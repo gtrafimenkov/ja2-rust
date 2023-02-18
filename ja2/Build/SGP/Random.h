@@ -1,10 +1,11 @@
 #ifndef __RANDOM_
 #define __RANDOM_
 
-#include "SGP/Types.h"
-#include "SGP/Debug.h"
 #include <stdlib.h>
 #include <time.h>
+
+#include "SGP/Debug.h"
+#include "SGP/Types.h"
 
 #ifdef __cplusplus
 extern "C" {

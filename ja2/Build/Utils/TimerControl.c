@@ -1,20 +1,20 @@
-#include "Utils/UtilsAll.h"
-#include "Tactical/InterfaceControl.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <windows.h>
-#include <mmsystem.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
-#include "Tactical/SoldierControl.h"
 #include "Utils/TimerControl.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/HandleItems.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/RenderWorld.h"
+
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#if 1
+#include <mmsystem.h>
 #endif
+
+#include "SGP/Debug.h"
+#include "SGP/WCheck.h"
+#include "Tactical/HandleItems.h"
+#include "Tactical/InterfaceControl.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldDef.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

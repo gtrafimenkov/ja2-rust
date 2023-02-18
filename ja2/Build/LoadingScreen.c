@@ -1,9 +1,13 @@
-#include "JA2All.h"
-#ifdef PRECOMPILEDHEADERS
 #include "LoadingScreen.h"
-#else
-//???
-#endif
+
+#include "SGP/Font.h"
+#include "SGP/Random.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/FontControl.h"
 
 extern HVSURFACE ghFrameBuffer;
 

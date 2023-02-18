@@ -1,10 +1,8 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "Utils/DebugControl.h"
-#include "stdio.h"
-#endif
+
+#include <stdio.h>
+
+#include "SGP/Types.h"
 
 #ifdef _ANIMSUBSYSTEM_DEBUG
 

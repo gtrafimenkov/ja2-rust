@@ -1,10 +1,11 @@
 #ifndef __JASCREENS_H_
 #define __JASCREENS_H_
 
-#include "SGP/SGP.h"
-#include "ScreenIDs.h"
-#include "SGP/MouseSystem.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/SGP.h"
+#include "SGP/Types.h"
+#include "ScreenIDs.h"
 
 extern UINT32 EditScreenInit(void);
 extern UINT32 EditScreenHandle(void);
@@ -56,9 +57,9 @@ UINT32 DebugScreenInit(void);
 UINT32 DebugScreenHandle(void);
 UINT32 DebugScreenShutdown(void);
 
-UINT32 MapScreenInit(void);
-UINT32 MapScreenHandle(void);
-UINT32 MapScreenShutdown(void);
+extern UINT32 MapScreenInit(void);
+extern UINT32 MapScreenHandle(void);
+extern UINT32 MapScreenShutdown(void);
 
 UINT32 LaptopScreenInit(void);
 UINT32 LaptopScreenHandle(void);
@@ -88,10 +89,6 @@ UINT32 SaveLoadScreenShutdown(void);
 UINT32 SaveLoadScreenHandle(void);
 UINT32 SaveLoadScreenInit(void);
 
-UINT32 OptionsScreenShutdown(void);
-UINT32 OptionsScreenHandle(void);
-UINT32 OptionsScreenInit(void);
-
 UINT32 ShopKeeperScreenInit(void);
 UINT32 ShopKeeperScreenHandle(void);
 UINT32 ShopKeeperScreenShutdown(void);
@@ -117,7 +114,7 @@ extern UINT32 CreditScreenHandle(void);
 extern UINT32 CreditScreenShutdown(void);
 
 // External functions
-void DisplayFrameRate();
+extern void DisplayFrameRate();
 
 void HandleTitleScreenAnimation();
 
@@ -134,6 +131,5 @@ void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, INT8 ubPage);
 void DisableFPSOverlay(BOOLEAN fEnable);
 
 void EnterTacticalScreen();
-void LeaveTacticalScreen(UINT32 uiNewScreen);
 
 #endif

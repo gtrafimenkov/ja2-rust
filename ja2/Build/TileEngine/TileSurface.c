@@ -1,22 +1,19 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldDat.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "time.h"
-#include "SGP/Video.h"
-#include "SGP/Debug.h"
+#include <time.h>
+
 #include "Editor/Smooth.h"
-#include "TileEngine/WorldMan.h"
+#include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "TileEngine/TileDat.h"
-#include "SGP/FileMan.h"
-#endif
+#include "TileEngine/WorldDat.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 
 TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
 UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];

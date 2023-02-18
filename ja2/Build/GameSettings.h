@@ -1,6 +1,8 @@
 #ifndef _GAME_SETTINGS__H_
 #define _GAME_SETTINGS__H_
 
+#include "SGP/Types.h"
+
 // If you add any options, MAKE sure you add the corresponding string to the Options Screen string
 // array
 enum {

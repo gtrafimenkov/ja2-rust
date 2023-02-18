@@ -1,6 +1,8 @@
 #ifndef __LOADING_SCREEN_H
 #define __LOADING_SCREEN_H
 
+#include "SGP/Types.h"
+
 enum {
   LOADINGSCREEN_NOTHING,
   LOADINGSCREEN_DAYGENERIC,

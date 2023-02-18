@@ -1,17 +1,13 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-
-#else
-#include "SGP/Debug.h"
-#include "SGP/Types.h"
-//#include "mssw.h"
 #include "Tactical/Gap.h"
-#include "Utils/SoundControl.h"
-#include "SGP/SoundMan.h"
-#include "Utils/TimerControl.h"
+
 #include <stdio.h>
+
+#include "SGP/Debug.h"
 #include "SGP/FileMan.h"
-#endif
+#include "SGP/SoundMan.h"
+#include "SGP/Types.h"
+#include "Utils/SoundControl.h"
+#include "Utils/TimerControl.h"
 
 #if 0
 static void AILCALLBACK timer_func( UINT32 user )

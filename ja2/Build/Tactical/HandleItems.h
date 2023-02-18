@@ -1,6 +1,7 @@
 #ifndef __HANDLE_ITEMS_H
 #define __HANDLE_ITEMS_H
 
+#include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/WorldItems.h"
 #include "TileEngine/Structure.h"

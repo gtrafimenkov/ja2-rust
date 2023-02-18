@@ -1,15 +1,16 @@
 #ifndef __SOLDER_CONTROL_H
 #define __SOLDER_CONTROL_H
 
+#include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "Tactical/AnimationCache.h"
+#include "Tactical/ItemTypes.h"
+#include "Tactical/OverheadTypes.h"
+#include "Utils/TimerControl.h"
+
 // Kris:  November 10, 1997
 // Please don't change this value from 10.  It will invalidate all of the maps and soldiers.
 #define MAXPATROLGRIDS 10  // *** THIS IS A DUPLICATION - MUST BE MOVED !
-
-#include "Tactical/AnimationCache.h"
-#include "Utils/TimerControl.h"
-#include "SGP/VObject.h"
-#include "Tactical/OverheadTypes.h"
-#include "Tactical/ItemTypes.h"
 
 // TEMP VALUES FOR NAMES
 #define MAXCIVLASTNAMES 30

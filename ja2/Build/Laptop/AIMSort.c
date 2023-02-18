@@ -1,20 +1,16 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/AIMSort.h"
+
+#include <stdlib.h>
+
 #include "Laptop/AIM.h"
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
+#include "Strategic/GameClock.h"
+#include "Tactical/SoldierProfile.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
+#include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "Tactical/SoldierProfile.h"
-#include "stdlib.h"
-#include "Strategic/GameClock.h"
-#include "Utils/Text.h"
-#include "Utils/MultiLanguageGraphicUtils.h"
-#endif
-
-//#define
 
 #define AIM_SORT_FONT_TITLE FONT14ARIAL
 #define AIM_SORT_FONT_SORT_TEXT FONT10ARIAL

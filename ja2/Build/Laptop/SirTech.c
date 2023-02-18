@@ -1,9 +1,6 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/SirTech.h"
-#endif
+
+#include "Laptop/Laptop.h"
 
 void GameInitSirTech() {}
 

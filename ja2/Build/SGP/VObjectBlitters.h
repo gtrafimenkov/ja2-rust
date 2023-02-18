@@ -2,8 +2,8 @@
 #define __VOBJECT_BLITTERS
 
 #include "SGP/Shading.h"
-#include "SGP/VSurface.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -341,8 +341,8 @@ BOOLEAN DDBlt8BPPDataTo16BPPBufferFullTransparent(HVOBJECT hDestVObject, HVOBJEC
                                                   UINT16 usX, UINT16 usY, SGPRect *srcRect);
 BOOLEAN DDFillSurface(HVOBJECT hDestVObject, blt_fx *pBltFx);
 BOOLEAN DDFillSurfaceRect(HVOBJECT hDestVObject, blt_fx *pBltFx);
-BOOLEAN BltVObjectUsingDD(HVOBJECT hDestVObject, HVOBJECT hSrcVObject, UINT32 fBltFlags,
-                          INT32 iDestX, INT32 iDestY, RECT *SrcRect);
+// BOOLEAN BltVObjectUsingDD(HVOBJECT hDestVObject, HVOBJECT hSrcVObject, UINT32 fBltFlags,
+//                           INT32 iDestX, INT32 iDestY, RECT *SrcRect);
 
 BOOLEAN BlitZRect(UINT16 *pZBuffer, UINT32 uiPitch, INT16 sLeft, INT16 sTop, INT16 sRight,
                   INT16 sBottom, UINT16 usZValue);

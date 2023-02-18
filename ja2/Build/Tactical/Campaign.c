@@ -1,29 +1,36 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <wchar.h>
+#include "Tactical/Campaign.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
+#include <wchar.h>
+
+#include "GameSettings.h"
+#include "Laptop/Email.h"
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
-#include "Tactical/OverheadTypes.h"
-#include "Tactical/SoldierControl.h"
 #include "SGP/Random.h"
-#include "Tactical/Campaign.h"
-#include "Tactical/DialogueControl.h"
-#include "Strategic/MapScreenInterface.h"
-#include "Utils/Message.h"
+#include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
+#include "Strategic/GameEventHook.h"
+#include "Strategic/MapScreen.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/Meanwhile.h"
+#include "Strategic/Quests.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicMap.h"
 #include "Strategic/StrategicMines.h"
 #include "Strategic/StrategicStatus.h"
+#include "Strategic/TownMilitia.h"
 #include "SysGlobals.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/Interface.h"
+#include "Tactical/OverheadTypes.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/Squads.h"
+#include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "GameSettings.h"
-#endif
-
-#include "Laptop/Email.h"
 
 extern UINT8 gbPlayerNum;
 

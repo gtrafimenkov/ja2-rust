@@ -1,10 +1,8 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "SGP/Debug.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/QueenCommand.h"
 #include "Strategic/StrategicMovement.h"
-#endif
+#include "Tactical/TacticalSave.h"
 
 UINT8 gubEncryptionArray3[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {
     {250, 224, 3,   197, 156, 209, 110, 159, 75,  119, 221, 42,  212, 180, 223, 115, 13,

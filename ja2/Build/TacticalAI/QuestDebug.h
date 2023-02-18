@@ -1,6 +1,8 @@
 #ifndef QUEST_DEBUG_H
 #define QUEST_DEBUG_H
 
+#include "SGP/Types.h"
+
 // Type of quote
 enum {
   QD_NPC_MSG,

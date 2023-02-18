@@ -4,8 +4,9 @@
 #ifndef __EDITORBUILDINGS_H
 #define __EDITORBUILDINGS_H
 
-#include "SGP/Video.h"
+#include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/Video.h"
 
 extern BOOLEAN fBuildingShowRoofs, fBuildingShowWalls, fBuildingShowRoomInfo;
 extern UINT8 gubCurrRoomNumber;

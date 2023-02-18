@@ -2,9 +2,8 @@
 #define _VEHICLES_H
 
 #include "SGP/Types.h"
-
-#include "Tactical/SoldierControl.h"
 #include "Strategic/StrategicMovement.h"
+#include "Tactical/SoldierControl.h"
 
 #define MAX_VEHICLES 10
 

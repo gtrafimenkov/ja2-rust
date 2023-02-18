@@ -1,16 +1,18 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <memory.h>
 #include "Strategic/StrategicStatus.h"
-#include "Tactical/InventoryChoosing.h"
-#include "SGP/FileMan.h"
-#include "Tactical/SoldierProfile.h"
-#include "Tactical/Campaign.h"
-#include "Strategic/StrategicMines.h"
+
+#include <memory.h>
+
+#include "GameSettings.h"
 #include "Laptop/Email.h"
+#include "Laptop/History.h"
+#include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "Strategic/GameClock.h"
-#endif
+#include "Strategic/StrategicMines.h"
+#include "Strategic/StrategicTownLoyalty.h"
+#include "Tactical/Campaign.h"
+#include "Tactical/InventoryChoosing.h"
+#include "Tactical/SoldierProfile.h"
 
 STRATEGIC_STATUS gStrategicStatus;
 

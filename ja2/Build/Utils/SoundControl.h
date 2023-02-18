@@ -1,6 +1,8 @@
 #ifndef SOUND_CONTROL_H
 #define SOUND_CONTROL_H
 
+#include "SGP/Types.h"
+
 #define FARLEFT 0
 #define LEFTSIDE 48
 #define MIDDLE 64

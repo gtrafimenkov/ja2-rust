@@ -27,15 +27,15 @@ generator will mistaken that for a string.
 AUTHOR:  Kris Morness
 CREATED:	Feb 16, 1999
 */
-#include "Utils/UtilsAll.h"
 
 #ifdef _DEBUG
 
 #include <stdio.h>
-#include "SGP/Types.h"
+
 #include "LanguageDefines.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/Types.h"
 
 // Currently in JA2's _EnglishText, these tokens make up all of the
 // format specifiers that are actually used.  Feel free to add more,

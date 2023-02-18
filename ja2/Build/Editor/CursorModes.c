@@ -1,28 +1,21 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
-
-#ifndef PRECOMPILEDHEADERS
-#include "SGP/Types.h"
 #include "Editor/CursorModes.h"
-#include "TileEngine/RenderWorld.h"
-#include "SGP/Random.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/Interface.h"
-#include "TileEngine/IsometricUtils.h"
 #include "Editor/EditScreen.h"
-#include "Editor/EditorDefines.h"
-#include "SGP/Input.h"
-#include "SGP/English.h"
-#include "Editor/EditorTaskbarUtils.h"
-#include "Tactical/Overhead.h"
-#include "Editor/EditorMercs.h"
 #include "Editor/EditorBuildings.h"
-#endif
+#include "Editor/EditorDefines.h"
+#include "Editor/EditorMercs.h"
+#include "Editor/EditorTaskbarUtils.h"
+#include "SGP/English.h"
+#include "SGP/Input.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "Tactical/Interface.h"
+#include "Tactical/Overhead.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldMan.h"
 
 BOOLEAN fValidCursor = FALSE;
 BOOLEAN fAnchored = FALSE;

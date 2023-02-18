@@ -1,6 +1,8 @@
 #ifndef __CURSORS_H
 #define __CURSORS_H
 
+#include "SGP/Types.h"
+
 // INDIVIDUAL CURSORS
 
 typedef enum {

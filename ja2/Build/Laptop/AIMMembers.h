@@ -1,6 +1,8 @@
 #ifndef __AIMMEMBERS_H_
 #define __AIMMEMBERS_H_
 
+#include "SGP/Types.h"
+
 void GameInitAIMMembers();
 BOOLEAN EnterAIMMembers();
 void ExitAIMMembers();

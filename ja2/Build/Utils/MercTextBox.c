@@ -1,16 +1,13 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Utils/MercTextBox.h"
+
+#include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
+#include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "Utils/FontControl.h"
+#include "Utils/Message.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "SGP/VObjectBlitters.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/Message.h"
-#endif
 
 #define TEXT_POPUP_WINDOW_TEXT_OFFSET_X 8
 #define TEXT_POPUP_WINDOW_TEXT_OFFSET_Y 8

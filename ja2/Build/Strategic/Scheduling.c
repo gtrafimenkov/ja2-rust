@@ -1,28 +1,31 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <memory.h>
-#include "SGP/FileMan.h"
-#include "SGP/Types.h"
 #include "Strategic/Scheduling.h"
-#include "Tactical/SoldierControl.h"
-#include "Utils/Message.h"
-#include "Tactical/Overhead.h"
+
+#include <memory.h>
+
+#include "JAScreens.h"
+#include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
-#include "TileEngine/WorldDef.h"
-#include "Tactical/SoldierInitList.h"
-#include "TileEngine/IsometricUtils.h"
-#include "TacticalAI/AI.h"
-#include "SGP/Debug.h"
-#include "SGP/Random.h"
-#include "Tactical/AnimationData.h"
-#include "Tactical/MapInformation.h"
-#include "Tactical/Keys.h"
-#include "Tactical/StructureWrap.h"
-#include "JAScreens.h"
+#include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"
-#endif
+#include "Tactical/AnimationControl.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/Keys.h"
+#include "Tactical/MapInformation.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierInitList.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/StructureWrap.h"
+#include "TacticalAI/AI.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Message.h"
 
 #ifdef JA2EDITOR
 extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];

@@ -1,6 +1,6 @@
-#include "SGP/SGPAll.h"
-#include "SGP/LibraryDataBase.h"
 #include <stdio.h>
+
+#include "SGP/LibraryDataBase.h"
 
 INT8 gbLocale = ENGLISH_LANG;
 

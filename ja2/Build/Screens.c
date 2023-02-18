@@ -1,8 +1,7 @@
-#include "JA2All.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Screens.h"
-#endif
+
+#include "JAScreens.h"
+#include "OptionsScreen.h"
 
 Screens GameScreens[MAX_SCREENS] = {
     {EditScreenInit, EditScreenHandle, EditScreenShutdown},

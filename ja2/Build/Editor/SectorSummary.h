@@ -4,6 +4,8 @@
 #ifndef __SECTOR_SUMMARY_H
 #define __SECTOR_SUMMARY_H
 
+#include "SGP/Types.h"
+
 // This function can be very time consuming as it loads every map file with a valid
 // coordinate name, analyses it, and builds a new global summary file.
 void CreateGlobalSummary();

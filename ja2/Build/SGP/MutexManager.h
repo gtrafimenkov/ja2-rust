@@ -2,8 +2,9 @@
 #define __MUTEX_
 
 #include <process.h>
-#include "SGP/Types.h"
+
 #include "Local.h"
+#include "SGP/Types.h"
 
 extern BOOLEAN InitializeMutexManager(void);
 extern void ShutdownMutexManager(void);

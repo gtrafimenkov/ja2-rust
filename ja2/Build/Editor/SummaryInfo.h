@@ -1,4 +1,6 @@
 #include "BuildDefines.h"
+#include "Tactical/MapInformation.h"
+#include "TileEngine/ExitGrids.h"
 
 #ifdef JA2EDITOR
 #ifndef __SUMMARY_INFO_H

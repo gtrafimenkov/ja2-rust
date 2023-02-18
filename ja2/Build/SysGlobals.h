@@ -1,6 +1,8 @@
 #ifndef __SYS_GLOBALS_H
 #define __SYS_GLOBALS_H
 
+#include "SGP/Types.h"
+
 #define SHOW_MIN_FPS 0
 #define SHOW_FULL_FPS 1
 

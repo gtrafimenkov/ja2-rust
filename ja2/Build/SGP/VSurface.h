@@ -1,9 +1,9 @@
 #ifndef __VSURFACE_H
 #define __VSURFACE_H
 
-#include "SGP/Types.h"
 #include "SGP/Container.h"
 #include "SGP/HImage.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

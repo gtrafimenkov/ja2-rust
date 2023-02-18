@@ -1,6 +1,9 @@
 #ifndef _STRATEGIC_MERC_HANDLER_H_
 #define _STRATEGIC_MERC_HANDLER_H_
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 void StrategicHandlePlayerTeamMercDeath(SOLDIERTYPE *pSoldier);
 void MercDailyUpdate();
 void MercsContractIsFinished(UINT8 ubID);

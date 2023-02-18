@@ -2,6 +2,7 @@
 #define __INTERACTIVE_TILES_H
 
 #include "Tactical/SoldierControl.h"
+#include "TileEngine/WorldDef.h"
 
 #define INTTILE_DOOR_TILE_ONE 1
 

@@ -1,16 +1,14 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include "SGP/Types.h"
 #include "Strategic/GameEvents.h"
-#include "Strategic/GameClock.h"
-#include "SGP/MemMan.h"
+
+#include <stdio.h>
+
 #include "SGP/Debug.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
+#include "Strategic/GameClock.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#endif
 
 #ifdef JA2TESTVERSION
 

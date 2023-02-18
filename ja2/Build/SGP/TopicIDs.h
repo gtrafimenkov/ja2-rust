@@ -1,6 +1,8 @@
 #ifndef _TOPICIDS_H
 #define _TOPICIDS_H
 
+#include "SGP/Types.h"
+
 // YOU MUST KEEP THIS VARIABLE UP TO DATE !!!!
 
 #define NUM_TOPIC_IDS 23

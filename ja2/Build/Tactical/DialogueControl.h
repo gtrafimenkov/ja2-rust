@@ -1,8 +1,8 @@
 #ifndef _DIALOG_CONTROL_H
 #define _DIALOG_CONTROL_H
 
-#include "Tactical/Faces.h"
 #include "GameScreen.h"
+#include "Tactical/Faces.h"
 
 // An enumeration for dialog quotes
 typedef enum {

@@ -1,41 +1,36 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "TileEngine/Structure.h"
+
 #include <string.h>
-#include "SGP/Types.h"
-#include "SGP/WCheck.h"
+
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/Font.h"
 #include "SGP/MemMan.h"
-#include "TileEngine/Structure.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "SGP/WCheck.h"
+#include "Strategic/StrategicMap.h"
+#include "SysGlobals.h"
+#include "Tactical/Interface.h"
+#include "Tactical/LOS.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/SaveLoadMap.h"
+#include "TileEngine/Smell.h"
+#include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-
-#include "Tactical/Interface.h"
-
-#include "TileEngine/IsometricUtils.h"
-#include "SGP/Font.h"
 #include "Utils/FontControl.h"
-#include "Tactical/LOS.h"
-
-#include "TileEngine/Lighting.h"
-#include "TileEngine/Smell.h"
-#include "TileEngine/SaveLoadMap.h"
-#include "Strategic/StrategicMap.h"
-
-#include "SysGlobals.h"  //for access to gfEditMode flag
 
 // Kris:
 #ifdef JA2EDITOR
 #include "Editor/EditorUndo.h"  //for access to AddToUndoList( iMapIndex )
 #endif
 
+#include "TileEngine/Buildings.h"
 #include "TileEngine/ExplosionControl.h"
 #include "Utils/SoundControl.h"
-
-#include "TileEngine/Buildings.h"
-#endif
 
 #ifdef COUNT_PATHS
 extern UINT32 guiSuccessfulPathChecks;

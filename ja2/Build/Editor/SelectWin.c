@@ -1,27 +1,19 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
-#include "TileEngine/TileDef.h"
-#include "SGP/VSurface.h"
-#include "TileEngine/WorldDat.h"
-#include "SGP/Random.h"
-#include "TileEngine/SysUtil.h"
-#include "Utils/FontControl.h"
-#include "Editor/SelectWin.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
-#endif
+#include "Editor/SelectWin.h"
+#include "SGP/Random.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/WorldDat.h"
+#include "Utils/FontControl.h"
 
 extern BOOLEAN gfOverheadMapDirty;
-
-extern void SetClippingRect(SGPRect *clip);
-extern void GetClippingRect(SGPRect *clip);
 
 extern INT32 iEditorToolbar;
 

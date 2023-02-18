@@ -1,9 +1,9 @@
 #ifndef MAP_SCREEN_INTERFACE_H
 #define MAP_SCREEN_INTERFACE_H
 
+#include "MessageBoxScreen.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
-#include "MessageBoxScreen.h"
 
 typedef struct FASTHELPREGION {
   // the string

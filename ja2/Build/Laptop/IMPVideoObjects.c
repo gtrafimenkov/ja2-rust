@@ -1,17 +1,16 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Laptop/IMPVideoObjects.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
+
+#include "Laptop/IMPAttributeSelection.h"
 #include "Laptop/IMPHomePage.h"
 #include "Laptop/Laptop.h"
-#endif
+#include "SGP/Debug.h"
+#include "SGP/WCheck.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 // globals
 

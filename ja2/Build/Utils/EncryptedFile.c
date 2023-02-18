@@ -1,12 +1,8 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Utils/EncryptedFile.h"
-#include "SGP/FileMan.h"
-#include "SGP/Debug.h"
-#endif
 
 #include "LanguageDefines.h"
+#include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 
 BOOLEAN LoadEncryptedDataFromFile(STR pFileName, STR16 pDestString, UINT32 uiSeekFrom,
                                   UINT32 uiSeekAmount) {

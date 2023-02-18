@@ -1,30 +1,34 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#include "Strategic/PreBattleInterface.h"
-#include "Strategic/CreatureSpreading.h"
-#else
-#include <stdio.h>
-#include "SGP/ButtonSystem.h"
-#include "SGP/MouseSystem.h"
-#include "JAScreens.h"
-#include "GameScreen.h"
-#include "Strategic/StrategicMap.h"
-#include "Strategic/GameClock.h"
-#include "Utils/MusicControl.h"
-#include "TileEngine/SysUtil.h"
-#include "Utils/FontControl.h"
-#include "Utils/Text.h"
-#include "Utils/PopUpBox.h"
-#include "Utils/Cursors.h"
 #include "Tactical/StrategicExitGUI.h"
-#include "Utils/MercTextBox.h"
-#include "TileEngine/RenderWorld.h"
-#include "Tactical/Overhead.h"
+
+#include <stdio.h>
+
+#include "FadeScreen.h"
+#include "GameScreen.h"
+#include "JAScreens.h"
+#include "MessageBoxScreen.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
-#include "SGP/Input.h"
 #include "SGP/English.h"
+#include "SGP/Input.h"
+#include "SGP/MouseSystem.h"
+#include "Strategic/CreatureSpreading.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/MapScreenInterfaceMap.h"
+#include "Strategic/PreBattleInterface.h"
+#include "Strategic/Quests.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/Squads.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
+#include "Utils/Cursors.h"
+#include "Utils/FontControl.h"
+#include "Utils/MercTextBox.h"
+#include "Utils/MusicControl.h"
+#include "Utils/PopUpBox.h"
 #include "Utils/Text.h"
-#endif
 
 BOOLEAN gfInSectorExitMenu = FALSE;
 

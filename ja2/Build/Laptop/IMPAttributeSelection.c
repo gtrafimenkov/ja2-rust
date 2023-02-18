@@ -1,25 +1,22 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/CharProfile.h"
 #include "Laptop/IMPAttributeSelection.h"
-#include "Laptop/IMPMainPage.h"
-#include "Laptop/IMPHomePage.h"
-#include "Laptop/IMPVideoObjects.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Input.h"
-#include "TileEngine/IsometricUtils.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
-#include "Laptop/Laptop.h"
-#include "Laptop/IMPTextSystem.h"
+
+#include "Laptop/CharProfile.h"
 #include "Laptop/IMPCompileCharacter.h"
+#include "Laptop/IMPHomePage.h"
+#include "Laptop/IMPMainPage.h"
+#include "Laptop/IMPTextSystem.h"
+#include "Laptop/IMPVideoObjects.h"
+#include "Laptop/Laptop.h"
+#include "SGP/Debug.h"
+#include "SGP/Input.h"
+#include "SGP/WCheck.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 // width of the slider bar region
 #define BAR_WIDTH 423 - 197

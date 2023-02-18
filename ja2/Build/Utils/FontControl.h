@@ -3,6 +3,7 @@
 
 #include "BuildDefines.h"
 #include "SGP/Font.h"
+#include "SGP/Types.h"
 
 extern BOOLEAN gfUseWinFonts;
 extern INT32 giCurWinFont;

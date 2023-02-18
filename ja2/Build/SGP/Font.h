@@ -1,8 +1,8 @@
 #ifndef __FONT_H_
 #define __FONT_H_
 
-#include "SGP/Types.h"
 #include "SGP/HImage.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 
 #define DEFAULT_SHADOW 2

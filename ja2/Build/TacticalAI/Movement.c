@@ -1,20 +1,18 @@
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TacticalAI/AI.h"
-#include "TacticalAI/AIInternals.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Tactical/Overhead.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/PathAI.h"
-#include "Tactical/Points.h"
-#include "Utils/Message.h"
-#include "TileEngine/Smell.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicPathing.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/PathAI.h"
+#include "Tactical/Points.h"
 #include "Tactical/SoldierControl.h"
-#endif
+#include "Tactical/SoldierMacros.h"
+#include "TacticalAI/AI.h"
+#include "TacticalAI/AIInternals.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/Smell.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Message.h"
 
 // from strategic
 extern INT16 DirXIncrementer[8];

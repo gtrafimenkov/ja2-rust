@@ -1,26 +1,27 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#include "Editor/EditSys.h"
-#else
-#include <stdio.h>
-#include "SGP/FileMan.h"
-#include "SGP/Types.h"
 #include "Tactical/MapInformation.h"
-#include "Tactical/SoldierInitList.h"
-#include "SGP/Random.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldMan.h"
-#include "TileEngine/RenderWorld.h"
+
+#include <stdio.h>
+
+#include "Editor/EditSys.h"
 #include "Editor/EditorMercs.h"
+#include "Editor/RoadSmoothing.h"
+#include "JA2.h"
+#include "SGP/FileMan.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "SysGlobals.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/SoldierInitList.h"
+#include "Tactical/Weapons.h"
+#include "TileEngine/Environment.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"
-#include "JA2.h"
-#include "Tactical/AnimationData.h"
-#include "Editor/RoadSmoothing.h"
-#include "SysGlobals.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/AnimatedProgressBar.h"
 #include "Utils/Message.h"
-#include "Tactical/Weapons.h"
-#endif
 
 // Don't mess with this value, unless you want to force update all maps in the game!
 #ifdef RUSSIAN
@@ -570,8 +571,8 @@ void ValidateAndUpdateMapVersionIfNecessary() {
 }
 
 #ifdef JA2EDITOR
-#include "TileEngine/ExitGrids.h"
 #include "Editor/SummaryInfo.h"
+#include "TileEngine/ExitGrids.h"
 // This function is used to avoid conflicts between minor version updates and sector summary info.
 // By updating the summary info in conjunction with minor version updates, we can avoid these
 // conflicts and really prevent major map updates.

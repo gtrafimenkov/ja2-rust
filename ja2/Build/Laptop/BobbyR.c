@@ -1,23 +1,22 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/BobbyR.h"
+
 #include "Laptop/BobbyRGuns.h"
-#include "Utils/Utilities.h"
+#include "Laptop/Laptop.h"
+#include "Laptop/LaptopSave.h"
+#include "Laptop/StoreInventory.h"
+#include "SGP/Random.h"
 #include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/GameEventHook.h"
+#include "Tactical/ArmsDealerInvInit.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Weapons.h"
-#include "Laptop/StoreInventory.h"
-#include "Strategic/GameEventHook.h"
-#include "Strategic/GameClock.h"
-#include "Laptop/LaptopSave.h"
-#include "SGP/Random.h"
-#include "Utils/Text.h"
+#include "Utils/Cursors.h"
+#include "Utils/Message.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
-#endif
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #ifdef JA2TESTVERSION
 #define BR_INVENTORY_TURNOVER_DEBUG

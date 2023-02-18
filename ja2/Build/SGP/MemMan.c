@@ -18,23 +18,19 @@
 //
 //**************************************************************************
 
-#include "SGP/SGPAll.h"
-//#ifdef PRECOMPILEDHEADERS
-//#elif defined( WIZ8_PRECOMPILED_HEADERS )
-//	#include "WIZ8 SGP ALL.H"
-//#else
-#include "SGP/Types.h"
-#include <windows.h>
+#include "SGP/MemMan.h"
+
 #include <malloc.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "SGP/MemMan.h"
+#include <windows.h>
+
 #include "SGP/Debug.h"
-#include <stdio.h>
+#include "SGP/Types.h"
 #ifdef _DEBUG
 #include <crtdbg.h>
 #endif
-//#endif
 
 #ifdef _DEBUG
 //#define DEBUG_MEM_LEAKS // turns on tracking of every MemAlloc and MemFree!
@@ -47,8 +43,8 @@
 //**************************************************************************
 
 #ifdef JA2
-#include "SGP/MouseSystem.h"
 #include "MessageBoxScreen.h"
+#include "SGP/MouseSystem.h"
 STR16 gzJA2ScreenNames[] = {
     L"EDIT_SCREEN",        L"SAVING_SCREEN",
     L"LOADING_SCREEN",     L"ERROR_SCREEN",

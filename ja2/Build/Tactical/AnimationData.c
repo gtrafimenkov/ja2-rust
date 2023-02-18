@@ -1,23 +1,21 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
 #include "Tactical/AnimationData.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "JAScreens.h"
+#include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/WCheck.h"
+#include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/SoldierControl.h"
-#include "JAScreens.h"
 #include "TileEngine/TileDef.h"
-#include "SysGlobals.h"
-#include "Utils/DebugControl.h"
-#include "Utils/Utilities.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "SGP/FileMan.h"
-#endif
+#include "Utils/DebugControl.h"
+#include "Utils/Utilities.h"
 
 #define EMPTY_SLOT -1
 #define TO_INIT 0

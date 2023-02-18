@@ -1,6 +1,8 @@
 #ifndef MEANWHILE_H
 #define MEANWHILE_H
 
+#include "SGP/Types.h"
+
 enum {
   END_OF_PLAYERS_FIRST_BATTLE,
   DRASSEN_LIBERATED,

@@ -1,16 +1,16 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "Tactical/DrugsAndAlcohol.h"
+
+#include "SGP/Random.h"
 #include "SGP/SGP.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierProfile.h"
 #include "Tactical/DrugsAndAlcohol.h"
+#include "Tactical/Interface.h"
 #include "Tactical/Items.h"
-#include "Tactical/DrugsAndAlcohol.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Points.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierProfile.h"
 #include "Utils/Message.h"
-#endif
+#include "Utils/Text.h"
 
 UINT8 ubDrugTravelRate[] = {4, 2};
 UINT8 ubDrugWearoffRate[] = {2, 2};

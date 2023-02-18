@@ -1,38 +1,39 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "Tactical/LOS.h"
+
+#include <math.h>
+#include <memory.h>
 #include <stdio.h>
 
-#include <memory.h>
-#include <math.h>
-#include "SGP/WCheck.h"
-#include "TileEngine/IsometricUtils.h"
-#include "SGP/Debug.h"
-#include "Tactical/LOS.h"
-#include "Tactical/AnimationControl.h"
-#include "SGP/Random.h"
-#include "Tactical/SoldierControl.h"
-#include "Utils/EventPump.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/Weapons.h"
-
-#include "Tactical/OppList.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/Bullets.h"
-
-#include "TileEngine/PhysMath.h"
-#include "Tactical/Items.h"
-#include "Tactical/SoldierProfile.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/RottingCorpses.h"
 #include "GameSettings.h"
-#include "Tactical/Keys.h"
-#include "Utils/Message.h"
-#include "Tactical/StructureWrap.h"
+#include "SGP/Debug.h"
+#include "SGP/Random.h"
+#include "SGP/WCheck.h"
+#include "Strategic/Quests.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/Bullets.h"
 #include "Tactical/Campaign.h"
-#include "TileEngine/Environment.h"
+#include "Tactical/Interface.h"
+#include "Tactical/Items.h"
+#include "Tactical/Keys.h"
+#include "Tactical/OppList.h"
+#include "Tactical/Overhead.h"
 #include "Tactical/PathAI.h"
-#endif
+#include "Tactical/Points.h"
+#include "Tactical/RottingCorpses.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/StructureWrap.h"
+#include "Tactical/Weapons.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/PhysMath.h"
+#include "TileEngine/Smell.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/EventPump.h"
+#include "Utils/Message.h"
+#include "Utils/Text.h"
 
 #define STEPS_FOR_BULLET_MOVE_TRAILS 10
 #define STEPS_FOR_BULLET_MOVE_SMALL_TRAILS 5

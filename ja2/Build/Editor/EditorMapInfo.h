@@ -4,6 +4,8 @@
 #ifndef __EDITORMAPINFO_H
 #define __EDITORMAPINFO_H
 
+#include "SGP/Types.h"
+
 void SetupTextInputForMapInfo();
 void UpdateMapInfo();
 void ExtractAndUpdateMapInfo();

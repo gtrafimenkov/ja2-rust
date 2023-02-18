@@ -328,9 +328,6 @@
     <ClInclude Include="Insurance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LaptopAll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Laptop.h">
       <Filter>Header Files</Filter>
     </ClInclude>

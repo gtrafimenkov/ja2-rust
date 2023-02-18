@@ -1,15 +1,12 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/Funeral.h"
+
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
+#include "Utils/Cursors.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
+#include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
-#include "Utils/Text.h"
-#include "Utils/MultiLanguageGraphicUtils.h"
-#endif
 
 #define FUNERAL_SENTENCE_FONT FONT12ARIAL
 #define FUNERAL_SENTENCE_COLOR 2                         // FONT_MCOLOR_WHITE

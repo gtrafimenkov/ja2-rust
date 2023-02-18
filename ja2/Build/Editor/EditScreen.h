@@ -5,6 +5,7 @@
 #define EDITSCREEN_H
 
 #include "SGP/ButtonSystem.h"
+#include "SGP/Types.h"
 
 #define EDITOR_LIGHT_MAX (SHADE_MIN + SHADE_MAX)
 #define EDITOR_LIGHT_FAKE (EDITOR_LIGHT_MAX - SHADE_MAX - 2)

@@ -1,6 +1,7 @@
 #ifndef _SPREAD_BURST_H
 #define _SPREAD_BURST_H
 
+#include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 
 void ResetBurstLocations();

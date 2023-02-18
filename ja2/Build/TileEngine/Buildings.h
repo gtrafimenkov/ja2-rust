@@ -1,7 +1,7 @@
 #ifndef BUILDING_H
-
 #define BUILDING_H
 
+#include "SGP/SGP.h"
 #include "TileEngine/WorldDef.h"
 // for what it's worth, 2 bytes, we use roof climb spots as 1-based
 // so the 0th entry is always 0 and can be compared with (and not equal)

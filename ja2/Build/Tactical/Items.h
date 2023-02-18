@@ -1,5 +1,6 @@
 #ifndef ITEMS_H
 #define ITEMS_H
+
 #include "Tactical/ItemTypes.h"
 #include "Tactical/SoldierControl.h"
 

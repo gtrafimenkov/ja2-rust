@@ -1,6 +1,9 @@
 #ifndef __SOLDIER_ANI_H
 #define __SOLDIER_ANI_H
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier);
 
 BOOLEAN CheckForAndHandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);

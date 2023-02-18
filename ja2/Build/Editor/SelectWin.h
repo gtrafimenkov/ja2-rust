@@ -4,11 +4,10 @@
 #ifndef _SELECTION_WIN_H_
 #define _SELECTION_WIN_H_
 
+#include "SGP/ButtonSystem.h"
+#include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
-
-#include "SGP/MouseSystem.h"
-#include "SGP/ButtonSystem.h"
 
 #define CANCEL_ICON 0
 #define UP_ICON 1

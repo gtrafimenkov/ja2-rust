@@ -1,27 +1,25 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
+#include "Tactical/InterfaceCursors.h"
+
 #include <stdarg.h>
+#include <stdio.h>
 #include <time.h>
-#include "SGP/SGP.h"
+
+#include "GameSettings.h"
+#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/SGP.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
-#include "SGP/Input.h"
+#include "SysGlobals.h"
 #include "Tactical/HandleUI.h"
-#include "Utils/Cursors.h"
+#include "Tactical/Interface.h"
+#include "Tactical/InterfaceItems.h"
+#include "Tactical/Overhead.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderDirty.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "TileEngine/RenderDirty.h"
-#include "Tactical/InterfaceCursors.h"
-#include "Tactical/Interface.h"
-#include "TileEngine/IsometricUtils.h"
 #include "Utils/Cursors.h"
-#include "SysGlobals.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/InterfaceItems.h"
-#endif
 
 #define DISPLAY_AP_INDEX MOCKFLOOR1
 

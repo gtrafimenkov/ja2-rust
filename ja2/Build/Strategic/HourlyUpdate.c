@@ -1,15 +1,19 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "JAScreens.h"
+#include "Laptop/Finances.h"
+#include "Laptop/History.h"
+#include "SGP/Random.h"
 #include "Strategic/Assignments.h"
-#include "Strategic/StrategicTownLoyalty.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/Quests.h"
 #include "Strategic/StrategicMercHandler.h"
 #include "Strategic/StrategicMines.h"
+#include "Strategic/StrategicTownLoyalty.h"
+#include "Tactical/Boxing.h"
 #include "Tactical/Campaign.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/Items.h"
 #include "Tactical/Morale.h"
-#include "Strategic/Quests.h"
-#include "Strategic/GameClock.h"
-#endif
+#include "Tactical/Overhead.h"
 
 void HourlyQuestUpdate(void);
 void HourlyLarryUpdate(void);

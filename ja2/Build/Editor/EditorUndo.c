@@ -1,25 +1,18 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldMan.h"
-#include "Editor/Smooth.h"
-#include "SGP/Input.h"
-#include "SGP/Debug.h"
-#include "TileEngine/IsometricUtils.h"
-
+#include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorUndo.h"
-#include "TileEngine/RenderFun.h"  //for access to gubWorldRoomInfo;
-#include "Editor/CursorModes.h"
+#include "Editor/Smooth.h"
+#include "SGP/Debug.h"
+#include "SGP/Input.h"
 #include "TileEngine/ExitGrids.h"
-#endif
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"  //for access to gubWorldRoomInfo;
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 
 /*
 Kris -- Notes on how the undo code works:

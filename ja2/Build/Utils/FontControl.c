@@ -1,17 +1,15 @@
-#include "Utils/UtilsAll.h"
-#include "SGP/WinFont.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
+#include "Utils/FontControl.h"
+
 #include <stdarg.h>
+#include <stdio.h>
 #include <time.h>
-#include "SGP/SGP.h"
+
 #include "SGP/HImage.h"
+#include "SGP/SGP.h"
 #include "SGP/VSurface.h"
 #include "SGP/VSurfacePrivate.h"
 #include "SGP/WCheck.h"
-#include "Utils/FontControl.h"
-#endif
+#include "SGP/WinFont.h"
 
 INT32 giCurWinFont = 0;
 BOOLEAN gfUseWinFonts = FALSE;

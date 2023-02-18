@@ -1,31 +1,28 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "math.h"
-#include <stdio.h>
-#include <errno.h>
-
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/RenderWorld.h"
-#include "SGP/VSurface.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
-#include "SGP/Container.h"
-#include "SGP/WCheck.h"
-#include "SGP/Video.h"
-#include "SGP/VObjectBlitters.h"
-#include "Tactical/Faces.h"
-#include "Utils/Utilities.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/Gap.h"
-#include "Tactical/SoldierProfile.h"
 #include "Tactical/Bullets.h"
-#include "Tactical/LOS.h"
-#include "TileEngine/WorldMan.h"
-#include "SGP/Random.h"
+
+#include <errno.h>
+#include <math.h>
+#include <stdio.h>
+
 #include "GameSettings.h"
+#include "SGP/Container.h"
 #include "SGP/FileMan.h"
-#endif
+#include "SGP/Random.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "Tactical/Faces.h"
+#include "Tactical/Gap.h"
+#include "Tactical/LOS.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierProfile.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Utilities.h"
 
 // Defines
 #define NUM_BULLET_SLOTS 50

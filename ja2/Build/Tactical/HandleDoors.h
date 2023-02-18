@@ -1,6 +1,10 @@
 #ifndef _DOORS_H
 #define _DOORS_H
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+#include "TileEngine/StructureInternals.h"
+
 #define HANDLE_DOOR_OPEN 1
 #define HANDLE_DOOR_EXAMINE 2
 #define HANDLE_DOOR_LOCKPICK 3

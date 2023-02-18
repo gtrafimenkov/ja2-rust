@@ -1,6 +1,7 @@
 #ifndef _MAP_SCREEN_INTERFACE_MAP_H
 #define _MAP_SCREEN_INTERFACE_MAP_H
 
+#include "SGP/Types.h"
 #include "Tactical/Vehicles.h"
 
 // functions

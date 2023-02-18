@@ -1,18 +1,15 @@
-#include "JA2All.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/SGP.h"
-#include "ScreenIDs.h"
-#include "Utils/TimerControl.h"
-#include "SysGlobals.h"
 #include "FadeScreen.h"
-#include "TileEngine/SysUtil.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/CursorControl.h"
-#include "Utils/MusicControl.h"
-#include "TileEngine/RenderDirty.h"
+
 #include "GameLoop.h"
-#endif
+#include "SGP/CursorControl.h"
+#include "SGP/SGP.h"
+#include "SGP/VObjectBlitters.h"
+#include "ScreenIDs.h"
+#include "SysGlobals.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/SysUtil.h"
+#include "Utils/MusicControl.h"
+#include "Utils/TimerControl.h"
 
 #define SQUARE_STEP 8
 

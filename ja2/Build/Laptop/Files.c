@@ -1,20 +1,18 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include "Laptop/Laptop.h"
 #include "Laptop/Files.h"
-#include "Strategic/GameClock.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
+
+#include <stdio.h>
+
 #include "Laptop/Email.h"
+#include "Laptop/Laptop.h"
+#include "SGP/Debug.h"
+#include "SGP/WCheck.h"
+#include "Strategic/GameClock.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define TOP_X 0 + LAPTOP_SCREEN_UL_X
 #define TOP_Y LAPTOP_SCREEN_UL_Y

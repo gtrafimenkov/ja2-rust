@@ -1,23 +1,23 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <stdarg.h>
-#include "SGP/SGP.h"
-#include "SGP/HImage.h"
-#include "SGP/VObject.h"
 #include "Tactical/InterfaceUtils.h"
-#include "TileEngine/RenderDirty.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+
+#include "JAScreens.h"
+#include "SGP/HImage.h"
+#include "SGP/Line.h"
+#include "SGP/SGP.h"
+#include "SGP/VObject.h"
+#include "SGP/WCheck.h"
+#include "Tactical/Faces.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
-#include "TileEngine/SysUtil.h"
-#include "Tactical/Faces.h"
-#include "TileEngine/RenderDirty.h"
-#include "Tactical/Weapons.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
-#include "SGP/Line.h"
-#endif
+#include "Tactical/Vehicles.h"
+#include "Tactical/Weapons.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/SysUtil.h"
 
 #define LIFE_BAR_SHADOW FROMRGB(108, 12, 12)
 #define LIFE_BAR FROMRGB(200, 0, 0)

@@ -1,8 +1,9 @@
 #ifndef __IMAGE_H
 #define __IMAGE_H
 
-#include "SGP/MemMan.h"
 #include "SGP/ImgFmt.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
 
 // The HIMAGE module provides a common interface for managing image data. This module
 // includes:

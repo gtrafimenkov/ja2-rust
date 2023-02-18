@@ -2,8 +2,8 @@
 #define __WORDWRAP_H_
 
 #include "SGP/Types.h"
-#include "LAPTOP\files.h"
-#include "LAPTOP\email.h"
+#include "Laptop/Email.h"
+#include "Laptop/Files.h"
 
 // Flags for DrawTextToScreen()
 

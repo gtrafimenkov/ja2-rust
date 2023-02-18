@@ -1,9 +1,6 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Utils/PopUpBox.h"
+
 #include "TileEngine/SysUtil.h"
-#endif
 
 #define BORDER_WIDTH 16
 #define BORDER_HEIGHT 8

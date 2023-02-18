@@ -1,14 +1,12 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "Laptop/StoreInventory.h"
-#include "SGP/Random.h"
-#include "Tactical/Weapons.h"
-#include "SGP/Debug.h"
+
 #include "Laptop/LaptopSave.h"
+#include "SGP/Debug.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "Tactical/ArmsDealerInvInit.h"
 #include "Tactical/ShopKeeperInterface.h"
-#endif
+#include "Tactical/Weapons.h"
 
 UINT8 StoreInventory[MAXITEMS][BOBBY_RAY_LISTS] = {
     //

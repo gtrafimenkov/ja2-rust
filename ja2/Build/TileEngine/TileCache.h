@@ -1,8 +1,9 @@
 #ifndef __TILE_CACHE_H
 #define __TILE_CACHE_H
 
-#include "TileEngine/TileDef.h"
 #include "TileEngine/Structure.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/WorldDef.h"
 
 #define TILE_CACHE_START_INDEX 36000
 

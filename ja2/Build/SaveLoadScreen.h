@@ -2,6 +2,7 @@
 #define _SAVE_LOAD_SCREEN__H_
 
 #include "MessageBoxScreen.h"
+#include "SGP/Types.h"
 
 #define NUM_SAVE_GAMES 11
 

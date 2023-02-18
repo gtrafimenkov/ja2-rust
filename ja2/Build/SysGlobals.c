@@ -1,14 +1,12 @@
-#include "JA2All.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "SysGlobals.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <wchar.h>
+
+#include "GameLoop.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
-#include "SysGlobals.h"
-#include "GameLoop.h"
-#endif
 
 // External globals
 CHAR8 gubErrorText[200];
@@ -19,8 +17,9 @@ CHAR8 gSystemDebugStr[128];
 INT8 gbFPSDisplay = SHOW_MIN_FPS;
 BOOLEAN gfResetInputCheck = FALSE;
 BOOLEAN gfGlobalError = FALSE;
-
+BOOLEAN fFirstTimeInGameScreen = TRUE;
 UINT32 guiGameCycleCounter = 0;
+INT16 gsCurrentActionPoints = 1;
 
 BOOLEAN SET_ERROR(const char *String, ...) {
   va_list ArgPtr;

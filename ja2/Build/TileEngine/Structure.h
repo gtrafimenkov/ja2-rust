@@ -1,9 +1,9 @@
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
+#include "Tactical/OverheadTypes.h"
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
-#include "Tactical/OverheadTypes.h"
 
 #define NOTHING_BLOCKING 0
 #define BLOCKING_REDUCE_RANGE 1

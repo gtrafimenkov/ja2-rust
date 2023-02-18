@@ -1,6 +1,8 @@
 #ifndef __HISTORY_H
 #define __HISTORY_H
 
+#include "SGP/Types.h"
+
 void GameInitHistory();
 void EnterHistory();
 void ExitHistory();

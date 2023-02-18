@@ -1,6 +1,10 @@
 #ifndef _OPPLIST_H
 #define _OPPLIST_H
 
+#include "SGP/Types.h"
+#include "Tactical/OverheadTypes.h"
+#include "Tactical/SoldierControl.h"
+
 #define EVERYBODY MAXMERCS
 
 #define MAX_MISC_NOISE_DURATION 12  // max dur for VERY loud NOBODY noises

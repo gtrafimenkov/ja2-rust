@@ -1,29 +1,27 @@
-#include "Utils/UtilsAll.h"
-#include "Strategic/GameClock.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/SGP.h"
-#include "SGP/Font.h"
-#include "SGP/Types.h"
-#include "Utils/FontControl.h"
 #include "Utils/Message.h"
-#include "memory.h"
-#include "mbstring.h"
-#include "Utils/TimerControl.h"
+
+#include <memory.h>
+#include <stdio.h>
+
+#include "BuildDefines.h"
+#include "JAScreens.h"
+#include "Local.h"
+#include "SGP/Font.h"
+#include "SGP/MutexManager.h"
+#include "SGP/SGP.h"
+#include "SGP/SoundMan.h"
+#include "SGP/Types.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/MapScreenInterfaceBottom.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/Interface.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "SGP/MutexManager.h"
-#include "Local.h"
-#include "Tactical/Interface.h"
-#include "Strategic/MapScreenInterfaceBottom.h"
-#include "Utils/WordWrap.h"
+#include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
-#include "SGP/SoundMan.h"
-#include "BuildDefines.h"
-#include "Tactical/DialogueControl.h"
-#include <stdio.h>
-#include "Strategic/GameClock.h"
-#endif
+#include "Utils/TimerControl.h"
+#include "Utils/WordWrap.h"
+#include "mbstring.h"
 
 typedef struct {
   UINT32 uiFont;

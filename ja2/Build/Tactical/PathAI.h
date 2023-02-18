@@ -8,6 +8,8 @@
 
 #ifndef _PATHAI_H
 #define _PATHAI_H
+
+#include "SGP/Types.h"
 #include "TileEngine/IsometricUtils.h"
 
 BOOLEAN InitPathAI(void);

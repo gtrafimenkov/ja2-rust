@@ -1,6 +1,8 @@
 #ifndef _IMP_ATTRIBUTE_SELECTION_H
 #define _IMP_ATTRIBUTE_SELECTION_H
 
+#include "SGP/Types.h"
+
 void EnterIMPAttributeSelection(void);
 void RenderIMPAttributeSelection(void);
 void ExitIMPAttributeSelection(void);

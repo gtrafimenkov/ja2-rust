@@ -1,21 +1,21 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <memory.h>
 #include "TileEngine/MapEdgepoints.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/PathAI.h"
-#include "TacticalAI/AI.h"
-#include "Tactical/MapInformation.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/IsometricUtils.h"
+
+#include <memory.h>
+
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "Strategic/Strategic.h"
-#include "Tactical/AnimationControl.h"
-#include "TileEngine/RenderFun.h"
 #include "Strategic/StrategicMap.h"
-#endif
+#include "Tactical/AnimationControl.h"
+#include "Tactical/MapInformation.h"
+#include "Tactical/PathAI.h"
+#include "Tactical/SoldierControl.h"
+#include "TacticalAI/AI.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldMan.h"
 
 // dynamic arrays that contain the valid gridno's for each edge
 INT16 *gps1stNorthEdgepointArray = NULL;

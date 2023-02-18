@@ -1,39 +1,42 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
+#include "TileEngine/InteractiveTiles.h"
+
 #include <stdarg.h>
+#include <stdio.h>
 #include <time.h>
-#include "SGP/SGP.h"
+
+#include "GameSettings.h"
+#include "SGP/English.h"
 #include "SGP/HImage.h"
+#include "SGP/Random.h"
+#include "SGP/SGP.h"
 #include "SGP/VSurface.h"
 #include "SGP/VSurfacePrivate.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/SysUtil.h"
-#include "TileEngine/RenderWorld.h"
-#include "Tactical/Interface.h"
-#include "Utils/SoundControl.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/InteractiveTiles.h"
-#include "Tactical/InterfaceCursors.h"
-#include "TileEngine/WorldMan.h"
-#include "TileEngine/Structure.h"
+#include "Strategic/Quests.h"
+#include "Strategic/StrategicMap.h"
 #include "Tactical/AnimationControl.h"
-#include "Tactical/Points.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/HandleDoors.h"
+#include "Tactical/HandleItems.h"
+#include "Tactical/HandleUI.h"
+#include "Tactical/Interface.h"
+#include "Tactical/InterfaceCursors.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/Points.h"
 #include "Tactical/StructureWrap.h"
+#include "TacticalAI/NPC.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/ExplosionControl.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileCache.h"
-#include "Tactical/HandleDoors.h"
-#include "Strategic/StrategicMap.h"
-#include "Strategic/Quests.h"
-#include "Tactical/DialogueControl.h"
-#include "SGP/Random.h"
-#include "SGP/English.h"
-#include "Tactical/HandleItems.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
-#include "Tactical/HandleUI.h"
-#endif
+#include "Utils/SoundControl.h"
+#include "Utils/Text.h"
 
 #define MAX_INTTILE_STACK 10
 

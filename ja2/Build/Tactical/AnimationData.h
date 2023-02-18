@@ -2,9 +2,8 @@
 #define ANIMATION_DATA_H_
 
 #include "SGP/VObject.h"
-
-#include "Tactical/SoldierControl.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/StructureInternals.h"
 
 // DEFINES FOR ANIMATION PROFILES

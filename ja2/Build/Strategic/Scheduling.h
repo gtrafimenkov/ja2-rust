@@ -2,6 +2,7 @@
 #define __SCHEDULING_H
 
 #include "BuildDefines.h"
+#include "SGP/Types.h"
 #include "Tactical/SoldierInitList.h"
 
 // Merc scheduling actions

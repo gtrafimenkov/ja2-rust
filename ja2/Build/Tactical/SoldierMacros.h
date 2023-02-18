@@ -1,10 +1,12 @@
 #ifndef SOLDIER_MACROS_H
 #define SOLDIER_MACROS_H
 
-// MACROS FOR EASIER SOLDIER CONTROL
-#include "Tactical/TeamTurns.h"
-#include "Tactical/SoldierProfile.h"
+#include "SGP/Types.h"
 #include "Strategic/Assignments.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/TeamTurns.h"
 
 // MACROS
 #define RPC_RECRUITED(p)        \

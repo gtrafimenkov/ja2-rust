@@ -7,34 +7,28 @@
 // non-persistant functionality, however, it is still supported.  Just remove the commented line of
 // code (search for UNCOMMENT), and it's fixed -- it is currently disabled.
 
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
-#include "TileEngine/TileDef.h"
-#include "TileEngine/SysUtil.h"
-#include "SGP/Font.h"
-#include "Utils/FontControl.h"
-#include "SGP/Line.h"
-#include "TileEngine/WorldDat.h"
-#include "Editor/SelectWin.h"
-#include "Editor/PopupMenu.h"
 #include "Editor/EditorDefines.h"
-#include "TileEngine/RenderDirty.h"
-#include "SGP/Debug.h"
-#include "SGP/MouseSystem.h"
-#include "Utils/Cursors.h"
-#include "Tactical/OverheadTypes.h"
 #include "Editor/EditorMercs.h"
-#include "Strategic/Scheduling.h"
-#include "SGP/English.h"
 #include "Editor/ItemStatistics.h"
-#endif
+#include "Editor/PopupMenu.h"
+#include "Editor/SelectWin.h"
+#include "SGP/Debug.h"
+#include "SGP/English.h"
+#include "SGP/Font.h"
+#include "SGP/Line.h"
+#include "SGP/MouseSystem.h"
+#include "Strategic/Scheduling.h"
+#include "Tactical/OverheadTypes.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/WorldDat.h"
+#include "Utils/Cursors.h"
+#include "Utils/FontControl.h"
 
 CurrentPopupMenuInformation gPopup;
 

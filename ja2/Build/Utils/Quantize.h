@@ -1,6 +1,9 @@
 #ifndef __QUANTIZE_H_
 #define __QUANTIZE_H_
 
+#include <windows.h>
+// #include "SGP/Types.h"
+
 typedef struct _NODE {
   BOOL bIsLeaf;             // TRUE if node has no children
   UINT nPixelCount;         // Number of pixels represented by this leaf

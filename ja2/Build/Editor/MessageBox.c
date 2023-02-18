@@ -1,20 +1,14 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
+#include "Editor/MessageBox.h"
+#include "SGP/English.h"
+#include "SGP/Font.h"
+#include "SGP/Input.h"
 #include "SGP/VObject.h"
 #include "SGP/Video.h"
-#include "SGP/Font.h"
 #include "Utils/FontControl.h"
-#include "Editor/MessageBox.h"
-#include "SGP/Input.h"
-#include "SGP/English.h"
-#endif
 
 // internal variables.
 INT32 iMsgBoxNum;

@@ -1,18 +1,15 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Tactical/SkillCheck.h"
-#include "Tactical/SoldierProfile.h"
+
 #include "SGP/Random.h"
-#include "Tactical/Items.h"
+#include "Strategic/StrategicMap.h"
 #include "Tactical/DialogueControl.h"
+#include "Tactical/DrugsAndAlcohol.h"
+#include "Tactical/Items.h"
+#include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
+#include "Tactical/SoldierProfile.h"
 #include "TileEngine/IsometricUtils.h"
-#include "Tactical/Morale.h"
-#include "Tactical/DrugsAndAlcohol.h"
-#include "Strategic/StrategicMap.h"
-#endif
 
 INT8 EffectiveStrength(SOLDIERTYPE *pSoldier) {
   INT8 bBandaged;

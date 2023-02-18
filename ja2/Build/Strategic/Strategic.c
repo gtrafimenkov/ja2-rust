@@ -1,20 +1,19 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Strategic/Strategic.h"
-#include "SGP/Types.h"
-#include "Tactical/Squads.h"
+
 #include "JAScreens.h"
+#include "Laptop/Personnel.h"
+#include "SGP/Types.h"
 #include "Strategic/Assignments.h"
+#include "Strategic/GameClock.h"
+#include "Tactical/DialogueControl.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
-#include "Utils/MusicControl.h"
 #include "Tactical/SoldierProfile.h"
-#include "Tactical/DialogueControl.h"
-#include "Laptop/Personnel.h"
+#include "Tactical/Squads.h"
 #include "Tactical/TacticalSave.h"
+#include "Tactical/Vehicles.h"
 #include "TileEngine/IsometricUtils.h"
-#endif
+#include "Utils/MusicControl.h"
 
 StrategicMapElement StrategicMap[MAP_WORLD_X * MAP_WORLD_Y];
 

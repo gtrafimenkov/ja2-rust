@@ -1,18 +1,15 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Utils/WordWrap.h"
+#include "Laptop/IMPTextSystem.h"
+
+#include "Laptop/CharProfile.h"
+#include "Laptop/IMPAttributeSelection.h"
+#include "Laptop/IMPMainPage.h"
+#include "Laptop/IMPPersonalityFinish.h"
+#include "Laptop/IMPPersonalityQuiz.h"
+#include "Laptop/Laptop.h"
 #include "SGP/SGP.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/EncryptedFile.h"
-#include "Laptop/IMPTextSystem.h"
-#include "Laptop/CharProfile.h"
-#include "Laptop/Laptop.h"
-#include "Laptop/IMPPersonalityQuiz.h"
-#include "Laptop/IMPPersonalityFinish.h"
-#include "Laptop/IMPAttributeSelection.h"
-#include "Laptop/IMPMainPage.h"
-#endif
+#include "Utils/WordWrap.h"
 
 #define IMP_SEEK_AMOUNT 5 * 80 * 2
 

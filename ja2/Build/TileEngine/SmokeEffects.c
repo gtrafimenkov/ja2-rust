@@ -1,29 +1,28 @@
-
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/Weapons.h"
-#include "Tactical/HandleItems.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/AnimationControl.h"
-#include "TileEngine/TileAnimation.h"
-#include "Tactical/HandleItems.h"
 #include "TileEngine/SmokeEffects.h"
-#include "Utils/Message.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "SGP/Debug.h"
+#include "SGP/Random.h"
+#include "SGP/WCheck.h"
+#include "SaveLoadGame.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/HandleItems.h"
+#include "Tactical/OppList.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/TacticalSave.h"
+#include "Tactical/Weapons.h"
+#include "TileEngine/ExplosionControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/ExplosionControl.h"
-#include "SGP/Random.h"
-#endif
-
-#include "SaveLoadGame.h"
+#include "TileEngine/TileAnimation.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Message.h"
 
 INT8 FromWorldFlagsToSmokeType(UINT8 ubWorldFlags);
 UINT8 FromSmokeTypeToWorldFlags(INT8 bType);

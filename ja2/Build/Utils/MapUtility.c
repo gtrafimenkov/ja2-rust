@@ -1,24 +1,20 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "SGP/SGP.h"
 #ifdef JA2EDITOR
-#include "Screens.h"
-#include "Utils/MapUtility.h"
-#include "TileEngine/WorldDef.h"
-#include "Tactical/Overhead.h"
-#include "SGP/FileMan.h"
 #include "Editor/LoadScreen.h"
+#include "SGP/English.h"
+#include "SGP/FileMan.h"
+#include "SGP/Line.h"
+#include "SGP/VObjectBlitters.h"
+#include "Screens.h"
+#include "Tactical/MapInformation.h"
+#include "Tactical/Overhead.h"
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/RadarScreen.h"
-#include "SGP/VObjectBlitters.h"
-#include "Utils/STIConvert.h"
-#include "Utils/FontControl.h"
 #include "TileEngine/WorldDat.h"
-#include "SGP/English.h"
-#include "Tactical/MapInformation.h"
-#include "SGP/Line.h"
-#endif
+#include "TileEngine/WorldDef.h"
+#include "Utils/FontControl.h"
+#include "Utils/MapUtility.h"
+#include "Utils/STIConvert.h"
 #endif
 
 #ifdef JA2EDITOR

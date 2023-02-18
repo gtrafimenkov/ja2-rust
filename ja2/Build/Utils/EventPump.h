@@ -1,6 +1,7 @@
 #ifndef EVENT_PROCESSOR_H
 #define EVENT_PROCESSOR_H
 
+#include "SGP/Types.h"
 #include "Utils/EventManager.h"
 
 #define NETWORK_PATH_DATA_SIZE 6

@@ -1,6 +1,8 @@
 #ifndef _GAMESCREEN_H
 #define _GAMESCREEN_H
 
+#include "SGP/Types.h"
+
 #define ARE_IN_FADE_IN() (gfFadeIn || gfFadeInitialized)
 
 void FadeInGameScreen();

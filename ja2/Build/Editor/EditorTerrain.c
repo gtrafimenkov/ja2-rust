@@ -1,38 +1,32 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
 #include <windows.h>
-#include "TileEngine/TileDef.h"
-#include "Editor/EditSys.h"
-#include "SGP/VSurface.h"
-#include "SGP/VObject.h"
-#include "SGP/MouseSystem.h"
-#include "SGP/ButtonSystem.h"
-#include "SGP/WCheck.h"
-#include "SGP/VSurface.h"
-#include "SGP/Input.h"
-#include "TileEngine/SysUtil.h"
-#include "SGP/Font.h"
-#include "Utils/FontControl.h"
-#include "Editor/EditScreen.h"
-#include "Editor/SelectWin.h"
-#include "SGP/Video.h"
-#include "SGP/VObjectBlitters.h"
-#include "Tactical/InterfacePanels.h"
-#include "Utils/Utilities.h"
-#include "Tactical/WorldItems.h"
-#include "Editor/EditorDefines.h"
-#include "Editor/EditorTerrain.h"
-#include "Editor/EditorTaskbarUtils.h"
+
 #include "Editor/CursorModes.h"
+#include "Editor/EditScreen.h"
+#include "Editor/EditSys.h"
+#include "Editor/EditorDefines.h"
+#include "Editor/EditorTaskbarUtils.h"
+#include "Editor/EditorTerrain.h"
+#include "Editor/SelectWin.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
-#endif
+#include "SGP/Font.h"
+#include "SGP/Input.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/VObject.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "Tactical/InterfacePanels.h"
+#include "Tactical/WorldItems.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
+#include "Utils/FontControl.h"
+#include "Utils/Utilities.h"
 
 BOOLEAN gfShowTerrainTileButtons;
 UINT8 ubTerrainTileButtonWeight[NUM_TERRAIN_TILE_REGIONS];

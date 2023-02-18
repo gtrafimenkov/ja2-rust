@@ -1,8 +1,9 @@
 #ifndef _SQUADS_H
 #define _SQUADS_H
 
-#include "Tactical/SoldierControl.h"
 #include "SGP/FileMan.h"
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
 
 // header for squad management system
 #define NUMBER_OF_SOLDIERS_PER_SQUAD 6

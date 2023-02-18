@@ -1,9 +1,9 @@
+#include "SGP/Random.h"
 #include "SGP/Types.h"
-#include "TileEngine/IsometricUtils.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Overhead.h"
-#include "SGP/Random.h"
 #include "Tactical/Points.h"
+#include "TileEngine/IsometricUtils.h"
 
 extern BOOLEAN gfTurnBasedAI;
 

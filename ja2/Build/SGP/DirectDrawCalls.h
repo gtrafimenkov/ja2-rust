@@ -1,8 +1,9 @@
 #ifndef __DirectDraw_Calls_H__
 #define __DirectDraw_Calls_H__
 
-#include "SGP/DirectXCommon.h"
 #include "SGP/DDraw.h"
+#include "SGP/DirectXCommon.h"
+#include "SGP/SGP.h"
 
 // Direct Draw Functions
 

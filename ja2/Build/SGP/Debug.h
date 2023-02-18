@@ -16,9 +16,9 @@
 
 #include <crtdbg.h>
 
-#include "SGP/Types.h"
-#include "SGP/TopicOps.h"
 #include "SGP/TopicIDs.h"
+#include "SGP/TopicOps.h"
+#include "SGP/Types.h"
 
 #ifdef __cplusplus
 extern "C" {

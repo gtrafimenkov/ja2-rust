@@ -1,19 +1,16 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "Tactical/StructureWrap.h"
+
 #include <stdio.h>
+
 #include "SGP/Debug.h"
 #include "SGP/WCheck.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/RottingCorpses.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderWorld.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "Tactical/StructureWrap.h"
-#include "TileEngine/IsometricUtils.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/Overhead.h"
-#include "TileEngine/RenderWorld.h"
-#include "Strategic/StrategicMap.h"
-#include "Tactical/RottingCorpses.h"
-#endif
 
 extern BOOLEAN DoesSAMExistHere(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, INT16 sGridNo);
 

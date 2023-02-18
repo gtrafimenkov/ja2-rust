@@ -16,23 +16,18 @@
 //
 //**************************************************************************
 
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include "SGP/FileMan.h"
-#include "SGP/MemMan.h"
-#include "SGP/WCheck.h"
-#include "SGP/HImage.h"
-#include "string.h"
+#include "SGP/ImpTGA.h"
+
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/HImage.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
+#include "SGP/WCheck.h"
+#include "string.h"
 #if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
 #else
-#include "video2.h"
-#endif
 #endif
 
 //**************************************************************************

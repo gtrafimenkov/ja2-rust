@@ -1,15 +1,16 @@
 #ifndef __VIDEO_
 #define __VIDEO_
 
-#include <windows.h>
 #include <process.h>
+#include <windows.h>
 
 #include "Local.h"
+#include "SGP/DDraw.h"
 #include "SGP/Debug.h"
-#include "SGP/Types.h"
 #include "SGP/DirectDrawCalls.h"
-#include "SGP/VSurface.h"
 #include "SGP/MutexManager.h"
+#include "SGP/Types.h"
+#include "SGP/VSurface.h"
 
 #define BUFFER_READY 0x00
 #define BUFFER_BUSY 0x01

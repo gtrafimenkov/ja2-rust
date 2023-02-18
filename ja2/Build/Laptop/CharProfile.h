@@ -2,6 +2,7 @@
 #define __CHARPROFILE_H
 
 #include "SGP/Types.h"
+
 void GameInitCharProfile();
 void EnterCharProfile();
 void ExitCharProfile();

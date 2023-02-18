@@ -1,33 +1,35 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include "SGP/SGP.h"
 #include "TileEngine/RadarScreen.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <time.h>
+
+#include "JAScreens.h"
 #include "SGP/Line.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Tactical/Interface.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/SoldierControl.h"
-#include "TileEngine/Lighting.h"
-#include "SGP/WCheck.h"
-#include "TileEngine/SysUtil.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/OverheadMap.h"
-#include "Tactical/Squads.h"
 #include "SGP/MouseSystem.h"
-#include "Utils/Text.h"
-#include "Utils/FontControl.h"
+#include "SGP/SGP.h"
 #include "SGP/VObject.h"
-#include "Utils/Utilities.h"
-#include "Tactical/InterfaceControl.h"
+#include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceMapInventory.h"
+#include "Strategic/Meanwhile.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/Interface.h"
+#include "Tactical/InterfaceControl.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/Squads.h"
 #include "TileEngine/Environment.h"
-#endif
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/OverheadMap.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
+#include "Utils/FontControl.h"
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
 
 extern INT32 iCurrentMapSectorZ;
 

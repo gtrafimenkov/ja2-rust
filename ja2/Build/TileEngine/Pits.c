@@ -1,23 +1,20 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "TileEngine/Pits.h"
+
+#include "SGP/Types.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicMap.h"
+#include "SysGlobals.h"
+#include "Tactical/ActionItems.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/WorldItems.h"
+#include "TileEngine/ExitGrids.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/SaveLoadMap.h"
+#include "TileEngine/SimpleRenderUtils.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "TileEngine/SimpleRenderUtils.h"
-#include "Tactical/WorldItems.h"
-#include "TileEngine/SaveLoadMap.h"
-#include "TileEngine/ExitGrids.h"
-#include "SysGlobals.h"
-#include "Strategic/StrategicMap.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Tactical/Overhead.h"
 #include "Utils/SoundControl.h"
-#include "Tactical/AnimationControl.h"
-#include "Strategic/Strategic.h"
-#include "Tactical/ActionItems.h"
-#endif
 
 // used by editor
 BOOLEAN gfShowPits = FALSE;

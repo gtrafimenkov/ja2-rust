@@ -1,6 +1,10 @@
 #ifndef _EXCEPTION_HANDLING__H_
 #define _EXCEPTION_HANDLING__H_
 
+#include <windows.h>
+
+#include "SGP/Types.h"
+
 // uncomment this line if you want Exceptions to be handled
 #ifdef JA2
 
@@ -8,9 +12,6 @@
 #define ENABLE_EXCEPTION_HANDLING
 #endif
 
-#else
-// Wizardry
-//#define ENABLE_EXCEPTION_HANDLING
 #endif
 
 #ifdef __cplusplus

@@ -1,7 +1,13 @@
 #ifndef _CINEMATICS_H_
 #define _CINEMATICS_H_
 
+#include "SGP/Types.h"
 #include "SGP/smack.h"
+
+#if 1
+// must go after other includes
+#include <ddraw.h>
+#endif
 
 typedef struct {
   CHAR8 *cFilename;

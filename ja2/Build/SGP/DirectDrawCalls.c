@@ -1,15 +1,12 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/DirectXCommon.h"
 #include "SGP/DirectDrawCalls.h"
 
 #include "SGP/DDraw.h"
 #include "SGP/Debug.h"
+#include "SGP/DirectDrawCalls.h"
+#include "SGP/DirectXCommon.h"
+#include "SGP/SGP.h"
+#include "SGP/VObjectBlitters.h"
 #include "SGP/VideoPrivate.h"
-#endif
 
 // DirectDrawSurface2 Calls
 void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfaceDesc,

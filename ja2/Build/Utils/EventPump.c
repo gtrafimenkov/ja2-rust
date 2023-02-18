@@ -1,25 +1,24 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include "SGP/SGP.h"
-#include "SGP/Container.h"
-#include "SGP/WCheck.h"
 #include "Utils/EventPump.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <time.h>
+
+#include "SGP/Container.h"
+#include "SGP/SGP.h"
 #include "SGP/Timer.h"
-#include "Tactical/SoldierControl.h"
-#include "Utils/SoundControl.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/Weapons.h"
+#include "SGP/WCheck.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/OppList.h"
-#endif
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/TacticalSave.h"
+#include "Tactical/Weapons.h"
+#include "Utils/SoundControl.h"
 
 #ifdef NETWORKED
-#include "Networking.h"
 #include "NetworkEvent.h"
+#include "Networking.h"
 #endif
 
 UINT8 gubEncryptionArray4[BASE_NUMBER_OF_ROTATION_ARRAYS * 3][NEW_ROTATION_ARRAY_SIZE] = {

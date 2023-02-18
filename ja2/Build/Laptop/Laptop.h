@@ -1,10 +1,10 @@
 #ifndef __LAPTOP_H
 #define __LAPTOP_H
 
-#include "SGP/Types.h"
-#include "SGP/SGP.h"
-#include "Utils/FontControl.h"
 #include "MessageBoxScreen.h"
+#include "SGP/SGP.h"
+#include "SGP/Types.h"
+#include "Utils/FontControl.h"
 
 extern UINT32 guiDropDownBorder;
 extern MOUSE_REGION pScreenMask;

@@ -1,16 +1,14 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "TileEngine/WorldDat.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <wchar.h>
-#include "TileEngine/WorldDat.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/TileDef.h"
-#include "SysGlobals.h"
-#include "TileEngine/TileSurface.h"
+
 #include "SGP/FileMan.h"
-#endif
+#include "SysGlobals.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/TileSurface.h"
+#include "TileEngine/WorldDef.h"
 
 // THIS FILE CONTAINS DEFINITIONS FOR TILESET FILES
 

@@ -1,16 +1,16 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TileEngine/WorldDef.h"
-#include "SGP/Random.h"
 #include "TileEngine/Smell.h"
-#include "TileEngine/WorldMan.h"
+
+#include "GameSettings.h"
+#include "SGP/Random.h"
+#include "Strategic/GameClock.h"
+#include "Tactical/MapInformation.h"
+#include "Tactical/Overhead.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SaveLoadMap.h"
-#include "GameSettings.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
-#include "TileEngine/IsometricUtils.h"
-#endif
 
 /*
  * Smell & Blood system

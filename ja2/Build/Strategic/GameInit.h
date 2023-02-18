@@ -1,6 +1,8 @@
 #ifndef __GAME_INIT_H
 #define __GAME_INIT_H
 
+#include "SGP/Types.h"
+
 BOOLEAN InitNewGame(BOOLEAN fReset);
 BOOLEAN AnyMercsHired();
 

@@ -1,6 +1,6 @@
 #ifndef __STRATEGIC_H
 #define __STRATEGIC_H
-// header for strategic structure
+
 #include "SGP/Types.h"
 #include "Strategic/MapScreen.h"
 #include "Tactical/SoldierControl.h"

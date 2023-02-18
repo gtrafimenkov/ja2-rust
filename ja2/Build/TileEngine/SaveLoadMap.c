@@ -1,23 +1,21 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "TileEngine/SaveLoadMap.h"
-#include "Tactical/Overhead.h"
-#include "SGP/FileMan.h"
-#include "Tactical/TacticalSave.h"
-#include "SGP/Debug.h"
-#include "TileEngine/WorldMan.h"
-#include "Strategic/StrategicMap.h"
-#include "Strategic/CampaignTypes.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/RenderFun.h"
-#include "Tactical/FOV.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/ExitGrids.h"
-#include "Utils/Message.h"
+
 #include "GameSettings.h"
-#endif
+#include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/Types.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/FOV.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/TacticalSave.h"
+#include "TileEngine/ExitGrids.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/Smell.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Message.h"
 
 #define NUM_REVEALED_BYTES 3200
 

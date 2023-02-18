@@ -15,9 +15,9 @@
 #endif
 
 // build defines header....
-#include "BuildDefines.h"
-
 #include <wchar.h>  // for wide-character strings
+
+#include "BuildDefines.h"
 
 // *** SIR-TECH TYPE DEFINITIONS ***
 

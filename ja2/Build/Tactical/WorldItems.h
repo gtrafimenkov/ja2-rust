@@ -1,8 +1,8 @@
 #ifndef __WORLD_ITEMS
 #define __WORLD_ITEMS
 
-#include "Tactical/Items.h"
 #include "SGP/FileMan.h"
+#include "Tactical/Items.h"
 
 #define WORLD_ITEM_DONTRENDER 0x0001
 #define WOLRD_ITEM_FIND_SWEETSPOT_FROM_GRIDNO 0x0002

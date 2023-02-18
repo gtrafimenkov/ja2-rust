@@ -1,6 +1,8 @@
 #ifndef __IMP_TEXT_SYSTEM_H
 #define __IMP_TEXT_SYSTEM_H
 
+#include "SGP/Types.h"
+
 void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
                            INT16 sIMPTextRecordNumber, UINT32 uiFont, UINT8 ubColor,
                            BOOLEAN fShadow, UINT32 uiFlags);

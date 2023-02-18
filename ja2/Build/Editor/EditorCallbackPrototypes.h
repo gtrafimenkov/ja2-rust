@@ -4,6 +4,9 @@
 #ifndef __EDITOR_CALLBACK_PROTOTYPES_H
 #define __EDITOR_CALLBACK_PROTOTYPES_H
 
+#include "SGP/ButtonSystem.h"
+#include "SGP/Types.h"
+
 // Editor Tabs
 void TaskTerrainCallback(GUI_BUTTON *btn, INT32 reason);
 void TaskBuildingCallback(GUI_BUTTON *btn, INT32 reason);

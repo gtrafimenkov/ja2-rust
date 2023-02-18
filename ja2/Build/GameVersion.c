@@ -1,10 +1,7 @@
-#include "JA2All.h"
-#include "BuildInfo.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "GameVersion.h"
-#endif
+
+#include "BuildInfo.h"
+#include "SGP/Types.h"
 
 //
 //	Keeps track of the game version

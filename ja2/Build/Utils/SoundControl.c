@@ -1,15 +1,12 @@
 // MODULE FOR SOUND SYSTEM
 
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/SGP.h"
 #include "Utils/SoundControl.h"
+
+#include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
 #include "Tactical/Overhead.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
-#endif
 
 #define SOUND_FAR_VOLUME_MOD 25
 

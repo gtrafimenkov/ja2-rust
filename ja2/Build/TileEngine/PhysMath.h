@@ -2,8 +2,8 @@
 #define __PHYS_MATH_H
 
 // explicit dependencies
-#include <math.h>  // for sqrt
 #include <float.h>
+#include <math.h>  // for sqrt
 
 typedef float real;
 

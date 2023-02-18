@@ -1,41 +1,37 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
+#include "Tactical/SoldierCreate.h"
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
 #include <stdio.h>
-#include "SGP/Types.h"
-#include "Editor/SectorSummary.h"
-#include "Utils/TimerControl.h"
-#include "SGP/VSurface.h"
-#include "SGP/ButtonSystem.h"
-#include "Utils/FontControl.h"
-#include "TileEngine/SimpleRenderUtils.h"
-#include "Editor/EditorTaskbarUtils.h"
-#include "SGP/Line.h"
-#include "SGP/Input.h"
-#include "SGP/VObjectBlitters.h"
-#include "Editor/LoadScreen.h"
-#include "Utils/TextInput.h"
-#include "SGP/MouseSystem.h"
-#include "Strategic/StrategicMap.h"
-#include "SGP/FileMan.h"
-#include "TileEngine/ExitGrids.h"
-#include "Tactical/MapInformation.h"
-#include "Editor/SummaryInfo.h"
-#include "Utils/AnimatedProgressBar.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldDat.h"
-#include "Editor/EditorDefines.h"
+
 #include "Editor/EditScreen.h"
+#include "Editor/EditorDefines.h"
+#include "Editor/EditorTaskbarUtils.h"
+#include "Editor/LoadScreen.h"
+#include "Editor/SectorSummary.h"
+#include "Editor/SummaryInfo.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
+#include "SGP/Input.h"
+#include "SGP/Line.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/Types.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/MapInformation.h"
 #include "Tactical/WorldItems.h"
+#include "TileEngine/ExitGrids.h"
+#include "TileEngine/SimpleRenderUtils.h"
+#include "TileEngine/WorldDat.h"
+#include "TileEngine/WorldDef.h"
+#include "Utils/AnimatedProgressBar.h"
+#include "Utils/FontControl.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/TextInput.h"
+#include "Utils/TimerControl.h"
 
 extern BOOLEAN gfOverheadMapDirty;
 

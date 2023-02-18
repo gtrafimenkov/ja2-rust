@@ -1,6 +1,8 @@
 #ifndef __Q_ARRAY_H
 #define __Q_ARRAY_H
 
+#include "SGP/Types.h"
+
 extern BOOLEAN QuoteExp_HeadShotOnly[75];
 extern BOOLEAN QuoteExp_TeamSpecific[75];
 extern BOOLEAN QuoteExp_GenderCode[75];

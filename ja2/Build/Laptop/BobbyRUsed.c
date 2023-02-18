@@ -1,17 +1,14 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/BobbyRUsed.h"
+
 #include "Laptop/BobbyR.h"
 #include "Laptop/BobbyRGuns.h"
-#include "Utils/Utilities.h"
+#include "Laptop/Laptop.h"
+#include "Laptop/LaptopSave.h"
 #include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
 #include "Utils/Cursors.h"
 #include "Utils/Text.h"
-#include "Laptop/LaptopSave.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 UINT32 guiUsedBackground;
 UINT32 guiUsedGrid;

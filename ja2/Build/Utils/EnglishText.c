@@ -1,12 +1,8 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "LanguageDefines.h"
 #if defined(ENGLISH) || defined(TAIWANESE)
-#include "Utils/Text.h"
-#include "SGP/FileMan.h"
 #include "JA2DemoAds.h"
-#endif
+#include "SGP/FileMan.h"
+#include "Utils/Text.h"
 #endif
 
 #if defined(ENGLISH) || defined(TAIWANESE)

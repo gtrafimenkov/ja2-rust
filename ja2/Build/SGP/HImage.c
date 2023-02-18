@@ -1,22 +1,17 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
+#include "SGP/HImage.h"
+
 #include <math.h>
 #include <stdlib.h>
-#include "SGP/Types.h"
-#include "string.h"
+
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
-#include "SGP/HImage.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
 #include "SGP/STCI.h"
-#include "SGP/WCheck.h"
-#include "SGP/Compression.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
-#endif
+#include "SGP/WCheck.h"
+#include "string.h"
 
 // This is the color substituted to keep a 24bpp -> 16bpp color
 // from going transparent (0x0000) -- DB

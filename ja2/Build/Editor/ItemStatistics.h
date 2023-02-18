@@ -4,6 +4,7 @@
 #ifndef __ITEM_STATISTICS_H
 #define __ITEM_STATISTICS_H
 
+#include "SGP/Types.h"
 #include "Tactical/ItemTypes.h"
 
 // Handles the dynamic changing of text input fields and button modes depending on the currently

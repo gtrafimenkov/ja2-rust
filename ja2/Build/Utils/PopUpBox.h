@@ -2,6 +2,7 @@
 #define __POPUP_BOX
 
 #include "SGP/SGP.h"
+#include "SGP/Types.h"
 //#include "Local.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"

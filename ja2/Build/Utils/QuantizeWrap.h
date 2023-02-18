@@ -1,6 +1,9 @@
 #ifndef __QUANTIZE_WRAP_H
 #define __QUANTIZE_WRAP_H
 
+#include "SGP/HImage.h"
+#include "SGP/Types.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -1,6 +1,8 @@
 #ifndef __TILEDAT_H
 #define __TILEDAT_H
 
+#include "SGP/Types.h"
+
 enum TileDefines {
   FIRSTTEXTURE1 = 0,
   FIRSTTEXTURE2,

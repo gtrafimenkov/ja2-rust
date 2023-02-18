@@ -1,12 +1,13 @@
 #ifndef _SOLDIER_CREATE_H
 #define _SOLDIER_CREATE_H
 
-#include "Tactical/AnimationCache.h"
-#include "Utils/TimerControl.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
-#include "Tactical/OverheadTypes.h"
+#include "Tactical/AnimationCache.h"
 #include "Tactical/ItemTypes.h"
+#include "Tactical/OverheadTypes.h"
 #include "Tactical/SoldierControl.h"
+#include "Utils/TimerControl.h"
 
 #define SOLDIER_CREATE_AUTO_TEAM -1
 

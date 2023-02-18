@@ -1,19 +1,13 @@
 #ifndef __CURSOR_DATABASE_
 #define __CURSOR_DATABASE_
 
-#include "SGP/Types.h"
 #include "SGP/FileMan.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#else
-#include "video2.h"
 #endif
 
 extern UINT32 GetCursorHandle(UINT32 uiCursorIndex);
@@ -104,9 +98,5 @@ void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride);
 
 void SetExternVOData(UINT32 uiCursorIndex, HVOBJECT hVObject, UINT16 usSubIndex);
 void RemoveExternVOData(UINT32 uiCursorIndex);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

@@ -1,8 +1,13 @@
-#include "JA2All.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-// add includes here!
-#endif
+#include <stdio.h>
+
+#include "MainMenuScreen.h"
+#include "SGP/FileMan.h"
+#include "SGP/LibraryDataBase.h"
+#include "SGP/TopicIDs.h"
+#include "SGP/TopicOps.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "Utils/TimerControl.h"
 
 UINT32 guiSplashFrameFade = 10;
 UINT32 guiSplashStartTime = 0;

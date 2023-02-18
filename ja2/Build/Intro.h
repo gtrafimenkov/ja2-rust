@@ -1,6 +1,8 @@
 #ifndef _INTRO__C_
 #define _INTRO__C_
 
+#include "SGP/Types.h"
+
 UINT32 IntroScreenShutdown(void);
 UINT32 IntroScreenHandle(void);
 UINT32 IntroScreenInit(void);

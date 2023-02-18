@@ -4,6 +4,7 @@
 #ifndef __SMOOTHING_UTILS_H
 #define __SMOOTHING_UTILS_H
 
+#include "SGP/Types.h"
 #include "TileEngine/WorldDef.h"
 
 // Use these values when specifically replacing a wall with new type.

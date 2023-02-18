@@ -1,8 +1,8 @@
 #ifndef __SOUNDMAN_
 #define __SOUNDMAN_
 
-#include "SGP/Types.h"
 #include "SGP/Mss.h"
+#include "SGP/Types.h"
 
 #ifdef __cplusplus
 extern "C" {

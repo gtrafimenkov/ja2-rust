@@ -1,24 +1,21 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/BobbyRGuns.h"
+
+#include "Laptop/AIMMembers.h"
 #include "Laptop/BobbyR.h"
-#include "Utils/Utilities.h"
+#include "Laptop/BobbyRGuns.h"
+#include "Laptop/Finances.h"
+#include "Laptop/Laptop.h"
+#include "Laptop/LaptopSave.h"
+#include "Laptop/StoreInventory.h"
 #include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
 #include "Tactical/InterfaceItems.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/Weapons.h"
+#include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
-#include "Laptop/StoreInventory.h"
-#include "Laptop/LaptopSave.h"
-#include "Laptop/Finances.h"
-#include "Laptop/AIMMembers.h"
-#include "Tactical/Overhead.h"
-#include "Utils/Text.h"
-#include "Tactical/Weapons.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define BOBBYR_DEFAULT_MENU_COLOR 255
 

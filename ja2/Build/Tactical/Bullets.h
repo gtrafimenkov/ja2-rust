@@ -2,8 +2,8 @@
 #define __BULLETS_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
 #include "Tactical/LOS.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/TileAnimation.h"
 
 #define BULLET_FLAG_CREATURE_SPIT 0x0001

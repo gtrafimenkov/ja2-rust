@@ -1,16 +1,13 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/Utilities.h"
-#include "Utils/Cursors.h"
-#include "SGP/WCheck.h"
 #include "Utils/Slider.h"
-#include "TileEngine/SysUtil.h"
+
 #include "SGP/Line.h"
-#endif
+#include "SGP/Types.h"
+#include "SGP/WCheck.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/SysUtil.h"
+#include "Utils/Cursors.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 ///////////////////////////////////////////////////
 //

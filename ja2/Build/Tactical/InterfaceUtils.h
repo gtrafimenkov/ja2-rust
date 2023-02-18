@@ -1,6 +1,7 @@
 #ifndef __INTERFACE_UTILS_H
 #define __INTERFACE_UTILS_H
 
+#include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 
 #define DRAW_ITEM_STATUS_ATTACHMENT1 200

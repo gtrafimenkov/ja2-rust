@@ -1,6 +1,9 @@
 #ifndef __ENDGAME_H
 #define __ENDGAME_H
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 BOOLEAN DoesO3SectorStatueExistHere(INT16 sGridNo);
 void ChangeO3SectorStatue(BOOLEAN fFromExplosion);
 

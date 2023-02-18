@@ -1,6 +1,9 @@
 #ifndef __DRUGS_AND_ALCOHOL_H
 #define __DRUGS_AND_ALCOHOL_H
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 #define DRUG_TYPE_ADRENALINE 0
 #define DRUG_TYPE_ALCOHOL 1
 #define NO_DRUG 2

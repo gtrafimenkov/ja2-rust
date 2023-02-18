@@ -1,10 +1,12 @@
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "Strategic/Quests.h"
+#include "Tactical/LOS.h"
+#include "Tactical/OppList.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/SoldierProfile.h"
 #include "TacticalAI/AI.h"
 #include "TacticalAI/AIInternals.h"
-#include "Tactical/OppList.h"
-#endif
+#include "TacticalAI/NPC.h"
+#include "TileEngine/RenderFun.h"
 
 void CallAvailableEnemiesTo(INT16 sGridNo) {
   INT32 iLoop;

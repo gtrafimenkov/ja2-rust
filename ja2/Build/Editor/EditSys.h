@@ -1,4 +1,5 @@
 #include "BuildDefines.h"
+#include "SGP/Types.h"
 
 #ifdef JA2EDITOR
 #ifndef __EDIT_SYS_H

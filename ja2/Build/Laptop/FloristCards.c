@@ -1,17 +1,14 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
-#include "Laptop/Florist.h"
 #include "Laptop/FloristCards.h"
+
+#include "Laptop/Florist.h"
+#include "Laptop/FloristGallery.h"
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
-#include "Utils/Utilities.h"
-#include "Utils/WordWrap.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
-#include "Laptop/FloristGallery.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define FLORIST_CARDS_SENTENCE_FONT FONT12ARIAL
 #define FLORIST_CARDS_SENTENCE_COLOR FONT_MCOLOR_WHITE

@@ -1,8 +1,9 @@
 #ifndef __BOBBYR_H
 #define __BOBBYR_H
 
-#include "Tactical/ItemTypes.h"
 #include "Laptop/StoreInventory.h"
+#include "SGP/Types.h"
+#include "Tactical/ItemTypes.h"
 
 void GameInitBobbyR();
 BOOLEAN EnterBobbyR();

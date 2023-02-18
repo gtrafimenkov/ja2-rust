@@ -1,14 +1,9 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/ButtonSoundControl.h"
-#include "Utils/SoundControl.h"
+
 #include "JAScreens.h"
-#endif
+#include "SGP/ButtonSystem.h"
+#include "SGP/Types.h"
+#include "Utils/SoundControl.h"
 
 void SpecifyButtonSoundScheme(INT32 iButtonID, INT8 bSoundScheme) {
   ButtonList[iButtonID]->ubSoundSchemeID = (UINT8)bSoundScheme;

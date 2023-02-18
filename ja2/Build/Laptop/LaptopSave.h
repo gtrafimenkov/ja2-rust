@@ -1,9 +1,10 @@
 #ifndef _LAPTOP_SAVE_H_
 #define _LAPTOP_SAVE_H_
 
-#include "Tactical/ItemTypes.h"
-#include "SGP/FileMan.h"
 #include "Laptop/StoreInventory.h"
+#include "SGP/FileMan.h"
+#include "SGP/Types.h"
+#include "Tactical/ItemTypes.h"
 
 #define MAX_BOOKMARKS 20
 

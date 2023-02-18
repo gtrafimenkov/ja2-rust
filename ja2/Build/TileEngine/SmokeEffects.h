@@ -1,6 +1,8 @@
 #ifndef __SMOKE_EFFECTS
 #define __SMOKE_EFFECTS
 
+#include "SGP/Types.h"
+
 // Smoke effect types
 enum {
   NO_SMOKE_EFFECT,

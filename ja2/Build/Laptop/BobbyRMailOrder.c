@@ -1,28 +1,26 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/BobbyRMailOrder.h"
+
 #include "Laptop/BobbyR.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
-#include "Utils/EncryptedFile.h"
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Finances.h"
-#include "Strategic/GameClock.h"
-#include "Strategic/GameEventHook.h"
-#include "SGP/Random.h"
+#include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "Tactical/SoldierProfile.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
-#include "Utils/Text.h"
-#include "Strategic/Strategic.h"
+#include "SGP/Random.h"
+#include "SGP/WCheck.h"
 #include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/GameEventHook.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/SoldierProfile.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
-#endif
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 typedef struct {
   STR16 psCityLoc;

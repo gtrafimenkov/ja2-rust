@@ -1,6 +1,9 @@
 #ifndef _MSGBOX_H
 #define _MSGBOX_H
 
+#include "SGP/MouseSystem.h"
+#include "SGP/Types.h"
+
 // Message box flags
 #define MSG_BOX_FLAG_USE_CENTERING_RECT 0x0001     // Pass in a rect to center in
 #define MSG_BOX_FLAG_OK 0x0002                     // Displays OK button

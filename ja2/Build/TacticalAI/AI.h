@@ -2,8 +2,8 @@
 #define __AI_H
 
 #include "SGP/Types.h"
-#include "TileEngine/WorldDef.h"
 #include "Tactical/SoldierControl.h"
+#include "TileEngine/WorldDef.h"
 
 #define TESTAICONTROL
 

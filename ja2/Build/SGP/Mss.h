@@ -254,7 +254,11 @@ extern "C" {
 #endif
 
 #include <windows.h>
+
+#if 1
+// must go after other includes
 #include <mmsystem.h>
+#endif
 
 #define MSS_MAIN_DEF __cdecl
 
@@ -317,10 +321,10 @@ typedef LPVOID AILLPDIRECTSOUNDBUFFER;
 
 #ifdef IS_MAC
 
-#include <string.h>
 #include <Files.h>
-#include <Sound.h>
 #include <Resources.h>  // needed for GetResource, ReleaseResource
+#include <Sound.h>
+#include <string.h>
 
 #define FAR
 

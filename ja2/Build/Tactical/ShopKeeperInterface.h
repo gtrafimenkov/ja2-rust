@@ -2,6 +2,7 @@
 #define _SHOPKEEPER_INTERFACE__H_
 
 #include "Laptop/StoreInventory.h"
+#include "SGP/Types.h"
 
 #define SKI_NUM_TRADING_INV_SLOTS 12
 #define SKI_NUM_TRADING_INV_ROWS 2

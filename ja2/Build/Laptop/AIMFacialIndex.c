@@ -1,17 +1,17 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/AIMFacialIndex.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "stdio.h"
+
+#include <stdio.h>
+
 #include "Laptop/AIM.h"
-#include "Tactical/SoldierProfile.h"
+#include "Laptop/AIMSort.h"
 #include "Laptop/Email.h"
+#include "Laptop/Laptop.h"
+#include "SGP/WCheck.h"
+#include "Strategic/Assignments.h"
+#include "Tactical/SoldierProfile.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 UINT32 guiMugShotBorder;
 UINT32 guiAimFiFace[MAX_NUMBER_MERCS];

@@ -1,33 +1,31 @@
-#include "Tactical/TacticalAll.h"
 #include "Tactical/EnemySoldierSave.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
+
 #include <memory.h>
+#include <stdio.h>
 
+#include "Editor/EditorMercs.h"
+#include "SGP/Debug.h"
+#include "SGP/Random.h"
 #include "SGP/Types.h"
-
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/QueenCommand.h"
+#include "Strategic/Scheduling.h"
 #include "Strategic/StrategicMap.h"
+#include "SysGlobals.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/Items.h"
+#include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
-#include "TileEngine/IsometricUtils.h"
-
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
-#include "SGP/Debug.h"
-#include "SGP/Random.h"
-#include "Tactical/Items.h"
-
-#include "Utils/Cursors.h"
-
-#include "Tactical/MapInformation.h"
 #include "Tactical/SoldierProfile.h"
-#include "SysGlobals.h"
-#include "Editor/EditorMercs.h"
-#include "Tactical/AnimationData.h"
-#include "Utils/Message.h"
+#include "Tactical/TacticalSave.h"
+#include "TileEngine/IsometricUtils.h"
+#include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
-#endif
+#include "Utils/Message.h"
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
     UINT8 *pubNumElites, UINT8 *pubNumRegulars, UINT8 *pubNumAdmins, UINT8 *pubNumCreatures);

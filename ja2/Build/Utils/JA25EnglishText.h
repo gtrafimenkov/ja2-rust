@@ -1,6 +1,8 @@
 #ifndef _JA25ENGLISHTEXT__H_
 #define _JA25ENGLISHTEXT__H_
 
+#include "SGP/Types.h"
+
 enum {
   TCTL_MSG__RANGE_TO_TARGET,
   TCTL_MSG__ATTACH_TRANSMITTER_TO_LAPTOP,

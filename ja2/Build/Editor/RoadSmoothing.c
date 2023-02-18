@@ -1,18 +1,13 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
-#include "SGP/Types.h"
+#include "Editor/EditorUndo.h"
 #include "Editor/RoadSmoothing.h"
+#include "SGP/Types.h"
 #include "TileEngine/TileDat.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#endif
 
 typedef struct MACROSTRUCT {
   INT16 sMacroID;

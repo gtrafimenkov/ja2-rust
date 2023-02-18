@@ -1,6 +1,9 @@
 #ifndef STRUCURE_WRAP_H
 #define STRUCURE_WRAP_H
 
+#include "SGP/Types.h"
+#include "TileEngine/WorldDef.h"
+
 BOOLEAN IsTreePresentAtGridno(INT16 sGridNo);
 BOOLEAN IsFencePresentAtGridno(INT16 sGridNo);
 BOOLEAN IsJumpableFencePresentAtGridno(INT16 sGridNo);

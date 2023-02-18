@@ -8,42 +8,38 @@
         Date            :       1997-NOV
 */
 
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
-#include "SGP/MemMan.h"
-#include "Tactical/OverheadTypes.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/AnimationCache.h"
-#include "Tactical/AnimationData.h"
-#include "Tactical/AnimationControl.h"
-#include "SGP/Container.h"
-#include "Tactical/Interface.h"
-#include <math.h>
-
-#include "SGP/Input.h"
-#include "SGP/English.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldMan.h"
-#include "TileEngine/RenderWorld.h"
 #include "Tactical/PathAI.h"
+
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "GameSettings.h"
+#include "JAScreens.h"
+#include "SGP/Container.h"
+#include "SGP/Debug.h"
+#include "SGP/English.h"
+#include "SGP/Input.h"
+#include "SGP/MemMan.h"
+#include "SGP/Random.h"
+#include "SGP/WCheck.h"
+#include "Tactical/AnimationCache.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/Interface.h"
+#include "Tactical/Keys.h"
+#include "Tactical/OverheadTypes.h"
 #include "Tactical/PathAIDebug.h"
 #include "Tactical/Points.h"
-#include "TacticalAI/AI.h"
-#include "SGP/Random.h"
-#include "Utils/Message.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/StructureWrap.h"
-#include "Tactical/Keys.h"
-#include "GameSettings.h"
+#include "TacticalAI/AI.h"
 #include "TileEngine/Buildings.h"
-#endif
-
-#include "Tactical/PathAIDebug.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Message.h"
 
 extern UINT16 gubAnimSurfaceIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
 

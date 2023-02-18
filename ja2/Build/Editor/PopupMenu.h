@@ -8,6 +8,8 @@
 #ifndef __POPUPMENU_H
 #define __POPUPMENU_H
 
+#include "SGP/Types.h"
+
 /*
 POPUP MENU
 

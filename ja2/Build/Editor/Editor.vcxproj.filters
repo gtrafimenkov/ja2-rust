@@ -20,9 +20,6 @@
     <ClInclude Include="EditSys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EditorAll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EditorCallbackPrototypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>

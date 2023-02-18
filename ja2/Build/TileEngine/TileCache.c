@@ -1,21 +1,19 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
-#include "TileEngine/TileDef.h"
-#include "Tactical/AnimationCache.h"
-#include "Tactical/AnimationData.h"
-#include "Tactical/AnimationControl.h"
-#include "SysGlobals.h"
-#include "Utils/DebugControl.h"
-#include "TileEngine/TileSurface.h"
 #include "TileEngine/TileCache.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "SGP/Debug.h"
 #include "SGP/FileMan.h"
-#endif
+#include "SGP/WCheck.h"
+#include "SysGlobals.h"
+#include "Tactical/AnimationCache.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/AnimationData.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/TileSurface.h"
+#include "Utils/DebugControl.h"
 
 UINT32 guiNumTileCacheStructs = 0;
 UINT32 guiMaxTileCacheSize = 50;

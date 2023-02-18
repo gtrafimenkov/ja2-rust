@@ -1,28 +1,29 @@
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include <stdlib.h>
-#include "TileEngine/IsometricUtils.h"
-#include "TacticalAI/AI.h"
-#include "TacticalAI/AIInternals.h"
+
+#include "Strategic/StrategicMap.h"
+#include "Tactical/Boxing.h"
+#include "Tactical/Items.h"
 #include "Tactical/LOS.h"
-#include "Tactical/Weapons.h"
 #include "Tactical/OppList.h"
 #include "Tactical/PathAI.h"
-#include "Tactical/Items.h"
-#include "Tactical/WorldItems.h"
 #include "Tactical/Points.h"
-#include "Utils/Message.h"
-#include "TileEngine/MapEdgepoints.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/RenderFun.h"
-#include "Tactical/Boxing.h"
-#include "Utils/Text.h"
 #include "Tactical/StructureWrap.h"
-#ifdef _DEBUG
+#include "Tactical/Weapons.h"
+#include "Tactical/WorldItems.h"
+#include "TacticalAI/AI.h"
+#include "TacticalAI/AIInternals.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/MapEdgepoints.h"
+#include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Message.h"
+#include "Utils/Text.h"
+#ifdef _DEBUG
 #include "SGP/Video.h"
-#endif
+#include "TileEngine/RenderWorld.h"
 #endif
 
 #include "Tactical/PathAIDebug.h"

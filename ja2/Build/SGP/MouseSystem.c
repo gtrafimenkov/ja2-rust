@@ -11,25 +11,19 @@
 //
 //=================================================================================================
 
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <windows.h>
-#include <stdio.h>
 #include <memory.h>
+#include <stdio.h>
+#include <windows.h>
+
+#include "JAScreens.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
-#include "SGP/MemMan.h"
 #include "SGP/Line.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
 #if (defined(JA2) || defined(UTIL))
 #include "SGP/Video.h"
 #define BASE_REGION_FLAGS (MSYS_REGION_ENABLED | MSYS_SET_CURSOR)
-#else
-#include "video2.h"
-#define BASE_REGION_FLAGS MSYS_REGION_ENABLED  // Wiz doesn't ever want MSYS_SET_CURSOR to be on...
 #endif
 #ifdef _JA2_RENDER_DIRTY
 #include "TileEngine/RenderDirty.h"
@@ -37,10 +31,9 @@
 #endif
 #include "SGP/English.h"
 // Include mouse system defs and macros
-#include "SGP/MouseSystem.h"
-#include "SGP/CursorControl.h"
 #include "SGP/ButtonSystem.h"
-#endif
+#include "SGP/CursorControl.h"
+#include "SGP/MouseSystem.h"
 
 #ifdef PRECOMPILEDHEADERS
 #define BASE_REGION_FLAGS (MSYS_REGION_ENABLED | MSYS_SET_CURSOR)

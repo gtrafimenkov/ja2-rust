@@ -1,6 +1,8 @@
 #ifndef __FOG_OF_WAR_H
 #define __FOG_OF_WAR_H
 
+#include "SGP/SGP.h"
+
 // Called after a map is loaded.  By keying on the MAPELEMENT_REVEALED value, we can easily
 // determine what is hidden by the fog.
 void InitializeFogInWorld();

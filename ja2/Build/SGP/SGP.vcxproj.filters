@@ -74,9 +74,6 @@
     <ClInclude Include="Install.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SGPAll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LibraryDataBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>

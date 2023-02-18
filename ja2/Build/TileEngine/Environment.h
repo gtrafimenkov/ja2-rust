@@ -1,6 +1,8 @@
 #ifndef _ENVIRONMENT_H_
 #define _ENVIRONMENT_H_
 
+#include "SGP/Types.h"
+
 #define ENV_TIME_00 0
 #define ENV_TIME_01 1
 #define ENV_TIME_02 2

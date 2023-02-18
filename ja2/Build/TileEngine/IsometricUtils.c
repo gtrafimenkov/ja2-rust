@@ -1,23 +1,21 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include "SGP/Debug.h"
-#include "SGP/WCheck.h"
-#include "SGP/MouseSystem.h"
-#include "JAScreens.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/IsometricUtils.h"
-#include "Tactical/Interface.h"
-#include "math.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/StructureWrap.h"
-#include "SysGlobals.h"
-#include "Tactical/Overhead.h"
+
+#include <math.h>
+#include <stdio.h>
+
+#include "JAScreens.h"
+#include "SGP/Debug.h"
+#include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
+#include "SGP/WCheck.h"
+#include "SysGlobals.h"
+#include "Tactical/Interface.h"
+#include "Tactical/Overhead.h"
 #include "Tactical/PathAI.h"
-#endif
+#include "Tactical/StructureWrap.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 
 UINT32 guiForceRefreshMousePositionCalculation = 0;
 

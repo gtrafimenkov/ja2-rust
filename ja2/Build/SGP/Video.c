@@ -1,22 +1,19 @@
-#include "SGP/SGPAll.h"
-#include "Res/Resource.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
 #include "SGP/Video.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/SGP.h"
+
 #include <stdio.h>
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/IsometricUtils.h"
+
 #include "FadeScreen.h"
-#include "SGP/ImpTGA.h"
-#include "Utils/TimerControl.h"
+#include "Res/Resource.h"
 #include "SGP/FileMan.h"
-#endif
+#include "SGP/ImpTGA.h"
+#include "SGP/Input.h"
+#include "SGP/SGP.h"
+#include "SGP/Types.h"
+#include "SGP/VObjectBlitters.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "Utils/TimerControl.h"
 
 #ifndef _MT
 #define _MT

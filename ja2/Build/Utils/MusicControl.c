@@ -1,19 +1,16 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "Utils/MusicControl.h"
-#include "SGP/SoundMan.h"
-#include "SGP/Random.h"
+
+#include "FadeScreen.h"
 #include "GameScreen.h"
 #include "JAScreens.h"
+#include "SGP/Random.h"
+#include "SGP/SoundMan.h"
+#include "SGP/Types.h"
 #include "Strategic/CreatureSpreading.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/Overhead.h"
-#include "Utils/TimerControl.h"
 #include "Strategic/StrategicMap.h"
-#include "FadeScreen.h"
-#endif
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
+#include "Utils/TimerControl.h"
 
 UINT32 uiMusicHandle = NO_SAMPLE;
 UINT32 uiMusicVolume = 50;

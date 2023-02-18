@@ -1,27 +1,24 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/CharProfile.h"
 #include "Laptop/IMPPersonalityQuiz.h"
-#include "Laptop/IMPMainPage.h"
-#include "Laptop/IMPHomePage.h"
-#include "Laptop/IMPVideoObjects.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
-#include "Laptop/Laptop.h"
-#include "Laptop/IMPCompileCharacter.h"
-#include "Tactical/SoldierProfileType.h"
-#include "Laptop/IMPTextSystem.h"
-#include "SGP/Input.h"
-#include "SGP/English.h"
-#endif
 
-#include "windows.h"
+#include <windows.h>
+
+#include "Laptop/CharProfile.h"
+#include "Laptop/IMPCompileCharacter.h"
+#include "Laptop/IMPHomePage.h"
+#include "Laptop/IMPMainPage.h"
+#include "Laptop/IMPTextSystem.h"
+#include "Laptop/IMPVideoObjects.h"
+#include "Laptop/Laptop.h"
+#include "SGP/Debug.h"
+#include "SGP/English.h"
+#include "SGP/Input.h"
+#include "SGP/WCheck.h"
+#include "Tactical/SoldierProfileType.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 // struct POINT;
 
 UINT32 giIMPPersonalityQuizButton[2];

@@ -1,29 +1,37 @@
-#include "Tactical/TacticalAll.h"
-#include "LanguageDefines.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include "SGP/SGP.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldMan.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/Structure.h"
-#include "Tactical/AnimationControl.h"
-#include "Tactical/Points.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/StructureWrap.h"
-#include "TileEngine/TileAnimation.h"
-#include "TileEngine/InteractiveTiles.h"
 #include "Tactical/HandleDoors.h"
-#include "Utils/SoundControl.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <time.h>
+
+#include "LanguageDefines.h"
+#include "SGP/Random.h"
+#include "SGP/SGP.h"
+#include "Strategic/MapScreenInterfaceMap.h"
+#include "Strategic/Quests.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/DialogueControl.h"
 #include "Tactical/Interface.h"
 #include "Tactical/Keys.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/Points.h"
+#include "Tactical/SkillCheck.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/StructureWrap.h"
+#include "TacticalAI/AI.h"
+#include "TileEngine/InteractiveTiles.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/TileAnimation.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "Utils/SoundControl.h"
 #include "Utils/Text.h"
-#include "SGP/Random.h"
-#endif
 
 BOOLEAN gfSetPerceivedDoorState = FALSE;
 

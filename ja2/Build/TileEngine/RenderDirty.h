@@ -1,6 +1,8 @@
 #ifndef __RENDER_DIRTY_H
 #define __RENDER_DIRTY_H
 
+#include "SGP/Types.h"
+
 // DEFINES
 #define BGND_FLAG_PERMANENT 0x80000000
 #define BGND_FLAG_SINGLE 0x40000000

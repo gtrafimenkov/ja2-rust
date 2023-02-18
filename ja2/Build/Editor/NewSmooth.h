@@ -4,6 +4,8 @@
 #ifndef __NEWSMOOTH_H
 #define __NEWSMOOTH_H
 
+#include "SGP/Types.h"
+
 void AddBuildingSectionToWorld(SGPRect *pSelectRegion);
 void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion);
 

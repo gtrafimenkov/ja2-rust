@@ -1,6 +1,8 @@
 #ifndef __FINANCES_H
 #define __FINANCES_H
 
+#include "SGP/Types.h"
+
 void GameInitFinances();
 void EnterFinances();
 void ExitFinances();

@@ -1,23 +1,25 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <String.h>
 #include "Strategic/StrategicMines.h"
+
+#include <string.h>
+
+#include "GameSettings.h"
 #include "Laptop/Finances.h"
-#include "Strategic/StrategicTownLoyalty.h"
-#include "Strategic/Strategic.h"
-#include "Strategic/GameClock.h"
-#include "Strategic/StrategicMap.h"
+#include "Laptop/History.h"
 #include "SGP/Random.h"
-#include "Tactical/SoldierProfile.h"
-#include "Tactical/DialogueControl.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/CreatureSpreading.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/GameEventHook.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/Quests.h"
-#include "Strategic/CreatureSpreading.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicAI.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicTownLoyalty.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/SoldierProfile.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "Strategic/GameEventHook.h"
-#endif
 
 // this .c file will handle the strategic level of mines and income from them
 

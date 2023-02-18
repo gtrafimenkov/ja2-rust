@@ -2,10 +2,10 @@
 #define __WORLDDEF_H
 
 #include "SGP/VObject.h"
-#include "TileEngine/TileDef.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/SoldierControl.h"
 #include "TileEngine/Structure.h"
-#include "Tactical/HandleItems.h"
+#include "TileEngine/TileDef.h"
 
 #define WORLD_TILE_X 40
 #define WORLD_TILE_Y 20

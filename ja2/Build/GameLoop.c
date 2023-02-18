@@ -1,36 +1,35 @@
-#include "JA2All.h"
-#include "HelpScreen.h"
-#include "Strategic/PreBattleInterface.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include "SGP/SGP.h"
 #include "GameLoop.h"
-#include "Screens.h"
-#include "SGP/WCheck.h"
-#include "Utils/Cursors.h"
-#include "Init.h"
-#include "Utils/MusicControl.h"
-#include "SysGlobals.h"
-#include "Laptop/Laptop.h"
-#include "Strategic/MapScreen.h"
-#include "Strategic/GameClock.h"
-#include "Utils/TimerControl.h"
-#include "Tactical/Overhead.h"
-#include "SGP/LibraryDataBase.h"
-#include "Strategic/MapScreenInterface.h"
-#include "Tactical/TacticalSave.h"
-#include "Tactical/Interface.h"
-#include "GameSettings.h"
-#include "Strategic/MapScreen.h"
-#include "Tactical/InterfaceControl.h"
-#include "FadeScreen.h"
-#include "JA2DemoAds.h"
-#include "Utils/Text.h"
-#include "HelpScreen.h"
-#endif
 
-UINT32 guiCurrentScreen;
+#include <stdio.h>
+
+#include "FadeScreen.h"
+#include "GameSettings.h"
+#include "HelpScreen.h"
+#include "Init.h"
+#include "JA2DemoAds.h"
+#include "JAScreens.h"
+#include "Laptop/Finances.h"
+#include "Laptop/Laptop.h"
+#include "OptionsScreen.h"
+#include "SGP/LibraryDataBase.h"
+#include "SGP/SGP.h"
+#include "SGP/WCheck.h"
+#include "SaveLoadGame.h"
+#include "Screens.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/MapScreen.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/PreBattleInterface.h"
+#include "SysGlobals.h"
+#include "Tactical/Interface.h"
+#include "Tactical/InterfaceControl.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/TacticalSave.h"
+#include "Utils/Cursors.h"
+#include "Utils/MusicControl.h"
+#include "Utils/Text.h"
+#include "Utils/TimerControl.h"
+
 UINT32 guiPendingScreen = NO_PENDING_SCREEN;
 UINT32 guiPreviousScreen = NO_PENDING_SCREEN;
 

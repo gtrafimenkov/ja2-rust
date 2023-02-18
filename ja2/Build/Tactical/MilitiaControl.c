@@ -1,16 +1,12 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#include "Strategic/PreBattleInterface.h"
-#else
-#include "Tactical/SoldierControl.h"
 #include "Tactical/MilitiaControl.h"
-#include "Strategic/TownMilitia.h"
-#include "Tactical/SoldierInitList.h"
+
 #include "Strategic/CampaignTypes.h"
-#include "Tactical/Overhead.h"
-#include "Strategic/StrategicMap.h"
 #include "Strategic/PreBattleInterface.h"
-#endif
+#include "Strategic/StrategicMap.h"
+#include "Strategic/TownMilitia.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierInitList.h"
 
 BOOLEAN gfStrategicMilitiaChangesMade = FALSE;
 

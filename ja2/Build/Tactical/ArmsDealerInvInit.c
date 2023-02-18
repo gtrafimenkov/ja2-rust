@@ -1,12 +1,15 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "Tactical/ArmsDealerInvInit.h"
-#include "Tactical/ItemTypes.h"
-#include "Tactical/ArmsDealerInit.h"
+
+#include "Laptop/BobbyR.h"
+#include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
-#endif
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "Tactical/ArmsDealerInit.h"
+#include "Tactical/Campaign.h"
+#include "Tactical/ItemTypes.h"
+#include "Tactical/ShopKeeperInterface.h"
+#include "Tactical/Weapons.h"
 
 extern INT8 gbSelectedArmsDealerID;
 

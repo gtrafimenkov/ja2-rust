@@ -1,13 +1,12 @@
 #define WIN32_LEAN_AND_MEAN
+#include <mmsystem.h>
 #include <windows.h>
 #include <windowsx.h>
-#include <mmsystem.h>
+
 #include "SGP/DSound.h"
-#include "Utils/DSUtil.h"
 #include "SGP/Debug.h"
-
 #include "SGP/SGP.h"
-
+#include "Utils/DSUtil.h"
 #include "Utils/SoundControl.h"
 
 // THIS MODULE IS TEMPORARY - USED FOR OUR SOUND SYSTEM INTIL IT IS IMPLEMENTED FOR THE SGP

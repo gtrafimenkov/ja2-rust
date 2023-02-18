@@ -1,26 +1,17 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
-// sgp
-#include "SGP/ButtonSystem.h"
-#include "Utils/FontControl.h"
-#include "SGP/Debug.h"
-// editor
-#include "Editor/EditorDefines.h"
 #include "Editor/EditorCallbackPrototypes.h"
-#include "Editor/EditorTaskbarUtils.h"
-#include "Editor/EditorMercs.h"
+#include "Editor/EditorDefines.h"
 #include "Editor/EditorMapInfo.h"
-// tactical
-#include "Tactical/SoldierCreate.h"
+#include "Editor/EditorMercs.h"
+#include "Editor/EditorTaskbarUtils.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "Tactical/OverheadTypes.h"
-#endif
+#include "Tactical/SoldierCreate.h"
+#include "Utils/FontControl.h"
 
 // Category tabs of the editor buttons
 void InitEditorTerrainToolbar();

@@ -1,6 +1,8 @@
 #ifndef _JA2_LIBS_H_
 #define _JA2_LIBS_H_
 
+#include "SGP/Types.h"
+
 enum {
   ENGLISH_LANG,
   RUSSIAN_LANG,

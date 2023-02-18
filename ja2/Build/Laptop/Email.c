@@ -1,25 +1,24 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/Email.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
-#include "Tactical/SoldierProfile.h"
-#include "Laptop/IMPCompileCharacter.h"
-#include "Laptop/IMPVoices.h"
-#include "Laptop/IMPPortraits.h"
-#include "Strategic/GameClock.h"
-#include "TileEngine/Environment.h"
+
 #include "Laptop/AIMMembers.h"
+#include "Laptop/Finances.h"
+#include "Laptop/IMPCompileCharacter.h"
+#include "Laptop/IMPPortraits.h"
+#include "Laptop/IMPVoices.h"
+#include "Laptop/Laptop.h"
+#include "Laptop/LaptopSave.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
+#include "SGP/WCheck.h"
+#include "Strategic/GameClock.h"
+#include "Tactical/SoldierProfile.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 // static EmailPtr pEmailList;
 EmailPtr pEmailList;

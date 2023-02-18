@@ -1,17 +1,15 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
+#include "TileEngine/SysUtil.h"
+
 #include <stdarg.h>
+#include <stdio.h>
 #include <time.h>
-#include "SGP/SGP.h"
+
 #include "SGP/HImage.h"
+#include "SGP/SGP.h"
 #include "SGP/VSurface.h"
 #include "SGP/VSurfacePrivate.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/RenderWorld.h"
-#endif
 
 UINT32 guiBOTTOMPANEL = 0;
 UINT32 guiRIGHTPANEL = 0;

@@ -1,21 +1,26 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Strategic/PlayerCommand.h"
-#include "Strategic/QueenCommand.h"
-#include "Strategic/CampaignTypes.h"
-#include "Strategic/Strategic.h"
-#include "Strategic/StrategicTownLoyalty.h"
-#include "Strategic/StrategicMines.h"
-#include "Utils/Text.h"
+
+#include "GameSettings.h"
+#include "Laptop/Email.h"
 #include "Laptop/LaptopSave.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/MapScreenHelicopter.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/Meanwhile.h"
+#include "Strategic/PreBattleInterface.h"
+#include "Strategic/QueenCommand.h"
 #include "Strategic/Quests.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicAI.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicMines.h"
+#include "Strategic/StrategicStatus.h"
+#include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
-#include "Strategic/StrategicMap.h"
-#include "Strategic/MapScreenHelicopter.h"
-#include "Strategic/GameClock.h"
-#endif
+#include "Tactical/TacticalSave.h"
+#include "Utils/Text.h"
 
 extern BOOLEAN fMapScreenBottomDirty;
 

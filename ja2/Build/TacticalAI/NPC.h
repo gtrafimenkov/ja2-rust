@@ -1,8 +1,9 @@
 #ifndef NPC_H
 #define NPC_H
 
-#include "Strategic/MapScreen.h"
 #include "SGP/FileMan.h"
+#include "SGP/Types.h"
+#include "Strategic/MapScreen.h"
 
 #define NUM_NPC_QUOTE_RECORDS 50
 

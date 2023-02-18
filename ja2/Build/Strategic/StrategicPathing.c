@@ -1,32 +1,31 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include "SGP/Types.h"
-#include "TileEngine/WorldDef.h"
-#include "SGP/SGP.h"
-#include "Strategic/Strategic.h"
-#include "Strategic/MapScreen.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/InterfacePanels.h"
-#include "TileEngine/WorldMan.h"
-#include "Strategic/StrategicMap.h"
 #include "Strategic/StrategicPathing.h"
-#include "Strategic/MapScreenInterfaceBorder.h"
-#include "Strategic/GameClock.h"
-#include "Strategic/StrategicMovement.h"
-#include "Strategic/CampaignTypes.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <time.h>
+
+#include "SGP/English.h"
+#include "SGP/Input.h"
+#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "Strategic/Assignments.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/GameEventHook.h"
+#include "Strategic/MapScreen.h"
+#include "Strategic/MapScreenHelicopter.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/MapScreenInterfaceBorder.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicAI.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicMovement.h"
+#include "Tactical/InterfacePanels.h"
+#include "Tactical/Overhead.h"
 #include "Tactical/Squads.h"
 #include "Tactical/Vehicles.h"
-#include "Strategic/MapScreenHelicopter.h"
-#include "SGP/Input.h"
-#include "SGP/English.h"
-#include "Strategic/MapScreenInterface.h"
-#include "Strategic/GameEventHook.h"
-#endif
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 
 void AddSectorToFrontOfMercPath(PathStPtr *ppMercPath, UINT8 ubSectorX, UINT8 ubSectorY);
 

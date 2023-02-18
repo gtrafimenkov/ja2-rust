@@ -1,21 +1,20 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "time.h"
-#include "SGP/Video.h"
-#include "SGP/Debug.h"
-#include "TileEngine/WorldMan.h"
-#include "GameLoop.h"
+#include <time.h>
+
 #include "Editor/EditSys.h"
+#include "GameLoop.h"
+#include "SGP/Debug.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
 #include "Tactical/PathAI.h"
+#include "Tactical/TacticalSave.h"
 #include "TileEngine/TileSurface.h"
-#endif
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 
 //#include "Editor/EditScreen.h"
 

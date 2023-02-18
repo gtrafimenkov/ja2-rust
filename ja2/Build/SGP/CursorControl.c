@@ -1,18 +1,10 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
 #include "SGP/CursorControl.h"
 
 #if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#else
-#include "video2.h"
 #endif
 
 #include "SGP/WCheck.h"
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //

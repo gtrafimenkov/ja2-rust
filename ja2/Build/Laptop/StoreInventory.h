@@ -1,6 +1,7 @@
 #ifndef __STORE_INVENTORY_H_
 #define __STORE_INVENTORY_H_
 
+#include "SGP/Types.h"
 #include "Tactical/Items.h"
 
 typedef struct {

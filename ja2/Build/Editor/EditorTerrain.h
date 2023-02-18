@@ -4,6 +4,8 @@
 #ifndef __EDITORTERRAIN_H
 #define __EDITORTERRAIN_H
 
+#include "SGP/Types.h"
+
 #define TERRAIN_TILES_NODRAW 0
 #define TERRAIN_TILES_FOREGROUND 1
 #define TERRAIN_TILES_BACKGROUND 2

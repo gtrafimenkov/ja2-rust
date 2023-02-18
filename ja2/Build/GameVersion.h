@@ -1,6 +1,8 @@
 #ifndef _GAME_VERSION_H_
 #define _GAME_VERSION_H_
 
+#include "SGP/Types.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

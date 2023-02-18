@@ -2,6 +2,7 @@
 #define __RENDER_FUN_H
 
 #include <stdio.h>
+
 #include "TileEngine/WorldDef.h"
 
 #define NO_ROOM 0

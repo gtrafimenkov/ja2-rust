@@ -1,26 +1,23 @@
-#include "SGP/SGPAll.h"
-#include "JA2Splash.h"
-#include "Utils/Utilities.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
+#include "SGP/SGP.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 #include <windows.h>
 #include <windowsx.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
-#include "SGP/SGP.h"
-#include "SGP/RegInst.h"
-#include "SGP/VObject.h"
-#include "SGP/Font.h"
+
+#include "GameLoop.h"
+#include "JA2Splash.h"
 #include "Local.h"
 #include "SGP/FileMan.h"
+#include "SGP/Font.h"
 #include "SGP/Input.h"
 #include "SGP/Random.h"
-#include "GameLoop.h"
+#include "SGP/RegInst.h"
 #include "SGP/SoundMan.h"
+#include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "Utils/Utilities.h"
 #ifdef JA2
 #include "JA2Splash.h"
 #include "Utils/TimerControl.h"
@@ -28,26 +25,23 @@
 #if !defined(JA2) && !defined(UTIL)
 #include "GameData.h"  // for MoveTimer() [Wizardry specific]
 #endif
-#endif
-
-#include "SGP/Input.h"
-#include "zmouse.h"
 
 #include "SGP/ExceptionHandling.h"
-#include "dbt.h"
-
+#include "SGP/Input.h"
 #include "Tactical/InterfacePanels.h"
+#include "dbt.h"
+#include "zmouse.h"
 
 #ifdef JA2
 #include "BuildDefines.h"
 #include "Intro.h"
 #endif
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/RenderDirty.h"
-#include "Strategic/MapScreenInterfaceMap.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
-#include "laptop\laptop.h"
+#include "Strategic/MapScreenInterfaceMap.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "Laptop/Laptop.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

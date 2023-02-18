@@ -1,6 +1,9 @@
 #ifndef __UI_CURSORS_H
 #define __UI_CURSORS_H
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 #define REFINE_PUNCH_1 0
 #define REFINE_PUNCH_2 6
 

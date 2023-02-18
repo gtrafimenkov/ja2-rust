@@ -1,28 +1,25 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
-#include "Utils/Cursors.h"
 #include "Laptop/CharProfile.h"
+
 #include "Laptop/IMPAboutUs.h"
 #include "Laptop/IMPAttributeEntrance.h"
 #include "Laptop/IMPAttributeFinish.h"
-#include "Laptop/IMPMainPage.h"
-#include "Laptop/IMPHomePage.h"
-#include "Laptop/IMPVideoObjects.h"
-#include "Laptop/IMPTextSystem.h"
-#include "Laptop/IMPFinish.h"
-#include "Laptop/IMPPortraits.h"
-#include "Laptop/IMPVoices.h"
-#include "Laptop/IMPPersonalityEntrance.h"
 #include "Laptop/IMPAttributeSelection.h"
-#include "Laptop/IMPPersonalityQuiz.h"
 #include "Laptop/IMPBeginScreen.h"
-#include "Laptop/IMPPersonalityFinish.h"
-#include "Laptop/IMPVideoObjects.h"
 #include "Laptop/IMPConfirm.h"
+#include "Laptop/IMPFinish.h"
+#include "Laptop/IMPHomePage.h"
+#include "Laptop/IMPMainPage.h"
+#include "Laptop/IMPPersonalityEntrance.h"
+#include "Laptop/IMPPersonalityFinish.h"
+#include "Laptop/IMPPersonalityQuiz.h"
+#include "Laptop/IMPPortraits.h"
+#include "Laptop/IMPTextSystem.h"
+#include "Laptop/IMPVideoObjects.h"
+#include "Laptop/IMPVoices.h"
+#include "Laptop/Laptop.h"
+#include "Laptop/LaptopSave.h"
 #include "MessageBoxScreen.h"
-#endif
+#include "Utils/Cursors.h"
 
 // BOOLEAN fIMPCompletedFlag = FALSE;
 BOOLEAN fReDrawCharProfile = FALSE;

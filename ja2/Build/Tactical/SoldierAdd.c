@@ -1,24 +1,24 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "Tactical/SoldierAdd.h"
+
+#include "SGP/Random.h"
 #include "SGP/SGP.h"
-#include "Tactical/SoldierControl.h"
+#include "Strategic/Meanwhile.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/FOV.h"
+#include "Tactical/InterfacePanels.h"
+#include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/OverheadTypes.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Tactical/InterfacePanels.h"
-#include "Tactical/SoldierMacros.h"
-#include "Strategic/StrategicMap.h"
-#include "Strategic/Strategic.h"
-#include "Tactical/AnimationControl.h"
+#include "Tactical/PathAI.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
-#include "Tactical/SoldierAdd.h"
-#include "Tactical/MapInformation.h"
-#include "Tactical/FOV.h"
-#include "Tactical/PathAI.h"
-#include "SGP/Random.h"
-#endif
+#include "Tactical/SoldierMacros.h"
+#include "TileEngine/ExitGrids.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
 
 // Adds a soldier to a world gridno and set's direction
 void AddSoldierToSectorGridNo(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection,

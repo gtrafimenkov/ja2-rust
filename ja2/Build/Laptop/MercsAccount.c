@@ -1,24 +1,22 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/MercsAccount.h"
-#include "Laptop/Mercs.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
-#include "Tactical/SoldierProfile.h"
-#include "Laptop/Finances.h"
-#include "Strategic/GameClock.h"
-#include "Tactical/SoldierAdd.h"
-#include "Tactical/Overhead.h"
-#include "Laptop/History.h"
+
 #include "Laptop/Email.h"
+#include "Laptop/Finances.h"
+#include "Laptop/History.h"
+#include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "Utils/Text.h"
+#include "Laptop/Mercs.h"
 #include "Laptop/SpeckQuotes.h"
-#endif
+#include "SGP/WCheck.h"
+#include "Strategic/GameClock.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierProfile.h"
+#include "Utils/Cursors.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define MERC_ACCOUNT_TEXT_FONT FONT14ARIAL
 #define MERC_ACCOUNT_TEXT_COLOR FONT_MCOLOR_WHITE

@@ -1,21 +1,21 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else #include < stdio.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
 #include "Tactical/AnimationControl.h"
-#include "Tactical/AnimationData.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/WCheck.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/Points.h"
+#include "Tactical/RottingCorpses.h"
 #include "Tactical/Weapons.h"
-#include "Utils/Message.h"
 #include "TileEngine/Structure.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "Tactical/RottingCorpses.h"
-#include "Tactical/Points.h"
-#endif
+#include "Utils/DebugControl.h"
+#include "Utils/Message.h"
 
 // Defines for Anim inst reading, taken from orig Jagged
 #define ANIMFILENAME "BINARYDATA\\ja2bin.dat"
@@ -5740,6 +5740,7 @@ UINT16 GetSoldierAnimationSurface(SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
       ScreenMsg(FONT_MCOLOR_RED, MSG_BETAVERSION,
                 L"IAnimation Surface for Body %d, animation %S, surface %d not loaded.",
                 pSoldier->ubBodyType, gAnimControl[usAnimState].zAnimStr, usAnimSurface);
+
       AnimDebugMsg(String("Surface Database: PROBLEMS!!!!!!"));
       usAnimSurface = INVALID_ANIMATION_SURFACE;
     }

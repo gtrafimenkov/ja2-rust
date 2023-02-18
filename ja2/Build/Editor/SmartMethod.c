@@ -1,18 +1,12 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
-#include "TileEngine/WorldDef.h"  //LEVELNODE def
-#include "TileEngine/WorldMan.h"  //ReplaceStructIndex
+#include "Editor/EditorUndo.h"
 #include "Editor/SmartMethod.h"
 #include "Editor/SmoothingUtils.h"
-#include "Editor/EditorUndo.h"
-#endif
+#include "TileEngine/WorldDef.h"  //LEVELNODE def
+#include "TileEngine/WorldMan.h"  //ReplaceStructIndex
 
 UINT8 gubDoorUIValue = 0;
 UINT8 gubWindowUIValue = 0;

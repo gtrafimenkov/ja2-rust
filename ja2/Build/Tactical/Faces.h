@@ -5,6 +5,7 @@
 #define ANGRY 2
 #define SURPRISED 3
 
+#include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 
 // Defines

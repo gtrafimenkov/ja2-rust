@@ -1,21 +1,24 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdlib.h>
 #include "Tactical/Morale.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/SoldierProfile.h"
-#include "Tactical/DialogueControl.h"
-#include "Strategic/MapScreenInterface.h"
-#include "Utils/Message.h"
+
+#include <stdlib.h>
+
+#include "SGP/Debug.h"
 #include "Strategic/Assignments.h"
+#include "Strategic/MapScreen.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/StrategicMap.h"
 #include "Strategic/StrategicMovement.h"
 #include "Strategic/StrategicStatus.h"
-#include "Tactical/SkillCheck.h"
+#include "Tactical/Campaign.h"
+#include "Tactical/DialogueControl.h"
 #include "Tactical/DrugsAndAlcohol.h"
-#include "Strategic/StrategicMap.h"
-#include "SGP/Debug.h"
-#endif
+#include "Tactical/Overhead.h"
+#include "Tactical/SkillCheck.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/Squads.h"
+#include "TacticalAI/AI.h"
+#include "Utils/Message.h"
 
 #define MORALE_MOD_MAX \
   50  // morale *mod* range is -50 to 50, if you change this, check the decay formulas!

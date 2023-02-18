@@ -1,6 +1,8 @@
 #ifndef __AIMFACIALINDEX_H_
 #define __AIMFACIALINDEX_H_
 
+#include "SGP/Types.h"
+
 #define AIM_FI_LEFT_CLICK_TEXT_X 116
 #define AIM_FI_LEFT_CLICK_TEXT_Y 35 + LAPTOP_SCREEN_WEB_DELTA_Y
 

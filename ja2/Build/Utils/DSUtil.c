@@ -1,19 +1,16 @@
 // THIS MODULE IS TEMPORARY - USED FOR OUR SOUND SYSTEM INTIL IT IS IMPLEMENTED FOR THE SGP
 // TAKEN FROM MS SAMPLES FOR DirectSound
 
-#include "Utils/UtilsAll.h"
 #include <windows.h>
 #include <windowsx.h>
+
+#if 1
+// must go after other includes
 #include <mmsystem.h>
-#include "SGP/DSound.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
-#include <windows.h>
-#include <windowsx.h>
-#include <mmsystem.h>
-#include "SGP/DSound.h"
 #endif
+
+#include "SGP/DSound.h"
+#include "SGP/Types.h"
 
 #define WIN32_LEAN_AND_MEAN
 

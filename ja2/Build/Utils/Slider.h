@@ -1,6 +1,8 @@
 #ifndef _SLIDER__H_
 #define _SLIDER__H_
 
+#include "SGP/Types.h"
+
 #define SLIDER_VERTICAL 0x00000001
 #define SLIDER_HORIZONTAL 0x00000002
 

@@ -1,14 +1,10 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include <stdio.h>
-#include <stdarg.h>
 #include "SGP/PCX.h"
-#include "SGP/MemMan.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+
 #include "SGP/FileMan.h"
-#endif
+#include "SGP/MemMan.h"
 
 // Local typedefs
 

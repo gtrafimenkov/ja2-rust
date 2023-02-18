@@ -1,14 +1,13 @@
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TacticalAI/AIInternals.h"
-#include "TacticalAI/AI.h"
-#include "Tactical/PathAI.h"
-#include "Tactical/Items.h"
-#include "Tactical/WorldItems.h"
-#endif
-
+#include "Strategic/MapScreenInterfaceMap.h"
 #include "Strategic/QueenCommand.h"
+#include "Strategic/Quests.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/Items.h"
+#include "Tactical/PathAI.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/WorldItems.h"
+#include "TacticalAI/AI.h"
+#include "TacticalAI/AIInternals.h"
 
 void MakeClosestEnemyChosenOne() {
   UINT32 cnt;

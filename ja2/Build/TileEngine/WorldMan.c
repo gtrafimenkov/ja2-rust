@@ -1,31 +1,30 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TileEngine/WorldDef.h"
-#include <stdio.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "time.h"
-#include "SGP/Video.h"
-#include "SGP/Debug.h"
-#include "Editor/Smooth.h"
 #include "TileEngine/WorldMan.h"
-#include "TileEngine/Lighting.h"
-#include "TileEngine/RenderWorld.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#include "Editor/Smooth.h"
+#include "Editor/SmoothingUtils.h"
+#include "GameSettings.h"
+#include "SGP/Debug.h"
+#include "SGP/Random.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "Tactical/AnimationControl.h"
 #include "Tactical/Overhead.h"
 #include "TacticalAI/AI.h"
-#include "Utils/SoundControl.h"
-#include "Tactical/AnimationControl.h"
 #include "TileEngine/IsometricUtils.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SaveLoadMap.h"
+#include "TileEngine/TileCache.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
-#include "TileEngine/TileCache.h"
-#include "Editor/SmoothingUtils.h"
-#include "TileEngine/SaveLoadMap.h"
-#include "SGP/Random.h"
-#include "TileEngine/RenderFun.h"
-#endif
+#include "Utils/SoundControl.h"
 
 extern BOOLEAN gfBasement;
 

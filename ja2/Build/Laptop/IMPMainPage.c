@@ -1,27 +1,24 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Laptop/IMPMainPage.h"
+
 #include "Laptop/CharProfile.h"
-#include "Laptop/IMPVideoObjects.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
-#include "Laptop/Laptop.h"
 #include "Laptop/Finances.h"
 #include "Laptop/IMPAttributeSelection.h"
-#include "Laptop/IMPTextSystem.h"
-#include "Laptop/IMPFinish.h"
-#include "SGP/MouseSystem.h"
-#include "Tactical/MercHiring.h"
-#include "Laptop/LaptopSave.h"
 #include "Laptop/IMPCompileCharacter.h"
+#include "Laptop/IMPFinish.h"
 #include "Laptop/IMPPortraits.h"
-#endif
+#include "Laptop/IMPTextSystem.h"
+#include "Laptop/IMPVideoObjects.h"
+#include "Laptop/Laptop.h"
+#include "Laptop/LaptopSave.h"
+#include "SGP/Debug.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/WCheck.h"
+#include "Tactical/MercHiring.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define MAIN_PAGE_BUTTON_TEXT_WIDTH 95
 

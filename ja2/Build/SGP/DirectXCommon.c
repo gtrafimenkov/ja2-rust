@@ -1,17 +1,11 @@
-#include "SGP/Types.h"
-#include <objbase.h>
-
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include "SGP/DDraw.h"
 #include "SGP/DirectXCommon.h"
+
+#include <objbase.h>
 #include <windows.h>
+
+#include "SGP/DDraw.h"
 #include "SGP/Debug.h"
-#endif
+#include "SGP/Types.h"
 
 void DirectXZeroMem(void* pMemory, int nSize) { memset(pMemory, 0, nSize); }
 

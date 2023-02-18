@@ -1,24 +1,17 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <windows.h>
-#include <stdio.h>
-#include <memory.h>
-#include "SGP/Debug.h"
 #include "SGP/Input.h"
-#include "SGP/MemMan.h"
+
+#include <memory.h>
+#include <stdio.h>
+#include <windows.h>
+
+#include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
 #if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#else
-#include "video2.h"
 #endif
 #include "Local.h"
-#endif
-
 #include "zmouse.h"
 
 // Make sure to refer to the translation table which is within one of the following files (depending

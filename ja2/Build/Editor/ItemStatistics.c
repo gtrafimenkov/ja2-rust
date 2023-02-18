@@ -1,37 +1,32 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
 #include <memory.h>
 #include <stdio.h>
-#include "SGP/Types.h"
-#include "SGP/MouseSystem.h"
-#include "SGP/ButtonSystem.h"
-#include "Utils/FontControl.h"
-#include "Editor/EditorDefines.h"
-#include "Editor/EditorTaskbarUtils.h"
-#include "Editor/EditorMercs.h"
-#include "Editor/EditorItems.h"
-#include "Editor/ItemStatistics.h"
-#include "Utils/TextInput.h"
-#include "Tactical/ActionItems.h"
-#include "Tactical/ItemTypes.h"
-#include "SGP/Video.h"
-#include "TileEngine/SimpleRenderUtils.h"
-#include "Tactical/Weapons.h"
-#include "Tactical/Items.h"
+
 #include "Editor/EditScreen.h"
-#include "SGP/Random.h"
-#include "Tactical/HandleItems.h"
-#include "Tactical/WorldItems.h"
+#include "Editor/EditorDefines.h"
+#include "Editor/EditorItems.h"
+#include "Editor/EditorMercs.h"
+#include "Editor/EditorTaskbarUtils.h"
+#include "Editor/ItemStatistics.h"
 #include "Editor/PopupMenu.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "SGP/Video.h"
+#include "Tactical/ActionItems.h"
+#include "Tactical/HandleItems.h"
+#include "Tactical/ItemTypes.h"
+#include "Tactical/Items.h"
+#include "Tactical/Weapons.h"
+#include "Tactical/WorldItems.h"
 #include "TileEngine/Pits.h"
-#endif
+#include "TileEngine/SimpleRenderUtils.h"
+#include "Utils/FontControl.h"
+#include "Utils/TextInput.h"
 
 INT32 giBothCheckboxButton = -1;
 INT32 giRealisticCheckboxButton = -1;

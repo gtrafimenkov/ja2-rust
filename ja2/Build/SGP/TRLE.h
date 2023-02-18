@@ -1,6 +1,8 @@
 #ifndef __TRLE_H
 #define __TRLE_H
 
+#include "SGP/Types.h"
+
 typedef struct {
   UINT32 uiOffset;
   UINT32 uiWidth;

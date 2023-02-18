@@ -6,6 +6,8 @@
 #ifndef _JA2_LOAD_SCREEN_
 #define _JA2_LOAD_SCREEN_
 
+#include "SGP/Types.h"
+
 typedef struct _FDLG_LIST_TAG {
   GETFILESTRUCT FileInfo;
   struct _FDLG_LIST_TAG *pNext;

@@ -1,33 +1,27 @@
 // font.c
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <malloc.h>
-#include <windows.h>
-#include <stdarg.h>
-#include <wchar.h>
-#include "SGP/SGP.h"
-#include "SGP/PCX.h"
-#include "SGP/MemMan.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
+
+#include <malloc.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <wchar.h>
+#include <windows.h>
+
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/MemMan.h"
+#include "SGP/PCX.h"
+#include "SGP/SGP.h"
+#include "SGP/Types.h"
 
 #if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#else
-#include "video2.h"
 #endif
 
 #include "SGP/HImage.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
-#endif
+
 //*******************************************************
 //
 //   Defines

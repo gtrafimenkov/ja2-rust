@@ -1,11 +1,13 @@
 #ifndef __OVERHEAD_H
 #define __OVERHEAD_H
 
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
+
+#include "SGP/Types.h"
 //#include "SGP/Container.h"
-#include "Tactical/SoldierControl.h"
 #include "Tactical/OverheadTypes.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierFind.h"
 #define ADD_SOLDIER_NO_PROFILE_ID 200
 

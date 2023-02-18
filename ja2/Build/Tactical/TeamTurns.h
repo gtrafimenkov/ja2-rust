@@ -1,6 +1,7 @@
 #ifndef TEAMTURNS_H
 #define TEAMTURNS_H
 
+#include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 
 extern UINT8 gubOutOfTurnPersons;

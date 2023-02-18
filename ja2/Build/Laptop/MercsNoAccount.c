@@ -1,18 +1,15 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/MercsNoAccount.h"
-#include "Laptop/Mercs.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
+
+#include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "SGP/Random.h"
-#include "Utils/Text.h"
+#include "Laptop/Mercs.h"
 #include "Laptop/SpeckQuotes.h"
-#endif
+#include "SGP/Random.h"
+#include "SGP/WCheck.h"
+#include "Utils/Cursors.h"
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define MERC_NA_TEXT_FONT FONT12ARIAL
 #define MERC_NA_TEXT_COLOR FONT_MCOLOR_WHITE

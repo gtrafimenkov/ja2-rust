@@ -1,15 +1,12 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/AIMHistory.h"
+
 #include "Laptop/AIM.h"
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
-#include "Utils/Utilities.h"
-#include "Utils/WordWrap.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 // Defines
 

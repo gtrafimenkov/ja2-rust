@@ -1,20 +1,21 @@
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TacticalAI/AI.h"
-#include "Tactical/Weapons.h"
-#include "Tactical/OppList.h"
-#include "TacticalAI/AIInternals.h"
-#include "Tactical/LOS.h"
-#include "TileEngine/Physics.h"
+#include "GameSettings.h"
+#include "Strategic/StrategicMap.h"
 #include "Tactical/Items.h"
-#include "Tactical/Weapons.h"
-#include "Tactical/SpreadBurst.h"
+#include "Tactical/LOS.h"
+#include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/PathAI.h"
 #include "Tactical/SkillCheck.h"
+#include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
+#include "Tactical/SpreadBurst.h"
+#include "Tactical/Weapons.h"
+#include "TacticalAI/AI.h"
+#include "TacticalAI/AIInternals.h"
+#include "TileEngine/Environment.h"
 #include "TileEngine/IsometricUtils.h"
-#endif
+#include "TileEngine/Lighting.h"
+#include "TileEngine/Physics.h"
 
 extern INT16 DirIncrementer[8];
 

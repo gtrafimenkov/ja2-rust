@@ -1,17 +1,12 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
 #include <string.h>
-#include "SGP/MemMan.h"
-#include "SGP/FileMan.h"
-#include "SGP/ImgFmt.h"
-#include "SGP/HImage.h"
-#include "SGP/Types.h"
+
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/HImage.h"
+#include "SGP/ImgFmt.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
-#endif
 
 BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);
 BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);

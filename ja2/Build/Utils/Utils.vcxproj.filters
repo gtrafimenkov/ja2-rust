@@ -205,9 +205,6 @@
     <ClInclude Include="Utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UtilsAll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WordWrap.h">
       <Filter>Header Files</Filter>
     </ClInclude>

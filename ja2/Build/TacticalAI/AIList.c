@@ -10,14 +10,15 @@
  *
  */
 
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "TacticalAI/AIList.h"
-#include "Tactical/Overhead.h"
+
 #include "SGP/Debug.h"
+#include "Tactical/Interface.h"
+#include "Tactical/OppList.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/TacticalSave.h"
+#include "TacticalAI/AI.h"
 #include "TacticalAI/AIInternals.h"
-#endif
 
 #define AI_LIST_SIZE TOTAL_SOLDIERS
 

@@ -1,18 +1,19 @@
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TacticalAI/AI.h"
-#include "TacticalAI/AIInternals.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Tactical/Points.h"
-#include "Tactical/Overhead.h"
+#include "Strategic/Quests.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/Items.h"
 #include "Tactical/OppList.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/Points.h"
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfileType.h"
-#include "Tactical/Items.h"
 #include "Tactical/Weapons.h"
-#endif
+#include "TacticalAI/AI.h"
+#include "TacticalAI/AIInternals.h"
+#include "TacticalAI/NPC.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
 
 INT8 RTPlayerDecideAction(SOLDIERTYPE *pSoldier) {
   INT8 bAction = AI_ACTION_NONE;

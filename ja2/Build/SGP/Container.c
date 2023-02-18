@@ -22,21 +22,16 @@
 //				 this crap.  DON'T USE THIS -- NO MATTER WHAT!!!
 //*****************************************************************************
 
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <stdlib.h>
+#include "SGP/Container.h"
+
 #include <malloc.h>
 #include <stdio.h>
-#include "windows.h"
-#include "SGP/MemMan.h"
+#include <stdlib.h>
+#include <windows.h>
+
 #include "SGP/Debug.h"
-#include "SGP/Container.h"
-#include <iostream.h>
-#endif
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
 
 //*****************************************************************************
 //

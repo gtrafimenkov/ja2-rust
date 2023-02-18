@@ -1,32 +1,32 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileAnimation.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "time.h"
-#include "SGP/Video.h"
-#include "SGP/Debug.h"
+#include <time.h>
+
 #include "Editor/Smooth.h"
-#include "TileEngine/WorldMan.h"
+#include "SGP/Debug.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/Bullets.h"
+#include "Tactical/Keys.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/RottingCorpses.h"
+#include "Tactical/Weapons.h"
+#include "TacticalAI/AI.h"
+#include "TileEngine/ExplosionControl.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/RenderWorld.h"
-#include "Tactical/Overhead.h"
-#include "TacticalAI/AI.h"
-#include "Utils/SoundControl.h"
-#include "Tactical/AnimationControl.h"
-#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/SmokeEffects.h"
+#include "TileEngine/TileCache.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
-#include "TileEngine/TileAnimation.h"
-#include "TileEngine/TileCache.h"
-#include "TileEngine/ExplosionControl.h"
-#include "Tactical/Weapons.h"
-#include "Tactical/Keys.h"
-#include "Tactical/Bullets.h"
-#endif
+#include "Utils/SoundControl.h"
 
 ANITILE *pAniTileHead = NULL;
 

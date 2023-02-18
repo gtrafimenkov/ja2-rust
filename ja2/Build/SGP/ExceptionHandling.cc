@@ -1,15 +1,11 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <stdlib.h>
+#include "SGP/ExceptionHandling.h"
+
 #include <malloc.h>
 #include <stdio.h>
-#endif
+#include <stdlib.h>
 
-#include "SGP/ExceptionHandling.h"
+#include "SGP/FileMan.h"
+#include "SGP/Types.h"
 
 #ifdef JA2
 #include "GameVersion.h"

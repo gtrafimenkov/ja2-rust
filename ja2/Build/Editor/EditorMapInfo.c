@@ -1,63 +1,57 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
 #include <windows.h>
-#include "TileEngine/TileDef.h"
-#include "Editor/EditSys.h"
-#include "SGP/VSurface.h"
-#include "SGP/VObject.h"
-#include "SGP/MouseSystem.h"
-#include "SGP/ButtonSystem.h"
-#include "SGP/WCheck.h"
-#include "SGP/VSurface.h"
-#include "SGP/Line.h"
-#include "SGP/Input.h"
-#include "TileEngine/SysUtil.h"
-#include "SGP/Font.h"
-#include "Utils/FontControl.h"
+
 #include "Editor/EditScreen.h"
-#include "Editor/SelectWin.h"
-#include "SGP/Video.h"
-#include "SGP/VObjectBlitters.h"
-#include "Tactical/InterfacePanels.h"
-#include "Tactical/InterfaceItems.h"
-#include "Utils/Utilities.h"
-#include "Tactical/WorldItems.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/Overhead.h"  //GetSoldier
-#include "TileEngine/RenderWorld.h"
-#include "Tactical/AnimationData.h"
-#include "Tactical/AnimationControl.h"
-#include "TileEngine/Lighting.h"
+#include "Editor/EditSys.h"
 #include "Editor/EditorDefines.h"
-#include "Editor/EditorMercs.h"
-#include "Editor/EditorTerrain.h"    //for access to TerrainTileDrawMode
-#include "Tactical/SoldierCreate.h"  //The stuff that connects the editor generated information
-#include "Tactical/SoldierInitList.h"
-#include "Strategic/StrategicMap.h"
-#include "Tactical/SoldierAdd.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierProfileType.h"
-#include "Tactical/SoldierProfile.h"
-#include "Utils/TextInput.h"
-#include "SGP/Random.h"
-#include "Utils/WordWrap.h"
 #include "Editor/EditorItems.h"
+#include "Editor/EditorMapInfo.h"
+#include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
-#include "TileEngine/ExitGrids.h"
+#include "Editor/EditorTerrain.h"  //for access to TerrainTileDrawMode
 #include "Editor/EditorUndo.h"
 #include "Editor/ItemStatistics.h"
+#include "Editor/SelectWin.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Font.h"
+#include "SGP/Input.h"
+#include "SGP/Line.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/Random.h"
+#include "SGP/VObject.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/InterfaceItems.h"
+#include "Tactical/InterfacePanels.h"
 #include "Tactical/MapInformation.h"
-#include "Editor/EditorMapInfo.h"
+#include "Tactical/Overhead.h"  //GetSoldier
+#include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierCreate.h"  //The stuff that connects the editor generated information
+#include "Tactical/SoldierInitList.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/SoldierProfileType.h"
+#include "Tactical/WorldItems.h"
 #include "TileEngine/Environment.h"
+#include "TileEngine/ExitGrids.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SimpleRenderUtils.h"
-#endif
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/FontControl.h"
+#include "Utils/TextInput.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 INT8 gbDefaultLightType = PRIMETIME_LIGHT;
 

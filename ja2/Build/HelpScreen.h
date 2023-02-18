@@ -1,6 +1,8 @@
 #ifndef _HELP_SCREEN__H_
 #define _HELP_SCREEN__H_
 
+#include "SGP/Types.h"
+
 // enum used for the different help screens that can come up
 enum {
   HELP_SCREEN_LAPTOP,

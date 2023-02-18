@@ -2,6 +2,7 @@
 #define __QUESTS_H
 
 #include "SGP/FileMan.h"
+#include "SGP/Types.h"
 
 //  Quest.ubStatus values
 #define QUESTNOTSTARTED 0

@@ -1,16 +1,18 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <memory.h>
 #include "Tactical/InventoryChoosing.h"
-#include "Tactical/AnimationData.h"
-#include "Tactical/Items.h"
-#include "SGP/Random.h"
-#include "Tactical/Weapons.h"
-#include "Strategic/StrategicStatus.h"
-#include "Tactical/Campaign.h"
+
+#include <memory.h>
+
 #include "GameSettings.h"
-#endif
+#include "SGP/Random.h"
+#include "Strategic/AutoResolve.h"
+#include "Strategic/MapScreenInterfaceMap.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicStatus.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/Campaign.h"
+#include "Tactical/Items.h"
+#include "Tactical/Weapons.h"
 
 #define ENEMYAMMODROPRATE 50     // % of time enemies drop ammunition
 #define ENEMYGRENADEDROPRATE 25  // % of time enemies drop grenades

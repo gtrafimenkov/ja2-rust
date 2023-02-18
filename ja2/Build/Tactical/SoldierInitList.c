@@ -1,32 +1,41 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <memory.h>
-
-#include "SGP/Types.h"
-
-#include "Strategic/StrategicMap.h"
-#include "Tactical/Overhead.h"
-#include "TileEngine/IsometricUtils.h"
-
-#include "Tactical/SoldierAdd.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
+
+#include <memory.h>
+#include <stdio.h>
+
+#include "Editor/EditorMercs.h"
+#include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
-#include "Tactical/Items.h"
-
-#include "Utils/Cursors.h"
-
-#include "Tactical/MapInformation.h"
-#include "Tactical/SoldierProfile.h"
+#include "SGP/Types.h"
+#include "SaveLoadScreen.h"
+#include "ScreenIDs.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/MapScreenInterfaceMap.h"
+#include "Strategic/Meanwhile.h"
+#include "Strategic/Quests.h"
+#include "Strategic/Scheduling.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicAI.h"
+#include "Strategic/StrategicMap.h"
 #include "SysGlobals.h"
-#include "Editor/EditorMercs.h"
 #include "Tactical/AnimationData.h"
-#include "Utils/Message.h"
+#include "Tactical/InventoryChoosing.h"
+#include "Tactical/Items.h"
+#include "Tactical/MapInformation.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierCreate.h"
+#include "Tactical/SoldierProfile.h"
+#include "TacticalAI/AI.h"
+#include "TacticalAI/NPC.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
+#include "Utils/Cursors.h"
+#include "Utils/DebugControl.h"
 #include "Utils/FontControl.h"
-#endif
+#include "Utils/Message.h"
+#include "Utils/SoundControl.h"
 
 BOOLEAN gfOriginalList = TRUE;
 

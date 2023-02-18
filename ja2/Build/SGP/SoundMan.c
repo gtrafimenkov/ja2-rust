@@ -5,20 +5,17 @@
  *
  * Derek Beland, May 28, 1997
  *********************************************************************************/
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
+#include "SGP/SoundMan.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "SGP/SoundMan.h"
-#include "SGP/FileMan.h"
+
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/LibraryDataBase.h"
 #include "SGP/MemMan.h"
 #include "SGP/Mss.h"
 #include "SGP/Random.h"
-#endif
 
 // Uncomment this to disable the startup of sound hardware
 //#define SOUND_DISABLE

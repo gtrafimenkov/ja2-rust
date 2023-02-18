@@ -1,18 +1,15 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/BobbyRAmmo.h"
-#include "Laptop/BobbyRGuns.h"
+
 #include "Laptop/BobbyR.h"
-#include "Utils/Utilities.h"
+#include "Laptop/BobbyRGuns.h"
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
 #include "Tactical/InterfaceItems.h"
+#include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 UINT32 guiAmmoBackground;
 UINT32 guiAmmoGrid;

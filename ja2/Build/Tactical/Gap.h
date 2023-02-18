@@ -1,6 +1,7 @@
 #ifndef __GAP_H
 #define __GAP_H
 
+#include "SGP/Types.h"
 #include "Tactical/Faces.h"
 
 typedef UINT8 AudioSample8;

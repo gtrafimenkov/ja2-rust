@@ -1,16 +1,9 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
 #include <windows.h>
+
+#include "SGP/Types.h"
 #if defined(JA2) || defined(UTIL)
-#include "SGP/Video.h"
-#else
-#include "video2.h"
-#endif
 #include "SGP/Timer.h"
+#include "SGP/Video.h"
 #endif
 
 #ifndef WIN32_LEAN_AND_MEAN

@@ -2,6 +2,7 @@
 #define _CHEATS__H_
 
 #include "LanguageDefines.h"
+#include "SGP/Types.h"
 
 extern UINT8 gubCheatLevel;
 

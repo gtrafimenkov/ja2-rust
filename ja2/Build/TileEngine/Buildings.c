@@ -1,17 +1,15 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "TileEngine/Buildings.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Tactical/PathAI.h"
-#include "Tactical/StructureWrap.h"
+
 #include "SGP/Random.h"
-#include "Tactical/Overhead.h"
-#include "TileEngine/RenderFun.h"
+#include "SGP/Types.h"
 #include "Strategic/StrategicMap.h"
 #include "SysGlobals.h"
-#endif
+#include "Tactical/Overhead.h"
+#include "Tactical/PathAI.h"
+#include "Tactical/StructureWrap.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/WorldMan.h"
 
 #define ROOF_LOCATION_CHANCE 8
 

@@ -1,19 +1,15 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "SGP/Types.h"
-#include "SGP/Compression.h"
+
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
-#include "SGP/ImgFmt.h"
 #include "SGP/HImage.h"
-#include "SGP/PCX.h"
+#include "SGP/ImgFmt.h"
 #include "SGP/ImpTGA.h"
+#include "SGP/PCX.h"
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
-#endif
 
 // CONVERT_TO_16_BIT
 BOOLEAN ConvertToETRLE(UINT8 **ppDest, UINT32 *puiDestLen, UINT8 **ppSubImageBuffer,

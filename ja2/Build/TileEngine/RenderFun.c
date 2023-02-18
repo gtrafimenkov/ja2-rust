@@ -1,27 +1,24 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "math.h"
-#include <stdio.h>
-#include <errno.h>
-
 #include "TileEngine/RenderFun.h"
-#include "TileEngine/WorldDef.h"
-#include "SGP/Input.h"
-#include "TileEngine/SysUtil.h"
-#include "SGP/Debug.h"
-#include "SGP/WCheck.h"
-#include "TileEngine/WorldMan.h"
+
+#include <errno.h>
+#include <math.h>
+#include <stdio.h>
+
 #include "JAScreens.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Utils/TimerControl.h"
-#include "TileEngine/RenderWorld.h"
-#include "Tactical/FOV.h"
-#include "TileEngine/FogOfWar.h"
-#include "TileEngine/Environment.h"
-#include "Tactical/DialogueControl.h"
+#include "SGP/Debug.h"
+#include "SGP/Input.h"
 #include "SGP/Random.h"
-#endif
+#include "SGP/WCheck.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/FOV.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/FogOfWar.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/TimerControl.h"
 
 // Room Information
 UINT8 gubWorldRoomInfo[WORLD_MAX];

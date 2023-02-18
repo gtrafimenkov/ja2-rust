@@ -1,10 +1,10 @@
 #ifndef __TILEDEF_H
 #define __TILEDEF_H
 
-#include "SGP/VObject.h"
 #include "SGP/Timer.h"
-#include "TileEngine/TileDat.h"
+#include "SGP/VObject.h"
 #include "TileEngine/Structure.h"
+#include "TileEngine/TileDat.h"
 
 // CATEGORY TYPES
 #define NO_TILE 64000

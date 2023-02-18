@@ -2,8 +2,8 @@
 #define __SYSTEM_UTILS
 
 #include "SGP/Font.h"
-#include "TileEngine/IsometricUtils.h"
 #include "Tactical/Interface.h"
+#include "TileEngine/IsometricUtils.h"
 
 // Global variables for video objects
 extern UINT32 guiBOTTOMPANEL;

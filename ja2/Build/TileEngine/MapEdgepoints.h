@@ -1,8 +1,8 @@
 #ifndef __MAP_EDGEPOINTS_H
 #define __MAP_EDGEPOINTS_H
 
-#include "SGP/Types.h"
 #include "SGP/FileMan.h"
+#include "SGP/Types.h"
 
 typedef struct MAPEDGEPOINTINFO {
   UINT8 ubNumPoints;

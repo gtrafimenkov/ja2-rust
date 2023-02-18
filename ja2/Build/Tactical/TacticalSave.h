@@ -1,11 +1,11 @@
 #ifndef __TACTICAL_SAVE_H_
 #define __TACTICAL_SAVE_H_
 
+#include "SGP/Types.h"
+#include "Tactical/RottingCorpses.h"
+#include "Tactical/SoldierProfileType.h"
 #include "Tactical/WorldItems.h"
 #include "TileEngine/WorldDef.h"
-#include "Tactical/RottingCorpses.h"
-
-#include "Tactical/SoldierProfileType.h"
 
 #define MAPS_DIR "Temp\\"
 

@@ -1,6 +1,8 @@
 #ifndef BOXING_H
-
 #define BOXING_H
+
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
 
 #define BOXING_SECTOR_X 5
 #define BOXING_SECTOR_Y 4

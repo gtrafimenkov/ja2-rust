@@ -16,21 +16,17 @@
 //
 //**************************************************************************
 
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <stdlib.h>
+#include "SGP/DBMan.h"
+
 #include <malloc.h>
 #include <stdio.h>
-#include "windows.h"
+#include <stdlib.h>
+#include <windows.h>
+
+#include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
-#include "SGP/DBMan.h"
-#include "SGP/Debug.h"
-#endif
+#include "SGP/Types.h"
 
 //**************************************************************************
 //

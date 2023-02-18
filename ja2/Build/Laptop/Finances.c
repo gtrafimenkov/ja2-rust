@@ -1,21 +1,20 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/Finances.h"
-#include "Strategic/GameClock.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
-#include "Tactical/SoldierProfile.h"
-#include "Utils/Text.h"
-#include "Strategic/StrategicMines.h"
+
+#include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#endif
+#include "SGP/Debug.h"
+#include "SGP/WCheck.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicMines.h"
+#include "Tactical/SoldierProfile.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 // the global defines
 

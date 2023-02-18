@@ -6,8 +6,8 @@
 // structure_extern.h, not structure.h!
 //
 
-#include "SGP/Types.h"
 #include "SGP/HImage.h"
+#include "SGP/Types.h"
 
 // A few words about the overall structure scheme:
 //

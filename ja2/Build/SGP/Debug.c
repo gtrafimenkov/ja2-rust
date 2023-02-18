@@ -13,35 +13,30 @@
 //		xxnov96:HJH				- made it work
 //
 //**************************************************************************
-#include "SGP/SGPAll.h"
-
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <windows.h>
-#include <ddeml.h>
-#include <stdio.h>
 #include "SGP/Debug.h"
-#include "SGP/WCheck.h"
+
+// #include <ddeml.h>
+#include <stdio.h>
+#include <windows.h>
+
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
+#include "SGP/Types.h"
+#include "SGP/WCheck.h"
 #include "SGP/WizShare.h"
 
 // Kris addition
 #ifdef JA2
+#include "GameLoop.h"
+#include "JAScreens.h"
+#include "SGP/Input.h"
 #include "ScreenIDs.h"
 #include "SysGlobals.h"
-#include "JAScreens.h"
-#include "GameLoop.h"
-#include "SGP/Input.h"
 #endif
 
 // CJC added
 #ifndef _NO_DEBUG_TXT
 #include "SGP/FileMan.h"
-#endif
 #endif
 
 #ifdef __cplusplus

@@ -1,8 +1,8 @@
 #ifndef _INTERFACE_H
 #define _INTERFACE_H
 
-#include "Tactical/HandleUI.h"
 #include "SGP/MouseSystem.h"
+#include "Tactical/HandleUI.h"
 #include "TileEngine/Structure.h"
 
 #define MAX_UICOMPOSITES 4

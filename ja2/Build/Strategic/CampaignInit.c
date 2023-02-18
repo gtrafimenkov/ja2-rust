@@ -1,18 +1,17 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "Strategic/CampaignInit.h"
+
+#include "GameSettings.h"
 #include "SGP/Random.h"
+#include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
+#include "Strategic/CreatureSpreading.h"
 #include "Strategic/QueenCommand.h"
-#include "Tactical/Overhead.h"
+#include "Strategic/StrategicAI.h"
 #include "Strategic/StrategicMovement.h"
 #include "Strategic/StrategicStatus.h"
-#include "GameSettings.h"
-#include "Strategic/CreatureSpreading.h"
-#include "Strategic/StrategicAI.h"
-#endif
+#include "Tactical/MapInformation.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/TacticalSave.h"
 
 extern void InitStrategicMovementCosts();
 void InitKnowFacilitiesFlags();

@@ -4,6 +4,8 @@
 #ifndef __SMOOTH_H
 #define __SMOOTH_H
 
+#include "SGP/Types.h"
+
 #define ONELEVELTYPEONEROOF 1
 #define ONELEVELTYPETWOROOF 2
 

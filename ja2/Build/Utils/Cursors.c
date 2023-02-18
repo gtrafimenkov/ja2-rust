@@ -1,20 +1,19 @@
-#include "Utils/UtilsAll.h"
-#include "Tactical/InterfaceItems.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <wchar.h>
-#include "SGP/SGP.h"
 #include "Utils/Cursors.h"
-#include "Utils/TimerControl.h"
+
+#include <wchar.h>
+
 #include "JAScreens.h"
+#include "SGP/CursorControl.h"
 #include "SGP/Font.h"
-#include "Utils/FontControl.h"
+#include "SGP/SGP.h"
 #include "SysGlobals.h"
 #include "Tactical/HandleUI.h"
 #include "Tactical/Interface.h"
+#include "Tactical/InterfaceItems.h"
 #include "Tactical/Overhead.h"
-#include "SGP/CursorControl.h"
-#endif
+#include "Utils/FontControl.h"
+#include "Utils/SoundControl.h"
+#include "Utils/TimerControl.h"
 
 #define NUM_MOUSE_LEVELS 2
 

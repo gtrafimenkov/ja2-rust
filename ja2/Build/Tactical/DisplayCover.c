@@ -1,10 +1,23 @@
-#include "Tactical/TacticalAll.h"
 #include "Tactical/DisplayCover.h"
+
+#include "GameSettings.h"
+#include "SGP/Debug.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/AnimationControl.h"
 #include "Tactical/Interface.h"
+#include "Tactical/LOS.h"
+#include "Tactical/OppList.h"
+#include "Tactical/PathAI.h"
+#include "Tactical/Weapons.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/FontControl.h"
 #include "Utils/Ja25EnglishText.h"
-//#include "Ja25 Strategic Ai.h"
-#ifdef PRECOMPILEDHEADERS
-#endif
+#include "Utils/Message.h"
+#include "Utils/Text.h"
 
 //*******  Local Defines **************************************************
 

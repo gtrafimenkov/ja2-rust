@@ -1,6 +1,8 @@
 #ifndef __PITS_H
 #define __PITS_H
 
+#include "SGP/SGP.h"
+
 void Add3X3Pit(INT32 iMapIndex);
 void Add5X5Pit(INT32 iMapIndex);
 void Remove3X3Pit(INT32 iMapIndex);

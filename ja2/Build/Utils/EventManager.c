@@ -1,15 +1,13 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include "SGP/SGP.h"
-#include "SGP/Container.h"
-#include "SGP/WCheck.h"
 #include "Utils/EventManager.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <time.h>
+
+#include "SGP/Container.h"
+#include "SGP/SGP.h"
+#include "SGP/WCheck.h"
 #include "Utils/TimerControl.h"
-#endif
 
 HLIST hEventQueue = NULL;
 HLIST hDelayEventQueue = NULL;

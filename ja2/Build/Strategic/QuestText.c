@@ -1,9 +1,5 @@
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "SGP/Types.h"
 #include "Strategic/Quests.h"
-#endif
 
 STR16 QuestDescText[] = {
     L"Deliver Letter",

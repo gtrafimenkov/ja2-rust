@@ -1,6 +1,7 @@
 #ifndef __SHADE_TABLE_UTIL_H
 #define __SHADE_TABLE_UTIL_H
 
+#include "SGP/VObject.h"
 #include "TileEngine/TileDat.h"
 
 void DetermineRGBDistributionSettings();

@@ -1,6 +1,8 @@
 #ifndef __CREATURE_SPREADING_H
 #define __CREATURE_SPREADING_H
 
+#include "SGP/Types.h"
+
 void InitCreatureQuest();
 void SpreadCreatures();
 void DecayCreatures();

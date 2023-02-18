@@ -1,6 +1,9 @@
 #ifndef __SOLDIER_FIND_H
 #define __SOLDIER_FIND_H
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 #define FIND_SOLDIER_FULL 0x000000002
 #define FIND_SOLDIER_GRIDNO 0x000000004
 #define FIND_SOLDIER_SAMELEVEL 0x000000008

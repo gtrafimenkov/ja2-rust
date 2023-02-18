@@ -1,8 +1,9 @@
 #ifndef __INTERFACE_ITEMS_H
 #define __INTERFACE_ITEMS_H
 
-#include "Tactical/Items.h"
+#include "SGP/MouseSystem.h"
 #include "Tactical/HandleItems.h"
+#include "Tactical/Items.h"
 
 // DEFINES FOR ITEM SLOT SIZES IN PIXELS
 #define BIG_INV_SLOT_WIDTH 61

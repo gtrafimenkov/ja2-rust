@@ -1,5 +1,6 @@
 #ifndef __IMP_MAINPAGE_H
 #define __IMP_MAINPAGE_H
+
 #include "SGP/Types.h"
 
 void RenderIMPMainPage(void);

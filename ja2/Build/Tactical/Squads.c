@@ -1,20 +1,19 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "Tactical/Squads.h"
-#include "Strategic/StrategicPathing.h"
-#include "Strategic/StrategicMap.h"
-#include "Tactical/Faces.h"
-#include "Strategic/StrategicMovement.h"
+
+#include "JAScreens.h"
+#include "SGP/Types.h"
 #include "Strategic/Assignments.h"
-#include "Tactical/Overhead.h"
-#include "TileEngine/RenderWorld.h"
-#include "Tactical/Interface.h"
-#include "Tactical/Vehicles.h"
 #include "Strategic/MapScreenHelicopter.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicMovement.h"
+#include "Strategic/StrategicPathing.h"
+#include "Tactical/Faces.h"
+#include "Tactical/Interface.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
-#endif
+#include "Tactical/Vehicles.h"
+#include "TileEngine/RenderWorld.h"
 
 typedef struct {
   INT16 uiID;  // The soldiers ID

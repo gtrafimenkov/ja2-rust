@@ -1,21 +1,20 @@
-#include "TileEngine/TileEngineAll.h"
-#include "SGP/WinFont.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "math.h"
-#include <stdio.h>
-#include <errno.h>
-
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/RenderWorld.h"
-#include "SGP/VSurface.h"
+#include "Utils/FontControl.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
+
+#include <errno.h>
+#include <math.h>
+#include <stdio.h>
+
+#include "JAScreens.h"
 #include "SGP/Container.h"
-#include "SGP/WCheck.h"
-#include "SGP/Video.h"
 #include "SGP/VObjectBlitters.h"
-#endif
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "SGP/WinFont.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/WorldDef.h"
 
 #ifdef JA2BETAVERSION
 #include "Utils/Message.h"

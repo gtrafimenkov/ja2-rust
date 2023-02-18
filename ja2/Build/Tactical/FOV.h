@@ -1,6 +1,7 @@
 #ifndef __FOV_H
 #define __FOV_H
 
+#include "SGP/Types.h"
 #include "Tactical/Overhead.h"
 
 void RevealRoofsAndItems(SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLocators,

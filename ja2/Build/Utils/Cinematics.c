@@ -6,43 +6,38 @@
 //	Originally by Derek Beland and Bret Rowden.
 //
 //----------------------------------------------------------------------------------
-//#include "LocalCodeAll.h"
-#include "Utils/UtilsAll.h"
 
-#include "SGP/Types.h"
-#include <stdio.h>
-#include <io.h>
-#include <string.h>
-#include <fcntl.h>
-#include <share.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <malloc.h>
-#include <stdlib.h>
-
-#include "SGP/Debug.h"
-#include "SGP/FileMan.h"
-#include "SGP/smack.h"
-#include "SGP/DDraw.h"
-#include "SGP/Mss.h"
-#include "SGP/DirectXCommon.h"
-#include "SGP/DirectDrawCalls.h"
 #include "Utils/Cinematics.h"
+
+#include <fcntl.h>
+#include <io.h>
+#include <malloc.h>
+#include <share.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#include "SGP/DDraw.h"
+#include "SGP/Debug.h"
+#include "SGP/DirectDrawCalls.h"
+#include "SGP/DirectXCommon.h"
+#include "SGP/FileMan.h"
+#include "SGP/Mss.h"
 #include "SGP/SoundMan.h"
+#include "SGP/Types.h"
+#include "SGP/smack.h"
 
 #ifdef JA2
 #include "SGP/Video.h"
-#else
-#include "video2.h"
 #endif
 
-#include "SGP/VSurfacePrivate.h"
+#include <crtdbg.h>
 
 #include "Intro.h"
-
+#include "SGP/VSurfacePrivate.h"
 #include "radmalw.i"
-
-#include <crtdbg.h>
 
 //-Structures----------------------------------------------------------------------
 

@@ -1,6 +1,31 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#endif
+#include "Tactical/CivQuotes.h"
+
+#include "MessageBoxScreen.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "ScreenIDs.h"
+#include "Strategic/MapScreen.h"
+#include "Strategic/QueenCommand.h"
+#include "Strategic/Quests.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicMines.h"
+#include "Strategic/StrategicTownLoyalty.h"
+#include "Tactical/AnimationData.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/Overhead.h"
+#include "TacticalAI/AI.h"
+#include "TacticalAI/NPC.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/FontControl.h"
+#include "Utils/MercTextBox.h"
+#include "Utils/Message.h"
+#include "Utils/Text.h"
 
 #define DIALOGUE_DEFAULT_WIDTH 200
 #define EXTREAMLY_LOW_TOWN_LOYALTY 20

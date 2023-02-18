@@ -1,6 +1,8 @@
 #ifndef __FILES_H
 #define __FILES_H
 
+#include "SGP/Types.h"
+
 #define FILES_DAT_FILE "TEMP\\files.dat"
 
 void GameInitFiles();

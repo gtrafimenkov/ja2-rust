@@ -1,8 +1,8 @@
 #ifndef __TEXT_H
 #define __TEXT_H
 
-#include "Tactical/Items.h"
 #include "SGP/Types.h"
+#include "Tactical/Items.h"
 
 #define STRING_LENGTH 255
 #define MED_STRING_LENGTH 96  /// 80

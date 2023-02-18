@@ -1,27 +1,22 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
 #include <stdlib.h>
+
+#include "Editor/EditSys.h"
+#include "Editor/EditorBuildings.h"
+#include "Editor/EditorUndo.h"
+#include "Editor/NewSmooth.h"
+#include "Editor/SmoothingUtils.h"
+#include "SGP/Random.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "Editor/NewSmooth.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Editor/EditorBuildings.h"
-#include "Editor/EditSys.h"
-#include "Editor/SmoothingUtils.h"
-#include "Editor/EditorUndo.h"
-#include "TileEngine/StructureInternals.h"
-#include "TileEngine/Environment.h"
-#include "SGP/Random.h"
-#include "TileEngine/RenderFun.h"
-#endif
 
 BOOLEAN CaveAtGridNo(INT32 iMapIndex);
 UINT16 GetCaveTileIndexFromPerimeterValue(UINT8 ubTotal);

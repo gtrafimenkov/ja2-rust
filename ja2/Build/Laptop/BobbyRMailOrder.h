@@ -1,6 +1,9 @@
 #ifndef __BOBBYRMAILORDER_H
 #define __BOBBYRMAILORDER_H
 
+#include "Laptop/LaptopSave.h"
+#include "SGP/Types.h"
+
 // enums for the various destinations that are available in the bobbyR dest drop down box
 enum {
   BR_AUSTIN,

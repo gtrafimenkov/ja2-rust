@@ -193,9 +193,9 @@ RADDEFSTART
 
 #ifdef __RADMAC__
 
-#include <string.h>
-#include <memory.h>
 #include <OSUtils.h>
+#include <memory.h>
+#include <string.h>
 
 #define radstrlen strlen
 

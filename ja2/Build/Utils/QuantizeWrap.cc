@@ -1,14 +1,15 @@
-#include "Utils/UtilsAll.h"
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-#include <windows.h>
-#include "SGP/Types.h"
-#include "SGP/HImage.h"
-#include "Utils/Quantize.h"
 #include "Utils/QuantizeWrap.h"
+
+#include <windows.h>
+
+#include "SGP/HImage.h"
+#include "SGP/Types.h"
 #include "TileEngine/PhysMath.h"
+#include "Utils/Quantize.h"
 
 typedef struct {
   UINT8 r;

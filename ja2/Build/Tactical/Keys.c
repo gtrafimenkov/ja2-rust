@@ -1,39 +1,40 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <memory.h>
-
-#include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
 #include "Tactical/Keys.h"
-#include "SGP/Debug.h"
+
+#include <memory.h>
+#include <stdio.h>
+
 #include "Editor/SmoothingUtils.h"
-#include "Tactical/SkillCheck.h"
-#include "Tactical/OppList.h"
-#include "Tactical/Items.h"
-#include "Tactical/Weapons.h"
-#include "TacticalAI/AI.h"
-#include "Utils/Message.h"
-#include "Utils/Text.h"
-#include "TileEngine/ExplosionControl.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Strategic/StrategicMap.h"
-#include "Tactical/TacticalSave.h"
+#include "SGP/Debug.h"
+#include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "SGP/WCheck.h"
 #include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/MapScreen.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/Campaign.h"
+#include "Tactical/HandleDoors.h"
+#include "Tactical/Interface.h"
+#include "Tactical/Items.h"
 #include "Tactical/LOS.h"
 #include "Tactical/OppList.h"
-#include "TileEngine/TileDat.h"
 #include "Tactical/Overhead.h"
-#include "TileEngine/Structure.h"
+#include "Tactical/SkillCheck.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/TacticalSave.h"
+#include "Tactical/Weapons.h"
+#include "TacticalAI/AI.h"
+#include "TileEngine/ExplosionControl.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/WorldMan.h"
-#include "SGP/WCheck.h"
-#include "SGP/Random.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/TileDat.h"
 #include "TileEngine/WorldDef.h"
-#include "Tactical/Campaign.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Message.h"
 #include "Utils/SoundControl.h"
-#endif
+#include "Utils/Text.h"
 
 DOOR_STATUS *gpDoorStatus = NULL;
 UINT8 gubNumDoorStatus = 0;

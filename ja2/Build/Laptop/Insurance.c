@@ -1,19 +1,16 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/Insurance.h"
+
 #include "Laptop/InsuranceContract.h"
+#include "Laptop/InsuranceText.h"
+#include "Laptop/Laptop.h"
+#include "SGP/Line.h"
 #include "SGP/WCheck.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
+#include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
-#include "SGP/Line.h"
-#include "Laptop/InsuranceText.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Text.h"
-#include "Utils/MultiLanguageGraphicUtils.h"
-#endif
 
 #define INSURANCE_BACKGROUND_WIDTH 125
 #define INSURANCE_BACKGROUND_HEIGHT 100

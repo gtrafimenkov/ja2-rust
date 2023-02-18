@@ -1,16 +1,13 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/InsuranceInfo.h"
+
 #include "Laptop/Insurance.h"
+#include "Laptop/InsuranceText.h"
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
+#include "Utils/Cursors.h"
+#include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
-#include "Laptop/InsuranceText.h"
-#include "Utils/Text.h"
-#endif
 
 #define INS_INFO_FRAUD_TEXT_COLOR FONT_MCOLOR_RED
 

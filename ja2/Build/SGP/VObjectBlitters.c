@@ -1,25 +1,17 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/DirectDrawCalls.h"
 #include <stdio.h>
+
 #include "SGP/Debug.h"
+#include "SGP/DirectDrawCalls.h"
 #if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"  // JA2
-#else
-#include "video2.h"  // Wiz8
 #endif
 #include "SGP/HImage.h"
+#include "SGP/Shading.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectPrivate.h"
 #include "SGP/VideoPrivate.h"
 #include "SGP/WCheck.h"
-#include "SGP/VObject.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/Shading.h"
-#endif
 
 SGPRect ClippingRect = {0, 0, 640, 480};
 // 555      565

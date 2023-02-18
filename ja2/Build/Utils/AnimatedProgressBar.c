@@ -1,16 +1,14 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
 #include "Utils/AnimatedProgressBar.h"
-#include "SGP/MemMan.h"
+
 #include "SGP/Debug.h"
-#include "Utils/FontControl.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "TileEngine/RenderDirty.h"
+#include "TileEngine/SysUtil.h"
+#include "Utils/FontControl.h"
 #include "Utils/MusicControl.h"
-#endif
 
 double rStart, rEnd;
 double rActual;

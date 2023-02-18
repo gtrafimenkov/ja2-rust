@@ -1,33 +1,26 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
-
-#ifndef PRECOMPILEDHEADERS
-#include "TileEngine/TileDef.h"
 #include "Editor/EditSys.h"
-#include "TileEngine/SysUtil.h"
-#include "Utils/FontControl.h"
-#include "TileEngine/RenderWorld.h"  //ClearRenderFlags();
-#include "TileEngine/WorldMan.h"     //HideStructOfGivenType()
-#include "Editor/EditorDefines.h"
 #include "Editor/EditorBuildings.h"
-#include "Editor/EditorTerrain.h"  //for access to TerrainTileDrawMode
-#include "TileEngine/RenderFun.h"
-#include "Editor/NewSmooth.h"
-#include "Editor/EditorUndo.h"
-#include "Editor/EditorTaskbarUtils.h"
+#include "Editor/EditorDefines.h"
 #include "Editor/EditorModes.h"
+#include "Editor/EditorTaskbarUtils.h"
+#include "Editor/EditorTerrain.h"  //for access to TerrainTileDrawMode
+#include "Editor/EditorUndo.h"
+#include "Editor/NewSmooth.h"
+#include "Editor/SelectWin.h"
 #include "Editor/SmoothingUtils.h"
-#include "Utils/TextInput.h"
 #include "Tactical/Keys.h"
 #include "TileEngine/Environment.h"
-#include "Editor/SelectWin.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/RenderWorld.h"  //ClearRenderFlags();
 #include "TileEngine/SimpleRenderUtils.h"
-#endif
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/WorldMan.h"  //HideStructOfGivenType()
+#include "Utils/FontControl.h"
+#include "Utils/TextInput.h"
 
 BOOLEAN fBuildingShowRoofs, fBuildingShowWalls, fBuildingShowRoomInfo;
 UINT16 usCurrentMode;

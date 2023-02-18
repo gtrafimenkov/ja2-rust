@@ -1,6 +1,8 @@
 #ifndef _AMBIENT_TYPES_H
 #define _AMBIENT_TYPES_H
 
+#include "SGP/SGP.h"
+
 #define MAX_AMBIENT_SOUNDS 100
 
 #define AMB_TOD_DAWN 0

@@ -1,13 +1,11 @@
-#include "Utils/UtilsAll.h"
-#include "SGP/WinFont.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "Utils/WordWrap.h"
+
+#include <stdio.h>
+
 #include "SGP/SGP.h"
+#include "SGP/WinFont.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
-#include "Stdio.h"
-#endif
 
 #define SINGLE_CHARACTER_WORD_FOR_WORDWRAP
 

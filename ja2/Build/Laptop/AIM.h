@@ -1,6 +1,7 @@
 #ifndef __AIM_H
 #define __AIM_H
 
+#include "SGP/Types.h"
 #include "Utils/Cursors.h"
 
 //

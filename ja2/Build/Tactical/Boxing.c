@@ -1,21 +1,27 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Tactical/SoldierControl.h"
-#include "Tactical/Overhead.h"
 #include "Tactical/Boxing.h"
-#include "TileEngine/RenderFun.h"
+
+#include "Laptop/History.h"
 #include "SGP/Random.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/SoldierProfile.h"
-#include "TacticalAI/NPC.h"
-#include "Tactical/OppList.h"
-#include "TacticalAI/AI.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/StrategicMap.h"
+#include "Tactical/AnimationData.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/HandleUI.h"
-#include "Tactical/Points.h"
 #include "Tactical/Interface.h"
-#endif
+#include "Tactical/InterfaceDialogue.h"
+#include "Tactical/OppList.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/Points.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/TeamTurns.h"
+#include "TacticalAI/AI.h"
+#include "TacticalAI/NPC.h"
+#include "TileEngine/RenderFun.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/FontControl.h"
+#include "Utils/Message.h"
+#include "Utils/MusicControl.h"
 
 INT16 gsBoxerGridNo[NUM_BOXERS] = {11393, 11233, 11073};
 UINT8 gubBoxerID[NUM_BOXERS] = {NOBODY, NOBODY, NOBODY};

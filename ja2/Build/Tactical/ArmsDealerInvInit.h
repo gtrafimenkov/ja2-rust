@@ -1,6 +1,8 @@
 #ifndef _ARMS_DEALER_INV_INIT__H_
 #define _ARMS_DEALER_INV_INIT__H_
 
+#include "SGP/Types.h"
+
 #define LAST_DEALER_ITEM -1
 #define NO_DEALER_ITEM 0
 

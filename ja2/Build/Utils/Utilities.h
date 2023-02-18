@@ -1,8 +1,9 @@
 #ifndef _UTILITIES_H_
 #define _UTILITIES_H_
 
-#include "Tactical/OverheadTypes.h"
 #include "SGP/SGP.h"
+#include "SGP/Types.h"
+#include "Tactical/OverheadTypes.h"
 
 #define GETPIXELDEPTH() (gbPixelDepth)
 

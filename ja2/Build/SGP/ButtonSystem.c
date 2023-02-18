@@ -4,36 +4,30 @@
         Rewritten mostly by Kris Morness
 ***********************************************************************************************/
 
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <windows.h>
-#include <stdio.h>
+#include "SGP/ButtonSystem.h"
+
 #include <memory.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <windows.h>
+
 #include "SGP/Debug.h"
-#include "SGP/Input.h"
-#include "SGP/MemMan.h"
 #include "SGP/English.h"
+#include "SGP/Input.h"
+#include "SGP/Line.h"
+#include "SGP/MemMan.h"
+#include "SGP/SoundMan.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
-#include "SGP/SoundMan.h"
-#include "SGP/ButtonSystem.h"
-#include "SGP/Line.h"
-#include <stdarg.h>
 #if defined(JA2) || defined(UTIL)
-#include "Utils/WordWrap.h"
-#include "SGP/Video.h"
 #include "SGP/ButtonSoundControl.h"
+#include "SGP/Video.h"
+#include "Utils/WordWrap.h"
 #ifdef _JA2_RENDER_DIRTY
-#include "Utils/FontControl.h"
 #include "TileEngine/RenderDirty.h"
+#include "Utils/FontControl.h"
 #include "Utils/Utilities.h"
-#endif
-#else
-#include "video2.h"
 #endif
 #endif
 

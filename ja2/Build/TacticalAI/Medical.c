@@ -1,18 +1,17 @@
-#include "TacticalAI/AIAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "Strategic/Assignments.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/Items.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/PathAI.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierFunctions.h"
 #include "TacticalAI/AI.h"
 #include "TacticalAI/AIInternals.h"
-#include "Tactical/AnimationControl.h"
-#include "Tactical/PathAI.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/Items.h"
+#include "TileEngine/Buildings.h"
+#include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
-#endif
 
 extern BOOLEAN gfAutoBandageFailed;
 

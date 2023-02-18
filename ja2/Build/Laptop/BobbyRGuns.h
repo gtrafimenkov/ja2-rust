@@ -1,7 +1,9 @@
 #ifndef __BOBBYRGUNS_H
 #define __BOBBYRGUNS_H
 
-//#include "Laptop/LaptopSave.h"
+#include "SGP/Types.h"
+
+// #include "Laptop/LaptopSave.h"
 
 #define BOBBYRDESCFILE "BINARYDATA\\BrayDesc.edt"
 

@@ -1,16 +1,13 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
-#include "Laptop/InsuranceText.h"
-#include "Laptop/Insurance.h"
 #include "Laptop/InsuranceComments.h"
+
+#include "Laptop/Insurance.h"
+#include "Laptop/InsuranceText.h"
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
-#include "Utils/Utilities.h"
-#include "Utils/WordWrap.h"
 #include "Utils/Cursors.h"
 #include "Utils/Text.h"
-#endif
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define INS_CMNT_TITLE_Y 52 + LAPTOP_SCREEN_WEB_UL_Y
 

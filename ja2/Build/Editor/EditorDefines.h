@@ -4,8 +4,8 @@
 #ifndef __EDITORDEFINES_H
 #define __EDITORDEFINES_H
 
-#include "SGP/Types.h"
 #include "Editor/ButtonDefines.h"
+#include "SGP/Types.h"
 
 enum {
   TBAR_MODE_NONE,

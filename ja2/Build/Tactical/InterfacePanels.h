@@ -1,6 +1,10 @@
 #ifndef __INTERFACE_PANELS
 #define __INTERFACE_PANELS
 
+#include "SGP/MouseSystem.h"
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 enum {
   STANCEUP_BUTTON = 0,
   UPDOWN_BUTTON,

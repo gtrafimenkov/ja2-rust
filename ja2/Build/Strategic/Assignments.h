@@ -3,10 +3,10 @@
 
 // header for assignment manipulation/updating for characters
 
-#include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/Types.h"
 #include "Strategic/StrategicMovement.h"
+#include "Tactical/SoldierControl.h"
 
 // this distinguishes whether we're only looking for patients healable THIS HOUR (those that have
 // been on their assignment long enough), or those that will be healable EVER (regardless of whether

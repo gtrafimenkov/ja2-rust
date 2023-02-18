@@ -1,30 +1,30 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
-#include "Laptop/Insurance.h"
 #include "Laptop/InsuranceContract.h"
-#include "SGP/WCheck.h"
-#include "Utils/Utilities.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
-#include "Laptop/InsuranceText.h"
-#include "stdio.h"
-#include "Tactical/SoldierProfile.h"
-#include "Tactical/Overhead.h"
-#include "Utils/TextInput.h"
-#include "Tactical/SoldierAdd.h"
-#include "Strategic/GameClock.h"
+
+#include <stdio.h>
+
+#include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
-#include "Strategic/GameEventHook.h"
+#include "Laptop/Insurance.h"
+#include "Laptop/InsuranceText.h"
+#include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
 #include "SGP/English.h"
-#include "Utils/Text.h"
 #include "SGP/Random.h"
-#include "Strategic/StrategicStatus.h"
+#include "SGP/WCheck.h"
 #include "Strategic/Assignments.h"
-#endif
+#include "Strategic/GameClock.h"
+#include "Strategic/GameEventHook.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/StrategicStatus.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierProfile.h"
+#include "Utils/Cursors.h"
+#include "Utils/Text.h"
+#include "Utils/TextInput.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define INS_CTRCT_ORDER_GRID_WIDTH 132
 #define INS_CTRCT_ORDER_GRID_HEIGHT 216

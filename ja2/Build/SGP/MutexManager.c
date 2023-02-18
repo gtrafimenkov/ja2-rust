@@ -1,12 +1,6 @@
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
 #include "SGP/MutexManager.h"
+
 #include "SGP/Debug.h"
-#endif
-//#define __MUTEX_TYPE
 
 #ifdef __MUTEX_TYPE
 

@@ -1,11 +1,11 @@
 #ifndef __PHYSICS_H
 #define __PHYSICS_H
 
-#include "TileEngine/PhysMath.h"
 #include "SGP/SGP.h"
-#include "TileEngine/WorldDef.h"
 #include "Tactical/Items.h"
 #include "Tactical/SoldierControl.h"
+#include "TileEngine/PhysMath.h"
+#include "TileEngine/WorldDef.h"
 
 extern UINT32 guiNumObjectSlots;
 

@@ -1,9 +1,9 @@
 #ifndef __STRATMAP_H
 #define __STRATMAP_H
-// this file is for manipulation of the strategic map structure
+
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
-#include "SGP/FileMan.h"
 
 // The maximum size for any team strategically speaking.  For example, we can't have more than 20
 // enemies, militia, or creatures at a time.

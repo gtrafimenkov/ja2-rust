@@ -1,6 +1,8 @@
 #ifndef __INSURANCE_H
 #define __INSURANCE_H
 
+#include "SGP/Types.h"
+
 #define INS_FONT_COLOR 2
 #define INS_FONT_COLOR_RED FONT_MCOLOR_RED
 #define INS_FONT_BIG FONT14ARIAL

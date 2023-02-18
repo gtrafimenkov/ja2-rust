@@ -1,6 +1,7 @@
 #ifndef __SOLDIER_TILE_H
 #define __SOLDIER_TILE_H
 
+#include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 
 #define MOVE_TILE_CLEAR 1

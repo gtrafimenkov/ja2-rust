@@ -1,6 +1,8 @@
 #ifndef _SAVE_LOAD_GAME_H_
 #define _SAVE_LOAD_GAME_H_
 
+#include "GameSettings.h"
+#include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 
 #define BYTESINMEGABYTE 1048576  // 1024*1024

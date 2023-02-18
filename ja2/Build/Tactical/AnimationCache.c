@@ -1,19 +1,16 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "Tactical/AnimationCache.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
+#include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
-#include "Tactical/AnimationCache.h"
-#include "Tactical/AnimationData.h"
-#include "Tactical/AnimationControl.h"
 #include "SysGlobals.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/AnimationData.h"
 #include "Utils/DebugControl.h"
-#endif
 
 #define EMPTY_CACHE_ENTRY 65000
 

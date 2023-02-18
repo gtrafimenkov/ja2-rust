@@ -1,14 +1,15 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "stdio.h"
-#include "SGP/SGP.h"
-#include "TileEngine/AmbientTypes.h"
+#include "TileEngine/AmbientControl.h"
+
+#include <stdio.h>
+
 #include "SGP/FileMan.h"
-#include "TileEngine/Environment.h"
-#include "Utils/SoundControl.h"
+#include "SGP/Random.h"
+#include "SGP/SGP.h"
 #include "Strategic/GameEvents.h"
-#endif
+#include "TileEngine/AmbientTypes.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/Lighting.h"
+#include "Utils/SoundControl.h"
 
 AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
 INT16 gsNumAmbData = 0;

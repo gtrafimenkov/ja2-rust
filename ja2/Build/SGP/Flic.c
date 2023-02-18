@@ -33,9 +33,11 @@
 //**************************************************************************
 
 //#include "stdafx.h"
-#include <conio.h>
 #include "SGP/Flic.h"
-#include "windows.h"
+
+#include <conio.h>
+#include <windows.h>
+
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 

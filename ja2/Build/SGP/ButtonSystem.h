@@ -7,10 +7,11 @@
 #ifndef __BUTTON_SYSTEM_H
 #define __BUTTON_SYSTEM_H
 
-#include "SGP/VObject.h"
+#include "SGP/ButtonSoundControl.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/SoundMan.h"
-#include "SGP/ButtonSoundControl.h"
+#include "SGP/Types.h"
+#include "SGP/VObject.h"
 
 #ifdef __cplusplus
 extern "C" {

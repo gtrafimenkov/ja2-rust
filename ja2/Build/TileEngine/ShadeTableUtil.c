@@ -1,14 +1,12 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include "SGP/Types.h"
-#include "TileEngine/Lighting.h"
 #include "TileEngine/ShadeTableUtil.h"
-#include "SGP/Video.h"
-#include "TileEngine/WorldDat.h"
+
+#include <stdio.h>
+
 #include "SGP/FileMan.h"
-#endif
+#include "SGP/Types.h"
+#include "SGP/Video.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/WorldDat.h"
 
 #define SHADE_TABLE_DIR "ShadeTables"
 

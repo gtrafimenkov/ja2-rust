@@ -1,24 +1,21 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/CharProfile.h"
 #include "Laptop/IMPHomePage.h"
-#include "Laptop/IMPVideoObjects.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/EncryptedFile.h"
-#include "Utils/Cursors.h"
-#include "Laptop/Laptop.h"
+
+#include "Laptop/CharProfile.h"
 #include "Laptop/IMPTextSystem.h"
-#include "Utils/TimerControl.h"
-#include "Utils/TextInput.h"
+#include "Laptop/IMPVideoObjects.h"
+#include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "SGP/Line.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
-#endif
+#include "SGP/Line.h"
+#include "SGP/WCheck.h"
+#include "TileEngine/RenderDirty.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/TextInput.h"
+#include "Utils/TimerControl.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 void GetPlayerKeyBoardInputForIMPHomePage(void);
 void DisplayPlayerActivationString(void);

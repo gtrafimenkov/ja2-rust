@@ -1,6 +1,8 @@
 #ifndef __LIGHT_EFFECTS
 #define __LIGHT_EFFECTS
 
+#include "SGP/Types.h"
+
 // Light effect types
 enum {
   NO_LIGHT_EFFECT,

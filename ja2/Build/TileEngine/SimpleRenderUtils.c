@@ -1,10 +1,6 @@
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "SGP/Types.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
-#endif
 
 void MarkMapIndexDirty(INT32 iMapIndex) {
   gpWorldLevelData[iMapIndex].uiFlags |= MAPELEMENT_REDRAW;

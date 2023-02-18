@@ -1,6 +1,9 @@
 #ifndef LOS_H
 #define LOS_H
 
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
+
 //#define LOS_DEBUG
 
 // fixed-point arithmetic definitions start here

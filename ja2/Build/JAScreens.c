@@ -1,79 +1,65 @@
-#include "JA2All.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
+#include "JAScreens.h"
+
 #include <stdarg.h>
+#include <stdio.h>
+#include <tchar.h>
 #include <time.h>
-#include "SGP/SGP.h"
+#include <wchar.h>
+
+#include "Editor/EditScreen.h"
+#include "FadeScreen.h"
 #include "GameLoop.h"
-#include "SGP/HImage.h"
-#include "SGP/VObject.h"
-#include "SGP/VObjectPrivate.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/WCheck.h"
-#include "SGP/Input.h"
+#include "GameScreen.h"
+#include "GameVersion.h"
+#include "Init.h"
+#include "JA2DemoAds.h"
+#include "LanguageDefines.h"
+#include "MainMenuScreen.h"
+#include "SGP/CursorControl.h"
+#include "SGP/English.h"
 #include "SGP/Font.h"
-#include "SGP/Timer.h"
+#include "SGP/HImage.h"
+#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/Random.h"
+#include "SGP/SGP.h"
+#include "SGP/Timer.h"
+#include "SGP/VObject.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectPrivate.h"
+#include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Screens.h"
-#include "Utils/FontControl.h"
-#include "TileEngine/SysUtil.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/GameInit.h"
+#include "SysGlobals.h"
+#include "Tactical/AnimationCache.h"
+#include "Tactical/Interface.h"
+#include "Tactical/InterfacePanels.h"
+#include "Tactical/Overhead.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/Lighting.h"
+#include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDef.h"
-#include "Editor/EditScreen.h"
-#include <wchar.h>
-#include <tchar.h>
-#include "Utils/TimerControl.h"
-#include "SysGlobals.h"
-#include "Tactical/Interface.h"
-#include "Tactical/Overhead.h"
-#include "Utils/Utilities.h"
-#include "TileEngine/RenderDirty.h"
-#include "JAScreens.h"
-#include "GameLoop.h"
 #include "Utils/Cursors.h"
 #include "Utils/EventPump.h"
-#include "TileEngine/Environment.h"
-#include "Tactical/AnimationCache.h"
-#include "TileEngine/Lighting.h"
-#include "Tactical/InterfacePanels.h"
+#include "Utils/FontControl.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
-#include "MainMenuScreen.h"
-#include "Strategic/GameInit.h"
-#include "Init.h"
-#include "SGP/CursorControl.h"
-#include "Utils/Utilities.h"
-#include "GameVersion.h"
-#include "Strategic/GameClock.h"
-#include "GameScreen.h"
-#include "SGP/English.h"
-#include "SGP/Random.h"
-#include "Utils/WordWrap.h"
-#include "Utils/SoundControl.h"
-#include "FadeScreen.h"
-#include "Utils/WordWrap.h"
-#include "JA2DemoAds.h"
-#include "Utils/MultiLanguageGraphicUtils.h"
 #include "Utils/Text.h"
-#include "LanguageDefines.h"
-#endif
+#include "Utils/TimerControl.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define _UNICODE
-// Networking Stuff
-#ifdef NETWORKED
-
-#include "Communication.h"
-#include "Application Msg.h"
-#include "Networking.h"
-
-extern ClientReadyType gMsgClientReady;
-extern BOOLEAN gfAmINetworked;
-#endif
 
 #define MAX_DEBUG_PAGES 4
+
+UINT32 guiCurrentScreen;
 
 // GLOBAL FOR PAL EDITOR
 UINT8 CurrentPalette = 0;

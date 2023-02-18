@@ -17,6 +17,7 @@
 // *****************************************************************************
 
 #include "SGP/MouseSystemMacros.h"
+#include "SGP/Types.h"
 
 #ifndef _MOUSE_SYSTEM_H_
 #define _MOUSE_SYSTEM_H_

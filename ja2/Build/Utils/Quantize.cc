@@ -1,13 +1,13 @@
-#include "Utils/UtilsAll.h"
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-#include "SGP/Types.h"
-#include <windows.h>
 #include "Utils/Quantize.h"
-#include "SGP/Types.h"
+
+#include <windows.h>
+
 #include "SGP/HImage.h"
+#include "SGP/Types.h"
 
 CQuantizer::CQuantizer(UINT nMaxColors, UINT nColorBits) {
   m_pTree = NULL;

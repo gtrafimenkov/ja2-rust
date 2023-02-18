@@ -1,20 +1,17 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/AIM.h"
-#include "Utils/Utilities.h"
-#include "SGP/WCheck.h"
-#include "Utils/TimerControl.h"
-#include "SGP/Debug.h"
-#include "Utils/WordWrap.h"
-#include "Utils/EncryptedFile.h"
+
 #include "Laptop/Email.h"
-#include "Strategic/GameClock.h"
-#include "Utils/Text.h"
+#include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "SGP/Debug.h"
+#include "SGP/WCheck.h"
+#include "Strategic/GameClock.h"
+#include "Utils/EncryptedFile.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
-#endif
+#include "Utils/Text.h"
+#include "Utils/TimerControl.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 UINT8 AimMercArray[MAX_NUMBER_MERCS];
 

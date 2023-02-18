@@ -1,11 +1,22 @@
-#include "JA2All.h"
 #include "Credits.h"
-#include "Utils/EncryptedFile.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+
+#include "SGP/ButtonSystem.h"
+#include "SGP/English.h"
+#include "SGP/Input.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/Random.h"
 #include "SGP/Types.h"
-#include "Credits.h"
-#endif
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/SysUtil.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/FontControl.h"
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 // externals
 extern HVSURFACE ghFrameBuffer;

@@ -2,10 +2,10 @@
 #define __MESSAGE_H
 
 //#include "SGP/SGP.h"
-#include "SGP/Font.h"
-#include "Utils/FontControl.h"
-#include "SGP/Types.h"
 #include "SGP/FileMan.h"
+#include "SGP/Font.h"
+#include "SGP/Types.h"
+#include "Utils/FontControl.h"
 
 struct stringstruct {
   STR16 pString16;

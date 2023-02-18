@@ -1,39 +1,41 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-
-#else
-#include "math.h"
-#include <stdio.h>
-#include <errno.h>
-
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/RenderWorld.h"
-#include "SGP/VSurface.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
-#include "SGP/Container.h"
-#include "SGP/WCheck.h"
-#include "SGP/Video.h"
-#include "SGP/VObjectBlitters.h"
 #include "Tactical/Faces.h"
-#include "Utils/Utilities.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/Gap.h"
-#include "Tactical/SoldierProfile.h"
-#include "Utils/SoundControl.h"
-#include "Tactical/TeamTurns.h"
-#include "Tactical/SoldierMacros.h"
-#include "Tactical/DialogueControl.h"
-#include "Utils/FontControl.h"
-#include "Strategic/Assignments.h"
-#include "SGP/Random.h"
-#include "SGP/Line.h"
+
+#include <errno.h>
+#include <math.h>
+#include <stdio.h>
+
 #include "GameSettings.h"
-#include "Tactical/Squads.h"
-#include "Tactical/Interface.h"
+#include "JAScreens.h"
+#include "SGP/Container.h"
+#include "SGP/Line.h"
+#include "SGP/Random.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "Strategic/Assignments.h"
+#include "Strategic/MapScreenInterface.h"
+#include "Strategic/MapScreenInterfaceMap.h"
+#include "Strategic/Meanwhile.h"
 #include "Strategic/Quests.h"
 #include "Tactical/AnimationControl.h"
-#endif
+#include "Tactical/DialogueControl.h"
+#include "Tactical/DrugsAndAlcohol.h"
+#include "Tactical/Gap.h"
+#include "Tactical/Interface.h"
+#include "Tactical/InterfaceItems.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierMacros.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/Squads.h"
+#include "Tactical/TeamTurns.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/WorldDef.h"
+#include "Utils/FontControl.h"
+#include "Utils/SoundControl.h"
+#include "Utils/Utilities.h"
 
 // Defines
 #define NUM_FACE_SLOTS 50

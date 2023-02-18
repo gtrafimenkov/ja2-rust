@@ -1,9 +1,9 @@
 #ifndef __VOBJECT_H
 #define __VOBJECT_H
 
-#include "SGP/Types.h"
 #include "SGP/Container.h"
 #include "SGP/HImage.h"
+#include "SGP/Types.h"
 
 // ************************************************************************************
 //

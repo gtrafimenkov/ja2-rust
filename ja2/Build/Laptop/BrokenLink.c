@@ -1,9 +1,9 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
 #include "Laptop/BrokenLink.h"
-#else
 
-#endif
+#include "Laptop/Laptop.h"
+#include "SGP/Font.h"
+#include "Utils/Text.h"
+#include "Utils/WordWrap.h"
 
 #define BROKEN_LINK__FONT FONT12ARIAL
 #define BROKEN_LINK__COLOR FONT_MCOLOR_BLACK

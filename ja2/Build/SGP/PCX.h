@@ -1,8 +1,8 @@
 #ifndef __PCX_
 #define __PCX_
 
-#include "SGP/Types.h"
 #include "SGP/HImage.h"
+#include "SGP/Types.h"
 
 typedef struct {
   UINT8 ubManufacturer;

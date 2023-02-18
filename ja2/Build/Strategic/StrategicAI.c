@@ -1,25 +1,36 @@
-
-#include "Strategic/StrategicAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include "SGP/Types.h"
-#include "Strategic/StrategicMovement.h"
-#include "Strategic/QueenCommand.h"
 #include "Strategic/StrategicAI.h"
-#include "Strategic/GameEventHook.h"
+
+#include <stdio.h>
+
 #include "GameSettings.h"
-#include "Strategic/CampaignTypes.h"
+#include "JAScreens.h"
+#include "MessageBoxScreen.h"
 #include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "Strategic/CampaignInit.h"
+#include "Strategic/CampaignTypes.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/GameEventHook.h"
+#include "Strategic/GameInit.h"
+#include "Strategic/PlayerCommand.h"
+#include "Strategic/PreBattleInterface.h"
+#include "Strategic/QueenCommand.h"
+#include "Strategic/Quests.h"
+#include "Strategic/Scheduling.h"
+#include "Strategic/Strategic.h"
+#include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicMovement.h"
 #include "Strategic/StrategicPathing.h"
+#include "Strategic/TownMilitia.h"
+#include "Tactical/Campaign.h"
+#include "Tactical/InterfaceDialogue.h"
+#include "Tactical/MapInformation.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/Squads.h"
+#include "TileEngine/ExplosionControl.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
-#include "Strategic/StrategicMap.h"
-#include "Strategic/GameClock.h"
-#include "Strategic/Strategic.h"
-#include "TileEngine/ExplosionControl.h"
-#include "Strategic/TownMilitia.h"
-#endif
 
 #define SAI_VERSION 29
 

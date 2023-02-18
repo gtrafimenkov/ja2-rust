@@ -16,15 +16,10 @@
 //
 //**************************************************************************
 
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
 #include "SGP/RegInst.h"
+
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
-#endif
 
 //**************************************************************************
 //

@@ -1,24 +1,22 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+#include "Utils/TextInput.h"
+
 #include <math.h>
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <time.h>
 #include <wchar.h>
-#include "SGP/Input.h"
-#include "SGP/Font.h"
+
+#include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/Font.h"
+#include "SGP/Input.h"
+#include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
-#include "SGP/Debug.h"
 #include "Utils/Cursors.h"
-#include "Utils/TextInput.h"
-#include "Utils/TimerControl.h"
-#include "SGP/VObjectBlitters.h"
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
-#endif
+#include "Utils/TimerControl.h"
 
 STR16 szClipboard;
 BOOLEAN gfNoScroll = FALSE;

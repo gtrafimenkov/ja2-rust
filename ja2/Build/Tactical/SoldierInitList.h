@@ -1,8 +1,8 @@
 #ifndef __SOLDIER_INIT_LIST_H
 #define __SOLDIER_INIT_LIST_H
 
-#include "Tactical/SoldierCreate.h"
 #include "SGP/FileMan.h"
+#include "Tactical/SoldierCreate.h"
 
 typedef struct SOLDIERINITNODE {
   UINT8 ubNodeID;

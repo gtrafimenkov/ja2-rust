@@ -4,6 +4,8 @@
 #ifndef __CURSOR_MODES_H
 #define __CURSOR_MODES_H
 
+#include "SGP/Types.h"
+
 enum {
   SMALLSELECTION,   // 1x1
   MEDIUMSELECTION,  // 3x3

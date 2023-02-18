@@ -2,33 +2,30 @@
 #define __SGP_
 
 #include "Local.h"
-#include "SGP/Types.h"
-#include "SGP/Timer.h"
 #include "SGP/Debug.h"
-
+#include "SGP/Timer.h"
+#include "SGP/Types.h"
 #include "SysGlobals.h"
 
 #if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#else
-#include "video2.h"
 #endif
 
 #ifndef JA2
-#include "SGP/Input.h"
-#include "SGP/MemMan.h"
-#include "SGP/FileMan.h"
-#include "SGP/DBMan.h"
-#include "SGP/SoundMan.h"
-#include "SGP/PCX.h"
-#include "SGP/Line.h"
 #include "GameLoop.h"
-#include "SGP/Font.h"
+#include "SGP/DBMan.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
+#include "SGP/Font.h"
+#include "SGP/Input.h"
+#include "SGP/Line.h"
+#include "SGP/MemMan.h"
 #include "SGP/MutexManager.h"
-#include "SGP/VObject.h"
+#include "SGP/PCX.h"
 #include "SGP/Random.h"
 #include "SGP/Shading.h"
+#include "SGP/SoundMan.h"
+#include "SGP/VObject.h"
 #endif
 
 #ifdef __cplusplus

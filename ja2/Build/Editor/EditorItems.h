@@ -4,6 +4,8 @@
 #ifndef __EDITORITEMS_H
 #define __EDITORITEMS_H
 
+#include "SGP/Types.h"
+
 typedef struct {
   BOOLEAN fGameInit;      // Used for initializing save variables the first time.
                           // This flag is initialize at

@@ -1,15 +1,12 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
 #include "Laptop/AIMLinks.h"
+
 #include "Laptop/AIM.h"
-#include "Utils/Utilities.h"
+#include "Laptop/Laptop.h"
 #include "SGP/WCheck.h"
-#include "Utils/WordWrap.h"
-#include "Utils/Text.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
-#endif
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
+#include "Utils/WordWrap.h"
 
 #define AIM_LINK_TITLE_FONT FONT14ARIAL
 #define AIM_LINK_TITLE_COLOR AIM_GREEN

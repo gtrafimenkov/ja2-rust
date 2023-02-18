@@ -1,8 +1,9 @@
 #ifndef _KEYS_H_
 #define _KEYS_H_
 
-#include "SGP/Types.h"
 #include "SGP/FileMan.h"
+#include "SGP/Types.h"
+#include "Tactical/SoldierControl.h"
 
 typedef struct {
   UINT16 usItem;         // index in item table for key

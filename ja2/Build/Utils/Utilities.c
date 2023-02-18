@@ -1,20 +1,18 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "SGP/Types.h"
-#include <stdio.h>
-#include <Windows.h>
-#include "SGP/SGP.h"
-#include "time.h"
-#include "SGP/VObject.h"
-#include "SGP/FileMan.h"
 #include "Utils/Utilities.h"
-#include "Utils/FontControl.h"
-#include "Tactical/Overhead.h"
-#include "Tactical/OverheadTypes.h"
+
+#include <stdio.h>
+#include <time.h>
+#include <windows.h>
+
+#include "SGP/FileMan.h"
+#include "SGP/SGP.h"
+#include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
-#endif
+#include "Tactical/Overhead.h"
+#include "Tactical/OverheadTypes.h"
+#include "Utils/FontControl.h"
 
 extern BOOLEAN GetCDromDriveLetter(STR8 pString);
 

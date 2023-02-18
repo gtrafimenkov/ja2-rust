@@ -1,13 +1,10 @@
-#include "Utils/UtilsAll.h"
 #include "Utils/Ja25EnglishText.h"
-#ifdef PRECOMPILEDHEADERS
-#else
+
 #include "LanguageDefines.h"
 #ifdef ENGLISH
-#include "Utils/Text.h"
-#include "SGP/FileMan.h"
 #include "JA2DemoAds.h"
-#endif
+#include "SGP/FileMan.h"
+#include "Utils/Text.h"
 #endif
 
 #ifdef ENGLISH

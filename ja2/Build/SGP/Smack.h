@@ -258,9 +258,9 @@ RADEXPFUNC u32 RADEXPLINK SmackSetSystemRes(u32 mode);  // use SMACKRES* values
 
 #ifdef __RADMAC__
 
-#include <windows.h>
 #include <palettes.h>
 #include <qdoffscreen.h>
+#include <windows.h>
 
 #define SmackTimerSetup()
 #define SmackTimerDone()
@@ -316,7 +316,8 @@ typedef struct SmackBufTag {
 #ifdef __RADWIN__
 
 #define INCLUDE_MMSYSTEM_H
-#include "windows.h"
+#include <windows.h>
+
 #include "windowsx.h"
 
 #ifdef __RADNT__  // to combat WIN32_LEAN_AND_MEAN

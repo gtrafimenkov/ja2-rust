@@ -1,12 +1,8 @@
-#include "Utils/UtilsAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "LanguageDefines.h"
 #ifdef FRENCH
-#include "Utils/Text.h"
-#include "SGP/FileMan.h"
 #include "JA2DemoAds.h"
-#endif
+#include "SGP/FileMan.h"
+#include "Utils/Text.h"
 #endif
 
 #ifdef FRENCH

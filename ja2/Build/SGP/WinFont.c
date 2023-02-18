@@ -1,26 +1,23 @@
-#include "SGP/SGPAll.h"
+#include "SGP/WinFont.h"
 
-//#define UNICODE
-#include "SGP/Types.h"
-#include <stdio.h>
-#include <stdarg.h>
 #include <malloc.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include <wchar.h>
 #include <windows.h>
 #include <windowsx.h>
-#include <stdarg.h>
-#include <wchar.h>
-#include <string.h>
-#include "SGP/SGP.h"
-#include "SGP/MemMan.h"
+
+#include "SGP/DDraw.h"
+#include "SGP/Debug.h"
+#include "SGP/DirectXCommon.h"
 #include "SGP/FileMan.h"
 #include "SGP/Font.h"
-#include "SGP/Debug.h"
+#include "SGP/MemMan.h"
+#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/VSurfacePrivate.h"
-#include "SGP/DirectXCommon.h"
-#include "SGP/DDraw.h"
-#include "SGP/WinFont.h"
-#include "SGP/Font.h"
 
 INT32 FindFreeWinFont(void);
 BOOLEAN gfEnumSucceed = FALSE;

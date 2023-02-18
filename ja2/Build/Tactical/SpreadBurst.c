@@ -1,21 +1,18 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/Weapons.h"
+
 #include "SGP/CursorControl.h"
-#include "Utils/Cursors.h"
-#include "Tactical/SoldierFind.h"
-#include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/RenderDirty.h"
+#include "SGP/Debug.h"
+#include "SGP/WCheck.h"
 #include "Tactical/Interface.h"
-#endif
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierFind.h"
+#include "Tactical/Weapons.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "Utils/Cursors.h"
 
 #define MAX_BURST_LOCATIONS 50
 

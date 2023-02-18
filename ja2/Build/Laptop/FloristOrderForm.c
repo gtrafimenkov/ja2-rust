@@ -1,25 +1,24 @@
-#include "Laptop/LaptopAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "Laptop/Laptop.h"
-#include "Laptop/Florist.h"
 #include "Laptop/FloristOrderForm.h"
+
+#include <stdio.h>
+
+#include "Laptop/Finances.h"
+#include "Laptop/Florist.h"
+#include "Laptop/FloristCards.h"
+#include "Laptop/FloristGallery.h"
+#include "Laptop/Laptop.h"
+#include "Laptop/LaptopSave.h"
+#include "SGP/English.h"
+#include "SGP/Random.h"
 #include "SGP/WCheck.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/Meanwhile.h"
+#include "Utils/Cursors.h"
+#include "Utils/EncryptedFile.h"
+#include "Utils/Text.h"
+#include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "Utils/Cursors.h"
-#include "Laptop/FloristGallery.h"
-#include "stdio.h"
-#include "Utils/EncryptedFile.h"
-#include "Laptop/FloristCards.h"
-#include "Utils/TextInput.h"
-#include "Laptop/Finances.h"
-#include "Strategic/GameClock.h"
-#include "SGP/English.h"
-#include "Utils/Text.h"
-#endif
-
-#include "Strategic/Meanwhile.h"
 
 #define FLOWER_ORDEER_TINY_FONT FONT10ARIAL
 #define FLOWER_ORDEER_SMALL_FONT FONT12ARIAL

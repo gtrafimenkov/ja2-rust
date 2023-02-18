@@ -1,35 +1,41 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <string.h>
-#include "SGP/WCheck.h"
-#include "stdlib.h"
-#include "SGP/Debug.h"
-#include "Tactical/SoldierControl.h"
-#include "Tactical/Weapons.h"
-#include "Tactical/HandleItems.h"
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/WorldMan.h"
-#include "Tactical/RottingCorpses.h"
-#include "TileEngine/TileCache.h"
-#include "TileEngine/IsometricUtils.h"
-#include "Tactical/AnimationControl.h"
-#include "Utils/Utilities.h"
-#include "Strategic/GameClock.h"
-#include "Tactical/SoldierCreate.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/TileAnimation.h"
 #include "Tactical/MercEntering.h"
-#include "Utils/SoundControl.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
+#include "SGP/English.h"
+#include "SGP/WCheck.h"
+#include "Strategic/GameClock.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
+#include "Strategic/StrategicTurns.h"
+#include "Tactical/AnimationControl.h"
+#include "Tactical/DialogueControl.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/HandleUI.h"
+#include "Tactical/MercHiring.h"
+#include "Tactical/RottingCorpses.h"
+#include "Tactical/SoldierControl.h"
+#include "Tactical/SoldierCreate.h"
 #include "Tactical/Squads.h"
-#include "SGP/English.h"
+#include "Tactical/Weapons.h"
+#include "TacticalAI/AI.h"
+#include "TileEngine/IsometricUtils.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/TileAnimation.h"
+#include "TileEngine/TileCache.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
-#include "SGP/CursorControl.h"
-#endif
+#include "Utils/FontControl.h"
+#include "Utils/Message.h"
+#include "Utils/MusicControl.h"
+#include "Utils/SoundControl.h"
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
 
 #define MAX_MERC_IN_HELI 20
 #define MAX_HELI_SCRIPT 30

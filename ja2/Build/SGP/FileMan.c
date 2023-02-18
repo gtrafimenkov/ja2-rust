@@ -26,27 +26,22 @@
 //				Includes
 //
 //**************************************************************************
-#include "SGP/SGPAll.h"
-#ifdef PRECOMPILEDHEADERS
-#elif defined(WIZ8_PRECOMPILED_HEADERS)
-#include "WIZ8 SGP ALL.H"
-#else
-#include "SGP/Types.h"
-#include <stdlib.h>
+#include "SGP/FileMan.h"
+
+#include <direct.h>
 #include <malloc.h>
 #include <stdio.h>
-#include <direct.h>
+#include <stdlib.h>
+#include <windows.h>
 
-#include "windows.h"
-#include "SGP/FileMan.h"
-#include "SGP/MemMan.h"
+#include "SGP/Container.h"
 #include "SGP/DBMan.h"
 #include "SGP/Debug.h"
-#include "SGP/RegInst.h"
-#include "SGP/Container.h"
 #include "SGP/LibraryDataBase.h"
+#include "SGP/MemMan.h"
+#include "SGP/RegInst.h"
+#include "SGP/Types.h"
 #include "io.h"
-#endif
 //**************************************************************************
 //
 //				Defines

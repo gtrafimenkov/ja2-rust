@@ -1,59 +1,59 @@
-#include "Tactical/TacticalAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include "SGP/SGP.h"
-#include "GameLoop.h"
-#include "SGP/HImage.h"
-#include "SGP/VObject.h"
-#include "TileEngine/SysUtil.h"
-#include "Tactical/Overhead.h"
-#include "SGP/MouseSystem.h"
-#include "SGP/ButtonSystem.h"
 #include "Tactical/Interface.h"
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <time.h>
+
+#include "GameLoop.h"
+#include "GameSettings.h"
+#include "MessageBoxScreen.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/CursorControl.h"
+#include "SGP/HImage.h"
+#include "SGP/Input.h"
+#include "SGP/Line.h"
+#include "SGP/MouseSystem.h"
+#include "SGP/SGP.h"
+#include "SGP/VObject.h"
+#include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
-#include "SGP/Input.h"
-#include "Tactical/HandleUI.h"
+#include "Strategic/GameClock.h"
+#include "Strategic/MapScreenInterfaceMap.h"
+#include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"
-#include "TileEngine/RenderWorld.h"
-#include "SysGlobals.h"
-#include "Utils/Cursors.h"
-#include "TileEngine/RadarScreen.h"
-#include "TileEngine/WorldMan.h"
-#include "Utils/FontControl.h"
-#include "TileEngine/RenderDirty.h"
-#include "Utils/Utilities.h"
-#include "Tactical/InterfaceCursors.h"
-#include "Utils/SoundControl.h"
-#include "TileEngine/Lighting.h"
-#include "Tactical/InterfacePanels.h"
-#include "Tactical/PathAI.h"
-#include "SGP/VObjectBlitters.h"
 #include "Tactical/Faces.h"
+#include "Tactical/HandleDoors.h"
+#include "Tactical/HandleUI.h"
 #include "Tactical/HandleUIPlan.h"
 #include "Tactical/InterfaceControl.h"
+#include "Tactical/InterfaceCursors.h"
 #include "Tactical/InterfaceItems.h"
-#include "Tactical/SoldierProfile.h"
-#include "Utils/MercTextBox.h"
-#include "Tactical/SoldierFunctions.h"
-#include "SGP/CursorControl.h"
-#include "Tactical/HandleDoors.h"
+#include "Tactical/InterfacePanels.h"
 #include "Tactical/Keys.h"
-#include "Utils/Text.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/PathAI.h"
 #include "Tactical/Points.h"
+#include "Tactical/SoldierFunctions.h"
 #include "Tactical/SoldierMacros.h"
-#include "Strategic/GameClock.h"
-#include "TileEngine/Physics.h"
-#include "Strategic/MapScreenInterfaceMap.h"
-#include "SGP/Line.h"
+#include "Tactical/SoldierProfile.h"
+#include "Tactical/Squads.h"
 #include "Tactical/Vehicles.h"
-#include "MessageBoxScreen.h"
-#include "GameSettings.h"
-#endif
+#include "TileEngine/Lighting.h"
+#include "TileEngine/Physics.h"
+#include "TileEngine/RadarScreen.h"
+#include "TileEngine/RenderDirty.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/Cursors.h"
+#include "Utils/FontControl.h"
+#include "Utils/MercTextBox.h"
+#include "Utils/Message.h"
+#include "Utils/SoundControl.h"
+#include "Utils/Text.h"
+#include "Utils/Utilities.h"
 
 #define ARROWS_X_OFFSET 10
 #define ARROWS_HEIGHT 20
@@ -218,7 +218,6 @@ UINT32 giDownArrowRect;
 void DrawBarsInUIBox(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth, INT16 sHeight);
 void PopupDoorOpenMenu(BOOLEAN fClosingDoor);
 
-BOOLEAN fFirstTimeInGameScreen = TRUE;
 BOOLEAN fInterfacePanelDirty = DIRTYLEVEL2;
 INT16 gsInterfaceLevel = I_GROUND_LEVEL;
 INT16 gsCurrentSoldierGridNo = 0;

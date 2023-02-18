@@ -1,6 +1,7 @@
 #ifndef _ROTTING_CORPSES_H
 #define _ROTTING_CORPSES_H
 
+#include "SGP/Types.h"
 #include "TileEngine/TileAnimation.h"
 
 #define NUM_CORPSE_SHADES 17

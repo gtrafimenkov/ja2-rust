@@ -1,37 +1,28 @@
-#include "Editor/EditorAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
 #include "BuildDefines.h"
-#endif
 
 #ifdef JA2EDITOR
 
-#ifndef PRECOMPILEDHEADERS
-#include "SGP/Types.h"
-#include "SGP/ButtonSystem.h"
-#include "Editor/EditorDefines.h"
-
-#include "Editor/EditorTaskbarUtils.h"
-#include "TileEngine/RenderWorld.h"
-#include "Editor/EditorItems.h"
-
-#include "Editor/EditorCallbackPrototypes.h"
-#include "Editor/EditorModes.h"
-
-#include "Editor/EditorBuildings.h"
-#include "Editor/EditorMercs.h"
-#include "Editor/EditScreen.h"
-#include "Editor/ItemStatistics.h"
 #include "Editor/CursorModes.h"
-#include "Editor/PopupMenu.h"
-#include "TileEngine/SimpleRenderUtils.h"
-#include "Tactical/SoldierInitList.h"
-#include "Tactical/Overhead.h"
-#include "Strategic/Scheduling.h"
-#include "SGP/Input.h"
-#include "Tactical/MapInformation.h"
+#include "Editor/EditScreen.h"
+#include "Editor/EditorBuildings.h"
+#include "Editor/EditorCallbackPrototypes.h"
+#include "Editor/EditorDefines.h"
+#include "Editor/EditorItems.h"
 #include "Editor/EditorMapInfo.h"
-#endif
+#include "Editor/EditorMercs.h"
+#include "Editor/EditorModes.h"
+#include "Editor/EditorTaskbarUtils.h"
+#include "Editor/ItemStatistics.h"
+#include "Editor/PopupMenu.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Input.h"
+#include "SGP/Types.h"
+#include "Strategic/Scheduling.h"
+#include "Tactical/MapInformation.h"
+#include "Tactical/Overhead.h"
+#include "Tactical/SoldierInitList.h"
+#include "TileEngine/RenderWorld.h"
+#include "TileEngine/SimpleRenderUtils.h"
 
 extern SOLDIERINITNODE *gpSelected;
 extern SCHEDULENODE gCurrSchedule;

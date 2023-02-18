@@ -1,11 +1,11 @@
 #ifndef __QUEEN_COMMAND_H
 #define __QUEEN_COMMAND_H
 
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
-#include "Tactical/SoldierControl.h"
-#include "SGP/FileMan.h"
 #include "Strategic/StrategicMovement.h"
+#include "Tactical/SoldierControl.h"
 
 extern BOOLEAN gfPendingEnemies;
 

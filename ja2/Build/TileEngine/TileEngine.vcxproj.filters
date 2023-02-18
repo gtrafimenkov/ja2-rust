@@ -220,9 +220,6 @@
     <ClInclude Include="TileDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileEngineAll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldTilesetEnums.h">
       <Filter>Header Files</Filter>
     </ClInclude>

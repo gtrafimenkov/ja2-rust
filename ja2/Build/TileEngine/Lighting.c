@@ -14,45 +14,43 @@
  * Written by Derek Beland, April 14, 1997
  *
  ***************************************************************************************/
-#include "TileEngine/TileEngineAll.h"
-#ifdef PRECOMPILEDHEADERS
-#else
-#include "math.h"
-#include <stdio.h>
-#include <errno.h>
 
-#include "TileEngine/WorldDef.h"
-#include "TileEngine/RenderWorld.h"
-#include "SGP/VSurface.h"
-#include "SGP/Input.h"
-#include "TileEngine/SysUtil.h"
-#include "wchar.h"
-#include "SGP/Video.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/Debug.h"
-#include "SGP/WCheck.h"
-#include "TileEngine/WorldMan.h"
-#include "JAScreens.h"
+#include "TileEngine/Lighting.h"
+
+#include <errno.h>
+#include <math.h>
+#include <stdio.h>
+#include <wchar.h>
+
 #include "Editor/EditSys.h"
-#include "TileEngine/IsometricUtils.h"
+#include "JAScreens.h"
+#include "SGP/Debug.h"
+#include "SGP/FileMan.h"
+#include "SGP/Input.h"
 #include "SGP/Line.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "SGP/WCheck.h"
+#include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"
-#include "Utils/TimerControl.h"
+#include "Tactical/PathAI.h"
+#include "Tactical/RottingCorpses.h"
+#include "Tactical/StructureWrap.h"
+#include "TileEngine/Environment.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
-#include "Utils/FontControl.h"
-#include "SysGlobals.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/TileDef.h"
-#include "TileEngine/Lighting.h"
-#include "TileEngine/StructureInternals.h"
-#include "Tactical/StructureWrap.h"
+#include "TileEngine/RenderWorld.h"
 #include "TileEngine/ShadeTableUtil.h"
-#include "Tactical/RottingCorpses.h"
-#include "SGP/FileMan.h"
-#include "TileEngine/Environment.h"
-#endif
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
+#include "Utils/FontControl.h"
+#include "Utils/TimerControl.h"
 
 #define LVL1_L1_PER (50)
 #define LVL1_L2_PER (50)
