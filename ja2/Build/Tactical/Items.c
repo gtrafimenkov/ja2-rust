@@ -3640,22 +3640,22 @@ UINT16 RandomMagazine(UINT16 usItem, UINT8 ubPercentStandard) {
   if (usPossibleMagCnt == 0) {
     return (0);
   } else
-      // only one match?
-      if (usPossibleMagCnt == 1) {
-    // use that, no choice
-    return (MagazineClassIndexToItemType(usPossibleMagIndex[0]));
-  } else  // multiple choices
-  {
-    // Pick one at random, using supplied probability to pick the default
-    if (Random(100) < ubPercentStandard) {
-      ubMagChosen = 0;
-    } else {
-      // pick a non-standard type instead
-      ubMagChosen = (UINT8)(1 + Random((UINT32)(usPossibleMagCnt - 1)));
-    }
+    // only one match?
+    if (usPossibleMagCnt == 1) {
+      // use that, no choice
+      return (MagazineClassIndexToItemType(usPossibleMagIndex[0]));
+    } else  // multiple choices
+    {
+      // Pick one at random, using supplied probability to pick the default
+      if (Random(100) < ubPercentStandard) {
+        ubMagChosen = 0;
+      } else {
+        // pick a non-standard type instead
+        ubMagChosen = (UINT8)(1 + Random((UINT32)(usPossibleMagCnt - 1)));
+      }
 
-    return (MagazineClassIndexToItemType(usPossibleMagIndex[ubMagChosen]));
-  }
+      return (MagazineClassIndexToItemType(usPossibleMagIndex[ubMagChosen]));
+    }
 }
 
 BOOLEAN CreateGun(UINT16 usItem, INT8 bStatus, OBJECTTYPE *pObj) {

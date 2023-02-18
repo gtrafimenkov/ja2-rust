@@ -2042,8 +2042,8 @@ void MakeHeliReturnToBase(void) {
     pVehicleList[iHelicopterVehicleId].pMercPath = AppendStrategicPath(
         MoveToBeginningOfPathList(BuildAStrategicPath(
             NULL, GetLastSectorIdInVehiclePath(iHelicopterVehicleId),
-            (INT16)(
-                CALCULATE_STRATEGIC_INDEX(ubRefuelList[iLocation][0], ubRefuelList[iLocation][1])),
+            (INT16)(CALCULATE_STRATEGIC_INDEX(ubRefuelList[iLocation][0],
+                                              ubRefuelList[iLocation][1])),
             pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE /*, FALSE */)),
         pVehicleList[iHelicopterVehicleId].pMercPath);
     pVehicleList[iHelicopterVehicleId].pMercPath =

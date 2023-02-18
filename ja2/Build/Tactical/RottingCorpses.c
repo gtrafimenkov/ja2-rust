@@ -1158,8 +1158,8 @@ UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
   // create the basic shade table
   for (uiCount = 0; uiCount < 256; uiCount++) {
     // combine the rgb of the light color with the object's palette
-    LightPal[uiCount].peRed = (UINT8)(
-        __min((UINT16)pCorpse->p8BPPPalette[uiCount].peRed + (UINT16)gpLightColors[0].peRed, 255));
+    LightPal[uiCount].peRed = (UINT8)(__min(
+        (UINT16)pCorpse->p8BPPPalette[uiCount].peRed + (UINT16)gpLightColors[0].peRed, 255));
     LightPal[uiCount].peGreen = (UINT8)(__min(
         (UINT16)pCorpse->p8BPPPalette[uiCount].peGreen + (UINT16)gpLightColors[0].peGreen, 255));
     LightPal[uiCount].peBlue = (UINT8)(__min(

@@ -498,9 +498,9 @@ INT32 GetRangeInCellCoordsFromGridNoDiff(INT16 sGridNo1, INT16 sGridNo2) {
   // Convert our grid-not into an XY
   ConvertGridNoToXY(sGridNo2, &sXPos2, &sYPos2);
 
-  return ((INT32)(
-      sqrt(float((sXPos2 - sXPos) * (sXPos2 - sXPos) + (sYPos2 - sYPos) * (sYPos2 - sYPos))) *
-      CELL_X_SIZE));
+  return ((INT32)(sqrt(float((sXPos2 - sXPos) * (sXPos2 - sXPos) +
+                             (sYPos2 - sYPos) * (sYPos2 - sYPos))) *
+                  CELL_X_SIZE));
 }
 
 BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, SGPRect *pRect) {

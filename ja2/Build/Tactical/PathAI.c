@@ -1439,9 +1439,8 @@ INT32 FindBestPath(SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMov
       if (newLoc == iDestination)
         nextCost = 0;
       else
-          // if (_KeyDown(CTRL_DOWN) && nextCost < TRAVELCOST_VEINEND)
-          if (gfPlotDirectPath && nextCost < NOPASS)
-        nextCost = TRAVELCOST_FLAT;
+        // if (_KeyDown(CTRL_DOWN) && nextCost < TRAVELCOST_VEINEND)
+        if (gfPlotDirectPath && nextCost < NOPASS) nextCost = TRAVELCOST_FLAT;
 
       // if (ISVEIN(prevCost))
       //		prevCost=VEINCOST;

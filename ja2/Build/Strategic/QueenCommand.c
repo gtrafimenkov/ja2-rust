@@ -619,8 +619,9 @@ BOOLEAN PrepareEnemyForUndergroundBattle() {
                                                pUnderground->ubNumElites);
         ValidateEnemiesHaveWeapons();
       }
-      return ((BOOLEAN)(
-          pUnderground->ubNumAdmins + pUnderground->ubNumTroops + pUnderground->ubNumElites > 0));
+      return ((BOOLEAN)(pUnderground->ubNumAdmins + pUnderground->ubNumTroops +
+                            pUnderground->ubNumElites >
+                        0));
     }
     pUnderground = pUnderground->next;
   }

@@ -1133,8 +1133,9 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, UINT16 
         usStandardCost = 0;
     }
 
-    iShippingCost = (INT32)(
-        (gpNewBobbyrShipments[iOrderNum].uiPackageWeight / (FLOAT)10) * usStandardCost + .5);
+    iShippingCost =
+        (INT32)((gpNewBobbyrShipments[iOrderNum].uiPackageWeight / (FLOAT)10) * usStandardCost +
+                .5);
   }
 
   // erase the old area

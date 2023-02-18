@@ -1370,7 +1370,7 @@ void SoldierGetItemFromWorld(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGri
         }
 
         // Increment counter...
-        //:ATE: Only incremrnt counter for items we can see..
+        //: ATE: Only incremrnt counter for items we can see..
         cnt++;
 
         if (fPickup) {

@@ -683,8 +683,9 @@ void ChangeBaseSoldierStats(SOLDIERTYPE *pSoldier) {
   pSoldier->bBleeding = 0;
   pSoldier->bBreath = 100;
 
-  pSoldier->bMarksmanship = (UINT8)(
-      sBaseStat[sCurBaseDiff] + (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
+  pSoldier->bMarksmanship =
+      (UINT8)(sBaseStat[sCurBaseDiff] +
+              (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bMedical = (UINT8)(sBaseStat[sCurBaseDiff] +
                                (UINT16)(Random(BASE_STAT_DEVIATION * 2) - BASE_STAT_DEVIATION));
   pSoldier->bMechanical = (UINT8)(sBaseStat[sCurBaseDiff] +

@@ -2151,9 +2151,9 @@ fprintf(NetDebugFile,"\tDecideTrueVisibility - LOCATE\n");
       } else  // not our team - if we're NOT allied then locate...
               // if (pSoldier->side != gTacticalStatus.Team[gbPlayerNum].side &&
               // ConfigOptions[FOLLOWMODE]) if (Status.stopSlidingAt == NOBODY)
-          if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT))
-        // LocateSoldier(pSoldier->ubID,DONTSETLOCATOR);
-        SlideTo(0, pSoldier->ubID, NOBODY, DONTSETLOCATOR);
+        if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT))
+          // LocateSoldier(pSoldier->ubID,DONTSETLOCATOR);
+          SlideTo(0, pSoldier->ubID, NOBODY, DONTSETLOCATOR);
 
       // follow his movement on our screen as he moves around...
       // LocateMember(ptr->guynum,DONTSETLOCATOR);

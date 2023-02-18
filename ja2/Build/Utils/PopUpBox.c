@@ -1248,10 +1248,11 @@ BOOLEAN DrawBoxText(UINT32 uiCounter) {
       } else {
         uX = ((INT16)(PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin +
                       PopUpBoxList[uiCounter]->uiSecondColumnCurrentOffset));
-        uY = ((INT16)(
-            PopUpBoxList[uiCounter]->Position.iY +
-            uiCount * GetFontHeight(PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
-            PopUpBoxList[uiCounter]->uiTopMargin + uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
+        uY = ((INT16)(PopUpBoxList[uiCounter]->Position.iY +
+                      uiCount * GetFontHeight(
+                                    PopUpBoxList[uiCounter]->pSecondColumnString[uiCount]->uiFont) +
+                      PopUpBoxList[uiCounter]->uiTopMargin +
+                      uiCount * PopUpBoxList[uiCounter]->uiLineSpace));
       }
 
       // print

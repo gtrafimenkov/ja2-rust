@@ -2190,8 +2190,9 @@ void RetreatButtonCallback(GUI_BUTTON *btn, INT32 reason) {
       if (!(gpMercs[i].uiFlags & (CELL_RETREATING | CELL_RETREATED))) {
         gpMercs[i].uiFlags |= CELL_RETREATING | CELL_DIRTY;
         // Gets to retreat after a total of 2 attacks.
-        gpMercs[i].usNextAttack = (UINT16)(
-            (1000 + gpMercs[i].usNextAttack * 2 + PreRandom(2000 - gpMercs[i].usAttack)) * 2);
+        gpMercs[i].usNextAttack =
+            (UINT16)((1000 + gpMercs[i].usNextAttack * 2 + PreRandom(2000 - gpMercs[i].usAttack)) *
+                     2);
         gpAR->usPlayerAttack -= gpMercs[i].usAttack;
         gpMercs[i].usAttack = 0;
       }

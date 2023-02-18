@@ -6063,38 +6063,43 @@ void BeginRemoveMercFromContract(SOLDIERTYPE *pSoldier) {
                                                 1, 0);
 
     } else
-        // quote is different if he's fired in less than 48 hours
-        if ((GetWorldTotalMin() - pSoldier->uiTimeOfLastContractUpdate) < 60 * 48) {
-      SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 1, MAP_SCREEN, 0, 0, 0);
-      if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)) {
-        // Only do this if they want to renew.....
-        if (WillMercRenew(pSoldier, FALSE)) {
-          HandleImportantMercQuote(pSoldier,
-                                   QUOTE_DEPART_COMMET_CONTRACT_NOT_RENEWED_OR_TERMINATED_UNDER_48);
+      // quote is different if he's fired in less than 48 hours
+      if ((GetWorldTotalMin() - pSoldier->uiTimeOfLastContractUpdate) < 60 * 48) {
+        SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 1, MAP_SCREEN, 0, 0,
+                                      0);
+        if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)) {
+          // Only do this if they want to renew.....
+          if (WillMercRenew(pSoldier, FALSE)) {
+            HandleImportantMercQuote(
+                pSoldier, QUOTE_DEPART_COMMET_CONTRACT_NOT_RENEWED_OR_TERMINATED_UNDER_48);
+          }
         }
-      }
 
-      SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 0, MAP_SCREEN, 0, 0, 0);
-      TacticalCharacterDialogueWithSpecialEvent(pSoldier, 0, DIALOGUE_SPECIAL_EVENT_CONTRACT_ENDING,
-                                                1, 0);
+        SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 0, MAP_SCREEN, 0, 0,
+                                      0);
+        TacticalCharacterDialogueWithSpecialEvent(pSoldier, 0,
+                                                  DIALOGUE_SPECIAL_EVENT_CONTRACT_ENDING, 1, 0);
 
-    } else {
-      SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 1, MAP_SCREEN, 0, 0, 0);
-      if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)) {
-        // Only do this if they want to renew.....
-        if (WillMercRenew(pSoldier, FALSE)) {
+      } else {
+        SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 1, MAP_SCREEN, 0, 0,
+                                      0);
+        if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)) {
+          // Only do this if they want to renew.....
+          if (WillMercRenew(pSoldier, FALSE)) {
+            HandleImportantMercQuote(pSoldier,
+                                     QUOTE_DEPARTING_COMMENT_CONTRACT_NOT_RENEWED_OR_48_OR_MORE);
+          }
+        } else if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) ||
+                   (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__NPC)) {
           HandleImportantMercQuote(pSoldier,
-                                   QUOTE_DEPARTING_COMMENT_CONTRACT_NOT_RENEWED_OR_48_OR_MORE);
+                                   QUOTE_RESPONSE_TO_MIGUEL_SLASH_QUOTE_MERC_OR_RPC_LETGO);
         }
-      } else if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) ||
-                 (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__NPC)) {
-        HandleImportantMercQuote(pSoldier, QUOTE_RESPONSE_TO_MIGUEL_SLASH_QUOTE_MERC_OR_RPC_LETGO);
-      }
 
-      SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 0, MAP_SCREEN, 0, 0, 0);
-      TacticalCharacterDialogueWithSpecialEvent(pSoldier, 0, DIALOGUE_SPECIAL_EVENT_CONTRACT_ENDING,
-                                                1, 0);
-    }
+        SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 0, MAP_SCREEN, 0, 0,
+                                      0);
+        TacticalCharacterDialogueWithSpecialEvent(pSoldier, 0,
+                                                  DIALOGUE_SPECIAL_EVENT_CONTRACT_ENDING, 1, 0);
+      }
 
     if ((GetWorldTotalMin() - pSoldier->uiTimeOfLastContractUpdate) < 60 * 3) {
       // this will cause him give us lame excuses for a while until he gets over it

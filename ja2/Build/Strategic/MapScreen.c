@@ -7350,35 +7350,35 @@ void PlotTemporaryPaths(void) {
         RestoreClipRegionToFullScreen();
       }
     } else
-        // dest char has been selected,
-        if (bSelectedDestChar != -1) {
-      /*
-                              if( fZoomFlag )
-                              {
-                                      sMapX =  ( INT16 )( ( ( iZoomX ) / ( MAP_GRID_X ) ) + sMapX );
-                                      sMapX /= 2;
+      // dest char has been selected,
+      if (bSelectedDestChar != -1) {
+        /*
+                                if( fZoomFlag )
+                                {
+                                        sMapX =  ( INT16 )( ( ( iZoomX ) / ( MAP_GRID_X ) ) + sMapX
+           ); sMapX /= 2;
 
-                                      sMapY =  ( INT16 )( ( ( iZoomY ) / ( MAP_GRID_Y ) ) + sMapY );
-                                      sMapY /= 2;
-                              }
-      */
+                                        sMapY =  ( INT16 )( ( ( iZoomY ) / ( MAP_GRID_Y ) ) + sMapY
+           ); sMapY /= 2;
+                                }
+        */
 
-      PlotATemporaryPathForCharacter(&Menptr[gCharactersList[bSelectedDestChar].usSolID], sMapX,
-                                     sMapY);
+        PlotATemporaryPathForCharacter(&Menptr[gCharactersList[bSelectedDestChar].usSolID], sMapX,
+                                       sMapY);
 
-      // check to see if we are drawing path
-      DisplayThePotentialPathForCurrentDestinationCharacterForMapScreenInterface(sMapX, sMapY);
+        // check to see if we are drawing path
+        DisplayThePotentialPathForCurrentDestinationCharacterForMapScreenInterface(sMapX, sMapY);
 
-      // if we need to draw path, do it
-      if (fDrawTempPath == TRUE) {
-        // clip region
-        ClipBlitsToMapViewRegion();
-        // blit
-        DisplaySoldierTempPath(&Menptr[gCharactersList[bSelectedDestChar].usSolID]);
-        // restore
-        RestoreClipRegionToFullScreen();
+        // if we need to draw path, do it
+        if (fDrawTempPath == TRUE) {
+          // clip region
+          ClipBlitsToMapViewRegion();
+          // blit
+          DisplaySoldierTempPath(&Menptr[gCharactersList[bSelectedDestChar].usSolID]);
+          // restore
+          RestoreClipRegionToFullScreen();
+        }
       }
-    }
   }
 }
 

@@ -210,28 +210,28 @@ void CountPeopleInBoxingRingAndDoActions(void) {
       PickABoxer();
     }
   } else
-      // if pre-boxing, check for two people (from different teams!) in the ring
-      if (gTacticalStatus.bBoxingState == PRE_BOXING) {
-    if (ubTotalInRing == 2 && ubPlayersInRing == 1) {
-      // ladieees and gennleman, we have a fight!
-      for (uiLoop = 0; uiLoop < 2; uiLoop++) {
-        if (!(pInRing[uiLoop]->uiStatusFlags & SOLDIER_BOXER)) {
-          // set as boxer!
-          pInRing[uiLoop]->uiStatusFlags |= SOLDIER_BOXER;
+    // if pre-boxing, check for two people (from different teams!) in the ring
+    if (gTacticalStatus.bBoxingState == PRE_BOXING) {
+      if (ubTotalInRing == 2 && ubPlayersInRing == 1) {
+        // ladieees and gennleman, we have a fight!
+        for (uiLoop = 0; uiLoop < 2; uiLoop++) {
+          if (!(pInRing[uiLoop]->uiStatusFlags & SOLDIER_BOXER)) {
+            // set as boxer!
+            pInRing[uiLoop]->uiStatusFlags |= SOLDIER_BOXER;
+          }
         }
-      }
-      // start match!
-      SetBoxingState(BOXING);
-      gfLastBoxingMatchWonByPlayer = FALSE;
+        // start match!
+        SetBoxingState(BOXING);
+        gfLastBoxingMatchWonByPlayer = FALSE;
 
 #ifdef JA2TESTVERSION
-      ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Boxer APs %d %d", pInRing[0]->bActionPoints,
-                pInRing[1]->bActionPoints);
+        ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Boxer APs %d %d",
+                  pInRing[0]->bActionPoints, pInRing[1]->bActionPoints);
 #endif
-      // give the first turn to a randomly chosen boxer
-      EnterCombatMode(pInRing[Random(2)]->bTeam);
+        // give the first turn to a randomly chosen boxer
+        EnterCombatMode(pInRing[Random(2)]->bTeam);
+      }
     }
-  }
   /*
   else
   {

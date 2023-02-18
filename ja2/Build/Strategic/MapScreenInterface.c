@@ -5137,10 +5137,10 @@ BOOLEAN CanSoldierMoveWithVehicleId(SOLDIERTYPE *pSoldier, INT32 iVehicle1Id) {
   if (pSoldier->bAssignment == VEHICLE) {
     iVehicle2Id = pSoldier->iVehicleId;
   } else
-      // if soldier IS a vehicle
-      if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
-    iVehicle2Id = pSoldier->bVehicleID;
-  }
+    // if soldier IS a vehicle
+    if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
+      iVehicle2Id = pSoldier->bVehicleID;
+    }
 
   // if also (in) a vehicle
   if (iVehicle2Id != -1) {

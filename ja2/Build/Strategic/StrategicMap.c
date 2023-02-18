@@ -785,32 +785,32 @@ BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
     // with different numbers of various types of enemies.
   } else
 #endif
-      // is the sector already loaded?
-      if ((gWorldSectorX == sMapX) && (sMapY == gWorldSectorY) && (bMapZ == gbWorldSectorZ)) {
-    // Inserts the enemies into the newly loaded map based on the strategic information.
-    // Note, the flag will return TRUE only if enemies were added.  The game may wish to
-    // do something else in a case where no enemies are present.
+    // is the sector already loaded?
+    if ((gWorldSectorX == sMapX) && (sMapY == gWorldSectorY) && (bMapZ == gbWorldSectorZ)) {
+      // Inserts the enemies into the newly loaded map based on the strategic information.
+      // Note, the flag will return TRUE only if enemies were added.  The game may wish to
+      // do something else in a case where no enemies are present.
 
-    SetPendingNewScreen(GAME_SCREEN);
-    if (!NumEnemyInSector()) {
-      PrepareEnemyForSectorBattle();
-    }
-    if (gubNumCreaturesAttackingTown && !gbWorldSectorZ &&
-        gubSectorIDOfCreatureAttack == SECTOR(gWorldSectorX, gWorldSectorY)) {
-      PrepareCreaturesForBattle();
-    }
-    if (gfGotoSectorTransition) {
-      BeginLoadScreen();
-      gfGotoSectorTransition = FALSE;
-    }
+      SetPendingNewScreen(GAME_SCREEN);
+      if (!NumEnemyInSector()) {
+        PrepareEnemyForSectorBattle();
+      }
+      if (gubNumCreaturesAttackingTown && !gbWorldSectorZ &&
+          gubSectorIDOfCreatureAttack == SECTOR(gWorldSectorX, gWorldSectorY)) {
+        PrepareCreaturesForBattle();
+      }
+      if (gfGotoSectorTransition) {
+        BeginLoadScreen();
+        gfGotoSectorTransition = FALSE;
+      }
 
-    // Check for helicopter being on the ground in this sector...
-    HandleHelicopterOnGroundGraphic();
+      // Check for helicopter being on the ground in this sector...
+      HandleHelicopterOnGroundGraphic();
 
-    ResetMilitia();
-    AllTeamsLookForAll(TRUE);
-    return (TRUE);
-  }
+      ResetMilitia();
+      AllTeamsLookForAll(TRUE);
+      return (TRUE);
+    }
 
   if (gWorldSectorX && gWorldSectorY && gbWorldSectorZ != -1) {
     HandleDefiniteUnloadingOfWorld(ABOUT_TO_LOAD_NEW_MAP);

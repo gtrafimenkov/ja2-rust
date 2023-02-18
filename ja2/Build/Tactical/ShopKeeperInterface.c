@@ -2827,19 +2827,21 @@ UINT32 CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, U
         // if it's regular ammo
         if (Item[pItemObject->usGunAmmoItem].usItemClass == IC_AMMO) {
           // add value of its remaining ammo
-          uiUnitPrice += (UINT32)(
-              CalcValueOfItemToDealer(gbSelectedArmsDealerID, pItemObject->usGunAmmoItem,
-                                      fDealerSelling) *
-              ItemConditionModifier(pItemObject->usGunAmmoItem, pItemObject->ubGunShotsLeft) *
-              dModifier);
+          uiUnitPrice +=
+              (UINT32)(CalcValueOfItemToDealer(gbSelectedArmsDealerID, pItemObject->usGunAmmoItem,
+                                               fDealerSelling) *
+                       ItemConditionModifier(pItemObject->usGunAmmoItem,
+                                             pItemObject->ubGunShotsLeft) *
+                       dModifier);
         } else  // assume it's attached ammo (mortar shells, grenades)
         {
           // add its value (uses normal status 0-100)
-          uiUnitPrice += (UINT32)(
-              CalcValueOfItemToDealer(gbSelectedArmsDealerID, pItemObject->usGunAmmoItem,
-                                      fDealerSelling) *
-              ItemConditionModifier(pItemObject->usGunAmmoItem, pItemObject->bGunAmmoStatus) *
-              dModifier);
+          uiUnitPrice +=
+              (UINT32)(CalcValueOfItemToDealer(gbSelectedArmsDealerID, pItemObject->usGunAmmoItem,
+                                               fDealerSelling) *
+                       ItemConditionModifier(pItemObject->usGunAmmoItem,
+                                             pItemObject->bGunAmmoStatus) *
+                       dModifier);
         }
       }
 

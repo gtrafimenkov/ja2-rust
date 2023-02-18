@@ -1855,29 +1855,29 @@ BOOLEAN HandleGotoNewGridNo(SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving, BOOLEA
           }
           return (FALSE);
         } else
-            // ATE; First check for profile
-            // Forgetful guy might forget his path
-            if ((pSoldier->bTeam == gbPlayerNum) && (pSoldier->ubProfile != NO_PROFILE) &&
-                gMercProfiles[pSoldier->ubProfile].bPersonalityTrait == FORGETFUL) {
-          if (pSoldier->ubNumTilesMovesSinceLastForget < 255) {
-            pSoldier->ubNumTilesMovesSinceLastForget++;
-          }
-
-          if (pSoldier->usPathIndex > 2 && (Random(100) == 0) &&
-              pSoldier->ubNumTilesMovesSinceLastForget > 200) {
-            pSoldier->ubNumTilesMovesSinceLastForget = 0;
-
-            TacticalCharacterDialogue(pSoldier, QUOTE_PERSONALITY_TRAIT);
-            EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
-            if (pSoldier->bActionPoints > 0) {
-              pSoldier->bActionPoints -= (INT8)(Random(pSoldier->bActionPoints) + 1);
+          // ATE; First check for profile
+          // Forgetful guy might forget his path
+          if ((pSoldier->bTeam == gbPlayerNum) && (pSoldier->ubProfile != NO_PROFILE) &&
+              gMercProfiles[pSoldier->ubProfile].bPersonalityTrait == FORGETFUL) {
+            if (pSoldier->ubNumTilesMovesSinceLastForget < 255) {
+              pSoldier->ubNumTilesMovesSinceLastForget++;
             }
 
-            fDontContinue = TRUE;
+            if (pSoldier->usPathIndex > 2 && (Random(100) == 0) &&
+                pSoldier->ubNumTilesMovesSinceLastForget > 200) {
+              pSoldier->ubNumTilesMovesSinceLastForget = 0;
 
-            UnSetUIBusy(pSoldier->ubID);
+              TacticalCharacterDialogue(pSoldier, QUOTE_PERSONALITY_TRAIT);
+              EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
+              if (pSoldier->bActionPoints > 0) {
+                pSoldier->bActionPoints -= (INT8)(Random(pSoldier->bActionPoints) + 1);
+              }
+
+              fDontContinue = TRUE;
+
+              UnSetUIBusy(pSoldier->ubID);
+            }
           }
-        }
       }
     }
 
