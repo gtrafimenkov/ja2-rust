@@ -1,8 +1,10 @@
 name: MSBuild
 
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - 'main'
+  pull_request:
 
 env:
   SOLUTION_FILE_PATH: ja2/Build/JA2.sln
