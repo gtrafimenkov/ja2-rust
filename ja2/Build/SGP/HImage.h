@@ -155,20 +155,6 @@ BOOLEAN CopyImageToBuffer(HIMAGE hImage, UINT32 fBufferType, BYTE *pDestBuf, UIN
                           UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
-#ifndef NO_ZLIB_COMPRESSION
-BOOLEAN Copy8BPPCompressedImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                            UINT16 usDestHeight, UINT16 usX, UINT16 usY,
-                                            SGPRect *srcRect);
-BOOLEAN Copy8BPPCompressedImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                             UINT16 usDestHeight, UINT16 usX, UINT16 usY,
-                                             SGPRect *srcRect);
-BOOLEAN Copy16BPPCompressedImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                              UINT16 usDestHeight, UINT16 usX, UINT16 usY,
-                                              SGPRect *srcRect);
-// This function will extract a compressed image into a non-compressed buffer
-BOOLEAN Extract8BPPCompressedImageToBuffer(HIMAGE hImage, BYTE *pDestBuf);
-BOOLEAN Extract16BPPCompressedImageToBuffer(HIMAGE hImage, BYTE *pDestBuf);
-#endif
 
 BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWidth,
                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);

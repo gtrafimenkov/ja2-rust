@@ -164,12 +164,6 @@
     <ClInclude Include="WizShare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="zconf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="zlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MemMan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
