@@ -1,13 +1,11 @@
+#include "Editor/EditorModes.h"
+
 #include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorItems.h"
-#include "Editor/EditorModes.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/EditorTerrain.h"
 #include "Editor/SelectWin.h"
@@ -354,5 +352,3 @@ void SetEditorSmoothingMode(UINT8 ubNewMode) {
   }
   gMapInformation.ubEditorSmoothingType = ubNewMode;
 }
-
-#endif

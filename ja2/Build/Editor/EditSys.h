@@ -1,9 +1,8 @@
-#include "BuildDefines.h"
-#include "SGP/Types.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDIT_SYS_H
 #define __EDIT_SYS_H
+
+#include "BuildDefines.h"
+#include "SGP/Types.h"
 
 #define SMALLBRUSH 0
 #define MEDIUMBRUSH 1
@@ -70,5 +69,4 @@ void RaiseWorldLand();
 
 void EliminateObjectLayerRedundancy();
 
-#endif
 #endif

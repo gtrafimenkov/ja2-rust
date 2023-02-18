@@ -1,9 +1,8 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/EditorTaskbarUtils.h"
 
 #include <stdio.h>
 
+#include "BuildDefines.h"
 #include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorBuildings.h"
@@ -14,7 +13,6 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorModes.h"
 #include "Editor/EditorTaskbarCreation.h"
-#include "Editor/EditorTaskbarUtils.h"
 #include "Editor/EditorTerrain.h"
 #include "Editor/ItemStatistics.h"
 #include "Editor/SectorSummary.h"
@@ -899,5 +897,3 @@ void ProcessEditorRendering() {
 
   RenderButtonsFastHelp();
 }
-
-#endif

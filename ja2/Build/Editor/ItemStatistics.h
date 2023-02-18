@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __ITEM_STATISTICS_H
 #define __ITEM_STATISTICS_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 #include "Tactical/ItemTypes.h"
 
@@ -98,5 +96,4 @@ extern INT8 gbDefaultBombTrapLevel;
 
 extern void SetOwnershipGroup(UINT8 ubNewGroup);
 
-#endif
 #endif

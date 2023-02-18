@@ -1,10 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #ifndef __ROAD_SMOOTHING_H
 #define __ROAD_SMOOTHING_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 // There are the 32 macro definitions that make up all of the road pieces.  These enumerations
@@ -58,7 +55,5 @@ void ReplaceObsoleteRoads();
 void PlaceRoadMacroAtGridNo(INT32 iMapIndex, INT32 iMacroID);
 
 void InitializeRoadMacros();
-
-#endif
 
 #endif

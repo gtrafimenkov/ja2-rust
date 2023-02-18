@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __MESSAGEBOX_H
 #define __MESSAGEBOX_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 enum { MESSAGEBOX_NONE, MESSAGEBOX_DONE, MESSAGEBOX_WAIT };
@@ -39,5 +37,4 @@ void RemoveMessageBox();
 //		...
 //	}
 
-#endif
 #endif

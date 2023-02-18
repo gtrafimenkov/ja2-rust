@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITORITEMS_H
 #define __EDITORITEMS_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 typedef struct {
@@ -61,5 +59,4 @@ void HandleItemsPanel(UINT16 usScreenX, UINT16 usScreenY, INT8 bEvent);
 
 extern INT32 giDefaultExistChance;
 
-#endif
 #endif

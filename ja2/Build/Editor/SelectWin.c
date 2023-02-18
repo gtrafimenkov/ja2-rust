@@ -1,10 +1,8 @@
+#include "Editor/SelectWin.h"
+
 #include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
-#include "Editor/SelectWin.h"
 #include "SGP/Random.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -1481,5 +1479,3 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
 
   return (fReturnVal);
 }
-
-#endif

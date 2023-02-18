@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __NEWSMOOTH_H
 #define __NEWSMOOTH_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 void AddBuildingSectionToWorld(SGPRect *pSelectRegion);
@@ -20,5 +18,4 @@ void AddCave(INT32 iMapIndex, UINT16 usIndex);
 
 void AnalyseCaveMapForStructureInfo();
 
-#endif
 #endif

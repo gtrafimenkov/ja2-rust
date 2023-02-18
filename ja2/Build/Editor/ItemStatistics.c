@@ -1,16 +1,16 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "SGP/ButtonSystem.h"
+#include "Tactical/OverheadTypes.h"
+#include "Editor/ItemStatistics.h"
 
 #include <memory.h>
 #include <stdio.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorItems.h"
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
-#include "Editor/ItemStatistics.h"
 #include "Editor/PopupMenu.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/MouseSystem.h"
@@ -1433,5 +1433,3 @@ void ReEvaluateAttachmentStatii() {
     }
   }
 }
-
-#endif

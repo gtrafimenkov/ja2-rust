@@ -36,12 +36,12 @@
 #include "BuildDefines.h"
 #include "Intro.h"
 #endif
+#include "Laptop/Laptop.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/MapScreenInterfaceMap.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "Laptop/Laptop.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

@@ -1,9 +1,8 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/LoadScreen.h"
 
 #include <stdio.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorBuildings.h"
@@ -15,7 +14,6 @@
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/EditorUndo.h"
 #include "Editor/ItemStatistics.h"
-#include "Editor/LoadScreen.h"
 #include "Editor/MessageBox.h"
 #include "Editor/NewSmooth.h"
 #include "Editor/SectorSummary.h"
@@ -977,19 +975,3 @@ BOOLEAN ExternalSaveMap(STR16 szFilename) {
   if (ProcessFileIO() == EDIT_SCREEN) return TRUE;
   return FALSE;
 }
-
-#else  // non-editor version
-
-#include "SGP/Types.h"
-#include "ScreenIDs.h"
-
-UINT32 LoadSaveScreenInit() { return TRUE; }
-
-UINT32 LoadSaveScreenHandle() {
-  // If this screen ever gets set, then this is a bad thing -- endless loop
-  return ERROR_SCREEN;
-}
-
-UINT32 LoadSaveScreenShutdown() { return TRUE; }
-
-#endif

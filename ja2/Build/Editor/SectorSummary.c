@@ -1,15 +1,12 @@
-#include "BuildDefines.h"
-#include "Tactical/SoldierCreate.h"
-
-#ifdef JA2EDITOR
+#include "Editor/SectorSummary.h"
 
 #include <stdio.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/LoadScreen.h"
-#include "Editor/SectorSummary.h"
 #include "Editor/SummaryInfo.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
@@ -22,6 +19,7 @@
 #include "SGP/VSurface.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/MapInformation.h"
+#include "Tactical/SoldierCreate.h"
 #include "Tactical/WorldItems.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/SimpleRenderUtils.h"
@@ -2749,5 +2747,3 @@ UINT8 GetCurrentSummaryVersion() {
   }
   return 0;
 }
-
-#endif

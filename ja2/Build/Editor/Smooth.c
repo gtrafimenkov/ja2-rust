@@ -1,14 +1,12 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/Smooth.h"
 
 #include <stdlib.h>
 #include <time.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorUndo.h"
 #include "Editor/SelectWin.h"
-#include "Editor/Smooth.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "Tactical/StructureWrap.h"
@@ -557,5 +555,3 @@ void SmoothWaterTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fFo
   GetTileIndexFromTypeSubIndex(origType, land, &usTileIndex);
   *piNewTile = usTileIndex;
 }
-
-#endif

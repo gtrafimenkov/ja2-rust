@@ -1,11 +1,8 @@
-#include "BuildDefines.h"
-#include "SGP/FileMan.h"
-
-#ifdef JA2EDITOR
-
 #ifndef _JA2_LOAD_SCREEN_
 #define _JA2_LOAD_SCREEN_
 
+#include "BuildDefines.h"
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 
 typedef struct _FDLG_LIST_TAG {
@@ -43,5 +40,4 @@ BOOLEAN ExternalSaveMap(STR16 szFilename);
 extern BOOLEAN gfErrorCatch;
 extern CHAR16 gzErrorCatchString[256];
 
-#endif
 #endif

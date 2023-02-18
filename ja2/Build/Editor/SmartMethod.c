@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
-#include "Editor/EditorUndo.h"
 #include "Editor/SmartMethod.h"
+
+#include "BuildDefines.h"
+#include "Editor/EditorUndo.h"
 #include "Editor/SmoothingUtils.h"
 #include "TileEngine/WorldDef.h"  //LEVELNODE def
 #include "TileEngine/WorldMan.h"  //ReplaceStructIndex
@@ -526,5 +524,3 @@ void PasteSmartBrokenWall(UINT32 iMapIndex) {
     // Calculate the new graphic for the window type selected.
   }
 }
-
-#endif

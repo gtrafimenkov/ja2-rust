@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef EDITSCREEN_H
 #define EDITSCREEN_H
 
+#include "BuildDefines.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Types.h"
 
@@ -74,5 +72,4 @@ extern BOOLEAN gfConfirmExitFirst;
 extern BOOLEAN gfConfirmExitPending;
 extern BOOLEAN gfIntendOnEnteringEditor;
 
-#endif
 #endif

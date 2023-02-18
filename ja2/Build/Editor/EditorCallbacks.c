@@ -1,7 +1,4 @@
 #include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorBuildings.h"
@@ -1014,5 +1011,3 @@ void ItemStatsToggleHideCallback(GUI_BUTTON *btn, INT32 reason) {
 void ItemStatsDeleteCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) ExecuteItemStatsCmd(ITEMSTATS_DELETE);
 }
-
-#endif

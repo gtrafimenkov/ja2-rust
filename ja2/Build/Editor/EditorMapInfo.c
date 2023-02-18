@@ -1,14 +1,12 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/EditorMapInfo.h"
 
 #include <windows.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorItems.h"
-#include "Editor/EditorMapInfo.h"
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/EditorTerrain.h"  //for access to TerrainTileDrawMode
@@ -263,5 +261,3 @@ void ChangeLightDefault(INT8 bLightType) {
   gbDefaultLightType = bLightType;
   ClickEditorButton(MAPINFO_PRIMETIME_LIGHT + gbDefaultLightType);
 }
-
-#endif

@@ -1,14 +1,12 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/SmoothingUtils.h"
 
 #include <stdlib.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorUndo.h"
 #include "Editor/SmartMethod.h"
-#include "Editor/SmoothingUtils.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/IsometricUtils.h"  //for GridNoOnVisibleWorldTile()
 #include "TileEngine/WorldDef.h"        //for LEVELNODE def
@@ -387,5 +385,3 @@ UINT16 GetHorizontalWallClass(UINT16 iMapIndex) {
   if (pWall = GetVerticalWall(iMapIndex)) return GetWallClass(pWall);
   return 0xffff;
 }
-
-#endif

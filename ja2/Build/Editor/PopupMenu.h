@@ -1,6 +1,3 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 // popupmenu.h
 // Author:  Kris Morness
 // Created:  Sept 4, 1997
@@ -8,6 +5,7 @@
 #ifndef __POPUPMENU_H
 #define __POPUPMENU_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 /*
@@ -96,5 +94,4 @@ void RenderPopupMenu();
 void PopupMenuHandle();
 void ProcessPopupMenuSelection();
 
-#endif
 #endif

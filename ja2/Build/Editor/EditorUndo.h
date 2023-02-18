@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITOR_UNDO_H
 #define __EDITOR_UNDO_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 BOOLEAN AddToUndoList(INT32 iMapIndex);
@@ -20,5 +18,4 @@ void DetermineUndoState();
 // Undo command flags
 #define MAX_UNDO_COMMAND_LENGTH 10
 
-#endif
 #endif

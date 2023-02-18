@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITOR_CALLBACK_PROTOTYPES_H
 #define __EDITOR_CALLBACK_PROTOTYPES_H
 
+#include "BuildDefines.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Types.h"
 
@@ -153,5 +151,4 @@ void ItemStatsDeleteCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnUndoCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnEraseCallback(GUI_BUTTON *btn, INT32 reason);
 
-#endif
 #endif

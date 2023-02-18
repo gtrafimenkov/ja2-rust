@@ -1,7 +1,5 @@
+#include "Tactical/OverheadTypes.h"
 #include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/EditorCallbackPrototypes.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorMapInfo.h"
@@ -793,5 +791,3 @@ void CreateEditorTaskbarInternal() {
   InitEditorOptionsToolbar();
   InitEditorItemStatsButtons();
 }
-
-#endif

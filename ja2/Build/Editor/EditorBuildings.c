@@ -1,8 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-#include "Editor/EditSys.h"
 #include "Editor/EditorBuildings.h"
+
+#include "BuildDefines.h"
+#include "Editor/EditSys.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorModes.h"
 #include "Editor/EditorTaskbarUtils.h"
@@ -621,5 +620,3 @@ void ExtractAndUpdateBuildingInfo() {
   SetInputFieldStringWith16BitString(1, str);
   SetActiveField(0);
 }
-
-#endif

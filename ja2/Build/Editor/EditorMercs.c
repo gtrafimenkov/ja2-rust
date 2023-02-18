@@ -1,14 +1,14 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/EditorMercs.h"
 
 #include <windows.h>
 
+#include "Tactical/OverheadTypes.h"
+
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorItems.h"
-#include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/EditorTerrain.h"  //for access to TerrainTileDrawMode
 #include "Editor/EditorUndo.h"
@@ -34,7 +34,7 @@
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/InventoryChoosing.h"
 #include "Tactical/MapInformation.h"
-#include "Tactical/Overhead.h"  //GetSoldier
+#include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierCreate.h"
@@ -3539,5 +3539,3 @@ void PasteMercPlacement(INT32 iMapIndex) {
     }
   }
 }
-
-#endif

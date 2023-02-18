@@ -1,10 +1,8 @@
+#include "Editor/EditorUndo.h"
+
 #include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
-#include "Editor/EditorUndo.h"
 #include "Editor/Smooth.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
@@ -868,5 +866,3 @@ void DetermineUndoState() {
     }
   }
 }
-
-#endif

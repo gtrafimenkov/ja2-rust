@@ -1,13 +1,11 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/EditorItems.h"
 
 #include <windows.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorDefines.h"
-#include "Editor/EditorItems.h"
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/ItemStatistics.h"
@@ -1383,5 +1381,3 @@ void DisplayItemStatistics() {
   mprintf(2, 440, L"Status Info Line 4");
   mprintf(2, 450, L"Status Info Line 5");
 }
-
-#endif

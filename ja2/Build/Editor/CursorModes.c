@@ -1,7 +1,6 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #include "Editor/CursorModes.h"
+
+#include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorDefines.h"
@@ -382,5 +381,3 @@ void RemoveBuildingLayout() {
     curr = curr->next;
   }
 }
-
-#endif

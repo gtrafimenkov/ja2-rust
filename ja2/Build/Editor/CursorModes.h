@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __CURSOR_MODES_H
 #define __CURSOR_MODES_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 enum {
@@ -35,7 +33,5 @@ void RemoveCursors();
 extern CHAR16 wszSelType[6][16];
 
 extern BOOLEAN gfCurrentSelectionWithRightButton;
-
-#endif
 
 #endif

@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITOR_TASKBAR_UTILS_H
 #define __EDITOR_TASKBAR_UTILS_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 // These are utilities that are used within the editor.  This function absorbs the expensive
@@ -60,5 +58,4 @@ extern UINT32 guiMercInvPanelBuffers[9];
 extern UINT32 guiMercTempBuffer;
 extern INT32 giEditMercImage[2];
 
-#endif
 #endif

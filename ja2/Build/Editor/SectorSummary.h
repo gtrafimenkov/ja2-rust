@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __SECTOR_SUMMARY_H
 #define __SECTOR_SUMMARY_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 // This function can be very time consuming as it loads every map file with a valid
@@ -33,5 +31,4 @@ extern BOOLEAN gfUpdateSummaryInfo;
 
 extern UINT8 GetCurrentSummaryVersion();
 
-#endif
 #endif

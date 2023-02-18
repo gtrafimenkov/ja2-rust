@@ -1,10 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #ifndef __EDITORMERCS_H
 #define __EDITORMERCS_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 // Merc editing modes.  These are used to determine which buttons to show and hide.
@@ -143,5 +140,4 @@ void StartScheduleAction();
 void InitDetailedPlacementForMerc();
 void KillDetailedPlacementForMerc();
 
-#endif
 #endif

@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITORTERRAIN_H
 #define __EDITORTERRAIN_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 #define TERRAIN_TILES_NODRAW 0
@@ -33,7 +31,5 @@ void HideTerrainTileButtons();
 void ChooseWeightedTerrainTile();
 
 void TerrainFill(UINT32 iMapIndex);
-
-#endif
 
 #endif

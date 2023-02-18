@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITORDEFINES_H
 #define __EDITORDEFINES_H
 
+#include "BuildDefines.h"
 #include "Editor/ButtonDefines.h"
 #include "SGP/Types.h"
 
@@ -251,5 +249,4 @@ extern BOOLEAN gfShowItemStatsPanel;
 #define MERCPANEL_X 177
 #define MERCPANEL_Y 361
 
-#endif
 #endif

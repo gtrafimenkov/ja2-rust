@@ -1,13 +1,11 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/NewSmooth.h"
 
 #include <stdlib.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorUndo.h"
-#include "Editor/NewSmooth.h"
 #include "Editor/SmoothingUtils.h"
 #include "SGP/Random.h"
 #include "TileEngine/Environment.h"
@@ -1287,5 +1285,3 @@ void AnalyseCaveMapForStructureInfo() {
     }
   }
 }
-
-#endif

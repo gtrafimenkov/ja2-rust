@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITORBUILDINGS_H
 #define __EDITORBUILDINGS_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
@@ -54,7 +52,5 @@ void FindNextLockedDoor();
 extern BOOLEAN gfEditingDoor;
 
 extern UINT16 usCurrentMode;
-
-#endif
 
 #endif

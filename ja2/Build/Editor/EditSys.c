@@ -1,10 +1,8 @@
+#include "Editor/EditSys.h"
+
 #include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
-#include "Editor/EditSys.h"
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorMercs.h"
@@ -1247,5 +1245,3 @@ void EliminateObjectLayerRedundancy() {
     }
   }
 }
-
-#endif  // JA2EDITOR

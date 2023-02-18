@@ -1,12 +1,10 @@
-#include "BuildDefines.h"
-#include "Tactical/MapInformation.h"
-#include "TileEngine/ExitGrids.h"
-
-#ifdef JA2EDITOR
 #ifndef __SUMMARY_INFO_H
 #define __SUMMARY_INFO_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
+#include "Tactical/MapInformation.h"
+#include "TileEngine/ExitGrids.h"
 
 #define GLOBAL_SUMMARY_VERSION 14
 #define MINIMUMVERSION 7
@@ -106,5 +104,4 @@ extern BOOLEAN gfMustForceUpdateAllMaps;
 extern BOOLEAN gfMajorUpdate;
 void ApologizeOverrideAndForceUpdateEverything();
 
-#endif
 #endif

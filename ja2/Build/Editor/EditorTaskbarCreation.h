@@ -1,10 +1,8 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __EDITOR_TASKBAR_CREATION_H
 #define __EDITOR_TASKBAR_CREATION_H
 
+#include "BuildDefines.h"
+
 void CreateEditorTaskbarInternal();
 
-#endif
 #endif

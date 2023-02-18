@@ -7,14 +7,12 @@
 // non-persistant functionality, however, it is still supported.  Just remove the commented line of
 // code (search for UNCOMMENT), and it's fixed -- it is currently disabled.
 
+#include "Editor/PopupMenu.h"
+
 #include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorMercs.h"
 #include "Editor/ItemStatistics.h"
-#include "Editor/PopupMenu.h"
 #include "Editor/SelectWin.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
@@ -437,5 +435,3 @@ BOOLEAN ProcessPopupMenuIfActive() {
   EndFrameBufferRender();
   return TRUE;
 }
-
-#endif

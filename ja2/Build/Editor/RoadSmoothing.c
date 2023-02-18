@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
-#include "Editor/EditorUndo.h"
 #include "Editor/RoadSmoothing.h"
+
+#include "BuildDefines.h"
+#include "Editor/EditorUndo.h"
 #include "SGP/Types.h"
 #include "TileEngine/TileDat.h"
 #include "TileEngine/WorldDef.h"
@@ -426,5 +424,3 @@ void ReplaceObsoleteRoads() {
     }
   }
 }
-
-#endif

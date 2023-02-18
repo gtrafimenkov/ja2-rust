@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __SMOOTHING_UTILS_H
 #define __SMOOTHING_UTILS_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 #include "TileEngine/WorldDef.h"
 
@@ -62,5 +60,4 @@ UINT16 GetVerticalWallClass(UINT16 iMapIndex);
 UINT16 GetHorizontalWallClass(UINT16 iMapIndex);
 BOOLEAN ValidDecalPlacement(UINT32 iMapIndex);
 
-#endif
 #endif

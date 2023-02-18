@@ -1,8 +1,6 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
-
 #include "Editor/MessageBox.h"
+
+#include "BuildDefines.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
@@ -132,5 +130,3 @@ void MsgBoxCnclClkCallback(GUI_BUTTON *butn, INT32 reason) {
 //----------------------------------------------------------------------------------------------
 //	End of the quick message box callback functions
 //----------------------------------------------------------------------------------------------
-
-#endif

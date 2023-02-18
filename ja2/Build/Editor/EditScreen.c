@@ -1,10 +1,7 @@
-#include "BuildDefines.h"
-#include "SysGlobals.h"
-
-#ifdef JA2EDITOR
-
-#include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
+
+#include "BuildDefines.h"
+#include "Editor/CursorModes.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorDefines.h"
@@ -3524,19 +3521,3 @@ void ReloadMap() {
   swprintf(szFilename, L"%S", gubFilename);
   ExternalLoadMap(szFilename);
 }
-
-#else  // non-editor version
-
-#include "SGP/Types.h"
-#include "ScreenIDs.h"
-
-UINT32 EditScreenInit() { return TRUE; }
-
-UINT32 EditScreenHandle() {
-  // If this screen ever gets set, then this is a bad thing -- endless loop
-  return ERROR_SCREEN;
-}
-
-UINT32 EditScreenShutdown() { return TRUE; }
-
-#endif

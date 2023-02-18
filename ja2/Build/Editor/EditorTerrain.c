@@ -1,15 +1,13 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
+#include "Editor/EditorTerrain.h"
 
 #include <windows.h>
 
+#include "BuildDefines.h"
 #include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditSys.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
-#include "Editor/EditorTerrain.h"
 #include "Editor/SelectWin.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
@@ -219,5 +217,3 @@ void TerrainFill(UINT32 iMapIndex) {
 
   Fill(sX, sY);
 }
-
-#endif

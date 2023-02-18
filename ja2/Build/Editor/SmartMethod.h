@@ -1,9 +1,7 @@
-#include "BuildDefines.h"
-
-#ifdef JA2EDITOR
 #ifndef __SMARTMETHOD_H
 #define __SMARTMETHOD_H
 
+#include "BuildDefines.h"
 #include "SGP/Types.h"
 
 void CalcSmartWallDefault(UINT16 *pusObjIndex, UINT16 *pusUseIndex);
@@ -40,5 +38,4 @@ extern UINT8 gubWindowUIValue;
 extern UINT8 gubWallUIValue;
 extern UINT8 gubBrokenWallUIValue;
 
-#endif
 #endif
