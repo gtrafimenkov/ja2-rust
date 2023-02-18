@@ -672,9 +672,9 @@ void RenderDoorLockInfo() {
     GetGridNoScreenPos(DoorTable[i].sGridNo, 0, &sScreenX, &sScreenY);
     if (sScreenY > 390) continue;
     if (DoorTable[i].ubLockID != 255)
-      swprintf(str, L"%S", LockTable[DoorTable[i].ubLockID].ubEditorName);
+      swprintf(str, ARR_SIZE(str), L"%S", LockTable[DoorTable[i].ubLockID].ubEditorName);
     else
-      swprintf(str, L"No Lock ID");
+      swprintf(str, ARR_SIZE(str), L"No Lock ID");
     xp = sScreenX - 10;
     yp = sScreenY - 40;
     DisplayWrappedString(xp, yp, 60, 2, FONT10ARIAL, FONT_LTKHAKI, str, FONT_BLACK, TRUE,
@@ -685,25 +685,25 @@ void RenderDoorLockInfo() {
       SetFontShadow(FONT_NEARBLACK);
       switch (DoorTable[i].ubTrapID) {
         case EXPLOSION:
-          swprintf(str, L"Explosion Trap");
+          swprintf(str, ARR_SIZE(str), L"Explosion Trap");
           break;
         case ELECTRIC:
-          swprintf(str, L"Electric Trap");
+          swprintf(str, ARR_SIZE(str), L"Electric Trap");
           break;
         case SIREN:
-          swprintf(str, L"Siren Trap");
+          swprintf(str, ARR_SIZE(str), L"Siren Trap");
           break;
         case SILENT_ALARM:
-          swprintf(str, L"Silent Alarm");
+          swprintf(str, ARR_SIZE(str), L"Silent Alarm");
           break;
         case SUPER_ELECTRIC:
-          swprintf(str, L"Super Electric Trap");
+          swprintf(str, ARR_SIZE(str), L"Super Electric Trap");
           break;
       }
       xp = sScreenX + 20 - StringPixLength(str, FONT10ARIAL) / 2;
       yp = sScreenY;
       mprintf(xp, yp, str);
-      swprintf(str, L"Trap Level %d", DoorTable[i].ubTrapLevel);
+      swprintf(str, ARR_SIZE(str), L"Trap Level %d", DoorTable[i].ubTrapLevel);
       xp = sScreenX + 20 - StringPixLength(str, FONT10ARIAL) / 2;
       mprintf(xp, yp + 10, str);
     }

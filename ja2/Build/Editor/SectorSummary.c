@@ -745,28 +745,28 @@ void RenderItemDetails() {
           SetFontForeground(77);
         switch (i) {
           case 0:
-            swprintf(str, L"Panic1");
+            swprintf(str, ARR_SIZE(str), L"Panic1");
             break;
           case 1:
-            swprintf(str, L"Panic2");
+            swprintf(str, ARR_SIZE(str), L"Panic2");
             break;
           case 2:
-            swprintf(str, L"Panic3");
+            swprintf(str, ARR_SIZE(str), L"Panic3");
             break;
           case 3:
-            swprintf(str, L"Norm1");
+            swprintf(str, ARR_SIZE(str), L"Norm1");
             break;
           case 4:
-            swprintf(str, L"Norm2");
+            swprintf(str, ARR_SIZE(str), L"Norm2");
             break;
           case 5:
-            swprintf(str, L"Norm3");
+            swprintf(str, ARR_SIZE(str), L"Norm3");
             break;
           case 6:
-            swprintf(str, L"Norm4");
+            swprintf(str, ARR_SIZE(str), L"Norm4");
             break;
           case 7:
-            swprintf(str, L"Pressure Actions");
+            swprintf(str, ARR_SIZE(str), L"Pressure Actions");
             break;
         }
         if (i < 7) {
@@ -978,7 +978,7 @@ void RenderSummaryWindow() {
           x = gsSelSectorX - 1, y = gsSelSectorY - 1;
         else
           x = gsSectorX - 1, y = gsSectorY - 1;
-        swprintf(str, L"%c%d", y + 'A', x + 1);
+        swprintf(str, ARR_SIZE(str), L"%c%d", y + 'A', x + 1);
         swprintf(gszFilename, str);
         giCurrLevel = giCurrentViewLevel;
         switch (giCurrentViewLevel) {
@@ -1291,7 +1291,7 @@ void RenderSummaryWindow() {
     }
     for (x = 1; x <= 16; x++) {
       CHAR16 str[3];
-      swprintf(str, L"%d", x);
+      swprintf(str, ARR_SIZE(str), L"%d", x);
       mprintf(MAP_LEFT + x * 13 - (13 + StringPixLength(str, SMALLCOMPFONT)) / 2, MAP_TOP - 8, str);
     }
     if (gfRenderGrid) {
@@ -1324,7 +1324,7 @@ void RenderSummaryWindow() {
               // is no ground level, then it'll be shadowed.
               SetFont(SMALLCOMPFONT);
               SetFontForeground(FONT_YELLOW);
-              swprintf(str, L"%d", ubNumUndergroundLevels);
+              swprintf(str, ARR_SIZE(str), L"%d", ubNumUndergroundLevels);
               mprintf(MAP_LEFT + x * 13 + 4, ClipRect.iTop + 4, str);
             }
             if (gbSectorLevels[x][y] & GROUND_LEVEL_MASK) {
@@ -1341,7 +1341,7 @@ void RenderSummaryWindow() {
               // is no ground level, then it'll be shadowed.
               SetFont(SMALLCOMPFONT);
               SetFontForeground(FONT_YELLOW);
-              swprintf(str, L"%d", ubNumUndergroundLevels);
+              swprintf(str, ARR_SIZE(str), L"%d", ubNumUndergroundLevels);
               mprintf(MAP_LEFT + x * 13 + 4, ClipRect.iTop + 4, str);
             }
             if (gbSectorLevels[x][y] & ALTERNATE_GROUND_MASK) {
@@ -1499,7 +1499,7 @@ void UpdateSectorSummary(STR16 gszFilename, BOOLEAN fUpdate) {
     SetFont(FONT10ARIAL);
     SetFontForeground(FONT_LTKHAKI);
     SetFontShadow(FONT_NEARBLACK);
-    swprintf(str, L"Analyzing map:  %s...", gszFilename);
+    swprintf(str, ARR_SIZE(str), L"Analyzing map:  %s...", gszFilename);
 
     if (gfSummaryWindowActive) {
       mprintf(MAP_LEFT, MAP_BOTTOM + 100, str);
@@ -1906,7 +1906,7 @@ void SummaryLoadMapCallback(GUI_BUTTON *btn, INT32 reason) {
     CreateProgressBar(0, MAP_LEFT + 5, MAP_BOTTOM + 110, 573, MAP_BOTTOM + 120);
 
     DefineProgressBarPanel(0, 65, 79, 94, MAP_LEFT, 318, 578, 356);
-    swprintf(str, L"Loading map:  %s", gszDisplayName);
+    swprintf(str, ARR_SIZE(str), L"Loading map:  %s", gszDisplayName);
     SetProgressBarTitle(0, str, BLOCKFONT2, FONT_RED, FONT_NEARBLACK);
     SetProgressBarMsgAttributes(0, SMALLCOMPFONT, FONT_BLACK, FONT_BLACK);
 
@@ -2339,7 +2339,7 @@ void ReportError(CHAR8 *pSector, UINT8 ubLevel) {
   CHAR16 temp[10];
 
   // Make sure the file exists... if not, then return false
-  swprintf(str, L"%S", pSector);
+  swprintf(str, ARR_SIZE(str), L"%S", pSector);
   if (ubLevel % 4) {
     swprintf(temp, L"_b%d.dat", ubLevel % 4);
     wcscat(str, temp);
@@ -2468,11 +2468,11 @@ void ApologizeOverrideAndForceUpdateEverything() {
   SetFont(HUGEFONT);
   SetFontForeground(FONT_RED);
   SetFontShadow(FONT_NEARBLACK);
-  swprintf(str, L"MAJOR VERSION UPDATE");
+  swprintf(str, ARR_SIZE(str), L"MAJOR VERSION UPDATE");
   mprintf(320 - StringPixLength(str, HUGEFONT) / 2, 105, str);
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_YELLOW);
-  swprintf(str, L"There are %d maps requiring a major version update.",
+  swprintf(str, ARR_SIZE(str), L"There are %d maps requiring a major version update.",
            gusNumberOfMapsToBeForceUpdated);
   mprintf(320 - StringPixLength(str, FONT10ARIAL) / 2, 130, str);
 

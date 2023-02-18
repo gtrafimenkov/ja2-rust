@@ -81,7 +81,8 @@ void ValidateEnemiesHaveWeapons() {
   // do message box and return
   if (iNumInvalid) {
     CHAR16 str[100];
-    swprintf(str, L"%d enemies have been added without any weapons!  KM:0.  Please note sector.",
+    swprintf(str, ARR_SIZE(str),
+             L"%d enemies have been added without any weapons!  KM:0.  Please note sector.",
              iNumInvalid);
     iErrorDialog =
         DoMessageBox(MSG_BOX_BASIC_STYLE, str, GAME_SCREEN, MSG_BOX_FLAG_OK, NULL, &CenteringRect);
@@ -688,7 +689,8 @@ void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
     if (!pGroup) {
 #ifdef JA2BETAVERSION
       CHAR16 str[256];
-      swprintf(str, L"Enemy soldier killed with ubGroupID of %d, and the group doesn't exist!",
+      swprintf(str, ARR_SIZE(str),
+               L"Enemy soldier killed with ubGroupID of %d, and the group doesn't exist!",
                pSoldier->ubGroupID);
       DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
 #endif

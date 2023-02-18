@@ -1251,7 +1251,7 @@ void DrawDate(INT32 iCounter, INT32 iDate, BOOLEAN fRead) {
     SetFont(FONT10ARIALBOLD);
   }
   // draw date of message being displayed in mail viewer
-  swprintf(sString, L"%s %d", pDayStrings[0], iDate / (24 * 60));
+  swprintf(sString, ARR_SIZE(sString), L"%s %d", pDayStrings[0], iDate / (24 * 60));
   mprintf(DATE_X, ((UINT16)(4 + MIDDLE_Y + iCounter * MIDDLE_WIDTH)), sString);
 
   SetFont(MESSAGE_FONT);
@@ -2529,7 +2529,7 @@ void DisplayEmailMessageSubjectDateFromLines(EmailPtr pMail, INT32 iViewerY) {
   mprintf(usX, MESSAGE_DATE_Y + (UINT16)iViewerY, pEmailHeaders[2]);
 
   // the actual date info
-  swprintf(sString, L"%d", ((pMail->iDate) / (24 * 60)));
+  swprintf(sString, ARR_SIZE(sString), L"%d", ((pMail->iDate) / (24 * 60)));
   mprintf(MESSAGE_HEADER_X + 235, MESSAGE_DATE_Y + (UINT16)iViewerY, sString);
 
   // print subject
@@ -4124,9 +4124,9 @@ void DisplayWhichPageOfEmailProgramIsDisplayed(void) {
 
   // page number
   if (iLastPage < 0)
-    swprintf(sString, L"%d / %d", 1, 1);
+    swprintf(sString, ARR_SIZE(sString), L"%d / %d", 1, 1);
   else
-    swprintf(sString, L"%d / %d", iCurrentPage + 1, iLastPage + 1);
+    swprintf(sString, ARR_SIZE(sString), L"%d / %d", iCurrentPage + 1, iLastPage + 1);
 
   // print it
   mprintf(PAGE_NUMBER_X, PAGE_NUMBER_Y, sString);
@@ -4186,7 +4186,8 @@ BOOLEAN DisplayNumberOfPagesToThisEmail(INT32 iViewerY) {
   giNumberOfPagesToCurrentEmail = (giNumberOfPagesToCurrentEmail);
 
   // parse current page and max number of pages to email
-  swprintf(sString, L"%d / %d", (giMessagePage + 1), (giNumberOfPagesToCurrentEmail - 1));
+  swprintf(sString, ARR_SIZE(sString), L"%d / %d", (giMessagePage + 1),
+           (giNumberOfPagesToCurrentEmail - 1));
 
   SetFont(FONT12ARIAL);
   SetFontForeground(FONT_BLACK);

@@ -323,7 +323,7 @@ void BringupMeanwhileBox() {
       L"Meanwhile..... ( %S : Remember to make sure towns are controlled if required by script )",
       gzMeanwhileStr[gCurrentMeanwhileDef.ubMeanwhileID]);
 #else
-  swprintf(zStr, L"%s.....", pMessageStrings[MSG_MEANWHILE]);
+  swprintf(zStr, ARR_SIZE(zStr), L"%s.....", pMessageStrings[MSG_MEANWHILE]);
 #endif
 
 #ifdef JA2TESTVERSION

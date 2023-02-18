@@ -3625,7 +3625,7 @@ void DisplayPlayersBalanceToDate(void) {
   SetFontShadow(NO_SHADOW);
 
   // parse straigth number
-  swprintf(sString, L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(sString, ARR_SIZE(sString), L"%d", LaptopSaveInfo.iCurrentBalance);
 
   // put in commas, then dollar sign
   InsertCommasForDollarFigure(sString);
@@ -4874,7 +4874,7 @@ BOOLEAN RenderWWWProgramTitleBar(void) {
   else {
     iIndex = guiCurrentLaptopMode - LAPTOP_MODE_WWW - 1;
 
-    swprintf(sString, L"%s  -  %s", pWebTitle[0], pWebPagesTitles[iIndex]);
+    swprintf(sString, ARR_SIZE(sString), L"%s  -  %s", pWebTitle[0], pWebPagesTitles[iIndex]);
     mprintf(140, 33, sString);
   }
 

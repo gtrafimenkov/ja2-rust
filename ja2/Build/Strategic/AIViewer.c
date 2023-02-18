@@ -207,9 +207,9 @@ void StringFromValue(STR16 str, INT32 iValue, UINT32 uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
   else if ((UINT32)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
-    swprintf(str, L"%d", uiMax);
+    swprintf(str, ARR_SIZE(str), L"%d", uiMax);
   else  // this is a valid static value, so convert it to a string.
-    swprintf(str, L"%d", iValue);
+    swprintf(str, ARR_SIZE(str), L"%d", iValue);
 }
 
 BOOLEAN CreateAIViewer() {
@@ -458,7 +458,7 @@ void RenderStationaryGroups() {
         BlitGroupIcon(ICON_TYPE_STOPPED, ubIconColor, xp, yp, hVObject);
 
         // Print the group size
-        swprintf(str, L"%d", ubGroupSize);
+        swprintf(str, ARR_SIZE(str), L"%d", ubGroupSize);
         mprintf(xp + 2, yp + 2, str);
       }
 
@@ -782,7 +782,7 @@ void RenderViewer() {
         SetFontForeground(FONT_YELLOW);
       else
         SetFontForeground(FONT_GRAY1);
-      swprintf(str, L"%d", x);
+      swprintf(str, ARR_SIZE(str), L"%d", x);
       mprintf(VIEWER_LEFT + x * 26 - (26 + StringPixLength(str, FONT12POINT1)) / 2, VIEWER_TOP - 12,
               str);
     }
@@ -1647,7 +1647,8 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
     iSurplus = pSector->ubNumTroops + pSector->ubNumAdmins + pSector->ubNumElites - iDesired;
     SetFontForeground(FONT_WHITE);
 
-    swprintf(wString, L"Garrison #%d: %d desired, ", pSector->ubGarrisonID, iDesired);
+    swprintf(wString, ARR_SIZE(wString), L"Garrison #%d: %d desired, ", pSector->ubGarrisonID,
+             iDesired);
 
     if (iSurplus >= 0) {
       swprintf(wSubString, L"%d surplus troops", iSurplus);
@@ -1684,7 +1685,7 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
       if ((pGroup->ubSectorX == ubSectorX) && (pGroup->ubSectorY == ubSectorY)) {
         Assert(pGroup->pEnemyGroup->ubIntention < NUM_ENEMY_INTENTIONS);
 
-        swprintf(wString, L"Group %c: %s", 'A' + ubGroupCnt,
+        swprintf(wString, ARR_SIZE(wString), L"Group %c: %s", 'A' + ubGroupCnt,
                  gwGroupTypeString[pGroup->pEnemyGroup->ubIntention]);
 
         switch (pGroup->pEnemyGroup->ubIntention) {

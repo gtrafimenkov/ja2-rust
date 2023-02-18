@@ -493,7 +493,8 @@ void UpdateSectorExitMenu() {
     if (gExitDialog.fSelectedMercIsEPC) {  // EPCs cannot leave the sector alone and must be
                                            // escorted
       CHAR16 str[256];
-      swprintf(str, pExitingSectorHelpText[EXIT_GUI_ESCORTED_CHARACTERS_MUST_BE_ESCORTED_HELPTEXT],
+      swprintf(str, ARR_SIZE(str),
+               pExitingSectorHelpText[EXIT_GUI_ESCORTED_CHARACTERS_MUST_BE_ESCORTED_HELPTEXT],
                MercPtrs[gusSelectedSoldier]->name);
       SetButtonFastHelpText(gExitDialog.uiSingleMoveButton, str);
       SetRegionFastHelpText(&gExitDialog.SingleRegion, str);
@@ -517,7 +518,8 @@ void UpdateSectorExitMenu() {
         }
       } else {
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male plural
-          swprintf(str, pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_PLURAL],
+          swprintf(str, ARR_SIZE(str),
+                   pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_PLURAL],
                    MercPtrs[gusSelectedSoldier]->name);
         } else {  // female plural
           swprintf(str,
@@ -532,7 +534,8 @@ void UpdateSectorExitMenu() {
     CHAR16 str[256];
     EnableButton(gExitDialog.uiSingleMoveButton);
     MSYS_EnableRegion(&(gExitDialog.SingleRegion));
-    swprintf(str, pExitingSectorHelpText[EXIT_GUI_SINGLE_TRAVERSAL_WILL_SEPARATE_SQUADS_HELPTEXT],
+    swprintf(str, ARR_SIZE(str),
+             pExitingSectorHelpText[EXIT_GUI_SINGLE_TRAVERSAL_WILL_SEPARATE_SQUADS_HELPTEXT],
              MercPtrs[gusSelectedSoldier]->name);
     SetButtonFastHelpText(gExitDialog.uiSingleMoveButton, str);
     SetRegionFastHelpText(&gExitDialog.SingleRegion, str);
@@ -679,7 +682,8 @@ void RemoveSectorExitMenu(BOOLEAN fOk) {
     if (fOk && AM_AN_EPC(MercPtrs[gusSelectedSoldier])) {
       // Check if there are more than one in this squad
       if (gExitDialog.ubNumPeopleOnSquad == 0) {
-        swprintf(Str, pMessageStrings[MSG_EPC_CANT_TRAVERSE], MercPtrs[gusSelectedSoldier]->name);
+        swprintf(Str, ARR_SIZE(Str), pMessageStrings[MSG_EPC_CANT_TRAVERSE],
+                 MercPtrs[gusSelectedSoldier]->name);
 
         DoMessageBox(MSG_BOX_BASIC_STYLE, Str, GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
         return;

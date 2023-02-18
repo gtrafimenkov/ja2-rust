@@ -9247,12 +9247,13 @@ void DebugValidateSoldierData() {
             pSoldier->bAssignment != ASSIGNMENT_POW &&
             !(pSoldier->uiStatusFlags & (SOLDIER_DRIVER | SOLDIER_PASSENGER))) {
           // This is bad!
-          swprintf(sString, L"Soldier Data Error: Soldier %d is alive but has a zero group ID.",
-                   cnt);
+          swprintf(sString, ARR_SIZE(sString),
+                   L"Soldier Data Error: Soldier %d is alive but has a zero group ID.", cnt);
           fProblemDetected = TRUE;
         } else if ((pSoldier->ubGroupID != 0) && (GetGroup(pSoldier->ubGroupID) == NULL)) {
           // This is bad!
-          swprintf(sString, L"Soldier Data Error: Soldier %d has an invalid group ID of %d.", cnt,
+          swprintf(sString, ARR_SIZE(sString),
+                   L"Soldier Data Error: Soldier %d has an invalid group ID of %d.", cnt,
                    pSoldier->ubGroupID);
           fProblemDetected = TRUE;
         }
@@ -9268,8 +9269,9 @@ void DebugValidateSoldierData() {
       if ((pSoldier->bAssignment != IN_TRANSIT) &&
           ((pSoldier->sSectorX <= 0) || (pSoldier->sSectorX >= 17) || (pSoldier->sSectorY <= 0) ||
            (pSoldier->sSectorY >= 17) || (pSoldier->bSectorZ < 0) || (pSoldier->bSectorZ > 3))) {
-        swprintf(sString, L"Soldier Data Error: Soldier %d is located at %d/%d/%d.", cnt,
-                 pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ);
+        swprintf(sString, ARR_SIZE(sString),
+                 L"Soldier Data Error: Soldier %d is located at %d/%d/%d.", cnt, pSoldier->sSectorX,
+                 pSoldier->sSectorY, pSoldier->bSectorZ);
         fProblemDetected = TRUE;
       }
     }

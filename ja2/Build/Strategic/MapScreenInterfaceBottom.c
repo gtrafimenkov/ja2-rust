@@ -816,9 +816,9 @@ void DisplayCompressMode(void) {
   // get compress speed
   if (giTimeCompressMode != NOT_USING_TIME_COMPRESSION) {
     if (IsTimeBeingCompressed()) {
-      swprintf(sString, L"%s", sTimeStrings[giTimeCompressMode]);
+      swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[giTimeCompressMode]);
     } else {
-      swprintf(sString, L"%s", sTimeStrings[0]);
+      swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[0]);
     }
   }
 
@@ -1202,7 +1202,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
   SetFontForeground(MAP_BOTTOM_FONT_COLOR);
   SetFontBackground(FONT_BLACK);
 
-  swprintf(sString, L"%s", pMapScreenBottomText[0]);
+  swprintf(sString, ARR_SIZE(sString), L"%s", pMapScreenBottomText[0]);
 
   // center it
   VarFindFontCenterCoordinates(359, 387 - 14, 437 - 359, 10, COMPFONT, &sFontX, &sFontY, sString);
@@ -1210,7 +1210,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
   // print it
   mprintf(sFontX, sFontY, L"%s", sString);
 
-  swprintf(sString, L"%s", zMarksMapScreenText[2]);
+  swprintf(sString, ARR_SIZE(sString), L"%s", zMarksMapScreenText[2]);
 
   // center it
   VarFindFontCenterCoordinates(359, 433 - 14, 437 - 359, 10, COMPFONT, &sFontX, &sFontY, sString);
@@ -1236,7 +1236,7 @@ void DisplayCurrentBalanceForMapBottom(void) {
   SetFontForeground(183);
   SetFontBackground(FONT_BLACK);
 
-  swprintf(sString, L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(sString, ARR_SIZE(sString), L"%d", LaptopSaveInfo.iCurrentBalance);
 
   // insert
 
@@ -1324,7 +1324,7 @@ void DisplayProjectedDailyMineIncome(void) {
   SetFontForeground(183);
   SetFontBackground(FONT_BLACK);
 
-  swprintf(sString, L"%d", iRate);
+  swprintf(sString, ARR_SIZE(sString), L"%d", iRate);
 
   // insert
   InsertCommasForDollarFigure(sString);
@@ -1453,7 +1453,7 @@ void BuildDemoMouseRegionsForHelpText(void) {
                       MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK,
                       MapButtonMaskBtnCallback);
 
-    swprintf(sString, L"%s %d", zMarksMapScreenText[0], iCounter + 1);
+    swprintf(sString, ARR_SIZE(sString), L"%s %d", zMarksMapScreenText[0], iCounter + 1);
     SetRegionFastHelpText(&MapButtonScreenMasks[iCounter + 10], sString);
   }
 

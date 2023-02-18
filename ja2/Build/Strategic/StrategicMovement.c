@@ -1045,7 +1045,8 @@ BOOLEAN CheckConditionsForBattle(GROUP *pGroup) {
         CHAR16 pSectorStr[128];
         GetSectorIDString(pGroup->ubSectorX, pGroup->ubSectorY, pGroup->ubSectorZ, pSectorStr,
                           TRUE);
-        swprintf(str, gpStrategicString[STR_DIALOG_ENEMIES_ATTACK_UNCONCIOUSMERCS], pSectorStr);
+        swprintf(str, ARR_SIZE(str), gpStrategicString[STR_DIALOG_ENEMIES_ATTACK_UNCONCIOUSMERCS],
+                 pSectorStr);
         DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, TriggerPrebattleInterface);
       }
     }
@@ -2003,7 +2004,7 @@ BOOLEAN PossibleToCoordinateSimultaneousGroupArrivals(GROUP *pFirstGroup) {
     // header, sector, singular/plural str, confirmation string.
     // Ex:  Enemies have been detected in sector J9 and another squad is
     //     about to arrive.  Do you wish to coordinate a simultaneous arrival?
-    swprintf(str, pStr,
+    swprintf(str, ARR_SIZE(str), pStr,
              pEnemyType,  // Enemy type (Enemies or bloodcats)
              'A' + gpPendingSimultaneousGroup->ubSectorY - 1,
              gpPendingSimultaneousGroup->ubSectorX);  // Sector location
@@ -3952,7 +3953,7 @@ void AddFuelToVehicle(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pVehicle) {
   if (pItem->usItem != GAS_CAN) {
 #ifdef JA2BETAVERSION
     CHAR16 str[100];
-    swprintf(str, L"%s is supposed to have gas can in hand.  ATE:0", pSoldier->name);
+    swprintf(str, ARR_SIZE(str), L"%s is supposed to have gas can in hand.  ATE:0", pSoldier->name);
     DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
 #endif
     return;
@@ -3980,8 +3981,8 @@ void AddFuelToVehicle(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pVehicle) {
 void ReportVehicleOutOfGas(INT32 iVehicleID, UINT8 ubSectorX, UINT8 ubSectorY) {
   CHAR16 str[255];
   // Report that the vehicle that just arrived is out of gas.
-  swprintf(str, gzLateLocalizedString[5], pVehicleStrings[pVehicleList[iVehicleID].ubVehicleType],
-           ubSectorY + 'A' - 1, ubSectorX);
+  swprintf(str, ARR_SIZE(str), gzLateLocalizedString[5],
+           pVehicleStrings[pVehicleList[iVehicleID].ubVehicleType], ubSectorY + 'A' - 1, ubSectorX);
   DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
 }
 
@@ -4189,7 +4190,7 @@ void NotifyPlayerOfBloodcatBattle(UINT8 ubSectorX, UINT8 ubSectorY) {
   CHAR16 zTempString[128];
   if (gubEnemyEncounterCode == BLOODCAT_AMBUSH_CODE) {
     GetSectorIDString(ubSectorX, ubSectorY, 0, zTempString, TRUE);
-    swprintf(str, pMapErrorString[12], zTempString);
+    swprintf(str, ARR_SIZE(str), pMapErrorString[12], zTempString);
   } else if (gubEnemyEncounterCode == ENTERING_BLOODCAT_LAIR_CODE) {
     wcscpy(str, pMapErrorString[13]);
   }
@@ -4378,8 +4379,8 @@ BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(GROUP *pGroup) {
 
   // build string for squad
   GetSectorIDString(sSectorX, sSectorY, bSectorZ, wSectorName, FALSE);
-  swprintf(sString, pLandMarkInSectorString[0], pGroup->pPlayerList->pSoldier->bAssignment + 1,
-           wSectorName);
+  swprintf(sString, ARR_SIZE(sString), pLandMarkInSectorString[0],
+           pGroup->pPlayerList->pSoldier->bAssignment + 1, wSectorName);
 
   if (GroupAtFinalDestination(pGroup)) {
     // do an OK message box

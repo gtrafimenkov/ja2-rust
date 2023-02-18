@@ -926,9 +926,10 @@ void BullsEyeOrChopperSelectionPopupCallback(UINT8 ubExitValue);
 void WakeUpAnySleepingSelectedMercsOnFootOrDriving(void);
 
 void GetMapscreenMercAssignmentString(SOLDIERTYPE *pSoldier, wchar_t sString[]);
-void GetMapscreenMercLocationString(SOLDIERTYPE *pSoldier, wchar_t sString[]);
-void GetMapscreenMercDestinationString(SOLDIERTYPE *pSoldier, wchar_t sString[]);
-void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[], UINT8 *pubFontColor);
+void GetMapscreenMercLocationString(SOLDIERTYPE *pSoldier, wchar_t sString[], int sStringSize);
+void GetMapscreenMercDestinationString(SOLDIERTYPE *pSoldier, wchar_t sString[], int sStringSize);
+void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[], int sStringSize,
+                                     UINT8 *pubFontColor);
 
 void InitPreviousPaths(void);
 void RememberPreviousPathForAllSelectedChars(void);
@@ -993,7 +994,7 @@ void DisplayDestinationOfCurrentDestMerc(void) {
   SetBoxForeground(ghVehicleBox, FONT_LTGREEN);
   SetBoxBackground(ghVehicleBox, FONT_BLACK);
 
-  swprintf(sString, L"%s%s", pMapVertIndex[sSector / MAP_WORLD_X],
+  swprintf(sString, ARR_SIZE(sString), L"%s%s", pMapVertIndex[sSector / MAP_WORLD_X],
            pMapHortIndex[sSector % MAP_WORLD_X]);
   FindFontCenterCoordinates(DEST_PLOT_X, DEST_PLOT_Y, 70, GetFontHeight(MAP_SCREEN_FONT), sString,
                             MAP_SCREEN_FONT, &sX, &sY);
@@ -1393,7 +1394,7 @@ void DrawPay(INT16 sCharNumber) {
   SetFontBackground(FONT_BLACK);
 
   // parse salary
-  swprintf(sString, L"%d", uiSalary);
+  swprintf(sString, ARR_SIZE(sString), L"%d", uiSalary);
 
   // right justify salary
   FindFontRightCoordinates(CHAR_PAY_X, CHAR_PAY_Y, CHAR_PAY_WID, CHAR_PAY_HEI, sString, CHAR_FONT,
@@ -1469,7 +1470,7 @@ void DrawCharStats(INT16 sCharNum) {
   SetFontBackground(FONT_BLACK);
 
   // strength
-  swprintf(sString, L"%d", pSoldier->bStrength);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bStrength);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeStrengthTime) &&
       (pSoldier->uiChangeStrengthTime != 0)) {
@@ -1487,7 +1488,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, STR_Y, CHAR_FONT);
 
   // dexterity
-  swprintf(sString, L"%d", pSoldier->bDexterity);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bDexterity);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeDexterityTime) &&
       (pSoldier->uiChangeDexterityTime != 0)) {
@@ -1505,7 +1506,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, DEX_Y, CHAR_FONT);
 
   // agility
-  swprintf(sString, L"%d", pSoldier->bAgility);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bAgility);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeAgilityTime) &&
       (pSoldier->uiChangeAgilityTime != 0)) {
@@ -1523,7 +1524,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, AGL_Y, CHAR_FONT);
 
   // wisdom
-  swprintf(sString, L"%d", pSoldier->bWisdom);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bWisdom);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeWisdomTime) &&
       (pSoldier->uiChangeWisdomTime != 0)) {
@@ -1541,7 +1542,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, WIS_Y, CHAR_FONT);
 
   // leadership
-  swprintf(sString, L"%d", pSoldier->bLeadership);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bLeadership);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeLeadershipTime) &&
       (pSoldier->uiChangeLeadershipTime != 0)) {
@@ -1559,7 +1560,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, LDR_Y, CHAR_FONT);
 
   // experience level
-  swprintf(sString, L"%d", pSoldier->bExpLevel);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bExpLevel);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeLevelTime) &&
       (pSoldier->uiChangeLevelTime != 0)) {
@@ -1577,7 +1578,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, LVL_Y, CHAR_FONT);
 
   // marksmanship
-  swprintf(sString, L"%d", pSoldier->bMarksmanship);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bMarksmanship);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeMarksmanshipTime) &&
       (pSoldier->uiChangeMarksmanshipTime != 0)) {
@@ -1595,7 +1596,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, MRK_Y, CHAR_FONT);
 
   // explosives
-  swprintf(sString, L"%d", pSoldier->bExplosive);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bExplosive);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeExplosivesTime) &&
       (pSoldier->uiChangeExplosivesTime != 0)) {
@@ -1613,7 +1614,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, EXP_Y, CHAR_FONT);
 
   // mechanical
-  swprintf(sString, L"%d", pSoldier->bMechanical);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bMechanical);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeMechanicalTime) &&
       (pSoldier->uiChangeMechanicalTime != 0)) {
@@ -1631,7 +1632,7 @@ void DrawCharStats(INT16 sCharNum) {
   DrawString(sString, usX, MEC_Y, CHAR_FONT);
 
   // medical
-  swprintf(sString, L"%d", pSoldier->bMedical);
+  swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bMedical);
 
   if ((GetJA2Clock() < CHANGE_STAT_RECENTLY_DURATION + pSoldier->uiChangeMedicalTime) &&
       (pSoldier->uiChangeMedicalTime != 0)) {
@@ -1664,7 +1665,7 @@ void DrawCharHealth(INT16 sCharNum) {
   if (pSoldier->bAssignment != ASSIGNMENT_POW) {
     // find starting X coordinate by centering all 3 substrings together, then print them separately
     // (different colors)!
-    swprintf(sString, L"%d/%d", pSoldier->bLife, pSoldier->bLifeMax);
+    swprintf(sString, ARR_SIZE(sString), L"%d/%d", pSoldier->bLife, pSoldier->bLifeMax);
     FindFontCenterCoordinates(CHAR_HP_X, CHAR_HP_Y, CHAR_HP_WID, CHAR_HP_HEI, sString, CHAR_FONT,
                               &usX, &usY);
 
@@ -1688,7 +1689,7 @@ void DrawCharHealth(INT16 sCharNum) {
     }
 
     // current life
-    swprintf(sString, L"%d", pSoldier->bLife);
+    swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bLife);
     DrawString(sString, usX, CHAR_HP_Y, CHAR_FONT);
     usX += StringPixLength(sString, CHAR_FONT);
 
@@ -1710,12 +1711,12 @@ void DrawCharHealth(INT16 sCharNum) {
     }
 
     // maximum life
-    swprintf(sString, L"%d", pSoldier->bLifeMax);
+    swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bLifeMax);
     DrawString(sString, usX, CHAR_HP_Y, CHAR_FONT);
   } else {
     // POW - health unknown
     SetFontForeground(CHAR_TEXT_FONT_COLOR);
-    swprintf(sString, pPOWStrings[1]);
+    swprintf(sString, ARR_SIZE(sString), pPOWStrings[1]);
     FindFontCenterCoordinates(CHAR_HP_X, CHAR_HP_Y, CHAR_HP_WID, CHAR_HP_HEI, sString, CHAR_FONT,
                               &usX, &usY);
     DrawString(sString, usX, CHAR_HP_Y, CHAR_FONT);
@@ -1838,7 +1839,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
     ConvertMinTimeToETADayHourMinString(uiArrivalTime, sString);
   } else {
     // show location
-    GetMapscreenMercLocationString(pSoldier, sString);
+    GetMapscreenMercLocationString(pSoldier, sString, ARR_SIZE(sString));
   }
 
   if (wcslen(sString) > 0) {
@@ -1863,7 +1864,8 @@ void DrawCharacterInfo(INT16 sCharNumber) {
 
   // dead?
   if (pSoldier->bLife <= 0) {
-    swprintf(sString, L"%s", gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
+    swprintf(sString, ARR_SIZE(sString), L"%s",
+             gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
   }
   // what kind of merc
   else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC || pSoldier->ubProfile == SLAY) {
@@ -1890,8 +1892,9 @@ void DrawCharacterInfo(INT16 sCharNumber) {
         SetFontForeground(FONT_LTGREEN);
       }
 
-      swprintf(sString, L"%.1f%s/%d%s", dTimeLeft, gpStrategicString[STR_PB_DAYS_ABBREVIATION],
-               pSoldier->iTotalContractLength, gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
+      swprintf(sString, ARR_SIZE(sString), L"%.1f%s/%d%s", dTimeLeft,
+               gpStrategicString[STR_PB_DAYS_ABBREVIATION], pSoldier->iTotalContractLength,
+               gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
     } else {
       // less than a day, display hours left in red
       if (iTimeRemaining > 5) {
@@ -1910,17 +1913,20 @@ void DrawCharacterInfo(INT16 sCharNumber) {
         SetFontForeground(FONT_RED);
       }
 
-      swprintf(sString, L"%d%s/%d%s", iTimeRemaining, gpStrategicString[STR_PB_HOURS_ABBREVIATION],
-               pSoldier->iTotalContractLength, gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
+      swprintf(sString, ARR_SIZE(sString), L"%d%s/%d%s", iTimeRemaining,
+               gpStrategicString[STR_PB_HOURS_ABBREVIATION], pSoldier->iTotalContractLength,
+               gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
     }
   } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
     INT32 iBeenHiredFor = (GetWorldTotalMin() / NUM_MIN_IN_DAY) - pSoldier->iStartContractTime;
 
-    swprintf(sString, L"%d%s/%d%s", gMercProfiles[pSoldier->ubProfile].iMercMercContractLength,
+    swprintf(sString, ARR_SIZE(sString), L"%d%s/%d%s",
+             gMercProfiles[pSoldier->ubProfile].iMercMercContractLength,
              gpStrategicString[STR_PB_DAYS_ABBREVIATION], iBeenHiredFor,
              gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
   } else {
-    swprintf(sString, L"%s", gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
+    swprintf(sString, ARR_SIZE(sString), L"%s",
+             gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
   }
 
   // set font stuff
@@ -1947,7 +1953,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
     iDailyCost = gMercProfiles[pSoldier->ubProfile].sSalary;
   }
 
-  swprintf(sString, L"%d", iDailyCost);
+  swprintf(sString, ARR_SIZE(sString), L"%d", iDailyCost);
 
   // insert commas and dollar sign
   InsertCommasForDollarFigure(sString);
@@ -1960,7 +1966,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
   // medical deposit
   if (gMercProfiles[Menptr[gCharactersList[sCharNumber].usSolID].ubProfile].sMedicalDepositAmount >
       0) {
-    swprintf(sString, L"%d",
+    swprintf(sString, ARR_SIZE(sString), L"%d",
              gMercProfiles[Menptr[gCharactersList[sCharNumber].usSolID].ubProfile]
                  .sMedicalDepositAmount);
 
@@ -1975,7 +1981,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
 
   /*
           // life insurance
-          swprintf(sString, L"%d", Menptr[ gCharactersList[ sCharNumber ].usSolID
+          swprintf(sString, ARR_SIZE(sString), L"%d", Menptr[ gCharactersList[ sCharNumber ].usSolID
      ].usLifeInsuranceAmount ); InsertCommasForDollarFigure( sString ); InsertDollarSignInToString(
      sString ); FindFontRightCoordinates(CHAR_LIFE_INSUR_X, CHAR_LIFE_INSUR_Y, CHAR_LIFE_INSUR_WID,
      CHAR_LIFE_INSUR_HEI, sString, CHAR_FONT, &usX, &usY); DrawString(sString,usX,usY, CHAR_FONT);
@@ -1990,7 +1996,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
     }
   } else {
     // POW - morale unknown
-    swprintf(sString, pPOWStrings[1]);
+    swprintf(sString, ARR_SIZE(sString), pPOWStrings[1]);
   }
 
   FindFontCenterCoordinates(CHAR_MORALE_X, CHAR_MORALE_Y, CHAR_MORALE_WID, CHAR_MORALE_HEI, sString,
@@ -3595,8 +3601,8 @@ void SetDayAlternate(STR16 pStringA, ...) {
   wchar_t String[80];
   va_list argptr;
 
-  va_start(argptr, pStringA);           // Set up variable argument pointer
-  vswprintf(String, pStringA, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pStringA);                             // Set up variable argument pointer
+  vswprintf(String, ARR_SIZE(String), pStringA, argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   if (String[1] == 0) {
@@ -3625,8 +3631,8 @@ void SetHourAlternate(STR16 pStringA, ...) {
   wchar_t String[80];
   va_list argptr;
 
-  va_start(argptr, pStringA);           // Set up variable argument pointer
-  vswprintf(String, pStringA, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pStringA);                             // Set up variable argument pointer
+  vswprintf(String, ARR_SIZE(String), pStringA, argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   if (String[1] == 0) {
@@ -3656,8 +3662,8 @@ void SetClockHour(STR16 pStringA, ...) {
   wchar_t String[80];
   va_list argptr;
 
-  va_start(argptr, pStringA);           // Set up variable argument pointer
-  vswprintf(String, pStringA, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pStringA);                             // Set up variable argument pointer
+  vswprintf(String, ARR_SIZE(String), pStringA, argptr);  // process gprintf string (get output str)
   va_end(argptr);
   if (String[1] == 0) {
     String[1] = String[0];
@@ -3682,8 +3688,8 @@ void SetClockMin(STR16 pStringA, ...) {
   wchar_t String[10];
   va_list argptr;
 
-  va_start(argptr, pStringA);           // Set up variable argument pointer
-  vswprintf(String, pStringA, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pStringA);                             // Set up variable argument pointer
+  vswprintf(String, ARR_SIZE(String), pStringA, argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   if (String[1] == 0) {
@@ -3751,7 +3757,8 @@ void DrawLocation(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont) {
   INT16 usY = 0;
   wchar_t sString[32];
 
-  GetMapscreenMercLocationString(MercPtrs[gCharactersList[sCharNumber].usSolID], sString);
+  GetMapscreenMercLocationString(MercPtrs[gCharactersList[sCharNumber].usSolID], sString,
+                                 ARR_SIZE(sString));
 
   if (sRowIndex < FIRST_VEHICLE) {
     // center
@@ -3774,7 +3781,8 @@ void DrawDestination(INT16 sCharNumber, INT16 sRowIndex, INT32 iFont) {
   INT16 usY = 0;
   wchar_t sString[32];
 
-  GetMapscreenMercDestinationString(MercPtrs[gCharactersList[sCharNumber].usSolID], sString);
+  GetMapscreenMercDestinationString(MercPtrs[gCharactersList[sCharNumber].usSolID], sString,
+                                    ARR_SIZE(sString));
 
   if (wcslen(sString) == 0) {
     return;
@@ -3803,7 +3811,7 @@ void DrawTimeRemaining(INT16 sCharNumber, INT32 iFont, UINT8 ubFontColor) {
   wchar_t sString[32];
 
   GetMapscreenMercDepartureString(MercPtrs[gCharactersList[sCharNumber].usSolID], sString,
-                                  &ubFontColor);
+                                  ARR_SIZE(sString), &ubFontColor);
 
   // if merc is highlighted, override the color decided above with bright white
   if (sCharNumber == (INT16)giHighLine) {
@@ -4156,7 +4164,7 @@ UINT32 HandleMapUI() {
               GetSectorIDString(sMapX, sMapY, 0, sMsgSubString, FALSE);
 
               // now build the string
-              swprintf(sMsgString, pBullseyeStrings[1], sMsgSubString);
+              swprintf(sMsgString, ARR_SIZE(sMsgString), pBullseyeStrings[1], sMsgSubString);
 
               // confirm the change with overlay message
               MapScreenMessage(FONT_MCOLOR_LTYELLOW, MSG_MAP_UI_POSITION_MIDDLE, sMsgString);
@@ -5750,8 +5758,9 @@ void PopupText(CHAR16 *pFontString, ...) {
   INT16 sX, sY;
   wchar_t PopupString[512];
 
-  va_start(argptr, pFontString);                // Set up variable argument pointer
-  vswprintf(PopupString, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(PopupString, ARR_SIZE(PopupString), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   FindFontCenterCoordinates(0, 0, SCREEN_WIDTH, INTERFACE_START_Y, PopupString, LARGEFONT1, &sX,
@@ -5930,19 +5939,19 @@ void BltCharInvPanel() {
   mprintf(MAP_CAMMO_PERCENT_X, MAP_CAMMO_PERCENT_Y, L"%%");
 
   // display armor value
-  swprintf(sString, L"%3d", ArmourPercent(pSoldier));
+  swprintf(sString, ARR_SIZE(sString), L"%3d", ArmourPercent(pSoldier));
   FindFontRightCoordinates(MAP_ARMOR_X, MAP_ARMOR_Y, MAP_PERCENT_WIDTH, MAP_PERCENT_HEIGHT, sString,
                            BLOCKFONT2, &usX, &usY);
   mprintf(usX, usY, sString);
 
   // Display weight value
-  swprintf(sString, L"%3d", CalculateCarriedWeight(pSoldier));
+  swprintf(sString, ARR_SIZE(sString), L"%3d", CalculateCarriedWeight(pSoldier));
   FindFontRightCoordinates(MAP_WEIGHT_X, MAP_WEIGHT_Y, MAP_PERCENT_WIDTH, MAP_PERCENT_HEIGHT,
                            sString, BLOCKFONT2, &usX, &usY);
   mprintf(usX, usY, sString);
 
   // Display camo value
-  swprintf(sString, L"%3d", pSoldier->bCamo);
+  swprintf(sString, ARR_SIZE(sString), L"%3d", pSoldier->bCamo);
   FindFontRightCoordinates(MAP_CAMMO_X, MAP_CAMMO_Y, MAP_PERCENT_WIDTH, MAP_PERCENT_HEIGHT, sString,
                            BLOCKFONT2, &usX, &usY);
   mprintf(usX, usY, sString);
@@ -9177,7 +9186,7 @@ void TellPlayerWhyHeCantCompressTime(void) {
       CHAR16 str[256];
       CHAR16 pSectorString[128];
       GetSectorIDString(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, pSectorString, TRUE);
-      swprintf(str, gzLateLocalizedString[27], pSectorString);
+      swprintf(str, ARR_SIZE(str), gzLateLocalizedString[27], pSectorString);
       DoMapMessageBox(MSG_BOX_BASIC_STYLE, str, MAP_SCREEN, MSG_BOX_FLAG_OK,
                       MapScreenDefaultOkBoxCallback);
     } else {
@@ -10109,7 +10118,7 @@ void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString) {
   // current time
   //	swprintf( sString, L"%s %s %d, %02d:%02d", pEtaString[ 0 ], pDayStrings[ 0 ], uiDay, uiHour,
   // uiMin ); 	swprintf( sString, L"%s %d, %02d:%02d", pDayStrings[ 0 ], uiDay, uiHour, uiMin );
-  swprintf(sString, L"%s %02d:%02d", pEtaString[0], uiHour, uiMin);
+  swprintf(sString, ARR_SIZE(sString), L"%s %02d:%02d", pEtaString[0], uiHour, uiMin);
 }
 
 INT32 GetGroundTravelTimeOfCharacter(INT8 bCharNumber) {
@@ -10449,7 +10458,7 @@ void HandleMilitiaRedistributionClick(void) {
         }
       } else {
         // can't have militia in this town
-        swprintf(sString, pMapErrorString[31], pTownNames[bTownId]);
+        swprintf(sString, ARR_SIZE(sString), pMapErrorString[31], pTownNames[bTownId]);
         DoScreenIndependantMessageBox(sString, MSG_BOX_FLAG_OK, NULL);
       }
     } else if (IsThisSectorASAMSector(sSelMapX, sSelMapY, 0) &&
@@ -10612,7 +10621,7 @@ void GetMapscreenMercAssignmentString(SOLDIERTYPE *pSoldier, wchar_t sString[]) 
   }
 }
 
-void GetMapscreenMercLocationString(SOLDIERTYPE *pSoldier, wchar_t sString[]) {
+void GetMapscreenMercLocationString(SOLDIERTYPE *pSoldier, wchar_t sString[], int sStringSize) {
   wchar_t pTempString[32];
 
   if (pSoldier->bAssignment == IN_TRANSIT) {
@@ -10621,28 +10630,28 @@ void GetMapscreenMercLocationString(SOLDIERTYPE *pSoldier, wchar_t sString[]) {
   } else {
     if (pSoldier->bAssignment == ASSIGNMENT_POW) {
       // POW - location unknown
-      swprintf(sString, L"%s", pPOWStrings[1]);
+      swprintf(sString, sStringSize, L"%s", pPOWStrings[1]);
     } else {
-      swprintf(pTempString, L"%s%s%s", pMapVertIndex[pSoldier->sSectorY],
+      swprintf(pTempString, ARR_SIZE(pTempString), L"%s%s%s", pMapVertIndex[pSoldier->sSectorY],
                pMapHortIndex[pSoldier->sSectorX], pMapDepthIndex[pSoldier->bSectorZ]);
 
       if (pSoldier->fBetweenSectors) {
         // put brackets around it when he's between sectors!
-        swprintf(sString, L"(%s)", pTempString);
+        swprintf(sString, sStringSize, L"(%s)", pTempString);
       } else {
-        wcscpy(sString, pTempString);
+        wcsncpy(sString, pTempString, sStringSize);
       }
     }
   }
 }
 
-void GetMapscreenMercDestinationString(SOLDIERTYPE *pSoldier, wchar_t sString[]) {
+void GetMapscreenMercDestinationString(SOLDIERTYPE *pSoldier, wchar_t sString[], int sStringSize) {
   INT32 iSectorX, iSectorY;
   INT16 sSector = 0;
   GROUP *pGroup = NULL;
 
   // by default, show nothing
-  wcscpy(sString, L"");
+  wcsncpy(sString, L"", sStringSize);
 
   // if dead or POW - has no destination (no longer part of a group, for that matter)
   if ((pSoldier->bAssignment == ASSIGNMENT_DEAD) || (pSoldier->bAssignment == ASSIGNMENT_POW) ||
@@ -10678,10 +10687,10 @@ void GetMapscreenMercDestinationString(SOLDIERTYPE *pSoldier, wchar_t sString[])
     }
   }
 
-  swprintf(sString, L"%s%s", pMapVertIndex[iSectorY], pMapHortIndex[iSectorX]);
+  swprintf(sString, sStringSize, L"%s%s", pMapVertIndex[iSectorY], pMapHortIndex[iSectorX]);
 }
 
-void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[],
+void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[], int sStringSize,
                                      UINT8 *pubFontColor) {
   INT32 iMinsRemaining = 0;
   INT32 iDaysRemaining = 0;
@@ -10689,7 +10698,7 @@ void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[],
 
   if ((pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC && pSoldier->ubProfile != SLAY) ||
       pSoldier->bLife == 0) {
-    swprintf(sString, L"%s", gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
+    swprintf(sString, sStringSize, L"%s", gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
   } else {
     iMinsRemaining = pSoldier->iEndofContractTime - GetWorldTotalMin();
 
@@ -10707,7 +10716,8 @@ void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[],
 
       *pubFontColor = FONT_LTGREEN;
 
-      swprintf(sString, L"%d%s", iDaysRemaining, gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
+      swprintf(sString, sStringSize, L"%d%s", iDaysRemaining,
+               gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
     } else  // less than 3 days
     {
       if (iMinsRemaining > 5) {
@@ -10723,7 +10733,8 @@ void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[],
         *pubFontColor = FONT_RED;
       }
 
-      swprintf(sString, L"%d%s", iHoursRemaining, gpStrategicString[STR_PB_HOURS_ABBREVIATION]);
+      swprintf(sString, sStringSize, L"%d%s", iHoursRemaining,
+               gpStrategicString[STR_PB_HOURS_ABBREVIATION]);
     }
   }
 }

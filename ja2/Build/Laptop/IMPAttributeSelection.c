@@ -758,7 +758,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentStrength);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentStrength);
         sX += LAPTOP_SCREEN_UL_X;
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         mprintf(sX + 13, sY + 3, sString);
@@ -774,7 +774,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentDexterity);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentDexterity);
         sX += LAPTOP_SCREEN_UL_X;
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         mprintf(sX + 13, sY + 3, sString);
@@ -791,7 +791,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentAgility);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentAgility);
         sX += LAPTOP_SCREEN_UL_X;
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         mprintf(sX + 13, sY + 3, sString);
@@ -808,7 +808,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentWisdom);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentWisdom);
         sX += LAPTOP_SCREEN_UL_X;
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         mprintf(sX + 13, sY + 3, sString);
@@ -823,7 +823,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentLeaderShip);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentLeaderShip);
         sX += LAPTOP_SCREEN_UL_X;
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         mprintf(sX + 13, sY + 3, sString);
@@ -839,7 +839,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentHealth);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentHealth);
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         sX += LAPTOP_SCREEN_UL_X;
         mprintf(sX + 13, sY + 3, sString);
@@ -860,7 +860,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentMarkmanship);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentMarkmanship);
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         sX += LAPTOP_SCREEN_UL_X;
         mprintf(sX + 13, sY + 3, sString);
@@ -882,7 +882,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentMedical);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentMedical);
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         sX += LAPTOP_SCREEN_UL_X;
         mprintf(sX + 13, sY + 3, sString);
@@ -904,7 +904,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentMechanical);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentMechanical);
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         sX += LAPTOP_SCREEN_UL_X;
         mprintf(sX + 13, sY + 3, sString);
@@ -926,7 +926,7 @@ void RenderAttributeBoxes(void) {
                                (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
-        swprintf(sString, L"%d", iCurrentExplosives);
+        swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentExplosives);
         sY += LAPTOP_SCREEN_WEB_UL_Y;
         sX += LAPTOP_SCREEN_UL_X;
         mprintf(sX + 13, sY + 3, sString);
@@ -1388,7 +1388,7 @@ void DrawBonusPointsRemaining(void) {
     return;
   }
   // parse amountof bns pts remaining
-  swprintf(sString, L"%d", iCurrentBonusPoints);
+  swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentBonusPoints);
 
   // set font color
   SetFontForeground(FONT_WHITE);

@@ -6756,7 +6756,7 @@ void BuildRepairTimeString(wchar_t sString[], UINT32 uiTimeInMinutesToFixItem) {
   // show up to 1.5 hrs in minutes
   if (uiTimeInMinutesToFixItem <= 90) {
     // show minutes
-    swprintf(sString, SKI_Text[SKI_TEXT_MINUTES], uiTimeInMinutesToFixItem);
+    swprintf(sString, ARR_SIZE(sString), SKI_Text[SKI_TEXT_MINUTES], uiTimeInMinutesToFixItem);
   } else {
     // show hours
 
@@ -6764,7 +6764,8 @@ void BuildRepairTimeString(wchar_t sString[], UINT32 uiTimeInMinutesToFixItem) {
     usNumberOfHoursToFixItem = (UINT16)((uiTimeInMinutesToFixItem + 45) / 60);
 
     if (usNumberOfHoursToFixItem > 1) {
-      swprintf(sString, SKI_Text[SKI_TEXT_PLURAL_HOURS], usNumberOfHoursToFixItem);
+      swprintf(sString, ARR_SIZE(sString), SKI_Text[SKI_TEXT_PLURAL_HOURS],
+               usNumberOfHoursToFixItem);
     } else {
       wcscpy(sString, SKI_Text[SKI_TEXT_ONE_HOUR]);
     }
@@ -6809,9 +6810,9 @@ void BuildDoneWhenTimeString(wchar_t sString[], UINT8 ubArmsDealer, UINT16 usIte
 
   // only show day if it's gonna take overnight
   if (GetWorldDay() != uiDay) {
-    swprintf(sString, L"%s %d %02d:%02d", pDayStrings[0], uiDay, uiHour, uiMin);
+    swprintf(sString, ARR_SIZE(sString), L"%s %d %02d:%02d", pDayStrings[0], uiDay, uiHour, uiMin);
   } else {
-    swprintf(sString, L"%02d:%02d", uiHour, uiMin);
+    swprintf(sString, ARR_SIZE(sString), L"%02d:%02d", uiHour, uiMin);
   }
 }
 
@@ -6827,7 +6828,8 @@ void BuildItemHelpTextString(wchar_t sString[], INVENTORY_IN_SLOT *pInv, UINT8 u
         (ArmsDealerInfo[gbSelectedArmsDealerID].ubTypeOfArmsDealer == ARMS_DEALER_REPAIRS)) {
       BuildRepairTimeString(
           zRepairTime, CalculateObjectItemRepairTime(gbSelectedArmsDealerID, &(pInv->ItemObject)));
-      swprintf(sString, L"%s\n(%s: %s)", zHelpText, gzLateLocalizedString[44], zRepairTime);
+      swprintf(sString, ARR_SIZE(sString), L"%s\n(%s: %s)", zHelpText, gzLateLocalizedString[44],
+               zRepairTime);
     } else {
       wcscpy(sString, zHelpText);
     }

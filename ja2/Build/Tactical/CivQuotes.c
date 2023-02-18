@@ -276,9 +276,9 @@ void BeginCivQuote(SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16
   }
 
 #ifdef TAIWANESE
-  swprintf(gzCivQuote, L"%s", zQuote);
+  swprintf(gzCivQuote, ARR_SIZE(gzCivQuote), L"%s", zQuote);
 #else
-  swprintf(gzCivQuote, L"\"%s\"", zQuote);
+  swprintf(gzCivQuote, ARR_SIZE(gzCivQuote), L"\"%s\"", zQuote);
 #endif
 
   if (ubCivQuoteID == CIV_QUOTE_HINT) {

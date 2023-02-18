@@ -4777,7 +4777,7 @@ void DrawMouseText() {
       // Set dest for gprintf to be different
       SetFontDestBuffer(MOUSE_BUFFER, 0, 0, 64, 64, FALSE);
 
-      swprintf(pStr, L"%d", gsCurrentActionPoints);
+      swprintf(pStr, ARR_SIZE(pStr), L"%d", gsCurrentActionPoints);
 
       if (gfUIDisplayActionPointsCenter) {
         FindFontCenterCoordinates(0, 0, gsCurMouseWidth, gsCurMouseHeight, pStr, TINYFONT1, &sX,

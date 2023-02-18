@@ -325,7 +325,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
       SetFontForeground(FONT_MCOLOR_WHITE);
       SetFontDestBuffer(eInfo.uiBuffer, 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
 
-      swprintf(pStr, L"%S", LockTable[i].ubEditorName);
+      swprintf(pStr, ARR_SIZE(pStr), L"%S", LockTable[i].ubEditorName);
       DisplayWrappedString(x, (UINT16)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr, FONT_BLACK,
                            TRUE, CENTER_JUSTIFIED);
 
@@ -414,30 +414,30 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
 
           if (eInfo.uiItemType != TBAR_MODE_ITEM_TRIGGERS) {
             LoadItemInfo(usCounter, pItemName, NULL);
-            swprintf(pStr, L"%s", pItemName);
+            swprintf(pStr, ARR_SIZE(pStr), L"%s", pItemName);
           } else {
             if (i == PRESSURE_ACTION_ID) {
-              swprintf(pStr, L"Pressure Action");
+              swprintf(pStr, ARR_SIZE(pStr), L"Pressure Action");
             } else if (i < 2) {
               if (usCounter == SWITCH)
-                swprintf(pStr, L"Panic Trigger1");
+                swprintf(pStr, ARR_SIZE(pStr), L"Panic Trigger1");
               else
-                swprintf(pStr, L"Panic Action1");
+                swprintf(pStr, ARR_SIZE(pStr), L"Panic Action1");
             } else if (i < 4) {
               if (usCounter == SWITCH)
-                swprintf(pStr, L"Panic Trigger2");
+                swprintf(pStr, ARR_SIZE(pStr), L"Panic Trigger2");
               else
-                swprintf(pStr, L"Panic Action2");
+                swprintf(pStr, ARR_SIZE(pStr), L"Panic Action2");
             } else if (i < 6) {
               if (usCounter == SWITCH)
-                swprintf(pStr, L"Panic Trigger3");
+                swprintf(pStr, ARR_SIZE(pStr), L"Panic Trigger3");
               else
-                swprintf(pStr, L"Panic Action3");
+                swprintf(pStr, ARR_SIZE(pStr), L"Panic Action3");
             } else {
               if (usCounter == SWITCH)
-                swprintf(pStr, L"Trigger%d", (i - 4) / 2);
+                swprintf(pStr, ARR_SIZE(pStr), L"Trigger%d", (i - 4) / 2);
               else
-                swprintf(pStr, L"Action%d", (i - 4) / 2);
+                swprintf(pStr, ARR_SIZE(pStr), L"Action%d", (i - 4) / 2);
             }
           }
           DisplayWrappedString(x, (UINT16)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr,

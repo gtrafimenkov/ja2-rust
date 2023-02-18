@@ -908,7 +908,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(SOLDIERTYPE *pSoldie
   GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, zShortTownIDString);
 
   // Set string for generic button
-  swprintf(gzUserDefinedButton1, L"%s", zShortTownIDString);
+  swprintf(gzUserDefinedButton1, ARR_SIZE(gzUserDefinedButton1), L"%s", zShortTownIDString);
 
   pLeaveSoldier = pSoldier;
 
@@ -927,9 +927,11 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(SOLDIERTYPE *pSoldie
   // if the character is an RPC
   if (pSoldier->ubProfile >= FIRST_RPC && pSoldier->ubProfile < FIRST_NPC) {
     if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
-      swprintf(sString, pMercHeLeaveString[4], pSoldier->name, zShortTownIDString);
+      swprintf(sString, ARR_SIZE(sString), pMercHeLeaveString[4], pSoldier->name,
+               zShortTownIDString);
     } else {
-      swprintf(sString, pMercSheLeaveString[4], pSoldier->name, zShortTownIDString);
+      swprintf(sString, ARR_SIZE(sString), pMercSheLeaveString[4], pSoldier->name,
+               zShortTownIDString);
     }
     fInSector = TRUE;
   }
@@ -939,38 +941,42 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(SOLDIERTYPE *pSoldie
     if ((pSoldier->sSectorX == AIRPORT_X) && (pSoldier->sSectorY == AIRPORT_Y) &&
         (pSoldier->bSectorZ == 0)) {
       if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
-        swprintf(sString, L"%s %s", pSoldier->name, pMercHeLeaveString[3]);
+        swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercHeLeaveString[3]);
       } else {
-        swprintf(sString, L"%s %s", pSoldier->name, pMercSheLeaveString[3]);
+        swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercSheLeaveString[3]);
       }
       fInSector = TRUE;
     } else {
       // Set string for generic button
-      swprintf(gzUserDefinedButton2, L"B13");
+      swprintf(gzUserDefinedButton2, ARR_SIZE(gzUserDefinedButton2), L"B13");
 
       if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
-        swprintf(sString, pMercHeLeaveString[0], pSoldier->name, zShortTownIDString);
+        swprintf(sString, ARR_SIZE(sString), pMercHeLeaveString[0], pSoldier->name,
+                 zShortTownIDString);
       } else {
-        swprintf(sString, pMercSheLeaveString[0], pSoldier->name, zShortTownIDString);
+        swprintf(sString, ARR_SIZE(sString), pMercSheLeaveString[0], pSoldier->name,
+                 zShortTownIDString);
       }
     }
   } else {
     if ((pSoldier->sSectorX == OMERTA_LEAVE_EQUIP_SECTOR_X) &&
         (pSoldier->sSectorY == OMERTA_LEAVE_EQUIP_SECTOR_Y) && (pSoldier->bSectorZ == 0)) {
       if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
-        swprintf(sString, L"%s %s", pSoldier->name, pMercHeLeaveString[2]);
+        swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercHeLeaveString[2]);
       } else {
-        swprintf(sString, L"%s %s", pSoldier->name, pMercSheLeaveString[2]);
+        swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercSheLeaveString[2]);
       }
       fInSector = TRUE;
     } else {
       // Set string for generic button
-      swprintf(gzUserDefinedButton2, L"A9");
+      swprintf(gzUserDefinedButton2, ARR_SIZE(gzUserDefinedButton2), L"A9");
 
       if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
-        swprintf(sString, pMercHeLeaveString[1], pSoldier->name, zShortTownIDString);
+        swprintf(sString, ARR_SIZE(sString), pMercHeLeaveString[1], pSoldier->name,
+                 zShortTownIDString);
       } else {
-        swprintf(sString, pMercSheLeaveString[1], pSoldier->name, zShortTownIDString);
+        swprintf(sString, ARR_SIZE(sString), pMercSheLeaveString[1], pSoldier->name,
+                 zShortTownIDString);
       }
     }
   }
@@ -1219,13 +1225,13 @@ void HandleNotifyPlayerCanAffordInsurance(SOLDIERTYPE *pSoldier, UINT8 ubLength,
   CHAR16 sStringA[32];
 
   // parse the cost
-  swprintf(sStringA, L"%d", iCost);
+  swprintf(sStringA, ARR_SIZE(sStringA), L"%d", iCost);
 
   // insert the commans and dollar sign
   InsertCommasForDollarFigure(sStringA);
   InsertDollarSignInToString(sStringA);
 
-  swprintf(sString, zMarksMapScreenText[10], pSoldier->name, sStringA, ubLength);
+  swprintf(sString, ARR_SIZE(sString), zMarksMapScreenText[10], pSoldier->name, sStringA, ubLength);
 
   // Set the length to the global variable ( so we know how long the contract is in the callback )
   gubContractLength = ubLength;

@@ -3783,7 +3783,8 @@ void WriteQuantityAndAttachments(OBJECTTYPE *pObject, INT32 yp) {
       CHAR16 str[50];
       CHAR16 temp[5];
       UINT8 i;
-      swprintf(str, L"Clips:  %d  (%d", pObject->ubNumberOfObjects, pObject->bStatus[0]);
+      swprintf(str, ARR_SIZE(str), L"Clips:  %d  (%d", pObject->ubNumberOfObjects,
+               pObject->bStatus[0]);
       for (i = 1; i < pObject->ubNumberOfObjects; i++) {
         swprintf(temp, L", %d", pObject->bStatus[0]);
         wcscat(str, temp);

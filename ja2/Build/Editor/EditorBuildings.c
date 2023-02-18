@@ -602,7 +602,7 @@ void SetupTextInputForBuildings() {
   CHAR16 str[4];
   InitTextInputModeWithScheme(DEFAULT_SCHEME);
   AddUserInputField(NULL);  // just so we can use short cut keys while not typing.
-  swprintf(str, L"%d", gubMaxRoomNumber);
+  swprintf(str, ARR_SIZE(str), L"%d", gubMaxRoomNumber);
   AddTextInputField(410, 400, 25, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
 }
 
@@ -616,7 +616,7 @@ void ExtractAndUpdateBuildingInfo() {
   } else {
     gubCurrRoomNumber = 0;
   }
-  swprintf(str, L"%d", gubCurrRoomNumber);
+  swprintf(str, ARR_SIZE(str), L"%d", gubCurrRoomNumber);
   SetInputFieldStringWith16BitString(1, str);
   SetActiveField(0);
 }

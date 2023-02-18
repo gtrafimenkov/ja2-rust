@@ -805,14 +805,14 @@ void HandleDialogue() {
       if (QItem->uiSpecialEventData < 3) {
         // post a notice if the player wants to withdraw money from thier account to cover the
         // difference?
-        swprintf(zMoney, L"%d", QItem->uiSpecialEventData2);
+        swprintf(zMoney, ARR_SIZE(zMoney), L"%d", QItem->uiSpecialEventData2);
         InsertCommasForDollarFigure(zMoney);
         InsertDollarSignInToString(zMoney);
       }
 
       switch (QItem->uiSpecialEventData) {
         case (0):
-          swprintf(zText, SkiMessageBoxText[SKI_SHORT_FUNDS_TEXT], zMoney);
+          swprintf(zText, ARR_SIZE(zText), SkiMessageBoxText[SKI_SHORT_FUNDS_TEXT], zMoney);
 
           // popup a message stating the player doesnt have enough money
           DoSkiMessageBox(MSG_BOX_BASIC_STYLE, zText, SHOPKEEPER_SCREEN, MSG_BOX_FLAG_OK,
@@ -820,7 +820,7 @@ void HandleDialogue() {
           break;
         case (1):
           // if the player is trading items
-          swprintf(zText,
+          swprintf(zText, ARR_SIZE(zText),
                    SkiMessageBoxText
                        [SKI_QUESTION_TO_DEDUCT_MONEY_FROM_PLAYERS_ACCOUNT_TO_COVER_DIFFERENCE],
                    zMoney);
@@ -832,7 +832,7 @@ void HandleDialogue() {
           break;
         case (2):
           swprintf(
-              zText,
+              zText, ARR_SIZE(zText),
               SkiMessageBoxText[SKI_QUESTION_TO_DEDUCT_MONEY_FROM_PLAYERS_ACCOUNT_TO_COVER_COST],
               zMoney);
 
@@ -1012,7 +1012,8 @@ void HandleDialogue() {
 }
 
 BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
-                    CHAR16 *zDialogueText, UINT32 *puiSoundID, CHAR8 *zSoundString);
+                    CHAR16 *zDialogueText, int zDialogueTextSize, UINT32 *puiSoundID,
+                    CHAR8 *zSoundString);
 
 BOOLEAN DelayedTacticalCharacterDialogue(SOLDIERTYPE *pSoldier, UINT16 usQuoteNum) {
   if (pSoldier->ubProfile == NO_PROFILE) {
@@ -1405,8 +1406,8 @@ SOLDIER_QUOTE_SAID_ANNOYING_MERC; break;
   // Check face index
   CHECKF(iFaceIndex != -1);
 
-  if (!GetDialogue(ubCharacterNum, usQuoteNum, DIALOGUESIZE, gzQuoteStr, &uiSoundID,
-                   zSoundString)) {
+  if (!GetDialogue(ubCharacterNum, usQuoteNum, DIALOGUESIZE, gzQuoteStr, ARR_SIZE(gzQuoteStr),
+                   &uiSoundID, zSoundString)) {
     return (FALSE);
   }
 
@@ -1556,7 +1557,8 @@ BOOLEAN DialogueDataFileExistsForProfile(UINT8 ubCharacterNum, UINT16 usQuoteNum
 }
 
 BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
-                    CHAR16 *zDialogueText, UINT32 *puiSoundID, CHAR8 *zSoundString) {
+                    CHAR16 *zDialogueText, int zDialogueTextSize, UINT32 *puiSoundID,
+                    CHAR8 *zSoundString) {
   CHAR8 *pFilename;
 
   // first things first  - grab the text (if player has SUBTITLE PREFERENCE ON)
@@ -1565,14 +1567,16 @@ BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
     if (DialogueDataFileExistsForProfile(ubCharacterNum, 0, FALSE, &pFilename)) {
       LoadEncryptedDataFromFile(pFilename, zDialogueText, usQuoteNum * iDataSize, iDataSize);
       if (zDialogueText[0] == 0) {
-        swprintf(zDialogueText, L"I have no text in the EDT file ( %d ) %S", usQuoteNum, pFilename);
+        swprintf(zDialogueText, zDialogueTextSize, L"I have no text in the EDT file ( %d ) %S",
+                 usQuoteNum, pFilename);
 
 #ifndef JA2BETAVERSION
         return (FALSE);
 #endif
       }
     } else {
-      swprintf(zDialogueText, L"I have no text in the file ( %d ) %S", usQuoteNum, pFilename);
+      swprintf(zDialogueText, zDialogueTextSize, L"I have no text in the file ( %d ) %S",
+               usQuoteNum, pFilename);
 
 #ifndef JA2BETAVERSION
       return (FALSE);
@@ -1624,10 +1628,11 @@ void HandleTacticalNPCTextUI(UINT8 ubCharacterNum, CHAR16 *zQuoteStr) {
 
   // post message to mapscreen message system
 #ifdef TAIWANESE
-  swprintf(gTalkPanel.zQuoteStr, L"%s", zQuoteStr);
+  swprintf(gTalkPanel.zQuoteStr, ARR_SIZE(gTalkPanel.zQuoteStr), L"%s", zQuoteStr);
 #else
-  swprintf(gTalkPanel.zQuoteStr, L"\"%s\"", zQuoteStr);
-  swprintf(zText, L"%s: \"%s\"", gMercProfiles[ubCharacterNum].zNickname, zQuoteStr);
+  swprintf(gTalkPanel.zQuoteStr, ARR_SIZE(gTalkPanel.zQuoteStr), L"\"%s\"", zQuoteStr);
+  swprintf(zText, ARR_SIZE(zText), L"%s: \"%s\"", gMercProfiles[ubCharacterNum].zNickname,
+           zQuoteStr);
   MapScreenMessage(FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s", zText);
 #endif
 }
@@ -1645,10 +1650,11 @@ void DisplayTextForExternalNPC(UINT8 ubCharacterNum, STR16 zQuoteStr) {
 
   // post message to mapscreen message system
 #ifdef TAIWANESE
-  swprintf(gTalkPanel.zQuoteStr, L"%s", zQuoteStr);
+  swprintf(gTalkPanel.zQuoteStr, ARR_SIZE(gTalkPanel.zQuoteStr), L"%s", zQuoteStr);
 #else
-  swprintf(gTalkPanel.zQuoteStr, L"\"%s\"", zQuoteStr);
-  swprintf(zText, L"%s: \"%s\"", gMercProfiles[ubCharacterNum].zNickname, zQuoteStr);
+  swprintf(gTalkPanel.zQuoteStr, ARR_SIZE(gTalkPanel.zQuoteStr), L"\"%s\"", zQuoteStr);
+  swprintf(zText, ARR_SIZE(zText), L"%s: \"%s\"", gMercProfiles[ubCharacterNum].zNickname,
+           zQuoteStr);
   MapScreenMessage(FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s", zText);
 #endif
 
@@ -1673,9 +1679,9 @@ void HandleTacticalTextUI(INT32 iFaceIndex, SOLDIERTYPE *pSoldier, CHAR16 *zQuot
   // swprintf( zText, L"\xb4\xa2 %s: \xb5 \"%s\"", gMercProfiles[ ubCharacterNum ].zNickname,
   // zQuoteStr );
 #ifdef TAIWANESE
-  swprintf(zText, L"%s", zQuoteStr);
+  swprintf(zText, ARR_SIZE(zText), L"%s", zQuoteStr);
 #else
-  swprintf(zText, L"\"%s\"", zQuoteStr);
+  swprintf(zText, ARR_SIZE(zText), L"\"%s\"", zQuoteStr);
 #endif
   sLeft = 110;
 
@@ -1685,7 +1691,8 @@ void HandleTacticalTextUI(INT32 iFaceIndex, SOLDIERTYPE *pSoldier, CHAR16 *zQuot
   ExecuteTacticalTextBox(sLeft, zText);
 
 #ifndef TAIWANESE
-  swprintf(zText, L"%s: \"%s\"", gMercProfiles[pSoldier->ubProfile].zNickname, zQuoteStr);
+  swprintf(zText, ARR_SIZE(zText), L"%s: \"%s\"", gMercProfiles[pSoldier->ubProfile].zNickname,
+           zQuoteStr);
   MapScreenMessage(FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s", zText);
 #endif
 }

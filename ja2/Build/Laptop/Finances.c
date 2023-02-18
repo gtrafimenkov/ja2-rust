@@ -684,7 +684,7 @@ void DrawRecordsText(void) {
   // loop through record list
   for (iCounter; iCounter < NUM_RECORDS_PER_PAGE; iCounter++) {
     // get and write the date
-    swprintf(sString, L"%d", pCurFinance->uiDate / (24 * 60));
+    swprintf(sString, ARR_SIZE(sString), L"%d", pCurFinance->uiDate / (24 * 60));
 
     FindFontCenterCoordinates(RECORD_DATE_X, 0, RECORD_DATE_WIDTH, 0, sString, FINANCE_TEXT_FONT,
                               &usX, &usY);
@@ -693,7 +693,7 @@ void DrawRecordsText(void) {
     // get and write debit/ credit
     if (pCurFinance->iAmount >= 0) {
       // increase in asset - debit
-      swprintf(sString, L"%d", pCurFinance->iAmount);
+      swprintf(sString, ARR_SIZE(sString), L"%d", pCurFinance->iAmount);
       // insert commas
       InsertCommasForDollarFigure(sString);
       // insert dollar sight for first record in the list
@@ -706,7 +706,7 @@ void DrawRecordsText(void) {
       mprintf(usX, 12 + RECORD_Y + (iCounter * (GetFontHeight(FINANCE_TEXT_FONT) + 6)), sString);
     } else {
       // decrease in asset - credit
-      swprintf(sString, L"%d", pCurFinance->iAmount * (-1));
+      swprintf(sString, ARR_SIZE(sString), L"%d", pCurFinance->iAmount * (-1));
       SetFontForeground(FONT_RED);
       InsertCommasForDollarFigure(sString);
       // insert dollar sight for first record in the list
@@ -738,7 +738,7 @@ void DrawRecordsText(void) {
     mprintf(usX, 12 + RECORD_Y + (iCounter * (GetFontHeight(FINANCE_TEXT_FONT) + 6)), sString);
 
     // print the balance string
-    swprintf(sString, L"%d", iBalance);
+    swprintf(sString, ARR_SIZE(sString), L"%d", iBalance);
     InsertCommasForDollarFigure(sString);
     // insert dollar sight for first record in the list
     // DEF: 3/19/99: removed cause we want to see the dollar sign on ALL entries
@@ -1398,7 +1398,7 @@ void DisplayFinancePageNumberAndDateRange(void) {
   if (!pCurrentFinance) {
     pCurrentFinance = pFinanceListHead;
     if (!pCurrentFinance) {
-      swprintf(sString, L"%s %d / %d", pFinanceHeaders[5], iCurrentPage + 1,
+      swprintf(sString, ARR_SIZE(sString), L"%s %d / %d", pFinanceHeaders[5], iCurrentPage + 1,
                guiLastPageInRecordsList + 2);
       mprintf(PAGE_NUMBER_X, PAGE_NUMBER_Y, sString);
       return;
@@ -1414,7 +1414,7 @@ void DisplayFinancePageNumberAndDateRange(void) {
 
   // get the last page
 
-  swprintf(sString, L"%s %d / %d", pFinanceHeaders[5], iCurrentPage + 1,
+  swprintf(sString, ARR_SIZE(sString), L"%s %d / %d", pFinanceHeaders[5], iCurrentPage + 1,
            guiLastPageInRecordsList + 2);
   mprintf(PAGE_NUMBER_X, PAGE_NUMBER_Y, sString);
 

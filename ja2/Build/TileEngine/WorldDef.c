@@ -1967,7 +1967,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   FileRead(hfile, pBuffer, uiFileSize, &uiBytesRead);
   FileClose(hfile);
 
-  swprintf(str, L"Analyzing map %S", szFilename);
+  swprintf(str, ARR_SIZE(str), L"Analyzing map %S", szFilename);
   if (!gfUpdatingNow)
     SetRelativeStartAndEndPercentage(0, 0, 100, str);
   else

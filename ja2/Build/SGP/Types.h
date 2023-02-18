@@ -121,4 +121,6 @@ typedef VECTOR4 MATRIX4[4];  // 4x4 matrix
 typedef VECTOR3 ANGLE;  // angle return array
 typedef VECTOR4 COLOR;  // rgba color array
 
+#define ARR_SIZE(a) (sizeof(a) / sizeof(a[0]))
+
 #endif

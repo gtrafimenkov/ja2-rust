@@ -16,3 +16,6 @@ indent_size = 2
 
 [*.cc]
 indent_size = 2
+
+[*.vcxproj]
+end_of_line = crlf

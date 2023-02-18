@@ -2840,7 +2840,8 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
         }
       } else {  // Use the plural version of the string
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male plural
-          swprintf(str, pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_PLURAL],
+          swprintf(str, ARR_SIZE(str),
+                   pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_PLURAL],
                    MercPtrs[gusSelectedSoldier]->name);
         } else {  // female plural
           swprintf(str,

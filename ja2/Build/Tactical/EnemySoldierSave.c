@@ -474,7 +474,8 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
             curr->pDetailedPlacement->sInsertionGridNo = curr->pBasicPlacement->usStartingGridNo;
           }
 
-          swprintf(curr->pDetailedPlacement->name, pSoldier->name);
+          swprintf(curr->pDetailedPlacement->name, ARR_SIZE(curr->pDetailedPlacement->name),
+                   pSoldier->name);
 
           // Copy patrol points
           curr->pDetailedPlacement->bPatrolCnt = pSoldier->bPatrolCnt;
@@ -1429,7 +1430,8 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY,
               curr->pDetailedPlacement->sInsertionGridNo = curr->pBasicPlacement->usStartingGridNo;
             }
 
-            swprintf(curr->pDetailedPlacement->name, pSoldier->name);
+            swprintf(curr->pDetailedPlacement->name, ARR_SIZE(curr->pDetailedPlacement->name),
+                     pSoldier->name);
 
             // Copy patrol points
             curr->pDetailedPlacement->bPatrolCnt = pSoldier->bPatrolCnt;

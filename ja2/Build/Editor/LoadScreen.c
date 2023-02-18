@@ -310,10 +310,10 @@ UINT32 LoadSaveScreenHandle(void) {
       if (GetFileFirst(gszCurrFilename, &FileInfo)) {
         CHAR16 str[40];
         if (FileInfo.uiFileAttribs & (FILE_IS_READONLY | FILE_IS_HIDDEN | FILE_IS_SYSTEM)) {
-          swprintf(str, L" Delete READ-ONLY file %s? ", gzFilename);
+          swprintf(str, ARR_SIZE(str), L" Delete READ-ONLY file %s? ", gzFilename);
           gfReadOnly = TRUE;
         } else
-          swprintf(str, L" Delete file %s? ", gzFilename);
+          swprintf(str, ARR_SIZE(str), L" Delete file %s? ", gzFilename);
         gfDeleteFile = TRUE;
         CreateMessageBox(str);
       }

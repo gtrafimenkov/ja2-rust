@@ -229,7 +229,7 @@ UINT32 ErrorScreenHandle(void) {
 #ifdef JA2BETAVERSION
 
   if (gubAssertString[0]) {
-    swprintf(str, L"%S", gubAssertString);
+    swprintf(str, ARR_SIZE(str), L"%S", gubAssertString);
     DisplayWrappedString(50, 270, 560, 2, FONT12ARIAL, FONT_RED, str, FONT_BLACK, TRUE,
                          LEFT_JUSTIFIED);
   }
@@ -1205,7 +1205,7 @@ UINT32 DemoExitScreenHandle(void) {
       switch (i) {
         case 38:
           SetFontForeground(FONT_LTKHAKI);
-          swprintf(str, L"%s", gpDemoString[i]);
+          swprintf(str, ARR_SIZE(str), L"%s", gpDemoString[i]);
           break;
         case 39:
           SetFontForeground(FONT_LTKHAKI);

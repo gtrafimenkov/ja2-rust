@@ -447,11 +447,11 @@ void EndLoadScreen() {
   SetFontForeground(FONT_YELLOW);
   SetFontBackground(FONT_NEARBLACK);
   if (!gbWorldSectorZ) {
-    swprintf(str, L"%c%d ENTER SECTOR TIME:  %d.%02d seconds.", 'A' + gWorldSectorY - 1,
-             gWorldSectorX, uiSeconds, uiHundreths);
+    swprintf(str, ARR_SIZE(str), L"%c%d ENTER SECTOR TIME:  %d.%02d seconds.",
+             'A' + gWorldSectorY - 1, gWorldSectorX, uiSeconds, uiHundreths);
   } else {
-    swprintf(str, L"%c%d_b%d ENTER SECTOR TIME:  %d.%02d seconds.", 'A' + gWorldSectorY - 1,
-             gWorldSectorX, gbWorldSectorZ, uiSeconds, uiHundreths);
+    swprintf(str, ARR_SIZE(str), L"%c%d_b%d ENTER SECTOR TIME:  %d.%02d seconds.",
+             'A' + gWorldSectorY - 1, gWorldSectorX, gbWorldSectorZ, uiSeconds, uiHundreths);
   }
   ScreenMsg(FONT_YELLOW, MSG_TESTVERSION, str);
   if (fStartNewFile) {  // start new file
@@ -629,7 +629,7 @@ void InitializeSAMSites(void) {
 // get short sector name without town name
 void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString) {
   // OK, build string id like J11
-  swprintf(sString, L"%S%S", pVertStrings[sMapY], pHortStrings[sMapX]);
+  swprintf(sString, ARR_SIZE(sString), L"%S%S", pVertStrings[sMapY], pHortStrings[sMapX]);
 
   return;
 }
@@ -1667,19 +1667,19 @@ void UpdateMercInSector(SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY, I
         INT16 sGridNo;
         GetLoadedSectorString(szSector);
         if (gMapInformation.sNorthGridNo != -1) {
-          swprintf(szEntry, L"north");
+          swprintf(szEntry, ARR_SIZE(szEntry), L"north");
           sGridNo = gMapInformation.sNorthGridNo;
         } else if (gMapInformation.sEastGridNo != -1) {
-          swprintf(szEntry, L"east");
+          swprintf(szEntry, ARR_SIZE(szEntry), L"east");
           sGridNo = gMapInformation.sEastGridNo;
         } else if (gMapInformation.sSouthGridNo != -1) {
-          swprintf(szEntry, L"south");
+          swprintf(szEntry, ARR_SIZE(szEntry), L"south");
           sGridNo = gMapInformation.sSouthGridNo;
         } else if (gMapInformation.sWestGridNo != -1) {
-          swprintf(szEntry, L"west");
+          swprintf(szEntry, ARR_SIZE(szEntry), L"west");
           sGridNo = gMapInformation.sWestGridNo;
         } else if (gMapInformation.sCenterGridNo != -1) {
-          swprintf(szEntry, L"center");
+          swprintf(szEntry, ARR_SIZE(szEntry), L"center");
           sGridNo = gMapInformation.sCenterGridNo;
         } else {
           ScreenMsg(FONT_RED, MSG_BETAVERSION,
@@ -1771,7 +1771,7 @@ void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zS
                        BOOLEAN fDetailed) {
 #ifdef JA2DEMO
 
-  swprintf(zString, L"Demoville");
+  swprintf(zString, ARR_SIZE(zString), L"Demoville");
 
 #else
   SECTORINFO *pSector = NULL;
@@ -1788,27 +1788,27 @@ void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zS
     if (pUnderground && (pUnderground->fVisited || gfGettingNameFromSaveLoadScreen)) {
       bMineIndex = GetIdOfMineForSector(sSectorX, sSectorY, bSectorZ);
       if (bMineIndex != -1) {
-        swprintf(zString, L"%c%d: %s %s", 'A' + sSectorY - 1, sSectorX,
+        swprintf(zString, ARR_SIZE(zString), L"%c%d: %s %s", 'A' + sSectorY - 1, sSectorX,
                  pTownNames[GetTownAssociatedWithMine(bMineIndex)], pwMineStrings[0]);
       } else
         switch (SECTOR(sSectorX, sSectorY)) {
           case SEC_A10:
-            swprintf(zString, L"A10: %s", pLandTypeStrings[REBEL_HIDEOUT]);
+            swprintf(zString, ARR_SIZE(zString), L"A10: %s", pLandTypeStrings[REBEL_HIDEOUT]);
             break;
           case SEC_J9:
-            swprintf(zString, L"J9: %s", pLandTypeStrings[TIXA_DUNGEON]);
+            swprintf(zString, ARR_SIZE(zString), L"J9: %s", pLandTypeStrings[TIXA_DUNGEON]);
             break;
           case SEC_K4:
-            swprintf(zString, L"K4: %s", pLandTypeStrings[ORTA_BASEMENT]);
+            swprintf(zString, ARR_SIZE(zString), L"K4: %s", pLandTypeStrings[ORTA_BASEMENT]);
             break;
           case SEC_O3:
-            swprintf(zString, L"O3: %s", pLandTypeStrings[TUNNEL]);
+            swprintf(zString, ARR_SIZE(zString), L"O3: %s", pLandTypeStrings[TUNNEL]);
             break;
           case SEC_P3:
-            swprintf(zString, L"P3: %s", pLandTypeStrings[SHELTER]);
+            swprintf(zString, ARR_SIZE(zString), L"P3: %s", pLandTypeStrings[SHELTER]);
             break;
           default:
-            swprintf(zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX,
+            swprintf(zString, ARR_SIZE(zString), L"%c%d: %s", 'A' + sSectorY - 1, sSectorX,
                      pLandTypeStrings[CREATURE_LAIR]);
             break;
         }
@@ -1820,7 +1820,7 @@ void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zS
     ubSectorID = (UINT8)SECTOR(sSectorX, sSectorY);
     pSector = &SectorInfo[ubSectorID];
     ubLandType = pSector->ubTraversability[4];
-    swprintf(zString, L"%c%d: ", 'A' + sSectorY - 1, sSectorX);
+    swprintf(zString, ARR_SIZE(zString), L"%c%d: ", 'A' + sSectorY - 1, sSectorX);
 
     if (bTownNameID == BLANK_SECTOR) {
       // OK, build string id like J11
@@ -3294,7 +3294,7 @@ void UpdateAirspaceControl(void) {
     GetSectorIDString(gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString2, FALSE);
 
     // now build the string
-    swprintf(sMsgString, pBullseyeStrings[4], sMsgSubString1, sMsgSubString2);
+    swprintf(sMsgString, ARR_SIZE(sMsgString), pBullseyeStrings[4], sMsgSubString1, sMsgSubString2);
 
     // confirm the change with overlay message
     DoScreenIndependantMessageBox(sMsgString, MSG_BOX_FLAG_OK, NULL);
@@ -4026,13 +4026,14 @@ INT16 PickGridNoToWalkIn(SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection,
 
 void GetLoadedSectorString(STR16 pString) {
   if (!gfWorldLoaded) {
-    swprintf(pString, L"");
+    swprintf(pString, ARR_SIZE(pString), L"");
     return;
   }
   if (gbWorldSectorZ) {
-    swprintf(pString, L"%c%d_b%d", gWorldSectorY + 'A' - 1, gWorldSectorX, gbWorldSectorZ);
+    swprintf(pString, ARR_SIZE(pString), L"%c%d_b%d", gWorldSectorY + 'A' - 1, gWorldSectorX,
+             gbWorldSectorZ);
   } else if (!gbWorldSectorZ) {
-    swprintf(pString, L"%c%d", gWorldSectorY + 'A' - 1, gWorldSectorX);
+    swprintf(pString, ARR_SIZE(pString), L"%c%d", gWorldSectorY + 'A' - 1, gWorldSectorX);
   }
 }
 

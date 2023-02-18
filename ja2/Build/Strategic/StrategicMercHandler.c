@@ -269,7 +269,7 @@ void MercDailyUpdate() {
             CHAR16 zMoney[128];
 
             // create a string for the salary owed to the npc
-            swprintf(zMoney, L"%d", sSalary);
+            swprintf(zMoney, ARR_SIZE(zMoney), L"%d", sSalary);
             InsertCommasForDollarFigure(zMoney);
             InsertDollarSignInToString(zMoney);
 

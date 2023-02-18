@@ -29,52 +29,52 @@ void GetSectorFacilitiesFlags(INT16 sMapX, INT16 sMapY, STR16 sFacilitiesString)
 
   if (SectorInfo[SECTOR(sMapX, sMapY)].uiFacilitiesFlags == 0) {
     // none
-    swprintf(sFacilitiesString, L"%s", sFacilitiesStrings[0]);
+    swprintf(sFacilitiesString, ARR_SIZE(sFacilitiesString), L"%s", sFacilitiesStrings[0]);
     return;
   }
 
   // hospital
   if (SectorInfo[SECTOR(sMapX, sMapY)].uiFacilitiesFlags & SFCF_HOSPITAL) {
-    swprintf(sFacilitiesString, L"%s", sFacilitiesStrings[1]);
+    swprintf(sFacilitiesString, ARR_SIZE(sFacilitiesString), L"%s", sFacilitiesStrings[1]);
   }
 
   // industry
   if (SectorInfo[SECTOR(sMapX, sMapY)].uiFacilitiesFlags & SFCF_INDUSTRY) {
     if (wcslen(sFacilitiesString) == 0) {
-      swprintf(sFacilitiesString, L"%s", sFacilitiesStrings[2]);
+      swprintf(sFacilitiesString, ARR_SIZE(sFacilitiesString), L"%s", sFacilitiesStrings[2]);
     } else {
-      wcscat(sFacilitiesString, L",");
-      wcscat(sFacilitiesString, sFacilitiesStrings[2]);
+      wcsncat(sFacilitiesString, L",", ARR_SIZE(sFacilitiesString));
+      wcsncat(sFacilitiesString, sFacilitiesStrings[2], ARR_SIZE(sFacilitiesString));
     }
   }
 
   // prison
   if (SectorInfo[SECTOR(sMapX, sMapY)].uiFacilitiesFlags & SFCF_PRISON) {
     if (wcslen(sFacilitiesString) == 0) {
-      swprintf(sFacilitiesString, L"%s", sFacilitiesStrings[3]);
+      swprintf(sFacilitiesString, ARR_SIZE(sFacilitiesString), L"%s", sFacilitiesStrings[3]);
     } else {
-      wcscat(sFacilitiesString, L",");
-      wcscat(sFacilitiesString, sFacilitiesStrings[3]);
+      wcsncat(sFacilitiesString, L",", ARR_SIZE(sFacilitiesString));
+      wcsncat(sFacilitiesString, sFacilitiesStrings[3], ARR_SIZE(sFacilitiesString));
     }
   }
 
   // airport
   if (SectorInfo[SECTOR(sMapX, sMapY)].uiFacilitiesFlags & SFCF_AIRPORT) {
     if (wcslen(sFacilitiesString) == 0) {
-      swprintf(sFacilitiesString, L"%s", sFacilitiesStrings[5]);
+      swprintf(sFacilitiesString, ARR_SIZE(sFacilitiesString), L"%s", sFacilitiesStrings[5]);
     } else {
-      wcscat(sFacilitiesString, L",");
-      wcscat(sFacilitiesString, sFacilitiesStrings[5]);
+      wcsncat(sFacilitiesString, L",", ARR_SIZE(sFacilitiesString));
+      wcsncat(sFacilitiesString, sFacilitiesStrings[5], ARR_SIZE(sFacilitiesString));
     }
   }
 
   // gun range
   if (SectorInfo[SECTOR(sMapX, sMapY)].uiFacilitiesFlags & SFCF_GUN_RANGE) {
     if (wcslen(sFacilitiesString) == 0) {
-      swprintf(sFacilitiesString, L"%s", sFacilitiesStrings[6]);
+      swprintf(sFacilitiesString, ARR_SIZE(sFacilitiesString), L"%s", sFacilitiesStrings[6]);
     } else {
-      wcscat(sFacilitiesString, L",");
-      wcscat(sFacilitiesString, sFacilitiesStrings[6]);
+      wcsncat(sFacilitiesString, L",", ARR_SIZE(sFacilitiesString));
+      wcsncat(sFacilitiesString, sFacilitiesStrings[6], ARR_SIZE(sFacilitiesString));
     }
   }
 

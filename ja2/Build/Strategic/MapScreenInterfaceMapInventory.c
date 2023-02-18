@@ -732,10 +732,10 @@ void MapInvenPoolSlots(MOUSE_REGION *pRegion, INT32 iReason) {
           (Menptr[gCharactersList[bSelectedInfoChar].usSolID].bSectorZ != iCurrentMapSectorZ) ||
           (Menptr[gCharactersList[bSelectedInfoChar].usSolID].fBetweenSectors)) {
         if (gpItemPointer == NULL) {
-          swprintf(sString, pMapInventoryErrorString[2],
+          swprintf(sString, ARR_SIZE(sString), pMapInventoryErrorString[2],
                    Menptr[gCharactersList[bSelectedInfoChar].usSolID].name);
         } else {
-          swprintf(sString, pMapInventoryErrorString[5],
+          swprintf(sString, ARR_SIZE(sString), pMapInventoryErrorString[5],
                    Menptr[gCharactersList[bSelectedInfoChar].usSolID].name);
         }
         DoMapMessageBox(MSG_BOX_BASIC_STYLE, sString, MAP_SCREEN, MSG_BOX_FLAG_OK, NULL);
@@ -1471,7 +1471,8 @@ void DisplayPagesForMapInventoryPool(void) {
   SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
 
   // grab current and last pages
-  swprintf(sString, L"%d / %d", iCurrentInventoryPoolPage + 1, iLastInventoryPoolPage + 1);
+  swprintf(sString, ARR_SIZE(sString), L"%d / %d", iCurrentInventoryPoolPage + 1,
+           iLastInventoryPoolPage + 1);
 
   // grab centered coords
   FindFontCenterCoordinates(MAP_INVENTORY_POOL_PAGE_X, MAP_INVENTORY_POOL_PAGE_Y,
@@ -1517,7 +1518,7 @@ void DrawNumberOfIventoryPoolItems(void) {
   iNumberOfItems = GetTotalNumberOfItemsInSectorStash();
 
   // get number of items
-  swprintf(sString, L"%d", iNumberOfItems);
+  swprintf(sString, ARR_SIZE(sString), L"%d", iNumberOfItems);
 
   // set font stuff
   SetFont(COMPFONT);
@@ -1563,7 +1564,7 @@ void DisplayCurrentSector(void) {
   CHAR16 sString[32];
   INT16 sX, sY;
 
-  swprintf(sString, L"%s%s%s", pMapVertIndex[sSelMapY], pMapHortIndex[sSelMapX],
+  swprintf(sString, ARR_SIZE(sString), L"%s%s%s", pMapVertIndex[sSelMapY], pMapHortIndex[sSelMapX],
            pMapDepthIndex[iCurrentMapSectorZ]);
 
   // set font stuff
@@ -1667,7 +1668,7 @@ void DrawTextOnSectorInventory(void) {
   CHAR16 sString[64];
 
   // parse the string
-  swprintf(sString, zMarksMapScreenText[11]);
+  swprintf(sString, ARR_SIZE(sString), zMarksMapScreenText[11]);
 
   SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
 
@@ -1870,8 +1871,7 @@ void CheckGridNoOfItemsInMapScreenMapInventory() {
 }
 
 void SortSectorInventory(WORLDITEM *pInventory, UINT32 uiSizeOfArray) {
-  qsort((LPVOID)pInventory, (size_t)uiSizeOfArray, sizeof(WORLDITEM),
-        MapScreenSectorInventoryCompare);
+  qsort(pInventory, (size_t)uiSizeOfArray, sizeof(WORLDITEM), MapScreenSectorInventoryCompare);
 }
 
 INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {

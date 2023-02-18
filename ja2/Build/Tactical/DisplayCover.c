@@ -536,11 +536,13 @@ void DisplayRangeToTarget(SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   // if the soldier has a weapon in hand,
   if (WeaponInHand(pSoldier)) {
     // display a string with the weapons range, then range to target
-    swprintf(zOutputString, zNewTacticalMessages[TCTL_MSG__RANGE_TO_TARGET_AND_GUN_RANGE],
+    swprintf(zOutputString, ARR_SIZE(zOutputString),
+             zNewTacticalMessages[TCTL_MSG__RANGE_TO_TARGET_AND_GUN_RANGE],
              Weapon[pSoldier->inv[HANDPOS].usItem].usRange / 10, usRange);
   } else {
     // display a string with the range to target
-    swprintf(zOutputString, zNewTacticalMessages[TCTL_MSG__RANGE_TO_TARGET], usRange);
+    swprintf(zOutputString, ARR_SIZE(zOutputString),
+             zNewTacticalMessages[TCTL_MSG__RANGE_TO_TARGET], usRange);
   }
 
   // Display the msg

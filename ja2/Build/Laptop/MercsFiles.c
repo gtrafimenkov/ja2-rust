@@ -594,7 +594,8 @@ void DisplayMercsStats(UINT8 ubMercID) {
 
   usPosX =
       MERC_STATS_SECOND_COL_X + StringPixLength(MercInfo[MERC_FILES_SALARY], MERC_NAME_FONT) + 1;
-  swprintf(sString, L"%d %s", gMercProfiles[ubMercID].sSalary, MercInfo[MERC_FILES_PER_DAY]);
+  swprintf(sString, ARR_SIZE(sString), L"%d %s", gMercProfiles[ubMercID].sSalary,
+           MercInfo[MERC_FILES_PER_DAY]);
   DrawTextToScreen(sString, usPosX, usPosY, 95, MERC_NAME_FONT, MERC_DYNAMIC_STATS_COLOR,
                    FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 }
