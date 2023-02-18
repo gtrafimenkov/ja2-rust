@@ -1,15 +1,14 @@
+#include "SGP/VObjectBlitters.h"
+
 #include <stdio.h>
 
 #include "SGP/Debug.h"
 #include "SGP/DirectDrawCalls.h"
-#if defined(JA2) || defined(UTIL)
-#include "SGP/Video.h"  // JA2
-#endif
 #include "SGP/HImage.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
-#include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectPrivate.h"
+#include "SGP/Video.h"
 #include "SGP/VideoPrivate.h"
 #include "SGP/WCheck.h"
 

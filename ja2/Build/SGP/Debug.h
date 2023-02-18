@@ -109,16 +109,9 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 #define ErrorMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
 
 // Enable the debug topic we want
-#if defined(JA2) || defined(UTIL)
 #define RegisterJA2DebugTopic(a, b) DbgTopicRegistration(TOPIC_REGISTER, &(a), (b))
 #define RegisterDebugTopic(a, b)
 #define DebugMsg(a, b, c) DbgMessageReal((a), TOPIC_MESSAGE, (b), (c))
-#else
-#define RegisterJA2DebugTopic(a, b)
-#define RegisterDebugTopic(a, b) \
-  DbgTopicRegistration((UINT8)TOPIC_REGISTER, (UINT16 *)(&(a)), (CHAR8 *)(b))
-#define DebugMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
-#endif
 
 // public interface to debug methods:
 extern void DbgMessageReal(UINT16 TopicId, UINT8 uiCommand, UINT8 uiDebugLevel, CHAR8 *Str);
@@ -148,12 +141,8 @@ extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 #define DbgTopicRegistration(a, b, c)
 #define DbgMessage(a, b, c)
 
-#if defined(JA2) || defined(UTIL)
 #define RegisterJA2DebugTopic(a, b)
 #define DebugMsg(a, b, c)
-#else
-#define DebugMsg(a)
-#endif
 
 //*******************************************************************************************
 #endif

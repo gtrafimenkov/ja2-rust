@@ -1,10 +1,9 @@
+#include "SGP/Timer.h"
+
 #include <windows.h>
 
 #include "SGP/Types.h"
-#if defined(JA2) || defined(UTIL)
-#include "SGP/Timer.h"
 #include "SGP/Video.h"
-#endif
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

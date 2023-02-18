@@ -4,13 +4,10 @@
 #ifndef _SIRTECH_TYPES_
 #define _SIRTECH_TYPES_
 
-#ifdef JA2
 #ifdef RELEASE_WITH_DEBUG_INFO
 
 // For JA2 Release with debug info build, disable these warnigs messages
 #pragma warning(disable : 4201 4214 4057 4100 4514 4115 4711 4244)
-
-#endif
 
 #endif
 
@@ -26,13 +23,8 @@
 
 // HEY WIZARDRY DUDES, JA2 ISN'T THE ONLY PROGRAM WE COMPILE! :-)
 
-#if defined(JA2) || defined(UTILS)
 typedef unsigned int UINT32;
 typedef signed int INT32;
-#else
-typedef unsigned int UINT32;
-typedef int INT32;
-#endif
 
 // integers
 typedef unsigned char UINT8;

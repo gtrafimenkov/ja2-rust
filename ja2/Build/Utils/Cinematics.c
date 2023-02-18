@@ -9,6 +9,7 @@
 
 #include "Utils/Cinematics.h"
 
+#include <crtdbg.h>
 #include <fcntl.h>
 #include <io.h>
 #include <malloc.h>
@@ -19,6 +20,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include "Intro.h"
 #include "SGP/DDraw.h"
 #include "SGP/Debug.h"
 #include "SGP/DirectDrawCalls.h"
@@ -27,16 +29,9 @@
 #include "SGP/Mss.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
-#include "SGP/smack.h"
-
-#ifdef JA2
-#include "SGP/Video.h"
-#endif
-
-#include <crtdbg.h>
-
-#include "Intro.h"
 #include "SGP/VSurfacePrivate.h"
+#include "SGP/Video.h"
+#include "SGP/smack.h"
 #include "radmalw.i"
 
 //-Structures----------------------------------------------------------------------

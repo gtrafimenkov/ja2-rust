@@ -36,14 +36,7 @@ typedef struct {
 
 } LibraryInitHeader;
 
-#ifdef JA2
 #include "SGP/Ja2Libs.h"
-#elif UTIL
-#define NUMBER_OF_LIBRARIES 0
-typedef FILETIME SGP_FILETIME;
-#else  // wizardry
-#include "WizLibs.h"
-#endif
 
 extern LibraryInitHeader gGameLibaries[];
 extern CHAR8 gzCdDirectory[SGPFILENAME_LEN];

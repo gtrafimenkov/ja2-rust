@@ -1,15 +1,14 @@
+#include "SGP/Shading.h"
+
 #include <stdio.h>
 
 #include "SGP/Debug.h"
 #include "SGP/DirectDrawCalls.h"
-#if defined(JA2) || defined(UTIL)
-#include "SGP/Video.h"
-#endif
 #include "SGP/HImage.h"
-#include "SGP/Shading.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectPrivate.h"
+#include "SGP/Video.h"
 #include "SGP/VideoPrivate.h"
 #include "SGP/WCheck.h"
 
@@ -263,8 +262,6 @@ void SetShadeTablePercent(FLOAT uiShadePercent) {
   BuildShadeTable();
 }
 
-#ifdef JA2  // Jul. 23 '97 - ALEX - because Wizardry isn't using it & no longer has a version of
-            // Set8BPPPalette() available
 void Init8BitTables(void) {
   SGPPaletteEntry Pal[256];
   UINT32 uiCount;
@@ -288,4 +285,3 @@ BOOLEAN Set8BitModePalette(SGPPaletteEntry *pPal) {
   Set8BPPPalette(pPal);
   return (TRUE);
 }
-#endif

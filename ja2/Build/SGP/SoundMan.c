@@ -68,11 +68,7 @@ CHAR8 *cWAVChunks[3] = {"RIFF", "FMT ", "DATA"};
 // global settings
 #define SOUND_MAX_CACHED 128  // number of cache slots
 
-#ifdef JA2
 #define SOUND_MAX_CHANNELS 16  // number of mixer channels
-#else
-#define SOUND_MAX_CHANNELS 32  // number of mixer channels
-#endif
 
 #pragma message("TEMP!")
 

@@ -19,20 +19,16 @@
 #include <stdio.h>
 #include <windows.h>
 
+#include "GameLoop.h"
+#include "JAScreens.h"
+#include "SGP/Input.h"
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "SGP/WizShare.h"
-
-// Kris addition
-#ifdef JA2
-#include "GameLoop.h"
-#include "JAScreens.h"
-#include "SGP/Input.h"
 #include "ScreenIDs.h"
 #include "SysGlobals.h"
-#endif
 
 // CJC added
 #ifndef _NO_DEBUG_TXT
@@ -411,7 +407,6 @@ void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 
 extern HVOBJECT FontObjs[25];
 
-#ifdef JA2  // JAGGED ALLIANCE 2 VERSION ONLY
 void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
   MSG Message;
   CHAR8 ubOutputString[512];
@@ -473,44 +468,6 @@ void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 #endif
   exit(0);
 }
-
-#else  // NOT JAGGED ALLIANCE 2
-
-void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
-  CHAR8 ubOutputString[512];
-  BOOLEAN fDone = FALSE;
-
-#ifndef _NO_DEBUG_TXT
-  FILE *DebugFile;
-#endif
-
-  // Build the output string
-  sprintf(ubOutputString, "{ %ld } Assertion Failure: %s [Line %d in %s]\n", GetTickCount(),
-          pString, uiLineNum, pSourceFile);
-  if (pString) sprintf(gubAssertString, pString);
-  // Output to debugger
-  if (gfRecordToDebugger) {
-    OutputDebugString(ubOutputString);
-    if (pString) {  // tag on the assert message
-      OutputDebugString(gubAssertString);
-    }
-  }
-  // Record to file if required
-#ifndef _NO_DEBUG_TXT
-  if (gfRecordToFile) {
-    if ((DebugFile = fopen(gpcDebugLogFileName, "a+t")) != NULL) {
-      fputs(ubOutputString, DebugFile);
-      if (pString) {  // tag on the assert message
-        fputs(gubAssertString, DebugFile);
-      }
-      fclose(DebugFile);
-    }
-  }
-#endif
-  exit(0);
-}
-
-#endif
 
 #endif
 

@@ -21,10 +21,8 @@
 #include "SGP/Line.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
-#if (defined(JA2) || defined(UTIL))
 #include "SGP/Video.h"
 #define BASE_REGION_FLAGS (MSYS_REGION_ENABLED | MSYS_SET_CURSOR)
-#endif
 #ifdef _JA2_RENDER_DIRTY
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
@@ -126,11 +124,9 @@ BOOLEAN gfRefreshUpdate = FALSE;
 // an already deleted region.  It will also ensure that you don't create an identical region
 // that already exists.
 // TO REMOVE ALL DEBUG FUNCTIONALITY:  simply comment out MOUSESYSTEM_DEBUGGING definition
-#ifdef JA2
 #ifdef _DEBUG
 #ifndef BOUNDS_CHECKER
 #define MOUSESYSTEM_DEBUGGING
-#endif
 #endif
 #endif
 
@@ -236,16 +232,14 @@ void MSYS_SGP_Mouse_Handler_Hook(UINT16 Type, UINT16 Xcoord, UINT16 Ycoord, BOOL
         MSYS_Action |= MSYS_DO_LBUTTON_DWN;
       else if (Type == LEFT_BUTTON_UP) {
         MSYS_Action |= MSYS_DO_LBUTTON_UP;
-// Kris:
-// Used only if applicable.  This is used for that special button that is locked with the
-// mouse press -- just like windows.  When you release the button, the previous state
-// of the button is restored if you released the mouse outside of it's boundaries.  If
-// you release inside of the button, the action is selected -- but later in the code.
-// NOTE:  It has to be here, because the mouse can be released anywhere regardless of
-// regions, buttons, etc.
-#ifdef JA2
+        // Kris:
+        // Used only if applicable.  This is used for that special button that is locked with the
+        // mouse press -- just like windows.  When you release the button, the previous state
+        // of the button is restored if you released the mouse outside of it's boundaries.  If
+        // you release inside of the button, the action is selected -- but later in the code.
+        // NOTE:  It has to be here, because the mouse can be released anywhere regardless of
+        // regions, buttons, etc.
         ReleaseAnchorMode();
-#endif
       } else if (Type == RIGHT_BUTTON_DOWN)
         MSYS_Action |= MSYS_DO_RBUTTON_DWN;
       else if (Type == RIGHT_BUTTON_UP)
@@ -535,9 +529,6 @@ void MSYS_UpdateMouseRegion(void) {
 
         // if( region->uiFlags & MSYS_REGION_ENABLED )
         //	region->uiFlags |= BUTTON_DIRTY;
-#ifndef JA2
-        VideoRemoveToolTip();
-#endif
       }
 
       MSYS_CurrRegion->FastHelpTimer = gsFastHelpDelay;
@@ -565,10 +556,6 @@ void MSYS_UpdateMouseRegion(void) {
 #endif
           MSYS_CurrRegion->uiFlags &= (~MSYS_GOT_BACKGROUND);
           MSYS_CurrRegion->uiFlags |= MSYS_FASTHELP_RESET;
-
-#ifndef JA2
-          VideoRemoveToolTip();
-#endif
 
           // if( b->uiFlags & BUTTON_ENABLED )
           //	b->uiFlags |= BUTTON_DIRTY;
@@ -676,9 +663,6 @@ void MSYS_UpdateMouseRegion(void) {
 
               // if( b->uiFlags & BUTTON_ENABLED )
               //	b->uiFlags |= BUTTON_DIRTY;
-#ifndef JA2
-              VideoRemoveToolTip();
-#endif
             }
 
             // Kris: Nov 31, 1999 -- Added support for double click events.
@@ -869,9 +853,6 @@ void MSYS_RemoveRegion(MOUSE_REGION *region) {
 
   // Get rid of the FastHelp text (if applicable)
   if (region->FastHelpText) {
-#ifndef JA2
-    if (region->uiFlags & MSYS_FASTHELP) VideoRemoveToolTip();
-#endif
     MemFree(region->FastHelpText);
   }
   region->FastHelpText = NULL;
@@ -1073,20 +1054,14 @@ void SetRegionFastHelpText(MOUSE_REGION *region, STR16 szText) {
   // ATE: We could be replacing already existing, active text
   // so let's remove the region so it be rebuilt...
 
-#ifdef JA2
   if (guiCurrentScreen != MAP_SCREEN) {
-#endif
-
 #ifdef _JA2_RENDER_DIRTY
     if (region->uiFlags & MSYS_GOT_BACKGROUND) FreeBackgroundRectPending(region->FastHelpRect);
 #endif
 
     region->uiFlags &= (~MSYS_GOT_BACKGROUND);
     region->uiFlags &= (~MSYS_FASTHELP_RESET);
-
-#ifdef JA2
   }
-#endif
 
   // region->FastHelpTimer = gsFastHelpDelay;
 }

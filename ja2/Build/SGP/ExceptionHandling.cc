@@ -4,12 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "GameVersion.h"
 #include "SGP/FileMan.h"
 #include "SGP/Types.h"
-
-#ifdef JA2
-#include "GameVersion.h"
-#endif
 
 // If we are to use exception handling
 #ifdef ENABLE_EXCEPTION_HANDLING
@@ -74,7 +71,6 @@ INT32 RecordExceptionInfo(EXCEPTION_POINTERS *pExceptInfo) {
   //
   // Display the version number
   //
-#ifdef JA2
 
   // Dispay Ja's version number
   ErrorLog(hFile, "%S: %s.  %S", zBuildInfo, czVersionNumber, zTrackingNumber);
@@ -84,7 +80,6 @@ INT32 RecordExceptionInfo(EXCEPTION_POINTERS *pExceptInfo) {
 
   // Insert a new line
   ErrorLog(hFile, zNewLine);
-#endif
 
   //
   // Write out the current state of the system

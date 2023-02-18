@@ -23,12 +23,9 @@
 #include "SGP/HImage.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "string.h"
-#if defined(JA2) || defined(UTIL)
-#include "SGP/Video.h"
-#else
-#endif
 
 //**************************************************************************
 //

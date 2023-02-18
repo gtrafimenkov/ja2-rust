@@ -26,14 +26,13 @@
 #include <string.h>
 #include <windows.h>
 
+#include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
+#include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
-#ifdef _DEBUG
-#include <crtdbg.h>
-#endif
 
 #ifdef _DEBUG
-//#define DEBUG_MEM_LEAKS // turns on tracking of every MemAlloc and MemFree!
+#include <crtdbg.h>
 #endif
 
 //**************************************************************************
@@ -42,9 +41,6 @@
 //
 //**************************************************************************
 
-#ifdef JA2
-#include "MessageBoxScreen.h"
-#include "SGP/MouseSystem.h"
 STR16 gzJA2ScreenNames[] = {
     L"EDIT_SCREEN",        L"SAVING_SCREEN",
     L"LOADING_SCREEN",     L"ERROR_SCREEN",
@@ -63,7 +59,6 @@ STR16 gzJA2ScreenNames[] = {
     L"AIVIEWER_SCREEN",    L"QUEST_DEBUG_SCREEN",
 #endif
 };
-#endif
 
 #ifdef EXTREME_MEMORY_DEBUGGING
 typedef struct MEMORY_NODE {

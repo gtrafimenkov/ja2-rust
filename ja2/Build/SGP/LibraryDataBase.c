@@ -3,26 +3,13 @@
 #include <stdio.h>
 #include <windows.h>
 
+#include "GameSettings.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
-#include "SGP/WCheck.h"
-
-#if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#endif
-
-// NUMBER_OF_LIBRARIES
-#ifdef JA2
-///#include	"Ja2 Libs.c"
-#include "GameSettings.h"
-#elif defined(UTIL)
-LibraryInitHeader gGameLibaries[] = {0};
-#else
-// We link it as an .obj file
-//	#include "WizLibs.c"
-#endif
+#include "SGP/WCheck.h"
 
 // used when doing the binary search of the libraries
 INT16 gsCurrentLibrary = -1;
@@ -53,11 +40,7 @@ BOOLEAN InitializeFileDatabase() {
   UINT32 uiSize;
   BOOLEAN fLibraryInited = FALSE;
 
-#ifdef JA2
   GetCDLocation();
-#else
-  gzCdDirectory[0] = '.';
-#endif
 
   // if all the libraries exist, set them up
   gFileDataBase.usNumberOfLibraries = NUMBER_OF_LIBRARIES;

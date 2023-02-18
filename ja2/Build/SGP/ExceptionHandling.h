@@ -5,13 +5,8 @@
 
 #include "SGP/Types.h"
 
-// uncomment this line if you want Exceptions to be handled
-#ifdef JA2
-
 #ifndef _DEBUG
 #define ENABLE_EXCEPTION_HANDLING
-#endif
-
 #endif
 
 #ifdef __cplusplus

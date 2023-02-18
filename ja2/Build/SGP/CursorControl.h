@@ -5,10 +5,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
-
-#if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#endif
 
 extern UINT32 GetCursorHandle(UINT32 uiCursorIndex);
 extern void UnloadCursorData(UINT32 uiCursorIndex);

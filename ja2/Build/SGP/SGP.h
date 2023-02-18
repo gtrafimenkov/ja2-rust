@@ -5,28 +5,8 @@
 #include "SGP/Debug.h"
 #include "SGP/Timer.h"
 #include "SGP/Types.h"
-#include "SysGlobals.h"
-
-#if defined(JA2) || defined(UTIL)
 #include "SGP/Video.h"
-#endif
-
-#ifndef JA2
-#include "GameLoop.h"
-#include "SGP/DBMan.h"
-#include "SGP/English.h"
-#include "SGP/FileMan.h"
-#include "SGP/Font.h"
-#include "SGP/Input.h"
-#include "SGP/Line.h"
-#include "SGP/MemMan.h"
-#include "SGP/MutexManager.h"
-#include "SGP/PCX.h"
-#include "SGP/Random.h"
-#include "SGP/Shading.h"
-#include "SGP/SoundMan.h"
-#include "SGP/VObject.h"
-#endif
+#include "SysGlobals.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,14 +17,6 @@ extern UINT32 giStartMem;
 extern CHAR8 gzCommandLine[100];  // Command line given
 extern UINT8 gbPixelDepth;        // GLOBAL RUN-TIME SETTINGS
 extern BOOLEAN gfDontUseDDBlits;  // GLOBAL FOR USE OF DD BLITTING
-
-#if !defined(JA2) && !defined(UTILS)
-extern BOOLEAN gfLoadAtStartup;
-extern CHAR8 *gzStringDataOverride;
-extern BOOLEAN gfUsingBoundsChecker;
-extern BOOLEAN gfCapturingVideo;
-
-#endif
 
 // function prototypes
 void SGPExit(void);
