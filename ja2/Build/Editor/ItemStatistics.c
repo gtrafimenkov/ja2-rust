@@ -1,5 +1,3 @@
-#include "SGP/ButtonSystem.h"
-#include "Tactical/OverheadTypes.h"
 #include "Editor/ItemStatistics.h"
 
 #include <memory.h>
@@ -21,6 +19,7 @@
 #include "Tactical/HandleItems.h"
 #include "Tactical/ItemTypes.h"
 #include "Tactical/Items.h"
+#include "Tactical/OverheadTypes.h"
 #include "Tactical/Weapons.h"
 #include "Tactical/WorldItems.h"
 #include "TileEngine/Pits.h"

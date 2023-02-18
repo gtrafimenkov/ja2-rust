@@ -1,9 +1,9 @@
-#include "MessageBoxScreen.h"
 #include "Intro.h"
 
 #include "GameScreen.h"
 #include "Intro.h"
 #include "MainMenuScreen.h"
+#include "MessageBoxScreen.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
 #include "SGP/Ja2Libs.h"

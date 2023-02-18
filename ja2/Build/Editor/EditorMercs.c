@@ -2,8 +2,6 @@
 
 #include <windows.h>
 
-#include "Tactical/OverheadTypes.h"
-
 #include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditSys.h"
@@ -35,6 +33,7 @@
 #include "Tactical/InventoryChoosing.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/OverheadTypes.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierCreate.h"

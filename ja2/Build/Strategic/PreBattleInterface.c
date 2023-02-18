@@ -1,8 +1,8 @@
-#include "Cheats.h"
 #include "Strategic/PreBattleInterface.h"
 
 #include <stdio.h>
 
+#include "Cheats.h"
 #include "GameScreen.h"
 #include "GameSettings.h"
 #include "JAScreens.h"

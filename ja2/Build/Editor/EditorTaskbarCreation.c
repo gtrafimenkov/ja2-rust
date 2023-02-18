@@ -1,4 +1,3 @@
-#include "Tactical/OverheadTypes.h"
 #include "BuildDefines.h"
 #include "Editor/EditorCallbackPrototypes.h"
 #include "Editor/EditorDefines.h"

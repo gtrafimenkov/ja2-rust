@@ -7,18 +7,15 @@
 BasedOnStyle: Google
 ColumnLimit:  100
 
-SortIncludes: Never
+IncludeBlocks: Regroup
 
-# IncludeBlocks: Regroup
-# IncludeBlocks: Preserve
+IncludeCategories:
 
-# IncludeCategories:
+  - Regex:           '^<'
+    Priority:        10
 
-#   - Regex:           '^<'
-#     Priority:        10
+  - Regex:           '.*'
+    Priority:        30
 
-#   - Regex:           '.*'
-#     Priority:        30
-
-#   - Regex:           '"SDL.*[.]h"'
-#     Priority:        60
+  - Regex:           '"SDL.*[.]h"'
+    Priority:        60

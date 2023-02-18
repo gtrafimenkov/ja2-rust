@@ -1,4 +1,3 @@
-#include "Utils/FontControl.h"
 #include "TileEngine/RenderDirty.h"
 
 #include <errno.h>
@@ -15,6 +14,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldDef.h"
+#include "Utils/FontControl.h"
 
 #ifdef JA2BETAVERSION
 #include "Utils/Message.h"
