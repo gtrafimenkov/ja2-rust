@@ -14,9 +14,6 @@
 // used when doing the binary search of the libraries
 INT16 gsCurrentLibrary = -1;
 
-// The location of the cdrom drive
-CHAR8 gzCdDirectory[SGPFILENAME_LEN];
-
 INT CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2);
 BOOLEAN GetFileHeaderFromLibrary(INT16 sLibraryID, STR pstrFileName,
                                  FileHeaderStruct **pFileHeader);
@@ -39,8 +36,6 @@ BOOLEAN InitializeFileDatabase() {
   INT16 i;
   UINT32 uiSize;
   BOOLEAN fLibraryInited = FALSE;
-
-  GetCDLocation();
 
   // if all the libraries exist, set them up
   gFileDataBase.usNumberOfLibraries = NUMBER_OF_LIBRARIES;
@@ -184,26 +179,8 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
   hFile =
       CreateFile(pLibraryName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_FLAG_RANDOM_ACCESS, NULL);
   if (hFile == INVALID_HANDLE_VALUE) {
-    // if it failed finding the file on the hard drive, and the file can be on the cdrom
-    if (fCanBeOnCDrom) {
-      // Add the path of the cdrom to the path of the library file
-      sprintf(zTempPath, "%s%s", gzCdDirectory, pLibraryName);
-
-      // look on the cdrom
-      hFile = CreateFile(zTempPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_FLAG_RANDOM_ACCESS,
-                         NULL);
-      if (hFile == INVALID_HANDLE_VALUE) {
-        UINT32 uiLastError = GetLastError();
-        char zString[1024];
-        FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
-
-        return (FALSE);
-      } else
-        FastDebugMsg(String("CD Library %s opened.", zTempPath));
-    } else {
       // error opening the library
       return (FALSE);
-    }
   }
 
   // Read in the library header ( at the begining of the library )

@@ -39,7 +39,6 @@ typedef struct {
 #include "SGP/Ja2Libs.h"
 
 extern LibraryInitHeader gGameLibaries[];
-extern CHAR8 gzCdDirectory[SGPFILENAME_LEN];
 
 #define REAL_LIBRARY_FILE "RealFiles.slf"
 
