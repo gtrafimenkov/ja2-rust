@@ -587,7 +587,7 @@ BOOLEAN SoundSetDigitalVolume(UINT32 uiVolume) {
   UINT32 uiVolClip;
 
   if (fSoundSystemInit) {
-    uiVolClip = __min(uiVolume, 127);
+    uiVolClip = min(uiVolume, 127);
     AIL_set_digital_master_volume(hSoundDriver, uiVolClip);
   }
   return (TRUE);
@@ -619,7 +619,7 @@ UINT32 SoundGetDigitalVolume(UINT32 uiVolume) {
 //
 // Created:  3/28/00 Derek Beland
 //*****************************************************************************************
-void SoundSetDefaultVolume(UINT32 uiVolume) { guiSoundDefaultVolume = __min(uiVolume, 127); }
+void SoundSetDefaultVolume(UINT32 uiVolume) { guiSoundDefaultVolume = min(uiVolume, 127); }
 
 //*****************************************************************************************
 // SoundGetDefaultVolume
@@ -671,7 +671,7 @@ BOOLEAN SoundSetFadeVolume(UINT32 uiSoundID, UINT32 uiVolume, UINT32 uiRate, BOO
   UINT32 uiSound, uiVolCap, uiVolumeDiff;
 
   if (fSoundSystemInit) {
-    uiVolCap = __min(uiVolume, 127);
+    uiVolCap = min(uiVolume, 127);
 
     if ((uiSound = SoundGetIndexByID(uiSoundID)) != NO_SAMPLE) {
       uiVolumeDiff = abs((long)(uiVolCap - SoundGetVolumeIndex(uiSound)));
@@ -703,7 +703,7 @@ BOOLEAN SoundSetVolume(UINT32 uiSoundID, UINT32 uiVolume) {
   UINT32 uiSound, uiVolCap;
 
   if (fSoundSystemInit) {
-    uiVolCap = __min(uiVolume, 127);
+    uiVolCap = min(uiVolume, 127);
 
     if ((uiSound = SoundGetIndexByID(uiSoundID)) != NO_SAMPLE) {
       pSoundList[uiSound].uiFadeVolume = uiVolume;
@@ -730,7 +730,7 @@ BOOLEAN SoundSetVolumeIndex(UINT32 uiChannel, UINT32 uiVolume) {
   UINT32 uiVolCap;
 
   if (fSoundSystemInit) {
-    uiVolCap = __min(uiVolume, 127);
+    uiVolCap = min(uiVolume, 127);
 
     if (pSoundList[uiChannel].hMSS != NULL)
       AIL_set_sample_volume(pSoundList[uiChannel].hMSS, uiVolCap);
@@ -760,7 +760,7 @@ BOOLEAN SoundSetPan(UINT32 uiSoundID, UINT32 uiPan) {
   UINT32 uiSound, uiPanCap;
 
   if (fSoundSystemInit) {
-    uiPanCap = __min(uiPan, 127);
+    uiPanCap = min(uiPan, 127);
 
     if ((uiSound = SoundGetIndexByID(uiSoundID)) != NO_SAMPLE) {
       if (pSoundList[uiSound].hMSS != NULL) AIL_set_sample_pan(pSoundList[uiSound].hMSS, uiPanCap);
@@ -788,7 +788,7 @@ BOOLEAN SoundSetFrequency(UINT32 uiSoundID, UINT32 uiFreq) {
   UINT32 uiSound, uiFreqCap;
 
   if (fSoundSystemInit) {
-    uiFreqCap = __min(uiFreq, 44100);
+    uiFreqCap = min(uiFreq, 44100);
 
     if ((uiSound = SoundGetIndexByID(uiSoundID)) != NO_SAMPLE) {
       if (pSoundList[uiSound].hMSS != NULL)
@@ -820,7 +820,7 @@ BOOLEAN SoundSetLoop(UINT32 uiSoundID, UINT32 uiLoop) {
   UINT32 uiSound, uiLoopCap;
 
   if (fSoundSystemInit) {
-    uiLoopCap = __min(uiLoop, 10000);
+    uiLoopCap = min(uiLoop, 10000);
 
     if ((uiSound = SoundGetIndexByID(uiSoundID)) != NO_SAMPLE) {
       if (pSoundList[uiSound].hMSS != NULL)

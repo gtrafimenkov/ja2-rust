@@ -115,4 +115,11 @@ typedef VECTOR4 COLOR;  // rgba color array
 
 #define ARR_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
+#if !defined(max)
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+#endif
+#if !defined(min)
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
 #endif

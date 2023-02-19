@@ -1210,8 +1210,8 @@ INT8 CalcDifficultyModifier(UINT8 ubSoldierClass) {
   // easy Assert( bDiffModifier <= 100 );
 
   // limit the range of the combined factors to between 0 and 100
-  bDiffModifier = __max(0, bDiffModifier);
-  bDiffModifier = __min(100, bDiffModifier);
+  bDiffModifier = max(0, bDiffModifier);
+  bDiffModifier = min(100, bDiffModifier);
 
   // DON'T change this function without carefully considering the impact on
   // GenerateRandomEquipment(), CreateDetailedPlacementGivenBasicPlacementInfo(), and
@@ -2006,15 +2006,15 @@ void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass) {
   if (SOLDIER_CLASS_MILITIA(ubSoldierClass)) {
     // Militia never get to roll bad/great results at all (to avoid great equipment drops from them
     // if killed)
-    bAdjustedRoll = __max(1, bAdjustedRoll);
-    bAdjustedRoll = __min(8, bAdjustedRoll);
+    bAdjustedRoll = max(1, bAdjustedRoll);
+    bAdjustedRoll = min(8, bAdjustedRoll);
     if (IsAutoResolveActive()) {  // Artificially strengthen militia strength for sake of gameplay
       bAdjustedRoll++;
     }
   } else {
     // max-min this to a range of 0-9
-    bAdjustedRoll = __max(0, bAdjustedRoll);
-    bAdjustedRoll = __min(9, bAdjustedRoll);
+    bAdjustedRoll = max(0, bAdjustedRoll);
+    bAdjustedRoll = min(9, bAdjustedRoll);
     if (IsAutoResolveActive()) {  // Artificially weaken enemy/creature strength for sake of
                                   // gameplay
       if (bAdjustedRoll > 0) {

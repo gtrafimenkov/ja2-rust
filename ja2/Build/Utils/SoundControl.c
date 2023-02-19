@@ -523,11 +523,11 @@ UINT32 PlaySoldierJA2Sample(UINT16 usID, UINT32 usNum, UINT32 usRate, UINT32 ubV
   return (0);
 }
 
-void SetSpeechVolume(UINT32 uiNewVolume) { guiSpeechVolume = __min(uiNewVolume, 127); }
+void SetSpeechVolume(UINT32 uiNewVolume) { guiSpeechVolume = min(uiNewVolume, 127); }
 
 UINT32 GetSpeechVolume() { return (guiSpeechVolume); }
 
-void SetSoundEffectsVolume(UINT32 uiNewVolume) { guiSoundEffectsVolume = __min(uiNewVolume, 127); }
+void SetSoundEffectsVolume(UINT32 uiNewVolume) { guiSoundEffectsVolume = min(uiNewVolume, 127); }
 
 UINT32 GetSoundEffectsVolume() { return (guiSoundEffectsVolume); }
 
@@ -652,7 +652,7 @@ INT8 SoundVolume(INT8 bInitialVolume, INT16 sGridNo) {
     // Is it outside the screen?
     if (sAbsDifX > ((gsBottomRightWorldX - gsTopLeftWorldX) / 2) ||
         sAbsDifY > ((gsBottomRightWorldY - gsTopLeftWorldY) / 2)) {
-      return (__max(LOWVOLUME, (bInitialVolume - SOUND_FAR_VOLUME_MOD)));
+      return (max(LOWVOLUME, (bInitialVolume - SOUND_FAR_VOLUME_MOD)));
     }
   }
 

@@ -73,7 +73,7 @@ void ExitBoxing(void) {
 
           // if necessary, revive boxer so he can leave ring
           if (pSoldier->bLife > 0 && (pSoldier->bLife < OKLIFE || pSoldier->bBreath < OKBREATH)) {
-            pSoldier->bLife = __max(OKLIFE * 2, pSoldier->bLife);
+            pSoldier->bLife = max(OKLIFE * 2, pSoldier->bLife);
             if (pSoldier->bBreath < 100) {
               // deduct -ve BPs to grant some BPs back (properly)
               DeductPoints(pSoldier, 0, (INT16) - ((100 - pSoldier->bBreath) * 100));
@@ -306,10 +306,10 @@ BOOLEAN PickABoxer(void) {
           RESETTIMECOUNTER(pBoxer->AICounter, 0);
           gfBoxerFought[uiLoop] = TRUE;
           // improve stats based on the # of rests these guys have had
-          pBoxer->bStrength = __min(100, pBoxer->bStrength += gubBoxersRests * 5);
-          pBoxer->bDexterity = __min(100, pBoxer->bDexterity + gubBoxersRests * 5);
-          pBoxer->bAgility = __min(100, pBoxer->bAgility + gubBoxersRests * 5);
-          pBoxer->bLifeMax = __min(100, pBoxer->bLifeMax + gubBoxersRests * 5);
+          pBoxer->bStrength = min(100, pBoxer->bStrength += gubBoxersRests * 5);
+          pBoxer->bDexterity = min(100, pBoxer->bDexterity + gubBoxersRests * 5);
+          pBoxer->bAgility = min(100, pBoxer->bAgility + gubBoxersRests * 5);
+          pBoxer->bLifeMax = min(100, pBoxer->bLifeMax + gubBoxersRests * 5);
           // give the 3rd boxer martial arts
           if ((uiLoop == NUM_BOXERS - 1) && pBoxer->ubBodyType == REGMALE) {
             pBoxer->ubSkillTrait1 = MARTIALARTS;

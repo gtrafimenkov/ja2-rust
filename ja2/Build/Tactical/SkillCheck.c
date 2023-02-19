@@ -24,7 +24,7 @@ INT8 EffectiveStrength(SOLDIERTYPE *pSoldier) {
       (pSoldier->bStrength / 2) * (pSoldier->bLife + bBandaged / 2) / (pSoldier->bLifeMax);
 
   // ATE: Make sure at least 2...
-  iEffStrength = __max(iEffStrength, 2);
+  iEffStrength = max(iEffStrength, 2);
 
   return ((INT8)iEffStrength);
 }
@@ -276,7 +276,7 @@ INT32 SkillCheck(SOLDIERTYPE *pSoldier, INT8 bReason, INT8 bChanceMod) {
 
       fForceDamnSound = TRUE;
 
-      iSkill = __max(EffectiveMechanical(pSoldier), EffectiveExplosive(pSoldier)) * 7;
+      iSkill = max(EffectiveMechanical(pSoldier), EffectiveExplosive(pSoldier)) * 7;
       if (iSkill == 0) {
         break;
       }

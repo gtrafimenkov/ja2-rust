@@ -1005,7 +1005,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 															pNode = pNode->pPrevNode;
 														else
 															pNode = pNode->pNext;
-														
+
 														continue;
 													}
 												}
@@ -1371,7 +1371,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                     UINT8 ubShadeLevel;
 
                     ubShadeLevel = (pNode->ubShadeLevel & 0x0f);
-                    ubShadeLevel = __max(ubShadeLevel - 2, DEFAULT_SHADE_LEVEL);
+                    ubShadeLevel = max(ubShadeLevel - 2, DEFAULT_SHADE_LEVEL);
                     ubShadeLevel |= (pNode->ubShadeLevel & 0x30);
 
                     if (pSoldier->fBeginFade) {
@@ -1733,13 +1733,13 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 
                     RegisterBackgroundRect(
                         uiDirtyFlags, NULL, sXPos, sYPos, (INT16)(sXPos + uiBrushWidth),
-                        (INT16)(__min((INT16)(sYPos + uiBrushHeight), gsVIEWPORT_WINDOW_END_Y)));
+                        (INT16)(min((INT16)(sYPos + uiBrushHeight), gsVIEWPORT_WINDOW_END_Y)));
 
                     if (fSaveZ) {
                       RegisterBackgroundRect(
                           uiDirtyFlags | BGND_FLAG_SAVE_Z, NULL, sXPos, sYPos,
                           (INT16)(sXPos + uiBrushWidth),
-                          (INT16)(__min((INT16)(sYPos + uiBrushHeight), gsVIEWPORT_WINDOW_END_Y)));
+                          (INT16)(min((INT16)(sYPos + uiBrushHeight), gsVIEWPORT_WINDOW_END_Y)));
                     }
                   }
                 } else {
@@ -3660,10 +3660,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -3745,8 +3745,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
 		je		LeftSkipSetup
 
         // Skips the number of lines clipped at the top
-TopSkipLoop:										
-		
+TopSkipLoop:
+
 		mov		cl, [esi]
 		inc		esi
 		or		cl, cl
@@ -3764,11 +3764,11 @@ TSEndLine:
 
         // Skips the pixels hanging outside the left-side boundry
 LeftSkipSetup:
-		
+
 		mov		Unblitted, 0  // Unblitted counts any pixels left from a run
 		mov		eax, LeftSkip  // after we have skipped enough left-side pixels
 		mov		LSCount, eax  // LSCount counts how many pixels skipped so far
-		or		eax, eax							
+		or		eax, eax
 		jz		BlitLineSetup  // check for nothing to skip
 
 LeftSkipLoop:
@@ -3789,7 +3789,7 @@ LeftSkipLoop:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitNTL1  // *** jumps into non-transparent blit loop
-		
+
 LSSkip2:
 		add		esi, ecx  // skip whole run, and start blit with new run
 		jmp		BlitLineSetup
@@ -3812,7 +3812,7 @@ LSTrans:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitTransparent  // *** jumps into transparent blit loop
-		
+
 
 LSTrans1:
 		sub		LSCount, ecx  // skip whole run, continue skipping
@@ -3821,7 +3821,7 @@ LSTrans1:
             //-------------------------------------------------
             // setup for beginning of line
 
-BlitLineSetup:									
+BlitLineSetup:
 		mov		eax, BlitLength
 		mov		LSCount, eax
 		mov		Unblitted, 0
@@ -3865,7 +3865,7 @@ BlitNTL2:
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -3894,10 +3894,10 @@ BlitNTL5:
 BlitNTL6:
 		dec		LSCount  // decrement pixel length to blit
 		jz		RightSkipLoop  // done blitting the visible line
-		
+
 		dec		ecx
 		jnz		BlitNTL1  // continue current run
-		
+
 		jmp		BlitDispatch  // done current run, go for another
 
                     //----------------------------
@@ -3911,13 +3911,13 @@ BlitTrans2:
 
 		add		edi, 2  // move up the destination pointer
 		add		ebx, 2
-			
+
 		dec		usZColsToGo
 		jnz		BlitTrans1
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -3945,7 +3945,7 @@ BlitTrans5:
 
 BlitTrans1:
 
-		dec		LSCount  // decrement the pixels to blit	
+		dec		LSCount  // decrement the pixels to blit
 		jz		RightSkipLoop  // done the line
 
 		dec		ecx
@@ -3956,12 +3956,12 @@ BlitTrans1:
                         //---------------------------------------------
                         // Scans the ETRLE until it finds an EOL marker
 
-RightSkipLoop:										
-				
-		
+RightSkipLoop:
+
+
 RSLoop1:
 		mov		al, [esi]
-		inc		esi		
+		inc		esi
 		or		al, al
 		jnz		RSLoop1
 
@@ -3981,9 +3981,9 @@ RSLoop2:
 		mov		ax, usZStartCols
 		mov		usZColsToGo, ax
 
-		
+
 		jmp		LeftSkipSetup
-		
+
 
 BlitDone:
   }
@@ -4043,10 +4043,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -4128,8 +4128,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
 		je		LeftSkipSetup
 
         // Skips the number of lines clipped at the top
-TopSkipLoop:										
-		
+TopSkipLoop:
+
 		mov		cl, [esi]
 		inc		esi
 		or		cl, cl
@@ -4147,11 +4147,11 @@ TSEndLine:
 
         // Skips the pixels hanging outside the left-side boundry
 LeftSkipSetup:
-		
+
 		mov		Unblitted, 0  // Unblitted counts any pixels left from a run
 		mov		eax, LeftSkip  // after we have skipped enough left-side pixels
 		mov		LSCount, eax  // LSCount counts how many pixels skipped so far
-		or		eax, eax							
+		or		eax, eax
 		jz		BlitLineSetup  // check for nothing to skip
 
 LeftSkipLoop:
@@ -4172,7 +4172,7 @@ LeftSkipLoop:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitNTL1  // *** jumps into non-transparent blit loop
-		
+
 LSSkip2:
 		add		esi, ecx  // skip whole run, and start blit with new run
 		jmp		BlitLineSetup
@@ -4195,7 +4195,7 @@ LSTrans:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitTransparent  // *** jumps into transparent blit loop
-		
+
 
 LSTrans1:
 		sub		LSCount, ecx  // skip whole run, continue skipping
@@ -4204,7 +4204,7 @@ LSTrans1:
             //-------------------------------------------------
             // setup for beginning of line
 
-BlitLineSetup:									
+BlitLineSetup:
 		mov		eax, BlitLength
 		mov		LSCount, eax
 		mov		Unblitted, 0
@@ -4248,7 +4248,7 @@ BlitNTL2:
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -4277,10 +4277,10 @@ BlitNTL5:
 BlitNTL6:
 		dec		LSCount  // decrement pixel length to blit
 		jz		RightSkipLoop  // done blitting the visible line
-		
+
 		dec		ecx
 		jnz		BlitNTL1  // continue current run
-		
+
 		jmp		BlitDispatch  // done current run, go for another
 
                     //----------------------------
@@ -4294,13 +4294,13 @@ BlitTrans2:
 
 		add		edi, 2  // move up the destination pointer
 		add		ebx, 2
-			
+
 		dec		usZColsToGo
 		jnz		BlitTrans1
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -4328,7 +4328,7 @@ BlitTrans5:
 
 BlitTrans1:
 
-		dec		LSCount  // decrement the pixels to blit	
+		dec		LSCount  // decrement the pixels to blit
 		jz		RightSkipLoop  // done the line
 
 		dec		ecx
@@ -4339,12 +4339,12 @@ BlitTrans1:
                         //---------------------------------------------
                         // Scans the ETRLE until it finds an EOL marker
 
-RightSkipLoop:										
-				
-		
+RightSkipLoop:
+
+
 RSLoop1:
 		mov		al, [esi]
-		inc		esi		
+		inc		esi
 		or		al, al
 		jnz		RSLoop1
 
@@ -4364,9 +4364,9 @@ RSLoop2:
 		mov		ax, usZStartCols
 		mov		usZColsToGo, ax
 
-		
+
 		jmp		LeftSkipSetup
-		
+
 
 BlitDone:
   }
@@ -4430,10 +4430,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   uiLineFlag = (iTempY & 1);
 
@@ -4517,8 +4517,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
 		je		LeftSkipSetup
 
         // Skips the number of lines clipped at the top
-TopSkipLoop:										
-		
+TopSkipLoop:
+
 		mov		cl, [esi]
 		inc		esi
 		or		cl, cl
@@ -4538,11 +4538,11 @@ TSEndLine:
 
         // Skips the pixels hanging outside the left-side boundry
 LeftSkipSetup:
-		
+
 		mov		Unblitted, 0  // Unblitted counts any pixels left from a run
 		mov		eax, LeftSkip  // after we have skipped enough left-side pixels
 		mov		LSCount, eax  // LSCount counts how many pixels skipped so far
-		or		eax, eax							
+		or		eax, eax
 		jz		BlitLineSetup  // check for nothing to skip
 
 LeftSkipLoop:
@@ -4563,7 +4563,7 @@ LeftSkipLoop:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitNTL1  // *** jumps into non-transparent blit loop
-		
+
 LSSkip2:
 		add		esi, ecx  // skip whole run, and start blit with new run
 		jmp		BlitLineSetup
@@ -4586,7 +4586,7 @@ LSTrans:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitTransparent  // *** jumps into transparent blit loop
-		
+
 
 LSTrans1:
 		sub		LSCount, ecx  // skip whole run, continue skipping
@@ -4595,7 +4595,7 @@ LSTrans1:
             //-------------------------------------------------
             // setup for beginning of line
 
-BlitLineSetup:									
+BlitLineSetup:
 		mov		eax, BlitLength
 		mov		LSCount, eax
 		mov		Unblitted, 0
@@ -4635,7 +4635,7 @@ BlitPixellate1:
 BlitSkip1:
 		test	edi, 2
 		jnz		BlitNTL2
-		
+
 BlitPixel1:
 
 		mov		ax, usZLevel  // update z-level of pixel
@@ -4656,7 +4656,7 @@ BlitNTL2:
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -4685,10 +4685,10 @@ BlitNTL5:
 BlitNTL6:
 		dec		LSCount  // decrement pixel length to blit
 		jz		RightSkipLoop  // done blitting the visible line
-		
+
 		dec		ecx
 		jnz		BlitNTL1  // continue current run
-		
+
 		jmp		BlitDispatch  // done current run, go for another
 
                     //----------------------------
@@ -4702,13 +4702,13 @@ BlitTrans2:
 
 		add		edi, 2  // move up the destination pointer
 		add		ebx, 2
-			
+
 		dec		usZColsToGo
 		jnz		BlitTrans1
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -4736,7 +4736,7 @@ BlitTrans5:
 
 BlitTrans1:
 
-		dec		LSCount  // decrement the pixels to blit	
+		dec		LSCount  // decrement the pixels to blit
 		jz		RightSkipLoop  // done the line
 
 		dec		ecx
@@ -4747,12 +4747,12 @@ BlitTrans1:
                         //---------------------------------------------
                         // Scans the ETRLE until it finds an EOL marker
 
-RightSkipLoop:										
-				
-		
+RightSkipLoop:
+
+
 RSLoop1:
 		mov		al, [esi]
-		inc		esi		
+		inc		esi
 		or		al, al
 		jnz		RSLoop1
 
@@ -4773,9 +4773,9 @@ RSLoop2:
 		mov		ax, usZStartCols
 		mov		usZColsToGo, ax
 
-		
+
 		jmp		LeftSkipSetup
-		
+
 
 BlitDone:
   }
@@ -4831,10 +4831,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   uiLineFlag = (iTempY & 1);
 
@@ -4917,8 +4917,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
 		je		LeftSkipSetup
 
         // Skips the number of lines clipped at the top
-TopSkipLoop:										
-		
+TopSkipLoop:
+
 		mov		cl, [esi]
 		inc		esi
 		or		cl, cl
@@ -4938,11 +4938,11 @@ TSEndLine:
 
         // Skips the pixels hanging outside the left-side boundry
 LeftSkipSetup:
-		
+
 		mov		Unblitted, 0  // Unblitted counts any pixels left from a run
 		mov		eax, LeftSkip  // after we have skipped enough left-side pixels
 		mov		LSCount, eax  // LSCount counts how many pixels skipped so far
-		or		eax, eax							
+		or		eax, eax
 		jz		BlitLineSetup  // check for nothing to skip
 
 LeftSkipLoop:
@@ -4963,7 +4963,7 @@ LeftSkipLoop:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitNTL1  // *** jumps into non-transparent blit loop
-		
+
 LSSkip2:
 		add		esi, ecx  // skip whole run, and start blit with new run
 		jmp		BlitLineSetup
@@ -4987,7 +4987,7 @@ LSTrans:
 
 		mov		Unblitted, 0
 		jmp		BlitTransparent  // *** jumps into transparent blit loop
-		
+
 
 LSTrans1:
 		sub		LSCount, ecx  // skip whole run, continue skipping
@@ -4996,7 +4996,7 @@ LSTrans1:
             //-------------------------------------------------
             // setup for beginning of line
 
-BlitLineSetup:									
+BlitLineSetup:
 		mov		eax, BlitLength
 		mov		LSCount, eax
 		mov		Unblitted, 0
@@ -5036,7 +5036,7 @@ BlitPixellate1:
 BlitSkip1:
 		test	edi, 2
 		jnz		BlitNTL2
-		
+
 BlitPixel1:
 
 		mov		ax, usZLevel  // update z-level of pixel
@@ -5068,7 +5068,7 @@ BlitNTL2:
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -5097,10 +5097,10 @@ BlitNTL5:
 BlitNTL6:
 		dec		LSCount  // decrement pixel length to blit
 		jz		RightSkipLoop  // done blitting the visible line
-		
+
 		dec		ecx
 		jnz		BlitNTL1  // continue current run
-		
+
 		jmp		BlitDispatch  // done current run, go for another
 
                     //----------------------------
@@ -5114,13 +5114,13 @@ BlitTrans2:
 
 		add		edi, 2  // move up the destination pointer
 		add		ebx, 2
-			
+
 		dec		usZColsToGo
 		jnz		BlitTrans1
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -5148,7 +5148,7 @@ BlitTrans5:
 
 BlitTrans1:
 
-		dec		LSCount  // decrement the pixels to blit	
+		dec		LSCount  // decrement the pixels to blit
 		jz		RightSkipLoop  // done the line
 
 		dec		ecx
@@ -5159,12 +5159,12 @@ BlitTrans1:
                         //---------------------------------------------
                         // Scans the ETRLE until it finds an EOL marker
 
-RightSkipLoop:										
-				
-		
+RightSkipLoop:
+
+
 RSLoop1:
 		mov		al, [esi]
-		inc		esi		
+		inc		esi
 		or		al, al
 		jnz		RSLoop1
 
@@ -5185,9 +5185,9 @@ RSLoop2:
 		mov		ax, usZStartCols
 		mov		usZColsToGo, ax
 
-		
+
 		jmp		LeftSkipSetup
-		
+
 
 BlitDone:
   }
@@ -5276,10 +5276,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -5360,8 +5360,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
 		je		LeftSkipSetup
 
         // Skips the number of lines clipped at the top
-TopSkipLoop:										
-		
+TopSkipLoop:
+
 		mov		cl, [esi]
 		inc		esi
 		or		cl, cl
@@ -5379,11 +5379,11 @@ TSEndLine:
 
         // Skips the pixels hanging outside the left-side boundry
 LeftSkipSetup:
-		
+
 		mov		Unblitted, 0  // Unblitted counts any pixels left from a run
 		mov		eax, LeftSkip  // after we have skipped enough left-side pixels
 		mov		LSCount, eax  // LSCount counts how many pixels skipped so far
-		or		eax, eax							
+		or		eax, eax
 		jz		BlitLineSetup  // check for nothing to skip
 
 LeftSkipLoop:
@@ -5404,7 +5404,7 @@ LeftSkipLoop:
 		mov		LSCount, eax
 		mov		Unblitted, 0
 		jmp		BlitNTL1  // *** jumps into non-transparent blit loop
-		
+
 LSSkip2:
 		add		esi, ecx  // skip whole run, and start blit with new run
 		jmp		BlitLineSetup
@@ -5428,7 +5428,7 @@ LSTrans:
 
 		mov		Unblitted, 0
 		jmp		BlitTransparent  // *** jumps into transparent blit loop
-		
+
 
 LSTrans1:
 		sub		LSCount, ecx  // skip whole run, continue skipping
@@ -5437,7 +5437,7 @@ LSTrans1:
             //-------------------------------------------------
             // setup for beginning of line
 
-BlitLineSetup:									
+BlitLineSetup:
 		mov		eax, BlitLength
 		mov		LSCount, eax
 		mov		Unblitted, 0
@@ -5492,7 +5492,7 @@ BlitNTL2:
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -5521,10 +5521,10 @@ BlitNTL5:
 BlitNTL6:
 		dec		LSCount  // decrement pixel length to blit
 		jz		RightSkipLoop  // done blitting the visible line
-		
+
 		dec		ecx
 		jnz		BlitNTL1  // continue current run
-		
+
 		jmp		BlitDispatch  // done current run, go for another
 
                     //----------------------------
@@ -5538,13 +5538,13 @@ BlitTrans2:
 
 		add		edi, 2  // move up the destination pointer
 		add		ebx, 2
-			
+
 		dec		usZColsToGo
 		jnz		BlitTrans1
 
         // update the z-level according to the z-table
 
-		push	edx		
+		push	edx
 		mov		edx, pZArray  // get pointer to array
 		xor		eax, eax
 		mov		ax, usZIndex  // pick up the current array index
@@ -5572,7 +5572,7 @@ BlitTrans5:
 
 BlitTrans1:
 
-		dec		LSCount  // decrement the pixels to blit	
+		dec		LSCount  // decrement the pixels to blit
 		jz		RightSkipLoop  // done the line
 
 		dec		ecx
@@ -5583,12 +5583,12 @@ BlitTrans1:
                         //---------------------------------------------
                         // Scans the ETRLE until it finds an EOL marker
 
-RightSkipLoop:										
-				
-		
+RightSkipLoop:
+
+
 RSLoop1:
 		mov		al, [esi]
-		inc		esi		
+		inc		esi
 		or		al, al
 		jnz		RSLoop1
 
@@ -5608,9 +5608,9 @@ RSLoop2:
 		mov		ax, usZStartCols
 		mov		usZColsToGo, ax
 
-		
+
 		jmp		LeftSkipSetup
-		
+
 
 BlitDone:
   }
@@ -6104,10 +6104,10 @@ void CalcRenderParameters(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) 
   gOldClipRect = gClippingRect;
 
   // Set new clipped rect
-  gClippingRect.iLeft = __max(gsVIEWPORT_START_X, sLeft);
-  gClippingRect.iRight = __min(gsVIEWPORT_END_X, sRight);
-  gClippingRect.iTop = __max(gsVIEWPORT_WINDOW_START_Y, sTop);
-  gClippingRect.iBottom = __min(gsVIEWPORT_WINDOW_END_Y, sBottom);
+  gClippingRect.iLeft = max(gsVIEWPORT_START_X, sLeft);
+  gClippingRect.iRight = min(gsVIEWPORT_END_X, sRight);
+  gClippingRect.iTop = max(gsVIEWPORT_WINDOW_START_Y, sTop);
+  gClippingRect.iBottom = min(gsVIEWPORT_WINDOW_END_Y, sBottom);
 
   gsEndXS = sRight + VIEWPORT_XOFFSET_S;
   gsEndYS = sBottom + VIEWPORT_YOFFSET_S;
@@ -6264,7 +6264,7 @@ BlitDispatch:
 		jnc		BlitNTL2
 
 		mov		[edi], ax
-		
+
 		inc		esi
 		add		edi, 2
 
@@ -6288,7 +6288,7 @@ BlitNTL3:
 		xor		ebx, ebx
 
 BlitNTL4:
-		
+
 		mov		[edi], ax
 
 		mov		[edi+2], ax
@@ -6314,12 +6314,12 @@ BlitTransparent:
 
 
 BlitDoneLine:
-				
+
 		dec		usHeight
 		jz		BlitDone
 		add		edi, LineSkip
 		jmp		BlitDispatch
-		
+
 
 BlitDone:
   }
@@ -6384,18 +6384,18 @@ BlitDispatch:
 		xor		eax, eax
 
 BlitNTL4:
-		
-		mov		ax, usZValue		
+
+		mov		ax, usZValue
 		cmp		ax, [ebx]
 		jne		BlitNTL5
 
         // mov		[ebx], ax
-		
+
 		xor		ah, ah
 		mov		al, [esi]
 		mov		ax, [edx+eax*2]
 		mov		[edi], ax
-		
+
 BlitNTL5:
 		inc		esi
 		inc		edi
@@ -6420,13 +6420,13 @@ BlitTransparent:
 
 
 BlitDoneLine:
-				
+
 		dec		usHeight
 		jz		BlitDone
 		add		edi, LineSkip
 		add		ebx, LineSkip
 		jmp		BlitDispatch
-		
+
 
 BlitDone:
   }
@@ -6488,8 +6488,8 @@ BlitDispatch:
 		xor		eax, eax
 
 BlitNTL4:
-		
-		mov		ax, usZValue		
+
+		mov		ax, usZValue
 		cmp		ax, [ebx]
 		jle		BlitNTL5
 
@@ -6497,7 +6497,7 @@ BlitNTL4:
 		mov   fHidden, 0
 		jmp		BlitDone
 
-			
+
 BlitNTL5:
 		inc		esi
 		inc		ebx
@@ -6519,12 +6519,12 @@ BlitTransparent:
 
 
 BlitDoneLine:
-				
+
 		dec		usHeight
 		jz		BlitDone
 		add		ebx, LineSkip
 		jmp		BlitDispatch
-		
+
 
 BlitDone:
   }

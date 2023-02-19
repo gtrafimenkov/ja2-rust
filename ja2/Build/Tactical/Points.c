@@ -776,10 +776,10 @@ UINT8 CalcAPsToBurst(INT8 bBaseActionPoints, OBJECTTYPE *pObj) {
 
     bAttachPos = FindAttachment(pObj, SPRING_AND_BOLT_UPGRADE);
     if (bAttachPos != -1) {
-      return ((__max(3, (AP_BURST * bBaseActionPoints + (AP_MAXIMUM - 1)) / AP_MAXIMUM) * 100) /
+      return ((max(3, (AP_BURST * bBaseActionPoints + (AP_MAXIMUM - 1)) / AP_MAXIMUM) * 100) /
               (100 + pObj->bAttachStatus[bAttachPos] / 5));
     } else {
-      return (__max(3, (AP_BURST * bBaseActionPoints + (AP_MAXIMUM - 1)) / AP_MAXIMUM));
+      return (max(3, (AP_BURST * bBaseActionPoints + (AP_MAXIMUM - 1)) / AP_MAXIMUM));
     }
   }
 }
@@ -1106,8 +1106,8 @@ UINT8 MinAPsToShootOrStab(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurni
 
   } else if (IsValidSecondHandShot(pSoldier)) {
     // charge the maximum of the two
-    bAPCost += __max(BaseAPsToShootOrStab(bFullAPs, bAimSkill, &(pSoldier->inv[HANDPOS])),
-                     BaseAPsToShootOrStab(bFullAPs, bAimSkill, &(pSoldier->inv[SECONDHANDPOS])));
+    bAPCost += max(BaseAPsToShootOrStab(bFullAPs, bAimSkill, &(pSoldier->inv[HANDPOS])),
+                   BaseAPsToShootOrStab(bFullAPs, bAimSkill, &(pSoldier->inv[SECONDHANDPOS])));
   } else {
     bAPCost += BaseAPsToShootOrStab(bFullAPs, bAimSkill, &(pSoldier->inv[HANDPOS]));
   }

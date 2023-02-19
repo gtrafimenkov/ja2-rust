@@ -186,7 +186,7 @@ void CreatePlayerAttitude(void) {
   for (iCounter = 0; iCounter < NUM_ATTITUDES; iCounter++) {
     if (iAttitudeHits[iCounter]) {
       if (iAttitudeHits[iCounter] > iHighestHits) {
-        iHighestHits = __max(iHighestHits, iAttitudeHits[iCounter]);
+        iHighestHits = max(iHighestHits, iAttitudeHits[iCounter]);
         iNumAttitudesWithHighestHits = 1;
       } else if (iAttitudeHits[iCounter] == iHighestHits) {
         iNumAttitudesWithHighestHits++;

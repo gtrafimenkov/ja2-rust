@@ -459,9 +459,9 @@ UINT16 *Create16BPPPaletteShaded(SGPPaletteEntry *pPalette, UINT32 rscale, UINT3
       bmod = (bscale * pPalette[cnt].peBlue / 256);
     }
 
-    r = (UINT8)__min(rmod, 255);
-    g = (UINT8)__min(gmod, 255);
-    b = (UINT8)__min(bmod, 255);
+    r = (UINT8)min(rmod, 255);
+    g = (UINT8)min(gmod, 255);
+    b = (UINT8)min(bmod, 255);
 
     if (gusRedShift < 0)
       r16 = ((UINT16)r >> (-gusRedShift));

@@ -343,7 +343,7 @@ void SimulateArmsDealerCustomer() {
           // will be available
           ubItemsSold = HowManyItemsAreSold(
               ubArmsDealer, usItemIndex,
-              (UINT8)__min(3, gArmsDealersInventory[ubArmsDealer][usItemIndex].ubPerfectItems),
+              (UINT8)min(3, gArmsDealersInventory[ubArmsDealer][usItemIndex].ubPerfectItems),
               FALSE);
         } else {
           ubItemsSold = HowManyItemsAreSold(
@@ -468,7 +468,7 @@ void ConvertCreatureBloodToElixir(void) {
   ubBloodAvailable = gArmsDealersInventory[ARMS_DEALER_GABBY][JAR_CREATURE_BLOOD].ubTotalItems;
   if (ubBloodAvailable) {
     // start converting blood into elixir!
-    // ubAmountToConvert = (UINT8) __min( 5 + Random( 3 ), ubBloodAvailable );
+    // ubAmountToConvert = (UINT8) min( 5 + Random( 3 ), ubBloodAvailable );
     ubAmountToConvert = ubBloodAvailable;
 
     // create item info describing a perfect item

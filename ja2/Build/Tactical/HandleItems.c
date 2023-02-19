@@ -1137,7 +1137,7 @@ void HandleSoldierDropBomb(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
       StatChange(pSoldier, EXPLODEAMT, 25, FALSE);
 
       pSoldier->inv[HANDPOS].bTrap =
-          __min(10, (EffectiveExplosive(pSoldier) / 20) + (EffectiveExpLevel(pSoldier) / 3));
+          min(10, (EffectiveExplosive(pSoldier) / 20) + (EffectiveExpLevel(pSoldier) / 3));
       pSoldier->inv[HANDPOS].ubBombOwner = pSoldier->ubID + 2;
 
       // we now know there is something nasty here
@@ -3452,7 +3452,7 @@ void BombMessageBoxCallBack(UINT8 ubExitValue) {
       }
 
       if (ArmBomb(&(gpTempSoldier->inv[HANDPOS]), ubExitValue)) {
-        gpTempSoldier->inv[HANDPOS].bTrap = __min(
+        gpTempSoldier->inv[HANDPOS].bTrap = min(
             10, (EffectiveExplosive(gpTempSoldier) / 20) + (EffectiveExpLevel(gpTempSoldier) / 3));
         // HACK IMMINENT!
         // value of 1 is stored in maps for SIDE of bomb owner... when we want to use IDs!

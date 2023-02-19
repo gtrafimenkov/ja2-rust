@@ -69,8 +69,8 @@ void ModifyPlayerReputation(INT8 bRepChange) {
   iNewBadRep = (INT32)gStrategicStatus.ubBadReputation - bRepChange;
 
   // keep within a 0-100 range (0 = Saint, 100 = Satan)
-  iNewBadRep = __max(0, iNewBadRep);
-  iNewBadRep = __min(100, iNewBadRep);
+  iNewBadRep = max(0, iNewBadRep);
+  iNewBadRep = min(100, iNewBadRep);
 
   gStrategicStatus.ubBadReputation = (UINT8)iNewBadRep;
 }
@@ -285,7 +285,7 @@ void HandleEnricoEmail(void) {
   // grant some leeway for the next day, could have started moving
   // at night...
   gStrategicStatus.ubNumNewSectorsVisitedToday =
-      __min(gStrategicStatus.ubNumNewSectorsVisitedToday, NEW_SECTORS_EQUAL_TO_ACTIVITY) / 3;
+      min(gStrategicStatus.ubNumNewSectorsVisitedToday, NEW_SECTORS_EQUAL_TO_ACTIVITY) / 3;
 }
 
 void TrackEnemiesKilled(UINT8 ubKilledHow, UINT8 ubSoldierClass) {

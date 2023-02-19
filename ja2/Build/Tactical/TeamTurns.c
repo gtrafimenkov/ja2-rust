@@ -1190,7 +1190,7 @@ INT8 CalcInterruptDuelPts(SOLDIERTYPE *pSoldier, UINT8 ubOpponentID, BOOLEAN fUs
     {
             // modify by the difficulty level setting
             bPoints += gbDiff[ DIFF_ENEMY_INTERRUPT_MOD ][ SoldierDifficultyLevel( pSoldier ) ];
-            bPoints = __max( bPoints, 9 );
+            bPoints = max( bPoints, 9 );
     }
     */
 

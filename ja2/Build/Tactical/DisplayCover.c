@@ -420,8 +420,8 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(SOLDIERTYPE *pSoldier, INT16 sTar
       usMaxRange = Weapon[GLOCK_18].usRange;
     }
 
-    iBulletGetThrough = __min(
-        __max((INT32)(((((usMaxRange - usRange) / (FLOAT)(usMaxRange)) + .3) * 100)), 0), 100);
+    iBulletGetThrough =
+        min(max((INT32)(((((usMaxRange - usRange) / (FLOAT)(usMaxRange)) + .3) * 100)), 0), 100);
 
     if (iBulletGetThrough > 5 && iGetThrough > 0) {
       iCover = (iGetThrough * iBulletGetThrough / 100);
@@ -444,7 +444,7 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(SOLDIERTYPE *pSoldier, INT16 sTar
 
     iTemp = iTemp + iHighestValue;
 
-    bPercentCoverForGridno = 100 - (__min(iTemp, 100));
+    bPercentCoverForGridno = 100 - (min(iTemp, 100));
   }
 
   return (bPercentCoverForGridno);

@@ -540,7 +540,7 @@ BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
 		if ( pStruct->usIndex < NUMBEROFTILES )
 		{
 			GetTileType( pStruct->usIndex, &uiType );
-  
+
 			// ATE: Changed to use last decordations rather than last decal
 			// Could maybe check orientation value? Depends on our
 			// use of the orientation value flags..
@@ -553,7 +553,7 @@ BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
 		}
 
 		pStruct=pStruct->pNext;
-	} 
+	}
 
 	if ( bWallCount )
 	{
@@ -684,8 +684,8 @@ UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel) {
   } else {
     iSum = pNode->ubNaturalShadeLevel - (pNode->ubSumLights - pNode->ubFakeShadeLevel);
 
-    iSum = __min(SHADE_MIN, iSum);
-    iSum = __max(SHADE_MAX, iSum);
+    iSum = min(SHADE_MIN, iSum);
+    iSum = max(SHADE_MAX, iSum);
     return ((UINT8)iSum);
   }
 }
@@ -705,12 +705,12 @@ void LightAddTileNode(LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShadeAdd, BO
   }
 
   // Now set max
-  pNode->ubMaxLights = __max(pNode->ubMaxLights, ubShadeAdd);
+  pNode->ubMaxLights = max(pNode->ubMaxLights, ubShadeAdd);
 
   sSum = pNode->ubNaturalShadeLevel - pNode->ubMaxLights;
 
-  sSum = __min(SHADE_MIN, sSum);
-  sSum = __max(SHADE_MAX, sSum);
+  sSum = min(SHADE_MIN, sSum);
+  sSum = max(SHADE_MAX, sSum);
 
   pNode->ubShadeLevel = (UINT8)sSum;
 }
@@ -740,12 +740,12 @@ void LightSubtractTileNode(LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShadeSu
   }
 
   // Now set max
-  pNode->ubMaxLights = __min(pNode->ubMaxLights, pNode->ubSumLights);
+  pNode->ubMaxLights = min(pNode->ubMaxLights, pNode->ubSumLights);
 
   sSum = pNode->ubNaturalShadeLevel - pNode->ubMaxLights;
 
-  sSum = __min(SHADE_MIN, sSum);
-  sSum = __max(SHADE_MAX, sSum);
+  sSum = min(SHADE_MIN, sSum);
+  sSum = max(SHADE_MAX, sSum);
 
   pNode->ubShadeLevel = (UINT8)sSum;
 }
@@ -798,7 +798,7 @@ BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT
 
             // ATE: Limit shade for walls if in caves
             if (fLitWall && gfCaves) {
-              LightAddTileNode(pStruct, uiLightType, (UINT8)__min(ubShadeAdd, (SHADE_MAX + 5)),
+              LightAddTileNode(pStruct, uiLightType, (UINT8)min(ubShadeAdd, (SHADE_MAX + 5)),
                                FALSE);
             } else if (fLitWall) {
               LightAddTileNode(pStruct, uiLightType, ubShadeAdd, FALSE);
@@ -910,7 +910,7 @@ BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX
 
             // ATE: Limit shade for walls if in caves
             if (fLitWall && gfCaves) {
-              LightSubtractTileNode(pStruct, uiLightType, (UINT8)__max((ubShadeSubtract - 5), 0),
+              LightSubtractTileNode(pStruct, uiLightType, (UINT8)max((ubShadeSubtract - 5), 0),
                                     FALSE);
             } else if (fLitWall) {
               LightSubtractTileNode(pStruct, uiLightType, ubShadeSubtract, FALSE);
@@ -1009,8 +1009,8 @@ BOOLEAN LightSetNaturalTile(INT16 iX, INT16 iY, UINT8 ubShade) {
 
   Assert(uiIndex != 0xffff);
 
-  ubShade = __max(SHADE_MAX, ubShade);
-  ubShade = __min(SHADE_MIN, ubShade);
+  ubShade = max(SHADE_MAX, ubShade);
+  ubShade = min(SHADE_MIN, ubShade);
 
   pLand = gpWorldLevelData[uiIndex].pLandHead;
 
@@ -1161,8 +1161,8 @@ BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, UINT32 uiLightType) {
   /*LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pFog;
   UINT32 uiIndex;
 
-          ubShade=__max(SHADE_MAX, ubShade);
-          ubShade=__min(SHADE_MIN, ubShade);
+          ubShade=max(SHADE_MAX, ubShade);
+          ubShade=min(SHADE_MIN, ubShade);
 
           uiIndex = MAPROWCOLTOPOS( iY, iX );
           pLand = gpWorldLevelData[ uiIndex ].pLandHead;
@@ -1782,7 +1782,7 @@ BOOLEAN LightSetBaseLevel(UINT8 iIntensity) {
 BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
   INT16 iCountY, iCountX;
 
-  ubAmbientLightLevel = __max(SHADE_MAX, ubAmbientLightLevel - iIntensity);
+  ubAmbientLightLevel = max(SHADE_MAX, ubAmbientLightLevel - iIntensity);
 
   for (iCountY = 0; iCountY < WORLD_ROWS; iCountY++)
     for (iCountX = 0; iCountX < WORLD_COLS; iCountX++)
@@ -1806,7 +1806,7 @@ BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
 BOOLEAN LightSubtractBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
   INT16 iCountY, iCountX;
 
-  ubAmbientLightLevel = __min(SHADE_MIN, ubAmbientLightLevel + iIntensity);
+  ubAmbientLightLevel = min(SHADE_MIN, ubAmbientLightLevel + iIntensity);
 
   for (iCountY = 0; iCountY < WORLD_ROWS; iCountY++)
     for (iCountX = 0; iCountX < WORLD_COLS; iCountX++)
@@ -1962,11 +1962,11 @@ BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 u
                           // adjust tile's recorded light level
                           pMapElement->sSumRealLight1+=sShadeAdd;
 
-                          sSum=pMapElement->pLand->ubNaturalShadeLevel - __max(
+                          sSum=pMapElement->pLand->ubNaturalShadeLevel - max(
      pMapElement->sSumRealLights[0], pMapElement->pLand->sSumLights[1]);
 
-                          sSum=__min(SHADE_MIN, sSum);
-                          sSum=__max(SHADE_MAX, sSum);
+                          sSum=min(SHADE_MIN, sSum);
+                          sSum=max(SHADE_MAX, sSum);
 
                           gpWorldLevelData[ ].ubRealShadeLevel = (UINT8) sSum;
 
@@ -2451,10 +2451,10 @@ BOOLEAN LightHideTrees(INT16 iX, INT16 iY) {
   UINT32 fTileFlags;
 
   // Kris:  added map boundary checking!!!
-  for (iCountY = (INT16)__max(iY - LIGHT_TREE_REVEAL, 0);
-       iCountY < (INT16)__min(iY + LIGHT_TREE_REVEAL, WORLD_ROWS - 1); iCountY++)
-    for (iCountX = (INT16)__max(iX - LIGHT_TREE_REVEAL, 0);
-         iCountX < (INT16)__min(iX + LIGHT_TREE_REVEAL, WORLD_COLS - 1); iCountX++) {
+  for (iCountY = (INT16)max(iY - LIGHT_TREE_REVEAL, 0);
+       iCountY < (INT16)min(iY + LIGHT_TREE_REVEAL, WORLD_ROWS - 1); iCountY++)
+    for (iCountX = (INT16)max(iX - LIGHT_TREE_REVEAL, 0);
+         iCountX < (INT16)min(iX + LIGHT_TREE_REVEAL, WORLD_COLS - 1); iCountX++) {
       uiTile = MAPROWCOLTOPOS(iCountY, iCountX);
       pNode = gpWorldLevelData[uiTile].pStructHead;
       while (pNode != NULL) {
@@ -2576,10 +2576,10 @@ BOOLEAN LightCalcRect(INT32 iLight) {
   for (uiCount = 0; uiCount < usTemplateSize[iLight]; uiCount++) {
     pLight = pLightList[iLight] + uiCount;
     if (pLight->ubLight) {
-      MaxRect.iLeft = __min(MaxRect.iLeft, pLight->iDX);
-      MaxRect.iRight = __max(MaxRect.iRight, pLight->iDX);
-      MaxRect.iTop = __min(MaxRect.iTop, pLight->iDY);
-      MaxRect.iBottom = __max(MaxRect.iBottom, pLight->iDY);
+      MaxRect.iLeft = min(MaxRect.iLeft, pLight->iDX);
+      MaxRect.iRight = max(MaxRect.iRight, pLight->iDX);
+      MaxRect.iTop = min(MaxRect.iTop, pLight->iDY);
+      MaxRect.iBottom = max(MaxRect.iBottom, pLight->iDY);
     }
   }
 
@@ -2752,13 +2752,13 @@ BOOLEAN LightSetColors(SGPPaletteEntry *pPal, UINT8 ubNumColors) {
 
   // if there are two colors, calculate a third palette that is a mix of the two
   if (ubNumColors == 2) {
-    sRed = __min(
+    sRed = min(
         (((INT16)pPal[0].peRed) * LVL1_L1_PER / 100 + ((INT16)pPal[1].peRed) * LVL1_L2_PER / 100),
         255);
-    sGreen = __min((((INT16)pPal[0].peGreen) * LVL1_L1_PER / 100 +
-                    ((INT16)pPal[1].peGreen) * LVL1_L2_PER / 100),
-                   255);
-    sBlue = __min(
+    sGreen = min((((INT16)pPal[0].peGreen) * LVL1_L1_PER / 100 +
+                  ((INT16)pPal[1].peGreen) * LVL1_L2_PER / 100),
+                 255);
+    sBlue = min(
         (((INT16)pPal[0].peBlue) * LVL1_L1_PER / 100 + ((INT16)pPal[1].peBlue) * LVL1_L2_PER / 100),
         255);
 
@@ -2766,13 +2766,13 @@ BOOLEAN LightSetColors(SGPPaletteEntry *pPal, UINT8 ubNumColors) {
     gpLightColors[1].peGreen = (UINT8)(sGreen);
     gpLightColors[1].peBlue = (UINT8)(sBlue);
 
-    sRed = __min(
+    sRed = min(
         (((INT16)pPal[0].peRed) * LVL2_L1_PER / 100 + ((INT16)pPal[1].peRed) * LVL2_L2_PER / 100),
         255);
-    sGreen = __min((((INT16)pPal[0].peGreen) * LVL2_L1_PER / 100 +
-                    ((INT16)pPal[1].peGreen) * LVL2_L2_PER / 100),
-                   255);
-    sBlue = __min(
+    sGreen = min((((INT16)pPal[0].peGreen) * LVL2_L1_PER / 100 +
+                  ((INT16)pPal[1].peGreen) * LVL2_L2_PER / 100),
+                 255);
+    sBlue = min(
         (((INT16)pPal[0].peBlue) * LVL2_L1_PER / 100 + ((INT16)pPal[1].peBlue) * LVL2_L2_PER / 100),
         255);
 
@@ -3151,11 +3151,11 @@ UINT16 CreateTilePaletteTables(HVOBJECT pObj, UINT32 uiTileIndex, BOOLEAN fForce
   if (!fLoaded) {  // This is expensive as hell to call!
     for (uiCount = 0; uiCount < 256; uiCount++) {
       // combine the rgb of the light color with the object's palette
-      LightPal[uiCount].peRed = (UINT8)(__min(
+      LightPal[uiCount].peRed = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peRed + (UINT16)gpLightColors[0].peRed, 255));
-      LightPal[uiCount].peGreen = (UINT8)(__min(
+      LightPal[uiCount].peGreen = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peGreen + (UINT16)gpLightColors[0].peGreen, 255));
-      LightPal[uiCount].peBlue = (UINT8)(__min(
+      LightPal[uiCount].peBlue = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peBlue + (UINT16)gpLightColors[0].peBlue, 255));
     }
     // build the shade tables
@@ -3177,22 +3177,22 @@ UINT16 CreateTilePaletteTables(HVOBJECT pObj, UINT32 uiTileIndex, BOOLEAN fForce
   if (gubNumLightColors == 2) {
     // build the second light's palette and table
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].peRed = (UINT8)(__min(
+      LightPal[uiCount].peRed = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peRed + (UINT16)gpLightColors[1].peRed, 255));
-      LightPal[uiCount].peGreen = (UINT8)(__min(
+      LightPal[uiCount].peGreen = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peGreen + (UINT16)gpLightColors[1].peGreen, 255));
-      LightPal[uiCount].peBlue = (UINT8)(__min(
+      LightPal[uiCount].peBlue = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peBlue + (UINT16)gpLightColors[1].peBlue, 255));
     }
     CreateObjectPalette(pObj, 16, LightPal);
 
     // build a table that is a mix of the first two
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].peRed = (UINT8)(__min(
+      LightPal[uiCount].peRed = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peRed + (UINT16)gpLightColors[2].peRed, 255));
-      LightPal[uiCount].peGreen = (UINT8)(__min(
+      LightPal[uiCount].peGreen = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peGreen + (UINT16)gpLightColors[2].peGreen, 255));
-      LightPal[uiCount].peBlue = (UINT8)(__min(
+      LightPal[uiCount].peBlue = (UINT8)(min(
           (UINT16)pObj->pPaletteEntry[uiCount].peBlue + (UINT16)gpLightColors[2].peBlue, 255));
     }
     CreateObjectPalette(pObj, 32, LightPal);
@@ -3213,11 +3213,11 @@ UINT16 CreateSoldierPaletteTables(SOLDIERTYPE *pSoldier, UINT32 uiType) {
   // create the basic shade table
   for (uiCount = 0; uiCount < 256; uiCount++) {
     // combine the rgb of the light color with the object's palette
-    LightPal[uiCount].peRed = (UINT8)(__min(
+    LightPal[uiCount].peRed = (UINT8)(min(
         (UINT16)pSoldier->p8BPPPalette[uiCount].peRed + (UINT16)gpLightColors[0].peRed, 255));
-    LightPal[uiCount].peGreen = (UINT8)(__min(
+    LightPal[uiCount].peGreen = (UINT8)(min(
         (UINT16)pSoldier->p8BPPPalette[uiCount].peGreen + (UINT16)gpLightColors[0].peGreen, 255));
-    LightPal[uiCount].peBlue = (UINT8)(__min(
+    LightPal[uiCount].peBlue = (UINT8)(min(
         (UINT16)pSoldier->p8BPPPalette[uiCount].peBlue + (UINT16)gpLightColors[0].peBlue, 255));
   }
   // build the shade tables
@@ -3227,22 +3227,22 @@ UINT16 CreateSoldierPaletteTables(SOLDIERTYPE *pSoldier, UINT32 uiType) {
   if (gubNumLightColors == 2) {
     // build the second light's palette and table
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].peRed = (UINT8)(__min(
+      LightPal[uiCount].peRed = (UINT8)(min(
           (UINT16)pSoldier->p8BPPPalette[uiCount].peRed + (UINT16)gpLightColors[1].peRed, 255));
-      LightPal[uiCount].peGreen = (UINT8)(__min(
+      LightPal[uiCount].peGreen = (UINT8)(min(
           (UINT16)pSoldier->p8BPPPalette[uiCount].peGreen + (UINT16)gpLightColors[1].peGreen, 255));
-      LightPal[uiCount].peBlue = (UINT8)(__min(
+      LightPal[uiCount].peBlue = (UINT8)(min(
           (UINT16)pSoldier->p8BPPPalette[uiCount].peBlue + (UINT16)gpLightColors[1].peBlue, 255));
     }
     CreateSoldierShadedPalette(pSoldier, 16, LightPal);
 
     // build a table that is a mix of the first two
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].peRed = (UINT8)(__min(
+      LightPal[uiCount].peRed = (UINT8)(min(
           (UINT16)pSoldier->p8BPPPalette[uiCount].peRed + (UINT16)gpLightColors[2].peRed, 255));
-      LightPal[uiCount].peGreen = (UINT8)(__min(
+      LightPal[uiCount].peGreen = (UINT8)(min(
           (UINT16)pSoldier->p8BPPPalette[uiCount].peGreen + (UINT16)gpLightColors[2].peGreen, 255));
-      LightPal[uiCount].peBlue = (UINT8)(__min(
+      LightPal[uiCount].peBlue = (UINT8)(min(
           (UINT16)pSoldier->p8BPPPalette[uiCount].peBlue + (UINT16)gpLightColors[2].peBlue, 255));
     }
     CreateSoldierShadedPalette(pSoldier, 32, LightPal);

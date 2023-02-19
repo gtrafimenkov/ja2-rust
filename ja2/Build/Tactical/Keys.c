@@ -299,7 +299,7 @@ BOOLEAN AttemptToCrowbarLock(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
 
   // possibly damage crowbar
-  bStress = __min(EffectiveStrength(pSoldier), LockTable[pDoor->ubLockID].ubSmashDifficulty + 30);
+  bStress = min(EffectiveStrength(pSoldier), LockTable[pDoor->ubLockID].ubSmashDifficulty + 30);
   // reduce crowbar status by random % between 0 and 5%
   DamageObj(&(pSoldier->inv[bSlot]), (INT8)PreRandom(bStress / 20));
 

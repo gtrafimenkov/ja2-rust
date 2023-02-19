@@ -2011,7 +2011,7 @@ void CleanUpStack(OBJECTTYPE *pObj, OBJECTTYPE *pCursorObj) {
         for (bLoop2 = pObj->ubNumberOfObjects - 1; bLoop2 >= 0; bLoop2--) {
           if (pObj->bStatus[bLoop2] < bMaxPoints) {
             bPointsToMove = bMaxPoints - pObj->bStatus[bLoop2];
-            bPointsToMove = __min(bPointsToMove, pCursorObj->bStatus[bLoop]);
+            bPointsToMove = min(bPointsToMove, pCursorObj->bStatus[bLoop]);
 
             pObj->bStatus[bLoop2] += bPointsToMove;
 
@@ -2033,7 +2033,7 @@ void CleanUpStack(OBJECTTYPE *pObj, OBJECTTYPE *pCursorObj) {
       for (bLoop2 = bLoop - 1; bLoop2 >= 0; bLoop2--) {
         if (pObj->bStatus[bLoop2] < bMaxPoints) {
           bPointsToMove = bMaxPoints - pObj->bStatus[bLoop2];
-          bPointsToMove = __min(bPointsToMove, pObj->bStatus[bLoop]);
+          bPointsToMove = min(bPointsToMove, pObj->bStatus[bLoop]);
 
           pObj->bStatus[bLoop2] += bPointsToMove;
 
@@ -2144,7 +2144,7 @@ BOOLEAN ReloadGun(SOLDIERTYPE *pSoldier, OBJECTTYPE *pGun, OBJECTTYPE *pAmmo) {
 
       if (bReloadType == RELOAD_TOPOFF) {
         ubBulletsToMove =
-            __min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft);
+            min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft);
       } else {
         ubBulletsToMove = pAmmo->ubShotsLeft[0];
       }
@@ -2154,18 +2154,18 @@ BOOLEAN ReloadGun(SOLDIERTYPE *pSoldier, OBJECTTYPE *pGun, OBJECTTYPE *pAmmo) {
       usNewAmmoItem = pAmmo->usItem - 1;
       if (bReloadType == RELOAD_TOPOFF) {
         ubBulletsToMove =
-            __min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft);
+            min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft);
       } else {
-        ubBulletsToMove = __min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize);
+        ubBulletsToMove = min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize);
       }
     } else  // mag is smaller than weapon mag
     {
       usNewAmmoItem = pAmmo->usItem + 1;
       if (bReloadType == RELOAD_TOPOFF) {
         ubBulletsToMove =
-            __min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft);
+            min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft);
       } else {
-        ubBulletsToMove = __min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize);
+        ubBulletsToMove = min(pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize);
       }
     }
 
@@ -2854,9 +2854,9 @@ BOOLEAN PlaceObject(SOLDIERTYPE *pSoldier, INT8 bPos, OBJECTTYPE *pObj) {
     // placement in an empty slot
     ubNumberToDrop = pObj->ubNumberOfObjects;
 
-    if (ubNumberToDrop > __max(ubSlotLimit, 1)) {
+    if (ubNumberToDrop > max(ubSlotLimit, 1)) {
       // drop as many as possible into pocket
-      ubNumberToDrop = __max(ubSlotLimit, 1);
+      ubNumberToDrop = max(ubSlotLimit, 1);
     }
 
     // could be wrong type of object for slot... need to check...
@@ -2969,7 +2969,7 @@ BOOLEAN PlaceObject(SOLDIERTYPE *pSoldier, INT8 bPos, OBJECTTYPE *pObj) {
         } else {
           SwapObjs(pObj, pInSlot);
         }
-      } else if (pObj->ubNumberOfObjects <= __max(ubSlotLimit, 1)) {
+      } else if (pObj->ubNumberOfObjects <= max(ubSlotLimit, 1)) {
         // swapping
         SwapObjs(pObj, pInSlot);
       } else {
@@ -4381,9 +4381,9 @@ void WaterDamage(SOLDIERTYPE *pSoldier) {
     // reduce camouflage by 2% per tile of deep water
     // and 1% for medium water
     if (pSoldier->bOverTerrainType == DEEP_WATER) {
-      pSoldier->bCamo = __max(0, pSoldier->bCamo - 2);
+      pSoldier->bCamo = max(0, pSoldier->bCamo - 2);
     } else {
-      pSoldier->bCamo = __max(0, pSoldier->bCamo - 1);
+      pSoldier->bCamo = max(0, pSoldier->bCamo - 1);
     }
     if (pSoldier->bCamo == 0) {
       // Reload palettes....
@@ -4436,8 +4436,8 @@ BOOLEAN ApplyCammo(SOLDIERTYPE *pSoldier, OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs) 
   // points are used up at a rate of 50% kit = 100% cammo on guy
   // add 1 to round off
   bPointsToUse = (100 - pSoldier->bCamo + 1) / 2;
-  bPointsToUse = __min(bPointsToUse, usTotalKitPoints);
-  pSoldier->bCamo = __min(100, pSoldier->bCamo + bPointsToUse * 2);
+  bPointsToUse = min(bPointsToUse, usTotalKitPoints);
+  pSoldier->bCamo = min(100, pSoldier->bCamo + bPointsToUse * 2);
 
   UseKitPoints(pObj, bPointsToUse, pSoldier);
 
@@ -4480,7 +4480,7 @@ BOOLEAN ApplyCanteen(SOLDIERTYPE *pSoldier, OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs
     }
   }
 
-  sPointsToUse = __min(20, usTotalKitPoints);
+  sPointsToUse = min(20, usTotalKitPoints);
 
   // CJC Feb 9.  Canteens don't seem effective enough, so doubled return from them
   DeductPoints(pSoldier, AP_DRINK, (INT16)(2 * sPointsToUse * -(100 - pSoldier->bBreath)));
@@ -4516,7 +4516,7 @@ BOOLEAN ApplyElixir(SOLDIERTYPE *pSoldier, OBJECTTYPE *pObj, BOOLEAN *pfGoodAPs)
   DeductPoints(pSoldier, AP_CAMOFLAGE, 0);
 
   sPointsToUse = (MAX_HUMAN_CREATURE_SMELL - pSoldier->bMonsterSmell) * 2;
-  sPointsToUse = __min(sPointsToUse, usTotalKitPoints);
+  sPointsToUse = min(sPointsToUse, usTotalKitPoints);
 
   UseKitPoints(pObj, sPointsToUse, pSoldier);
 

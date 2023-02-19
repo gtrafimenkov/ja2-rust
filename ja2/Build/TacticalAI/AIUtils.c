@@ -394,7 +394,7 @@ BOOLEAN IsActionAffordable(SOLDIERTYPE *pSoldier) {
       break;
 
     case AI_ACTION_PICKUP_ITEM:  // grab things lying on the ground
-      bMinPointsNeeded = __max(MinPtsToMove(pSoldier), AP_PICKUP_ITEM);
+      bMinPointsNeeded = max(MinPtsToMove(pSoldier), AP_PICKUP_ITEM);
       break;
 
     case AI_ACTION_OPEN_OR_CLOSE_DOOR:
@@ -2048,8 +2048,8 @@ UINT8 SoldierDifficultyLevel(SOLDIERTYPE *pSoldier) {
       break;
   }
 
-  bDifficulty = __max(bDifficulty, 0);
-  bDifficulty = __min(bDifficulty, 4);
+  bDifficulty = max(bDifficulty, 0);
+  bDifficulty = min(bDifficulty, 4);
 
   return ((UINT8)bDifficulty);
 }

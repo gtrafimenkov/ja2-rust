@@ -722,7 +722,7 @@ fprintf(OpplistFile,"OtherTeamsLookForMan (HandleSight/Look) for %d\n",ptr->guyn
   if (pSoldier->bNewSituation && !(pSoldier->uiStatusFlags & SOLDIER_PC)) {
     HaultSoldierFromSighting(pSoldier, TRUE);
   }
-  pSoldier->bNewSituation = __max(pSoldier->bNewSituation, bTempNewSituation);
+  pSoldier->bNewSituation = max(pSoldier->bNewSituation, bTempNewSituation);
 
   // if we've been told to radio the results
   if (ubSightFlags & SIGHT_RADIO) {
@@ -1037,14 +1037,14 @@ INT16 DistanceVisible(SOLDIERTYPE *pSoldier, INT8 bFacingDir, INT8 bSubjectDir,
 
   // let tanks see and be seen further (at night)
   if ((TANK(pSoldier) && sDistVisible > 0) || (pSubject && TANK(pSubject))) {
-    sDistVisible = __max(sDistVisible + 5, MaxDistanceVisible());
+    sDistVisible = max(sDistVisible + 5, MaxDistanceVisible());
   }
 
   if (gpWorldLevelData[pSoldier->sGridNo].ubExtFlags[bLevel] &
       (MAPELEMENT_EXT_TEARGAS | MAPELEMENT_EXT_MUSTARDGAS)) {
     if (pSoldier->inv[HEAD1POS].usItem != GASMASK && pSoldier->inv[HEAD2POS].usItem != GASMASK) {
       // in gas without a gas mask; reduce max distance visible to 2 tiles at most
-      sDistVisible = __min(sDistVisible, 2);
+      sDistVisible = min(sDistVisible, 2);
     }
   }
 
@@ -4164,7 +4164,7 @@ UINT8 MovementNoise(SOLDIERTYPE *pSoldier) {
   */
   // NumMessage("Modified Stealth = ",stealthSkill);
 
-  iStealthSkill = __max(iStealthSkill, 0);
+  iStealthSkill = max(iStealthSkill, 0);
 
   if (!pSoldier->bStealthMode)  // REGULAR movement
   {
@@ -5997,7 +5997,7 @@ void CommunicateWatchedLoc(UINT8 ubID, INT16 sGridNo, INT8 bLevel, UINT8 ubPoint
     } else {
       // increment to max
       gubWatchedLocPoints[ubLoop][bLoopPoint] =
-          __max(gubWatchedLocPoints[ubLoop][bLoopPoint], ubPoints);
+          max(gubWatchedLocPoints[ubLoop][bLoopPoint], ubPoints);
 
       gfWatchedLocReset[ubLoop][bLoopPoint] = FALSE;
       gfWatchedLocHasBeenIncremented[ubLoop][bLoopPoint] = TRUE;

@@ -170,10 +170,10 @@ INT32 RegisterBackgroundRect(UINT32 uiFlags, INT16 *pSaveArea, INT16 sLeft, INT1
   iTempY = sTop;
 
   // Clip to rect
-  uiLeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  uiRightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  uiTopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  uiBottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  uiRightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  uiBottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // check if whole thing is clipped
   if ((uiLeftSkip >= (INT32)usWidth) || (uiRightSkip >= (INT32)usWidth)) return (-1);
@@ -1044,10 +1044,10 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
         iTempY = sTop + sShiftY;
 
         // Clip to rect
-        uiLeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-        uiRightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-        uiTopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-        uiBottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+        uiLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+        uiRightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+        uiTopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+        uiBottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
         // check if whole thing is clipped
         if ((uiLeftSkip >= (INT32)usWidth) || (uiRightSkip >= (INT32)usWidth)) continue;

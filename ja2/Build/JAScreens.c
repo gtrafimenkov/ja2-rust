@@ -114,7 +114,7 @@ void DisplayFrameRate() {
   // Create string
   SetFont(SMALLFONT1);
 
-  // DebugMsg(TOPIC_JA2, DBG_LEVEL_0, String( "FPS: %d ", __min( uiFPS, 1000 ) ) );
+  // DebugMsg(TOPIC_JA2, DBG_LEVEL_0, String( "FPS: %d ", min( uiFPS, 1000 ) ) );
 
   if (uiFPS < 20) {
     SetFontBackground(FONT_MCOLOR_BLACK);
@@ -127,12 +127,12 @@ void DisplayFrameRate() {
   if (gbFPSDisplay == SHOW_FULL_FPS) {
     // FRAME RATE
     memset(&VideoOverlayDesc, 0, sizeof(VideoOverlayDesc));
-    swprintf(VideoOverlayDesc.pzText, L"%ld", __min(uiFPS, 1000));
+    swprintf(VideoOverlayDesc.pzText, L"%ld", min(uiFPS, 1000));
     VideoOverlayDesc.uiFlags = VOVERLAY_DESC_TEXT;
     UpdateVideoOverlay(&VideoOverlayDesc, giFPSOverlay, FALSE);
 
     // TIMER COUNTER
-    swprintf(VideoOverlayDesc.pzText, L"%ld", __min(giTimerDiag, 1000));
+    swprintf(VideoOverlayDesc.pzText, L"%ld", min(giTimerDiag, 1000));
     VideoOverlayDesc.uiFlags = VOVERLAY_DESC_TEXT;
     UpdateVideoOverlay(&VideoOverlayDesc, giCounterPeriodOverlay, FALSE);
 

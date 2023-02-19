@@ -92,9 +92,9 @@ BOOLEAN ShadesCalculatePalette(SGPPaletteEntry *pSrcPalette, SGPPaletteEntry *pD
       bmod = (usBlue * pSrcPalette[cnt].peBlue / 255);
     }
 
-    pDestPalette[cnt].peRed = (UINT8)__min(rmod, 255);
-    pDestPalette[cnt].peGreen = (UINT8)__min(gmod, 255);
-    pDestPalette[cnt].peBlue = (UINT8)__min(bmod, 255);
+    pDestPalette[cnt].peRed = (UINT8)min(rmod, 255);
+    pDestPalette[cnt].peGreen = (UINT8)min(gmod, 255);
+    pDestPalette[cnt].peBlue = (UINT8)min(bmod, 255);
   }
 
   return (TRUE);
@@ -237,7 +237,7 @@ void BuildIntensityTable(void) {
 
 				lumin=( red*299/1000)+ ( green*587/1000 ) + ( blue*114/1000 );
 
-				//lumin = __min(lumin, 255);
+				//lumin = min(lumin, 255);
 				rmod=(255*lumin)/256;
 				gmod=(100*lumin)/256;
 				bmod=(100*lumin)/256;

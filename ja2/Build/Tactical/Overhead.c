@@ -803,7 +803,7 @@ BOOLEAN ExecuteOverhead() {
             // Fade out....
             if (pSoldier->fBeginFade == 1) {
               bShadeLevel = (pSoldier->ubFadeLevel & 0x0f);
-              bShadeLevel = __min(bShadeLevel + 1, SHADE_MIN);
+              bShadeLevel = min(bShadeLevel + 1, SHADE_MIN);
 
               if (bShadeLevel >= (SHADE_MIN - 3)) {
                 pSoldier->fBeginFade = FALSE;
@@ -822,7 +822,7 @@ BOOLEAN ExecuteOverhead() {
               pSoldier->ubFadeLevel = bShadeLevel;
             } else if (pSoldier->fBeginFade == 2) {
               bShadeLevel = (pSoldier->ubFadeLevel & 0x0f);
-              // ubShadeLevel =__max(ubShadeLevel-1, gpWorldLevelData[ pSoldier->sGridNo
+              // ubShadeLevel =max(ubShadeLevel-1, gpWorldLevelData[ pSoldier->sGridNo
               // ].pLandHead->ubShadeLevel );
 
               bShadeLevel = bShadeLevel - 1;
@@ -4723,7 +4723,7 @@ void ExitCombatMode() {
   // Make sure next opplist decay DOES happen right after we go to RT
   // since this would be the same as what would happen at the end of the turn
   gTacticalStatus.uiTimeSinceLastOpplistDecay =
-      __max(0, GetWorldTotalSeconds() - TIME_BETWEEN_RT_OPPLIST_DECAYS);
+      max(0, GetWorldTotalSeconds() - TIME_BETWEEN_RT_OPPLIST_DECAYS);
   NonCombatDecayPublicOpplist(GetWorldTotalSeconds());
 }
 

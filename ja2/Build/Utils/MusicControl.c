@@ -136,7 +136,7 @@ BOOLEAN MusicSetVolume(UINT32 uiVolume) {
 
 #ifndef WINDOWED_MODE
 
-  uiMusicVolume = __min(uiVolume, 127);
+  uiMusicVolume = min(uiVolume, 127);
 
   if (uiMusicHandle != NO_SAMPLE) {
     // get volume and if 0 stop music!
@@ -255,7 +255,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
     if (fMusicFadingIn) {
       if (uiMusicHandle != NO_SAMPLE) {
         iVol = SoundGetVolume(uiMusicHandle);
-        iVol = __min((INT32)uiMusicVolume, iVol + gbFadeSpeed);
+        iVol = min((INT32)uiMusicVolume, iVol + gbFadeSpeed);
         SoundSetVolume(uiMusicHandle, iVol);
         if (iVol == (INT32)uiMusicVolume) {
           fMusicFadingIn = FALSE;
@@ -267,7 +267,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
         iVol = SoundGetVolume(uiMusicHandle);
         iVol = (iVol >= 1) ? iVol - gbFadeSpeed : 0;
 
-        iVol = __max((INT32)iVol, 0);
+        iVol = max((INT32)iVol, 0);
 
         SoundSetVolume(uiMusicHandle, iVol);
         if (iVol == 0) {

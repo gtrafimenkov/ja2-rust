@@ -243,7 +243,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
     } else {
       while (ubItemsDelivered) {
         // treat 0s as 1s :-)
-        ubTempNumItems = __min(ubItemsDelivered, __max(1, Item[usItem].ubPerPocket));
+        ubTempNumItems = min(ubItemsDelivered, max(1, Item[usItem].ubPerPocket));
         CreateItems(usItem, gpNewBobbyrShipments[ubOrderID].BobbyRayPurchase[i].bItemQuality,
                     ubTempNumItems, &Object);
 
@@ -988,7 +988,7 @@ void DropOffItemsInMeduna(UINT8 ubOrderNum) {
 
     while (ubItemsDelivered) {
       // treat 0s as 1s :-)
-      ubTempNumItems = __min(ubItemsDelivered, __max(1, Item[usItem].ubPerPocket));
+      ubTempNumItems = min(ubItemsDelivered, max(1, Item[usItem].ubPerPocket));
       CreateItems(usItem, gpNewBobbyrShipments[ubOrderNum].BobbyRayPurchase[i].bItemQuality,
                   ubTempNumItems, &Object);
 

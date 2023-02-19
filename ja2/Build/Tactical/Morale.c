@@ -112,10 +112,10 @@ void DecayTacticalMorale(SOLDIERTYPE *pSoldier) {
     // decay the modifier!
     if (pSoldier->bTacticalMoraleMod > 0) {
       pSoldier->bTacticalMoraleMod =
-          __max(0, pSoldier->bTacticalMoraleMod - (8 - pSoldier->bTacticalMoraleMod / 10));
+          max(0, pSoldier->bTacticalMoraleMod - (8 - pSoldier->bTacticalMoraleMod / 10));
     } else {
       pSoldier->bTacticalMoraleMod =
-          __min(0, pSoldier->bTacticalMoraleMod + (6 + pSoldier->bTacticalMoraleMod / 10));
+          min(0, pSoldier->bTacticalMoraleMod + (6 + pSoldier->bTacticalMoraleMod / 10));
     }
   }
 }
@@ -124,10 +124,10 @@ void DecayStrategicMorale(SOLDIERTYPE *pSoldier) {
   // decay the modifier!
   if (pSoldier->bStrategicMoraleMod > 0) {
     pSoldier->bStrategicMoraleMod =
-        __max(0, pSoldier->bStrategicMoraleMod - (8 - pSoldier->bStrategicMoraleMod / 10));
+        max(0, pSoldier->bStrategicMoraleMod - (8 - pSoldier->bStrategicMoraleMod / 10));
   } else {
     pSoldier->bStrategicMoraleMod =
-        __min(0, pSoldier->bStrategicMoraleMod + (6 + pSoldier->bStrategicMoraleMod / 10));
+        min(0, pSoldier->bStrategicMoraleMod + (6 + pSoldier->bStrategicMoraleMod / 10));
   }
 }
 
@@ -252,8 +252,8 @@ void RefreshSoldierMorale(SOLDIERTYPE *pSoldier) {
   iActualMorale += ((pSoldier->bDrugEffect[DRUG_TYPE_ADRENALINE] * DRUG_EFFECT_MORALE_MOD) / 100);
   iActualMorale += ((pSoldier->bDrugEffect[DRUG_TYPE_ALCOHOL] * ALCOHOL_EFFECT_MORALE_MOD) / 100);
 
-  iActualMorale = __min(100, iActualMorale);
-  iActualMorale = __max(0, iActualMorale);
+  iActualMorale = min(100, iActualMorale);
+  iActualMorale = max(0, iActualMorale);
   pSoldier->bMorale = (INT8)iActualMorale;
 
   // update mapscreen as needed
@@ -322,20 +322,20 @@ void UpdateSoldierMorale(SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoraleMod) {
   // apply change!
   if (ubType == TACTICAL_MORALE_EVENT) {
     iMoraleModTotal = (INT32)pSoldier->bTacticalMoraleMod + (INT32)bMoraleMod;
-    iMoraleModTotal = __min(iMoraleModTotal, MORALE_MOD_MAX);
-    iMoraleModTotal = __max(iMoraleModTotal, -MORALE_MOD_MAX);
+    iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
+    iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
     pSoldier->bTacticalMoraleMod = (INT8)iMoraleModTotal;
   } else if (gTacticalStatus.fEnemyInSector && !pSoldier->bInSector)  // delayed strategic
   {
     iMoraleModTotal = (INT32)pSoldier->bDelayedStrategicMoraleMod + (INT32)bMoraleMod;
-    iMoraleModTotal = __min(iMoraleModTotal, MORALE_MOD_MAX);
-    iMoraleModTotal = __max(iMoraleModTotal, -MORALE_MOD_MAX);
+    iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
+    iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
     pSoldier->bDelayedStrategicMoraleMod = (INT8)iMoraleModTotal;
   } else  // strategic
   {
     iMoraleModTotal = (INT32)pSoldier->bStrategicMoraleMod + (INT32)bMoraleMod;
-    iMoraleModTotal = __min(iMoraleModTotal, MORALE_MOD_MAX);
-    iMoraleModTotal = __max(iMoraleModTotal, -MORALE_MOD_MAX);
+    iMoraleModTotal = min(iMoraleModTotal, MORALE_MOD_MAX);
+    iMoraleModTotal = max(iMoraleModTotal, -MORALE_MOD_MAX);
     pSoldier->bStrategicMoraleMod = (INT8)iMoraleModTotal;
   }
 
@@ -776,16 +776,16 @@ void HourlyMoraleUpdate(void) {
         bTeamMoraleModChange = 0;
       }
       pSoldier->bTeamMoraleMod += bTeamMoraleModChange;
-      pSoldier->bTeamMoraleMod = __min(pSoldier->bTeamMoraleMod, MORALE_MOD_MAX);
-      pSoldier->bTeamMoraleMod = __max(pSoldier->bTeamMoraleMod, -MORALE_MOD_MAX);
+      pSoldier->bTeamMoraleMod = min(pSoldier->bTeamMoraleMod, MORALE_MOD_MAX);
+      pSoldier->bTeamMoraleMod = max(pSoldier->bTeamMoraleMod, -MORALE_MOD_MAX);
 
       // New, December 3rd, 1998, by CJC --
       // If delayed strategic modifier exists then incorporate it in strategic mod
       if (pSoldier->bDelayedStrategicMoraleMod) {
         pSoldier->bStrategicMoraleMod += pSoldier->bDelayedStrategicMoraleMod;
         pSoldier->bDelayedStrategicMoraleMod = 0;
-        pSoldier->bStrategicMoraleMod = __min(pSoldier->bStrategicMoraleMod, MORALE_MOD_MAX);
-        pSoldier->bStrategicMoraleMod = __max(pSoldier->bStrategicMoraleMod, -MORALE_MOD_MAX);
+        pSoldier->bStrategicMoraleMod = min(pSoldier->bStrategicMoraleMod, MORALE_MOD_MAX);
+        pSoldier->bStrategicMoraleMod = max(pSoldier->bStrategicMoraleMod, -MORALE_MOD_MAX);
       }
 
       // refresh the morale value for the soldier based on the recalculated team modifier

@@ -542,7 +542,7 @@ INT16 SpacesAway(INT16 sOrigin, INT16 sDest) {
   sRows = abs((sOrigin / MAXCOL) - (sDest / MAXCOL));
   sCols = abs((sOrigin % MAXROW) - (sDest % MAXROW));
 
-  return (__max(sRows, sCols));
+  return (max(sRows, sCols));
 }
 
 INT16 CardinalSpacesAway(INT16 sOrigin, INT16 sDest)

@@ -3839,7 +3839,7 @@ UINT32 CalcMedicalCost(UINT8 ubId) {
   uiCostSoFar *= 10;
 
   // always ask for at least $10
-  uiCostSoFar = __max(10, uiCostSoFar);
+  uiCostSoFar = max(10, uiCostSoFar);
 
   return (uiCostSoFar);
 }

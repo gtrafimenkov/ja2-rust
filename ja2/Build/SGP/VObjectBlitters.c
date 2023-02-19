@@ -72,10 +72,10 @@ BOOLEAN Blt16BPPDataTo16BPPBufferTransZClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -339,10 +339,10 @@ BOOLEAN Blt16BPPDataTo16BPPBufferTransparentClip(UINT16 *pBuffer, UINT32 uiDestP
 
   } else {
     // Calculate rows hanging off each side of the screen
-    LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-    RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-    TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-    BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+    LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+    RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+    TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+    BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
   }
 
   // calculate the remaining rows and columns to blit
@@ -586,10 +586,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(UINT16 *pBuffer, UINT32 
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -969,10 +969,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipTranslucent(UINT16 *pBuffer, UINT32 ui
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -1348,10 +1348,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitch
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -1596,10 +1596,10 @@ BOOLEAN BlitZRect(UINT16 *pZBuffer, UINT32 uiPitch, INT16 sLeft, INT16 sTop, INT
   UINT8 *pZPtr;
   UINT32 uiLineSkip, usWidth, usHeight;
 
-  sLeftClip = __max(ClippingRect.iLeft, sLeft);
-  sRightClip = __min(ClippingRect.iRight, sRight);
-  sTopClip = __max(ClippingRect.iTop, sTop);
-  sBottomClip = __min(ClippingRect.iBottom, sBottom);
+  sLeftClip = max(ClippingRect.iLeft, sLeft);
+  sRightClip = min(ClippingRect.iRight, sRight);
+  sTopClip = max(ClippingRect.iTop, sTop);
+  sBottomClip = min(ClippingRect.iBottom, sBottom);
 
   usHeight = sBottomClip - sTopClip;
   usWidth = sRightClip - sLeftClip;
@@ -1917,10 +1917,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferMonoShadowClip(UINT8 *pBuffer, UINT32 uiDestPitch
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -2435,10 +2435,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZClipPixelate(UINT16 *pBuffer, UINT32 uiDest
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -2702,10 +2702,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZNBClipPixelate(UINT16 *pBuffer, UINT32 uiDe
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -2961,10 +2961,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransparentClip(UINT16 *pBuffer, UINT32 uiDestPit
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -3844,10 +3844,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZClip(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -4094,10 +4094,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZNBClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -4342,10 +4342,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZNBClipColor(UINT16 *pBuffer, UINT32 uiDestP
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -4818,10 +4818,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferShadowZClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -5067,10 +5067,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferShadowZNBClip(UINT16 *pBuffer, UINT32 uiDestPitch
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -5566,10 +5566,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransShadowZClip(UINT16 *pBuffer, UINT32 uiDestPi
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -5826,10 +5826,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransShadowZNBClip(UINT16 *pBuffer, UINT32 uiDest
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -6219,10 +6219,10 @@ BOOLEAN Blt8BPPDataTo8BPPBufferShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -6501,10 +6501,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadowClip(UINT16 *pBuffer, UINT32 uiDestPit
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -6876,13 +6876,13 @@ BOOLEAN Blt16BPPTo16BPPMirror(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, U
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - __min(ClipX1, iTempX), (INT32)uiWidth);
-  RightSkip = __min(__max(ClipX2, (iTempX + (INT32)uiWidth)) - ClipX2, (INT32)uiWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)uiHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)uiHeight)) - ClipY2, (INT32)uiHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)uiWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)uiWidth)) - ClipX2, (INT32)uiWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)uiHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)uiHeight)) - ClipY2, (INT32)uiHeight);
 
-  iTempX = __max(ClipX1, iDestXPos);
-  iTempY = __max(ClipY1, iDestYPos);
+  iTempX = max(ClipX1, iDestXPos);
+  iTempY = max(ClipY1, iDestYPos);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)uiWidth - LeftSkip - RightSkip);
@@ -7324,10 +7324,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelate(UINT16 *pBuffer, UINT32 uiDes
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -7718,10 +7718,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipPixelate(UINT16 *pBuffer, UINT32 uiD
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -8889,10 +8889,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZClip(UINT16 *pBuffer, UINT32 uiDestP
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -9145,10 +9145,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowClip(UINT16 *pBuffer, UINT32 uiDestPi
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -9389,10 +9389,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBClip(UINT16 *pBuffer, UINT32 uiDes
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -9647,10 +9647,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(UINT16 *pBuffer, UINT
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -9928,10 +9928,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowBelowOrEqualZNBClip(
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -10295,10 +10295,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -10651,10 +10651,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNBClip(UINT16 *pBuffer, UINT32 uiDestPitc
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -10896,10 +10896,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -11144,10 +11144,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClip(UINT16 *pBuffer, UINT32 uiDestPitch
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -11391,10 +11391,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipColor(UINT16 *pBuffer, UINT32 uiDest
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -12189,10 +12189,10 @@ BOOLEAN Blt16BPPBufferPixelateRectWithColor(UINT16 *pBuffer, UINT32 uiDestPitchB
   Assert(pBuffer != NULL);
   Assert(Pattern != NULL);
 
-  iLeft = __max(ClippingRect.iLeft, area->iLeft);
-  iTop = __max(ClippingRect.iTop, area->iTop);
-  iRight = __min(ClippingRect.iRight - 1, area->iRight);
-  iBottom = __min(ClippingRect.iBottom - 1, area->iBottom);
+  iLeft = max(ClippingRect.iLeft, area->iLeft);
+  iTop = max(ClippingRect.iTop, area->iTop);
+  iRight = min(ClippingRect.iRight - 1, area->iRight);
+  iBottom = min(ClippingRect.iBottom - 1, area->iBottom);
 
   DestPtr = (pBuffer + (iTop * (uiDestPitchBYTES / 2)) + iLeft);
   width = iRight - iLeft + 1;
@@ -12784,10 +12784,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparentClip(UINT16 *pBuffer, UINT32 uiDestPi
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -13058,13 +13058,13 @@ BOOLEAN BltIsClipped(HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
   }
 
   // Calculate rows hanging off each side of the screen
-  if (__min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth)) return (TRUE);
+  if (min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth)) return (TRUE);
 
-  if (__min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth)) return (TRUE);
+  if (min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth)) return (TRUE);
 
-  if (__min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight)) return (TRUE);
+  if (min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight)) return (TRUE);
 
-  if (__min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight)) return (TRUE);
+  if (min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight)) return (TRUE);
 
   return (FALSE);
 }
@@ -13116,10 +13116,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -13979,10 +13979,10 @@ BOOLEAN FillRect8BPP(UINT8 *pBuffer, UINT32 uiDestPitchBYTES, INT32 x1, INT32 y1
 
   // clip edges of rect if hanging off screen
 
-  x1real = __max(0, x1);
-  x2real = __min(639, x2);
-  y1real = __max(0, y1);
-  y2real = __min(479, y2);
+  x1real = max(0, x1);
+  x2real = min(639, x2);
+  y1real = max(0, y1);
+  y2real = min(479, y2);
 
   startoffset = pBuffer + (y1real * uiDestPitchBYTES) + x1real;
   lines = y2real - y1real + 1;
@@ -14052,10 +14052,10 @@ BOOLEAN FillRect16BPP(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, INT32 x1, INT32 
 
   // clip edges of rect if hanging off screen
 
-  x1real = __max(0, x1);
-  x2real = __min(639, x2);
-  y1real = __max(0, y1);
-  y2real = __min(479, y2);
+  x1real = max(0, x1);
+  x2real = min(639, x2);
+  y1real = max(0, y1);
+  y2real = min(479, y2);
 
   startoffset = pBuffer + (y1real * uiDestPitchBYTES / 2) + x1real;
   lines = y2real - y1real + 1;
@@ -14139,10 +14139,10 @@ CHAR8 BltIsClippedOrOffScreen(HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 u
   }
 
   // Calculate rows hanging off each side of the screen
-  gLeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  gRightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  gTopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  gBottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  gLeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  gRightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  gTopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  gBottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   gfUsePreCalcSkips = TRUE;
 
@@ -14314,10 +14314,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -14554,10 +14554,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(UINT16 *pBuffer, UINT32 uiDestPitch
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -14812,10 +14812,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -15190,10 +15190,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(UINT16 *pBuffer, UINT32 uiDest
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -15987,10 +15987,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZClip(UINT16 *pBuffer, UINT32 uiDestPit
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -16344,10 +16344,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZNBClip(UINT16 *pBuffer, UINT32 uiDestP
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -16586,10 +16586,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityClip(UINT16 *pBuffer, UINT32 uiDestPitc
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);
@@ -17008,10 +17008,10 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(UINT16 *pBuffer, UINT
   }
 
   // Calculate rows hanging off each side of the screen
-  LeftSkip = __min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
-  RightSkip = __min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
-  TopSkip = __min(ClipY1 - __min(ClipY1, iTempY), (INT32)usHeight);
-  BottomSkip = __min(__max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
+  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)usWidth);
+  RightSkip = min(max(ClipX2, (iTempX + (INT32)usWidth)) - ClipX2, (INT32)usWidth);
+  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)usHeight);
+  BottomSkip = min(max(ClipY2, (iTempY + (INT32)usHeight)) - ClipY2, (INT32)usHeight);
 
   // calculate the remaining rows and columns to blit
   BlitLength = ((INT32)usWidth - LeftSkip - RightSkip);

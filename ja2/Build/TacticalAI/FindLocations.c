@@ -580,7 +580,7 @@ INT16 FindBestNearbyCover(SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piPercentB
     // action points left (rounded down) tiles away, since minimum
     // cost to move per tile is 1 points.
     iMaxMoveTilesLeft =
-        __max(0, pSoldier->bActionPoints - MinAPsToStartMovement(pSoldier, usMovementMode));
+        max(0, pSoldier->bActionPoints - MinAPsToStartMovement(pSoldier, usMovementMode));
     // NumMessage("In BLACK, maximum tiles to move left = ",maxMoveTilesLeft);
 
     // if we can't go as far as the usual full search range
@@ -1112,7 +1112,7 @@ INT16 FindSpotMaxDistFromOpponents(SOLDIERTYPE *pSoldier) {
     gubNPCAPBudget = pSoldier->bActionPoints;
   } else {
     // even if not under pressure, limit to 1 turn's travelling distance
-    gubNPCAPBudget = __min(pSoldier->bActionPoints / 2, CalcActionPoints(pSoldier));
+    gubNPCAPBudget = min(pSoldier->bActionPoints / 2, CalcActionPoints(pSoldier));
 
     iSearchRange = gubNPCAPBudget / 2;
   }
@@ -1131,7 +1131,7 @@ INT16 FindSpotMaxDistFromOpponents(SOLDIERTYPE *pSoldier) {
   // use the min macro here to make sure we don't wrap the UINT8 to 255...
 
   gubNPCAPBudget = gubNPCAPBudget =
-      __min(gubNPCAPBudget, gubNPCAPBudget - GetAPsToChangeStance(pSoldier, ANIM_STAND));
+      min(gubNPCAPBudget, gubNPCAPBudget - GetAPsToChangeStance(pSoldier, ANIM_STAND));
   // NumMessage("Search Range = ",iSearchRange);
   // NumMessage("gubNPCAPBudget = ",gubNPCAPBudget);
 

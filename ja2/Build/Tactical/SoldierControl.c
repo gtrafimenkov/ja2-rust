@@ -481,7 +481,7 @@ void CalcNewActionPoints(SOLDIERTYPE *pSoldier) {
   // Don't max out if we are drugged....
   if (!GetDrugEffect(pSoldier, DRUG_TYPE_ADRENALINE)) {
     pSoldier->bActionPoints =
-        __min(pSoldier->bActionPoints, gubMaxActionPoints[pSoldier->ubBodyType]);
+        min(pSoldier->bActionPoints, gubMaxActionPoints[pSoldier->ubBodyType]);
   }
 
   pSoldier->bInitialActionPoints = pSoldier->bActionPoints;
@@ -2311,8 +2311,8 @@ void EVENT_FireSoldierWeapon(SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
       // Set the TOTAL number of bullets to be fired
       // Can't shoot more bullets than we have in our magazine!
       pSoldier->bBulletsLeft =
-          __min(Weapon[pSoldier->inv[pSoldier->ubAttackingHand].usItem].ubShotsPerBurst,
-                pSoldier->inv[pSoldier->ubAttackingHand].ubGunShotsLeft);
+          min(Weapon[pSoldier->inv[pSoldier->ubAttackingHand].usItem].ubShotsPerBurst,
+              pSoldier->inv[pSoldier->ubAttackingHand].ubGunShotsLeft);
     } else if (IsValidSecondHandShot(pSoldier)) {
       // two-pistol attack - two bullets!
       pSoldier->bBulletsLeft = 2;
@@ -5433,7 +5433,7 @@ UINT8 SoldierTakeDamage(SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeDeduct, 
     // reduce breath loss to a smaller degree, except for the queen...
     if (pSoldier->ubBodyType == QUEENMONSTER) {
       // in fact, reduce breath loss by MORE!
-      sReductionFactor = __min(sReductionFactor, 8);
+      sReductionFactor = min(sReductionFactor, 8);
       sReductionFactor *= 2;
     } else {
       sReductionFactor /= 2;
@@ -5543,7 +5543,7 @@ UINT8 SoldierTakeDamage(SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeDeduct, 
     INT8 bVisible = -1;
 
     sTestOne = EffectiveStrength(pSoldier);
-    sTestTwo = (2 * (__max(sLifeDeduct, (sBreathLoss / 100))));
+    sTestTwo = (2 * (max(sLifeDeduct, (sBreathLoss / 100))));
 
     if (pSoldier->ubAttackerID != NOBODY &&
         MercPtrs[pSoldier->ubAttackerID]->ubBodyType == BLOODCAT) {
@@ -5552,7 +5552,7 @@ UINT8 SoldierTakeDamage(SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeDeduct, 
     }
 
     // If damage > effective strength....
-    sChanceToDrop = (__max(0, (sTestTwo - sTestOne)));
+    sChanceToDrop = (max(0, (sTestTwo - sTestOne)));
 
     // ATE: Increase odds of NOT dropping an UNDROPPABLE OBJECT
     if ((pSoldier->inv[HANDPOS].fFlags & OBJECT_UNDROPPABLE)) {
@@ -7692,15 +7692,15 @@ UINT16 *CreateEnemyGlow16BPPPalette(SGPPaletteEntry *pPalette, UINT32 rscale, UI
     gmod = (pPalette[cnt].peGreen);
     bmod = (pPalette[cnt].peBlue);
 
-    rmod = __max(rscale, (pPalette[cnt].peRed));
+    rmod = max(rscale, (pPalette[cnt].peRed));
 
     if (fAdjustGreen) {
-      gmod = __max(gscale, (pPalette[cnt].peGreen));
+      gmod = max(gscale, (pPalette[cnt].peGreen));
     }
 
-    r = (UINT8)__min(rmod, 255);
-    g = (UINT8)__min(gmod, 255);
-    b = (UINT8)__min(bmod, 255);
+    r = (UINT8)min(rmod, 255);
+    g = (UINT8)min(gmod, 255);
+    b = (UINT8)min(bmod, 255);
 
     if (gusRedShift < 0)
       r16 = ((UINT16)r >> (-gusRedShift));
@@ -7745,15 +7745,15 @@ UINT16 *CreateEnemyGreyGlow16BPPPalette(SGPPaletteEntry *pPalette, UINT32 rscale
     gmod = (100 * lumin) / 256;
     bmod = (100 * lumin) / 256;
 
-    rmod = __max(rscale, rmod);
+    rmod = max(rscale, rmod);
 
     if (fAdjustGreen) {
-      gmod = __max(gscale, gmod);
+      gmod = max(gscale, gmod);
     }
 
-    r = (UINT8)__min(rmod, 255);
-    g = (UINT8)__min(gmod, 255);
-    b = (UINT8)__min(bmod, 255);
+    r = (UINT8)min(rmod, 255);
+    g = (UINT8)min(gmod, 255);
+    b = (UINT8)min(bmod, 255);
 
     if (gusRedShift < 0)
       r16 = ((UINT16)r >> (-gusRedShift));

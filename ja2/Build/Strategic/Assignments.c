@@ -3463,10 +3463,10 @@ INT16 GetSoldierTrainingPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtG
   // calculate normal training pts - what it would be if his stats were "normal" (ignoring drugs,
   // fatigue)
   *pusMaxPts =
-      __max(((pSoldier->bWisdom * (TRAINING_RATING_CAP - bSkill)) / SELF_TRAINING_DIVISOR), 1);
+      max(((pSoldier->bWisdom * (TRAINING_RATING_CAP - bSkill)) / SELF_TRAINING_DIVISOR), 1);
 
   // calculate effective training pts
-  sTrainingPts = __max(
+  sTrainingPts = max(
       ((EffectiveWisdom(pSoldier) * (TRAINING_RATING_CAP - bSkill)) / SELF_TRAINING_DIVISOR), 1);
 
   // get special bonus if we're training marksmanship and we're in the gun range sector in Alma
@@ -3544,10 +3544,10 @@ INT16 GetSoldierStudentPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGu
   // calculate normal training pts - what it would be if his stats were "normal" (ignoring drugs,
   // fatigue)
   *pusMaxPts =
-      __max(((pSoldier->bWisdom * (TRAINING_RATING_CAP - bSkill)) / SELF_TRAINING_DIVISOR), 1);
+      max(((pSoldier->bWisdom * (TRAINING_RATING_CAP - bSkill)) / SELF_TRAINING_DIVISOR), 1);
 
   // calculate effective training pts
-  sTrainingPts = __max(
+  sTrainingPts = max(
       ((EffectiveWisdom(pSoldier) * (TRAINING_RATING_CAP - bSkill)) / SELF_TRAINING_DIVISOR), 1);
 
   // get special bonus if we're training marksmanship and we're in the gun range sector in Alma
