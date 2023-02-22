@@ -58,6 +58,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
+#include "fileman.h"
 
 // MODULE FOR EXPLOSIONS
 
@@ -2780,17 +2781,18 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
   //
 
   // Write the number of explosion queues
-  FileWrite(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   // loop through and add all the explosions
   for (uiCnt = 0; uiCnt < MAX_BOMB_QUEUE; uiCnt++) {
-    FileWrite(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement), &uiNumBytesWritten);
+    FileMan_Write(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement),
+                  &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(ExplosionQueueElement)) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
   }
@@ -2808,18 +2810,18 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of explosions
-  FileWrite(hFile, &uiExplosionCount, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiExplosionCount, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   // loop through and count all the active explosions
   for (uiCnt = 0; uiCnt < NUM_EXPLOSION_SLOTS; uiCnt++) {
     if (gExplosionData[uiCnt].fAllocated) {
-      FileWrite(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesWritten);
+      FileMan_Write(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(EXPLOSIONTYPE)) {
-        FileClose(hFile);
+        FileMan_Close(hFile);
         return (FALSE);
       }
     }
@@ -2841,14 +2843,14 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   memset(gExplosionQueue, 0, sizeof(ExplosionQueueElement) * MAX_BOMB_QUEUE);
 
   // Read the number of explosions queue's
-  FileRead(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
 
   // loop through read all the active explosions fro the file
   for (uiCnt = 0; uiCnt < MAX_BOMB_QUEUE; uiCnt++) {
-    FileRead(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement), &uiNumBytesRead);
+    FileMan_Read(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(ExplosionQueueElement)) {
       return (FALSE);
     }
@@ -2859,14 +2861,14 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   //
 
   // Load the number of explosions
-  FileRead(hFile, &guiNumExplosions, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiNumExplosions, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
 
   // loop through and load all the active explosions
   for (uiCnt = 0; uiCnt < guiNumExplosions; uiCnt++) {
-    FileRead(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesRead);
+    FileMan_Read(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(EXPLOSIONTYPE)) {
       return (FALSE);
     }

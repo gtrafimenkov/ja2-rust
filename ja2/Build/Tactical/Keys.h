@@ -1,7 +1,6 @@
 #ifndef _KEYS_H_
 #define _KEYS_H_
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 

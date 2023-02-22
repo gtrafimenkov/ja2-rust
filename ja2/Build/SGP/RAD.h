@@ -636,7 +636,7 @@ u16 GetDS();
 #define radstrchr strchr
 #define radtoupper toupper
 #define radstru32(s) ((u32)atol(s))
-#define radstricmp _stricmp
+#define radstricmp strcasecmp
 #define radstrcmp strcmp
 #define radstrupr _strupr
 #define radstrlwr _strlwr
@@ -649,94 +649,94 @@ u16 GetDS();
 typedef char* RADPCHAR;
 
 u32 __inline radsqr(u32 m) {
-  _asm { 
-            mov eax,[m] 
+  _asm {
+            mov eax,[m]
             mul eax
   }
 }
 
 u32 __inline mult64anddiv(u32 m1, u32 m2, u32 d) {
-  _asm { 
-            mov eax,[m1] 
-            mov ecx,[m2] 
-            mul ecx 
-            mov ecx,[d] 
+  _asm {
+            mov eax,[m1]
+            mov ecx,[m2]
+            mul ecx
+            mov ecx,[d]
             div ecx
   }
 }
 
 s32 __inline radabs(s32 ab) {
-  _asm { 
-            mov eax,[ab] 
-            test eax,eax 
-            jge skip 
-            neg eax 
+  _asm {
+            mov eax,[ab]
+            test eax,eax
+            jge skip
+            neg eax
            skip:
   }
 }
 
 u8 __inline radinp(u16 p) {
-  _asm { 
-            mov dx,[p] 
+  _asm {
+            mov dx,[p]
             in al,dx
   }
 }
 
 void __inline radoutp(u16 p, u8 v) {
-  _asm { 
-            mov dx,[p] 
-            mov al,[v] 
+  _asm {
+            mov dx,[p]
+            mov al,[v]
             out dx,al
   }
 }
 
 RADPCHAR __inline radstpcpy(char* p1, char* p2) {
-  _asm { 
-             mov edx,[p1] 
-             mov ecx,[p2] 
-             cld 
-            lp: 
-             mov al,[ecx] 
-             inc ecx 
-             mov [edx],al 
-             inc edx 
-             cmp al,0 
-             jne lp 
-             dec edx 
+  _asm {
+             mov edx,[p1]
+             mov ecx,[p2]
+             cld
+            lp:
+             mov al,[ecx]
+             inc ecx
+             mov [edx],al
+             inc edx
+             cmp al,0
+             jne lp
+             dec edx
              mov eax,edx
   }
 }
 
 RADPCHAR __inline radstpcpyrs(char* p1, char* p2) {
-  _asm { 
-            mov edx,[p1] 
-            mov ecx,[p2] 
-            cld 
-           lp: 
-            mov al,[ecx] 
-            inc ecx 
+  _asm {
+            mov edx,[p1]
+            mov ecx,[p2]
+            cld
+           lp:
+            mov al,[ecx]
+            inc ecx
             mov [edx],al
-            inc edx 
-            cmp al,0 
-            jne lp 
-            dec ecx 
+            inc edx
+            cmp al,0
+            jne lp
+            dec ecx
             mov eax,ecx
   }
 }
 
 void __inline radmemset16(void* dest, u16 value, u32 sizeb) {
-  _asm { 
-            mov edi,[dest] 
-            mov ax,[value] 
-            mov ecx,[sizeb] 
-            shl eax,16 
-            cld 
-            mov ax,[value] 
-            mov bl,cl 
-            shr ecx,1 
-            rep stosd 
-            mov cl,bl 
-            and cl,1 
+  _asm {
+            mov edi,[dest]
+            mov ax,[value]
+            mov ecx,[sizeb]
+            shl eax,16
+            cld
+            mov ax,[value]
+            mov bl,cl
+            shr ecx,1
+            rep stosd
+            mov cl,bl
+            and cl,1
             rep stosw
   }
 }

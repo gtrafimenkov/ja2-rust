@@ -11,7 +11,6 @@
 #include "Editor/SummaryInfo.h"
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
@@ -63,6 +62,8 @@
 #include "Utils/FontControl.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Utilities.h"
+#include "fileman.h"
+#include "platform.h"
 
 #define SET_MOVEMENTCOST(a, b, c, d) \
   ((gubWorldMovementCosts[a][b][c] < d) ? (gubWorldMovementCosts[a][b][c] = d) : 0);
@@ -291,12 +292,12 @@ BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
   STRING512 INIFile;
 
   // Get Executable Directory
-  GetExecutableDirectory(ExeDir);
+  Plat_GetExecutableDirectory(ExeDir, sizeof(ExeDir));
 
   // Adjust Current Dir
   // CHECK IF DEFAULT INI OVERRIDE FILE EXISTS
   sprintf(INIFile, "%s\\engine.ini", ExeDir);
-  if (!FileExists(INIFile)) {
+  if (!FileMan_Exists(INIFile)) {
     // USE PER TILESET BASIS
     sprintf(INIFile, "%s\\engine%d.ini", ExeDir, ubTilesetID);
   }
@@ -458,14 +459,14 @@ void BuildTileShadeTables() {
 #endif
 
   // Set the directory to the shadetable directory
-  GetFileManCurrentDirectory(DataDir);
+  Plat_GetCurrentDirectory(DataDir);
   sprintf(ShadeTableDir, "%s\\ShadeTables", DataDir);
-  if (!SetFileManCurrentDirectory(ShadeTableDir)) {
+  if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
     AssertMsg(0, "Can't set the directory to Data\\ShadeTable.  Kris' big problem!");
   }
-  hfile = FileOpen("IgnoreShadeTables.txt", FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_Open("IgnoreShadeTables.txt", FILE_ACCESS_READ, FALSE);
   if (hfile) {
-    FileClose(hfile);
+    FileMan_Close(hfile);
     gfForceBuildShadeTables = TRUE;
   } else {
     gfForceBuildShadeTables = FALSE;
@@ -517,7 +518,7 @@ void BuildTileShadeTables() {
   }
 
   // Restore the data directory once we are finished.
-  SetFileManCurrentDirectory(DataDir);
+  Plat_SetCurrentDirectory(DataDir);
 
   ubLastRed = gpLightColors[0].peRed;
   ubLastGreen = gpLightColors[0].peGreen;
@@ -1438,16 +1439,16 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   sprintf(aFilename, "MAPS\\%s", puiFilename);
 
   // Open file
-  hfile = FileOpen(aFilename, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hfile = FileMan_Open(aFilename, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 
   if (!hfile) {
     return (FALSE);
   }
 
   // Write JA2 Version ID
-  FileWrite(hfile, &gdMajorMapVersion, sizeof(FLOAT), &uiBytesWritten);
+  FileMan_Write(hfile, &gdMajorMapVersion, sizeof(FLOAT), &uiBytesWritten);
   if (gdMajorMapVersion >= 4.00) {
-    FileWrite(hfile, &gubMinorMapVersion, sizeof(UINT8), &uiBytesWritten);
+    FileMan_Write(hfile, &gubMinorMapVersion, sizeof(UINT8), &uiBytesWritten);
   }
 
   // Write FLAGS FOR WORLD
@@ -1462,21 +1463,21 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   if (gfBasement || gfCaves) uiFlags |= MAP_AMBIENTLIGHTLEVEL_SAVED;
   uiFlags |= MAP_NPCSCHEDULES_SAVED;
 
-  FileWrite(hfile, &uiFlags, sizeof(INT32), &uiBytesWritten);
+  FileMan_Write(hfile, &uiFlags, sizeof(INT32), &uiBytesWritten);
 
   // Write tileset ID
-  FileWrite(hfile, &giCurrentTilesetID, sizeof(INT32), &uiBytesWritten);
+  FileMan_Write(hfile, &giCurrentTilesetID, sizeof(INT32), &uiBytesWritten);
 
   // Write SOLDIER CONTROL SIZE
   uiSoldierSize = sizeof(SOLDIERTYPE);
-  FileWrite(hfile, &uiSoldierSize, sizeof(INT32), &uiBytesWritten);
+  FileMan_Write(hfile, &uiSoldierSize, sizeof(INT32), &uiBytesWritten);
 
   // REMOVE WORLD VISIBILITY TILES
   RemoveWorldWireFrameTiles();
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Write out height values
-    FileWrite(hfile, &gpWorldLevelData[cnt].sHeight, sizeof(INT16), &uiBytesWritten);
+    FileMan_Write(hfile, &gpWorldLevelData[cnt].sHeight, sizeof(INT16), &uiBytesWritten);
   }
 
   // Write out # values - we'll have no more than 15 per level!
@@ -1495,7 +1496,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                LayerCount, cnt, uiNumWarningsCaught);
       gfErrorCatch = TRUE;
-      FileClose(hfile);
+      FileMan_Close(hfile);
       return FALSE;
     }
     if (LayerCount > 10) {
@@ -1510,7 +1511,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     // Combine # of land layers with worlddef flags ( first 4 bits )
     ubCombine = (UINT8)((LayerCount & 0xf) | ((gpWorldLevelData[cnt].uiFlags & 0xf) << 4));
     // Write combination
-    FileWrite(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
+    FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
 
     // Determine # of objects
     pObject = gpWorldLevelData[cnt].pObjectHead;
@@ -1531,7 +1532,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                ObjectCount, cnt, uiNumWarningsCaught);
       gfErrorCatch = TRUE;
-      FileClose(hfile);
+      FileMan_Close(hfile);
       return FALSE;
     }
     if (ObjectCount > 10) {
@@ -1559,7 +1560,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                StructCount, cnt, uiNumWarningsCaught);
       gfErrorCatch = TRUE;
-      FileClose(hfile);
+      FileMan_Close(hfile);
       return FALSE;
     }
     if (StructCount > 10) {
@@ -1573,7 +1574,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 
     ubCombine = (UINT8)((ObjectCount & 0xf) | ((StructCount & 0xf) << 4));
     // Write combination
-    FileWrite(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
+    FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
 
     // Determine # of shadows
     pShadow = gpWorldLevelData[cnt].pShadowHead;
@@ -1591,7 +1592,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                ShadowCount, cnt, uiNumWarningsCaught);
       gfErrorCatch = TRUE;
-      FileClose(hfile);
+      FileMan_Close(hfile);
       return FALSE;
     }
     if (ShadowCount > 10) {
@@ -1619,7 +1620,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                RoofCount, cnt, uiNumWarningsCaught);
       gfErrorCatch = TRUE;
-      FileClose(hfile);
+      FileMan_Close(hfile);
       return FALSE;
     }
     if (RoofCount > 10) {
@@ -1633,7 +1634,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 
     ubCombine = (UINT8)((ShadowCount & 0xf) | ((RoofCount & 0xf) << 4));
     // Write combination
-    FileWrite(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
+    FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
 
     // Write OnRoof layer
     // Determine # of OnRoofs
@@ -1650,7 +1651,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                OnRoofCount, cnt, uiNumWarningsCaught);
       gfErrorCatch = TRUE;
-      FileClose(hfile);
+      FileMan_Close(hfile);
       return FALSE;
     }
     if (OnRoofCount > 10) {
@@ -1665,13 +1666,13 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     // Write combination of onroof and nothing...
     ubCombine = (UINT8)((OnRoofCount & 0xf));
     // Write combination
-    FileWrite(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
+    FileMan_Write(hfile, &ubCombine, sizeof(ubCombine), &uiBytesWritten);
   }
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (bCounts[cnt][0] == 0) {
-      FileWrite(hfile, &ubTest, sizeof(UINT8), &uiBytesWritten);
-      FileWrite(hfile, &ubTest, sizeof(UINT8), &uiBytesWritten);
+      FileMan_Write(hfile, &ubTest, sizeof(UINT8), &uiBytesWritten);
+      FileMan_Write(hfile, &ubTest, sizeof(UINT8), &uiBytesWritten);
     } else {
       // Write land layers
       // Write out land peices backwards so that they are loaded properly
@@ -1687,8 +1688,8 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
         GetTileType(pTailLand->usIndex, &uiType);
         ubType = (UINT8)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pTailLand->usIndex, &ubTypeSubIndex);
-        FileWrite(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileWrite(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
 
         pTailLand = pTailLand->pPrevNode;
       }
@@ -1709,8 +1710,8 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
           // ROADPIECES slot contains more than 256 subindices.
           ubType = (UINT8)uiType;
           GetTypeSubIndexFromTileIndex(uiType, pObject->usIndex, &usTypeSubIndex);
-          FileWrite(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-          FileWrite(hfile, &usTypeSubIndex, sizeof(UINT16), &uiBytesWritten);
+          FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
+          FileMan_Write(hfile, &usTypeSubIndex, sizeof(UINT16), &uiBytesWritten);
         }
       }
       pObject = pObject->pNext;
@@ -1727,8 +1728,8 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
         GetTileType(pStruct->usIndex, &uiType);
         ubType = (UINT8)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pStruct->usIndex, &ubTypeSubIndex);
-        FileWrite(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileWrite(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
       }
 
       pStruct = pStruct->pNext;
@@ -1746,8 +1747,8 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
         GetTileType(pShadow->usIndex, &uiType);
         ubType = (UINT8)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pShadow->usIndex, &ubTypeSubIndex);
-        FileWrite(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileWrite(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
 
       } else if (pShadow->uiFlags & LEVELNODE_EXITGRID) {  // count the number of exitgrids
         usNumExitGrids++;
@@ -1766,8 +1767,8 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
         GetTileType(pRoof->usIndex, &uiType);
         ubType = (UINT8)uiType;
         GetTypeSubIndexFromTileIndexChar(uiType, pRoof->usIndex, &ubTypeSubIndex);
-        FileWrite(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-        FileWrite(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
+        FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
       }
 
       pRoof = pRoof->pNext;
@@ -1782,8 +1783,8 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       GetTileType(pOnRoof->usIndex, &uiType);
       ubType = (UINT8)uiType;
       GetTypeSubIndexFromTileIndexChar(uiType, pOnRoof->usIndex, &ubTypeSubIndex);
-      FileWrite(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
-      FileWrite(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
+      FileMan_Write(hfile, &ubType, sizeof(UINT8), &uiBytesWritten);
+      FileMan_Write(hfile, &ubTypeSubIndex, sizeof(UINT8), &uiBytesWritten);
 
       pOnRoof = pOnRoof->pNext;
     }
@@ -1791,7 +1792,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // Write out room information
-    FileWrite(hfile, &gubWorldRoomInfo[cnt], sizeof(INT8), &uiBytesWritten);
+    FileMan_Write(hfile, &gubWorldRoomInfo[cnt], sizeof(INT8), &uiBytesWritten);
   }
 
   if (uiFlags & MAP_WORLDITEMS_SAVED) {
@@ -1800,9 +1801,9 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   }
 
   if (uiFlags & MAP_AMBIENTLIGHTLEVEL_SAVED) {
-    FileWrite(hfile, &gfBasement, 1, &uiBytesWritten);
-    FileWrite(hfile, &gfCaves, 1, &uiBytesWritten);
-    FileWrite(hfile, &ubAmbientLightLevel, 1, &uiBytesWritten);
+    FileMan_Write(hfile, &gfBasement, 1, &uiBytesWritten);
+    FileMan_Write(hfile, &gfCaves, 1, &uiBytesWritten);
+    FileMan_Write(hfile, &ubAmbientLightLevel, 1, &uiBytesWritten);
   }
 
   if (uiFlags & MAP_WORLDLIGHTS_SAVED) {
@@ -1829,7 +1830,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     SaveSchedules(hfile);
   }
 
-  FileClose(hfile);
+  FileMan_Close(hfile);
 
   sprintf(gubFilename, puiFilename);
 #endif  // JA2EDITOR
@@ -1954,18 +1955,18 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   if (gfMajorUpdate) {
     if (!LoadWorld(szFilename))  // error
       return FALSE;
-    FileClearAttributes(szDirFilename);
+    Plat_ClearFileAttributes(szDirFilename);
     SaveWorld(szFilename);
   }
 
-  hfile = FileOpen(szDirFilename, FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_Open(szDirFilename, FILE_ACCESS_READ, FALSE);
   if (!hfile) return FALSE;
 
-  uiFileSize = FileGetSize(hfile);
+  uiFileSize = FileMan_GetSize(hfile);
   pBuffer = (INT8 *)MemAlloc(uiFileSize);
   pBufferHead = pBuffer;
-  FileRead(hfile, pBuffer, uiFileSize, &uiBytesRead);
-  FileClose(hfile);
+  FileMan_Read(hfile, pBuffer, uiFileSize, &uiBytesRead);
+  FileMan_Close(hfile);
 
   swprintf(str, ARR_SIZE(str), L"Analyzing map %S", szFilename);
   if (!gfUpdatingNow)
@@ -2339,7 +2340,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   gfCaves = FALSE;
 
   // Open file
-  hfile = FileOpen(aFilename, FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_Open(aFilename, FILE_ACCESS_READ, FALSE);
 
   if (!hfile) {
     SET_ERROR("Could not load map file %S", aFilename);
@@ -2361,11 +2362,11 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 
   // Get the file size and alloc one huge buffer for it.
   // We will use this buffer to transfer all of the data from.
-  uiFileSize = FileGetSize(hfile);
+  uiFileSize = FileMan_GetSize(hfile);
   pBuffer = (INT8 *)MemAlloc(uiFileSize);
   pBufferHead = pBuffer;
-  FileRead(hfile, pBuffer, uiFileSize, &uiBytesRead);
-  FileClose(hfile);
+  FileMan_Read(hfile, pBuffer, uiFileSize, &uiBytesRead);
+  FileMan_Close(hfile);
 
   // Read JA2 Version ID
   LOADDATA(&dMajorMapVersion, pBuffer, sizeof(FLOAT));
@@ -3120,7 +3121,7 @@ BOOLEAN SaveMapTileset(INT32 iTilesetID) {
   sprintf(zTilesetName, "TSET%04d.SET", iTilesetID);
 
   // Open file
-  hTSet = FileOpen(zTilesetName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hTSet = FileMan_Open(zTilesetName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 
   if (!hTSet) {
     return (FALSE);
@@ -3128,8 +3129,8 @@ BOOLEAN SaveMapTileset(INT32 iTilesetID) {
 
   // Save current tile set in map file.
   for (cnt = 0; cnt < NUMBEROFTILETYPES; cnt++)
-    FileWrite(hTSet, TileSurfaceFilenames[cnt], 65, &uiBytesWritten);
-  FileClose(hTSet);
+    FileMan_Write(hTSet, TileSurfaceFilenames[cnt], 65, &uiBytesWritten);
+  FileMan_Close(hTSet);
 
   return (TRUE);
 }
@@ -3485,7 +3486,7 @@ void ReloadTileset(UINT8 ubID) {
   // Delete file
   sprintf(aFilename, "MAPS\\%s", TEMP_FILE_FOR_TILESET_CHANGE);
 
-  FileDelete(aFilename);
+  FileMan_Delete(aFilename);
 }
 
 void SaveMapLights(HWFILE hfile) {
@@ -3501,8 +3502,8 @@ void SaveMapLights(HWFILE hfile) {
   ubNumColors = LightGetColors(LColors);
 
   // Save the current light colors!
-  FileWrite(hfile, &ubNumColors, 1, &uiBytesWritten);
-  FileWrite(hfile, LColors, sizeof(SGPPaletteEntry) * ubNumColors, &uiBytesWritten);
+  FileMan_Write(hfile, &ubNumColors, 1, &uiBytesWritten);
+  FileMan_Write(hfile, LColors, sizeof(SGPPaletteEntry) * ubNumColors, &uiBytesWritten);
 
   // count number of non-merc lights.
   for (cnt = 0; cnt < MAX_LIGHT_SPRITES; cnt++) {
@@ -3519,7 +3520,7 @@ void SaveMapLights(HWFILE hfile) {
   }
 
   // save the number of lights.
-  FileWrite(hfile, &usNumLights, 2, &uiBytesWritten);
+  FileMan_Write(hfile, &usNumLights, 2, &uiBytesWritten);
 
   for (cnt = 0; cnt < MAX_LIGHT_SPRITES; cnt++) {
     if (LightSprites[cnt].uiFlags & LIGHT_SPR_ACTIVE) {  // found an active light.  Check to make
@@ -3531,11 +3532,11 @@ void SaveMapLights(HWFILE hfile) {
         }
       }
       if (!fSoldierLight) {  // save the light
-        FileWrite(hfile, &LightSprites[cnt], sizeof(LIGHT_SPRITE), &uiBytesWritten);
+        FileMan_Write(hfile, &LightSprites[cnt], sizeof(LIGHT_SPRITE), &uiBytesWritten);
 
         ubStrLen = (UINT8)(strlen(pLightNames[LightSprites[cnt].iTemplate]) + 1);
-        FileWrite(hfile, &ubStrLen, 1, &uiBytesWritten);
-        FileWrite(hfile, pLightNames[LightSprites[cnt].iTemplate], ubStrLen, &uiBytesWritten);
+        FileMan_Write(hfile, &ubStrLen, 1, &uiBytesWritten);
+        FileMan_Write(hfile, pLightNames[LightSprites[cnt].iTemplate], ubStrLen, &uiBytesWritten);
       }
     }
   }

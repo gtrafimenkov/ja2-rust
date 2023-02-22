@@ -50,9 +50,6 @@
     <ClInclude Include="ExceptionHandling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileMan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Flic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -190,6 +187,9 @@
     <ClCompile Include="Debug.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="win_debug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="DirectDrawCalls.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -200,9 +200,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ExceptionHandling.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileMan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Font.c">

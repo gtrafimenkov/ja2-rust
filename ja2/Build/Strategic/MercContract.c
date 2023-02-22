@@ -35,6 +35,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 void CalculateMedicalDepositRefund(SOLDIERTYPE *pSoldier);
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(SOLDIERTYPE *pSoldier,
@@ -85,12 +86,12 @@ BOOLEAN gfInContractMenuFromRenewSequence = FALSE;
 BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
-  FileWrite(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesWritten);
+  FileMan_Write(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(ContractRenewalList)) {
     return (FALSE);
   }
 
-  FileWrite(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesWritten);
+  FileMan_Write(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(ubNumContractRenewals)) {
     return (FALSE);
   }
@@ -101,12 +102,12 @@ BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile) {
 BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
-  FileRead(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesRead);
+  FileMan_Read(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(ContractRenewalList)) {
     return (FALSE);
   }
 
-  FileRead(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesRead);
+  FileMan_Read(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(ubNumContractRenewals)) {
     return (FALSE);
   }

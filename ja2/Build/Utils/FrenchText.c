@@ -1,8 +1,8 @@
 #include "LanguageDefines.h"
 #ifdef FRENCH
 #include "JA2DemoAds.h"
-#include "SGP/FileMan.h"
 #include "Utils/Text.h"
+
 #endif
 
 #ifdef FRENCH

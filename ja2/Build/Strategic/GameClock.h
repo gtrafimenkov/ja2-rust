@@ -1,7 +1,7 @@
 #ifndef __WORLD_CLOCK
 #define __WORLD_CLOCK
 
-#include "SGP/FileMan.h"
+#include "SGP/Types.h"
 
 // where the time string itself is rendered
 #define CLOCK_X 554

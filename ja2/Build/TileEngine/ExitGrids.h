@@ -1,7 +1,6 @@
 #ifndef __EXIT_GRIDS_H
 #define __EXIT_GRIDS_H
 
-#include "SGP/FileMan.h"
 #include "TileEngine/WorldDef.h"
 
 typedef struct  // for exit grids (object level)

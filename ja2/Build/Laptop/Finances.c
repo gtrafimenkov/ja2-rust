@@ -15,6 +15,8 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
+#include "platform.h"
 
 // the global defines
 
@@ -376,9 +378,9 @@ INT32 GetConfidenceValue() {
 void GameInitFinances() {
   // initialize finances on game start up
   // unlink Finances data file
-  if ((FileExists(FINANCES_DATA_FILE))) {
-    FileClearAttributes(FINANCES_DATA_FILE);
-    FileDelete(FINANCES_DATA_FILE);
+  if ((FileMan_Exists(FINANCES_DATA_FILE))) {
+    Plat_ClearFileAttributes(FINANCES_DATA_FILE);
+    FileMan_Delete(FINANCES_DATA_FILE);
   }
   GetBalanceFromDisk();
 }
@@ -982,40 +984,40 @@ void OpenAndReadFinancesFile(void) {
   ClearFinanceList();
 
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return;
   }
 
   // make sure file is more than 0 length
-  if (FileGetSize(hFileHandle) == 0) {
-    FileClose(hFileHandle);
+  if (FileMan_GetSize(hFileHandle) == 0) {
+    FileMan_Close(hFileHandle);
     return;
   }
 
   // read in balance
   // write balance to disk first
-  FileRead(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), &iBytesRead);
+  FileMan_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), &iBytesRead);
   uiByteCount += sizeof(INT32);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
   // file exists, read in data, continue until file end
-  while (FileGetSize(hFileHandle) > uiByteCount) {
+  while (FileMan_GetSize(hFileHandle) > uiByteCount) {
     // read in other data
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
@@ -1027,7 +1029,7 @@ void OpenAndReadFinancesFile(void) {
   }
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return;
 }
@@ -1429,13 +1431,13 @@ BOOLEAN WriteBalanceToDisk(void) {
   FinanceUnitPtr pFinanceList = pFinanceListHead;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 
   // write balance to disk
-  FileWrite(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), NULL);
+  FileMan_Write(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), NULL);
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return (TRUE);
 }
@@ -1448,26 +1450,26 @@ void GetBalanceFromDisk(void) {
   UINT32 iBytesRead = 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     LaptopSaveInfo.iCurrentBalance = 0;
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return;
   }
 
   // start at beginning
-  FileSeek(hFileHandle, 0, FILE_SEEK_FROM_START);
+  FileMan_Seek(hFileHandle, 0, FILE_SEEK_FROM_START);
 
   // get balance from disk first
-  FileRead(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), &iBytesRead);
+  FileMan_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(INT32), &iBytesRead);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return;
 }
@@ -1479,33 +1481,33 @@ BOOLEAN AppendFinanceToEndOfFile(FinanceUnitPtr pFinance) {
   FinanceUnitPtr pFinanceList = pFinanceListHead;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
 
   // if no file exits, do nothing
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return (FALSE);
   }
 
   // go to the end
-  if (FileSeek(hFileHandle, 0, FILE_SEEK_FROM_END) == FALSE) {
+  if (FileMan_Seek(hFileHandle, 0, FILE_SEEK_FROM_END) == FALSE) {
     // error
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return (FALSE);
   }
 
   // write finance to disk
   // now write date and amount, and code
-  FileWrite(hFileHandle, &(pFinanceList->ubCode), sizeof(UINT8), NULL);
-  FileWrite(hFileHandle, &(pFinanceList->ubSecondCode), sizeof(UINT8), NULL);
-  FileWrite(hFileHandle, &(pFinanceList->uiDate), sizeof(UINT32), NULL);
-  FileWrite(hFileHandle, &(pFinanceList->iAmount), sizeof(INT32), NULL);
-  FileWrite(hFileHandle, &(pFinanceList->iBalanceToDate), sizeof(INT32), NULL);
+  FileMan_Write(hFileHandle, &(pFinanceList->ubCode), sizeof(UINT8), NULL);
+  FileMan_Write(hFileHandle, &(pFinanceList->ubSecondCode), sizeof(UINT8), NULL);
+  FileMan_Write(hFileHandle, &(pFinanceList->uiDate), sizeof(UINT32), NULL);
+  FileMan_Write(hFileHandle, &(pFinanceList->iAmount), sizeof(INT32), NULL);
+  FileMan_Write(hFileHandle, &(pFinanceList->iBalanceToDate), sizeof(INT32), NULL);
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return (TRUE);
 }
@@ -1518,31 +1520,31 @@ UINT32 ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
   INT32 iFileSize = 0;
 
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
 
   // make sure file is more than balance size + length of 1 record - 1 byte
-  if (FileGetSize(hFileHandle) <
+  if (FileMan_GetSize(hFileHandle) <
       sizeof(INT32) + sizeof(UINT32) + sizeof(UINT8) + sizeof(UINT8) + sizeof(INT32)) {
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return 0;
   }
 
   // size is?
-  iFileSize = FileGetSize(hFileHandle);
+  iFileSize = FileMan_GetSize(hFileHandle);
 
   // done with file, close it
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   // file size -1 / sizeof record in bytes is id
   return ((iFileSize - 1) /
@@ -1555,10 +1557,10 @@ void SetLastPageInRecords(void) {
   UINT32 iBytesRead = 0;
 
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1568,14 +1570,14 @@ void SetLastPageInRecords(void) {
   }
 
   // make sure file is more than 0 length
-  if (FileGetSize(hFileHandle) == 0) {
-    FileClose(hFileHandle);
+  if (FileMan_GetSize(hFileHandle) == 0) {
+    FileMan_Close(hFileHandle);
     guiLastPageInRecordsList = 1;
     return;
   }
 
   // done with file, close it
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   guiLastPageInRecordsList =
       (ReadInLastElementOfFinanceListAndReturnIdNumber() - 1) / NUM_RECORDS_PER_PAGE;
@@ -1635,54 +1637,54 @@ BOOLEAN LoadInRecords(UINT32 uiPage) {
     return (FALSE);
   }
 
-  if (!(FileExists(FINANCES_DATA_FILE))) return (FALSE);
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return (FALSE);
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return (FALSE);
   }
 
   // make sure file is more than 0 length
-  if (FileGetSize(hFileHandle) == 0) {
-    FileClose(hFileHandle);
+  if (FileMan_GetSize(hFileHandle) == 0) {
+    FileMan_Close(hFileHandle);
     return (FALSE);
   }
 
   // is the file long enough?
-  if ((FileGetSize(hFileHandle) - sizeof(INT32) - 1) /
+  if ((FileMan_GetSize(hFileHandle) - sizeof(INT32) - 1) /
               (NUM_RECORDS_PER_PAGE *
                (sizeof(INT32) + sizeof(UINT32) + sizeof(UINT8) + sizeof(UINT8) + sizeof(INT32))) +
           1 <
       uiPage) {
     // nope
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return (FALSE);
   }
 
-  FileSeek(hFileHandle,
-           sizeof(INT32) +
-               (uiPage - 1) * NUM_RECORDS_PER_PAGE *
-                   (sizeof(INT32) + sizeof(UINT32) + sizeof(UINT8) + sizeof(UINT8) + sizeof(INT32)),
-           FILE_SEEK_FROM_START);
+  FileMan_Seek(hFileHandle,
+               sizeof(INT32) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
+                                   (sizeof(INT32) + sizeof(UINT32) + sizeof(UINT8) + sizeof(UINT8) +
+                                    sizeof(INT32)),
+               FILE_SEEK_FROM_START);
 
   uiByteCount = sizeof(INT32) + (uiPage - 1) * NUM_RECORDS_PER_PAGE *
                                     (sizeof(INT32) + sizeof(UINT32) + sizeof(UINT8) +
                                      sizeof(UINT8) + sizeof(INT32));
   // file exists, read in data, continue until end of page
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue) &&
-         (uiByteCount < FileGetSize(hFileHandle))) {
+         (uiByteCount < FileMan_GetSize(hFileHandle))) {
     // read in data
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
@@ -1693,7 +1695,7 @@ BOOLEAN LoadInRecords(UINT32 uiPage) {
     uiByteCount += sizeof(INT32) + sizeof(UINT32) + sizeof(UINT8) + sizeof(UINT8) + sizeof(INT32);
 
     // we've overextended our welcome, and bypassed end of file, get out
-    if (uiByteCount >= FileGetSize(hFileHandle)) {
+    if (uiByteCount >= FileMan_GetSize(hFileHandle)) {
       // not ok to continue
       fOkToContinue = FALSE;
     }
@@ -1702,7 +1704,7 @@ BOOLEAN LoadInRecords(UINT32 uiPage) {
   }
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   // check to see if we in fact have a list to display
   if (pFinanceListHead == NULL) {
@@ -1801,31 +1803,31 @@ INT32 GetPreviousBalanceToDate(void) {
   INT32 iBalanceToDate = 0;
 
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
 
-  if (FileGetSize(hFileHandle) <
+  if (FileMan_GetSize(hFileHandle) <
       sizeof(INT32) + sizeof(UINT32) + sizeof(UINT8) + sizeof(UINT8) + sizeof(INT32)) {
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return 0;
   }
 
-  FileSeek(hFileHandle, (sizeof(INT32)), FILE_SEEK_FROM_END);
+  FileMan_Seek(hFileHandle, (sizeof(INT32)), FILE_SEEK_FROM_END);
 
   // get balnce to date
-  FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+  FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return iBalanceToDate;
 }
@@ -1852,15 +1854,15 @@ INT32 GetPreviousDaysBalance(void) {
 
   // error checking
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
@@ -1870,17 +1872,17 @@ INT32 GetPreviousDaysBalance(void) {
   iByteCount += sizeof(INT32);
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
-  while ((iByteCount < FileGetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
-    FileSeek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
+  while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
+    FileMan_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
 
     // incrment byte count
     iByteCount += RECORD_SIZE;
 
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     // check to see if we are far enough
     if ((uiDate / (24 * 60)) == (iDateInMinutes / (24 * 60)) - 2) {
@@ -1901,11 +1903,11 @@ INT32 GetPreviousDaysBalance(void) {
   if (fOkToContinue == FALSE) {
     // reached beginning of file, nothing found, return 0
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return 0;
   }
 
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   // reached 3 days ago, or beginning of file
   return iBalanceToDate;
@@ -1932,15 +1934,15 @@ INT32 GetTodaysBalance(void) {
 
   // error checking
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
@@ -1951,17 +1953,17 @@ INT32 GetTodaysBalance(void) {
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
-  while ((iByteCount < FileGetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
-    FileSeek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
+  while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
+    FileMan_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
 
     // incrment byte count
     iByteCount += RECORD_SIZE;
 
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -1972,7 +1974,7 @@ INT32 GetTodaysBalance(void) {
     iCounter++;
   }
 
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   // not found ?
   if (fOkToContinue == FALSE) {
@@ -2007,15 +2009,15 @@ INT32 GetPreviousDaysIncome(void) {
 
   // error checking
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
@@ -2026,21 +2028,21 @@ INT32 GetPreviousDaysIncome(void) {
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
-  while ((iByteCount < FileGetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
-    FileGetPos(hFileHandle);
+  while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
+    FileMan_GetPos(hFileHandle);
 
-    FileSeek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
+    FileMan_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
 
     // incrment byte count
     iByteCount += RECORD_SIZE;
 
-    FileGetPos(hFileHandle);
+    FileMan_GetPos(hFileHandle);
 
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2070,7 +2072,7 @@ INT32 GetPreviousDaysIncome(void) {
   // now run back one more day and add up the total of deposits
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return (iTotalPreviousIncome);
 }
@@ -2099,15 +2101,15 @@ INT32 GetTodaysDaysIncome(void) {
 
   // error checking
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
@@ -2118,17 +2120,17 @@ INT32 GetTodaysDaysIncome(void) {
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
-  while ((iByteCount < FileGetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
-    FileSeek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
+  while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
+    FileMan_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
 
     // incrment byte count
     iByteCount += RECORD_SIZE;
 
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2153,14 +2155,14 @@ INT32 GetTodaysDaysIncome(void) {
 
   // no entries, return nothing - no income for the day
   if (fGoneTooFar == TRUE) {
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return 0;
   }
 
   // now run back one more day and add up the total of deposits
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return (iTotalIncome);
 }
@@ -2216,15 +2218,15 @@ INT32 GetTodaysOtherDeposits(void) {
 
   // error checking
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
@@ -2235,17 +2237,17 @@ INT32 GetTodaysOtherDeposits(void) {
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
-  while ((iByteCount < FileGetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
-    FileSeek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
+  while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
+    FileMan_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
 
     // incrment byte count
     iByteCount += RECORD_SIZE;
 
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2272,14 +2274,14 @@ INT32 GetTodaysOtherDeposits(void) {
 
   // no entries, return nothing - no income for the day
   if (fGoneTooFar == TRUE) {
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return 0;
   }
 
   // now run back one more day and add up the total of deposits
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return (iTotalIncome);
 }
@@ -2306,15 +2308,15 @@ INT32 GetYesterdaysOtherDeposits(void) {
 
   // error checking
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) return 0;
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return 0;
   }
@@ -2325,17 +2327,17 @@ INT32 GetYesterdaysOtherDeposits(void) {
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
-  while ((iByteCount < FileGetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
-    FileSeek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
+  while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
+    FileMan_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
 
     // incrment byte count
     iByteCount += RECORD_SIZE;
 
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
-    FileRead(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
-    FileRead(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iAmount, sizeof(INT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &iBalanceToDate, sizeof(INT32), &iBytesRead);
 
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
@@ -2365,7 +2367,7 @@ INT32 GetYesterdaysOtherDeposits(void) {
   }
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return (iTotalPreviousIncome);
 }
@@ -2394,30 +2396,30 @@ void LoadCurrentBalance(void) {
   // is the first record in the file
   // error checking
   // no file, return
-  if (!(FileExists(FINANCES_DATA_FILE))) {
+  if (!(FileMan_Exists(FINANCES_DATA_FILE))) {
     LaptopSaveInfo.iCurrentBalance = 0;
     return;
   }
 
   // open file
-  hFileHandle = FileOpen(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
     LaptopSaveInfo.iCurrentBalance = 0;
 
     // close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     return;
   }
 
-  FileSeek(hFileHandle, 0, FILE_SEEK_FROM_START);
-  FileRead(hFileHandle, &LaptopSaveInfo.iCurrentBalance, sizeof(INT32), &iBytesRead);
+  FileMan_Seek(hFileHandle, 0, FILE_SEEK_FROM_START);
+  FileMan_Read(hFileHandle, &LaptopSaveInfo.iCurrentBalance, sizeof(INT32), &iBytesRead);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return;
 }

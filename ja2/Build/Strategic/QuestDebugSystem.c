@@ -35,6 +35,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 //#ifdef JA2BETAVERSION
 
@@ -3095,9 +3096,9 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
     // open a new file for writing
 
     // if the file exists
-    if (FileExists(QUEST_DEBUG_FILE)) {
+    if (FileMan_Exists(QUEST_DEBUG_FILE)) {
       // delete the file
-      if (!FileDelete(QUEST_DEBUG_FILE)) {
+      if (!FileMan_Delete(QUEST_DEBUG_FILE)) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to delete %s file", QUEST_DEBUG_FILE));
         return;
       }
@@ -3106,17 +3107,17 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
   }
 
   // open the file
-  hFile = FileOpen(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
+  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
   if (!hFile) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("FAILED to open Quest Debug File %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  if (FileSeek(hFile, 0, FILE_SEEK_FROM_END) == FALSE) {
+  if (FileMan_Seek(hFile, 0, FILE_SEEK_FROM_END) == FALSE) {
     // error
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return;
   }
 
@@ -3125,8 +3126,8 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
   //	sprintf( DestString, "\n\n\nNew Approach for NPC ID: %d  against Merc: %d ", ubNpcID,
   // ubMercID );
 
-  if (!FileWrite(hFile, DestString, strlen(DestString), &uiByteWritten)) {
-    FileClose(hFile);
+  if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
+    FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to write to %s", QUEST_DEBUG_FILE));
     return;
   }
@@ -3135,13 +3136,13 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
   sprintf(DestString, "\n\tTesting Record #: %d", ubQuoteNum);
 
   // append to file
-  if (!FileWrite(hFile, DestString, strlen(DestString), &uiByteWritten)) {
-    FileClose(hFile);
+  if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
+    FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to write to %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 }
 
 void NpcRecordLogging(UINT8 ubApproach, STR pStringA, ...) {
@@ -3168,30 +3169,30 @@ void NpcRecordLogging(UINT8 ubApproach, STR pStringA, ...) {
   va_end(argptr);
 
   // open the file
-  hFile = FileOpen(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
+  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
   if (!hFile) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("FAILED to open Quest Debug File %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  if (FileSeek(hFile, 0, FILE_SEEK_FROM_END) == FALSE) {
+  if (FileMan_Seek(hFile, 0, FILE_SEEK_FROM_END) == FALSE) {
     // error
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return;
   }
 
   sprintf(DestString, "\n\t\t%s", TempString);
 
   // append to file
-  if (!FileWrite(hFile, DestString, strlen(DestString), &uiByteWritten)) {
-    FileClose(hFile);
+  if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
+    FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to write to %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 }
 
 void EnableQDSButtons() {

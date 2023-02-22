@@ -1,7 +1,6 @@
 #ifndef __QUEEN_COMMAND_H
 #define __QUEEN_COMMAND_H
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/StrategicMovement.h"

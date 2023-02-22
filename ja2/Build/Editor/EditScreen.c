@@ -261,7 +261,7 @@ BOOLEAN EditModeInit(void) {
   INT32 i;
   SGPPaletteEntry LColors[2];
 
-  OutputDebugString("Entering editor mode...\n");
+  DebugPrint("Entering editor mode...\n");
 
   gfRealGunNut = gGameOptions.fGunNut;
   gGameOptions.fGunNut = TRUE;
@@ -387,7 +387,7 @@ BOOLEAN EditModeInit(void) {
     ShowLightPositionHandles();
     LightSpriteRenderAll();
   } else {
-    OutputDebugString("Creating summary window...\n");
+    DebugPrint("Creating summary window...\n");
     CreateSummaryWindow();
     gfNeedToInitGame = TRUE;
   }
@@ -402,7 +402,7 @@ BOOLEAN EditModeInit(void) {
 
   gfIntendOnEnteringEditor = FALSE;
 
-  OutputDebugString("Finished entering editor mode...\n");
+  DebugPrint("Finished entering editor mode...\n");
 
   return (TRUE);
 }
@@ -2734,7 +2734,7 @@ void MapOptimize(void) {
 		{
 			// Tile is in viewable area so try to optimize any extra land pieces
 			pMapTile = &gpWorldLevelData[ gridno ];
-			
+
 			node = start = pMapTile->pLandStart;
 			head = pMapTile->pLandHead;
 
@@ -2742,7 +2742,7 @@ void MapOptimize(void) {
 				node = start = head;
 
 			end = pMapTile->pLandTail;
-			
+
 			fChangedHead = fChangedTail = fFound = FALSE;
 			while ( !fFound && node != NULL )
 			{
@@ -2770,7 +2770,7 @@ void MapOptimize(void) {
 */
 
 				// Now delete from the end to "node"
-				while( end != node && end != NULL ) 
+				while( end != node && end != NULL )
 				{
 					fChangedTail = TRUE;
 					temp = end->pPrev;

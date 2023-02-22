@@ -2,10 +2,11 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 #define QUEST_DEBUG_FILE "QuestDebug.txt"
 
@@ -99,9 +100,9 @@ void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
     // open a new file for writing
 
     // if the file exists
-    if (FileExists(QUEST_DEBUG_FILE)) {
+    if (FileMan_Exists(QUEST_DEBUG_FILE)) {
       // delete the file
-      if (!FileDelete(QUEST_DEBUG_FILE)) {
+      if (!FileMan_Delete(QUEST_DEBUG_FILE)) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to delete %s file", QUEST_DEBUG_FILE));
         return;
       }
@@ -110,9 +111,9 @@ void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
   }
 
   // open the file
-  hFile = FileOpen(QUEST_DEBUG_FILE, FILE_ACCESS_WRITE, FALSE);
+  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_ACCESS_WRITE, FALSE);
   if (!hFile) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("FAILED to open Quest Debug File %s", QUEST_DEBUG_FILE));
     return;
@@ -121,8 +122,8 @@ void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
   sprintf(DestString, "#%5d. P%d:\n\t%s\n\n", uiLineNumber, ubPriority, TempString);
 
   // open the file and append to it
-  if (!FileWrite(hFile, DestString, strlen(DestString), &uiByteWritten)) {
-    FileClose(hFile);
+  if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
+    FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to write to %s", QUEST_DEBUG_FILE));
     return;
   }

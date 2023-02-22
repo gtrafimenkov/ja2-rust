@@ -26,6 +26,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 // Global dynamic array of all of the items in a loaded map.
 WORLDITEM *gWorldItems = NULL;
@@ -312,10 +313,11 @@ void SaveWorldItemsToMap(HWFILE fp) {
 
   uiActualNumWorldItems = GetNumUsedWorldItems();
 
-  FileWrite(fp, &uiActualNumWorldItems, 4, &uiBytesWritten);
+  FileMan_Write(fp, &uiActualNumWorldItems, 4, &uiBytesWritten);
 
   for (i = 0; i < guiNumWorldItems; i++) {
-    if (gWorldItems[i].fExists) FileWrite(fp, &gWorldItems[i], sizeof(WORLDITEM), &uiBytesWritten);
+    if (gWorldItems[i].fExists)
+      FileMan_Write(fp, &gWorldItems[i], sizeof(WORLDITEM), &uiBytesWritten);
   }
 }
 

@@ -20,7 +20,7 @@ void DirectXZeroMem(void* pMemory, int nSize);
 #define ZEROMEM(x) DirectXZeroMem((void*)&(x), sizeof(x))
 
 #undef DEBUGMSG
-#define DEBUGMSG(x) OutputDebugString(x)
+#define DEBUGMSG(x) DebugPrint(x)
 
 #ifdef __cplusplus
 }

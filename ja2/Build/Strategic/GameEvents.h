@@ -1,7 +1,6 @@
 #ifndef __GAME_EVENTS_H
 #define __GAME_EVENTS_H
 
-#include "SGP/FileMan.h"
 #include "Strategic/GameEventHook.h"
 
 #define SEF_PREVENT_DELETION 0x01

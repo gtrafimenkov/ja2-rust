@@ -18,14 +18,15 @@
 
 #include "SGP/ImpTGA.h"
 
+#include <string.h>
+
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "string.h"
+#include "fileman.h"
 
 //**************************************************************************
 //
@@ -69,14 +70,14 @@ BOOLEAN LoadTGAFileToImage(HIMAGE hImage, UINT16 fContents) {
 
   Assert(hImage != NULL);
 
-  CHECKF(FileExists(hImage->ImageFile));
+  CHECKF(FileMan_Exists(hImage->ImageFile));
 
-  hFile = FileOpen(hImage->ImageFile, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(hImage->ImageFile, FILE_ACCESS_READ, FALSE);
   CHECKF(hFile);
 
-  if (!FileRead(hFile, &uiImgID, sizeof(UINT8), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiColMap, sizeof(UINT8), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiType, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiImgID, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMap, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiType, sizeof(UINT8), &uiBytesRead)) goto end;
 
   switch (uiType) {
     case 1:
@@ -98,7 +99,7 @@ BOOLEAN LoadTGAFileToImage(HIMAGE hImage, UINT16 fContents) {
   // Set remaining values
 
 end:
-  FileClose(hFile);
+  FileMan_Close(hFile);
   return (fReturnVal);
 }
 
@@ -158,23 +159,23 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
   UINT8 g;
   UINT8 b;
 
-  if (!FileRead(hFile, &uiColMapOrigin, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiColMapLength, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiColMapEntrySize, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMapOrigin, sizeof(UINT16), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMapLength, sizeof(UINT16), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiColMapEntrySize, sizeof(UINT8), &uiBytesRead)) goto end;
 
-  if (!FileRead(hFile, &uiXOrg, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiYOrg, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiWidth, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiHeight, sizeof(UINT16), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiImagePixelSize, sizeof(UINT8), &uiBytesRead)) goto end;
-  if (!FileRead(hFile, &uiImageDescriptor, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiXOrg, sizeof(UINT16), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiYOrg, sizeof(UINT16), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiWidth, sizeof(UINT16), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiHeight, sizeof(UINT16), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiImagePixelSize, sizeof(UINT8), &uiBytesRead)) goto end;
+  if (!FileMan_Read(hFile, &uiImageDescriptor, sizeof(UINT8), &uiBytesRead)) goto end;
 
   // skip the id
-  FileSeek(hFile, uiImgID, FILE_SEEK_FROM_CURRENT);
+  FileMan_Seek(hFile, uiImgID, FILE_SEEK_FROM_CURRENT);
 
   // skip the colour map
   if (uiColMap != 0) {
-    FileSeek(hFile, uiColMapLength * (uiImagePixelSize / 8), FILE_SEEK_FROM_CURRENT);
+    FileMan_Seek(hFile, uiColMapLength * (uiImagePixelSize / 8), FILE_SEEK_FROM_CURRENT);
   }
 
   // Set some HIMAGE data values
@@ -201,12 +202,12 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
 
       // Data is stored top-bottom - reverse for SGP HIMAGE format
       for (cnt = 0; cnt < uiHeight - 1; cnt++) {
-        if (!FileRead(hFile, pBMData, uiWidth * 2, &uiBytesRead)) goto freeEnd;
+        if (!FileMan_Read(hFile, pBMData, uiWidth * 2, &uiBytesRead)) goto freeEnd;
 
         pBMData -= uiWidth * 2;
       }
       // Do first row
-      if (!FileRead(hFile, pBMData, uiWidth * 2, &uiBytesRead)) goto freeEnd;
+      if (!FileMan_Read(hFile, pBMData, uiWidth * 2, &uiBytesRead)) goto freeEnd;
 
       // Convert TGA 5,5,5 16 BPP data into current system 16 BPP Data
       // ConvertTGAToSystemBPPFormat( hImage );
@@ -229,9 +230,9 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
 
       for (cnt = 0; cnt < uiHeight; cnt++) {
         for (i = 0; i < uiWidth; i++) {
-          if (!FileRead(hFile, &b, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
-          if (!FileRead(hFile, &g, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
-          if (!FileRead(hFile, &r, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
+          if (!FileMan_Read(hFile, &b, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
+          if (!FileMan_Read(hFile, &g, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
+          if (!FileMan_Read(hFile, &r, sizeof(UINT8), &uiBytesRead)) goto freeEnd;
 
           pBMPtr[i * 3] = r;
           pBMPtr[i * 3 + 1] = g;
@@ -250,13 +251,13 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, HWFILE hFile, UINT8 uiImgID, UINT8 uiC
 
 			for ( i=0 ; i<iNumValues; i++ )
 			{
-				if ( !FileRead( hFile, &b, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &b, sizeof(UINT8), &uiBytesRead ) )
 					goto freeEnd;
-				if ( !FileRead( hFile, &g, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &g, sizeof(UINT8), &uiBytesRead ) )
 					goto freeEnd;
-				if ( !FileRead( hFile, &r, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &r, sizeof(UINT8), &uiBytesRead ) )
 					goto freeEnd;
-				if ( !FileRead( hFile, &a, sizeof(UINT8), &uiBytesRead ) )
+				if ( !FileMan_Read( hFile, &a, sizeof(UINT8), &uiBytesRead ) )
 					goto freeEnd;
 
 				pBMData[ i*3   ] = r;

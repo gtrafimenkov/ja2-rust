@@ -41,12 +41,12 @@
 #include "Utils/FontControl.h"
 #include "Utils/MapUtility.h"
 #include "Utils/MercTextBox.h"
-#include "Utils/MultilingualTextCodeGenerator.h"
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
+#include "platfrom_strings.h"
 
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
@@ -138,14 +138,6 @@ UINT32 InitializeJA2(void) {
 #endif
 
 #ifdef JA2BETAVERSION
-  if (ProcessIfMultilingualCmdLineArgDetected(
-          gzCommandLine)) {  // If the multilingual text code generator has activated, quit now.
-    gfProgramIsRunning = FALSE;
-    return (INIT_SCREEN);
-  }
-#endif
-
-#ifdef JA2BETAVERSION
   // CHECK COMMANDLINE FOR SPECIAL UTILITY
   if (strcmp(gzCommandLine, "-DOMAPS") == 0) {
     return (MAPUTILITY_SCREEN);
@@ -155,7 +147,7 @@ UINT32 InitializeJA2(void) {
 #ifdef JA2BETAVERSION
   // This allows the QuickSave Slots to be autoincremented, ie everytime the user saves, there will
   // be a new quick save file
-  if (_stricmp(gzCommandLine, "-quicksave") == 0) {
+  if (strcasecmp(gzCommandLine, "-quicksave") == 0) {
     gfUseConsecutiveQuickSaveSlots = TRUE;
   }
 #endif
@@ -164,7 +156,7 @@ UINT32 InitializeJA2(void) {
 #ifdef JA2EDITOR
   // CHECK COMMANDLINE FOR SPECIAL UTILITY
   if (!strcmp(gzCommandLine, "-EDITORAUTO")) {
-    OutputDebugString("Beginning JA2 using -EDITORAUTO commandline argument...\n");
+    DebugPrint("Beginning JA2 using -EDITORAUTO commandline argument...\n");
     // For editor purposes, need to know the default map file.
     sprintf(gubFilename, "none");
     // also set the sector
@@ -176,7 +168,7 @@ UINT32 InitializeJA2(void) {
     return (GAME_SCREEN);
   }
   if (strcmp(gzCommandLine, "-EDITOR") == 0) {
-    OutputDebugString("Beginning JA2 using -EDITOR commandline argument...\n");
+    DebugPrint("Beginning JA2 using -EDITOR commandline argument...\n");
     // For editor purposes, need to know the default map file.
     sprintf(gubFilename, "none");
     // also set the sector

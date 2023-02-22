@@ -17,6 +17,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 // externals
 extern HVSURFACE ghFrameBuffer;
@@ -458,7 +459,8 @@ BOOLEAN EnterCreditsScreen() {
 
   /*
           //open the credit text file
-          ghFile = FileOpen( CRDT_NAME_OF_CREDIT_FILE, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE
+          ghFile = FileMan_Open( CRDT_NAME_OF_CREDIT_FILE, FILE_ACCESS_READ | FILE_OPEN_EXISTING,
+     FALSE
      ); if( !ghFile )
           {
                   return( FALSE );
@@ -491,7 +493,7 @@ BOOLEAN ExitCreditScreen() {
 
   /*
           //close the text file
-          FileClose( ghFile );
+          FileMan_Close( ghFile );
           ghFile = 0;
   */
 

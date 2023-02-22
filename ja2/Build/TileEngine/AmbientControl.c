@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
 #include "Strategic/GameEvents.h"
@@ -10,6 +9,7 @@
 #include "TileEngine/Environment.h"
 #include "TileEngine/Lighting.h"
 #include "Utils/SoundControl.h"
+#include "fileman.h"
 
 AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
 INT16 gsNumAmbData = 0;
@@ -149,19 +149,19 @@ BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
   sprintf(zFilename, "AMBIENT\\%d.bad", ubAmbientID);
 
   // OPEN, LOAD
-  hFile = FileOpen(zFilename, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(zFilename, FILE_ACCESS_READ, FALSE);
   if (!hFile) {
     return (FALSE);
   }
 
   // READ #
-  if (!FileRead(hFile, &gsNumAmbData, sizeof(INT16), NULL)) {
+  if (!FileMan_Read(hFile, &gsNumAmbData, sizeof(INT16), NULL)) {
     return (FALSE);
   }
 
   // LOOP FOR OTHERS
   for (cnt = 0; cnt < gsNumAmbData; cnt++) {
-    if (!FileRead(hFile, &(gAmbData[cnt]), sizeof(AMBIENTDATA_STRUCT), NULL)) {
+    if (!FileMan_Read(hFile, &(gAmbData[cnt]), sizeof(AMBIENTDATA_STRUCT), NULL)) {
       return (FALSE);
     }
 
@@ -169,7 +169,7 @@ BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
     strcpy(gAmbData[cnt].zFilename, zFilename);
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }

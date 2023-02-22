@@ -80,9 +80,6 @@
     <ClCompile Include="MultiLanguageGraphicUtils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MultilingualTextCodeGenerator.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MusicControl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -164,9 +161,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MultiLanguageGraphicUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MultilingualTextCodeGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MusicControl.h">

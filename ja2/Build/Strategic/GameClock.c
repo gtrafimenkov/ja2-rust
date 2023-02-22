@@ -24,6 +24,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "fileman.h"
 
 //#define DEBUG_GAME_CLOCK
 
@@ -674,61 +675,61 @@ void UpdateClock() {
 BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState) {
   UINT32 uiNumBytesWritten = 0;
 
-  FileWrite(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) return (FALSE);
 
-  FileWrite(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) return (FALSE);
 
-  FileWrite(hFile, &fGamePaused, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &fGamePaused, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileWrite(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileWrite(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileWrite(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  FileWrite(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  FileWrite(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesWritten);
+  FileMan_Write(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) return (FALSE);
 
-  FileWrite(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  FileWrite(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  FileWrite(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) return (FALSE);
 
-  FileWrite(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  FileWrite(hFile, &fLockPauseState, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &fLockPauseState, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileWrite(hFile, &gfPauseDueToPlayerGamePause, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gfPauseDueToPlayerGamePause, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileWrite(hFile, &gfResetAllPlayerKnowsEnemiesFlags, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gfResetAllPlayerKnowsEnemiesFlags, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileWrite(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  FileWrite(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  FileWrite(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  FileWrite(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesWritten);
+  FileMan_Write(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesWritten);
   if (uiNumBytesWritten != TIME_PADDINGBYTES) return (FALSE);
   return (TRUE);
 }
@@ -736,61 +737,61 @@ BOOLEAN SaveGameClock(HWFILE hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
 BOOLEAN LoadGameClock(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
-  FileRead(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) return (FALSE);
 
-  FileRead(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesRead);
+  FileMan_Read(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
 
-  FileRead(hFile, &gfGamePaused, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &gfGamePaused, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileRead(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileRead(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileRead(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  FileRead(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  FileRead(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesRead);
+  FileMan_Read(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
 
-  FileRead(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  FileRead(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  FileRead(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesRead);
+  FileMan_Read(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
 
-  FileRead(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  FileRead(hFile, &gfLockPauseState, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &gfLockPauseState, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileRead(hFile, &gfPauseDueToPlayerGamePause, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &gfPauseDueToPlayerGamePause, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileRead(hFile, &gfResetAllPlayerKnowsEnemiesFlags, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &gfResetAllPlayerKnowsEnemiesFlags, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileRead(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  FileRead(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  FileRead(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  FileRead(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesRead);
+  FileMan_Read(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesRead);
   if (uiNumBytesRead != TIME_PADDINGBYTES) return (FALSE);
 
   // Update the game clock

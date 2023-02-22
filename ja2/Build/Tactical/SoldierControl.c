@@ -85,6 +85,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WinUtil.h"
+#include "fileman.h"
 
 extern INT16 DirIncrementer[8];
 
@@ -4871,10 +4872,10 @@ BOOLEAN LoadPaletteData() {
   HWFILE hFile;
   UINT32 cnt, cnt2;
 
-  hFile = FileOpen(PALETTEFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(PALETTEFILENAME, FILE_ACCESS_READ, FALSE);
 
   // Read # of types
-  if (!FileRead(hFile, &guiNumPaletteSubRanges, sizeof(guiNumPaletteSubRanges), NULL)) {
+  if (!FileMan_Read(hFile, &guiNumPaletteSubRanges, sizeof(guiNumPaletteSubRanges), NULL)) {
     return (FALSE);
   }
 
@@ -4885,23 +4886,23 @@ BOOLEAN LoadPaletteData() {
 
   // Read # of types for each!
   for (cnt = 0; cnt < guiNumPaletteSubRanges; cnt++) {
-    if (!FileRead(hFile, &gubpNumReplacementsPerRange[cnt], sizeof(UINT8), NULL)) {
+    if (!FileMan_Read(hFile, &gubpNumReplacementsPerRange[cnt], sizeof(UINT8), NULL)) {
       return (FALSE);
     }
   }
 
   // Loop for each one, read in data
   for (cnt = 0; cnt < guiNumPaletteSubRanges; cnt++) {
-    if (!FileRead(hFile, &gpPaletteSubRanges[cnt].ubStart, sizeof(UINT8), NULL)) {
+    if (!FileMan_Read(hFile, &gpPaletteSubRanges[cnt].ubStart, sizeof(UINT8), NULL)) {
       return (FALSE);
     }
-    if (!FileRead(hFile, &gpPaletteSubRanges[cnt].ubEnd, sizeof(UINT8), NULL)) {
+    if (!FileMan_Read(hFile, &gpPaletteSubRanges[cnt].ubEnd, sizeof(UINT8), NULL)) {
       return (FALSE);
     }
   }
 
   // Read # of palettes
-  if (!FileRead(hFile, &guiNumReplacements, sizeof(guiNumReplacements), NULL)) {
+  if (!FileMan_Read(hFile, &guiNumReplacements, sizeof(guiNumReplacements), NULL)) {
     return (FALSE);
   }
 
@@ -4912,16 +4913,17 @@ BOOLEAN LoadPaletteData() {
   // Read!
   for (cnt = 0; cnt < guiNumReplacements; cnt++) {
     // type
-    if (!FileRead(hFile, &gpPalRep[cnt].ubType, sizeof(gpPalRep[cnt].ubType), NULL)) {
+    if (!FileMan_Read(hFile, &gpPalRep[cnt].ubType, sizeof(gpPalRep[cnt].ubType), NULL)) {
       return (FALSE);
     }
 
-    if (!FileRead(hFile, &gpPalRep[cnt].ID, sizeof(gpPalRep[cnt].ID), NULL)) {
+    if (!FileMan_Read(hFile, &gpPalRep[cnt].ID, sizeof(gpPalRep[cnt].ID), NULL)) {
       return (FALSE);
     }
 
     // # entries
-    if (!FileRead(hFile, &gpPalRep[cnt].ubPaletteSize, sizeof(gpPalRep[cnt].ubPaletteSize), NULL)) {
+    if (!FileMan_Read(hFile, &gpPalRep[cnt].ubPaletteSize, sizeof(gpPalRep[cnt].ubPaletteSize),
+                      NULL)) {
       return (FALSE);
     }
 
@@ -4934,19 +4936,19 @@ BOOLEAN LoadPaletteData() {
     CHECKF(gpPalRep[cnt].b != NULL);
 
     for (cnt2 = 0; cnt2 < gpPalRep[cnt].ubPaletteSize; cnt2++) {
-      if (!FileRead(hFile, &gpPalRep[cnt].r[cnt2], sizeof(UINT8), NULL)) {
+      if (!FileMan_Read(hFile, &gpPalRep[cnt].r[cnt2], sizeof(UINT8), NULL)) {
         return (FALSE);
       }
-      if (!FileRead(hFile, &gpPalRep[cnt].g[cnt2], sizeof(UINT8), NULL)) {
+      if (!FileMan_Read(hFile, &gpPalRep[cnt].g[cnt2], sizeof(UINT8), NULL)) {
         return (FALSE);
       }
-      if (!FileRead(hFile, &gpPalRep[cnt].b[cnt2], sizeof(UINT8), NULL)) {
+      if (!FileMan_Read(hFile, &gpPalRep[cnt].b[cnt2], sizeof(UINT8), NULL)) {
         return (FALSE);
       }
     }
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }
@@ -5903,7 +5905,7 @@ BOOLEAN InternalDoMercBattleSound(SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID, 
     sprintf(zFilename, "BATTLESNDS\\%03d_%s.wav", pSoldier->ubProfile,
             gBattleSndsData[ubSoundID].zName);
 
-    if (!FileExists(zFilename)) {
+    if (!FileMan_Exists(zFilename)) {
       // OK, temp build file...
       if (pSoldier->ubBodyType == REGFEMALE) {
         sprintf(zFilename, "BATTLESNDS\\f_%s.wav", gBattleSndsData[ubSoundID].zName);

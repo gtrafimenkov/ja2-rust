@@ -1,6 +1,8 @@
 #ifndef __TYPES_
 #define __TYPES_
 
+#include <stdint.h>
+
 #ifndef _SIRTECH_TYPES_
 #define _SIRTECH_TYPES_
 
@@ -23,14 +25,14 @@
 
 // HEY WIZARDRY DUDES, JA2 ISN'T THE ONLY PROGRAM WE COMPILE! :-)
 
-typedef unsigned int UINT32;
-typedef signed int INT32;
+typedef uint32_t UINT32;
+typedef int32_t INT32;
 
 // integers
 typedef unsigned char UINT8;
 typedef signed char INT8;
-typedef unsigned short UINT16;
-typedef signed short INT16;
+typedef uint16_t UINT16;
+typedef int16_t INT16;
 // floats
 typedef float FLOAT;
 typedef double DOUBLE;
@@ -42,12 +44,12 @@ typedef char* STR8;
 typedef wchar_t* STR16;
 // flags (individual bits used)
 typedef unsigned char FLAGS8;
-typedef unsigned short FLAGS16;
+typedef uint16_t FLAGS16;
 typedef unsigned long FLAGS32;
 // other
 typedef unsigned char BOOLEAN;
 typedef void* PTR;
-typedef unsigned short HNDL;
+typedef uint16_t HNDL;
 typedef UINT8 BYTE;
 typedef CHAR8 STRING512[512];
 typedef UINT32 HWFILE;
@@ -121,5 +123,13 @@ typedef VECTOR4 COLOR;  // rgba color array
 #if !defined(min)
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #endif
+
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
+
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
 
 #endif

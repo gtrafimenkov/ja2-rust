@@ -16,7 +16,6 @@
 #include "LoadingScreen.h"
 #include "MessageBoxScreen.h"
 #include "SGP/CursorControl.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SaveLoadGame.h"
@@ -92,6 +91,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 // Used by PickGridNoToWalkIn
 #define MAX_ATTEMPTS 200
@@ -286,7 +286,7 @@ UINT32 uiEnterSectorEndTime;
 // The grand total time for loading a map
 UINT32 uiLoadWorldStartTime;
 UINT32 uiLoadWorldEndTime;
-// The time spent in FileRead
+// The time spent in FileMan_Read
 UINT32 uiTotalFileReadTime;
 UINT32 uiTotalFileReadCalls;
 // LoadWorld and parts
@@ -417,7 +417,7 @@ void BeginLoadScreen() {
   // The grand total time for loading a map
   uiLoadWorldStartTime = 0;
   uiLoadWorldEndTime = 0;
-  // The time spent in FileRead
+  // The time spent in FileMan_Read
   uiTotalFileReadTime = 0;
   uiTotalFileReadCalls = 0;
   // Sections of LoadWorld
@@ -470,13 +470,13 @@ void EndLoadScreen() {
     // Record all of the timings.
     fprintf(fp, "%S\n", str);
     fprintf(fp, "EnterSector() supersets LoadWorld().  This includes other external sections.\n");
-    // FileRead()
+    // FileMan_Read()
     fprintf(
         fp,
         "\n\nVARIOUS FUNCTION TIMINGS (exclusive of actual function timings in second heading)\n");
     uiSeconds = uiTotalFileReadTime / 1000;
     uiHundreths = (uiTotalFileReadTime / 10) % 100;
-    fprintf(fp, "FileRead:  %d.%02d (called %d times)\n", uiSeconds, uiHundreths,
+    fprintf(fp, "FileMan_Read:  %d.%02d (called %d times)\n", uiSeconds, uiHundreths,
             uiTotalFileReadCalls);
 
     fprintf(fp, "\n\nSECTIONS OF LOADWORLD (all parts should add up to 100%)\n");
@@ -673,7 +673,7 @@ void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLE
   // We will test against this string
   sprintf(bTestString, "MAPS\\%s", bString);
 
-  if (fUsePlaceholder && !FileExists(bTestString)) {
+  if (fUsePlaceholder && !FileMan_Exists(bTestString)) {
     // Debug str
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("Map does not exist for %s, using default.", bTestString));
@@ -980,9 +980,9 @@ BOOLEAN MapExists(CHAR8 *szFilename) {
   CHAR8 str[50];
   HWFILE fp;
   sprintf(str, "MAPS\\%s", szFilename);
-  fp = FileOpen(str, FILE_ACCESS_READ, FALSE);
+  fp = FileMan_Open(str, FILE_ACCESS_READ, FALSE);
   if (!fp) return FALSE;
-  FileClose(fp);
+  FileMan_Close(fp);
   return TRUE;
 }
 
@@ -3359,14 +3359,14 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
 
   // Save the strategic map information
-  FileWrite(hFile, StrategicMap, uiSize, &uiNumBytesWritten);
+  FileMan_Write(hFile, StrategicMap, uiSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSize) {
     return (FALSE);
   }
 
   // Save the Sector Info
   uiSize = sizeof(SECTORINFO) * 256;
-  FileWrite(hFile, SectorInfo, uiSize, &uiNumBytesWritten);
+  FileMan_Write(hFile, SectorInfo, uiSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSize) {
     return (FALSE);
   }
@@ -3374,16 +3374,16 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   // Save the SAM Controlled Sector Information
   uiSize = MAP_WORLD_X * MAP_WORLD_Y;
   /*
-          FileWrite( hFile, ubSAMControlledSectors, uiSize, &uiNumBytesWritten );
+          FileMan_Write( hFile, ubSAMControlledSectors, uiSize, &uiNumBytesWritten );
           if( uiNumBytesWritten != uiSize)
           {
                   return(FALSE);
           }
   */
-  FileSeek(hFile, uiSize, FILE_SEEK_FROM_CURRENT);
+  FileMan_Seek(hFile, uiSize, FILE_SEEK_FROM_CURRENT);
 
   // Save the fFoundOrta
-  FileWrite(hFile, &fFoundOrta, sizeof(BOOLEAN), &uiNumBytesWritten);
+  FileMan_Write(hFile, &fFoundOrta, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) {
     return (FALSE);
   }
@@ -3396,14 +3396,14 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
   UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
 
   // Load the strategic map information
-  FileRead(hFile, StrategicMap, uiSize, &uiNumBytesRead);
+  FileMan_Read(hFile, StrategicMap, uiSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiSize) {
     return (FALSE);
   }
 
   // Load the Sector Info
   uiSize = sizeof(SECTORINFO) * 256;
-  FileRead(hFile, SectorInfo, uiSize, &uiNumBytesRead);
+  FileMan_Read(hFile, SectorInfo, uiSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiSize) {
     return (FALSE);
   }
@@ -3411,16 +3411,16 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
   // Load the SAM Controlled Sector Information
   uiSize = MAP_WORLD_X * MAP_WORLD_Y;
   /*
-          FileRead( hFile, ubSAMControlledSectors, uiSize, &uiNumBytesRead );
+          FileMan_Read( hFile, ubSAMControlledSectors, uiSize, &uiNumBytesRead );
           if( uiNumBytesRead != uiSize)
           {
                   return(FALSE);
           }
   */
-  FileSeek(hFile, uiSize, FILE_SEEK_FROM_CURRENT);
+  FileMan_Seek(hFile, uiSize, FILE_SEEK_FROM_CURRENT);
 
   // Load the fFoundOrta
-  FileRead(hFile, &fFoundOrta, sizeof(BOOLEAN), &uiNumBytesRead);
+  FileMan_Read(hFile, &fFoundOrta, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) {
     return (FALSE);
   }

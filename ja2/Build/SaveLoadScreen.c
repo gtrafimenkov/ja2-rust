@@ -37,6 +37,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 BOOLEAN gfSchedulesHosed = FALSE;
 extern UINT32 guiBrokenSaveGameVersion;
@@ -1001,7 +1002,7 @@ BOOLEAN InitSaveGameArray() {
   for (cnt = 0; cnt < NUM_SAVE_GAMES; cnt++) {
     CreateSavedGameFileNameFromNumber(cnt, zSaveGameName);
 
-    if (FileExists(zSaveGameName)) {
+    if (FileMan_Exists(zSaveGameName)) {
       // Get the header for the saved game
       if (!LoadSavedGameHeader(cnt, &SaveGameHeader))
         gbSaveGameArray[cnt] = FALSE;
@@ -1297,24 +1298,24 @@ BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
   // Get the name of the file
   CreateSavedGameFileNameFromNumber(bEntry, zSavedGameName);
 
-  if (FileExists(zSavedGameName)) {
+  if (FileMan_Exists(zSavedGameName)) {
     // create the save game file
-    hFile = FileOpen(zSavedGameName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_Open(zSavedGameName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
     if (!hFile) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       gbSaveGameArray[bEntry] = FALSE;
       return (FALSE);
     }
 
     // Load the Save Game header file
-    FileRead(hFile, pSaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesRead);
+    FileMan_Read(hFile, pSaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(SAVED_GAME_HEADER)) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       gbSaveGameArray[bEntry] = FALSE;
       return (FALSE);
     }
 
-    FileClose(hFile);
+    FileMan_Close(hFile);
 
     //
     // Do some Tests on the header to make sure it is valid
@@ -1809,7 +1810,7 @@ void DeleteSaveGameNumber(UINT8 ubSaveGameSlotID) {
   CreateSavedGameFileNameFromNumber(ubSaveGameSlotID, zSaveGameName);
 
   // Delete the saved game file
-  FileDelete(zSaveGameName);
+  FileMan_Delete(zSaveGameName);
 }
 
 void DisplayOnScreenNumber(BOOLEAN fErase) {
@@ -2027,7 +2028,7 @@ BOOLEAN DoQuickSave() {
                   swprintf( zSizeNeeded, L"%d", REQUIRED_FREE_SPACE / BYTESINMEGABYTE );
                   InsertCommasForDollarFigure( zSizeNeeded );
 
-                  uiSpaceOnDrive = GetFreeSpaceOnHardDriveWhereGameIsRunningFrom( );
+                  uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom( );
 
                   swprintf( zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE );
 
@@ -2091,7 +2092,7 @@ BOOLEAN IsThereAnySavedGameFiles() {
   for (cnt = 0; cnt < NUM_SAVE_GAMES; cnt++) {
     CreateSavedGameFileNameFromNumber(cnt, zSaveGameName);
 
-    if (FileExists(zSaveGameName)) return (TRUE);
+    if (FileMan_Exists(zSaveGameName)) return (TRUE);
   }
 
   return (FALSE);
@@ -2202,7 +2203,7 @@ void SaveGameToSlotNum() {
                   swprintf( zSizeNeeded, L"%d", REQUIRED_FREE_SPACE / BYTESINMEGABYTE );
                   InsertCommasForDollarFigure( zSizeNeeded );
 
-                  uiSpaceOnDrive = GetFreeSpaceOnHardDriveWhereGameIsRunningFrom( );
+                  uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom( );
 
                   swprintf( zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE );
 

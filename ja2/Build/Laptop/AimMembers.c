@@ -42,6 +42,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 //
 //******  Defines  ******
@@ -1066,7 +1067,7 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   UINT16 i;
   UINT32 uiStartSeekAmount;
 
-  hFile = FileOpen(MERCBIOSFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(MERCBIOSFILENAME, FILE_ACCESS_READ, FALSE);
   if (!hFile) {
     return (FALSE);
   }
@@ -1074,11 +1075,11 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   // Get current mercs bio info
   uiStartSeekAmount = (SIZE_MERC_BIO_INFO + SIZE_MERC_ADDITIONAL_INFO) * ubIndex;
 
-  if (FileSeek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
+  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
     return (FALSE);
   }
 
-  if (!FileRead(hFile, pInfoString, SIZE_MERC_BIO_INFO, &uiBytesRead)) {
+  if (!FileMan_Read(hFile, pInfoString, SIZE_MERC_BIO_INFO, &uiBytesRead)) {
     return (FALSE);
   }
 
@@ -1150,11 +1151,11 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   // Get the additional info
   uiStartSeekAmount =
       ((SIZE_MERC_BIO_INFO + SIZE_MERC_ADDITIONAL_INFO) * ubIndex) + SIZE_MERC_BIO_INFO;
-  if (FileSeek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
+  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
     return (FALSE);
   }
 
-  if (!FileRead(hFile, pAddInfo, SIZE_MERC_ADDITIONAL_INFO, &uiBytesRead)) {
+  if (!FileMan_Read(hFile, pAddInfo, SIZE_MERC_ADDITIONAL_INFO, &uiBytesRead)) {
     return (FALSE);
   }
 
@@ -1223,7 +1224,7 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
 #endif
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
   return (TRUE);
 }
 

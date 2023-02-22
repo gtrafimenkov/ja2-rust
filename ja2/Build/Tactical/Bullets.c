@@ -6,7 +6,6 @@
 
 #include "GameSettings.h"
 #include "SGP/Container.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -23,6 +22,7 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Utilities.h"
+#include "fileman.h"
 
 // Defines
 #define NUM_BULLET_SLOTS 50
@@ -353,7 +353,7 @@ BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of Bullets in the array
-  FileWrite(hFile, &uiBulletCount, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiBulletCount, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -363,7 +363,7 @@ BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile) {
       // if the bullet is active, save it
       if (gBullets[usCnt].fAllocated) {
         // Save the the Bullet structure
-        FileWrite(hFile, &gBullets[usCnt], sizeof(BULLET), &uiNumBytesWritten);
+        FileMan_Write(hFile, &gBullets[usCnt], sizeof(BULLET), &uiNumBytesWritten);
         if (uiNumBytesWritten != sizeof(BULLET)) {
           return (FALSE);
         }
@@ -382,14 +382,14 @@ BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile) {
   memset(gBullets, 0, NUM_BULLET_SLOTS * sizeof(BULLET));
 
   // Load the number of Bullets in the array
-  FileRead(hFile, &guiNumBullets, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiNumBullets, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
 
   for (usCnt = 0; usCnt < guiNumBullets; usCnt++) {
     // Load the the Bullet structure
-    FileRead(hFile, &gBullets[usCnt], sizeof(BULLET), &uiNumBytesRead);
+    FileMan_Read(hFile, &gBullets[usCnt], sizeof(BULLET), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(BULLET)) {
       return (FALSE);
     }

@@ -29,6 +29,7 @@
 #include "Tactical/WorldItems.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 // the max loyalty rating for any given town
 #define MAX_LOYALTY_VALUE 100
@@ -1211,12 +1212,12 @@ void WriteOutDistancesBetweenTowns(void) {
   HWFILE hFileHandle;
 
   hFileHandle =
-      FileOpen("BinaryData\\TownDistances.dat", FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+      FileMan_Open("BinaryData\\TownDistances.dat", FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
 
-  FileWrite(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
+  FileMan_Write(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return;
 }
@@ -1268,12 +1269,12 @@ void DumpDistancesBetweenTowns(void) {
 void ReadInDistancesBetweenTowns(void) {
   HWFILE hFileHandle;
 
-  hFileHandle = FileOpen("BinaryData\\TownDistances.dat", FILE_ACCESS_READ, FALSE);
+  hFileHandle = FileMan_Open("BinaryData\\TownDistances.dat", FILE_ACCESS_READ, FALSE);
 
-  FileRead(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
+  FileMan_Read(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return;
 }
@@ -1335,7 +1336,7 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
   // Save the Town Loyalty
-  FileWrite(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesWritten);
+  FileMan_Write(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(TOWN_LOYALTY) * NUM_TOWNS) {
     return (FALSE);
   }
@@ -1347,7 +1348,7 @@ BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
   // Restore the Town Loyalty
-  FileRead(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesRead);
+  FileMan_Read(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(TOWN_LOYALTY) * NUM_TOWNS) {
     return (FALSE);
   }

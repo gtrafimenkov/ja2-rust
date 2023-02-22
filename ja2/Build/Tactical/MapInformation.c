@@ -6,7 +6,6 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/RoadSmoothing.h"
 #include "JA2.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SysGlobals.h"
@@ -22,6 +21,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 // Don't mess with this value, unless you want to force update all maps in the game!
 #ifdef RUSSIAN
@@ -108,12 +108,12 @@ void SaveMapInformation(HWFILE fp) {
   UINT32 uiBytesWritten;
 
   gMapInformation.ubMapVersion = MINOR_MAP_VERSION;
-  FileWrite(fp, &gMapInformation, sizeof(MAPCREATE_STRUCT), &uiBytesWritten);
+  FileMan_Write(fp, &gMapInformation, sizeof(MAPCREATE_STRUCT), &uiBytesWritten);
 }
 
 void LoadMapInformation(INT8 **hBuffer) {
   LOADDATA(&gMapInformation, *hBuffer, sizeof(MAPCREATE_STRUCT));
-  // FileRead( hfile, &gMapInformation, sizeof( MAPCREATE_STRUCT ), &uiBytesRead);
+  // FileMan_Read( hfile, &gMapInformation, sizeof( MAPCREATE_STRUCT ), &uiBytesRead);
 
   // ATE: OK, do some handling here for basement level scroll restrictions
   // Calcuate world scrolling restrictions
@@ -151,7 +151,7 @@ void UpdateOldVersionMap() {
 	}
 	//VERSION 1 -- obsolete January 7, 1998
 	if( gMapInformation.ubMapVersion == 1 )
-	{	
+	{
 		gMapInformation.ubMapVersion++;
 		//Bug #03)  Removing all wall decals from map, because of new changes to the slots
 		//					as well as certain decals found commonly in illegal places.
@@ -217,7 +217,7 @@ void UpdateOldVersionMap() {
 					break;
 				}
 				else if( pStruct->usIndex == 936 || pStruct->usIndex == 956 || pStruct->usIndex == 976 )
-				{	
+				{
 					ReplaceStructIndex( i, pStruct->usIndex, 916 );
 					break;
 				}
@@ -277,7 +277,7 @@ void UpdateOldVersionMap() {
 			if( curr->pDetailedPlacement )
 			{
 				for( i = 0; i < NUM_INV_SLOTS; i++ )
-				{ //make all items undroppable, even if it is empty.  This will allow for 
+				{ //make all items undroppable, even if it is empty.  This will allow for
 					//random item generation, while empty, droppable slots are locked as empty
 					//during random item generation.
 					curr->pDetailedPlacement->Inv[ i ].fFlags |= OBJECT_UNDROPPABLE;
@@ -340,7 +340,7 @@ void UpdateOldVersionMap() {
 			{
 				RemoveObject( i, pStruct->usIndex );
 			}
-		}		
+		}
 	}
 
 	if( gMapInformation.ubMapVersion <= 7 )

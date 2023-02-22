@@ -1,28 +1,37 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "SGP/LibraryDataBase.h"
+#include "platform.h"
 
 INT8 gbLocale = ENGLISH_LANG;
 
 STR8 LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
                                  "polish",  "french",  "italian"};
 
+#define _MAX_PATH 260
+
 INT8 DetectLocale() {
   INT8 bLoc;
-  CHAR8 zPath[MAX_PATH];
-  CHAR8 zLocalePath[MAX_PATH];
+  CHAR8 zPath[_MAX_PATH];
+  CHAR8 zLocalePath[_MAX_PATH];
 
-  GetModuleFileName(NULL, zPath, MAX_PATH);
-  strcpy(strrchr(zPath, '\\'), "\\Data\\");
+  if (!Plat_GetExecutableDirectory(zPath, sizeof(zPath))) {
+    return ENGLISH_LANG;
+  }
+
+  strcpy(zPath, "\\Data\\");
 
   for (bLoc = RUSSIAN_LANG; bLoc < LANG_NUMBER; bLoc++) {
     strcpy(zLocalePath, zPath);
     strcat(zLocalePath, LocaleNames[bLoc]);
     strcat(zLocalePath, ".slf");
 
-    if (GetFileAttributes(zLocalePath) != INVALID_FILE_ATTRIBUTES) {
+    if (Plat_FileEntityExists(zLocalePath)) {
       gbLocale = bLoc;
-      sprintf(gGameLibaries[LIBRARY_NATIONAL_DATA].sLibraryName, "%s.slf", LocaleNames[gbLocale]);
+      snprintf(gGameLibaries[LIBRARY_NATIONAL_DATA].sLibraryName,
+               sizeof(gGameLibaries[LIBRARY_NATIONAL_DATA].sLibraryName), "%s.slf",
+               LocaleNames[gbLocale]);
       break;
     }
   }
@@ -82,3 +91,5 @@ LibraryInitHeader gGameLibaries[] = {
 #endif
 
 };
+
+// build:linux

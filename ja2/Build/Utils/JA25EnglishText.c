@@ -3,7 +3,6 @@
 #include "LanguageDefines.h"
 #ifdef ENGLISH
 #include "JA2DemoAds.h"
-#include "SGP/FileMan.h"
 #include "Utils/Text.h"
 #endif
 

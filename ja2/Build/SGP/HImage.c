@@ -2,16 +2,17 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
 #include "SGP/STCI.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/WCheck.h"
-#include "string.h"
+#include "fileman.h"
+#include "platfrom_strings.h"
 
 // This is the color substituted to keep a 24bpp -> 16bpp color
 // from going transparent (0x0000) -- DB
@@ -59,17 +60,17 @@ HIMAGE CreateImage(SGPFILENAME ImageFile, UINT16 fContents) {
   do {
     iFileLoader = UNKNOWN_FILE_READER;
 
-    if (_stricmp(Extension, "PCX") == 0) {
+    if (strcasecmp(Extension, "PCX") == 0) {
       iFileLoader = PCX_FILE_READER;
       break;
     }
 
-    if (_stricmp(Extension, "TGA") == 0) {
+    if (strcasecmp(Extension, "TGA") == 0) {
       iFileLoader = TGA_FILE_READER;
       break;
     }
 
-    if (_stricmp(Extension, "STI") == 0) {
+    if (strcasecmp(Extension, "STI") == 0) {
       iFileLoader = STCI_FILE_READER;
       break;
     }
@@ -77,7 +78,7 @@ HIMAGE CreateImage(SGPFILENAME ImageFile, UINT16 fContents) {
   } while (FALSE);
 
   // Determine if resource exists before creating image structure
-  if (!FileExists(ImageFile)) {
+  if (!FileMan_Exists(ImageFile)) {
     // If in debig, make fatal!
 #ifdef _DEBUG
     // FatalError( "Resource file %s does not exist.", ImageFile );

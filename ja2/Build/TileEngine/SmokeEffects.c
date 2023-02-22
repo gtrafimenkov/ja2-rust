@@ -23,6 +23,7 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 INT8 FromWorldFlagsToSmokeType(UINT8 ubWorldFlags);
 UINT8 FromSmokeTypeToWorldFlags(INT8 bType);
@@ -489,7 +490,7 @@ BOOLEAN SaveSmokeEffectsToSaveGameFile(HWFILE hFile) {
 
 
           //Save the Number of Smoke Effects
-          FileWrite( hFile, &uiNumSmokeEffects, sizeof( UINT32 ), &uiNumBytesWritten );
+          FileMan_Write( hFile, &uiNumSmokeEffects, sizeof( UINT32 ), &uiNumBytesWritten );
           if( uiNumBytesWritten != sizeof( UINT32 ) )
           {
                   return( FALSE );
@@ -505,7 +506,8 @@ BOOLEAN SaveSmokeEffectsToSaveGameFile(HWFILE hFile) {
                           if( gSmokeEffectData[ uiCnt ].fAllocated )
                           {
                                   //Save the Smoke effect Data
-                                  FileWrite( hFile, &gSmokeEffectData[ uiCnt ], sizeof( SMOKEEFFECT
+                                  FileMan_Write( hFile, &gSmokeEffectData[ uiCnt ], sizeof(
+     SMOKEEFFECT
      ), &uiNumBytesWritten ); if( uiNumBytesWritten != sizeof( SMOKEEFFECT ) )
                                   {
                                           return( FALSE );
@@ -529,7 +531,7 @@ BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile) {
     memset(gSmokeEffectData, 0, sizeof(SMOKEEFFECT) * NUM_SMOKE_EFFECT_SLOTS);
 
     // Load the Number of Smoke Effects
-    FileRead(hFile, &guiNumSmokeEffects, sizeof(UINT32), &uiNumBytesRead);
+    FileMan_Read(hFile, &guiNumSmokeEffects, sizeof(UINT32), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UINT32)) {
       return (FALSE);
     }
@@ -537,7 +539,7 @@ BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile) {
     // This is a TEMP hack to allow us to use the saves
     if (guiSaveGameVersion < 37 && guiNumSmokeEffects == 0) {
       // Load the Smoke effect Data
-      FileRead(hFile, gSmokeEffectData, sizeof(SMOKEEFFECT), &uiNumBytesRead);
+      FileMan_Read(hFile, gSmokeEffectData, sizeof(SMOKEEFFECT), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(SMOKEEFFECT)) {
         return (FALSE);
       }
@@ -546,7 +548,7 @@ BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile) {
     // loop through and load the list
     for (uiCnt = 0; uiCnt < guiNumSmokeEffects; uiCnt++) {
       // Load the Smoke effect Data
-      FileRead(hFile, &gSmokeEffectData[uiCnt], sizeof(SMOKEEFFECT), &uiNumBytesRead);
+      FileMan_Read(hFile, &gSmokeEffectData[uiCnt], sizeof(SMOKEEFFECT), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(SMOKEEFFECT)) {
         return (FALSE);
       }
@@ -585,7 +587,7 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   GetMapTempFileName(SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // delete file the file.
-  FileDelete(zMapName);
+  FileMan_Delete(zMapName);
 
   // loop through and count the number of smoke effects
   for (uiCnt = 0; uiCnt < guiNumSmokeEffects; uiCnt++) {
@@ -601,17 +603,17 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   }
 
   // Open the file for writing
-  hFile = FileOpen(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
   if (hFile == 0) {
     // Error opening file
     return (FALSE);
   }
 
   // Save the Number of Smoke Effects
-  FileWrite(hFile, &uiNumSmokeEffects, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiNumSmokeEffects, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     // Close the file
-    FileClose(hFile);
+    FileMan_Close(hFile);
 
     return (FALSE);
   }
@@ -621,10 +623,10 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
     // if the smoke is active
     if (gSmokeEffectData[uiCnt].fAllocated) {
       // Save the Smoke effect Data
-      FileWrite(hFile, &gSmokeEffectData[uiCnt], sizeof(SMOKEEFFECT), &uiNumBytesWritten);
+      FileMan_Write(hFile, &gSmokeEffectData[uiCnt], sizeof(SMOKEEFFECT), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(SMOKEEFFECT)) {
         // Close the file
-        FileClose(hFile);
+        FileMan_Close(hFile);
 
         return (FALSE);
       }
@@ -632,7 +634,7 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   }
 
   // Close the file
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   SetSectorFlag(sMapX, sMapY, bMapZ, SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS);
 
@@ -651,7 +653,7 @@ BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   GetMapTempFileName(SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Open the file for reading, Create it if it doesnt exist
-  hFile = FileOpen(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
@@ -661,18 +663,18 @@ BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   ResetSmokeEffects();
 
   // Load the Number of Smoke Effects
-  FileRead(hFile, &guiNumSmokeEffects, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiNumSmokeEffects, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   // loop through and load the list
   for (uiCnt = 0; uiCnt < guiNumSmokeEffects; uiCnt++) {
     // Load the Smoke effect Data
-    FileRead(hFile, &gSmokeEffectData[uiCnt], sizeof(SMOKEEFFECT), &uiNumBytesRead);
+    FileMan_Read(hFile, &gSmokeEffectData[uiCnt], sizeof(SMOKEEFFECT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(SMOKEEFFECT)) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
   }
@@ -693,7 +695,7 @@ BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
     }
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }

@@ -40,6 +40,8 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "fileman.h"
+
 #ifdef DEBUG_INTERRUPTS
 #include "SGP/Debug.h"
 #endif
@@ -1706,7 +1708,7 @@ BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Save the gubTurn Order Array
-  FileWrite(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesWritten);
+  FileMan_Write(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8) * MAXMERCS) {
     return (FALSE);
   }
@@ -1720,7 +1722,7 @@ BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
   TeamTurnStruct.ubLastInterruptedGuy = gubLastInterruptedGuy;
 
   // Save the Team turn save structure
-  FileWrite(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesWritten);
+  FileMan_Write(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(TEAM_TURN_SAVE_STRUCT)) {
     return (FALSE);
   }
@@ -1733,13 +1735,13 @@ BOOLEAN LoadTeamTurnsFromTheSavedGameFile(HWFILE hFile) {
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Load the gubTurn Order Array
-  FileRead(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesRead);
+  FileMan_Read(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8) * MAXMERCS) {
     return (FALSE);
   }
 
   // Load the Team turn save structure
-  FileRead(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesRead);
+  FileMan_Read(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(TEAM_TURN_SAVE_STRUCT)) {
     return (FALSE);
   }

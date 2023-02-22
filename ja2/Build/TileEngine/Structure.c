@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
@@ -22,6 +21,7 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
+#include "fileman.h"
 
 // Kris:
 #ifdef JA2EDITOR
@@ -236,15 +236,15 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
 
   CHECKF(szFileName);
   CHECKF(pFileRef);
-  hInput = FileOpen(szFileName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hInput = FileMan_Open(szFileName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
   if (hInput == 0) {
     return (FALSE);
   }
-  fOk = FileRead(hInput, &Header, sizeof(STRUCTURE_FILE_HEADER), &uiBytesRead);
+  fOk = FileMan_Read(hInput, &Header, sizeof(STRUCTURE_FILE_HEADER), &uiBytesRead);
   if (!fOk || uiBytesRead != sizeof(STRUCTURE_FILE_HEADER) ||
       strncmp(Header.szId, STRUCTURE_FILE_ID, STRUCTURE_FILE_ID_LEN) != 0 ||
       Header.usNumberOfStructures == 0) {
-    FileClose(hInput);
+    FileMan_Close(hInput);
     return (FALSE);
   }
   pFileRef->usNumberOfStructures = Header.usNumberOfStructures;
@@ -252,13 +252,13 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
     uiDataSize = sizeof(AuxObjectData) * Header.usNumberOfImages;
     pFileRef->pAuxData = (AuxObjectData *)MemAlloc(uiDataSize);
     if (pFileRef->pAuxData == NULL) {
-      FileClose(hInput);
+      FileMan_Close(hInput);
       return (FALSE);
     }
-    fOk = FileRead(hInput, pFileRef->pAuxData, uiDataSize, &uiBytesRead);
+    fOk = FileMan_Read(hInput, pFileRef->pAuxData, uiDataSize, &uiBytesRead);
     if (!fOk || uiBytesRead != uiDataSize) {
       MemFree(pFileRef->pAuxData);
-      FileClose(hInput);
+      FileMan_Close(hInput);
       return (FALSE);
     }
     if (Header.usNumberOfImageTileLocsStored > 0) {
@@ -266,13 +266,13 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
       pFileRef->pTileLocData = (RelTileLoc *)MemAlloc(uiDataSize);
       if (pFileRef->pTileLocData == NULL) {
         MemFree(pFileRef->pAuxData);
-        FileClose(hInput);
+        FileMan_Close(hInput);
         return (FALSE);
       }
-      fOk = FileRead(hInput, pFileRef->pTileLocData, uiDataSize, &uiBytesRead);
+      fOk = FileMan_Read(hInput, pFileRef->pTileLocData, uiDataSize, &uiBytesRead);
       if (!fOk || uiBytesRead != uiDataSize) {
         MemFree(pFileRef->pAuxData);
-        FileClose(hInput);
+        FileMan_Close(hInput);
         return (FALSE);
       }
     }
@@ -284,7 +284,7 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
     // allocate enough memory and read it in
     pFileRef->pubStructureData = (UINT8 *)MemAlloc(uiDataSize);
     if (pFileRef->pubStructureData == NULL) {
-      FileClose(hInput);
+      FileMan_Close(hInput);
       if (pFileRef->pAuxData != NULL) {
         MemFree(pFileRef->pAuxData);
         if (pFileRef->pTileLocData != NULL) {
@@ -293,7 +293,7 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
       }
       return (FALSE);
     }
-    fOk = FileRead(hInput, pFileRef->pubStructureData, uiDataSize, &uiBytesRead);
+    fOk = FileMan_Read(hInput, pFileRef->pubStructureData, uiDataSize, &uiBytesRead);
     if (!fOk || uiBytesRead != uiDataSize) {
       MemFree(pFileRef->pubStructureData);
       if (pFileRef->pAuxData != NULL) {
@@ -302,12 +302,12 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
           MemFree(pFileRef->pTileLocData);
         }
       }
-      FileClose(hInput);
+      FileMan_Close(hInput);
       return (FALSE);
     }
     *puiStructureDataSize = uiDataSize;
   }
-  FileClose(hInput);
+  FileMan_Close(hInput);
   return (TRUE);
 }
 

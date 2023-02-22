@@ -1,7 +1,6 @@
 #ifndef NPC_H
 #define NPC_H
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Strategic/MapScreen.h"
 

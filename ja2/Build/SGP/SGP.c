@@ -13,7 +13,6 @@
 #include "Laptop/Laptop.h"
 #include "Local.h"
 #include "SGP/ExceptionHandling.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
 #include "SGP/Random.h"
@@ -30,6 +29,9 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "dbt.h"
+#include "fileman.h"
+#include "platform.h"
+#include "platfrom_strings.h"
 #include "zmouse.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
@@ -210,7 +212,7 @@ BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow) 
 
   FastDebugMsg("Initializing File Manager");
   // Initialize the File Manager
-  if (InitializeFileManager(NULL) == FALSE) {  // We were unable to initialize the file manager
+  if (FileMan_Initialize() == FALSE) {  // We were unable to initialize the file manager
     FastDebugMsg("FAILED : Initializing File Manager");
     return FALSE;
   }
@@ -331,7 +333,7 @@ void ShutdownStandardGamingPlatform(void) {
 
   ShutdownInputManager();
   ShutdownContainers();
-  ShutdownFileManager();
+  FileMan_Shutdown();
   ShutdownMutexManager();
 
 #ifdef EXTREME_MEMORY_DEBUGGING
@@ -481,7 +483,7 @@ void GetRuntimeSettings() {
   STRING512 INIFile;
 
   // Get Executable Directory
-  GetExecutableDirectory(ExeDir);
+  Plat_GetExecutableDirectory(ExeDir, sizeof(ExeDir));
   // Adjust Current Dir
   sprintf(INIFile, "%s\\sgp.ini", ExeDir);
 
@@ -510,7 +512,7 @@ void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine) {
   pToken = strtok(pCopy, cSeparators);
   while (pToken) {
     // if its the NO SOUND option
-    if (!_strnicmp(pToken, "/NOSOUND", 8)) {
+    if (!strncasecmp(pToken, "/NOSOUND", 8)) {
       // disable the sound
       SoundEnableSound(FALSE);
     }

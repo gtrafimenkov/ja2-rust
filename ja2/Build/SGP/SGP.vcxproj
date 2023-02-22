@@ -28,7 +28,6 @@
     <ClInclude Include="DSound.h" />
     <ClInclude Include="English.h" />
     <ClInclude Include="ExceptionHandling.h" />
-    <ClInclude Include="FileMan.h" />
     <ClInclude Include="Flic.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="HImage.h" />
@@ -76,11 +75,11 @@
     <ClCompile Include="CursorControl.c" />
     <ClCompile Include="DBMan.c" />
     <ClCompile Include="Debug.c" />
+    <ClCompile Include="win_debug.c" />
     <ClCompile Include="DirectDrawCalls.c" />
     <ClCompile Include="DirectXCommon.c" />
     <ClCompile Include="English.c" />
     <ClCompile Include="ExceptionHandling.cc" />
-    <ClCompile Include="FileMan.c" />
     <ClCompile Include="Font.c" />
     <ClCompile Include="HImage.c" />
     <ClCompile Include="ImpTGA.c" />

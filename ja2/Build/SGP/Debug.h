@@ -14,7 +14,7 @@
 #ifndef __DEBUG_MANAGER_
 #define __DEBUG_MANAGER_
 
-#include <crtdbg.h>
+// #include <crtdbg.h>
 
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
@@ -23,6 +23,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+extern void DebugPrint(const char *message);
 
 #define INVALID_TOPIC 0xffff
 #define MAX_TOPICS_ALLOTED 1024
@@ -67,7 +69,7 @@ extern void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 #define Assert(a) (a) ? _Null() : _FailMessage((STR8)NULL, __LINE__, (STR8)__FILE__)
 #define AssertMsg(a, b) (a) ? _Null() : _FailMessage((STR8)b, __LINE__, (STR8)__FILE__)
 
-extern CHAR8 gubAssertString[128];
+extern char gubAssertString[128];
 
 #else
 
@@ -99,11 +101,11 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 #define DebugBreakpoint() __asm { int 3}
 
 #define DbgMessage(a, b, c) \
-  DbgMessageReal((UINT16)(a), (UINT8)(TOPIC_MESSAGE), (UINT8)(b), (CHAR8 *)(c))
+  DbgMessageReal((UINT16)(a), (UINT8)(TOPIC_MESSAGE), (UINT8)(b), (char *)(c))
 #define FastDebugMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
 
 #define UnRegisterDebugTopic(a, b) \
-  DbgTopicRegistration((UINT8)TOPIC_UNREGISTER, (UINT16 *)(&(a)), (CHAR8 *)(b))
+  DbgTopicRegistration((UINT8)TOPIC_UNREGISTER, (UINT16 *)(&(a)), (char *)(b))
 #define ClearAllDebugTopics() DbgClearAllTopics()
 
 #define ErrorMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
@@ -114,11 +116,11 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 #define DebugMsg(a, b, c) DbgMessageReal((a), TOPIC_MESSAGE, (b), (c))
 
 // public interface to debug methods:
-extern void DbgMessageReal(UINT16 TopicId, UINT8 uiCommand, UINT8 uiDebugLevel, CHAR8 *Str);
+extern void DbgMessageReal(UINT16 TopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *Str);
 extern BOOLEAN DbgSetDebugLevel(UINT16 TopicId, UINT8 uiDebugLevel);
 extern void DbgFailedAssertion(BOOLEAN fExpression, char *szFile, int nLine);
 // extern	void		_FailMessage(UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile );
-extern void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, CHAR8 *zMessage);
+extern void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage);
 extern void DbgClearAllTopics(void);
 extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 

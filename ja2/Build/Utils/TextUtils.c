@@ -1,8 +1,8 @@
 #include "GameSettings.h"
 #include "JA2DemoAds.h"
 #include "LanguageDefines.h"
-#include "SGP/FileMan.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   HWFILE hFile;
@@ -10,7 +10,7 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   UINT16 i;
   UINT32 uiStartSeekAmount;
 
-  hFile = FileOpen(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
   if (!hFile) {
     return (FALSE);
   }
@@ -21,13 +21,13 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   // Skip short names
   uiStartSeekAmount += SIZE_SHORT_ITEM_NAME;
 
-  if (FileSeek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
-    FileClose(hFile);
+  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
-  if (!FileRead(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
-    FileClose(hFile);
+  if (!FileMan_Read(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -103,13 +103,13 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
     // Get the additional info
     uiStartSeekAmount = ((SIZE_ITEM_NAME + SIZE_SHORT_ITEM_NAME + SIZE_ITEM_INFO) * ubIndex) +
                         SIZE_ITEM_NAME + SIZE_SHORT_ITEM_NAME;
-    if (FileSeek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
-      FileClose(hFile);
+    if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
+      FileMan_Close(hFile);
       return (FALSE);
     }
 
-    if (!FileRead(hFile, pInfoString, SIZE_ITEM_INFO, &uiBytesRead)) {
-      FileClose(hFile);
+    if (!FileMan_Read(hFile, pInfoString, SIZE_ITEM_INFO, &uiBytesRead)) {
+      FileMan_Close(hFile);
       return (FALSE);
     }
 
@@ -179,7 +179,7 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
     }
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
   return (TRUE);
 }
 
@@ -190,7 +190,7 @@ BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
   UINT16 i;
   UINT32 uiStartSeekAmount;
 
-  hFile = FileOpen(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
   if (!hFile) {
     return (FALSE);
   }
@@ -198,13 +198,13 @@ BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
   // Get current mercs bio info
   uiStartSeekAmount = ((SIZE_SHORT_ITEM_NAME + SIZE_ITEM_NAME + SIZE_ITEM_INFO) * ubIndex);
 
-  if (FileSeek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
-    FileClose(hFile);
+  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
-  if (!FileRead(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
-    FileClose(hFile);
+  if (!FileMan_Read(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -273,7 +273,7 @@ BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
 #endif
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
   return (TRUE);
 }
 

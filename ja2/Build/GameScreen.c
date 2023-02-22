@@ -371,10 +371,10 @@ UINT32 MainGameScreenHandle(void) {
 
 		pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
 
-		Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, 
-					(UINT16 *)pData, uiPitch,  
-					0 , 0, 
-					0 , 0, 
+		Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES,
+					(UINT16 *)pData, uiPitch,
+					0 , 0,
+					0 , 0,
 					64, 64 );
 
 		UnlockMouseBuffer( );
@@ -599,7 +599,7 @@ UINT32 MainGameScreenHandle(void) {
     }
 #ifdef JA2EDITOR
     else if (gfIntendOnEnteringEditor) {
-      OutputDebugString("Aborting normal game mode and entering editor mode...\n");
+      DebugPrint("Aborting normal game mode and entering editor mode...\n");
       SetPendingNewScreen(0xffff);  // NO_SCREEN
       return EDIT_SCREEN;
     }

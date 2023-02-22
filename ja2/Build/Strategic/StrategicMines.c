@@ -20,6 +20,7 @@
 #include "Tactical/SoldierProfile.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 // this .c file will handle the strategic level of mines and income from them
 
@@ -731,7 +732,8 @@ BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
   // Save the MineStatus
-  FileWrite(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES, &uiNumBytesWritten);
+  FileMan_Write(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES,
+                &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES) {
     return (FALSE);
   }
@@ -743,7 +745,7 @@ BOOLEAN LoadMineStatusFromSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
   // Load the MineStatus
-  FileRead(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES, &uiNumBytesRead);
+  FileMan_Read(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES) {
     return (FALSE);
   }

@@ -1,7 +1,6 @@
 #ifndef __STRATEGIC_MOVEMENT_H
 #define __STRATEGIC_MOVEMENT_H
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 

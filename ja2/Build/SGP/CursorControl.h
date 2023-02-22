@@ -1,7 +1,6 @@
 #ifndef __CURSOR_DATABASE_
 #define __CURSOR_DATABASE_
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
@@ -42,15 +41,7 @@ extern BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex);
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-typedef struct {
-  CHAR8 ubFilename[MAX_FILENAME_LEN];
-  BOOLEAN fLoaded;
-  UINT32 uiIndex;
-  UINT8 ubFlags;
-  UINT8 ubNumberOfFrames;
-  HVOBJECT hVObject;
-
-} CursorFileData;
+struct CursorFileData;
 
 typedef struct {
   UINT32 uiFileIndex;
@@ -89,7 +80,7 @@ extern BOOLEAN gfExternUse2nd;
 
 typedef void (*MOUSEBLT_HOOK)(void);
 
-void InitCursorDatabase(CursorFileData *pCursorFileData, CursorData *pCursorData,
+void InitCursorDatabase(struct CursorFileData *pCursorFileData, CursorData *pCursorData,
                         UINT16 suNumDataFiles);
 void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride);
 

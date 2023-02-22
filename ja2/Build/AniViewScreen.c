@@ -8,7 +8,6 @@
 #include "MessageBoxScreen.h"
 #include "SGP/Container.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"
 #include "SGP/Input.h"

@@ -28,6 +28,7 @@
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 #define IMP_MERC_FILE "IMP.dat"
 
@@ -456,25 +457,26 @@ void WriteOutCurrentImpCharacter(INT32 iProfileId) {
   UINT32 uiBytesWritten = 0;
 
   // open the file for writing
-  hFile = FileOpen(IMP_MERC_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 
   // write out the profile id
-  if (!FileWrite(hFile, &iProfileId, sizeof(INT32), &uiBytesWritten)) {
+  if (!FileMan_Write(hFile, &iProfileId, sizeof(INT32), &uiBytesWritten)) {
     return;
   }
 
   // write out the portrait id
-  if (!FileWrite(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesWritten)) {
+  if (!FileMan_Write(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesWritten)) {
     return;
   }
 
   // write out the profile itself
-  if (!FileWrite(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT), &uiBytesWritten)) {
+  if (!FileMan_Write(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT),
+                     &uiBytesWritten)) {
     return;
   }
 
   // close file
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return;
 }
@@ -485,7 +487,7 @@ void LoadInCurrentImpCharacter(void) {
   UINT32 uiBytesRead = 0;
 
   // open the file for writing
-  hFile = FileOpen(IMP_MERC_FILE, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_READ, FALSE);
 
   // valid file?
   if (hFile == -1) {
@@ -493,22 +495,22 @@ void LoadInCurrentImpCharacter(void) {
   }
 
   // read in the profile
-  if (!FileRead(hFile, &iProfileId, sizeof(INT32), &uiBytesRead)) {
+  if (!FileMan_Read(hFile, &iProfileId, sizeof(INT32), &uiBytesRead)) {
     return;
   }
 
   // read in the portrait
-  if (!FileRead(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesRead)) {
+  if (!FileMan_Read(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesRead)) {
     return;
   }
 
   // read in the profile
-  if (!FileRead(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT), &uiBytesRead)) {
+  if (!FileMan_Read(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT), &uiBytesRead)) {
     return;
   }
 
   // close file
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   if (LaptopSaveInfo.iCurrentBalance < COST_OF_PROFILE) {
     // not enough

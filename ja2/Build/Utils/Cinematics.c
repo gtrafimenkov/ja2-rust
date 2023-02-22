@@ -25,13 +25,14 @@
 #include "SGP/Debug.h"
 #include "SGP/DirectDrawCalls.h"
 #include "SGP/DirectXCommon.h"
-#include "SGP/FileMan.h"
 #include "SGP/Mss.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "SGP/VSurfacePrivate.h"
 #include "SGP/Video.h"
 #include "SGP/smack.h"
+#include "fileman.h"
+#include "platform_win.h"
 #include "radmalw.i"
 
 //-Structures----------------------------------------------------------------------
@@ -166,7 +167,8 @@ SMKFLIC *SmkOpenFlic(CHAR8 *cFilename) {
   }
 
   // Attempt opening the filename
-  if (!(pSmack->hFileHandle = FileOpen(cFilename, FILE_OPEN_EXISTING | FILE_ACCESS_READ, FALSE))) {
+  if (!(pSmack->hFileHandle =
+            FileMan_Open(cFilename, FILE_OPEN_EXISTING | FILE_ACCESS_READ, FALSE))) {
     ErrorMsg("SMK ERROR: Can't open the SMK file");
     return (NULL);
   }
@@ -208,7 +210,7 @@ void SmkSetBlitPosition(SMKFLIC *pSmack, UINT32 uiLeft, UINT32 uiTop) {
 
 void SmkCloseFlic(SMKFLIC *pSmack) {
   // Attempt opening the filename
-  FileClose(pSmack->hFileHandle);
+  FileMan_Close(pSmack->hFileHandle);
 
   // Deallocate the smack buffers
   SmackBufferClose(pSmack->SmackBuffer);

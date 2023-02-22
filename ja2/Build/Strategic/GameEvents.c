@@ -9,6 +9,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 #ifdef JA2TESTVERSION
 
@@ -611,7 +612,7 @@ BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile) {
   }
 
   // write the number of strategic events
-  FileWrite(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -623,7 +624,7 @@ BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile) {
     memcpy(&sGameEvent, pTempEvent, sizeof(STRATEGICEVENT));
 
     // write the current strategic event
-    FileWrite(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesWritten);
+    FileMan_Write(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(STRATEGICEVENT)) {
       return (FALSE);
     }
@@ -645,7 +646,7 @@ BOOLEAN LoadStrategicEventsFromSavedGame(HWFILE hFile) {
   DeleteAllStrategicEvents();
 
   // Read the number of strategic events
-  FileRead(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -661,7 +662,7 @@ BOOLEAN LoadStrategicEventsFromSavedGame(HWFILE hFile) {
     if (pTempEvent == NULL) return (FALSE);
 
     // Read the current strategic event
-    FileRead(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesRead);
+    FileMan_Read(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(STRATEGICEVENT)) {
       return (FALSE);
     }

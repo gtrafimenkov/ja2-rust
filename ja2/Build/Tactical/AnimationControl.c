@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationData.h"
 #include "Tactical/Points.h"
@@ -16,6 +15,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/DebugControl.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 // Defines for Anim inst reading, taken from orig Jagged
 #define ANIMFILENAME "BINARYDATA\\ja2bin.dat"
@@ -5283,18 +5283,18 @@ BOOLEAN LoadAnimationStateInstructions() {
   UINT32 uiBytesRead;
 
   // Open ani file
-  hFile = FileOpen(ANIMFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(ANIMFILENAME, FILE_ACCESS_READ, FALSE);
 
   if (!hFile) {
     return (FALSE);
   }
 
   // Read in block
-  if (!FileRead(hFile, gusAnimInst, sizeof(gusAnimInst), &uiBytesRead)) {
+  if (!FileMan_Read(hFile, gusAnimInst, sizeof(gusAnimInst), &uiBytesRead)) {
     return (FALSE);
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }

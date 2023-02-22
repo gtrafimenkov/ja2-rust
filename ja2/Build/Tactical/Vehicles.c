@@ -35,6 +35,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 INT8 gubVehicleMovementGroups[MAX_VEHICLES];
 
@@ -1615,7 +1616,7 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
   UINT8 ubPassengerCnt = 0;
 
   // Save the number of elements
-  FileWrite(hFile, &ubNumberOfVehicles, sizeof(UINT8), &uiNumBytesWritten);
+  FileMan_Write(hFile, &ubNumberOfVehicles, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) {
     return (FALSE);
   }
@@ -1623,7 +1624,7 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
   // loop through all the vehicles and save each one
   for (cnt = 0; cnt < ubNumberOfVehicles; cnt++) {
     // save if the vehicle spot is valid
-    FileWrite(hFile, &pVehicleList[cnt].fValid, sizeof(BOOLEAN), &uiNumBytesWritten);
+    FileMan_Write(hFile, &pVehicleList[cnt].fValid, sizeof(BOOLEAN), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(BOOLEAN)) {
       return (FALSE);
     }
@@ -1650,7 +1651,7 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
       }
 
       // save the vehicle info
-      FileWrite(hFile, &TempVehicle, sizeof(VEHICLETYPE), &uiNumBytesWritten);
+      FileMan_Write(hFile, &TempVehicle, sizeof(VEHICLETYPE), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(VEHICLETYPE)) {
         return (FALSE);
       }
@@ -1663,7 +1664,7 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
       }
 
       // Save the number of nodes
-      FileWrite(hFile, &uiNodeCount, sizeof(UINT32), &uiNumBytesWritten);
+      FileMan_Write(hFile, &uiNodeCount, sizeof(UINT32), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(UINT32)) {
         return (FALSE);
       }
@@ -1672,7 +1673,7 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
       pTempPathPtr = pVehicleList[cnt].pMercPath;
       while (pTempPathPtr) {
         // Save the node
-        FileWrite(hFile, pTempPathPtr, sizeof(PathSt), &uiNumBytesWritten);
+        FileMan_Write(hFile, pTempPathPtr, sizeof(PathSt), &uiNumBytesWritten);
         if (uiNumBytesWritten != sizeof(PathSt)) {
           return (FALSE);
         }
@@ -1698,7 +1699,7 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGame
   ClearOutVehicleList();
 
   // Load the number of elements
-  FileRead(hFile, &ubNumberOfVehicles, sizeof(UINT8), &uiNumBytesRead);
+  FileMan_Read(hFile, &ubNumberOfVehicles, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) {
     return (FALSE);
   }
@@ -1712,14 +1713,14 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGame
     // loop through all the vehicles and load each one
     for (cnt = 0; cnt < ubNumberOfVehicles; cnt++) {
       // Load if the vehicle spot is valid
-      FileRead(hFile, &pVehicleList[cnt].fValid, sizeof(BOOLEAN), &uiNumBytesRead);
+      FileMan_Read(hFile, &pVehicleList[cnt].fValid, sizeof(BOOLEAN), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(BOOLEAN)) {
         return (FALSE);
       }
 
       if (pVehicleList[cnt].fValid) {
         // load the vehicle info
-        FileRead(hFile, &pVehicleList[cnt], sizeof(VEHICLETYPE), &uiNumBytesRead);
+        FileMan_Read(hFile, &pVehicleList[cnt], sizeof(VEHICLETYPE), &uiNumBytesRead);
         if (uiNumBytesRead != sizeof(VEHICLETYPE)) {
           return (FALSE);
         }
@@ -1750,7 +1751,7 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGame
         }
 
         // Load the number of nodes
-        FileRead(hFile, &uiTotalNodeCount, sizeof(UINT32), &uiNumBytesRead);
+        FileMan_Read(hFile, &uiTotalNodeCount, sizeof(UINT32), &uiNumBytesRead);
         if (uiNumBytesRead != sizeof(UINT32)) {
           return (FALSE);
         }
@@ -1768,7 +1769,7 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGame
             memset(pTempPath, 0, sizeof(PathSt));
 
             // Load all the nodes
-            FileRead(hFile, pTempPath, sizeof(PathSt), &uiNumBytesRead);
+            FileMan_Read(hFile, pTempPath, sizeof(PathSt), &uiNumBytesRead);
             if (uiNumBytesRead != sizeof(PathSt)) {
               return (FALSE);
             }
@@ -1835,7 +1836,7 @@ BOOLEAN SaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
   UINT32 uiSaveSize = 0;
 
   // Save all the vehicle movement id's
-  FileWrite(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesWritten);
+  FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT8) * 5) {
     return (FALSE);
   }
@@ -1850,7 +1851,7 @@ BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   UINT32 uiSaveSize = 0;
 
   // Load in the Squad movement id's
-  FileRead(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesRead);
+  FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT8) * 5) {
     return (FALSE);
   }
@@ -1872,7 +1873,7 @@ BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
   UINT32 uiSaveSize = 0;
 
   // Save all the vehicle movement id's
-  FileWrite(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesWritten);
+  FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT8) * MAX_VEHICLES) {
     return (FALSE);
   }
@@ -1885,7 +1886,7 @@ BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   UINT32 uiSaveSize = 0;
 
   // Load in the Squad movement id's
-  FileRead(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesRead);
+  FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT8) * MAX_VEHICLES) {
     return (FALSE);
   }

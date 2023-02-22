@@ -31,6 +31,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "fileman.h"
 
 #define SCRIPT_DELAY 10
 #define AIR_RAID_SAY_QUOTE_TIME 3000
@@ -1077,7 +1078,7 @@ BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile) {
   memcpy(&sAirRaidSaveStruct.AirRaidDef, &gAirRaidDef, sizeof(AIR_RAID_DEFINITION));
 
   // Save the Air Raid Save Struct
-  FileWrite(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesWritten);
+  FileMan_Write(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(AIR_RAID_SAVE_STRUCT)) {
     return (FALSE);
   }
@@ -1090,7 +1091,7 @@ BOOLEAN LoadAirRaidInfoFromSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
   // Load the number of REAL_OBJECTs in the array
-  FileRead(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesRead);
+  FileMan_Read(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(AIR_RAID_SAVE_STRUCT)) {
     return (FALSE);
   }

@@ -1,7 +1,6 @@
 #ifndef __SOLDIER_INIT_LIST_H
 #define __SOLDIER_INIT_LIST_H
 
-#include "SGP/FileMan.h"
 #include "Tactical/SoldierCreate.h"
 
 typedef struct SOLDIERINITNODE {

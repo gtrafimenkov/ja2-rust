@@ -69,6 +69,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 #define ITEMDESC_FONT BLOCKFONT2
 #define ITEMDESC_FONTSHADOW1 MILITARY_SHADOW
@@ -6384,7 +6385,7 @@ BOOLEAN LoadItemCursorFromSavedGame(HWFILE hFile) {
 
   // Load structure
   uiLoadSize = sizeof(ITEM_CURSOR_SAVE_INFO);
-  FileRead(hFile, &SaveStruct, uiLoadSize, &uiNumBytesRead);
+  FileMan_Read(hFile, &SaveStruct, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
@@ -6443,7 +6444,7 @@ BOOLEAN SaveItemCursorToSavedGame(HWFILE hFile) {
 
   // save locations of watched points
   uiSaveSize = sizeof(ITEM_CURSOR_SAVE_INFO);
-  FileWrite(hFile, &SaveStruct, uiSaveSize, &uiNumBytesWritten);
+  FileMan_Write(hFile, &SaveStruct, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }

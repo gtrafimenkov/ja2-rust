@@ -44,6 +44,8 @@
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "fileman.h"
+#include "platform.h"
 
 BOOLEAN gfWasInMeanwhile = FALSE;
 
@@ -354,7 +356,7 @@ BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile) {
 
           // KILL IT!!! KILL KIT!!!! IT IS CORRUPTED!!!
           GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, pMapName, sMapX, sMapY, 0);
-          FileDelete(pMapName);
+          FileMan_Delete(pMapName);
 
           // turn off the flag
           SectorInfo[SECTOR(sMapX, sMapY)].uiFlags &= (~SF_CIV_PRESERVED_TEMP_FILE_EXISTS);
@@ -432,7 +434,7 @@ BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile) {
         // KILL IT!!! KILL KIT!!!! IT IS CORRUPTED!!!
         GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, pMapName, TempNode->ubSectorX,
                            TempNode->ubSectorY, TempNode->ubSectorZ);
-        FileDelete(pMapName);
+        FileMan_Delete(pMapName);
 
         // turn off the flag
         TempNode->uiFlags &= (~SF_CIV_PRESERVED_TEMP_FILE_EXISTS);
@@ -464,32 +466,32 @@ BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, UINT3
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileOpen(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Save the size of the ITem table
-  FileWrite(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   // if there are items to save..
   if (uiNumberOfItems != 0) {
     // Save the ITem array
-    FileWrite(hFile, pData, uiNumberOfItems * sizeof(WORLDITEM), &uiNumBytesWritten);
+    FileMan_Write(hFile, pData, uiNumberOfItems * sizeof(WORLDITEM), &uiNumBytesWritten);
     if (uiNumBytesWritten != uiNumberOfItems * sizeof(WORLDITEM)) {
       // Error Writing size of array to disk
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   SetSectorFlag(sMapX, sMapY, bMapZ, SF_ITEM_TEMP_FILE_EXISTS);
 
@@ -507,35 +509,35 @@ BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WOR
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Check to see if the file exists
-  if (!FileExists(zMapName)) {
+  if (!FileMan_Exists(zMapName)) {
     // If the file doesnt exists, its no problem.
     return (TRUE);
   }
 
   // Open the file for reading
-  hFile = FileOpen(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
   }
 
   // Load the size of the World ITem table
-  FileRead(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   // Load the World ITem table
-  FileRead(hFile, pData, uiNumberOfItems * sizeof(WORLDITEM), &uiNumBytesRead);
+  FileMan_Read(hFile, pData, uiNumberOfItems * sizeof(WORLDITEM), &uiNumBytesRead);
   if (uiNumBytesRead != uiNumberOfItems * sizeof(WORLDITEM)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }
@@ -550,14 +552,14 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMa
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Check if the file DOESNT exists
-  if (!FileExistsNoDB(zMapName)) {
+  if (!FileMan_ExistsNoDB(zMapName)) {
     if (fIfEmptyCreate) {
       WORLDITEM TempWorldItems[10];
       UINT32 uiNumberOfItems = 10;
       UINT32 uiNumBytesWritten = 0;
 
       // If the file doesnt exists, create a file that has an initial amount of Items
-      hFile = FileOpen(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+      hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
       if (hFile == 0) {
         // Error opening item modification file
         return (FALSE);
@@ -566,23 +568,23 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMa
       memset(TempWorldItems, 0, (sizeof(WORLDITEM) * 10));
 
       // write the the number of item in the maps item file
-      FileWrite(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesWritten);
+      FileMan_Write(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(UINT32)) {
         // Error Writing size of array to disk
-        FileClose(hFile);
+        FileMan_Close(hFile);
         return (FALSE);
       }
 
       // write the the number of item in the maps item file
-      FileWrite(hFile, TempWorldItems, uiNumberOfItems * sizeof(WORLDITEM), &uiNumBytesWritten);
+      FileMan_Write(hFile, TempWorldItems, uiNumberOfItems * sizeof(WORLDITEM), &uiNumBytesWritten);
       if (uiNumBytesWritten != uiNumberOfItems * sizeof(WORLDITEM)) {
         // Error Writing size of array to disk
-        FileClose(hFile);
+        FileMan_Close(hFile);
         return (FALSE);
       }
 
       // Close the file
-      FileClose(hFile);
+      FileMan_Close(hFile);
     } else {
       // the file doesnt exist
       *pSizeOfData = 0;
@@ -592,23 +594,23 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMa
   }
 
   // Open the file for reading, if it exists
-  hFile = FileOpen(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Load the size of the World ITem table
-  FileRead(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &uiNumberOfItems, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   *pSizeOfData = uiNumberOfItems;
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }
@@ -1237,19 +1239,13 @@ BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, 
 
 // Deletes the Temp map Directory
 BOOLEAN InitTacticalSave(BOOLEAN fCreateTempDir) {
-  UINT32 uiRetVal;
-
   // If the Map Temp directory exists, removes the temp files
-  uiRetVal = FileGetAttributes(MAPS_DIR);
-  if (uiRetVal != 0xFFFFFFFF) {
-    if (uiRetVal & FILE_ATTRIBUTES_DIRECTORY) {
-      // Erase the directory
-      if (!EraseDirectory(MAPS_DIR)) {
-        // error erasing the temporary maps directory
-      }
+  if (Plat_DirectoryExists(MAPS_DIR)) {
+    if (!Plat_EraseDirectory(MAPS_DIR)) {
+      // error erasing the temporary maps directory
     }
   } else {
-    if (!MakeFileManDirectory(MAPS_DIR)) {
+    if (!Plat_CreateDirectory(MAPS_DIR)) {
       // Erro creating the temp map directory
       AssertMsg(0, "Error creating the Temp Directory.");
     }
@@ -1282,7 +1278,7 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ)
   GetMapTempFileName(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileOpen(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
@@ -1294,10 +1290,10 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ)
   }
 
   // Save the number of the Rotting Corpses array table
-  FileWrite(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -1305,17 +1301,17 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ)
   for (iCount = 0; iCount < giNumRottingCorpse; iCount++) {
     if (gRottingCorpse[iCount].fActivated == TRUE) {
       // Save the RottingCorpse info array
-      FileWrite(hFile, &gRottingCorpse[iCount].def, sizeof(ROTTING_CORPSE_DEFINITION),
-                &uiNumBytesWritten);
+      FileMan_Write(hFile, &gRottingCorpse[iCount].def, sizeof(ROTTING_CORPSE_DEFINITION),
+                    &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(ROTTING_CORPSE_DEFINITION)) {
         // Error Writing size of array to disk
-        FileClose(hFile);
+        FileMan_Close(hFile);
         return (FALSE);
       }
     }
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   // Set the flag indicating that there is a rotting corpse Temp File
   //	SectorInfo[ SECTOR( sMapX,sMapY) ].uiFlags |= SF_ROTTING_CORPSE_TEMP_FILE_EXISTS;
@@ -1340,7 +1336,7 @@ BOOLEAN DeleteTempItemMapFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Check to see if the file exists
-  if (!FileExists(zMapName)) {
+  if (!FileMan_Exists(zMapName)) {
     // If the file doesnt exists, its no problem.
     return (TRUE);
   }
@@ -1373,23 +1369,23 @@ BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMap
   GetMapTempFileName(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Check to see if the file exists
-  if (!FileExists(zMapName)) {
+  if (!FileMan_Exists(zMapName)) {
     // If the file doesnt exists, its no problem.
     return (TRUE);
   }
 
   // Open the file for reading
-  hFile = FileOpen(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
   }
 
   // Load the number of Rotting corpses
-  FileRead(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -1400,10 +1396,10 @@ BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMap
     fDontAddCorpse = FALSE;
 
     // Load the Rotting corpses info
-    FileRead(hFile, &def, sizeof(ROTTING_CORPSE_DEFINITION), &uiNumBytesRead);
+    FileMan_Read(hFile, &def, sizeof(ROTTING_CORPSE_DEFINITION), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(ROTTING_CORPSE_DEFINITION)) {
       // Error Writing size of array to disk
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
 
@@ -1454,14 +1450,14 @@ BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMap
 
         /*
                                 Assert( 0 );
-                                FileClose( hFile );
+                                FileMan_Close( hFile );
                                 return( FALSE );
         */
       }
     }
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   // Check to see if we have to start decomposing the corpses
   HandleRottingCorpses();
@@ -1804,7 +1800,7 @@ BOOLEAN InitTempNpcQuoteInfoForNPCFromTempFile() {
   HWFILE hFile;
 
   // Open the temp npc file
-  hFile = FileOpen(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_Open(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
   if (hFile == 0) {
     // Error opening temp npc quote info
     return (FALSE);
@@ -1824,14 +1820,14 @@ BOOLEAN InitTempNpcQuoteInfoForNPCFromTempFile() {
     }
 
     // Save the array to a temp file
-    FileWrite(hFile, TempNpcQuote, uiSizeOfTempArray, &uiNumBytesWritten);
+    FileMan_Write(hFile, TempNpcQuote, uiSizeOfTempArray, &uiNumBytesWritten);
     if (uiNumBytesWritten != uiSizeOfTempArray) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
   return (TRUE);
 }
 
@@ -1847,7 +1843,7 @@ BOOLEAN SaveTempNpcQuoteInfoForNPCToTempFile(UINT8 ubNpcId) {
 
   // if there are records to save
   if (gpNPCQuoteInfoArray[ubNpcId]) {
-    hFile = FileOpen(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+    hFile = FileMan_Open(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
     if (hFile == 0) {
       // Error opening temp npc quote info
       return (FALSE);
@@ -1863,19 +1859,19 @@ BOOLEAN SaveTempNpcQuoteInfoForNPCToTempFile(UINT8 ubNpcId) {
     }
 
     // Seek to the correct spot in the file
-    FileSeek(hFile, uiSpotInFile * uiSizeOfTempArray, FILE_SEEK_FROM_START);
+    FileMan_Seek(hFile, uiSpotInFile * uiSizeOfTempArray, FILE_SEEK_FROM_START);
 
     // Save the array to a temp file
-    FileWrite(hFile, TempNpcQuote, uiSizeOfTempArray, &uiNumBytesWritten);
+    FileMan_Write(hFile, TempNpcQuote, uiSizeOfTempArray, &uiNumBytesWritten);
     if (uiNumBytesWritten != uiSizeOfTempArray) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
 
     // Set the fact that the merc has the temp npc quote data
     gMercProfiles[ubNpcId].ubMiscFlags |= PROFILE_MISC_FLAG_TEMP_NPC_QUOTE_DATA_EXISTS;
 
-    FileClose(hFile);
+    FileMan_Close(hFile);
   }
 
   return (TRUE);
@@ -1901,19 +1897,19 @@ BOOLEAN LoadTempNpcQuoteInfoForNPCFromTempFile(UINT8 ubNpcId) {
     if (gpNPCQuoteInfoArray[ubNpcId] == NULL) return (FALSE);
   }
 
-  hFile = FileOpen(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_READ | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_Open(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_READ | FILE_OPEN_ALWAYS, FALSE);
   if (hFile == 0) {
     // Error opening temp npc quote info
     return (FALSE);
   }
 
   // Seek to the correct spot in the file
-  FileSeek(hFile, uiSpotInFile * uiSizeOfTempArray, FILE_SEEK_FROM_START);
+  FileMan_Seek(hFile, uiSpotInFile * uiSizeOfTempArray, FILE_SEEK_FROM_START);
 
   // Save the array to a temp file
-  FileRead(hFile, TempNpcQuote, uiSizeOfTempArray, &uiNumBytesRead);
+  FileMan_Read(hFile, TempNpcQuote, uiSizeOfTempArray, &uiNumBytesRead);
   if (uiNumBytesRead != uiSizeOfTempArray) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -1924,7 +1920,7 @@ BOOLEAN LoadTempNpcQuoteInfoForNPCFromTempFile(UINT8 ubNpcId) {
     gpNPCQuoteInfoArray[ubNpcId][ubCnt].usGoToGridno = TempNpcQuote[ubCnt].usGoToGridno;
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }
@@ -1971,24 +1967,24 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
   GetMapTempFileName(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // CHECK TO SEE if the file exist
-  if (FileExists(zMapName)) {
+  if (FileMan_Exists(zMapName)) {
     // Open the file for reading
-    hFile = FileOpen(zMapName, FILE_ACCESS_READWRITE | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_Open(zMapName, FILE_ACCESS_READWRITE | FILE_OPEN_EXISTING, FALSE);
     if (hFile == 0) {
       // Error opening map modification file,
       return (FALSE);
     }
 
     // Load the number of Rotting corpses
-    FileRead(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesRead);
+    FileMan_Read(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UINT32)) {
       // Error Writing size of array to disk
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
   } else {
     // the file doesnt exists, create a new one
-    hFile = FileOpen(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+    hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
     if (hFile == 0) {
       // Error opening map modification file
       return (FALSE);
@@ -1997,30 +1993,30 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
   }
 
   // Start at the begining of the file
-  FileSeek(hFile, 0, FILE_SEEK_FROM_START);
+  FileMan_Seek(hFile, 0, FILE_SEEK_FROM_START);
 
   // Add on to the number and save it back to disk
   uiNumberOfCorpses++;
 
-  FileWrite(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiNumberOfCorpses, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   // Go to the end of the file
-  FileSeek(hFile, 0, FILE_SEEK_FROM_END);
+  FileMan_Seek(hFile, 0, FILE_SEEK_FROM_END);
 
   // Append the new rotting corpse def to the end of the file
-  FileWrite(hFile, pRottingCorpseDef, sizeof(ROTTING_CORPSE_DEFINITION), &uiNumBytesWritten);
+  FileMan_Write(hFile, pRottingCorpseDef, sizeof(ROTTING_CORPSE_DEFINITION), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(ROTTING_CORPSE_DEFINITION)) {
     // Error Writing size of array to disk
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
   SetSectorFlag(sMapX, sMapY, bMapZ, SF_ROTTING_CORPSE_TEMP_FILE_EXISTS);
   return (TRUE);
 }
@@ -2385,7 +2381,7 @@ BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead,
 
   pubRotationArray = GetRotationArray();
 
-  fRet = FileRead(hFile, pDest, uiBytesToRead, puiBytesRead);
+  fRet = FileMan_Read(hFile, pDest, uiBytesToRead, puiBytesRead);
   if (fRet) {
     pMemBlock = (UINT8 *)pDest;
     for (uiLoop = 0; uiLoop < *puiBytesRead; uiLoop++) {
@@ -2430,7 +2426,7 @@ BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
     ubLastByte = pMemBlock[uiLoop];
   }
 
-  fRet = FileWrite(hFile, pMemBlock, uiBytesToWrite, puiBytesWritten);
+  fRet = FileMan_Write(hFile, pMemBlock, uiBytesToWrite, puiBytesWritten);
 
   MemFree(pMemBlock);
 
@@ -2452,7 +2448,7 @@ BOOLEAN JA2EncryptedFileRead(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT
   BOOLEAN fRet;
   UINT8 *pMemBlock;
 
-  fRet = FileRead(hFile, pDest, uiBytesToRead, puiBytesRead);
+  fRet = FileMan_Read(hFile, pDest, uiBytesToRead, puiBytesRead);
   if (fRet) {
     pMemBlock = (UINT8 *)pDest;
     for (uiLoop = 0; uiLoop < *puiBytesRead; uiLoop++) {
@@ -2519,7 +2515,7 @@ BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
     */
   }
 
-  fRet = FileWrite(hFile, pMemBlock, uiBytesToWrite, puiBytesWritten);
+  fRet = FileMan_Write(hFile, pMemBlock, uiBytesToWrite, puiBytesWritten);
 
   MemFree(pMemBlock);
 

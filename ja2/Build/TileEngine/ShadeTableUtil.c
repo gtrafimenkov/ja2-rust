@@ -2,11 +2,12 @@
 
 #include <stdio.h>
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/WorldDat.h"
+#include "fileman.h"
+#include "platform.h"
 
 #define SHADE_TABLE_DIR "ShadeTables"
 
@@ -33,37 +34,37 @@ void DetermineRGBDistributionSettings() {
   // First, determine if we have a file saved.  If not, then this is the first time, and
   // all shade tables will have to be built and saved to disk.  This can be time consuming, adding
   // up to 3-4 seconds to the time of a map load.
-  GetExecutableDirectory(ExecDir);
+  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
   sprintf(ShadeTableDir, "%s\\Data\\%s", ExecDir, SHADE_TABLE_DIR);
 
   // Check to make sure we have a ShadeTable directory.  If we don't create one!
-  if (!SetFileManCurrentDirectory(ShadeTableDir)) {
-    if (!MakeFileManDirectory(ShadeTableDir)) {
+  if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
+    if (!Plat_CreateDirectory(ShadeTableDir)) {
       AssertMsg(0, "ShadeTable directory doesn't exist, and couldn't create one!");
     }
-    if (!SetFileManCurrentDirectory(ShadeTableDir)) {
+    if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
       AssertMsg(0, "Couldn't access the newly created ShadeTable directory.");
     }
     fSaveRGBDist = TRUE;
   }
 
   if (!fSaveRGBDist) {  // Load the previous RGBDist and determine if it is the same one
-    if (!FileExists("RGBDist.dat") ||
-        FileExists("ResetShadeTables.txt")) {  // Can't find the RGBDist.dat file.  The directory
-                                               // exists, but the file doesn't, which
+    if (!FileMan_Exists("RGBDist.dat") ||
+        FileMan_Exists("ResetShadeTables.txt")) {  // Can't find the RGBDist.dat file.  The
+                                                   // directory exists, but the file doesn't, which
       // means the user deleted the file manually.  Now, set it up to create a new one.
       fSaveRGBDist = TRUE;
       fCleanShadeTable = TRUE;
     } else {
-      hfile = FileOpen("RGBDist.dat", FILE_ACCESS_READ, FALSE);
+      hfile = FileMan_Open("RGBDist.dat", FILE_ACCESS_READ, FALSE);
       if (!hfile) {
         AssertMsg(0, "Couldn't open RGBDist.dat, even though it exists!");
       }
-      FileRead(hfile, &uiPrevRBitMask, sizeof(UINT32), &uiNumBytesRead);
-      FileRead(hfile, &uiPrevGBitMask, sizeof(UINT32), &uiNumBytesRead);
-      FileRead(hfile, &uiPrevBBitMask, sizeof(UINT32), &uiNumBytesRead);
+      FileMan_Read(hfile, &uiPrevRBitMask, sizeof(UINT32), &uiNumBytesRead);
+      FileMan_Read(hfile, &uiPrevGBitMask, sizeof(UINT32), &uiNumBytesRead);
+      FileMan_Read(hfile, &uiPrevBBitMask, sizeof(UINT32), &uiNumBytesRead);
       fLoadedPrevRGBDist = TRUE;
-      FileClose(hfile);
+      FileMan_Close(hfile);
     }
   }
 
@@ -85,25 +86,25 @@ void DetermineRGBDistributionSettings() {
   if (fCleanShadeTable) {  // This means that we are going to remove all of the current shade
                            // tables, if any exist, and
     // start fresh.
-    EraseDirectory(ShadeTableDir);
+    Plat_EraseDirectory(ShadeTableDir);
   }
   if (fSaveRGBDist) {  // The RGB distribution is going to be saved in a tiny file for future
                        // reference.  As long as the
     // RGB distribution never changes, the shade table will grow until eventually, all tilesets are
     // loaded, shadetables generated and saved in this directory.
-    hfile = FileOpen("RGBDist.dat", FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+    hfile = FileMan_Open("RGBDist.dat", FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
     if (!hfile) {
       AssertMsg(0, "Couldn't create RGBDist.dat for writing!");
     }
-    FileWrite(hfile, &uiRBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileWrite(hfile, &uiGBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileWrite(hfile, &uiBBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileClose(hfile);
+    FileMan_Write(hfile, &uiRBitMask, sizeof(UINT32), &uiNumBytesRead);
+    FileMan_Write(hfile, &uiGBitMask, sizeof(UINT32), &uiNumBytesRead);
+    FileMan_Write(hfile, &uiBBitMask, sizeof(UINT32), &uiNumBytesRead);
+    FileMan_Close(hfile);
   }
 
   // We're done, so restore the executable directory to JA2\Data.
   sprintf(DataDir, "%s\\Data", ExecDir);
-  SetFileManCurrentDirectory(DataDir);
+  Plat_SetCurrentDirectory(DataDir);
 }
 
 BOOLEAN LoadShadeTable(HVOBJECT pObj, UINT32 uiTileTypeIndex) {
@@ -124,9 +125,9 @@ BOOLEAN LoadShadeTable(HVOBJECT pObj, UINT32 uiTileTypeIndex) {
   ptr++;
   sprintf(ptr, "sha");
 
-  hfile = FileOpen(ShadeFileName, FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_Open(ShadeFileName, FILE_ACCESS_READ, FALSE);
   if (!hfile) {  // File doesn't exist, so generate it
-    FileClose(hfile);
+    FileMan_Close(hfile);
     return FALSE;
   }
 
@@ -135,11 +136,11 @@ BOOLEAN LoadShadeTable(HVOBJECT pObj, UINT32 uiTileTypeIndex) {
   for (i = 0; i < 16; i++) {
     pObj->pShades[i] = (UINT16*)MemAlloc(512);
     Assert(pObj->pShades[i]);
-    FileRead(hfile, pObj->pShades[i], 512, &uiNumBytesRead);
+    FileMan_Read(hfile, pObj->pShades[i], 512, &uiNumBytesRead);
   }
 
   // The file exists, now make sure the
-  FileClose(hfile);
+  FileMan_Close(hfile);
 #ifdef JA2TESTVERSION
   uiNumTablesLoaded++;
 #endif
@@ -167,18 +168,18 @@ BOOLEAN SaveShadeTable(HVOBJECT pObj, UINT32 uiTileTypeIndex) {
   ptr++;
   sprintf(ptr, "sha");
 
-  hfile = FileOpen(ShadeFileName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hfile = FileMan_Open(ShadeFileName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
   if (!hfile) {
-    FileClose(hfile);
+    FileMan_Close(hfile);
     AssertMsg(0, String("Can't create %s", ShadeFileName));
     return FALSE;
   }
   for (i = 0; i < 16; i++) {
-    FileWrite(hfile, pObj->pShades[i], 512, &uiNumBytesWritten);
+    FileMan_Write(hfile, pObj->pShades[i], 512, &uiNumBytesWritten);
   }
 
-  FileClose(hfile);
+  FileMan_Close(hfile);
   return TRUE;
 }
 
-BOOLEAN DeleteShadeTableDir() { return (RemoveFileManDirectory(SHADE_TABLE_DIR, TRUE)); }
+BOOLEAN DeleteShadeTableDir() { return (Plat_RemoveDirectory(SHADE_TABLE_DIR, TRUE)); }

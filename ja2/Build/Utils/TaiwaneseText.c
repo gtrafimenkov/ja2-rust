@@ -1,7 +1,6 @@
 #include "LanguageDefines.h"
 #ifdef TAIWANESE
 #include "JA2DemoAds.h"
-#include "SGP/FileMan.h"
 #include "Utils/Text.h"
 #endif
 

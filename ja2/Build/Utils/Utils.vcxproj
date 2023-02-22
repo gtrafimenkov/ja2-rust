@@ -28,7 +28,6 @@
     <ClCompile Include="MercTextBox.c" />
     <ClCompile Include="Message.c" />
     <ClCompile Include="MultiLanguageGraphicUtils.c" />
-    <ClCompile Include="MultilingualTextCodeGenerator.c" />
     <ClCompile Include="MusicControl.c" />
     <ClCompile Include="PopUpBox.c" />
     <ClCompile Include="QuantizeWrap.cc" />
@@ -66,7 +65,6 @@
     <ClInclude Include="MercTextBox.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MultiLanguageGraphicUtils.h" />
-    <ClInclude Include="MultilingualTextCodeGenerator.h" />
     <ClInclude Include="MusicControl.h" />
     <ClInclude Include="PopUpBox.h" />
     <ClInclude Include="QuantizeWrap.h" />

@@ -19,3 +19,6 @@ indent_size = 2
 
 [*.vcxproj]
 end_of_line = crlf
+
+[*.vcxproj.filters]
+end_of_line = crlf

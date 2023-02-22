@@ -4,7 +4,6 @@
 
 #include "FadeScreen.h"
 #include "Res/Resource.h"
-#include "SGP/FileMan.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/Input.h"
 #include "SGP/SGP.h"
@@ -14,6 +13,8 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "Utils/TimerControl.h"
+#include "fileman.h"
+#include "platform.h"
 
 #ifndef _MT
 #define _MT
@@ -1597,8 +1598,8 @@ void RefreshScreen(void *DummyVariable) {
     STRING512 ExecDir;
     UINT16 *p16BPPData;
 
-    GetExecutableDirectory(ExecDir);
-    SetFileManCurrentDirectory(ExecDir);
+    Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
+    Plat_SetCurrentDirectory(ExecDir);
 
     //
     // Create temporary system memory surface. This is used to correct problems with the backbuffer
@@ -1716,7 +1717,7 @@ void RefreshScreen(void *DummyVariable) {
     IDirectDrawSurface2_Release(pTmpBuffer);
 
     strcat(ExecDir, "\\Data");
-    SetFileManCurrentDirectory(ExecDir);
+    Plat_SetCurrentDirectory(ExecDir);
   }
 
   //
@@ -2781,8 +2782,8 @@ void RefreshMovieCache() {
 
   PauseTime(TRUE);
 
-  GetExecutableDirectory(ExecDir);
-  SetFileManCurrentDirectory(ExecDir);
+  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
+  Plat_SetCurrentDirectory(ExecDir);
 
   for (cnt = 0; cnt < giNumFrames; cnt++) {
     sprintf(cFilename, "JA%5.5d.TGA", uiPicNum++);
@@ -2814,5 +2815,5 @@ void RefreshMovieCache() {
   giNumFrames = 0;
 
   strcat(ExecDir, "\\Data");
-  SetFileManCurrentDirectory(ExecDir);
+  Plat_SetCurrentDirectory(ExecDir);
 }

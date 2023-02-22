@@ -36,6 +36,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
+#include "fileman.h"
 
 BOOLEAN gfOriginalList = TRUE;
 
@@ -186,11 +187,11 @@ BOOLEAN SaveSoldiersToMap(HWFILE fp) {
   for (i = 0; i < gMapInformation.ubNumIndividuals; i++) {
     if (!curr) return FALSE;
     curr->ubNodeID = (UINT8)i;
-    FileWrite(fp, curr->pBasicPlacement, sizeof(BASIC_SOLDIERCREATE_STRUCT), &uiBytesWritten);
+    FileMan_Write(fp, curr->pBasicPlacement, sizeof(BASIC_SOLDIERCREATE_STRUCT), &uiBytesWritten);
 
     if (curr->pBasicPlacement->fDetailedPlacement) {
       if (!curr->pDetailedPlacement) return FALSE;
-      FileWrite(fp, curr->pDetailedPlacement, sizeof(SOLDIERCREATE_STRUCT), &uiBytesWritten);
+      FileMan_Write(fp, curr->pDetailedPlacement, sizeof(SOLDIERCREATE_STRUCT), &uiBytesWritten);
     }
     curr = curr->next;
   }
@@ -1491,7 +1492,7 @@ BOOLEAN SaveSoldierInitListLinks(HWFILE hfile) {
     curr = curr->next;
   }
   //...and save it.
-  FileWrite(hfile, &ubSlots, 1, &uiNumBytesWritten);
+  FileMan_Write(hfile, &ubSlots, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) {
     return FALSE;
   }
@@ -1501,11 +1502,11 @@ BOOLEAN SaveSoldierInitListLinks(HWFILE hfile) {
     if (curr->pSoldier && !curr->pSoldier->bActive) {
       curr->ubSoldierID = 0;
     }
-    FileWrite(hfile, &curr->ubNodeID, 1, &uiNumBytesWritten);
+    FileMan_Write(hfile, &curr->ubNodeID, 1, &uiNumBytesWritten);
     if (uiNumBytesWritten != 1) {
       return FALSE;
     }
-    FileWrite(hfile, &curr->ubSoldierID, 1, &uiNumBytesWritten);
+    FileMan_Write(hfile, &curr->ubSoldierID, 1, &uiNumBytesWritten);
     if (uiNumBytesWritten != 1) {
       return FALSE;
     }
@@ -1519,16 +1520,16 @@ BOOLEAN LoadSoldierInitListLinks(HWFILE hfile) {
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 
-  FileRead(hfile, &ubSlots, 1, &uiNumBytesRead);
+  FileMan_Read(hfile, &ubSlots, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) {
     return FALSE;
   }
   while (ubSlots--) {
-    FileRead(hfile, &ubNodeID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubNodeID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }
-    FileRead(hfile, &ubSoldierID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubSoldierID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }
@@ -1848,16 +1849,16 @@ BOOLEAN NewWayOfLoadingEnemySoldierInitListLinks(HWFILE hfile) {
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 
-  FileRead(hfile, &ubSlots, 1, &uiNumBytesRead);
+  FileMan_Read(hfile, &ubSlots, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) {
     return FALSE;
   }
   while (ubSlots--) {
-    FileRead(hfile, &ubNodeID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubNodeID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }
-    FileRead(hfile, &ubSoldierID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubSoldierID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }
@@ -1885,16 +1886,16 @@ BOOLEAN NewWayOfLoadingCivilianInitListLinks(HWFILE hfile) {
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 
-  FileRead(hfile, &ubSlots, 1, &uiNumBytesRead);
+  FileMan_Read(hfile, &ubSlots, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) {
     return FALSE;
   }
   while (ubSlots--) {
-    FileRead(hfile, &ubNodeID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubNodeID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }
-    FileRead(hfile, &ubSoldierID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubSoldierID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }
@@ -1922,16 +1923,16 @@ BOOLEAN LookAtButDontProcessEnemySoldierInitListLinks(HWFILE hfile) {
   SOLDIERINITNODE *curr;
   UINT8 ubSlots, ubSoldierID, ubNodeID;
 
-  FileRead(hfile, &ubSlots, 1, &uiNumBytesRead);
+  FileMan_Read(hfile, &ubSlots, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) {
     return FALSE;
   }
   while (ubSlots--) {
-    FileRead(hfile, &ubNodeID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubNodeID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }
-    FileRead(hfile, &ubSoldierID, 1, &uiNumBytesRead);
+    FileMan_Read(hfile, &ubSoldierID, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return FALSE;
     }

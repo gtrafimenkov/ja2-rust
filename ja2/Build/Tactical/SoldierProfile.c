@@ -11,7 +11,6 @@
 #include "Laptop/Personnel.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
@@ -52,6 +51,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/TimerControl.h"
+#include "fileman.h"
 
 #ifdef JA2EDITOR
 extern BOOLEAN gfProfileDataLoaded;
@@ -149,7 +149,7 @@ BOOLEAN LoadMercProfiles(void) {
   UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
   UINT32 uiNumBytesRead;
 
-  fptr = FileOpen(pFileName, FILE_ACCESS_READ, FALSE);
+  fptr = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
   if (!fptr) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to LoadMercProfiles from file %s", pFileName));
     return (FALSE);
@@ -160,7 +160,7 @@ BOOLEAN LoadMercProfiles(void) {
                              &uiNumBytesRead) != 1) {
       DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                String("FAILED to Read Merc Profiles from File %d %s", uiLoop, pFileName));
-      FileClose(fptr);
+      FileMan_Close(fptr);
       return (FALSE);
     }
 
@@ -260,7 +260,7 @@ BOOLEAN LoadMercProfiles(void) {
 
   // SET SOME DEFAULT LOCATIONS FOR STARTING NPCS
 
-  FileClose(fptr);
+  FileMan_Close(fptr);
 
 // decide which terrorists are active
 #ifndef JA2DEMO

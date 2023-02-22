@@ -37,6 +37,8 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/TextInput.h"
+#include "fileman.h"
+#include "platform.h"
 
 //===========================================================================
 
@@ -61,7 +63,7 @@ void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason);
 void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering);
 
 UINT32 ProcessLoadSaveScreenMessageBoxResult();
-BOOLEAN RemoveFromFDlgList(FDLG_LIST **head, FDLG_LIST *node);
+BOOLEAN RemoveFromFDlgList(struct FileDialogList **head, struct FileDialogList *node);
 
 void DrawFileDialog();
 void HandleMainKeyEvents(InputAtom *pEvent);
@@ -75,7 +77,7 @@ INT32 iLastClickTime;
 
 CHAR16 gzFilename[31];
 
-FDLG_LIST *FileList = NULL;
+struct FileDialogList *FileList = NULL;
 
 INT32 iFDlgState = DIALOG_NONE;
 BOOLEAN gfDestroyFDlg = FALSE;
@@ -89,7 +91,7 @@ BOOLEAN gfDeleteFile;
 BOOLEAN gfNoFiles;
 
 CHAR16 zOrigName[60];
-GETFILESTRUCT FileInfo;
+struct GetFile FileInfo;
 
 BOOLEAN fEnteringLoadSaveScreen = TRUE;
 BOOLEAN gfPassedSaveCheck = FALSE;
@@ -133,14 +135,14 @@ void LoadSaveScreenEntry() {
   if (FileList) TrashFDlgList(FileList);
 
   iTopFileShown = iTotalFiles = 0;
-  if (GetFileFirst("MAPS\\*.dat", &FileInfo)) {
+  if (Plat_GetFileFirst("MAPS\\*.dat", &FileInfo)) {
     FileList = AddToFDlgList(FileList, &FileInfo);
     iTotalFiles++;
-    while (GetFileNext(&FileInfo)) {
+    while (Plat_GetFileNext(&FileInfo)) {
       FileList = AddToFDlgList(FileList, &FileInfo);
       iTotalFiles++;
     }
-    GetFileClose(&FileInfo);
+    Plat_GetFileClose(&FileInfo);
   }
 
   swprintf(zOrigName, L"%s Map (*.dat)", iCurrentAction == ACTION_SAVE_MAP ? L"Save" : L"Load");
@@ -159,7 +161,7 @@ void LoadSaveScreenEntry() {
 }
 
 UINT32 ProcessLoadSaveScreenMessageBoxResult() {
-  FDLG_LIST *curr, *temp;
+  struct FileDialogList *curr, *temp;
   gfRenderWorld = TRUE;
   RemoveMessageBox();
   if (gfIllegalName) {
@@ -177,10 +179,10 @@ UINT32 ProcessLoadSaveScreenMessageBoxResult() {
       }
       if (curr) {
         if (gfReadOnly) {
-          FileClearAttributes(gszCurrFilename);
+          Plat_ClearFileAttributes(gszCurrFilename);
           gfReadOnly = FALSE;
         }
-        FileDelete(gszCurrFilename);
+        FileMan_Delete(gszCurrFilename);
 
         // File is deleted so redo the text fields so they show the
         // next file in the list.
@@ -237,7 +239,7 @@ UINT32 ProcessLoadSaveScreenMessageBoxResult() {
 }
 
 UINT32 LoadSaveScreenHandle(void) {
-  FDLG_LIST *FListNode;
+  struct FileDialogList *FListNode;
   INT32 x;
   InputAtom DialogEvent;
 
@@ -307,9 +309,10 @@ UINT32 LoadSaveScreenHandle(void) {
       return EDIT_SCREEN;
     case DIALOG_DELETE:
       sprintf(gszCurrFilename, "MAPS\\%S", gzFilename);
-      if (GetFileFirst(gszCurrFilename, &FileInfo)) {
+      if (Plat_GetFileFirst(gszCurrFilename, &FileInfo)) {
         CHAR16 str[40];
-        if (FileInfo.uiFileAttribs & (FILE_IS_READONLY | FILE_IS_HIDDEN | FILE_IS_SYSTEM)) {
+        if (Plat_GetFileIsReadonly(&FileInfo) || Plat_GetFileIsSystem(&FileInfo) ||
+            Plat_GetFileIsHidden(&FileInfo)) {
           swprintf(str, ARR_SIZE(str), L" Delete READ-ONLY file %s? ", gzFilename);
           gfReadOnly = TRUE;
         } else
@@ -326,14 +329,16 @@ UINT32 LoadSaveScreenHandle(void) {
         return LOADSAVE_SCREEN;
       }
       sprintf(gszCurrFilename, "MAPS\\%S", gzFilename);
-      if (FileExists(gszCurrFilename)) {
+      if (FileMan_Exists(gszCurrFilename)) {
         gfFileExists = TRUE;
         gfReadOnly = FALSE;
-        if (GetFileFirst(gszCurrFilename, &FileInfo)) {
-          if (FileInfo.uiFileAttribs & (FILE_IS_READONLY | FILE_IS_DIRECTORY | FILE_IS_HIDDEN |
-                                        FILE_IS_SYSTEM | FILE_IS_OFFLINE | FILE_IS_TEMPORARY))
+        if (Plat_GetFileFirst(gszCurrFilename, &FileInfo)) {
+          if (Plat_GetFileIsReadonly(&FileInfo) || Plat_GetFileIsDirectory(&FileInfo) ||
+              Plat_GetFileIsHidden(&FileInfo) || Plat_GetFileIsSystem(&FileInfo) ||
+              Plat_GetFileIsOffline(&FileInfo) || Plat_GetFileIsTemporary(&FileInfo)) {
             gfReadOnly = TRUE;
-          GetFileClose(&FileInfo);
+          }
+          Plat_GetFileClose(&FileInfo);
         }
         if (gfReadOnly)
           CreateMessageBox(L" File is read only!  Choose a different name? ");
@@ -424,7 +429,7 @@ void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason) {
 // text field to the currently selected file in the list which is already know.
 void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering) {
   INT32 x;
-  FDLG_LIST *FListNode;
+  struct FileDialogList *FListNode;
   if (fEntering) {
     // Skip to first filename
     FListNode = FileList;
@@ -503,7 +508,7 @@ void DrawFileDialog(void) {
 void SelectFileDialogYPos(UINT16 usRelativeYPos) {
   INT16 sSelName;
   INT32 x;
-  FDLG_LIST *FListNode;
+  struct FileDialogList *FListNode;
 
   sSelName = usRelativeYPos / 15;
 
@@ -546,12 +551,12 @@ void SelectFileDialogYPos(UINT16 usRelativeYPos) {
   }
 }
 
-FDLG_LIST *AddToFDlgList(FDLG_LIST *pList, GETFILESTRUCT *pInfo) {
-  FDLG_LIST *pNode;
+struct FileDialogList *AddToFDlgList(struct FileDialogList *pList, struct GetFile *pInfo) {
+  struct FileDialogList *pNode;
 
   // Add to start of list
   if (pList == NULL) {
-    pNode = (FDLG_LIST *)MemAlloc(sizeof(FDLG_LIST));
+    pNode = (struct FileDialogList *)MemAlloc(sizeof(struct FileDialogList));
     pNode->FileInfo = *pInfo;
     pNode->pPrev = pNode->pNext = NULL;
     return (pNode);
@@ -560,7 +565,7 @@ FDLG_LIST *AddToFDlgList(FDLG_LIST *pList, GETFILESTRUCT *pInfo) {
   // Add and sort alphabetically without regard to case -- function limited to 10 chars comparison
   if (stricmp(pList->FileInfo.zFileName, pInfo->zFileName) > 0) {
     // pInfo is smaller than pList (i.e. Insert before)
-    pNode = (FDLG_LIST *)MemAlloc(sizeof(FDLG_LIST));
+    pNode = (struct FileDialogList *)MemAlloc(sizeof(struct FileDialogList));
     pNode->FileInfo = *pInfo;
     pNode->pNext = pList;
     pNode->pPrev = pList->pPrev;
@@ -573,8 +578,8 @@ FDLG_LIST *AddToFDlgList(FDLG_LIST *pList, GETFILESTRUCT *pInfo) {
   return (pList);
 }
 
-BOOLEAN RemoveFromFDlgList(FDLG_LIST **head, FDLG_LIST *node) {
-  FDLG_LIST *curr;
+BOOLEAN RemoveFromFDlgList(struct FileDialogList **head, struct FileDialogList *node) {
+  struct FileDialogList *curr;
   curr = *head;
   while (curr) {
     if (curr == node) {
@@ -590,8 +595,8 @@ BOOLEAN RemoveFromFDlgList(FDLG_LIST **head, FDLG_LIST *node) {
   return FALSE;  // wasn't deleted
 }
 
-void TrashFDlgList(FDLG_LIST *pList) {
-  FDLG_LIST *pNode;
+void TrashFDlgList(struct FileDialogList *pList) {
+  struct FileDialogList *pNode;
 
   while (pList != NULL) {
     pNode = pList;
@@ -602,8 +607,8 @@ void TrashFDlgList(FDLG_LIST *pList) {
 
 void SetTopFileToLetter(UINT16 usLetter) {
   UINT32 x;
-  FDLG_LIST *curr;
-  FDLG_LIST *prev;
+  struct FileDialogList *curr;
+  struct FileDialogList *prev;
   UINT16 usNodeLetter;
 
   // Skip to first filename
@@ -691,7 +696,7 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
   // Update the text field if the file value has changed.
   if (iCurrFileShown != iPrevFileShown) {
     INT32 x;
-    FDLG_LIST *curr;
+    struct FileDialogList *curr;
     x = 0;
     curr = FileList;
     while (curr && x != iCurrFileShown) {

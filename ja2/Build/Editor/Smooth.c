@@ -8,7 +8,6 @@
 #include "Editor/EditorUndo.h"
 #include "Editor/SelectWin.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "Tactical/StructureWrap.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"

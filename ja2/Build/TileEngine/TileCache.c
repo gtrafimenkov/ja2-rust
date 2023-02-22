@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationCache.h"
@@ -14,6 +13,9 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
 #include "Utils/DebugControl.h"
+#include "fileman.h"
+#include "platform.h"
+#include "platfrom_strings.h"
 
 UINT32 guiNumTileCacheStructs = 0;
 UINT32 guiMaxTileCacheSize = 50;
@@ -25,7 +27,7 @@ TILE_CACHE_STRUCT *gpTileCacheStructInfo = NULL;
 
 BOOLEAN InitTileCache() {
   UINT32 cnt;
-  GETFILESTRUCT FileInfo;
+  struct GetFile FileInfo;
   INT16 sFiles = 0;
 
   gpTileCache = (TILE_CACHE_ELEMENT *)MemAlloc(sizeof(TILE_CACHE_ELEMENT) * guiMaxTileCacheSize);
@@ -40,11 +42,11 @@ BOOLEAN InitTileCache() {
 
   // OK, look for JSD files in the tile cache directory and
   // load any we find....
-  if (GetFileFirst("TILECACHE\\*.jsd", &FileInfo)) {
-    while (GetFileNext(&FileInfo)) {
+  if (Plat_GetFileFirst("TILECACHE\\*.jsd", &FileInfo)) {
+    while (Plat_GetFileNext(&FileInfo)) {
       sFiles++;
     }
-    GetFileClose(&FileInfo);
+    Plat_GetFileClose(&FileInfo);
   }
 
   // Allocate memory...
@@ -56,8 +58,8 @@ BOOLEAN InitTileCache() {
     gpTileCacheStructInfo = (TILE_CACHE_STRUCT *)MemAlloc(sizeof(TILE_CACHE_STRUCT) * sFiles);
 
     // Loop through and set filenames
-    if (GetFileFirst("TILECACHE\\*.jsd", &FileInfo)) {
-      while (GetFileNext(&FileInfo)) {
+    if (Plat_GetFileFirst("TILECACHE\\*.jsd", &FileInfo)) {
+      while (Plat_GetFileNext(&FileInfo)) {
         sprintf(gpTileCacheStructInfo[cnt].Filename, "TILECACHE\\%s", FileInfo.zFileName);
 
         // Get root name
@@ -78,7 +80,7 @@ BOOLEAN InitTileCache() {
 
         cnt++;
       }
-      GetFileClose(&FileInfo);
+      Plat_GetFileClose(&FileInfo);
     }
   }
 
@@ -110,7 +112,7 @@ INT16 FindCacheStructDataIndex(STR8 cFilename) {
   UINT32 cnt;
 
   for (cnt = 0; cnt < guiNumTileCacheStructs; cnt++) {
-    if (_stricmp(gpTileCacheStructInfo[cnt].zRootName, cFilename) == 0) {
+    if (strcasecmp(gpTileCacheStructInfo[cnt].zRootName, cFilename) == 0) {
       return ((INT16)cnt);
     }
   }
@@ -126,7 +128,7 @@ INT32 GetCachedTile(STR8 cFilename) {
   // Check to see if surface exists already
   for (cnt = 0; cnt < guiCurTileCacheSize; cnt++) {
     if (gpTileCache[cnt].pImagery != NULL) {
-      if (_stricmp(gpTileCache[cnt].zName, cFilename) == 0) {
+      if (strcasecmp(gpTileCache[cnt].zName, cFilename) == 0) {
         // Found surface, return
         gpTileCache[cnt].sHits++;
         return ((INT32)cnt);

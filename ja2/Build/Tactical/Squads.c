@@ -14,6 +14,7 @@
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Vehicles.h"
 #include "TileEngine/RenderWorld.h"
+#include "fileman.h"
 
 typedef struct {
   INT16 uiID;  // The soldiers ID
@@ -912,13 +913,13 @@ BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile) {
   // Save the squad info to the Saved Game File
   uiSaveSize = sizeof(SAVE_SQUAD_INFO_STRUCT) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD;
 
-  FileWrite(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesWritten);
+  FileMan_Write(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save all the squad movement id's
-  FileWrite(hFile, SquadMovementGroups, sizeof(INT8) * NUMBER_OF_SQUADS, &uiNumBytesWritten);
+  FileMan_Write(hFile, SquadMovementGroups, sizeof(INT8) * NUMBER_OF_SQUADS, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT8) * NUMBER_OF_SQUADS) {
     return (FALSE);
   }
@@ -946,7 +947,7 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   // Load in the squad info
   uiSaveSize = sizeof(SAVE_SQUAD_INFO_STRUCT) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD;
 
-  FileRead(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesRead);
+  FileMan_Read(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiSaveSize) {
     return (FALSE);
   }
@@ -962,7 +963,7 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   }
 
   // Load in the Squad movement id's
-  FileRead(hFile, SquadMovementGroups, sizeof(INT8) * NUMBER_OF_SQUADS, &uiNumBytesRead);
+  FileMan_Read(hFile, SquadMovementGroups, sizeof(INT8) * NUMBER_OF_SQUADS, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT8) * NUMBER_OF_SQUADS) {
     return (FALSE);
   }

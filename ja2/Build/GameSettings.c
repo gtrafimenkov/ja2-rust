@@ -6,8 +6,7 @@
 #include "LanguageDefines.h"
 #include "OptionsScreen.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
-#include "SGP/LibraryDataBase.h"
+#include "SGP/LibraryDataBasePub.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
 #include "SGP/Types.h"
@@ -24,6 +23,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 #define GAME_SETTINGS_FILE "..\\Ja2.set"
 
@@ -54,28 +54,29 @@ BOOLEAN LoadGameSettings() {
   UINT32 uiNumBytesRead;
 
   // if the game settings file does NOT exist, or if it is smaller then what it should be
-  if (!FileExists(GAME_SETTINGS_FILE) || FileSize(GAME_SETTINGS_FILE) != sizeof(GAME_SETTINGS)) {
+  if (!FileMan_Exists(GAME_SETTINGS_FILE) ||
+      FileMan_Size(GAME_SETTINGS_FILE) != sizeof(GAME_SETTINGS)) {
     // Initialize the settings
     InitGameSettings();
 
     // delete the shade tables aswell
     DeleteShadeTableDir();
   } else {
-    hFile = FileOpen(GAME_SETTINGS_FILE, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_Open(GAME_SETTINGS_FILE, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
     if (!hFile) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       InitGameSettings();
       return (FALSE);
     }
 
-    FileRead(hFile, &gGameSettings, sizeof(GAME_SETTINGS), &uiNumBytesRead);
+    FileMan_Read(hFile, &gGameSettings, sizeof(GAME_SETTINGS), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(GAME_SETTINGS)) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       InitGameSettings();
       return (FALSE);
     }
 
-    FileClose(hFile);
+    FileMan_Close(hFile);
   }
 
   // if the version in the game setting file is older then the we want, init the game settings
@@ -137,9 +138,9 @@ BOOLEAN SaveGameSettings() {
   UINT32 uiNumBytesWritten;
 
   // create the file
-  hFile = FileOpen(GAME_SETTINGS_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFile = FileMan_Open(GAME_SETTINGS_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
   if (!hFile) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -154,13 +155,13 @@ BOOLEAN SaveGameSettings() {
   gGameSettings.uiSettingsVersionNumber = GAME_SETTING_CURRENT_VERSION;
 
   // Write the game settings to disk
-  FileWrite(hFile, &gGameSettings, sizeof(GAME_SETTINGS), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gGameSettings, sizeof(GAME_SETTINGS), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(GAME_SETTINGS)) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (TRUE);
 }
@@ -257,7 +258,7 @@ BOOLEAN CheckIfGameCdromIsInCDromDrive() {
   sprintf(zCdFile, "%s%s", zCdLocation, gCheckFilenames[Random(2)]);
 
   // If the cdrom drive is no longer in the drive
-  if (uiLastError == ERROR_NOT_READY || (!FileExists(zCdFile))) {
+  if (uiLastError == ERROR_NOT_READY || (!FileMan_Exists(zCdFile))) {
     CHAR8 sString[512];
 
     // if a game has been started, add the msg about saving the game to a different entry

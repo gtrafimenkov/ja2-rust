@@ -11,7 +11,7 @@
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
 #include "OptionsScreen.h"
-#include "SGP/LibraryDataBase.h"
+#include "SGP/LibraryDataBasePub.h"
 #include "SGP/SGP.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
@@ -29,6 +29,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "platform.h"
 
 UINT32 guiPendingScreen = NO_PENDING_SCREEN;
 UINT32 guiPreviousScreen = NO_PENDING_SCREEN;
@@ -218,7 +219,7 @@ void GameLoop(void) {
           swprintf(zSizeNeeded, L"%d", REQUIRED_FREE_SPACE / BYTESINMEGABYTE);
           InsertCommasForDollarFigure(zSizeNeeded);
 
-          uiSpaceOnDrive = GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
+          uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
           swprintf(zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE);
 

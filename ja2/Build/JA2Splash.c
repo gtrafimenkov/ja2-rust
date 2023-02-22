@@ -1,13 +1,14 @@
 #include <stdio.h>
 
 #include "MainMenuScreen.h"
-#include "SGP/FileMan.h"
-#include "SGP/LibraryDataBase.h"
+#include "SGP/LibraryDataBasePub.h"
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "Utils/TimerControl.h"
+#include "fileman.h"
+#include "platform.h"
 
 UINT32 guiSplashFrameFade = 10;
 UINT32 guiSplashStartTime = 0;
@@ -25,11 +26,11 @@ void InitJA2SplashScreen() {
   InitializeJA2Clock();
   // InitializeJA2TimerID();
   // Get Executable Directory
-  GetExecutableDirectory(CurrentDir);
+  Plat_GetExecutableDirectory(CurrentDir, sizeof(CurrentDir));
 
   // Adjust Current Dir
   sprintf(DataDir, "%s\\Data", CurrentDir);
-  if (!SetFileManCurrentDirectory(DataDir)) {
+  if (!Plat_SetCurrentDirectory(DataDir)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not find data directory, shutting down");
     return;
   }

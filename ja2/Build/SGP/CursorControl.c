@@ -1,6 +1,6 @@
 #include "SGP/CursorControl.h"
 
-#include "SGP/Video.h"
+#include "SGP/CursorFileData.h"
 #include "SGP/WCheck.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +11,7 @@
 
 BOOLEAN gfCursorDatabaseInit = FALSE;
 
-CursorFileData *gpCursorFileDatabase;
+struct CursorFileData *gpCursorFileDatabase;
 CursorData *gpCursorDatabase;
 INT16 gsGlobalCursorYOffset = 0;
 INT16 gsCurMouseOffsetX = 0;
@@ -65,7 +65,7 @@ BOOLEAN BltToMouseCursorFromVObjectWithOutline(HVOBJECT hVObject, UINT16 usVideo
 }
 
 // THESE TWO PARAMETERS MUST POINT TO STATIC OR GLOBAL DATA, NOT AUTOMATIC VARIABLES
-void InitCursorDatabase(CursorFileData *pCursorFileData, CursorData *pCursorData,
+void InitCursorDatabase(struct CursorFileData *pCursorFileData, CursorData *pCursorData,
                         UINT16 suNumDataFiles) {
   // Set global values!
 

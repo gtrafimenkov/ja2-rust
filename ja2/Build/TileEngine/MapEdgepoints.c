@@ -16,6 +16,7 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/WorldMan.h"
+#include "fileman.h"
 
 // dynamic arrays that contain the valid gridno's for each edge
 INT16 *gps1stNorthEdgepointArray = NULL;
@@ -783,39 +784,43 @@ void GenerateMapEdgepoints() {
 
 void SaveMapEdgepoints(HWFILE fp) {
   // 1st priority edgepoints -- for common entry -- tactical placement gui uses only these points.
-  FileWrite(fp, &gus1stNorthEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus1stNorthEdgepointMiddleIndex, 2, NULL);
+  FileMan_Write(fp, &gus1stNorthEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus1stNorthEdgepointMiddleIndex, 2, NULL);
   if (gus1stNorthEdgepointArraySize)
-    FileWrite(fp, gps1stNorthEdgepointArray, gus1stNorthEdgepointArraySize * sizeof(INT16), NULL);
-  FileWrite(fp, &gus1stEastEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus1stEastEdgepointMiddleIndex, 2, NULL);
+    FileMan_Write(fp, gps1stNorthEdgepointArray, gus1stNorthEdgepointArraySize * sizeof(INT16),
+                  NULL);
+  FileMan_Write(fp, &gus1stEastEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus1stEastEdgepointMiddleIndex, 2, NULL);
   if (gus1stEastEdgepointArraySize)
-    FileWrite(fp, gps1stEastEdgepointArray, gus1stEastEdgepointArraySize * sizeof(INT16), NULL);
-  FileWrite(fp, &gus1stSouthEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus1stSouthEdgepointMiddleIndex, 2, NULL);
+    FileMan_Write(fp, gps1stEastEdgepointArray, gus1stEastEdgepointArraySize * sizeof(INT16), NULL);
+  FileMan_Write(fp, &gus1stSouthEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus1stSouthEdgepointMiddleIndex, 2, NULL);
   if (gus1stSouthEdgepointArraySize)
-    FileWrite(fp, gps1stSouthEdgepointArray, gus1stSouthEdgepointArraySize * sizeof(INT16), NULL);
-  FileWrite(fp, &gus1stWestEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus1stWestEdgepointMiddleIndex, 2, NULL);
+    FileMan_Write(fp, gps1stSouthEdgepointArray, gus1stSouthEdgepointArraySize * sizeof(INT16),
+                  NULL);
+  FileMan_Write(fp, &gus1stWestEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus1stWestEdgepointMiddleIndex, 2, NULL);
   if (gus1stWestEdgepointArraySize)
-    FileWrite(fp, gps1stWestEdgepointArray, gus1stWestEdgepointArraySize * sizeof(INT16), NULL);
+    FileMan_Write(fp, gps1stWestEdgepointArray, gus1stWestEdgepointArraySize * sizeof(INT16), NULL);
   // 2nd priority edgepoints -- for isolated areas.  Okay to be zero
-  FileWrite(fp, &gus2ndNorthEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus2ndNorthEdgepointMiddleIndex, 2, NULL);
+  FileMan_Write(fp, &gus2ndNorthEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus2ndNorthEdgepointMiddleIndex, 2, NULL);
   if (gus2ndNorthEdgepointArraySize)
-    FileWrite(fp, gps2ndNorthEdgepointArray, gus2ndNorthEdgepointArraySize * sizeof(INT16), NULL);
-  FileWrite(fp, &gus2ndEastEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus2ndEastEdgepointMiddleIndex, 2, NULL);
+    FileMan_Write(fp, gps2ndNorthEdgepointArray, gus2ndNorthEdgepointArraySize * sizeof(INT16),
+                  NULL);
+  FileMan_Write(fp, &gus2ndEastEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus2ndEastEdgepointMiddleIndex, 2, NULL);
   if (gus2ndEastEdgepointArraySize)
-    FileWrite(fp, gps2ndEastEdgepointArray, gus2ndEastEdgepointArraySize * sizeof(INT16), NULL);
-  FileWrite(fp, &gus2ndSouthEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus2ndSouthEdgepointMiddleIndex, 2, NULL);
+    FileMan_Write(fp, gps2ndEastEdgepointArray, gus2ndEastEdgepointArraySize * sizeof(INT16), NULL);
+  FileMan_Write(fp, &gus2ndSouthEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus2ndSouthEdgepointMiddleIndex, 2, NULL);
   if (gus2ndSouthEdgepointArraySize)
-    FileWrite(fp, gps2ndSouthEdgepointArray, gus2ndSouthEdgepointArraySize * sizeof(INT16), NULL);
-  FileWrite(fp, &gus2ndWestEdgepointArraySize, 2, NULL);
-  FileWrite(fp, &gus2ndWestEdgepointMiddleIndex, 2, NULL);
+    FileMan_Write(fp, gps2ndSouthEdgepointArray, gus2ndSouthEdgepointArraySize * sizeof(INT16),
+                  NULL);
+  FileMan_Write(fp, &gus2ndWestEdgepointArraySize, 2, NULL);
+  FileMan_Write(fp, &gus2ndWestEdgepointMiddleIndex, 2, NULL);
   if (gus2ndWestEdgepointArraySize)
-    FileWrite(fp, gps2ndWestEdgepointArray, gus2ndWestEdgepointArraySize * sizeof(INT16), NULL);
+    FileMan_Write(fp, gps2ndWestEdgepointArray, gus2ndWestEdgepointArraySize * sizeof(INT16), NULL);
 }
 
 void OldLoadMapEdgepoints(INT8 **hBuffer) {

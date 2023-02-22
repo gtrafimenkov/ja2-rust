@@ -35,10 +35,6 @@
 #define FILE_ACCESS_WRITE 0x02
 #endif
 
-#define FILE_SEEK_FROM_START 0x01    // keep in sync with fileman.h
-#define FILE_SEEK_FROM_END 0x02      // keep in sync with fileman.h
-#define FILE_SEEK_FROM_CURRENT 0x04  // keep in sync with fileman.h
-
 //**************************************************************************
 //
 //				Typedefs

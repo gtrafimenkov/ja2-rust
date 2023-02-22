@@ -34,6 +34,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 /////////////////////////////////
 //
@@ -311,7 +312,7 @@ BOOLEAN EnterOptionsScreen() {
 
   /*
   Uncomment this to enable the check for files to activate the blood and gore option for the german
-  build if( !FileExists( "Germany.dat" ) && FileExists( "Lecken.dat" ) )
+  build if( !FileMan_Exists( "Germany.dat" ) && FileMan_Exists( "Lecken.dat" ) )
           {
                   gfHideBloodAndGoreOption = FALSE;
           }
@@ -809,11 +810,11 @@ void GetOptionsScreenUserInput() {
                                                           sprintf( zCdromRootDrive,
              "%sData\\NPC_Speech.slf", zCdromRootDrive );
 
-                                          //		if( FileExistsNoDB( zCdromRootDrive ) )
-                                                          hFile = FileOpen( zCdromRootDrive,
+                                          //		if( FileMan_ExistsNoDB( zCdromRootDrive ) )
+                                                          hFile = FileMan_Open( zCdromRootDrive,
              FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE ); if( hFile != 0 )
                                                           {
-                                                                  FileClose( hFile );
+                                                                  FileMan_Close( hFile );
                                                                   sprintf( zCdromRootDrive,
              "%sData\\NPC_Speech.slf", zCdromRootDrive );
                                                           }

@@ -13,6 +13,8 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
+#include "platform.h"
 
 #define TOP_X 0 + LAPTOP_SCREEN_UL_X
 #define TOP_Y LAPTOP_SCREEN_UL_Y
@@ -188,9 +190,9 @@ UINT32 AddFilesToPlayersLog(UINT8 ubCode, UINT32 uiDate, UINT8 ubFormat, STR8 pF
   return uiId;
 }
 void GameInitFiles() {
-  if ((FileExists(FILES_DAT_FILE) == TRUE)) {
-    FileClearAttributes(FILES_DAT_FILE);
-    FileDelete(FILES_DAT_FILE);
+  if ((FileMan_Exists(FILES_DAT_FILE) == TRUE)) {
+    Plat_ClearFileAttributes(FILES_DAT_FILE);
+    FileMan_Delete(FILES_DAT_FILE);
   }
 
   ClearFilesList();
@@ -443,10 +445,10 @@ void OpenAndReadFilesFile(void) {
   ClearFilesList();
 
   // no file, return
-  if (!(FileExists(FILES_DAT_FILE))) return;
+  if (!(FileMan_Exists(FILES_DAT_FILE))) return;
 
   // open file
-  hFileHandle = FileOpen(FILES_DAT_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_Open(FILES_DAT_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -454,25 +456,25 @@ void OpenAndReadFilesFile(void) {
   }
 
   // make sure file is more than 0 length
-  if (FileGetSize(hFileHandle) == 0) {
-    FileClose(hFileHandle);
+  if (FileMan_GetSize(hFileHandle) == 0) {
+    FileMan_Close(hFileHandle);
     return;
   }
 
   // file exists, read in data, continue until file end
-  while (FileGetSize(hFileHandle) > uiByteCount) {
+  while (FileMan_GetSize(hFileHandle) > uiByteCount) {
     // read in data
-    FileRead(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
 
-    FileRead(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
+    FileMan_Read(hFileHandle, &uiDate, sizeof(UINT32), &iBytesRead);
 
-    FileRead(hFileHandle, &pFirstFilePath, 128, &iBytesRead);
+    FileMan_Read(hFileHandle, &pFirstFilePath, 128, &iBytesRead);
 
-    FileRead(hFileHandle, &pSecondFilePath, 128, &iBytesRead);
+    FileMan_Read(hFileHandle, &pSecondFilePath, 128, &iBytesRead);
 
-    FileRead(hFileHandle, &ubFormat, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &ubFormat, sizeof(UINT8), &iBytesRead);
 
-    FileRead(hFileHandle, &fRead, sizeof(UINT8), &iBytesRead);
+    FileMan_Read(hFileHandle, &fRead, sizeof(UINT8), &iBytesRead);
     // add transaction
     ProcessAndEnterAFilesRecord(ubCode, uiDate, ubFormat, pFirstFilePath, pSecondFilePath, fRead);
 
@@ -481,7 +483,7 @@ void OpenAndReadFilesFile(void) {
   }
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return;
 }
@@ -507,7 +509,7 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   }
 
   // open file
-  hFileHandle = FileOpen(FILES_DAT_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFileHandle = FileMan_Open(FILES_DAT_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 
   // if no file exits, do nothing
   if (!hFileHandle) {
@@ -516,19 +518,19 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   // write info, while there are elements left in the list
   while (pFilesList) {
     // now write date and amount, and code
-    FileWrite(hFileHandle, &(pFilesList->ubCode), sizeof(UINT8), NULL);
-    FileWrite(hFileHandle, &(pFilesList->uiDate), sizeof(UINT32), NULL);
-    FileWrite(hFileHandle, &(pFirstFilePath), 128, NULL);
-    FileWrite(hFileHandle, &(pSecondFilePath), 128, NULL);
-    FileWrite(hFileHandle, &(pFilesList->ubFormat), sizeof(UINT8), NULL);
-    FileWrite(hFileHandle, &(pFilesList->fRead), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->ubCode), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->uiDate), sizeof(UINT32), NULL);
+    FileMan_Write(hFileHandle, &(pFirstFilePath), 128, NULL);
+    FileMan_Write(hFileHandle, &(pSecondFilePath), 128, NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->ubFormat), sizeof(UINT8), NULL);
+    FileMan_Write(hFileHandle, &(pFilesList->fRead), sizeof(UINT8), NULL);
 
     // next element in list
     pFilesList = pFilesList->Next;
   }
 
   // close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
   // clear out the old list
   ClearFilesList();
 

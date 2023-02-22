@@ -5,8 +5,10 @@
 #include <stdlib.h>
 
 #include "GameVersion.h"
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
+#include "fileman.h"
+#include "platform.h"
+#include "platform_win.h"
 
 // If we are to use exception handling
 #ifdef ENABLE_EXCEPTION_HANDLING
@@ -62,9 +64,9 @@ INT32 RecordExceptionInfo(EXCEPTION_POINTERS *pExceptInfo) {
   sprintf(zFileName, "Crash Report_%s___%s.txt", zDate, zTime);
 
   // create the save game file
-  hFile = FileOpen(zFileName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_Open(zFileName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
   if (!hFile) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (0);
   }
 
@@ -148,7 +150,7 @@ INT32 RecordExceptionInfo(EXCEPTION_POINTERS *pExceptInfo) {
 
   // eee
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   return (EXCEPTION_EXECUTE_HANDLER);
 }
@@ -167,9 +169,9 @@ void ErrorLog(HWFILE hFile, char *Format, ...) {
   uiStringWidth = lstrlen(buffer);
 
   // write out the string
-  FileWrite(hFile, buffer, uiStringWidth, &uiNumBytesWritten);
+  FileMan_Write(hFile, buffer, uiStringWidth, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiStringWidth) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return;
   }
 }
@@ -465,9 +467,9 @@ static void ShowModuleInfo(HWFILE hFile, HINSTANCE ModuleHandle) {
       HANDLE ModuleFile = CreateFile(ModName, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING,
                                      FILE_ATTRIBUTE_NORMAL, 0);
       char TimeBuffer[100] = "";
-      DWORD FileSize = 0;
+      DWORD FileMan_Size = 0;
       if (ModuleFile != INVALID_HANDLE_VALUE) {
-        FileSize = GetFileSize(ModuleFile, 0);
+        FileMan_Size = Plat_GetFileSize(ModuleFile);
         FILETIME LastWriteTime;
         if (GetFileTime(ModuleFile, 0, 0, &LastWriteTime)) {
           wsprintf(TimeBuffer, " - file date is ");
@@ -476,7 +478,7 @@ static void ShowModuleInfo(HWFILE hFile, HINSTANCE ModuleHandle) {
         CloseHandle(ModuleFile);
       }
       ErrorLog(hFile, "%-35s, loaded at 0x%08x - %7d bytes - %08x%s\r\n", ModName, ModuleHandle,
-               FileSize, NTHeader->FileHeader.TimeDateStamp, TimeBuffer);
+               FileMan_Size, NTHeader->FileHeader.TimeDateStamp, TimeBuffer);
     }
   }
   // Handle any exceptions by continuing from this point.

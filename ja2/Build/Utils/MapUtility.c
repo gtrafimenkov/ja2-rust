@@ -1,9 +1,9 @@
-#include "SGP/SGP.h"
-#ifdef JA2EDITOR
+#include "Utils/MapUtility.h"
+
 #include "Editor/LoadScreen.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Line.h"
+#include "SGP/SGP.h"
 #include "SGP/VObjectBlitters.h"
 #include "Screens.h"
 #include "Tactical/MapInformation.h"
@@ -13,9 +13,9 @@
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
-#include "Utils/MapUtility.h"
 #include "Utils/STIConvert.h"
-#endif
+#include "fileman.h"
+#include "platform.h"
 
 #ifdef JA2EDITOR
 
@@ -49,10 +49,10 @@ UINT32 MapUtilScreenHandle() {
   static INT16 fNewMap = TRUE;
   static INT16 sFileNum = 0;
   InputAtom InputEvent;
-  GETFILESTRUCT FileInfo;
-  static FDLG_LIST *FListNode;
+  struct GetFile FileInfo;
+  static struct FileDialogList *FListNode;
   static INT16 sFiles = 0, sCurFile = 0;
-  static FDLG_LIST *FileList = NULL;
+  static struct FileDialogList *FileList = NULL;
   CHAR8 zFilename[260], zFilename2[260];
   VSURFACE_DESC vs_desc;
   UINT16 usWidth;
@@ -99,14 +99,14 @@ UINT32 MapUtilScreenHandle() {
     }
 
     // USING BRET's STUFF FOR LOOPING FILES/CREATING LIST, hence AddToFDlgList.....
-    if (GetFileFirst("MAPS\\*.dat", &FileInfo)) {
+    if (Plat_GetFileFirst("MAPS\\*.dat", &FileInfo)) {
       FileList = AddToFDlgList(FileList, &FileInfo);
       sFiles++;
-      while (GetFileNext(&FileInfo)) {
+      while (Plat_GetFileNext(&FileInfo)) {
         FileList = AddToFDlgList(FileList, &FileInfo);
         sFiles++;
       }
-      GetFileClose(&FileInfo);
+      Plat_GetFileClose(&FileInfo);
     }
 
     FListNode = FileList;

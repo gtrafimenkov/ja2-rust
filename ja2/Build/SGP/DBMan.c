@@ -24,9 +24,9 @@
 #include <windows.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
+#include "fileman.h"
 
 //**************************************************************************
 //
@@ -60,8 +60,6 @@
   if (!(exp)) {     \
     return (0);     \
   }
-
-#define PRINT_DEBUG_INFO FileDebugPrint();
 
 #define ExtractFileIndex(exp) ((HFILEINDEX)((exp) >> 16))
 #define ExtractDbIndex(exp) ((HDBINDEX)((exp)&0x0000FFFF))
@@ -222,7 +220,7 @@ BOOLEAN InitializeDatabaseManager(STR strIndexFilename) {
   INT32 i;
   UINT32 uiSize;
 
-  if (!FileExistsNoDB(strIndexFilename)) {
+  if (!FileMan_ExistsNoDB(strIndexFilename)) {
     return (FALSE);
   }
 
@@ -269,7 +267,7 @@ void ShutdownDatabaseManager(void) {
     DbClose((HDBINDEX)i);
     // if ( gdb.pDBFiles[i].hFile )
     //{
-    //	FileClose(gdb.pDBFiles[i].hFile);
+    //	FileMan_Close(gdb.pDBFiles[i].hFile);
     //	gdb.pDBFiles[i].hFile = 0;
     //}
   }
@@ -317,7 +315,7 @@ void DbDebug(BOOLEAN fFlag) { gdb.fDebug = fFlag; }
 //
 //**************************************************************************
 
-BOOLEAN DbExists(STR strFilename) { return (FileExists(strFilename)); }
+BOOLEAN DbExists(STR strFilename) { return (FileMan_Exists(strFilename)); }
 
 //**************************************************************************
 //
@@ -414,7 +412,7 @@ HDBINDEX DbOpen(STR strFilename) {
 void DbClose(HDBINDEX hFile) {
   if (hFile && gdb.pDBFiles[hFile].hFile) {
     MemFree(gdb.pDBFiles[hFile].pOpenFiles);
-    FileClose(gdb.pDBFiles[hFile].hFile);
+    FileMan_Close(gdb.pDBFiles[hFile].hFile);
     gdb.pDBFiles[hFile].hFile = 0;
 
     DbgMessage(TOPIC_DATABASE_MANAGER, DBG_LEVEL_2, "Closing Database File");
@@ -562,8 +560,8 @@ BOOLEAN DbFileRead(HDBFILE hDBFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *pui
 
   CHECKF(hFile);
 
-  FileSeek(hFile, uiStartPos + uiCurPos, FILE_SEEK_FROM_START);
-  FileRead(hFile, pDest, uiBytesToRead, &uiBytesRead);
+  FileMan_Seek(hFile, uiStartPos + uiCurPos, FILE_SEEK_FROM_START);
+  FileMan_Read(hFile, pDest, uiBytesToRead, &uiBytesRead);
 
   if (puiBytesRead) *puiBytesRead = uiBytesRead;
 
@@ -767,7 +765,7 @@ BOOLEAN InitDB(DbInfo *pDBInfo, STR strFilename) {
 
   CHECKF(pDBInfo);
 
-  hFile = FileOpen(strFilename, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(strFilename, FILE_ACCESS_READ, FALSE);
   CHECKF(hFile);
 
   strcpy(pDBInfo->strFilename, strFilename);
@@ -775,7 +773,7 @@ BOOLEAN InitDB(DbInfo *pDBInfo, STR strFilename) {
   pDBInfo->pOpenFiles = (DbFile *)MemAlloc(INITIAL_NUM_HANDLES * sizeof(DbFile));
 
   if (!pDBInfo->pOpenFiles) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -853,14 +851,14 @@ BOOLEAN InitFile(HWFILE hDBFile, DbFile *pFileInfo, STR strFilename) {
   CHECKF(strFilename);
   CHECKF(hDBFile);
 
-  FileSeek(hDBFile, 0, FILE_SEEK_FROM_START);
-  FileRead(hDBFile, &header, sizeof(DbHeader), &uiBytesRead);
+  FileMan_Seek(hDBFile, 0, FILE_SEEK_FROM_START);
+  FileMan_Read(hDBFile, &header, sizeof(DbHeader), &uiBytesRead);
   CHECKF(uiBytesRead == sizeof(DbHeader));
-  FileSeek(hDBFile, header.iOffsetToIndex, FILE_SEEK_FROM_START);
+  FileMan_Seek(hDBFile, header.iOffsetToIndex, FILE_SEEK_FROM_START);
 
   GetShortFilename(cShortFilename, strFilename);
   for (i = 0; i < header.iNumFiles; i++) {
-    FileRead(hDBFile, &im, sizeof(IndexMember), &uiBytesRead);
+    FileMan_Read(hDBFile, &im, sizeof(IndexMember), &uiBytesRead);
     CHECKF(uiBytesRead == sizeof(IndexMember));
     GetShortFilename(cFilename, im.strFilename);
     if (strcmp(cFilename, cShortFilename) == 0) {
@@ -899,24 +897,24 @@ BOOLEAN LoadBucket(CHAR cFirstLetter) {
   MemFree(gdb.bucket.pstrFilenames);
   MemFree(gdb.bucket.pstrDatabasenames);
 
-  hFile = FileOpen(gdb.strIndexFilename, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_Open(gdb.strIndexFilename, FILE_ACCESS_READ, FALSE);
   CHECKF(hFile);
-  uiSize = FileGetSize(hFile);
+  uiSize = FileMan_GetSize(hFile);
 
   if (cFirstLetter >= 'a' && cFirstLetter <= 'z')
     uiPosition = 'z' - cFirstLetter + 1;
   else
     uiPosition = 26 + ('9' - cFirstLetter + 1);
 
-  FileSeek(hFile, sizeof(UINT32) * uiPosition, FILE_SEEK_FROM_END);
-  FileRead(hFile, &uiPosition, sizeof(UINT32), &uiBytesRead);
+  FileMan_Seek(hFile, sizeof(UINT32) * uiPosition, FILE_SEEK_FROM_END);
+  FileMan_Read(hFile, &uiPosition, sizeof(UINT32), &uiBytesRead);
   if (uiPosition > uiSize) {
     // error
     return (FALSE);
   }
 
-  FileSeek(hFile, uiPosition, FILE_SEEK_FROM_START);
-  FileRead(hFile, &uiNumEntries, sizeof(UINT32), &uiBytesRead);
+  FileMan_Seek(hFile, uiPosition, FILE_SEEK_FROM_START);
+  FileMan_Read(hFile, &uiNumEntries, sizeof(UINT32), &uiBytesRead);
 
   CHECKF(uiNumEntries);
 
@@ -930,14 +928,14 @@ BOOLEAN LoadBucket(CHAR cFirstLetter) {
   }
 
   for (i = 0; i < uiNumEntries; i++) {
-    FileRead(hFile, cFilename, BUCKET_FILENAME_LENGTH, &uiBytesRead);
-    FileRead(hFile, cDatabasename, BUCKET_FILENAME_LENGTH, &uiBytesRead);
+    FileMan_Read(hFile, cFilename, BUCKET_FILENAME_LENGTH, &uiBytesRead);
+    FileMan_Read(hFile, cDatabasename, BUCKET_FILENAME_LENGTH, &uiBytesRead);
 
     strcpy(&gdb.bucket.pstrFilenames[i * BUCKET_FILENAME_LENGTH], cFilename);
     strcpy(&gdb.bucket.pstrDatabasenames[i * BUCKET_FILENAME_LENGTH], cDatabasename);
   }
 
-  FileClose(hFile);
+  FileMan_Close(hFile);
 
   gdb.bucket.uiNumNames = uiNumEntries;
   gdb.bucket.cFirstLetter = cFirstLetter;

@@ -26,6 +26,7 @@
 #include "Utils/MercTextBox.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "fileman.h"
 
 #define DIALOGUE_DEFAULT_WIDTH 200
 #define EXTREAMLY_LOW_TOWN_LOYALTY 20
@@ -93,7 +94,7 @@ BOOLEAN GetCivQuoteText(UINT8 ubCivQuoteID, UINT8 ubEntryID, CHAR16 *zQuote) {
     sprintf(zFileName, "NPCDATA\\CIV%02d.edt", ubCivQuoteID);
   }
 
-  CHECKF(FileExists(zFileName));
+  CHECKF(FileMan_Exists(zFileName));
 
   // Get data...
   LoadEncryptedDataFromFile(zFileName, zQuote, ubEntryID * 320, 320);
@@ -650,7 +651,7 @@ void InitCivQuoteSystem() {
 BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
-  FileWrite(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesWritten);
+  FileMan_Write(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(gCivQuotes)) {
     return (FALSE);
   }
@@ -661,7 +662,7 @@ BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
 BOOLEAN LoadCivQuotesFromLoadGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
-  FileRead(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesRead);
+  FileMan_Read(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(gCivQuotes)) {
     return (FALSE);
   }

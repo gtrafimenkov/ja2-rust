@@ -246,6 +246,7 @@
     <ClCompile Include="AniViewScreen.c" />
     <ClCompile Include="Credits.c" />
     <ClCompile Include="FadeScreen.c" />
+    <ClCompile Include="fileman.c" />
     <ClCompile Include="GameInitOptionsScreen.c" />
     <ClCompile Include="GameLoop.c" />
     <ClCompile Include="GameScreen.c" />
@@ -260,6 +261,8 @@
     <ClCompile Include="MainMenuScreen.c" />
     <ClCompile Include="MessageBoxScreen.c" />
     <ClCompile Include="OptionsScreen.c" />
+    <ClCompile Include="platform_win.c" />
+    <ClCompile Include="platform_win_io.c" />
     <ClCompile Include="SaveLoadGame.c" />
     <ClCompile Include="SaveLoadScreen.c" />
     <ClCompile Include="Screens.c" />
@@ -290,6 +293,8 @@
     <ClInclude Include="MainMenuScreen.h" />
     <ClInclude Include="MessageBoxScreen.h" />
     <ClInclude Include="OptionsScreen.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="platform_win.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Res\resource.h" />
     <ClInclude Include="SaveLoadGame.h" />

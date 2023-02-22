@@ -1,7 +1,6 @@
 #ifndef __MAP_EDGEPOINTS_H
 #define __MAP_EDGEPOINTS_H
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 
 typedef struct MAPEDGEPOINTINFO {

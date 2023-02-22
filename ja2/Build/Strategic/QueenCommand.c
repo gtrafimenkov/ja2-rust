@@ -36,6 +36,7 @@
 #include "TileEngine/MapEdgepoints.h"
 #include "TileEngine/RenderWorld.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 #ifdef JA2BETAVERSION
 extern BOOLEAN gfClearCreatureQuest;
@@ -1298,7 +1299,7 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
   }
 
   // Write how many nodes there are
-  FileWrite(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -1307,7 +1308,7 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
 
   // Go through each node and save it.
   while (TempNode) {
-    FileWrite(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesWritten);
+    FileMan_Write(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(UNDERGROUND_SECTORINFO)) {
       return (FALSE);
     }
@@ -1329,7 +1330,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
   TrashUndergroundSectorInfo();
 
   // Read in the number of nodes stored
-  FileRead(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -1340,7 +1341,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
     if (TempNode == NULL) return (FALSE);
 
     // read in the new node
-    FileRead(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesRead);
+    FileMan_Read(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UNDERGROUND_SECTORINFO)) {
       return (FALSE);
     }

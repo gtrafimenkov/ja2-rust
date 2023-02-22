@@ -8,7 +8,6 @@
 #include <windows.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/MemMan.h"
 #include "SGP/PCX.h"
@@ -17,6 +16,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
+#include "fileman.h"
 
 //*******************************************************
 //
@@ -1550,17 +1550,17 @@ FontTranslationTable *CreateEnglishTransTable() {
   }
 
   // Open and read in the file
-  if ((hFileHandle = FileOpen(pFilename, FILE_ACCESS_READ, FALSE)) == 0)
+  if ((hFileHandle = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) == 0)
   { // damn we failed to open the file
     DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Cannot open font file");
     return NULL;
   }
 
-  uiFileSize = FileGetSize(hFileHandle);
+  uiFileSize = FileMan_GetSize(hFileHandle);
   if (uiFileSize == 0)
   { // we failed to size up the file
     DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Font file is empty");
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
     return NULL;
   }
 
@@ -1568,21 +1568,21 @@ FontTranslationTable *CreateEnglishTransTable() {
   if ((pFontBase = (FontBase *)MemAlloc(sizeof(FontBase))) == NULL)
   {
     DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not malloc memory");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
   }
 
   // read in these values from the file
-  if (FileRead(hFileHandle, &uiHeightEach, sizeof(UINT32), NULL) == FALSE)
+  if (FileMan_Read(hFileHandle, &uiHeightEach, sizeof(UINT32), NULL) == FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Height from File");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
-  if (FileRead(hFileHandle, &uiTotalSymbol, sizeof(UINT32), NULL) == FALSE)
+  if (FileMan_Read(hFileHandle, &uiTotalSymbol, sizeof(UINT32), NULL) == FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Total Symbol from File");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
@@ -1596,56 +1596,56 @@ FontTranslationTable *CreateEnglishTransTable() {
   pFontBase->pPixData8 = (UINT8 *)MemAlloc(uiNewoffst);
 
   //seek past the FontHeader
-  if (FileSeek(hFileHandle, sizeof(FontHeader), FILE_SEEK_FROM_START) == FALSE)
+  if (FileMan_Seek(hFileHandle, sizeof(FontHeader), FILE_SEEK_FROM_START) == FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek FileHeader");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
   //read in the FontObject
-  if (FileRead(hFileHandle, pFontBase->pFontObject, (uiTotalSymbol)*sizeof(FontHeader), NULL) ==
+  if (FileMan_Read(hFileHandle, pFontBase->pFontObject, (uiTotalSymbol)*sizeof(FontHeader), NULL) ==
 FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Font Objects");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
-  if (FileSeek(hFileHandle, uiOldoffst, FILE_SEEK_FROM_START) == FALSE)
+  if (FileMan_Seek(hFileHandle, uiOldoffst, FILE_SEEK_FROM_START) == FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Old offset");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
   // read in the Pixel data
-  if (FileRead(hFileHandle, pFontBase->pPixData8, uiNewoffst, NULL) == FALSE)
+  if (FileMan_Read(hFileHandle, pFontBase->pPixData8, uiNewoffst, NULL) == FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Pixel data");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
   // seek proper position to read in Palette
-  if (FileSeek(hFileHandle, sizeof(UINT32)*3, FILE_SEEK_FROM_START) == FALSE)
+  if (FileMan_Seek(hFileHandle, sizeof(UINT32)*3, FILE_SEEK_FROM_START) == FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Palette Start");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
   // read in Palette
-  if (FileRead(hFileHandle, pPalette, PALETTE_SIZE, NULL) == FALSE)
+  if (FileMan_Read(hFileHandle, pPalette, PALETTE_SIZE, NULL) == FALSE)
   {
           DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Palette");
-          FileClose(hFileHandle);
+          FileMan_Close(hFileHandle);
           return NULL;
   }
 
   // set the default pixel depth
   pFontBase->siPixelDepth = pFManager->usDefaultPixelDepth;
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   // convert from RGB to SGPPaletteEntry
   pNewPalette = ConvertToPaletteEntry(0, 255, pPalette);

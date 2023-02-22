@@ -76,6 +76,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "fileman.h"
 
 #define MAX_ON_DUTY_SOLDIERS 6
 
@@ -1522,7 +1523,7 @@ UINT32 UIHandleEndTurn(UI_EVENT *pUIEvent) {
   if (CheckForEndOfCombatMode(FALSE)) {
     // do nothing...
   } else {
-    if (FileExists("..\\AutoSave.pls") && CanGameBeSaved()) {
+    if (FileMan_Exists("..\\AutoSave.pls") && CanGameBeSaved()) {
       // Save the game
       guiPreviousOptionScreen = guiCurrentScreen;
       SaveGame(SAVE__END_TURN_NUM, L"End Turn Auto Save");

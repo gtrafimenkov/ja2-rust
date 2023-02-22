@@ -632,7 +632,7 @@ void DumpMemoryInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
     strcpy(tempCode, curr->pCode);
     fFound = FALSE;
     for (i = 0; i < uiUniqueID; i++) {
-      if (!_stricmp(tempCode, pCode[i].str)) {  // same string
+      if (!strcasecmp(tempCode, pCode[i].str)) {  // same string
         fFound = TRUE;
         (puiCounter[i])++;
         (puiSize[i]) += curr->uiSize;

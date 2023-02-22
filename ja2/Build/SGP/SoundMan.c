@@ -11,11 +11,13 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
-#include "SGP/LibraryDataBase.h"
+#include "SGP/LibraryDataBasePub.h"
 #include "SGP/MemMan.h"
 #include "SGP/Mss.h"
 #include "SGP/Random.h"
+#include "fileman.h"
+#include "platform_win.h"
+#include "platfrom_strings.h"
 
 // Uncomment this to disable the startup of sound hardware
 //#define SOUND_DISABLE
@@ -291,7 +293,7 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
   if (fSoundSystemInit) {
     if ((uiChannel = SoundGetFreeChannel()) != SOUND_ERROR) {
       // Open the file
-      hFile = FileOpen(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hFile = FileMan_Open(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       if (!hFile) {
         FastDebugMsg(
             String("\n*******\nSoundPlayStreamedFile():  ERROR:  Couldnt open '%s' in "
@@ -302,8 +304,8 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
 
       // MSS cannot determine which provider to play if you don't give it a real filename
       // so if the file isn't in a library, play it normally
-      if (DB_EXTRACT_LIBRARY(hFile) == REAL_FILE_LIBRARY_ID) {
-        FileClose(hFile);
+      if (IsLibraryRealFile(hFile)) {
+        FileMan_Close(hFile);
         return (SoundStartStream(pFilename, uiChannel, pParms));
       }
 
@@ -327,7 +329,7 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
       if (uiRetVal != SOUND_ERROR)
         pSoundList[uiChannel].hFile = hFile;
       else
-        FileClose(hFile);
+        FileMan_Close(hFile);
 
       return (uiRetVal);
     }
@@ -1419,7 +1421,7 @@ UINT32 SoundGetCached(STR pFilename) {
   UINT32 uiCount;
 
   for (uiCount = 0; uiCount < SOUND_MAX_CACHED; uiCount++) {
-    if (_stricmp(pSampleList[uiCount].pName, pFilename) == 0) return (uiCount);
+    if (strcasecmp(pSampleList[uiCount].pName, pFilename) == 0) return (uiCount);
   }
 
   return (NO_SAMPLE);
@@ -1443,8 +1445,8 @@ UINT32 SoundLoadDisk(STR pFilename) {
 
   Assert(pFilename != NULL);
 
-  if ((hFile = FileOpen(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
-    uiSize = FileGetSize(hFile);
+  if ((hFile = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
+    uiSize = FileMan_GetSize(hFile);
 
     // if insufficient memory, start unloading old samples until either
     // there's nothing left to unload, or we fit
@@ -1456,7 +1458,7 @@ UINT32 SoundLoadDisk(STR pFilename) {
     if ((uiSize + guiSoundMemoryUsed) > guiSoundMemoryLimit) {
       FastDebugMsg(
           String("SoundLoadDisk:  ERROR:  trying to play %s, not enough memory\n", pFilename));
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (NO_SAMPLE);
     }
 
@@ -1470,7 +1472,7 @@ UINT32 SoundLoadDisk(STR pFilename) {
     if (uiSample == NO_SAMPLE) {
       FastDebugMsg(
           String("SoundLoadDisk:  ERROR: Trying to play %s, sound channels are full\n", pFilename));
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (NO_SAMPLE);
     }
 
@@ -1479,14 +1481,14 @@ UINT32 SoundLoadDisk(STR pFilename) {
     if ((pSampleList[uiSample].pData = AIL_mem_alloc_lock(uiSize)) == NULL) {
       FastDebugMsg(
           String("SoundLoadDisk:  ERROR: Trying to play %s, AIL channels are full\n", pFilename));
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (NO_SAMPLE);
     }
 
     guiSoundMemoryUsed += uiSize;
 
-    FileRead(hFile, pSampleList[uiSample].pData, uiSize, NULL);
-    FileClose(hFile);
+    FileMan_Read(hFile, pSampleList[uiSample].pData, uiSize, NULL);
+    FileMan_Close(hFile);
 
     strcpy(pSampleList[uiSample].pName, pFilename);
     strupr(pSampleList[uiSample].pName);
@@ -2021,9 +2023,9 @@ BOOLEAN SoundPlayStreamed(STR pFilename) {
   HWFILE hDisk;
   UINT32 uiFilesize;
 
-  if ((hDisk = FileOpen(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
-    uiFilesize = FileGetSize(hDisk);
-    FileClose(hDisk);
+  if ((hDisk = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
+    uiFilesize = FileMan_GetSize(hDisk);
+    FileMan_Close(hDisk);
     return (uiFilesize >= guiSoundCacheThreshold);
   }
 
@@ -2092,7 +2094,7 @@ BOOLEAN SoundStopIndex(UINT32 uiChannel) {
       }
 
       if (pSoundList[uiChannel].hFile != 0) {
-        FileClose(pSoundList[uiChannel].hFile);
+        FileMan_Close(pSoundList[uiChannel].hFile);
         pSoundList[uiChannel].hFile = 0;
 
         pSoundList[uiChannel].uiSample = NO_SAMPLE;

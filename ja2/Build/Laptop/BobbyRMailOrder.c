@@ -21,6 +21,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 typedef struct {
   STR16 psCityLoc;
@@ -2386,19 +2387,19 @@ BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
   // Write the number of orders
-  FileWrite(hFile, &giNumberOfNewBobbyRShipment, sizeof(INT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &giNumberOfNewBobbyRShipment, sizeof(INT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
   // loop through and save all the mail order slots
   for (iCnt = 0; iCnt < giNumberOfNewBobbyRShipment; iCnt++) {
     // Write the order
-    FileWrite(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct),
-              &uiNumBytesWritten);
+    FileMan_Write(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct),
+                  &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(NewBobbyRayOrderStruct)) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
   }
@@ -2414,9 +2415,9 @@ BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
   ShutDownBobbyRNewMailOrders();
 
   // Read the number of orders
-  FileRead(hFile, &giNumberOfNewBobbyRShipment, sizeof(INT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &giNumberOfNewBobbyRShipment, sizeof(INT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -2434,9 +2435,10 @@ BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
     // loop through and load all the mail order slots
     for (iCnt = 0; iCnt < giNumberOfNewBobbyRShipment; iCnt++) {
       // Read the order
-      FileRead(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct), &uiNumBytesRead);
+      FileMan_Read(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct),
+                   &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(NewBobbyRayOrderStruct)) {
-        FileClose(hFile);
+        FileMan_Close(hFile);
         return (FALSE);
       }
     }

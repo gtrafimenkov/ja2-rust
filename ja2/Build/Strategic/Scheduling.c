@@ -4,7 +4,6 @@
 
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
@@ -26,6 +25,7 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 #ifdef JA2EDITOR
 extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
@@ -363,9 +363,9 @@ BOOLEAN LoadSchedulesFromSave(HWFILE hFile) {
 
   // LOADDATA( &ubNum, *hBuffer, sizeof( UINT8 ) );
   uiNumBytesToRead = sizeof(UINT8);
-  FileRead(hFile, &ubNum, uiNumBytesToRead, &uiNumBytesRead);
+  FileMan_Read(hFile, &ubNum, uiNumBytesToRead, &uiNumBytesRead);
   if (uiNumBytesRead != uiNumBytesToRead) {
-    FileClose(hFile);
+    FileMan_Close(hFile);
     return (FALSE);
   }
 
@@ -375,9 +375,9 @@ BOOLEAN LoadSchedulesFromSave(HWFILE hFile) {
   gubScheduleID = 1;
   while (ubRealNum) {
     uiNumBytesToRead = sizeof(SCHEDULENODE);
-    FileRead(hFile, &temp, uiNumBytesToRead, &uiNumBytesRead);
+    FileMan_Read(hFile, &temp, uiNumBytesToRead, &uiNumBytesRead);
     if (uiNumBytesRead != uiNumBytesToRead) {
-      FileClose(hFile);
+      FileMan_Close(hFile);
       return (FALSE);
     }
     // LOADDATA( &temp, *hBuffer, sizeof( SCHEDULENODE ) );
@@ -468,7 +468,7 @@ BOOLEAN SaveSchedules(HWFILE hFile) {
   }
   ubNum = (UINT8)((iNum >= 32) ? 32 : iNum);
 
-  FileWrite(hFile, &ubNum, sizeof(UINT8), &uiBytesWritten);
+  FileMan_Write(hFile, &ubNum, sizeof(UINT8), &uiBytesWritten);
   if (uiBytesWritten != sizeof(UINT8)) {
     return (FALSE);
   }
@@ -482,7 +482,7 @@ BOOLEAN SaveSchedules(HWFILE hFile) {
       if (ubNumFucker > ubNum) {
         return (TRUE);
       }
-      FileWrite(hFile, curr, sizeof(SCHEDULENODE), &uiBytesWritten);
+      FileMan_Write(hFile, curr, sizeof(SCHEDULENODE), &uiBytesWritten);
       if (uiBytesWritten != sizeof(SCHEDULENODE)) {
         return (FALSE);
       }

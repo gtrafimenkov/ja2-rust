@@ -77,6 +77,15 @@
     <ClCompile Include="SysGlobals.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="platform_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="platform_win_io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fileman.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuildDefines.h">
@@ -170,6 +179,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BuildInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="platform_win.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,6 @@
 #ifndef __MESSAGE_H
 #define __MESSAGE_H
 
-//#include "SGP/SGP.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/Types.h"
 #include "Utils/FontControl.h"

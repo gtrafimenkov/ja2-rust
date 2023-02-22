@@ -2,18 +2,8 @@
 #define _JA2_LOAD_SCREEN_
 
 #include "BuildDefines.h"
-#include "SGP/FileMan.h"
+#include "Editor/LoadScreenPub.h"
 #include "SGP/Types.h"
-
-typedef struct _FDLG_LIST_TAG {
-  GETFILESTRUCT FileInfo;
-  struct _FDLG_LIST_TAG *pNext;
-  struct _FDLG_LIST_TAG *pPrev;
-} FDLG_LIST;
-
-extern FDLG_LIST *AddToFDlgList(FDLG_LIST *pList, GETFILESTRUCT *pInfo);
-
-extern void TrashFDlgList(FDLG_LIST *pList);
 
 extern INT32 iFDlgState;
 extern INT32 iFDlgSelectedSlot;

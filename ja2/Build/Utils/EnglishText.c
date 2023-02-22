@@ -1,8 +1,8 @@
 #include "LanguageDefines.h"
 #if defined(ENGLISH) || defined(TAIWANESE)
 #include "JA2DemoAds.h"
-#include "SGP/FileMan.h"
 #include "Utils/Text.h"
+
 #endif
 
 #if defined(ENGLISH) || defined(TAIWANESE)

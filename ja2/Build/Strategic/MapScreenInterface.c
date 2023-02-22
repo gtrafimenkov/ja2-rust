@@ -1,5 +1,7 @@
 #include "Strategic/MapScreenInterface.h"
 
+#include <string.h>
+
 #include "GameLoop.h"
 #include "GameSettings.h"
 #include "JAScreens.h"
@@ -50,7 +52,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
-#include "string.h"
+#include "fileman.h"
 
 // inventory pool position on screen
 #define MAP_INVEN_POOL_X 300
@@ -5206,7 +5208,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
       fNodeExists = TRUE;
 
       // Save the to specify that a node DOES exist
-      FileWrite(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
+      FileMan_Write(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(BOOLEAN)) {
         return (FALSE);
       }
@@ -5221,7 +5223,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
       }
 
       // Save the number specifing how many items there are in the list
-      FileWrite(hFile, &uiCount, sizeof(UINT32), &uiNumBytesWritten);
+      FileMan_Write(hFile, &uiCount, sizeof(UINT32), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(UINT32)) {
         return (FALSE);
       }
@@ -5231,7 +5233,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
       // loop through all the nodes to see how many there are
       for (uiCnt = 0; uiCnt < uiCount; uiCnt++) {
         // Save the items
-        FileWrite(hFile, pCurrentItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesWritten);
+        FileMan_Write(hFile, pCurrentItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesWritten);
         if (uiNumBytesWritten != sizeof(MERC_LEAVE_ITEM)) {
           return (FALSE);
         }
@@ -5241,7 +5243,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
     } else {
       fNodeExists = FALSE;
       // Save the to specify that a node DOENST exist
-      FileWrite(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
+      FileMan_Write(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(BOOLEAN)) {
         return (FALSE);
       }
@@ -5250,7 +5252,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
 
   // Save the leave list profile id's
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
-    FileWrite(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(UINT32), &uiNumBytesWritten);
+    FileMan_Write(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(UINT32), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(UINT32)) {
       return (FALSE);
     }
@@ -5277,7 +5279,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
   // loop through all the lists
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
     // load the flag that specifis that a node DOES exist
-    FileRead(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesRead);
+    FileMan_Read(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(BOOLEAN)) {
       return (FALSE);
     }
@@ -5285,7 +5287,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
     // if a root node is supposed to exist
     if (fNodeExists) {
       // load the number specifing how many items there are in the list
-      FileRead(hFile, &uiCount, sizeof(UINT32), &uiNumBytesRead);
+      FileMan_Read(hFile, &uiCount, sizeof(UINT32), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(UINT32)) {
         return (FALSE);
       }
@@ -5308,7 +5310,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
         memset(pItem, 0, sizeof(MERC_LEAVE_ITEM));
 
         // Load the items
-        FileRead(hFile, pItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesRead);
+        FileMan_Read(hFile, pItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesRead);
         if (uiNumBytesRead != sizeof(MERC_LEAVE_ITEM)) {
           return (FALSE);
         }
@@ -5329,7 +5331,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
 
   // Load the leave list profile id's
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
-    FileRead(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(UINT32), &uiNumBytesRead);
+    FileMan_Read(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(UINT32), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UINT32)) {
       return (FALSE);
     }

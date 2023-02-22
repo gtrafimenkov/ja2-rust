@@ -1,7 +1,6 @@
 #ifndef __STRATMAP_H
 #define __STRATMAP_H
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 

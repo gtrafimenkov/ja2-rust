@@ -5,7 +5,6 @@
 
 #include "Editor/Smooth.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -14,6 +13,7 @@
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
+#include "fileman.h"
 
 TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
 UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
@@ -61,7 +61,7 @@ TILE_IMAGERY *LoadTileSurface(char *cFilename) {
     strcat(cStructureFilename, ".");
   }
   strcat(cStructureFilename, STRUCTURE_FILE_EXTENSION);
-  if (FileExists(cStructureFilename)) {
+  if (FileMan_Exists(cStructureFilename)) {
     pStructureFileRef = LoadStructureFile(cStructureFilename);
     if (pStructureFileRef == NULL ||
         hVObject->usNumberOfObjects != pStructureFileRef->usNumberOfStructures) {

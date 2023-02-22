@@ -11,7 +11,6 @@
 #include "SGP/DDraw.h"
 #include "SGP/Debug.h"
 #include "SGP/DirectXCommon.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/MemMan.h"
 #include "SGP/SGP.h"

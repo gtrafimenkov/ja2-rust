@@ -1,7 +1,6 @@
 #ifndef _SQUADS_H
 #define _SQUADS_H
 
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
 

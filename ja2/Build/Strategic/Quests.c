@@ -27,6 +27,7 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 #define TESTQUESTS
 
@@ -1205,13 +1206,13 @@ BOOLEAN SaveQuestInfoToSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
   // Save all the states if the Quests
-  FileWrite(hFile, gubQuest, MAX_QUESTS, &uiNumBytesWritten);
+  FileMan_Write(hFile, gubQuest, MAX_QUESTS, &uiNumBytesWritten);
   if (uiNumBytesWritten != MAX_QUESTS) {
     return (FALSE);
   }
 
   // Save all the states for the facts
-  FileWrite(hFile, gubFact, NUM_FACTS, &uiNumBytesWritten);
+  FileMan_Write(hFile, gubFact, NUM_FACTS, &uiNumBytesWritten);
   if (uiNumBytesWritten != NUM_FACTS) {
     return (FALSE);
   }
@@ -1223,13 +1224,13 @@ BOOLEAN LoadQuestInfoFromSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
   // Save all the states if the Quests
-  FileRead(hFile, gubQuest, MAX_QUESTS, &uiNumBytesRead);
+  FileMan_Read(hFile, gubQuest, MAX_QUESTS, &uiNumBytesRead);
   if (uiNumBytesRead != MAX_QUESTS) {
     return (FALSE);
   }
 
   // Save all the states for the facts
-  FileRead(hFile, gubFact, NUM_FACTS, &uiNumBytesRead);
+  FileMan_Read(hFile, gubFact, NUM_FACTS, &uiNumBytesRead);
   if (uiNumBytesRead != NUM_FACTS) {
     return (FALSE);
   }

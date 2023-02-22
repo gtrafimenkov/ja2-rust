@@ -1,16 +1,12 @@
 #ifndef _LIBRARY_DATABASE_H
 #define _LIBRARY_DATABASE_H
 
-#include <windows.h>
-
-#include "SGP/FileMan.h"
+#include "SGP/LibraryDataBasePub.h"
 #include "SGP/Types.h"
+#include "fileman.h"
+#include "platform.h"
 
 #define FILENAME_SIZE 256
-
-//#define	FILENAME_SIZE									40 +
-// PATH_SIZE
-#define PATH_SIZE 80
 
 #define NUM_FILES_TO_ADD_AT_A_TIME 20
 #define INITIAL_NUM_HANDLES 20
@@ -26,8 +22,6 @@
 #define DB_ADD_LIBRARY_ID(exp) (exp << DB_BITS_FOR_FILE_ID)
 #define DB_ADD_FILE_ID(exp) (exp & 0xC00000)
 
-typedef UINT32 HWFILE;
-
 typedef struct {
   CHAR8 sLibraryName[FILENAME_SIZE];  // The name of the library file on the disk
   BOOLEAN fOnCDrom;  // A flag specifying if its a cdrom library ( not implemented yet )
@@ -40,11 +34,9 @@ typedef struct {
 
 extern LibraryInitHeader gGameLibaries[];
 
-#define REAL_LIBRARY_FILE "RealFiles.slf"
-
 typedef struct {
-  UINT32 uiFileID;         // id of the file ( they start at 1 )
-  HANDLE hRealFileHandle;  // if the file is a Real File, this its handle
+  UINT32 uiFileID;                  // id of the file ( they start at 1 )
+  SYS_FILE_HANDLE hRealFileHandle;  // if the file is a Real File, this its handle
 } RealFileOpenStruct;
 
 typedef struct {
@@ -62,7 +54,7 @@ typedef struct {
 
 typedef struct {
   STR sLibraryPath;
-  HANDLE hLibraryHandle;
+  SYS_FILE_HANDLE hLibraryHandle;
   UINT16 usNumberOfEntries;
   BOOLEAN fLibraryOpen;
   //	BOOLEAN	fAnotherFileAlreadyOpenedLibrary;				//this variable is
@@ -102,8 +94,6 @@ typedef struct {
   RealFileHeaderStruct RealFiles;
 } DatabaseManagerHeaderStruct;
 
-// typedef UINT32	HLIBFILE;
-
 //*************************************************************************
 //
 //  NOTE!  The following structs are also used by the datalib98 utility
@@ -126,16 +116,6 @@ typedef struct {
   INT32 iReserved;
 } LIBHEADER;
 
-typedef struct {
-  CHAR8 sFileName[FILENAME_SIZE];
-  UINT32 uiOffset;
-  UINT32 uiLength;
-  UINT8 ubState;
-  UINT8 ubReserved;
-  FILETIME sFileTime;
-  UINT16 usReserved2;
-} DIRENTRY;
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -148,13 +128,10 @@ extern DatabaseManagerHeaderStruct gFileDataBase;
 BOOLEAN CheckForLibraryExistence(STR pLibraryName);
 BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibheader, BOOLEAN fCanBeOnCDrom);
 
-BOOLEAN InitializeFileDatabase();
-BOOLEAN ReopenCDLibraries(void);
-BOOLEAN ShutDownFileDatabase();
 BOOLEAN CheckIfFileExistInLibrary(STR pFileName);
 INT16 GetLibraryIDFromFileName(STR pFileName);
 HWFILE OpenFileFromLibrary(STR pName);
-HWFILE CreateRealFileHandle(HANDLE hFile);
+HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile);
 BOOLEAN CloseLibraryFile(INT16 sLibraryID, UINT32 uiFileID);
 BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibraryID,
                                                  UINT32 *pFileNum);
@@ -165,10 +142,6 @@ BOOLEAN LibraryFileSeek(INT16 sLibraryID, UINT32 uiFileNum, UINT32 uiDistance, U
 // used to open and close libraries during the game
 BOOLEAN CloseLibrary(INT16 sLibraryID);
 BOOLEAN OpenLibrary(INT16 sLibraryID);
-
-BOOLEAN IsLibraryOpened(INT16 sLibraryID);
-
-BOOLEAN GetLibraryFileTime(INT16 sLibraryID, UINT32 uiFileNum, SGP_FILETIME *pLastWriteTime);
 
 #ifdef __cplusplus
 }

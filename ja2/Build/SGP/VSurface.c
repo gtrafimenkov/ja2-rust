@@ -11,6 +11,7 @@
 #include "SGP/Video.h"
 #include "SGP/VideoPrivate.h"
 #include "SGP/WCheck.h"
+#include "platfrom_strings.h"
 
 extern void SetClippingRect(SGPRect *clip);
 extern void GetClippingRect(SGPRect *clip);
@@ -2280,7 +2281,8 @@ void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
     strcpy(tempCode, curr->pCode);
     fFound = FALSE;
     for (i = 0; i < uiUniqueID; i++) {
-      if (!_stricmp(tempName, pName[i].str) && !_stricmp(tempCode, pCode[i].str)) {  // same string
+      if (!strcasecmp(tempName, pName[i].str) &&
+          !strcasecmp(tempCode, pCode[i].str)) {  // same string
         fFound = TRUE;
         (puiCounter[i])++;
         break;

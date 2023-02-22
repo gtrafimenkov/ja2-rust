@@ -4,6 +4,7 @@
 
 #include "JAScreens.h"
 #include "SGP/CursorControl.h"
+#include "SGP/CursorFileData.h"
 #include "SGP/Font.h"
 #include "SGP/SGP.h"
 #include "SysGlobals.h"
@@ -28,7 +29,7 @@ void BltJA2CursorData();
 
 void DrawMouseText();
 
-CursorFileData CursorFileDatabase[] = {
+struct CursorFileData CursorFileDatabase[] = {
     {"CURSORS\\cursor.sti", FALSE, 0, 0, 0, NULL},
     {"CURSORS\\cur_targ.sti", FALSE, 0, ANIMATED_CURSOR, 7, NULL},
     {"CURSORS\\cur_tagr.sti", FALSE, 0, ANIMATED_CURSOR, 7, NULL},
@@ -4836,7 +4837,7 @@ void DrawMouseText() {
 
 			SetFontBackground( FONT_MCOLOR_BLACK );
 			SetFontForeground( FONT_MCOLOR_WHITE );
-			SetFontShadow( DEFAULT_SHADOW );				
+			SetFontShadow( DEFAULT_SHADOW );
 
 			if ( !( gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA  ) )
 			{

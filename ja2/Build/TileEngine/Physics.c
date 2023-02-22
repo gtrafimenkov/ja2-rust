@@ -26,6 +26,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "fileman.h"
 
 #define NO_TEST_OBJECT 0
 #define TEST_OBJECT_NO_COLLISIONS 1
@@ -1123,7 +1124,7 @@ BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
 {
 	LEVELNODE *pNode;
 	INT16			sNewGridNo;
-	
+
 	//Determine new gridno
 	sNewGridNo = MAPROWCOLTOPOS( ( pObject->Position.y / CELL_Y_SIZE ), ( pObject->Position.x / CELL_X_SIZE ) );
 
@@ -2197,7 +2198,7 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of REAL_OBJECTs in the array
-  FileWrite(hFile, &usPhysicsCount, sizeof(UINT32), &uiNumBytesWritten);
+  FileMan_Write(hFile, &usPhysicsCount, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2207,7 +2208,7 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
       // if the REAL_OBJECT is active, save it
       if (ObjectSlots[usCnt].fAllocated) {
         // Save the the REAL_OBJECT structure
-        FileWrite(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesWritten);
+        FileMan_Write(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesWritten);
         if (uiNumBytesWritten != sizeof(REAL_OBJECT)) {
           return (FALSE);
         }
@@ -2226,7 +2227,7 @@ BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
   memset(ObjectSlots, 0, NUM_OBJECT_SLOTS * sizeof(REAL_OBJECT));
 
   // Load the number of REAL_OBJECTs in the array
-  FileRead(hFile, &guiNumObjectSlots, sizeof(UINT32), &uiNumBytesRead);
+  FileMan_Read(hFile, &guiNumObjectSlots, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2234,7 +2235,7 @@ BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
   // loop through and add the objects
   for (usCnt = 0; usCnt < guiNumObjectSlots; usCnt++) {
     // Load the the REAL_OBJECT structure
-    FileRead(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesRead);
+    FileMan_Read(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(REAL_OBJECT)) {
       return (FALSE);
     }

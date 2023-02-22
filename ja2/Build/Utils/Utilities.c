@@ -4,7 +4,6 @@
 #include <time.h>
 #include <windows.h>
 
-#include "SGP/FileMan.h"
 #include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -13,6 +12,7 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/OverheadTypes.h"
 #include "Utils/FontControl.h"
+#include "fileman.h"
 
 #define DATA_8_BIT_DIR "8-Bit\\"
 
@@ -41,31 +41,31 @@ BOOLEAN CreateSGPPaletteFromCOLFile(SGPPaletteEntry *pPalette, SGPFILENAME ColFi
   UINT32 cnt;
 
   // See if files exists, if not, return error
-  if (!FileExists(ColFile)) {
+  if (!FileMan_Exists(ColFile)) {
     // Return FALSE w/ debug
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot find COL file");
     return (FALSE);
   }
 
   // Open and read in the file
-  if ((hFileHandle = FileOpen(ColFile, FILE_ACCESS_READ, FALSE)) == 0) {
+  if ((hFileHandle = FileMan_Open(ColFile, FILE_ACCESS_READ, FALSE)) == 0) {
     // Return FALSE w/ debug
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot open COL file");
     return (FALSE);
   }
 
   // Skip header
-  FileRead(hFileHandle, bColHeader, sizeof(bColHeader), NULL);
+  FileMan_Read(hFileHandle, bColHeader, sizeof(bColHeader), NULL);
 
   // Read in a palette entry at a time
   for (cnt = 0; cnt < 256; cnt++) {
-    FileRead(hFileHandle, &pPalette[cnt].peRed, sizeof(UINT8), NULL);
-    FileRead(hFileHandle, &pPalette[cnt].peGreen, sizeof(UINT8), NULL);
-    FileRead(hFileHandle, &pPalette[cnt].peBlue, sizeof(UINT8), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(UINT8), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(UINT8), NULL);
+    FileMan_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(UINT8), NULL);
   }
 
   // Close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return (TRUE);
 }
@@ -199,17 +199,17 @@ void HandleLimitedNumExecutions() {
   strcat(ubSysDir, "\\winaese.dll");
 
   // Open file and check # runs...
-  if (FileExists(ubSysDir)) {
+  if (FileMan_Exists(ubSysDir)) {
     // Open and read
-    if ((hFileHandle = FileOpen(ubSysDir, FILE_ACCESS_READ, FALSE)) == 0) {
+    if ((hFileHandle = FileMan_Open(ubSysDir, FILE_ACCESS_READ, FALSE)) == 0) {
       return;
     }
 
     // Read value
-    FileRead(hFileHandle, &bNumRuns, sizeof(bNumRuns), NULL);
+    FileMan_Read(hFileHandle, &bNumRuns, sizeof(bNumRuns), NULL);
 
     // Close file
-    FileClose(hFileHandle);
+    FileMan_Close(hFileHandle);
 
     if (bNumRuns <= 0) {
       // Fail!
@@ -225,15 +225,15 @@ void HandleLimitedNumExecutions() {
   bNumRuns--;
 
   // Open and write
-  if ((hFileHandle = FileOpen(ubSysDir, FILE_ACCESS_WRITE, FALSE)) == 0) {
+  if ((hFileHandle = FileMan_Open(ubSysDir, FILE_ACCESS_WRITE, FALSE)) == 0) {
     return;
   }
 
   // Write value
-  FileWrite(hFileHandle, &bNumRuns, sizeof(bNumRuns), NULL);
+  FileMan_Write(hFileHandle, &bNumRuns, sizeof(bNumRuns), NULL);
 
   // Close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 }
 
 SGPFILENAME gCheckFilenames[] = {
@@ -243,13 +243,9 @@ SGPFILENAME gCheckFilenames[] = {
 
 UINT32 gCheckFileMinSizes[] = {68000000, 36000000, 87000000, 187000000, 236000000};
 
-BOOLEAN HandleJA2CDCheck() {
-  return (TRUE);
-}
+BOOLEAN HandleJA2CDCheck() { return (TRUE); }
 
-BOOLEAN HandleJA2CDCheckTwo() {
-  return (TRUE);
-}
+BOOLEAN HandleJA2CDCheckTwo() { return (TRUE); }
 
 BOOLEAN DoJA2FilesExistsOnDrive(CHAR8 *zCdLocation) {
   BOOLEAN fFailed = FALSE;
@@ -261,15 +257,15 @@ BOOLEAN DoJA2FilesExistsOnDrive(CHAR8 *zCdLocation) {
     // OK, build filename
     sprintf(zCdFile, "%s%s", zCdLocation, gCheckFilenames[cnt]);
 
-    hFile = FileOpen(zCdFile, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_Open(zCdFile, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
 
     // Check if it exists...
     if (!hFile) {
       fFailed = TRUE;
-      FileClose(hFile);
+      FileMan_Close(hFile);
       break;
     }
-    FileClose(hFile);
+    FileMan_Close(hFile);
   }
 
   return (!fFailed);

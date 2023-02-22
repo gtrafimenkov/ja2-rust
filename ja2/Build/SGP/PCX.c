@@ -3,8 +3,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
+#include "fileman.h"
 
 // Local typedefs
 
@@ -78,12 +78,12 @@ PcxObject *LoadPcx(STR8 pFilename) {
   UINT8 *pPcxBuffer;
 
   // Open and read in the file
-  if ((hFileHandle = FileOpen(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE)) ==
+  if ((hFileHandle = FileMan_Open(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE)) ==
       0) {  // damn we failed to open the file
     return NULL;
   }
 
-  uiFileSize = FileGetSize(hFileHandle);
+  uiFileSize = FileMan_GetSize(hFileHandle);
   if (uiFileSize == 0) {  // we failed to size up the file
     return NULL;
   }
@@ -102,7 +102,7 @@ PcxObject *LoadPcx(STR8 pFilename) {
   }
 
   // Ok we now have a file handle, so let's read in the data
-  FileRead(hFileHandle, &Header, sizeof(PcxHeader), NULL);
+  FileMan_Read(hFileHandle, &Header, sizeof(PcxHeader), NULL);
   if ((Header.ubManufacturer != 10) || (Header.ubEncoding != 1)) {  // We have an invalid pcx format
     // Delete the object
     MemFree(pCurrentPcxObject->pPcxBuffer);
@@ -123,13 +123,13 @@ PcxObject *LoadPcx(STR8 pFilename) {
   // We are ready to read in the pcx buffer data. Therefore we must lock the buffer
   pPcxBuffer = pCurrentPcxObject->pPcxBuffer;
 
-  FileRead(hFileHandle, pPcxBuffer, pCurrentPcxObject->uiBufferSize, NULL);
+  FileMan_Read(hFileHandle, pPcxBuffer, pCurrentPcxObject->uiBufferSize, NULL);
 
   // Read in the palette
-  FileRead(hFileHandle, &(pCurrentPcxObject->ubPalette[0]), 768, NULL);
+  FileMan_Read(hFileHandle, &(pCurrentPcxObject->ubPalette[0]), 768, NULL);
 
   // Close file
-  FileClose(hFileHandle);
+  FileMan_Close(hFileHandle);
 
   return pCurrentPcxObject;
 }

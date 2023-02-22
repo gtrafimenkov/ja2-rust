@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
@@ -15,6 +14,7 @@
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Weapons.h"
 #include "Utils/Message.h"
+#include "fileman.h"
 
 // To reduce memory fragmentation from frequent MemRealloc(), we allocate memory for more than one
 // special slot each time we run out of space.  Odds are that if we need one, we'll need another
@@ -222,12 +222,13 @@ BOOLEAN SaveArmsDealerInventoryToSaveGameFile(HWFILE hFile) {
   UINT16 usItemIndex;
 
   // Save the arms dealers status
-  if (!FileWrite(hFile, gArmsDealerStatus, sizeof(gArmsDealerStatus), &uiNumBytesWritten)) {
+  if (!FileMan_Write(hFile, gArmsDealerStatus, sizeof(gArmsDealerStatus), &uiNumBytesWritten)) {
     return (FALSE);
   }
 
   // save the dealers inventory item headers (all at once)
-  if (!FileWrite(hFile, gArmsDealersInventory, sizeof(gArmsDealersInventory), &uiNumBytesWritten)) {
+  if (!FileMan_Write(hFile, gArmsDealersInventory, sizeof(gArmsDealersInventory),
+                     &uiNumBytesWritten)) {
     return (FALSE);
   }
 
@@ -237,10 +238,10 @@ BOOLEAN SaveArmsDealerInventoryToSaveGameFile(HWFILE hFile) {
     for (usItemIndex = 1; usItemIndex < MAXITEMS; usItemIndex++) {
       // if there are any special item elements allocated for this item, save them
       if (gArmsDealersInventory[ubArmsDealer][usItemIndex].ubElementsAlloced > 0) {
-        if (!FileWrite(hFile, &gArmsDealersInventory[ubArmsDealer][usItemIndex].SpecialItem[0],
-                       sizeof(DEALER_SPECIAL_ITEM) *
-                           gArmsDealersInventory[ubArmsDealer][usItemIndex].ubElementsAlloced,
-                       &uiNumBytesWritten)) {
+        if (!FileMan_Write(hFile, &gArmsDealersInventory[ubArmsDealer][usItemIndex].SpecialItem[0],
+                           sizeof(DEALER_SPECIAL_ITEM) *
+                               gArmsDealersInventory[ubArmsDealer][usItemIndex].ubElementsAlloced,
+                           &uiNumBytesWritten)) {
           return (FALSE);
         }
       }
@@ -265,12 +266,13 @@ BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(HWFILE hFile, BOOLEAN fIncludes
     // info for all dealers is in the save file
 
     // Load the arms dealers status
-    if (!FileRead(hFile, gArmsDealerStatus, sizeof(gArmsDealerStatus), &uiNumBytesRead)) {
+    if (!FileMan_Read(hFile, gArmsDealerStatus, sizeof(gArmsDealerStatus), &uiNumBytesRead)) {
       return (FALSE);
     }
 
     // load the dealers inventory item headers (all at once)
-    if (!FileRead(hFile, gArmsDealersInventory, sizeof(gArmsDealersInventory), &uiNumBytesRead)) {
+    if (!FileMan_Read(hFile, gArmsDealersInventory, sizeof(gArmsDealersInventory),
+                      &uiNumBytesRead)) {
       return (FALSE);
     }
   } else {
@@ -291,10 +293,10 @@ BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(HWFILE hFile, BOOLEAN fIncludes
                 gArmsDealersInventory[ubArmsDealer][usItemIndex].ubElementsAlloced))
           return (FALSE);
 
-        if (!FileRead(hFile, &gArmsDealersInventory[ubArmsDealer][usItemIndex].SpecialItem[0],
-                      sizeof(DEALER_SPECIAL_ITEM) *
-                          gArmsDealersInventory[ubArmsDealer][usItemIndex].ubElementsAlloced,
-                      &uiNumBytesRead)) {
+        if (!FileMan_Read(hFile, &gArmsDealersInventory[ubArmsDealer][usItemIndex].SpecialItem[0],
+                          sizeof(DEALER_SPECIAL_ITEM) *
+                              gArmsDealersInventory[ubArmsDealer][usItemIndex].ubElementsAlloced,
+                          &uiNumBytesRead)) {
           return (FALSE);
         }
       }
@@ -2365,14 +2367,14 @@ BOOLEAN LoadIncompleteArmsDealersStatus(HWFILE hFile, BOOLEAN fIncludesElgin,
   }
 
   // read in all other dealer's status
-  if (!FileRead(hFile, gArmsDealerStatus, uiDealersSaved * sizeof(ARMS_DEALER_STATUS),
-                &uiNumBytesRead)) {
+  if (!FileMan_Read(hFile, gArmsDealerStatus, uiDealersSaved * sizeof(ARMS_DEALER_STATUS),
+                    &uiNumBytesRead)) {
     return (FALSE);
   }
 
   // read in all other dealer's inventory
-  if (!FileRead(hFile, gArmsDealersInventory,
-                uiDealersSaved * sizeof(DEALER_ITEM_HEADER) * MAXITEMS, &uiNumBytesRead)) {
+  if (!FileMan_Read(hFile, gArmsDealersInventory,
+                    uiDealersSaved * sizeof(DEALER_ITEM_HEADER) * MAXITEMS, &uiNumBytesRead)) {
     return (FALSE);
   }
 

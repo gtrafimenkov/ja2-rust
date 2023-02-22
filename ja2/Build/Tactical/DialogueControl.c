@@ -53,6 +53,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
+#include "fileman.h"
 
 #define DIALOGUESIZE 480
 #define QUOTE_MESSAGE_SIZE 520
@@ -1553,7 +1554,7 @@ BOOLEAN DialogueDataFileExistsForProfile(UINT8 ubCharacterNum, UINT16 usQuoteNum
     (*ppStr) = pFilename;
   }
 
-  return (FileExists(pFilename));
+  return (FileMan_Exists(pFilename));
 }
 
 BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
@@ -1595,7 +1596,7 @@ BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
   //#ifndef JA2TESTVERSION
 
   /*
-    if ( !FileExists( pFilename ) )
+    if ( !FileMan_Exists( pFilename ) )
     {
                   CHAR8 sString[512];
 
