@@ -9,6 +9,7 @@
 #include "Laptop/Mercs.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
+#include "SGP/SoundMan.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"

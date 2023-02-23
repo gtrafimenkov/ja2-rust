@@ -9,7 +9,6 @@
 
 #include "SGP/ButtonSoundControl.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 

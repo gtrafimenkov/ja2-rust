@@ -1,6 +1,7 @@
 #include "Tactical/Gap.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "SGP/Debug.h"
 #include "SGP/SoundMan.h"

@@ -9,6 +9,7 @@
 #include "SGP/Container.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
+#include "SGP/SoundMan.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"

@@ -9,6 +9,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
+#include "SGP/SoundMan.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderDirty.h"

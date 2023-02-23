@@ -6,6 +6,7 @@
 #include "JAScreens.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
+#include "SGP/SoundMan.h"
 #include "ScreenIDs.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"

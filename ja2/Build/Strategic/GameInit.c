@@ -17,6 +17,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
+#include "SGP/SoundMan.h"
 #include "Strategic/CampaignInit.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/CreatureSpreading.h"

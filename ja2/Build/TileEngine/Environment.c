@@ -7,6 +7,7 @@
 #include "Laptop/Mercs.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
+#include "SGP/SoundMan.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEvents.h"
 #include "Strategic/Quests.h"

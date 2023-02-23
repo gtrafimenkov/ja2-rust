@@ -1,6 +1,7 @@
 #include "TileEngine/Physics.h"
 
 #include "SGP/Random.h"
+#include "SGP/SoundMan.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Campaign.h"

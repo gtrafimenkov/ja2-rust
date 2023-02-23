@@ -68,9 +68,6 @@
     <ClInclude Include="Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Install.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LibraryDataBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,9 +93,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Random.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RegInst.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SGP.h">
@@ -214,9 +208,6 @@
     <ClCompile Include="Input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Install.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LibraryDataBase.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -235,16 +226,13 @@
     <ClCompile Include="Random.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RegInst.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SGP.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shading.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SoundMan.c">
+    <ClCompile Include="SoundMan_win.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="STCI.c">

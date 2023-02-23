@@ -5,6 +5,7 @@
 #include "JAScreens.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
+#include "SGP/SoundMan.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
 #include "Strategic/Assignments.h"

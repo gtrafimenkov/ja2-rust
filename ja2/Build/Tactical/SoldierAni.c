@@ -9,6 +9,7 @@
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
+#include "SGP/SoundMan.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -3491,7 +3492,7 @@ BOOLEAN HandleUnjamAnimation(SOLDIERTYPE *pSoldier) {
 							{
 								// CHECK IF WE HAVE AN ATTACKER, TAKE OPPOSITE DIRECTION!
 								if ( pSoldier->ubAttackerID != NOBODY )
-								{ 
+								{
 									// Find direction!
 									bTestDirection = (INT8)GetDirectionFromGridNo( MercPtrs[ pSoldier->ubAttackerID ]->sGridNo, pSoldier );
 									fForceDirection = TRUE;

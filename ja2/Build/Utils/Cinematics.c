@@ -25,7 +25,6 @@
 #include "SGP/Debug.h"
 #include "SGP/DirectDrawCalls.h"
 #include "SGP/DirectXCommon.h"
-#include "SGP/Mss.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "SGP/VSurfacePrivate.h"
@@ -111,7 +110,7 @@ BOOLEAN SmkPollFlics(void) {
 }
 
 void SmkInitialize(HWND hWindow, UINT32 uiWidth, UINT32 uiHeight) {
-  HDIGDRIVER pSoundDriver = NULL;
+  void *pSoundDriver = NULL;
 
   // Wipe the flic list clean
   memset(SmkList, 0, sizeof(SMKFLIC) * SMK_NUM_FLICS);
