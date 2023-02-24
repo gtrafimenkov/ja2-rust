@@ -9,6 +9,7 @@
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/EditorTerrain.h"
 #include "Editor/SelectWin.h"
+#include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "Tactical/MapInformation.h"
 #include "TileEngine/Environment.h"

@@ -4,6 +4,7 @@
 
 #include "Laptop/AIM.h"
 #include "Laptop/Laptop.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Tactical/SoldierProfile.h"
@@ -580,7 +581,7 @@ void DrawSelectLight(UINT8 ubMode, UINT8 ubImage) {
 }
 
 BOOLEAN SortMercArray(void) {
-  qsort((LPVOID)AimMercArray, (size_t)MAX_NUMBER_MERCS, sizeof(UINT8), QsortCompare);
+  qsort((void *)AimMercArray, (size_t)MAX_NUMBER_MERCS, sizeof(UINT8), QsortCompare);
 
   return (TRUE);
 }

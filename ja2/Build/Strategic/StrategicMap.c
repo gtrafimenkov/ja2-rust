@@ -261,7 +261,6 @@ void HandlePotentialMoraleHitForSkimmingSectors(GROUP *pGroup);
 
 extern void InitializeTacticalStatusAtBattleStart();
 
-extern HVSURFACE ghFrameBuffer;
 extern BOOLEAN gfOverrideSector;
 
 extern STR16 pBullseyeStrings[];

@@ -7,7 +7,6 @@
 #include "SGP/HImage.h"
 #include "SGP/SGP.h"
 #include "SGP/VSurface.h"
-#include "SGP/VSurfacePrivate.h"
 #include "SGP/WCheck.h"
 #include "SGP/WinFont.h"
 
@@ -209,27 +208,6 @@ BOOLEAN InitializeFonts() {
 
   gfFontsInit = TRUE;
 
-  // ATE: Init WinFont System and any winfonts we wish...
-#ifdef WINFONTS
-
-  InitWinFonts();
-
-  // giSubTitleWinFont = CreateWinFont( -16, 0, 0,  0, FALSE, FALSE, FALSE, L"�з���",
-  // CHINESEBIG5_CHARSET );
-  giSubTitleWinFont =
-      CreateWinFont(-16, 0, 0, 0, FALSE, FALSE, FALSE, L"�s�ө���", CHINESEBIG5_CHARSET);
-
-  SET_USE_WINFONTS(TRUE);
-  SET_WINFONT(giSubTitleWinFont);
-  Color = FROMRGB(255, 255, 255);
-  SetWinFontForeColor(giSubTitleWinFont, &Color);
-  PrintWinFont(FRAME_BUFFER, giSubTitleWinFont, 10, 100, L"Font %s initialized", gzFontName);
-  InvalidateScreen();
-  RefreshScreen(NULL);
-  SET_USE_WINFONTS(FALSE);
-
-#endif
-
   return (TRUE);
 }
 
@@ -253,11 +231,6 @@ void ShutdownFonts() {
 #if defined(JA2EDITOR) && defined(ENGLISH)
   UnloadFont(gpHugeFont);
 #endif
-
-  // ATE: Shutdown any win fonts
-#ifdef WINFONTS
-  DeleteWinFont(giSubTitleWinFont);
-#endif
 }
 
 // Set shades for fonts
@@ -276,7 +249,7 @@ BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
 
 UINT16 CreateFontPaletteTables(HVOBJECT pObj) {
   UINT32 count;
-  SGPPaletteEntry Pal[256];
+  struct SGPPaletteEntry Pal[256];
 
   for (count = 0; count < 16; count++) {
     if ((count == 4) && (pObj->p16BPPPalette == pObj->pShades[count]))

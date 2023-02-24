@@ -15,10 +15,12 @@
 #include "SGP/ExceptionHandling.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
+#include "SGP/MutexManager.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/MapScreenInterfaceMap.h"
@@ -27,6 +29,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
+#include "Video_win.h"
 #include "dbt.h"
 #include "fileman.h"
 #include "platform.h"
@@ -70,7 +73,6 @@ UINT32 guiMouseWheelMsg;  // For mouse wheel messages
 BOOLEAN gfApplicationActive;
 BOOLEAN gfProgramIsRunning;
 BOOLEAN gfGameInitialized = FALSE;
-BOOLEAN gfDontUseDDBlits = FALSE;
 
 // There were TWO of them??!?! -- DB
 // CHAR8		gzCommandLine[ 100 ];

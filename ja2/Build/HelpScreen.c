@@ -1,5 +1,7 @@
 #include "HelpScreen.h"
 
+#include <windows.h>
+
 #include "GameScreen.h"
 #include "GameSettings.h"
 #include "HelpScreen.h"
@@ -38,8 +40,8 @@ extern BOOLEAN fMapPanelDirty;
 extern BOOLEAN gfGamePaused;
 extern BOOLEAN fShowMapInventoryPool;
 
-extern BOOLEAN BltVSurfaceUsingDD(HVSURFACE hDestVSurface, HVSURFACE hSrcVSurface, UINT32 fBltFlags,
-                                  INT32 iDestX, INT32 iDestY, RECT *SrcRect);
+extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
+                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect);
 
 #define HELP_SCREEN_ACTIVE 0x00000001
 
@@ -2003,7 +2005,7 @@ void RenderCurrentHelpScreenTextToBuffer() {
 }
 
 void RenderTextBufferToScreen() {
-  HVSURFACE hDestVSurface, hSrcVSurface;
+  struct VSurface *hDestVSurface, *hSrcVSurface;
   SGPRect SrcRect;
 
   GetVideoSurface(&hDestVSurface, guiRENDERBUFFER);

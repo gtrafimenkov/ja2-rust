@@ -1,5 +1,7 @@
 #include "Editor/EditSys.h"
 
+#include <stdlib.h>
+
 #include "BuildDefines.h"
 #include "Editor/CursorModes.h"
 #include "Editor/EditScreen.h"

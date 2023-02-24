@@ -4,6 +4,7 @@
 #include "Laptop/InsuranceText.h"
 #include "Laptop/Laptop.h"
 #include "SGP/Line.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"

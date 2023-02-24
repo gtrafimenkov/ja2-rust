@@ -53,7 +53,7 @@
 
 INT8 gbDefaultLightType = PRIMETIME_LIGHT;
 
-SGPPaletteEntry gEditorLightColor;
+struct SGPPaletteEntry gEditorLightColor;
 
 BOOLEAN gfEditorForceShadeTableRebuild = FALSE;
 

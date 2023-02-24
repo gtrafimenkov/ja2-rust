@@ -10,6 +10,7 @@
 #include "Laptop/Laptop.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderDirty.h"

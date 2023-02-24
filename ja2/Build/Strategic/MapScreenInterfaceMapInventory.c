@@ -1,5 +1,7 @@
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 
+#include <stdlib.h>
+
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
 #include "SGP/VObject.h"

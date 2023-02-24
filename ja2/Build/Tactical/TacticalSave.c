@@ -2138,7 +2138,7 @@ BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, SO
                                        INT16 sGridNo, UINT32 uiFlags) {
   UINT32 uiNumberOfItems;
   WORLDITEM *pWorldItems = NULL;
-  UINT i;
+  unsigned int i;
   UINT8 bCount = 0;
   UINT16 uiFlagsForWorldItems = 0;
   UINT16 usFlagsForRottingCorpse = 0;
@@ -2523,7 +2523,7 @@ BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
 }
 
 void GetMapTempFileName(UINT32 uiType, STR pMapName, INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
-  CHAR zTempName[512];
+  char zTempName[512];
 
   // Convert the current sector location into a file name
   GetMapFileName(sMapX, sMapY, bMapZ, zTempName, FALSE, FALSE);

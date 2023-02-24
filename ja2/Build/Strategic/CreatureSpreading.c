@@ -1073,7 +1073,7 @@ void DetermineCreatureTownCompositionBasedOnTacticalInformation(UINT8 *pubNumCre
 BOOLEAN PrepareCreaturesForBattle() {
   UNDERGROUND_SECTORINFO *pSector;
   INT32 i, iRandom;
-  SGPPaletteEntry LColors[3];
+  struct SGPPaletteEntry LColors[3];
   UINT8 ubNumColors;
   BOOLEAN fQueen;
   UINT8 ubLarvaePercentage;

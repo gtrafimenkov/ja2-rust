@@ -1240,14 +1240,14 @@ ErrCode FlicGetStats(char *filename, int width, int height, Flic *flic, int *piB
 //
 //**************************************************************************
 
-ErrCode FlicGetColourPalette(CHAR *filename, int width, int height, CHAR **ppBuffer,
+ErrCode FlicGetColourPalette(char *filename, int width, int height, char **ppBuffer,
                              INT *piNumColours) {
   Flic flic;
   INT iBufferSize;
   INT iColourPaletteSize = 0;
   ErrCode err = 0;
   ChunkHead *chunk = NULL;
-  CHAR *pcPosition;
+  char *pcPosition;
 
   if (FlicGetStats(filename, width, height, &flic, &iBufferSize, &iColourPaletteSize)) err = -1;
 
@@ -1260,9 +1260,9 @@ ErrCode FlicGetColourPalette(CHAR *filename, int width, int height, CHAR **ppBuf
 
     FlicSetOrigin(&flic, 0, 0);
 
-    *ppBuffer = (CHAR *)MemAlloc(iColourPaletteSize);
+    *ppBuffer = (char *)MemAlloc(iColourPaletteSize);
     chunk = (ChunkHead *)FlicSeekChunk(&flic, 0, COLOR_256, NULL);
-    pcPosition = (CHAR *)(((BYTE *)chunk) + 6);
+    pcPosition = (char *)(((BYTE *)chunk) + 6);
 
     if (chunk) {
       INT ix, end, count, start = 0;
@@ -1321,7 +1321,7 @@ ErrCode FlicGetColourPalette(CHAR *filename, int width, int height, CHAR **ppBuf
 //
 //**************************************************************************
 
-CHAR *FlicSeekChunk(Flic *flic, INT iFrame, ChunkTypes eType, INT *piChunkSize) {
+char *FlicSeekChunk(Flic *flic, INT iFrame, ChunkTypes eType, INT *piChunkSize) {
   FrameHead head;
   LONG lSize;
   BOOL fFound = FALSE;
@@ -1469,7 +1469,7 @@ ErrCode FlicFillBitmapData(Flic *flic, INT iPrevFrame, INT iFrame, HBITMAP hBitm
 //		Flic			*flic			-> the flic to extract data from
 //		INT			iPrevFrame	-> the previous frame decoded, BAD_INDEX if
 // unknown 		INT			iFrame		-> the frame number to extract
-// bitmap data for 		CHAR *pcBuffer	-> place to put the frame data
+// bitmap data for 		char *pcBuffer	-> place to put the frame data
 //		INT			*piSize		-> size of buffer ; we return how many bytes
 //											were placed
 // in the buffer
@@ -1484,7 +1484,7 @@ ErrCode FlicFillBitmapData(Flic *flic, INT iPrevFrame, INT iFrame, HBITMAP hBitm
 //
 //**************************************************************************
 
-ErrCode FlicFillFrameData(Flic *flic, INT iPrevFrame, INT iFrame, CHAR *pcBuffer, INT *piNumBytes) {
+ErrCode FlicFillFrameData(Flic *flic, INT iPrevFrame, INT iFrame, char *pcBuffer, INT *piNumBytes) {
   ErrCode err = 0;
   ChunkHead *chunk = NULL;
   INT i, iStart, iNumBytesInBuffer;
@@ -1556,6 +1556,6 @@ void FlicClearBitmap(HBITMAP hBitmap, INT iColourIndex) {
   CHECKV(dibSection.dsBm.bmWidth);
 
   for (i = 0; i < dibSection.dsBm.bmHeight * dibSection.dsBm.bmWidth; i++) {
-    ((CHAR *)dibSection.dsBm.bmBits)[i] = iColourIndex;
+    ((char *)dibSection.dsBm.bmBits)[i] = iColourIndex;
   }
 }

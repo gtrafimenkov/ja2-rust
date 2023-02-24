@@ -1,5 +1,7 @@
 #include "SGP/MutexManager.h"
 
+#include <windows.h>
+
 #include "SGP/Debug.h"
 
 #ifdef __MUTEX_TYPE

@@ -1,6 +1,7 @@
 #include "Utils/Message.h"
 
 #include <memory.h>
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "BuildDefines.h"
@@ -11,6 +12,7 @@
 #include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
+#include "SGP/VSurface.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceBottom.h"
 #include "Tactical/DialogueControl.h"

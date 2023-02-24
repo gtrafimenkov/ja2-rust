@@ -5,6 +5,7 @@
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QuestText.h"
@@ -1551,7 +1552,7 @@ void GetQuestEndedString(UINT8 ubQuestValue, STR16 sQuestString) {
 #ifdef JA2TESTVERSION
 void PerformCheckOnHistoryRecord(UINT32 uiErrorCode, INT16 sSectorX, INT16 sSectorY,
                                  INT8 bSectorZ) {
-  CHAR zString[512];
+  char zString[512];
 
   if (sSectorX > 16 || sSectorY > 16 || bSectorZ > 3 || sSectorX < -1 || sSectorY < -1 ||
       bSectorZ < 0) {

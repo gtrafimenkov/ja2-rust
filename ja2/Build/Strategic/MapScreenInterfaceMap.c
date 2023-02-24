@@ -1,5 +1,7 @@
 #include "Strategic/MapScreenInterfaceMap.h"
 
+#include <windows.h>
+
 #include "Laptop/Finances.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
@@ -664,7 +666,7 @@ void HandleShowingOfEnemiesWithMilitiaOn(void) {
 
 UINT32 DrawMap(void) {
 #ifndef JA2DEMO
-  HVSURFACE hSrcVSurface;
+  struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
@@ -1179,9 +1181,9 @@ void ShowTeamAndVehicles(INT32 fShowFlags) {
 
 BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   INT16 sScreenX, sScreenY;
-  HVSURFACE hSrcVSurface;
-  // HVSURFACE hSAMSurface;
-  // HVSURFACE hMineSurface;
+  struct VSurface *hSrcVSurface;
+  // struct VSurface* hSAMSurface;
+  // struct VSurface* hMineSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
@@ -1350,7 +1352,7 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
 BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   INT16 sScreenX, sScreenY;
   INT32 iX, iY;
-  HVSURFACE hSrcVSurface;
+  struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
@@ -1518,8 +1520,8 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
 
 BOOLEAN InitializePalettesForMap(void) {
   // init palettes
-  HVSURFACE hSrcVSurface;
-  SGPPaletteEntry pPalette[256];
+  struct VSurface *hSrcVSurface;
+  struct SGPPaletteEntry pPalette[256];
   VSURFACE_DESC vs_desc;
   UINT32 uiTempMap;
 

@@ -1,5 +1,6 @@
 #include "Strategic/StrategicAI.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "GameSettings.h"

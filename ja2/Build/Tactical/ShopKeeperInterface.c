@@ -1,5 +1,7 @@
 #include "Tactical/ShopKeeperInterface.h"
 
+#include <windows.h>
+
 #include "BuildDefines.h"
 #include "GameSettings.h"
 #include "Laptop/Finances.h"
@@ -365,8 +367,8 @@ extern void HandleShortCutExitState(void);
 extern UINT8 gubSelectSMPanelToMerc;
 extern INT32 giItemDescAmmoButton;
 
-extern BOOLEAN BltVSurfaceUsingDD(HVSURFACE hDestVSurface, HVSURFACE hSrcVSurface, UINT32 fBltFlags,
-                                  INT32 iDestX, INT32 iDestY, RECT *SrcRect);
+extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
+                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect);
 
 extern UINT8 gubLastSpecialItemAddedAtElement;
 
@@ -1266,7 +1268,7 @@ void HandleShopKeeperInterface() {
 BOOLEAN RenderShopKeeperInterface() {
   HVOBJECT hPixHandle;
   CHAR16 zMoney[128];
-  HVSURFACE hDestVSurface, hSrcVSurface;
+  struct VSurface *hDestVSurface, *hSrcVSurface;
   SGPRect SrcRect;
 
   if (InItemDescriptionBox() && pShopKeeperItemDescObject != NULL) {
@@ -1372,7 +1374,7 @@ BOOLEAN RenderShopKeeperInterface() {
 }
 
 void RestoreTacticalBackGround() {
-  HVSURFACE hDestVSurface, hSrcVSurface;
+  struct VSurface *hDestVSurface, *hSrcVSurface;
   SGPRect SrcRect;
 
   // Restore the background before blitting the text back on

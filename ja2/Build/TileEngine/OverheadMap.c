@@ -1,6 +1,7 @@
 #include "TileEngine/OverheadMap.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "GameLoop.h"
 #include "SGP/English.h"

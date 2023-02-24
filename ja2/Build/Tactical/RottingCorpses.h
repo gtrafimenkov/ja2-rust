@@ -115,7 +115,7 @@ typedef struct {
 
   ANITILE *pAniTile;
 
-  SGPPaletteEntry *p8BPPPalette;
+  struct SGPPaletteEntry *p8BPPPalette;
   UINT16 *p16BPPPalette;
   UINT16 *pShades[NUM_CORPSE_SHADES];
   INT16 sGraphicNum;

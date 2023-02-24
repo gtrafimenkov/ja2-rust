@@ -8,6 +8,7 @@
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"

@@ -72,7 +72,7 @@ void SetRGBFontBackground(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue);
 void SetRGBFontShadow(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue);
 
 BOOLEAN ResetFontObjectPalette(INT32 iFont);
-UINT16 *SetFontObjectPalette8BPP(INT32 iFont, SGPPaletteEntry *pPal8);
+UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8);
 UINT16 *SetFontObjectPalette16BPP(INT32 iFont, UINT16 *pPal16);
 UINT16 *GetFontObjectPalette16BPP(INT32 iFont);
 
@@ -134,7 +134,7 @@ void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHei
 // extern UINT8    *GetFontPalette(UINT8 *pFileName);
 // extern UINT16    GetMaxFontWidth(FontBase *pBase);
 // extern void      UnloadFont(FontBase *pBase);
-// extern BOOLEAN   SetFontPalette(FontBase *pFont, UINT16 siDepthPix, SGPPaletteEntry
+// extern BOOLEAN   SetFontPalette(FontBase *pFont, UINT16 siDepthPix, struct SGPPaletteEntry
 // *pNewPalette);
 // make sure the pFontString is terminated by 0
 // extern BOOLEAN   PrintFontString(CHAR16 *pFontString, UINT8 *pDestBuffer, UINT16 siDestWidth,

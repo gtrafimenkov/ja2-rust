@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <windows.h>
 
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorMapInfo.h"
@@ -2079,7 +2080,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
     // RenderProgressBar( 1, 92 );
     // skip number of light palette entries
     LOADDATA(&ubTemp, pBuffer, 1);
-    pBuffer += sizeof(SGPPaletteEntry) * ubTemp;
+    pBuffer += sizeof(struct SGPPaletteEntry) * ubTemp;
     // get number of lights
     LOADDATA(&pSummary->usNumLights, pBuffer, 2);
     // skip the light loading
@@ -3491,7 +3492,7 @@ void ReloadTileset(UINT8 ubID) {
 
 void SaveMapLights(HWFILE hfile) {
   SOLDIERTYPE *pSoldier;
-  SGPPaletteEntry LColors[3];
+  struct SGPPaletteEntry LColors[3];
   UINT8 ubNumColors;
   BOOLEAN fSoldierLight;
   UINT16 usNumLights = 0;
@@ -3503,7 +3504,7 @@ void SaveMapLights(HWFILE hfile) {
 
   // Save the current light colors!
   FileMan_Write(hfile, &ubNumColors, 1, &uiBytesWritten);
-  FileMan_Write(hfile, LColors, sizeof(SGPPaletteEntry) * ubNumColors, &uiBytesWritten);
+  FileMan_Write(hfile, LColors, sizeof(struct SGPPaletteEntry) * ubNumColors, &uiBytesWritten);
 
   // count number of non-merc lights.
   for (cnt = 0; cnt < MAX_LIGHT_SPRITES; cnt++) {
@@ -3543,7 +3544,7 @@ void SaveMapLights(HWFILE hfile) {
 }
 
 void LoadMapLights(INT8 **hBuffer) {
-  SGPPaletteEntry LColors[3];
+  struct SGPPaletteEntry LColors[3];
   UINT8 ubNumColors;
   UINT16 usNumLights;
   INT32 cnt;
@@ -3559,7 +3560,7 @@ void LoadMapLights(INT8 **hBuffer) {
 
   // read in the light colors!
   LOADDATA(&ubNumColors, *hBuffer, 1);
-  LOADDATA(LColors, *hBuffer, sizeof(SGPPaletteEntry) * ubNumColors);
+  LOADDATA(LColors, *hBuffer, sizeof(struct SGPPaletteEntry) * ubNumColors);
 
   LOADDATA(&usNumLights, *hBuffer, 2);
 

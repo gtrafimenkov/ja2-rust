@@ -8,6 +8,7 @@
 #include "SGP/Line.h"
 #include "SGP/SGP.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Tactical/Faces.h"
 #include "Tactical/Interface.h"

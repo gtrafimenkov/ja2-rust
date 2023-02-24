@@ -4,6 +4,7 @@
 
 #include "SGP/Types.h"
 #include "SGP/Video.h"
+#include "SGP/Video_win.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

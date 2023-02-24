@@ -2093,12 +2093,6 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                             (UINT16 *)pDestBuf, uiDestPitchBYTES, gpZBuffer, sZLevel, hVObject,
                             sXPos, sYPos, usImageIndex, pShadeTable);
 
-                        //	Blt8BPPDataTo8BPPBufferTransShadowZNB( (UINT16*)pDestBuf,
-                        // uiDestPitchBYTES, gpZBuffer, sZLevel,
-                        // hVObject,
-                        // sXPos, sYPos,
-                        // usImageIndex,
-                        // pShadeTable);
                       } else if (fShadowBlitter) {
                         if (fZWrite)
                           Blt8BPPDataTo8BPPBufferShadowZ((UINT16 *)pDestBuf, uiDestPitchBYTES,

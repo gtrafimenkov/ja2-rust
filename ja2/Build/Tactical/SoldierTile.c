@@ -49,7 +49,6 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
-#include "Utils/WinUtil.h"
 
 extern INT8 gbNumMercsUntilWaitingOver;
 extern UINT8 gubWaitingForAllMercsToExitCode;

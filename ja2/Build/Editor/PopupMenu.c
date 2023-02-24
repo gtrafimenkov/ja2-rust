@@ -19,6 +19,7 @@
 #include "SGP/Font.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/VSurface.h"
 #include "Strategic/Scheduling.h"
 #include "Tactical/OverheadTypes.h"
 #include "TileEngine/RenderDirty.h"

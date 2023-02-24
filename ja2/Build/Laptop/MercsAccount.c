@@ -7,6 +7,7 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/SpeckQuotes.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Tactical/Overhead.h"

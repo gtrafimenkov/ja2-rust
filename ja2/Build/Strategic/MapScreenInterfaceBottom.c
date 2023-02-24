@@ -1,5 +1,7 @@
 #include "Strategic/MapScreenInterfaceBottom.h"
 
+#include <windows.h>
+
 #include "GameLoop.h"
 #include "GameSettings.h"
 #include "JAScreens.h"

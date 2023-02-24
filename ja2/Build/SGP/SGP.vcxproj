@@ -24,7 +24,6 @@
     <ClInclude Include="DDraw.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DirectDrawCalls.h" />
-    <ClInclude Include="DirectXCommon.h" />
     <ClInclude Include="DSound.h" />
     <ClInclude Include="English.h" />
     <ClInclude Include="ExceptionHandling.h" />
@@ -56,12 +55,10 @@
     <ClInclude Include="TRLE.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Video.h" />
-    <ClInclude Include="VideoPrivate.h" />
     <ClInclude Include="VObject.h" />
     <ClInclude Include="VObjectBlitters.h" />
     <ClInclude Include="VObjectPrivate.h" />
     <ClInclude Include="VSurface.h" />
-    <ClInclude Include="VSurfacePrivate.h" />
     <ClInclude Include="WCheck.h" />
     <ClInclude Include="WinFont.h" />
     <ClInclude Include="WizShare.h" />
@@ -73,9 +70,6 @@
     <ClCompile Include="CursorControl.c" />
     <ClCompile Include="DBMan.c" />
     <ClCompile Include="Debug.c" />
-    <ClCompile Include="win_debug.c" />
-    <ClCompile Include="DirectDrawCalls.c" />
-    <ClCompile Include="DirectXCommon.c" />
     <ClCompile Include="English.c" />
     <ClCompile Include="ExceptionHandling.cc" />
     <ClCompile Include="Font.c" />
@@ -96,9 +90,9 @@
     <ClCompile Include="STCI.c" />
     <ClCompile Include="Timer.c" />
     <ClCompile Include="Video.c" />
+    <ClCompile Include="Video_win.c" />
     <ClCompile Include="VObject.c" />
     <ClCompile Include="VObjectBlitters.c" />
-    <ClCompile Include="VSurface.c" />
     <ClCompile Include="WinFont.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

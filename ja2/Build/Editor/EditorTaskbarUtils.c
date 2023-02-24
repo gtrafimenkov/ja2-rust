@@ -1,5 +1,6 @@
 #include "Editor/EditorTaskbarUtils.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "BuildDefines.h"

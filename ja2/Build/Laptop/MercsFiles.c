@@ -11,6 +11,7 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"

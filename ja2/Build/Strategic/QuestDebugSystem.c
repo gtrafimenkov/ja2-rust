@@ -1,6 +1,7 @@
 #include "Strategic/QuestDebugSystem.h"
 
 #include <stdio.h>
+#include <windows.h>
 
 #include "Laptop/AIMMembers.h"
 #include "MessageBoxScreen.h"
@@ -8,6 +9,7 @@
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
@@ -3603,7 +3605,7 @@ UINT8 WhichPanelShouldTalkingMercUse() {
 }
 
 void DisableFactMouseRegions() {
-  UINT i;
+  unsigned int i;
 
   for (i = 0; i < QUEST_DBS_NUM_DISPLAYED_FACTS; i++) {
     MSYS_DisableRegion(&gFactListRegion[i]);
@@ -3611,7 +3613,7 @@ void DisableFactMouseRegions() {
 }
 
 void EnableFactMouseRegions() {
-  UINT i;
+  unsigned int i;
 
   for (i = 0; i < QUEST_DBS_NUM_DISPLAYED_FACTS; i++) {
     MSYS_EnableRegion(&gFactListRegion[i]);

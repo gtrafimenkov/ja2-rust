@@ -1,6 +1,7 @@
 #include "Laptop/Funeral.h"
 
 #include "Laptop/Laptop.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Utils/Cursors.h"
 #include "Utils/MultiLanguageGraphicUtils.h"

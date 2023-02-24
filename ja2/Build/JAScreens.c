@@ -26,7 +26,6 @@
 #include "SGP/Timer.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
-#include "SGP/VObjectPrivate.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Screens.h"
@@ -77,7 +76,7 @@ void DebugRenderHook();
 BOOLEAN DebugKeyboardHook(InputAtom *pInputEvent);
 INT8 gCurDebugPage = 0;
 
-HVSURFACE hVAnims[7];
+struct VSurface *hVAnims[7];
 INT8 bTitleAnimFrame = 0;
 UINT32 uiTitleAnimTime = 0;
 UINT32 uiDoTitleAnimTime = 0;
@@ -91,8 +90,6 @@ void DefaultDebugPage4();
 RENDER_HOOK gDebugRenderOverride[MAX_DEBUG_PAGES] = {
     (RENDER_HOOK)DefaultDebugPage1, (RENDER_HOOK)DefaultDebugPage2, (RENDER_HOOK)DefaultDebugPage3,
     (RENDER_HOOK)DefaultDebugPage4};
-
-extern HVSURFACE ghFrameBuffer;
 
 void DisplayFrameRate() {
   static UINT32 uiFPS = 0;
@@ -266,7 +263,7 @@ UINT32 InitScreenInitialize(void) { return (TRUE); }
 
 UINT32 InitScreenHandle(void) {
   VSURFACE_DESC vs_desc;
-  static HVSURFACE hVSurface;
+  static struct VSurface *hVSurface;
   static UINT8 ubCurrentScreen = 255;
 
   if (ubCurrentScreen == 255) {
@@ -283,10 +280,6 @@ UINT32 InitScreenHandle(void) {
   }
 
   if (ubCurrentScreen == 0) {
-    if (strcmp(gzCommandLine, "-NODD") == 0) {
-      gfDontUseDDBlits = TRUE;
-    }
-
     // Load version number....
     // HandleLimitedNumExecutions( );
 
@@ -313,14 +306,6 @@ UINT32 InitScreenHandle(void) {
 #ifdef _DEBUG
     mprintf(10, 440, L"SOLDIERTYPE: %d bytes", sizeof(SOLDIERTYPE));
 #endif
-
-    if (gfDontUseDDBlits) {
-#ifdef _DEBUG
-      mprintf(10, 450, L"SOLDIERTYPE: %d bytes", sizeof(SOLDIERTYPE));
-#else
-      mprintf(10, 440, L"Using software blitters");
-#endif
-    }
 
     InvalidateScreen();
 
@@ -911,7 +896,7 @@ UINT32 DemoExitScreenHandle(void) {
   CHAR16 str[150];
   static UINT16 usCenter = 320;
   static UINT32 uiCollageID = 0;
-  HVSURFACE hVSurface;
+  struct VSurface *hVSurface;
   VSURFACE_DESC VSurfaceDesc;
   static BOOLEAN gfFastAnim = FALSE;
   static BOOLEAN gfPrevFastAnim = FALSE;

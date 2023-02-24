@@ -8,9 +8,6 @@
 extern BOOLEAN gfUseWinFonts;
 extern INT32 giCurWinFont;
 
-// ATE: Use this define to enable winfonts in JA2
-// #define     WINFONTS
-
 #ifdef WINFONTS
 #define USE_WINFONTS() (gfUseWinFonts)
 #else

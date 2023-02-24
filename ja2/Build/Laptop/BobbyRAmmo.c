@@ -3,6 +3,7 @@
 #include "Laptop/BobbyR.h"
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Laptop.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Tactical/InterfaceItems.h"
 #include "Utils/Cursors.h"

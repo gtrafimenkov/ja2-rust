@@ -1,11 +1,14 @@
 #include "OptionsScreen.h"
 
+#include <windows.h>
+
 #include "GameSettings.h"
 #include "LanguageDefines.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadScreen.h"

@@ -11,6 +11,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/English.h"
 #include "SGP/Random.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"

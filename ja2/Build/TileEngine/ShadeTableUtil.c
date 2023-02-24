@@ -1,7 +1,9 @@
 #include "TileEngine/ShadeTableUtil.h"
 
 #include <stdio.h>
+#include <string.h>
 
+#include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
 #include "TileEngine/Lighting.h"

@@ -1,5 +1,7 @@
 #include "SGP/CursorControl.h"
 
+#include <windows.h>
+
 #include "SGP/CursorFileData.h"
 #include "SGP/WCheck.h"
 

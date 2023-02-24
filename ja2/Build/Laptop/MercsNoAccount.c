@@ -5,6 +5,7 @@
 #include "Laptop/Mercs.h"
 #include "Laptop/SpeckQuotes.h"
 #include "SGP/Random.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Utils/Cursors.h"
 #include "Utils/Text.h"

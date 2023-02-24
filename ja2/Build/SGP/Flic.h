@@ -199,12 +199,12 @@ int FlicStart(char *filename, int width, int height, char *buffer, Flic *flic, c
 void FlicStop(Flic *flic);
 ErrCode FlicGetStats(char *filename, int width, int height, Flic *flic, int *piBufferSize,
                      int *piColourPalSize);
-ErrCode FlicGetColourPalette(CHAR *filename, int width, int height, CHAR **ppBuffer,
+ErrCode FlicGetColourPalette(char *filename, int width, int height, char **ppBuffer,
                              INT *piNumColours);
-CHAR *FlicSeekChunk(Flic *flic, INT iFrame, ChunkTypes eType, INT *piChunkSize);
+char *FlicSeekChunk(Flic *flic, INT iFrame, ChunkTypes eType, INT *piChunkSize);
 INT FlicFindByteRunBeforeFrame(Flic *flic, INT iFrame);
 ErrCode FlicFillBitmapData(Flic *flic, INT iPrevFrame, INT iFrame, HBITMAP hBitmap);
-ErrCode FlicFillFrameData(Flic *flic, INT iPrevFrame, INT iFrame, CHAR *, INT *);
+ErrCode FlicFillFrameData(Flic *flic, INT iPrevFrame, INT iFrame, char *, INT *);
 void FlicClearBitmap(HBITMAP hBitmap, INT iColourIndex);
 #ifdef __cplusplus
 }

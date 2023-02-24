@@ -1,5 +1,7 @@
 #include "GameSettings.h"
 
+#include <windows.h>
+
 #include "Cheats.h"
 #include "GameVersion.h"
 #include "HelpScreen.h"

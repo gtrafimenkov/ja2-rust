@@ -1,5 +1,7 @@
 #include "Laptop/IMPHomePage.h"
 
+#include <Windows.h>
+
 #include "Laptop/CharProfile.h"
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"
@@ -8,6 +10,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"

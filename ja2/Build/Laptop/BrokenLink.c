@@ -2,6 +2,7 @@
 
 #include "Laptop/Laptop.h"
 #include "SGP/Font.h"
+#include "SGP/VSurface.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
 

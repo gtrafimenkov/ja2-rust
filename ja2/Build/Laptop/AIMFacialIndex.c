@@ -6,6 +6,7 @@
 #include "Laptop/AIMSort.h"
 #include "Laptop/Email.h"
 #include "Laptop/Laptop.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Assignments.h"
 #include "Tactical/SoldierProfile.h"

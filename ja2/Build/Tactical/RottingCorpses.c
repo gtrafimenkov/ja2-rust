@@ -53,7 +53,7 @@
 #define MAX_NUM_CROWS 6
 
 // From lighting
-extern SGPPaletteEntry gpLightColors[3];
+extern struct SGPPaletteEntry gpLightColors[3];
 extern UINT16 gusShadeLevels[16][3];
 
 void MakeCorpseVisible(SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse);
@@ -335,7 +335,7 @@ INT32 giNumRottingCorpse = 0;
 
 BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse);
 BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, UINT32 uiBase,
-                                  SGPPaletteEntry *pShadePal);
+                                  struct SGPPaletteEntry *pShadePal);
 
 void ReduceAmmoDroppedByNonPlayerSoldiers(SOLDIERTYPE *pSoldier, INT32 iInvSlot);
 
@@ -626,9 +626,9 @@ void RemoveCorpse(INT32 iCorpseID) {
 BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
   CHAR8 zColFilename[100];
   INT8 bBodyTypePalette;
-  SGPPaletteEntry Temp8BPPPalette[256];
+  struct SGPPaletteEntry Temp8BPPPalette[256];
 
-  pCorpse->p8BPPPalette = (SGPPaletteEntry *)MemAlloc(sizeof(SGPPaletteEntry) * 256);
+  pCorpse->p8BPPPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
 
   CHECKF(pCorpse->p8BPPPalette != NULL);
 
@@ -1157,7 +1157,7 @@ void RebuildAllCorpseShadeTables() {
 }
 
 UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
-  SGPPaletteEntry LightPal[256];
+  struct SGPPaletteEntry LightPal[256];
   UINT32 uiCount;
 
   // create the basic shade table
@@ -1180,7 +1180,7 @@ UINT16 CreateCorpsePaletteTables(ROTTING_CORPSE *pCorpse) {
 }
 
 BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, UINT32 uiBase,
-                                  SGPPaletteEntry *pShadePal) {
+                                  struct SGPPaletteEntry *pShadePal) {
   UINT32 uiCount;
 
   pCorpse->pShades[uiBase] = Create16BPPPaletteShaded(

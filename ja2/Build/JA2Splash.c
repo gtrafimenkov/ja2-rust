@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "MainMenuScreen.h"
+#include "SGP/Debug.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
@@ -12,14 +13,13 @@
 
 UINT32 guiSplashFrameFade = 10;
 UINT32 guiSplashStartTime = 0;
-extern HVSURFACE ghFrameBuffer;
 
 // Simply create videosurface, load image, and draw it to the screen.
 void InitJA2SplashScreen() {
   UINT32 uiLogoID = 0;
   STRING512 CurrentDir;
   STRING512 DataDir;
-  HVSURFACE hVSurface;
+  struct VSurface* hVSurface;
   VSURFACE_DESC VSurfaceDesc;
   INT32 i = 0;
 

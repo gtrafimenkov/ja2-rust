@@ -1,9 +1,11 @@
 #include "Editor/MessageBox.h"
 
 #include "BuildDefines.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/Video.h"
 #include "Utils/FontControl.h"

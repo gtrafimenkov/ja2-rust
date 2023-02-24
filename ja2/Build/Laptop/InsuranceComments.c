@@ -3,6 +3,7 @@
 #include "Laptop/Insurance.h"
 #include "Laptop/InsuranceText.h"
 #include "Laptop/Laptop.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Utils/Cursors.h"
 #include "Utils/Text.h"

@@ -1,5 +1,7 @@
 #include "Laptop/Laptop.h"
 
+#include <windows.h>
+
 #include "Cheats.h"
 #include "GameLoop.h"
 #include "HelpScreen.h"
@@ -4477,7 +4479,7 @@ void BlitTitleBarIcons(void) {
 }
 
 BOOLEAN DrawDeskTopBackground(void) {
-  HVSURFACE hSrcVSurface;
+  struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;

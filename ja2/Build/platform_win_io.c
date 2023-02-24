@@ -175,7 +175,7 @@ BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) {
 //**************************************************************************
 
 typedef struct FMFileInfoTag {
-  CHAR strFilename[FILENAME_LENGTH];
+  char strFilename[FILENAME_LENGTH];
   UINT8 uiFileAccess;
   UINT32 uiFilePosition;
   HANDLE hFileHandle;
@@ -189,7 +189,7 @@ typedef struct FileSystemTag {
   BOOLEAN fDebug;
   BOOLEAN fDBInitialized;
 
-  CHAR *pcFileNames;
+  char *pcFileNames;
   UINT32 uiNumFilesInDirectory;
 } FileSystem;
 

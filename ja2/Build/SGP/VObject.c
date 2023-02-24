@@ -1,15 +1,13 @@
 #include "SGP/VObject.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/DirectDrawCalls.h"
 #include "SGP/HImage.h"
 #include "SGP/SGP.h"
 #include "SGP/VObjectBlitters.h"
-#include "SGP/VObjectPrivate.h"
 #include "SGP/Video.h"
-#include "SGP/VideoPrivate.h"
 #include "SGP/WCheck.h"
 #include "platfrom_strings.h"
 
@@ -432,22 +430,23 @@ HVOBJECT CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
 }
 
 // Palette setting is expensive, need to set both DDPalette and create 16BPP palette
-BOOLEAN SetVideoObjectPalette(HVOBJECT hVObject, SGPPaletteEntry *pSrcPalette) {
+BOOLEAN SetVideoObjectPalette(HVOBJECT hVObject, struct SGPPaletteEntry *pSrcPalette) {
   Assert(hVObject != NULL);
   Assert(pSrcPalette != NULL);
 
   // Create palette object if not already done so
   if (hVObject->pPaletteEntry == NULL) {
     // Create palette
-    hVObject->pPaletteEntry = (SGPPaletteEntry *)MemAlloc(sizeof(SGPPaletteEntry) * 256);
+    hVObject->pPaletteEntry =
+        (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
     CHECKF(hVObject->pPaletteEntry != NULL);
 
     // Copy src into palette
-    memcpy(hVObject->pPaletteEntry, pSrcPalette, sizeof(SGPPaletteEntry) * 256);
+    memcpy(hVObject->pPaletteEntry, pSrcPalette, sizeof(struct SGPPaletteEntry) * 256);
 
   } else {
     // Just Change entries
-    memcpy(hVObject->pPaletteEntry, pSrcPalette, sizeof(SGPPaletteEntry) * 256);
+    memcpy(hVObject->pPaletteEntry, pSrcPalette, sizeof(struct SGPPaletteEntry) * 256);
   }
 
   // Delete 16BPP Palette if one exists
@@ -793,7 +792,7 @@ UINT16 FillObjectRect(UINT32 iObj, INT32 x1, INT32 y1, INT32 x2, INT32 y2, COLOR
 {
 UINT16	*pBuffer;
 UINT32	uiPitch;
-//HVSURFACE pSurface;
+//struct VSurface* pSurface;
 
         // Lock video surface
         pBuffer = (UINT16*)LockVideoSurface(iObj, &uiPitch );
@@ -923,7 +922,7 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, ETRLEObject
   return (TRUE);
 }
 
-BOOLEAN SetVideoObjectPalette8BPP(INT32 uiVideoObject, SGPPaletteEntry *pPal8) {
+BOOLEAN SetVideoObjectPalette8BPP(INT32 uiVideoObject, struct SGPPaletteEntry *pPal8) {
   HVOBJECT hVObject;
 
 // Get video object

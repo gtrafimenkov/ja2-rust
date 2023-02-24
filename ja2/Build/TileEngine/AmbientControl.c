@@ -1,6 +1,7 @@
 #include "TileEngine/AmbientControl.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "SGP/Random.h"
 #include "SGP/SGP.h"

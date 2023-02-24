@@ -301,7 +301,7 @@ BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, HIMAGE hImage) {
   pubPalette = &(pCurrentPcxObject->ubPalette[0]);
 
   // Allocate memory for palette
-  hImage->pPalette = (SGPPaletteEntry *)MemAlloc(sizeof(SGPPaletteEntry) * 256);
+  hImage->pPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
 
   if (hImage->pPalette == NULL) {
     return (FALSE);

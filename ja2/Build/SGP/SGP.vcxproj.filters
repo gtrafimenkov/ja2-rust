@@ -38,9 +38,6 @@
     <ClInclude Include="DirectDrawCalls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXCommon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DSound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -128,9 +125,6 @@
     <ClInclude Include="Video.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VideoPrivate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -141,9 +135,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VSurface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VSurfacePrivate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WCheck.h">
@@ -179,15 +170,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_debug.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectDrawCalls.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXCommon.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="English.c">
@@ -244,13 +226,13 @@
     <ClCompile Include="Video.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Video_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="VObject.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VObjectBlitters.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VSurface.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MemMan.c">

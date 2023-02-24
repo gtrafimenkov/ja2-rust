@@ -1,5 +1,7 @@
 #include "Laptop/IMPBeginScreen.h"
 
+#include <windows.h>
+
 #include "Laptop/CharProfile.h"
 #include "Laptop/IMPAttributeSelection.h"
 #include "Laptop/IMPFinish.h"
@@ -15,6 +17,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Strategic.h"

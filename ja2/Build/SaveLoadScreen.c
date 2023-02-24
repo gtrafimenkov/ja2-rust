@@ -1,6 +1,7 @@
 #include "SaveLoadScreen.h"
 
 #include <stdio.h>
+#include <windows.h>
 
 #include "FadeScreen.h"
 #include "GameLoop.h"
@@ -14,6 +15,7 @@
 #include "SGP/English.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"

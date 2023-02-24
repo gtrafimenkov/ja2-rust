@@ -10,7 +10,6 @@
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
 #include "SGP/VSurface.h"
-#include "SGP/VSurfacePrivate.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"

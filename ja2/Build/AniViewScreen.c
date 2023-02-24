@@ -14,7 +14,6 @@
 #include "SGP/SGP.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
-#include "SGP/VObjectPrivate.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "SysGlobals.h"
@@ -33,6 +32,7 @@
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"
+#include "platfrom_strings.h"
 
 void BuildListFile();
 
@@ -265,7 +265,7 @@ UINT16 GetAnimStateFromName(STR8 zName) {
 
   // FInd the next animation with start height the same...
   for (cnt = 0; cnt < NUMANIMATIONSTATES; cnt++) {
-    if (stricmp(gAnimControl[cnt].zAnimStr, zName) == 0) {
+    if (strcasecmp(gAnimControl[cnt].zAnimStr, zName) == 0) {
       return ((UINT16)cnt);
     }
   }

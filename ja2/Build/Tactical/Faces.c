@@ -194,7 +194,7 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   ETRLEObject ETRLEObject;
   HVOBJECT hVObject;
   UINT32 uiCount;
-  SGPPaletteEntry Pal[256];
+  struct SGPPaletteEntry Pal[256];
 
   if ((iFaceIndex = GetFreeFace()) == (-1)) return (-1);
 

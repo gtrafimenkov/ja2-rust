@@ -259,7 +259,7 @@ UINT32 EditScreenShutdown(void) {
 BOOLEAN EditModeInit(void) {
   UINT32 x;
   INT32 i;
-  SGPPaletteEntry LColors[2];
+  struct SGPPaletteEntry LColors[2];
 
   DebugPrint("Entering editor mode...\n");
 
@@ -2379,7 +2379,7 @@ void ShowCurrentSlotSurface(UINT32 vSurface, INT32 iWindow) {
   INT32 iStartX;
   INT32 iStartY;
   INT32 iPicHeight, iPicWidth;
-  HVSURFACE hvSurface;
+  struct VSurface *hvSurface;
   INT32 iWinWidth, iWinHeight;
   blt_vs_fx vSfx;
 

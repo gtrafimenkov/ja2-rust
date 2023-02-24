@@ -10,7 +10,6 @@
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Line.h"
 #include "SGP/SGP.h"
-#include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameInit.h"
 #include "SysGlobals.h"
@@ -28,7 +27,6 @@
 #include "fileman.h"
 
 extern STR16 gzIntroScreen[];
-extern HVSURFACE ghFrameBuffer;
 
 enum {
   INTRO_TXT__CANT_FIND_INTRO,
@@ -73,7 +71,7 @@ enum {
 
 INT32 giCurrentIntroBeingPlayed = SMKINTRO_NO_VIDEO;
 
-CHAR *gpzSmackerFileNames[] = {
+char *gpzSmackerFileNames[] = {
     // begining of the game
     "INTRO\\Rebel_cr.smk",
     "INTRO\\Omerta.smk",
@@ -169,7 +167,7 @@ BOOLEAN EnterIntroScreen() {
   }
 
   // initialize smacker
-  SmkInitialize(ghWindow, 640, 480);
+  SmkInitialize(640, 480);
 
   // get the index opf the first video to watch
   iFirstVideoID = GetNextIntroVideo(SMKINTRO_FIRST_VIDEO);

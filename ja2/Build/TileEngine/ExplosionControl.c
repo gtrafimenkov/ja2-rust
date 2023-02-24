@@ -59,6 +59,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
 #include "fileman.h"
+#include "platfrom_strings.h"
 
 // MODULE FOR EXPLOSIONS
 
@@ -906,8 +907,8 @@ BOOLEAN ExplosiveDamageStructureAtGridNo(STRUCTURE *pCurrent, STRUCTURE **ppNext
         // Get tile type
         GetTileType(pNode->usIndex, &uiTileType);
         // Check if we are a fountain!
-        if (stricmp(gTilesets[giCurrentTilesetID].TileSurfaceFilenames[uiTileType], "fount1.sti") ==
-            0) {
+        if (strcasecmp(gTilesets[giCurrentTilesetID].TileSurfaceFilenames[uiTileType],
+                       "fount1.sti") == 0) {
           // Yes we are!
           // Remove water....
           ApplyMapChangesToMapTempFile(TRUE);

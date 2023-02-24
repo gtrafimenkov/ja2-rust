@@ -1,6 +1,7 @@
 #include "Editor/SectorSummary.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "BuildDefines.h"
 #include "Editor/EditScreen.h"

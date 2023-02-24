@@ -1,6 +1,7 @@
-// MODULE FOR SOUND SYSTEM
-
 #include "Utils/SoundControl.h"
+
+#include <math.h>
+#include <stdlib.h>
 
 #include "SGP/SGP.h"
 #include "SGP/SoundMan.h"

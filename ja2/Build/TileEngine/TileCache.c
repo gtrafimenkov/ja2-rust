@@ -74,7 +74,7 @@ BOOLEAN InitTileCache() {
           SET_ERROR("Cannot load tilecache JSD: %s", gpTileCacheStructInfo[cnt].Filename);
         }
 #endif
-        if (stricmp(gpTileCacheStructInfo[cnt].zRootName, "l_dead1") == 0) {
+        if (strcasecmp(gpTileCacheStructInfo[cnt].zRootName, "l_dead1") == 0) {
           giDefaultStructIndex = cnt;
         }
 

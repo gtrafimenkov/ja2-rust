@@ -35,13 +35,12 @@
 #define IMAGE_ALLDATA 0x001C
 
 // Palette structure, mimics that of Win32
-typedef struct tagSGPPaletteEntry {
+struct SGPPaletteEntry {
   UINT8 peRed;
   UINT8 peGreen;
   UINT8 peBlue;
   UINT8 peFlags;
-
-} SGPPaletteEntry;
+};
 
 #define AUX_FULL_TILE 0x01
 #define AUX_ANIMATED_TILE 0x02
@@ -91,7 +90,7 @@ typedef struct {
   UINT16 fFlags;
   SGPFILENAME ImageFile;
   UINT32 iFileLoader;
-  SGPPaletteEntry *pPalette;
+  struct SGPPaletteEntry *pPalette;
   UINT16 *pui16BPPPalette;
   UINT8 *pAppData;
   UINT32 uiAppDataSize;
@@ -169,12 +168,12 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer);
 // UTILITY FUNCTIONS
 
 // Used to create a 16BPP Palette from an 8 bit palette, found in himage.c
-UINT16 *Create16BPPPaletteShaded(SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
+UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
                                  UINT32 bscale, BOOLEAN mono);
-UINT16 *Create16BPPPalette(SGPPaletteEntry *pPalette);
+UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
 UINT16 Get16BPPColor(UINT32 RGBValue);
 UINT32 GetRGBColor(UINT16 Value16BPP);
-SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
 
 extern UINT16 gusAlphaMask;
 extern UINT16 gusRedMask;

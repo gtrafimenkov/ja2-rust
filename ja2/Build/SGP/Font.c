@@ -1,4 +1,3 @@
-// font.c
 #include "SGP/Font.h"
 
 #include <malloc.h>
@@ -201,7 +200,7 @@ BOOLEAN ResetFontObjectPalette(INT32 iFont) {
 // the appropriate 16-bit palette, and assigned to the HVOBJECT).
 //
 //*****************************************************************************
-UINT16 *SetFontObjectPalette8BPP(INT32 iFont, SGPPaletteEntry *pPal8) {
+UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
   UINT16 *pPal16;
 
   Assert(iFont >= 0);
@@ -1540,7 +1539,7 @@ FontTranslationTable *CreateEnglishTransTable() {
   UINT32           uiTotalSymbol;
   UINT32           uiNewoffst, uiOldoffst;
   FontBase        *pFontBase;
-  SGPPaletteEntry *pNewPalette;
+  struct SGPPaletteEntry *pNewPalette;
   UINT8           *pPalette;
 
   if (pFManager == NULL)
@@ -1647,7 +1646,7 @@ FALSE)
   pFontBase->siPixelDepth = pFManager->usDefaultPixelDepth;
   FileMan_Close(hFileHandle);
 
-  // convert from RGB to SGPPaletteEntry
+  // convert from RGB to struct SGPPaletteEntry
   pNewPalette = ConvertToPaletteEntry(0, 255, pPalette);
   pFontBase->pPalette = pNewPalette;
 
@@ -1718,9 +1717,9 @@ FALSE)
 //
 // ConvertToPaletteEntry
 //
-// Parameter List : Converts from RGB to SGPPaletteEntry
+// Parameter List : Converts from RGB to struct SGPPaletteEntry
 //
-// Return Value  pointer to the SGPPaletteEntry
+// Return Value  pointer to the struct SGPPaletteEntry
 //
 // Modification History :
 // Dec 15th 1996 -> modified for use by Wizardry
@@ -1728,15 +1727,15 @@ FALSE)
 //*****************************************************************************
 
 /*
-SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette)
+struct SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette)
 {
         UINT16 Index;
-  SGPPaletteEntry *pPalEntry;
-        SGPPaletteEntry *pInitEntry;
+  struct SGPPaletteEntry *pPalEntry;
+        struct SGPPaletteEntry *pInitEntry;
 
-        pPalEntry = (SGPPaletteEntry *)MemAlloc(sizeof(SGPPaletteEntry) * 256);
+        pPalEntry = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
         pInitEntry = pPalEntry;
-  DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Converting RGB palette to SGPPaletteEntry");
+  DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Converting RGB palette to struct SGPPaletteEntry");
   for(Index=0; Index <= (sbEnd-sbStart);Index++)
   {
     pPalEntry->peRed = *(pOldPalette + (Index*3));
@@ -1764,7 +1763,7 @@ SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPa
 //
 //*****************************************************************************
 
-/*BOOLEAN SetFontPalette(FontBase *pFontBase, UINT16 siPixelDepth, SGPPaletteEntry *pPalData)
+/*BOOLEAN SetFontPalette(FontBase *pFontBase, UINT16 siPixelDepth, struct SGPPaletteEntry *pPalData)
 {
         Assert(pFontBase != NULL);
         Assert(pPalData != NULL);

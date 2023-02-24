@@ -75,11 +75,11 @@ typedef struct {
 // This structure is a video object.
 // The video object contains different data based on it's type, compressed or not
 typedef struct TAG_HVOBJECT {
-  UINT32 fFlags;                   // Special flags
-  UINT32 uiSizePixData;            // ETRLE data size
-  SGPPaletteEntry *pPaletteEntry;  // 8BPP Palette
-  COLORVAL TransparentColor;       // Defaults to 0,0,0
-  UINT16 *p16BPPPalette;           // A 16BPP palette used for 8->16 blits
+  UINT32 fFlags;                          // Special flags
+  UINT32 uiSizePixData;                   // ETRLE data size
+  struct SGPPaletteEntry *pPaletteEntry;  // 8BPP Palette
+  COLORVAL TransparentColor;              // Defaults to 0,0,0
+  UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
 
   PTR pPixData;               // ETRLE pixel data
   ETRLEObject *pETRLEObject;  // Object offset data etc
@@ -174,7 +174,7 @@ HVOBJECT CreateVideoObject(VOBJECT_DESC *VObjectDesc);
 BOOLEAN SetVideoObjectTransparencyColor(HVOBJECT hVObject, COLORVAL TransColor);
 
 // Sets HVOBJECT palette, creates if nessessary. Also sets 16BPP palette
-BOOLEAN SetVideoObjectPalette(HVOBJECT hVObject, SGPPaletteEntry *pSrcPalette);
+BOOLEAN SetVideoObjectPalette(HVOBJECT hVObject, struct SGPPaletteEntry *pSrcPalette);
 
 // Deletes all data
 BOOLEAN DeleteVideoObject(HVOBJECT hVObject);
@@ -233,7 +233,7 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, ETRLEObject
 BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIndex,
                                                UINT16 *pusWidth, UINT16 *pusHeight);
 
-BOOLEAN SetVideoObjectPalette8BPP(INT32 uiVideoObject, SGPPaletteEntry *pPal8);
+BOOLEAN SetVideoObjectPalette8BPP(INT32 uiVideoObject, struct SGPPaletteEntry *pPal8);
 BOOLEAN SetVideoObjectPalette16BPP(INT32 uiVideoObject, UINT16 *pPal16);
 BOOLEAN GetVideoObjectPalette16BPP(INT32 uiVideoObject, UINT16 **ppPal16);
 BOOLEAN CopyVideoObjectPalette16BPP(INT32 uiVideoObject, UINT16 *ppPal16);

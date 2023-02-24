@@ -1,6 +1,7 @@
 #include "Editor/LoadScreen.h"
 
 #include <stdio.h>
+#include <windows.h>
 
 #include "BuildDefines.h"
 #include "Editor/EditScreen.h"
@@ -39,6 +40,7 @@
 #include "Utils/TextInput.h"
 #include "fileman.h"
 #include "platform.h"
+#include "platfrom_strings.h"
 
 //===========================================================================
 
@@ -563,7 +565,7 @@ struct FileDialogList *AddToFDlgList(struct FileDialogList *pList, struct GetFil
   }
 
   // Add and sort alphabetically without regard to case -- function limited to 10 chars comparison
-  if (stricmp(pList->FileInfo.zFileName, pInfo->zFileName) > 0) {
+  if (strcasecmp(pList->FileInfo.zFileName, pInfo->zFileName) > 0) {
     // pInfo is smaller than pList (i.e. Insert before)
     pNode = (struct FileDialogList *)MemAlloc(sizeof(struct FileDialogList));
     pNode->FileInfo = *pInfo;

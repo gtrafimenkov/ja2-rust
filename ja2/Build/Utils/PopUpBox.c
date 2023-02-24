@@ -1014,7 +1014,7 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   UINT32 uiNumTilesHigh;
   UINT32 uiCount = 0;
   HVOBJECT hBoxHandle;
-  HVSURFACE hSrcVSurface;
+  struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;

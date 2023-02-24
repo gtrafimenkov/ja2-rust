@@ -2,6 +2,7 @@
 
 #include "SGP/Line.h"
 #include "SGP/Types.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"

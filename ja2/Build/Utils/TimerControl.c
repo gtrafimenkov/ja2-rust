@@ -217,7 +217,8 @@ UINT32 InitializeJA2TimerCallback(UINT32 uiDelay, LPTIMECALLBACK TimerProc, UINT
 
   // Set timer at lowest resolution. Could use middle of lowest/highest, we'll see how this performs
   // first
-  TimerID = timeSetEvent((UINT)uiDelay, (UINT)uiDelay, TimerProc, (DWORD)uiUser, TIME_PERIODIC);
+  TimerID = timeSetEvent((unsigned int)uiDelay, (unsigned int)uiDelay, TimerProc, (DWORD)uiUser,
+                         TIME_PERIODIC);
 
   if (!TimerID) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not create timer callback");

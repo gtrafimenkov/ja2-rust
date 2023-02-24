@@ -3,6 +3,7 @@
 #include "MessageBoxScreen.h"
 #include "SGP/English.h"
 #include "SGP/SGP.h"
+#include "SGP/VSurface.h"
 #include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"

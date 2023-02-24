@@ -2,6 +2,7 @@
 
 #include <errno.h>
 #include <math.h>
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "JAScreens.h"

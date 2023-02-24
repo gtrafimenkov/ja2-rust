@@ -63,7 +63,6 @@
 //#define INVULNERABILITY
 
 extern BOOLEAN AutoReload(SOLDIERTYPE *pSoldier);
-extern HVSURFACE ghFrameBuffer;
 BOOLEAN gfTransferTacticalOppositionToAutoResolve = FALSE;
 
 // button images
@@ -1389,7 +1388,7 @@ UINT32 AutoBandageMercs() {
 
 void RenderAutoResolve() {
   INT32 i;
-  HVSURFACE hVSurface;
+  struct VSurface *hVSurface;
   INT32 xp, yp;
   SOLDIERCELL *pCell = NULL;
   INT32 index = 0;

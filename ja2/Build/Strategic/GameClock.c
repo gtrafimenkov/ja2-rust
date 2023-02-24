@@ -4,6 +4,7 @@
 #include "GameScreen.h"
 #include "JAScreens.h"
 #include "SGP/SGP.h"
+#include "SGP/VSurface.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameEvents.h"
 #include "Strategic/MapScreen.h"

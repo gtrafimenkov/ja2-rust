@@ -371,7 +371,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestW
   return (TRUE);
 }
 
-UINT16 *Create16BPPPalette(SGPPaletteEntry *pPalette) {
+UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
   UINT32 cnt;
   UINT8 r, g, b;
@@ -436,7 +436,7 @@ shaded according to each pixel's brightness.
         4) For gamma correction, pass in weighted values for each color.
 
 **********************************************************************************************/
-UINT16 *Create16BPPPaletteShaded(SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
+UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
                                  UINT32 bscale, BOOLEAN mono) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
   UINT32 cnt, lumin;
@@ -567,23 +567,23 @@ UINT32 GetRGBColor(UINT16 Value16BPP) {
 //
 // ConvertToPaletteEntry
 //
-// Parameter List : Converts from RGB to SGPPaletteEntry
+// Parameter List : Converts from RGB to struct SGPPaletteEntry
 //
-// Return Value  pointer to the SGPPaletteEntry
+// Return Value  pointer to the struct SGPPaletteEntry
 //
 // Modification History :
 // Dec 15th 1996 -> modified for use by Wizardry
 //
 //*****************************************************************************
 
-SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette) {
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette) {
   UINT16 Index;
-  SGPPaletteEntry *pPalEntry;
-  SGPPaletteEntry *pInitEntry;
+  struct SGPPaletteEntry *pPalEntry;
+  struct SGPPaletteEntry *pInitEntry;
 
-  pPalEntry = (SGPPaletteEntry *)MemAlloc(sizeof(SGPPaletteEntry) * 256);
+  pPalEntry = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
   pInitEntry = pPalEntry;
-  DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_0, "Converting RGB palette to SGPPaletteEntry");
+  DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_0, "Converting RGB palette to struct SGPPaletteEntry");
   for (Index = 0; Index <= (sbEnd - sbStart); Index++) {
     pPalEntry->peRed = *(pOldPalette + (Index * 3));
     pPalEntry->peGreen = *(pOldPalette + (Index * 3) + 1);

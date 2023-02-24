@@ -19,9 +19,6 @@
 #include "Utils/WordWrap.h"
 #include "fileman.h"
 
-// externals
-extern HVSURFACE ghFrameBuffer;
-
 // local Defines
 enum {
   CRDT_RENDER_NONE,
@@ -340,7 +337,7 @@ void InitCreditEyeBlinking();
 // ppp
 
 //	VSURFACE_DESC		vs_desc;
-//	HVSURFACE hVSurface;
+//	struct VSurface* hVSurface;
 
 UINT32 CreditScreenInit(void) {
   gfCreditsScreenEntry = TRUE;
@@ -548,7 +545,7 @@ BOOLEAN RenderCreditScreen() {
   GetVideoObject(&hPixHandle, guiCreditBackGroundImage);
   BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
   /*
-          HVSURFACE hVSurface;
+          struct VSurface* hVSurface;
 
           GetVideoSurface( &hVSurface, guiCreditBackGroundImage );
           BltVideoSurfaceToVideoSurface( ghFrameBuffer, hVSurface, 0, 0, 0, 0, NULL );
@@ -903,7 +900,7 @@ void HandleNode_Default(CRDT_NODE *pCurrent) {
 }
 
 BOOLEAN DisplayCreditNode(CRDT_NODE *pCurrent) {
-  HVSURFACE hVSurface;
+  struct VSurface *hVSurface;
 
   // Currently, we have no need to display a node that doesnt have a string
   if (pCurrent->pString == NULL) return (FALSE);

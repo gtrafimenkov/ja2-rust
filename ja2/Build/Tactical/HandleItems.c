@@ -3,6 +3,7 @@
 #include "GameSettings.h"
 #include "MessageBoxScreen.h"
 #include "SGP/Random.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/MapScreenInterfaceMapInventory.h"

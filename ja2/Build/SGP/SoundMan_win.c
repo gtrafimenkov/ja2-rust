@@ -7,8 +7,6 @@
  *
  * Derek Beland, May 28, 1997
  *********************************************************************************/
-#include "SGP/SoundMan.h"
-
 #include <stdio.h>
 #include <string.h>
 
@@ -17,6 +15,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Mss.h"
 #include "SGP/Random.h"
+#include "SGP/SoundMan.h"
 #include "fileman.h"
 #include "platform_win.h"
 #include "platfrom_strings.h"
@@ -387,7 +386,7 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
       }
 
       // Convert the file handle into a 'name'
-      sprintf(pFileHandlefileName, "\\\\\\\\%d", (UINT)hRealFileHandle);
+      sprintf(pFileHandlefileName, "\\\\\\\\%d", (unsigned int)hRealFileHandle);
 
       // Start the sound stream
       uiRetVal = SoundStartStream(pFileHandlefileName, uiChannel, pParms);

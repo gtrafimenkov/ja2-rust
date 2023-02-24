@@ -1,5 +1,7 @@
 #include "Laptop/BobbyRGuns.h"
 
+#include <stdlib.h>
+
 #include "Laptop/AIMMembers.h"
 #include "Laptop/BobbyR.h"
 #include "Laptop/BobbyRGuns.h"
@@ -7,6 +9,7 @@
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
 #include "Laptop/StoreInventory.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Overhead.h"

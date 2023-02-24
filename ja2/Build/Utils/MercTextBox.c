@@ -1,5 +1,7 @@
 #include "Utils/MercTextBox.h"
 
+#include <string.h>
+
 #include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"
@@ -282,7 +284,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   VSURFACE_DESC vs_desc;
   UINT16 usStringPixLength;
   SGPRect DestRect;
-  HVSURFACE hSrcVSurface;
+  struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;

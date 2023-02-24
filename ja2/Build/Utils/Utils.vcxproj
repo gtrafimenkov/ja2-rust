@@ -19,7 +19,6 @@
     <ClCompile Include="Cinematics.c" />
     <ClCompile Include="Cursors.c" />
     <ClCompile Include="DebugControl.c" />
-    <ClCompile Include="DSUtil.c" />
     <ClCompile Include="EncryptedFile.c" />
     <ClCompile Include="EventManager.c" />
     <ClCompile Include="EventPump.c" />
@@ -56,7 +55,6 @@
     <ClInclude Include="Cinematics.h" />
     <ClInclude Include="Cursors.h" />
     <ClInclude Include="DebugControl.h" />
-    <ClInclude Include="DSUtil.h" />
     <ClInclude Include="EncryptedFile.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventPump.h" />

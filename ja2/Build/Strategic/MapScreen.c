@@ -6,6 +6,7 @@
 #include <tchar.h>
 #include <time.h>
 #include <wchar.h>
+#include <windows.h>
 
 #include "Cheats.h"
 #include "FadeScreen.h"

@@ -1,5 +1,7 @@
 #include "Tactical/SoldierCreate.h"
 
+#include <math.h>
+
 #include "Editor/EditorMercs.h"
 #include "GameSettings.h"
 #include "JAScreens.h"

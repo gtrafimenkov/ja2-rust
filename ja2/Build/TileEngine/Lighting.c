@@ -51,6 +51,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"
 #include "fileman.h"
+#include "platfrom_strings.h"
 
 #define LVL1_L1_PER (50)
 #define LVL1_L2_PER (50)
@@ -117,9 +118,9 @@ UINT8 ubAmbientLightLevel = DEFAULT_SHADE_LEVEL;
 UINT8 gubNumLightColors = 1;
 
 // Externed in Rotting Corpses.c
-SGPPaletteEntry gpLightColors[3] = {{0, 0, 0, 0}, {0, 0, 255, 0}, {0, 0, 0, 0}};
+struct SGPPaletteEntry gpLightColors[3] = {{0, 0, 0, 0}, {0, 0, 255, 0}, {0, 0, 0, 0}};
 
-SGPPaletteEntry gpOrigLights[2] = {{0, 0, 0, 0}, {0, 0, 255, 0}};
+struct SGPPaletteEntry gpOrigLights[2] = {{0, 0, 0, 0}, {0, 0, 255, 0}};
 
 /*
 UINT16 gusShadeLevels[16][3]={{500, 500, 500},				// green table
@@ -255,7 +256,7 @@ BOOLEAN InitLightingSystem(void) {
 
 // THIS MUST BE CALLED ONCE ALL SURFACE VIDEO OBJECTS HAVE BEEN LOADED!
 BOOLEAN SetDefaultWorldLightingColors(void) {
-  SGPPaletteEntry pPal[2];
+  struct SGPPaletteEntry pPal[2];
 
   pPal[0].peRed = 0;
   pPal[0].peGreen = 0;
@@ -2703,15 +2704,16 @@ INT32 LightLoadCachedTemplate(STR pFilename) {
   INT32 iCount;
 
   for (iCount = 0; iCount < MAX_LIGHT_TEMPLATES; iCount++) {
-    if ((pLightNames[iCount] != NULL) && !(stricmp(pFilename, pLightNames[iCount])))
+    if ((pLightNames[iCount] != NULL) && !(strcasecmp(pFilename, pLightNames[iCount])))
       return (iCount);
   }
 
   return (LightLoad(pFilename));
 }
 
-UINT8 LightGetColors(SGPPaletteEntry *pPal) {
-  if (pPal != NULL) memcpy(pPal, &gpOrigLights[0], sizeof(SGPPaletteEntry) * gubNumLightColors);
+UINT8 LightGetColors(struct SGPPaletteEntry *pPal) {
+  if (pPal != NULL)
+    memcpy(pPal, &gpOrigLights[0], sizeof(struct SGPPaletteEntry) * gubNumLightColors);
 
   return (gubNumLightColors);
 }
@@ -2728,7 +2730,7 @@ BOOLEAN gfEditorForceRebuildAllColors = FALSE;
 
 extern void SetAllNewTileSurfacesLoaded(BOOLEAN fNew);
 
-BOOLEAN LightSetColors(SGPPaletteEntry *pPal, UINT8 ubNumColors) {
+BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors) {
   INT16 sRed, sGreen, sBlue;
 
   Assert(ubNumColors >= 1 && ubNumColors <= 2);
@@ -2745,8 +2747,8 @@ BOOLEAN LightSetColors(SGPPaletteEntry *pPal, UINT8 ubNumColors) {
   DestroyTileShadeTables();
 
   // we will have at least one light color
-  memcpy(&gpLightColors[0], &pPal[0], sizeof(SGPPaletteEntry));
-  memcpy(&gpOrigLights[0], &pPal[0], sizeof(SGPPaletteEntry) * 2);
+  memcpy(&gpLightColors[0], &pPal[0], sizeof(struct SGPPaletteEntry));
+  memcpy(&gpOrigLights[0], &pPal[0], sizeof(struct SGPPaletteEntry) * 2);
 
   gubNumLightColors = ubNumColors;
 
@@ -3088,7 +3090,7 @@ BOOLEAN LightSpriteDirty(INT32 iSprite) {
   return (TRUE);
 }
 
-BOOLEAN CreateObjectPalette(HVOBJECT pObj, UINT32 uiBase, SGPPaletteEntry *pShadePal) {
+BOOLEAN CreateObjectPalette(HVOBJECT pObj, UINT32 uiBase, struct SGPPaletteEntry *pShadePal) {
   UINT32 uiCount;
 
   pObj->pShades[uiBase] = Create16BPPPaletteShaded(
@@ -3104,7 +3106,7 @@ BOOLEAN CreateObjectPalette(HVOBJECT pObj, UINT32 uiBase, SGPPaletteEntry *pShad
 }
 
 BOOLEAN CreateSoldierShadedPalette(SOLDIERTYPE *pSoldier, UINT32 uiBase,
-                                   SGPPaletteEntry *pShadePal) {
+                                   struct SGPPaletteEntry *pShadePal) {
   UINT32 uiCount;
 
   pSoldier->pShades[uiBase] = Create16BPPPaletteShaded(
@@ -3134,7 +3136,7 @@ extern UINT32 uiNumTablesSaved;
 
 UINT16 CreateTilePaletteTables(HVOBJECT pObj, UINT32 uiTileIndex, BOOLEAN fForce) {
   UINT32 uiCount;
-  SGPPaletteEntry LightPal[256];
+  struct SGPPaletteEntry LightPal[256];
   BOOLEAN fLoaded = FALSE;
 
   Assert(pObj != NULL);
@@ -3207,7 +3209,7 @@ UINT16 CreateTilePaletteTables(HVOBJECT pObj, UINT32 uiTileIndex, BOOLEAN fForce
 }
 
 UINT16 CreateSoldierPaletteTables(SOLDIERTYPE *pSoldier, UINT32 uiType) {
-  SGPPaletteEntry LightPal[256];
+  struct SGPPaletteEntry LightPal[256];
   UINT32 uiCount;
 
   // create the basic shade table

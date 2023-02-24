@@ -2,17 +2,18 @@
 
 #include <windows.h>
 
+#include "SGP/Debug.h"
 #include "platform.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
+BOOLEAN Plat_GetExecutableDirectory(char* buf, u16 bufSize) {
   char ModuleFilename[100];
   UINT32 cnt;
 
-  if(GetModuleFileName(NULL, ModuleFilename, sizeof(ModuleFilename)) == 0) {
+  if (GetModuleFileName(NULL, ModuleFilename, sizeof(ModuleFilename)) == 0) {
     return FALSE;
   }
 
@@ -29,6 +30,8 @@ BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
 
   return (TRUE);
 }
+
+void DebugPrint(const char* message) { OutputDebugStringA(message); }
 
 /////////////////////////////////////////////////////////////////////////////////
 //

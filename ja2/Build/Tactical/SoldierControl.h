@@ -489,7 +489,7 @@ typedef struct {
   UINT16 usFrontArcFullTileList[MAX_FULLTILE_DIRECTIONS];
   INT16 usFrontArcFullTileGridNos[MAX_FULLTILE_DIRECTIONS];
 
-  SGPPaletteEntry *p8BPPPalette;  // 4
+  struct SGPPaletteEntry *p8BPPPalette;  // 4
   UINT16 *p16BPPPalette;
   UINT16 *pShades[NUM_SOLDIER_SHADES];  // Shading tables
   UINT16 *pGlowShades[20];              //
@@ -1022,7 +1022,7 @@ void ReviveSoldier(SOLDIERTYPE *pSoldier);
 // Palette functions for soldiers
 BOOLEAN CreateSoldierPalettes(SOLDIERTYPE *pSoldier);
 BOOLEAN GetPaletteRepIndexFromID(PaletteRepID aPalRep, UINT8 *pubPalIndex);
-BOOLEAN SetPaletteReplacement(SGPPaletteEntry *p8BPPPalette, PaletteRepID aPalRep);
+BOOLEAN SetPaletteReplacement(struct SGPPaletteEntry *p8BPPPalette, PaletteRepID aPalRep);
 BOOLEAN LoadPaletteData();
 BOOLEAN DeletePaletteData();
 

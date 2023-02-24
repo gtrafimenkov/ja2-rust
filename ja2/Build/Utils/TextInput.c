@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include <wchar.h>
 
@@ -10,6 +11,7 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
+#include "SGP/MouseSystem.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"

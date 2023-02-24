@@ -9,6 +9,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/SGP.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceMapInventory.h"

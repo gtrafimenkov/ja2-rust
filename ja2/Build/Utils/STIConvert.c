@@ -89,7 +89,7 @@ void ConvertRGBDistribution555To565(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
   }
 }
 
-void WriteSTIFile(UINT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,
+void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,
                   STR cOutputName, UINT32 fFlags, UINT32 uiAppDataSize) {
   FILE *pOutput;
 
@@ -101,7 +101,7 @@ void WriteSTIFile(UINT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 s
   UINT32 uiLoop;
   image_type Image;
 
-  SGPPaletteEntry *pSGPPaletteEntry;
+  struct SGPPaletteEntry *pSGPPaletteEntry;
   STCIPaletteElement STCIPaletteEntry;
 
   STCISubImage *pSubImageBuffer;

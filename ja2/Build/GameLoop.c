@@ -1,6 +1,7 @@
 #include "GameLoop.h"
 
 #include <stdio.h>
+#include <windows.h>
 
 #include "FadeScreen.h"
 #include "GameSettings.h"

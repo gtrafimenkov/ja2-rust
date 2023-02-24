@@ -40,9 +40,9 @@ void SetClippingRegionAndImageWidth(int iImageWidth, int iClipStartX, int iClipS
   giClipYMax = iClipStartY + iClipHeight - 1;
 }
 
-BOOL Clipt(FLOAT denom, FLOAT num, FLOAT *tE, FLOAT *tL) {
+BOOLEAN Clipt(FLOAT denom, FLOAT num, FLOAT *tE, FLOAT *tL) {
   FLOAT t;
-  BOOL accept;
+  BOOLEAN accept;
 
   accept = TRUE;
 
@@ -64,12 +64,12 @@ BOOL Clipt(FLOAT denom, FLOAT num, FLOAT *tE, FLOAT *tL) {
   return (accept);
 }
 
-BOOL ClipPoint(int x, int y) {
+BOOLEAN ClipPoint(int x, int y) {
   return (x <= giClipXMax && x >= giClipXMin && y <= giClipYMax && y >= giClipYMin);
 }
 
-BOOL Clip2D(int *ix0, int *iy0, int *ix1, int *iy1) {
-  BOOL visible;
+BOOLEAN Clip2D(int *ix0, int *iy0, int *ix1, int *iy1) {
+  BOOLEAN visible;
   FLOAT te, tl;
   FLOAT dx, dy;
   FLOAT x0, y0, x1, y1;
@@ -116,7 +116,7 @@ BOOL Clip2D(int *ix0, int *iy0, int *ix1, int *iy1) {
 }
 
 /* Draws a line between the specified endpoints in color Color. */
-void LineDraw(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
+void LineDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
               char *ScreenPtr) {
   int Temp, AdjUp, AdjDown, ErrorTerm, XAdvance, XDelta, YDelta;
   int WholeStep, InitialPixelCount, FinalPixelCount, i, RunLength;
@@ -296,7 +296,7 @@ void LineDraw(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, short Colo
   }
 }
 
-void LineDraw(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
+void LineDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
               UINT8 *ScreenPtr) {
   LineDraw(fClip, XStart, YStart, XEnd, YEnd, Color, (char *)ScreenPtr);
 }
@@ -353,7 +353,7 @@ void DrawVerticalRun(char **ScreenPtr, int XAdvance, int RunLength, int Color, i
 }
 
 /* Draws a rectangle between the specified endpoints in color Color. */
-void RectangleDraw(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
+void RectangleDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
                    UINT8 *ScreenPtr) {
   LineDraw(fClip, XStart, YStart, XEnd, YStart, Color, ScreenPtr);
   LineDraw(fClip, XStart, YEnd, XEnd, YEnd, Color, ScreenPtr);
@@ -370,7 +370,7 @@ void RectangleDraw(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, short
  ***********************************************************************************/
 
 /* Draws a rectangle between the specified endpoints in color Color. */
-void RectangleDraw8(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
+void RectangleDraw8(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
                     UINT8 *ScreenPtr) {
   LineDraw8(fClip, XStart, YStart, XEnd, YStart, Color, ScreenPtr);
   LineDraw8(fClip, XStart, YEnd, XEnd, YEnd, Color, ScreenPtr);
@@ -379,7 +379,7 @@ void RectangleDraw8(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, shor
 }
 
 /* Draws a line between the specified endpoints in color Color. */
-void LineDraw8(BOOL fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
+void LineDraw8(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
                UINT8 *ScreenPtr) {
   int Temp, AdjUp, AdjDown, ErrorTerm, XAdvance, XDelta, YDelta;
   int WholeStep, InitialPixelCount, FinalPixelCount, i, RunLength;

@@ -28,7 +28,7 @@
 
 FLOAT gdXStep, gdYStep;
 UINT32 giMiniMap, gi8BitMiniMap;
-HVSURFACE ghvSurface;
+struct VSurface *ghvSurface;
 
 extern BOOLEAN gfOverheadMapDirty;
 
@@ -75,7 +75,7 @@ UINT32 MapUtilScreenHandle() {
 
   FLOAT dX, dY, dStartX, dStartY;
   INT32 iX, iY, iSubX1, iSubY1, iSubX2, iSubY2, iWindowX, iWindowY, iCount;
-  SGPPaletteEntry pPalette[256];
+  struct SGPPaletteEntry pPalette[256];
 
   sDest16BPPColor = -1;
   bAvR = bAvG = bAvB = 0;

@@ -1,8 +1,10 @@
 #include "Utils/WordWrap.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "SGP/SGP.h"
+#include "SGP/VSurface.h"
 #include "SGP/WinFont.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
@@ -281,7 +283,7 @@ WRAPPED_STRING *LineWrap(UINT32 ulFont, UINT16 usLineWidthPixels,
         usCurIndex--;
         usDestIndex = -1;
       } else {
-        CHAR zText[1024];
+        char zText[1024];
 
         sprintf(zText,
                 "LineWrap() Error!  The string ( %S ) has a word ( %S ) that is too long to fit "

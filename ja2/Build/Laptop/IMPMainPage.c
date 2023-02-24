@@ -12,6 +12,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Tactical/MercHiring.h"
 #include "TileEngine/RenderDirty.h"

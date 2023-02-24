@@ -572,7 +572,7 @@ void DoorToggleLockedCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void AddLockedDoorCursors() {
   DOOR *pDoor;
-  INT i;
+  int i;
   for (i = 0; i < gubNumDoors; i++) {
     pDoor = &DoorTable[i];
     AddTopmostToHead(pDoor->sGridNo, ROTATINGKEY1);
@@ -581,7 +581,7 @@ void AddLockedDoorCursors() {
 
 void RemoveLockedDoorCursors() {
   DOOR *pDoor;
-  INT i;
+  int i;
   LEVELNODE *pNode;
   LEVELNODE *pTemp;
   for (i = 0; i < gubNumDoors; i++) {

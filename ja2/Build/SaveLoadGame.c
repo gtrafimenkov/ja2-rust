@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <windows.h>
 
 #include "Cheats.h"
 #include "GameScreen.h"
@@ -25,6 +26,7 @@
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "SGP/VSurface.h"
 #include "SaveLoadScreen.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CreatureSpreading.h"
@@ -117,7 +119,7 @@ extern void EndLoadScreen();
 #ifdef JA2BETAVERSION
 UINT32 guiNumberOfMapTempFiles;  // Test purposes
 UINT32 guiSizeOfTempFiles;
-CHAR gzNameOfMapTempFile[128];
+char gzNameOfMapTempFile[128];
 #endif
 
 extern SOLDIERTYPE *gpSMCurrentMerc;
@@ -2388,7 +2390,7 @@ BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
 //];
 ////
 //	UINT16 *pShades[ NUM_SOLDIER_SHADES ]; // Shading tables 	UINT16 *p16BPPPalette;
-// SGPPaletteEntry *p8BPPPalette 	OBJECTTYPE *pTempObject;
+// struct SGPPaletteEntry *p8BPPPalette 	OBJECTTYPE *pTempObject;
 
 BOOLEAN SaveSoldierStructure(HWFILE hFile) {
   UINT16 cnt;
@@ -4406,8 +4408,8 @@ void UpdateMercMercContractInfo() {
 }
 
 INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave) {
-  CHAR zFileName1[256];
-  CHAR zFileName2[256];
+  char zFileName1[256];
+  char zFileName2[256];
   HWFILE hFile;
   BOOLEAN fFile1Exist, fFile2Exist;
   uint64_t LastWriteTime1;

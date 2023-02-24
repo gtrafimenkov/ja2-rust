@@ -1,5 +1,7 @@
 #include "LoadingScreen.h"
 
+#include <string.h>
+
 #include "SGP/Font.h"
 #include "SGP/Random.h"
 #include "SGP/VSurface.h"
@@ -9,13 +11,11 @@
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
 
-extern HVSURFACE ghFrameBuffer;
-
 UINT8 gubLastLoadingScreenID = LOADINGSCREEN_NOTHING;
 
 // returns the UINT8 ID for the specified sector.
 UINT8 GetLoadScreenID(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
-  SECTORINFO *pSector;
+  SECTORINFO* pSector;
   UINT8 ubSectorID;
   BOOLEAN fNight = FALSE;
 
@@ -175,7 +175,7 @@ extern BOOLEAN gfSchedulesHosed;
 // and refreshing the screen with it.
 void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
   VSURFACE_DESC vs_desc;
-  HVSURFACE hVSurface;
+  struct VSurface* hVSurface;
   UINT32 uiLoadScreen;
 
   vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;

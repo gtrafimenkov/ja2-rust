@@ -14,6 +14,7 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "fileman.h"
+#include "platfrom_strings.h"
 
 TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
 UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
@@ -144,7 +145,7 @@ void SetRaisedObjectFlag(char *cFilename, TILE_IMAGERY *pTileSurf) {
       pTileSurf->fType == DEBRIS2MISC || pTileSurf->fType == ANOTHERDEBRIS) {
     GetRootName(cRootFile, cFilename);
     while (ubRaisedObjectFiles[cnt][0] != '1') {
-      if (stricmp(ubRaisedObjectFiles[cnt], cRootFile) == 0) {
+      if (strcasecmp(ubRaisedObjectFiles[cnt], cRootFile) == 0) {
         pTileSurf->bRaisedObjectType = TRUE;
       }
 

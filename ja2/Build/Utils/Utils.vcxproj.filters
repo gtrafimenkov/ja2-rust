@@ -53,9 +53,6 @@
     <ClCompile Include="DebugControl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DSUtil.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EncryptedFile.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -134,9 +131,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DebugControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DSUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EncryptedFile.h">

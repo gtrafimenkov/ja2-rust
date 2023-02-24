@@ -7,7 +7,6 @@
 #include "SGP/HImage.h"
 #include "SGP/SGP.h"
 #include "SGP/VSurface.h"
-#include "SGP/VSurfacePrivate.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderWorld.h"
 

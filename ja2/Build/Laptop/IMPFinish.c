@@ -13,6 +13,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
 #include "SGP/SoundMan.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"

@@ -84,7 +84,6 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
-#include "Utils/WinUtil.h"
 #include "fileman.h"
 
 extern INT16 DirIncrementer[8];
@@ -226,10 +225,10 @@ UINT8 CalcScreamVolume(SOLDIERTYPE *pSoldier, UINT8 ubCombinedLoss);
 void PlaySoldierFootstepSound(SOLDIERTYPE *pSoldier);
 void HandleSystemNewAISituation(SOLDIERTYPE *pSoldier, BOOLEAN fResetABC);
 
-UINT16 *CreateEnemyGlow16BPPPalette(SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
+UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
                                     BOOLEAN fAdjustGreen);
-UINT16 *CreateEnemyGreyGlow16BPPPalette(SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                        BOOLEAN fAdjustGreen);
+UINT16 *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale,
+                                        UINT32 gscale, BOOLEAN fAdjustGreen);
 
 void SoldierBleed(SOLDIERTYPE *pSoldier, BOOLEAN fBandagedBleed);
 INT32 CheckBleeding(SOLDIERTYPE *pSoldier);
@@ -4560,7 +4559,7 @@ BOOLEAN CreateSoldierPalettes(SOLDIERTYPE *pSoldier) {
   INT32 iWhich;
   INT32 cnt;
   INT8 bBodyTypePalette;
-  SGPPaletteEntry Temp8BPPPalette[256];
+  struct SGPPaletteEntry Temp8BPPPalette[256];
 
   // NT32 uiCount;
   // PPaletteEntry Pal[256];
@@ -4571,8 +4570,8 @@ BOOLEAN CreateSoldierPalettes(SOLDIERTYPE *pSoldier) {
   }
 
   // Allocate mem for new palette
-  pSoldier->p8BPPPalette = (SGPPaletteEntry *)MemAlloc(sizeof(SGPPaletteEntry) * 256);
-  memset(pSoldier->p8BPPPalette, 0, sizeof(SGPPaletteEntry) * 256);
+  pSoldier->p8BPPPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
+  memset(pSoldier->p8BPPPalette, 0, sizeof(struct SGPPaletteEntry) * 256);
 
   CHECKF(pSoldier->p8BPPPalette != NULL);
 
@@ -4953,7 +4952,7 @@ BOOLEAN LoadPaletteData() {
   return (TRUE);
 }
 
-BOOLEAN SetPaletteReplacement(SGPPaletteEntry *p8BPPPalette, PaletteRepID aPalRep) {
+BOOLEAN SetPaletteReplacement(struct SGPPaletteEntry *p8BPPPalette, PaletteRepID aPalRep) {
   UINT32 cnt2;
   UINT8 ubType;
   UINT8 ubPalIndex;
@@ -7679,7 +7678,7 @@ void ReLoadSoldierAnimationDueToHandItemChange(SOLDIERTYPE *pSoldier, UINT16 usO
   }
 }
 
-UINT16 *CreateEnemyGlow16BPPPalette(SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
+UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
                                     BOOLEAN fAdjustGreen) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
   UINT32 cnt;
@@ -7729,8 +7728,8 @@ UINT16 *CreateEnemyGlow16BPPPalette(SGPPaletteEntry *pPalette, UINT32 rscale, UI
   return (p16BPPPalette);
 }
 
-UINT16 *CreateEnemyGreyGlow16BPPPalette(SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                        BOOLEAN fAdjustGreen) {
+UINT16 *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rscale,
+                                        UINT32 gscale, BOOLEAN fAdjustGreen) {
   UINT16 *p16BPPPalette, r16, g16, b16, usColor;
   UINT32 cnt, lumin;
   UINT32 rmod, gmod, bmod;

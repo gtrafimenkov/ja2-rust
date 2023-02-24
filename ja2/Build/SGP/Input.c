@@ -10,6 +10,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
+#include "SGP/Video_win.h"
 #include "zmouse.h"
 
 // Make sure to refer to the translation table which is within one of the following files (depending

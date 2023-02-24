@@ -7,6 +7,7 @@
 #include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/Overhead.h"
@@ -35,7 +36,7 @@ void FilenameForBPP(STR pFilename, STR pDestination) {
   }
 }
 
-BOOLEAN CreateSGPPaletteFromCOLFile(SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
+BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
   HWFILE hFileHandle;
   BYTE bColHeader[8];
   UINT32 cnt;

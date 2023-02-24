@@ -1,10 +1,12 @@
 #include "Laptop/Files.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "Laptop/Email.h"
 #include "Laptop/Laptop.h"
 #include "SGP/Debug.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "TileEngine/RenderDirty.h"
@@ -1425,7 +1427,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
   UINT32 uiPicture;
   HVOBJECT hHandle;
   VOBJECT_DESC VObjectDesc;
-  CHAR sTemp[128];
+  char sTemp[128];
 
   iOffset = ubFileOffsets[iFileNumber];
 

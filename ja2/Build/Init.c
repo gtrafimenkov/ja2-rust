@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <windows.h>
 
 #include "Editor/EditScreen.h"
 #include "Editor/SummaryInfo.h"
