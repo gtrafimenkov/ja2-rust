@@ -1,5 +1,7 @@
 #include "Utils/PopUpBox.h"
 
+#include "SGP/Debug.h"
+#include "SGP/Video.h"
 #include "TileEngine/SysUtil.h"
 
 #define BORDER_WIDTH 16

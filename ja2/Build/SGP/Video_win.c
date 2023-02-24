@@ -4,10 +4,12 @@
 #include <windows.h>
 
 #include "FadeScreen.h"
+#include "Globals.h"
 #include "Local.h"
+#include "Rect.h"
 #include "Res/Resource.h"
+#include "SGP/Debug.h"
 #include "SGP/Input.h"
-#include "SGP/MutexManager.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -15,6 +17,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "platform.h"
+#include "platform_win.h"
 
 struct VSurface *ghPrimary = NULL;
 struct VSurface *ghBackBuffer = NULL;
@@ -43,7 +46,6 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
 extern "C" {
 #endif
 
-extern BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *WindowProc);
 extern LPDIRECTDRAW2 GetDirectDraw2Object(void);
 extern BOOLEAN GetRGBDistribution(void);
 
@@ -210,12 +212,6 @@ struct SGPPaletteEntry gSgpPalette[256];
 LPDIRECTDRAWPALETTE gpDirectDrawPalette;
 
 //
-// Make sure we record the value of the hWindow (main window frame for the application)
-//
-
-HWND ghWindow;
-
-//
 // Refresh thread based variables
 //
 
@@ -260,7 +256,7 @@ void SnapshotSmall(void);
 void VideoMovieCapture(BOOLEAN fEnable);
 void RefreshMovieCache();
 
-BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *WindowProc) {
+BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   UINT32 uiIndex, uiPitch;
   HRESULT ReturnCode;
   HWND hWindow;
@@ -282,11 +278,11 @@ BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *
   DebugMsg(TOPIC_VIDEO, DBG_LEVEL_0, "Initializing the video manager");
 
   WindowClass.style = CS_HREDRAW | CS_VREDRAW;
-  WindowClass.lpfnWndProc = (WNDPROC)WindowProc;
+  WindowClass.lpfnWndProc = (WNDPROC)params->WindowProc;
   WindowClass.cbClsExtra = 0;
   WindowClass.cbWndExtra = 0;
-  WindowClass.hInstance = hInstance;
-  WindowClass.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
+  WindowClass.hInstance = params->hInstance;
+  WindowClass.hIcon = LoadIcon(params->hInstance, MAKEINTRESOURCE(IDI_ICON1));
   WindowClass.hCursor = NULL;
   WindowClass.hbrBackground = NULL;
   WindowClass.lpszMenuName = NULL;
@@ -299,11 +295,11 @@ BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *
   //
 #ifdef WINDOWED_MODE
   hWindow = CreateWindowEx(0, ClassName, "Windowed JA2 !!", WS_POPUP, 0, 0, SCREEN_WIDTH,
-                           SCREEN_HEIGHT, NULL, NULL, hInstance, NULL);
+                           SCREEN_HEIGHT, NULL, NULL, params->hInstance, NULL);
 #else
   hWindow = CreateWindowEx(WS_EX_TOPMOST, ClassName, ClassName, WS_POPUP | WS_VISIBLE, 0, 0,
                            GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), NULL, NULL,
-                           hInstance, NULL);
+                           params->hInstance, NULL);
 #endif
   if (hWindow == NULL) {
     DebugMsg(TOPIC_VIDEO, DBG_LEVEL_0, "Failed to create window frame for Direct Draw");
@@ -323,7 +319,7 @@ BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *
   //
 
   ShowCursor(FALSE);
-  ShowWindow(hWindow, usCommandShow);
+  ShowWindow(hWindow, params->usCommandShow);
   UpdateWindow(hWindow);
   SetFocus(hWindow);
 
@@ -579,21 +575,6 @@ BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *
       DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return FALSE;
     }
-  }
-
-  //
-  // Initialize the mutex sections
-  //
-
-  // ATE: Keep these mutexes for now!
-  if (InitializeMutex(REFRESH_THREAD_MUTEX, "RefreshThreadMutex") == FALSE) {
-    return FALSE;
-  }
-  if (InitializeMutex(FRAME_BUFFER_MUTEX, "FrameBufferMutex") == FALSE) {
-    return FALSE;
-  }
-  if (InitializeMutex(MOUSE_BUFFER_MUTEX, "MouseBufferMutex") == FALSE) {
-    return FALSE;
   }
 
   //
@@ -1309,7 +1290,6 @@ void RefreshScreen(void *DummyVariable) {
   static BOOLEAN fShowMouse;
   HRESULT ReturnCode;
   static RECT Region;
-  static POINT MousePos;
   static BOOLEAN fFirstTime = TRUE;
   UINT32 uiTime;
 
@@ -1353,7 +1333,7 @@ void RefreshScreen(void *DummyVariable) {
   // Get the current mouse position
   //
 
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   // RESTORE OLD POSITION OF MOUSE
   if (gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore == TRUE) {
@@ -1498,7 +1478,7 @@ void RefreshScreen(void *DummyVariable) {
   //
 
   if (gfVideoCapture) {
-    uiTime = GetTickCount();
+    uiTime = Plat_GetTickCount();
     if ((uiTime < guiLastFrame) || (uiTime > (guiLastFrame + guiFramePeriod))) {
       SnapshotSmall();
       guiLastFrame = uiTime;
@@ -2491,7 +2471,7 @@ void VideoMovieCapture(BOOLEAN fEnable) {
 
     giNumFrames = 0;
 
-    guiLastFrame = GetTickCount();
+    guiLastFrame = Plat_GetTickCount();
   } else {
     RefreshMovieCache();
 
@@ -2647,7 +2627,7 @@ void DeletePrimaryVideoSurfaces() {
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 extern void SetClippingRect(SGPRect *clip);
 extern void GetClippingRect(SGPRect *clip);
@@ -2678,9 +2658,9 @@ BOOLEAN ClipReleatedSrcAndDestRectangles(struct VSurface *hDestVSurface,
 BOOLEAN FillSurface(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx);
 BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx);
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect);
+                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect);
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect,
+                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
                               RECT *DestRect);
 BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, RECT *pRect);
 
@@ -4193,7 +4173,8 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
       UnLockVideoSurfaceBuffer(hDestVSurface);
       return (TRUE);
     }
-    CHECKF(BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &SrcRect));
+    struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
+    CHECKF(BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &srcRect));
 
   } else if (hDestVSurface->ubBitDepth == 8 && hSrcVSurface->ubBitDepth == 8) {
     if ((pSrcSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
@@ -4446,9 +4427,11 @@ BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx) {
 }
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect) {
+                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect) {
   UINT32 uiDDFlags;
   RECT DestRect;
+
+  RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
 
   // Blit using the correct blitter
   if (fBltFlags & VS_BLT_FAST) {
@@ -4475,8 +4458,7 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
     }
 
     DDBltFastSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, iDestX, iDestY,
-                     (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, SrcRect, uiDDFlags);
-
+                     (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags);
   } else {
     // Normal, specialized blit for clipping, etc
 
@@ -4495,7 +4477,7 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
     DestRect.right = (int)iDestX + (SrcRect->right - SrcRect->left);
 
     // Do Clipping of rectangles
-    if (!ClipReleatedSrcAndDestRectangles(hDestVSurface, hSrcVSurface, &DestRect, SrcRect)) {
+    if (!ClipReleatedSrcAndDestRectangles(hDestVSurface, hSrcVSurface, &DestRect, &srcRect)) {
       // Returns false because dest start is > dest size
       return (TRUE);
     }
@@ -4508,7 +4490,7 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
     // Check for -ve values
 
     DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, &DestRect,
-                 (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, SrcRect, uiDDFlags, NULL);
+                 (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags, NULL);
   }
 
   // Update backup surface with new data
@@ -4610,9 +4592,10 @@ BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 
 //
 // BltVSurfaceUsingDDBlt will always use Direct Draw Blt,NOT BltFast
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect,
+                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
                               RECT *DestRect) {
   UINT32 uiDDFlags;
+  RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
 
   // Default flags
   uiDDFlags = DDBLT_WAIT;
@@ -4623,7 +4606,7 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *h
   }
 
   DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, DestRect,
-               (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, SrcRect, uiDDFlags, NULL);
+               (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags, NULL);
 
   // Update backup surface with new data
   if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE) &&
@@ -4661,8 +4644,9 @@ BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT3
   // if the 2 images are not both 16bpp, return FALSE
   if ((hDestVSurface->ubBitDepth != 16) && (hSrcVSurface->ubBitDepth != 16)) return (FALSE);
 
-  if (!BltVSurfaceUsingDDBlt(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY,
-                             (RECT *)SrcRect, (RECT *)DestRect)) {
+  struct Rect srcRect = {SrcRect->iLeft, SrcRect->iTop, SrcRect->iRight, SrcRect->iBottom};
+  if (!BltVSurfaceUsingDDBlt(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &srcRect,
+                             (RECT *)DestRect)) {
     //
     // VO Blitter will set debug messages for error conditions
     //
@@ -4890,7 +4874,7 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
-#include "SGP/smack.h"
+#include "SGP/windows/smack.h"
 #include "Utils/Cinematics.h"
 #include "Utils/radmalw.i"
 #include "platform_win.h"

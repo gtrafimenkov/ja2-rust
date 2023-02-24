@@ -3,8 +3,8 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
+#include "SGP/Types.h"
 #include "Tactical/Overhead.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"

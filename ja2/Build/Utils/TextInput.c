@@ -10,7 +10,6 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
-#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"

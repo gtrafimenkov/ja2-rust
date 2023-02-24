@@ -4,11 +4,15 @@
 #include <stdlib.h>
 
 #include "GameLoop.h"
+#include "Globals.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "SysGlobals.h"

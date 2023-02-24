@@ -51,7 +51,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 #define LVL1_L1_PER (50)
 #define LVL1_L2_PER (50)

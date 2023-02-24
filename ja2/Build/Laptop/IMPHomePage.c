@@ -1,17 +1,18 @@
 #include "Laptop/IMPHomePage.h"
 
-#include <Windows.h>
-
 #include "Laptop/CharProfile.h"
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
@@ -210,9 +211,7 @@ void DisplayActivationStringCursor(void) {
 
 void GetPlayerKeyBoardInputForIMPHomePage(void) {
   InputAtom InputEvent;
-  POINT MousePos;
-
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&InputEvent) == TRUE) {
     // HOOK INTO MOUSE HOOKS

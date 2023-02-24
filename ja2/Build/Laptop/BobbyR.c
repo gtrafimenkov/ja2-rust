@@ -6,6 +6,7 @@
 #include "Laptop/StoreInventory.h"
 #include "SGP/Random.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"

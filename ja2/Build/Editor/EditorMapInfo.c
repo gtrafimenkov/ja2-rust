@@ -1,7 +1,5 @@
 #include "Editor/EditorMapInfo.h"
 
-#include <windows.h>
-
 #include "BuildDefines.h"
 #include "Editor/EditScreen.h"
 #include "Editor/EditSys.h"
@@ -15,7 +13,6 @@
 #include "Editor/SelectWin.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Font.h"
-#include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"

@@ -1,9 +1,8 @@
 #include "SGP/CursorControl.h"
 
-#include <windows.h>
-
 #include "SGP/CursorFileData.h"
 #include "SGP/WCheck.h"
+#include "platform.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -279,7 +278,6 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
 
   if (gfCursorDatabaseInit) {
     // Enter mouse buffer mutex
-    // EnterMutex(MOUSE_BUFFER_MUTEX, __LINE__, __FILE__);
 
     // If the current cursor is the first index, disable cursors
 
@@ -355,7 +353,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
         if (uiCursorIndex != guiOldSetCursor) {
           // OK, check if we are a delay cursor...
           if (pCurData->bFlags & DELAY_START_CURSOR) {
-            guiDelayTimer = GetTickCount();
+            guiDelayTimer = Plat_GetTickCount();
           }
         }
 
@@ -363,7 +361,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
 
         // Olny update if delay timer has elapsed...
         if (pCurData->bFlags & DELAY_START_CURSOR) {
-          if ((GetTickCount() - guiDelayTimer) < 1000) {
+          if ((Plat_GetTickCount() - guiDelayTimer) < 1000) {
             EraseMouseCursor();
 
             SetMouseCursorProperties(0, 0, 5, 5);

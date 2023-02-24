@@ -1,6 +1,6 @@
 #include "Tactical/QArray.h"
 
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 
 BOOLEAN QuoteExp_HeadShotOnly[75] = {
     // this is for quote 33 (0=generic grossout, 1=headshot specific)

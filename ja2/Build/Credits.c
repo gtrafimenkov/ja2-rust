@@ -2,7 +2,6 @@
 
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
@@ -10,6 +9,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
@@ -388,19 +388,6 @@ UINT32 CreditScreenShutdown(void) { return (1); }
 BOOLEAN EnterCreditsScreen() {
   UINT32 uiCnt;
   VOBJECT_DESC VObjectDesc;
-  /*
-
-          VSURFACE_DESC		vs_desc;
-
-          vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
-
-          strcpy(vs_desc.ImageFile, "INTERFACE\\Credits.sti");
-
-          if( !AddVideoSurface( &vs_desc, &guiCreditBackGroundImage ) )
-          {
-                  return( FALSE );
-          }
-  */
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   FilenameForBPP("INTERFACE\\Credits.sti", VObjectDesc.ImageFile);

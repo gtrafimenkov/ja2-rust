@@ -1,21 +1,22 @@
 #include "Tactical/ShopKeeperInterface.h"
 
-#include <windows.h>
-
 #include "BuildDefines.h"
 #include "GameSettings.h"
+#include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Personnel.h"
 #include "MessageBoxScreen.h"
+#include "Rect.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
-#include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/Quests.h"
@@ -368,7 +369,8 @@ extern UINT8 gubSelectSMPanelToMerc;
 extern INT32 giItemDescAmmoButton;
 
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect);
+                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
+                                  struct Rect *SrcRect);
 
 extern UINT8 gubLastSpecialItemAddedAtElement;
 
@@ -1269,7 +1271,7 @@ BOOLEAN RenderShopKeeperInterface() {
   HVOBJECT hPixHandle;
   CHAR16 zMoney[128];
   struct VSurface *hDestVSurface, *hSrcVSurface;
-  SGPRect SrcRect;
+  struct Rect SrcRect;
 
   if (InItemDescriptionBox() && pShopKeeperItemDescObject != NULL) {
     return (TRUE);
@@ -1335,12 +1337,12 @@ BOOLEAN RenderShopKeeperInterface() {
     GetVideoSurface(&hDestVSurface, guiCornerWhereTacticalIsStillSeenImage);
     GetVideoSurface(&hSrcVSurface, guiSAVEBUFFER);
 
-    SrcRect.iLeft = SKI_TACTICAL_BACKGROUND_START_X;
-    SrcRect.iTop = SKI_TACTICAL_BACKGROUND_START_Y;
-    SrcRect.iRight = SKI_TACTICAL_BACKGROUND_START_X + SKI_TACTICAL_BACKGROUND_START_WIDTH;
-    SrcRect.iBottom = SKI_TACTICAL_BACKGROUND_START_Y + SKI_TACTICAL_BACKGROUND_START_HEIGHT;
+    SrcRect.left = SKI_TACTICAL_BACKGROUND_START_X;
+    SrcRect.top = SKI_TACTICAL_BACKGROUND_START_Y;
+    SrcRect.right = SKI_TACTICAL_BACKGROUND_START_X + SKI_TACTICAL_BACKGROUND_START_WIDTH;
+    SrcRect.bottom = SKI_TACTICAL_BACKGROUND_START_Y + SKI_TACTICAL_BACKGROUND_START_HEIGHT;
 
-    BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, VO_BLT_SRCTRANSPARENCY, 0, 0, (RECT *)&SrcRect);
+    BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, VO_BLT_SRCTRANSPARENCY, 0, 0, &SrcRect);
 
     gfRenderScreenOnNextLoop = FALSE;
   }
@@ -1375,7 +1377,7 @@ BOOLEAN RenderShopKeeperInterface() {
 
 void RestoreTacticalBackGround() {
   struct VSurface *hDestVSurface, *hSrcVSurface;
-  SGPRect SrcRect;
+  struct Rect SrcRect;
 
   // Restore the background before blitting the text back on
   //	RestoreExternBackgroundRect( SKI_TACTICAL_BACKGROUND_START_X,
@@ -1389,23 +1391,20 @@ void RestoreTacticalBackGround() {
   GetVideoSurface(&hDestVSurface, guiRENDERBUFFER);
   GetVideoSurface(&hSrcVSurface, guiCornerWhereTacticalIsStillSeenImage);
 
-  SrcRect.iLeft = 0;
-  SrcRect.iTop = 0;
-  SrcRect.iRight = SKI_TACTICAL_BACKGROUND_START_WIDTH;
-  SrcRect.iBottom = SKI_TACTICAL_BACKGROUND_START_HEIGHT;
+  SrcRect.left = 0;
+  SrcRect.top = 0;
+  SrcRect.right = SKI_TACTICAL_BACKGROUND_START_WIDTH;
+  SrcRect.bottom = SKI_TACTICAL_BACKGROUND_START_HEIGHT;
 
   BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, VO_BLT_SRCTRANSPARENCY,
-                     SKI_TACTICAL_BACKGROUND_START_X, SKI_TACTICAL_BACKGROUND_START_Y,
-                     (RECT *)&SrcRect);
+                     SKI_TACTICAL_BACKGROUND_START_X, SKI_TACTICAL_BACKGROUND_START_Y, &SrcRect);
 
   InvalidateRegion(0, 0, 640, 480);
 }
 
 void GetShopKeeperInterfaceUserInput() {
   InputAtom Event;
-  POINT MousePos;
-
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&Event)) {
     // HOOK INTO MOUSE HOOKS

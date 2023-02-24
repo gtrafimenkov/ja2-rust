@@ -9,6 +9,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "ScreenIDs.h"
 #include "Strategic/CampaignInit.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"

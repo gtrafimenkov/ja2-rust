@@ -6,7 +6,6 @@
 
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/Input.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Tactical/DialogueControl.h"

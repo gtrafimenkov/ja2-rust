@@ -2,6 +2,8 @@
 
 #include "HelpScreen.h"
 #include "Laptop/Finances.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/Video.h"
 #include "Strategic/MapScreenHelicopter.h"

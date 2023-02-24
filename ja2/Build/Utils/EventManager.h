@@ -1,13 +1,10 @@
 #ifndef __EVENT_MANAGER_H
 #define __EVENT_MANAGER_H
 
-#include "SGP/Timer.h"
 #include "SGP/Types.h"
 
-//#include <time.h>
-
 typedef struct {
-  TIMER TimeStamp;
+  UINT32 TimeStamp;
   UINT32 uiFlags;
   UINT16 usDelay;
   UINT32 uiEvent;

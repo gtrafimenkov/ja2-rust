@@ -1,8 +1,8 @@
 #include "Strategic/MapScreenInterfaceMap.h"
 
-#include <windows.h>
-
 #include "Laptop/Finances.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
@@ -385,7 +385,7 @@ INT16 sBaseSectorList[] = {
 // position of town names on the map
 // these are no longer PIXELS, but 10 * the X,Y position in SECTORS (fractions possible) to the
 // X-CENTER of the town
-POINT pTownPoints[] = {
+struct Point pTownPoints[] = {
     {0, 0},     {90, 10},  // Omerta
     {125, 40},             // Drassen
     {130, 90},             // Alma
@@ -1979,7 +1979,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, PathStPtr pPath
   PathStPtr pNode = NULL;
   PathStPtr pPastNode = NULL;
   PathStPtr pNextNode = NULL;
-  UINT ubCounter = 1;
+  unsigned int ubCounter = 1;
   HVOBJECT hMapHandle;
 
   if (pPath == NULL) {

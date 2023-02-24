@@ -83,6 +83,9 @@
     <ClCompile Include="platform_win_io.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuildDefines.h">

@@ -1,7 +1,7 @@
 #ifndef _AMBIENT_TYPES_H
 #define _AMBIENT_TYPES_H
 
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 
 #define MAX_AMBIENT_SOUNDS 100
 

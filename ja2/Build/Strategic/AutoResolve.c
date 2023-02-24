@@ -7,7 +7,6 @@
 #include "GameScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
-#include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"

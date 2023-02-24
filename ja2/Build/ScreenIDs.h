@@ -1,6 +1,8 @@
 #ifndef __SCREEN_IDS
 #define __SCREEN_IDS
 
+#include "BuildDefines.h"
+
 enum ScreenTypes {
   EDIT_SCREEN,
   SAVING_SCREEN,

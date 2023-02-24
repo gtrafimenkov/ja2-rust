@@ -1,7 +1,7 @@
 #include "Tactical/SoldierAdd.h"
 
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"

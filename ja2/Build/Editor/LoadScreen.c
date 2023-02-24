@@ -1,7 +1,6 @@
 #include "Editor/LoadScreen.h"
 
 #include <stdio.h>
-#include <windows.h>
 
 #include "BuildDefines.h"
 #include "Editor/EditScreen.h"
@@ -20,9 +19,12 @@
 #include "Editor/SectorSummary.h"
 #include "Editor/SelectWin.h"
 #include "GameLoop.h"
+#include "JAScreens.h"
 #include "MessageBoxScreen.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
+#include "ScreenIDs.h"
 #include "Strategic/Scheduling.h"
 #include "Strategic/StrategicMap.h"
 #include "SysGlobals.h"
@@ -40,7 +42,7 @@
 #include "Utils/Message.h"
 #include "Utils/TextInput.h"
 #include "platform.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 //===========================================================================
 

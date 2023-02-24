@@ -3,15 +3,15 @@
 #include <malloc.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 #include <wchar.h>
-#include <windows.h>
 
+#include "Globals.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/MemMan.h"
 #include "SGP/PCX.h"
-#include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"

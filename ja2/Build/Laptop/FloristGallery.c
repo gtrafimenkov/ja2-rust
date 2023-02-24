@@ -4,6 +4,8 @@
 
 #include "Laptop/Florist.h"
 #include "Laptop/Laptop.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"

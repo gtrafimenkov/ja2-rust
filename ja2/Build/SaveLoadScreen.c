@@ -1,7 +1,6 @@
 #include "SaveLoadScreen.h"
 
 #include <stdio.h>
-#include <windows.h>
 
 #include "FadeScreen.h"
 #include "GameLoop.h"
@@ -11,7 +10,10 @@
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Laptop/LaptopSave.h"
+#include "Local.h"
 #include "OptionsScreen.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
 #include "SGP/Types.h"
@@ -20,6 +22,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
+#include "ScreenIDs.h"
 #include "Strategic/CampaignInit.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
@@ -725,11 +728,10 @@ void HandleSaveLoadScreen() {
 
 void GetSaveLoadScreenUserInput() {
   InputAtom Event;
-  POINT MousePos;
   INT8 bActiveTextField;
   static BOOLEAN fWasCtrlHeldDownLastFrame = FALSE;
 
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   // if we are going to be instantly leaving the screen, dont draw the numbers
   if (gfLoadGameUponEntry) {

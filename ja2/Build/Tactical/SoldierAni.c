@@ -13,6 +13,7 @@
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/StrategicStatus.h"
 #include "Strategic/StrategicTownLoyalty.h"

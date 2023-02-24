@@ -10,6 +10,7 @@
 #include "Editor/NewSmooth.h"
 #include "Editor/SelectWin.h"
 #include "Editor/SmoothingUtils.h"
+#include "SGP/Debug.h"
 #include "Tactical/Keys.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/RenderFun.h"

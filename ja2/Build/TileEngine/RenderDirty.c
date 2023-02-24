@@ -5,8 +5,10 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#include "Globals.h"
 #include "JAScreens.h"
 #include "SGP/Container.h"
+#include "SGP/Debug.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"

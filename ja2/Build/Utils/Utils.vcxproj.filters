@@ -107,6 +107,9 @@
     <ClCompile Include="TimerControl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TimerControl_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Utilities.c">
       <Filter>Source Files</Filter>
     </ClCompile>

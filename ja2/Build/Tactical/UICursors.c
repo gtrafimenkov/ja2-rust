@@ -1,6 +1,7 @@
 #include "Tactical/UICursors.h"
 
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"

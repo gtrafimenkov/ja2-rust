@@ -1,7 +1,8 @@
 #include "Strategic/StrategicTurns.h"
 
 #include "JAScreens.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Tactical/AnimationControl.h"

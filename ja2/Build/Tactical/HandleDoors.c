@@ -6,7 +6,7 @@
 
 #include "LanguageDefines.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "Strategic/MapScreenInterfaceMap.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"

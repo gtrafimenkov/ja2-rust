@@ -1,7 +1,6 @@
 #ifndef _UTILITIES_H_
 #define _UTILITIES_H_
 
-#include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "Tactical/OverheadTypes.h"
 
@@ -13,13 +12,5 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
 void FilenameForBPP(STR pFilename, STR pDestination);
 
 BOOLEAN WrapString(STR16 pStr, STR16 pStr2, UINT16 usWidth, INT32 uiFont);
-
-BOOLEAN IfWinNT(void);
-BOOLEAN IfWin95(void);
-
-void HandleLimitedNumExecutions();
-
-BOOLEAN HandleJA2CDCheck();
-BOOLEAN HandleJA2CDCheckTwo();
 
 #endif

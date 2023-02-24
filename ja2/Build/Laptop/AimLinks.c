@@ -2,7 +2,9 @@
 
 #include "Laptop/AIM.h"
 #include "Laptop/Laptop.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
 #include "Utils/Text.h"

@@ -19,6 +19,8 @@
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
 #include "MessageBoxScreen.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "Utils/Cursors.h"
 
 // BOOLEAN fIMPCompletedFlag = FALSE;

@@ -27,7 +27,6 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"

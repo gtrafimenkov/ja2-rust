@@ -5,8 +5,8 @@
 
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
+#include "SGP/Types.h"
 #include "Strategic/GameEvents.h"
 #include "TileEngine/AmbientTypes.h"
 #include "TileEngine/Environment.h"

@@ -2,16 +2,19 @@
 
 #include "GameScreen.h"
 #include "Intro.h"
+#include "Local.h"
 #include "MainMenuScreen.h"
 #include "MessageBoxScreen.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
 #include "SGP/Ja2Libs.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Line.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameInit.h"
 #include "SysGlobals.h"
 #include "Tactical/SoldierProfile.h"
@@ -92,8 +95,6 @@ char *gpzSmackerFileNames[] = {
 // enums used for when the intro screen can come up, either begining game intro, or end game
 // cinematic
 INT8 gbIntroScreenMode = -1;
-
-extern void CDromEjectionErrorMessageBoxCallBack(UINT8 bExitValue);
 
 void GetIntroScreenUserInput();
 BOOLEAN EnterIntroScreen();
@@ -221,9 +222,7 @@ void HandleIntroScreen() {
 
 void GetIntroScreenUserInput() {
   InputAtom Event;
-  POINT MousePos;
-
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&Event)) {
     // HOOK INTO MOUSE HOOKS
@@ -384,14 +383,7 @@ void StartPlayingIntroFlic(INT32 iIndexOfFlicToPlay) {
     if (gpSmackFlic != NULL) {
       giCurrentIntroBeingPlayed = iIndexOfFlicToPlay;
     } else {
-      // do a check
-#ifdef JA2BETAVERSION
       PrepareToExitIntroScreen();
-#else
-
-      DoScreenIndependantMessageBox(gzIntroScreen[INTRO_TXT__CANT_FIND_INTRO], MSG_BOX_FLAG_OK,
-                                    CDromEjectionErrorMessageBoxCallBack);
-#endif
     }
   }
 }

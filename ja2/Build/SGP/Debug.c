@@ -311,7 +311,8 @@ void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 //   // Build the output string
 //   //
 
-//   sprintf(ubOutputString, "{ %ld } %s [Line %d in %s]\n", GetTickCount(), pString, uiLineNum,
+//   sprintf(ubOutputString, "{ %ld } %s [Line %d in %s]\n", Plat_GetTickCount(), pString,
+//   uiLineNum,
 //           pSourceFile);
 
 //   //
@@ -350,7 +351,7 @@ void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 // #endif
 //   BOOLEAN fDone = FALSE;
 //   // Build the output strings
-//   sprintf(ubOutputString, "{ %ld } Assertion Failure [Line %d in %s]\n", GetTickCount(),
+//   sprintf(ubOutputString, "{ %ld } Assertion Failure [Line %d in %s]\n", Plat_GetTickCount(),
 //   uiLineNum,
 //           pSourceFile);
 //   if (pString)

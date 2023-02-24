@@ -1,6 +1,6 @@
 #include "Editor/EditorTerrain.h"
 
-#include <windows.h>
+#include <stdlib.h>
 
 #include "BuildDefines.h"
 #include "Editor/CursorModes.h"
@@ -12,7 +12,6 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
-#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"

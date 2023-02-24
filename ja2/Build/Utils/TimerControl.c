@@ -1,26 +1,14 @@
 #include "Utils/TimerControl.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <windows.h>
-#if 1
-#include <mmsystem.h>
-#endif
-
 #include "SGP/Debug.h"
 #include "SGP/WCheck.h"
-#include "Tactical/HandleItems.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
-#include "Tactical/SoldierControl.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/WorldDef.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-INT32 giClockTimer = -1;
 INT32 giTimerDiag = 0;
 
 UINT32 guiBaseJA2Clock = 0;
@@ -68,9 +56,6 @@ INT32 giTimerTeamTurnUpdate = 0;
 
 CUSTOMIZABLE_TIMER_CALLBACK gpCustomizableTimerCallback = NULL;
 
-// Clock Callback event ID
-MMRESULT gTimerID;
-
 // GLOBALS FOR CALLBACK
 UINT32 gCNT;
 SOLDIERTYPE *gPSOLDIER;
@@ -93,191 +78,11 @@ extern INT32 giFlashContractBaseTime;
 extern UINT32 guiFlashCursorBaseTime;
 extern INT32 giPotCharPathBaseTime;
 
-UINT32 InitializeJA2TimerCallback(UINT32 uiDelay, LPTIMECALLBACK TimerProc, UINT32 uiUser);
-
-// CALLBACKS
-void CALLBACK FlashItem(UINT uiID, UINT uiMsg, DWORD uiUser, DWORD uiDw1, DWORD uiDw2);
-
-void CALLBACK TimeProc(UINT uID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2) {
-  static BOOLEAN fInFunction = FALSE;
-  // SOLDIERTYPE		*pSoldier;
-
-  if (!fInFunction) {
-    fInFunction = TRUE;
-
-    guiBaseJA2NoPauseClock += BASETIMESLICE;
-
-    if (!gfPauseClock) {
-      guiBaseJA2Clock += BASETIMESLICE;
-
-      for (gCNT = 0; gCNT < NUMTIMERS; gCNT++) {
-        UPDATECOUNTER(gCNT);
-      }
-
-      // Update some specialized countdown timers...
-      UPDATETIMECOUNTER(giTimerAirRaidQuote);
-      UPDATETIMECOUNTER(giTimerAirRaidDiveStarted);
-      UPDATETIMECOUNTER(giTimerAirRaidUpdate);
-      UPDATETIMECOUNTER(giTimerTeamTurnUpdate);
-
-      if (gpCustomizableTimerCallback) {
-        UPDATETIMECOUNTER(giTimerCustomizable);
-      }
-
-#ifndef BOUNDS_CHECKER
-
-      // If mapscreen...
-      if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
-        // IN Mapscreen, loop through player's team.....
-        for (gCNT = gTacticalStatus.Team[gbPlayerNum].bFirstID;
-             gCNT <= gTacticalStatus.Team[gbPlayerNum].bLastID; gCNT++) {
-          gPSOLDIER = MercPtrs[gCNT];
-          UPDATETIMECOUNTER(gPSOLDIER->PortraitFlashCounter);
-          UPDATETIMECOUNTER(gPSOLDIER->PanelAnimateCounter);
-        }
-      } else {
-        // Set update flags for soldiers
-        ////////////////////////////
-        for (gCNT = 0; gCNT < guiNumMercSlots; gCNT++) {
-          gPSOLDIER = MercSlots[gCNT];
-
-          if (gPSOLDIER != NULL) {
-            UPDATETIMECOUNTER(gPSOLDIER->UpdateCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->DamageCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->ReloadCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->FlashSelCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->BlinkSelCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->PortraitFlashCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->AICounter);
-            UPDATETIMECOUNTER(gPSOLDIER->FadeCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->NextTileCounter);
-            UPDATETIMECOUNTER(gPSOLDIER->PanelAnimateCounter);
-          }
-        }
-      }
-#endif
-    }
-
-    fInFunction = FALSE;
-  }
-}
-
-BOOLEAN InitializeJA2Clock(void) {
-#ifdef CALLBACKTIMER
-
-  MMRESULT mmResult;
-  TIMECAPS tc;
-  INT32 cnt;
-
-  // Init timer delays
-  for (cnt = 0; cnt < NUMTIMERS; cnt++) {
-    giTimerCounters[cnt] = giTimerIntervals[cnt];
-  }
-
-  // First get timer resolutions
-  mmResult = timeGetDevCaps(&tc, sizeof(tc));
-
-  if (mmResult != TIMERR_NOERROR) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not get timer properties");
-  }
-
-  // Set timer at lowest resolution. Could use middle of lowest/highest, we'll see how this performs
-  // first
-  gTimerID = timeSetEvent(BASETIMESLICE, BASETIMESLICE, TimeProc, (DWORD)0, TIME_PERIODIC);
-
-  if (!gTimerID) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not create timer callback");
-  }
-
-#endif
-
-  return TRUE;
-}
-
-void ShutdownJA2Clock(void) {
-  // Make sure we kill the timer
-#ifdef CALLBACKTIMER
-
-  timeKillEvent(gTimerID);
-
-#endif
-}
-
-UINT32 InitializeJA2TimerCallback(UINT32 uiDelay, LPTIMECALLBACK TimerProc, UINT32 uiUser) {
-  MMRESULT mmResult;
-  TIMECAPS tc;
-  MMRESULT TimerID;
-
-  // First get timer resolutions
-  mmResult = timeGetDevCaps(&tc, sizeof(tc));
-
-  if (mmResult != TIMERR_NOERROR) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not get timer properties");
-  }
-
-  // Set timer at lowest resolution. Could use middle of lowest/highest, we'll see how this performs
-  // first
-  TimerID = timeSetEvent((unsigned int)uiDelay, (unsigned int)uiDelay, TimerProc, (DWORD)uiUser,
-                         TIME_PERIODIC);
-
-  if (!TimerID) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not create timer callback");
-  }
-
-  return ((UINT32)TimerID);
-}
-
-void RemoveJA2TimerCallback(UINT32 uiTimer) { timeKillEvent(uiTimer); }
-
-UINT32 InitializeJA2TimerID(UINT32 uiDelay, UINT32 uiCallbackID, UINT32 uiUser) {
-  switch (uiCallbackID) {
-    case ITEM_LOCATOR_CALLBACK:
-
-      return (InitializeJA2TimerCallback(uiDelay, FlashItem, uiUser));
-      break;
-  }
-
-  // invalid callback id
-  Assert(FALSE);
-  return (0);
-}
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 // TIMER CALLBACK S
 //////////////////////////////////////////////////////////////////////////////////////////////
-void CALLBACK FlashItem(UINT uiID, UINT uiMsg, DWORD uiUser, DWORD uiDw1, DWORD uiDw2) {}
 
-void PauseTime(BOOLEAN fPaused) { gfPauseClock = fPaused; }
-
-void SetCustomizableTimerCallbackAndDelay(INT32 iDelay, CUSTOMIZABLE_TIMER_CALLBACK pCallback,
-                                          BOOLEAN fReplace) {
-  if (gpCustomizableTimerCallback) {
-    if (!fReplace) {
-      // replace callback but call the current callback first
-      gpCustomizableTimerCallback();
-    }
-  }
-
-  RESETTIMECOUNTER(giTimerCustomizable, iDelay);
-  gpCustomizableTimerCallback = pCallback;
-}
-
-void CheckCustomizableTimer(void) {
-  if (gpCustomizableTimerCallback) {
-    if (TIMECOUNTERDONE(giTimerCustomizable, 0)) {
-      // set the callback to a temp variable so we can reset the global variable
-      // before calling the callback, so that if the callback sets up another
-      // instance of the timer, we don't reset it afterwards
-      CUSTOMIZABLE_TIMER_CALLBACK pTempCallback;
-
-      pTempCallback = gpCustomizableTimerCallback;
-      gpCustomizableTimerCallback = NULL;
-      pTempCallback();
-    }
-  }
-}
-
-void ResetJA2ClockGlobalTimers(void) {
+static void ResetJA2ClockGlobalTimers(void) {
   UINT32 uiCurrentTime = GetJA2Clock();
 
   guiCompressionStringBaseTime = uiCurrentTime;
@@ -294,4 +99,13 @@ void ResetJA2ClockGlobalTimers(void) {
   giFlashContractBaseTime = uiCurrentTime;
   guiFlashCursorBaseTime = uiCurrentTime;
   giPotCharPathBaseTime = uiCurrentTime;
+}
+
+UINT32 GetJA2Clock() { return guiBaseJA2Clock; }
+
+void SetJA2Clock(UINT32 time) {
+  guiBaseJA2Clock = time;
+  // whenever guiBaseJA2Clock changes, we must reset all the timer variables that use it as a
+  // reference
+  ResetJA2ClockGlobalTimers();
 }

@@ -1,40 +1,21 @@
 #include "Utils/Utilities.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
-#include <windows.h>
 
+#include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
-#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "SysGlobals.h"
-#include "Tactical/Overhead.h"
 #include "Tactical/OverheadTypes.h"
+#include "Tactical/SoldierControl.h"
 #include "Utils/FontControl.h"
 
-#define DATA_8_BIT_DIR "8-Bit\\"
-
-void FilenameForBPP(STR pFilename, STR pDestination) {
-  CHAR8 Drive[128], Dir[128], Name[128], Ext[128];
-
-  if (GETPIXELDEPTH() == 16) {
-    // no processing for 16 bit names
-    strcpy(pDestination, pFilename);
-  } else {
-    _splitpath(pFilename, Drive, Dir, Name, Ext);
-
-    strcat(Name, "_8");
-
-    strcpy(pDestination, Drive);
-    // strcat(pDestination, Dir);
-    strcat(pDestination, DATA_8_BIT_DIR);
-    strcat(pDestination, Name);
-    strcat(pDestination, Ext);
-  }
-}
+void FilenameForBPP(STR pFilename, STR pDestination) { strcpy(pDestination, pFilename); }
 
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
   HWFILE hFileHandle;
@@ -160,114 +141,4 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, UINT16 usWidth, INT32 uiFont) {
   }
 
   return (fLineSplit);
-}
-
-BOOLEAN IfWinNT(void) {
-  OSVERSIONINFO OsVerInfo;
-
-  OsVerInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-  GetVersionEx(&OsVerInfo);
-
-  if (OsVerInfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
-    return (TRUE);
-  else
-    return (FALSE);
-}
-
-BOOLEAN IfWin95(void) {
-  OSVERSIONINFO OsVerInfo;
-
-  OsVerInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-  GetVersionEx(&OsVerInfo);
-
-  if (OsVerInfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
-    return (TRUE);
-  else
-    return (FALSE);
-}
-
-void HandleLimitedNumExecutions() {
-  // Get system directory
-  HWFILE hFileHandle;
-  CHAR8 ubSysDir[512];
-  INT8 bNumRuns;
-
-  GetSystemDirectory(ubSysDir, sizeof(ubSysDir));
-
-  // Append filename
-  strcat(ubSysDir, "\\winaese.dll");
-
-  // Open file and check # runs...
-  if (FileMan_Exists(ubSysDir)) {
-    // Open and read
-    if ((hFileHandle = FileMan_Open(ubSysDir, FILE_ACCESS_READ, FALSE)) == 0) {
-      return;
-    }
-
-    // Read value
-    FileMan_Read(hFileHandle, &bNumRuns, sizeof(bNumRuns), NULL);
-
-    // Close file
-    FileMan_Close(hFileHandle);
-
-    if (bNumRuns <= 0) {
-      // Fail!
-      SET_ERROR("Error 1054: Cannot execute - contact Sir-Tech Software.");
-      return;
-    }
-
-  } else {
-    bNumRuns = 10;
-  }
-
-  // OK, decrement # runs...
-  bNumRuns--;
-
-  // Open and write
-  if ((hFileHandle = FileMan_Open(ubSysDir, FILE_ACCESS_WRITE, FALSE)) == 0) {
-    return;
-  }
-
-  // Write value
-  FileMan_Write(hFileHandle, &bNumRuns, sizeof(bNumRuns), NULL);
-
-  // Close file
-  FileMan_Close(hFileHandle);
-}
-
-SGPFILENAME gCheckFilenames[] = {
-    "DATA\\INTRO.SLF",      "DATA\\LOADSCREENS.SLF", "DATA\\MAPS.SLF",
-    "DATA\\NPC_SPEECH.SLF", "DATA\\SPEECH.SLF",
-};
-
-UINT32 gCheckFileMinSizes[] = {68000000, 36000000, 87000000, 187000000, 236000000};
-
-BOOLEAN HandleJA2CDCheck() { return (TRUE); }
-
-BOOLEAN HandleJA2CDCheckTwo() { return (TRUE); }
-
-BOOLEAN DoJA2FilesExistsOnDrive(CHAR8 *zCdLocation) {
-  BOOLEAN fFailed = FALSE;
-  CHAR8 zCdFile[SGPFILENAME_LEN];
-  INT32 cnt;
-  HWFILE hFile;
-
-  for (cnt = 0; cnt < 4; cnt++) {
-    // OK, build filename
-    sprintf(zCdFile, "%s%s", zCdLocation, gCheckFilenames[cnt]);
-
-    hFile = FileMan_Open(zCdFile, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
-
-    // Check if it exists...
-    if (!hFile) {
-      fFailed = TRUE;
-      FileMan_Close(hFile);
-      break;
-    }
-    FileMan_Close(hFile);
-  }
-
-  return (!fFailed);
 }

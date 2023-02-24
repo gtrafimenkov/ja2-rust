@@ -3,8 +3,10 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include "SGP/SGP.h"
+#include "SGP/Debug.h"
+#include "SGP/Types.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WinFont.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"

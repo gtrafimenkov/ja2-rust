@@ -1,7 +1,7 @@
 #ifndef __AMBIENT_CONTROL
 #define __AMBIENT_CONTROL
 
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "TileEngine/AmbientTypes.h"
 
 BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID);

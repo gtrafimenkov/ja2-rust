@@ -2,7 +2,8 @@
 
 #include "JAScreens.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QueenCommand.h"
 #include "Strategic/StrategicMap.h"

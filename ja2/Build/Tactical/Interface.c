@@ -6,14 +6,15 @@
 
 #include "GameLoop.h"
 #include "GameSettings.h"
+#include "Globals.h"
 #include "MessageBoxScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/HImage.h"
-#include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -2589,7 +2590,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
 		INT16		usNumStepsPerEnemy;
 
 		if ( gfProgBarActive )
-		{				
+		{
 			//usNumStepsPerEnemy = ( PROG_BAR_LENGTH / gubProgNumEnemies );
 
 			// Alrighty, do some fun stuff!

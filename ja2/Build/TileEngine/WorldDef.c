@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <windows.h>
 
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorMapInfo.h"
@@ -98,9 +97,6 @@ INT32 giCurrentTilesetID = 0;
 CHAR8 gzLastLoadedFile[260];
 
 UINT32 gCurrentBackground = FIRSTTEXTURE;
-
-// From memman.c in SGP
-extern UINT32 guiMemTotal;
 
 INT8 gbNewTileSurfaceLoaded[NUMBEROFTILETYPES];
 
@@ -283,105 +279,50 @@ void DeinitializeWorld() {
 BOOLEAN ReloadTilesetSlot(INT32 iSlot) { return (TRUE); }
 
 BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
-  SGPFILENAME cTemp;
   UINT32 uiLoop;
-
   UINT32 uiPercentage;
-  // UINT32					uiLength;
-  // UINT16					uiFillColor;
-  STRING512 ExeDir;
-  STRING512 INIFile;
-
-  // Get Executable Directory
-  Plat_GetExecutableDirectory(ExeDir, sizeof(ExeDir));
-
-  // Adjust Current Dir
-  // CHECK IF DEFAULT INI OVERRIDE FILE EXISTS
-  sprintf(INIFile, "%s\\engine.ini", ExeDir);
-  if (!FileMan_Exists(INIFile)) {
-    // USE PER TILESET BASIS
-    sprintf(INIFile, "%s\\engine%d.ini", ExeDir, ubTilesetID);
-  }
 
   // If no Tileset filenames are given, return error
   if (ppTileSurfaceFilenames == NULL) {
     return (FALSE);
   } else {
     for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++)
-      strcpy(TileSurfaceFilenames[uiLoop],
-             ppTileSurfaceFilenames[uiLoop]);  //(char *)(ppTileSurfaceFilenames + (65 * uiLoop)) );
+      strcpy(TileSurfaceFilenames[uiLoop], ppTileSurfaceFilenames[uiLoop]);
   }
 
-  // uiFillColor = Get16BPPColor(FROMRGB(223, 223, 223));
-  // StartFrameBufferRender( );
-  // ColorFillVideoSurfaceArea( FRAME_BUFFER, 20, 399, 622, 420, uiFillColor );
-  // ColorFillVideoSurfaceArea( FRAME_BUFFER, 21, 400, 621, 419, 0 );
-  // EndFrameBufferRender( );
-
-  // uiFillColor = Get16BPPColor(FROMRGB( 100, 0, 0 ));
   // load the tile surfaces
   SetRelativeStartAndEndPercentage(0, 1, 35, L"Tile Surfaces");
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     uiPercentage = (uiLoop * 100) / (NUMBEROFTILETYPES - 1);
     RenderProgressBar(0, uiPercentage);
 
-    // uiFillColor = Get16BPPColor(FROMRGB( 100 + uiPercentage , 0, 0 ));
-    // ColorFillVideoSurfaceArea( FRAME_BUFFER, 22, 401, 22 + uiLength, 418, uiFillColor );
-    // InvalidateRegion( 0, 399, 640, 420 );
-    // EndFrameBufferRender( );
-
     // The cost of having to do this check each time through the loop,
     // thus about 20 times, seems better than having to maintain two
     // almost completely identical functions
     if (ppTileSurfaceFilenames == NULL) {
-      GetPrivateProfileString("TileSurface Filenames", gTileSurfaceName[uiLoop], "", cTemp,
-                              SGPFILENAME_LEN, INIFile);
-      if (*cTemp != '\0') {
-        strcpy(TileSurfaceFilenames[uiLoop], cTemp);
-        if (AddTileSurface(cTemp, uiLoop, ubTilesetID, TRUE) == FALSE) {
-          DestroyTileSurfaces();
-          return (FALSE);
-        }
-      } else {
-        // Use default
-        if (AddTileSurface(TileSurfaceFilenames[uiLoop], uiLoop, ubTilesetID, FALSE) == FALSE) {
-          DestroyTileSurfaces();
-          return (FALSE);
-        }
+      if (AddTileSurface(TileSurfaceFilenames[uiLoop], uiLoop, ubTilesetID, FALSE) == FALSE) {
+        DestroyTileSurfaces();
+        return (FALSE);
       }
-
     } else {
-      GetPrivateProfileString("TileSurface Filenames", gTileSurfaceName[uiLoop], "", cTemp,
-                              SGPFILENAME_LEN, INIFile);
-      if (*cTemp != '\0') {
-        strcpy(TileSurfaceFilenames[uiLoop], cTemp);
-        if (AddTileSurface(cTemp, uiLoop, ubTilesetID, TRUE) == FALSE) {
+      if (*(ppTileSurfaceFilenames[uiLoop]) != '\0') {
+        if (AddTileSurface(ppTileSurfaceFilenames[uiLoop], uiLoop, ubTilesetID, FALSE) == FALSE) {
           DestroyTileSurfaces();
           return (FALSE);
         }
       } else {
-        if (*(ppTileSurfaceFilenames[uiLoop]) != '\0') {
-          if (AddTileSurface(ppTileSurfaceFilenames[uiLoop], uiLoop, ubTilesetID, FALSE) == FALSE) {
+        // USE FIRST TILESET VALUE!
+
+        // ATE: If here, don't load default surface if already loaded...
+        if (!gbDefaultSurfaceUsed[uiLoop]) {
+          strcpy(TileSurfaceFilenames[uiLoop], gTilesets[GENERIC_1].TileSurfaceFilenames[uiLoop]);
+          if (AddTileSurface(gTilesets[GENERIC_1].TileSurfaceFilenames[uiLoop], uiLoop, GENERIC_1,
+                             FALSE) == FALSE) {
             DestroyTileSurfaces();
             return (FALSE);
           }
         } else {
-          // USE FIRST TILESET VALUE!
-
-          // ATE: If here, don't load default surface if already loaded...
-          if (!gbDefaultSurfaceUsed[uiLoop]) {
-            strcpy(TileSurfaceFilenames[uiLoop],
-                   gTilesets[GENERIC_1]
-                       .TileSurfaceFilenames[uiLoop]);  //(char *)(ppTileSurfaceFilenames + (65 *
-                                                        // uiLoop)) );
-            if (AddTileSurface(gTilesets[GENERIC_1].TileSurfaceFilenames[uiLoop], uiLoop, GENERIC_1,
-                               FALSE) == FALSE) {
-              DestroyTileSurfaces();
-              return (FALSE);
-            }
-          } else {
-            gbSameAsDefaultSurfaceUsed[uiLoop] = TRUE;
-          }
+          gbSameAsDefaultSurfaceUsed[uiLoop] = TRUE;
         }
       }
     }
@@ -3080,9 +3021,6 @@ BOOLEAN LoadMapTileset(INT32 iTilesetID) {
   if (iTilesetID == giCurrentTilesetID) {
     return (TRUE);
   }
-
-  // Get free memory value nere
-  gSurfaceMemUsage = guiMemTotal;
 
   // LOAD SURFACES
   CHECKF(LoadTileSurfaces(&(gTilesets[iTilesetID].TileSurfaceFilenames[0]), (UINT8)iTilesetID) !=

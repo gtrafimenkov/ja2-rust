@@ -1,7 +1,5 @@
 #include "Strategic/MapScreenInterfaceBottom.h"
 
-#include <windows.h>
-
 #include "GameLoop.h"
 #include "GameSettings.h"
 #include "JAScreens.h"
@@ -11,12 +9,13 @@
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadScreen.h"
+#include "ScreenIDs.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
@@ -892,7 +891,6 @@ void DeleteMapScreenBottomMessageScrollRegion(void) {
 }
 
 void MapScreenMessageScrollBarCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
-  POINT MousePos;
   UINT8 ubMouseYOffset;
   UINT8 ubDesiredSliderOffset;
   UINT8 ubDesiredMessageIndex;
@@ -910,7 +908,7 @@ void MapScreenMessageScrollBarCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
     // this
     if (ubNumMessages > MAX_MESSAGES_ON_MAP_BOTTOM) {
       // where is the mouse?
-      GetCursorPos(&MousePos);
+      struct Point MousePos = GetMousePoint();
 
       ubMouseYOffset = (INT8)(MousePos.y - MESSAGE_SCROLL_AREA_START_Y);
 

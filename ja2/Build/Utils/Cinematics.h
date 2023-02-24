@@ -2,7 +2,7 @@
 #define _CINEMATICS_H_
 
 #include "SGP/Types.h"
-#include "SGP/smack.h"
+#include "SGP/windows/smack.h"
 
 #if 1
 // must go after other includes

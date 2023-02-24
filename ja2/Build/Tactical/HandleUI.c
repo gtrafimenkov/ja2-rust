@@ -7,6 +7,7 @@
 
 #include "BuildDefines.h"
 #include "GameSettings.h"
+#include "Globals.h"
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
 #include "OptionsScreen.h"
@@ -21,6 +22,7 @@
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
 #include "ScreenIDs.h"
+#include "Screens.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"

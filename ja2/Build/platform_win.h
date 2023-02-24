@@ -13,4 +13,12 @@
 //		if its a LIBRARY file, the return will be the handle of the LIBRARY
 HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile);
 
+struct PlatformInitParams {
+  HINSTANCE hInstance;
+  UINT16 usCommandShow;
+  void *WindowProc;
+};
+
+extern HWND ghWindow;
+
 #endif

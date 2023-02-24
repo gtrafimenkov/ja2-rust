@@ -4,8 +4,8 @@
 
 #include "GameSettings.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
+#include "SGP/Types.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/Quests.h"

@@ -6,7 +6,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"

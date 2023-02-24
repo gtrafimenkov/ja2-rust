@@ -1,10 +1,13 @@
 #include "Strategic/QuestDebugSystem.h"
 
+#include <stdarg.h>
 #include <stdio.h>
-#include <windows.h>
 
+#include "Globals.h"
+#include "JAScreens.h"
 #include "Laptop/AIMMembers.h"
 #include "MessageBoxScreen.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
 #include "SGP/Line.h"
@@ -13,6 +16,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QuestText.h"
 #include "Strategic/Quests.h"
@@ -1136,10 +1140,9 @@ void DisplayCurrentGridNo() {
 
 void GetUserInput() {
   InputAtom Event;
-  POINT MousePos;
   UINT8 ubPanelMercShouldUse = WhichPanelShouldTalkingMercUse();
 
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&Event)) {
     if (!HandleTextInput(&Event) && Event.usEvent == KEY_DOWN) {

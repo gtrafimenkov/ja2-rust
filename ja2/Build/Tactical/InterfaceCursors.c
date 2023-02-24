@@ -5,10 +5,10 @@
 #include <time.h>
 
 #include "GameSettings.h"
-#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/HandleUI.h"

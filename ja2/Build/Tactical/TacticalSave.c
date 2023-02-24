@@ -3,14 +3,15 @@
 #include <stdio.h>
 
 #include "GameVersion.h"
+#include "Globals.h"
 #include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SaveLoadGame.h"
+#include "ScreenIDs.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceMap.h"

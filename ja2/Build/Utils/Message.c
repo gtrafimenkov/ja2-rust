@@ -9,11 +9,10 @@
 #include "Local.h"
 #include "SGP/FileMan.h"
 #include "SGP/Font.h"
-#include "SGP/MutexManager.h"
-#include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceBottom.h"
 #include "Tactical/DialogueControl.h"
@@ -627,8 +626,6 @@ void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
     // Init display array!
     memset(gpDisplayList, 0, sizeof(gpDisplayList));
     fFirstTimeInMessageSystem = FALSE;
-    // if(!(InitializeMutex(SCROLL_MESSAGE_MUTEX,"ScrollMessageMutex" )))
-    //	return;
   }
 
   pStringSt = pStringS;
@@ -697,7 +694,6 @@ void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   // clear up list of wrapped strings
   ClearWrappedStrings(pStringWrapperHead);
 
-  // LeaveMutex(SCROLL_MESSAGE_MUTEX, __LINE__, __FILE__);
   return;
 }
 
@@ -799,8 +795,6 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
     // Init display array!
     memset(gpDisplayList, 0, sizeof(gpDisplayList));
     fFirstTimeInMessageSystem = FALSE;
-    // if(!(InitializeMutex(SCROLL_MESSAGE_MUTEX,"ScrollMessageMutex" )))
-    //	return;
   }
 
   pStringSt = pStringS;
@@ -854,8 +848,6 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   // PlayNewMessageSound( );
 
   MoveToEndOfMapScreenMessageList();
-
-  // LeaveMutex(SCROLL_MESSAGE_MUTEX, __LINE__, __FILE__);
 }
 
 // add string to the map screen message list

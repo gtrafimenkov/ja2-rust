@@ -5,8 +5,8 @@
 #include <time.h>
 
 #include "SGP/Container.h"
-#include "SGP/SGP.h"
-#include "SGP/Timer.h"
+#include "SGP/Debug.h"
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/OppList.h"

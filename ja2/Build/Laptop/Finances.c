@@ -2,9 +2,11 @@
 
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"

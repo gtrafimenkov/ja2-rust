@@ -5,7 +5,9 @@
 #include <time.h>
 
 #include "SGP/Container.h"
-#include "SGP/SGP.h"
+#include "SGP/Debug.h"
+#include "SGP/MemMan.h"
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "Utils/TimerControl.h"
 

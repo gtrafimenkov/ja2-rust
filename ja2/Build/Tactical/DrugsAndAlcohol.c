@@ -1,7 +1,7 @@
 #include "Tactical/DrugsAndAlcohol.h"
 
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "Tactical/DrugsAndAlcohol.h"
 #include "Tactical/Interface.h"
 #include "Tactical/Items.h"

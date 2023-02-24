@@ -5,6 +5,7 @@
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/CampaignInit.h"

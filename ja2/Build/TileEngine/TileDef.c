@@ -419,16 +419,6 @@ void CreateTileDatabase() {
       }
     }
   }
-
-  // Calculate mem usgae
-  gSurfaceMemUsage = guiMemTotal - gSurfaceMemUsage;
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-           String("Database Sizes: %d vs %d", gTileDatabaseSize, NUMBEROFTILES));
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Database Types: %d", NUMBEROFTILETYPES));
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-           String("Database Item Mem:		%d", gTileDatabaseSize * sizeof(TILE_ELEMENT)));
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-           String("Database Item Total Mem:		%d", gSurfaceMemUsage));
 }
 
 void DeallocateTileDatabase() {

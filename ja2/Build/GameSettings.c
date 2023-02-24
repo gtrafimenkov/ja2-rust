@@ -1,7 +1,5 @@
 #include "GameSettings.h"
 
-#include <windows.h>
-
 #include "Cheats.h"
 #include "GameVersion.h"
 #include "HelpScreen.h"
@@ -11,7 +9,6 @@
 #include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SaveLoadGame.h"
 #include "SaveLoadScreen.h"
@@ -37,16 +34,8 @@ GAME_SETTINGS gGameSettings;
 GAME_OPTIONS gGameOptions;
 
 extern SGPFILENAME gCheckFilenames[];
-extern CHAR8 gzErrorMsg[256];
 
 void InitGameSettings();
-
-BOOLEAN GetCdromLocationFromIniFile(STR pRootOfCdromDrive);
-
-extern BOOLEAN DoJA2FilesExistsOnDrive(CHAR8 *zCdLocation);
-
-BOOLEAN IsDriveLetterACDromDrive(STR pDriveLetter);
-void CDromEjectionErrorMessageBoxCallBack(UINT8 bExitValue);
 
 // Change this number when we want any who gets the new build to reset the options
 #define GAME_SETTING_CURRENT_VERSION 522
@@ -230,116 +219,6 @@ void InitGameOptions() {
   gGameOptions.ubDifficultyLevel = DIF_LEVEL_EASY;
   // gGameOptions.fTurnTimeLimit		 = FALSE;
   gGameOptions.fIronManMode = FALSE;
-}
-
-BOOLEAN CheckIfGameCdromIsInCDromDrive() {
-  CHAR8 zVolumeNameBuffer[512];
-  UINT32 uiVolumeSerialNumber = 0;
-  UINT32 uiMaxComponentLength = 0;
-  UINT32 uiFileSystemFlags = 0;
-  CHAR8 zFileSystemNameBuffer[512];
-  CHAR8 zCdLocation[SGPFILENAME_LEN];
-  CHAR8 zCdFile[SGPFILENAME_LEN];
-
-  CHAR8 zCdromRootDrive[512];
-  BOOLEAN fFailed = FALSE;
-  UINT32 uiVolumeReturnValue;
-  UINT32 uiLastError = ERROR_SUCCESS;
-
-  if (!GetCdromLocationFromIniFile(zCdromRootDrive)) return (FALSE);
-
-  uiVolumeReturnValue = GetVolumeInformation(
-      zCdromRootDrive, zVolumeNameBuffer, 512, (LPDWORD)&uiVolumeSerialNumber,
-      (LPDWORD)&uiMaxComponentLength, (LPDWORD)&uiFileSystemFlags, zFileSystemNameBuffer, 512);
-
-  if (!uiVolumeReturnValue) {
-    uiLastError = GetLastError();
-  }
-
-  // OK, build filename
-  sprintf(zCdFile, "%s%s", zCdLocation, gCheckFilenames[Random(2)]);
-
-  // If the cdrom drive is no longer in the drive
-  if (uiLastError == ERROR_NOT_READY || (!FileMan_Exists(zCdFile))) {
-    CHAR8 sString[512];
-
-    // if a game has been started, add the msg about saving the game to a different entry
-    if (gTacticalStatus.fHasAGameBeenStarted) {
-      sprintf(sString, "%S  %S", pMessageStrings[MSG_INTEGRITY_WARNING],
-              pMessageStrings[MSG_CDROM_SAVE_GAME]);
-
-      SaveGame(SAVE__ERROR_NUM, pMessageStrings[MSG_CDROM_SAVE]);
-    } else {
-      sprintf(sString, "%S", pMessageStrings[MSG_INTEGRITY_WARNING]);
-    }
-
-    // ATE: These are ness. due to reference counting
-    // in showcursor(). I'm not about to go digging in low level stuff at this
-    // point in the game development, so keep these here, as this works...
-    ShowCursor(TRUE);
-    ShowCursor(TRUE);
-    ShutdownWithErrorBox(sString);
-
-    // DoTester( );
-    // MessageBox(NULL, sString, "Error", MB_OK | MB_ICONERROR  );
-
-    return (FALSE);
-  }
-
-  return (TRUE);
-}
-
-BOOLEAN GetCdromLocationFromIniFile(STR pRootOfCdromDrive) {
-  UINT32 uiRetVal = 0;
-
-  // Do a crude check to make sure the Ja2.ini file is the right on
-
-  uiRetVal = GetPrivateProfileString("Ja2 Settings", "CD", "", pRootOfCdromDrive, SGPFILENAME_LEN,
-                                     GAME_INI_FILE);
-  if (uiRetVal == 0) {
-    pRootOfCdromDrive[0] = '\0';
-    return (FALSE);
-  } else {
-    // add the :\ to the dir
-    strcat(pRootOfCdromDrive, ":\\");
-    return (TRUE);
-  }
-}
-
-void CDromEjectionErrorMessageBoxCallBack(UINT8 bExitValue) {
-  if (bExitValue == MSG_BOX_RETURN_OK) {
-    guiPreviousOptionScreen = GAME_SCREEN;
-
-    // if we are in a game, save the game
-    if (gTacticalStatus.fHasAGameBeenStarted) {
-      SaveGame(SAVE__ERROR_NUM, pMessageStrings[MSG_CDROM_SAVE]);
-    }
-
-    // quit the game
-    gfProgramIsRunning = FALSE;
-  }
-}
-
-BOOLEAN IsDriveLetterACDromDrive(STR pDriveLetter) {
-  UINT32 uiDriveType;
-  CHAR8 zRootName[512];
-
-  sprintf(zRootName, "%s:\\", pDriveLetter);
-
-  // Get the drive type
-  uiDriveType = GetDriveType(zRootName);
-  switch (uiDriveType) {
-    // The drive is a CD-ROM drive.
-#ifdef JA2BETAVERSION
-    case DRIVE_NO_ROOT_DIR:
-    case DRIVE_REMOTE:
-#endif
-    case DRIVE_CDROM:
-      return (TRUE);
-      break;
-  }
-
-  return (FALSE);
 }
 
 void DisplayGameSettings() {

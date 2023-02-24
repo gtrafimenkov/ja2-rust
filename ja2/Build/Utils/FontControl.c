@@ -5,7 +5,7 @@
 #include <time.h>
 
 #include "SGP/HImage.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "SGP/WinFont.h"

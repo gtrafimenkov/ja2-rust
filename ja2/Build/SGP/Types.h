@@ -86,7 +86,6 @@ typedef struct {
   INT32 iTop;
   INT32 iRight;
   INT32 iBottom;
-
 } SGPRect;
 
 typedef struct {
@@ -124,6 +123,7 @@ typedef VECTOR4 COLOR;  // rgba color array
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #endif
 
+typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;

@@ -1,15 +1,22 @@
 #ifndef __QUANTIZE_H_
 #define __QUANTIZE_H_
 
-#include <windows.h>
-// #include "SGP/Types.h"
+#include "SGP/Types.h"
+
+// copied from wingdi.h
+typedef struct tagRGBQUAD {
+  BYTE rgbBlue;
+  BYTE rgbGreen;
+  BYTE rgbRed;
+  BYTE rgbReserved;
+} RGBQUAD;
 
 typedef struct _NODE {
-  BOOL bIsLeaf;             // TRUE if node has no children
-  UINT nPixelCount;         // Number of pixels represented by this leaf
-  UINT nRedSum;             // Sum of red components
-  UINT nGreenSum;           // Sum of green components
-  UINT nBlueSum;            // Sum of blue components
+  BOOLEAN bIsLeaf;          // TRUE if node has no children
+  u32 nPixelCount;          // Number of pixels represented by this leaf
+  u32 nRedSum;              // Sum of red components
+  u32 nGreenSum;            // Sum of green components
+  u32 nBlueSum;             // Sum of blue components
   struct _NODE* pChild[8];  // Pointers to child nodes
   struct _NODE* pNext;      // Pointer to next reducible node
 } NODE;
@@ -17,27 +24,27 @@ typedef struct _NODE {
 class CQuantizer {
  protected:
   NODE* m_pTree;
-  UINT m_nLeafCount;
+  u32 m_nLeafCount;
   NODE* m_pReducibleNodes[9];
-  UINT m_nMaxColors;
-  UINT m_nColorBits;
+  u32 m_nMaxColors;
+  u32 m_nColorBits;
 
  public:
-  CQuantizer(UINT nMaxColors, UINT nColorBits);
+  CQuantizer(u32 nMaxColors, u32 nColorBits);
   virtual ~CQuantizer();
-  BOOL ProcessImage(BYTE* pData, int iWidth, int iHeight);
-  UINT GetColorCount();
+  BOOLEAN ProcessImage(u8* pData, int iWidth, int iHeight);
+  u32 GetColorCount();
   void GetColorTable(RGBQUAD* prgb);
 
  protected:
-  int GetLeftShiftCount(DWORD dwVal);
-  int GetRightShiftCount(DWORD dwVal);
-  void AddColor(NODE** ppNode, BYTE r, BYTE g, BYTE b, UINT nColorBits, UINT nLevel,
-                UINT* pLeafCount, NODE** pReducibleNodes);
-  NODE* CreateNode(UINT nLevel, UINT nColorBits, UINT* pLeafCount, NODE** pReducibleNodes);
-  void ReduceTree(UINT nColorBits, UINT* pLeafCount, NODE** pReducibleNodes);
+  int GetLeftShiftCount(u32 dwVal);
+  int GetRightShiftCount(u32 dwVal);
+  void AddColor(NODE** ppNode, u8 r, u8 g, u8 b, u32 nColorBits, u32 nLevel, u32* pLeafCount,
+                NODE** pReducibleNodes);
+  NODE* CreateNode(u32 nLevel, u32 nColorBits, u32* pLeafCount, NODE** pReducibleNodes);
+  void ReduceTree(u32 nColorBits, u32* pLeafCount, NODE** pReducibleNodes);
   void DeleteTree(NODE** ppNode);
-  void GetPaletteColors(NODE* pTree, RGBQUAD* prgb, UINT* pIndex);
+  void GetPaletteColors(NODE* pTree, RGBQUAD* prgb, u32* pIndex);
 };
 
 #endif

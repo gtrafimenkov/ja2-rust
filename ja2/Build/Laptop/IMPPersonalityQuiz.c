@@ -1,7 +1,5 @@
 #include "Laptop/IMPPersonalityQuiz.h"
 
-#include <windows.h>
-
 #include "Laptop/CharProfile.h"
 #include "Laptop/IMPCompileCharacter.h"
 #include "Laptop/IMPHomePage.h"
@@ -9,6 +7,7 @@
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"
 #include "Laptop/Laptop.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Input.h"
@@ -19,7 +18,6 @@
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-// struct POINT;
 
 UINT32 giIMPPersonalityQuizButton[2];
 UINT32 giIMPPersonalityQuizButtonImage[2];
@@ -1405,10 +1403,9 @@ void CheckStateOfTheConfirmButton(void) {
 
 void HandleIMPQuizKeyBoard(void) {
   InputAtom InputEvent;
-  POINT MousePos;
   BOOLEAN fSkipFrame = FALSE;
 
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while ((DequeueEvent(&InputEvent) == TRUE)) {
     if (fSkipFrame == FALSE) {

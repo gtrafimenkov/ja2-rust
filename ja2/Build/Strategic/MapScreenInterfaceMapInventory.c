@@ -2,10 +2,13 @@
 
 #include <stdlib.h>
 
+#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/VObject.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/MapScreenInterfaceBorder.h"

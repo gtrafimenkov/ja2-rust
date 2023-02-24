@@ -7,6 +7,7 @@
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"
 #include "Laptop/Laptop.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"

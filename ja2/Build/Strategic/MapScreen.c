@@ -6,7 +6,6 @@
 #include <tchar.h>
 #include <time.h>
 #include <wchar.h>
-#include <windows.h>
 
 #include "Cheats.h"
 #include "FadeScreen.h"
@@ -14,20 +13,22 @@
 #include "GameScreen.h"
 #include "GameSettings.h"
 #include "GameVersion.h"
+#include "Globals.h"
 #include "HelpScreen.h"
 #include "JAScreens.h"
 #include "Laptop/Email.h"
 #include "Laptop/Finances.h"
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Personnel.h"
+#include "Local.h"
 #include "OptionsScreen.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
-#include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -3959,7 +3960,6 @@ UINT32 HandleMapUI() {
   UINT8 ubCount = 0;
   PathStPtr pNode = NULL;
   BOOLEAN fVehicle = FALSE;
-  POINT MousePos;
   UINT32 uiNewScreen = MAP_SCREEN;
   BOOLEAN fWasAlreadySelected;
 
@@ -4026,7 +4026,7 @@ UINT32 HandleMapUI() {
           sY = (GetLastSectorIdInCharactersPath(
                     &Menptr[gCharactersList[bSelectedDestChar].usSolID]) /
                 MAP_WORLD_X);
-          GetCursorPos(&MousePos);
+          struct Point MousePos = GetMousePoint();
           RestoreBackgroundForMapGrid(sX, sY);
           // fMapPanelDirty = TRUE;
         }
@@ -4288,7 +4288,6 @@ UINT32 HandleMapUI() {
 
 void GetMapKeyboardInput(UINT32 *puiNewEvent) {
   InputAtom InputEvent;
-  POINT MousePos;
   INT8 bSquadNumber;
   UINT8 ubGroupId = 0;
   BOOLEAN fCtrl, fAlt;
@@ -4300,11 +4299,8 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
   fCtrl = _KeyDown(CTRL);
   fAlt = _KeyDown(ALT);
 
-  while (DequeueEvent(&InputEvent))
-  //		while( DequeueSpecificEvent( &InputEvent, KEY_DOWN ) )		// doesn't work for
-  // some reason
-  {
-    GetCursorPos(&MousePos);
+  while (DequeueEvent(&InputEvent)) {
+    struct Point MousePos = GetMousePoint();
 
     // HOOK INTO MOUSE HOOKS
     switch (InputEvent.usEvent) {
@@ -5427,14 +5423,12 @@ void EndMapScreen(BOOLEAN fDuringFade) {
 }
 
 BOOLEAN GetMouseMapXY(INT16 *psMapWorldX, INT16 *psMapWorldY) {
-  POINT MousePos;
-
   if (IsMapScreenHelpTextUp()) {
     // don't show highlight while global help text is up
     return (FALSE);
   }
 
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   if (fZoomFlag) {
     if (MousePos.x > MAP_GRID_X + MAP_VIEW_START_X) MousePos.x -= MAP_GRID_X;
@@ -7286,10 +7280,7 @@ INT32 GetIndexForThisSoldier(SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN IsCursorWithInRegion(INT16 sLeft, INT16 sRight, INT16 sTop, INT16 sBottom) {
-  POINT MousePos;
-
-  // get cursor position
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   // is it within region?
 

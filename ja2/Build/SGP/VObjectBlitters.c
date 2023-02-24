@@ -11749,7 +11749,7 @@ VOBJECT_RESERVED_SURFACE )
 
 
 BOOLEAN BltVObjectUsingDD( HVOBJECT hDestVObject, HVOBJECT hSrcVObject, UINT32 fBltFlags, INT32
-iDestX, INT32 iDestY, RECT *SrcRect )
+iDestX, INT32 iDestY, struct Rect *SrcRect )
 {
         UINT32		uiDDFlags;
         RECT			DestRect;

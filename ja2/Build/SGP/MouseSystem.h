@@ -28,8 +28,6 @@
 //
 // *****************************************************************************
 
-#define _JA2_RENDER_DIRTY  // Undef this if not using the JA2 Dirty Rectangle System.
-
 typedef void (*MOUSE_CALLBACK)(struct _MOUSE_REGION *,
                                INT32);           // Define MOUSE_CALLBACK type as pointer to void
 typedef void (*MOUSE_HELPTEXT_DONE_CALLBACK)();  // the help is done callback
@@ -216,12 +214,8 @@ void DisableMouseFastHelp(void);
 
 void ResetClickedMode(void);
 
-#ifdef _JA2_RENDER_DIRTY
-
 BOOLEAN SetRegionSavedRect(MOUSE_REGION *region);
 void FreeRegionSavedRect(MOUSE_REGION *region);
-
-#endif
 
 // *****************************************************************************
 

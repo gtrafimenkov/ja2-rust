@@ -14,11 +14,12 @@
 #include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/MemMan.h"
-#include "SGP/Mss.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
+#include "SGP/windows/Mss.h"
+#include "platform.h"
+#include "platform_strings.h"
 #include "platform_win.h"
-#include "platfrom_strings.h"
 
 // Sample status flags
 #define SAMPLE_ALLOCATED 0x00000001
@@ -473,9 +474,9 @@ UINT32 SoundPlayRandom(STR pFilename, RANDOMPARMS *pParms) {
 
       pSampleList[uiSample].uiInstances = 0;
 
-      uiTicks = GetTickCount();
+      uiTicks = Plat_GetTickCount();
       pSampleList[uiSample].uiTimeNext =
-          GetTickCount() + pSampleList[uiSample].uiTimeMin +
+          Plat_GetTickCount() + pSampleList[uiSample].uiTimeMin +
           Random(pSampleList[uiSample].uiTimeMax - pSampleList[uiSample].uiTimeMin);
       return (uiSample);
     }
@@ -747,9 +748,9 @@ BOOLEAN SoundServiceRandom(void) {
 BOOLEAN SoundRandomShouldPlay(UINT32 uiSample) {
   UINT32 uiTicks;
 
-  uiTicks = GetTickCount();
+  uiTicks = Plat_GetTickCount();
   if (pSampleList[uiSample].uiFlags & SAMPLE_RANDOM)
-    if (pSampleList[uiSample].uiTimeNext <= GetTickCount())
+    if (pSampleList[uiSample].uiTimeNext <= Plat_GetTickCount())
       if (pSampleList[uiSample].uiInstances < pSampleList[uiSample].uiMaxInstances) return (TRUE);
 
   return (FALSE);
@@ -780,7 +781,7 @@ UINT32 SoundStartRandom(UINT32 uiSample) {
 
     if ((uiSoundID = SoundStartSample(uiSample, uiChannel, &spParms)) != SOUND_ERROR) {
       pSampleList[uiSample].uiTimeNext =
-          GetTickCount() + pSampleList[uiSample].uiTimeMin +
+          Plat_GetTickCount() + pSampleList[uiSample].uiTimeMin +
           Random(pSampleList[uiSample].uiTimeMax - pSampleList[uiSample].uiTimeMin);
       pSampleList[uiSample].uiInstances++;
       return (uiSoundID);
@@ -864,7 +865,7 @@ BOOLEAN SoundServiceStreams(void) {
           SoundStopIndex(uiCount);
         else {  // Check the volume fades on currently playing sounds
           UINT32 uiVolume = SoundGetVolumeIndex(uiCount);
-          UINT32 uiTime = GetTickCount();
+          UINT32 uiTime = Plat_GetTickCount();
 
           if ((uiVolume != pSoundList[uiCount].uiFadeVolume) &&
               (uiTime >= (pSoundList[uiCount].uiFadeTime + pSoundList[uiCount].uiFadeRate))) {
@@ -938,7 +939,7 @@ UINT32 SoundGetPosition(UINT32 uiSoundID) {
                       }
               }
       */
-      uiTime = GetTickCount();
+      uiTime = Plat_GetTickCount();
       // check for rollover
       if (uiTime < pSoundList[uiSound].uiTimeStamp)
         uiPosition = (0 - pSoundList[uiSound].uiTimeStamp) + uiTime;
@@ -1581,7 +1582,7 @@ UINT32 SoundStartSample(UINT32 uiSample, UINT32 uiChannel, SOUNDPARMS *pParms) {
   uiSoundID = SoundGetUniqueID();
   pSoundList[uiChannel].uiSoundID = uiSoundID;
   pSoundList[uiChannel].uiSample = uiSample;
-  pSoundList[uiChannel].uiTimeStamp = GetTickCount();
+  pSoundList[uiChannel].uiTimeStamp = Plat_GetTickCount();
   pSoundList[uiChannel].uiFadeVolume = SoundGetVolumeIndex(uiChannel);
 
   pSampleList[uiSample].uiCacheHits++;
@@ -1662,7 +1663,7 @@ UINT32 SoundStartStream(STR pFilename, UINT32 uiChannel, SOUNDPARMS *pParms) {
     pSoundList[uiChannel].pCallbackData = NULL;
   }
 
-  pSoundList[uiChannel].uiTimeStamp = GetTickCount();
+  pSoundList[uiChannel].uiTimeStamp = Plat_GetTickCount();
   pSoundList[uiChannel].uiFadeVolume = SoundGetVolumeIndex(uiChannel);
 
   return (uiSoundID);

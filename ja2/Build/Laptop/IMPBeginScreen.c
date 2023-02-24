@@ -1,7 +1,5 @@
 #include "Laptop/IMPBeginScreen.h"
 
-#include <windows.h>
-
 #include "Laptop/CharProfile.h"
 #include "Laptop/IMPAttributeSelection.h"
 #include "Laptop/IMPFinish.h"
@@ -14,11 +12,14 @@
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
 #include "MessageBoxScreen.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Strategic.h"
 #include "Tactical/MercHiring.h"
@@ -354,10 +355,7 @@ void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void GetPlayerKeyBoardInputForIMPBeginScreen(void) {
   InputAtom InputEvent;
-  POINT MousePos;
-
-  // get the current curosr position, might just need it.
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   // handle input events
   while (DequeueEvent(&InputEvent)) {

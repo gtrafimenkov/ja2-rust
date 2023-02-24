@@ -1,6 +1,7 @@
 #include "Tactical/Points.h"
 
-#include "SGP/SGP.h"
+#include "SGP/Debug.h"
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/DialogueControl.h"

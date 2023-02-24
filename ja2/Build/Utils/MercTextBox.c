@@ -2,7 +2,9 @@
 
 #include <string.h>
 
+#include "SGP/Debug.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"

@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <windows.h>
 
 #include "Cheats.h"
 #include "GameScreen.h"
@@ -28,7 +27,9 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SaveLoadScreen.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
@@ -110,7 +111,6 @@ void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pb
 extern void NextLoopCheckForEnoughFreeHardDriveSpace();
 extern void UpdatePersistantGroupsFromOldSave(UINT32 uiSavedGameVersion);
 extern void TrashAllSoldiers();
-extern void ResetJA2ClockGlobalTimers(void);
 
 extern void BeginLoadScreen();
 extern void EndLoadScreen();
@@ -426,7 +426,6 @@ void InitLoadGameFilePosition();
 void SaveGameFilePosition(INT32 iPos, STR pMsg);
 void LoadGameFilePosition(INT32 iPos, STR pMsg);
 
-void WriteTempFileNameToFile(STR pFileName, UINT32 uiSizeOfFile, HFILE hSaveFile);
 void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGameID);
 #endif
 
@@ -2780,11 +2779,6 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   // Clsoe the source data file
   FileMan_Close(hSrcFile);
 
-#ifdef JA2BETAVERSION
-  // Write out the name of the temp file so we can track whcih ones get loaded, and saved
-  WriteTempFileNameToFile(pSrcFileName, uiFileSize, hFile);
-#endif
-
   return (TRUE);
 }
 
@@ -2863,9 +2857,6 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
   // Close the source data file
   FileMan_Close(hSrcFile);
 
-#ifdef JA2BETAVERSION
-  WriteTempFileNameToFile(pSrcFileName, uiFileSize, hFile);
-#endif
   return (TRUE);
 }
 
@@ -3640,7 +3631,7 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
 #endif
 
   // Save the Ja2Clock()
-  sGeneralInfo.uiBaseJA2Clock = guiBaseJA2Clock;
+  sGeneralInfo.uiBaseJA2Clock = GetJA2Clock();
 
   // Save the current tactical panel mode
   sGeneralInfo.sCurInterfacePanel = gsCurInterfacePanel;
@@ -3871,11 +3862,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
 #endif
 
   // Restore the JA2 Clock
-  guiBaseJA2Clock = sGeneralInfo.uiBaseJA2Clock;
-
-  // whenever guiBaseJA2Clock changes, we must reset all the timer variables that use it as a
-  // reference
-  ResetJA2ClockGlobalTimers();
+  SetJA2Clock(sGeneralInfo.uiBaseJA2Clock);
 
   // Restore the selected merc
   if (sGeneralInfo.ubSMCurrentMercID == 255)
@@ -4150,39 +4137,6 @@ void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGam
 
     FileMan_Close(hFile);
   }
-}
-
-void WriteTempFileNameToFile(STR pFileName, UINT32 uiSizeOfFile, HFILE hSaveFile) {
-  HWFILE hFile;
-  CHAR8 zTempString[512];
-  UINT32 uiNumBytesWritten;
-  UINT32 uiStrLen = 0;
-
-  CHAR8 zFileName[128];
-
-  guiSizeOfTempFiles += uiSizeOfFile;
-
-  sprintf(zFileName, "%S\\%s.txt", pMessageStrings[MSG_SAVEDIRECTORY], gzNameOfMapTempFile);
-
-  // create the save game file
-  hFile = FileMan_Open(zFileName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
-  if (!hFile) {
-    FileMan_Close(hFile);
-    return;
-  }
-
-  FileMan_Seek(hFile, 0, FILE_SEEK_FROM_END);
-
-  sprintf(zTempString, "%8d   %6d   %s\n", FileMan_GetPos(hSaveFile), uiSizeOfFile, pFileName);
-  uiStrLen = strlen(zTempString);
-
-  FileMan_Write(hFile, zTempString, uiStrLen, &uiNumBytesWritten);
-  if (uiNumBytesWritten != uiStrLen) {
-    FileMan_Close(hFile);
-    return;
-  }
-
-  FileMan_Close(hFile);
 }
 
 #endif

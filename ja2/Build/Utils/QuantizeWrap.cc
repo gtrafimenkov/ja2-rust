@@ -4,8 +4,6 @@
 
 #include "Utils/QuantizeWrap.h"
 
-#include <windows.h>
-
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
 #include "TileEngine/PhysMath.h"

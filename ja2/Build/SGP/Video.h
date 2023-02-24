@@ -14,6 +14,9 @@ extern "C" {
 
 extern struct VSurface *ghFrameBuffer;
 
+struct PlatformInitParams;
+extern BOOLEAN InitializeVideoManager(struct PlatformInitParams *params);
+
 extern void ShutdownVideoManager(void);
 extern void SuspendVideoManager(void);
 extern BOOLEAN RestoreVideoManager(void);

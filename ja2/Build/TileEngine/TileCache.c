@@ -15,7 +15,7 @@
 #include "TileEngine/TileSurface.h"
 #include "Utils/DebugControl.h"
 #include "platform.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 UINT32 guiNumTileCacheStructs = 0;
 UINT32 guiMaxTileCacheSize = 50;

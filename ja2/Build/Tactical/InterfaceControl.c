@@ -7,13 +7,13 @@
 #include "GameLoop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/HImage.h"
-#include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
@@ -546,9 +546,6 @@ void RenderTopmostTacticalInterface() {
     mprintf(0, 300, L"OPPONENT %d DEADLOCKED - 'Q' TO DEBUG, <ALT><ENTER> END OPP TURN",
             gUIDeadlockedSoldier);
   }
-
-  // Syncronize for upcoming soldier counters
-  SYNCTIMECOUNTER();
 
   // Setup system for video overlay ( text and blitting ) Sets clipping rects, etc
   StartViewportOverlays();

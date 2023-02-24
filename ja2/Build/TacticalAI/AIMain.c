@@ -1,6 +1,6 @@
 #include <math.h>
 
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Strategic/QueenCommand.h"

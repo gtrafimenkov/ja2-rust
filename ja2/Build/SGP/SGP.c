@@ -1,189 +1,28 @@
 #include "SGP/SGP.h"
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
-#include <windows.h>
-#include <windowsx.h>
-
 #include "BuildDefines.h"
 #include "GameLoop.h"
-#include "Intro.h"
+#include "Globals.h"
 #include "JA2Splash.h"
 #include "Laptop/Laptop.h"
 #include "Local.h"
-#include "SGP/ExceptionHandling.h"
 #include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
-#include "SGP/MutexManager.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
+#include "SGP/Timer.h"
 #include "SGP/Types.h"
-#include "SGP/VObject.h"
-#include "SGP/VSurface.h"
-#include "Strategic/MapScreen.h"
-#include "Strategic/MapScreenInterface.h"
-#include "Strategic/MapScreenInterfaceMap.h"
-#include "Tactical/InterfacePanels.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/RenderWorld.h"
-#include "Utils/TimerControl.h"
-#include "Utils/Utilities.h"
-#include "Video_win.h"
-#include "dbt.h"
+#include "SGP/Video.h"
 #include "platform.h"
-#include "platfrom_strings.h"
-#include "zmouse.h"
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
+void SGPExit(void);
 
-extern UINT32 MemDebugCounter;
-extern BOOLEAN gfPauseDueToPlayerGamePause;
-
-extern BOOLEAN CheckIfGameCdromIsInCDromDrive();
-extern void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
-
-// Prototype Declarations
-
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LPARAM lParam);
-BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow);
-void ShutdownStandardGamingPlatform(void);
-void GetRuntimeSettings();
-
-int PASCAL HandledWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandLine,
-                          int sCommandShow);
-
-HINSTANCE ghInstance;
-
-void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine);
-
-// Global Variable Declarations
-#ifdef WINDOWED_MODE
-RECT rcWindow;
-#endif
-
-// moved from header file: 24mar98:HJH
-UINT32 giStartMem;
-
-UINT32 guiMouseWheelMsg;  // For mouse wheel messages
-
-BOOLEAN gfApplicationActive;
-BOOLEAN gfProgramIsRunning;
-BOOLEAN gfGameInitialized = FALSE;
-
-// There were TWO of them??!?! -- DB
-// CHAR8		gzCommandLine[ 100 ];
-CHAR8 gzCommandLine[100];  // Command line given
-
-CHAR8 gzErrorMsg[2048] = "";
-BOOLEAN gfIgnoreMessages = FALSE;
-
-// GLOBAL VARIBLE, SET TO DEFAULT BUT CAN BE CHANGED BY THE GAME IF INIT FILE READ
-UINT8 gbPixelDepth = PIXEL_DEPTH;
-
-INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LPARAM lParam) {
-  static BOOLEAN fRestore = FALSE;
-
-  if (gfIgnoreMessages) return (DefWindowProc(hWindow, Message, wParam, lParam));
-
-  // ATE: This is for older win95 or NT 3.51 to get MOUSE_WHEEL Messages
-  if (Message == guiMouseWheelMsg) {
-    QueueEvent(MOUSE_WHEEL, wParam, lParam);
-    return (0L);
-  }
-
-  switch (Message) {
-    case WM_MOUSEWHEEL: {
-      QueueEvent(MOUSE_WHEEL, wParam, lParam);
-      break;
-    }
-
-#ifdef WINDOWED_MODE
-    case WM_MOVE:
-
-      GetClientRect(hWindow, &rcWindow);
-      ClientToScreen(hWindow, (LPPOINT)&rcWindow);
-      ClientToScreen(hWindow, (LPPOINT)&rcWindow + 1);
-      break;
-#endif
-
-    case WM_ACTIVATEAPP:
-      switch (wParam) {
-        case TRUE:  // We are restarting DirectDraw
-          if (fRestore == TRUE) {
-            RestoreVideoManager();
-            RestoreVideoSurfaces();  // Restore any video surfaces
-
-            // unpause the JA2 Global clock
-            if (!gfPauseDueToPlayerGamePause) {
-              PauseTime(FALSE);
-            }
-
-            gfApplicationActive = TRUE;
-          }
-          break;
-        case FALSE:  // We are suspending direct draw
-                     // pause the JA2 Global clock
-          PauseTime(TRUE);
-          SuspendVideoManager();
-
-          gfApplicationActive = FALSE;
-          fRestore = TRUE;
-          break;
-      }
-      break;
-
-    case WM_CREATE:
-      break;
-
-    case WM_DESTROY:
-      ShutdownStandardGamingPlatform();
-      ShowCursor(TRUE);
-      PostQuitMessage(0);
-      break;
-
-    case WM_SETFOCUS:
-      RestoreCursorClipRect();
-      break;
-
-    case WM_KILLFOCUS:
-      // Set a flag to restore surfaces once a WM_ACTIVEATEAPP is received
-      fRestore = TRUE;
-      break;
-
-#ifndef JA2DEMO
-    case WM_DEVICECHANGE: {
-      DEV_BROADCAST_HDR *pHeader = (DEV_BROADCAST_HDR *)lParam;
-
-      // if a device has been removed
-      if (wParam == DBT_DEVICEREMOVECOMPLETE) {
-        // if its  a disk
-        if (pHeader->dbch_devicetype == DBT_DEVTYP_VOLUME) {
-          // check to see if the play cd is still in the cdrom
-          if (!CheckIfGameCdromIsInCDromDrive()) {
-          }
-        }
-      }
-    } break;
-#endif
-
-    default:
-      return DefWindowProc(hWindow, Message, wParam, lParam);
-  }
-  return 0L;
-}
-
-BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow) {
+BOOLEAN InitializeStandardGamingPlatform(struct PlatformInitParams *params) {
   FontTranslationTable *pFontTable;
 
   // now required by all (even JA2) in order to call ShutdownSGP
   atexit(SGPExit);
-
-  // Second, read in settings
-  GetRuntimeSettings();
 
   // Initialize the Debug Manager - success doesn't matter
 #ifdef SGP_DEBUG
@@ -198,13 +37,6 @@ BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow) 
   // Initialize the Memory Manager
   if (InitializeMemoryManager() == FALSE) {  // We were unable to initialize the memory manager
     FastDebugMsg("FAILED : Initializing Memory Manager");
-    return FALSE;
-  }
-
-  FastDebugMsg("Initializing Mutex Manager");
-  // Initialize the Dirty Rectangle Manager
-  if (InitializeMutexManager() == FALSE) {  // We were unable to initialize the game
-    FastDebugMsg("FAILED : Initializing Mutex Manager");
     return FALSE;
   }
 
@@ -227,8 +59,7 @@ BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow) 
 
   FastDebugMsg("Initializing Video Manager");
   // Initialize DirectDraw (DirectX 2)
-  if (InitializeVideoManager(hInstance, (UINT16)sCommandShow, (void *)WindowProcedure) ==
-      FALSE) {  // We were unable to initialize the video manager
+  if (InitializeVideoManager(params) == FALSE) {
     FastDebugMsg("FAILED : Initializing Video Manager");
     return FALSE;
   }
@@ -271,12 +102,10 @@ BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow) 
 
   FastDebugMsg("Initializing Sound Manager");
   // Initialize the Sound Manager (DirectSound)
-#ifndef UTIL
   if (InitializeSoundManager() == FALSE) {  // We were unable to initialize the sound manager
     FastDebugMsg("FAILED : Initializing Sound Manager");
     return FALSE;
   }
-#endif
 
   FastDebugMsg("Initializing Random");
   // Initialize random number generator
@@ -289,171 +118,7 @@ BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow) 
     return FALSE;
   }
 
-  // Register mouse wheel message
-  guiMouseWheelMsg = RegisterWindowMessage(MSH_MOUSEWHEEL);
-
-  gfGameInitialized = TRUE;
-
   return TRUE;
-}
-
-void ShutdownStandardGamingPlatform(void) {
-  //
-  // Shut down the different components of the SGP
-  //
-
-  // TEST
-  SoundServiceStreams();
-
-  if (gfGameInitialized) {
-    ShutdownGame();
-  }
-
-  ShutdownButtonSystem();
-  MSYS_Shutdown();
-
-#ifndef UTIL
-  ShutdownSoundManager();
-#endif
-
-  DestroyEnglishTransTable();  // has to go before ShutdownFontManager()
-  ShutdownFontManager();
-
-  ShutdownClockManager();  // must shutdown before VideoManager, 'cause it uses ghWindow
-
-#ifdef SGP_VIDEO_DEBUGGING
-  PerformVideoInfoDumpIntoFile("SGPVideoShutdownDump.txt", FALSE);
-#endif
-
-  ShutdownVideoSurfaceManager();
-  ShutdownVideoObjectManager();
-  ShutdownVideoManager();
-
-  ShutdownInputManager();
-  ShutdownContainers();
-  FileMan_Shutdown();
-  ShutdownMutexManager();
-
-#ifdef EXTREME_MEMORY_DEBUGGING
-  DumpMemoryInfoIntoFile("ExtremeMemoryDump.txt", FALSE);
-#endif
-
-  ShutdownMemoryManager();  // must go last (except for Debug), for MemDebugCounter to work right...
-
-  //
-  // Make sure we unregister the last remaining debug topic before shutting
-  // down the debugging layer
-  UnRegisterDebugTopic(TOPIC_SGP, "Standard Gaming Platform");
-
-#ifdef SGP_DEBUG
-  ShutdownDebugManager();
-#endif
-}
-
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandLine,
-                   int sCommandShow) {
-// If we are to use exception handling
-#ifdef ENABLE_EXCEPTION_HANDLING
-  int Result = -1;
-
-  __try {
-    Result = HandledWinMain(hInstance, hPrevInstance, pCommandLine, sCommandShow);
-  } __except (RecordExceptionInfo(GetExceptionInformation())) {
-    // Do nothing here - RecordExceptionInfo() has already done
-    // everything that is needed. Actually this code won't even
-    // get called unless you return EXCEPTION_EXECUTE_HANDLER from
-    // the __except clause.
-  }
-  return Result;
-}
-
-// Do not place code in between WinMain and Handled WinMain
-
-int PASCAL HandledWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandLine,
-                          int sCommandShow) {
-// DO NOT REMOVE, used for exception handing list above in WinMain
-#endif
-  MSG Message;
-  HWND hPrevInstanceWindow;
-
-  // Make sure that only one instance of this application is running at once
-  // // Look for prev instance by searching for the window
-  hPrevInstanceWindow = FindWindowEx(NULL, NULL, APPLICATION_NAME, APPLICATION_NAME);
-
-  // One is found, bring it up!
-  if (hPrevInstanceWindow != NULL) {
-    SetForegroundWindow(hPrevInstanceWindow);
-    ShowWindow(hPrevInstanceWindow, SW_RESTORE);
-    return (0);
-  }
-
-  ghInstance = hInstance;
-
-  // Copy commandline!
-  strncpy(gzCommandLine, pCommandLine, 100);
-  gzCommandLine[99] = '\0';
-
-  // Process the command line BEFORE initialization
-  ProcessJa2CommandLineBeforeInitialization(pCommandLine);
-
-  // Mem Usage
-  giStartMem = MemGetFree() / 1024;
-
-  // Handle Check for CD
-  if (!HandleJA2CDCheck()) {
-    return (0);
-  }
-
-  ShowCursor(FALSE);
-
-  // Inititialize the SGP
-  if (InitializeStandardGamingPlatform(hInstance, sCommandShow) ==
-      FALSE) {  // We failed to initialize the SGP
-    return 0;
-  }
-
-#ifdef ENGLISH
-  SetIntroType(INTRO_SPLASH);
-#endif
-
-  gfApplicationActive = TRUE;
-  gfProgramIsRunning = TRUE;
-
-  FastDebugMsg("Running Game");
-
-  // At this point the SGP is set up, which means all I/O, Memory, tools, etc... are available. All
-  // we need to do is attend to the gaming mechanics themselves
-  while (gfProgramIsRunning) {
-    if (PeekMessage(&Message, NULL, 0, 0,
-                    PM_NOREMOVE)) {  // We have a message on the WIN95 queue, let's get it
-      if (!GetMessage(&Message, NULL, 0, 0)) {  // It's quitting time
-        return Message.wParam;
-      }
-      // Ok, now that we have the message, let's handle it
-      TranslateMessage(&Message);
-      DispatchMessage(&Message);
-    } else {  // Windows hasn't processed any messages, therefore we handle the rest
-      if (gfApplicationActive ==
-          FALSE) {  // Well we got nothing to do but to wait for a message to activate
-        WaitMessage();
-      } else {  // Well, the game is active, so we handle the game stuff
-        GameLoop();
-
-        // After this frame, reset input given flag
-        gfSGPInputReceived = FALSE;
-      }
-    }
-  }
-
-  // This is the normal exit point
-  FastDebugMsg("Exiting Game");
-  PostQuitMessage(0);
-
-  // SGPExit() will be called next through the atexit() mechanism...  This way we correctly process
-  // both normal exits and emergency aborts (such as those caused by a failed assertion).
-
-  // return wParam of the last message received
-  return Message.wParam;
 }
 
 void SGPExit(void) {
@@ -469,55 +134,5 @@ void SGPExit(void) {
   gfProgramIsRunning = FALSE;
 
   ShutdownStandardGamingPlatform();
-  ShowCursor(TRUE);
-  if (strlen(gzErrorMsg)) {
-    MessageBox(NULL, gzErrorMsg, "Error", MB_OK | MB_ICONERROR);
-  }
-}
-
-void GetRuntimeSettings() {
-  // Runtime settings - for now use INI file - later use registry
-  STRING512 ExeDir;
-  STRING512 INIFile;
-
-  // Get Executable Directory
-  Plat_GetExecutableDirectory(ExeDir, sizeof(ExeDir));
-  // Adjust Current Dir
-  sprintf(INIFile, "%s\\sgp.ini", ExeDir);
-
-  gbPixelDepth = GetPrivateProfileInt("SGP", "PIXEL_DEPTH", PIXEL_DEPTH, INIFile);
-}
-
-void ShutdownWithErrorBox(CHAR8 *pcMessage) {
-  strncpy(gzErrorMsg, pcMessage, 255);
-  gzErrorMsg[255] = '\0';
-  gfIgnoreMessages = TRUE;
-
-  exit(0);
-}
-
-void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine) {
-  CHAR8 cSeparators[] = "\t =";
-  CHAR8 *pCopy = NULL, *pToken;
-
-  pCopy = (CHAR8 *)MemAlloc(strlen(pCommandLine) + 1);
-
-  Assert(pCopy);
-  if (!pCopy) return;
-
-  memcpy(pCopy, pCommandLine, strlen(pCommandLine) + 1);
-
-  pToken = strtok(pCopy, cSeparators);
-  while (pToken) {
-    // if its the NO SOUND option
-    if (!strncasecmp(pToken, "/NOSOUND", 8)) {
-      // disable the sound
-      SoundEnableSound(FALSE);
-    }
-
-    // get the next token
-    pToken = strtok(NULL, cSeparators);
-  }
-
-  MemFree(pCopy);
+  Plat_OnSGPExit();
 }

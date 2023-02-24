@@ -5,7 +5,7 @@
 
 #ifndef __RADRES__
 
-#include "SGP/rad.h"
+#include "SGP/windows/RAD.h"
 
 RADDEFSTART
 
@@ -318,11 +318,11 @@ typedef struct SmackBufTag {
 #define INCLUDE_MMSYSTEM_H
 #include <windows.h>
 
-#include "windowsx.h"
+#include <windowsx.h>
 
 #ifdef __RADNT__  // to combat WIN32_LEAN_AND_MEAN
 
-#include "mmsystem.h"
+#include <mmsystem.h>
 
 RADEXPFUNC s32 RADEXPLINK SmackDDSurfaceType(void* lpDDS);
 

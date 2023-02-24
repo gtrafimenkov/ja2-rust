@@ -11,6 +11,8 @@
 #include "SGP/English.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
+#include "SGP/Video.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/CreatureSpreading.h"

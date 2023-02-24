@@ -7,7 +7,6 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "SGP/English.h"
-#include "SGP/Input.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Tactical/Interface.h"

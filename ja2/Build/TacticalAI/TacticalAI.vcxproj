@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>.;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>RELEASE_WITH_DEBUG_INFO;WINDOWS_IGNORE_PACKING_MISMATCH;NDEBUG;CALLBACKTIMER;WIN32;_WINDOWS;CINTERFACE;NEW_AI_STRUCT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RELEASE_WITH_DEBUG_INFO;WINDOWS_IGNORE_PACKING_MISMATCH;NDEBUG;WIN32;_WINDOWS;CINTERFACE;NEW_AI_STRUCT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

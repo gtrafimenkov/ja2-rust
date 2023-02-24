@@ -6,7 +6,7 @@
 #include "SGP/CursorControl.h"
 #include "SGP/CursorFileData.h"
 #include "SGP/Font.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SysGlobals.h"
 #include "Tactical/HandleUI.h"
 #include "Tactical/Interface.h"
@@ -4698,8 +4698,6 @@ void DrawMouseText() {
   static BOOLEAN fShow = FALSE;
   static BOOLEAN fHoldInvalid = TRUE;
 
-  // EnterMutex(MOUSE_BUFFER_MUTEX, __LINE__, __FILE__);
-
   if (gfUIBodyHitLocation) {
     // Set dest for gprintf to be different
     SetFontDestBuffer(MOUSE_BUFFER, 0, 0, 64, 64, FALSE);
@@ -4812,8 +4810,6 @@ void DrawMouseText() {
 
       mprintf(sX, sY, L"%d", gsCurrentActionPoints);
       // mprintf( sX, sY, L"%d %d", sX, sY );
-
-      // LeaveMutex(MOUSE_BUFFER_MUTEX, __LINE__, __FILE__);
 
       SetFontShadow(DEFAULT_SHADOW);
 

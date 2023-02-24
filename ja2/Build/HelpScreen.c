@@ -1,16 +1,17 @@
 #include "HelpScreen.h"
 
-#include <windows.h>
-
 #include "GameScreen.h"
 #include "GameSettings.h"
 #include "HelpScreen.h"
 #include "HelpScreenText.h"
 #include "Laptop/Laptop.h"
+#include "Rect.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
@@ -41,7 +42,8 @@ extern BOOLEAN gfGamePaused;
 extern BOOLEAN fShowMapInventoryPool;
 
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, RECT *SrcRect);
+                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
+                                  struct Rect *SrcRect);
 
 #define HELP_SCREEN_ACTIVE 0x00000001
 
@@ -939,9 +941,7 @@ void CreateHelpScreenButtons() {
 
 void GetHelpScreenUserInput() {
   InputAtom Event;
-  POINT MousePos;
-
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&Event)) {
     // HOOK INTO MOUSE HOOKS
@@ -2006,19 +2006,19 @@ void RenderCurrentHelpScreenTextToBuffer() {
 
 void RenderTextBufferToScreen() {
   struct VSurface *hDestVSurface, *hSrcVSurface;
-  SGPRect SrcRect;
+  struct Rect SrcRect;
 
   GetVideoSurface(&hDestVSurface, guiRENDERBUFFER);
   GetVideoSurface(&hSrcVSurface, guiHelpScreenTextBufferSurface);
 
-  SrcRect.iLeft = 0;
-  SrcRect.iTop = gHelpScreen.iLineAtTopOfTextBuffer * HLP_SCRN__HEIGHT_OF_1_LINE_IN_BUFFER;
-  SrcRect.iRight = HLP_SCRN__WIDTH_OF_TEXT_BUFFER;
-  SrcRect.iBottom = SrcRect.iTop + HLP_SCRN__HEIGHT_OF_TEXT_AREA - (2 * 8);
+  SrcRect.left = 0;
+  SrcRect.top = gHelpScreen.iLineAtTopOfTextBuffer * HLP_SCRN__HEIGHT_OF_1_LINE_IN_BUFFER;
+  SrcRect.right = HLP_SCRN__WIDTH_OF_TEXT_BUFFER;
+  SrcRect.bottom = SrcRect.top + HLP_SCRN__HEIGHT_OF_TEXT_AREA - (2 * 8);
 
   BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, VO_BLT_SRCTRANSPARENCY,
                      gHelpScreen.usLeftMarginPosX,
-                     (gHelpScreen.usScreenLocY + HELP_SCREEN_TEXT_OFFSET_Y), (RECT *)&SrcRect);
+                     (gHelpScreen.usScreenLocY + HELP_SCREEN_TEXT_OFFSET_Y), &SrcRect);
 
   DisplayHelpScreenTextBufferScrollBox();
 }

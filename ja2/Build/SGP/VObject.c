@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "Globals.h"
 #include "SGP/Debug.h"
 #include "SGP/HImage.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 // ******************************************************************************
 //

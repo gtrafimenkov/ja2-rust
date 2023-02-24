@@ -24,7 +24,6 @@ void InitJA2SplashScreen() {
   INT32 i = 0;
 
   InitializeJA2Clock();
-  // InitializeJA2TimerID();
   // Get Executable Directory
   Plat_GetExecutableDirectory(CurrentDir, sizeof(CurrentDir));
 

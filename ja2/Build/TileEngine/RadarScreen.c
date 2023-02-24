@@ -4,13 +4,17 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "Globals.h"
 #include "JAScreens.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/Meanwhile.h"

@@ -9,7 +9,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/WCheck.h"
 #include "platform.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 // The FileDatabaseHeader
 DatabaseManagerHeaderStruct gFileDataBase;

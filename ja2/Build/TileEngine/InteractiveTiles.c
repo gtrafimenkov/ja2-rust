@@ -8,7 +8,7 @@
 #include "SGP/English.h"
 #include "SGP/HImage.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Quests.h"

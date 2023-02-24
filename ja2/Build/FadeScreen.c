@@ -1,8 +1,9 @@
 #include "FadeScreen.h"
 
 #include "GameLoop.h"
+#include "Globals.h"
 #include "SGP/CursorControl.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "ScreenIDs.h"
 #include "SysGlobals.h"

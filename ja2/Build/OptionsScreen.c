@@ -1,9 +1,9 @@
 #include "OptionsScreen.h"
 
-#include <windows.h>
-
 #include "GameSettings.h"
+#include "JAScreens.h"
 #include "LanguageDefines.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
@@ -13,6 +13,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadScreen.h"
+#include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameInit.h"
 #include "Tactical/Gap.h"
@@ -226,7 +227,6 @@ void HandleSliderBarMovementSounds();
 void HandleOptionToggle(UINT8 ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound);
 void HandleHighLightedText(BOOLEAN fHighLight);
 
-extern BOOLEAN CheckIfGameCdromIsInCDromDrive();
 extern void ToggleItemGlow(BOOLEAN fOn);
 
 // ppp
@@ -726,9 +726,7 @@ void RenderOptionsScreen() {
 
 void GetOptionsScreenUserInput() {
   InputAtom Event;
-  POINT MousePos;
-
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&Event)) {
     // HOOK INTO MOUSE HOOKS
@@ -801,45 +799,7 @@ void GetOptionsScreenUserInput() {
                                             MIDDLEPAN);
         } break;
         case 't': {
-          /*
-                                                  {
-                                                          CHAR8		zCdromRootDrive[512];
-                                                          HWFILE	hFile;
-
-                                                          if( !GetCdromLocationFromIniFile(
-             zCdromRootDrive ) ) return;
-
-                                                          //Check if a file exists on the cdrom
-                                                          sprintf( zCdromRootDrive,
-             "%sData\\NPC_Speech.slf", zCdromRootDrive );
-
-                                          //		if( FileMan_ExistsNoDB( zCdromRootDrive ) )
-                                                          hFile = FileMan_Open( zCdromRootDrive,
-             FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE ); if( hFile != 0 )
-                                                          {
-                                                                  FileMan_Close( hFile );
-                                                                  sprintf( zCdromRootDrive,
-             "%sData\\NPC_Speech.slf", zCdromRootDrive );
-                                                          }
-                                                          else
-                                                          {
-                                                                  sprintf( zCdromRootDrive,
-             "%sData\\NPC_Speech.slf", zCdromRootDrive );
-                                                          }
-
-                                                          uiLastTimeToCheckCDromDrive =
-             GetJA2Clock();
-                                                  }
-          */
         } break;
-
-        case 'z':
-          SetErrorMode(SEM_FAILCRITICALERRORS);
-          break;
-
-        case 'q':
-          //					ShouldMercSayPrecedentToRepeatOneSelf( 11, 99 );
-          break;
 #endif
       }
     }

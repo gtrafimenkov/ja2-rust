@@ -14,7 +14,7 @@
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
 UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];

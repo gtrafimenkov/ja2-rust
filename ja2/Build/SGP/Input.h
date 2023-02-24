@@ -1,11 +1,8 @@
 #ifndef __INPUT_
 #define __INPUT_
 
+#include "Point.h"
 #include "SGP/Types.h"
-
-#define SCAN_CODE_MASK 0xff0000
-#define EXT_CODE_MASK 0x01000000
-#define TRANSITION_MASK 0x80000000
 
 #define KEY_DOWN 0x0001
 #define KEY_UP 0x0002
@@ -24,7 +21,6 @@
 #define CTRL_DOWN 0x02
 #define ALT_DOWN 0x04
 
-#define MAX_STRING_INPUT 64
 #define DBL_CLK_TIME 300  // Increased by Alex, Jun-10-97, 200 felt too short
 #define BUTTON_REPEAT_TIMEOUT 250
 #define BUTTON_REPEAT_TIME 50
@@ -35,12 +31,7 @@ typedef struct {
   UINT16 usEvent;
   UINT32 usParam;
   UINT32 uiParam;
-
 } InputAtom;
-
-// Mouse pos extracting macros from InputAtom
-#define GETYPOS(a) HIWORD(((a)->uiParam))
-#define GETXPOS(a) LOWORD(((a)->uiParam))
 
 typedef struct StringInput {
   UINT16 *pString;
@@ -69,21 +60,8 @@ extern void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
 extern void KeyDown(UINT32 usParam, UINT32 uiParam);
 extern void KeyUp(UINT32 usParam, UINT32 uiParam);
 
-extern void EnableDoubleClk(void);
-extern void DisableDoubleClk(void);
 extern void GetMousePos(SGPPoint *Point);
 
-extern StringInput *InitStringInput(UINT16 *pInputString, UINT16 usLength, UINT16 *pFilter);
-extern void LinkPreviousString(StringInput *pCurrentString, StringInput *pPreviousString);
-extern void LinkNextString(StringInput *pCurrentString, StringInput *pNextString);
-extern UINT16 GetStringLastInput(void);
-extern BOOLEAN StringInputHasFocus(void);
-extern BOOLEAN SetStringFocus(StringInput *pStringDescriptor);
-extern UINT16 GetCursorPositionInString(StringInput *pStringDescriptor);
-extern UINT16 GetStringInputState(void);
-extern BOOLEAN StringHasFocus(StringInput *pStringDescriptor);
-extern UINT16 *GetString(StringInput *pStringDescriptor);
-extern void EndStringInput(StringInput *pStringDescriptor);
 extern BOOLEAN DequeueSpecificEvent(InputAtom *Event, UINT32 uiMaskFlags);
 
 extern void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2);
@@ -91,12 +69,9 @@ extern void RestrictMouseCursor(SGPRect *pRectangle);
 extern void FreeMouseCursor(void);
 extern BOOLEAN IsCursorRestricted(void);
 extern void GetRestrictedClipCursor(SGPRect *pRectangle);
-extern void RestoreCursorClipRect(void);
+extern void ReapplyCursorClipRect(void);
 
 void SimulateMouseMovement(UINT32 uiNewXPos, UINT32 uiNewYPos);
-BOOLEAN InputEventInside(InputAtom *Event, UINT32 uiX1, UINT32 uiY1, UINT32 uiX2, UINT32 uiY2);
-
-INT16 GetMouseWheelDeltaValue(UINT32 wParam);
 
 extern void DequeueAllKeyBoardEvents();
 
@@ -128,6 +103,8 @@ extern BOOLEAN gfSGPInputReceived;
 #define _EvShiftDown(a) (((InputAtom *)(a))->usKeyState & SHIFT_DOWN)
 #define _EvCtrlDown(a) (((InputAtom *)(a))->usKeyState & CTRL_DOWN)
 #define _EvAltDown(a) (((InputAtom *)(a))->usKeyState & ALT_DOWN)
+
+extern struct Point GetMousePoint();
 
 #ifdef __cplusplus
 }

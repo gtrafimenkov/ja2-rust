@@ -20,6 +20,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SaveLoadGame.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/CampaignTypes.h"

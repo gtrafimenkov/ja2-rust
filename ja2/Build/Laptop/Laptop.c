@@ -1,7 +1,5 @@
 #include "Laptop/Laptop.h"
 
-#include <windows.h>
-
 #include "Cheats.h"
 #include "GameLoop.h"
 #include "HelpScreen.h"
@@ -43,12 +41,13 @@
 #include "Laptop/MercsNoAccount.h"
 #include "Laptop/Personnel.h"
 #include "Laptop/SirTech.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
@@ -606,9 +605,7 @@ void HandleLapTopCursorUpDate() {
 }
 void GetLaptopKeyboardInput() {
   InputAtom InputEvent;
-  POINT MousePos;
-
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   fTabHandled = FALSE;
 
@@ -2731,8 +2728,7 @@ void PersonnelRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void CheckIfMouseLeaveScreen() {
-  POINT MousePos;
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
   if ((MousePos.x > LAPTOP_SCREEN_LR_X) || (MousePos.x < LAPTOP_UL_X) ||
       (MousePos.y < LAPTOP_UL_Y) || (MousePos.y > LAPTOP_SCREEN_LR_Y)) {
     guiCurrentLapTopCursor = LAPTOP_PANEL_CURSOR;

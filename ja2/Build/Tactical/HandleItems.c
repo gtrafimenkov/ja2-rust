@@ -5,6 +5,7 @@
 #include "SGP/Random.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/Quests.h"

@@ -2,6 +2,7 @@
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
 #include "SGP/Random.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Quests.h"

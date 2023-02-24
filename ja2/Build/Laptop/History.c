@@ -4,6 +4,7 @@
 
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/VSurface.h"

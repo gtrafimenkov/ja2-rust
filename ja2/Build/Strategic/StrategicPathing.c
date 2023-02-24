@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Input.h"
-#include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"

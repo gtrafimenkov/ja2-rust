@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
 
 #include "Cheats.h"
 #include "Editor/EditScreen.h"
@@ -19,7 +18,6 @@
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/Input.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
@@ -109,8 +107,6 @@ extern SOLDIERTYPE *gpSMCurrentMerc;
 extern INT16 gsOverItemsGridNo;
 extern INT16 gsOverItemsLevel;
 extern BOOLEAN gfUIShowExitSouth;
-
-extern INT32 giStartingMemValue;
 
 extern BOOLEAN gfBeginBurstSpreadTracking;
 extern BOOLEAN gfRTClickLeftHoldIntercepted;
@@ -1157,15 +1153,13 @@ extern BOOLEAN gfUserTurnRegionActive;
 void GetKeyboardInput(UINT32 *puiNewEvent) {
   InputAtom InputEvent;
   BOOLEAN fKeyTaken = FALSE;
-  POINT MousePos;
-  // SOLDIERTYPE				*pSoldier;
   static BOOLEAN fShifted = FALSE;
   static BOOLEAN fShifted2 = FALSE;
   static BOOLEAN fAltDown = FALSE;
   UINT16 usMapPos;
   BOOLEAN fGoodCheatLevelKey = FALSE;
 
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   GetMouseMapPos(&usMapPos);
 
@@ -2229,11 +2223,6 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
               CountLevelNodes();
             }
           } else if (fCtrl) {
-            if (INFORMATION_CHEAT_LEVEL()) {
-              ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Memory Used: %d + %d = %d vs: %d",
-                        guiMemTotal, giMemUsedInSurfaces, (guiMemTotal + giMemUsedInSurfaces),
-                        (giStartingMemValue - MemGetFree()));
-            }
           } else {
             // nothing in hand and the Map Screen button for whichever panel we're in must be
             // enabled

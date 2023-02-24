@@ -1,7 +1,7 @@
 #ifndef __PHYSICS_H
 #define __PHYSICS_H
 
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "Tactical/Items.h"
 #include "Tactical/SoldierControl.h"
 #include "TileEngine/PhysMath.h"

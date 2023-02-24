@@ -1,8 +1,11 @@
 #include "Strategic/TownMilitia.h"
 
+#include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Laptop/LaptopSave.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Random.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"

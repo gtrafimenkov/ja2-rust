@@ -20,6 +20,7 @@
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "Strategic/Scheduling.h"
 #include "Tactical/OverheadTypes.h"
 #include "TileEngine/RenderDirty.h"

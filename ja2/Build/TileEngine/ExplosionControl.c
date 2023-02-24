@@ -59,7 +59,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 // MODULE FOR EXPLOSIONS
 

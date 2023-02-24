@@ -1,16 +1,17 @@
 #include <stdio.h>
-#include <windows.h>
 
 #include "Editor/EditScreen.h"
 #include "Editor/SummaryInfo.h"
 #include "GameLoop.h"
 #include "GameSettings.h"
+#include "Globals.h"
 #include "HelpScreen.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -47,7 +48,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
@@ -56,11 +57,7 @@
 extern BOOLEAN gfUseConsecutiveQuickSaveSlots;
 #endif
 
-extern HINSTANCE ghInstance;
-
 UINT32 InitializeJA2(void) {
-  HandleJA2CDCheck();
-
   gfWorldLoaded = FALSE;
 
   // Load external text
@@ -97,10 +94,6 @@ UINT32 InitializeJA2(void) {
   if (!InitTacticalEngine()) {
     return (ERROR_SCREEN);
   }
-
-  // Init timer system
-  // Moved to the splash screen code.
-  // InitializeJA2Clock( );
 
   // INit shade tables
   BuildShadeTable();

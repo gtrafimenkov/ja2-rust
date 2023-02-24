@@ -1,8 +1,10 @@
 #include "Tactical/Squads.h"
 
 #include "JAScreens.h"
+#include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/Types.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/StrategicMap.h"

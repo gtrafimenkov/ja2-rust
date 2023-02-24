@@ -7,11 +7,13 @@
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
 #include "Laptop/Mercs.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
+#include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
@@ -1591,23 +1593,6 @@ BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
 
   // Copy
   strcpy(zSoundString, pFilename);
-
-  // Double check it exists....
-
-  //#ifndef JA2TESTVERSION
-
-  /*
-    if ( !FileMan_Exists( pFilename ) )
-    {
-                  CHAR8 sString[512];
-
-                  sprintf( sString, "ERROR: Missing file for character # %d, quote # %d",
-    ubCharacterNum, usQuoteNum ); ShowCursor(TRUE); ShowCursor(TRUE); ShutdownWithErrorBox( sString
-    );
-    }
-  */
-
-  //#endif
 
   // get speech if applicable
   if (gGameSettings.fOptions[TOPTION_SPEECH]) {

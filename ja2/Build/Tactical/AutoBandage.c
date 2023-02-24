@@ -1,9 +1,12 @@
 #include "Tactical/AutoBandage.h"
 
 #include "MessageBoxScreen.h"
+#include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"

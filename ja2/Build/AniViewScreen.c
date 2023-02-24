@@ -10,10 +10,10 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"
-#include "SGP/Input.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "SysGlobals.h"
@@ -32,7 +32,7 @@
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"
-#include "platfrom_strings.h"
+#include "platform_strings.h"
 
 void BuildListFile();
 

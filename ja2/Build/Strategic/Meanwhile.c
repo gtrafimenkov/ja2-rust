@@ -6,7 +6,7 @@
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"

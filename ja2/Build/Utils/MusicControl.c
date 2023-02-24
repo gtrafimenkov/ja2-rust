@@ -6,6 +6,7 @@
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
+#include "ScreenIDs.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Overhead.h"

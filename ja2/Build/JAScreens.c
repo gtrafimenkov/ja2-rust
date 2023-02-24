@@ -11,6 +11,7 @@
 #include "GameLoop.h"
 #include "GameScreen.h"
 #include "GameVersion.h"
+#include "Globals.h"
 #include "Init.h"
 #include "JA2DemoAds.h"
 #include "LanguageDefines.h"
@@ -19,11 +20,10 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"
-#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
 #include "SGP/Timer.h"
+#include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/WCheck.h"
@@ -180,10 +180,6 @@ void DisplayFrameRate() {
     // Print Num tiles
     // gprintfdirty( 0, 280, L"%d Tiles", gTileDatabaseSize );
     // mprintf( 0, 280, L"%d Tiles", gTileDatabaseSize );
-
-    // Print tile mem usage
-    // gprintfdirty( 0, 300, L"%d kB", guiMemTotal / 1024 );
-    // mprintf( 0, 300, L"%d kB", guiMemTotal / 1024 );
   }
 #endif
 }
@@ -280,9 +276,6 @@ UINT32 InitScreenHandle(void) {
   }
 
   if (ubCurrentScreen == 0) {
-    // Load version number....
-    // HandleLimitedNumExecutions( );
-
     // Load init screen and blit!
     vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
 
@@ -798,9 +791,7 @@ void DoDemoIntroduction() {
       DispatchMessage(&Message);
     } else {  // Windows hasn't processed any messages, therefore we handle the rest
       InputAtom InputEvent;
-      POINT MousePos;
-
-      GetCursorPos(&MousePos);
+      struct Point MousePos = GetMousePoint();
       // Hook into mouse stuff for MOVEMENT MESSAGES
       MouseSystemHook(MOUSE_POS, (UINT16)MousePos.x, (UINT16)MousePos.y, _LeftButtonDown,
                       _RightButtonDown);

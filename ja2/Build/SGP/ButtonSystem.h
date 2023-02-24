@@ -180,7 +180,6 @@ INT32 GetNextButtonNumber(void);
 // Now used by Wizardry -- DB
 void SetButtonFastHelpText(INT32 iButton, STR16 Text);
 
-#ifdef _JA2_RENDER_DIRTY
 void SetBtnHelpEndCallback(INT32 iButton, MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn);
 // void DisplayFastHelp(GUI_BUTTON *b);
 void RenderButtonsFastHelp(void);
@@ -189,8 +188,6 @@ void RenderButtonsFastHelp(void);
 
 BOOLEAN SetButtonSavedRect(INT32 iButton);
 void FreeButtonSavedRect(INT32 iButton);
-
-#endif
 
 INT16 LoadGenericButtonIcon(STR8 filename);
 BOOLEAN UnloadGenericButtonIcon(INT16 GenImg);

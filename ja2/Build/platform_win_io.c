@@ -8,7 +8,6 @@
 #include <windows.h>
 
 #include "SGP/Container.h"
-#include "SGP/DBMan.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/LibraryDataBase.h"
@@ -170,36 +169,9 @@ BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) {
 
 //**************************************************************************
 //
-//				Typedefs
-//
-//**************************************************************************
-
-typedef struct FMFileInfoTag {
-  char strFilename[FILENAME_LENGTH];
-  UINT8 uiFileAccess;
-  UINT32 uiFilePosition;
-  HANDLE hFileHandle;
-  HDBFILE hDBFile;
-
-} FMFileInfo;  // for 'File Manager File Information'
-
-typedef struct FileSystemTag {
-  FMFileInfo *pFileInfo;
-  UINT32 uiNumHandles;
-  BOOLEAN fDebug;
-  BOOLEAN fDBInitialized;
-
-  char *pcFileNames;
-  UINT32 uiNumFilesInDirectory;
-} FileSystem;
-
-//**************************************************************************
-//
 //				Variables
 //
 //**************************************************************************
-
-// FileSystem gfs;
 
 WIN32_FIND_DATA Win32FindInfo[20];
 BOOLEAN fFindInfoInUse[20] = {FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,
@@ -248,13 +220,11 @@ HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
   HANDLE hRealFile;
   DWORD dwAccess;
   DWORD dwFlagsAndAttributes;
-  HDBFILE hDBFile;
   BOOLEAN fExists;
   DWORD dwCreationFlags;
   HWFILE hLibFile;
 
   hFile = 0;
-  hDBFile = 0;
   dwCreationFlags = 0;
 
   // check if the file exists - note that we use the function FileMan_ExistsNoDB

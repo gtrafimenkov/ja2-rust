@@ -4,7 +4,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Random.h"
-#include "SGP/SGP.h"
+#include "SGP/Types.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/QueenCommand.h"

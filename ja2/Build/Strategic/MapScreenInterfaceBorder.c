@@ -1,10 +1,11 @@
 #include "Strategic/MapScreenInterfaceBorder.h"
 
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"

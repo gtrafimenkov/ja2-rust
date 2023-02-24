@@ -759,9 +759,6 @@ BOOLEAN ExecuteOverhead() {
     for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
       pSoldier = MercSlots[cnt];
 
-      // Syncronize for upcoming soldier counters
-      SYNCTIMECOUNTER();
-
       if (pSoldier != NULL) {
         HandlePanelFaceAnimations(pSoldier);
 
@@ -914,12 +911,8 @@ BOOLEAN ExecuteOverhead() {
 
         // Handle animation update counters
         // ATE: Added additional check here for special value of anispeed that pauses all updates
-#ifndef BOUNDS_CHECKER
         if (TIMECOUNTERDONE(pSoldier->UpdateCounter, pSoldier->sAniDelay) &&
-            pSoldier->sAniDelay != 10000)
-#endif
-        {
-
+            pSoldier->sAniDelay != 10000) {
 #ifdef NETWORKED
           // DEF:
           // Check for TIMING delay here only if in Realtime
@@ -1374,9 +1367,6 @@ BOOLEAN ExecuteOverhead() {
         guiAISlotToHandle == HANDLE_OFF_MAP_MERC &&
         guiAIAwaySlotToHandle != RESET_HANDLE_OF_OFF_MAP_MERCS) {
       pSoldier = AwaySlots[guiAIAwaySlotToHandle];
-
-      // Syncronize for upcoming soldier counters
-      SYNCTIMECOUNTER();
 
       if (pSoldier != NULL) {
         // the ONLY thing to do with away soldiers is process their schedule if they have one

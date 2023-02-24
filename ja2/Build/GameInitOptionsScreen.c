@@ -4,11 +4,12 @@
 #include "GameSettings.h"
 #include "Intro.h"
 #include "OptionsScreen.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
-#include "SGP/Input.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "ScreenIDs.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/SoldierProfileType.h"
 #include "TileEngine/RenderDirty.h"
@@ -670,9 +671,7 @@ BOOLEAN RenderGIOScreen() {
 
 void GetGIOScreenUserInput() {
   InputAtom Event;
-  //	POINT  MousePos;
-
-  //	GetCursorPos(&MousePos);
+  //	struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&Event)) {
     if (Event.usEvent == KEY_DOWN) {

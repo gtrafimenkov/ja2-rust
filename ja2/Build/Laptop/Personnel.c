@@ -1,12 +1,12 @@
 #include "Laptop/Personnel.h"
 
-#include <windows.h>
-
 #include "GameLoop.h"
 #include "Laptop/AIMMembers.h"
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "Point.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Input.h"
@@ -241,15 +241,11 @@ INT32 giPersonnelATMSideButtonImage[NUMBER_ATM_BUTTONS];
 INT32 iNumberPadButtons[10];
 INT32 iNumberPadButtonsImages[10];
 
-POINT pAtmSideButtonPts[] = {
-    {533, 155}, {558, 110}, {558, 125}, {558, 140}, {558, 155},
-};
-
 #define PrsnlOffSetX (-15)  //-20
 #define Prsnl_DATA_OffSetX (36)
 #define PrsnlOffSetY 10
 
-POINT pPersonnelScreenPoints[] = {
+struct Point pPersonnelScreenPoints[] = {
     {422 + PrsnlOffSetX, 205 + PrsnlOffSetY},
     {422 + PrsnlOffSetX, 215 + PrsnlOffSetY},
     {422 + PrsnlOffSetX, 225 + PrsnlOffSetY},
@@ -449,7 +445,6 @@ void DisplayATMAmount(void);
 
 // create destroy ATM button
 void CreateDestroyStartATMButton(void);
-void CreateDestroyATMButton(void);
 void ATMStartButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void ATMNumberButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void HandleStateOfATMButtons(void);
@@ -531,7 +526,6 @@ void ExitPersonnel(void) {
   fShowAtmPanel = FALSE;
   fATMFlags = 0;
   CreateDestroyStartATMButton();
-  CreateDestroyATMButton();
 
   //	fShowInventory = FALSE;
   gubPersonnelInfoState = PRSNL_STATS;
@@ -767,9 +761,6 @@ void RenderPersonnelStats(INT32 iId, INT32 iSlot) {
   SetFont(PERS_FONT);
   SetFontForeground(PERS_TEXT_FONT_COLOR);
   SetFontBackground(FONT_BLACK);
-
-  // for(iCounter=0; iCounter <PERS_COUNT; iCounter++)
-  // mprintf((INT16)(pPersonnelScreenPoints[iCounter].x+(iSlot*IMAGE_BOX_WIDTH)),pPersonnelScreenPoints[iCounter].y,pPersonnelScreenStrings[iCounter]);
 
   if (gubPersonnelInfoState == PERSONNEL_STAT_BTN) {
     DisplayCharStats(iId, iSlot);
@@ -4995,7 +4986,6 @@ BOOLEAN RenderAtmPanel(void) {
 
     // create destroy
     CreateDestroyStartATMButton();
-    CreateDestroyATMButton();
 
     // display strings for ATM
     DisplayATMStrings();
@@ -5030,7 +5020,6 @@ BOOLEAN RenderAtmPanel(void) {
 
     // create destroy
     CreateDestroyStartATMButton();
-    CreateDestroyATMButton();
   }
   return (TRUE);
 }
@@ -5144,7 +5133,6 @@ void FindPositionOfPersInvSlider(void) {
 void HandleSliderBarClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iValue = 0;
   INT32 iNumberOfItems = 0;
-  POINT MousePos;
   INT16 sSizeOfEachSubRegion = 0;
   INT16 sYPositionOnBar = 0;
   INT16 iCurrentItemValue = 0;
@@ -5168,7 +5156,7 @@ void HandleSliderBarClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
     }
 
     // find the x,y on the slider bar
-    GetCursorPos(&MousePos);
+    struct Point MousePos = GetMousePoint();
 
     // get the subregion sizes
     sSizeOfEachSubRegion =
@@ -5206,120 +5194,6 @@ void RenderSliderBarForPersonnelInventory(void) {
   BltVideoObject(FRAME_BUFFER, hHandle, 5, (INT16)(X_OF_PERSONNEL_SCROLL_REGION),
                  (INT16)(guiSliderPosition + Y_OF_PERSONNEL_SCROLL_REGION), VO_BLT_SRCTRANSPARENCY,
                  NULL);
-}
-
-void CreateDestroyATMButton(void) {
-  /*
-  static BOOLEAN fCreated = FALSE;
-  CHAR16 sString[ 32 ];
-
-
-
-  // create/destroy atm start button as needed
-  INT32 iCounter = 0;
-
-  if( ( fCreated == FALSE ) && ( fShowAtmPanel == TRUE ) )
-  {
-
-          for( iCounter = 0; iCounter < 10; iCounter++ )
-          {
-                  if( iCounter != 9 )
-                  {
-                          iNumberPadButtonsImages[ iCounter ]=LoadButtonImage(
-  "LAPTOP\\AtmButtons.sti" ,-1,4,-1,6,-1 ); swprintf( sString, L"%d", iCounter+1 );
-                  }
-                  else
-                  {
-                          iNumberPadButtonsImages[ iCounter ]=LoadButtonImage(
-  "LAPTOP\\AtmButtons.sti" ,-1,7,-1,9,-1 ); swprintf( sString, L"%d", iCounter - 9 );
-                  }
-
-                  iNumberPadButtons[ iCounter ] = QuickCreateButton( iNumberPadButtonsImages[
-  iCounter ], ( INT16 )( ATM_BUTTONS_START_X + ( ATM_BUTTON_WIDTH * ( INT16 )( iCounter % 3 )) ), (
-  INT16 )( ATM_BUTTONS_START_Y + ( INT16 )( ATM_BUTTON_HEIGHT * ( iCounter / 3 ))) , BUTTON_TOGGLE,
-  MSYS_PRIORITY_HIGHEST - 1, BtnGenericMouseMoveButtonCallback,
-  (GUI_CALLBACK)ATMNumberButtonCallback );
-
-                  if( iCounter != 9)
-                  {
-                          MSYS_SetBtnUserData(iNumberPadButtons[iCounter],0,iCounter + 1 );
-                  }
-                  else
-                  {
-                          MSYS_SetBtnUserData(iNumberPadButtons[iCounter],0, 0 );
-                  }
-                  SetButtonCursor(iNumberPadButtons[iCounter], CURSOR_LAPTOP_SCREEN);
-                  SpecifyButtonFont( iNumberPadButtons[iCounter], PERS_FONT );
-                  SpecifyButtonText( iNumberPadButtons[iCounter], sString );
-                  SpecifyButtonUpTextColors( iNumberPadButtons[iCounter], FONT_BLACK, FONT_BLACK );
-
-          }
-
-
-          // now slap down done, cancel, dep, withdraw
-          for( iCounter = OK_ATM; iCounter < NUMBER_ATM_BUTTONS ;iCounter++ )
-          {
-                  if( iCounter == OK_ATM )
-                  {
-                          giPersonnelATMSideButtonImage[ iCounter ]=  LoadButtonImage(
-  "LAPTOP\\AtmButtons.sti" ,-1,7,-1,9,-1 );
-                  }
-                  else
-                  {
-                          giPersonnelATMSideButtonImage[ iCounter ]=  LoadButtonImage(
-  "LAPTOP\\AtmButtons.sti" ,-1,10,-1,12,-1 );
-                  }
-
-                  if( ( iCounter != DEPOSIT_ATM ) && ( iCounter != WIDTHDRAWL_ATM ) )
-                  {
-                          giPersonnelATMSideButton[ iCounter ] = QuickCreateButton(
-  giPersonnelATMSideButtonImage[ iCounter ], ( INT16 )( pAtmSideButtonPts[ iCounter ].x ), ( INT16
-  )( pAtmSideButtonPts[ iCounter ].y ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
-                                                                          BtnGenericMouseMoveButtonCallback,
-  (GUI_CALLBACK)ATMOtherButtonCallback );
-                  }
-                  else
-                  {
-                          giPersonnelATMSideButton[ iCounter ] = QuickCreateButton(
-  giPersonnelATMSideButtonImage[ iCounter ], ( INT16 )( pAtmSideButtonPts[ iCounter ].x ), ( INT16
-  )( pAtmSideButtonPts[ iCounter ].y ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
-                                                                          BtnGenericMouseMoveButtonCallback,
-  (GUI_CALLBACK)ATMOther2ButtonCallback );
-                  }
-                  MSYS_SetBtnUserData(giPersonnelATMSideButton[iCounter],0,iCounter );
-                  SpecifyButtonFont( giPersonnelATMSideButton[iCounter], PERS_FONT );
-                  SetButtonCursor(giPersonnelATMSideButton[iCounter], CURSOR_LAPTOP_SCREEN);
-                  SpecifyButtonUpTextColors( giPersonnelATMSideButton[iCounter], FONT_BLACK,
-  FONT_BLACK ); SpecifyButtonText( giPersonnelATMSideButton[iCounter], gsAtmSideButtonText[ iCounter
-  ] );
-          }
-
-
-          //SetButtonCursor(giPersonnelATMStartButton, CURSOR_LAPTOP_SCREEN);
-          fCreated = TRUE;
-  }
-  else if( ( fCreated == TRUE ) && ( fShowAtmPanel == FALSE ) )
-  {
-          // stop showing
-          //RemoveButton( giPersonnelATMButton );
-          //UnloadButtonImage( giPersonnelATMButtonImage );
-
-          for( iCounter = 0; iCounter < 10; iCounter++ )
-          {
-                  UnloadButtonImage( iNumberPadButtonsImages[ iCounter ] );
-                  RemoveButton( iNumberPadButtons[ iCounter ] );
-          }
-
-          for( iCounter = OK_ATM; iCounter < NUMBER_ATM_BUTTONS ;iCounter++ )
-          {
-                  RemoveButton( giPersonnelATMSideButton[ iCounter ]  );
-                  UnloadButtonImage( giPersonnelATMSideButtonImage[ iCounter ] );
-          }
-
-          fCreated = FALSE;
-  }
-
-  */
 }
 
 void ATMStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {
@@ -5898,9 +5772,7 @@ void HandlePersonnelKeyboard(void) {
   CHAR16 sZero[2] = L"0";
 
   InputAtom InputEvent;
-  POINT MousePos;
-
-  GetCursorPos(&MousePos);
+  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&InputEvent) == TRUE) {
     if ((InputEvent.usEvent == KEY_DOWN) && (InputEvent.usParam >= '0') &&

@@ -1,8 +1,11 @@
 #include <stdio.h>
 
+#include "BuildDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "GameSettings.h"
+#include "Globals.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
 #include "SGP/Input.h"
@@ -11,6 +14,8 @@
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
+#include "ScreenIDs.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/CampaignInit.h"
 #include "Strategic/CampaignTypes.h"

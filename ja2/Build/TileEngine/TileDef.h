@@ -1,7 +1,6 @@
 #ifndef __TILEDEF_H
 #define __TILEDEF_H
 
-#include "SGP/Timer.h"
 #include "SGP/VObject.h"
 #include "TileEngine/Structure.h"
 #include "TileEngine/TileDat.h"

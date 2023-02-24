@@ -9,8 +9,9 @@
 #include <memory.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <windows.h>
+#include <string.h>
 
+#include "Globals.h"
 #include "SGP/ButtonSoundControl.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
@@ -22,12 +23,10 @@
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
-#include "Utils/WordWrap.h"
-#ifdef _JA2_RENDER_DIRTY
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
 #include "Utils/Utilities.h"
-#endif
+#include "Utils/WordWrap.h"
 
 // ATE: Added to let Wiz default creating mouse regions with no cursor, JA2 default to a cursor (
 // first one )
@@ -171,7 +170,6 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
   UINT32 UseSlot;
   ETRLEObject *pTrav;
   UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
-  UINT32 MemBefore, MemAfter, MemUsed;
 
   AssertMsg(filename != BUTTON_NO_FILENAME, "Attempting to LoadButtonImage() with null filename.");
   AssertMsg(strlen(filename), "Attempting to LoadButtonImage() with empty filename string.");
@@ -196,14 +194,11 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
   vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(vo_desc.ImageFile, filename);
 
-  MemBefore = MemGetFree();
   if ((ButtonPictures[UseSlot].vobj = CreateVideoObject(&vo_desc)) == NULL) {
     DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
                String("Couldn't create VOBJECT for %s", filename));
     return (-1);
   }
-  MemAfter = MemGetFree();
-  MemUsed = MemBefore - MemAfter;
 
   // Init the QuickButton image structure with indexes to use
   ButtonPictures[UseSlot].Grayed = Grayed;
@@ -1148,11 +1143,9 @@ void RemoveButton(INT32 iButtonID) {
   // ...kill it!!!
   MSYS_RemoveRegion(&b->Area);
 
-#ifdef _JA2_RENDER_DIRTY
   if (b->uiFlags & BUTTON_SAVEBACKGROUND) {
     FreeBackgroundRectPending(b->BackRect);
   }
-#endif
 
   // Get rid of the text string
   if (b->string != NULL) MemFree(b->string);
@@ -1222,14 +1215,12 @@ void ResizeButton(INT32 iButtonID, INT16 w, INT16 h) {
   b->Area.RegionBottomRightY = (UINT16)(yloc + h);
   b->uiFlags |= BUTTON_DIRTY;
 
-#ifdef _JA2_RENDER_DIRTY
   if (b->uiFlags & BUTTON_SAVEBACKGROUND) {
     FreeBackgroundRectPending(b->BackRect);
     b->BackRect =
         RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (INT16)xloc,
                                (INT16)yloc, (INT16)(xloc + w), (INT16)(yloc + h));
   }
-#endif
 }
 
 //=============================================================================
@@ -1271,14 +1262,12 @@ void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y) {
   b->Area.RegionBottomRightY = (UINT16)(yloc + h);
   b->uiFlags |= BUTTON_DIRTY;
 
-#ifdef _JA2_RENDER_DIRTY
   if (b->uiFlags & BUTTON_SAVEBACKGROUND) {
     FreeBackgroundRectPending(b->BackRect);
     b->BackRect =
         RegisterBackgroundRect(BGND_FLAG_PERMANENT | BGND_FLAG_SAVERECT, NULL, (INT16)xloc,
                                (INT16)yloc, (INT16)(xloc + w), (INT16)(yloc + h));
   }
-#endif
 }
 
 //=============================================================================
@@ -1433,9 +1422,7 @@ INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, IN
   // Set this button's flags
   b->uiFlags |= (BUTTON_ENABLED | BType | BUTTON_GENERIC);
 
-#ifdef _JA2_RENDER_DIRTY
   b->BackRect = -1;
-#endif
 
 // Add button to the button list
 #ifdef BUTTONSYSTEM_DEBUGGING
@@ -1559,9 +1546,7 @@ INT32 CreateTextButton(STR16 string, UINT32 uiFont, INT16 sForeColor, INT16 sSha
   // Set the flags for this button
   b->uiFlags |= (BUTTON_ENABLED | BType | BUTTON_GENERIC);
 
-#ifdef _JA2_RENDER_DIRTY
   b->BackRect = -1;
-#endif
 
 // Add this button to the button list
 #ifdef BUTTONSYSTEM_DEBUGGING
@@ -1647,9 +1632,7 @@ INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Pri
   // Set the flags entry for this hotspot
   b->uiFlags |= (BUTTON_ENABLED | BType | BUTTON_HOT_SPOT);
 
-#ifdef _JA2_RENDER_DIRTY
   b->BackRect = -1;
-#endif
 
 // Add this button (hotspot) to the button list
 #ifdef BUTTONSYSTEM_DEBUGGING
@@ -1793,9 +1776,7 @@ INT32 QuickCreateButton(UINT32 Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 
 
   // Set the flags for this button
   b->uiFlags |= BUTTON_ENABLED | BType | BUTTON_QUICK;
-#ifdef _JA2_RENDER_DIRTY
   b->BackRect = -1;
-#endif
 
 // Add this QuickButton to the button list
 #ifdef BUTTONSYSTEM_DEBUGGING
@@ -1964,9 +1945,7 @@ INT32 CreateIconAndTextButton(INT32 Image, STR16 string, UINT32 uiFont, INT16 sF
   // Set the flags for this button
   b->uiFlags |= (BUTTON_ENABLED | BType | BUTTON_QUICK);
 
-#ifdef _JA2_RENDER_DIRTY
   b->BackRect = -1;
-#endif
 
 // Add this QuickButton to the button list
 #ifdef BUTTONSYSTEM_DEBUGGING
@@ -3607,8 +3586,6 @@ void ReleaseAnchorMode() {
   gpAnchoredButton = NULL;
 }
 
-#ifdef _JA2_RENDER_DIRTY
-
 // Used to setup a dirtysaved region for buttons
 BOOLEAN SetButtonSavedRect(INT32 iButton) {
   GUI_BUTTON *b;
@@ -3648,8 +3625,6 @@ void FreeButtonSavedRect(INT32 iButton) {
     FreeBackgroundRectPending(b->BackRect);
   }
 }
-
-#endif
 
 // Kris:
 // Yet new logical additions to the winbart library.

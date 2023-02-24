@@ -9,6 +9,8 @@
 #include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
+#include "SGP/Video.h"
+#include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/CampaignTypes.h"
