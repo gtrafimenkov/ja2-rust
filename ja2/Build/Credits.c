@@ -2,6 +2,7 @@
 
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
@@ -17,7 +18,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 // local Defines
 enum {

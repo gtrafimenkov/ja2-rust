@@ -10,10 +10,10 @@
 #include "SGP/Container.h"
 #include "SGP/DBMan.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBase.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
-#include "fileman.h"
 #include "platform.h"
 
 BOOLEAN Plat_SetCurrentDirectory(STR pcDirectory) { return (SetCurrentDirectory(pcDirectory)); }

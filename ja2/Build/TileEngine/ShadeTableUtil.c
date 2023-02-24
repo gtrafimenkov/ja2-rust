@@ -4,11 +4,11 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/WorldDat.h"
-#include "fileman.h"
 #include "platform.h"
 
 #define SHADE_TABLE_DIR "ShadeTables"

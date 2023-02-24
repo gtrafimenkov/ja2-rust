@@ -4,6 +4,7 @@
 #include <time.h>
 #include <windows.h>
 
+#include "SGP/FileMan.h"
 #include "SGP/SGP.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -13,7 +14,6 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/OverheadTypes.h"
 #include "Utils/FontControl.h"
-#include "fileman.h"
 
 #define DATA_8_BIT_DIR "8-Bit\\"
 

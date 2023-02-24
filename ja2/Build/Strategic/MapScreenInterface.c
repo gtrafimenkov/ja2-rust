@@ -8,6 +8,7 @@
 #include "Laptop/Finances.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
@@ -52,7 +53,6 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 // inventory pool position on screen
 #define MAP_INVEN_POOL_X 300

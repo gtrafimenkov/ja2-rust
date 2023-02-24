@@ -5,6 +5,7 @@
 #include "GameSettings.h"
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/CreatureSpreading.h"
@@ -20,7 +21,6 @@
 #include "Tactical/SoldierProfile.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 // this .c file will handle the strategic level of mines and income from them
 

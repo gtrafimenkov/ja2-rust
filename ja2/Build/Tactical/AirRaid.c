@@ -4,6 +4,7 @@
 
 #include "GameSettings.h"
 #include "JAScreens.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
@@ -32,7 +33,6 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 
 #define SCRIPT_DELAY 10
 #define AIR_RAID_SAY_QUOTE_TIME 3000

@@ -3,13 +3,13 @@
 #include <stdio.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 #ifdef JA2TESTVERSION
 

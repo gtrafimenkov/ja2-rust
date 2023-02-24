@@ -7,6 +7,7 @@
 #include <windows.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/MemMan.h"
 #include "SGP/PCX.h"
@@ -15,7 +16,6 @@
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
-#include "fileman.h"
 
 //*******************************************************
 //

@@ -12,6 +12,7 @@
 #include "Editor/SummaryInfo.h"
 #include "JAScreens.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
@@ -63,7 +64,6 @@
 #include "Utils/FontControl.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Utilities.h"
-#include "fileman.h"
 #include "platform.h"
 
 #define SET_MOVEMENTCOST(a, b, c, d) \

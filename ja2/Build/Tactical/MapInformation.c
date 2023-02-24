@@ -6,6 +6,7 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/RoadSmoothing.h"
 #include "JA2.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SysGlobals.h"
@@ -21,7 +22,6 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/Message.h"
-#include "fileman.h"
 
 // Don't mess with this value, unless you want to force update all maps in the game!
 #ifdef RUSSIAN

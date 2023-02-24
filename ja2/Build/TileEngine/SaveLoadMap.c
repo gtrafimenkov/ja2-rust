@@ -2,6 +2,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/StrategicMap.h"
@@ -15,7 +16,6 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
-#include "fileman.h"
 
 #define NUM_REVEALED_BYTES 3200
 

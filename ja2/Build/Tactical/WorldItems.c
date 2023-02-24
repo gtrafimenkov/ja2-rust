@@ -2,6 +2,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/Quests.h"
@@ -26,7 +27,6 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
-#include "fileman.h"
 
 // Global dynamic array of all of the items in a loaded map.
 WORLDITEM *gWorldItems = NULL;

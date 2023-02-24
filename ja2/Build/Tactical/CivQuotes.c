@@ -1,6 +1,7 @@
 #include "Tactical/CivQuotes.h"
 
 #include "MessageBoxScreen.h"
+#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
@@ -26,7 +27,6 @@
 #include "Utils/MercTextBox.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 #define DIALOGUE_DEFAULT_WIDTH 200
 #define EXTREAMLY_LOW_TOWN_LOYALTY 20

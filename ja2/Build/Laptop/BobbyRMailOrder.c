@@ -5,6 +5,7 @@
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
@@ -22,7 +23,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 typedef struct {
   STR16 psCityLoc;

@@ -6,6 +6,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Container.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -22,7 +23,6 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Utilities.h"
-#include "fileman.h"
 
 // Defines
 #define NUM_BULLET_SLOTS 50

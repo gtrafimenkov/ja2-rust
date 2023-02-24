@@ -5,6 +5,7 @@
 #include "GameVersion.h"
 #include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
@@ -44,7 +45,6 @@
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 #include "platform.h"
 
 BOOLEAN gfWasInMeanwhile = FALSE;

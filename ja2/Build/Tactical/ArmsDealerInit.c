@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
@@ -14,7 +15,6 @@
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Weapons.h"
 #include "Utils/Message.h"
-#include "fileman.h"
 
 // To reduce memory fragmentation from frequent MemRealloc(), we allocate memory for more than one
 // special slot each time we run out of space.  Odds are that if we need one, we'll need another

@@ -3,6 +3,7 @@
 #include <memory.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
@@ -16,7 +17,6 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/WorldMan.h"
-#include "fileman.h"
 
 // dynamic arrays that contain the valid gridno's for each edge
 INT16 *gps1stNorthEdgepointArray = NULL;

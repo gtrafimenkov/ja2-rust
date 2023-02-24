@@ -6,6 +6,7 @@
 #include "Laptop/AIMMembers.h"
 #include "MessageBoxScreen.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
@@ -37,7 +38,6 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 //#ifdef JA2BETAVERSION
 

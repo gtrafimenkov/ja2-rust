@@ -13,6 +13,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"
@@ -43,7 +44,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 //
 //******  Defines  ******

@@ -6,6 +6,7 @@
 
 #include "JAScreens.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
@@ -15,7 +16,6 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/DebugControl.h"
 #include "Utils/Utilities.h"
-#include "fileman.h"
 
 #define EMPTY_SLOT -1
 #define TO_INIT 0

@@ -14,6 +14,7 @@
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
@@ -28,7 +29,6 @@
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 #define IMP_MERC_FILE "IMP.dat"
 

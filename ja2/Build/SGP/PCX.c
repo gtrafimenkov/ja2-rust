@@ -3,8 +3,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
-#include "fileman.h"
 
 // Local typedefs
 

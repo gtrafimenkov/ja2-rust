@@ -12,6 +12,7 @@
 #include "SGP/Container.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
@@ -84,7 +85,6 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
-#include "fileman.h"
 
 extern INT16 DirIncrementer[8];
 

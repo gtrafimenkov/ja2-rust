@@ -5,6 +5,7 @@
 
 #include "Editor/Smooth.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -13,7 +14,6 @@
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
-#include "fileman.h"
 #include "platfrom_strings.h"
 
 TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];

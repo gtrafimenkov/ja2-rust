@@ -1,7 +1,7 @@
+#include <ddraw.h>
 #include <process.h>
 #include <stdio.h>
 #include <windows.h>
-#include <ddraw.h>
 
 #include "FadeScreen.h"
 #include "Local.h"
@@ -37,7 +37,7 @@ struct VSurface *ghMouseBuffer = NULL;
 extern INT32 giNumFrames;
 extern UINT32 guiMouseBufferState;  // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
 
-struct VSurface* CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface);
+struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface);
 
 #ifdef __cplusplus
 extern "C" {
@@ -87,7 +87,8 @@ void DDSetClipper(LPDIRECTDRAWSURFACE2 pSurface, LPDIRECTDRAWCLIPPER pDDClipper)
 void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper);
 void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags);
 
-#define IDirectDrawSurface2_SGPBltFast(p, a, b, c, d, e) IDirectDrawSurface2_BltFast(p, a, b, c, d, e)
+#define IDirectDrawSurface2_SGPBltFast(p, a, b, c, d, e) \
+  IDirectDrawSurface2_BltFast(p, a, b, c, d, e)
 #define IDirectDrawSurface2_SGPBlt(p, a, b, c, d, e) IDirectDrawSurface2_Blt(p, a, b, c, d, e)
 
 #ifdef __cplusplus
@@ -99,16 +100,16 @@ extern "C" {
 #endif
 
 // local functions
-char* DirectXErrorDescription(INT32 iDXReturn);
-void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char* szFilename);
-void DirectXAssert(BOOLEAN fValue, INT32 nLine, char* szFilename);
-void DirectXZeroMem(void* pMemory, int nSize);
+char *DirectXErrorDescription(INT32 iDXReturn);
+void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename);
+void DirectXAssert(BOOLEAN fValue, INT32 nLine, char *szFilename);
+void DirectXZeroMem(void *pMemory, int nSize);
 
 #undef ATTEMPT
 #define ATTEMPT(x) DirectXAttempt((x), __LINE__, __FILE__)
 
 #undef ZEROMEM
-#define ZEROMEM(x) DirectXZeroMem((void*)&(x), sizeof(x))
+#define ZEROMEM(x) DirectXZeroMem((void *)&(x), sizeof(x))
 
 #undef DEBUGMSG
 #define DEBUGMSG(x) DebugPrint(x)
@@ -2637,14 +2638,13 @@ void DeletePrimaryVideoSurfaces() {
 // VSurface
 //////////////////////////////////////////////////////////////////
 
-#include "SGP/VSurface.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "SGP/Debug.h"
 #include "SGP/HImage.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "platfrom_strings.h"
@@ -4873,8 +4873,6 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT
 // Cinematics
 //////////////////////////////////////////////////////////////////
 
-#include "Utils/Cinematics.h"
-
 #include <crtdbg.h>
 #include <fcntl.h>
 #include <io.h>
@@ -4887,14 +4885,15 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT
 #include <sys/types.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/smack.h"
-#include "fileman.h"
-#include "platform_win.h"
+#include "Utils/Cinematics.h"
 #include "Utils/radmalw.i"
+#include "platform_win.h"
 
 //-Structures----------------------------------------------------------------------
 
@@ -5131,8 +5130,8 @@ void SmkShutdownVideo(void) {
 // WinFont
 //////////////////////////////////////////////////////////////////
 
-#include "SGP/WinFont.h"
 #include "SGP/Font.h"
+#include "SGP/WinFont.h"
 
 INT32 FindFreeWinFont(void);
 BOOLEAN gfEnumSucceed = FALSE;
@@ -5510,9 +5509,9 @@ void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT3
 // DirectXCommon
 //////////////////////////////////////////////////////////////////
 
-void DirectXZeroMem(void* pMemory, int nSize) { memset(pMemory, 0, nSize); }
+void DirectXZeroMem(void *pMemory, int nSize) { memset(pMemory, 0, nSize); }
 
-void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char* szFilename) {
+void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename) {
 #ifdef _DEBUG
   if (iErrorCode != DD_OK) {
     FastDebugMsg("DIRECTX COMMON: DirectX Error\n");
@@ -5521,7 +5520,7 @@ void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char* szFilename) {
 #endif
 }
 
-char* DirectXErrorDescription(INT32 iDXReturn) {
+char *DirectXErrorDescription(INT32 iDXReturn) {
   switch (iDXReturn) {
     case DD_OK:
       return "No error.\0";

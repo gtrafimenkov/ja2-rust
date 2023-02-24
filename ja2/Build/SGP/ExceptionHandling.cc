@@ -5,8 +5,8 @@
 #include <stdlib.h>
 
 #include "GameVersion.h"
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
-#include "fileman.h"
 #include "platform.h"
 #include "platform_win.h"
 

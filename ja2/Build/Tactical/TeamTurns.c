@@ -1,5 +1,6 @@
 #include "Tactical/TeamTurns.h"
 
+#include "SGP/FileMan.h"
 #include "SGP/Timer.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
@@ -40,7 +41,6 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 #ifdef DEBUG_INTERRUPTS
 #include "SGP/Debug.h"

@@ -16,6 +16,7 @@
 #include "LoadingScreen.h"
 #include "MessageBoxScreen.h"
 #include "SGP/CursorControl.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SaveLoadGame.h"
@@ -91,7 +92,6 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 // Used by PickGridNoToWalkIn
 #define MAX_ATTEMPTS 200

@@ -1,8 +1,8 @@
 #include "GameSettings.h"
 #include "JA2DemoAds.h"
 #include "LanguageDefines.h"
+#include "SGP/FileMan.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   HWFILE hFile;

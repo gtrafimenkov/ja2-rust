@@ -2,7 +2,7 @@
 
 #include "LanguageDefines.h"
 #include "SGP/Debug.h"
-#include "fileman.h"
+#include "SGP/FileMan.h"
 
 BOOLEAN LoadEncryptedDataFromFile(STR pFileName, STR16 pDestString, UINT32 uiSeekFrom,
                                   UINT32 uiSeekAmount) {

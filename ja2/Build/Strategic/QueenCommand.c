@@ -3,6 +3,7 @@
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/AutoResolve.h"
@@ -36,7 +37,6 @@
 #include "TileEngine/MapEdgepoints.h"
 #include "TileEngine/RenderWorld.h"
 #include "Utils/Message.h"
-#include "fileman.h"
 
 #ifdef JA2BETAVERSION
 extern BOOLEAN gfClearCreatureQuest;

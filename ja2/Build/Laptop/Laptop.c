@@ -45,6 +45,7 @@
 #include "Laptop/SirTech.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
@@ -81,7 +82,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 #include "platform.h"
 
 // icons text id's

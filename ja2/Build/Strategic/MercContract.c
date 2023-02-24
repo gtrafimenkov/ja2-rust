@@ -10,6 +10,7 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/Personnel.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Strategic/Assignments.h"
@@ -35,7 +36,6 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 void CalculateMedicalDepositRefund(SOLDIERTYPE *pSoldier);
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(SOLDIERTYPE *pSoldier,

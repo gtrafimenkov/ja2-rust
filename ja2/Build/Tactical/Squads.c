@@ -1,6 +1,7 @@
 #include "Tactical/Squads.h"
 
 #include "JAScreens.h"
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/MapScreenHelicopter.h"
@@ -14,7 +15,6 @@
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Vehicles.h"
 #include "TileEngine/RenderWorld.h"
-#include "fileman.h"
 
 typedef struct {
   INT16 uiID;  // The soldiers ID

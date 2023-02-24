@@ -4,11 +4,11 @@
 #include <string.h>
 #include <wchar.h>
 
+#include "SGP/FileMan.h"
 #include "SysGlobals.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
 #include "TileEngine/WorldDef.h"
-#include "fileman.h"
 
 // THIS FILE CONTAINS DEFINITIONS FOR TILESET FILES
 

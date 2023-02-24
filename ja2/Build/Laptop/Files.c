@@ -6,6 +6,7 @@
 #include "Laptop/Email.h"
 #include "Laptop/Laptop.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
@@ -15,7 +16,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 #include "platform.h"
 
 #define TOP_X 0 + LAPTOP_SCREEN_UL_X

@@ -13,6 +13,7 @@
 #include "Laptop/LaptopSave.h"
 #include "OptionsScreen.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
@@ -39,7 +40,6 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 BOOLEAN gfSchedulesHosed = FALSE;
 extern UINT32 guiBrokenSaveGameVersion;

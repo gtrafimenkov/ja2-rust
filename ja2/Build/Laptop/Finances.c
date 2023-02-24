@@ -3,6 +3,7 @@
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/CampaignTypes.h"
@@ -16,7 +17,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 #include "platform.h"
 
 // the global defines

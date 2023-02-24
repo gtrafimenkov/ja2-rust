@@ -24,9 +24,9 @@
 #include <windows.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
-#include "fileman.h"
 
 //**************************************************************************
 //

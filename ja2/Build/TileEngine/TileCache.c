@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationCache.h"
@@ -13,7 +14,6 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
 #include "Utils/DebugControl.h"
-#include "fileman.h"
 #include "platform.h"
 #include "platfrom_strings.h"
 

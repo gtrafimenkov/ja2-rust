@@ -6,6 +6,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Strategic/CampaignTypes.h"
@@ -58,7 +59,6 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
-#include "fileman.h"
 #include "platfrom_strings.h"
 
 // MODULE FOR EXPLOSIONS

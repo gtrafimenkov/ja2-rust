@@ -4,6 +4,7 @@
 
 #include "JAScreens.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
@@ -25,7 +26,6 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
-#include "fileman.h"
 
 #ifdef JA2EDITOR
 extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];

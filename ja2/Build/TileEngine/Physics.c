@@ -1,5 +1,6 @@
 #include "TileEngine/Physics.h"
 
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/WCheck.h"
@@ -27,7 +28,6 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 
 #define NO_TEST_OBJECT 0
 #define TEST_OBJECT_NO_COLLISIONS 1

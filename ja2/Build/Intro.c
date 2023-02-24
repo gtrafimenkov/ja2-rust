@@ -6,6 +6,7 @@
 #include "MessageBoxScreen.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Ja2Libs.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Line.h"
@@ -24,7 +25,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 extern STR16 gzIntroScreen[];
 

@@ -21,12 +21,12 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "fileman.h"
 
 //**************************************************************************
 //

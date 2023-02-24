@@ -14,6 +14,7 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
@@ -69,7 +70,6 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 #define ITEMDESC_FONT BLOCKFONT2
 #define ITEMDESC_FONTSHADOW1 MILITARY_SHADOW

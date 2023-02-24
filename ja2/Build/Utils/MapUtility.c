@@ -2,6 +2,7 @@
 
 #include "Editor/LoadScreen.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/SGP.h"
 #include "SGP/VObjectBlitters.h"
@@ -14,7 +15,6 @@
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/STIConvert.h"
-#include "fileman.h"
 #include "platform.h"
 
 #ifdef JA2EDITOR

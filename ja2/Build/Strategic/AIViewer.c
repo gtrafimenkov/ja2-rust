@@ -4,6 +4,7 @@
 #include "GameSettings.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
@@ -32,7 +33,6 @@
 #include "Utils/TextInput.h"
 #include "Utils/TimerControl.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 #ifdef JA2BETAVERSION
 

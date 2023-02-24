@@ -3,6 +3,7 @@
 #include "FadeScreen.h"
 #include "GameScreen.h"
 #include "JAScreens.h"
+#include "SGP/FileMan.h"
 #include "SGP/SGP.h"
 #include "SGP/VSurface.h"
 #include "Strategic/Assignments.h"
@@ -25,7 +26,6 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 
 //#define DEBUG_GAME_CLOCK
 

@@ -1,9 +1,9 @@
 #include <stdio.h>
 
+#include "SGP/FileMan.h"
 #include "SGP/Ja2Libs.h"
 #include "SGP/LibraryDataBase.h"
 #include "SGP/Types.h"
-#include "fileman.h"
 
 int main() {
   char CurrentDir[100];

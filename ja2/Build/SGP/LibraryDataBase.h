@@ -1,9 +1,9 @@
 #ifndef _LIBRARY_DATABASE_H
 #define _LIBRARY_DATABASE_H
 
+#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Types.h"
-#include "fileman.h"
 #include "platform.h"
 
 #define FILENAME_SIZE 256

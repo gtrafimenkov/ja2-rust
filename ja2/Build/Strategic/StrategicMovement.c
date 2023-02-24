@@ -6,6 +6,7 @@
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "Strategic/Assignments.h"
@@ -45,7 +46,6 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 // the delay for a group about to arrive
 #define ABOUT_TO_ARRIVE_DELAY 5

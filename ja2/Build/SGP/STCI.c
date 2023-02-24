@@ -1,12 +1,12 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/ImgFmt.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
-#include "fileman.h"
 
 BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);
 BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);

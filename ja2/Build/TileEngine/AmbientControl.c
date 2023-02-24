@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
@@ -11,7 +12,6 @@
 #include "TileEngine/Environment.h"
 #include "TileEngine/Lighting.h"
 #include "Utils/SoundControl.h"
-#include "fileman.h"
 
 AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
 INT16 gsNumAmbData = 0;

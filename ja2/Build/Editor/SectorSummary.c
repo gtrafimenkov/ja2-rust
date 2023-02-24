@@ -11,6 +11,7 @@
 #include "Editor/SummaryInfo.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
@@ -30,7 +31,6 @@
 #include "Utils/Text.h"
 #include "Utils/TextInput.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 #include "platform.h"
 
 extern BOOLEAN gfOverheadMapDirty;

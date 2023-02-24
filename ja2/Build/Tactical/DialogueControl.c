@@ -7,6 +7,7 @@
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
 #include "Laptop/Mercs.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
 #include "SGP/SoundMan.h"
@@ -54,7 +55,6 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
-#include "fileman.h"
 
 #define DIALOGUESIZE 480
 #define QUOTE_MESSAGE_SIZE 520

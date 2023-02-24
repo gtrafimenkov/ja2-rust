@@ -25,6 +25,7 @@
 #include "Editor/EditSys.h"
 #include "JAScreens.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/VObjectBlitters.h"
@@ -50,7 +51,6 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 #include "platfrom_strings.h"
 
 #define LVL1_L1_PER (50)

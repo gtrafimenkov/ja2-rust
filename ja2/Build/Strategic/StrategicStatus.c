@@ -6,13 +6,13 @@
 #include "Laptop/Email.h"
 #include "Laptop/History.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/StrategicMines.h"
 #include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/Campaign.h"
 #include "Tactical/InventoryChoosing.h"
 #include "Tactical/SoldierProfile.h"
-#include "fileman.h"
 
 STRATEGIC_STATUS gStrategicStatus;
 

@@ -24,6 +24,7 @@
 #include "LoadingScreen.h"
 #include "OptionsScreen.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
@@ -95,7 +96,6 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 #include "platform.h"
 
 BOOLEAN fFirstTimeInMapScreen = TRUE;

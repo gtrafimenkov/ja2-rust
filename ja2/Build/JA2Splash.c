@@ -2,13 +2,13 @@
 
 #include "MainMenuScreen.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 #include "platform.h"
 
 UINT32 guiSplashFrameFade = 10;

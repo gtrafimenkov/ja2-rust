@@ -3,6 +3,7 @@
 #include "GameSettings.h"
 #include "Laptop/History.h"
 #include "MessageBoxScreen.h"
+#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/Random.h"
 #include "Strategic/Assignments.h"
@@ -29,7 +30,6 @@
 #include "Tactical/WorldItems.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 // the max loyalty rating for any given town
 #define MAX_LOYALTY_VALUE 100

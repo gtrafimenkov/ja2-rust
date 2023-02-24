@@ -4,6 +4,7 @@
 #include "Laptop/BobbyRMailOrder.h"
 #include "Laptop/History.h"
 #include "Laptop/LaptopSave.h"
+#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
 #include "Strategic/Assignments.h"
@@ -27,7 +28,6 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
 #include "Utils/Message.h"
-#include "fileman.h"
 
 #define TESTQUESTS
 

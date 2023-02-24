@@ -11,12 +11,12 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/MemMan.h"
 #include "SGP/Mss.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
-#include "fileman.h"
 #include "platform_win.h"
 #include "platfrom_strings.h"
 

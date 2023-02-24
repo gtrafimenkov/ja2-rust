@@ -11,6 +11,7 @@
 #include "Laptop/Personnel.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
@@ -51,7 +52,6 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 
 #ifdef JA2EDITOR
 extern BOOLEAN gfProfileDataLoaded;

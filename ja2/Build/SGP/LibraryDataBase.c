@@ -5,9 +5,9 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/WCheck.h"
-#include "fileman.h"
 #include "platform.h"
 #include "platfrom_strings.h"
 

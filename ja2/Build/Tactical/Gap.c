@@ -4,11 +4,11 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
-#include "fileman.h"
 
 #if 0
 static void AILCALLBACK timer_func( UINT32 user )

@@ -8,6 +8,7 @@
 #include "LanguageDefines.h"
 #include "OptionsScreen.h"
 #include "SGP/Debug.h"
+#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Random.h"
 #include "SGP/SGP.h"
@@ -25,7 +26,6 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
-#include "fileman.h"
 
 #define GAME_SETTINGS_FILE "..\\Ja2.set"
 
