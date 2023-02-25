@@ -428,12 +428,8 @@ void RenderSoldierFace(SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY, BOOLEA
       }
     }
   } else {
-    // Put close panel there
-    // if(gbPixelDepth==16)
-    //{
     BltVideoObjectFromIndex(guiSAVEBUFFER, guiCLOSE, 5, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY,
                             NULL);
-    //}
     RestoreExternBackgroundRect(sFaceX, sFaceY, FACE_WIDTH, FACE_HEIGHT);
   }
 }

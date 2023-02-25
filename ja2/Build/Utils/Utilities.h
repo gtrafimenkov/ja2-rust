@@ -4,8 +4,6 @@
 #include "SGP/Types.h"
 #include "Tactical/OverheadTypes.h"
 
-#define GETPIXELDEPTH() (gbPixelDepth)
-
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile);
 BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT32 uiDestSurface);
 

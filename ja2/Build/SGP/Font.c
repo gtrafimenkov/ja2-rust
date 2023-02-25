@@ -664,15 +664,9 @@ UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    if (gbPixelDepth == 8) {
-      Blt8BPPDataTo8BPPBufferMonoShadowClip(pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault],
-                                            destx, desty, transletter, &FontDestRegion,
-                                            FontForeground8, FontBackground8);
-    } else {
-      Blt8BPPDataTo16BPPBufferMonoShadowClip(
-          (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
-          &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
-    }
+    Blt8BPPDataTo16BPPBufferMonoShadowClip(
+        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
 
@@ -779,15 +773,9 @@ UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    if (gbPixelDepth == 8) {
-      Blt8BPPDataTo8BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                             FontObjs[FontDefault], destx, desty, transletter,
-                                             &FontDestRegion);
-    } else {
-      Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                              FontObjs[FontDefault], destx, desty, transletter,
-                                              &FontDestRegion);
-    }
+    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+                                            FontObjs[FontDefault], destx, desty, transletter,
+                                            &FontDestRegion);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
 
@@ -830,15 +818,9 @@ UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    if (gbPixelDepth == 8) {
-      Blt8BPPDataTo8BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                             FontObjs[FontDefault], destx, desty, transletter,
-                                             &FontDestRegion);
-    } else {
-      Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                              FontObjs[FontDefault], destx, desty, transletter,
-                                              &FontDestRegion);
-    }
+    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+                                            FontObjs[FontDefault], destx, desty, transletter,
+                                            &FontDestRegion);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
 
@@ -886,15 +868,9 @@ UINT32 gprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
     }
 
     // Blit directly
-    if (gbPixelDepth == 8) {
-      Blt8BPPDataTo8BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                             FontObjs[FontDefault], destx, desty, transletter,
-                                             &FontDestRegion);
-    } else {
-      Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                              FontObjs[FontDefault], destx, desty, transletter,
-                                              &FontDestRegion);
-    }
+    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+                                            FontObjs[FontDefault], destx, desty, transletter,
+                                            &FontDestRegion);
 
     destx += GetWidth(FontObjs[FontType], transletter);
   }
@@ -931,15 +907,9 @@ UINT32 mprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
     }
 
     // Blit directly
-    if (gbPixelDepth == 8) {
-      Blt8BPPDataTo8BPPBufferMonoShadowClip(pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault],
-                                            destx, desty, transletter, &FontDestRegion,
-                                            FontForeground8, FontBackground8);
-    } else {
-      Blt8BPPDataTo16BPPBufferMonoShadowClip(
-          (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
-          &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
-    }
+    Blt8BPPDataTo16BPPBufferMonoShadowClip(
+        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
 
@@ -987,15 +957,9 @@ UINT32 mprintf_buffer_coded(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 Fon
     }
 
     // Blit directly
-    if (gbPixelDepth == 8) {
-      Blt8BPPDataTo8BPPBufferMonoShadowClip(pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault],
-                                            destx, desty, transletter, &FontDestRegion,
-                                            FontForeground8, FontBackground8);
-    } else {
-      Blt8BPPDataTo16BPPBufferMonoShadowClip(
-          (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
-          &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
-    }
+    Blt8BPPDataTo16BPPBufferMonoShadowClip(
+        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
 
@@ -1047,15 +1011,9 @@ UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    if (gbPixelDepth == 8) {
-      Blt8BPPDataTo8BPPBufferMonoShadowClip(pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault],
-                                            destx, desty, transletter, &FontDestRegion,
-                                            FontForeground8, FontBackground8);
-    } else {
-      Blt8BPPDataTo16BPPBufferMonoShadowClip(
-          (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
-          &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
-    }
+    Blt8BPPDataTo16BPPBufferMonoShadowClip(
+        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
 

@@ -71,9 +71,6 @@ CHAR8 gzCommandLine[100];  // Command line given
 
 BOOLEAN gfIgnoreMessages = FALSE;
 
-// GLOBAL VARIBLE, SET TO DEFAULT BUT CAN BE CHANGED BY THE GAME IF INIT FILE READ
-UINT8 gbPixelDepth = PIXEL_DEPTH;
-
 INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LPARAM lParam) {
   static BOOLEAN fRestore = FALSE;
 

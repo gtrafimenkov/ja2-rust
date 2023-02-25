@@ -354,8 +354,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // Set the display mode
   //
 #ifndef WINDOWED_MODE
-  ReturnCode = IDirectDraw2_SetDisplayMode(gpDirectDrawObject, SCREEN_WIDTH, SCREEN_HEIGHT,
-                                           gbPixelDepth, 0, 0);
+  ReturnCode =
+      IDirectDraw2_SetDisplayMode(gpDirectDrawObject, SCREEN_WIDTH, SCREEN_HEIGHT, 16, 0, 0);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -364,7 +364,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
 
   gusScreenWidth = SCREEN_WIDTH;
   gusScreenHeight = SCREEN_HEIGHT;
-  gubScreenPixelDepth = gbPixelDepth;
 
   //
   // Initialize Primary Surface along with BackBuffer
@@ -2147,11 +2146,6 @@ BOOLEAN GetRGBDistribution(void) {
   HRESULT ReturnCode;
 
   Assert(gpPrimarySurface != NULL);
-
-  // ONLY DO IF WE ARE IN 16BIT MODE
-  if (gbPixelDepth == 8) {
-    return (TRUE);
-  }
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);

@@ -467,17 +467,9 @@ BOOLEAN UpdateSaveBuffer(void) {
   pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
   pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
 
-  if (gbPixelDepth == 16) {
-    // BLIT HERE
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
-                    gsVIEWPORT_WINDOW_START_Y, 0, gsVIEWPORT_WINDOW_START_Y, usWidth,
-                    (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y));
-  } else if (gbPixelDepth == 8) {
-    // BLIT HERE
-    Blt8BPPTo8BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, 0,
+  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
                   gsVIEWPORT_WINDOW_START_Y, 0, gsVIEWPORT_WINDOW_START_Y, usWidth,
-                  gsVIEWPORT_WINDOW_END_Y);
-  }
+                  (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y));
 
   UnLockVideoSurface(guiRENDERBUFFER);
   UnLockVideoSurface(guiSAVEBUFFER);
@@ -494,13 +486,8 @@ BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16
   pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
 
-  if (gbPixelDepth == 16) {
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                    sTop, sLeft, sTop, sWidth, sHeight);
-  } else if (gbPixelDepth == 8) {
-    Blt8BPPTo8BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, sLeft, sTop, sLeft, sTop,
-                  sWidth, sHeight);
-  }
+  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
+                  sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(guiRENDERBUFFER);
   UnLockVideoSurface(guiSAVEBUFFER);
 
@@ -529,13 +516,8 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
 
-  if (gbPixelDepth == 16) {
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                    sTop, sLeft, sTop, sWidth, sHeight);
-  } else if (gbPixelDepth == 8) {
-    Blt8BPPTo8BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, sLeft, sTop, sLeft, sTop,
-                  sWidth, sHeight);
-  }
+  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
+                  sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(guiRENDERBUFFER);
   UnLockVideoSurface(guiSAVEBUFFER);
 
@@ -554,13 +536,8 @@ BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
   pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
   pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
 
-  if (gbPixelDepth == 16) {
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                    sTop, sLeft, sTop, sWidth, sHeight);
-  } else if (gbPixelDepth == 8) {
-    Blt8BPPTo8BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, sLeft, sTop, sLeft, sTop,
-                  sWidth, sHeight);
-  }
+  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
+                  sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(guiSAVEBUFFER);
   UnLockVideoSurface(guiRENDERBUFFER);
 
@@ -1067,14 +1044,10 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
         usHeight = sBottom - sTop;
         usWidth = sRight - sLeft;
 
-        if (gbPixelDepth == 16) {
-          Blt16BPPTo16BPP((UINT16 *)(UINT16 *)pDestBuf, uiDestPitchBYTES,
-                          (UINT16 *)gVideoOverlays[uiCount].pSaveArea,
-                          gBackSaves[iBackIndex].sWidth * 2, sLeft, sTop, uiLeftSkip, uiTopSkip,
-                          usWidth, usHeight);
-
-        } else if (gbPixelDepth == 8) {
-        }
+        Blt16BPPTo16BPP((UINT16 *)(UINT16 *)pDestBuf, uiDestPitchBYTES,
+                        (UINT16 *)gVideoOverlays[uiCount].pSaveArea,
+                        gBackSaves[iBackIndex].sWidth * 2, sLeft, sTop, uiLeftSkip, uiTopSkip,
+                        usWidth, usHeight);
 
         // Once done, check for pending deletion
         if (gVideoOverlays[uiCount].fDeletionPending) {

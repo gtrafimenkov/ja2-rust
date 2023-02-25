@@ -1520,21 +1520,6 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
         }
       }
 
-      // Render faceplate
-      // BltVideoObjectFromIndex( guiSAVEBUFFER, guiSMObjects2, 1, SM_SELMERC_NAMEPLATE_X,
-      // SM_SELMERC_NAMEPLATE_Y, VO_BLT_SRCTRANSPARENCY, NULL ); RestoreExternBackgroundRect(
-      // SM_SELMERC_NAMEPLATE_X, SM_SELMERC_NAMEPLATE_Y, SM_SELMERC_NAMEPLATE_WIDTH,
-      // SM_SELMERC_NAMEPLATE_HEIGHT );
-
-      // Blit position
-      // if(gbPixelDepth==16)
-      //{
-      // BltVideoObjectFromIndex( guiSAVEBUFFER, guiSMObjects, gbSMCurStanceObj, SM_POSITIONB_X,
-      // SM_POSITIONB_Y, VO_BLT_SRCTRANSPARENCY, NULL );
-      //}
-      // RestoreExternBackgroundRect( SM_POSITIONB_X, SM_POSITIONB_Y, SM_POSITIONB_WIDTH ,
-      // SM_POSITIONB_HEIGHT );
-
       SetFont(BLOCKFONT2);
 
       // Render Values for stats!
@@ -2957,12 +2942,8 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
     MarkAButtonDirty(iTEAMPanelButtons[TEAM_MAP_SCREEN_BUTTON]);
     MarkAButtonDirty(iTEAMPanelButtons[CHANGE_SQUAD_BUTTON]);
 
-    // Blit video surface
-    // if(gbPixelDepth==16)
-    //{
     BltVideoObjectFromIndex(guiSAVEBUFFER, guiTEAMPanel, 0, INTERFACE_START_X, INTERFACE_START_Y,
                             VO_BLT_SRCTRANSPARENCY, NULL);
-    //}
     RestoreExternBackgroundRect(INTERFACE_START_X, INTERFACE_START_Y, (640 - INTERFACE_START_X),
                                 (480 - INTERFACE_START_Y));
 
@@ -3029,20 +3010,10 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
         // Render Selected guy if selected
         if (gusSelectedSoldier == pSoldier->ubID && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
             OK_INTERRUPT_MERC(pSoldier)) {
-          // if(gbPixelDepth==16)
-          //{
           BltVideoObjectFromIndex(guiSAVEBUFFER, guiTEAMObjects, 0, sTEAMFaceHighlXY[posIndex],
                                   sTEAMFaceHighlXY[posIndex + 1], VO_BLT_SRCTRANSPARENCY, NULL);
           RestoreExternBackgroundRect(sTEAMFaceHighlXY[posIndex], sTEAMFaceHighlXY[posIndex + 1],
                                       TM_FACEHIGHTL_WIDTH, TM_FACEHIGHTL_HEIGHT);
-
-          // Render faceplate
-          // BltVideoObjectFromIndex( guiSAVEBUFFER, guiTEAMObjects, 1, sTEAMFacesXY[ posIndex ] +
-          // TM_FACEPLATE_OFFSET_X, sTEAMFacesXY[ posIndex + 1 ] + TM_FACEPLATE_OFFSET_Y,
-          // VO_BLT_SRCTRANSPARENCY, NULL ); RestoreExternBackgroundRect( (INT16)(sTEAMFacesXY[
-          // posIndex ] + TM_FACEPLATE_OFFSET_X), (INT16)(sTEAMFacesXY[ posIndex + 1 ] +
-          // TM_FACEPLATE_OFFSET_Y ), TM_FACEPLATE_WIDTH, TM_FACEPLATE_HEIGHT );
-          //}
         } else if (gTacticalStatus.ubCurrentTeam != OUR_TEAM || !OK_INTERRUPT_MERC(pSoldier)) {
           BltVideoObjectFromIndex(guiSAVEBUFFER, guiTEAMObjects, 1, sTEAMFaceHighlXY[posIndex],
                                   sTEAMFaceHighlXY[posIndex + 1], VO_BLT_SRCTRANSPARENCY, NULL);
@@ -3747,9 +3718,6 @@ void HandlePanelFaceAnimations(SOLDIERTYPE *pSoldier) {
   }
 
   if (pSoldier->fClosePanel) {
-    // Render panel!
-    // if(gbPixelDepth==16)
-    //{
     if (!gFacesData[pSoldier->iFaceIndex].fDisabled) {
       RestoreExternBackgroundRect(pSoldier->sPanelFaceX, pSoldier->sPanelFaceY, TM_FACE_WIDTH,
                                   TM_FACE_HEIGHT);
@@ -3760,7 +3728,6 @@ void HandlePanelFaceAnimations(SOLDIERTYPE *pSoldier) {
                        pSoldier->sPanelFaceX + TM_FACE_WIDTH,
                        pSoldier->sPanelFaceY + TM_FACE_HEIGHT);
     }
-    //}
   }
 
   if (pSoldier->fDeadPanel) {
@@ -3799,9 +3766,6 @@ void HandlePanelFaceAnimations(SOLDIERTYPE *pSoldier) {
   }
 
   if (pSoldier->fDeadPanel) {
-    // Render panel!
-    // if(gbPixelDepth==16)
-    //{
     if (!gFacesData[pSoldier->iFaceIndex].fDisabled) {
       BltVideoObjectFromIndex(FRAME_BUFFER, guiDEAD, pSoldier->ubDeadPanelFrame,
                               pSoldier->sPanelFaceX, pSoldier->sPanelFaceY, VO_BLT_SRCTRANSPARENCY,
@@ -3815,7 +3779,6 @@ void HandlePanelFaceAnimations(SOLDIERTYPE *pSoldier) {
                        pSoldier->sPanelFaceX + TM_FACE_WIDTH,
                        pSoldier->sPanelFaceY + TM_FACE_HEIGHT);
     }
-    //}
   }
 
   if (pSoldier->fOpenPanel) {
@@ -3836,20 +3799,13 @@ void HandlePanelFaceAnimations(SOLDIERTYPE *pSoldier) {
   }
 
   if (pSoldier->fOpenPanel) {
-    // Render panel!
-    // if(gbPixelDepth==16)
-    //{
     if (!gFacesData[pSoldier->iFaceIndex].fDisabled) {
       RestoreExternBackgroundRect(pSoldier->sPanelFaceX, pSoldier->sPanelFaceY, TM_FACE_WIDTH,
                                   TM_FACE_HEIGHT);
       BltVideoObjectFromIndex(FRAME_BUFFER, guiCLOSE, pSoldier->bOpenPanelFrame,
                               pSoldier->sPanelFaceX, pSoldier->sPanelFaceY, VO_BLT_SRCTRANSPARENCY,
                               NULL);
-      // InvalidateRegion( sTEAMFacesXY[ ubOpenPanelID ], sTEAMFacesXY[ ubOpenPanelID + 1 ],
-      // sTEAMFacesXY[ ubOpenPanelID ] + TM_FACE_WIDTH, sTEAMFacesXY[ ubOpenPanelID + 1 ] +
-      // TM_FACE_HEIGHT );
     }
-    //}
   }
 }
 

@@ -1,1 +1,0 @@
-- gbPixelDepth is alwyas 16; a lot of code can be removed
