@@ -26,7 +26,6 @@
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierProfile.h"
 #include "TacticalAI/AI.h"
 #include "TacticalAI/NPC.h"
@@ -440,7 +439,7 @@ void SortSoldierInitList() {
 BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *curr) {
   UINT8 ubProfile;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubID;
   // First check if this guy has a profile and if so check his location such that it matches!
   // Get profile from placement info
@@ -1437,7 +1436,7 @@ void UseEditorAlternateList() {
 // Any killed people that used detailed placement information must prevent that from occurring
 // again in the future.  Otherwise, the sniper guy with 99 marksmanship could appear again
 // if the map was loaded again!
-void EvaluateDeathEffectsToSoldierInitList(SOLDIERTYPE *pSoldier) {
+void EvaluateDeathEffectsToSoldierInitList(struct SOLDIERTYPE *pSoldier) {
   SOLDIERINITNODE *curr;
   UINT8 ubNodeID;
   curr = gSoldierInitHead;
@@ -1586,7 +1585,7 @@ void AddSoldierInitListBloodcats() {
         ubSectorID != SEC_N5) {
 #ifdef JA2BETAVERSION
       CHAR16 str[200];
-      swprintf(str,
+      swprintf(str, ARR_SIZE(str),
                L"Table specifies that there are %d bloodcat placements in sector %c%d, but the map "
                L"actually has %d bloodcat placements. Map value takes precedence. KM,LC:1",
                pSector->bBloodCatPlacements, gWorldSectorY + 'A' - 1, gWorldSectorX,
@@ -1700,7 +1699,7 @@ SOLDIERINITNODE *FindSoldierInitListNodeByProfile(UINT8 ubProfile) {
 // this way is the gMercProfiles[i].fUseProfileInsertionInfo.
 void AddProfilesUsingProfileInsertionData() {
   INT32 i;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   SOLDIERINITNODE *curr;
 
   for (i = FIRST_RPC; i < (PROF_HUMMER); i++) {
@@ -1802,7 +1801,7 @@ BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode) {
   if (uiNumInvalids || ubCode == 4) {
     switch (ubCode) {
       case 1:  // loading save
-        swprintf(str,
+        swprintf(str, ARR_SIZE(str),
                  L"Error detected in save file WHILE LOADING.  Please send save and text files "
                  L"associated with save to Kris and Dave."
                  L"  After doing so, go back into the game and immediately resave the game which "
@@ -1828,7 +1827,7 @@ BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode) {
         break;
       case 4:  // after fade in
         gfDoDialogOnceGameScreenFadesIn = FALSE;
-        swprintf(str,
+        swprintf(str, ARR_SIZE(str),
                  L"Error detected while entering sector USING TEMP FILES.  Please send previous "
                  L"save and text files associated with save to Kris and Dave."
                  L"  After doing so, go back into the game and saving the game, reloading it, and "

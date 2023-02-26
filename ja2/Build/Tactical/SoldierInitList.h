@@ -8,7 +8,7 @@ typedef struct SOLDIERINITNODE {
   UINT8 ubSoldierID;
   BASIC_SOLDIERCREATE_STRUCT *pBasicPlacement;
   SOLDIERCREATE_STRUCT *pDetailedPlacement;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   struct SOLDIERINITNODE *prev;
   struct SOLDIERINITNODE *next;
 } SOLDIERINITNODE;
@@ -52,7 +52,7 @@ void UseEditorAlternateList();
 BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *pNode);
 void AddPlacementToWorldByProfileID(UINT8 ubProfile);
 
-void EvaluateDeathEffectsToSoldierInitList(SOLDIERTYPE *pSoldier);
+void EvaluateDeathEffectsToSoldierInitList(struct SOLDIERTYPE *pSoldier);
 void RemoveDetailedPlacementInfo(UINT8 ubNodeID);
 
 void AddProfilesUsingProfileInsertionData();

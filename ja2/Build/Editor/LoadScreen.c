@@ -24,12 +24,14 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "ScreenIDs.h"
 #include "Strategic/Scheduling.h"
 #include "Strategic/StrategicMap.h"
 #include "SysGlobals.h"
 #include "Tactical/MapInformation.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/Lighting.h"
@@ -37,6 +39,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SimpleRenderUtils.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -100,7 +103,7 @@ struct GetFile FileInfo;
 BOOLEAN fEnteringLoadSaveScreen = TRUE;
 BOOLEAN gfPassedSaveCheck = FALSE;
 
-MOUSE_REGION BlanketRegion;
+struct MOUSE_REGION BlanketRegion;
 
 CHAR8 gszCurrFilename[80];
 

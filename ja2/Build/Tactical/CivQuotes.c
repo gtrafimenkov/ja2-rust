@@ -17,6 +17,7 @@
 #include "Tactical/AnimationData.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TacticalAI/AI.h"
 #include "TacticalAI/NPC.h"
 #include "TileEngine/RenderDirty.h"
@@ -57,12 +58,12 @@ UINT8 gubNumEntries[NUM_CIV_QUOTES] = {15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 
 typedef struct {
   BOOLEAN bActive;
-  MOUSE_REGION MouseRegion;
+  struct MOUSE_REGION MouseRegion;
   INT32 iVideoOverlay;
   INT32 iDialogueBox;
   UINT32 uiTimeOfCreation;
   UINT32 uiDelayTime;
-  SOLDIERTYPE *pCiv;
+  struct SOLDIERTYPE *pCiv;
 } QUOTE_SYSTEM_STRUCT;
 
 QUOTE_SYSTEM_STRUCT gCivQuoteData;
@@ -107,7 +108,7 @@ BOOLEAN GetCivQuoteText(UINT8 ubCivQuoteID, UINT8 ubEntryID, CHAR16 *zQuote) {
 }
 
 void SurrenderMessageBoxCallBack(UINT8 ubExitValue) {
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt = 0;
 
   if (ubExitValue == MSG_BOX_RETURN_YES) {
@@ -175,7 +176,7 @@ BOOLEAN ShutDownQuoteBoxIfActive() {
   return (FALSE);
 }
 
-INT8 GetCivType(SOLDIERTYPE *pCiv) {
+INT8 GetCivType(struct SOLDIERTYPE *pCiv) {
   if (pCiv->ubProfile != NO_PROFILE) {
     return (CIV_TYPE_NA);
   }
@@ -246,7 +247,7 @@ void RenderCivQuoteBoxOverlay(VIDEO_OVERLAY *pBlitter) {
   }
 }
 
-void QuoteOverlayClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void QuoteOverlayClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static BOOLEAN fLButtonDown = FALSE;
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -261,7 +262,8 @@ void QuoteOverlayClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void BeginCivQuote(SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX, INT16 sY) {
+void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX,
+                   INT16 sY) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   CHAR16 zQuote[320];
 
@@ -349,7 +351,8 @@ void BeginCivQuote(SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16
   gCivQuoteData.pCiv = pCiv;
 }
 
-UINT8 DetermineCivQuoteEntry(SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN fCanUseHints) {
+UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
+                             BOOLEAN fCanUseHints) {
   UINT8 ubCivType;
   INT8 bTownId;
   BOOLEAN bCivLowLoyalty = FALSE;
@@ -581,7 +584,7 @@ void HandleCivQuote() {
   }
 }
 
-void StartCivQuote(SOLDIERTYPE *pCiv) {
+void StartCivQuote(struct SOLDIERTYPE *pCiv) {
   UINT8 ubCivQuoteID;
   INT16 sX, sY;
   UINT8 ubEntryID = 0;

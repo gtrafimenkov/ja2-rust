@@ -2,12 +2,13 @@
 #define _DISPLAY_COVER__H_
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 void DisplayCoverOfSelectedGridNo();
 void RemoveCoverOfSelectedGridNo();
 
-void DisplayRangeToTarget(SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
+void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo);
 
 void RemoveVisibleGridNoAtSelectedGridNo();
 void DisplayGridNoVisibleToSoldierGrid();

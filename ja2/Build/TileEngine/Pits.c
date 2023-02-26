@@ -7,12 +7,13 @@
 #include "Tactical/ActionItems.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/WorldItems.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/SimpleRenderUtils.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDat.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/SoundControl.h"
 
@@ -187,7 +188,7 @@ void RemoveAllPits() {
 void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sRadius) {
   INT16 x, y, sNewGridNo;
   UINT8 ubID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   PlayJA2Sample(CAVE_COLLAPSE, RATE_11025, SoundVolume(HIGHVOLUME, sGridNo), 1, SoundDir(sGridNo));
   for (y = -sRadius; y <= sRadius; y++)
@@ -213,7 +214,7 @@ void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sR
 }
 
 void HandleFallIntoPitFromAnimation(UINT8 ubID) {
-  SOLDIERTYPE *pSoldier = MercPtrs[ubID];
+  struct SOLDIERTYPE *pSoldier = MercPtrs[ubID];
   EXITGRID ExitGrid;
   INT16 sPitGridNo;
   // OK, get exit grid...

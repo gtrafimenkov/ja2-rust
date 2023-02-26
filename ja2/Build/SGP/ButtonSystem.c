@@ -22,6 +22,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
@@ -116,18 +117,18 @@ UINT16 GetWidthOfButtonPic(UINT16 usButtonPicID, INT32 iSlot) {
   return ButtonPictures[usButtonPicID].vobj->pETRLEObject[iSlot].usWidth;
 }
 
-HVOBJECT GenericButtonGrayed[MAX_GENERIC_PICS];
-HVOBJECT GenericButtonOffNormal[MAX_GENERIC_PICS];
-HVOBJECT GenericButtonOffHilite[MAX_GENERIC_PICS];
-HVOBJECT GenericButtonOnNormal[MAX_GENERIC_PICS];
-HVOBJECT GenericButtonOnHilite[MAX_GENERIC_PICS];
-HVOBJECT GenericButtonBackground[MAX_GENERIC_PICS];
+struct VObject *GenericButtonGrayed[MAX_GENERIC_PICS];
+struct VObject *GenericButtonOffNormal[MAX_GENERIC_PICS];
+struct VObject *GenericButtonOffHilite[MAX_GENERIC_PICS];
+struct VObject *GenericButtonOnNormal[MAX_GENERIC_PICS];
+struct VObject *GenericButtonOnHilite[MAX_GENERIC_PICS];
+struct VObject *GenericButtonBackground[MAX_GENERIC_PICS];
 UINT16 GenericButtonFillColors[MAX_GENERIC_PICS];
 UINT16 GenericButtonBackgroundIndex[MAX_GENERIC_PICS];
 INT16 GenericButtonOffsetX[MAX_GENERIC_PICS];
 INT16 GenericButtonOffsetY[MAX_GENERIC_PICS];
 
-HVOBJECT GenericButtonIcons[MAX_BUTTON_ICONS];
+struct VObject *GenericButtonIcons[MAX_BUTTON_ICONS];
 
 // flag to state we wish to render buttons on the one after the next pass through render buttons
 BOOLEAN fPausedMarkButtonsDirtyFlag = FALSE;
@@ -137,8 +138,8 @@ BOOLEAN gfDelayButtonDeletion = FALSE;
 BOOLEAN gfPendingButtonDeletion = FALSE;
 void RemoveButtonsMarkedForDeletion();
 
-extern MOUSE_REGION *MSYS_PrevRegion;
-extern MOUSE_REGION *MSYS_CurrRegion;
+extern struct MOUSE_REGION *MSYS_PrevRegion;
+extern struct MOUSE_REGION *MSYS_CurrRegion;
 
 //=============================================================================
 //	FindFreeButtonSlot
@@ -386,7 +387,7 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 //			structures are simply removed from the button image list. It's up to
 //			the user to actually unload the image.
 //
-INT32 UseVObjAsButtonImage(HVOBJECT hVObject, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
+INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
                            INT32 OnNormal, INT32 OnHilite) {
   UINT32 UseSlot;
   ETRLEObject *pTrav;
@@ -1205,7 +1206,7 @@ void ResizeButton(INT32 iButtonID, INT16 w, INT16 h) {
   xloc = b->XLoc;
   yloc = b->YLoc;
 
-  // Set the new MOUSE_REGION area values to reflect change in size.
+  // Set the new struct MOUSE_REGION area values to reflect change in size.
   b->Area.RegionTopLeftX = (UINT16)xloc;
   b->Area.RegionTopLeftY = (UINT16)yloc;
   b->Area.RegionBottomRightX = (UINT16)(xloc + w);
@@ -1252,7 +1253,7 @@ void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y) {
   // Set button to new location
   b->XLoc = x;
   b->YLoc = y;
-  // Set the buttons MOUSE_REGION to appropriate area
+  // Set the buttons struct MOUSE_REGION to appropriate area
   b->Area.RegionTopLeftX = (UINT16)xloc;
   b->Area.RegionTopLeftY = (UINT16)yloc;
   b->Area.RegionBottomRightX = (UINT16)(xloc + w);
@@ -1531,13 +1532,13 @@ INT32 CreateTextButton(STR16 string, UINT32 uiFont, INT16 sForeColor, INT16 sSha
   } else
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
-  // Define a MOUSE_REGION for this button
+  // Define a struct MOUSE_REGION for this button
   MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc, (UINT16)(xloc + w), (UINT16)(yloc + h),
                     (INT8)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
-  // Link the MOUSE_REGION to this button
+  // Link the struct MOUSE_REGION to this button
   MSYS_SetRegionUserData(&b->Area, 0, ButtonNum);
 
   // Set the flags for this button
@@ -1617,13 +1618,13 @@ INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Pri
   } else
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
-  // define a MOUSE_REGION for this hotspot
+  // define a struct MOUSE_REGION for this hotspot
   MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc, (UINT16)(xloc + Width),
                     (UINT16)(yloc + Height), (INT8)Priority, MSYS_STARTING_CURSORVAL,
                     (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
-  // Link the MOUSE_REGION to this hotspot
+  // Link the struct MOUSE_REGION to this hotspot
   MSYS_SetRegionUserData(&b->Area, 0, ButtonNum);
 
   // Set the flags entry for this hotspot
@@ -1760,15 +1761,15 @@ INT32 QuickCreateButton(UINT32 Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 
   } else
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
-  memset(&b->Area, 0, sizeof(MOUSE_REGION));
-  // Define a MOUSE_REGION for this QuickButton
+  memset(&b->Area, 0, sizeof(struct MOUSE_REGION));
+  // Define a struct MOUSE_REGION for this QuickButton
   MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc,
                     (UINT16)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
                     (UINT16)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
-  // Link the MOUSE_REGION with this QuickButton
+  // Link the struct MOUSE_REGION with this QuickButton
   MSYS_SetRegionUserData(&b->Area, 0, ButtonNum);
 
   // Set the flags for this button
@@ -1929,14 +1930,14 @@ INT32 CreateIconAndTextButton(INT32 Image, STR16 string, UINT32 uiFont, INT16 sF
   } else
     b->MoveCallback = BUTTON_NO_CALLBACK;
 
-  // Define a MOUSE_REGION for this QuickButton
+  // Define a struct MOUSE_REGION for this QuickButton
   MSYS_DefineRegion(&b->Area, (UINT16)xloc, (UINT16)yloc,
                     (UINT16)(xloc + (INT16)ButtonPictures[Image].MaxWidth),
                     (UINT16)(yloc + (INT16)ButtonPictures[Image].MaxHeight), (INT8)Priority,
                     MSYS_STARTING_CURSORVAL, (MOUSE_CALLBACK)QuickButtonCallbackMMove,
                     (MOUSE_CALLBACK)QuickButtonCallbackMButn);
 
-  // Link the MOUSE_REGION with this QuickButton
+  // Link the struct MOUSE_REGION with this QuickButton
   MSYS_SetRegionUserData(&b->Area, 0, iButtonID);
 
   // Set the flags for this button
@@ -2237,7 +2238,7 @@ void SetBtnHelpEndCallback(INT32 iButton, MOUSE_HELPTEXT_DONE_CALLBACK CallbackF
 //	Dispatches all button callbacks for mouse movement. This function gets
 //	called by the Mouse System. *DO NOT CALL DIRECTLY*
 //
-void QuickButtonCallbackMMove(MOUSE_REGION *reg, INT32 reason) {
+void QuickButtonCallbackMMove(struct MOUSE_REGION *reg, INT32 reason) {
   GUI_BUTTON *b;
   INT32 iButtonID;
 
@@ -2316,7 +2317,7 @@ void QuickButtonCallbackMMove(MOUSE_REGION *reg, INT32 reason) {
 //	Dispatches all button callbacks for button presses. This function is
 //	called by the Mouse System. *DO NOT CALL DIRECTLY*
 //
-void QuickButtonCallbackMButn(MOUSE_REGION *reg, INT32 reason) {
+void QuickButtonCallbackMButn(struct MOUSE_REGION *reg, INT32 reason) {
   GUI_BUTTON *b;
   INT32 iButtonID;
   BOOLEAN MouseBtnDown;
@@ -2837,7 +2838,7 @@ void DrawIconOnButton(GUI_BUTTON *b) {
   INT32 IconW, IconH;
   SGPRect NewClip, OldClip;
   ETRLEObject *pTrav;
-  HVOBJECT hvObject;
+  struct VObject *hvObject;
 
   // If there's an actual icon on this button, try to show it.
   if (b->iIconID >= 0) {
@@ -3089,7 +3090,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   INT32 NumChunksWide, NumChunksHigh, cx, cy, width, height, hremain, wremain;
   INT32 q, ImgNum, ox, oy;
   INT32 iBorderHeight, iBorderWidth;
-  HVOBJECT BPic;
+  struct VObject *BPic;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
   SGPRect ClipRect;
@@ -3256,12 +3257,12 @@ typedef struct _CreateDlgInfo {
   INT32 iTextAreaWidth;
   INT32 iTextAreaHeight;
 
-  HVOBJECT hBackImg;    // Background pic for dialog box (if any)
-  INT32 iBackImgIndex;  // Sub-image index to use for image
-  INT32 iBackOffsetX;   // Offset on dialog box where to put image
+  struct VObject *hBackImg;  // Background pic for dialog box (if any)
+  INT32 iBackImgIndex;       // Sub-image index to use for image
+  INT32 iBackOffsetX;        // Offset on dialog box where to put image
   INT32 iBackOffsetY;
 
-  HVOBJECT hIconImg;  // Icon image pic and index.
+  struct VObject *hIconImg;  // Icon image pic and index.
   INT32 iIconImgIndex;
   INT32 iIconPosX;
   INT32 iIconPosY;
@@ -3325,7 +3326,7 @@ BOOLEAN SetDialogAttributes(CreateDlgInfo *pDlgInfo, INT32 iAttrib, ...) {
   UINT16 *zString;
   INT32 iX, iY, iW, iH;
   INT32 iIndex;
-  HVOBJECT hVObj;
+  struct VObject *hVObj;
   INT32 iButnImg;
   INT32 iFlags;
   UINT8 ubFGrnd, ubBGrnd;
@@ -3400,7 +3401,7 @@ BOOLEAN SetDialogAttributes(CreateDlgInfo *pDlgInfo, INT32 iAttrib, ...) {
 
     case DLG_BACKPIC:
       iFlags = va_arg(arg, INT32);
-      hVObj = (HVOBJECT)va_arg(arg, UINT32);
+      hVObj = (struct VObject *)va_arg(arg, UINT32);
       iIndex = va_arg(arg, INT32);
       iX = va_arg(arg, INT32);
       iY = va_arg(arg, INT32);
@@ -3409,7 +3410,7 @@ BOOLEAN SetDialogAttributes(CreateDlgInfo *pDlgInfo, INT32 iAttrib, ...) {
     case DLG_ICON:
       // Icon
       iFlags = va_arg(arg, INT32);
-      hVObj = (HVOBJECT)va_arg(arg, UINT32);
+      hVObj = (struct VObject *)va_arg(arg, UINT32);
       iIndex = va_arg(arg, INT32);
       iX = va_arg(arg, INT32);
       iY = va_arg(arg, INT32);

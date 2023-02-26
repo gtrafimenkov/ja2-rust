@@ -1,7 +1,9 @@
 #ifndef _MERC_CONTRACT_H_
 #define _MERC_CONTRACT_H_
 
-#include "Tactical/SoldierControl.h"
+#include "SGP/Types.h"
+
+struct SOLDIERTYPE;
 
 // enums used for extending contract, etc.
 enum {
@@ -45,13 +47,13 @@ enum
 };
 */
 
-BOOLEAN MercContractHandling(SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction);
+BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction);
 
-BOOLEAN StrategicRemoveMerc(SOLDIERTYPE *pSoldier);
-BOOLEAN BeginStrategicRemoveMerc(SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton);
+BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier);
+BOOLEAN BeginStrategicRemoveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton);
 
-BOOLEAN WillMercRenew(SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote);
-void CheckIfMercGetsAnotherContract(SOLDIERTYPE *pSoldier);
+BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote);
+void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier);
 void FindOutIfAnyMercAboutToLeaveIsGonnaRenew(void);
 
 void BeginContractRenewalSequence();
@@ -60,17 +62,17 @@ void EndCurrentContractRenewal();
 void HandleMercIsWillingToRenew(UINT8 ubID);
 void HandleMercIsNotWillingToRenew(UINT8 ubID);
 
-BOOLEAN ContractIsExpiring(SOLDIERTYPE *pSoldier);
-UINT32 GetHourWhenContractDone(SOLDIERTYPE *pSoldier);
-BOOLEAN ContractIsGoingToExpireSoon(SOLDIERTYPE *pSoldier);
+BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier);
+UINT32 GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier);
+BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile);
 BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile);
 
 // rehiring of mercs from leave equipment pop up
 extern BOOLEAN fEnterMapDueToContract;
-extern SOLDIERTYPE *pContractReHireSoldier;
-extern SOLDIERTYPE *pLeaveSoldier;
+extern struct SOLDIERTYPE *pContractReHireSoldier;
+extern struct SOLDIERTYPE *pLeaveSoldier;
 extern UINT8 ubQuitType;
 extern BOOLEAN gfFirstMercSayQuote;
 

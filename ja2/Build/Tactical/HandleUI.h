@@ -2,7 +2,8 @@
 #define _HANDLE_UI_
 
 #include "SGP/Input.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 // DEFINES
 #define UIEVENT_SINGLEEVENT 0x00000002
@@ -281,11 +282,11 @@ void ToggleLookCursorMode(UINT32 *puiNewEvent);
 void UIHandleSoldierStanceChange(UINT8 ubSoldierID, INT8 bNewStance);
 void GetCursorMovementFlags(UINT32 *puiCursorFlags);
 
-BOOLEAN HandleUIMovementCursor(SOLDIERTYPE *pSoldier, UINT32 uiCursorFlags, UINT16 usMapPos,
+BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, UINT32 uiCursorFlags, UINT16 usMapPos,
                                UINT32 uiFlags);
-BOOLEAN UIMouseOnValidAttackLocation(SOLDIERTYPE *pSoldier);
+BOOLEAN UIMouseOnValidAttackLocation(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN UIOkForItemPickup(SOLDIERTYPE *pSoldier, INT16 sGridNo);
+BOOLEAN UIOkForItemPickup(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 
 BOOLEAN IsValidTalkableNPCFromMouse(UINT8 *pubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs,
                                     BOOLEAN fCheckCollapsed);
@@ -306,7 +307,7 @@ void BeginDisplayTimedCursor(UINT32 uiCursorID, UINT32 uiDelay);
 void HandleHandCursorClick(UINT16 usMapPos, UINT32 *puiNewEvent);
 INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, UINT32 *puiNewEvent);
 
-BOOLEAN HandleUIReloading(SOLDIERTYPE *pSoldier);
+BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier);
 
 UINT32 UIHandleChangeLevel(UI_EVENT *pUIEvent);
 BOOLEAN UIHandleOnMerc(BOOLEAN fMovementMode);
@@ -320,11 +321,11 @@ void StopRubberBandedMercFromMoving();
 
 BOOLEAN SelectedGuyInBusyAnimation();
 
-void GotoLowerStance(SOLDIERTYPE *pSoldier);
-void GotoHeigherStance(SOLDIERTYPE *pSoldier);
+void GotoLowerStance(struct SOLDIERTYPE *pSoldier);
+void GotoHeigherStance(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN IsValidJumpLocation(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fCheckForPath);
+BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fCheckForPath);
 
-void PopupAssignmentMenuInTactical(SOLDIERTYPE *pSoldier);
+void PopupAssignmentMenuInTactical(struct SOLDIERTYPE *pSoldier);
 
 #endif

@@ -8,18 +8,20 @@
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/WCheck.h"
 #include "Strategic/StrategicMap.h"
 #include "SysGlobals.h"
 #include "Tactical/Interface.h"
 #include "Tactical/LOS.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/Smell.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 
@@ -55,7 +57,7 @@ UINT8 AtHeight[PROFILE_Z_SIZE] = {0x01, 0x02, 0x04, 0x08};
 
 UINT16 gusNextAvailableStructureID = FIRST_AVAILABLE_STRUCTURE_ID;
 
-STRUCTURE_FILE_REF *gpStructureFileRefs;
+struct STRUCTURE_FILE_REF *gpStructureFileRefs;
 
 INT32 guiMaterialHitSound[NUM_MATERIAL_TYPES] = {
     -1,
@@ -137,7 +139,7 @@ UINT8 gubMaterialArmour[] =
         57,   // like 22 but with screen windows
 };
 
-void DeleteStructureFromTile(MAP_ELEMENT *pMapElement, STRUCTURE *pStructure);
+void DeleteStructureFromTile(MAP_ELEMENT *pMapElement, struct STRUCTURE *pStructure);
 
 // Function operating on a structure tile
 UINT8 FilledTilePositions(DB_STRUCTURE_TILE *pTile) {
@@ -164,8 +166,9 @@ UINT8 FilledTilePositions(DB_STRUCTURE_TILE *pTile) {
 //
 
 void FreeStructureFileRef(
-    STRUCTURE_FILE_REF *pFileRef) {  // Frees all of the memory associated with a file reference,
-                                     // including the file reference structure itself
+    struct STRUCTURE_FILE_REF
+        *pFileRef) {  // Frees all of the memory associated with a file reference,
+                      // including the file reference structure itself
 
   UINT16 usLoop;
 
@@ -191,8 +194,8 @@ void FreeStructureFileRef(
 }
 
 void FreeAllStructureFiles(void) {  // Frees all of the structure database!
-  STRUCTURE_FILE_REF *pFileRef;
-  STRUCTURE_FILE_REF *pNextRef;
+  struct STRUCTURE_FILE_REF *pFileRef;
+  struct STRUCTURE_FILE_REF *pNextRef;
 
   pFileRef = gpStructureFileRefs;
   while (pFileRef != NULL) {
@@ -202,7 +205,7 @@ void FreeAllStructureFiles(void) {  // Frees all of the structure database!
   }
 }
 
-BOOLEAN FreeStructureFile(STRUCTURE_FILE_REF *pStructureFile) {
+BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile) {
   CHECKF(pStructureFile);
 
   // unlink the file ref
@@ -224,7 +227,7 @@ BOOLEAN FreeStructureFile(STRUCTURE_FILE_REF *pStructureFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
+BOOLEAN LoadStructureData(STR szFileName, struct STRUCTURE_FILE_REF *pFileRef,
                           UINT32 *puiStructureDataSize)
 // UINT8 **ppubStructureData, UINT32 * puiDataSize, STRUCTURE_FILE_HEADER * pHeader )
 {  // Loads a structure file's data as a honking chunk o' memory
@@ -249,8 +252,8 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
   }
   pFileRef->usNumberOfStructures = Header.usNumberOfStructures;
   if (Header.fFlags & STRUCTURE_FILE_CONTAINS_AUXIMAGEDATA) {
-    uiDataSize = sizeof(AuxObjectData) * Header.usNumberOfImages;
-    pFileRef->pAuxData = (AuxObjectData *)MemAlloc(uiDataSize);
+    uiDataSize = sizeof(struct AuxObjectData) * Header.usNumberOfImages;
+    pFileRef->pAuxData = (struct AuxObjectData *)MemAlloc(uiDataSize);
     if (pFileRef->pAuxData == NULL) {
       FileMan_Close(hInput);
       return (FALSE);
@@ -262,8 +265,8 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
       return (FALSE);
     }
     if (Header.usNumberOfImageTileLocsStored > 0) {
-      uiDataSize = sizeof(RelTileLoc) * Header.usNumberOfImageTileLocsStored;
-      pFileRef->pTileLocData = (RelTileLoc *)MemAlloc(uiDataSize);
+      uiDataSize = sizeof(struct RelTileLoc) * Header.usNumberOfImageTileLocsStored;
+      pFileRef->pTileLocData = (struct RelTileLoc *)MemAlloc(uiDataSize);
       if (pFileRef->pTileLocData == NULL) {
         MemFree(pFileRef->pAuxData);
         FileMan_Close(hInput);
@@ -312,12 +315,12 @@ BOOLEAN LoadStructureData(STR szFileName, STRUCTURE_FILE_REF *pFileRef,
 }
 
 BOOLEAN CreateFileStructureArrays(
-    STRUCTURE_FILE_REF *pFileRef,
+    struct STRUCTURE_FILE_REF *pFileRef,
     UINT32 uiDataSize) {  // Based on a file chunk, creates all the dynamic arrays for the
                           // structure definitions contained within
 
   UINT8 *pCurrent;
-  DB_STRUCTURE_REF *pDBStructureRef;
+  struct DB_STRUCTURE_REF *pDBStructureRef;
   DB_STRUCTURE_TILE **ppTileArray;
   UINT16 usLoop;
   UINT16 usIndex;
@@ -325,33 +328,33 @@ BOOLEAN CreateFileStructureArrays(
   UINT32 uiHitPoints;
 
   pCurrent = pFileRef->pubStructureData;
-  pDBStructureRef =
-      (DB_STRUCTURE_REF *)MemAlloc(pFileRef->usNumberOfStructures * sizeof(DB_STRUCTURE_REF));
+  pDBStructureRef = (struct DB_STRUCTURE_REF *)MemAlloc(pFileRef->usNumberOfStructures *
+                                                        sizeof(struct DB_STRUCTURE_REF));
   if (pDBStructureRef == NULL) {
     return (FALSE);
   }
-  memset(pDBStructureRef, 0, pFileRef->usNumberOfStructures * sizeof(DB_STRUCTURE_REF));
+  memset(pDBStructureRef, 0, pFileRef->usNumberOfStructures * sizeof(struct DB_STRUCTURE_REF));
   pFileRef->pDBStructureRef = pDBStructureRef;
   for (usLoop = 0; usLoop < pFileRef->usNumberOfStructuresStored; usLoop++) {
-    if (pCurrent + sizeof(DB_STRUCTURE) >
+    if (pCurrent + sizeof(struct DB_STRUCTURE) >
         pFileRef->pubStructureData + uiDataSize) {  // gone past end of file block?!
       // freeing of memory will occur outside of the function
       return (FALSE);
     }
-    usIndex = ((DB_STRUCTURE *)pCurrent)->usStructureNumber;
-    pDBStructureRef[usIndex].pDBStructure = (DB_STRUCTURE *)pCurrent;
+    usIndex = ((struct DB_STRUCTURE *)pCurrent)->usStructureNumber;
+    pDBStructureRef[usIndex].pDBStructure = (struct DB_STRUCTURE *)pCurrent;
     ppTileArray = (DB_STRUCTURE_TILE **)MemAlloc(
         pDBStructureRef[usIndex].pDBStructure->ubNumberOfTiles * sizeof(DB_STRUCTURE_TILE *));
     if (ppTileArray == NULL) {  // freeing of memory will occur outside of the function
       return (FALSE);
     }
     pDBStructureRef[usIndex].ppTile = ppTileArray;
-    pCurrent += sizeof(DB_STRUCTURE);
+    pCurrent += sizeof(struct DB_STRUCTURE);
     // Set things up to calculate hit points
     uiHitPoints = 0;
     for (usTileLoop = 0; usTileLoop < pDBStructureRef[usIndex].pDBStructure->ubNumberOfTiles;
          usTileLoop++) {
-      if (pCurrent + sizeof(DB_STRUCTURE) >
+      if (pCurrent + sizeof(struct DB_STRUCTURE) >
           pFileRef->pubStructureData + uiDataSize) {  // gone past end of file block?!
         // freeing of memory will occur outside of the function
         return (FALSE);
@@ -383,17 +386,18 @@ BOOLEAN CreateFileStructureArrays(
   return (TRUE);
 }
 
-STRUCTURE_FILE_REF *LoadStructureFile(STR szFileName) {  // NB should be passed in expected number
-                                                         // of structures so we can check equality
+struct STRUCTURE_FILE_REF *LoadStructureFile(
+    STR szFileName) {  // NB should be passed in expected number
+                       // of structures so we can check equality
   UINT32 uiDataSize = 0;
   BOOLEAN fOk;
-  STRUCTURE_FILE_REF *pFileRef;
+  struct STRUCTURE_FILE_REF *pFileRef;
 
-  pFileRef = (STRUCTURE_FILE_REF *)MemAlloc(sizeof(STRUCTURE_FILE_REF));
+  pFileRef = (struct STRUCTURE_FILE_REF *)MemAlloc(sizeof(struct STRUCTURE_FILE_REF));
   if (pFileRef == NULL) {
     return (NULL);
   }
-  memset(pFileRef, 0, sizeof(STRUCTURE_FILE_REF));
+  memset(pFileRef, 0, sizeof(struct STRUCTURE_FILE_REF));
   fOk = LoadStructureData(szFileName, pFileRef, &uiDataSize);
   if (!fOk) {
     MemFree(pFileRef);
@@ -419,11 +423,11 @@ STRUCTURE_FILE_REF *LoadStructureFile(STR szFileName) {  // NB should be passed 
 // Structure creation functions
 //
 
-STRUCTURE *CreateStructureFromDB(
-    DB_STRUCTURE_REF *pDBStructureRef,
-    UINT8 ubTileNum) {  // Creates a STRUCTURE struct for one tile of a structure
-  STRUCTURE *pStructure;
-  DB_STRUCTURE *pDBStructure;
+struct STRUCTURE *CreateStructureFromDB(
+    struct DB_STRUCTURE_REF *pDBStructureRef,
+    UINT8 ubTileNum) {  // Creates a struct STRUCTURE struct for one tile of a structure
+  struct STRUCTURE *pStructure;
+  struct DB_STRUCTURE *pDBStructure;
   DB_STRUCTURE_TILE *pTile;
 
   // set pointers to the DBStructure and Tile
@@ -435,10 +439,10 @@ STRUCTURE *CreateStructureFromDB(
   CHECKN(pTile);
 
   // allocate memory...
-  pStructure = (STRUCTURE *)MemAlloc(sizeof(STRUCTURE));
+  pStructure = (struct STRUCTURE *)MemAlloc(sizeof(struct STRUCTURE));
   CHECKN(pStructure);
 
-  memset(pStructure, 0, sizeof(STRUCTURE));
+  memset(pStructure, 0, sizeof(struct STRUCTURE));
 
   // setup
   pStructure->fFlags = pDBStructure->fFlags;
@@ -465,13 +469,14 @@ STRUCTURE *CreateStructureFromDB(
 }
 
 BOOLEAN OkayToAddStructureToTile(
-    INT16 sBaseGridNo, INT16 sCubeOffset, DB_STRUCTURE_REF *pDBStructureRef, UINT8 ubTileIndex,
-    INT16 sExclusionID, BOOLEAN fIgnorePeople) {  // Verifies whether a structure is blocked from
-                                                  // being added to the map at a particular point
-  DB_STRUCTURE *pDBStructure;
+    INT16 sBaseGridNo, INT16 sCubeOffset, struct DB_STRUCTURE_REF *pDBStructureRef,
+    UINT8 ubTileIndex, INT16 sExclusionID,
+    BOOLEAN fIgnorePeople) {  // Verifies whether a structure is blocked from
+                              // being added to the map at a particular point
+  struct DB_STRUCTURE *pDBStructure;
   DB_STRUCTURE_TILE **ppTile;
-  STRUCTURE *pExistingStructure;
-  STRUCTURE *pOtherExistingStructure;
+  struct STRUCTURE *pExistingStructure;
+  struct STRUCTURE *pOtherExistingStructure;
   INT8 bLoop, bLoop2;
   INT16 sGridNo;
   INT16 sOtherGridNo;
@@ -666,8 +671,8 @@ BOOLEAN OkayToAddStructureToTile(
 }
 
 BOOLEAN InternalOkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
-                                          DB_STRUCTURE_REF *pDBStructureRef, INT16 sExclusionID,
-                                          BOOLEAN fIgnorePeople) {
+                                          struct DB_STRUCTURE_REF *pDBStructureRef,
+                                          INT16 sExclusionID, BOOLEAN fIgnorePeople) {
   UINT8 ubLoop;
   INT16 sCubeOffset;
 
@@ -702,16 +707,17 @@ BOOLEAN InternalOkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
   return (TRUE);
 }
 
-BOOLEAN OkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel, DB_STRUCTURE_REF *pDBStructureRef,
-                                  INT16 sExclusionID) {
+BOOLEAN OkayToAddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+                                  struct DB_STRUCTURE_REF *pDBStructureRef, INT16 sExclusionID) {
   return (InternalOkayToAddStructureToWorld(sBaseGridNo, bLevel, pDBStructureRef, sExclusionID,
                                             (BOOLEAN)(sExclusionID == IGNORE_PEOPLE_STRUCTURE_ID)));
 }
 
-BOOLEAN AddStructureToTile(MAP_ELEMENT *pMapElement, STRUCTURE *pStructure,
-                           UINT16 usStructureID) {  // adds a STRUCTURE to a MAP_ELEMENT (adds part
-                                                    // of a structure to a location on the map)
-  STRUCTURE *pStructureTail;
+BOOLEAN AddStructureToTile(
+    MAP_ELEMENT *pMapElement, struct STRUCTURE *pStructure,
+    UINT16 usStructureID) {  // adds a struct STRUCTURE to a MAP_ELEMENT (adds part
+                             // of a structure to a location on the map)
+  struct STRUCTURE *pStructureTail;
 
   CHECKF(pMapElement);
   CHECKF(pStructure);
@@ -730,14 +736,14 @@ BOOLEAN AddStructureToTile(MAP_ELEMENT *pMapElement, STRUCTURE *pStructure,
   return (TRUE);
 }
 
-STRUCTURE *InternalAddStructureToWorld(
-    INT16 sBaseGridNo, INT8 bLevel, DB_STRUCTURE_REF *pDBStructureRef,
-    LEVELNODE *pLevelNode) {  // Adds a complete structure to the world at a location plus all other
-                              // locations covered by the structure
+struct STRUCTURE *InternalAddStructureToWorld(
+    INT16 sBaseGridNo, INT8 bLevel, struct DB_STRUCTURE_REF *pDBStructureRef,
+    struct LEVELNODE *pLevelNode) {  // Adds a complete structure to the world at a location plus
+                                     // all other locations covered by the structure
   INT16 sGridNo;
-  STRUCTURE **ppStructure;
-  STRUCTURE *pBaseStructure;
-  DB_STRUCTURE *pDBStructure;
+  struct STRUCTURE **ppStructure;
+  struct STRUCTURE *pBaseStructure;
+  struct DB_STRUCTURE *pDBStructure;
   DB_STRUCTURE_TILE **ppTile;
   UINT8 ubLoop;
   UINT8 ubLoop2;
@@ -763,17 +769,18 @@ STRUCTURE *InternalAddStructureToWorld(
   // We go through a definition stage here and a later stage of
   // adding everything to the world so that we don't have to untangle
   // things if we run out of memory.  First we create an array of
-  // pointers to point to all of the STRUCTURE elements created in
+  // pointers to point to all of the struct STRUCTURE elements created in
   // the first stage.  This array gets given to the base tile so
   // there is an easy way to remove an entire object from the world quickly
 
   // NB we add 1 because the 0th element is in fact the reference count!
-  ppStructure = (STRUCTURE **)MemAlloc(pDBStructure->ubNumberOfTiles * sizeof(STRUCTURE *));
+  ppStructure =
+      (struct STRUCTURE **)MemAlloc(pDBStructure->ubNumberOfTiles * sizeof(struct STRUCTURE *));
   CHECKF(ppStructure);
-  memset(ppStructure, 0, pDBStructure->ubNumberOfTiles * sizeof(STRUCTURE *));
+  memset(ppStructure, 0, pDBStructure->ubNumberOfTiles * sizeof(struct STRUCTURE *));
 
   for (ubLoop = BASE_TILE; ubLoop < pDBStructure->ubNumberOfTiles;
-       ubLoop++) {  // for each tile, create the appropriate STRUCTURE struct
+       ubLoop++) {  // for each tile, create the appropriate struct STRUCTURE struct
     ppStructure[ubLoop] = CreateStructureFromDB(pDBStructureRef, ubLoop);
     if (ppStructure[ubLoop] == NULL) {
       // Free allocated memory and abort!
@@ -872,12 +879,12 @@ STRUCTURE *InternalAddStructureToWorld(
   return (pBaseStructure);
 }
 
-BOOLEAN AddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel, DB_STRUCTURE_REF *pDBStructureRef,
-                            PTR pLevelN) {
-  STRUCTURE *pStructure;
+BOOLEAN AddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel,
+                            struct DB_STRUCTURE_REF *pDBStructureRef, PTR pLevelN) {
+  struct STRUCTURE *pStructure;
 
-  pStructure =
-      InternalAddStructureToWorld(sBaseGridNo, bLevel, pDBStructureRef, (LEVELNODE *)pLevelN);
+  pStructure = InternalAddStructureToWorld(sBaseGridNo, bLevel, pDBStructureRef,
+                                           (struct LEVELNODE *)pLevelN);
   if (pStructure == NULL) {
     return (FALSE);
   }
@@ -890,7 +897,8 @@ BOOLEAN AddStructureToWorld(INT16 sBaseGridNo, INT8 bLevel, DB_STRUCTURE_REF *pD
 
 void DeleteStructureFromTile(
     MAP_ELEMENT *pMapElement,
-    STRUCTURE *pStructure) {  // removes a STRUCTURE element at a particular location from the world
+    struct STRUCTURE *
+        pStructure) {  // removes a struct STRUCTURE element at a particular location from the world
   // put location pointer in tile
   if (pMapElement->pStructureHead == pStructure) {
     if (pMapElement->pStructureTail == pStructure) {
@@ -920,12 +928,13 @@ void DeleteStructureFromTile(
   MemFree(pStructure);
 }
 
-BOOLEAN DeleteStructureFromWorld(STRUCTURE *pStructure) {  // removes all of the STRUCTURE elements
-                                                           // for a structure from the world
+BOOLEAN DeleteStructureFromWorld(
+    struct STRUCTURE *pStructure) {  // removes all of the struct STRUCTURE elements
+                                     // for a structure from the world
   MAP_ELEMENT *pBaseMapElement;
-  STRUCTURE *pBaseStructure;
+  struct STRUCTURE *pBaseStructure;
   DB_STRUCTURE_TILE **ppTile;
-  STRUCTURE *pCurrent;
+  struct STRUCTURE *pCurrent;
   UINT8 ubLoop, ubLoop2;
   UINT8 ubNumberOfTiles;
   INT16 sBaseGridNo, sGridNo;
@@ -982,14 +991,14 @@ BOOLEAN DeleteStructureFromWorld(STRUCTURE *pStructure) {  // removes all of the
   return (TRUE);
 }
 
-STRUCTURE *InternalSwapStructureForPartner(INT16 sGridNo, STRUCTURE *pStructure,
-                                           BOOLEAN fFlipSwitches,
-                                           BOOLEAN fStoreInMap) {  // switch structure
-  LEVELNODE *pLevelNode;
-  LEVELNODE *pShadowNode;
-  STRUCTURE *pBaseStructure;
-  STRUCTURE *pNewBaseStructure;
-  DB_STRUCTURE_REF *pPartnerDBStructure;
+struct STRUCTURE *InternalSwapStructureForPartner(INT16 sGridNo, struct STRUCTURE *pStructure,
+                                                  BOOLEAN fFlipSwitches,
+                                                  BOOLEAN fStoreInMap) {  // switch structure
+  struct LEVELNODE *pLevelNode;
+  struct LEVELNODE *pShadowNode;
+  struct STRUCTURE *pBaseStructure;
+  struct STRUCTURE *pNewBaseStructure;
+  struct DB_STRUCTURE_REF *pPartnerDBStructure;
   BOOLEAN fDoor;
 
   INT8 bDelta;
@@ -1060,21 +1069,24 @@ STRUCTURE *InternalSwapStructureForPartner(INT16 sGridNo, STRUCTURE *pStructure,
   return (pNewBaseStructure);
 }
 
-STRUCTURE *SwapStructureForPartner(INT16 sGridNo, STRUCTURE *pStructure) {
+struct STRUCTURE *SwapStructureForPartner(INT16 sGridNo, struct STRUCTURE *pStructure) {
   return (InternalSwapStructureForPartner(sGridNo, pStructure, TRUE, FALSE));
 }
 
-STRUCTURE *SwapStructureForPartnerWithoutTriggeringSwitches(INT16 sGridNo, STRUCTURE *pStructure) {
+struct STRUCTURE *SwapStructureForPartnerWithoutTriggeringSwitches(INT16 sGridNo,
+                                                                   struct STRUCTURE *pStructure) {
   return (InternalSwapStructureForPartner(sGridNo, pStructure, FALSE, FALSE));
 }
 
-STRUCTURE *SwapStructureForPartnerAndStoreChangeInMap(INT16 sGridNo, STRUCTURE *pStructure) {
+struct STRUCTURE *SwapStructureForPartnerAndStoreChangeInMap(INT16 sGridNo,
+                                                             struct STRUCTURE *pStructure) {
   return (InternalSwapStructureForPartner(sGridNo, pStructure, TRUE, TRUE));
 }
 
-STRUCTURE *FindStructure(INT16 sGridNo,
-                         UINT32 fFlags) {  // finds a structure that matches any of the given flags
-  STRUCTURE *pCurrent;
+struct STRUCTURE *FindStructure(
+    INT16 sGridNo,
+    UINT32 fFlags) {  // finds a structure that matches any of the given flags
+  struct STRUCTURE *pCurrent;
 
   pCurrent = gpWorldLevelData[sGridNo].pStructureHead;
   while (pCurrent != NULL) {
@@ -1086,8 +1098,8 @@ STRUCTURE *FindStructure(INT16 sGridNo,
   return (NULL);
 }
 
-STRUCTURE *FindNextStructure(STRUCTURE *pStructure, UINT32 fFlags) {
-  STRUCTURE *pCurrent;
+struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, UINT32 fFlags) {
+  struct STRUCTURE *pCurrent;
 
   CHECKF(pStructure);
   pCurrent = pStructure->pNext;
@@ -1100,9 +1112,9 @@ STRUCTURE *FindNextStructure(STRUCTURE *pStructure, UINT32 fFlags) {
   return (NULL);
 }
 
-STRUCTURE *FindStructureByID(
+struct STRUCTURE *FindStructureByID(
     INT16 sGridNo, UINT16 usStructureID) {  // finds a structure that matches any of the given flags
-  STRUCTURE *pCurrent;
+  struct STRUCTURE *pCurrent;
 
   pCurrent = gpWorldLevelData[sGridNo].pStructureHead;
   while (pCurrent != NULL) {
@@ -1114,7 +1126,8 @@ STRUCTURE *FindStructureByID(
   return (NULL);
 }
 
-STRUCTURE *FindBaseStructure(STRUCTURE *pStructure) {  // finds the base structure for any structure
+struct STRUCTURE *FindBaseStructure(
+    struct STRUCTURE *pStructure) {  // finds the base structure for any structure
   CHECKF(pStructure);
   if (pStructure->fFlags & STRUCTURE_BASE_TILE) {
     return (pStructure);
@@ -1122,8 +1135,8 @@ STRUCTURE *FindBaseStructure(STRUCTURE *pStructure) {  // finds the base structu
   return (FindStructureByID(pStructure->sBaseGridNo, pStructure->usStructureID));
 }
 
-STRUCTURE *FindNonBaseStructure(
-    INT16 sGridNo, STRUCTURE *pStructure) {  // finds a non-base structure in a location
+struct STRUCTURE *FindNonBaseStructure(
+    INT16 sGridNo, struct STRUCTURE *pStructure) {  // finds a non-base structure in a location
   CHECKF(pStructure);
   if (!(pStructure->fFlags & STRUCTURE_BASE_TILE)) {  // error!
     return (NULL);
@@ -1132,7 +1145,7 @@ STRUCTURE *FindNonBaseStructure(
   return (FindStructureByID(sGridNo, pStructure->usStructureID));
 }
 
-INT16 GetBaseTile(STRUCTURE *pStructure) {
+INT16 GetBaseTile(struct STRUCTURE *pStructure) {
   if (pStructure == NULL) {
     return (-1);
   }
@@ -1143,7 +1156,7 @@ INT16 GetBaseTile(STRUCTURE *pStructure) {
   }
 }
 
-INT8 StructureHeight(STRUCTURE *pStructure) {  // return the height of an object from 1-4
+INT8 StructureHeight(struct STRUCTURE *pStructure) {  // return the height of an object from 1-4
   UINT8 ubLoopX, ubLoopY;
   PROFILE *pShape;
   UINT8 ubShapeValue;
@@ -1185,7 +1198,7 @@ INT8 StructureHeight(STRUCTURE *pStructure) {  // return the height of an object
 }
 
 INT8 GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
-  STRUCTURE *pCurrent;
+  struct STRUCTURE *pCurrent;
   INT8 iHeight;
   INT8 iTallest = 0;
   INT16 sDesiredHeight;
@@ -1209,7 +1222,7 @@ INT8 GetTallestStructureHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
 }
 
 INT8 GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
-  STRUCTURE *pCurrent;
+  struct STRUCTURE *pCurrent;
   INT8 iHeight;
   INT8 iTallest = 0;
   INT16 sDesiredHeight;
@@ -1246,7 +1259,7 @@ INT8 GetStructureTargetHeight(INT16 sGridNo, BOOLEAN fOnRoof) {
 }
 
 INT8 StructureBottomLevel(
-    STRUCTURE *pStructure) {  // return the bottom level of an object, from 1-4
+    struct STRUCTURE *pStructure) {  // return the bottom level of an object, from 1-4
   UINT8 ubLoopX, ubLoopY;
   PROFILE *pShape;
   UINT8 ubShapeValue;
@@ -1278,7 +1291,7 @@ INT8 StructureBottomLevel(
   return (bLowestHeight + 1);
 }
 
-BOOLEAN StructureDensity(STRUCTURE *pStructure, UINT8 *pubLevel0, UINT8 *pubLevel1,
+BOOLEAN StructureDensity(struct STRUCTURE *pStructure, UINT8 *pubLevel0, UINT8 *pubLevel1,
                          UINT8 *pubLevel2, UINT8 *pubLevel3) {
   UINT8 ubLoopX, ubLoopY;
   UINT8 ubShapeValue;
@@ -1322,12 +1335,12 @@ BOOLEAN StructureDensity(STRUCTURE *pStructure, UINT8 *pubLevel0, UINT8 *pubLeve
 }
 
 BOOLEAN DamageStructure(
-    STRUCTURE *pStructure, UINT8 ubDamage, UINT8 ubReason, INT16 sGridNo, INT16 sX, INT16 sY,
+    struct STRUCTURE *pStructure, UINT8 ubDamage, UINT8 ubReason, INT16 sGridNo, INT16 sX, INT16 sY,
     UINT8 ubOwner) {  // do damage to a structure; returns TRUE if the structure should be removed
 
-  STRUCTURE *pBase;
+  struct STRUCTURE *pBase;
   UINT8 ubArmour;
-  // LEVELNODE			*pNode;
+  // struct LEVELNODE			*pNode;
 
   CHECKF(pStructure);
   if (pStructure->fFlags & STRUCTURE_PERSON || pStructure->fFlags & STRUCTURE_CORPSE) {
@@ -1370,7 +1383,7 @@ BOOLEAN DamageStructure(
       // ATE: Set hit points to zero....
       pBase->ubHitPoints = 0;
 
-      // Get LEVELNODE for struct and remove!
+      // Get struct LEVELNODE for struct and remove!
       // pNode = FindLevelNodeBasedOnStructure( pBase->sGridNo, pBase );
 
       // Set a flag indicating that the following changes are to go the the maps temp file
@@ -1422,9 +1435,9 @@ BOOLEAN DamageStructure(
 
 #define LINE_HEIGHT 20
 void DebugStructurePage1(void) {
-  STRUCTURE *pStructure;
-  STRUCTURE *pBase;
-  // LEVELNODE *		pLand;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pBase;
+  // struct LEVELNODE *		pLand;
   INT16 sGridNo, sDesiredLevel;
   UINT8 bHeight, bDens0, bDens1, bDens2, bDens3;
   INT8 bStructures;
@@ -1493,7 +1506,7 @@ void DebugStructurePage1(void) {
       gprintf(0, LINE_HEIGHT * 1, L"DDoorRt with orientation %s",
               WallOrientationString[pStructure->ubWallOrientation]);
     } else {
-      gprintf(0, LINE_HEIGHT * 1, L"UNKNOWN STRUCTURE! (%x)", pStructure->fFlags);
+      gprintf(0, LINE_HEIGHT * 1, L"UNKNOWN struct STRUCTURE! (%x)", pStructure->fFlags);
     }
     bHeight = StructureHeight(pStructure);
     pBase = FindBaseStructure(pStructure);
@@ -1566,8 +1579,9 @@ void DebugStructurePage1(void) {
 #endif
 }
 
-BOOLEAN AddZStripInfoToVObject(HVOBJECT hVObject, STRUCTURE_FILE_REF *pStructureFileRef,
-                               BOOLEAN fFromAnimation, INT16 sSTIStartIndex) {
+BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
+                               struct STRUCTURE_FILE_REF *pStructureFileRef, BOOLEAN fFromAnimation,
+                               INT16 sSTIStartIndex) {
   UINT32 uiLoop;
   UINT8 ubLoop2;
   UINT8 ubNumIncreasing = 0;
@@ -1581,8 +1595,8 @@ BOOLEAN AddZStripInfoToVObject(HVOBJECT hVObject, STRUCTURE_FILE_REF *pStructure
   INT16 sOffsetY;
   UINT16 usWidth;
   UINT16 usHeight;
-  DB_STRUCTURE_REF *pDBStructureRef;
-  DB_STRUCTURE *pDBStructure = NULL;
+  struct DB_STRUCTURE_REF *pDBStructureRef;
+  struct DB_STRUCTURE *pDBStructure = NULL;
   INT16 sSTIStep = 0;
   INT16 sStructIndex = 0;
   INT16 sNext;
@@ -1832,9 +1846,9 @@ BOOLEAN FiniStructureDB(void) {
 }
 
 INT8 GetBlockingStructureInfo(INT16 sGridNo, INT8 bDir, INT8 bNextDir, INT8 bLevel,
-                              INT8 *pStructHeight, STRUCTURE **ppTallestStructure,
+                              INT8 *pStructHeight, struct STRUCTURE **ppTallestStructure,
                               BOOLEAN fWallsBlock) {
-  STRUCTURE *pCurrent, *pStructure;
+  struct STRUCTURE *pCurrent, *pStructure;
   INT16 sDesiredLevel;
   BOOLEAN fOKStructOnLevel = FALSE;
   BOOLEAN fMinimumBlockingFound = FALSE;
@@ -1982,9 +1996,9 @@ UINT32 StructureTypeToFlag(UINT8 ubType) {
   return (uiFlag);
 }
 
-STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, UINT8 ubType, UINT8 ubWallOrientation,
-                                    INT8 bLevel) {
-  STRUCTURE *pCurrent;
+struct STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, UINT8 ubType, UINT8 ubWallOrientation,
+                                           INT8 bLevel) {
+  struct STRUCTURE *pCurrent;
   UINT32 uiTypeFlag;
 
   uiTypeFlag = StructureTypeToFlag(ubType);
@@ -2001,7 +2015,7 @@ STRUCTURE *FindStructureBySavedInfo(INT16 sGridNo, UINT8 ubType, UINT8 ubWallOri
   return (NULL);
 }
 
-UINT32 GetStructureOpenSound(STRUCTURE *pStructure, BOOLEAN fClose) {
+UINT32 GetStructureOpenSound(struct STRUCTURE *pStructure, BOOLEAN fClose) {
   UINT32 uiSoundID;
 
   switch (pStructure->pDBStructureRef->pDBStructure->ubArmour) {

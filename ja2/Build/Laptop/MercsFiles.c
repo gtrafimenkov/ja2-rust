@@ -12,6 +12,7 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -21,6 +22,7 @@
 #include "Strategic/Quests.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
@@ -220,7 +222,7 @@ void ExitMercsFiles() {
 void HandleMercsFiles() {}
 
 void RenderMercsFiles() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   DrawMecBackGround();
 
@@ -385,13 +387,13 @@ void BtnMercHireButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 BOOLEAN DisplayMercFace(UINT8 ubMercID) {
-  HVOBJECT hFaceHandle;
-  HVOBJECT hPortraitHandle;
+  struct VObject *hFaceHandle;
+  struct VObject *hPortraitHandle;
   STR sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
   MERCPROFILESTRUCT *pMerc;
   VOBJECT_DESC VObjectDesc;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // Portrait Frame
   GetVideoObject(&hPortraitHandle, guiPortraitBox);

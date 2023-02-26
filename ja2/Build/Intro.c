@@ -13,6 +13,9 @@
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Line.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Strategic/GameInit.h"
@@ -399,7 +402,7 @@ void SetIntroType(INT8 bIntroType) {
 }
 
 void DisplaySirtechSplashScreen() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   VOBJECT_DESC VObjectDesc;
   UINT32 uiLogoID;
 

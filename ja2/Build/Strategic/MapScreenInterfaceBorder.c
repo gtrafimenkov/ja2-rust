@@ -4,6 +4,7 @@
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -17,7 +18,6 @@
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/StrategicMap.h"
 #include "Strategic/StrategicTownLoyalty.h"
-#include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
@@ -34,7 +34,7 @@ extern GUI_BUTTON *gpAnchoredButton;
 extern BOOLEAN gfAnchoredState;
 
 // mouse levels
-MOUSE_REGION LevelMouseRegions[4];
+struct MOUSE_REGION LevelMouseRegions[4];
 
 // graphics
 UINT32 guiMapBorder;
@@ -94,7 +94,7 @@ void BtnMilitiaCallback(GUI_BUTTON *btn, INT32 reason);
 // void BtnZoomCallback(GUI_BUTTON *btn,INT32 reason);
 
 void BtnGenericMouseMoveButtonCallbackForMapBorder(GUI_BUTTON *btn, INT32 reason);
-void LevelMarkerBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void LevelMarkerBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void CommonBtnCallbackBtnDownChecks(void);
 
@@ -139,7 +139,7 @@ void DeleteMapBorderGraphics(void) {
 
 void RenderMapBorder(void) {
   // renders the actual border to the guiSAVEBUFFER
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   /*
           if( fDisabledMapBorder )
@@ -169,7 +169,7 @@ void RenderMapBorder(void) {
 void RenderMapBorderCorner( void )
 {
         // renders map border corner to the FRAME_BUFFER
-        HVOBJECT hHandle;
+        struct VObject* hHandle;
 
         if( fDisabledMapBorder )
         {
@@ -195,7 +195,7 @@ VO_BLT_SRCTRANSPARENCY,NULL );
 
 void RenderMapBorderEtaPopUp(void) {
   // renders map border corner to the FRAME_BUFFER
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   /*
           if( fDisabledMapBorder )
@@ -1008,7 +1008,7 @@ BOOLEAN ScrollButtonsDisplayingHelpMessage( void )
 void DisplayCurrentLevelMarker(void) {
   // display the current level marker on the map border
 
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   /*
           if( fDisabledMapBorder )
@@ -1052,7 +1052,7 @@ void DeleteMouseRegionsForLevelMarkers(void) {
   }
 }
 
-void LevelMarkerBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void LevelMarkerBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment screen mask region
   INT32 iCounter = 0;
 

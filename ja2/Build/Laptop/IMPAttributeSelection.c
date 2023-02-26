@@ -14,7 +14,6 @@
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
@@ -88,11 +87,11 @@ UINT32 giIMPAttributeSelectionSliderButton[20];
 UINT32 giIMPAttributeSelectionSliderButtonImage[20];
 
 // mouse regions
-MOUSE_REGION pSliderRegions[10];
-MOUSE_REGION pSliderBarRegions[10];
+struct MOUSE_REGION pSliderRegions[10];
+struct MOUSE_REGION pSliderBarRegions[10];
 
 // The currently "anchored scroll bar"
-MOUSE_REGION *gpCurrentScrollBox = NULL;
+struct MOUSE_REGION *gpCurrentScrollBox = NULL;
 INT32 giCurrentlySelectedStat = -1;
 
 // has any of the sliding bars moved?...for re-rendering puposes
@@ -125,8 +124,8 @@ void SetGeneratedCharacterAttributes(void);
 void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnIMPAttributeSliderLeftCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnIMPAttributeSliderRightCallback(GUI_BUTTON *btn, INT32 reason);
-void SliderRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void SliderBarRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void StatAtZeroBoxCallBack(UINT8 bExitValue);
 
 void EnterIMPAttributeSelection(void) {
@@ -1123,7 +1122,7 @@ void DestroySlideBarMouseRegions(void) {
   return;
 }
 
-void SliderRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iCurrentAttributeValue = 0;
   INT32 iNewAttributeValue = 0;
   INT32 iAttributeDelta = 0;
@@ -1287,7 +1286,7 @@ void SliderRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SliderBarRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     fSlideIsActive = TRUE;
     SliderRegionButtonCallback(&pSliderRegions[MSYS_GetRegionUserData(pRegion, 0)],

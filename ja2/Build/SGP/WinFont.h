@@ -2,7 +2,6 @@
 #define __WINFONT_
 
 #include "SGP/Types.h"
-#include "SGP/VObject.h"
 
 void InitWinFonts();
 void ShutdownWinFonts();

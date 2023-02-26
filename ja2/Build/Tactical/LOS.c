@@ -13,6 +13,7 @@
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Bullets.h"
 #include "Tactical/Campaign.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/Interface.h"
 #include "Tactical/Items.h"
 #include "Tactical/Keys.h"
@@ -30,6 +31,9 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/PhysMath.h"
 #include "TileEngine/Smell.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/Message.h"
@@ -176,13 +180,13 @@ static UINT16 guiStructureHitChance[MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_STR
 
 #define MAX_LOCAL_STRUCTURES 20
 
-STRUCTURE *gpLocalStructure[MAX_LOCAL_STRUCTURES];
+struct STRUCTURE *gpLocalStructure[MAX_LOCAL_STRUCTURES];
 UINT32 guiLocalStructureCTH[MAX_LOCAL_STRUCTURES];
 UINT8 gubLocalStructureNumTimesHit[MAX_LOCAL_STRUCTURES];
 
-BOOLEAN CalculateLOSNormal(STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY, INT8 bLOSZ, FLOAT dDeltaX,
-                           FLOAT dDeltaY, FLOAT dDeltaZ, FLOAT *pdNormalX, FLOAT *pdNormalY,
-                           FLOAT *pdNormalZ);
+BOOLEAN CalculateLOSNormal(struct STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY, INT8 bLOSZ,
+                           FLOAT dDeltaX, FLOAT dDeltaY, FLOAT dDeltaZ, FLOAT *pdNormalX,
+                           FLOAT *pdNormalY, FLOAT *pdNormalZ);
 
 extern UINT8 gubMaterialArmour[];
 
@@ -236,8 +240,8 @@ void DebugLOS(STR szOutput) {
 
 typedef enum { LOC_OTHER, LOC_0_4, LOC_3_4, LOC_4_0, LOC_4_3, LOC_4_4 } LocationCode;
 
-BOOLEAN ResolveHitOnWall(STRUCTURE *pStructure, INT32 iGridNo, INT8 bLOSIndexX, INT8 bLOSIndexY,
-                         DOUBLE ddHorizAngle) {
+BOOLEAN ResolveHitOnWall(struct STRUCTURE *pStructure, INT32 iGridNo, INT8 bLOSIndexX,
+                         INT8 bLOSIndexY, DOUBLE ddHorizAngle) {
   BOOLEAN fNorthSouth, fEastWest;
   BOOLEAN fTopLeft, fTopRight;
   INT8 bLocation = LOC_OTHER;
@@ -631,8 +635,8 @@ INT32 LineOfSightTest(FLOAT dStartX, FLOAT dStartY, FLOAT dStartZ, FLOAT dEndX, 
   INT32 iLoop;
 
   MAP_ELEMENT *pMapElement;
-  STRUCTURE *pStructure;
-  STRUCTURE *pRoofStructure = NULL;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pRoofStructure = NULL;
 
   BOOLEAN fCheckForRoof;
   FIXEDPT qLastZ;
@@ -1198,7 +1202,7 @@ INT32 LineOfSightTest(FLOAT dStartX, FLOAT dStartY, FLOAT dStartZ, FLOAT dEndX, 
           iSightLimit);
 }
 
-BOOLEAN CalculateSoldierZPos(SOLDIERTYPE *pSoldier, UINT8 ubPosType, FLOAT *pdZPos) {
+BOOLEAN CalculateSoldierZPos(struct SOLDIERTYPE *pSoldier, UINT8 ubPosType, FLOAT *pdZPos) {
   UINT8 ubHeight;
 
   if (pSoldier->ubBodyType == CROW) {
@@ -1358,8 +1362,9 @@ BOOLEAN CalculateSoldierZPos(SOLDIERTYPE *pSoldier, UINT8 ubPosType, FLOAT *pdZP
   return (TRUE);
 }
 
-INT32 SoldierToSoldierLineOfSightTest(SOLDIERTYPE *pStartSoldier, SOLDIERTYPE *pEndSoldier,
-                                      UINT8 ubTileSightLimit, INT8 bAware) {
+INT32 SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
+                                      struct SOLDIERTYPE *pEndSoldier, UINT8 ubTileSightLimit,
+                                      INT8 bAware) {
   FLOAT dStartZPos, dEndZPos;
   BOOLEAN fOk;
   BOOLEAN fSmell;
@@ -1453,7 +1458,7 @@ INT32 SoldierToSoldierLineOfSightTest(SOLDIERTYPE *pStartSoldier, SOLDIERTYPE *p
       ubTileSightLimit, ubTreeReduction, bAware, bEffectiveCamo, fSmell, NULL));
 }
 
-INT16 SoldierToLocationWindowTest(SOLDIERTYPE *pStartSoldier, INT16 sEndGridNo) {
+INT16 SoldierToLocationWindowTest(struct SOLDIERTYPE *pStartSoldier, INT16 sEndGridNo) {
   // figure out if there is a SINGLE window between the looker and target
   FLOAT dStartZPos, dEndZPos;
   INT16 sXPos, sYPos, sWindowGridNo = NOWHERE;
@@ -1480,7 +1485,8 @@ INT16 SoldierToLocationWindowTest(SOLDIERTYPE *pStartSoldier, INT16 sEndGridNo) 
   return (sWindowGridNo);
 }
 
-BOOLEAN SoldierToSoldierLineOfSightTimingTest(SOLDIERTYPE *pStartSoldier, SOLDIERTYPE *pEndSoldier,
+BOOLEAN SoldierToSoldierLineOfSightTimingTest(struct SOLDIERTYPE *pStartSoldier,
+                                              struct SOLDIERTYPE *pEndSoldier,
                                               UINT8 ubTileSightLimit, INT8 bAware) {
   UINT32 uiLoopLimit = 100000;
   UINT32 uiLoop;
@@ -1504,12 +1510,13 @@ BOOLEAN SoldierToSoldierLineOfSightTimingTest(SOLDIERTYPE *pStartSoldier, SOLDIE
   return (TRUE);
 }
 
-INT32 SoldierTo3DLocationLineOfSightTest(SOLDIERTYPE *pStartSoldier, INT16 sGridNo, INT8 bLevel,
-                                         INT8 bCubeLevel, UINT8 ubTileSightLimit, INT8 bAware) {
+INT32 SoldierTo3DLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+                                         INT8 bLevel, INT8 bCubeLevel, UINT8 ubTileSightLimit,
+                                         INT8 bAware) {
   FLOAT dStartZPos, dEndZPos;
   INT16 sXPos, sYPos;
   UINT8 ubTargetID;
-  SOLDIERTYPE *pTarget;
+  struct SOLDIERTYPE *pTarget;
   BOOLEAN fOk;
 
   CHECKF(pStartSoldier);
@@ -1543,9 +1550,10 @@ INT32 SoldierTo3DLocationLineOfSightTest(SOLDIERTYPE *pStartSoldier, INT16 sGrid
                           gubTreeSightReduction[ANIM_STAND], bAware, 0, FALSE, NULL));
 }
 
-INT32 SoldierToBodyPartLineOfSightTest(SOLDIERTYPE *pStartSoldier, INT16 sGridNo, INT8 bLevel,
-                                       UINT8 ubAimLocation, UINT8 ubTileSightLimit, INT8 bAware) {
-  SOLDIERTYPE *pEndSoldier;
+INT32 SoldierToBodyPartLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+                                       INT8 bLevel, UINT8 ubAimLocation, UINT8 ubTileSightLimit,
+                                       INT8 bAware) {
+  struct SOLDIERTYPE *pEndSoldier;
   UINT8 ubTargetID;
   FLOAT dStartZPos, dEndZPos;
   INT16 sXPos, sYPos;
@@ -1594,8 +1602,9 @@ INT32 SoldierToBodyPartLineOfSightTest(SOLDIERTYPE *pStartSoldier, INT16 sGridNo
                           gubTreeSightReduction[ANIM_STAND], bAware, 0, FALSE, NULL));
 }
 
-INT32 SoldierToVirtualSoldierLineOfSightTest(SOLDIERTYPE *pStartSoldier, INT16 sGridNo, INT8 bLevel,
-                                             INT8 bStance, UINT8 ubTileSightLimit, INT8 bAware) {
+INT32 SoldierToVirtualSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+                                             INT8 bLevel, INT8 bStance, UINT8 ubTileSightLimit,
+                                             INT8 bAware) {
   FLOAT dStartZPos, dEndZPos;
   INT16 sXPos, sYPos;
   BOOLEAN fOk;
@@ -1634,7 +1643,7 @@ INT32 SoldierToVirtualSoldierLineOfSightTest(SOLDIERTYPE *pStartSoldier, INT16 s
                           gubTreeSightReduction[ANIM_STAND], bAware, 0, FALSE, NULL));
 }
 
-INT32 SoldierToLocationLineOfSightTest(SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+INT32 SoldierToLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
                                        UINT8 ubTileSightLimit, INT8 bAware) {
   return (
       SoldierTo3DLocationLineOfSightTest(pStartSoldier, sGridNo, 0, 0, ubTileSightLimit, bAware));
@@ -1687,11 +1696,11 @@ INT32 BulletImpactReducedByRange( INT32 iImpact, INT32 iDistanceTravelled, INT32
 }
 */
 
-BOOLEAN BulletHitMerc(BULLET *pBullet, STRUCTURE *pStructure, BOOLEAN fIntended) {
+BOOLEAN BulletHitMerc(BULLET *pBullet, struct STRUCTURE *pStructure, BOOLEAN fIntended) {
   INT32 iImpact, iDamage;
   EV_S_WEAPONHIT SWeaponHit;
   INT16 sRange;
-  SOLDIERTYPE *pFirer = pBullet->pFirer;
+  struct SOLDIERTYPE *pFirer = pBullet->pFirer;
   FLOAT dZPosRelToMerc;
   UINT8 ubHitLocation = AIM_SHOT_RANDOM;
   UINT8 ubAttackDirection;
@@ -1702,8 +1711,8 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, STRUCTURE *pStructure, BOOLEAN fIntended)
   BOOLEAN fStopped = TRUE;
   INT8 bSlot;
   INT8 bHeadSlot = NO_SLOT;
-  OBJECTTYPE Object;
-  SOLDIERTYPE *pTarget;
+  struct OBJECTTYPE Object;
+  struct SOLDIERTYPE *pTarget;
   INT16 sNewGridNo;
   BOOLEAN fCanSpewBlood = FALSE;
   INT8 bSpewBloodLevel;
@@ -2043,8 +2052,9 @@ BOOLEAN BulletHitMerc(BULLET *pBullet, STRUCTURE *pStructure, BOOLEAN fIntended)
   return (fStopped);
 }
 
-void BulletHitStructure(BULLET *pBullet, UINT16 usStructureID, INT32 iImpact, SOLDIERTYPE *pFirer,
-                        FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qCurrZ, BOOLEAN fStopped) {
+void BulletHitStructure(BULLET *pBullet, UINT16 usStructureID, INT32 iImpact,
+                        struct SOLDIERTYPE *pFirer, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qCurrZ,
+                        BOOLEAN fStopped) {
   EV_S_STRUCTUREHIT SStructureHit;
 
   SStructureHit.sXPos = (INT16)FIXEDPT_TO_INT32(qCurrX + FloatToFixed(0.5f));  // + 0.5);
@@ -2068,7 +2078,7 @@ void BulletHitWindow(BULLET *pBullet, INT16 sGridNo, UINT16 usStructureID,
   WindowHit(sGridNo, usStructureID, fBlowWindowSouth, FALSE);
 }
 
-void BulletMissed(BULLET *pBullet, SOLDIERTYPE *pFirer) {
+void BulletMissed(BULLET *pBullet, struct SOLDIERTYPE *pFirer) {
   ShotMiss(pFirer->ubID, pBullet->iBullet);
 }
 
@@ -2112,7 +2122,8 @@ INT32 StructureResistanceIncreasedByRange(INT32 iImpactReduction, INT32 iGunRang
   */
 }
 
-INT32 HandleBulletStructureInteraction(BULLET *pBullet, STRUCTURE *pStructure, BOOLEAN *pfHit) {
+INT32 HandleBulletStructureInteraction(BULLET *pBullet, struct STRUCTURE *pStructure,
+                                       BOOLEAN *pfHit) {
   DOOR *pDoor;
   INT16 sLockDamage;
 
@@ -2225,7 +2236,7 @@ INT32 HandleBulletStructureInteraction(BULLET *pBullet, STRUCTURE *pStructure, B
   }
 }
 
-INT32 CTGTHandleBulletStructureInteraction(BULLET *pBullet, STRUCTURE *pStructure) {
+INT32 CTGTHandleBulletStructureInteraction(BULLET *pBullet, struct STRUCTURE *pStructure) {
   // returns reduction in impact for summing in CTGT
 
   INT32 iCurrImpact;
@@ -2289,8 +2300,8 @@ UINT8 CalcChanceToGetThrough(BULLET *pBullet) {
   INT32 iOldCubesZ;
 
   MAP_ELEMENT *pMapElement;
-  STRUCTURE *pStructure;
-  STRUCTURE *pRoofStructure = NULL;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pRoofStructure = NULL;
 
   FIXEDPT qLastZ;
 
@@ -2675,7 +2686,8 @@ UINT8 CalcChanceToGetThrough(BULLET *pBullet) {
   return ((UINT8)iChanceToGetThrough);
 }
 
-UINT8 SoldierToSoldierChanceToGetThrough(SOLDIERTYPE *pStartSoldier, SOLDIERTYPE *pEndSoldier) {
+UINT8 SoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                         struct SOLDIERTYPE *pEndSoldier) {
   FLOAT dEndZPos;
   BOOLEAN fOk;
 
@@ -2696,8 +2708,9 @@ UINT8 SoldierToSoldierChanceToGetThrough(SOLDIERTYPE *pStartSoldier, SOLDIERTYPE
                              (FLOAT)CenterY(pEndSoldier->sGridNo), dEndZPos));
 }
 
-UINT8 SoldierToSoldierBodyPartChanceToGetThrough(SOLDIERTYPE *pStartSoldier,
-                                                 SOLDIERTYPE *pEndSoldier, UINT8 ubAimLocation) {
+UINT8 SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                                 struct SOLDIERTYPE *pEndSoldier,
+                                                 UINT8 ubAimLocation) {
   // does like StS-CTGT but with a particular body part in mind
   FLOAT dEndZPos;
   BOOLEAN fOk;
@@ -2735,13 +2748,13 @@ UINT8 SoldierToSoldierBodyPartChanceToGetThrough(SOLDIERTYPE *pStartSoldier,
                              (FLOAT)CenterY(pEndSoldier->sGridNo), dEndZPos));
 }
 
-UINT8 SoldierToLocationChanceToGetThrough(SOLDIERTYPE *pStartSoldier, INT16 sGridNo, INT8 bLevel,
-                                          INT8 bCubeLevel, UINT8 ubTargetID) {
+UINT8 SoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+                                          INT8 bLevel, INT8 bCubeLevel, UINT8 ubTargetID) {
   FLOAT dEndZPos;
   INT16 sXPos;
   INT16 sYPos;
   INT8 bStructHeight;
-  SOLDIERTYPE *pEndSoldier;
+  struct SOLDIERTYPE *pEndSoldier;
 
   if (pStartSoldier->sGridNo == sGridNo) {
     return (0);
@@ -2779,7 +2792,8 @@ UINT8 SoldierToLocationChanceToGetThrough(SOLDIERTYPE *pStartSoldier, INT16 sGri
   }
 }
 
-UINT8 AISoldierToSoldierChanceToGetThrough(SOLDIERTYPE *pStartSoldier, SOLDIERTYPE *pEndSoldier) {
+UINT8 AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
+                                           struct SOLDIERTYPE *pEndSoldier) {
   // Like a standard CTGT algorithm BUT fakes the start soldier at standing height
   FLOAT dEndZPos;
   BOOLEAN fOk;
@@ -2808,13 +2822,13 @@ UINT8 AISoldierToSoldierChanceToGetThrough(SOLDIERTYPE *pStartSoldier, SOLDIERTY
   return (ubChance);
 }
 
-UINT8 AISoldierToLocationChanceToGetThrough(SOLDIERTYPE *pStartSoldier, INT16 sGridNo, INT8 bLevel,
-                                            INT8 bCubeLevel) {
+UINT8 AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT16 sGridNo,
+                                            INT8 bLevel, INT8 bCubeLevel) {
   FLOAT dEndZPos;
   INT16 sXPos;
   INT16 sYPos;
   INT8 bStructHeight;
-  SOLDIERTYPE *pEndSoldier;
+  struct SOLDIERTYPE *pEndSoldier;
 
   UINT16 usTrueState;
   UINT8 ubChance;
@@ -2940,7 +2954,7 @@ void CalculateFiringIncrements(DOUBLE ddHorizAngle, DOUBLE ddVerticAngle, DOUBLE
       FloatToFixed((FLOAT)(sin(ddVerticAngle) / sin((PI / 2) - ddVerticAngle) * 2.56));
 }
 
-INT8 FireBullet(SOLDIERTYPE *pFirer, BULLET *pBullet, BOOLEAN fFake) {
+INT8 FireBullet(struct SOLDIERTYPE *pFirer, BULLET *pBullet, BOOLEAN fFake) {
   pBullet->iCurrTileX = FIXEDPT_TO_INT32(pBullet->qCurrX) / CELL_X_SIZE;
   pBullet->iCurrTileY = FIXEDPT_TO_INT32(pBullet->qCurrY) / CELL_Y_SIZE;
   pBullet->bLOSIndexX =
@@ -2989,7 +3003,7 @@ INT8 FireBullet(SOLDIERTYPE *pFirer, BULLET *pBullet, BOOLEAN fFake) {
 }
 
 /*
-DOUBLE CalculateVerticalAngle( SOLDIERTYPE * pFirer, SOLDIERTYPE * pTarget )
+DOUBLE CalculateVerticalAngle( struct SOLDIERTYPE * pFirer, struct SOLDIERTYPE * pTarget )
 {
         DOUBLE dStartZ, dEndZ;
 
@@ -3006,7 +3020,7 @@ DOUBLE CalculateVerticalAngle( SOLDIERTYPE * pFirer, SOLDIERTYPE * pTarget )
 }
 */
 
-INT8 FireBulletGivenTarget(SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ,
+INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ,
                            UINT16 usHandItem, INT16 sHitBy, BOOLEAN fBuckshot, BOOLEAN fFake) {
   // fFake indicates that we should set things up for a call to ChanceToGetThrough
   FLOAT dStartZ;
@@ -3213,7 +3227,7 @@ INT8 FireBulletGivenTarget(SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT 
   return (TRUE);
 }
 
-INT8 ChanceToGetThrough(SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ) {
+INT8 ChanceToGetThrough(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY, FLOAT dEndZ) {
   if (Item[pFirer->usAttackingWeapon].usItemClass == IC_GUN ||
       Item[pFirer->usAttackingWeapon].usItemClass == IC_THROWING_KNIFE) {
     BOOLEAN fBuckShot = FALSE;
@@ -3246,12 +3260,12 @@ void MoveBullet(INT32 iBullet) {
   INT32 iOldCubesZ;
 
   MAP_ELEMENT *pMapElement;
-  STRUCTURE *pStructure;
-  STRUCTURE *pRoofStructure = NULL;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pRoofStructure = NULL;
 
   FIXEDPT qLastZ;
 
-  SOLDIERTYPE *pTarget;
+  struct SOLDIERTYPE *pTarget;
   UINT8 ubTargetID;
   BOOLEAN fIntended;
   BOOLEAN fStopped;
@@ -3735,7 +3749,7 @@ void MoveBullet(INT32 iBullet) {
                           HandleBulletStructureInteraction(pBullet, pStructure, &fHitStructure);
                       if (iRemainingImpact <= 0) {
                         // check angle of knife and place on ground appropriately
-                        OBJECTTYPE Object;
+                        struct OBJECTTYPE Object;
                         INT32 iKnifeGridNo;
 
                         CreateItem(THROWING_KNIFE, (INT8)pBullet->ubItemStatus, &Object);
@@ -3971,11 +3985,11 @@ INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDelt
   INT16 sDesiredLevel;
 
   MAP_ELEMENT *pMapElement;
-  STRUCTURE *pStructure, *pTempStructure;
+  struct STRUCTURE *pStructure, *pTempStructure;
 
   BOOLEAN fRoofPresent = FALSE;
 
-  SOLDIERTYPE *pTarget;
+  struct SOLDIERTYPE *pTarget;
   FLOAT dTargetX;
   FLOAT dTargetY;
   FLOAT dTargetZMin;
@@ -4270,9 +4284,9 @@ INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDelt
 
 INT16 gsLOSDirLUT[3][3] = {315, 0, 45, 270, 0, 90, 225, 180, 135};
 
-BOOLEAN CalculateLOSNormal(STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY, INT8 bLOSZ, FLOAT dDeltaX,
-                           FLOAT dDeltaY, FLOAT dDeltaZ, FLOAT *pdNormalX, FLOAT *pdNormalY,
-                           FLOAT *pdNormalZ) {
+BOOLEAN CalculateLOSNormal(struct STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY, INT8 bLOSZ,
+                           FLOAT dDeltaX, FLOAT dDeltaY, FLOAT dDeltaZ, FLOAT *pdNormalX,
+                           FLOAT *pdNormalY, FLOAT *pdNormalZ) {
   INT32 cntx, cnty;
   INT8 bX, bY, tX, tY;
   INT8 bNumNormals = 0;

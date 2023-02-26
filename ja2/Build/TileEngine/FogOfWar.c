@@ -3,7 +3,6 @@
 #include "SGP/Types.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SimpleRenderUtils.h"
 #include "TileEngine/WorldMan.h"
 

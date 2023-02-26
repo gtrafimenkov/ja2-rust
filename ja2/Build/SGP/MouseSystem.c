@@ -14,6 +14,8 @@
 #include "SGP/MemMan.h"
 #include "SGP/Timer.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
 #include "TileEngine/RenderDirty.h"
@@ -28,8 +30,8 @@
 //
 // Records and stores the last place the user clicked.  These values are compared to the current
 // click to determine if a double click event has been detected.
-MOUSE_REGION *gpRegionLastLButtonDown = NULL;
-MOUSE_REGION *gpRegionLastLButtonUp = NULL;
+struct MOUSE_REGION *gpRegionLastLButtonDown = NULL;
+struct MOUSE_REGION *gpRegionLastLButtonUp = NULL;
 UINT32 guiRegionLastLButtonDownTime = 0;
 
 extern void ReleaseAnchorMode();  // private function used here (implemented in Button System.c)
@@ -51,15 +53,15 @@ BOOLEAN MSYS_SystemInitialized = FALSE;
 BOOLEAN MSYS_UseMouseHandlerHook = FALSE;
 
 BOOLEAN MSYS_Mouse_Grabbed = FALSE;
-MOUSE_REGION *MSYS_GrabRegion = NULL;
+struct MOUSE_REGION *MSYS_GrabRegion = NULL;
 
 UINT16 gusClickedIDNumber;
 BOOLEAN gfClickedModeOn = FALSE;
 
-MOUSE_REGION *MSYS_RegList = NULL;
+struct MOUSE_REGION *MSYS_RegList = NULL;
 
-MOUSE_REGION *MSYS_PrevRegion = NULL;
-MOUSE_REGION *MSYS_CurrRegion = NULL;
+struct MOUSE_REGION *MSYS_PrevRegion = NULL;
+struct MOUSE_REGION *MSYS_CurrRegion = NULL;
 
 // When set, the fast help text will be instantaneous, if consecutive regions with help text are
 // hilighted.  It is set, whenever the timer for the first help button expires, and the mode is
@@ -70,34 +72,34 @@ INT16 gsFastHelpDelay = 600;  // In timer ticks
 BOOLEAN gfShowFastHelp = TRUE;
 
 // help text is done, now execute callback, if there is one
-void ExecuteMouseHelpEndCallBack(MOUSE_REGION *region);
+void ExecuteMouseHelpEndCallBack(struct MOUSE_REGION *region);
 
 // Kris:
 // NOTE:  This doesn't really need to be here, however, it is a good indication that
 // when an error appears here, that you need to go below to the init code and initialize the
 // values there as well.  That's the only reason why I left this here.
-MOUSE_REGION MSYS_SystemBaseRegion = {MSYS_ID_SYSTEM,
-                                      MSYS_PRIORITY_SYSTEM,
-                                      BASE_REGION_FLAGS,
-                                      -32767,
-                                      -32767,
-                                      32767,
-                                      32767,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      MSYS_NO_CALLBACK,
-                                      MSYS_NO_CALLBACK,
-                                      {0, 0, 0, 0},
-                                      0,
-                                      0,
-                                      -1,
-                                      MSYS_NO_CALLBACK,
-                                      NULL,
-                                      NULL};
+struct MOUSE_REGION MSYS_SystemBaseRegion = {MSYS_ID_SYSTEM,
+                                             MSYS_PRIORITY_SYSTEM,
+                                             BASE_REGION_FLAGS,
+                                             -32767,
+                                             -32767,
+                                             32767,
+                                             32767,
+                                             0,
+                                             0,
+                                             0,
+                                             0,
+                                             0,
+                                             0,
+                                             MSYS_NO_CALLBACK,
+                                             MSYS_NO_CALLBACK,
+                                             {0, 0, 0, 0},
+                                             0,
+                                             0,
+                                             -1,
+                                             MSYS_NO_CALLBACK,
+                                             NULL,
+                                             NULL};
 
 BOOLEAN gfRefreshUpdate = FALSE;
 
@@ -290,7 +292,7 @@ void MSYS_SGP_Mouse_Handler_Hook(UINT16 Type, UINT16 Xcoord, UINT16 Ycoord, BOOL
 INT32 MSYS_GetNewID(void) {
   INT32 retID;
   INT32 Current, found, done;
-  MOUSE_REGION *node;
+  struct MOUSE_REGION *node;
 
   retID = MSYS_CurrentID;
   MSYS_CurrentID++;
@@ -342,8 +344,8 @@ void MSYS_TrashRegList(void) {
 // entries 	have the same priority level, then the latest to enter the list gets the higher
 // priority.
 //
-void MSYS_AddRegionToList(MOUSE_REGION *region) {
-  MOUSE_REGION *curr;
+void MSYS_AddRegionToList(struct MOUSE_REGION *region) {
+  struct MOUSE_REGION *curr;
   INT32 done;
 
   // If region seems to already be in list, delete it so we can
@@ -396,8 +398,8 @@ void MSYS_AddRegionToList(MOUSE_REGION *region) {
 //
 //	Scan region list for presence of a node with the same region ID number
 //
-INT32 MSYS_RegionInList(MOUSE_REGION *region) {
-  MOUSE_REGION *Current;
+INT32 MSYS_RegionInList(struct MOUSE_REGION *region) {
+  struct MOUSE_REGION *Current;
   INT32 found;
 
   found = FALSE;
@@ -414,7 +416,7 @@ INT32 MSYS_RegionInList(MOUSE_REGION *region) {
 //
 //	Removes a region from the current list.
 //
-void MSYS_DeleteRegionFromList(MOUSE_REGION *region) {
+void MSYS_DeleteRegionFromList(struct MOUSE_REGION *region) {
   // If no list present, there's nothin' to do.
   if (!MSYS_RegList) return;
 
@@ -462,7 +464,7 @@ void MSYS_DeleteRegionFromList(MOUSE_REGION *region) {
 void MSYS_UpdateMouseRegion(void) {
   INT32 found;
   UINT32 ButtonReason;
-  MOUSE_REGION *pTempRegion;
+  struct MOUSE_REGION *pTempRegion;
   BOOLEAN fFound = FALSE;
   found = FALSE;
 
@@ -704,9 +706,9 @@ void MSYS_UpdateMouseRegion(void) {
 //=================================================================================================
 //	MSYS_DefineRegion
 //
-//	Inits a MOUSE_REGION structure for use with the mouse system
+//	Inits a struct MOUSE_REGION structure for use with the mouse system
 //
-void MSYS_DefineRegion(MOUSE_REGION *region, UINT16 tlx, UINT16 tly, UINT16 brx, UINT16 bry,
+void MSYS_DefineRegion(struct MOUSE_REGION *region, UINT16 tlx, UINT16 tly, UINT16 brx, UINT16 bry,
                        INT8 priority, UINT16 crsr, MOUSE_CALLBACK movecallback,
                        MOUSE_CALLBACK buttoncallback) {
 #ifdef MOUSESYSTEM_DEBUGGING
@@ -766,7 +768,7 @@ void MSYS_DefineRegion(MOUSE_REGION *region, UINT16 tlx, UINT16 tly, UINT16 brx,
 //=================================================================================================
 //	MSYS_ChangeRegionCursor
 //
-void MSYS_ChangeRegionCursor(MOUSE_REGION *region, UINT16 crsr) {
+void MSYS_ChangeRegionCursor(struct MOUSE_REGION *region, UINT16 crsr) {
   region->uiFlags &= (~MSYS_SET_CURSOR);
   region->Cursor = crsr;
   if (crsr != MSYS_NO_CURSOR) {
@@ -788,7 +790,7 @@ void MSYS_ChangeRegionCursor(MOUSE_REGION *region, UINT16 crsr) {
 //	Adds a defined mouse region to the system list. Once inserted, it enables the region then
 //	calls the callback functions, if any, for initialization.
 //
-INT32 MSYS_AddRegion(MOUSE_REGION *region) { return (1); }
+INT32 MSYS_AddRegion(struct MOUSE_REGION *region) { return (1); }
 
 //=================================================================================================
 //	MSYS_RemoveRegion
@@ -796,7 +798,7 @@ INT32 MSYS_AddRegion(MOUSE_REGION *region) { return (1); }
 //	Removes a region from the list, disables it, then calls the callback functions for
 //	de-initialization.
 //
-void MSYS_RemoveRegion(MOUSE_REGION *region) {
+void MSYS_RemoveRegion(struct MOUSE_REGION *region) {
   if (!region) {
 #ifdef MOUSESYSTEM_DEBUGGING
     if (gfIgnoreShutdownAssertions)
@@ -839,7 +841,7 @@ void MSYS_RemoveRegion(MOUSE_REGION *region) {
   }
 
   // clear all internal values (including the region exists flag)
-  memset(region, 0, sizeof(MOUSE_REGION));
+  memset(region, 0, sizeof(struct MOUSE_REGION));
 }
 
 //=================================================================================================
@@ -847,14 +849,14 @@ void MSYS_RemoveRegion(MOUSE_REGION *region) {
 //
 //	Enables a mouse region.
 //
-void MSYS_EnableRegion(MOUSE_REGION *region) { region->uiFlags |= MSYS_REGION_ENABLED; }
+void MSYS_EnableRegion(struct MOUSE_REGION *region) { region->uiFlags |= MSYS_REGION_ENABLED; }
 
 //=================================================================================================
 //	MSYS_DisableRegion
 //
 //	Disables a mouse region without removing it from the system list.
 //
-void MSYS_DisableRegion(MOUSE_REGION *region) { region->uiFlags &= (~MSYS_REGION_ENABLED); }
+void MSYS_DisableRegion(struct MOUSE_REGION *region) { region->uiFlags &= (~MSYS_REGION_ENABLED); }
 
 //=================================================================================================
 //	MSYS_SetCurrentCursor
@@ -868,7 +870,7 @@ void MSYS_SetCurrentCursor(UINT16 Cursor) { SetCurrentCursorFromDatabase(Cursor)
 //
 //	Set the priority of a mouse region
 //
-void MSYS_ChangeRegionPriority(MOUSE_REGION *region, INT8 priority) {
+void MSYS_ChangeRegionPriority(struct MOUSE_REGION *region, INT8 priority) {
   if (priority == MSYS_PRIORITY_AUTO) priority = MSYS_PRIORITY_NORMAL;
 
   region->PriorityLevel = priority;
@@ -879,7 +881,7 @@ void MSYS_ChangeRegionPriority(MOUSE_REGION *region, INT8 priority) {
 //
 //	Sets one of the four user data entries in a mouse region
 //
-void MSYS_SetRegionUserData(MOUSE_REGION *region, INT32 index, INT32 userdata) {
+void MSYS_SetRegionUserData(struct MOUSE_REGION *region, INT32 index, INT32 userdata) {
   if (index < 0 || index > 3) {
     CHAR8 str[80];
 #ifdef MOUSESYSTEM_DEBUGGING
@@ -897,7 +899,7 @@ void MSYS_SetRegionUserData(MOUSE_REGION *region, INT32 index, INT32 userdata) {
 //
 //	Retrieves one of the four user data entries in a mouse region
 //
-INT32 MSYS_GetRegionUserData(MOUSE_REGION *region, INT32 index) {
+INT32 MSYS_GetRegionUserData(struct MOUSE_REGION *region, INT32 index) {
   if (index < 0 || index > 3) {
     CHAR8 str[80];
 #ifdef MOUSESYSTEM_DEBUGGING
@@ -916,7 +918,7 @@ INT32 MSYS_GetRegionUserData(MOUSE_REGION *region, INT32 index) {
 //	Assigns all mouse activity to a region, effectively blocking any other region from having
 //	control.
 //
-INT32 MSYS_GrabMouse(MOUSE_REGION *region) {
+INT32 MSYS_GrabMouse(struct MOUSE_REGION *region) {
   if (!MSYS_RegionInList(region)) return (MSYS_REGION_NOT_IN_LIST);
 
   if (MSYS_Mouse_Grabbed == TRUE) return (MSYS_ALREADY_GRABBED);
@@ -931,7 +933,7 @@ INT32 MSYS_GrabMouse(MOUSE_REGION *region) {
 //
 //	Releases a previously grabbed mouse region
 //
-void MSYS_ReleaseMouse(MOUSE_REGION *region) {
+void MSYS_ReleaseMouse(struct MOUSE_REGION *region) {
   if (MSYS_GrabRegion != region) return;
 
   if (MSYS_Mouse_Grabbed == TRUE) {
@@ -942,13 +944,13 @@ void MSYS_ReleaseMouse(MOUSE_REGION *region) {
 }
 
 /* ==================================================================================
-   MSYS_MoveMouseRegionTo( MOUSE_REGION *region, INT16 sX, INT16 sY)
+   MSYS_MoveMouseRegionTo( struct MOUSE_REGION *region, INT16 sX, INT16 sY)
 
          Moves a Mouse region to X Y on the screen
 
 */
 
-void MSYS_MoveMouseRegionTo(MOUSE_REGION *region, INT16 sX, INT16 sY) {
+void MSYS_MoveMouseRegionTo(struct MOUSE_REGION *region, INT16 sX, INT16 sY) {
   INT16 sWidth;
   INT16 sHeight;
 
@@ -967,13 +969,13 @@ void MSYS_MoveMouseRegionTo(MOUSE_REGION *region, INT16 sX, INT16 sY) {
 }
 
 /* ==================================================================================
-   MSYS_MoveMouseRegionBy( MOUSE_REGION *region, INT16 sDeltaX, INT16 sDeltaY)
+   MSYS_MoveMouseRegionBy( struct MOUSE_REGION *region, INT16 sDeltaX, INT16 sDeltaY)
 
          Moves a Mouse region by sDeltaX sDeltaY on the screen
 
 */
 
-void MSYS_MoveMouseRegionBy(MOUSE_REGION *region, INT16 sDeltaX, INT16 sDeltaY) {
+void MSYS_MoveMouseRegionBy(struct MOUSE_REGION *region, INT16 sDeltaX, INT16 sDeltaY) {
   // move top left
   region->RegionTopLeftX = region->RegionTopLeftX + sDeltaX;
   region->RegionTopLeftY = region->RegionTopLeftY + sDeltaY;
@@ -993,7 +995,7 @@ void RefreshMouseRegions() {
   MSYS_UpdateMouseRegion();
 }
 
-void SetRegionFastHelpText(MOUSE_REGION *region, STR16 szText) {
+void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
   Assert(region);
 
   if (region->FastHelpText) MemFree(region->FastHelpText);
@@ -1048,7 +1050,7 @@ INT16 GetNumberOfLinesInHeight(STR16 pStringA) {
 //	DisplayFastHelp
 //
 //
-void DisplayFastHelp(MOUSE_REGION *region) {
+void DisplayFastHelp(struct MOUSE_REGION *region) {
   UINT16 usFillColor;
   INT32 iX, iY, iW, iH;
   INT32 iNumberOfLines = 1;
@@ -1189,11 +1191,11 @@ void RenderFastHelp() {
   }
 }
 
-BOOLEAN SetRegionSavedRect(MOUSE_REGION *region) { return FALSE; }
+BOOLEAN SetRegionSavedRect(struct MOUSE_REGION *region) { return FALSE; }
 
-void FreeRegionSavedRect(MOUSE_REGION *region) {}
+void FreeRegionSavedRect(struct MOUSE_REGION *region) {}
 
-void MSYS_AllowDisabledRegionFastHelp(MOUSE_REGION *region, BOOLEAN fAllow) {
+void MSYS_AllowDisabledRegionFastHelp(struct MOUSE_REGION *region, BOOLEAN fAllow) {
   if (fAllow) {
     region->uiFlags |= MSYS_ALLOW_DISABLED_FASTHELP;
   } else {
@@ -1203,7 +1205,8 @@ void MSYS_AllowDisabledRegionFastHelp(MOUSE_REGION *region, BOOLEAN fAllow) {
 
 // new stuff to allow mouse callbacks when help text finishes displaying
 
-void SetRegionHelpEndCallback(MOUSE_REGION *region, MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn) {
+void SetRegionHelpEndCallback(struct MOUSE_REGION *region,
+                              MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn) {
   // make sure region is non null
   if (region == NULL) {
     return;
@@ -1215,7 +1218,7 @@ void SetRegionHelpEndCallback(MOUSE_REGION *region, MOUSE_HELPTEXT_DONE_CALLBACK
   return;
 }
 
-void ExecuteMouseHelpEndCallBack(MOUSE_REGION *region) {
+void ExecuteMouseHelpEndCallBack(struct MOUSE_REGION *region) {
   if (region == NULL) {
     return;
   }

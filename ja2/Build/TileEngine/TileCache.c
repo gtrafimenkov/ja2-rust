@@ -5,14 +5,17 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
+#include "SGP/MemMan.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationCache.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/DebugControl.h"
 #include "platform.h"
 #include "platform_strings.h"
@@ -226,7 +229,7 @@ BOOLEAN RemoveCachedTile(INT32 iCachedTile) {
   return (FALSE);
 }
 
-HVOBJECT GetCachedTileVideoObject(INT32 iIndex) {
+struct VObject *GetCachedTileVideoObject(INT32 iIndex) {
   if (iIndex == -1) {
     return (NULL);
   }
@@ -238,7 +241,7 @@ HVOBJECT GetCachedTileVideoObject(INT32 iIndex) {
   return (gpTileCache[iIndex].pImagery->vo);
 }
 
-STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex) {
+struct STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex) {
   if (iIndex == -1) {
     return (NULL);
   }
@@ -250,7 +253,7 @@ STRUCTURE_FILE_REF *GetCachedTileStructureRef(INT32 iIndex) {
   return (gpTileCacheStructInfo[gpTileCache[iIndex].sStructRefID].pStructureFileRef);
 }
 
-STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename) {
+struct STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename) {
   INT16 sStructDataIndex;
 
   // Given filename, look for index
@@ -263,9 +266,9 @@ STRUCTURE_FILE_REF *GetCachedTileStructureRefFromFilename(STR8 cFilename) {
   return (gpTileCacheStructInfo[sStructDataIndex].pStructureFileRef);
 }
 
-void CheckForAndAddTileCacheStructInfo(LEVELNODE *pNode, INT16 sGridNo, UINT16 usIndex,
+void CheckForAndAddTileCacheStructInfo(struct LEVELNODE *pNode, INT16 sGridNo, UINT16 usIndex,
                                        UINT16 usSubIndex) {
-  STRUCTURE_FILE_REF *pStructureFileRef;
+  struct STRUCTURE_FILE_REF *pStructureFileRef;
 
   pStructureFileRef = GetCachedTileStructureRef(usIndex);
 
@@ -283,8 +286,8 @@ void CheckForAndAddTileCacheStructInfo(LEVELNODE *pNode, INT16 sGridNo, UINT16 u
   }
 }
 
-void CheckForAndDeleteTileCacheStructInfo(LEVELNODE *pNode, UINT16 usIndex) {
-  STRUCTURE_FILE_REF *pStructureFileRef;
+void CheckForAndDeleteTileCacheStructInfo(struct LEVELNODE *pNode, UINT16 usIndex) {
+  struct STRUCTURE_FILE_REF *pStructureFileRef;
 
   if (usIndex >= TILE_CACHE_START_INDEX) {
     pStructureFileRef = GetCachedTileStructureRef((usIndex - TILE_CACHE_START_INDEX));

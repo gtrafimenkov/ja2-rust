@@ -40,9 +40,9 @@
 #include "TacticalAI/NPC.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"
-#include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
@@ -57,7 +57,7 @@ extern UINT8 gubWaitingForAllMercsToExitCode;
 
 #ifdef JA2BETAVERSION
 
-void OutputDebugInfoForTurnBasedNextTileWaiting(SOLDIERTYPE *pSoldier) {
+void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   if ((gTacticalStatus.uiFlags & INCOMBAT) && (pSoldier->usPathDataSize > 0)) {
     UINT32 uiLoop;
     UINT16 usTemp;
@@ -93,7 +93,7 @@ void OutputDebugInfoForTurnBasedNextTileWaiting(SOLDIERTYPE *pSoldier) {
 }
 #endif
 
-void SetDelayedTileWaiting(SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, INT8 bValue) {
+void SetDelayedTileWaiting(struct SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, INT8 bValue) {
   UINT8 ubPerson;
 
   // Cancel AI Action
@@ -124,7 +124,7 @@ void SetDelayedTileWaiting(SOLDIERTYPE *pSoldier, INT16 sCauseGridNo, INT8 bValu
   }
 }
 
-void SetFinalTile(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fGivenUp) {
+void SetFinalTile(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fGivenUp) {
   // OK, If we were waiting for stuff, do it here...
 
   // ATE: Disabled stuff below, made obsolete by timeout...
@@ -148,7 +148,7 @@ void SetFinalTile(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fGivenUp) {
   EVENT_StopMerc(pSoldier, pSoldier->sGridNo, pSoldier->bDirection);
 }
 
-void MarkMovementReserved(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void MarkMovementReserved(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   // Check if we have one reserrved already, and free it first!
   if (pSoldier->sReservedMovementGridNo != NOWHERE) {
     UnMarkMovementReserved(pSoldier);
@@ -163,7 +163,7 @@ void MarkMovementReserved(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   pSoldier->sReservedMovementGridNo = sGridNo;
 }
 
-void UnMarkMovementReserved(SOLDIERTYPE *pSoldier) {
+void UnMarkMovementReserved(struct SOLDIERTYPE *pSoldier) {
   INT16 sNewGridNo;
 
   sNewGridNo = GETWORLDINDEXFROMWORLDCOORDS(pSoldier->dYPos, pSoldier->dXPos);
@@ -182,7 +182,7 @@ void UnMarkMovementReserved(SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 TileIsClear(SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, INT8 bLevel) {
+INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, INT8 bLevel) {
   UINT8 ubPerson;
   INT16 sTempDestGridNo;
   INT16 sNewGridNo;
@@ -332,7 +332,7 @@ INT8 TileIsClear(SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, INT8 bLe
   return (MOVE_TILE_CLEAR);
 }
 
-BOOLEAN HandleNextTile(SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo,
+BOOLEAN HandleNextTile(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo,
                        INT16 sFinalDestTile) {
   INT8 bBlocked;
   INT16 bOverTerrainType;
@@ -439,7 +439,7 @@ BOOLEAN HandleNextTile(SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo,
   return (TRUE);
 }
 
-BOOLEAN HandleNextTileWaiting(SOLDIERTYPE *pSoldier) {
+BOOLEAN HandleNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
   // Buddy is waiting to continue his path
   INT8 bBlocked, bPathBlocked;
   INT16 sCost;
@@ -679,7 +679,7 @@ BOOLEAN HandleNextTileWaiting(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN TeleportSoldier(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fForce) {
+BOOLEAN TeleportSoldier(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fForce) {
   INT16 sX, sY;
 
   // Check dest...
@@ -713,7 +713,7 @@ BOOLEAN TeleportSoldier(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fForce) {
 }
 
 // Swaps 2 soldier positions...
-void SwapMercPositions(SOLDIERTYPE *pSoldier1, SOLDIERTYPE *pSoldier2) {
+void SwapMercPositions(struct SOLDIERTYPE *pSoldier1, struct SOLDIERTYPE *pSoldier2) {
   INT16 sGridNo1, sGridNo2;
 
   // OK, save positions...
@@ -737,7 +737,8 @@ void SwapMercPositions(SOLDIERTYPE *pSoldier1, SOLDIERTYPE *pSoldier2) {
   }
 }
 
-BOOLEAN CanExchangePlaces(SOLDIERTYPE *pSoldier1, SOLDIERTYPE *pSoldier2, BOOLEAN fShow) {
+BOOLEAN CanExchangePlaces(struct SOLDIERTYPE *pSoldier1, struct SOLDIERTYPE *pSoldier2,
+                          BOOLEAN fShow) {
   // NB checks outside of this function
   if (EnoughPoints(pSoldier1, AP_EXCHANGE_PLACES, 0, fShow)) {
     if (EnoughPoints(pSoldier2, AP_EXCHANGE_PLACES, 0, fShow)) {

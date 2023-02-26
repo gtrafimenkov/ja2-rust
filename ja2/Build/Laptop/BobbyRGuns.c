@@ -11,12 +11,14 @@
 #include "Laptop/StoreInventory.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/Weapons.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
@@ -180,8 +182,8 @@ UINT32 guiBobbyRNextPage;
 INT32 guiBobbyRNextPageImage;
 
 // Big Image Mouse region
-MOUSE_REGION gSelectedBigImageRegion[BOBBYR_NUM_WEAPONS_ON_PAGE];
-void SelectBigImageRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedBigImageRegion[BOBBYR_NUM_WEAPONS_ON_PAGE];
+void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // The order form button
 void BtnBobbyROrderFormCallback(GUI_BUTTON *btn, INT32 reason);
@@ -194,8 +196,8 @@ UINT32 guiBobbyRHome;
 INT32 guiBobbyRHomeImage;
 
 // Link from the title
-MOUSE_REGION gSelectedTitleImageLinkRegion;
-void SelectTitleImageLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedTitleImageLinkRegion;
+void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 UINT32 guiTempCurrentMode;
 
@@ -298,7 +300,7 @@ void ExitBobbyRGuns() {
 void HandleBobbyRGuns() {}
 
 void RenderBobbyRGuns() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   WebPageTileBackground(BOBBYR_NUM_HORIZONTAL_TILES, BOBBYR_NUM_VERTICAL_TILES,
                         BOBBYR_BACKGROUND_WIDTH, BOBBYR_BACKGROUND_HEIGHT, guiGunBackground);
@@ -320,7 +322,7 @@ void RenderBobbyRGuns() {
 }
 
 BOOLEAN DisplayBobbyRBrTitle() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   // BR title
   GetVideoObject(&hPixHandle, guiBrTitle);
@@ -376,7 +378,7 @@ BOOLEAN DeleteBobbyBrTitle() {
   return (TRUE);
 }
 
-void SelectTitleImageLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectTitleImageLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_BOBBY_R;
@@ -803,7 +805,7 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   ETRLEObject *pTrav;
   INVTYPE *pItem;
   UINT32 uiImage;
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   PosX = BOBBYR_GRID_PIC_X;
 
@@ -1279,7 +1281,7 @@ void DeleteMouseRegionForBigImage() {
   gubNumItemsOnScreen = 0;
 }
 
-void SelectBigImageRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectBigImageRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     UINT16 usItemNum = (UINT16)MSYS_GetRegionUserData(pRegion, 0);

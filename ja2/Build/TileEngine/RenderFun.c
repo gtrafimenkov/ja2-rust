@@ -10,12 +10,15 @@
 #include "SGP/WCheck.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/FOV.h"
+#include "Tactical/HandleItems.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/FogOfWar.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/SysUtil.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/TimerControl.h"
 
@@ -84,10 +87,10 @@ void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
 
 void SetGridNoRevealedFlag(UINT16 sGridNo) {
   //	UINT32 cnt;
-  //  ITEM_POOL					*pItemPool;
+  //  struct ITEM_POOL					*pItemPool;
   //	INT16							sX, sY;
-  LEVELNODE *pNode = NULL;
-  STRUCTURE *pStructure, *pBase;
+  struct LEVELNODE *pNode = NULL;
+  struct STRUCTURE *pStructure, *pBase;
 
   // Set hidden flag, for any roofs
   SetRoofIndexFlagsFromTypeRange(sGridNo, FIRSTROOF, FOURTHROOF, LEVELNODE_HIDDEN);
@@ -124,7 +127,7 @@ void SetGridNoRevealedFlag(UINT16 sGridNo) {
           (pStructure->fFlags & STRUCTURE_SLANTED_ROOF)) {
         pBase = FindBaseStructure(pStructure);
 
-        // Get LEVELNODE for struct and remove!
+        // Get struct LEVELNODE for struct and remove!
         pNode = FindLevelNodeBasedOnStructure(pBase->sGridNo, pBase);
 
         if (pNode) pNode->uiFlags |= LEVELNODE_SHOW_THROUGH;
@@ -145,8 +148,8 @@ void SetGridNoRevealedFlag(UINT16 sGridNo) {
 }
 
 void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
-  LEVELNODE *pNode = NULL;
-  STRUCTURE *pStructure, *pBase;
+  struct LEVELNODE *pNode = NULL;
+  struct STRUCTURE *pStructure, *pBase;
   UINT8 ubLoop;
   DB_STRUCTURE_TILE **ppTile;
   INT16 sGridNo;
@@ -160,7 +163,7 @@ void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
     // We have a slanted roof here ... find base and remove...
     pBase = FindBaseStructure(pStructure);
 
-    // Get LEVELNODE for struct and remove!
+    // Get struct LEVELNODE for struct and remove!
     pNode = FindLevelNodeBasedOnStructure(pBase->sGridNo, pBase);
 
     // Loop through each gridno and see if revealed....
@@ -202,14 +205,14 @@ void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
   }
 }
 
-void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, SOLDIERTYPE *pSoldier) {
+void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier) {
   UINT32 cnt;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   INT16 sX, sY;
-  LEVELNODE *pNode = NULL;
+  struct LEVELNODE *pNode = NULL;
   BOOLEAN fSaidItemSeenQuote = FALSE;
 
-  //	STRUCTURE					*pStructure;//, *pBase;
+  //	struct STRUCTURE					*pStructure;//, *pBase;
 
   // LOOP THORUGH WORLD AND CHECK ROOM INFO
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {

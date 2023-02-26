@@ -9,10 +9,12 @@
 #include "Tactical/LOS.h"
 #include "Tactical/OppList.h"
 #include "Tactical/PathAI.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/Weapons.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Ja25EnglishText.h"
@@ -65,18 +67,18 @@ INT16 gsLastVisibleToSoldierGridNo = NOWHERE;
 
 //*******  Function Prototypes ***************************************
 
-INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(SOLDIERTYPE *pSoldier, INT16 sTargetGridno,
+INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridno,
                                                INT8 bStance);
 void CalculateCoverInRadiusAroundGridno(INT16 sTargetGridNo, INT8 bSearchRange);
 void AddCoverTileToEachGridNo();
 void AddCoverObjectToWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof);
 void RemoveCoverObjectFromWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof);
 INT8 GetCurrentMercForDisplayCoverStance();
-SOLDIERTYPE *GetCurrentMercForDisplayCover();
+struct SOLDIERTYPE *GetCurrentMercForDisplayCover();
 
 void CalculateVisibleToSoldierAroundGridno(INT16 sGridNo, INT8 bSearchRange);
 void AddVisibleToSoldierToEachGridNo();
-INT8 CalcIfSoldierCanSeeGridNo(SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fRoof);
+INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fRoof);
 BOOLEAN IsTheRoofVisible(INT16 sGridNo);
 
 // ppp
@@ -257,7 +259,7 @@ void RemoveCoverOfSelectedGridNo() {
 
 void CalculateCoverInRadiusAroundGridno(INT16 sTargetGridNo, INT8 bSearchRange) {
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT16 sGridNo;
   INT16 sCounterX, sCounterY;
   UINT8 ubID;
@@ -355,13 +357,13 @@ void CalculateCoverInRadiusAroundGridno(INT16 sTargetGridNo, INT8 bSearchRange) 
   }
 }
 
-INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(SOLDIERTYPE *pSoldier, INT16 sTargetGridNo,
+INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo,
                                                INT8 bStance) {
   INT32 iTotalCoverPoints = 0;
   INT8 bNumEnemies = 0;
   INT8 bPercentCoverForGridno = 0;
   UINT32 uiLoop;
-  SOLDIERTYPE *pOpponent;
+  struct SOLDIERTYPE *pOpponent;
   INT8 *pbPersOL;
   INT8 *pbPublOL;
   INT32 iGetThrough = 0;
@@ -451,7 +453,7 @@ INT8 CalcCoverForGridNoBasedOnTeamKnownEnemies(SOLDIERTYPE *pSoldier, INT16 sTar
 }
 
 void AddCoverObjectToWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof) {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
 
   if (fRoof) {
     AddOnRoofToHead(sGridNo, usGraphic);
@@ -477,8 +479,8 @@ void RemoveCoverObjectFromWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof) 
   }
 }
 
-SOLDIERTYPE *GetCurrentMercForDisplayCover() {
-  SOLDIERTYPE *pSoldier = NULL;
+struct SOLDIERTYPE *GetCurrentMercForDisplayCover() {
+  struct SOLDIERTYPE *pSoldier = NULL;
   // Get a soldier that is on the player team
   if (gusSelectedSoldier != NOBODY) {
     GetSoldier(&pSoldier, gusSelectedSoldier);
@@ -490,7 +492,7 @@ SOLDIERTYPE *GetCurrentMercForDisplayCover() {
 
 INT8 GetCurrentMercForDisplayCoverStance() {
   INT8 bStance;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   pSoldier = GetCurrentMercForDisplayCover();
 
@@ -520,7 +522,7 @@ INT8 GetCurrentMercForDisplayCoverStance() {
   return (bStance);
 }
 
-void DisplayRangeToTarget(SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
+void DisplayRangeToTarget(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   UINT16 usRange = 0;
   CHAR16 zOutputString[512];
 
@@ -613,7 +615,7 @@ void DisplayGridNoVisibleToSoldierGrid() {
 
 void CalculateVisibleToSoldierAroundGridno(INT16 sTargetGridNo, INT8 bSearchRange) {
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT16 sGridNo;
   INT16 sCounterX, sCounterY;
   BOOLEAN fRoof = FALSE;
@@ -804,7 +806,7 @@ void RemoveVisibleGridNoAtSelectedGridNo() {
   gsLastSoldierGridNo = NOWHERE;
 }
 
-INT8 CalcIfSoldierCanSeeGridNo(SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fRoof) {
+INT8 CalcIfSoldierCanSeeGridNo(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fRoof) {
   INT8 bRetVal = 0;
   INT32 iLosForGridNo = 0;
   UINT16 usSightLimit = 0;

@@ -3,8 +3,9 @@
 
 #include "SGP/Types.h"
 #include "Tactical/LOS.h"
-#include "Tactical/SoldierControl.h"
 #include "TileEngine/TileAnimation.h"
+
+struct SOLDIERTYPE;
 
 #define BULLET_FLAG_CREATURE_SPIT 0x0001
 #define BULLET_FLAG_KNIFE 0x0002
@@ -46,7 +47,7 @@ typedef struct {
   UINT32 uiLastUpdate;
   UINT8 ubTilesPerUpdate;
   UINT16 usClockTicksPerUpdate;
-  SOLDIERTYPE *pFirer;
+  struct SOLDIERTYPE *pFirer;
   UINT32 sTargetGridNo;
   INT16 sHitBy;
   INT32 iImpact;

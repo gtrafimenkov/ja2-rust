@@ -2,7 +2,8 @@
 #define __UI_CURSORS_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 #define REFINE_PUNCH_1 0
 #define REFINE_PUNCH_2 6
@@ -14,15 +15,15 @@ UINT8 GetProperItemCursor(UINT8 ubSoldierID, UINT16 ubItemIndex, UINT16 usMapPos
                           BOOLEAN fActivated);
 void DetermineCursorBodyLocation(UINT8 ubSoldierID, BOOLEAN fDisplay, BOOLEAN fRecalc);
 
-void HandleLeftClickCursor(SOLDIERTYPE *pSoldier);
-void HandleRightClickAdjustCursor(SOLDIERTYPE *pSoldier, INT16 usMapPos);
+void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier);
+void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos);
 
-UINT8 GetActionModeCursor(SOLDIERTYPE *pSoldier);
+UINT8 GetActionModeCursor(struct SOLDIERTYPE *pSoldier);
 
 extern BOOLEAN gfCannotGetThrough;
 
-void HandleUICursorRTFeedback(SOLDIERTYPE *pSoldier);
-void HandleEndConfirmCursor(SOLDIERTYPE *pSoldier);
+void HandleUICursorRTFeedback(struct SOLDIERTYPE *pSoldier);
+void HandleEndConfirmCursor(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN GetMouseRecalcAndShowAPFlags(UINT32 *puiCursorFlags, BOOLEAN *pfShowAPs);
 

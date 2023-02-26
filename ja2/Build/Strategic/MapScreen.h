@@ -2,7 +2,9 @@
 #define __MAPSCREEN_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
+struct path;
 
 #define MAP_WORLD_X 18
 #define MAP_WORLD_Y 18
@@ -57,17 +59,17 @@ void ChangeSelectedInfoChar(INT8 bCharNumber, BOOLEAN fResetSelectedList);
 
 void MAPEndItemPointer();
 
-void CopyPathToAllSelectedCharacters(PathStPtr pPath);
+void CopyPathToAllSelectedCharacters(struct path* pPath);
 void CancelPathsOfAllSelectedCharacters();
 
-INT32 GetPathTravelTimeDuringPlotting(PathStPtr pPath);
+INT32 GetPathTravelTimeDuringPlotting(struct path* pPath);
 
 void AbortMovementPlottingMode(void);
 
 void ExplainWhySkyriderCantFly(void);
 
 BOOLEAN CanChangeSleepStatusForCharSlot(INT8 bCharNumber);
-BOOLEAN CanChangeSleepStatusForSoldier(SOLDIERTYPE *pSoldier);
+BOOLEAN CanChangeSleepStatusForSoldier(struct SOLDIERTYPE* pSoldier);
 
 BOOLEAN MapCharacterHasAccessibleInventory(INT8 bCharNumber);
 

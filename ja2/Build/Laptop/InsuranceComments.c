@@ -4,6 +4,7 @@
 #include "Laptop/InsuranceText.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -33,8 +34,8 @@
 UINT32 guiInsCmntBulletImage;
 
 // link to the varios pages
-MOUSE_REGION gSelectedInsuranceCommentLinkRegion[3];
-void SelectInsuranceCommentLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedInsuranceCommentLinkRegion[3];
+void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 
 BOOLEAN DisplayComment(UINT8 ubCommentorsName, UINT8 ubComment, UINT16 usPosY);
 
@@ -80,7 +81,7 @@ void ExitInsuranceComments() {
 void HandleInsuranceComments() {}
 
 void RenderInsuranceComments() {
-  //  HVOBJECT hPixHandle;
+  //  struct VObject* hPixHandle;
   wchar_t sText[800];
   UINT16 usPosX, usPosY;
 
@@ -153,7 +154,7 @@ void RenderInsuranceComments() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectInsuranceCommentLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectInsuranceCommentLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     UINT32 uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
@@ -170,7 +171,7 @@ void SelectInsuranceCommentLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReas
 
 BOOLEAN DisplayComment(UINT8 ubCommentorsName, UINT8 ubComment, UINT16 usPosY) {
   wchar_t sText[800];
-  HVOBJECT hPixHandle;
+  struct VObject* hPixHandle;
   UINT16 sNumPixels = 0;
 
   // Get and display the insurance bullet

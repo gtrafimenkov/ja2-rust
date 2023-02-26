@@ -5,6 +5,8 @@
 #include "SGP/Font.h"
 #include "SGP/Types.h"
 
+struct VObject;
+
 extern BOOLEAN gfUseWinFonts;
 extern INT32 giCurWinFont;
 
@@ -24,71 +26,71 @@ INT16 WFStringPixLength(STR16 string, INT32 UseFont);
 
 // Global variables for video objects
 extern INT32 gpLargeFontType1;
-extern HVOBJECT gvoLargeFontType1;
+extern struct VObject* gvoLargeFontType1;
 
 extern INT32 gpSmallFontType1;
-extern HVOBJECT gvoSmallFontType1;
+extern struct VObject* gvoSmallFontType1;
 
 extern INT32 gpTinyFontType1;
-extern HVOBJECT gvoTinyFontType1;
+extern struct VObject* gvoTinyFontType1;
 
 extern INT32 gp12PointFont1;
-extern HVOBJECT gvo12PointFont1;
+extern struct VObject* gvo12PointFont1;
 
 extern INT32 gpClockFont;
-extern HVOBJECT gvoClockFont;
+extern struct VObject* gvoClockFont;
 
 extern INT32 gpCompFont;
-extern HVOBJECT gvoCompFont;
+extern struct VObject* gvoCompFont;
 
 extern INT32 gpSmallCompFont;
-extern HVOBJECT gvoSmallCompFont;
+extern struct VObject* gvoSmallCompFont;
 
 extern INT32 gp10PointRoman;
-extern HVOBJECT gvo10PointRoman;
+extern struct VObject* gvo10PointRoman;
 
 extern INT32 gp12PointRoman;
-extern HVOBJECT gvo12PointRoman;
+extern struct VObject* gvo12PointRoman;
 
 extern INT32 gp14PointSansSerif;
-extern HVOBJECT gvo14PointSansSerif;
+extern struct VObject* gvo14PointSansSerif;
 
 // extern INT32						gpMilitaryFont1;
-// extern HVOBJECT				gvoMilitaryFont1;
+// extern struct VObject*				gvoMilitaryFont1;
 
 extern INT32 gp10PointArial;
-extern HVOBJECT gvo10PointArial;
+extern struct VObject* gvo10PointArial;
 
 extern INT32 gp14PointArial;
-extern HVOBJECT gvo14PointArial;
+extern struct VObject* gvo14PointArial;
 
 extern INT32 gp12PointArial;
-extern HVOBJECT gvo12PointArial;
+extern struct VObject* gvo12PointArial;
 
 extern INT32 gpBlockyFont;
-extern HVOBJECT gvoBlockyFont;
+extern struct VObject* gvoBlockyFont;
 
 extern INT32 gpBlockyFont2;
-extern HVOBJECT gvoBlockyFont2;
+extern struct VObject* gvoBlockyFont2;
 
 extern INT32 gp10PointArialBold;
-extern HVOBJECT gvo10PointArialBold;
+extern struct VObject* gvo10PointArialBold;
 
 extern INT32 gp12PointArialFixedFont;
-extern HVOBJECT gvo12PointArialFixedFont;
+extern struct VObject* gvo12PointArialFixedFont;
 
 extern INT32 gp16PointArial;
-extern HVOBJECT gvo16PointArial;
+extern struct VObject* gvo16PointArial;
 
 extern INT32 gpBlockFontNarrow;
-extern HVOBJECT gvoBlockFontNarrow;
+extern struct VObject* gvoBlockFontNarrow;
 
 extern INT32 gp14PointHumanist;
-extern HVOBJECT gvo14PointHumanist;
+extern struct VObject* gvo14PointHumanist;
 
 #ifdef JA2EDITOR
 extern INT32 gpHugeFont;
-extern HVOBJECT gvoHugeFont;
+extern struct VObject* gvoHugeFont;
 #endif
 
 extern INT32 giSubTitleWinFont;

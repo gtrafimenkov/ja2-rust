@@ -3,6 +3,7 @@
 #include "Laptop/AIM.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -136,8 +137,8 @@ enum {
 } AimPolicyTextLocatoins;
 
 // Toc menu mouse regions
-MOUSE_REGION gSelectedPolicyTocMenuRegion[NUM_AIM_POLICY_TOC_BUTTONS];
-void SelectPolicyTocMenuRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedPolicyTocMenuRegion[NUM_AIM_POLICY_TOC_BUTTONS];
+void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Agree/Disagree menu Buttons regions
 void BtnPoliciesAgreeButtonCallback(GUI_BUTTON *btn, INT32 reason);
@@ -455,7 +456,7 @@ BOOLEAN DrawAimPolicyMenu() {
   UINT16 usHeight;
   UINT32 uiStartLoc = 0;
   wchar_t sText[400];
-  HVOBJECT hContentButtonHandle;
+  struct VObject *hContentButtonHandle;
   UINT8 ubLocInFile[] = {
       DEFINITIONS,      LENGTH_OF_ENGAGEMENT, LOCATION_0F_ENGAGEMENT, CONTRACT_EXTENSIONS,
       TERMS_OF_PAYMENT, TERMS_OF_ENGAGEMENT,  ENGAGEMENT_TERMINATION, EQUIPMENT_AND_INVENTORY,
@@ -518,7 +519,7 @@ BOOLEAN ExitAimPolicyTocMenu() {
   return (TRUE);
 }
 
-void SelectPolicyTocMenuRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPolicyTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (gfInPolicyToc) {
     if (iReason & MSYS_CALLBACK_REASON_INIT) {
     } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

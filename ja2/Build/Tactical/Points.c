@@ -14,23 +14,24 @@
 #include "Tactical/PathAI.h"
 #include "Tactical/RTTimeDefines.h"
 #include "Tactical/SkillCheck.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/StructureWrap.h"
 #include "Tactical/Weapons.h"
 #include "TacticalAI/AI.h"
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 
-extern BOOLEAN IsValidSecondHandShot(SOLDIERTYPE *pSoldier);
+extern BOOLEAN IsValidSecondHandShot(struct SOLDIERTYPE *pSoldier);
 
-INT16 GetBreathPerAP(SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+INT16 GetBreathPerAP(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
 
-INT16 TerrainActionPoints(SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir, INT8 bLevel) {
+INT16 TerrainActionPoints(struct SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir, INT8 bLevel) {
   INT16 sAPCost = 0;
   INT16 sSwitchValue;
   BOOLEAN fHiddenStructVisible;  // Used for hidden struct visiblity
@@ -124,7 +125,7 @@ INT16 TerrainActionPoints(SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir, INT8 
   return (sAPCost);
 }
 
-INT16 BreathPointAdjustmentForCarriedWeight(SOLDIERTYPE *pSoldier) {
+INT16 BreathPointAdjustmentForCarriedWeight(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCarriedPercent;
   UINT32 uiPercentCost;
 
@@ -151,7 +152,8 @@ INT16 BreathPointAdjustmentForCarriedWeight(SOLDIERTYPE *pSoldier) {
   return ((INT16)uiPercentCost);
 }
 
-INT16 TerrainBreathPoints(SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir, UINT16 usMovementMode) {
+INT16 TerrainBreathPoints(struct SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir,
+                          UINT16 usMovementMode) {
   INT32 iPoints = 0;
   UINT8 ubMovementCost;
 
@@ -243,7 +245,8 @@ INT16 TerrainBreathPoints(SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir, UINT1
   return ((INT16)iPoints);
 }
 
-INT16 ActionPointCost(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir, UINT16 usMovementMode) {
+INT16 ActionPointCost(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir,
+                      UINT16 usMovementMode) {
   INT16 sTileCost, sPoints, sSwitchValue;
 
   sPoints = 0;
@@ -323,7 +326,7 @@ INT16 ActionPointCost(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir, UINT16 us
   return (sPoints);
 }
 
-INT16 EstimateActionPointCost(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir,
+INT16 EstimateActionPointCost(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir,
                               UINT16 usMovementMode, INT8 bPathIndex, INT8 bPathLength) {
   // This action point cost code includes the penalty for having to change
   // stance after jumping a fence IF our path continues...
@@ -422,7 +425,8 @@ INT16 EstimateActionPointCost(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir,
   return (sPoints);
 }
 
-BOOLEAN EnoughPoints(SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost, BOOLEAN fDisplayMsg) {
+BOOLEAN EnoughPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost,
+                     BOOLEAN fDisplayMsg) {
   INT16 sNewAP = 0;
 
   // If this guy is on a special move... don't care about APS, OR BPSs!
@@ -462,7 +466,7 @@ BOOLEAN EnoughPoints(SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost, BOOLEA
   return (TRUE);
 }
 
-void DeductPoints(SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost) {
+void DeductPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost) {
   INT16 sNewAP = 0, sNewBP = 0;
   INT8 bNewBreath;
 
@@ -540,7 +544,7 @@ void DeductPoints(SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost) {
   DirtyMercPanelInterface(pSoldier, DIRTYLEVEL1);
 }
 
-INT16 AdjustBreathPts(SOLDIERTYPE *pSold, INT16 sBPCost) {
+INT16 AdjustBreathPts(struct SOLDIERTYPE *pSold, INT16 sBPCost) {
   INT16 sBreathFactor = 100;
   UINT8 ubBandaged;
 
@@ -599,7 +603,7 @@ INT16 AdjustBreathPts(SOLDIERTYPE *pSold, INT16 sBPCost) {
   return (sBPCost);
 }
 
-void UnusedAPsToBreath(SOLDIERTYPE *pSold) {
+void UnusedAPsToBreath(struct SOLDIERTYPE *pSold) {
   INT16 sUnusedAPs, sBreathPerAP = 0, sBreathChange, sRTBreathMod;
   BOOLEAN fAnimTypeFound = FALSE;
 
@@ -700,7 +704,7 @@ void UnusedAPsToBreath(SOLDIERTYPE *pSold) {
   }
 }
 
-INT16 GetBreathPerAP(SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
+INT16 GetBreathPerAP(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
   INT16 sBreathPerAP = 0;
   BOOLEAN fAnimTypeFound = FALSE;
 
@@ -766,7 +770,7 @@ INT16 GetBreathPerAP(SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
 }
 
 // UINT8 CalcAPsToBurst( INT8 bBaseActionPoints, UINT16 usItem )
-UINT8 CalcAPsToBurst(INT8 bBaseActionPoints, OBJECTTYPE *pObj) {
+UINT8 CalcAPsToBurst(INT8 bBaseActionPoints, struct OBJECTTYPE *pObj) {
   // base APs is what you'd get from CalcActionPoints();
   if (pObj->usItem == G11) {
     return (1);
@@ -785,7 +789,7 @@ UINT8 CalcAPsToBurst(INT8 bBaseActionPoints, OBJECTTYPE *pObj) {
   }
 }
 
-UINT8 CalcTotalAPsToAttack(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost,
+UINT8 CalcTotalAPsToAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost,
                            INT8 bAimTime) {
   UINT16 sAPCost = 0;
   UINT16 usItemNum;
@@ -830,7 +834,7 @@ UINT8 CalcTotalAPsToAttack(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurn
         UINT8 ubGuyThere;
         INT16 sGotLocation = NOWHERE;
         BOOLEAN fGotAdjacent = FALSE;
-        SOLDIERTYPE *pTarget;
+        struct SOLDIERTYPE *pTarget;
 
         ubGuyThere = WhoIsThere2(sGridNo, pSoldier->bLevel);
 
@@ -898,7 +902,7 @@ UINT8 CalcTotalAPsToAttack(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurn
   return ((INT8)sAPCost);
 }
 
-UINT8 MinAPsToAttack(SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCost) {
+UINT8 MinAPsToAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCost) {
   UINT16 sAPCost = 0;
   UINT32 uiItemClass;
 
@@ -931,7 +935,7 @@ UINT8 MinAPsToAttack(SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubAddTurningCos
   return ((UINT8)sAPCost);
 }
 
-INT8 CalcAimSkill(SOLDIERTYPE *pSoldier, UINT16 usWeapon) {
+INT8 CalcAimSkill(struct SOLDIERTYPE *pSoldier, UINT16 usWeapon) {
   INT8 bAimSkill;
 
   if (Item[usWeapon].usItemClass == IC_GUN || Item[usWeapon].usItemClass == IC_LAUNCHER) {
@@ -948,7 +952,7 @@ INT8 CalcAimSkill(SOLDIERTYPE *pSoldier, UINT16 usWeapon) {
   return (bAimSkill);
 }
 
-UINT8 BaseAPsToShootOrStab(INT8 bAPs, INT8 bAimSkill, OBJECTTYPE *pObj) {
+UINT8 BaseAPsToShootOrStab(INT8 bAPs, INT8 bAimSkill, struct OBJECTTYPE *pObj) {
   INT16 sTop, sBottom;
   INT8 bAttachPos;
 
@@ -974,7 +978,7 @@ UINT8 BaseAPsToShootOrStab(INT8 bAPs, INT8 bAimSkill, OBJECTTYPE *pObj) {
   return ((((100 * sTop) / sBottom) + 1) / 2);
 }
 
-void GetAPChargeForShootOrStabWRTGunRaises(SOLDIERTYPE *pSoldier, INT16 sGridNo,
+void GetAPChargeForShootOrStabWRTGunRaises(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                            UINT8 ubAddTurningCost, BOOLEAN *pfChargeTurning,
                                            BOOLEAN *pfChargeRaise) {
   UINT8 ubDirection;
@@ -1017,7 +1021,7 @@ void GetAPChargeForShootOrStabWRTGunRaises(SOLDIERTYPE *pSoldier, INT16 sGridNo,
   (*pfChargeRaise) = fAddingRaiseGunCost;
 }
 
-UINT8 MinAPsToShootOrStab(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost) {
+UINT8 MinAPsToShootOrStab(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost) {
   UINT32 uiMercFlags;
   UINT16 usTargID;
   INT8 bFullAPs;
@@ -1089,7 +1093,7 @@ UINT8 MinAPsToShootOrStab(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurni
 
   if (pSoldier->bWeaponMode == WM_ATTACHED) {
     INT8 bAttachSlot;
-    OBJECTTYPE GrenadeLauncher;
+    struct OBJECTTYPE GrenadeLauncher;
 
     // look for an attached grenade launcher
     bAttachSlot = FindAttachment(&(pSoldier->inv[HANDPOS]), UNDER_GLAUNCHER);
@@ -1126,7 +1130,7 @@ UINT8 MinAPsToShootOrStab(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurni
   return (bAPCost);
 }
 
-UINT8 MinAPsToPunch(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost) {
+UINT8 MinAPsToPunch(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost) {
   UINT8 bAPCost = 0;
   UINT16 usTargID;
   UINT8 ubDirection;
@@ -1167,7 +1171,7 @@ UINT8 MinAPsToPunch(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost
   return (bAPCost);
 }
 
-INT8 MinPtsToMove(SOLDIERTYPE *pSoldier) {
+INT8 MinPtsToMove(struct SOLDIERTYPE *pSoldier) {
   // look around all 8 directions and return lowest terrain cost
   INT32 cnt;
   INT16 sLowest = 127;
@@ -1189,7 +1193,7 @@ INT8 MinPtsToMove(SOLDIERTYPE *pSoldier) {
   return ((INT8)sLowest);
 }
 
-INT8 PtsToMoveDirection(SOLDIERTYPE *pSoldier, INT8 bDirection) {
+INT8 PtsToMoveDirection(struct SOLDIERTYPE *pSoldier, INT8 bDirection) {
   INT16 sGridno, sCost;
   INT8 bOverTerrainType;
   UINT16 usMoveModeToUse;
@@ -1217,7 +1221,7 @@ INT8 PtsToMoveDirection(SOLDIERTYPE *pSoldier, INT8 bDirection) {
   return ((INT8)sCost);
 }
 
-INT8 MinAPsToStartMovement(SOLDIERTYPE *pSoldier, UINT16 usMovementMode) {
+INT8 MinAPsToStartMovement(struct SOLDIERTYPE *pSoldier, UINT16 usMovementMode) {
   INT8 bAPs = 0;
 
   switch (usMovementMode) {
@@ -1253,7 +1257,7 @@ INT8 MinAPsToStartMovement(SOLDIERTYPE *pSoldier, UINT16 usMovementMode) {
   return (bAPs);
 }
 
-BOOLEAN EnoughAmmo(SOLDIERTYPE *pSoldier, BOOLEAN fDisplay, INT8 bInvPos) {
+BOOLEAN EnoughAmmo(struct SOLDIERTYPE *pSoldier, BOOLEAN fDisplay, INT8 bInvPos) {
   if (pSoldier->inv[bInvPos].usItem != NOTHING) {
     if (pSoldier->bWeaponMode == WM_ATTACHED) {
       return (TRUE);
@@ -1295,8 +1299,8 @@ BOOLEAN EnoughAmmo(SOLDIERTYPE *pSoldier, BOOLEAN fDisplay, INT8 bInvPos) {
   return (FALSE);
 }
 
-void DeductAmmo(SOLDIERTYPE *pSoldier, INT8 bInvPos) {
-  OBJECTTYPE *pObj;
+void DeductAmmo(struct SOLDIERTYPE *pSoldier, INT8 bInvPos) {
+  struct OBJECTTYPE *pObj;
 
   // tanks never run out of MG ammo!
   // unlimited cannon ammo is handled in AI
@@ -1334,8 +1338,8 @@ void DeductAmmo(SOLDIERTYPE *pSoldier, INT8 bInvPos) {
   }
 }
 
-UINT16 GetAPsToPickupItem(SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
-  ITEM_POOL *pItemPool;
+UINT16 GetAPsToPickupItem(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
+  struct ITEM_POOL *pItemPool;
   UINT16 sAPCost = 0;
   INT16 sActionGridNo;
 
@@ -1362,7 +1366,7 @@ UINT16 GetAPsToPickupItem(SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
   return (sAPCost);
 }
 
-UINT16 GetAPsToGiveItem(SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
+UINT16 GetAPsToGiveItem(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
   UINT16 sAPCost = 0;
 
   sAPCost =
@@ -1378,7 +1382,7 @@ UINT16 GetAPsToGiveItem(SOLDIERTYPE *pSoldier, UINT16 usMapPos) {
   return (sAPCost);
 }
 
-INT8 GetAPsToReloadGunWithAmmo(OBJECTTYPE *pGun, OBJECTTYPE *pAmmo) {
+INT8 GetAPsToReloadGunWithAmmo(struct OBJECTTYPE *pGun, struct OBJECTTYPE *pAmmo) {
   if (Item[pGun->usItem].usItemClass == IC_LAUNCHER) {
     // always standard AP cost
     return (AP_RELOAD_GUN);
@@ -1392,8 +1396,8 @@ INT8 GetAPsToReloadGunWithAmmo(OBJECTTYPE *pGun, OBJECTTYPE *pAmmo) {
   }
 }
 
-INT8 GetAPsToAutoReload(SOLDIERTYPE *pSoldier) {
-  OBJECTTYPE *pObj;
+INT8 GetAPsToAutoReload(struct SOLDIERTYPE *pSoldier) {
+  struct OBJECTTYPE *pObj;
   INT8 bSlot, bSlot2, bExcludeSlot;
   INT8 bAPCost = 0, bAPCost2 = 0;
   ;
@@ -1442,7 +1446,7 @@ INT8 GetAPsToAutoReload(SOLDIERTYPE *pSoldier) {
   return (bAPCost);
 }
 
-UINT16 GetAPsToReloadRobot(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pRobot) {
+UINT16 GetAPsToReloadRobot(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pRobot) {
   UINT16 sAPCost = 0;
   INT16 sActionGridNo;
   UINT8 ubDirection;
@@ -1464,7 +1468,7 @@ UINT16 GetAPsToReloadRobot(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pRobot) {
   return (sAPCost);
 }
 
-UINT16 GetAPsToChangeStance(SOLDIERTYPE *pSoldier, INT8 bDesiredHeight) {
+UINT16 GetAPsToChangeStance(struct SOLDIERTYPE *pSoldier, INT8 bDesiredHeight) {
   UINT16 sAPCost = 0;
   INT8 bCurrentHeight;
 
@@ -1496,7 +1500,7 @@ UINT16 GetAPsToChangeStance(SOLDIERTYPE *pSoldier, INT8 bDesiredHeight) {
   return (sAPCost);
 }
 
-UINT16 GetBPsToChangeStance(SOLDIERTYPE *pSoldier, INT8 bDesiredHeight) {
+UINT16 GetBPsToChangeStance(struct SOLDIERTYPE *pSoldier, INT8 bDesiredHeight) {
   UINT16 sBPCost = 0;
   INT8 bCurrentHeight;
 
@@ -1528,7 +1532,7 @@ UINT16 GetBPsToChangeStance(SOLDIERTYPE *pSoldier, INT8 bDesiredHeight) {
   return (sBPCost);
 }
 
-UINT16 GetAPsToLook(SOLDIERTYPE *pSoldier) {
+UINT16 GetAPsToLook(struct SOLDIERTYPE *pSoldier) {
   // Set # of APs
   switch (gAnimControl[pSoldier->usAnimState].ubEndHeight) {
     // Now change to appropriate animation
@@ -1555,7 +1559,7 @@ UINT16 GetAPsToLook(SOLDIERTYPE *pSoldier) {
   }
 }
 
-BOOLEAN CheckForMercContMove(SOLDIERTYPE *pSoldier) {
+BOOLEAN CheckForMercContMove(struct SOLDIERTYPE *pSoldier) {
   INT16 sAPCost;
   INT16 sGridNo;
 
@@ -1598,7 +1602,7 @@ BOOLEAN CheckForMercContMove(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT16 GetAPsToReadyWeapon(SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
+INT16 GetAPsToReadyWeapon(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
   UINT16 usItem;
 
   // If this is a dwel pistol anim
@@ -1626,7 +1630,7 @@ INT16 GetAPsToReadyWeapon(SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
   return (0);
 }
 
-INT8 GetAPsToClimbRoof(SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown) {
+INT8 GetAPsToClimbRoof(struct SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown) {
   if (!fClimbDown) {
     // OK, add aps to goto stand stance...
     return ((INT8)(AP_CLIMBROOF + GetAPsToChangeStance(pSoldier, ANIM_STAND)));
@@ -1636,7 +1640,7 @@ INT8 GetAPsToClimbRoof(SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown) {
   }
 }
 
-INT16 GetBPsToClimbRoof(SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown) {
+INT16 GetBPsToClimbRoof(struct SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown) {
   if (!fClimbDown) {
     return (BP_CLIMBROOF);
   } else {
@@ -1644,22 +1648,22 @@ INT16 GetBPsToClimbRoof(SOLDIERTYPE *pSoldier, BOOLEAN fClimbDown) {
   }
 }
 
-INT8 GetAPsToCutFence(SOLDIERTYPE *pSoldier) {
+INT8 GetAPsToCutFence(struct SOLDIERTYPE *pSoldier) {
   // OK, it's normally just cost, but add some if different stance...
   return (GetAPsToChangeStance(pSoldier, ANIM_CROUCH) + AP_USEWIRECUTTERS);
 }
 
-INT8 GetAPsToBeginFirstAid(SOLDIERTYPE *pSoldier) {
+INT8 GetAPsToBeginFirstAid(struct SOLDIERTYPE *pSoldier) {
   // OK, it's normally just cost, but add some if different stance...
   return (GetAPsToChangeStance(pSoldier, ANIM_CROUCH) + AP_START_FIRST_AID);
 }
 
-INT8 GetAPsToBeginRepair(SOLDIERTYPE *pSoldier) {
+INT8 GetAPsToBeginRepair(struct SOLDIERTYPE *pSoldier) {
   // OK, it's normally just cost, but add some if different stance...
   return (GetAPsToChangeStance(pSoldier, ANIM_CROUCH) + AP_START_REPAIR);
 }
 
-INT8 GetAPsToRefuelVehicle(SOLDIERTYPE *pSoldier) {
+INT8 GetAPsToRefuelVehicle(struct SOLDIERTYPE *pSoldier) {
   // OK, it's normally just cost, but add some if different stance...
   return (GetAPsToChangeStance(pSoldier, ANIM_CROUCH) + AP_REFUEL_VEHICLE);
 }
@@ -1668,7 +1672,7 @@ INT8 GetAPsToRefuelVehicle(SOLDIERTYPE *pSoldier) {
 #define AP_MIN_AIM_ATTACK 0    // minimum permitted extra aiming
 #define AP_MAX_AIM_ATTACK 4    // maximum permitted extra aiming
 
-INT16 MinAPsToThrow(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost) {
+INT16 MinAPsToThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost) {
   INT32 iTop, iBottom;
   INT32 iFullAPs;
   INT32 iAPCost = AP_MIN_AIM_ATTACK;
@@ -1744,9 +1748,9 @@ INT16 MinAPsToThrow(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAddTurningCost
   return ((INT16)iAPCost);
 }
 
-UINT16 GetAPsToDropBomb(SOLDIERTYPE *pSoldier) { return (AP_DROP_BOMB); }
+UINT16 GetAPsToDropBomb(struct SOLDIERTYPE *pSoldier) { return (AP_DROP_BOMB); }
 
-UINT16 GetTotalAPsToDropBomb(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+UINT16 GetTotalAPsToDropBomb(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   INT16 sAPs = 0;
 
   sAPs =
@@ -1760,9 +1764,9 @@ UINT16 GetTotalAPsToDropBomb(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   return (sAPs);
 }
 
-UINT16 GetAPsToUseRemote(SOLDIERTYPE *pSoldier) { return (AP_USE_REMOTE); }
+UINT16 GetAPsToUseRemote(struct SOLDIERTYPE *pSoldier) { return (AP_USE_REMOTE); }
 
-INT8 GetAPsToStealItem(SOLDIERTYPE *pSoldier, INT16 usMapPos) {
+INT8 GetAPsToStealItem(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) {
   UINT16 sAPCost = 0;
 
   sAPCost =
@@ -1780,9 +1784,9 @@ INT8 GetAPsToStealItem(SOLDIERTYPE *pSoldier, INT16 usMapPos) {
   return ((INT8)sAPCost);
 }
 
-INT8 GetBPsToStealItem(SOLDIERTYPE *pSoldier) { return (BP_STEAL_ITEM); }
+INT8 GetBPsToStealItem(struct SOLDIERTYPE *pSoldier) { return (BP_STEAL_ITEM); }
 
-INT8 GetAPsToUseJar(SOLDIERTYPE *pSoldier, INT16 usMapPos) {
+INT8 GetAPsToUseJar(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) {
   UINT16 sAPCost = 0;
 
   sAPCost =
@@ -1798,7 +1802,7 @@ INT8 GetAPsToUseJar(SOLDIERTYPE *pSoldier, INT16 usMapPos) {
   return ((INT8)sAPCost);
 }
 
-INT8 GetAPsToUseCan(SOLDIERTYPE *pSoldier, INT16 usMapPos) {
+INT8 GetAPsToUseCan(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) {
   UINT16 sAPCost = 0;
 
   sAPCost =
@@ -1814,6 +1818,6 @@ INT8 GetAPsToUseCan(SOLDIERTYPE *pSoldier, INT16 usMapPos) {
   return ((INT8)sAPCost);
 }
 
-INT8 GetAPsToJumpOver(SOLDIERTYPE *pSoldier) {
+INT8 GetAPsToJumpOver(struct SOLDIERTYPE *pSoldier) {
   return (GetAPsToChangeStance(pSoldier, ANIM_STAND) + AP_JUMP_OVER);
 }

@@ -1,9 +1,10 @@
 #ifndef __INTERFACE_PANELS
 #define __INTERFACE_PANELS
 
-#include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
+
+struct MOUSE_REGION;
 
 enum {
   STANCEUP_BUTTON = 0,
@@ -61,11 +62,11 @@ BOOLEAN GetPlayerIDFromInterfaceTeamSlot(UINT8 ubPanelSlot, UINT8 *pubID);
 void RemoveAllPlayersFromSlot();
 BOOLEAN PlayerExistsInSlot(UINT8 ubID);
 BOOLEAN RemovePlayerFromTeamSlotGivenMercID(UINT8 ubMercID);
-void CheckForAndAddMercToTeamPanel(SOLDIERTYPE *pSoldier);
+void CheckForAndAddMercToTeamPanel(struct SOLDIERTYPE *pSoldier);
 
 void DisableTacticalTeamPanelButtons(BOOLEAN fDisable);
 void RenderTownIDString();
-void KeyRingSlotInvClickCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 extern INT8 gbNewItem[NUM_INV_SLOTS];
 extern INT8 gbNewItemCycle[NUM_INV_SLOTS];
@@ -74,7 +75,7 @@ extern UINT8 gubNewItemMerc;
 void ShowRadioLocator(UINT8 ubID, UINT8 ubLocatorSpeed);
 void EndRadioLocator(UINT8 ubID);
 
-extern MOUSE_REGION gSMPanelRegion;
+extern struct MOUSE_REGION gSMPanelRegion;
 
 extern UINT32 guiSecItemHiddenVO;
 
@@ -97,18 +98,18 @@ void ReEvaluateDisabledINVPanelButtons();
 void CheckForReEvaluateDisabledINVPanelButtons();
 
 void CheckForDisabledForGiveItem();
-void ReevaluateItemHatches(SOLDIERTYPE *pSoldier, BOOLEAN fEnable);
+void ReevaluateItemHatches(struct SOLDIERTYPE *pSoldier, BOOLEAN fEnable);
 
-void HandlePanelFaceAnimations(SOLDIERTYPE *pSoldier);
+void HandlePanelFaceAnimations(struct SOLDIERTYPE *pSoldier);
 
 void GoToMapScreenFromTactical(void);
 
-void HandleTacticalEffectsOfEquipmentChange(SOLDIERTYPE *pSoldier, UINT32 uiInvPos,
+void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, UINT32 uiInvPos,
                                             UINT16 usOldItem, UINT16 usNewItem);
 
 void FinishAnySkullPanelAnimations();
 
-UINT8 FindNextMercInTeamPanel(SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
+UINT8 FindNextMercInTeamPanel(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
                               BOOLEAN fOnlyRegularMercs);
 
 #endif

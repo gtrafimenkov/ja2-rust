@@ -2,7 +2,8 @@
 #define __INSURANCE_CONTRACT_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 void GameInitInsuranceContract();
 BOOLEAN EnterInsuranceContract();
@@ -17,7 +18,7 @@ void DailyUpdateOfInsuredMercs();
 
 // void InsuranceContractPayLifeInsuranceForDeadMerc( LIFE_INSURANCE_PAYOUT *pPayoutStruct );
 
-BOOLEAN AddLifeInsurancePayout(SOLDIERTYPE *pSoldier);
+BOOLEAN AddLifeInsurancePayout(struct SOLDIERTYPE *pSoldier);
 void InsuranceContractPayLifeInsuranceForDeadMerc(UINT8 ubPayoutID);
 void StartInsuranceInvestigation(UINT8 ubPayoutID);
 void EndInsuranceInvestigation(UINT8 ubPayoutID);
@@ -26,6 +27,6 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID);
 
 void InsuranceContractEndGameShutDown();
 
-void PurchaseOrExtendInsuranceForSoldier(SOLDIERTYPE *pSoldier, UINT32 uiInsuranceLength);
+void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, UINT32 uiInsuranceLength);
 
 #endif

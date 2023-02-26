@@ -16,6 +16,7 @@
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Campaign.h"
 #include "Tactical/HandleDoors.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/Interface.h"
 #include "Tactical/Items.h"
 #include "Tactical/LOS.h"
@@ -30,8 +31,8 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDat.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
@@ -148,7 +149,7 @@ BOOLEAN LoadLockTable(void) {
   return (TRUE);
 }
 
-BOOLEAN SoldierHasKey(SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
+BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
   if (KeyExistsInKeyRing(pSoldier, ubKeyID, NULL) || KeyExistsInInventory(pSoldier, ubKeyID)) {
     return (TRUE);
   }
@@ -156,7 +157,7 @@ BOOLEAN SoldierHasKey(SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
   return (FALSE);
 }
 
-BOOLEAN KeyExistsInKeyRing(SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 *pubPos) {
+BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 *pubPos) {
   // returns the index into the key ring where the key can be found
   UINT8 ubLoop;
 
@@ -180,7 +181,7 @@ BOOLEAN KeyExistsInKeyRing(SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 *pubPos) 
   return (FALSE);
 }
 
-BOOLEAN KeyExistsInInventory(SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
+BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
   UINT8 ubLoop;
 
   for (ubLoop = 0; ubLoop < NUM_INV_SLOTS; ubLoop++) {
@@ -222,7 +223,7 @@ BOOLEAN DoUnlockDoor(DOOR *pDoor, UINT8 ubKeyID) {
   }
 }
 
-BOOLEAN AttemptToUnlockDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN AttemptToUnlockDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   UINT8 ubLoop;
   UINT8 ubKeyID;
 
@@ -245,7 +246,7 @@ BOOLEAN AttemptToUnlockDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   return (FALSE);
 }
 
-BOOLEAN AttemptToLockDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN AttemptToLockDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   UINT8 ubLoop;
   UINT8 ubKeyID;
 
@@ -265,7 +266,7 @@ BOOLEAN AttemptToLockDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   return (FALSE);
 }
 
-BOOLEAN AttemptToCrowbarLock(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   INT32 iResult;
   INT8 bStress, bSlot;
 
@@ -344,7 +345,7 @@ BOOLEAN AttemptToCrowbarLock(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
 }
 
-BOOLEAN AttemptToSmashDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   INT32 iResult;
 
   LOCK *pLock;
@@ -413,7 +414,7 @@ BOOLEAN AttemptToSmashDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
 }
 
-BOOLEAN AttemptToPickLock(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN AttemptToPickLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   INT32 iResult;
   INT8 bReason;
   LOCK *pLock;
@@ -464,7 +465,7 @@ BOOLEAN AttemptToPickLock(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
 }
 
-BOOLEAN AttemptToUntrapDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN AttemptToUntrapDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   INT32 iResult;
 
   // See if we measure up to the task.
@@ -485,7 +486,7 @@ BOOLEAN AttemptToUntrapDoor(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
 }
 
-BOOLEAN ExamineDoorForTraps(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN ExamineDoorForTraps(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   // Check to see if there is a trap or not on this door
   INT8 bDetectLevel;
 
@@ -508,7 +509,7 @@ BOOLEAN ExamineDoorForTraps(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   return (FALSE);
 }
 
-BOOLEAN HasDoorTrapGoneOff(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN HasDoorTrapGoneOff(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   // Check to see if the soldier causes the trap to go off
   INT8 bDetectLevel;
 
@@ -523,7 +524,7 @@ BOOLEAN HasDoorTrapGoneOff(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   return (FALSE);
 }
 
-void HandleDoorTrap(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   if (!(DoorTrapTable[pDoor->ubTrapID].fFlags & DOOR_TRAP_SILENT)) {
     switch (pDoor->ubTrapID) {
       case BROTHEL_SIREN:
@@ -609,7 +610,7 @@ void HandleDoorTrap(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   }
 }
 
-BOOLEAN AttemptToBlowUpLock(SOLDIERTYPE *pSoldier, DOOR *pDoor) {
+BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   INT32 iResult;
   INT8 bSlot = NO_SLOT;
 
@@ -926,8 +927,8 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
 // fOpen is True if the door is open, false if it is closed
 BOOLEAN ModifyDoorStatus(INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fPerceivedOpen) {
   UINT8 ubCnt;
-  STRUCTURE *pStructure;
-  STRUCTURE *pBaseStructure;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pBaseStructure;
 
   // Set the gridno for the door
 
@@ -1028,8 +1029,8 @@ void TrashDoorStatusArray() {
 
 BOOLEAN IsDoorOpen(INT16 sGridNo) {
   UINT8 ubCnt;
-  STRUCTURE *pStructure;
-  STRUCTURE *pBaseStructure;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pBaseStructure;
 
   // Find the base tile for the door structure and use that gridno
   pStructure = FindStructure(sGridNo, STRUCTURE_ANYDOOR);
@@ -1071,8 +1072,8 @@ BOOLEAN IsDoorOpen(INT16 sGridNo) {
 // Returns a doors status value, NULL if not found
 DOOR_STATUS *GetDoorStatus(INT16 sGridNo) {
   UINT8 ubCnt;
-  STRUCTURE *pStructure;
-  STRUCTURE *pBaseStructure;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pBaseStructure;
 
   // if there is an array
   if (gpDoorStatus) {
@@ -1103,7 +1104,7 @@ DOOR_STATUS *GetDoorStatus(INT16 sGridNo) {
 BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
   INT32 cnt, cnt2;
   INT8 bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sDistVisible;
   DOOR_STATUS *pDoorStatus;
   INT16 usNewGridNo;
@@ -1166,7 +1167,7 @@ BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
   return (FALSE);
 }
 
-BOOLEAN MercLooksForDoors(SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
+BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
   INT32 cnt, cnt2;
   INT16 sDistVisible;
   INT16 sGridNo;
@@ -1229,8 +1230,8 @@ BOOLEAN MercLooksForDoors(SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
 }
 
 void SyncronizeDoorStatusToStructureData(DOOR_STATUS *pDoorStatus) {
-  STRUCTURE *pStructure, *pBaseStructure;
-  LEVELNODE *pNode;
+  struct STRUCTURE *pStructure, *pBaseStructure;
+  struct LEVELNODE *pNode;
   INT16 sBaseGridNo = NOWHERE;
 
   // First look for a door structure here...
@@ -1296,10 +1297,10 @@ void UpdateDoorGraphicsFromStatus(BOOLEAN fUsePerceivedStatus, BOOLEAN fDirty) {
 
 void InternalUpdateDoorGraphicFromStatus(DOOR_STATUS *pDoorStatus, BOOLEAN fUsePerceivedStatus,
                                          BOOLEAN fDirty) {
-  STRUCTURE *pStructure, *pBaseStructure;
+  struct STRUCTURE *pStructure, *pBaseStructure;
   INT32 cnt;
   BOOLEAN fOpenedGraphic = FALSE;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   BOOLEAN fWantToBeOpen = FALSE;
   BOOLEAN fDifferent = FALSE;
   INT16 sBaseGridNo = NOWHERE;
@@ -1684,7 +1685,7 @@ BOOLEAN LoadKeyTableFromSaveedGameFile(HWFILE hFile) {
 void ExamineDoorsOnEnteringSector() {
   INT32 cnt;
   DOOR_STATUS *pDoorStatus;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
   INT8 bTownId;
 
@@ -1732,7 +1733,7 @@ void ExamineDoorsOnEnteringSector() {
 void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   INT32 cnt;
   DOOR_STATUS *pDoorStatus;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
   INT32 iNumNewMercs = 0;
   INT8 bTownId;
@@ -1800,11 +1801,11 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   }
 }
 
-void DropKeysInKeyRing(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 bVisible,
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 bVisible,
                        BOOLEAN fAddToDropList, INT32 iDropListSlot, BOOLEAN fUseUnLoaded) {
   UINT8 ubLoop;
   UINT8 ubItem;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   if (!(pSoldier->pKeyRing)) {
     // no key ring!

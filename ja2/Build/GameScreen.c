@@ -13,13 +13,14 @@
 #include "GameSettings.h"
 #include "HelpScreen.h"
 #include "MessageBoxScreen.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Screens.h"
@@ -46,7 +47,6 @@
 #include "Tactical/MapInformation.h"
 #include "Tactical/MercEntering.h"
 #include "Tactical/Overhead.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/Squads.h"
@@ -62,7 +62,6 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/Cursors.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
@@ -96,7 +95,7 @@ UINT32 uiOldMouseCursor;
 UINT8 gubPreferredInitialSelectedGuy = NOBODY;
 
 BOOLEAN gfTacticalIsModal = FALSE;
-MOUSE_REGION gTacticalDisableRegion;
+struct MOUSE_REGION gTacticalDisableRegion;
 BOOLEAN gfTacticalDisableRegionActive = FALSE;
 INT8 gbTacticalDisableMode = FALSE;
 MODAL_HOOK gModalDoneCallback;
@@ -797,7 +796,7 @@ void DisableFPSOverlay(BOOLEAN fEnable) {
 
 void TacticalScreenLocateToSoldier() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
   BOOLEAN fPreferedGuyUsed = FALSE;
 
@@ -835,7 +834,7 @@ void EnterMapScreen() {
 
 void UpdateTeamPanelAssignments() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
 
   // Remove all players

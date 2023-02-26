@@ -4,6 +4,7 @@
 #include "Laptop/InsuranceText.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -65,11 +66,11 @@ void BtnInsNextButtonCallback(GUI_BUTTON *btn, INT32 reason);
 UINT32 guiInsNextBackButton;
 
 // link to the varios pages
-MOUSE_REGION gSelectedInsuranceInfoLinkRegion;
-void SelectInsuranceLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedInsuranceInfoLinkRegion;
+void SelectInsuranceLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-MOUSE_REGION gSelectedInsuranceInfoHomeLinkRegion;
-void SelectInsuranceInfoHomeLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedInsuranceInfoHomeLinkRegion;
+void SelectInsuranceInfoHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void DisplaySubmitClaimPage();
 void DisplayPremiumPage();
@@ -276,7 +277,7 @@ void BtnInsNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SelectInsuranceLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectInsuranceLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_INSURANCE_CONTRACT;
@@ -284,7 +285,7 @@ void SelectInsuranceLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectInsuranceInfoHomeLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectInsuranceInfoHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_INSURANCE;
@@ -345,7 +346,7 @@ void DisplaySubmitClaimPage() {
 void DisplayPremiumPage() {
   wchar_t sText[800];
   UINT16 usNewLineOffset = 0;
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   usNewLineOffset = INS_INFO_FIRST_PARAGRAPH_Y;
 
@@ -400,7 +401,7 @@ void DisplayPremiumPage() {
 void DisplayRenewingPremiumPage() {
   wchar_t sText[800];
   UINT16 usNewLineOffset = 0;
-  //  HVOBJECT hPixHandle;
+  //  struct VObject* hPixHandle;
 
   usNewLineOffset = INS_INFO_FIRST_PARAGRAPH_Y;
 
@@ -501,7 +502,7 @@ void ChangingInsuranceInfoSubPage(UINT8 ubSubPageNumber) {
 void DisplayInfoTocPage() {
   wchar_t sText[800];
   UINT16 usNewLineOffset = 0;
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usPosY;
 
   usNewLineOffset = INS_INFO_FIRST_PARAGRAPH_Y;

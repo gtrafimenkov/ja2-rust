@@ -25,13 +25,13 @@ void EvaluateQueenSituation();
 extern BOOLEAN gfUseAlternateQueenPosition;
 
 // returns TRUE if the group was deleted.
-BOOLEAN StrategicAILookForAdjacentGroups(GROUP *pGroup);
+BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup);
 void RemoveGroupFromStrategicAILists(UINT8 ubGroupID);
 void RecalculateSectorWeight(UINT8 ubSectorID);
-void RecalculateGroupWeight(GROUP *pGroup);
+void RecalculateGroupWeight(struct GROUP *pGroup);
 
 BOOLEAN OkayForEnemyToMoveThroughSector(UINT8 ubSectorID);
-BOOLEAN EnemyPermittedToAttackSector(GROUP **pGroup, UINT8 ubSectorID);
+BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, UINT8 ubSectorID);
 
 void StrategicHandleQueenLosingControlOfSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
 
@@ -45,13 +45,13 @@ INT16 FindPatrolGroupIndexForGroupID(UINT8 ubGroupID);
 INT16 FindPatrolGroupIndexForGroupIDPending(UINT8 ubGroupID);
 INT16 FindGarrisonIndexForGroupIDPending(UINT8 ubGroupID);
 
-GROUP *FindPendingGroupInSector(UINT8 ubSectorID);
+struct GROUP *FindPendingGroupInSector(UINT8 ubSectorID);
 
-void RepollSAIGroup(GROUP *pGroup);
+void RepollSAIGroup(struct GROUP *pGroup);
 
 // When an enemy AI group is eliminated by the player, apply a grace period in which the
 // group isn't allowed to be filled for several days.
-void TagSAIGroupWithGracePeriod(GROUP *pGroup);
+void TagSAIGroupWithGracePeriod(struct GROUP *pGroup);
 
 BOOLEAN PermittedToFillPatrolGroup(INT32 iPatrolID);
 

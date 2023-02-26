@@ -7,6 +7,8 @@
 #include "SGP/CursorFileData.h"
 #include "SGP/Font.h"
 #include "SGP/Types.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SysGlobals.h"
 #include "Tactical/HandleUI.h"
 #include "Tactical/Interface.h"
@@ -22,8 +24,8 @@ INT16 gsMouseGlobalYOffsets[NUM_MOUSE_LEVELS] = {0, 50};
 
 void UpdateFlashingCursorFrames(UINT32 uiCursorIndex);
 
-extern MOUSE_REGION gDisableRegion;
-extern MOUSE_REGION gUserTurnRegion;
+extern struct MOUSE_REGION gDisableRegion;
+extern struct MOUSE_REGION gUserTurnRegion;
 
 void BltJA2CursorData();
 
@@ -4899,7 +4901,7 @@ void RemoveCursorFlags(UINT32 uiCursor, UINT8 ubFlags) {
   CursorDatabase[uiCursor].bFlags &= (~ubFlags);
 }
 
-HVOBJECT GetCursorFileVideoObject(UINT32 uiCursorFile) {
+struct VObject *GetCursorFileVideoObject(UINT32 uiCursorFile) {
   return (CursorFileDatabase[uiCursorFile].hVObject);
 }
 

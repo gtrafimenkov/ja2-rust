@@ -2,12 +2,13 @@
 #define __HANDLEUIPLAN_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 #define UIPLAN_ACTION_MOVETO 1
 #define UIPLAN_ACTION_FIRE 2
 
-BOOLEAN BeginUIPlan(SOLDIERTYPE *pSoldier);
+BOOLEAN BeginUIPlan(struct SOLDIERTYPE *pSoldier);
 BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID);
 void EndUIPlan();
 BOOLEAN InUIPlanMode();

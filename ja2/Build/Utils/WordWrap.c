@@ -5,6 +5,7 @@
 
 #include "SGP/Debug.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WinFont.h"

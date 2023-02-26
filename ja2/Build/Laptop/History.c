@@ -7,13 +7,14 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QuestText.h"
 #include "Strategic/StrategicMap.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Message.h"
@@ -343,7 +344,7 @@ void RemoveHistory(void) {
 
 void RenderHistoryBackGround(void) {
   // render generic background for history system
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT32 iCounter = 0;
 
   // get title bar object
@@ -720,7 +721,7 @@ void DisplayHistoryListHeaders(void) {
 
 void DisplayHistoryListBackground(void) {
   // this function will display the History list display background
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT32 iCounter = 0;
 
   // get shaded line object

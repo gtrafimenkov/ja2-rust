@@ -8,6 +8,7 @@
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Boxing.h"
 #include "Tactical/DialogueControl.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/Keys.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
@@ -23,7 +24,9 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/Smell.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 
@@ -268,7 +271,7 @@ void ExamineSlantRoofFOVSlots() {
   ClearSlantRoofs();
 }
 
-void RevealRoofsAndItems(SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLocators,
+void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLocators,
                          UINT8 ubLevel, BOOLEAN fForce) {
   UINT32 maincnt, markercnt, marker, tilesLeftToSee, cnt, prevmarker;
   INT32 Inc[6], Dir[6];
@@ -279,7 +282,7 @@ void RevealRoofsAndItems(SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLo
   UINT8 dir, range, Path2;
   UINT8 ubRoomNo;
   BOOLEAN fCheckForRooms = FALSE;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   BOOLEAN fHiddenStructVisible;
   UINT8 ubMovementCost;
   BOOLEAN fTravelCostObs;
@@ -291,7 +294,7 @@ void RevealRoofsAndItems(SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLo
   BOOLEAN fStopRevealingItemsAfterThisTile = FALSE;
   INT8 bTallestStructureHeight;
   INT32 iDoorGridNo;
-  STRUCTURE *pStructure, *pDummy;
+  struct STRUCTURE *pStructure, *pDummy;
   INT8 bStructHeight;
   INT8 bThroughWindowDirection;
 
@@ -693,7 +696,7 @@ void RevealRoofsAndItems(SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLo
 
           // CHECK FOR SLANT ROOF!
           {
-            STRUCTURE *pStructure, *pBase;
+            struct STRUCTURE *pStructure, *pBase;
 
             pStructure = FindStructure((INT16)marker, STRUCTURE_SLANTED_ROOF);
 

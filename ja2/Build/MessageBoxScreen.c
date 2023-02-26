@@ -11,6 +11,8 @@
 #include "SGP/English.h"
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
@@ -56,7 +58,7 @@ void ContractMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void LieMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
 void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason);
-void MsgBoxClickCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 UINT32 ExitMsgBox(INT8 ubExitCode);
 UINT16 GetMSgBoxButtonWidth(INT32 iButtonImage);
 
@@ -597,7 +599,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   return (iId);
 }
 
-void MsgBoxClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   /// if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP)
   //{
   //	gMsgBox.bHandled = MSG_BOX_RETURN_NO;

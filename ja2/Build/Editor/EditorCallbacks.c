@@ -11,14 +11,12 @@
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/ItemStatistics.h"
 #include "Editor/PopupMenu.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/Input.h"
 #include "SGP/Types.h"
 #include "Strategic/Scheduling.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierInitList.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SimpleRenderUtils.h"
 
 extern SOLDIERINITNODE *gpSelected;
@@ -503,11 +501,11 @@ void BtnQuitCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 // ITEMS
-void MouseMovedInItemsRegion(MOUSE_REGION *reg, INT32 reason) {
+void MouseMovedInItemsRegion(struct MOUSE_REGION *reg, INT32 reason) {
   HandleItemsPanel(gusMouseXPos, gusMouseYPos, GUI_MOVE_EVENT);
 }
 
-void MouseClickedInItemsRegion(MOUSE_REGION *reg, INT32 reason) {
+void MouseClickedInItemsRegion(struct MOUSE_REGION *reg, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
     HandleItemsPanel(gusMouseXPos, gusMouseYPos, GUI_LCLICK_EVENT);
   else if (reason & MSYS_CALLBACK_REASON_RBUTTON_UP)
@@ -950,7 +948,7 @@ void MercsDirectionSetCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void MercsFindSelectedMercCallback(GUI_BUTTON *btn, INT32 reason) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gsSelectedMercID == -1) return;
     GetSoldier(&pSoldier, gsSelectedMercID);
@@ -969,11 +967,11 @@ void MercsSetRelativeAttributesCallback(GUI_BUTTON *btn, INT32 reason) {
     SetMercRelativeAttributes((INT8)MSYS_GetBtnUserData(btn, 0));
 }
 
-void MouseMovedInMercRegion(MOUSE_REGION *reg, INT32 reason) {
+void MouseMovedInMercRegion(struct MOUSE_REGION *reg, INT32 reason) {
   HandleMercInventoryPanel(reg->RelativeXPos, reg->RelativeYPos, GUI_MOVE_EVENT);
 }
 
-void MouseClickedInMercRegion(MOUSE_REGION *reg, INT32 reason) {
+void MouseClickedInMercRegion(struct MOUSE_REGION *reg, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
     HandleMercInventoryPanel(reg->RelativeXPos, reg->RelativeYPos, GUI_LCLICK_EVENT);
   else if (reason & MSYS_CALLBACK_REASON_RBUTTON_UP)

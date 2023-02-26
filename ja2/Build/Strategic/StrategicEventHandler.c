@@ -18,13 +18,11 @@
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/StructureWrap.h"
 #include "Tactical/TacticalSave.h"
 #include "Tactical/interfaceDialogue.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
@@ -45,7 +43,7 @@ void DropOffItemsInMeduna(UINT8 ubOrderNum);
 void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
   UINT8 i, j;
   UINT16 usItem;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   UINT16 usMapPos, usStandardMapPos;
   UINT16 usNumberOfItems;
   BOOLEAN fSectorLoaded = FALSE;
@@ -55,8 +53,8 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
   UINT32 uiChanceOfTheft;
   BOOLEAN fPablosStoleSomething = FALSE;
   BOOLEAN fPablosStoleLastItem = FALSE;
-  OBJECTTYPE *pObject = NULL;
-  OBJECTTYPE *pStolenObject = NULL;
+  struct OBJECTTYPE *pObject = NULL;
+  struct OBJECTTYPE *pStolenObject = NULL;
   BOOLEAN fThisShipmentIsFromJohnKulba = FALSE;  // if it is, dont add an email
   UINT8 ubItemsDelivered;
   UINT8 ubTempNumItems;
@@ -131,11 +129,11 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
   // if we are NOT currently in the right sector
   if (!fSectorLoaded) {
     // build an array of objects to be added
-    pObject = (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE) * usNumberOfItems);
-    pStolenObject = (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE) * usNumberOfItems);
+    pObject = (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE) * usNumberOfItems);
+    pStolenObject = (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE) * usNumberOfItems);
     if (pObject == NULL || pStolenObject == NULL) return;
-    memset(pObject, 0, sizeof(OBJECTTYPE) * usNumberOfItems);
-    memset(pStolenObject, 0, sizeof(OBJECTTYPE) * usNumberOfItems);
+    memset(pObject, 0, sizeof(struct OBJECTTYPE) * usNumberOfItems);
+    memset(pStolenObject, 0, sizeof(struct OBJECTTYPE) * usNumberOfItems);
   }
 
   // check for potential theft
@@ -205,7 +203,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
       } else {
         if (j > 1 && !fPablosStoleLastItem && uiChanceOfTheft > 0 &&
             Random(100) < (uiChanceOfTheft + j)) {
-          memcpy(&pStolenObject[uiStolenCount], &Object, sizeof(OBJECTTYPE));
+          memcpy(&pStolenObject[uiStolenCount], &Object, sizeof(struct OBJECTTYPE));
           uiStolenCount++;
           fPablosStoleSomething = TRUE;
           fPablosStoleLastItem = TRUE;
@@ -222,7 +220,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
             if (Object.bStatus[0] == 0) {
               Object.bStatus[0] = 1;
             }
-            memcpy(&pObject[uiCount], &Object, sizeof(OBJECTTYPE));
+            memcpy(&pObject[uiCount], &Object, sizeof(struct OBJECTTYPE));
             uiCount++;
           } else {
             ubItemsDelivered++;
@@ -237,7 +235,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
       if (fSectorLoaded) {
         AddItemToPool(usStandardMapPos, &Object, -1, 0, 0, 0);
       } else {
-        memcpy(&pObject[uiCount], &Object, sizeof(OBJECTTYPE));
+        memcpy(&pObject[uiCount], &Object, sizeof(struct OBJECTTYPE));
         uiCount++;
       }
     } else {
@@ -251,7 +249,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
         if (fSectorLoaded) {
           AddItemToPool(usStandardMapPos, &Object, -1, 0, 0, 0);
         } else {
-          memcpy(&pObject[uiCount], &Object, sizeof(OBJECTTYPE));
+          memcpy(&pObject[uiCount], &Object, sizeof(struct OBJECTTYPE));
           uiCount++;
         }
 
@@ -344,7 +342,7 @@ void HandleDelayedItemsArrival(UINT32 uiReason) {
   BOOLEAN fOk;
   WORLDITEM *pTemp;
   UINT8 ubLoop;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   if (uiReason == NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_RETURN_STOLEN_SHIPMENT_ITEMS) {
     if (gMercProfiles[PABLO].bMercStatus == MERC_IS_DEAD) {
@@ -629,7 +627,7 @@ void HandleNPCSystemEvent(UINT32 uiEvent) {
         if (gMercProfiles[JOEY].bMercStatus != MERC_IS_DEAD && !CheckFact(FACT_JOEY_ESCORTED, 0) &&
             gMercProfiles[JOEY].sSectorX == 4 && gMercProfiles[JOEY].sSectorY == MAP_ROW_D &&
             gMercProfiles[JOEY].bSectorZ == 1) {
-          SOLDIERTYPE *pJoey;
+          struct SOLDIERTYPE *pJoey;
 
           pJoey = FindSoldierByProfileID(JOEY, FALSE);
           if (pJoey) {
@@ -884,8 +882,8 @@ void RemoveAssassin(UINT8 ubProfile) {
 
 void CheckForMissingHospitalSupplies(void) {
   UINT32 uiLoop;
-  ITEM_POOL *pItemPool;
-  OBJECTTYPE *pObj;
+  struct ITEM_POOL *pItemPool;
+  struct OBJECTTYPE *pObj;
   UINT8 ubMedicalObjects = 0;
 
   for (uiLoop = 0; uiLoop < guiNumWorldItems; uiLoop++) {
@@ -933,9 +931,9 @@ void CheckForMissingHospitalSupplies(void) {
 
 void DropOffItemsInMeduna(UINT8 ubOrderNum) {
   BOOLEAN fSectorLoaded = FALSE;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   UINT32 uiCount = 0;
-  OBJECTTYPE *pObject = NULL;
+  struct OBJECTTYPE *pObject = NULL;
   UINT16 usNumberOfItems = 0, usItem;
   UINT8 ubItemsDelivered, ubTempNumItems;
   UINT32 i;
@@ -974,9 +972,9 @@ void DropOffItemsInMeduna(UINT8 ubOrderNum) {
   // if we are NOT currently in the right sector
   if (!fSectorLoaded) {
     // build an array of objects to be added
-    pObject = (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE) * usNumberOfItems);
+    pObject = (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE) * usNumberOfItems);
     if (pObject == NULL) return;
-    memset(pObject, 0, sizeof(OBJECTTYPE) * usNumberOfItems);
+    memset(pObject, 0, sizeof(struct OBJECTTYPE) * usNumberOfItems);
   }
 
   uiCount = 0;
@@ -996,7 +994,7 @@ void DropOffItemsInMeduna(UINT8 ubOrderNum) {
       if (fSectorLoaded) {
         AddItemToPool(MEDUNA_ITEM_DROP_OFF_GRIDNO, &Object, -1, 0, 0, 0);
       } else {
-        memcpy(&pObject[uiCount], &Object, sizeof(OBJECTTYPE));
+        memcpy(&pObject[uiCount], &Object, sizeof(struct OBJECTTYPE));
         uiCount++;
       }
 

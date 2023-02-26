@@ -29,8 +29,12 @@
 #include "SGP/English.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
+#include "SGP/Shading.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameInit.h"
@@ -44,7 +48,6 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/OverheadTypes.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/WorldItems.h"
@@ -60,7 +63,8 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SimpleRenderUtils.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/Message.h"
@@ -147,8 +151,8 @@ BOOLEAN fDontUseRandom = FALSE;
 
 INT32 TestButtons[10];
 
-LEVELNODE *gCursorNode = NULL;
-// LEVELNODE *gBasicCursorNode = NULL;
+struct LEVELNODE *gCursorNode = NULL;
+// struct LEVELNODE *gBasicCursorNode = NULL;
 INT16 gsCursorGridNo;
 
 INT32 giMusicID = 0;
@@ -207,7 +211,7 @@ void CreateGotoGridNoUI();
 void RemoveGotoGridNoUI();
 BOOLEAN gfGotoGridNoUI = FALSE;
 INT32 guiGotoGridNoUIButtonID;
-MOUSE_REGION GotoGridNoUIRegion;
+struct MOUSE_REGION GotoGridNoUIRegion;
 
 //----------------------------------------------------------------------------------------------
 //	EditScreenInit
@@ -2427,7 +2431,7 @@ void ShowCurrentSlotSurface(UINT32 vSurface, INT32 iWindow) {
 //	Displays the image of the currently highlighted tileset slot image. Usually this is for
 //	8 bit image (.STI) files
 //
-void ShowCurrentSlotImage(HVOBJECT hVObj, INT32 iWindow) {
+void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
   SGPRect ClipRect, NewRect;
   INT32 iStartX;
   INT32 iStartY;
@@ -2558,7 +2562,7 @@ BOOLEAN PlaceLight(INT16 sRadius, INT16 iMapX, INT16 iMapY, INT16 sType) {
 BOOLEAN RemoveLight(INT16 iMapX, INT16 iMapY) {
   INT32 iCount;
   UINT16 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSoldierLight;
   BOOLEAN fRemovedLight;
   INT32 iMapIndex;
@@ -2615,7 +2619,7 @@ void ShowLightPositionHandles(void) {
   INT32 iMapIndex;
   UINT16 cnt;
   UINT16 usTmpIndex;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSoldierLight;
 
   // Check all lights and place a position handle there!
@@ -2650,7 +2654,7 @@ void RemoveLightPositionHandles(void) {
   INT32 iCount;
   INT32 iMapIndex;
   UINT16 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSoldierLight;
 
   // Check all lights and remove the position handle there!
@@ -2717,7 +2721,7 @@ BOOLEAN CheckForSlantRoofs(void) {
 void MapOptimize(void) {
 #if 0
 	INT16 gridno;
-	LEVELNODE *start, *head, *end, *node, *temp;
+	struct LEVELNODE *start, *head, *end, *node, *temp;
 	MAP_ELEMENT		*pMapTile;
 	BOOLEAN fFound, fChangedHead, fChangedTail;
 

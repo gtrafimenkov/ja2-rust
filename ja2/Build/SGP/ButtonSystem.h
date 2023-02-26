@@ -10,7 +10,8 @@
 #include "SGP/ButtonSoundControl.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
-#include "SGP/VObject.h"
+
+struct VObject;
 
 #ifdef __cplusplus
 extern "C" {
@@ -98,7 +99,7 @@ typedef void (*GUI_CALLBACK)(struct _GUI_BUTTON *, INT32);
 typedef struct _GUI_BUTTON {
   INT32 IDNum;                 // ID Number, contains it's own button number
   UINT32 ImageNum;             // Image number to use (see DOCs for details)
-  MOUSE_REGION Area;           // Mouse System's mouse region to use for this button
+  struct MOUSE_REGION Area;    // Mouse System's mouse region to use for this button
   GUI_CALLBACK ClickCallback;  // Button Callback when button is clicked
   GUI_CALLBACK MoveCallback;   // Button Callback when mouse moved on this region
   INT16 Cursor;                // Cursor to use for this button
@@ -150,15 +151,15 @@ extern GUI_BUTTON *ButtonList[MAX_BUTTONS];  // Button System's Main Button List
 
 // Struct definition for the QuickButton pictures.
 typedef struct {
-  HVOBJECT vobj;     // The Image itself
-  INT32 Grayed;      // Index to use for a "Grayed-out" button
-  INT32 OffNormal;   // Index to use when button is OFF
-  INT32 OffHilite;   // Index to use when button is OFF w/ hilite on it
-  INT32 OnNormal;    // Index to use when button is ON
-  INT32 OnHilite;    // Index to use when button is ON w/ hilite on it
-  UINT32 MaxWidth;   // Width of largest image in use
-  UINT32 MaxHeight;  // Height of largest image in use
-  UINT32 fFlags;     // Special image flags
+  struct VObject *vobj;  // The Image itself
+  INT32 Grayed;          // Index to use for a "Grayed-out" button
+  INT32 OffNormal;       // Index to use when button is OFF
+  INT32 OffHilite;       // Index to use when button is OFF w/ hilite on it
+  INT32 OnNormal;        // Index to use when button is ON
+  INT32 OnHilite;        // Index to use when button is ON w/ hilite on it
+  UINT32 MaxWidth;       // Width of largest image in use
+  UINT32 MaxHeight;      // Height of largest image in use
+  UINT32 fFlags;         // Special image flags
 } BUTTON_PICS;
 
 #define MAX_BUTTON_PICS 256
@@ -195,7 +196,7 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
                       INT32 OnHilite);
 INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
                            INT32 OnNormal, INT32 OnHilite);
-INT32 UseVObjAsButtonImage(HVOBJECT hVObject, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
+INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
                            INT32 OnNormal, INT32 OnHilite);
 void UnloadButtonImage(INT32 Index);
 INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteName, STR8 OnNormName,
@@ -322,8 +323,8 @@ BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, UINT16 usVideoO
 void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y);
 void ResizeButton(INT32 iButtonID, INT16 w, INT16 h);
 
-void QuickButtonCallbackMMove(MOUSE_REGION *reg, INT32 reason);
-void QuickButtonCallbackMButn(MOUSE_REGION *reg, INT32 reason);
+void QuickButtonCallbackMMove(struct MOUSE_REGION *reg, INT32 reason);
+void QuickButtonCallbackMButn(struct MOUSE_REGION *reg, INT32 reason);
 
 BOOLEAN SetButtonCursor(INT32 iBtnId, UINT16 crsr);
 void MSYS_SetBtnUserData(INT32 iButtonNum, INT32 index, INT32 userdata);

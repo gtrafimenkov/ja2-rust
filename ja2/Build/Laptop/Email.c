@@ -10,13 +10,13 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Tactical/SoldierProfile.h"
 #include "TileEngine/Environment.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
@@ -197,8 +197,8 @@ BOOLEAN fSortSubjectUpwards = FALSE;
 BOOLEAN gfPageButtonsWereCreated = FALSE;
 
 // mouse regions
-MOUSE_REGION pEmailRegions[MAX_MESSAGES_PAGE];
-MOUSE_REGION pDeleteScreenMask;
+struct MOUSE_REGION pEmailRegions[MAX_MESSAGES_PAGE];
+struct MOUSE_REGION pDeleteScreenMask;
 
 // the email info struct to speed up email
 EmailPageInfoStruct pEmailPageInfo[MAX_NUMBER_EMAIL_PAGES];
@@ -218,8 +218,8 @@ INT32 giMailPageButtons[2];
 INT32 giMailPageButtonsImage[2];
 
 // mouse regions
-MOUSE_REGION pEmailMoveRegions[NEXT_BUTTON + 1];
-MOUSE_REGION pSortMailRegions[3];
+struct MOUSE_REGION pEmailMoveRegions[NEXT_BUTTON + 1];
+struct MOUSE_REGION pSortMailRegions[3];
 
 // the message record list, for the currently displayed message
 RecordPtr pMessageRecordList = NULL;
@@ -263,8 +263,8 @@ INT32 iTotalHeight = 0;
 void SwapMessages(INT32 iIdA, INT32 iIdB);
 void PlaceMessagesinPages();
 BOOLEAN fFirstTime = TRUE;
-void EmailBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void EmailMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void EmailBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void EmailMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void PreviousRegionButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void NextRegionButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void SetUnNewMessages();
@@ -554,7 +554,7 @@ void DisplayEmailHeaders(void) {
 }
 
 void RenderEmail(void) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT32 iCounter = 0;
 
   // get and blt the email list background
@@ -1161,7 +1161,7 @@ void DisplayMessageList(INT32 iPageNum) {
 }
 
 void DrawLetterIcon(INT32 iCounter, BOOLEAN fRead) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   // will draw the icon for letter in mail list depending if the mail has been read or not
 
   // grab video object
@@ -1346,7 +1346,7 @@ void LookForUnread() {
   return;
 }
 
-void EmailBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void EmailBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iCount;
   PagePtr pPage = pPageList;
   INT32 iId = 0;
@@ -1410,7 +1410,7 @@ void EmailBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
     }
   }
 }
-void EmailMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void EmailMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
   }
@@ -1470,7 +1470,7 @@ void SetUnNewMessages() {
 }
 
 INT32 DisplayEmailMessage(EmailPtr pMail) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT32 iCnt = 0;
   INT32 iHeight = 0;
   INT32 iCounter = 1;
@@ -1844,7 +1844,7 @@ void CreateDestroyNewMailButton() {
 }
 
 BOOLEAN DisplayNewMailBox(void) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   static BOOLEAN fOldNewMailFlag = FALSE;
   // will display a new mail box whenever new mail has arrived
 
@@ -2206,7 +2206,7 @@ void CreateDestroyDeleteNoticeMailButton() {
   return;
 }
 BOOLEAN DisplayDeleteNotice(EmailPtr pMail) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   // will display a delete mail box whenever delete mail has arrived
   if (!fDeleteMailFlag) return (FALSE);
 
@@ -2569,7 +2569,7 @@ void DrawEmailMessageDisplayTitleText(INT32 iViewerY) {
 void DrawLineDividers(void) {
   // this function draws divider lines between lines of text
   INT32 iCounter = 0;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   for (iCounter = 1; iCounter < 19; iCounter++) {
     GetVideoObject(&hHandle, guiMAILDIVIDER);

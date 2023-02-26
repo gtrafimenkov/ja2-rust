@@ -12,21 +12,19 @@
 #include "Tactical/AnimationData.h"
 #include "Tactical/Campaign.h"
 #include "Tactical/DialogueControl.h"
+#include "Tactical/Items.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/Points.h"
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierAdd.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierMacros.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/LightEffects.h"
-#include "TileEngine/RenderDirty.h"
 #include "TileEngine/Smell.h"
 #include "TileEngine/SmokeEffects.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/TimerControl.h"
@@ -40,7 +38,7 @@ void HandleRPCDescription() {
   UINT8 ubMercsInSector[20] = {0};
   UINT8 ubNumMercs = 0;
   UINT8 ubChosenMerc;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt2;
   BOOLEAN fSAMSite = FALSE;
 
@@ -117,7 +115,7 @@ void HandleRPCDescription() {
 
 void HandleTacticalEndTurn() {
   UINT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 uiTime;
   static UINT32 uiTimeSinceLastStrategicUpdate = 0;
 

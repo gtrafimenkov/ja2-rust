@@ -6,6 +6,7 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -412,10 +413,10 @@ SGPRect MapScreenRect = {(MAP_VIEW_START_X + MAP_GRID_X - 2), (MAP_VIEW_START_Y 
 SGPRect FullScreenRect = {0, 0, 640, 480};
 
 // temp helicopter path
-PathStPtr pTempHelicopterPath = NULL;
+struct path *pTempHelicopterPath = NULL;
 
 // character temp path
-PathStPtr pTempCharacterPath = NULL;
+struct path *pTempCharacterPath = NULL;
 
 // draw temp path?
 BOOLEAN fDrawTempHeliPath = FALSE;
@@ -436,8 +437,8 @@ INT8 bSelectedContractChar = -1;
 BOOLEAN fTempPathAlreadyDrawn = FALSE;
 
 // the regions for the mapscreen militia box
-MOUSE_REGION gMapScreenMilitiaBoxRegions[9];
-MOUSE_REGION gMapScreenMilitiaRegion;
+struct MOUSE_REGION gMapScreenMilitiaBoxRegions[9];
+struct MOUSE_REGION gMapScreenMilitiaRegion;
 
 // the mine icon
 UINT32 guiMINEICON;
@@ -481,8 +482,8 @@ void BlitMineText(INT16 sMapX, INT16 sMapY);
 extern BOOLEAN GetMouseMapXY(INT16 *psMapWorldX, INT16 *psMapWorldY);
 INT16 GetBaseSectorForCurrentTown(void);
 void RenderIconsPerSectorForSelectedTown(void);
-void MilitiaRegionClickCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void MilitiaRegionMoveCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void MilitiaRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MilitiaRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void CreateDestroyMilitiaSectorButtons(void);
 void ShowHighLightedSectorOnMilitiaMap(void);
 void SetMilitiaMapButtonsText(void);
@@ -510,7 +511,7 @@ BOOLEAN DrawMapForDemo(void);
 #endif
 
 // callbacks
-void MilitiaBoxMaskBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // display potential path, yes or no?
 void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
@@ -523,7 +524,7 @@ void HandleShowingOfEnemyForcesInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSe
 BOOLEAN CanMilitiaAutoDistribute(void);
 
 void ShowItemsOnMap(void);
-void DrawMapBoxIcon(HVOBJECT hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
+void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
                     UINT8 ubIconPosition);
 void DisplayDestinationOfHelicopter(void);
 void DrawOrta();
@@ -533,8 +534,8 @@ void HideExistenceOfUndergroundMapSector(UINT8 ubSectorX, UINT8 ubSectorY);
 
 BOOLEAN CanMercsScoutThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
 
-BOOLEAN TraceCharAnimatedRoute(PathStPtr pPath, BOOLEAN fCheckFlag, BOOLEAN fForceUpDate);
-void AnimateRoute(PathStPtr pPath);
+BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN fForceUpDate);
+void AnimateRoute(struct path *pPath);
 
 extern void EndConfirmMapMoveMode(void);
 extern BOOLEAN CanDrawSectorCursor(void);
@@ -983,8 +984,8 @@ void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFir
 // "on duty" includes mercs inside vehicles
 INT32 ShowOnDutyTeam(INT16 sMapX, INT16 sMapY) {
   UINT8 ubCounter = 0, ubIconPosition = 0;
-  HVOBJECT hIconHandle;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct VObject *hIconHandle;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   GetVideoObject(&hIconHandle, guiCHARICONS);
 
@@ -1008,8 +1009,8 @@ INT32 ShowOnDutyTeam(INT16 sMapX, INT16 sMapY) {
 
 INT32 ShowAssignedTeam(INT16 sMapX, INT16 sMapY, INT32 iCount) {
   UINT8 ubCounter, ubIconPosition;
-  HVOBJECT hIconHandle;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct VObject *hIconHandle;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   GetVideoObject(&hIconHandle, guiCHARICONS);
   ubCounter = 0;
@@ -1043,8 +1044,8 @@ INT32 ShowAssignedTeam(INT16 sMapX, INT16 sMapY, INT32 iCount) {
 
 INT32 ShowVehicles(INT16 sMapX, INT16 sMapY, INT32 iCount) {
   UINT8 ubCounter, ubIconPosition;
-  HVOBJECT hIconHandle;
-  SOLDIERTYPE *pVehicleSoldier;
+  struct VObject *hIconHandle;
+  struct SOLDIERTYPE *pVehicleSoldier;
 
   GetVideoObject(&hIconHandle, guiCHARICONS);
   ubCounter = 0;
@@ -1082,7 +1083,7 @@ INT32 ShowVehicles(INT16 sMapX, INT16 sMapY, INT32 iCount) {
 
 void ShowEnemiesInSector(INT16 sSectorX, INT16 sSectorY, INT16 sNumberOfEnemies,
                          UINT8 ubIconPosition) {
-  HVOBJECT hIconHandle;
+  struct VObject *hIconHandle;
   UINT8 ubEnemy = 0;
 
   // get the video object
@@ -1096,7 +1097,7 @@ void ShowEnemiesInSector(INT16 sSectorX, INT16 sSectorY, INT16 sNumberOfEnemies,
 
 void ShowUncertainNumberEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
   INT16 sXPosition = 0, sYPosition = 0;
-  HVOBJECT hIconHandle;
+  struct VObject *hIconHandle;
 
   // grab the x and y postions
   sXPosition = sSectorX;
@@ -1560,7 +1561,8 @@ void ShutDownPalettesForMap(void) {
   return;
 }
 
-void PlotPathForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY, BOOLEAN fTacticalTraversal) {
+void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY,
+                          BOOLEAN fTacticalTraversal) {
   // will plot a path for this character
 
   // is cursor allowed here?..if not..don't build path
@@ -1614,7 +1616,7 @@ void PlotPathForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY, BOOLEAN f
   }
 }
 
-void PlotATemporaryPathForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
+void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
   // make sure we're at the beginning
   pTempCharacterPath = MoveToBeginningOfPathList(pTempCharacterPath);
 
@@ -1635,7 +1637,7 @@ void PlotATemporaryPathForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY)
 }
 
 // clear out character path list, after and including this sector
-UINT32 ClearPathAfterThisSectorForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
+UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
   INT32 iOrigLength = 0;
   VEHICLETYPE *pVehicle = NULL;
 
@@ -1691,7 +1693,7 @@ UINT32 ClearPathAfterThisSectorForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, I
   }
 }
 
-void CancelPathForCharacter(SOLDIERTYPE *pCharacter) {
+void CancelPathForCharacter(struct SOLDIERTYPE *pCharacter) {
   // clear out character's entire path list, he and his squad will stay/return to his current
   // sector.
   pCharacter->pMercPath = ClearStrategicPathList(pCharacter->pMercPath, pCharacter->ubGroupID);
@@ -1746,7 +1748,7 @@ void CancelPathForVehicle(VEHICLETYPE *pVehicle, BOOLEAN fAlreadyReversed) {
   fCharacterInfoPanelDirty = TRUE;  // to update ETA
 }
 
-void CancelPathForGroup(GROUP *pGroup) {
+void CancelPathForGroup(struct GROUP *pGroup) {
   INT32 iVehicleId;
 
   // if it's the chopper, but player can't redirect it
@@ -1777,7 +1779,7 @@ void CancelPathForGroup(GROUP *pGroup) {
   }
 }
 
-void CopyPathToCharactersSquadIfInOne(SOLDIERTYPE *pCharacter) {
+void CopyPathToCharactersSquadIfInOne(struct SOLDIERTYPE *pCharacter) {
   INT8 bSquad = 0;
 
   // check if on a squad, if so, do same thing for all characters
@@ -1792,8 +1794,8 @@ void CopyPathToCharactersSquadIfInOne(SOLDIERTYPE *pCharacter) {
   }
 }
 
-void DisplaySoldierPath(SOLDIERTYPE *pCharacter) {
-  PathStPtr pPath = NULL;
+void DisplaySoldierPath(struct SOLDIERTYPE *pCharacter) {
+  struct path *pPath = NULL;
 
   /* ARM: Hopefully no longer required once using GetSoldierMercPathPtr() ???
           // check if in vehicle, if so, copy path to vehicle
@@ -1814,7 +1816,7 @@ void DisplaySoldierPath(SOLDIERTYPE *pCharacter) {
   return;
 }
 
-void DisplaySoldierTempPath(SOLDIERTYPE *pCharacter) {
+void DisplaySoldierTempPath(struct SOLDIERTYPE *pCharacter) {
   // now render temp route
   TracePathRoute(FALSE, TRUE, pTempCharacterPath);
 
@@ -1950,7 +1952,7 @@ INT16 GetLastSectorOfHelicoptersPath(void) {
   // will return the last sector of the helicopter's current path
   INT16 sLastSector = pVehicleList[iHelicopterVehicleId].sSectorX +
                       pVehicleList[iHelicopterVehicleId].sSectorY * MAP_WORLD_X;
-  PathStPtr pNode = NULL;
+  struct path *pNode = NULL;
 
   pNode = pVehicleList[iHelicopterVehicleId].pMercPath;
 
@@ -1962,8 +1964,8 @@ INT16 GetLastSectorOfHelicoptersPath(void) {
   return sLastSector;
 }
 
-BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, PathStPtr pPath) {
-  PathStPtr pCurrentNode = NULL;
+BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pPath) {
+  struct path *pCurrentNode = NULL;
   BOOLEAN fSpeedFlag = FALSE;
   BOOLEAN fUpDate = FALSE;
   INT32 iDifference = 0;
@@ -1975,12 +1977,12 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, PathStPtr pPath
   INT32 iDirection = 0;
   BOOLEAN fUTurnFlag = FALSE;
   BOOLEAN fNextNode = FALSE;
-  PathStPtr pTempNode = NULL;
-  PathStPtr pNode = NULL;
-  PathStPtr pPastNode = NULL;
-  PathStPtr pNextNode = NULL;
+  struct path *pTempNode = NULL;
+  struct path *pNode = NULL;
+  struct path *pPastNode = NULL;
+  struct path *pNextNode = NULL;
   unsigned int ubCounter = 1;
-  HVOBJECT hMapHandle;
+  struct VObject *hMapHandle;
 
   if (pPath == NULL) {
     return FALSE;
@@ -2532,7 +2534,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, PathStPtr pPath
   return (TRUE);
 }
 
-void AnimateRoute(PathStPtr pPath) {
+void AnimateRoute(struct path *pPath) {
   // set buffer
   SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
 
@@ -2595,14 +2597,14 @@ void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY,
   return;
 }
 
-BOOLEAN TraceCharAnimatedRoute(PathStPtr pPath, BOOLEAN fCheckFlag, BOOLEAN fForceUpDate) {
-  static PathStPtr pCurrentNode = NULL;
+BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN fForceUpDate) {
+  static struct path *pCurrentNode = NULL;
   static INT8 bCurrentChar = -1;
   static BOOLEAN fUpDateFlag = FALSE;
   static BOOLEAN fPauseFlag = TRUE;
   static UINT8 ubCounter = 1;
 
-  HVOBJECT hMapHandle;
+  struct VObject *hMapHandle;
   BOOLEAN fSpeedFlag = FALSE;
   BOOLEAN fUpDate = FALSE;
   INT32 iDifference = 0;
@@ -2615,10 +2617,10 @@ BOOLEAN TraceCharAnimatedRoute(PathStPtr pPath, BOOLEAN fCheckFlag, BOOLEAN fFor
   INT32 iDirection = -1;
   BOOLEAN fUTurnFlag = FALSE;
   BOOLEAN fNextNode = FALSE;
-  PathStPtr pTempNode = NULL;
-  PathStPtr pNode = NULL;
-  PathStPtr pPastNode = NULL;
-  PathStPtr pNextNode = NULL;
+  struct path *pTempNode = NULL;
+  struct path *pNode = NULL;
+  struct path *pPastNode = NULL;
+  struct path *pNextNode = NULL;
 
   // must be plotting movement
   if ((bSelectedDestChar == -1) && (fPlotForHelicopter == FALSE)) {
@@ -3486,7 +3488,7 @@ void ShowPeopleInMotion(INT16 sX, INT16 sY) {
   INT16 iX = sX, iY = sY;
   INT16 sXPosition = 0, sYPosition = 0;
   INT32 iCounter = 0;
-  HVOBJECT hIconHandle;
+  struct VObject *hIconHandle;
   BOOLEAN fAboutToEnter = FALSE;
   CHAR16 sString[32];
   INT16 sTextXOffset = 0;
@@ -3683,7 +3685,7 @@ void DisplayDistancesForHelicopter(void) {
   INT16 sDistanceToGo = 0;  //, sDistanceSoFar = 0, sTotalCanTravel = 0;
   INT16 sX = 0, sY = 0;
   CHAR16 sString[32];
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT16 sTotalOfTrip = 0;
   INT32 iTime = 0;
   INT16 sMapX, sMapY;
@@ -3824,8 +3826,8 @@ void DisplayPositionOfHelicopter(void) {
   FLOAT flRatio = 0.0;
   UINT32 x, y;
   UINT16 minX, minY, maxX, maxY;
-  GROUP *pGroup;
-  HVOBJECT hHandle;
+  struct GROUP *pGroup;
+  struct VObject *hHandle;
   INT32 iNumberOfPeopleInHelicopter = 0;
   CHAR16 sString[4];
 
@@ -3969,7 +3971,7 @@ void DisplayDestinationOfHelicopter(void) {
   INT16 sSector;
   INT16 sMapX, sMapY;
   UINT32 x, y;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   AssertMsg((sOldMapX >= 0) && (sOldMapX < 640),
             String("DisplayDestinationOfHelicopter: Invalid sOldMapX = %d", sOldMapX));
@@ -4018,7 +4020,7 @@ void DisplayDestinationOfHelicopter(void) {
 BOOLEAN CheckForClickOverHelicopterIcon(INT16 sClickedSectorX, INT16 sClickedSectorY) {
   INT32 iDeltaTime = 0;
   BOOLEAN fIgnoreClick = FALSE;
-  GROUP *pGroup = NULL;
+  struct GROUP *pGroup = NULL;
   BOOLEAN fHelicopterOverNextSector = FALSE;
   FLOAT flRatio = 0.0;
   INT16 sSectorX;
@@ -4081,7 +4083,7 @@ BOOLEAN CheckForClickOverHelicopterIcon(INT16 sClickedSectorX, INT16 sClickedSec
 }
 
 void BlitMineIcon(INT16 sMapX, INT16 sMapY) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf2;
   INT16 sScreenX, sScreenY;
@@ -4362,7 +4364,7 @@ void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, IN
 
 UINT8 NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ )
 {
-        SOLDIERTYPE *pTeamSoldier;
+        struct SOLDIERTYPE *pTeamSoldier;
         INT32				cnt = 0;
         UINT8				ubNumFriendlies = 0;
 
@@ -4543,7 +4545,7 @@ void RemoveMilitiaPopUpBox(void) {
 }
 
 BOOLEAN DrawMilitiaPopUpBox(void) {
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   ETRLEObject *pTrav;
 
   if (!fShowMilitia) {
@@ -4664,7 +4666,7 @@ void RenderIconsPerSectorForSelectedTown(void) {
   INT32 iNumberOfElites = 0;
   INT32 iTotalNumberOfTroops = 0;
   INT32 iCurrentTroopIcon = 0;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   INT32 iCurrentIcon = 0;
   INT16 sX, sY;
   CHAR16 sString[32];
@@ -4773,7 +4775,7 @@ INT16 GetBaseSectorForCurrentTown(void) {
 
 void ShowHighLightedSectorOnMilitiaMap(void) {
   // show the highlighted sector on the militia map
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   INT16 sX = 0, sY = 0;
 
   if (sSectorMilitiaMapSector != -1) {
@@ -4805,7 +4807,7 @@ void ShowHighLightedSectorOnMilitiaMap(void) {
   return;
 }
 
-void MilitiaRegionClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void MilitiaRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iValue = 0;
 
   iValue = MSYS_GetRegionUserData(pRegion, 0);
@@ -4827,7 +4829,7 @@ void MilitiaRegionClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MilitiaRegionMoveCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void MilitiaRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iValue = 0;
 
   iValue = MSYS_GetRegionUserData(pRegion, 0);
@@ -4848,7 +4850,7 @@ void CreateDestroyMilitiaSectorButtons(void) {
   static INT16 sOldSectorValue = -1;
   INT16 sX = 0, sY = 0;
   INT32 iCounter = 0;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   ETRLEObject *pTrav;
 
   if (sOldSectorValue == sSectorMilitiaMapSector && fShowMilitia && sSelectedMilitiaTown &&
@@ -5005,7 +5007,7 @@ void DisplayUnallocatedMilitia(void) {
         iCurrentTroopIcon = 0;
   INT32 iCurrentIcon = 0;
   INT16 sX = 0, sY = 0;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
   // get number of each
   iNumberOfGreens = sGreensOnCursor;
@@ -5425,7 +5427,7 @@ void RenderShadingForUnControlledSectors(void) {
 void DrawTownMilitiaForcesOnMap(void) {
   INT32 iCounter = 0, iCounterB = 0, iTotalNumberOfTroops = 0, iIconValue = 0;
   INT32 iNumberOfGreens = 0, iNumberOfRegulars = 0, iNumberOfElites = 0;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   INT16 sSectorX = 0, sSectorY = 0;
 
   // get militia video object
@@ -5602,7 +5604,7 @@ void ShadeSubLevelsNotVisited(void) {
 }
 
 void HandleLowerLevelMapBlit(void) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // blits the sub level maps
   switch (iCurrentMapSectorZ) {
@@ -5627,7 +5629,7 @@ void HandleLowerLevelMapBlit(void) {
   return;
 }
 
-void MilitiaBoxMaskBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment screen mask region
   if ((iReason & MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     sSectorMilitiaMapSector = -1;
@@ -5656,7 +5658,7 @@ INT32 GetNumberOfMilitiaInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) 
 BOOLEAN DrawMapForDemo(void) {
   VOBJECT_DESC VObjectDesc;
   UINT32 uiTempObject;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   FilenameForBPP("INTERFACE\\map_1.sti", VObjectDesc.ImageFile);
@@ -5731,7 +5733,7 @@ UINT32 WhatPlayerKnowsAboutEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
 BOOLEAN CanMercsScoutThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   INT32 iFirstId = 0, iLastId = 0;
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // to speed it up a little?
   iFirstId = gTacticalStatus.Team[OUR_TEAM].bFirstID;
@@ -5823,7 +5825,7 @@ void HandleShowingOfEnemyForcesInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSe
 UINT8 NumActiveCharactersInSector( INT16 sSectorX, INT16 sSectorY, INT16 bSectorZ )
 {
         INT32 iCounter = 0;
-        SOLDIERTYPE *pSoldier = NULL;
+        struct SOLDIERTYPE *pSoldier = NULL;
         UINT8 ubNumberOnTeam = 0;
 
         for( iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++ )
@@ -5850,7 +5852,7 @@ void ShowSAMSitesOnStrategicMap(void) {
   INT32 iCounter = 0;
   INT16 sSectorX = 0, sSectorY = 0;
   INT16 sX = 0, sY = 0;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT8 ubVidObjIndex = 0;
   UINT8 *pDestBuf2;
   UINT32 uiDestPitchBYTES;
@@ -6083,7 +6085,7 @@ void ShowItemsOnMap(void) {
   RestoreClipRegionToFullScreen();
 }
 
-void DrawMapBoxIcon(HVOBJECT hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
+void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
                     UINT8 ubIconPosition) {
   INT32 iRowNumber, iColumnNumber;
   INT32 iX, iY;
@@ -6135,7 +6137,7 @@ void DrawOrta() {
   UINT32 uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   if (fZoomFlag) {
     pDestBuf2 = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -6165,7 +6167,7 @@ void DrawTixa() {
   UINT32 uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   if (fZoomFlag) {
     pDestBuf2 = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -6191,7 +6193,7 @@ void DrawTixa() {
 
 void DrawBullseye() {
   INT16 sX, sY;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   GetScreenXYFromMapXY(gsMercArriveSectorX, gsMercArriveSectorY, &sX, &sY);
   sY -= 2;

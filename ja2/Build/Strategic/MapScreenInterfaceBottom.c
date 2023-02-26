@@ -12,6 +12,7 @@
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadScreen.h"
@@ -136,14 +137,14 @@ UINT32 guiMapBottomExitButtonsImage[3];
 UINT32 guiMapBottomTimeButtonsImage[2];
 
 // mouse regions
-MOUSE_REGION gMapMessageScrollBarRegion;
-MOUSE_REGION gMapPauseRegion;
+struct MOUSE_REGION gMapMessageScrollBarRegion;
+struct MOUSE_REGION gMapPauseRegion;
 
-MOUSE_REGION gTimeCompressionMask[3];
+struct MOUSE_REGION gTimeCompressionMask[3];
 
 #ifdef JA2DEMO
-MOUSE_REGION MapButtonScreenMasks[14];
-MOUSE_REGION MapScreenmaskForDemo;
+struct MOUSE_REGION MapButtonScreenMasks[14];
+struct MOUSE_REGION MapScreenmaskForDemo;
 #endif
 
 // EXTERNS
@@ -156,7 +157,7 @@ extern BOOLEAN fInMapMode;
 extern BOOLEAN fShowInventoryFlag;
 extern BOOLEAN fShowDescriptionFlag;
 
-extern MOUSE_REGION gMPanelRegion;
+extern struct MOUSE_REGION gMPanelRegion;
 
 // PROTOTYPES
 
@@ -184,8 +185,8 @@ void BtnLaptopCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnTacticalCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnOptionsFromMapScreenCallback(GUI_BUTTON *btn, INT32 reason);
 
-void CompressModeClickCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void CompressMaskClickCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void CompressModeClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void CompressMaskClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void BtnTimeCompressMoreMapScreenCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnTimeCompressLessMapScreenCallback(GUI_BUTTON *btn, INT32 reason);
@@ -193,12 +194,12 @@ void BtnTimeCompressLessMapScreenCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnMessageDownMapScreenCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnMessageUpMapScreenCallback(GUI_BUTTON *btn, INT32 reason);
 
-void MapScreenMessageScrollBarCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void MapScreenMessageScrollBarCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 #ifdef JA2DEMO
 void BuildDemoMouseRegionsForHelpText(void);
 void RemoveDemoMouseRegionsForHelpText(void);
-void MapButtonMaskBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void MapButtonMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 #endif
 
 // void CheckForAndHandleAutoMessageScroll( void );
@@ -253,7 +254,7 @@ void DeleteMapScreenInterfaceBottom(void) {
 
 void RenderMapScreenInterfaceBottom(void) {
   // will render the map screen bottom interface
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   CHAR8 bFilename[32];
 
   // render whole panel
@@ -577,7 +578,7 @@ void DrawNameOfLoadedSector(void) {
   mprintf(sFontX, sFontY, L"%s", sString);
 }
 
-void CompressModeClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void CompressModeClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & (MSYS_CALLBACK_REASON_RBUTTON_UP | MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     if (CommonTimeCompressionChecks() == TRUE) return;
 
@@ -890,7 +891,7 @@ void DeleteMapScreenBottomMessageScrollRegion(void) {
   MSYS_RemoveRegion(&gMapMessageScrollBarRegion);
 }
 
-void MapScreenMessageScrollBarCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void MapScreenMessageScrollBarCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   UINT8 ubMouseYOffset;
   UINT8 ubDesiredSliderOffset;
   UINT8 ubDesiredMessageIndex;
@@ -947,7 +948,7 @@ void DisplayScrollBarSlider() {
   // will display the scroll bar icon
   UINT8 ubNumMessages;
   UINT8 ubSliderOffset;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   ubNumMessages = GetRangeOfMapScreenMessages();
 
@@ -1292,7 +1293,7 @@ void CreateDestroyMouseRegionMasksForTimeCompressionButtons(void) {
   }
 }
 
-void CompressMaskClickCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void CompressMaskClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     TellPlayerWhyHeCantCompressTime();
   }
@@ -1356,7 +1357,7 @@ BOOLEAN CommonTimeCompressionChecks(void) {
 }
 
 BOOLEAN AnyUsableRealMercenariesOnTeam(void) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iCounter = 0, iNumberOnTeam = 0;
 
   // this is for speed, this runs once/frame
@@ -1470,7 +1471,7 @@ void RemoveDemoMouseRegionsForHelpText(void) {
 }
 
 // invnetory screen mask btn callback
-void MapButtonMaskBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void MapButtonMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // inventory screen mask btn callback
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     DoMapMessageBox(MSG_BOX_BASIC_STYLE, zMarksMapScreenText[17], MAP_SCREEN, MSG_BOX_FLAG_OK,

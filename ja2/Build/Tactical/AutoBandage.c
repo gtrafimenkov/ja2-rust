@@ -5,6 +5,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
@@ -54,7 +55,7 @@ BOOLEAN gfAutoBandageFailed;
 INT32 iEndAutoBandageButton[2];
 INT32 iEndAutoBandageButtonImage[2];
 
-MOUSE_REGION gAutoBandageRegion;
+struct MOUSE_REGION gAutoBandageRegion;
 
 // the lists of the doctor and patient
 INT32 iDoctorList[MAX_CHARACTER_COUNT];
@@ -81,14 +82,14 @@ BOOLEAN RenderSoldierSmallFaceForAutoBandagePanel(INT32 iIndex, INT16 sCurrentXP
 void StopAutoBandageButtonCallback(GUI_BUTTON *btn, INT32 reason);
 BOOLEAN RemoveFacesForAutoBandage(void);
 
-extern BOOLEAN CanCharacterAutoBandageTeammate(SOLDIERTYPE *pSoldier);
-extern BOOLEAN CanCharacterBeAutoBandagedByTeammate(SOLDIERTYPE *pSoldier);
+extern BOOLEAN CanCharacterAutoBandageTeammate(struct SOLDIERTYPE *pSoldier);
+extern BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier);
 extern UINT8 NumEnemyInSector();
 
 void BeginAutoBandage() {
   INT32 cnt;
   BOOLEAN fFoundAGuy = FALSE;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fFoundAMedKit = FALSE;
 
   // If we are in combat, we con't...
@@ -143,7 +144,7 @@ void BeginAutoBandage() {
 
 void HandleAutoBandagePending() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // OK, if we have a pending autobandage....
   // check some conditions
@@ -267,7 +268,7 @@ BOOLEAN CreateAutoBandageString(void) {
   UINT8 ubDoctor[20], ubDoctors = 0;
   UINT32 uiDoctorNameStringLength = 1;  // for end-of-string character
   STR16 sTemp;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID; cnt++, pSoldier++) {
@@ -336,7 +337,7 @@ void AutoBandage(BOOLEAN fStart) {
   SGPRect aRect;
   UINT8 ubLoop;
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (fStart) {
     gTacticalStatus.fAutoBandageMode = TRUE;
@@ -519,7 +520,7 @@ void DisplayAutoBandageUpdatePanel(void) {
   INT32 iTotalPixelsHigh = 0, iTotalPixelsWide = 0;
   INT32 iCurPixelY = 0;
   INT16 sXPosition = 0, sYPosition = 0;
-  HVOBJECT hBackGroundHandle;
+  struct VObject *hBackGroundHandle;
   INT32 iCounterA = 0, iCounterB = 0;
   INT32 iIndex = 0;
   INT16 sCurrentXPosition = 0, sCurrentYPosition = 0;
@@ -995,9 +996,9 @@ BOOLEAN RemoveFacesForAutoBandage(void) {
 BOOLEAN RenderSoldierSmallFaceForAutoBandagePanel(INT32 iIndex, INT16 sCurrentXPosition,
                                                   INT16 sCurrentYPosition) {
   INT32 iStartY = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iCounter = 0, iIndexCount = 0;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // grab the video object
   GetVideoObject(&hHandle, giAutoBandagesSoldierFaces[iIndex]);

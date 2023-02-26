@@ -9,7 +9,6 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/RenderWorld.h"
 
 UINT32 guiBOTTOMPANEL = 0;
 UINT32 guiRIGHTPANEL = 0;

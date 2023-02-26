@@ -19,6 +19,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
 #include "SaveLoadScreen.h"
@@ -58,7 +59,6 @@
 #include "Tactical/ShopKeeperInterface.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierFunctions.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
@@ -84,7 +84,10 @@
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/Physics.h"
 #include "TileEngine/RenderWorld.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileAnimation.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
 #include "Utils/EventPump.h"
@@ -103,7 +106,7 @@ extern BOOLEAN fIgnoreLeftUp;
 extern UINT32 guiCurrentEvent;
 extern UINT8 gubIntTileCheckFlags;
 extern UINT32 guiCurrentUICursor;
-extern SOLDIERTYPE *gpSMCurrentMerc;
+extern struct SOLDIERTYPE *gpSMCurrentMerc;
 extern INT16 gsOverItemsGridNo;
 extern INT16 gsOverItemsLevel;
 extern BOOLEAN gfUIShowExitSouth;
@@ -132,10 +135,10 @@ void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight);
 
 extern BOOLEAN ValidQuickExchangePosition();
 
-BOOLEAN HandleUIReloading(SOLDIERTYPE *pSoldier);
+BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier);
 
-extern SOLDIERTYPE *FindNextActiveSquad(SOLDIERTYPE *pSoldier);
-extern SOLDIERTYPE *FindPrevActiveSquad(SOLDIERTYPE *pSoldier);
+extern struct SOLDIERTYPE *FindNextActiveSquad(struct SOLDIERTYPE *pSoldier);
+extern struct SOLDIERTYPE *FindPrevActiveSquad(struct SOLDIERTYPE *pSoldier);
 extern void ToggleItemGlow(BOOLEAN fOn);
 extern void HandleTalkingMenuBackspace(void);
 extern void BeginKeyPanelFromKeyShortcut();
@@ -144,8 +147,8 @@ extern INT32 iSMPanelButtons[NUM_SM_BUTTONS];
 extern INT32 iTEAMPanelButtons[NUM_TEAM_BUTTONS];
 extern INT32 giSMStealthButton;
 
-SOLDIERTYPE *gpExchangeSoldier1;
-SOLDIERTYPE *gpExchangeSoldier2;
+struct SOLDIERTYPE *gpExchangeSoldier1;
+struct SOLDIERTYPE *gpExchangeSoldier2;
 
 BOOLEAN ConfirmActionCancel(UINT16 usMapPos, UINT16 usOldMapPos);
 
@@ -207,7 +210,7 @@ void GetTBMouseButtonInput(UINT32 *puiNewEvent) {
 }
 
 void QueryTBLeftButton(UINT32 *puiNewEvent) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usMapPos;
   static BOOLEAN fClickHoldIntercepted = FALSE;
   BOOLEAN fOnInterTile = FALSE;
@@ -596,7 +599,7 @@ void QueryTBLeftButton(UINT32 *puiNewEvent) {
 void QueryTBRightButton(UINT32 *puiNewEvent) {
   static BOOLEAN fClickHoldIntercepted = FALSE;
   static BOOLEAN fClickIntercepted = FALSE;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usMapPos;
   BOOLEAN fDone = FALSE;
   if (!GetMouseMapPos(&usMapPos)) {
@@ -801,7 +804,7 @@ extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 void GetTBMousePositionInput(UINT32 *puiNewEvent) {
   UINT16 usMapPos;
   static UINT16 usOldMapPos = 0;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN bHandleCode;
   static BOOLEAN fOnValidGuy = FALSE;
   static UINT32 uiMoveTargetSoldierId = NO_SOLDIER;
@@ -1475,7 +1478,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
                (ButtonList[iSMPanelButtons[NEXTMERC_BUTTON]]->uiFlags & BUTTON_ENABLED))) {
             if (!InKeyRingPopup()) {
               if (_KeyDown(SHIFT)) {
-                SOLDIERTYPE *pNewSoldier;
+                struct SOLDIERTYPE *pNewSoldier;
                 INT32 iCurrentSquad;
 
                 if (gusSelectedSoldier != NO_SOLDIER) {
@@ -1642,7 +1645,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
 
           if (fAlt) {
 #ifdef JA2TESTVERSION
-            SOLDIERTYPE *pSoldier;
+            struct SOLDIERTYPE *pSoldier;
 
             // Get selected soldier
             if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
@@ -1776,7 +1779,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
 
           if (!fCtrl && !fAlt) {
             // Exchange places...
-            SOLDIERTYPE *pSoldier1, *pSoldier2;
+            struct SOLDIERTYPE *pSoldier1, *pSoldier2;
 
             // Check if we have a good selected guy
             if (gusSelectedSoldier != NOBODY) {
@@ -1940,7 +1943,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
                     (ButtonList[iTEAMPanelButtons[TEAM_DONE_BUTTON]]->uiFlags & BUTTON_ENABLED)))) {
                 if (fAlt) {
                   INT32 cnt;
-                  SOLDIERTYPE *pSoldier;
+                  struct SOLDIERTYPE *pSoldier;
 
                   if (CHEATER_CHEAT_LEVEL()) {
                     for (pSoldier = MercPtrs[gbPlayerNum], cnt = 0;
@@ -1978,7 +1981,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
           }
 #endif
           else {
-            SOLDIERTYPE *pSoldier;
+            struct SOLDIERTYPE *pSoldier;
 
             if (gusSelectedSoldier != NOBODY) {
               pSoldier = MercPtrs[gusSelectedSoldier];
@@ -2472,7 +2475,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
 
             // ATE: This key will select everybody in the sector
             if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
-              SOLDIERTYPE *pSoldier;
+              struct SOLDIERTYPE *pSoldier;
               INT32 cnt;
 
               cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -2498,7 +2501,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
             }
           } else if (fCtrl) {
             INT32 cnt;
-            SOLDIERTYPE *pSoldier;
+            struct SOLDIERTYPE *pSoldier;
 
 #ifdef GERMAN
             if (gubCheatLevel == 2) {
@@ -2574,8 +2577,8 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
 
         case 'y':
           if (fAlt) {
-            OBJECTTYPE Object;
-            SOLDIERTYPE *pSoldier;
+            struct OBJECTTYPE Object;
+            struct SOLDIERTYPE *pSoldier;
 
             if (CHEATER_CHEAT_LEVEL()) {
               QuickCreateProfileMerc(CIV_TEAM, MARIA);  // Ira
@@ -2607,7 +2610,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
             // Toggle squad's stealth mode.....
             // For each guy on squad...
             {
-              SOLDIERTYPE *pTeamSoldier;
+              struct SOLDIERTYPE *pTeamSoldier;
               INT8 bLoop;
               BOOLEAN fStealthOn = FALSE;
 
@@ -2927,7 +2930,7 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
 // Simple function implementations called by keyboard input
 
 void CreateRandomItem() {
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   UINT16 usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     CreateItem((UINT16)(Random(35) + 1), 100, &Object);
@@ -2937,8 +2940,8 @@ void CreateRandomItem() {
 
 void MakeSelectedSoldierTired() {
   // Key to make guy get tired!
-  SOLDIERTYPE *pSoldier;
-  OBJECTTYPE Object;
+  struct SOLDIERTYPE *pSoldier;
+  struct OBJECTTYPE Object;
   UINT16 usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     CreateItem((UINT16)TNT, 100, &Object);
@@ -3024,7 +3027,7 @@ void TestExplosion() {
 
 void CycleSelectedMercsItem() {
   UINT16 usOldItem;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   // Cycle selected guy's item...
   if (gfUIFullTargetFound) {
     // Get soldier...
@@ -3059,7 +3062,7 @@ void ToggleWireFrame() {
 }
 
 void RefreshSoldier() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usMapPos;
   // CHECK IF WE'RE ON A GUY ( EITHER SELECTED, OURS, OR THEIRS
   if (gfUIFullTargetFound) {
@@ -3081,7 +3084,7 @@ void RefreshSoldier() {
 }
 
 void ChangeSoldiersBodyType(UINT8 ubBodyType, BOOLEAN fCreateNewPalette) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   if (gusSelectedSoldier != NO_SOLDIER) {
     if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
       pSoldier->ubBodyType = ubBodyType;
@@ -3100,7 +3103,7 @@ void ChangeSoldiersBodyType(UINT8 ubBodyType, BOOLEAN fCreateNewPalette) {
           case QUEENMONSTER:
 
             pSoldier->uiStatusFlags |= SOLDIER_MONSTER;
-            memset(&(pSoldier->inv), 0, sizeof(OBJECTTYPE) * NUM_INV_SLOTS);
+            memset(&(pSoldier->inv), 0, sizeof(struct OBJECTTYPE) * NUM_INV_SLOTS);
             AssignCreatureInventory(pSoldier);
 
             CreateItem(CREATURE_YOUNG_MALE_SPIT, 100, &(pSoldier->inv[HANDPOS]));
@@ -3125,7 +3128,7 @@ void ChangeSoldiersBodyType(UINT8 ubBodyType, BOOLEAN fCreateNewPalette) {
 }
 
 void TeleportSelectedSoldier() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usMapPos;
   // CHECK IF WE'RE ON A GUY ( EITHER SELECTED, OURS, OR THEIRS
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
@@ -3176,7 +3179,7 @@ void ToggleZBuffer() {
 }
 
 void TogglePlanningMode() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usMapPos;
   // DO ONLY IN TURNED BASED!
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
@@ -3212,7 +3215,7 @@ void SetBurstMode() {
 
 void ObliterateSector() {
   INT32 cnt;
-  SOLDIERTYPE *pTSoldier;
+  struct SOLDIERTYPE *pTSoldier;
 
   // Kill everybody!
   cnt = gTacticalStatus.Team[gbPlayerNum].bLastID + 1;
@@ -3241,7 +3244,7 @@ void ObliterateSector() {
 }
 
 void RandomizeMercProfile() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   // Get selected soldier
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     // Change guy!
@@ -3253,7 +3256,7 @@ void RandomizeMercProfile() {
 }
 
 void JumpFence() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT8 bDirection;
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     if (FindFenceJumpDirection(pSoldier, pSoldier->sGridNo, pSoldier->bDirection, &bDirection)) {
@@ -3375,7 +3378,7 @@ void GrenadeTest1() {
   // Get mousexy
   INT16 sX, sY;
   if (GetMouseXY(&sX, &sY)) {
-    OBJECTTYPE Object;
+    struct OBJECTTYPE Object;
     Object.usItem = MUSTARD_GRENADE;
     Object.bStatus[0] = 100;
     Object.ubNumberOfObjects = 1;
@@ -3388,7 +3391,7 @@ void GrenadeTest2() {
   // Get mousexy
   INT16 sX, sY;
   if (GetMouseXY(&sX, &sY)) {
-    OBJECTTYPE Object;
+    struct OBJECTTYPE Object;
     Object.usItem = HAND_GRENADE;
     Object.bStatus[0] = 100;
     Object.ubNumberOfObjects = 1;
@@ -3401,7 +3404,7 @@ void GrenadeTest3() {
   // Get mousexy
   INT16 sX, sY;
   if (GetMouseXY(&sX, &sY)) {
-    OBJECTTYPE Object;
+    struct OBJECTTYPE Object;
     Object.usItem = HAND_GRENADE;
     Object.bStatus[0] = 100;
     Object.ubNumberOfObjects = 1;
@@ -3438,12 +3441,12 @@ void CreatePlayerControlledMonster() {
   }
 }
 
-INT8 CheckForAndHandleHandleVehicleInteractiveClick(SOLDIERTYPE *pSoldier, UINT16 usMapPos,
+INT8 CheckForAndHandleHandleVehicleInteractiveClick(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos,
                                                     BOOLEAN fMovementMode) {
   // Look for an item pool
   INT16 sActionGridNo;
   UINT8 ubDirection;
-  SOLDIERTYPE *pTSoldier;
+  struct SOLDIERTYPE *pTSoldier;
   INT16 sAPCost = 0;
 
   if (gfUIFullTargetFound) {
@@ -3496,15 +3499,15 @@ INT8 CheckForAndHandleHandleVehicleInteractiveClick(SOLDIERTYPE *pSoldier, UINT1
 }
 
 void HandleHandCursorClick(UINT16 usMapPos, UINT32 *puiNewEvent) {
-  SOLDIERTYPE *pSoldier;
-  LEVELNODE *pIntTile;
+  struct SOLDIERTYPE *pSoldier;
+  struct LEVELNODE *pIntTile;
   INT16 sIntTileGridNo;
   INT16 sActionGridNo;
   UINT8 ubDirection;
   INT16 sAPCost;
   INT16 sAdjustedGridNo;
-  STRUCTURE *pStructure = NULL;
-  ITEM_POOL *pItemPool;
+  struct STRUCTURE *pStructure = NULL;
+  struct ITEM_POOL *pItemPool;
   BOOLEAN fIgnoreItems = FALSE;
 
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
@@ -3618,7 +3621,7 @@ void HandleHandCursorClick(UINT16 usMapPos, UINT32 *puiNewEvent) {
   }
 }
 
-extern BOOLEAN AnyItemsVisibleOnLevel(ITEM_POOL *pItemPool, INT8 bZLevel);
+extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
 
 void ExchangeMessageBoxCallBack(UINT8 bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
@@ -3628,16 +3631,16 @@ void ExchangeMessageBoxCallBack(UINT8 bExitValue) {
 
 INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, UINT32 *puiNewEvent) {
   // Look for an item pool
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   BOOLEAN fContinue = TRUE;
-  SOLDIERTYPE *pSoldier;
-  LEVELNODE *pIntTile;
+  struct SOLDIERTYPE *pSoldier;
+  struct LEVELNODE *pIntTile;
   INT16 sIntTileGridNo;
   INT16 sActionGridNo;
   UINT8 ubDirection;
   INT8 bReturnCode = 0;
   INT8 bZLevel;
-  STRUCTURE *pStructure = NULL;
+  struct STRUCTURE *pStructure = NULL;
 
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     // If we are out of breath, no cursor...
@@ -3735,7 +3738,7 @@ INT8 HandleMoveModeInteractiveClick(UINT16 usMapPos, UINT32 *puiNewEvent) {
   return (bReturnCode);
 }
 
-BOOLEAN HandleUIReloading(SOLDIERTYPE *pSoldier) {
+BOOLEAN HandleUIReloading(struct SOLDIERTYPE *pSoldier) {
   INT8 bAPs = 0;
 
   // CHECK OUR CURRENT CURSOR...
@@ -3818,7 +3821,7 @@ void HandleSelectMercSlot(UINT8 ubPanelSlot, INT8 bCode) {
 void TestMeanWhile(INT32 iID) {
   MEANWHILE_DEFINITION MeanwhileDef;
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   MeanwhileDef.sSectorX = 3;
   MeanwhileDef.sSectorY = 16;
@@ -3892,9 +3895,9 @@ void ToggleMercsNeverQuit() {
 
 void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight) {
   // If we have multiple guys selected, make all change stance!
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
-  SOLDIERTYPE *pFirstSoldier = NULL;
+  struct SOLDIERTYPE *pFirstSoldier = NULL;
 
   if (gTacticalStatus.fAtLeastOneGuyOnMultiSelect) {
     // OK, loop through all guys who are 'multi-selected' and
@@ -3915,7 +3918,7 @@ void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight) {
   }
 }
 
-void ToggleStealthMode(SOLDIERTYPE *pSoldier) {
+void ToggleStealthMode(struct SOLDIERTYPE *pSoldier) {
   // nothing in hand and either not in SM panel, or the matching button is enabled if we are in SM
   // panel
   if ((gsCurInterfacePanel != SM_PANEL) ||
@@ -3941,9 +3944,9 @@ void ToggleStealthMode(SOLDIERTYPE *pSoldier) {
 
 void HandleStealthChangeFromUIKeys() {
   // If we have multiple guys selected, make all change stance!
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
-  SOLDIERTYPE *pFirstSoldier = NULL;
+  struct SOLDIERTYPE *pFirstSoldier = NULL;
 
   if (gTacticalStatus.fAtLeastOneGuyOnMultiSelect) {
     // OK, loop through all guys who are 'multi-selected' and
@@ -3969,7 +3972,7 @@ void HandleStealthChangeFromUIKeys() {
 
 void TestCapture() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 uiNumChosen = 0;
 
   // StartQuest( QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY );
@@ -3997,7 +4000,7 @@ void TestCapture() {
   EndCaptureSequence();
 }
 
-void PopupAssignmentMenuInTactical(SOLDIERTYPE *pSoldier) {
+void PopupAssignmentMenuInTactical(struct SOLDIERTYPE *pSoldier) {
 #ifndef JA2DEMO
   // do something
   fShowAssignmentMenu = TRUE;

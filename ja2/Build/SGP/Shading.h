@@ -1,9 +1,10 @@
 #ifndef _SHADING_H_
 #define _SHADING_H_
 
-#include "SGP/HImage.h"    // For struct SGPPaletteEntry
-#include "SGP/VObject.h"   // For HVOBJECT_SHADE_TABLES
-#include "SGP/VSurface.h"  // For
+// #include "SGP/HImage.h"
+#include "SGP/VObject.h"
+
+struct VSurface;
 
 #ifdef __cplusplus
 extern "C" {

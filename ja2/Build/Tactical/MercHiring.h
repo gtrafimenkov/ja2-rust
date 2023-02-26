@@ -1,7 +1,9 @@
 #ifndef _MERC_HIRING_H_
 #define _MERC_HIRING_H_
 
-#include "Tactical/SoldierControl.h"
+#include "SGP/Types.h"
+
+struct SOLDIERTYPE;
 
 //
 // Used with the HireMerc function
@@ -42,8 +44,8 @@ void MercArrivesCallback(UINT8 ubSoldierID);
 BOOLEAN IsMercHireable(UINT8 ubMercID);
 BOOLEAN IsMercDead(UINT8 ubMercID);
 UINT8 NumberOfMercsOnPlayerTeam();
-BOOLEAN IsTheSoldierAliveAndConcious(SOLDIERTYPE *pSoldier);
-void HandleMercArrivesQuotes(SOLDIERTYPE *pSoldier);
+BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier);
+void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier);
 void UpdateAnyInTransitMercsWithGlobalArrivalSector();
 
 UINT32 GetMercArrivalTimeOfDay();

@@ -2,8 +2,9 @@
 #define _DOORS_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
-#include "TileEngine/StructureInternals.h"
+
+struct SOLDIERTYPE;
+struct STRUCTURE;
 
 #define HANDLE_DOOR_OPEN 1
 #define HANDLE_DOOR_EXAMINE 2
@@ -17,15 +18,16 @@
 
 extern BOOLEAN gfSetPerceivedDoorState;
 
-BOOLEAN HandleOpenableStruct(SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *pStructure);
+BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+                             struct STRUCTURE *pStructure);
 
-void InteractWithOpenableStruct(SOLDIERTYPE *pSoldier, STRUCTURE *pStructure, UINT8 ubDirection,
-                                BOOLEAN fDoor);
+void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
+                                UINT8 ubDirection, BOOLEAN fDoor);
 
-void InteractWithClosedDoor(SOLDIERTYPE *pSoldier, UINT8 ubHandleCode);
+void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, UINT8 ubHandleCode);
 
 void SetDoorString(INT16 sGridNo);
 
-void HandleDoorChangeFromGridNo(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fNoAnimations);
+void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fNoAnimations);
 
 #endif

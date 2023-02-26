@@ -3,7 +3,6 @@
 
 #include "BuildDefines.h"
 #include "SGP/Types.h"
-#include "TileEngine/WorldDef.h"
 
 // Use these values when specifically replacing a wall with new type.
 enum {                 // Wall tile types
@@ -45,17 +44,17 @@ UINT16 SearchForRoofType(UINT32 iMapIndex);
 UINT16 SearchForWallType(UINT32 iMapIndex);
 BOOLEAN RoofAtGridNo(UINT32 iMapIndex);
 BOOLEAN BuildingAtGridNo(UINT32 iMapIndex);
-LEVELNODE* GetHorizontalWall(UINT32 iMapIndex);
-LEVELNODE* GetVerticalWall(UINT32 iMapIndex);
-LEVELNODE* GetVerticalFence(UINT32 iMapIndex);
-LEVELNODE* GetHorizontalFence(UINT32 iMapIndex);
+struct LEVELNODE* GetHorizontalWall(UINT32 iMapIndex);
+struct LEVELNODE* GetVerticalWall(UINT32 iMapIndex);
+struct LEVELNODE* GetVerticalFence(UINT32 iMapIndex);
+struct LEVELNODE* GetHorizontalFence(UINT32 iMapIndex);
 UINT16 GetHorizontalWallType(UINT32 iMapIndex);
 UINT16 GetVerticalWallType(UINT32 iMapIndex);
 void EraseHorizontalWall(UINT32 iMapIndex);
 void EraseVerticalWall(UINT32 iMapIndex);
 void ChangeHorizontalWall(UINT32 iMapIndex, UINT16 usNewPiece);
 void ChangeVerticalWall(UINT32 iMapIndex, UINT16 usNewPiece);
-UINT16 GetWallClass(LEVELNODE* pWall);
+UINT16 GetWallClass(struct LEVELNODE* pWall);
 UINT16 GetVerticalWallClass(UINT16 iMapIndex);
 UINT16 GetHorizontalWallClass(UINT16 iMapIndex);
 BOOLEAN ValidDecalPlacement(UINT32 iMapIndex);

@@ -5,6 +5,7 @@
 #include "Laptop/BobbyRMailOrder.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -73,8 +74,8 @@ void BtnBobbyRShipmentHomeCallback(GUI_BUTTON *btn, INT32 reason);
 UINT32 guiBobbyRShipmentHome;
 INT32 giBobbyRShipmentHomeImage;
 
-MOUSE_REGION gSelectedPreviousShipmentsRegion[BOBBYR_SHIPMENT_NUM_PREVIOUS_SHIPMENTS];
-void SelectPreviousShipmentsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedPreviousShipmentsRegion[BOBBYR_SHIPMENT_NUM_PREVIOUS_SHIPMENTS];
+void SelectPreviousShipmentsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 //
 // Function Prototypes
@@ -164,7 +165,7 @@ void HandleBobbyRShipments() {
 }
 
 void RenderBobbyRShipments() {
-  //  HVOBJECT hPixHandle;
+  //  struct VObject* hPixHandle;
 
   DrawBobbyRWoodBackground();
 
@@ -250,7 +251,7 @@ void BtnBobbyRShipmentHomeCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void DisplayShipmentGrid() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   GetVideoObject(&hPixHandle, guiBobbyRShipmentGrid);
 
@@ -352,7 +353,7 @@ void RemovePreviousShipmentsMouseRegions() {
   }
 }
 
-void SelectPreviousShipmentsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPreviousShipmentsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     INT32 iSlotID = MSYS_GetRegionUserData(pRegion, 0);

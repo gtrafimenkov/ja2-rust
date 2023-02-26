@@ -3,7 +3,8 @@
 
 // Header file for merc animation control
 #include "Tactical/AnimationData.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 // Defines
 // #######################################################
@@ -537,17 +538,18 @@ extern UINT16 gubAnimSurfaceCorpseID[TOTALBODYTYPES][NUMANIMATIONSTATES];
 // FUNCTIONS
 BOOLEAN LoadAnimationStateInstructions();
 void InitAnimationSurfacesPerBodytype();
-BOOLEAN IsAnimationValidForBodyType(SOLDIERTYPE *pSoldier, UINT16 usNewState);
-BOOLEAN SubstituteBodyTypeAnimation(SOLDIERTYPE *pSoldier, UINT16 usTestState, UINT16 *pusSubState);
-INT8 GetBodyTypePaletteSubstitutionCode(SOLDIERTYPE *pSoldier, UINT8 ubBodyType,
+BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, UINT16 usNewState);
+BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, UINT16 usTestState,
+                                    UINT16 *pusSubState);
+INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, UINT8 ubBodyType,
                                         CHAR8 *zColFilename);
 
-BOOLEAN SetSoldierAnimationSurface(SOLDIERTYPE *pSoldier, UINT16 usAnimState);
-UINT16 DetermineSoldierAnimationSurface(SOLDIERTYPE *pSoldier, UINT16 usAnimState);
-UINT16 LoadSoldierAnimationSurface(SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+UINT16 DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+UINT16 LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
 
 // This function could be wrapped in a debug marco, since it only returns pSoldier->ubAnimSurface
 // but Also does some debug checking
-UINT16 GetSoldierAnimationSurface(SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+UINT16 GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
 
 #endif

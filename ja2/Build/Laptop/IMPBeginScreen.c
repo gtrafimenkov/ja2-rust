@@ -16,6 +16,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -24,7 +25,6 @@
 #include "Strategic/Strategic.h"
 #include "Tactical/MercHiring.h"
 #include "Tactical/SoldierProfileType.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
@@ -85,7 +85,7 @@ UINT32 uiFullNameCursorPosition = 196 + LAPTOP_SCREEN_UL_X;
 BOOLEAN fNewCharInString = FALSE;
 
 // mouse regions
-MOUSE_REGION gIMPBeginScreenMouseRegions[4];
+struct MOUSE_REGION gIMPBeginScreenMouseRegions[4];
 
 // function definitions
 void CreateIMPBeginScreenButtons(void);
@@ -111,12 +111,12 @@ void Print8CharacterOnlyString(void);
 BOOLEAN CheckCharacterInputForEgg(void);
 
 // mouse region callbacks
-void SelectFullNameRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectNickNameRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectMaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectFemaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void MvtOnMaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void MvtOnFemaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFullNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectNickNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MvtOnMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MvtOnFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void EnterIMPBeginScreen(void) {
   // reset all variables
@@ -936,7 +936,7 @@ void DestroyIMPBeginScreenMouseRegions(void) {
   return;
 }
 
-void SelectFullNameRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFullNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set current mode to full name type in mode
@@ -946,7 +946,7 @@ void SelectFullNameRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectNickNameRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectNickNameRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set mode to nick name type in
@@ -956,7 +956,7 @@ void SelectNickNameRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectMaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set mode to nick name type in
@@ -966,7 +966,7 @@ void SelectMaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectFemaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // set mode to nick name type in
@@ -976,7 +976,7 @@ void SelectFemaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MvtOnFemaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void MvtOnFemaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     // fNewCharInString = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
@@ -985,7 +985,7 @@ void MvtOnFemaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MvtOnMaleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void MvtOnMaleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     // fNewCharInString = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {

@@ -22,11 +22,11 @@ typedef struct {
   INT8 bOldCurSelect;
   UINT16 usWidth;
   UINT16 usHeight;
-  MOUSE_REGION Regions[6];
-  MOUSE_REGION BackRegion;
-  MOUSE_REGION NameRegion;
-  MOUSE_REGION ScreenRegion;
-  MOUSE_REGION TextRegion;
+  struct MOUSE_REGION Regions[6];
+  struct MOUSE_REGION BackRegion;
+  struct MOUSE_REGION NameRegion;
+  struct MOUSE_REGION ScreenRegion;
+  struct MOUSE_REGION TextRegion;
   BOOLEAN fTextRegionOn;
   BOOLEAN fOnName;
   BOOLEAN fDirtyLevel;
@@ -43,8 +43,8 @@ typedef struct {
 // GLOBAL NPC STRUCT
 extern NPC_DIALOGUE_TYPE gTalkPanel;
 
-BOOLEAN InitiateConversation(SOLDIERTYPE *pDestSoldier, SOLDIERTYPE *pSrcSoldier, INT8 bApproach,
-                             UINT32 uiApproachData);
+BOOLEAN InitiateConversation(struct SOLDIERTYPE *pDestSoldier, struct SOLDIERTYPE *pSrcSoldier,
+                             INT8 bApproach, UINT32 uiApproachData);
 
 // THis fuction will allocate and setup an NPCDiaogue structure. Loads the face for the character..
 BOOLEAN InitTalkingMenu(UINT8 ubCharacterNum, INT16 sGridNo);
@@ -65,7 +65,7 @@ void RenderTalkingMenu();
 BOOLEAN HandleTalkingMenuEscape(BOOLEAN fCanDelete, BOOLEAN fFromEscKey);
 
 // Gices an item to buddy
-BOOLEAN TalkingMenuGiveItem(UINT8 ubNPC, OBJECTTYPE *pObject, INT8 bInvPos);
+BOOLEAN TalkingMenuGiveItem(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
 // Triggers an NPC record
 BOOLEAN NPCTriggerNPC(UINT8 ubTargetNPC, UINT8 ubTargetRecord, UINT8 ubTargetApproach,
                       BOOLEAN fShowDialogueMenu);
@@ -79,7 +79,7 @@ BOOLEAN NPCClosePanel();
 void HandleWaitTimerForNPCTrigger();
 
 void HandleNPCClosePanel();
-void HandleNPCItemGiven(UINT8 ubNPC, OBJECTTYPE *pObject, INT8 bInvPos);
+void HandleNPCItemGiven(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos);
 void HandleNPCTriggerNPC(UINT8 ubTargetNPC, UINT8 ubTargetRecord, BOOLEAN fShowDialogueMenu,
                          UINT8 ubTargetApproach);
 void HandleNPCGotoGridNo(UINT8 ubTargetNPC, UINT16 usGridNo, UINT8 ubRecordNum);
@@ -356,7 +356,7 @@ extern INT32 giHospitalTempBalance;
 extern INT32 giHospitalRefund;
 extern INT8 gbHospitalPriceModifier;
 
-extern UINT32 CalcPatientMedicalCost(SOLDIERTYPE *pSoldier);
+extern UINT32 CalcPatientMedicalCost(struct SOLDIERTYPE *pSoldier);
 extern UINT32 CalcMedicalCost(UINT8 ubId);
 
 extern BOOLEAN gfInTalkPanel;

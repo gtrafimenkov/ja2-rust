@@ -20,7 +20,6 @@
 #include "Tactical/MercHiring.h"
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/Squads.h"
 #include "Tactical/Weapons.h"
 #include "TacticalAI/AI.h"
@@ -28,7 +27,6 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileCache.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
@@ -716,7 +714,7 @@ void HandleHeliDrop() {
   }
 }
 
-void BeginMercEntering(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void BeginMercEntering(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   ResetHeliSeats();
 
   AddMercToHeli(pSoldier->ubID);

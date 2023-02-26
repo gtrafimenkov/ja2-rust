@@ -9,7 +9,7 @@
 #define EDITOR_LIGHT_FAKE (EDITOR_LIGHT_MAX - SHADE_MAX - 2)
 
 extern BOOLEAN gfFakeLights;
-extern GUI_BUTTON *gpPersistantButton;
+extern GUI_BUTTON* gpPersistantButton;
 
 extern UINT16 GenericButtonFillColors[40];
 
@@ -25,7 +25,7 @@ extern BOOLEAN DoWindowSelection(void);
 extern void RemoveTempMouseCursorObject(void);
 extern BOOLEAN DrawTempMouseCursorObject(void);
 extern void ShowCurrentDrawingMode(void);
-extern void ShowCurrentSlotImage(HVOBJECT hVObj, INT32 iWindow);
+extern void ShowCurrentSlotImage(struct VObject* hVObj, INT32 iWindow);
 extern void ShowCurrentSlotSurface(UINT32 hSurface, INT32 iWindow);
 
 void CreateNewMap();

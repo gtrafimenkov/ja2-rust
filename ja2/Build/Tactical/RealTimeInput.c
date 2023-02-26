@@ -32,7 +32,6 @@
 #include "Tactical/Points.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/SpreadBurst.h"
@@ -88,7 +87,7 @@ void GetRTMouseButtonInput(UINT32 *puiNewEvent) {
 
 void QueryRTLeftButton(UINT32 *puiNewEvent) {
   UINT16 usSoldierIndex;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 uiMercFlags;
   static UINT32 uiSingleClickTime;
   UINT16 usMapPos;
@@ -569,9 +568,9 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
                                               // ATE: Select everybody in squad and make move!
                                               {
 #if 0
-																										SOLDIERTYPE *		pTeamSoldier;
+																										struct SOLDIERTYPE *		pTeamSoldier;
 																										INT32						cnt;
-																										SOLDIERTYPE			*pFirstSoldier = NULL;
+																										struct SOLDIERTYPE			*pFirstSoldier = NULL;
 
 																										// OK, loop through all guys who are 'multi-selected' and
 																										// check if our currently selected guy is amoung the
@@ -777,7 +776,7 @@ void QueryRTRightButton(UINT32 *puiNewEvent) {
   static BOOLEAN fDoubleClickIntercepted = FALSE;
   static BOOLEAN fValidDoubleClickPossible = FALSE;
 
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usMapPos;
 
   if (gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
@@ -1028,7 +1027,7 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
   UINT16 usMapPos;
   static UINT16 usOldMapPos = 0;
   static UINT32 uiMoveTargetSoldierId = NO_SOLDIER;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   static BOOLEAN fOnValidGuy = FALSE;
 
   if (!GetMouseMapPos(&usMapPos)) {

@@ -8,12 +8,13 @@
 #include "Editor/EditSys.h"
 #include "GameLoop.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Tactical/PathAI.h"
 #include "Tactical/TacticalSave.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileSurface.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
 //#include "Editor/EditScreen.h"
@@ -275,7 +276,7 @@ void CreateTileDatabase() {
   UINT32 cnt1, cnt2;
   UINT8 ubLoop;
   UINT32 NumRegions;
-  PTILE_IMAGERY TileSurf;
+  struct TILE_IMAGERY *TileSurf;
   TILE_ELEMENT TileElement;
 
   // Loop through all surfaces and tiles and build database
@@ -530,7 +531,7 @@ BOOLEAN SetLandIndexWithRadius(INT32 iMapIndex, UINT16 usIndex, UINT32 uiNewType
 
 BOOLEAN GetTypeLandLevel(UINT32 iMapIndex, UINT32 uiNewType, UINT8 *pubLevel) {
   UINT8 level = 0;
-  LEVELNODE *pLand;
+  struct LEVELNODE *pLand;
   UINT32 fTileType = 0;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
@@ -554,7 +555,7 @@ BOOLEAN GetTypeLandLevel(UINT32 iMapIndex, UINT32 uiNewType, UINT8 *pubLevel) {
 
 UINT8 GetLandLevelDepth(UINT32 iMapIndex) {
   UINT8 level = 0;
-  LEVELNODE *pLand;
+  struct LEVELNODE *pLand;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
 
@@ -660,7 +661,7 @@ BOOLEAN LandTypeHeigher(UINT32 uiDestType, UINT32 uiSrcType) {
 }
 
 BOOLEAN AnyHeigherLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel) {
-  LEVELNODE *pLand = NULL;
+  struct LEVELNODE *pLand = NULL;
   UINT8 ubSrcLogHeight = 0;
   UINT32 fTileType = 0;
   UINT8 level = 0;
@@ -700,7 +701,7 @@ BOOLEAN AnyHeigherLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel) 
 }
 
 BOOLEAN AnyLowerLand(UINT32 iMapIndex, UINT32 uiSrcType, UINT8 *pubLastLevel) {
-  LEVELNODE *pLand = NULL;
+  struct LEVELNODE *pLand = NULL;
   UINT8 ubSrcLogHeight;
   UINT32 fTileType = 0;
   UINT8 level = 0;
@@ -756,7 +757,7 @@ BOOLEAN GetWallOrientation(UINT16 usIndex, UINT16 *pusWallOrientation) {
 
 BOOLEAN ContainsWallOrientation(INT32 iMapIndex, UINT32 uiType, UINT16 usWallOrientation,
                                 UINT8 *pubLevel) {
-  LEVELNODE *pStruct = NULL;
+  struct LEVELNODE *pStruct = NULL;
   UINT8 level = 0;
   UINT16 usCheckWallOrient = 0;
 
@@ -788,7 +789,7 @@ BOOLEAN ContainsWallOrientation(INT32 iMapIndex, UINT32 uiType, UINT16 usWallOri
 // first wall encountered -- not that there should be duplicate walls...
 UINT8 CalculateWallOrientationsAtGridNo(INT32 iMapIndex) {
   UINT16 usCheckWallOrientation = 0;
-  LEVELNODE *pStruct = NULL;
+  struct LEVELNODE *pStruct = NULL;
   UINT8 ubFinalWallOrientation = NO_ORIENTATION;
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
   // Traverse all of the pStructs

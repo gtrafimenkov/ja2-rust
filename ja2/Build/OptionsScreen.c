@@ -9,6 +9,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -26,7 +27,6 @@
 #include "TileEngine/SmokeEffects.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldDat.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
@@ -37,6 +37,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TextInput.h"
+#include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
@@ -196,13 +197,13 @@ UINT32 guiOptionsToggles[NUM_GAME_OPTIONS];
 void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason);
 
 // Mouse regions for the name of the option
-MOUSE_REGION gSelectedOptionTextRegion[NUM_GAME_OPTIONS];
-void SelectedOptionTextRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectedOptionTextRegionMovementCallBack(MOUSE_REGION *pRegion, INT32 reason);
+struct MOUSE_REGION gSelectedOptionTextRegion[NUM_GAME_OPTIONS];
+void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
 
 // Mouse regions for the area around the toggle boxs
-MOUSE_REGION gSelectedToggleBoxAreaRegion;
-void SelectedToggleBoxAreaRegionMovementCallBack(MOUSE_REGION *pRegion, INT32 reason);
+struct MOUSE_REGION gSelectedToggleBoxAreaRegion;
+void SelectedToggleBoxAreaRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
 
 /////////////////////////////////
 //
@@ -642,7 +643,7 @@ void HandleOptionsScreen() {
 }
 
 void RenderOptionsScreen() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usPosY;
   UINT8 cnt;
   UINT16 usWidth = 0;
@@ -1091,7 +1092,7 @@ void HandleSliderBarMovementSounds() {
     uiLastSpeechTime = GetJA2Clock();
 }
 
-void SelectedOptionTextRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   UINT8 ubButton = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1112,7 +1113,7 @@ void SelectedOptionTextRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectedOptionTextRegionMovementCallBack(MOUSE_REGION *pRegion, INT32 reason) {
+void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   INT8 bButton = (INT8)MSYS_GetRegionUserData(pRegion, 0);
 
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
@@ -1217,7 +1218,7 @@ void HandleHighLightedText(BOOLEAN fHighLight) {
   }
 }
 
-void SelectedToggleBoxAreaRegionMovementCallBack(MOUSE_REGION *pRegion, INT32 reason) {
+void SelectedToggleBoxAreaRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
   } else if (reason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
     UINT8 ubCnt;

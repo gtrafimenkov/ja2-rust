@@ -3,8 +3,10 @@
 #include "BuildDefines.h"
 #include "Editor/EditorUndo.h"
 #include "Editor/SmoothingUtils.h"
-#include "TileEngine/WorldDef.h"  //LEVELNODE def
-#include "TileEngine/WorldMan.h"  //ReplaceStructIndex
+#include "TileEngine/TileDat.h"
+#include "TileEngine/TileDef.h"
+#include "TileEngine/WorldDef.h"
+#include "TileEngine/WorldMan.h"
 
 UINT8 gubDoorUIValue = 0;
 UINT8 gubWindowUIValue = 0;
@@ -107,7 +109,7 @@ BOOLEAN CalcWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UINT
 }
 
 BOOLEAN CalcDoorInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusDoorType, UINT16 *pusIndex) {
-  LEVELNODE *pWall = NULL;
+  struct LEVELNODE *pWall = NULL;
   UINT16 usWallOrientation;
   pWall = GetVerticalWall(iMapIndex);
   if (pWall) {
@@ -127,7 +129,7 @@ BOOLEAN CalcDoorInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusDoorType, UINT
 }
 
 BOOLEAN CalcWindowInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UINT16 *pusIndex) {
-  LEVELNODE *pWall = NULL;
+  struct LEVELNODE *pWall = NULL;
   UINT32 uiTileType;
   UINT16 usWallOrientation;
 
@@ -162,7 +164,7 @@ BOOLEAN CalcWindowInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType, UI
 
 BOOLEAN CalcBrokenWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType,
                                            UINT16 *pusIndex) {
-  LEVELNODE *pWall = NULL;
+  struct LEVELNODE *pWall = NULL;
   UINT32 uiTileType;
   UINT16 usWallOrientation;
 
@@ -407,7 +409,7 @@ void PasteSmartWall(UINT32 iMapIndex) {
 }
 
 void PasteSmartDoor(UINT32 iMapIndex) {
-  LEVELNODE *pWall = NULL;
+  struct LEVELNODE *pWall = NULL;
   UINT16 usTileIndex;
   UINT16 usDoorType;
   UINT16 usIndex;
@@ -434,7 +436,7 @@ void PasteSmartDoor(UINT32 iMapIndex) {
 void PasteSmartWindow(UINT32 iMapIndex) {
   UINT16 usNewWallIndex;
 
-  LEVELNODE *pWall = NULL;
+  struct LEVELNODE *pWall = NULL;
   UINT32 uiTileType;
   UINT16 usWallType;
   UINT16 usIndex;
@@ -478,7 +480,7 @@ void PasteSmartWindow(UINT32 iMapIndex) {
 void PasteSmartBrokenWall(UINT32 iMapIndex) {
   UINT16 usNewWallIndex;
 
-  LEVELNODE *pWall;
+  struct LEVELNODE *pWall;
   UINT32 uiTileType;
   UINT16 usWallType;
   UINT16 usIndex;

@@ -44,11 +44,8 @@
 #include "TileEngine/Environment.h"
 #include "TileEngine/InteractiveTiles.h"
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderFun.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/TimerControl.h"
@@ -138,7 +135,7 @@ INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile);
 extern void HandleEndDemoInCreatureLevel();
 void DecideActiveTerrorists(void);
 
-extern SOLDIERTYPE *gpSMCurrentMerc;
+extern struct SOLDIERTYPE *gpSMCurrentMerc;
 extern BOOLEAN gfRerenderInterfaceFromHelpText;
 
 BOOLEAN LoadMercProfiles(void) {
@@ -384,7 +381,7 @@ void DecideActiveTerrorists(void) {
 void MakeRemainingTerroristsTougher(void) {
   UINT8 ubRemainingTerrorists = 0, ubLoop;
   UINT16 usNewItem, usOldItem;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   UINT8 ubRemainingDifficulty;
 
   for (ubLoop = 0; ubLoop < NUM_TERRORISTS; ubLoop++) {
@@ -501,7 +498,7 @@ void DecideOnAssassin(void) {
 void MakeRemainingAssassinsTougher(void) {
   UINT8 ubRemainingAssassins = 0, ubLoop;
   UINT16 usNewItem, usOldItem;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   UINT8 ubRemainingDifficulty;
 
   for (ubLoop = 0; ubLoop < NUM_ASSASSINS; ubLoop++) {
@@ -641,9 +638,9 @@ INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile) {
   return (usDeposit);
 }
 
-SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMercsOnly) {
+struct SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMercsOnly) {
   UINT8 ubLoop, ubLoopLimit;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (fPlayerMercsOnly) {
     ubLoopLimit = gTacticalStatus.Team[0].bLastID;
@@ -659,9 +656,9 @@ SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMercsOnly)
   return (NULL);
 }
 
-SOLDIERTYPE *ChangeSoldierTeam(SOLDIERTYPE *pSoldier, UINT8 ubTeam) {
+struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam) {
   UINT8 ubID;
-  SOLDIERTYPE *pNewSoldier = NULL;
+  struct SOLDIERTYPE *pNewSoldier = NULL;
   SOLDIERCREATE_STRUCT MercCreateStruct;
   UINT32 cnt;
   INT16 sOldGridNo;
@@ -670,7 +667,7 @@ SOLDIERTYPE *ChangeSoldierTeam(SOLDIERTYPE *pSoldier, UINT8 ubTeam) {
   UINT32 uiOldUniqueId;
 
   UINT32 uiSlot;
-  SOLDIERTYPE *pGroupMember;
+  struct SOLDIERTYPE *pGroupMember;
 
   if (gfInTalkPanel) {
     DeleteTalkingMenu();
@@ -789,7 +786,7 @@ SOLDIERTYPE *ChangeSoldierTeam(SOLDIERTYPE *pSoldier, UINT8 ubTeam) {
 }
 
 BOOLEAN RecruitRPC(UINT8 ubCharNum) {
-  SOLDIERTYPE *pSoldier, *pNewSoldier;
+  struct SOLDIERTYPE *pSoldier, *pNewSoldier;
 
   // Get soldier pointer
   pSoldier = FindSoldierByProfileID(ubCharNum, FALSE);
@@ -870,7 +867,7 @@ BOOLEAN RecruitRPC(UINT8 ubCharNum) {
 }
 
 BOOLEAN RecruitEPC(UINT8 ubCharNum) {
-  SOLDIERTYPE *pSoldier, *pNewSoldier;
+  struct SOLDIERTYPE *pSoldier, *pNewSoldier;
 
   // Get soldier pointer
   pSoldier = FindSoldierByProfileID(ubCharNum, FALSE);
@@ -914,7 +911,7 @@ BOOLEAN RecruitEPC(UINT8 ubCharNum) {
 }
 
 BOOLEAN UnRecruitEPC(UINT8 ubCharNum) {
-  SOLDIERTYPE *pSoldier, *pNewSoldier;
+  struct SOLDIERTYPE *pSoldier, *pNewSoldier;
 
   // Get soldier pointer
   pSoldier = FindSoldierByProfileID(ubCharNum, FALSE);
@@ -1016,7 +1013,7 @@ BOOLEAN IsProfileAHeadMiner(UINT8 ubProfile) {
 
 void UpdateSoldierPointerDataIntoProfile(BOOLEAN fPlayerMercs) {
   UINT32 uiCount;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fDoCopy = FALSE;
 
@@ -1084,7 +1081,7 @@ BOOLEAN DoesMercHaveABuddyOnTheTeam(UINT8 ubMercID) {
   return (FALSE);
 }
 
-BOOLEAN MercIsHot(SOLDIERTYPE *pSoldier) {
+BOOLEAN MercIsHot(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->ubProfile != NO_PROFILE &&
       gMercProfiles[pSoldier->ubProfile].bPersonalityTrait == HEAT_INTOLERANT) {
     if (SectorTemperature(GetWorldMinutesInDay(), pSoldier->sSectorX, pSoldier->sSectorY,
@@ -1095,7 +1092,7 @@ BOOLEAN MercIsHot(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-SOLDIERTYPE *SwapLarrysProfiles(SOLDIERTYPE *pSoldier) {
+struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubSrcProfile;
   UINT8 ubDestProfile;
   MERCPROFILESTRUCT *pNewProfile;
@@ -1208,7 +1205,7 @@ SOLDIERTYPE *SwapLarrysProfiles(SOLDIERTYPE *pSoldier) {
   return (pSoldier);
 }
 
-BOOLEAN DoesNPCOwnBuilding(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   UINT8 ubRoomInfo;
 
   // Get room info

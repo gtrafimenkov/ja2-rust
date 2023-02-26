@@ -20,10 +20,9 @@
 #include "Tactical/Weapons.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Pits.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/RenderWorld.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -130,8 +129,8 @@ void FindPanicBombsAndTriggers(void) {
   // This function searches the bomb table to find panic-trigger-tuned bombs and triggers
 
   UINT32 uiBombIndex;
-  OBJECTTYPE *pObj;
-  STRUCTURE *pSwitch;
+  struct OBJECTTYPE *pObj;
+  struct STRUCTURE *pSwitch;
   INT16 sGridNo = NOWHERE;
   BOOLEAN fPanicTriggerIsAlarm = FALSE;
   INT8 bPanicIndex;
@@ -238,7 +237,7 @@ UINT32 GetNumUsedWorldItems(void) {
   return (uiNumItems);
 }
 
-INT32 AddItemToWorld(INT16 sGridNo, OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
+INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible) {
   UINT32 iItemIndex;
   INT32 iReturn;
@@ -264,7 +263,7 @@ INT32 AddItemToWorld(INT16 sGridNo, OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 u
   gWorldItems[iItemIndex].bVisible = bVisible;
   gWorldItems[iItemIndex].bRenderZHeightAboveLevel = bRenderZHeightAboveLevel;
 
-  memcpy(&(gWorldItems[iItemIndex].o), pObject, sizeof(OBJECTTYPE));
+  memcpy(&(gWorldItems[iItemIndex].o), pObject, sizeof(struct OBJECTTYPE));
 
   // Add a bomb reference if needed
   if (usFlags & WORLD_ITEM_ARMED_BOMB) {

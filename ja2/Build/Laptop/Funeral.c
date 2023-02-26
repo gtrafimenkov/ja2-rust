@@ -2,6 +2,7 @@
 
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -90,12 +91,12 @@ UINT32 guiMortuary;
 UINT32 guiRightColumn;
 
 // Clicking on Funeral link
-MOUSE_REGION gSelectedFuneralLinkRegion[FUNERAL_NUMBER_OF_LINKS];
-void SelectFuneralLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFuneralLinkRegion[FUNERAL_NUMBER_OF_LINKS];
+void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 
 // Clicking on rip sign to make it disappear
-MOUSE_REGION gSelectedRipSignRegion;
-void SelectRipSignRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedRipSignRegion;
+void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 
 void DisplayFuneralRipTombStone();
 
@@ -188,7 +189,7 @@ void ExitFuneral() {
 void HandleFuneral() {}
 
 void RenderFuneral() {
-  HVOBJECT hPixHandle;
+  struct VObject* hPixHandle;
   UINT16 i, usPosX, usStringHeight;
 
   WebPageTileBackground(4, 4, FUNERAL_MARBLE_WIDTH, FUNERAL_MARBLE_HEIGHT, guiMarbleBackground);
@@ -271,7 +272,7 @@ void RenderFuneral() {
 }
 
 void DisplayFuneralRipTombStone() {
-  HVOBJECT hPixHandle;
+  struct VObject* hPixHandle;
 
   // rip tombstone
   GetVideoObject(&hPixHandle, guiClosedSign);
@@ -304,7 +305,7 @@ void DisplayFuneralRipTombStone() {
   MSYS_EnableRegion(&gSelectedRipSignRegion);
 }
 
-void SelectFuneralLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     UINT32 uiUserData;
@@ -322,7 +323,7 @@ void SelectFuneralLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason) {
   }
 }
 
-void SelectRipSignRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     MSYS_DisableRegion(&gSelectedRipSignRegion);

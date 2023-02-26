@@ -10,6 +10,7 @@
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -22,6 +23,7 @@
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Vehicles.h"
 #include "TileEngine/MapEdgepoints.h"
@@ -35,9 +37,9 @@
 #include "Utils/WordWrap.h"
 
 typedef struct MERCPLACEMENT {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 uiVObjectID;
-  MOUSE_REGION region;
+  struct MOUSE_REGION region;
   UINT8 ubStrategicInsertionCode;
   BOOLEAN fPlaced;
 } MERCPLACEMENT;
@@ -71,8 +73,8 @@ UINT8 gubCursorGroupID = 0;
 INT8 gbSelectedMercID = -1;
 INT8 gbHilightedMercID = -1;
 INT8 gbCursorMercID = -1;
-SOLDIERTYPE *gpTacticalPlacementSelectedSoldier = NULL;
-SOLDIERTYPE *gpTacticalPlacementHilightedSoldier = NULL;
+struct SOLDIERTYPE *gpTacticalPlacementSelectedSoldier = NULL;
+struct SOLDIERTYPE *gpTacticalPlacementHilightedSoldier = NULL;
 
 BOOLEAN gfNorth, gfEast, gfSouth, gfWest;
 
@@ -80,8 +82,8 @@ void DoneOverheadPlacementClickCallback(GUI_BUTTON *btn, INT32 reason);
 void SpreadPlacementsCallback(GUI_BUTTON *btn, INT32 reason);
 void GroupPlacementsCallback(GUI_BUTTON *btn, INT32 reason);
 void ClearPlacementsCallback(GUI_BUTTON *btn, INT32 reason);
-void MercMoveCallback(MOUSE_REGION *reg, INT32 reason);
-void MercClickCallback(MOUSE_REGION *reg, INT32 reason);
+void MercMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
+void MercClickCallback(struct MOUSE_REGION *reg, INT32 reason);
 void PlaceMercs();
 void FastHelpRemovedCallback();
 void FastHelpRemoved2Callback();
@@ -355,7 +357,7 @@ void InitTacticalPlacementGUI() {
 void RenderTacticalPlacementGUI() {
   INT32 i, xp, yp, width, height;
   INT32 iStartY;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 uiDestPitchBYTES;
   UINT16 usHatchColor;
   CHAR16 str[128];
@@ -772,7 +774,7 @@ void ClearPlacementsCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MercMoveCallback(MOUSE_REGION *reg, INT32 reason) {
+void MercMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   if (reg->uiFlags & MSYS_MOUSE_IN_AREA) {
     INT8 i;
     for (i = 0; i < giPlacements; i++) {
@@ -790,7 +792,7 @@ void MercMoveCallback(MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void MercClickCallback(MOUSE_REGION *reg, INT32 reason) {
+void MercClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     INT8 i;
     for (i = 0; i < giPlacements; i++) {
@@ -847,7 +849,7 @@ void SelectNextUnplacedUnit() {
   }
 }
 
-void HandleTacticalPlacementClicksInOverheadMap(MOUSE_REGION *reg, INT32 reason) {
+void HandleTacticalPlacementClicksInOverheadMap(struct MOUSE_REGION *reg, INT32 reason) {
   INT32 i;
   INT16 sGridNo;
   BOOLEAN fInvalidArea = FALSE;
@@ -940,7 +942,7 @@ void PutDownMercPiece(INT32 iPlacement) {
   INT16 sGridNo, sCellX, sCellY;
   UINT8 ubDirection;
 
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   pSoldier = gMercPlacement[iPlacement].pSoldier;
   switch (pSoldier->ubStrategicInsertionCode) {
     case INSERTION_CODE_NORTH:

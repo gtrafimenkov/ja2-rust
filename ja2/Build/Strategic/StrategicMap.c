@@ -19,6 +19,9 @@
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SaveLoadGame.h"
 #include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
@@ -63,7 +66,6 @@
 #include "Tactical/Points.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/Squads.h"
@@ -83,7 +85,6 @@
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
 #include "TileEngine/WorldDat.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/Cursors.h"
@@ -126,7 +127,7 @@ INT8 gbWorldSectorZ = -1;
 
 INT16 gsAdjacentSectorX, gsAdjacentSectorY;
 INT8 gbAdjacentSectorZ;
-GROUP *gpAdjacentGroup = NULL;
+struct GROUP *gpAdjacentGroup = NULL;
 UINT8 gubAdjacentJumpCode;
 UINT32 guiAdjacentTraverseTime;
 UINT8 gubTacticalDirection;
@@ -254,11 +255,12 @@ void InitializeStrategicMapSectorTownNames(void);
 void DoneFadeOutAdjacentSector(void);
 void DoneFadeOutExitGridSector(void);
 
-INT16 PickGridNoNearestEdge(SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirection);
-INT16 PickGridNoToWalkIn(SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection, UINT32 *puiNumAttempts);
+INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirection);
+INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection,
+                         UINT32 *puiNumAttempts);
 
 void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ);
-void HandlePotentialMoraleHitForSkimmingSectors(GROUP *pGroup);
+void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup);
 
 extern void InitializeTacticalStatusAtBattleStart();
 
@@ -298,7 +300,7 @@ UINT32 uiBuildShadeTableTime;
 UINT32 uiNumTablesSaved;
 UINT32 uiNumTablesLoaded;
 UINT32 uiNumImagesReloaded;
-#include "TileEngine/RenderDirty.h"
+
 #include "TileEngine/TileDat.h"
 #endif
 
@@ -479,7 +481,7 @@ void EndLoadScreen() {
     fprintf(fp, "FileMan_Read:  %d.%02d (called %d times)\n", uiSeconds, uiHundreths,
             uiTotalFileReadCalls);
 
-    fprintf(fp, "\n\nSECTIONS OF LOADWORLD (all parts should add up to 100%)\n");
+    fprintf(fp, "\n\nSECTIONS OF LOADWORLD (all parts should add up to 100%%)\n");
     // TrashWorld()
     uiSeconds = uiTrashWorldTime / 1000;
     uiHundreths = (uiTrashWorldTime / 10) % 100;
@@ -988,7 +990,7 @@ BOOLEAN MapExists(CHAR8 *szFilename) {
 
 void RemoveMercsInSector() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // IF IT'S THE SELECTED GUY, MAKE ANOTHER SELECTED!
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -1153,7 +1155,7 @@ void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNe
   UINT8 ubMiner, ubMinersPlaced;
   UINT8 ubMine, ubThisMine;
   UINT8 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (CheckFact(FACT_ALL_TERRORISTS_KILLED, 0)) {
     // end terrorist quest
@@ -1220,7 +1222,7 @@ void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNe
   }
 
   if (CheckFact(FACT_ROBOT_RECRUITED_AND_MOVED, 0) == FALSE) {
-    SOLDIERTYPE *pRobot;
+    struct SOLDIERTYPE *pRobot;
     pRobot = FindSoldierByProfileID(ROBOT, TRUE);
     if (pRobot) {
       // robot is on our team and we have changed sectors, so we can
@@ -1428,7 +1430,7 @@ BOOLEAN EnterSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
 
 void UpdateMercsInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fPOWSquadSet = FALSE;
   UINT8 ubPOWSquad = 0;
 
@@ -1532,7 +1534,8 @@ void UpdateMercsInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   }
 }
 
-void UpdateMercInSector(SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY,
+                        INT8 bSectorZ) {
   BOOLEAN fError = FALSE;
   if (pSoldier->uiStatusFlags & SOLDIER_IS_TACTICALLY_VALID) {
     pSoldier->ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
@@ -1915,8 +1918,8 @@ void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zS
 #endif
 }
 
-UINT8 SetInsertionDataFromAdjacentMoveDirection(SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirection,
-                                                INT16 sAdditionalData) {
+UINT8 SetInsertionDataFromAdjacentMoveDirection(struct SOLDIERTYPE *pSoldier,
+                                                UINT8 ubTacticalDirection, INT16 sAdditionalData) {
   UINT8 ubDirection;
   EXITGRID ExitGrid;
 
@@ -2060,9 +2063,9 @@ UINT8 GetStrategicInsertionDataFromAdjacentMoveDirection(UINT8 ubTacticalDirecti
 
 void JumpIntoAdjacentSector(UINT8 ubTacticalDirection, UINT8 ubJumpCode, INT16 sAdditionalData) {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
-  SOLDIERTYPE *pValidSoldier = NULL;
-  GROUP *pGroup;
+  struct SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pValidSoldier = NULL;
+  struct GROUP *pGroup;
   UINT32 uiTraverseTime = 0;
   UINT8 ubDirection;
   EXITGRID ExitGrid;
@@ -2270,7 +2273,7 @@ void JumpIntoAdjacentSector(UINT8 ubTacticalDirection, UINT8 ubJumpCode, INT16 s
   }
 }
 
-void HandleSoldierLeavingSectorByThemSelf(SOLDIERTYPE *pSoldier) {
+void HandleSoldierLeavingSectorByThemSelf(struct SOLDIERTYPE *pSoldier) {
   // soldier leaving thier squad behind, will rejoin later
   // if soldier in a squad, set the fact they want to return here
   UINT8 ubGroupId;
@@ -2392,7 +2395,7 @@ properly setup tactical traversal information for the first squads to traverse, 
 new version supports this feature. void AllMercsHaveWalkedOffSector( )
 {
         PLAYERGROUP *pPlayer;
-        SOLDIERTYPE *pSoldier;
+        struct SOLDIERTYPE *pSoldier;
 
         HandleLoyaltyImplicationsOfMercRetreat( RETREAT_TACTICAL_TRAVERSAL, gWorldSectorX,
 gWorldSectorY, gbWorldSectorZ );
@@ -2595,7 +2598,7 @@ gsAdjacentSectorX, gsAdjacentSectorY, TRUE ); pPlayer = pPlayer->next;
 */
 
 void SetupTacticalTraversalInformation() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   PLAYERGROUP *pPlayer;
   UINT32 sWorldX, sWorldY;
   INT16 sScreenX, sScreenY, sNewGridNo;
@@ -2840,7 +2843,7 @@ void DoneFadeOutAdjacentSector() {
   FadeInGameScreen();
 }
 
-BOOLEAN SoldierOKForSectorExit(SOLDIERTYPE *pSoldier, INT8 bExitDirection,
+BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
                                UINT16 usAdditionalData) {
   INT16 sXMapPos;
   INT16 sYMapPos;
@@ -2935,10 +2938,10 @@ BOOLEAN SoldierOKForSectorExit(SOLDIERTYPE *pSoldier, INT8 bExitDirection,
 BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
                         UINT32 *puiTraverseTimeInMinutes) {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fAtLeastOneMercControllable = FALSE;
   BOOLEAN fOnlySelectedGuy = FALSE;
-  SOLDIERTYPE *pValidSoldier = NULL;
+  struct SOLDIERTYPE *pValidSoldier = NULL;
   UINT8 ubReturnVal = FALSE;
   UINT8 ubNumControllableMercs = 0;
   UINT8 ubNumMercs = 0, ubNumEPCs = 0;
@@ -3011,7 +3014,7 @@ BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
           fOnlySelectedGuy = TRUE;
         }
       } else {
-        GROUP *pGroup;
+        struct GROUP *pGroup;
 
         // ATE: Dont's assume exit grids here...
         if (bExitDirection != -1) {
@@ -3068,7 +3071,7 @@ BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
       }
     }
     if (bExitDirection != -1) {
-      GROUP *pGroup;
+      struct GROUP *pGroup;
       // Now, determine if this is a valid path.
       pGroup = GetGroup(pValidSoldier->ubGroupID);
       AssertMsg(pGroup, String("%S is not in a valid group (pSoldier->ubGroupID is %d)",
@@ -3188,7 +3191,7 @@ INT8 GetSAMIdFromSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
 
 BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ) {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // if not a valid sector
   if ((sX < 1) || (sX > 16) || (sY < 1) || (sY > 16) || (ubZ > 3)) {
@@ -3428,7 +3431,7 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
   return (TRUE);
 }
 
-INT16 PickGridNoNearestEdge(SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirection) {
+INT16 PickGridNoNearestEdge(struct SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirection) {
   INT16 sGridNo, sStartGridNo, sOldGridNo;
   INT8 bOdd = 1, bOdd2 = 1;
   UINT8 bAdjustedDist = 0;
@@ -3655,7 +3658,7 @@ INT16 PickGridNoNearestEdge(SOLDIERTYPE *pSoldier, UINT8 ubTacticalDirection) {
   return (NOWHERE);
 }
 
-void AdjustSoldierPathToGoOffEdge(SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
+void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
                                   UINT8 ubTacticalDirection) {
   INT16 sNewGridNo, sTempGridNo;
   INT32 iLoop;
@@ -3789,7 +3792,7 @@ void AdjustSoldierPathToGoOffEdge(SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
   }
 }
 
-INT16 PickGridNoToWalkIn(SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection,
+INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection,
                          UINT32 *puiNumAttempts) {
   INT16 sGridNo, sStartGridNo, sOldGridNo;
   INT8 bOdd = 1, bOdd2 = 1;
@@ -4038,7 +4041,7 @@ void GetLoadedSectorString(STR16 pString) {
 }
 
 void HandleSlayDailyEvent(void) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // grab slay
   pSoldier = FindSoldierByProfileID(64, TRUE);
@@ -4299,7 +4302,7 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
 // NPCs either in the sector or strategically in the sector (such as firing an NPC in a sector that
 // isn't yet loaded.)  When loading that sector, the RPC would be added.
 //@@@Evaluate
-void SetupProfileInsertionDataForSoldier(SOLDIERTYPE *pSoldier) {
+void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier) {
   if (!pSoldier || pSoldier->ubProfile == NO_PROFILE) {  // Doesn't have profile information.
     return;
   }
@@ -4365,7 +4368,7 @@ void SetupProfileInsertionDataForSoldier(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandlePotentialMoraleHitForSkimmingSectors(GROUP *pGroup) {
+void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup) {
   PLAYERGROUP *pPlayer;
 
   if (!gTacticalStatus.fHasEnteredCombatModeSinceEntering && gTacticalStatus.fEnemyInSector) {

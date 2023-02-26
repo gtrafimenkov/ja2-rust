@@ -13,7 +13,6 @@
 #include "SGP/Input.h"
 #include "SGP/WCheck.h"
 #include "Tactical/SoldierProfileType.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"

@@ -13,7 +13,6 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
 BOOLEAN CaveAtGridNo(INT32 iMapIndex);
@@ -21,8 +20,8 @@ UINT16 GetCaveTileIndexFromPerimeterValue(UINT8 ubTotal);
 UINT8 CalcNewCavePerimeterValue(INT32 iMapIndex);
 
 BOOLEAN CaveAtGridNo(INT32 iMapIndex) {
-  STRUCTURE *pStruct;
-  LEVELNODE *pLevel;
+  struct STRUCTURE *pStruct;
+  struct LEVELNODE *pLevel;
   if (iMapIndex < 0 || iMapIndex >= NOWHERE) return TRUE;
   pStruct = gpWorldLevelData[iMapIndex].pStructureHead;
   while (pStruct) {
@@ -434,7 +433,7 @@ UINT8 CalcNewCavePerimeterValue(INT32 iMapIndex) {
 }
 
 void AddCave(INT32 iMapIndex, UINT16 usIndex) {
-  LEVELNODE *pStruct;
+  struct LEVELNODE *pStruct;
 
   if (iMapIndex < 0 || iMapIndex >= NOWHERE) return;
   // First toast any existing wall (caves)
@@ -607,7 +606,7 @@ void BuildWallPiece(UINT32 iMapIndex, UINT8 ubWallPiece, UINT16 usWallType) {
   INT16 sIndex;
   UINT16 usTileIndex;
   UINT16 ubWallClass;
-  LEVELNODE *pStruct;
+  struct LEVELNODE *pStruct;
   if (!usWallType) {
     usWallType = SearchForWallType(iMapIndex);
   }
@@ -893,7 +892,7 @@ void EraseBuilding(UINT32 iMapIndex) {
 // and the TOP_LEFT oriented wall in the gridno up one as well as the other building information at
 // this gridno.
 void EraseFloorOwnedBuildingPieces(UINT32 iMapIndex) {
-  LEVELNODE *pStruct = NULL;
+  struct LEVELNODE *pStruct = NULL;
   UINT32 uiTileType;
   UINT16 usWallOrientation;
 
@@ -1138,7 +1137,7 @@ void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
     for (x = left; x <= right; x++) {
       iMapIndex = y * WORLD_COLS + x;
       if (FloorAtGridNo(iMapIndex)) {
-        LEVELNODE *pFloor;
+        struct LEVELNODE *pFloor;
         UINT32 uiTileType;
         // If a floor is found, then we are adding to an existing structure.
         fNewBuilding = FALSE;
@@ -1265,7 +1264,7 @@ void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
 }
 
 void AnalyseCaveMapForStructureInfo() {
-  LEVELNODE *pStruct;
+  struct LEVELNODE *pStruct;
   UINT32 uiTileType;
   INT32 iMapIndex;
   for (iMapIndex = 0; iMapIndex < WORLD_MAX; iMapIndex++) {

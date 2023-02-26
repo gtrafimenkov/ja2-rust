@@ -11,6 +11,7 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -23,8 +24,8 @@ STR16 szClipboard;
 BOOLEAN gfNoScroll = FALSE;
 
 // The internal callback functions assigned to each text field.
-void MouseClickedInTextRegionCallback(MOUSE_REGION *reg, INT32 reason);
-void MouseMovedInTextRegionCallback(MOUSE_REGION *reg, INT32 reason);
+void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
+void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 
 // Internal string manipulation functions.
 void AddChar(UINT32 uiKey);
@@ -65,7 +66,7 @@ typedef struct TEXTINPUTNODE {
   UINT8 ubStrLen;
   BOOLEAN fEnabled;
   BOOLEAN fUserField;
-  MOUSE_REGION region;
+  struct MOUSE_REGION region;
   INPUT_CALLBACK InputCallback;
   struct TEXTINPUTNODE *next, *prev;
 } TEXTINPUTNODE;
@@ -939,7 +940,7 @@ void RemoveChar(UINT8 ubArrayIndex) {
 }
 
 // Internally used to continue highlighting text
-void MouseMovedInTextRegionCallback(MOUSE_REGION *reg, INT32 reason) {
+void MouseMovedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
   TEXTINPUTNODE *curr;
   if (gfLeftButtonState) {
     if (reason & MSYS_CALLBACK_REASON_MOVE || reason & MSYS_CALLBACK_REASON_LOST_MOUSE ||
@@ -989,7 +990,7 @@ void MouseMovedInTextRegionCallback(MOUSE_REGION *reg, INT32 reason) {
 }
 
 // Internally used to calculate where to place the cursor.
-void MouseClickedInTextRegionCallback(MOUSE_REGION *reg, INT32 reason) {
+void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
   TEXTINPUTNODE *curr;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     INT32 iClickX, iCurrCharPos, iNextCharPos;

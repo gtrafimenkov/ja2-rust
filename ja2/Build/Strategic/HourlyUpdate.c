@@ -8,6 +8,7 @@
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMercHandler.h"
 #include "Strategic/StrategicMines.h"
+#include "Strategic/StrategicMovement.h"
 #include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/Boxing.h"
 #include "Tactical/Campaign.h"
@@ -15,6 +16,7 @@
 #include "Tactical/Items.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 
 void HourlyQuestUpdate(void);
 void HourlyLarryUpdate(void);
@@ -155,7 +157,7 @@ UINT16 LarryItems[NUM_LARRY_ITEMS][3] = {
 #define LARRY_FALLS_OFF_WAGON 8
 
 void HourlyLarryUpdate(void) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT8 bSlot, bBoozeSlot;
   INT8 bLarryItemLoop;
   UINT16 usTemptation = 0;
@@ -266,7 +268,7 @@ void HourlyLarryUpdate(void) {
 }
 
 void HourlyCheckIfSlayAloneSoHeCanLeave() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   pSoldier = FindSoldierByProfileID(SLAY, TRUE);
   if (!pSoldier) {
     return;

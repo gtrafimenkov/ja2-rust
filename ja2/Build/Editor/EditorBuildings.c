@@ -11,10 +11,10 @@
 #include "Editor/SelectWin.h"
 #include "Editor/SmoothingUtils.h"
 #include "SGP/Debug.h"
+#include "SGP/Video.h"
 #include "Tactical/Keys.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/RenderFun.h"
-#include "TileEngine/RenderWorld.h"  //ClearRenderFlags();
 #include "TileEngine/SimpleRenderUtils.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
@@ -242,7 +242,7 @@ void SortBuildingLayout(INT32 iMapIndex) {
 
 void PasteMapElementToNewMapElement(INT32 iSrcGridNo, INT32 iDstGridNo) {
   MAP_ELEMENT *pSrcMapElement;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   UINT16 usType;
 
   DeleteStuffFromMapTile(iDstGridNo);
@@ -411,7 +411,7 @@ void ReplaceBuildingWithNewRoof(INT32 iMapIndex) {
 INT32 iDoorMapIndex = 0;
 enum { DOOR_BACKGROUND, DOOR_OKAY, DOOR_CANCEL, DOOR_LOCKED, NUM_DOOR_BUTTONS };
 INT32 iDoorButton[NUM_DOOR_BUTTONS];
-MOUSE_REGION DoorRegion;
+struct MOUSE_REGION DoorRegion;
 void DoorOkayCallback(GUI_BUTTON *btn, INT32 reason);
 void DoorCancelCallback(GUI_BUTTON *btn, INT32 reason);
 void DoorToggleLockedCallback(GUI_BUTTON *btn, INT32 reason);
@@ -458,7 +458,7 @@ void InitDoorEditing(INT32 iMapIndex) {
 }
 
 void ExtractAndUpdateDoorInfo() {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   INT32 num;
   DOOR door;
   BOOLEAN fCursor = FALSE;
@@ -583,8 +583,8 @@ void AddLockedDoorCursors() {
 void RemoveLockedDoorCursors() {
   DOOR *pDoor;
   int i;
-  LEVELNODE *pNode;
-  LEVELNODE *pTemp;
+  struct LEVELNODE *pNode;
+  struct LEVELNODE *pTemp;
   for (i = 0; i < gubNumDoors; i++) {
     pDoor = &DoorTable[i];
     pNode = gpWorldLevelData[pDoor->sGridNo].pTopmostHead;

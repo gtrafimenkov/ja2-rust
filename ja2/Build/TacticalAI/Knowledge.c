@@ -1,6 +1,7 @@
 #include "Strategic/Quests.h"
 #include "Tactical/LOS.h"
 #include "Tactical/OppList.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "TacticalAI/AI.h"
@@ -11,7 +12,7 @@
 void CallAvailableEnemiesTo(INT16 sGridNo) {
   INT32 iLoop;
   INT32 iLoop2;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
   for (iLoop = 0; iLoop < LAST_TEAM; iLoop++) {
@@ -39,7 +40,7 @@ void CallAvailableEnemiesTo(INT16 sGridNo) {
 
 void CallAvailableTeamEnemiesTo(INT16 sGridno, INT8 bTeam) {
   INT32 iLoop2;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
   // if this team is active
@@ -68,7 +69,7 @@ void CallAvailableKingpinMenTo(INT16 sGridNo) {
   // NO PROFILE
 
   INT32 iLoop2;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
   // if this team is active
@@ -92,7 +93,7 @@ void CallAvailableKingpinMenTo(INT16 sGridNo) {
 
 void CallEldinTo(INT16 sGridNo) {
   // like call all enemies, but only affects Eldin
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // Eldin becomes aware of a very important "noise" coming from here!
   // So long as he hasn't already heard a noise a sec ago...
@@ -126,7 +127,7 @@ void CallEldinTo(INT16 sGridNo) {
   }
 }
 
-INT16 MostImportantNoiseHeard(SOLDIERTYPE *pSoldier, INT32 *piRetValue,
+INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
                               BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
   UINT32 uiLoop;
   INT8 *pbPersOL, *pbPublOL;
@@ -140,7 +141,7 @@ INT16 MostImportantNoiseHeard(SOLDIERTYPE *pSoldier, INT32 *piRetValue,
   INT8 bBestLevel = 0;
   INT16 sClimbingGridNo;
   BOOLEAN fClimbingNecessary = FALSE;
-  SOLDIERTYPE *pTemp;
+  struct SOLDIERTYPE *pTemp;
 
   pubNoiseVolume = &gubPublicNoiseVolume[pSoldier->bTeam];
   psNoiseGridNo = &gsPublicNoiseGridno[pSoldier->bTeam];
@@ -289,11 +290,11 @@ INT16 MostImportantNoiseHeard(SOLDIERTYPE *pSoldier, INT32 *piRetValue,
   return (sBestGridNo);
 }
 
-INT16 WhatIKnowThatPublicDont(SOLDIERTYPE *pSoldier, UINT8 ubInSightOnly) {
+INT16 WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, UINT8 ubInSightOnly) {
   UINT8 ubTotal = 0;
   UINT32 uiLoop;
   INT8 *pbPersOL, *pbPublOL;
-  SOLDIERTYPE *pTemp;
+  struct SOLDIERTYPE *pTemp;
 
   // if merc knows of a more important misc. noise than his team does
   if (!(CREATURE_OR_BLOODCAT(pSoldier)) &&

@@ -2,7 +2,8 @@
 #define __CIV_QUOTES_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 #define CIV_TYPE_NA 0
 #define CIV_TYPE_ADULT 1
@@ -71,9 +72,9 @@ enum {
 
 void InitCivQuoteSystem();
 
-void StartCivQuote(SOLDIERTYPE *pCiv);
+void StartCivQuote(struct SOLDIERTYPE *pCiv);
 
-INT8 GetCivType(SOLDIERTYPE *pCiv);
+INT8 GetCivType(struct SOLDIERTYPE *pCiv);
 
 void HandleCivQuote();
 
@@ -82,6 +83,7 @@ BOOLEAN LoadCivQuotesFromLoadGameFile(HWFILE hFile);
 
 BOOLEAN ShutDownQuoteBoxIfActive();
 
-void BeginCivQuote(SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX, INT16 sY);
+void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX,
+                   INT16 sY);
 
 #endif

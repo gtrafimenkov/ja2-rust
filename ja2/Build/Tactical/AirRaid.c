@@ -24,6 +24,7 @@
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/OverheadTypes.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/StructureWrap.h"
 #include "TileEngine/ExplosionControl.h"
@@ -120,7 +121,7 @@ typedef struct {
 } AIR_RAID_SAVE_STRUCT;
 
 // END SERIALIZATION
-SOLDIERTYPE *gpRaidSoldier;
+struct SOLDIERTYPE *gpRaidSoldier;
 
 typedef struct {
   INT8 bDir1;
@@ -156,7 +157,7 @@ void ScheduleAirRaid(AIR_RAID_DEFINITION *pAirRaidDef) {
 BOOLEAN BeginAirRaid() {
   INT32 cnt;
   BOOLEAN fOK = FALSE;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // OK, we have been told to start.....
 
@@ -223,7 +224,7 @@ BOOLEAN BeginAirRaid() {
   gfAirRaidHasHadTurn = FALSE;
 
   gpRaidSoldier = MercPtrs[MAX_NUM_SOLDIERS - 1];
-  memset(gpRaidSoldier, 0, sizeof(SOLDIERTYPE));
+  memset(gpRaidSoldier, 0, sizeof(struct SOLDIERTYPE));
   gpRaidSoldier->bLevel = 0;
   gpRaidSoldier->bTeam = 1;
   gpRaidSoldier->bSide = 1;
@@ -244,7 +245,7 @@ INT16 PickLocationNearAnyMercInSector() {
   UINT8 ubMercsInSector[20] = {0};
   UINT8 ubNumMercs = 0;
   UINT8 ubChosenMerc;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
 
   // Loop through all our guys and randomly say one from someone in our sector
@@ -1157,7 +1158,7 @@ void EndAirRaid() {
 
     if (!gTacticalStatus.Team[ENEMY_TEAM].bTeamActive &&
         !gTacticalStatus.Team[CREATURE_TEAM].bTeamActive) {
-      SOLDIERTYPE *pTeamSoldier;
+      struct SOLDIERTYPE *pTeamSoldier;
       INT32 cnt;
 
       // Loop through all militia and restore them to peaceful status
@@ -1186,7 +1187,7 @@ void EndAirRaid() {
   if (gAirRaidDef.uiFlags &
       AIR_RAID_BEGINNING_GAME) {  // OK, make enemy appear in Omerta
                                   // Talk to strategic AI for this...
-                                  // GROUP *pGroup;
+                                  // struct GROUP *pGroup;
                                   // Create a patrol group originating from sector B9
                                   // pGroup = CreateNewEnemyGroupDepartingFromSector( SEC_B9,
                                   // (UINT8)(2 + Random( 2 ) + gGameOptions.ubDifficultyLevel), 0 );

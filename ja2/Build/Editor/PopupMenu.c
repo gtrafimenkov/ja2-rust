@@ -19,6 +19,7 @@
 #include "SGP/Font.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "Strategic/Scheduling.h"
@@ -32,7 +33,7 @@
 
 CurrentPopupMenuInformation gPopup;
 
-MOUSE_REGION popupRegion;
+struct MOUSE_REGION popupRegion;
 
 UINT16 gusEntryHeight;
 BOOLEAN fWaitingForLButtonRelease = FALSE;

@@ -1,6 +1,9 @@
 #include "SGP/CursorControl.h"
 
 #include "SGP/CursorFileData.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "platform.h"
 
@@ -29,8 +32,8 @@ UINT32 guiDelayTimer = 0;
 
 MOUSEBLT_HOOK gMouseBltOverride = NULL;
 
-BOOLEAN BltToMouseCursorFromVObject(HVOBJECT hVObject, UINT16 usVideoObjectSubIndex, UINT16 usXPos,
-                                    UINT16 usYPos) {
+BOOLEAN BltToMouseCursorFromVObject(struct VObject *hVObject, UINT16 usVideoObjectSubIndex,
+                                    UINT16 usXPos, UINT16 usYPos) {
   BOOLEAN ReturnValue;
 
   ReturnValue = BltVideoObject(MOUSE_BUFFER, hVObject, usVideoObjectSubIndex, usXPos, usYPos,
@@ -39,8 +42,9 @@ BOOLEAN BltToMouseCursorFromVObject(HVOBJECT hVObject, UINT16 usVideoObjectSubIn
   return ReturnValue;
 }
 
-BOOLEAN BltToMouseCursorFromVObjectWithOutline(HVOBJECT hVObject, UINT16 usVideoObjectSubIndex,
-                                               UINT16 usXPos, UINT16 usYPos) {
+BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
+                                               UINT16 usVideoObjectSubIndex, UINT16 usXPos,
+                                               UINT16 usYPos) {
   BOOLEAN ReturnValue;
   ETRLEObject *pTrav;
   INT16 sXPos, sYPos;
@@ -103,7 +107,7 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
       VOBJECT_DESC VideoObjectDescription;
       // FIRST LOAD AS AN HIMAGE SO WE CAN GET AUX DATA!
       HIMAGE hImage;
-      AuxObjectData *pAuxData;
+      struct AuxObjectData *pAuxData;
 
       // ATE: First check if we are using an extern vo cursor...
       if (gpCursorFileDatabase[pCurImage->uiFileIndex].ubFlags & USE_EXTERN_VO_CURSOR) {
@@ -130,7 +134,7 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
         // Check for animated tile
         if (hImage->uiAppDataSize > 0) {
           // Valid auxiliary data, so get # od frames from data
-          pAuxData = (AuxObjectData *)hImage->pAppData;
+          pAuxData = (struct AuxObjectData *)hImage->pAppData;
 
           if (pAuxData->fFlags & AUX_ANIMATED_TILE) {
             gpCursorFileDatabase[pCurImage->uiFileIndex].ubFlags |= ANIMATED_CURSOR;
@@ -272,7 +276,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
   CursorImage *pCurImage;
   UINT32 cnt;
   INT16 sCenterValX, sCenterValY;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   ETRLEObject *pTrav;
   UINT16 usEffHeight, usEffWidth;
 
@@ -293,7 +297,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
       // CHECK FOR EXTERN CURSOR
       if (uiCursorIndex == EXTERN_CURSOR || uiCursorIndex == EXTERN2_CURSOR) {
         INT16 sSubX, sSubY;
-        HVOBJECT hVObjectTemp;
+        struct VObject *hVObjectTemp;
         ETRLEObject *pTravTemp;
 
         // Erase old cursor
@@ -481,7 +485,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
 void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride) { gMouseBltOverride = pMouseBltOverride; }
 
 // Sets an external video object as cursor file data....
-void SetExternVOData(UINT32 uiCursorIndex, HVOBJECT hVObject, UINT16 usSubIndex) {
+void SetExternVOData(UINT32 uiCursorIndex, struct VObject *hVObject, UINT16 usSubIndex) {
   CursorData *pCurData;
   CursorImage *pCurImage;
   UINT32 cnt;

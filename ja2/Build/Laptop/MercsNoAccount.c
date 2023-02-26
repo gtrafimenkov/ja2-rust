@@ -6,6 +6,7 @@
 #include "Laptop/SpeckQuotes.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -90,7 +91,7 @@ void ExitMercsNoAccount() {
 void HandleMercsNoAccount() {}
 
 void RenderMercsNoAccount() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   DrawMecBackGround();
 

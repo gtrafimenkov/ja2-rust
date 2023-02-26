@@ -12,6 +12,7 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -121,8 +122,8 @@ INT16 gsCurrentInsuranceMercIndex;
 INT16 gsMaxPlayersOnTeam;
 
 // link to the varios pages
-MOUSE_REGION gSelectedInsuranceContractLinkRegion[2];
-void SelectInsuranceContractRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedInsuranceContractLinkRegion[2];
+void SelectInsuranceContractRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 INT32 guiInsContractPrevButtonImage;
 void BtnInsContractPrevButtonCallback(GUI_BUTTON *btn, INT32 reason);
@@ -150,7 +151,7 @@ UINT32 guiInsuranceAcceptClearForm3Button;
 //
 BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID);
 INT8 GetNumberOfHireMercsStartingFromID(UINT8 ubStartMercID);
-// INT32			CalculateInsuranceCost( SOLDIERTYPE *pSoldier, BOOLEAN
+// INT32			CalculateInsuranceCost( struct SOLDIERTYPE *pSoldier, BOOLEAN
 // fHaveInsurance
 // );
 void InsuranceContractUserTextFieldCallBack(UINT8 ubID, BOOLEAN fEntering);
@@ -161,16 +162,16 @@ void HandleAcceptButton(UINT8 ubSoldierID, UINT8 ubFormID);
 FLOAT DiffFromNormRatio(INT16 sThisValue, INT16 sNormalValue);
 void InsContractNoMercsPopupCallBack(UINT8 bExitValue);
 void BuildInsuranceArray();
-BOOLEAN MercIsInsurable(SOLDIERTYPE *pSoldier);
+BOOLEAN MercIsInsurable(struct SOLDIERTYPE *pSoldier);
 // UINT32		GetContractLengthForFormNumber( UINT8 ubFormID );
 void EnableDisableInsuranceContractAcceptButtons();
-UINT32 GetTimeRemainingOnSoldiersContract(SOLDIERTYPE *pSoldier);
-UINT32 GetTimeRemainingOnSoldiersInsuranceContract(SOLDIERTYPE *pSoldier);
+UINT32 GetTimeRemainingOnSoldiersContract(struct SOLDIERTYPE *pSoldier);
+UINT32 GetTimeRemainingOnSoldiersInsuranceContract(struct SOLDIERTYPE *pSoldier);
 void EnableDisableIndividualInsuranceContractButton(UINT8 ubMercIDForMercInForm1,
                                                     UINT32 *puiAcceptButton);
-BOOLEAN CanSoldierExtendInsuranceContract(SOLDIERTYPE *pSoldier);
-INT32 CalculateSoldiersInsuranceContractLength(SOLDIERTYPE *pSoldier);
-INT32 CalcStartDayOfInsurance(SOLDIERTYPE *pSoldier);
+BOOLEAN CanSoldierExtendInsuranceContract(struct SOLDIERTYPE *pSoldier);
+INT32 CalculateSoldiersInsuranceContractLength(struct SOLDIERTYPE *pSoldier);
+INT32 CalcStartDayOfInsurance(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN AreAnyAimMercsOnTeam();
 // ppp
@@ -299,14 +300,14 @@ void HandleInsuranceContract() {
 }
 
 void RenderInsuranceContract() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   wchar_t sText[800];
   UINT8 ubCount = 0;
   INT16 sMercID;
   INT16 sNextMercID;
   UINT16 usPosX;
   BOOLEAN fIsThereAnyAimMercs = FALSE;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   SetFontShadow(INS_FONT_SHADOW);
 
@@ -465,7 +466,7 @@ void BtnInsContractNextButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 
 BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usPosX, usPosY;
   UINT32 uiInsMercFaceImage;
   INT32 iCostOfContract = 0;
@@ -473,7 +474,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   wchar_t sText[800];
   BOOLEAN fDisplayMercContractStateTextColorInRed = FALSE;
 
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pSoldier = &Menptr[GetSoldierIDFromMercID(ubMercID)];
 
@@ -845,7 +846,7 @@ INT8 GetNumberOfHireMercsStartingFromID(UINT8 ubStartMercID) {
 }
 
 /*
-INT32 CalculateInsuranceCost( SOLDIERTYPE *pSoldier, BOOLEAN fHaveInsurance )
+INT32 CalculateInsuranceCost( struct SOLDIERTYPE *pSoldier, BOOLEAN fHaveInsurance )
 {
         INT32			iAmount=0;
         UINT32		uiInsuranceContractLength = 0;
@@ -878,7 +879,7 @@ pSoldier->ubProfile);
 }
 */
 
-void SelectInsuranceContractRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectInsuranceContractRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     UINT32 uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
@@ -893,7 +894,7 @@ void SelectInsuranceContractRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason)
 
 INT8 CountInsurableMercs() {
   INT16 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
   INT8 bCount = 0;
 
@@ -1015,7 +1016,7 @@ void HandleAcceptButton(UINT8 ubSoldierID, UINT8 ubFormID) {
 void DailyUpdateOfInsuredMercs() {
   INT16 cnt;
   INT16 bLastTeamID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   bLastTeamID = gTacticalStatus.Team[gbPlayerNum].bLastID;
@@ -1052,7 +1053,7 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID) {
   FLOAT flRiskFactor;
   UINT32 uiDailyInsurancePremium;
   UINT32 uiTotalInsurancePremium;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pSoldier = &Menptr[GetSoldierIDFromMercID(ubMercID)];
 
@@ -1146,7 +1147,7 @@ void InsContractNoMercsPopupCallBack(UINT8 bExitValue) {
 
 void BuildInsuranceArray() {
   INT16 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -1162,7 +1163,7 @@ void BuildInsuranceArray() {
   }
 }
 
-BOOLEAN AddLifeInsurancePayout(SOLDIERTYPE *pSoldier) {
+BOOLEAN AddLifeInsurancePayout(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubPayoutID;
   UINT32 uiTimeInMinutes;
   MERCPROFILESTRUCT *pProfile;
@@ -1344,7 +1345,7 @@ void InsuranceContractEndGameShutDown() {
   }
 }
 
-BOOLEAN MercIsInsurable(SOLDIERTYPE *pSoldier) {
+BOOLEAN MercIsInsurable(struct SOLDIERTYPE *pSoldier) {
   // only A.I.M. mercs currently on player's team
   if ((pSoldier->bActive) && (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)) {
     // with more than one day left on their employment contract are eligible for insurance
@@ -1407,7 +1408,7 @@ void EnableDisableIndividualInsuranceContractButton(UINT8 ubMercIDForMercInForm,
 UINT32	GetContractLengthForFormNumber( UINT8 ubFormID )
 {
         UINT8	ubMercID;
-        SOLDIERTYPE	*pSoldier;
+        struct SOLDIERTYPE	*pSoldier;
 
         switch( ubFormID )
         {
@@ -1432,7 +1433,7 @@ UINT32	GetContractLengthForFormNumber( UINT8 ubFormID )
 }
 */
 
-UINT32 GetTimeRemainingOnSoldiersInsuranceContract(SOLDIERTYPE *pSoldier) {
+UINT32 GetTimeRemainingOnSoldiersInsuranceContract(struct SOLDIERTYPE *pSoldier) {
   // if the soldier has life insurance
   if (pSoldier->usLifeInsurance) {
     // if the insurance contract hasnt started yet
@@ -1445,7 +1446,7 @@ UINT32 GetTimeRemainingOnSoldiersInsuranceContract(SOLDIERTYPE *pSoldier) {
     return (0);
 }
 
-UINT32 GetTimeRemainingOnSoldiersContract(SOLDIERTYPE *pSoldier) {
+UINT32 GetTimeRemainingOnSoldiersContract(struct SOLDIERTYPE *pSoldier) {
   INT32 iDayMercLeaves = (pSoldier->iEndofContractTime / 1440) - 1;
 
   // Since the merc is leaving in the afternoon, we must adjust since the time left would be
@@ -1462,7 +1463,7 @@ UINT32 GetTimeRemainingOnSoldiersContract(SOLDIERTYPE *pSoldier) {
   //	return( ( pSoldier->iEndofContractTime - (INT32)GetWorldTotalMin( ) ) / 1440 );
 }
 
-void PurchaseOrExtendInsuranceForSoldier(SOLDIERTYPE *pSoldier, UINT32 uiInsuranceLength) {
+void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, UINT32 uiInsuranceLength) {
   INT32 iAmountOfMoneyTransfer = -1;
 
   if (pSoldier == NULL) AssertMsg(0, "Soldier pointer is NULL!");
@@ -1529,14 +1530,14 @@ void PurchaseOrExtendInsuranceForSoldier(SOLDIERTYPE *pSoldier, UINT32 uiInsuran
   }
 }
 
-BOOLEAN CanSoldierExtendInsuranceContract(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanSoldierExtendInsuranceContract(struct SOLDIERTYPE *pSoldier) {
   if (CalculateSoldiersInsuranceContractLength(pSoldier) != 0)
     return (TRUE);
   else
     return (FALSE);
 }
 
-INT32 CalculateSoldiersInsuranceContractLength(SOLDIERTYPE *pSoldier) {
+INT32 CalculateSoldiersInsuranceContractLength(struct SOLDIERTYPE *pSoldier) {
   INT32 iInsuranceContractLength = 0;
   UINT32 uiTimeRemainingOnSoldiersContract = GetTimeRemainingOnSoldiersContract(pSoldier);
 
@@ -1581,7 +1582,7 @@ INT32 CalculateSoldiersInsuranceContractLength(SOLDIERTYPE *pSoldier) {
   return (iInsuranceContractLength);
 }
 
-INT32 CalcStartDayOfInsurance(SOLDIERTYPE *pSoldier) {
+INT32 CalcStartDayOfInsurance(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiDayToStartInsurance = 0;
 
   // if the soldier was just hired ( in transit ), and the game didnt just start
@@ -1598,7 +1599,7 @@ INT32 CalcStartDayOfInsurance(SOLDIERTYPE *pSoldier) {
 BOOLEAN AreAnyAimMercsOnTeam() {
   INT16 sNextMercID = 0;
   BOOLEAN fIsThereAnyAimMercs = FALSE;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   for (sNextMercID = 0; sNextMercID <= gTacticalStatus.Team[gbPlayerNum].bLastID; sNextMercID++) {
     pSoldier = &Menptr[GetSoldierIDFromMercID((UINT8)sNextMercID)];

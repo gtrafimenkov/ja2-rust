@@ -19,7 +19,6 @@
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/TacticalSave.h"
@@ -388,7 +387,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
                                     UINT8 ubFirstIdTeam, UINT8 ubLastIdTeam,
                                     BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 i;
   INT32 slots = 0;
   INT32 iSlotsAlreadyInUse = 0;
@@ -491,7 +490,8 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
           sprintf(curr->pDetailedPlacement->MiscPal, pSoldier->MiscPal);
 
           // copy soldier's inventory
-          memcpy(curr->pDetailedPlacement->Inv, pSoldier->inv, sizeof(OBJECTTYPE) * NUM_INV_SLOTS);
+          memcpy(curr->pDetailedPlacement->Inv, pSoldier->inv,
+                 sizeof(struct OBJECTTYPE) * NUM_INV_SLOTS);
         }
 
         // DONE, now increment the counter, so we know how many there are.
@@ -1338,7 +1338,7 @@ FAIL_LOAD:
 BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
                                                  BOOLEAN fEnemy, BOOLEAN fValidateOnly) {
   SOLDIERINITNODE *curr;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 i;
   INT32 slots = 0;
   UINT32 uiNumBytesWritten;
@@ -1448,7 +1448,7 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY,
 
             // copy soldier's inventory
             memcpy(curr->pDetailedPlacement->Inv, pSoldier->inv,
-                   sizeof(OBJECTTYPE) * NUM_INV_SLOTS);
+                   sizeof(struct OBJECTTYPE) * NUM_INV_SLOTS);
           }
         }
 

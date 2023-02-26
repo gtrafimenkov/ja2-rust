@@ -4,6 +4,7 @@
 #include "Editor/EditorUndo.h"
 #include "SGP/Types.h"
 #include "TileEngine/TileDat.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
@@ -406,7 +407,7 @@ void PlaceRoadMacroAtGridNo(INT32 iMapIndex, INT32 iMacroID) {
 void ReplaceObsoleteRoads() {
   INT32 i;
   INT32 iMacro;
-  LEVELNODE *pObject;
+  struct LEVELNODE *pObject;
   BOOLEAN fRoadExistsAtGridNo;
   for (i = 0; i < WORLD_MAX; i++) {
     pObject = gpWorldLevelData[i].pObjectHead;

@@ -8,6 +8,7 @@
 #include "Laptop/Mercs.h"
 #include "Laptop/SpeckQuotes.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -146,7 +147,7 @@ void HandleMercsAccount() {
 
 void RenderMercsAccount() {
   wchar_t sText[100];
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   DrawMecBackGround();
 
@@ -323,7 +324,7 @@ void DisplayHiredMercs() {
 }
 
 void SettleMercAccounts() {
-  //	SOLDIERTYPE *pSoldier;
+  //	struct SOLDIERTYPE *pSoldier;
   INT16 i;
   UINT8 ubMercID;
   INT32 iPartialPayment = 0;
@@ -398,7 +399,7 @@ void SettleMercAccounts() {
           {
                   INT32	iPartialPayment=0;
                   INT32	iContractCharge=0;
-                  SOLDIERTYPE *pSoldier;
+                  struct SOLDIERTYPE *pSoldier;
 
                   //try to make a partial payment by looping through all the mercs and settling them
   1 at a time for(i=0; i<NUMBER_OF_MERCS; i++)

@@ -1,9 +1,7 @@
 #ifndef _INTERFACE_H
 #define _INTERFACE_H
 
-#include "SGP/MouseSystem.h"
 #include "Tactical/HandleUI.h"
-#include "TileEngine/Structure.h"
 
 #define MAX_UICOMPOSITES 4
 
@@ -79,9 +77,9 @@ extern UINT32 guiPORTRAITICONS;
 extern UINT32 guiBURSTACCUM;
 extern UINT32 guiITEMPOINTERHATCHES;
 
-extern MOUSE_REGION gViewportRegion;
-extern MOUSE_REGION gRadarRegion;
-extern MOUSE_REGION gBottomPanalRegion;
+extern struct MOUSE_REGION gViewportRegion;
+extern struct MOUSE_REGION gRadarRegion;
+extern struct MOUSE_REGION gBottomPanalRegion;
 
 #define MOVEMENT_MENU_LOOK 1
 #define MOVEMENT_MENU_ACTIONC 2
@@ -120,8 +118,8 @@ void CancelMovementMenu();
 
 void PopDownOpenDoorMenu();
 void RenderOpenDoorMenu();
-BOOLEAN InitDoorOpenMenu(SOLDIERTYPE *pSoldier, STRUCTURE *pStructure, UINT8 ubDirection,
-                         BOOLEAN fClosingDoor);
+BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
+                         UINT8 ubDirection, BOOLEAN fClosingDoor);
 BOOLEAN HandleOpenDoorMenu();
 void CancelOpenDoorMenu();
 
@@ -153,7 +151,7 @@ void EndDeadlockMsg();
 
 void HandleLocateSelectMerc(UINT8 ubID, INT8 bFlag);
 
-void DirtyMercPanelInterface(SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel);
+void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel);
 
 void EndUIMessage();
 void BeginUIMessage(CHAR16 *pFontString, ...);
@@ -186,7 +184,7 @@ void PauseRT(BOOLEAN fPause);
 
 void InitEnemyUIBar(UINT8 ubNumEnemies, UINT8 ubDoneEnemies);
 
-CHAR16 *GetSoldierHealthString(SOLDIERTYPE *pSoldier);
+CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier);
 
 void GetLaunchItemParamsFromUI();
 void RenderAimCubeUI();
@@ -194,7 +192,7 @@ void ResetAimCubeAI();
 void SetupAimCubeAI();
 void IncrementAimCubeUI();
 void EndAimCubeUI();
-void BeginAimCubeUI(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, UINT8 bStartPower,
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, UINT8 bStartPower,
                     INT8 bStartHeight);
 BOOLEAN AimCubeUIClick();
 

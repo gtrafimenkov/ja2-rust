@@ -3,6 +3,7 @@
 #include "GameSettings.h"
 #include "MessageBoxScreen.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
@@ -53,8 +54,9 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SaveLoadMap.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -69,21 +71,21 @@
 ITEM_POOL_LOCATOR FlashItemSlots[NUM_ITEM_FLASH_SLOTS];
 UINT32 guiNumFlashItemSlots = 0;
 
-LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel);
+struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel);
 INT8 GetListMouseHotSpot(INT16 sLargestLineWidth, INT8 bNumItemsListed, INT16 sFontX, INT16 sFontY,
                          INT8 bCurStart);
 void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel,
-                                LEVELNODE *pLevelNode);
+                                struct LEVELNODE *pLevelNode);
 
-ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel);
+struct ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel);
 
 INT32 GetFreeFlashItemSlot(void);
 void RecountFlashItemSlots(void);
-INT32 AddFlashItemSlot(ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback, UINT8 ubFlags);
-BOOLEAN RemoveFlashItemSlot(ITEM_POOL *pItemPool);
+INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback, UINT8 ubFlags);
+BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool);
 
 // Disgusting hacks: have to keep track of these values for accesses in callbacks
-static SOLDIERTYPE *gpTempSoldier;
+static struct SOLDIERTYPE *gpTempSoldier;
 static INT16 gsTempGridno;
 static INT8 bTempFrequency;
 
@@ -98,17 +100,18 @@ void MineSpottedMessageBoxCallBack(UINT8 ubExitValue);
 void CheckForPickedOwnership(void);
 void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue);
 
-BOOLEAN ContinuePastBoobyTrap(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT32 iItemIndex,
-                              BOOLEAN fInStrategic, BOOLEAN *pfSaidQuote);
-extern BOOLEAN ItemIsCool(OBJECTTYPE *pObj);
+BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
+                              INT32 iItemIndex, BOOLEAN fInStrategic, BOOLEAN *pfSaidQuote);
+extern BOOLEAN ItemIsCool(struct OBJECTTYPE *pObj);
 extern INT8 gbItemPointerSrcSlot;
 extern void MAPEndItemPointer();
 extern BOOLEAN gfResetUIMovementOptimization;
 
-BOOLEAN ItemPoolOKForPickup(SOLDIERTYPE *pSoldier, ITEM_POOL *pItemPool, INT8 bZLevel);
+BOOLEAN ItemPoolOKForPickup(struct SOLDIERTYPE *pSoldier, struct ITEM_POOL *pItemPool,
+                            INT8 bZLevel);
 
-SOLDIERTYPE *gpBoobyTrapSoldier;
-ITEM_POOL *gpBoobyTrapItemPool;
+struct SOLDIERTYPE *gpBoobyTrapSoldier;
+struct ITEM_POOL *gpBoobyTrapItemPool;
 INT16 gsBoobyTrapGridNo;
 INT8 gbBoobyTrapLevel;
 BOOLEAN gfDisarmingBuriedBomb;
@@ -116,10 +119,11 @@ extern BOOLEAN gfDontChargeAPsToPickup;
 INT8 gbTrapDifficulty;
 BOOLEAN gfJustFoundBoobyTrap = FALSE;
 
-void StartBombMessageBox(SOLDIERTYPE *pSoldier, INT16 sGridNo);
+void StartBombMessageBox(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 
-BOOLEAN HandleCheckForBadChangeToGetThrough(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTargetSoldier,
-                                            INT16 sTargetGridNo, INT8 bLevel) {
+BOOLEAN HandleCheckForBadChangeToGetThrough(struct SOLDIERTYPE *pSoldier,
+                                            struct SOLDIERTYPE *pTargetSoldier, INT16 sTargetGridNo,
+                                            INT8 bLevel) {
   BOOLEAN fBadChangeToGetThrough = FALSE;
 
   if (pTargetSoldier != NULL) {
@@ -171,9 +175,9 @@ BOOLEAN HandleCheckForBadChangeToGetThrough(SOLDIERTYPE *pSoldier, SOLDIERTYPE *
   return (TRUE);
 }
 
-INT32 HandleItem(SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 usHandItem,
+INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 usHandItem,
                  BOOLEAN fFromUI) {
-  SOLDIERTYPE *pTargetSoldier = NULL;
+  struct SOLDIERTYPE *pTargetSoldier = NULL;
   UINT16 usSoldierIndex;
   INT16 sTargetGridNo;
   INT16 sAPCost;
@@ -183,8 +187,8 @@ INT32 HandleItem(SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 usH
   BOOLEAN fDropBomb = FALSE;
   BOOLEAN fAddingTurningCost = FALSE;
   BOOLEAN fAddingRaiseGunCost = FALSE;
-  LEVELNODE *pIntNode;
-  STRUCTURE *pStructure;
+  struct LEVELNODE *pIntNode;
+  struct STRUCTURE *pStructure;
   INT16 sGridNo;
 
   // Remove any previous actions
@@ -831,8 +835,8 @@ INT32 HandleItem(SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 usH
   }
 
   if (usHandItem == STRING_TIED_TO_TIN_CAN) {
-    STRUCTURE *pStructure;
-    LEVELNODE *pIntTile;
+    struct STRUCTURE *pStructure;
+    struct LEVELNODE *pIntTile;
 
     // Get structure info for in tile!
     pIntTile = GetCurInteractiveTileGridNoAndStructure((INT16 *)&usGridNo, &pStructure);
@@ -1127,7 +1131,7 @@ INT32 HandleItem(SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 usH
   return (ITEM_HANDLE_OK);
 }
 
-void HandleSoldierDropBomb(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void HandleSoldierDropBomb(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   // Does this have detonator that needs info?
   if (FindAttachment(&(pSoldier->inv[HANDPOS]), DETONATOR) != ITEM_NOT_FOUND ||
       FindAttachment(&(pSoldier->inv[HANDPOS]), REMDETONATOR) != ITEM_NOT_FOUND) {
@@ -1152,11 +1156,11 @@ void HandleSoldierDropBomb(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   }
 }
 
-void HandleSoldierUseRemote(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void HandleSoldierUseRemote(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   StartBombMessageBox(pSoldier, sGridNo);
 }
 
-void SoldierHandleDropItem(SOLDIERTYPE *pSoldier) {
+void SoldierHandleDropItem(struct SOLDIERTYPE *pSoldier) {
   // LOOK IN PANDING DATA FOR ITEM TO DROP, AND LOCATION
   if (pSoldier->pTempObject != NULL) {
     if (pSoldier->bVisible != -1) {
@@ -1172,7 +1176,7 @@ void SoldierHandleDropItem(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleSoldierThrowItem(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void HandleSoldierThrowItem(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   // Determine what to do
   UINT8 ubDirection;
 
@@ -1227,8 +1231,8 @@ void HandleSoldierThrowItem(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   }
 }
 
-void SoldierGiveItem(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTargetSoldier, OBJECTTYPE *pObject,
-                     INT8 bInvPos) {
+void SoldierGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
+                     struct OBJECTTYPE *pObject, INT8 bInvPos) {
   INT16 sActionGridNo, sAdjustedGridNo;
   UINT8 ubDirection;
 
@@ -1244,8 +1248,8 @@ void SoldierGiveItem(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTargetSoldier, OBJECTT
 
     pSoldier->bPendingActionData5 = bInvPos;
     // Copy temp object
-    pSoldier->pTempObject = (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE));
-    memcpy(pSoldier->pTempObject, pObject, sizeof(OBJECTTYPE));
+    pSoldier->pTempObject = (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE));
+    memcpy(pSoldier->pTempObject, pObject, sizeof(struct OBJECTTYPE));
 
     pSoldier->sPendingActionData2 = pTargetSoldier->sGridNo;
     pSoldier->bPendingActionData3 = ubDirection;
@@ -1275,18 +1279,19 @@ void SoldierGiveItem(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTargetSoldier, OBJECTT
   }
 }
 
-BOOLEAN SoldierDropItem(SOLDIERTYPE *pSoldier, OBJECTTYPE *pObj) {
-  pSoldier->pTempObject = (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE));
+BOOLEAN SoldierDropItem(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj) {
+  pSoldier->pTempObject = (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE));
   if (pSoldier->pTempObject == NULL) {
     // OUT OF MEMORY! YIKES!
     return (FALSE);
   }
-  memcpy(pSoldier->pTempObject, pObj, sizeof(OBJECTTYPE));
+  memcpy(pSoldier->pTempObject, pObj, sizeof(struct OBJECTTYPE));
   PickDropItemAnimation(pSoldier);
   return (TRUE);
 }
 
-void SoldierPickupItem(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo, INT8 bZLevel) {
+void SoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
+                       INT8 bZLevel) {
   INT16 sActionGridNo;
 
   // Remove any previous actions
@@ -1328,7 +1333,7 @@ void SoldierPickupItem(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo, I
   }
 }
 
-void HandleAutoPlaceFail(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo) {
+void HandleAutoPlaceFail(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo) {
   if (pSoldier->bTeam == gbPlayerNum) {
     // Place it in buddy's hand!
     if (gpItemPointer == NULL) {
@@ -1345,11 +1350,11 @@ void HandleAutoPlaceFail(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo)
   }
 }
 
-void SoldierGetItemFromWorld(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo, INT8 bZLevel,
-                             BOOLEAN *pfSelectionList) {
-  ITEM_POOL *pItemPool;
-  ITEM_POOL *pItemPoolToDelete = NULL;
-  OBJECTTYPE Object;
+void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
+                             INT8 bZLevel, BOOLEAN *pfSelectionList) {
+  struct ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPoolToDelete = NULL;
+  struct OBJECTTYPE Object;
   INT32 cnt = 0;
   BOOLEAN fPickup;
   BOOLEAN fFailedAutoPlace = FALSE;
@@ -1382,7 +1387,7 @@ void SoldierGetItemFromWorld(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGri
           if (ContinuePastBoobyTrap(pSoldier, sGridNo, bZLevel, pItemPool->iItemIndex, FALSE,
                                     &fSaidBoobyTrapQuote)) {
             // Make copy of item
-            memcpy(&Object, &(gWorldItems[pItemPool->iItemIndex].o), sizeof(OBJECTTYPE));
+            memcpy(&Object, &(gWorldItems[pItemPool->iItemIndex].o), sizeof(struct OBJECTTYPE));
 
             if (ItemIsCool(&Object)) {
               fShouldSayCoolQuote = TRUE;
@@ -1403,7 +1408,8 @@ void SoldierGetItemFromWorld(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGri
                         gWorldItems[pItemPool->iItemIndex].o.ubNumberOfObjects) {
                   // copy back because item changed, and we must make sure the item pool reflects
                   // this.
-                  memcpy(&(gWorldItems[pItemPool->iItemIndex].o), &Object, sizeof(OBJECTTYPE));
+                  memcpy(&(gWorldItems[pItemPool->iItemIndex].o), &Object,
+                         sizeof(struct OBJECTTYPE));
                 }
 
                 pItemPoolToDelete = pItemPool;
@@ -1462,7 +1468,7 @@ void SoldierGetItemFromWorld(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGri
       if (ContinuePastBoobyTrap(pSoldier, sGridNo, bZLevel, iItemIndex, FALSE,
                                 &fSaidBoobyTrapQuote)) {
         // Make copy of item
-        memcpy(&Object, &(gWorldItems[iItemIndex].o), sizeof(OBJECTTYPE));
+        memcpy(&Object, &(gWorldItems[iItemIndex].o), sizeof(struct OBJECTTYPE));
 
         if (ItemIsCool(&Object)) {
           fShouldSayCoolQuote = TRUE;
@@ -1544,8 +1550,9 @@ void SoldierGetItemFromWorld(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGri
   SetCustomizableTimerCallbackAndDelay(1000, CheckForPickedOwnership, TRUE);
 }
 
-void HandleSoldierPickupItem(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo, INT8 bZLevel) {
-  ITEM_POOL *pItemPool;
+void HandleSoldierPickupItem(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
+                             INT8 bZLevel) {
+  struct ITEM_POOL *pItemPool;
   UINT16 usNum;
 
   // Draw menu if more than one item!
@@ -1621,9 +1628,9 @@ void HandleSoldierPickupItem(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGri
   }
 }
 
-LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel) {
+struct LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel) {
   UINT16 usTileIndex;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
 
   usTileIndex = GetTileGraphicForItem(pItem);
 
@@ -1650,8 +1657,8 @@ LEVELNODE *AddItemGraphicToWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel) {
 }
 
 void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel,
-                                LEVELNODE *pLevelNode) {
-  LEVELNODE *pNode;
+                                struct LEVELNODE *pLevelNode) {
+  struct LEVELNODE *pNode;
 
   // OK, Do stuff differently base on level!
   // Loop through and find pointer....
@@ -1688,29 +1695,29 @@ void RemoveItemGraphicFromWorld(INVTYPE *pItem, INT16 sGridNo, UINT8 ubLevel,
 }
 
 // INVENTORY POOL STUFF
-OBJECTTYPE *AddItemToPool(INT16 sGridNo, OBJECTTYPE *pObject, INT8 bVisible, UINT8 ubLevel,
-                          UINT16 usFlags, INT8 bRenderZHeightAboveLevel) {
+struct OBJECTTYPE *AddItemToPool(INT16 sGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
+                                 UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel) {
   return InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                bRenderZHeightAboveLevel, NULL);
 }
 
-OBJECTTYPE *AddItemToPoolAndGetIndex(INT16 sGridNo, OBJECTTYPE *pObject, INT8 bVisible,
-                                     UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel,
-                                     INT32 *piItemIndex) {
+struct OBJECTTYPE *AddItemToPoolAndGetIndex(INT16 sGridNo, struct OBJECTTYPE *pObject,
+                                            INT8 bVisible, UINT8 ubLevel, UINT16 usFlags,
+                                            INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
   return (InternalAddItemToPool(&sGridNo, pObject, bVisible, ubLevel, usFlags,
                                 bRenderZHeightAboveLevel, piItemIndex));
 }
 
-OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, OBJECTTYPE *pObject, INT8 bVisible,
-                                  UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel,
-                                  INT32 *piItemIndex) {
-  ITEM_POOL *pItemPool;
-  ITEM_POOL *pItemPoolTemp;
+struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pObject, INT8 bVisible,
+                                         UINT8 ubLevel, UINT16 usFlags,
+                                         INT8 bRenderZHeightAboveLevel, INT32 *piItemIndex) {
+  struct ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPoolTemp;
   INT32 iWorldItem;
-  STRUCTURE *pStructure, *pBase;
+  struct STRUCTURE *pStructure, *pBase;
   INT16 sDesiredLevel;
   INT16 sNewGridNo = *psGridNo;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   BOOLEAN fForceOnGround = FALSE;
   BOOLEAN fObjectInOpenable = FALSE;
   INT8 bTerrainID;
@@ -1772,7 +1779,7 @@ OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, OBJECTTYPE *pObject, INT8 bVi
         // Adjust the item's gridno to the base of struct.....
         pBase = FindBaseStructure(pStructure);
 
-        // Get LEVELNODE for struct and remove!
+        // Get struct LEVELNODE for struct and remove!
         sNewGridNo = pBase->sGridNo;
 
         // Check for openable flag....
@@ -1875,7 +1882,7 @@ OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, OBJECTTYPE *pObject, INT8 bVi
     // Add New Node
     pItemPoolTemp = pItemPool;
     // Create new pool
-    pItemPool = (ITEM_POOL *)MemAlloc(sizeof(ITEM_POOL));
+    pItemPool = (struct ITEM_POOL *)MemAlloc(sizeof(struct ITEM_POOL));
 
     // Set Next to NULL
     pItemPool->pNext = NULL;
@@ -1898,7 +1905,7 @@ OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, OBJECTTYPE *pObject, INT8 bVi
     pNode = AddItemGraphicToWorld(&(Item[pObject->usItem]), *psGridNo, ubLevel);
 
     // Create new pool
-    pItemPool = (ITEM_POOL *)MemAlloc(sizeof(ITEM_POOL));
+    pItemPool = (struct ITEM_POOL *)MemAlloc(sizeof(struct ITEM_POOL));
 
     pNode->pItemPool = pItemPool;
 
@@ -1946,8 +1953,8 @@ OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, OBJECTTYPE *pObject, INT8 bVi
 }
 
 BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
-  ITEM_POOL *pItemPool;
-  ITEM_POOL *pItemPoolTemp;
+  struct ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
@@ -1966,8 +1973,8 @@ BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
 }
 
 BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, UINT16 usItem, UINT8 ubLevel, INT32 *piItemIndex) {
-  ITEM_POOL *pItemPool;
-  ITEM_POOL *pItemPoolTemp;
+  struct ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
@@ -1989,8 +1996,8 @@ BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, UINT16 usItem, UINT8 ubLevel, IN
 }
 
 INT32 GetItemOfClassTypeInPool(INT16 sGridNo, UINT32 uiItemClass, UINT8 ubLevel) {
-  ITEM_POOL *pItemPool;
-  ITEM_POOL *pItemPoolTemp;
+  struct ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
@@ -2008,9 +2015,9 @@ INT32 GetItemOfClassTypeInPool(INT16 sGridNo, UINT32 uiItemClass, UINT8 ubLevel)
   return (-1);
 }
 
-ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
-  ITEM_POOL *pItemPool;
-  ITEM_POOL *pItemPoolTemp;
+struct ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
+  struct ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
@@ -2028,7 +2035,7 @@ ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
   return (NULL);
 }
 
-BOOLEAN DoesItemPoolContainAnyHiddenItems(ITEM_POOL *pItemPool) {
+BOOLEAN DoesItemPoolContainAnyHiddenItems(struct ITEM_POOL *pItemPool) {
   // LOOP THROUGH LIST TO FIND NODE WE WANT
   while (pItemPool != NULL) {
     if (gWorldItems[pItemPool->iItemIndex].bVisible == HIDDEN_ITEM) {
@@ -2041,7 +2048,7 @@ BOOLEAN DoesItemPoolContainAnyHiddenItems(ITEM_POOL *pItemPool) {
   return (FALSE);
 }
 
-BOOLEAN DoesItemPoolContainAllHiddenItems(ITEM_POOL *pItemPool) {
+BOOLEAN DoesItemPoolContainAllHiddenItems(struct ITEM_POOL *pItemPool) {
   // LOOP THROUGH LIST TO FIND NODE WE WANT
   while (pItemPool != NULL) {
     if (gWorldItems[pItemPool->iItemIndex].bVisible != HIDDEN_ITEM) {
@@ -2055,8 +2062,8 @@ BOOLEAN DoesItemPoolContainAllHiddenItems(ITEM_POOL *pItemPool) {
 }
 
 BOOLEAN LookForHiddenItems(INT16 sGridNo, INT8 ubLevel, BOOLEAN fSetLocator, INT8 bZLevel) {
-  ITEM_POOL *pItemPool = NULL;
-  ITEM_POOL *pHeadItemPool = NULL;
+  struct ITEM_POOL *pItemPool = NULL;
+  struct ITEM_POOL *pHeadItemPool = NULL;
   BOOLEAN fFound = FALSE;
 
   if (GetItemPool(sGridNo, &pItemPool, ubLevel)) {
@@ -2083,8 +2090,8 @@ BOOLEAN LookForHiddenItems(INT16 sGridNo, INT8 ubLevel, BOOLEAN fSetLocator, INT
   return (fFound);
 }
 
-INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, UINT8 ubLevel, STRUCTURE *pStructure) {
-  ITEM_POOL *pItemPool;
+INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, UINT8 ubLevel, struct STRUCTURE *pStructure) {
+  struct ITEM_POOL *pItemPool;
 
   if (pStructure == NULL) {
     return (0);
@@ -2097,7 +2104,7 @@ INT8 GetZLevelOfItemPoolGivenStructure(INT16 sGridNo, UINT8 ubLevel, STRUCTURE *
   return (0);
 }
 
-INT8 GetLargestZLevelOfItemPool(ITEM_POOL *pItemPool) {
+INT8 GetLargestZLevelOfItemPool(struct ITEM_POOL *pItemPool) {
   // OK, loop through pools and get any height != 0........
   while (pItemPool != NULL) {
     if (pItemPool->bRenderZHeightAboveLevel > 0) {
@@ -2110,7 +2117,7 @@ INT8 GetLargestZLevelOfItemPool(ITEM_POOL *pItemPool) {
   return (0);
 }
 
-BOOLEAN DoesItemPoolContainAllItemsOfHigherZLevel(ITEM_POOL *pItemPool) {
+BOOLEAN DoesItemPoolContainAllItemsOfHigherZLevel(struct ITEM_POOL *pItemPool) {
   // LOOP THROUGH LIST TO FIND NODE WE WANT
   while (pItemPool != NULL) {
     if (pItemPool->bRenderZHeightAboveLevel == 0) {
@@ -2123,7 +2130,7 @@ BOOLEAN DoesItemPoolContainAllItemsOfHigherZLevel(ITEM_POOL *pItemPool) {
   return (TRUE);
 }
 
-BOOLEAN DoesItemPoolContainAllItemsOfZeroZLevel(ITEM_POOL *pItemPool) {
+BOOLEAN DoesItemPoolContainAllItemsOfZeroZLevel(struct ITEM_POOL *pItemPool) {
   // LOOP THROUGH LIST TO FIND NODE WE WANT
   while (pItemPool != NULL) {
     if (pItemPool->bRenderZHeightAboveLevel != 0) {
@@ -2137,7 +2144,7 @@ BOOLEAN DoesItemPoolContainAllItemsOfZeroZLevel(ITEM_POOL *pItemPool) {
 }
 
 void RemoveItemPool(INT16 sGridNo, UINT8 ubLevel) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
 
   // Check for and existing pool on the object layer
   while (GetItemPool(sGridNo, &pItemPool, ubLevel) == TRUE) {
@@ -2146,7 +2153,7 @@ void RemoveItemPool(INT16 sGridNo, UINT8 ubLevel) {
 }
 
 void RemoveAllUnburiedItems(INT16 sGridNo, UINT8 ubLevel) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
 
   // Check for and existing pool on the object layer
   GetItemPool(sGridNo, &pItemPool, ubLevel);
@@ -2162,7 +2169,7 @@ void RemoveAllUnburiedItems(INT16 sGridNo, UINT8 ubLevel) {
   }
 }
 
-void LoopLevelNodeForShowThroughFlag(LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLevel) {
+void LoopLevelNodeForShowThroughFlag(struct LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLevel) {
   while (pNode != NULL) {
     if (pNode->uiFlags & LEVELNODE_ITEM) {
       if (ubLevel == 0) {
@@ -2182,7 +2189,7 @@ void LoopLevelNodeForShowThroughFlag(LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLe
 }
 
 void HandleItemObscuredFlag(INT16 sGridNo, UINT8 ubLevel) {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
 
   if (ubLevel == 0) {
     pNode = gpWorldLevelData[sGridNo].pStructHead;
@@ -2193,11 +2200,12 @@ void HandleItemObscuredFlag(INT16 sGridNo, UINT8 ubLevel) {
   }
 }
 
-BOOLEAN SetItemPoolVisibilityOn(ITEM_POOL *pItemPool, INT8 bAllGreaterThan, BOOLEAN fSetLocator) {
-  ITEM_POOL *pItemPoolTemp;
+BOOLEAN SetItemPoolVisibilityOn(struct ITEM_POOL *pItemPool, INT8 bAllGreaterThan,
+                                BOOLEAN fSetLocator) {
+  struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fAtLeastModified = FALSE, fDeleted = FALSE;
   INT8 bVisibleValue;
-  // OBJECTTYPE *pObj;
+  // struct OBJECTTYPE *pObj;
 
   pItemPoolTemp = pItemPool;
   while (pItemPoolTemp != NULL) {
@@ -2292,8 +2300,8 @@ BOOLEAN SetItemPoolVisibilityOn(ITEM_POOL *pItemPool, INT8 bAllGreaterThan, BOOL
   return (TRUE);
 }
 
-void SetItemPoolVisibilityHidden(ITEM_POOL *pItemPool) {
-  ITEM_POOL *pItemPoolTemp;
+void SetItemPoolVisibilityHidden(struct ITEM_POOL *pItemPool) {
+  struct ITEM_POOL *pItemPoolTemp;
 
   pItemPoolTemp = pItemPool;
   while (pItemPoolTemp != NULL) {
@@ -2307,8 +2315,8 @@ void SetItemPoolVisibilityHidden(ITEM_POOL *pItemPool) {
 
 // This determines the overall initial visibility of the pool...
 // IF ANY are set to VISIBLE, MODIFY
-void AdjustItemPoolVisibility(ITEM_POOL *pItemPool) {
-  ITEM_POOL *pItemPoolTemp;
+void AdjustItemPoolVisibility(struct ITEM_POOL *pItemPool) {
+  struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fAtLeastModified = FALSE;
 
   pItemPoolTemp = pItemPool;
@@ -2346,10 +2354,10 @@ void AdjustItemPoolVisibility(ITEM_POOL *pItemPool) {
 }
 
 BOOLEAN RemoveItemFromPool(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
-  ITEM_POOL *pItemPool;
-  ITEM_POOL *pItemPoolTemp;
+  struct ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPoolTemp;
   BOOLEAN fItemFound = FALSE;
-  LEVELNODE *pObject;
+  struct LEVELNODE *pObject;
 
   // Check for and existing pool on the object layer
   if (GetItemPool(sGridNo, &pItemPool, ubLevel)) {
@@ -2418,8 +2426,8 @@ BOOLEAN RemoveItemFromPool(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
 
     // Find any structure with flag set as having items on top.. if this one did...
     if (pItemPoolTemp->bRenderZHeightAboveLevel > 0) {
-      STRUCTURE *pStructure;
-      ITEM_POOL *pTempPool;
+      struct STRUCTURE *pStructure;
+      struct ITEM_POOL *pTempPool;
 
       // Check if an item pool exists here....
       if (!GetItemPool(pItemPoolTemp->sGridNo, &pTempPool, pItemPoolTemp->ubLevel)) {
@@ -2450,7 +2458,7 @@ BOOLEAN RemoveItemFromPool(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
 
 BOOLEAN MoveItemPools(INT16 sStartPos, INT16 sEndPos) {
   // note, only works between locations on the ground
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   WORLDITEM TempWorldItem;
 
   // While there is an existing pool
@@ -2463,8 +2471,8 @@ BOOLEAN MoveItemPools(INT16 sStartPos, INT16 sEndPos) {
   return (TRUE);
 }
 
-BOOLEAN GetItemPool(UINT16 usMapPos, ITEM_POOL **ppItemPool, UINT8 ubLevel) {
-  LEVELNODE *pObject;
+BOOLEAN GetItemPool(UINT16 usMapPos, struct ITEM_POOL **ppItemPool, UINT8 ubLevel) {
+  struct LEVELNODE *pObject;
 
   if (ubLevel == 0) {
     pObject = gpWorldLevelData[usMapPos].pStructHead;
@@ -2494,7 +2502,7 @@ BOOLEAN GetItemPool(UINT16 usMapPos, ITEM_POOL **ppItemPool, UINT8 ubLevel) {
 
 void NotifySoldiersToLookforItems() {
   UINT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
     pSoldier = MercSlots[cnt];
@@ -2507,7 +2515,7 @@ void NotifySoldiersToLookforItems() {
 
 void AllSoldiersLookforItems(BOOLEAN fShowLocators) {
   UINT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
     pSoldier = MercSlots[cnt];
@@ -2518,7 +2526,7 @@ void AllSoldiersLookforItems(BOOLEAN fShowLocators) {
   }
 }
 
-INT16 GetNumOkForDisplayItemsInPool(ITEM_POOL *pItemPool, INT8 bZLevel) {
+INT16 GetNumOkForDisplayItemsInPool(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
   INT32 cnt;
 
   // Determine total #
@@ -2534,7 +2542,7 @@ INT16 GetNumOkForDisplayItemsInPool(ITEM_POOL *pItemPool, INT8 bZLevel) {
   return ((UINT16)cnt);
 }
 
-BOOLEAN AnyItemsVisibleOnLevel(ITEM_POOL *pItemPool, INT8 bZLevel) {
+BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
   if ((gTacticalStatus.uiFlags & SHOW_ALL_ITEMS)) {
     return (TRUE);
   }
@@ -2553,7 +2561,7 @@ BOOLEAN AnyItemsVisibleOnLevel(ITEM_POOL *pItemPool, INT8 bZLevel) {
   return (FALSE);
 }
 
-BOOLEAN ItemPoolOKForDisplay(ITEM_POOL *pItemPool, INT8 bZLevel) {
+BOOLEAN ItemPoolOKForDisplay(struct ITEM_POOL *pItemPool, INT8 bZLevel) {
   if (gTacticalStatus.uiFlags & SHOW_ALL_ITEMS) {
     return (TRUE);
   }
@@ -2571,7 +2579,8 @@ BOOLEAN ItemPoolOKForDisplay(ITEM_POOL *pItemPool, INT8 bZLevel) {
   return (TRUE);
 }
 
-BOOLEAN ItemPoolOKForPickup(SOLDIERTYPE *pSoldier, ITEM_POOL *pItemPool, INT8 bZLevel) {
+BOOLEAN ItemPoolOKForPickup(struct SOLDIERTYPE *pSoldier, struct ITEM_POOL *pItemPool,
+                            INT8 bZLevel) {
   if (gTacticalStatus.uiFlags & SHOW_ALL_ITEMS) {
     return (TRUE);
   }
@@ -2591,14 +2600,14 @@ BOOLEAN ItemPoolOKForPickup(SOLDIERTYPE *pSoldier, ITEM_POOL *pItemPool, INT8 bZ
   return (TRUE);
 }
 
-extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, OBJECTTYPE *pObject,
+extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
 
-BOOLEAN DrawItemPoolList(ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bCommand, INT8 bZLevel,
+BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bCommand, INT8 bZLevel,
                          INT16 sXPos, INT16 sYPos) {
   INT16 sY;
   INVTYPE *pItem;
-  ITEM_POOL *pTempItemPool;
+  struct ITEM_POOL *pTempItemPool;
   CHAR16 pStr[100];
   INT16 cnt = 0, sHeight = 0;
   INT16 sLargeLineWidth = 0, sLineWidth;
@@ -2840,13 +2849,13 @@ INT8 GetListMouseHotSpot(INT16 sLargestLineWidth, INT8 bNumItemsListed, INT16 sF
   return (gbCurrentItemSel);
 }
 
-void SetItemPoolLocator(ITEM_POOL *pItemPool) {
+void SetItemPoolLocator(struct ITEM_POOL *pItemPool) {
   pItemPool->bFlashColor = 59;
 
   pItemPool->uiTimerID = AddFlashItemSlot(pItemPool, NULL, 0);
 }
 
-void SetItemPoolLocatorWithCallback(ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback) {
+void SetItemPoolLocatorWithCallback(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback) {
   pItemPool->bFlashColor = 59;
 
   pItemPool->uiTimerID = AddFlashItemSlot(pItemPool, Callback, 0);
@@ -2877,7 +2886,8 @@ void RecountFlashItemSlots(void) {
   }
 }
 
-INT32 AddFlashItemSlot(ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback, UINT8 ubFlags) {
+INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback,
+                       UINT8 ubFlags) {
   INT32 iFlashItemIndex;
 
   if ((iFlashItemIndex = GetFreeFlashItemSlot()) == (-1)) return (-1);
@@ -2895,7 +2905,7 @@ INT32 AddFlashItemSlot(ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callback, UI
   return (iFlashItemIndex);
 }
 
-BOOLEAN RemoveFlashItemSlot(ITEM_POOL *pItemPool) {
+BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool) {
   UINT32 uiCount;
 
   CHECKF(pItemPool != NULL);
@@ -2920,8 +2930,8 @@ BOOLEAN RemoveFlashItemSlot(ITEM_POOL *pItemPool) {
 
 void HandleFlashingItems() {
   UINT32 cnt;
-  ITEM_POOL *pItemPool;
-  LEVELNODE *pObject;
+  struct ITEM_POOL *pItemPool;
+  struct LEVELNODE *pObject;
   ITEM_POOL_LOCATOR *pLocator;
   BOOLEAN fDoLocator = FALSE;
 
@@ -3006,7 +3016,7 @@ void HandleFlashingItems() {
 
 void RenderTopmostFlashingItems() {
   UINT32 cnt;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   ITEM_POOL_LOCATOR *pLocator;
 
   for (cnt = 0; cnt < guiNumFlashItemSlots; cnt++) {
@@ -3069,10 +3079,10 @@ void RenderTopmostFlashingItems() {
   }
 }
 
-BOOLEAN VerifyGiveItem(SOLDIERTYPE *pSoldier, SOLDIERTYPE **ppTargetSoldier) {
-  SOLDIERTYPE *pTSoldier;
+BOOLEAN VerifyGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTargetSoldier) {
+  struct SOLDIERTYPE *pTSoldier;
   UINT16 usSoldierIndex;
-  OBJECTTYPE *pObject;
+  struct OBJECTTYPE *pObject;
 
   INT16 sGridNo;
   UINT8 ubDirection;
@@ -3128,10 +3138,10 @@ BOOLEAN VerifyGiveItem(SOLDIERTYPE *pSoldier, SOLDIERTYPE **ppTargetSoldier) {
   return (FALSE);
 }
 
-void SoldierGiveItemFromAnimation(SOLDIERTYPE *pSoldier) {
-  SOLDIERTYPE *pTSoldier;
+void SoldierGiveItemFromAnimation(struct SOLDIERTYPE *pSoldier) {
+  struct SOLDIERTYPE *pTSoldier;
   INT8 bInvPos;
-  OBJECTTYPE TempObject;
+  struct OBJECTTYPE TempObject;
   UINT8 ubProfile;
 
   INT16 sGridNo;
@@ -3143,7 +3153,7 @@ void SoldierGiveItemFromAnimation(SOLDIERTYPE *pSoldier) {
   // Get items from pending data
 
   // Get objectype and delete
-  memcpy(&TempObject, pSoldier->pTempObject, sizeof(OBJECTTYPE));
+  memcpy(&TempObject, pSoldier->pTempObject, sizeof(struct OBJECTTYPE));
   MemFree(pSoldier->pTempObject);
   pSoldier->pTempObject = NULL;
 
@@ -3309,8 +3319,8 @@ void SoldierGiveItemFromAnimation(SOLDIERTYPE *pSoldier) {
   pTSoldier->uiStatusFlags &= (~SOLDIER_ENGAGEDINACTION);
 }
 
-INT16 AdjustGridNoForItemPlacement(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  STRUCTURE *pStructure;
+INT16 AdjustGridNoForItemPlacement(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+  struct STRUCTURE *pStructure;
   INT16 sDesiredLevel;
   INT16 sActionGridNo;
   BOOLEAN fStructFound = FALSE;
@@ -3354,7 +3364,7 @@ INT16 AdjustGridNoForItemPlacement(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   return (sActionGridNo);
 }
 
-void StartBombMessageBox(SOLDIERTYPE *pSoldier, INT16 sGridNo) {
+void StartBombMessageBox(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   UINT8 ubRoom;
 
   gpTempSoldier = pSoldier;
@@ -3468,9 +3478,9 @@ void BombMessageBoxCallBack(UINT8 ubExitValue) {
   }
 }
 
-BOOLEAN HandItemWorks(SOLDIERTYPE *pSoldier, INT8 bSlot) {
+BOOLEAN HandItemWorks(struct SOLDIERTYPE *pSoldier, INT8 bSlot) {
   BOOLEAN fItemJustBroke = FALSE, fItemWorks = TRUE;
-  OBJECTTYPE *pObj;
+  struct OBJECTTYPE *pObj;
 
   pObj = &(pSoldier->inv[bSlot]);
 
@@ -3517,7 +3527,7 @@ BOOLEAN HandItemWorks(SOLDIERTYPE *pSoldier, INT8 bSlot) {
   return (fItemWorks);
 }
 
-void SetOffBoobyTrapInMapScreen(SOLDIERTYPE *pSoldier, OBJECTTYPE *pObject) {
+void SetOffBoobyTrapInMapScreen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject) {
   UINT8 ubPtsDmg = 0;
 
   // check if trapped item is an explosive, if so then up the amount of dmg
@@ -3537,7 +3547,7 @@ void SetOffBoobyTrapInMapScreen(SOLDIERTYPE *pSoldier, OBJECTTYPE *pObject) {
   PlayJA2Sample(EXPLOSION_1, RATE_11025, BTNVOLUME, 1, MIDDLEPAN);
 }
 
-void SetOffBoobyTrap(ITEM_POOL *pItemPool) {
+void SetOffBoobyTrap(struct ITEM_POOL *pItemPool) {
   if (pItemPool) {
     INT16 sX, sY;
     sX = CenterX(pItemPool->sGridNo);
@@ -3550,11 +3560,11 @@ void SetOffBoobyTrap(ITEM_POOL *pItemPool) {
   }
 }
 
-BOOLEAN ContinuePastBoobyTrap(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT32 iItemIndex,
-                              BOOLEAN fInStrategic, BOOLEAN *pfSaidQuote) {
+BOOLEAN ContinuePastBoobyTrap(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
+                              INT32 iItemIndex, BOOLEAN fInStrategic, BOOLEAN *pfSaidQuote) {
   BOOLEAN fBoobyTrapKnowledge;
   INT8 bTrapDifficulty, bTrapDetectLevel;
-  OBJECTTYPE *pObj;
+  struct OBJECTTYPE *pObj;
 
   pObj = &(gWorldItems[iItemIndex].o);
 
@@ -3649,13 +3659,13 @@ void BoobyTrapMessageBoxCallBack(UINT8 ubExitValue) {
 
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     INT32 iCheckResult;
-    OBJECTTYPE Object;
+    struct OBJECTTYPE Object;
 
     iCheckResult = SkillCheck(gpBoobyTrapSoldier, DISARM_TRAP_CHECK, 0);
 
     if (iCheckResult >= 0) {
       // get the item
-      memcpy(&Object, &(gWorldItems[gpBoobyTrapItemPool->iItemIndex].o), sizeof(OBJECTTYPE));
+      memcpy(&Object, &(gWorldItems[gpBoobyTrapItemPool->iItemIndex].o), sizeof(struct OBJECTTYPE));
 
       // NB owner grossness... bombs 'owned' by the enemy are stored with side value 1 in
       // the map. So if we want to detect a bomb placed by the player, owner is > 1, and
@@ -3738,7 +3748,7 @@ void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue) {
 
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     INT32 iCheckResult;
-    OBJECTTYPE Object;
+    struct OBJECTTYPE Object;
 
     iCheckResult = SkillCheck(gpBoobyTrapSoldier, DISARM_TRAP_CHECK, 0);
 
@@ -3750,7 +3760,7 @@ void BoobyTrapInMapScreenMessageBoxCallBack(UINT8 ubExitValue) {
       DoMercBattleSound(gpBoobyTrapSoldier, BATTLE_SOUND_COOL1);
 
       // get the item
-      memcpy(&Object, gpItemPointer, sizeof(OBJECTTYPE));
+      memcpy(&Object, gpItemPointer, sizeof(struct OBJECTTYPE));
 
       if (gfDisarmingBuriedBomb) {
         if (Object.usItem == SWITCH) {
@@ -3806,17 +3816,17 @@ void SwitchMessageBoxCallBack(UINT8 ubExitValue) {
   }
 }
 
-BOOLEAN NearbyGroundSeemsWrong(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fCheckAroundGridno,
-                               UINT16 *psProblemGridNo) {
+BOOLEAN NearbyGroundSeemsWrong(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+                               BOOLEAN fCheckAroundGridno, UINT16 *psProblemGridNo) {
   INT16 sNextGridNo;
   // BOOLEAN fWorthChecking = FALSE, fProblemExists = FALSE, fDetectedProblem = FALSE;
   UINT8 ubDetectLevel, ubDirection;
   MAP_ELEMENT *pMapElement;
   UINT32 fCheckFlag;
   UINT32 uiWorldBombIndex;
-  OBJECTTYPE *pObj;
+  struct OBJECTTYPE *pObj;
   BOOLEAN fMining, fFoundMetal = FALSE;
-  //	ITEM_POOL *			pItemPool;
+  //	struct ITEM_POOL *			pItemPool;
   UINT8 ubMovementCost;
 
   ubDetectLevel = 0;
@@ -3961,7 +3971,7 @@ BOOLEAN NearbyGroundSeemsWrong(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fCh
 }
 
 void MineSpottedDialogueCallBack(void) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
 
   // ATE: REALLY IMPORTANT - ALL CALLBACK ITEMS SHOULD UNLOCK
   gTacticalStatus.fLockItemLocators = FALSE;
@@ -3996,7 +4006,7 @@ void RemoveBlueFlagDialogueCallBack(UINT8 ubExitValue) {
 }
 
 void AddBlueFlag(INT16 sGridNo, INT8 bLevel) {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
 
   ApplyMapChangesToMapTempFile(TRUE);
   gpWorldLevelData[sGridNo].uiFlags |= MAPELEMENT_PLAYER_MINE_PRESENT;
@@ -4027,7 +4037,8 @@ void RemoveBlueFlag(INT16 sGridNo, INT8 bLevel) {
   SetRenderFlags(RENDER_FLAG_FULL);
 }
 
-void MakeNPCGrumpyForMinorOffense(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOffendingSoldier) {
+void MakeNPCGrumpyForMinorOffense(struct SOLDIERTYPE *pSoldier,
+                                  struct SOLDIERTYPE *pOffendingSoldier) {
   CancelAIAction(pSoldier, TRUE);
 
   switch (pSoldier->ubProfile) {
@@ -4062,7 +4073,7 @@ void MakeNPCGrumpyForMinorOffense(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOffending
   }
 }
 
-void TestPotentialOwner(SOLDIERTYPE *pSoldier) {
+void TestPotentialOwner(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife >= OKLIFE) {
     if (SoldierToSoldierLineOfSightTest(
             pSoldier, gpTempSoldier,
@@ -4075,10 +4086,10 @@ void TestPotentialOwner(SOLDIERTYPE *pSoldier) {
 }
 
 void CheckForPickedOwnership(void) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   UINT8 ubProfile;
   UINT8 ubCivGroup;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubLoop;
 
   // LOOP THROUGH LIST TO FIND NODE WE WANT
@@ -4113,7 +4124,8 @@ void CheckForPickedOwnership(void) {
   }
 }
 
-void LoopLevelNodeForItemGlowFlag(LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLevel, BOOLEAN fOn) {
+void LoopLevelNodeForItemGlowFlag(struct LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLevel,
+                                  BOOLEAN fOn) {
   while (pNode != NULL) {
     if (pNode->uiFlags & LEVELNODE_ITEM) {
       if (fOn) {
@@ -4127,7 +4139,7 @@ void LoopLevelNodeForItemGlowFlag(LEVELNODE *pNode, INT16 sGridNo, UINT8 ubLevel
 }
 
 void HandleItemGlowFlag(INT16 sGridNo, UINT8 ubLevel, BOOLEAN fOn) {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
 
   if (ubLevel == 0) {
     pNode = gpWorldLevelData[sGridNo].pStructHead;
@@ -4155,7 +4167,7 @@ void ToggleItemGlow(BOOLEAN fOn) {
   SetRenderFlags(RENDER_FLAG_FULL);
 }
 
-BOOLEAN ContinuePastBoobyTrapInMapScreen(OBJECTTYPE *pObject, SOLDIERTYPE *pSoldier) {
+BOOLEAN ContinuePastBoobyTrapInMapScreen(struct OBJECTTYPE *pObject, struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fBoobyTrapKnowledge;
   INT8 bTrapDifficulty, bTrapDetectLevel;
 
@@ -4230,7 +4242,7 @@ INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius) {
   INT16 sLowestGridNo = 0;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
-  SOLDIERTYPE soldier;
+  struct SOLDIERTYPE soldier;
   UINT8 ubSaveNPCAPBudget;
   UINT8 ubSaveNPCDistLimit;
   BOOLEAN fSetDirection = FALSE;
@@ -4246,7 +4258,7 @@ INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius) {
 
   // create dummy soldier, and use the pathing to determine which nearby slots are
   // reachable.
-  memset(&soldier, 0, sizeof(SOLDIERTYPE));
+  memset(&soldier, 0, sizeof(struct SOLDIERTYPE));
   soldier.bTeam = 1;
   soldier.sGridNo = sSweetGridNo;
 
@@ -4301,7 +4313,7 @@ INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius) {
   return NOWHERE;
 }
 
-BOOLEAN CanPlayerUseRocketRifle(SOLDIERTYPE *pSoldier, BOOLEAN fDisplay) {
+BOOLEAN CanPlayerUseRocketRifle(struct SOLDIERTYPE *pSoldier, BOOLEAN fDisplay) {
   if (pSoldier->inv[pSoldier->ubAttackingHand].usItem == ROCKET_RIFLE ||
       pSoldier->inv[pSoldier->ubAttackingHand].usItem == AUTO_ROCKET_RIFLE) {
     // check imprint ID

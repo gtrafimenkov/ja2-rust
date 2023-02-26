@@ -2,12 +2,14 @@
 #define _SPREAD_BURST_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 void ResetBurstLocations();
 void AccumulateBurstLocation(INT16 sGridNo);
-void PickBurstLocations(SOLDIERTYPE *pSoldier);
-void AIPickBurstLocations(SOLDIERTYPE *pSoldier, INT8 bTargets, SOLDIERTYPE *pTargets[5]);
+void PickBurstLocations(struct SOLDIERTYPE *pSoldier);
+void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, INT8 bTargets,
+                          struct SOLDIERTYPE *pTargets[5]);
 
 void RenderAccumulatedBurstLocations();
 

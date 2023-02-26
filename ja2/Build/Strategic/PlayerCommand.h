@@ -1,9 +1,7 @@
 #ifndef _PLAYER_COMMAND_H
 #define _PLAYER_COMMAND_H
 
-// header file to track the information a player 'knows' about a sector, which may in fact not be
-// true
-#include "Strategic/StrategicMovement.h"
+#include "SGP/Types.h"
 
 // build main facilities strings for sector
 void GetSectorFacilitiesFlags(INT16 sMapX, INT16 sMapY, STR16 sFacilitiesString);

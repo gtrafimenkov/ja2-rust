@@ -4,6 +4,8 @@
 
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Tactical/Interface.h"
 #include "Tactical/SoldierControl.h"
@@ -51,7 +53,7 @@ void AccumulateBurstLocation(INT16 sGridNo) {
   }
 }
 
-void PickBurstLocations(SOLDIERTYPE *pSoldier) {
+void PickBurstLocations(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubShotsPerBurst;
   FLOAT dAccululator = 0;
   FLOAT dStep = 0;
@@ -82,7 +84,8 @@ void PickBurstLocations(SOLDIERTYPE *pSoldier) {
   // OK, they have been added
 }
 
-void AIPickBurstLocations(SOLDIERTYPE *pSoldier, INT8 bTargets, SOLDIERTYPE *pTargets[5]) {
+void AIPickBurstLocations(struct SOLDIERTYPE *pSoldier, INT8 bTargets,
+                          struct SOLDIERTYPE *pTargets[5]) {
   UINT8 ubShotsPerBurst;
   FLOAT dAccululator = 0;
   FLOAT dStep = 0;
@@ -115,12 +118,12 @@ void AIPickBurstLocations(SOLDIERTYPE *pSoldier, INT8 bTargets, SOLDIERTYPE *pTa
   // OK, they have been added
 }
 
-extern HVOBJECT GetCursorFileVideoObject(UINT32 uiCursorFile);
+extern struct VObject *GetCursorFileVideoObject(UINT32 uiCursorFile);
 
 void RenderAccumulatedBurstLocations() {
   INT32 cnt;
   INT16 sGridNo;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
   if (!gfBeginBurstSpreadTracking) {
     return;

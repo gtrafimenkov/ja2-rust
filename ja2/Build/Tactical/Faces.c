@@ -10,6 +10,7 @@
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -26,15 +27,14 @@
 #include "Tactical/Gap.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceItems.h"
+#include "Tactical/InterfaceUtils.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Squads.h"
 #include "Tactical/TeamTurns.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
@@ -151,7 +151,7 @@ void RecountFaces(void) {
   }
 }
 
-INT32 InitSoldierFace(SOLDIERTYPE *pSoldier) {
+INT32 InitSoldierFace(struct SOLDIERTYPE *pSoldier) {
   INT32 iFaceIndex;
 
   // Check if we have a face init already
@@ -193,7 +193,7 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   UINT32 uiVideoObject;
   INT32 iFaceIndex;
   ETRLEObject ETRLEObject;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   UINT32 uiCount;
   struct SGPPaletteEntry Pal[256];
 
@@ -342,7 +342,7 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   return (iFaceIndex);
 }
 
-void DeleteSoldierFace(SOLDIERTYPE *pSoldier) {
+void DeleteSoldierFace(struct SOLDIERTYPE *pSoldier) {
   DeleteFace(pSoldier->iFaceIndex);
 
   pSoldier->iFaceIndex = -1;
@@ -557,7 +557,7 @@ void SetAutoFaceInActiveFromSoldier(UINT8 ubSoldierID) {
 
 void SetAutoFaceInActive(INT32 iFaceIndex) {
   FACETYPE *pFace;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // Check face index
   CHECKV(iFaceIndex != -1);
@@ -944,7 +944,7 @@ void HandleTalkingAutoFace(INT32 iFaceIndex) {
 }
 
 // Local function - uses these variables because they have already been validated
-void SetFaceShade(SOLDIERTYPE *pSoldier, FACETYPE *pFace, BOOLEAN fExternBlit) {
+void SetFaceShade(struct SOLDIERTYPE *pSoldier, FACETYPE *pFace, BOOLEAN fExternBlit) {
   // Set to default
   SetObjectHandleShade(pFace->uiVideoObject, FLASH_PORTRAIT_NOSHADE);
 
@@ -979,7 +979,7 @@ void GetXYForIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 
   INT16 sX, sY;
   UINT16 usWidth, usHeight;
   ETRLEObject *pTrav;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
@@ -999,7 +999,7 @@ void GetXYForRightIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, I
   INT16 sX, sY;
   UINT16 usWidth, usHeight;
   ETRLEObject *pTrav;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
@@ -1038,7 +1038,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
   BOOLEAN fAtGunRange = FALSE;
   BOOLEAN fShowNumber = FALSE;
   BOOLEAN fShowMaximum = FALSE;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sFontX, sFontY;
   INT16 sX1, sY1, sY2, sX2;
   UINT32 uiDestPitchBYTES;
@@ -1565,7 +1565,7 @@ void HandleAutoFaces() {
   BOOLEAN fRerender = FALSE;
   BOOLEAN fHandleFace;
   BOOLEAN fHandleUIHatch;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (uiCount = 0; uiCount < guiNumFaces; uiCount++) {
     fRerender = FALSE;

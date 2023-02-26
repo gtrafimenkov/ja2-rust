@@ -16,7 +16,6 @@
 #include "SGP/WinFont.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 
 #ifdef JA2BETAVERSION

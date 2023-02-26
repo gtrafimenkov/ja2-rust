@@ -28,7 +28,6 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"
@@ -39,7 +38,7 @@ void BuildListFile();
 BOOLEAN gfAniEditMode = FALSE;
 static UINT16 usStartAnim = 0;
 static UINT8 ubStartHeight = 0;
-static SOLDIERTYPE *pSoldier;
+static struct SOLDIERTYPE *pSoldier;
 
 static BOOLEAN fOKFiles = FALSE;
 static UINT8 ubNumStates = 0;

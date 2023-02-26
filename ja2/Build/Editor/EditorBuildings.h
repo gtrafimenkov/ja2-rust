@@ -3,8 +3,6 @@
 
 #include "BuildDefines.h"
 #include "SGP/Types.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/Video.h"
 
 extern BOOLEAN fBuildingShowRoofs, fBuildingShowWalls, fBuildingShowRoomInfo;
 extern UINT8 gubCurrRoomNumber;

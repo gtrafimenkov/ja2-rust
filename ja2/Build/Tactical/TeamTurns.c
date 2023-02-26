@@ -47,7 +47,7 @@
 #endif
 
 extern void DecayPublicOpplist(INT8 bTeam);
-extern void VerifyAndDecayOpplist(SOLDIERTYPE *pSoldier);
+extern void VerifyAndDecayOpplist(struct SOLDIERTYPE *pSoldier);
 void EndInterrupt(BOOLEAN fMarkInterruptOccurred);
 void DeleteFromIntList(UINT8 ubIndex, BOOLEAN fCommunicate);
 
@@ -90,7 +90,7 @@ void ClearIntList(void) {
 
 BOOLEAN BloodcatsPresent(void) {
   INT32 iLoop;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.Team[CREATURE_TEAM].bTeamActive == FALSE) {
     return (FALSE);
@@ -111,7 +111,7 @@ BOOLEAN BloodcatsPresent(void) {
 
 void StartPlayerTeamTurn(BOOLEAN fDoBattleSnd, BOOLEAN fEnteringCombatMode) {
   INT32 cnt;
-  //	SOLDIERTYPE		*pSoldier;
+  //	struct SOLDIERTYPE		*pSoldier;
   //	EV_S_BEGINTURN	SBeginTurn;
 
   // Start the turn of player charactors
@@ -213,7 +213,7 @@ void FreezeInterfaceForEnemyTurn(void) {
 }
 
 void EndTurn(UINT8 ubNextTeam) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
 
   // Check for enemy pooling (add enemies if there happens to be more than the max in the
@@ -255,7 +255,7 @@ void EndTurn(UINT8 ubNextTeam) {
 }
 
 void EndAITurn(void) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
 
   // Remove any deadlock message
@@ -281,7 +281,7 @@ void EndAITurn(void) {
 
 void EndAllAITurns(void) {
   // warp turn to the player's turn
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
 
   // Remove any deadlock message
@@ -327,7 +327,7 @@ void EndTurnEvents(void) {
 void BeginTeamTurn(UINT8 ubTeam) {
   INT32 cnt;
   UINT8 ubID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   while (1) {
     if (ubTeam > LAST_TEAM) {
@@ -408,7 +408,7 @@ void BeginTeamTurn(UINT8 ubTeam) {
   }
 }
 
-void DisplayHiddenInterrupt(SOLDIERTYPE *pSoldier) {
+void DisplayHiddenInterrupt(struct SOLDIERTYPE *pSoldier) {
   // If the AI got an interrupt but this has been hidden from the player until this point,
   // this code will display the interrupt
 
@@ -447,7 +447,7 @@ void DisplayHiddenInterrupt(SOLDIERTYPE *pSoldier) {
   gfHiddenInterrupt = FALSE;
 }
 
-void DisplayHiddenTurnbased(SOLDIERTYPE *pActingSoldier) {
+void DisplayHiddenTurnbased(struct SOLDIERTYPE *pActingSoldier) {
   // This code should put the game in turn-based and give control to the AI-controlled soldier
   // whose pointer has been passed in as an argument (we were in non-combat and the AI is doing
   // something visible, i.e. making an attack)
@@ -506,8 +506,8 @@ BOOLEAN EveryoneInInterruptListOnSameTeam(void) {
 void StartInterrupt(void) {
   UINT8 ubFirstInterrupter;
   INT8 bTeam;
-  SOLDIERTYPE *pSoldier;
-  SOLDIERTYPE *pTempSoldier;
+  struct SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pTempSoldier;
   UINT8 ubInterrupter;
   INT32 cnt;
 
@@ -705,8 +705,8 @@ void StartInterrupt(void) {
 
 void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
   UINT8 ubInterruptedSoldier;
-  SOLDIERTYPE *pSoldier;
-  SOLDIERTYPE *pTempSoldier;
+  struct SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pTempSoldier;
   INT32 cnt;
   BOOLEAN fFound;
   UINT8 ubMinAPsToAttack;
@@ -926,12 +926,12 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
   }
 }
 
-BOOLEAN StandardInterruptConditionsMet(SOLDIERTYPE *pSoldier, UINT8 ubOpponentID,
+BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, UINT8 ubOpponentID,
                                        INT8 bOldOppList) {
   //	UINT8 ubAniType;
   UINT8 ubMinPtsNeeded;
   INT8 bDir;
-  SOLDIERTYPE *pOpponent;
+  struct SOLDIERTYPE *pOpponent;
 
   if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) &&
       !(gubSightFlags & SIGHT_INTERRUPT)) {
@@ -1169,7 +1169,8 @@ BOOLEAN StandardInterruptConditionsMet(SOLDIERTYPE *pSoldier, UINT8 ubOpponentID
   return (TRUE);
 }
 
-INT8 CalcInterruptDuelPts(SOLDIERTYPE *pSoldier, UINT8 ubOpponentID, BOOLEAN fUseWatchSpots) {
+INT8 CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, UINT8 ubOpponentID,
+                          BOOLEAN fUseWatchSpots) {
   INT8 bPoints;
   INT8 bLightLevel;
   UINT8 ubDistance;
@@ -1314,7 +1315,7 @@ INT8 CalcInterruptDuelPts(SOLDIERTYPE *pSoldier, UINT8 ubOpponentID, BOOLEAN fUs
   return (bPoints);
 }
 
-BOOLEAN InterruptDuel(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent) {
+BOOLEAN InterruptDuel(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent) {
   BOOLEAN fResult = FALSE;
 
   // if opponent can't currently see us and we can see them
@@ -1513,7 +1514,7 @@ void VerifyOutOfTurnOrderArray() {
   }
 }
 
-void DoneAddingToIntList(SOLDIERTYPE *pSoldier, BOOLEAN fChange, UINT8 ubInterruptType) {
+void DoneAddingToIntList(struct SOLDIERTYPE *pSoldier, BOOLEAN fChange, UINT8 ubInterruptType) {
   if (fChange) {
     VerifyOutOfTurnOrderArray();
     if (EveryoneInInterruptListOnSameTeam()) {
@@ -1524,7 +1525,7 @@ void DoneAddingToIntList(SOLDIERTYPE *pSoldier, BOOLEAN fChange, UINT8 ubInterru
   }
 }
 
-void ResolveInterruptsVs(SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
+void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
   UINT8 ubTeam, ubOpp;
   UINT8 ubIntCnt;
   UINT8 ubIntList[MAXMERCS];
@@ -1533,7 +1534,7 @@ void ResolveInterruptsVs(SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
   UINT8 ubSlot, ubSmallestSlot;
   UINT8 ubLoop;
   BOOLEAN fIntOccurs;
-  SOLDIERTYPE *pOpponent;
+  struct SOLDIERTYPE *pOpponent;
   BOOLEAN fControlChanged = FALSE;
 
   if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT)) {
@@ -1757,7 +1758,7 @@ BOOLEAN LoadTeamTurnsFromTheSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN NPCFirstDraw(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTargetSoldier) {
+BOOLEAN NPCFirstDraw(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier) {
   // if attacking an NPC check to see who draws first!
 
   if (pTargetSoldier->ubProfile != NO_PROFILE && pTargetSoldier->ubProfile != SLAY &&

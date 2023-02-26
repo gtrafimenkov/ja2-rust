@@ -11,6 +11,8 @@
 #include "SGP/English.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
@@ -36,6 +38,7 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/Squads.h"
+#include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
 #include "Utils/Cursors.h"
@@ -59,8 +62,8 @@ extern BOOLEAN fZoomFlag;
 extern BOOLEAN fMapScreenBottomDirty;
 
 BOOLEAN gfTacticalTraversal = FALSE;
-GROUP *gpTacticalTraversalGroup = NULL;
-SOLDIERTYPE *gpTacticalTraversalChosenSoldier = NULL;
+struct GROUP *gpTacticalTraversalGroup = NULL;
+struct SOLDIERTYPE *gpTacticalTraversalChosenSoldier = NULL;
 
 BOOLEAN gfAutomaticallyStartAutoResolve = FALSE;
 BOOLEAN gfAutoAmbush = FALSE;
@@ -93,31 +96,31 @@ enum  // GraphicIDs for the panel
 BOOLEAN gfDisplayPotentialRetreatPaths = FALSE;
 UINT16 gusRetreatButtonLeft, gusRetreatButtonTop, gusRetreatButtonRight, gusRetreatButtonBottom;
 
-GROUP *gpBattleGroup = NULL;
+struct GROUP *gpBattleGroup = NULL;
 
 void AutoResolveBattleCallback(GUI_BUTTON *btn, INT32 reason);
 void GoToSectorCallback(GUI_BUTTON *btn, INT32 reason);
 void RetreatMercsCallback(GUI_BUTTON *btn, INT32 reason);
 
-void GetSoldierConditionInfo(SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
+void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
                              UINT8 *pubHPPercent, UINT8 *pubBPPercent);
 
 void CheckForRobotAndIfItsControlled(void);
 
 void PutNonSquadMercsInBattleSectorOnSquads(BOOLEAN fExitVehicles);
-void PutNonSquadMercsInPlayerGroupOnSquads(GROUP *pGroup, BOOLEAN fExitVehicles);
+void PutNonSquadMercsInPlayerGroupOnSquads(struct GROUP *pGroup, BOOLEAN fExitVehicles);
 
 /*
-void InvolvedMoveCallback( MOUSE_REGION *reg, INT32 reason );
-void InvolvedClickCallback( MOUSE_REGION *reg, INT32 reason );
-void UninvolvedMoveCallback( MOUSE_REGION *reg, INT32 reason );
-void UninvolvedClickCallback( MOUSE_REGION *reg, INT32 reason );
+void InvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason );
+void InvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason );
+void UninvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason );
+void UninvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason );
 
-SOLDIERTYPE* InvolvedSoldier( INT32 index );
-SOLDIERTYPE* UninvolvedSoldier( INT32 index );
+struct SOLDIERTYPE* InvolvedSoldier( INT32 index );
+struct SOLDIERTYPE* UninvolvedSoldier( INT32 index );
 */
 
-MOUSE_REGION PBInterfaceBlanket;
+struct MOUSE_REGION PBInterfaceBlanket;
 BOOLEAN gfPreBattleInterfaceActive = FALSE;
 UINT32 iPBButton[3];
 UINT32 iPBButtonImage[3];
@@ -131,8 +134,8 @@ void DoTransitionFromMapscreenToPreBattleInterface();
 BOOLEAN gfBlinkHeader;
 
 // mouse regions in mapscreen proper than must have thier help text disabled then re-enabled
-extern MOUSE_REGION gMapStatusBarsRegion;
-extern MOUSE_REGION gCharInfoHandRegion;
+extern struct MOUSE_REGION gMapStatusBarsRegion;
+extern struct MOUSE_REGION gCharInfoHandRegion;
 
 extern INT32 giMapContractButton;
 extern INT32 giCharInfoButton[2];
@@ -178,21 +181,21 @@ BOOLEAN gfUsePersistantPBI;
 
 INT32 giHilitedInvolved, giHilitedUninvolved;
 
-extern void CalculateGroupRetreatSector(GROUP *pGroup);
+extern void CalculateGroupRetreatSector(struct GROUP *pGroup);
 
-extern void GetMapscreenMercAssignmentString(SOLDIERTYPE *pSoldier, wchar_t sString[]);
-extern void GetMapscreenMercLocationString(SOLDIERTYPE *pSoldier, wchar_t sString[],
+extern void GetMapscreenMercAssignmentString(struct SOLDIERTYPE *pSoldier, wchar_t sString[]);
+extern void GetMapscreenMercLocationString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
                                            int sStringSize);
-extern void GetMapscreenMercDestinationString(SOLDIERTYPE *pSoldier, wchar_t sString[],
+extern void GetMapscreenMercDestinationString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
                                               int sStringSize);
-extern void GetMapscreenMercDepartureString(SOLDIERTYPE *pSoldier, wchar_t sString[],
+extern void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sString[],
                                             int sStringSize, UINT8 *pubFontColor);
 
 #ifdef JA2BETAVERSION
 // The group is passed so we can extract the sector location
-void ValidateAndCorrectInBattleCounters(GROUP *pLocGroup) {
+void ValidateAndCorrectInBattleCounters(struct GROUP *pLocGroup) {
   SECTORINFO *pSector;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   UINT8 ubSectorID;
   UINT8 ubInvalidGroups = 0;
 
@@ -222,7 +225,7 @@ void ValidateAndCorrectInBattleCounters(GROUP *pLocGroup) {
       pSector->ubElitesInBattle || pSector->ubCreaturesInBattle) {
     CHAR16 str[512];
     swprintf(
-        str,
+        str, ARR_SIZE(str),
         L"Strategic info warning:  Sector 'in battle' counters are not clear when they should be.  "
         L"If you can provide information on how a previous battle was resolved here or nearby "
         L"patrol "
@@ -243,7 +246,7 @@ void ValidateAndCorrectInBattleCounters(GROUP *pLocGroup) {
 }
 #endif
 
-void InitPreBattleInterface(GROUP *pBattleGroup, BOOLEAN fPersistantPBI) {
+void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) {
   VOBJECT_DESC VObjectDesc;
   INT32 i;
   UINT8 ubGroupID = 0;
@@ -471,7 +474,7 @@ void InitPreBattleInterface(GROUP *pBattleGroup, BOOLEAN fPersistantPBI) {
           if (!gpBattleGroup) gpBattleGroup = GetGroup(ubGroupID);
           if (bBestExpLevel > MercPtrs[i]->bExpLevel) bBestExpLevel = MercPtrs[i]->bExpLevel;
           if (MercPtrs[i]->ubPrevSectorID == 255) {  // Not able to retreat (calculate it for group)
-            GROUP *pTempGroup;
+            struct GROUP *pTempGroup;
             pTempGroup = GetGroup(ubGroupID);
             Assert(pTempGroup);
             CalculateGroupRetreatSector(pTempGroup);
@@ -876,8 +879,8 @@ void RenderPBHeader(INT32 *piX, INT32 *piWidth) {
 }
 
 void RenderPreBattleInterface() {
-  GROUP *pGroup;
-  HVOBJECT hVObject;
+  struct GROUP *pGroup;
+  struct VObject *hVObject;
   INT32 i, x, y, line, width;
   CHAR16 str[100];
   CHAR16 pSectorName[128];
@@ -1286,7 +1289,7 @@ enum {
   COND_DEAD
 };
 
-void GetSoldierConditionInfo(SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
+void GetSoldierConditionInfo(struct SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szConditionSize,
                              UINT8 *pubHPPercent, UINT8 *pubBPPercent) {
   Assert(pSoldier);
   *pubHPPercent = (UINT8)(pSoldier->bLife * 100 / pSoldier->bLifeMax);
@@ -1315,7 +1318,7 @@ void GetSoldierConditionInfo(SOLDIERTYPE *pSoldier, CHAR16 *szCondition, int szC
 }
 
 /*
-void InvolvedMoveCallback( MOUSE_REGION *reg, INT32 reason )
+void InvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason )
 {
         gfRenderPBInterface = TRUE;
         if( reason & MSYS_CALLBACK_REASON_LOST_MOUSE )
@@ -1327,11 +1330,11 @@ void InvolvedMoveCallback( MOUSE_REGION *reg, INT32 reason )
         giHilitedUninvolved = -1;
 }
 
-void InvolvedClickCallback( MOUSE_REGION *reg, INT32 reason )
+void InvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
 {
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
-                SOLDIERTYPE *pSoldier;
+                struct SOLDIERTYPE *pSoldier;
                 INT16 y;
                 pSoldier = InvolvedSoldier( giHilitedInvolved );
                 if( !pSoldier )
@@ -1345,7 +1348,7 @@ void InvolvedClickCallback( MOUSE_REGION *reg, INT32 reason )
         }
 }
 
-void UninvolvedMoveCallback( MOUSE_REGION *reg, INT32 reason )
+void UninvolvedMoveCallback( struct MOUSE_REGION *reg, INT32 reason )
 {
         gfRenderPBInterface = TRUE;
         if( reason & MSYS_CALLBACK_REASON_LOST_MOUSE )
@@ -1357,11 +1360,11 @@ void UninvolvedMoveCallback( MOUSE_REGION *reg, INT32 reason )
         giHilitedInvolved = -1;
 }
 
-void UninvolvedClickCallback( MOUSE_REGION *reg, INT32 reason )
+void UninvolvedClickCallback( struct MOUSE_REGION *reg, INT32 reason )
 {
         if( reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
         {
-                SOLDIERTYPE *pSoldier;
+                struct SOLDIERTYPE *pSoldier;
                 INT16 y;
                 pSoldier = UninvolvedSoldier( giHilitedUninvolved );
                 if( !pSoldier )
@@ -1385,9 +1388,9 @@ void UninvolvedClickCallback( MOUSE_REGION *reg, INT32 reason )
         }
 }
 
-SOLDIERTYPE* InvolvedSoldier( INT32 index )
+struct SOLDIERTYPE* InvolvedSoldier( INT32 index )
 {
-        GROUP *pGroup;
+        struct GROUP *pGroup;
         PLAYERGROUP *pPlayer=NULL;
         BOOLEAN fFound = FALSE;
         if( index < 0 || index > 19 )
@@ -1416,9 +1419,9 @@ SOLDIERTYPE* InvolvedSoldier( INT32 index )
         return pPlayer->pSoldier;
 }
 
-SOLDIERTYPE* UninvolvedSoldier( INT32 index )
+struct SOLDIERTYPE* UninvolvedSoldier( INT32 index )
 {
-        GROUP *pGroup;
+        struct GROUP *pGroup;
         PLAYERGROUP *pPlayer=NULL;
         BOOLEAN fFound = FALSE;
         if( index < 0 || index > 19 )
@@ -1525,7 +1528,7 @@ void CalculateNonPersistantPBIInfo() {
 void ClearNonPersistantPBIInfo() { gfBlitBattleSectorLocator = FALSE; }
 
 void PutNonSquadMercsInBattleSectorOnSquads(BOOLEAN fExitVehicles) {
-  GROUP *pGroup, *pNextGroup;
+  struct GROUP *pGroup, *pNextGroup;
 
   // IMPORTANT: Have to do this by group, so everyone inside vehicles gets assigned to the same
   // squad.  Needed for the tactical placement interface to work in case of simultaneous
@@ -1555,9 +1558,9 @@ void PutNonSquadMercsInBattleSectorOnSquads(BOOLEAN fExitVehicles) {
   }
 }
 
-void PutNonSquadMercsInPlayerGroupOnSquads(GROUP *pGroup, BOOLEAN fExitVehicles) {
+void PutNonSquadMercsInPlayerGroupOnSquads(struct GROUP *pGroup, BOOLEAN fExitVehicles) {
   PLAYERGROUP *pPlayer, *pNextPlayer;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT8 bUniqueVehicleSquad = -1;
   BOOLEAN fSuccess;
 
@@ -1616,7 +1619,7 @@ void PutNonSquadMercsInPlayerGroupOnSquads(GROUP *pGroup, BOOLEAN fExitVehicles)
 
 void WakeUpAllMercsInSectorUnderAttack(void) {
   INT32 iCounter = 0, iNumberOfMercsOnTeam = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // get number of possible grunts on team
   iNumberOfMercsOnTeam = gTacticalStatus.Team[OUR_TEAM].bLastID;
@@ -1637,7 +1640,7 @@ void WakeUpAllMercsInSectorUnderAttack(void) {
 
 // we are entering the sector, clear out all mvt orders for grunts
 void ClearMovementForAllInvolvedPlayerGroups(void) {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
 
   pGroup = gpGroupList;
   while (pGroup) {
@@ -1650,7 +1653,7 @@ void ClearMovementForAllInvolvedPlayerGroups(void) {
 }
 
 void RetreatAllInvolvedPlayerGroups(void) {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
 
   // make sure guys stop their off duty assignments, like militia training!
   // but don't exit vehicles - drive off in them!
@@ -1669,7 +1672,7 @@ void RetreatAllInvolvedPlayerGroups(void) {
   }
 }
 
-BOOLEAN PlayerMercInvolvedInThisCombat(SOLDIERTYPE *pSoldier) {
+BOOLEAN PlayerMercInvolvedInThisCombat(struct SOLDIERTYPE *pSoldier) {
   Assert(pSoldier);
   Assert(pSoldier->bActive);
 
@@ -1689,7 +1692,7 @@ BOOLEAN PlayerMercInvolvedInThisCombat(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN PlayerGroupInvolvedInThisCombat(GROUP *pGroup) {
+BOOLEAN PlayerGroupInvolvedInThisCombat(struct GROUP *pGroup) {
   Assert(pGroup);
 
   // player group, non-empty, not between sectors, in the right sector, isn't a group of in transit,

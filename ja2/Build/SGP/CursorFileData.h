@@ -1,7 +1,7 @@
 #ifndef __CURSOR_FILE_DATA
 #define __CURSOR_FILE_DATA
 
-#include "SGP/Video.h"
+#include "SGP/Types.h"
 
 struct CursorFileData {
   CHAR8 ubFilename[48];
@@ -9,7 +9,7 @@ struct CursorFileData {
   UINT32 uiIndex;
   UINT8 ubFlags;
   UINT8 ubNumberOfFrames;
-  HVOBJECT hVObject;
+  struct VObject* hVObject;
 };
 
 #endif

@@ -337,7 +337,7 @@ void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 // #endif
 // }
 
-// extern HVOBJECT FontObjs[25];
+// extern struct VObject* FontObjs[25];
 
 void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
   printf("Assertion Failure [Line %d in %s]\n", uiLineNum, pSourceFile);

@@ -2,14 +2,17 @@
 #define __WORLDMAN_H_
 
 #include "SGP/Types.h"
-#include "TileEngine/WorldDef.h"
+
+struct LEVELNODE;
+struct SOLDIERTYPE;
+struct STRUCTURE;
 
 // memory-accounting function
 void CountLevelNodes(void);
 
 // Object manipulation functions
 BOOLEAN RemoveObject(UINT32 iMapIndex, UINT16 usIndex);
-LEVELNODE *AddObjectToTail(UINT32 iMapIndex, UINT16 usIndex);
+struct LEVELNODE *AddObjectToTail(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN AddObjectToHead(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN TypeExistsInObjectLayer(UINT32 iMapIndex, UINT32 fType, UINT16 *pusObjectIndex);
 BOOLEAN RemoveAllObjectsOfTypeRange(UINT32 iMapIndex, UINT32 fStartType, UINT32 fEndType);
@@ -20,7 +23,7 @@ BOOLEAN TypeRangeExistsInObjectLayer(UINT32 iMapIndex, UINT32 fStartType, UINT32
 
 // Roof manipulation functions
 BOOLEAN RemoveRoof(UINT32 iMapIndex, UINT16 usIndex);
-LEVELNODE *AddRoofToTail(UINT32 iMapIndex, UINT16 usIndex);
+struct LEVELNODE *AddRoofToTail(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN AddRoofToHead(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN TypeExistsInRoofLayer(UINT32 iMapIndex, UINT32 fType, UINT16 *pusRoofIndex);
 BOOLEAN RemoveAllRoofsOfTypeRange(UINT32 iMapIndex, UINT32 fStartType, UINT32 fEndType);
@@ -38,17 +41,17 @@ BOOLEAN IndexExistsInRoofLayer(INT16 sGridNo, UINT16 usIndex);
 
 // OnRoof manipulation functions
 BOOLEAN RemoveOnRoof(UINT32 iMapIndex, UINT16 usIndex);
-LEVELNODE *AddOnRoofToTail(UINT32 iMapIndex, UINT16 usIndex);
+struct LEVELNODE *AddOnRoofToTail(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN AddOnRoofToHead(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN TypeExistsInOnRoofLayer(UINT32 iMapIndex, UINT32 fType, UINT16 *pusOnRoofIndex);
 BOOLEAN RemoveAllOnRoofsOfTypeRange(UINT32 iMapIndex, UINT32 fStartType, UINT32 fEndType);
 void SetAllOnRoofShadeLevels(UINT32 iMapIndex, UINT8 ubShadeLevel);
 void AdjustAllOnRoofShadeLevels(UINT32 iMapIndex, INT8 bShadeDiff);
-BOOLEAN RemoveOnRoofFromLevelNode(UINT32 iMapIndex, LEVELNODE *pNode);
+BOOLEAN RemoveOnRoofFromLevelNode(UINT32 iMapIndex, struct LEVELNODE *pNode);
 
 // Land manipulation functions
 BOOLEAN RemoveLand(UINT32 iMapIndex, UINT16 usIndex);
-LEVELNODE *AddLandToTail(UINT32 iMapIndex, UINT16 usIndex);
+struct LEVELNODE *AddLandToTail(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN AddLandToHead(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN TypeExistsInLandLayer(UINT32 iMapIndex, UINT32 fType, UINT16 *pusLandIndex);
 BOOLEAN RemoveAllLandsOfTypeRange(UINT32 iMapIndex, UINT32 fStartType, UINT32 fEndType);
@@ -73,9 +76,9 @@ BOOLEAN WaterTooDeepForAttacks(INT16 sGridNo);
 
 // Structure manipulation routines
 BOOLEAN RemoveStruct(UINT32 iMapIndex, UINT16 usIndex);
-LEVELNODE *AddStructToTail(UINT32 iMapIndex, UINT16 usIndex);
-LEVELNODE *AddStructToTailCommon(UINT32 iMapIndex, UINT16 usIndex, BOOLEAN fAddStructDBInfo);
-LEVELNODE *ForceStructToTail(UINT32 iMapIndex, UINT16 usIndex);
+struct LEVELNODE *AddStructToTail(UINT32 iMapIndex, UINT16 usIndex);
+struct LEVELNODE *AddStructToTailCommon(UINT32 iMapIndex, UINT16 usIndex, BOOLEAN fAddStructDBInfo);
+struct LEVELNODE *ForceStructToTail(UINT32 iMapIndex, UINT16 usIndex);
 
 BOOLEAN AddStructToHead(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN TypeExistsInStructLayer(UINT32 iMapIndex, UINT32 fType, UINT16 *pusStructIndex);
@@ -92,7 +95,7 @@ void RemoveStructIndexFlagsFromTypeRange(UINT32 iMapIndex, UINT32 fStartType, UI
                                          UINT32 uiFlags);
 void SetStructAframeFlags(UINT32 iMapIndex, UINT32 uiFlags);
 void RemoveStructAframeFlags(UINT32 iMapIndex, UINT32 uiFlags);
-BOOLEAN RemoveStructFromLevelNode(UINT32 iMapIndex, LEVELNODE *pNode);
+BOOLEAN RemoveStructFromLevelNode(UINT32 iMapIndex, struct LEVELNODE *pNode);
 
 BOOLEAN RemoveStructFromTail(UINT32 iMapIndex);
 BOOLEAN RemoveStructFromTailCommon(UINT32 iMapIndex, BOOLEAN fRemoveStructDBInfo);
@@ -109,22 +112,22 @@ void AddExclusiveShadow(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN TypeExistsInShadowLayer(UINT32 iMapIndex, UINT32 fType, UINT16 *pusShadowIndex);
 BOOLEAN RemoveAllShadowsOfTypeRange(UINT32 iMapIndex, UINT32 fStartType, UINT32 fEndType);
 BOOLEAN RemoveAllShadows(UINT32 iMapIndex);
-BOOLEAN RemoveShadowFromLevelNode(UINT32 iMapIndex, LEVELNODE *pNode);
+BOOLEAN RemoveShadowFromLevelNode(UINT32 iMapIndex, struct LEVELNODE *pNode);
 
 // Merc manipulation routines
 // #################################################################
 
-BOOLEAN AddMercToHead(UINT32 iMapIndex, SOLDIERTYPE *pSoldier, BOOLEAN fAddStructInfo);
-BOOLEAN RemoveMerc(UINT32 iMapIndex, SOLDIERTYPE *pSoldier, BOOLEAN fPlaceHolder);
+BOOLEAN AddMercToHead(UINT32 iMapIndex, struct SOLDIERTYPE *pSoldier, BOOLEAN fAddStructInfo);
+BOOLEAN RemoveMerc(UINT32 iMapIndex, struct SOLDIERTYPE *pSoldier, BOOLEAN fPlaceHolder);
 UINT8 WhoIsThere2(INT16 sGridNo, INT8 bLevel);
-BOOLEAN AddMercStructureInfo(INT16 sGridNo, SOLDIERTYPE *pSoldier);
-BOOLEAN AddMercStructureInfoFromAnimSurface(INT16 sGridNo, SOLDIERTYPE *pSoldier,
+BOOLEAN AddMercStructureInfo(INT16 sGridNo, struct SOLDIERTYPE *pSoldier);
+BOOLEAN AddMercStructureInfoFromAnimSurface(INT16 sGridNo, struct SOLDIERTYPE *pSoldier,
                                             UINT16 usAnimSurface, UINT16 usAnimState);
-BOOLEAN UpdateMercStructureInfo(SOLDIERTYPE *pSoldier);
-BOOLEAN OKToAddMercToWorld(SOLDIERTYPE *pSoldier, INT8 bDirection);
+BOOLEAN UpdateMercStructureInfo(struct SOLDIERTYPE *pSoldier);
+BOOLEAN OKToAddMercToWorld(struct SOLDIERTYPE *pSoldier, INT8 bDirection);
 
 // TOPMOST manipulation functions
-LEVELNODE *AddTopmostToTail(UINT32 iMapIndex, UINT16 usIndex);
+struct LEVELNODE *AddTopmostToTail(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN AddTopmostToHead(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN RemoveTopmost(UINT32 iMapIndex, UINT16 usIndex);
 BOOLEAN TypeExistsInTopmostLayer(UINT32 iMapIndex, UINT32 fType, UINT16 *pusTopmostIndex);
@@ -133,23 +136,23 @@ BOOLEAN SetMapElementShadeLevel(UINT32 uiMapIndex, UINT8 ubShadeLevel);
 void SetTopmostFlags(UINT32 iMapIndex, UINT32 uiFlags, UINT16 usIndex);
 void RemoveTopmostFlags(UINT32 iMapIndex, UINT32 uiFlags, UINT16 usIndex);
 BOOLEAN AddUIElem(UINT32 iMapIndex, UINT16 usIndex, INT8 sRelativeX, INT8 sRelativeY,
-                  LEVELNODE **ppNewNode);
+                  struct LEVELNODE **ppNewNode);
 void RemoveUIElem(UINT32 iMapIndex, UINT16 usIndex);
-BOOLEAN RemoveTopmostFromLevelNode(UINT32 iMapIndex, LEVELNODE *pNode);
+BOOLEAN RemoveTopmostFromLevelNode(UINT32 iMapIndex, struct LEVELNODE *pNode);
 
 BOOLEAN IsLowerLevel(INT16 sGridNo);
 BOOLEAN IsHeigherLevel(INT16 sGridNo);
 BOOLEAN IsRoofVisible(INT16 sMapPos);
 BOOLEAN IsRoofVisible2(INT16 sMapPos);
 
-LEVELNODE *FindLevelNodeBasedOnStructure(INT16 sGridNo, STRUCTURE *pStructure);
-LEVELNODE *FindShadow(INT16 sGridNo, UINT16 usStructIndex);
+struct LEVELNODE *FindLevelNodeBasedOnStructure(INT16 sGridNo, struct STRUCTURE *pStructure);
+struct LEVELNODE *FindShadow(INT16 sGridNo, UINT16 usStructIndex);
 
 void WorldHideTrees();
 void WorldShowTrees();
 
-BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                        UINT16 usIndex);
+BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcVObject, INT32 iX,
+                        INT32 iY, UINT16 usIndex);
 
 // this is found in editscreen.c
 // Andrew, you had worldman.c checked out at the time, so I stuck it here.

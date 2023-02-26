@@ -4,6 +4,7 @@
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Items.h"
 #include "Tactical/PathAI.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/WorldItems.h"
 #include "TacticalAI/AI.h"
@@ -14,7 +15,7 @@ void MakeClosestEnemyChosenOne() {
   INT16 sPathCost, sShortestPath = 1000;
   INT8 bOldKeys = -1;
   UINT8 ubClosestEnemy = NOBODY;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT8 bPanicTrigger;
   INT16 sPanicTriggerGridNo;
 
@@ -153,7 +154,7 @@ void MakeClosestEnemyChosenOne() {
 #endif
 }
 
-void PossiblyMakeThisEnemyChosenOne(SOLDIERTYPE *pSoldier) {
+void PossiblyMakeThisEnemyChosenOne(struct SOLDIERTYPE *pSoldier) {
   INT32 iAPCost, iPathCost;
   // INT8		bOldKeys;
   INT8 bPanicTrigger;
@@ -210,7 +211,7 @@ void PossiblyMakeThisEnemyChosenOne(SOLDIERTYPE *pSoldier) {
   pSoldier->bHasKeys = (pSoldier->bHasKeys >> 1);
 }
 
-INT8 PanicAI(SOLDIERTYPE *pSoldier, UINT8 ubCanMove) {
+INT8 PanicAI(struct SOLDIERTYPE *pSoldier, UINT8 ubCanMove) {
   BOOLEAN fFoundRoute = FALSE;
   INT8 bSlot;
   INT32 iPathCost;
@@ -359,7 +360,7 @@ void InitPanicSystem(void) {
   FindPanicBombsAndTriggers();
 }
 
-INT8 ClosestPanicTrigger(SOLDIERTYPE *pSoldier) {
+INT8 ClosestPanicTrigger(struct SOLDIERTYPE *pSoldier) {
   INT8 bLoop;
   INT16 sDistance;
   INT16 sClosestDistance = 1000;
@@ -416,7 +417,7 @@ BOOLEAN NeedToRadioAboutPanicTrigger(void) {
   }
 
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y) {
-    SOLDIERTYPE *pSoldier;
+    struct SOLDIERTYPE *pSoldier;
     pSoldier = FindSoldierByProfileID(WARDEN, FALSE);
     if (!pSoldier || pSoldier->ubID == gTacticalStatus.ubTheChosenOne) {
       return (FALSE);
@@ -441,7 +442,7 @@ BOOLEAN NeedToRadioAboutPanicTrigger(void) {
 #define STAIRCASE_GRIDNO 12067
 #define STAIRCASE_DIRECTION 0
 
-INT8 HeadForTheStairCase(SOLDIERTYPE *pSoldier) {
+INT8 HeadForTheStairCase(struct SOLDIERTYPE *pSoldier) {
   UNDERGROUND_SECTORINFO *pBasementInfo;
 
   pBasementInfo = FindUnderGroundSector(3, MAP_ROW_P, 1);

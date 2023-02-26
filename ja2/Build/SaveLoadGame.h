@@ -3,7 +3,8 @@
 
 #include "GameSettings.h"
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 #define BYTESINMEGABYTE 1048576  // 1024*1024
 #define REQUIRED_FREE_SPACE (20 * BYTESINMEGABYTE)
@@ -62,7 +63,8 @@ void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName);
 BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc);
 BOOLEAN LoadSavedGame(UINT8 ubSavedGameID);
 
-BOOLEAN CopySavedSoldierInfoToNewSoldier(SOLDIERTYPE *pDestSourceInfo, SOLDIERTYPE *pSourceInfo);
+BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
+                                         struct SOLDIERTYPE *pSourceInfo);
 
 BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile);
 BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile);

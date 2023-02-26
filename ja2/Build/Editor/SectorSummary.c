@@ -9,12 +9,12 @@
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/LoadScreen.h"
 #include "Editor/SummaryInfo.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/Shading.h"
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -26,7 +26,6 @@
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/SimpleRenderUtils.h"
 #include "TileEngine/WorldDat.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/FontControl.h"
 #include "Utils/Text.h"
@@ -87,7 +86,7 @@ BOOLEAN gfGlobalSummaryLoaded = FALSE;
 SUMMARYFILE *gpSectorSummary[16][16][8];
 SUMMARYFILE *gpCurrentSectorSummary;
 
-MOUSE_REGION MapRegion;
+struct MOUSE_REGION MapRegion;
 
 extern INT8 gbMercSlotTypes[9];
 
@@ -108,8 +107,8 @@ void SummaryToggleAlternateCallback(GUI_BUTTON *btn, INT32 reason);
 void SummarySciFiCallback(GUI_BUTTON *btn, INT32 reason);
 void SummaryRealCallback(GUI_BUTTON *btn, INT32 reason);
 void SummaryEnemyCallback(GUI_BUTTON *btn, INT32 reason);
-void MapMoveCallback(MOUSE_REGION *reg, INT32 reason);
-void MapClickCallback(MOUSE_REGION *reg, INT32 reason);
+void MapMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
+void MapClickCallback(struct MOUSE_REGION *reg, INT32 reason);
 
 // Set if there is an existing global summary.  The first time this is run on your computer, it
 // will not exist, and will have to be generated before this will be set.
@@ -162,9 +161,9 @@ BOOLEAN gfItemDetailsMode = FALSE;
 
 WORLDITEM *gpWorldItemsSummaryArray = NULL;
 UINT16 gusWorldItemsSummaryArraySize = 0;
-OBJECTTYPE *gpPEnemyItemsSummaryArray = NULL;
+struct OBJECTTYPE *gpPEnemyItemsSummaryArray = NULL;
 UINT16 gusPEnemyItemsSummaryArraySize = 0;
-OBJECTTYPE *gpNEnemyItemsSummaryArray = NULL;
+struct OBJECTTYPE *gpNEnemyItemsSummaryArray = NULL;
 UINT16 gusNEnemyItemsSummaryArraySize = 0;
 
 BOOLEAN gfSetupItemDetailsMode = TRUE;
@@ -636,7 +635,7 @@ void RenderSectorInformation() {
 // 2)  CODE TRIGGER/ACTION NAMES
 void RenderItemDetails() {
   FLOAT dAvgExistChance, dAvgStatus;
-  OBJECTTYPE *pItem;
+  struct OBJECTTYPE *pItem;
   INT32 index, i;
   CHAR16 str[100];
   UINT32 uiQuantity, uiExistChance, uiStatus;
@@ -1751,7 +1750,7 @@ void CreateGlobalSummary() {
   DebugPrint("GlobalSummary Information generated successfully.\n");
 }
 
-void MapMoveCallback(MOUSE_REGION *reg, INT32 reason) {
+void MapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   static INT16 gsPrevX = 0, gsPrevY = 0;
   // calc current sector highlighted.
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
@@ -1769,7 +1768,7 @@ void MapMoveCallback(MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void MapClickCallback(MOUSE_REGION *reg, INT32 reason) {
+void MapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
   static INT16 sLastX = -1, sLastY = -1;
   static INT32 iLastClickTime = 0;
   // calc current sector selected.
@@ -2579,7 +2578,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   SOLDIERCREATE_STRUCT priority;
   INT32 i, j;
   UINT16 usNumItems;
-  OBJECTTYPE *pItem;
+  struct OBJECTTYPE *pItem;
   UINT16 usPEnemyIndex, usNEnemyIndex;
 
   // Clear memory for all the item summaries loaded
@@ -2691,13 +2690,15 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   // Pass 1 completed, so now allocate enough space to hold all the items
   if (gusPEnemyItemsSummaryArraySize) {
     gpPEnemyItemsSummaryArray =
-        (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE) * gusPEnemyItemsSummaryArraySize);
-    memset(gpPEnemyItemsSummaryArray, 0, sizeof(OBJECTTYPE) * gusPEnemyItemsSummaryArraySize);
+        (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE) * gusPEnemyItemsSummaryArraySize);
+    memset(gpPEnemyItemsSummaryArray, 0,
+           sizeof(struct OBJECTTYPE) * gusPEnemyItemsSummaryArraySize);
   }
   if (gusNEnemyItemsSummaryArraySize) {
     gpNEnemyItemsSummaryArray =
-        (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE) * gusNEnemyItemsSummaryArraySize);
-    memset(gpNEnemyItemsSummaryArray, 0, sizeof(OBJECTTYPE) * gusNEnemyItemsSummaryArraySize);
+        (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE) * gusNEnemyItemsSummaryArraySize);
+    memset(gpNEnemyItemsSummaryArray, 0,
+           sizeof(struct OBJECTTYPE) * gusNEnemyItemsSummaryArraySize);
   }
 
   // PASS #2
@@ -2731,10 +2732,10 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
         pItem = &priority.Inv[gbMercSlotTypes[j]];
         if (pItem->usItem != NOTHING && !(pItem->fFlags & OBJECT_UNDROPPABLE)) {
           if (basic.fPriorityExistance) {
-            memcpy(&(gpPEnemyItemsSummaryArray[usPEnemyIndex]), pItem, sizeof(OBJECTTYPE));
+            memcpy(&(gpPEnemyItemsSummaryArray[usPEnemyIndex]), pItem, sizeof(struct OBJECTTYPE));
             usPEnemyIndex++;
           } else {
-            memcpy(&(gpNEnemyItemsSummaryArray[usNEnemyIndex]), pItem, sizeof(OBJECTTYPE));
+            memcpy(&(gpNEnemyItemsSummaryArray[usNEnemyIndex]), pItem, sizeof(struct OBJECTTYPE));
             usNEnemyIndex++;
           }
         }

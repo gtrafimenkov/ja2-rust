@@ -6,6 +6,7 @@
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -103,41 +104,41 @@ UINT8 gubOldListMode;
 
 // Mouse stuff
 // Clicking on To Mugshot
-MOUSE_REGION gSelectedToMugShotRegion;
-void SelectToMugShotRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedToMugShotRegion;
+void SelectToMugShotRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Clicking on ToStats
-MOUSE_REGION gSelectedToStatsRegion;
-void SelectToStatsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedToStatsRegion;
+void SelectToStatsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Clicking on ToStats
-MOUSE_REGION gSelectedToArchiveRegion;
-void SelectToArchiveRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedToArchiveRegion;
+void SelectToArchiveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Clicking on Price Check Box
-MOUSE_REGION gSelectedPriceBoxRegion;
-void SelectPriceBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedPriceBoxRegion;
+void SelectPriceBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 // Clicking on Explosive Check Box
-MOUSE_REGION gSelectedExpBoxRegion;
-void SelectExpBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedExpBoxRegion;
+void SelectExpBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 // Clicking on Markmanship Check Box
-MOUSE_REGION gSelectedMarkBoxRegion;
-void SelectMarkBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedMarkBoxRegion;
+void SelectMarkBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 // Clicking on Medical Check box
-MOUSE_REGION gSelectedMedicalBoxRegion;
-void SelectMedicalBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedMedicalBoxRegion;
+void SelectMedicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 // Clicking on Explosive Check Box
-MOUSE_REGION gSelectedExplosiveBoxRegion;
-void SelectExplosiveBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedExplosiveBoxRegion;
+void SelectExplosiveBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 // Clicking on Mechanical Check Box
-MOUSE_REGION gSelectedMechanicalBoxRegion;
-void SelectMechanicalBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedMechanicalBoxRegion;
+void SelectMechanicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 // Clicking on Ascending Check Box
-MOUSE_REGION gSelectedAscendBoxRegion;
-void SelectAscendBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedAscendBoxRegion;
+void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 // Clicking on Descending Check Box
-MOUSE_REGION gSelectedDescendBoxRegion;
-void SelectDescendBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedDescendBoxRegion;
+void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void DrawSelectLight(UINT8 ubMode, UINT8 ubImage);
 INT32 QsortCompare(const void *pNum1, const void *pNum2);
@@ -349,10 +350,10 @@ void ExitAimSort() {
 void HandleAimSort() {}
 
 void RenderAimSort() {
-  HVOBJECT hSortByHandle;
-  HVOBJECT hToAlumniHandle;
-  HVOBJECT hToMugShotHandle;
-  HVOBJECT hToStatsHandle;
+  struct VObject *hSortByHandle;
+  struct VObject *hToAlumniHandle;
+  struct VObject *hToMugShotHandle;
+  struct VObject *hToStatsHandle;
 
   DrawAimDefaults();
   // SortBy
@@ -439,7 +440,7 @@ void RenderAimSort() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectToMugShotRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectToMugShotRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX;
@@ -447,7 +448,7 @@ void SelectToMugShotRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectToStatsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectToStatsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS;
@@ -455,7 +456,7 @@ void SelectToStatsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectToArchiveRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectToArchiveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_ARCHIVES;
@@ -463,7 +464,7 @@ void SelectToArchiveRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectPriceBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPriceBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 0) {
@@ -476,7 +477,7 @@ void SelectPriceBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectExpBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectExpBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 1) {
@@ -489,7 +490,7 @@ void SelectExpBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectMarkBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMarkBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 2) {
@@ -502,7 +503,7 @@ void SelectMarkBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectMedicalBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMedicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 3) {
@@ -515,7 +516,7 @@ void SelectMedicalBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectExplosiveBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectExplosiveBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 4) {
@@ -528,7 +529,7 @@ void SelectExplosiveBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectMechanicalBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMechanicalBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentSortMode != 5) {
@@ -541,7 +542,7 @@ void SelectMechanicalBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectAscendBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAscendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentListMode != AIM_ASCEND) {
@@ -554,7 +555,7 @@ void SelectAscendBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectDescendBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectDescendBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentListMode != AIM_DESCEND) {
@@ -568,7 +569,7 @@ void SelectDescendBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void DrawSelectLight(UINT8 ubMode, UINT8 ubImage) {
-  HVOBJECT hSelectLightHandle;
+  struct VObject *hSelectLightHandle;
 
   ubMode *= 2;
 

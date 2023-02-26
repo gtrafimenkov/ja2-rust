@@ -13,12 +13,12 @@
 #include "Tactical/AnimationData.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/Weapons.h"
+#include "Tactical/WorldItems.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/Message.h"
@@ -129,7 +129,7 @@ void UpdateOldVersionMap() {
        // However, I am keeping it in for reference.
 	SOLDIERINITNODE *curr;
 	INT32 i;
-	LEVELNODE *pStruct;
+	struct LEVELNODE *pStruct;
 	//VERSION 0 -- obsolete November 14, 1997
 	if( gMapInformation.ubMapVersion == 0 )
 	{
@@ -306,7 +306,7 @@ void UpdateOldVersionMap() {
 
 	if( gMapInformation.ubMapVersion == 14 )
 	{ //Toast all of the ambiguous road pieces that ended up wrapping the byte.
-		LEVELNODE *pStruct, *pStruct2;
+		struct LEVELNODE *pStruct, *pStruct2;
 		INT32 i;
 		for( i = 0; i < WORLD_MAX; i++ )
 		{
@@ -405,7 +405,7 @@ void UpdateOldVersionMap() {
 	if( gMapInformation.ubMapVersion < 13 )
 	{	//replace all merc ammo inventory slots status value with the max ammo that the clip can hold.
 		INT32 i, cnt;
-		OBJECTTYPE *pItem;
+		struct OBJECTTYPE *pItem;
 		gMapInformation.ubMapVersion++;
 		//Bug 10) Padding on detailed placements is uninitialized.  Clear all data starting at
 		//				fKillSlotIfOwnerDies.
@@ -535,7 +535,7 @@ void UpdateOldVersionMap() {
 void AutoCalculateItemNoOverwriteStatus() {
   SOLDIERINITNODE *curr;
   INT32 i;
-  OBJECTTYPE *pItem;
+  struct OBJECTTYPE *pItem;
 
   // Recalculate the "no overwrite" status flag on all items.  There are two different cases:
   // 1)  If detailed placement has item, the item "no overwrite" flag is set

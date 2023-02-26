@@ -12,7 +12,6 @@
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
 INT16 gbSmoothStruct[] =
@@ -168,7 +167,7 @@ void SmoothTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fForceSm
 }
 
 void SmoothExitGridRadius(INT16 sMapIndex, UINT8 ubRadius) {
-  LEVELNODE *pShadow;
+  struct LEVELNODE *pShadow;
   INT16 x, y;
   INT16 centerX, centerY;
 

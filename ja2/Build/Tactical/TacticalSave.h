@@ -5,7 +5,6 @@
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierProfileType.h"
 #include "Tactical/WorldItems.h"
-#include "TileEngine/WorldDef.h"
 
 #define MAPS_DIR "Temp\\"
 
@@ -46,7 +45,7 @@ BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WOR
 //  Adds an array of Item Objects to the specified location on a unloaded map.
 //  If you want to overwrite all the items in the array set fReplaceEntireFile to TRUE.
 BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
-                                 UINT32 uiNumberOfItems, OBJECTTYPE *pObject, UINT8 ubLevel,
+                                 UINT32 uiNumberOfItems, struct OBJECTTYPE *pObject, UINT8 ubLevel,
                                  UINT16 usFlags, INT8 bRenderZHeightAboveLevel, INT8 bVisible,
                                  BOOLEAN fReplaceEntireFile);
 
@@ -80,8 +79,8 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
 // ADD_DEAD_SOLDIER_TO_SWEETSPOT
 //
 // This function DOES NOT remove the soldier from the soldier struct.  YOU must do it.
-BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, SOLDIERTYPE *pSoldier,
-                                       INT16 sGridNo, UINT32 uiFlags);
+BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ,
+                                       struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT32 uiFlags);
 
 BOOLEAN GetSectorFlagStatus(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet);
 BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet);
@@ -95,7 +94,7 @@ BOOLEAN LoadTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);
 // Loads the NPC temp Quote file from the saved game file
 BOOLEAN SaveTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);
 
-UINT32 MercChecksum(SOLDIERTYPE *pSoldier);
+UINT32 MercChecksum(struct SOLDIERTYPE *pSoldier);
 UINT32 ProfileChecksum(MERCPROFILESTRUCT *pProfile);
 BOOLEAN JA2EncryptedFileRead(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead);
 BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,

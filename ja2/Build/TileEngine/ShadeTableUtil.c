@@ -6,6 +6,7 @@
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/Video.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/WorldDat.h"
@@ -109,7 +110,7 @@ void DetermineRGBDistributionSettings() {
   Plat_SetCurrentDirectory(DataDir);
 }
 
-BOOLEAN LoadShadeTable(HVOBJECT pObj, UINT32 uiTileTypeIndex) {
+BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   HWFILE hfile;
   INT32 i;
   UINT32 uiNumBytesRead;
@@ -149,7 +150,7 @@ BOOLEAN LoadShadeTable(HVOBJECT pObj, UINT32 uiTileTypeIndex) {
   return TRUE;
 }
 
-BOOLEAN SaveShadeTable(HVOBJECT pObj, UINT32 uiTileTypeIndex) {
+BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   HWFILE hfile;
   INT32 i;
   UINT32 uiNumBytesWritten;

@@ -18,6 +18,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceMap.h"
@@ -36,6 +37,7 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/PathAI.h"
 #include "Tactical/Points.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierFunctions.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
@@ -47,6 +49,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
@@ -65,7 +68,7 @@
 #define BUTTON_PANEL_WIDTH 78
 #define BUTTON_PANEL_HEIGHT 76
 
-MOUSE_REGION gBottomPanalRegion;
+struct MOUSE_REGION gBottomPanalRegion;
 BOOLEAN gfInMovementMenu = FALSE;
 INT32 giMenuAnchorX, giMenuAnchorY;
 
@@ -94,9 +97,10 @@ TOP_MESSAGE gTopMessage;
 BOOLEAN gfTopMessageDirty = FALSE;
 
 void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString);
-extern UINT16 GetAnimStateForInteraction(SOLDIERTYPE *pSoldier, BOOLEAN fDoor, UINT16 usAnimState);
+extern UINT16 GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor,
+                                         UINT16 usAnimState);
 
-MOUSE_REGION gMenuOverlayRegion;
+struct MOUSE_REGION gMenuOverlayRegion;
 
 UINT16 gusOldSelectedSoldier = NO_SOLDIER;
 
@@ -119,8 +123,8 @@ void BlitPopupText(VIDEO_OVERLAY *pBlitter);
 
 BOOLEAN gfPanelAllocated = FALSE;
 
-extern MOUSE_REGION gDisableRegion;
-extern MOUSE_REGION gUserTurnRegion;
+extern struct MOUSE_REGION gDisableRegion;
+extern struct MOUSE_REGION gUserTurnRegion;
 extern BOOLEAN gfUserTurnRegionActive;
 extern UINT8 gubSelectSMPanelToMerc;
 extern BOOLEAN gfIgnoreOnSelectedGuy;
@@ -205,8 +209,8 @@ UINT32 guiBURSTACCUM;
 UINT32 guiITEMPOINTERHATCHES;
 
 // UI Globals
-MOUSE_REGION gViewportRegion;
-MOUSE_REGION gRadarRegion;
+struct MOUSE_REGION gViewportRegion;
+struct MOUSE_REGION gRadarRegion;
 
 UINT16 gsUpArrowX;
 UINT16 gsUpArrowY;
@@ -216,7 +220,8 @@ UINT16 gsDownArrowY;
 UINT32 giUpArrowRect;
 UINT32 giDownArrowRect;
 
-void DrawBarsInUIBox(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth, INT16 sHeight);
+void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
+                     INT16 sHeight);
 void PopupDoorOpenMenu(BOOLEAN fClosingDoor);
 
 BOOLEAN fInterfacePanelDirty = DIRTYLEVEL2;
@@ -228,8 +233,8 @@ INT16 gsCurInterfacePanel = TEAM_PANEL;
 void BtnPositionCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnMovementCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnDoorMenuCallback(GUI_BUTTON *btn, INT32 reason);
-void MovementMenuBackregionCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void DoorMenuBackregionCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 UINT32 CalcUIMessageDuration(STR16 wString);
 
@@ -453,7 +458,7 @@ void ShutdownCurrentPanel() {
 }
 
 void SetCurrentTacticalPanelCurrentMerc(UINT8 ubID) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // Disable faces
   SetAllAutoFacesInactive();
@@ -546,7 +551,7 @@ void PopDownPositionMenu() {}
 void BtnPositionCallback(GUI_BUTTON *btn, INT32 reason) {}
 
 void PopupMovementMenu(UI_EVENT *pUIEvent) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iMenuAnchorX, iMenuAnchorY;
   UINT32 uiActionImages;
   CHAR16 zActionString[50];
@@ -1066,7 +1071,7 @@ void EraseRenderArrows() {
 }
 
 void GetArrowsBackground() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sMercScreenX, sMercScreenY;
   UINT16 sArrowHeight = ARROWS_HEIGHT, sArrowWidth = ARROWS_WIDTH;
 
@@ -1168,7 +1173,8 @@ void GetArrowsBackground() {
   }
 }
 
-void GetSoldierAboveGuyPositions(SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY, BOOLEAN fRadio) {
+void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY,
+                                 BOOLEAN fRadio) {
   INT16 sMercScreenX, sMercScreenY;
   INT16 sOffsetX, sOffsetY, sAddXOffset = 0;
   UINT8 ubAnimUseHeight;
@@ -1253,7 +1259,7 @@ void GetSoldierAboveGuyPositions(SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY, 
 }
 
 void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sXPos, sYPos;
   INT16 sX, sY;
   INT32 iBack;
@@ -1590,7 +1596,8 @@ void EndOverlayMessage() {
   }
 }
 
-void DrawBarsInUIBox(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth, INT16 sHeight) {
+void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
+                     INT16 sHeight) {
   FLOAT dWidth, dPercentage;
   // UINT16 usLineColor;
 
@@ -1737,7 +1744,7 @@ void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
   UnLockVideoSurface(pBlitter->uiDestBuff);
 }
 
-void DirtyMercPanelInterface(SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel) {
+void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel) {
   if (pSoldier->bTeam == gbPlayerNum) {
     // ONly set to a higher level!
     if (fInterfacePanelDirty < ubDirtyLevel) {
@@ -1747,8 +1754,8 @@ void DirtyMercPanelInterface(SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel) {
 }
 
 typedef struct {
-  SOLDIERTYPE *pSoldier;
-  STRUCTURE *pStructure;
+  struct SOLDIERTYPE *pSoldier;
+  struct STRUCTURE *pStructure;
   UINT8 ubDirection;
   INT16 sX;
   INT16 sY;
@@ -1760,8 +1767,8 @@ typedef struct {
 OPENDOOR_MENU gOpenDoorMenu;
 BOOLEAN gfInOpenDoorMenu = FALSE;
 
-BOOLEAN InitDoorOpenMenu(SOLDIERTYPE *pSoldier, STRUCTURE *pStructure, UINT8 ubDirection,
-                         BOOLEAN fClosingDoor) {
+BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
+                         UINT8 ubDirection, BOOLEAN fClosingDoor) {
   INT16 sHeight, sWidth;
   INT16 sScreenX, sScreenY;
 
@@ -2906,7 +2913,7 @@ void UpdateEnemyUIBar() {
 }
 
 void InitPlayerUIBar(BOOLEAN fInterrupt) {
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt = 0;
   INT8 bNumOK = 0, bNumNotOK = 0;
 
@@ -2962,19 +2969,19 @@ void InitPlayerUIBar(BOOLEAN fInterrupt) {
   }
 }
 
-void MovementMenuBackregionCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void MovementMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     CancelMovementMenu();
   }
 }
 
-void DoorMenuBackregionCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     CancelOpenDoorMenu();
   }
 }
 
-CHAR16 *GetSoldierHealthString(SOLDIERTYPE *pSoldier) {
+CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt, cntStart;
   if (pSoldier->bLife == pSoldier->bLifeMax) {
     cntStart = 4;
@@ -2995,7 +3002,7 @@ typedef struct {
   INT8 bPower;
   INT16 sGridNo;
   UINT8 ubLevel;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fShowHeight;
   BOOLEAN fShowPower;
   BOOLEAN fActiveHeightBar;
@@ -3061,7 +3068,7 @@ BOOLEAN AimCubeUIClick() {
   }
 }
 
-void BeginAimCubeUI(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, UINT8 bStartPower,
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, UINT8 bStartPower,
                     INT8 bStartHeight) {
   gfInAimCubeUI = TRUE;
 

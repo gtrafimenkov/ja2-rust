@@ -8,6 +8,7 @@
 #include "Laptop/SpeckQuotes.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -19,10 +20,12 @@
 #include "Tactical/MercHiring.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "Utils/Cursors.h"
 #include "Utils/MercTextBox.h"
 #include "Utils/Text.h"
+#include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
@@ -238,8 +241,8 @@ UINT32 guiXToCloseMercVideoButton;
 INT32 guiXToCloseMercVideoButtonImage;
 
 // Mouse region for the subtitles region when the merc is talking
-MOUSE_REGION gMercSiteSubTitleMouseRegion;
-void MercSiteSubTitleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gMercSiteSubTitleMouseRegion;
+void MercSiteSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 //*******************************
 //
@@ -526,7 +529,7 @@ void HandleMercs() {
 }
 
 void RenderMercs() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   DrawMecBackGround();
 
@@ -672,7 +675,7 @@ void BtnFileBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void DailyUpdateOfMercSite(UINT16 usDate) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sSoldierID, i;
   UINT8 ubMercID;
   INT32 iNumDays;
@@ -1775,7 +1778,7 @@ UINT8 CountNumberOfMercMercsWhoAreDead() {
 }
 
 // Mouse Call back for the pop up text box
-void MercSiteSubTitleRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void MercSiteSubTitleRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP ||
              iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
@@ -2044,7 +2047,7 @@ void GetMercSiteBackOnline() {
 }
 
 void DrawMercVideoBackGround() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   GetVideoObject(&hPixHandle, guiMercVideoPopupBackground);
   BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_VIDEO_BACKGROUND_X, MERC_VIDEO_BACKGROUND_Y,

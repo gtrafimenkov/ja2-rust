@@ -6,12 +6,11 @@
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorItems.h"
 #include "Editor/EditorTaskbarUtils.h"
-#include "Editor/EditorTerrain.h"  //for access to TerrainTileDrawMode
+#include "Editor/EditorTerrain.h"
 #include "Editor/EditorUndo.h"
 #include "Editor/ItemStatistics.h"
 #include "Editor/PopupMenu.h"
 #include "Editor/SelectWin.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
@@ -33,7 +32,6 @@
 #include "Tactical/OverheadTypes.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/SoldierProfileType.h"
@@ -54,7 +52,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-extern void GetSoldierAboveGuyPositions(SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY,
+extern void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY,
                                         BOOLEAN fRadio);
 
 //--------------------------------------------------
@@ -108,10 +106,10 @@ void DetermineScheduleEditability();
 void RenderCurrentSchedule();
 void UpdateScheduleInfo();
 
-void ShowEditMercPalettes(SOLDIERTYPE *pSoldier);
+void ShowEditMercPalettes(struct SOLDIERTYPE *pSoldier);
 void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet);
 
-void ChangeBaseSoldierStats(SOLDIERTYPE *pSoldier);
+void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier);
 void AskDefaultDifficulty(void);
 
 // internal merc inventory functions
@@ -126,7 +124,7 @@ extern BOOLEAN InternalAddSoldierToSector(UINT8 ubID, BOOLEAN fCalculateDirectio
 // array which keeps track of which item is in which slot.  This is dependant on the selected merc,
 // so these temp values must be updated when different mercs are selected, and reset when a merc
 // detailed placement is created.
-OBJECTTYPE *gpMercSlotItem[9] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+struct OBJECTTYPE *gpMercSlotItem[9] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 // Because we only support these nine slots, they aren't continuous values, so this array helps
 // processing functions by referring to this array to get the appropriate slot.
 INT8 gbMercSlotTypes[9] = {HELMETPOS,   VESTPOS,     LEGPOS,      HANDPOS,    SECONDHANDPOS,
@@ -171,7 +169,7 @@ INT8 gbDefaultDirection = NORTHWEST;
 INT8 gubSoldierClass = SOLDIER_CLASS_ARMY;
 UINT8 gubCivGroup = NON_CIV_GROUP;
 
-SOLDIERTYPE *pTempSoldier;
+struct SOLDIERTYPE *pTempSoldier;
 BOOLEAN gfRoofPlacement;
 
 // Below are all flags that have to do with editing detailed placement mercs:
@@ -310,7 +308,7 @@ enum { HAIR_PAL, SKIN_PAL, VEST_PAL, PANTS_PAL };
 
 void ProcessMercEditing() {
   UINT8 ubType, ubPaletteRep;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   if (iEditMercMode == EDIT_MERC_NONE) {
     return;
   }
@@ -433,7 +431,7 @@ void ProcessMercEditing() {
 }
 
 void AddMercToWorld(INT32 iMapIndex) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 i;
 
   memset(&gTempBasicPlacement, 0, sizeof(BASIC_SOLDIERCREATE_STRUCT));
@@ -663,7 +661,7 @@ void EraseMercWaypoint() {
 //	This functions changes the stats of a given merc (PC or NPC, though should only be used
 //	for NPC mercs) to reflect the base difficulty level selected.
 //
-void ChangeBaseSoldierStats(SOLDIERTYPE *pSoldier) {
+void ChangeBaseSoldierStats(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier == NULL) return;
 
   pSoldier->bLifeMax = (UINT8)(sBaseStat[sCurBaseDiff] +
@@ -713,7 +711,7 @@ void DisplayEditMercWindow(void) {
   UINT16 usFillColorBack, usFillColorDark, usFillColorLight, usFillColorTextBk;
   INT32 x, iXOff;
   CHAR16 TempString[30];
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT8 iEditStat[12];
 
   usFillColorBack = 0;
@@ -818,7 +816,7 @@ void DisplayEditMercWindow(void) {
 INT32 IsMercHere(INT32 iMapIndex) {
   INT32 IDNumber;
   INT32 RetIDNumber;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSoldierFound;
 
   RetIDNumber = -1;
@@ -1057,7 +1055,7 @@ void EditMercIncDifficultyCallback(GUI_BUTTON *btn, INT32 reason) {
 //
 //	Displays the palette of the given merc (used by the edit merc color page)
 //
-void ShowEditMercPalettes(SOLDIERTYPE *pSoldier) {
+void ShowEditMercPalettes(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubPaletteRep;
   if (!pSoldier) ubPaletteRep = 0xff;
 
@@ -1158,7 +1156,7 @@ void DisplayWayPoints(void) {
   INT16 sScreenX, sScreenY;
   FLOAT ScrnX, ScrnY, dOffsetX, dOffsetY;
   INT8 bPoint;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
 
   if (gsSelectedMercID == -1 ||
@@ -1213,7 +1211,7 @@ void DisplayWayPoints(void) {
 void CreateEditMercWindow(void) {
   INT32 iXPos, iYPos, iHeight, iWidth;
   INT32 x;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   iWidth = 266;
   iHeight = 360;
@@ -2626,7 +2624,7 @@ void DeleteSelectedMercsItem() {
 void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   UINT32 uiVideoObjectIndex;
   UINT32 uiSrcID, uiDstID;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   ETRLEObject *pObject;
   INVTYPE *item;
   SGPRect SrcRect, DstRect;
@@ -2859,7 +2857,7 @@ void UpdateMercItemSlots() {
   } else {
     if (gpSelected->pDetailedPlacement->ubProfile != NO_PROFILE) {
       memcpy(gpSelected->pDetailedPlacement->Inv, gpSelected->pSoldier->inv,
-             sizeof(OBJECTTYPE) * NUM_INV_SLOTS);
+             sizeof(struct OBJECTTYPE) * NUM_INV_SLOTS);
     }
     for (x = 0; x < 9; x++) {
       // Set the curr select and the addnewitem function will handle the rest, including rebuilding
@@ -2875,7 +2873,7 @@ void UpdateMercItemSlots() {
 }
 
 void SetDroppableCheckboxesBasedOnMercsInventory() {
-  OBJECTTYPE *pItem;
+  struct OBJECTTYPE *pItem;
   INT32 i;
   if (gpSelected && gpSelected->pDetailedPlacement) {
     for (i = 0; i < 9; i++) {
@@ -2971,7 +2969,7 @@ void ChangeCivGroup(UINT8 ubNewCivGroup) {
 }
 
 void RenderMercStrings() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sXPos, sYPos;
   INT16 sX, sY;
   STR16 pStr;
@@ -3419,7 +3417,7 @@ void CopyMercPlacement(INT32 iMapIndex) {
 }
 
 void PasteMercPlacement(INT32 iMapIndex) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   SOLDIERCREATE_STRUCT tempDetailedPlacement;
   INT32 i;
 

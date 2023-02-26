@@ -2,7 +2,8 @@
 #define BOXING_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 #define BOXING_SECTOR_X 5
 #define BOXING_SECTOR_Y 4
@@ -25,14 +26,14 @@ extern UINT8 gubBoxingMatchesWon;
 extern UINT8 gubBoxersRests;
 extern BOOLEAN gfBoxersResting;
 
-extern void BoxingPlayerDisqualified(SOLDIERTYPE* pOffender, INT8 bReason);
+extern void BoxingPlayerDisqualified(struct SOLDIERTYPE* pOffender, INT8 bReason);
 extern BOOLEAN PickABoxer(void);
 extern BOOLEAN CheckOnBoxers(void);
-extern void EndBoxingMatch(SOLDIERTYPE* pLoser);
+extern void EndBoxingMatch(struct SOLDIERTYPE* pLoser);
 extern BOOLEAN BoxerAvailable(void);
 extern BOOLEAN AnotherFightPossible(void);
-extern void TriggerEndOfBoxingRecord(SOLDIERTYPE* pSolier);
-extern void BoxingMovementCheck(SOLDIERTYPE* pSoldier);
+extern void TriggerEndOfBoxingRecord(struct SOLDIERTYPE* pSolier);
+extern void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier);
 extern void ExitBoxing(void);
 extern UINT8 BoxersAvailable(void);
 extern void SetBoxingState(INT8 bNewState);

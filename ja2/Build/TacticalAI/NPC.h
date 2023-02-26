@@ -143,7 +143,7 @@ extern UINT8 CalcDesireToTalk(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach);
 extern void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData);
 
 extern BOOLEAN NPCOkToGiveItem(UINT8 ubNPC, UINT8 ubMerc, UINT16 usItem);
-extern void NPCReachedDestination(SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere);
+extern void NPCReachedDestination(struct SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere);
 extern void PCsNearNPC(UINT8 ubNPC);
 extern BOOLEAN PCDoesFirstAidOnNPC(UINT8 ubNPC);
 extern void TriggerNPCRecord(UINT8 ubTriggerNPC, UINT8 ubTriggerNPCRec);
@@ -181,7 +181,7 @@ void HandleVictoryInNPCSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
 BOOLEAN HandleShopKeepHasBeenShutDown(UINT8 ubCharNum);
 
 BOOLEAN NPCHasUnusedRecordWithGivenApproach(UINT8 ubNPC, UINT8 ubApproach);
-BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, OBJECTTYPE *pObj);
+BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pObj);
 
 BOOLEAN SaveBackupNPCInfoToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersion);
@@ -190,7 +190,7 @@ BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersio
 void ToggleNPCRecordDisplay(void);
 #endif
 
-void UpdateDarrelScriptToGoTo(SOLDIERTYPE *pSoldier);
+void UpdateDarrelScriptToGoTo(struct SOLDIERTYPE *pSoldier);
 
 #define WALTER_BRIBE_AMOUNT 20000
 
@@ -202,7 +202,7 @@ INT8 ConsiderCivilianQuotes(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, BOOL
 
 void ResetOncePerConvoRecordsForNPC(UINT8 ubNPC);
 
-void HandleNPCChangesForTacticalTraversal(SOLDIERTYPE *pSoldier);
+void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN NPCHasUnusedHostileRecord(UINT8 ubNPC, UINT8 ubApproach);
 

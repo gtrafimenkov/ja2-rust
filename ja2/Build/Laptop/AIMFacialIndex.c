@@ -7,10 +7,12 @@
 #include "Laptop/Email.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/Assignments.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
@@ -46,13 +48,13 @@ UINT32 guiAimFiFace[MAX_NUMBER_MERCS];
 // Mouse Regions
 
 // Face regions
-MOUSE_REGION gMercFaceMouseRegions[MAX_NUMBER_MERCS];
-void SelectMercFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectMercFaceMoveRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gMercFaceMouseRegions[MAX_NUMBER_MERCS];
+void SelectMercFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Screen region, used to right click to go back to previous page
-MOUSE_REGION gScreenMouseRegions;
-void SelectScreenRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gScreenMouseRegions;
+void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT8 ubImage);
 
@@ -197,7 +199,7 @@ BOOLEAN RenderAimFacialIndex() {
   return (TRUE);
 }
 
-void SelectMercFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMercFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS;
@@ -207,14 +209,14 @@ void SelectMercFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectScreenRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectScreenRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_SORTED_FILES;
   }
 }
 
-void SelectMercFaceMoveRegionCallBack(MOUSE_REGION *pRegion, INT32 reason) {
+void SelectMercFaceMoveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   UINT8 ubMercNum;
   UINT16 usPosX, usPosY;
   UINT16 ty1, ty2, tx1, tx2;
@@ -249,9 +251,9 @@ void SelectMercFaceMoveRegionCallBack(MOUSE_REGION *pRegion, INT32 reason) {
 }
 
 BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT8 ubImage) {
-  HVOBJECT hMugShotBorderHandle;
-  HVOBJECT hFaceHandle;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct VObject *hMugShotBorderHandle;
+  struct VObject *hFaceHandle;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   pSoldier = FindSoldierByProfileID(AimMercArray[ubMercID], TRUE);
 

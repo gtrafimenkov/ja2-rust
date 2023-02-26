@@ -15,6 +15,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 
 //*******************************************************
@@ -40,7 +41,7 @@ typedef struct {
 } FontManager;
 
 FontManager *pFManager;
-HVOBJECT FontObjs[MAX_FONTS];
+struct VObject *FontObjs[MAX_FONTS];
 INT32 FontsLoaded = 0;
 
 // Destination printing parameters
@@ -180,7 +181,7 @@ void SetRGBFontShadow(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
 // ResetFontObjectPalette
 //
 //	Sets the palette of a font, using an 8 bit palette (which is converted to
-// the appropriate 16-bit palette, and assigned to the HVOBJECT).
+// the appropriate 16-bit palette, and assigned to the struct VObject*).
 //
 //*****************************************************************************
 BOOLEAN ResetFontObjectPalette(INT32 iFont) {
@@ -197,7 +198,7 @@ BOOLEAN ResetFontObjectPalette(INT32 iFont) {
 // SetFontObjectPalette8BPP
 //
 //	Sets the palette of a font, using an 8 bit palette (which is converted to
-// the appropriate 16-bit palette, and assigned to the HVOBJECT).
+// the appropriate 16-bit palette, and assigned to the struct VObject*).
 //
 //*****************************************************************************
 UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
@@ -252,7 +253,7 @@ UINT16 *GetFontObjectPalette16BPP(INT32 iFont) {
 //	Returns the VOBJECT pointer of a font.
 //
 //*****************************************************************************
-HVOBJECT GetFontObject(INT32 iFont) {
+struct VObject *GetFontObject(INT32 iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -331,7 +332,7 @@ void UnloadFont(UINT32 FontIndex) {
 //	Returns the width of a given character in the font.
 //
 //*****************************************************************************
-UINT32 GetWidth(HVOBJECT hSrcVObject, INT16 ssIndex) {
+UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
   ETRLEObject *pTrav;
 
   // Assertions
@@ -530,7 +531,7 @@ void RestoreFontSettings(void) {
 //	Returns the height of a given character in the font.
 //
 //*****************************************************************************
-UINT32 GetHeight(HVOBJECT hSrcVObject, INT16 ssIndex) {
+UINT32 GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
   ETRLEObject *pTrav;
 
   // Assertions

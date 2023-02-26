@@ -14,10 +14,10 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/SoundMan.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
@@ -394,7 +394,7 @@ void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn, INT32 reason) {
 BOOLEAN RenderCharProfileFinishFace(void) {
   // render the portrait of the current picture
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   UINT32 uiGraphicHandle;
 
   if (fCharacterIsMale == TRUE) {

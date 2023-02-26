@@ -1,11 +1,13 @@
 #ifndef __WORLDDEF_H
 #define __WORLDDEF_H
 
-#include "SGP/VObject.h"
-#include "Tactical/HandleItems.h"
-#include "Tactical/SoldierControl.h"
-#include "TileEngine/Structure.h"
-#include "TileEngine/TileDef.h"
+#include <memory.h>
+
+#include "SGP/Types.h"
+
+struct ITEM_POOL;
+struct SOLDIERTYPE;
+struct VObject;
 
 #define WORLD_TILE_X 40
 #define WORLD_TILE_Y 20
@@ -23,7 +25,6 @@
 // A macro that actually memcpy's over data and increments the pointer automatically
 // based on the size.  Works like a FileMan_Read except with a buffer instead of a file pointer.
 // Used by LoadWorld() and child functions.
-#include <memory.h>
 #define LOADDATA(dst, src, size) \
   memcpy(dst, src, size);        \
   src += size
@@ -36,7 +37,7 @@
 #define MIN_SHADE_LEVEL 4
 #define MAX_SHADE_LEVEL 15
 
-// DEFINES FOR LEVELNODE FLAGS
+// DEFINES FOR struct LEVELNODE FLAGS
 #define LEVELNODE_SOLDIER 0x00000001
 #define LEVELNODE_UNUSED2 0x00000002
 #define LEVELNODE_MERCPLACEHOLDER 0x00000004
@@ -102,16 +103,16 @@
   (MAPELEMENT_EXT_CREATUREGAS | MAPELEMENT_EXT_SMOKE | MAPELEMENT_EXT_TEARGAS | \
    MAPELEMENT_EXT_MUSTARDGAS)
 
-typedef struct TAG_level_node {
-  struct TAG_level_node *pNext;
+struct LEVELNODE {
+  struct LEVELNODE *pNext;
   UINT32 uiFlags;  // flags struct
 
   UINT8 ubSumLights;  // LIGHTING INFO
   UINT8 ubMaxLights;  // MAX LIGHTING INFO
 
   union {
-    struct TAG_level_node *pPrevNode;  // FOR LAND, GOING BACKWARDS POINTER
-    STRUCTURE *pStructureData;         // STRUCTURE DATA
+    struct LEVELNODE *pPrevNode;       // FOR LAND, GOING BACKWARDS POINTER
+    struct STRUCTURE *pStructureData;  // struct STRUCTURE DATA
     INT32 iPhysicsObjectID;            // ID FOR PHYSICS ITEM
     INT32 uiAPCost;                    // FOR AP DISPLAY
     INT32 iExitGridInfo;
@@ -123,7 +124,7 @@ typedef struct TAG_level_node {
       INT16 sCurrentFrame;  // Stuff for animated tiles for a given tile location ( doors, etc )
     };
 
-    SOLDIERTYPE *pSoldier;  // POINTER TO SOLDIER
+    struct SOLDIERTYPE *pSoldier;  // POINTER TO SOLDIER
 
   };  // ( 4 byte union )
 
@@ -151,7 +152,7 @@ typedef struct TAG_level_node {
 
     // Can be an item pool as well...
     struct {
-      ITEM_POOL *pItemPool;  // ITEM POOLS
+      struct ITEM_POOL *pItemPool;  // ITEM POOLS
     };
   };
 
@@ -159,8 +160,7 @@ typedef struct TAG_level_node {
   UINT8 ubShadeLevel;         // LIGHTING INFO
   UINT8 ubNaturalShadeLevel;  // LIGHTING INFO
   UINT8 ubFakeShadeLevel;     // LIGHTING INFO
-
-} LEVELNODE;
+};
 
 #define LAND_START_INDEX 1
 #define OBJECT_START_INDEX 2
@@ -174,29 +174,29 @@ typedef struct TAG_level_node {
 typedef struct {
   union {
     struct {
-      LEVELNODE *pLandHead;   // 0
-      LEVELNODE *pLandStart;  // 1
+      struct LEVELNODE *pLandHead;   // 0
+      struct LEVELNODE *pLandStart;  // 1
 
-      LEVELNODE *pObjectHead;  // 2
+      struct LEVELNODE *pObjectHead;  // 2
 
-      LEVELNODE *pStructHead;  // 3
+      struct LEVELNODE *pStructHead;  // 3
 
-      LEVELNODE *pShadowHead;  // 4
+      struct LEVELNODE *pShadowHead;  // 4
 
-      LEVELNODE *pMercHead;  // 5
+      struct LEVELNODE *pMercHead;  // 5
 
-      LEVELNODE *pRoofHead;  // 6
+      struct LEVELNODE *pRoofHead;  // 6
 
-      LEVELNODE *pOnRoofHead;  // 7
+      struct LEVELNODE *pOnRoofHead;  // 7
 
-      LEVELNODE *pTopmostHead;  // 8
+      struct LEVELNODE *pTopmostHead;  // 8
     };
 
-    LEVELNODE *pLevelNodes[9];
+    struct LEVELNODE *pLevelNodes[9];
   };
 
-  STRUCTURE *pStructureHead;
-  STRUCTURE *pStructureTail;
+  struct STRUCTURE *pStructureHead;
+  struct STRUCTURE *pStructureTail;
 
   UINT16 uiFlags;
   UINT8 ubExtFlags[2];
@@ -219,7 +219,7 @@ extern UINT8 gubWorldMovementCosts[WORLD_MAX][MAXDIR][2];
 extern UINT8 gubCurrentLevel;
 extern INT32 giCurrentTilesetID;
 
-extern HVOBJECT hRenderVObject;
+extern struct VObject *hRenderVObject;
 extern UINT32 gSurfaceMemUsage;
 
 extern CHAR8 gzLastLoadedFile[260];
@@ -254,8 +254,9 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce);
 void RemoveWorldWireFrameTiles();
 void RemoveWireFrameTiles(INT16 sGridNo);
 
-LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags, SOLDIERTYPE **ppTargSoldier,
-                               LEVELNODE *pGivenNode);
+struct LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags,
+                                      struct SOLDIERTYPE **ppTargSoldier,
+                                      struct LEVELNODE *pGivenNode);
 
 void ReloadTileset(UINT8 ubID);
 

@@ -79,7 +79,7 @@ BOOLEAN EnsureQuoteFileLoaded(UINT8 ubNPC);
 NPCQuoteInfo *LoadQuoteFile(UINT8 ubNPC);
 UINT8 NPCConsiderQuote(UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuoteNum,
                        UINT8 ubTalkDesire, NPCQuoteInfo *pNPCQuoteInfoArray);
-UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, OBJECTTYPE *pObj,
+UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pObj,
                                        NPCQuoteInfo *pNPCQuoteInfoArray,
                                        NPCQuoteInfo **ppResultQuoteInfo, UINT8 *pubQuoteNum);
 void PCsNearNPC(UINT8 ubNPC);
@@ -204,7 +204,7 @@ BOOLEAN EnsureQuoteFileLoaded(UINT8 ubNPC) {
 #ifdef CRIPPLED_VERSION
       // make sure we're not trying to load NOPROFILE for some stupid reason
       if (ubNPC != NO_PROFILE) {
-        SOLDIERTYPE *pNull = NULL;
+        struct SOLDIERTYPE *pNull = NULL;
         pNull->bLife = 0;  // crash!
       }
 #else
@@ -225,7 +225,7 @@ BOOLEAN EnsureQuoteFileLoaded(UINT8 ubNPC) {
     if (gpNPCQuoteInfoArray[ubNPC][0].ubIdentifier[0] != '9') {
       if (gpNPCQuoteInfoArray[ubNPC][0].ubIdentifier[2] != '5') {
         // crash!
-        SOLDIERTYPE *pNull = NULL;
+        struct SOLDIERTYPE *pNull = NULL;
         pNull->bLife = 0;
       }
     }
@@ -423,7 +423,7 @@ void SetQuoteRecordAsUsed(UINT8 ubNPC, UINT8 ubRecord) {
 }
 
 INT32 CalcThreateningEffectiveness(UINT8 ubMerc) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 iStrength, iDeadliness;
 
   // effective threat is 1/3 strength, 1/3 weapon deadliness, 1/3 leadership
@@ -526,7 +526,7 @@ UINT8 NPCConsiderTalking(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT8 ubReco
   BOOLEAN fQuoteFound = FALSE;
   UINT32 uiDay;
   UINT8 ubFirstQuoteRecord, ubLastQuoteRecord;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   ubTalkDesire = ubQuote = 0;
 
@@ -639,7 +639,7 @@ UINT8 NPCConsiderTalking(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT8 ubReco
   }
 }
 
-UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, OBJECTTYPE *pObj,
+UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pObj,
                                        NPCQuoteInfo *pNPCQuoteInfoArray,
                                        NPCQuoteInfo **ppResultQuoteInfo, UINT8 *pubQuoteNum) {
   // This function returns the opinion level required of the "most difficult" quote
@@ -739,7 +739,7 @@ UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, OBJECTTYPE *pO
                 /*
                 {
 
-                        SOLDIERTYPE *					pSoldier;
+                        struct SOLDIERTYPE *					pSoldier;
                         INT8 bMoney; INT8
                 bEmptySlot;
 
@@ -763,7 +763,7 @@ UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, OBJECTTYPE *pO
                   (*pubQuoteNum) = 17;
                 } else {
                   // find Kingpin, if he's in his house, invoke the script to move him to the bar
-                  SOLDIERTYPE *pKingpin;
+                  struct SOLDIERTYPE *pKingpin;
                   UINT8 ubKingpinRoom;
 
                   pKingpin = FindSoldierByProfileID(KINGPIN, FALSE);
@@ -1283,14 +1283,14 @@ void ResetOncePerConvoRecordsForAllNPCsInLoadedSector(void) {
 
 void ReturnItemToPlayerIfNecessary(UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData,
                                    NPCQuoteInfo *pQuotePtr) {
-  OBJECTTYPE *pObj;
-  SOLDIERTYPE *pSoldier;
+  struct OBJECTTYPE *pObj;
+  struct SOLDIERTYPE *pSoldier;
 
   // if the approach was changed, always return the item
   // otherwise check to see if the record in question specified refusal
   if (bApproach != APPROACH_GIVINGITEM || (pQuotePtr == NULL) ||
       (pQuotePtr->sActionData == NPC_ACTION_DONT_ACCEPT_ITEM)) {
-    pObj = (OBJECTTYPE *)uiApproachData;
+    pObj = (struct OBJECTTYPE *)uiApproachData;
 
     // Find the merc
     pSoldier = FindSoldierByProfileID(ubMerc, FALSE);
@@ -1309,10 +1309,10 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData) 
   NPCQuoteInfo *pNPCQuoteInfoArray = NULL;
   MERCPROFILESTRUCT *pProfile = NULL;
   UINT8 ubLoop, ubQuoteNum, ubRecordNum;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   UINT32 uiDay;
-  OBJECTTYPE *pObj = NULL;
-  SOLDIERTYPE *pNPC;
+  struct OBJECTTYPE *pObj = NULL;
+  struct SOLDIERTYPE *pNPC;
   BOOLEAN fAttemptingToGiveItem;
 
   // we have to record whether an item is being given in order to determine whether,
@@ -1476,7 +1476,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData) 
           }
 
           // If we are approaching because we want to give an item, do something different
-          pObj = (OBJECTTYPE *)uiApproachData;
+          pObj = (struct OBJECTTYPE *)uiApproachData;
           NPCConsiderReceivingItemFromMerc(ubNPC, ubMerc, pObj, pNPCQuoteInfoArray, &pQuotePtr,
                                            &ubRecordNum);
           break;
@@ -1824,12 +1824,12 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData) 
   }
 }
 
-INT16 NPCConsiderInitiatingConv(SOLDIERTYPE *pNPC, UINT8 *pubDesiredMerc) {
+INT16 NPCConsiderInitiatingConv(struct SOLDIERTYPE *pNPC, UINT8 *pubDesiredMerc) {
   INT16 sMyGridNo, sDist, sDesiredMercDist = 100;
   UINT8 ubNPC, ubMerc, ubDesiredMerc = NOBODY;
   UINT8 ubTalkDesire, ubHighestTalkDesire = 0;
-  SOLDIERTYPE *pMerc;
-  SOLDIERTYPE *pDesiredMerc;
+  struct SOLDIERTYPE *pMerc;
+  struct SOLDIERTYPE *pDesiredMerc;
   NPCQuoteInfo *pNPCQuoteInfoArray;
 
   CHECKF(pubDesiredMerc);
@@ -1891,7 +1891,8 @@ INT16 NPCConsiderInitiatingConv(SOLDIERTYPE *pNPC, UINT8 *pubDesiredMerc) {
   }
 }
 
-UINT8 NPCTryToInitiateConv(SOLDIERTYPE *pNPC) {  // assumes current action is ACTION_APPROACH_MERC
+UINT8 NPCTryToInitiateConv(
+    struct SOLDIERTYPE *pNPC) {  // assumes current action is ACTION_APPROACH_MERC
   if (pNPC->bAction != AI_ACTION_APPROACH_MERC) {
     return (AI_ACTION_NONE);
   }
@@ -1937,7 +1938,7 @@ BOOLEAN NPCOkToGiveItem( UINT8 ubNPC, UINT8 ubMerc, UINT16 usItem )
         }
 }
 */
-void NPCReachedDestination(SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere) {
+void NPCReachedDestination(struct SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere) {
   // perform action or whatever after reaching our destination
   UINT8 ubNPC;
   NPCQuoteInfo *pQuotePtr;
@@ -2049,7 +2050,7 @@ void TriggerNPCRecordImmediately(UINT8 ubTriggerNPC, UINT8 ubTriggerNPCRec) {
 void PCsNearNPC(UINT8 ubNPC) {
   UINT8 ubLoop;
   NPCQuoteInfo *pNPCQuoteInfoArray;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   NPCQuoteInfo *pQuotePtr;
 
   if (EnsureQuoteFileLoaded(ubNPC) == FALSE) {
@@ -2084,7 +2085,7 @@ void PCsNearNPC(UINT8 ubNPC) {
 BOOLEAN PCDoesFirstAidOnNPC(UINT8 ubNPC) {
   UINT8 ubLoop;
   NPCQuoteInfo *pNPCQuoteInfoArray;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   NPCQuoteInfo *pQuotePtr;
 
   if (EnsureQuoteFileLoaded(ubNPC) == FALSE) {
@@ -2119,7 +2120,7 @@ void TriggerClosestMercWhoCanSeeNPC(UINT8 ubNPC, NPCQuoteInfo *pQuotePtr) {
   UINT8 ubMercsInSector[40] = {0};
   UINT8 ubNumMercs = 0;
   UINT8 ubChosenMerc;
-  SOLDIERTYPE *pTeamSoldier, *pSoldier;
+  struct SOLDIERTYPE *pTeamSoldier, *pSoldier;
   INT32 cnt;
 
   // First get pointer to NPC
@@ -2244,7 +2245,7 @@ BOOLEAN NPCHasUnusedHostileRecord(UINT8 ubNPC, UINT8 ubApproach) {
   return (FALSE);
 }
 
-BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, OBJECTTYPE *pObj) {
+BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pObj) {
   // Check if we have a quote that could be used, that applies to this item
   NPCQuoteInfo *pNPCQuoteInfoArray;
   NPCQuoteInfo *pQuotePtr;
@@ -2611,8 +2612,8 @@ BOOLEAN LoadBackupNPCInfoFromSavedGameFile(HWFILE hFile, UINT32 uiSaveGameVersio
 void TriggerFriendWithHostileQuote(UINT8 ubNPC) {
   UINT8 ubMercsAvailable[40] = {0};
   UINT8 ubNumMercsAvailable = 0, ubChosenMerc;
-  SOLDIERTYPE *pTeamSoldier;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
   INT8 bTeam;
 
@@ -2697,7 +2698,7 @@ UINT8 ActionIDForMovementRecord(UINT8 ubNPC, UINT8 ubRecord) {
   }
 }
 
-void HandleNPCChangesForTacticalTraversal(SOLDIERTYPE *pSoldier) {
+void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
   if (!pSoldier || pSoldier->ubProfile == NO_PROFILE || (pSoldier->fAIFlags & AI_CHECK_SCHEDULE)) {
     return;
   }
@@ -2803,12 +2804,12 @@ void ToggleNPCRecordDisplay(void) {
 }
 #endif
 
-void UpdateDarrelScriptToGoTo(SOLDIERTYPE *pSoldier) {
+void UpdateDarrelScriptToGoTo(struct SOLDIERTYPE *pSoldier) {
   // change destination in Darrel record 10 to go to a gridno adjacent to the
   // soldier's gridno, and destination in record 11
   INT16 sAdjustedGridNo;
   UINT8 ubDummyDirection;
-  SOLDIERTYPE *pDarrel;
+  struct SOLDIERTYPE *pDarrel;
 
   pDarrel = FindSoldierByProfileID(DARREL, FALSE);
   if (!pDarrel) {

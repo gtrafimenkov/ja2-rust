@@ -5,10 +5,11 @@
 #include "Strategic/GameClock.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SaveLoadMap.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 
@@ -230,7 +231,7 @@ void DecayBloodAndSmells(UINT32 uiTime) {
   }
 }
 
-void DropSmell(SOLDIERTYPE* pSoldier) {
+void DropSmell(struct SOLDIERTYPE* pSoldier) {
   MAP_ELEMENT* pMapElement;
   UINT8 ubOldSmell;
   UINT8 ubOldStrength;
@@ -384,7 +385,7 @@ void InternalDropBlood(INT16 sGridNo, INT8 bLevel, UINT8 ubType, UINT8 ubStrengt
   }
 }
 
-void DropBlood(SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible) {
+void DropBlood(struct SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible) {
   UINT8 ubType;
   UINT8 ubOldStrength = 0;
   UINT8 ubNewStrength = 0;

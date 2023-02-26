@@ -13,6 +13,7 @@
 #include "Tactical/Overhead.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
 BOOLEAN fValidCursor = FALSE;
@@ -83,7 +84,7 @@ void RemoveCursors() {
   Assert(gSelectRegion.iLeft >= 0 && gSelectRegion.iLeft <= gSelectRegion.iRight);
   for (y = gSelectRegion.iTop; y <= gSelectRegion.iBottom; y++) {
     for (x = gSelectRegion.iLeft; x <= gSelectRegion.iRight; x++) {
-      LEVELNODE *pNode;
+      struct LEVELNODE *pNode;
       iMapIndex = y * WORLD_COLS + x;
       if (gfUsingOffset) iMapIndex += ROOF_OFFSET;
       pNode = gpWorldLevelData[iMapIndex].pTopmostHead;
@@ -101,7 +102,7 @@ void RemoveCursors() {
 }
 
 void RemoveBadMarker() {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   if (sBadMarker < 0) return;
   pNode = gpWorldLevelData[sBadMarker].pTopmostHead;
   while (pNode) {
@@ -345,7 +346,7 @@ void EnsureSelectionType() {
 void DrawBuildingLayout(INT32 iMapIndex) {
   BUILDINGLAYOUTNODE *curr;
   INT32 iOffset;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   BOOLEAN fAdd;
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
   curr = gpBuildingLayoutList;

@@ -9,7 +9,6 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"

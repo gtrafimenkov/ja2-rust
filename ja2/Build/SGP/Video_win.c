@@ -10,12 +10,14 @@
 #include "Res/Resource.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/VideoInternal.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
+#include "Utils/TimerControl.h"
 #include "platform.h"
 #include "platform_win.h"
 
@@ -201,7 +203,7 @@ static LPDIRECTDRAWSURFACE2 gpMouseCursorOriginal = NULL;
 
 static MouseCursorBackground gMouseCursorBackground[2];
 
-static HVOBJECT gpCursorStore;
+static struct VObject *gpCursorStore;
 
 BOOLEAN gfFatalError = FALSE;
 char gFatalErrorString[512];
@@ -384,8 +386,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  ReturnCode = IDirectDrawSurface_QueryInterface(
-      _gpPrimarySurface, (const IID &)IID_IDirectDrawSurface2, (LPVOID *)&gpPrimarySurface);
+  IID tmpID = IID_IDirectDrawSurface2;
+  ReturnCode =
+      IDirectDrawSurface_QueryInterface(_gpPrimarySurface, tmpID, (LPVOID *)&gpPrimarySurface);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -405,8 +408,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  ReturnCode = IDirectDrawSurface_QueryInterface(
-      _gpBackBuffer, (const IID &)IID_IDirectDrawSurface2, (LPVOID *)&gpBackBuffer);
+  tmpID = IID_IDirectDrawSurface2;
+  ReturnCode = IDirectDrawSurface_QueryInterface(_gpBackBuffer, tmpID, (LPVOID *)&gpBackBuffer);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -3096,8 +3099,8 @@ BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, HVOBJECT BkgrndImg, UINT16 Index,
-                                  INT16 Ox, INT16 Oy) {
+                                  INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
+                                  UINT16 Index, INT16 Ox, INT16 Oy) {
   INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
   ETRLEObject *pTrav;
   SGPRect NewClip, OldClip;
@@ -4651,7 +4654,7 @@ BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT3
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, HVOBJECT hImageHandle, INT32 iPosX,
+BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
                                 INT32 iPosY) {
   // Horizontal shadow
   ShadowVideoSurfaceRect(uiDestVSurface, iPosX + 3, iPosY + hImageHandle->pETRLEObject->usHeight,
@@ -4666,7 +4669,7 @@ BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, HVOBJECT hImageHandle, IN
 }
 
 BOOLEAN MakeVSurfaceFromVObject(UINT32 uiVObject, UINT16 usSubIndex, UINT32 *puiVSurface) {
-  HVOBJECT hSrcVObject;
+  struct VObject *hSrcVObject;
   UINT32 uiVSurface;
   VSURFACE_DESC hDesc;
 

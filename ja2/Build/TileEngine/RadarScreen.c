@@ -44,8 +44,8 @@ void AdjustWorldCenterFromRadarCoords(INT16 sRadarX, INT16 sRadarY);
 void RenderSquadList(void);
 
 // squad list mvt + btn callback
-void TacticalSquadListMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void TacticalSquadListBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void TacticalSquadListMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void TacticalSquadListBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // the squad list font
 #define SQUAD_FONT COMPFONT
@@ -65,7 +65,7 @@ INT16 sSelectedSquadLine = -1;
 
 BOOLEAN gfRadarCurrentGuyFlash = FALSE;
 
-MOUSE_REGION gRadarRegionSquadList[NUMBER_OF_SQUADS];
+struct MOUSE_REGION gRadarRegionSquadList[NUMBER_OF_SQUADS];
 
 BOOLEAN InitRadarScreen() {
   // Add region for radar
@@ -89,7 +89,7 @@ BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
   VOBJECT_DESC VObjectDesc;
   CHAR8 zFilename[260];
   INT32 cnt;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
   strcpy(zFilename, aFilename);
 
@@ -171,7 +171,7 @@ void MoveRadarScreen() {
   MSYS_AddRegion(&gRadarRegion);
 }
 
-void RadarRegionMoveCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void RadarRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT16 sRadarX, sRadarY;
 
   // check if we are allowed to do anything?
@@ -192,7 +192,7 @@ void RadarRegionMoveCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void RadarRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void RadarRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT16 sRadarX, sRadarY;
 
   // check if we are allowed to do anything?
@@ -233,7 +233,7 @@ void RenderRadarScreen() {
   INT16 sBottomLeftWorldX, sBottomLeftWorldY;
   INT16 sBottomRightWorldX, sBottomRightWorldY;
 
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   INT16 sXSoldPos, sYSoldPos, sXSoldScreen, sYSoldScreen, sXSoldRadar, sYSoldRadar;
 
@@ -529,7 +529,7 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
   static BOOLEAN fCreated = FALSE;
   INT16 sCounter = 0;
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   UINT32 uiHandle;
 
   if ((fRenderRadarScreen == FALSE) && (fCreated == FALSE)) {
@@ -678,7 +678,7 @@ void RenderSquadList(void) {
   }
 }
 
-void TacticalSquadListMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void TacticalSquadListMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iValue = -1;
 
   iValue = MSYS_GetRegionUserData(pRegion, 0);
@@ -695,7 +695,7 @@ void TacticalSquadListMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   return;
 }
 
-void TacticalSquadListBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void TacticalSquadListBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for team list info region
   INT32 iValue = 0;
 

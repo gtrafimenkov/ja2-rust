@@ -7,6 +7,7 @@
 #include "GameSettings.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Strategic.h"
@@ -34,8 +35,9 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/Smell.h"
 #include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileCache.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
@@ -56,7 +58,7 @@
 extern struct SGPPaletteEntry gpLightColors[3];
 extern UINT16 gusShadeLevels[16][3];
 
-void MakeCorpseVisible(SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse);
+void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse);
 
 // When adding a corpse, add struct data...
 CHAR8 zCorpseFilenames[NUM_CORPSES][70] = {
@@ -337,7 +339,7 @@ BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse);
 BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, UINT32 uiBase,
                                   struct SGPPaletteEntry *pShadePal);
 
-void ReduceAmmoDroppedByNonPlayerSoldiers(SOLDIERTYPE *pSoldier, INT32 iInvSlot);
+void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iInvSlot);
 
 INT32 GetFreeRottingCorpse(void) {
   INT32 iCount;
@@ -419,9 +421,9 @@ INT32 AddRottingCorpse(ROTTING_CORPSE_DEFINITION *pCorpseDef) {
   ROTTING_CORPSE *pCorpse;
   ANITILE_PARAMS AniParams;
   UINT8 ubLevelID;
-  STRUCTURE_FILE_REF *pStructureFileRef = NULL;
+  struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
   CHAR8 zFilename[150];
-  DB_STRUCTURE_REF *pDBStructureRef;
+  struct DB_STRUCTURE_REF *pDBStructureRef;
   UINT8 ubLoop;
   INT16 sTileGridNo;
   DB_STRUCTURE_TILE **ppTile;
@@ -644,7 +646,7 @@ BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
   }
 
   if (bBodyTypePalette == -1) {
-    // Use palette from HVOBJECT, then use substitution for pants, etc
+    // Use palette from struct VObject*, then use substitution for pants, etc
     memcpy(pCorpse->p8BPPPalette, gpTileCache[pCorpse->iCachedTileID].pImagery->vo->pPaletteEntry,
            sizeof(pCorpse->p8BPPPalette) * 256);
 
@@ -677,17 +679,18 @@ BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
   return (TRUE);
 }
 
-BOOLEAN TurnSoldierIntoCorpse(SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc, BOOLEAN fCheckForLOS) {
+BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
+                              BOOLEAN fCheckForLOS) {
   ROTTING_CORPSE_DEFINITION Corpse;
   UINT8 ubType;
   INT32 cnt;
   UINT16 usItemFlags = 0;  // WORLD_ITEM_DONTRENDER;
   INT32 iCorpseID;
   INT8 bVisible = -1;
-  OBJECTTYPE *pObj;
+  struct OBJECTTYPE *pObj;
   UINT8 ubNumGoo;
   INT16 sNewGridNo;
-  OBJECTTYPE ItemObject;
+  struct OBJECTTYPE ItemObject;
 
   if (pSoldier->sGridNo == NOWHERE) {
     return (FALSE);
@@ -837,7 +840,7 @@ BOOLEAN TurnSoldierIntoCorpse(SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc, BOOLEA
   return (TRUE);
 }
 
-INT16 FindNearestRottingCorpse(SOLDIERTYPE *pSoldier) {
+INT16 FindNearestRottingCorpse(struct SOLDIERTYPE *pSoldier) {
   INT32 uiRange, uiLowestRange = 999999;
   INT16 sLowestGridNo = NOWHERE;
   INT32 cnt;
@@ -869,7 +872,7 @@ void AddCrowToCorpse(ROTTING_CORPSE *pCorpse) {
   UINT8 iNewIndex;
   INT16 sGridNo;
   UINT8 ubDirection;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubRoomNum;
 
   // No crows inside :(
@@ -918,7 +921,7 @@ void AddCrowToCorpse(ROTTING_CORPSE *pCorpse) {
   }
 }
 
-void HandleCrowLeave(SOLDIERTYPE *pSoldier) {
+void HandleCrowLeave(struct SOLDIERTYPE *pSoldier) {
   ROTTING_CORPSE *pCorpse;
 
   // Check if this crow is still referencing the same corpse...
@@ -936,7 +939,7 @@ void HandleCrowLeave(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleCrowFlyAway(SOLDIERTYPE *pSoldier) {
+void HandleCrowFlyAway(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubDirection;
   INT16 sGridNo;
 
@@ -972,7 +975,7 @@ void HandleRottingCorpses() {
   // Couint how many we have now...
   {
     UINT8 bLoop;
-    SOLDIERTYPE *pSoldier;
+    struct SOLDIERTYPE *pSoldier;
 
     for (bLoop = gTacticalStatus.Team[CIV_TEAM].bFirstID, pSoldier = MercPtrs[bLoop];
          bLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID; bLoop++, pSoldier++) {
@@ -1025,14 +1028,14 @@ void HandleRottingCorpses() {
   }
 }
 
-void MakeCorpseVisible(SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse) {
+void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse) {
   pCorpse->def.bVisible = 1;
   SetRenderFlags(RENDER_FLAG_FULL);
 }
 
 void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, INT8 bTeam) {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sDistVisible;
   INT16 sGridNo;
 
@@ -1072,7 +1075,7 @@ void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, INT8 bTeam) {
   }
 }
 
-void MercLooksForCorpses(SOLDIERTYPE *pSoldier) {
+void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt;
   INT16 sDistVisible;
   INT16 sGridNo;
@@ -1195,8 +1198,8 @@ BOOLEAN CreateCorpseShadedPalette(ROTTING_CORPSE *pCorpse, UINT32 uiBase,
   return (TRUE);
 }
 
-ROTTING_CORPSE *FindCorpseBasedOnStructure(INT16 sGridNo, STRUCTURE *pStructure) {
-  LEVELNODE *pLevelNode;
+ROTTING_CORPSE *FindCorpseBasedOnStructure(INT16 sGridNo, struct STRUCTURE *pStructure) {
+  struct LEVELNODE *pLevelNode;
   ROTTING_CORPSE *pCorpse = NULL;
 
   pLevelNode = gpWorldLevelData[sGridNo].pStructHead;
@@ -1217,7 +1220,7 @@ ROTTING_CORPSE *FindCorpseBasedOnStructure(INT16 sGridNo, STRUCTURE *pStructure)
 
 void CorpseHit(INT16 sGridNo, UINT16 usStructureID) {
 #if 0
-	STRUCTURE				*pStructure, *pBaseStructure;
+	struct STRUCTURE				*pStructure, *pBaseStructure;
 	ROTTING_CORPSE	*pCorpse = NULL;
 	INT16						sBaseGridNo;
 
@@ -1265,7 +1268,7 @@ void CorpseHit(INT16 sGridNo, UINT16 usStructureID) {
 }
 
 void VaporizeCorpse(INT16 sGridNo, UINT16 usStructureID) {
-  STRUCTURE *pStructure, *pBaseStructure;
+  struct STRUCTURE *pStructure, *pBaseStructure;
   ROTTING_CORPSE *pCorpse = NULL;
   INT16 sBaseGridNo;
   ANITILE_PARAMS AniParams;
@@ -1333,10 +1336,10 @@ INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, INT8 
   INT16 sLowestGridNo = 0;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
-  SOLDIERTYPE soldier;
+  struct SOLDIERTYPE soldier;
   UINT8 ubSaveNPCAPBudget;
   UINT8 ubSaveNPCDistLimit;
-  STRUCTURE_FILE_REF *pStructureFileRef = NULL;
+  struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
   CHAR8 zFilename[150];
   UINT8 ubBestDirection = 0;
   BOOLEAN fSetDirection = FALSE;
@@ -1360,7 +1363,7 @@ INT16 FindNearestAvailableGridNoForCorpse(ROTTING_CORPSE_DEFINITION *pDef, INT8 
 
   // create dummy soldier, and use the pathing to determine which nearby slots are
   // reachable.
-  memset(&soldier, 0, sizeof(SOLDIERTYPE));
+  memset(&soldier, 0, sizeof(struct SOLDIERTYPE));
   soldier.bTeam = 1;
   soldier.sGridNo = sSweetGridNo;
 
@@ -1453,7 +1456,7 @@ BOOLEAN IsValidDecapitationCorpse(ROTTING_CORPSE *pCorpse) {
 }
 
 ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, INT8 bLevel) {
-  STRUCTURE *pStructure, *pBaseStructure;
+  struct STRUCTURE *pStructure, *pBaseStructure;
   INT16 sBaseGridNo;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_CORPSE);
@@ -1473,8 +1476,8 @@ ROTTING_CORPSE *GetCorpseAtGridNo(INT16 sGridNo, INT8 bLevel) {
   return (NULL);
 }
 
-void DecapitateCorpse(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel) {
-  OBJECTTYPE Object;
+void DecapitateCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel) {
+  struct OBJECTTYPE Object;
   ROTTING_CORPSE *pCorpse;
   ROTTING_CORPSE_DEFINITION CorpseDef;
   UINT16 usHeadIndex = HEAD_1;
@@ -1539,10 +1542,10 @@ void DecapitateCorpse(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel) {
   }
 }
 
-void GetBloodFromCorpse(SOLDIERTYPE *pSoldier) {
+void GetBloodFromCorpse(struct SOLDIERTYPE *pSoldier) {
   ROTTING_CORPSE *pCorpse;
   INT8 bObjSlot;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   // OK, get corpse
   pCorpse = &(gRottingCorpse[pSoldier->uiPendingActionData4]);
@@ -1573,8 +1576,8 @@ void GetBloodFromCorpse(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void ReduceAmmoDroppedByNonPlayerSoldiers(SOLDIERTYPE *pSoldier, INT32 iInvSlot) {
-  OBJECTTYPE *pObj;
+void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iInvSlot) {
+  struct OBJECTTYPE *pObj;
 
   Assert(pSoldier);
   Assert((iInvSlot >= 0) && (iInvSlot < NUM_INV_SLOTS));
@@ -1593,11 +1596,12 @@ void ReduceAmmoDroppedByNonPlayerSoldiers(SOLDIERTYPE *pSoldier, INT32 iInvSlot)
   }
 }
 
-void LookForAndMayCommentOnSeeingCorpse(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel) {
+void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+                                        UINT8 ubLevel) {
   ROTTING_CORPSE *pCorpse;
   INT8 bToleranceThreshold = 0;
   INT32 cnt;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
 
   if (QuoteExp_HeadShotOnly[pSoldier->ubProfile] == 1) {
     return;

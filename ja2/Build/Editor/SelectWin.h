@@ -3,9 +3,9 @@
 
 #include "BuildDefines.h"
 #include "SGP/ButtonSystem.h"
-#include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
-#include "SGP/VObject.h"
+
+struct VObject;
 
 #define CANCEL_ICON 0
 #define UP_ICON 1
@@ -71,7 +71,7 @@ typedef struct {
   UINT8 ubType;
   union {
     struct {
-      HVOBJECT hVObject;
+      struct VObject *hVObject;
       UINT16 usStart;
       UINT16 usEnd;
       UINT32 uiObjIndx;
@@ -83,7 +83,7 @@ typedef struct {
 } DisplaySpec;
 
 typedef struct _DisplayList {
-  HVOBJECT hObj;
+  struct VObject *hObj;
   UINT16 uiIndex;
   INT16 iX;
   INT16 iY;

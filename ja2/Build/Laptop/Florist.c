@@ -5,6 +5,7 @@
 #include "Laptop/FloristOrderForm.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -71,8 +72,8 @@ void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason);
 UINT32 guiGalleryButton;
 
 // link to the flower home page by clicking on the flower title
-MOUSE_REGION gSelectedFloristTitleHomeLinkRegion;
-void SelectFloristTitleHomeLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFloristTitleHomeLinkRegion;
+void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void GameInitFlorist() {}
 
@@ -129,7 +130,7 @@ void ExitFlorist() {
 void HandleFlorist() {}
 
 void RenderFlorist() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 i, usPosY;
   UINT8 ubTextCounter;
 
@@ -215,7 +216,7 @@ BOOLEAN InitFloristDefaults() {
 }
 
 void DisplayFloristDefaults() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   WebPageTileBackground(4, 4, FLORIST_BACKGROUND_WIDTH, FLORIST_BACKGROUND_HEIGHT,
                         guiFloristBackground);
@@ -272,7 +273,7 @@ void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SelectFloristTitleHomeLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_FLORIST;

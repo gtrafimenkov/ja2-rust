@@ -1,6 +1,4 @@
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderWorld.h"
-#include "TileEngine/WorldDef.h"
 
 INT16 gsRScreenCenterX, gsRScreenCenterY;
 INT16 gsRDistToCenterY, gsRDistToCenterX;

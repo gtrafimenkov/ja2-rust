@@ -7,28 +7,32 @@
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDat.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "platform_strings.h"
 
-TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
+struct TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
 UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
 UINT8 gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
 
-TILE_IMAGERY *LoadTileSurface(char *cFilename) {
+struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   // Add tile surface
-  PTILE_IMAGERY pTileSurf = NULL;
+  struct TILE_IMAGERY *pTileSurf = NULL;
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   HIMAGE hImage;
   SGPFILENAME cStructureFilename;
   STR cEndOfName;
-  STRUCTURE_FILE_REF *pStructureFileRef;
+  struct STRUCTURE_FILE_REF *pStructureFileRef;
   BOOLEAN fOk;
 
   hImage = CreateImage(cFilename, IMAGE_ALLDATA);
@@ -86,10 +90,10 @@ TILE_IMAGERY *LoadTileSurface(char *cFilename) {
     pStructureFileRef = NULL;
   }
 
-  pTileSurf = (TILE_IMAGERY *)MemAlloc(sizeof(TILE_IMAGERY));
+  pTileSurf = (struct TILE_IMAGERY *)MemAlloc(sizeof(struct TILE_IMAGERY));
 
   // Set all values to zero
-  memset(pTileSurf, 0, sizeof(TILE_IMAGERY));
+  memset(pTileSurf, 0, sizeof(struct TILE_IMAGERY));
 
   pTileSurf->vo = hVObject;
   pTileSurf->pStructureFileRef = pStructureFileRef;
@@ -97,9 +101,9 @@ TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   if (pStructureFileRef && pStructureFileRef->pAuxData != NULL) {
     pTileSurf->pAuxData = pStructureFileRef->pAuxData;
     pTileSurf->pTileLocData = pStructureFileRef->pTileLocData;
-  } else if (hImage->uiAppDataSize == hVObject->usNumberOfObjects * sizeof(AuxObjectData)) {
+  } else if (hImage->uiAppDataSize == hVObject->usNumberOfObjects * sizeof(struct AuxObjectData)) {
     // Valid auxiliary data, so make a copy of it for TileSurf
-    pTileSurf->pAuxData = (AuxObjectData *)MemAlloc(hImage->uiAppDataSize);
+    pTileSurf->pAuxData = (struct AuxObjectData *)MemAlloc(hImage->uiAppDataSize);
     if (pTileSurf->pAuxData == NULL) {
       DestroyImage(hImage);
       DeleteVideoObject(hVObject);
@@ -115,7 +119,7 @@ TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   return (pTileSurf);
 }
 
-void DeleteTileSurface(PTILE_IMAGERY pTileSurf) {
+void DeleteTileSurface(struct TILE_IMAGERY *pTileSurf) {
   if (pTileSurf->pStructureFileRef != NULL) {
     FreeStructureFile(pTileSurf->pStructureFileRef);
   } else {
@@ -133,7 +137,7 @@ void DeleteTileSurface(PTILE_IMAGERY pTileSurf) {
 
 extern void GetRootName(STR8 pDestStr, STR8 pSrcStr);
 
-void SetRaisedObjectFlag(char *cFilename, TILE_IMAGERY *pTileSurf) {
+void SetRaisedObjectFlag(char *cFilename, struct TILE_IMAGERY *pTileSurf) {
   INT32 cnt = 0;
   CHAR8 cRootFile[128];
   CHAR8 ubRaisedObjectFiles[][80] = {"bones",    "bones2", "grass2", "grass3", "l_weed3", "litter",

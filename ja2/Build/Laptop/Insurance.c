@@ -5,6 +5,7 @@
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Line.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -75,12 +76,12 @@ UINT32 guiInsuranceBigRedLineImage;
 UINT32 guiInsuranceBulletImage;
 
 // link to the varios pages
-MOUSE_REGION gSelectedInsuranceLinkRegion[3];
-void SelectInsuranceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedInsuranceLinkRegion[3];
+void SelectInsuranceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // link to the home page by clicking on the small title
-MOUSE_REGION gSelectedInsuranceTitleLinkRegion;
-void SelectInsuranceTitleLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedInsuranceTitleLinkRegion;
+void SelectInsuranceTitleLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void GameInitInsurance() {}
 
@@ -137,7 +138,7 @@ void HandleInsurance() {}
 
 void RenderInsurance() {
   wchar_t sText[800];
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   DisplayInsuranceDefaults();
 
@@ -269,7 +270,7 @@ BOOLEAN InitInsuranceDefaults() {
 }
 
 void DisplayInsuranceDefaults() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT8 i;
   UINT16 usPosY;
 
@@ -364,7 +365,7 @@ void GetInsuranceText(UINT8 ubNumber, STR16 pString) {
   }
 }
 
-void SelectInsuranceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectInsuranceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     UINT32 uiInsuranceLink = MSYS_GetRegionUserData(pRegion, 0);
@@ -379,7 +380,7 @@ void SelectInsuranceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectInsuranceTitleLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectInsuranceTitleLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_INSURANCE;

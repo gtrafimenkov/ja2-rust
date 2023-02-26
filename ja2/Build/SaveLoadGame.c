@@ -73,7 +73,6 @@
 #include "Tactical/MilitiaControl.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Squads.h"
 #include "Tactical/TacticalSave.h"
@@ -91,7 +90,6 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SmokeEffects.h"
 #include "TileEngine/TacticalPlacementGUI.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/MercTextBox.h"
 #include "Utils/Message.h"
@@ -122,7 +120,7 @@ UINT32 guiSizeOfTempFiles;
 char gzNameOfMapTempFile[128];
 #endif
 
-extern SOLDIERTYPE *gpSMCurrentMerc;
+extern struct SOLDIERTYPE *gpSMCurrentMerc;
 extern INT32 giSortStateForMapScreenList;
 extern INT16 sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 extern INT32 giRTAILastUpdateTime;
@@ -632,7 +630,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc) {
           else
           {
                   INT16					sSoldierCnt;
-                  SOLDIERTYPE		*pSoldier;
+                  struct SOLDIERTYPE		*pSoldier;
                   INT16					bLastTeamID;
                   INT8					bCount=0;
                   BOOLEAN				fFoundAMerc=FALSE;
@@ -2217,7 +2215,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // ATE: if we are within this window where skyridder was foobared, fix!
   if (SaveGameHeader.uiSavedGameVersion >= 61 && SaveGameHeader.uiSavedGameVersion <= 65) {
-    SOLDIERTYPE *pSoldier;
+    struct SOLDIERTYPE *pSoldier;
     MERCPROFILESTRUCT *pProfile;
 
     if (!fSkyRiderSetUp) {
@@ -2268,7 +2266,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   }
 
   // Update the MERC merc contract lenght.  Before save version 77 the data was stored in the
-  // SOLDIERTYPE, after 77 the data is stored in the profile
+  // struct SOLDIERTYPE, after 77 the data is stored in the profile
   if (SaveGameHeader.uiSavedGameVersion < 77) {
     UpdateMercMercContractInfo();
   }
@@ -2373,9 +2371,9 @@ BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
 
 // Not saving any of these in the soldier struct
 
-//	struct TAG_level_node				*pLevelNode;
-//	struct TAG_level_node				*pExternShadowLevelNode;
-//	struct TAG_level_node				*pRoofUILevelNode;
+//	struct LEVELNODE				*pLevelNode;
+//	struct LEVELNODE				*pExternShadowLevelNode;
+//	struct LEVELNODE				*pRoofUILevelNode;
 //	UINT16 *pBackGround; 	UINT16
 //*pZBackground; 	UINT16
 //*pForcedShade;
@@ -2389,7 +2387,7 @@ BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
 //];
 ////
 //	UINT16 *pShades[ NUM_SOLDIER_SHADES ]; // Shading tables 	UINT16 *p16BPPPalette;
-// struct SGPPaletteEntry *p8BPPPalette 	OBJECTTYPE *pTempObject;
+// struct SGPPaletteEntry *p8BPPPalette 	struct OBJECTTYPE *pTempObject;
 
 BOOLEAN SaveSoldierStructure(HWFILE hFile) {
   UINT16 cnt;
@@ -2397,7 +2395,7 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
   UINT8 ubOne = 1;
   UINT8 ubZero = 0;
 
-  UINT32 uiSaveSize = sizeof(SOLDIERTYPE);
+  UINT32 uiSaveSize = sizeof(struct SOLDIERTYPE);
 
   // Loop through all the soldier structs to save
   for (cnt = 0; cnt < TOTAL_SOLDIERS; cnt++) {
@@ -2470,8 +2468,8 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
 BOOLEAN LoadSoldierStructure(HWFILE hFile) {
   UINT16 cnt;
   UINT32 uiNumBytesRead = 0;
-  SOLDIERTYPE SavedSoldierInfo;
-  UINT32 uiSaveSize = sizeof(SOLDIERTYPE);
+  struct SOLDIERTYPE SavedSoldierInfo;
+  UINT32 uiSaveSize = sizeof(struct SOLDIERTYPE);
   UINT8 ubId;
   UINT8 ubOne = 1;
   UINT8 ubActive = 1;
@@ -2614,7 +2612,7 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
 
   // Fix robot
   if (guiSaveGameVersion <= 87) {
-    SOLDIERTYPE *pSoldier;
+    struct SOLDIERTYPE *pSoldier;
 
     if (gMercProfiles[ROBOT].inv[VESTPOS] == SPECTRA_VEST) {
       // update this
@@ -3100,9 +3098,10 @@ BOOLEAN LoadTacticalStatusFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN CopySavedSoldierInfoToNewSoldier(SOLDIERTYPE *pDestSourceInfo, SOLDIERTYPE *pSourceInfo) {
+BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
+                                         struct SOLDIERTYPE *pSourceInfo) {
   // Copy the old soldier information over to the new structure
-  memcpy(pDestSourceInfo, pSourceInfo, sizeof(SOLDIERTYPE));
+  memcpy(pDestSourceInfo, pSourceInfo, sizeof(struct SOLDIERTYPE));
 
   return (TRUE);
 }
@@ -3365,7 +3364,7 @@ void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName) {
 
 BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
   UINT32 uiNumOfNodes = 0;
-  PathStPtr pTempPath = Menptr[ubID].pMercPath;
+  struct path *pTempPath = Menptr[ubID].pMercPath;
   UINT32 uiNumBytesWritten = 0;
 
   // loop through to get all the nodes
@@ -3386,8 +3385,8 @@ BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
   // loop through nodes and save all the nodes
   while (pTempPath) {
     // Save the number of the nodes
-    FileMan_Write(hFile, pTempPath, sizeof(PathSt), &uiNumBytesWritten);
-    if (uiNumBytesWritten != sizeof(PathSt)) {
+    FileMan_Write(hFile, pTempPath, sizeof(struct path), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(struct path)) {
       return (FALSE);
     }
 
@@ -3399,8 +3398,8 @@ BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
 
 BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, UINT8 ubID) {
   UINT32 uiNumOfNodes = 0;
-  PathStPtr pTempPath = NULL;
-  PathStPtr pTemp = NULL;
+  struct path *pTempPath = NULL;
+  struct path *pTemp = NULL;
   UINT32 uiNumBytesRead = 0;
   UINT32 cnt;
 
@@ -3432,13 +3431,13 @@ BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, UINT8 ubID) {
   // load all the nodes
   for (cnt = 0; cnt < uiNumOfNodes; cnt++) {
     // Allocate memory for the new node
-    pTemp = (PathStPtr)MemAlloc(sizeof(PathSt));
+    pTemp = (struct path *)MemAlloc(sizeof(struct path));
     if (pTemp == NULL) return (FALSE);
-    memset(pTemp, 0, sizeof(PathSt));
+    memset(pTemp, 0, sizeof(struct path));
 
     // Load the node
-    FileMan_Read(hFile, pTemp, sizeof(PathSt), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(PathSt)) {
+    FileMan_Read(hFile, pTemp, sizeof(struct path), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(struct path)) {
       return (FALSE);
     }
 
@@ -4155,7 +4154,7 @@ void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pb
     }
   } else {
     INT16 sSoldierCnt;
-    SOLDIERTYPE *pSoldier;
+    struct SOLDIERTYPE *pSoldier;
     INT16 bLastTeamID;
     INT8 bCount = 0;
     BOOLEAN fFoundAMerc = FALSE;
@@ -4224,7 +4223,7 @@ void UnPauseAfterSaveGame(void) {
 }
 
 void TruncateStrategicGroupSizes() {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   SECTORINFO *pSector;
   INT32 i;
   for (i = SEC_A1; i < SEC_P16; i++) {
@@ -4347,7 +4346,7 @@ void TruncateStrategicGroupSizes() {
 
 void UpdateMercMercContractInfo() {
   UINT8 ubCnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (ubCnt = BIFF; ubCnt <= BUBBA; ubCnt++) {
     pSoldier = FindSoldierByProfileID(ubCnt, TRUE);

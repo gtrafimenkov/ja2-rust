@@ -20,9 +20,7 @@
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/TileAnimation.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 

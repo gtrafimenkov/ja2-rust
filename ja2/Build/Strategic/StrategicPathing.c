@@ -8,6 +8,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Input.h"
+#include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
@@ -23,12 +24,11 @@
 #include "Strategic/StrategicMovement.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/Overhead.h"
-#include "Tactical/Squads.h"
 #include "Tactical/Vehicles.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
-void AddSectorToFrontOfMercPath(PathStPtr *ppMercPath, UINT8 ubSectorX, UINT8 ubSectorY);
+void AddSectorToFrontOfMercPath(struct path** ppMercPath, UINT8 ubSectorX, UINT8 ubSectorY);
 
 // mvt modifier
 //#define FOOT_MVT_MODIFIER 2
@@ -68,7 +68,7 @@ typedef struct trail_s trail_t;
 #define MAXTRAILTREE (4096)
 #define MAXpathQ (512)
 #define MAP_WIDTH 18
-#define MAP_LENGTH MAP_WIDTH *MAP_WIDTH
+#define MAP_LENGTH MAP_WIDTH* MAP_WIDTH
 
 //#define EASYWATERCOST	TRAVELCOST_FLAT / 2
 //#define ISWATER(t)	(((t)==TRAVELCOST_KNEEDEEP) || ((t)==TRAVELCOST_DEEPWATER))
@@ -131,7 +131,7 @@ short trailStratTreedxB = 0;
 
 #define ESTIMATE0 ((dx > dy) ? (dx) : (dy))
 #define ESTIMATE1 ((dx < dy) ? ((dx * 14) / 10 + dy) : ((dy * 14) / 10 + dx))
-#define ESTIMATE2 FLATCOST *((dx < dy) ? ((dx * 14) / 10 + dy) : ((dy * 14) / 10 + dx))
+#define ESTIMATE2 FLATCOST*((dx < dy) ? ((dx * 14) / 10 + dy) : ((dy * 14) / 10 + dx))
 #define ESTIMATEn ((int)(FLATCOST * sqrt(dx * dx + dy * dy)))
 #define ESTIMATE ESTIMATE1
 
@@ -186,7 +186,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
   INT16 iCounter = 0;
   BOOLEAN fPlotDirectPath = FALSE;
   static BOOLEAN fPreviousPlotDirectPath = FALSE;  // don't save
-  GROUP *pGroup;
+  struct GROUP* pGroup;
 
   // ******** Fudge by Bret (for now), curAPcost is never initialized in this function, but should
   // be! so this is just to keep things happy!
@@ -417,24 +417,24 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
   return (0);
 }
 
-PathStPtr BuildAStrategicPath(PathStPtr pPath, INT16 iStartSectorNum, INT16 iEndSectorNum,
-                              INT16 sMvtGroupNumber,
-                              BOOLEAN fTacticalTraversal /*, BOOLEAN fTempPath */) {
+struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT16 iEndSectorNum,
+                                 INT16 sMvtGroupNumber,
+                                 BOOLEAN fTacticalTraversal /*, BOOLEAN fTempPath */) {
   INT32 iCurrentSectorNum;
   INT32 iDelta = 0;
   INT32 iPathLength;
   INT32 iCount = 0;
-  PathStPtr pNode = NULL;
-  PathStPtr pNewNode = NULL;
-  PathStPtr pDeleteNode = NULL;
+  struct path* pNode = NULL;
+  struct path* pNewNode = NULL;
+  struct path* pDeleteNode = NULL;
   BOOLEAN fFlag = FALSE;
-  PathStPtr pHeadOfPathList = pPath;
+  struct path* pHeadOfPathList = pPath;
   INT32 iOldDelta = 0;
   iCurrentSectorNum = iStartSectorNum;
 
   if (pNode == NULL) {
     // start new path list
-    pNode = (PathSt *)MemAlloc(sizeof(PathSt));
+    pNode = (struct path*)MemAlloc(sizeof(struct path));
     /*
        if ( _KeyDown( CTRL ))
                      pNode->fSpeed=SLOW_MVT;
@@ -538,16 +538,16 @@ PathStPtr BuildAStrategicPath(PathStPtr pPath, INT16 iStartSectorNum, INT16 iEnd
   return pPath;
 }
 
-BOOLEAN AddSectorToPathList(PathStPtr pPath, UINT16 uiSectorNum) {
-  PathStPtr pNode = NULL;
-  PathStPtr pTempNode = NULL;
-  PathStPtr pHeadOfList = pPath;
+BOOLEAN AddSectorToPathList(struct path* pPath, UINT16 uiSectorNum) {
+  struct path* pNode = NULL;
+  struct path* pTempNode = NULL;
+  struct path* pHeadOfList = pPath;
   pNode = pPath;
 
   if (uiSectorNum < MAP_WORLD_X - 1) return FALSE;
 
   if (pNode == NULL) {
-    pNode = (PathSt *)MemAlloc(sizeof(PathSt));
+    pNode = (struct path*)MemAlloc(sizeof(struct path));
 
     // Implement EtaCost Array as base EtaCosts of sectors
     // pNode->uiEtaCost=EtaCost[uiSectorNum];
@@ -572,7 +572,7 @@ BOOLEAN AddSectorToPathList(PathStPtr pPath, UINT16 uiSectorNum) {
       pNode = pNode->pNext;
     }
 
-    pTempNode = (PathSt *)MemAlloc(sizeof(PathSt));
+    pTempNode = (struct path*)MemAlloc(sizeof(struct path));
     pTempNode->uiEta = 0;
     pNode->pNext = pTempNode;
     pTempNode->uiSectorId = uiSectorNum;
@@ -681,7 +681,7 @@ BOOLEAN SectorIsBlockedFromFootExit( UINT16 sSourceSector, INT8 bToDirection )
 
 
 
-BOOLEAN CanThisMercMoveToThisSector( SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY )
+BOOLEAN CanThisMercMoveToThisSector( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY )
 {
         // this fucntion will return if this merc ( pSoldier ), can move to sector sX, sY
   BOOLEAN fOkToMoveFlag = FALSE;
@@ -692,7 +692,7 @@ BOOLEAN CanThisMercMoveToThisSector( SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY )
 
 
 
-void SetThisMercsSectorXYToTheseValues( SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, UINT8
+void SetThisMercsSectorXYToTheseValues( struct SOLDIERTYPE *pSoldier ,INT16 sX, INT16 sY, UINT8
 ubFromDirection )
 {
   // will move a merc ( pSoldier )to a sector sX, sY
@@ -724,12 +724,12 @@ ubFromDirection )
 }
 */
 
-PathStPtr AppendStrategicPath(PathStPtr pNewSection, PathStPtr pHeadOfPathList) {
+struct path* AppendStrategicPath(struct path* pNewSection, struct path* pHeadOfPathList) {
   // will append a new section onto the end of the head of list, then return the head of the new
   // list
 
-  PathStPtr pNode = pHeadOfPathList;
-  PathStPtr pPastNode = NULL;
+  struct path* pNode = pHeadOfPathList;
+  struct path* pPastNode = NULL;
   // move to end of original section
 
   if (pNewSection == NULL) {
@@ -764,10 +764,10 @@ PathStPtr AppendStrategicPath(PathStPtr pNewSection, PathStPtr pHeadOfPathList) 
   return (pHeadOfPathList);
 }
 
-PathStPtr ClearStrategicPathList(PathStPtr pHeadOfPath, INT16 sMvtGroup) {
+struct path* ClearStrategicPathList(struct path* pHeadOfPath, INT16 sMvtGroup) {
   // will clear out a strategic path and return head of list as NULL
-  PathStPtr pNode = pHeadOfPath;
-  PathStPtr pDeleteNode = pHeadOfPath;
+  struct path* pNode = pHeadOfPath;
+  struct path* pDeleteNode = pHeadOfPath;
 
   // is there in fact a path?
   if (pNode == NULL) {
@@ -801,11 +801,11 @@ PathStPtr ClearStrategicPathList(PathStPtr pHeadOfPath, INT16 sMvtGroup) {
   return (pNode);
 }
 
-PathStPtr ClearStrategicPathListAfterThisSector(PathStPtr pHeadOfPath, INT16 sX, INT16 sY,
-                                                INT16 sMvtGroup) {
+struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, INT16 sX, INT16 sY,
+                                                   INT16 sMvtGroup) {
   // will clear out a strategic path and return head of list as NULL
-  PathStPtr pNode = pHeadOfPath;
-  PathStPtr pDeleteNode = pHeadOfPath;
+  struct path* pNode = pHeadOfPath;
+  struct path* pDeleteNode = pHeadOfPath;
   INT16 sSector = 0;
   INT16 sCurrentSector = -1;
 
@@ -887,7 +887,7 @@ PathStPtr ClearStrategicPathListAfterThisSector(PathStPtr pHeadOfPath, INT16 sX,
   return (pHeadOfPath);
 }
 
-PathStPtr MoveToBeginningOfPathList(PathStPtr pList) {
+struct path* MoveToBeginningOfPathList(struct path* pList) {
   // move to beginning of this list
 
   // no list, return
@@ -903,7 +903,7 @@ PathStPtr MoveToBeginningOfPathList(PathStPtr pList) {
   return (pList);
 }
 
-PathStPtr MoveToEndOfPathList(PathStPtr pList) {
+struct path* MoveToEndOfPathList(struct path* pList) {
   // move to end of list
 
   // no list, return
@@ -919,10 +919,10 @@ PathStPtr MoveToEndOfPathList(PathStPtr pList) {
   return (pList);
 }
 
-PathStPtr RemoveTailFromStrategicPath(PathStPtr pHeadOfList) {
+struct path* RemoveTailFromStrategicPath(struct path* pHeadOfList) {
   // remove the tail section from the strategic path
-  PathStPtr pNode = pHeadOfList;
-  PathStPtr pLastNode = pHeadOfList;
+  struct path* pNode = pHeadOfList;
+  struct path* pLastNode = pHeadOfList;
 
   if (pNode == NULL) {
     // no list, leave
@@ -946,10 +946,10 @@ PathStPtr RemoveTailFromStrategicPath(PathStPtr pHeadOfList) {
   return (pHeadOfList);
 }
 
-PathStPtr RemoveHeadFromStrategicPath(PathStPtr pList) {
+struct path* RemoveHeadFromStrategicPath(struct path* pList) {
   // move to head of list
-  PathStPtr pNode = pList;
-  PathStPtr pNewHead = pList;
+  struct path* pNode = pList;
+  struct path* pNewHead = pList;
 
   // check if there is a list
   if (pNode == NULL) {
@@ -978,12 +978,12 @@ PathStPtr RemoveHeadFromStrategicPath(PathStPtr pList) {
   return (pNewHead);
 }
 
-PathStPtr RemoveSectorFromStrategicPathList(PathStPtr pList, INT16 sX, INT16 sY) {
+struct path* RemoveSectorFromStrategicPathList(struct path* pList, INT16 sX, INT16 sY) {
   // find sector sX, sY ...then remove it
   INT16 sSector = 0;
   INT16 sCurrentSector = -1;
-  PathStPtr pNode = pList;
-  PathStPtr pPastNode = pList;
+  struct path* pNode = pList;
+  struct path* pPastNode = pList;
 
   // get sector value
   sSector = sX + (sY * MAP_WORLD_X);
@@ -1030,10 +1030,10 @@ PathStPtr RemoveSectorFromStrategicPathList(PathStPtr pList, INT16 sX, INT16 sY)
   return (pPastNode);
 }
 
-INT16 GetLastSectorIdInCharactersPath(SOLDIERTYPE *pCharacter) {
+INT16 GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter) {
   // will return the last sector of the current path, or the current sector if there's no path
   INT16 sLastSector = (pCharacter->sSectorX) + (pCharacter->sSectorY) * (MAP_WORLD_X);
-  PathStPtr pNode = NULL;
+  struct path* pNode = NULL;
 
   pNode = GetSoldierMercPathPtr(pCharacter);
 
@@ -1048,7 +1048,7 @@ INT16 GetLastSectorIdInCharactersPath(SOLDIERTYPE *pCharacter) {
 // get id of last sector in vehicle path list
 INT16 GetLastSectorIdInVehiclePath(INT32 iId) {
   INT16 sLastSector = -1;
-  PathStPtr pNode = NULL;
+  struct path* pNode = NULL;
 
   if ((iId >= ubNumberOfVehicles) || (iId < 0)) {
     return (sLastSector);
@@ -1071,9 +1071,9 @@ INT16 GetLastSectorIdInVehiclePath(INT32 iId) {
   return sLastSector;
 }
 
-PathStPtr CopyPaths(PathStPtr pSourcePath, PathStPtr pDestPath) {
-  PathStPtr pDestNode = pDestPath;
-  PathStPtr pCurNode = pSourcePath;
+struct path* CopyPaths(struct path* pSourcePath, struct path* pDestPath) {
+  struct path* pDestNode = pDestPath;
+  struct path* pCurNode = pSourcePath;
   // copies path from source to dest
 
   // NULL out dest path
@@ -1082,7 +1082,7 @@ PathStPtr CopyPaths(PathStPtr pSourcePath, PathStPtr pDestPath) {
 
   // start list off
   if (pCurNode != NULL) {
-    pDestNode = (PathSt *)MemAlloc(sizeof(PathSt));
+    pDestNode = (struct path*)MemAlloc(sizeof(struct path));
 
     // set next and prev nodes
     pDestNode->pPrev = NULL;
@@ -1097,7 +1097,7 @@ PathStPtr CopyPaths(PathStPtr pSourcePath, PathStPtr pDestPath) {
   }
 
   while (pCurNode != NULL) {
-    pDestNode->pNext = (PathSt *)MemAlloc(sizeof(PathSt));
+    pDestNode->pNext = (struct path*)MemAlloc(sizeof(struct path));
 
     // set next's previous to current
     pDestNode->pNext->pPrev = pDestNode;
@@ -1123,7 +1123,7 @@ PathStPtr CopyPaths(PathStPtr pSourcePath, PathStPtr pDestPath) {
   return (pDestNode);
 }
 
-INT32 GetStrategicMvtSpeed(SOLDIERTYPE *pCharacter) {
+INT32 GetStrategicMvtSpeed(struct SOLDIERTYPE* pCharacter) {
   // will return the strategic speed of the character
   INT32 iSpeed;
 
@@ -1137,9 +1137,9 @@ INT32 GetStrategicMvtSpeed(SOLDIERTYPE *pCharacter) {
 }
 
 /*
-void CalculateEtaForCharacterPath( SOLDIERTYPE *pCharacter )
+void CalculateEtaForCharacterPath( struct SOLDIERTYPE *pCharacter )
 {
-        PathStPtr pNode = NULL;
+        struct path* pNode = NULL;
         UINT32 uiDeltaEta =0;
         INT32 iMveDelta = 0;
         BOOLEAN fInVehicle;
@@ -1226,11 +1226,11 @@ iMveDelta ] * FOOT_MVT_MODIFIER ) / ( GetStrategicMvtSpeed( pCharacter ) * ( pNo
 */
 
 /*
-void MoveCharacterOnPath( SOLDIERTYPE *pCharacter )
+void MoveCharacterOnPath( struct SOLDIERTYPE *pCharacter )
 {
         // will move a character along a merc path
-        PathStPtr pNode = NULL;
-        PathStPtr pDeleteNode = NULL;
+        struct path* pNode = NULL;
+        struct path* pDeleteNode = NULL;
 
 
         // error check
@@ -1298,7 +1298,7 @@ void MoveCharacterOnPath( SOLDIERTYPE *pCharacter )
 void MoveTeamOnFoot( void )
 {
         // run through list of characters on player team, if on foot, move them
-        SOLDIERTYPE *pSoldier, *pTeamSoldier;
+        struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt=0;
 
         // set psoldier as first in merc ptrs
@@ -1319,10 +1319,10 @@ void MoveTeamOnFoot( void )
 */
 
 /*
-UINT32 GetEtaGivenRoute( PathStPtr pPath )
+UINT32 GetEtaGivenRoute( struct path* pPath )
 {
         // will return the eta of a passed path in global time units, in minutes
-        PathStPtr pNode = pPath;
+        struct path* pNode = pPath;
 
         if( pPath == NULL )
         {
@@ -1351,9 +1351,9 @@ UINT32 GetEtaGivenRoute( PathStPtr pPath )
 */
 
 #ifdef BETA_VERSION
-void VerifyAllMercsInGroupAreOnSameSquad(GROUP *pGroup) {
-  PLAYERGROUP *pPlayer;
-  SOLDIERTYPE *pSoldier;
+void VerifyAllMercsInGroupAreOnSameSquad(struct GROUP* pGroup) {
+  PLAYERGROUP* pPlayer;
+  struct SOLDIERTYPE* pSoldier;
   INT8 bSquad = -1;
 
   // Let's choose somebody in group.....
@@ -1377,13 +1377,13 @@ void VerifyAllMercsInGroupAreOnSameSquad(GROUP *pGroup) {
 }
 #endif
 
-void RebuildWayPointsForGroupPath(PathStPtr pHeadOfPath, INT16 sMvtGroup) {
+void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, INT16 sMvtGroup) {
   INT32 iDelta = 0;
   INT32 iOldDelta = 0;
   BOOLEAN fFirstNode = TRUE;
-  PathStPtr pNode = pHeadOfPath;
-  GROUP *pGroup = NULL;
-  WAYPOINT *wp = NULL;
+  struct path* pNode = pHeadOfPath;
+  struct GROUP* pGroup = NULL;
+  WAYPOINT* wp = NULL;
 
   if ((sMvtGroup == -1) || (sMvtGroup == 0)) {
     // invalid group...leave
@@ -1480,8 +1480,8 @@ void RebuildWayPointsForGroupPath(PathStPtr pHeadOfPath, INT16 sMvtGroup) {
 
 // clear strategic movement (mercpaths and waypoints) for this soldier, and his group (including its
 // vehicles)
-void ClearMvtForThisSoldierAndGang(SOLDIERTYPE *pSoldier) {
-  GROUP *pGroup = NULL;
+void ClearMvtForThisSoldierAndGang(struct SOLDIERTYPE* pSoldier) {
+  struct GROUP* pGroup = NULL;
 
   // check if valid grunt
   Assert(pSoldier);
@@ -1495,7 +1495,7 @@ void ClearMvtForThisSoldierAndGang(SOLDIERTYPE *pSoldier) {
 
 BOOLEAN MoveGroupFromSectorToSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX,
                                     INT16 sDestY) {
-  PathStPtr pNode = NULL;
+  struct path* pNode = NULL;
 
   // build the path
   pNode = BuildAStrategicPath(pNode, (INT16)CALCULATE_STRATEGIC_INDEX(sStartX, sStartY),
@@ -1519,7 +1519,7 @@ BOOLEAN MoveGroupFromSectorToSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStart
 
 BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStartY,
                                                       INT16 sDestX, INT16 sDestY) {
-  PathStPtr pNode = NULL;
+  struct path* pNode = NULL;
 
   // build the path
   pNode = BuildAStrategicPath(pNode, (INT16)CALCULATE_STRATEGIC_INDEX(sStartX, sStartY),
@@ -1547,7 +1547,7 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(UINT8 ubGroupID, INT16 sSt
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroupID, INT16 sStartX,
                                                                    INT16 sStartY, INT16 sDestX,
                                                                    INT16 sDestY) {
-  PathStPtr pNode = NULL;
+  struct path* pNode = NULL;
 
   // init sectors with soldiers in them
   InitSectorsWithSoldiersList();
@@ -1587,7 +1587,7 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroup
 
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSectorBeforeEnd(
     UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX, INT16 sDestY) {
-  PathStPtr pNode = NULL;
+  struct path* pNode = NULL;
 
   // init sectors with soldiers in them
   InitSectorsWithSoldiersList();
@@ -1632,7 +1632,7 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSect
 /*
 BOOLEAN MoveGroupToOriginalSector( UINT8 ubGroupID )
 {
-        GROUP *pGroup;
+        struct GROUP *pGroup;
         UINT8 ubDestX, ubDestY;
         pGroup = GetGroup( ubGroupID );
         ubDestX = ( pGroup->ubOriginalSector % 16 ) + 1;
@@ -1644,9 +1644,9 @@ ubDestY );
 }
 */
 
-INT32 GetLengthOfPath(PathStPtr pHeadPath) {
+INT32 GetLengthOfPath(struct path* pHeadPath) {
   INT32 iLength = 0;
-  PathStPtr pNode = pHeadPath;
+  struct path* pNode = pHeadPath;
 
   while (pNode) {
     pNode = pNode->pNext;
@@ -1656,8 +1656,8 @@ INT32 GetLengthOfPath(PathStPtr pHeadPath) {
   return (iLength);
 }
 
-INT32 GetLengthOfMercPath(SOLDIERTYPE *pSoldier) {
-  PathStPtr pNode = NULL;
+INT32 GetLengthOfMercPath(struct SOLDIERTYPE* pSoldier) {
+  struct path* pNode = NULL;
   INT32 iLength = 0;
 
   pNode = GetSoldierMercPathPtr(pSoldier);
@@ -1665,7 +1665,7 @@ INT32 GetLengthOfMercPath(SOLDIERTYPE *pSoldier) {
   return (iLength);
 }
 
-BOOLEAN CheckIfPathIsEmpty(PathStPtr pHeadPath) {
+BOOLEAN CheckIfPathIsEmpty(struct path* pHeadPath) {
   // no path
   if (pHeadPath == NULL) {
     return (TRUE);
@@ -1679,8 +1679,8 @@ BOOLEAN CheckIfPathIsEmpty(PathStPtr pHeadPath) {
   return (FALSE);
 }
 
-PathStPtr GetSoldierMercPathPtr(SOLDIERTYPE *pSoldier) {
-  PathStPtr pMercPath = NULL;
+struct path* GetSoldierMercPathPtr(struct SOLDIERTYPE* pSoldier) {
+  struct path* pMercPath = NULL;
 
   Assert(pSoldier);
 
@@ -1699,8 +1699,8 @@ PathStPtr GetSoldierMercPathPtr(SOLDIERTYPE *pSoldier) {
   return (pMercPath);
 }
 
-PathStPtr GetGroupMercPathPtr(GROUP *pGroup) {
-  PathStPtr pMercPath = NULL;
+struct path* GetGroupMercPathPtr(struct GROUP* pGroup) {
+  struct path* pMercPath = NULL;
   INT32 iVehicledId = -1;
 
   Assert(pGroup);
@@ -1723,7 +1723,7 @@ PathStPtr GetGroupMercPathPtr(GROUP *pGroup) {
   return (pMercPath);
 }
 
-UINT8 GetSoldierGroupId(SOLDIERTYPE *pSoldier) {
+UINT8 GetSoldierGroupId(struct SOLDIERTYPE* pSoldier) {
   UINT8 ubGroupId = 0;
 
   // IN a vehicle?
@@ -1743,9 +1743,9 @@ UINT8 GetSoldierGroupId(SOLDIERTYPE *pSoldier) {
 
 // clears this groups strategic movement (mercpaths and waypoints), include those in the vehicle
 // structs(!)
-void ClearMercPathsAndWaypointsForAllInGroup(GROUP *pGroup) {
-  PLAYERGROUP *pPlayer = NULL;
-  SOLDIERTYPE *pSoldier = NULL;
+void ClearMercPathsAndWaypointsForAllInGroup(struct GROUP* pGroup) {
+  PLAYERGROUP* pPlayer = NULL;
+  struct SOLDIERTYPE* pSoldier = NULL;
 
   pPlayer = pGroup->pPlayerList;
   while (pPlayer) {
@@ -1761,7 +1761,7 @@ void ClearMercPathsAndWaypointsForAllInGroup(GROUP *pGroup) {
   // if it's a vehicle
   if (pGroup->fVehicle) {
     INT32 iVehicleId = -1;
-    VEHICLETYPE *pVehicle = NULL;
+    VEHICLETYPE* pVehicle = NULL;
 
     iVehicleId = GivenMvtGroupIdFindVehicleId(pGroup->ubGroupID);
     Assert(iVehicleId != -1);
@@ -1780,8 +1780,8 @@ void ClearMercPathsAndWaypointsForAllInGroup(GROUP *pGroup) {
 
 // clears the contents of the soldier's mercpPath, as well as his vehicle path if he is a / or is in
 // a vehicle
-void ClearPathForSoldier(SOLDIERTYPE *pSoldier) {
-  VEHICLETYPE *pVehicle = NULL;
+void ClearPathForSoldier(struct SOLDIERTYPE* pSoldier) {
+  VEHICLETYPE* pVehicle = NULL;
 
   // clear the soldier's mercpath
   pSoldier->pMercPath = ClearStrategicPathList(pSoldier->pMercPath, pSoldier->ubGroupID);
@@ -1802,10 +1802,10 @@ void ClearPathForSoldier(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void AddSectorToFrontOfMercPathForAllSoldiersInGroup(GROUP *pGroup, UINT8 ubSectorX,
+void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, UINT8 ubSectorX,
                                                      UINT8 ubSectorY) {
-  PLAYERGROUP *pPlayer = NULL;
-  SOLDIERTYPE *pSoldier = NULL;
+  PLAYERGROUP* pPlayer = NULL;
+  struct SOLDIERTYPE* pSoldier = NULL;
 
   pPlayer = pGroup->pPlayerList;
   while (pPlayer) {
@@ -1821,7 +1821,7 @@ void AddSectorToFrontOfMercPathForAllSoldiersInGroup(GROUP *pGroup, UINT8 ubSect
   // if it's a vehicle
   if (pGroup->fVehicle) {
     INT32 iVehicleId = -1;
-    VEHICLETYPE *pVehicle = NULL;
+    VEHICLETYPE* pVehicle = NULL;
 
     iVehicleId = GivenMvtGroupIdFindVehicleId(pGroup->ubGroupID);
     Assert(iVehicleId != -1);
@@ -1833,11 +1833,11 @@ void AddSectorToFrontOfMercPathForAllSoldiersInGroup(GROUP *pGroup, UINT8 ubSect
   }
 }
 
-void AddSectorToFrontOfMercPath(PathStPtr *ppMercPath, UINT8 ubSectorX, UINT8 ubSectorY) {
-  PathStPtr pNode = NULL;
+void AddSectorToFrontOfMercPath(struct path** ppMercPath, UINT8 ubSectorX, UINT8 ubSectorY) {
+  struct path* pNode = NULL;
 
   // allocate and hang a new node at the front of the path list
-  pNode = (PathSt *)MemAlloc(sizeof(PathSt));
+  pNode = (struct path*)MemAlloc(sizeof(struct path));
 
   pNode->uiSectorId = CALCULATE_STRATEGIC_INDEX(ubSectorX, ubSectorY);
   pNode->pNext = *ppMercPath;

@@ -4,6 +4,7 @@
 #include "Laptop/FloristGallery.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -43,8 +44,8 @@ UINT32 guiCardBackground;
 INT8 gbCurrentlySelectedCard;
 
 // link to the card gallery
-MOUSE_REGION gSelectedFloristCardsRegion[9];
-void SelectFloristCardsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFloristCardsRegion[9];
+void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 INT32 guiFlowerCardsButtonImage;
 void BtnFlowerCardsBackButtonCallback(GUI_BUTTON *btn, INT32 reason);
@@ -118,7 +119,7 @@ void RenderFloristCards() {
   UINT16 usPosX, usPosY;
   wchar_t sTemp[640];
   UINT32 uiStartLoc = 0;
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usHeightOffset;
 
   DisplayFloristDefaults();
@@ -165,7 +166,7 @@ void RenderFloristCards() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectFloristCardsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristCardsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gbCurrentlySelectedCard = (UINT8)MSYS_GetRegionUserData(pRegion, 0);

@@ -12,6 +12,9 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
+#include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -136,19 +139,19 @@ INT32 ghMoveBox = -1;
 INT16 gsAssignmentBoxesX, gsAssignmentBoxesY;
 
 // assignment menu mouse regions
-MOUSE_REGION gAssignmentMenuRegion[MAX_ASSIGN_STRING_COUNT];
-MOUSE_REGION gTrainingMenuRegion[MAX_TRAIN_STRING_COUNT];
-MOUSE_REGION gAttributeMenuRegion[MAX_ATTRIBUTE_STRING_COUNT];
-MOUSE_REGION gSquadMenuRegion[MAX_SQUAD_MENU_STRING_COUNT];
-MOUSE_REGION gContractMenuRegion[MAX_CONTRACT_MENU_STRING_COUNT];
-MOUSE_REGION gRemoveMercAssignRegion[MAX_REMOVE_MERC_COUNT];
-MOUSE_REGION gEpcMenuRegion[MAX_EPC_MENU_STRING_COUNT];
-MOUSE_REGION gRepairMenuRegion[20];
+struct MOUSE_REGION gAssignmentMenuRegion[MAX_ASSIGN_STRING_COUNT];
+struct MOUSE_REGION gTrainingMenuRegion[MAX_TRAIN_STRING_COUNT];
+struct MOUSE_REGION gAttributeMenuRegion[MAX_ATTRIBUTE_STRING_COUNT];
+struct MOUSE_REGION gSquadMenuRegion[MAX_SQUAD_MENU_STRING_COUNT];
+struct MOUSE_REGION gContractMenuRegion[MAX_CONTRACT_MENU_STRING_COUNT];
+struct MOUSE_REGION gRemoveMercAssignRegion[MAX_REMOVE_MERC_COUNT];
+struct MOUSE_REGION gEpcMenuRegion[MAX_EPC_MENU_STRING_COUNT];
+struct MOUSE_REGION gRepairMenuRegion[20];
 
 // mouse region for vehicle menu
-MOUSE_REGION gVehicleMenuRegion[20];
+struct MOUSE_REGION gVehicleMenuRegion[20];
 
-MOUSE_REGION gAssignmentScreenMaskRegion;
+struct MOUSE_REGION gAssignmentScreenMaskRegion;
 
 BOOLEAN fShownAssignmentMenu = FALSE;
 BOOLEAN fShowVehicleMenu = FALSE;
@@ -160,7 +163,7 @@ BOOLEAN fFirstClickInAssignmentScreenMask = FALSE;
 // render pre battle interface?
 extern BOOLEAN gfRenderPBInterface;
 extern BOOLEAN fMapScreenBottomDirty;
-extern SOLDIERTYPE *pMilitiaTrainerSoldier;
+extern struct SOLDIERTYPE *pMilitiaTrainerSoldier;
 
 // in the mapscreen?
 extern BOOLEAN fInMapMode;
@@ -177,7 +180,7 @@ extern BOOLEAN fShowTownInfo;
 extern INT32 giMapBorderButtons[];
 
 extern BOOLEAN fProcessingAMerc;
-extern SOLDIERTYPE *pProcessingSoldier;
+extern struct SOLDIERTYPE *pProcessingSoldier;
 
 BOOLEAN gfAddDisplayBoxToWaitingQueue = FALSE;
 
@@ -186,7 +189,7 @@ extern BOOLEAN fDrawCharacterList;
 
 extern BOOLEAN fSelectedListOfMercsForMapScreen[MAX_CHARACTER_COUNT];
 
-SOLDIERTYPE *gpDismissSoldier = NULL;
+struct SOLDIERTYPE *gpDismissSoldier = NULL;
 
 BOOLEAN gfReEvaluateEveryonesNothingToDo = FALSE;
 
@@ -270,10 +273,10 @@ at all! #define SAM_SITE_REPAIR_DIVISOR		10
 */
 
 // how many points worth of tool kits does the character have?
-UINT16 ToolKitPoints(SOLDIERTYPE *pSoldier);
+UINT16 ToolKitPoints(struct SOLDIERTYPE *pSoldier);
 
 // how many points worth of doctoring does the character have in his medical kits ?
-UINT16 TotalMedicalKitPoints(SOLDIERTYPE *pSoldier);
+UINT16 TotalMedicalKitPoints(struct SOLDIERTYPE *pSoldier);
 
 // handle doctor in this sector
 void HandleDoctorsInSector(INT16 sX, INT16 sY, INT8 bZ);
@@ -282,39 +285,40 @@ void HandleDoctorsInSector(INT16 sX, INT16 sY, INT8 bZ);
 void HandleRepairmenInSector(INT16 sX, INT16 sY, INT8 bZ);
 
 // heal characters in this sector with this doctor
-void HealCharacters(SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ);
+void HealCharacters(struct SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ);
 
 // update characters who might done healing but are still patients
 void UpdatePatientsWhoAreDoneHealing(void);
 
 // returns minimum medical skill necessary to treat this patient
-UINT8 GetMinHealingSkillNeeded(SOLDIERTYPE *pPatient);
+UINT8 GetMinHealingSkillNeeded(struct SOLDIERTYPE *pPatient);
 
 // heal patient, given doctor and total healing pts available to doctor at this time
-UINT16 HealPatient(SOLDIERTYPE *pPatient, SOLDIERTYPE *pDoctor, UINT16 usHundredthsHealed);
+UINT16 HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
+                   UINT16 usHundredthsHealed);
 
 // can item be repaired?
 BOOLEAN IsItemRepairable(UINT16 usItem, INT8 bStatus);
 
 // does another merc have a repairable item on them?
-INT8 FindRepairableItemOnOtherSoldier(SOLDIERTYPE *pSoldier, UINT8 ubPassType);
+INT8 FindRepairableItemOnOtherSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubPassType);
 
 // repair stuff
-void HandleRepairBySoldier(SOLDIERTYPE *pSoldier);
+void HandleRepairBySoldier(struct SOLDIERTYPE *pSoldier);
 
 // rest the character
-void RestCharacter(SOLDIERTYPE *pSoldier);
+void RestCharacter(struct SOLDIERTYPE *pSoldier);
 // fatigue the character
-void FatigueCharacter(SOLDIERTYPE *pSoldier);
+void FatigueCharacter(struct SOLDIERTYPE *pSoldier);
 
 // a list of which sectors have characters
 BOOLEAN fSectorsWithSoldiers[MAP_WORLD_X * MAP_WORLD_Y][4];
 
 // can soldier repair robot
-BOOLEAN CanCharacterRepairRobot(SOLDIERTYPE *pSoldier);
+BOOLEAN CanCharacterRepairRobot(struct SOLDIERTYPE *pSoldier);
 
 // can the character repair this vehicle?
-BOOLEAN CanCharacterRepairVehicle(SOLDIERTYPE *pSoldier, INT32 iVehicleId);
+BOOLEAN CanCharacterRepairVehicle(struct SOLDIERTYPE *pSoldier, INT32 iVehicleId);
 
 // handle training of character in sector
 void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ);
@@ -323,30 +327,31 @@ void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ);
 int TownTrainerQsortCompare(const void *pArg1, const void *pArg2);
 
 // this function will actually pass on the pts to the mercs stat
-void TrainSoldierWithPts(SOLDIERTYPE *pSoldier, INT16 sTrainPts);
+void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts);
 
 // train militia in this sector with this soldier
-BOOLEAN TrainTownInSector(SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY, UINT16 sTrainingPts);
+BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY,
+                          UINT16 sTrainingPts);
 
 // is the character between secotrs in mvt
-BOOLEAN CharacterIsBetweenSectors(SOLDIERTYPE *pSoldier);
+BOOLEAN CharacterIsBetweenSectors(struct SOLDIERTYPE *pSoldier);
 
 // update soldier life
-void UpDateSoldierLife(SOLDIERTYPE *pSoldier);
+void UpDateSoldierLife(struct SOLDIERTYPE *pSoldier);
 
 // handle natural healing for all mercs on players team
 void HandleNaturalHealing(void);
 
 // handle natural healing for any individual grunt
-void HandleHealingByNaturalCauses(SOLDIERTYPE *pSoldier);
+void HandleHealingByNaturalCauses(struct SOLDIERTYPE *pSoldier);
 
 /*
 // auto sleep mercs
-BOOLEAN AutoSleepMerc( SOLDIERTYPE *pSoldier );
+BOOLEAN AutoSleepMerc( struct SOLDIERTYPE *pSoldier );
 */
 
 // assignment screen mask
-void AssignmentScreenMaskBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void AssignmentScreenMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // glow area for contract region?
 BOOLEAN fGlowContractRegion = FALSE;
@@ -358,13 +363,13 @@ void HandleShadingOfLinesForTrainingMenu(void);
 void HandleShadingOfLinesForAttributeMenus(void);
 
 // post message about contract
-void PostContractMessage(SOLDIERTYPE *pCharacter, INT32 iContract);
+void PostContractMessage(struct SOLDIERTYPE *pCharacter, INT32 iContract);
 
 // post a terminate message
-void PostTerminateMessage(SOLDIERTYPE *pCharacter);
+void PostTerminateMessage(struct SOLDIERTYPE *pCharacter);
 
-BOOLEAN DisplayVehicleMenu(SOLDIERTYPE *pSoldier);
-BOOLEAN DisplayRepairMenu(SOLDIERTYPE *pSoldier);
+BOOLEAN DisplayVehicleMenu(struct SOLDIERTYPE *pSoldier);
+BOOLEAN DisplayRepairMenu(struct SOLDIERTYPE *pSoldier);
 
 // create menus
 void CreateEPCBox(void);
@@ -374,94 +379,96 @@ void CreateRepairBox(void);
 
 /*
 // get how fast the person regains sleep
-INT8 GetRegainDueToSleepNeeded( SOLDIERTYPE *pSoldier, INT32 iRateOfReGain );
+INT8 GetRegainDueToSleepNeeded( struct SOLDIERTYPE *pSoldier, INT32 iRateOfReGain );
 */
 
 void PositionCursorForTacticalAssignmentBox(void);
 
 // can this soldier be healed by this doctor?
-BOOLEAN CanSoldierBeHealedByDoctor(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pDoctor,
+BOOLEAN CanSoldierBeHealedByDoctor(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pDoctor,
                                    BOOLEAN fIgnoreAssignment, BOOLEAN fThisHour,
                                    BOOLEAN fSkipKitCheck, BOOLEAN fSkipSkillCheck);
-UINT8 GetNumberThatCanBeDoctored(SOLDIERTYPE *pDoctor, BOOLEAN fThisHour, BOOLEAN fSkipKitCheck,
-                                 BOOLEAN fSkipSkillCheck);
+UINT8 GetNumberThatCanBeDoctored(struct SOLDIERTYPE *pDoctor, BOOLEAN fThisHour,
+                                 BOOLEAN fSkipKitCheck, BOOLEAN fSkipSkillCheck);
 void CheckForAndHandleHospitalPatients(void);
-void HealHospitalPatient(SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft);
+void HealHospitalPatient(struct SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft);
 
-void MakeSureToolKitIsInHand(SOLDIERTYPE *pSoldier);
-BOOLEAN MakeSureMedKitIsInHand(SOLDIERTYPE *pSoldier);
+void MakeSureToolKitIsInHand(struct SOLDIERTYPE *pSoldier);
+BOOLEAN MakeSureMedKitIsInHand(struct SOLDIERTYPE *pSoldier);
 
 void RepositionMouseRegions(void);
 void CheckAndUpdateTacticalAssignmentPopUpPositions(void);
 void HandleRestFatigueAndSleepStatus(void);
-BOOLEAN CharacterIsTakingItEasy(SOLDIERTYPE *pSoldier);
-void RepairMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
-BOOLEAN CanCharacterDoctorButDoesntHaveMedKit(SOLDIERTYPE *pSoldier);
-BOOLEAN CanCharacterRepairButDoesntHaveARepairkit(SOLDIERTYPE *pSoldier);
+BOOLEAN CharacterIsTakingItEasy(struct SOLDIERTYPE *pSoldier);
+void RepairMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+BOOLEAN CanCharacterDoctorButDoesntHaveMedKit(struct SOLDIERTYPE *pSoldier);
+BOOLEAN CanCharacterRepairButDoesntHaveARepairkit(struct SOLDIERTYPE *pSoldier);
 
 // robot replated stuff
 BOOLEAN IsRobotInThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
-SOLDIERTYPE *GetRobotSoldier(void);
-UINT8 RepairRobot(SOLDIERTYPE *pRobot, UINT8 ubRepairPts, BOOLEAN *pfNothingLeftToRepair);
-UINT8 HandleRepairOfRobotBySoldier(SOLDIERTYPE *pSoldier, UINT8 ubRepairPts,
+struct SOLDIERTYPE *GetRobotSoldier(void);
+UINT8 RepairRobot(struct SOLDIERTYPE *pRobot, UINT8 ubRepairPts, BOOLEAN *pfNothingLeftToRepair);
+UINT8 HandleRepairOfRobotBySoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubRepairPts,
                                    BOOLEAN *pfNothingLeftToRepair);
-BOOLEAN HandleAssignmentExpansionAndHighLightForAssignMenu(SOLDIERTYPE *pSoldier);
+BOOLEAN HandleAssignmentExpansionAndHighLightForAssignMenu(struct SOLDIERTYPE *pSoldier);
 BOOLEAN HandleAssignmentExpansionAndHighLightForTrainingMenu(void);
 BOOLEAN HandleShowingOfMovementBox(void);
 // BOOLEAN HandleShowingOfUpBox( void );
 void ReportTrainersTraineesWithoutPartners(void);
-BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(SOLDIERTYPE *pSoldier,
+BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(struct SOLDIERTYPE *pSoldier,
                                                           INT8 bTargetAssignment, INT8 bTargetStat);
 
-extern void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining(SOLDIERTYPE *pSoldier);
+extern void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining(
+    struct SOLDIERTYPE *pSoldier);
 
 extern BOOLEAN SectorIsImpassable(INT16 sSector);
 
 extern BOOLEAN CanChangeSleepStatusForCharSlot(INT8 bCharNumber);
 
-extern UINT32 VirtualSoldierDressWound(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pVictim,
-                                       OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus);
+extern UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
+                                       struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus);
 
 // only 2 trainers are allowed per sector, so this function counts the # in a guy's sector
-INT8 CountMilitiaTrainersInSoldiersSector(SOLDIERTYPE *pSoldier);
+INT8 CountMilitiaTrainersInSoldiersSector(struct SOLDIERTYPE *pSoldier);
 
 // notify player of assignment attempt failure
 void NotifyPlayerOfAssignmentAttemptFailure(INT8 bAssignment);
 
-BOOLEAN PlayerSoldierTooTiredToTravel(SOLDIERTYPE *pSoldier);
+BOOLEAN PlayerSoldierTooTiredToTravel(struct SOLDIERTYPE *pSoldier);
 
-void AssignmentAborted(SOLDIERTYPE *pSoldier, UINT8 ubReason);
+void AssignmentAborted(struct SOLDIERTYPE *pSoldier, UINT8 ubReason);
 
-UINT8 CalcSoldierNeedForSleep(SOLDIERTYPE *pSoldier);
+UINT8 CalcSoldierNeedForSleep(struct SOLDIERTYPE *pSoldier);
 
 UINT32 GetLastSquadListedInSquadMenu(void);
 
-BOOLEAN IsAnythingAroundForSoldierToRepair(SOLDIERTYPE *pSoldier);
-BOOLEAN HasCharacterFinishedRepairing(SOLDIERTYPE *pSoldier);
-BOOLEAN DoesCharacterHaveAnyItemsToRepair(SOLDIERTYPE *pSoldier, INT8 bHighestPass);
+BOOLEAN IsAnythingAroundForSoldierToRepair(struct SOLDIERTYPE *pSoldier);
+BOOLEAN HasCharacterFinishedRepairing(struct SOLDIERTYPE *pSoldier);
+BOOLEAN DoesCharacterHaveAnyItemsToRepair(struct SOLDIERTYPE *pSoldier, INT8 bHighestPass);
 
-BOOLEAN CanCharacterRepairAnotherSoldiersStuff(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOtherSoldier);
+BOOLEAN CanCharacterRepairAnotherSoldiersStuff(struct SOLDIERTYPE *pSoldier,
+                                               struct SOLDIERTYPE *pOtherSoldier);
 
 // can this character EVER train militia?
-BOOLEAN BasicCanCharacterTrainMilitia(SOLDIERTYPE *pCharacter);
+BOOLEAN BasicCanCharacterTrainMilitia(struct SOLDIERTYPE *pCharacter);
 
-SOLDIERTYPE *GetSelectedAssignSoldier(BOOLEAN fNullOK);
+struct SOLDIERTYPE *GetSelectedAssignSoldier(BOOLEAN fNullOK);
 
-BOOLEAN RepairObject(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOwner, OBJECTTYPE *pObj,
-                     UINT8 *pubRepairPtsLeft);
-void RepairItemsOnOthers(SOLDIERTYPE *pSoldier, UINT8 *pubRepairPtsLeft);
-BOOLEAN UnjamGunsOnSoldier(SOLDIERTYPE *pOwnerSoldier, SOLDIERTYPE *pRepairSoldier,
+BOOLEAN RepairObject(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOwner,
+                     struct OBJECTTYPE *pObj, UINT8 *pubRepairPtsLeft);
+void RepairItemsOnOthers(struct SOLDIERTYPE *pSoldier, UINT8 *pubRepairPtsLeft);
+BOOLEAN UnjamGunsOnSoldier(struct SOLDIERTYPE *pOwnerSoldier, struct SOLDIERTYPE *pRepairSoldier,
                            UINT8 *pubRepairPtsLeft);
 
 /* No point in allowing SAM site repair any more.  Jan/13/99.  ARM
 BOOLEAN IsTheSAMSiteInSectorRepairable( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ );
-BOOLEAN SoldierInSameSectorAsSAM( SOLDIERTYPE *pSoldier );
-BOOLEAN CanSoldierRepairSAM( SOLDIERTYPE *pSoldier, INT8 bRepairPoints );
-BOOLEAN IsSoldierCloseEnoughToSAMControlPanel( SOLDIERTYPE *pSoldier );
+BOOLEAN SoldierInSameSectorAsSAM( struct SOLDIERTYPE *pSoldier );
+BOOLEAN CanSoldierRepairSAM( struct SOLDIERTYPE *pSoldier, INT8 bRepairPoints );
+BOOLEAN IsSoldierCloseEnoughToSAMControlPanel( struct SOLDIERTYPE *pSoldier );
 */
 
 /* Assignment distance limits removed.  Sep/11/98.  ARM
-BOOLEAN IsSoldierCloseEnoughToADoctor( SOLDIERTYPE *pPatient );
+BOOLEAN IsSoldierCloseEnoughToADoctor( struct SOLDIERTYPE *pPatient );
 */
 
 #ifdef JA2BETAVERSION
@@ -476,7 +483,7 @@ void InitSectorsWithSoldiersList(void) {
 }
 
 void BuildSectorsWithSoldiersList(void) {
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
 
   pSoldier = MercPtrs[0];
@@ -491,7 +498,7 @@ void BuildSectorsWithSoldiersList(void) {
   }
 }
 
-void ChangeSoldiersAssignment(SOLDIERTYPE *pSoldier, INT8 bAssignment) {
+void ChangeSoldiersAssignment(struct SOLDIERTYPE *pSoldier, INT8 bAssignment) {
   // This is the most basic assignment-setting function.  It must be called before setting any
   // subsidiary values like fFixingRobot.  It will clear all subsidiary values so we don't leave the
   // merc in a messed up state!
@@ -516,7 +523,7 @@ void ChangeSoldiersAssignment(SOLDIERTYPE *pSoldier, INT8 bAssignment) {
   fMapPanelDirty = TRUE;
 }
 
-BOOLEAN BasicCanCharacterAssignment(SOLDIERTYPE *pSoldier, BOOLEAN fNotInCombat) {
+BOOLEAN BasicCanCharacterAssignment(struct SOLDIERTYPE *pSoldier, BOOLEAN fNotInCombat) {
   // global conditions restricting all assignment changes
   if (SectorIsImpassable((INT16)SECTOR(pSoldier->sSectorX, pSoldier->sSectorY))) {
     return (FALSE);
@@ -530,7 +537,7 @@ BOOLEAN BasicCanCharacterAssignment(SOLDIERTYPE *pSoldier, BOOLEAN fNotInCombat)
 }
 
 /*
-BOOLEAN CanSoldierAssignment( SOLDIERTYPE *pSoldier, INT8 bAssignment )
+BOOLEAN CanSoldierAssignment( struct SOLDIERTYPE *pSoldier, INT8 bAssignment )
 {
         switch( bAssignment )
         {
@@ -559,7 +566,7 @@ CHARACTER_CAN_JOIN_SQUAD ) ); break;
 }
 */
 
-BOOLEAN CanCharacterDoctorButDoesntHaveMedKit(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterDoctorButDoesntHaveMedKit(struct SOLDIERTYPE *pSoldier) {
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
   }
@@ -611,7 +618,7 @@ BOOLEAN CanCharacterDoctorButDoesntHaveMedKit(SOLDIERTYPE *pSoldier) {
 
 // is character capable of 'playing' doctor?
 // check that character is alive, conscious, has medical skill and equipment
-BOOLEAN CanCharacterDoctor(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterDoctor(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fFoundMedKit = FALSE;
   INT8 bPocket = 0;
 
@@ -641,7 +648,7 @@ BOOLEAN CanCharacterDoctor(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN IsAnythingAroundForSoldierToRepair(SOLDIERTYPE *pSoldier) {
+BOOLEAN IsAnythingAroundForSoldierToRepair(struct SOLDIERTYPE *pSoldier) {
   INT32 iCounter;
 
   // items?
@@ -674,7 +681,7 @@ BOOLEAN IsAnythingAroundForSoldierToRepair(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN HasCharacterFinishedRepairing(SOLDIERTYPE *pSoldier) {
+BOOLEAN HasCharacterFinishedRepairing(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fCanStillRepair;
 
   // NOTE: This must detect situations where the vehicle/robot has left the sector, in which case we
@@ -696,12 +703,12 @@ BOOLEAN HasCharacterFinishedRepairing(SOLDIERTYPE *pSoldier) {
   return (!fCanStillRepair);
 }
 
-BOOLEAN DoesCharacterHaveAnyItemsToRepair(SOLDIERTYPE *pSoldier, INT8 bHighestPass) {
+BOOLEAN DoesCharacterHaveAnyItemsToRepair(struct SOLDIERTYPE *pSoldier, INT8 bHighestPass) {
   INT8 bPocket;
   UINT8 ubItemsInPocket, ubObjectInPocketCounter;
   INT8 bLoop;
-  SOLDIERTYPE *pOtherSoldier;
-  OBJECTTYPE *pObj;
+  struct SOLDIERTYPE *pOtherSoldier;
+  struct OBJECTTYPE *pObj;
   UINT8 ubPassType;
 
   // check for jams
@@ -777,7 +784,7 @@ BOOLEAN DoesCharacterHaveAnyItemsToRepair(SOLDIERTYPE *pSoldier, INT8 bHighestPa
   return (FALSE);
 }
 
-BOOLEAN BasicCanCharacterRepair(SOLDIERTYPE *pSoldier) {
+BOOLEAN BasicCanCharacterRepair(struct SOLDIERTYPE *pSoldier) {
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
   }
@@ -822,7 +829,7 @@ BOOLEAN BasicCanCharacterRepair(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN CanCharacterRepairButDoesntHaveARepairkit(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterRepairButDoesntHaveARepairkit(struct SOLDIERTYPE *pSoldier) {
   if (BasicCanCharacterRepair(pSoldier) == FALSE) {
     return (FALSE);
   }
@@ -837,7 +844,7 @@ BOOLEAN CanCharacterRepairButDoesntHaveARepairkit(SOLDIERTYPE *pSoldier) {
 
 // can character be assigned as repairman?
 // check that character is alive, oklife, has repair skill, and equipment, etc.
-BOOLEAN CanCharacterRepair(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterRepair(struct SOLDIERTYPE *pSoldier) {
   INT8 bPocket = 0;
   BOOLEAN fToolKitFound = FALSE;
 
@@ -873,7 +880,7 @@ BOOLEAN CanCharacterRepair(SOLDIERTYPE *pSoldier) {
 }
 
 // can character be set to patient?
-BOOLEAN CanCharacterPatient(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterPatient(struct SOLDIERTYPE *pSoldier) {
 // this assignment is no go in the demo
 #ifdef JA2DEMO
   return FALSE;
@@ -922,7 +929,7 @@ BOOLEAN CanCharacterPatient(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN BasicCanCharacterTrainMilitia(SOLDIERTYPE *pSoldier) {
+BOOLEAN BasicCanCharacterTrainMilitia(struct SOLDIERTYPE *pSoldier) {
   // is the character capable of training a town?
   // they must be alive/conscious and in the sector with the town
   BOOLEAN fSamSitePresent = FALSE;
@@ -1004,7 +1011,7 @@ BOOLEAN BasicCanCharacterTrainMilitia(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN CanCharacterTrainMilitia(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterTrainMilitia(struct SOLDIERTYPE *pSoldier) {
   if (BasicCanCharacterTrainMilitia(pSoldier) &&
       MilitiaTrainingAllowedInSector(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ) &&
       DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(pSoldier) &&
@@ -1026,7 +1033,7 @@ BOOLEAN DoesTownHaveRatingToTrainMilitia(INT8 bTownId) {
   return (TRUE);
 }
 
-BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(SOLDIERTYPE *pSoldier) {
+BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(struct SOLDIERTYPE *pSoldier) {
   INT8 bTownId = 0;
   BOOLEAN fSamSitePresent = FALSE;
 
@@ -1059,9 +1066,9 @@ BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(SOLDIERTYPE *pSold
   return (TRUE);
 }
 
-INT8 CountMilitiaTrainersInSoldiersSector(SOLDIERTYPE *pSoldier) {
+INT8 CountMilitiaTrainersInSoldiersSector(struct SOLDIERTYPE *pSoldier) {
   INT8 bLoop;
-  SOLDIERTYPE *pOtherSoldier;
+  struct SOLDIERTYPE *pOtherSoldier;
   INT8 bCount = 0;
 
   for (bLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -1079,7 +1086,7 @@ INT8 CountMilitiaTrainersInSoldiersSector(SOLDIERTYPE *pSoldier) {
   return (bCount);
 }
 
-BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(SOLDIERTYPE *pSoldier) {
+BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(struct SOLDIERTYPE *pSoldier) {
   INT8 bTownId = 0;
   BOOLEAN fSamSitePresent = FALSE;
 
@@ -1114,7 +1121,7 @@ BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN CanCharacterTrainStat(SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf,
+BOOLEAN CanCharacterTrainStat(struct SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf,
                               BOOLEAN fTrainTeammate) {
 // is the character capable of training this stat? either self or as trainer
 
@@ -1257,7 +1264,7 @@ BOOLEAN CanCharacterTrainStat(SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainS
   return (TRUE);
 }
 
-BOOLEAN CanCharacterOnDuty(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterOnDuty(struct SOLDIERTYPE *pSoldier) {
   // can character commit themselves to on duty?
 
   // only need to be alive and well to do so right now
@@ -1307,7 +1314,7 @@ BOOLEAN CanCharacterOnDuty(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN CanCharacterPractise(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterPractise(struct SOLDIERTYPE *pSoldier) {
 // can character practise right now?
 
 // this assignment is no go in the demo
@@ -1359,9 +1366,9 @@ BOOLEAN CanCharacterPractise(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN CanCharacterTrainTeammates(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterTrainTeammates(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt = 0;
-  SOLDIERTYPE *pTeamSoldier = NULL;
+  struct SOLDIERTYPE *pTeamSoldier = NULL;
 
   // can character train at all
   if (CanCharacterPractise(pSoldier) == FALSE) {
@@ -1379,7 +1386,7 @@ BOOLEAN CanCharacterTrainTeammates(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN CanCharacterBeTrainedByOther(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterBeTrainedByOther(struct SOLDIERTYPE *pSoldier) {
   INT32 iCounter = 0;
 
   // can character train at all
@@ -1398,7 +1405,7 @@ BOOLEAN CanCharacterBeTrainedByOther(SOLDIERTYPE *pSoldier) {
 }
 
 // can character sleep right now?
-BOOLEAN CanCharacterSleep(SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
+BOOLEAN CanCharacterSleep(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
   CHAR16 sString[128];
 
 // this assignment is no go in the demo
@@ -1492,7 +1499,7 @@ BOOLEAN CanCharacterSleep(SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
   return (TRUE);
 }
 
-BOOLEAN CanCharacterBeAwakened(SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
+BOOLEAN CanCharacterBeAwakened(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
   CHAR16 sString[128];
 
   // if dead tired
@@ -1515,7 +1522,7 @@ BOOLEAN CanCharacterBeAwakened(SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
   return (TRUE);
 }
 
-BOOLEAN CanCharacterVehicle(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterVehicle(struct SOLDIERTYPE *pSoldier) {
 // can character enter/leave vehicle?
 
 // this assignment is no go in the demo
@@ -1581,7 +1588,7 @@ BOOLEAN CanCharacterVehicle(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-INT8 CanCharacterSquad(SOLDIERTYPE *pSoldier, INT8 bSquadValue) {
+INT8 CanCharacterSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue) {
   // can character join this squad?
   INT16 sX, sY, sZ;
 
@@ -1649,7 +1656,7 @@ INT8 CanCharacterSquad(SOLDIERTYPE *pSoldier, INT8 bSquadValue) {
   return (CHARACTER_CAN_JOIN_SQUAD);
 }
 
-BOOLEAN IsCharacterInTransit(SOLDIERTYPE *pSoldier) {
+BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pSoldier) {
   // valid character?
   if (pSoldier == NULL) {
     return (FALSE);
@@ -1743,7 +1750,7 @@ void UpdateAssignments() {
 #ifdef JA2BETAVERSION
 void VerifyTownTrainingIsPaidFor(void) {
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     // valid character?
@@ -1777,7 +1784,7 @@ void VerifyTownTrainingIsPaidFor(void) {
 
 UINT8 FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment) {
   // run thought list of characters find number with this assignment
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
   INT32 iCounter = 0;
   INT8 bNumberOfPeople = 0;
@@ -1800,10 +1807,10 @@ UINT8 FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment) {
   return (bNumberOfPeople);
 }
 
-UINT8 GetNumberThatCanBeDoctored(SOLDIERTYPE *pDoctor, BOOLEAN fThisHour, BOOLEAN fSkipKitCheck,
-                                 BOOLEAN fSkipSkillCheck) {
+UINT8 GetNumberThatCanBeDoctored(struct SOLDIERTYPE *pDoctor, BOOLEAN fThisHour,
+                                 BOOLEAN fSkipKitCheck, BOOLEAN fSkipSkillCheck) {
   int cnt;
-  SOLDIERTYPE *pSoldier = MercPtrs[0], *pTeamSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = MercPtrs[0], *pTeamSoldier = NULL;
   UINT8 ubNumberOfPeople = 0;
 
   // go through list of characters, find all who are patients/doctors healable by this doctor
@@ -1821,9 +1828,10 @@ UINT8 GetNumberThatCanBeDoctored(SOLDIERTYPE *pDoctor, BOOLEAN fThisHour, BOOLEA
   return (ubNumberOfPeople);
 }
 
-SOLDIERTYPE *AnyDoctorWhoCanHealThisPatient(SOLDIERTYPE *pPatient, BOOLEAN fThisHour) {
+struct SOLDIERTYPE *AnyDoctorWhoCanHealThisPatient(struct SOLDIERTYPE *pPatient,
+                                                   BOOLEAN fThisHour) {
   int cnt;
-  SOLDIERTYPE *pSoldier = MercPtrs[0], *pTeamSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = MercPtrs[0], *pTeamSoldier = NULL;
 
   // go through list of characters, find all who are patients/doctors healable by this doctor
   for (cnt = 0, pTeamSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[pSoldier->bTeam].bLastID;
@@ -1842,7 +1850,7 @@ SOLDIERTYPE *AnyDoctorWhoCanHealThisPatient(SOLDIERTYPE *pPatient, BOOLEAN fThis
   return (NULL);
 }
 
-UINT16 CalculateHealingPointsForDoctor(SOLDIERTYPE *pDoctor, UINT16 *pusMaxPts,
+UINT16 CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pDoctor, UINT16 *pusMaxPts,
                                        BOOLEAN fMakeSureKitIsInHand) {
   UINT16 usHealPts = 0;
   UINT16 usKitPts = 0;
@@ -1896,7 +1904,7 @@ UINT16 CalculateHealingPointsForDoctor(SOLDIERTYPE *pDoctor, UINT16 *pusMaxPts,
   return (usHealPts);
 }
 
-UINT8 CalculateRepairPointsForRepairman(SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts,
+UINT8 CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts,
                                         BOOLEAN fMakeSureKitIsInHand) {
   UINT16 usRepairPts;
   UINT16 usKitPts;
@@ -1948,7 +1956,7 @@ UINT8 CalculateRepairPointsForRepairman(SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts
   return ((UINT8)usRepairPts);
 }
 
-UINT16 ToolKitPoints(SOLDIERTYPE *pSoldier) {
+UINT16 ToolKitPoints(struct SOLDIERTYPE *pSoldier) {
   UINT16 usKitpts = 0;
   UINT8 ubPocket;
 
@@ -1962,7 +1970,7 @@ UINT16 ToolKitPoints(SOLDIERTYPE *pSoldier) {
   return (usKitpts);
 }
 
-UINT16 TotalMedicalKitPoints(SOLDIERTYPE *pSoldier) {
+UINT16 TotalMedicalKitPoints(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubPocket;
   UINT16 usKitpts = 0;
 
@@ -1978,7 +1986,7 @@ UINT16 TotalMedicalKitPoints(SOLDIERTYPE *pSoldier) {
 }
 
 void HandleDoctorsInSector(INT16 sX, INT16 sY, INT8 bZ) {
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
   INT32 iCounter = 0;
 
@@ -2023,7 +2031,7 @@ void HandleDoctorsInSector(INT16 sX, INT16 sY, INT8 bZ) {
 
 void UpdatePatientsWhoAreDoneHealing(void) {
   INT32 cnt = 0;
-  SOLDIERTYPE *pSoldier = NULL, *pTeamSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL, *pTeamSoldier = NULL;
 
   // set as first in list
   pSoldier = MercPtrs[0];
@@ -2042,7 +2050,7 @@ void UpdatePatientsWhoAreDoneHealing(void) {
   return;
 }
 
-void HealCharacters(SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ) {
+void HealCharacters(struct SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ) {
   // heal all patients in this sector
   UINT16 usAvailableHealingPts = 0;
   UINT16 usRemainingHealingPts = 0;
@@ -2050,7 +2058,7 @@ void HealCharacters(SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ) {
   UINT16 usEvenHealingAmount = 0;
   UINT16 usMax = 0;
   UINT8 ubTotalNumberOfPatients = 0;
-  SOLDIERTYPE *pSoldier = MercPtrs[0], *pTeamSoldier = NULL, *pWorstHurtSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = MercPtrs[0], *pTeamSoldier = NULL, *pWorstHurtSoldier = NULL;
   INT32 cnt = 0;
   UINT16 usOldLeftOvers = 0;
 
@@ -2147,13 +2155,13 @@ void HealCharacters(SOLDIERTYPE *pDoctor, INT16 sX, INT16 sY, INT8 bZ) {
 }
 
 /* Assignment distance limits removed.  Sep/11/98.  ARM
-BOOLEAN IsSoldierCloseEnoughToADoctor( SOLDIERTYPE *pPatient )
+BOOLEAN IsSoldierCloseEnoughToADoctor( struct SOLDIERTYPE *pPatient )
 {
         // run through all doctors in sector, if it is loaded
         // if no - one is close enough and there is a doctor assigned in sector, inform player
         BOOLEAN fDoctorInSector = FALSE;
         BOOLEAN fDoctorCloseEnough = FALSE;
-        SOLDIERTYPE *pSoldier = NULL;
+        struct SOLDIERTYPE *pSoldier = NULL;
         INT32 iCounter = 0;
         CHAR16 sString[ 128 ];
 
@@ -2207,7 +2215,7 @@ HEALABLE_EVER, FALSE, FALSE ) == TRUE )
 }
 */
 
-BOOLEAN CanSoldierBeHealedByDoctor(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pDoctor,
+BOOLEAN CanSoldierBeHealedByDoctor(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pDoctor,
                                    BOOLEAN fIgnoreAssignment, BOOLEAN fThisHour,
                                    BOOLEAN fSkipKitCheck, BOOLEAN fSkipSkillCheck) {
   INT16 sDistance = 0;
@@ -2257,7 +2265,7 @@ BOOLEAN CanSoldierBeHealedByDoctor(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pDoctor,
   return (TRUE);
 }
 
-UINT8 GetMinHealingSkillNeeded(SOLDIERTYPE *pPatient) {
+UINT8 GetMinHealingSkillNeeded(struct SOLDIERTYPE *pPatient) {
   // get the minimum skill to handle a character under OKLIFE
 
   if (pPatient->bLife < OKLIFE) {
@@ -2270,7 +2278,8 @@ UINT8 GetMinHealingSkillNeeded(SOLDIERTYPE *pPatient) {
   }
 }
 
-UINT16 HealPatient(SOLDIERTYPE *pPatient, SOLDIERTYPE *pDoctor, UINT16 usHundredthsHealed) {
+UINT16 HealPatient(struct SOLDIERTYPE *pPatient, struct SOLDIERTYPE *pDoctor,
+                   UINT16 usHundredthsHealed) {
   // heal patient and return the number of healing pts used
   UINT16 usHealingPtsLeft;
   UINT16 usTotalFullPtsUsed = 0;
@@ -2439,7 +2448,7 @@ UINT16 HealPatient(SOLDIERTYPE *pPatient, SOLDIERTYPE *pDoctor, UINT16 usHundred
 }
 
 void CheckForAndHandleHospitalPatients(void) {
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
 
   if (fSectorsWithSoldiers[HOSPITAL_SECTOR_X + HOSPITAL_SECTOR_Y * MAP_WORLD_X][0] == FALSE) {
@@ -2465,7 +2474,7 @@ void CheckForAndHandleHospitalPatients(void) {
   }
 }
 
-void HealHospitalPatient(SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft) {
+void HealHospitalPatient(struct SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft) {
   INT8 bPointsToUse;
 
   if (usHealingPtsLeft <= 0) {
@@ -2521,7 +2530,7 @@ void HealHospitalPatient(SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft) {
 }
 
 void HandleRepairmenInSector(INT16 sX, INT16 sY, INT8 bZ) {
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
   INT32 iCounter = 0;
 
@@ -2551,7 +2560,7 @@ void HandleRepairmenInSector(INT16 sX, INT16 sY, INT8 bZ) {
 }
 
 /* No point in allowing SAM site repair any more.  Jan/13/99.  ARM
-INT8 HandleRepairOfSAMSite( SOLDIERTYPE *pSoldier, INT8 bPointsAvailable, BOOLEAN *
+INT8 HandleRepairOfSAMSite( struct SOLDIERTYPE *pSoldier, INT8 bPointsAvailable, BOOLEAN *
 pfNothingLeftToRepair )
 {
         INT8 bPtsUsed = 0;
@@ -2614,11 +2623,11 @@ bSectorZ );
 }
 */
 
-INT8 FindRepairableItemOnOtherSoldier(SOLDIERTYPE *pSoldier, UINT8 ubPassType) {
+INT8 FindRepairableItemOnOtherSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubPassType) {
   INT8 bLoop, bLoop2;
   REPAIR_PASS_SLOTS_TYPE *pPassList;
   INT8 bSlotToCheck;
-  OBJECTTYPE *pObj;
+  struct OBJECTTYPE *pObj;
 
   Assert(ubPassType < NUM_REPAIR_PASS_TYPES);
 
@@ -2648,7 +2657,8 @@ INT8 FindRepairableItemOnOtherSoldier(SOLDIERTYPE *pSoldier, UINT8 ubPassType) {
   return (NO_SLOT);
 }
 
-void DoActualRepair(SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 *pbStatus, UINT8 *pubRepairPtsLeft) {
+void DoActualRepair(struct SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 *pbStatus,
+                    UINT8 *pubRepairPtsLeft) {
   INT16 sRepairCostAdj;
   UINT16 usDamagePts, usPtsFixed;
 
@@ -2697,8 +2707,8 @@ void DoActualRepair(SOLDIERTYPE *pSoldier, UINT16 usItem, INT8 *pbStatus, UINT8 
   }
 }
 
-BOOLEAN RepairObject(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOwner, OBJECTTYPE *pObj,
-                     UINT8 *pubRepairPtsLeft) {
+BOOLEAN RepairObject(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOwner,
+                     struct OBJECTTYPE *pObj, UINT8 *pubRepairPtsLeft) {
   UINT8 ubLoop, ubItemsInPocket;
   BOOLEAN fSomethingWasRepaired = FALSE;
 
@@ -2709,7 +2719,7 @@ BOOLEAN RepairObject(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOwner, OBJECTTYPE *pOb
     if (IsItemRepairable(pObj->usItem, pObj->bStatus[ubLoop])) {
       // repairable, try to repair it
 
-      // void DoActualRepair( SOLDIERTYPE * pSoldier, UINT16 usItem, INT8 * pbStatus, UINT8 *
+      // void DoActualRepair( struct SOLDIERTYPE * pSoldier, UINT16 usItem, INT8 * pbStatus, UINT8 *
       // pubRepairPtsLeft )
       DoActualRepair(pSoldier, pObj->usItem, &(pObj->bStatus[ubLoop]), pubRepairPtsLeft);
 
@@ -2768,7 +2778,7 @@ BOOLEAN RepairObject(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOwner, OBJECTTYPE *pOb
   return (fSomethingWasRepaired);
 }
 
-void HandleRepairBySoldier(SOLDIERTYPE *pSoldier) {
+void HandleRepairBySoldier(struct SOLDIERTYPE *pSoldier) {
   UINT16 usMax = 0;
   UINT8 ubRepairPtsLeft = 0;
   UINT8 ubItemsInPocket = 0;
@@ -2779,7 +2789,7 @@ void HandleRepairBySoldier(SOLDIERTYPE *pSoldier) {
   BOOLEAN fNothingLeftToRepair = FALSE;
   INT8 bLoop, bLoopStart, bLoopEnd;
   BOOLEAN fAnyOfSoldiersOwnItemsWereFixed = FALSE;
-  OBJECTTYPE *pObj;
+  struct OBJECTTYPE *pObj;
 
   // grab max number of repair pts open to this soldier
   ubRepairPtsLeft = CalculateRepairPointsForRepairman(pSoldier, &usMax, TRUE);
@@ -2907,7 +2917,7 @@ BOOLEAN IsItemRepairable(UINT16 usItem, INT8 bStatus) {
 
 void HandleRestAndFatigueInSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   // this will handle all sleeping characters in this sector
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
 
   pSoldier = MercPtrs[0];
@@ -2924,7 +2934,7 @@ void HandleRestAndFatigueInSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
 }
 
 /*
-INT8 GetRegainDueToSleepNeeded( SOLDIERTYPE *pSoldier, INT32 iRateOfReGain )
+INT8 GetRegainDueToSleepNeeded( struct SOLDIERTYPE *pSoldier, INT32 iRateOfReGain )
 {
         // look at persons regain rate,
         // if they infact loses sleep, make sure it doesn't go below the current rate
@@ -2944,7 +2954,7 @@ INT8 GetRegainDueToSleepNeeded( SOLDIERTYPE *pSoldier, INT32 iRateOfReGain )
 }
 */
 
-void RestCharacter(SOLDIERTYPE *pSoldier) {
+void RestCharacter(struct SOLDIERTYPE *pSoldier) {
   // handle the sleep of this character, update bBreathMax based on sleep they have
   INT8 bMaxBreathRegain = 0;
 
@@ -2974,7 +2984,7 @@ void RestCharacter(SOLDIERTYPE *pSoldier) {
   return;
 }
 
-void FatigueCharacter(SOLDIERTYPE *pSoldier) {
+void FatigueCharacter(struct SOLDIERTYPE *pSoldier) {
   // fatigue character
   INT32 iPercentEncumbrance;
   INT32 iBreathLoss;
@@ -3039,15 +3049,15 @@ void FatigueCharacter(SOLDIERTYPE *pSoldier) {
 
 // ONCE PER HOUR, will handle ALL kinds of training (self, teaching, and town) in this sector
 void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ) {
-  SOLDIERTYPE *pTrainer;
-  SOLDIERTYPE *pStudent;
+  struct SOLDIERTYPE *pTrainer;
+  struct SOLDIERTYPE *pStudent;
   UINT8 ubStat;
   BOOLEAN fAtGunRange = FALSE;
   UINT32 uiCnt = 0;
   INT16 sTotalTrainingPts = 0;
   UINT16 sTrainingPtsDueToInstructor = 0;
-  SOLDIERTYPE *pStatTrainerList[NUM_TRAINABLE_STATS];  // can't have more "best" trainers than
-                                                       // trainable stats
+  struct SOLDIERTYPE *pStatTrainerList[NUM_TRAINABLE_STATS];  // can't have more "best" trainers
+                                                              // than trainable stats
   INT16 sBestTrainingPts;
   INT16 sTownTrainingPts;
   TOWN_TRAINER_TYPE TownTrainer[MAX_CHARACTER_COUNT];
@@ -3226,8 +3236,9 @@ int TownTrainerQsortCompare(const void *pArg1, const void *pArg2) {
   }
 }
 
-INT16 GetBonusTrainingPtsDueToInstructor(SOLDIERTYPE *pInstructor, SOLDIERTYPE *pStudent,
-                                         INT8 bTrainStat, BOOLEAN fAtGunRange, UINT16 *pusMaxPts) {
+INT16 GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,
+                                         struct SOLDIERTYPE *pStudent, INT8 bTrainStat,
+                                         BOOLEAN fAtGunRange, UINT16 *pusMaxPts) {
   // return the bonus training pts of this instructor with this student,...if student null, simply
   // assignment student skill of 0 and student wisdom of 100
   UINT16 sTrainingPts = 0;
@@ -3409,7 +3420,7 @@ INT16 GetBonusTrainingPtsDueToInstructor(SOLDIERTYPE *pInstructor, SOLDIERTYPE *
   return (sTrainingPts);
 }
 
-INT16 GetSoldierTrainingPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
+INT16 GetSoldierTrainingPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
                             UINT16 *pusMaxPts) {
   UINT16 sTrainingPts = 0;
   INT8 bTrainingBonus = 0;
@@ -3485,7 +3496,7 @@ INT16 GetSoldierTrainingPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtG
   return (sTrainingPts);
 }
 
-INT16 GetSoldierStudentPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
+INT16 GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
                            UINT16 *pusMaxPts) {
   UINT16 sTrainingPts = 0;
   INT8 bTrainingBonus = 0;
@@ -3494,7 +3505,7 @@ INT16 GetSoldierStudentPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGu
   INT16 sBestTrainingPts, sTrainingPtsDueToInstructor;
   UINT16 usMaxTrainerPts, usBestMaxTrainerPts;
   UINT32 uiCnt;
-  SOLDIERTYPE *pTrainer;
+  struct SOLDIERTYPE *pTrainer;
 
   // assume training impossible for max pts
   *pusMaxPts = 0;
@@ -3600,7 +3611,7 @@ INT16 GetSoldierStudentPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGu
   return (sTrainingPts);
 }
 
-void TrainSoldierWithPts(SOLDIERTYPE *pSoldier, INT16 sTrainPts) {
+void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts) {
   UINT8 ubChangeStat = 0;
 
   if (sTrainPts <= 0) {
@@ -3652,7 +3663,8 @@ void TrainSoldierWithPts(SOLDIERTYPE *pSoldier, INT16 sTrainPts) {
 }
 
 // will train a town in sector by character
-BOOLEAN TrainTownInSector(SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY, UINT16 sTrainingPts) {
+BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY,
+                          UINT16 sTrainingPts) {
   SECTORINFO *pSectorInfo = &(SectorInfo[SECTOR(sMapX, sMapY)]);
   UINT8 ubTownId = 0;
   INT16 sCnt = 0;
@@ -3702,7 +3714,7 @@ BOOLEAN TrainTownInSector(SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY, UINT1
   }
 }
 
-INT16 GetTownTrainPtsForCharacter(SOLDIERTYPE *pTrainer, UINT16 *pusMaxPts) {
+INT16 GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, UINT16 *pusMaxPts) {
   UINT16 sTotalTrainingPts = 0;
   INT8 bTrainingBonus = 0;
   //	UINT8 ubTownId = 0;
@@ -3753,7 +3765,7 @@ INT16 GetTownTrainPtsForCharacter(SOLDIERTYPE *pTrainer, UINT16 *pusMaxPts) {
   return (sTotalTrainingPts);
 }
 
-void MakeSoldiersTacticalAnimationReflectAssignment(SOLDIERTYPE *pSoldier) {
+void MakeSoldiersTacticalAnimationReflectAssignment(struct SOLDIERTYPE *pSoldier) {
   // soldier is in tactical, world loaded, he's OKLIFE
   if ((pSoldier->bInSector) && gfWorldLoaded && (pSoldier->bLife >= OKLIFE)) {
     // Set animation based on his assignment
@@ -3772,7 +3784,7 @@ void MakeSoldiersTacticalAnimationReflectAssignment(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void AssignmentAborted(SOLDIERTYPE *pSoldier, UINT8 ubReason) {
+void AssignmentAborted(struct SOLDIERTYPE *pSoldier, UINT8 ubReason) {
   Assert(ubReason < NUM_ASSIGN_ABORT_REASONS);
 
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzLateLocalizedString[ubReason], pSoldier->name);
@@ -3785,7 +3797,7 @@ void AssignmentAborted(SOLDIERTYPE *pSoldier, UINT8 ubReason) {
   fMapScreenBottomDirty = TRUE;
 }
 
-void AssignmentDone(SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote, BOOLEAN fMeToo) {
+void AssignmentDone(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote, BOOLEAN fMeToo) {
   if ((pSoldier->bInSector) && (gfWorldLoaded)) {
     if (pSoldier->bAssignment == DOCTOR) {
       if (guiCurrentScreen == GAME_SCREEN) {
@@ -3848,7 +3860,7 @@ void AssignmentDone(SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote, BOOLEAN fMeToo) {
   fMapScreenBottomDirty = TRUE;
 }
 
-BOOLEAN CharacterIsBetweenSectors(SOLDIERTYPE *pSoldier) {
+BOOLEAN CharacterIsBetweenSectors(struct SOLDIERTYPE *pSoldier) {
   // is the character on the move
   if (pSoldier == NULL) {
     return (FALSE);
@@ -3858,7 +3870,7 @@ BOOLEAN CharacterIsBetweenSectors(SOLDIERTYPE *pSoldier) {
 }
 
 void HandleNaturalHealing(void) {
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
   INT32 iCounter = 0;
   INT8 bNumberOfPeople = 0;
@@ -3881,7 +3893,7 @@ void HandleNaturalHealing(void) {
 }
 
 // handle healing of this soldier by natural causes.
-void HandleHealingByNaturalCauses(SOLDIERTYPE *pSoldier) {
+void HandleHealingByNaturalCauses(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiPercentHealth = 0;
   INT8 bActivityLevelDivisor = 0;
 
@@ -3940,7 +3952,7 @@ void HandleHealingByNaturalCauses(SOLDIERTYPE *pSoldier) {
   return;
 }
 
-void UpDateSoldierLife(SOLDIERTYPE *pSoldier) {
+void UpDateSoldierLife(struct SOLDIERTYPE *pSoldier) {
   // update soldier life, make sure we don't go out of bounds
   pSoldier->bLife += pSoldier->sFractLife / 100;
 
@@ -3958,7 +3970,7 @@ void UpDateSoldierLife(SOLDIERTYPE *pSoldier) {
 
 /*
 // merc is tired, put to sleep
-BOOLEAN AutoSleepMerc( SOLDIERTYPE *pSoldier )
+BOOLEAN AutoSleepMerc( struct SOLDIERTYPE *pSoldier )
 {
         if( pSoldier == NULL )
         {
@@ -4026,7 +4038,7 @@ pSoldier -> name );
 }
 */
 
-void CheckIfSoldierUnassigned(SOLDIERTYPE *pSoldier) {
+void CheckIfSoldierUnassigned(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->bAssignment == NO_ASSIGNMENT) {
     // unassigned
     AddCharacterToAnySquad(pSoldier);
@@ -4045,7 +4057,7 @@ void CreateDestroyMouseRegionsForAssignmentMenu(void) {
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
   SGPRect pDimensions;
@@ -4168,7 +4180,7 @@ void CreateDestroyMouseRegionForVehicleMenu(void) {
   SGPPoint pPosition, pPoint;
   INT32 iBoxWidth = 0;
   SGPRect pDimensions;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   if (fShowVehicleMenu) {
     GetBoxPosition(ghAssignmentBox, &pPoint);
@@ -4274,7 +4286,7 @@ void CreateDestroyMouseRegionForVehicleMenu(void) {
 }
 
 void HandleShadingOfLinesForVehicleMenu(void) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iVehicleId;
   UINT32 uiMenuLine = 0;
 
@@ -4304,10 +4316,10 @@ void HandleShadingOfLinesForVehicleMenu(void) {
   }
 }
 
-void VehicleMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void VehicleMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment region
   INT32 iValue = -1, iVehicleID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   iValue = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -4347,7 +4359,7 @@ void VehicleMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void VehicleMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void VehicleMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for assignment region
   INT32 iValue = -1;
 
@@ -4372,7 +4384,7 @@ void VehicleMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-BOOLEAN DisplayRepairMenu(SOLDIERTYPE *pSoldier) {
+BOOLEAN DisplayRepairMenu(struct SOLDIERTYPE *pSoldier) {
   INT32 iVehicleIndex = 0;
   UINT32 hStringHandle = 0;
 
@@ -4441,7 +4453,7 @@ BOOLEAN DisplayRepairMenu(SOLDIERTYPE *pSoldier) {
 }
 
 void HandleShadingOfLinesForRepairMenu(void) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iVehicleIndex = 0;
   INT32 iCount = 0;
 
@@ -4534,7 +4546,7 @@ void CreateDestroyMouseRegionForRepairMenu(void) {
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
   SGPRect pDimensions;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iVehicleIndex = 0;
 
   if ((fShowRepairMenu == TRUE) && (fCreated == FALSE)) {
@@ -4681,10 +4693,10 @@ void CreateDestroyMouseRegionForRepairMenu(void) {
   return;
 }
 
-void RepairMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void RepairMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment region
   INT32 iValue = -1;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iRepairWhat;
 
   iValue = MSYS_GetRegionUserData(pRegion, 0);
@@ -4810,7 +4822,7 @@ void RepairMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void RepairMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void RepairMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for assignment region
   INT32 iValue = -1;
 
@@ -4832,7 +4844,7 @@ void RepairMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MakeSureToolKitIsInHand(SOLDIERTYPE *pSoldier) {
+void MakeSureToolKitIsInHand(struct SOLDIERTYPE *pSoldier) {
   INT8 bPocket = 0;
 
   // if there isn't a toolkit in his hand
@@ -4847,7 +4859,7 @@ void MakeSureToolKitIsInHand(SOLDIERTYPE *pSoldier) {
   }
 }
 
-BOOLEAN MakeSureMedKitIsInHand(SOLDIERTYPE *pSoldier) {
+BOOLEAN MakeSureMedKitIsInHand(struct SOLDIERTYPE *pSoldier) {
   INT8 bPocket = 0;
   BOOLEAN fFoundOne = FALSE;
 
@@ -4898,7 +4910,7 @@ BOOLEAN MakeSureMedKitIsInHand(SOLDIERTYPE *pSoldier) {
 }
 
 void HandleShadingOfLinesForAssignmentMenus(void) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // updates which menus are selectable based on character status
 
@@ -5020,7 +5032,7 @@ void HandleShadingOfLinesForAssignmentMenus(void) {
 
 void DetermineWhichAssignmentMenusCanBeShown(void) {
   BOOLEAN fCharacterNoLongerValid = FALSE;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
     if (fShowMapScreenMovementList == TRUE) {
@@ -5233,7 +5245,7 @@ void CreateDestroyScreenMaskForAssignmentAndContractMenus(void) {
   return;
 }
 
-void AssignmentScreenMaskBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void AssignmentScreenMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment screen mask region
 
   if ((iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) || (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP)) {
@@ -5885,10 +5897,10 @@ void CreateDestroyMouseRegionsForSquadMenu(BOOLEAN fPositionBox) {
   }
 }
 
-void AssignmentMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void AssignmentMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for assignment region
   INT32 iValue = -1;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   iValue = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -5920,7 +5932,7 @@ void AssignmentMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void RemoveMercMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void RemoveMercMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for assignment region
   INT32 iValue = -1;
 
@@ -5940,7 +5952,7 @@ void RemoveMercMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void ContractMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void ContractMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for Contract region
   INT32 iValue = -1;
 
@@ -5961,7 +5973,7 @@ void ContractMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SquadMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SquadMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for assignment region
   INT32 iValue = -1;
 
@@ -5988,10 +6000,10 @@ void SquadMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void RemoveMercMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void RemoveMercMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for contract region
   INT32 iValue = -1;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   pSoldier = GetSelectedAssignSoldier(FALSE);
 
@@ -6058,7 +6070,7 @@ void RemoveMercMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void BeginRemoveMercFromContract(SOLDIERTYPE *pSoldier) {
+void BeginRemoveMercFromContract(struct SOLDIERTYPE *pSoldier) {
   // This function will setup the quote, then start dialogue beginning the actual leave sequence
   if ((pSoldier->bLife > 0) && (pSoldier->bAssignment != ASSIGNMENT_POW)) {
     if ((pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) ||
@@ -6130,11 +6142,11 @@ void MercDismissConfirmCallBack(UINT8 bExitValue) {
   }
 }
 
-void ContractMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void ContractMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for contract region
   INT32 iValue = -1;
   BOOLEAN fOkToClose = FALSE;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
     pSoldier = &Menptr[gCharactersList[bSelectedInfoChar].usSolID];
@@ -6232,7 +6244,7 @@ void ContractMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   return;
 }
 
-void TrainingMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void TrainingMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for assignment region
   INT32 iValue = -1;
 
@@ -6256,7 +6268,7 @@ void TrainingMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void AttributeMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void AttributeMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // mvt callback handler for assignment region
   INT32 iValue = -1;
 
@@ -6274,10 +6286,10 @@ void AttributeMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SquadMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment region
   INT32 iValue = -1;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   CHAR16 sString[128];
   INT8 bCanJoinSquad;
   /* ARM: Squad menu is now disabled for anyone between sectors
@@ -6423,10 +6435,10 @@ void SquadMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   return;
 }
 
-void TrainingMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment region
   INT32 iValue = -1;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT8 bTownId;
   CHAR16 sString[128];
   CHAR16 sStringA[128];
@@ -6591,10 +6603,10 @@ void TrainingMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void AttributesMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void AttributesMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment region
   INT32 iValue = -1;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   pSoldier = GetSelectedAssignSoldier(FALSE);
 
@@ -6652,12 +6664,12 @@ void AttributesMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 };
 
-void AssignmentMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void AssignmentMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment region
   INT32 iValue = -1;
   CHAR16 sString[128];
 
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   pSoldier = GetSelectedAssignSoldier(FALSE);
 
@@ -7092,7 +7104,7 @@ void CreateEPCBox(void) {
 void HandleShadingOfLinesForSquadMenu(void) {
   // find current squad and set that line the squad box a lighter green
   UINT32 uiCounter;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   UINT32 uiMaxSquad;
   INT8 bResult;
 
@@ -7126,7 +7138,7 @@ void HandleShadingOfLinesForSquadMenu(void) {
   }
 }
 
-void PostContractMessage(SOLDIERTYPE *pCharacter, INT32 iContract) {
+void PostContractMessage(struct SOLDIERTYPE *pCharacter, INT32 iContract) {
   // do nothing
   return;
 
@@ -7137,7 +7149,7 @@ void PostContractMessage(SOLDIERTYPE *pCharacter, INT32 iContract) {
   return;
 }
 
-void PostTerminateMessage(SOLDIERTYPE *pCharacter) {
+void PostTerminateMessage(struct SOLDIERTYPE *pCharacter) {
   // do nothing
   return;
 
@@ -7146,7 +7158,7 @@ void PostTerminateMessage(SOLDIERTYPE *pCharacter) {
   // pCharacter -> name );
 }
 
-BOOLEAN DisplayVehicleMenu(SOLDIERTYPE *pSoldier) {
+BOOLEAN DisplayVehicleMenu(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fVehiclePresent = FALSE;
   INT32 iCounter = 0;
   UINT32 hStringHandle = 0;
@@ -7199,7 +7211,7 @@ void CreateRepairBox(void) {
   SetLineSpace(ghRepairBox, 2);
 }
 
-void CreateContractBox(SOLDIERTYPE *pCharacter) {
+void CreateContractBox(struct SOLDIERTYPE *pCharacter) {
   UINT32 hStringHandle;
   UINT32 uiCounter;
   CHAR16 sString[50];
@@ -7437,7 +7449,7 @@ void CreateAssignmentsBox(void) {
   UINT32 hStringHandle;
   UINT32 uiCounter;
   CHAR16 sString[128];
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // will create attribute pop up menu for mapscreen assignments
 
@@ -7627,7 +7639,7 @@ void DetermineBoxPositions(void) {
   SGPPoint pPoint;
   SGPPoint pNewPoint;
   SGPRect pDimensions;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   if ((fShowAssignmentMenu == FALSE) || (ghAssignmentBox == -1)) {
     return;
@@ -7696,7 +7708,7 @@ void DetermineBoxPositions(void) {
 
 void SetTacticalPopUpAssignmentBoxXY(void) {
   INT16 sX, sY;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // get the soldier
   pSoldier = GetSelectedAssignSoldier(FALSE);
@@ -7755,7 +7767,7 @@ void CheckAndUpdateTacticalAssignmentPopUpPositions(void) {
   SGPRect pDimensions, pDimensions2, pDimensions3;
   SGPPoint pPoint;
   INT16 sLongest;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   if (fShowAssignmentMenu == FALSE) {
     return;
@@ -7921,7 +7933,7 @@ void PositionCursorForTacticalAssignmentBox(void) {
 
 void HandleRestFatigueAndSleepStatus(void) {
   INT32 iCounter = 0, iNumberOnTeam = 0;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fReasonAdded = FALSE;
   BOOLEAN fBoxSetUp = FALSE;
   BOOLEAN fMeToo = FALSE;
@@ -8086,7 +8098,7 @@ void HandleRestFatigueAndSleepStatus(void) {
   return;
 }
 
-BOOLEAN CanCharacterRepairVehicle(SOLDIERTYPE *pSoldier, INT32 iVehicleId) {
+BOOLEAN CanCharacterRepairVehicle(struct SOLDIERTYPE *pSoldier, INT32 iVehicleId) {
   // is the vehicle valid?
   if (VehicleIdIsValid(iVehicleId) == FALSE) {
     return (FALSE);
@@ -8129,7 +8141,7 @@ BOOLEAN CanCharacterRepairVehicle(SOLDIERTYPE *pSoldier, INT32 iVehicleId) {
 }
 
 BOOLEAN IsRobotInThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pSoldier = GetRobotSoldier();
 
@@ -8143,8 +8155,8 @@ BOOLEAN IsRobotInThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   return (FALSE);
 }
 
-SOLDIERTYPE *GetRobotSoldier(void) {
-  SOLDIERTYPE *pSoldier = NULL, *pTeamSoldier = NULL;
+struct SOLDIERTYPE *GetRobotSoldier(void) {
+  struct SOLDIERTYPE *pSoldier = NULL, *pTeamSoldier = NULL;
   INT32 cnt = 0;
 
   // set pSoldier as first in merc ptrs
@@ -8163,8 +8175,8 @@ SOLDIERTYPE *GetRobotSoldier(void) {
   return (NULL);
 }
 
-BOOLEAN CanCharacterRepairRobot(SOLDIERTYPE *pSoldier) {
-  SOLDIERTYPE *pRobot = NULL;
+BOOLEAN CanCharacterRepairRobot(struct SOLDIERTYPE *pSoldier) {
+  struct SOLDIERTYPE *pRobot = NULL;
 
   // do we in fact have the robot on the team?
   pRobot = GetRobotSoldier();
@@ -8198,9 +8210,9 @@ BOOLEAN CanCharacterRepairRobot(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-UINT8 HandleRepairOfRobotBySoldier(SOLDIERTYPE *pSoldier, UINT8 ubRepairPts,
+UINT8 HandleRepairOfRobotBySoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubRepairPts,
                                    BOOLEAN *pfNothingLeftToRepair) {
-  SOLDIERTYPE *pRobot = NULL;
+  struct SOLDIERTYPE *pRobot = NULL;
 
   pRobot = GetRobotSoldier();
 
@@ -8208,7 +8220,7 @@ UINT8 HandleRepairOfRobotBySoldier(SOLDIERTYPE *pSoldier, UINT8 ubRepairPts,
   return (RepairRobot(pRobot, ubRepairPts, pfNothingLeftToRepair));
 }
 
-UINT8 RepairRobot(SOLDIERTYPE *pRobot, UINT8 ubRepairPts, BOOLEAN *pfNothingLeftToRepair) {
+UINT8 RepairRobot(struct SOLDIERTYPE *pRobot, UINT8 ubRepairPts, BOOLEAN *pfNothingLeftToRepair) {
   UINT8 ubPointsUsed = 0;
 
   // is it "dead" ?
@@ -8242,8 +8254,8 @@ UINT8 RepairRobot(SOLDIERTYPE *pRobot, UINT8 ubRepairPts, BOOLEAN *pfNothingLeft
   return (ubPointsUsed);
 }
 
-void SetSoldierAssignment(SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam1, INT32 iParam2,
-                          INT32 iParam3) {
+void SetSoldierAssignment(struct SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam1,
+                          INT32 iParam2, INT32 iParam3) {
   switch (bAssignment) {
     case (ASSIGNMENT_HOSPITAL):
       if (CanCharacterPatient(pSoldier)) {
@@ -8527,7 +8539,7 @@ void SetSoldierAssignment(SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam1
 }
 
 /* No point in allowing SAM site repair any more.  Jan/13/99.  ARM
-BOOLEAN CanSoldierRepairSAM( SOLDIERTYPE *pSoldier, INT8 bRepairPoints)
+BOOLEAN CanSoldierRepairSAM( struct SOLDIERTYPE *pSoldier, INT8 bRepairPoints)
 {
         INT16 sGridNoA = 0, sGridNoB = 0;
 
@@ -8597,7 +8609,7 @@ BOOLEAN IsTheSAMSiteInSectorRepairable( INT16 sSectorX, INT16 sSectorY, INT16 sS
         return( FALSE );
 }
 
-BOOLEAN SoldierInSameSectorAsSAM( SOLDIERTYPE *pSoldier )
+BOOLEAN SoldierInSameSectorAsSAM( struct SOLDIERTYPE *pSoldier )
 {
         INT32 iCounter = 0;
 
@@ -8619,7 +8631,7 @@ BOOLEAN SoldierInSameSectorAsSAM( SOLDIERTYPE *pSoldier )
         return( FALSE );
 }
 
-BOOLEAN IsSoldierCloseEnoughToSAMControlPanel( SOLDIERTYPE *pSoldier )
+BOOLEAN IsSoldierCloseEnoughToSAMControlPanel( struct SOLDIERTYPE *pSoldier )
 {
 
         INT32 iCounter = 0;
@@ -8643,7 +8655,7 @@ MAX_DISTANCE_FOR_REPAIR ) )
 }
 */
 
-BOOLEAN HandleAssignmentExpansionAndHighLightForAssignMenu(SOLDIERTYPE *pSoldier) {
+BOOLEAN HandleAssignmentExpansionAndHighLightForAssignMenu(struct SOLDIERTYPE *pSoldier) {
   if (fShowSquadMenu) {
     // squad menu up?..if so, highlight squad line the previous menu
     if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__EPC) {
@@ -8741,7 +8753,7 @@ BOOLEAN HandleShowingOfMovementBox(void) {
 }
 
 void HandleShadingOfLinesForTrainingMenu(void) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iCounter = 0;
 
   // check if valid
@@ -8792,7 +8804,7 @@ void HandleShadingOfLinesForTrainingMenu(void) {
 
 void HandleShadingOfLinesForAttributeMenus(void) {
   // will do the same as updateassignments...but with training pop up box strings
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT8 bAttrib = 0;
   BOOLEAN fStatTrainable;
 
@@ -8837,10 +8849,10 @@ void HandleShadingOfLinesForAttributeMenus(void) {
   return;
 }
 
-void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(SOLDIERTYPE *pSoldier) {
+void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(struct SOLDIERTYPE *pSoldier) {
   INT16 sSectorX = 0, sSectorY = 0;
   INT32 iNumberOnTeam = 0, iCounter = 0;
-  SOLDIERTYPE *pCurSoldier = NULL;
+  struct SOLDIERTYPE *pCurSoldier = NULL;
 
   iNumberOnTeam = gTacticalStatus.Team[OUR_TEAM].bLastID;
 
@@ -8861,7 +8873,7 @@ void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(SOLDIERTYPE *pSold
 }
 
 void ReportTrainersTraineesWithoutPartners(void) {
-  SOLDIERTYPE *pTeamSoldier = NULL;
+  struct SOLDIERTYPE *pTeamSoldier = NULL;
   INT32 iCounter = 0, iNumberOnTeam = 0;
   BOOLEAN fFound = FALSE;
 
@@ -8894,7 +8906,7 @@ void ReportTrainersTraineesWithoutPartners(void) {
   return;
 }
 
-BOOLEAN SetMercAsleep(SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning) {
+BOOLEAN SetMercAsleep(struct SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning) {
   if (CanCharacterSleep(pSoldier, fGiveWarning)) {
     // put him to sleep
     PutMercInAsleepState(pSoldier);
@@ -8907,7 +8919,7 @@ BOOLEAN SetMercAsleep(SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning) {
   }
 }
 
-BOOLEAN PutMercInAsleepState(SOLDIERTYPE *pSoldier) {
+BOOLEAN PutMercInAsleepState(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->fMercAsleep == FALSE) {
     if ((gfWorldLoaded) && (pSoldier->bInSector)) {
       if (guiCurrentScreen == GAME_SCREEN) {
@@ -8928,7 +8940,7 @@ BOOLEAN PutMercInAsleepState(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN SetMercAwake(SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning, BOOLEAN fForceHim) {
+BOOLEAN SetMercAwake(struct SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning, BOOLEAN fForceHim) {
   // forcing him skips all normal checks!
   if (!fForceHim) {
     if (!CanCharacterBeAwakened(pSoldier, fGiveWarning)) {
@@ -8940,7 +8952,7 @@ BOOLEAN SetMercAwake(SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning, BOOLEAN fForce
   return (TRUE);
 }
 
-BOOLEAN PutMercInAwakeState(SOLDIERTYPE *pSoldier) {
+BOOLEAN PutMercInAwakeState(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->fMercAsleep) {
     if ((gfWorldLoaded) && (pSoldier->bInSector)) {
       if (guiCurrentScreen == GAME_SCREEN) {
@@ -8977,7 +8989,7 @@ BOOLEAN IsThereASoldierInThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSector
 }
 
 // set the time this soldier's assignment changed
-void SetTimeOfAssignmentChangeForMerc(SOLDIERTYPE *pSoldier) {
+void SetTimeOfAssignmentChangeForMerc(struct SOLDIERTYPE *pSoldier) {
   // if someone is being taken off of HOSPITAL then track how much
   // of payment wasn't used up
   if (pSoldier->bAssignment == ASSIGNMENT_HOSPITAL) {
@@ -8997,7 +9009,7 @@ void SetTimeOfAssignmentChangeForMerc(SOLDIERTYPE *pSoldier) {
 }
 
 // have we spent enough time on assignment for it to count?
-BOOLEAN EnoughTimeOnAssignment(SOLDIERTYPE *pSoldier) {
+BOOLEAN EnoughTimeOnAssignment(struct SOLDIERTYPE *pSoldier) {
   if (GetWorldTotalMin() - pSoldier->uiLastAssignmentChangeMin >= MINUTES_FOR_ASSIGNMENT_TO_COUNT) {
     return (TRUE);
   }
@@ -9005,9 +9017,9 @@ BOOLEAN EnoughTimeOnAssignment(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN AnyMercInGroupCantContinueMoving(GROUP *pGroup) {
+BOOLEAN AnyMercInGroupCantContinueMoving(struct GROUP *pGroup) {
   PLAYERGROUP *pPlayer;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fMeToo = FALSE;
   BOOLEAN fGroupMustStop = FALSE;
 
@@ -9047,7 +9059,7 @@ BOOLEAN AnyMercInGroupCantContinueMoving(GROUP *pGroup) {
   return (fGroupMustStop);
 }
 
-BOOLEAN PlayerSoldierTooTiredToTravel(SOLDIERTYPE *pSoldier) {
+BOOLEAN PlayerSoldierTooTiredToTravel(struct SOLDIERTYPE *pSoldier) {
   Assert(pSoldier);
 
   // if this guy ever needs sleep at all
@@ -9070,7 +9082,7 @@ BOOLEAN PlayerSoldierTooTiredToTravel(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN AssignMercToAMovementGroup(SOLDIERTYPE *pSoldier) {
+BOOLEAN AssignMercToAMovementGroup(struct SOLDIERTYPE *pSoldier) {
   // if merc doesn't have a group or is in a vehicle or on a squad assign to group
   INT8 bGroupId = 0;
 
@@ -9126,7 +9138,7 @@ void NotifyPlayerOfAssignmentAttemptFailure(INT8 bAssignment) {
 BOOLEAN HandleSelectedMercsBeingPutAsleep(BOOLEAN fWakeUp, BOOLEAN fDisplayWarning) {
   BOOLEAN fSuccess = TRUE;
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   UINT8 ubNumberOfSelectedSoldiers = 0;
   CHAR16 sString[128];
 
@@ -9194,7 +9206,7 @@ BOOLEAN HandleSelectedMercsBeingPutAsleep(BOOLEAN fWakeUp, BOOLEAN fDisplayWarni
 
 BOOLEAN IsAnyOneOnPlayersTeamOnThisAssignment(INT8 bAssignment) {
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   for (iCounter = gTacticalStatus.Team[OUR_TEAM].bFirstID;
        iCounter <= gTacticalStatus.Team[OUR_TEAM].bLastID; iCounter++) {
@@ -9226,10 +9238,10 @@ void RebuildAssignmentsBox(void) {
 
 void BandageBleedingDyingPatientsBeingTreated() {
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
-  SOLDIERTYPE *pDoctor = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pDoctor = NULL;
   INT32 iKitSlot;
-  OBJECTTYPE *pKit = NULL;
+  struct OBJECTTYPE *pKit = NULL;
   UINT16 usKitPts;
   UINT32 uiKitPtsUsed;
   BOOLEAN fSomeoneStillBleedingDying = FALSE;
@@ -9297,7 +9309,7 @@ void BandageBleedingDyingPatientsBeingTreated() {
 
 void ReEvaluateEveryonesNothingToDo() {
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   BOOLEAN fNothingToDo;
 
   for (iCounter = 0; iCounter <= gTacticalStatus.Team[OUR_TEAM].bLastID; iCounter++) {
@@ -9375,8 +9387,8 @@ void ReEvaluateEveryonesNothingToDo() {
 
 void SetAssignmentForList(INT8 bAssignment, INT8 bParam) {
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSelectedSoldier = NULL;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSelectedSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   BOOLEAN fItWorked;
   BOOLEAN fRemoveFromSquad = TRUE;
   BOOLEAN fNotifiedOfFailure = FALSE;
@@ -9596,7 +9608,7 @@ void SetAssignmentForList(INT8 bAssignment, INT8 bParam) {
   return;
 }
 
-BOOLEAN IsCharacterAliveAndConscious(SOLDIERTYPE *pCharacter) {
+BOOLEAN IsCharacterAliveAndConscious(struct SOLDIERTYPE *pCharacter) {
   // is the character alive and conscious?
   if (pCharacter->bLife < CONSCIOUSNESS) {
     return (FALSE);
@@ -9605,11 +9617,11 @@ BOOLEAN IsCharacterAliveAndConscious(SOLDIERTYPE *pCharacter) {
   return (TRUE);
 }
 
-BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(SOLDIERTYPE *pTargetSoldier,
+BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(struct SOLDIERTYPE *pTargetSoldier,
                                                           INT8 bTargetAssignment,
                                                           INT8 bTargetStat) {
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   BOOLEAN fFound = FALSE;
   UINT16 sTrainingPts = 0;
   BOOLEAN fAtGunRange = FALSE;
@@ -9663,7 +9675,7 @@ BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(SOLDIERTYPE *pTargetSo
   return (FALSE);
 }
 
-void UnEscortEPC(SOLDIERTYPE *pSoldier) {
+void UnEscortEPC(struct SOLDIERTYPE *pSoldier) {
   if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
     BOOLEAN fGotInfo;
     UINT16 usQuoteNum;
@@ -9686,7 +9698,7 @@ void UnEscortEPC(SOLDIERTYPE *pSoldier) {
     HandleFactForNPCUnescorted(pSoldier->ubProfile);
 
     if (pSoldier->ubProfile == JOHN) {
-      SOLDIERTYPE *pSoldier2;
+      struct SOLDIERTYPE *pSoldier2;
 
       // unrecruit Mary as well
       pSoldier2 = FindSoldierByProfileID(MARY, TRUE);
@@ -9705,7 +9717,7 @@ void UnEscortEPC(SOLDIERTYPE *pSoldier) {
         SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_REMOVE_EPC, MARY, 0, 0, 0, 0);
       }
     } else if (pSoldier->ubProfile == MARY) {
-      SOLDIERTYPE *pSoldier2;
+      struct SOLDIERTYPE *pSoldier2;
 
       // unrecruit John as well
       pSoldier2 = FindSoldierByProfileID(JOHN, TRUE);
@@ -9736,7 +9748,7 @@ void UnEscortEPC(SOLDIERTYPE *pSoldier) {
   }
 }
 
-BOOLEAN CharacterIsTakingItEasy(SOLDIERTYPE *pSoldier) {
+BOOLEAN CharacterIsTakingItEasy(struct SOLDIERTYPE *pSoldier) {
   // actually asleep?
   if (pSoldier->fMercAsleep == TRUE) {
     return (TRUE);
@@ -9765,7 +9777,7 @@ BOOLEAN CharacterIsTakingItEasy(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-UINT8 CalcSoldierNeedForSleep(SOLDIERTYPE *pSoldier) {
+UINT8 CalcSoldierNeedForSleep(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubNeedForSleep;
   UINT8 ubPercentHealth;
 
@@ -9813,7 +9825,8 @@ UINT32 GetLastSquadListedInSquadMenu(void) {
   return (uiMaxSquad);
 }
 
-BOOLEAN CanCharacterRepairAnotherSoldiersStuff(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOtherSoldier) {
+BOOLEAN CanCharacterRepairAnotherSoldiersStuff(struct SOLDIERTYPE *pSoldier,
+                                               struct SOLDIERTYPE *pOtherSoldier) {
   if (pOtherSoldier == pSoldier) {
     return (FALSE);
   }
@@ -9844,8 +9857,8 @@ BOOLEAN CanCharacterRepairAnotherSoldiersStuff(SOLDIERTYPE *pSoldier, SOLDIERTYP
   return (TRUE);
 }
 
-SOLDIERTYPE *GetSelectedAssignSoldier(BOOLEAN fNullOK) {
-  SOLDIERTYPE *pSoldier = NULL;
+struct SOLDIERTYPE *GetSelectedAssignSoldier(BOOLEAN fNullOK) {
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
     // mapscreen version
@@ -9871,7 +9884,7 @@ SOLDIERTYPE *GetSelectedAssignSoldier(BOOLEAN fNullOK) {
   return (pSoldier);
 }
 
-void ResumeOldAssignment(SOLDIERTYPE *pSoldier) {
+void ResumeOldAssignment(struct SOLDIERTYPE *pSoldier) {
   BOOLEAN fOldAssignmentInvalid = FALSE;
 
   // ARM: I don't think the whole "old assignment" idea is a very good one, and I doubt the code
@@ -9922,12 +9935,12 @@ void ResumeOldAssignment(SOLDIERTYPE *pSoldier) {
   fMapPanelDirty = TRUE;
 }
 
-void RepairItemsOnOthers(SOLDIERTYPE *pSoldier, UINT8 *pubRepairPtsLeft) {
+void RepairItemsOnOthers(struct SOLDIERTYPE *pSoldier, UINT8 *pubRepairPtsLeft) {
   UINT8 ubPassType;
   INT8 bLoop;
   INT8 bPocket;
-  SOLDIERTYPE *pOtherSoldier;
-  SOLDIERTYPE *pBestOtherSoldier;
+  struct SOLDIERTYPE *pOtherSoldier;
+  struct SOLDIERTYPE *pBestOtherSoldier;
   INT8 bPriority, bBestPriority = -1;
   BOOLEAN fSomethingWasRepairedThisPass;
 
@@ -9997,7 +10010,7 @@ void RepairItemsOnOthers(SOLDIERTYPE *pSoldier, UINT8 *pubRepairPtsLeft) {
   }
 }
 
-BOOLEAN UnjamGunsOnSoldier(SOLDIERTYPE *pOwnerSoldier, SOLDIERTYPE *pRepairSoldier,
+BOOLEAN UnjamGunsOnSoldier(struct SOLDIERTYPE *pOwnerSoldier, struct SOLDIERTYPE *pRepairSoldier,
                            UINT8 *pubRepairPtsLeft) {
   BOOLEAN fAnyGunsWereUnjammed = FALSE;
   INT8 bPocket;

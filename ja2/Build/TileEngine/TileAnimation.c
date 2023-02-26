@@ -22,7 +22,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SmokeEffects.h"
 #include "TileEngine/TileCache.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -33,7 +33,7 @@ ANITILE *pAniTileHead = NULL;
 ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   ANITILE *pAniNode;
   ANITILE *pNewAniNode;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   INT32 iCachedTile = -1;
   INT16 sGridNo;
   UINT8 ubLevel;
@@ -42,7 +42,7 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
   INT16 sDelay;
   INT16 sStartFrame = -1;
   UINT32 uiFlags;
-  LEVELNODE *pGivenNode;
+  struct LEVELNODE *pGivenNode;
   INT16 sX, sY, sZ;
   UINT8 ubTempDir;
 
@@ -177,7 +177,7 @@ ANITILE *CreateAnimationTile(ANITILE_PARAMS *pAniParams) {
       break;
   }
 
-  // SET FLAGS FOR LEVELNODE
+  // SET FLAGS FOR struct LEVELNODE
   pNewAniNode->pLevelNode->uiFlags |= (LEVELNODE_ANIMATION | LEVELNODE_USEZ | LEVELNODE_DYNAMIC);
 
   if ((uiFlags & ANITILE_NOZBLITTER)) {
@@ -654,7 +654,7 @@ void SetAniTileFrame(ANITILE *pAniTile, INT16 sFrame) {
 }
 
 ANITILE *GetCachedAniTileOfType(INT16 sGridNo, UINT8 ubLevelID, UINT32 uiFlags) {
-  LEVELNODE *pNode = NULL;
+  struct LEVELNODE *pNode = NULL;
 
   switch (ubLevelID) {
     case ANI_STRUCT_LEVEL:

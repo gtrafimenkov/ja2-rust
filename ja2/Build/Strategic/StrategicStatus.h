@@ -3,7 +3,8 @@
 
 #include "SGP/Types.h"
 #include "Tactical/ItemTypes.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 // Enemy is allowed to capture the player after certain day
 #define STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE 4
@@ -114,7 +115,7 @@ void ModifyPlayerReputation(INT8 bRepChange);
 
 BOOLEAN MercThinksDeathRateTooHigh(UINT8 ubProfileID);
 BOOLEAN MercThinksBadReputationTooHigh(UINT8 ubProfileID);
-BOOLEAN MercThinksHisMoraleIsTooLow(SOLDIERTYPE *pSoldier);
+BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier);
 
 void HandleEnricoEmail(void);
 

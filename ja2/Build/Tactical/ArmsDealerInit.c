@@ -36,7 +36,7 @@ void ConvertCreatureBloodToElixir(void);
 
 UINT8 gubLastSpecialItemAddedAtElement = 255;
 
-// THIS STRUCTURE HAS UNCHANGING INFO THAT DOESN'T GET SAVED/RESTORED/RESET
+// THIS struct STRUCTURE HAS UNCHANGING INFO THAT DOESN'T GET SAVED/RESTORED/RESET
 ARMS_DEALER_INFO ArmsDealerInfo[NUM_ARMS_DEALERS] = {
     // Buying		Selling	Merc ID#	Type
     // Initial
@@ -1357,7 +1357,7 @@ UINT8 CountSpecificItemsRepairDealerHasInForRepairs(UINT8 ubArmsDealer, UINT16 u
   return (ubHowManyInForRepairs);
 }
 
-void AddObjectToArmsDealerInventory(UINT8 ubArmsDealer, OBJECTTYPE *pObject) {
+void AddObjectToArmsDealerInventory(UINT8 ubArmsDealer, struct OBJECTTYPE *pObject) {
   UINT8 ubCnt;
   SPECIAL_ITEM_INFO SpclItemInfo;
 
@@ -1430,7 +1430,7 @@ void AddObjectToArmsDealerInventory(UINT8 ubArmsDealer, OBJECTTYPE *pObject) {
   }
 
   // nuke the original object to prevent any possible item duplication
-  memset(pObject, 0, sizeof(OBJECTTYPE));
+  memset(pObject, 0, sizeof(struct OBJECTTYPE));
 }
 
 void AddAmmoToArmsDealerInventory(UINT8 ubArmsDealer, UINT16 usItemIndex, UINT8 ubShotsLeft) {
@@ -1476,8 +1476,8 @@ void AddAmmoToArmsDealerInventory(UINT8 ubArmsDealer, UINT16 usItemIndex, UINT8 
   }
 }
 
-// Use AddObjectToArmsDealerInventory() instead of this when converting a complex item in OBJECTTYPE
-// format.
+// Use AddObjectToArmsDealerInventory() instead of this when converting a complex item in struct
+// OBJECTTYPE format.
 void AddItemToArmsDealerInventory(UINT8 ubArmsDealer, UINT16 usItemIndex,
                                   SPECIAL_ITEM_INFO *pSpclItemInfo, UINT8 ubHowMany) {
   UINT8 ubRoomLeft;
@@ -1709,13 +1709,13 @@ void RemoveSpecialItemFromArmsDealerInventoryAtElement(UINT8 ubArmsDealer, UINT1
 
 BOOLEAN AddDeadArmsDealerItemsToWorld(UINT8 ubMercID) {
   INT8 bArmsDealer;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usItemIndex;
   UINT8 ubElement;
   UINT8 ubHowManyMaxAtATime;
   UINT8 ubLeftToDrop;
   UINT8 ubNowDropping;
-  OBJECTTYPE TempObject;
+  struct OBJECTTYPE TempObject;
   DEALER_SPECIAL_ITEM *pSpecialItem;
   SPECIAL_ITEM_INFO SpclItemInfo;
 
@@ -1801,7 +1801,7 @@ BOOLEAN AddDeadArmsDealerItemsToWorld(UINT8 ubMercID) {
   // if the dealer has money
   if (gArmsDealerStatus[bArmsDealer].uiArmsDealersCash > 0) {
     // Create the object
-    memset(&TempObject, 0, sizeof(OBJECTTYPE));
+    memset(&TempObject, 0, sizeof(struct OBJECTTYPE));
     if (!CreateMoney(gArmsDealerStatus[bArmsDealer].uiArmsDealersCash, &TempObject)) {
       return (FALSE);
     }
@@ -1816,7 +1816,7 @@ BOOLEAN AddDeadArmsDealerItemsToWorld(UINT8 ubMercID) {
 }
 
 void MakeObjectOutOfDealerItems(UINT16 usItemIndex, SPECIAL_ITEM_INFO *pSpclItemInfo,
-                                OBJECTTYPE *pObject, UINT8 ubHowMany) {
+                                struct OBJECTTYPE *pObject, UINT8 ubHowMany) {
   INT8 bItemCondition;
   UINT8 ubCnt;
 
@@ -1827,7 +1827,7 @@ void MakeObjectOutOfDealerItems(UINT16 usItemIndex, SPECIAL_ITEM_INFO *pSpclItem
     bItemCondition *= -1;
   }
 
-  memset(pObject, 0, sizeof(OBJECTTYPE));
+  memset(pObject, 0, sizeof(struct OBJECTTYPE));
 
   // Create the item object
   CreateItems(usItemIndex, bItemCondition, ubHowMany, pObject);
@@ -1855,7 +1855,7 @@ void MakeObjectOutOfDealerItems(UINT16 usItemIndex, SPECIAL_ITEM_INFO *pSpclItem
   }
 }
 
-void GiveObjectToArmsDealerForRepair(UINT8 ubArmsDealer, OBJECTTYPE *pObject,
+void GiveObjectToArmsDealerForRepair(UINT8 ubArmsDealer, struct OBJECTTYPE *pObject,
                                      UINT8 ubOwnerProfileId) {
   //	UINT8 ubCnt;
   SPECIAL_ITEM_INFO SpclItemInfo;
@@ -1905,8 +1905,8 @@ void GiveObjectToArmsDealerForRepair(UINT8 ubArmsDealer, OBJECTTYPE *pObject,
   GiveItemToArmsDealerforRepair(ubArmsDealer, pObject->usItem, &SpclItemInfo, ubOwnerProfileId);
 }
 
-// PLEASE: Use GiveObjectToArmsDealerForRepair() instead of this when repairing a item in OBJECTTYPE
-// format.
+// PLEASE: Use GiveObjectToArmsDealerForRepair() instead of this when repairing a item in struct
+// OBJECTTYPE format.
 void GiveItemToArmsDealerforRepair(UINT8 ubArmsDealer, UINT16 usItemIndex,
                                    SPECIAL_ITEM_INFO *pSpclItemInfo, UINT8 ubOwnerProfileId) {
   UINT32 uiTimeWhenFreeToStartIt;
@@ -2010,7 +2010,7 @@ UINT32 CalculateSpecialItemRepairTime(UINT8 ubArmsDealer, UINT16 usItemIndex,
   return (uiRepairTime);
 }
 
-UINT32 CalculateObjectItemRepairTime(UINT8 ubArmsDealer, OBJECTTYPE *pItemObject) {
+UINT32 CalculateObjectItemRepairTime(UINT8 ubArmsDealer, struct OBJECTTYPE *pItemObject) {
   UINT32 uiRepairTime;
   UINT8 ubCnt;
 
@@ -2089,7 +2089,7 @@ UINT32 CalculateSpecialItemRepairCost(UINT8 ubArmsDealer, UINT16 usItemIndex,
   return (uiRepairCost);
 }
 
-UINT32 CalculateObjectItemRepairCost(UINT8 ubArmsDealer, OBJECTTYPE *pItemObject) {
+UINT32 CalculateObjectItemRepairCost(UINT8 ubArmsDealer, struct OBJECTTYPE *pItemObject) {
   UINT32 uiRepairCost;
   UINT8 ubCnt;
 
@@ -2170,7 +2170,7 @@ void SetSpecialItemInfoToDefaults(SPECIAL_ITEM_INFO *pSpclItemInfo) {
   }
 }
 
-void SetSpecialItemInfoFromObject(SPECIAL_ITEM_INFO *pSpclItemInfo, OBJECTTYPE *pObject) {
+void SetSpecialItemInfoFromObject(SPECIAL_ITEM_INFO *pSpclItemInfo, struct OBJECTTYPE *pObject) {
   UINT8 ubCnt;
 
   memset(pSpclItemInfo, 0, sizeof(SPECIAL_ITEM_INFO));
@@ -2428,7 +2428,7 @@ BOOLEAN ItemIsARocketRifle(INT16 sItemIndex) {
 }
 
 BOOLEAN GetArmsDealerShopHours(UINT8 ubArmsDealer, UINT32 *puiOpeningTime, UINT32 *puiClosingTime) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pSoldier = FindSoldierByProfileID(ArmsDealerInfo[ubArmsDealer].ubShopKeeperID, FALSE);
   if (pSoldier == NULL) {

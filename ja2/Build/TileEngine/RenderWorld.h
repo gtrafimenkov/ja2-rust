@@ -1,7 +1,9 @@
 #ifndef __RENDERWORLD_H
 #define __RENDERWORLD_H
 
-#include "TileEngine/WorldDef.h"
+#include "SGP/Types.h"
+
+struct VObject;
 
 // TEMP SELECT STUFF
 #define NO_SELECT 0
@@ -158,7 +160,7 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
 
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                               UINT16 *pZBuffer, UINT16 usZValue,
-                                              HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               UINT16 usIndex, SGPRect *clipregion);
 
 void RenderStaticWorldRect(INT16, INT16, INT16, INT16, BOOLEAN);

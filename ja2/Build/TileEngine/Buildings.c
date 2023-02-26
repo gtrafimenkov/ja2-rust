@@ -6,9 +6,13 @@
 #include "SysGlobals.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/PathAI.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/StructureWrap.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
 #define ROOF_LOCATION_CHANCE 8
@@ -40,7 +44,7 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
   INT16 sWallGridNo;
   INT8 bDesiredOrientation;
   INT8 bSkipSpots = 0;
-  SOLDIERTYPE FakeSoldier;
+  struct SOLDIERTYPE FakeSoldier;
   BUILDING* pBuilding;
   UINT8 ubBuildingID = 0;
 
@@ -50,7 +54,7 @@ BUILDING* GenerateBuilding(INT16 sDesiredSpot) {
   }
 
   // set up fake soldier for location testing
-  memset(&FakeSoldier, 0, sizeof(SOLDIERTYPE));
+  memset(&FakeSoldier, 0, sizeof(struct SOLDIERTYPE));
   FakeSoldier.sGridNo = sDesiredSpot;
   FakeSoldier.bLevel = 1;
   FakeSoldier.bTeam = 1;

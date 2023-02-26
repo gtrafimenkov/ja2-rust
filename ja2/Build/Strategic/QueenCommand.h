@@ -3,8 +3,8 @@
 
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
-#include "Strategic/StrategicMovement.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 extern BOOLEAN gfPendingEnemies;
 
@@ -31,12 +31,12 @@ void GetNumberOfEnemiesInSector(INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAdm
 BOOLEAN PrepareEnemyForSectorBattle();
 BOOLEAN PrepareEnemyForUndergroundBattle();
 
-void AddEnemiesToBattle(GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ubNumAdmins,
+void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ubNumAdmins,
                         UINT8 ubNumTroops, UINT8 ubNumElites, BOOLEAN fMagicallyAppeared);
 void AddPossiblePendingEnemiesToBattle();
 void EndTacticalBattleForEnemy();
 
-void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier);
+void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier);
 
 void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap();
 BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile);
@@ -45,7 +45,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile);
 // Finds and returns the specified underground structure ( DONT MODIFY IT ).  Else returns NULL
 UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ);
 
-void EnemyCapturesPlayerSoldier(SOLDIERTYPE *pSoldier);
+void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier);
 void BeginCaptureSquence();
 void EndCaptureSequence();
 

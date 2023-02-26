@@ -17,6 +17,7 @@
 #include "Tactical/MercHiring.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/AmbientControl.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/RenderWorld.h"

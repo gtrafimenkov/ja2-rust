@@ -1,16 +1,17 @@
 #ifndef _TILE_SURFACE_H
 #define _TILE_SURFACE_H
 
-#include "TileEngine/WorldDef.h"
+#include "SGP/Types.h"
+#include "TileEngine/TileDat.h"
 
-extern TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
+extern struct TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
 extern UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
 extern UINT8 gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
 
-TILE_IMAGERY *LoadTileSurface(char *cFilename);
+struct TILE_IMAGERY *LoadTileSurface(char *cFilename);
 
-void DeleteTileSurface(PTILE_IMAGERY pTileSurf);
+void DeleteTileSurface(struct TILE_IMAGERY *pTileSurf);
 
-void SetRaisedObjectFlag(char *cFilename, TILE_IMAGERY *pTileSurf);
+void SetRaisedObjectFlag(char *cFilename, struct TILE_IMAGERY *pTileSurf);
 
 #endif

@@ -5,6 +5,7 @@
 
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/MemMan.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "Utils/SoundControl.h"

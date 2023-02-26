@@ -182,7 +182,7 @@ enum {
 #define FIRST_VEHICLE 18
 
 typedef struct MERC_LEAVE_ITEM {
-  OBJECTTYPE o;
+  struct OBJECTTYPE o;
   struct MERC_LEAVE_ITEM *pNext;
 } MERC_LEAVE_ITEM;
 
@@ -326,7 +326,7 @@ void DisableTeamInfoPanels(void);
 void EnableTeamInfoPanels(void);
 
 // activate pop up for soldiers in the pre battle interface
-void ActivateSoldierPopup(SOLDIERTYPE *pSoldier, UINT8 ubPopupType, INT16 xp, INT16 yp);
+void ActivateSoldierPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPopupType, INT16 xp, INT16 yp);
 
 // do mapscreen message box
 INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
@@ -351,10 +351,10 @@ void HandleDisplayOfItemPopUpForSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ);
 void HandleDisplayOfSelectedMercArrows(void);
 
 // check which guys can move with this guy
-void DeselectSelectedListMercsWhoCantMoveWithThisGuy(SOLDIERTYPE *pSoldier);
+void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldier);
 
 // get morale string for this grunt given this morale level
-void GetMoraleString(SOLDIERTYPE *pSoldier, STR16 sString);
+void GetMoraleString(struct SOLDIERTYPE *pSoldier, STR16 sString);
 
 // handle leaving of equipment in sector
 void HandleLeavingOfEquipmentInCurrentSector(UINT32 uiMercId);
@@ -372,7 +372,7 @@ void InitLeaveList(void);
 void ShutDownLeaveList(void);
 
 // add item to leave equip index
-BOOLEAN AddItemToLeaveIndex(OBJECTTYPE *o, UINT32 uiIndex);
+BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, UINT32 uiIndex);
 
 // release memory for all items in this slot's leave item list
 void FreeLeaveListSlot(UINT32 uiSlotIndex);
@@ -401,7 +401,7 @@ void RemoveMapStatusBarsRegion(void);
 void UpdateCharRegionHelpText(void);
 
 // find this soldier in mapscreen character list and set as contract
-void FindAndSetThisContractSoldier(SOLDIERTYPE *pSoldier);
+void FindAndSetThisContractSoldier(struct SOLDIERTYPE *pSoldier);
 
 // lose the cursor, re-render
 void HandleMAPUILoseCursorFromOtherScreen(void);
@@ -480,13 +480,13 @@ void ResetAssignmentOfMercsThatWereTrainingMilitiaInThisSector(INT16 sSectorX, I
 // the sector move box
 void DeselectSquadForMovement(INT32 iSquadNumber);
 void SelectedSquadForMovement(INT32 iSquadNumber);
-void DeselectSoldierForMovement(SOLDIERTYPE *pSoldier);
-void SelectSoldierForMovement(SOLDIERTYPE *pSoldier);
+void DeselectSoldierForMovement(struct SOLDIERTYPE *pSoldier);
+void SelectSoldierForMovement(struct SOLDIERTYPE *pSoldier);
 void SelectVehicleForMovement(INT32 iVehicleId, BOOLEAN fAndAllOnBoard);
 void DeselectVehicleForMovement(INT32 iVehicleId);
 void AddVehicleToMovingLists(INT32 iVehicleId);
 void AddSquadToMovingLists(INT32 iSquadNumber);
-void AddSoldierToMovingLists(SOLDIERTYPE *pSoldier);
+void AddSoldierToMovingLists(struct SOLDIERTYPE *pSoldier);
 void CreateDestroyMovementBox(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
 void SetUpMovingListsForSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
 void ReBuildMoveBox(void);
@@ -496,7 +496,7 @@ BOOLEAN IsCharacterSelectedForSleep(INT16 sCharNumber);
 // the update box
 void CreateDestroyTheUpdateBox(void);
 void SetSoldierUpdateBoxReason(INT32 iReason);
-void AddSoldierToUpdateBox(SOLDIERTYPE *pSoldier);
+void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier);
 void ResetSoldierUpdateBox(void);
 void DisplaySoldierUpdateBox();
 BOOLEAN IsThePopUpBoxEmpty(void);
@@ -544,12 +544,12 @@ void ShutDownUserDefineHelpTextRegions(void);
 void ShowUpdateBox(void);
 
 // add special events
-void AddSoldierToWaitingListQueue(SOLDIERTYPE *pSoldier);
+void AddSoldierToWaitingListQueue(struct SOLDIERTYPE *pSoldier);
 void AddReasonToWaitingListQueue(INT32 iReason);
 void AddDisplayBoxToWaitingQueue(void);
 
 // can this group move it out
-BOOLEAN CanEntireMovementGroupMercIsInMove(SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
+BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
 void ReportMapScreenMovementError(INT8 bErrorNumber);
 
 void HandleRebuildingOfMapScreenCharacterList(void);
@@ -559,16 +559,17 @@ void RequestIncreaseInTimeCompression(void);
 void RequestDecreaseInTimeCompression(void);
 
 void SelectUnselectedMercsWhoMustMoveWithThisGuy(void);
-BOOLEAN AnyMercInSameSquadOrVehicleIsSelected(SOLDIERTYPE *pSoldier);
+BOOLEAN AnyMercInSameSquadOrVehicleIsSelected(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN LoadLeaveItemList(HWFILE hFile);
 BOOLEAN SaveLeaveItemList(HWFILE hFile);
 
-BOOLEAN CheckIfSalaryIncreasedAndSayQuote(SOLDIERTYPE *pSoldier, BOOLEAN fTriggerContractMenu);
+BOOLEAN CheckIfSalaryIncreasedAndSayQuote(struct SOLDIERTYPE *pSoldier,
+                                          BOOLEAN fTriggerContractMenu);
 
 void EndUpdateBox(BOOLEAN fContinueTimeCompression);
 
-extern BOOLEAN CanCharacterMoveInStrategic(SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
+extern BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
 extern BOOLEAN MapscreenCanPassItemToCharNum(INT32 iNewCharSlot);
 
 #endif

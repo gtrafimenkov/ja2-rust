@@ -12,7 +12,10 @@
 #include "SGP/English.h"
 #include "SGP/Line.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameInit.h"
@@ -334,24 +337,24 @@ UINT8 gubRenderHelpScreenTwiceInaRow = 0;
 // mmm
 
 // region to mask the background
-MOUSE_REGION gHelpScreenFullScreenMask;
-// void SelectHelpTextFullScreenMaskCallBack(MOUSE_REGION * pRegion, INT32 iReason );
+struct MOUSE_REGION gHelpScreenFullScreenMask;
+// void SelectHelpTextFullScreenMaskCallBack(struct MOUSE_REGION * pRegion, INT32 iReason );
 
 // region to mask the background
-MOUSE_REGION gHelpScreenScrollArea;
-void SelectHelpScrollAreaMovementCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectHelpScrollAreaCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gHelpScreenScrollArea;
+void SelectHelpScrollAreaMovementCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectHelpScrollAreaCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // region to mask the background
-MOUSE_REGION gHelpScreenScrollAreaArrows;
-void SelectHelpScrollAreaArrowsCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gHelpScreenScrollAreaArrows;
+void SelectHelpScrollAreaArrowsCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // checkbox to toggle show help again toggle
 UINT32 gHelpScreenDontShowHelpAgainToggle;
 void BtnHelpScreenDontShowHelpAgainCallback(GUI_BUTTON *btn, INT32 reason);
-// MOUSE_REGION    HelpScreenDontShowHelpAgainToggleTextRegion;
-// void		HelpScreenDontShowHelpAgainToggleTextRegionCallBack(MOUSE_REGION * pRegion, INT32
-// iReason );
+// struct MOUSE_REGION    HelpScreenDontShowHelpAgainToggleTextRegion;
+// void		HelpScreenDontShowHelpAgainToggleTextRegionCallBack(struct MOUSE_REGION * pRegion,
+// INT32 iReason );
 
 INT32 giHelpScreenButtonsImage[HELP_SCREEN_NUM_BTNS];
 UINT32 guiHelpScreenBtns[HELP_SCREEN_NUM_BTNS];
@@ -791,7 +794,7 @@ void ExitHelpScreen() {
 }
 
 BOOLEAN DrawHelpScreenBackGround() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usPosX;
 
   // Get and display the background image
@@ -1432,7 +1435,8 @@ void BtnHelpScreenDontShowHelpAgainCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 /*
-void HelpScreenDontShowHelpAgainToggleTextRegionCallBack(MOUSE_REGION * pRegion, INT32 iReason )
+void HelpScreenDontShowHelpAgainToggleTextRegionCallBack(struct MOUSE_REGION * pRegion, INT32
+iReason )
 {
         if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP)
         {
@@ -2240,7 +2244,7 @@ void CalculateHeightAndPositionForHelpScreenScrollBox(INT32 *piHeightOfScrollBox
   if (piTopOfScrollBox != NULL) *piTopOfScrollBox = iTopPosScrollBox;
 }
 
-void SelectHelpScrollAreaCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectHelpScrollAreaCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfScrollBoxIsScrolling = FALSE;
@@ -2252,7 +2256,7 @@ void SelectHelpScrollAreaCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectHelpScrollAreaMovementCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectHelpScrollAreaMovementCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     //		InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY,
     // pRegion->RegionBottomRightX, pRegion->RegionBottomRightY);

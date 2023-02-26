@@ -5,6 +5,7 @@
 #include "Laptop/Florist.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Utils/Cursors.h"

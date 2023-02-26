@@ -1,7 +1,6 @@
 #ifndef _QUEST_DEBUG_SYSTEM_H_
 #define _QUEST_DEBUG_SYSTEM_H_
 
-#include "Tactical/SoldierControl.h"
 #include "TacticalAI/NPC.h"
 
 extern BOOLEAN gfNpcLogButton;

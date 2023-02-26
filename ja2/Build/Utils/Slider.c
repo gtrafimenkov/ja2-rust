@@ -4,6 +4,7 @@
 #include "SGP/Debug.h"
 #include "SGP/Line.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -39,7 +40,7 @@ typedef struct TAG_SLIDER {
 
   UINT16 usBackGroundColor;
 
-  MOUSE_REGION ScrollAreaMouseRegion;
+  struct MOUSE_REGION ScrollAreaMouseRegion;
 
   UINT32 uiSliderBoxImage;
   UINT16 usCurrentSliderBoxPosition;
@@ -77,8 +78,8 @@ UINT32 guiSliderBoxImage = 0;
 // ggg
 
 // Mouse regions for the currently selected save game
-void SelectedSliderButtonCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectedSliderMovementCallBack(MOUSE_REGION *pRegion, INT32 reason);
+void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
 
 ///////////////////////////////////////////////////
 //
@@ -291,7 +292,7 @@ void RenderSelectedSliderBar(SLIDER *pSlider) {
 }
 
 void RenderSliderBox(SLIDER *pSlider) {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   SGPRect SrcRect;
   SGPRect DestRect;
 
@@ -408,7 +409,7 @@ void RemoveSliderBar(UINT32 uiSliderID) {
   pNodeToRemove = NULL;
 }
 
-void SelectedSliderMovementCallBack(MOUSE_REGION *pRegion, INT32 reason) {
+void SelectedSliderMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   UINT32 uiSelectedSlider;
   SLIDER *pSlider = NULL;
 
@@ -473,7 +474,7 @@ void SelectedSliderMovementCallBack(MOUSE_REGION *pRegion, INT32 reason) {
   }
 }
 
-void SelectedSliderButtonCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectedSliderButtonCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   UINT32 uiSelectedSlider;
   SLIDER *pSlider = NULL;
 

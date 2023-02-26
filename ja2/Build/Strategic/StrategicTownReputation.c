@@ -6,6 +6,7 @@
 #include "Strategic/GameEventHook.h"
 #include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/SoldierProfileType.h"
 #include "Utils/Message.h"
@@ -60,7 +61,7 @@ UINT8 GetTownOpinionOfMerc(UINT8 ubProfileId, UINT8 ubTownId) {
   return (gMercProfiles[ubProfileId].bMercTownReputation[ubTownId]);
 }
 
-UINT8 GetTownOpinionOfMercForSoldier(SOLDIERTYPE *pSoldier, UINT8 ubTownId) {
+UINT8 GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId) {
   // error check
   if (pSoldier == NULL) {
     return (0);
@@ -90,7 +91,8 @@ void UpdateTownOpinionOfThisMerc(UINT8 ubProfileId, UINT8 ubTownId, INT8 bAmount
   }
 }
 
-void UpdateTownOpinionOfThisMercForSoldier(SOLDIERTYPE *pSoldier, UINT8 ubTownId, INT8 bAmount) {
+void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId,
+                                           INT8 bAmount) {
   // error check
   if (pSoldier == NULL) {
     return;
@@ -144,7 +146,7 @@ void HandleOpinionOfTownsAboutSoldier(INT8 bTownA, INT8 bTownB, INT32 iDistanceB
 }
 
 /*
-void HandleSpreadOfTownOpinionForMercForSoldier( SOLDIERTYPE *pSoldier )
+void HandleSpreadOfTownOpinionForMercForSoldier( struct SOLDIERTYPE *pSoldier )
 {
         // error check
         if( pSoldier == NULL )

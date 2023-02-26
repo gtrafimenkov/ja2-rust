@@ -1,13 +1,3 @@
-/*
-        Filename        :       pathai.c
-        Author          :       Ray E. Bornert II
-        Date            :       1992-MAR-15
-
-        Skip list additions
-        Author          :       Chris Camfield
-        Date            :       1997-NOV
-*/
-
 #include "Tactical/PathAI.h"
 
 #include <math.h>
@@ -37,7 +27,9 @@
 #include "TacticalAI/AI.h"
 #include "TileEngine/Buildings.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 
@@ -457,7 +449,7 @@ void RestorePathAIToDefaults(void) {
 ///////////////////////////////////////////////////////////////////////
 //	FINDBESTPATH                                                   /
 ////////////////////////////////////////////////////////////////////////
-INT32 FindBestPath(SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMovementMode,
+INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMovementMode,
                    INT8 bCopy, UINT8 fFlags) {
   INT32 iDestination = sDestination, iOrigination;
   INT32 iCnt = -1, iStructIndex;
@@ -482,7 +474,7 @@ INT32 FindBestPath(SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMov
   // INT32 iLastDir, iPrevToLastDir;
   // INT8 bVehicleCheckDir;
   // UINT16 adjLoc;
-  STRUCTURE_FILE_REF *pStructureFileRef = NULL;
+  struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
   UINT16 usAnimSurface;
   // INT32 iCnt2, iCnt3;
 #endif
@@ -513,7 +505,7 @@ INT32 FindBestPath(SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMov
   BOOLEAN fDoorIsObstacleIfClosed = 0;  // if false, door is obstacle if it is open
   DOOR_STATUS *pDoorStatus;
   DOOR *pDoor;
-  STRUCTURE *pDoorStructure;
+  struct STRUCTURE *pDoorStructure;
   BOOLEAN fDoorIsOpen = FALSE;
   BOOLEAN fNonFenceJumper;
   BOOLEAN fNonSwimmer;
@@ -1800,10 +1792,10 @@ INT32 FindBestPath(SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT16 usMov
 }
 
 void GlobalReachableTest(INT16 sStartGridNo) {
-  SOLDIERTYPE s;
+  struct SOLDIERTYPE s;
   INT32 iCurrentGridNo = 0;
 
-  memset(&s, 0, sizeof(SOLDIERTYPE));
+  memset(&s, 0, sizeof(struct SOLDIERTYPE));
   s.sGridNo = sStartGridNo;
   s.bLevel = 0;
   s.bTeam = 1;
@@ -1819,11 +1811,11 @@ void GlobalReachableTest(INT16 sStartGridNo) {
 }
 
 void LocalReachableTest(INT16 sStartGridNo, INT8 bRadius) {
-  SOLDIERTYPE s;
+  struct SOLDIERTYPE s;
   INT32 iCurrentGridNo = 0;
   INT32 iX, iY;
 
-  memset(&s, 0, sizeof(SOLDIERTYPE));
+  memset(&s, 0, sizeof(struct SOLDIERTYPE));
   s.sGridNo = sStartGridNo;
 
   // if we are moving on the gorund level
@@ -1854,10 +1846,10 @@ void LocalReachableTest(INT16 sStartGridNo, INT8 bRadius) {
 }
 
 void GlobalItemsReachableTest(INT16 sStartGridNo1, INT16 sStartGridNo2) {
-  SOLDIERTYPE s;
+  struct SOLDIERTYPE s;
   INT32 iCurrentGridNo = 0;
 
-  memset(&s, 0, sizeof(SOLDIERTYPE));
+  memset(&s, 0, sizeof(struct SOLDIERTYPE));
   s.sGridNo = sStartGridNo1;
   s.bLevel = 0;
   s.bTeam = 1;
@@ -1877,9 +1869,9 @@ void GlobalItemsReachableTest(INT16 sStartGridNo1, INT16 sStartGridNo2) {
 }
 
 void RoofReachableTest(INT16 sStartGridNo, UINT8 ubBuildingID) {
-  SOLDIERTYPE s;
+  struct SOLDIERTYPE s;
 
-  memset(&s, 0, sizeof(SOLDIERTYPE));
+  memset(&s, 0, sizeof(struct SOLDIERTYPE));
   s.sGridNo = sStartGridNo;
   s.bLevel = 1;
   s.bTeam = 1;
@@ -1947,8 +1939,8 @@ void ErasePath(char bEraseOldOne) {
   memset(guiPlottedPath, 0, 256 * sizeof(UINT32));
 }
 
-INT16 PlotPath(SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot, INT8 bStayOn,
-               UINT16 usMovementMode, INT8 bStealth, INT8 bReverse, INT16 sAPBudget) {
+INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
+               INT8 bStayOn, UINT16 usMovementMode, INT8 bStealth, INT8 bReverse, INT16 sAPBudget) {
   INT16 sTileCost, sPoints = 0, sTempGrid, sAnimCost = 0;
   INT16 sPointsWalk = 0, sPointsCrawl = 0, sPointsRun = 0, sPointsSwat = 0;
   INT16 sExtraCostStand, sExtraCostSwat, sExtraCostCrawl;
@@ -1961,7 +1953,7 @@ INT16 PlotPath(SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlo
                          REDSTEPSTART};
   UINT16 usTileIndex;
   UINT16 usTileNum;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   UINT16 usMovementModeToUseForAPs;
   BOOLEAN bIgnoreNextCost = FALSE;
   INT16 sTestGridno;
@@ -2284,8 +2276,9 @@ INT16 PlotPath(SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlo
   return (sPoints);
 }
 
-INT16 UIPlotPath(SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot, INT8 bStayOn,
-                 UINT16 usMovementMode, INT8 bStealth, INT8 bReverse, INT16 sAPBudget) {
+INT16 UIPlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
+                 INT8 bStayOn, UINT16 usMovementMode, INT8 bStealth, INT8 bReverse,
+                 INT16 sAPBudget) {
   // This function is specifically for UI calls to the pathing routine, to
   // check whether the shift key is pressed, etc.
   INT16 sRet;
@@ -2309,7 +2302,7 @@ INT16 UIPlotPath(SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bP
   return (sRet);
 }
 
-INT16 RecalculatePathCost(SOLDIERTYPE *pSoldier, UINT16 usMovementMode) {
+INT16 RecalculatePathCost(struct SOLDIERTYPE *pSoldier, UINT16 usMovementMode) {
   // AI function for a soldier already with a path; this will return the cost of that path using the
   // given movement mode
   INT16 sRet;
@@ -2325,7 +2318,7 @@ INT16 RecalculatePathCost(SOLDIERTYPE *pSoldier, UINT16 usMovementMode) {
   return (sRet);
 }
 
-INT16 EstimatePlotPath(SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
+INT16 EstimatePlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, INT8 bPlot,
                        INT8 bStayOn, UINT16 usMovementMode, INT8 bStealth, INT8 bReverse,
                        INT16 sAPBudget) {
   // This function is specifically for AI calls to estimate path cost to a location
@@ -2342,7 +2335,7 @@ INT16 EstimatePlotPath(SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, I
   return (sRet);
 }
 
-UINT8 InternalDoorTravelCost(SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
+UINT8 InternalDoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
                              BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo,
                              BOOLEAN fReturnDoorCost) {
   // This function will return either TRAVELCOST_DOOR (in place of closed door cost),
@@ -2352,7 +2345,7 @@ UINT8 InternalDoorTravelCost(SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovem
   INT32 iDoorGridNo = -1;
   DOOR_STATUS *pDoorStatus;
   DOOR *pDoor;
-  STRUCTURE *pDoorStructure;
+  struct STRUCTURE *pDoorStructure;
   BOOLEAN fDoorIsOpen;
   UINT8 ubReplacementCost;
 
@@ -2507,7 +2500,7 @@ UINT8 InternalDoorTravelCost(SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovem
   return (ubMovementCost);
 }
 
-UINT8 DoorTravelCost(SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
+UINT8 DoorTravelCost(struct SOLDIERTYPE *pSoldier, INT32 iGridNo, UINT8 ubMovementCost,
                      BOOLEAN fReturnPerceivedValue, INT32 *piDoorGridNo) {
   return (InternalDoorTravelCost(pSoldier, iGridNo, ubMovementCost, fReturnPerceivedValue,
                                  piDoorGridNo, FALSE));

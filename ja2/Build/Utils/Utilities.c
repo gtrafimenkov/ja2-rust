@@ -6,9 +6,10 @@
 
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
-#include "SGP/SGP.h"
-#include "SGP/Types.h"
+#include "SGP/Font.h"
+#include "SGP/HImage.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Tactical/OverheadTypes.h"
@@ -89,7 +90,7 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, UINT16 usWidth, INT32 uiFont) {
   UINT32 Cur, uiLet, uiNewLet, uiHyphenLet;
   CHAR16 *curletter, transletter;
   BOOLEAN fLineSplit = FALSE;
-  HVOBJECT hFont;
+  struct VObject *hFont;
 
   // CHECK FOR WRAP
   Cur = 0;

@@ -5,6 +5,7 @@
 #include "Laptop/LaptopSave.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -145,20 +146,20 @@ UINT8 gubCurrentAdvertisment;
 BOOLEAN gfInitAdArea;
 
 // MemberCard
-MOUSE_REGION gSelectedMemberCardRegion;
-void SelectMemberCardRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedMemberCardRegion;
+void SelectMemberCardRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Policies
-MOUSE_REGION gSelectedPoliciesRegion;
-void SelectPoliciesRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedPoliciesRegion;
+void SelectPoliciesRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // History
-MOUSE_REGION gSelectedHistoryRegion;
-void SelectHistoryRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedHistoryRegion;
+void SelectHistoryRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Links
-MOUSE_REGION gSelectedLinksRegion;
-void SelectLinksRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedLinksRegion;
+void SelectLinksRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Bottom Buttons
 void BtnAimBottomButtonsCallback(GUI_BUTTON *btn, INT32 reason);
@@ -166,12 +167,12 @@ UINT32 guiBottomButtons[NUM_AIM_SCREENS];
 INT32 guiBottomButtonImage;
 
 // Banner Area
-MOUSE_REGION gSelectedBannerRegion;
-void SelectBannerRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedBannerRegion;
+void SelectBannerRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Aim logo click
-MOUSE_REGION gSelectedAimLogo;
-void SelectAimLogoRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedAimLogo;
+void SelectAimLogoRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 BOOLEAN DrawWarningBox(BOOLEAN fInit, BOOLEAN fRedraw);
 BOOLEAN DisplayFlowerAd(BOOLEAN fInit, BOOLEAN fRedraw);
@@ -323,10 +324,10 @@ void HandleAIM() {
 }
 
 void RenderAIM() {
-  HVOBJECT hMemberCardHandle;
-  HVOBJECT hPoliciesHandle;
-  HVOBJECT hLinksHandle;
-  HVOBJECT hHistoryHandle;
+  struct VObject *hMemberCardHandle;
+  struct VObject *hPoliciesHandle;
+  struct VObject *hLinksHandle;
+  struct VObject *hHistoryHandle;
   //	UINT16	x,y, uiPosX, uiPosY;
 
   DrawAimDefaults();
@@ -377,7 +378,7 @@ void RenderAIM() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectMemberCardRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMemberCardRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (!fFirstTimeIn) guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_SORTED_FILES;
@@ -385,7 +386,7 @@ void SelectMemberCardRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectPoliciesRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectPoliciesRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_POLICIES;
@@ -393,7 +394,7 @@ void SelectPoliciesRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectHistoryRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectHistoryRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_HISTORY;
@@ -401,7 +402,7 @@ void SelectHistoryRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectLinksRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectLinksRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_LINKS;
@@ -440,8 +441,8 @@ BOOLEAN RemoveAimDefaults() {
 }
 
 BOOLEAN DrawAimDefaults() {
-  HVOBJECT hRustBackGroundHandle;
-  HVOBJECT hAimSymbolHandle;
+  struct VObject *hRustBackGroundHandle;
+  struct VObject *hAimSymbolHandle;
   UINT16 x, y, uiPosX, uiPosY;
 
   // Blt the rust background
@@ -466,7 +467,7 @@ BOOLEAN DrawAimDefaults() {
   return (TRUE);
 }
 
-void SelectAimLogoRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAimLogoRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM;
@@ -710,7 +711,7 @@ BOOLEAN DisplayFlowerAd(BOOLEAN fInit, BOOLEAN fRedraw) {
   }
 
   if (((uiCurTime - uiLastTime) > AIM_FLOWER_AD_DELAY) || fRedraw) {
-    HVOBJECT hAdHandle;
+    struct VObject *hAdHandle;
 
     if (ubSubImage == AIM_FLOWER_NUM_SUBIMAGES) {
       if (ubCount == 0 || fRedraw) {
@@ -773,7 +774,7 @@ BOOLEAN DrawWarningBox(BOOLEAN fInit, BOOLEAN fRedraw) {
     wchar_t sText[400];
     UINT32 uiStartLoc = 0;
     UINT16 usLocY = AIM_WARNING_TEXT_Y + (GetFontHeight(AIM_WARNING_FONT) + 2) * 2;
-    HVOBJECT hWarningHandle;
+    struct VObject *hWarningHandle;
 
     // Warning
     GetVideoObject(&hWarningHandle, guiWarning);
@@ -804,7 +805,7 @@ BOOLEAN DrawWarningBox(BOOLEAN fInit, BOOLEAN fRedraw) {
   }
 }
 
-void SelectBannerRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectBannerRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (gubCurrentAdvertisment == AIM_AD_FLOWER_SHOP)
@@ -835,7 +836,7 @@ BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, UINT16 usDelay, UINT16 usNumbe
   }
 
   if (((uiCurTime - uiLastTime) > usDelay) || fRedraw) {
-    HVOBJECT hAdHandle;
+    struct VObject *hAdHandle;
 
     if (ubSubImage == 0) {
       if (ubCount == 0 || fRedraw) {
@@ -975,7 +976,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
   }
 
   if (((uiCurTime - uiLastTime) > usDelay) || fRedraw) {
-    HVOBJECT hAdHandle;
+    struct VObject *hAdHandle;
 
     // Loop through the first 6 images twice, then start into the later ones
     GetVideoObject(&hAdHandle, guiBobbyRAdImages);

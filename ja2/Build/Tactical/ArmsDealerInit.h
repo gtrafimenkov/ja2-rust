@@ -118,7 +118,7 @@ enum {
 #define ARMS_DEALER_FLAG__FRANZ_HAS_SOLD_VIDEO_CAMERA_TO_PLAYER \
   0x00000001  // Franz Hinkle has sold the video camera to the player
 
-// THIS STRUCTURE HAS UNCHANGING INFO THAT DOESN'T GET SAVED/RESTORED/RESET
+// THIS struct STRUCTURE HAS UNCHANGING INFO THAT DOESN'T GET SAVED/RESTORED/RESET
 typedef struct {
   union {
     struct {
@@ -137,7 +137,7 @@ typedef struct {
   UINT32 uiFlags;      // various flags which control the dealer's operations
 } ARMS_DEALER_INFO;
 
-// THIS STRUCTURE GETS SAVED/RESTORED/RESET
+// THIS struct STRUCTURE GETS SAVED/RESTORED/RESET
 typedef struct {
   UINT32 uiArmsDealersCash;  // How much money the arms dealer currently has
 
@@ -231,7 +231,7 @@ UINT8 CountActiveSpecialItemsInArmsDealersInventory(UINT8 ubArmsDealer, UINT16 u
 UINT16 CountTotalItemsRepairDealerHasInForRepairs(UINT8 ubArmsDealer);
 UINT8 CountSpecificItemsRepairDealerHasInForRepairs(UINT8 ubArmsDealer, UINT16 usItemIndex);
 
-void AddObjectToArmsDealerInventory(UINT8 ubArmsDealer, OBJECTTYPE *pObject);
+void AddObjectToArmsDealerInventory(UINT8 ubArmsDealer, struct OBJECTTYPE *pObject);
 
 void RemoveItemFromArmsDealerInventory(UINT8 ubArmsDealer, UINT16 usItemIndex,
                                        SPECIAL_ITEM_INFO *pSpclItemInfo, UINT8 ubHowMany);
@@ -260,9 +260,9 @@ BOOLEAN CanDealerRepairItem(UINT8 ubArmsDealer, UINT16 usItemIndex);
 BOOLEAN AddDeadArmsDealerItemsToWorld(UINT8 ubMercID);
 
 void MakeObjectOutOfDealerItems(UINT16 usItemIndex, SPECIAL_ITEM_INFO *pSpclItemInfo,
-                                OBJECTTYPE *pObject, UINT8 ubHowMany);
+                                struct OBJECTTYPE *pObject, UINT8 ubHowMany);
 
-void GiveObjectToArmsDealerForRepair(UINT8 ubArmsDealer, OBJECTTYPE *pObject,
+void GiveObjectToArmsDealerForRepair(UINT8 ubArmsDealer, struct OBJECTTYPE *pObject,
                                      UINT8 ubOwnerProfileId);
 void GiveItemToArmsDealerforRepair(UINT8 ubArmsDealer, UINT16 usItemIndex,
                                    SPECIAL_ITEM_INFO *pSpclItemInfo, UINT8 ubOwnerProfileId);
@@ -270,16 +270,16 @@ UINT32 WhenWillRepairmanBeAllDoneRepairing(UINT8 ubArmsDealer);
 
 UINT32 CalculateSpecialItemRepairTime(UINT8 ubArmsDealer, UINT16 usItemIndex,
                                       SPECIAL_ITEM_INFO *pSpclItemInfo);
-UINT32 CalculateObjectItemRepairTime(UINT8 ubArmsDealer, OBJECTTYPE *pItemObject);
+UINT32 CalculateObjectItemRepairTime(UINT8 ubArmsDealer, struct OBJECTTYPE *pItemObject);
 UINT32 CalculateSimpleItemRepairTime(UINT8 ubArmsDealer, UINT16 usItemIndex, INT8 bItemCondition);
 
 UINT32 CalculateSpecialItemRepairCost(UINT8 ubArmsDealer, UINT16 usItemIndex,
                                       SPECIAL_ITEM_INFO *pSpclItemInfo);
-UINT32 CalculateObjectItemRepairCost(UINT8 ubArmsDealer, OBJECTTYPE *pItemObject);
+UINT32 CalculateObjectItemRepairCost(UINT8 ubArmsDealer, struct OBJECTTYPE *pItemObject);
 UINT32 CalculateSimpleItemRepairCost(UINT8 ubArmsDealer, UINT16 usItemIndex, INT8 bItemCondition);
 
 void SetSpecialItemInfoToDefaults(SPECIAL_ITEM_INFO *pSpclItemInfo);
-void SetSpecialItemInfoFromObject(SPECIAL_ITEM_INFO *pSpclItemInfo, OBJECTTYPE *pObject);
+void SetSpecialItemInfoFromObject(SPECIAL_ITEM_INFO *pSpclItemInfo, struct OBJECTTYPE *pObject);
 
 UINT16 CalcValueOfItemToDealer(UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN fDealerSelling);
 

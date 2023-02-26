@@ -4,6 +4,7 @@
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -119,12 +120,12 @@ BOOLEAN AimArchivesSubPagesVisitedFlag[3] = {0, 0, 0};
 // Mouse Regions
 
 // Face regions
-MOUSE_REGION gMercAlumniFaceMouseRegions[MAX_NUMBER_OLD_MERCS_ON_PAGE];
-void SelectAlumniFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gMercAlumniFaceMouseRegions[MAX_NUMBER_OLD_MERCS_ON_PAGE];
+void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Done region
-MOUSE_REGION gDoneRegion;
-void SelectAlumniDoneRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gDoneRegion;
+void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Previous Button
 void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, INT32 reason);
@@ -259,9 +260,9 @@ void HandleAimArchives() {
 }
 
 void RenderAimArchives() {
-  HVOBJECT hFrameHandle;
-  HVOBJECT hFaceHandle;
-  //  HVOBJECT	hBottomButtonHandle;
+  struct VObject *hFrameHandle;
+  struct VObject *hFaceHandle;
+  //  struct VObject*	hBottomButtonHandle;
   UINT16 usPosX, usPosY, x, y, i = 0;
   UINT8 ubNumRows = 0;
   UINT32 uiStartLoc = 0;
@@ -359,7 +360,7 @@ void RenderAimArchives() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectAlumniFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfDrawPopUpBox = TRUE;
@@ -436,10 +437,10 @@ void DisplayAlumniOldMercPopUp() {
   UINT8 i, ubNumLines = 11;  // 17
   UINT16 usPosY, usTextPosY;
   UINT8 ubFontHeight, ubNumDescLines;
-  HVOBJECT hAlumniPopUpHandle;
-  HVOBJECT hDoneHandle;
-  HVOBJECT hFacePaneHandle;
-  HVOBJECT hFaceHandle;
+  struct VObject *hAlumniPopUpHandle;
+  struct VObject *hDoneHandle;
+  struct VObject *hFacePaneHandle;
+  struct VObject *hFaceHandle;
   //	WRAPPED_STRING *pFirstWrappedString, *pTempWrappedString;
   UINT16 usHeight = GetFontHeight(AIM_ALUMNI_POPUP_FONT);
   wchar_t sName[AIM_ALUMNI_NAME_SIZE];
@@ -621,7 +622,7 @@ void CreateDestroyDoneMouseRegion(UINT16 usPosY) {
   }
 }
 
-void SelectAlumniDoneRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfDestroyPopUpBox = TRUE;

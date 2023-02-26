@@ -60,7 +60,7 @@ typedef enum { BOMB_TIMED = 1, BOMB_REMOTE, BOMB_PRESSURE, BOMB_SWITCH } Detonat
 #define OBJECT_ALARM_TRIGGER 0x40
 #define OBJECT_NO_OVERWRITE 0x80
 
-typedef struct {
+struct OBJECTTYPE {
   UINT16 usItem;
   UINT8 ubNumberOfObjects;
   union {
@@ -127,7 +127,7 @@ typedef struct {
   UINT8 ubImprintID;  // ID of merc that item is imprinted on
   UINT8 ubWeight;
   UINT8 fUsed;  // flags for whether the item is used or not
-} OBJECTTYPE;
+};
 
 /*
 typedef struct

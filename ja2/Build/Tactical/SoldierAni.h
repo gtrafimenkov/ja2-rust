@@ -2,21 +2,22 @@
 #define __SOLDIER_ANI_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
 
-BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier);
+struct SOLDIERTYPE;
 
-BOOLEAN CheckForAndHandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
+BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN CheckForAndHandleSoldierDyingNotFromHit(SOLDIERTYPE *pSoldier);
+BOOLEAN CheckForAndHandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
 
-BOOLEAN HandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
+BOOLEAN CheckForAndHandleSoldierDyingNotFromHit(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN OKFallDirection(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 bTestDirection,
-                        UINT16 usAnimState);
+BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
 
-BOOLEAN HandleCheckForDeathCommonCode(SOLDIERTYPE *pSoldier);
+BOOLEAN OKFallDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
+                        INT8 bTestDirection, UINT16 usAnimState);
 
-void KickOutWheelchair(SOLDIERTYPE *pSoldier);
+BOOLEAN HandleCheckForDeathCommonCode(struct SOLDIERTYPE *pSoldier);
+
+void KickOutWheelchair(struct SOLDIERTYPE *pSoldier);
 
 #endif

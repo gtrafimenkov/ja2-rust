@@ -4,6 +4,7 @@
 
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
@@ -15,7 +16,7 @@
 #include "TileEngine/Environment.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
-#include "TileEngine/RenderWorld.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
 // dynamic arrays that contain the valid gridno's for each edge
@@ -62,8 +63,8 @@ INT16 gsTRGridNo = 1043;
 INT16 gsBLGridNo = 24878;
 INT16 gsBRGridNo = 12635;
 
-BOOLEAN VerifyEdgepoint(SOLDIERTYPE *pSoldier, INT16 sEdgepoint);
-BOOLEAN EdgepointsClose(SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 sEdgepoint2);
+BOOLEAN VerifyEdgepoint(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint);
+BOOLEAN EdgepointsClose(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 sEdgepoint2);
 
 extern UINT8 gubTacticalDirection;
 
@@ -110,9 +111,9 @@ void TrashMapEdgepoints() {
 void ValidateEdgepoints() {
   INT32 i;
   UINT16 usValidEdgepoints;
-  SOLDIERTYPE Soldier;
+  struct SOLDIERTYPE Soldier;
 
-  memset(&Soldier, 0, sizeof(SOLDIERTYPE));
+  memset(&Soldier, 0, sizeof(struct SOLDIERTYPE));
   Soldier.bTeam = 1;
 
   // north
@@ -261,7 +262,7 @@ void CompactEdgepointArray(INT16 **psArray, UINT16 *pusMiddleIndex, UINT16 *pusA
   Assert(*psArray);
 }
 
-void InternallyClassifyEdgepoints(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT16 **psArray1,
+void InternallyClassifyEdgepoints(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT16 **psArray1,
                                   UINT16 *pusMiddleIndex1, UINT16 *pusArraySize1, INT16 **psArray2,
                                   UINT16 *pusMiddleIndex2, UINT16 *pusArraySize2) {
   INT32 i;
@@ -361,10 +362,10 @@ void InternallyClassifyEdgepoints(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT16 **
 }
 
 void ClassifyEdgepoints() {
-  SOLDIERTYPE Soldier;
+  struct SOLDIERTYPE Soldier;
   INT16 sGridNo = -1;
 
-  memset(&Soldier, 0, sizeof(SOLDIERTYPE));
+  memset(&Soldier, 0, sizeof(struct SOLDIERTYPE));
   Soldier.bTeam = 1;
 
   // north
@@ -1372,7 +1373,7 @@ INT16 SearchForClosestSecondaryMapEdgepoint(INT16 sGridNo, UINT8 ubInsertionCode
 }
 
 #define EDGE_OF_MAP_SEARCH 5
-BOOLEAN VerifyEdgepoint(SOLDIERTYPE *pSoldier, INT16 sEdgepoint) {
+BOOLEAN VerifyEdgepoint(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint) {
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT16 sGridNo;
@@ -1434,7 +1435,7 @@ BOOLEAN VerifyEdgepoint(SOLDIERTYPE *pSoldier, INT16 sEdgepoint) {
   return FALSE;
 }
 
-BOOLEAN EdgepointsClose(SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 sEdgepoint2) {
+BOOLEAN EdgepointsClose(struct SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 sEdgepoint2) {
   INT32 iSearchRange;
   INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
   INT16 sGridNo;
@@ -1481,7 +1482,7 @@ BOOLEAN EdgepointsClose(SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 sEdgepoi
 }
 
 UINT8 CalcMapEdgepointClassInsertionCode(INT16 sGridNo) {
-  SOLDIERTYPE Soldier;
+  struct SOLDIERTYPE Soldier;
   INT32 iLoop;
   INT16 *psEdgepointArray1, *psEdgepointArray2;
   INT32 iEdgepointArraySize1, iEdgepointArraySize2;
@@ -1489,7 +1490,7 @@ UINT8 CalcMapEdgepointClassInsertionCode(INT16 sGridNo) {
   INT16 sClosestSpot2 = NOWHERE, sClosestDist2 = 0x7FFF;
   BOOLEAN fPrimaryValid = FALSE, fSecondaryValid = FALSE;
 
-  memset(&Soldier, 0, sizeof(SOLDIERTYPE));
+  memset(&Soldier, 0, sizeof(struct SOLDIERTYPE));
   Soldier.bTeam = 1;
   Soldier.sGridNo = sGridNo;
 

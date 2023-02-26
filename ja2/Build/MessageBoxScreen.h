@@ -46,7 +46,7 @@ typedef struct {
   INT16 sX;
   INT16 sY;
   UINT32 uiSaveBuffer;
-  MOUSE_REGION BackRegion;
+  struct MOUSE_REGION BackRegion;
   UINT16 usWidth;
   UINT16 usHeight;
   INT32 iButtonImages;

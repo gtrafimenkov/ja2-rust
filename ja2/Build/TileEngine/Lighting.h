@@ -1,7 +1,9 @@
 #ifndef _LIGHTING_H_
 #define _LIGHTING_H_
 
-#include "Tactical/SoldierControl.h"
+#include "SGP/Types.h"
+
+struct SOLDIERTYPE;
 
 /****************************************************************************************
  * JA2 Lighting Module
@@ -156,10 +158,10 @@ BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset);
 BOOLEAN LightHideRays(INT16 iX, INT16 iY);
 
 // makes the 16-bit palettes
-UINT16 CreateTilePaletteTables(HVOBJECT pObj, UINT32 uiType, BOOLEAN fForce);
-BOOLEAN CreateSoldierShadedPalette(SOLDIERTYPE *pSoldier, UINT32 uiBase,
+UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiType, BOOLEAN fForce);
+BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, UINT32 uiBase,
                                    struct SGPPaletteEntry *pShadePal);
-UINT16 CreateSoldierPaletteTables(SOLDIERTYPE *pSoldier, UINT32 uiType);
+UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, UINT32 uiType);
 
 // returns the true light value at a tile (ignoring fake/merc lights)
 UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel);

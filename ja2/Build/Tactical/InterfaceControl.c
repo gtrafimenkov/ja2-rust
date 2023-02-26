@@ -41,6 +41,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
@@ -60,7 +61,7 @@ UINT8 gsUICurIntTileOldShade;
 
 BOOLEAN gfRerenderInterfaceFromHelpText = FALSE;
 
-MOUSE_REGION gLockPanelOverlayRegion;
+struct MOUSE_REGION gLockPanelOverlayRegion;
 
 extern void RenderTownIDString();
 extern BOOLEAN gfUIOverItemPool;
@@ -75,9 +76,9 @@ BOOLEAN gfPausedTacticalRenderFlags = FALSE;
 
 // which assignment menu can be shown?
 extern void DetermineWhichAssignmentMenusCanBeShown(void);
-extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, OBJECTTYPE *pObject,
+extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
-extern BOOLEAN RemoveFlashItemSlot(ITEM_POOL *pItemPool);
+extern BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool);
 
 void SetTacticalInterfaceFlags(UINT32 uiFlags) { guiTacticalInterfaceFlags = uiFlags; }
 
@@ -154,8 +155,8 @@ void RenderTacticalInterfaceWhileScrolling() {
 }
 
 void SetUpInterface() {
-  SOLDIERTYPE *pSoldier;
-  LEVELNODE *pIntTile;
+  struct SOLDIERTYPE *pSoldier;
+  struct LEVELNODE *pIntTile;
 
   if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
     return;
@@ -277,7 +278,7 @@ void SetUpInterface() {
 }
 
 void ResetInterface() {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
 
   if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
     return;
@@ -334,7 +335,7 @@ void ResetInterface() {
   }
 }
 
-extern BOOLEAN AnyItemsVisibleOnLevel(ITEM_POOL *pItemPool, INT8 bZLevel);
+extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
 
 UINT32 guiColors[12] = {FROMRGB(198, 163, 0), FROMRGB(185, 150, 0), FROMRGB(172, 136, 0),
                         FROMRGB(159, 123, 0), FROMRGB(146, 110, 0), FROMRGB(133, 96, 0),
@@ -442,14 +443,14 @@ void RenderRubberBanding() {
 }
 
 void RenderTopmostTacticalInterface() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 cnt;
   static UINT32 uiBogTarget = 0;
   VOBJECT_DESC VObjectDesc;
   INT16 sX, sY;
   INT16 sOffsetX, sOffsetY, sTempY_S, sTempX_S;
   UINT16 usMapPos;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
 
   if (gfRerenderInterfaceFromHelpText == TRUE) {
     fInterfacePanelDirty = DIRTYLEVEL2;
@@ -634,7 +635,7 @@ void RenderTopmostTacticalInterface() {
       if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
         // Check if we are over an item pool
         if (GetItemPool(gfUIOverItemPoolGridNo, &pItemPool, pSoldier->bLevel)) {
-          STRUCTURE *pStructure = NULL;
+          struct STRUCTURE *pStructure = NULL;
           INT16 sIntTileGridNo;
           INT8 bZLevel = 0;
           INT16 sActionGridNo = usMapPos;
@@ -666,7 +667,7 @@ void RenderTopmostTacticalInterface() {
 
           // Check if we are over an item pool
           if (GetItemPool(gfUIOverItemPoolGridNo, &pItemPool, bCheckLevel)) {
-            STRUCTURE *pStructure = NULL;
+            struct STRUCTURE *pStructure = NULL;
             INT16 sIntTileGridNo;
             INT8 bZLevel = 0;
             INT16 sActionGridNo = usMapPos;

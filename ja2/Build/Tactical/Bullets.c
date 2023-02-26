@@ -16,11 +16,10 @@
 #include "Tactical/Gap.h"
 #include "Tactical/LOS.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Utilities.h"
 
@@ -188,7 +187,7 @@ void LocateBullet(INT32 iBulletIndex) {
 
 void UpdateBullets() {
   UINT32 uiCount;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   BOOLEAN fDeletedSome = FALSE;
 
   for (uiCount = 0; uiCount < guiNumBullets; uiCount++) {

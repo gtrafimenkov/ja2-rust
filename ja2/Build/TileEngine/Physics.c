@@ -3,6 +3,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
+#include "SGP/VObject.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Campaign.h"
@@ -20,7 +21,9 @@
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/LightEffects.h"
+#include "TileEngine/Structure.h"
 #include "TileEngine/TileAnimation.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/DebugControl.h"
 #include "Utils/EventPump.h"
@@ -81,7 +84,7 @@ real Kdl = (float)(0.1 * TIME_MULTI);  // LINEAR DAMPENING ( WIND RESISTANCE )
 void SimulateObject(REAL_OBJECT *pObject, real deltaT);
 
 void CheckForObjectHittingMerc(REAL_OBJECT *pObject, UINT16 usStructureID);
-extern void DoGenericHit(SOLDIERTYPE *pSoldier, UINT8 ubSpecial, INT16 bDirection);
+extern void DoGenericHit(struct SOLDIERTYPE *pSoldier, UINT8 ubSpecial, INT16 bDirection);
 
 BOOLEAN PhysicsUpdateLife(REAL_OBJECT *pObject, real DeltaTime);
 BOOLEAN PhysicsComputeForces(REAL_OBJECT *pObject);
@@ -99,16 +102,16 @@ UINT16 RandomGridFromRadius(INT16 sSweetGridNo, INT8 ubMinRadius, INT8 ubMaxRadi
 void HandleArmedObjectImpact(REAL_OBJECT *pObject);
 void ObjectHitWindow(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth,
                      BOOLEAN fLargeForce);
-FLOAT CalculateObjectTrajectory(INT16 sTargetZ, OBJECTTYPE *pItem, vector_3 *vPosition,
+FLOAT CalculateObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem, vector_3 *vPosition,
                                 vector_3 *vForce, INT16 *psFinalGridNo);
 vector_3 FindBestForceForTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStartZ, INT16 sEndZ,
-                                    real dzDegrees, OBJECTTYPE *pItem, INT16 *psGridNo,
+                                    real dzDegrees, struct OBJECTTYPE *pItem, INT16 *psGridNo,
                                     FLOAT *pzMagForce);
-INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, OBJECTTYPE *pItem, vector_3 *vPosition,
-                                         vector_3 *vForce, INT16 *psFinalGridNo, INT8 *pbLevel,
-                                         BOOLEAN fFromUI);
-FLOAT CalculateSoldierMaxForce(SOLDIERTYPE *pSoldier, FLOAT dDegrees, OBJECTTYPE *pObject,
-                               BOOLEAN fArmed);
+INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem,
+                                         vector_3 *vPosition, vector_3 *vForce,
+                                         INT16 *psFinalGridNo, INT8 *pbLevel, BOOLEAN fFromUI);
+FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
+                               struct OBJECTTYPE *pObject, BOOLEAN fArmed);
 BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject);
 BOOLEAN CheckForCatchObject(REAL_OBJECT *pObject);
 BOOLEAN DoCatchObject(REAL_OBJECT *pObject);
@@ -140,9 +143,9 @@ void RecountObjectSlots(void) {
   guiNumObjectSlots = 0;
 }
 
-INT32 CreatePhysicalObject(OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos, real zPos,
-                           real xForce, real yForce, real zForce, UINT8 ubOwner, UINT8 ubActionCode,
-                           UINT32 uiActionData) {
+INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
+                           real zPos, real xForce, real yForce, real zForce, UINT8 ubOwner,
+                           UINT8 ubActionCode, UINT32 uiActionData) {
   INT32 iObjectIndex;
   FLOAT mass;
   REAL_OBJECT *pObject;
@@ -154,7 +157,7 @@ INT32 CreatePhysicalObject(OBJECTTYPE *pGameObj, real dLifeLength, real xPos, re
   memset(pObject, 0, sizeof(REAL_OBJECT));
 
   // OK, GET OBJECT DATA AND COPY
-  memcpy(&(pObject->Obj), pGameObj, sizeof(OBJECTTYPE));
+  memcpy(&(pObject->Obj), pGameObj, sizeof(struct OBJECTTYPE));
 
   // Get mass
   mass = CALCULATE_OBJECT_MASS(Item[pGameObj->usItem].ubWeight);
@@ -402,7 +405,7 @@ BOOLEAN PhysicsUpdateLife(REAL_OBJECT *pObject, real DeltaTime) {
 
       // ATE: Handle end of animation...
       if (pObject->fCatchAnimOn) {
-        SOLDIERTYPE *pSoldier;
+        struct SOLDIERTYPE *pSoldier;
 
         pObject->fCatchAnimOn = FALSE;
 
@@ -981,10 +984,10 @@ void PhysicsResolveCollision(REAL_OBJECT *pObject, vector_3 *pVelocity, vector_3
 }
 
 BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   INT16 sNewGridNo, sTileIndex;
   ETRLEObject *pTrav;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
   // Determine new gridno
   sNewGridNo = MAPROWCOLTOPOS(((INT16)pObject->Position.y / CELL_Y_SIZE),
@@ -1123,7 +1126,7 @@ BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
 
 #if 0
 {
-	LEVELNODE *pNode;
+	struct LEVELNODE *pNode;
 	INT16			sNewGridNo;
 
 	//Determine new gridno
@@ -1172,7 +1175,7 @@ void ObjectHitWindow(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSou
 }
 
 vector_3 FindBestForceForTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStartZ, INT16 sEndZ,
-                                    real dzDegrees, OBJECTTYPE *pItem, INT16 *psGridNo,
+                                    real dzDegrees, struct OBJECTTYPE *pItem, INT16 *psGridNo,
                                     real *pdMagForce) {
   vector_3 vDirNormal, vPosition, vForce;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
@@ -1260,7 +1263,7 @@ vector_3 FindBestForceForTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStar
 
 INT16 FindFinalGridNoGivenDirectionGridNoForceAngle(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStartZ,
                                                     INT16 sEndZ, real dForce, real dzDegrees,
-                                                    OBJECTTYPE *pItem) {
+                                                    struct OBJECTTYPE *pItem) {
   vector_3 vDirNormal, vPosition, vForce;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
   real dRange;
@@ -1300,7 +1303,7 @@ INT16 FindFinalGridNoGivenDirectionGridNoForceAngle(INT16 sSrcGridNo, INT16 sGri
 }
 
 real FindBestAngleForTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStartZ, INT16 sEndZ,
-                                real dForce, OBJECTTYPE *pItem, INT16 *psGridNo) {
+                                real dForce, struct OBJECTTYPE *pItem, INT16 *psGridNo) {
   vector_3 vDirNormal, vPosition, vForce;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
   real dRange;
@@ -1392,7 +1395,7 @@ real FindBestAngleForTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStartZ, 
 }
 
 void FindTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStartZ, INT16 sEndZ, real dForce,
-                    real dzDegrees, OBJECTTYPE *pItem, INT16 *psGridNo) {
+                    real dzDegrees, struct OBJECTTYPE *pItem, INT16 *psGridNo) {
   vector_3 vDirNormal, vPosition, vForce;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
 
@@ -1427,7 +1430,7 @@ void FindTrajectory(INT16 sSrcGridNo, INT16 sGridNo, INT16 sStartZ, INT16 sEndZ,
 // OK, this will, given a target Z, INVTYPE, source, target gridnos, initial force vector, will
 // return range
 
-FLOAT CalculateObjectTrajectory(INT16 sTargetZ, OBJECTTYPE *pItem, vector_3 *vPosition,
+FLOAT CalculateObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem, vector_3 *vPosition,
                                 vector_3 *vForce, INT16 *psFinalGridNo) {
   INT32 iID;
   REAL_OBJECT *pObject;
@@ -1476,9 +1479,9 @@ FLOAT CalculateObjectTrajectory(INT16 sTargetZ, OBJECTTYPE *pItem, vector_3 *vPo
   return ((FLOAT)sqrt((dDiffX * dDiffX) + (dDiffY * dDiffY)));
 }
 
-INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, OBJECTTYPE *pItem, vector_3 *vPosition,
-                                         vector_3 *vForce, INT16 *psNewGridNo, INT8 *pbLevel,
-                                         BOOLEAN fFromUI) {
+INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, struct OBJECTTYPE *pItem,
+                                         vector_3 *vPosition, vector_3 *vForce, INT16 *psNewGridNo,
+                                         INT8 *pbLevel, BOOLEAN fFromUI) {
   INT32 iID;
   REAL_OBJECT *pObject;
 
@@ -1530,8 +1533,8 @@ INT32 ChanceToGetThroughObjectTrajectory(INT16 sTargetZ, OBJECTTYPE *pItem, vect
   return (100);
 }
 
-FLOAT CalculateLaunchItemAngle(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHeight, real dForce,
-                               OBJECTTYPE *pItem, INT16 *psGridNo) {
+FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHeight,
+                               real dForce, struct OBJECTTYPE *pItem, INT16 *psGridNo) {
   real dAngle;
   INT16 sSrcX, sSrcY;
 
@@ -1545,9 +1548,9 @@ FLOAT CalculateLaunchItemAngle(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHei
   return (dAngle);
 }
 
-void CalculateLaunchItemBasicParams(SOLDIERTYPE *pSoldier, OBJECTTYPE *pItem, INT16 sGridNo,
-                                    UINT8 ubLevel, INT16 sEndZ, FLOAT *pdMagForce, FLOAT *pdDegrees,
-                                    INT16 *psFinalGridNo, BOOLEAN fArmed) {
+void CalculateLaunchItemBasicParams(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pItem,
+                                    INT16 sGridNo, UINT8 ubLevel, INT16 sEndZ, FLOAT *pdMagForce,
+                                    FLOAT *pdDegrees, INT16 *psFinalGridNo, BOOLEAN fArmed) {
   INT16 sInterGridNo;
   INT16 sStartZ;
   FLOAT dMagForce, dMaxForce, dMinForce;
@@ -1696,10 +1699,10 @@ void CalculateLaunchItemBasicParams(SOLDIERTYPE *pSoldier, OBJECTTYPE *pItem, IN
   (*pdDegrees) = dDegrees;
 }
 
-BOOLEAN CalculateLaunchItemChanceToGetThrough(SOLDIERTYPE *pSoldier, OBJECTTYPE *pItem,
-                                              INT16 sGridNo, UINT8 ubLevel, INT16 sEndZ,
-                                              INT16 *psFinalGridNo, BOOLEAN fArmed, INT8 *pbLevel,
-                                              BOOLEAN fFromUI) {
+BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
+                                              struct OBJECTTYPE *pItem, INT16 sGridNo,
+                                              UINT8 ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
+                                              BOOLEAN fArmed, INT8 *pbLevel, BOOLEAN fFromUI) {
   FLOAT dForce, dDegrees;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
   vector_3 vForce, vPosition, vDirNormal;
@@ -1753,7 +1756,7 @@ BOOLEAN CalculateLaunchItemChanceToGetThrough(SOLDIERTYPE *pSoldier, OBJECTTYPE 
 FLOAT CalculateForceFromRange(INT16 sRange, FLOAT dDegrees) {
   FLOAT dMagForce;
   INT16 sSrcGridNo, sDestGridNo;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   INT16 sFinalGridNo;
 
   // OK, use a fake gridno, find the new gridno based on range, use height of merc, end height of
@@ -1770,8 +1773,8 @@ FLOAT CalculateForceFromRange(INT16 sRange, FLOAT dDegrees) {
   return (dMagForce);
 }
 
-FLOAT CalculateSoldierMaxForce(SOLDIERTYPE *pSoldier, FLOAT dDegrees, OBJECTTYPE *pItem,
-                               BOOLEAN fArmed) {
+FLOAT CalculateSoldierMaxForce(struct SOLDIERTYPE *pSoldier, FLOAT dDegrees,
+                               struct OBJECTTYPE *pItem, BOOLEAN fArmed) {
   INT32 uiMaxRange;
   FLOAT dMagForce;
 
@@ -1788,8 +1791,8 @@ FLOAT CalculateSoldierMaxForce(SOLDIERTYPE *pSoldier, FLOAT dDegrees, OBJECTTYPE
 #define MIN_MISS_BY 1
 #define MAX_MISS_RADIUS 5
 
-void CalculateLaunchItemParamsForThrow(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
-                                       INT16 sEndZ, OBJECTTYPE *pItem, INT8 bMissBy,
+void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
+                                       INT16 sEndZ, struct OBJECTTYPE *pItem, INT8 bMissBy,
                                        UINT8 ubActionCode, UINT32 uiActionData) {
   FLOAT dForce, dDegrees;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
@@ -1889,9 +1892,9 @@ void CalculateLaunchItemParamsForThrow(SOLDIERTYPE *pSoldier, INT16 sGridNo, UIN
   pSoldier->pThrowParams = (THROW_PARAMS *)MemAlloc(sizeof(THROW_PARAMS));
   memset(pSoldier->pThrowParams, 0, sizeof(THROW_PARAMS));
 
-  pSoldier->pTempObject = (OBJECTTYPE *)MemAlloc(sizeof(OBJECTTYPE));
+  pSoldier->pTempObject = (struct OBJECTTYPE *)MemAlloc(sizeof(struct OBJECTTYPE));
 
-  memcpy(pSoldier->pTempObject, pItem, sizeof(OBJECTTYPE));
+  memcpy(pSoldier->pTempObject, pItem, sizeof(struct OBJECTTYPE));
   pSoldier->pThrowParams->dX = (float)sSrcX;
   pSoldier->pThrowParams->dY = (float)sSrcY;
 
@@ -1934,7 +1937,7 @@ BOOLEAN CheckForCatcher(REAL_OBJECT *pObject, UINT16 usStructureID) {
 }
 
 void CheckForObjectHittingMerc(REAL_OBJECT *pObject, UINT16 usStructureID) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sDamage, sBreath;
 
   // Do we want to catch?
@@ -1957,7 +1960,7 @@ void CheckForObjectHittingMerc(REAL_OBJECT *pObject, UINT16 usStructureID) {
 }
 
 BOOLEAN CheckForCatchObject(REAL_OBJECT *pObject) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 uiSpacesAway;
 
   // Do we want to catch?
@@ -1995,7 +1998,7 @@ BOOLEAN CheckForCatchObject(REAL_OBJECT *pObject) {
 }
 
 BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubChanceToCatch;
 
   // Get intended target
@@ -2021,7 +2024,7 @@ BOOLEAN AttemptToCatchObject(REAL_OBJECT *pObject) {
 }
 
 BOOLEAN DoCatchObject(REAL_OBJECT *pObject) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fGoodCatch = FALSE;
   UINT16 usItem;
 
@@ -2075,7 +2078,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   INT16 sZ;
   BOOLEAN fDoImpact = FALSE;
   BOOLEAN fCheckForDuds = FALSE;
-  OBJECTTYPE *pObj;
+  struct OBJECTTYPE *pObj;
   INT32 iTrapped = 0;
   UINT16 usFlags = 0;
   INT8 bLevel = 0;
@@ -2084,7 +2087,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   sZ = (INT16)CONVERT_HEIGHTUNITS_TO_PIXELS((INT16)(pObject->Position.z)) -
        gpWorldLevelData[pObject->sGridNo].sHeight;
 
-  // get OBJECTTYPE
+  // get struct OBJECTTYPE
   pObj = &(pObject->Obj);
 
   // ATE: Make sure number of objects is 1...

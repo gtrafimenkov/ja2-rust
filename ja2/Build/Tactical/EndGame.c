@@ -35,13 +35,14 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SaveLoadMap.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 
 INT16 sStatueGridNos[] = {13829, 13830, 13669, 13670};
 
-SOLDIERTYPE *gpKillerSoldier = NULL;
+struct SOLDIERTYPE *gpKillerSoldier = NULL;
 INT16 gsGridNo;
 INT8 gbLevel;
 
@@ -117,7 +118,7 @@ void ChangeO3SectorStatue(BOOLEAN fFromExplosion) {
 
 void DeidrannaTimerCallback(void) { HandleDeidrannaDeath(gpKillerSoldier, gsGridNo, gbLevel); }
 
-void BeginHandleDeidrannaDeath(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+void BeginHandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
   gpKillerSoldier = pKillerSoldier;
   gsGridNo = sGridNo;
   gbLevel = bLevel;
@@ -132,8 +133,8 @@ void BeginHandleDeidrannaDeath(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 
   SetCustomizableTimerCallbackAndDelay(2000, DeidrannaTimerCallback, FALSE);
 }
 
-void HandleDeidrannaDeath(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
-  SOLDIERTYPE *pTeamSoldier;
+void HandleDeidrannaDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;
   UINT8 ubKillerSoldierID = NOBODY;
@@ -181,7 +182,7 @@ void HandleDeidrannaDeath(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLeve
 }
 
 void DoneFadeInKilledQueen(void) {
-  SOLDIERTYPE *pNPCSoldier;
+  struct SOLDIERTYPE *pNPCSoldier;
 
   // Locate gridno.....
 
@@ -198,7 +199,7 @@ void DoneFadeInKilledQueen(void) {
 
 void DoneFadeOutKilledQueen(void) {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
 
   // For one, loop through our current squad and move them over
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -296,7 +297,7 @@ void HandleDoneLastKilledQueenQuote() {
 
 void EndQueenDeathEndgameBeginEndCimenatic() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // Start end cimimatic....
   gTacticalStatus.uiFlags |= IN_ENDGAME_SEQUENCE;
@@ -352,8 +353,8 @@ void HandleDoneLastEndGameQuote() {
 
 void QueenBitchTimerCallback(void) { HandleQueenBitchDeath(gpKillerSoldier, gsGridNo, gbLevel); }
 
-void BeginHandleQueenBitchDeath(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
-  SOLDIERTYPE *pTeamSoldier;
+void BeginHandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
 
   gpKillerSoldier = pKillerSoldier;
@@ -392,8 +393,8 @@ void BeginHandleQueenBitchDeath(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8
   }
 }
 
-void HandleQueenBitchDeath(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
-  SOLDIERTYPE *pTeamSoldier;
+void HandleQueenBitchDeath(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;
   UINT8 ubKillerSoldierID = NOBODY;

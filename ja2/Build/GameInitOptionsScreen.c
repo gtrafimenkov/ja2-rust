@@ -8,6 +8,9 @@
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Tactical/SoldierProfile.h"
@@ -506,7 +509,7 @@ void HandleGIOScreen() {
 }
 
 BOOLEAN RenderGIOScreen() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usPosY;
 
   // Get the main background screen graphic and blt it

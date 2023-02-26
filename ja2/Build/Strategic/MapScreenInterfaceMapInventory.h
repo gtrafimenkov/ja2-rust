@@ -43,7 +43,7 @@ void HandleFlashForHighLightedItem(void);
 extern WORLDITEM *pInventoryPoolList;
 
 // autoplace down object
-BOOLEAN AutoPlaceObjectInInventoryStash(OBJECTTYPE *pItemPtr);
+BOOLEAN AutoPlaceObjectInInventoryStash(struct OBJECTTYPE *pItemPtr);
 
 // the current inventory item
 extern INT32 iCurrentlyHighLightedItem;

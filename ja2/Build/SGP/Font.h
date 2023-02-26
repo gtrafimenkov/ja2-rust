@@ -3,7 +3,8 @@
 
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
-#include "SGP/VObject.h"
+
+struct VObject;
 
 #define DEFAULT_SHADOW 2
 #define MILITARY_SHADOW 67
@@ -78,7 +79,7 @@ UINT16 *GetFontObjectPalette16BPP(INT32 iFont);
 
 void DestroyEnglishTransTable(void);
 
-extern HVOBJECT GetFontObject(INT32 iFont);
+extern struct VObject *GetFontObject(INT32 iFont);
 extern UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...);
 extern UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...);
 extern UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...);
@@ -109,7 +110,7 @@ extern void UnloadFont(UINT32 FontIndex);
 extern FontTranslationTable *CreateEnglishTransTable();
 
 extern INT16 GetIndex(UINT16 siChar);
-extern UINT32 GetWidth(HVOBJECT hSrcVObject, INT16 ssIndex);
+extern UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex);
 
 extern INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, UINT32 uiCharCount,
                                         CHAR16 *pFontString);

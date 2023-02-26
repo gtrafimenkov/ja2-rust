@@ -25,8 +25,8 @@ extern INT16 DirYIncrementer[8];
 // GoAsFarAsPossibleTowards - C.O. stuff related to current animation esp first aid
 // SetCivilianDestination - C.O. stuff for if we don't control the civ
 
-int LegalNPCDestination(SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPathMode, UINT8 ubWaterOK,
-                        UINT8 fFlags) {
+int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPathMode,
+                        UINT8 ubWaterOK, UINT8 fFlags) {
   BOOLEAN fSkipTilesWithMercs;
 
   if ((sGridno < 0) || (sGridno >= GRIDSIZE)) {
@@ -108,7 +108,7 @@ int LegalNPCDestination(SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPathMode, 
     return (FALSE);  // illegal destination
 }
 
-int TryToResumeMovement(SOLDIERTYPE *pSoldier, INT16 sGridno) {
+int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
   UINT8 ubGottaCancel = FALSE;
   UINT8 ubSuccess = FALSE;
 
@@ -203,7 +203,7 @@ int TryToResumeMovement(SOLDIERTYPE *pSoldier, INT16 sGridno) {
   return (ubSuccess);
 }
 
-INT16 NextPatrolPoint(SOLDIERTYPE *pSoldier) {
+INT16 NextPatrolPoint(struct SOLDIERTYPE *pSoldier) {
   // patrol slot 0 is UNUSED, so max patrolCnt is actually only 9
   if ((pSoldier->bPatrolCnt < 1) || (pSoldier->bPatrolCnt >= MAXPATROLGRIDS)) {
 #ifdef BETAVERSION
@@ -224,7 +224,7 @@ INT16 NextPatrolPoint(SOLDIERTYPE *pSoldier) {
   return (pSoldier->usPatrolGrid[pSoldier->bNextPatrolPnt]);
 }
 
-INT8 PointPatrolAI(SOLDIERTYPE *pSoldier) {
+INT8 PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   INT16 sPatrolPoint;
   INT8 bOldOrders;
 
@@ -288,7 +288,7 @@ INT8 PointPatrolAI(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-INT8 RandomPointPatrolAI(SOLDIERTYPE *pSoldier) {
+INT8 RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   INT16 sPatrolPoint;
   INT8 bOldOrders, bPatrolIndex;
   INT8 bCnt;
@@ -365,8 +365,8 @@ INT8 RandomPointPatrolAI(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-INT16 InternalGoAsFarAsPossibleTowards(SOLDIERTYPE *pSoldier, INT16 sDesGrid, INT8 bReserveAPs,
-                                       INT8 bAction, INT8 fFlags) {
+INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesGrid,
+                                       INT8 bReserveAPs, INT8 bAction, INT8 fFlags) {
   INT16 sLoop, sAPCost;
   INT16 sTempDest, sGoToGrid;
   UINT16 sOrigin;
@@ -657,11 +657,11 @@ INT16 InternalGoAsFarAsPossibleTowards(SOLDIERTYPE *pSoldier, INT16 sDesGrid, IN
   }
 }
 
-INT16 GoAsFarAsPossibleTowards(SOLDIERTYPE *pSoldier, INT16 sDesGrid, INT8 bAction) {
+INT16 GoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesGrid, INT8 bAction) {
   return (InternalGoAsFarAsPossibleTowards(pSoldier, sDesGrid, -1, bAction, 0));
 }
 
-void SoldierTriesToContinueAlongPath(SOLDIERTYPE *pSoldier) {
+void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier) {
   INT16 usNewGridNo, bAPCost;
 
   // turn off the flag now that we're going to do something about it...
@@ -727,7 +727,7 @@ void SoldierTriesToContinueAlongPath(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HaltMoveForSoldierOutOfPoints(SOLDIERTYPE *pSoldier) {
+void HaltMoveForSoldierOutOfPoints(struct SOLDIERTYPE *pSoldier) {
   // If a special move, ignore this!
   if ((gAnimControl[pSoldier->usAnimState].uiFlags & ANIM_SPECIALMOVE)) {
     return;
@@ -751,7 +751,7 @@ void HaltMoveForSoldierOutOfPoints(SOLDIERTYPE *pSoldier) {
 }
 
 void SetCivilianDestination(UINT8 ubWho, INT16 sGridno) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pSoldier = MercPtrs[ubWho];
 
@@ -797,7 +797,7 @@ void SetCivilianDestination(UINT8 ubWho, INT16 sGridno) {
 
 #define RADIUS 3
 
-INT16 TrackScent(SOLDIERTYPE *pSoldier) {
+INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
   // This function returns the best gridno to go to based on the scent being followed,
   // and the soldier (creature/animal)'s current direction (which is used to resolve
   // ties.
@@ -896,7 +896,7 @@ INT16 TrackScent(SOLDIERTYPE *pSoldier) {
 }
 
 /*
-UINT16 RunAway( SOLDIERTYPE * pSoldier )
+UINT16 RunAway( struct SOLDIERTYPE * pSoldier )
 {
         // "Run away! Run away!!!"
         // This code should figure out which directions are safe for the enemy
@@ -913,7 +913,7 @@ UINT16 RunAway( SOLDIERTYPE * pSoldier )
         INT32	iSector, iSectorX, iSectorY;
         INT32 iNewSectorX, iNewSectorY, iNewSector;
         INT32	iRunX, iRunY, iRunGridNo;
-        SOLDIERTYPE * pOpponent;
+        struct SOLDIERTYPE * pOpponent;
 
         iSector = pSoldier->sSectorX + pSoldier->sSectorY * MAP_WORLD_X;
 

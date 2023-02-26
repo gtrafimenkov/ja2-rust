@@ -5,10 +5,10 @@
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
@@ -81,7 +81,7 @@ void RemoveProfileBackGround(void) {
 }
 
 void RenderProfileBackGround(void) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
   INT32 iCurrentHeight = 0;
   INT32 iCounter = 0;
 
@@ -139,7 +139,7 @@ void DeleteIMPSymbol(void) {
 }
 
 void RenderIMPSymbol(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiIMPSYMBOL);
@@ -171,7 +171,7 @@ void DeleteBeginIndent(void) {
 }
 
 void RenderBeginIndent(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiBEGININDENT);
@@ -202,7 +202,7 @@ void DeleteActivationIndent(void) {
 }
 
 void RenderActivationIndent(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiACTIVATIONINDENT);
@@ -233,7 +233,7 @@ void DeleteFrontPageIndent(void) {
 }
 
 void RenderFrontPageIndent(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiFRONTPAGEINDENT);
@@ -264,7 +264,7 @@ void DeleteAnalyse(void) {
 }
 
 void RenderAnalyse(INT16 sX, INT16 sY, INT8 bImageNumber) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiANALYSE);
@@ -295,7 +295,7 @@ void DeleteAttributeGraph(void) {
 }
 
 void RenderAttributeGraph(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiATTRIBUTEGRAPH);
@@ -326,7 +326,7 @@ void DeleteAttributeBarGraph(void) {
 }
 
 void RenderAttributeBarGraph(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiATTRIBUTEGRAPHBAR);
@@ -357,7 +357,7 @@ void DeleteFullNameIndent(void) {
 }
 
 void RenderFullNameIndent(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiFULLNAMEINDENT);
@@ -388,7 +388,7 @@ void DeleteNickNameIndent(void) {
 }
 
 void RenderNickNameIndent(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiNICKNAMEINDENT);
@@ -419,7 +419,7 @@ void DeleteNameIndent(void) {
 }
 
 void RenderNameIndent(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiNAMEINDENT);
@@ -450,7 +450,7 @@ void DeleteGenderIndent(void) {
 }
 
 void RenderGenderIndent(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiGENDERINDENT);
@@ -481,7 +481,7 @@ void DeleteSmallFrame(void) {
 }
 
 void RenderSmallFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiSMALLFRAME);
@@ -512,7 +512,7 @@ void DeleteSmallSilhouette(void) {
 }
 
 void RenderSmallSilhouette(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiSMALLSILHOUETTE);
@@ -543,7 +543,7 @@ void DeleteLargeSilhouette(void) {
 }
 
 void RenderLargeSilhouette(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiLARGESILHOUETTE);
@@ -574,7 +574,7 @@ void DeleteAttributeFrame(void) {
 }
 
 void RenderAttributeFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
   INT32 iCounter = 0;
   INT16 sCurrentY = 0;
 
@@ -606,7 +606,7 @@ void RenderAttributeFrame(INT16 sX, INT16 sY) {
 
 void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex) {
   INT16 sCurrentY = 0;
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // valid index?
   if (iIndex == -1) {
@@ -655,7 +655,7 @@ void DeleteSliderBar(void) {
 }
 
 void RenderSliderBar(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiSLIDERBAR);
@@ -686,7 +686,7 @@ void DeleteButton2Image(void) {
 }
 
 void RenderButton2Image(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiBUTTON2IMAGE);
@@ -717,7 +717,7 @@ void DeleteButton4Image(void) {
 }
 
 void RenderButton4Image(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiBUTTON4IMAGE);
@@ -748,7 +748,7 @@ void DeleteButton1Image(void) {
 }
 
 void RenderButton1Image(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiBUTTON1IMAGE);
@@ -779,7 +779,7 @@ void DeletePortraitFrame(void) {
 }
 
 void RenderPortraitFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiPORTRAITFRAME);
@@ -810,7 +810,7 @@ void DeleteMainIndentFrame(void) {
 }
 
 void RenderMainIndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiMAININDENT);
@@ -841,7 +841,7 @@ void DeleteQtnLongIndentFrame(void) {
 }
 
 void RenderQtnLongIndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiLONGINDENT);
@@ -872,7 +872,7 @@ void DeleteQtnShortIndentFrame(void) {
 }
 
 void RenderQtnShortIndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiSHORTINDENT);
@@ -903,7 +903,7 @@ void DeleteQtnLongIndentHighFrame(void) {
 }
 
 void RenderQtnLongIndentHighFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiLONGHINDENT);
@@ -934,7 +934,7 @@ void DeleteQtnShortIndentHighFrame(void) {
 }
 
 void RenderQtnShortIndentHighFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiSHORTHINDENT);
@@ -965,7 +965,7 @@ void DeleteQtnIndentFrame(void) {
 }
 
 void RenderQtnIndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiQINDENT);
@@ -996,7 +996,7 @@ void DeleteAttrib1IndentFrame(void) {
 }
 
 void RenderAttrib1IndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiA1INDENT);
@@ -1027,7 +1027,7 @@ void DeleteAttrib2IndentFrame(void) {
 }
 
 void RenderAttrib2IndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiA2INDENT);
@@ -1058,7 +1058,7 @@ void DeleteAvgMercIndentFrame(void) {
 }
 
 void RenderAvgMercIndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiAVGMERCINDENT);
@@ -1089,7 +1089,7 @@ void DeleteAboutUsIndentFrame(void) {
 }
 
 void RenderAboutUsIndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiABOUTUSINDENT);
@@ -1120,7 +1120,7 @@ void DeleteQtnShort2IndentFrame(void) {
 }
 
 void RenderQtnShort2IndentFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiSHORT2INDENT);
@@ -1151,7 +1151,7 @@ void DeleteQtnShort2IndentHighFrame(void) {
 }
 
 void RenderQtnShort2IndentHighFrame(INT16 sX, INT16 sY) {
-  HVOBJECT hHandle;
+  struct VObject* hHandle;
 
   // get the video object
   GetVideoObject(&hHandle, guiSHORT2HINDENT);

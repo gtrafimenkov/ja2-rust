@@ -14,13 +14,17 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
 #include "SaveLoadScreen.h"
 #include "ScreenIDs.h"
 #include "Strategic/GameInit.h"
 #include "SysGlobals.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
@@ -63,7 +67,7 @@ UINT16 gusMainMenuButtonWidths[NUM_MENU_ITEMS];
 UINT32 guiMainMenuBackGroundImage;
 UINT32 guiJa2LogoImage;
 
-MOUSE_REGION gBackRegion;
+struct MOUSE_REGION gBackRegion;
 INT8 gbHandledMainMenu = 0;
 BOOLEAN fInitialRender = FALSE;
 // BOOLEAN						gfDoHelpScreen = 0;
@@ -82,7 +86,7 @@ void HandleMainMenuScreen();
 void DisplayAssignmentText();
 void ClearMainMenu();
 void HandleHelpScreenInput();
-void SelectMainMenuBackGroundRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void SetMainMenuExitScreen(UINT32 uiNewScreen);
 void CreateDestroyBackGroundMouseMask(BOOLEAN fCreate);
 BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate);
@@ -418,7 +422,7 @@ void ClearMainMenu() {
   InvalidateScreen();
 }
 
-void SelectMainMenuBackGroundRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     //		if( gfDoHelpScreen )
@@ -540,7 +544,7 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
       iStartLoc = MAINMENU_RECORD_SIZE * cnt;
       if (!LoadEncryptedDataFromFile(MAINMENU_TEXT_FILE, zText, iStartLoc, MAINMENU_RECORD_SIZE)) {
         // the file was not able to be loaded properly
-        SOLDIERTYPE *pSoldier = NULL;
+        struct SOLDIERTYPE *pSoldier = NULL;
 
         if (pSoldier->bActive != TRUE) {
           // something is very wrong
@@ -566,7 +570,7 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
 }
 
 void RenderMainMenu() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiMainMenuBackGroundImage);

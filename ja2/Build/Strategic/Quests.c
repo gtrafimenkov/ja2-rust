@@ -23,6 +23,7 @@
 #include "Tactical/Campaign.h"
 #include "Tactical/HandleItems.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/interfaceDialogue.h"
 #include "TileEngine/IsometricUtils.h"
@@ -31,8 +32,8 @@
 
 #define TESTQUESTS
 
-extern SOLDIERTYPE *gpSrcSoldier;
-extern SOLDIERTYPE *gpDestSoldier;
+extern struct SOLDIERTYPE *gpSrcSoldier;
+extern struct SOLDIERTYPE *gpDestSoldier;
 
 UINT8 gubQuest[MAX_QUESTS];
 UINT8 gubFact[NUM_FACTS];  // this has to be updated when we figure out how many facts we have
@@ -58,7 +59,7 @@ void SetFactTrue(UINT16 usFact) {
 void SetFactFalse(UINT16 usFact) { gubFact[usFact] = FALSE; }
 
 BOOLEAN CheckForNewShipment(void) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
 
   if ((gWorldSectorX == BOBBYR_SHIPPING_DEST_SECTOR_X) &&
       (gWorldSectorY == BOBBYR_SHIPPING_DEST_SECTOR_Y) &&
@@ -71,7 +72,7 @@ BOOLEAN CheckForNewShipment(void) {
 }
 
 BOOLEAN CheckNPCWounded(UINT8 ubProfileID, BOOLEAN fByPlayerOnly) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // is the NPC is wounded at all?
   pSoldier = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -91,7 +92,7 @@ BOOLEAN CheckNPCWounded(UINT8 ubProfileID, BOOLEAN fByPlayerOnly) {
 }
 
 BOOLEAN CheckNPCInOkayHealth(UINT8 ubProfileID) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // is the NPC at better than half health?
   pSoldier = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -103,7 +104,7 @@ BOOLEAN CheckNPCInOkayHealth(UINT8 ubProfileID) {
 }
 
 BOOLEAN CheckNPCBleeding(UINT8 ubProfileID) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // the NPC is wounded...
   pSoldier = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -115,7 +116,7 @@ BOOLEAN CheckNPCBleeding(UINT8 ubProfileID) {
 }
 
 BOOLEAN CheckNPCWithin(UINT8 ubFirstNPC, UINT8 ubSecondNPC, UINT8 ubMaxDistance) {
-  SOLDIERTYPE *pFirstNPC, *pSecondNPC;
+  struct SOLDIERTYPE *pFirstNPC, *pSecondNPC;
 
   pFirstNPC = FindSoldierByProfileID(ubFirstNPC, FALSE);
   pSecondNPC = FindSoldierByProfileID(ubSecondNPC, FALSE);
@@ -127,7 +128,7 @@ BOOLEAN CheckNPCWithin(UINT8 ubFirstNPC, UINT8 ubSecondNPC, UINT8 ubMaxDistance)
 
 BOOLEAN CheckGuyVisible(UINT8 ubNPC, UINT8 ubGuy) {
   // NB ONLY WORKS IF ON DIFFERENT TEAMS
-  SOLDIERTYPE *pNPC, *pGuy;
+  struct SOLDIERTYPE *pNPC, *pGuy;
 
   pNPC = FindSoldierByProfileID(ubNPC, FALSE);
   pGuy = FindSoldierByProfileID(ubGuy, FALSE);
@@ -142,7 +143,7 @@ BOOLEAN CheckGuyVisible(UINT8 ubNPC, UINT8 ubGuy) {
 }
 
 BOOLEAN CheckNPCAt(UINT8 ubNPC, INT16 sGridNo) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubNPC, FALSE);
   if (!pNPC) {
@@ -152,7 +153,7 @@ BOOLEAN CheckNPCAt(UINT8 ubNPC, INT16 sGridNo) {
 }
 
 BOOLEAN CheckNPCIsEnemy(UINT8 ubProfileID) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -172,8 +173,8 @@ BOOLEAN CheckNPCIsEnemy(UINT8 ubProfileID) {
   }
 }
 
-BOOLEAN CheckIfMercIsNearNPC(SOLDIERTYPE *pMerc, UINT8 ubProfileId) {
-  SOLDIERTYPE *pNPC;
+BOOLEAN CheckIfMercIsNearNPC(struct SOLDIERTYPE *pMerc, UINT8 ubProfileId) {
+  struct SOLDIERTYPE *pNPC;
   INT16 sGridNo;
 
   // no merc nearby?
@@ -198,8 +199,8 @@ BOOLEAN CheckIfMercIsNearNPC(SOLDIERTYPE *pMerc, UINT8 ubProfileId) {
 INT8 NumWoundedMercsNearby(UINT8 ubProfileID) {
   INT8 bNumber = 0;
   UINT32 uiLoop;
-  SOLDIERTYPE *pNPC;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -225,8 +226,8 @@ INT8 NumWoundedMercsNearby(UINT8 ubProfileID) {
 INT8 NumMercsNear(UINT8 ubProfileID, UINT8 ubMaxDist) {
   INT8 bNumber = 0;
   UINT32 uiLoop;
-  SOLDIERTYPE *pNPC;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -249,7 +250,7 @@ INT8 NumMercsNear(UINT8 ubProfileID, UINT8 ubMaxDist) {
 }
 
 BOOLEAN CheckNPCIsEPC(UINT8 ubProfileID) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   if (gMercProfiles[ubProfileID].bMercStatus == MERC_IS_DEAD) {
     return (FALSE);
@@ -263,7 +264,7 @@ BOOLEAN CheckNPCIsEPC(UINT8 ubProfileID) {
 }
 
 BOOLEAN NPCInRoom(UINT8 ubProfileID, UINT8 ubRoomID) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC || (gubWorldRoomInfo[pNPC->sGridNo] != ubRoomID)) {
@@ -273,7 +274,7 @@ BOOLEAN NPCInRoom(UINT8 ubProfileID, UINT8 ubRoomID) {
 }
 
 BOOLEAN NPCInRoomRange(UINT8 ubProfileID, UINT8 ubRoomID1, UINT8 ubRoomID2) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC || (gubWorldRoomInfo[pNPC->sGridNo] < ubRoomID1) ||
@@ -284,10 +285,10 @@ BOOLEAN NPCInRoomRange(UINT8 ubProfileID, UINT8 ubRoomID1, UINT8 ubRoomID2) {
 }
 
 BOOLEAN PCInSameRoom(UINT8 ubProfileID) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
   UINT8 ubRoom;
   INT8 bLoop;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -346,8 +347,8 @@ BOOLEAN CheckTalkerUnpropositionedFemale(void) {
 INT8 NumMalesPresent(UINT8 ubProfileID) {
   INT8 bNumber = 0;
   UINT32 uiLoop;
-  SOLDIERTYPE *pNPC;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -373,8 +374,8 @@ INT8 NumMalesPresent(UINT8 ubProfileID) {
 
 BOOLEAN FemalePresent(UINT8 ubProfileID) {
   UINT32 uiLoop;
-  SOLDIERTYPE *pNPC;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sGridNo;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
@@ -400,7 +401,7 @@ BOOLEAN FemalePresent(UINT8 ubProfileID) {
 
 BOOLEAN CheckPlayerHasHead(void) {
   INT8 bLoop;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (bLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
        bLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID; bLoop++) {
@@ -417,7 +418,7 @@ BOOLEAN CheckPlayerHasHead(void) {
 }
 
 BOOLEAN CheckNPCSector(UINT8 ubProfileID, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pSoldier = FindSoldierByProfileID(ubProfileID, TRUE);
 
@@ -437,7 +438,7 @@ BOOLEAN CheckNPCSector(UINT8 ubProfileID, INT16 sSectorX, INT16 sSectorY, INT8 b
 
 BOOLEAN AIMMercWithin(INT16 sGridNo, INT16 sDistance) {
   UINT32 uiLoop;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
     pSoldier = MercSlots[uiLoop];
@@ -454,7 +455,7 @@ BOOLEAN AIMMercWithin(INT16 sGridNo, INT16 sDistance) {
 }
 
 BOOLEAN CheckNPCCowering(UINT8 ubProfileID) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -476,7 +477,7 @@ UINT8 CountBartenders(void) {
 }
 
 BOOLEAN CheckNPCIsUnderFire(UINT8 ubProfileID) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {
@@ -486,7 +487,7 @@ BOOLEAN CheckNPCIsUnderFire(UINT8 ubProfileID) {
 }
 
 BOOLEAN NPCHeardShot(UINT8 ubProfileID) {
-  SOLDIERTYPE *pNPC;
+  struct SOLDIERTYPE *pNPC;
 
   pNPC = FindSoldierByProfileID(ubProfileID, FALSE);
   if (!pNPC) {

@@ -3,11 +3,11 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/RenderWorld.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Utilities.h"
@@ -281,7 +281,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   UINT16 usNumberVerticalPixels, usNumberOfLines;
   UINT16 usTextWidth, usHeight;
   UINT16 i;
-  HVOBJECT hImageHandle;
+  struct VObject *hImageHandle;
   UINT16 usPosY, usPosX;
   VSURFACE_DESC vs_desc;
   UINT16 usStringPixLength;

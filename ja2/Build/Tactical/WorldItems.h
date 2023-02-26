@@ -15,7 +15,7 @@ typedef struct {
   BOOLEAN fExists;
   INT16 sGridNo;
   UINT8 ubLevel;
-  OBJECTTYPE o;
+  struct OBJECTTYPE o;
   UINT16 usFlags;
   INT8 bRenderZHeightAboveLevel;
 
@@ -34,7 +34,7 @@ typedef struct {
 extern WORLDITEM *gWorldItems;
 extern UINT32 guiNumWorldItems;
 
-INT32 AddItemToWorld(INT16 sGridNo, OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
+INT32 AddItemToWorld(INT16 sGridNo, struct OBJECTTYPE *pObject, UINT8 ubLevel, UINT16 usFlags,
                      INT8 bRenderZHeightAboveLevel, INT8 bVisible);
 void RemoveItemFromWorld(INT32 iItemIndex);
 INT32 FindWorldItem(UINT16 usItem);

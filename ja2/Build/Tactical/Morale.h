@@ -2,7 +2,8 @@
 #define _MORALE_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 #define DEFAULT_MORALE 50
 
@@ -52,13 +53,13 @@ typedef struct MoraleEvent {
   INT8 bChange;
 } MoraleEvent;
 
-extern void HandleMoraleEvent(SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX, INT16 sMapY,
-                              INT8 bMapZ);
-extern void RefreshSoldierMorale(SOLDIERTYPE *pSoldier);
-extern INT8 GetMoraleModifier(SOLDIERTYPE *pSoldier);
+extern void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX,
+                              INT16 sMapY, INT8 bMapZ);
+extern void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier);
+extern INT8 GetMoraleModifier(struct SOLDIERTYPE *pSoldier);
 
 void HourlyMoraleUpdate(void);
-void DailyMoraleUpdate(SOLDIERTYPE *pSoldier);
+void DailyMoraleUpdate(struct SOLDIERTYPE *pSoldier);
 
 void DecayTacticalMoraleModifiers(void);
 

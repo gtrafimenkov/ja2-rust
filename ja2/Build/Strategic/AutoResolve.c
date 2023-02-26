@@ -13,6 +13,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
 #include "Strategic/CreatureSpreading.h"
@@ -61,7 +62,7 @@
 
 //#define INVULNERABILITY
 
-extern BOOLEAN AutoReload(SOLDIERTYPE *pSoldier);
+extern BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier);
 BOOLEAN gfTransferTacticalOppositionToAutoResolve = FALSE;
 
 // button images
@@ -80,8 +81,8 @@ enum {
 };
 
 typedef struct SOLDIERCELL {
-  SOLDIERTYPE *pSoldier;
-  MOUSE_REGION *pRegion;  // only used for player mercs.
+  struct SOLDIERTYPE *pSoldier;
+  struct MOUSE_REGION *pRegion;  // only used for player mercs.
   UINT32 uiVObjectID;
   UINT16 usIndex;
   UINT32 uiFlags;
@@ -160,7 +161,7 @@ typedef struct AUTORESOLVE_STRUCT {
   BOOLEAN fMoraleEventsHandled;
   BOOLEAN fCaptureNotPermittedDueToEPCs;
 
-  MOUSE_REGION AutoResolveRegion;
+  struct MOUSE_REGION AutoResolveRegion;
 
 } AUTORESOLVE_STRUCT;
 
@@ -263,8 +264,8 @@ void FinishButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void RetreatButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void BandageButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void DoneButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void MercCellMouseMoveCallback(MOUSE_REGION *reg, INT32 reason);
-void MercCellMouseClickCallback(MOUSE_REGION *reg, INT32 reason);
+void MercCellMouseMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
+void MercCellMouseClickCallback(struct MOUSE_REGION *reg, INT32 reason);
 
 void DetermineBandageButtonState();
 
@@ -330,7 +331,7 @@ void PlayAutoResolveSampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolu
   }
 }
 
-extern void ClearPreviousAIGroupAssignment(GROUP *pGroup);
+extern void ClearPreviousAIGroupAssignment(struct GROUP *pGroup);
 
 void EliminateAllMercs() {
   SOLDIERCELL *pAttacker = NULL;
@@ -371,7 +372,7 @@ void EliminateAllFriendlies() {
 }
 
 void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
-  GROUP *pGroup, *pDeleteGroup;
+  struct GROUP *pGroup, *pDeleteGroup;
   SECTORINFO *pSector;
   INT32 i;
   UINT8 ubNumEnemies[NUM_ENEMY_RANKS];
@@ -651,7 +652,7 @@ UINT32 AutoResolveScreenHandle() {
   return AUTORESOLVE_SCREEN;
 }
 
-void RefreshMerc(SOLDIERTYPE *pSoldier) {
+void RefreshMerc(struct SOLDIERTYPE *pSoldier) {
   pSoldier->bLife = pSoldier->bLifeMax;
   pSoldier->bBleeding = 0;
   pSoldier->bBreath = pSoldier->bBreathMax = 100;
@@ -666,7 +667,7 @@ void RefreshMerc(SOLDIERTYPE *pSoldier) {
 // stationary groups first.
 void AssociateEnemiesWithStrategicGroups() {
   SECTORINFO *pSector;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   UINT8 ubNumAdmins, ubNumTroops, ubNumElites;
   UINT8 ubNumElitesInGroup, ubNumTroopsInGroup, ubNumAdminsInGroup;
   INT32 i;
@@ -782,9 +783,9 @@ void CalculateSoldierCells(BOOLEAN fReset) {
             gpMercs[index].uiFlags |= CELL_EPC;
           }
         }
-        gpMercs[index].pRegion = (MOUSE_REGION *)MemAlloc(sizeof(MOUSE_REGION));
+        gpMercs[index].pRegion = (struct MOUSE_REGION *)MemAlloc(sizeof(struct MOUSE_REGION));
         Assert(gpMercs[index].pRegion);
-        memset(gpMercs[index].pRegion, 0, sizeof(MOUSE_REGION));
+        memset(gpMercs[index].pRegion, 0, sizeof(struct MOUSE_REGION));
         MSYS_DefineRegion(gpMercs[index].pRegion, gpMercs[index].xp, gpMercs[index].yp,
                           (UINT16)(gpMercs[index].xp + 50), (UINT16)(gpMercs[index].yp + 44),
                           MSYS_PRIORITY_HIGH, 0, MercCellMouseMoveCallback,
@@ -1152,8 +1153,8 @@ void ExpandWindow() {
                    gpAR->ExRect.iBottom + 1);
 }
 
-UINT32 VirtualSoldierDressWound(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pVictim, OBJECTTYPE *pKit,
-                                INT16 sKitPts, INT16 sStatus) {
+UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
+                                struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus) {
   UINT32 uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
   UINT8 bBelowOKlife, bPtsLeft;
 
@@ -1288,7 +1289,7 @@ UINT32 VirtualSoldierDressWound(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pVictim, OBJ
   return uiMedcost;
 }
 
-OBJECTTYPE *FindMedicalKit() {
+struct OBJECTTYPE *FindMedicalKit() {
   INT32 i;
   INT32 iSlot;
   for (i = 0; i < gpAR->ubMercs; i++) {
@@ -1304,7 +1305,7 @@ UINT32 AutoBandageMercs() {
   INT32 i, iBest;
   UINT32 uiPointsUsed, uiCurrPointsUsed, uiMaxPointsUsed, uiParallelPointsUsed;
   UINT16 usKitPts;
-  OBJECTTYPE *pKit = NULL;
+  struct OBJECTTYPE *pKit = NULL;
   BOOLEAN fFound = FALSE;
   BOOLEAN fComplete = TRUE;
   INT8 bSlot, cnt;
@@ -1636,7 +1637,7 @@ void RenderAutoResolve() {
 void CreateAutoResolveInterface() {
   VOBJECT_DESC VObjectDesc;
   INT32 i, index;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   UINT8 ubGreenMilitia, ubRegMilitia, ubEliteMilitia;
   // Setup new autoresolve blanket interface.
   MSYS_DefineRegion(&gpAR->AutoResolveRegion, 0, 0, 640, 480, MSYS_PRIORITY_HIGH - 1, 0,
@@ -2235,7 +2236,7 @@ void RetreatButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void DetermineBandageButtonState() {
   INT32 i;
-  OBJECTTYPE *pKit = NULL;
+  struct OBJECTTYPE *pKit = NULL;
   BOOLEAN fFound = FALSE;
 
   // Does anyone need bandaging?
@@ -2291,7 +2292,7 @@ void DoneButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MercCellMouseMoveCallback(MOUSE_REGION *reg, INT32 reason) {
+void MercCellMouseMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   // Find the merc with the same region.
   INT32 i;
   SOLDIERCELL *pCell = NULL;
@@ -2318,7 +2319,7 @@ void MercCellMouseMoveCallback(MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void MercCellMouseClickCallback(MOUSE_REGION *reg, INT32 reason) {
+void MercCellMouseClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // Find the merc with the same region.
     INT32 i;
@@ -2378,7 +2379,7 @@ void MercCellMouseClickCallback(MOUSE_REGION *reg, INT32 reason) {
 // to figure out how many rows and columns we can use.  The will effect the size of the panel.
 void CalculateAutoResolveInfo() {
   VOBJECT_DESC VObjectDesc;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   PLAYERGROUP *pPlayer;
   Assert(gpAR->ubSectorX >= 1 && gpAR->ubSectorX <= 16);
   Assert(gpAR->ubSectorY >= 1 && gpAR->ubSectorY <= 16);
@@ -3000,7 +3001,7 @@ void ResetNextAttackCounter(SOLDIERCELL *pCell) {
 void CalculateAttackValues() {
   INT32 i;
   SOLDIERCELL *pCell;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT16 usBonus;
   UINT16 usBestAttack = 0xffff;
   UINT16 usBreathStrengthPercentage;
@@ -3236,8 +3237,8 @@ SOLDIERCELL *ChooseTarget(SOLDIERCELL *pAttacker) {
 }
 
 BOOLEAN FireAShot(SOLDIERCELL *pAttacker) {
-  OBJECTTYPE *pItem;
-  SOLDIERTYPE *pSoldier;
+  struct OBJECTTYPE *pItem;
+  struct SOLDIERTYPE *pSoldier;
   INT32 i;
 
   pSoldier = pAttacker->pSoldier;
@@ -3292,9 +3293,9 @@ BOOLEAN AttackerHasKnife(SOLDIERCELL *pAttacker) {
   return FALSE;
 }
 
-BOOLEAN TargetHasLoadedGun(SOLDIERTYPE *pSoldier) {
+BOOLEAN TargetHasLoadedGun(struct SOLDIERTYPE *pSoldier) {
   INT32 i;
-  OBJECTTYPE *pItem;
+  struct OBJECTTYPE *pItem;
   for (i = 0; i < NUM_INV_SLOTS; i++) {
     pItem = &pSoldier->inv[i];
     if (Item[pItem->usItem].usItemClass == IC_GUN) {
@@ -3415,8 +3416,8 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
     }
 
   } else {
-    OBJECTTYPE *pItem;
-    OBJECTTYPE tempItem;
+    struct OBJECTTYPE *pItem;
+    struct OBJECTTYPE tempItem;
     PlayAutoResolveSample((UINT8)(BULLET_IMPACT_1 + PreRandom(3)), RATE_11025, 50, 1, MIDDLEPAN);
     if (!pTarget->pSoldier->bLife) {  // Soldier already dead (can't kill him again!)
       return;
@@ -3434,14 +3435,14 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
     }
 
     if (pAttacker->bWeaponSlot != HANDPOS) {  // switch items
-      memcpy(&tempItem, &pAttacker->pSoldier->inv[HANDPOS], sizeof(OBJECTTYPE));
+      memcpy(&tempItem, &pAttacker->pSoldier->inv[HANDPOS], sizeof(struct OBJECTTYPE));
       memcpy(&pAttacker->pSoldier->inv[HANDPOS], &pAttacker->pSoldier->inv[pAttacker->bWeaponSlot],
-             sizeof(OBJECTTYPE));
+             sizeof(struct OBJECTTYPE));
       iImpact =
           HTHImpact(pAttacker->pSoldier, pTarget->pSoldier, ubAccuracy, (BOOLEAN)(fKnife | fClaw));
       memcpy(&pAttacker->pSoldier->inv[pAttacker->bWeaponSlot], &pAttacker->pSoldier->inv[HANDPOS],
-             sizeof(OBJECTTYPE));
-      memcpy(&pAttacker->pSoldier->inv[HANDPOS], &tempItem, sizeof(OBJECTTYPE));
+             sizeof(struct OBJECTTYPE));
+      memcpy(&pAttacker->pSoldier->inv[HANDPOS], &tempItem, sizeof(struct OBJECTTYPE));
     } else {
       iImpact =
           HTHImpact(pAttacker->pSoldier, pTarget->pSoldier, ubAccuracy, (BOOLEAN)(fKnife || fClaw));
@@ -3714,7 +3715,7 @@ BOOLEAN IsBattleOver() {
     }
   }
   if (gpAR->pRobotCell) {  // Do special robot checks
-    SOLDIERTYPE *pRobot;
+    struct SOLDIERTYPE *pRobot;
     pRobot = gpAR->pRobotCell->pSoldier;
     if (pRobot->ubRobotRemoteHolderID == NOBODY) {  // Robot can't fight anymore.
       gpAR->usPlayerAttack -= gpAR->pRobotCell->usAttack;

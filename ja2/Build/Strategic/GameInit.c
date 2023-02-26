@@ -46,7 +46,6 @@
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Squads.h"
@@ -516,7 +515,7 @@ BOOLEAN InitNewGame(BOOLEAN fReset) {
 
 BOOLEAN AnyMercsHired() {
   INT32 cnt;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   INT16 bLastTeamID;
 
   // Find first guy availible in team

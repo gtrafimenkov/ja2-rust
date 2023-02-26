@@ -1,10 +1,10 @@
 #ifndef ANIMATION_DATA_H_
 #define ANIMATION_DATA_H_
 
-#include "SGP/VObject.h"
 #include "Tactical/Overhead.h"
-#include "Tactical/SoldierControl.h"
-#include "TileEngine/StructureInternals.h"
+
+struct VObject;
+struct STRUCTURE_FILE_REF;
 
 // DEFINES FOR ANIMATION PROFILES
 #define TILE_FLAG_FEET 0x0001
@@ -520,7 +520,7 @@ typedef struct {
   UINT8 ubFlags;
   UINT32 uiNumDirections;
   UINT32 uiNumFramesPerDir;
-  HVOBJECT hVideoObject;
+  struct VObject *hVideoObject;
   void *Unused;
   INT8 bUsageCount;
   INT8 bProfile;
@@ -529,7 +529,7 @@ typedef struct {
 
 typedef struct {
   CHAR8 Filename[50];
-  STRUCTURE_FILE_REF *pStructureFileRef;
+  struct STRUCTURE_FILE_REF *pStructureFileRef;
 
 } AnimationStructureType;
 
@@ -546,12 +546,12 @@ void ClearAnimationSurfacesUsageHistory(UINT16 usSoldierID);
 void DeleteAnimationProfiles();
 BOOLEAN LoadAnimationProfiles();
 
-STRUCTURE_FILE_REF *GetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
-                                             UINT16 usAnimState);
-STRUCTURE_FILE_REF *GetDefaultStructureRef(UINT16 usSoldierID);
+struct STRUCTURE_FILE_REF *GetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
+                                                    UINT16 usAnimState);
+struct STRUCTURE_FILE_REF *GetDefaultStructureRef(UINT16 usSoldierID);
 
 // Profile data
-extern ANIM_PROF *gpAnimProfiles;
+extern struct ANIM_PROF *gpAnimProfiles;
 extern UINT8 gubNumAnimProfiles;
 
 void ZeroAnimSurfaceCounts();

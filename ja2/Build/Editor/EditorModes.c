@@ -14,6 +14,7 @@
 #include "Tactical/MapInformation.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/ExitGrids.h"
+#include "TileEngine/TileDat.h"
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 
@@ -233,7 +234,7 @@ void SetEditorTerrainTaskbarMode(UINT16 usNewMode) {
 
 void ShowExitGrids() {
   UINT16 i;
-  LEVELNODE *pLevelNode;
+  struct LEVELNODE *pLevelNode;
   if (gfShowExitGrids) return;
   gfShowExitGrids = TRUE;
   for (i = 0; i < WORLD_MAX; i++) {
@@ -245,7 +246,7 @@ void ShowExitGrids() {
 
 void HideExitGrids() {
   UINT16 i;
-  LEVELNODE *pLevelNode;
+  struct LEVELNODE *pLevelNode;
   if (!gfShowExitGrids) return;
   gfShowExitGrids = FALSE;
   for (i = 0; i < WORLD_MAX; i++) {

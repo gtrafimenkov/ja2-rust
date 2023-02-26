@@ -1,25 +1,29 @@
 #ifndef _SOLDIER_FUNCTIONS_H
 #define _SOLDIER_FUNCTIONS_H
 
-#include "Tactical/SoldierControl.h"
+#include "SGP/Types.h"
 
-void ContinueMercMovement(SOLDIERTYPE *pSoldier);
+struct SOLDIERTYPE;
 
-BOOLEAN IsValidStance(SOLDIERTYPE *pSoldier, INT8 bNewStance);
-void SelectMoveAnimationFromStance(SOLDIERTYPE *pSoldier);
-BOOLEAN IsValidMovementMode(SOLDIERTYPE *pSoldier, INT16 usMovementMode);
-FLOAT CalcSoldierNextBleed(SOLDIERTYPE *pSoldier);
-FLOAT CalcSoldierNextUnmovingBleed(SOLDIERTYPE *pSoldier);
-void SoldierCollapse(SOLDIERTYPE *pSoldier);
+void ContinueMercMovement(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN ReevaluateEnemyStance(SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+BOOLEAN IsValidStance(struct SOLDIERTYPE *pSoldier, INT8 bNewStance);
+void SelectMoveAnimationFromStance(struct SOLDIERTYPE *pSoldier);
+BOOLEAN IsValidMovementMode(struct SOLDIERTYPE *pSoldier, INT16 usMovementMode);
+FLOAT CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier);
+FLOAT CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier);
+void SoldierCollapse(struct SOLDIERTYPE *pSoldier);
 
-void HandlePlacingRoofMarker(SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fSet, BOOLEAN fForce);
+BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
 
-void PickPickupAnimation(SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo, INT8 bZLevel);
+void HandlePlacingRoofMarker(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fSet,
+                             BOOLEAN fForce);
 
-void MercStealFromMerc(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTarget);
+void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
+                         INT8 bZLevel);
 
-void HandleCrowShadowVisibility(SOLDIERTYPE *pSoldier);
+void MercStealFromMerc(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget);
+
+void HandleCrowShadowVisibility(struct SOLDIERTYPE *pSoldier);
 
 #endif

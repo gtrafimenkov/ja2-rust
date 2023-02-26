@@ -6,6 +6,7 @@
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
 
@@ -932,7 +933,7 @@ void SetPositionSndsVolumeAndPanning() {
   UINT32 cnt;
   POSITIONSND *pPositionSnd;
   INT8 bVolume, bPan;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (cnt = 0; cnt < guiNumPositionSnds; cnt++) {
     pPositionSnd = &gPositionSndData[cnt];
@@ -943,7 +944,7 @@ void SetPositionSndsVolumeAndPanning() {
           bVolume = PositionSoundVolume(15, pPositionSnd->sGridNo);
 
           if (pPositionSnd->uiFlags & POSITION_SOUND_FROM_SOLDIER) {
-            pSoldier = (SOLDIERTYPE *)pPositionSnd->uiData;
+            pSoldier = (struct SOLDIERTYPE *)pPositionSnd->uiData;
 
             if (pSoldier->bVisible == -1) {
               // Limit volume,,,

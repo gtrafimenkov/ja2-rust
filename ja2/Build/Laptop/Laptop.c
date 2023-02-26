@@ -48,7 +48,10 @@
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
 #include "Screens.h"
@@ -316,7 +319,7 @@ BOOLEAN gfTemporaryDisablingOfLoadPendingFlag = FALSE;
 // GLOBAL FOR WHICH SCREEN TO EXIT TO FOR LAPTOP
 UINT32 guiExitScreen = MAP_SCREEN;
 
-MOUSE_REGION gLaptopRegion;
+struct MOUSE_REGION gLaptopRegion;
 // Laptop screen graphic handle
 UINT32 guiLAPTOP;
 BOOLEAN fNewWWWDisplay = TRUE;
@@ -429,18 +432,18 @@ BOOLEAN gfWWWaitSubSitesVisitedFlags[LAPTOP_MODE_SIRTECH - LAPTOP_MODE_WWW];
 // INT32 iBookMarkList[MAX_BOOKMARKS];
 
 // mouse regions
-MOUSE_REGION gEmailRegion;
-MOUSE_REGION gWWWRegion;
-MOUSE_REGION gFinancialRegion;
-MOUSE_REGION gPersonnelRegion;
-MOUSE_REGION gHistoryRegion;
-MOUSE_REGION gFilesRegion;
-MOUSE_REGION gLapTopScreenRegion;
-MOUSE_REGION gBookmarkMouseRegions[MAX_BOOKMARKS];
-MOUSE_REGION pScreenMask;
-MOUSE_REGION gLapTopProgramMinIcon;
-MOUSE_REGION gNewMailIconRegion;
-MOUSE_REGION gNewFileIconRegion;
+struct MOUSE_REGION gEmailRegion;
+struct MOUSE_REGION gWWWRegion;
+struct MOUSE_REGION gFinancialRegion;
+struct MOUSE_REGION gPersonnelRegion;
+struct MOUSE_REGION gHistoryRegion;
+struct MOUSE_REGION gFilesRegion;
+struct MOUSE_REGION gLapTopScreenRegion;
+struct MOUSE_REGION gBookmarkMouseRegions[MAX_BOOKMARKS];
+struct MOUSE_REGION pScreenMask;
+struct MOUSE_REGION gLapTopProgramMinIcon;
+struct MOUSE_REGION gNewMailIconRegion;
+struct MOUSE_REGION gNewFileIconRegion;
 
 // highlighted mouse region
 INT32 giHighLightRegion = NO_REGION;
@@ -479,31 +482,31 @@ void WWWRegionButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void EmailRegionButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void FilesRegionButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void HistoryRegionButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void LaptopProgramIconMinimizeCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void LaptopProgramIconMinimizeCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
-void WWWRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void EmailRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void WWWRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void EmailRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void RestoreOldRegion(INT32 iOldRegion);
 void HighLightRegion(INT32 iCurrentRegion);
-void FinancialRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void HistoryRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void FilesRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void PersonnelRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void ScreenRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void FinancialRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void HistoryRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void FilesRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void PersonnelRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void ScreenRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // minimize callback
 void LaptopMinimizeProgramButtonCallback(GUI_BUTTON *btn, INT32 reason);
 
-void NewFileIconCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void NewFileIconCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void DisplayBookMarks();
 void InitBookMarkList();
 BOOLEAN LoadBookmark();
 void DeleteBookmark();
 void ScrollDisplayText(INT32 iY);
-void BookmarkCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void BookmarkCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void CreateBookMarkMouseRegions();
-void BookmarkMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void BookmarkMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void DeleteBookmarkRegions();
 void DeleteLoadPending(void);
 BOOLEAN LoadLoadPending(void);
@@ -549,7 +552,7 @@ void HandleDefaultWebpageForLaptop(void);
 void CreateMinimizeRegionsForLaptopProgramIcons(void);
 void DestroyMinimizeRegionsForLaptopProgramIcons(void);
 void CreateDestroyMouseRegionForNewMailIcon(void);
-void NewEmailIconCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void NewEmailIconCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void HandleWWWSubSites(void);
 void UpdateStatusOfDisplayingBookMarks(void);
 void InitalizeSubSitesList(void);
@@ -563,7 +566,7 @@ void DisplayWebBookMarkNotify(void);
 // handle timer for bookmark notify
 void HandleWebBookMarkNotifyTimer(void);
 
-void CreateBookMarkHelpText(MOUSE_REGION *pRegion, UINT32 uiBookMarkID);
+void CreateBookMarkHelpText(struct MOUSE_REGION *pRegion, UINT32 uiBookMarkID);
 
 void CreateFileAndNewEmailIconFastHelpText(UINT32 uiHelpTextID, BOOLEAN fClearHelpText);
 void CreateLaptopButtonHelpText(INT32 iButtonIndex, UINT32 uiButtonHelpTextID);
@@ -1004,7 +1007,7 @@ void ExitLaptop() {
 }
 
 void RenderLapTopImage() {
-  HVOBJECT hLapTopHandle;
+  struct VObject *hLapTopHandle;
 
   if ((fMaximizingProgram == TRUE) || (fMinizingProgram == TRUE)) {
     return;
@@ -2617,11 +2620,11 @@ void HighLightRegion(INT32 iCurrentRegion) { return; }
 void HandleAnimatedButtons() { return; }
 void AnimateButton(UINT32 uiIconID, UINT16 usX, UINT16 usY) { return; }
 
-void WWWRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void WWWRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
   INT32 iDifference = 0;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iBaseTime = 0;
     iFrame = 0;
@@ -2634,11 +2637,11 @@ void WWWRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void EmailRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void EmailRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
   INT32 iDifference = 0;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iBaseTime = 0;
     iFrame = 0;
@@ -2657,11 +2660,11 @@ void EmailRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void FinancialRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void FinancialRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
   INT32 iDifference = 0;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iBaseTime = 0;
     iFrame = 0;
@@ -2674,11 +2677,11 @@ void FinancialRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void HistoryRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void HistoryRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
   INT32 iDifference = 0;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iBaseTime = 0;
     iFrame = 0;
@@ -2692,11 +2695,11 @@ void HistoryRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void FilesRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void FilesRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
   INT32 iDifference = 0;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iBaseTime = 0;
     iFrame = 0;
@@ -2709,11 +2712,11 @@ void FilesRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void PersonnelRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void PersonnelRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
   INT32 iDifference = 0;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iBaseTime = 0;
     iFrame = 0;
@@ -2734,7 +2737,7 @@ void CheckIfMouseLeaveScreen() {
     guiCurrentLapTopCursor = LAPTOP_PANEL_CURSOR;
   }
 }
-void ScreenRegionMvtCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void ScreenRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
   }
@@ -2851,7 +2854,7 @@ void DisplayBookMarks(void) {
   // will look at bookmarklist and set accordingly
   INT32 iCounter = 1;
   // load images
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   // laptop icons
   INT16 sX, sY;
 
@@ -3069,7 +3072,7 @@ void CreateDestoryBookMarkRegions(void) {
   }
 }
 
-void BookmarkCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void BookmarkCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iCount;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -3233,7 +3236,7 @@ void GoToWebPage(INT32 iPageId) {
   return;
 }
 
-void BookmarkMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void BookmarkMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason == MSYS_CALLBACK_REASON_MOVE) {
     iHighLightBookLine = MSYS_GetRegionUserData(pRegion, 0);
   }
@@ -3265,7 +3268,7 @@ BOOLEAN DisplayLoadPending(void) {
   INT32 iTempTime = 0;
   INT32 iCounter = 0;
   INT32 iDifference = 0;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   INT32 iLoadTime;
   INT32 iUnitTime;
   UINT32 uiTempLaptopMode = 0;
@@ -3478,7 +3481,7 @@ void CreateDestroyErrorButton(void) {
 
 void DisplayErrorBox(void) {
   // this function will display the error graphic
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
   if (!fErrorFlag) return;
 
   // get and blt top portion
@@ -3771,7 +3774,7 @@ void HandleLeftButtonUpEvent(void) {
   }
 }
 
-void LapTopScreenCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
   }
@@ -3838,7 +3841,7 @@ BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitSc
 // places a tileable pattern down
 BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight,
                               UINT32 uiBackgroundIdentifier) {
-  HVOBJECT hBackGroundHandle;
+  struct VObject *hBackGroundHandle;
   UINT16 x, y, uiPosX, uiPosY;
 
   // Blt the Wood background
@@ -3860,7 +3863,7 @@ BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16
 BOOLEAN InitTitleBarMaximizeGraphics(UINT32 uiBackgroundGraphic, STR16 pTitle, UINT32 uiIconGraphic,
                                      UINT16 usIconGraphicIndex) {
   VSURFACE_DESC vs_desc;
-  HVOBJECT hImageHandle;
+  struct VObject *hImageHandle;
 
   Assert(uiBackgroundGraphic);
 
@@ -4144,7 +4147,7 @@ void HandleSlidingTitleBar(void) {
 
 void ShowLights(void) {
   // will show lights depending on state
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   if (fPowerLightOn == TRUE) {
     GetVideoObject(&hHandle, guiLIGHTS);
@@ -4434,7 +4437,7 @@ void SetCurrentToLastProgramOpened(void) {
 }
 
 void BlitTitleBarIcons(void) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   // will blit the icons for the title bar of the program we are in
   switch (guiCurrentLaptopMode) {
     case (LAPTOP_MODE_HISTORY):
@@ -4547,7 +4550,7 @@ void PrintBalance(void) {
 
 void PrintNumberOnTeam(void) {
   CHAR16 pString[32];
-  SOLDIERTYPE *pSoldier, *pTeamSoldier;
+  struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
   INT32 iCounter = 0;
   UINT16 usPosX, usPosY, usFontHeight, usStrLength;
@@ -4630,7 +4633,7 @@ void PrintDate(void) {
 }
 
 void DisplayTaskBarIcons() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   //	UINT16 usPosX;
 
   //	usPosX = 83;
@@ -4840,7 +4843,7 @@ void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usK
 BOOLEAN RenderWWWProgramTitleBar(void) {
   // will render the title bar for the www program
   UINT32 uiTITLEFORWWW;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
   INT32 iIndex = 0;
   CHAR16 sString[256];
@@ -4918,7 +4921,7 @@ void DestroyMinimizeRegionsForLaptopProgramIcons(void) {
   return;
 }
 
-void LaptopProgramIconMinimizeCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void LaptopProgramIconMinimizeCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // callback handler for the minize region that is attatched to the laptop program icon
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     switch (guiCurrentLaptopMode) {
@@ -4976,7 +4979,7 @@ void LaptopProgramIconMinimizeCallback(MOUSE_REGION *pRegion, INT32 iReason) {
 
 void DisplayProgramBoundingBox(BOOLEAN fMarkButtons) {
   // the border fot eh program
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   GetVideoObject(&hHandle, guiLaptopBACKGROUND);
   BltVideoObject(FRAME_BUFFER, hHandle, 1, 25, 23, VO_BLT_SRCTRANSPARENCY, NULL);
@@ -5033,7 +5036,7 @@ void CreateDestroyMouseRegionForNewMailIcon(void) {
   }
 }
 
-void NewEmailIconCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void NewEmailIconCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (fUnReadMailFlag) {
       fOpenMostRecentUnReadFlag = TRUE;
@@ -5042,7 +5045,7 @@ void NewEmailIconCallback(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void NewFileIconCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void NewFileIconCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (fNewFilesInFileViewer) {
       fEnteredFileViewerFromNewFileIcon = TRUE;
@@ -5196,7 +5199,7 @@ void HandleAltTabKeyInLaptop(void) {
 // display the 2 second book mark instruction
 void DisplayWebBookMarkNotify(void) {
   static BOOLEAN fOldShow = FALSE;
-  HVOBJECT hLapTopIconHandle;
+  struct VObject *hLapTopIconHandle;
 
   // handle the timer for this thing
   HandleWebBookMarkNotifyTimer();
@@ -5473,14 +5476,14 @@ void InternetRainDelayMessageBoxCallBack(UINT8 bExitValue) {
   giRainDelayInternetSite = -2;
 }
 
-void CreateBookMarkHelpText(MOUSE_REGION *pRegion, UINT32 uiBookMarkID) {
+void CreateBookMarkHelpText(struct MOUSE_REGION *pRegion, UINT32 uiBookMarkID) {
   SetRegionFastHelpText(
       pRegion,
       gzLaptopHelpText[BOOKMARK_TEXT_ASSOCIATION_OF_INTERNATION_MERCENARIES + uiBookMarkID]);
 }
 
 void CreateFileAndNewEmailIconFastHelpText(UINT32 uiHelpTextID, BOOLEAN fClearHelpText) {
-  MOUSE_REGION *pRegion;
+  struct MOUSE_REGION *pRegion;
 
   switch (uiHelpTextID) {
     case LAPTOP_BN_HLP_TXT_YOU_HAVE_NEW_MAIL:

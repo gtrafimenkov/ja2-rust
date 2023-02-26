@@ -1,7 +1,7 @@
 #ifndef _TILE_ANIMATION_H
 #define _TILE_ANIMATION_H
 
-#include "TileEngine/WorldDef.h"
+#include "SGP/Types.h"
 
 #define ANITILE_DOOR 0x00000001
 #define ANITILE_BACKWARD 0x00000020
@@ -39,7 +39,7 @@ typedef struct TAG_anitile {
   UINT32 uiFlags;           // flags struct
   UINT32 uiTimeLastUpdate;  // Stuff for animated tiles
 
-  LEVELNODE *pLevelNode;
+  struct LEVELNODE *pLevelNode;
   UINT8 ubLevelID;
   INT16 sCurrentFrame;
   INT16 sStartFrame;
@@ -84,8 +84,8 @@ typedef struct TAG_anitile_params {
   INT16 sZ;            // World Z ( optional )
   INT16 sGridNo;       // World GridNo
 
-  LEVELNODE *pGivenLevelNode;  // Levelnode for existing tile ( optional )
-  CHAR8 zCachedFile[100];      // Filename for cached tile name ( optional )
+  struct LEVELNODE *pGivenLevelNode;  // Levelnode for existing tile ( optional )
+  CHAR8 zCachedFile[100];             // Filename for cached tile name ( optional )
 
   UINT8 ubOwner;           // UBID for the owner
   UINT8 ubKeyFrame1;       // Key frame 1

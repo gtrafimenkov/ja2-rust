@@ -1,7 +1,11 @@
 #include "Utils/PopUpBox.h"
 
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
+#include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "SGP/WCheck.h"
 #include "TileEngine/SysUtil.h"
 
 #define BORDER_WIDTH 16
@@ -1015,7 +1019,7 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   UINT32 uiNumTilesWide;
   UINT32 uiNumTilesHigh;
   UINT32 uiCount = 0;
-  HVOBJECT hBoxHandle;
+  struct VObject *hBoxHandle;
   struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;

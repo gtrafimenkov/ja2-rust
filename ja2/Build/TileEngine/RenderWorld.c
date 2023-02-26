@@ -12,6 +12,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
+#include "SGP/Shading.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -20,6 +21,7 @@
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfaceCursors.h"
 #include "Tactical/LOS.h"
@@ -35,10 +37,12 @@
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderFun.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileCache.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
@@ -448,28 +452,30 @@ void CalcRenderParameters(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
 void ResetRenderParameters();
 
 BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                             HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex);
 
 BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                          UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                          INT32 iX, INT32 iY, UINT16 usIndex);
+                                          UINT16 *pZBuffer, UINT16 usZValue,
+                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                          UINT16 usIndex);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                          UINT16 *pZBuffer, UINT16 usZValue,
-                                                         HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                         UINT16 usIndex, SGPRect *clipregion,
-                                                         INT16 sZIndex, UINT16 *p16BPPPalette);
+                                                         struct VObject *hSrcVObject, INT32 iX,
+                                                         INT32 iY, UINT16 usIndex,
+                                                         SGPRect *clipregion, INT16 sZIndex,
+                                                         UINT16 *p16BPPPalette);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                      UINT16 *pZBuffer, UINT16 usZValue,
-                                                     HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                     UINT16 usIndex, SGPRect *clipregion);
+                                                     struct VObject *hSrcVObject, INT32 iX,
+                                                     INT32 iY, UINT16 usIndex, SGPRect *clipregion);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
-    HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion, INT16 sZIndex,
-    UINT16 *p16BPPPalette);
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion,
+    INT16 sZIndex, UINT16 *p16BPPPalette);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
     UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
-    HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion);
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion);
 
 void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
                     INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS);
@@ -501,7 +507,7 @@ void RenderHighlight(INT16 sMouseX_M, INT16 sMouseY_M, INT16 sStartPointX_M, INT
 BOOLEAN CheckRenderCenter(INT16 sNewCenterX, INT16 sNewCenterY);
 
 BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
-  LEVELNODE *pStruct;
+  struct LEVELNODE *pStruct;
   INT16 sCountX, sCountY;
   UINT32 uiTile;
   BOOLEAN fRerender = FALSE;
@@ -547,7 +553,7 @@ BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
 }
 
 BOOLEAN ConcealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
-  LEVELNODE *pStruct;
+  struct LEVELNODE *pStruct;
   INT16 sCountX, sCountY;
   UINT32 uiTile;
   BOOLEAN fRerender = FALSE;
@@ -593,7 +599,7 @@ BOOLEAN ConcealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
 }
 
 void ConcealAllWalls(void) {
-  LEVELNODE *pStruct;
+  struct LEVELNODE *pStruct;
   UINT32 uiCount;
 
   for (uiCount = 0; uiCount < WORLD_MAX; uiCount++) {
@@ -632,9 +638,9 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                  UINT32 *puiLevels, UINT16 *psLevelIDs) {
   //#if 0
 
-  LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
-  SOLDIERTYPE *pSoldier, *pSelSoldier;
-  HVOBJECT hVObject;
+  struct LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
+  struct SOLDIERTYPE *pSoldier, *pSelSoldier;
+  struct VObject *hVObject;
   ETRLEObject *pTrav;
   TILE_ELEMENT *TileElem = NULL;
   UINT32 uiDestPitchBYTES;
@@ -705,7 +711,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 
   UINT32 uiSaveBufferPitchBYTES;
   UINT8 *pSaveBuf;
-  ITEM_POOL *pItemPool = NULL;
+  struct ITEM_POOL *pItemPool = NULL;
   BOOLEAN fHiddenTile = FALSE;
   UINT32 uiAniTileFlags = 0;
 
@@ -949,7 +955,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                   }
                 }
 
-                // OK, ATE, CHECK FOR AN OBSCURED TILE AND MAKE SURE IF LEVELNODE IS SET
+                // OK, ATE, CHECK FOR AN OBSCURED TILE AND MAKE SURE IF struct LEVELNODE IS SET
                 // WE DON'T RENDER UNLESS WE HAVE THE RENDER FLAG SET!
                 if (fObscured) {
                   if ((uiFlags & TILES_OBSCURED)) {
@@ -1481,7 +1487,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
               // Adjust for interface level
               sYPos += gsRenderHeight;
 
-              // OK, check for LEVELNODE HIDDEN...
+              // OK, check for struct LEVELNODE HIDDEN...
               fHiddenTile = FALSE;
 
               if (uiLevelNodeFlags & LEVELNODE_HIDDEN) {
@@ -3473,7 +3479,7 @@ void InvalidateWorldRedundency() {
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                               UINT16 *pZBuffer, UINT16 usZValue,
-                                              HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -3857,7 +3863,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
     UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
-    HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion) {
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
@@ -4243,8 +4249,9 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                      UINT16 *pZBuffer, UINT16 usZValue,
-                                                     HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                     UINT16 usIndex, SGPRect *clipregion) {
+                                                     struct VObject *hSrcVObject, INT32 iX,
+                                                     INT32 iY, UINT16 usIndex,
+                                                     SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset, uiLineFlag;
   UINT32 usHeight, usWidth, Unblitted;
@@ -4645,8 +4652,8 @@ BlitDone:
 //
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
-    HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion, INT16 sZIndex,
-    UINT16 *p16BPPPalette) {
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion,
+    INT16 sZIndex, UINT16 *p16BPPPalette) {
   UINT32 uiOffset, uiLineFlag;
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
@@ -5089,9 +5096,10 @@ void CorrectRenderCenter(INT16 sRenderX, INT16 sRenderY, INT16 *pSNewX, INT16 *p
 //
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                          UINT16 *pZBuffer, UINT16 usZValue,
-                                                         HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                         UINT16 usIndex, SGPRect *clipregion,
-                                                         INT16 sZIndex, UINT16 *p16BPPPalette) {
+                                                         struct VObject *hSrcVObject, INT32 iX,
+                                                         INT32 iY, UINT16 usIndex,
+                                                         SGPRect *clipregion, INT16 sZIndex,
+                                                         UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
@@ -5850,7 +5858,7 @@ void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
   UINT8 *pDestBuf;
   TILE_ELEMENT *TileElem;
   INT8 bBlitClipVal;
-  LEVELNODE *pObject;
+  struct LEVELNODE *pObject;
 
   // Begin Render Loop
   sAnchorPosX_M = sStartPointX_M;
@@ -6064,7 +6072,7 @@ void ResetRenderParameters() {
 }
 
 BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                             HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -6182,8 +6190,9 @@ BlitDone:
 }
 
 BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                          UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                          INT32 iX, INT32 iY, UINT16 usIndex) {
+                                          UINT16 *pZBuffer, UINT16 usZValue,
+                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                          UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -6288,8 +6297,8 @@ BlitDone:
   return (TRUE);
 }
 
-BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                        UINT16 usIndex) {
+BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcVObject, INT32 iX,
+                        INT32 iY, UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;

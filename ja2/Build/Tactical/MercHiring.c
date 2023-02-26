@@ -43,11 +43,8 @@
 #include "TacticalAI/AI.h"
 #include "TileEngine/InteractiveTiles.h"
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderFun.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/Message.h"
@@ -73,7 +70,7 @@ INT16 gsMercArriveSectorY = 1;
 void CheckForValidArrivalSector();
 
 INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 iNewIndex;
   UINT8 ubCount = 0;
   UINT8 ubCurrentSoldier = pHireMerc->ubProfileID;
@@ -121,10 +118,10 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
 #ifndef JA2DEMO
     if (iNewIndex == 0) {
       // OK, give this item to our merc!
-      OBJECTTYPE Object;
+      struct OBJECTTYPE Object;
 
       // make an objecttype
-      memset(&Object, 0, sizeof(OBJECTTYPE));
+      memset(&Object, 0, sizeof(struct OBJECTTYPE));
       Object.usItem = LETTER;
       Object.ubNumberOfObjects = 1;
       Object.bStatus[0] = 100;
@@ -262,7 +259,7 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
 
 void MercArrivesCallback(UINT8 ubSoldierID) {
   MERCPROFILESTRUCT *pMerc;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT32 uiTimeOfPost;
 
   if (!DidGameJustStart() && gsMercArriveSectorX == 9 &&
@@ -403,7 +400,7 @@ BOOLEAN IsMercDead(UINT8 ubMercID) {
     return (FALSE);
 }
 
-BOOLEAN IsTheSoldierAliveAndConcious(SOLDIERTYPE *pSoldier) {
+BOOLEAN IsTheSoldierAliveAndConcious(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->bLife >= CONSCIOUSNESS)
     return (TRUE);
   else
@@ -412,7 +409,7 @@ BOOLEAN IsTheSoldierAliveAndConcious(SOLDIERTYPE *pSoldier) {
 
 UINT8 NumberOfMercsOnPlayerTeam() {
   INT8 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 bLastTeamID;
   UINT8 ubCount = 0;
 
@@ -430,9 +427,9 @@ UINT8 NumberOfMercsOnPlayerTeam() {
   return (ubCount);
 }
 
-void HandleMercArrivesQuotes(SOLDIERTYPE *pSoldier) {
+void HandleMercArrivesQuotes(struct SOLDIERTYPE *pSoldier) {
   INT8 cnt, bHated, bLastTeamID;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
 
   // If we are approaching with helicopter, don't say any ( yet )
   if (pSoldier->ubStrategicInsertionCode != INSERTION_CODE_CHOPPER) {
@@ -507,7 +504,7 @@ UINT32 GetMercArrivalTimeOfDay() {
 
 void UpdateAnyInTransitMercsWithGlobalArrivalSector() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
 

@@ -3,6 +3,7 @@
 #include "Laptop/AIM.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -47,8 +48,8 @@ UINT32 guiInsuranceLink;
 UINT8 gubLinkPages[] = {BOBBYR_BOOKMARK, FUNERAL_BOOKMARK, INSURANCE_BOOKMARK};
 
 // Clicking on guys Face
-MOUSE_REGION gSelectedLinkRegion[AIM_LINK_NUM_LINKS];
-void SelectLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedLinkRegion[AIM_LINK_NUM_LINKS];
+void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 
 void GameInitAimLinks() {}
 
@@ -107,7 +108,7 @@ void ExitAimLinks() {
 void HandleAimLinks() {}
 
 void RenderAimLinks() {
-  HVOBJECT hPixHandle;
+  struct VObject* hPixHandle;
 
   DrawAimDefaults();
   DisableAimButton();
@@ -141,7 +142,7 @@ void RenderAimLinks() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectLinkRegionCallBack(MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

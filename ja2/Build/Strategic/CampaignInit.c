@@ -1,6 +1,7 @@
 #include "Strategic/CampaignInit.h"
 
 #include "GameSettings.h"
+#include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
@@ -12,6 +13,7 @@
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/TacticalSave.h"
+#include "TileEngine/TileDef.h"
 
 extern void InitStrategicMovementCosts();
 void InitKnowFacilitiesFlags();
@@ -107,7 +109,7 @@ void InitMiningLocations() {
 
 // Mobile groups are handled separately from sectors, because they are on the move.
 void GeneratePatrolGroups() {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   UINT8 ubNumTroops;
   ubNumTroops = (UINT8)(3 + gGameOptions.ubDifficultyLevel + Random(3));
   pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_C7, 0, ubNumTroops, 0);

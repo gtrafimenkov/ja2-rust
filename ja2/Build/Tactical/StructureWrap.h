@@ -2,18 +2,17 @@
 #define STRUCURE_WRAP_H
 
 #include "SGP/Types.h"
-#include "TileEngine/WorldDef.h"
 
 BOOLEAN IsTreePresentAtGridno(INT16 sGridNo);
 BOOLEAN IsFencePresentAtGridno(INT16 sGridNo);
 BOOLEAN IsJumpableFencePresentAtGridno(INT16 sGridNo);
 BOOLEAN IsDoorPresentAtGridno(INT16 sGridNo);
 
-// OK, THIS FUNCTION RETURNS A LEVELNODE POINTER TO A WALL OF THE SAME ORIENTATION
+// OK, THIS FUNCTION RETURNS A struct LEVELNODE POINTER TO A WALL OF THE SAME ORIENTATION
 // AS WAS GIVEN. RETURNS NULL IF NONE FOUND.
-LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation);
+struct LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation);
 
-LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo);
+struct LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo);
 
 BOOLEAN IsDoorVisibleAtGridNo(INT16 sGridNo);
 
@@ -32,8 +31,8 @@ BOOLEAN WallOrClosedDoorExistsOfTopRightOrientation(INT16 sGridNo);
 BOOLEAN OpenRightOrientedDoorWithDoorOnRightOfEdgeExists(INT16 sGridNo);
 BOOLEAN OpenLeftOrientedDoorWithDoorOnLeftOfEdgeExists(INT16 sGridNo);
 
-LEVELNODE *GetWallLevelNodeAndStructOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation,
-                                                              STRUCTURE **ppStructure);
+struct LEVELNODE *GetWallLevelNodeAndStructOfSameOrientationAtGridno(
+    INT16 sGridNo, INT8 ubOrientation, struct STRUCTURE **ppStructure);
 
 BOOLEAN CutWireFence(INT16 sGridNo);
 BOOLEAN IsCuttableWireFenceAtGridNo(INT16 sGridNo);

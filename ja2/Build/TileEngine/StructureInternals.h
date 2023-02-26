@@ -50,9 +50,9 @@ extern UINT8 AtHeight[PROFILE_Z_SIZE];
 // PROFILE *		CombinedLOSProfile;
 // PROFILE *		CombinedProtectionProfile;
 //
-// LEVELNODE gets a pointer to a STRUCTURE or
+// struct LEVELNODE gets a pointer to a struct STRUCTURE or
 // a union between its soldier pointer and a
-// STRUCTURE pointer
+// struct STRUCTURE pointer
 
 // if (fFlags & STRUCTURE_BASE_TILE)
 // then the structure is the "base" of the object
@@ -138,7 +138,7 @@ typedef struct TAG_STRUCTURE_TILE {
 
 #define NO_PARTNER_STRUCTURE 0
 
-typedef struct TAG_DB_STRUCTURE {
+struct DB_STRUCTURE {
   UINT8 ubArmour;
   UINT8 ubHitPoints;
   UINT8 ubDensity;
@@ -151,19 +151,19 @@ typedef struct TAG_DB_STRUCTURE {
   INT8 bZTileOffsetX;
   INT8 bZTileOffsetY;
   BYTE bUnused[1];
-} DB_STRUCTURE;  // 16 bytes
+};  // 16 bytes
 
-typedef struct TAG_DB_STRUCTURE_REF {
-  DB_STRUCTURE* pDBStructure;
+struct DB_STRUCTURE_REF {
+  struct DB_STRUCTURE* pDBStructure;
   DB_STRUCTURE_TILE** ppTile;  // dynamic array
-} DB_STRUCTURE_REF;            // 8 bytes
+};                             // 8 bytes
 
-typedef struct TAG_STRUCTURE {
-  struct TAG_STRUCTURE* pPrev;
-  struct TAG_STRUCTURE* pNext;
+struct STRUCTURE {
+  struct STRUCTURE* pPrev;
+  struct STRUCTURE* pNext;
   INT16 sGridNo;
   UINT16 usStructureID;
-  DB_STRUCTURE_REF* pDBStructureRef;
+  struct DB_STRUCTURE_REF* pDBStructureRef;
   union {
     struct {
       UINT8 ubHitPoints;
@@ -181,18 +181,18 @@ typedef struct TAG_STRUCTURE {
   UINT8 ubStructureHeight;  // if 0, then unset; otherwise stores height of structure when last
                             // calculated
   UINT8 ubUnused[1];
-} STRUCTURE;  // 32 bytes
+};  // 32 bytes
 
-typedef struct TAG_STRUCTURE_FILE_REF {
-  struct TAG_STRUCTURE_FILE_REF* pPrev;
-  struct TAG_STRUCTURE_FILE_REF* pNext;
-  AuxObjectData* pAuxData;
-  RelTileLoc* pTileLocData;
+struct STRUCTURE_FILE_REF {
+  struct STRUCTURE_FILE_REF* pPrev;
+  struct STRUCTURE_FILE_REF* pNext;
+  struct AuxObjectData* pAuxData;
+  struct RelTileLoc* pTileLocData;
   UINT8* pubStructureData;
-  DB_STRUCTURE_REF* pDBStructureRef;  // dynamic array
+  struct DB_STRUCTURE_REF* pDBStructureRef;  // dynamic array
   UINT16 usNumberOfStructures;
   UINT16 usNumberOfStructuresStored;
-} STRUCTURE_FILE_REF;  // 24 bytes
+};  // 24 bytes
 
 // IMPORTANT THING TO REMEMBER
 //

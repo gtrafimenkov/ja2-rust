@@ -4,7 +4,8 @@
 #include "SGP/Container.h"
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
-#include "SGP/VObject.h"
+
+struct VObject;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -168,8 +169,8 @@ BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
                                   INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP);
 
 BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, HVOBJECT BkgrndImg, UINT16 Index,
-                                  INT16 Ox, INT16 Oy);
+                                  INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
+                                  UINT16 Index, INT16 Ox, INT16 Oy);
 
 // This function sets the global video Surfaces for primary and backbuffer
 BOOLEAN SetPrimaryVideoSurfaces();
@@ -269,7 +270,7 @@ struct VSurface *GetPrimaryVideoSurface();
 struct VSurface *GetBackBufferVideoSurface();
 
 BOOLEAN ShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
-BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, HVOBJECT hImageHandle, INT32 iPosX,
+BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
                                 INT32 iPosY);
 
 // If the Dest Rect and the source rect are not the same size, the source surface will be either

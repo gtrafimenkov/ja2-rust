@@ -6,7 +6,7 @@
 #include "Utils/FontControl.h"
 
 extern UINT32 guiDropDownBorder;
-extern MOUSE_REGION pScreenMask;
+extern struct MOUSE_REGION pScreenMask;
 
 INT32 EnterLaptop();
 void ExitLaptop();
@@ -24,7 +24,7 @@ BOOLEAN LeaveLapTopScreen();
 void SetLaptopExitScreen(UINT32 uiExitScreen);
 void SetLaptopNewGameFlag();
 UINT32 DrawLapTopIcons();
-void LapTopScreenCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void HandleRightButtonUpEvent(void);
 BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT8 ubFlags,
                            MSGBOX_CALLBACK ReturnCallback);

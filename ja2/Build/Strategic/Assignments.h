@@ -3,10 +3,9 @@
 
 // header for assignment manipulation/updating for characters
 
-#include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
-#include "Strategic/StrategicMovement.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 // this distinguishes whether we're only looking for patients healable THIS HOUR (those that have
 // been on their assignment long enough), or those that will be healable EVER (regardless of whether
@@ -81,46 +80,46 @@ enum {
 };
 
 typedef struct TOWN_TRAINER_TYPE {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT16 sTrainingPts;
 
 } TOWN_TRAINER_TYPE;
 
 // can character do this assignment?
-// BOOLEAN CanSoldierAssignment( SOLDIERTYPE *pSoldier, INT8 bAssignment );
+// BOOLEAN CanSoldierAssignment( struct SOLDIERTYPE *pSoldier, INT8 bAssignment );
 
 // can this character be assigned as a doctor?
-BOOLEAN CanCharacterDoctor(SOLDIERTYPE *pCharacter);
+BOOLEAN CanCharacterDoctor(struct SOLDIERTYPE *pCharacter);
 
 // can this character be assigned as a repairman?
-BOOLEAN CanCharacterRepair(SOLDIERTYPE *pCharacter);
+BOOLEAN CanCharacterRepair(struct SOLDIERTYPE *pCharacter);
 
 // can character be patient?
-BOOLEAN CanCharacterPatient(SOLDIERTYPE *pCharacter);
+BOOLEAN CanCharacterPatient(struct SOLDIERTYPE *pCharacter);
 
 // can character train militia?
-BOOLEAN CanCharacterTrainMilitia(SOLDIERTYPE *pCharacter);
+BOOLEAN CanCharacterTrainMilitia(struct SOLDIERTYPE *pCharacter);
 
 // can character train stat?..as train self or as trainer?
-BOOLEAN CanCharacterTrainStat(SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf,
+BOOLEAN CanCharacterTrainStat(struct SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf,
                               BOOLEAN fTrainTeammate);
 
 // is character capable of practising at all?
-BOOLEAN CanCharacterPractise(SOLDIERTYPE *pCharacter);
+BOOLEAN CanCharacterPractise(struct SOLDIERTYPE *pCharacter);
 
 // can this character train others?
-BOOLEAN CanCharacterTrainTeammates(SOLDIERTYPE *pSoldier);
+BOOLEAN CanCharacterTrainTeammates(struct SOLDIERTYPE *pSoldier);
 
 // put character on duty?
-BOOLEAN CanCharacterOnDuty(SOLDIERTYPE *pCharacter);
+BOOLEAN CanCharacterOnDuty(struct SOLDIERTYPE *pCharacter);
 
 // put character to sleep?
-BOOLEAN CanCharacterSleep(SOLDIERTYPE *pCharacter, BOOLEAN fExplainWhyNot);
+BOOLEAN CanCharacterSleep(struct SOLDIERTYPE *pCharacter, BOOLEAN fExplainWhyNot);
 
-BOOLEAN CanCharacterBeAwakened(SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot);
+BOOLEAN CanCharacterBeAwakened(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot);
 
 // put character in vehicle?
-BOOLEAN CanCharacterVehicle(SOLDIERTYPE *pCharacter);
+BOOLEAN CanCharacterVehicle(struct SOLDIERTYPE *pCharacter);
 
 #define CHARACTER_CANT_JOIN_SQUAD_ALREADY_IN_IT -6
 #define CHARACTER_CANT_JOIN_SQUAD_SQUAD_MOVING -5
@@ -132,14 +131,14 @@ BOOLEAN CanCharacterVehicle(SOLDIERTYPE *pCharacter);
 #define CHARACTER_CAN_JOIN_SQUAD 1
 
 // can character be added to squad
-INT8 CanCharacterSquad(SOLDIERTYPE *pCharacter, INT8 bSquadValue);
+INT8 CanCharacterSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
 
 // if merc could train militia here, do they have sufficient loyalty?
-BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(SOLDIERTYPE *pSoldier);
+BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(struct SOLDIERTYPE *pSoldier);
 BOOLEAN DoesTownHaveRatingToTrainMilitia(INT8 bTownId);
 
 // is the character in transit?
-BOOLEAN IsCharacterInTransit(SOLDIERTYPE *pCharacter);
+BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pCharacter);
 
 // handler for assignments -- called once per hour via event
 void UpdateAssignments();
@@ -147,7 +146,7 @@ void UpdateAssignments();
 // how many people in this secotr have this assignment?
 UINT8 FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment);
 
-void MakeSoldiersTacticalAnimationReflectAssignment(SOLDIERTYPE *pSoldier);
+void MakeSoldiersTacticalAnimationReflectAssignment(struct SOLDIERTYPE *pSoldier);
 
 // build list of sectors with mercs
 void BuildSectorsWithSoldiersList(void);
@@ -158,7 +157,7 @@ void InitSectorsWithSoldiersList(void);
 // is there a soldier in this sector?..only use after BuildSectorsWithSoldiersList is called
 BOOLEAN IsThereASoldierInThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
 
-void CheckIfSoldierUnassigned(SOLDIERTYPE *pSoldier);
+void CheckIfSoldierUnassigned(struct SOLDIERTYPE *pSoldier);
 
 // figure out the assignment menu pop up box positions
 void DetermineBoxPositions(void);
@@ -167,33 +166,34 @@ void DetermineBoxPositions(void);
 void SetTacticalPopUpAssignmentBoxXY(void);
 
 // get number of pts that are being used this strategic turn
-INT16 GetTownTrainPtsForCharacter(SOLDIERTYPE *pTrainer, UINT16 *pusMaxPts);
+INT16 GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, UINT16 *pusMaxPts);
 
 // find number of healing pts
-UINT16 CalculateHealingPointsForDoctor(SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts,
+UINT16 CalculateHealingPointsForDoctor(struct SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts,
                                        BOOLEAN fMakeSureKitIsInHand);
 
 // find number of repair pts repairman has available
-UINT8 CalculateRepairPointsForRepairman(SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts,
+UINT8 CalculateRepairPointsForRepairman(struct SOLDIERTYPE *pSoldier, UINT16 *pusMaxPts,
                                         BOOLEAN fMakeSureKitIsInHand);
 
 // get bonus tarining pts due to an instructor for this student
-INT16 GetBonusTrainingPtsDueToInstructor(SOLDIERTYPE *pInstructor, SOLDIERTYPE *pStudent,
-                                         INT8 bTrainStat, BOOLEAN fAtGunRange, UINT16 *pusMaxPts);
+INT16 GetBonusTrainingPtsDueToInstructor(struct SOLDIERTYPE *pInstructor,
+                                         struct SOLDIERTYPE *pStudent, INT8 bTrainStat,
+                                         BOOLEAN fAtGunRange, UINT16 *pusMaxPts);
 
 // get training pts for this soldier
-INT16 GetSoldierTrainingPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
+INT16 GetSoldierTrainingPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
                             UINT16 *pusMaxPts);
 
 // pts for being a student for this soldier
-INT16 GetSoldierStudentPts(SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
+INT16 GetSoldierStudentPts(struct SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtGunRange,
                            UINT16 *pusMaxPts);
 
 // reset these soldiers
-void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(SOLDIERTYPE *pSoldier);
+void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(struct SOLDIERTYPE *pSoldier);
 
 // Handle assignment done
-void AssignmentDone(SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote, BOOLEAN fMeToo);
+void AssignmentDone(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote, BOOLEAN fMeToo);
 
 extern INT32 ghAssignmentBox;
 extern INT32 ghEpcBox;
@@ -207,15 +207,15 @@ extern INT32 ghContractBox;
 extern INT32 ghMoveBox;
 // extern INT32 ghUpdateBox;
 
-extern MOUSE_REGION gAssignmentScreenMaskRegion;
+extern struct MOUSE_REGION gAssignmentScreenMaskRegion;
 
-extern MOUSE_REGION gAssignmentMenuRegion[];
-extern MOUSE_REGION gTrainingMenuRegion[];
-extern MOUSE_REGION gAttributeMenuRegion[];
-extern MOUSE_REGION gSquadMenuRegion[];
-extern MOUSE_REGION gContractMenuRegion[];
-extern MOUSE_REGION gRemoveMercAssignRegion[];
-extern MOUSE_REGION gVehicleMenuRegion[];
+extern struct MOUSE_REGION gAssignmentMenuRegion[];
+extern struct MOUSE_REGION gTrainingMenuRegion[];
+extern struct MOUSE_REGION gAttributeMenuRegion[];
+extern struct MOUSE_REGION gSquadMenuRegion[];
+extern struct MOUSE_REGION gContractMenuRegion[];
+extern struct MOUSE_REGION gRemoveMercAssignRegion[];
+extern struct MOUSE_REGION gVehicleMenuRegion[];
 
 extern BOOLEAN fShownContractMenu;
 extern BOOLEAN fShownAssignmentMenu;
@@ -231,68 +231,68 @@ extern BOOLEAN gfReEvaluateEveryonesNothingToDo;
 
 // pop up menu mouse regions
 void CreateDestroyMouseRegionsForAssignmentMenu(void);
-void AssignmentMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void AssignmentMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void AssignmentMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void AssignmentMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void CreateDestroyMouseRegionsForTrainingMenu(void);
-void TrainingMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void TrainingMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void TrainingMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void CreateDestroyMouseRegionsForAttributeMenu(void);
-void AttributeMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void AttributesMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void AttributeMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void AttributesMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void CreateDestroyMouseRegionsForSquadMenu(BOOLEAN fPositionBox);
-void SquadMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SquadMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void SquadMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SquadMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // vehicle menu
 void CreateDestroyMouseRegionForVehicleMenu(void);
-void VehicleMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void VehicleMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void VehicleMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void VehicleMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // repair menu
 void CreateDestroyMouseRegionForRepairMenu(void);
-void RepairMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void RepairMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void RepairMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void RepairMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // contract menu
 void CreateDestroyMouseRegionsForContractMenu(void);
-void ContractMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void ContractMenuMvtCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void RebuildContractBoxForMerc(SOLDIERTYPE *pCharacter);
+void ContractMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void ContractMenuMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void RebuildContractBoxForMerc(struct SOLDIERTYPE *pCharacter);
 
 // remove merc from team menu callback
-void RemoveMercMenuBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
-void RemoveMercMenuMvtCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void RemoveMercMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void RemoveMercMenuMvtCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void CreateDestroyMouseRegionsForRemoveMenu(void);
 
 // misc assignment GUI functions
 void HandleShadingOfLinesForAssignmentMenus(void);
-BOOLEAN IsCharacterAliveAndConscious(SOLDIERTYPE *pCharacter);
+BOOLEAN IsCharacterAliveAndConscious(struct SOLDIERTYPE *pCharacter);
 void CreateDestroyScreenMaskForAssignmentAndContractMenus(void);
 
 BOOLEAN CreateDestroyAssignmentPopUpBoxes(void);
-void SetSoldierAssignment(SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam1, INT32 iParam2,
-                          INT32 iParam3);
+void SetSoldierAssignment(struct SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam1,
+                          INT32 iParam2, INT32 iParam3);
 
 // set merc asleep and awake under the new sleep system implemented June 29, 1998
 // if give warning is false, the function can be used as an internal function
-BOOLEAN SetMercAwake(SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning, BOOLEAN fForceHim);
-BOOLEAN SetMercAsleep(SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning);
-BOOLEAN PutMercInAsleepState(SOLDIERTYPE *pSoldier);
-BOOLEAN PutMercInAwakeState(SOLDIERTYPE *pSoldier);
+BOOLEAN SetMercAwake(struct SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning, BOOLEAN fForceHim);
+BOOLEAN SetMercAsleep(struct SOLDIERTYPE *pSoldier, BOOLEAN fGiveWarning);
+BOOLEAN PutMercInAsleepState(struct SOLDIERTYPE *pSoldier);
+BOOLEAN PutMercInAwakeState(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN AssignMercToAMovementGroup(SOLDIERTYPE *pSoldier);
+BOOLEAN AssignMercToAMovementGroup(struct SOLDIERTYPE *pSoldier);
 
 // set what time this merc undertook this assignment
-void SetTimeOfAssignmentChangeForMerc(SOLDIERTYPE *pSoldier);
+void SetTimeOfAssignmentChangeForMerc(struct SOLDIERTYPE *pSoldier);
 
 // enough time on assignment for it to count?
-BOOLEAN EnoughTimeOnAssignment(SOLDIERTYPE *pSoldier);
+BOOLEAN EnoughTimeOnAssignment(struct SOLDIERTYPE *pSoldier);
 
 // check if any merc in group is too tired to keep moving
-BOOLEAN AnyMercInGroupCantContinueMoving(GROUP *pGroup);
+BOOLEAN AnyMercInGroupCantContinueMoving(struct GROUP *pGroup);
 
 // handle selected group of mercs being put to sleep
 BOOLEAN HandleSelectedMercsBeingPutAsleep(BOOLEAN fWakeUp, BOOLEAN fDisplayWarning);
@@ -311,13 +311,13 @@ void ReEvaluateEveryonesNothingToDo();
 void SetAssignmentForList(INT8 bAssignment, INT8 bParam);
 
 // is this area maxed out on militia?
-BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(SOLDIERTYPE *pSoldier);
+BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(struct SOLDIERTYPE *pSoldier);
 
 // function where we actually set someone's assignment so we can trap certain situations
-void ChangeSoldiersAssignment(SOLDIERTYPE *pSoldier, INT8 bAssignment);
+void ChangeSoldiersAssignment(struct SOLDIERTYPE *pSoldier, INT8 bAssignment);
 
-void UnEscortEPC(SOLDIERTYPE *pSoldier);
+void UnEscortEPC(struct SOLDIERTYPE *pSoldier);
 
-SOLDIERTYPE *AnyDoctorWhoCanHealThisPatient(SOLDIERTYPE *pPatient, BOOLEAN fThisHour);
+struct SOLDIERTYPE *AnyDoctorWhoCanHealThisPatient(struct SOLDIERTYPE *pPatient, BOOLEAN fThisHour);
 
 #endif

@@ -393,7 +393,7 @@ control down there
 */
 
 void ReplaceSoldierProfileInPlayerGroup(UINT8 ubGroupID, UINT8 ubOldProfile, UINT8 ubNewProfile) {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   PLAYERGROUP *curr;
 
   pGroup = GetGroup(ubGroupID);

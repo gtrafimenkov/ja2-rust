@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#include "SGP/Types.h"
 #include "TileEngine/WorldDef.h"
 
 #define NO_ROOM 0
@@ -17,7 +18,7 @@ void ShutdownRoomDatabase();
 void SetTileRoomNum(INT16 sGridNo, UINT8 ubRoomNum);
 void SetTileRangeRoomNum(SGPRect *pSelectRegion, UINT8 ubRoomNum);
 
-void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, SOLDIERTYPE *pSoldier);
+void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier);
 BOOLEAN InARoom(UINT16 sGridNo, UINT8 *pubRoomNo);
 BOOLEAN InAHiddenRoom(UINT16 sGridNo, UINT8 *pubRoomNo);
 

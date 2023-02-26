@@ -225,7 +225,7 @@ BOOLEAN InitalizeDialogueControl();
 void ShutdownDialogueControl();
 void EmptyDialogueQueue();
 void HandleDialogue();
-void HandleImportantMercQuote(SOLDIERTYPE *pSoldier, UINT16 usQuoteNumber);
+void HandleImportantMercQuote(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNumber);
 
 // Send in a profile number to see if text dialog exists for this guy....
 BOOLEAN DialogueDataFileExistsForProfile(UINT8 ubCharacterNum, UINT16 usQuoteNum, BOOLEAN fWavFile,
@@ -244,19 +244,19 @@ BOOLEAN CharacterDialogueWithSpecialEventEx(UINT8 ubCharacterNum, UINT16 usQuote
                                             UINT32 uiData1, UINT32 uiData2, UINT32 uiData3);
 
 // A higher level function used for tactical quotes
-BOOLEAN TacticalCharacterDialogueWithSpecialEvent(SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
+BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
                                                   UINT32 uiFlag, UINT32 uiData1, UINT32 uiData2);
 
 // A higher level function used for tactical quotes
-BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
+BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
                                                     UINT32 uiFlag, UINT32 uiData1, UINT32 uiData2,
                                                     UINT32 uiData3);
 
 // A higher level function used for tactical quotes
-BOOLEAN TacticalCharacterDialogue(SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
+BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
 
 // A higher level function used for tactical quotes
-BOOLEAN DelayedTacticalCharacterDialogue(SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
+BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
 
 // A more general purpose function for processing quotes
 BOOLEAN CharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
@@ -310,8 +310,8 @@ void ExecuteTacticalTextBoxForLastQuote(INT16 sLeftPosition, STR16 pString);
 UINT32 FindDelayForString(STR16 sString);
 void BeginLoggingForBleedMeToos(BOOLEAN fStart);
 
-void UnSetEngagedInConvFromPCAction(SOLDIERTYPE *pSoldier);
-void SetEngagedInConvFromPCAction(SOLDIERTYPE *pSoldier);
+void UnSetEngagedInConvFromPCAction(struct SOLDIERTYPE *pSoldier);
+void SetEngagedInConvFromPCAction(struct SOLDIERTYPE *pSoldier);
 
 extern UINT32 guiDialogueLastQuoteTime;
 extern UINT32 guiDialogueLastQuoteDelay;

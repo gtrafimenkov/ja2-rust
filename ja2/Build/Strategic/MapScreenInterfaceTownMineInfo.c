@@ -5,6 +5,8 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/Font.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/MapScreenInterface.h"
@@ -21,6 +23,7 @@
 #include "Tactical/HandleUI.h"
 #include "Tactical/TacticalSave.h"
 #include "TacticalAI/NPC.h"
+#include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
 #include "Utils/PopUpBox.h"
 #include "Utils/Text.h"
@@ -695,7 +698,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
   UINT32 uiObject;
   ETRLEObject *pTrav;
   INT16 sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // load the button
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -803,7 +806,7 @@ void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 
 // get the min width of the town mine info pop up box
 void MinWidthOfTownMineInfoBox(void) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
   INT16 sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
   UINT32 uiObject;

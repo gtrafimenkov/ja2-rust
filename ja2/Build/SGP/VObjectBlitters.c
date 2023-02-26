@@ -6,6 +6,7 @@
 #include "SGP/HImage.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 
@@ -34,8 +35,9 @@ bit, and must be the same dimensions (including Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                         UINT16 *pZBuffer, UINT16 usZValue,
-                                                        HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                        UINT16 usIndex, SGPRect *clipregion) {
+                                                        struct VObject *hSrcVObject, INT32 iX,
+                                                        INT32 iY, UINT16 usIndex,
+                                                        SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset, uiLineFlag;
   UINT32 usHeight, usWidth, Unblitted;
@@ -291,7 +293,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTranslucent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                   UINT16 *pZBuffer, UINT16 usZValue,
-                                                  HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                  struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                   UINT16 usIndex) {
   UINT32 usHeight, usWidth, uiOffset, LineSkip;
   INT32 iTempX, iTempY;
@@ -417,7 +419,7 @@ bit, and must be the same dimensions (including Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBTranslucent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                     UINT16 *pZBuffer, UINT16 usZValue,
-                                                    HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                    struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                     UINT16 usIndex) {
   UINT32 usHeight, usWidth, uiOffset, LineSkip;
   INT32 iTempX, iTempY;
@@ -535,7 +537,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo8BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                              UINT16 *pZBuffer, UINT16 usZValue,
-                                             HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex, SGPRect *clipregion) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
@@ -826,9 +828,9 @@ BOOLEAN ShutdownZBuffer(UINT16 *pBuffer) {
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo8BPPBufferMonoShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                          UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                          INT32 iX, INT32 iY, UINT16 usIndex, UINT8 ubForeground,
-                                          UINT8 ubBackground) {
+                                          UINT16 *pZBuffer, UINT16 usZValue,
+                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                          UINT16 usIndex, UINT8 ubForeground, UINT8 ubBackground) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
@@ -962,7 +964,7 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                               HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                UINT16 usIndex, SGPRect *clipregion,
                                                UINT16 usForeground, UINT16 usBackground,
                                                UINT16 usShadow) {
@@ -1509,7 +1511,7 @@ BlitLineDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelate(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                UINT16 *pZBuffer, UINT16 usZValue,
-                                               HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                UINT16 usIndex) {
   UINT32 usHeight, usWidth, uiOffset, LineSkip;
   INT32 iTempX, iTempY;
@@ -1640,8 +1642,8 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelateObscured(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                        UINT16 *pZBuffer, UINT16 usZValue,
-                                                       HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                       UINT16 usIndex) {
+                                                       struct VObject *hSrcVObject, INT32 iX,
+                                                       INT32 iY, UINT16 usIndex) {
   UINT32 usHeight, usWidth, uiOffset, LineSkip;
   INT32 iTempX, iTempY;
   UINT16 *p16BPPPalette;
@@ -1786,7 +1788,7 @@ bit, and must be the same dimensions (including Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBPixelate(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                  UINT16 *pZBuffer, UINT16 usZValue,
-                                                 HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                 struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                  UINT16 usIndex) {
   UINT32 usHeight, usWidth, uiOffset, LineSkip;
   INT32 iTempX, iTempY;
@@ -1916,8 +1918,9 @@ bit, and must be the same dimensions (including Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipPixelate(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                      UINT16 *pZBuffer, UINT16 usZValue,
-                                                     HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                     UINT16 usIndex, SGPRect *clipregion) {
+                                                     struct VObject *hSrcVObject, INT32 iX,
+                                                     INT32 iY, UINT16 usIndex,
+                                                     SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset, uiLineFlag;
   UINT32 usHeight, usWidth, Unblitted;
@@ -2177,8 +2180,8 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer,
-                                       UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                       UINT16 usIndex) {
+                                       UINT16 usZValue, struct VObject *hSrcVObject, INT32 iX,
+                                       INT32 iY, UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -2294,8 +2297,8 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer,
-                                         UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                         UINT16 usIndex) {
+                                         UINT16 usZValue, struct VObject *hSrcVObject, INT32 iX,
+                                         INT32 iY, UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -2410,7 +2413,7 @@ destination.
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                            HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                            struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                             UINT16 usIndex, UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -2522,7 +2525,7 @@ destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                              UINT16 *pZBuffer, UINT16 usZValue,
-                                             HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex, UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -2645,7 +2648,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                UINT16 *pZBuffer, UINT16 usZValue,
-                                               HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                UINT16 usIndex, UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -2815,8 +2818,9 @@ BlitNTL10:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscured(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                        UINT16 *pZBuffer, UINT16 usZValue,
-                                                       HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                       UINT16 usIndex, UINT16 *p16BPPPalette) {
+                                                       struct VObject *hSrcVObject, INT32 iX,
+                                                       INT32 iY, UINT16 usIndex,
+                                                       UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
@@ -2966,7 +2970,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                  UINT16 *pZBuffer, UINT16 usZValue,
-                                                 HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                 struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                  UINT16 usIndex, SGPRect *clipregion,
                                                  UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
@@ -3222,7 +3226,7 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                                HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                 UINT16 usIndex, SGPRect *clipregion,
                                                 UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
@@ -3466,7 +3470,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                    UINT16 *pZBuffer, UINT16 usZValue,
-                                                   HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                   struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                    UINT16 usIndex, SGPRect *clipregion,
                                                    UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
@@ -3724,8 +3728,9 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                            UINT16 *pZBuffer, UINT16 usZValue,
-                                                           HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                           UINT16 usIndex, SGPRect *clipregion,
+                                                           struct VObject *hSrcVObject, INT32 iX,
+                                                           INT32 iY, UINT16 usIndex,
+                                                           SGPRect *clipregion,
                                                            UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted, uiLineFlag;
@@ -4006,7 +4011,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowBelowOrEqualZNBClip(
     UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
-    HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion,
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion,
     UINT16 *p16BPPPalette) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
@@ -4259,8 +4264,8 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferShadowZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer,
-                                        UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                        UINT16 usIndex) {
+                                        UINT16 usZValue, struct VObject *hSrcVObject, INT32 iX,
+                                        INT32 iY, UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -4371,9 +4376,9 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferShadowZClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                            UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                            INT32 iX, INT32 iY, UINT16 usIndex,
-                                            SGPRect *clipregion) {
+                                            UINT16 *pZBuffer, UINT16 usZValue,
+                                            struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                            UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
@@ -4617,8 +4622,9 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                          UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                          INT32 iX, INT32 iY, UINT16 usIndex) {
+                                          UINT16 *pZBuffer, UINT16 usZValue,
+                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                          UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -4728,7 +4734,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNBClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                               UINT16 *pZBuffer, UINT16 usZValue,
-                                              HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -4972,9 +4978,9 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                           UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                           INT32 iX, INT32 iY, UINT16 usIndex,
-                                           SGPRect *clipregion) {
+                                           UINT16 *pZBuffer, UINT16 usZValue,
+                                           struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                           UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
@@ -5221,7 +5227,7 @@ Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                              UINT16 *pZBuffer, UINT16 usZValue,
-                                             HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -5859,9 +5865,10 @@ ReadMask:
         for a mask, and a 16-bit buffer as a destination.
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferMask(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, HVOBJECT hSrcVObject,
-                                     INT32 iX, INT32 iY, UINT16 usIndex, HVOBJECT hMaskObject,
-                                     INT32 iMOX, INT32 iMOY, UINT16 usMask) {
+BOOLEAN Blt8BPPDataTo16BPPBufferMask(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+                                     struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                     UINT16 usIndex, struct VObject *hMaskObject, INT32 iMOX,
+                                     INT32 iMOY, UINT16 usMask) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 uiMOffset;
@@ -6134,7 +6141,8 @@ BOOLEAN Blt16BPPBufferLooseHatchRectWithColor(UINT16 *pBuffer, UINT32 uiDestPitc
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                       HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex) {
+                                       struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                       UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -6276,7 +6284,7 @@ BlitDone:
 **********************************************************************************************/
 
 BOOLEAN Blt8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                            HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                            struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                             UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -6418,7 +6426,7 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransparentClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                                HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                 UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -6698,7 +6706,7 @@ BlitDone:
         Determines whether a given blit will need clipping or not. Returns TRUE/FALSE.
 
 **********************************************************************************************/
-BOOLEAN BltIsClipped(HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
+BOOLEAN BltIsClipped(struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
                      SGPRect *clipregion) {
   UINT32 usHeight, usWidth;
   ETRLEObject *pTrav;
@@ -6750,8 +6758,8 @@ BOOLEAN BltIsClipped(HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                           HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
-                                           SGPRect *clipregion) {
+                                           struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                           UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
@@ -7151,8 +7159,9 @@ BlitLine:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                           HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
-                                           UINT16 usForeground, UINT16 usBackground) {
+                                           struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                           UINT16 usIndex, UINT16 usForeground,
+                                           UINT16 usBackground) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -7283,8 +7292,8 @@ BlitDone:
 }
 
 /*
-BOOLEAN Blt8BPPDataTo16BPPBufferFullTransparent( HVOBJECT hDestVObject, HVOBJECT hSrcVObject, UINT16
-usX, UINT16 usY, SGPRect *srcRect )
+BOOLEAN Blt8BPPDataTo16BPPBufferFullTransparent( struct VObject* hDestVObject, struct VObject*
+hSrcVObject, UINT16 usX, UINT16 usY, SGPRect *srcRect )
 {
         UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
 //	UINT32 rows, cols;
@@ -7404,8 +7413,8 @@ finished blit
 
 // UTILITY FUNCTIONS FOR BLITTING
 /*
-BOOLEAN ClipReleatedSrcAndDestRectangles( HVOBJECT hDestVObject, HVOBJECT hSrcVObject, RECT
-*DestRect, RECT *SrcRect )
+BOOLEAN ClipReleatedSrcAndDestRectangles( struct VObject* hDestVObject, struct VObject* hSrcVObject,
+RECT *DestRect, RECT *SrcRect )
 {
 
         Assert( hDestVObject != NULL );
@@ -7484,7 +7493,7 @@ BOOLEAN ClipReleatedSrcAndDestRectangles( HVOBJECT hDestVObject, HVOBJECT hSrcVO
 }
 
 
-BOOLEAN FillSurface( HVOBJECT hDestVObject, blt_fx *pBltFx )
+BOOLEAN FillSurface( struct VObject* hDestVObject, blt_fx *pBltFx )
 {
         DDBLTFX				 BlitterFX;
 
@@ -7506,7 +7515,7 @@ VOBJECT_RESERVED_SURFACE )
         return( TRUE );
 }
 
-BOOLEAN FillSurfaceRect( HVOBJECT hDestVObject, blt_fx *pBltFx )
+BOOLEAN FillSurfaceRect( struct VObject* hDestVObject, blt_fx *pBltFx )
 {
         DDBLTFX				 BlitterFX;
 
@@ -7529,8 +7538,8 @@ VOBJECT_RESERVED_SURFACE )
 }
 
 
-BOOLEAN BltVObjectUsingDD( HVOBJECT hDestVObject, HVOBJECT hSrcVObject, UINT32 fBltFlags, INT32
-iDestX, INT32 iDestY, struct Rect *SrcRect )
+BOOLEAN BltVObjectUsingDD( struct VObject* hDestVObject, struct VObject* hSrcVObject, UINT32
+fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect )
 {
         UINT32		uiDDFlags;
         RECT			DestRect;
@@ -7612,7 +7621,7 @@ VOBJECT_RESERVED_SURFACE )
 
 
 // Blt to backup buffer
-BOOLEAN UpdateBackupSurface( HVOBJECT hVObject )
+BOOLEAN UpdateBackupSurface( struct VObject* hVObject )
 {
         RECT		aRect;
 
@@ -7706,7 +7715,7 @@ FillLineEnd:
         Determines whether a given blit will need clipping or not. Returns TRUE/FALSE.
 
 **********************************************************************************************/
-CHAR8 BltIsClippedOrOffScreen(HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
+CHAR8 BltIsClippedOrOffScreen(struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
                               SGPRect *clipregion) {
   UINT32 usHeight, usWidth;
   ETRLEObject *pTrav;
@@ -7766,8 +7775,8 @@ CHAR8 BltIsClippedOrOffScreen(HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 u
 // ATE New blitter for rendering a differrent color for value 254. Can be transparent if fDoOutline
 // is FALSE
 BOOLEAN Blt8BPPDataTo16BPPBufferOutline(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                        HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
-                                        INT16 s16BPPColor, BOOLEAN fDoOutline) {
+                                        struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                        UINT16 usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
@@ -7874,7 +7883,7 @@ BlitDone:
 // ATE New blitter for rendering a differrent color for value 254. Can be transparent if fDoOutline
 // is FALSE
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                            HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                            struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                             UINT16 usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline,
                                             SGPRect *clipregion) {
   UINT32 uiOffset;
@@ -8114,7 +8123,7 @@ BlitDone:
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                              UINT16 *pZBuffer, UINT16 usZValue,
-                                             HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline,
                                              SGPRect *clipregion) {
   UINT32 uiOffset;
@@ -8372,8 +8381,8 @@ BlitDone:
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
     UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
-    HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline,
-    SGPRect *clipregion) {
+    struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, INT16 s16BPPColor,
+    BOOLEAN fDoOutline, SGPRect *clipregion) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
@@ -8655,7 +8664,7 @@ BlitDone:
 }
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                              HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               UINT16 usIndex) {
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -8751,7 +8760,7 @@ BlitDone:
 }
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                                  HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                                  struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                   UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -9024,8 +9033,9 @@ BlitDone:
 }
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer,
-                                         UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                         UINT16 usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline) {
+                                         UINT16 usZValue, struct VObject *hSrcVObject, INT32 iX,
+                                         INT32 iY, UINT16 usIndex, INT16 s16BPPColor,
+                                         BOOLEAN fDoOutline) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -9150,9 +9160,9 @@ BlitDone:
 
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                          UINT16 *pZBuffer, UINT16 usZValue,
-                                                         HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                         UINT16 usIndex, INT16 s16BPPColor,
-                                                         BOOLEAN fDoOutline) {
+                                                         struct VObject *hSrcVObject, INT32 iX,
+                                                         INT32 iY, UINT16 usIndex,
+                                                         INT16 s16BPPColor, BOOLEAN fDoOutline) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -9301,9 +9311,9 @@ BlitDone:
 
 // This is the same as above, but DONOT WRITE to Z!
 BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                           UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                           INT32 iX, INT32 iY, UINT16 usIndex, INT16 s16BPPColor,
-                                           BOOLEAN fDoOutline) {
+                                           UINT16 *pZBuffer, UINT16 usZValue,
+                                           struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                           UINT16 usIndex, INT16 s16BPPColor, BOOLEAN fDoOutline) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -9435,8 +9445,9 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                           UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject,
-                                           INT32 iX, INT32 iY, UINT16 usIndex) {
+                                           UINT16 *pZBuffer, UINT16 usZValue,
+                                           struct VObject *hSrcVObject, INT32 iX, INT32 iY,
+                                           UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
@@ -9548,7 +9559,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                UINT16 *pZBuffer, UINT16 usZValue,
-                                               HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                                UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -9794,7 +9805,7 @@ BlitDone:
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                              UINT16 *pZBuffer, UINT16 usZValue,
-                                             HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                             struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                              UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -9902,7 +9913,7 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferIntensityClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                              HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                              struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                               UINT16 usIndex, SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -10176,7 +10187,7 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferIntensity(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                          HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
+                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                           UINT16 usIndex) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
@@ -10324,8 +10335,9 @@ bit, and must be the same dimensions (including Pitch) as the destination.
 **********************************************************************************************/
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                            UINT16 *pZBuffer, UINT16 usZValue,
-                                                           HVOBJECT hSrcVObject, INT32 iX, INT32 iY,
-                                                           UINT16 usIndex, SGPRect *clipregion) {
+                                                           struct VObject *hSrcVObject, INT32 iX,
+                                                           INT32 iY, UINT16 usIndex,
+                                                           SGPRect *clipregion) {
   UINT16 *p16BPPPalette;
   UINT32 uiOffset, uiLineFlag;
   UINT32 usHeight, usWidth, Unblitted;

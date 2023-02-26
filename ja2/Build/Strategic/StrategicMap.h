@@ -2,7 +2,8 @@
 #define __STRATMAP_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 // The maximum size for any team strategically speaking.  For example, we can't have more than 20
 // enemies, militia, or creatures at a time.
@@ -68,7 +69,8 @@ BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
 
 BOOLEAN EnterSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
 void UpdateMercsInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
-void UpdateMercInSector(SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY,
+                        INT8 bSectorZ);
 
 void InitializeMapStructure();
 
@@ -113,7 +115,8 @@ BOOLEAN SectorIsPartOfTown(INT8 bTownId, INT16 sSectorX, INT16 sSectorY);
 
 // BOOLEAN IsThereAnyOneInThisTown( UINT8 ubTownId );
 
-BOOLEAN SoldierOKForSectorExit(SOLDIERTYPE *pSoldier, INT8 bExitDirection, UINT16 usAdditionalData);
+BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
+                               UINT16 usAdditionalData);
 BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
                         UINT32 *puiTraverseTimeInMinutes);
 void SetupNewStrategicGame();
@@ -123,7 +126,7 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile);
 
 void AllMercsHaveWalkedOffSector();
 
-void AdjustSoldierPathToGoOffEdge(SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
+void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
                                   UINT8 ubTacticalDirection);
 
 void AllMercsWalkedToExitGrid();
@@ -138,7 +141,7 @@ void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNe
 
 // handle a soldier leaving thier squad behind, this sets them up for mvt and potential rejoining of
 // group
-void HandleSoldierLeavingSectorByThemSelf(SOLDIERTYPE *pSoldier);
+void HandleSoldierLeavingSectorByThemSelf(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN CheckAndHandleUnloadingOfCurrentWorld();
 
@@ -155,7 +158,7 @@ INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY);
 
 INT8 GetSAMIdFromSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
 
-void SetupProfileInsertionDataForSoldier(SOLDIERTYPE *pSoldier);
+void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle();
 

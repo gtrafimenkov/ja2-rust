@@ -80,7 +80,7 @@ MoraleEvent gbMoraleEvent[NUM_MORALE_EVENTS] = {
 
 BOOLEAN gfSomeoneSaidMoraleQuote = FALSE;
 
-INT8 GetMoraleModifier(SOLDIERTYPE *pSoldier) {
+INT8 GetMoraleModifier(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->uiStatusFlags & SOLDIER_PC) {
     if (pSoldier->bMorale > 50) {
       // give +1 at 55, +3 at 65, up to +5 at 95 and above
@@ -106,7 +106,7 @@ INT8 GetMoraleModifier(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void DecayTacticalMorale(SOLDIERTYPE *pSoldier) {
+void DecayTacticalMorale(struct SOLDIERTYPE *pSoldier) {
   // decay the tactical morale modifier
   if (pSoldier->bTacticalMoraleMod != 0) {
     // decay the modifier!
@@ -120,7 +120,7 @@ void DecayTacticalMorale(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void DecayStrategicMorale(SOLDIERTYPE *pSoldier) {
+void DecayStrategicMorale(struct SOLDIERTYPE *pSoldier) {
   // decay the modifier!
   if (pSoldier->bStrategicMoraleMod > 0) {
     pSoldier->bStrategicMoraleMod =
@@ -132,7 +132,7 @@ void DecayStrategicMorale(SOLDIERTYPE *pSoldier) {
 }
 
 void DecayTacticalMoraleModifiers(void) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubLoop, ubLoop2;
   BOOLEAN fHandleNervous;
 
@@ -214,7 +214,7 @@ void DecayTacticalMoraleModifiers(void) {
 }
 
 void DecayStrategicMoraleModifiers(void) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubLoop;
 
   ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
@@ -235,7 +235,7 @@ void DecayStrategicMoraleModifiers(void) {
   }
 }
 
-void RefreshSoldierMorale(SOLDIERTYPE *pSoldier) {
+void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier) {
   INT32 iActualMorale;
 
   if (pSoldier->fMercAsleep) {
@@ -260,7 +260,7 @@ void RefreshSoldierMorale(SOLDIERTYPE *pSoldier) {
   fCharacterInfoPanelDirty = TRUE;
 }
 
-void UpdateSoldierMorale(SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoraleMod) {
+void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoraleMod) {
   MERCPROFILESTRUCT *pProfile;
   INT32 iMoraleModTotal;
 
@@ -363,15 +363,15 @@ void UpdateSoldierMorale(SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoraleMod) {
   }
 }
 
-void HandleMoraleEventForSoldier(SOLDIERTYPE *pSoldier, INT8 bMoraleEvent) {
+void HandleMoraleEventForSoldier(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent) {
   UpdateSoldierMorale(pSoldier, gbMoraleEvent[bMoraleEvent].ubType,
                       gbMoraleEvent[bMoraleEvent].bChange);
 }
 
-void HandleMoraleEvent(SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX, INT16 sMapY,
+void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX, INT16 sMapY,
                        INT8 bMapZ) {
   UINT8 ubLoop;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   MERCPROFILESTRUCT *pProfile;
 
   gfSomeoneSaidMoraleQuote = FALSE;
@@ -649,8 +649,8 @@ void HourlyMoraleUpdate(void) {
   INT8 bNumTeamMembers;
   INT8 bHighestTeamLeadership = 0;
   INT8 bLastTeamID;
-  SOLDIERTYPE *pSoldier;
-  SOLDIERTYPE *pOtherSoldier;
+  struct SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pOtherSoldier;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fSameGroupOnly;
   static INT8 bStrategicMoraleUpdateCounter = 0;
@@ -801,7 +801,7 @@ void HourlyMoraleUpdate(void) {
   }
 }
 
-void DailyMoraleUpdate(SOLDIERTYPE *pSoldier) {
+void DailyMoraleUpdate(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->ubProfile == NO_PROFILE) {
     return;
   }

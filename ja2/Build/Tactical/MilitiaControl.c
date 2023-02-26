@@ -65,7 +65,7 @@ void PrepareMilitiaForTactical() {
 void HandleMilitiaPromotions(void) {
   UINT8 cnt;
   UINT8 ubMilitiaRank;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   UINT8 ubPromotions;
 
   gbGreenToElitePromotions = 0;

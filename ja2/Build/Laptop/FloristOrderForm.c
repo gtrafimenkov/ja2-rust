@@ -11,6 +11,7 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -208,33 +209,34 @@ void BtnFlowerOrderGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason);
 UINT32 guiFlowerOrderGalleryButton;
 
 // Clicking on OrderCheckBox
-MOUSE_REGION gSelectedFloristCheckBoxRegion[6];
-void SelectFlorsitCheckBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFloristCheckBoxRegion[6];
+void SelectFlorsitCheckBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // link to the card gallery
-MOUSE_REGION gSelectedFloristCardGalleryLinkRegion;
-void SelectFloristCardGalleryLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFloristCardGalleryLinkRegion;
+void SelectFloristCardGalleryLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // link to the flower gallery by clicking on the flower
-MOUSE_REGION gSelectedFloristGalleryLinkRegion;
-void SelectFloristGalleryLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFloristGalleryLinkRegion;
+void SelectFloristGalleryLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // the drop down for the city
-MOUSE_REGION gSelectedFloristDropDownRegion;
-void SelectFloristDropDownRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFloristDropDownRegion;
+void SelectFloristDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // to disable the drop down window
-MOUSE_REGION gSelectedFloristDisableDropDownRegion;
-void SelectFloristDisableDropDownRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFloristDisableDropDownRegion;
+void SelectFloristDisableDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // mouse region for the drop down city location area
-MOUSE_REGION gSelectedFlowerDropDownRegion[FLOWER_ORDER_NUMBER_OF_DROP_DOWN_LOCATIONS];
-void SelectFlowerDropDownRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectFlowerDropDownMovementCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFlowerDropDownRegion[FLOWER_ORDER_NUMBER_OF_DROP_DOWN_LOCATIONS];
+void SelectFlowerDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFlowerDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // to select typing in the personal sentiment box
-// MOUSE_REGION    gSelectedFloristPersonalSentimentBoxRegion;
-// void SelectFloristPersonalSentimentBoxRegionCallBack(MOUSE_REGION * pRegion, INT32 iReason );
+// struct MOUSE_REGION    gSelectedFloristPersonalSentimentBoxRegion;
+// void SelectFloristPersonalSentimentBoxRegionCallBack(struct MOUSE_REGION * pRegion, INT32 iReason
+// );
 
 void DisplayFloristCheckBox();
 void DisplayFlowerDynamicItems();
@@ -503,7 +505,7 @@ void HandleFloristOrderForm() {
 }
 
 void RenderFloristOrderForm() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usPosX;
   wchar_t sTemp[640];
   UINT32 uiStartLoc = 0;
@@ -769,7 +771,7 @@ void BtnFlowerOrderGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SelectFlorsitCheckBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFlorsitCheckBoxRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     UINT32 uiUserData;
@@ -827,7 +829,7 @@ void SelectFlorsitCheckBoxRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void DisplayFloristCheckBox() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   // check box
   GetVideoObject(&hPixHandle, guiFlowerOrderCheckBoxButtonImage);
@@ -887,7 +889,7 @@ void DisplayFloristCheckBox() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectFloristCardGalleryLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristCardGalleryLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_FLORIST_CARD_GALLERY;
@@ -964,7 +966,7 @@ void DisplayFlowerDynamicItems() {
                    FLOWER_ORDEER_SMALL_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 }
 
-void SelectFloristGalleryLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristGalleryLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_FLORIST_FLOWER_GALLERY;
@@ -972,21 +974,21 @@ void SelectFloristGalleryLinkRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason
   }
 }
 
-void SelectFloristDropDownRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gubFlowerDestDropDownMode = FLOWER_ORDER_DROP_DOWN_CREATE;
   }
 }
 
-void SelectFloristDisableDropDownRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristDisableDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gubFlowerDestDropDownMode = FLOWER_ORDER_DROP_DOWN_DESTROY;
   }
 }
 
-void SelectFlowerDropDownRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFlowerDropDownRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gubCurrentlySelectedFlowerLocation = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
@@ -995,7 +997,7 @@ void SelectFlowerDropDownRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectFlowerDropDownMovementCallBack(MOUSE_REGION *pRegion, INT32 reason) {
+void SelectFlowerDropDownMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     pRegion->uiFlags &= (~BUTTON_CLICKED_ON);
     InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY, pRegion->RegionBottomRightX,
@@ -1107,7 +1109,7 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
       UINT8 i;
       UINT16 usPosY, usPosX;
       UINT16 usFontHeight = GetFontHeight(FLOWER_ORDEER_DROP_DOWN_FONT);
-      HVOBJECT hImageHandle;
+      struct VObject *hImageHandle;
 
       // Display the background for the drop down window
       ColorFillVideoSurfaceArea(

@@ -213,12 +213,12 @@ UINT32 guiSlgSaveLoadBtn;
 INT32 guiSaveLoadImage;
 
 // Mouse regions for the currently selected save game
-MOUSE_REGION gSelectedSaveRegion[NUM_SAVE_GAMES];
-void SelectedSaveRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectedSaveRegionMovementCallBack(MOUSE_REGION *pRegion, INT32 reason);
+struct MOUSE_REGION gSelectedSaveRegion[NUM_SAVE_GAMES];
+void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
 
-MOUSE_REGION gSLSEntireScreenRegion;
-void SelectedSLSEntireRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSLSEntireScreenRegion;
+void SelectedSLSEntireRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 //////////////////////////////////////////////////////
 //
@@ -676,7 +676,7 @@ void ExitSaveLoadScreen() {
 }
 
 void RenderSaveLoadScreen() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   // if we are going to be instantly leaving the screen, dont draw the numbers
   if (gfLoadGameUponEntry) {
@@ -1041,7 +1041,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
   CHAR16 zNumMercsString[128];
   CHAR16 zBalanceString[128];
   SAVED_GAME_HEADER SaveGameHeader;
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT16 usPosX = SLG_FIRST_SAVED_SPOT_X;
   UINT32 uiFont = SAVE_LOAD_TITLE_FONT;
   UINT8 ubFontColor = SAVE_LOAD_TITLE_COLOR;
@@ -1426,7 +1426,7 @@ btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
 }
 */
 
-void SelectedSaveRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT8 bActiveTextField;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -1565,7 +1565,7 @@ void SelectedSaveRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectedSaveRegionMovementCallBack(MOUSE_REGION *pRegion, INT32 reason) {
+void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     INT8 bTemp;
     pRegion->uiFlags &= (~BUTTON_CLICKED_ON);
@@ -1943,7 +1943,7 @@ void DoneFadeInForSaveLoadScreen(void) {
   }
 }
 
-void SelectedSLSEntireRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectedSLSEntireRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     DisableSelectedSlot();

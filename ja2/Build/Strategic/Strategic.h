@@ -3,7 +3,8 @@
 
 #include "SGP/Types.h"
 #include "Strategic/MapScreen.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 struct strategicmapelement {
   UINT8 UNUSEDuiFootEta[4];     // eta/mvt costs for feet
@@ -39,8 +40,8 @@ extern StrategicMapElement StrategicMap[MAP_WORLD_X * MAP_WORLD_Y];
 
 BOOLEAN InitStrategicEngine();
 
-void HandleSoldierDeadComments(SOLDIERTYPE *pSoldier);
+void HandleSoldierDeadComments(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN HandleStrategicDeath(SOLDIERTYPE *pSoldier);
+BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier);
 
 #endif

@@ -6,10 +6,13 @@
 #include "Editor/Smooth.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
+#include "SGP/MemMan.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"  //for access to gubWorldRoomInfo;
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
 /*
@@ -190,15 +193,15 @@ undo_stack *DeleteThisStackNode(undo_stack *pThisNode) {
 BOOLEAN DeleteStackNodeContents(undo_stack *pCurrent) {
   undo_struct *pData;
   MAP_ELEMENT *pMapTile;
-  LEVELNODE *pLandNode;
-  LEVELNODE *pObjectNode;
-  LEVELNODE *pStructNode;
-  LEVELNODE *pShadowNode;
-  LEVELNODE *pMercNode;
-  LEVELNODE *pTopmostNode;
-  LEVELNODE *pRoofNode;
-  LEVELNODE *pOnRoofNode;
-  STRUCTURE *pStructureNode;
+  struct LEVELNODE *pLandNode;
+  struct LEVELNODE *pObjectNode;
+  struct LEVELNODE *pStructNode;
+  struct LEVELNODE *pShadowNode;
+  struct LEVELNODE *pMercNode;
+  struct LEVELNODE *pTopmostNode;
+  struct LEVELNODE *pRoofNode;
+  struct LEVELNODE *pOnRoofNode;
+  struct STRUCTURE *pStructureNode;
 
   pData = pCurrent->pData;
   pMapTile = pData->pMapTile;
@@ -374,7 +377,7 @@ BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount) {
   undo_stack *pNode;
   undo_struct *pUndoInfo;
   MAP_ELEMENT *pData;
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
   INT32 iCoveredMapIndex;
   UINT8 ubLoop;
 
@@ -452,7 +455,7 @@ BOOLEAN AddToUndoListCmd(INT32 iMapIndex, INT32 iCmdCount) {
 }
 
 void CheckMapIndexForMultiTileStructures(UINT16 usMapIndex) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
   UINT8 ubLoop;
   INT32 iCoveredMapIndex;
 
@@ -563,10 +566,10 @@ BOOLEAN ExecuteUndoList(void) {
 }
 
 void SmoothUndoMapTileTerrain(INT32 iWorldTile, MAP_ELEMENT *pUndoTile) {
-  LEVELNODE *pWorldLand;
-  LEVELNODE *pUndoLand;
-  LEVELNODE *pLand;
-  LEVELNODE *pWLand;
+  struct LEVELNODE *pWorldLand;
+  struct LEVELNODE *pUndoLand;
+  struct LEVELNODE *pLand;
+  struct LEVELNODE *pWLand;
   UINT32 uiCheckType, uiWCheckType;
   BOOLEAN fFound;
 
@@ -634,14 +637,14 @@ void SmoothUndoMapTileTerrain(INT32 iWorldTile, MAP_ELEMENT *pUndoTile) {
 // undo methods coded by Bret, it is feasible that it could fail.  Instead of using assertions to
 // terminate the program, destroy the memory allocated thusfar.
 void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
-  LEVELNODE *pLevelNode;
-  STRUCTURE *pStructure;
+  struct LEVELNODE *pLevelNode;
+  struct STRUCTURE *pStructure;
   INT32 x;
   for (x = 0; x < 9; x++) {
     if (x == 1) continue;
     pLevelNode = pNewMapElement->pLevelNodes[x];
     while (pLevelNode) {
-      LEVELNODE *temp;
+      struct LEVELNODE *temp;
       temp = pLevelNode;
       pLevelNode = pLevelNode->pNext;
       MemFree(temp);
@@ -649,7 +652,7 @@ void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
   }
   pStructure = pNewMapElement->pStructureHead;
   while (pStructure) {
-    STRUCTURE *temp;
+    struct STRUCTURE *temp;
     temp = pStructure;
     pStructure = pStructure->pNext;
     MemFree(temp);
@@ -659,10 +662,10 @@ void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
 /*
         union
         {
-                struct TAG_level_node				*pPrevNode;
-   // FOR LAND, GOING BACKWARDS POINTER ITEM_POOL
-   *pItemPool;					// ITEM POOLS STRUCTURE
-   *pStructureData;		// STRUCTURE DATA INT32
+                struct LEVELNODE				*pPrevNode;
+   // FOR LAND, GOING BACKWARDS POINTER struct ITEM_POOL
+   *pItemPool;					// ITEM POOLS struct STRUCTURE
+   *pStructureData;		// struct STRUCTURE DATA INT32
    iPhysicsObjectID;		// ID FOR PHYSICS ITEM
                 INT32
    uiAPCost;						// FOR AP DISPLAY
@@ -678,20 +681,20 @@ void DeleteMapElementContentsAfterCreationFail(MAP_ELEMENT *pNewMapElement) {
                 };
                 struct
                 {
-                        SOLDIERTYPE
+                        struct SOLDIERTYPE
    *pSoldier;					// POINTER TO SOLDIER
                 };
         }; // ( 4 byte union )
 */
 BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, INT32 iMapIndex) {
   MAP_ELEMENT *pOldMapElement;
-  LEVELNODE *pOldLevelNode;
-  LEVELNODE *pLevelNode;
-  LEVELNODE *pNewLevelNode;
-  LEVELNODE *tail;
+  struct LEVELNODE *pOldLevelNode;
+  struct LEVELNODE *pLevelNode;
+  struct LEVELNODE *pNewLevelNode;
+  struct LEVELNODE *tail;
   INT32 x;
 
-  STRUCTURE *pOldStructure;
+  struct STRUCTURE *pOldStructure;
 
   // Get a pointer to the current map index
   pOldMapElement = &gpWorldLevelData[iMapIndex];
@@ -699,13 +702,13 @@ BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, INT32 iMapIndex) {
   // Save the structure information from the mapelement
   pOldStructure = pOldMapElement->pStructureHead;
   if (pOldStructure) {
-    STRUCTURE *pNewStructure;
-    STRUCTURE *pStructure;
-    STRUCTURE *tail;
+    struct STRUCTURE *pNewStructure;
+    struct STRUCTURE *pStructure;
+    struct STRUCTURE *tail;
     tail = NULL;
     pNewStructure = NULL;
     while (pOldStructure) {
-      pStructure = (STRUCTURE *)MemAlloc(sizeof(STRUCTURE));
+      pStructure = (struct STRUCTURE *)MemAlloc(sizeof(struct STRUCTURE));
       if (!pStructure) {
         DeleteMapElementContentsAfterCreationFail(pNewMapElement);
         return FALSE;
@@ -747,7 +750,7 @@ BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, INT32 iMapIndex) {
     pNewLevelNode = NULL;
     while (pOldLevelNode) {
       // copy the level node
-      pLevelNode = (LEVELNODE *)MemAlloc(sizeof(LEVELNODE));
+      pLevelNode = (struct LEVELNODE *)MemAlloc(sizeof(struct LEVELNODE));
       if (!pLevelNode) {
         DeleteMapElementContentsAfterCreationFail(pNewMapElement);
         return FALSE;
@@ -784,8 +787,8 @@ BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, INT32 iMapIndex) {
           break;
         case 2:                            // OBJECT LAYER
           if (pOldLevelNode->pItemPool) {  // save the item pool?
-                                           // pNewLevelNode->pItemPool = (ITEM_POOL*)MemAlloc(
-                                           // sizeof( ITEM_POOL ) );
+                                           // pNewLevelNode->pItemPool = (struct
+                                           // ITEM_POOL*)MemAlloc( sizeof( struct ITEM_POOL ) );
           }
           break;
         case 3:                                 // STRUCT LAYER
@@ -793,7 +796,7 @@ BOOLEAN CopyMapElementFromWorld(MAP_ELEMENT *pNewMapElement, INT32 iMapIndex) {
         case 7:                                 // ON ROOF LAYER
           if (pOldLevelNode->pStructureData) {  // make sure the structuredata pointer points to the
                                                 // parallel structure
-            STRUCTURE *pOld, *pNew;
+            struct STRUCTURE *pOld, *pNew;
             // both lists are exactly the same size and contain the same information,
             // but the addresses are different.  We will traverse the old list until
             // we find the match, then

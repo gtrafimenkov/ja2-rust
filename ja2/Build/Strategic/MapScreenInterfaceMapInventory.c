@@ -7,6 +7,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Strategic/MapScreen.h"
@@ -25,7 +26,6 @@
 #include "Tactical/TacticalSave.h"
 #include "Tactical/WorldItems.h"
 #include "TileEngine/RadarScreen.h"
-#include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -112,8 +112,8 @@ INT16 sObjectSourceGridNo = 0;
 UINT32 uiNumberOfUnSeenItems = 0;
 
 // the inventory slots
-MOUSE_REGION MapInventoryPoolSlots[MAP_INVENTORY_POOL_SLOT_COUNT];
-MOUSE_REGION MapInventoryPoolMask;
+struct MOUSE_REGION MapInventoryPoolSlots[MAP_INVENTORY_POOL_SLOT_COUNT];
+struct MOUSE_REGION MapInventoryPoolMask;
 BOOLEAN fMapInventoryItemCompatable[MAP_INVENTORY_POOL_SLOT_COUNT];
 BOOLEAN fChangedInventorySlots = FALSE;
 
@@ -142,11 +142,11 @@ extern BOOLEAN ReduceStringLength(STR16 pString, UINT32 uiWidth, UINT32 uiFont);
 extern UINT32 guiExternVo;
 extern UINT16 gusExternVoSubIndex;
 
-extern MOUSE_REGION gMPanelRegion;
+extern struct MOUSE_REGION gMPanelRegion;
 
 // map inventory callback
-void MapInvenPoolSlots(MOUSE_REGION *pRegion, INT32 iReason);
-void MapInvenPoolSlotsMove(MOUSE_REGION *pRegion, INT32 iReason);
+void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, INT32 iReason);
+void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, INT32 iReason);
 void CreateMapInventoryPoolSlots(void);
 void DestroyMapInventoryPoolSlots(void);
 void CreateMapInventoryButtons(void);
@@ -154,10 +154,11 @@ void DestroyMapInventoryButtons(void);
 void ReSizeStashListByThisAmount(INT32 iNumberOfItems);
 void DestroyStash(void);
 void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ);
-BOOLEAN GetObjFromInventoryStashSlot(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pItemPtr);
-BOOLEAN RemoveObjectFromStashSlot(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pItemPtr);
-void BeginInventoryPoolPtr(OBJECTTYPE *pInventorySlot);
-BOOLEAN PlaceObjectInInventoryStash(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pItemPtr);
+BOOLEAN GetObjFromInventoryStashSlot(struct OBJECTTYPE *pInventorySlot,
+                                     struct OBJECTTYPE *pItemPtr);
+BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr);
+void BeginInventoryPoolPtr(struct OBJECTTYPE *pInventorySlot);
+BOOLEAN PlaceObjectInInventoryStash(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr);
 void RenderItemsForCurrentPageOfInventoryPool(void);
 BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage);
 void UpdateHelpTextForInvnentoryStashSlots(void);
@@ -184,9 +185,10 @@ BOOLEAN IsMapScreenWorldItemInvisibleInMapInventory(WORLDITEM *pWorldItem);
 void CheckGridNoOfItemsInMapScreenMapInventory();
 INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2);
 void SortSectorInventory(WORLDITEM *pInventory, UINT32 uiSizeOfArray);
-BOOLEAN CanPlayerUseSectorInventory(SOLDIERTYPE *pSelectedSoldier);
+BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier);
 
-extern void StackObjs(OBJECTTYPE *pSourceObj, OBJECTTYPE *pTargetObj, UINT8 ubNumberToCopy);
+extern void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
+                      UINT8 ubNumberToCopy);
 extern void MAPEndItemPointer();
 extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX,
                                                                       INT16 *psSectorY,
@@ -219,7 +221,7 @@ void RemoveInventoryPoolGraphic(void) {
 
 // blit the background panel for the inventory
 void BlitInventoryPoolGraphic(void) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // blit inventory pool graphic to the screen
   GetVideoObject(&hHandle, guiMapInventoryPoolBackground);
@@ -269,7 +271,7 @@ void RenderItemsForCurrentPageOfInventoryPool(void) {
 BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
   // render item in this slot of the list
   INT16 sCenX, sCenY, usWidth, usHeight, sX, sY;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   ETRLEObject *pTrav;
   CHAR16 sString[64];
   INT16 sWidth = 0, sHeight = 0;
@@ -607,7 +609,7 @@ void SaveSeenAndUnseenItems(void) {
 }
 
 // the screen mask bttn callaback...to disable the inventory and lock out the map itself
-void MapInvenPoolScreenMaskCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void MapInvenPoolScreenMaskCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if ((iReason & MSYS_CALLBACK_REASON_RBUTTON_UP)) {
     fShowMapInventoryPool = FALSE;
   }
@@ -660,7 +662,7 @@ void DestroyMapInventoryPoolSlots(void) {
   MSYS_RemoveRegion(&MapInventoryPoolMask);
 }
 
-void MapInvenPoolSlotsMove(MOUSE_REGION *pRegion, INT32 iReason) {
+void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iCounter = 0;
 
   iCounter = MSYS_GetRegionUserData(pRegion, 0);
@@ -679,14 +681,14 @@ void MapInvenPoolSlotsMove(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void MapInvenPoolSlots(MOUSE_REGION *pRegion, INT32 iReason) {
+void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment screen mask region
   INT32 iCounter = 0;
   UINT16 usOldItemIndex, usNewItemIndex;
   INT16 sGridNo = 0;
   INT32 iOldNumberOfObjects = 0;
   INT16 sDistanceFromObject = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   CHAR16 sString[128];
 
   iCounter = MSYS_GetRegionUserData(pRegion, 0);
@@ -901,7 +903,7 @@ void DestroyMapInventoryButtons(void) {
 
 void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
   INT32 iSize = 0;
-  OBJECTTYPE *pTempList = NULL;
+  struct OBJECTTYPE *pTempList = NULL;
   UINT32 uiItemCount = 0;
   UINT32 uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;
@@ -1238,7 +1240,7 @@ INT32 GetSizeOfStashInSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCou
   return (uiItemCount);
 }
 
-void BeginInventoryPoolPtr(OBJECTTYPE *pInventorySlot) {
+void BeginInventoryPoolPtr(struct OBJECTTYPE *pInventorySlot) {
   BOOLEAN fOk = FALSE;
 
   // If not null return
@@ -1279,7 +1281,8 @@ void BeginInventoryPoolPtr(OBJECTTYPE *pInventorySlot) {
 }
 
 // get this item out of the stash slot
-BOOLEAN GetObjFromInventoryStashSlot(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pItemPtr) {
+BOOLEAN GetObjFromInventoryStashSlot(struct OBJECTTYPE *pInventorySlot,
+                                     struct OBJECTTYPE *pItemPtr) {
   // item ptr
   if (!pItemPtr) {
     return (FALSE);
@@ -1287,7 +1290,7 @@ BOOLEAN GetObjFromInventoryStashSlot(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pIt
 
   // if there are only one item in slot, just copy
   if (pInventorySlot->ubNumberOfObjects == 1) {
-    memcpy(pItemPtr, pInventorySlot, sizeof(OBJECTTYPE));
+    memcpy(pItemPtr, pInventorySlot, sizeof(struct OBJECTTYPE));
     DeleteObj(pInventorySlot);
   } else {
     // take one item
@@ -1304,19 +1307,20 @@ BOOLEAN GetObjFromInventoryStashSlot(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pIt
   return (TRUE);
 }
 
-BOOLEAN RemoveObjectFromStashSlot(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pItemPtr) {
+BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr) {
   CHECKF(pInventorySlot);
 
   if (pInventorySlot->ubNumberOfObjects == 0) {
     return (FALSE);
   } else {
-    memcpy(pItemPtr, pInventorySlot, sizeof(OBJECTTYPE));
+    memcpy(pItemPtr, pInventorySlot, sizeof(struct OBJECTTYPE));
     DeleteObj(pInventorySlot);
     return (TRUE);
   }
 }
 
-BOOLEAN PlaceObjectInInventoryStash(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pItemPtr) {
+BOOLEAN PlaceObjectInInventoryStash(struct OBJECTTYPE *pInventorySlot,
+                                    struct OBJECTTYPE *pItemPtr) {
   UINT8 ubNumberToDrop, ubSlotLimit, ubLoop;
 
   // if there is something there, swap it, if they are of the same type and stackable then add to
@@ -1335,7 +1339,7 @@ BOOLEAN PlaceObjectInInventoryStash(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pIte
 
     // could be wrong type of object for slot... need to check...
     // but assuming it isn't
-    memcpy(pInventorySlot, pItemPtr, sizeof(OBJECTTYPE));
+    memcpy(pInventorySlot, pItemPtr, sizeof(struct OBJECTTYPE));
 
     if (ubNumberToDrop != pItemPtr->ubNumberOfObjects) {
       // in the InSlot copy, zero out all the objects we didn't drop
@@ -1382,9 +1386,9 @@ BOOLEAN PlaceObjectInInventoryStash(OBJECTTYPE *pInventorySlot, OBJECTTYPE *pIte
   return (TRUE);
 }
 
-BOOLEAN AutoPlaceObjectInInventoryStash(OBJECTTYPE *pItemPtr) {
+BOOLEAN AutoPlaceObjectInInventoryStash(struct OBJECTTYPE *pItemPtr) {
   UINT8 ubNumberToDrop, ubSlotLimit, ubLoop;
-  OBJECTTYPE *pInventorySlot;
+  struct OBJECTTYPE *pInventorySlot;
 
   // if there is something there, swap it, if they are of the same type and stackable then add to
   // the count
@@ -1402,7 +1406,7 @@ BOOLEAN AutoPlaceObjectInInventoryStash(OBJECTTYPE *pItemPtr) {
 
   // could be wrong type of object for slot... need to check...
   // but assuming it isn't
-  memcpy(pInventorySlot, pItemPtr, sizeof(OBJECTTYPE));
+  memcpy(pInventorySlot, pItemPtr, sizeof(struct OBJECTTYPE));
 
   if (ubNumberToDrop != pItemPtr->ubNumberOfObjects) {
     // in the InSlot copy, zero out all the objects we didn't drop
@@ -1723,7 +1727,7 @@ void HandleFlashForHighLightedItem(void) {
 }
 
 void HandleMouseInCompatableItemForMapSectorInventory(INT32 iCurrentSlot) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   static BOOLEAN fItemWasHighLighted = FALSE;
 
   if (iCurrentSlot == -1) {
@@ -1896,7 +1900,7 @@ INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {
   return (CompareItemsForSorting(usItem1Index, usItem2Index, ubItem1Quality, ubItem2Quality));
 }
 
-BOOLEAN CanPlayerUseSectorInventory(SOLDIERTYPE *pSelectedSoldier) {
+BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier) {
   INT16 sSectorX, sSectorY, sSectorZ;
   BOOLEAN fInCombat;
 

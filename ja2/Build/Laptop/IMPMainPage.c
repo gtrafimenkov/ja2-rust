@@ -13,12 +13,12 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Tactical/MercHiring.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
@@ -33,7 +33,7 @@ INT32 giIMPMainPageButtonImage[6];
 extern INT32 iCurrentVoices;
 
 // mouse regions for not entablable warning
-MOUSE_REGION pIMPMainPageMouseRegions[4];
+struct MOUSE_REGION pIMPMainPageMouseRegions[4];
 
 UINT32 guiCHARACTERPORTRAITFORMAINPAGE;
 
@@ -52,7 +52,7 @@ void UpDateIMPMainPageButtons(void);
 void BeginMessageBoxCallBack(UINT8 bExitValue);
 void DestoryMouseRegionsForIMPMainPageBasedOnCharGenStatus(void);
 void CreateMouseRegionsForIMPMainPageBasedOnCharGenStatus(void);
-void IMPMainPageNotSelectableBtnCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 BOOLEAN LoadCharacterPortraitForMainPage(void);
 
 BOOLEAN CheckIfFinishedCharacterGeneration(void);
@@ -565,7 +565,7 @@ void DestoryMouseRegionsForIMPMainPageBasedOnCharGenStatus(void) {
   return;
 }
 
-void IMPMainPageNotSelectableBtnCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
   }

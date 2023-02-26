@@ -5,6 +5,7 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/StoreInventory.h"
 #include "SGP/Random.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -17,6 +18,7 @@
 #include "Utils/Message.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
 #include "Utils/Text.h"
+#include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
@@ -165,12 +167,12 @@ UINT8 gubBobbyRPages[] = {LAPTOP_MODE_BOBBY_R_USED, LAPTOP_MODE_BOBBY_R_MISC,
                           LAPTOP_MODE_BOBBY_R_ARMOR};
 
 // Bobby's Sign menu mouse regions
-MOUSE_REGION gSelectedBobbiesSignMenuRegion[BOBBIES_NUMBER_SIGNS];
-void SelectBobbiesSignMenuRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedBobbiesSignMenuRegion[BOBBIES_NUMBER_SIGNS];
+void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 BOOLEAN InitBobbiesMouseRegion(UINT8 ubNumerRegions, UINT16 *usMouseRegionPosArray,
-                               MOUSE_REGION *MouseRegion);
-BOOLEAN RemoveBobbiesMouseRegion(UINT8 ubNumberRegions, MOUSE_REGION *Mouse_Region);
+                               struct MOUSE_REGION *MouseRegion);
+BOOLEAN RemoveBobbiesMouseRegion(UINT8 ubNumberRegions, struct MOUSE_REGION *Mouse_Region);
 void HandleBobbyRUnderConstructionAni(BOOLEAN fReset);
 
 void SimulateBobbyRayCustomer(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed);
@@ -282,8 +284,8 @@ void ExitBobbyR() {
 void HandleBobbyR() { HandleBobbyRUnderConstructionAni(FALSE); }
 
 void RenderBobbyR() {
-  HVOBJECT hPixHandle;
-  HVOBJECT hStorePlaqueHandle;
+  struct VObject *hPixHandle;
+  struct VObject *hStorePlaqueHandle;
 
   DrawBobbyRWoodBackground();
 
@@ -410,7 +412,7 @@ BOOLEAN DeleteBobbyRWoodBackground() {
 }
 
 BOOLEAN DrawBobbyRWoodBackground() {
-  HVOBJECT hWoodBackGroundHandle;
+  struct VObject *hWoodBackGroundHandle;
   UINT16 x, y, uiPosX, uiPosY;
 
   // Blt the Wood background
@@ -431,7 +433,7 @@ BOOLEAN DrawBobbyRWoodBackground() {
 }
 
 BOOLEAN InitBobbiesMouseRegion(UINT8 ubNumerRegions, UINT16 *usMouseRegionPosArray,
-                               MOUSE_REGION *MouseRegion) {
+                               struct MOUSE_REGION *MouseRegion) {
   UINT8 i, ubCount = 0;
 
   for (i = 0; i < ubNumerRegions; i++) {
@@ -449,7 +451,7 @@ BOOLEAN InitBobbiesMouseRegion(UINT8 ubNumerRegions, UINT16 *usMouseRegionPosArr
   return (TRUE);
 }
 
-BOOLEAN RemoveBobbiesMouseRegion(UINT8 ubNumberRegions, MOUSE_REGION *Mouse_Region) {
+BOOLEAN RemoveBobbiesMouseRegion(UINT8 ubNumberRegions, struct MOUSE_REGION *Mouse_Region) {
   UINT8 i;
 
   for (i = 0; i < ubNumberRegions; i++) MSYS_RemoveRegion(&Mouse_Region[i]);
@@ -457,7 +459,7 @@ BOOLEAN RemoveBobbiesMouseRegion(UINT8 ubNumberRegions, MOUSE_REGION *Mouse_Regi
   return (TRUE);
 }
 
-void SelectBobbiesSignMenuRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     UINT8 ubNewPage = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
@@ -472,7 +474,7 @@ void SelectBobbiesSignMenuRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
 BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight, UINT32
 uiBackground)
 {
-  HVOBJECT hBackGroundHandle;
+  struct VObject* hBackGroundHandle;
         UINT16	x,y, uiPosX, uiPosY;
 
         // Blt the Wood background
@@ -494,7 +496,7 @@ VO_BLT_SRCTRANSPARENCY,NULL); uiPosX += usWidth;
 */
 
 void HandleBobbyRUnderConstructionAni(BOOLEAN fReset) {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   static UINT32 uiLastTime = 1;
   static UINT16 usCount = 0;
   UINT32 uiCurTime = GetJA2Clock();

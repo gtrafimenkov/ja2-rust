@@ -116,7 +116,7 @@ BOOLEAN MercThinksBadReputationTooHigh(UINT8 ubProfileID) {
 }
 
 // only meaningful for already hired mercs
-BOOLEAN MercThinksHisMoraleIsTooLow(SOLDIERTYPE *pSoldier) {
+BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier) {
   INT8 bRepTolerance;
   INT8 bMoraleTolerance;
 

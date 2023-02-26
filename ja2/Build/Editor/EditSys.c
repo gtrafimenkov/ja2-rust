@@ -15,12 +15,15 @@
 #include "Editor/SelectWin.h"
 #include "Editor/Smooth.h"
 #include "Editor/SmoothingUtils.h"
+#include "SGP/HImage.h"
+#include "SGP/MemMan.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/SimpleRenderUtils.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
 BOOLEAN PasteHigherTextureFromRadius(INT32 iMapIndex, UINT32 uiNewType, UINT8 ubRadius);
@@ -990,7 +993,7 @@ void PasteTextureFromRadiusEx(INT16 sGridNo, UINT16 usType, UINT8 ubRadius) {
 void RaiseWorldLand() {
   INT32 cnt;
   UINT32 sTempGridNo;
-  LEVELNODE *pStruct;
+  struct LEVELNODE *pStruct;
   TILE_ELEMENT *pTileElement;
   BOOLEAN fRaise;
   BOOLEAN fRaiseSet;
@@ -1212,7 +1215,7 @@ void RaiseWorldLand() {
 void EliminateObjectLayerRedundancy() {
   INT32 i, numRoads, numAnothers;
   UINT32 uiType;
-  LEVELNODE *pObject, *pValidRoad, *pValidAnother;
+  struct LEVELNODE *pObject, *pValidRoad, *pValidAnother;
   UINT16 usIndex;
 
   for (i = 0; i < WORLD_MAX; i++) {  // Eliminate all but the last ROADPIECE and ANOTHERDEBRIS

@@ -3,6 +3,7 @@
 #include "Laptop/AIM.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -59,8 +60,8 @@ BOOLEAN AimHistorySubPagesVisitedFlag[NUM_AIM_HISTORY_PAGES];
 void ResetAimHistoryButtons();
 void DisableAimHistoryButton();
 
-MOUSE_REGION gSelectedHistoryTocMenuRegion[NUM_AIM_HISTORY_PAGES];
-void SelectHistoryTocMenuRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedHistoryTocMenuRegion[NUM_AIM_HISTORY_PAGES];
+void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Bottom Menu Buttons
 void BtnHistoryMenuButtonCallback(GUI_BUTTON *btn, INT32 reason);
@@ -264,7 +265,7 @@ BOOLEAN ExitAimHistoryMenuBar(void) {
   return (TRUE);
 }
 
-void SelectHistoryMenuButtonsRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectHistoryMenuButtonsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   UINT8 rValue;
   static BOOLEAN fOnPage = TRUE;
 
@@ -364,7 +365,7 @@ BOOLEAN InitTocMenu() {
   UINT8 ubLocInFile[] = {IN_THE_BEGINNING, THE_ISLAND_METAVIRA, GUS_TARBALLS, WORD_FROM_FOUNDER,
                          INCORPORATION};
 
-  HVOBJECT hContentButtonHandle;
+  struct VObject *hContentButtonHandle;
 
   GetVideoObject(&hContentButtonHandle, guiContentButton);
 
@@ -411,7 +412,7 @@ BOOLEAN ExitTocMenu() {
   return (TRUE);
 }
 
-void SelectHistoryTocMenuRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (gfInToc) {
     if (iReason & MSYS_CALLBACK_REASON_INIT) {
     } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

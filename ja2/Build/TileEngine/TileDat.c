@@ -1,5 +1,4 @@
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 
 INT16 gOpenDoorList[20] = {
     FIRSTDOOR1,  SECONDDOOR1,  THIRDDOOR1,  FOURTHDOOR1,  FIRSTDOOR6,  SECONDDOOR6,

@@ -2,9 +2,8 @@
 #define __CURSOR_DATABASE_
 
 #include "SGP/Types.h"
-#include "SGP/VObject.h"
-#include "SGP/VSurface.h"
-#include "SGP/Video.h"
+
+struct VObject;
 
 extern UINT32 GetCursorHandle(UINT32 uiCursorIndex);
 extern void UnloadCursorData(UINT32 uiCursorIndex);
@@ -84,7 +83,7 @@ void InitCursorDatabase(struct CursorFileData *pCursorFileData, CursorData *pCur
                         UINT16 suNumDataFiles);
 void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride);
 
-void SetExternVOData(UINT32 uiCursorIndex, HVOBJECT hVObject, UINT16 usSubIndex);
+void SetExternVOData(UINT32 uiCursorIndex, struct VObject *hVObject, UINT16 usSubIndex);
 void RemoveExternVOData(UINT32 uiCursorIndex);
 
 #endif

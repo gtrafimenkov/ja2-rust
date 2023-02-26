@@ -3,9 +3,9 @@
 
 #include "SGP/Types.h"
 #include "Tactical/Items.h"
-#include "Tactical/SoldierControl.h"
 #include "TileEngine/PhysMath.h"
-#include "TileEngine/WorldDef.h"
+
+struct SOLDIERTYPE;
 
 extern UINT32 guiNumObjectSlots;
 
@@ -38,8 +38,8 @@ typedef struct {
 
   INT16 sGridNo;
   INT32 iID;
-  LEVELNODE *pNode;
-  LEVELNODE *pShadow;
+  struct LEVELNODE *pNode;
+  struct LEVELNODE *pShadow;
 
   INT16 sConsecutiveCollisions;
   INT16 sConsecutiveZeroVelocityCollisions;
@@ -47,7 +47,7 @@ typedef struct {
 
   FLOAT dLifeLength;
   FLOAT dLifeSpan;
-  OBJECTTYPE Obj;
+  struct OBJECTTYPE Obj;
   BOOLEAN fFirstTimeMoved;
   INT16 sFirstGridNo;
   UINT8 ubOwner;
@@ -75,22 +75,22 @@ typedef struct {
 extern REAL_OBJECT ObjectSlots[NUM_OBJECT_SLOTS];
 
 // OBJECT LIST STUFF
-INT32 CreatePhysicalObject(OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos, real zPos,
-                           real xForce, real yForce, real zForce, UINT8 ubOwner, UINT8 ubActionCode,
-                           UINT32 uiActionData);
+INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
+                           real zPos, real xForce, real yForce, real zForce, UINT8 ubOwner,
+                           UINT8 ubActionCode, UINT32 uiActionData);
 BOOLEAN RemoveObjectSlot(INT32 iObject);
 void RemoveAllPhysicsObjects();
 
-FLOAT CalculateLaunchItemAngle(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHeight, real dForce,
-                               OBJECTTYPE *pItem, INT16 *psGridNo);
+FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHeight,
+                               real dForce, struct OBJECTTYPE *pItem, INT16 *psGridNo);
 
-BOOLEAN CalculateLaunchItemChanceToGetThrough(SOLDIERTYPE *pSoldier, OBJECTTYPE *pItem,
-                                              INT16 sGridNo, UINT8 ubLevel, INT16 sEndZ,
-                                              INT16 *psFinalGridNo, BOOLEAN fArmed, INT8 *pbLevel,
-                                              BOOLEAN fFromUI);
+BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
+                                              struct OBJECTTYPE *pItem, INT16 sGridNo,
+                                              UINT8 ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
+                                              BOOLEAN fArmed, INT8 *pbLevel, BOOLEAN fFromUI);
 
-void CalculateLaunchItemParamsForThrow(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
-                                       INT16 sZPos, OBJECTTYPE *pItem, INT8 bMissBy,
+void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
+                                       INT16 sZPos, struct OBJECTTYPE *pItem, INT8 bMissBy,
                                        UINT8 ubActionCode, UINT32 uiActionData);
 
 // SIMULATE WORLD

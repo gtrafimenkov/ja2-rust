@@ -14,7 +14,8 @@
 #include "Tactical/PathAI.h"
 #include "Tactical/StructureWrap.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/WorldMan.h"
 
 UINT32 guiForceRefreshMousePositionCalculation = 0;
@@ -589,7 +590,7 @@ INT8 FindNumTurnsBetweenDirs(INT8 sDir1, INT8 sDir2) {
   return ((INT8)sNumTurns);
 }
 
-BOOLEAN FindHeigherLevel(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
+BOOLEAN FindHeigherLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
                          INT8 *pbDirection) {
   INT32 cnt;
   INT16 sNewGridNo;
@@ -632,7 +633,8 @@ BOOLEAN FindHeigherLevel(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir
   return (FALSE);
 }
 
-BOOLEAN FindLowerLevel(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir, INT8 *pbDirection) {
+BOOLEAN FindLowerLevel(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
+                       INT8 *pbDirection) {
   INT32 cnt;
   INT16 sNewGridNo;
   BOOLEAN fFound = FALSE;
@@ -814,7 +816,7 @@ BOOLEAN GridNoOnEdgeOfMap(INT16 sGridNo, INT8 *pbDirection) {
   return (FALSE);
 }
 
-BOOLEAN FindFenceJumpDirection(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
+BOOLEAN FindFenceJumpDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bStartingDir,
                                INT8 *pbDirection) {
   INT32 cnt;
   INT16 sNewGridNo, sOtherSideOfFence;

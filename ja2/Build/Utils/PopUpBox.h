@@ -2,10 +2,6 @@
 #define __POPUP_BOX
 
 #include "SGP/Types.h"
-//#include "Local.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/WCheck.h"
-#include "TileEngine/RenderDirty.h"
 
 #define MAX_POPUP_BOX_COUNT 20
 #define MAX_POPUP_BOX_STRING_COUNT \

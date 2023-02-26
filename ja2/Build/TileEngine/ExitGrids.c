@@ -14,8 +14,9 @@
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/PathAI.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/SaveLoadMap.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDat.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -46,7 +47,7 @@ void ConvertINT32ToExitGrid(INT32 iExitGridInfo, EXITGRID *pExitGrid) {
 }
 
 BOOLEAN GetExitGrid(UINT16 usMapIndex, EXITGRID *pExitGrid) {
-  LEVELNODE *pShadow;
+  struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[usMapIndex].pShadowHead;
   // Search through object layer for an exitgrid
   while (pShadow) {
@@ -64,7 +65,7 @@ BOOLEAN GetExitGrid(UINT16 usMapIndex, EXITGRID *pExitGrid) {
 }
 
 BOOLEAN ExitGridAtGridNo(UINT16 usMapIndex) {
-  LEVELNODE *pShadow;
+  struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[usMapIndex].pShadowHead;
   // Search through object layer for an exitgrid
   while (pShadow) {
@@ -76,8 +77,8 @@ BOOLEAN ExitGridAtGridNo(UINT16 usMapIndex) {
   return FALSE;
 }
 
-BOOLEAN GetExitGridLevelNode(UINT16 usMapIndex, LEVELNODE **ppLevelNode) {
-  LEVELNODE *pShadow;
+BOOLEAN GetExitGridLevelNode(UINT16 usMapIndex, struct LEVELNODE **ppLevelNode) {
+  struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[usMapIndex].pShadowHead;
   // Search through object layer for an exitgrid
   while (pShadow) {
@@ -91,7 +92,7 @@ BOOLEAN GetExitGridLevelNode(UINT16 usMapIndex, LEVELNODE **ppLevelNode) {
 }
 
 void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid) {
-  LEVELNODE *pShadow, *tail;
+  struct LEVELNODE *pShadow, *tail;
   pShadow = gpWorldLevelData[iMapIndex].pShadowHead;
 
   // Search through object layer for an exitgrid
@@ -201,7 +202,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
   }
 }
 
-UINT16 FindGridNoFromSweetSpotCloseToExitGrid(SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
+UINT16 FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
                                               INT8 ubRadius, UINT8 *pubDirection) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
@@ -211,7 +212,7 @@ UINT16 FindGridNoFromSweetSpotCloseToExitGrid(SOLDIERTYPE *pSoldier, INT16 sSwee
   INT16 sLowestGridNo = 0;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
-  SOLDIERTYPE soldier;
+  struct SOLDIERTYPE soldier;
   UINT8 ubSaveNPCAPBudget;
   UINT8 ubSaveNPCDistLimit;
   EXITGRID ExitGrid;
@@ -229,7 +230,7 @@ UINT16 FindGridNoFromSweetSpotCloseToExitGrid(SOLDIERTYPE *pSoldier, INT16 sSwee
 
   // create dummy soldier, and use the pathing to determine which nearby slots are
   // reachable.
-  memset(&soldier, 0, sizeof(SOLDIERTYPE));
+  memset(&soldier, 0, sizeof(struct SOLDIERTYPE));
   soldier.bLevel = 0;
   soldier.bTeam = 1;
   soldier.sGridNo = pSoldier->sGridNo;
@@ -311,7 +312,7 @@ UINT16 FindGridNoFromSweetSpotCloseToExitGrid(SOLDIERTYPE *pSoldier, INT16 sSwee
   }
 }
 
-UINT16 FindClosestExitGrid(SOLDIERTYPE *pSoldier, INT16 sSrcGridNo, INT8 ubRadius) {
+UINT16 FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo, INT8 ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;

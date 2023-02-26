@@ -1,8 +1,9 @@
 #ifndef __INTERACTIVE_TILES_H
 #define __INTERACTIVE_TILES_H
 
-#include "Tactical/SoldierControl.h"
-#include "TileEngine/WorldDef.h"
+#include "SGP/Types.h"
+
+struct SOLDIERTYPE;
 
 #define INTTILE_DOOR_TILE_ONE 1
 
@@ -13,24 +14,25 @@
 
 extern BOOLEAN gfOverIntTile;
 
-void GetLevelNodeScreenRect(LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos, INT16 sYPos,
+void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos, INT16 sYPos,
                             INT16 sGridNo);
 BOOLEAN InitInteractiveTileManagement();
 void ShutdownInteractiveTileManagement();
-BOOLEAN AddInteractiveTile(INT16 sGridNo, LEVELNODE *pLevelNode, UINT32 uiFlags, UINT16 usType);
-BOOLEAN StartInteractiveObject(INT16 sGridNo, UINT16 usStructureID, SOLDIERTYPE *pSoldier,
+BOOLEAN AddInteractiveTile(INT16 sGridNo, struct LEVELNODE *pLevelNode, UINT32 uiFlags,
+                           UINT16 usType);
+BOOLEAN StartInteractiveObject(INT16 sGridNo, UINT16 usStructureID, struct SOLDIERTYPE *pSoldier,
                                UINT8 ubDirection);
-BOOLEAN StartInteractiveObjectFromMouse(SOLDIERTYPE *pSoldier, UINT8 ubDirection);
+BOOLEAN StartInteractiveObjectFromMouse(struct SOLDIERTYPE *pSoldier, UINT8 ubDirection);
 void CompileInteractiveTiles();
 UINT32 GetInteractiveTileCursor(UINT32 uiOldCursor, BOOLEAN fConfirm);
-BOOLEAN InteractWithInteractiveObject(SOLDIERTYPE *pSoldier, STRUCTURE *pStructure,
+BOOLEAN InteractWithInteractiveObject(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
                                       UINT8 ubDirection);
-BOOLEAN SoldierHandleInteractiveObject(SOLDIERTYPE *pSoldier);
+BOOLEAN SoldierHandleInteractiveObject(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN CalcInteractiveObjectAPs(INT16 sGridNo, STRUCTURE *pStructure, INT16 *psAPCost,
+BOOLEAN CalcInteractiveObjectAPs(INT16 sGridNo, struct STRUCTURE *pStructure, INT16 *psAPCost,
                                  INT16 *psBPCost);
 
-void HandleStructChangeFromGridNo(SOLDIERTYPE *pSoldier, INT16 sGridNo);
+void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo);
 
 void BeginCurInteractiveTileCheck(UINT8 bCheckFlags);
 void EndCurInteractiveTileCheck();
@@ -40,11 +42,12 @@ BOOLEAN ShouldCheckForMouseDetections();
 void CycleIntTileFindStack(UINT16 usMapPos);
 void SetActionModeDoorCursorText();
 
-LEVELNODE *GetCurInteractiveTile();
-LEVELNODE *GetCurInteractiveTileGridNo(INT16 *psGridNo);
-LEVELNODE *GetCurInteractiveTileGridNoAndStructure(INT16 *psGridNo, STRUCTURE **ppStructure);
-LEVELNODE *ConditionalGetCurInteractiveTileGridNoAndStructure(INT16 *psGridNo,
-                                                              STRUCTURE **ppStructure,
-                                                              BOOLEAN fRejectOnTopItems);
+struct LEVELNODE *GetCurInteractiveTile();
+struct LEVELNODE *GetCurInteractiveTileGridNo(INT16 *psGridNo);
+struct LEVELNODE *GetCurInteractiveTileGridNoAndStructure(INT16 *psGridNo,
+                                                          struct STRUCTURE **ppStructure);
+struct LEVELNODE *ConditionalGetCurInteractiveTileGridNoAndStructure(INT16 *psGridNo,
+                                                                     struct STRUCTURE **ppStructure,
+                                                                     BOOLEAN fRejectOnTopItems);
 
 #endif

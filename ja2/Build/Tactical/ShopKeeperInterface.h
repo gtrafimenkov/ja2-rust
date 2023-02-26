@@ -33,7 +33,7 @@ typedef struct {
   BOOLEAN fActive;
   INT16 sItemIndex;
   UINT32 uiFlags;
-  OBJECTTYPE ItemObject;
+  struct OBJECTTYPE ItemObject;
   UINT8 ubLocationOfObject;  // An enum value for the location of the item ( either in the arms
                              // dealers inventory, one of the offer areas or in the users inventory)
   INT8 bSlotIdInOtherLocation;
@@ -60,11 +60,11 @@ enum {
 
 extern UINT8 gubSkiDirtyLevel;
 
-extern OBJECTTYPE *gpHighLightedItemObject;
+extern struct OBJECTTYPE *gpHighLightedItemObject;
 
 extern INVENTORY_IN_SLOT gMoveingItem;
 
-extern OBJECTTYPE *pShopKeeperItemDescObject;
+extern struct OBJECTTYPE *pShopKeeperItemDescObject;
 
 UINT32 ShopKeeperScreenInit(void);
 UINT32 ShopKeeperScreenHandle(void);
@@ -85,13 +85,14 @@ void SetSkiCursor(UINT16 usCursor);
 
 void InitShopKeeperSubTitledText(STR16 pString);
 
-void AddItemToPlayersOfferAreaAfterShopKeeperOpen(OBJECTTYPE *pItemObject, INT8 bPreviousInvPos);
+void AddItemToPlayersOfferAreaAfterShopKeeperOpen(struct OBJECTTYPE *pItemObject,
+                                                  INT8 bPreviousInvPos);
 
 void BeginSkiItemPointer(UINT8 ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFirst);
 
 void DeleteShopKeeperItemDescBox();
 
-BOOLEAN CanMercInteractWithSelectedShopkeeper(SOLDIERTYPE *pSoldier);
+BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier);
 
 void DealerGetsBribed(UINT8 ubProfileId, UINT32 uiMoneyAmount);
 

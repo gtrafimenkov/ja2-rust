@@ -49,7 +49,7 @@ struct SGPPaletteEntry {
 #define AUX_IGNORES_HEIGHT 0x10
 #define AUX_USES_LAND_Z 0x20
 
-typedef struct {
+struct AuxObjectData {
   UINT8 ubWallOrientation;
   UINT8 ubNumberOfTiles;
   UINT16 usTileLocIndex;
@@ -58,12 +58,13 @@ typedef struct {
   UINT8 ubNumberOfFrames;
   UINT8 fFlags;
   UINT8 ubUnused[6];
-} AuxObjectData;
+};
 
-typedef struct {
+// relative tile location
+struct RelTileLoc {
   INT8 bTileOffsetX;
   INT8 bTileOffsetY;
-} RelTileLoc;  // relative tile location
+};
 
 // TRLE subimage structure, mirroring that of ST(C)I
 typedef struct tagETRLEObject {

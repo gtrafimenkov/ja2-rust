@@ -12,16 +12,19 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
 #include "SysGlobals.h"
 #include "Tactical/Faces.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierFind.h"
 #include "Tactical/Squads.h"
 #include "Tactical/WorldItems.h"
@@ -36,7 +39,6 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
 #include "TileEngine/WorldDat.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -58,13 +60,13 @@ extern SOLDIERINITNODE *gpSelected;
 #define FASTMAPROWCOLTOPOS(r, c) ((r)*WORLD_COLS + (c))
 
 typedef struct {
-  HVOBJECT vo;
+  struct VObject *vo;
   UINT32 fType;
 
 } SMALL_TILE_SURF;
 
 typedef struct {
-  HVOBJECT vo;
+  struct VObject *vo;
   UINT16 usSubIndex;
   UINT32 fType;
 
@@ -75,8 +77,8 @@ SMALL_TILE_DB gSmTileDB[NUMBEROFTILES];
 UINT8 gubSmTileNum = 0;
 BOOLEAN gfSmTileLoaded = FALSE;
 BOOLEAN gfInOverheadMap = FALSE;
-MOUSE_REGION OverheadRegion;
-MOUSE_REGION OverheadBackgroundRegion;
+struct MOUSE_REGION OverheadRegion;
+struct MOUSE_REGION OverheadBackgroundRegion;
 UINT32 uiOVERMAP;
 UINT32 uiPERSONS;
 BOOLEAN gfOverheadMapDirty = FALSE;
@@ -86,13 +88,13 @@ BOOLEAN gfOverItemPool = FALSE;
 INT16 gsOveritemPoolGridNo;
 
 void HandleOverheadUI();
-void ClickOverheadRegionCallback(MOUSE_REGION *reg, INT32 reason);
-void MoveOverheadRegionCallback(MOUSE_REGION *reg, INT32 reason);
+void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
+void MoveOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason);
 void DeleteOverheadDB();
 BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(INT16 *psGridNo);
 
-extern BOOLEAN AnyItemsVisibleOnLevel(ITEM_POOL *pItemPool, INT8 bZLevel);
-extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, OBJECTTYPE *pObject,
+extern BOOLEAN AnyItemsVisibleOnLevel(struct ITEM_POOL *pItemPool, INT8 bZLevel);
+extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTTYPE *pObject,
                                                    BOOLEAN fReset);
 
 // Isometric utilities (for overhead stuff only)
@@ -105,7 +107,7 @@ void RenderOverheadOverlays();
 void InitNewOverheadDB(UINT8 ubTilesetID) {
   UINT32 uiLoop;
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   CHAR8 cFileBPP[128];
   CHAR8 cAdjustedFile[128];
   UINT32 cnt1, cnt2;
@@ -205,8 +207,8 @@ void DeleteOverheadDB() {
   }
 }
 
-BOOLEAN GetClosestItemPool(INT16 sSweetGridNo, ITEM_POOL **ppReturnedItemPool, UINT8 ubRadius,
-                           INT8 bLevel) {
+BOOLEAN GetClosestItemPool(INT16 sSweetGridNo, struct ITEM_POOL **ppReturnedItemPool,
+                           UINT8 ubRadius, INT8 bLevel) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2;
@@ -214,7 +216,7 @@ BOOLEAN GetClosestItemPool(INT16 sSweetGridNo, ITEM_POOL **ppReturnedItemPool, U
   INT32 uiRange, uiLowestRange = 999999;
   INT32 leftmost;
   BOOLEAN fFound = FALSE;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
 
   // create dummy soldier, and use the pathing to determine which nearby slots are
   // reachable.
@@ -250,7 +252,7 @@ BOOLEAN GetClosestItemPool(INT16 sSweetGridNo, ITEM_POOL **ppReturnedItemPool, U
   return (fFound);
 }
 
-BOOLEAN GetClosestMercInOverheadMap(INT16 sSweetGridNo, SOLDIERTYPE **ppReturnedSoldier,
+BOOLEAN GetClosestMercInOverheadMap(INT16 sSweetGridNo, struct SOLDIERTYPE **ppReturnedSoldier,
                                     UINT8 ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
@@ -295,7 +297,7 @@ BOOLEAN GetClosestMercInOverheadMap(INT16 sSweetGridNo, SOLDIERTYPE **ppReturned
   return (fFound);
 }
 
-void DisplayMercNameInOverhead(SOLDIERTYPE *pSoldier) {
+void DisplayMercNameInOverhead(struct SOLDIERTYPE *pSoldier) {
   INT16 sWorldScreenX, sX;
   INT16 sWorldScreenY, sY;
 
@@ -325,7 +327,7 @@ void DisplayMercNameInOverhead(SOLDIERTYPE *pSoldier) {
 
 void HandleOverheadMap() {
   static BOOLEAN fFirst = TRUE;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (fFirst) {
     fFirst = FALSE;
@@ -386,7 +388,7 @@ void HandleOverheadMap() {
 
   if (!gfEditMode && !gfTacticalPlacementGUIActive) {
     INT16 usMapPos;
-    ITEM_POOL *pItemPool;
+    struct ITEM_POOL *pItemPool;
 
     gfUIHandleSelectionAboveGuy = FALSE;
 
@@ -395,7 +397,7 @@ void HandleOverheadMap() {
     if (GetOverheadMouseGridNo(&usMapPos)) {
       // ATE: Find the closest item pool within 5 tiles....
       if (GetClosestItemPool(usMapPos, &pItemPool, 1, 0)) {
-        STRUCTURE *pStructure = NULL;
+        struct STRUCTURE *pStructure = NULL;
         INT16 sIntTileGridNo;
         INT8 bZLevel = 0;
         INT16 sActionGridNo = usMapPos;
@@ -468,7 +470,7 @@ BOOLEAN InOverheadMap() { return (gfInOverheadMap); }
 
 void GoIntoOverheadMap() {
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
 #ifdef JA2DEMO
 
@@ -614,10 +616,10 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
   INT16 sX, sY;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   SMALL_TILE_DB *pTile;
   INT16 sHeight;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   INT16 sX1, sX2, sY1, sY2;
 
   // Get video object for persons...
@@ -962,8 +964,8 @@ void RenderOverheadOverlays() {
   UINT32 uiDestPitchBYTES;
   WORLDITEM *pWorldItem;
   UINT32 i;
-  SOLDIERTYPE *pSoldier;
-  HVOBJECT hVObject;
+  struct SOLDIERTYPE *pSoldier;
+  struct VObject *hVObject;
   INT16 sX, sY;
   UINT16 end;
   UINT16 usLineColor = 0;
@@ -1133,11 +1135,11 @@ sStartPointY_S, INT16 sEndXS, INT16 sEndYS )
         INT16				sX, sY;
         UINT32			uiDestPitchBYTES;
         UINT8				*pDestBuf;
-        LEVELNODE		*pNode;
+        struct LEVELNODE		*pNode;
         UINT16			usLineColor;
         INT16				sHeight;
-        SOLDIERTYPE	*pSoldier;
-        HVOBJECT hVObject;
+        struct SOLDIERTYPE	*pSoldier;
+        struct VObject* hVObject;
         pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
         // Begin Render Loop
         sAnchorPosX_M = sStartPointX_M;
@@ -1315,11 +1317,11 @@ NULL, (INT16)(sX-2), (INT16)(sY-2), (INT16)(sX + 5), (INT16)(sY + 11));
 }
 */
 
-void MoveInOverheadRegionCallback(MOUSE_REGION *reg, INT32 reason) {
+void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
   // Calculate the cursor...
 }
 
-void ClickOverheadRegionCallback(MOUSE_REGION *reg, INT32 reason) {
+void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
   UINT32 uiCellX, uiCellY;
   INT16 sWorldScreenX, sWorldScreenY;
 
@@ -1349,7 +1351,7 @@ void ClickOverheadRegionCallback(MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void MoveOverheadRegionCallback(MOUSE_REGION *reg, INT32 reason) {}
+void MoveOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {}
 
 void GetOverheadScreenXYFromGridNo(INT16 sGridNo, INT16 *psScreenX, INT16 *psScreenY) {
   GetWorldXYAbsoluteScreenXY((INT16)(CenterX(sGridNo) / CELL_X_SIZE),
@@ -1463,7 +1465,7 @@ void CalculateRestrictedScaleFactors(INT16 *pScaleX, INT16 *pScaleY) {}
 
 void CopyOverheadDBShadetablesFromTileset() {
   UINT32 uiLoop, uiLoop2;
-  PTILE_IMAGERY pTileSurf;
+  struct TILE_IMAGERY *pTileSurf;
 
   // Loop through tileset
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {

@@ -25,6 +25,7 @@
 #include "Tactical/DialogueControl.h"
 #include "Tactical/DrugsAndAlcohol.h"
 #include "Tactical/FOV.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/HandleUI.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceDialogue.h"
@@ -56,6 +57,9 @@
 #include "TileEngine/Pits.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/Smell.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/EventPump.h"
 #include "Utils/Message.h"
@@ -69,7 +73,7 @@
 
 BOOLEAN gfLastMercTalkedAboutKillingID = NOBODY;
 
-extern void AddFuelToVehicle(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pVehicle);
+extern void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle);
 
 DOUBLE gHopFenceForwardSEDist[NUMSOLDIERBODYTYPES] = {2.2, 0.7, 3.2, 0.7};
 DOUBLE gHopFenceForwardNWDist[NUMSOLDIERBODYTYPES] = {2.7, 1.0, 2.7, 1.0};
@@ -81,23 +85,23 @@ DOUBLE gClimbUpRoofLATDist[NUMSOLDIERBODYTYPES] = {0.7, 0.5, 0.7, 0.5};
 DOUBLE gClimbDownRoofStartDist[NUMSOLDIERBODYTYPES] = {5.0, 1.0, 1, 1};
 DOUBLE gClimbUpRoofDistGoingLower[NUMSOLDIERBODYTYPES] = {0.9, 0.1, 1, 1};
 
-BOOLEAN HandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
+BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse);
 
-void CheckForAndHandleSoldierIncompacitated(SOLDIERTYPE *pSoldier);
-BOOLEAN CheckForImproperFireGunEnd(SOLDIERTYPE *pSoldier);
-BOOLEAN OKHeightDest(SOLDIERTYPE *pSoldier, INT16 sNewGridNo);
-BOOLEAN HandleUnjamAnimation(SOLDIERTYPE *pSoldier);
+void CheckForAndHandleSoldierIncompacitated(struct SOLDIERTYPE *pSoldier);
+BOOLEAN CheckForImproperFireGunEnd(struct SOLDIERTYPE *pSoldier);
+BOOLEAN OKHeightDest(struct SOLDIERTYPE *pSoldier, INT16 sNewGridNo);
+BOOLEAN HandleUnjamAnimation(struct SOLDIERTYPE *pSoldier);
 
-extern void HandleSystemNewAISituation(SOLDIERTYPE *pSoldier, BOOLEAN fResetABC);
-extern void PlaySoldierFootstepSound(SOLDIERTYPE *pSoldier);
+extern void HandleSystemNewAISituation(struct SOLDIERTYPE *pSoldier, BOOLEAN fResetABC);
+extern void PlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier);
 extern UINT8 NumCapableEnemyInSector();
 extern BOOLEAN gfKillingGuysForLosingBattle;
 
 extern UINT8 gubInterruptProvoker;
 
-extern UINT16 PickSoldierReadyAnimation(SOLDIERTYPE *pSoldier, BOOLEAN fEndReady);
+extern UINT16 PickSoldierReadyAnimation(struct SOLDIERTYPE *pSoldier, BOOLEAN fEndReady);
 
-BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier) {
+BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
   EV_S_FIREWEAPON SFireWeapon;
 
   UINT16 sNewAniFrame, anAniFrame;
@@ -1476,7 +1480,7 @@ BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier) {
           // SIGNAL DODGE!
           // ATE: Only do if we're not inspecial case...
           if (!(pSoldier->uiStatusFlags & SOLDIER_NPC_DOING_PUNCH)) {
-            SOLDIERTYPE *pTSoldier;
+            struct SOLDIERTYPE *pTSoldier;
             UINT32 uiMercFlags;
             UINT16 usSoldierIndex;
 
@@ -2298,7 +2302,7 @@ BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier) {
           // Reload robot....
           {
             UINT8 ubPerson;
-            SOLDIERTYPE *pRobot;
+            struct SOLDIERTYPE *pRobot;
 
             // Get pointer...
             ubPerson = WhoIsThere2(pSoldier->sPendingActionData2, pSoldier->bLevel);
@@ -2341,7 +2345,7 @@ BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier) {
 
           // Getting hit by slap
           {
-            SOLDIERTYPE *pTarget;
+            struct SOLDIERTYPE *pTarget;
 
             pTarget = FindSoldierByProfileID(ELLIOT, FALSE);
 
@@ -2461,7 +2465,7 @@ BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier) {
           // THE GAS_CAN IS IN THE MERCS MAIN HAND AT THIS TIME
           {
             UINT8 ubPerson;
-            SOLDIERTYPE *pVehicle;
+            struct SOLDIERTYPE *pVehicle;
 
             // Get pointer to vehicle...
             ubPerson = WhoIsThere2(pSoldier->sPendingActionData2, pSoldier->bLevel);
@@ -2650,7 +2654,7 @@ BOOLEAN AdjustToNextAnimationFrame(SOLDIERTYPE *pSoldier) {
 
 #define MIN_DEADLINESS_FOR_LIKE_GUN_QUOTE 20
 
-BOOLEAN ShouldMercSayHappyWithGunQuote(SOLDIERTYPE *pSoldier) {
+BOOLEAN ShouldMercSayHappyWithGunQuote(struct SOLDIERTYPE *pSoldier) {
   // How do we do this....
 
   if (QuoteExp_GotGunOrUsedGun[pSoldier->ubProfile] == QUOTE_SATISFACTION_WITH_GUN_AFTER_KILL) {
@@ -2674,13 +2678,14 @@ BOOLEAN ShouldMercSayHappyWithGunQuote(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-void SayBuddyWitnessedQuoteFromKill(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel) {
+void SayBuddyWitnessedQuoteFromKill(struct SOLDIERTYPE *pKillerSoldier, INT16 sGridNo,
+                                    INT8 bLevel) {
   UINT8 ubMercsInSector[20] = {0};
   INT8 bBuddyIndex[20] = {-1};
   INT8 bTempBuddyIndex;
   UINT8 ubNumMercs = 0;
   UINT8 ubChosenMerc;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   INT16 sDistVisible = FALSE;
   UINT16 usQuoteNum;
@@ -2777,9 +2782,9 @@ void SayBuddyWitnessedQuoteFromKill(SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, 
   }
 }
 
-void HandleKilledQuote(SOLDIERTYPE *pKilledSoldier, SOLDIERTYPE *pKillerSoldier, INT16 sGridNo,
-                       INT8 bLevel) {
-  SOLDIERTYPE *pTeamSoldier;
+void HandleKilledQuote(struct SOLDIERTYPE *pKilledSoldier, struct SOLDIERTYPE *pKillerSoldier,
+                       INT16 sGridNo, INT8 bLevel) {
+  struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt;
   UINT8 ubMercsInSector[20] = {0};
   UINT8 ubNumMercs = 0;
@@ -2916,7 +2921,7 @@ void HandleKilledQuote(SOLDIERTYPE *pKilledSoldier, SOLDIERTYPE *pKillerSoldier,
   }
 }
 
-BOOLEAN HandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) {
+BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) {
   BOOLEAN fBuddyJustDead = FALSE;
 
   *pfMadeCorpse = FALSE;
@@ -3064,7 +3069,7 @@ BOOLEAN HandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) {
   return (fBuddyJustDead);
 }
 
-void HandlePlayerTeamMemberDeathAfterSkullAnimation(SOLDIERTYPE *pSoldier) {
+void HandlePlayerTeamMemberDeathAfterSkullAnimation(struct SOLDIERTYPE *pSoldier) {
   // Release attacker
   if (!pSoldier->fDoingExternalDeath) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
@@ -3078,7 +3083,7 @@ void HandlePlayerTeamMemberDeathAfterSkullAnimation(SOLDIERTYPE *pSoldier) {
   RemoveCharacterFromSquads(pSoldier);
 }
 
-BOOLEAN CheckForAndHandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) {
+BOOLEAN CheckForAndHandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) {
   if (HandleSoldierDeath(pSoldier, pfMadeCorpse)) {
     // Select approriate death
     switch (pSoldier->usAnimState) {
@@ -3141,7 +3146,7 @@ BOOLEAN CheckForAndHandleSoldierDeath(SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorp
 //#define TESTFALLBACK
 //#define TESTFALLFORWARD
 
-void CheckForAndHandleSoldierIncompacitated(SOLDIERTYPE *pSoldier) {
+void CheckForAndHandleSoldierIncompacitated(struct SOLDIERTYPE *pSoldier) {
   INT16 sNewGridNo;
 
   if (pSoldier->bLife < OKLIFE) {
@@ -3169,7 +3174,7 @@ void CheckForAndHandleSoldierIncompacitated(SOLDIERTYPE *pSoldier) {
 
     // OK, if we are in a meanwhile and this is elliot...
     if (AreInMeanwhile()) {
-      SOLDIERTYPE *pQueen;
+      struct SOLDIERTYPE *pQueen;
 
       pQueen = FindSoldierByProfileID(QUEEN, FALSE);
 
@@ -3296,7 +3301,7 @@ void CheckForAndHandleSoldierIncompacitated(SOLDIERTYPE *pSoldier) {
   }
 }
 
-BOOLEAN CheckForAndHandleSoldierDyingNotFromHit(SOLDIERTYPE *pSoldier) {
+BOOLEAN CheckForAndHandleSoldierDyingNotFromHit(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->bLife == 0) {
     DoMercBattleSound(pSoldier, BATTLE_SOUND_DIE1);
     pSoldier->fDeadSoundPlayed = TRUE;
@@ -3387,7 +3392,7 @@ BOOLEAN CheckForAndHandleSoldierDyingNotFromHit(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN CheckForImproperFireGunEnd(SOLDIERTYPE *pSoldier) {
+BOOLEAN CheckForImproperFireGunEnd(struct SOLDIERTYPE *pSoldier) {
   if (AM_A_ROBOT(pSoldier)) {
     return (FALSE);
   }
@@ -3405,7 +3410,7 @@ BOOLEAN CheckForImproperFireGunEnd(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN OKHeightDest(SOLDIERTYPE *pSoldier, INT16 sNewGridNo) {
+BOOLEAN OKHeightDest(struct SOLDIERTYPE *pSoldier, INT16 sNewGridNo) {
   if (pSoldier->bLevel == 0) {
     return (TRUE);
   }
@@ -3418,7 +3423,7 @@ BOOLEAN OKHeightDest(SOLDIERTYPE *pSoldier, INT16 sNewGridNo) {
   return (TRUE);
 }
 
-BOOLEAN HandleUnjamAnimation(SOLDIERTYPE *pSoldier) {
+BOOLEAN HandleUnjamAnimation(struct SOLDIERTYPE *pSoldier) {
   // OK, play intermediate animation here..... save in pending animation data, the current
   // code we are at!
   pSoldier->uiPendingActionData1 = pSoldier->usAniCode;
@@ -3518,9 +3523,9 @@ BOOLEAN HandleUnjamAnimation(SOLDIERTYPE *pSoldier) {
 
 #endif
 
-BOOLEAN OKFallDirection(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 bTestDirection,
-                        UINT16 usAnimState) {
-  STRUCTURE_FILE_REF *pStructureFileRef;
+BOOLEAN OKFallDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
+                        INT8 bTestDirection, UINT16 usAnimState) {
+  struct STRUCTURE_FILE_REF *pStructureFileRef;
   UINT16 usAnimSurface;
 
   // How are the movement costs?
@@ -3567,7 +3572,7 @@ BOOLEAN OKFallDirection(SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 
   return (TRUE);
 }
 
-BOOLEAN HandleCheckForDeathCommonCode(SOLDIERTYPE *pSoldier) {
+BOOLEAN HandleCheckForDeathCommonCode(struct SOLDIERTYPE *pSoldier) {
   // Do we have a primary pending animation?
   if (pSoldier->usPendingAnimation2 != NO_PENDING_ANIMATION) {
     ChangeSoldierState(pSoldier, pSoldier->usPendingAnimation2, 0, FALSE);
@@ -3691,7 +3696,7 @@ BOOLEAN HandleCheckForDeathCommonCode(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-void KickOutWheelchair(SOLDIERTYPE *pSoldier) {
+void KickOutWheelchair(struct SOLDIERTYPE *pSoldier) {
   INT16 sNewGridNo;
 
   // Move forward one gridno....

@@ -13,13 +13,13 @@
 #include "Utils/Message.h"
 
 UINT8 gubNumUIPlannedMoves = 0;
-SOLDIERTYPE *gpUIPlannedSoldier = NULL;
-SOLDIERTYPE *gpUIStartPlannedSoldier = NULL;
+struct SOLDIERTYPE *gpUIPlannedSoldier = NULL;
+struct SOLDIERTYPE *gpUIStartPlannedSoldier = NULL;
 BOOLEAN gfInUIPlanMode = FALSE;
 
-void SelectPausedFireAnimation(SOLDIERTYPE *pSoldier);
+void SelectPausedFireAnimation(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN BeginUIPlan(SOLDIERTYPE *pSoldier) {
+BOOLEAN BeginUIPlan(struct SOLDIERTYPE *pSoldier) {
   gubNumUIPlannedMoves = 0;
   gpUIPlannedSoldier = pSoldier;
   gpUIStartPlannedSoldier = pSoldier;
@@ -33,7 +33,7 @@ BOOLEAN BeginUIPlan(SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
-  SOLDIERTYPE *pPlanSoldier;
+  struct SOLDIERTYPE *pPlanSoldier;
   INT16 sXPos, sYPos;
   INT16 sAPCost = 0;
   INT8 bDirection;
@@ -215,7 +215,7 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
 
 void EndUIPlan() {
   int cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // Zero out any planned soldiers
   for (cnt = MAX_NUM_SOLDIERS; cnt < TOTAL_SOLDIERS; cnt++) {
@@ -238,7 +238,7 @@ void EndUIPlan() {
 
 BOOLEAN InUIPlanMode() { return (gfInUIPlanMode); }
 
-void SelectPausedFireAnimation(SOLDIERTYPE *pSoldier) {
+void SelectPausedFireAnimation(struct SOLDIERTYPE *pSoldier) {
   // Determine which animation to do...depending on stance and gun in hand...
 
   switch (gAnimControl[pSoldier->usAnimState].ubEndHeight) {

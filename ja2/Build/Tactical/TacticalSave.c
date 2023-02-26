@@ -33,7 +33,6 @@
 #include "Tactical/PathAI.h"
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierAdd.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "TacticalAI/AI.h"
@@ -42,7 +41,6 @@
 #include "TileEngine/LightEffects.h"
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/SmokeEffects.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
@@ -128,7 +126,7 @@ UINT32 GetLastTimePlayerWasInSector();
 void SetLastTimePlayerWasInSector();
 
 extern void InitLoadedWorld();
-extern void ReduceAmmoDroppedByNonPlayerSoldiers(SOLDIERTYPE *pSoldier, INT32 iInvSlot);
+extern void ReduceAmmoDroppedByNonPlayerSoldiers(struct SOLDIERTYPE *pSoldier, INT32 iInvSlot);
 
 extern void StripEnemyDetailedPlacementsIfSectorWasPlayerLiberated();
 
@@ -617,9 +615,9 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMa
 }
 
 BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
-                                 UINT32 uiNumberOfItemsToAdd, OBJECTTYPE *pObject, UINT8 ubLevel,
-                                 UINT16 usFlags, INT8 bRenderZHeightAboveLevel, INT8 bVisible,
-                                 BOOLEAN fReplaceEntireFile) {
+                                 UINT32 uiNumberOfItemsToAdd, struct OBJECTTYPE *pObject,
+                                 UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel,
+                                 INT8 bVisible, BOOLEAN fReplaceEntireFile) {
   UINT32 uiNumberOfItems = 0;
   WORLDITEM *pWorldItems;
   UINT32 cnt;
@@ -700,7 +698,7 @@ BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGr
                 pWorldItems[cnt].o.usItem, ItemNames[pWorldItems[cnt].o.usItem]);
     }
 
-    memcpy(&(pWorldItems[cnt].o), &pObject[uiLoop1], sizeof(OBJECTTYPE));
+    memcpy(&(pWorldItems[cnt].o), &pObject[uiLoop1], sizeof(struct OBJECTTYPE));
   }
 
   // Save the Items to the the file
@@ -835,7 +833,7 @@ void HandleAllReachAbleItemsInTheSector(INT16 sSectorX, INT16 sSectorY, INT8 bSe
   INT16 sGridNo = NOWHERE, sGridNo2 = NOWHERE;
   INT16 sNewLoc;
 
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fSecondary = FALSE;
 
   if (guiNumWorldItems == 0) {
@@ -1489,7 +1487,7 @@ BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT1
 
 void SaveNPCInformationToProfileStruct() {
   UINT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   MERCPROFILESTRUCT *pProfile;
 
   // Loop through the active NPC's
@@ -1547,13 +1545,13 @@ void SaveNPCInformationToProfileStruct() {
 }
 
 extern void EVENT_SetSoldierPositionAndMaybeFinalDestAndMaybeNotDestination(
-    SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos, BOOLEAN fUpdateDest,
+    struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOAT dNewYPos, BOOLEAN fUpdateDest,
     BOOLEAN fUpdateFinalDest);
 
 void LoadNPCInformationFromProfileStruct() {
   UINT32 cnt;
   INT16 sSoldierID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // CJC: disabled this Dec 21, 1998 as unnecessary (and messing up quote files for
   // recruited/escorted NPCs
@@ -1591,7 +1589,7 @@ void LoadNPCInformationFromProfileStruct() {
   /*
           INT16 sX, sY;
           UINT16	cnt;
-          SOLDIERTYPE		*pSoldier;
+          struct SOLDIERTYPE		*pSoldier;
           INT16			sSoldierID;
           INT16		sXPos, sYPos;
 
@@ -1771,7 +1769,7 @@ BOOLEAN DoesTempFileExistsForMap(UINT32 uiType, INT16 sMapX, INT16 sMapY, INT8 b
 INT16 GetSoldierIDFromAnyMercID(UINT8 ubMercID) {
   UINT16 cnt;
   UINT8 ubLastTeamID;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
 
   cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
 
@@ -2135,8 +2133,9 @@ BOOLEAN GetSectorFlagStatus(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlag
     return ((GetUnderGroundSectorFlagStatus(sMapX, sMapY, bMapZ, uiFlagToSet)) ? 1 : 0);
 }
 
-BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, SOLDIERTYPE *pSoldier,
-                                       INT16 sGridNo, UINT32 uiFlags) {
+BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ,
+                                       struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+                                       UINT32 uiFlags) {
   UINT32 uiNumberOfItems;
   WORLDITEM *pWorldItems = NULL;
   unsigned int i;
@@ -2217,7 +2216,7 @@ BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, SO
           pWorldItems[bCount].bVisible = TRUE;
           pWorldItems[bCount].bRenderZHeightAboveLevel = 0;
 
-          memcpy(&(pWorldItems[bCount].o), &pSoldier->inv[i], sizeof(OBJECTTYPE));
+          memcpy(&(pWorldItems[bCount].o), &pSoldier->inv[i], sizeof(struct OBJECTTYPE));
           bCount++;
         }
       }
@@ -2301,7 +2300,7 @@ void InitExitGameDialogBecauseFileHackDetected() {
                    MSG_BOX_FLAG_OK, TempFileLoadErrorMessageReturnCallback, &CenteringRect);
 }
 
-UINT32 MercChecksum(SOLDIERTYPE *pSoldier) {
+UINT32 MercChecksum(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiChecksum = 1;
   UINT32 uiLoop;
 

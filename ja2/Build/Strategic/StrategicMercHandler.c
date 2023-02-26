@@ -44,14 +44,14 @@
 BOOLEAN fContractOverMeTooFlag = FALSE;
 BOOLEAN fContractOverAndIWontRenewMeTooFlag = FALSE;
 BOOLEAN fProcessingAMerc = FALSE;
-SOLDIERTYPE *pProcessingSoldier = NULL;
+struct SOLDIERTYPE *pProcessingSoldier = NULL;
 extern BOOLEAN gfFirstMercSayingQuoteWillLeaveNoMatterWhat = FALSE;
 
 // build a list of mercs based on departure time
-void BuildMercQuitList(SOLDIERTYPE *pMercList);
+void BuildMercQuitList(struct SOLDIERTYPE *pMercList);
 
-void StrategicHandlePlayerTeamMercDeath(SOLDIERTYPE *pSoldier) {
-  SOLDIERTYPE *pKiller = NULL;
+void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
+  struct SOLDIERTYPE *pKiller = NULL;
   INT16 sSectorX, sSectorY;
 
   // if the soldier HAS a profile
@@ -153,8 +153,8 @@ void StrategicHandlePlayerTeamMercDeath(SOLDIERTYPE *pSoldier) {
 void MercDailyUpdate() {
   INT32 cnt;
   INT8 bLastTeamID;
-  SOLDIERTYPE *pSoldier;
-  // SOLDIERTYPE *pQuitList[ 21 ];
+  struct SOLDIERTYPE *pSoldier;
+  // struct SOLDIERTYPE *pQuitList[ 21 ];
   MERCPROFILESTRUCT *pProfile;
   UINT32 uiChance;
   INT32 iOffset = 0;
@@ -442,14 +442,14 @@ void MercDailyUpdate() {
 }
 
 /*
-void BuildMercQuitList( SOLDIERTYPE *pMercList )
+void BuildMercQuitList( struct SOLDIERTYPE *pMercList )
 {
         // go through list of mercs on players team, fill pMercList sorted from most recent leave
 time, to furthest leave time
 
         INT32		cnt;
         INT8		bLastTeamID;
-        SOLDIERTYPE		*pSoldier;
+        struct SOLDIERTYPE		*pSoldier;
         INT32 iCounter = 0;
 
         cnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
@@ -511,7 +511,7 @@ MERC_ACCOUNT_INVALID )
 }
 */
 /*
-void HandleMercsAboutToLeave( SOLDIERTYPE *pMercList )
+void HandleMercsAboutToLeave( struct SOLDIERTYPE *pMercList )
 {
         // run from top of list to bottom..if merc is gonna leave within a defined time frame of the
 previous guy and they are leaving the same day (today)
@@ -562,7 +562,7 @@ MERC_DEPARTURE_TIME_OF_DAY - 2 * 60,	(UINT32) pSoldier->ubID );
 // ATE: This function deals with MERC MERC and NPC's leaving because of not getting paid...
 // NOT AIM renewals....
 void MercsContractIsFinished(UINT8 ubID) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
 #ifndef JA2DEMO
 
@@ -613,7 +613,7 @@ void MercsContractIsFinished(UINT8 ubID) {
 
 // ATE: Called for RPCs who should now complain about no pay...
 void RPCWhineAboutNoPay(UINT8 ubID) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
 #ifndef JA2DEMO
 
@@ -631,7 +631,7 @@ void RPCWhineAboutNoPay(UINT8 ubID) {
 }
 
 // OK loop through and check!
-BOOLEAN SoldierHasWorseEquipmentThanUsedTo(SOLDIERTYPE *pSoldier) {
+BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt;
   UINT16 usItem;
   INT8 bBestArmour = -1;
@@ -684,7 +684,7 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo(SOLDIERTYPE *pSoldier) {
 }
 
 void MercComplainAboutEquipment(UINT8 ubProfile) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (ubProfile == LARRY_NORMAL) {
     if (CheckFact(FACT_LARRY_CHANGED, 0)) {
@@ -716,8 +716,8 @@ void UpdateBuddyAndHatedCounters(void) {
   INT8 bOtherID;
   INT8 bLastTeamID;
   UINT8 ubOtherProfileID;
-  SOLDIERTYPE *pSoldier;
-  SOLDIERTYPE *pOtherSoldier;
+  struct SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pOtherSoldier;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fSameGroupOnly;
 
@@ -927,7 +927,7 @@ void UpdateBuddyAndHatedCounters(void) {
 
 void HourlyCamouflageUpdate(void) {
   INT8 bMercID, bLastTeamID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   bMercID = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   bLastTeamID = gTacticalStatus.Team[gbPlayerNum].bLastID;

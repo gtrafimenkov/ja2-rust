@@ -4,6 +4,7 @@
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -62,7 +63,7 @@ void ExitBobbyRAmmo() {
 void HandleBobbyRAmmo() {}
 
 void RenderBobbyRAmmo() {
-  HVOBJECT hPixHandle;
+  struct VObject* hPixHandle;
 
   WebPageTileBackground(BOBBYR_NUM_HORIZONTAL_TILES, BOBBYR_NUM_VERTICAL_TILES,
                         BOBBYR_BACKGROUND_WIDTH, BOBBYR_BACKGROUND_HEIGHT, guiAmmoBackground);

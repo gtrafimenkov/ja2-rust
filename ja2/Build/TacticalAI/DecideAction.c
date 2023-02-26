@@ -23,10 +23,13 @@
 #include "TacticalAI/NPC.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 
-extern BOOLEAN InternalIsValidStance(SOLDIERTYPE *pSoldier, INT8 bDirection, INT8 bNewStance);
+extern BOOLEAN InternalIsValidStance(struct SOLDIERTYPE *pSoldier, INT8 bDirection,
+                                     INT8 bNewStance);
 extern BOOLEAN gfHiddenInterrupt;
 extern BOOLEAN gfUseAlternateQueenPosition;
 
@@ -42,20 +45,20 @@ guiRedHideCounter = 0;
 
 #define CENTER_OF_RING 11237
 
-void DoneScheduleAction(SOLDIERTYPE *pSoldier) {
+void DoneScheduleAction(struct SOLDIERTYPE *pSoldier) {
   pSoldier->fAIFlags &= (~AI_CHECK_SCHEDULE);
   pSoldier->bAIScheduleProgress = 0;
   PostNextSchedule(pSoldier);
 }
 
-INT8 DecideActionSchedule(SOLDIERTYPE *pSoldier) {
+INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
   INT32 iScheduleIndex;
   UINT8 ubScheduleAction;
   UINT16 usGridNo1, usGridNo2;
   INT16 sX, sY;
   INT8 bDirection;
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
   BOOLEAN fDoUseDoor;
   DOOR_STATUS *pDoorStatus;
 
@@ -425,7 +428,7 @@ INT8 DecideActionSchedule(SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionBoxerEnteringRing(SOLDIERTYPE *pSoldier) {
+INT8 DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubRoom;
   INT16 sDesiredMercLoc;
   UINT8 ubDesiredMercDir;
@@ -466,7 +469,7 @@ INT8 DecideActionBoxerEnteringRing(SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_ABSOLUTELY_NONE);
 }
 
-INT8 DecideActionNamedNPC(SOLDIERTYPE *pSoldier) {
+INT8 DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
   INT16 sDesiredMercLoc;
   UINT8 ubDesiredMercDir;
   UINT8 ubDesiredMerc;
@@ -552,7 +555,7 @@ INT8 DecideActionNamedNPC(SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionGreen(SOLDIERTYPE *pSoldier) {
+INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
   INT32 iChance, iSneaky = 10;
   INT8 bInWater, bInGas;
 
@@ -988,7 +991,7 @@ INT8 DecideActionGreen(SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionYellow(SOLDIERTYPE *pSoldier) {
+INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   INT32 iDummy;
   UINT8 ubNoiseDir;
   INT16 sNoiseGridNo;
@@ -1498,7 +1501,7 @@ INT8 DecideActionYellow(SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionRed(SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
+INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
   INT8 bActionReturned;
   INT32 iDummy;
   INT16 iChance, sClosestOpponent, sClosestFriend;
@@ -2598,7 +2601,7 @@ INT8 DecideActionRed(SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionBlack(SOLDIERTYPE *pSoldier) {
+INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   INT32 iCoverPercentBetter, iOffense, iDefense, iChance;
   INT16 sClosestOpponent, sBestCover = NOWHERE;
   INT16 sClosestDisturbance;
@@ -3798,7 +3801,7 @@ INT8 DecideActionBlack(SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideAction(SOLDIERTYPE *pSoldier) {
+INT8 DecideAction(struct SOLDIERTYPE *pSoldier) {
   INT8 bAction = AI_ACTION_NONE;
 
 #ifdef AI_TIMING_TESTS
@@ -3899,7 +3902,7 @@ INT8 DecideAction(SOLDIERTYPE *pSoldier) {
   return (bAction);
 }
 
-INT8 DecideActionEscort(SOLDIERTYPE *pSoldier) {
+INT8 DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
   // if he has a place to go, and isn't already there... go!
   if (pSoldier->usActionData != NOWHERE && (pSoldier->sGridNo != pSoldier->usActionData)) {
 #ifdef DEBUGDECISIONS
@@ -3912,7 +3915,7 @@ INT8 DecideActionEscort(SOLDIERTYPE *pSoldier) {
     return (AI_ACTION_NONE);
 }
 
-void DecideAlertStatus(SOLDIERTYPE *pSoldier) {
+void DecideAlertStatus(struct SOLDIERTYPE *pSoldier) {
   INT8 bOldStatus;
   INT32 iDummy;
   BOOLEAN fClimbDummy, fReachableDummy;

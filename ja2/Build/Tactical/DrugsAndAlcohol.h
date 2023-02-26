@@ -2,7 +2,9 @@
 #define __DRUGS_AND_ALCOHOL_H
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
+struct OBJECTTYPE;
 
 #define DRUG_TYPE_ADRENALINE 0
 #define DRUG_TYPE_ALCOHOL 1
@@ -20,16 +22,16 @@
 #define LIFE_GAIN_PER_REGEN_POINT 10
 
 UINT8 GetDrugType(UINT16 usItem);
-BOOLEAN ApplyDrugs(SOLDIERTYPE *pSoldier, OBJECTTYPE *pObject);
+BOOLEAN ApplyDrugs(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject);
 
-void HandleEndTurnDrugAdjustments(SOLDIERTYPE *pSoldier);
-void HandleAPEffectDueToDrugs(SOLDIERTYPE *pSoldier, UINT8 *pubPoints);
-void HandleBPEffectDueToDrugs(SOLDIERTYPE *pSoldier, INT16 *psPoints);
+void HandleEndTurnDrugAdjustments(struct SOLDIERTYPE *pSoldier);
+void HandleAPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints);
+void HandleBPEffectDueToDrugs(struct SOLDIERTYPE *pSoldier, INT16 *psPoints);
 
-INT8 GetDrugEffect(SOLDIERTYPE *pSoldier, UINT8 ubDrugType);
-INT8 GetDrugSideEffect(SOLDIERTYPE *pSoldier, UINT8 ubDrugType);
-INT8 GetDrunkLevel(SOLDIERTYPE *pSoldier);
-INT32 EffectStatForBeingDrunk(SOLDIERTYPE *pSoldier, INT32 iStat);
-BOOLEAN MercUnderTheInfluence(SOLDIERTYPE *pSoldier);
+INT8 GetDrugEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType);
+INT8 GetDrugSideEffect(struct SOLDIERTYPE *pSoldier, UINT8 ubDrugType);
+INT8 GetDrunkLevel(struct SOLDIERTYPE *pSoldier);
+INT32 EffectStatForBeingDrunk(struct SOLDIERTYPE *pSoldier, INT32 iStat);
+BOOLEAN MercUnderTheInfluence(struct SOLDIERTYPE *pSoldier);
 
 #endif

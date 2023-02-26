@@ -7,13 +7,15 @@
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/FOV.h"
+#include "Tactical/HandleItems.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/TacticalSave.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/RenderFun.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/Smell.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 
@@ -385,7 +387,7 @@ void RemoveSavedStructFromMap(UINT32 uiMapIndex, UINT16 usIndex) {
 void SaveBloodSmellAndRevealedStatesFromMapToTempFile() {
   MODIFY_MAP Map;
   UINT16 cnt;
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   gpRevealedMap = (UINT8 *)MemAlloc(NUM_REVEALED_BYTES);
   if (gpRevealedMap == NULL) AssertMsg(0, "Failed allocating memory for the revealed map");
@@ -417,7 +419,7 @@ void SaveBloodSmellAndRevealedStatesFromMapToTempFile() {
 
     // if there is a structure that is damaged
     if (gpWorldLevelData[cnt].uiFlags & MAPELEMENT_STRUCTURE_DAMAGED) {
-      STRUCTURE *pCurrent;
+      struct STRUCTURE *pCurrent;
 
       pCurrent = gpWorldLevelData[cnt].pStructureHead;
 
@@ -612,7 +614,7 @@ void SetMapRevealedStatus() {
 }
 
 void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
-  STRUCTURE *pCurrent = NULL;
+  struct STRUCTURE *pCurrent = NULL;
   INT8 bLevel;
   UINT8 ubWallOrientation;
   UINT8 ubBitToSet = 0x80;
@@ -867,7 +869,7 @@ void AddWindowHitToMapTempFile(UINT32 uiMapIndex) {
 }
 
 BOOLEAN ModifyWindowStatus(UINT32 uiMapIndex) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure((INT16)uiMapIndex, STRUCTURE_WALLNWINDOW);
   if (pStructure) {
@@ -879,10 +881,10 @@ BOOLEAN ModifyWindowStatus(UINT32 uiMapIndex) {
 }
 
 void SetOpenableStructStatusFromMapTempFile(UINT32 uiMapIndex, BOOLEAN fOpened) {
-  STRUCTURE *pStructure;
-  STRUCTURE *pBase;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pBase;
   BOOLEAN fStatusOnTheMap;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   INT16 sBaseGridNo = (INT16)uiMapIndex;
 
   pStructure = FindStructure((UINT16)uiMapIndex, STRUCTURE_OPENABLE);
@@ -900,7 +902,7 @@ void SetOpenableStructStatusFromMapTempFile(UINT32 uiMapIndex, BOOLEAN fOpened) 
     // Adjust the item's gridno to the base of struct.....
     pBase = FindBaseStructure(pStructure);
 
-    // Get LEVELNODE for struct and remove!
+    // Get struct LEVELNODE for struct and remove!
     if (pBase) {
       sBaseGridNo = pBase->sGridNo;
     }
@@ -927,7 +929,7 @@ void SetOpenableStructStatusFromMapTempFile(UINT32 uiMapIndex, BOOLEAN fOpened) 
 BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(UINT16 usSectorX, UINT16 usSectorY,
                                                      INT8 bSectorZ, UINT16 usGridNo,
                                                      BOOLEAN fChangeToOpen) {
-  //	STRUCTURE * pStructure;
+  //	struct STRUCTURE * pStructure;
   //	MODIFY_MAP Map;
   CHAR8 zMapName[128];
   HWFILE hFile;

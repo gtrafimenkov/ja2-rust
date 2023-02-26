@@ -4,7 +4,7 @@
 #include "SGP/Types.h"
 #include "Strategic/StrategicMovement.h"
 
-void InitPreBattleInterface(GROUP *pBattleGroup, BOOLEAN fPersistantPBI);
+void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI);
 void KillPreBattleInterface();
 void RenderPreBattleInterface();
 
@@ -13,11 +13,11 @@ extern BOOLEAN gfDisplayPotentialRetreatPaths;
 extern BOOLEAN gfAutomaticallyStartAutoResolve;
 extern BOOLEAN fDisableMapInterfaceDueToBattle;
 
-extern GROUP *gpBattleGroup;
+extern struct GROUP *gpBattleGroup;
 
 extern BOOLEAN gfTacticalTraversal;
-extern GROUP *gpTacticalTraversalGroup;
-extern SOLDIERTYPE *gpTacticalTraversalChosenSoldier;
+extern struct GROUP *gpTacticalTraversalGroup;
+extern struct SOLDIERTYPE *gpTacticalTraversalChosenSoldier;
 
 extern BOOLEAN gfGotoSectorTransition;
 extern BOOLEAN gfEnteringMapScreenToEnterPreBattleInterface;
@@ -86,8 +86,8 @@ void WakeUpAllMercsInSectorUnderAttack(void);
 void ClearMovementForAllInvolvedPlayerGroups(void);
 void RetreatAllInvolvedPlayerGroups(void);
 
-BOOLEAN PlayerGroupInvolvedInThisCombat(GROUP *pGroup);
-BOOLEAN PlayerMercInvolvedInThisCombat(SOLDIERTYPE *pSoldier);
+BOOLEAN PlayerGroupInvolvedInThisCombat(struct GROUP *pGroup);
+BOOLEAN PlayerMercInvolvedInThisCombat(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN CurrentBattleSectorIs(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
 

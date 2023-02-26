@@ -12,6 +12,7 @@
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -31,6 +32,7 @@
 #include "Tactical/Campaign.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SimpleRenderUtils.h"
 #include "Utils/FontControl.h"
@@ -132,8 +134,8 @@ enum {
 void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom);
 void HandleViewerInput();
 void RenderViewer();
-void ViewerMapMoveCallback(MOUSE_REGION *reg, INT32 reason);
-void ViewerMapClickCallback(MOUSE_REGION *reg, INT32 reason);
+void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
+void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason);
 void ViewerExitCallback(GUI_BUTTON *btn, INT32 reason);
 void Compression0Callback(GUI_BUTTON *btn, INT32 reason);
 void Compression5Callback(GUI_BUTTON *btn, INT32 reason);
@@ -158,11 +160,12 @@ void ExtractAndUpdatePopulations();
 void PrintEnemyPopTable();
 void PrintEnemiesKilledTable();
 UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites);
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY, HVOBJECT hVObject);
+void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
+                   struct VObject *hVObject);
 void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,
                                       UINT8 ubSectorY);
 
-MOUSE_REGION ViewerRegion;
+struct MOUSE_REGION ViewerRegion;
 
 UINT32 guiMapGraphicID;
 UINT32 guiMapIconsID;
@@ -403,7 +406,7 @@ void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
 }
 
 void RenderStationaryGroups() {
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   SECTORINFO *pSector;
   INT32 x, y, xp, yp;
   CHAR16 str[20];
@@ -473,8 +476,8 @@ void RenderStationaryGroups() {
 }
 
 void RenderMovingGroupsAndMercs() {
-  GROUP *pGroup;
-  HVOBJECT hVObject;
+  struct GROUP *pGroup;
+  struct VObject *hVObject;
   INT32 x, y;
   UINT8 ubNumTroops, ubNumAdmins, ubNumElites;
   float ratio;
@@ -632,7 +635,7 @@ void RenderInfoInSector() {
   // Count the number of mercs and their states (even for underground sectors)
   for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
        i++) {
-    SOLDIERTYPE *pSoldier;
+    struct SOLDIERTYPE *pSoldier;
 
     pSoldier = MercPtrs[i];
     if (pSoldier->bActive && pSoldier->sSectorX == ubSectorX && pSoldier->sSectorY == ubSectorY &&
@@ -653,7 +656,7 @@ void RenderInfoInSector() {
   yp = 375;
   if (!gbViewLevel) {
     SECTORINFO *pSector;
-    GROUP *pGroup;
+    struct GROUP *pGroup;
     UINT8 ubNumAdmins = 0, ubNumTroops = 0, ubNumElites = 0, ubAdminsInBattle = 0,
           ubTroopsInBattle = 0, ubElitesInBattle = 0, ubNumGroups = 0;
 
@@ -970,7 +973,7 @@ void HardCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ViewerMapMoveCallback(MOUSE_REGION *reg, INT32 reason) {
+void ViewerMapMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   static INT16 gsPrevX = 0, gsPrevY = 0;
   // calc current sector highlighted.
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
@@ -988,7 +991,7 @@ void ViewerMapMoveCallback(MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void ViewerMapClickCallback(MOUSE_REGION *reg, INT32 reason) {
+void ViewerMapClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
   static INT16 sLastX = -1, sLastY = -1;
   // calc current sector selected.
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -1111,7 +1114,7 @@ void Compression6HCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    GROUP *pGroup;
+    struct GROUP *pGroup;
     UINT8 ubSector;
     UINT32 uiWorldMin;
     Compression0Callback(ButtonList[iViewerButton[COMPRESSION0]], MSYS_CALLBACK_REASON_LBUTTON_UP);
@@ -1324,7 +1327,7 @@ void PrintEnemyPopTable() {
   UINT8 ubEnemyRank;
   UINT8 ubEnemyType;
   SECTORINFO *pSector;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   CHAR16 wPrintSpec[10];
   CHAR16 wTempString[10];
 
@@ -1621,7 +1624,8 @@ UINT8 ChooseEnemyIconColor(UINT8 ubAdmins, UINT8 ubTroops, UINT8 ubElites) {
   return (ubIconColor);
 }
 
-void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY, HVOBJECT hVObject) {
+void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
+                   struct VObject *hVObject) {
   UINT8 ubObjectIndex;
 
   Assert(ubIconType < NUM_ICON_TYPES);
@@ -1634,7 +1638,7 @@ void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY, 
 void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,
                                       UINT8 ubSectorY) {
   SECTORINFO *pSector;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   INT32 iDesired, iSurplus;
   UINT8 ubGroupCnt = 0;
   UINT8 ubSectorID;
@@ -1745,7 +1749,7 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
                              pFinalWaypoint->y + 'A' - 1, pFinalWaypoint->x);
                   }
                 } else {
-                  swprintf(wSubString, L" (LOST GROUP!)");
+                  swprintf(wSubString, L" (LOST struct GROUP!)");
                 }
                 wcscat(wString, wSubString);
               }
@@ -1757,7 +1761,7 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
               swprintf(wSubString, L"#%d, next sector %c%d", iPatrolIndex,
                        pGroup->ubNextY + 'A' - 1, pGroup->ubNextX);
             } else {
-              swprintf(wSubString, L"#err, FLOATING GROUP!");
+              swprintf(wSubString, L"#err, FLOATING struct GROUP!");
             }
             wcscat(wString, wSubString);
             break;

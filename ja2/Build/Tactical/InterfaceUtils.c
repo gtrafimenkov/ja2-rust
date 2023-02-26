@@ -16,6 +16,7 @@
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/Vehicles.h"
 #include "Tactical/Weapons.h"
@@ -98,8 +99,8 @@ void UnLoadCarPortraits(void) {
   return;
 }
 
-void DrawLifeUIBarEx(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth, INT16 sHeight,
-                     BOOLEAN fErase, UINT32 uiBuffer) {
+void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
+                     INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
@@ -180,15 +181,15 @@ void DrawLifeUIBarEx(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWid
   UnLockVideoSurface(uiBuffer);
 }
 
-void DrawBreathUIBarEx(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth, INT16 sHeight,
-                       BOOLEAN fErase, UINT32 uiBuffer) {
+void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
+                       INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usLineColor;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // Erase what was there
   if (fErase) {
@@ -282,8 +283,8 @@ void DrawBreathUIBarEx(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sW
   UnLockVideoSurface(uiBuffer);
 }
 
-void DrawMoraleUIBarEx(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth, INT16 sHeight,
-                       BOOLEAN fErase, UINT32 uiBuffer) {
+void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
+                       INT16 sHeight, BOOLEAN fErase, UINT32 uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
@@ -323,8 +324,9 @@ void DrawMoraleUIBarEx(SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sW
   UnLockVideoSurface(uiBuffer);
 }
 
-void DrawItemUIBarEx(OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYPos, INT16 sWidth,
-                     INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase, UINT32 uiBuffer) {
+void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYPos,
+                     INT16 sWidth, INT16 sHeight, INT16 sColor1, INT16 sColor2, BOOLEAN fErase,
+                     UINT32 uiBuffer) {
   FLOAT dStart, dEnd, dPercentage;
   // UINT16 usLineColor;
 
@@ -388,7 +390,8 @@ void DrawItemUIBarEx(OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYP
   }
 }
 
-void RenderSoldierFace(SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY, BOOLEAN fAutoFace) {
+void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
+                       BOOLEAN fAutoFace) {
   BOOLEAN fDoFace = FALSE;
   INT32 iFaceIndex = -1;
   UINT8 ubVehicleType = 0;

@@ -8,10 +8,10 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
@@ -122,7 +122,7 @@ enum {
   NEXT_FILES_PAGE_BUTTON,
 };
 // mouse regions
-MOUSE_REGION pFilesRegions[MAX_FILES_PAGE];
+struct MOUSE_REGION pFilesRegions[MAX_FILES_PAGE];
 
 // function definitions
 void RenderFilesBackGround(void);
@@ -158,7 +158,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat);
 BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName);
 
 // callbacks
-void FilesBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+void FilesBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 void BtnPreviousFilePageCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnNextFilePageCallback(GUI_BUTTON *btn, INT32 reason);
 
@@ -255,7 +255,7 @@ void ExitFiles() {
 void HandleFiles() { CheckForUnreadFiles(); }
 
 void RenderFiles() {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // render the background
   RenderFilesBackGround();
@@ -282,7 +282,7 @@ void RenderFiles() {
 
 void RenderFilesBackGround(void) {
   // render generic background for file system
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT32 iCounter = 0;
 
   // get title bar object
@@ -571,7 +571,7 @@ void ClearFilesList(void) {
 void DrawFilesListBackGround(void) {
   // proceudre will draw the background for the list of files
   INT32 iCounter = 7;
-  // HVOBJECT hHandle;
+  // struct VObject* hHandle;
 
   // now the columns
 
@@ -582,7 +582,7 @@ void DisplayFilesList(void) {
   // this function will run through the list of files of files and display the 'sender'
   FilesUnitPtr pFilesList = pFilesListHead;
   INT32 iCounter = 0;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // font stuff
   SetFont(FILES_TEXT_FONT);
@@ -650,7 +650,7 @@ void RemoveFilesMouseRegions(void) {
   }
 }
 
-void FilesBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void FilesBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iFileId = -1;
   INT32 iCounter = 0;
   FilesUnitPtr pFilesList = pFilesListHead;
@@ -705,7 +705,7 @@ BOOLEAN DisplayFormattedText(void) {
   INT32 iOffSet = 0;
   INT32 iMessageCode;
   wchar_t sString[2048];
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   UINT32 uiFirstTempPicture;
   UINT32 uiSecondTempPicture;
   VOBJECT_DESC VObjectDesc;
@@ -913,7 +913,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
   FileRecordWidthPtr WidthList = NULL;
 
   UINT32 uiPicture;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
 
   ClearFileStringList();
@@ -1426,7 +1426,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
   FileRecordWidthPtr WidthList = NULL;
   INT32 iOffset = 0;
   UINT32 uiPicture;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   VOBJECT_DESC VObjectDesc;
   char sTemp[128];
 

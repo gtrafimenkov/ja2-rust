@@ -7,12 +7,14 @@
 #include "JAScreens.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/HImage.h"
+#include "SGP/VObject.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/SoldierControl.h"
+#include "TileEngine/Structure.h"
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/DebugControl.h"
 #include "Utils/Utilities.h"
@@ -22,7 +24,7 @@
 
 #define ANIMPROFILEFILENAME "BINARYDATA\\JA2PROF.DAT"
 
-ANIM_PROF *gpAnimProfiles = NULL;
+struct ANIM_PROF *gpAnimProfiles = NULL;
 UINT8 gubNumAnimProfiles = 0;
 
 INT8 gbAnimUsageHistory[NUMANIMATIONSURFACETYPES][MAX_NUM_SOLDIERS];
@@ -4160,7 +4162,7 @@ AnimationStructureType gAnimStructureDatabase[TOTALBODYTYPES][NUM_STRUCT_IDS] = 
 BOOLEAN InitAnimationSystem() {
   INT32 cnt1, cnt2;
   CHAR8 sFilename[50];
-  STRUCTURE_FILE_REF *pStructureFileRef;
+  struct STRUCTURE_FILE_REF *pStructureFileRef;
 
   CHECKF(LoadAnimationStateInstructions());
 
@@ -4214,8 +4216,10 @@ BOOLEAN DeInitAnimationSystem() {
   return (TRUE);
 }
 
-STRUCTURE_FILE_REF *InternalGetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
-                                                     UINT16 usAnimState, BOOLEAN fUseAbsolute) {
+struct STRUCTURE_FILE_REF *InternalGetAnimationStructureRef(UINT16 usSoldierID,
+                                                            UINT16 usSurfaceIndex,
+                                                            UINT16 usAnimState,
+                                                            BOOLEAN fUseAbsolute) {
   INT8 bStructDataType;
 
   if (usSurfaceIndex == INVALID_ANIMATION_SURFACE) {
@@ -4241,19 +4245,19 @@ STRUCTURE_FILE_REF *InternalGetAnimationStructureRef(UINT16 usSoldierID, UINT16 
       gAnimStructureDatabase[MercPtrs[usSoldierID]->ubBodyType][bStructDataType].pStructureFileRef);
 }
 
-STRUCTURE_FILE_REF *GetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
-                                             UINT16 usAnimState) {
+struct STRUCTURE_FILE_REF *GetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
+                                                    UINT16 usAnimState) {
   return (InternalGetAnimationStructureRef(usSoldierID, usSurfaceIndex, usAnimState, FALSE));
 }
 
-STRUCTURE_FILE_REF *GetDefaultStructureRef(UINT16 usSoldierID) {
+struct STRUCTURE_FILE_REF *GetDefaultStructureRef(UINT16 usSoldierID) {
   return (
       gAnimStructureDatabase[MercPtrs[usSoldierID]->ubBodyType][DEFAULT_STRUCT].pStructureFileRef);
 }
 
 // Surface mamagement functions
 BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 usAnimState) {
-  AuxObjectData *pAuxData;
+  struct AuxObjectData *pAuxData;
 
   // Check for valid surface
   CHECKF(usSurfaceIndex < NUMANIMATIONSURFACETYPES);
@@ -4266,10 +4270,10 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
   } else {
     // Load into memory
     VOBJECT_DESC VObjectDesc;
-    HVOBJECT hVObject;
+    struct VObject *hVObject;
     HIMAGE hImage;
     CHAR8 sFilename[48];
-    STRUCTURE_FILE_REF *pStructureFileRef;
+    struct STRUCTURE_FILE_REF *pStructureFileRef;
 
     AnimDebugMsg(String("Surface Database: Loading %d", usSurfaceIndex));
 
@@ -4298,9 +4302,9 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
     }
 
     // Get aux data
-    if (hImage->uiAppDataSize == hVObject->usNumberOfObjects * sizeof(AuxObjectData)) {
+    if (hImage->uiAppDataSize == hVObject->usNumberOfObjects * sizeof(struct AuxObjectData)) {
       // Valid auxiliary data, so get # od frames from data
-      pAuxData = (AuxObjectData *)hImage->pAppData;
+      pAuxData = (struct AuxObjectData *)hImage->pAppData;
 
       gAnimSurfaceDatabase[usSurfaceIndex].uiNumFramesPerDir = pAuxData->ubNumberOfFrames;
 
@@ -4412,8 +4416,8 @@ BOOLEAN LoadAnimationProfiles() {
   //	FILE *			pInput;
   HWFILE pInput;
   INT32 iProfileCount, iDirectionCount, iTileCount;
-  ANIM_PROF *pProfile;
-  ANIM_PROF_DIR *pProfileDirs;
+  struct ANIM_PROF *pProfile;
+  struct ANIM_PROF_DIR *pProfileDirs;
   UINT32 uiBytesRead;
 
   //	pInput = fopen( ANIMPROFILEFILENAME, "rb" );
@@ -4430,7 +4434,7 @@ BOOLEAN LoadAnimationProfiles() {
   }
 
   // Malloc profile data!
-  gpAnimProfiles = (ANIM_PROF *)MemAlloc(gubNumAnimProfiles * sizeof(ANIM_PROF));
+  gpAnimProfiles = (struct ANIM_PROF *)MemAlloc(gubNumAnimProfiles * sizeof(struct ANIM_PROF));
 
   // Loop profiles
   for (iProfileCount = 0; iProfileCount < gubNumAnimProfiles; iProfileCount++) {
@@ -4450,8 +4454,8 @@ BOOLEAN LoadAnimationProfiles() {
       }
 
       // Malloc space for tiles!
-      pProfileDirs->pTiles =
-          (ANIM_PROF_TILE *)MemAlloc(sizeof(ANIM_PROF_TILE) * pProfileDirs->ubNumTiles);
+      pProfileDirs->pTiles = (struct ANIM_PROF_TILE *)MemAlloc(sizeof(struct ANIM_PROF_TILE) *
+                                                               pProfileDirs->ubNumTiles);
 
       // Loop tiles
       for (iTileCount = 0; iTileCount < pProfileDirs->ubNumTiles; iTileCount++) {
@@ -4487,8 +4491,8 @@ BOOLEAN LoadAnimationProfiles() {
 
 void DeleteAnimationProfiles() {
   INT32 iProfileCount, iDirectionCount;
-  ANIM_PROF *pProfile;
-  ANIM_PROF_DIR *pProfileDir;
+  struct ANIM_PROF *pProfile;
+  struct ANIM_PROF_DIR *pProfileDir;
 
   // Loop profiles
   for (iProfileCount = 0; iProfileCount < gubNumAnimProfiles; iProfileCount++) {

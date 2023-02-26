@@ -3,6 +3,7 @@
 #include "SGP/Debug.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Utils/TimerControl.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
@@ -18,7 +19,7 @@ extern INT32 giTimerAirRaidUpdate;
 extern INT32 giTimerCustomizable;
 extern INT32 giTimerTeamTurnUpdate;
 extern UINT32 gCNT;
-extern SOLDIERTYPE *gPSOLDIER;
+extern struct SOLDIERTYPE *gPSOLDIER;
 
 MMRESULT gTimerID;
 

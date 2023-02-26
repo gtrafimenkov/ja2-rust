@@ -8,7 +8,6 @@
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/ItemStatistics.h"
 #include "Editor/SelectWin.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/Font.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
@@ -21,6 +20,7 @@
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/Keys.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/Weapons.h"
 #include "Tactical/WorldItems.h"
 #include "TileEngine/Pits.h"
@@ -36,7 +36,7 @@
 #define NUMBER_TRIGGERS 27
 #define PRESSURE_ACTION_ID (NUMBER_TRIGGERS - 1)
 
-extern ITEM_POOL *gpEditingItemPool;
+extern struct ITEM_POOL *gpEditingItemPool;
 
 // Simply counts the number of items in the world.  This is used for display purposes.
 UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex,
@@ -64,10 +64,10 @@ typedef struct IPListNode {
 IPListNode *pIPHead = NULL;
 
 IPListNode *gpCurrItemPoolNode = NULL;
-ITEM_POOL *gpItemPool = NULL;
+struct ITEM_POOL *gpItemPool = NULL;
 
 void BuildItemPoolList() {
-  ITEM_POOL *temp;
+  struct ITEM_POOL *temp;
   IPListNode *tail;
   UINT16 i;
   KillItemPoolList();
@@ -183,7 +183,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
   UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
   SGPRect SaveRect, NewRect;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   UINT32 uiVideoObjectIndex;
   UINT16 usUselessWidth, usUselessHeight;
   INT16 sWidth, sOffset, sStart;
@@ -483,7 +483,7 @@ void RenderEditorItemsInfo() {
   UINT8 *pDestBuf, *pSrcBuf;
   UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   UINT32 uiVideoObjectIndex;
   INT16 i;
   INT16 minIndex, maxIndex;
@@ -671,7 +671,7 @@ void HandleItemsPanel(UINT16 usScreenX, UINT16 usScreenY, INT8 bEvent) {
 }
 
 void ShowItemCursor(INT32 iMapIndex) {
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   pNode = gpWorldLevelData[iMapIndex].pTopmostHead;
   while (pNode) {
     if (pNode->usIndex == SELRING) return;
@@ -683,7 +683,7 @@ void ShowItemCursor(INT32 iMapIndex) {
 void HideItemCursor(INT32 iMapIndex) { RemoveTopmost(iMapIndex, SELRING1); }
 
 BOOLEAN TriggerAtGridNo(INT16 sGridNo) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   if (!GetItemPool(sGridNo, &pItemPool, 0)) {
     return FALSE;
   }
@@ -697,10 +697,10 @@ BOOLEAN TriggerAtGridNo(INT16 sGridNo) {
 }
 
 void AddSelectedItemToWorld(INT16 sGridNo) {
-  OBJECTTYPE tempObject;
-  OBJECTTYPE *pObject;
+  struct OBJECTTYPE tempObject;
+  struct OBJECTTYPE *pObject;
   INVTYPE *pItem;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   INT32 iItemIndex;
   INT8 bVisibility = INVISIBLE;
   BOOLEAN fFound = FALSE;
@@ -710,7 +710,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
   // Extract the currently selected item.
   SpecifyItemToEdit(NULL, -1);
 
-  // memset( &tempObject, 0, sizeof( OBJECTTYPE ) );
+  // memset( &tempObject, 0, sizeof( struct OBJECTTYPE ) );
   if (eInfo.uiItemType == TBAR_MODE_ITEM_KEYS) {
     CreateKeyObject(&tempObject, 1, (UINT8)eInfo.sSelItemIndex);
   } else {
@@ -852,7 +852,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
 }
 
 void HandleRightClickOnItem(INT16 sGridNo) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
 
   if (gsItemGridNo ==
@@ -1033,7 +1033,7 @@ void FindNextItemOfSelectedType() {
 
 void SelectNextItemOfType(UINT16 usItem) {
   IPListNode *curr;
-  OBJECTTYPE *pObject;
+  struct OBJECTTYPE *pObject;
   if (gpItemPool) {
     curr = pIPHead;
     while (curr) {  // skip quickly to the same gridno as the item pool
@@ -1085,7 +1085,7 @@ void SelectNextItemOfType(UINT16 usItem) {
 
 void SelectNextKeyOfType(UINT8 ubKeyID) {
   IPListNode *curr;
-  OBJECTTYPE *pObject;
+  struct OBJECTTYPE *pObject;
   if (gpItemPool) {
     curr = pIPHead;
     while (curr) {  // skip quickly to the same gridno as the item pool
@@ -1137,7 +1137,7 @@ void SelectNextKeyOfType(UINT8 ubKeyID) {
 
 void SelectNextTriggerWithFrequency(UINT16 usItem, INT8 bFrequency) {
   IPListNode *curr;
-  OBJECTTYPE *pObject;
+  struct OBJECTTYPE *pObject;
   if (gpItemPool) {
     curr = pIPHead;
     while (curr) {  // skip quickly to the same gridno as the item pool
@@ -1189,7 +1189,7 @@ void SelectNextTriggerWithFrequency(UINT16 usItem, INT8 bFrequency) {
 
 void SelectNextPressureAction() {
   IPListNode *curr;
-  OBJECTTYPE *pObject;
+  struct OBJECTTYPE *pObject;
   if (gpItemPool) {
     curr = pIPHead;
     while (curr) {  // skip quickly to the same gridno as the item pool
@@ -1240,7 +1240,7 @@ void SelectNextPressureAction() {
 }
 
 UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   INT16 num = 0;
   *pusQuantity = 0;
@@ -1260,7 +1260,7 @@ UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity) {
 }
 
 UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   UINT16 num = 0;
   pIPCurr = pIPHead;
@@ -1279,7 +1279,7 @@ UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency) {
 }
 
 UINT16 CountNumberOfPressureActionsInWorld() {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   UINT16 num = 0;
   pIPCurr = pIPHead;
@@ -1328,7 +1328,7 @@ UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex, UINT16 *pusQuan
 }
 
 UINT16 CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID) {
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
   INT16 num = 0;
   pIPCurr = pIPHead;

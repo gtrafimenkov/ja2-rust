@@ -7,11 +7,12 @@
 #include "Tactical/Items.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "TileEngine/IsometricUtils.h"
 
-INT8 EffectiveStrength(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveStrength(struct SOLDIERTYPE *pSoldier) {
   INT8 bBandaged;
   INT32 iEffStrength;
 
@@ -29,7 +30,7 @@ INT8 EffectiveStrength(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffStrength);
 }
 
-INT8 EffectiveWisdom(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveWisdom(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffWisdom;
 
   iEffWisdom = pSoldier->bWisdom;
@@ -39,7 +40,7 @@ INT8 EffectiveWisdom(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffWisdom);
 }
 
-INT8 EffectiveAgility(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveAgility(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffAgility;
 
   iEffAgility = pSoldier->bAgility;
@@ -53,7 +54,7 @@ INT8 EffectiveAgility(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffAgility);
 }
 
-INT8 EffectiveMechanical(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveMechanical(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffMechanical;
 
   iEffMechanical = pSoldier->bMechanical;
@@ -63,7 +64,7 @@ INT8 EffectiveMechanical(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffMechanical);
 }
 
-INT8 EffectiveExplosive(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveExplosive(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffExplosive;
 
   iEffExplosive = pSoldier->bExplosive;
@@ -73,7 +74,7 @@ INT8 EffectiveExplosive(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffExplosive);
 }
 
-INT8 EffectiveMedical(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveMedical(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffMedical;
 
   iEffMedical = pSoldier->bMedical;
@@ -83,7 +84,7 @@ INT8 EffectiveMedical(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffMedical);
 }
 
-INT8 EffectiveLeadership(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveLeadership(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffLeadership;
   INT8 bDrunkLevel;
 
@@ -99,7 +100,7 @@ INT8 EffectiveLeadership(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffLeadership);
 }
 
-INT8 EffectiveExpLevel(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveExpLevel(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffExpLevel;
   INT8 bDrunkLevel;
   INT32 iExpModifier[] = {
@@ -132,7 +133,7 @@ INT8 EffectiveExpLevel(SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 EffectiveMarksmanship(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveMarksmanship(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffMarksmanship;
 
   iEffMarksmanship = pSoldier->bMarksmanship;
@@ -142,7 +143,7 @@ INT8 EffectiveMarksmanship(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffMarksmanship);
 }
 
-INT8 EffectiveDexterity(SOLDIERTYPE *pSoldier) {
+INT8 EffectiveDexterity(struct SOLDIERTYPE *pSoldier) {
   INT32 iEffDexterity;
 
   iEffDexterity = pSoldier->bDexterity;
@@ -152,7 +153,7 @@ INT8 EffectiveDexterity(SOLDIERTYPE *pSoldier) {
   return ((INT8)iEffDexterity);
 }
 
-UINT8 GetPenaltyForFatigue(SOLDIERTYPE *pSoldier) {
+UINT8 GetPenaltyForFatigue(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubPercentPenalty;
 
   if (pSoldier->bBreathMax >= 85)
@@ -173,22 +174,22 @@ UINT8 GetPenaltyForFatigue(SOLDIERTYPE *pSoldier) {
   return (ubPercentPenalty);
 }
 
-void ReducePointsForFatigue(SOLDIERTYPE *pSoldier, UINT16 *pusPoints) {
+void ReducePointsForFatigue(struct SOLDIERTYPE *pSoldier, UINT16 *pusPoints) {
   *pusPoints -= (*pusPoints * GetPenaltyForFatigue(pSoldier)) / 100;
 }
 
-INT32 GetSkillCheckPenaltyForFatigue(SOLDIERTYPE *pSoldier, INT32 iSkill) {
+INT32 GetSkillCheckPenaltyForFatigue(struct SOLDIERTYPE *pSoldier, INT32 iSkill) {
   // use only half the full effect of fatigue for skill checks
   return (((iSkill * GetPenaltyForFatigue(pSoldier)) / 100) / 2);
 }
 
-INT32 SkillCheck(SOLDIERTYPE *pSoldier, INT8 bReason, INT8 bChanceMod) {
+INT32 SkillCheck(struct SOLDIERTYPE *pSoldier, INT8 bReason, INT8 bChanceMod) {
   INT32 iSkill;
   INT32 iChance, iReportChance;
   INT32 iRoll, iMadeItBy;
   INT8 bSlot;
   INT32 iLoop;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   INT8 bBuddyIndex;
   BOOLEAN fForceDamnSound = FALSE;
 
@@ -438,7 +439,7 @@ INT32 SkillCheck(SOLDIERTYPE *pSoldier, INT8 bReason, INT8 bChanceMod) {
   return (iMadeItBy);
 }
 
-INT8 CalcTrapDetectLevel(SOLDIERTYPE *pSoldier, BOOLEAN fExamining) {
+INT8 CalcTrapDetectLevel(struct SOLDIERTYPE *pSoldier, BOOLEAN fExamining) {
   // return the level of trap which the guy is able to detect
 
   INT8 bDetectLevel;

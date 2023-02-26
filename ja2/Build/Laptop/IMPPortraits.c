@@ -10,10 +10,10 @@
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
@@ -95,7 +95,7 @@ void HandleIMPPortraits(void) {
 BOOLEAN RenderPortrait(INT16 sX, INT16 sY) {
   // render the portrait of the current picture
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   UINT32 uiGraphicHandle;
 
   if (fCharacterIsMale) {

@@ -23,34 +23,35 @@ void PlotPathForHelicopter(INT16 sX, INT16 sY);
 void PlotATemporaryPathForHelicopter(INT16 sX, INT16 sY);
 
 // trace a route for a passed path...doesn't require dest char - most more general
-BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, PathStPtr pPath);
+BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pPath);
 
 // show arrows for this char
-void DisplayPathArrows(UINT16 usCharNum, HVOBJECT hMapHandle);
+void DisplayPathArrows(UINT16 usCharNum, struct VObject *hMapHandle);
 
 // restore backgrounds for arrows
 void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY, BOOLEAN fZoom);
 
 // build path for character
-void PlotPathForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY, BOOLEAN fTacticalTraversal);
+void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY,
+                          BOOLEAN fTacticalTraversal);
 
 // build temp path for character
-void PlotATemporaryPathForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
+void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
 
 // display current/temp paths
-void DisplaySoldierPath(SOLDIERTYPE *pCharacter);
-void DisplaySoldierTempPath(SOLDIERTYPE *pCharacter);
+void DisplaySoldierPath(struct SOLDIERTYPE *pCharacter);
+void DisplaySoldierTempPath(struct SOLDIERTYPE *pCharacter);
 void DisplayHelicopterPath(void);
 void DisplayHelicopterTempPath(void);
 
 // clear path after this sector
-UINT32 ClearPathAfterThisSectorForCharacter(SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
+UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
 
 // cancel path : clear the path completely and gives player feedback message that the route was
 // canceled
-void CancelPathForCharacter(SOLDIERTYPE *pCharacter);
+void CancelPathForCharacter(struct SOLDIERTYPE *pCharacter);
 void CancelPathForVehicle(VEHICLETYPE *pVehicle, BOOLEAN fAlreadyReversed);
-void CancelPathForGroup(GROUP *pGroup);
+void CancelPathForGroup(struct GROUP *pGroup);
 
 // check if we have waited long enought o update temp path
 void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
@@ -119,7 +120,7 @@ UINT32 WhatPlayerKnowsAboutEnemiesInSector(INT16 sSectorX, INT16 sSectorY);
 // This is the function that clears that flag.
 void ClearAnySectorsFlashingNumberOfEnemies();
 
-void CopyPathToCharactersSquadIfInOne(SOLDIERTYPE *pCharacter);
+void CopyPathToCharactersSquadIfInOne(struct SOLDIERTYPE *pCharacter);
 
 void InitMapSecrets(void);
 

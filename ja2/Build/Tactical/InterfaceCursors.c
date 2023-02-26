@@ -15,11 +15,12 @@
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
+#include "Utils/TimerControl.h"
 
 #define DISPLAY_AP_INDEX MOCKFLOOR1
 
@@ -663,7 +664,7 @@ BOOLEAN SetUICursor(UINT32 uiNewCursor) {
 BOOLEAN DrawUICursor() {
   UINT16 usMapPos;
   static BOOLEAN fHideCursor = FALSE;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   UINT16 usTileCursor;
 
   // RaiseMouseToLevel( (INT8)gsInterfaceLevel );
@@ -881,8 +882,8 @@ BOOLEAN HideUICursor() {
 }
 
 void DrawSnappingCursor() {
-  LEVELNODE *pNewUIElem;
-  SOLDIERTYPE *pSoldier;
+  struct LEVELNODE *pNewUIElem;
+  struct SOLDIERTYPE *pSoldier;
   static BOOLEAN fShowAP = TRUE;
 
   if (gusSelectedSoldier != NO_SOLDIER) {
@@ -1039,7 +1040,7 @@ void StartLooseCursor(INT16 sGridNo, UINT32 uiCursorID) {
 }
 
 void HandleLooseCursorDraw() {
-  LEVELNODE *pNewUIElem;
+  struct LEVELNODE *pNewUIElem;
 
   if ((GetJA2Clock() - guiLooseCursorTimeOfLastUpdate) > LOOSE_CURSOR_DELAY) {
     gfLooseCursorOn = FALSE;

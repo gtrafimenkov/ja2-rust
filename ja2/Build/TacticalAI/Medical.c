@@ -24,10 +24,10 @@ extern BOOLEAN gfAutoBandageFailed;
 #define NOT_GOING_TO_COLLAPSE -1
 
 // can this grunt be bandaged by a teammate?
-BOOLEAN CanCharacterBeAutoBandagedByTeammate(SOLDIERTYPE *pSoldier);
+BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier);
 
 // c an this grunt help anyone else out?
-BOOLEAN CanCharacterAutoBandageTeammate(SOLDIERTYPE *pSoldier);
+BOOLEAN CanCharacterAutoBandageTeammate(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN FindAutobandageClimbPoint(INT16 sDesiredGridNo, BOOLEAN fClimbUp) {
   // checks for existance of location to climb up to building, not occupied by a medic
@@ -58,9 +58,9 @@ BOOLEAN FindAutobandageClimbPoint(INT16 sDesiredGridNo, BOOLEAN fClimbUp) {
   return (FALSE);
 }
 
-BOOLEAN FullPatientCheck(SOLDIERTYPE *pPatient) {
+BOOLEAN FullPatientCheck(struct SOLDIERTYPE *pPatient) {
   UINT8 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (CanCharacterAutoBandageTeammate(pPatient)) {
     // can bandage self!
@@ -99,7 +99,7 @@ BOOLEAN CanAutoBandage(BOOLEAN fDoFullCheck) {
   // returns false if we should stop being in auto-bandage mode
   UINT8 cnt;
   UINT8 ubMedics = 0, ubPatients = 0;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   static UINT8 ubIDForFullCheck = NOBODY;
 
   // run though the list of chars on team
@@ -154,7 +154,7 @@ BOOLEAN CanAutoBandage(BOOLEAN fDoFullCheck) {
   }
 }
 
-BOOLEAN CanCharacterAutoBandageTeammate(SOLDIERTYPE *pSoldier)
+BOOLEAN CanCharacterAutoBandageTeammate(struct SOLDIERTYPE *pSoldier)
 // can this soldier autobandage others in sector
 {
   // if the soldier isn't active or in sector, we have problems..leave
@@ -174,7 +174,7 @@ BOOLEAN CanCharacterAutoBandageTeammate(SOLDIERTYPE *pSoldier)
 }
 
 // can this soldier autobandage others in sector
-BOOLEAN CanCharacterBeAutoBandagedByTeammate(SOLDIERTYPE *pSoldier) {
+BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier) {
   // if the soldier isn't active or in sector, we have problems..leave
   if (!(pSoldier->bActive) || !(pSoldier->bInSector) ||
       (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (pSoldier->bAssignment == VEHICLE)) {
@@ -189,14 +189,14 @@ BOOLEAN CanCharacterBeAutoBandagedByTeammate(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-INT8 FindBestPatient(SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
+INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
   UINT8 cnt, cnt2;
   INT16 bBestPriority = 0, sBestAdjGridNo;
   INT16 sPatientGridNo, sBestPatientGridNo;
   INT16 sShortestPath = 1000, sPathCost, sOtherMedicPathCost;
-  SOLDIERTYPE *pPatient;
-  SOLDIERTYPE *pBestPatient = NULL;
-  SOLDIERTYPE *pOtherMedic;
+  struct SOLDIERTYPE *pPatient;
+  struct SOLDIERTYPE *pBestPatient = NULL;
+  struct SOLDIERTYPE *pOtherMedic;
   INT8 bPatientPriority;
   UINT8 ubDirection;
   INT16 sAdjustedGridNo, sAdjacentGridNo, sOtherAdjacentGridNo;
@@ -330,7 +330,7 @@ INT8 FindBestPatient(SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
   }
 }
 
-INT8 DecideAutoBandage(SOLDIERTYPE *pSoldier) {
+INT8 DecideAutoBandage(struct SOLDIERTYPE *pSoldier) {
   INT8 bSlot;
   BOOLEAN fDoClimb;
 
@@ -353,7 +353,7 @@ INT8 DecideAutoBandage(SOLDIERTYPE *pSoldier) {
 
       SwapObjs(&(pSoldier->inv[HANDPOS]), &(pSoldier->inv[bSlot]));
       /*
-      memset( &TempObj, 0, sizeof( OBJECTTYPE ) );
+      memset( &TempObj, 0, sizeof( struct OBJECTTYPE ) );
       // move the med kit out to temp obj
       SwapObjs( &TempObj, &(pSoldier->inv[bSlot]) );
       // swap the med kit with whatever was in the hand

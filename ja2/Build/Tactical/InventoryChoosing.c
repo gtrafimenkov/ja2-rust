@@ -146,7 +146,7 @@ void MarkAllWeaponsOfSameGunClassAsDropped(UINT16 usWeapon) {
 // there are variations, so a guy at a certain level may get a better gun and worse armour or vice
 // versa.
 void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 bEquipmentRating) {
-  OBJECTTYPE *pItem;
+  struct OBJECTTYPE *pItem;
   // general rating information
   INT8 bRating = 0;
   // numbers of items
@@ -430,7 +430,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
 
   for (i = 0; i < NUM_INV_SLOTS; i++) {  // clear items, but only if they have write status.
     if (!(pp->Inv[i].fFlags & OBJECT_NO_OVERWRITE)) {
-      memset(&(pp->Inv[i]), 0, sizeof(OBJECTTYPE));
+      memset(&(pp->Inv[i]), 0, sizeof(struct OBJECTTYPE));
       pp->Inv[i].fFlags |= OBJECT_UNDROPPABLE;
     } else {  // check to see what kind of item is here.  If we find a gun, for example, it'll make
               // the
@@ -508,7 +508,7 @@ void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 
 void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponClass,
                                         INT8 bAmmoClips, INT8 bAttachClass, BOOLEAN fAttachment) {
   INVTYPE *pItem;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   UINT16 i;
   UINT16 usRandom;
   UINT16 usNumMatches = 0;
@@ -659,7 +659,7 @@ void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponCl
 
 void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenades,
                                           INT8 bGrenadeClass, BOOLEAN fGrenadeLauncher) {
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   INT16 sNumPoints;
   UINT16 usItem;
   UINT8 ubBaseQuality;
@@ -889,7 +889,7 @@ void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetCl
   UINT16 usRandom;
   UINT16 usNumMatches;
   INT8 bOrigVestClass = bVestClass;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   // Choose helmet
   if (bHelmetClass) {
@@ -1025,7 +1025,7 @@ void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 b
   UINT16 usRandom;
   UINT16 usNumMatches = 0;
   UINT16 usKnifeIndex = 0;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   // Choose knife
   while (bKnifeClass && !usNumMatches) {  // First step is to count the number of weapons in the
@@ -1154,7 +1154,7 @@ void ChooseKitsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKitClass) 
   INVTYPE *pItem;
   UINT16 usRandom;
   UINT16 usNumMatches = 0;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
   UINT16 usKitItem = 0;
 
   // we want these mostly to be first aid and medical kits, and for those kit class doesn't matter,
@@ -1205,7 +1205,7 @@ void ChooseMiscGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bMiscCl
   INVTYPE *pItem;
   UINT16 usRandom;
   UINT16 usNumMatches = 0;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   // not all of these are IC_MISC, some are IC_PUNCH (not covered anywhere else)
   INT32 iMiscItemsList[] = {CANTEEN,
@@ -1268,7 +1268,7 @@ void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass
   INVTYPE *pItem;
   UINT16 usRandom;
   UINT16 usNumMatches = 0;
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   // count how many are eligible
   for (i = 0; i < MAXITEMS; i++) {
@@ -1300,7 +1300,7 @@ void ChooseBombsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bBombClass
 }
 
 void ChooseLocationSpecificGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   // If this is Tixa and the player doesn't control Tixa then give all enemies gas masks,
   // but somewhere on their person, not in their face positions
@@ -1311,13 +1311,13 @@ void ChooseLocationSpecificGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) 
   }
 }
 
-BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, OBJECTTYPE *pObject) {
+BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECTTYPE *pObject) {
   INT8 i;
   if (!Item[pObject->usItem].ubPerPocket) {  // ubPerPocket == 0 will only fit in large pockets.
     pObject->ubNumberOfObjects = 1;
     for (i = BIGPOCK1POS; i <= BIGPOCK4POS; i++) {
       if (!(pp->Inv[i].usItem) && !(pp->Inv[i].fFlags & OBJECT_NO_OVERWRITE)) {
-        memcpy(&(pp->Inv[i]), pObject, sizeof(OBJECTTYPE));
+        memcpy(&(pp->Inv[i]), pObject, sizeof(struct OBJECTTYPE));
         return TRUE;
       }
     }
@@ -1328,14 +1328,14 @@ BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, OBJECTTYPE *p
     // try to get it into a small pocket first
     for (i = SMALLPOCK1POS; i <= SMALLPOCK8POS; i++) {
       if (!(pp->Inv[i].usItem) && !(pp->Inv[i].fFlags & OBJECT_NO_OVERWRITE)) {
-        memcpy(&(pp->Inv[i]), pObject, sizeof(OBJECTTYPE));
+        memcpy(&(pp->Inv[i]), pObject, sizeof(struct OBJECTTYPE));
         return TRUE;
       }
     }
     for (i = BIGPOCK1POS; i <= BIGPOCK4POS;
          i++) {  // no space free in small pockets, so put it into a large pocket.
       if (!(pp->Inv[i].usItem) && !(pp->Inv[i].fFlags & OBJECT_NO_OVERWRITE)) {
-        memcpy(&(pp->Inv[i]), pObject, sizeof(OBJECTTYPE));
+        memcpy(&(pp->Inv[i]), pObject, sizeof(struct OBJECTTYPE));
         return TRUE;
       }
     }
@@ -1665,7 +1665,7 @@ void RandomlyChooseWhichItemsAreDroppable(SOLDIERCREATE_STRUCT *pp, INT8 bSoldie
   }
 }
 
-void AssignCreatureInventory(SOLDIERTYPE *pSoldier) {
+void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiChanceToDrop = 0;
   BOOLEAN fMaleCreature = FALSE;
   BOOLEAN fBloodcat = FALSE;
@@ -1767,7 +1767,7 @@ void AssignCreatureInventory(SOLDIERTYPE *pSoldier) {
 void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass) {
   UINT32 uiLoop, uiLoop2, uiAttachDestIndex;
   INT8 bWeaponClass;
-  OBJECTTYPE OldObj;
+  struct OBJECTTYPE OldObj;
   UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
 
   for (uiLoop = 0; uiLoop < NUM_INV_SLOTS; uiLoop++) {
@@ -1849,7 +1849,7 @@ UINT16 SelectStandardArmyGun(UINT8 uiGunLevel) {
 }
 
 void EquipTank(SOLDIERCREATE_STRUCT *pp) {
-  OBJECTTYPE Object;
+  struct OBJECTTYPE Object;
 
   // tanks get special equipment, and they drop nothing (MGs are hard-mounted & non-removable)
 

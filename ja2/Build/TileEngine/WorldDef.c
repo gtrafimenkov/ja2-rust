@@ -34,7 +34,6 @@
 #include "Tactical/Points.h"
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/StructureWrap.h"
 #include "Tactical/WorldItems.h"
@@ -54,7 +53,9 @@
 #include "TileEngine/ShadeTableUtil.h"
 #include "TileEngine/SmokeEffects.h"
 #include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileCache.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldMan.h"
@@ -146,7 +147,7 @@ extern UINT32 uiNumImagesReloaded;
 #endif
 
 BOOLEAN DoorAtGridNo(UINT32 iMapIndex) {
-  STRUCTURE *pStruct;
+  struct STRUCTURE *pStruct;
   pStruct = gpWorldLevelData[iMapIndex].pStructureHead;
   while (pStruct) {
     if (pStruct->fFlags & STRUCTURE_ANYDOOR) return TRUE;
@@ -156,7 +157,7 @@ BOOLEAN DoorAtGridNo(UINT32 iMapIndex) {
 }
 
 BOOLEAN OpenableAtGridNo(UINT32 iMapIndex) {
-  STRUCTURE *pStruct;
+  struct STRUCTURE *pStruct;
   pStruct = gpWorldLevelData[iMapIndex].pStructureHead;
   while (pStruct) {
     if (pStruct->fFlags & STRUCTURE_OPENABLE) return TRUE;
@@ -166,7 +167,7 @@ BOOLEAN OpenableAtGridNo(UINT32 iMapIndex) {
 }
 
 BOOLEAN FloorAtGridNo(UINT32 iMapIndex) {
-  LEVELNODE *pLand;
+  struct LEVELNODE *pLand;
   UINT32 uiTileType;
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
   // Look through all objects and Search for type
@@ -189,10 +190,10 @@ BOOLEAN GridNoIndoors(UINT32 iMapIndex) {
 }
 
 void DOIT() {
-  //	LEVELNODE *			pLand;
-  // LEVELNODE *			pObject;
-  LEVELNODE *pStruct, *pNewStruct;
-  // LEVELNODE	*			pShadow;
+  //	struct LEVELNODE *			pLand;
+  // struct LEVELNODE *			pObject;
+  struct LEVELNODE *pStruct, *pNewStruct;
+  // struct LEVELNODE	*			pShadow;
   UINT32 uiLoop;
 
   // first level
@@ -333,7 +334,7 @@ BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
 
 BOOLEAN AddTileSurface(char *cFilename, UINT32 ubType, UINT8 ubTilesetID, BOOLEAN fGetFromRoot) {
   // Add tile surface
-  PTILE_IMAGERY TileSurf;
+  struct TILE_IMAGERY *TileSurf;
   CHAR8 cFileBPP[128];
   CHAR8 cAdjustedFile[128];
 
@@ -504,7 +505,7 @@ void DestroyTileSurfaces() {
 void CompileWorldTerrainIDs(void) {
   INT16 sGridNo;
   INT16 sTempGridNo;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
   TILE_ELEMENT *pTileElement;
   UINT8 ubLoop;
 
@@ -546,9 +547,9 @@ void CompileWorldTerrainIDs(void) {
 void CompileTileMovementCosts(UINT16 usGridNo) {
   UINT8 ubTerrainID;
   TILE_ELEMENT TileElem;
-  LEVELNODE *pLand;
+  struct LEVELNODE *pLand;
 
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
   BOOLEAN fStructuresOnRoof;
 
   UINT8 ubDirLoop;
@@ -1356,13 +1357,13 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   UINT32 uiBytesWritten;
   UINT32 uiNumWarningsCaught = 0;
   HWFILE hfile;
-  LEVELNODE *pLand;
-  LEVELNODE *pObject;
-  LEVELNODE *pStruct;
-  LEVELNODE *pShadow;
-  LEVELNODE *pRoof;
-  LEVELNODE *pOnRoof;
-  LEVELNODE *pTailLand = NULL;
+  struct LEVELNODE *pLand;
+  struct LEVELNODE *pObject;
+  struct LEVELNODE *pStruct;
+  struct LEVELNODE *pShadow;
+  struct LEVELNODE *pRoof;
+  struct LEVELNODE *pOnRoof;
+  struct LEVELNODE *pTailLand = NULL;
   UINT16 usNumExitGrids = 0;
   UINT16 usTypeSubIndex;
   UINT8 LayerCount;
@@ -1411,7 +1412,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   FileMan_Write(hfile, &giCurrentTilesetID, sizeof(INT32), &uiBytesWritten);
 
   // Write SOLDIER CONTROL SIZE
-  uiSoldierSize = sizeof(SOLDIERTYPE);
+  uiSoldierSize = sizeof(struct SOLDIERTYPE);
   FileMan_Write(hfile, &uiSoldierSize, sizeof(INT32), &uiBytesWritten);
 
   // REMOVE WORLD VISIBILITY TILES
@@ -1433,7 +1434,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       pLand = pLand->pNext;
     }
     if (LayerCount > 15) {
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"SAVE ABORTED!  Land count too high (%d) for gridno %d."
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                LayerCount, cnt, uiNumWarningsCaught);
@@ -1444,7 +1445,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     if (LayerCount > 10) {
       uiNumWarningsCaught++;
       gfErrorCatch = TRUE;
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"Warnings %d -- Last warning:  Land count warning of %d for gridno %d.",
                uiNumWarningsCaught, LayerCount, cnt);
     }
@@ -1469,7 +1470,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       pObject = pObject->pNext;
     }
     if (ObjectCount > 15) {
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"SAVE ABORTED!  Object count too high (%d) for gridno %d."
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                ObjectCount, cnt, uiNumWarningsCaught);
@@ -1480,7 +1481,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     if (ObjectCount > 10) {
       uiNumWarningsCaught++;
       gfErrorCatch = TRUE;
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"Warnings %d -- Last warning:  Object count warning of %d for gridno %d.",
                uiNumWarningsCaught, ObjectCount, cnt);
     }
@@ -1497,7 +1498,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       pStruct = pStruct->pNext;
     }
     if (StructCount > 15) {
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"SAVE ABORTED!  Struct count too high (%d) for gridno %d."
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                StructCount, cnt, uiNumWarningsCaught);
@@ -1508,7 +1509,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     if (StructCount > 10) {
       uiNumWarningsCaught++;
       gfErrorCatch = TRUE;
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"Warnings %d -- Last warning:  Struct count warning of %d for gridno %d.",
                uiNumWarningsCaught, StructCount, cnt);
     }
@@ -1529,7 +1530,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       pShadow = pShadow->pNext;
     }
     if (ShadowCount > 15) {
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"SAVE ABORTED!  Shadow count too high (%d) for gridno %d."
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                ShadowCount, cnt, uiNumWarningsCaught);
@@ -1540,7 +1541,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     if (ShadowCount > 10) {
       uiNumWarningsCaught++;
       gfErrorCatch = TRUE;
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"Warnings %d -- Last warning:  Shadow count warning of %d for gridno %d.",
                uiNumWarningsCaught, ShadowCount, cnt);
     }
@@ -1557,7 +1558,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       pRoof = pRoof->pNext;
     }
     if (RoofCount > 15) {
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"SAVE ABORTED!  Roof count too high (%d) for gridno %d."
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                RoofCount, cnt, uiNumWarningsCaught);
@@ -1568,7 +1569,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     if (RoofCount > 10) {
       uiNumWarningsCaught++;
       gfErrorCatch = TRUE;
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"Warnings %d -- Last warning:  Roof count warning of %d for gridno %d.",
                uiNumWarningsCaught, RoofCount, cnt);
     }
@@ -1588,7 +1589,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
       pOnRoof = pOnRoof->pNext;
     }
     if (OnRoofCount > 15) {
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"SAVE ABORTED!  OnRoof count too high (%d) for gridno %d."
                L"  Need to fix before map can be saved!  There are %d additional warnings.",
                OnRoofCount, cnt, uiNumWarningsCaught);
@@ -1599,7 +1600,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
     if (OnRoofCount > 10) {
       uiNumWarningsCaught++;
       gfErrorCatch = TRUE;
-      swprintf(gzErrorCatchString,
+      swprintf(gzErrorCatchString, ARR_SIZE(gzErrorCatchString),
                L"Warnings %d -- Last warning:  OnRoof count warning of %d for gridno %d.",
                uiNumWarningsCaught, OnRoofCount, cnt);
     }
@@ -1789,7 +1790,7 @@ void OptimizeMapForShadows() {
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     // CHECK IF WE ARE A TREE HERE
     if (IsTreePresentAtGridno((INT16)cnt)) {
-      // CHECK FOR A STRUCTURE A FOOTPRINT AWAY
+      // CHECK FOR A struct STRUCTURE A FOOTPRINT AWAY
       for (dir = 0; dir < NUM_DIR_SEARCHES; dir++) {
         sNewGridNo = NewGridNo((INT16)cnt, (UINT16)DirectionInc(bDirectionsForShadowSearch[dir]));
 
@@ -1809,7 +1810,7 @@ void OptimizeMapForShadows() {
 
 void SetBlueFlagFlags(void) {
   INT32 cnt;
-  LEVELNODE *pNode;
+  struct LEVELNODE *pNode;
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     pNode = gpWorldLevelData[cnt].pStructHead;
@@ -2780,17 +2781,17 @@ BOOLEAN NewWorld(void) {
 
 void TrashWorld(void) {
   MAP_ELEMENT *pMapTile;
-  LEVELNODE *pLandNode;
-  LEVELNODE *pObjectNode;
-  LEVELNODE *pStructNode;
-  LEVELNODE *pShadowNode;
-  LEVELNODE *pMercNode;
-  LEVELNODE *pRoofNode;
-  LEVELNODE *pOnRoofNode;
-  LEVELNODE *pTopmostNode;
-  //	STRUCTURE			*pStructureNode;
+  struct LEVELNODE *pLandNode;
+  struct LEVELNODE *pObjectNode;
+  struct LEVELNODE *pStructNode;
+  struct LEVELNODE *pShadowNode;
+  struct LEVELNODE *pMercNode;
+  struct LEVELNODE *pRoofNode;
+  struct LEVELNODE *pOnRoofNode;
+  struct LEVELNODE *pTopmostNode;
+  //	struct STRUCTURE			*pStructureNode;
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (!gfWorldLoaded) return;
 
@@ -2928,14 +2929,14 @@ void TrashWorld(void) {
 
 void TrashMapTile(INT16 MapTile) {
   MAP_ELEMENT *pMapTile;
-  LEVELNODE *pLandNode;
-  LEVELNODE *pObjectNode;
-  LEVELNODE *pStructNode;
-  LEVELNODE *pShadowNode;
-  LEVELNODE *pMercNode;
-  LEVELNODE *pRoofNode;
-  LEVELNODE *pOnRoofNode;
-  LEVELNODE *pTopmostNode;
+  struct LEVELNODE *pLandNode;
+  struct LEVELNODE *pObjectNode;
+  struct LEVELNODE *pStructNode;
+  struct LEVELNODE *pShadowNode;
+  struct LEVELNODE *pMercNode;
+  struct LEVELNODE *pRoofNode;
+  struct LEVELNODE *pOnRoofNode;
+  struct LEVELNODE *pTopmostNode;
 
   pMapTile = &gpWorldLevelData[MapTile];
 
@@ -3084,7 +3085,7 @@ void SetLoadOverrideParams(BOOLEAN fForceLoad, BOOLEAN fForceFile, CHAR8 *zLoadN
 }
 
 void AddWireFrame(INT16 sGridNo, UINT16 usIndex, BOOLEAN fForced) {
-  LEVELNODE *pTopmost, *pTopmostTail;
+  struct LEVELNODE *pTopmost, *pTopmostTail;
 
   pTopmost = gpWorldLevelData[sGridNo].pTopmostHead;
 
@@ -3103,12 +3104,12 @@ void AddWireFrame(INT16 sGridNo, UINT16 usIndex, BOOLEAN fForced) {
   }
 }
 
-UINT16 GetWireframeGraphicNumToUseForWall(INT16 sGridNo, STRUCTURE *pStructure) {
-  LEVELNODE *pNode = NULL;
+UINT16 GetWireframeGraphicNumToUseForWall(INT16 sGridNo, struct STRUCTURE *pStructure) {
+  struct LEVELNODE *pNode = NULL;
   UINT8 ubWallOrientation;
   UINT16 usValue = 0;
   UINT16 usSubIndex;
-  STRUCTURE *pBaseStructure;
+  struct STRUCTURE *pBaseStructure;
 
   ubWallOrientation = pStructure->ubWallOrientation;
 
@@ -3159,7 +3160,7 @@ UINT16 GetWireframeGraphicNumToUseForWall(INT16 sGridNo, STRUCTURE *pStructure) 
 
 void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
   INT32 cnt;
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
   INT16 sGridNo;
   UINT8 ubWallOrientation;
   INT8 bHiddenVal;
@@ -3359,7 +3360,7 @@ void RemoveWorldWireFrameTiles() {
 }
 
 void RemoveWireFrameTiles(INT16 sGridNo) {
-  LEVELNODE *pTopmost, *pNewTopmost;
+  struct LEVELNODE *pTopmost, *pNewTopmost;
   TILE_ELEMENT *pTileElement;
 
   pTopmost = gpWorldLevelData[sGridNo].pTopmostHead;
@@ -3380,7 +3381,7 @@ void RemoveWireFrameTiles(INT16 sGridNo) {
 }
 
 INT8 IsHiddenTileMarkerThere(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   if (!gfBasement) {
     pStructure = FindStructure(sGridNo, STRUCTURE_ROOF);
@@ -3429,7 +3430,7 @@ void ReloadTileset(UINT8 ubID) {
 }
 
 void SaveMapLights(HWFILE hfile) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   struct SGPPaletteEntry LColors[3];
   UINT8 ubNumColors;
   BOOLEAN fSoldierLight;
@@ -3553,7 +3554,7 @@ void LoadMapLights(INT8 **hBuffer) {
 }
 
 BOOLEAN IsRoofVisibleForWireframe(INT16 sMapPos) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   if (!gfBasement) {
     pStructure = FindStructure(sMapPos, STRUCTURE_ROOF);

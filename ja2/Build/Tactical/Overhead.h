@@ -5,31 +5,14 @@
 #include <string.h>
 
 #include "SGP/Types.h"
-//#include "SGP/Container.h"
 #include "Tactical/OverheadTypes.h"
-#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierFind.h"
+
+struct SOLDIERTYPE;
+
 #define ADD_SOLDIER_NO_PROFILE_ID 200
 
 #define MAX_REALTIME_SPEED_VAL 10
-
-/*
-enum
-{
-        TOPTION_SUBTITLES,
-        TOPTION_SPEECH,
-        TOPTION_KEY_ADVANCE_SPEECH,
-        TOPTION_RTCONFIRM,
-        TOPTION_HIDE_BULLETS,
-        TOPTION_TRACKING_MODE,
-        TOPTION_CONFIRM_MOVE,
-        TOPTION_MUTE_CONFIRMATIONS,
-        TOPTION_SHADOWS,
-        TOPTION_BLOOD_N_GORE,
-
-        NUM_TOPTIONS
-};
-*/
 
 // Enums for waiting for mercs to finish codes
 enum {
@@ -191,11 +174,11 @@ extern CHAR8 *GetSceneFilename();
 extern INT8 ubLevelMoveLink[10];
 
 // Soldier List used for all soldier overhead interaction
-extern SOLDIERTYPE Menptr[TOTAL_SOLDIERS];
-extern SOLDIERTYPE *MercPtrs[TOTAL_SOLDIERS];
+extern struct SOLDIERTYPE Menptr[TOTAL_SOLDIERS];
+extern struct SOLDIERTYPE *MercPtrs[TOTAL_SOLDIERS];
 
 // MERC SLOTS - A LIST OF ALL ACTIVE MERCS
-extern SOLDIERTYPE *MercSlots[TOTAL_SOLDIERS];
+extern struct SOLDIERTYPE *MercSlots[TOTAL_SOLDIERS];
 extern UINT32 guiNumMercSlots;
 
 extern BOOLEAN gfMovingAnimation;
@@ -207,9 +190,10 @@ void ShutdownTacticalEngine();
 
 BOOLEAN InitOverhead();
 BOOLEAN ShutdownOverhead();
-BOOLEAN GetSoldier(SOLDIERTYPE **ppSoldier, UINT16 usSoldierIndex);
+BOOLEAN GetSoldier(struct SOLDIERTYPE **ppSoldier, UINT16 usSoldierIndex);
 
-INT16 NewOKDestination(SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN fPeopleToo, INT8 bLevel);
+INT16 NewOKDestination(struct SOLDIERTYPE *pCurrSoldier, INT16 sGridNo, BOOLEAN fPeopleToo,
+                       INT8 bLevel);
 
 // Simple check to see if a (one-tiled) soldier can occupy a given location on the ground or roof.
 extern BOOLEAN IsLocationSittable(INT32 iMapIndex, BOOLEAN fOnRoof);
@@ -233,49 +217,49 @@ void SlideTo(INT16 sGridno, UINT16 usSoldierID, UINT16 usReasonID, BOOLEAN fSetL
 void SlideToLocation(UINT16 usReasonID, INT16 sDestGridNo);
 
 void RebuildAllSoldierShadeTables();
-void HandlePlayerTeamMemberDeath(SOLDIERTYPE *pSoldier);
+void HandlePlayerTeamMemberDeath(struct SOLDIERTYPE *pSoldier);
 UINT8 LastActiveTeamMember(UINT8 ubTeam);
-BOOLEAN SoldierOnVisibleWorldTile(SOLDIERTYPE *pSoldier);
+BOOLEAN SoldierOnVisibleWorldTile(struct SOLDIERTYPE *pSoldier);
 
-UINT8 FindNextActiveAndAliveMerc(SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
+UINT8 FindNextActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
                                  BOOLEAN fOnlyRegularMercs);
-UINT8 FindPrevActiveAndAliveMerc(SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
+UINT8 FindPrevActiveAndAliveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLessOKLife,
                                  BOOLEAN fOnlyRegularMercs);
 
 BOOLEAN CheckForPlayerTeamInMissionExit();
-void HandleNPCTeamMemberDeath(SOLDIERTYPE *pSoldier);
+void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldier);
 
 void StopMercAnimation(BOOLEAN fStop);
 
 UINT32 EnterTacticalDemoMode();
 
-BOOLEAN UIOKMoveDestination(SOLDIERTYPE *pSoldier, UINT16 usMapPos);
+BOOLEAN UIOKMoveDestination(struct SOLDIERTYPE *pSoldier, UINT16 usMapPos);
 
-INT16 FindAdjacentGridEx(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirection,
+INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirection,
                          INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
-INT16 FindNextToAdjacentGridEx(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirection,
+INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirection,
                                INT16 *psAdjustedGridNo, BOOLEAN fForceToPerson, BOOLEAN fDoor);
 
-void SelectNextAvailSoldier(SOLDIERTYPE *pSoldier);
+void SelectNextAvailSoldier(struct SOLDIERTYPE *pSoldier);
 BOOLEAN TeamMemberNear(INT8 bTeam, INT16 sGridNo, INT32 iRange);
 BOOLEAN IsValidTargetMerc(UINT8 ubSoldierID);
 
 // FUNCTIONS FOR MANIPULATING MERC SLOTS - A LIST OF ALL ACTIVE MERCS
 INT32 GetFreeMercSlot(void);
 void RecountMercSlots(void);
-INT32 AddMercSlot(SOLDIERTYPE *pSoldier);
-BOOLEAN RemoveMercSlot(SOLDIERTYPE *pSoldier);
+INT32 AddMercSlot(struct SOLDIERTYPE *pSoldier);
+BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier);
 
-INT32 AddAwaySlot(SOLDIERTYPE *pSoldier);
-BOOLEAN RemoveAwaySlot(SOLDIERTYPE *pSoldier);
-INT32 MoveSoldierFromMercToAwaySlot(SOLDIERTYPE *pSoldier);
-INT32 MoveSoldierFromAwayToMercSlot(SOLDIERTYPE *pSoldier);
+INT32 AddAwaySlot(struct SOLDIERTYPE *pSoldier);
+BOOLEAN RemoveAwaySlot(struct SOLDIERTYPE *pSoldier);
+INT32 MoveSoldierFromMercToAwaySlot(struct SOLDIERTYPE *pSoldier);
+INT32 MoveSoldierFromAwayToMercSlot(struct SOLDIERTYPE *pSoldier);
 
 void EnterCombatMode(UINT8 ubStartingTeam);
 void ExitCombatMode();
 
 void HandleTeamServices(UINT8 ubTeamNum);
-void HandlePlayerServices(SOLDIERTYPE *pTeamSoldier);
+void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier);
 
 void SetEnemyPresence();
 
@@ -283,7 +267,7 @@ void CycleThroughKnownEnemies();
 
 BOOLEAN CheckForEndOfCombatMode(BOOLEAN fIncrementTurnsNotSeen);
 
-SOLDIERTYPE *FreeUpAttacker(UINT8 ubID);
+struct SOLDIERTYPE *FreeUpAttacker(UINT8 ubID);
 
 BOOLEAN PlayerTeamFull();
 
@@ -292,14 +276,14 @@ void SetActionToDoOnceMercsGetToLocation(UINT8 ubActionCode, INT8 bNumMercsWaiti
 
 void ResetAllMercSpeeds();
 
-BOOLEAN HandleGotoNewGridNo(SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving, BOOLEAN fInitialMove,
-                            UINT16 usAnimState);
+BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
+                            BOOLEAN fInitialMove, UINT16 usAnimState);
 
-SOLDIERTYPE *ReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByAttacker);
+struct SOLDIERTYPE *ReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByAttacker);
 
 void CommonEnterCombatModeCode();
 
-void CheckForPotentialAddToBattleIncrement(SOLDIERTYPE *pSoldier);
+void CheckForPotentialAddToBattleIncrement(struct SOLDIERTYPE *pSoldier);
 
 void CencelAllActionsForTimeCompression(void);
 
@@ -309,23 +293,24 @@ void AddManToTeam(INT8 bTeam);
 
 void RemoveManFromTeam(INT8 bTeam);
 
-void RemoveSoldierFromTacticalSector(SOLDIERTYPE *pSoldier, BOOLEAN fAdjustSelected);
+void RemoveSoldierFromTacticalSector(struct SOLDIERTYPE *pSoldier, BOOLEAN fAdjustSelected);
 
-void MakeCivHostile(SOLDIERTYPE *pSoldier, INT8 bNewSide);
+void MakeCivHostile(struct SOLDIERTYPE *pSoldier, INT8 bNewSide);
 
 #define REASON_NORMAL_ATTACK 1
 #define REASON_EXPLOSION 2
 
-BOOLEAN ProcessImplicationsOfPCAttack(SOLDIERTYPE *pSoldier, SOLDIERTYPE **ppTarget, INT8 bReason);
+BOOLEAN ProcessImplicationsOfPCAttack(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTarget,
+                                      INT8 bReason);
 
-INT16 FindAdjacentPunchTarget(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTargetSoldier,
+INT16 FindAdjacentPunchTarget(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTargetSoldier,
                               INT16 *psAdjustedTargetGridNo, UINT8 *pubDirection);
 
-SOLDIERTYPE *CivilianGroupMemberChangesSides(SOLDIERTYPE *pAttacked);
+struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacked);
 void CivilianGroupChangesSides(UINT8 ubCivilianGroup);
 
-void CycleVisibleEnemies(SOLDIERTYPE *pSrcSoldier);
-UINT8 CivilianGroupMembersChangeSidesWithinProximity(SOLDIERTYPE *pAttacked);
+void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier);
+UINT8 CivilianGroupMembersChangeSidesWithinProximity(struct SOLDIERTYPE *pAttacked);
 
 void PauseAITemporarily(void);
 void PauseAIUntilManuallyUnpaused(void);
@@ -338,7 +323,7 @@ BOOLEAN HostileCiviliansPresent(void);
 BOOLEAN HostileBloodcatsPresent(void);
 UINT8 NumPCsInSector(void);
 
-void SetSoldierNonNeutral(SOLDIERTYPE *pSoldier);
-void SetSoldierNeutral(SOLDIERTYPE *pSoldier);
+void SetSoldierNonNeutral(struct SOLDIERTYPE *pSoldier);
+void SetSoldierNeutral(struct SOLDIERTYPE *pSoldier);
 
 #endif

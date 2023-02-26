@@ -1,10 +1,11 @@
-#include "Tactical/SoldierCreate.h"
+
 
 #include <math.h>
 
 #include "Editor/EditorMercs.h"
 #include "GameSettings.h"
 #include "JAScreens.h"
+#include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -63,11 +64,12 @@
 #define MAX_PALACE_DISTANCE 20
 
 // Private functions used within TacticalCreateStruct()
-void InitSoldierStruct(SOLDIERTYPE *pSoldier);
-BOOLEAN TacticalCopySoldierFromProfile(SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct);
-BOOLEAN TacticalCopySoldierFromCreateStruct(SOLDIERTYPE *pSoldier,
+void InitSoldierStruct(struct SOLDIERTYPE *pSoldier);
+BOOLEAN TacticalCopySoldierFromProfile(struct SOLDIERTYPE *pSoldier,
+                                       SOLDIERCREATE_STRUCT *pCreateStruct);
+BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
                                             SOLDIERCREATE_STRUCT *pCreateStruct);
-void CopyProfileItems(SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct);
+void CopyProfileItems(struct SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct);
 UINT8 GetLocationModifier(UINT8 ubSoldierClass);
 void ReduceHighExpLevels(INT8 *pbExpLevel);
 
@@ -101,10 +103,10 @@ void RandomizeNewSoldierStats(SOLDIERCREATE_STRUCT *pCreateStruct) {
   pCreateStruct->bAIMorale = MORALE_FEARLESS;
 }
 
-SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *pubID) {
-  SOLDIERTYPE Soldier;
+struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *pubID) {
+  struct SOLDIERTYPE Soldier;
   INT32 cnt;
-  SOLDIERTYPE *pTeamSoldier;
+  struct SOLDIERTYPE *pTeamSoldier;
   BOOLEAN fGuyAvail = FALSE;
   UINT8 bLastTeamID;
   UINT8 ubVehicleID = 0;
@@ -340,12 +342,12 @@ SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *p
           if (!fSecondFaceItem) {  // Don't check for compatibility...  automatically assume there
                                    // are no head positions filled.
             fSecondFaceItem = TRUE;
-            memcpy(&Soldier.inv[HEAD1POS], &Soldier.inv[i], sizeof(OBJECTTYPE));
-            memset(&Soldier.inv[i], 0, sizeof(OBJECTTYPE));
+            memcpy(&Soldier.inv[HEAD1POS], &Soldier.inv[i], sizeof(struct OBJECTTYPE));
+            memset(&Soldier.inv[i], 0, sizeof(struct OBJECTTYPE));
           } else {  // if there is a second item, compare it to the first one we already added.
             if (CompatibleFaceItem(Soldier.inv[HEAD1POS].usItem, Soldier.inv[i].usItem)) {
-              memcpy(&Soldier.inv[HEAD2POS], &Soldier.inv[i], sizeof(OBJECTTYPE));
-              memset(&Soldier.inv[i], 0, sizeof(OBJECTTYPE));
+              memcpy(&Soldier.inv[HEAD2POS], &Soldier.inv[i], sizeof(struct OBJECTTYPE));
+              memset(&Soldier.inv[i], 0, sizeof(struct OBJECTTYPE));
               break;
             }
           }
@@ -479,7 +481,7 @@ SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *p
 
     if (guiCurrentScreen != AUTORESOLVE_SCREEN) {
       // Copy into merc struct
-      memcpy(MercPtrs[Soldier.ubID], &Soldier, sizeof(SOLDIERTYPE));
+      memcpy(MercPtrs[Soldier.ubID], &Soldier, sizeof(struct SOLDIERTYPE));
       // Alrighty then, we are set to create the merc, stuff after here can fail!
       CHECKF(CreateSoldierCommon(Soldier.ubBodyType, MercPtrs[Soldier.ubID], Soldier.ubID,
                                  STANDING) != FALSE);
@@ -501,7 +503,7 @@ SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *p
     }
 
     // Copy into merc struct
-    memcpy(MercPtrs[Soldier.ubID], &Soldier, sizeof(SOLDIERTYPE));
+    memcpy(MercPtrs[Soldier.ubID], &Soldier, sizeof(struct SOLDIERTYPE));
 
     // Alrighty then, we are set to create the merc, stuff after here can fail!
     CHECKF(CreateSoldierCommon(Soldier.ubBodyType, MercPtrs[Soldier.ubID], Soldier.ubID,
@@ -528,12 +530,12 @@ SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *p
 
     return MercPtrs[Soldier.ubID];
   } else {  // We are creating a dynamically allocated soldier for autoresolve.
-    SOLDIERTYPE *pSoldier;
+    struct SOLDIERTYPE *pSoldier;
     UINT8 ubSectorID;
     ubSectorID = GetAutoResolveSectorID();
-    pSoldier = (SOLDIERTYPE *)MemAlloc(sizeof(SOLDIERTYPE));
+    pSoldier = (struct SOLDIERTYPE *)MemAlloc(sizeof(struct SOLDIERTYPE));
     if (!pSoldier) return NULL;
-    memcpy(pSoldier, &Soldier, sizeof(SOLDIERTYPE));
+    memcpy(pSoldier, &Soldier, sizeof(struct SOLDIERTYPE));
     pSoldier->ubID = 255;
     pSoldier->sSectorX = (INT16)SECTORX(ubSectorID);
     pSoldier->sSectorY = (INT16)SECTORY(ubSectorID);
@@ -543,7 +545,8 @@ SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, UINT8 *p
   }
 }
 
-BOOLEAN TacticalCopySoldierFromProfile(SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct) {
+BOOLEAN TacticalCopySoldierFromProfile(struct SOLDIERTYPE *pSoldier,
+                                       SOLDIERCREATE_STRUCT *pCreateStruct) {
   UINT8 ubProfileIndex;
   MERCPROFILESTRUCT *pProfile;
 
@@ -610,7 +613,7 @@ enum {
   NUMHEADS
 };
 
-INT32 ChooseHairColor(SOLDIERTYPE *pSoldier, INT32 skin) {
+INT32 ChooseHairColor(struct SOLDIERTYPE *pSoldier, INT32 skin) {
   INT32 iRandom;
   INT32 hair = 0;
   iRandom = Random(100);
@@ -673,7 +676,7 @@ INT32 ChooseHairColor(SOLDIERTYPE *pSoldier, INT32 skin) {
   return hair;
 }
 
-void GeneratePaletteForSoldier(SOLDIERTYPE *pSoldier, UINT8 ubSoldierClass) {
+void GeneratePaletteForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubSoldierClass) {
   INT32 skin, hair;
   BOOLEAN fMercClothingScheme;
   hair = -1;
@@ -883,7 +886,7 @@ void GeneratePaletteForSoldier(SOLDIERTYPE *pSoldier, UINT8 ubSoldierClass) {
   }
 }
 
-BOOLEAN TacticalCopySoldierFromCreateStruct(SOLDIERTYPE *pSoldier,
+BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
                                             SOLDIERCREATE_STRUCT *pCreateStruct) {
   pSoldier->ubProfile = NO_PROFILE;
 
@@ -1003,14 +1006,14 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(SOLDIERTYPE *pSoldier,
   GeneratePaletteForSoldier(pSoldier, pCreateStruct->ubSoldierClass);
 
   // Copy item info over
-  memcpy(pSoldier->inv, pCreateStruct->Inv, sizeof(OBJECTTYPE) * NUM_INV_SLOTS);
+  memcpy(pSoldier->inv, pCreateStruct->Inv, sizeof(struct OBJECTTYPE) * NUM_INV_SLOTS);
 
   return (TRUE);
 }
 
-void InitSoldierStruct(SOLDIERTYPE *pSoldier) {
+void InitSoldierStruct(struct SOLDIERTYPE *pSoldier) {
   // Memset values
-  memset(pSoldier, 0, sizeof(SOLDIERTYPE));
+  memset(pSoldier, 0, sizeof(struct SOLDIERTYPE));
 
   // Set default values
   pSoldier->bVisible = -1;
@@ -1067,7 +1070,7 @@ void InitSoldierStruct(SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN InternalTacticalRemoveSoldier(UINT16 usSoldierIndex, BOOLEAN fRemoveVehicle) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // Check range of index given
   if (usSoldierIndex < 0 || usSoldierIndex > TOTAL_SOLDIERS - 1) {
@@ -1090,7 +1093,7 @@ BOOLEAN InternalTacticalRemoveSoldier(UINT16 usSoldierIndex, BOOLEAN fRemoveVehi
   return TacticalRemoveSoldierPointer(pSoldier, fRemoveVehicle);
 }
 
-BOOLEAN TacticalRemoveSoldierPointer(SOLDIERTYPE *pSoldier, BOOLEAN fRemoveVehicle) {
+BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveVehicle) {
   if (!pSoldier->bActive) return FALSE;
 
   if (pSoldier->ubScheduleID) {
@@ -1549,7 +1552,7 @@ void CreateStaticDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *
 
   // Starts with nothing
   for (i = 0; i < NUM_INV_SLOTS; i++) {
-    memset(&(spp->Inv[i]), 0, sizeof(OBJECTTYPE));
+    memset(&(spp->Inv[i]), 0, sizeof(struct OBJECTTYPE));
     spp->Inv[i].usItem = NOTHING;
     spp->Inv[i].fFlags |= OBJECT_UNDROPPABLE;
   }
@@ -1624,8 +1627,8 @@ void CreateDetailedPlacementGivenStaticDetailedPlacementAndBasicPlacementInfo(
   for (i = 0; i < NUM_INV_SLOTS; i++) {
     // copy over static items and empty slots that are droppable (signifies a forced empty slot)
     if (spp->Inv[i].fFlags & OBJECT_NO_OVERWRITE) {
-      memcpy(&pp->Inv[i], &spp->Inv[i], sizeof(OBJECTTYPE));
-      // memcpy( pp->Inv, spp->Inv, sizeof( OBJECTTYPE ) * NUM_INV_SLOTS );
+      memcpy(&pp->Inv[i], &spp->Inv[i], sizeof(struct OBJECTTYPE));
+      // memcpy( pp->Inv, spp->Inv, sizeof( struct OBJECTTYPE ) * NUM_INV_SLOTS );
       // return;
     }
   }
@@ -1642,7 +1645,7 @@ void CreateDetailedPlacementGivenStaticDetailedPlacementAndBasicPlacementInfo(
 // is used by the editor upon exiting the editor into the game, to update the existing soldiers with
 // new information. This gives flexibility of testing mercs.  Upon entering the editor again, this
 // call will reset all the mercs to their original states.
-void UpdateSoldierWithStaticDetailedInformation(SOLDIERTYPE *s, SOLDIERCREATE_STRUCT *spp) {
+void UpdateSoldierWithStaticDetailedInformation(struct SOLDIERTYPE *s, SOLDIERCREATE_STRUCT *spp) {
   // First, check to see if the soldier has a profile.  If so, then it'll extract the information
   // and update the soldier with the profile information instead.  This has complete override
   // authority.
@@ -1704,7 +1707,7 @@ void UpdateSoldierWithStaticDetailedInformation(SOLDIERTYPE *s, SOLDIERCREATE_ST
   s->ubScheduleID = spp->ubScheduleID;
 
   // Copy over the current inventory list.
-  memcpy(s->inv, spp->Inv, sizeof(OBJECTTYPE) * NUM_INV_SLOTS);
+  memcpy(s->inv, spp->Inv, sizeof(struct OBJECTTYPE) * NUM_INV_SLOTS);
 }
 
 // In the case of setting a profile ID in order to extract a soldier from the profile array, we
@@ -1749,7 +1752,8 @@ void UpdateStaticDetailedPlacementWithProfileInformation(SOLDIERCREATE_STRUCT *s
 
 // When the editor modifies the soldier's relative attribute level,
 // this function is called to update that information.
-void ModifySoldierAttributesWithNewRelativeLevel(SOLDIERTYPE *s, INT8 bRelativeAttributeLevel) {
+void ModifySoldierAttributesWithNewRelativeLevel(struct SOLDIERTYPE *s,
+                                                 INT8 bRelativeAttributeLevel) {
   INT8 bBaseAttribute;
   // Set the experience level based on the relative attribute level
   // NOTE OF WARNING: THIS CURRENTLY IGNORES THE ENEMY CLASS (ADMIN/REG/ELITE) FOR CALCULATING LEVEL
@@ -1780,7 +1784,7 @@ void ModifySoldierAttributesWithNewRelativeLevel(SOLDIERTYPE *s, INT8 bRelativeA
   s->bMorale = (INT8)(bBaseAttribute + Random(9) + Random(8));
 }
 
-void ForceSoldierProfileID(SOLDIERTYPE *pSoldier, UINT8 ubProfileID) {
+void ForceSoldierProfileID(struct SOLDIERTYPE *pSoldier, UINT8 ubProfileID) {
   SOLDIERCREATE_STRUCT CreateStruct;
 
   memset(&CreateStruct, 0, sizeof(CreateStruct));
@@ -1804,9 +1808,9 @@ void ForceSoldierProfileID(SOLDIERTYPE *pSoldier, UINT8 ubProfileID) {
 #define CENTRAL_GRIDNO 13202
 #define CENTRAL_RADIUS 30
 
-SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(UINT8 ubSoldierClass) {
+struct SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(UINT8 ubSoldierClass) {
   INT32 i, iStart, iEnd;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   // This code looks for a soldier of specified type that currently exists in tactical and
   // returns the pointer to that soldier.  This is used when copying the exact status of
   // all remaining enemy troops (or creatures) to finish the battle in autoresolve.  To
@@ -1826,9 +1830,9 @@ SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(UINT8 ubSoldierClass) {
         MercPtrs[i]->sGridNo = NOWHERE;
 
         // Allocate and copy the soldier
-        pSoldier = (SOLDIERTYPE *)MemAlloc(sizeof(SOLDIERTYPE));
+        pSoldier = (struct SOLDIERTYPE *)MemAlloc(sizeof(struct SOLDIERTYPE));
         if (!pSoldier) return NULL;
-        memcpy(pSoldier, MercPtrs[i], sizeof(SOLDIERTYPE));
+        memcpy(pSoldier, MercPtrs[i], sizeof(struct SOLDIERTYPE));
 
         // Assign a bogus ID, then return it
         pSoldier->ubID = 255;
@@ -1840,11 +1844,11 @@ SOLDIERTYPE *ReserveTacticalSoldierForAutoresolve(UINT8 ubSoldierClass) {
 }
 
 // USED BY STRATEGIC AI and AUTORESOLVE
-SOLDIERTYPE *TacticalCreateAdministrator() {
+struct SOLDIERTYPE *TacticalCreateAdministrator() {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
   UINT8 ubID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (guiCurrentScreen == AUTORESOLVE_SCREEN && !gfPersistantPBI) {
     return ReserveTacticalSoldierForAutoresolve(SOLDIER_CLASS_ADMINISTRATOR);
@@ -1872,11 +1876,11 @@ SOLDIERTYPE *TacticalCreateAdministrator() {
 }
 
 // USED BY STRATEGIC AI and AUTORESOLVE
-SOLDIERTYPE *TacticalCreateArmyTroop() {
+struct SOLDIERTYPE *TacticalCreateArmyTroop() {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
   UINT8 ubID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (guiCurrentScreen == AUTORESOLVE_SCREEN && !gfPersistantPBI) {
     return ReserveTacticalSoldierForAutoresolve(SOLDIER_CLASS_ARMY);
@@ -1904,11 +1908,11 @@ SOLDIERTYPE *TacticalCreateArmyTroop() {
 }
 
 // USED BY STRATEGIC AI and AUTORESOLVE
-SOLDIERTYPE *TacticalCreateEliteEnemy() {
+struct SOLDIERTYPE *TacticalCreateEliteEnemy() {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
   UINT8 ubID;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (guiCurrentScreen == AUTORESOLVE_SCREEN && !gfPersistantPBI) {
     return ReserveTacticalSoldierForAutoresolve(SOLDIER_CLASS_ELITE);
@@ -1944,7 +1948,7 @@ SOLDIERTYPE *TacticalCreateEliteEnemy() {
   return (pSoldier);
 }
 
-SOLDIERTYPE *TacticalCreateMilitia(UINT8 ubMilitiaClass) {
+struct SOLDIERTYPE *TacticalCreateMilitia(UINT8 ubMilitiaClass) {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
   UINT8 ubID;
@@ -1963,7 +1967,7 @@ SOLDIERTYPE *TacticalCreateMilitia(UINT8 ubMilitiaClass) {
   return TacticalCreateSoldier(&pp, &ubID);
 }
 
-SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType) {
+struct SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType) {
   BASIC_SOLDIERCREATE_STRUCT bp;
   SOLDIERCREATE_STRUCT pp;
   UINT8 ubID;
@@ -2109,10 +2113,10 @@ void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID) {
   }
 }
 
-void CopyProfileItems(SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct) {
+void CopyProfileItems(struct SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct) {
   UINT32 cnt, cnt2;
   MERCPROFILESTRUCT *pProfile;
-  OBJECTTYPE Obj;
+  struct OBJECTTYPE Obj;
   UINT32 uiMoneyLeft, uiMoneyLimitInSlot;
   INT8 bSlot;
 
@@ -2123,7 +2127,7 @@ void CopyProfileItems(SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct
     if (pCreateStruct->fPlayerMerc) {
       // do some special coding to put stuff in the profile in better-looking
       // spots
-      memset(pSoldier->inv, 0, NUM_INV_SLOTS * sizeof(OBJECTTYPE));
+      memset(pSoldier->inv, 0, NUM_INV_SLOTS * sizeof(struct OBJECTTYPE));
       for (cnt = 0; cnt < NUM_INV_SLOTS; cnt++) {
         if (pProfile->inv[cnt] != NOTHING) {
           CreateItems(pProfile->inv[cnt], pProfile->bInvStatus[cnt], pProfile->bInvNumber[cnt],
@@ -2159,25 +2163,25 @@ void CopyProfileItems(SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct
                 if (pProfile->inv[cnt] >= KEY_1 && pProfile->inv[cnt] <= KEY_32) {
                   CreateKeyObject(&(pSoldier->inv[cnt]), pProfile->bInvNumber[cnt], 19);
                 } else {
-                  memset(&(pSoldier->inv[cnt]), 0, sizeof(OBJECTTYPE));
+                  memset(&(pSoldier->inv[cnt]), 0, sizeof(struct OBJECTTYPE));
                 }
                 break;
               case SKIPPER:
                 if (pProfile->inv[cnt] >= KEY_1 && pProfile->inv[cnt] <= KEY_32) {
                   CreateKeyObject(&(pSoldier->inv[cnt]), pProfile->bInvNumber[cnt], 11);
                 } else {
-                  memset(&(pSoldier->inv[cnt]), 0, sizeof(OBJECTTYPE));
+                  memset(&(pSoldier->inv[cnt]), 0, sizeof(struct OBJECTTYPE));
                 }
                 break;
               case DOREEN:
                 if (pProfile->inv[cnt] >= KEY_1 && pProfile->inv[cnt] <= KEY_32) {
                   CreateKeyObject(&(pSoldier->inv[cnt]), pProfile->bInvNumber[cnt], 32);
                 } else {
-                  memset(&(pSoldier->inv[cnt]), 0, sizeof(OBJECTTYPE));
+                  memset(&(pSoldier->inv[cnt]), 0, sizeof(struct OBJECTTYPE));
                 }
                 break;
               default:
-                memset(&(pSoldier->inv[cnt]), 0, sizeof(OBJECTTYPE));
+                memset(&(pSoldier->inv[cnt]), 0, sizeof(struct OBJECTTYPE));
                 break;
             }
           } else {
@@ -2193,7 +2197,7 @@ void CopyProfileItems(SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct
             }
           }
         } else {
-          memset(&(pSoldier->inv[cnt]), 0, sizeof(OBJECTTYPE));
+          memset(&(pSoldier->inv[cnt]), 0, sizeof(struct OBJECTTYPE));
         }
       }
       if (pProfile->uiMoney > 0) {
@@ -2248,7 +2252,7 @@ void OkayToUpgradeEliteToSpecialProfiledEnemy(SOLDIERCREATE_STRUCT *pp) {
 
 void TrashAllSoldiers() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   cnt = 0;
 

@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+#include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
@@ -21,7 +22,7 @@ void DetermineOptimumAnimationCacheSize() {
   guiCacheSize = MIN_CACHE_SIZE;
 }
 
-BOOLEAN InitAnimationCache(UINT16 usSoldierID, AnimationSurfaceCacheType *pAnimCache) {
+BOOLEAN InitAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
   UINT32 cnt;
 
   // Allocate entries
@@ -46,7 +47,7 @@ BOOLEAN InitAnimationCache(UINT16 usSoldierID, AnimationSurfaceCacheType *pAnimC
   return (TRUE);
 }
 
-void DeleteAnimationCache(UINT16 usSoldierID, AnimationSurfaceCacheType *pAnimCache) {
+void DeleteAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
   // Allocate entries
   if (pAnimCache->usCachedSurfaces != NULL) {
     AnimDebugMsg(String("*** Removing Anim Cache surface for soldier %d", usSoldierID));
@@ -59,7 +60,7 @@ void DeleteAnimationCache(UINT16 usSoldierID, AnimationSurfaceCacheType *pAnimCa
   }
 }
 
-BOOLEAN GetCachedAnimationSurface(UINT16 usSoldierID, AnimationSurfaceCacheType *pAnimCache,
+BOOLEAN GetCachedAnimationSurface(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache,
                                   UINT16 usSurfaceIndex, UINT16 usCurrentAnimation) {
   UINT8 cnt;
   UINT8 ubLowestIndex = 0;
@@ -132,7 +133,7 @@ BOOLEAN GetCachedAnimationSurface(UINT16 usSoldierID, AnimationSurfaceCacheType 
   return (TRUE);
 }
 
-void UnLoadCachedAnimationSurfaces(UINT16 usSoldierID, AnimationSurfaceCacheType *pAnimCache) {
+void UnLoadCachedAnimationSurfaces(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
   UINT8 cnt;
 
   // Check to see if surface exists already

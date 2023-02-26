@@ -5,6 +5,7 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -13,7 +14,6 @@
 #include "Strategic/StrategicMap.h"
 #include "Strategic/StrategicMines.h"
 #include "Tactical/SoldierProfile.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
@@ -452,7 +452,7 @@ void ExitFinances(void) {
 void HandleFinances(void) {}
 
 void RenderFinances(void) {
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // draw background
   RenderBackGround();
@@ -524,7 +524,7 @@ void RemoveFinances(void) {
 
 void RenderBackGround(void) {
   // render generic background for Finance system
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
   INT32 iCounter = 0;
 
   // get title bar object
@@ -548,7 +548,7 @@ void DrawSummary(void) {
 
 void DrawSummaryLines(void) {
   // draw divider lines on screen
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // the summary LINE object handle
   GetVideoObject(&hHandle, guiLINE);
@@ -587,7 +587,7 @@ void DrawAPageOfRecords(void) {
 void DrawRecordsBackGround(void) {
   // proceudre will draw the background for the list of financial records
   INT32 iCounter = 6;
-  HVOBJECT hHandle;
+  struct VObject *hHandle;
 
   // render the generic background
   RenderBackGround();

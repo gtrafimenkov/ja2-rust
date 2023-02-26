@@ -63,7 +63,7 @@ void DoneFadeOutDueToEndMusic(void);
 extern void HandleEndDemoInCreatureLevel();
 
 BOOLEAN NoEnemiesInSight() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
 
   // Loop through our guys

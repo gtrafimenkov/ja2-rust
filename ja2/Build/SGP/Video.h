@@ -2,7 +2,8 @@
 #define __VIDEO_H
 
 #include "SGP/Types.h"
-#include "SGP/VSurface.h"
+
+struct VSurface;
 
 #define VIDEO_NO_CURSOR 0xFFFF
 

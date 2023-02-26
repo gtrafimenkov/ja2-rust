@@ -24,14 +24,12 @@
 #include "String.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Overhead.h"
-#include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Squads.h"
 #include "Tactical/Vehicles.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/TileDat.h"
-#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
@@ -57,7 +55,7 @@ extern FACETYPE *gpCurrentTalkingFace;
 extern UINT8 gubCurrentTalkingID;
 
 // current temp path for dest char
-extern PathStPtr pTempHelicopterPath;
+extern struct path *pTempHelicopterPath;
 
 extern UINT8 ubSAMControlledSectors[MAP_WORLD_X][MAP_WORLD_Y];
 
@@ -144,12 +142,12 @@ BOOLEAN gfSkyriderSaidCongratsOnTakingSAM = FALSE;
 UINT8 gubPlayerProgressSkyriderLastCommentedOn = 0;
 
 // skyrider placeholder
-SOLDIERTYPE SoldierSkyRider;
+struct SOLDIERTYPE SoldierSkyRider;
 
-SOLDIERTYPE *pSkyRider;
+struct SOLDIERTYPE *pSkyRider;
 
 // helicopter char dialogue
-BOOLEAN HeliCharacterDialogue(SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
+BOOLEAN HeliCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum);
 
 // does skyrider notice bad guys in sector?
 BOOLEAN DoesSkyriderNoticeEnemiesInSector(UINT8 ubNumEnemies);
@@ -212,7 +210,7 @@ void InitializeHelicopter(void) {
   gubPlayerProgressSkyriderLastCommentedOn = 0;
 }
 
-BOOLEAN AddSoldierToHelicopter(SOLDIERTYPE *pSoldier) {
+BOOLEAN AddSoldierToHelicopter(struct SOLDIERTYPE *pSoldier) {
   // attempt to add soldier to helicopter
   if (iHelicopterVehicleId == -1) {
     // no heli yet
@@ -233,7 +231,7 @@ BOOLEAN AddSoldierToHelicopter(SOLDIERTYPE *pSoldier) {
   return (PutSoldierInVehicle(pSoldier, (INT8)iHelicopterVehicleId));
 }
 
-BOOLEAN RemoveSoldierFromHelicopter(SOLDIERTYPE *pSoldier) {
+BOOLEAN RemoveSoldierFromHelicopter(struct SOLDIERTYPE *pSoldier) {
   // attempt to add soldier to helicopter
   if (iHelicopterVehicleId == -1) {
     // no heli yet
@@ -687,7 +685,7 @@ BOOLEAN DoesSkyriderNoticeEnemiesInSector(UINT8 ubNumEnemies) {
 // if the heli is on the move, what is the distance it will move..the length of the merc path, less
 // the first node
 INT32 DistanceOfIntendedHelicopterPath(void) {
-  PathStPtr pNode = NULL;
+  struct path *pNode = NULL;
   INT32 iLength = 0;
 
   if (CanHelicopterFly() == FALSE) {
@@ -759,7 +757,7 @@ void SetUpHelicopterForMovement(void) {
   }
 }
 
-BOOLEAN HeliCharacterDialogue(SOLDIERTYPE *pSoldier, UINT16 usQuoteNum) {
+BOOLEAN HeliCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum) {
   // ARM: we could just return, but since various flags are often being set it's safer to honk so it
   // gets fixed right!
   Assert(fSkyRiderAvailable);
@@ -834,7 +832,7 @@ void SetUpHelicopterForPlayer(INT16 sX, INT16 sY) {
 
     Assert(iHelicopterVehicleId != -1);
 
-    memset(&SoldierSkyRider, 0, sizeof(SOLDIERTYPE));
+    memset(&SoldierSkyRider, 0, sizeof(struct SOLDIERTYPE));
     SoldierSkyRider.ubProfile = SKYRIDER;
     SoldierSkyRider.bLife = 80;
 
@@ -856,7 +854,7 @@ UINT8 MoveAllInHelicopterToFootMovementGroup(void) {
   // take everyone out of heli and add to movement group
   INT32 iCounter = 0;
   UINT8 ubGroupId = 0;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT8 bNewSquad;
   BOOLEAN fAnyoneAboard = FALSE;
   BOOLEAN fSuccess;
@@ -1202,7 +1200,7 @@ void HandleAnimationOfSectors(void) {
 
 INT16 LastSectorInHelicoptersPath(void) {
   // get the last sector value in the helictoper's path
-  PathStPtr pNode = NULL;
+  struct path *pNode = NULL;
   UINT32 uiLocation = 0;
 
   // if the heli is on the move, what is the distance it will move..the length of the merc path,
@@ -1244,7 +1242,7 @@ INT32 GetTotalCostOfHelicopterTrip( void )
 {
         // get cost of helicopter trip
 
-        PathStPtr pNode = NULL, pTempNode = NULL;
+        struct path* pNode = NULL, pTempNode = NULL;
         UINT32 uiCost = 0;
         UINT32 uiLastTempPathSectorId = 0;
         UINT32 iClosestRefuelPoint = 0;
@@ -1420,7 +1418,7 @@ uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pTempNode->uiSectorId / MAP_WORLD_X ) )
 
 void HandleHelicopterOnGroundGraphic(void) {
   UINT8 ubSite = 0;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // no worries if underground
   if (gbWorldSectorZ != 0) {
@@ -1468,7 +1466,7 @@ void HandleHelicopterOnGroundGraphic(void) {
 
 void HandleHelicopterOnGroundSkyriderProfile(void) {
   UINT8 ubSite = 0;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // no worries if underground
   if (gbWorldSectorZ != 0) {
@@ -1786,7 +1784,7 @@ void AddHelicopterToMaps(BOOLEAN fAdd, UINT8 ubSite) {
 }
 
 BOOLEAN IsSkyriderIsFlyingInSector(INT16 sSectorX, INT16 sSectorY) {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
 
   // up and about?
   if (fHelicopterAvailable && (iHelicopterVehicleId != -1) && CanHelicopterFly() &&
@@ -1802,7 +1800,7 @@ BOOLEAN IsSkyriderIsFlyingInSector(INT16 sSectorX, INT16 sSectorY) {
   return (FALSE);
 }
 
-BOOLEAN IsGroupTheHelicopterGroup(GROUP *pGroup) {
+BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup) {
   if ((iHelicopterVehicleId != -1) && VehicleIdIsValid(iHelicopterVehicleId) &&
       (pVehicleList[iHelicopterVehicleId].ubMovementGroup != 0) &&
       (pVehicleList[iHelicopterVehicleId].ubMovementGroup == pGroup->ubGroupID)) {
@@ -1814,11 +1812,11 @@ BOOLEAN IsGroupTheHelicopterGroup(GROUP *pGroup) {
 
 INT16 GetNumSafeSectorsInPath(void) {
   // get the last sector value in the helictoper's path
-  PathStPtr pNode = NULL;
+  struct path *pNode = NULL;
   UINT32 uiLocation = 0;
   UINT32 uiCount = 0;
   INT32 iHeliSector = -1;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
 
   // if the heli is on the move, what is the distance it will move..the length of the merc path,
   // less the first node
@@ -1890,11 +1888,11 @@ INT16 GetNumSafeSectorsInPath(void) {
 
 INT16 GetNumUnSafeSectorsInPath(void) {
   // get the last sector value in the helictoper's path
-  PathStPtr pNode = NULL;
+  struct path *pNode = NULL;
   UINT32 uiLocation = 0;
   UINT32 uiCount = 0;
   INT32 iHeliSector = -1;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
 
   // if the heli is on the move, what is the distance it will move..the length of the merc path,
   // less the first node
@@ -2068,7 +2066,7 @@ void MakeHeliReturnToBase(void) {
   StopTimeCompression();
 }
 
-BOOLEAN SoldierAboardAirborneHeli(SOLDIERTYPE *pSoldier) {
+BOOLEAN SoldierAboardAirborneHeli(struct SOLDIERTYPE *pSoldier) {
   Assert(pSoldier);
 
   // if not in a vehicle, or not aboard the helicopter

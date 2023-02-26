@@ -3,7 +3,10 @@
 #include "BuildDefines.h"
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
+#include "SGP/ButtonSystem.h"
 #include "SGP/Random.h"
+#include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "TileEngine/SysUtil.h"
@@ -340,7 +343,7 @@ void InitJA2SelectionWindow(void) {
   INT32 iCount3;
 
   UINT16 usETRLEObjects;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
 
   pDispList = NULL;
 

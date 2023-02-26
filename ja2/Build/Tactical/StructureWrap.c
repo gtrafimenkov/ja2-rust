@@ -9,7 +9,9 @@
 #include "Tactical/RottingCorpses.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 
 extern BOOLEAN DoesSAMExistHere(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, INT16 sGridNo);
@@ -31,7 +33,7 @@ BOOLEAN IsRoofPresentAtGridno(INT16 sGridNo) {
 }
 
 BOOLEAN IsJumpableFencePresentAtGridno(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_OBSTACLE);
 
@@ -64,9 +66,9 @@ BOOLEAN IsTreePresentAtGridno(INT16 sGridNo) {
   return (FALSE);
 }
 
-LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo) {
-  LEVELNODE *pNode = NULL;
-  STRUCTURE *pStructure;
+struct LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo) {
+  struct LEVELNODE *pNode = NULL;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WALLSTUFF);
 
@@ -77,9 +79,9 @@ LEVELNODE *IsWallPresentAtGridno(INT16 sGridNo) {
   return (pNode);
 }
 
-LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation) {
-  LEVELNODE *pNode = NULL;
-  STRUCTURE *pStructure;
+struct LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation) {
+  struct LEVELNODE *pNode = NULL;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WALLSTUFF);
 
@@ -95,10 +97,10 @@ LEVELNODE *GetWallLevelNodeOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrien
   return (NULL);
 }
 
-LEVELNODE *GetWallLevelNodeAndStructOfSameOrientationAtGridno(INT16 sGridNo, INT8 ubOrientation,
-                                                              STRUCTURE **ppStructure) {
-  LEVELNODE *pNode = NULL;
-  STRUCTURE *pStructure, *pBaseStructure;
+struct LEVELNODE *GetWallLevelNodeAndStructOfSameOrientationAtGridno(
+    INT16 sGridNo, INT8 ubOrientation, struct STRUCTURE **ppStructure) {
+  struct LEVELNODE *pNode = NULL;
+  struct STRUCTURE *pStructure, *pBaseStructure;
 
   (*ppStructure) = NULL;
 
@@ -121,7 +123,7 @@ LEVELNODE *GetWallLevelNodeAndStructOfSameOrientationAtGridno(INT16 sGridNo, INT
 }
 
 BOOLEAN IsDoorVisibleAtGridNo(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
   INT16 sNewGridNo;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_ANYDOOR);
@@ -170,7 +172,7 @@ BOOLEAN IsDoorVisibleAtGridNo(INT16 sGridNo) {
 BOOLEAN DoesGridnoContainHiddenStruct(INT16 sGridNo, BOOLEAN *pfVisible) {
   // ATE: These are ignored now - always return false
 
-  // STRUCTURE *pStructure;
+  // struct STRUCTURE *pStructure;
 
   // pStructure = FindStructure( sGridNo, STRUCTURE_HIDDEN );
 
@@ -207,7 +209,7 @@ BOOLEAN IsHiddenStructureVisible(INT16 sGridNo, UINT16 usIndex) {
 
 BOOLEAN WallExistsOfTopLeftOrientation(INT16 sGridNo) {
   // CJC: changing to search only for normal walls, July 16, 1998
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WALL);
 
@@ -226,7 +228,7 @@ BOOLEAN WallExistsOfTopLeftOrientation(INT16 sGridNo) {
 
 BOOLEAN WallExistsOfTopRightOrientation(INT16 sGridNo) {
   // CJC: changing to search only for normal walls, July 16, 1998
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WALL);
 
@@ -244,7 +246,7 @@ BOOLEAN WallExistsOfTopRightOrientation(INT16 sGridNo) {
 }
 
 BOOLEAN WallOrClosedDoorExistsOfTopLeftOrientation(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WALLSTUFF);
 
@@ -265,7 +267,7 @@ BOOLEAN WallOrClosedDoorExistsOfTopLeftOrientation(INT16 sGridNo) {
 }
 
 BOOLEAN WallOrClosedDoorExistsOfTopRightOrientation(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WALLSTUFF);
 
@@ -286,7 +288,7 @@ BOOLEAN WallOrClosedDoorExistsOfTopRightOrientation(INT16 sGridNo) {
 }
 
 BOOLEAN OpenRightOrientedDoorWithDoorOnRightOfEdgeExists(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_ANYDOOR);
 
@@ -306,7 +308,7 @@ BOOLEAN OpenRightOrientedDoorWithDoorOnRightOfEdgeExists(INT16 sGridNo) {
 }
 
 BOOLEAN OpenLeftOrientedDoorWithDoorOnLeftOfEdgeExists(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_ANYDOOR);
 
@@ -325,8 +327,8 @@ BOOLEAN OpenLeftOrientedDoorWithDoorOnLeftOfEdgeExists(INT16 sGridNo) {
   return (FALSE);
 }
 
-STRUCTURE *FindCuttableWireFenceAtGridNo(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+struct STRUCTURE *FindCuttableWireFenceAtGridNo(INT16 sGridNo) {
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WIREFENCE);
   if (pStructure != NULL && pStructure->ubWallOrientation != NO_ORIENTATION &&
@@ -337,7 +339,7 @@ STRUCTURE *FindCuttableWireFenceAtGridNo(INT16 sGridNo) {
 }
 
 BOOLEAN CutWireFence(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindCuttableWireFenceAtGridNo(sGridNo);
   if (pStructure) {
@@ -399,7 +401,7 @@ BOOLEAN IsRefuelableStructAtGridNo(INT16 sGridNo, UINT8 *pubID) {
 }
 
 BOOLEAN IsCutWireFenceAtGridNo(INT16 sGridNo) {
-  STRUCTURE *pStructure;
+  struct STRUCTURE *pStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_WIREFENCE);
   if (pStructure != NULL && (pStructure->ubWallOrientation != NO_ORIENTATION) &&
@@ -410,8 +412,8 @@ BOOLEAN IsCutWireFenceAtGridNo(INT16 sGridNo) {
 }
 
 INT16 FindDoorAtGridNoOrAdjacent(INT16 sGridNo) {
-  STRUCTURE *pStructure;
-  STRUCTURE *pBaseStructure;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pBaseStructure;
   INT16 sTestGridNo;
 
   sTestGridNo = sGridNo;
@@ -447,8 +449,8 @@ BOOLEAN IsCorpseAtGridNo(INT16 sGridNo, UINT8 ubLevel) {
 }
 
 BOOLEAN SetOpenableStructureToClosed(INT16 sGridNo, UINT8 ubLevel) {
-  STRUCTURE *pStructure;
-  STRUCTURE *pNewStructure;
+  struct STRUCTURE *pStructure;
+  struct STRUCTURE *pNewStructure;
 
   pStructure = FindStructure(sGridNo, STRUCTURE_OPENABLE);
   if (!pStructure) {

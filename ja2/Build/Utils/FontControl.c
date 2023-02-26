@@ -6,6 +6,7 @@
 
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "SGP/WinFont.h"
@@ -15,78 +16,78 @@ BOOLEAN gfUseWinFonts = FALSE;
 
 // Global variables for video objects
 INT32 gpLargeFontType1;
-HVOBJECT gvoLargeFontType1;
+struct VObject* gvoLargeFontType1;
 
 INT32 gpSmallFontType1;
-HVOBJECT gvoSmallFontType1;
+struct VObject* gvoSmallFontType1;
 
 INT32 gpTinyFontType1;
-HVOBJECT gvoTinyFontType1;
+struct VObject* gvoTinyFontType1;
 
 INT32 gp12PointFont1;
-HVOBJECT gvo12PointFont1;
+struct VObject* gvo12PointFont1;
 
 INT32 gpClockFont;
-HVOBJECT gvoClockFont;
+struct VObject* gvoClockFont;
 
 INT32 gpCompFont;
-HVOBJECT gvoCompFont;
+struct VObject* gvoCompFont;
 
 INT32 gpSmallCompFont;
-HVOBJECT gvoSmallCompFont;
+struct VObject* gvoSmallCompFont;
 
 INT32 gp10PointRoman;
-HVOBJECT gvo10PointRoman;
+struct VObject* gvo10PointRoman;
 
 INT32 gp12PointRoman;
-HVOBJECT gvo12PointRoman;
+struct VObject* gvo12PointRoman;
 
 INT32 gp14PointSansSerif;
-HVOBJECT gvo14PointSansSerif;
+struct VObject* gvo14PointSansSerif;
 
 // INT32						gpMilitaryFont1;
-// HVOBJECT				gvoMilitaryFont1;
+// struct VObject*				gvoMilitaryFont1;
 
 INT32 gp10PointArial;
-HVOBJECT gvo10PointArial;
+struct VObject* gvo10PointArial;
 
 INT32 gp10PointArialBold;
-HVOBJECT gvo10PointArialBold;
+struct VObject* gvo10PointArialBold;
 
 INT32 gp14PointArial;
-HVOBJECT gvo14PointArial;
+struct VObject* gvo14PointArial;
 
 INT32 gp12PointArial;
-HVOBJECT gvo12PointArial;
+struct VObject* gvo12PointArial;
 
 INT32 gpBlockyFont;
-HVOBJECT gvoBlockyFont;
+struct VObject* gvoBlockyFont;
 
 INT32 gpBlockyFont2;
-HVOBJECT gvoBlockyFont2;
+struct VObject* gvoBlockyFont2;
 
 INT32 gp12PointArialFixedFont;
-HVOBJECT gvo12PointArialFixedFont;
+struct VObject* gvo12PointArialFixedFont;
 
 INT32 gp16PointArial;
-HVOBJECT gvo16PointArial;
+struct VObject* gvo16PointArial;
 
 INT32 gpBlockFontNarrow;
-HVOBJECT gvoBlockFontNarrow;
+struct VObject* gvoBlockFontNarrow;
 
 INT32 gp14PointHumanist;
-HVOBJECT gvo14PointHumanist;
+struct VObject* gvo14PointHumanist;
 
 #if defined(JA2EDITOR) && defined(ENGLISH)
 INT32 gpHugeFont;
-HVOBJECT gvoHugeFont;
+struct VObject* gvoHugeFont;
 #endif
 
 INT32 giSubTitleWinFont;
 
 BOOLEAN gfFontsInit = FALSE;
 
-UINT16 CreateFontPaletteTables(HVOBJECT pObj);
+UINT16 CreateFontPaletteTables(struct VObject* pObj);
 
 extern CHAR16 gzFontName[32];
 
@@ -235,7 +236,7 @@ void ShutdownFonts() {
 
 // Set shades for fonts
 BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
-  HVOBJECT pFont;
+  struct VObject* pFont;
 
   CHECKF(bColorID > 0);
   CHECKF(bColorID < 16);
@@ -247,7 +248,7 @@ BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
   return (TRUE);
 }
 
-UINT16 CreateFontPaletteTables(HVOBJECT pObj) {
+UINT16 CreateFontPaletteTables(struct VObject* pObj) {
   UINT32 count;
   struct SGPPaletteEntry Pal[256];
 

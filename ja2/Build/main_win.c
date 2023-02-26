@@ -27,8 +27,6 @@
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/MapScreenInterfaceMap.h"
 #include "Tactical/InterfacePanels.h"
-#include "TileEngine/RenderDirty.h"
-#include "TileEngine/RenderWorld.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "platform.h"

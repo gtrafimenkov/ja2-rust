@@ -3,7 +3,6 @@
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Laptop/LaptopSave.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/Random.h"
 #include "ScreenIDs.h"
 #include "Strategic/Assignments.h"
@@ -22,8 +21,6 @@
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/MilitiaControl.h"
 #include "Tactical/Overhead.h"
-#include "Tactical/SoldierCreate.h"
-#include "Tactical/Squads.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 
@@ -40,7 +37,7 @@ INT32 giTotalCostOfTraining = 0;
 
 // the completed list of sector soldiers for training militia
 INT32 giListOfMercsInSectorsCompletedMilitiaTraining[SIZE_OF_MILITIA_COMPLETED_TRAINING_LIST];
-SOLDIERTYPE *pMilitiaTrainerSoldier = NULL;
+struct SOLDIERTYPE *pMilitiaTrainerSoldier = NULL;
 
 // note that these sector values are STRATEGIC INDEXES, not 0-255!
 INT16 gsUnpaidStrategicSector[MAX_CHARACTER_COUNT];
@@ -67,7 +64,7 @@ void ResetDoneFlagForAllMilitiaTrainersInSector(UINT8 ubSector);
 void VerifyTownTrainingIsPaidFor(void);
 #endif
 
-void TownMilitiaTrainingCompleted(SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY) {
+void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY) {
   SECTORINFO *pSectorInfo = &(SectorInfo[SECTOR(sMapX, sMapY)]);
   UINT8 ubMilitiaTrained = 0;
   BOOLEAN fFoundOne;
@@ -429,7 +426,7 @@ BOOLEAN ServeNextFriendlySectorInTown(INT16 *sNeighbourX, INT16 *sNeighbourY) {
   return (TRUE);
 }
 
-void HandleInterfaceMessageForCostOfTrainingMilitia(SOLDIERTYPE *pSoldier) {
+void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier) {
   CHAR16 sString[128];
   SGPRect pCenteringRect = {0, 0, 640, INV_INTERFACE_START_Y};
   INT32 iNumberOfSectors = 0;
@@ -483,7 +480,7 @@ void DoContinueMilitiaTrainingMessageBox(INT16 sSectorX, INT16 sSectorY, CHAR16 
   }
 }
 
-void HandleInterfaceMessageForContinuingTrainingMilitia(SOLDIERTYPE *pSoldier) {
+void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSoldier) {
   CHAR16 sString[128];
   INT16 sSectorX = 0, sSectorY = 0;
   CHAR16 sStringB[128];
@@ -723,10 +720,10 @@ BOOLEAN IsSAMSiteFullOfMilitia(INT16 sSectorX, INT16 sSectorY) {
   return (TRUE);
 }
 
-void HandleCompletionOfTownTrainingByGroupWithTrainer(SOLDIERTYPE *pTrainer) {
+void HandleCompletionOfTownTrainingByGroupWithTrainer(struct SOLDIERTYPE *pTrainer) {
   INT16 sSectorX = 0, sSectorY = 0;
   INT8 bSectorZ = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iCounter = 0;
 
   // get the sector values
@@ -758,10 +755,10 @@ void HandleCompletionOfTownTrainingByGroupWithTrainer(SOLDIERTYPE *pTrainer) {
   return;
 }
 
-void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining(SOLDIERTYPE *pSoldier) {
+void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining(struct SOLDIERTYPE *pSoldier) {
   INT32 iCounter = 0;
   INT16 sSector = 0, sCurrentSector = 0;
-  SOLDIERTYPE *pCurrentSoldier = NULL;
+  struct SOLDIERTYPE *pCurrentSoldier = NULL;
 
   // get the sector value
   sSector = pSoldier->sSectorX + pSoldier->sSectorY * MAP_WORLD_X;
@@ -802,7 +799,7 @@ void ClearSectorListForCompletedTrainingOfMilitia(void) {
 }
 
 void HandleContinueOfTownTraining(void) {
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iCounter = 0;
   BOOLEAN fContinueEventPosted = FALSE;
 
@@ -844,7 +841,7 @@ void HandleContinueOfTownTraining(void) {
 
 void BuildListOfUnpaidTrainableSectors(void) {
   INT32 iCounter = 0, iCounterB = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   memset(gsUnpaidStrategicSector, 0, sizeof(INT16) * MAX_CHARACTER_COUNT);
 
@@ -956,7 +953,7 @@ void PayForTrainingInSector(UINT8 ubSector) {
 
 void ResetDoneFlagForAllMilitiaTrainersInSector(UINT8 ubSector) {
   INT32 iCounter = 0;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   for (iCounter = 0; iCounter <= gTacticalStatus.Team[OUR_TEAM].bLastID; iCounter++) {
     pSoldier = &Menptr[iCounter];

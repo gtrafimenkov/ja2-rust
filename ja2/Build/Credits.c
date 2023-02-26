@@ -6,6 +6,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -16,6 +17,7 @@
 #include "Utils/EncryptedFile.h"
 #include "Utils/FontControl.h"
 #include "Utils/Text.h"
+#include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
@@ -259,9 +261,9 @@ loading screens too!)",	// Joey \"Joeker\" Whelan",
 
 // Global Variables
 
-MOUSE_REGION gCrdtMouseRegions[NUM_PEOPLE_IN_CREDITS];
-void SelectCreditFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectCreditFaceMovementRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gCrdtMouseRegions[NUM_PEOPLE_IN_CREDITS];
+void SelectCreditFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectCreditFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 UINT32 guiCreditBackGroundImage;
 UINT32 guiCreditFaces;
@@ -527,7 +529,7 @@ void HandleCreditScreen() {
 
 // rrr
 BOOLEAN RenderCreditScreen() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
 
   GetVideoObject(&hPixHandle, guiCreditBackGroundImage);
   BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
@@ -1188,14 +1190,14 @@ void HandleCreditFlags(UINT32 uiFlags) {
   }
 }
 
-void SelectCreditFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectCreditFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
   }
 }
 
-void SelectCreditFaceMovementRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectCreditFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     giCurrentlySelectedFace = -1;
   } else if (iReason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
@@ -1214,7 +1216,7 @@ void InitCreditEyeBlinking() {
 }
 
 void HandleCreditEyeBlinking() {
-  HVOBJECT hPixHandle;
+  struct VObject *hPixHandle;
   UINT8 ubCnt;
 
   GetVideoObject(&hPixHandle, guiCreditFaces);

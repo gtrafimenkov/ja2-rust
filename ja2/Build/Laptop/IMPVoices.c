@@ -12,7 +12,6 @@
 #include "SGP/SoundMan.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/IsometricUtils.h"
-#include "TileEngine/RenderDirty.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/SoundControl.h"
@@ -38,7 +37,7 @@ BOOLEAN fVoiceAVisited = FALSE, fVoiceBVisited = FALSE, fVoiceCVisited = FALSE;
 BOOLEAN fReDrawVoicesScreenFlag = FALSE;
 
 // the portrait region, for player to click on and re-hear voice
-MOUSE_REGION gVoicePortraitRegion;
+struct MOUSE_REGION gVoicePortraitRegion;
 
 // function definitions
 void IncrementVoice(void);
@@ -53,7 +52,7 @@ void RenderVoiceIndex(void);
 void BtnIMPVoicesNextCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnIMPVoicesPreviousCallback(GUI_BUTTON *btn, INT32 reason);
 void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, INT32 reason);
-void IMPPortraitRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason);
+void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 void EnterIMPVoices(void) {
   fVoiceAVisited = FALSE;
@@ -359,7 +358,7 @@ void DestroyIMPVoiceMouseRegions(void) {
   return;
 }
 
-void IMPPortraitRegionButtonCallback(MOUSE_REGION *pRegion, INT32 iReason) {
+void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // callback handler for imp portrait region button events
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {

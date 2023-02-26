@@ -10,7 +10,6 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/PopupMenu.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
@@ -45,7 +44,7 @@ CHAR16 gszActionItemDesc[NUM_ACTIONITEMS][30] = {
     L"Bloodcat alarm",   L"Big teargas",
 };
 
-CHAR16 *GetActionItemName(OBJECTTYPE *pItem) {
+CHAR16 *GetActionItemName(struct OBJECTTYPE *pItem) {
   if (!pItem || pItem->usItem != ACTION_ITEM) return NULL;
   if (pItem->bActionValue != ACTION_ITEM_BLOW_UP) {
     switch (pItem->bActionValue) {
@@ -173,12 +172,12 @@ enum {
 
 INT8 gbEditingMode = EDITING_NOTHING;
 
-OBJECTTYPE *gpItem = NULL;
+struct OBJECTTYPE *gpItem = NULL;
 BOOLEAN gfShowItemStatsPanel;
 INT16 gsItemGridNo;
 
-ITEM_POOL *gpEditingItemPool = NULL;
-extern ITEM_POOL *gpItemPool;
+struct ITEM_POOL *gpEditingItemPool = NULL;
+extern struct ITEM_POOL *gpItemPool;
 
 void SetupGameTypeFlags();
 void RemoveGameTypeFlags();
@@ -333,7 +332,7 @@ void RemoveItemGUI() {
     }
 }
 
-void SpecifyItemToEdit(OBJECTTYPE *pItem, INT32 iMapIndex) {
+void SpecifyItemToEdit(struct OBJECTTYPE *pItem, INT32 iMapIndex) {
   // Set the global item pointer to point to the new item
   if (gpItem == pItem) return;
   if (gpItem != pItem) {
@@ -1165,7 +1164,7 @@ void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     INT32 i;
     UINT16 usAttachment;
-    OBJECTTYPE temp;
+    struct OBJECTTYPE temp;
     for (i = 0; i < NUM_ATTACHMENT_BUTTONS;
          i++) {  // Loop through and find the button that was just modified
       switch (i) {
@@ -1211,7 +1210,7 @@ void ToggleAttachment(GUI_BUTTON *btn, INT32 reason) {
 
 void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    OBJECTTYPE temp;
+    struct OBJECTTYPE temp;
     gfCeramicPlates ^= TRUE;
     if (gfCeramicPlates) {
       btn->uiFlags |= BUTTON_CLICKED_ON;
@@ -1228,7 +1227,7 @@ void ToggleCeramicPlates(GUI_BUTTON *btn, INT32 reason) {
 
 void ToggleDetonator(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    OBJECTTYPE temp;
+    struct OBJECTTYPE temp;
     if (!gfDetonator) {
       gfDetonator = TRUE;
       btn->uiFlags |= BUTTON_CLICKED_ON;
@@ -1250,7 +1249,7 @@ void ActionItemCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void ChangeActionItem(OBJECTTYPE *pItem, INT8 bActionItemIndex) {
+void ChangeActionItem(struct OBJECTTYPE *pItem, INT8 bActionItemIndex) {
   pItem->usItem = ACTION_ITEM;
   pItem->bActionValue = ACTION_ITEM_BLOW_UP;
   switch (bActionItemIndex) {

@@ -9,7 +9,6 @@
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/SelectWin.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/MouseSystem.h"
@@ -22,6 +21,7 @@
 #include "Tactical/WorldItems.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/Utilities.h"
 
@@ -111,7 +111,7 @@ void RenderTerrainTileButtons() {
 
 // This callback is used for each of the terrain tile buttons.  The userData[0] field
 // contains the terrain button's index value.
-void TerrainTileButtonRegionCallback(MOUSE_REGION *reg, INT32 reason) {
+void TerrainTileButtonRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfRenderTaskbar = TRUE;
     TerrainTileSelected = MSYS_GetRegionUserData(reg, 0);

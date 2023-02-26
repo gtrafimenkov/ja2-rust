@@ -66,7 +66,7 @@ void ValidateEnemiesHaveWeapons() {
 #ifdef JA2BETAVERSION
   SGPRect CenteringRect = {0, 0, 639, 479};
   INT32 i, iErrorDialog;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 iNumInvalid = 0;
 
   for (i = gTacticalStatus.Team[ENEMY_TEAM].bFirstID; i <= gTacticalStatus.Team[ENEMY_TEAM].bLastID;
@@ -109,7 +109,7 @@ UINT8 NumHostilesInSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
     }
   } else {
     SECTORINFO *pSector;
-    GROUP *pGroup;
+    struct GROUP *pGroup;
 
     // Count stationary hostiles
     pSector = &SectorInfo[SECTOR(sSectorX, sSectorY)];
@@ -145,7 +145,7 @@ UINT8 NumEnemiesInAnySector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
     }
   } else {
     SECTORINFO *pSector;
-    GROUP *pGroup;
+    struct GROUP *pGroup;
 
     // Count stationary enemies
     pSector = &SectorInfo[SECTOR(sSectorX, sSectorY)];
@@ -167,7 +167,7 @@ UINT8 NumEnemiesInAnySector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
 
 UINT8 NumEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
   SECTORINFO *pSector;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   UINT8 ubNumTroops;
   Assert(sSectorX >= 1 && sSectorX <= 16);
   Assert(sSectorY >= 1 && sSectorY <= 16);
@@ -206,7 +206,7 @@ UINT8 NumStationaryEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
 }
 
 UINT8 NumMobileEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   SECTORINFO *pSector;
   UINT8 ubNumTroops;
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -233,7 +233,7 @@ UINT8 NumMobileEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
 
 void GetNumberOfMobileEnemiesInSector(INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAdmins,
                                       UINT8 *pubNumTroops, UINT8 *pubNumElites) {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   SECTORINFO *pSector;
   Assert(sSectorX >= 1 && sSectorX <= 16);
   Assert(sSectorY >= 1 && sSectorY <= 16);
@@ -288,7 +288,7 @@ void GetNumberOfEnemiesInSector(INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAdm
 }
 
 void EndTacticalBattleForEnemy() {
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   INT32 i, iNumMilitia = 0, iNumEnemies = 0;
 
   // Clear enemies in battle for all stationary groups in the sector.
@@ -350,7 +350,7 @@ void EndTacticalBattleForEnemy() {
 UINT8 NumFreeEnemySlots() {
   UINT8 ubNumFreeSlots = 0;
   INT32 i;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   // Count the number of free enemy slots.  It is possible to have multiple groups exceed the
   // maximum.
   for (i = gTacticalStatus.Team[ENEMY_TEAM].bFirstID; i <= gTacticalStatus.Team[ENEMY_TEAM].bLastID;
@@ -366,8 +366,8 @@ UINT8 NumFreeEnemySlots() {
 // in global focus (gWorldSectorX/Y)
 BOOLEAN PrepareEnemyForSectorBattle() {
   SECTORINFO *pSector;
-  GROUP *pGroup;
-  SOLDIERTYPE *pSoldier;
+  struct GROUP *pGroup;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubNumAdmins, ubNumTroops, ubNumElites;
   UINT8 ubTotalAdmins, ubTotalElites, ubTotalTroops;
   UINT8 ubStationaryEnemies;
@@ -646,7 +646,7 @@ BOOLEAN PrepareEnemyForUndergroundBattle() {
 }
 
 // The queen AI layer must process the event by subtracting forces, etc.
-void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
+void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
   INT32 iNumEnemiesInSector;
   SECTORINFO *pSector;
   CHAR16 str[128];
@@ -686,7 +686,7 @@ void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
     return;
   // we are recording an enemy death
   if (pSoldier->ubGroupID) {  // The enemy was in a mobile group
-    GROUP *pGroup;
+    struct GROUP *pGroup;
     pGroup = GetGroup(pSoldier->ubGroupID);
     if (!pGroup) {
 #ifdef JA2BETAVERSION
@@ -701,9 +701,9 @@ void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
     if (pGroup->fPlayer) {
 #ifdef JA2BETAVERSION
       CHAR16 str[256];
-      swprintf(str,
+      swprintf(str, ARR_SIZE(str),
                L"Attempting to process player group thinking it's an enemy group in "
-               L"ProcessQueenCmdImplicationsOfDeath()",
+               L"ProcessQueenCmdImplicationsOfDeath(), %d",
                pSoldier->ubGroupID);
       DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
 #endif
@@ -714,7 +714,7 @@ void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
 #ifdef JA2BETAVERSION
         if (!pGroup->pEnemyGroup->ubNumElites) {
           swprintf(
-              str,
+              str, ARR_SIZE(str),
               L"Enemy elite killed with ubGroupID of %d, but the group doesn't contain elites!",
               pGroup->ubGroupID);
           DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
@@ -744,7 +744,7 @@ void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
 #ifdef JA2BETAVERSION
         if (!pGroup->pEnemyGroup->ubNumTroops) {
           swprintf(
-              str,
+              str, ARR_SIZE(str),
               L"Enemy troop killed with ubGroupID of %d, but the group doesn't contain elites!",
               pGroup->ubGroupID);
           DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
@@ -773,7 +773,7 @@ void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
       case SOLDIER_CLASS_ADMINISTRATOR:
 #ifdef JA2BETAVERSION
         if (!pGroup->pEnemyGroup->ubNumAdmins) {
-          swprintf(str,
+          swprintf(str, ARR_SIZE(str),
                    L"Enemy administrator killed with ubGroupID of %d, but the group doesn't "
                    L"contain elites!",
                    pGroup->ubGroupID);
@@ -1044,7 +1044,7 @@ void ProcessQueenCmdImplicationsOfDeath(SOLDIERTYPE *pSoldier) {
 void AddPossiblePendingEnemiesToBattle() {
   UINT8 ubSlots, ubNumAvailable;
   UINT8 ubNumElites, ubNumTroops, ubNumAdmins;
-  GROUP *pGroup;
+  struct GROUP *pGroup;
   if (!gfPendingEnemies) {  // Optimization.  No point in checking if we know that there aren't any
                             // more enemies that can
     // be added to this battle.  This changes whenever a new enemy group arrives at the scene.
@@ -1127,7 +1127,7 @@ void AddPossiblePendingEnemiesToBattle() {
 
 void NotifyPlayersOfNewEnemies() {
   INT32 iSoldiers, iChosenSoldier, i;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fIgnoreBreath = FALSE;
 
   iSoldiers = 0;
@@ -1171,9 +1171,9 @@ void NotifyPlayersOfNewEnemies() {
   }
 }
 
-void AddEnemiesToBattle(GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ubNumAdmins,
+void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ubNumAdmins,
                         UINT8 ubNumTroops, UINT8 ubNumElites, BOOLEAN fMagicallyAppeared) {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   MAPEDGEPOINTINFO MapEdgepointInfo;
   UINT8 ubCurrSlot;
   UINT8 ubTotalSoldiers;
@@ -1439,7 +1439,7 @@ void EndCaptureSequence() {
   }
 }
 
-void EnemyCapturesPlayerSoldier(SOLDIERTYPE *pSoldier) {
+void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
   INT32 i;
   WORLDITEM WorldItem;
   BOOLEAN fMadeCorpse;
@@ -1522,7 +1522,7 @@ void EnemyCapturesPlayerSoldier(SOLDIERTYPE *pSoldier) {
         WorldItem.bVisible = FALSE;
         WorldItem.bRenderZHeightAboveLevel = 0;
 
-        memcpy(&(WorldItem.o), &pSoldier->inv[i], sizeof(OBJECTTYPE));
+        memcpy(&(WorldItem.o), &pSoldier->inv[i], sizeof(struct OBJECTTYPE));
 
         AddWorldItemsToUnLoadedSector(
             13, 9, 0, sAlmaCaptureItemsGridNo[gStrategicStatus.ubNumCapturedForRescue], 1,
@@ -1555,7 +1555,7 @@ void EnemyCapturesPlayerSoldier(SOLDIERTYPE *pSoldier) {
         WorldItem.bVisible = FALSE;
         WorldItem.bRenderZHeightAboveLevel = 0;
 
-        memcpy(&(WorldItem.o), &pSoldier->inv[i], sizeof(OBJECTTYPE));
+        memcpy(&(WorldItem.o), &pSoldier->inv[i], sizeof(struct OBJECTTYPE));
 
         AddWorldItemsToUnLoadedSector(
             7, 14, 0, sInterrogationItemGridNo[gStrategicStatus.ubNumCapturedForRescue], 1,
@@ -1686,7 +1686,7 @@ BOOLEAN PlayerSectorDefended(UINT8 ubSectorID) {
 
 // Assumes gTacticalStatus.fEnemyInSector
 BOOLEAN OnlyHostileCivsInSector() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 i;
   BOOLEAN fHostileCivs = FALSE;
 

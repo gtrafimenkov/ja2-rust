@@ -26,6 +26,8 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Screens.h"
@@ -36,13 +38,12 @@
 #include "Tactical/Interface.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/Overhead.h"
+#include "Tactical/SoldierControl.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/Cursors.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
@@ -297,7 +298,7 @@ UINT32 InitScreenHandle(void) {
     mprintf(10, 430, L"%s", zBuildInfo);
 
 #ifdef _DEBUG
-    mprintf(10, 440, L"SOLDIERTYPE: %d bytes", sizeof(SOLDIERTYPE));
+    mprintf(10, 440, L"struct SOLDIERTYPE: %d bytes", sizeof(struct SOLDIERTYPE));
 #endif
 
     InvalidateScreen();
@@ -370,7 +371,7 @@ UINT32 PalEditScreenHandle(void) {
 UINT32 PalEditScreenShutdown(void) { return (TRUE); }
 
 void PalEditRenderHook() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (gusSelectedSoldier != NO_SOLDIER) {
     // Set to current
@@ -385,7 +386,7 @@ void PalEditRenderHook() {
 
 BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
   UINT8 ubType;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   UINT8 ubPaletteRep;
   UINT32 cnt;
   UINT8 ubStartRep = 0;
@@ -632,7 +633,7 @@ UINT32 SexScreenHandle(void) {
   static INT8 bCurFrame = 0;
   static UINT32 uiTimeOfLastUpdate = 0, uiTime;
   ETRLEObject *pTrav;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   INT16 sX, sY;
 
   // OK, Clear screen and show smily face....
@@ -892,7 +893,7 @@ UINT32 DemoExitScreenHandle(void) {
   static BOOLEAN gfFastAnim = FALSE;
   static BOOLEAN gfPrevFastAnim = FALSE;
 
-  static MOUSE_REGION BackRegion;
+  static struct MOUSE_REGION BackRegion;
   InputAtom InputEvent;
 
   gfPrevFastAnim = gfFastAnim;

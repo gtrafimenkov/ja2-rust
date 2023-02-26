@@ -38,8 +38,8 @@ extern BOOLEAN gfFadeOut;
 // These functions shouldn't be used anywhere else...
 extern BOOLEAN GameEventsPending(UINT32 uiAdjustment);
 extern void ProcessPendingGameEvents(UINT32 uiAdjustment, UINT8 ubWarpCode);
-void PauseOfClockBtnCallback(MOUSE_REGION* pRegion, INT32 iReason);
-void ScreenMaskForGamePauseBtnCallBack(MOUSE_REGION* pRegion, INT32 iReason);
+void PauseOfClockBtnCallback(struct MOUSE_REGION* pRegion, INT32 iReason);
+void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 
 void CreateDestroyScreenMaskForPauseGame(void);
 
@@ -59,8 +59,8 @@ UINT32 guiTimeCurrentSectorWasLastLoaded = 0;
 BOOLEAN gfJustFinishedAPause = FALSE;
 
 // clock mouse region
-MOUSE_REGION gClockMouseRegion;
-MOUSE_REGION gClockScreenMaskMouseRegion;
+struct MOUSE_REGION gClockMouseRegion;
+struct MOUSE_REGION gClockScreenMaskMouseRegion;
 void AdvanceClock(UINT8 ubWarpCode);
 
 extern BOOLEAN fMapScreenBottomDirty;
@@ -839,7 +839,7 @@ void RemoveMouseRegionForPauseOfClock(void) {
   }
 }
 
-void PauseOfClockBtnCallback(MOUSE_REGION* pRegion, INT32 iReason) {
+void PauseOfClockBtnCallback(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     HandlePlayerPauseUnPauseOfGame();
   }
@@ -922,7 +922,7 @@ void CreateDestroyScreenMaskForPauseGame(void) {
   }
 }
 
-void ScreenMaskForGamePauseBtnCallBack(MOUSE_REGION* pRegion, INT32 iReason) {
+void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // unpause the game
     HandlePlayerPauseUnPauseOfGame();

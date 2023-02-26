@@ -18,10 +18,12 @@
 #include "Editor/ItemStatistics.h"
 #include "Editor/SectorSummary.h"
 #include "JAScreens.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
+#include "SGP/Video.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Keys.h"
 #include "Tactical/MapInformation.h"
@@ -35,14 +37,16 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldDat.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/Text.h"
 #include "Utils/TextInput.h"
+#include "Utils/TimerControl.h"
 #include "Utils/WordWrap.h"
 
 void RenderEditorInfo();
 
-extern ITEM_POOL *gpItemPool;
+extern struct ITEM_POOL *gpItemPool;
 
 // editor icon storage vars
 INT32 giEditMercDirectionIcons[2];
@@ -55,10 +59,10 @@ UINT32 guiExclamation;
 UINT32 guiKeyImage;
 
 // editor Mouseregion storage vars
-MOUSE_REGION TerrainTileButtonRegion[NUM_TERRAIN_TILE_REGIONS];
-MOUSE_REGION ItemsRegion;
-MOUSE_REGION MercRegion;
-MOUSE_REGION EditorRegion;
+struct MOUSE_REGION TerrainTileButtonRegion[NUM_TERRAIN_TILE_REGIONS];
+struct MOUSE_REGION ItemsRegion;
+struct MOUSE_REGION MercRegion;
+struct MOUSE_REGION EditorRegion;
 
 void EnableEditorRegion(INT8 bRegionID) {
   switch (bRegionID) {
@@ -643,7 +647,7 @@ void RenderMapEntryPointsAndLights() {
   }
 }
 
-void BuildTriggerName(OBJECTTYPE *pItem, STR16 szItemName) {
+void BuildTriggerName(struct OBJECTTYPE *pItem, STR16 szItemName) {
   if (pItem->usItem == SWITCH) {
     if (pItem->bFrequency == PANIC_FREQUENCY)
       swprintf(szItemName, L"Panic Trigger1");
@@ -715,9 +719,9 @@ void RenderDoorLockInfo() {
 
 void RenderSelectedItemBlownUp() {
   UINT32 uiVideoObjectIndex;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   INT16 sScreenX, sScreenY, xp, yp;
-  ITEM_POOL *pItemPool;
+  struct ITEM_POOL *pItemPool;
   CHAR16 szItemName[SIZE_ITEM_NAME];
   INT32 i;
   INT16 sWidth, sHeight, sOffsetX, sOffsetY;

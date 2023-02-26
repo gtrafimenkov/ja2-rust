@@ -485,13 +485,13 @@ INT32 giXToCloseVideoConfButton;
 
 // Mouse Regions
 // Clicking on guys Face
-MOUSE_REGION gSelectedFaceRegion;
-void SelectFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
-void SelectFaceMovementRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedFaceRegion;
+void SelectFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // Clicking To shut merc up
-MOUSE_REGION gSelectedShutUpMercRegion;
-void SelectShutUpMercRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason);
+struct MOUSE_REGION gSelectedShutUpMercRegion;
+void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 //*******************************************
 //
@@ -853,9 +853,9 @@ BOOLEAN RenderAIMMembersTopLevel() {
 }
 
 BOOLEAN RenderAIMMembers() {
-  HVOBJECT hStatsHandle;
-  HVOBJECT hPriceHandle;
-  HVOBJECT hWeaponBoxHandle;
+  struct VObject *hStatsHandle;
+  struct VObject *hPriceHandle;
+  struct VObject *hWeaponBoxHandle;
   UINT16 x, uiPosX;
   wchar_t wTemp[50];
 
@@ -983,7 +983,7 @@ BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 usLo
   return (TRUE);
 }
 
-void SelectFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX;
@@ -996,7 +996,7 @@ void SelectFaceRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SelectFaceMovementRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     gfAimMemberDisplayFaceHelpText = FALSE;
     gfRedrawScreen = TRUE;
@@ -1237,7 +1237,7 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
   INT16 PosX, PosY, sCenX, sCenY;
   UINT16 usItem;
   INVTYPE *pItem;
-  HVOBJECT hVObject;
+  struct VObject *hVObject;
   UINT32 usHeight, usWidth;
   ETRLEObject *pTrav;
   CHAR16 gzItemName[SIZE_ITEM_NAME];
@@ -1411,12 +1411,12 @@ void BtnNextButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 BOOLEAN DisplayMercsFace() {
-  HVOBJECT hFaceHandle;
-  HVOBJECT hPortraitHandle;
+  struct VObject *hFaceHandle;
+  struct VObject *hPortraitHandle;
   STR sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
   VOBJECT_DESC VObjectDesc;
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
 
   // See if the merc is currently hired
   pSoldier = FindSoldierByProfileID(gbCurrentSoldier, TRUE);
@@ -1918,7 +1918,7 @@ BOOLEAN DisplayVideoConferencingDisplay() {
 }
 
 BOOLEAN DisplayMercsVideoFace() {
-  HVOBJECT hTerminalHandle;
+  struct VObject *hTerminalHandle;
   STR sFaceLoc = "FACES\\";
 
   // Get and Blt Terminal Frame
@@ -1992,7 +1992,7 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
 UINT32 DisplayMercChargeAmount() {
   wchar_t wTemp[50];
   wchar_t wDollarTemp[50];
-  HVOBJECT hImageHandle;
+  struct VObject *hImageHandle;
 
   if (gubVideoConferencingMode != AIM_VIDEO_HIRE_MERC_MODE) return (0);
 
@@ -2050,7 +2050,7 @@ UINT32 DisplayMercChargeAmount() {
 BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, UINT16 usPosX,
                                     UINT16 usPosY, UINT8 ubData) {
   VOBJECT_DESC VObjectDesc;
-  HVOBJECT hPopupBoxHandle;
+  struct VObject *hPopupBoxHandle;
   static UINT16 usPopUpBoxPosX, usPopUpBoxPosY;
   static wchar_t sPopUpString1[400], sPopUpString2[400];
   static BOOLEAN fPopUpBoxActive = FALSE;
@@ -2113,7 +2113,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
     } break;
 
     case AIM_POPUP_DISPLAY: {
-      HVOBJECT hPopupBoxHandle;
+      struct VObject *hPopupBoxHandle;
       UINT16 usTempPosY = usPopUpBoxPosY;
 
       if (gubPopUpBoxAction != AIM_POPUP_DISPLAY) return (FALSE);
@@ -2438,7 +2438,7 @@ void DisplayTextForMercFaceVideoPopUp(STR16 pString) {
   gfRedrawScreen = TRUE;
 }
 
-void SelectShutUpMercRegionCallBack(MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectShutUpMercRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   BOOLEAN fInCallBack = TRUE;
 
   if (fInCallBack) {
@@ -2584,7 +2584,7 @@ BOOLEAN CanMercBeHired() {
 
 BOOLEAN DisplaySnowBackground() {
   UINT32 uiCurrentTime = 0;
-  HVOBJECT hSnowHandle;
+  struct VObject *hSnowHandle;
   UINT8 ubCount;
 
   uiCurrentTime = GetJA2Clock();
@@ -2774,7 +2774,7 @@ void HandleVideoDistortion() {
 // returns true when done. else false
 UINT8 DisplayTransparentSnow(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxImages,
                              BOOLEAN bForward) {
-  HVOBJECT hFuzzLineHandle;
+  struct VObject *hFuzzLineHandle;
   static INT8 bCount = 0;
   UINT32 uiCurrentTime = 0;
   static UINT32 uiLastTime = 0;
@@ -2820,7 +2820,7 @@ UINT8 DisplayTransparentSnow(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMax
 
 // returns true when done. else false
 UINT8 DisplayDistortionLine(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxImages) {
-  HVOBJECT hFuzzLineHandle;
+  struct VObject *hFuzzLineHandle;
   static UINT8 ubCount = 255;
   UINT32 uiCurrentTime = 0;
   static UINT32 uiLastTime = 0;
@@ -3041,7 +3041,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
 
     if (gfJustSwitchedVideoConferenceMode) {
       UINT32 uiVideoBackgroundGraphic;
-      HVOBJECT hImageHandle;
+      struct VObject *hImageHandle;
 
       // load the answering machine graphic and add it
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -3262,7 +3262,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
 
   if (gubVideoConferencingMode == AIM_VIDEO_POPDOWN_MODE) {
     UINT32 uiVideoBackgroundGraphic;
-    HVOBJECT hImageHandle;
+    struct VObject *hImageHandle;
 
     if (gubPopUpBoxAction == AIM_POPUP_DISPLAY) {
       return (TRUE);
@@ -3543,7 +3543,7 @@ BOOLEAN HandleAnsweringMachineMessage()
 /*
 BOOLEAN DisplayAnimatedAnsweringMachineMsg( BOOLEAN fInit, UINT8 ubNumSubImages)
 {
-//  HVOBJECT	hImageHandle;
+//  struct VObject*	hImageHandle;
         static UINT8	ubSubImage=0;
         static UINT32 uiLastTime=0;
         UINT32 uiCurTime = GetJA2Clock();
@@ -4065,7 +4065,7 @@ void DemoHiringOfMercs() {
 
 void DisplayPopUpBoxExplainingMercArrivalLocationAndTime() {
   CHAR16 szLocAndTime[512];
-  SOLDIERTYPE *pSoldier = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL;
   CHAR16 zTimeString[128];
   CHAR16 zSectorIDString[512];
   UINT32 uiHour;

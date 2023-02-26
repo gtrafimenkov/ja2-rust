@@ -31,6 +31,7 @@
 #include "Tactical/Squads.h"
 #include "Tactical/TacticalSave.h"
 #include "TacticalAI/NPC.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
 
@@ -319,7 +320,7 @@ void BringupMeanwhileBox() {
 
 #ifdef JA2TESTVERSION
   swprintf(
-      zStr,
+      zStr, ARR_SIZE(zStr),
       L"Meanwhile..... ( %S : Remember to make sure towns are controlled if required by script )",
       gzMeanwhileStr[gCurrentMeanwhileDef.ubMeanwhileID]);
 #else
@@ -783,7 +784,7 @@ void LocateMeanWhileGrid(void) {
 }
 
 void LocateToMeanwhileCharacter() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (gfInMeanwhile) {
     pSoldier = FindSoldierByProfileID(gCurrentMeanwhileDef.ubNPCNumber, FALSE);

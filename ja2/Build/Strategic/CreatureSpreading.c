@@ -380,7 +380,7 @@ void InitCreatureQuest() {
 #ifdef JA2BETAVERSION
     {
       CHAR16 str[512];
-      swprintf(str,
+      swprintf(str, ARR_SIZE(str),
                L"Creature quest never chose a lair and won't infect any mines.  Infectible mines = "
                L"%d, iRandom = %d.  "
                L"This isn't a bug if you are not receiving income from any mines.",
@@ -571,7 +571,7 @@ void DecayCreatures() {  // when the queen dies, we need to kill off the creatur
 void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 ubNumAdultMales,
                           UINT8 ubNumAdultFemales) {
   INT32 iRandom;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   MAPEDGEPOINTINFO MapEdgepointInfo;
   UINT8 bDesiredDirection = 0;
   UINT8 ubCurrSlot = 0;
@@ -1039,7 +1039,7 @@ void DetermineCreatureTownCompositionBasedOnTacticalInformation(UINT8 *pubNumCre
                                                                 UINT8 *pubNumAdultFemales) {
   SECTORINFO *pSector;
   INT32 i;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
   *pubNumCreatures = 0;
@@ -1397,7 +1397,7 @@ void ForceCreaturesToAvoidMineTemporarily(UINT8 ubMineIndex) {
 
 BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   CREATURE_DIRECTIVE *curr;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   INT32 i;
   INT16 sSectorX, sSectorY;
   INT8 bSectorZ;

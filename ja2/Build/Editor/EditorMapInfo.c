@@ -11,7 +11,6 @@
 #include "Editor/EditorUndo.h"
 #include "Editor/ItemStatistics.h"
 #include "Editor/SelectWin.h"
-#include "SGP/ButtonSystem.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
@@ -27,10 +26,9 @@
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/MapInformation.h"
-#include "Tactical/Overhead.h"  //GetSoldier
+#include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"
-#include "Tactical/SoldierCreate.h"  //The stuff that connects the editor generated information
 #include "Tactical/SoldierInitList.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/SoldierProfileType.h"
@@ -38,7 +36,6 @@
 #include "TileEngine/Environment.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/Lighting.h"
-#include "TileEngine/RenderWorld.h"
 #include "TileEngine/SimpleRenderUtils.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"

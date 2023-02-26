@@ -4,7 +4,8 @@
 // header for town militia strategic control module
 
 #include "SGP/Types.h"
-#include "Tactical/SoldierControl.h"
+
+struct SOLDIERTYPE;
 
 // how many militia of all ranks can be in any one sector at once
 #define MAX_ALLOWABLE_MILITIA_PER_SECTOR 20
@@ -19,7 +20,7 @@
 #define MIN_RATING_TO_TRAIN_TOWN 20
 
 // this handles what happens when a new militia unit is finishes getting trained
-void TownMilitiaTrainingCompleted(SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY);
+void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY);
 
 // feed this a SOLDIER_CLASS_, it will return you a _MITILIA rank, or -1 if the guy's not militia
 INT8 SoldierClassToMilitiaRank(UINT8 ubSoldierClass);
@@ -49,10 +50,10 @@ UINT8 MilitiaInSectorOfRank(INT16 sMapX, INT16 sMapY, UINT8 ubRank);
 BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
 
 // tell player how much it will cost
-void HandleInterfaceMessageForCostOfTrainingMilitia(SOLDIERTYPE *pSoldier);
+void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier);
 
 // continue training?
-void HandleInterfaceMessageForContinuingTrainingMilitia(SOLDIERTYPE *pSoldier);
+void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSoldier);
 
 // call this when the sector changes...
 void HandleMilitiaStatusInCurrentMapBeforeLoadingNewMap(void);
@@ -69,7 +70,7 @@ BOOLEAN IsSAMSiteFullOfMilitia(INT16 sSectorX, INT16 sSectorY);
 void HandleContinueOfTownTraining(void);
 
 // handle completion of assignment byt his soldier too and inform the player
-void HandleCompletionOfTownTrainingByGroupWithTrainer(SOLDIERTYPE *pTrainer);
+void HandleCompletionOfTownTrainingByGroupWithTrainer(struct SOLDIERTYPE *pTrainer);
 
 // clear the list of training completed sectors
 void ClearSectorListForCompletedTrainingOfMilitia(void);

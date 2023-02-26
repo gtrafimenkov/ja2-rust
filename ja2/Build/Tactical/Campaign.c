@@ -51,7 +51,7 @@ UINT8 CalcImportantSectorControl(void);
 
 // give pSoldier usNumChances to improve ubStat.  If it's from training, it doesn't count towards
 // experience level gain
-void StatChange(SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances, UINT8 ubReason) {
+void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances, UINT8 ubReason) {
   Assert(pSoldier != NULL);
   Assert(pSoldier->bActive);
 
@@ -358,14 +358,14 @@ void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumCh
 }
 
 // convert hired mercs' stats subpoint changes into actual point changes where warranted
-void UpdateStats(SOLDIERTYPE *pSoldier) {
+void UpdateStats(struct SOLDIERTYPE *pSoldier) {
   ProcessUpdateStats(&(gMercProfiles[pSoldier->ubProfile]), pSoldier);
 }
 
 // UpdateStats version for mercs not currently on player's team
 void ProfileUpdateStats(MERCPROFILESTRUCT *pProfile) { ProcessUpdateStats(pProfile, NULL); }
 
-void ChangeStat(MERCPROFILESTRUCT *pProfile, SOLDIERTYPE *pSoldier, UINT8 ubStat,
+void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, UINT8 ubStat,
                 INT16 sPtsChanged) {
   // this function changes the stat a given amount...
   INT16 *psStatGainPtr = NULL;
@@ -688,7 +688,7 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, SOLDIERTYPE *pSoldier, UINT8 ubStat
 }
 
 // pSoldier may be NULL!
-void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, SOLDIERTYPE *pSoldier) {
+void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier) {
   // this function will run through the soldier's profile and update their stats based on any
   // accumulated gain pts.
   UINT8 ubStat = 0;
@@ -890,7 +890,7 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, SOLDIERTYPE *pSoldier) {
 
 void HandleAnyStatChangesAfterAttack(void) {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // must check everyone on player's team, not just the shooter
   for (cnt = 0, pSoldier = MercPtrs[0]; cnt <= gTacticalStatus.Team[MercPtrs[0]->bTeam].bLastID;
@@ -1321,7 +1321,7 @@ void TestDumpStatChanges(void) {
 void AwardExperienceBonusToActiveSquad(UINT8 ubExpBonusType) {
   UINT16 usXPs = 0;
   UINT8 ubGuynum;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   Assert(ubExpBonusType < NUM_EXP_BONUS_TYPES);
 

@@ -21,7 +21,7 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/TileAnimation.h"
-#include "TileEngine/WorldDef.h"
+#include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 

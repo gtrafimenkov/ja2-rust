@@ -13,6 +13,8 @@
 #include "SGP/SoundMan.h"
 #include "SGP/Timer.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "platform.h"
 

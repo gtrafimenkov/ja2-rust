@@ -3,12 +3,14 @@
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
+#include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "Utils/FontControl.h"
 #include "Utils/MusicControl.h"
+#include "Utils/TimerControl.h"
 
 double rStart, rEnd;
 double rActual;

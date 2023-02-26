@@ -58,7 +58,7 @@ CUSTOMIZABLE_TIMER_CALLBACK gpCustomizableTimerCallback = NULL;
 
 // GLOBALS FOR CALLBACK
 UINT32 gCNT;
-SOLDIERTYPE *gPSOLDIER;
+struct SOLDIERTYPE *gPSOLDIER;
 
 // GLobal for displaying time diff ( DIAG )
 UINT32 guiClockDiff = 0;

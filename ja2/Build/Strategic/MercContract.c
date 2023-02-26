@@ -33,28 +33,28 @@
 #include "Tactical/Squads.h"
 #include "Tactical/TacticalSave.h"
 #include "Tactical/Vehicles.h"
-#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 
-void CalculateMedicalDepositRefund(SOLDIERTYPE *pSoldier);
-void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(SOLDIERTYPE *pSoldier,
+void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier);
+void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,
                                                             BOOLEAN fAddRehireButton);
 void MercDepartEquipmentBoxCallBack(UINT8 bExitValue);
-BOOLEAN HandleFiredDeadMerc(SOLDIERTYPE *pSoldier);
-void HandleExtendMercsContract(SOLDIERTYPE *pSoldier);
-void HandleSoldierLeavingWithLowMorale(SOLDIERTYPE *pSoldier);
-void HandleSoldierLeavingForAnotherContract(SOLDIERTYPE *pSoldier);
-// BOOLEAN SoldierWantsToDelayRenewalOfContract( SOLDIERTYPE *pSoldier );
+BOOLEAN HandleFiredDeadMerc(struct SOLDIERTYPE *pSoldier);
+void HandleExtendMercsContract(struct SOLDIERTYPE *pSoldier);
+void HandleSoldierLeavingWithLowMorale(struct SOLDIERTYPE *pSoldier);
+void HandleSoldierLeavingForAnotherContract(struct SOLDIERTYPE *pSoldier);
+// BOOLEAN SoldierWantsToDelayRenewalOfContract( struct SOLDIERTYPE *pSoldier );
 void HandleNotifyPlayerCantAffordInsurance(void);
-void HandleNotifyPlayerCanAffordInsurance(SOLDIERTYPE *pSoldier, UINT8 ubLength, INT32 iCost);
+void HandleNotifyPlayerCanAffordInsurance(struct SOLDIERTYPE *pSoldier, UINT8 ubLength,
+                                          INT32 iCost);
 void ExtendMercInsuranceContractCallBack(UINT8 bExitValue);
-void HandleUniqueEventWhenPlayerLeavesTeam(SOLDIERTYPE *pSoldier);
+void HandleUniqueEventWhenPlayerLeavesTeam(struct SOLDIERTYPE *pSoldier);
 
 UINT32 uiContractTimeMode = 0;
 
-SOLDIERTYPE *pLeaveSoldier = NULL;
+struct SOLDIERTYPE *pLeaveSoldier = NULL;
 
 BOOLEAN fEnterMapDueToContract = FALSE;
 extern BOOLEAN fOneFrame;
@@ -66,10 +66,10 @@ extern BOOLEAN gfFirstMercSayingQuoteWillLeaveNoMatterWhat;
 extern CHAR16 gzUserDefinedButton1[128];
 extern CHAR16 gzUserDefinedButton2[128];
 
-SOLDIERTYPE *pContractReHireSoldier = NULL;
+struct SOLDIERTYPE *pContractReHireSoldier = NULL;
 
 static UINT8 gubContractLength = 0;  // used when extending a mercs insurance contract
-SOLDIERTYPE *gpInsuranceSoldier = NULL;
+struct SOLDIERTYPE *gpInsuranceSoldier = NULL;
 
 // The values need to be saved!
 CONTRACT_NEWAL_LIST_NODE ContractRenewalList[20];
@@ -118,7 +118,7 @@ BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile) {
 
 void BeginContractRenewalSequence() {
   INT32 cnt;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
   BOOLEAN fFoundAtLeastOne = FALSE;
 
   if (ubNumContractRenewals > 0) {
@@ -161,7 +161,7 @@ void BeginContractRenewalSequence() {
 }
 
 void HandleContractRenewalSequence() {
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   if (gfContractRenewalSquenceOn) {
     // Should we stop now?
@@ -241,7 +241,7 @@ void EndCurrentContractRenewal() {
 }
 
 void HandleMercIsWillingToRenew(UINT8 ubID) {
-  SOLDIERTYPE *pSoldier = MercPtrs[ubID];
+  struct SOLDIERTYPE *pSoldier = MercPtrs[ubID];
 
   // We wish to lock interface
   SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 1, MAP_SCREEN, 0, 0, 0);
@@ -260,7 +260,7 @@ void HandleMercIsWillingToRenew(UINT8 ubID) {
 }
 
 void HandleMercIsNotWillingToRenew(UINT8 ubID) {
-  SOLDIERTYPE *pSoldier = MercPtrs[ubID];
+  struct SOLDIERTYPE *pSoldier = MercPtrs[ubID];
 
   // We wish to lock interface
   SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_LOCK_INTERFACE, 1, MAP_SCREEN, 0, 0, 0);
@@ -277,7 +277,7 @@ void HandleMercIsNotWillingToRenew(UINT8 ubID) {
 }
 
 // This is used only to EXTEND the contract of an AIM merc already on the team
-BOOLEAN MercContractHandling(SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction) {
+BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction) {
   INT32 iContractCharge = 0;
   INT32 iContractLength = 0;
   UINT8 ubHistoryContractType = 0;
@@ -415,7 +415,7 @@ BOOLEAN MercContractHandling(SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction) {
   return (TRUE);
 }
 
-BOOLEAN WillMercRenew(SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
+BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   UINT8 i;
   INT8 bMercID;
   BOOLEAN fBuddyAround = FALSE;
@@ -423,7 +423,7 @@ BOOLEAN WillMercRenew(SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   UINT16 usBuddyQuote = 0;
   UINT16 usReasonQuote = 0;
   BOOLEAN fSayPrecedent = FALSE;
-  SOLDIERTYPE *pHated;
+  struct SOLDIERTYPE *pHated;
 
   if (pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC) return (FALSE);
 
@@ -617,7 +617,7 @@ BOOLEAN WillMercRenew(SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   }
 }
 
-void HandleSoldierLeavingWithLowMorale(SOLDIERTYPE *pSoldier) {
+void HandleSoldierLeavingWithLowMorale(struct SOLDIERTYPE *pSoldier) {
   if (MercThinksHisMoraleIsTooLow(pSoldier)) {
     // this will cause him give us lame excuses for a while until he gets over it
     // 3-6 days (but the first 1-2 days of that are spent "returning" home)
@@ -625,7 +625,7 @@ void HandleSoldierLeavingWithLowMorale(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleSoldierLeavingForAnotherContract(SOLDIERTYPE *pSoldier) {
+void HandleSoldierLeavingForAnotherContract(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->fSignedAnotherContract) {
     // merc goes to work elsewhere
     gMercProfiles[pSoldier->ubProfile].bMercStatus = MERC_WORKING_ELSEWHERE;
@@ -635,7 +635,7 @@ void HandleSoldierLeavingForAnotherContract(SOLDIERTYPE *pSoldier) {
 }
 
 /*
-BOOLEAN SoldierWantsToDelayRenewalOfContract( SOLDIERTYPE *pSoldier )
+BOOLEAN SoldierWantsToDelayRenewalOfContract( struct SOLDIERTYPE *pSoldier )
 {
 
         INT8 bTypeOfCurrentContract = 0; // what kind of contract the merc has..1 day, week or 2
@@ -680,7 +680,7 @@ player if( pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC ) return( FALSE 
 */
 
 // this is called once a day (daily update) for every merc working for the player
-void CheckIfMercGetsAnotherContract(SOLDIERTYPE *pSoldier) {
+void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiFullDaysRemaining = 0;
   INT32 iChance = 0;
 
@@ -725,7 +725,7 @@ void CheckIfMercGetsAnotherContract(SOLDIERTYPE *pSoldier) {
 }
 
 // for ubRemoveType pass in the enum from the .h, 	( MERC_QUIT, MERC_FIRED  )
-BOOLEAN BeginStrategicRemoveMerc(SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton) {
+BOOLEAN BeginStrategicRemoveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton) {
   InterruptTime();
   PauseGame();
   LockPauseState(8);
@@ -743,7 +743,7 @@ BOOLEAN BeginStrategicRemoveMerc(SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton
   return (TRUE);
 }
 
-BOOLEAN StrategicRemoveMerc(SOLDIERTYPE *pSoldier) {
+BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubHistoryCode = 0;
 
   if (gfInContractMenuFromRenewSequence) {
@@ -848,7 +848,7 @@ BOOLEAN StrategicRemoveMerc(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-void CalculateMedicalDepositRefund(SOLDIERTYPE *pSoldier) {
+void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
   INT32 iRefundAmount = 0;
 
   // if the merc didnt have any medical deposit, exit
@@ -893,7 +893,7 @@ void CalculateMedicalDepositRefund(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(SOLDIERTYPE *pSoldier,
+void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,
                                                             BOOLEAN fAddRehireButton) {
   // will tell player this character is leaving and ask where they want the equipment left
   CHAR16 sString[1024];
@@ -1062,7 +1062,7 @@ void MercDepartEquipmentBoxCallBack(UINT8 bExitValue) {
   return;
 }
 
-BOOLEAN HandleFiredDeadMerc(SOLDIERTYPE *pSoldier) {
+BOOLEAN HandleFiredDeadMerc(struct SOLDIERTYPE *pSoldier) {
   AddCharacterToDeadList(pSoldier);
 
 #if 0
@@ -1105,7 +1105,7 @@ BOOLEAN HandleFiredDeadMerc(SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-void HandleExtendMercsContract(SOLDIERTYPE *pSoldier) {
+void HandleExtendMercsContract(struct SOLDIERTYPE *pSoldier) {
   if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
     gfEnteringMapScreen = TRUE;
 
@@ -1133,7 +1133,7 @@ void HandleExtendMercsContract(SOLDIERTYPE *pSoldier) {
 
 void FindOutIfAnyMercAboutToLeaveIsGonnaRenew(void) {
   // find out is something was said
-  SOLDIERTYPE *pSoldier = NULL, *pSoldierWhoWillQuit = NULL;
+  struct SOLDIERTYPE *pSoldier = NULL, *pSoldierWhoWillQuit = NULL;
   INT32 iCounter = 0, iNumberOnTeam = 0;
   UINT8 ubPotentialMercs[20] = {0};
   UINT8 ubNumMercs = 0;
@@ -1222,7 +1222,8 @@ void HandleNotifyPlayerCantAffordInsurance(void) {
   DoScreenIndependantMessageBox(zMarksMapScreenText[9], MSG_BOX_FLAG_OK, NULL);
 }
 
-void HandleNotifyPlayerCanAffordInsurance(SOLDIERTYPE *pSoldier, UINT8 ubLength, INT32 iCost) {
+void HandleNotifyPlayerCanAffordInsurance(struct SOLDIERTYPE *pSoldier, UINT8 ubLength,
+                                          INT32 iCost) {
   CHAR16 sString[128];
   CHAR16 sStringA[32];
 
@@ -1261,7 +1262,7 @@ void ExtendMercInsuranceContractCallBack(UINT8 bExitValue) {
   gpInsuranceSoldier = NULL;
 }
 
-void HandleUniqueEventWhenPlayerLeavesTeam(SOLDIERTYPE *pSoldier) {
+void HandleUniqueEventWhenPlayerLeavesTeam(struct SOLDIERTYPE *pSoldier) {
   switch (pSoldier->ubProfile) {
     // When iggy leaves the players team,
     case IGGY:
@@ -1274,7 +1275,7 @@ void HandleUniqueEventWhenPlayerLeavesTeam(SOLDIERTYPE *pSoldier) {
   }
 }
 
-UINT32 GetHourWhenContractDone(SOLDIERTYPE *pSoldier) {
+UINT32 GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiArriveHour;
 
   // Get the arrival hour - that will give us when they arrived....
@@ -1285,7 +1286,7 @@ UINT32 GetHourWhenContractDone(SOLDIERTYPE *pSoldier) {
   return (uiArriveHour);
 }
 
-BOOLEAN ContractIsExpiring(SOLDIERTYPE *pSoldier) {
+BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCheckHour;
 
   // First at least make sure same day....
@@ -1302,7 +1303,7 @@ BOOLEAN ContractIsExpiring(SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-BOOLEAN ContractIsGoingToExpireSoon(SOLDIERTYPE *pSoldier) {
+BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier) {
   // get hour contract is going to expire....
   UINT32 uiCheckHour;
 

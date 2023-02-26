@@ -15,7 +15,7 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
 
-INT8 RTPlayerDecideAction(SOLDIERTYPE *pSoldier) {
+INT8 RTPlayerDecideAction(struct SOLDIERTYPE *pSoldier) {
   INT8 bAction = AI_ACTION_NONE;
 
   if (gTacticalStatus.fAutoBandageMode) {
@@ -32,7 +32,7 @@ INT8 RTPlayerDecideAction(SOLDIERTYPE *pSoldier) {
   return (bAction);
 }
 
-INT8 RTDecideAction(SOLDIERTYPE *pSoldier) {
+INT8 RTDecideAction(struct SOLDIERTYPE *pSoldier) {
   if (CREATURE_OR_BLOODCAT(pSoldier)) {
     return (CreatureDecideAction(pSoldier));
   } else if (pSoldier->ubBodyType == CROW) {
@@ -56,7 +56,7 @@ INT8 RTDecideAction(SOLDIERTYPE *pSoldier) {
   }
 }
 
-UINT16 RealtimeDelay(SOLDIERTYPE *pSoldier) {
+UINT16 RealtimeDelay(struct SOLDIERTYPE *pSoldier) {
   if (PTR_CIV_OR_MILITIA && !(pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP)) {
     return ((UINT16)REALTIME_CIV_AI_DELAY);
   } else if (CREATURE_OR_BLOODCAT(pSoldier) && !(pSoldier->bHunting)) {
@@ -74,7 +74,7 @@ UINT16 RealtimeDelay(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void RTHandleAI(SOLDIERTYPE *pSoldier) {
+void RTHandleAI(struct SOLDIERTYPE *pSoldier) {
 #ifdef AI_PROFILING
   INT32 iLoop;
 #endif

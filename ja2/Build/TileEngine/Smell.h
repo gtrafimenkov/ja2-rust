@@ -1,4 +1,6 @@
-#include "Tactical/SoldierControl.h"
+#include "SGP/Types.h"
+
+struct SOLDIERTYPE;
 
 #define HUMAN 0
 #define CREATURE_ON_FLOOR 0x01
@@ -17,8 +19,8 @@
 
 void DecaySmells(void);
 void DecayBloodAndSmells(UINT32 uiTime);
-void DropSmell(SOLDIERTYPE* pSoldier);
-void DropBlood(SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible);
+void DropSmell(struct SOLDIERTYPE* pSoldier);
+void DropBlood(struct SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible);
 void UpdateBloodGraphics(INT16 sGridNo, INT8 bLevel);
 void RemoveBlood(INT16 sGridNo, INT8 bLevel);
 void InternalDropBlood(INT16 sGridNo, INT8 bLevel, UINT8 ubType, UINT8 ubStrength, INT8 bVisible);

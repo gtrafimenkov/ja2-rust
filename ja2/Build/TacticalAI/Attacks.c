@@ -6,6 +6,7 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/PathAI.h"
 #include "Tactical/SkillCheck.h"
+#include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/SpreadBurst.h"
@@ -16,6 +17,9 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/Physics.h"
+#include "TileEngine/Structure.h"
+#include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileDef.h"
 
 extern INT16 DirIncrementer[8];
 
@@ -31,7 +35,7 @@ extern INT16 DirIncrementer[8];
 
 // this define should go in soldier control.h
 
-void LoadWeaponIfNeeded(SOLDIERTYPE *pSoldier) {
+void LoadWeaponIfNeeded(struct SOLDIERTYPE *pSoldier) {
   UINT16 usInHand;
   INT8 bPayloadPocket;
 
@@ -86,7 +90,7 @@ void LoadWeaponIfNeeded(SOLDIERTYPE *pSoldier) {
   }
 }
 
-void CalcBestShot(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
+void CalcBestShot(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
   UINT32 uiLoop;
   INT32 iAttackValue;
   INT32 iThreatValue;
@@ -94,7 +98,7 @@ void CalcBestShot(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
   INT32 iEstDamage;
   UINT8 ubRawAPCost, ubMinAPcost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
   UINT8 ubChanceToHit, ubChanceToGetThrough, ubChanceToReallyHit, ubBestChanceToHit = 0;
-  SOLDIERTYPE *pOpponent;
+  struct SOLDIERTYPE *pOpponent;
   UINT8 ubBurstAPs;
 
   ubBestChanceToHit = ubBestAimTime = ubChanceToHit = 0;
@@ -153,7 +157,7 @@ void CalcBestShot(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot) {
     if (ubChanceToGetThrough == 0) continue;  // next opponent
 
     if ((pSoldier->uiStatusFlags & SOLDIER_MONSTER) && (pSoldier->ubBodyType != QUEENMONSTER)) {
-      STRUCTURE_FILE_REF *pStructureFileRef;
+      struct STRUCTURE_FILE_REF *pStructureFileRef;
       UINT16 usAnimSurface;
 
       usAnimSurface = DetermineSoldierAnimationSurface(pSoldier, pSoldier->usUIMovementMode);
@@ -363,7 +367,7 @@ BOOLEAN CloseEnoughForGrenadeToss(INT16 sGridNo, INT16 sGridNo2) {
   return (TRUE);
 }
 
-void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
+void CalcBestThrow(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   // September 9, 1998: added code for LAWs (CJC)
   UINT8 ubLoop, ubLoop2;
   INT32 iAttackValue;
@@ -384,7 +388,7 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   INT8 bPayloadPocket;
   INT8 bMaxLeft, bMaxRight, bMaxUp, bMaxDown, bXOffset, bYOffset;
   INT8 bPersOL, bPublOL;
-  SOLDIERTYPE *pOpponent, *pFriend;
+  struct SOLDIERTYPE *pOpponent, *pFriend;
   static INT16 sExcludeTile[100];  // This array is for storing tiles that we have
   UINT8 ubNumExcludedTiles = 0;    // already considered, to prevent duplication of effort
   INT32 iTossRange;
@@ -942,14 +946,14 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   }
 }
 
-void CalcBestStab(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN fBladeAttack) {
+void CalcBestStab(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN fBladeAttack) {
   UINT32 uiLoop;
   INT32 iAttackValue;
   INT32 iThreatValue, iHitRate, iBestHitRate, iPercentBetter, iEstDamage;
   BOOLEAN fSurpriseStab;
   UINT8 ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
   UINT8 ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
-  SOLDIERTYPE *pOpponent;
+  struct SOLDIERTYPE *pOpponent;
   UINT16 usTrueMovementMode;
 
   InitAttackType(pBestStab);  // set all structure fields to defaults
@@ -1132,14 +1136,14 @@ void CalcBestStab(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN fBladeAt
   pSoldier->usUIMovementMode = usTrueMovementMode;
 }
 
-void CalcTentacleAttack(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
+void CalcTentacleAttack(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
   UINT32 uiLoop;
   INT32 iAttackValue;
   INT32 iThreatValue, iHitRate, iBestHitRate, iEstDamage;
   BOOLEAN fSurpriseStab;
   UINT8 ubRawAPCost, ubMinAPCost, ubMaxPossibleAimTime, ubAimTime, ubBestAimTime;
   UINT8 ubChanceToHit, ubChanceToReallyHit, ubBestChanceToHit = 0;
-  SOLDIERTYPE *pOpponent;
+  struct SOLDIERTYPE *pOpponent;
 
   InitAttackType(pBestStab);  // set all structure fields to defaults
 
@@ -1271,7 +1275,7 @@ void CalcTentacleAttack(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab) {
 UINT8 NumMercsCloseTo(INT16 sGridNo, UINT8 ubMaxDist) {
   INT8 bNumber = 0;
   UINT32 uiLoop;
-  SOLDIERTYPE *pSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
     pSoldier = MercSlots[uiLoop];
@@ -1286,7 +1290,8 @@ UINT8 NumMercsCloseTo(INT16 sGridNo, UINT8 ubMaxDist) {
   return (bNumber);
 }
 
-INT32 EstimateShotDamage(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ubChanceToHit) {
+INT32 EstimateShotDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
+                         UINT8 ubChanceToHit) {
   INT32 iRange, iMaxRange, iPowerLost;
   INT32 iDamage;
   UINT8 ubBonus;
@@ -1414,8 +1419,8 @@ INT32 EstimateShotDamage(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ub
   return (iDamage);
 }
 
-INT32 EstimateThrowDamage(SOLDIERTYPE *pSoldier, UINT8 ubItemPos, SOLDIERTYPE *pOpponent,
-                          INT16 sGridno) {
+INT32 EstimateThrowDamage(struct SOLDIERTYPE *pSoldier, UINT8 ubItemPos,
+                          struct SOLDIERTYPE *pOpponent, INT16 sGridno) {
   UINT8 ubExplosiveIndex;
   INT32 iExplosDamage, iBreathDamage, iArmourAmount, iDamage = 0;
   INT8 bSlot;
@@ -1491,8 +1496,8 @@ INT32 EstimateThrowDamage(SOLDIERTYPE *pSoldier, UINT8 ubItemPos, SOLDIERTYPE *p
   return (iDamage);
 }
 
-INT32 EstimateStabDamage(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ubChanceToHit,
-                         BOOLEAN fBladeAttack) {
+INT32 EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponent,
+                         UINT8 ubChanceToHit, BOOLEAN fBladeAttack) {
   INT32 iImpact, iFluke, iBonus;
 
   UINT16 usItem;
@@ -1544,7 +1549,7 @@ INT32 EstimateStabDamage(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ub
   return (iImpact);
 }
 
-INT8 TryToReload(SOLDIERTYPE *pSoldier) {
+INT8 TryToReload(struct SOLDIERTYPE *pSoldier) {
   INT8 bSlot;
   WEAPONTYPE *pWeapon;
 
@@ -1559,7 +1564,7 @@ INT8 TryToReload(SOLDIERTYPE *pSoldier) {
 }
 
 /*
-INT8 TryToReloadLauncher( SOLDIERTYPE * pSoldier )
+INT8 TryToReloadLauncher( struct SOLDIERTYPE * pSoldier )
 {
         UINT16	usWeapon;
         INT8		bSlot;
@@ -1582,7 +1587,7 @@ INT8 TryToReloadLauncher( SOLDIERTYPE * pSoldier )
 }
 */
 
-INT8 CanNPCAttack(SOLDIERTYPE *pSoldier) {
+INT8 CanNPCAttack(struct SOLDIERTYPE *pSoldier) {
   INT8 bCanAttack;
   INT8 bWeaponIn;
 
@@ -1634,7 +1639,7 @@ INT8 CanNPCAttack(SOLDIERTYPE *pSoldier) {
   return (bCanAttack);
 }
 
-void CheckIfTossPossible(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
+void CheckIfTossPossible(struct SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   UINT8 ubMinAPcost;
 
   if (TANK(pSoldier)) {
@@ -1680,12 +1685,13 @@ void CheckIfTossPossible(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow) {
   }
 }
 
-INT8 CountAdjacentSpreadTargets(SOLDIERTYPE *pSoldier, INT16 sFirstTarget, INT8 bTargetLevel) {
+INT8 CountAdjacentSpreadTargets(struct SOLDIERTYPE *pSoldier, INT16 sFirstTarget,
+                                INT8 bTargetLevel) {
   // return the number of people next to this guy for burst-spread purposes
 
   INT8 bDirLoop, bDir, bCheckDir, bTargetIndex, bTargets;
   INT16 sTarget;
-  SOLDIERTYPE *pTarget, *pTargets[5] = {NULL};
+  struct SOLDIERTYPE *pTarget, *pTargets[5] = {NULL};
 
   bTargetIndex = -1;
   bCheckDir = -1;
@@ -1795,10 +1801,10 @@ INT8 CountAdjacentSpreadTargets(SOLDIERTYPE *pSoldier, INT16 sFirstTarget, INT8 
   return (bTargets - 1);
 }
 
-INT16 CalcSpreadBurst(SOLDIERTYPE *pSoldier, INT16 sFirstTarget, INT8 bTargetLevel) {
+INT16 CalcSpreadBurst(struct SOLDIERTYPE *pSoldier, INT16 sFirstTarget, INT8 bTargetLevel) {
   INT8 bDirLoop, bDir, bCheckDir, bTargetIndex = 0, bLoop, bTargets;
   INT16 sTarget;
-  SOLDIERTYPE *pTarget, *pTargets[5] = {NULL};
+  struct SOLDIERTYPE *pTarget, *pTargets[5] = {NULL};
   INT8 bAdjacents, bOtherAdjacents;
 
   bCheckDir = -1;
@@ -1945,7 +1951,7 @@ INT16 CalcSpreadBurst(SOLDIERTYPE *pSoldier, INT16 sFirstTarget, INT8 bTargetLev
   return (sFirstTarget);
 }
 
-INT16 AdvanceToFiringRange(SOLDIERTYPE *pSoldier, INT16 sClosestOpponent) {
+INT16 AdvanceToFiringRange(struct SOLDIERTYPE *pSoldier, INT16 sClosestOpponent) {
   // see how far we can go down a path and still shoot
 
   INT8 bAttackCost, bTrueActionPoints;

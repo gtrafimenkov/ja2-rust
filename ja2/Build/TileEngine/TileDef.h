@@ -1,9 +1,10 @@
 #ifndef __TILEDEF_H
 #define __TILEDEF_H
 
-#include "SGP/VObject.h"
-#include "TileEngine/Structure.h"
 #include "TileEngine/TileDat.h"
+
+struct AuxObjectData;
+struct VObject;
 
 // CATEGORY TYPES
 #define NO_TILE 64000
@@ -64,19 +65,18 @@ typedef enum {
 } TerrainTypeDefines;
 
 // These structures are placed in a list and used for all tile imagery
-typedef struct {
-  HVOBJECT vo;
+struct TILE_IMAGERY {
+  struct VObject *vo;
   UINT32 fType;
-  AuxObjectData *pAuxData;
-  RelTileLoc *pTileLocData;
-  STRUCTURE_FILE_REF *pStructureFileRef;
+  struct AuxObjectData *pAuxData;
+  struct RelTileLoc *pTileLocData;
+  struct STRUCTURE_FILE_REF *pStructureFileRef;
   UINT8 ubTerrainID;
   BYTE bRaisedObjectType;
 
   // Reserved for added room and 32-byte boundaries
   BYTE bReserved[2];
-
-} TILE_IMAGERY, *PTILE_IMAGERY;
+};
 
 typedef struct {
   UINT16 *pusFrames;
@@ -88,10 +88,10 @@ typedef struct {
 // Tile data element
 typedef struct {
   UINT16 fType;
-  HVOBJECT hTileSurface;
-  DB_STRUCTURE_REF *pDBStructureRef;
+  struct VObject *hTileSurface;
+  struct DB_STRUCTURE_REF *pDBStructureRef;
   UINT32 uiFlags;
-  RelTileLoc *pTileLocData;
+  struct RelTileLoc *pTileLocData;
   UINT16 usRegionIndex;
   INT16 sBuddyNum;
   UINT8 ubTerrainID;
