@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'dev'
   pull_request:
 
 env:
@@ -14,7 +15,11 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        config: ["Debug", "Release", "ReleaseWithDebug"]
+        config: [
+            "Debug",
+            "Release",
+            # "ReleaseWithDebug",
+            ]
 
     steps:
     - uses: actions/checkout@v3
@@ -35,11 +40,18 @@ jobs:
       run: cat ja2/Build/BuildInfo.h
       shell: bash
 
+    - name: Restore NuGet packages
+      run: msbuild /m /p:Configuration="${{ matrix.config }}" /p:RestorePackagesConfig=true /t:restore ${{env.SOLUTION_FILE_PATH}}
+
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration="${{ matrix.config }}" ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Run Tests
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: .\ja2\Build\${{ matrix.config }}\tester.exe
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3

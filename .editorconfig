@@ -9,12 +9,7 @@ trim_trailing_whitespace = true
 [Makefile]
 indent_style = tab
 
-[*.h]
-
-[*.c]
-indent_size = 2
-
-[*.cc]
+[*.{h,c,cc,cpp}]
 indent_size = 2
 
 [*.vcxproj]
