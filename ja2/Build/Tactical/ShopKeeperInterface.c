@@ -1326,7 +1326,7 @@ BOOLEAN RenderShopKeeperInterface() {
                        CENTER_JUSTIFIED);
 
   // Display the players current balance value
-  swprintf(zMoney, L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(zMoney, ARR_SIZE(zMoney), L"%d", LaptopSaveInfo.iCurrentBalance);
 
   InsertCommasForDollarFigure(zMoney);
   InsertDollarSignInToString(zMoney);
@@ -1486,7 +1486,7 @@ void DisplayAllDealersCash() {
                      LEFT_JUSTIFIED);
 
     // Display the arms dealer cash on hand
-    swprintf(zTemp, L"%d", gArmsDealerStatus[bArmsDealer].uiArmsDealersCash);
+    swprintf(zTemp, ARR_SIZE(zTemp), L"%d", gArmsDealerStatus[bArmsDealer].uiArmsDealersCash);
 
     InsertCommasForDollarFigure(zTemp);
     InsertDollarSignInToString(zTemp);
@@ -2260,7 +2260,7 @@ void DisplayArmsDealerCurrentInventoryPage() {
 
       // Display the Current Page number
       uiFontHeight = GetFontHeight(SKI_LABEL_FONT);
-      swprintf(zTemp, L"%d/%d", gSelectArmsDealerInfo.ubCurrentPage,
+      swprintf(zTemp, ARR_SIZE(zTemp), L"%d/%d", gSelectArmsDealerInfo.ubCurrentPage,
                gSelectArmsDealerInfo.ubNumberOfPages);
       DrawTextToScreen(zTemp, SKI_PAGE_X, (UINT16)(SKI_PAGE_Y + uiFontHeight + 6), SKI_PAGE_WIDTH,
                        SKI_LABEL_FONT, SKI_TITLE_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
@@ -2475,7 +2475,7 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
 
   // if the item has a price, display it
   if (uiItemCost != 0) {
-    swprintf(zTemp, L"%d", uiItemCost);
+    swprintf(zTemp, ARR_SIZE(zTemp), L"%d", uiItemCost);
     InsertCommasForDollarFigure(zTemp);
     InsertDollarSignInToString(zTemp);
     DrawTextToScreen(zTemp, (UINT16)(usPosX + SKI_INV_PRICE_OFFSET_X),
@@ -2492,7 +2492,7 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
       ((pItemObject->ubNumberOfObjects == 1) && DealerItemIsSafeToStack(usItemIndex) &&
        (ubItemArea == ARMS_DEALER_INVENTORY) &&
        (gpTempDealersInventory[ubSlotNum].uiFlags & ARMS_INV_ITEM_SELECTED))) {
-    swprintf(zTemp, L"x%d", pItemObject->ubNumberOfObjects);
+    swprintf(zTemp, ARR_SIZE(zTemp), L"x%d", pItemObject->ubNumberOfObjects);
     DrawTextToScreen(zTemp, (UINT16)(usPosX + SKI_ITEM_NUMBER_TEXT_OFFSET_X),
                      (UINT16)(usPosY + SKI_ITEM_NUMBER_TEXT_OFFSET_Y), SKI_ITEM_NUMBER_TEXT_WIDTH,
                      SKIT_NUMBER_FONT, SKI_ITEM_PRICE_COLOR, FONT_MCOLOR_BLACK, FALSE,
@@ -2515,7 +2515,7 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
   // if the item has attachments
   if (ItemHasAttachments(pItemObject)) {
     // Display the '*' in the bottom right corner of the square
-    swprintf(zTemp, L"*");
+    swprintf(zTemp, ARR_SIZE(zTemp), L"*");
     DrawTextToScreen(zTemp, (UINT16)(usPosX + SKI_ATTACHMENT_SYMBOL_X_OFFSET),
                      (UINT16)(usPosY + SKI_ATTACHMENT_SYMBOL_Y_OFFSET), 0, TINYFONT1, FONT_GREEN,
                      FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
@@ -2523,13 +2523,13 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
 
   // Display 'JAMMED' if it's jammed
   if (pItemObject->bGunAmmoStatus < 0) {
-    swprintf(zTemp, TacticalStr[JAMMED_ITEM_STR]);
+    swprintf(zTemp, ARR_SIZE(zTemp), TacticalStr[JAMMED_ITEM_STR]);
     VarFindFontCenterCoordinates(usPosX, usPosY, SKI_INV_SLOT_WIDTH, SKI_INV_HEIGHT, TINYFONT1,
                                  &sCenX, &sCenY, zTemp);
     DrawTextToScreen(zTemp, sCenX, sCenY, SKI_INV_SLOT_WIDTH, TINYFONT1, FONT_RED,
                      FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   } else if (fPrintRepaired) {
-    swprintf(zTemp, SKI_Text[SKI_TEXT_REPAIRED]);
+    swprintf(zTemp, ARR_SIZE(zTemp), SKI_Text[SKI_TEXT_REPAIRED]);
     VarFindFontCenterCoordinates(usPosX, usPosY, SKI_INV_SLOT_WIDTH, SKI_INV_HEIGHT, TINYFONT1,
                                  &sCenX, &sCenY, zTemp);
     DrawTextToScreen(zTemp, sCenX, sCenY, SKI_INV_SLOT_WIDTH, TINYFONT1, FONT_RED,
@@ -3034,7 +3034,7 @@ void DisplayArmsDealerOfferArea() {
                                 SKI_ARMS_DEALER_TOTAL_COST_HEIGHT);
 
     // Display the total cost text
-    swprintf(zTemp, L"%d", uiTotalCost);
+    swprintf(zTemp, ARR_SIZE(zTemp), L"%d", uiTotalCost);
     InsertCommasForDollarFigure(zTemp);
     InsertDollarSignInToString(zTemp);
     DrawTextToScreen(zTemp, SKI_ARMS_DEALER_TOTAL_COST_X,
@@ -3132,8 +3132,9 @@ void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pReg
   if ((pInv != NULL) && (pInv->ubIdOfMercWhoOwnsTheItem != NO_PROFILE)) {
     BuildItemHelpTextString(zTempText, pInv, ubScreenArea);
     // add who owns it
-    swprintf(zHelpText, L"%s%s %s", gMercProfiles[pInv->ubIdOfMercWhoOwnsTheItem].zNickname,
-             pMessageStrings[MSG_DASH_S], zTempText);
+    swprintf(zHelpText, ARR_SIZE(zHelpText), L"%s%s %s",
+             gMercProfiles[pInv->ubIdOfMercWhoOwnsTheItem].zNickname, pMessageStrings[MSG_DASH_S],
+             zTempText);
   } else {
     zHelpText[0] = '\0';
   }
@@ -3290,7 +3291,7 @@ void DisplayPlayersOfferArea() {
                                 SKI_PLAYERS_TOTAL_VALUE_WIDTH, SKI_PLAYERS_TOTAL_VALUE_HEIGHT);
 
     // Display the total cost text
-    swprintf(zTemp, L"%d", uiTotalCost);
+    swprintf(zTemp, ARR_SIZE(zTemp), L"%d", uiTotalCost);
     InsertCommasForDollarFigure(zTemp);
     InsertDollarSignInToString(zTemp);
     DrawTextToScreen(zTemp, SKI_PLAYERS_TOTAL_VALUE_X, (UINT16)(SKI_PLAYERS_TOTAL_VALUE_Y + 5),
@@ -4266,9 +4267,9 @@ void InitShopKeeperSubTitledText(STR16 pString) {
   memset(gsShopKeeperTalkingText, 0, SKI_SUBTITLE_TEXT_SIZE);
 
 #ifdef TAIWANESE
-  swprintf(gsShopKeeperTalkingText, L"%s", pString);
+  swprintf(gsShopKeeperTalkingText, ARR_SIZE(gsShopKeeperTalkingText), L"%s", pString);
 #else
-  swprintf(gsShopKeeperTalkingText, L"\"%s\"", pString);
+  swprintf(gsShopKeeperTalkingText, ARR_SIZE(gsShopKeeperTalkingText), L"\"%s\"", pString);
 #endif
 
   // Now setup the popup box
@@ -4638,7 +4639,8 @@ void HandleAtmOK() {
         memset(gzSkiAtmTransferString, 0, 32);
       else {
         // Set the amount to transfer
-        swprintf(gzSkiAtmTransferString, L"%d", uiFundsOnCurrentMerc);
+        swprintf(gzSkiAtmTransferString, ARR_SIZE(gzSkiAtmTransferString), L"%d",
+                 uiFundsOnCurrentMerc);
       }
 
       gubCurrentSkiAtmMode = SKI_ATM_ERR_TAKE_MODE;
@@ -4656,7 +4658,8 @@ void HandleAtmOK() {
         memset(gzSkiAtmTransferString, 0, 32);
       else {
         // Set the amount to transfer
-        swprintf(gzSkiAtmTransferString, L"%d", LaptopSaveInfo.iCurrentBalance);
+        swprintf(gzSkiAtmTransferString, ARR_SIZE(gzSkiAtmTransferString), L"%d",
+                 LaptopSaveInfo.iCurrentBalance);
       }
 
       gubCurrentSkiAtmMode = SKI_ATM_ERR_GIVE_MODE;
@@ -4705,7 +4708,7 @@ void AddNumberToSkiAtm(UINT8 ubNumber) {
   // if its the first number being added and the number is a zero
   if (gzSkiAtmTransferString[0] == L'\0' && ubNumber == SKI_ATM_0) return;
 
-  swprintf(zTemp, L"%d", ubNumber);
+  swprintf(zTemp, ARR_SIZE(zTemp), L"%d", ubNumber);
 
   // add the number to the current amount
   wcscat(gzSkiAtmTransferString, zTemp);
@@ -4735,7 +4738,7 @@ void DisplaySkiAtmTransferString() {
   //
   uiMoney = GetFundsOnMerc(gpSMCurrentMerc);
 
-  swprintf(zSkiAtmTransferString, L"%d", uiMoney);
+  swprintf(zSkiAtmTransferString, ARR_SIZE(zSkiAtmTransferString), L"%d", uiMoney);
 
   InsertCommasForDollarFigure(zSkiAtmTransferString);
   InsertDollarSignInToString(zSkiAtmTransferString);
@@ -4864,11 +4867,11 @@ void HandleCurrentModeText(UINT8 ubMode) {
       break;
 
     case SKI_ATM_DISPLAY_PLAYERS_BALANCE:
-      swprintf(zMoney, L"%d", LaptopSaveInfo.iCurrentBalance);
+      swprintf(zMoney, ARR_SIZE(zMoney), L"%d", LaptopSaveInfo.iCurrentBalance);
       InsertCommasForDollarFigure(zMoney);
       InsertDollarSignInToString(zMoney);
 
-      swprintf(zTemp, L"%s: %s", gzSkiAtmText[SKI_ATM_MODE_TEXT_BALANCE], zMoney);
+      swprintf(zTemp, ARR_SIZE(zTemp), L"%s: %s", gzSkiAtmText[SKI_ATM_MODE_TEXT_BALANCE], zMoney);
       break;
   }
 

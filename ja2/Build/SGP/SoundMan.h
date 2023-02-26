@@ -5,10 +5,6 @@
 
 #include "SGP/Types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Sample status flags
 #define SAMPLE_RANDOM 0x00000004
 
@@ -79,9 +75,5 @@ extern void SoundRemoveSampleFlags(UINT32 uiSample, UINT32 uiFlags);
 extern void SoundEnableSound(BOOLEAN fEnable);
 
 extern BOOLEAN SoundServiceRandom(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

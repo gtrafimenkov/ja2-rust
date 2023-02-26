@@ -4533,7 +4533,7 @@ void PrintBalance(void) {
   SetFontBackground(FONT_BLACK);
   SetFontShadow(NO_SHADOW);
 
-  swprintf(pString, L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", LaptopSaveInfo.iCurrentBalance);
   InsertCommasForDollarFigure(pString);
   InsertDollarSignInToString(pString);
 
@@ -4572,7 +4572,7 @@ void PrintNumberOnTeam(void) {
     }
   }
 
-  swprintf(pString, L"%s %d", pPersonnelString[0], iCounter);
+  swprintf(pString, ARR_SIZE(pString), L"%s %d", pPersonnelString[0], iCounter);
 
   usFontHeight = GetFontHeight(FONT10ARIAL);
   usStrLength = StringPixLength(pString, FONT10ARIAL);
@@ -4622,7 +4622,8 @@ void PrintDate(void) {
 
           SetFontShadow( NO_SHADOW );
 
-          swprintf(pString, L"%s %d", pMessageStrings[ MSG_DAY ], GetWorldDay( ) );
+          swprintf(pString, ARR_SIZE(pString), L"%s %d", pMessageStrings[ MSG_DAY ], GetWorldDay( )
+  );
 
   //	gprintfdirty(35, 413 + 19,pString);
           mprintf(35, 413 + 19,pString);

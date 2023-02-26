@@ -3,10 +3,6 @@
 
 #include "SGP/Types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 //
 //	Keeps track of the game version
 //
@@ -23,9 +19,5 @@ extern CHAR16 zTrackingNumber[16];
 //
 
 const extern UINT32 guiSavedGameVersion;
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

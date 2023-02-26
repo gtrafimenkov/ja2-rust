@@ -1498,7 +1498,8 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
   pMail->fRead = TRUE;
 
   // draw text for title bar
-  // swprintf(pString, L"%s / %s", pSenderNameList[pMail->ubSender],pMail->pSubject);
+  // swprintf(pString, ARR_SIZE(pString), L"%s / %s",
+  // pSenderNameList[pMail->ubSender],pMail->pSubject);
   // DisplayWrappedString(VIEWER_X+VIEWER_HEAD_X+4, VIEWER_Y+VIEWER_HEAD_Y+4, VIEWER_HEAD_WIDTH,
   // MESSAGE_GAP, MESSAGE_FONT, MESSAGE_COLOR, pString, 0,FALSE,0);
 
@@ -2891,7 +2892,7 @@ void HandleIMPCharProfileResultsMessage(void) {
       if (iCounter == 0) {
         wchar_t zTemp[512];
 
-        swprintf(zTemp, L" %s",
+        swprintf(zTemp, ARR_SIZE(zTemp), L" %s",
                  gMercProfiles[PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId].zName);
         wcscat(pString, zTemp);
       }
@@ -4562,7 +4563,7 @@ BOOLEAN ReplaceMercNameAndAmountWithProperData(CHAR16 *pFinishedString, EmailPtr
       } else {
         CHAR16 sDollarAmount[64];
 
-        swprintf(sDollarAmount, L"%d", pMail->iFirstData);
+        swprintf(sDollarAmount, ARR_SIZE(sDollarAmount), L"%d", pMail->iFirstData);
 
         InsertCommasForDollarFigure(sDollarAmount);
         InsertDollarSignInToString(sDollarAmount);

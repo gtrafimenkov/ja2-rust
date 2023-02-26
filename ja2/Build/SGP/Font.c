@@ -361,8 +361,9 @@ INT16 StringPixLengthArg(INT32 usUseFont, UINT32 uiCharCount, STR16 pFontString,
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   // make sure the character count is legal
@@ -643,8 +644,9 @@ UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   curletter = string;
@@ -683,8 +685,9 @@ void VarFindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
   wchar_t string[512];
   va_list argptr;
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   FindFontRightCoordinates(sLeft, sTop, sWidth, sHeight, string, iFontIndex, psNewX, psNewY);
@@ -696,8 +699,9 @@ void VarFindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 s
   wchar_t string[512];
   va_list argptr;
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   FindFontCenterCoordinates(sLeft, sTop, sWidth, sHeight, string, iFontIndex, psNewX, psNewY);
@@ -727,12 +731,6 @@ void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHei
   *psNewY = yp;
 }
 
-void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, STR16 pStr,
-                               INT32 iFontIndex, UINT16 *psNewX, UINT16 *psNewY) {
-  FindFontCenterCoordinates(sLeft, sTop, sWidth, sHeight, pStr, iFontIndex, (INT16 *)psNewX,
-                            (INT16 *)psNewY);
-}
-
 //*****************************************************************************
 // gprintf
 //
@@ -752,8 +750,9 @@ UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   curletter = string;
@@ -797,8 +796,9 @@ UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   curletter = string;
@@ -850,8 +850,9 @@ UINT32 gprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   curletter = string;
@@ -889,8 +890,9 @@ UINT32 mprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   curletter = string;
@@ -928,8 +930,9 @@ UINT32 mprintf_buffer_coded(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 Fon
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   curletter = string;
@@ -979,8 +982,9 @@ UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   curletter = string;

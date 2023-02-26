@@ -7,10 +7,6 @@
 #include "SGP/Types.h"
 #include "platform.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 BOOLEAN gfRecordToFile = FALSE;
 BOOLEAN gfRecordToDebugger = TRUE;
 
@@ -430,9 +426,5 @@ STR String(const char *String, ...) {
 //////////////////////////////////////////////////////////////////////
 // This func is used by Assert()
 void _Null(void) {}
-
-#ifdef __cplusplus
-}
-#endif
 
 // build:linux

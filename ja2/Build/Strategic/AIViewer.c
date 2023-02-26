@@ -1459,7 +1459,8 @@ void PrintEnemyPopTable() {
         wcscpy(wPrintSpec, L"%4d");
       }
 
-      swprintf(wTempString, wPrintSpec, usEnemyPopTable[ubEnemyRank][ubEnemyType]);
+      swprintf(wTempString, ARR_SIZE(wTempString), wPrintSpec,
+               usEnemyPopTable[ubEnemyRank][ubEnemyType]);
       DrawTextToScreen(wTempString, (UINT16)(usX + (POP_TABLE_X_GAP * ubEnemyRank)),
                        (UINT16)(usY + (POP_TABLE_Y_GAP * ubEnemyType)), POP_TABLE_X_GAP,
                        FONT10ARIAL, FONT_YELLOW, 0, FALSE, RIGHT_JUSTIFIED);
@@ -1583,7 +1584,8 @@ void PrintEnemiesKilledTable() {
         wcscpy(wPrintSpec, L"%4d");
       }
 
-      swprintf(wTempString, wPrintSpec, usEnemiesKilledTable[ubEnemyRank][ubKillType]);
+      swprintf(wTempString, ARR_SIZE(wTempString), wPrintSpec,
+               usEnemiesKilledTable[ubEnemyRank][ubKillType]);
       DrawTextToScreen(wTempString, (UINT16)(usX + (KILLED_TABLE_X_GAP * ubEnemyRank)),
                        (UINT16)(usY + (KILLED_TABLE_Y_GAP * ubKillType)), KILLED_TABLE_X_GAP,
                        FONT10ARIAL, FONT_YELLOW, 0, FALSE, RIGHT_JUSTIFIED);
@@ -1660,10 +1662,10 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
              iDesired);
 
     if (iSurplus >= 0) {
-      swprintf(wSubString, L"%d surplus troops", iSurplus);
+      swprintf(wSubString, ARR_SIZE(wSubString), L"%d surplus troops", iSurplus);
       wcscat(wString, wSubString);
     } else {
-      swprintf(wSubString, L"%d reinforcements requested", -iSurplus);
+      swprintf(wSubString, ARR_SIZE(wSubString), L"%d reinforcements requested", -iSurplus);
       wcscat(wString, wSubString);
     }
     mprintf(iScreenX, iScreenY, wString);
@@ -1703,19 +1705,19 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
             iGarrisonIndex = FindGarrisonIndexForGroupIDPending(pGroup->ubGroupID);
             if (iGarrisonIndex != -1) {
               ubSectorID = gGarrisonGroup[iGarrisonIndex].ubSectorID;
-              swprintf(wSubString, L", target sector %c%d", SECTORY(ubSectorID) + 'A' - 1,
-                       SECTORX(ubSectorID));
+              swprintf(wSubString, ARR_SIZE(wSubString), L", target sector %c%d",
+                       SECTORY(ubSectorID) + 'A' - 1, SECTORX(ubSectorID));
             } else {
               pFinalWaypoint = GetFinalWaypoint(pGroup);
               if (pFinalWaypoint) {
                 if (pFinalWaypoint->x == 3 && pFinalWaypoint->y == 16) {
-                  swprintf(wSubString, L" - group returning to pool.");
+                  swprintf(wSubString, ARR_SIZE(wSubString), L" - group returning to pool.");
                 } else {
-                  swprintf(wSubString, L" - moving to %c%d", pFinalWaypoint->y + 'A' - 1,
-                           pFinalWaypoint->x);
+                  swprintf(wSubString, ARR_SIZE(wSubString), L" - moving to %c%d",
+                           pFinalWaypoint->y + 'A' - 1, pFinalWaypoint->x);
                 }
               } else {
-                swprintf(wSubString, L" - can't determine target sector");
+                swprintf(wSubString, ARR_SIZE(wSubString), L" - can't determine target sector");
               }
             }
             wcscat(wString, wSubString);
@@ -1726,8 +1728,8 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
             iGarrisonIndex = FindGarrisonIndexForGroupIDPending(pGroup->ubGroupID);
             if (iGarrisonIndex != -1) {
               ubSectorID = gGarrisonGroup[iGarrisonIndex].ubSectorID;
-              swprintf(wSubString, L", dest sector %c%d", SECTORY(ubSectorID) + 'A' - 1,
-                       SECTORX(ubSectorID));
+              swprintf(wSubString, ARR_SIZE(wSubString), L", dest sector %c%d",
+                       SECTORY(ubSectorID) + 'A' - 1, SECTORX(ubSectorID));
               wcscat(wString, wSubString);
             } else  // must be reinforcing a patrol
             {
@@ -1736,20 +1738,20 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
                 pFinalWaypoint = GetFinalWaypoint(pGroup);
                 Assert(pFinalWaypoint);
 
-                swprintf(wSubString, L", Patrol #%d, dest sector %c%d", iPatrolIndex,
-                         pFinalWaypoint->y + 'A' - 1, pFinalWaypoint->x);
+                swprintf(wSubString, ARR_SIZE(wSubString), L", Patrol #%d, dest sector %c%d",
+                         iPatrolIndex, pFinalWaypoint->y + 'A' - 1, pFinalWaypoint->x);
                 wcscat(wString, wSubString);
               } else {
                 pFinalWaypoint = GetFinalWaypoint(pGroup);
                 if (pFinalWaypoint) {
                   if (pFinalWaypoint->x == 3 && pFinalWaypoint->y == 16) {
-                    swprintf(wSubString, L" - group returning to pool.");
+                    swprintf(wSubString, ARR_SIZE(wSubString), L" - group returning to pool.");
                   } else {
-                    swprintf(wSubString, L" - lost group moving to %c%d",
+                    swprintf(wSubString, ARR_SIZE(wSubString), L" - lost group moving to %c%d",
                              pFinalWaypoint->y + 'A' - 1, pFinalWaypoint->x);
                   }
                 } else {
-                  swprintf(wSubString, L" (LOST struct GROUP!)");
+                  swprintf(wSubString, ARR_SIZE(wSubString), L" (LOST struct GROUP!)");
                 }
                 wcscat(wString, wSubString);
               }
@@ -1758,10 +1760,10 @@ void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSe
           case PATROL:
             iPatrolIndex = FindPatrolGroupIndexForGroupID(pGroup->ubGroupID);
             if (iPatrolIndex != -1) {
-              swprintf(wSubString, L"#%d, next sector %c%d", iPatrolIndex,
+              swprintf(wSubString, ARR_SIZE(wSubString), L"#%d, next sector %c%d", iPatrolIndex,
                        pGroup->ubNextY + 'A' - 1, pGroup->ubNextX);
             } else {
-              swprintf(wSubString, L"#err, FLOATING struct GROUP!");
+              swprintf(wSubString, ARR_SIZE(wSubString), L"#err, FLOATING struct GROUP!");
             }
             wcscat(wString, wSubString);
             break;

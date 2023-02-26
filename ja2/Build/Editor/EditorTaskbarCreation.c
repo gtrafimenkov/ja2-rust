@@ -213,7 +213,7 @@ void InitEditorMercsToolbar() {
       (INT16)giEditMercDirectionIcons[0], 6, BUTTON_USE_DEFAULT, 360, 395, 30, 30, BUTTON_TOGGLE,
       MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, MercsDirectionSetCallback);
   for (x = 0; x < 8; x++) {
-    swprintf(TempString, L"Set merc to face %s", FaceDirs[x]);
+    swprintf(TempString, ARR_SIZE(TempString), L"Set merc to face %s", FaceDirs[x]);
     SetButtonFastHelpText(iEditorButton[FIRST_MERCS_DIRECTION_BUTTON + x], TempString);
     MSYS_SetBtnUserData(iEditorButton[FIRST_MERCS_DIRECTION_BUTTON + x], 0, x);
   }

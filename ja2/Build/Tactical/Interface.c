@@ -694,53 +694,53 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
     // Until we get mounted weapons...
     uiActionImages = CANCEL_IMAGES;
-    swprintf(zActionString, TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
+    swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
     fDisableAction = TRUE;
   } else {
     if (pSoldier->inv[HANDPOS].usItem == TOOLKIT) {
       uiActionImages = TOOLKITACTIONC_IMAGES;
-      swprintf(zActionString, TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
+      swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
     } else if (pSoldier->inv[HANDPOS].usItem == WIRECUTTERS) {
       uiActionImages = WIRECUTACTIONC_IMAGES;
-      swprintf(zActionString, TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
+      swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
     } else {
       // Create button based on what is in our hands at the moment!
       switch (Item[pSoldier->inv[HANDPOS].usItem].usItemClass) {
         case IC_PUNCH:
 
           uiActionImages = PUNCHACTIONC_IMAGES;
-          swprintf(zActionString, TacticalStr[USE_HANDTOHAND_POPUPTEXT]);
+          swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[USE_HANDTOHAND_POPUPTEXT]);
           break;
 
         case IC_GUN:
 
           uiActionImages = TARGETACTIONC_IMAGES;
-          swprintf(zActionString, TacticalStr[USE_FIREARM_POPUPTEXT]);
+          swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[USE_FIREARM_POPUPTEXT]);
           break;
 
         case IC_BLADE:
 
           uiActionImages = KNIFEACTIONC_IMAGES;
-          swprintf(zActionString, TacticalStr[USE_BLADE_POPUPTEXT]);
+          swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[USE_BLADE_POPUPTEXT]);
           break;
 
         case IC_GRENADE:
         case IC_BOMB:
 
           uiActionImages = BOMBACTIONC_IMAGES;
-          swprintf(zActionString, TacticalStr[USE_EXPLOSIVE_POPUPTEXT]);
+          swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[USE_EXPLOSIVE_POPUPTEXT]);
           break;
 
         case IC_MEDKIT:
 
           uiActionImages = AIDACTIONC_IMAGES;
-          swprintf(zActionString, TacticalStr[USE_MEDKIT_POPUPTEXT]);
+          swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[USE_MEDKIT_POPUPTEXT]);
           break;
 
         default:
 
           uiActionImages = CANCEL_IMAGES;
-          swprintf(zActionString, TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
+          swprintf(zActionString, ARR_SIZE(zActionString), TacticalStr[NOT_APPLICABLE_POPUPTEXT]);
           fDisableAction = TRUE;
           break;
       }
@@ -1392,21 +1392,21 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
 
   if (pSoldier->ubProfile != NO_PROFILE || (pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
     if (gfUIMouseOnValidCatcher == 1 && pSoldier->ubID == gubUIValidCatcherID) {
-      swprintf(NameStr, TacticalStr[CATCH_STR]);
+      swprintf(NameStr, ARR_SIZE(NameStr), TacticalStr[CATCH_STR]);
       FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
       fRaiseName = TRUE;
     } else if (gfUIMouseOnValidCatcher == 3 && pSoldier->ubID == gubUIValidCatcherID) {
-      swprintf(NameStr, TacticalStr[RELOAD_STR]);
+      swprintf(NameStr, ARR_SIZE(NameStr), TacticalStr[RELOAD_STR]);
       FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
       mprintf(sX, sY, NameStr);
       fRaiseName = TRUE;
     } else if (gfUIMouseOnValidCatcher == 4 && pSoldier->ubID == gubUIValidCatcherID) {
-      swprintf(NameStr, pMessageStrings[MSG_PASS]);
+      swprintf(NameStr, ARR_SIZE(NameStr), pMessageStrings[MSG_PASS]);
       FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
@@ -1414,7 +1414,7 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
       fRaiseName = TRUE;
     } else if (pSoldier->bAssignment >= ON_DUTY) {
       SetFontForeground(FONT_YELLOW);
-      swprintf(NameStr, L"(%s)", pAssignmentStrings[pSoldier->bAssignment]);
+      swprintf(NameStr, ARR_SIZE(NameStr), L"(%s)", pAssignmentStrings[pSoldier->bAssignment]);
       FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
@@ -1423,7 +1423,7 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
     } else if (pSoldier->bTeam == gbPlayerNum && pSoldier->bAssignment < ON_DUTY &&
                pSoldier->bAssignment != CurrentSquad() &&
                !(pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED)) {
-      swprintf(NameStr, gzLateLocalizedString[34], (pSoldier->bAssignment + 1));
+      swprintf(NameStr, ARR_SIZE(NameStr), gzLateLocalizedString[34], (pSoldier->bAssignment + 1));
       FindFontCenterCoordinates(sXPos, (INT16)(sYPos), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
@@ -1444,13 +1444,13 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
 
     if (fDoName) {
       if (fRaiseName) {
-        swprintf(NameStr, L"%s", pSoldier->name);
+        swprintf(NameStr, ARR_SIZE(NameStr), L"%s", pSoldier->name);
         FindFontCenterCoordinates(sXPos, (INT16)(sYPos - 10), (INT16)(80), 1, NameStr, TINYFONT1,
                                   &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
         mprintf(sX, sY, NameStr);
       } else {
-        swprintf(NameStr, L"%s", pSoldier->name);
+        swprintf(NameStr, ARR_SIZE(NameStr), L"%s", pSoldier->name);
         FindFontCenterCoordinates(sXPos, sYPos, (INT16)(80), 1, NameStr, TINYFONT1, &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
         mprintf(sX, sY, NameStr);
@@ -1493,7 +1493,7 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
         SetFontBackground(FONT_MCOLOR_BLACK);
         SetFontForeground(FONT_MCOLOR_WHITE);
 
-        swprintf(NameStr, TacticalStr[GIVE_STR]);
+        swprintf(NameStr, ARR_SIZE(NameStr), TacticalStr[GIVE_STR]);
         FindFontCenterCoordinates(sXPos, (INT16)(sYPos + 10), (INT16)(80), 1, NameStr, TINYFONT1,
                                   &sX, &sY);
         gprintfdirty(sX, sY, NameStr);
@@ -1518,7 +1518,7 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_YELLOW);
 
-      swprintf(NameStr, gzLateLocalizedString[15]);
+      swprintf(NameStr, ARR_SIZE(NameStr), gzLateLocalizedString[15]);
       FindFontCenterCoordinates(sXPos, (INT16)(sYPos + 10), (INT16)(80), 1, NameStr, TINYFONT1, &sX,
                                 &sY);
       gprintfdirty(sX, sY, NameStr);
@@ -1555,8 +1555,9 @@ void BeginOverlayMessage(UINT32 uiFont, CHAR16 *pFontString, ...) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   wchar_t SlideString[512];
 
-  va_start(argptr, pFontString);                // Set up variable argument pointer
-  vswprintf(SlideString, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(SlideString, ARR_SIZE(SlideString), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   // Override it!
@@ -1851,9 +1852,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-    swprintf(zDisp, pTacticalPopupButtonStrings[USE_KEYRING_ICON]);
+    swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[USE_KEYRING_ICON]);
   } else {
-    swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[USE_KEYRING_ICON], AP_UNLOCK_DOOR);
+    swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[USE_KEYRING_ICON],
+             AP_UNLOCK_DOOR);
   }
   SetButtonFastHelpText(iActionIcons[USE_KEYRING_ICON], zDisp);
 
@@ -1877,9 +1879,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-    swprintf(zDisp, pTacticalPopupButtonStrings[USE_CROWBAR_ICON]);
+    swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[USE_CROWBAR_ICON]);
   } else {
-    swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[USE_CROWBAR_ICON], AP_USE_CROWBAR);
+    swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[USE_CROWBAR_ICON],
+             AP_USE_CROWBAR);
   }
   SetButtonFastHelpText(iActionIcons[USE_CROWBAR_ICON], zDisp);
 
@@ -1902,9 +1905,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-    swprintf(zDisp, pTacticalPopupButtonStrings[LOCKPICK_DOOR_ICON]);
+    swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[LOCKPICK_DOOR_ICON]);
   } else {
-    swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[LOCKPICK_DOOR_ICON], AP_PICKLOCK);
+    swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[LOCKPICK_DOOR_ICON],
+             AP_PICKLOCK);
   }
   SetButtonFastHelpText(iActionIcons[LOCKPICK_DOOR_ICON], zDisp);
 
@@ -1928,9 +1932,9 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-    swprintf(zDisp, pTacticalPopupButtonStrings[EXPLOSIVE_DOOR_ICON]);
+    swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[EXPLOSIVE_DOOR_ICON]);
   } else {
-    swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[EXPLOSIVE_DOOR_ICON],
+    swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[EXPLOSIVE_DOOR_ICON],
              AP_EXPLODE_DOOR);
   }
   SetButtonFastHelpText(iActionIcons[EXPLOSIVE_DOOR_ICON], zDisp);
@@ -1956,15 +1960,17 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
 
   if (fClosingDoor) {
     if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-      swprintf(zDisp, pTacticalPopupButtonStrings[CANCEL_ICON + 1]);
+      swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[CANCEL_ICON + 1]);
     } else {
-      swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[CANCEL_ICON + 1], AP_OPEN_DOOR);
+      swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[CANCEL_ICON + 1],
+               AP_OPEN_DOOR);
     }
   } else {
     if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-      swprintf(zDisp, pTacticalPopupButtonStrings[OPEN_DOOR_ICON]);
+      swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[OPEN_DOOR_ICON]);
     } else {
-      swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[OPEN_DOOR_ICON], AP_OPEN_DOOR);
+      swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[OPEN_DOOR_ICON],
+               AP_OPEN_DOOR);
     }
   }
   SetButtonFastHelpText(iActionIcons[OPEN_DOOR_ICON], zDisp);
@@ -1984,9 +1990,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-    swprintf(zDisp, pTacticalPopupButtonStrings[EXAMINE_DOOR_ICON]);
+    swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[EXAMINE_DOOR_ICON]);
   } else {
-    swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[EXAMINE_DOOR_ICON], AP_EXAMINE_DOOR);
+    swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[EXAMINE_DOOR_ICON],
+             AP_EXAMINE_DOOR);
   }
   SetButtonFastHelpText(iActionIcons[EXAMINE_DOOR_ICON], zDisp);
 
@@ -2005,9 +2012,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-    swprintf(zDisp, pTacticalPopupButtonStrings[BOOT_DOOR_ICON]);
+    swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[BOOT_DOOR_ICON]);
   } else {
-    swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[BOOT_DOOR_ICON], AP_BOOT_DOOR);
+    swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[BOOT_DOOR_ICON],
+             AP_BOOT_DOOR);
   }
   SetButtonFastHelpText(iActionIcons[BOOT_DOOR_ICON], zDisp);
 
@@ -2026,9 +2034,10 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   }
 
   if (!(gTacticalStatus.uiFlags & TURNBASED) || !(gTacticalStatus.uiFlags & INCOMBAT)) {
-    swprintf(zDisp, pTacticalPopupButtonStrings[UNTRAP_DOOR_ICON]);
+    swprintf(zDisp, ARR_SIZE(zDisp), pTacticalPopupButtonStrings[UNTRAP_DOOR_ICON]);
   } else {
-    swprintf(zDisp, L"%s ( %d )", pTacticalPopupButtonStrings[UNTRAP_DOOR_ICON], AP_UNTRAP_DOOR);
+    swprintf(zDisp, ARR_SIZE(zDisp), L"%s ( %d )", pTacticalPopupButtonStrings[UNTRAP_DOOR_ICON],
+             AP_UNTRAP_DOOR);
   }
   SetButtonFastHelpText(iActionIcons[UNTRAP_DOOR_ICON], zDisp);
 
@@ -2276,8 +2285,9 @@ void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...) {
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
   wchar_t MsgString[512];
 
-  va_start(argptr, pFontString);              // Set up variable argument pointer
-  vswprintf(MsgString, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(MsgString, ARR_SIZE(MsgString), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   guiUIMessageTime = GetJA2Clock();
@@ -2331,8 +2341,9 @@ void BeginUIMessage(CHAR16 *pFontString, ...) {
   va_list argptr;
   wchar_t MsgString[512];
 
-  va_start(argptr, pFontString);              // Set up variable argument pointer
-  vswprintf(MsgString, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(MsgString, ARR_SIZE(MsgString), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   InternalBeginUIMessage(FALSE, MsgString);
@@ -2345,8 +2356,9 @@ void BeginMapUIMessage(UINT8 ubPosition, CHAR16 *pFontString, ...) {
 
   memset(&VideoOverlayDesc, 0, sizeof(VideoOverlayDesc));
 
-  va_start(argptr, pFontString);              // Set up variable argument pointer
-  vswprintf(MsgString, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(MsgString, ARR_SIZE(MsgString), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   guiUIMessageTime = GetJA2Clock();

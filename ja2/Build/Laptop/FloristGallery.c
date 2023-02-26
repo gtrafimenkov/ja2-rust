@@ -345,7 +345,8 @@ BOOLEAN DisplayFloralDescriptions() {
     LoadEncryptedDataFromFile(FLOR_GALLERY_TEXT_FILE, sTemp, uiStartLoc,
                               FLOR_GALLERY_TEXT_PRICE_SIZE);
     swscanf(sTemp, L"%hu", &usPrice);
-    swprintf(sTemp, L"$%d.00 %s", usPrice, pMessageStrings[MSG_USDOLLAR_ABBREVIATION]);
+    swprintf(sTemp, ARR_SIZE(sTemp), L"$%d.00 %s", usPrice,
+             pMessageStrings[MSG_USDOLLAR_ABBREVIATION]);
     DrawTextToScreen(sTemp, FLOR_GALLERY_FLOWER_TITLE_X,
                      (UINT16)(usPosY + FLOR_GALLERY_FLOWER_PRICE_OFFSET_Y), 0,
                      FLOR_GALLERY_FLOWER_PRICE_FONT, FLOR_GALLERY_FLOWER_PRICE_COLOR,

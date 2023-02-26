@@ -3520,6 +3520,6 @@ void UpdateLastActionBeforeLeaving() {
 
 void ReloadMap() {
   CHAR16 szFilename[30];
-  swprintf(szFilename, L"%S", gubFilename);
+  swprintf(szFilename, ARR_SIZE(szFilename), L"%S", gubFilename);
   ExternalLoadMap(szFilename);
 }

@@ -296,10 +296,6 @@ void LineDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short C
   }
 }
 
-void LineDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
-              UINT8 *ScreenPtr) {
-  LineDraw(fClip, XStart, YStart, XEnd, YEnd, Color, (char *)ScreenPtr);
-}
 // Draws a pixel in the specified color
 void PixelDraw(BOOLEAN fClip, INT32 xp, INT32 yp, INT16 sColor, UINT8 *pScreen) {
   INT8 col2 = sColor >> 8;

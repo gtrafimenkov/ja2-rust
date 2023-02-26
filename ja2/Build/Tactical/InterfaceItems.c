@@ -2740,7 +2740,7 @@ void RenderItemDescriptionBox() {
       SetFontShadow(DEFAULT_SHADOW);
 
       // LABELS
-      swprintf(sTempString, gWeaponStatsDesc[0], GetWeightUnitString());
+      swprintf(sTempString, ARR_SIZE(sTempString), gWeaponStatsDesc[0], GetWeightUnitString());
       mprintf(gMapWeaponStats[0].sX + gsInvDescX, gMapWeaponStats[0].sY + gsInvDescY, L"%s",
               sTempString);
       // mprintf( gMapWeaponStats[ 2 ].sX + gsInvDescX, gMapWeaponStats[ 2 ].sY + gsInvDescY, L"%s",
@@ -2953,7 +2953,7 @@ void RenderItemDescriptionBox() {
         mprintf(gMapWeaponStats[1].sX + gsInvDescX, gMapWeaponStats[1].sY + gsInvDescY, L"%s",
                 gWeaponStatsDesc[1]);
       }
-      swprintf(sTempString, gWeaponStatsDesc[0], GetWeightUnitString());
+      swprintf(sTempString, ARR_SIZE(sTempString), gWeaponStatsDesc[0], GetWeightUnitString());
       mprintf(gMapWeaponStats[0].sX + gsInvDescX, gMapWeaponStats[0].sY + gsInvDescY, sTempString);
 
       // Values
@@ -3221,7 +3221,7 @@ void RenderItemDescriptionBox() {
       SetFontShadow(DEFAULT_SHADOW);
 
       // LABELS
-      swprintf(sTempString, gWeaponStatsDesc[0], GetWeightUnitString());
+      swprintf(sTempString, ARR_SIZE(sTempString), gWeaponStatsDesc[0], GetWeightUnitString());
       mprintf(gWeaponStats[0].sX + gsInvDescX, gWeaponStats[0].sY + gsInvDescY, sTempString);
       //		mprintf( gWeaponStats[ 1 ].sX + gsInvDescX, gWeaponStats[ 1 ].sY +
       // gsInvDescY, L"%s", gWeaponStatsDesc[ 1 ].zDesc ); 		mprintf( gWeaponStats[ 2
@@ -3441,7 +3441,7 @@ void RenderItemDescriptionBox() {
       }
 
       // Weight
-      swprintf(sTempString, gWeaponStatsDesc[0], GetWeightUnitString());
+      swprintf(sTempString, ARR_SIZE(sTempString), gWeaponStatsDesc[0], GetWeightUnitString());
       mprintf(gWeaponStats[0].sX + gsInvDescX, gWeaponStats[0].sY + gsInvDescY, sTempString);
 
       // Values
@@ -5764,7 +5764,7 @@ void RenderItemPickupMenu() {
         // If we are money...
         if (Item[pObject->usItem].usItemClass == IC_MONEY) {
           CHAR16 pStr2[20];
-          swprintf(pStr2, L"%ld", pObject->uiMoneyAmount);
+          swprintf(pStr2, ARR_SIZE(pStr2), L"%ld", pObject->uiMoneyAmount);
           InsertCommasForDollarFigure(pStr2);
           InsertDollarSignInToString(pStr2);
 
@@ -6273,7 +6273,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, struct OBJECTTYPE *pObject, struct SOLDIE
   if (pSoldier != NULL) {
     if (pSoldier->uiStatusFlags & SOLDIER_DEAD) {
       swprintf(pStr, ARR_SIZE(pStr), L"");
-      swprintf(pzStr, L"%s", pStr);
+      swprintf(pzStr, ARR_SIZE(pzStr), L"%s", pStr);
       return;
     }
   }
@@ -6284,7 +6284,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, struct OBJECTTYPE *pObject, struct SOLDIE
     InsertDollarSignInToString(pStr);
   } else if (Item[usItem].usItemClass == IC_MONEY) {  // alternate money like silver or gold
     CHAR16 pStr2[20];
-    swprintf(pStr2, L"%ld", pObject->uiMoneyAmount);
+    swprintf(pStr2, ARR_SIZE(pStr2), L"%ld", pObject->uiMoneyAmount);
     InsertCommasForDollarFigure(pStr2);
     InsertDollarSignInToString(pStr2);
 
@@ -6301,7 +6301,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, struct OBJECTTYPE *pObject, struct SOLDIE
     if ((pObject->usItem == ROCKET_RIFLE || pObject->usItem == AUTO_ROCKET_RIFLE) &&
         pObject->ubImprintID < NO_PROFILE) {
       CHAR16 pStr2[20];
-      swprintf(pStr2, L" [%s]", gMercProfiles[pObject->ubImprintID].zNickname);
+      swprintf(pStr2, ARR_SIZE(pStr2), L" [%s]", gMercProfiles[pObject->ubImprintID].zNickname);
       wcscat(pStr, pStr2);
     }
 
@@ -6328,7 +6328,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, struct OBJECTTYPE *pObject, struct SOLDIE
   }
 
   // Copy over...
-  swprintf(pzStr, L"%s", pStr);
+  swprintf(pzStr, ARR_SIZE(pzStr), L"%s", pStr);
 }
 
 UINT8 GetPrefferedItemSlotGraphicNum(UINT16 usItem) {

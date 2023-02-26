@@ -215,14 +215,17 @@ void GameLoop(void) {
           UINT32 uiSpaceOnDrive;
           CHAR16 zSizeNeeded[512];
 
-          swprintf(zSizeNeeded, L"%d", REQUIRED_FREE_SPACE / BYTESINMEGABYTE);
+          swprintf(zSizeNeeded, ARR_SIZE(zSizeNeeded), L"%d",
+                   REQUIRED_FREE_SPACE / BYTESINMEGABYTE);
           InsertCommasForDollarFigure(zSizeNeeded);
 
           uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
-          swprintf(zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE);
+          swprintf(zSpaceOnDrive, ARR_SIZE(zSpaceOnDrive), L"%.2f",
+                   uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE);
 
-          swprintf(zText, pMessageStrings[MSG_LOWDISKSPACE_WARNING], zSpaceOnDrive, zSizeNeeded);
+          swprintf(zText, ARR_SIZE(zText), pMessageStrings[MSG_LOWDISKSPACE_WARNING], zSpaceOnDrive,
+                   zSizeNeeded);
 
           if (guiPreviousOptionScreen == MAP_SCREEN)
             DoMapMessageBox(MSG_BOX_BASIC_STYLE, zText, MAP_SCREEN, MSG_BOX_FLAG_OK, NULL);

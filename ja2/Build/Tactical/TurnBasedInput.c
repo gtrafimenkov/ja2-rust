@@ -2823,13 +2823,15 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
       CHAR16 str[256];
       if (gubLoneMercAttemptingToAbandonEPCs == 1) {  // Use the singular version of the string
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male singular
-          swprintf(
-              str, pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_SINGULAR],
-              MercPtrs[gusSelectedSoldier]->name, MercPtrs[gbPotentiallyAbandonedEPCSlotID]->name);
+          swprintf(str, ARR_SIZE(str),
+                   pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_SINGULAR],
+                   MercPtrs[gusSelectedSoldier]->name,
+                   MercPtrs[gbPotentiallyAbandonedEPCSlotID]->name);
         } else {  // female singular
-          swprintf(
-              str, pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_FEMALE_SINGULAR],
-              MercPtrs[gusSelectedSoldier]->name, MercPtrs[gbPotentiallyAbandonedEPCSlotID]->name);
+          swprintf(str, ARR_SIZE(str),
+                   pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_FEMALE_SINGULAR],
+                   MercPtrs[gusSelectedSoldier]->name,
+                   MercPtrs[gbPotentiallyAbandonedEPCSlotID]->name);
         }
       } else {  // Use the plural version of the string
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male plural
@@ -2837,7 +2839,7 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
                    pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_PLURAL],
                    MercPtrs[gusSelectedSoldier]->name);
         } else {  // female plural
-          swprintf(str,
+          swprintf(str, ARR_SIZE(str),
                    pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_FEMALE_PLURAL],
                    MercPtrs[gusSelectedSoldier]->name);
         }

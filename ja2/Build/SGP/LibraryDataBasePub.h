@@ -5,17 +5,9 @@
 
 #include "SGP/Types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 BOOLEAN InitializeFileDatabase();
 BOOLEAN ShutDownFileDatabase();
 BOOLEAN IsLibraryOpened(INT16 sLibraryID);
 BOOLEAN IsLibraryRealFile(HWFILE hFile);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

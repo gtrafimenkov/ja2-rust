@@ -32,10 +32,6 @@
 #define TOPIC_JA2OPPLIST						22
 */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern UINT16 TOPIC_MEMORY_MANAGER;
 extern UINT16 TOPIC_FILE_MANAGER;
 extern UINT16 TOPIC_DATABASE_MANAGER;
@@ -60,9 +56,5 @@ extern UINT16 TOPIC_JA2;
 extern UINT16 TOPIC_BLIT_QUEUE;
 extern UINT16 TOPIC_JA2OPPLIST;
 extern UINT16 TOPIC_JA2AI;
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif  // NUM_TOPICS_IDS

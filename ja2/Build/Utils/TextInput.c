@@ -251,10 +251,10 @@ void AddTextInputField(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, INT
   if (szInitText) {
     pNode->ubStrLen = (UINT8)wcslen(szInitText);
     Assert(pNode->ubStrLen <= ubMaxChars);
-    swprintf(pNode->szString, szInitText);
+    swprintf(pNode->szString, ARR_SIZE(pNode->szString), szInitText);
   } else {
     pNode->ubStrLen = 0;
-    swprintf(pNode->szString, L"");
+    swprintf(pNode->szString, ARR_SIZE(pNode->szString), L"");
   }
   pNode->ubMaxChars = ubMaxChars;  // max string length
 
@@ -357,10 +357,10 @@ void SetInputFieldStringWith16BitString(UINT8 ubField, STR16 szNewText) {
       if (szNewText) {
         curr->ubStrLen = (UINT8)wcslen(szNewText);
         Assert(curr->ubStrLen <= curr->ubMaxChars);
-        swprintf(curr->szString, szNewText);
+        swprintf(curr->szString, ARR_SIZE(curr->szString), szNewText);
       } else if (!curr->fUserField) {
         curr->ubStrLen = 0;
-        swprintf(curr->szString, L"");
+        swprintf(curr->szString, ARR_SIZE(curr->szString), L"");
       } else {
         AssertMsg(0, String("Attempting to illegally set text into user field %d", curr->ubID));
       }
@@ -378,10 +378,10 @@ void SetInputFieldStringWith8BitString(CHAR8 ubField, STR8 szNewText) {
       if (szNewText) {
         curr->ubStrLen = (UINT8)strlen(szNewText);
         Assert(curr->ubStrLen <= curr->ubMaxChars);
-        swprintf(curr->szString, L"%S", szNewText);
+        swprintf(curr->szString, ARR_SIZE(curr->szString), L"%S", szNewText);
       } else if (!curr->fUserField) {
         curr->ubStrLen = 0;
-        swprintf(curr->szString, L"");
+        swprintf(curr->szString, ARR_SIZE(curr->szString), L"");
       } else {
         AssertMsg(0, String("Attempting to illegally set text into user field %d", curr->ubID));
       }
@@ -410,7 +410,7 @@ void Get16BitStringFromField(UINT8 ubField, STR16 szString) {
   curr = gpTextInputHead;
   while (curr) {
     if (curr->ubID == ubField) {
-      swprintf(szString, curr->szString);
+      swprintf(szString, ARR_SIZE(szString), curr->szString);
       return;
     }
     curr = curr->next;
@@ -453,13 +453,13 @@ void SetInputFieldStringWithNumericStrictValue(UINT8 ubField, INT32 iNumber) {
       if (curr->fUserField)
         AssertMsg(0, String("Attempting to illegally set text into user field %d", curr->ubID));
       if (iNumber < 0)  // negative number converts to blank string
-        swprintf(curr->szString, L"");
+        swprintf(curr->szString, ARR_SIZE(curr->szString), L"");
       else {
         INT32 iMax = (INT32)pow(10.0, curr->ubMaxChars);
         if (iNumber > iMax)  // set string to max value based on number of chars.
-          swprintf(curr->szString, L"%d", iMax - 1);
+          swprintf(curr->szString, ARR_SIZE(curr->szString), L"%d", iMax - 1);
         else  // set string to the number given
-          swprintf(curr->szString, L"%d", iNumber);
+          swprintf(curr->szString, ARR_SIZE(curr->szString), L"%d", iNumber);
       }
       curr->ubStrLen = (UINT8)wcslen(curr->szString);
       return;

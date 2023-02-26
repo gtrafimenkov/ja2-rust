@@ -152,9 +152,10 @@ void LoadSaveScreenEntry() {
     Plat_GetFileClose(&FileInfo);
   }
 
-  swprintf(zOrigName, L"%s Map (*.dat)", iCurrentAction == ACTION_SAVE_MAP ? L"Save" : L"Load");
+  swprintf(zOrigName, ARR_SIZE(zOrigName), L"%s Map (*.dat)",
+           iCurrentAction == ACTION_SAVE_MAP ? L"Save" : L"Load");
 
-  swprintf(gzFilename, L"%S", gubFilename);
+  swprintf(gzFilename, ARR_SIZE(gzFilename), L"%S", gubFilename);
 
   CreateFileDialog(zOrigName);
 
@@ -198,7 +199,7 @@ UINT32 ProcessLoadSaveScreenMessageBoxResult() {
         if (!temp)
           wcscpy(gzFilename, L"");
         else
-          swprintf(gzFilename, L"%S", temp->FileInfo.zFileName);
+          swprintf(gzFilename, ARR_SIZE(gzFilename), L"%S", temp->FileInfo.zFileName);
         if (ValidFilename()) {
           SetInputFieldStringWith16BitString(0, gzFilename);
         } else {
@@ -366,7 +367,7 @@ UINT32 LoadSaveScreenHandle(void) {
       RemoveFileDialog();
       CreateProgressBar(0, 118, 183, 522, 202);
       DefineProgressBarPanel(0, 65, 79, 94, 100, 155, 540, 235);
-      swprintf(zOrigName, L"Loading map:  %s", gzFilename);
+      swprintf(zOrigName, ARR_SIZE(zOrigName), L"Loading map:  %s", gzFilename);
       SetProgressBarTitle(0, zOrigName, BLOCKFONT2, FONT_RED, FONT_NEARBLACK);
       gbCurrentFileIOStatus = INITIATE_MAP_LOAD;
       return LOADSAVE_SCREEN;
@@ -533,7 +534,7 @@ void SelectFileDialogYPos(UINT16 usRelativeYPos) {
       INT32 iCurrClickTime;
       iCurrFileShown = x;
       FListNode->FileInfo.zFileName[30] = 0;
-      swprintf(gzFilename, L"%S", FListNode->FileInfo.zFileName);
+      swprintf(gzFilename, ARR_SIZE(gzFilename), L"%S", FListNode->FileInfo.zFileName);
       if (ValidFilename()) {
         SetInputFieldStringWith16BitString(0, gzFilename);
       } else {
@@ -712,7 +713,7 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
     }
     if (curr) {
       SetInputFieldStringWith8BitString(0, curr->FileInfo.zFileName);
-      swprintf(gzFilename, L"%S", curr->FileInfo.zFileName);
+      swprintf(gzFilename, ARR_SIZE(gzFilename), L"%S", curr->FileInfo.zFileName);
     }
   }
 }
@@ -767,7 +768,7 @@ UINT32 ProcessFileIO() {
       SetFontForeground(FONT_LTKHAKI);
       SetFontShadow(FONT_DKKHAKI);
       SetFontBackground(0);
-      swprintf(zOrigName, L"Saving map:  %s", gzFilename);
+      swprintf(zOrigName, ARR_SIZE(zOrigName), L"Saving map:  %s", gzFilename);
       usStartX = 320 - StringPixLength(zOrigName, LARGEFONT1) / 2;
       usStartY = 180 - GetFontHeight(LARGEFONT1) / 2;
       mprintf(usStartX, usStartY, zOrigName);

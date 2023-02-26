@@ -116,10 +116,6 @@ typedef struct {
 //
 // **********************************************************************************
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Creates a list to contain video objects
 BOOLEAN InitializeVideoObjectManager();
 
@@ -250,9 +246,5 @@ BOOLEAN BltVideoObjectOutlineShadowFromIndex(UINT32 uiDestVSurface, UINT32 uiSrc
 BOOLEAN BltVideoObjectOutlineShadow(UINT32 uiDestVSurface, struct VObject *hSrcVObject,
                                     UINT16 usIndex, INT32 iDestX, INT32 iDestY);
 BOOLEAN PixelateVideoObjectRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

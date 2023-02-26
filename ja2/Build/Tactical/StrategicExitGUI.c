@@ -510,12 +510,12 @@ void UpdateSectorExitMenu() {
       CHAR16 str[256];
       if (!gExitDialog.fSquadHasMultipleEPCs) {
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male singular
-          swprintf(str,
+          swprintf(str, ARR_SIZE(str),
                    pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_SINGULAR],
                    MercPtrs[gusSelectedSoldier]->name,
                    MercPtrs[gExitDialog.bSingleMoveWillIsolateEPC]->name);
         } else {  // female singular
-          swprintf(str,
+          swprintf(str, ARR_SIZE(str),
                    pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_FEMALE_SINGULAR],
                    MercPtrs[gusSelectedSoldier]->name,
                    MercPtrs[gExitDialog.bSingleMoveWillIsolateEPC]->name);
@@ -526,7 +526,7 @@ void UpdateSectorExitMenu() {
                    pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_MALE_PLURAL],
                    MercPtrs[gusSelectedSoldier]->name);
         } else {  // female plural
-          swprintf(str,
+          swprintf(str, ARR_SIZE(str),
                    pExitingSectorHelpText[EXIT_GUI_MERC_CANT_ISOLATE_EPC_HELPTEXT_FEMALE_PLURAL],
                    MercPtrs[gusSelectedSoldier]->name);
         }

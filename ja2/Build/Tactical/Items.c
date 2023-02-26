@@ -1591,7 +1591,8 @@ BOOLEAN ValidItemAttachment(struct OBJECTTYPE *pObj, UINT16 usAttachment,
         // well, maybe the player thought he could
         CHAR16 zTemp[100];
 
-        swprintf(zTemp, Message[STR_CANT_ATTACH], ItemNames[usAttachment], ItemNames[pObj->usItem]);
+        swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_ATTACH], ItemNames[usAttachment],
+                 ItemNames[pObj->usItem]);
         ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, zTemp);
       }
 
@@ -2827,7 +2828,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
     if (!CompatibleFaceItem(pObj->usItem, pSoldier->inv[HEAD2POS].usItem)) {
       CHAR16 zTemp[150];
 
-      swprintf(zTemp, Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
+      swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
                ItemNames[pSoldier->inv[HEAD2POS].usItem]);
       ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, zTemp);
       return (FALSE);
@@ -2836,7 +2837,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
     if (!CompatibleFaceItem(pObj->usItem, pSoldier->inv[HEAD1POS].usItem)) {
       CHAR16 zTemp[150];
 
-      swprintf(zTemp, Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
+      swprintf(zTemp, ARR_SIZE(zTemp), Message[STR_CANT_USE_TWO_ITEMS], ItemNames[pObj->usItem],
                ItemNames[pSoldier->inv[HEAD1POS].usItem]);
       ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, zTemp);
       return (FALSE);

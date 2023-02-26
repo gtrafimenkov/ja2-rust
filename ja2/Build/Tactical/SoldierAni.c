@@ -9,6 +9,7 @@
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
+#include "SGP/Shading.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"

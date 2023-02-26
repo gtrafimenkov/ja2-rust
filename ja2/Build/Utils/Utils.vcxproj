@@ -29,8 +29,7 @@
     <ClCompile Include="MultiLanguageGraphicUtils.c" />
     <ClCompile Include="MusicControl.c" />
     <ClCompile Include="PopUpBox.c" />
-    <ClCompile Include="QuantizeWrap.cc" />
-    <ClCompile Include="Quantize.cc" />
+    <ClCompile Include="QuantizeWrap.c" />
     <ClCompile Include="Slider.c" />
     <ClCompile Include="SoundControl.c" />
     <ClCompile Include="STIConvert.c" />
@@ -67,7 +66,6 @@
     <ClInclude Include="MusicControl.h" />
     <ClInclude Include="PopUpBox.h" />
     <ClInclude Include="QuantizeWrap.h" />
-    <ClInclude Include="Quantize.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SoundControl.h" />
@@ -145,7 +143,8 @@
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <DisableSpecificWarnings>4996;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
@@ -173,7 +172,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <DisableSpecificWarnings>4996;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
@@ -200,7 +200,8 @@
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <DisableSpecificWarnings>4996;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>

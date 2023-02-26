@@ -32,9 +32,6 @@
     <ClInclude Include="DirectDrawCalls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DSound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="English.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shading.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Smack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundMan.h">
@@ -119,22 +113,22 @@
     <ClInclude Include="WinFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WizShare.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MemMan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ja2Libs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mss.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RAD.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FileMan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="windows\Mss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="windows\RAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="windows\Smack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

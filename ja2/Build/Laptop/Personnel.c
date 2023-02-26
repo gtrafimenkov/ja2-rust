@@ -1173,7 +1173,7 @@ void DisplayCharName(INT32 iId, INT32 iSlot) {
     bTownId = GetTownIdForSector(Menptr[iId].sSectorX, Menptr[iId].sSectorY);
 
     if (bTownId != BLANK_SECTOR) {
-      swprintf(sTownName, L"%s", pTownNames[bTownId]);
+      swprintf(sTownName, ARR_SIZE(sTownName), L"%s", pTownNames[bTownId]);
     }
   }
 
@@ -2259,8 +2259,8 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
         usHeight = (UINT32)pTrav->usHeight;
         usWidth = (UINT32)pTrav->usWidth;
 
-        sCenX = PosX + (abs((INT32)(INT32(57 - usWidth))) / 2) - pTrav->sOffsetX;
-        sCenY = PosY + (abs((INT32)(INT32(22 - usHeight))) / 2) - pTrav->sOffsetY;
+        sCenX = PosX + (abs((INT32)(57 - usWidth)) / 2) - pTrav->sOffsetX;
+        sCenY = PosY + (abs((INT32)(22 - usHeight)) / 2) - pTrav->sOffsetY;
 
         // shadow
         // BltVideoObjectOutlineShadowFromIndex( FRAME_BUFFER, GetInterfaceGraphicForItem( pItem ),
@@ -2318,7 +2318,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
 
         if (Item[pSoldier->inv[ubCounter].usItem].usItemClass & IC_GUN) {
           swprintf(
-              sString, L"%s",
+              sString, ARR_SIZE(sString), L"%s",
               AmmoCaliber[Weapon[Item[pSoldier->inv[ubCounter].usItem].ubClassIndex].ubCalibre]);
 
           // shorten if needed
@@ -4727,8 +4727,6 @@ void DisplayDepartedCharName(INT32 iId, INT32 iSlot, INT32 iState) {
       swprintf(sString, ARR_SIZE(sString), L"%s", pPersonnelDepartedStateStrings[DEPARTED_QUIT]);
   }
 
-  //	swprintf( sString, L"%s", pPersonnelDepartedStateStrings[ iState ] );
-
   // nick name - assignment
   FindFontCenterCoordinates(IMAGE_BOX_X - 5, 0, IMAGE_BOX_WIDTH + 90, 0, sString, CHAR_NAME_FONT,
                             &sX, &sY);
@@ -5329,7 +5327,7 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
                     iValue = (wcstol(sTransferString, NULL, 10) -
                               (wcstol(sTransferString, NULL, 10) % 10));
-                    swprintf(sTransferString, L"%d", iValue);
+                    swprintf(sTransferString, ARR_SIZE(sTransferString), L"%d", iValue);
                     fReDrawScreenFlag = TRUE;
                   } else {
                     // transfer
@@ -5341,7 +5339,7 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
                   fOldATMFlags = fATMFlags;
                   fATMFlags = 4;
                   iValue = GetFundsOnMerc(pSoldier);
-                  swprintf(sTransferString, L"%d", iValue);
+                  swprintf(sTransferString, ARR_SIZE(sTransferString), L"%d", iValue);
                   fReDrawScreenFlag = TRUE;
                 }
               } else if (fATMFlags == 3) {
@@ -5353,7 +5351,7 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
                     iValue = (wcstol(sTransferString, NULL, 10) -
                               (wcstol(sTransferString, NULL, 10) % 10));
-                    swprintf(sTransferString, L"%d", iValue);
+                    swprintf(sTransferString, ARR_SIZE(sTransferString), L"%d", iValue);
                     fReDrawScreenFlag = TRUE;
                   } else {
                     // transfer
@@ -5365,7 +5363,7 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
                   fOldATMFlags = fATMFlags;
                   fATMFlags = 4;
                   iValue = LaptopSaveInfo.iCurrentBalance;
-                  swprintf(sTransferString, L"%d", iValue);
+                  swprintf(sTransferString, ARR_SIZE(sTransferString), L"%d", iValue);
                   fReDrawScreenFlag = TRUE;
                 }
               } else if (fATMFlags == 4) {

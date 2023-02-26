@@ -4598,14 +4598,14 @@ void SMInvMoneyButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         guiPendingOverrideEvent = A_CHANGE_TO_MOVE;
         HandleTacticalUI();
 
-        swprintf(zMoney, L"%d", gpItemPointer->uiMoneyAmount);
+        swprintf(zMoney, ARR_SIZE(zMoney), L"%d", gpItemPointer->uiMoneyAmount);
 
         InsertCommasForDollarFigure(zMoney);
         InsertDollarSignInToString(zMoney);
 
         // ask the user if they are sure they want to deposit the money
-        swprintf(zText, gzMoneyWithdrawMessageText[CONFIRMATION_TO_DEPOSIT_MONEY_TO_ACCOUNT],
-                 zMoney);
+        swprintf(zText, ARR_SIZE(zText),
+                 gzMoneyWithdrawMessageText[CONFIRMATION_TO_DEPOSIT_MONEY_TO_ACCOUNT], zMoney);
 
         if (guiCurrentScreen == SHOPKEEPER_SCREEN) {
           // if we are in the shop keeper interface, free the cursor

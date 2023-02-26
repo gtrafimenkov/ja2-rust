@@ -48,10 +48,6 @@ typedef struct StringInput {
 
 } StringInput;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern BOOLEAN InitializeInputManager(void);
 extern void ShutdownInputManager(void);
 extern BOOLEAN DequeueEvent(InputAtom *Event);
@@ -105,9 +101,5 @@ extern BOOLEAN gfSGPInputReceived;
 #define _EvAltDown(a) (((InputAtom *)(a))->usKeyState & ALT_DOWN)
 
 extern struct Point GetMousePoint();
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

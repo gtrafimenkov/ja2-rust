@@ -83,10 +83,7 @@
     <ClCompile Include="PopUpBox.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuantizeWrap.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Quantize.cc">
+    <ClCompile Include="QuantizeWrap.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Slider.c">
@@ -167,9 +164,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QuantizeWrap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Quantize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">

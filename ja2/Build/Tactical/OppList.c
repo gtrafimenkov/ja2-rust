@@ -3773,7 +3773,7 @@ void WriteQuantityAndAttachments(struct OBJECTTYPE *pObject, INT32 yp) {
   if (pObject->usAttachItem[0] || pObject->usAttachItem[1] || pObject->usAttachItem[2] ||
       pObject->usAttachItem[3]) {
     fAttachments = TRUE;
-    swprintf(szAttach, L"(");
+    swprintf(szAttach, ARR_SIZE(szAttach), L"(");
     AppendAttachmentCode(pObject->usAttachItem[0], szAttach);
     AppendAttachmentCode(pObject->usAttachItem[1], szAttach);
     AppendAttachmentCode(pObject->usAttachItem[2], szAttach);
@@ -3789,7 +3789,7 @@ void WriteQuantityAndAttachments(struct OBJECTTYPE *pObject, INT32 yp) {
       swprintf(str, ARR_SIZE(str), L"Clips:  %d  (%d", pObject->ubNumberOfObjects,
                pObject->bStatus[0]);
       for (i = 1; i < pObject->ubNumberOfObjects; i++) {
-        swprintf(temp, L", %d", pObject->bStatus[0]);
+        swprintf(temp, ARR_SIZE(temp), L", %d", pObject->bStatus[0]);
         wcscat(str, temp);
       }
       wcscat(str, L")");
@@ -3865,54 +3865,54 @@ void DebugSoldierPage4() {
       SOLDIERINITNODE *pNode;
       switch (pSoldier->bOrders) {
         case STATIONARY:
-          swprintf(szOrders, L"STATIONARY");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"STATIONARY");
           break;
         case ONGUARD:
-          swprintf(szOrders, L"ON GUARD");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"ON GUARD");
           break;
         case ONCALL:
-          swprintf(szOrders, L"ON CALL");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"ON CALL");
           break;
         case SEEKENEMY:
-          swprintf(szOrders, L"SEEK ENEMY");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"SEEK ENEMY");
           break;
         case CLOSEPATROL:
-          swprintf(szOrders, L"CLOSE PATROL");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"CLOSE PATROL");
           break;
         case FARPATROL:
-          swprintf(szOrders, L"FAR PATROL");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"FAR PATROL");
           break;
         case POINTPATROL:
-          swprintf(szOrders, L"POINT PATROL");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"POINT PATROL");
           break;
         case RNDPTPATROL:
-          swprintf(szOrders, L"RND PT PATROL");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"RND PT PATROL");
           break;
         default:
-          swprintf(szOrders, L"UNKNOWN");
+          swprintf(szOrders, ARR_SIZE(szOrders), L"UNKNOWN");
           break;
       }
       switch (pSoldier->bAttitude) {
         case DEFENSIVE:
-          swprintf(szAttitude, L"DEFENSIVE");
+          swprintf(szAttitude, ARR_SIZE(szAttitude), L"DEFENSIVE");
           break;
         case BRAVESOLO:
-          swprintf(szAttitude, L"BRAVE SOLO");
+          swprintf(szAttitude, ARR_SIZE(szAttitude), L"BRAVE SOLO");
           break;
         case BRAVEAID:
-          swprintf(szAttitude, L"BRAVE AID");
+          swprintf(szAttitude, ARR_SIZE(szAttitude), L"BRAVE AID");
           break;
         case AGGRESSIVE:
-          swprintf(szAttitude, L"AGGRESSIVE");
+          swprintf(szAttitude, ARR_SIZE(szAttitude), L"AGGRESSIVE");
           break;
         case CUNNINGSOLO:
-          swprintf(szAttitude, L"CUNNING SOLO");
+          swprintf(szAttitude, ARR_SIZE(szAttitude), L"CUNNING SOLO");
           break;
         case CUNNINGAID:
-          swprintf(szAttitude, L"CUNNING AID");
+          swprintf(szAttitude, ARR_SIZE(szAttitude), L"CUNNING AID");
           break;
         default:
-          swprintf(szAttitude, L"UNKNOWN");
+          swprintf(szAttitude, ARR_SIZE(szAttitude), L"UNKNOWN");
           break;
       }
       pNode = gSoldierInitHead;

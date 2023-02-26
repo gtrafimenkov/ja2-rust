@@ -909,7 +909,7 @@ BOOLEAN RenderAIMMembers() {
                    AIM_MEMBER_OPTIONAL_GEAR_Y, 0, AIM_M_FONT_STATIC_TEXT, AIM_M_COLOR_STATIC_TEXT,
                    FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
-  swprintf(wTemp, L"%d", gMercProfiles[gbCurrentSoldier].usOptionalGearCost);
+  swprintf(wTemp, ARR_SIZE(wTemp), L"%d", gMercProfiles[gbCurrentSoldier].usOptionalGearCost);
   InsertCommasForDollarFigure(wTemp);
   InsertDollarSignInToString(wTemp);
   uiPosX = AIM_MEMBER_OPTIONAL_GEAR_X +
@@ -959,7 +959,7 @@ BOOLEAN DrawNumeralsToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 u
                              UINT32 ulFont, UINT8 ubColor) {
   wchar_t sStr[10];
 
-  swprintf(sStr, L"%d", iNumber);
+  swprintf(sStr, ARR_SIZE(sStr), L"%d", iNumber);
 
   DrawTextToScreen(sStr, usLocX, usLocY, bWidth, ulFont, ubColor, FONT_MCOLOR_BLACK, FALSE,
                    RIGHT_JUSTIFIED);
@@ -971,7 +971,7 @@ BOOLEAN DrawMoneyToScreen(INT32 iNumber, INT8 bWidth, UINT16 usLocX, UINT16 usLo
                           UINT8 ubColor) {
   wchar_t sStr[10];
 
-  swprintf(sStr, L"%d", iNumber);
+  swprintf(sStr, ARR_SIZE(sStr), L"%d", iNumber);
   InsertCommasForDollarFigure(sStr);
   InsertDollarSignInToString(sStr);
 
@@ -1026,11 +1026,12 @@ BOOLEAN UpdateMercInfo(void) {
     wchar_t sMedicalString[40];
 
     // Display the medical cost
-    swprintf(zTemp, L"%d", gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount);
+    swprintf(zTemp, ARR_SIZE(zTemp), L"%d", gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount);
     InsertCommasForDollarFigure(zTemp);
     InsertDollarSignInToString(zTemp);
 
-    swprintf(sMedicalString, L"%s %s", zTemp, CharacterInfo[AIM_MEMBER_MEDICAL_DEPOSIT_REQ]);
+    swprintf(sMedicalString, ARR_SIZE(sMedicalString), L"%s %s", zTemp,
+             CharacterInfo[AIM_MEMBER_MEDICAL_DEPOSIT_REQ]);
 
     // If the string will be displayed in more then 2 lines, recenter the string
     if ((DisplayWrappedString(0, 0, AIM_MEDICAL_DEPOSIT_WIDTH, 2, AIM_FONT12ARIAL,
@@ -1280,7 +1281,7 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
         wchar_t zTempStr[32];
         //				UINT16	usWidthOfNumber;
 
-        swprintf(zTempStr, L"x%d", gMercProfiles[ubMercID].bInvNumber[i]);
+        swprintf(zTempStr, ARR_SIZE(zTempStr), L"x%d", gMercProfiles[ubMercID].bInvNumber[i]);
 
         DrawTextToScreen(zTempStr, (UINT16)(PosX - 1), (UINT16)(PosY + 20),
                          AIM_MEMBER_WEAPON_NAME_WIDTH, AIM_M_FONT_DYNAMIC_TEXT,
@@ -1867,11 +1868,12 @@ BOOLEAN DisplayVideoConferencingDisplay() {
 
   // Title & Name
   if (gubVideoConferencingMode == AIM_VIDEO_INIT_MODE) {
-    swprintf(sMercName, L"%s", VideoConfercingText[AIM_MEMBER_CONNECTING]);
+    swprintf(sMercName, ARR_SIZE(sMercName), L"%s", VideoConfercingText[AIM_MEMBER_CONNECTING]);
     DrawTextToScreen(sMercName, AIM_MEMBER_VIDEO_NAME_X, AIM_MEMBER_VIDEO_NAME_Y, 0, FONT12ARIAL,
                      AIM_M_VIDEO_TITLE_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   } else {
-    swprintf(sMercName, L"%s %s", VideoConfercingText[AIM_MEMBER_VIDEO_CONF_WITH],
+    swprintf(sMercName, ARR_SIZE(sMercName), L"%s %s",
+             VideoConfercingText[AIM_MEMBER_VIDEO_CONF_WITH],
              gMercProfiles[gbCurrentSoldier].zName);
     DrawTextToScreen(sMercName, AIM_MEMBER_VIDEO_NAME_X, AIM_MEMBER_VIDEO_NAME_Y, 0, FONT12ARIAL,
                      AIM_M_VIDEO_TITLE_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
@@ -2027,7 +2029,7 @@ UINT32 DisplayMercChargeAmount() {
     }
   }
 
-  swprintf(wDollarTemp, L"%d", giContractAmount);
+  swprintf(wDollarTemp, ARR_SIZE(wDollarTemp), L"%d", giContractAmount);
   InsertCommasForDollarFigure(wDollarTemp);
   InsertDollarSignInToString(wDollarTemp);
 
@@ -2035,9 +2037,10 @@ UINT32 DisplayMercChargeAmount() {
   //	if( FindSoldierByProfileID( gbCurrentSoldier, TRUE ) == NULL )
   {
     if (gMercProfiles[gbCurrentSoldier].bMedicalDeposit)
-      swprintf(wTemp, L"%s %s", wDollarTemp, VideoConfercingText[AIM_MEMBER_WITH_MEDICAL]);
+      swprintf(wTemp, ARR_SIZE(wTemp), L"%s %s", wDollarTemp,
+               VideoConfercingText[AIM_MEMBER_WITH_MEDICAL]);
     else
-      swprintf(wTemp, L"%s", wDollarTemp);
+      swprintf(wTemp, ARR_SIZE(wTemp), L"%s", wDollarTemp);
 
     DrawTextToScreen(wTemp, AIM_CONTRACT_CHARGE_AMOUNNT_X + 1, AIM_CONTRACT_CHARGE_AMOUNNT_Y + 3, 0,
                      AIM_M_VIDEO_CONTRACT_AMOUNT_FONT, AIM_M_VIDEO_CONTRACT_AMOUNT_COLOR,
@@ -2424,9 +2427,9 @@ BOOLEAN DisplayTalkingMercFaceForVideoPopUp(INT32 iFaceIndex) {
 
 void DisplayTextForMercFaceVideoPopUp(STR16 pString) {
 #ifdef TAIWANESE
-  swprintf(gsTalkingMercText, L"%s", pString);
+  swprintf(gsTalkingMercText, ARR_SIZE(gsTalkingMercText), L"%s", pString);
 #else
-  swprintf(gsTalkingMercText, L"\"%s\"", pString);
+  swprintf(gsTalkingMercText, ARR_SIZE(gsTalkingMercText), L"\"%s\"", pString);
 #endif
 
   // Set the minimum time for the dialogue text to be present
@@ -4086,7 +4089,7 @@ void DisplayPopUpBoxExplainingMercArrivalLocationAndTime() {
            60;
 
   // create the time string
-  swprintf(zTimeString, L"%02d:%02d", uiHour, 0);
+  swprintf(zTimeString, ARR_SIZE(zTimeString), L"%02d:%02d", uiHour, 0);
 
   // get the id string
   GetSectorIDString(gsMercArriveSectorX, gsMercArriveSectorY, 0, zSectorIDString, FALSE);
@@ -4098,11 +4101,13 @@ void DisplayPopUpBoxExplainingMercArrivalLocationAndTime() {
 
 #ifdef GERMAN
   // Germans version has a different argument order
-  swprintf(szLocAndTime, pMessageStrings[MSG_JUST_HIRED_MERC_ARRIVAL_LOCATION_POPUP],
+  swprintf(szLocAndTime, ARR_SIZE(szLocAndTime),
+           pMessageStrings[MSG_JUST_HIRED_MERC_ARRIVAL_LOCATION_POPUP],
            gMercProfiles[pSoldier->ubProfile].zNickname,
            LaptopSaveInfo.sLastHiredMerc.uiArrivalTime / 1440, zTimeString, zSectorIDString);
 #else
-  swprintf(szLocAndTime, pMessageStrings[MSG_JUST_HIRED_MERC_ARRIVAL_LOCATION_POPUP],
+  swprintf(szLocAndTime, ARR_SIZE(szLocAndTime),
+           pMessageStrings[MSG_JUST_HIRED_MERC_ARRIVAL_LOCATION_POPUP],
            gMercProfiles[pSoldier->ubProfile].zNickname, zSectorIDString,
            LaptopSaveInfo.sLastHiredMerc.uiArrivalTime / 1440, zTimeString);
 #endif

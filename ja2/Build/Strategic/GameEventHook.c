@@ -400,7 +400,8 @@ void CrippledVersionEndGameCheck() {
         zString,
         L"Game Over.  We hope you have enjoyed playing the limited version of Jagged Alliance 2.");
   } else {
-    swprintf(zString, L"You have %d game days left in this limited version of Jagged Alliance 2.",
+    swprintf(zString, ARR_SIZE(zString),
+             L"You have %d game days left in this limited version of Jagged Alliance 2.",
              (8 - guiDay));
   }
 

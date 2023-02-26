@@ -314,7 +314,7 @@ void BuildListFile() {
       ubNumStates = (UINT8)cnt;
       pusStates[cnt] = usState;
     } else {
-      swprintf(zError, L"Animation str %S is not known: ", currFilename);
+      swprintf(zError, ARR_SIZE(zError), L"Animation str %S is not known: ", currFilename);
       DoMessageBox(MSG_BOX_BASIC_STYLE, zError, ANIEDIT_SCREEN, (UINT8)MSG_BOX_FLAG_YESNO, NULL,
                    NULL);
       fclose(infoFile);

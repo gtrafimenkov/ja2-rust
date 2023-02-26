@@ -981,7 +981,7 @@ void RenderSummaryWindow() {
         else
           x = gsSectorX - 1, y = gsSectorY - 1;
         swprintf(str, ARR_SIZE(str), L"%c%d", y + 'A', x + 1);
-        swprintf(gszFilename, str);
+        swprintf(gszFilename, ARR_SIZE(gszFilename), str);
         giCurrLevel = giCurrentViewLevel;
         switch (giCurrentViewLevel) {
           case ALL_LEVELS_MASK:
@@ -1110,7 +1110,7 @@ void RenderSummaryWindow() {
               wcscat(gszFilename, L"_b3_a.dat");
               break;
           }
-          swprintf(gszDisplayName, gszFilename);
+          swprintf(gszDisplayName, ARR_SIZE(gszDisplayName), gszFilename);
           EnableButton(iSummaryButton[SUMMARY_LOAD]);
           if (gpCurrentSectorSummary) {
             if (gpCurrentSectorSummary->ubSummaryVersion < GLOBAL_SUMMARY_VERSION)
@@ -1187,7 +1187,7 @@ void RenderSummaryWindow() {
               wcscat(gszFilename, L"_b3_a.dat");
               break;
           }
-          swprintf(gszDisplayName, gszFilename);
+          swprintf(gszDisplayName, ARR_SIZE(gszDisplayName), gszFilename);
           DisableButton(iSummaryButton[SUMMARY_LOAD]);
         }
       SPECIALCASE_LABEL:
@@ -1991,7 +1991,7 @@ void CalculateOverrideStatus() {
       sprintf(ptr, ".dat");
   } else
     sprintf(szFilename, "MAPS\\%S", gszFilename);
-  swprintf(gszDisplayName, L"%S", &(szFilename[5]));
+  swprintf(gszDisplayName, ARR_SIZE(gszDisplayName), L"%S", &(szFilename[5]));
   if (Plat_GetFileFirst(szFilename, &FileInfo)) {
     if (gfWorldLoaded) {
       if (Plat_GetFileIsReadonly(&FileInfo) || Plat_GetFileIsSystem(&FileInfo))
@@ -2343,7 +2343,7 @@ void ReportError(CHAR8 *pSector, UINT8 ubLevel) {
   // Make sure the file exists... if not, then return false
   swprintf(str, ARR_SIZE(str), L"%S", pSector);
   if (ubLevel % 4) {
-    swprintf(temp, L"_b%d.dat", ubLevel % 4);
+    swprintf(temp, ARR_SIZE(temp), L"_b%d.dat", ubLevel % 4);
     wcscat(str, temp);
   }
   mprintf(10, yp, L"Skipping update for %s.  Probably due to tileset conflicts...", str);
@@ -2449,7 +2449,7 @@ void ExtractTempFilename() {
     gfRenderSummary = TRUE;
     gfOverrideDirty = TRUE;
   }
-  if (!wcslen(str)) swprintf(gszDisplayName, L"test.dat");
+  if (!wcslen(str)) swprintf(gszDisplayName, ARR_SIZE(gszDisplayName), L"test.dat");
 }
 
 void ApologizeOverrideAndForceUpdateEverything() {

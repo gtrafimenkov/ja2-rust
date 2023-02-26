@@ -560,8 +560,9 @@ UINT16 gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   if (USE_WINFONTS()) {
@@ -591,8 +592,9 @@ UINT16 gprintfinvalidate(INT16 x, INT16 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   uiStringLength = StringPixLength(string, FontDefault);
@@ -611,8 +613,9 @@ UINT16 gprintfRestore(INT16 x, INT16 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   uiStringLength = StringPixLength(string, FontDefault);

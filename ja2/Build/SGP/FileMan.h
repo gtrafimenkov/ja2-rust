@@ -17,9 +17,9 @@ typedef UINT32 HWFILE;
 #define FILE_OPEN_ALWAYS 0x0080        // open a file, create if doesn't exist
 #define FILE_TRUNCATE_EXISTING 0x0100  // open a file, truncate to size 0. fail if no exist
 
-#define FILE_SEEK_FROM_START 0x01    // keep in sync with dbman.h
-#define FILE_SEEK_FROM_END 0x02      // keep in sync with dbman.h
-#define FILE_SEEK_FROM_CURRENT 0x04  // keep in sync with dbman.h
+#define FILE_SEEK_FROM_START 0x01
+#define FILE_SEEK_FROM_END 0x02
+#define FILE_SEEK_FROM_CURRENT 0x04
 
 extern BOOLEAN FileMan_Initialize();
 extern void FileMan_Shutdown(void);

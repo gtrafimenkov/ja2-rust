@@ -13,10 +13,6 @@
 
 struct VObject;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Moved here from Button System.c by DB 99/01/07
 // Names of the default generic button image files.
 #define DEFAULT_GENERIC_BUTTON_OFF "GENBUTN.STI"
@@ -356,9 +352,5 @@ void DrawCheckBoxButtonOn(INT32 iButtonID);
 void DrawCheckBoxButtonOff(INT32 iButtonID);
 
 extern UINT16 GetWidthOfButtonPic(UINT16 usButtonPicID, INT32 iSlot);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

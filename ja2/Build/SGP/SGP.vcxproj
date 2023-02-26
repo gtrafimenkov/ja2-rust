@@ -22,7 +22,6 @@
     <ClInclude Include="CursorControl.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DirectDrawCalls.h" />
-    <ClInclude Include="DSound.h" />
     <ClInclude Include="English.h" />
     <ClInclude Include="FileMan.h" />
     <ClInclude Include="Font.h" />
@@ -36,12 +35,9 @@
     <ClInclude Include="MemMan.h" />
     <ClInclude Include="MouseSystem.h" />
     <ClInclude Include="MouseSystemMacros.h" />
-    <ClInclude Include="Mss.h" />
     <ClInclude Include="PCX.h" />
-    <ClInclude Include="RAD.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Shading.h" />
-    <ClInclude Include="Smack.h" />
     <ClInclude Include="SoundMan.h" />
     <ClInclude Include="STCI.h" />
     <ClInclude Include="Timer.h" />
@@ -55,8 +51,10 @@
     <ClInclude Include="VObjectPrivate.h" />
     <ClInclude Include="VSurface.h" />
     <ClInclude Include="WCheck.h" />
+    <ClInclude Include="windows\Mss.h" />
+    <ClInclude Include="windows\RAD.h" />
+    <ClInclude Include="windows\Smack.h" />
     <ClInclude Include="WinFont.h" />
-    <ClInclude Include="WizShare.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ButtonSoundControl.c" />
@@ -150,7 +148,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <DisableSpecificWarnings>4996;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
@@ -177,7 +176,8 @@
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <DisableSpecificWarnings>4996;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
@@ -202,7 +202,8 @@
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <CompileAs>Default</CompileAs>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <DisableSpecificWarnings>4996;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>

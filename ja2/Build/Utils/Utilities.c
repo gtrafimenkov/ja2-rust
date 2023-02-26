@@ -127,7 +127,7 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, UINT16 usWidth, INT32 uiFont) {
       }
       if (!fLineSplit) {
         // We completed the check for a space, but failed, so use the hyphen method.
-        swprintf(pStr2, L"-%s", &(pStr[uiHyphenLet]));
+        swprintf(pStr2, ARR_SIZE(pStr2), L"-%s", &(pStr[uiHyphenLet]));
         pStr[uiHyphenLet] = (INT16)'/0';
         fLineSplit = TRUE;  // hyphen method
         break;

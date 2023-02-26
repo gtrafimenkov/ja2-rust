@@ -1,13 +1,3 @@
-//=================================================================================================
-//	MouseSystem_Macros.h
-//
-//	Macro definitions for the "mousesystem" mouse region handler.
-//
-//	This file is included by "mousesystem.h" or can be included by itself.
-//
-//	Written by Bret Rowdon. Jan 30 '97
-//=================================================================================================
-
 #ifndef _MOUSE_SYSTEM_MACROS_H_
 #define _MOUSE_SYSTEM_MACROS_H_
 
@@ -26,16 +16,8 @@
 #define MouseSystemHook(t, x, y, l, r)
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Special prototype for mouse handler hook
 extern void MSYS_SGP_Mouse_Handler_Hook(UINT16 Type, UINT16 Xcoord, UINT16 Ycoord,
                                         BOOLEAN LeftButton, BOOLEAN RightButton);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

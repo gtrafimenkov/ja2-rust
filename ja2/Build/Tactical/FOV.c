@@ -175,12 +175,6 @@ void BuildSightDir(UINT32 dir, UINT32 *One, UINT32 *Two, UINT32 *Three, UINT32 *
   }
 }
 
-void BuildSightDir(UINT32 dir, INT32 *One, INT32 *Two, INT32 *Three, INT32 *Four, INT32 *Five) {
-  BuildSightDir(dir, (UINT32 *)One, (UINT32 *)Two, (UINT32 *)Three, (UINT32 *)Four, (UINT32 *)Five);
-}
-
-//#if 0
-
 #define NUM_SLANT_ROOF_SLOTS 200
 
 typedef struct {

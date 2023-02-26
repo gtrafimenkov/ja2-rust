@@ -116,10 +116,6 @@ typedef struct {
   INT32 iReserved;
 } LIBHEADER;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // The FileDatabaseHeader
 extern DatabaseManagerHeaderStruct gFileDataBase;
 
@@ -142,9 +138,5 @@ BOOLEAN LibraryFileSeek(INT16 sLibraryID, UINT32 uiFileNum, UINT32 uiDistance, U
 // used to open and close libraries during the game
 BOOLEAN CloseLibrary(INT16 sLibraryID);
 BOOLEAN OpenLibrary(INT16 sLibraryID);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

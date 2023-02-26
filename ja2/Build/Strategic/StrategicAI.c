@@ -1667,7 +1667,8 @@ void ValidatePlayersAreInOneGroupOnly() {
                      // strings.  We will simply append another string containing
     // the total number of detected errors.
     CHAR16 tempstr[128];
-    swprintf(tempstr, L"  A total of %d related errors have been detected.", iNumErrors);
+    swprintf(tempstr, ARR_SIZE(tempstr), L"  A total of %d related errors have been detected.",
+             iNumErrors);
     wcscat(str, tempstr);
     SAIReportError(str);
   }

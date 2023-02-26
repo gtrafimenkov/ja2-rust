@@ -250,7 +250,7 @@ void RenderClock(INT16 sX, INT16 sY) {
     SetFontForeground(FONT_FCOLOR_NICERED);
     // Erase first!
     RestoreExternBackgroundRect(sX, sY, CLOCK_STRING_WIDTH, CLOCK_STRING_HEIGHT);
-    swprintf(gswzWorldTimeStr, L"GAME OVER");
+    swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"GAME OVER");
     mprintf(sX + (CLOCK_STRING_WIDTH - StringPixLength(WORLDTIMESTR, CLOCK_FONT)) / 2, sY,
             WORLDTIMESTR);
     return;

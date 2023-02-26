@@ -40,10 +40,6 @@ typedef struct {
 
 } FontTranslationTable;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern INT32 FontDefault;
 extern UINT32 FontDestBuffer;
 extern UINT32 FontDestPitch;
@@ -130,21 +126,5 @@ void FindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeig
                               INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY);
 void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, CHAR16 *pStr,
                                INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY);
-
-// extern FontBase *LoadFontFile(STR8 pFileName);
-// extern UINT8    *GetFontPalette(UINT8 *pFileName);
-// extern UINT16    GetMaxFontWidth(FontBase *pBase);
-// extern void      UnloadFont(FontBase *pBase);
-// extern BOOLEAN   SetFontPalette(FontBase *pFont, UINT16 siDepthPix, struct SGPPaletteEntry
-// *pNewPalette);
-// make sure the pFontString is terminated by 0
-// extern BOOLEAN   PrintFontString(CHAR16 *pFontString, UINT8 *pDestBuffer, UINT16 siDestWidth,
-// UINT16 siDestPixelDepth, UINT16 siDestPitch, UINT16 siDestHeight, UINT16 siX, UINT16 siY, UINT16
-// siTotalWidth, UINT16 siTotalHeight, BOOLEAN MultiLine, FontBase *pFontBase); extern BOOLEAN
-// SetFont16BitData(FontBase *pFontBase, UINT16 *pData16);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

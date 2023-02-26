@@ -798,10 +798,9 @@ BOOLEAN IsLibraryOpened(INT16 sLibraryID) {
 BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, INT16 sLibraryID) {
   UINT16 usLoop1 = 0;
 
-  const u32 filenameBufSize = 256;
-  char filename[filenameBufSize];
+  char filename[256];
 
-  Plat_FileBaseName(pFileName, filename, filenameBufSize);
+  Plat_FileBaseName(pFileName, filename, ARR_SIZE(filename));
 
   // loop through all the open files to see if 'new' file to open is already open
   for (usLoop1 = 1; usLoop1 < gFileDataBase.pLibraries[sLibraryID].iSizeOfOpenFileArray;

@@ -1,28 +1,9 @@
-//**************************************************************************
-//
-// Filename :	debug.h
-//
-//	Purpose :	prototypes for the debug manager
-//
-// Modification history :
-//
-//		xxxxx96:LH				- Creation
-//		xxnov96:HJH				- made it work
-//
-//**************************************************************************
-
 #ifndef __DEBUG_MANAGER_
 #define __DEBUG_MANAGER_
-
-// #include <crtdbg.h>
 
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
 #include "SGP/Types.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 extern void DebugPrint(const char *message);
 
@@ -147,10 +128,6 @@ extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 #define DebugMsg(a, b, c)
 
 //*******************************************************************************************
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif

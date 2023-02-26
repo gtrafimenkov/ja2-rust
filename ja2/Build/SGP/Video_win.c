@@ -44,20 +44,8 @@ extern UINT32 guiMouseBufferState;  // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABL
 
 struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern LPDIRECTDRAW2 GetDirectDraw2Object(void);
 extern BOOLEAN GetRGBDistribution(void);
-
-#ifdef __cplusplus
-}
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 // Surface Functions
 
@@ -95,14 +83,6 @@ void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT3
   IDirectDrawSurface2_BltFast(p, a, b, c, d, e)
 #define IDirectDrawSurface2_SGPBlt(p, a, b, c, d, e) IDirectDrawSurface2_Blt(p, a, b, c, d, e)
 
-#ifdef __cplusplus
-}
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // local functions
 char *DirectXErrorDescription(INT32 iDXReturn);
 void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename);
@@ -117,10 +97,6 @@ void DirectXZeroMem(void *pMemory, int nSize);
 
 #undef DEBUGMSG
 #define DEBUGMSG(x) DebugPrint(x)
-
-#ifdef __cplusplus
-}
-#endif
 
 #define MAX_DIRTY_REGIONS 128
 
@@ -331,8 +307,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  ReturnCode = IDirectDraw_QueryInterface(_gpDirectDrawObject, (const IID &)IID_IDirectDraw2,
-                                          (LPVOID *)&gpDirectDrawObject);
+  IID tmpID = IID_IDirectDraw2;
+  ReturnCode =
+      IDirectDraw_QueryInterface(_gpDirectDrawObject, &tmpID, (LPVOID *)&gpDirectDrawObject);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -386,9 +363,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  IID tmpID = IID_IDirectDrawSurface2;
+  tmpID = IID_IDirectDrawSurface2;
   ReturnCode =
-      IDirectDrawSurface_QueryInterface(_gpPrimarySurface, tmpID, (LPVOID *)&gpPrimarySurface);
+      IDirectDrawSurface_QueryInterface(_gpPrimarySurface, &tmpID, (LPVOID *)&gpPrimarySurface);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -409,7 +386,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   }
 
   tmpID = IID_IDirectDrawSurface2;
-  ReturnCode = IDirectDrawSurface_QueryInterface(_gpBackBuffer, tmpID, (LPVOID *)&gpBackBuffer);
+  ReturnCode = IDirectDrawSurface_QueryInterface(_gpBackBuffer, &tmpID, (LPVOID *)&gpBackBuffer);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -428,8 +405,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  ReturnCode = IDirectDrawSurface_QueryInterface(
-      _gpPrimarySurface, (const IID &)IID_IDirectDrawSurface2, (LPVOID *)&gpPrimarySurface);
+  tmpID = IID_IDirectDrawSurface2;
+  ReturnCode =
+      IDirectDrawSurface_QueryInterface(_gpPrimarySurface, &tmpID, (LPVOID *)&gpPrimarySurface);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -462,8 +440,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  ReturnCode = IDirectDrawSurface_QueryInterface(
-      _gpFrameBuffer, (const IID &)IID_IDirectDrawSurface2, (LPVOID *)&gpFrameBuffer);
+  tmpID = IID_IDirectDrawSurface2;
+  ReturnCode = IDirectDrawSurface_QueryInterface(_gpFrameBuffer, &tmpID, (LPVOID *)&gpFrameBuffer);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -497,8 +475,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  ReturnCode = IDirectDrawSurface_QueryInterface(
-      _gpMouseCursor, (const IID &)IID_IDirectDrawSurface2, (LPVOID *)&gpMouseCursor);
+  tmpID = IID_IDirectDrawSurface2;
+  ReturnCode = IDirectDrawSurface_QueryInterface(_gpMouseCursor, &tmpID, (LPVOID *)&gpMouseCursor);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
@@ -530,8 +508,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  ReturnCode = IDirectDrawSurface_QueryInterface(_gpMouseCursorOriginal,
-                                                 (const IID &)IID_IDirectDrawSurface2,
+  tmpID = IID_IDirectDrawSurface2;
+  ReturnCode = IDirectDrawSurface_QueryInterface(_gpMouseCursorOriginal, &tmpID,
                                                  (LPVOID *)&gpMouseCursorOriginal);
   if (ReturnCode != DD_OK) {
     DirectXAttempt(ReturnCode, __LINE__, __FILE__);
@@ -569,9 +547,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
       return FALSE;
     }
 
+    IID tmpID = IID_IDirectDrawSurface2;
     ReturnCode = IDirectDrawSurface_QueryInterface(
-        (IDirectDrawSurface *)gMouseCursorBackground[uiIndex]._pSurface,
-        (const IID &)IID_IDirectDrawSurface2,
+        (IDirectDrawSurface *)gMouseCursorBackground[uiIndex]._pSurface, &tmpID,
         (LPVOID *)&(gMouseCursorBackground[uiIndex].pSurface));
     if (ReturnCode != DD_OK) {
       DirectXAttempt(ReturnCode, __LINE__, __FILE__);
@@ -1517,8 +1495,8 @@ void RefreshScreen(void *DummyVariable) {
       DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     }
 
-    ReturnCode = IDirectDrawSurface_QueryInterface((IDirectDrawSurface *)_pTmpBuffer,
-                                                   (const IID &)IID_IDirectDrawSurface2,
+    IID tmpID = IID_IDirectDrawSurface2;
+    ReturnCode = IDirectDrawSurface_QueryInterface((IDirectDrawSurface *)_pTmpBuffer, &tmpID,
                                                    (LPVOID *)&pTmpBuffer);
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
       DirectXAttempt(ReturnCode, __LINE__, __FILE__);
@@ -2629,10 +2607,6 @@ void DeletePrimaryVideoSurfaces() {
 extern void SetClippingRect(SGPRect *clip);
 extern void GetClippingRect(SGPRect *clip);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 LPDIRECTDRAW2 GetDirectDraw2Object();
 LPDIRECTDRAWSURFACE2 GetPrimarySurfaceInterface();
 LPDIRECTDRAWSURFACE2 GetBackbufferInterface();
@@ -2640,10 +2614,6 @@ LPDIRECTDRAWSURFACE2 GetBackbufferInterface();
 BOOLEAN SetDirectDraw2Object(LPDIRECTDRAW2 pDirectDraw);
 BOOLEAN SetPrimarySurfaceInterface(LPDIRECTDRAWSURFACE2 pSurface);
 BOOLEAN SetBackbufferInterface(LPDIRECTDRAWSURFACE2 pSurface);
-
-#ifdef __cplusplus
-}
-#endif
 
 #define DEFAULT_NUM_REGIONS 5
 #define DEFAULT_VIDEO_SURFACE_LIST_SIZE 10
@@ -5243,8 +5213,9 @@ UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   PrintWinFont(FontDestBuffer, iFont, x, y, string);
@@ -5290,14 +5261,15 @@ void PrintWinFont(UINT32 uiDestBuf, INT32 iFont, INT32 x, INT32 y, STR16 pFontSt
     return;
   }
 
-  va_start(argptr, pFontString);                  // Set up variable argument pointer
-  len = vswprintf(string2, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  len = vswprintf(string2, ARR_SIZE(string2), pFontString,
+                  argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
 #ifdef TAIWANESE
   Convert16BitStringTo8BitChineseBig5String(string, string2);
 #else
-  sprintf(string, "%S", string2);
+  snprintf(string, ARR_SIZE(string), "%S", string2);
 #endif
 
   // Get surface...
@@ -5334,8 +5306,8 @@ void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfa
   ATTEMPT(IDirectDraw2_CreateSurface(pExistingDirectDraw, pNewSurfaceDesc, ppNewSurface1, NULL));
 
   // get the direct draw surface 2 interface
-  ATTEMPT(IDirectDrawSurface_QueryInterface(*ppNewSurface1, (const IID &)IID_IDirectDrawSurface2,
-                                            (LPVOID *)ppNewSurface2));
+  IID tmpID = IID_IDirectDrawSurface2;
+  ATTEMPT(IDirectDrawSurface_QueryInterface(*ppNewSurface1, &tmpID, (LPVOID *)ppNewSurface2));
 }
 
 // Lock, unlock calls

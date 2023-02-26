@@ -988,7 +988,8 @@ BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPC, UINT32 uiMoneyAmount, UINT
       } else {
         CHAR16 sTempString[100];
 
-        swprintf(sTempString, L"%ld", iCost - uiMoneyAmount - giHospitalTempBalance);
+        swprintf(sTempString, ARR_SIZE(sTempString), L"%ld",
+                 iCost - uiMoneyAmount - giHospitalTempBalance);
         InsertDollarSignInToString(sTempString);
 
         // not enough cash

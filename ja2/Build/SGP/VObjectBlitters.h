@@ -6,13 +6,8 @@
 struct VSurface;
 struct VObject;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern SGPRect ClippingRect;
 extern UINT32 guiTranslucentMask;
-extern UINT16 White16BPPPalette[256];
 
 extern void SetClippingRect(SGPRect *clip);
 void GetClippingRect(SGPRect *clip);
@@ -257,9 +252,5 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelateObscured(UINT16 *pBuffer, UINT32 u
 
 BOOLEAN FillRect16BPP(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, INT32 x1, INT32 y1, INT32 x2,
                       INT32 y2, UINT16 color);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

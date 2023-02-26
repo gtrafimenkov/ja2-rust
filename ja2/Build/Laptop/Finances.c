@@ -821,7 +821,7 @@ void DrawSummaryText(void) {
 
   // yesterdays income
   iBalance = GetPreviousDaysIncome();
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
 
   InsertCommasForDollarFigure(pString);
 
@@ -835,7 +835,7 @@ void DrawSummaryText(void) {
 
   // yesterdays other
   iBalance = GetYesterdaysOtherDeposits();
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
 
   InsertCommasForDollarFigure(pString);
   if (iBalance != 0) InsertDollarSignInToString(pString);
@@ -852,7 +852,7 @@ void DrawSummaryText(void) {
     iBalance *= -1;
   }
 
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
 
   InsertCommasForDollarFigure(pString);
   if (iBalance != 0) InsertDollarSignInToString(pString);
@@ -870,7 +870,7 @@ void DrawSummaryText(void) {
     iBalance *= -1;
   }
 
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
   InsertCommasForDollarFigure(pString);
   if (iBalance != 0) InsertDollarSignInToString(pString);
   FindFontRightCoordinates(0, 0, 580, 0, pString, FINANCE_TEXT_FONT, &usX, &usY);
@@ -881,7 +881,7 @@ void DrawSummaryText(void) {
 
   // todays income
   iBalance = GetTodaysDaysIncome();
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
 
   InsertCommasForDollarFigure(pString);
   if (iBalance != 0) InsertDollarSignInToString(pString);
@@ -893,7 +893,7 @@ void DrawSummaryText(void) {
 
   // todays other
   iBalance = GetTodaysOtherDeposits();
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
 
   InsertCommasForDollarFigure(pString);
   if (iBalance != 0) InsertDollarSignInToString(pString);
@@ -911,7 +911,7 @@ void DrawSummaryText(void) {
     iBalance *= (-1);
   }
 
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
 
   InsertCommasForDollarFigure(pString);
   if (iBalance != 0) InsertDollarSignInToString(pString);
@@ -926,10 +926,10 @@ void DrawSummaryText(void) {
   if (iBalance < 0) {
     iBalance *= -1;
     SetFontForeground(FONT_RED);
-    swprintf(pString, L"%d", iBalance);
+    swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
     iBalance *= -1;
   } else {
-    swprintf(pString, L"%d", iBalance);
+    swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
   }
 
   InsertCommasForDollarFigure(pString);
@@ -940,7 +940,7 @@ void DrawSummaryText(void) {
 
   // todays forcast income
   iBalance = GetProjectedTotalDailyIncome();
-  swprintf(pString, L"%d", iBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
 
   InsertCommasForDollarFigure(pString);
   if (iBalance != 0) InsertDollarSignInToString(pString);
@@ -955,10 +955,10 @@ void DrawSummaryText(void) {
   if (iBalance < 0) {
     iBalance *= -1;
     SetFontForeground(FONT_RED);
-    swprintf(pString, L"%d", iBalance);
+    swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
     iBalance *= -1;
   } else {
-    swprintf(pString, L"%d", iBalance);
+    swprintf(pString, ARR_SIZE(pString), L"%d", iBalance);
   }
 
   InsertCommasForDollarFigure(pString);
@@ -1254,113 +1254,113 @@ void IncrementCurrentPageFinancialDisplay(void) {
 void ProcessTransactionString(STR16 pString, FinanceUnitPtr pFinance) {
   switch (pFinance->ubCode) {
     case ACCRUED_INTEREST:
-      swprintf(pString, L"%s", pTransactionText[ACCRUED_INTEREST]);
+      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[ACCRUED_INTEREST]);
       break;
 
     case ANONYMOUS_DEPOSIT:
-      swprintf(pString, L"%s", pTransactionText[ANONYMOUS_DEPOSIT]);
+      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[ANONYMOUS_DEPOSIT]);
       break;
 
     case TRANSACTION_FEE:
-      swprintf(pString, L"%s", pTransactionText[TRANSACTION_FEE]);
+      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[TRANSACTION_FEE]);
       break;
 
     case HIRED_MERC:
-      swprintf(pString, pMessageStrings[MSG_HIRED_MERC],
+      swprintf(pString, ARR_SIZE(pString), pMessageStrings[MSG_HIRED_MERC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case BOBBYR_PURCHASE:
-      swprintf(pString, L"%s", pTransactionText[BOBBYR_PURCHASE]);
+      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[BOBBYR_PURCHASE]);
       break;
 
     case PAY_SPECK_FOR_MERC:
-      swprintf(pString, L"%s", pTransactionText[PAY_SPECK_FOR_MERC]);
+      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[PAY_SPECK_FOR_MERC]);
       break;
 
     case MEDICAL_DEPOSIT:
-      swprintf(pString, pTransactionText[MEDICAL_DEPOSIT],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[MEDICAL_DEPOSIT],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case IMP_PROFILE:
-      swprintf(pString, L"%s", pTransactionText[IMP_PROFILE]);
+      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[IMP_PROFILE]);
       break;
 
     case PURCHASED_INSURANCE:
-      swprintf(pString, pTransactionText[PURCHASED_INSURANCE],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[PURCHASED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case REDUCED_INSURANCE:
-      swprintf(pString, pTransactionText[REDUCED_INSURANCE],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[REDUCED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_INSURANCE:
-      swprintf(pString, pTransactionText[EXTENDED_INSURANCE],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[EXTENDED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case CANCELLED_INSURANCE:
-      swprintf(pString, pTransactionText[CANCELLED_INSURANCE],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[CANCELLED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case INSURANCE_PAYOUT:
-      swprintf(pString, pTransactionText[INSURANCE_PAYOUT],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[INSURANCE_PAYOUT],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_CONTRACT_BY_1_DAY:
-      swprintf(pString, pTransactionAlternateText[1],
+      swprintf(pString, ARR_SIZE(pString), pTransactionAlternateText[1],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_CONTRACT_BY_1_WEEK:
-      swprintf(pString, pTransactionAlternateText[2],
+      swprintf(pString, ARR_SIZE(pString), pTransactionAlternateText[2],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_CONTRACT_BY_2_WEEKS:
-      swprintf(pString, pTransactionAlternateText[3],
+      swprintf(pString, ARR_SIZE(pString), pTransactionAlternateText[3],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case DEPOSIT_FROM_GOLD_MINE:
     case DEPOSIT_FROM_SILVER_MINE:
-      swprintf(pString, pTransactionText[16]);
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[16]);
       break;
 
     case PURCHASED_FLOWERS:
-      swprintf(pString, L"%s", pTransactionText[PURCHASED_FLOWERS]);
+      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[PURCHASED_FLOWERS]);
       break;
 
     case FULL_MEDICAL_REFUND:
-      swprintf(pString, pTransactionText[FULL_MEDICAL_REFUND],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[FULL_MEDICAL_REFUND],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case PARTIAL_MEDICAL_REFUND:
-      swprintf(pString, pTransactionText[PARTIAL_MEDICAL_REFUND],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[PARTIAL_MEDICAL_REFUND],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case NO_MEDICAL_REFUND:
-      swprintf(pString, pTransactionText[NO_MEDICAL_REFUND],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[NO_MEDICAL_REFUND],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case TRANSFER_FUNDS_TO_MERC:
-      swprintf(pString, pTransactionText[TRANSFER_FUNDS_TO_MERC],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[TRANSFER_FUNDS_TO_MERC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
     case TRANSFER_FUNDS_FROM_MERC:
-      swprintf(pString, pTransactionText[TRANSFER_FUNDS_FROM_MERC],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[TRANSFER_FUNDS_FROM_MERC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
     case PAYMENT_TO_NPC:
-      swprintf(pString, pTransactionText[PAYMENT_TO_NPC],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[PAYMENT_TO_NPC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
     case (TRAIN_TOWN_MILITIA): {
@@ -1370,16 +1370,16 @@ void ProcessTransactionString(STR16 pString, FinanceUnitPtr pFinance) {
       ubSectorX = (UINT8)SECTORX(pFinance->ubSecondCode);
       ubSectorY = (UINT8)SECTORY(pFinance->ubSecondCode);
       GetSectorIDString(ubSectorX, ubSectorY, 0, str, TRUE);
-      swprintf(pString, pTransactionText[TRAIN_TOWN_MILITIA], str);
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[TRAIN_TOWN_MILITIA], str);
     } break;
 
     case (PURCHASED_ITEM_FROM_DEALER):
-      swprintf(pString, pTransactionText[PURCHASED_ITEM_FROM_DEALER],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[PURCHASED_ITEM_FROM_DEALER],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case (MERC_DEPOSITED_MONEY_TO_PLAYER_ACCOUNT):
-      swprintf(pString, pTransactionText[MERC_DEPOSITED_MONEY_TO_PLAYER_ACCOUNT],
+      swprintf(pString, ARR_SIZE(pString), pTransactionText[MERC_DEPOSITED_MONEY_TO_PLAYER_ACCOUNT],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
   }

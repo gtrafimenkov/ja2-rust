@@ -531,7 +531,7 @@ INT16 StrategicPythSpacesAway(INT16 sOrigin, INT16 sDest) {
 
   // apply Pythagoras's theorem for right-handed triangle:
   // dist^2 = rows^2 + cols^2, so use the square root to get the distance
-  sResult = (INT16)sqrt(float((sRows * sRows) + (sCols * sCols)));
+  sResult = (INT16)sqrt((float)(sRows * sRows) + (sCols * sCols));
 
   return (sResult);
 }
@@ -599,7 +599,7 @@ void CheckForValidArrivalSector() {
 
     GetShortSectorString(gsMercArriveSectorX, gsMercArriveSectorY, zShortTownIDString2);
 
-    swprintf(sString,
+    swprintf(sString, ARR_SIZE(sString),
              L"Arrival of new recruits is being rerouted to sector %s, as scheduled drop-off point "
              L"of sector %s is enemy occupied.",
              zShortTownIDString2, zShortTownIDString1);

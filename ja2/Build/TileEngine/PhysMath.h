@@ -27,10 +27,6 @@ typedef struct {
 #define RADIANS_FROM(d) ((d * PI2) / 180)
 #define DEGREES_FROM(r) ((r * 180) / PI2)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 vector_3 VSetEqual(vector_3 *a);
 vector_3 VSubtract(vector_3 *a, vector_3 *b);
 vector_3 VAdd(vector_3 *a, vector_3 *b);
@@ -42,9 +38,5 @@ vector_3 VGetPerpendicular(vector_3 *a);
 real VGetLength(vector_3 *a);
 vector_3 VGetNormal(vector_3 *a);
 vector_3 VCrossProduct(vector_3 *a, vector_3 *b);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

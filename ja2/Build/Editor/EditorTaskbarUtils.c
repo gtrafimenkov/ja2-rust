@@ -437,8 +437,9 @@ void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...) {
 
   Assert(pFontString != NULL);
 
-  va_start(argptr, pFontString);           // Set up variable argument pointer
-  vswprintf(string, pFontString, argptr);  // process gprintf string (get output str)
+  va_start(argptr, pFontString);  // Set up variable argument pointer
+  vswprintf(string, ARR_SIZE(string), pFontString,
+            argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
   uiStringLength = StringPixLength(string, FontDefault);
@@ -647,27 +648,27 @@ void RenderMapEntryPointsAndLights() {
   }
 }
 
-void BuildTriggerName(struct OBJECTTYPE *pItem, STR16 szItemName) {
+void BuildTriggerName(struct OBJECTTYPE *pItem, STR16 szItemName, int bufSize) {
   if (pItem->usItem == SWITCH) {
     if (pItem->bFrequency == PANIC_FREQUENCY)
-      swprintf(szItemName, L"Panic Trigger1");
+      swprintf(szItemName, bufSize, L"Panic Trigger1");
     else if (pItem->bFrequency == PANIC_FREQUENCY_2)
-      swprintf(szItemName, L"Panic Trigger2");
+      swprintf(szItemName, bufSize, L"Panic Trigger2");
     else if (pItem->bFrequency == PANIC_FREQUENCY_3)
-      swprintf(szItemName, L"Panic Trigger3");
+      swprintf(szItemName, bufSize, L"Panic Trigger3");
     else
-      swprintf(szItemName, L"Trigger%d", pItem->bFrequency - 50);
+      swprintf(szItemName, bufSize, L"Trigger%d", pItem->bFrequency - 50);
   } else {  // action item
     if (pItem->bDetonatorType == BOMB_PRESSURE)
-      swprintf(szItemName, L"Pressure Action");
+      swprintf(szItemName, bufSize, L"Pressure Action");
     else if (pItem->bFrequency == PANIC_FREQUENCY)
-      swprintf(szItemName, L"Panic Action1");
+      swprintf(szItemName, bufSize, L"Panic Action1");
     else if (pItem->bFrequency == PANIC_FREQUENCY_2)
-      swprintf(szItemName, L"Panic Action2");
+      swprintf(szItemName, bufSize, L"Panic Action2");
     else if (pItem->bFrequency == PANIC_FREQUENCY_3)
-      swprintf(szItemName, L"Panic Action3");
+      swprintf(szItemName, bufSize, L"Panic Action3");
     else
-      swprintf(szItemName, L"Action%d", pItem->bFrequency - 50);
+      swprintf(szItemName, bufSize, L"Action%d", pItem->bFrequency - 50);
   }
 }
 
@@ -751,9 +752,9 @@ void RenderSelectedItemBlownUp() {
   SetFontForeground(FONT_YELLOW);
   SetFontShadow(FONT_NEARBLACK);
   if (gpItem->usItem == ACTION_ITEM || gpItem->usItem == SWITCH) {
-    BuildTriggerName(gpItem, szItemName);
+    BuildTriggerName(gpItem, szItemName, ARR_SIZE(szItemName));
   } else if (Item[gpItem->usItem].usItemClass == IC_KEY) {
-    swprintf(szItemName, L"%S", LockTable[gpItem->ubKeyID].ubEditorName);
+    swprintf(szItemName, ARR_SIZE(szItemName), L"%S", LockTable[gpItem->ubKeyID].ubEditorName);
   } else {
     LoadItemInfo(gpItem->usItem, szItemName, NULL);
   }
@@ -807,9 +808,9 @@ void RenderEditorInfo() {
 
   // Display the mapindex position
   if (GetMouseMapPos(&iMapIndex))
-    swprintf(FPSText, L"   (%d)   ", iMapIndex);
+    swprintf(FPSText, ARR_SIZE(FPSText), L"   (%d)   ", iMapIndex);
   else
-    swprintf(FPSText, L"          ");
+    swprintf(FPSText, ARR_SIZE(FPSText), L"          ");
   mprintfEditor((UINT16)(50 - StringPixLength(FPSText, FONT12POINT1) / 2), 463, FPSText);
 
   switch (iCurrentTaskbar) {
@@ -822,9 +823,10 @@ void RenderEditorInfo() {
       break;
     case TASK_TERRAIN:
       if (gusSelectionType == LINESELECTION)
-        swprintf(wszSelType[LINESELECTION], L"Width: %d", gusSelectionWidth);
+        swprintf(wszSelType[LINESELECTION], ARR_SIZE(wszSelType[LINESELECTION]), L"Width: %d",
+                 gusSelectionWidth);
       DrawEditorInfoBox(wszSelType[gusSelectionType], FONT12POINT1, 220, 430, 60, 30);
-      swprintf(FPSText, L"%d%%", gusSelectionDensity);
+      swprintf(FPSText, ARR_SIZE(FPSText), L"%d%%", gusSelectionDensity);
       DrawEditorInfoBox(FPSText, FONT12POINT1, 310, 430, 40, 30);
       break;
     case TASK_ITEMS:
@@ -834,7 +836,8 @@ void RenderEditorInfo() {
     case TASK_BUILDINGS:
       UpdateBuildingsInfo();
       if (gusSelectionType == LINESELECTION)
-        swprintf(wszSelType[LINESELECTION], L"Width: %d", gusSelectionWidth);
+        swprintf(wszSelType[LINESELECTION], ARR_SIZE(wszSelType[LINESELECTION]), L"Width: %d",
+                 gusSelectionWidth);
       DrawEditorInfoBox(wszSelType[gusSelectionType], FONT12POINT1, 530, 430, 60, 30);
       break;
     case TASK_MERCS:
@@ -843,7 +846,8 @@ void RenderEditorInfo() {
     case TASK_MAPINFO:
       UpdateMapInfo();
       if (gusSelectionType == LINESELECTION)
-        swprintf(wszSelType[LINESELECTION], L"Width: %d", gusSelectionWidth);
+        swprintf(wszSelType[LINESELECTION], ARR_SIZE(wszSelType[LINESELECTION]), L"Width: %d",
+                 gusSelectionWidth);
       DrawEditorInfoBox(wszSelType[gusSelectionType], FONT12POINT1, 440, 430, 60, 30);
       break;
   }

@@ -980,23 +980,23 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
   // Expanded the default names based on team.
   switch (pCreateStruct->bTeam) {
     case ENEMY_TEAM:
-      swprintf(pSoldier->name, TacticalStr[ENEMY_TEAM_MERC_NAME]);
+      swprintf(pSoldier->name, ARR_SIZE(pSoldier->name), TacticalStr[ENEMY_TEAM_MERC_NAME]);
       break;
     case MILITIA_TEAM:
-      swprintf(pSoldier->name, TacticalStr[MILITIA_TEAM_MERC_NAME]);
+      swprintf(pSoldier->name, ARR_SIZE(pSoldier->name), TacticalStr[MILITIA_TEAM_MERC_NAME]);
       break;
     case CIV_TEAM:
       if (pSoldier->ubSoldierClass == SOLDIER_CLASS_MINER) {
-        swprintf(pSoldier->name, TacticalStr[CIV_TEAM_MINER_NAME]);
+        swprintf(pSoldier->name, ARR_SIZE(pSoldier->name), TacticalStr[CIV_TEAM_MINER_NAME]);
       } else {
-        swprintf(pSoldier->name, TacticalStr[CIV_TEAM_MERC_NAME]);
+        swprintf(pSoldier->name, ARR_SIZE(pSoldier->name), TacticalStr[CIV_TEAM_MERC_NAME]);
       }
       break;
     case CREATURE_TEAM:
       if (pSoldier->ubBodyType == BLOODCAT) {
-        swprintf(pSoldier->name, gzLateLocalizedString[36]);
+        swprintf(pSoldier->name, ARR_SIZE(pSoldier->name), gzLateLocalizedString[36]);
       } else {
-        swprintf(pSoldier->name, TacticalStr[CREATURE_TEAM_MERC_NAME]);
+        swprintf(pSoldier->name, ARR_SIZE(pSoldier->name), TacticalStr[CREATURE_TEAM_MERC_NAME]);
         break;
       }
       break;

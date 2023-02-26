@@ -147,7 +147,7 @@ void SetupTextInputForMercSchedule();
 void ExtractAndUpdateMercAttributes();
 void ExtractAndUpdateMercProfile();
 void ExtractAndUpdateMercSchedule();
-void CalcStringForValue(STR16 str, INT32 iValue, UINT32 uiMax);
+void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, UINT32 uiMax);
 void ChangeBodyType(INT8 bOffset);  //+1 or -1 only
 
 // internal merc variables
@@ -801,7 +801,7 @@ void DisplayEditMercWindow(void) {
     ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 29,
                               iYPos + 111 + (20 * x) + 18, usFillColorTextBk);
 
-    swprintf(TempString, L"%d", iEditStat[x]);
+    swprintf(TempString, ARR_SIZE(TempString), L"%d", iEditStat[x]);
     iXOff = (30 - StringPixLength(TempString, FONT12POINT1)) / 2;
     gprintf(iXPos + 118 + iXOff, iYPos + 114 + (20 * x), L"%s", TempString);
   }
@@ -1621,7 +1621,7 @@ void SetupTextInputForMercProfile() {
   if (sNum == NO_PROFILE)
     str[0] = '\0';
   else
-    CalcStringForValue(str, gpSelected->pDetailedPlacement->ubProfile, NUM_PROFILES);
+    CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->ubProfile, NUM_PROFILES);
   AddTextInputField(200, 430, 30, 20, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
 }
 
@@ -1630,31 +1630,31 @@ void SetupTextInputForMercAttributes() {
 
   InitTextInputModeWithScheme(DEFAULT_SCHEME);
 
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bExpLevel, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bExpLevel, 100);
   AddTextInputField(200, 365, 20, 15, MSYS_PRIORITY_NORMAL, str, 1, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bLife, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bLife, 100);
   AddTextInputField(200, 390, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bLifeMax, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bLifeMax, 100);
   AddTextInputField(200, 415, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bMarksmanship, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bMarksmanship, 100);
   AddTextInputField(200, 440, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bStrength, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bStrength, 100);
   AddTextInputField(300, 365, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bAgility, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bAgility, 100);
   AddTextInputField(300, 390, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bDexterity, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bDexterity, 100);
   AddTextInputField(300, 415, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bWisdom, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bWisdom, 100);
   AddTextInputField(300, 440, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bLeadership, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bLeadership, 100);
   AddTextInputField(400, 365, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bExplosive, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bExplosive, 100);
   AddTextInputField(400, 390, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bMedical, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bMedical, 100);
   AddTextInputField(400, 415, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bMechanical, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bMechanical, 100);
   AddTextInputField(400, 440, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  CalcStringForValue(str, gpSelected->pDetailedPlacement->bMorale, 100);
+  CalcStringForValue(str, ARR_SIZE(str), gpSelected->pDetailedPlacement->bMorale, 100);
   AddTextInputField(500, 365, 20, 15, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
 
   if (!gfCanEditMercs) DisableAllTextFields();
@@ -1663,13 +1663,13 @@ void SetupTextInputForMercAttributes() {
 // In the merc editing, all detailed placement values for generated attributes are set to -1.
 // When making a generated attribute static, we then set the value to its applicable value.
 // This function is similar to the itoa function except that -1 is converted to a null string.
-void CalcStringForValue(STR16 str, INT32 iValue, UINT32 uiMax) {
+void CalcStringForValue(STR16 str, int bufSize, INT32 iValue, UINT32 uiMax) {
   if (iValue < 0)  // a blank string is determined by a negative value.
     str[0] = '\0';
   else if ((UINT32)iValue > uiMax)  // higher than max attribute value, so convert it to the max.
-    swprintf(str, ARR_SIZE(str), L"%d", uiMax);
+    swprintf(str, bufSize, L"%d", uiMax);
   else  // this is a valid static value, so convert it to a string.
-    swprintf(str, ARR_SIZE(str), L"%d", iValue);
+    swprintf(str, bufSize, L"%d", iValue);
 }
 
 void ExtractAndUpdateMercAttributes() {
@@ -2411,7 +2411,7 @@ void UpdateMercsInfo() {
       SetFontShadow(FONT_NEARBLACK);
       {  // scope trick
         CHAR16 tempStr[500];
-        swprintf(tempStr, L"%s%s%s%s%s%d.",
+        swprintf(tempStr, ARR_SIZE(tempStr), L"%s%s%s%s%s%d.",
                  L"By specifying a profile index, all of the information will be extracted from "
                  L"the profile ",
                  L"and override any values that you have edited.  It will also disable the editing "
@@ -2482,16 +2482,16 @@ void UpdateMercsInfo() {
                                   Get16BPPColor(FROMRGB(32, 45, 72)));
         switch (gCurrSchedule.ubAction[gubCurrentScheduleActionIndex]) {
           case SCHEDULE_ACTION_LOCKDOOR:
-            swprintf(keyword, L"lock");
+            swprintf(keyword, ARR_SIZE(keyword), L"lock");
             break;
           case SCHEDULE_ACTION_UNLOCKDOOR:
-            swprintf(keyword, L"unlock");
+            swprintf(keyword, ARR_SIZE(keyword), L"unlock");
             break;
           case SCHEDULE_ACTION_OPENDOOR:
-            swprintf(keyword, L"open");
+            swprintf(keyword, ARR_SIZE(keyword), L"open");
             break;
           case SCHEDULE_ACTION_CLOSEDOOR:
-            swprintf(keyword, L"close");
+            swprintf(keyword, ARR_SIZE(keyword), L"close");
             break;
         }
         switch (gubScheduleInstructions) {
@@ -2507,7 +2507,7 @@ void UpdateMercsInfo() {
             swprintf(str, ARR_SIZE(str), L"Click on the gridno where you wish to move to.");
             break;
           case SCHEDULE_INSTRUCTIONS_SLEEP:
-            swprintf(str,
+            swprintf(str, ARR_SIZE(str),
                      L"Click on the gridno where you wish to sleep at.  Person will automatically "
                      L"return to original position after waking up.");
           default:

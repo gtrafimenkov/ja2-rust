@@ -10,10 +10,6 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 
-#ifdef _DEBUG
-#include <crtdbg.h>
-#endif
-
 //**************************************************************************
 //
 //				Variables
@@ -38,20 +34,6 @@ STR16 gzJA2ScreenNames[] = {
     L"AIVIEWER_SCREEN",    L"QUEST_DEBUG_SCREEN",
 #endif
 };
-
-//**************************************************************************
-//
-//				Function Prototypes
-//
-//**************************************************************************
-
-void DebugPrint(void);
-
-//**************************************************************************
-//
-//				Functions
-//
-//**************************************************************************
 
 BOOLEAN InitializeMemoryManager(void) { return (TRUE); }
 

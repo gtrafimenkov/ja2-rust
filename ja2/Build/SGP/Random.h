@@ -7,10 +7,6 @@
 #include "SGP/Debug.h"
 #include "SGP/Types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern void InitializeRandom(void);
 extern UINT32 Random(UINT32 uiRange);
 
@@ -30,10 +26,6 @@ extern BOOLEAN PreChance(UINT32 uiChance);
 #define MAX_PREGENERATED_NUMS 256
 extern UINT32 guiPreRandomIndex;
 extern UINT32 guiPreRandomNums[MAX_PREGENERATED_NUMS];
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif

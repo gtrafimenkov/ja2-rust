@@ -1,32 +1,8 @@
-// *****************************************************************************
-//
-// Filename :	MouseSystem.h
-//
-// Purpose :	Defines and typedefs for the "mousesystem" mouse region handler
-//
-// Modification history :
-//
-//		30jan97:Bret	-> Creation
-//
-// *****************************************************************************
-
-// *****************************************************************************
-//
-//				Includes
-//
-// *****************************************************************************
-
-#include "SGP/MouseSystemMacros.h"
-#include "SGP/Types.h"
-
 #ifndef _MOUSE_SYSTEM_H_
 #define _MOUSE_SYSTEM_H_
 
-// *****************************************************************************
-//
-//				Typedefs
-//
-// *****************************************************************************
+#include "SGP/MouseSystemMacros.h"
+#include "SGP/Types.h"
 
 typedef void (*MOUSE_CALLBACK)(struct MOUSE_REGION *,
                                INT32);           // Define MOUSE_CALLBACK type as pointer to void
@@ -150,18 +126,6 @@ struct MOUSE_REGION {
 #define MSYS_ALREADY_GRABBED 1
 #define MSYS_REGION_NOT_IN_LIST 2
 
-// *****************************************************************************
-//
-//				Prototypes
-//
-// *****************************************************************************
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-// *****************************************************************************
-
 // Note:
 //		The prototype for MSYS_SGP_Mouse_Handler_Hook() is defined in mousesystem_macros.h
 
@@ -218,12 +182,4 @@ void ResetClickedMode(void);
 BOOLEAN SetRegionSavedRect(struct MOUSE_REGION *region);
 void FreeRegionSavedRect(struct MOUSE_REGION *region);
 
-// *****************************************************************************
-
-#ifdef __cplusplus
-}
 #endif
-
-#endif
-
-// EOF *************************************************************************

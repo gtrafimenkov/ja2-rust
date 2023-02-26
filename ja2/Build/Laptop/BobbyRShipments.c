@@ -299,7 +299,7 @@ void DisplayPreviousShipments() {
       }
 
       // Display the "ordered on day num"
-      swprintf(zText, L"%s %d", gpGameClockString[0],
+      swprintf(zText, ARR_SIZE(zText), L"%s %d", gpGameClockString[0],
                gpNewBobbyrShipments[uiCnt].uiOrderedOnDayNum);
       DrawTextToScreen(zText, BOBBYR_SHIPMENT_ORDER_NUM_X, usPosY, BOBBYR_SHIPMENT_ORDER_NUM_WIDTH,
                        BOBBYR_SHIPMENT_STATIC_TEXT_FONT, ubFontColor, 0, FALSE, CENTER_JUSTIFIED);
@@ -317,7 +317,7 @@ void DisplayPreviousShipments() {
       }
 
       // Display the # of items
-      swprintf(zText, L"%d", uiNumberItemsInShipments);
+      swprintf(zText, ARR_SIZE(zText), L"%d", uiNumberItemsInShipments);
       DrawTextToScreen(zText, BOBBYR_SHIPMENT_NUM_ITEMS_X, usPosY, BOBBYR_SHIPMENT_NUM_ITEMS_WIDTH,
                        BOBBYR_SHIPMENT_STATIC_TEXT_FONT, ubFontColor, 0, FALSE, CENTER_JUSTIFIED);
       usPosY += BOBBYR_SHIPMENT_GAP_BTN_LINES;

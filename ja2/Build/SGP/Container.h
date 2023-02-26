@@ -36,15 +36,6 @@ typedef HCONTAINER HQUEUE;
 typedef HCONTAINER HLIST;
 typedef HCONTAINER HORDLIST;
 
-//***********************************************
-//
-// Function Prototypes
-//
-//***********************************************
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // call these functions to initialize and shutdown the debug messages for
 // containers
 extern void InitializeContainers(void);
@@ -124,9 +115,5 @@ extern BOOLEAN RemfromOrdList(HLIST hList, void *data, UINT32 position);
 extern BOOLEAN PeekOrdList(HLIST hList, void *data, UINT32 position);
 extern UINT32 OrdListSize(HLIST hList);
 extern BOOLEAN DeleteOrdList(HLIST hList);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

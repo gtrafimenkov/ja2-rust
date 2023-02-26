@@ -538,11 +538,11 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc) {
     guiCurrentQuickSaveNumber++;
 
     if (gfUseConsecutiveQuickSaveSlots)
-      swprintf(pGameDesc, L"%s%03d", pMessageStrings[MSG_QUICKSAVE_NAME],
+      swprintf(pGameDesc, ARR_SIZE(pGameDesc), L"%s%03d", pMessageStrings[MSG_QUICKSAVE_NAME],
                guiCurrentQuickSaveNumber);
     else
 #endif
-      swprintf(pGameDesc, pMessageStrings[MSG_QUICKSAVE_NAME]);
+      swprintf(pGameDesc, ARR_SIZE(pGameDesc), pMessageStrings[MSG_QUICKSAVE_NAME]);
   }
 
   // If there was no string, add one

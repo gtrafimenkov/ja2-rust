@@ -128,10 +128,6 @@ typedef struct {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern INT32 giMemUsedInSurfaces;
 
 // Creates a list to contain video Surfaces
@@ -282,9 +278,5 @@ BOOLEAN MakeVSurfaceFromVObject(UINT32 uiVObject, UINT16 usSubIndex, UINT32 *pui
 
 BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 X1, INT32 Y1,
                                                    INT32 X2, INT32 Y2);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

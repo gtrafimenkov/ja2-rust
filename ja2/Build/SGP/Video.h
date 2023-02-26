@@ -9,10 +9,6 @@ struct VSurface;
 
 extern INT32 giNumFrames;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern struct VSurface *ghFrameBuffer;
 
 struct PlatformInitParams;
@@ -53,9 +49,5 @@ void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UI
 void RefreshScreen(void *DummyVariable);
 
 void FatalError(STR8 pError, ...);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
