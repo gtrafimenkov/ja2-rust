@@ -339,7 +339,7 @@ void AddTextToTownBox(void) {
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[4]);
     AddMonoString(&hStringHandle, wString);
     GetShortSectorString((INT16)(sMineSector % MAP_WORLD_X), (INT16)(sMineSector / MAP_WORLD_X),
-                         wString);
+                         wString, ARR_SIZE(wString));
     AddSecondColumnMonoString(&hStringHandle, wString);
   }
 }
@@ -511,7 +511,8 @@ void AddSectorToBox(void) {
   swprintf(wString, ARR_SIZE(wString), L"%s:", pwMiscSectorStrings[1]);
   AddMonoString(&hStringHandle, wString);
 
-  GetShortSectorString(bCurrentTownMineSectorX, bCurrentTownMineSectorY, wString);
+  GetShortSectorString(bCurrentTownMineSectorX, bCurrentTownMineSectorY, wString,
+                       ARR_SIZE(wString));
   if (bCurrentTownMineSectorZ != 0) {
     swprintf(wString2, ARR_SIZE(wString2), L"-%d", bCurrentTownMineSectorZ);
     wcscat(wString, wString2);

@@ -904,10 +904,8 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
   // use YES/NO Pop up box, settup for particular screen
   SGPRect pCenteringRect = {0, 0, 640, 480};
 
-  // GetSectorIDString( pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ, zTownIDString,
-  // TRUE );
-
-  GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, zShortTownIDString);
+  GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, zShortTownIDString,
+                       ARR_SIZE(zShortTownIDString));
 
   // Set string for generic button
   swprintf(gzUserDefinedButton1, ARR_SIZE(gzUserDefinedButton1), L"%s", zShortTownIDString);

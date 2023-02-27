@@ -510,7 +510,7 @@ void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSol
     bTownId = GetTownIdForSector(sSectorX, sSectorY);
     if (bTownId == BLANK_SECTOR) {
       // wilderness SAM site
-      GetSectorIDString(sSectorX, sSectorY, 0, sStringB, TRUE);
+      GetSectorIDString(sSectorX, sSectorY, 0, sStringB, ARR_SIZE(sStringB), TRUE);
       swprintf(sString, ARR_SIZE(sString), pMilitiaConfirmStrings[10], sStringB, GetSectorIDString,
                MIN_RATING_TO_TRAIN_TOWN);
     } else {
@@ -537,7 +537,7 @@ void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSol
 
   // ok to continue, ask player
 
-  GetSectorIDString(sSectorX, sSectorY, 0, sStringB, TRUE);
+  GetSectorIDString(sSectorX, sSectorY, 0, sStringB, ARR_SIZE(sStringB), TRUE);
   swprintf(sString, ARR_SIZE(sString), pMilitiaConfirmStrings[3], sStringB,
            pMilitiaConfirmStrings[4], giTotalCostOfTraining);
 

@@ -2008,7 +2008,7 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
       if (pSoldier->sSectorX != gWorldSectorX || pSoldier->sSectorY != gWorldSectorY ||
           pSoldier->bSectorZ != gbWorldSectorZ || pSoldier->fBetweenSectors) {
         GetSectorIDString(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ, zTownIDString,
-                          FALSE);
+                          ARR_SIZE(zTownIDString), FALSE);
 
         ReduceStringLength(zTownIDString, 64, BLOCKFONT2);
 

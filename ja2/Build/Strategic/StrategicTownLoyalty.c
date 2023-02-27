@@ -999,7 +999,7 @@ void RemoveRandomItemsInSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, U
   Assert(GetSectorFlagStatus(sSectorX, sSectorY, (UINT8)sSectorZ, SF_ALREADY_VISITED) == TRUE);
 
   // get sector name string
-  GetSectorIDString(sSectorX, sSectorY, (INT8)sSectorZ, wSectorName, TRUE);
+  GetSectorIDString(sSectorX, sSectorY, (INT8)sSectorZ, wSectorName, ARR_SIZE(wSectorName), TRUE);
 
   // go through list of items in sector and randomly remove them
 
@@ -1447,7 +1447,7 @@ void AdjustLoyaltyForCivsEatenByMonsters(INT16 sSectorX, INT16 sSectorY, UINT8 u
   }
 
   // Report this to player
-  GetSectorIDString(sSectorX, sSectorY, 0, pSectorString, TRUE);
+  GetSectorIDString(sSectorX, sSectorY, 0, pSectorString, ARR_SIZE(pSectorString), TRUE);
   swprintf(str, ARR_SIZE(str), gpStrategicString[STR_DIALOG_CREATURES_KILL_CIVILIANS], ubHowMany,
            pSectorString);
   DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback);

@@ -2961,7 +2961,7 @@ void AddStringsToMoveBox(void) {
   RemoveAllCurrentBoxStrings();
 
   // add title
-  GetShortSectorString(sSelMapX, sSelMapY, sStringB);
+  GetShortSectorString(sSelMapX, sSelMapY, sStringB, ARR_SIZE(sStringB));
   swprintf(sString, ARR_SIZE(sString), L"%s %s", pMovementMenuStrings[0], sStringB);
   AddMonoString(&hStringHandle, sString);
 
@@ -4597,7 +4597,7 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(INT16 sSectorX, INT16
   }
 
   // get the name of the sector
-  GetSectorIDString(sSectorX, sSectorY, bSectorZ, sString, TRUE);
+  GetSectorIDString(sSectorX, sSectorY, bSectorZ, sString, ARR_SIZE(sString), TRUE);
 
   bTownId = GetTownIdForSector(sSectorX, sSectorY);
 
@@ -4653,7 +4653,7 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(INT16 sSectorX, INT16
   }
 
   // get the name of the sector
-  GetSectorIDString(sSectorX, sSectorY, bSectorZ, sStringA, TRUE);
+  GetSectorIDString(sSectorX, sSectorY, bSectorZ, sStringA, ARR_SIZE(sStringA), TRUE);
 
   // now build the string
   swprintf(sString, ARR_SIZE(sString), pMapErrorString[17], sStringA);
@@ -4689,19 +4689,19 @@ void NotifyPlayerOfInvasionByEnemyForces(INT16 sSectorX, INT16 sSectorY, INT8 bS
   // check if SAM site here
   if (IsThisSectorASAMSector(sSectorX, sSectorY, bSectorZ)) {
     // get sector id value
-    GetShortSectorString(sSectorX, sSectorY, sStringA);
+    GetShortSectorString(sSectorX, sSectorY, sStringA, ARR_SIZE(sStringA));
 
     swprintf(sString, ARR_SIZE(sString), pMapErrorString[22], sStringA);
     DoScreenIndependantMessageBox(sString, MSG_BOX_FLAG_OK, ReturnCallback);
   } else if (bTownId) {
     // get the name of the sector
-    GetSectorIDString(sSectorX, sSectorY, bSectorZ, sStringA, TRUE);
+    GetSectorIDString(sSectorX, sSectorY, bSectorZ, sStringA, ARR_SIZE(sStringA), TRUE);
 
     swprintf(sString, ARR_SIZE(sString), pMapErrorString[23], sStringA);
     DoScreenIndependantMessageBox(sString, MSG_BOX_FLAG_OK, ReturnCallback);
   } else {
     // get sector id value
-    GetShortSectorString(sSectorX, sSectorY, sStringA);
+    GetShortSectorString(sSectorX, sSectorY, sStringA, ARR_SIZE(sStringA));
 
     swprintf(sString, ARR_SIZE(sString), pMapErrorString[24], sStringA);
     ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, sString);

@@ -997,7 +997,8 @@ void RenderPreBattleInterface() {
     SetFontForeground(FONT_YELLOW);
     SetFontShadow(FONT_NEARBLACK);
 
-    GetSectorIDString(gubPBSectorX, gubPBSectorY, gubPBSectorZ, pSectorName, TRUE);
+    GetSectorIDString(gubPBSectorX, gubPBSectorY, gubPBSectorZ, pSectorName, ARR_SIZE(pSectorName),
+                      TRUE);
     mprintf(70, 17, L"%s %s", gpStrategicString[STR_PB_SECTOR], pSectorName);
 
     // enemy

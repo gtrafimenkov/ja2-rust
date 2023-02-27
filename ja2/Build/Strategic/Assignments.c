@@ -6499,7 +6499,8 @@ void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
           if (IsMilitiaTrainableFromSoldiersSectorMaxed(pSoldier)) {
             if (bTownId == BLANK_SECTOR) {
               // SAM site
-              GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, sStringA);
+              GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, sStringA,
+                                   ARR_SIZE(sStringA));
               swprintf(sString, ARR_SIZE(sString), zMarksMapScreenText[21], sStringA);
             } else {
               // town

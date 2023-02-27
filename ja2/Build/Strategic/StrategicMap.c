@@ -629,11 +629,9 @@ void InitializeSAMSites(void) {
 }
 
 // get short sector name without town name
-void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString) {
+void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString, size_t bufSize) {
   // OK, build string id like J11
-  swprintf(sString, ARR_SIZE(sString), L"%S%S", pVertStrings[sMapY], pHortStrings[sMapX]);
-
-  return;
+  swprintf(sString, bufSize, L"%S%S", pVertStrings[sMapY], pHortStrings[sMapX]);
 }
 
 void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder,
@@ -1668,7 +1666,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSec
         CHAR16 szEntry[10];
         CHAR16 szSector[10];
         INT16 sGridNo;
-        GetLoadedSectorString(szSector);
+        GetLoadedSectorString(szSector, ARR_SIZE(szSector));
         if (gMapInformation.sNorthGridNo != -1) {
           swprintf(szEntry, ARR_SIZE(szEntry), L"north");
           sGridNo = gMapInformation.sNorthGridNo;
@@ -1771,10 +1769,10 @@ void InitializeStrategicMapSectorTownNames(void) {
 
 // Get sector ID string makes a string like 'A9 - OMERTA', or just J11 if no town....
 void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zString,
-                       BOOLEAN fDetailed) {
+                       size_t bufSize, BOOLEAN fDetailed) {
 #ifdef JA2DEMO
 
-  swprintf(zString, ARR_SIZE(zString), L"Demoville");
+  swprintf(zString, bufSize, L"Demoville");
 
 #else
   SECTORINFO *pSector = NULL;
@@ -1791,27 +1789,27 @@ void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zS
     if (pUnderground && (pUnderground->fVisited || gfGettingNameFromSaveLoadScreen)) {
       bMineIndex = GetIdOfMineForSector(sSectorX, sSectorY, bSectorZ);
       if (bMineIndex != -1) {
-        swprintf(zString, ARR_SIZE(zString), L"%c%d: %s %s", 'A' + sSectorY - 1, sSectorX,
+        swprintf(zString, bufSize, L"%c%d: %s %s", 'A' + sSectorY - 1, sSectorX,
                  pTownNames[GetTownAssociatedWithMine(bMineIndex)], pwMineStrings[0]);
       } else
         switch (SECTOR(sSectorX, sSectorY)) {
           case SEC_A10:
-            swprintf(zString, ARR_SIZE(zString), L"A10: %s", pLandTypeStrings[REBEL_HIDEOUT]);
+            swprintf(zString, bufSize, L"A10: %s", pLandTypeStrings[REBEL_HIDEOUT]);
             break;
           case SEC_J9:
-            swprintf(zString, ARR_SIZE(zString), L"J9: %s", pLandTypeStrings[TIXA_DUNGEON]);
+            swprintf(zString, bufSize, L"J9: %s", pLandTypeStrings[TIXA_DUNGEON]);
             break;
           case SEC_K4:
-            swprintf(zString, ARR_SIZE(zString), L"K4: %s", pLandTypeStrings[ORTA_BASEMENT]);
+            swprintf(zString, bufSize, L"K4: %s", pLandTypeStrings[ORTA_BASEMENT]);
             break;
           case SEC_O3:
-            swprintf(zString, ARR_SIZE(zString), L"O3: %s", pLandTypeStrings[TUNNEL]);
+            swprintf(zString, bufSize, L"O3: %s", pLandTypeStrings[TUNNEL]);
             break;
           case SEC_P3:
-            swprintf(zString, ARR_SIZE(zString), L"P3: %s", pLandTypeStrings[SHELTER]);
+            swprintf(zString, bufSize, L"P3: %s", pLandTypeStrings[SHELTER]);
             break;
           default:
-            swprintf(zString, ARR_SIZE(zString), L"%c%d: %s", 'A' + sSectorY - 1, sSectorX,
+            swprintf(zString, bufSize, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX,
                      pLandTypeStrings[CREATURE_LAIR]);
             break;
         }
@@ -1823,7 +1821,7 @@ void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zS
     ubSectorID = (UINT8)SECTOR(sSectorX, sSectorY);
     pSector = &SectorInfo[ubSectorID];
     ubLandType = pSector->ubTraversability[4];
-    swprintf(zString, ARR_SIZE(zString), L"%c%d: ", 'A' + sSectorY - 1, sSectorX);
+    swprintf(zString, bufSize, L"%c%d: ", 'A' + sSectorY - 1, sSectorX);
 
     if (bTownNameID == BLANK_SECTOR) {
       // OK, build string id like J11
@@ -3287,14 +3285,16 @@ void UpdateAirspaceControl(void) {
     CHAR16 sMsgString[256], sMsgSubString1[64], sMsgSubString2[64];
 
     // get the name of the old sector
-    GetSectorIDString(gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString1, FALSE);
+    GetSectorIDString(gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString1,
+                      ARR_SIZE(sMsgSubString1), FALSE);
 
     // move the landing zone over to Omerta
     gsMercArriveSectorX = 9;
     gsMercArriveSectorY = 1;
 
     // get the name of the new sector
-    GetSectorIDString(gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString2, FALSE);
+    GetSectorIDString(gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString2,
+                      ARR_SIZE(sMsgSubString2), FALSE);
 
     // now build the string
     swprintf(sMsgString, ARR_SIZE(sMsgString), pBullseyeStrings[4], sMsgSubString1, sMsgSubString2);
@@ -4027,16 +4027,15 @@ INT16 PickGridNoToWalkIn(struct SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirectio
   return (NOWHERE);
 }
 
-void GetLoadedSectorString(STR16 pString) {
+void GetLoadedSectorString(STR16 pString, size_t bufSize) {
   if (!gfWorldLoaded) {
-    swprintf(pString, ARR_SIZE(pString), L"");
+    swprintf(pString, bufSize, L"");
     return;
   }
   if (gbWorldSectorZ) {
-    swprintf(pString, ARR_SIZE(pString), L"%c%d_b%d", gWorldSectorY + 'A' - 1, gWorldSectorX,
-             gbWorldSectorZ);
+    swprintf(pString, bufSize, L"%c%d_b%d", gWorldSectorY + 'A' - 1, gWorldSectorX, gbWorldSectorZ);
   } else if (!gbWorldSectorZ) {
-    swprintf(pString, ARR_SIZE(pString), L"%c%d", gWorldSectorY + 'A' - 1, gWorldSectorX);
+    swprintf(pString, bufSize, L"%c%d", gWorldSectorY + 'A' - 1, gWorldSectorX);
   }
 }
 

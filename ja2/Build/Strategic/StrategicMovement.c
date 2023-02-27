@@ -1048,7 +1048,7 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
         CHAR16 str[256];
         CHAR16 pSectorStr[128];
         GetSectorIDString(pGroup->ubSectorX, pGroup->ubSectorY, pGroup->ubSectorZ, pSectorStr,
-                          TRUE);
+                          ARR_SIZE(pSectorStr), TRUE);
         swprintf(str, ARR_SIZE(str), gpStrategicString[STR_DIALOG_ENEMIES_ATTACK_UNCONCIOUSMERCS],
                  pSectorStr);
         DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, TriggerPrebattleInterface);
@@ -4194,7 +4194,7 @@ void NotifyPlayerOfBloodcatBattle(UINT8 ubSectorX, UINT8 ubSectorY) {
   CHAR16 str[256];
   CHAR16 zTempString[128];
   if (gubEnemyEncounterCode == BLOODCAT_AMBUSH_CODE) {
-    GetSectorIDString(ubSectorX, ubSectorY, 0, zTempString, TRUE);
+    GetSectorIDString(ubSectorX, ubSectorY, 0, zTempString, ARR_SIZE(zTempString), TRUE);
     swprintf(str, ARR_SIZE(str), pMapErrorString[12], zTempString);
   } else if (gubEnemyEncounterCode == ENTERING_BLOODCAT_LAIR_CODE) {
     wcscpy(str, pMapErrorString[13]);
@@ -4383,7 +4383,7 @@ BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup
   gpGroupPrompting = pGroup;
 
   // build string for squad
-  GetSectorIDString(sSectorX, sSectorY, bSectorZ, wSectorName, FALSE);
+  GetSectorIDString(sSectorX, sSectorY, bSectorZ, wSectorName, ARR_SIZE(wSectorName), FALSE);
   swprintf(sString, ARR_SIZE(sString), pLandMarkInSectorString[0],
            pGroup->pPlayerList->pSoldier->bAssignment + 1, wSectorName);
 

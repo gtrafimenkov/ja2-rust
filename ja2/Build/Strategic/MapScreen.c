@@ -4153,7 +4153,7 @@ UINT32 HandleMapUI() {
               CancelChangeArrivalSectorMode();
 
               // get the name of the sector
-              GetSectorIDString(sMapX, sMapY, 0, sMsgSubString, FALSE);
+              GetSectorIDString(sMapX, sMapY, 0, sMsgSubString, ARR_SIZE(sMsgSubString), FALSE);
 
               // now build the string
               swprintf(sMsgString, ARR_SIZE(sMsgString), pBullseyeStrings[1], sMsgSubString);
@@ -9151,7 +9151,8 @@ void TellPlayerWhyHeCantCompressTime(void) {
     if (OnlyHostileCivsInSector()) {
       CHAR16 str[256];
       CHAR16 pSectorString[128];
-      GetSectorIDString(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, pSectorString, TRUE);
+      GetSectorIDString(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, pSectorString,
+                        ARR_SIZE(pSectorString), TRUE);
       swprintf(str, ARR_SIZE(str), gzLateLocalizedString[27], pSectorString);
       DoMapMessageBox(MSG_BOX_BASIC_STYLE, str, MAP_SCREEN, MSG_BOX_FLAG_OK,
                       MapScreenDefaultOkBoxCallback);
@@ -10447,7 +10448,8 @@ void DumpSectorDifficultyInfo(void) {
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Player Kills = %d",
             gStrategicStatus.usPlayerKills);
 
-  GetSectorIDString(sSelMapX, sSelMapY, (INT8)iCurrentMapSectorZ, wSectorName, TRUE);
+  GetSectorIDString(sSelMapX, sSelMapY, (INT8)iCurrentMapSectorZ, wSectorName,
+                    ARR_SIZE(wSectorName), TRUE);
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"SECTOR: %s", wSectorName);
 
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Pyth. Distance From Meduna (0-20) = %d",

@@ -560,7 +560,8 @@ void CheckForValidArrivalSector() {
     return;
   }
 
-  GetShortSectorString(gsMercArriveSectorX, gsMercArriveSectorY, zShortTownIDString1);
+  GetShortSectorString(gsMercArriveSectorX, gsMercArriveSectorY, zShortTownIDString1,
+                       ARR_SIZE(zShortTownIDString1));
 
   // If here - we need to do a search!
   sTop = ubRadius;
@@ -597,7 +598,8 @@ void CheckForValidArrivalSector() {
 
     UpdateAnyInTransitMercsWithGlobalArrivalSector();
 
-    GetShortSectorString(gsMercArriveSectorX, gsMercArriveSectorY, zShortTownIDString2);
+    GetShortSectorString(gsMercArriveSectorX, gsMercArriveSectorY, zShortTownIDString2,
+                         ARR_SIZE(zShortTownIDString2));
 
     swprintf(sString, ARR_SIZE(sString),
              L"Arrival of new recruits is being rerouted to sector %s, as scheduled drop-off point "

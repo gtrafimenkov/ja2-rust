@@ -1812,16 +1812,10 @@ void DisplaySelectedNPC() {
 
       GetDebugLocationString(gubCurrentNpcInSector[i], sTempString);
 
-      // GetShortSectorString( gMercProfiles[ gubCurrentNpcInSector[ i ] ].sSectorX, gMercProfiles[
-      // gubCurrentNpcInSector[ i ] ].sSectorY, sTempString );
     } else {
       DrawTextToScreen(gMercProfiles[i].zNickname, usPosX, usPosY, 0, QUEST_DBS_FONT_DYNAMIC_TEXT,
                        QUEST_DBS_COLOR_DYNAMIC_TEXT, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-
       GetDebugLocationString(i, sTempString);
-
-      //			GetShortSectorString( gMercProfiles[ i ].sSectorX, gMercProfiles[ i
-      //].sSectorY, sTempString );
     }
 
     FindFontRightCoordinates(gpActiveListBox->usScrollPosX, usPosY, gpActiveListBox->usScrollWidth,
@@ -1857,19 +1851,12 @@ void DisplaySelectedNPC() {
           gpActiveListBox->usScrollPosX, (UINT16)(usPosY), 0, QUEST_DBS_FONT_LISTBOX_TEXT, 2,
           FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
       GetDebugLocationString(gubCurrentNpcInSector[gpActiveListBox->sCurSelectedItem], sTempString);
-
-      //			GetShortSectorString( gMercProfiles[ gubCurrentNpcInSector[
-      // gpActiveListBox->sCurSelectedItem ] ].sSectorX, gMercProfiles[ gubCurrentNpcInSector[
-      // gpActiveListBox->sCurSelectedItem ] ].sSectorY, sTempString );
     } else {
       DrawTextToScreen(gMercProfiles[gpActiveListBox->sCurSelectedItem].zNickname,
                        gpActiveListBox->usScrollPosX, (UINT16)(usPosY), 0,
                        QUEST_DBS_FONT_LISTBOX_TEXT, 2, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
       GetDebugLocationString(gpActiveListBox->sCurSelectedItem, sTempString);
-      //			GetShortSectorString( gMercProfiles[
-      // gpActiveListBox->sCurSelectedItem ].sSectorX, gMercProfiles[
-      // gpActiveListBox->sCurSelectedItem ].sSectorY, sTempString );
     }
 
     FindFontRightCoordinates(gpActiveListBox->usScrollPosX, (UINT16)(usPosY),
@@ -3672,13 +3659,13 @@ void GetDebugLocationString(UINT16 usProfileID, STR16 pzText) {
 
   // the soldier is in this sector
   else if (pSoldier != NULL) {
-    GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, pzText);
+    GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, pzText, ARR_SIZE(pzText));
   }
 
   // else the soldier is in a different map
   else {
     GetShortSectorString(gMercProfiles[usProfileID].sSectorX, gMercProfiles[usProfileID].sSectorY,
-                         pzText);
+                         pzText, ARR_SIZE(pzText));
   }
 }
 

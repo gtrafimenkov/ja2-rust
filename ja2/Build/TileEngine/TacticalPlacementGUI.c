@@ -436,7 +436,7 @@ void RenderTacticalPlacementGUI() {
     SetFontForeground(FONT_BEIGE);
     SetFontShadow(141);
 
-    GetSectorIDString(gubPBSectorX, gubPBSectorY, gubPBSectorZ, str, TRUE);
+    GetSectorIDString(gubPBSectorX, gubPBSectorY, gubPBSectorZ, str, ARR_SIZE(str), TRUE);
 
     mprintf(120, 335, L"%s %s -- %s...", gpStrategicString[STR_TP_SECTOR], str,
             gpStrategicString[STR_TP_CHOOSEENTRYPOSITIONS]);

@@ -571,7 +571,8 @@ void DrawNameOfLoadedSector(void) {
   SetFontForeground(183);
   SetFontBackground(FONT_BLACK);
 
-  GetSectorIDString(sSelMapX, sSelMapY, (INT8)(iCurrentMapSectorZ), sString, TRUE);
+  GetSectorIDString(sSelMapX, sSelMapY, (INT8)(iCurrentMapSectorZ), sString, ARR_SIZE(sString),
+                    TRUE);
   ReduceStringLength(sString, 80, COMPFONT);
 
   VarFindFontCenterCoordinates(548, 426, 80, 16, COMPFONT, &sFontX, &sFontY, sString);
