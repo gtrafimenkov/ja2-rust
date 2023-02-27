@@ -4850,20 +4850,31 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT
 #include "Utils/radmalw.i"
 #include "platform_win.h"
 
-//-Structures----------------------------------------------------------------------
-
-//-Flags-and-Symbols---------------------------------------------------------------
+#if 1
+// must go after other includes
+#include <ddraw.h>
+#endif
 
 #define SMK_NUM_FLICS 4  // Maximum number of flics open
 
-// SMKFLIC uiFlags
 #define SMK_FLIC_OPEN 0x00000001       // Flic is open
 #define SMK_FLIC_PLAYING 0x00000002    // Flic is playing
 #define SMK_FLIC_LOOP 0x00000004       // Play flic in a loop
 #define SMK_FLIC_AUTOCLOSE 0x00000008  // Close when done
 
-//-Globals-------------------------------------------------------------------------
-SMKFLIC SmkList[SMK_NUM_FLICS];
+struct SmkFlic {
+  CHAR8 *cFilename;
+  HWFILE hFileHandle;
+  struct SmackTag *SmackHandle;
+  struct SmackBufTag *SmackBuffer;
+  UINT32 uiFlags;
+  LPDIRECTDRAWSURFACE2 lpDDS;
+  HWND hWindow;
+  UINT32 uiFrame;
+  UINT32 uiLeft, uiTop;
+};
+
+struct SmkFlic SmkList[SMK_NUM_FLICS];
 
 HWND hDisplayWindow = 0;
 UINT32 uiDisplayHeight, uiDisplayWidth;
@@ -4877,12 +4888,12 @@ LPDIRECTDRAWSURFACE2 lpVideoPlayback2 = NULL;
 //-Function-Prototypes-------------------------------------------------------------
 void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight);
 void SmkShutdown(void);
-SMKFLIC *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fAutoClose);
+struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fAutoClose);
 BOOLEAN SmkPollFlics(void);
-SMKFLIC *SmkOpenFlic(CHAR8 *cFilename);
-void SmkSetBlitPosition(SMKFLIC *pSmack, UINT32 uiLeft, UINT32 uiTop);
-void SmkCloseFlic(SMKFLIC *pSmack);
-SMKFLIC *SmkGetFreeFlic(void);
+struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename);
+void SmkSetBlitPosition(struct SmkFlic *pSmack, UINT32 uiLeft, UINT32 uiTop);
+void SmkCloseFlic(struct SmkFlic *pSmack);
+struct SmkFlic *SmkGetFreeFlic(void);
 void SmkSetupVideo(void);
 void SmkShutdownVideo(void);
 
@@ -4929,7 +4940,7 @@ void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight) {
   void *pSoundDriver = NULL;
 
   // Wipe the flic list clean
-  memset(SmkList, 0, sizeof(SMKFLIC) * SMK_NUM_FLICS);
+  memset(SmkList, 0, sizeof(struct SmkFlic) * SMK_NUM_FLICS);
 
   // Set playback window properties
   hDisplayWindow = ghWindow;
@@ -4955,8 +4966,8 @@ void SmkShutdown(void) {
   }
 }
 
-SMKFLIC *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
-  SMKFLIC *pSmack;
+struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
+  struct SmkFlic *pSmack;
 
   // Open the flic
   if ((pSmack = SmkOpenFlic(cFilename)) == NULL) return (NULL);
@@ -4971,8 +4982,8 @@ SMKFLIC *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClo
   return (pSmack);
 }
 
-SMKFLIC *SmkOpenFlic(CHAR8 *cFilename) {
-  SMKFLIC *pSmack;
+struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
+  struct SmkFlic *pSmack;
   HANDLE hFile;
 
   // Get an available flic slot from the list
@@ -5018,12 +5029,12 @@ SMKFLIC *SmkOpenFlic(CHAR8 *cFilename) {
   return (pSmack);
 }
 
-void SmkSetBlitPosition(SMKFLIC *pSmack, UINT32 uiLeft, UINT32 uiTop) {
+void SmkSetBlitPosition(struct SmkFlic *pSmack, UINT32 uiLeft, UINT32 uiTop) {
   pSmack->uiLeft = uiLeft;
   pSmack->uiTop = uiTop;
 }
 
-void SmkCloseFlic(SMKFLIC *pSmack) {
+void SmkCloseFlic(struct SmkFlic *pSmack) {
   // Attempt opening the filename
   FileMan_Close(pSmack->hFileHandle);
 
@@ -5034,10 +5045,10 @@ void SmkCloseFlic(SMKFLIC *pSmack) {
   SmackClose(pSmack->SmackHandle);
 
   // Zero the memory, flags, etc.
-  memset(pSmack, 0, sizeof(SMKFLIC));
+  memset(pSmack, 0, sizeof(struct SmkFlic));
 }
 
-SMKFLIC *SmkGetFreeFlic(void) {
+struct SmkFlic *SmkGetFreeFlic(void) {
   UINT32 uiCount;
 
   for (uiCount = 0; uiCount < SMK_NUM_FLICS; uiCount++)

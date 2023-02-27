@@ -48,7 +48,7 @@ UINT32 guiIntroExitScreen = INTRO_SCREEN;
 
 extern BOOLEAN gfDoneWithSplashScreen;
 
-SMKFLIC *gpSmackFlic = NULL;
+struct SmkFlic *gpSmackFlic = NULL;
 
 #define SMKINTRO_FIRST_VIDEO 255
 #define SMKINTRO_NO_VIDEO -1
