@@ -1,7 +1,5 @@
-#include <ddraw.h>
 #include <process.h>
 #include <stdio.h>
-#include <windows.h>
 
 #include "FadeScreen.h"
 #include "Globals.h"
@@ -19,12 +17,18 @@
 #include "TileEngine/RenderWorld.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
-#include "platform_win.h"
 
 struct VSurface *ghPrimary = NULL;
 struct VSurface *ghBackBuffer = NULL;
 struct VSurface *ghFrameBuffer = NULL;
 struct VSurface *ghMouseBuffer = NULL;
+
+#define INITGUID
+#include <ddraw.h>
+#include <windows.h>
+
+#include "Smack.h"
+#include "platform_win.h"
 
 #ifndef _MT
 #define _MT
@@ -4841,7 +4845,7 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
-#include "SGP/windows/smack.h"
+#include "Smack.h"
 #include "Utils/Cinematics.h"
 #include "Utils/radmalw.i"
 #include "platform_win.h"

@@ -570,7 +570,6 @@ void ValidateAndUpdateMapVersionIfNecessary() {
   AutoCalculateItemNoOverwriteStatus();
 }
 
-#ifdef JA2EDITOR
 #include "Editor/SummaryInfo.h"
 #include "TileEngine/ExitGrids.h"
 // This function is used to avoid conflicts between minor version updates and sector summary info.
@@ -588,4 +587,3 @@ void UpdateSummaryInfo(SUMMARYFILE *pSummary) {
     pSummary->MapInfo.sIsolatedGridNo = -1;
   }
 }
-#endif

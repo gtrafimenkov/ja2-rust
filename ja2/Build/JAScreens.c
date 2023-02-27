@@ -1410,19 +1410,3 @@ UINT32 DemoExitScreenHandle(void) {
 }
 
 UINT32 DemoExitScreenShutdown(void) { return (TRUE); }
-
-#ifndef JA2EDITOR
-
-UINT32 LoadSaveScreenInit() { return TRUE; }
-
-UINT32 LoadSaveScreenHandle() { return TRUE; }
-
-UINT32 LoadSaveScreenShutdown() { return TRUE; }
-
-UINT32 EditScreenInit() { return TRUE; }
-
-UINT32 EditScreenHandle() { return TRUE; }
-
-UINT32 EditScreenShutdown() { return TRUE; }
-
-#endif

@@ -1851,7 +1851,6 @@ void InitLoadedWorld() {
   SetBlueFlagFlags();
 }
 
-#ifdef JA2EDITOR
 // This is a specialty function that is very similar to LoadWorld, except that it
 // doesn't actually load the world, it instead evaluates the map and generates summary
 // information for use within the summary editor.  The header is defined in Summary Info.h,
@@ -2235,7 +2234,6 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   WriteSectorSummaryUpdate(szFilename, ubLevel, pSummary);
   return TRUE;
 }
-#endif
 
 extern UINT8 GetCurrentSummaryVersion();
 extern void LoadShadeTablesFromTextFile();

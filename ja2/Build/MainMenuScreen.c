@@ -4,6 +4,7 @@
 #include "GameLoop.h"
 #include "GameScreen.h"
 #include "GameSettings.h"
+#include "GameVersion.h"
 #include "Globals.h"
 #include "JA2Splash.h"
 #include "JAScreens.h"

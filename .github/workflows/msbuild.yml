@@ -8,7 +8,7 @@ on:
   pull_request:
 
 env:
-  SOLUTION_FILE_PATH: ja2/Build/JA2.sln
+  SOLUTION_FILE_PATH: ja2/JA2.sln
 
 jobs:
   build:
@@ -51,7 +51,7 @@ jobs:
 
     - name: Run Tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: .\ja2\Build\${{ matrix.config }}\tester.exe
+      run: .\ja2\${{ matrix.config }}\tester.exe
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3

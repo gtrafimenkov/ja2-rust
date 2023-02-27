@@ -202,17 +202,17 @@ void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage) {
 // //
 // //**************************************************************************
 
-// void DbgClearAllTopics(void) {
-//   UINT16 usIndex;
+void DbgClearAllTopics(void) {
+  //   UINT16 usIndex;
 
-//   for (usIndex = 0; usIndex < MAX_TOPICS_ALLOTED; usIndex++) {
-//     gfDebugTopics[usIndex] = FALSE;
-//     if (gpDbgTopicPtrs[usIndex] != NULL) {
-//       *gpDbgTopicPtrs[usIndex] = INVALID_TOPIC;
-//       gpDbgTopicPtrs[usIndex] = NULL;
-//     }
-//   }
-// }
+  //   for (usIndex = 0; usIndex < MAX_TOPICS_ALLOTED; usIndex++) {
+  //     gfDebugTopics[usIndex] = FALSE;
+  //     if (gpDbgTopicPtrs[usIndex] != NULL) {
+  //       *gpDbgTopicPtrs[usIndex] = INVALID_TOPIC;
+  //       gpDbgTopicPtrs[usIndex] = NULL;
+  //     }
+  //   }
+}
 
 void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
   printf("%4d / %4d / %4d / %s\n", uiTopicId, uiCommand, uiDebugLevel, strMessage);

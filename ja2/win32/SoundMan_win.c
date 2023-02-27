@@ -10,13 +10,13 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "Mss.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
-#include "SGP/windows/Mss.h"
 #include "platform.h"
 #include "platform_strings.h"
 #include "platform_win.h"

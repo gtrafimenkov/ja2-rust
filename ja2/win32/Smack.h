@@ -5,7 +5,7 @@
 
 #ifndef __RADRES__
 
-#include "SGP/windows/RAD.h"
+#include "RAD.h"
 
 RADDEFSTART
 
@@ -317,7 +317,6 @@ typedef struct SmackBufTag {
 
 #define INCLUDE_MMSYSTEM_H
 #include <windows.h>
-
 #include <windowsx.h>
 
 #ifdef __RADNT__  // to combat WIN32_LEAN_AND_MEAN

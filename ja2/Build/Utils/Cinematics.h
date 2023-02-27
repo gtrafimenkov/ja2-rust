@@ -2,18 +2,20 @@
 #define _CINEMATICS_H_
 
 #include "SGP/Types.h"
-#include "SGP/windows/smack.h"
 
 #if 1
 // must go after other includes
 #include <ddraw.h>
 #endif
 
+struct SmackTag;
+struct SmackBufTag;
+
 typedef struct {
   CHAR8 *cFilename;
   HWFILE hFileHandle;
-  Smack *SmackHandle;
-  SmackBuf *SmackBuffer;
+  struct SmackTag *SmackHandle;
+  struct SmackBufTag *SmackBuffer;
   UINT32 uiFlags;
   LPDIRECTDRAWSURFACE2 lpDDS;
   HWND hWindow;

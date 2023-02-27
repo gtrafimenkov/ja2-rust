@@ -2,19 +2,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="..\Build\Utils\EnglishText.c">
-      <Filter>ja2\Utils</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="ja2">
-      <UniqueIdentifier>{cb0b63da-a354-43a5-8e11-af4d20f02fdf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ja2\Utils">
-      <UniqueIdentifier>{6023519d-5cb2-4034-8291-c15d542b747c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>
