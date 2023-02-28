@@ -15,7 +15,7 @@ format-modified:
 CCd	= gcc
 CXX	= g++
 CFLAGd	= -fPIC
-COMPILE_FLAGS	= -c -Wall -Werror -DJA2 -DFORCE_ASSERTS_ON -DPRECOMPILEDHEADERS -I./ja2/Build
+COMPILE_FLAGS	= -c -Wall -Werror -DJA2 -DFORCE_ASSERTS_ON -DPRECOMPILEDHEADERS -I./ja2lib
 
 TARGET_ARCH    ?=
 ifeq "$(TARGET_ARCH)" ""

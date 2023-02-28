@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JA2", "win32\JA2.vcxproj", "{FBF9F112-A506-471C-A2F3-06DEF47FD111}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ja2-win32", "win32\JA2.vcxproj", "{FBF9F112-A506-471C-A2F3-06DEF47FD111}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1E5A01AA-C47E-4C14-AD20-9E152E321AE0} = {1E5A01AA-C47E-4C14-AD20-9E152E321AE0}
 	EndProjectSection
@@ -12,7 +12,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tester", "tester\tester.vcx
 		{1E5A01AA-C47E-4C14-AD20-9E152E321AE0} = {1E5A01AA-C47E-4C14-AD20-9E152E321AE0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ja2lib", "Build\ja2lib.vcxproj", "{1E5A01AA-C47E-4C14-AD20-9E152E321AE0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ja2lib", "ja2lib\ja2lib.vcxproj", "{1E5A01AA-C47E-4C14-AD20-9E152E321AE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
