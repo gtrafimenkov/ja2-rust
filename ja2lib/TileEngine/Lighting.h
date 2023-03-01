@@ -1,9 +1,11 @@
 #ifndef _LIGHTING_H_
 #define _LIGHTING_H_
 
+#include "SGP/HImage.h"
 #include "SGP/Types.h"
 
 struct SOLDIERTYPE;
+struct VObject;
 
 /****************************************************************************************
  * JA2 Lighting Module

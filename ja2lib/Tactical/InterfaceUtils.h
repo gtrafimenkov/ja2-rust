@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct OBJECTTYPE;
 struct SOLDIERTYPE;
 
 #define DRAW_ITEM_STATUS_ATTACHMENT1 200

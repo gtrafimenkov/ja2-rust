@@ -27,6 +27,7 @@
 #include "Tactical/Campaign.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Interface.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/MercHiring.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"

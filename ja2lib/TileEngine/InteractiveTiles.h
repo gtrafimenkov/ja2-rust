@@ -3,7 +3,9 @@
 
 #include "SGP/Types.h"
 
+struct LEVELNODE;
 struct SOLDIERTYPE;
+struct STRUCTURE;
 
 #define INTTILE_DOOR_TILE_ONE 1
 

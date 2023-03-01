@@ -2687,17 +2687,6 @@ DXDEC U32 AILCALL AIL_interrupt_divisor(void);
 
 #endif
 
-#ifdef __WATCOMC__
-
-void MSSBreakPoint();
-#pragma aux MSSBreakPoint = "int 3";
-
-#else
-
-#define MSSBreakPoint() __asm {int 3}
-
-#endif
-
 //
 // High-level support services
 //

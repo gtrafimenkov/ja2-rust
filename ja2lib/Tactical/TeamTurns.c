@@ -11,6 +11,7 @@
 #include "Tactical/AnimationControl.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Interface.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/PathAI.h"

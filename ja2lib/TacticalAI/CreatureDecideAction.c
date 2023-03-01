@@ -1,5 +1,6 @@
 #include "SGP/Types.h"
 #include "Tactical/Items.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/OppList.h"
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierAdd.h"

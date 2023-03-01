@@ -91,5 +91,3 @@ LibraryInitHeader gGameLibaries[] = {
 #endif
 
 };
-
-// build:linux

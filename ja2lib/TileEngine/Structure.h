@@ -3,6 +3,11 @@
 
 #include "Tactical/OverheadTypes.h"
 
+struct DB_STRUCTURE_REF;
+struct LEVELNODE;
+struct STRUCTURE;
+struct VObject;
+
 #define NOTHING_BLOCKING 0
 #define BLOCKING_REDUCE_RANGE 1
 #define BLOCKING_NEXT_TILE 10

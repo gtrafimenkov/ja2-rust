@@ -101,5 +101,3 @@ BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
 }
 
 BOOLEAN Plat_SetCurrentDirectory(STR pcDirectory) { return chdir(pcDirectory) == 0; }
-
-// build:linux

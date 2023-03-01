@@ -4,6 +4,7 @@
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
 
+struct GROUP;
 struct SOLDIERTYPE;
 
 extern BOOLEAN gfPendingEnemies;

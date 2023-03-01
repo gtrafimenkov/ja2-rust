@@ -28,6 +28,7 @@
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/InterfaceUtils.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"

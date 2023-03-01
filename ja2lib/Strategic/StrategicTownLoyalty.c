@@ -22,6 +22,7 @@
 #include "Tactical/AnimationData.h"
 #include "Tactical/HandleItems.h"
 #include "Tactical/LOS.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierProfile.h"

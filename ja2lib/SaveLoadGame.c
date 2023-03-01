@@ -69,6 +69,7 @@
 #include "Tactical/InterfaceUtils.h"
 #include "Tactical/Keys.h"
 #include "Tactical/MapInformation.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/MercHiring.h"
 #include "Tactical/MilitiaControl.h"
 #include "Tactical/OppList.h"

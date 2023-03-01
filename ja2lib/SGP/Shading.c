@@ -105,6 +105,7 @@ void FindIndecies(struct SGPPaletteEntry *pSrcPalette, struct SGPPaletteEntry *p
   UINT16 usCurIndex, usCurDelta, usCurCount;
   UINT32 *pSavedPtr;
 
+#ifdef _WINDOWS
 __asm {
 
 // Assumes:
@@ -180,6 +181,9 @@ NotThisCol:
 		dec		usCurCount
 		jnz		DoNextIndex
 	}
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 }
 
 /**********************************************************************************************

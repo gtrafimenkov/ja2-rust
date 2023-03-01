@@ -3,7 +3,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#include <tchar.h>
 #include <time.h>
 #include <wchar.h>
 
@@ -43,6 +42,7 @@
 #include "Tactical/HandleUI.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
+#include "Tactical/InterfaceDialogue.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/MercEntering.h"
@@ -51,7 +51,6 @@
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/Squads.h"
 #include "Tactical/StrategicExitGUI.h"
-#include "Tactical/interfaceDialogue.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Lighting.h"

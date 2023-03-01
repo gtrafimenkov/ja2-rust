@@ -3,6 +3,8 @@
 
 #include "Tactical/HandleUI.h"
 
+struct STRUCTURE;
+
 #define MAX_UICOMPOSITES 4
 
 #define INTERFACE_START_Y 360

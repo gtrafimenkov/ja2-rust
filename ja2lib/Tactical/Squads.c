@@ -12,6 +12,7 @@
 #include "Strategic/StrategicPathing.h"
 #include "Tactical/Faces.h"
 #include "Tactical/Interface.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"

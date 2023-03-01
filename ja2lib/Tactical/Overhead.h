@@ -174,7 +174,6 @@ extern CHAR8 *GetSceneFilename();
 extern INT8 ubLevelMoveLink[10];
 
 // Soldier List used for all soldier overhead interaction
-extern struct SOLDIERTYPE Menptr[TOTAL_SOLDIERS];
 extern struct SOLDIERTYPE *MercPtrs[TOTAL_SOLDIERS];
 
 // MERC SLOTS - A LIST OF ALL ACTIVE MERCS

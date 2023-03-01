@@ -98,9 +98,6 @@ enum {
 };
 
 enum {
-
-};
-enum {
   NO_REGION = 0,
   EMAIL_REGION,
   WWW_REGION,

@@ -1,4 +1,4 @@
-#include "Utils/Ja25EnglishText.h"
+#include "Utils/JA25EnglishText.h"
 
 #include "LanguageDefines.h"
 #ifdef ENGLISH

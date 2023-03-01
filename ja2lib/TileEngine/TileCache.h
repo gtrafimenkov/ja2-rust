@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct LEVELNODE;
 struct VObject;
 
 #define TILE_CACHE_START_INDEX 36000

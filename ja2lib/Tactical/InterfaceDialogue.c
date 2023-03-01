@@ -1,4 +1,4 @@
-#include "Tactical/interfaceDialogue.h"
+#include "Tactical/InterfaceDialogue.h"
 
 #include <stdio.h>
 
@@ -44,6 +44,7 @@
 #include "Tactical/HandleDoors.h"
 #include "Tactical/HandleItems.h"
 #include "Tactical/InterfaceControl.h"
+#include "Tactical/InterfaceDialogue.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/Items.h"
 #include "Tactical/Keys.h"
@@ -57,7 +58,6 @@
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Squads.h"
 #include "Tactical/TacticalSave.h"
-#include "Tactical/interfaceDialogue.h"
 #include "TacticalAI/AI.h"
 #include "TacticalAI/AIInternals.h"
 #include "TacticalAI/NPC.h"

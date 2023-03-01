@@ -15,6 +15,7 @@
 #include "Tactical/Faces.h"
 #include "Tactical/Gap.h"
 #include "Tactical/LOS.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"

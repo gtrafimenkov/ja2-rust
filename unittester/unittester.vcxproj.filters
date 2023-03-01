@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="test.cpp" />
     <ClCompile Include="bugfixes.cpp" />
-    <ClCompile Include="dummy-platform.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -20,6 +20,7 @@
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/InterfaceUtils.h"
 #include "Tactical/Items.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/ShopKeeperInterface.h"
 #include "Tactical/SoldierControl.h"

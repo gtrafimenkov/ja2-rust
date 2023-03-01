@@ -1,6 +1,7 @@
 #include "SGP/VObjectBlitters.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "SGP/Debug.h"
 #include "SGP/HImage.h"
@@ -96,6 +97,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(UINT16 *pBuffer, UINT32 
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -275,6 +277,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -327,6 +332,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTranslucent(UINT16 *pBuffer, UINT32 uiDest
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -401,6 +407,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -453,6 +462,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBTranslucent(UINT16 *pBuffer, UINT32 uiDe
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -524,6 +534,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -602,6 +615,7 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitch
   usZLevel = usZValue;
   //	usZLinesToGo=WORLD_TILE_Y;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -787,6 +801,9 @@ RSLoop2:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -815,137 +832,6 @@ UINT16 *InitZBuffer(UINT32 uiPitch, UINT32 uiHeight) {
 **********************************************************************************************/
 BOOLEAN ShutdownZBuffer(UINT16 *pBuffer) {
   MemFree(pBuffer);
-  return (TRUE);
-}
-
-/**********************************************************************************************
- Blt8BPPDataTo8BPPBufferMonoShadow
-
-        Uses a bitmap an 8BPP template for blitting. Anywhere a 1 appears in the bitmap, a shadow
-        is blitted to the destination (a black pixel). Any other value above zero is considered a
-        forground color, and zero is background. If the parameter for the background color is zero,
-        transparency is used for the background.
-
-**********************************************************************************************/
-BOOLEAN Blt8BPPDataTo8BPPBufferMonoShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                          UINT16 *pZBuffer, UINT16 usZValue,
-                                          struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                          UINT16 usIndex, UINT8 ubForeground, UINT8 ubBackground) {
-  UINT32 uiOffset;
-  UINT32 usHeight, usWidth;
-  UINT8 *SrcPtr, *DestPtr, *ZPtr;
-  UINT32 LineSkip, LineSkipZ;
-  ETRLEObject *pTrav;
-  INT32 iTempX, iTempY;
-  UINT8 *pPal8BPP;
-
-  // Assertions
-  Assert(hSrcVObject != NULL);
-  Assert(pBuffer != NULL);
-
-  // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
-
-  // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
-
-  // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
-
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
-  DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX);
-  ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * 2 * iTempY) + (iTempX * 2);
-  LineSkip = (uiDestPitchBYTES - (usWidth));
-  LineSkipZ = LineSkip * 2;
-  pPal8BPP = hSrcVObject->pShade8;
-
-  __asm {
-
-		mov		esi, SrcPtr
-		mov		edi, DestPtr
-		xor		eax, eax
-		mov		ebx, ZPtr
-		xor		ecx, ecx
-		mov		edx, pPal8BPP
-
-BlitDispatch:
-
-		mov		cl, [esi]
-		inc		esi
-		or		cl, cl
-		js		BlitTransparent
-		jz		BlitDoneLine
-
-        // BlitNonTransLoop:
-
-BlitNTL4:
-
-		mov		al, [esi]
-		cmp		al, 1
-		jne		BlitNTL6
-
-		xor		al, al
-		mov		[edi], al
-		jmp		BlitNTL5
-
-BlitNTL6:
-		or		al, al
-		jz		BlitNTL7
-
-		mov		al, ubForeground
-		mov		[edi], al
-		jmp		BlitNTL5
-
-BlitNTL7:
-		cmp		ubBackground, 0
-		je		BlitNTL5
-
-		mov		al, ubBackground
-		mov		[edi], al
-
-BlitNTL5:
-		inc		esi
-		inc		edi
-		add		ebx, 2
-		dec		cl
-		jnz		BlitNTL4
-
-		jmp		BlitDispatch
-
-
-BlitTransparent:
-		and		ecx, 07fH
-
-		mov		al, ubBackground
-		or		al, al
-		jz		BlitTrans1
-
-		rep		stosb
-		jmp		BlitDispatch
-
-
-BlitTrans1:
-		add		edi, ecx
-		jmp		BlitDispatch
-
-
-BlitDoneLine:
-
-		dec		usHeight
-		jz		BlitDone
-		add		edi, LineSkip
-		add		ebx, LineSkipZ
-		jmp		BlitDispatch
-
-
-BlitDone:
-  }
-
   return (TRUE);
 }
 
@@ -1022,6 +908,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadowClip(UINT16 *pBuffer, UINT32 uiDestPit
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -1215,6 +1102,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1241,6 +1131,7 @@ BOOLEAN Blt16BPPTo16BPP(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, UINT32 
   uiLineSkipDest = uiDestPitch - (uiWidth * 2);
   uiLineSkipSrc = uiSrcPitch - (uiWidth * 2);
 
+#ifdef _WINDOWS
   __asm {
 	mov		esi, pSrcPtr
 	mov		edi, pDestPtr
@@ -1282,6 +1173,9 @@ BlitDwords:
 BlitDone:
 
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1309,6 +1203,7 @@ BOOLEAN Blt16BPPTo16BPPTrans(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, UI
   uiLineSkipDest = uiDestPitch - (uiWidth * 2);
   uiLineSkipSrc = uiSrcPitch - (uiWidth * 2);
 
+#ifdef _WINDOWS
   __asm {
 	mov		esi, pSrcPtr
 	mov		edi, pDestPtr
@@ -1337,6 +1232,9 @@ Blit3:
 	jnz		BlitNewLine
 
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1402,6 +1300,7 @@ BOOLEAN Blt16BPPTo16BPPMirror(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, U
   uiLineSkipDest = uiDestPitch;  //+((BlitLength-1)*2);
   uiLineSkipSrc = uiSrcPitch - (BlitLength * 2);
 
+#ifdef _WINDOWS
   __asm {
 	mov		esi, pSrcPtr
 	mov		edi, pDestPtr
@@ -1432,6 +1331,9 @@ BlitNTL2:
 	jnz		BlitNewLine
 
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1458,6 +1360,7 @@ BOOLEAN Blt8BPPTo8BPP(UINT8 *pDest, UINT32 uiDestPitch, UINT8 *pSrc, UINT32 uiSr
   uiLineSkipDest = uiDestPitch - (uiWidth);
   uiLineSkipSrc = uiSrcPitch - (uiWidth);
 
+#ifdef _WINDOWS
   __asm {
 	mov		esi, pSrcPtr
 	mov		edi, pDestPtr
@@ -1493,6 +1396,9 @@ BlitLineDone:
 	jnz		BlitNewLine
 
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1545,6 +1451,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelate(UINT16 *pBuffer, UINT32 uiDestPit
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -1622,6 +1529,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1676,6 +1586,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelateObscured(UINT16 *pBuffer, UINT32 u
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -1770,6 +1681,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1822,6 +1736,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBPixelate(UINT16 *pBuffer, UINT32 uiDestP
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -1900,6 +1815,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -1979,6 +1897,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipPixelate(UINT16 *pBuffer, UINT32 uiD
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -2165,6 +2084,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -2214,6 +2136,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -2282,6 +2205,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -2331,6 +2257,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -2396,6 +2323,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -2444,6 +2374,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadow(UINT16 *pBuffer, UINT32 uiDestPitchB
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -2507,6 +2438,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -2557,6 +2491,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZ(UINT16 *pBuffer, UINT32 uiDestPitch
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -2631,6 +2566,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -2680,6 +2618,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNB(UINT16 *pBuffer, UINT32 uiDestPit
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -2755,55 +2694,12 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
-
-#if 0
-
-BlitNTL4:
-
-		// TEST FOR Z FIRST!
-		mov		ax, [ebx]
-		cmp		ax, usZValue
-		ja		BlitNTL8
-
-		// Write it NOW!
-		jmp		BlitNTL7
-
-BlitNTL8:
-
-		test	uiLineFlag, 1
-		jz		BlitNTL6
-
-		test	edi, 2
-		jz		BlitNTL5
-		jmp		BlitNTL9
-
-BlitNTL6:
-		test	edi, 2
-		jnz		BlitNTL5
-
-BlitNTL7:
-
-		// Write normal z value
-		mov		ax, usZValue
-		mov		[ebx], ax
-		jmp   BlitNTL10
-
-BlitNTL9:
-
-		// Write high z
-		mov		ax, 32767
-		mov		[ebx], ax
-
-BlitNTL10:
-
-		xor		eax, eax
-		mov		al, [esi]
-		mov		ax, [edx+eax*2]
-		mov		[edi], ax
-#endif
 
 /**********************************************************************************************
  Blt8BPPDataTo16BPPBufferTransShadowZNBObscured
@@ -2853,6 +2749,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscured(UINT16 *pBuffer, UINT32 u
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -2953,6 +2850,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -3028,6 +2928,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZClip(UINT16 *pBuffer, UINT32 uiDestP
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -3210,6 +3111,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -3283,6 +3187,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowClip(UINT16 *pBuffer, UINT32 uiDestPi
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -3453,6 +3358,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -3528,6 +3436,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBClip(UINT16 *pBuffer, UINT32 uiDes
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -3711,6 +3620,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -3787,6 +3699,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(UINT16 *pBuffer, UINT
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -3994,6 +3907,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -4068,6 +3984,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowBelowOrEqualZNBClip(
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -4251,6 +4168,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -4298,6 +4218,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -4361,6 +4282,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -4436,6 +4360,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -4609,6 +4534,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -4657,6 +4585,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -4718,6 +4647,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -4793,6 +4725,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNBClip(UINT16 *pBuffer, UINT32 uiDestPitc
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -4963,6 +4896,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5038,6 +4974,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -5211,6 +5148,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5286,6 +5226,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClip(UINT16 *pBuffer, UINT32 uiDestPitch
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -5456,6 +5397,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5504,6 +5448,7 @@ BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   p16BPPPalette = hSrcVSurface->p16BPPPalette;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr  // pointer to current line start address in source
@@ -5539,6 +5484,9 @@ BlitLoop:
 
     // DoneBlit: // finished blit
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5583,6 +5531,7 @@ BOOLEAN Blt8BPPDataTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   p16BPPPalette = hSrcVSurface->p16BPPPalette;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr  // pointer to current line start address in source
@@ -5676,6 +5625,9 @@ DoneRow:
 
 DoneBlit:  // finished blit
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5720,6 +5672,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferHalf(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   LineSkip = (uiDestPitchBYTES - (usWidth & 0xfffffffe));
   uiSrcSkip = (uiSrcPitch * 2) - (usWidth & 0xfffffffe);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr  // pointer to current line start address in source
@@ -5759,6 +5712,9 @@ ReadMask:
 
     // DoneBlit: // finished blit
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5813,6 +5769,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferHalfRect(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   LineSkip = (uiDestPitchBYTES - (usWidth & 0xfffffffe));
   uiSrcSkip = (uiSrcPitch * 2) - (usWidth & 0xfffffffe);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr  // pointer to current line start address in source
@@ -5852,6 +5809,9 @@ ReadMask:
 
     // DoneBlit: // finished blit
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5909,6 +5869,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMask(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -6006,6 +5967,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6070,6 +6034,7 @@ BOOLEAN Blt16BPPBufferPixelateRectWithColor(UINT16 *pBuffer, UINT32 uiDestPitchB
   CHECKF(width >= 1);
   CHECKF(height >= 1);
 
+#ifdef _WINDOWS
   __asm {
 		mov		esi, Pattern  // Pointer to pixel pattern
 		mov		edi, DestPtr  // Pointer to top left of rect area
@@ -6102,6 +6067,9 @@ BlitLine2:
 		dec		height
 		jnz		BlitNewLine
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6174,6 +6142,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -6271,6 +6240,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6317,6 +6289,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchB
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -6414,6 +6387,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6484,6 +6460,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparentClip(UINT16 *pBuffer, UINT32 uiDestPi
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -6696,6 +6673,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6816,6 +6796,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -7020,6 +7001,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -7060,6 +7044,7 @@ BOOLEAN Blt16BPPBufferShadowRect(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, SGPRe
   CHECKF(width >= 1);
   CHECKF(height >= 1);
 
+#ifdef _WINDOWS
   __asm {
 		mov		esi, OFFSET ShadeTable
 		mov		edi, DestPtr
@@ -7082,6 +7067,9 @@ BlitLine:
 		dec		edx
 		jnz		BlitNewLine
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -7123,6 +7111,7 @@ BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPit
   CHECKF(width >= 1);
   CHECKF(height >= 1);
 
+#ifdef _WINDOWS
   __asm {
 		mov		esi, OFFSET IntensityTable
 		mov		edi, DestPtr
@@ -7145,6 +7134,9 @@ BlitLine:
 		dec		edx
 		jnz		BlitNewLine
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -7193,6 +7185,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadow(UINT16 *pBuffer, UINT32 uiDestPitchBY
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -7287,364 +7280,12 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
-
-/*
-BOOLEAN Blt8BPPDataTo16BPPBufferFullTransparent( struct VObject* hDestVObject, struct VObject*
-hSrcVObject, UINT16 usX, UINT16 usY, SGPRect *srcRect )
-{
-        UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-//	UINT32 rows, cols;
-        UINT8 *pSrc; //, *pSrcTemp;
-        UINT16 *pDest; //*pDestTemp,
-        UINT32	uiSrcPitch, uiDestPitch;
-        UINT16 *p16BPPPalette;
-        UINT16 usEffectiveSrcWidth;
-        UINT16 usEffectiveDestWidth;
-        UINT16 us16BPPSrcTransColor;
-        UINT16 us16BPPDestTransColor;
-//	UINT16 us16BPPValue;
-        UINT32 count;
-        UINT8  maskcolor;
-
-        // Assertions
-        Assert( hSrcVObject != NULL );
-        Assert( hDestVObject != NULL );
-
-        // Validations
-        CHECKF( usX >= 0 );
-        CHECKF( usY >= 0 );
-        CHECKF( srcRect->iRight > srcRect->iLeft );
-        CHECKF( srcRect->iBottom > srcRect->iTop );
-
-        p16BPPPalette = hSrcVObject->p16BPPPalette;
-        CHECKF( p16BPPPalette != NULL );
-
-        // Lock Data
-        pSrc = LockVideoObjectBuffer( hSrcVObject, &uiSrcPitch );
-
-        // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-        usEffectiveSrcWidth = (UINT16)( uiSrcPitch / ( hSrcVObject->ubBitDepth / 8 ) );
-
-        pDest = (UINT16*)LockVideoObjectBuffer( hDestVObject, &uiDestPitch );
-
-        // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-        usEffectiveDestWidth = (UINT16)( uiDestPitch / ( hDestVObject->ubBitDepth / 8 ) );
-
-        // Determine memcopy coordinates
-        uiSrcStart = srcRect->iTop * usEffectiveSrcWidth + srcRect->iLeft;
-        uiDestStart = usY * usEffectiveDestWidth + usX;
-        uiNumLines = ( srcRect->iBottom - srcRect->iTop );
-        uiLineSize = ( srcRect->iRight - srcRect->iLeft );
-
-        CHECKF( hDestVObject->usWidth >= uiLineSize );
-        CHECKF( hDestVObject->usHeight >= uiNumLines );
-
-        // Find 16 BPP transparent color
-        us16BPPSrcTransColor = Get16BPPColor( hSrcVObject->TransparentColor );
-        for(count=0; (count < 256) && (p16BPPPalette[count]!=us16BPPSrcTransColor); count++);
-
-        if(count==256)
-        {
-                DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_2, String( "Transparency color does not exist
-in palette table for source object" )); maskcolor=0;
-        }
-        else
-                        maskcolor=(UINT8)count;
-
-        us16BPPDestTransColor = Get16BPPColor( hDestVObject->TransparentColor );
-
-        // Convert to Pixel specification
-        pDest = pDest + uiDestStart;
-        pSrc =  pSrc + uiSrcStart;
-
-        __asm {
-                mov		esi, pSrc						// pointer
-to current line start address in source mov		edi, pDest
-// pointer to current line start address in destination mov		ecx, uiNumLines
-// line counter (goes top to bottom) mov		edx, p16BPPPalette
-
-                mov		ebx, uiLineSize			// column counter (goes right to
-left) dec		ebx
-
-ReadMask:
-                mov		ax, [edi+ebx*2]
-                cmp		ax, us16BPPDestTransColor
-                je		NextColumn
-                xor		eax, eax						// clear out
-the top 24 bits mov		al, [esi+ebx] cmp		al, maskcolor je
-NextColumn
-
-                shl		eax, 1							// make it
-into a word index
-                mov		ax, [edx+eax]				// get 16-bit version of
-8-bit pixel mov		[edi+ebx*2], ax
-
-NextColumn:
-                dec		ebx
-// decrement column counter
-                jns		ReadMask						// loop
-until one line is done
-
-                dec		ecx
-// check line counter
-                jz		DoneBlit						// done
-blitting, exit
-
-                add		esi, uiSrcPitch			// move line pointers down one line
-                add		edi, uiDestPitch
-                mov		ebx, uiLineSize			// column counter (goes right to
-left) dec		ebx
-                jmp		ReadMask						// back into
-blitting on next line
-
-DoneBlit:											//
-finished blit
-                }
-
-        ReleaseVideoObjectBuffer( hSrcVObject );
-        ReleaseVideoObjectBuffer( hDestVObject );
-
-        return( TRUE );
-
-}	*/
-
-// UTILITY FUNCTIONS FOR BLITTING
-/*
-BOOLEAN ClipReleatedSrcAndDestRectangles( struct VObject* hDestVObject, struct VObject* hSrcVObject,
-RECT *DestRect, RECT *SrcRect )
-{
-
-        Assert( hDestVObject != NULL );
-        Assert( hSrcVObject != NULL );
-
-        // Check for invalid start positions and clip by ignoring blit
-        if ( DestRect->iLeft >= hDestVObject->usWidth || DestRect->iTop >= hDestVObject->usHeight )
-        {
-                return( FALSE );
-        }
-
-        if ( SrcRect->iLeft >= hSrcVObject->usWidth || SrcRect->iTop >= hSrcVObject->usHeight )
-        {
-                return( FALSE );
-        }
-
-        // For overruns
-        // Clip destination rectangles
-        if ( DestRect->iRight > hDestVObject->usWidth )
-        {
-                // Both have to be modified or by default streching occurs
-                DestRect->iRight = hDestVObject->usWidth;
-                SrcRect->iRight = SrcRect->iLeft + ( DestRect->iRight - DestRect->iLeft );
-        }
-        if ( DestRect->iBottom > hDestVObject->usHeight )
-        {
-                // Both have to be modified or by default streching occurs
-                DestRect->iBottom = hDestVObject->usHeight;
-                SrcRect->iBottom = SrcRect->iTop + ( DestRect->iBottom - DestRect->iTop );
-        }
-
-        // Clip src rectangles
-        if ( SrcRect->iRight > hSrcVObject->usWidth )
-        {
-                // Both have to be modified or by default streching occurs
-                SrcRect->iRight = hSrcVObject->usWidth;
-                DestRect->iRight = DestRect->iLeft  + ( SrcRect->iRight - SrcRect->iLeft );
-        }
-        if ( SrcRect->iBottom > hSrcVObject->usHeight )
-        {
-                // Both have to be modified or by default streching occurs
-                SrcRect->iBottom = hSrcVObject->usHeight;
-                DestRect->iBottom = DestRect->iTop + ( SrcRect->iBottom - SrcRect->iTop );
-        }
-
-        // For underruns
-        // Clip destination rectangles
-        if ( DestRect->iLeft < 0 )
-        {
-                // Both have to be modified or by default streching occurs
-                DestRect->iLeft = 0;
-                SrcRect->iLeft = SrcRect->iRight - ( DestRect->iRight - DestRect->iLeft );
-        }
-        if ( DestRect->iTop < 0 )
-        {
-                // Both have to be modified or by default streching occurs
-                DestRect->iTop = 0;
-                SrcRect->iTop = SrcRect->iBottom - ( DestRect->iBottom - DestRect->iTop );
-        }
-
-        // Clip src rectangles
-        if ( SrcRect->iLeft < 0 )
-        {
-                // Both have to be modified or by default streching occurs
-                SrcRect->iLeft = 0;
-                DestRect->iLeft = DestRect->iRight  - ( SrcRect->iRight - SrcRect->iLeft );
-        }
-        if ( SrcRect->iTop < 0 )
-        {
-                // Both have to be modified or by default streching occurs
-                SrcRect->iTop = 0;
-                DestRect->iTop = DestRect->iBottom - ( SrcRect->iBottom - SrcRect->iTop );
-        }
-
-        return( TRUE );
-}
-
-
-BOOLEAN FillSurface( struct VObject* hDestVObject, blt_fx *pBltFx )
-{
-        DDBLTFX				 BlitterFX;
-
-        Assert( hDestVObject != NULL );
-        CHECKF( pBltFx != NULL );
-
-        BlitterFX.dwSize = sizeof( DDBLTFX );
-        BlitterFX.dwFillColor = pBltFx->ColorFill;
-
-        DDBltSurface( (LPDIRECTDRAWSURFACE2)hDestVObject->pSurfaceData, NULL, NULL, NULL,
-DDBLT_COLORFILL, &BlitterFX );
-
-        if ( hDestVObject->fFlags & VOBJECT_VIDEO_MEM_USAGE && !hDestVObject->fFlags &
-VOBJECT_RESERVED_SURFACE )
-        {
-                UpdateBackupSurface( hDestVObject );
-        }
-
-        return( TRUE );
-}
-
-BOOLEAN FillSurfaceRect( struct VObject* hDestVObject, blt_fx *pBltFx )
-{
-        DDBLTFX				 BlitterFX;
-
-        Assert( hDestVObject != NULL );
-        CHECKF( pBltFx != NULL );
-
-        BlitterFX.dwSize = sizeof( DDBLTFX );
-        BlitterFX.dwFillColor = pBltFx->ColorFill;
-
-        DDBltSurface( (LPDIRECTDRAWSURFACE2)hDestVObject->pSurfaceData, (LPRECT)&(pBltFx->FillRect),
-NULL, NULL, DDBLT_COLORFILL, &BlitterFX );
-
-        if ( hDestVObject->fFlags & VOBJECT_VIDEO_MEM_USAGE && !hDestVObject->fFlags &
-VOBJECT_RESERVED_SURFACE )
-        {
-                UpdateBackupSurface( hDestVObject );
-        }
-
-        return( TRUE );
-}
-
-
-BOOLEAN BltVObjectUsingDD( struct VObject* hDestVObject, struct VObject* hSrcVObject, UINT32
-fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect )
-{
-        UINT32		uiDDFlags;
-        RECT			DestRect;
-
-  // Blit using the correct blitter
-        if ( fBltFlags & VO_BLT_FAST )
-        {
-
-                // Validations
-                CHECKF( iDestX >= 0 );
-                CHECKF( iDestY >= 0 );
-
-                // Default flags
-                uiDDFlags = 0;
-
-                // Convert flags into DD flags, ( for transparency use, etc )
-                if ( fBltFlags & VO_BLT_USECOLORKEY )
-                {
-                        uiDDFlags != DDBLTFAST_SRCCOLORKEY;
-                }
-
-                // Convert flags into DD flags, ( for transparency use, etc )
-                if ( fBltFlags & VO_BLT_USEDESTCOLORKEY )
-                {
-                        uiDDFlags != DDBLTFAST_DESTCOLORKEY;
-                }
-
-                if ( uiDDFlags == 0 )
-                {
-                        // Default here is no colorkey
-                        uiDDFlags = DDBLTFAST_NOCOLORKEY;
-                }
-
-                DDBltFastSurface( (LPDIRECTDRAWSURFACE2)hDestVObject->pSurfaceData, iDestX, iDestY,
-(LPDIRECTDRAWSURFACE2)hSrcVObject->pSurfaceData, SrcRect, uiDDFlags );
-
-        }
-        else
-        {
-                // Normal, specialized blit for clipping, etc
-
-                // Default flags
-                uiDDFlags = DDBLT_WAIT;
-
-                // Convert flags into DD flags, ( for transparency use, etc )
-                if ( fBltFlags & VO_BLT_USECOLORKEY )
-                {
-                        uiDDFlags |= DDBLT_KEYSRC;
-                }
-
-                // Setup dest rectangle
-                DestRect.top =  (int)iDestY;
-                DestRect.left = (int)iDestX;
-                DestRect.bottom = (int)iDestY + ( SrcRect->iBottom - SrcRect->iTop );
-                DestRect.right = (int)iDestX + ( SrcRect->iRight - SrcRect->iLeft );
-
-                // Do Clipping of rectangles
-                if ( !ClipReleatedSrcAndDestRectangles( hDestVObject, hSrcVObject, &DestRect,
-SrcRect ) )
-                {
-                        // Returns false because dest start is > dest size
-                        return( TRUE );
-                }
-
-                DDBltSurface( (LPDIRECTDRAWSURFACE2)hDestVObject->pSurfaceData, &DestRect,
-(LPDIRECTDRAWSURFACE2)hSrcVObject->pSurfaceData, SrcRect, uiDDFlags, NULL );
-
-        }
-
-        // Update backup surface with new data
-        if ( hDestVObject->fFlags & VOBJECT_VIDEO_MEM_USAGE && !hDestVObject->fFlags &
-VOBJECT_RESERVED_SURFACE )
-        {
-                UpdateBackupSurface( hDestVObject );
-        }
-
-        return( TRUE );
-}
-
-
-// Blt to backup buffer
-BOOLEAN UpdateBackupSurface( struct VObject* hVObject )
-{
-        RECT		aRect;
-
-        // Assertions
-        Assert( hVObject != NULL );
-
-        // Validations
-        CHECKF( hVObject->pSavedSurfaceData != NULL );
-
-        aRect.top = (int)0;
-        aRect.left = (int)0;
-        aRect.bottom = (int)hVObject->usHeight;
-        aRect.right = (int)hVObject->usWidth;
-
-        // Copy all contents into backup buffer
-        DDBltFastSurface( (LPDIRECTDRAWSURFACE2)hVObject->pSurfaceData, 0, 0,
-(LPDIRECTDRAWSURFACE2)hVObject->pSavedSurfaceData, &aRect, DDBLTFAST_NOCOLORKEY );
-
-        return( TRUE );
-
-}
-
-*/
 
 BOOLEAN FillRect16BPP(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, INT32 x1, INT32 y1, INT32 x2,
                       INT32 y2, UINT16 color) {
@@ -7670,6 +7311,7 @@ BOOLEAN FillRect16BPP(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, INT32 x1, INT32 
   linelength = x2real - x1real + 1;
   lineskip = uiDestPitchBYTES - (linelength * 2);
 
+#ifdef _WINDOWS
   __asm {
 		mov		edi, startoffset
 		mov		ax, color
@@ -7706,6 +7348,10 @@ FillLineEnd:
 		jnz		LineLoop
 
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
+
   return (TRUE);
 }
 
@@ -7808,6 +7454,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutline(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   p16BPPPalette = hSrcVObject->pShadeCurrent;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -7876,6 +7523,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -7942,6 +7592,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
   p16BPPPalette = hSrcVObject->pShadeCurrent;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -8117,6 +7768,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -8184,6 +7838,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(UINT16 *pBuffer, UINT32 uiDestPitch
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
   p16BPPPalette = hSrcVObject->pShadeCurrent;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -8375,6 +8030,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -8443,6 +8101,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -8659,6 +8318,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -8697,6 +8359,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadow(UINT16 *pBuffer, UINT32 uiDestPitc
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   p16BPPPalette = hSrcVObject->pShadeCurrent;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -8755,6 +8418,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -8818,6 +8484,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(UINT16 *pBuffer, UINT32 uiDest
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -9028,6 +8695,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -9068,6 +8738,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -9154,6 +8825,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -9197,6 +8871,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(UINT16 *pBuffer, UINT32
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -9305,6 +8980,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -9346,6 +9024,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(UINT16 *pBuffer, UINT32 uiDestPitchBY
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -9432,6 +9111,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -9480,6 +9162,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZ(UINT16 *pBuffer, UINT32 uiDestPitchBY
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -9543,6 +9226,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -9618,6 +9304,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZClip(UINT16 *pBuffer, UINT32 uiDestPit
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -9791,6 +9478,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -9839,6 +9529,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZNB(UINT16 *pBuffer, UINT32 uiDestPitch
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -9900,6 +9591,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -9971,6 +9665,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityClip(UINT16 *pBuffer, UINT32 uiDestPitc
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -10175,6 +9870,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -10220,6 +9918,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensity(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -10317,6 +10016,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -10396,6 +10098,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(UINT16 *pBuffer, UINT
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
   uiLineFlag = (iTempY & 1);
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -10588,6 +10291,9 @@ RSLoop1:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }

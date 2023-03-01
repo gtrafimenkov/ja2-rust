@@ -1,5 +1,7 @@
 #include "GameSettings.h"
 
+#include <string.h>
+
 #include "Cheats.h"
 #include "GameVersion.h"
 #include "HelpScreen.h"
@@ -15,7 +17,6 @@
 #include "Strategic/Meanwhile.h"
 #include "Strategic/QueenCommand.h"
 #include "Strategic/StrategicMap.h"
-#include "String.h"
 #include "Tactical/Campaign.h"
 #include "Tactical/Overhead.h"
 #include "TileEngine/ShadeTableUtil.h"

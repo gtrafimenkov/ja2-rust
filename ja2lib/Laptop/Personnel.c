@@ -23,6 +23,7 @@
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/InterfaceItems.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"

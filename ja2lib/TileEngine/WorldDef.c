@@ -117,7 +117,6 @@ BOOLEAN IsRoofVisibleForWireframe(INT16 sMapPos);
 
 INT8 IsHiddenTileMarkerThere(INT16 sGridNo);
 extern void SetInterfaceHeightLevel();
-extern void GetRootName(INT8 *pDestStr, CHAR8 *pSrcStr);
 
 void SaveMapLights(HWFILE hfile);
 void LoadMapLights(INT8 **hBuffer);

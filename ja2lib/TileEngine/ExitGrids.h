@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct LEVELNODE;
 struct SOLDIERTYPE;
 
 typedef struct  // for exit grids (object level)

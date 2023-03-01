@@ -834,5 +834,3 @@ INT32 CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2) {
   /* Compare all of both strings: */
   return strcasecmp(sSearchKey, sFileNameWithPath);
 }
-
-// build:linux

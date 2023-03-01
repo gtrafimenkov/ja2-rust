@@ -26,6 +26,7 @@
 #include "Tactical/AnimationData.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Items.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/OverheadTypes.h"

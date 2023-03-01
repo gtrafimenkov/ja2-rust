@@ -47,6 +47,8 @@
 #include "platform.h"
 #include "platform_strings.h"
 
+struct FileDialogList;
+
 //===========================================================================
 
 BOOLEAN gfErrorCatch = FALSE;

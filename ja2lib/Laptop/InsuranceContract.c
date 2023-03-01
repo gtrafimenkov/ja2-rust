@@ -22,6 +22,7 @@
 #include "Strategic/GameEventHook.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/StrategicStatus.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierProfile.h"

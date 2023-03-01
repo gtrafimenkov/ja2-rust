@@ -20,6 +20,7 @@
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/Items.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierProfile.h"
 #include "TacticalAI/AI.h"

@@ -327,7 +327,9 @@ void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight) {}
 
 void SmkShutdown(void) {}
 
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) { return NULL; }
+struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
+  return NULL;
+}
 
 void SmkCloseFlic(struct SmkFlic *pSmack) {}
 

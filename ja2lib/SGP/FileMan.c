@@ -50,5 +50,3 @@ BOOLEAN FileMan_Exists(STR strFilename) {
 
   return (fExists);
 }
-
-// build:linux

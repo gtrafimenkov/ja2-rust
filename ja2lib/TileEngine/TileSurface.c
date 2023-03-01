@@ -13,6 +13,7 @@
 #include "SysGlobals.h"
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
+#include "TileEngine/TileCache.h"
 #include "TileEngine/TileDat.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDat.h"
@@ -134,8 +135,6 @@ void DeleteTileSurface(struct TILE_IMAGERY *pTileSurf) {
   DeleteVideoObject(pTileSurf->vo);
   MemFree(pTileSurf);
 }
-
-extern void GetRootName(STR8 pDestStr, STR8 pSrcStr);
 
 void SetRaisedObjectFlag(char *cFilename, struct TILE_IMAGERY *pTileSurf) {
   INT32 cnt = 0;

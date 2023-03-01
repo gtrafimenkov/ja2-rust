@@ -1,6 +1,7 @@
 #include "Tactical/ArmsDealerInit.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
@@ -9,7 +10,6 @@
 #include "Strategic/GameClock.h"
 #include "Strategic/Quests.h"
 #include "Strategic/Scheduling.h"
-#include "String.h"
 #include "Tactical/ArmsDealerInvInit.h"
 #include "Tactical/HandleItems.h"
 #include "Tactical/SoldierProfile.h"

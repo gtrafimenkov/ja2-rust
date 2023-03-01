@@ -4,6 +4,7 @@
 #include "SGP/Input.h"
 
 struct SOLDIERTYPE;
+struct TAG_UI_EVENT;
 
 // DEFINES
 #define UIEVENT_SINGLEEVENT 0x00000002

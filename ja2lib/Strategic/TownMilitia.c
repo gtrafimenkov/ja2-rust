@@ -19,6 +19,7 @@
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/MilitiaControl.h"
 #include "Tactical/Overhead.h"
 #include "Utils/Text.h"

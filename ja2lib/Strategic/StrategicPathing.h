@@ -3,6 +3,8 @@
 
 #include "Strategic/MapScreenInterfaceMap.h"
 
+struct GROUP;
+
 // directions of movement for badsector determination ( blocking off of a sector exit from foot or
 // vehicle travel)
 

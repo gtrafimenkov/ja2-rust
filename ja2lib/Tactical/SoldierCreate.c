@@ -1,5 +1,3 @@
-
-
 #include <math.h>
 
 #include "Editor/EditorMercs.h"
@@ -30,6 +28,7 @@
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/InventoryChoosing.h"
 #include "Tactical/Items.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Morale.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"

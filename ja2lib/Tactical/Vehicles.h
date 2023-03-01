@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct GROUP;
 struct SOLDIERTYPE;
 
 #define MAX_VEHICLES 10

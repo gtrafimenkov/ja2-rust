@@ -32,6 +32,7 @@
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Interface.h"
 #include "Tactical/Items.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/Points.h"
 #include "Tactical/SoldierAdd.h"

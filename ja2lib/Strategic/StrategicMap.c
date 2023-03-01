@@ -631,7 +631,7 @@ void InitializeSAMSites(void) {
 // get short sector name without town name
 void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString, size_t bufSize) {
   // OK, build string id like J11
-  swprintf(sString, bufSize, L"%S%S", pVertStrings[sMapY], pHortStrings[sMapX]);
+  swprintf(sString, bufSize, L"%hs%hs", pVertStrings[sMapY], pHortStrings[sMapX]);
 }
 
 void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder,

@@ -5,7 +5,6 @@
 #include "Globals.h"
 #include "Local.h"
 #include "Rect.h"
-#include "Res/Resource.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
 #include "SGP/VObject.h"
@@ -264,7 +263,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   WindowClass.cbClsExtra = 0;
   WindowClass.cbWndExtra = 0;
   WindowClass.hInstance = params->hInstance;
-  WindowClass.hIcon = LoadIcon(params->hInstance, MAKEINTRESOURCE(IDI_ICON1));
+  WindowClass.hIcon = LoadIcon(params->hInstance, MAKEINTRESOURCE(params->iconID));
   WindowClass.hCursor = NULL;
   WindowClass.hbrBackground = NULL;
   WindowClass.lpszMenuName = NULL;

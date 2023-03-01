@@ -3,7 +3,6 @@
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <tchar.h>
 #include <time.h>
 #include <wchar.h>
 
@@ -77,6 +76,7 @@
 #include "Tactical/InterfaceUtils.h"
 #include "Tactical/Items.h"
 #include "Tactical/MapInformation.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierCreate.h"
 #include "Tactical/SoldierMacros.h"

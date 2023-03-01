@@ -17,6 +17,7 @@ struct PlatformInitParams {
   HINSTANCE hInstance;
   UINT16 usCommandShow;
   void *WindowProc;
+  UINT16 iconID;
 };
 
 extern HWND ghWindow;

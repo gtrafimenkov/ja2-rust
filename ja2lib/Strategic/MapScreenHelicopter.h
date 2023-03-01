@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct GROUP;
 struct SOLDIERTYPE;
 
 // costs of flying through sectors

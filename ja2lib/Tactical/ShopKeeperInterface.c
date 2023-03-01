@@ -35,6 +35,7 @@
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/InterfaceUtils.h"
 #include "Tactical/LOS.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/ShopKeeperQuotes.h"

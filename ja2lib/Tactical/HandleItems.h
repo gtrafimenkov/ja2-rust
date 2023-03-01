@@ -5,6 +5,7 @@
 #include "Tactical/WorldItems.h"
 
 struct SOLDIERTYPE;
+struct STRUCTURE;
 
 #define ITEM_HANDLE_OK 1
 #define ITEM_HANDLE_RELOADING -1

@@ -45,6 +45,7 @@
 #include "Tactical/ItemTypes.h"
 #include "Tactical/Items.h"
 #include "Tactical/MapInformation.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SkillCheck.h"
 #include "Tactical/SoldierAdd.h"

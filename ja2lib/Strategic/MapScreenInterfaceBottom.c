@@ -33,6 +33,7 @@
 #include "Tactical/AirRaid.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/InterfaceItems.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/TacticalSave.h"

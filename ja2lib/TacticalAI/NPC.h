@@ -6,6 +6,8 @@
 
 #define NUM_NPC_QUOTE_RECORDS 50
 
+struct OBJECTTYPE;
+
 //#define IRRELEVANT 255
 //#define NO_QUEST 255
 //#define NO_FACT 255

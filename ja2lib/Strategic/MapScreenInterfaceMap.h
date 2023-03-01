@@ -4,6 +4,8 @@
 #include "SGP/Types.h"
 #include "Tactical/Vehicles.h"
 
+struct GROUP;
+
 // functions
 void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow);
 // void DrawMapIndexSmallMap( BOOLEAN fSelectedCursorIsYellow );

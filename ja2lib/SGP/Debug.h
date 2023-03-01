@@ -78,9 +78,6 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 // These are the debug macros (the ones the use will use). The user should never call
 // the actual debug functions directly
 
-// Force a breakpoint in the debugger
-#define DebugBreakpoint() __asm { int 3}
-
 #define DbgMessage(a, b, c) \
   DbgMessageReal((UINT16)(a), (UINT8)(TOPIC_MESSAGE), (UINT8)(b), (char *)(c))
 #define FastDebugMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
@@ -112,7 +109,6 @@ extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 //*******************************************************************************************
 // Release Mode
 //*******************************************************************************************
-#define DebugBreakpoint()
 
 #define RegisterDebugTopic(a, b)
 #define UnRegisterDebugTopic(a, b)

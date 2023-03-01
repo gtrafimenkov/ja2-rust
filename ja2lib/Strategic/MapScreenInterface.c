@@ -43,6 +43,7 @@
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Keys.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"

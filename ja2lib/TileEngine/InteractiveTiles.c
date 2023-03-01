@@ -788,6 +788,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -898,6 +899,9 @@ BlitFound:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (fDataFound);
 }

@@ -36,6 +36,7 @@
 #include "Tactical/DialogueControl.h"
 #include "Tactical/InventoryChoosing.h"
 #include "Tactical/MapInformation.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierControl.h"

@@ -1,5 +1,7 @@
 #include "Strategic/MapScreenHelicopter.h"
 
+#include <string.h>
+
 #include "Laptop/Finances.h"
 #include "Laptop/LaptopSave.h"
 #include "SGP/Random.h"
@@ -21,7 +23,6 @@
 #include "Strategic/StrategicMap.h"
 #include "Strategic/StrategicMovement.h"
 #include "Strategic/StrategicPathing.h"
-#include "String.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierProfile.h"

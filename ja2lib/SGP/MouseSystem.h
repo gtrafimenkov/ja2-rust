@@ -4,6 +4,8 @@
 #include "SGP/MouseSystemMacros.h"
 #include "SGP/Types.h"
 
+struct MOUSE_REGION;
+
 typedef void (*MOUSE_CALLBACK)(struct MOUSE_REGION *,
                                INT32);           // Define MOUSE_CALLBACK type as pointer to void
 typedef void (*MOUSE_HELPTEXT_DONE_CALLBACK)();  // the help is done callback

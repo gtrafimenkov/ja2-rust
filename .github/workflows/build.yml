@@ -1,4 +1,4 @@
-name: MSBuild
+name: Build
 
 on:
   push:
@@ -11,7 +11,8 @@ env:
   SOLUTION_FILE_PATH: JA2.sln
 
 jobs:
-  build:
+
+  build-on-windows:
     runs-on: windows-latest
     strategy:
       matrix:
@@ -51,7 +52,7 @@ jobs:
 
     - name: Run Tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: .\${{ matrix.config }}\tester.exe
+      run: .\${{ matrix.config }}\unittester.exe
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3
@@ -59,3 +60,22 @@ jobs:
         name: ja2-vanilla-exe
         path: Release/ja2-win32.exe
         retention-days: 2
+
+  build-on-linux:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install build dependencies
+      run: make install-build-dependencies-deb
+
+    - name: Build linux-bin
+      run: make linux-bin
+
+    - name: Build unittester
+      run: make unittester-bin
+
+    - name: Run unit tests
+      run: make run-unittester

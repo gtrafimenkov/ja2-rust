@@ -31,6 +31,7 @@
 #include "Tactical/AirRaid.h"
 #include "Tactical/ArmsDealerInit.h"
 #include "Tactical/Campaign.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/MercHiring.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierProfile.h"

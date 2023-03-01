@@ -41,6 +41,7 @@
 #include "Tactical/InventoryChoosing.h"
 #include "Tactical/Items.h"
 #include "Tactical/MapInformation.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/RTTimeDefines.h"

@@ -3,6 +3,9 @@
 
 #include "SGP/Types.h"
 
+struct LEVELNODE;
+struct STRUCTURE;
+
 BOOLEAN IsTreePresentAtGridno(INT16 sGridNo);
 BOOLEAN IsFencePresentAtGridno(INT16 sGridNo);
 BOOLEAN IsJumpableFencePresentAtGridno(INT16 sGridNo);

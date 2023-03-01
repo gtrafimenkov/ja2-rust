@@ -3,6 +3,8 @@
 
 #include "SGP/Types.h"
 
+struct _VIDEO_OVERLAY;
+
 // DEFINES
 #define BGND_FLAG_PERMANENT 0x80000000
 #define BGND_FLAG_SINGLE 0x40000000

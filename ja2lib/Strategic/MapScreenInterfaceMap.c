@@ -30,6 +30,7 @@
 #include "Strategic/TownMilitia.h"
 #include "Tactical/AirRaid.h"
 #include "Tactical/MapInformation.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/MilitiaControl.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierProfile.h"

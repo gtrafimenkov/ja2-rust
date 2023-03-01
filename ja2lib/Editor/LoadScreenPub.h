@@ -4,6 +4,7 @@
 #include "SGP/Types.h"
 
 struct FileDialogList;
+struct GetFile;
 
 extern struct FileDialogList *AddToFDlgList(struct FileDialogList *pList, struct GetFile *pInfo);
 

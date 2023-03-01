@@ -35,6 +35,7 @@
 #include "Strategic/TownMilitia.h"
 #include "Tactical/Campaign.h"
 #include "Tactical/InterfaceControl.h"
+#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/Squads.h"

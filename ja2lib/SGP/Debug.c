@@ -426,5 +426,3 @@ STR String(const char *String, ...) {
 //////////////////////////////////////////////////////////////////////
 // This func is used by Assert()
 void _Null(void) {}
-
-// build:linux

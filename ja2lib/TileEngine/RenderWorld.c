@@ -3592,6 +3592,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   usZLevel = usZStartLevel;
   usZIndex = usZStartIndex;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -3847,6 +3848,9 @@ RSLoop2:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -3975,6 +3979,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   usZLevel = usZStartLevel;
   usZIndex = usZStartIndex;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -4230,6 +4235,9 @@ RSLoop2:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -4365,6 +4373,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   usZLevel = usZStartLevel;
   usZIndex = usZStartIndex;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -4640,6 +4649,9 @@ RSLoop2:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -4765,6 +4777,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   usZLevel = usZStartLevel;
   usZIndex = usZStartIndex;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -5052,6 +5065,9 @@ RSLoop2:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -5209,6 +5225,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   usZLevel = usZStartLevel;
   usZIndex = usZStartIndex;
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -5476,6 +5493,9 @@ RSLoop2:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6103,6 +6123,7 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -6185,6 +6206,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6225,6 +6249,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -6293,6 +6318,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (TRUE);
 }
@@ -6330,6 +6358,7 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (1280 - (usWidth * 2));
 
+#ifdef _WINDOWS
   __asm {
 
 		mov		esi, SrcPtr
@@ -6391,6 +6420,9 @@ BlitDoneLine:
 
 BlitDone:
   }
+#else
+  // Linux: NOT IMPLEMENTED
+#endif
 
   return (fHidden);
 }

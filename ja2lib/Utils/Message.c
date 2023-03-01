@@ -23,7 +23,8 @@
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
 #include "Utils/WordWrap.h"
-#include "mbstring.h"
+
+// #include "mbstring.h"
 
 typedef struct {
   UINT32 uiFont;
@@ -65,7 +66,7 @@ BOOLEAN fOkToBeepNewMessage = TRUE;
 
 static ScrollStringStPtr gpDisplayList[MAX_LINE_COUNT];
 static ScrollStringStPtr gMapScreenMessageList[256];
-static ScrollStringStPtr pStringS = NULL;
+ScrollStringStPtr pStringS = NULL;
 
 // first time adding any message to the message dialogue system
 BOOLEAN fFirstTimeInMessageSystem = TRUE;

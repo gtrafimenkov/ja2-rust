@@ -70,7 +70,7 @@ BOOLEAN FloristGallerySubPagesVisitedFlag[4];
 
 // Floral buttons
 void BtnGalleryFlowerButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiGalleryButton[FLOR_GALLERY_NUMBER_FLORAL_BUTTONS];
+UINT32 guiGalleryButtons[FLOR_GALLERY_NUMBER_FLORAL_BUTTONS];
 
 // Next Previous buttons
 INT32 guiFloralGalleryButtonImage;
@@ -277,13 +277,13 @@ BOOLEAN InitFlowerButtons() {
   count = gubCurFlowerIndex;
   guiGalleryButtonImage = LoadButtonImage("LAPTOP\\GalleryButtons.sti", -1, 0, -1, 1, -1);
   for (j = 0; j < gubCurNumberOfFlowers; j++) {
-    guiGalleryButton[j] = QuickCreateButton(
+    guiGalleryButtons[j] = QuickCreateButton(
         guiGalleryButtonImage, FLOR_GALLERY_FLOWER_BUTTON_X, usPosY, BUTTON_TOGGLE,
         MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnGalleryFlowerButtonCallback);
-    SetButtonCursor(guiGalleryButton[j], CURSOR_WWW);
-    MSYS_SetBtnUserData(guiGalleryButton[j], 0, count);
+    SetButtonCursor(guiGalleryButtons[j], CURSOR_WWW);
+    MSYS_SetBtnUserData(guiGalleryButtons[j], 0, count);
 
-    SpecifyButtonIcon(guiGalleryButton[j], guiFlowerImages[j], 0, 5, 5, FALSE);
+    SpecifyButtonIcon(guiGalleryButtons[j], guiFlowerImages[j], 0, 5, 5, FALSE);
     usPosY += FLOR_GALLERY_FLOWER_BUTTON_OFFSET_Y;
     count++;
   }
@@ -314,7 +314,7 @@ void DeleteFlowerButtons() {
   UnloadButtonImage(guiGalleryButtonImage);
 
   for (i = 0; i < gubPrevNumberOfFlowers; i++) {
-    RemoveButton(guiGalleryButton[i]);
+    RemoveButton(guiGalleryButtons[i]);
   }
 }
 
