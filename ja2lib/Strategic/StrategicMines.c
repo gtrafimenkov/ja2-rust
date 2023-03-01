@@ -585,7 +585,6 @@ void HandleIncomeFromMines(void) {
   INT32 iIncome = 0;
   INT8 bCounter = 0;
 
-#ifndef JA2DEMO
   // mine each mine, check if we own it and such
   for (bCounter = 0; bCounter < MAX_NUMBER_OF_MINES; bCounter++) {
     // mine this mine
@@ -594,7 +593,6 @@ void HandleIncomeFromMines(void) {
   if (iIncome) {
     AddTransactionToPlayersBook(DEPOSIT_FROM_SILVER_MINE, 0, GetWorldTotalMin(), iIncome);
   }
-#endif
 }
 
 UINT32 PredictDailyIncomeFromAMine(INT8 bMineIndex) {

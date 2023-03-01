@@ -388,43 +388,6 @@ UINT32 MainGameScreenHandle(void) {
     gfBeginEndTurn = FALSE;
   }
 
-#ifdef JA2DEMO
-  SetGameTimeCompressionLevel(TIME_COMPRESS_X1);
-#endif
-  /*
-          if ( gfExitToNewSector )
-          {
-                  // Shade screen one frame
-                  if ( gfExitToNewSector == 1 )
-                  {
-                          // Disable any saved regions!
-                          EmptyBackgroundRects( );
-
-                          // Remove cursor
-                          uiOldMouseCursor = gViewportRegion.Cursor;
-                          SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
-
-                          //Shadow area
-                          ShadowVideoSurfaceRect( FRAME_BUFFER, 0, 0, 640, 480 );
-                          InvalidateScreen( );
-
-                          // Next frame please
-                          gfExitToNewSector++;
-
-                          return( GAME_SCREEN );
-                  }
-                  else
-                  {
-                          // Go into sector
-                          JumpIntoAdjacentSector( gubNewSectorExitDirection );
-                          gfExitToNewSector = FALSE;
-
-                          // Restore mouse
-                          SetCurrentCursorFromDatabase( uiOldMouseCursor );
-                  }
-          }
-  */
-
   // The gfFailedToSaveGameWhenInsideAMessageBox flag will only be set at this point if the game
   // fails to save during a quick save and when the game was already in a message box.
   // If the game failed to save when in a message box, pop up a message box stating an error occured

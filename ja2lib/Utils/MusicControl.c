@@ -33,18 +33,6 @@ INT8 bBattleModeSong;
 
 INT8 gbFadeSpeed = 1;
 
-#ifdef JA2DEMO
-
-CHAR8 *szMusicList[NUM_MUSIC] = {
-    "MUSIC\\marimbad 2.wav", "MUSIC\\menumix1.wav",  "MUSIC\\nothing A.wav",
-    "MUSIC\\nothing B.wav",  "MUSIC\\nothing A.wav", "MUSIC\\nothing B.wav",
-    "MUSIC\\tensor B.wav",   "MUSIC\\tensor B.wav",  "MUSIC\\tensor B.wav",
-    "MUSIC\\triumph.wav",    "MUSIC\\death.wav",     "MUSIC\\battle A.wav",
-    "MUSIC\\tensor B.wav",   "MUSIC\\creepy.wav",    "MUSIC\\creature battle.wav",
-};
-
-#else
-
 CHAR8 *szMusicList[NUM_MUSIC] = {
     "MUSIC\\marimbad 2.wav", "MUSIC\\menumix1.wav",  "MUSIC\\nothing A.wav",
     "MUSIC\\nothing B.wav",  "MUSIC\\nothing C.wav", "MUSIC\\nothing D.wav",
@@ -52,8 +40,6 @@ CHAR8 *szMusicList[NUM_MUSIC] = {
     "MUSIC\\triumph.wav",    "MUSIC\\death.wav",     "MUSIC\\battle A.wav",
     "MUSIC\\tensor B.wav",   "MUSIC\\creepy.wav",    "MUSIC\\creature battle.wav",
 };
-
-#endif
 
 BOOLEAN gfForceMusicToTense = FALSE;
 BOOLEAN gfDontRestartSong = FALSE;
@@ -288,26 +274,12 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
       // If we were in victory mode, change!
       if (gbVictorySongCount == 1 || gbDeathSongCount == 1) {
         if (gbDeathSongCount == 1 && guiCurrentScreen == GAME_SCREEN) {
-#ifdef JA2DEMO
-          gFadeOutDoneCallback = DoneFadeOutDueToEndMusic;
-          FadeOutGameScreen();
-#else
           CheckAndHandleUnloadingOfCurrentWorld();
-#endif
         }
 
-#ifdef JA2DEMO
-        if (gbVictorySongCount == 1 && guiCurrentScreen == GAME_SCREEN) {
-          // Bring up dialogue...
-          HandleEndDemoInCreatureLevel();
-
-          SetMusicMode(MUSIC_TACTICAL_NOTHING);
-        }
-#else
         if (gbVictorySongCount == 1) {
           SetMusicMode(MUSIC_TACTICAL_NOTHING);
         }
-#endif
       } else {
         if (!gfDontRestartSong) {
           StartMusicBasedOnMode();
@@ -337,19 +309,6 @@ BOOLEAN SetMusicMode(UINT8 ubMusicMode) {
     // Save previous mode...
     bPreviousMode = gubOldMusicMode;
   }
-
-#ifdef JA2DEMO
-  // ATE: Short circuit normal music modes and
-  // If we a\were told to play tense mode,
-  // change to nothing until we have set
-  // the flag indicating that we can....
-  if (ubMusicMode == MUSIC_TACTICAL_ENEMYPRESENT && !gfForceMusicToTense) {
-    ubMusicMode = MUSIC_TACTICAL_NOTHING;
-  }
-
-  gfForceMusicToTense = FALSE;
-
-#endif
 
   // if different, start a new music song
   if (gubOldMusicMode != ubMusicMode) {

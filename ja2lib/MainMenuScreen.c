@@ -189,15 +189,7 @@ void HandleMainMenuScreen() {
     switch (gbHandledMainMenu) {
       case QUIT:
         gfMainMenuScreenExit = TRUE;
-
-#ifdef JA2DEMO
-        // Goto ad pages
-        SetPendingNewScreen(DEMO_EXIT_SCREEN);
-        SetMusicMode(MUSIC_MAIN_MENU);
-        FadeOutNextFrame();
-#else
         gfProgramIsRunning = FALSE;
-#endif
         break;
 
       case NEW_GAME:
@@ -492,13 +484,8 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
     // Load button images
     GetMLGFilename(filename, MLG_TITLETEXT);
 
-#ifdef JA2DEMO
-    iMenuImages[NEW_GAME] = LoadButtonImage(filename, 17, 17, 18, 19, -1);
-    sSlot = 17;
-#else
     iMenuImages[NEW_GAME] = LoadButtonImage(filename, 0, 0, 1, 2, -1);
     sSlot = 0;
-#endif
     iMenuImages[LOAD_GAME] = UseLoadedButtonImage(iMenuImages[NEW_GAME], 6, 3, 4, 5, -1);
     iMenuImages[PREFERENCES] = UseLoadedButtonImage(iMenuImages[NEW_GAME], 7, 7, 8, 9, -1);
     iMenuImages[CREDITS] = UseLoadedButtonImage(iMenuImages[NEW_GAME], 13, 10, 11, 12, -1);

@@ -572,11 +572,6 @@ BOOLEAN CanCharacterDoctorButDoesntHaveMedKit(struct SOLDIERTYPE *pSoldier) {
     return (FALSE);
   }
 
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return FALSE;
-#endif
-
   // make sure character is alive and conscious
   if (pSoldier->bLife < OKLIFE) {
     // dead or unconscious...
@@ -853,11 +848,6 @@ BOOLEAN CanCharacterRepair(struct SOLDIERTYPE *pSoldier) {
     return (FALSE);
   }
 
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return FALSE;
-#endif
-
   if (BasicCanCharacterRepair(pSoldier) == FALSE) {
     return (FALSE);
   }
@@ -882,10 +872,6 @@ BOOLEAN CanCharacterRepair(struct SOLDIERTYPE *pSoldier) {
 
 // can character be set to patient?
 BOOLEAN CanCharacterPatient(struct SOLDIERTYPE *pSoldier) {
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return FALSE;
-#endif
 
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
@@ -934,11 +920,6 @@ BOOLEAN BasicCanCharacterTrainMilitia(struct SOLDIERTYPE *pSoldier) {
   // is the character capable of training a town?
   // they must be alive/conscious and in the sector with the town
   BOOLEAN fSamSitePresent = FALSE;
-
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return FALSE;
-#endif
 
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
@@ -1125,11 +1106,6 @@ BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(struct SOLDIERTYPE *pSoldier) 
 BOOLEAN CanCharacterTrainStat(struct SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf,
                               BOOLEAN fTrainTeammate) {
 // is the character capable of training this stat? either self or as trainer
-
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return FALSE;
-#endif
 
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
@@ -1318,11 +1294,6 @@ BOOLEAN CanCharacterOnDuty(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN CanCharacterPractise(struct SOLDIERTYPE *pSoldier) {
 // can character practise right now?
 
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return FALSE;
-#endif
-
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
   }
@@ -1408,11 +1379,6 @@ BOOLEAN CanCharacterBeTrainedByOther(struct SOLDIERTYPE *pSoldier) {
 // can character sleep right now?
 BOOLEAN CanCharacterSleep(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot) {
   CHAR16 sString[128];
-
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return (FALSE);
-#endif
 
   // dead or dying?
   if (pSoldier->bLife < OKLIFE) {
@@ -1525,11 +1491,6 @@ BOOLEAN CanCharacterBeAwakened(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhy
 
 BOOLEAN CanCharacterVehicle(struct SOLDIERTYPE *pSoldier) {
 // can character enter/leave vehicle?
-
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return FALSE;
-#endif
 
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
@@ -1675,11 +1636,6 @@ BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pSoldier) {
 
 void UpdateAssignments() {
   INT8 sX, sY, bZ;
-
-// this assignment is no go in the demo
-#ifdef JA2DEMO
-  return;
-#endif
 
   // init sectors with soldiers list
   InitSectorsWithSoldiersList();

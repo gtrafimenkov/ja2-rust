@@ -375,24 +375,10 @@ BOOLEAN EnterGIOScreen() {
     usPosY += GIO_GAP_BN_SETTINGS;
   }
 
-// if its the demo, make sure the defuat is for additional guns
-#ifdef JA2DEMO
-  gGameOptions.fGunNut = TRUE;
-#endif
-
   if (gGameOptions.fGunNut)
     ButtonList[guiGunOptionToggles[GIO_GUN_NUT]]->uiFlags |= BUTTON_CLICKED_ON;
   else
     ButtonList[guiGunOptionToggles[GIO_REDUCED_GUNS]]->uiFlags |= BUTTON_CLICKED_ON;
-
-// if its the demo, make sure to disable the buttons
-#ifdef JA2DEMO
-  SpecifyDisabledButtonStyle(guiGunOptionToggles[GIO_GUN_NUT], DISABLED_STYLE_SHADED);
-  SpecifyDisabledButtonStyle(guiGunOptionToggles[GIO_REDUCED_GUNS], DISABLED_STYLE_SHADED);
-
-  DisableButton(guiGunOptionToggles[GIO_GUN_NUT]);
-  DisableButton(guiGunOptionToggles[GIO_REDUCED_GUNS]);
-#endif
 
   // JA2 Gold: no more timed turns
   //
@@ -650,24 +636,6 @@ BOOLEAN RenderGIOScreen() {
                        FONT12ARIAL, GIO_TOGGLE_TEXT_COLOR,
                        zNewTacticalMessages[TCTL_MSG__CANNOT_SAVE_DURING_COMBAT], FONT_MCOLOR_BLACK,
                        FALSE, LEFT_JUSTIFIED);
-
-// if its the demo, make sure to Display the text for the additional guns
-#ifdef JA2DEMO
-
-  // Shadow the area around the additional guns
-  ShadowVideoSurfaceRect(FRAME_BUFFER, 336, 105, 580, 218);  // 358
-
-  // Display the text indicatting that the option is disabled for the demo
-  //	DrawTextToScreen( gzGIOScreenText[ GIO_DISABLED_FOR_THE_DEMO_TEXT ],
-  // GIO_TIMED_TURN_SETTING_X, (UINT16)(GIO_TIMED_TURN_SETTING_Y-GIO_GAP_BN_SETTINGS),
-  // GIO_GUN_SETTINGS_WIDTH, GIO_TOGGLE_TEXT_FONT, GIO_TOGGLE_TEXT_COLOR, FONT_MCOLOR_BLACK, FALSE,
-  // LEFT_JUSTIFIED );
-
-  DisplayWrappedString(440, (UINT16)(GIO_GUN_SETTINGS_Y - GIO_GAP_BN_SETTINGS), 150, 2,
-                       GIO_TOGGLE_TEXT_FONT, 162, gzGIOScreenText[GIO_DISABLED_FOR_THE_DEMO_TEXT],
-                       FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-
-#endif
 
   return (TRUE);
 }

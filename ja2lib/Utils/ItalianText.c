@@ -2777,74 +2777,6 @@ STR16 pMilitiaConfirmStrings[] = {
     L"Non potete più addestrare i soldati a %s.",
 };
 
-#ifdef JA2DEMOADS
-STR16 gpDemoString[] = {
-    // 0-9
-    L"IL MEGLIO DELLA STRATEGIA.",
-    L"IL MEGLIO DEI GIOCHI DI RUOLO.",
-    L"Gioco non completamente lineare",
-    L"Nuova trama estrema",
-    L"Incendi estremamente realistici",
-    L"Luci dinamiche",
-    L"Interazione NPC",
-    L"Tattiche di furto e notturne",
-    L"Personalizzate il vostro mercenario",
-    L"Sfide e avventure creative",
-    L"Veicoli controllabili",
-    // 10-19
-    L"Più di 150 personalità",
-    L"Centinaia di oggetti fantastici",
-    L"Più di 250 locazioni uniche",
-    L"Paurose esplosioni",
-    L"Nuove manovre tattiche",
-    L"Gran quantità di animazione",
-    L"Più di 9000 righe di dialogo",
-    L"Stupendo tema musicale di Kevin Manthei",
-    L"Strategia globale",
-    L"Battaglia e attacchi aerei",
-    // 20-29
-    L"Allenate il vostro esercito",
-    L"Gioco personalizzabile",
-    L"Linea di vista realistica",
-    L"Sorprendente grafica a colori",
-    L"Comprare, vendere e commerciare",
-    L"Nemico crudele AI",
-    L"Tattiche di combattimento allo stato dell'arte",
-    L"Elementi opzionali di fantascienza",
-    L"24 ore",
-    L"Ben più di 60 ore di gioco",
-    // 30-34
-    L"Ambientazioni di varie difficoltà",
-    L"Modelli balistici realistici",
-    L"Accurato studio della fisica",
-    L"Ambiente completamente interattivo",
-    L"E altro ancora...",
-    // 35 on are BOLD
-    L"",
-    L"",
-    L"\"Uno dei giochi più creativi del 1998\"",
-    L"Giocatore PC",
-    L"Fate subito il vostro ordine al sito WWW.JAGGEDALLIANCE2.COM!",
-};
-
-STR16 gpDemoIntroString[] = {
-    L"State per sperimentare il meglio della strategia, dei giochi di ruolo e del combattimento "
-    L"tattico:",
-    // Point 1 (uses one string)
-    L"Controllate una squadra di mercenari con una spiccata personalità (nessuno di loro vi "
-    L"annoierà).",
-    // Point 2 (uses one string)
-    L"Controllate lo strabiliante schieramento di manovre tattiche: correre, strisciare, scalare, "
-    L"saltare, combattimenti corpo a corpo e altro ancora.",
-    // Point 3 (uses one string)
-    L"Scherzate col fuoco! Giochi fantastici, armi assassine, esplosioni paurose.",
-    // Additional comment
-    L"(e questo è solo l'inizio)",
-    // Introduction/instructions
-    L"Benvenuti a Demoville... (premete un tasto per continuare)",
-};
-#endif
-
 // Strings used in the popup box when withdrawing, or depositing money from the $ sign at the bottom
 // of the single merc panel
 STR16 gzMoneyWithdrawMessageText[] = {
@@ -3074,10 +3006,6 @@ STR16 pMessageStrings[] = {
     L"utilizzando ALT+S.",
     L"Aperto",
     L"Chiuso",
-#ifdef JA2DEMO
-    L"Siete tutti finiti qui. Forse dovreste andare a trovare Gabby.",
-    L"Troppo crudele per averlo ucciso.",
-#endif
     L"Lo spazio su disco si sta esaurendo. Avete liberi solo %s MB e Jagged Alliance 2 ne richiede "
     L"%s.",
     L"Arruolato %s dall'A.I.M.",
@@ -3129,18 +3057,6 @@ STR16 pMessageStrings[] = {
     L"Non esiste nessun livello inferiore...",
     L"Entra nel seminterrato %d...",
     L"Abbandona il seminterrato...",
-
-#ifdef JA2DEMO
-
-    // For the demo, the sector exit interface, you'll be able to split your teams up, but the demo
-    // has this feature disabled.  This string is fast help text that appears over "single" button.
-    L"In pieno gioco, potrete separare\nla vostra squadra, ma non in modalità demo.",
-
-    // The overhead map is a map of the entire sector, which you can go into anytime, except in the
-    // demo.
-    L"Mappa generale non attiva nella demo.",
-
-#endif
 
     L"di",  // used in the shop keeper inteface to mark the ownership of the item eg Red's gun
     L"Modalità segui disattiva.",

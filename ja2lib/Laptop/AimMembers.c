@@ -4006,7 +4006,7 @@ VO_BLT_SRCTRANSPARENCY, &SrcRect, &DestRect ) ) return(FALSE);
 }
 */
 
-#if defined(JA2TESTVERSION) || defined(JA2DEMO)
+#if defined(JA2TESTVERSION)
 
 void DemoHiringOfMercs() {
   INT16 i;
@@ -4016,7 +4016,6 @@ void DemoHiringOfMercs() {
   UINT8 MercID[] = {7, 10, 4, 42, 33};
 #endif
   MERC_HIRE_STRUCT HireMercStruct;
-#ifndef JA2DEMO
   static BOOLEAN fHaveCalledBefore = FALSE;
 
   if (fHaveCalledBefore) return;
@@ -4024,7 +4023,6 @@ void DemoHiringOfMercs() {
   fHaveCalledBefore = TRUE;
 
   if (guiCurrentLaptopMode != LAPTOP_MODE_NONE) return;
-#endif
 
   for (i = 0; i < 5; i++) {
     memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));

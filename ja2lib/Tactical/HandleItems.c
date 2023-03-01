@@ -3373,28 +3373,6 @@ void StartBombMessageBox(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
     DoMessageBox(MSG_BOX_BASIC_SMALL_BUTTONS, TacticalStr[CHOOSE_BOMB_FREQUENCY_STR], GAME_SCREEN,
                  (UINT8)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);
   } else if (pSoldier->inv[HANDPOS].usItem == REMOTETRIGGER) {
-#ifdef JA2DEMO
-    {
-      UINT8 ubRoom;
-
-      if (InARoom(pSoldier->sGridNo, &ubRoom) && ubRoom == 31) {
-        SetOffBombsByFrequency(pSoldier->ubID, FIRST_MAP_PLACED_FREQUENCY + 4);
-
-        DoMercBattleSound(pSoldier, BATTLE_SOUND_OK1);
-      } else {
-        DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
-      }
-    }
-#else
-    // ATE ignore the commented-out code and add stuff to open the secret passage here
-    /*
-    switch( pSoldier->inv[HANDPOS].ubLocationID )
-    {
-            // check to make sure the appropriate sector is loaded
-    }
-    SetOffBombsByFrequency( pSoldier->ubID, pSoldier->inv[HANDPOS].bFrequency );
-    */
-
     // PLay sound....
     PlayJA2Sample(USE_STATUE_REMOTE, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
 
@@ -3413,7 +3391,6 @@ void StartBombMessageBox(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
       DoMercBattleSound(pSoldier, BATTLE_SOUND_CURSE1);
     }
 
-#endif
   } else if (FindAttachment(&(pSoldier->inv[HANDPOS]), DETONATOR) != ITEM_NOT_FOUND) {
     DoMessageBox(MSG_BOX_BASIC_SMALL_BUTTONS, TacticalStr[CHOOSE_TIMER_STR], GAME_SCREEN,
                  (UINT8)MSG_BOX_FLAG_FOUR_NUMBERED_BUTTONS, BombMessageBoxCallBack, NULL);

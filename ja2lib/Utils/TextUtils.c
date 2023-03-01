@@ -1,5 +1,4 @@
 #include "GameSettings.h"
-#include "JA2DemoAds.h"
 #include "LanguageDefines.h"
 #include "SGP/FileMan.h"
 #include "Utils/Text.h"

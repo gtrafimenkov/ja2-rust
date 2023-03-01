@@ -7,7 +7,6 @@
 #include "Globals.h"
 #include "HelpScreen.h"
 #include "Init.h"
-#include "JA2DemoAds.h"
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
@@ -363,13 +362,7 @@ void HandleShortCutExitState(void) {
 void EndGameMessageBoxCallBack(UINT8 bExitValue) {
   // yes, so start over, else stay here and do nothing for now
   if (bExitValue == MSG_BOX_RETURN_YES) {
-#ifdef JA2DEMOADS
-    guiPendingScreen = DEMO_EXIT_SCREEN;
-    SetMusicMode(MUSIC_MAIN_MENU);
-    FadeOutNextFrame();
-#else
     gfProgramIsRunning = FALSE;
-#endif
   }
 
   // If we are in the tactical placement gui, we need this flag set so the interface is updated.

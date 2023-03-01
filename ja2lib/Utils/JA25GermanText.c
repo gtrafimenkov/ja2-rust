@@ -1,7 +1,6 @@
 #include "LanguageDefines.h"
 #include "Utils/JA25EnglishText.h"
 #ifdef ENGLISH
-#include "JA2DemoAds.h"
 #include "Utils/Text.h"
 #endif
 

@@ -1984,9 +1984,6 @@
     <ClInclude Include="JA2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JA2DemoAds.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="JA2Splash.h">
       <Filter>Header Files</Filter>
     </ClInclude>

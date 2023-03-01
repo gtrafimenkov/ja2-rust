@@ -2696,72 +2696,6 @@ STR16 pMilitiaConfirmStrings[] = {
     L"Nie możesz już dłużej szkolić samoobrony w mieście %s.",
 };
 
-#ifdef JA2DEMOADS
-STR16 gpDemoString[] = {
-    // 0-9
-    L"NAJLEPSZA GRA STRATEGICZNA.",
-    L"NAJLEPSZA GRA ROLE-PLAYING.",
-    L"Nieliniowy scenariusz gry",
-    L"Absolutnie nowy pomysł",
-    L"Wspaniałe strzelaniny",
-    L"Dynamiczne oświetlenie",
-    L"Rozmowy z postaciami",
-    L"Nocne akcje",
-    L"Kreowanie własnego najemnika",
-    L"Ambitne i wciągające misje",
-    L"Sterowanie pojazdami",
-    // 10-19
-    L"Ponad 150 różnych postaci",
-    L"Setki ciekawych przedmiotów",
-    L"Ponad 250 różnych plenerów",
-    L"Efektowne eksplozje",
-    L"Nowe taktyczne manewry",
-    L"Tony animacji",
-    L"Ponad 9000 kwestii dialogowych",
-    L"Niesamowity podkład muzyczny Kevina Manthei",
-    L"Globalna strategia",
-    L"Naloty",
-    // 20-29
-    L"Szkolenie oddziałów samoobrony",
-    L"Możliwość dostosowania scenariusza gry",
-    L"Realistyczne tereny",
-    L"Efektowna grafika high-color",
-    L"Kupno, sprzedaż i handel",
-    L"Bezwzględny przeciwnik AI",
-    L"Świetna walka taktyczna",
-    L"Opcjonalny element S-F",
-    L"24 godzinny zegar",
-    L"Minimum 60 godzin gry",
-    // 30-34
-    L"Różne poziomy trudności",
-    L"Realistycznie opracowana balistyka",
-    L"Wierne odwzorowanie zasad fizyki",
-    L"W pełni interaktywny interfejs",
-    L"I wiele, wiele więcej...",
-    // 35 on are BOLD
-    L"",
-    L"",
-    L"Jedna z najbardziej pomysłowych gier 1998 roku",
-    L"PC Gamer",
-    L"Zamów już dzisiaj na stronie WWW.TOPWARE.PL !",
-};
-
-STR16 gpDemoIntroString[] = {
-    L"Za chwilę spróbujesz najlepszej strategii, role-playing i najwspanialszej walki taktycznej:",
-    // Point 1 (uses one string)
-    L"Kontrola nad grupą najemników o bogatej osobowości   (żadnych nudnych i zbędnych postaci).",
-    // Point 2 (uses one string)
-    L"Sprawdź wspaniałe manewry taktyczne, począwszy od biegu do czołgania się, wspinania się, "
-    L"skakania, walki wręcz i wielu innych.",
-    // Point 3 (uses one string)
-    L"Igraj z ogniem! Fajne zabawki, śmiercionośna broń, efektowne eksplozje.",
-    // Additional comment
-    L"(a to dopiero początek...)",
-    // Introduction/instructions
-    L"Witamy w Demoville... (naciśnij dowolny klawisz)",
-};
-#endif
-
 // Strings used in the popup box when withdrawing, or depositing money from the $ sign at the bottom
 // of the single merc panel
 STR16 gzMoneyWithdrawMessageText[] = {
@@ -2990,10 +2924,6 @@ pMessageStrings[] = {
     L"kombinacją klawiszy ALT+S.",
     L"Otw.",
     L"Zamkn.",
-#ifdef JA2DEMO
-    L"Tu już wszystko załatwione. Może czas spotkać się z Gabby'm.",
-    L"Nie trzeba było go zabijać.",
-#endif
     L"Brak miejsca na dysku twardym.  Na dysku wolne jest %s MB, a wymagane jest "
     L"przynajmniej %s MB.",
     L"Najęto - %s z A.I.M.",
@@ -3050,20 +2980,6 @@ pMessageStrings[] = {
     L"Nie ma już niższych poziomów...",
     L"Wejście na %d poziom pod ziemią...",
     L"Wyjście z podziemii...",
-
-#ifdef JA2DEMO
-
-    // For the demo, the sector exit interface, you'll be able to split your teams up,
-    // but the demo has this feature disabled.  This string is fast help text that
-    // appears over "single" button.
-    L"W pełnej wersji gry będzie można dzielić oddziały,\nale w wersji demo jest to "
-    L"niemożliwe.",
-
-    // The overhead map is a map of the entire sector, which you can go into anytime,
-    // except in the demo.
-    L"Ogólna mapa sektora jest niedostępna w wersji demo.",
-
-#endif
 
     L" - ",  // used in the shop keeper inteface to mark the ownership of the item eg
              // Red's gun

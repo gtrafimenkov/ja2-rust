@@ -2,6 +2,8 @@ CLANG_FORMATTER ?= clang-format-13
 
 .PHONY: format format-modified linux-bin run-linux-bin unittester-bin run-unittester
 
+build: linux-bin unittester-bin
+
 format:
 	find . \( -iname '*.c' -o -iname '*.cc' -o -iname '*.cpp' -o -iname '*.h' \) \
 		| xargs $(CLANG_FORMATTER) -i --style=file

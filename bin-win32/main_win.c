@@ -140,10 +140,8 @@ INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LP
       fRestore = TRUE;
       break;
 
-#ifndef JA2DEMO
     case WM_DEVICECHANGE: {
     } break;
-#endif
 
     default:
       return DefWindowProc(hWindow, Message, wParam, lParam);

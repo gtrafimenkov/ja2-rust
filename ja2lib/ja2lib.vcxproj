@@ -376,7 +376,6 @@
     <ClInclude Include="Init.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="JA2.h" />
-    <ClInclude Include="JA2DemoAds.h" />
     <ClInclude Include="JA2Splash.h" />
     <ClInclude Include="JAScreens.h" />
     <ClInclude Include="LanguageDefines.h" />

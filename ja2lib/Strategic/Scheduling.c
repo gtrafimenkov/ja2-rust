@@ -889,7 +889,7 @@ void PostSchedules() {
   SOLDIERINITNODE *curr;
   BOOLEAN fDefaultSchedulesPossible = FALSE;
 
-#if defined(DISABLESCHEDULES) || defined(JA2DEMO)  // definition found at top of this .c file.
+#if defined(DISABLESCHEDULES)  // definition found at top of this .c file.
 
   return;
 

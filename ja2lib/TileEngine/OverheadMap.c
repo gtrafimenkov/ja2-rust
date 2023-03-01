@@ -472,15 +472,6 @@ void GoIntoOverheadMap() {
   VOBJECT_DESC VObjectDesc;
   struct VObject *hVObject;
 
-#ifdef JA2DEMO
-
-  if (gfCaves) {
-    ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[MSG_OVERHEAD_MAP_DISABLED]);
-    return;
-  }
-
-#endif
-
   gfInOverheadMap = TRUE;
 
   MSYS_DefineRegion(&OverheadBackgroundRegion, 0, 0, 640, 360, MSYS_PRIORITY_HIGH, CURSOR_NORMAL,

@@ -2366,12 +2366,10 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
 #endif
 
 #ifdef JA2TESTVERSION
-#ifndef JA2DEMO
               if (fCtrl) {
             // CTRL-P: Display player's highest progress percentage
             DumpSectorDifficultyInfo();
           } else
-#endif
 #endif
             HandleStanceChangeFromUIKeys(ANIM_PRONE);
           break;
@@ -3851,9 +3849,7 @@ void TestMeanWhile(INT32 iID) {
     }
   }
 
-#ifndef JA2DEMO
   ScheduleMeanwhileEvent(&MeanwhileDef, 10);
-#endif
 }
 
 void EscapeUILock() {
@@ -4003,7 +3999,6 @@ void TestCapture() {
 }
 
 void PopupAssignmentMenuInTactical(struct SOLDIERTYPE *pSoldier) {
-#ifndef JA2DEMO
   // do something
   fShowAssignmentMenu = TRUE;
   CreateDestroyAssignmentPopUpBoxes();
@@ -4012,5 +4007,4 @@ void PopupAssignmentMenuInTactical(struct SOLDIERTYPE *pSoldier) {
   DetermineWhichAssignmentMenusCanBeShown();
   fFirstClickInAssignmentScreenMask = TRUE;
   gfIgnoreScrolling = TRUE;
-#endif
 }

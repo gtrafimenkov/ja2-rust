@@ -442,130 +442,10 @@ void MercDailyUpdate() {
   ReBuildCharactersList();
 }
 
-/*
-void BuildMercQuitList( struct SOLDIERTYPE *pMercList )
-{
-        // go through list of mercs on players team, fill pMercList sorted from most recent leave
-time, to furthest leave time
-
-        INT32		cnt;
-        INT8		bLastTeamID;
-        struct SOLDIERTYPE		*pSoldier;
-        INT32 iCounter = 0;
-
-        cnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
-        bLastTeamID = gTacticalStatus.Team[ gbPlayerNum ].bLastID;
-
-        //loop though all the mercs
-  for ( pSoldier = MercPtrs[ cnt ]; cnt <= bLastTeamID; cnt++,pSoldier++, iCounter++ )
-        {
-                if ( pSoldier->bActive )
-                {
-                        // copy to list
-                        pMercList[ iCounter ] = pSoldier;
-                }
-        }
-
-        // now sort based on departure time..simple bubble sort
-        for( cnt = 0; cnt <=iCounter; cnt++ )
-        {
-                for( cntB = 0; cntB <=iCounter; cntB++ )
-                {
-                        if( MercPtrs[ cntB ]->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
-                        {
-                                //if the players account status is invalid
-                                if( LaptopSaveInfo.gubPlayersMercAccountStatus ==
-MERC_ACCOUNT_INVALID )
-                                {
-                                        //if the soldier is alive anc concious
-                                        if( IsTheSoldierAliveAndConcious( MercPtrs[ cntB ] ) )
-                                        {
-                                                // swap
-                                                pSoldier =  MercPtrs[ cntB ];
-                                                MercPtrs[ cntB ] =  MercPtrs[ cnt ];
-                                                MercPtrs[ cnt ] = pSoldier;
-                                        }
-                                }
-                        }
-                        else if(  MercPtrs[ cntB ]->ubWhatKindOfMercAmI == MERC_TYPE__AIM )
-                        {
-                                if( MercPtrs[ cntB ]->iEndofContractTime < MercPtrs[ cnt
-]->iEndofContractTime )
-                                {
-                                        // swap
-                                        pSoldier =  MercPtrs[ cntB ];
-                                        MercPtrs[ cntB ] =  MercPtrs[ cnt ];
-                                        MercPtrs[ cnt ] = pSoldier;
-                                }
-                        }
-                        else
-                        {
-                                // not a hirable guy, move to the botton
-                                pSoldier =  MercPtrs[ cnt ];
-                                MercPtrs[ cnt ] =  MercPtrs[ cntB ];
-                                MercPtrs[ cntB ] = pSoldier;
-                        }
-                }
-        }
-
-        return;
-}
-*/
-/*
-void HandleMercsAboutToLeave( struct SOLDIERTYPE *pMercList )
-{
-        // run from top of list to bottom..if merc is gonna leave within a defined time frame of the
-previous guy and they are leaving the same day (today)
-        // then post then with the quote at the same time
-
-        for( iCounter = 0; iCounter < 21; iCounter++ )
-        {
-                if( iCounter == 0 )
-                {
-                        // first guy, if he no leave today, no one is leave, go home
-                        if( ( pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__MERC ) && (
-pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM ) )
-                        {
-                                return;
-                        }
-                        else
-                        {
-                                if( ( pSoldier->iEndofContractTime / 1440 ) > (INT32)GetWorldDay( )
-)
-                                {
-                                        return;
-                                }
-                                else
-                                {
-                                        //if the soldier is alive anc concious
-                                if( IsTheSoldierAliveAndConcious( pSoldier ) )
-                                {
-                                        //if the soldier is an AIM merc
-                                        if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC )
-                                        {
-                                                //add an event so the merc will say the departing
-warning ( 2 hours prior to leaving AddSameDayStrategicEvent( EVENT_MERC_ABOUT_TO_LEAVE_COMMENT,
-MERC_DEPARTURE_TIME_OF_DAY - 2 * 60,	(UINT32) pSoldier->ubID );
-                                        }
-                                        else
-                                        {
-                                                // merc merc, they'll just leave
-
-                                        }
-                                }
-                        }
-                }
-        }
-}
-
-        */
-
 // ATE: This function deals with MERC MERC and NPC's leaving because of not getting paid...
 // NOT AIM renewals....
 void MercsContractIsFinished(UINT8 ubID) {
   struct SOLDIERTYPE *pSoldier;
-
-#ifndef JA2DEMO
 
   pSoldier = &Menptr[ubID];
 
@@ -608,15 +488,11 @@ void MercsContractIsFinished(UINT8 ubID) {
 
     pSoldier->ubLeaveHistoryCode = HISTORY_MERC_QUIT;
   }
-
-#endif
 }
 
 // ATE: Called for RPCs who should now complain about no pay...
 void RPCWhineAboutNoPay(UINT8 ubID) {
   struct SOLDIERTYPE *pSoldier;
-
-#ifndef JA2DEMO
 
   pSoldier = &Menptr[ubID];
 
@@ -627,8 +503,6 @@ void RPCWhineAboutNoPay(UINT8 ubID) {
     // Say quote for needing pay!
     TacticalCharacterDialogue(pSoldier, QUOTE_NOT_GETTING_PAID);
   }
-
-#endif
 }
 
 // OK loop through and check!

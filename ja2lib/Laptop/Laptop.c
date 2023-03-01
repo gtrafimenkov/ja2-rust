@@ -580,7 +580,7 @@ extern void ClearHistoryList(void);
 #ifdef JA2TESTVERSION
 extern void CheatToGetAll5Merc();
 #endif
-#if defined(JA2TESTVERSION) || defined(JA2DEMO)
+#if defined(JA2TESTVERSION)
 extern void DemoHiringOfMercs();
 #endif
 
@@ -4724,7 +4724,7 @@ void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usK
       if ((usEvent == KEY_DOWN) && ((usParam == 'h') || (usParam == 'H'))) {
     ShouldTheHelpScreenComeUp(HELP_SCREEN_LAPTOP, TRUE);
   }
-#if defined(JA2TESTVERSION) || defined(JA2DEMO)
+#if defined(JA2TESTVERSION)
   else if ((usEvent == KEY_DOWN) && (usParam == 'w')) {
     DemoHiringOfMercs();
   }
