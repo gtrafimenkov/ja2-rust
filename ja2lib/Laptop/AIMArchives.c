@@ -1,5 +1,7 @@
 #include "Laptop/AIMArchives.h"
 
+#include <string.h>
+
 #include "Laptop/AIM.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"

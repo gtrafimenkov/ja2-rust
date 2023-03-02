@@ -73,7 +73,7 @@ void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
   UINT32 uiByteWritten;
   va_list argptr;
   char TempString[1024];
-  char DestString[1024];
+  char DestString[1100];
 
   TempString[0] = '\0';
   DestString[0] = '\0';

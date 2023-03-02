@@ -56,7 +56,7 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
 BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT32 uiDestSurface) {
   UINT16 us16BPPColor;
   UINT32 cnt1;
-  UINT8 ubSize, ubType;
+  UINT8 ubSize;
   INT16 sTLX, sTLY, sBRX, sBRY;
   UINT8 ubPaletteRep;
 
@@ -65,7 +65,6 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
 
   SetFont(LARGEFONT1);
 
-  ubType = gpPalRep[ubPaletteRep].ubType;
   ubSize = gpPalRep[ubPaletteRep].ubPaletteSize;
 
   for (cnt1 = 0; cnt1 < ubSize; cnt1++) {
@@ -86,7 +85,7 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
   return (TRUE);
 }
 
-BOOLEAN WrapString(STR16 pStr, STR16 pStr2, UINT16 usWidth, INT32 uiFont) {
+BOOLEAN WrapString(STR16 pStr, STR16 pStr2, size_t buf2Size, UINT16 usWidth, INT32 uiFont) {
   UINT32 Cur, uiLet, uiNewLet, uiHyphenLet;
   CHAR16 *curletter, transletter;
   BOOLEAN fLineSplit = FALSE;
@@ -127,8 +126,8 @@ BOOLEAN WrapString(STR16 pStr, STR16 pStr2, UINT16 usWidth, INT32 uiFont) {
       }
       if (!fLineSplit) {
         // We completed the check for a space, but failed, so use the hyphen method.
-        swprintf(pStr2, ARR_SIZE(pStr2), L"-%s", &(pStr[uiHyphenLet]));
-        pStr[uiHyphenLet] = (INT16)'/0';
+        swprintf(pStr2, buf2Size, L"-%s", &(pStr[uiHyphenLet]));
+        pStr[uiHyphenLet] = (INT16)'\0';
         fLineSplit = TRUE;  // hyphen method
         break;
       }

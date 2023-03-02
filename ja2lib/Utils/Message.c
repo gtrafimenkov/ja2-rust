@@ -297,7 +297,6 @@ void ClearDisplayedListOfTacticalStrings(void) {
 }
 
 void ScrollString() {
-  ScrollStringStPtr pStringSt = pStringS;
   UINT32 suiTimer = 0;
   UINT32 cnt;
   INT32 iNumberOfNewStrings = 0;  // the count of new strings, so we can update position by
@@ -574,18 +573,9 @@ void TacticalScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
 
   ScrollStringStPtr pStringSt;
   UINT32 uiFont = TINYFONT1;
-  UINT16 usPosition = 0;
-  UINT16 usCount = 0;
-  UINT16 usStringLength = 0;
-  UINT16 usCurrentSPosition = 0;
-  UINT16 usCurrentLookup = 0;
-  // wchar_t *pString;
-  BOOLEAN fLastLine = FALSE;
   va_list argptr;
 
   wchar_t DestString[512], DestStringA[512];
-  // wchar_t *pStringBuffer;
-  BOOLEAN fMultiLine = FALSE;
   ScrollStringStPtr pTempStringSt = NULL;
   WRAPPED_STRING *pStringWrapper = NULL;
   WRAPPED_STRING *pStringWrapperHead = NULL;
@@ -698,17 +688,8 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
 
   ScrollStringStPtr pStringSt;
   UINT32 uiFont = MAP_SCREEN_MESSAGE_FONT;
-  UINT16 usPosition = 0;
-  UINT16 usCount = 0;
-  UINT16 usStringLength = 0;
-  UINT16 usCurrentSPosition = 0;
-  UINT16 usCurrentLookup = 0;
-  // wchar_t *pString;
-  BOOLEAN fLastLine = FALSE;
   va_list argptr;
   wchar_t DestString[512], DestStringA[512];
-  // wchar_t *pStringBuffer;
-  BOOLEAN fMultiLine = FALSE;
   WRAPPED_STRING *pStringWrapper = NULL;
   WRAPPED_STRING *pStringWrapperHead = NULL;
   BOOLEAN fNewString = FALSE;
@@ -851,7 +832,6 @@ void MapScreenMessage(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
 // add string to the map screen message list
 void AddStringToMapScreenMessageList(STR16 pString, UINT16 usColor, UINT32 uiFont,
                                      BOOLEAN fStartOfNewString, UINT8 ubPriority) {
-  UINT8 ubSlotIndex = 0;
   ScrollStringStPtr pStringSt = NULL;
 
   pStringSt = (ScrollStringSt *)MemAlloc(sizeof(ScrollStringSt));

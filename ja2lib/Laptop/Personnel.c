@@ -2281,7 +2281,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
 
         // shorten if needed
         if (StringPixLength(sString, FONT10ARIAL) > (171 - 75)) {
-          ReduceStringLength(sString, (171 - 75), FONT10ARIAL);
+          ReduceStringLength(sString, ARR_SIZE(sString), (171 - 75), FONT10ARIAL);
         }
 
         // print name
@@ -2324,7 +2324,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
 
           // shorten if needed
           if (StringPixLength(sString, FONT10ARIAL) > (171 - 75)) {
-            ReduceStringLength(sString, (171 - 75), FONT10ARIAL);
+            ReduceStringLength(sString, ARR_SIZE(sString), (171 - 75), FONT10ARIAL);
           }
 
           // print name

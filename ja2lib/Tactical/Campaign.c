@@ -567,8 +567,8 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, UINT8
         CHAR16 wTempString[128];
 
         // tell player about it
-        BuildStatChangeString(wTempString, pSoldier->name, fChangeTypeIncrease, sPtsChanged,
-                              ubStat);
+        BuildStatChangeString(wTempString, ARR_SIZE(wTempString), pSoldier->name,
+                              fChangeTypeIncrease, sPtsChanged, ubStat);
         ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, wTempString);
       }
 
@@ -1355,8 +1355,8 @@ void AwardExperienceBonusToActiveSquad(UINT8 ubExpBonusType) {
   }
 }
 
-void BuildStatChangeString(STR16 wString, STR16 wName, BOOLEAN fIncrease, INT16 sPtsChanged,
-                           UINT8 ubStat) {
+void BuildStatChangeString(STR16 wString, size_t bufSize, STR16 wName, BOOLEAN fIncrease,
+                           INT16 sPtsChanged, UINT8 ubStat) {
   UINT8 ubStringIndex;
 
   Assert(sPtsChanged != 0);
@@ -1377,9 +1377,9 @@ void BuildStatChangeString(STR16 wString, STR16 wName, BOOLEAN fIncrease, INT16 
     ubStringIndex += 2;
   }
 
-  swprintf(wString, ARR_SIZE(wString), L"%s %s %d %s %s", wName,
-           sPreStatBuildString[fIncrease ? 1 : 0], abs(sPtsChanged),
-           sPreStatBuildString[ubStringIndex], sStatGainStrings[ubStat - FIRST_CHANGEABLE_STAT]);
+  swprintf(wString, bufSize, L"%s %s %d %s %s", wName, sPreStatBuildString[fIncrease ? 1 : 0],
+           abs(sPtsChanged), sPreStatBuildString[ubStringIndex],
+           sStatGainStrings[ubStat - FIRST_CHANGEABLE_STAT]);
 }
 
 UINT8 CalcImportantSectorControl(void) {

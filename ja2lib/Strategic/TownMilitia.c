@@ -1017,49 +1017,49 @@ BOOLEAN MilitiaTrainingAllowedInTown(INT8 bTownId) {
   }
 }
 
-void BuildMilitiaPromotionsString(CHAR16 *str) {
+void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize) {
   CHAR16 pStr[256];
   BOOLEAN fAddSpace = FALSE;
-  swprintf(str, ARR_SIZE(str), L"");
+  swprintf(str, bufSize, L"");
 
   if (!gbMilitiaPromotions) {
     return;
   }
   if (gbGreenToElitePromotions > 1) {
     swprintf(pStr, ARR_SIZE(pStr), gzLateLocalizedString[22], gbGreenToElitePromotions);
-    wcscat(str, pStr);
+    wcsncat(str, pStr, bufSize);
     fAddSpace = TRUE;
   } else if (gbGreenToElitePromotions == 1) {
-    wcscat(str, gzLateLocalizedString[29]);
+    wcsncat(str, gzLateLocalizedString[29], bufSize);
     fAddSpace = TRUE;
   }
 
   if (gbGreenToRegPromotions > 1) {
     if (fAddSpace) {
-      wcscat(str, L" ");
+      wcsncat(str, L" ", bufSize);
     }
     swprintf(pStr, ARR_SIZE(pStr), gzLateLocalizedString[23], gbGreenToRegPromotions);
-    wcscat(str, pStr);
+    wcsncat(str, pStr, bufSize);
     fAddSpace = TRUE;
   } else if (gbGreenToRegPromotions == 1) {
     if (fAddSpace) {
-      wcscat(str, L" ");
+      wcsncat(str, L" ", bufSize);
     }
-    wcscat(str, gzLateLocalizedString[30]);
+    wcsncat(str, gzLateLocalizedString[30], bufSize);
     fAddSpace = TRUE;
   }
 
   if (gbRegToElitePromotions > 1) {
     if (fAddSpace) {
-      wcscat(str, L" ");
+      wcsncat(str, L" ", bufSize);
     }
     swprintf(pStr, ARR_SIZE(pStr), gzLateLocalizedString[24], gbRegToElitePromotions);
-    wcscat(str, pStr);
+    wcsncat(str, pStr, bufSize);
   } else if (gbRegToElitePromotions == 1) {
     if (fAddSpace) {
-      wcscat(str, L" ");
+      wcsncat(str, L" ", bufSize);
     }
-    wcscat(str, gzLateLocalizedString[31]);
+    wcsncat(str, gzLateLocalizedString[31], bufSize);
     fAddSpace = TRUE;
   }
 

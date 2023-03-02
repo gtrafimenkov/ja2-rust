@@ -143,7 +143,7 @@ STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
 };
 
 BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
-  SGPFILENAME zFilename;
+  char zFilename[200];
   HWFILE hFile;
   INT32 cnt;
 

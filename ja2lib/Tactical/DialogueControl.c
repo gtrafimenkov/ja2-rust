@@ -84,9 +84,9 @@ typedef struct {
   INT8 bUIHandlerID;
   INT32 iFaceIndex;
   INT32 iTimeStamp;
-  UINT32 uiSpecialEventFlag;
-  UINT32 uiSpecialEventData;
-  UINT32 uiSpecialEventData2;
+  uintptr_t uiSpecialEventFlag;
+  uintptr_t uiSpecialEventData;
+  uintptr_t uiSpecialEventData2;
   UINT32 uiSpecialEventData3;
   UINT32 uiSpecialEventData4;
   BOOLEAN fFromSoldier;
@@ -886,8 +886,9 @@ void HandleDialogue() {
         CHAR16 wTempString[128];
 
         // tell player about stat increase
-        BuildStatChangeString(wTempString, pSoldier->name, (BOOLEAN)QItem->uiSpecialEventData,
-                              (INT16)QItem->uiSpecialEventData2, (UINT8)QItem->uiSpecialEventData3);
+        BuildStatChangeString(wTempString, ARR_SIZE(wTempString), pSoldier->name,
+                              (BOOLEAN)QItem->uiSpecialEventData, (INT16)QItem->uiSpecialEventData2,
+                              (UINT8)QItem->uiSpecialEventData3);
         ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, wTempString);
       }
     } else if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_UNSET_ARRIVES_FLAG) {
@@ -1046,7 +1047,8 @@ BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 us
 }
 
 BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
-                                                  UINT32 uiFlag, UINT32 uiData1, UINT32 uiData2) {
+                                                  UINT32 uiFlag, uintptr_t uiData1,
+                                                  UINT32 uiData2) {
   if (pSoldier->ubProfile == NO_PROFILE) {
     return (FALSE);
   }
@@ -1167,7 +1169,7 @@ BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNu
 
 BOOLEAN CharacterDialogueWithSpecialEvent(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
                                           UINT8 bUIHandlerID, BOOLEAN fFromSoldier,
-                                          BOOLEAN fDelayed, UINT32 uiFlag, UINT32 uiData1,
+                                          BOOLEAN fDelayed, UINT32 uiFlag, uintptr_t uiData1,
                                           UINT32 uiData2) {
   DIALOGUE_Q_STRUCT *QItem;
 
@@ -1263,8 +1265,8 @@ BOOLEAN CharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIn
   return (TRUE);
 }
 
-BOOLEAN SpecialCharacterDialogueEvent(UINT32 uiSpecialEventFlag, UINT32 uiSpecialEventData1,
-                                      UINT32 uiSpecialEventData2, UINT32 uiSpecialEventData3,
+BOOLEAN SpecialCharacterDialogueEvent(uintptr_t uiSpecialEventFlag, uintptr_t uiSpecialEventData1,
+                                      uintptr_t uiSpecialEventData2, UINT32 uiSpecialEventData3,
                                       INT32 iFaceIndex, UINT8 bUIHandlerID) {
   DIALOGUE_Q_STRUCT *QItem;
 
@@ -2011,7 +2013,7 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
         GetSectorIDString(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ, zTownIDString,
                           ARR_SIZE(zTownIDString), FALSE);
 
-        ReduceStringLength(zTownIDString, 64, BLOCKFONT2);
+        ReduceStringLength(zTownIDString, ARR_SIZE(zTownIDString), 64, BLOCKFONT2);
 
         VarFindFontCenterCoordinates((INT16)(pBlitter->sX + 12), (INT16)(pBlitter->sY + 68), 73, 9,
                                      BLOCKFONT2, &sFontX, &sFontY, L"%s", zTownIDString);

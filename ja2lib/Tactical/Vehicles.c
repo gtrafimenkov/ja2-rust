@@ -1648,7 +1648,8 @@ BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile) {
           // soldier. ! When reloading, this bogus pointer is converted to a byte to contain the id
           // of the soldier so ! we can get the REAL pointer to the soldier
           TempVehicle.pPassengers[ubPassengerCnt] =
-              (struct SOLDIERTYPE *)pVehicleList[cnt].pPassengers[ubPassengerCnt]->ubProfile;
+              (struct SOLDIERTYPE
+                   *)((uintptr_t)pVehicleList[cnt].pPassengers[ubPassengerCnt]->ubProfile);
         }
       }
 
@@ -1738,14 +1739,14 @@ BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGame
               // ! The id of the soldier was saved in the passenger pointer.  The passenger pointer
               // is converted back ! to a UINT8 so we can get the REAL pointer to the soldier.
               pVehicleList[cnt].pPassengers[ubPassengerCnt] = FindSoldierByProfileID(
-                  (UINT8)((unsigned int)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
+                  (UINT8)((uintptr_t)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
             }
           } else {
             if (pVehicleList[cnt].pPassengers[ubPassengerCnt] != (struct SOLDIERTYPE *)NO_PROFILE) {
               // ! The id of the soldier was saved in the passenger pointer.  The passenger pointer
               // is converted back ! to a UINT8 so we can get the REAL pointer to the soldier.
               pVehicleList[cnt].pPassengers[ubPassengerCnt] = FindSoldierByProfileID(
-                  (UINT8)((unsigned int)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
+                  (UINT8)((uintptr_t)pVehicleList[cnt].pPassengers[ubPassengerCnt]), FALSE);
             } else {
               pVehicleList[cnt].pPassengers[ubPassengerCnt] = NULL;
             }

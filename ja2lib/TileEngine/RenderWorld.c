@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <wchar.h>
 
 #include "Editor/EditSys.h"
@@ -53,8 +54,7 @@
 #include "TileEngine/RenderZ.c"
 ///////////////////////////
 
-extern CHAR8 gDebugStr[128];
-extern BOOLEAN fLandLayerDirty = TRUE;
+BOOLEAN fLandLayerDirty = TRUE;
 
 extern INT16 gsVIEWPORT_START_X;
 extern INT16 gsVIEWPORT_START_Y;
@@ -510,7 +510,6 @@ BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
   struct LEVELNODE *pStruct;
   INT16 sCountX, sCountY;
   UINT32 uiTile;
-  BOOLEAN fRerender = FALSE;
   TILE_ELEMENT *TileElem;
 
   for (sCountY = sY - sRadius; sCountY < (sY + sRadius + 2); sCountY++)
@@ -528,7 +527,6 @@ BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
           case OUTSIDE_TOP_RIGHT:
             if (sCountX >= sX) {
               pStruct->uiFlags |= LEVELNODE_REVEAL;
-              fRerender = TRUE;
             }
             break;
 
@@ -536,18 +534,12 @@ BOOLEAN RevealWalls(INT16 sX, INT16 sY, INT16 sRadius) {
           case OUTSIDE_TOP_LEFT:
             if (sCountY >= sY) {
               pStruct->uiFlags |= LEVELNODE_REVEAL;
-              fRerender = TRUE;
             }
             break;
         }
         pStruct = pStruct->pNext;
       }
     }
-
-  /*
-          if(fRerender)
-                  SetRenderFlags(RENDER_FLAG_FULL);
-  */
 
   return (TRUE);
 }

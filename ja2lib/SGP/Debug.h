@@ -27,7 +27,7 @@ extern INT32 giProfileCount;
         guiExecutions, guiProfileTime, (FLOAT)guiProfileTime / guiExecutions);
 
 extern void _Null(void);
-extern STR String(const char *String, ...);
+extern char *String(const char *String, ...);
 
 #if defined(_DEBUG) || defined(FORCE_ASSERTS_ON)
 

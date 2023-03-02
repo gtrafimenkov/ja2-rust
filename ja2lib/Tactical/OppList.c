@@ -1822,17 +1822,6 @@ PopMessage(tempstr);
           }
         } else {
           switch (pSoldier->ubProfile) {
-            /*
-            case MIKE:
-                    if ( gfPlayerTeamSawMike && !( gMercProfiles[ pSoldier->ubProfile ].ubMiscFlags2
-            & PROFILE_MISC_FLAG2_SAID_FIRSTSEEN_QUOTE ) )
-                    {
-                            InitiateConversation( pSoldier, pOpponent, NPC_INITIAL_QUOTE, 0 );
-                            gMercProfiles[ pSoldier->ubProfile ].ubMiscFlags2 |=
-            PROFILE_MISC_FLAG2_SAID_FIRSTSEEN_QUOTE;
-                    }
-                    break;
-                    */
             case IGGY:
               if (!(gMercProfiles[pSoldier->ubProfile].ubMiscFlags2 &
                     PROFILE_MISC_FLAG2_SAID_FIRSTSEEN_QUOTE)) {

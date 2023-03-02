@@ -6617,11 +6617,9 @@ void DoneFadeOutDemoCreatureLevel(void) {
   FadeInGameScreen();
 }
 
-void DemoEndOKCallback(INT8 bExitCode) {
-}
+void DemoEndOKCallback(INT8 bExitCode) {}
 
-void HandleEndDemoInCreatureLevel() {
-}
+void HandleEndDemoInCreatureLevel() {}
 
 void DeathTimerCallback(void) {
   if (gTacticalStatus.Team[CREATURE_TEAM].bMenInSector >

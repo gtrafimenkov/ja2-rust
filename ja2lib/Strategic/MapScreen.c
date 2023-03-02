@@ -896,7 +896,7 @@ BOOLEAN HandleCtrlOrShiftInTeamPanel(INT8 bCharNumber);
 
 INT32 GetContractExpiryTime(struct SOLDIERTYPE *pSoldier);
 
-void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString);
+void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString, size_t bufSize);
 INT32 GetGroundTravelTimeOfCharacter(INT8 bCharNumber);
 
 INT16 CalcLocationValueForChar(INT32 iCounter);
@@ -1830,13 +1830,14 @@ void DrawCharacterInfo(INT16 sCharNumber) {
   // in transit?
   else if (pSoldier->bAssignment == IN_TRANSIT) {
     // show ETA
-    ConvertMinTimeToETADayHourMinString(pSoldier->uiTimeSoldierWillArrive, sString);
+    ConvertMinTimeToETADayHourMinString(pSoldier->uiTimeSoldierWillArrive, sString,
+                                        ARR_SIZE(sString));
   }
   // traveling ?
   else if (PlayerIDGroupInMotion(GetSoldierGroupId(pSoldier))) {
     // show ETA
     uiArrivalTime = GetWorldTotalMin() + CalculateTravelTimeOfGroupId(GetSoldierGroupId(pSoldier));
-    ConvertMinTimeToETADayHourMinString(uiArrivalTime, sString);
+    ConvertMinTimeToETADayHourMinString(uiArrivalTime, sString, ARR_SIZE(sString));
   } else {
     // show location
     GetMapscreenMercLocationString(pSoldier, sString, ARR_SIZE(sString));
@@ -9863,7 +9864,7 @@ void CancelPathsOfAllSelectedCharacters() {
   }
 }
 
-void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString) {
+void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString, size_t bufSize) {
   UINT32 uiDay, uiHour, uiMin;
 
   uiDay = (uiTimeInMin / NUM_MIN_IN_DAY);
@@ -9874,7 +9875,7 @@ void ConvertMinTimeToETADayHourMinString(UINT32 uiTimeInMin, STR16 sString) {
   // current time
   //	swprintf( sString, L"%s %s %d, %02d:%02d", pEtaString[ 0 ], pDayStrings[ 0 ], uiDay, uiHour,
   // uiMin ); 	swprintf( sString, L"%s %d, %02d:%02d", pDayStrings[ 0 ], uiDay, uiHour, uiMin );
-  swprintf(sString, ARR_SIZE(sString), L"%s %02d:%02d", pEtaString[0], uiHour, uiMin);
+  swprintf(sString, bufSize, L"%s %02d:%02d", pEtaString[0], uiHour, uiMin);
 }
 
 INT32 GetGroundTravelTimeOfCharacter(INT8 bCharNumber) {
@@ -10365,7 +10366,7 @@ void HandlePostAutoresolveMessages() {
     gsEnemyGainedControlOfSectorID = -1;
   } else if (gbMilitiaPromotions) {
     CHAR16 str[512];
-    BuildMilitiaPromotionsString(str);
+    BuildMilitiaPromotionsString(str, ARR_SIZE(str));
     DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback);
   }
 }

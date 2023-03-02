@@ -250,7 +250,6 @@ BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
 
 UINT16 CreateFontPaletteTables(struct VObject* pObj) {
   UINT32 count;
-  struct SGPPaletteEntry Pal[256];
 
   for (count = 0; count < 16; count++) {
     if ((count == 4) && (pObj->p16BPPPalette == pObj->pShades[count]))
@@ -259,13 +258,6 @@ UINT16 CreateFontPaletteTables(struct VObject* pObj) {
       MemFree(pObj->pShades[count]);
       pObj->pShades[count] = NULL;
     }
-  }
-
-  // Build white palette
-  for (count = 0; count < 256; count++) {
-    Pal[count].peRed = (UINT8)255;
-    Pal[count].peGreen = (UINT8)255;
-    Pal[count].peBlue = (UINT8)255;
   }
 
   pObj->pShades[FONT_SHADE_RED] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 255, 0, 0, TRUE);

@@ -153,7 +153,7 @@ void CalculatePopupTextOrientation(INT16 sWidth, INT16 sHeight);
 void HandleNPCTrigger();
 BOOLEAN InternalInitiateConversation(struct SOLDIERTYPE *pDestSoldier,
                                      struct SOLDIERTYPE *pSrcSoldier, INT8 bApproach,
-                                     UINT32 uiApproachData);
+                                     uintptr_t uiApproachData);
 
 extern void EndGameMessageBoxCallBack(UINT8 ubExitValue);
 extern INT16 FindNearestOpenableNonDoor(INT16 sStartGridNo);
@@ -188,7 +188,7 @@ BOOLEAN gfConversationPending = FALSE;
 struct SOLDIERTYPE *gpPendingDestSoldier;
 struct SOLDIERTYPE *gpPendingSrcSoldier;
 INT8 gbPendingApproach;
-UINT32 guiPendingApproachData;
+uintptr_t guiPendingApproachData;
 extern BOOLEAN fMapPanelDirty;
 
 INT32 giHospitalTempBalance;  // stores amount of money for current doctoring
@@ -205,7 +205,7 @@ enum {
 };
 
 BOOLEAN InitiateConversation(struct SOLDIERTYPE *pDestSoldier, struct SOLDIERTYPE *pSrcSoldier,
-                             INT8 bApproach, UINT32 uiApproachData) {
+                             INT8 bApproach, uintptr_t uiApproachData) {
   // ATE: OK, let's check the status of the Q
   // If it has something in it....delay this until after....
   if (DialogueQueueIsEmptyOrSomebodyTalkingNow()) {
@@ -247,7 +247,7 @@ void HandlePendingInitConv() {
 
 BOOLEAN InternalInitiateConversation(struct SOLDIERTYPE *pDestSoldier,
                                      struct SOLDIERTYPE *pSrcSoldier, INT8 bApproach,
-                                     UINT32 uiApproachData) {
+                                     uintptr_t uiApproachData) {
   // OK, init talking menu
   BOOLEAN fFromPending;
 
@@ -1187,7 +1187,7 @@ void CalculatePopupTextPosition(INT16 sWidth, INT16 sHeight) {
 
 BOOLEAN TalkingMenuGiveItem(UINT8 ubNPC, struct OBJECTTYPE *pObject, INT8 bInvPos) {
   CHECKF(SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_GIVE_ITEM, (UINT32)ubNPC,
-                                       (UINT32)pObject, (UINT32)bInvPos, gTalkPanel.iFaceIndex,
+                                       (uintptr_t)pObject, (UINT32)bInvPos, gTalkPanel.iFaceIndex,
                                        DIALOGUE_NPC_UI) != FALSE);
 
   return (TRUE);

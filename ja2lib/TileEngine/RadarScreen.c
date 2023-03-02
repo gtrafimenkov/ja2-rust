@@ -15,6 +15,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "StrUtils.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/Meanwhile.h"
@@ -87,11 +88,11 @@ BOOLEAN InitRadarScreen() {
 
 BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
   VOBJECT_DESC VObjectDesc;
-  CHAR8 zFilename[260];
+  CHAR8 zFilename[90];
   INT32 cnt;
   struct VObject *hVObject;
 
-  strcpy(zFilename, aFilename);
+  strcopy(zFilename, ARR_SIZE(zFilename), aFilename);
 
   // If we have loaded, remove old one
   if (fImageLoaded) {
@@ -229,8 +230,6 @@ void RenderRadarScreen() {
   INT16 sScreenCenterX, sScreenCenterY;
   INT16 sDistToCenterY, sDistToCenterX;
   INT16 sTopLeftWorldX, sTopLeftWorldY;
-  INT16 sTopRightWorldX, sTopRightWorldY;
-  INT16 sBottomLeftWorldX, sBottomLeftWorldY;
   INT16 sBottomRightWorldX, sBottomRightWorldY;
 
   struct SOLDIERTYPE *pSoldier;
@@ -241,7 +240,7 @@ void RenderRadarScreen() {
   UINT8 *pDestBuf;
   UINT16 usLineColor;
   UINT32 cnt;
-  INT16 sHeight, sWidth, sX, sY;
+  INT16 sHeight, sWidth, sX;
   INT32 iCounter = 0;
 
   // create / destroy squad list regions as nessacary
@@ -299,12 +298,6 @@ void RenderRadarScreen() {
   sTopLeftWorldX = sScreenCenterX - sX_S;
   sTopLeftWorldY = sScreenCenterY - sY_S;
 
-  sTopRightWorldX = sScreenCenterX + sX_S;
-  sTopRightWorldY = sScreenCenterY - sY_S;
-
-  sBottomLeftWorldX = sScreenCenterX - sX_S;
-  sBottomLeftWorldY = sScreenCenterY + sY_S;
-
   sBottomRightWorldX = sScreenCenterX + sX_S;
   sBottomRightWorldY = sScreenCenterY + sY_S;
 
@@ -315,7 +308,6 @@ void RenderRadarScreen() {
   sWidth = (RADAR_WINDOW_WIDTH);
   sHeight = (RADAR_WINDOW_HEIGHT);
   sX = RADAR_WINDOW_X;
-  sY = gsRadarY;
 
   sRadarTLX = (INT16)((sTopLeftWorldX * gdScaleX) - sRadarCX + sX + (sWidth / 2));
   sRadarTLY = (INT16)((sTopLeftWorldY * gdScaleY) - sRadarCY + gsRadarY + (sHeight / 2));
@@ -341,10 +333,6 @@ void RenderRadarScreen() {
   }
 
   if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) && (fShowMapInventoryPool == TRUE)) {
-    INT32 iNumberOfItems = 0;
-
-    iNumberOfItems = GetTotalNumberOfItems();
-
     for (iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++) {
       iItemNumber = iCounter + iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT;
       // stolen item

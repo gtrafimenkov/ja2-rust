@@ -24,6 +24,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "StrUtils.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/MapScreenInterfaceMap.h"
@@ -209,8 +210,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCommandL
   ghInstance = hInstance;
 
   // Copy commandline!
-  strncpy(gzCommandLine, pCommandLine, 100);
-  gzCommandLine[99] = '\0';
+  strcopy(gzCommandLine, ARR_SIZE(gzCommandLine), pCommandLine);
 
   // Process the command line BEFORE initialization
   ProcessJa2CommandLineBeforeInitialization(pCommandLine);

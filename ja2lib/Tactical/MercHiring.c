@@ -115,7 +115,7 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   }
 
   if (DidGameJustStart()) {
-// OK, CHECK FOR FIRST GUY, GIVE HIM SPECIAL ITEM!
+    // OK, CHECK FOR FIRST GUY, GIVE HIM SPECIAL ITEM!
     if (iNewIndex == 0) {
       // OK, give this item to our merc!
       struct OBJECTTYPE Object;

@@ -107,7 +107,7 @@ BOOLEAN gfPassedSaveCheck = FALSE;
 
 struct MOUSE_REGION BlanketRegion;
 
-CHAR8 gszCurrFilename[80];
+CHAR8 gszCurrFilename[1024];
 
 enum { IOSTATUS_NONE, INITIATE_MAP_SAVE, SAVING_MAP, INITIATE_MAP_LOAD, LOADING_MAP };
 INT8 gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
@@ -318,7 +318,7 @@ UINT32 LoadSaveScreenHandle(void) {
       fEnteringLoadSaveScreen = TRUE;
       return EDIT_SCREEN;
     case DIALOG_DELETE:
-      sprintf(gszCurrFilename, "MAPS\\%S", gzFilename);
+      snprintf(gszCurrFilename, ARR_SIZE(gszCurrFilename), "MAPS\\%ls", gzFilename);
       if (Plat_GetFileFirst(gszCurrFilename, &FileInfo)) {
         CHAR16 str[40];
         if (Plat_GetFileIsReadonly(&FileInfo) || Plat_GetFileIsSystem(&FileInfo) ||
@@ -338,7 +338,7 @@ UINT32 LoadSaveScreenHandle(void) {
         iFDlgState = DIALOG_NONE;
         return LOADSAVE_SCREEN;
       }
-      sprintf(gszCurrFilename, "MAPS\\%S", gzFilename);
+      snprintf(gszCurrFilename, ARR_SIZE(gszCurrFilename), "MAPS\\%ls", gzFilename);
       if (FileMan_Exists(gszCurrFilename)) {
         gfFileExists = TRUE;
         gfReadOnly = FALSE;
@@ -761,7 +761,7 @@ void InitErrorCatchDialog() {
 // process takes two full screen cycles.
 UINT32 ProcessFileIO() {
   INT16 usStartX, usStartY;
-  CHAR8 ubNewFilename[50];
+  CHAR8 ubNewFilename[1024];
   switch (gbCurrentFileIOStatus) {
     case INITIATE_MAP_SAVE:  // draw save message
       StartFrameBufferRender();
@@ -780,7 +780,7 @@ UINT32 ProcessFileIO() {
       gbCurrentFileIOStatus = SAVING_MAP;
       return LOADSAVE_SCREEN;
     case SAVING_MAP:  // save map
-      sprintf(ubNewFilename, "%S", gzFilename);
+      snprintf(ubNewFilename, ARR_SIZE(ubNewFilename), "%ls", gzFilename);
       RaiseWorldLand();
       if (gfShowPits) RemoveAllPits();
       OptimizeSchedules();
@@ -819,7 +819,7 @@ UINT32 ProcessFileIO() {
       return LOADSAVE_SCREEN;
     case LOADING_MAP:  // load map
       DisableUndo();
-      sprintf(ubNewFilename, "%S", gzFilename);
+      snprintf(ubNewFilename, ARR_SIZE(ubNewFilename), "%ls", gzFilename);
 
       RemoveMercsInSector();
 
@@ -928,7 +928,7 @@ void FDlgDwnCallback(GUI_BUTTON *butn, INT32 reason) {
 }
 
 BOOLEAN ExtractFilenameFromFields() {
-  Get16BitStringFromField(0, gzFilename);
+  Get16BitStringFromField(0, gzFilename, ARR_SIZE(gzFilename));
   return ValidFilename();
 }
 

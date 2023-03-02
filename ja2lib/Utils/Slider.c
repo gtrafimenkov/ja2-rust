@@ -142,9 +142,6 @@ INT32 AddSlider(UINT8 ubStyle, UINT16 usCursor, UINT16 usPosX, UINT16 usPosY, UI
                 SLIDER_CHANGE_CALLBACK SliderChangeCallback, UINT32 uiFlags) {
   SLIDER *pTemp = NULL;
   SLIDER *pNewSlider = NULL;
-  INT32 iNewID = 0;
-  UINT32 cnt = 0;
-  UINT16 usIncrementWidth = 0;
 
   AssertMsg(gfSliderInited, "Trying to Add a Slider Bar when the Slider System was never inited");
 
@@ -293,16 +290,10 @@ void RenderSelectedSliderBar(SLIDER *pSlider) {
 
 void RenderSliderBox(SLIDER *pSlider) {
   struct VObject *hPixHandle;
-  SGPRect SrcRect;
   SGPRect DestRect;
 
   if (pSlider->uiFlags & SLIDER_VERTICAL) {
     // fill out the settings for the current dest and source rects
-    SrcRect.iLeft = 0;
-    SrcRect.iTop = 0;
-    SrcRect.iRight = pSlider->ubSliderWidth;
-    SrcRect.iBottom = pSlider->ubSliderHeight;
-
     DestRect.iLeft = pSlider->usPosX - pSlider->ubSliderWidth / 2;
     DestRect.iTop = pSlider->usCurrentSliderBoxPosition - pSlider->ubSliderHeight / 2;
     DestRect.iRight = DestRect.iLeft + pSlider->ubSliderWidth;
@@ -325,11 +316,6 @@ void RenderSliderBox(SLIDER *pSlider) {
                        (UINT16)DestRect.iTop, pSlider->ubSliderWidth, pSlider->ubSliderHeight);
   } else {
     // fill out the settings for the current dest and source rects
-    SrcRect.iLeft = 0;
-    SrcRect.iTop = 0;
-    SrcRect.iRight = pSlider->ubSliderWidth;
-    SrcRect.iBottom = pSlider->ubSliderHeight;
-
     DestRect.iLeft = pSlider->usCurrentSliderBoxPosition;
     DestRect.iTop = pSlider->usPosY - DEFUALT_SLIDER_SIZE;
     DestRect.iRight = DestRect.iLeft + pSlider->ubSliderWidth;

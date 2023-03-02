@@ -335,7 +335,7 @@ BOOLEAN AddTileSurface(char *cFilename, UINT32 ubType, UINT8 ubTilesetID, BOOLEA
   // Add tile surface
   struct TILE_IMAGERY *TileSurf;
   CHAR8 cFileBPP[128];
-  CHAR8 cAdjustedFile[128];
+  CHAR8 cAdjustedFile[200];
 
   // Delete the surface first!
   if (gTileSurfaceArray[ubType] != NULL) {
@@ -382,8 +382,8 @@ extern BOOLEAN gfLoadShadeTablesFromTextFile;
 
 void BuildTileShadeTables() {
   HWFILE hfile;
-  STRING512 DataDir;
-  STRING512 ShadeTableDir;
+  char DataDir[256];
+  char ShadeTableDir[300];
   UINT32 uiLoop;
   CHAR8 cRootFile[128];
   BOOLEAN fForceRebuildForSlot = FALSE;
@@ -1881,7 +1881,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   UINT32 uiSoldierSize;
 
   // Make sure the file exists... if not, then return false
-  sprintf(szFilename, pSector);
+  strcpy(szFilename, pSector);
   if (ubLevel % 4) {
     CHAR8 str[4];
     sprintf(str, "_b%d", ubLevel % 4);
@@ -2255,7 +2255,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   UINT16 usTypeSubIndex;
   UINT8 ubType;
   UINT8 ubSubIndex;
-  CHAR8 aFilename[50];
+  CHAR8 aFilename[256];
   UINT8 ubCombine;
   UINT8 bCounts[WORLD_MAX][8];
   INT8 *pBuffer;
@@ -2722,7 +2722,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 
   gfWorldLoaded = TRUE;
 
-  sprintf(gubFilename, puiFilename);
+  strcpy(gubFilename, puiFilename);
 
   // Remove this rather large chunk of memory from the system now!
   MemFree(pBufferHead);

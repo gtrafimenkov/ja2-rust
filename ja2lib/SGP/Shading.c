@@ -1,6 +1,7 @@
 #include "SGP/Shading.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "SGP/Debug.h"
 #include "SGP/HImage.h"
@@ -124,7 +125,7 @@ __asm {
 		add		edi,4
 		mov		pSavedPtr, edi							; Save pointer to original pal
 
-		mov		usCurCount, 255							; We'll check cols 1-255
+		mov		usCurCount, 255							; We will check cols 1-255
 
 DoNextIndex:
 
@@ -163,7 +164,7 @@ NC2:add		dx,ax
 NC3:add		dx,ax
 
 		cmp		dx,usCurDelta								; If delta < old delta
-		jae		NotThisCol									;	Save this delta and it's
+		jae		NotThisCol									;	Save this delta and its
 		mov		ax,256                      ;	palette index
 		mov		[usCurDelta],dx
 		sub   ax,cx

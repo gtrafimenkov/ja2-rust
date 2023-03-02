@@ -663,11 +663,11 @@ BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
     // Use col file
     if (CreateSGPPaletteFromCOLFile(Temp8BPPPalette, zColFilename)) {
       // Copy into palette
-      memcpy(pCorpse->p8BPPPalette, Temp8BPPPalette, sizeof(pCorpse->p8BPPPalette) * 256);
+      memcpy(pCorpse->p8BPPPalette, Temp8BPPPalette, sizeof(struct SGPPaletteEntry) * 256);
     } else {
       // Use palette from hvobject
       memcpy(pCorpse->p8BPPPalette, gpTileCache[pCorpse->iCachedTileID].pImagery->vo->pPaletteEntry,
-             sizeof(pCorpse->p8BPPPalette) * 256);
+             sizeof(struct SGPPaletteEntry) * 256);
     }
   }
 

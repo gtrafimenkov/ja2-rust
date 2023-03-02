@@ -109,7 +109,7 @@ void DisplayHistoryListBackground(void);
 void DrawAPageofHistoryRecords(void);
 BOOLEAN IncrementCurrentPageHistoryDisplay(void);
 void DisplayPageNumberAndDateRange(void);
-void ProcessHistoryTransactionString(STR16 pString, HistoryUnitPtr pHistory);
+void ProcessHistoryTransactionString(STR16 pString, size_t bufSize, HistoryUnitPtr pHistory);
 void SetHistoryButtonStates(void);
 BOOLEAN LoadInHistoryRecords(UINT32 uiPage);
 BOOLEAN LoadNextHistoryPage(void);
@@ -777,7 +777,7 @@ void DrawHistoryRecordsText(void) {
     // now the actual history text
     // FindFontCenterCoordinates(RECORD_DATE_X + RECORD_DATE_WIDTH,0,RECORD_HISTORY_WIDTH,0,
     // pHistoryStrings[pCurHistory->ubCode], HISTORY_TEXT_FONT,&usX, &usY);
-    ProcessHistoryTransactionString(sString, pCurHistory);
+    ProcessHistoryTransactionString(sString, ARR_SIZE(sString), pCurHistory);
     //	mprintf(RECORD_DATE_X + RECORD_DATE_WIDTH + 25, RECORD_Y + ( iCounter * ( BOX_HEIGHT ) ) +
     // 3, pHistoryStrings[pCurHistory->ubCode] );
     mprintf(RECORD_DATE_X + RECORD_LOCATION_WIDTH + RECORD_DATE_WIDTH + 15,
@@ -794,7 +794,7 @@ void DrawHistoryRecordsText(void) {
       FindFontCenterCoordinates(RECORD_DATE_X + RECORD_DATE_WIDTH, 0, RECORD_LOCATION_WIDTH + 10, 0,
                                 sString, HISTORY_TEXT_FONT, &sX, &sY);
 
-      ReduceStringLength(sString, RECORD_LOCATION_WIDTH + 10, HISTORY_TEXT_FONT);
+      ReduceStringLength(sString, ARR_SIZE(sString), RECORD_LOCATION_WIDTH + 10, HISTORY_TEXT_FONT);
 
       mprintf(sX, RECORD_Y + (iCounter * (BOX_HEIGHT)) + 3, sString);
     }
@@ -923,129 +923,127 @@ void DisplayPageNumberAndDateRange(void) {
   return;
 }
 
-void ProcessHistoryTransactionString(STR16 pString, HistoryUnitPtr pHistory) {
+void ProcessHistoryTransactionString(STR16 pString, size_t bufSize, HistoryUnitPtr pHistory) {
   CHAR16 sString[128];
 
   switch (pHistory->ubCode) {
     case HISTORY_ENTERED_HISTORY_MODE:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_ENTERED_HISTORY_MODE]);
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_ENTERED_HISTORY_MODE]);
       break;
 
     case HISTORY_HIRED_MERC_FROM_AIM:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_HIRED_MERC_FROM_AIM],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_HIRED_MERC_FROM_AIM],
                gMercProfiles[pHistory->ubSecondCode].zName);
       break;
 
     case HISTORY_MERC_KILLED:
       if (pHistory->ubSecondCode != NO_PROFILE)
-        swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_MERC_KILLED],
+        swprintf(pString, bufSize, pHistoryStrings[HISTORY_MERC_KILLED],
                  gMercProfiles[pHistory->ubSecondCode].zName);
 #ifdef JA2BETAVERSION
       else {
-        swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_MERC_KILLED],
-                 L"ERROR!!!  NO_PROFILE");
+        swprintf(pString, bufSize, pHistoryStrings[HISTORY_MERC_KILLED], L"ERROR!!!  NO_PROFILE");
       }
 #endif
       break;
 
     case HISTORY_HIRED_MERC_FROM_MERC:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_HIRED_MERC_FROM_MERC],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_HIRED_MERC_FROM_MERC],
                gMercProfiles[pHistory->ubSecondCode].zName);
       break;
 
     case HISTORY_SETTLED_ACCOUNTS_AT_MERC:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_SETTLED_ACCOUNTS_AT_MERC]);
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_SETTLED_ACCOUNTS_AT_MERC]);
       break;
     case HISTORY_ACCEPTED_ASSIGNMENT_FROM_ENRICO:
-      swprintf(pString, ARR_SIZE(pString),
-               pHistoryStrings[HISTORY_ACCEPTED_ASSIGNMENT_FROM_ENRICO]);
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_ACCEPTED_ASSIGNMENT_FROM_ENRICO]);
       break;
     case (HISTORY_CHARACTER_GENERATED):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_CHARACTER_GENERATED]);
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_CHARACTER_GENERATED]);
       break;
     case (HISTORY_PURCHASED_INSURANCE):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_PURCHASED_INSURANCE],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_PURCHASED_INSURANCE],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
     case (HISTORY_CANCELLED_INSURANCE):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_CANCELLED_INSURANCE],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_CANCELLED_INSURANCE],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
     case (HISTORY_INSURANCE_CLAIM_PAYOUT):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_INSURANCE_CLAIM_PAYOUT],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_INSURANCE_CLAIM_PAYOUT],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
 
     case HISTORY_EXTENDED_CONTRACT_1_DAY:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_EXTENDED_CONTRACT_1_DAY],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_EXTENDED_CONTRACT_1_DAY],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
 
     case HISTORY_EXTENDED_CONTRACT_1_WEEK:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_EXTENDED_CONTRACT_1_WEEK],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_EXTENDED_CONTRACT_1_WEEK],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
 
     case HISTORY_EXTENDED_CONTRACT_2_WEEK:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_EXTENDED_CONTRACT_2_WEEK],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_EXTENDED_CONTRACT_2_WEEK],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
 
     case (HISTORY_MERC_FIRED):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_MERC_FIRED],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_MERC_FIRED],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
 
     case (HISTORY_MERC_QUIT):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_MERC_QUIT],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_MERC_QUIT],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
 
     case (HISTORY_QUEST_STARTED):
       GetQuestStartedString(pHistory->ubSecondCode, sString);
-      swprintf(pString, ARR_SIZE(pString), sString);
+      swprintf(pString, bufSize, sString);
 
       break;
     case (HISTORY_QUEST_FINISHED):
       GetQuestEndedString(pHistory->ubSecondCode, sString);
-      swprintf(pString, ARR_SIZE(pString), sString);
+      swprintf(pString, bufSize, sString);
 
       break;
     case (HISTORY_TALKED_TO_MINER):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_TALKED_TO_MINER],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_TALKED_TO_MINER],
                pTownNames[pHistory->ubSecondCode]);
       break;
     case (HISTORY_LIBERATED_TOWN):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_LIBERATED_TOWN],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_LIBERATED_TOWN],
                pTownNames[pHistory->ubSecondCode]);
       break;
     case (HISTORY_CHEAT_ENABLED):
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_CHEAT_ENABLED]);
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_CHEAT_ENABLED]);
       break;
     case HISTORY_TALKED_TO_FATHER_WALKER:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_TALKED_TO_FATHER_WALKER]);
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_TALKED_TO_FATHER_WALKER]);
       break;
     case HISTORY_MERC_MARRIED_OFF:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_MERC_MARRIED_OFF],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_MERC_MARRIED_OFF],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
     case HISTORY_MERC_CONTRACT_EXPIRED:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_MERC_CONTRACT_EXPIRED],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_MERC_CONTRACT_EXPIRED],
                gMercProfiles[pHistory->ubSecondCode].zName);
       break;
     case HISTORY_RPC_JOINED_TEAM:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_RPC_JOINED_TEAM],
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_RPC_JOINED_TEAM],
                gMercProfiles[pHistory->ubSecondCode].zName);
       break;
     case HISTORY_ENRICO_COMPLAINED:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[HISTORY_ENRICO_COMPLAINED]);
+      swprintf(pString, bufSize, pHistoryStrings[HISTORY_ENRICO_COMPLAINED]);
       break;
     case HISTORY_MINE_RUNNING_OUT:
     case HISTORY_MINE_RAN_OUT:
     case HISTORY_MINE_SHUTDOWN:
     case HISTORY_MINE_REOPENED:
       // all the same format
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[pHistory->ubCode],
+      swprintf(pString, bufSize, pHistoryStrings[pHistory->ubCode],
                pTownNames[pHistory->ubSecondCode]);
       break;
     case HISTORY_LOST_BOXING:
@@ -1053,7 +1051,7 @@ void ProcessHistoryTransactionString(STR16 pString, HistoryUnitPtr pHistory) {
     case HISTORY_DISQUALIFIED_BOXING:
     case HISTORY_NPC_KILLED:
     case HISTORY_MERC_KILLED_CHARACTER:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[pHistory->ubCode],
+      swprintf(pString, bufSize, pHistoryStrings[pHistory->ubCode],
                gMercProfiles[pHistory->ubSecondCode].zNickname);
       break;
 
@@ -1103,7 +1101,7 @@ void ProcessHistoryTransactionString(STR16 pString, HistoryUnitPtr pHistory) {
     case HISTORY_SLAUGHTEREDBLOODCATS:
     case HISTORY_GAVE_CARMEN_HEAD:
     case HISTORY_SLAY_MYSTERIOUSLY_LEFT:
-      swprintf(pString, ARR_SIZE(pString), pHistoryStrings[pHistory->ubCode]);
+      swprintf(pString, bufSize, pHistoryStrings[pHistory->ubCode]);
       break;
   }
 }

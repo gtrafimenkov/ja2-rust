@@ -216,7 +216,6 @@ INT32 NewSmokeEffect(INT16 sGridNo, UINT16 usItem, INT8 bLevel, UINT8 ubOwner) {
 // ( Replacement algorithm uses distance away )
 void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 bLevel) {
   ANITILE_PARAMS AniParams;
-  ANITILE *pAniTile;
   SMOKEEFFECT *pSmoke;
   BOOLEAN fDissipating = FALSE;
 
@@ -325,7 +324,7 @@ void AddSmokeEffectToTile(INT32 iSmokeEffectID, INT8 bType, INT16 sGridNo, INT8 
   }
 
   // Create tile...
-  pAniTile = CreateAnimationTile(&AniParams);
+  CreateAnimationTile(&AniParams);
 
   // Set world flags
   gpWorldLevelData[sGridNo].ubExtFlags[bLevel] |= FromSmokeTypeToWorldFlags(bType);

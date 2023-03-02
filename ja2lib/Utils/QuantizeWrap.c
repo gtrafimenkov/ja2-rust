@@ -1,5 +1,7 @@
 #include "Utils/QuantizeWrap.h"
 
+#include <string.h>
+
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
 #include "TileEngine/PhysMath.h"
@@ -35,7 +37,6 @@ struct CQuantizer {
 };
 
 static void CQuantizer_CQuantizer(struct CQuantizer* cq, u32 nMaxColors, u32 nColorBits);
-static void CQuantizer_Delete(struct CQuantizer* cq);
 static BOOLEAN CQuantizer_ProcessImage(struct CQuantizer* cq, u8* pData, int iWidth, int iHeight);
 static u32 CQuantizer_GetColorCount(struct CQuantizer* cq);
 static void CQuantizer_GetColorTable(struct CQuantizer* cq, RGBQUAD* prgb);
@@ -45,20 +46,11 @@ static void CQuantizer_AddColor(NODE** ppNode, u8 r, u8 g, u8 b, u32 nColorBits,
 static NODE* CQuantizer_CreateNode(u32 nLevel, u32 nColorBits, u32* pLeafCount,
                                    NODE** pReducibleNodes);
 static void CQuantizer_ReduceTree(u32 nColorBits, u32* pLeafCount, NODE** pReducibleNodes);
-static void CQuantizer_DeleteTree(NODE** ppNode);
 static void CQuantizer_GetPaletteColors(NODE* pTree, RGBQUAD* prgb, u32* pIndex);
 
 ///////////////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////////////
-
-static void CQuantizer_DeleteTree(NODE** ppNode) {
-  for (int i = 0; i < 8; i++) {
-    if ((*ppNode)->pChild[i] != NULL) CQuantizer_DeleteTree(&((*ppNode)->pChild[i]));
-  }
-  MemFree(*ppNode);
-  *ppNode = NULL;
-}
 
 static void CQuantizer_CQuantizer(struct CQuantizer* cq, u32 nMaxColors, u32 nColorBits) {
   cq->m_pTree = NULL;
@@ -66,10 +58,6 @@ static void CQuantizer_CQuantizer(struct CQuantizer* cq, u32 nMaxColors, u32 nCo
   for (int i = 0; i <= (int)nColorBits; i++) cq->m_pReducibleNodes[i] = NULL;
   cq->m_nMaxColors = nMaxColors;
   cq->m_nColorBits = nColorBits;
-}
-
-static void CQuantizer_Delete(struct CQuantizer* cq) {
-  if (cq->m_pTree != NULL) CQuantizer_DeleteTree(&cq->m_pTree);
 }
 
 static BOOLEAN CQuantizer_ProcessImage(struct CQuantizer* cq, u8* pData, int iWidth, int iHeight) {
@@ -134,7 +122,7 @@ static NODE* CQuantizer_CreateNode(u32 nLevel, u32 nColorBits, u32* pLeafCount,
   if (pNode == NULL) {
     return NULL;
   }
-  memset(pNode, sizeof(NODE), 0);
+  memset(pNode, 0, sizeof(NODE));
 
   pNode->bIsLeaf = (nLevel == nColorBits) ? TRUE : FALSE;
   if (pNode->bIsLeaf)

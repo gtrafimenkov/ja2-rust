@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct OBJECTTYPE;
 struct SOLDIERTYPE;
 
 typedef struct {

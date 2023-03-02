@@ -1,6 +1,7 @@
 #include "Laptop/FloristGallery.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "Laptop/Florist.h"
 #include "Laptop/Laptop.h"

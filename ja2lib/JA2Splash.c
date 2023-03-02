@@ -17,8 +17,8 @@ UINT32 guiSplashStartTime = 0;
 // Simply create videosurface, load image, and draw it to the screen.
 void InitJA2SplashScreen() {
   UINT32 uiLogoID = 0;
-  STRING512 CurrentDir;
-  STRING512 DataDir;
+  char CurrentDir[256];
+  char DataDir[300];
   struct VSurface* hVSurface;
   VSURFACE_DESC VSurfaceDesc;
   INT32 i = 0;
@@ -28,7 +28,7 @@ void InitJA2SplashScreen() {
   Plat_GetExecutableDirectory(CurrentDir, sizeof(CurrentDir));
 
   // Adjust Current Dir
-  sprintf(DataDir, "%s\\Data", CurrentDir);
+  snprintf(DataDir, ARR_SIZE(DataDir), "%s\\Data", CurrentDir);
   if (!Plat_SetCurrentDirectory(DataDir)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not find data directory, shutting down");
     return;

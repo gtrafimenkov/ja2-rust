@@ -1528,13 +1528,6 @@ UINT32 UIHandleEndTurn(UI_EVENT *pUIEvent) {
   if (CheckForEndOfCombatMode(FALSE)) {
     // do nothing...
   } else {
-    if (FileMan_Exists("..\\AutoSave.pls") && CanGameBeSaved()) {
-      // Save the game
-      guiPreviousOptionScreen = guiCurrentScreen;
-      SaveGame(SAVE__END_TURN_NUM, L"End Turn Auto Save");
-    }
-
-    // End our turn!
     EndTurn(gbPlayerNum + 1);
   }
 

@@ -405,7 +405,7 @@ void _FailMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 
 // This is NOT a _DEBUG only function! It is also needed in
 // release mode builds. -- DB
-STR String(const char *String, ...) {
+char *String(const char *string, ...) {
   va_list ArgPtr;
   UINT8 usIndex;
 
@@ -416,8 +416,8 @@ STR String(const char *String, ...) {
     gubStringIndex = 0;
   }
 
-  va_start(ArgPtr, String);
-  vsprintf(gbTmpDebugString[usIndex], String, ArgPtr);
+  va_start(ArgPtr, string);
+  vsprintf(gbTmpDebugString[usIndex], string, ArgPtr);
   va_end(ArgPtr);
 
   return gbTmpDebugString[usIndex];

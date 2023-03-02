@@ -1010,6 +1010,9 @@
     <ClCompile Include="SysGlobals.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StrUtils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SGP\Bitmap.h">
@@ -2021,6 +2024,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SysGlobals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StrUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

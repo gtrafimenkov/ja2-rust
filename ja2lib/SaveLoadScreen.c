@@ -882,7 +882,8 @@ void GetSaveLoadScreenUserInput() {
           if (gfSaveGame) {
             bActiveTextField = (INT8)GetActiveFieldID();
             if (bActiveTextField && bActiveTextField != -1) {
-              Get16BitStringFromField((UINT8)bActiveTextField, gzGameDescTextField);
+              Get16BitStringFromField((UINT8)bActiveTextField, gzGameDescTextField,
+                                      ARR_SIZE(gzGameDescTextField));
               SetActiveField(0);
 
               DestroySaveLoadTextInputBoxes();
@@ -922,7 +923,8 @@ void SaveLoadGameNumber(INT8 bSaveGameID) {
 
     bActiveTextField = (INT8)GetActiveFieldID();
     if (bActiveTextField && bActiveTextField != -1) {
-      Get16BitStringFromField((UINT8)bActiveTextField, gzGameDescTextField);
+      Get16BitStringFromField((UINT8)bActiveTextField, gzGameDescTextField,
+                              ARR_SIZE(gzGameDescTextField));
     }
 
     // if there is save game in the slot, ask for confirmation before overwriting
@@ -1239,7 +1241,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
                        FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
       // if the sector string exceeds the width, and the ...
-      ReduceStringLength(zLocationString, SLG_SECTOR_WIDTH, uiFont);
+      ReduceStringLength(zLocationString, ARR_SIZE(zLocationString), SLG_SECTOR_WIDTH, uiFont);
 
       // The Sector
       DrawTextToScreen(zLocationString, (UINT16)(usPosX + SLG_SECTOR_OFFSET_X),
@@ -1297,7 +1299,7 @@ BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
 
   // make sure the entry is valid
   if (bEntry < 0 || bEntry > NUM_SAVE_GAMES) {
-    memset(&pSaveGameHeader, 0, sizeof(SAVED_GAME_HEADER));
+    memset(pSaveGameHeader, 0, sizeof(SAVED_GAME_HEADER));
     return (FALSE);
   }
 
@@ -1341,7 +1343,7 @@ BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
       return (FALSE);
     }
   } else {
-    memset(&pSaveGameHeader, 0, sizeof(SAVED_GAME_HEADER));
+    memset(pSaveGameHeader, 0, sizeof(SAVED_GAME_HEADER));
 #ifdef JA2BETAVERSION
     wcscpy(pSaveGameHeader->sSavedGameDesc,
            L"ERROR loading saved game header, file doesn't exist!!");
@@ -1526,7 +1528,8 @@ void SelectedSaveRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
         } else {
           bActiveTextField = (INT8)GetActiveFieldID();
           if (bActiveTextField && bActiveTextField != -1) {
-            Get16BitStringFromField((UINT8)bActiveTextField, gzGameDescTextField);
+            Get16BitStringFromField((UINT8)bActiveTextField, gzGameDescTextField,
+                                    ARR_SIZE(gzGameDescTextField));
             SetActiveField(0);
 
             DestroySaveLoadTextInputBoxes();
@@ -2051,7 +2054,7 @@ BOOLEAN DoQuickSave() {
           }
   */
 
-  if (!SaveGame(0, gzGameDescTextField)) {
+  if (!SaveGame(0, gzGameDescTextField, ARR_SIZE(gzGameDescTextField))) {
     // Unset the fact that we are saving a game
     gTacticalStatus.uiFlags &= ~LOADING_SAVED_GAME;
 
@@ -2105,7 +2108,7 @@ BOOLEAN IsThereAnySavedGameFiles() {
 }
 
 void NotEnoughHardDriveSpaceForQuickSaveMessageBoxCallBack(UINT8 bExitValue) {
-  if (!SaveGame(0, gzGameDescTextField)) {
+  if (!SaveGame(0, gzGameDescTextField, ARR_SIZE(gzGameDescTextField))) {
     // Unset the fact that we are saving a game
     gTacticalStatus.uiFlags &= ~LOADING_SAVED_GAME;
 
@@ -2118,7 +2121,7 @@ void NotEnoughHardDriveSpaceForQuickSaveMessageBoxCallBack(UINT8 bExitValue) {
 void NotEnoughHardDriveSpaceForNormalSaveMessageBoxCallBack(UINT8 bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_OK) {
     // If the game failed to save
-    if (!SaveGame(gbSelectedSaveLocation, gzGameDescTextField)) {
+    if (!SaveGame(gbSelectedSaveLocation, gzGameDescTextField, ARR_SIZE(gzGameDescTextField))) {
       // Unset the fact that we are saving a game
       gTacticalStatus.uiFlags &= ~LOADING_SAVED_GAME;
 
@@ -2230,7 +2233,7 @@ void SaveGameToSlotNum() {
   MarkButtonsDirty();
   RenderButtons();
 
-  if (!SaveGame(gbSelectedSaveLocation, gzGameDescTextField)) {
+  if (!SaveGame(gbSelectedSaveLocation, gzGameDescTextField, ARR_SIZE(gzGameDescTextField))) {
     // Unset the fact that we are saving a game
     gTacticalStatus.uiFlags &= ~LOADING_SAVED_GAME;
 

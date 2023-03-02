@@ -6,6 +6,7 @@
 struct LEVELNODE;
 struct SOLDIERTYPE;
 struct STRUCTURE;
+struct VObject;
 
 // memory-accounting function
 void CountLevelNodes(void);

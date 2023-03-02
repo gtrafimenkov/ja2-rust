@@ -101,7 +101,7 @@ static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter) {
   return (uiBytesFree);
 }
 
-BOOLEAN Plat_CreateDirectory(STRING512 pcDirectory) { return CreateDirectory(pcDirectory, NULL); }
+BOOLEAN Plat_CreateDirectory(const char *pcDirectory) { return CreateDirectory(pcDirectory, NULL); }
 
 // GetFile file attributes
 #define FILE_IS_READONLY 1
@@ -710,7 +710,7 @@ BOOLEAN Plat_DirectoryExists(const char *pcDirectory) {
 // fRecursive is TRUE) Use Plat_EraseDirectory() to simply delete directory contents without
 // deleting the directory itself
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-BOOLEAN Plat_RemoveDirectory(STRING512 pcDirectory, BOOLEAN fRecursive) {
+BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) {
   WIN32_FIND_DATA sFindData;
   HANDLE SearchHandle;
   const CHAR8 *pFileSpec = "*.*";
@@ -787,7 +787,7 @@ BOOLEAN Plat_RemoveDirectory(STRING512 pcDirectory, BOOLEAN fRecursive) {
 // subdirectories! Use RemoveFilemanDirectory() to also delete the directory itself, or to
 // recursively delete subdirectories.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-BOOLEAN Plat_EraseDirectory(STRING512 pcDirectory) {
+BOOLEAN Plat_EraseDirectory(const char *pcDirectory) {
   WIN32_FIND_DATA sFindData;
   HANDLE SearchHandle;
   const CHAR8 *pFileSpec = "*.*";
@@ -1082,8 +1082,7 @@ void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
 
   _splitpath(path, sDrive, sPath, sName, sExt);
 
-  strncpy(outputBuf, sName, bufSize);
-  outputBuf[bufSize - 1] = 0;
+  strcopy(outputBuf, bufSize, sName);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

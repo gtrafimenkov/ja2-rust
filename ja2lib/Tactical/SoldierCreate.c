@@ -917,10 +917,10 @@ BOOLEAN TacticalCopySoldierFromCreateStruct(struct SOLDIERTYPE *pSoldier,
   pSoldier->ubSoldierClass = pCreateStruct->ubSoldierClass;
 
   if (pCreateStruct->fVisible) {
-    sprintf(pSoldier->HeadPal, pCreateStruct->HeadPal);
-    sprintf(pSoldier->PantsPal, pCreateStruct->PantsPal);
-    sprintf(pSoldier->VestPal, pCreateStruct->VestPal);
-    sprintf(pSoldier->SkinPal, pCreateStruct->SkinPal);
+    memcpy(pSoldier->HeadPal, pCreateStruct->HeadPal, sizeof(PaletteRepID));
+    memcpy(pSoldier->PantsPal, pCreateStruct->PantsPal, sizeof(PaletteRepID));
+    memcpy(pSoldier->VestPal, pCreateStruct->VestPal, sizeof(PaletteRepID));
+    memcpy(pSoldier->SkinPal, pCreateStruct->SkinPal, sizeof(PaletteRepID));
   }
 
   // KM:  March 25, 1999
@@ -1615,10 +1615,10 @@ void CreateDetailedPlacementGivenStaticDetailedPlacementAndBasicPlacementInfo(
 
   pp->fVisible = spp->fVisible;
   if (spp->fVisible) {
-    sprintf(pp->HeadPal, spp->HeadPal);
-    sprintf(pp->PantsPal, spp->PantsPal);
-    sprintf(pp->VestPal, spp->VestPal);
-    sprintf(pp->SkinPal, spp->SkinPal);
+    memcpy(pp->HeadPal, spp->HeadPal, sizeof(PaletteRepID));
+    memcpy(pp->PantsPal, spp->PantsPal, sizeof(PaletteRepID));
+    memcpy(pp->VestPal, spp->VestPal, sizeof(PaletteRepID));
+    memcpy(pp->SkinPal, spp->SkinPal, sizeof(PaletteRepID));
   }
 
   // This isn't perfect, however, it blindly brings over the items from the static

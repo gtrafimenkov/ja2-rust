@@ -306,7 +306,7 @@ void ExitMainMenu() {
 void MenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   INT8 bID;
 
-  bID = (UINT8)btn->UserData[0];
+  bID = (UINT8)((uintptr_t)btn->UserData[0]);
 
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

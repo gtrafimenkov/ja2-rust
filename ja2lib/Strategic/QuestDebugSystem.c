@@ -586,7 +586,7 @@ void EndMercTalking();
 void EnableFactMouseRegions();
 void DisableFactMouseRegions();
 INT32 GetMaxNumberOfQuotesToPlay();
-void GetDebugLocationString(UINT16 usProfileID, STR16 pzText);
+void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize);
 
 // ppp
 
@@ -1496,7 +1496,8 @@ void DisplayFactList() {
       wcscpy(sTemp, FactDescText[usLoop1]);
 
       if (StringPixLength(sTemp, QUEST_DBS_FONT_DYNAMIC_TEXT) > QUEST_DBS_SECOND_TITLE_COL_WIDTH) {
-        ReduceStringLength(sTemp, QUEST_DBS_SECOND_TITLE_COL_WIDTH, QUEST_DBS_FONT_DYNAMIC_TEXT);
+        ReduceStringLength(sTemp, ARR_SIZE(sTemp), QUEST_DBS_SECOND_TITLE_COL_WIDTH,
+                           QUEST_DBS_FONT_DYNAMIC_TEXT);
       }
 
       //			DisplayWrappedString( QUEST_DBS_SECOND_COL_TITLE_X, usPosY,
@@ -1811,12 +1812,12 @@ void DisplaySelectedNPC() {
                        QUEST_DBS_FONT_DYNAMIC_TEXT, QUEST_DBS_COLOR_DYNAMIC_TEXT, FONT_MCOLOR_BLACK,
                        FALSE, LEFT_JUSTIFIED);
 
-      GetDebugLocationString(gubCurrentNpcInSector[i], sTempString);
+      GetDebugLocationString(gubCurrentNpcInSector[i], sTempString, ARR_SIZE(sTempString));
 
     } else {
       DrawTextToScreen(gMercProfiles[i].zNickname, usPosX, usPosY, 0, QUEST_DBS_FONT_DYNAMIC_TEXT,
                        QUEST_DBS_COLOR_DYNAMIC_TEXT, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-      GetDebugLocationString(i, sTempString);
+      GetDebugLocationString(i, sTempString, ARR_SIZE(sTempString));
     }
 
     FindFontRightCoordinates(gpActiveListBox->usScrollPosX, usPosY, gpActiveListBox->usScrollWidth,
@@ -1851,13 +1852,14 @@ void DisplaySelectedNPC() {
           gMercProfiles[gubCurrentNpcInSector[gpActiveListBox->sCurSelectedItem]].zNickname,
           gpActiveListBox->usScrollPosX, (UINT16)(usPosY), 0, QUEST_DBS_FONT_LISTBOX_TEXT, 2,
           FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-      GetDebugLocationString(gubCurrentNpcInSector[gpActiveListBox->sCurSelectedItem], sTempString);
+      GetDebugLocationString(gubCurrentNpcInSector[gpActiveListBox->sCurSelectedItem], sTempString,
+                             ARR_SIZE(sTempString));
     } else {
       DrawTextToScreen(gMercProfiles[gpActiveListBox->sCurSelectedItem].zNickname,
                        gpActiveListBox->usScrollPosX, (UINT16)(usPosY), 0,
                        QUEST_DBS_FONT_LISTBOX_TEXT, 2, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
-      GetDebugLocationString(gpActiveListBox->sCurSelectedItem, sTempString);
+      GetDebugLocationString(gpActiveListBox->sCurSelectedItem, sTempString, ARR_SIZE(sTempString));
     }
 
     FindFontRightCoordinates(gpActiveListBox->usScrollPosX, (UINT16)(usPosY),
@@ -2561,7 +2563,7 @@ BOOLEAN CreateDestroyDisplayTextEntryBox(UINT8 ubAction, STR16 pString,
       gfRedrawQuestDebugSystem = TRUE;
 
       // get the striong from the text field
-      Get16BitStringFromField(0, zText);
+      Get16BitStringFromField(0, zText, ARR_SIZE(zText));
 
       // if the text is not null
       if (zText[0] != '\0') {
@@ -3146,7 +3148,7 @@ void NpcRecordLogging(UINT8 ubApproach, STR pStringA, ...) {
   HWFILE hFile;
   UINT32 uiByteWritten;
   va_list argptr;
-  char TempString[1024];
+  char TempString[1000];
   char DestString[1024];
 
   TempString[0] = '\0';
@@ -3177,7 +3179,7 @@ void NpcRecordLogging(UINT8 ubApproach, STR pStringA, ...) {
     return;
   }
 
-  sprintf(DestString, "\n\t\t%s", TempString);
+  snprintf(DestString, ARR_SIZE(DestString), "\n\t\t%s", TempString);
 
   // append to file
   if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
@@ -3641,7 +3643,7 @@ INT32 GetMaxNumberOfQuotesToPlay() {
   return (iNumberOfQuotes + 1);
 }
 
-void GetDebugLocationString(UINT16 usProfileID, STR16 pzText) {
+void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize) {
   struct SOLDIERTYPE *pSoldier;
 
   // Get a soldier pointer
@@ -3650,24 +3652,22 @@ void GetDebugLocationString(UINT16 usProfileID, STR16 pzText) {
   // if their is a soldier, the soldier is alive and the soldier is off the map
   if (pSoldier != NULL && pSoldier->bActive && pSoldier->uiStatusFlags & SOLDIER_OFF_MAP) {
     // the soldier is on schedule
-    swprintf(pzText, ARR_SIZE(pzText), L"On Schdl.");
+    swprintf(pzText, bufSize, L"On Schdl.");
   }
 
   // if the soldier is dead
   else if (gMercProfiles[usProfileID].bMercStatus == MERC_IS_DEAD) {
-    swprintf(pzText, ARR_SIZE(pzText), L"Dead");
+    swprintf(pzText, bufSize, L"Dead");
   }
 
   // the soldier is in this sector
   else if (pSoldier != NULL) {
-    GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, pzText, ARR_SIZE(pzText));
+    GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, pzText, bufSize);
   }
 
   // else the soldier is in a different map
   else {
     GetShortSectorString(gMercProfiles[usProfileID].sSectorX, gMercProfiles[usProfileID].sSectorY,
-                         pzText, ARR_SIZE(pzText));
+                         pzText, bufSize);
   }
 }
-
-//#endif

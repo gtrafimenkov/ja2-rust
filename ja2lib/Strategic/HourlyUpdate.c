@@ -27,8 +27,7 @@ void HourlyCheckIfSlayAloneSoHeCanLeave();
 
 void UpdateRegenCounters(void);
 
-void HandleMinuteUpdate() {
-}
+void HandleMinuteUpdate() {}
 
 // This function gets called every hour, on the hour.
 // It spawns the handling of all sorts of stuff:

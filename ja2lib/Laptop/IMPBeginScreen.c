@@ -1,5 +1,7 @@
 #include "Laptop/IMPBeginScreen.h"
 
+#include <string.h>
+
 #include "Laptop/CharProfile.h"
 #include "Laptop/IMPAttributeSelection.h"
 #include "Laptop/IMPFinish.h"

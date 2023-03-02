@@ -278,7 +278,7 @@ MercPopUpBox *GetPopUpBoxIndex(INT32 iId) { return (gpPopUpBoxList[iId]); }
 INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderIndex, STR16 pString,
                           UINT16 usWidth, UINT16 usMarginX, UINT16 usMarginTopY,
                           UINT16 usMarginBottomY, UINT16 *pActualWidth, UINT16 *pActualHeight) {
-  UINT16 usNumberVerticalPixels, usNumberOfLines;
+  UINT16 usNumberVerticalPixels;
   UINT16 usTextWidth, usHeight;
   UINT16 i;
   struct VObject *hImageHandle;
@@ -357,8 +357,6 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   usNumberVerticalPixels =
       IanWrappedStringHeight(0, 0, usTextWidth, 2, TEXT_POPUP_FONT, MERC_TEXT_COLOR, pString,
                              FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-
-  usNumberOfLines = usNumberVerticalPixels / TEXT_POPUP_GAP_BN_LINES;
 
   usHeight = usNumberVerticalPixels + MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X * 2;
 

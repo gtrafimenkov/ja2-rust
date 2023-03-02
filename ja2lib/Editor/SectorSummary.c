@@ -19,6 +19,7 @@
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "StrUtils.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/SoldierCreate.h"
@@ -1718,15 +1719,15 @@ BOOLEAN HandleSummaryInput(InputAtom *pEvent) {
 
 void CreateGlobalSummary() {
   FILE *fp;
-  STRING512 Dir;
-  STRING512 ExecDir;
+  char Dir[300];
+  char ExecDir[256];
 
   DebugPrint("Generating GlobalSummary Information...\n");
 
   gfGlobalSummaryExists = FALSE;
   // Set current directory to JA2\DevInfo which contains all of the summary data
   Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  sprintf(Dir, "%s\\DevInfo", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir);
 
   // Directory doesn't exist, so create it, and continue.
   if (!Plat_CreateDirectory(Dir))
@@ -1740,7 +1741,7 @@ void CreateGlobalSummary() {
           "This directory or it's contents shouldn't be included with final release.");
   fclose(fp);
 
-  sprintf(Dir, "%s\\Data", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir);
   Plat_SetCurrentDirectory(Dir);
 
   LoadGlobalSummary();
@@ -1948,8 +1949,8 @@ void SummarySaveMapCallback(GUI_BUTTON *btn, INT32 reason) {
     gfRenderSummary = TRUE;
     if (gubOverrideStatus == INACTIVE || gfOverride == TRUE) {
       if (gubOverrideStatus == READONLY) {
-        CHAR8 filename[40];
-        sprintf(filename, "MAPS\\%S", gszDisplayName);
+        CHAR8 filename[1024];
+        snprintf(filename, ARR_SIZE(filename), "MAPS\\%S", gszDisplayName);
         Plat_ClearFileAttributes(filename);
       }
       if (ExternalSaveMap(gszDisplayName)) {
@@ -1977,12 +1978,12 @@ void SummaryOverrideCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void CalculateOverrideStatus() {
   struct GetFile FileInfo;
-  CHAR8 szFilename[40];
+  CHAR8 szFilename[1024];
   gfOverrideDirty = FALSE;
   gfOverride = FALSE;
   if (gfTempFile) {
     CHAR8 *ptr;
-    sprintf(szFilename, "MAPS\\%S", gszTempFilename);
+    snprintf(szFilename, ARR_SIZE(szFilename), "MAPS\\%S", gszTempFilename);
     if (strlen(szFilename) == 5) strcat(szFilename, "test.dat");
     ptr = strstr(szFilename, ".");
     if (!ptr)
@@ -1990,7 +1991,7 @@ void CalculateOverrideStatus() {
     else
       sprintf(ptr, ".dat");
   } else
-    sprintf(szFilename, "MAPS\\%S", gszFilename);
+    snprintf(szFilename, ARR_SIZE(szFilename), "MAPS\\%S", gszFilename);
   swprintf(gszDisplayName, ARR_SIZE(gszDisplayName), L"%S", &(szFilename[5]));
   if (Plat_GetFileFirst(szFilename, &FileInfo)) {
     if (gfWorldLoaded) {
@@ -2013,9 +2014,9 @@ void CalculateOverrideStatus() {
 
 void LoadGlobalSummary() {
   HWFILE hfile;
-  STRING512 ExecDir;
-  STRING512 DevInfoDir;
-  STRING512 MapsDir;
+  char ExecDir[256];
+  char DevInfoDir[300];
+  char MapsDir[300];
   UINT32 uiNumBytesRead;
   FLOAT dMajorVersion;
   INT32 x, y;
@@ -2053,7 +2054,7 @@ void LoadGlobalSummary() {
       sprintf(szSector, "%c%d", 'A' + y, x + 1);
 
       // main ground level
-      sprintf(szFilename, "%c%d.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2063,11 +2064,11 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 0, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s.sum", szSector);
         FileMan_Delete(szFilename);
       }
       // main B1 level
-      sprintf(szFilename, "%c%d_b1.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2077,11 +2078,11 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 1, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s_b1.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s_b1.sum", szSector);
         FileMan_Delete(szFilename);
       }
       // main B2 level
-      sprintf(szFilename, "%c%d_b2.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2091,11 +2092,11 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 2, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s_b2.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s_b2.sum", szSector);
         FileMan_Delete(szFilename);
       }
       // main B3 level
-      sprintf(szFilename, "%c%d_b3.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2105,11 +2106,11 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 3, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s_b3.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s_b3.sum", szSector);
         FileMan_Delete(szFilename);
       }
       // alternate ground level
-      sprintf(szFilename, "%c%d_a.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2119,11 +2120,11 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 4, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s_a.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s_a.sum", szSector);
         FileMan_Delete(szFilename);
       }
       // alternate B1 level
-      sprintf(szFilename, "%c%d_b1_a.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2133,11 +2134,11 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 5, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s_b1_a.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s_b1_a.sum", szSector);
         FileMan_Delete(szFilename);
       }
       // alternate B2 level
-      sprintf(szFilename, "%c%d_b2_a.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2147,11 +2148,11 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 6, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s_b2_a.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s_b2_a.sum", szSector);
         FileMan_Delete(szFilename);
       }
       // alternate B3 level
-      sprintf(szFilename, "%c%d_b3_a.dat", 'A' + y, x + 1);
+      snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
       hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
       Plat_SetCurrentDirectory(DevInfoDir);
@@ -2162,7 +2163,7 @@ void LoadGlobalSummary() {
         FileMan_Close(hfile);
         LoadSummary(szSector, 7, dMajorVersion);
       } else {
-        sprintf(szFilename, "%s_b3_a.sum", szSector);
+        snprintf(szFilename, ARR_SIZE(szFilename), "%s_b3_a.sum", szSector);
         FileMan_Delete(szFilename);
       }
     }
@@ -2182,12 +2183,12 @@ void LoadGlobalSummary() {
 
 void GenerateSummaryList() {
   FILE *fp;
-  STRING512 ExecDir;
-  STRING512 Dir;
+  char ExecDir[256];
+  char Dir[300];
 
   // Set current directory to JA2\DevInfo which contains all of the summary data
   Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  sprintf(Dir, "%s\\DevInfo", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir);
   if (!Plat_SetCurrentDirectory(Dir)) {
     // Directory doesn't exist, so create it, and continue.
     if (!Plat_CreateDirectory(Dir))
@@ -2203,20 +2204,20 @@ void GenerateSummaryList() {
   }
 
   // Set current directory back to data directory!
-  sprintf(Dir, "%s\\Data", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir);
   Plat_SetCurrentDirectory(Dir);
 }
 
 void WriteSectorSummaryUpdate(CHAR8 *puiFilename, UINT8 ubLevel, SUMMARYFILE *pSummaryFileInfo) {
   FILE *fp;
-  STRING512 ExecDir;
-  STRING512 Dir;
+  char ExecDir[256];
+  char Dir[300];
   CHAR8 *ptr;
   INT8 x, y;
 
   // Set current directory to JA2\DevInfo which contains all of the summary data
   Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  sprintf(Dir, "%s\\DevInfo", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir);
   if (!Plat_SetCurrentDirectory(Dir))
     AssertMsg(0, "JA2\\DevInfo folder not found and should exist!");
 
@@ -2246,7 +2247,7 @@ void WriteSectorSummaryUpdate(CHAR8 *puiFilename, UINT8 ubLevel, SUMMARYFILE *pS
   gpSectorSummary[x][y][ubLevel] = pSummaryFileInfo;
 
   // Set current directory back to data directory!
-  sprintf(Dir, "%s\\Data", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir);
   Plat_SetCurrentDirectory(Dir);
 }
 
@@ -2277,7 +2278,7 @@ void LoadSummary(CHAR8 *pSector, UINT8 ubLevel, FLOAT dMajorMapVersion) {
   SUMMARYFILE temp;
   INT32 x, y;
   FILE *fp;
-  sprintf(filename, pSector);
+  strcopy(filename, ARR_SIZE(filename), pSector);
   if (ubLevel % 4) {
     CHAR8 str[4];
     sprintf(str, "_b%d", ubLevel % 4);
@@ -2443,7 +2444,7 @@ void SummaryUpdateCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void ExtractTempFilename() {
   CHAR16 str[40];
-  Get16BitStringFromField(1, str);
+  Get16BitStringFromField(1, str, ARR_SIZE(str));
   if (wcscmp(gszTempFilename, str)) {
     wcscpy(gszTempFilename, str);
     gfRenderSummary = TRUE;
@@ -2573,7 +2574,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   HWFILE hfile;
   UINT32 uiNumBytesRead;
   UINT32 uiNumItems;
-  CHAR8 szFilename[40];
+  CHAR8 szFilename[1024];
   BASIC_SOLDIERCREATE_STRUCT basic;
   SOLDIERCREATE_STRUCT priority;
   INT32 i, j;
@@ -2606,7 +2607,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
     gpCurrentSectorSummary = gpSectorSummary[gsSelSectorX - 1][gsSelSectorY - 1][giCurrLevel];
   }
   // Open the original map for the sector
-  sprintf(szFilename, "MAPS\\%S", gszFilename);
+  snprintf(szFilename, ARR_SIZE(szFilename), "MAPS\\%ls", gszFilename);
   hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
   if (!hfile) {  // The file couldn't be found!
     return;

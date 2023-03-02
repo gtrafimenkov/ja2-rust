@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct SGPPaletteEntry;
 struct VSurface;
 
 #define VIDEO_NO_CURSOR 0xFFFF

@@ -310,7 +310,8 @@ void AddTextToTownBox(void) {
   swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[8]);
   AddMonoString(&hStringHandle, wString);
   wcscpy(wString, L"");
-  GetSectorFacilitiesFlags(bCurrentTownMineSectorX, bCurrentTownMineSectorY, wString);
+  GetSectorFacilitiesFlags(bCurrentTownMineSectorX, bCurrentTownMineSectorY, wString,
+                           ARR_SIZE(wString));
   AddSecondColumnMonoString(&hStringHandle, wString);
 
   // the concept of control is only meaningful in sectors where militia can be trained

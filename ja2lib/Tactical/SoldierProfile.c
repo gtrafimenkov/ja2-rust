@@ -257,7 +257,7 @@ BOOLEAN LoadMercProfiles(void) {
 
   FileMan_Close(fptr);
 
-// decide which terrorists are active
+  // decide which terrorists are active
   DecideActiveTerrorists();
 
   // initialize mercs' status

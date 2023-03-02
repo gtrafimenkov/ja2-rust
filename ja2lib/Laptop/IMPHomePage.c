@@ -1,5 +1,7 @@
 #include "Laptop/IMPHomePage.h"
 
+#include <string.h>
+
 #include "Laptop/CharProfile.h"
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"

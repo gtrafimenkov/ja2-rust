@@ -196,27 +196,11 @@ void IgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo,
 
 void GenerateExplosion(EXPLOSION_PARAMS *pExpParams) {
   EXPLOSIONTYPE *pExplosion;
-  UINT32 uiFlags;
-  UINT8 ubOwner;
-  UINT8 ubTypeID;
-  INT16 sX;
-  INT16 sY;
-  INT16 sZ;
   INT16 sGridNo;
-  UINT16 usItem;
   INT32 iIndex;
-  INT8 bLevel;
 
   // Assign param values
-  uiFlags = pExpParams->uiFlags;
-  ubOwner = pExpParams->ubOwner;
-  ubTypeID = pExpParams->ubTypeID;
-  sX = pExpParams->sX;
-  sY = pExpParams->sY;
-  sZ = pExpParams->sZ;
   sGridNo = pExpParams->sGridNo;
-  usItem = pExpParams->usItem;
-  bLevel = pExpParams->bLevel;
 
   {
     // GET AND SETUP EXPLOSION INFO IN TABLE....
@@ -1272,24 +1256,19 @@ BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem
   UINT8 ubPerson;
   struct SOLDIERTYPE *pSoldier;
   EXPLOSIVETYPE *pExplosive;
-  INT16 sX, sY;
+  INT16 sY;
   BOOLEAN fRecompileMovementCosts = FALSE;
   BOOLEAN fSmokeEffect = FALSE;
   BOOLEAN fStunEffect = FALSE;
   INT8 bSmokeEffectType = 0;
   BOOLEAN fBlastEffect = TRUE;
   INT16 sNewGridNo;
-  BOOLEAN fBloodEffect = FALSE;
   struct ITEM_POOL *pItemPool, *pItemPoolNext;
   UINT32 uiRoll;
-
-  // Init the variables
-  sX = sY = -1;
 
   if (sSubsequent == BLOOD_SPREAD_EFFECT) {
     fSmokeEffect = FALSE;
     fBlastEffect = FALSE;
-    fBloodEffect = TRUE;
   } else {
     // Turn off blast effect if some types of items...
     switch (usItem) {
@@ -1427,34 +1406,6 @@ BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem
         }
         pItemPool = pItemPoolNext;
       }
-
-      /*
-      // Search for an explosive item in item pool
-      while ( ( iWorldItem = GetItemOfClassTypeInPool( sGridNo, IC_EXPLOSV, bLevel ) ) != -1 )
-      {
-              // Get usItem
-              usItem = gWorldItems[ iWorldItem ].o.usItem;
-
-              DamageItem
-
-              if ( CheckForChainReaction( usItem, gWorldItems[ iWorldItem ].o.bStatus[0], sWoundAmt,
-      TRUE ) )
-              {
-                      RemoveItemFromPool( sGridNo, iWorldItem, bLevel );
-
-                      // OK, Ignite this explosion!
-                      IgniteExplosion( NOBODY, sX, sY, 0, sGridNo, usItem, bLevel );
-              }
-              else
-              {
-                      RemoveItemFromPool( sGridNo, iWorldItem, bLevel );
-              }
-
-      }
-
-      // Remove any unburied items here!
-      RemoveAllUnburiedItems( sGridNo, bLevel );
-      */
     }
   } else if (fSmokeEffect) {
     // If tear gar, determine turns to spread.....
@@ -2329,7 +2280,6 @@ void PerformItemAction(INT16 sGridNo, struct OBJECTTYPE *pObj) {
 
       {
         UINT8 ubID, ubID2;
-        BOOLEAN fEnterCombat = FALSE;
 
         for (ubID = gTacticalStatus.Team[CIV_TEAM].bFirstID;
              ubID <= gTacticalStatus.Team[CIV_TEAM].bLastID; ubID++) {
@@ -2339,7 +2289,6 @@ void PerformItemAction(INT16 sGridNo, struct OBJECTTYPE *pObj) {
                  ubID2 <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubID2++) {
               if (MercPtrs[ubID]->bOppList[ubID2] == SEEN_CURRENTLY) {
                 MakeCivHostile(MercPtrs[ubID], 2);
-                fEnterCombat = TRUE;
               }
             }
           }
@@ -3020,10 +2969,7 @@ void HandleBuldingDestruction(INT16 sGridNo, UINT8 ubOwner) {
 
 INT32 FindActiveTimedBomb(void) {
   UINT32 uiWorldBombIndex;
-  UINT32 uiTimeStamp;
   struct OBJECTTYPE *pObj;
-
-  uiTimeStamp = GetJA2Clock();
 
   // Go through all the bombs in the world, and look for timed ones
   for (uiWorldBombIndex = 0; uiWorldBombIndex < guiNumWorldBombs; uiWorldBombIndex++) {

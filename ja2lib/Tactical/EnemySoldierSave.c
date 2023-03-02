@@ -483,11 +483,11 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
                  sizeof(INT16) * MAXPATROLGRIDS);
 
           // copy colors for soldier based on the body type.
-          sprintf(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal);
-          sprintf(curr->pDetailedPlacement->VestPal, pSoldier->VestPal);
-          sprintf(curr->pDetailedPlacement->SkinPal, pSoldier->SkinPal);
-          sprintf(curr->pDetailedPlacement->PantsPal, pSoldier->PantsPal);
-          sprintf(curr->pDetailedPlacement->MiscPal, pSoldier->MiscPal);
+          memcpy(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal, sizeof(PaletteRepID));
+          memcpy(curr->pDetailedPlacement->VestPal, pSoldier->VestPal, sizeof(PaletteRepID));
+          memcpy(curr->pDetailedPlacement->SkinPal, pSoldier->SkinPal, sizeof(PaletteRepID));
+          memcpy(curr->pDetailedPlacement->PantsPal, pSoldier->PantsPal, sizeof(PaletteRepID));
+          memcpy(curr->pDetailedPlacement->MiscPal, pSoldier->MiscPal, sizeof(PaletteRepID));
 
           // copy soldier's inventory
           memcpy(curr->pDetailedPlacement->Inv, pSoldier->inv,
@@ -1440,11 +1440,11 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY,
                    sizeof(INT16) * MAXPATROLGRIDS);
 
             // copy colors for soldier based on the body type.
-            sprintf(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal);
-            sprintf(curr->pDetailedPlacement->VestPal, pSoldier->VestPal);
-            sprintf(curr->pDetailedPlacement->SkinPal, pSoldier->SkinPal);
-            sprintf(curr->pDetailedPlacement->PantsPal, pSoldier->PantsPal);
-            sprintf(curr->pDetailedPlacement->MiscPal, pSoldier->MiscPal);
+            memcpy(curr->pDetailedPlacement->HeadPal, pSoldier->HeadPal, sizeof(PaletteRepID));
+            memcpy(curr->pDetailedPlacement->VestPal, pSoldier->VestPal, sizeof(PaletteRepID));
+            memcpy(curr->pDetailedPlacement->SkinPal, pSoldier->SkinPal, sizeof(PaletteRepID));
+            memcpy(curr->pDetailedPlacement->PantsPal, pSoldier->PantsPal, sizeof(PaletteRepID));
+            memcpy(curr->pDetailedPlacement->MiscPal, pSoldier->MiscPal, sizeof(PaletteRepID));
 
             // copy soldier's inventory
             memcpy(curr->pDetailedPlacement->Inv, pSoldier->inv,

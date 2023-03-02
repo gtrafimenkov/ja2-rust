@@ -3310,7 +3310,7 @@ void SoldierGiveItemFromAnimation(struct SOLDIERTYPE *pSoldier) {
       }
 
       // Now intiate conv
-      InitiateConversation(pTSoldier, pSoldier, APPROACH_GIVINGITEM, (INT32)&TempObject);
+      InitiateConversation(pTSoldier, pSoldier, APPROACH_GIVINGITEM, (uintptr_t)&TempObject);
     }
   }
 

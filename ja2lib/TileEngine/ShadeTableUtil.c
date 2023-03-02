@@ -24,7 +24,7 @@ extern UINT32 uiNumTablesLoaded;
 
 void DetermineRGBDistributionSettings() {
   STRING512 DataDir;
-  STRING512 ExecDir;
+  char ExecDir[256];
   STRING512 ShadeTableDir;
   UINT32 uiRBitMask, uiGBitMask, uiBBitMask;
   UINT32 uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;

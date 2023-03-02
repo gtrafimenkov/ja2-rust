@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 #include "GameLoop.h"
@@ -864,7 +865,7 @@ void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, UINT8 fDirtyLevel) {
   } else {
     for (cnt = 0; cnt < NUM_INV_SLOTS; cnt++) {
       if (fDirtyLevel == DIRTYLEVEL2) {
-        GetHelpTextForItem(pStr, &(pSoldier->inv[cnt]), pSoldier);
+        GetHelpTextForItem(pStr, ARR_SIZE(pStr), &(pSoldier->inv[cnt]), pSoldier);
 
         SetRegionFastHelpText(&(gSMInvRegion[cnt]), pStr);
       }
@@ -1795,7 +1796,7 @@ void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTT
                  ShortItemNames[pObject->usAttachItem[ubStatusIndex - RENDER_ITEM_ATTACHMENT1]]);
       }
 
-      fLineSplit = WrapString(pStr, pStr2, WORD_WRAP_INV_WIDTH, ITEM_FONT);
+      fLineSplit = WrapString(pStr, pStr2, ARR_SIZE(pStr2), WORD_WRAP_INV_WIDTH, ITEM_FONT);
 
       VarFindFontCenterCoordinates(sX, sY, sWidth, sHeight, ITEM_FONT, &sFontX, &sFontY, pStr);
       sFontY = sY + 1;
@@ -6264,7 +6265,8 @@ void RemoveMoney() {
 
 BOOLEAN AttemptToApplyCamo(struct SOLDIERTYPE *pSoldier, UINT16 usItemIndex) { return (FALSE); }
 
-void GetHelpTextForItem(CHAR16 *pzStr, struct OBJECTTYPE *pObject, struct SOLDIERTYPE *pSoldier) {
+void GetHelpTextForItem(CHAR16 *pzStr, size_t bufSize, struct OBJECTTYPE *pObject,
+                        struct SOLDIERTYPE *pSoldier) {
   CHAR16 pStr[250];
   UINT16 usItem = pObject->usItem;
   INT32 cnt = 0;
@@ -6273,7 +6275,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, struct OBJECTTYPE *pObject, struct SOLDIE
   if (pSoldier != NULL) {
     if (pSoldier->uiStatusFlags & SOLDIER_DEAD) {
       swprintf(pStr, ARR_SIZE(pStr), L"");
-      swprintf(pzStr, ARR_SIZE(pzStr), L"%s", pStr);
+      swprintf(pzStr, bufSize, L"%s", pStr);
       return;
     }
   }
@@ -6328,7 +6330,7 @@ void GetHelpTextForItem(CHAR16 *pzStr, struct OBJECTTYPE *pObject, struct SOLDIE
   }
 
   // Copy over...
-  swprintf(pzStr, ARR_SIZE(pzStr), L"%s", pStr);
+  swprintf(pzStr, bufSize, L"%s", pStr);
 }
 
 UINT8 GetPrefferedItemSlotGraphicNum(UINT16 usItem) {

@@ -234,7 +234,7 @@ BOOLEAN DialogueDataFileExistsForProfile(UINT8 ubCharacterNum, UINT16 usQuoteNum
 // Do special event as well as dialogue!
 BOOLEAN CharacterDialogueWithSpecialEvent(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIndex,
                                           UINT8 bUIHandlerID, BOOLEAN fFromSoldier,
-                                          BOOLEAN fDelayed, UINT32 uiFlag, UINT32 uiData1,
+                                          BOOLEAN fDelayed, UINT32 uiFlag, uintptr_t uiData1,
                                           UINT32 uiData2);
 
 // Do special event as well as dialogue!
@@ -245,7 +245,7 @@ BOOLEAN CharacterDialogueWithSpecialEventEx(UINT8 ubCharacterNum, UINT16 usQuote
 
 // A higher level function used for tactical quotes
 BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
-                                                  UINT32 uiFlag, UINT32 uiData1, UINT32 uiData2);
+                                                  UINT32 uiFlag, uintptr_t uiData1, UINT32 uiData2);
 
 // A higher level function used for tactical quotes
 BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
@@ -263,8 +263,8 @@ BOOLEAN CharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 iFaceIn
                           UINT8 bUIHandlerID, BOOLEAN fFromSoldier, BOOLEAN fDelayed);
 
 // A special event can be setup which can be queued with other speech
-BOOLEAN SpecialCharacterDialogueEvent(UINT32 uiSpecialEventFlag, UINT32 uiSpecialEventData1,
-                                      UINT32 uiSpecialEventData2, UINT32 uiSpecialEventData3,
+BOOLEAN SpecialCharacterDialogueEvent(uintptr_t uiSpecialEventFlag, uintptr_t uiSpecialEventData1,
+                                      uintptr_t uiSpecialEventData2, UINT32 uiSpecialEventData3,
                                       INT32 iFaceIndex, UINT8 bUIHandlerID);
 
 // Same as above, for triggers, with extra param to hold approach value

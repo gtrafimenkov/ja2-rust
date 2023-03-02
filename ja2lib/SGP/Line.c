@@ -25,8 +25,8 @@ int giClipXMax = 0;
 int giClipYMin = 0;
 int giClipYMax = 0;
 
-void DrawHorizontalRun(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
-void DrawVerticalRun(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
+void DrawHorizontalRun(UINT8 **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
+void DrawVerticalRun(UINT8 **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
 
 void DrawHorizontalRun8(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
 void DrawVerticalRun8(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth);
@@ -117,7 +117,7 @@ BOOLEAN Clip2D(int *ix0, int *iy0, int *ix1, int *iy1) {
 
 /* Draws a line between the specified endpoints in color Color. */
 void LineDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
-              char *ScreenPtr) {
+              UINT8 *ScreenPtr) {
   int Temp, AdjUp, AdjDown, ErrorTerm, XAdvance, XDelta, YDelta;
   int WholeStep, InitialPixelCount, FinalPixelCount, i, RunLength;
   int ScreenWidth = giImageWidth / 2;
@@ -314,7 +314,7 @@ void PixelDraw(BOOLEAN fClip, INT32 xp, INT32 yp, INT16 sColor, UINT8 *pScreen) 
 
 /* Draws a horizontal run of pixels, then advances the bitmap pointer to
    the first pixel of the next run. */
-void DrawHorizontalRun(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
+void DrawHorizontalRun(UINT8 **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
   int i;
   char *WorkingScreenPtr = *ScreenPtr;
   char col2 = Color >> 8;
@@ -332,7 +332,7 @@ void DrawHorizontalRun(char **ScreenPtr, int XAdvance, int RunLength, int Color,
 
 /* Draws a vertical run of pixels, then advances the bitmap pointer to
    the first pixel of the next run. */
-void DrawVerticalRun(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
+void DrawVerticalRun(UINT8 **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
   int i;
   char *WorkingScreenPtr = *ScreenPtr;
   char col2 = Color >> 8;

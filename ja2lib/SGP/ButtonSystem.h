@@ -12,6 +12,7 @@
 #include "SGP/Types.h"
 
 struct VObject;
+struct _GUI_BUTTON;
 
 // Moved here from Button System.c by DB 99/01/07
 // Names of the default generic button image files.
@@ -103,8 +104,8 @@ typedef struct _GUI_BUTTON {
   UINT32 uiOldFlags;           // Old flags from previous render loop
   INT16 XLoc;                  // Coordinates where button is on the screen
   INT16 YLoc;
-  INT32 UserData[4];  // Place holder for user data etc.
-  INT16 Group;        // Group this button belongs to (see DOCs)
+  uintptr_t UserData[4];  // Place holder for user data etc.
+  INT16 Group;            // Group this button belongs to (see DOCs)
   INT8 bDefaultStatus;
   // Button disabled style
   INT8 bDisabledStyle;

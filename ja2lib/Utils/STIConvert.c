@@ -238,7 +238,6 @@ BOOLEAN ConvertToETRLE(UINT8 **ppDest, UINT32 *puiDestLen, UINT8 **ppSubImageBuf
   BOOLEAN fNextExists;
   STCISubImage *pCurrSubImage;
   STCISubImage TempSubImage;
-  UINT32 uiCompressedSize = 0;
   UINT32 uiSubImageCompressedSize;
   UINT32 uiSpaceLeft;
 

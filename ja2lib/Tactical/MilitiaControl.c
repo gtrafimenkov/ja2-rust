@@ -99,11 +99,4 @@ void HandleMilitiaPromotions(void) {
       }
     }
   }
-  if (gbMilitiaPromotions) {
-    // ATE: Problems here with bringing up message box...
-
-    // CHAR16 str[ 512 ];
-    // BuildMilitiaPromotionsString( str );
-    // DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
-  }
 }

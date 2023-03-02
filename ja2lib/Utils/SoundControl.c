@@ -696,10 +696,9 @@ typedef struct {
   INT16 sGridNo;
   INT32 iSoundSampleID;
   INT32 iSoundToPlay;
-  UINT32 uiData;
+  void *uiData;
   BOOLEAN fAllocated;
   BOOLEAN fInActive;
-
 } POSITIONSND;
 
 // GLOBAL FOR SMOKE LISTING
@@ -733,7 +732,7 @@ void RecountPositionSnds(void) {
   }
 }
 
-INT32 NewPositionSnd(INT16 sGridNo, UINT32 uiFlags, UINT32 uiData, UINT32 iSoundToPlay) {
+INT32 NewPositionSnd(INT16 sGridNo, UINT32 uiFlags, void *uiData, UINT32 iSoundToPlay) {
   POSITIONSND *pPositionSnd;
   INT32 iPositionSndIndex;
 

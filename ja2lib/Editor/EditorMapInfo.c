@@ -199,7 +199,7 @@ void ExtractAndUpdateMapInfo() {
     gMapInformation.ubRestrictedScrollID = (UINT8)temp;
 
   // set up fields for exitgrid information
-  Get16BitStringFromField(7, str);
+  Get16BitStringFromField(7, str, ARR_SIZE(str));
   if (str[0] >= 'a' && str[0] <= 'z') str[0] -= 32;  // uppercase it!
   if (str[0] >= 'A' && str[0] <= 'Z' && str[1] >= '0' &&
       str[1] <= '9') {  // only update, if coordinate is valid.

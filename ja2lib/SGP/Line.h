@@ -12,7 +12,7 @@ void SetClippingRegionAndImageWidth(int iImageWidth, int iClipStartX, int iClipS
 //	fClip == FALSE.
 void PixelDraw(BOOLEAN fClip, INT32 xp, INT32 yp, INT16 sColor, UINT8 *pScreen);
 void LineDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
-              char *ScreenPtr);
+              UINT8 *ScreenPtr);
 void LineDraw8(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,
                UINT8 *ScreenPtr);
 void RectangleDraw(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short Color,

@@ -872,7 +872,6 @@ BOOLEAN CanCharacterRepair(struct SOLDIERTYPE *pSoldier) {
 
 // can character be set to patient?
 BOOLEAN CanCharacterPatient(struct SOLDIERTYPE *pSoldier) {
-
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
   }
@@ -1105,7 +1104,7 @@ BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(struct SOLDIERTYPE *pSoldier) 
 
 BOOLEAN CanCharacterTrainStat(struct SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf,
                               BOOLEAN fTrainTeammate) {
-// is the character capable of training this stat? either self or as trainer
+  // is the character capable of training this stat? either self or as trainer
 
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
@@ -1292,7 +1291,7 @@ BOOLEAN CanCharacterOnDuty(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN CanCharacterPractise(struct SOLDIERTYPE *pSoldier) {
-// can character practise right now?
+  // can character practise right now?
 
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
@@ -1490,7 +1489,7 @@ BOOLEAN CanCharacterBeAwakened(struct SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhy
 }
 
 BOOLEAN CanCharacterVehicle(struct SOLDIERTYPE *pSoldier) {
-// can character enter/leave vehicle?
+  // can character enter/leave vehicle?
 
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);

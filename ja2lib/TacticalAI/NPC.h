@@ -142,7 +142,7 @@ extern void SetQuoteRecordAsUsed(UINT8 ubNPC, UINT8 ubRecord);
 
 // uiApproachData is used for approach things like giving items, etc.
 extern UINT8 CalcDesireToTalk(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach);
-extern void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData);
+extern void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachData);
 
 extern BOOLEAN NPCOkToGiveItem(UINT8 ubNPC, UINT8 ubMerc, UINT16 usItem);
 extern void NPCReachedDestination(struct SOLDIERTYPE *pNPC, BOOLEAN fAlreadyThere);

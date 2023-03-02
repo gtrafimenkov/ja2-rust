@@ -5,6 +5,7 @@
 #include "Tactical/Vehicles.h"
 
 struct GROUP;
+struct VObject;
 
 // functions
 void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow);

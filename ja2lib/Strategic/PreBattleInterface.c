@@ -171,9 +171,9 @@ BOOLEAN gubExplicitEnemyEncounterCode = NO_ENCOUNTER_CODE;
 // icon is to be blitted.
 BOOLEAN gfBlitBattleSectorLocator = FALSE;
 
-extern UINT8 gubPBSectorX = 0;
-extern UINT8 gubPBSectorY = 0;
-extern UINT8 gubPBSectorZ = 0;
+UINT8 gubPBSectorX = 0;
+UINT8 gubPBSectorY = 0;
+UINT8 gubPBSectorZ = 0;
 
 BOOLEAN gfCantRetreatInPBI = FALSE;
 // SAVE END

@@ -617,7 +617,7 @@ BOOLEAN CreateSoldierCommon(UINT8 ubBodyType, struct SOLDIERTYPE *pSoldier, UINT
 
   if (pSoldier->ubBodyType == QUEENMONSTER) {
     pSoldier->iPositionSndID =
-        NewPositionSnd(NOWHERE, POSITION_SOUND_FROM_SOLDIER, (UINT32)pSoldier, QUEEN_AMBIENT_NOISE);
+        NewPositionSnd(NOWHERE, POSITION_SOUND_FROM_SOLDIER, pSoldier, QUEEN_AMBIENT_NOISE);
   }
 
   // ANYTHING AFTER HERE CAN FAIL
@@ -4603,7 +4603,7 @@ BOOLEAN CreateSoldierPalettes(struct SOLDIERTYPE *pSoldier) {
       // Use palette from struct VObject*, then use substitution for pants, etc
       memcpy(pSoldier->p8BPPPalette,
              gAnimSurfaceDatabase[usPaletteAnimSurface].hVideoObject->pPaletteEntry,
-             sizeof(pSoldier->p8BPPPalette) * 256);
+             sizeof(struct SGPPaletteEntry) * 256);
 
       // Substitute based on head, etc
       SetPaletteReplacement(pSoldier->p8BPPPalette, pSoldier->HeadPal);
@@ -4614,17 +4614,17 @@ BOOLEAN CreateSoldierPalettes(struct SOLDIERTYPE *pSoldier) {
   } else if (bBodyTypePalette == 0) {
     // Use palette from hvobject
     memcpy(pSoldier->p8BPPPalette, gAnimSurfaceDatabase[usAnimSurface].hVideoObject->pPaletteEntry,
-           sizeof(pSoldier->p8BPPPalette) * 256);
+           sizeof(struct SGPPaletteEntry) * 256);
   } else {
     // Use col file
     if (CreateSGPPaletteFromCOLFile(Temp8BPPPalette, zColFilename)) {
       // Copy into palette
-      memcpy(pSoldier->p8BPPPalette, Temp8BPPPalette, sizeof(pSoldier->p8BPPPalette) * 256);
+      memcpy(pSoldier->p8BPPPalette, Temp8BPPPalette, sizeof(struct SGPPaletteEntry) * 256);
     } else {
       // Use palette from hvobject
       memcpy(pSoldier->p8BPPPalette,
              gAnimSurfaceDatabase[usAnimSurface].hVideoObject->pPaletteEntry,
-             sizeof(pSoldier->p8BPPPalette) * 256);
+             sizeof(struct SGPPaletteEntry) * 256);
     }
   }
 
@@ -8890,7 +8890,6 @@ BOOLEAN PlayerSoldierStartTalking(struct SOLDIERTYPE *pSoldier, UINT8 ubTargetID
   // Are we an EPC that is being escorted?
   if (pTSoldier->ubProfile != NO_PROFILE && pTSoldier->ubWhatKindOfMercAmI == MERC_TYPE__EPC) {
     return (InitiateConversation(pTSoldier, pSoldier, APPROACH_EPC_WHO_IS_RECRUITED, 0));
-    // Converse( pTSoldier->ubProfile, pSoldier->ubProfile, APPROACH_EPC_WHO_IS_RECRUITED, 0 );
   } else if (pTSoldier->bNeutral) {
     switch (pTSoldier->ubProfile) {
       case JIM:

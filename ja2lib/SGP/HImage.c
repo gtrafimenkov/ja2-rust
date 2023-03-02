@@ -12,6 +12,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/WCheck.h"
+#include "StrUtils.h"
 #include "platform_strings.h"
 
 // This is the color substituted to keep a 24bpp -> 16bpp color
@@ -36,21 +37,24 @@ typedef union {
   UINT32 uiValue;
 } SplitUINT32;
 
-HIMAGE CreateImage(SGPFILENAME ImageFile, UINT16 fContents) {
+HIMAGE CreateImage(const char *ImageFile, UINT16 fContents) {
   HIMAGE hImage = NULL;
   SGPFILENAME Extension;
   CHAR8 ExtensionSep[] = ".";
   STR StrPtr;
   UINT32 iFileLoader;
+  SGPFILENAME imageFileCopy;
+
+  strcopy(imageFileCopy, ARR_SIZE(imageFileCopy), ImageFile);
 
   // Depending on extension of filename, use different image readers
   // Get extension
-  StrPtr = strstr(ImageFile, ExtensionSep);
+  StrPtr = strstr(imageFileCopy, ExtensionSep);
 
   if (StrPtr == NULL) {
     // No extension given, use default internal loader extension
     DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2, "No extension given, using default");
-    strcat(ImageFile, ".PCX");
+    strcat(imageFileCopy, ".PCX");
     strcpy(Extension, ".PCX");
   } else {
     strcpy(Extension, StrPtr + 1);
@@ -78,12 +82,9 @@ HIMAGE CreateImage(SGPFILENAME ImageFile, UINT16 fContents) {
   } while (FALSE);
 
   // Determine if resource exists before creating image structure
-  if (!FileMan_Exists(ImageFile)) {
-    // If in debig, make fatal!
-#ifdef _DEBUG
-    // FatalError( "Resource file %s does not exist.", ImageFile );
-#endif
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2, String("Resource file %s does not exist.", ImageFile));
+  if (!FileMan_Exists(imageFileCopy)) {
+    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2,
+               String("Resource file %s does not exist.", imageFileCopy));
     return (NULL);
   }
 
@@ -101,7 +102,7 @@ HIMAGE CreateImage(SGPFILENAME ImageFile, UINT16 fContents) {
   // hImage->pui16BPPPalette = NULL;
 
   // Set filename and loader
-  strcpy(hImage->ImageFile, ImageFile);
+  strcpy(hImage->ImageFile, imageFileCopy);
   hImage->iFileLoader = iFileLoader;
 
   if (!LoadImageData(hImage, fContents)) {

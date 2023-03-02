@@ -37,7 +37,7 @@ void StrategicRemoveMilitiaFromSector(INT16 sMapX, INT16 sMapY, UINT8 ubRank, UI
 UINT8 CheckOneMilitiaForPromotion(INT16 sMapX, INT16 sMapY, UINT8 ubCurrentRank,
                                   UINT8 ubRecentKillPts);
 
-void BuildMilitiaPromotionsString(CHAR16 *str);
+void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
 // call this if the player attacks his own militia
 void HandleMilitiaDefections(INT16 sMapX, INT16 sMapY);

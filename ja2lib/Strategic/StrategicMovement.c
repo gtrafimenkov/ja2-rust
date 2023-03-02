@@ -782,13 +782,13 @@ void HandleImportantPBIQuote(struct SOLDIERTYPE *pSoldier, struct GROUP *pInitia
                                               DIALOGUE_SPECIAL_EVENT_SLEEP, 0, 0);
     TacticalCharacterDialogueWithSpecialEvent(pSoldier, QUOTE_ENEMY_PRESENCE,
                                               DIALOGUE_SPECIAL_EVENT_BEGINPREBATTLEINTERFACE,
-                                              (UINT32)pInitiatingBattleGroup, 0);
+                                              (uintptr_t)pInitiatingBattleGroup, 0);
     TacticalCharacterDialogueWithSpecialEvent(pSoldier, QUOTE_ENEMY_PRESENCE,
                                               DIALOGUE_SPECIAL_EVENT_SLEEP, 1, 0);
   } else {
     TacticalCharacterDialogueWithSpecialEvent(pSoldier, QUOTE_ENEMY_PRESENCE,
                                               DIALOGUE_SPECIAL_EVENT_BEGINPREBATTLEINTERFACE,
-                                              (UINT32)pInitiatingBattleGroup, 0);
+                                              (uintptr_t)pInitiatingBattleGroup, 0);
   }
 }
 
@@ -1071,7 +1071,7 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
 void TriggerPrebattleInterface(UINT8 ubResult) {
   StopTimeCompression();
   SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_TRIGGERPREBATTLEINTERFACE,
-                                (UINT32)gpInitPrebattleGroup, 0, 0, 0, 0);
+                                (uintptr_t)gpInitPrebattleGroup, 0, 0, 0, 0);
   gpInitPrebattleGroup = NULL;
 }
 

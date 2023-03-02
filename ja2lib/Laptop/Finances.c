@@ -147,7 +147,7 @@ void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason);
 void CreateFinanceButtons(void);
 void DestroyFinanceButtons(void);
 void IncrementCurrentPageFinancialDisplay(void);
-void ProcessTransactionString(STR16 pString, FinanceUnitPtr pFinance);
+void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFinance);
 void DisplayFinancePageNumberAndDateRange(void);
 void GetBalanceFromDisk(void);
 BOOLEAN WriteBalanceToDisk(void);
@@ -737,7 +737,7 @@ void DrawRecordsText(void) {
     }
 
     // transaction string
-    ProcessTransactionString(sString, pCurFinance);
+    ProcessTransactionString(sString, ARR_SIZE(sString), pCurFinance);
     FindFontCenterCoordinates(RECORD_TRANSACTION_X, 0, RECORD_TRANSACTION_WIDTH, 0, sString,
                               FINANCE_TEXT_FONT, &usX, &usY);
     mprintf(usX, 12 + RECORD_Y + (iCounter * (GetFontHeight(FINANCE_TEXT_FONT) + 6)), sString);
@@ -1251,116 +1251,116 @@ void IncrementCurrentPageFinancialDisplay(void) {
   return;
 }
 
-void ProcessTransactionString(STR16 pString, FinanceUnitPtr pFinance) {
+void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFinance) {
   switch (pFinance->ubCode) {
     case ACCRUED_INTEREST:
-      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[ACCRUED_INTEREST]);
+      swprintf(pString, bufSize, L"%s", pTransactionText[ACCRUED_INTEREST]);
       break;
 
     case ANONYMOUS_DEPOSIT:
-      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[ANONYMOUS_DEPOSIT]);
+      swprintf(pString, bufSize, L"%s", pTransactionText[ANONYMOUS_DEPOSIT]);
       break;
 
     case TRANSACTION_FEE:
-      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[TRANSACTION_FEE]);
+      swprintf(pString, bufSize, L"%s", pTransactionText[TRANSACTION_FEE]);
       break;
 
     case HIRED_MERC:
-      swprintf(pString, ARR_SIZE(pString), pMessageStrings[MSG_HIRED_MERC],
+      swprintf(pString, bufSize, pMessageStrings[MSG_HIRED_MERC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case BOBBYR_PURCHASE:
-      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[BOBBYR_PURCHASE]);
+      swprintf(pString, bufSize, L"%s", pTransactionText[BOBBYR_PURCHASE]);
       break;
 
     case PAY_SPECK_FOR_MERC:
-      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[PAY_SPECK_FOR_MERC]);
+      swprintf(pString, bufSize, L"%s", pTransactionText[PAY_SPECK_FOR_MERC]);
       break;
 
     case MEDICAL_DEPOSIT:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[MEDICAL_DEPOSIT],
+      swprintf(pString, bufSize, pTransactionText[MEDICAL_DEPOSIT],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case IMP_PROFILE:
-      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[IMP_PROFILE]);
+      swprintf(pString, bufSize, L"%s", pTransactionText[IMP_PROFILE]);
       break;
 
     case PURCHASED_INSURANCE:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[PURCHASED_INSURANCE],
+      swprintf(pString, bufSize, pTransactionText[PURCHASED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case REDUCED_INSURANCE:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[REDUCED_INSURANCE],
+      swprintf(pString, bufSize, pTransactionText[REDUCED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_INSURANCE:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[EXTENDED_INSURANCE],
+      swprintf(pString, bufSize, pTransactionText[EXTENDED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case CANCELLED_INSURANCE:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[CANCELLED_INSURANCE],
+      swprintf(pString, bufSize, pTransactionText[CANCELLED_INSURANCE],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case INSURANCE_PAYOUT:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[INSURANCE_PAYOUT],
+      swprintf(pString, bufSize, pTransactionText[INSURANCE_PAYOUT],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_CONTRACT_BY_1_DAY:
-      swprintf(pString, ARR_SIZE(pString), pTransactionAlternateText[1],
+      swprintf(pString, bufSize, pTransactionAlternateText[1],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_CONTRACT_BY_1_WEEK:
-      swprintf(pString, ARR_SIZE(pString), pTransactionAlternateText[2],
+      swprintf(pString, bufSize, pTransactionAlternateText[2],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case EXTENDED_CONTRACT_BY_2_WEEKS:
-      swprintf(pString, ARR_SIZE(pString), pTransactionAlternateText[3],
+      swprintf(pString, bufSize, pTransactionAlternateText[3],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case DEPOSIT_FROM_GOLD_MINE:
     case DEPOSIT_FROM_SILVER_MINE:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[16]);
+      swprintf(pString, bufSize, pTransactionText[16]);
       break;
 
     case PURCHASED_FLOWERS:
-      swprintf(pString, ARR_SIZE(pString), L"%s", pTransactionText[PURCHASED_FLOWERS]);
+      swprintf(pString, bufSize, L"%s", pTransactionText[PURCHASED_FLOWERS]);
       break;
 
     case FULL_MEDICAL_REFUND:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[FULL_MEDICAL_REFUND],
+      swprintf(pString, bufSize, pTransactionText[FULL_MEDICAL_REFUND],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case PARTIAL_MEDICAL_REFUND:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[PARTIAL_MEDICAL_REFUND],
+      swprintf(pString, bufSize, pTransactionText[PARTIAL_MEDICAL_REFUND],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case NO_MEDICAL_REFUND:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[NO_MEDICAL_REFUND],
+      swprintf(pString, bufSize, pTransactionText[NO_MEDICAL_REFUND],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case TRANSFER_FUNDS_TO_MERC:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[TRANSFER_FUNDS_TO_MERC],
+      swprintf(pString, bufSize, pTransactionText[TRANSFER_FUNDS_TO_MERC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
     case TRANSFER_FUNDS_FROM_MERC:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[TRANSFER_FUNDS_FROM_MERC],
+      swprintf(pString, bufSize, pTransactionText[TRANSFER_FUNDS_FROM_MERC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
     case PAYMENT_TO_NPC:
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[PAYMENT_TO_NPC],
+      swprintf(pString, bufSize, pTransactionText[PAYMENT_TO_NPC],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
     case (TRAIN_TOWN_MILITIA): {
@@ -1370,16 +1370,16 @@ void ProcessTransactionString(STR16 pString, FinanceUnitPtr pFinance) {
       ubSectorX = (UINT8)SECTORX(pFinance->ubSecondCode);
       ubSectorY = (UINT8)SECTORY(pFinance->ubSecondCode);
       GetSectorIDString(ubSectorX, ubSectorY, 0, str, ARR_SIZE(str), TRUE);
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[TRAIN_TOWN_MILITIA], str);
+      swprintf(pString, bufSize, pTransactionText[TRAIN_TOWN_MILITIA], str);
     } break;
 
     case (PURCHASED_ITEM_FROM_DEALER):
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[PURCHASED_ITEM_FROM_DEALER],
+      swprintf(pString, bufSize, pTransactionText[PURCHASED_ITEM_FROM_DEALER],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
 
     case (MERC_DEPOSITED_MONEY_TO_PLAYER_ACCOUNT):
-      swprintf(pString, ARR_SIZE(pString), pTransactionText[MERC_DEPOSITED_MONEY_TO_PLAYER_ACCOUNT],
+      swprintf(pString, bufSize, pTransactionText[MERC_DEPOSITED_MONEY_TO_PLAYER_ACCOUNT],
                gMercProfiles[pFinance->ubSecondCode].zNickname);
       break;
   }

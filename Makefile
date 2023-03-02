@@ -4,6 +4,8 @@ CLANG_FORMATTER ?= clang-format-13
 
 build: linux-bin unittester-bin
 
+test: run-unittester
+
 format:
 	find . \( -iname '*.c' -o -iname '*.cc' -o -iname '*.cpp' -o -iname '*.h' \) \
 		| xargs $(CLANG_FORMATTER) -i --style=file
@@ -16,12 +18,13 @@ format-modified:
 # linux build
 ###################################################################
 
+GCC_ERRORS_FLAGS := -Werror
+GCC_ERRORS_FLAGS += -Werror=sizeof-pointer-div
+# GCC_ERRORS_FLAGS += -Wall
 CC = gcc
 CXX	= g++
-CFLAG = -fPIC --std=gnu17 -DFORCE_ASSERTS_ON -I./ja2lib
-CXXFLAG = -fPIC --std=gnu++17 -DFORCE_ASSERTS_ON -I./ja2lib
-# COMPILE_FLAGS = -c -Wall -Werror -DFORCE_ASSERTS_ON -I./ja2lib
-# COMPILE_FLAGS = -c -Wall --std=c17 -DFORCE_ASSERTS_ON -I./ja2lib
+CFLAG = -fPIC --std=gnu17 $(GCC_ERRORS_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
+CXXFLAG = -fPIC --std=gnu++17 $(GCC_ERRORS_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
 
 TARGET_ARCH    ?=
 ifeq "$(TARGET_ARCH)" ""
@@ -107,6 +110,9 @@ run-unittester: $(BUILD_DIR)/bin/unittester
 
 install-build-dependencies-deb:
 	sudo apt install -y libgtest-dev
+
+install-build-dependencies-yum:
+	sudo yum install -y gtest-devel
 
 install-dev-dependencies-deb:
 	sudo apt install clang-format-13 libgtest-dev

@@ -4,7 +4,7 @@
 #include "SGP/Types.h"
 
 // build main facilities strings for sector
-void GetSectorFacilitiesFlags(INT16 sMapX, INT16 sMapY, STR16 sFacilitiesString);
+void GetSectorFacilitiesFlags(INT16 sMapX, INT16 sMapY, STR16 sFacilitiesString, size_t bufSize);
 
 // set sector as enemy controlled
 BOOLEAN SetThisSectorAsEnemyControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fContested);

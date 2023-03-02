@@ -630,10 +630,11 @@ void DisplayTheSkiDropItemToGroundString();
 
 UINT32 EvaluateInvSlot(INVENTORY_IN_SLOT *pInvSlot);
 
-void BuildItemHelpTextString(wchar_t sString[], INVENTORY_IN_SLOT *pInv, UINT8 ubScreenArea);
-void BuildRepairTimeString(wchar_t sString[], UINT32 uiTimeInMinutesToFixItem);
-void BuildDoneWhenTimeString(wchar_t sString[], UINT8 ubArmsDealer, UINT16 usItemIndex,
-                             UINT8 ubElement);
+void BuildItemHelpTextString(wchar_t *sString, size_t bufSize, INVENTORY_IN_SLOT *pInv,
+                             UINT8 ubScreenArea);
+void BuildRepairTimeString(wchar_t *sString, size_t bufSize, UINT32 uiTimeInMinutesToFixItem);
+void BuildDoneWhenTimeString(wchar_t *sString, size_t bufSize, UINT8 ubArmsDealer,
+                             UINT16 usItemIndex, UINT8 ubElement);
 
 void DisableAllDealersInventorySlots(void);
 void EnableAllDealersInventorySlots(void);
@@ -647,7 +648,7 @@ extern BOOLEAN ItemIsARocketRifle(INT16 sItemIndex);
 #ifdef JA2TESTVERSION
 BOOLEAN gfTestDisplayDealerCash = FALSE;
 void DisplayAllDealersCash();
-#endif;
+#endif
 
 // ppp
 
@@ -2447,7 +2448,8 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
       Assert(gpTempDealersInventory[ubSlotNum].sSpecialItemElement != -1);
       ubElement = (UINT8)gpTempDealersInventory[ubSlotNum].sSpecialItemElement;
 
-      BuildDoneWhenTimeString(zTemp, gbSelectedArmsDealerID, usItemIndex, ubElement);
+      BuildDoneWhenTimeString(zTemp, ARR_SIZE(zTemp), gbSelectedArmsDealerID, usItemIndex,
+                              ubElement);
       DrawTextToScreen(zTemp, (UINT16)(usPosX + SKI_INV_PRICE_OFFSET_X),
                        (UINT16)(usPosY + SKI_INV_PRICE_OFFSET_Y), SKI_INV_SLOT_WIDTH,
                        SKI_ITEM_DESC_FONT, SKI_ITEM_PRICE_COLOR, FONT_MCOLOR_BLACK, FALSE,
@@ -3116,7 +3118,7 @@ void SetSkiRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pRegion,
 
   Assert(pRegion);
 
-  BuildItemHelpTextString(zHelpText, pInv, ubScreenArea);
+  BuildItemHelpTextString(zHelpText, ARR_SIZE(zHelpText), pInv, ubScreenArea);
 
   SetRegionFastHelpText(pRegion, zHelpText);
   SetRegionHelpEndCallback(pRegion, SkiHelpTextDoneCallBack);
@@ -3131,7 +3133,7 @@ void SetSkiFaceRegionHelpText(INVENTORY_IN_SLOT *pInv, struct MOUSE_REGION *pReg
 
   // if the item isn't NULL, and is owned by a merc
   if ((pInv != NULL) && (pInv->ubIdOfMercWhoOwnsTheItem != NO_PROFILE)) {
-    BuildItemHelpTextString(zTempText, pInv, ubScreenArea);
+    BuildItemHelpTextString(zTempText, ARR_SIZE(zTempText), pInv, ubScreenArea);
     // add who owns it
     swprintf(zHelpText, ARR_SIZE(zHelpText), L"%s%s %s",
              gMercProfiles[pInv->ubIdOfMercWhoOwnsTheItem].zNickname, pMessageStrings[MSG_DASH_S],
@@ -6745,7 +6747,7 @@ UINT32 EvaluateInvSlot(INVENTORY_IN_SLOT *pInvSlot) {
 // round off reapir times shown to the near quarter-hour
 #define REPAIR_MINUTES_INTERVAL 15
 
-void BuildRepairTimeString(wchar_t sString[], UINT32 uiTimeInMinutesToFixItem) {
+void BuildRepairTimeString(wchar_t *sString, size_t bufSize, UINT32 uiTimeInMinutesToFixItem) {
   UINT16 usNumberOfHoursToFixItem = 0;
 
   // if it's 0, it shouldn't be up here any more!
@@ -6764,7 +6766,7 @@ void BuildRepairTimeString(wchar_t sString[], UINT32 uiTimeInMinutesToFixItem) {
   // show up to 1.5 hrs in minutes
   if (uiTimeInMinutesToFixItem <= 90) {
     // show minutes
-    swprintf(sString, ARR_SIZE(sString), SKI_Text[SKI_TEXT_MINUTES], uiTimeInMinutesToFixItem);
+    swprintf(sString, bufSize, SKI_Text[SKI_TEXT_MINUTES], uiTimeInMinutesToFixItem);
   } else {
     // show hours
 
@@ -6772,16 +6774,15 @@ void BuildRepairTimeString(wchar_t sString[], UINT32 uiTimeInMinutesToFixItem) {
     usNumberOfHoursToFixItem = (UINT16)((uiTimeInMinutesToFixItem + 45) / 60);
 
     if (usNumberOfHoursToFixItem > 1) {
-      swprintf(sString, ARR_SIZE(sString), SKI_Text[SKI_TEXT_PLURAL_HOURS],
-               usNumberOfHoursToFixItem);
+      swprintf(sString, bufSize, SKI_Text[SKI_TEXT_PLURAL_HOURS], usNumberOfHoursToFixItem);
     } else {
       wcscpy(sString, SKI_Text[SKI_TEXT_ONE_HOUR]);
     }
   }
 }
 
-void BuildDoneWhenTimeString(wchar_t sString[], UINT8 ubArmsDealer, UINT16 usItemIndex,
-                             UINT8 ubElement) {
+void BuildDoneWhenTimeString(wchar_t *sString, size_t bufSize, UINT8 ubArmsDealer,
+                             UINT16 usItemIndex, UINT8 ubElement) {
   UINT32 uiDoneTime;
   UINT32 uiDay, uiHour, uiMin;
 
@@ -6818,25 +6819,27 @@ void BuildDoneWhenTimeString(wchar_t sString[], UINT8 ubArmsDealer, UINT16 usIte
 
   // only show day if it's gonna take overnight
   if (GetWorldDay() != uiDay) {
-    swprintf(sString, ARR_SIZE(sString), L"%s %d %02d:%02d", pDayStrings[0], uiDay, uiHour, uiMin);
+    swprintf(sString, bufSize, L"%s %d %02d:%02d", pDayStrings[0], uiDay, uiHour, uiMin);
   } else {
-    swprintf(sString, ARR_SIZE(sString), L"%02d:%02d", uiHour, uiMin);
+    swprintf(sString, bufSize, L"%02d:%02d", uiHour, uiMin);
   }
 }
 
-void BuildItemHelpTextString(wchar_t sString[], INVENTORY_IN_SLOT *pInv, UINT8 ubScreenArea) {
+void BuildItemHelpTextString(wchar_t *sString, size_t bufSize, INVENTORY_IN_SLOT *pInv,
+                             UINT8 ubScreenArea) {
   CHAR16 zHelpText[512];
   CHAR16 zRepairTime[64];
 
   if (pInv != NULL) {
-    GetHelpTextForItem(zHelpText, &(pInv->ItemObject), NULL);
+    GetHelpTextForItem(zHelpText, ARR_SIZE(zHelpText), &(pInv->ItemObject), NULL);
 
     // add repair time for items in a repairman's offer area
     if ((ubScreenArea == ARMS_DEALER_OFFER_AREA) &&
         (ArmsDealerInfo[gbSelectedArmsDealerID].ubTypeOfArmsDealer == ARMS_DEALER_REPAIRS)) {
       BuildRepairTimeString(
-          zRepairTime, CalculateObjectItemRepairTime(gbSelectedArmsDealerID, &(pInv->ItemObject)));
-      swprintf(sString, ARR_SIZE(sString), L"%s\n(%s: %s)", zHelpText, gzLateLocalizedString[44],
+          zRepairTime, ARR_SIZE(zRepairTime),
+          CalculateObjectItemRepairTime(gbSelectedArmsDealerID, &(pInv->ItemObject)));
+      swprintf(sString, bufSize, L"%s\n(%s: %s)", zHelpText, gzLateLocalizedString[44],
                zRepairTime);
     } else {
       wcscpy(sString, zHelpText);

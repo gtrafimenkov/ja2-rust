@@ -72,7 +72,7 @@ FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, UINT32 uiFont, 
 // Places a shadow the width an height of the string, to PosX, posY
 void ShadowText(UINT32 uiDestVSurface, STR16 pString, UINT32 uiFont, UINT16 usPosX, UINT16 usPosY);
 
-BOOLEAN ReduceStringLength(STR16 pString, UINT32 uiWidth, UINT32 uiFont);
+BOOLEAN ReduceStringLength(STR16 pString, size_t bufSize, UINT32 uiWidth, UINT32 uiFont);
 
 void UseSingleCharWordsForWordWrap(BOOLEAN fUseSingleCharWords);
 WRAPPED_STRING *LineWrapForSingleCharWords(UINT32 ulFont, UINT16 usLineWidthPixels,

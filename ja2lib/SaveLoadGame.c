@@ -439,7 +439,7 @@ void TruncateStrategicGroupSizes();
 //
 /////////////////////////////////////////////////////
 
-BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc) {
+BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   UINT32 uiNumBytesWritten = 0;
   HWFILE hFile = 0;
   SAVED_GAME_HEADER SaveGameHeader;
@@ -539,11 +539,11 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc) {
     guiCurrentQuickSaveNumber++;
 
     if (gfUseConsecutiveQuickSaveSlots)
-      swprintf(pGameDesc, ARR_SIZE(pGameDesc), L"%s%03d", pMessageStrings[MSG_QUICKSAVE_NAME],
+      swprintf(pGameDesc, bufSize, L"%s%03d", pMessageStrings[MSG_QUICKSAVE_NAME],
                guiCurrentQuickSaveNumber);
     else
 #endif
-      swprintf(pGameDesc, ARR_SIZE(pGameDesc), pMessageStrings[MSG_QUICKSAVE_NAME]);
+      swprintf(pGameDesc, bufSize, pMessageStrings[MSG_QUICKSAVE_NAME]);
   }
 
   // If there was no string, add one

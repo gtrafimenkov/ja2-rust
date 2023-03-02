@@ -1,5 +1,7 @@
 #include "Laptop/BobbyRMailOrder.h"
 
+#include <string.h>
+
 #include "Laptop/BobbyR.h"
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Finances.h"

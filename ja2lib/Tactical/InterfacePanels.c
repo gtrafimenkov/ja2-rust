@@ -2993,7 +2993,7 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
         }
         // Add text for first hand popup
         else {
-          GetHelpTextForItem(pStr, &(pSoldier->inv[HANDPOS]), pSoldier);
+          GetHelpTextForItem(pStr, ARR_SIZE(pStr), &(pSoldier->inv[HANDPOS]), pSoldier);
 
           // OK, for each item, set dirty text if applicable!
           SetRegionFastHelpText(&(gTEAM_FirstHandInv[cnt]), pStr);
@@ -3004,7 +3004,7 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
           // OK, for each item, set dirty text if applicable!
           SetRegionFastHelpText(&(gTEAM_SecondHandInv[cnt]), TacticalStr[EXIT_VEHICLE_POPUPTEXT]);
         } else {
-          GetHelpTextForItem(pStr, &(pSoldier->inv[SECONDHANDPOS]), pSoldier);
+          GetHelpTextForItem(pStr, ARR_SIZE(pStr), &(pSoldier->inv[SECONDHANDPOS]), pSoldier);
 
           // OK, for each item, set dirty text if applicable!
           SetRegionFastHelpText(&(gTEAM_SecondHandInv[cnt]), pStr);
@@ -4085,7 +4085,7 @@ void RenderTownIDString() {
 
   GetSectorIDString(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, zTownIDString,
                     ARR_SIZE(zTownIDString), TRUE);
-  ReduceStringLength(zTownIDString, 80, COMPFONT);
+  ReduceStringLength(zTownIDString, ARR_SIZE(zTownIDString), 80, COMPFONT);
   VarFindFontCenterCoordinates(548, 425, 80, 16, COMPFONT, &sFontX, &sFontY, zTownIDString);
   mprintf(sFontX, sFontY, L"%s", zTownIDString);
 }

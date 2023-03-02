@@ -141,7 +141,7 @@ typedef struct {
 
   UINT32 uiVideoObject;
 
-  UINT32 uiUserData1;
+  uintptr_t uiUserData1;
   UINT32 uiUserData2;
 
   BOOLEAN fCompatibleItems;

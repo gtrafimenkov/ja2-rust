@@ -137,8 +137,6 @@ extern UINT32 guiNumWorldItems;
 extern BOOLEAN fShowInventoryFlag;
 extern BOOLEAN fMapScreenBottomDirty;
 
-extern BOOLEAN ReduceStringLength(STR16 pString, UINT32 uiWidth, UINT32 uiFont);
-
 // outside vidieo objects for cursor
 extern UINT32 guiExternVo;
 extern UINT16 gusExternVoSubIndex;
@@ -352,7 +350,7 @@ BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
   wcscpy(sString, ShortItemNames[pInventoryPoolList[iCurrentSlot + iFirstSlotOnPage].o.usItem]);
 
   if (StringPixLength(sString, MAP_IVEN_FONT) >= (MAP_INVEN_SLOT_WIDTH)) {
-    ReduceStringLength(sString,
+    ReduceStringLength(sString, ARR_SIZE(sString),
                        (INT16)(MAP_INVEN_SLOT_WIDTH - StringPixLength(L" ...", MAP_IVEN_FONT)),
                        MAP_IVEN_FONT);
   }
@@ -407,7 +405,8 @@ void UpdateHelpTextForInvnentoryStashSlots(void) {
   // run through list of items in slots and update help text for mouse regions
   for (iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++) {
     if (pInventoryPoolList[iCounter + iFirstSlotOnPage].o.ubNumberOfObjects > 0) {
-      GetHelpTextForItem(pStr, &(pInventoryPoolList[iCounter + iFirstSlotOnPage].o), NULL);
+      GetHelpTextForItem(pStr, ARR_SIZE(pStr), &(pInventoryPoolList[iCounter + iFirstSlotOnPage].o),
+                         NULL);
       SetRegionFastHelpText(&(MapInventoryPoolSlots[iCounter]), pStr);
 
       /*
