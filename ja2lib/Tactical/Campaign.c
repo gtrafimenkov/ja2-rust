@@ -694,8 +694,6 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
   UINT8 ubStat = 0;
   INT16 *psStatGainPtr = NULL;
   INT8 *pbStatPtr = NULL;
-  INT8 *pbSoldierStatPtr = NULL;
-  INT8 *pbStatDeltaPtr = NULL;
   INT8 bMinStatValue;
   INT8 bMaxStatValue;
   UINT16 usSubpointsPerPoint;
@@ -808,56 +806,6 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
         psStatGainPtr = &(pProfile->sLeadershipGain);
         pbStatPtr = &(pProfile->bLeadership);
         break;
-    }
-
-    // if this merc is currently on the player's team
-    if (pSoldier != NULL) {
-      // build ptrs to appropriate soldiertype stat fields
-      switch (ubStat) {
-        case HEALTHAMT:
-          pbSoldierStatPtr = &(pSoldier->bLifeMax);
-          break;
-
-        case AGILAMT:
-          pbSoldierStatPtr = &(pSoldier->bAgility);
-          break;
-
-        case DEXTAMT:
-          pbSoldierStatPtr = &(pSoldier->bDexterity);
-          break;
-
-        case WISDOMAMT:
-          pbSoldierStatPtr = &(pSoldier->bWisdom);
-          break;
-
-        case MEDICALAMT:
-          pbSoldierStatPtr = &(pSoldier->bMedical);
-          break;
-
-        case EXPLODEAMT:
-          pbSoldierStatPtr = &(pSoldier->bExplosive);
-          break;
-
-        case MECHANAMT:
-          pbSoldierStatPtr = &(pSoldier->bMechanical);
-          break;
-
-        case MARKAMT:
-          pbSoldierStatPtr = &(pSoldier->bMarksmanship);
-          break;
-
-        case EXPERAMT:
-          pbSoldierStatPtr = &(pSoldier->bExpLevel);
-          break;
-
-        case STRAMT:
-          pbSoldierStatPtr = &(pSoldier->bStrength);
-          break;
-
-        case LDRAMT:
-          pbSoldierStatPtr = &(pSoldier->bLeadership);
-          break;
-      }
     }
 
     // ptrs set up, now handle

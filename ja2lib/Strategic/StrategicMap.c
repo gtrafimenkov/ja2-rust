@@ -196,26 +196,26 @@ INT8 gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
 
 UINT8 ubSAMControlledSectors[MAP_WORLD_Y][MAP_WORLD_X] = {
     //       1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-    0, 0, 0,  0, 0,  0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0,  0, 0,
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 
-    0, 1, 1,  1, 1,  1, 1, 1, 1,  0, 0, 2, 2, 2, 2, 2,  2, 0,  // A
-    0, 1, 1,  1, 1,  1, 1, 1, 1,  2, 2, 2, 2, 2, 2, 2,  2, 0,  // B
-    0, 1, 1,  1, 1,  1, 1, 1, 3,  2, 2, 2, 2, 2, 2, 2,  2, 0,  // C
-    0, 1, 01, 1, 1,  1, 1, 1, 3,  3, 2, 2, 2, 2, 2, 02, 2, 0,  // D
-    0, 1, 1,  1, 1,  1, 1, 3, 3,  3, 3, 2, 2, 2, 2, 2,  2, 0,  // E
-    0, 1, 1,  1, 1,  1, 3, 3, 3,  3, 3, 3, 2, 2, 2, 2,  2, 0,  // F
-    0, 1, 1,  1, 1,  3, 3, 3, 3,  3, 3, 3, 3, 2, 2, 2,  2, 0,  // G
-    0, 1, 1,  1, 3,  3, 3, 3, 3,  3, 3, 3, 3, 3, 2, 2,  2, 0,  // H
-    0, 1, 1,  3, 3,  3, 3, 3, 03, 3, 3, 3, 3, 3, 2, 2,  2, 0,  // I
-    0, 1, 4,  4, 4,  3, 3, 3, 3,  3, 3, 3, 3, 3, 2, 2,  2, 0,  // J
-    0, 4, 4,  4, 4,  4, 3, 3, 3,  3, 3, 3, 3, 3, 2, 2,  2, 0,  // K
-    0, 4, 4,  4, 4,  4, 4, 3, 3,  3, 3, 3, 3, 3, 2, 2,  2, 0,  // L
-    0, 4, 4,  4, 4,  4, 4, 4, 3,  3, 3, 3, 3, 3, 2, 2,  2, 0,  // M
-    0, 4, 4,  4, 04, 4, 4, 4, 4,  4, 4, 4, 4, 4, 2, 2,  2, 0,  // N
-    0, 4, 4,  4, 4,  4, 4, 4, 4,  4, 4, 4, 4, 4, 4, 2,  2, 0,  // O
-    0, 4, 4,  4, 4,  4, 4, 4, 4,  4, 4, 4, 4, 4, 4, 4,  2, 0,  // P
+    {0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 2, 0},    // A
+    {0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0},    // B
+    {0, 1, 1, 1, 1, 1, 1, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 0},    // C
+    {0, 1, 01, 1, 1, 1, 1, 1, 3, 3, 2, 2, 2, 2, 2, 02, 2, 0},  // D
+    {0, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 0},    // E
+    {0, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 0},    // F
+    {0, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 0},    // G
+    {0, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // H
+    {0, 1, 1, 3, 3, 3, 3, 3, 03, 3, 3, 3, 3, 3, 2, 2, 2, 0},   // I
+    {0, 1, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // J
+    {0, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // K
+    {0, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // L
+    {0, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // M
+    {0, 4, 4, 4, 04, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 0},   // N
+    {0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 0},    // O
+    {0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 0},    // P
 
-    0, 0, 0,  0, 0,  0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0,  0, 0,
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 };
 
 INT16 DirXIncrementer[8] = {
@@ -329,7 +329,6 @@ void BeginLoadScreen() {
   UINT32 uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
   UINT32 uiTimeRange;
-  INT32 iLastShadePercentage;
   UINT8 ubLoadScreenID;
 
   SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);
@@ -342,7 +341,6 @@ void BeginLoadScreen() {
     DstRect.iBottom = 480;
     uiTimeRange = 2000;
     iPercentage = 0;
-    iLastShadePercentage = 0;
     uiStartTime = GetJA2Clock();
     BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
     PlayJA2SampleFromFile("SOUNDS\\Final Psionic Blast 01 (16-44).wav", RATE_11025, HIGHVOLUME, 1,
@@ -754,7 +752,6 @@ void HandleRPCDescriptionOfSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ
 }
 
 BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
-  UNDERGROUND_SECTORINFO *pUnderWorld = NULL;
   BOOLEAN fChangeMusic = TRUE;
 
 #ifdef CRIPPLED_VERSION
@@ -990,9 +987,6 @@ void RemoveMercsInSector() {
 }
 
 void PrepareLoadedSector() {
-  INT32 iCounter = 0;
-  BOOLEAN fEnemyPresenceInThisSector = FALSE;
-  BOOLEAN fUsingOverride = FALSE;
   BOOLEAN fAddCivs = TRUE;
   INT8 bMineIndex = -1;
 
@@ -1079,17 +1073,11 @@ void PrepareLoadedSector() {
     AddProfilesNotUsingProfileInsertionData();
 
     if (!AreInMeanwhile() || GetMeanwhileID() == INTERROGATION) {
-      fEnemyPresenceInThisSector = PrepareEnemyForSectorBattle();
+      PrepareEnemyForSectorBattle();
     }
 
     // Regardless whether or not this was set, clear it now.
     gfRestoringEnemySoldiersFromTempFile = FALSE;
-
-    // KM:  FEB 8, 99 -- This call is no longer required!  Done already when group arrives in
-    // sector. if( ( gbWorldSectorZ == 0 ) && ( fEnemyPresenceInThisSector == FALSE ) )
-    //{
-    //	SetThisSectorAsPlayerControlled( gWorldSectorX, gWorldSectorY, 0 );
-    //}
 
     if (gbWorldSectorZ > 0) {
       // we always think we control underground sectors once we've visited them
@@ -2556,7 +2544,7 @@ gsAdjacentSectorX, gsAdjacentSectorY, TRUE ); pPlayer = pPlayer->next;
 void SetupTacticalTraversalInformation() {
   struct SOLDIERTYPE *pSoldier;
   PLAYERGROUP *pPlayer;
-  UINT32 sWorldX, sWorldY;
+  INT32 sWorldX, sWorldY;
   INT16 sScreenX, sScreenY, sNewGridNo;
 
   Assert(gpAdjacentGroup);

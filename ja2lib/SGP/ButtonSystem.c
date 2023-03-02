@@ -798,7 +798,6 @@ BOOLEAN UnloadGenericButtonIcon(INT16 GenImg) {
 //	image of iconic buttons. See above.
 //
 BOOLEAN UnloadGenericButtonImage(INT16 GenImg) {
-  BOOLEAN fDeletedSomething = FALSE;
   if (GenImg < 0 || GenImg >= MAX_GENERIC_PICS) {
     sprintf(str, "Attempting to UnloadGenericButtonImage with out of range index %d.", GenImg);
     AssertMsg(0, str);
@@ -809,43 +808,32 @@ BOOLEAN UnloadGenericButtonImage(INT16 GenImg) {
   if (GenericButtonGrayed[GenImg] != NULL) {
     DeleteVideoObject(GenericButtonGrayed[GenImg]);
     GenericButtonGrayed[GenImg] = NULL;
-    fDeletedSomething = TRUE;
   }
 
   if (GenericButtonOffNormal[GenImg] != NULL) {
     DeleteVideoObject(GenericButtonOffNormal[GenImg]);
     GenericButtonOffNormal[GenImg] = NULL;
-    fDeletedSomething = TRUE;
   }
 
   if (GenericButtonOffHilite[GenImg] != NULL) {
     DeleteVideoObject(GenericButtonOffHilite[GenImg]);
     GenericButtonOffHilite[GenImg] = NULL;
-    fDeletedSomething = TRUE;
   }
 
   if (GenericButtonOnNormal[GenImg] != NULL) {
     DeleteVideoObject(GenericButtonOnNormal[GenImg]);
     GenericButtonOnNormal[GenImg] = NULL;
-    fDeletedSomething = TRUE;
   }
 
   if (GenericButtonOnHilite[GenImg] != NULL) {
     DeleteVideoObject(GenericButtonOnHilite[GenImg]);
     GenericButtonOnHilite[GenImg] = NULL;
-    fDeletedSomething = TRUE;
   }
 
   if (GenericButtonBackground[GenImg] != NULL) {
     DeleteVideoObject(GenericButtonBackground[GenImg]);
     GenericButtonBackground[GenImg] = NULL;
-    fDeletedSomething = TRUE;
   }
-
-#ifdef BUTTONSYSTEM_DEBUGGING
-  if (!gfIgnoreShutdownAssertions && !fDeletedSomething)
-    AssertMsg(0, "Attempting to UnloadGenericButtonImage that has no images (already deleted).");
-#endif
 
   // Reset the remaining variables
   GenericButtonFillColors[GenImg] = 0;
@@ -2427,7 +2415,7 @@ void QuickButtonCallbackMButn(struct MOUSE_REGION *reg, INT32 reason) {
     // when the button wasn't anchored, and should have been.
     gfDelayButtonDeletion = TRUE;
     if (!(reason & MSYS_CALLBACK_REASON_LBUTTON_UP) || b->MoveCallback != DEFAULT_MOVE_CALLBACK ||
-        b->MoveCallback == DEFAULT_MOVE_CALLBACK && gpPrevAnchoredButton == b)
+        (b->MoveCallback == DEFAULT_MOVE_CALLBACK && gpPrevAnchoredButton == b))
       (b->ClickCallback)(b, reason);
     gfDelayButtonDeletion = FALSE;
   } else if ((reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) && !(b->uiFlags & BUTTON_IGNORE_CLICKS)) {
@@ -3094,7 +3082,6 @@ void DrawGenericButton(GUI_BUTTON *b) {
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
   SGPRect ClipRect;
-  ETRLEObject *pTrav;
 
   // Select the graphics to use depending on the current state of the button
   if (b->uiFlags & BUTTON_ENABLED) {
@@ -3130,7 +3117,6 @@ void DrawGenericButton(GUI_BUTTON *b) {
 
   iBorderWidth = 3;
   iBorderHeight = 2;
-  pTrav = NULL;
 
   // DB - Added this to support more flexible sizing of border images
   // The 3x2 size was a bit limiting. JA2 should default to the original

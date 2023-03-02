@@ -243,7 +243,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
     while (curr) {
       if (!curr->pBasicPlacement->fPriorityExistance) {
         if (!curr->pDetailedPlacement ||
-            curr->pDetailedPlacement && curr->pDetailedPlacement->ubProfile == NO_PROFILE) {
+            (curr->pDetailedPlacement && curr->pDetailedPlacement->ubProfile == NO_PROFILE)) {
           if (curr->pBasicPlacement->bTeam == tempDetailedPlacement.bTeam) {
             curr->pBasicPlacement->fPriorityExistance = TRUE;
             if (!curr->pDetailedPlacement) {  // need to upgrade the placement to detailed placement
@@ -361,9 +361,6 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
     ubStrategicElites = (ubStrategicElites > ubNumElites) ? ubStrategicElites - ubNumElites : 0;
     ubStrategicAdmins = (ubStrategicAdmins > ubNumAdmins) ? ubStrategicAdmins - ubNumAdmins : 0;
     AddSoldierInitListEnemyDefenceSoldiers(ubStrategicAdmins, ubStrategicTroops, ubStrategicElites);
-  }
-  if (ubStrategicCreatures > ubNumCreatures) {
-    ubStrategicCreatures;  // not sure if this wil ever happen.  If so, needs to be handled.
   }
 
   // successful
@@ -1002,7 +999,6 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     AddSoldierInitListEnemyDefenceSoldiers(ubStrategicAdmins, ubStrategicTroops, ubStrategicElites);
   }
   if (ubStrategicCreatures > ubNumCreatures) {
-    ubStrategicCreatures;  // not sure if this wil ever happen.  If so, needs to be handled.
   }
 
   // set the number of enemies in the sector
@@ -1015,23 +1011,8 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
               sSectorX, sSectorY, bSectorZ);
 #endif
       goto FAIL_LOAD;
-
-      /*
-                              pSector->ubElitesInBattle = ubStrategicElites;
-                              pSector->ubTroopsInBattle = ubStrategicTroops;
-                              pSector->ubAdminsInBattle = ubStrategicAdmins;
-                              pSector->ubCreaturesInBattle = ubStrategicCreatures;
-      */
     }
   } else {
-    SECTORINFO *pSector;
-    pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
-    /*
-                    pSector->ubElitesInBattle = ubStrategicElites;
-                    pSector->ubTroopsInBattle = ubStrategicTroops;
-                    pSector->ubAdminsInBattle = ubStrategicAdmins;
-                    pSector->ubCreaturesInBattle = ubStrategicCreatures;
-    */
   }
 
   // if in battle, what about the ubNumInBAttle
@@ -1069,7 +1050,6 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 #endif
   INT8 bSectorZ;
   UINT8 ubSectorID;
-  UINT8 ubNumElites = 0, ubNumTroops = 0, ubNumAdmins = 0, ubNumCreatures = 0;
   BOOLEAN fDeleted;
   //	UINT8 ubStrategicElites, ubStrategicTroops, ubStrategicAdmins, ubStrategicCreatures;
 
@@ -1197,7 +1177,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
     while (curr) {
       if (!curr->pBasicPlacement->fPriorityExistance) {
         if (!curr->pDetailedPlacement ||
-            curr->pDetailedPlacement && curr->pDetailedPlacement->ubProfile == NO_PROFILE) {
+            (curr->pDetailedPlacement && curr->pDetailedPlacement->ubProfile == NO_PROFILE)) {
           if (curr->pBasicPlacement->bTeam == tempDetailedPlacement.bTeam) {
             curr->pBasicPlacement->fPriorityExistance = TRUE;
 
@@ -1281,7 +1261,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   while (curr) {
     if (!curr->pBasicPlacement->fPriorityExistance) {
       if (!curr->pDetailedPlacement ||
-          curr->pDetailedPlacement && curr->pDetailedPlacement->ubProfile == NO_PROFILE) {
+          (curr->pDetailedPlacement && curr->pDetailedPlacement->ubProfile == NO_PROFILE)) {
         if (curr->pBasicPlacement->bTeam == tempDetailedPlacement.bTeam) {
           // Save pointer to the next guy in the list
           // and after deleting, set the 'curr' to that guy

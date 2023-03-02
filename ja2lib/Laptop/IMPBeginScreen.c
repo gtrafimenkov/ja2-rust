@@ -357,26 +357,9 @@ void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void GetPlayerKeyBoardInputForIMPBeginScreen(void) {
   InputAtom InputEvent;
-  struct Point MousePos = GetMousePoint();
 
   // handle input events
   while (DequeueEvent(&InputEvent)) {
-    /*
-           // HOOK INTO MOUSE HOOKS
-switch(InputEvent.usEvent)
-           {
-
-        case LEFT_BUTTON_DOWN:
-                     MouseSystemHook(LEFT_BUTTON_DOWN, (INT16)MousePos.x,
-(INT16)MousePos.y,_LeftButtonDown, _RightButtonDown); break; case LEFT_BUTTON_UP:
-                      MouseSystemHook(LEFT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y
-,_LeftButtonDown, _RightButtonDown); break; case RIGHT_BUTTON_DOWN:
-                    MouseSystemHook(RIGHT_BUTTON_DOWN, (INT16)MousePos.x,
-(INT16)MousePos.y,_LeftButtonDown, _RightButtonDown); break; case RIGHT_BUTTON_UP:
-                      MouseSystemHook(RIGHT_BUTTON_UP, (INT16)MousePos.x,
-(INT16)MousePos.y,_LeftButtonDown, _RightButtonDown); break;
-           }
-           */
     if (!HandleTextInput(&InputEvent) &&
         (InputEvent.usEvent == KEY_DOWN || InputEvent.usEvent == KEY_REPEAT)) {
       switch (InputEvent.usParam) {
@@ -474,8 +457,8 @@ void HandleBeginScreenTextEvent(UINT32 uiKey) {
       break;
 
     default:
-      if (uiKey >= 'A' && uiKey <= 'Z' || uiKey >= 'a' && uiKey <= 'z' ||
-          uiKey >= '0' && uiKey <= '9' || uiKey == '_' || uiKey == '.' || uiKey == ' ') {
+      if ((uiKey >= 'A' && uiKey <= 'Z') || (uiKey >= 'a' && uiKey <= 'z') ||
+          (uiKey >= '0' && uiKey <= '9') || uiKey == '_' || uiKey == '.' || uiKey == ' ') {
         // if the current string position is at max or great, do nothing
         switch (ubTextEnterMode) {
           case (FULL_NAME_MODE):
@@ -661,7 +644,6 @@ void DisplayNickNameStringCursor(void) {
 
 void DisplayPlayerFullNameString(void) {
   // this function will grab the string that the player will enter for activation
-  INT32 iCounter = 0;
 
   // player gone too far, move back
   if (uiFullNameCharacterPosition > MAX_FULL_NAME) {
@@ -687,7 +669,6 @@ void DisplayPlayerFullNameString(void) {
 
 void DisplayPlayerNickNameString(void) {
   // this function will grab the string that the player will enter for activation
-  INT32 iCounter = 0;
 
   // player gone too far, move back
   if (uiNickNameCharacterPosition > MAX_NICK_NAME) {
@@ -1029,8 +1010,6 @@ void Print8CharacterOnlyString(void) {
 }
 
 BOOLEAN CheckCharacterInputForEgg(void) {
-  MERC_HIRE_STRUCT HireMercStruct;
-
 #ifndef JA2BETAVERSION
   return (FALSE);
 #else
@@ -1233,6 +1212,7 @@ BOOLEAN CheckCharacterInputForEgg(void) {
     iPortraitNumber = 2;
 
     // DEF: temp
+    MERC_HIRE_STRUCT HireMercStruct;
     HireMercStruct.sSectorX = gsMercArriveSectorX;
     HireMercStruct.sSectorY = gsMercArriveSectorY;
     HireMercStruct.bSectorZ = 0;

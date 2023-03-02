@@ -153,12 +153,12 @@ typedef struct {
 } BATTLESNDS_STRUCT;
 
 BATTLESNDS_STRUCT gBattleSndsData[] = {
-    "ok1",    2, 1, 1, 1, 2, "ok2",   0, 1, 1, 1, 2, "cool",   0, 1, 0, 1, 0,
-    "curse",  0, 1, 1, 1, 0, "hit1",  2, 1, 1, 1, 1, "hit2",   0, 1, 1, 1, 1,
-    "laugh",  0, 1, 1, 1, 0, "attn",  0, 1, 0, 1, 0, "dying",  0, 1, 1, 1, 1,
-    "humm",   0, 0, 0, 1, 1, "noth",  0, 0, 0, 1, 1, "gotit",  0, 0, 0, 1, 1,
-    "lmok1",  2, 1, 0, 1, 2, "lmok2", 0, 1, 0, 1, 2, "lmattn", 0, 1, 0, 1, 0,
-    "locked", 0, 0, 0, 1, 0, "enem",  0, 1, 1, 1, 0,
+    {"ok1", 2, 1, 1, 1, 2},    {"ok2", 0, 1, 1, 1, 2},   {"cool", 0, 1, 0, 1, 0},
+    {"curse", 0, 1, 1, 1, 0},  {"hit1", 2, 1, 1, 1, 1},  {"hit2", 0, 1, 1, 1, 1},
+    {"laugh", 0, 1, 1, 1, 0},  {"attn", 0, 1, 0, 1, 0},  {"dying", 0, 1, 1, 1, 1},
+    {"humm", 0, 0, 0, 1, 1},   {"noth", 0, 0, 0, 1, 1},  {"gotit", 0, 0, 0, 1, 1},
+    {"lmok1", 2, 1, 0, 1, 2},  {"lmok2", 0, 1, 0, 1, 2}, {"lmattn", 0, 1, 0, 1, 0},
+    {"locked", 0, 0, 0, 1, 0}, {"enem", 0, 1, 1, 1, 0},
 };
 
 BOOLEAN IsValidSecondHandShot(struct SOLDIERTYPE *pSoldier);
@@ -1012,7 +1012,6 @@ void CheckForFreeupFromHit(struct SOLDIERTYPE *pSoldier, UINT32 uiOldAnimFlags,
 // THIS IS CALLED FROM AN EVENT ( S_CHANGESTATE )!
 BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState,
                                  UINT16 usStartingAniCode, BOOLEAN fForce) {
-  UINT16 usNewGridNo = 0;
   INT16 sAPCost = 0;
   INT16 sBPCost = 0;
   UINT32 uiOldAnimFlags;
@@ -1341,8 +1340,8 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState
     // Handle buddy beginning to move...
     // check new gridno, etc
     // ATE: Added: Make check that old anim is not a moving one as well
-    if (gAnimControl[usNewState].uiFlags & ANIM_MOVING &&
-            !(gAnimControl[pSoldier->usAnimState].uiFlags & ANIM_MOVING) ||
+    if ((gAnimControl[usNewState].uiFlags & ANIM_MOVING &&
+         !(gAnimControl[pSoldier->usAnimState].uiFlags & ANIM_MOVING)) ||
         (gAnimControl[usNewState].uiFlags & ANIM_MOVING && fForce)) {
       BOOLEAN fKeepMoving;
 
@@ -1436,9 +1435,6 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState
 
   uiOldAnimFlags = gAnimControl[pSoldier->usAnimState].uiFlags;
   uiNewAnimFlags = gAnimControl[usNewState].uiFlags;
-
-  usNewGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                          (UINT16)DirectionInc(pSoldier->usPathingData[pSoldier->usPathIndex]));
 
   // CHECKING IF WE HAVE A HIT FINISH BUT NO DEATH IS DONE WITH A SPECIAL ANI CODE
   // IN THE HIT FINSIH ANI SCRIPTS
@@ -2136,7 +2132,7 @@ void SetSoldierGridNo(struct SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fF
       // JA2Gold:
       // if the player wants the merc to cast the fake light AND it is night
       if (pSoldier->bTeam != OUR_TEAM ||
-          gGameSettings.fOptions[TOPTION_MERC_CASTS_LIGHT] && NightTime()) {
+          (gGameSettings.fOptions[TOPTION_MERC_CASTS_LIGHT] && NightTime())) {
         if (pSoldier->bLevel > 0 && gpWorldLevelData[pSoldier->sGridNo].pRoofHead != NULL) {
           gpWorldLevelData[pSoldier->sGridNo].pMercHead->ubShadeLevel =
               gpWorldLevelData[pSoldier->sGridNo].pRoofHead->ubShadeLevel;
@@ -2281,9 +2277,6 @@ void SetSoldierGridNo(struct SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fF
 
     // Adjust speed based on terrain, etc
     SetSoldierAniSpeed(pSoldier);
-
-  } else {
-    int i = 0;
   }
 }
 
@@ -2294,10 +2287,6 @@ void EVENT_FireSoldierWeapon(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) 
   // CANNOT BE SAME GRIDNO!
   if (pSoldier->sGridNo == sTargetGridNo) {
     return;
-  }
-
-  if (pSoldier->ubID == 33) {
-    int i = 0;
   }
 
   // Increment the number of people busy doing stuff because of an attack
@@ -2411,7 +2400,6 @@ void EVENT_FireSoldierWeapon(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) 
 
 UINT16 SelectFireAnimation(struct SOLDIERTYPE *pSoldier, UINT8 ubHeight) {
   INT16 sDist;
-  UINT16 usItem;
   FLOAT dTargetX;
   FLOAT dTargetY;
   FLOAT dTargetZ;
@@ -2475,8 +2463,6 @@ UINT16 SelectFireAnimation(struct SOLDIERTYPE *pSoldier, UINT8 ubHeight) {
   // Determine which animation to do...depending on stance and gun in hand...
   switch (ubHeight) {
     case ANIM_STAND:
-
-      usItem = pSoldier->inv[HANDPOS].usItem;
 
       // CHECK 2ND HAND!
       if (IsValidSecondHandShot(pSoldier)) {
@@ -3474,14 +3460,12 @@ BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, UINT16 sDe
                                         UINT16 usMovementAnim, BOOLEAN fFromUI,
                                         BOOLEAN fForceRestartAnim) {
   INT32 iDest;
-  INT16 sNewGridNo;
   BOOLEAN fContinue;
   UINT32 uiDist;
   UINT16 usAnimState;
   UINT16 usMoveAnimState = usMovementAnim;
   INT16 sMercGridNo;
   UINT16 usPathingData[MAX_PATH_LIST_SIZE];
-  UINT8 ubPathingMaxDirection;
   BOOLEAN fAdvancePath = TRUE;
   UINT8 fFlags = 0;
 
@@ -3547,7 +3531,6 @@ BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, UINT16 sDe
       // Add one to path data size....
       if (fAdvancePath) {
         memcpy(usPathingData, pSoldier->usPathingData, sizeof(usPathingData));
-        ubPathingMaxDirection = (UINT8)usPathingData[MAX_PATH_LIST_SIZE - 1];
         memcpy(&(pSoldier->usPathingData[1]), usPathingData,
                sizeof(usPathingData) - sizeof(UINT16));
 
@@ -3600,8 +3583,8 @@ BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, UINT16 sDe
     pSoldier->fPastYDest = 0;
 
     // CHECK IF FIRST TILE IS FREE
-    sNewGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                           DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
+    NewGridNo((UINT16)pSoldier->sGridNo,
+              DirectionInc((UINT8)pSoldier->usPathingData[pSoldier->usPathIndex]));
 
     // If true, we're OK, if not, WAIT for a guy to pass!
     // If we are in deep water, we can only swim!
@@ -5698,7 +5681,6 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
   UINT32 iFaceIndex;
   BOOLEAN fDoSub = FALSE;
   INT32 uiSubSoundID = 0;
-  BOOLEAN fSpeechSound = FALSE;
 
   // DOUBLECHECK RANGE
   CHECKF(ubBattleSoundID < NUM_MERC_BATTLE_SOUNDS);
@@ -5905,8 +5887,6 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
   if (ubSoundID == BATTLE_SOUND_OK1) {
     if (gGameSettings.fOptions[TOPTION_MUTE_CONFIRMATIONS]) return (TRUE);
     // else a speech sound is to be played
-    else
-      fSpeechSound = TRUE;
   }
 
   // Randomize between sounds, if appropriate
@@ -6147,13 +6127,9 @@ void BeginSoldierClimbDownRoof(struct SOLDIERTYPE *pSoldier) {
 
 void MoveMerc(struct SOLDIERTYPE *pSoldier, FLOAT dMovementChange, FLOAT dAngle,
               BOOLEAN fCheckRange) {
-  INT16 dDegAngle;
   FLOAT dDeltaPos;
   FLOAT dXPos, dYPos;
   BOOLEAN fStop = FALSE;
-
-  dDegAngle = (INT16)(dAngle * 180 / PI);
-  // sprintf( gDebugStr, "Move Angle: %d", (int)dDegAngle );
 
   // Find delta Movement for X pos
   dDeltaPos = (FLOAT)(dMovementChange * sin(dAngle));
@@ -6305,7 +6281,6 @@ UINT8 atan8(INT16 sXPos, INT16 sYPos, INT16 sXPos2, INT16 sYPos2) {
   DOUBLE test_x = sXPos2 - sXPos;
   DOUBLE test_y = sYPos2 - sYPos;
   UINT8 mFacing = WEST;
-  INT16 dDegAngle;
   DOUBLE angle;
 
   if (test_x == 0) {
@@ -6313,9 +6288,6 @@ UINT8 atan8(INT16 sXPos, INT16 sYPos, INT16 sXPos2, INT16 sYPos2) {
   }
 
   angle = atan2(test_x, test_y);
-
-  dDegAngle = (INT16)(angle * 180 / PI);
-  // sprintf( gDebugStr, "Move Angle: %d", (int)dDegAngle );
 
   do {
     if (angle >= -PI * .375 && angle <= -PI * .125) {
@@ -6867,7 +6839,6 @@ void EVENT_SoldierBeginBladeAttack(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, 
   // UINT32 uiMercFlags;
   UINT16 usSoldierIndex;
   UINT8 ubTDirection;
-  BOOLEAN fChangeDirection = FALSE;
   ROTTING_CORPSE *pCorpse;
 
   // Increment the number of people busy doing stuff because of an attack
@@ -7256,7 +7227,6 @@ UINT32 SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVict
                          INT16 sStatus) {
   UINT32 uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
   UINT8 ubBelowOKlife, ubPtsLeft;
-  BOOLEAN fRanOut = FALSE;
 
   if (pVictim->bBleeding < 1 && pVictim->bLife >= OKLIFE) {
     return (0);  // nothing to do, shouldn't have even been called!
@@ -7326,7 +7296,6 @@ UINT32 SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVict
 
     if (uiMedcost > (UINT32)sKitPts)  // if we can't afford this
     {
-      fRanOut = TRUE;
       uiMedcost = sKitPts;       // what CAN we afford?
       uiActual = uiMedcost * 2;  // give double this as aid
     }
@@ -7335,7 +7304,6 @@ UINT32 SoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVict
 
     if (uiMedcost > (UINT32)sKitPts)  // can't afford it
     {
-      fRanOut = TRUE;
       uiMedcost = uiActual = sKitPts;  // recalc cost AND aid
     }
   }
@@ -8027,7 +7995,6 @@ void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT
   // uses of this function, we should be able to use just the first frame...
 
   if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->usNumberOfObjects) {
-    int i = 0;
   }
 
   pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->pETRLEObject[pSoldier->usAniFrame]);
@@ -8177,8 +8144,6 @@ INT32 CheckBleeding(struct SOLDIERTYPE *pSoldier) {
 }
 
 void SoldierBleed(struct SOLDIERTYPE *pSoldier, BOOLEAN fBandagedBleed) {
-  INT8 bOldLife;
-
   // OK, here make some stuff happen for bleeding
   // A banaged bleed does not show damage taken , just through existing bandages
 
@@ -8193,8 +8158,6 @@ void SoldierBleed(struct SOLDIERTYPE *pSoldier, BOOLEAN fBandagedBleed) {
       SetInfoChar(pSoldier->ubID);
     }
   }
-
-  bOldLife = pSoldier->bLife;
 
   // If we are already dead, don't show damage!
   if (!fBandagedBleed) {

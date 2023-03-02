@@ -348,7 +348,6 @@ void ValidateSkillsList(void) {
 void CreatePlayerSkills(void) {
   // this function will 'roll a die' and decide if any attitude does exists
   INT32 iDiceValue = 0;
-  INT32 iCounter = 0;
 
   ValidateSkillsList();
 

@@ -986,8 +986,6 @@ void PhysicsResolveCollision(REAL_OBJECT *pObject, vector_3 *pVelocity, vector_3
 BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
   struct LEVELNODE *pNode;
   INT16 sNewGridNo, sTileIndex;
-  ETRLEObject *pTrav;
-  struct VObject *hVObject;
 
   // Determine new gridno
   sNewGridNo = MAPROWCOLTOPOS(((INT16)pObject->Position.y / CELL_Y_SIZE),
@@ -1102,10 +1100,6 @@ BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
   if (pObject->fVisible) {
     if (pObject->Obj.usItem != MORTAR_SHELL || pObject->ubActionCode != THROW_ARM_ITEM) {
       if (pObject->pNode != NULL) {
-        // OK, get offsets
-        hVObject = gTileDatabase[pObject->pNode->usIndex].hTileSurface;
-        pTrav = &(hVObject->pETRLEObject[gTileDatabase[pObject->pNode->usIndex].usRegionIndex]);
-
         // Add new object / update position
         // Update position data
         pObject->pNode->sRelativeX = (INT16)pObject->Position.x;  // + pTrav->sOffsetX;
@@ -1124,53 +1118,8 @@ BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
   return (TRUE);
 }
 
-#if 0
-{
-	struct LEVELNODE *pNode;
-	INT16			sNewGridNo;
-
-	//Determine new gridno
-	sNewGridNo = MAPROWCOLTOPOS( ( pObject->Position.y / CELL_Y_SIZE ), ( pObject->Position.x / CELL_X_SIZE ) );
-
-	// Look at old gridno
-	if ( sNewGridNo != pObject->sGridNo )
-	{
-		// We're at a new gridno!
-
-		// First find levelnode of our object and delete
-		pNode = gpWorldLevelData[ pObject->sGridNo ].pStructHead;
-
-		// LOOP THORUGH OBJECT LAYER
-		while( pNode != NULL )
-		{
-			if ( pNode->uiFlags & LEVELNODE_PHYSICSOBJECT )
-			{
-				if ( pNode->iPhysicsObjectID == pObject->iID )
-				{
-					RemoveStruct( pObject->sGridNo, pNode->usIndex );
-					break;
-				}
-			}
-
-			pNode = ppNode->pNext;
-		}
-
-		// Set new gridno, add
-	}
-	// Add new object / update position
-
-}
-#endif
-
 void ObjectHitWindow(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth,
                      BOOLEAN fLargeForce) {
-  EV_S_WINDOWHIT SWindowHit;
-  SWindowHit.sGridNo = sGridNo;
-  SWindowHit.usStructureID = usStructureID;
-  SWindowHit.fBlowWindowSouth = fBlowWindowSouth;
-  SWindowHit.fLargeForce = fLargeForce;
-  // AddGameEvent( S_WINDOWHIT, 0, &SWindowHit );
-
   WindowHit(sGridNo, usStructureID, fBlowWindowSouth, fLargeForce);
 }
 
@@ -1266,7 +1215,6 @@ INT16 FindFinalGridNoGivenDirectionGridNoForceAngle(INT16 sSrcGridNo, INT16 sGri
                                                     struct OBJECTTYPE *pItem) {
   vector_3 vDirNormal, vPosition, vForce;
   INT16 sDestX, sDestY, sSrcX, sSrcY;
-  real dRange;
   INT16 sEndGridNo;
 
   // Get XY from gridno
@@ -1288,9 +1236,6 @@ INT16 FindFinalGridNoGivenDirectionGridNoForceAngle(INT16 sSrcGridNo, INT16 sGri
 
   // From degrees, calculate Z portion of normal
   vDirNormal.z = (float)sin(dzDegrees);
-
-  // Get range
-  dRange = (float)GetRangeInCellCoordsFromGridNoDiff(sGridNo, sSrcGridNo);
 
   // Now use a force
   vForce.x = dForce * vDirNormal.x;

@@ -394,7 +394,6 @@ void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, IN
 void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
                        BOOLEAN fAutoFace) {
   BOOLEAN fDoFace = FALSE;
-  INT32 iFaceIndex = -1;
   UINT8 ubVehicleType = 0;
 
   if (pSoldier->bActive) {

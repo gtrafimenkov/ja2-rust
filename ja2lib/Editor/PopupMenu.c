@@ -156,11 +156,11 @@ void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection) {
   gPopup.ubColumns = 1;
   gPopup.ubMaxEntriesPerColumn = gPopup.ubNumEntries;
   usMenuHeight = gPopup.ubNumEntries * gusEntryHeight + 3;
-  while (usMenuHeight >= usY && (ubDirection == DIR_UPLEFT || ubDirection == DIR_UPRIGHT) ||
-         480 - usMenuHeight >= usY &&
-             (ubDirection == DIR_DOWNLEFT ||
-              ubDirection == DIR_DOWNRIGHT)) {  // menu has too many entries.  Increase the number
-                                                // of columns until the height is
+  while ((usMenuHeight >= usY && (ubDirection == DIR_UPLEFT || ubDirection == DIR_UPRIGHT)) ||
+         (480 - usMenuHeight >= usY &&
+          (ubDirection == DIR_DOWNLEFT || ubDirection == DIR_DOWNRIGHT))) {
+    // menu has too many entries.  Increase the number
+    // of columns until the height is
     // less than the max height.
     gPopup.ubMaxEntriesPerColumn =
         (gPopup.ubNumEntries + gPopup.ubColumns) / (gPopup.ubColumns + 1);
@@ -343,8 +343,8 @@ void PopupMenuHandle() {
   // Check terminating conditions for persistant states.
   if (gfLeftButtonState && gPopup.ubActiveType == POPUP_ACTIVETYPE_PERSISTANT)
     fWaitingForLButtonRelease = TRUE;
-  if (gfLeftButtonState && gPopup.ubActiveType == POPUP_ACTIVETYPE_PERSISTANT ||
-      !gfLeftButtonState && gPopup.ubActiveType == POPUP_ACTIVETYPE_NONPERSISTANT) {
+  if ((gfLeftButtonState && gPopup.ubActiveType == POPUP_ACTIVETYPE_PERSISTANT) ||
+      (!gfLeftButtonState && gPopup.ubActiveType == POPUP_ACTIVETYPE_NONPERSISTANT)) {
     // Selection conditions via mouse have been met whether the mouse is in the
     // menu region or not.
     gPopup.ubSelectedIndex = GetPopupIndexFromMousePosition();

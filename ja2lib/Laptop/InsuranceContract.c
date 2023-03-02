@@ -307,7 +307,6 @@ void RenderInsuranceContract() {
   INT16 sMercID;
   INT16 sNextMercID;
   UINT16 usPosX;
-  BOOLEAN fIsThereAnyAimMercs = FALSE;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   SetFontShadow(INS_FONT_SHADOW);
@@ -1002,8 +1001,6 @@ void CreateDestroyInsuranceContractFormButtons(BOOLEAN fCreate) {
 }
 
 void HandleAcceptButton(UINT8 ubSoldierID, UINT8 ubFormID) {
-  INT32 iAmountOfMoneyTransfer = -1;
-
   // passed in either 1,2,3 should be 0,1,2
   ubFormID--;
 

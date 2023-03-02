@@ -931,7 +931,6 @@ void DeleteStructureFromTile(
 BOOLEAN DeleteStructureFromWorld(
     struct STRUCTURE *pStructure) {  // removes all of the struct STRUCTURE elements
                                      // for a structure from the world
-  MAP_ELEMENT *pBaseMapElement;
   struct STRUCTURE *pBaseStructure;
   DB_STRUCTURE_TILE **ppTile;
   struct STRUCTURE *pCurrent;
@@ -939,7 +938,6 @@ BOOLEAN DeleteStructureFromWorld(
   UINT8 ubNumberOfTiles;
   INT16 sBaseGridNo, sGridNo;
   UINT16 usStructureID;
-  BOOLEAN fMultiStructure;
   BOOLEAN fRecompileMPs;
   BOOLEAN fRecompileExtraRadius;  // for doors... yuck
   INT16 sCheckGridNo;
@@ -950,7 +948,6 @@ BOOLEAN DeleteStructureFromWorld(
   CHECKF(pBaseStructure);
 
   usStructureID = pBaseStructure->usStructureID;
-  fMultiStructure = ((pBaseStructure->fFlags & STRUCTURE_MULTI) != 0);
   fRecompileMPs =
       ((gsRecompileAreaLeft != 0) && !((pBaseStructure->fFlags & STRUCTURE_MOBILE) != 0));
   if (fRecompileMPs) {
@@ -959,7 +956,6 @@ BOOLEAN DeleteStructureFromWorld(
     fRecompileExtraRadius = FALSE;
   }
 
-  pBaseMapElement = &gpWorldLevelData[pBaseStructure->sGridNo];
   ppTile = pBaseStructure->pDBStructureRef->ppTile;
   sBaseGridNo = pBaseStructure->sGridNo;
   ubNumberOfTiles = pBaseStructure->pDBStructureRef->pDBStructure->ubNumberOfTiles;
@@ -1594,7 +1590,6 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
   INT16 sOffsetX;
   INT16 sOffsetY;
   UINT16 usWidth;
-  UINT16 usHeight;
   struct DB_STRUCTURE_REF *pDBStructureRef;
   struct DB_STRUCTURE *pDBStructure = NULL;
   INT16 sSTIStep = 0;
@@ -1710,9 +1705,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
             sOffsetX = hVObject->pETRLEObject[uiLoop].sOffsetX;
             sOffsetY = hVObject->pETRLEObject[uiLoop].sOffsetY;
             usWidth = hVObject->pETRLEObject[uiLoop].usWidth;
-            usHeight = hVObject->pETRLEObject[uiLoop].usHeight;
             if (pDBStructure->fFlags & (STRUCTURE_MOBILE | STRUCTURE_CORPSE)) {
-              UINT32 i = 0;
               // adjust for the difference between the animation and structure base tile
 
               // if (pDBStructure->fFlags & (STRUCTURE_MOBILE ) )

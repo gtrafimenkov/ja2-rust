@@ -545,7 +545,6 @@ void CompileWorldTerrainIDs(void) {
 
 void CompileTileMovementCosts(UINT16 usGridNo) {
   UINT8 ubTerrainID;
-  TILE_ELEMENT TileElem;
   struct LEVELNODE *pLand;
 
   struct STRUCTURE *pStructure;
@@ -587,10 +586,6 @@ void CompileTileMovementCosts(UINT16 usGridNo) {
     // consider the land
     pLand = gpWorldLevelData[usGridNo].pLandHead;
     if (pLand != NULL) {
-      // Set TEMPORARY cost here
-      // Get from tile database
-      TileElem = gTileDatabase[pLand->usIndex];
-
       // Get terrain type
       ubTerrainID = gpWorldLevelData[usGridNo].ubTerrainID;  // = GetTerrainType( (INT16)usGridNo );
 
@@ -1876,9 +1871,6 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   CHAR8 szDirFilename[50];
   CHAR8 szFilename[40];
   UINT8 ubMinorMapVersion;
-
-  BOOLEAN fLegacyMap;
-  UINT32 uiSoldierSize;
 
   // Make sure the file exists... if not, then return false
   strcpy(szFilename, pSector);
@@ -3167,10 +3159,6 @@ void CalculateWorldWireFrameTiles(BOOLEAN fForce) {
   // Create world randomly from tiles
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (gpWorldLevelData[cnt].uiFlags & MAPELEMENT_RECALCULATE_WIREFRAMES || fForce) {
-      if (cnt == 8377) {
-        int i = 0;
-      }
-
       // Turn off flag
       gpWorldLevelData[cnt].uiFlags &= (~MAPELEMENT_RECALCULATE_WIREFRAMES);
 
@@ -3534,8 +3522,8 @@ void LoadMapLights(INT8 **hBuffer) {
     // ATE: Don't add ANY lights of mapscreen util is on
     if (iLSprite != -1 && guiCurrentScreen != MAPUTILITY_SCREEN) {
       if (!gfCaves || gfEditMode) {
-        if (gfEditMode || TmpLight.uiFlags & LIGHT_PRIMETIME && fPrimeTime ||
-            TmpLight.uiFlags & LIGHT_NIGHTTIME && fNightTime ||
+        if (gfEditMode || (TmpLight.uiFlags & LIGHT_PRIMETIME && fPrimeTime) ||
+            (TmpLight.uiFlags & LIGHT_NIGHTTIME && fNightTime) ||
             !(TmpLight.uiFlags &
               (LIGHT_PRIMETIME | LIGHT_NIGHTTIME))) {  // power only valid lights.
           LightSpritePower(iLSprite, TRUE);

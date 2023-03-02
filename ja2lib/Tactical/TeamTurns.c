@@ -111,10 +111,6 @@ BOOLEAN BloodcatsPresent(void) {
 }
 
 void StartPlayerTeamTurn(BOOLEAN fDoBattleSnd, BOOLEAN fEnteringCombatMode) {
-  INT32 cnt;
-  //	struct SOLDIERTYPE		*pSoldier;
-  //	EV_S_BEGINTURN	SBeginTurn;
-
   // Start the turn of player charactors
 
   //
@@ -122,8 +118,6 @@ void StartPlayerTeamTurn(BOOLEAN fDoBattleSnd, BOOLEAN fEnteringCombatMode) {
   //
   // make sure set properly in gTacticalStatus:
   gTacticalStatus.ubCurrentTeam = OUR_TEAM;
-
-  cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
 
   InitPlayerUIBar(FALSE);
 
@@ -1341,14 +1335,10 @@ BOOLEAN InterruptDuel(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponen
 
 void DeleteFromIntList(UINT8 ubIndex, BOOLEAN fCommunicate) {
   UINT8 ubLoop;
-  UINT8 ubID;
 
   if (ubIndex > gubOutOfTurnPersons) {
     return;
   }
-
-  // remember who we're getting rid of
-  ubID = gubOutOfTurnOrder[ubIndex];
 
 #ifdef DEBUG_INTERRUPTS
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("INTERRUPT: removing ID %d", ubID));

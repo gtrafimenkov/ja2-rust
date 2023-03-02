@@ -17,6 +17,11 @@
 #include "Utils/DebugControl.h"
 #include "Utils/Message.h"
 
+#ifdef __GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+#endif
+
 // Defines for Anim inst reading, taken from orig Jagged
 #define ANIMFILENAME "BINARYDATA\\ja2bin.dat"
 
@@ -5551,14 +5556,11 @@ UINT16 gusQueenMonsterSpitAnimPerDir[] = {
 UINT16 DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
   UINT16 usAnimSurface;
   UINT16 usAltAnimSurface;
-  UINT8 ubBodyType;
   UINT16 usItem;
   UINT8 ubWaterHandIndex = 1;
   INT32 cnt;
   BOOLEAN fAdjustedForItem = FALSE;
   UINT16 usNewAnimState;
-
-  ubBodyType = pSoldier->ubBodyType;
 
   if (SubstituteBodyTypeAnimation(pSoldier, usAnimState, &usNewAnimState)) {
     usAnimState = usNewAnimState;
@@ -5660,7 +5662,7 @@ UINT16 DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usA
     // ADJUST BASED ON ITEM IN HAND....
     usItem = pSoldier->inv[HANDPOS].usItem;
 
-    if (!(Item[usItem].usItemClass == IC_GUN) && !(Item[usItem].usItemClass == IC_LAUNCHER) ||
+    if ((!(Item[usItem].usItemClass == IC_GUN) && !(Item[usItem].usItemClass == IC_LAUNCHER)) ||
         usItem == ROCKET_LAUNCHER) {
       if (usAnimState == STANDING) {
         usAnimSurface = gusNothingBreath[pSoldier->ubBodyType];
@@ -5748,3 +5750,7 @@ UINT16 GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimSta
 
   return (usAnimSurface);
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

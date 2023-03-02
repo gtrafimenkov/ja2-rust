@@ -40,6 +40,13 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 
+#ifdef __GCC
+// since some of the code is not complied on Linux
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 #define MAX_INTTILE_STACK 10
 
 typedef struct {
@@ -937,3 +944,7 @@ void CycleIntTileFindStack(UINT16 usMapPos) {
     gCurIntTileStack.bCur = 0;
   }
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

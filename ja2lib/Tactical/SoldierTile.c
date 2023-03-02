@@ -186,7 +186,6 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
   UINT8 ubPerson;
   INT16 sTempDestGridNo;
   INT16 sNewGridNo;
-  BOOLEAN fSwapInDoor = FALSE;
 
   if (sGridNo == NOWHERE) {
     return (MOVE_TILE_CLEAR);
@@ -245,7 +244,6 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
                                    gubWorldMovementCosts[sGridNo][bDirection][pSoldier->bLevel],
                                    (BOOLEAN)(pSoldier->bTeam == gbPlayerNum),
                                    NULL) == TRAVELCOST_DOOR) {
-                  fSwapInDoor = TRUE;
                 }
 
                 // If we are to swap and we're near a door, open door first and then close it...?

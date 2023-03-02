@@ -129,8 +129,8 @@ struct LEVELNODE *GetVerticalWall(UINT32 iMapIndex) {
   while (pStruct) {
     if (pStruct->usIndex != NO_TILE) {
       GetTileType(pStruct->usIndex, &uiTileType);
-      if (uiTileType >= FIRSTWALL && uiTileType <= LASTWALL ||
-          uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR) {
+      if ((uiTileType >= FIRSTWALL && uiTileType <= LASTWALL) ||
+          (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)) {
         GetWallOrientation(pStruct->usIndex, &usWallOrientation);
         if (usWallOrientation == INSIDE_TOP_RIGHT || usWallOrientation == OUTSIDE_TOP_RIGHT) {
           return pStruct;
@@ -150,8 +150,8 @@ struct LEVELNODE *GetHorizontalWall(UINT32 iMapIndex) {
   while (pStruct) {
     if (pStruct->usIndex != NO_TILE) {
       GetTileType(pStruct->usIndex, &uiTileType);
-      if (uiTileType >= FIRSTWALL && uiTileType <= LASTWALL ||
-          uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR) {
+      if ((uiTileType >= FIRSTWALL && uiTileType <= LASTWALL) ||
+          (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)) {
         GetWallOrientation(pStruct->usIndex, &usWallOrientation);
         if (usWallOrientation == INSIDE_TOP_LEFT || usWallOrientation == OUTSIDE_TOP_LEFT) {
           return pStruct;
@@ -340,7 +340,7 @@ void RestoreWalls(UINT32 iMapIndex) {
   // is here.  We will hook into the smart wall method by tricking it into using the local wall
   // type, but only if we have adjacent walls.
   fDone = FALSE;
-  if (pWall = GetHorizontalWall(iMapIndex - 1)) fDone = TRUE;
+  if ((pWall = GetHorizontalWall(iMapIndex - 1))) fDone = TRUE;
   if (!fDone && (pWall = GetHorizontalWall(iMapIndex + 1))) fDone = TRUE;
   if (!fDone && (pWall = GetVerticalWall(iMapIndex - WORLD_COLS))) fDone = TRUE;
   if (!fDone && (pWall = GetVerticalWall(iMapIndex + WORLD_COLS))) fDone = TRUE;
@@ -378,12 +378,12 @@ UINT16 GetWallClass(struct LEVELNODE *pWall) {
 
 UINT16 GetVerticalWallClass(UINT16 iMapIndex) {
   struct LEVELNODE *pWall;
-  if (pWall = GetVerticalWall(iMapIndex)) return GetWallClass(pWall);
+  if ((pWall = GetVerticalWall(iMapIndex))) return GetWallClass(pWall);
   return 0xffff;
 }
 
 UINT16 GetHorizontalWallClass(UINT16 iMapIndex) {
   struct LEVELNODE *pWall;
-  if (pWall = GetVerticalWall(iMapIndex)) return GetWallClass(pWall);
+  if ((pWall = GetVerticalWall(iMapIndex))) return GetWallClass(pWall);
   return 0xffff;
 }

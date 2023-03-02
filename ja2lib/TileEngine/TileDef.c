@@ -318,9 +318,6 @@ void CreateTileDatabase() {
             if (TileSurf->vo->ppZStripInfo[cnt2] != NULL) {
               TileElement.uiFlags |= MULTI_Z_TILE;
             }
-          } else {
-            // Ate test to see if problems is gone
-            int i = 0;
           }
         }
 

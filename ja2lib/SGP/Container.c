@@ -684,7 +684,6 @@ BOOLEAN SwapListNode(HLIST hList, void *pdata, UINT32 uiPos) {
   BYTE *pvoid;
   UINT32 uiOffsetSrc;
   BYTE *pbyte;
-  BYTE *pSrc;
 
   // cannot check for invalid handle, only 0
   if (hList == NULL) {
@@ -718,7 +717,6 @@ BOOLEAN SwapListNode(HLIST hList, void *pdata, UINT32 uiPos) {
   pbyte = (BYTE *)hList;
   pbyte += uiOffsetSrc;
   pvoid = pbyte;
-  pSrc = (BYTE *)pdata;
 
   // possible overlap, use memmove()
   memmove(pvoid, pdata, pTemp_cont->uiSiz_of_elem);
@@ -935,7 +933,6 @@ HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
   QueueHeader *pTemp_cont;
   UINT32 uiMax_size;
   UINT32 uiSize_of_each;
-  UINT32 uiTotal;
   UINT32 uiNew_size;
   UINT32 uiHead;
   UINT32 uiTail;
@@ -960,7 +957,6 @@ HQUEUE AddtoQueue(HQUEUE hQueue, void *pdata) {
   // assign some temporary variables
   fresize = FALSE;
   pTemp_cont = (QueueHeader *)hQueue;
-  uiTotal = pTemp_cont->uiTotal_items;
   uiSize_of_each = pTemp_cont->uiSiz_of_elem;
   uiMax_size = pTemp_cont->uiMax_size;
   uiHead = pTemp_cont->uiHead;
@@ -1175,7 +1171,6 @@ HLIST AddtoList(HLIST hList, void *pdata, UINT32 uiPos) {
   ListHeader *pTemp_cont;
   UINT32 uiMax_size;
   UINT32 uiSize_of_each;
-  UINT32 uiTotal;
   UINT32 uiNew_size;
   UINT32 uiHead;
   UINT32 uiTail;
@@ -1210,7 +1205,6 @@ HLIST AddtoList(HLIST hList, void *pdata, UINT32 uiPos) {
     DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "There are not enough elements in the list");
     return NULL;
   }
-  uiTotal = pTemp_cont->uiTotal_items;
   uiSize_of_each = pTemp_cont->uiSiz_of_elem;
   uiMax_size = pTemp_cont->uiMax_size;
   uiHead = pTemp_cont->uiHead;
@@ -1339,13 +1333,10 @@ BOOLEAN RemfromList(HLIST hList, void *pdata, UINT32 uiPos) {
   ListHeader *pTemp_cont;
   UINT32 uiMax_size;
   UINT32 uiSize_of_each;
-  UINT32 uiTotal;
   UINT32 uiHead;
   UINT32 uiTail;
   UINT32 uiOffsetSrc;
   UINT32 uiOffsetDst;
-  UINT32 uiFinalLoc = 0;
-  BOOLEAN fTail_check = FALSE;
 
   // check for invalid handle = 0
   if (hList == NULL) {
@@ -1376,7 +1367,6 @@ BOOLEAN RemfromList(HLIST hList, void *pdata, UINT32 uiPos) {
     return FALSE;
   }
 
-  uiTotal = pTemp_cont->uiTotal_items;
   uiSize_of_each = pTemp_cont->uiSiz_of_elem;
   uiMax_size = pTemp_cont->uiMax_size;
   uiHead = pTemp_cont->uiHead;
@@ -1413,7 +1403,6 @@ BOOLEAN RemfromList(HLIST hList, void *pdata, UINT32 uiPos) {
         DbgMessage(TOPIC_LIST_CONTAINERS, DBG_LEVEL_0, "Could not store the data in list");
         return FALSE;
       }
-      uiFinalLoc = uiOffsetSrc;
     } else {
       uiOffsetSrc = sizeof(ListHeader);
       uiOffsetDst = uiOffsetSrc + uiSize_of_each;
@@ -1469,12 +1458,10 @@ BOOLEAN RemfromOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
   OrdListHeader *pTemp_cont;
   UINT32 uiMax_size;
   UINT32 uiSize_of_each;
-  UINT32 uiTotal;
   UINT32 uiHead;
   UINT32 uiTail;
   UINT32 uiOffsetSrc;
   UINT32 uiOffsetDst;
-  UINT32 uiFinalLoc = 0;
 
   // check for invalid handle = 0
   if (hOrdList == NULL) {
@@ -1510,7 +1497,6 @@ BOOLEAN RemfromOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
     return FALSE;
   }
 
-  uiTotal = pTemp_cont->uiTotal_items;
   uiSize_of_each = pTemp_cont->uiSiz_of_elem;
   uiMax_size = pTemp_cont->uiMax_size;
   uiHead = pTemp_cont->uiHead;
@@ -1552,7 +1538,6 @@ BOOLEAN RemfromOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
         return FALSE;
       }
 
-      uiFinalLoc = uiOffsetSrc;
     } else {
       uiOffsetSrc = sizeof(OrdListHeader);
       uiOffsetDst = uiOffsetSrc + uiSize_of_each;
@@ -1613,7 +1598,6 @@ HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
   OrdListHeader *pTemp_cont;
   UINT32 uiMax_size;
   UINT32 uiSize_of_each;
-  UINT32 uiTotal;
   UINT32 uiNew_size;
   UINT32 uiHead;
   UINT32 uiTail;
@@ -1648,7 +1632,6 @@ HORDLIST StoreinOrdList(HORDLIST hOrdList, void *pdata, UINT32 uiPos) {
     return NULL;
   }
 
-  uiTotal = pTemp_cont->uiTotal_items;
   uiSize_of_each = pTemp_cont->uiSiz_of_elem;
   uiMax_size = pTemp_cont->uiMax_size;
   uiHead = pTemp_cont->uiHead;
@@ -1801,8 +1784,6 @@ HORDLIST AddtoOrdList(HORDLIST hOrdList, void *pdata) {
   void *pTemp_data;
   UINT32 uiOffset;
   BOOLEAN fContinue = FALSE;
-  BOOLEAN fLessThan = FALSE;
-  BOOLEAN fMoreThan = FALSE;
   INT8 sbResult;
   UINT32 uiPosition;
 

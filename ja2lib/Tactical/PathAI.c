@@ -369,7 +369,6 @@ static UINT32 guiPlottedPath[256];
 UINT32 guiPathingData[256];
 static INT32 giPathDataSize;
 static INT32 giPlotCnt;
-static UINT32 guiEndPlotGridNo;
 
 static INT32 dirDelta[8] = {
     -MAPWIDTH,     // N
@@ -468,15 +467,9 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
   UINT8 ubCurAPCost, ubAPCost;
   UINT8 ubNewAPCost = 0;
 #ifdef VEHICLE
-  // BOOLEAN fTurnSlow = FALSE;
-  // BOOLEAN fReverse = FALSE; // stuff for vehicles turning
-  BOOLEAN fMultiTile, fVehicle;
-  // INT32 iLastDir, iPrevToLastDir;
-  // INT8 bVehicleCheckDir;
-  // UINT16 adjLoc;
+  BOOLEAN fMultiTile;
   struct STRUCTURE_FILE_REF *pStructureFileRef = NULL;
   UINT16 usAnimSurface;
-  // INT32 iCnt2, iCnt3;
 #endif
 
   INT32 iLastDir = 0;
@@ -499,7 +492,6 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
   BOOLEAN fVisitSpotsOnlyOnce;
   INT32 iOriginationX, iOriginationY, iX, iY;
 
-  BOOLEAN fTurnBased;
   BOOLEAN fPathingForPlayer;
   INT32 iDoorGridNo = -1;
   BOOLEAN fDoorIsObstacleIfClosed = 0;  // if false, door is obstacle if it is open
@@ -525,7 +517,6 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
   UINT16 usCounter = 0;
 #endif
 
-  fVehicle = FALSE;
   iOriginationX = iOriginationY = 0;
   iOrigination = (INT32)s->sGridNo;
 
@@ -551,8 +542,6 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
   if (gubGlobalPathFlags) {
     fFlags |= gubGlobalPathFlags;
   }
-
-  fTurnBased = ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT));
 
   fPathingForPlayer = ((s->bTeam == gbPlayerNum) && (!gTacticalStatus.fAutoBandageMode) &&
                        !(s->uiStatusFlags & SOLDIER_PCUNDERAICONTROL));
@@ -647,23 +636,8 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
     pStructureFileRef = GetAnimationStructureRef(s->ubID, usAnimSurface, usMovementMode);
 
     if (pStructureFileRef) {
-      fVehicle = ((s->uiStatusFlags & SOLDIER_VEHICLE) != 0);
-
       fContinuousTurnNeeded =
           ((s->uiStatusFlags & (SOLDIER_MONSTER | SOLDIER_ANIMAL | SOLDIER_VEHICLE)) != 0);
-
-      /*
-      if (fVehicle && s->bReverse)
-      {
-              fReverse = TRUE;
-      }
-      */
-      /*
-      if (fVehicle || s->ubBodyType == COW || s->ubBodyType == BLOODCAT) // or a vehicle
-      {
-              fTurnSlow = TRUE;
-      }
-      */
       if (gfEstimatePath) {
         usOKToAddStructID = IGNORE_PEOPLE_STRUCTURE_ID;
       } else if (s->pLevelNode != NULL && s->pLevelNode->pStructureData != NULL) {
@@ -1946,7 +1920,6 @@ INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, IN
   INT16 sExtraCostStand, sExtraCostSwat, sExtraCostCrawl;
   INT32 iLastGrid;
   INT32 iCnt;
-  INT16 sOldGrid = 0;
   INT16 sFootOrderIndex;
   INT16 sSwitchValue;
   INT16 sFootOrder[5] = {GREENSTEPSTART, PURPLESTEPSTART, BLUESTEPSTART, ORANGESTEPSTART,
@@ -2024,8 +1997,6 @@ INT16 PlotPath(struct SOLDIERTYPE *pSold, INT16 sDestGridno, INT8 bCopyRoute, IN
       sExtraCostSwat = 0;
       sExtraCostCrawl = 0;
       // what is the next gridno in the path?
-      sOldGrid = sTempGrid;
-
       sTempGrid = NewGridNo(sTempGrid, (INT16)DirectionInc((UINT16)guiPathingData[iCnt]));
 
       // Get switch value...

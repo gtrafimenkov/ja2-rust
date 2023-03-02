@@ -467,7 +467,7 @@ BOOLEAN EnoughPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost,
 }
 
 void DeductPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost) {
-  INT16 sNewAP = 0, sNewBP = 0;
+  INT16 sNewAP = 0;
   INT8 bNewBreath;
 
   // in real time, there IS no AP cost, (only breath cost)
@@ -605,7 +605,6 @@ INT16 AdjustBreathPts(struct SOLDIERTYPE *pSold, INT16 sBPCost) {
 
 void UnusedAPsToBreath(struct SOLDIERTYPE *pSold) {
   INT16 sUnusedAPs, sBreathPerAP = 0, sBreathChange, sRTBreathMod;
-  BOOLEAN fAnimTypeFound = FALSE;
 
   // Note to Andrew (or whomever else it may concern):
 

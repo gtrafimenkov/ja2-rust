@@ -66,7 +66,6 @@ void VerifyTownTrainingIsPaidFor(void);
 #endif
 
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY) {
-  SECTORINFO *pSectorInfo = &(SectorInfo[SECTOR(sMapX, sMapY)]);
   UINT8 ubMilitiaTrained = 0;
   BOOLEAN fFoundOne;
   INT16 sNeighbourX, sNeighbourY;
@@ -630,13 +629,11 @@ void HandleMilitiaStatusInCurrentMapBeforeLoadingNewMap(void) {
 }
 
 BOOLEAN CanNearbyMilitiaScoutThisSector(INT16 sSectorX, INT16 sSectorY) {
-  INT16 sSectorValue = 0, sSector = 0;
+  INT16 sSectorValue = 0;
   INT16 sCounterA = 0, sCounterB = 0;
   UINT8 ubScoutingRange = 1;
 
   // get the sector value
-  sSector = sSectorX + sSectorY * MAP_WORLD_X;
-
   for (sCounterA = sSectorX - ubScoutingRange; sCounterA <= sSectorX + ubScoutingRange;
        sCounterA++) {
     for (sCounterB = sSectorY - ubScoutingRange; sCounterB <= sSectorY + ubScoutingRange;

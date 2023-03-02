@@ -312,49 +312,14 @@ void BuildDayAmbientSounds() {
 
 void ForecastDayEvents() {
   UINT32 uiOldDay;
-  UINT32 uiStartTime, uiEndTime;
-  UINT8 ubStormIntensity;
-  //	UINT32 cnt;
 
   // Get current day and see if different
   if ((uiOldDay = GetWorldDay()) != guiEnvDay) {
     // It's a new day, forecast weather
     guiEnvDay = uiOldDay;
 
-    // Set light level changes
-    // BuildDayLightLevels();
-
     // Build ambient sound queues
     BuildDayAmbientSounds();
-
-    // Build weather....
-
-    // ATE: Don't forecast if start of game...
-    if (guiEnvDay > 1) {
-      // Should it rain...?
-      if (Random(100) < 20) {
-        // Add rain!
-        // Between 6:00 and 10:00
-        uiStartTime = (UINT32)(360 + Random(1080));
-        // Between 5 - 15 miniutes
-        uiEndTime = uiStartTime + (5 + Random(10));
-
-        ubStormIntensity = 0;
-
-        // Randomze for a storm!
-        if (Random(10) < 5) {
-          ubStormIntensity = 1;
-        }
-
-        // ATE: Disable RAIN!
-        //			AddSameDayRangedStrategicEvent( EVENT_RAINSTORM, uiStartTime,
-        // uiEndTime
-        //- uiStartTime, ubStormIntensity );
-
-        // AddSameDayStrategicEvent( EVENT_BEGINRAINSTORM, uiStartTime, ubStormIntensity );
-        // AddSameDayStrategicEvent( EVENT_ENDRAINSTORM,		uiEndTime, 0 );
-      }
-    }
   }
 }
 

@@ -36,6 +36,11 @@ static UINT32 guiLooseCursorTimeOfLastUpdate = 0;
 void HandleLooseCursorDraw();
 void HandleLooseCursorHide();
 
+#ifdef __GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+#endif
+
 UICursor gUICursors[NUM_UI_CURSORS] = {
     NO_UICURSOR,
     0,
@@ -644,6 +649,10 @@ UICursor gUICursors[NUM_UI_CURSORS] = {
 
 };
 
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif
+
 UINT32 guiCurUICursor = NO_UICURSOR;
 UINT32 guiOldUICursor = NO_UICURSOR;
 UINT16 gusCurMousePos;
@@ -662,7 +671,7 @@ BOOLEAN SetUICursor(UINT32 uiNewCursor) {
 }
 
 BOOLEAN DrawUICursor() {
-  UINT16 usMapPos;
+  INT16 usMapPos;
   static BOOLEAN fHideCursor = FALSE;
   struct LEVELNODE *pNode;
   UINT16 usTileCursor;

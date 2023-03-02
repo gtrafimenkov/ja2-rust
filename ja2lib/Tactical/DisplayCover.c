@@ -756,7 +756,6 @@ void AddVisibleToSoldierToEachGridNo() {
 void RemoveVisibleGridNoAtSelectedGridNo() {
   UINT32 uiCntX, uiCntY;
   INT8 bVisibleToSoldier;
-  INT16 sGridNo;
   BOOLEAN fRoof;
 
   // make sure to only remove it when its right
@@ -769,7 +768,6 @@ void RemoveVisibleGridNoAtSelectedGridNo() {
     for (uiCntX = 0; uiCntX < DC_MAX_COVER_RANGE; uiCntX++) {
       bVisibleToSoldier = gVisibleToSoldierStruct[uiCntX][uiCntY].bVisibleToSoldier;
       fRoof = gVisibleToSoldierStruct[uiCntX][uiCntY].fRoof;
-      sGridNo = gVisibleToSoldierStruct[uiCntX][uiCntY].sGridNo;
 
       // if there is a valid cover at this gridno
       if (bVisibleToSoldier == DC__SEE_3_STANCE) {

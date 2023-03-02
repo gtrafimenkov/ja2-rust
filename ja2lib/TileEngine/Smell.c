@@ -116,7 +116,7 @@ UINT8 ubBloodGraphicLUT[] = {3, 3, 2, 2, 1, 1, 0, 0};
   }
 
 #define SET_BLOOD_DELAY_TIME(b) \
-  { (b) = BLOOD_DELAY_TIME((UINT8)Random(BLOOD_DELAY_MAX) + 1) | (b & 0xFC); }
+  { (b) = BLOOD_DELAY_TIME(((UINT8)Random(BLOOD_DELAY_MAX) + 1)) | (b & 0xFC); }
 
 #define SET_BLOOD_FLOOR_TYPE(s, ntg) \
   { (s) = BLOOD_FLOOR_TYPE(ntg) | (s & 0xFE); }
@@ -387,8 +387,6 @@ void InternalDropBlood(INT16 sGridNo, INT8 bLevel, UINT8 ubType, UINT8 ubStrengt
 
 void DropBlood(struct SOLDIERTYPE* pSoldier, UINT8 ubStrength, INT8 bVisible) {
   UINT8 ubType;
-  UINT8 ubOldStrength = 0;
-  UINT8 ubNewStrength = 0;
 
   /*
    * Dropping some blood;

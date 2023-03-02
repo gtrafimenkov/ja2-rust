@@ -695,8 +695,8 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
       break;
     default:
       // This case handles jumping the file list to display the file with the letter pressed.
-      if (pEvent->usParam >= 'a' && pEvent->usParam <= 'z' ||
-          pEvent->usParam >= 'A' && pEvent->usParam <= 'Z') {
+      if ((pEvent->usParam >= 'a' && pEvent->usParam <= 'z') ||
+          (pEvent->usParam >= 'A' && pEvent->usParam <= 'Z')) {
         if (pEvent->usParam >= 'A' && pEvent->usParam <= 'Z')  // convert upper case to lower case
           pEvent->usParam += 32;                               // A = 65, a = 97 (difference of 32)
         SetTopFileToLetter((UINT16)pEvent->usParam);
@@ -933,8 +933,8 @@ BOOLEAN ExtractFilenameFromFields() {
 }
 
 BOOLEAN ValidCoordinate() {
-  if (gzFilename[0] >= 'A' && gzFilename[0] <= 'P' ||
-      gzFilename[0] >= 'a' && gzFilename[0] <= 'p') {
+  if ((gzFilename[0] >= 'A' && gzFilename[0] <= 'P') ||
+      (gzFilename[0] >= 'a' && gzFilename[0] <= 'p')) {
     UINT16 usTotal;
     if (gzFilename[1] == '1' && gzFilename[2] >= '0' && gzFilename[2] <= '6') {
       usTotal = (gzFilename[1] - 0x30) * 10 + (gzFilename[2] - 0x30);

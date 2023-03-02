@@ -1320,18 +1320,8 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ)
 }
 
 BOOLEAN DeleteTempItemMapFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
-  UINT8 bSectorId = 0;
-  //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
 
-  // grab the sector id
-  bSectorId = SECTOR(sMapX, sMapY);
-  /*
-          //Convert the current sector location into a file name
-          GetMapFileName( sMapX,sMapY, bMapZ, zTempName, FALSE );
-
-          sprintf( zMapName, "%s\\r_%s", MAPS_DIR, zTempName);
-  */
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Check to see if the file exists
@@ -1791,8 +1781,6 @@ INT16 GetSoldierIDFromAnyMercID(UINT8 ubMercID) {
 BOOLEAN InitTempNpcQuoteInfoForNPCFromTempFile() {
   UINT32 uiNumBytesWritten;
   UINT8 ubCnt;
-  UINT8 ubOne = 1;
-  UINT8 ubZero = 0;
   TempNPCQuoteInfoSave TempNpcQuote[NUM_NPC_QUOTE_RECORDS];
   UINT32 uiSizeOfTempArray = sizeof(TempNPCQuoteInfoSave) * NUM_NPC_QUOTE_RECORDS;
   UINT16 usCnt1;
@@ -1833,8 +1821,6 @@ BOOLEAN InitTempNpcQuoteInfoForNPCFromTempFile() {
 BOOLEAN SaveTempNpcQuoteInfoForNPCToTempFile(UINT8 ubNpcId) {
   UINT32 uiNumBytesWritten;
   UINT8 ubCnt;
-  UINT8 ubOne = 1;
-  UINT8 ubZero = 0;
   TempNPCQuoteInfoSave TempNpcQuote[NUM_NPC_QUOTE_RECORDS];
   UINT32 uiSizeOfTempArray = sizeof(TempNPCQuoteInfoSave) * NUM_NPC_QUOTE_RECORDS;
   UINT32 uiSpotInFile = ubNpcId - FIRST_RPC;
@@ -1879,8 +1865,6 @@ BOOLEAN SaveTempNpcQuoteInfoForNPCToTempFile(UINT8 ubNpcId) {
 BOOLEAN LoadTempNpcQuoteInfoForNPCFromTempFile(UINT8 ubNpcId) {
   UINT32 uiNumBytesRead;
   UINT8 ubCnt;
-  UINT8 ubOne = 1;
-  UINT8 ubZero = 0;
   TempNPCQuoteInfoSave TempNpcQuote[NUM_NPC_QUOTE_RECORDS];
   UINT32 uiSizeOfTempArray = sizeof(TempNPCQuoteInfoSave) * NUM_NPC_QUOTE_RECORDS;
   UINT32 uiSpotInFile = ubNpcId - FIRST_RPC;
@@ -2147,8 +2131,6 @@ BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ,
   UINT32 uiDeathAnim;
   UINT32 uiPossibleDeathAnims[] = {GENERIC_HIT_DEATH, FALLBACK_HIT_DEATH, PRONE_HIT_DEATH,
                                    FLYBACK_HIT_DEATH};
-  const UINT8 ubNumOfDeaths = 4;
-
   // setup the flags for the items and the rotting corpses
   if (uiFlags & ADD_DEAD_SOLDIER_USE_GRIDNO) {
     uiFlagsForWorldItems = 0;

@@ -799,7 +799,6 @@ void RenderSelectedItemBlownUp() {
 
 void RenderEditorInfo() {
   wchar_t FPSText[50];
-  static INT32 iSpewWarning = 0;
   INT16 iMapIndex;
 
   SetFont(FONT12POINT1);
@@ -894,7 +893,7 @@ void ProcessEditorRendering() {
   if (!gfSummaryWindowActive && !gfGotoGridNoUI && !InOverheadMap()) {
     if (gpItem && gsItemGridNo != -1) RenderSelectedItemBlownUp();
     if (iCurrentTaskbar == TASK_MAPINFO) RenderMapEntryPointsAndLights();
-    if (iDrawMode == DRAW_MODE_PLACE_ITEM && eInfo.uiItemType == TBAR_MODE_ITEM_KEYS ||
+    if ((iDrawMode == DRAW_MODE_PLACE_ITEM && eInfo.uiItemType == TBAR_MODE_ITEM_KEYS) ||
         iDrawMode == DRAW_MODE_DOORKEYS)
       RenderDoorLockInfo();
   }

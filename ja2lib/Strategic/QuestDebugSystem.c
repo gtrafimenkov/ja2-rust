@@ -1144,8 +1144,6 @@ void GetUserInput() {
   InputAtom Event;
   UINT8 ubPanelMercShouldUse = WhichPanelShouldTalkingMercUse();
 
-  struct Point MousePos = GetMousePoint();
-
   while (DequeueEvent(&Event)) {
     if (!HandleTextInput(&Event) && Event.usEvent == KEY_DOWN) {
       switch (Event.usParam) {
@@ -1727,7 +1725,6 @@ BOOLEAN CreateDestroyDisplaySelectNpcDropDownBox() {
 }
 
 void DisplaySelectedListBox() {
-  UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_LISTBOX_TEXT) + 2;
   UINT16 usPosX, usPosY;
   struct VObject *hImageHandle;
 
@@ -2131,18 +2128,13 @@ void ScrollAreaMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
 }
 
 void CalcPositionOfNewScrollBoxLocation() {
-  INT16 sMouseXPos, sMouseYPos;
+  INT16 sMouseYPos;
   INT16 sIncrementValue;
   FLOAT dValue;
   INT16 sHeight = 0;
-  //	INT16	sHeightOfScrollBox = (INT16)(gpActiveListBox->usScrollBarHeight /
-  //(FLOAT)(gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usStartIndex ) + .5);
-  INT16 sHeightOfScrollBox =
-      (INT16)(gpActiveListBox->usScrollBarHeight / (FLOAT)(gpActiveListBox->usMaxArrayIndex) + .5);
   INT16 sStartPosOfScrollArea =
       gpActiveListBox->usScrollPosY + gpActiveListBox->usScrollArrowHeight;
 
-  sMouseXPos = gusMouseXPos;
   sMouseYPos = gusMouseYPos;
 
   // if we have to scroll
@@ -2156,77 +2148,9 @@ void CalcPositionOfNewScrollBoxLocation() {
         (INT16)((dValue) * (gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usStartIndex) +
                 .5) +
         gpActiveListBox->usStartIndex;
-    //		sIncrementValue = (INT16)( ( dValue ) * ( gpActiveListBox->usMaxArrayIndex -
-    // gpActiveListBox->usStartIndex ) + .5 );
 
     IncrementActiveDropDownBox(sIncrementValue);
-    /*
-                    //if the mouse was clicked above the scroll box
-                    if( sIncrementValue < gpActiveListBox->sCurSelectedItem )
-                    {
-                            if( ( gpActiveListBox->usItemDisplayedOnTopOfList - sIncrementValue ) <=
-       0 ) gpActiveListBox->usItemDisplayedOnTopOfList = gpActiveListBox->usStartIndex; else
-                                    gpActiveListBox->usItemDisplayedOnTopOfList = sIncrementValue;
-
-                    }
-                    // else the mouse was clicked below the scroll box
-                    else
-                    {
-                            if( sIncrementValue >= ( gpActiveListBox->usMaxArrayIndex -
-       gpActiveListBox->usMaxNumDisplayedItems ) ) gpActiveListBox->usItemDisplayedOnTopOfList =
-       gpActiveListBox->usMaxArrayIndex - gpActiveListBox->usMaxNumDisplayedItems; else
-                                    gpActiveListBox->usItemDisplayedOnTopOfList = sIncrementValue;
-                    }
-
-                    gpActiveListBox->sCurSelectedItem = sIncrementValue;
-    */
   }
-
-  /*
-          if( sMouseYPos < gpActiveListBox->usScrollBoxY )
-          {
-                  if( ( gpActiveListBox->sCurSelectedItem - 10 ) > 0 )
-                          sIncrementValue = 10;
-                  else
-                          sIncrementValue = 1;
-
-                  gpActiveListBox->sCurSelectedItem -= sIncrementValue;
-
-                  //if we dont have to scroll,
-                  if( gpActiveListBox->usNumDisplayedItems < gpActiveListBox->usMaxNumDisplayedItems
-     )
-                  {
-
-                  }
-                  else
-                  {
-                          if( gpActiveListBox->sCurSelectedItem <
-     gpActiveListBox->usItemDisplayedOnTopOfList ) gpActiveListBox->usItemDisplayedOnTopOfList -=
-     sIncrementValue;
-                  }
-          }
-          else if( sMouseYPos > ( gpActiveListBox->usScrollBoxY + sHeightOfScrollBox )
-     )//usScrollBoxEndY
-          {
-                  if( ( gpActiveListBox->sCurSelectedItem + 10 ) <
-     gpActiveListBox->usMaxArrayIndex-1 ) sIncrementValue = 10; else sIncrementValue = 1;
-
-                  gpActiveListBox->sCurSelectedItem += sIncrementValue;
-
-                  //if we dont have to scroll,
-                  if( gpActiveListBox->usNumDisplayedItems < gpActiveListBox->usMaxNumDisplayedItems
-     )
-                  {
-
-                  }
-                  else
-                  {
-                          if( ( gpActiveListBox->sCurSelectedItem -
-     gpActiveListBox->usItemDisplayedOnTopOfList ) >= gpActiveListBox->usNumDisplayedItems )
-                                  gpActiveListBox->usItemDisplayedOnTopOfList += sIncrementValue;
-                  }
-          }
-  */
 
   DisplaySelectedListBox();
 }
@@ -2680,7 +2604,6 @@ void ScrollFactListRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void InitQuestDebugTextInputBoxes() {
-  UINT32 uiStartLoc = 0;
   wchar_t sTemp[640];
   //	wchar_t	sText[ 640 ];
 
@@ -2691,16 +2614,6 @@ void InitQuestDebugTextInputBoxes() {
   SetTextInputRegularColors(2, FONT_WHITE);
   SetTextInputHilitedColors(FONT_WHITE, 2, 141);
   SetCursorColor(Get16BPPColor(FROMRGB(0, 0, 0)));
-
-  //	AddUserInputField( NULL );
-  //	AddUserInputField( FlowerOrderUserTextFieldCallBack );
-
-  /*
-          if( gbCurrentlySelectedCard != -1 )
-          {
-          }
-  */
-
   swprintf(sTemp, ARR_SIZE(sTemp), L"%d", gsQdsEnteringGridNo);
 
   // Text entry field
@@ -3142,9 +3055,6 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
 }
 
 void NpcRecordLogging(UINT8 ubApproach, STR pStringA, ...) {
-  static BOOLEAN fFirstTimeIn = TRUE;
-  //	static UINT32		uiLineNumber = 1;
-  //	static UINT32		uiRecordNumber = 1;
   HWFILE hFile;
   UINT32 uiByteWritten;
   va_list argptr;
@@ -3310,7 +3220,6 @@ void IncrementActiveDropDownBox(INT16 sIncrementValue) {
 
 INT16 IsMercInTheSector(UINT16 usMercID) {
   UINT8 cnt;
-  UINT8 ubCount = 0;
 
   if (usMercID == -1) return (FALSE);
 

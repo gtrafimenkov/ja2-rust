@@ -223,98 +223,114 @@ HELP_SCREEN_BTN_TEXT_RECORD gHelpScreenBtnTextRecordNum[HELP_SCREEN_NUMBER_OF_HE
     // Laptop button record nums
     //	HELP_SCREEN_LAPTOP,
     {
-        HLP_TXT_LAPTOP_BUTTON_1,
-        HLP_TXT_LAPTOP_BUTTON_2,
-        HLP_TXT_LAPTOP_BUTTON_3,
-        HLP_TXT_LAPTOP_BUTTON_4,
-        HLP_TXT_LAPTOP_BUTTON_5,
-        HLP_TXT_LAPTOP_BUTTON_6,
-        HLP_TXT_LAPTOP_BUTTON_7,
-        HLP_TXT_LAPTOP_BUTTON_8,
+        {
+            HLP_TXT_LAPTOP_BUTTON_1,
+            HLP_TXT_LAPTOP_BUTTON_2,
+            HLP_TXT_LAPTOP_BUTTON_3,
+            HLP_TXT_LAPTOP_BUTTON_4,
+            HLP_TXT_LAPTOP_BUTTON_5,
+            HLP_TXT_LAPTOP_BUTTON_6,
+            HLP_TXT_LAPTOP_BUTTON_7,
+            HLP_TXT_LAPTOP_BUTTON_8,
+        },
     },
 
     //	HELP_SCREEN_MAPSCREEN,
     {
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_1,
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_2,
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_3,
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_4,
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_5,
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_6,
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_7,
-        HLP_TXT_WELCOM_TO_ARULCO_BUTTON_8,
+        {
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_1,
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_2,
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_3,
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_4,
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_5,
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_6,
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_7,
+            HLP_TXT_WELCOM_TO_ARULCO_BUTTON_8,
+        },
     },
 
     //	HELP_SCREEN_MAPSCREEN_NO_ONE_HIRED,
     {
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
+        {
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+        },
     },
 
     //	HELP_SCREEN_MAPSCREEN_NOT_IN_ARULCO,
     {
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
+        {
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+        },
     },
 
     //	HELP_SCREEN_MAPSCREEN_SECTOR_INVENTORY,
     {
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
+        {
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+        },
     },
 
     //	HELP_SCREEN_TACTICAL,
     {
-        HLP_TXT_TACTICAL_BUTTON_1,
-        HLP_TXT_TACTICAL_BUTTON_2,
-        HLP_TXT_TACTICAL_BUTTON_3,
-        HLP_TXT_TACTICAL_BUTTON_4,
-        HLP_TXT_TACTICAL_BUTTON_5,
-        HLP_TXT_TACTICAL_BUTTON_6,
-        -1,
-        -1,
+        {
+            HLP_TXT_TACTICAL_BUTTON_1,
+            HLP_TXT_TACTICAL_BUTTON_2,
+            HLP_TXT_TACTICAL_BUTTON_3,
+            HLP_TXT_TACTICAL_BUTTON_4,
+            HLP_TXT_TACTICAL_BUTTON_5,
+            HLP_TXT_TACTICAL_BUTTON_6,
+            -1,
+            -1,
+        },
     },
 
     //	HELP_SCREEN_OPTIONS,
     {
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
+        {
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+        },
     },
 
     //	HELP_SCREEN_LOAD_GAME,
     {
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
+        {
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+        },
     },
 
 };
@@ -615,22 +631,6 @@ BOOLEAN EnterHelpScreen() {
     else
       ButtonList[gHelpScreenDontShowHelpAgainToggle]->uiFlags &= ~BUTTON_CLICKED_ON;
   }
-
-  /*
-          ///creatre a region for the text that says ' [ x ] click to continue seeing ....'
-          iStartLoc = HELPSCREEN_RECORD_SIZE * HLP_TXT_CONSTANT_FOOTER;
-          LoadEncryptedDataFromFile(HELPSCREEN_FILE, zText, iStartLoc, HELPSCREEN_RECORD_SIZE );
-
-          usWidth = StringPixLength( zText, HELP_SCREEN_TEXT_BODY_FONT );
-          usHeight = GetFontHeight( HELP_SCREEN_TEXT_BODY_FONT );
-
-  /*
-          MSYS_DefineRegion( &HelpScreenDontShowHelpAgainToggleTextRegion, usPosX, usPosY,
-  (UINT16)(usPosX+usWidth), (UINT16)(usPosY+usHeight), MSYS_PRIORITY_HIGHEST-1,
-                                                           gHelpScreen.usCursor, MSYS_NO_CALLBACK,
-  HelpScreenDontShowHelpAgainToggleTextRegionCallBack ); MSYS_AddRegion(
-  &HelpScreenDontShowHelpAgainToggleTextRegion );
-  */
 
   // load the help screen background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;

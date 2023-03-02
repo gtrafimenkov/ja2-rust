@@ -816,7 +816,6 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, UINT16 usGridX, UINT16 
   UINT16 usStringLength;
   UINT16 usPixLength;
   wchar_t OneChar[2];
-  INT32 iGrandTotal;
   INT32 iSubTotal;
 
   // Output the qty
@@ -878,7 +877,6 @@ void DisplayPurchasedItems(BOOLEAN fCalledFromOrderPage, UINT16 usGridX, UINT16 
     giGrandTotal = 0;
   } else {
     iSubTotal = 0;
-    iGrandTotal = 0;
   }
 
   if (pBobbyRayPurchase == NULL) {
@@ -1330,7 +1328,6 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
     case BR_DROP_DOWN_DISPLAY: {
       UINT8 i;
       UINT16 usPosY, usPosX;
-      UINT16 usFontHeight = GetFontHeight(BOBBYR_DROPDOWN_FONT);
       struct VObject *hImageHandle;
       struct VObject *hArrowHandle;
 

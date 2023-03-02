@@ -170,7 +170,6 @@ void TrashUndergroundSectorInfo() {
 // changes to the maps, require changes accordingly.
 void BuildUndergroundSectorInfoList() {
   UNDERGROUND_SECTORINFO *curr;
-  SECTORINFO *pSector = NULL;
 
   TrashUndergroundSectorInfo();
 

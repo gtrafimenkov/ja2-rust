@@ -557,7 +557,6 @@ void DisplayEmailHeaders(void) {
 
 void RenderEmail(void) {
   struct VObject *hHandle;
-  INT32 iCounter = 0;
 
   // get and blt the email list background
   GetVideoObject(&hHandle, guiEmailBackground);
@@ -606,11 +605,6 @@ void RenderEmail(void) {
 void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
                              INT32 iDate, INT32 iFirstData, UINT32 uiSecondData) {
   wchar_t pSubject[320];
-  // MessagePtr pMessageList;
-  // MessagePtr pMessage;
-  // wchar_t pMessageString[320];
-  INT32 iPosition = 0;
-  INT32 iCounter = 1;
   Email FakeEmail;
 
   // starts at iSubjectOffset amd goes iSubjectLength, reading in string
@@ -639,11 +633,6 @@ void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 u
 
 void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 iDate) {
   wchar_t pSubject[320];
-  // MessagePtr pMessageList;
-  // MessagePtr pMessage;
-  // wchar_t pMessageString[320];
-  INT32 iPosition = 0;
-  INT32 iCounter = 1;
 
   // starts at iSubjectOffset amd goes iSubjectLength, reading in string
   LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, 640 * (iMessageOffset), 640);
@@ -663,11 +652,6 @@ void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 
 
 void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 iDate) {
   wchar_t pSubject[320];
-  // MessagePtr pMessageList;
-  // MessagePtr pMessage;
-  // wchar_t pMessageString[320];
-  INT32 iPosition = 0;
-  INT32 iCounter = 1;
 
   // starts at iSubjectOffset amd goes iSubjectLength, reading in string
   LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, 640 * (iMessageOffset), 640);
@@ -690,7 +674,6 @@ void AddEmailMessage(INT32 iMessageOffset, INT32 iMessageLength, STR16 pSubject,
   // will add a message to the list of messages
   EmailPtr pEmail = pEmailList;
   EmailPtr pTempEmail = NULL;
-  UINT32 iCounter = 0;
   INT32 iId = 0;
 
   // run through list of messages, get id of oldest message
@@ -780,7 +763,6 @@ void RemoveEmailMessage(INT32 iId) {
   // run through list and remove message, update everyone afterwards
   EmailPtr pEmail = pEmailList;
   EmailPtr pTempEmail = NULL;
-  INT32 iCounter = 0;
 
   // error check
   if (!pEmail) return;
@@ -969,7 +951,6 @@ void SortMessages(INT32 iCriteria) {
   EmailPtr pB = pEmailList;
   CHAR16 pSubjectA[256];
   CHAR16 pSubjectB[256];
-  INT32 iId = 0;
 
   // no messages to sort?
   if ((pA == NULL) || (pB == NULL)) {
@@ -1352,7 +1333,6 @@ void EmailBtnCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iCount;
   PagePtr pPage = pPageList;
   INT32 iId = 0;
-  EmailPtr pEmail = NULL;
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
     return;
   }
@@ -1473,20 +1453,12 @@ void SetUnNewMessages() {
 
 INT32 DisplayEmailMessage(EmailPtr pMail) {
   struct VObject *hHandle;
-  INT32 iCnt = 0;
   INT32 iHeight = 0;
   INT32 iCounter = 1;
   //	wchar_t pString[MAIL_STRING_SIZE/2 + 1];
   wchar_t pString[MAIL_STRING_SIZE];
   INT32 iOffSet = 0;
-  INT32 iHeightTemp = 0;
-  INT32 iHeightSoFar = 0;
   RecordPtr pTempRecord;
-  INT32 iPageSize = 0;
-  INT32 iPastHeight = 0;
-  INT32 iYPositionOnPage = 0;
-  INT32 iTotalYPosition = 0;
-  BOOLEAN fGoingOffCurrentPage = FALSE;
   BOOLEAN fDonePrintingMessage = FALSE;
 
   if (!pMail) return 0;
@@ -2854,16 +2826,11 @@ BOOLEAN HandleMailSpecialMessages(UINT16 usMessageId, INT32 *iResults, EmailPtr 
 
 void HandleIMPCharProfileResultsMessage(void) {
   // special case, IMP profile return
-  INT32 iTotalHeight = 0;
-  INT32 iCnt = 0;
   INT32 iHeight = 0;
   INT32 iCounter = 0;
   //	wchar_t pString[MAIL_STRING_SIZE/2 + 1];
   wchar_t pString[MAIL_STRING_SIZE];
   INT32 iOffSet = 0;
-  INT32 iViewerY = 0;
-  INT32 iHeightTemp = 0;
-  INT32 iHeightSoFar = 0;
   RecordPtr pTempRecord;
   INT32 iEndOfSection = 0;
   INT32 iRand = 0;
@@ -4175,7 +4142,6 @@ BOOLEAN DisplayNumberOfPagesToThisEmail(INT32 iViewerY) {
   // display the indent for the display of pages to this email..along with the current page/number
   // of pages
 
-  INT32 iCounter = 0;
   INT16 sX = 0, sY = 0;
   CHAR16 sString[32];
 
@@ -4396,9 +4362,9 @@ void PreProcessEmail(EmailPtr pMail) {
 
     // more than one page
     // for( iCounter = 0; iCounter < giNumberOfPagesToCurrentEmail; iCounter++ )
-    while (pTempRecord =
-               GetFirstRecordOnThisPage(pTempList, MESSAGE_FONT, MESSAGE_WIDTH, MESSAGE_GAP,
-                                        iCounter, MAX_EMAIL_MESSAGE_PAGE_SIZE)) {
+    while (
+        (pTempRecord = GetFirstRecordOnThisPage(pTempList, MESSAGE_FONT, MESSAGE_WIDTH, MESSAGE_GAP,
+                                                iCounter, MAX_EMAIL_MESSAGE_PAGE_SIZE))) {
       iYPositionOnPage = 0;
 
       pEmailPageInfo[iCounter].pFirstRecord = pTempRecord;
@@ -4460,16 +4426,12 @@ void PreProcessEmail(EmailPtr pMail) {
 void ModifyInsuranceEmails(UINT16 usMessageId, INT32 *iResults, EmailPtr pMail,
                            UINT8 ubNumberOfRecords) {
   INT32 iHeight = 0;
-  RecordPtr pTempRecord;
   //	wchar_t pString[MAIL_STRING_SIZE/2 + 1];
   wchar_t pString[MAIL_STRING_SIZE];
   UINT8 ubCnt;
 
   // Replace the name in the subject line
   //	swprintf( pMail->pSubject, gMercProfiles[ pMail->ubFirstData ].zNickname );
-
-  // set record ptr to head of list
-  pTempRecord = pMessageRecordList;
 
   // increment height for size of one line
   iHeight += GetFontHeight(MESSAGE_FONT);

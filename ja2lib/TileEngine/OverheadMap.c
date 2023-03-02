@@ -421,7 +421,6 @@ void HandleOverheadMap() {
 
       if (GetClosestItemPool(usMapPos, &pItemPool, 1, 1)) {
         INT8 bZLevel = 0;
-        INT16 sActionGridNo = usMapPos;
 
         if (AnyItemsVisibleOnLevel(pItemPool, bZLevel)) {
           DrawItemPoolList(pItemPool, usMapPos, ITEMLIST_DISPLAY, bZLevel, gusMouseXPos,
@@ -1065,7 +1064,7 @@ void RenderOverheadOverlays() {
     for (i = 0; i < guiNumWorldItems; i++) {
       pWorldItem = &gWorldItems[i];
       if (!pWorldItem || !pWorldItem->fExists ||
-          pWorldItem->bVisible != VISIBLE && !(gTacticalStatus.uiFlags & SHOW_ALL_ITEMS)) {
+          (pWorldItem->bVisible != VISIBLE && !(gTacticalStatus.uiFlags & SHOW_ALL_ITEMS))) {
         continue;
       }
 
@@ -1313,7 +1312,7 @@ void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
 }
 
 void ClickOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
-  UINT32 uiCellX, uiCellY;
+  INT32 uiCellX, uiCellY;
   INT16 sWorldScreenX, sWorldScreenY;
 
   if (gfTacticalPlacementGUIActive) {
@@ -1358,7 +1357,7 @@ void GetOverheadScreenXYFromGridNo(INT16 sGridNo, INT16 *psScreenX, INT16 *psScr
 }
 
 BOOLEAN GetOverheadMouseGridNo(INT16 *psGridNo) {
-  UINT32 uiCellX, uiCellY;
+  INT32 uiCellX, uiCellY;
   INT16 sWorldScreenX, sWorldScreenY;
 
   if ((OverheadRegion.uiFlags & MSYS_MOUSE_IN_AREA)) {
@@ -1387,7 +1386,7 @@ BOOLEAN GetOverheadMouseGridNo(INT16 *psGridNo) {
 }
 
 BOOLEAN GetOverheadMouseGridNoForFullSoldiersGridNo(INT16 *psGridNo) {
-  UINT32 uiCellX, uiCellY;
+  INT32 uiCellX, uiCellY;
   INT16 sWorldScreenX, sWorldScreenY;
 
   if ((OverheadRegion.uiFlags & MSYS_MOUSE_IN_AREA)) {

@@ -381,15 +381,15 @@ void PasteSingleWallCommon(UINT32 iMapIndex) {
         RemoveLand(iMapIndex, usTempIndex);
 
       AddLandToHead(iMapIndex, (UINT16)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
-    } else if (usUseObjIndex >= FIRSTWALLDECAL && usUseObjIndex <= LASTWALLDECAL ||
-               usUseObjIndex >= FIFTHWALLDECAL && usUseObjIndex <= EIGTHWALLDECAL) {
+    } else if ((usUseObjIndex >= FIRSTWALLDECAL && usUseObjIndex <= LASTWALLDECAL) ||
+               (usUseObjIndex >= FIFTHWALLDECAL && usUseObjIndex <= EIGTHWALLDECAL)) {
       // Plop a decal here
       RemoveAllStructsOfTypeRange(iMapIndex, FIRSTWALLDECAL, LASTWALLDECAL);
       RemoveAllStructsOfTypeRange(iMapIndex, FIFTHWALLDECAL, EIGTHWALLDECAL);
 
       AddStructToTail(iMapIndex, (UINT16)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
-    } else if (usUseObjIndex >= FIRSTISTRUCT && usUseObjIndex <= LASTISTRUCT ||
-               usUseObjIndex >= FIFTHISTRUCT && usUseObjIndex <= EIGHTISTRUCT) {
+    } else if ((usUseObjIndex >= FIRSTISTRUCT && usUseObjIndex <= LASTISTRUCT) ||
+               (usUseObjIndex >= FIFTHISTRUCT && usUseObjIndex <= EIGHTISTRUCT)) {
       AddStructToHead(iMapIndex, (UINT16)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
     } else if (usUseObjIndex == FIRSTSWITCHES) {
       AddStructToTail(iMapIndex, (UINT16)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
@@ -486,7 +486,6 @@ void PasteStructure2(UINT32 iMapIndex) {
 // COMPLETELY identical.
 //
 void PasteStructureCommon(UINT32 iMapIndex) {
-  BOOLEAN fDoPaste = FALSE;
   UINT32 fHeadType;
   UINT16 usUseIndex;
   UINT16 usUseObjIndex;
@@ -494,17 +493,6 @@ void PasteStructureCommon(UINT32 iMapIndex) {
   BOOLEAN fOkayToAdd;
 
   if (iMapIndex < 0x8000) {
-    /*
-            if ( gpWorldLevelData[ iMapIndex ].pStructHead != NULL )
-            {
-                    fDoPaste = FALSE;
-            }
-            else
-            {
-                    // Nothing is here, paste
-                    fDoPaste = TRUE;
-            }
-*/
     if (/*fDoPaste &&*/ iMapIndex < 0x8000) {
       iRandSelIndex = GetRandomSelection();
       if (iRandSelIndex == -1) {
@@ -547,7 +535,6 @@ void PasteBanks(UINT32 iMapIndex, UINT16 usStructIndex, BOOLEAN fReplace) {
   BOOLEAN fDoPaste = FALSE;
   UINT16 usUseIndex;
   UINT16 usUseObjIndex;
-  UINT16 usIndex;
 
   pSelList = SelBanks;
   pNumSelList = &iNumBanksSelected;
@@ -570,10 +557,7 @@ void PasteBanks(UINT32 iMapIndex, UINT16 usStructIndex, BOOLEAN fReplace) {
     }
 
     if (fDoPaste) {
-      usIndex = gTileTypeStartIndex[usUseObjIndex] + usUseIndex;
-
       AddToUndoList(iMapIndex);
-
       {
         if (usUseObjIndex == FIRSTROAD) {
           AddObjectToHead(iMapIndex, (UINT16)(gTileTypeStartIndex[usUseObjIndex] + usUseIndex));
@@ -995,18 +979,14 @@ void RaiseWorldLand() {
   UINT32 sTempGridNo;
   struct LEVELNODE *pStruct;
   TILE_ELEMENT *pTileElement;
-  BOOLEAN fRaise;
   BOOLEAN fRaiseSet;
   BOOLEAN fSomethingRaised = FALSE;
   UINT8 ubLoop;
   UINT16 usIndex;
-  BOOLEAN fStopRaise = FALSE;
-  INT32 iCounterA = 0, iCounterB = 0;
   INT32 iStartNumberOfRaises = 0;
   INT32 iNumberOfRaises = 0;
   BOOLEAN fAboutToRaise = FALSE;
 
-  fRaise = FALSE;
   fRaiseSet = FALSE;
 
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {

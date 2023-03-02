@@ -132,7 +132,6 @@ void FindPanicBombsAndTriggers(void) {
   struct OBJECTTYPE *pObj;
   struct STRUCTURE *pSwitch;
   INT16 sGridNo = NOWHERE;
-  BOOLEAN fPanicTriggerIsAlarm = FALSE;
   INT8 bPanicIndex;
 
   for (uiBombIndex = 0; uiBombIndex < guiNumWorldBombs; uiBombIndex++) {
@@ -324,7 +323,6 @@ void LoadWorldItemsFromMap(INT8 **hBuffer) {
   // Start loading itmes...
 
   UINT32 i;
-  UINT32 uiLevelItems = 0;
   WORLDITEM dummyItem;
   INT32 iItemIndex;
   UINT32 uiNumWorldItems;
@@ -352,9 +350,9 @@ void LoadWorldItemsFromMap(INT8 **hBuffer) {
       if (gfEditMode || dummyItem.ubNonExistChance <= PreRandom(100)) {
         if (!gfEditMode) {
           // check for matching item existance modes and only add if there is a match!
-          if (dummyItem.usFlags & WORLD_ITEM_SCIFI_ONLY && !gGameOptions.fSciFi ||
-              dummyItem.usFlags & WORLD_ITEM_REALISTIC_ONLY &&
-                  gGameOptions.fSciFi) {  // no match, so don't add item to world
+          if ((dummyItem.usFlags & WORLD_ITEM_SCIFI_ONLY && !gGameOptions.fSciFi) ||
+              (dummyItem.usFlags & WORLD_ITEM_REALISTIC_ONLY &&
+               gGameOptions.fSciFi)) {  // no match, so don't add item to world
             continue;
           }
 

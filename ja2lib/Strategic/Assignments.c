@@ -115,12 +115,12 @@ REPAIR_PASS_SLOTS_TYPE gRepairPassSlotList[NUM_REPAIR_PASS_TYPES] = {
     // in
     // this
     // pass
-    {/* hands and armor */ 5, HANDPOS, SECONDHANDPOS, VESTPOS, HELMETPOS, LEGPOS, -1, -1, -1, -1,
-     -1, -1, -1},
-    {/* headgear */ 2, HEAD1POS, HEAD2POS, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-    {/* pockets */ 12, BIGPOCK1POS, BIGPOCK2POS, BIGPOCK3POS, BIGPOCK4POS, SMALLPOCK1POS,
-     SMALLPOCK2POS, SMALLPOCK3POS, SMALLPOCK4POS, SMALLPOCK5POS, SMALLPOCK6POS, SMALLPOCK7POS,
-     SMALLPOCK8POS},
+    {/* hands and armor */ 5,
+     {HANDPOS, SECONDHANDPOS, VESTPOS, HELMETPOS, LEGPOS, -1, -1, -1, -1, -1, -1, -1}},
+    {/* headgear */ 2, {HEAD1POS, HEAD2POS, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}},
+    {/* pockets */ 12,
+     {BIGPOCK1POS, BIGPOCK2POS, BIGPOCK3POS, BIGPOCK4POS, SMALLPOCK1POS, SMALLPOCK2POS,
+      SMALLPOCK3POS, SMALLPOCK4POS, SMALLPOCK5POS, SMALLPOCK6POS, SMALLPOCK7POS, SMALLPOCK8POS}},
 };
 
 // PopUp Box Handles
@@ -841,9 +841,6 @@ BOOLEAN CanCharacterRepairButDoesntHaveARepairkit(struct SOLDIERTYPE *pSoldier) 
 // can character be assigned as repairman?
 // check that character is alive, oklife, has repair skill, and equipment, etc.
 BOOLEAN CanCharacterRepair(struct SOLDIERTYPE *pSoldier) {
-  INT8 bPocket = 0;
-  BOOLEAN fToolKitFound = FALSE;
-
   if (!BasicCanCharacterAssignment(pSoldier, TRUE)) {
     return (FALSE);
   }
@@ -1338,9 +1335,6 @@ BOOLEAN CanCharacterPractise(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN CanCharacterTrainTeammates(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt = 0;
-  struct SOLDIERTYPE *pTeamSoldier = NULL;
-
   // can character train at all
   if (CanCharacterPractise(pSoldier) == FALSE) {
     // nope
@@ -1358,8 +1352,6 @@ BOOLEAN CanCharacterTrainTeammates(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN CanCharacterBeTrainedByOther(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCounter = 0;
-
   // can character train at all
   if (CanCharacterPractise(pSoldier) == FALSE) {
     return (FALSE);
@@ -1742,7 +1734,6 @@ UINT8 FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment) {
   // run thought list of characters find number with this assignment
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
-  INT32 iCounter = 0;
   INT8 bNumberOfPeople = 0;
 
   // set psoldier as first in merc ptrs
@@ -1944,7 +1935,6 @@ UINT16 TotalMedicalKitPoints(struct SOLDIERTYPE *pSoldier) {
 void HandleDoctorsInSector(INT16 sX, INT16 sY, INT8 bZ) {
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
-  INT32 iCounter = 0;
 
   // set psoldier as first in merc ptrs
   pSoldier = MercPtrs[0];
@@ -2174,8 +2164,6 @@ HEALABLE_EVER, FALSE, FALSE ) == TRUE )
 BOOLEAN CanSoldierBeHealedByDoctor(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pDoctor,
                                    BOOLEAN fIgnoreAssignment, BOOLEAN fThisHour,
                                    BOOLEAN fSkipKitCheck, BOOLEAN fSkipSkillCheck) {
-  INT16 sDistance = 0;
-
   // must be an active guy
   if (pSoldier->bActive == FALSE) {
     return (FALSE);
@@ -2488,7 +2476,6 @@ void HealHospitalPatient(struct SOLDIERTYPE *pPatient, UINT16 usHealingPtsLeft) 
 void HandleRepairmenInSector(INT16 sX, INT16 sY, INT8 bZ) {
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
-  INT32 iCounter = 0;
 
   // set psoldier as first in merc ptrs
   pSoldier = MercPtrs[0];
@@ -2737,8 +2724,6 @@ BOOLEAN RepairObject(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOwner,
 void HandleRepairBySoldier(struct SOLDIERTYPE *pSoldier) {
   UINT16 usMax = 0;
   UINT8 ubRepairPtsLeft = 0;
-  UINT8 ubItemsInPocket = 0;
-  UINT8 ubObjectInPocketCounter = 0;
   UINT8 ubInitialRepairPts = 0;
   UINT8 ubRepairPtsUsed = 0;
   INT8 bPocket = 0;
@@ -3623,8 +3608,6 @@ BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY
                           UINT16 sTrainingPts) {
   SECTORINFO *pSectorInfo = &(SectorInfo[SECTOR(sMapX, sMapY)]);
   UINT8 ubTownId = 0;
-  INT16 sCnt = 0;
-  INT8 bChance = 0;
   BOOLEAN fSamSiteInSector = FALSE;
 
   // find out if a sam site here
@@ -3828,8 +3811,6 @@ BOOLEAN CharacterIsBetweenSectors(struct SOLDIERTYPE *pSoldier) {
 void HandleNaturalHealing(void) {
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
-  INT32 iCounter = 0;
-  INT8 bNumberOfPeople = 0;
 
   // set psoldier as first in merc ptrs
   pSoldier = MercPtrs[0];
@@ -4817,7 +4798,6 @@ void MakeSureToolKitIsInHand(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN MakeSureMedKitIsInHand(struct SOLDIERTYPE *pSoldier) {
   INT8 bPocket = 0;
-  BOOLEAN fFoundOne = FALSE;
 
   fTeamPanelDirty = TRUE;
 
@@ -8711,7 +8691,6 @@ BOOLEAN HandleShowingOfMovementBox(void) {
 
 void HandleShadingOfLinesForTrainingMenu(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iCounter = 0;
 
   // check if valid
   if ((fShowTrainingMenu == FALSE) || (ghTrainingBox == -1)) {
@@ -8807,7 +8786,6 @@ void HandleShadingOfLinesForAttributeMenus(void) {
 }
 
 void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(struct SOLDIERTYPE *pSoldier) {
-  INT16 sSectorX = 0, sSectorY = 0;
   INT32 iNumberOnTeam = 0, iCounter = 0;
   struct SOLDIERTYPE *pCurSoldier = NULL;
 
@@ -8832,7 +8810,6 @@ void ResetAssignmentsForAllSoldiersInSectorWhoAreTrainingTown(struct SOLDIERTYPE
 void ReportTrainersTraineesWithoutPartners(void) {
   struct SOLDIERTYPE *pTeamSoldier = NULL;
   INT32 iCounter = 0, iNumberOnTeam = 0;
-  BOOLEAN fFound = FALSE;
 
   iNumberOnTeam = gTacticalStatus.Team[OUR_TEAM].bLastID;
 
@@ -9579,7 +9556,6 @@ BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound(struct SOLDIERTYPE *pT
                                                           INT8 bTargetStat) {
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
-  BOOLEAN fFound = FALSE;
   UINT16 sTrainingPts = 0;
   BOOLEAN fAtGunRange = FALSE;
   UINT16 usMaxPts;

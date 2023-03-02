@@ -385,38 +385,7 @@ void UpdateTownLoyaltyRating(INT8 bTownId) {
 
 // strategic handler, goes through and handles all strategic events for town loyalty
 // updates...player controlled, monsters
-void HandleTownLoyalty(void) {
-  INT8 bTownId = 0;
-
-  /* ARM: removed to experiment with keeping loyalty from drifing without any direct causes from the
-     player for( bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++ )
-          {
-                  // update loyalty of controlled/uncontrolled towns
-                  UpdateLoyaltyBasedOnControl( bTownId );
-
-                  // update based on number of good guys in sector
-                  UpdateTownLoyaltyBasedOnFriendliesInTown( bTownId );
-
-                  // update bad on number of badies in sector
-                  UpdateTownLoyaltyBasedOnBadGuysInTown( bTownId );
-
-                  // finally update town loyalty
-                  UpdateTownLoyaltyRating( bTownId );
-          }
-  */
-
-  // now all loyalty is done, handle other stuff
-
-  /* ARM: Civilian theft of items was removed
-          // only check for theft every 12 hours, otherwise it's way too slow
-          if ( (GetWorldHour() % 12) == 0)
-          {
-                  HandleTownTheft( );
-          }
-  */
-
-  return;
-}
+void HandleTownLoyalty(void) { return; }
 
 /*
 // update of town loyalty based on if the player controls the town's sectors
@@ -636,8 +605,6 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   UINT32 uiChanceFalseAccusal = 0;
   INT8 bKillerTeam = 0;
   BOOLEAN fIncrement = FALSE;
-  UINT32 uiLoyaltyEffectDelay = 0;
-  UINT32 uiValue = 0;
 
   // ubAttacker CAN be NOBODY...  Don't treat is as murder if NOBODY killed us...
   if (pSoldier->ubAttackerID == NOBODY) {
@@ -893,7 +860,6 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
 void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
   INT8 bTownId = 0;
   UINT32 uiLoyaltyValue = 0;
-  INT32 iRating = 0;
 
   // get town id civilian
   bTownId = GetTownIdForSector(pSoldier->sSectorX, pSoldier->sSectorY);
@@ -1413,8 +1379,6 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(INT8 bCityToExclude) {
 
 // is the ENTIRE town under player control?
 INT32 IsTownUnderCompleteControlByPlayer(INT8 bTownId) {
-  INT32 iNumber = 0;
-
   if (GetTownSectorSize(bTownId) == GetTownSectorsUnderControl(bTownId)) {
     return (TRUE);
   }
@@ -1424,8 +1388,6 @@ INT32 IsTownUnderCompleteControlByPlayer(INT8 bTownId) {
 
 // is the ENTIRE town under enemy control?
 INT32 IsTownUnderCompleteControlByEnemy(INT8 bTownId) {
-  INT32 iNumber = 0;
-
   if (GetTownSectorsUnderControl(bTownId) == 0) {
     return (TRUE);
   }

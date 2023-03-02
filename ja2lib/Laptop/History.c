@@ -345,7 +345,6 @@ void RemoveHistory(void) {
 void RenderHistoryBackGround(void) {
   // render generic background for history system
   struct VObject *hHandle;
-  INT32 iCounter = 0;
 
   // get title bar object
   GetVideoObject(&hHandle, guiTITLE);
@@ -452,9 +451,6 @@ void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason) {
 
 BOOLEAN IncrementCurrentPageHistoryDisplay(void) {
   // run through list, from pCurrentHistory, to NUM_RECORDS_PER_PAGE +1 HistoryUnits
-  HistoryUnitPtr pTempHistory = pCurrentHistory;
-  BOOLEAN fOkToIncrementPage = FALSE;
-  INT32 iCounter = 0;
   HWFILE hFileHandle;
   UINT32 uiFileSize = 0;
   UINT32 uiSizeOfRecordsOnEachPage = 0;
@@ -493,22 +489,6 @@ BOOLEAN IncrementCurrentPageHistoryDisplay(void) {
     FileMan_Close(hFileHandle);
   }
 
-  /*
-  // haven't reached end of list and not yet at beginning of next page
-  while( ( pTempHistory )&&( ! fOkToIncrementPage ) )
-  {
-// found the next page,  first record thereof
-          if(iCounter==NUM_RECORDS_PER_PAGE+1)
-          {
-                  fOkToIncrementPage=TRUE;
-            pCurrentHistory=pTempHistory->Next;
-          }
-
-          //next record
-          pTempHistory=pTempHistory->Next;
-iCounter++;
-  }
-*/
   // if ok to increment, increment
 
   return (TRUE);
@@ -628,7 +608,6 @@ BOOLEAN OpenAndWriteHistoryFile(void) {
   // this procedure will open and write out data from the History list
 
   HWFILE hFileHandle;
-  INT32 iBytesWritten = 0;
   HistoryUnitPtr pHistoryList = pHistoryListHead;
 
   // open file
@@ -745,11 +724,8 @@ void DisplayHistoryListBackground(void) {
 void DrawHistoryRecordsText(void) {
   // draws the text of the records
   HistoryUnitPtr pCurHistory = pHistoryListHead;
-  HistoryUnitPtr pTempHistory = pHistoryListHead;
   wchar_t sString[512];
-  INT32 iCounter = 0;
   INT16 usX, usY;
-  INT32 iBalance = 0;
   INT16 sX = 0, sY = 0;
 
   // setup the font stuff
@@ -762,7 +738,7 @@ void DrawHistoryRecordsText(void) {
   if (!pCurHistory) return;
 
   // loop through record list
-  for (iCounter; iCounter < NUM_RECORDS_PER_PAGE; iCounter++) {
+  for (int iCounter = 0; iCounter < NUM_RECORDS_PER_PAGE; iCounter++) {
     if (pCurHistory->ubColor == 0) {
       SetFontForeground(FONT_BLACK);
     } else {
@@ -820,8 +796,6 @@ void DrawHistoryRecordsText(void) {
 
 void DrawAPageofHistoryRecords(void) {
   // this procedure will draw a series of history records to the screen
-  INT32 iCurPage = 1;
-  INT32 iCount = 0;
   pCurrentHistory = pHistoryListHead;
 
   // (re-)render background
@@ -878,18 +852,6 @@ void DisplayPageNumberAndDateRange(void) {
   }
 
   uiLastDate = pCurrentHistory->uiDate;
-
-  /*
-          // find last page
-          while(pTempHistory)
-          {
-                  iCounter++;
-                  pTempHistory=pTempHistory->Next;
-          }
-
-    // set last page
-          iLastPage=iCounter/NUM_RECORDS_PER_PAGE;
-  */
 
   iLastPage = GetNumberOfHistoryPages();
 
@@ -1239,8 +1201,6 @@ BOOLEAN WriteOutHistoryRecords(UINT32 uiPage) {
   INT32 iCount = 0;
   HWFILE hFileHandle;
   HistoryUnitPtr pList;
-  UINT32 iBytesRead = 0;
-  UINT32 uiByteCount = 0;
 
   // check if bad page
   if (uiPage == 0) {
@@ -1282,8 +1242,6 @@ BOOLEAN WriteOutHistoryRecords(UINT32 uiPage) {
                sizeof(INT32) + (uiPage - 1) * NUM_RECORDS_PER_PAGE * SIZE_OF_HISTORY_FILE_RECORD,
                FILE_SEEK_FROM_START);
 
-  uiByteCount =
-      /*sizeof( INT32 )+ */ (uiPage - 1) * NUM_RECORDS_PER_PAGE * SIZE_OF_HISTORY_FILE_RECORD;
   // file exists, read in data, continue until end of page
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue)) {
 #ifdef JA2TESTVERSION
@@ -1354,7 +1312,6 @@ BOOLEAN LoadPreviousHistoryPage(void) {
 void SetLastPageInHistoryRecords(void) {
   // grabs the size of the file and interprets number of pages it will take up
   HWFILE hFileHandle;
-  UINT32 iBytesRead = 0;
 
   // no file, return
   if (!(FileMan_Exists(HISTORY_DATA_FILE))) return;
@@ -1388,7 +1345,6 @@ UINT32 ReadInLastElementOfHistoryListAndReturnIdNumber(void) {
   // this function will read in the last unit in the history list, to grab it's id number
 
   HWFILE hFileHandle;
-  UINT32 iBytesRead = 0;
   INT32 iFileSize = 0;
 
   // no file, return
@@ -1421,7 +1377,6 @@ UINT32 ReadInLastElementOfHistoryListAndReturnIdNumber(void) {
 BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
   // will write the current finance to disk
   HWFILE hFileHandle;
-  INT32 iBytesWritten = 0;
   HistoryUnitPtr pHistoryList = pHistoryListHead;
 
   // open file
@@ -1462,7 +1417,6 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
 
 void ResetHistoryFact(UINT8 ubCode, INT16 sSectorX, INT16 sSectorY) {
   // run through history list
-  INT32 iOldHistoryPage = iCurrentHistoryPage;
   HistoryUnitPtr pList = pHistoryListHead;
   BOOLEAN fFound = FALSE;
 
@@ -1504,7 +1458,6 @@ void ResetHistoryFact(UINT8 ubCode, INT16 sSectorX, INT16 sSectorY) {
 
 UINT32 GetTimeQuestWasStarted(UINT8 ubCode) {
   // run through history list
-  INT32 iOldHistoryPage = iCurrentHistoryPage;
   HistoryUnitPtr pList = pHistoryListHead;
   BOOLEAN fFound = FALSE;
   UINT32 uiTime = 0;

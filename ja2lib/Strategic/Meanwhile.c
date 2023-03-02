@@ -375,7 +375,6 @@ void CheckForMeanwhileOKStart() {
 
 void StartMeanwhile() {
   INT32 iIndex;
-  INT8 bNumDone = 0;
 
   // OK, save old position...
   if (gfWorldLoaded) {
@@ -940,7 +939,6 @@ void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSamId) {
 void HandleFlowersMeanwhileScene(INT8 bTimeCode) {
   UINT32 uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
 
   // make sure scene hasn't been used before
   if (GetMeanWhileFlag(FLOWERS)) {
@@ -970,7 +968,6 @@ void HandleFlowersMeanwhileScene(INT8 bTimeCode) {
 void HandleOutskirtsOfMedunaMeanwhileScene(void) {
   UINT32 uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
 
   // make sure scene hasn't been used before
   if (GetMeanWhileFlag(OUTSKIRTS_MEDUNA)) {
@@ -993,7 +990,6 @@ void HandleOutskirtsOfMedunaMeanwhileScene(void) {
 void HandleKillChopperMeanwhileScene(void) {
   UINT32 uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
 
   // make sure scene hasn't been used before
   if (GetMeanWhileFlag(KILL_CHOPPER)) {
@@ -1016,7 +1012,6 @@ void HandleKillChopperMeanwhileScene(void) {
 void HandleScientistAWOLMeanwhileScene(void) {
   UINT32 uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
 
   // make sure scene hasn't been used before
   if (GetMeanWhileFlag(AWOL_SCIENTIST)) {
@@ -1039,7 +1034,6 @@ void HandleScientistAWOLMeanwhileScene(void) {
 void HandleInterrogationMeanwhileScene(void) {
   UINT32 uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
 
   // make sure scene hasn't been used before
   if (GetMeanWhileFlag(INTERROGATION)) {

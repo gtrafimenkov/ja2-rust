@@ -418,8 +418,6 @@ void GenerateMapEdgepoints() {
   INT32 i = -1;
   INT16 sGridNo = -1;
   INT16 sVGridNo[400];
-  UINT8 gubSaveNPCAPBudget = 0;
-  UINT8 gubSaveNPCDistLimit = 0;
 
   // Get rid of the current edgepoint lists.
   TrashMapEdgepoints();
@@ -933,7 +931,6 @@ BOOLEAN LoadMapEdgepoints(INT8 **hBuffer) {
 UINT16 ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode) {
   INT16 *psArray = NULL;
   UINT16 usArraySize = 0;
-  static INT32 randomVal = 0;
 
   // First validate and get access to the correct array based on strategic direction.
   // We will use the selected array to choose insertion gridno's.

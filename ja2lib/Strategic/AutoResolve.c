@@ -1308,18 +1308,15 @@ UINT32 AutoBandageMercs() {
   UINT32 uiPointsUsed, uiCurrPointsUsed, uiMaxPointsUsed, uiParallelPointsUsed;
   UINT16 usKitPts;
   struct OBJECTTYPE *pKit = NULL;
-  BOOLEAN fFound = FALSE;
   BOOLEAN fComplete = TRUE;
   INT8 bSlot, cnt;
 
   // Do we have any doctors?  If so, bandage selves first.
-  fFound = FALSE;
   uiMaxPointsUsed = uiParallelPointsUsed = 0;
   for (i = 0; i < gpAR->ubMercs; i++) {
     if (gpMercs[i].pSoldier->bLife >= OKLIFE && !gpMercs[i].pSoldier->bCollapsed &&
         gpMercs[i].pSoldier->bMedical > 0 &&
         (bSlot = FindObjClass(gpMercs[i].pSoldier, IC_MEDKIT)) != NO_SLOT) {
-      fFound = TRUE;
       // bandage self first!
       uiCurrPointsUsed = 0;
       cnt = 0;
@@ -1392,10 +1389,7 @@ void RenderAutoResolve() {
   INT32 i;
   struct VSurface *hVSurface;
   INT32 xp, yp;
-  SOLDIERCELL *pCell = NULL;
-  INT32 index = 0;
   CHAR16 str[100];
-  UINT8 bTownId = 0;
   UINT8 ubGood, ubBad;
 
   if (gpAR->fExpanding) {  // animate the expansion of the window.
@@ -2380,7 +2374,6 @@ void MercCellMouseClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
 // Determine how many players, militia, and enemies that are going at it, and use these values
 // to figure out how many rows and columns we can use.  The will effect the size of the panel.
 void CalculateAutoResolveInfo() {
-  VOBJECT_DESC VObjectDesc;
   struct GROUP *pGroup;
   PLAYERGROUP *pPlayer;
   Assert(gpAR->ubSectorX >= 1 && gpAR->ubSectorX <= 16);
@@ -2406,7 +2399,6 @@ void CalculateAutoResolveInfo() {
   gfTransferTacticalOppositionToAutoResolve = FALSE;
   gpAR->ubCivs = CountAllMilitiaInSector(gpAR->ubSectorX, gpAR->ubSectorY);
   gpAR->ubMercs = 0;
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   pGroup = gpGroupList;
   while (pGroup) {
     if (PlayerGroupInvolvedInThisCombat(pGroup)) {
@@ -2930,7 +2922,6 @@ UINT8 GetUnusedMercProfileID() {
 
 void CreateTempPlayerMerc() {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  static INT32 iSoldierCount = 0;
   UINT8 ubID;
 
   // Init the merc create structure with basic information
@@ -3007,19 +2998,8 @@ void CalculateAttackValues() {
   UINT16 usBonus;
   UINT16 usBestAttack = 0xffff;
   UINT16 usBreathStrengthPercentage;
-  // INT16 sOutnumberBonus = 0;
-  INT16 sMaxBonus = 0;
-  // PLAYER TEAM
   gpAR->usPlayerAttack = 0;
   gpAR->usPlayerDefence = 0;
-
-  // if( gpAR->ubEnemies )
-  //{
-  //	//bonus equals 20 if good guys outnumber bad guys 2 to 1.
-  //	sMaxBonus = 20;
-  //	sOutnumberBonus = (INT16)(gpAR->ubMercs + gpAR->ubCivs) * sMaxBonus / gpAR->ubEnemies -
-  // sMaxBonus; 	sOutnumberBonus = (INT16)min( sOutnumberBonus, max( sMaxBonus, 0 ) );
-  //}
 
   for (i = 0; i < gpAR->ubMercs; i++) {
     pCell = &gpMercs[i];
@@ -3972,11 +3952,11 @@ void ProcessBattleFrame() {
     for (i = 0; i < gpAR->ubEnemies; i++) gpEnemies[i].uiFlags &= ~CELL_PROCESSED;
     while (--iTotal) {
       INT32 cnt;
-      if (iTimeSlice != 0x7fffffff && GetJA2Clock() > gpAR->uiCurrTime + 17 ||
-          !gpAR->fInstantFinish &&
-              iAttacksThisFrame > (gpAR->ubMercs + gpAR->ubCivs + gpAR->ubEnemies) /
-                                      4) {  // We have spent too much time in here.  In order to
-                                            // maintain 60FPS, we will
+      if ((iTimeSlice != 0x7fffffff && GetJA2Clock() > gpAR->uiCurrTime + 17) ||
+          (!gpAR->fInstantFinish &&
+           iAttacksThisFrame > (gpAR->ubMercs + gpAR->ubCivs + gpAR->ubEnemies) / 4)) {
+        // We have spent too much time in here.  In order to
+        // maintain 60FPS, we will
         // leave now, which will allow for updating of the graphics (and mouse cursor),
         // and all of the necessary locals are saved via static variables.  It'll check
         // the fContinue flag, and goto the CONTINUE_BATTLE label the next time this function
@@ -3985,7 +3965,8 @@ void ProcessBattleFrame() {
         return;
       }
     CONTINUE_BATTLE:
-      if (IsBattleOver() || gubEnemyEncounterCode != CREATURE_ATTACK_CODE && AttemptPlayerCapture())
+      if ((IsBattleOver() || gubEnemyEncounterCode != CREATURE_ATTACK_CODE) &&
+          AttemptPlayerCapture())
         return;
 
       iRandom = PreRandom(iTotal);

@@ -263,8 +263,8 @@ void RenderRadarScreen() {
 
     // If night time and on surface, darken the radarmap.
     if (NightTime()) {
-      if (guiCurrentScreen == MAP_SCREEN && !iCurrentMapSectorZ ||
-          guiCurrentScreen == GAME_SCREEN && !gbWorldSectorZ) {
+      if ((guiCurrentScreen == MAP_SCREEN && !iCurrentMapSectorZ) ||
+          (guiCurrentScreen == GAME_SCREEN && !gbWorldSectorZ)) {
         SetObjectHandleShade(gusRadarImage, 1);
       }
     }

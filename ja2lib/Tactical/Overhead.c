@@ -259,18 +259,12 @@ CHAR8 gzDirectionStr[][30] = {"NORTHEAST", "EAST", "SOUTHEAST", "SOUTH",
 
 // TEMP VALUES FOR TEAM DEAFULT POSITIONS
 UINT8 bDefaultTeamRanges[MAXTEAMS][2] = {
-    0,
-    19,  // 20  US
-    20,
-    51,  // 32  ENEMY
-    52,
-    83,  // 32    CREATURE
-    84,
-    115,  // 32    REBELS ( OUR GUYS )
-    116,
-    MAX_NUM_SOLDIERS - 1,  // 32  CIVILIANS
-    MAX_NUM_SOLDIERS,
-    TOTAL_SOLDIERS - 1  // PLANNING SOLDIERS
+    {0, 19},                                // 20  US
+    {20, 51},                               // 32  ENEMY
+    {52, 83},                               // 32    CREATURE
+    {84, 115},                              // 32    REBELS ( OUR GUYS )
+    {116, MAX_NUM_SOLDIERS - 1},            // 32  CIVILIANS
+    {MAX_NUM_SOLDIERS, TOTAL_SOLDIERS - 1}  // PLANNING SOLDIERS
 };
 
 COLORVAL bDefaultTeamColors[MAXTEAMS] = {FROMRGB(255, 255, 0),   FROMRGB(255, 0, 0),
@@ -862,7 +856,6 @@ BOOLEAN ExecuteOverhead() {
             if (pSoldier->sGridNo != NOWHERE) {
               pSoldier->ubFadeLevel = gpWorldLevelData[pSoldier->sGridNo].pLandHead->ubShadeLevel;
             } else {
-              int i = 0;
             }
             pSoldier->fBeginFade = TRUE;
             pSoldier->sLocationOfFadeStart = pSoldier->sGridNo;
@@ -3184,7 +3177,6 @@ void CivilianGroupChangesSides(UINT8 ubCivilianGroup) {
   // change civ group side due to external event (wall blowing up)
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubFirstProfile = NO_PROFILE;
 
   gTacticalStatus.fCivGroupHostile[ubCivilianGroup] = CIV_GROUP_HOSTILE;
 
@@ -3831,7 +3823,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
   // in that location, because we could be passed a gridno based on the overlap of soldier's graphic
   // fDoor determines whether special door-handling code should be used (for interacting with doors)
 
-  INT16 sFourGrids[4], sDistance = 0;
+  INT16 sDistance = 0;
   INT16 sDirs[4] = {NORTH, EAST, SOUTH, WEST};
   INT32 cnt;
   INT16 sClosest = NOWHERE, sSpot, sOkTest;
@@ -3950,7 +3942,7 @@ INT16 FindAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pub
 
   for (cnt = 0; cnt < 4; cnt++) {
     // MOVE OUT TWO DIRECTIONS
-    sFourGrids[cnt] = sSpot = NewGridNo(sGridNo, DirectionInc(sDirs[cnt]));
+    sSpot = NewGridNo(sGridNo, DirectionInc(sDirs[cnt]));
 
     ubTestDirection = (UINT8)sDirs[cnt];
 
@@ -4074,7 +4066,7 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
   // in that location, because we could be passed a gridno based on the overlap of soldier's graphic
   // fDoor determines whether special door-handling code should be used (for interacting with doors)
 
-  INT16 sFourGrids[4], sDistance = 0;
+  INT16 sDistance = 0;
   INT16 sDirs[4] = {NORTH, EAST, SOUTH, WEST};
   INT32 cnt;
   INT16 sClosest = WORLD_MAX, sSpot, sSpot2, sOkTest;
@@ -4142,7 +4134,7 @@ INT16 FindNextToAdjacentGridEx(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT
 
   for (cnt = 0; cnt < 4; cnt++) {
     // MOVE OUT TWO DIRECTIONS
-    sFourGrids[cnt] = sSpot = NewGridNo(sGridNo, DirectionInc(sDirs[cnt]));
+    sSpot = NewGridNo(sGridNo, DirectionInc(sDirs[cnt]));
 
     ubTestDirection = (UINT8)sDirs[cnt];
 
@@ -4362,7 +4354,7 @@ void HandleTeamServices(UINT8 ubTeamNum) {
   INT32 cnt;
   struct SOLDIERTYPE *pTeamSoldier, *pTargetSoldier;
   UINT32 uiPointsUsed;
-  UINT16 usSoldierIndex, usInHand;
+  UINT16 usSoldierIndex;
   UINT16 usKitPts;
   INT8 bSlot;
   BOOLEAN fDone;
@@ -4378,9 +4370,6 @@ void HandleTeamServices(UINT8 ubTeamNum) {
       // Check for different events!
       // FOR DOING AID
       if (pTeamSoldier->usAnimState == GIVING_AID) {
-        // Get medkit info
-        usInHand = pTeamSoldier->inv[HANDPOS].usItem;
-
         // Get victim pointer
         usSoldierIndex = WhoIsThere2(pTeamSoldier->sTargetGridNo, pTeamSoldier->bLevel);
         if (usSoldierIndex != NOBODY) {
@@ -4440,7 +4429,7 @@ void HandleTeamServices(UINT8 ubTeamNum) {
 void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
   struct SOLDIERTYPE *pTargetSoldier;
   UINT32 uiPointsUsed;
-  UINT16 usSoldierIndex, usInHand;
+  UINT16 usSoldierIndex;
   UINT16 usKitPts;
   INT8 bSlot;
   BOOLEAN fDone = FALSE;
@@ -4449,9 +4438,6 @@ void HandlePlayerServices(struct SOLDIERTYPE *pTeamSoldier) {
     // Check for different events!
     // FOR DOING AID
     if (pTeamSoldier->usAnimState == GIVING_AID) {
-      // Get medkit info
-      usInHand = pTeamSoldier->inv[HANDPOS].usItem;
-
       // Get victim pointer
       usSoldierIndex = WhoIsThere2(pTeamSoldier->sTargetGridNo, pTeamSoldier->bLevel);
 
@@ -4832,7 +4818,6 @@ BOOLEAN WeSawSomeoneThisTurn(void) {
 }
 
 void SayBattleSoundFromAnyBodyInSector(INT32 iBattleSnd) {
-  UINT8 ubMercsInSector[20] = {0};
   UINT8 ubNumMercs = 0;
   UINT8 ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
@@ -4850,7 +4835,6 @@ void SayBattleSoundFromAnyBodyInSector(INT32 iBattleSnd) {
     if (OK_INSECTOR_MERC(pTeamSoldier) && !AM_AN_EPC(pTeamSoldier) &&
         !(pTeamSoldier->uiStatusFlags & SOLDIER_GASSED) && !(AM_A_ROBOT(pTeamSoldier)) &&
         !pTeamSoldier->fMercAsleep) {
-      ubMercsInSector[ubNumMercs] = (UINT8)cnt;
       ubNumMercs++;
     }
   }
@@ -5332,10 +5316,7 @@ void CycleThroughKnownEnemies() {
 void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
   // static to indicate last position we were at:
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usStartToLook;
   UINT32 cnt;
-
-  usStartToLook = gTacticalStatus.Team[gbPlayerNum].bLastID;
 
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bLastID, pSoldier = MercPtrs[cnt];
        cnt < TOTAL_SOLDIERS; cnt++, pSoldier++) {
@@ -5360,7 +5341,6 @@ void CycleVisibleEnemies(struct SOLDIERTYPE *pSrcSoldier) {
   // If here.. reset to zero...
   pSrcSoldier->ubLastEnemyCycledID = 0;
 
-  usStartToLook = gTacticalStatus.Team[gbPlayerNum].bLastID;
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bLastID, pSoldier = MercPtrs[cnt];
        cnt < TOTAL_SOLDIERS; cnt++, pSoldier++) {
     // try to find first active, OK enemy
@@ -5554,7 +5534,6 @@ UINT8 NumCapableEnemyInSector() {
 BOOLEAN CheckForLosingEndOfBattle() {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt = 0;
-  UINT8 ubNumEnemies = 0;
   INT8 bNumDead = 0, bNumNotOK = 0, bNumInBattle = 0, bNumNotOKRealMercs = 0;
   BOOLEAN fMadeCorpse;
   BOOLEAN fDoCapture = FALSE;
@@ -5650,8 +5629,8 @@ BOOLEAN CheckForLosingEndOfBattle() {
            cnt++, pTeamSoldier++) {
         // Are we active and in sector.....
         if (pTeamSoldier->bActive && pTeamSoldier->bInSector) {
-          if (pTeamSoldier->bLife != 0 && pTeamSoldier->bLife < OKLIFE || AM_AN_EPC(pTeamSoldier) ||
-              AM_A_ROBOT(pTeamSoldier)) {
+          if ((pTeamSoldier->bLife != 0 && pTeamSoldier->bLife < OKLIFE) ||
+              AM_AN_EPC(pTeamSoldier) || AM_A_ROBOT(pTeamSoldier)) {
             // Captured EPCs or ROBOTS will be kiiled in capture routine....
             if (!fDoCapture) {
               // Kill!
@@ -5692,7 +5671,6 @@ BOOLEAN CheckForLosingEndOfBattle() {
 BOOLEAN KillIncompacitatedEnemyInSector() {
   struct SOLDIERTYPE *pTeamSoldier;
   INT32 cnt = 0;
-  UINT8 ubNumEnemies = 0;
   BOOLEAN fReturnVal = FALSE;
 
   // Check if the battle is won!

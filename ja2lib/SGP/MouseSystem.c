@@ -1052,13 +1052,9 @@ INT16 GetNumberOfLinesInHeight(STR16 pStringA) {
 //
 //
 void DisplayFastHelp(struct MOUSE_REGION *region) {
-  UINT16 usFillColor;
   INT32 iX, iY, iW, iH;
-  INT32 iNumberOfLines = 1;
 
   if (region->uiFlags & MSYS_FASTHELP) {
-    usFillColor = Get16BPPColor(FROMRGB(250, 240, 188));
-
     iW = (INT32)GetWidthOfString(region->FastHelpText) + 10;
     iH = (INT32)(GetNumberOfLinesInHeight(region->FastHelpText) * (GetFontHeight(FONT10ARIAL) + 1) +
                  8);

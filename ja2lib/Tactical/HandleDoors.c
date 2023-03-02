@@ -361,7 +361,6 @@ BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   BOOLEAN fTrapFound = FALSE;
   BOOLEAN fDoAction = TRUE;
   BOOLEAN fDoor = FALSE;
-  INT8 bItemIn = FALSE;
 
   // Are we a door?
   if (pStructure->fFlags & STRUCTURE_ANYDOOR) {
@@ -810,7 +809,6 @@ BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
 
 BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                              struct STRUCTURE *pStructure, BOOLEAN fNoAnimations) {
-  struct LEVELNODE *pShadowNode;
   struct LEVELNODE *pNode;
   INT32 cnt;
   BOOLEAN fOpenedGraphic = FALSE;
@@ -858,8 +856,6 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
       }
     }
   }
-
-  pShadowNode = gpWorldLevelData[sGridNo].pShadowHead;
 
   // Check the graphic which is down!
   // Check for Open Door!

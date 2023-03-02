@@ -837,11 +837,11 @@ void PrepareForPreBattleInterface(struct GROUP *pPlayerDialogGroup,
   // Set music
   SetMusicMode(MUSIC_TACTICAL_ENEMYPRESENT);
 
-  if (gfTacticalTraversal && pInitiatingBattleGroup == gpTacticalTraversalGroup ||
-      pInitiatingBattleGroup && !pInitiatingBattleGroup->fPlayer &&
-          pInitiatingBattleGroup->ubSectorX == gWorldSectorX &&
-          pInitiatingBattleGroup->ubSectorY == gWorldSectorY &&
-          !gbWorldSectorZ) {  // At least say quote....
+  if ((gfTacticalTraversal && pInitiatingBattleGroup == gpTacticalTraversalGroup) ||
+      (pInitiatingBattleGroup && !pInitiatingBattleGroup->fPlayer &&
+       pInitiatingBattleGroup->ubSectorX == gWorldSectorX &&
+       pInitiatingBattleGroup->ubSectorY == gWorldSectorY &&
+       !gbWorldSectorZ)) {  // At least say quote....
     if (ubNumMercs > 0) {
       if (pPlayerDialogGroup->uiFlags & GROUPFLAG_JUST_RETREATED_FROM_BATTLE) {
         gfCantRetreatInPBI = TRUE;
@@ -899,7 +899,6 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
   PLAYERGROUP *pPlayer;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fBattlePending = FALSE;
-  BOOLEAN fPossibleQueuedBattle = FALSE;
   BOOLEAN fAliveMerc = FALSE;
   BOOLEAN fMilitiaPresent = FALSE;
   BOOLEAN fCombatAbleMerc = FALSE;
@@ -1168,162 +1167,7 @@ void CalculateNextMoveIntention(struct GROUP *pGroup) {
 }
 
 BOOLEAN AttemptToMergeSeparatedGroups(struct GROUP *pGroup, BOOLEAN fDecrementTraversals) {
-  struct GROUP *curr = NULL;
-  struct SOLDIERTYPE *pSoldier = NULL, *pCharacter = NULL;
-  PLAYERGROUP *pPlayer = NULL;
-  BOOLEAN fSuccess = FALSE;
-#ifdef JA2BETAVERSION
-  INT32 counter = 0;
-#endif
   return FALSE;
-#if 0
-	//First, make sure that we have a player group that isn't empty
-	if( !pGroup->fPlayer || !pGroup->ubGroupSize )
-		return FALSE;
-	//If our group doesn't have any traversals left to be allowed to merge, then no chance.
-	if( !pGroup->pPlayerList->pSoldier->ubNumTraversalsAllowedToMerge )
-		return FALSE;
-
-	//Reset the merged flags because this group has just arrived in a new sector
-	pPlayer = pGroup->pPlayerList;
-	while( pPlayer )
-	{
-		pPlayer->pSoldier->uiStatusFlags &= ~SOLDIER_IS_TACTICALLY_VALID;
-		pPlayer = pPlayer->next;
-	}
-
-	//Now, because the group just arrived in the sector, and he currently is allowed to merge, then
-	//decrement that num traversals.
-	if( fDecrementTraversals )
-	{
-		pPlayer = pGroup->pPlayerList;
-		while( pPlayer )
-		{
-			if( pPlayer->pSoldier->ubNumTraversalsAllowedToMerge == 100 )
-				pPlayer->pSoldier->ubNumTraversalsAllowedToMerge = 0;
-			else
-				pPlayer->pSoldier->ubNumTraversalsAllowedToMerge--;
-			pPlayer = pPlayer->next;
-		}
-	}
-	curr = gpGroupList;
-	if( pGroup->pPlayerList->pSoldier->ubDesiredSquadAssignment != NO_ASSIGNMENT )
-	{ //This group is looking for another group to merge with.
-		while( curr )
-		{
-			if( curr != pGroup && curr->fPlayer && curr->ubGroupSize )
-			{ //We have a player group with members
-				if( curr->pPlayerList->pSoldier->ubNumTraversalsAllowedToMerge )
-				{ //This group is allowed to merge
-					if( curr->ubSectorX == pGroup->ubSectorX && curr->ubSectorY == pGroup->ubSectorY &&
-						curr->pPlayerList->pSoldier->bSectorZ == pGroup->pPlayerList->pSoldier->bSectorZ )
-					{ //This group is in the same sector as us
-						if( curr->pPlayerList->pSoldier->bAssignment == pGroup->pPlayerList->pSoldier->ubDesiredSquadAssignment ||
-							  curr->pPlayerList->pSoldier->ubDesiredSquadAssignment == pGroup->pPlayerList->pSoldier->ubDesiredSquadAssignment )
-						{ //This group is the one we want to join (or has the same desire)!
-							pSoldier = pGroup->pPlayerList->pSoldier;
-
-							//First, set up flags for the current group to not relocate and walk in sector (they are already there)
-							pPlayer = curr->pPlayerList;
-							while( pPlayer )
-							{
-								if( pPlayer->pSoldier->uiStatusFlags & SOLDIER_IS_TACTICALLY_VALID )
-								{
-									pPlayer->pSoldier->uiStatusFlags |= SOLDIER_IS_TACTICALLY_VALID;
-								}
-								pPlayer = pPlayer->next;
-							}
-							while( pGroup->ubGroupSize && curr->ubGroupSize < 6 )
-							{ //while there is room in the new group, move one soldier at a time automatically.
-#ifdef JA2BETAVERSION
-									counter++;
-									if( counter > 100 )
-									{
-										AssertMsg( FALSE, L"Aborting infinite loop in merge group code #2. (KM : 1)" );
-										return FALSE;
-									}
-#endif
-								if( curr->pPlayerList->pSoldier->bAssignment < ON_DUTY )
-								{
-									RemoveCharacterFromSquads( pSoldier );
-									AddCharacterToSquad( pSoldier, curr->pPlayerList->pSoldier->bAssignment );
-								}
-								else
-								{
-									// KRIS NEEDS TO FIX THIS BIG TIME!!!
-									SetSoldierAssignment( pSoldier, curr->pPlayerList->pSoldier->bAssignment, 0, 0, 0 );
-									RemovePlayerFromGroup( pGroup->ubGroupID, pSoldier );
-									AddPlayerToGroup( curr->ubGroupID, pSoldier );
-								}
-							}
-
-							//Group successfully merged -- albeit one or more troops only!
-							fSuccess = TRUE;
-						}
-					}
-				}
-			}
-			curr = curr->next;
-		}
-	}
-	else if( pGroup->ubGroupSize < 6 )
-	{ //Search for other groups looking to join our group.
-		while( curr )
-		{
-			if( curr != pGroup && curr->fPlayer && curr->ubGroupSize )
-			{ //We have a player group with members
-				if( curr->pPlayerList->pSoldier->ubNumTraversalsAllowedToMerge )
-				{ //This group is allowed to merge
-					if( curr->ubSectorX == pGroup->ubSectorX && curr->ubSectorY == pGroup->ubSectorY )
-					{ //This group is in the same sector as us
-						if( curr->pPlayerList->pSoldier->ubDesiredSquadAssignment == pGroup->pPlayerList->pSoldier->bAssignment ||
-							  curr->pPlayerList->pSoldier->ubDesiredSquadAssignment == pGroup->pPlayerList->pSoldier->ubDesiredSquadAssignment )
-						{ //This group wants to join our group!
-							//First, set up flags for the current group to not relocate and walk in sector (they are already there)
-							pPlayer = curr->pPlayerList;
-							//if( curr->ubSectorX
-							while( pPlayer )
-							{
-								if( pPlayer->pSoldier->uiStatusFlags & SOLDIER_IS_TACTICALLY_VALID )
-								{
-									pPlayer->pSoldier->uiStatusFlags |= SOLDIER_IS_TACTICALLY_VALID;
-								}
-								pPlayer = pPlayer->next;
-							}
-							while( curr->ubGroupSize && pGroup->ubGroupSize < 6 )
-							{ //while there is room in the new group, move one soldier at a time automatically.
-#ifdef JA2BETAVERSION
-									counter++;
-									if( counter > 100 )
-									{
-										AssertMsg( FALSE, L"Aborting infinite loop in merge group code #3. (KM : 1)" );
-										return FALSE;
-									}
-#endif
-								pSoldier = curr->pPlayerList->pSoldier;
-								if( pGroup->pPlayerList->pSoldier->bAssignment < ON_DUTY )
-								{
-									RemoveCharacterFromSquads( pSoldier );
-									AddCharacterToSquad( pSoldier, pGroup->pPlayerList->pSoldier->bAssignment );
-								}
-								else
-								{
-									SetSoldierAssignment( pSoldier, curr->pPlayerList->pSoldier->bAssignment, 0, 0, 0 );
-									RemovePlayerFromGroup( curr->ubGroupID, pSoldier );
-									AddPlayerToGroup( pGroup->ubGroupID, pSoldier );
-								}
-							}
-							//Group successfully merged -- albeit one or more troops only!
-							fSuccess = TRUE;
-						}
-					}
-				}
-			}
-			curr = curr->next;
-		}
-	}
-	return fSuccess;
-#endif
 }
 
 void AwardExperienceForTravelling(struct GROUP *pGroup) {
@@ -1431,7 +1275,6 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
   BOOLEAN fExceptionQueue = FALSE;
   BOOLEAN fFirstTimeInSector = FALSE;
   BOOLEAN fGroupDestroyed = FALSE;
-  BOOLEAN fVehicleStranded = FALSE;
 
   // reset
   gfWaitingForInput = FALSE;
@@ -1486,16 +1329,16 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
   // First check if the group arriving is going to queue another battle.
   // NOTE:  We can't have more than one battle ongoing at a time.
   if (fExceptionQueue ||
-      fCheckForBattle && gTacticalStatus.fEnemyInSector &&
-          FindMovementGroupInSector((UINT8)gWorldSectorX, (UINT8)gWorldSectorY, TRUE) &&
-          (pGroup->ubNextX != gWorldSectorX || pGroup->ubNextY != gWorldSectorY ||
-           gbWorldSectorZ > 0) ||
+      (fCheckForBattle && gTacticalStatus.fEnemyInSector &&
+       FindMovementGroupInSector((UINT8)gWorldSectorX, (UINT8)gWorldSectorY, TRUE) &&
+       (pGroup->ubNextX != gWorldSectorX || pGroup->ubNextY != gWorldSectorY ||
+        gbWorldSectorZ > 0)) ||
       AreInMeanwhile() ||
       // KM : Aug 11, 1999 -- Patch fix:  Added additional checks to prevent a 2nd battle in the
       // case
       //     where the player is involved in a potential battle with bloodcats/civilians
-      fCheckForBattle && HostileCiviliansPresent() ||
-      fCheckForBattle && HostileBloodcatsPresent()) {
+      (fCheckForBattle && HostileCiviliansPresent()) ||
+      (fCheckForBattle && HostileBloodcatsPresent())) {
     // QUEUE BATTLE!
     // Delay arrival by a random value ranging from 3-5 minutes, so it doesn't get the player
     // too suspicious after it happens to him a few times, which, by the way, is a rare occurrence.
@@ -2282,7 +2125,6 @@ void RemoveGroup(UINT8 ubGroupID) {
   pGroup = GetGroup(ubGroupID);
 
   if (ubGroupID == 51) {
-    int i = 0;
   }
 
   Assert(pGroup);
@@ -2449,7 +2291,6 @@ INT32 CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
   UINT32 uiEtaTime = 0;
   WAYPOINT *pNode = NULL;
   WAYPOINT pCurrent, pDest;
-  INT8 ubCurrentSector = 0;
 
   // check if valid group
   if (pGroup == NULL) {
@@ -2907,7 +2748,6 @@ BOOLEAN PlayersBetweenTheseSectors(INT16 sSource, INT16 sDest, INT32 *iCountEnte
   INT16 sBattleSector = -1;
   BOOLEAN fMayRetreatFromBattle = FALSE;
   BOOLEAN fRetreatingFromBattle = FALSE;
-  BOOLEAN fHandleRetreats = FALSE;
   BOOLEAN fHelicopterGroup = FALSE;
   UINT8 ubMercsInGroup = 0;
 
@@ -2941,8 +2781,8 @@ BOOLEAN PlayersBetweenTheseSectors(INT16 sSource, INT16 sDest, INT32 *iCountEnte
       if (!fHelicopterGroup || !fShowAircraftFlag) {
         // if only showing retreat paths, ignore groups not in the battle sector
         // if NOT showing retreat paths, ignore groups not between sectors
-        if ((gfDisplayPotentialRetreatPaths == TRUE) && (sBattleSector == sSource) ||
-            (gfDisplayPotentialRetreatPaths == FALSE) && (curr->fBetweenSectors == TRUE)) {
+        if (((gfDisplayPotentialRetreatPaths == TRUE) && (sBattleSector == sSource)) ||
+            ((gfDisplayPotentialRetreatPaths == FALSE) && (curr->fBetweenSectors == TRUE))) {
           fMayRetreatFromBattle = FALSE;
           fRetreatingFromBattle = FALSE;
 
@@ -2978,8 +2818,8 @@ BOOLEAN PlayersBetweenTheseSectors(INT16 sSource, INT16 sDest, INT32 *iCountEnte
               *fAboutToArriveEnter = TRUE;
             }
           } else if ((SECTOR(curr->ubSectorX, curr->ubSectorY) == sDest) &&
-                         (SECTOR(curr->ubNextX, curr->ubNextY) == sSource) ||
-                     (fRetreatingFromBattle == TRUE)) {
+                     ((SECTOR(curr->ubNextX, curr->ubNextY) == sSource) ||
+                      (fRetreatingFromBattle == TRUE))) {
             // if it's a valid vehicle, but not the helicopter (which can fly empty)
             if (curr->fVehicle && !fHelicopterGroup &&
                 (GivenMvtGroupIdFindVehicleId(curr->ubGroupID) != -1)) {
@@ -3318,7 +3158,6 @@ BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
 }
 
 BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
-  UINT32 uiNumberOfNodesInList = 0;
   PLAYERGROUP *pTemp = NULL;
   PLAYERGROUP *pHead = NULL;
   UINT32 uiNumberOfNodes = 0;

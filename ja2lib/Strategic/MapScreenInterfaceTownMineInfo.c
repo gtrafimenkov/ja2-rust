@@ -107,7 +107,6 @@ void CreateDestroyTownInfoBox(void) {
   static BOOLEAN fCreated = FALSE;
   SGPRect pDimensions;
   SGPPoint pPosition;
-  INT16 sButtonX = 0, sButtonY = 0;
   INT8 bTownId = 0;
 
   if ((fCreated == FALSE) && (fShowTownInfo == TRUE)) {
@@ -645,7 +644,6 @@ void PositionTownMineInfoBox(void) {
   SGPRect pDimensions;
   SGPPoint pPosition;
   INT16 sX = 0, sY = 0;
-  INT16 sNewMargin = 0;
 
   // position the box based on x and y of the selected sector
   GetScreenXYFromMapXY(bCurrentTownMineSectorX, bCurrentTownMineSectorY, &sX, &sY);
@@ -699,7 +697,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
   VOBJECT_DESC VObjectDesc;
   UINT32 uiObject;
   ETRLEObject *pTrav;
-  INT16 sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
+  INT16 sWidthA = 0, sTotalBoxWidth = 0;
   struct VObject *hHandle;
 
   // load the button
@@ -714,7 +712,6 @@ void AddInventoryButtonForMapPopUpBox(void) {
   sWidthA = pTrav->usWidth;
 
   pTrav = &(hHandle->pETRLEObject[1]);
-  sWidthB = pTrav->usWidth;
 
   sTotalBoxWidth = sTotalButtonWidth;
 

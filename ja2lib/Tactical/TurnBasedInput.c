@@ -99,6 +99,11 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 
+#ifdef __GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wswitch"
+#endif
+
 extern UIKEYBOARD_HOOK gUIKeyboardHook;
 extern BOOLEAN fRightButtonDown;
 extern BOOLEAN fLeftButtonDown;
@@ -211,11 +216,9 @@ void GetTBMouseButtonInput(UINT32 *puiNewEvent) {
 
 void QueryTBLeftButton(UINT32 *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   static BOOLEAN fClickHoldIntercepted = FALSE;
-  BOOLEAN fOnInterTile = FALSE;
   static BOOLEAN fCanCheckForSpeechAdvance = FALSE;
-  static INT16 sMoveClickGridNo = 0;
 
   // LEFT MOUSE BUTTON
   if (gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
@@ -600,7 +603,7 @@ void QueryTBRightButton(UINT32 *puiNewEvent) {
   static BOOLEAN fClickHoldIntercepted = FALSE;
   static BOOLEAN fClickIntercepted = FALSE;
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   BOOLEAN fDone = FALSE;
   if (!GetMouseMapPos(&usMapPos)) {
     return;
@@ -802,7 +805,7 @@ void QueryTBRightButton(UINT32 *puiNewEvent) {
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
 void GetTBMousePositionInput(UINT32 *puiNewEvent) {
-  UINT16 usMapPos;
+  INT16 usMapPos;
   static UINT16 usOldMapPos = 0;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN bHandleCode;
@@ -1029,7 +1032,6 @@ void GetTBMousePositionInput(UINT32 *puiNewEvent) {
 }
 
 void GetPolledKeyboardInput(UINT32 *puiNewEvent) {
-  static BOOLEAN fShifted = FALSE;
   static BOOLEAN fShifted2 = FALSE;
   static BOOLEAN fCtrlDown = FALSE;
   static BOOLEAN fAltDown = FALSE;
@@ -1156,10 +1158,7 @@ extern BOOLEAN gfUserTurnRegionActive;
 void GetKeyboardInput(UINT32 *puiNewEvent) {
   InputAtom InputEvent;
   BOOLEAN fKeyTaken = FALSE;
-  static BOOLEAN fShifted = FALSE;
-  static BOOLEAN fShifted2 = FALSE;
-  static BOOLEAN fAltDown = FALSE;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   BOOLEAN fGoodCheatLevelKey = FALSE;
 
   struct Point MousePos = GetMousePoint();
@@ -2931,7 +2930,7 @@ BOOLEAN HandleCheckForExitArrowsInput(BOOLEAN fAdjustConfirm) {
 
 void CreateRandomItem() {
   struct OBJECTTYPE Object;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     CreateItem((UINT16)(Random(35) + 1), 100, &Object);
     AddItemToPool(usMapPos, &Object, -1, 0, 0, 0);
@@ -2942,7 +2941,7 @@ void MakeSelectedSoldierTired() {
   // Key to make guy get tired!
   struct SOLDIERTYPE *pSoldier;
   struct OBJECTTYPE Object;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     CreateItem((UINT16)TNT, 100, &Object);
     AddItemToPool(usMapPos, &Object, -1, 0, 0, 0);
@@ -3011,7 +3010,7 @@ void ToggleViewAllItems() {
 }
 
 void TestExplosion() {
-  UINT16 usMapPos;
+  INT16 usMapPos;
   if (GetMouseMapPos(&usMapPos)) {
     EXPLOSION_PARAMS ExpParams;
     ExpParams.uiFlags = 0;
@@ -3063,7 +3062,7 @@ void ToggleWireFrame() {
 
 void RefreshSoldier() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   // CHECK IF WE'RE ON A GUY ( EITHER SELECTED, OURS, OR THEIRS
   if (gfUIFullTargetFound) {
     // Get Soldier
@@ -3129,7 +3128,7 @@ void ChangeSoldiersBodyType(UINT8 ubBodyType, BOOLEAN fCreateNewPalette) {
 
 void TeleportSelectedSoldier() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   // CHECK IF WE'RE ON A GUY ( EITHER SELECTED, OURS, OR THEIRS
   if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
     if (GetMouseMapPos(&usMapPos)) {
@@ -3180,7 +3179,7 @@ void ToggleZBuffer() {
 
 void TogglePlanningMode() {
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   // DO ONLY IN TURNED BASED!
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
     // CANCEL FROM PLANNING MODE!
@@ -3268,7 +3267,7 @@ void JumpFence() {
 void CreateNextCivType() {
   INT16 sWorldX, sWorldY;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   static INT8 bBodyType = FATCIV;
   // Get Grid Corrdinates of mouse
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
@@ -3318,7 +3317,7 @@ void ToggleCliffDebug() {
 void CreateCow() {
   INT16 sWorldX, sWorldY;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   // Get Grid Corrdinates of mouse
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
     UINT8 iNewIndex;
@@ -3346,7 +3345,7 @@ void CreateCow() {
 void CreatePlayerControlledCow() {
   INT16 sWorldX, sWorldY;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   // Get Grid Corrdinates of mouse
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
     UINT8 iNewIndex;
@@ -3415,7 +3414,7 @@ void GrenadeTest3() {
 
 void CreatePlayerControlledMonster() {
   INT16 sWorldX, sWorldY;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   if (GetMouseWorldCoordsInCenter(&sWorldX, &sWorldY) && GetMouseMapPos(&usMapPos)) {
     SOLDIERCREATE_STRUCT MercCreateStruct;
     UINT8 iNewIndex;
@@ -3895,7 +3894,6 @@ void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight) {
   // If we have multiple guys selected, make all change stance!
   struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
-  struct SOLDIERTYPE *pFirstSoldier = NULL;
 
   if (gTacticalStatus.fAtLeastOneGuyOnMultiSelect) {
     // OK, loop through all guys who are 'multi-selected' and
@@ -3944,7 +3942,6 @@ void HandleStealthChangeFromUIKeys() {
   // If we have multiple guys selected, make all change stance!
   struct SOLDIERTYPE *pSoldier;
   INT32 cnt;
-  struct SOLDIERTYPE *pFirstSoldier = NULL;
 
   if (gTacticalStatus.fAtLeastOneGuyOnMultiSelect) {
     // OK, loop through all guys who are 'multi-selected' and
@@ -4008,3 +4005,7 @@ void PopupAssignmentMenuInTactical(struct SOLDIERTYPE *pSoldier) {
   fFirstClickInAssignmentScreenMask = TRUE;
   gfIgnoreScrolling = TRUE;
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

@@ -16,6 +16,11 @@
 #include "Tactical/Weapons.h"
 #include "Utils/Message.h"
 
+#ifdef __GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+#endif
+
 // To reduce memory fragmentation from frequent MemRealloc(), we allocate memory for more than one
 // special slot each time we run out of space.  Odds are that if we need one, we'll need another
 // soon.
@@ -632,9 +637,6 @@ void LimitArmsDealersInventory(UINT8 ubArmsDealer, UINT32 uiDealerItemType,
 void GuaranteeAtLeastOneItemOfType(UINT8 ubArmsDealer, UINT32 uiDealerItemType) {
   UINT16 usItemIndex;
   UINT8 ubChance;
-  BOOLEAN fFoundEligibleItemOfSameType = FALSE;
-  BOOLEAN fItemHasBeenAdded = FALSE;
-  BOOLEAN fFailedOnce = FALSE;
   UINT16 usAvailableItem[MAXITEMS] = {NOTHING};
   UINT8 ubChanceForAvailableItem[MAXITEMS] = {0};
   UINT32 uiTotalChances = 0;
@@ -2505,3 +2507,7 @@ UINT32 CalculateMinutesClosedBetween(UINT8 ubArmsDealer, UINT32 uiStartTime, UIN
 
   return (uiMinutesClosed);
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

@@ -918,7 +918,7 @@ BOOLEAN AddFacesToAutoBandageBox(void) {
   VOBJECT_DESC VObjectDesc;
 
   // reset
-  memset(&giAutoBandagesSoldierFaces, -1, 2 * MAX_CHARACTER_COUNT);
+  memset(&giAutoBandagesSoldierFaces, -1, sizeof(giAutoBandagesSoldierFaces));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
 

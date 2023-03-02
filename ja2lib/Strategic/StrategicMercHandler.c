@@ -159,7 +159,6 @@ void MercDailyUpdate() {
   MERCPROFILESTRUCT *pProfile;
   UINT32 uiChance;
   INT32 iOffset = 0;
-  BOOLEAN fFoundSomeOneForMenuShowing = FALSE;
 
   // if its the first day, leave
   if (GetWorldDay() == 1) return;
@@ -510,9 +509,7 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
   INT32 cnt;
   UINT16 usItem;
   INT8 bBestArmour = -1;
-  INT8 bBestArmourIndex = -1;
   INT8 bBestGun = -1;
-  INT8 bBestGunIndex = -1;
 
   for (cnt = 0; cnt < NUM_INV_SLOTS; cnt++) {
     usItem = pSoldier->inv[cnt].usItem;
@@ -522,7 +519,6 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
       // Check if it's a gun
       if (Item[usItem].usItemClass & IC_GUN) {
         if (Weapon[usItem].ubDeadliness > bBestGun) {
-          bBestGunIndex = (INT8)cnt;
           bBestGun = Weapon[usItem].ubDeadliness;
         }
       }
@@ -530,7 +526,6 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
       // If it's armour
       if (Item[usItem].usItemClass & IC_ARMOUR) {
         if (Armour[Item[usItem].ubClassIndex].ubProtection > bBestArmour) {
-          bBestArmourIndex = (INT8)cnt;
           bBestArmour = Armour[Item[usItem].ubClassIndex].ubProtection;
         }
       }
@@ -727,9 +722,9 @@ void UpdateBuddyAndHatedCounters(void) {
                       pProfile->bLearnToHateCount = 1;
                     } else if (pProfile->bLearnToHateCount > 0 &&
                                (pProfile->bLearnToHateCount == pProfile->bLearnToHateTime / 2 ||
-                                pProfile->bLearnToHateCount < pProfile->bLearnToHateTime / 2 &&
-                                    pProfile->bLearnToHateCount % TIME_BETWEEN_HATED_COMPLAINTS ==
-                                        0)) {
+                                (pProfile->bLearnToHateCount < pProfile->bLearnToHateTime / 2 &&
+                                 pProfile->bLearnToHateCount % TIME_BETWEEN_HATED_COMPLAINTS ==
+                                     0))) {
                       // complain!
                       TacticalCharacterDialogue(pSoldier, QUOTE_LEARNED_TO_HATE_MERC);
                       StopTimeCompression();

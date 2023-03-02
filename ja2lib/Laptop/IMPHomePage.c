@@ -131,7 +131,6 @@ void HandleImpHomePage(void) {
 
 void DisplayPlayerActivationString(void) {
   // this function will grab the string that the player will enter for activation
-  INT32 iCounter = 0;
 
   // player gone too far, move back
   if (iStringPos > 64) {
@@ -213,7 +212,6 @@ void DisplayActivationStringCursor(void) {
 
 void GetPlayerKeyBoardInputForIMPHomePage(void) {
   InputAtom InputEvent;
-  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&InputEvent) == TRUE) {
     // HOOK INTO MOUSE HOOKS
@@ -285,8 +283,8 @@ void HandleTextEvent(UINT32 uiKey) {
       break;
 
     default:
-      if (uiKey >= 'A' && uiKey <= 'Z' || uiKey >= 'a' && uiKey <= 'z' ||
-          uiKey >= '0' && uiKey <= '9' || uiKey == '_' || uiKey == '.') {
+      if ((uiKey >= 'A' && uiKey <= 'Z') || (uiKey >= 'a' && uiKey <= 'z') ||
+          (uiKey >= '0' && uiKey <= '9') || uiKey == '_' || uiKey == '.') {
         // if the current string position is at max or great, do nothing
         if (iStringPos >= 6) {
           break;

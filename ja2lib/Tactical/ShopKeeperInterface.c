@@ -1402,34 +1402,15 @@ void RestoreTacticalBackGround() {
 
 void GetShopKeeperInterfaceUserInput() {
   InputAtom Event;
-  struct Point MousePos = GetMousePoint();
 
   while (DequeueEvent(&Event)) {
     // HOOK INTO MOUSE HOOKS
 
     if (!HandleTextInput(&Event) && Event.usEvent == KEY_DOWN) {
-      /*
-      //ATM:
-
-                              //if the number entered was a number
-                              if( (Event.usParam >= '0' ) && ( Event.usParam <= '9') )
-                              {
-                                      UINT8 ubValue = 0;
-                                      ubValue = ( INT8 )( Event.usParam - '0' );
-
-                                      AddNumberToSkiAtm( ubValue );
-                              }
-      */
-
       switch (Event.usParam) {
         case ESC:
           // clean exits - does quotes, shuts up shopkeeper, etc.
           ExitSKIRequested();
-
-#ifdef JA2TESTVERSION
-          // Instant exit - doesn't clean up much
-//					gfSKIScreenExit = TRUE;
-#endif
           break;
 
         case 'x':
@@ -2365,7 +2346,6 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
   ETRLEObject *pTrav;
   UINT32 usHeight, usWidth;
   INT16 sCenX, sCenY;
-  UINT8 sItemCount = 0;
   BOOLEAN fHighlighted = IsGunOrAmmoOfSameTypeSelected(pItemObject);
   BOOLEAN fDisplayMercFace = FALSE;
   UINT8 ubMercID = 0;
@@ -2439,7 +2419,6 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
     } else  // UNDER REPAIR
     {
       UINT8 ubElement;
-      UINT32 uiTimeInMinutesToFixItem = 0;
 
       // display the length of time needed to repair the item
       uiItemCost = 0;
@@ -2795,9 +2774,11 @@ void DrawHatchOnInventory(UINT32 uiSurface, UINT16 usPosX, UINT16 usPosY, UINT16
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
   SGPRect ClipRect;
-  static UINT8 Pattern[8][8] = {1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0,
-                                1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1,
-                                0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1};
+  static UINT8 Pattern[8][8] = {
+      {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
+      {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
+      {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
+  };
   ClipRect.iLeft = usPosX;
   ClipRect.iRight = usPosX + usWidth;
   ClipRect.iTop = usPosY;
@@ -3585,7 +3566,6 @@ void PerformTransaction(UINT32 uiMoneyFromPlayersAccount) {
 void MoveAllArmsDealersItemsInOfferAreaToPlayersOfferArea() {
   // for all items in the dealers items offer area
   UINT32 uiCnt;
-  UINT32 uiTotal = 0;
   INT8 bSlotID = 0;
 
   // loop through all the slots in the shopkeeper's offer area
@@ -4093,7 +4073,6 @@ void HandleShopKeeperDialog(UINT8 ubInit) {
   UINT32 uiCurTime = GetJA2Clock();
 
   static UINT32 uiLastTime = 0;
-  static UINT32 uiLastTimeSpoke = 0;
   static INT8 bSpeech = -1;
 
   if (ubInit >= 1) {
@@ -4124,7 +4103,6 @@ void HandleShopKeeperDialog(UINT8 ubInit) {
   // if its the first time in
   if (bSpeech != -1) {
     if ((uiCurTime - uiLastTime) > 800) {
-      uiLastTimeSpoke = GetJA2Clock();
       StartShopKeeperTalking(bSpeech);
       bSpeech = -1;
       uiLastTime = GetJA2Clock();
@@ -4267,7 +4245,7 @@ BOOLEAN IsGunOrAmmoOfSameTypeSelected(struct OBJECTTYPE *pItemObject) {
 
 void InitShopKeeperSubTitledText(STR16 pString) {
   // Clear the contents of the subtitle text
-  memset(gsShopKeeperTalkingText, 0, SKI_SUBTITLE_TEXT_SIZE);
+  memset(gsShopKeeperTalkingText, 0, sizeof(gsShopKeeperTalkingText));
 
 #ifdef TAIWANESE
   swprintf(gsShopKeeperTalkingText, ARR_SIZE(gsShopKeeperTalkingText), L"%s", pString);
@@ -4544,13 +4522,7 @@ void BtnSKI_AtmButtonCallback(GUI_BUTTON *btn, INT32 reason) {
                      btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
   }
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
-
-    // ATM:
-
-    //		HandleSkiAtmPanelInput( ubButton );
-
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
                      btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
   }
@@ -4599,13 +4571,13 @@ void HandleSkiAtmPanelInput(UINT8 ubButtonPress) {
       break;
 
     case SKI_ATM_CANCEL:
-      memset(gzSkiAtmTransferString, 0, 32);
+      memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
       gubCurrentSkiAtmMode = SKI_ATM_DISABLED_MODE;
       EnableDisableSkiAtmButtons();
       break;
 
     case SKI_ATM_CLEAR:
-      memset(gzSkiAtmTransferString, 0, 32);
+      memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
       break;
 
     default:
@@ -4639,7 +4611,7 @@ void HandleAtmOK() {
       UINT32 uiFundsOnCurrentMerc = GetFundsOnMerc(gpSMCurrentMerc);
 
       if (uiFundsOnCurrentMerc == 0)
-        memset(gzSkiAtmTransferString, 0, 32);
+        memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
       else {
         // Set the amount to transfer
         swprintf(gzSkiAtmTransferString, ARR_SIZE(gzSkiAtmTransferString), L"%d",
@@ -4658,7 +4630,7 @@ void HandleAtmOK() {
     // are we tring to take more then we have?
     if (iAmountToTransfer > LaptopSaveInfo.iCurrentBalance) {
       if (LaptopSaveInfo.iCurrentBalance == 0)
-        memset(gzSkiAtmTransferString, 0, 32);
+        memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
       else {
         // Set the amount to transfer
         swprintf(gzSkiAtmTransferString, ARR_SIZE(gzSkiAtmTransferString), L"%d",
@@ -4677,7 +4649,7 @@ void HandleAtmOK() {
   if (fOkToClear) {
     gubCurrentSkiAtmMode = SKI_ATM_DISABLED_MODE;
     EnableDisableSkiAtmButtons();
-    memset(gzSkiAtmTransferString, 0, 32);
+    memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
   }
 
   // Redraw the screen
@@ -4930,7 +4902,6 @@ void EnableDisableDealersInventoryPageButtons() {
 
 void EnableDisableEvaluateAndTransactionButtons() {
   UINT8 ubCnt;
-  BOOLEAN fItemsHere = FALSE;
   BOOLEAN fItemEvaluated = FALSE;
   UINT32 uiArmsDealerTotalCost = CalculateTotalArmsDealerCost();
   UINT32 uiPlayersOfferAreaTotalCost = CalculateTotalPlayersValue();
@@ -4941,8 +4912,6 @@ void EnableDisableEvaluateAndTransactionButtons() {
   for (ubCnt = 0; ubCnt < SKI_NUM_TRADING_INV_SLOTS; ubCnt++) {
     // if there is an item here
     if (PlayersOfferArea[ubCnt].fActive) {
-      fItemsHere = TRUE;
-
       // if the item has value
       if (PlayersOfferArea[ubCnt].uiFlags & ARMS_INV_PLAYERS_ITEM_HAS_VALUE) {
         // if the item isnt money ( which is always evaluated )
@@ -5582,7 +5551,7 @@ INT16 GetNumberOfItemsInPlayerOfferArea(void) {
 
 void HandleCheckIfEnoughOnTheTable(void) {
   static INT32 iLastTime = 0;
-  INT32 iTime = 0, iDifference = 0, iRand = 0;
+  INT32 iDifference = 0, iRand = 0;
   UINT32 uiPlayersOfferAreaValue = CalculateTotalPlayersValue();
   UINT32 uiArmsDealersItemsCost = CalculateTotalArmsDealerCost();
 
@@ -6393,7 +6362,6 @@ void ResetAllQuoteSaidFlags() {
 }
 
 void DealWithItemsStillOnTheTable() {
-  BOOLEAN fAddedCorrectly = FALSE;
   UINT8 ubCnt;
   struct SOLDIERTYPE *pDropSoldier;
 

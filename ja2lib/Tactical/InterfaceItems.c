@@ -297,7 +297,7 @@ typedef struct {
 } MoneyLoc;
 
 MoneyLoc gMoneyButtonLoc = {343, 351};
-MoneyLoc gMoneyButtonOffsets[] = {0, 0, 34, 0, 0, 32, 34, 32, 8, 22};
+MoneyLoc gMoneyButtonOffsets[] = {{0, 0}, {34, 0}, {0, 32}, {34, 32}, {8, 22}};
 MoneyLoc gMapMoneyButtonLoc = {174, 115};
 
 // show the description
@@ -399,45 +399,52 @@ typedef struct {
 } INV_HELPTEXT;
 
 INV_DESC_STATS gWeaponStats[] = {
-    202, 25,  83, 202, 15,  83, 202, 15,  83, 265, 40,  20, 202, 40,
-    32,  202, 50, 32,  265, 50, 20,  234, 50, 0,   290, 50, 0,
+    {202, 25, 83}, {202, 15, 83}, {202, 15, 83}, {265, 40, 20}, {202, 40, 32},
+    {202, 50, 32}, {265, 50, 20}, {234, 50, 0},  {290, 50, 0},
 };
 
 // displayed AFTER the mass/weight/"Kg" line
 INV_DESC_STATS gMoneyStats[] = {
-    202, 14, 78, 212, 25, 78, 202, 40, 78, 212, 51, 78,
+    {202, 14, 78},
+    {212, 25, 78},
+    {202, 40, 78},
+    {212, 51, 78},
 };
 
 // displayed AFTER the mass/weight/"Kg" line
 INV_DESC_STATS gMapMoneyStats[] = {
-    51, 97, 45, 61, 107, 75, 51, 125, 45, 61, 135, 70,
+    {51, 97, 45},
+    {61, 107, 75},
+    {51, 125, 45},
+    {61, 135, 70},
 };
 
 INV_DESC_STATS gMapWeaponStats[] = {
-    72 - 20,      20 + 80 + 8, 80, 72 - 20, 20 + 80 - 2, 80, 72 - 20, 20 + 80 - 2, 80,
-    72 + 65 - 20, 40 + 80 + 4, 21, 72 - 20, 40 + 80 + 4, 30, 72 - 20, 53 + 80 + 2, 30,
-    72 + 65 - 20, 53 + 80 + 2, 25, 86,      53 + 80 + 2, 0,  145,     53 + 80 + 2, 0,
-
+    {72 - 20, 20 + 80 + 8, 80},      {72 - 20, 20 + 80 - 2, 80}, {72 - 20, 20 + 80 - 2, 80},
+    {72 + 65 - 20, 40 + 80 + 4, 21}, {72 - 20, 40 + 80 + 4, 30}, {72 - 20, 53 + 80 + 2, 30},
+    {72 + 65 - 20, 53 + 80 + 2, 25}, {86, 53 + 80 + 2, 0},       {145, 53 + 80 + 2, 0},
 };
 
 INV_ATTACHXY gItemDescAttachmentsXY[] = {
-    129, 12, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1,
-    163, 12, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1,
-    129, 39, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1,
-    163, 39, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1};
+    {129, 12, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1},
+    {163, 12, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1},
+    {129, 39, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1},
+    {163, 39, SM_INV_SLOT_HEIGHT, SM_INV_SLOT_WIDTH, INV_BAR_DX - 1, INV_BAR_DY + 1}};
 
 INV_ATTACHXY gMapItemDescAttachmentsXY[] = {
-    173, 10, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY,
-    211, 10, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY,
-    173, 36, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY,
-    211, 36, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY};
+    {173, 10, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY},
+    {211, 10, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY},
+    {173, 36, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY},
+    {211, 36, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY}};
 
 SGPRect gItemDescProsConsRects[] =
     {  // NB the left value is calculated based on the width of the 'pros' and 'cons' labels
-        0, 111, 313, 118, 0, 119, 313, 126};
+        {0, 111, 313, 118},
+        {0, 119, 313, 126}};
 
 SGPRect gMapItemDescProsConsRects[] = {
-    0, 231, 313, 238, 0, 239, 313, 246,
+    {0, 231, 313, 238},
+    {0, 239, 313, 246},
 };
 
 INV_HELPTEXT gItemDescHelpText = {
@@ -452,44 +459,169 @@ BOOLEAN gfItemDescHelpTextOffset = FALSE;
 
 // ARRAY FOR INV PANEL INTERFACE ITEM POSITIONS (sX,sY get set via InitInvSlotInterface() )
 INV_REGIONS gSMInvData[] = {
-    FALSE, INV_BAR_DX, INV_BAR_DY, HEAD_INV_SLOT_WIDTH, HEAD_INV_SLOT_HEIGHT,
-    0,     0,  // HELMETPOS
-    FALSE, INV_BAR_DX, INV_BAR_DY, VEST_INV_SLOT_WIDTH, VEST_INV_SLOT_HEIGHT,
-    0,     0,  // VESTPOS
-    FALSE, INV_BAR_DX, INV_BAR_DY, LEGS_INV_SLOT_WIDTH, LEGS_INV_SLOT_HEIGHT,
-    0,     0,  // LEGPOS,
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // HEAD1POS
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // HEAD2POS
-    TRUE,  INV_BAR_DX, INV_BAR_DY, BIG_INV_SLOT_WIDTH,  BIG_INV_SLOT_HEIGHT,
-    0,     0,  // HANDPOS,
-    TRUE,  INV_BAR_DX, INV_BAR_DY, BIG_INV_SLOT_WIDTH,  BIG_INV_SLOT_HEIGHT,
-    0,     0,  // SECONDHANDPOS
-    TRUE,  INV_BAR_DX, INV_BAR_DY, BIG_INV_SLOT_WIDTH,  BIG_INV_SLOT_HEIGHT,
-    0,     0,  // BIGPOCK1
-    TRUE,  INV_BAR_DX, INV_BAR_DY, BIG_INV_SLOT_WIDTH,  BIG_INV_SLOT_HEIGHT,
-    0,     0,  // BIGPOCK2
-    TRUE,  INV_BAR_DX, INV_BAR_DY, BIG_INV_SLOT_WIDTH,  BIG_INV_SLOT_HEIGHT,
-    0,     0,  // BIGPOCK3
-    TRUE,  INV_BAR_DX, INV_BAR_DY, BIG_INV_SLOT_WIDTH,  BIG_INV_SLOT_HEIGHT,
-    0,     0,  // BIGPOCK4
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // SMALLPOCK1
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // SMALLPOCK2
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // SMALLPOCK3
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // SMALLPOCK4
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // SMALLPOCK5
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // SMALLPOCK6
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0,  // SMALLPOCK7
-    FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH,   SM_INV_SLOT_HEIGHT,
-    0,     0  // SMALLPOCK8
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        HEAD_INV_SLOT_WIDTH,
+        HEAD_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // HELMETPOS
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        VEST_INV_SLOT_WIDTH,
+        VEST_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // VESTPOS
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        LEGS_INV_SLOT_WIDTH,
+        LEGS_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // LEGPOS,
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // HEAD1POS
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // HEAD2POS
+    {
+        TRUE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        BIG_INV_SLOT_WIDTH,
+        BIG_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // HANDPOS,
+    {
+        TRUE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        BIG_INV_SLOT_WIDTH,
+        BIG_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // SECONDHANDPOS
+    {
+        TRUE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        BIG_INV_SLOT_WIDTH,
+        BIG_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // BIGPOCK1
+    {
+        TRUE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        BIG_INV_SLOT_WIDTH,
+        BIG_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // BIGPOCK2
+    {
+        TRUE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        BIG_INV_SLOT_WIDTH,
+        BIG_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // BIGPOCK3
+    {
+        TRUE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        BIG_INV_SLOT_WIDTH,
+        BIG_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // BIGPOCK4
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // SMALLPOCK1
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // SMALLPOCK2
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // SMALLPOCK3
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // SMALLPOCK4
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // SMALLPOCK5
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },  // SMALLPOCK6
+    {
+        FALSE,
+        INV_BAR_DX,
+        INV_BAR_DY,
+        SM_INV_SLOT_WIDTH,
+        SM_INV_SLOT_HEIGHT,
+        0,
+        0,
+    },                                                                             // SMALLPOCK7
+    {FALSE, INV_BAR_DX, INV_BAR_DY, SM_INV_SLOT_WIDTH, SM_INV_SLOT_HEIGHT, 0, 0},  // SMALLPOCK8
 };
 
 typedef struct {
@@ -1113,7 +1245,6 @@ BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, INT32 b
   BOOLEAN fFound = FALSE;
   INT32 cnt;
   struct OBJECTTYPE *pObject, *pTestObject;
-  BOOLEAN fFoundAttachment = FALSE;
 
   if (fFromMerc == FALSE) {
     pTestObject = &(pInventoryPoolList[bInvPos].o);
@@ -1176,8 +1307,6 @@ BOOLEAN HandleCompatibleAmmoUIForMapScreen(struct SOLDIERTYPE *pSoldier, INT32 b
           ValidAttachment(pTestObject->usItem, pObject->usItem) ||
           ValidLaunchable(pTestObject->usItem, pObject->usItem) ||
           ValidLaunchable(pObject->usItem, pTestObject->usItem)) {
-        fFoundAttachment = TRUE;
-
         if (fOn != gbCompatibleAmmo[cnt]) {
           fFound = TRUE;
         }
@@ -1230,7 +1359,6 @@ BOOLEAN HandleCompatibleAmmoUIForMapInventory(struct SOLDIERTYPE *pSoldier, INT3
   BOOLEAN fFound = FALSE;
   INT32 cnt;
   struct OBJECTTYPE *pObject, *pTestObject;
-  BOOLEAN fFoundAttachment = FALSE;
 
   if (fFromMerc == FALSE) {
     pTestObject = &(pInventoryPoolList[iStartSlotNumber + bInvPos].o);
@@ -1255,8 +1383,6 @@ BOOLEAN HandleCompatibleAmmoUIForMapInventory(struct SOLDIERTYPE *pSoldier, INT3
         ValidAttachment(pTestObject->usItem, pObject->usItem) ||
         ValidLaunchable(pTestObject->usItem, pObject->usItem) ||
         ValidLaunchable(pObject->usItem, pTestObject->usItem)) {
-      fFoundAttachment = TRUE;
-
       if (fOn != fMapInventoryItemCompatable[cnt]) {
         fFound = TRUE;
       }
@@ -1305,7 +1431,6 @@ BOOLEAN InternalHandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, struct OBJE
   BOOLEAN fFound = FALSE;
   INT32 cnt;
   struct OBJECTTYPE *pObject;
-  BOOLEAN fFoundAttachment = FALSE;
 
   // ATE: If pTest object is NULL, test only for existence of syringes, etc...
   if (pTestObject == NULL) {
@@ -1357,8 +1482,6 @@ BOOLEAN InternalHandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, struct OBJE
         ValidAttachment(pTestObject->usItem, pObject->usItem) ||
         ValidLaunchable(pTestObject->usItem, pObject->usItem) ||
         ValidLaunchable(pObject->usItem, pTestObject->usItem)) {
-      fFoundAttachment = TRUE;
-
       if (fOn != gbCompatibleAmmo[cnt]) {
         fFound = TRUE;
       }
@@ -1445,7 +1568,6 @@ void ResetCompatibleItemArray() {
 BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, INT8 bInvPos, BOOLEAN fOn) {
   INT32 cnt;
   struct OBJECTTYPE *pTestObject;
-  BOOLEAN fFound = FALSE;
 
   // if we are in the shopkeeper interface
   if (guiTacticalInterfaceFlags & INTERFACE_SHOPKEEP_INTERFACE) {
@@ -1463,7 +1585,6 @@ BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, INT8 bInvPos, BOOLE
 
         for (cnt = 0; cnt < NUM_INV_SLOTS; cnt++) {
           if (gbCompatibleAmmo[cnt]) {
-            fFound = TRUE;
             gbCompatibleAmmo[cnt] = FALSE;
           }
         }
@@ -3817,7 +3938,7 @@ BOOLEAN SoldierCanSeeCatchComing(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo)
 }
 
 void DrawItemTileCursor() {
-  UINT16 usMapPos;
+  INT16 usMapPos;
   UINT16 usIndex;
   UINT8 ubSoldierID;
   INT16 sAPCost;
@@ -3921,7 +4042,7 @@ void DrawItemTileCursor() {
       }
 
       // If we are tossing...
-      if (sDist <= 1 && gfUIMouseOnValidCatcher == 0 || gfUIMouseOnValidCatcher == 4) {
+      if ((sDist <= 1 && gfUIMouseOnValidCatcher == 0) || gfUIMouseOnValidCatcher == 4) {
         gsCurrentActionPoints = AP_PICKUP_ITEM;
       } else {
         gsCurrentActionPoints = AP_TOSS_ITEM;
@@ -4631,7 +4752,7 @@ void EndItemStackPopupWithItemInHand() {
 
 void RenderItemStackPopup(BOOLEAN fFullRender) {
   ETRLEObject *pTrav;
-  UINT32 usHeight, usWidth;
+  UINT32 usWidth;
   struct VObject *hVObject;
   UINT32 cnt;
   INT16 sX, sY, sNewX, sNewY;
@@ -4650,7 +4771,6 @@ void RenderItemStackPopup(BOOLEAN fFullRender) {
   // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
   GetVideoObject(&hVObject, guiItemPopupBoxes);
   pTrav = &(hVObject->pETRLEObject[0]);
-  usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
 
   for (cnt = 0; cnt < gubNumItemPopups; cnt++) {
@@ -4715,7 +4835,6 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
   struct VObject *hVObject;
   INT32 cnt;
   UINT16 usPopupWidth, usPopupHeight;
-  UINT8 ubSlotSimilarToKeySlot = 10;
   INT16 sKeyRingItemWidth = 0;
   INT16 sOffSetY = 0, sOffSetX = 0;
 
@@ -5151,9 +5270,7 @@ void ItemPopupRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void ItemPopupFullRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT32 uiItemPos;
-
-  uiItemPos = MSYS_GetRegionUserData(pRegion, 0);
+  MSYS_GetRegionUserData(pRegion, 0);
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (InItemStackPopup()) {
@@ -5566,11 +5683,10 @@ void SetupPickupPage(INT8 bPage) {
 
 void CalculateItemPickupMenuDimensions() {
   INT32 cnt;
-  INT16 sX, sY;
+  INT16 sY;
   UINT16 usSubRegion, usHeight, usWidth;
 
   // Build background
-  sX = 0;
   sY = 0;
 
   for (cnt = 0; cnt < gItemPickupMenu.bNumSlotsPerPage; cnt++) {
@@ -5921,8 +6037,6 @@ void ItemPickupAll(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void ItemPickupOK(GUI_BUTTON *btn, INT32 reason) {
-  INT32 cnt = 0;
-
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -5941,8 +6055,6 @@ void ItemPickupOK(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void ItemPickupCancel(GUI_BUTTON *btn, INT32 reason) {
-  INT32 cnt = 0;
-
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

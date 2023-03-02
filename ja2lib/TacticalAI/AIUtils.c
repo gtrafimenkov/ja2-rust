@@ -731,10 +731,6 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
   INT32 iPathCost;
   INT16 sClosestDisturbance = NOWHERE;
   UINT32 uiLoop;
-  UINT16 closestConscious = NOWHERE, closestUnconscious = NOWHERE;
-  INT32 iShortestPath = 1000;
-  INT32 iShortestPathConscious = 1000, iShortestPathUnconscious = 1000;
-  UINT8 *pubNoiseVolume;
   INT8 *pbNoiseLevel;
   INT8 *pbPersOL, *pbPublOL;
   INT16 sClimbGridNo;
@@ -746,7 +742,6 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
 
   *pfChangeLevel = FALSE;
 
-  pubNoiseVolume = &gubPublicNoiseVolume[pSoldier->bTeam];
   pusNoiseGridNo = &gsPublicNoiseGridno[pSoldier->bTeam];
   pbNoiseLevel = &gbPublicNoiseLevel[pSoldier->bTeam];
 
@@ -827,7 +822,6 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
       } else {
         sClosestDisturbance = sClosestEnemy;
       }
-      iShortestPath = iPathCost;
       fClosestClimbingNecessary = fClimbingNecessary;
     }
   }
@@ -853,7 +847,6 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
         } else {
           sClosestDisturbance = sGridNo;
         }
-        iShortestPath = iPathCost;
         fClosestClimbingNecessary = fClimbingNecessary;
       }
     }
@@ -882,7 +875,6 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
         } else {
           sClosestDisturbance = sGridNo;
         }
-        iShortestPath = iPathCost;
         fClosestClimbingNecessary = fClimbingNecessary;
       }
     } else {
@@ -902,7 +894,7 @@ INT16 ClosestReachableDisturbance(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsci
 }
 
 INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *pbLevel) {
-  INT16 *psLastLoc, sGridNo, sClosestOpponent = NOWHERE;
+  INT16 sGridNo, sClosestOpponent = NOWHERE;
   UINT32 uiLoop;
   INT32 iRange, iClosestRange = 1500;
   INT8 *pbPersOL, *pbPublOL;
@@ -910,9 +902,6 @@ INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *
   struct SOLDIERTYPE *pOpp;
 
   bClosestLevel = -1;
-
-  // NOTE: THIS FUNCTION ALLOWS RETURN OF UNCONSCIOUS AND UNREACHABLE OPPONENTS
-  psLastLoc = &(gsLastKnownOppLoc[pSoldier->ubID][0]);
 
   // hang pointers at start of this guy's personal and public opponent opplists
   pbPersOL = &pSoldier->bOppList[0];
@@ -939,7 +928,6 @@ INT16 ClosestKnownOpponent(struct SOLDIERTYPE *pSoldier, INT16 *psGridNo, INT8 *
 
     pbPersOL = pSoldier->bOppList + pOpp->ubID;
     pbPublOL = gbPublicOpplist[pSoldier->bTeam] + pOpp->ubID;
-    psLastLoc = gsLastKnownOppLoc[pSoldier->ubID] + pOpp->ubID;
 
     // if this opponent is unknown personally and publicly
     if ((*pbPersOL == NOT_HEARD_OR_SEEN) && (*pbPublOL == NOT_HEARD_OR_SEEN)) {

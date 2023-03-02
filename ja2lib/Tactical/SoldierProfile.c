@@ -659,9 +659,6 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
   UINT32 cnt;
   INT16 sOldGridNo;
 
-  UINT8 ubOldID;
-  UINT32 uiOldUniqueId;
-
   UINT32 uiSlot;
   struct SOLDIERTYPE *pGroupMember;
 
@@ -671,9 +668,6 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
 
   // Save merc id for this guy...
   ubID = pSoldier->ubID;
-
-  ubOldID = ubID;
-  uiOldUniqueId = pSoldier->uiUniqueSoldierIdValue;
 
   sOldGridNo = pSoldier->sGridNo;
 
@@ -903,7 +897,7 @@ BOOLEAN RecruitEPC(UINT8 ubCharNum) {
 }
 
 BOOLEAN UnRecruitEPC(UINT8 ubCharNum) {
-  struct SOLDIERTYPE *pSoldier, *pNewSoldier;
+  struct SOLDIERTYPE *pSoldier;
 
   // Get soldier pointer
   pSoldier = FindSoldierByProfileID(ubCharNum, FALSE);
@@ -950,7 +944,7 @@ BOOLEAN UnRecruitEPC(UINT8 ubCharNum) {
   gMercProfiles[ubCharNum].ubMiscFlags3 |= PROFILE_MISC_FLAG3_PERMANENT_INSERTION_CODE;
 
   // Add this guy to CIV team!
-  pNewSoldier = ChangeSoldierTeam(pSoldier, CIV_TEAM);
+  ChangeSoldierTeam(pSoldier, CIV_TEAM);
 
   UpdateTeamPanelAssignments();
 

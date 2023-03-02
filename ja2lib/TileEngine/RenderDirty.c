@@ -189,10 +189,6 @@ INT32 RegisterBackgroundRect(UINT32 uiFlags, INT16 *pSaveArea, INT16 sLeft, INT1
   sTop = sTop + (INT16)uiTopSkip;
   sBottom = sBottom - (INT16)uiBottomSkip;
 
-  if (sLeft == 192 || sLeft == 188) {
-    int i = 0;
-  }
-
   if ((iBackIndex = GetFreeBackgroundBuffer()) == (-1)) return (-1);
 
   memset(&gBackSaves[iBackIndex], 0, sizeof(BACKGROUND_SAVE));
@@ -336,11 +332,10 @@ BOOLEAN EmptyBackgroundRects(void) {
 }
 
 BOOLEAN SaveBackgroundRects(void) {
-  UINT32 uiCount, uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
+  UINT32 uiCount, uiDestPitchBYTES;
+  UINT8 *pSrcBuf;
 
   pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
-  pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
     if (gBackSaves[uiCount].fAllocated && (!gBackSaves[uiCount].fDisabled)) {

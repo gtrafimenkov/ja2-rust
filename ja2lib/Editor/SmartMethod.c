@@ -230,8 +230,6 @@ BOOLEAN CalcBrokenWallInfoUsingSmartMethod(UINT32 iMapIndex, UINT16 *pusWallType
 // wall in the x+1 position.  If there are matching walls, there, then we draw two pieces to connect
 // the current gridno with the respective position.
 void PasteSmartWall(UINT32 iMapIndex) {
-  static BOOLEAN fWallAlone = FALSE;
-  static UINT32 iAloneMapIndex = 0x8000;
   UINT16 usWallType;
 
   // These are the counters for the walls of each type
@@ -283,15 +281,16 @@ void PasteSmartWall(UINT32 iMapIndex) {
   }
   //*D* See above documentation
   // Evaluate left adjacent tile
-  if (usWallType = GetVerticalWallType(iMapIndex - 1)) usNumH[usWallType - FIRSTWALL]++;
-  if (usWallType = GetHorizontalWallType(iMapIndex - 1)) usNumH[usWallType - FIRSTWALL]++;
+  if ((usWallType = GetVerticalWallType(iMapIndex - 1))) usNumH[usWallType - FIRSTWALL]++;
+  if ((usWallType = GetHorizontalWallType(iMapIndex - 1))) usNumH[usWallType - FIRSTWALL]++;
   // Evaluate right adjacent tile
-  if (usWallType = GetHorizontalWallType(iMapIndex + 1)) usNumH[usWallType - FIRSTWALL]++;
+  if ((usWallType = GetHorizontalWallType(iMapIndex + 1))) usNumH[usWallType - FIRSTWALL]++;
   // Evaluate upper adjacent tile
-  if (usWallType = GetVerticalWallType(iMapIndex - WORLD_COLS)) usNumV[usWallType - FIRSTWALL]++;
-  if (usWallType = GetHorizontalWallType(iMapIndex - WORLD_COLS)) usNumV[usWallType - FIRSTWALL]++;
+  if ((usWallType = GetVerticalWallType(iMapIndex - WORLD_COLS))) usNumV[usWallType - FIRSTWALL]++;
+  if ((usWallType = GetHorizontalWallType(iMapIndex - WORLD_COLS)))
+    usNumV[usWallType - FIRSTWALL]++;
   // Evaluate lower adjacent tile
-  if (usWallType = GetVerticalWallType(iMapIndex + WORLD_COLS)) usNumV[usWallType - FIRSTWALL]++;
+  if ((usWallType = GetVerticalWallType(iMapIndex + WORLD_COLS))) usNumV[usWallType - FIRSTWALL]++;
   //*E* See above documentation
   if (usNumV[gubWallUIValue - FIRSTWALL] | usNumH[gubWallUIValue - FIRSTWALL]) {
     if (usNumV[gubWallUIValue - FIRSTWALL] >= usNumH[gubWallUIValue - FIRSTWALL]) {
@@ -415,7 +414,7 @@ void PasteSmartDoor(UINT32 iMapIndex) {
   UINT16 usIndex;
   UINT16 usWallOrientation;
 
-  if (pWall = GetVerticalWall(iMapIndex)) {
+  if ((pWall = GetVerticalWall(iMapIndex))) {
     GetWallOrientation(pWall->usIndex, &usWallOrientation);
     usIndex = CalcSmartDoorIndex(usWallOrientation);
     usDoorType = CalcSmartDoorType();
@@ -423,7 +422,7 @@ void PasteSmartDoor(UINT32 iMapIndex) {
     GetTileIndexFromTypeSubIndex(usDoorType, usIndex, &usTileIndex);
     ReplaceStructIndex(iMapIndex, pWall->usIndex, usTileIndex);
   }
-  if (pWall = GetHorizontalWall(iMapIndex)) {
+  if ((pWall = GetHorizontalWall(iMapIndex))) {
     GetWallOrientation(pWall->usIndex, &usWallOrientation);
     usIndex = CalcSmartDoorIndex(usWallOrientation);
     usDoorType = CalcSmartDoorType();

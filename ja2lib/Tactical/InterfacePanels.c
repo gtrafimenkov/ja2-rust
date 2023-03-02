@@ -335,25 +335,25 @@ BOOLEAN gfDeductPoints;
 
 // ARRAY FOR INV PANEL INTERFACE ITEM POSITIONS
 INV_REGION_DESC gSMInvPocketXY[] = {
-    344, 347,  // HELMETPOS
-    344, 376,  // VESTPOS
-    344, 436,  // LEGPOS,
-    226, 347,  // HEAD1POS
-    226, 371,  // HEAD2POS
-    226, 424,  // HANDPOS,
-    226, 448,  // SECONDHANDPOS
-    468, 346,  // BIGPOCK1
-    468, 370,  // BIGPOCK2
-    468, 394,  // BIGPOCK3
-    468, 418,  // BIGPOCK4
-    396, 346,  // SMALLPOCK1
-    396, 370,  // SMALLPOCK2
-    396, 394,  // SMALLPOCK3
-    396, 418,  // SMALLPOCK4
-    432, 346,  // SMALLPOCK5
-    432, 370,  // SMALLPOCK6
-    432, 394,  // SMALLPOCK7
-    432, 418   // SMALLPOCK8
+    {344, 347},  // HELMETPOS
+    {344, 376},  // VESTPOS
+    {344, 436},  // LEGPOS,
+    {226, 347},  // HEAD1POS
+    {226, 371},  // HEAD2POS
+    {226, 424},  // HANDPOS,
+    {226, 448},  // SECONDHANDPOS
+    {468, 346},  // BIGPOCK1
+    {468, 370},  // BIGPOCK2
+    {468, 394},  // BIGPOCK3
+    {468, 418},  // BIGPOCK4
+    {396, 346},  // SMALLPOCK1
+    {396, 370},  // SMALLPOCK2
+    {396, 394},  // SMALLPOCK3
+    {396, 418},  // SMALLPOCK4
+    {432, 346},  // SMALLPOCK5
+    {432, 370},  // SMALLPOCK6
+    {432, 394},  // SMALLPOCK7
+    {432, 418}   // SMALLPOCK8
 };
 
 INV_REGION_DESC gSMCamoXY = {
@@ -437,10 +437,10 @@ extern INT8 gbCompatibleApplyItem;
 
 INT8 gbStanceButPos[2][3][3] = {
     // NON-STEALTH
-    16, 14, 15, 10, 8, 9, 22, 20, 21,
+    {{16, 14, 15}, {10, 8, 9}, {22, 20, 21}},
 
     // STEALTH MODE
-    13, 11, 12, 7, 5, 6, 19, 17, 18};
+    {{13, 11, 12}, {7, 5, 6}, {19, 17, 18}}};
 
 // Mouse button and region callbacks
 // void BtnPositionCallback( GUI_BUTTON *btn, INT32 reason );
@@ -1854,8 +1854,6 @@ void SMInvMoveCammoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void SMInvClickCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  // UINT16 usNewItemIndex;
-  UINT8 ubSrcID, ubDestID;
   BOOLEAN fGoodAPs;
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -1867,10 +1865,6 @@ void SMInvClickCamoCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     // If we do not have an item in hand, start moving it
     if (gpItemPointer != NULL) {
       // ATE: OK, get source, dest guy if different... check for and then charge appropriate APs
-      ubSrcID = gpSMCurrentMerc->ubID;
-      ubDestID = gpItemPointerSoldier->ubID;
-
-      // if ( ubSrcID == ubDestID )
       {
         // We are doing this ourselve, continue
         if (gpSMCurrentMerc->bLife >= CONSCIOUSNESS) {
@@ -2047,7 +2041,6 @@ void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   UINT16 usItemPrevInItemPointer;
   BOOLEAN fNewItem = FALSE;
   static BOOLEAN fRightDown = FALSE;
-  static BOOLEAN fLeftDown = FALSE;
 
   uiHandPos = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -2077,8 +2070,6 @@ void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   //}
   // else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP && fLeftDown )
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
-    fLeftDown = FALSE;
-
     // If we do not have an item in hand, start moving it
     if (gpItemPointer == NULL) {
       // Return if empty
@@ -2313,7 +2304,6 @@ void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     }
   } else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     fRightDown = FALSE;
-    fLeftDown = FALSE;
   }
 }
 
@@ -2775,10 +2765,8 @@ void BtnPositionShowCallback(GUI_BUTTON *btn, INT32 reason) {}
 
 // TEAM PANEL!!!!!!!!!!!!!!
 BOOLEAN InitializeTEAMPanel() {
-  VSURFACE_DESC vs_desc;
   VOBJECT_DESC VObjectDesc;
   UINT32 cnt, posIndex;
-  static BOOLEAN fFirstTime = TRUE;
 
   // INit viewport region
   // Set global mouse regions
@@ -2789,7 +2777,6 @@ BOOLEAN InitializeTEAMPanel() {
   MSYS_AddRegion(&gViewportRegion);
 
   // Load interface panels
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   FilenameForBPP("INTERFACE\\bottom_bar.sti", VObjectDesc.ImageFile);
@@ -4287,7 +4274,6 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // Copyies of values
   UINT16 usOldItemIndex;
   static BOOLEAN fRightDown = FALSE;
-  static BOOLEAN fLeftDown = FALSE;
   INT32 iNumberOfKeysTaken = 0;
 
   uiKeyRing = MSYS_GetRegionUserData(pRegion, 0);
@@ -4302,8 +4288,6 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   //}
   // else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP && fLeftDown )
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
-    fLeftDown = FALSE;
-
     // if we are in the shop keeper interface
     if (guiTacticalInterfaceFlags & INTERFACE_SHOPKEEP_INTERFACE) {
       INVENTORY_IN_SLOT InvSlot;
@@ -4313,25 +4297,6 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         memset(&gMoveingItem, 0, sizeof(INVENTORY_IN_SLOT));
       } else {
         memset(&InvSlot, 0, sizeof(INVENTORY_IN_SLOT));
-
-        // Return if empty
-        // if ( gpSMCurrentMerc->inv[ uiHandPos ].usItem == NOTHING )
-        //	return;
-
-        // Fill out the inv slot for the item
-        // InvSlot.sItemIndex = gpSMCurrentMerc->inv[ uiHandPos ].usItem;
-        //			InvSlot.ubNumberOfItems = gpSMCurrentMerc->inv[ uiHandPos
-        //].ubNumberOfObjects; 			InvSlot.ubItemQuality = gpSMCurrentMerc->inv[
-        // uiHandPos ].bGunStatus;
-        // memcpy( &InvSlot.ItemObject, &gpSMCurrentMerc->inv[ uiHandPos ], sizeof( struct
-        // OBJECTTYPE ) ); InvSlot.ubLocationOfObject = PLAYERS_INVENTORY;
-
-        // InvSlot.ubIdOfMercWhoOwnsTheItem = gpSMCurrentMerc->ubProfile;
-
-        // Add the item to the Players Offer Area
-        // AddItemToPlayersOfferArea( gpSMCurrentMerc->ubProfile, &InvSlot, (UINT8)uiHandPos );
-
-        // Dirty
         fInterfacePanelDirty = DIRTYLEVEL2;
       }
       return;
@@ -4486,7 +4451,6 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     }
   } else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     fRightDown = FALSE;
-    fLeftDown = FALSE;
   }
 }
 

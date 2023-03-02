@@ -1351,7 +1351,6 @@ void DisplayItemStatistics() {
   BOOLEAN fUseSelectedItem;
   INT16 usItemIndex;
   CHAR16 pItemName[SIZE_ITEM_NAME];
-  INVTYPE *pItem;
 
   if (!eInfo.fActive) {
     return;
@@ -1368,7 +1367,6 @@ void DisplayItemStatistics() {
   if (!eInfo.pusItemIndex) return;
   usItemIndex =
       eInfo.pusItemIndex[fUseSelectedItem ? eInfo.sSelItemIndex : eInfo.sHilitedItemIndex];
-  pItem = &Item[usItemIndex];
   LoadItemInfo(usItemIndex, pItemName, NULL);
 
   mprintf(50 - StringPixLength(pItemName, SMALLCOMPFONT) / 2, 403, pItemName);

@@ -71,8 +71,6 @@ SGPPoint SelWinSpacing, SelWinStartPoint, SelWinEndPoint;
   (LASTWALLDECAL - FIRSTWALLDECAL + EIGTHWALLDECAL - FIFTHWALLDECAL + 3)
 #define SINGLEFLOOR_NUMELEMENTS (LASTFLOOR - FIRSTFLOOR + 1)
 #define SINGLETOILET_NUMELEMENTS (EIGHTISTRUCT - FIFTHISTRUCT + 1)
-//#define ROOM_NUMELEMENTS							( (LASTWALL-FIRSTWALL+1) + (LASTFLOOR-FIRSTFLOOR+1) + \
-//																				(LASTROOF-FIRSTROOF+1) + (LASTSLANTROOF-FIRSTSLANTROOF+1) )
 #define ROOM_NUMELEMENTS \
   ((LASTWALL - FIRSTWALL + 1) + (LASTFLOOR - FIRSTFLOOR + 1) + (LASTROOF - FIRSTROOF + 1) + (2))
 
@@ -1250,7 +1248,7 @@ void UpClkCallback(GUI_BUTTON *button, INT32 reason) {
 //
 void ScrollSelWinUp(void) {
   DisplayList *pNode;
-  INT16 iCutOff, iBotCutOff;
+  INT16 iCutOff;
   BOOLEAN fDone;
 
   // Code to scroll window up!
@@ -1268,7 +1266,6 @@ void ScrollSelWinUp(void) {
     }
   }
 
-  iBotCutOff = iBotWinCutOff - iTopWinCutOff + iCutOff;
   iTopWinCutOff = iCutOff;
 }
 
@@ -1279,7 +1276,7 @@ void ScrollSelWinUp(void) {
 //
 void ScrollSelWinDown(void) {
   DisplayList *pNode;
-  INT16 iCutOff, iBotCutOff;
+  INT16 iCutOff;
   BOOLEAN fDone;
 
   pNode = pDispList;
@@ -1294,7 +1291,6 @@ void ScrollSelWinDown(void) {
       fDone = TRUE;
   }
 
-  iBotCutOff = iBotWinCutOff - iTopWinCutOff + iCutOff;
   iTopWinCutOff = iCutOff;
 }
 

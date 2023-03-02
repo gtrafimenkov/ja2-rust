@@ -97,26 +97,12 @@ HEAD_MINER_TYPE gHeadMinerData[NUM_HEAD_MINERS] = {
     // external
     // face
     // graphic
-    {FRED, 17, 18, 27, 26, MINER_FRED_EXTERNAL_FACE},
-    {MATT, -1, 18, 32, 31, MINER_MATT_EXTERNAL_FACE},
-    {OSWALD, 14, 15, 24, 23, MINER_OSWALD_EXTERNAL_FACE},
-    {CALVIN, 14, 15, 24, 23, MINER_CALVIN_EXTERNAL_FACE},
-    {CARL, 14, 15, 24, 23, MINER_CARL_EXTERNAL_FACE},
+    {FRED, {17, 18, 27, 26}, MINER_FRED_EXTERNAL_FACE},
+    {MATT, {-1, 18, 32, 31}, MINER_MATT_EXTERNAL_FACE},
+    {OSWALD, {14, 15, 24, 23}, MINER_OSWALD_EXTERNAL_FACE},
+    {CALVIN, {14, 15, 24, 23}, MINER_CALVIN_EXTERNAL_FACE},
+    {CARL, {14, 15, 24, 23}, MINER_CARL_EXTERNAL_FACE},
 };
-
-/* gradual monster infestation concept was ditched, now simply IN PRODUCTION or SHUT DOWN
-
-// percentage of workers working depends on level of mine infestation
-UINT8 gubMonsterMineInfestation[]={
-        100,
-        99,
-        95,
-        70,
-        30,
-        1,
-        0,
-};
-*/
 
 // the static NPC dialogue faces
 extern UINT32 uiExternalStaticNPCFaces[];
@@ -350,7 +336,6 @@ INT8 GetMineAssociatedWithThisTown(INT8 bTownId) {
 UINT32 ExtractOreFromMine(INT8 bMineIndex, UINT32 uiAmount) {
   // will remove the ore from the mine and return the amount that was removed
   UINT32 uiAmountExtracted = 0;
-  UINT32 uiOreRunningOutPoint = 0;
   INT16 sSectorX, sSectorY;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
@@ -518,7 +503,6 @@ INT32 GetCurrentWorkRateOfMineForEnemy(INT8 bMineIndex) {
 
 INT32 MineAMine(INT8 bMineIndex) {
   // will extract ore based on available workforce, and increment players income based on amount
-  INT8 bMineType = 0;
   INT32 iAmtExtracted = 0;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
@@ -544,9 +528,6 @@ INT32 MineAMine(INT8 bMineIndex) {
       // debug message
       //			ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s - Mine income from %s =
       //$%d", WORLDTIMESTR, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], iAmtExtracted );
-
-      // check type of mine
-      bMineType = gMineStatus[bMineIndex].ubMineType;
 
       // if this is the first time this mine has produced income for the player in the game
       if (!gMineStatus[bMineIndex].fMineHasProducedForPlayer) {
@@ -816,7 +797,6 @@ void IssueHeadMinerQuote(INT8 bMineIndex, UINT8 ubQuoteType) {
   UINT8 ubHeadMinerIndex = 0;
   UINT16 usHeadMinerProfileId = 0;
   INT8 bQuoteNum = 0;
-  UINT8 ubFaceIndex = 0;
   BOOLEAN fForceMapscreen = FALSE;
   INT16 sXPos, sYPos;
 
@@ -837,8 +817,6 @@ void IssueHeadMinerQuote(INT8 bMineIndex, UINT8 ubQuoteType) {
 
   bQuoteNum = gHeadMinerData[ubHeadMinerIndex].bQuoteNum[ubQuoteType];
   Assert(bQuoteNum != -1);
-
-  ubFaceIndex = (UINT8)uiExternalStaticNPCFaces[gHeadMinerData[ubHeadMinerIndex].ubExternalFace];
 
   // transition to mapscreen is not necessary for "creatures gone" quote - player is IN that mine,
   // so he'll know

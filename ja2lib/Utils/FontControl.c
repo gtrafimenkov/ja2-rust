@@ -92,9 +92,6 @@ UINT16 CreateFontPaletteTables(struct VObject* pObj);
 extern CHAR16 gzFontName[32];
 
 BOOLEAN InitializeFonts() {
-  CHAR16 zWinFontName[128];
-  COLORVAL Color;
-
   // Initialize fonts
   //	gpLargeFontType1  = LoadFontFile( "FONTS\\lfont1.sti" );
   gpLargeFontType1 = LoadFontFile("FONTS\\LARGEFONT1.sti");

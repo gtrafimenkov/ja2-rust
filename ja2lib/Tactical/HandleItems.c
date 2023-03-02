@@ -544,7 +544,7 @@ INT32 HandleItem(struct SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UIN
   // USING THE MEDKIT
   if (Item[usHandItem].usItemClass == IC_MEDKIT) {
     // ATE: AI CANNOT GO THROUGH HERE!
-    UINT16 usMapPos;
+    INT16 usMapPos;
     BOOLEAN fHadToUseCursorPos = FALSE;
 
     if (gTacticalStatus.fAutoBandageMode) {
@@ -1955,7 +1955,6 @@ struct OBJECTTYPE *InternalAddItemToPool(INT16 *psGridNo, struct OBJECTTYPE *pOb
 BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
-  BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
   if (GetItemPool(sGridNo, &pItemPool, ubLevel)) {
@@ -1975,7 +1974,6 @@ BOOLEAN ItemExistsAtLocation(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
 BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, UINT16 usItem, UINT8 ubLevel, INT32 *piItemIndex) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
-  BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
   if (GetItemPool(sGridNo, &pItemPool, ubLevel)) {
@@ -1998,7 +1996,6 @@ BOOLEAN ItemTypeExistsAtLocation(INT16 sGridNo, UINT16 usItem, UINT8 ubLevel, IN
 INT32 GetItemOfClassTypeInPool(INT16 sGridNo, UINT32 uiItemClass, UINT8 ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
-  BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
   if (GetItemPool(sGridNo, &pItemPool, ubLevel)) {
@@ -2018,7 +2015,6 @@ INT32 GetItemOfClassTypeInPool(INT16 sGridNo, UINT32 uiItemClass, UINT8 ubLevel)
 struct ITEM_POOL *GetItemPoolForIndex(INT16 sGridNo, INT32 iItemIndex, UINT8 ubLevel) {
   struct ITEM_POOL *pItemPool;
   struct ITEM_POOL *pItemPoolTemp;
-  BOOLEAN fItemFound = FALSE;
 
   // Check for an existing pool on the object layer
   if (GetItemPool(sGridNo, &pItemPool, ubLevel)) {
@@ -2606,12 +2602,10 @@ extern void HandleAnyMercInSquadHasCompatibleStuff(UINT8 ubSquad, struct OBJECTT
 BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bCommand, INT8 bZLevel,
                          INT16 sXPos, INT16 sYPos) {
   INT16 sY;
-  INVTYPE *pItem;
   struct ITEM_POOL *pTempItemPool;
   CHAR16 pStr[100];
   INT16 cnt = 0, sHeight = 0;
   INT16 sLargeLineWidth = 0, sLineWidth;
-  BOOLEAN fRecalcNumListed = FALSE;
   BOOLEAN fSelectionDone = FALSE;
 
   INT8 gbCurrentItemSel = 0;
@@ -2683,8 +2677,6 @@ BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bComm
   pTempItemPool = pItemPool;
   while (pTempItemPool != NULL) {
     if (ItemPoolOKForDisplay(pTempItemPool, bZLevel)) {
-      // GET ITEM
-      pItem = &Item[gWorldItems[pTempItemPool->iItemIndex].o.usItem];
       // Set string
       if (gWorldItems[pTempItemPool->iItemIndex].o.ubNumberOfObjects > 1) {
         swprintf(pStr, ARR_SIZE(pStr), L"%s (%d)",
@@ -2769,10 +2761,6 @@ BOOLEAN DrawItemPoolList(struct ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bComm
     }
 
     if (ItemPoolOKForDisplay(pItemPool, bZLevel)) {
-      // GET ITEM
-      pItem = &Item[gWorldItems[pItemPool->iItemIndex].o.usItem];
-      // Set string
-
       if (gWorldItems[pItemPool->iItemIndex].o.ubNumberOfObjects > 1) {
         swprintf(pStr, ARR_SIZE(pStr), L"%s (%d)",
                  ShortItemNames[gWorldItems[pItemPool->iItemIndex].o.usItem],
@@ -3082,19 +3070,12 @@ void RenderTopmostFlashingItems() {
 BOOLEAN VerifyGiveItem(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE **ppTargetSoldier) {
   struct SOLDIERTYPE *pTSoldier;
   UINT16 usSoldierIndex;
-  struct OBJECTTYPE *pObject;
-
   INT16 sGridNo;
-  UINT8 ubDirection;
   UINT8 ubTargetMercID;
 
   // DO SOME CHECKS IF WE CAN DO ANIMATION.....
 
-  // Get items from pending data
-  pObject = pSoldier->pTempObject;
-
   sGridNo = pSoldier->sPendingActionData2;
-  ubDirection = pSoldier->bPendingActionData3;
   ubTargetMercID = (UINT8)pSoldier->uiPendingActionData4;
 
   usSoldierIndex = WhoIsThere2(sGridNo, pSoldier->bLevel);
@@ -3143,10 +3124,6 @@ void SoldierGiveItemFromAnimation(struct SOLDIERTYPE *pSoldier) {
   INT8 bInvPos;
   struct OBJECTTYPE TempObject;
   UINT8 ubProfile;
-
-  INT16 sGridNo;
-  UINT8 ubDirection;
-  UINT8 ubTargetMercID;
   UINT16 usItemNum;
   BOOLEAN fToTargetPlayer = FALSE;
 
@@ -3170,10 +3147,6 @@ void SoldierGiveItemFromAnimation(struct SOLDIERTYPE *pSoldier) {
       }
     }
   }
-
-  sGridNo = pSoldier->sPendingActionData2;
-  ubDirection = pSoldier->bPendingActionData3;
-  ubTargetMercID = (UINT8)pSoldier->uiPendingActionData4;
 
   // ATE: Deduct APs!
   DeductPoints(pSoldier, AP_PICKUP_ITEM, 0);
@@ -4213,7 +4186,7 @@ void RefreshItemPools(WORLDITEM *pItemList, INT32 iNumberOfItems) {
 INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius) {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
-  INT16 cnt1, cnt2, cnt3;
+  INT16 cnt1, cnt2;
   INT16 sGridNo;
   INT32 uiRange, uiLowestRange = 999999;
   INT16 sLowestGridNo = 0;
@@ -4222,9 +4195,6 @@ INT16 FindNearestAvailableGridNoForItem(INT16 sSweetGridNo, INT8 ubRadius) {
   struct SOLDIERTYPE soldier;
   UINT8 ubSaveNPCAPBudget;
   UINT8 ubSaveNPCDistLimit;
-  BOOLEAN fSetDirection = FALSE;
-
-  cnt3 = 0;
 
   // Save AI pathing vars.  changing the distlimit restricts how
   // far away the pathing will consider.

@@ -1176,10 +1176,9 @@ void GetArrowsBackground() {
 void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY,
                                  BOOLEAN fRadio) {
   INT16 sMercScreenX, sMercScreenY;
-  INT16 sOffsetX, sOffsetY, sAddXOffset = 0;
+  INT16 sOffsetX, sOffsetY;
   UINT8 ubAnimUseHeight;
   INT16 sStanceOffset = 0;
-  INT16 sBarBodyTypeYOffset = 55;
   INT16 sTextBodyTypeYOffset = 62;
 
   // Find XY, dims, offsets
@@ -3121,10 +3120,6 @@ void IncrementAimCubeUI() {
 
   if (gCubeUIData.fActivePowerBar) {
     if (gCubeUIData.ubPowerIndex == 10) {
-      UINT8 ubHeight;
-
-      ubHeight = GET_CUBES_HEIGHT_FROM_UIHEIGHT(gCubeUIData.bHeight);
-
       // Start back to basic7
       gCubeUIData.dDegrees = (FLOAT)(PI / 4);
       gCubeUIData.dInitialForce = gCubeUIData.dForce;

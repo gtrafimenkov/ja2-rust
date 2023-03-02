@@ -408,7 +408,7 @@ BOOLEAN AddSoldierToVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
     // We have now a guy on a squad group, remove him!
     RemovePlayerFromGroup(SquadMovementGroups[pVehicleSoldier->bAssignment], pVehicleSoldier);
 
-    // I really have vehicles.\
+    // I really have vehicles.
     // ONLY add to vehicle group once!
     if (!DoesPlayerExistInPGroup(pVehicleList[iId].ubMovementGroup, pVehicleSoldier)) {
       // NOW.. add guy to vehicle group....
@@ -874,7 +874,6 @@ BOOLEAN SetUpMvtGroupForVehicle(struct SOLDIERTYPE *pSoldier) {
   // given this grunt, find out if asscoiated vehicle has a mvt group, if so, set this grunts mvt
   // group tho the vehicle for pathing purposes, will be reset to zero in copying of path
   INT32 iId = 0;
-  INT32 iCounter = 0;
 
   // check if character is in fact in a vehicle
   if ((pSoldier->bAssignment != VEHICLE) && (!(pSoldier->uiStatusFlags & SOLDIER_VEHICLE))) {
@@ -1231,8 +1230,6 @@ BOOLEAN TakeSoldierOutOfVehicle(struct SOLDIERTYPE *pSoldier) {
 }
 
 BOOLEAN EnterVehicle(struct SOLDIERTYPE *pVehicle, struct SOLDIERTYPE *pSoldier) {
-  INT16 sOldGridNo = 0;
-
   // TEST IF IT'S VALID...
   if (pVehicle->uiStatusFlags & SOLDIER_VEHICLE) {
     // Is there room...
@@ -1346,8 +1343,6 @@ void AddPassangersToTeamPanel(INT32 iId) {
 
 void VehicleTakeDamage(UINT8 ubID, UINT8 ubReason, INT16 sDamage, INT16 sGridNo,
                        UINT8 ubAttackerID) {
-  INT16 sOldDmgValue = 0;
-
   if (ubReason != TAKE_DAMAGE_GAS) {
     PlayJA2Sample((UINT32)(S_METAL_IMPACT3), RATE_11025, SoundVolume(MIDVOLUME, sGridNo), 1,
                   SoundDir(sGridNo));
@@ -1375,27 +1370,8 @@ void HandleCriticalHitForVehicleInLocation(UINT8 ubID, INT16 sDmg, INT16 sGridNo
                                            UINT8 ubAttackerID) {
   // check state the armor was s'posed to be in vs. the current state..the difference / orig state
   // is % chance that a critical hit will occur
-  INT16 sOrigValue = 0, sCurrValue = 0;
-  FLOAT fChance = 0.0;
-  INT32 iRand = 0, iCrit = 0;
   struct SOLDIERTYPE *pSoldier;
-  BOOLEAN fDestroyVehicle = FALSE;
   BOOLEAN fMadeCorpse = FALSE;
-
-#if 0
-		{
-			// injure someone inside
-			iRand = Random( iSeatingCapacities[ pVehicleList[ ubID ].ubVehicleType ] );
-			if( pVehicleList[ ubID ].pPassengers[ iRand ] )
-			{
-				// hurt this person
-				InjurePersonInVehicle( ( INT16 )ubID, pVehicleList[ ubID ].pPassengers[ iRand ], ( UINT8 )( sDmg / 2 ) );
-			}
-		}
-
-		ScreenMsg( FONT_BLACK, MSG_INTERFACE, sCritLocationStrings[ iCrit ] );
-	}
-#endif
 
   pSoldier = GetSoldierStructureForVehicle(ubID);
 
@@ -1557,28 +1533,9 @@ struct SOLDIERTYPE *GetSoldierStructureForVehicle(INT32 iId) {
 }
 
 void SetUpArmorForVehicle(UINT8 ubID) {
-  INT32 iCounter = 0;
-
-  /*
-          // set up the internal and external armor for vehicles
-          for( iCounter = 0; iCounter < NUMBER_OF_INTERNAL_HIT_LOCATIONS_IN_VEHICLE; iCounter++ )
-          {
-                  pVehicleList[ ubID ].sInternalHitLocations[ iCounter ] =
-     sVehicleInternalOrigArmorValues[ pVehicleList[ ubID ].ubVehicleType ][ iCounter ];
-          }
-
-
-          for( iCounter = 0; iCounter < NUMBER_OF_EXTERNAL_HIT_LOCATIONS_ON_VEHICLE; iCounter++ )
-          {
-                  pVehicleList[ ubID ].sExternalArmorLocationsStatus[ iCounter ] = 100;
-          }
-          */
-
   // for armour type, store the index into the armour table itself
   pVehicleList[ubID].sArmourType =
       Item[sVehicleArmourType[pVehicleList[ubID].ubVehicleType]].ubClassIndex;
-
-  return;
 }
 
 void AdjustVehicleAPs(struct SOLDIERTYPE *pSoldier, UINT8 *pubPoints) {
@@ -1836,7 +1793,6 @@ void UpdateAllVehiclePassengersGridNo(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN SaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten = 0;
-  UINT32 uiSaveSize = 0;
 
   // Save all the vehicle movement id's
   FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesWritten);
@@ -1851,7 +1807,6 @@ BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   INT32 cnt;
   struct GROUP *pGroup = NULL;
   UINT32 uiNumBytesRead = 0;
-  UINT32 uiSaveSize = 0;
 
   // Load in the Squad movement id's
   FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * 5, &uiNumBytesRead);
@@ -1873,7 +1828,6 @@ BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
 
 BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten = 0;
-  UINT32 uiSaveSize = 0;
 
   // Save all the vehicle movement id's
   FileMan_Write(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesWritten);
@@ -1886,7 +1840,6 @@ BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile) {
 
 BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead = 0;
-  UINT32 uiSaveSize = 0;
 
   // Load in the Squad movement id's
   FileMan_Read(hFile, gubVehicleMovementGroups, sizeof(INT8) * MAX_VEHICLES, &uiNumBytesRead);
@@ -2105,7 +2058,6 @@ BOOLEAN IsSoldierInThisVehicleSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadNum
 }
 
 struct SOLDIERTYPE *PickRandomPassengerFromVehicle(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubMercsInSector[20] = {0};
   UINT8 ubNumMercs = 0;
   UINT8 ubChosenMerc;
   INT32 iCounter, iId;
@@ -2120,7 +2072,6 @@ struct SOLDIERTYPE *PickRandomPassengerFromVehicle(struct SOLDIERTYPE *pSoldier)
   // Loop through passengers and update each guy's position
   for (iCounter = 0; iCounter < iSeatingCapacities[pVehicleList[iId].ubVehicleType]; iCounter++) {
     if (pVehicleList[iId].pPassengers[iCounter] != NULL) {
-      ubMercsInSector[ubNumMercs] = (UINT8)iCounter;
       ubNumMercs++;
     }
   }

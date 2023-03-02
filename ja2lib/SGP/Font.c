@@ -338,10 +338,6 @@ UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
   // Assertions
   Assert(hSrcVObject != NULL);
 
-  if (ssIndex < 0 || ssIndex > 92) {
-    int i = 0;
-  }
-
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->pETRLEObject[ssIndex]);
   return ((UINT32)(pTrav->usWidth + pTrav->sOffsetX));

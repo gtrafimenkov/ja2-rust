@@ -702,7 +702,6 @@ BOOLEAN SetCurrentSquad(INT32 iCurrentSquad, BOOLEAN fForce) {
 void RebuildCurrentSquad(void) {
   // rebuilds current squad to reset faces in tactical
   INT32 iCounter = 0;
-  INT32 iCount = 0;
   struct SOLDIERTYPE *pDeadSoldier = NULL;
 
   // check if valid value passed
@@ -746,7 +745,6 @@ void RebuildCurrentSquad(void) {
 
 void ExamineCurrentSquadLights(void) {
   // rebuilds current squad to reset faces in tactical
-  INT32 iCounter = 0;
   UINT8 ubLoop;
 
   // OK, we should add lights for any guy currently bInSector who is not bad OKLIFE...
@@ -1271,7 +1269,6 @@ INT8 NumberOfPlayerControllableMercsInSquad(INT8 bSquadValue) {
 BOOLEAN DoesVehicleExistInSquad(INT8 bSquadValue) {
   struct SOLDIERTYPE *pSoldier;
   INT8 bCounter = 0;
-  INT8 bSquadCount = 0;
 
   if (bSquadValue == NO_CURRENT_SQUAD) {
     return (FALSE);

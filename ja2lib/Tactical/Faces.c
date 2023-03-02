@@ -70,38 +70,34 @@ typedef struct {
 } RPC_SMALL_FACE_VALUES;
 
 RPC_SMALL_FACE_VALUES gRPCSmallFaceValues[] = {
-    9,  8, 8,  24,  // MIGUEL		( 57 )
-    8,  8, 7,  24,  // CARLOS		( 58 )
-    10, 8, 8,  26,  // IRA			( 59 )
-    7,  8, 7,  26,  // DIMITRI	( 60 )
-    6,  7, 7,  23,  // DEVIN		( 61 )
-    0,  0, 0,  0,   // THE RAT	( 62 )
-    8,  7, 8,  23,  //					( 63 )
-    8,  8, 8,  22,  // SLAY			( 64 )
-    0,  0, 0,  0,   //					( 65 )
-    9,  4, 7,  22,  // DYNAMO		( 66 )
-    8,  8, 8,  25,  // SHANK		( 67 )
-    4,  6, 5,  22,  // IGGY			( 68 )
-    8,  9, 7,  25,  // VINCE		( 69 )
-    4,  7, 5,  25,  // CONRAD		( 70 )
-    9,  7, 8,  22,  // CARL			( 71 )
-    9,  7, 9,  25,  // MADDOG		( 72 )
-    0,  0, 0,  0,   //					( 73 )
-    0,  0, 0,  0,   //					( 74 )
-
-    9,  3, 8,  23,  // MARIA		( 88 )
-
-    9,  3, 8,  25,  // JOEY			( 90 )
-
-    11, 7, 9,  24,  // SKYRIDER	( 97 )
-    9,  5, 7,  23,  // Miner	( 106 )
-
-    6,  4, 6,  24,  // JOHN					( 118 )
-    12, 4, 10, 24,  //					( 119 )
-    8,  6, 8,  23,  // Miner	( 148 )
-    6,  5, 6,  23,  // Miner	( 156 )
-    13, 7, 11, 24,  // Miner	( 157 )
-    9,  7, 8,  22,  // Miner	( 158 )
+    {9, 8, 8, 24},    // MIGUEL		( 57 )
+    {8, 8, 7, 24},    // CARLOS		( 58 )
+    {10, 8, 8, 26},   // IRA			( 59 )
+    {7, 8, 7, 26},    // DIMITRI	( 60 )
+    {6, 7, 7, 23},    // DEVIN		( 61 )
+    {0, 0, 0, 0},     // THE RAT	( 62 )
+    {8, 7, 8, 23},    //					( 63 )
+    {8, 8, 8, 22},    // SLAY			( 64 )
+    {0, 0, 0, 0},     //					( 65 )
+    {9, 4, 7, 22},    // DYNAMO		( 66 )
+    {8, 8, 8, 25},    // SHANK		( 67 )
+    {4, 6, 5, 22},    // IGGY			( 68 )
+    {8, 9, 7, 25},    // VINCE		( 69 )
+    {4, 7, 5, 25},    // CONRAD		( 70 )
+    {9, 7, 8, 22},    // CARL			( 71 )
+    {9, 7, 9, 25},    // MADDOG		( 72 )
+    {0, 0, 0, 0},     //					( 73 )
+    {0, 0, 0, 0},     //					( 74 )
+    {9, 3, 8, 23},    // MARIA		( 88 )
+    {9, 3, 8, 25},    // JOEY			( 90 )
+    {11, 7, 9, 24},   // SKYRIDER	( 97 )
+    {9, 5, 7, 23},    // Miner	  ( 106 )
+    {6, 4, 6, 24},    // JOHN			( 118 )
+    {12, 4, 10, 24},  //					( 119 )
+    {8, 6, 8, 23},    // Miner	( 148 )
+    {6, 5, 6, 23},    // Miner	( 156 )
+    {13, 7, 11, 24},  // Miner	( 157 )
+    {9, 7, 8, 22},    // Miner	( 158 )
 
 };
 
@@ -457,7 +453,6 @@ void SetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, INT32 iFa
 void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, INT32 iFaceIndex,
                                UINT16 usFaceX, UINT16 usFaceY, UINT16 usEyesX, UINT16 usEyesY,
                                UINT16 usMouthX, UINT16 usMouthY) {
-  UINT16 usMercProfileID;
   FACETYPE *pFace;
   VSURFACE_DESC vs_desc;
   UINT16 usWidth;
@@ -514,8 +509,6 @@ void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, I
     pFace->fAutoDisplayBuffer = FALSE;
     pFace->uiAutoDisplayBuffer = uiDisplayBuffer;
   }
-
-  usMercProfileID = pFace->ubCharacterNum;
 
   pFace->usFaceX = usFaceX;
   pFace->usFaceY = usFaceY;
@@ -611,12 +604,8 @@ void SetAutoFaceInActive(INT32 iFaceIndex) {
 
 void SetAllAutoFacesInactive() {
   UINT32 uiCount;
-  FACETYPE *pFace;
-
   for (uiCount = 0; uiCount < guiNumFaces; uiCount++) {
     if (gFacesData[uiCount].fAllocated) {
-      pFace = &gFacesData[uiCount];
-
       SetAutoFaceInActive(uiCount);
     }
   }
@@ -1141,10 +1130,10 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
         UnLockVideoSurface(uiRenderBuffer);
       }
 
-      if (MercPtrs[pFace->ubSoldierID]->bInSector &&
-              (((gTacticalStatus.ubCurrentTeam != OUR_TEAM) ||
-                !OK_INTERRUPT_MERC(MercPtrs[pFace->ubSoldierID])) &&
-               !gfHiddenInterrupt) ||
+      if ((MercPtrs[pFace->ubSoldierID]->bInSector &&
+           (((gTacticalStatus.ubCurrentTeam != OUR_TEAM) ||
+             !OK_INTERRUPT_MERC(MercPtrs[pFace->ubSoldierID])) &&
+            !gfHiddenInterrupt)) ||
           ((gfSMDisableForItems && !gfInItemPickupMenu) && gusSMCurrentMerc == pFace->ubSoldierID &&
            gsCurInterfacePanel == SM_PANEL)) {
         // Blit hatch!
@@ -1561,7 +1550,6 @@ void HandleAutoFaces() {
   UINT32 uiCount;
   FACETYPE *pFace;
   INT8 bLife;
-  INT8 bInSector;
   INT8 bAPs;
   BOOLEAN fRerender = FALSE;
   BOOLEAN fHandleFace;
@@ -1582,7 +1570,6 @@ void HandleAutoFaces() {
         // Get Life now
         pSoldier = MercPtrs[pFace->ubSoldierID];
         bLife = pSoldier->bLife;
-        bInSector = pSoldier->bInSector;
         bAPs = pSoldier->bActionPoints;
 
         if (pSoldier->ubID == gsSelectedGuy && gfUIHandleSelectionAboveGuy) {
@@ -1754,13 +1741,9 @@ void HandleAutoFaces() {
 
 void HandleTalkingAutoFaces() {
   UINT32 uiCount;
-  FACETYPE *pFace;
-
   for (uiCount = 0; uiCount < guiNumFaces; uiCount++) {
     // OK, NOW, check if our bLife status has changed, re-render if so!
     if (gFacesData[uiCount].fAllocated) {
-      pFace = &gFacesData[uiCount];
-
       HandleTalkingAutoFace(uiCount);
     }
   }

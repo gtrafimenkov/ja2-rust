@@ -316,7 +316,7 @@ void PixelDraw(BOOLEAN fClip, INT32 xp, INT32 yp, INT16 sColor, UINT8 *pScreen) 
    the first pixel of the next run. */
 void DrawHorizontalRun(UINT8 **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
   int i;
-  char *WorkingScreenPtr = *ScreenPtr;
+  UINT8 *WorkingScreenPtr = *ScreenPtr;
   char col2 = Color >> 8;
   char col1 = Color & 0x00FF;
 
@@ -334,7 +334,7 @@ void DrawHorizontalRun(UINT8 **ScreenPtr, int XAdvance, int RunLength, int Color
    the first pixel of the next run. */
 void DrawVerticalRun(UINT8 **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
   int i;
-  char *WorkingScreenPtr = *ScreenPtr;
+  UINT8 *WorkingScreenPtr = *ScreenPtr;
   char col2 = Color >> 8;
   char col1 = Color & 0x00FF;
 
@@ -380,7 +380,6 @@ void LineDraw8(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short 
   int Temp, AdjUp, AdjDown, ErrorTerm, XAdvance, XDelta, YDelta;
   int WholeStep, InitialPixelCount, FinalPixelCount, i, RunLength;
   int ScreenWidth = giImageWidth;
-  char col2 = Color >> 8;
   char col1 = Color & 0x00FF;
 
   if (fClip) {
@@ -557,7 +556,6 @@ void LineDraw8(BOOLEAN fClip, int XStart, int YStart, int XEnd, int YEnd, short 
 void DrawHorizontalRun8(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
   int i;
   char *WorkingScreenPtr = *ScreenPtr;
-  char col2 = Color >> 8;
   char col1 = Color & 0x00FF;
 
   for (i = 0; i < RunLength; i++) {
@@ -574,7 +572,6 @@ void DrawHorizontalRun8(char **ScreenPtr, int XAdvance, int RunLength, int Color
 void DrawVerticalRun8(char **ScreenPtr, int XAdvance, int RunLength, int Color, int ScreenWidth) {
   int i;
   char *WorkingScreenPtr = *ScreenPtr;
-  char col2 = Color >> 8;
   char col1 = Color & 0x00FF;
 
   for (i = 0; i < RunLength; i++) {

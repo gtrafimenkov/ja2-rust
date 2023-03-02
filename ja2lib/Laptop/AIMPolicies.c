@@ -455,7 +455,6 @@ BOOLEAN ExitAimPolicyMenuBar(void) {
 
 BOOLEAN DrawAimPolicyMenu() {
   UINT16 i, usPosY;
-  UINT16 usHeight;
   UINT32 uiStartLoc = 0;
   wchar_t sText[400];
   struct VObject *hContentButtonHandle;
@@ -466,7 +465,6 @@ BOOLEAN DrawAimPolicyMenu() {
 
   GetVideoObject(&hContentButtonHandle, guiContentButton);
 
-  usHeight = GetFontHeight(AIM_POLICY_TOC_FONT);
   usPosY = AIM_POLICY_TOC_Y;
   for (i = 0; i < NUM_AIM_POLICY_TOC_BUTTONS; i++) {
     BltVideoObject(FRAME_BUFFER, hContentButtonHandle, 0, AIM_POLICY_TOC_X, usPosY,
@@ -488,12 +486,9 @@ BOOLEAN DrawAimPolicyMenu() {
 
 BOOLEAN InitAimPolicyTocMenu(void) {
   UINT16 i, usPosY;
-  UINT16 usHeight;
-  UINT32 uiStartLoc = 0;
 
   if (gfInPolicyToc) return (TRUE);
 
-  usHeight = GetFontHeight(AIM_POLICY_TOC_FONT);
   usPosY = AIM_POLICY_TOC_Y;
   for (i = 0; i < NUM_AIM_POLICY_TOC_BUTTONS; i++) {
     // Mouse region for the toc buttons

@@ -1057,7 +1057,6 @@ BOOLEAN HandleTalkingMenuEscape(BOOLEAN fCanDelete, BOOLEAN fFromEscKey) {
 
 void HandleTalkingMenuBackspace(void) {
   FACETYPE *pFace;
-  BOOLEAN fTalking = FALSE;
 
   if (!gfInTalkPanel) {
     return;
@@ -1065,24 +1064,6 @@ void HandleTalkingMenuBackspace(void) {
 
   pFace = &gFacesData[gTalkPanel.iFaceIndex];
 
-  // If we are in the process of speaking, stop this quote an move on...
-  // If we have been 'handled' by an outside source, check what was our talking value at the time
-  /*
-  if ( gTalkPanel.fHandled )
-  {
-          fTalking = gTalkPanel.fHandledTalkingVal;
-  }
-  else
-  {
-          fTalking = pFace->fTalking;
-  }
-
-  // Set to false
-  gTalkPanel.fHandled = FALSE;
-
-
-  if ( fTalking )
-  */
   if (pFace->fTalking) {
     ShutupaYoFace(gTalkPanel.iFaceIndex);
   }

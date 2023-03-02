@@ -861,8 +861,8 @@ BOOLEAN SwapMapElementWithWorld(INT32 iMapIndex, MAP_ELEMENT *pUndoMapElement) {
 void DetermineUndoState() {
   // Reset the undo command mode if we released the left button.
   if (!fNewUndoCmd) {
-    if (!gfLeftButtonState && !gfCurrentSelectionWithRightButton ||
-        !gfRightButtonState && gfCurrentSelectionWithRightButton) {
+    if ((!gfLeftButtonState && !gfCurrentSelectionWithRightButton) ||
+        (!gfRightButtonState && gfCurrentSelectionWithRightButton)) {
       // Clear the mapindex binary tree list, and set up flag for new undo command.
       fNewUndoCmd = TRUE;
       ClearUndoMapIndexTree();

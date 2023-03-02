@@ -19,6 +19,11 @@
 #include "Utils/DebugControl.h"
 #include "Utils/Utilities.h"
 
+#ifdef __GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+#endif
+
 #define EMPTY_SLOT -1
 #define TO_INIT 0
 
@@ -4416,7 +4421,6 @@ BOOLEAN LoadAnimationProfiles() {
   //	FILE *			pInput;
   HWFILE pInput;
   INT32 iProfileCount, iDirectionCount, iTileCount;
-  struct ANIM_PROF *pProfile;
   struct ANIM_PROF_DIR *pProfileDirs;
   UINT32 uiBytesRead;
 
@@ -4438,9 +4442,6 @@ BOOLEAN LoadAnimationProfiles() {
 
   // Loop profiles
   for (iProfileCount = 0; iProfileCount < gubNumAnimProfiles; iProfileCount++) {
-    // Get profile pointer
-    pProfile = &(gpAnimProfiles[iProfileCount]);
-
     // Loop directions
     for (iDirectionCount = 0; iDirectionCount < 8; iDirectionCount++) {
       // Get prodile direction pointer
@@ -4491,14 +4492,10 @@ BOOLEAN LoadAnimationProfiles() {
 
 void DeleteAnimationProfiles() {
   INT32 iProfileCount, iDirectionCount;
-  struct ANIM_PROF *pProfile;
   struct ANIM_PROF_DIR *pProfileDir;
 
   // Loop profiles
   for (iProfileCount = 0; iProfileCount < gubNumAnimProfiles; iProfileCount++) {
-    // Get profile pointer
-    pProfile = &(gpAnimProfiles[iProfileCount]);
-
     // Loop directions
     for (iDirectionCount = 0; iDirectionCount < 8; iDirectionCount++) {
       // Get prodile direction pointer
@@ -4523,3 +4520,7 @@ void ZeroAnimSurfaceCounts() {
 
   memset(gbAnimUsageHistory, 0, sizeof(gbAnimUsageHistory));
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

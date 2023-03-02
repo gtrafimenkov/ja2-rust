@@ -546,7 +546,7 @@ BOOLEAN EnterSaveLoadScreen() {
         memset(&SaveGameHeader, 0, sizeof(SAVED_GAME_HEADER));
 
         // if it is not the Quick Save slot, and we are loading
-        if (!gfSaveGame || gfSaveGame && gGameSettings.bLastSavedGameSlot != 0) {
+        if (!gfSaveGame || (gfSaveGame && gGameSettings.bLastSavedGameSlot != 0)) {
           gbSelectedSaveLocation = gGameSettings.bLastSavedGameSlot;
           gbSaveGameSelectedLocation[gbSelectedSaveLocation] = SLG_SELECTED_SLOT_GRAPHICS_NUMBER;
 
@@ -1194,7 +1194,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
                SaveGameHeader.uiDay, SaveGameHeader.ubHour, SaveGameHeader.ubMin);
 
       // Create the string for the current location
-      if (SaveGameHeader.sSectorX == -1 && SaveGameHeader.sSectorY == -1 ||
+      if ((SaveGameHeader.sSectorX == -1 && SaveGameHeader.sSectorY == -1) ||
           SaveGameHeader.bSectorZ < 0) {
         if ((SaveGameHeader.uiDay * NUM_SEC_IN_DAY + SaveGameHeader.ubHour * NUM_SEC_IN_HOUR +
              SaveGameHeader.ubMin * NUM_SEC_IN_MIN) <= STARTING_TIME)
@@ -1602,7 +1602,6 @@ void SelectedSaveRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reas
 }
 
 void InitSaveLoadScreenTextInputBoxes() {
-  UINT32 uiStartLoc = 0;
   UINT16 usPosY;
   SAVED_GAME_HEADER SaveGameHeader;
 

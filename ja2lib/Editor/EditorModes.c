@@ -65,7 +65,6 @@ void SetEditorItemsTaskbarMode(UINT16 usNewMode) {
 #define NO_EFFECT 2
 
 void SetEditorBuildingTaskbarMode(UINT16 usNewMode) {
-  BOOLEAN fNewGroup = FALSE;
   BOOLEAN fNewRoofs, fNewWalls, fNewRoomInfo;
   if (usNewMode == usCurrentMode) {
     ClickEditorButton(usNewMode);

@@ -742,9 +742,7 @@ INT32 EnterLaptop() {
   // Create, load, initialize data -- just entered the laptop.
 
   VOBJECT_DESC VObjectDesc;
-  INT32 iCounter = 0;
 
-  static BOOLEAN fEnteredFromGameStartup = TRUE;
   // we are re entering due to message box, leave NOW!
   if (fExitDueToMessageBox == TRUE) {
     return (TRUE);
@@ -1618,7 +1616,7 @@ UINT32 LaptopScreenHandle() {
 
   if (gfStartMapScreenToLaptopTransition) {  // Everything is set up to start the transition
                                              // animation.
-    SGPRect SrcRect1, SrcRect2, DstRect;
+    SGPRect SrcRect2, DstRect;
     INT32 iPercentage, iScalePercentage, iFactor;
     UINT32 uiStartTime, uiTimeRange, uiCurrTime;
     INT32 iX, iY, iWidth, iHeight;
@@ -1665,11 +1663,6 @@ UINT32 LaptopScreenHandle() {
       else
         iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.5);
 
-      // Mapscreen source rect
-      SrcRect1.iLeft = 464 * iPercentage / 100;
-      SrcRect1.iRight = 640 - 163 * iPercentage / 100;
-      SrcRect1.iTop = 417 * iPercentage / 100;
-      SrcRect1.iBottom = 480 - 55 * iPercentage / 100;
       // Laptop source rect
       if (iPercentage < 99)
         iScalePercentage = 10000 / (100 - iPercentage);
@@ -1684,27 +1677,9 @@ UINT32 LaptopScreenHandle() {
       SrcRect2.iRight = SrcRect2.iLeft + iWidth;
       SrcRect2.iTop = iY - iHeight / 2;
       SrcRect2.iBottom = SrcRect2.iTop + iHeight;
-      // SrcRect2.iLeft = 464 - 464 * iScalePercentage / 100;
-      // SrcRect2.iRight = 477 + 163 * iScalePercentage / 100;
-      // SrcRect2.iTop = 417 - 417 * iScalePercentage / 100;
-      // SrcRect2.iBottom = 425 + 55 * iScalePercentage / 100;
-
-      // BltStretchVideoSurface( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 0, &SrcRect1, &DstRect );
-
-      // SetFont( FONT10ARIAL );
-      // SetFontForeground( FONT_YELLOW );
-      // SetFontShadow( FONT_NEARBLACK );
-      // mprintf( 10, 10, L"%d -> %d", iRealPercentage, iPercentage );
-      // pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-      // SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
-      // RectangleDraw( TRUE, SrcRect1.iLeft, SrcRect1.iTop, SrcRect1.iRight, SrcRect1.iBottom,
-      // Get16BPPColor( FROMRGB( 255, 100, 0 ) ), pDestBuf ); RectangleDraw( TRUE, SrcRect2.iLeft,
-      // SrcRect2.iTop, SrcRect2.iRight, SrcRect2.iBottom, Get16BPPColor( FROMRGB( 100, 255, 0 ) ),
-      // pDestBuf ); UnLockVideoSurface( FRAME_BUFFER );
 
       BltStretchVideoSurface(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 0, &DstRect, &SrcRect2);
       InvalidateScreen();
-      // gfPrintFrameBuffer = TRUE;
       RefreshScreen(NULL);
     }
     fReDrawScreenFlag = TRUE;
@@ -2203,7 +2178,7 @@ BOOLEAN LeaveLapTopScreen(void) {
     SetPendingNewScreen(guiExitScreen);
 
     if (!gfDontStartTransitionFromLaptop) {
-      SGPRect SrcRect1, SrcRect2, DstRect;
+      SGPRect SrcRect2, DstRect;
       INT32 iPercentage, iScalePercentage, iFactor;
       UINT32 uiStartTime, uiTimeRange, uiCurrTime;
       INT32 iX, iY, iWidth, iHeight;
@@ -2251,11 +2226,6 @@ BOOLEAN LeaveLapTopScreen(void) {
         else
           iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.5);
 
-        // Mapscreen source rect
-        SrcRect1.iLeft = 464 * iPercentage / 100;
-        SrcRect1.iRight = 640 - 163 * iPercentage / 100;
-        SrcRect1.iTop = 417 * iPercentage / 100;
-        SrcRect1.iBottom = 480 - 55 * iPercentage / 100;
         // Laptop source rect
         if (iPercentage < 99)
           iScalePercentage = 10000 / (100 - iPercentage);
@@ -2618,12 +2588,9 @@ void HandleAnimatedButtons() { return; }
 void AnimateButton(UINT32 uiIconID, UINT16 usX, UINT16 usY) { return; }
 
 void WWWRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
-  INT32 iDifference = 0;
   struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
-    iBaseTime = 0;
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiWWWICON);
     BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
@@ -2635,12 +2602,9 @@ void WWWRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void EmailRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
-  INT32 iDifference = 0;
   struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
-    iBaseTime = 0;
     iFrame = 0;
     DrawLapTopText();
     GetVideoObject(&hLapTopIconHandle, guiMAILICON);
@@ -2658,12 +2622,9 @@ void EmailRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void FinancialRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
-  INT32 iDifference = 0;
   struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
-    iBaseTime = 0;
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiFINANCIALICON);
     BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X - 4,
@@ -2675,12 +2636,9 @@ void FinancialRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void HistoryRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
-  INT32 iDifference = 0;
   struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
-    iBaseTime = 0;
     iFrame = 0;
 
     GetVideoObject(&hLapTopIconHandle, guiHISTORYICON);
@@ -2693,12 +2651,9 @@ void HistoryRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void FilesRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
-  INT32 iDifference = 0;
   struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
-    iBaseTime = 0;
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiFILESICON);
     BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
@@ -2710,12 +2665,9 @@ void FilesRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void PersonnelRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  static INT32 iBaseTime = 0;
   static INT32 iFrame = 0;
-  INT32 iDifference = 0;
   struct VObject *hLapTopIconHandle;
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
-    iBaseTime = 0;
     iFrame = 0;
 
     GetVideoObject(&hLapTopIconHandle, guiPERSICON);
@@ -2980,7 +2932,6 @@ void DeleteBookmark() {
 void ScrollDisplayText(INT32 iY) {
   static INT32 iBaseTime = 0;
   static INT16 sCurX;
-  INT16 sY = (INT16)iY;
 
   // if we are just enetering, set basetime to current clock value
   if (iBaseTime == 0) iBaseTime = GetJA2Clock();
@@ -3268,8 +3219,6 @@ BOOLEAN DisplayLoadPending(void) {
   struct VObject *hLapTopIconHandle;
   INT32 iLoadTime;
   INT32 iUnitTime;
-  UINT32 uiTempLaptopMode = 0;
-  UINT32 uiTempWWWMode = 0;
   INT16 sXPosition = 0, sYPosition = 0;
 
   // if merc webpage, make it longer
@@ -3595,20 +3544,11 @@ void PostButtonRendering(void) {
 }
 
 void ShouldNewMailBeDisplayed() {
-  BOOLEAN fReDraw = FALSE;
   switch (guiCurrentLaptopMode) {
     case LAPTOP_MODE_AIM_MEMBERS:
-      fReDraw = DisableNewMailMessage();
+      DisableNewMailMessage();
       break;
   }
-  /*
-          if(fReDraw)
-          {
-                  RenderLapTopImage();
-                  HighLightRegion(giCurrentRegion);
-                  RenderLaptop();
-          }
-   */
 }
 
 void DisplayPlayersBalanceToDate(void) {
@@ -4550,7 +4490,7 @@ void PrintNumberOnTeam(void) {
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
   INT32 iCounter = 0;
-  UINT16 usPosX, usPosY, usFontHeight, usStrLength;
+  UINT16 usPosX, usPosY;
 
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BLACK);
@@ -4571,23 +4511,14 @@ void PrintNumberOnTeam(void) {
 
   swprintf(pString, ARR_SIZE(pString), L"%s %d", pPersonnelString[0], iCounter);
 
-  usFontHeight = GetFontHeight(FONT10ARIAL);
-  usStrLength = StringPixLength(pString, FONT10ARIAL);
-
   if (ButtonList[gLaptopButton[3]]->uiFlags & BUTTON_CLICKED_ON) {
     usPosX = 47 + 1;
     usPosY = 194 + 30 + 1;
-    //		gprintfdirty(47 + 1, 194 +30 +1  ,pString);
-    //		mprintf(47 + 1, 194 + 30 + 1,pString);
   } else {
     usPosX = 47;
     usPosY = 194 + 30;
-    //		gprintfdirty(47, 194 +30 ,pString);
-    //		mprintf(47, 194 + 30,pString);
   }
 
-  //	RestoreExternBackgroundRect( usPosX, usPosY, usStrLength, usFontHeight );
-  //	gprintfdirty( usPosX, usPosY, pString);
   mprintf(usPosX, usPosY, pString);
 
   SetFontShadow(DEFAULT_SHADOW);
@@ -5074,10 +5005,10 @@ void HandleWWWSubSites(void) {
   gfWWWaitSubSitesVisitedFlags[guiCurrentLaptopMode - (LAPTOP_MODE_WWW + 1)] = TRUE;
 
   // Dont show the dlownload screen when switching between these pages
-  if ((guiCurrentLaptopMode == LAPTOP_MODE_AIM_MEMBERS) &&
-          (guiPreviousLaptopMode == LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX) ||
-      (guiCurrentLaptopMode == LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX) &&
-          (guiPreviousLaptopMode == LAPTOP_MODE_AIM_MEMBERS)) {
+  if (((guiCurrentLaptopMode == LAPTOP_MODE_AIM_MEMBERS) &&
+       (guiPreviousLaptopMode == LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX)) ||
+      ((guiCurrentLaptopMode == LAPTOP_MODE_AIM_MEMBERS_FACIAL_INDEX) &&
+       (guiPreviousLaptopMode == LAPTOP_MODE_AIM_MEMBERS))) {
     fFastLoadFlag = FALSE;
     fLoadPendingFlag = FALSE;
 

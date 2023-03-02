@@ -663,10 +663,10 @@ void RenderItemDetails() {
       for (i = 0; i < gusWorldItemsSummaryArraySize; i++) {
         if (index == SWITCH || index == ACTION_ITEM) {
           if (gpWorldItemsSummaryArray[i].o.usItem == index) {
-            if (gubSummaryItemMode == ITEMMODE_SCIFI &&
-                    !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_REALISTIC_ONLY) ||
-                gubSummaryItemMode == ITEMMODE_REAL &&
-                    !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_SCIFI_ONLY)) {
+            if ((gubSummaryItemMode == ITEMMODE_SCIFI &&
+                 !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_REALISTIC_ONLY)) ||
+                (gubSummaryItemMode == ITEMMODE_REAL &&
+                 !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_SCIFI_ONLY))) {
               pItem = &gpWorldItemsSummaryArray[i].o;
               if (!pItem->bFrequency)
                 bFreqIndex = 7;
@@ -700,10 +700,10 @@ void RenderItemDetails() {
           continue;
         }
         if (gpWorldItemsSummaryArray[i].o.usItem == index) {
-          if (gubSummaryItemMode == ITEMMODE_SCIFI &&
-                  !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_REALISTIC_ONLY) ||
-              gubSummaryItemMode == ITEMMODE_REAL &&
-                  !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_SCIFI_ONLY)) {
+          if ((gubSummaryItemMode == ITEMMODE_SCIFI &&
+               !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_REALISTIC_ONLY)) ||
+              (gubSummaryItemMode == ITEMMODE_REAL &&
+               !(gpWorldItemsSummaryArray[i].usFlags & WORLD_ITEM_SCIFI_ONLY))) {
             pItem = &gpWorldItemsSummaryArray[i].o;
             uiExistChance +=
                 (100 - gpWorldItemsSummaryArray[i].ubNonExistChance) * pItem->ubNumberOfObjects;
@@ -960,7 +960,7 @@ void RenderSummaryWindow() {
         mprintf(10, 50, L"depending on your computer, it may vary.");
         SetFontForeground(FONT_LTRED);
         mprintf(10, 65, L"Do you wish to regenerate info for ALL these maps at this time (y/n)?");
-      } else if (!gsSelSectorX && !gsSectorX || gfTempFile) {
+      } else if ((!gsSelSectorX && !gsSectorX) || gfTempFile) {
         DisableButton(iSummaryButton[SUMMARY_LOAD]);
         SetFontForeground(FONT_LTRED);
         mprintf(10, 20, L"There is no sector currently selected.");
@@ -1621,7 +1621,7 @@ void PerformTest() {
 BOOLEAN HandleSummaryInput(InputAtom *pEvent) {
   if (!gfSummaryWindowActive) return FALSE;
   gfCtrlPressed = pEvent->usKeyState & CTRL_DOWN;
-  if (!HandleTextInput(pEvent) && pEvent->usEvent == KEY_DOWN || pEvent->usEvent == KEY_REPEAT) {
+  if ((!HandleTextInput(pEvent) && pEvent->usEvent == KEY_DOWN) || pEvent->usEvent == KEY_REPEAT) {
     INT32 x;
     switch (pEvent->usParam) {
       case ESC:

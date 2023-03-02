@@ -154,14 +154,10 @@ void WarpGameTime(UINT32 uiAdjustment, UINT8 ubWarpCode) {
 }
 
 void AdvanceClock(UINT8 ubWarpCode) {
-  UINT32 uiGameSecondsPerRealSecond = guiGameSecondsPerRealSecond;
-
   // Set value, to different things if we are in combat...
   if ((gTacticalStatus.uiFlags & INCOMBAT)) {
     if ((gTacticalStatus.uiFlags & TURNBASED)) {
-      uiGameSecondsPerRealSecond = SECONDS_PER_COMPRESSION_IN_TBCOMBAT;
     } else {
-      uiGameSecondsPerRealSecond = SECONDS_PER_COMPRESSION_IN_RTCOMBAT;
     }
   }
 
@@ -572,7 +568,6 @@ void UpdateClock() {
   UINT32 uiThousandthsOfThisSecondProcessed;
   UINT32 uiTimeSlice;
   UINT32 uiNewTimeProcessed;
-  UINT32 uiAmountToAdvanceTime;
   static UINT8 ubLastResolution = 1;
   static UINT32 uiLastSecondTime = 0;
   static UINT32 uiLastTimeProcessed = 0;
@@ -650,8 +645,6 @@ void UpdateClock() {
           guiGameSecondsPerRealSecond * guiTimesThisSecondProcessed / gubClockResolution;
 
       uiNewTimeProcessed = max(uiNewTimeProcessed, uiLastTimeProcessed);
-
-      uiAmountToAdvanceTime = uiNewTimeProcessed - uiLastTimeProcessed;
 
 #ifdef DEBUG_GAME_CLOCK
       if (uiAmountToAdvanceTime > 0x80000000 ||

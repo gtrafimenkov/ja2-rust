@@ -39,9 +39,6 @@ void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
   // start of the laptop screen it will access record sIMPTextRecordNumber and go until all records
   // following it but before the next IMP record are displayed in font uiFont
   CHAR16 sString[1024];
-  INT32 iCounter = 0;
-  BOOLEAN fNotDonePrintingFlag = TRUE;
-  INT32 iRecordPosition = 0;
 
   if (fShadow == FALSE) {
     // don't want shadow, remove it
@@ -500,7 +497,6 @@ void PrintIMPPersonalityQuizQuestionAndAnsers(void) {
 void OffSetQuestionForFemaleSpecificQuestions(INT32 *iCurrentOffset) {
   INT32 iExtraOffSet = 0;
   BOOLEAN fOffSet = TRUE;
-  INT32 iCounter = 0;
 
   // find the extra
   switch (giCurrentPersonalityQuizQuestion) {

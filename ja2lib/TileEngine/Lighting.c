@@ -188,11 +188,11 @@ UINT16 gusShadeLevels[16][3] =
 
 // JA2 Gold:
 UINT16 gusShadeLevels[16][3] = {
-    500, 500, 500, 450, 450, 450,                                // bright
-    350, 350, 350, 300, 300, 300, 255, 255, 255,                 // normal
-    231, 199, 199, 209, 185, 185, 187, 171, 171, 165, 157, 157,  // darkening
-    143, 143, 143, 121, 121, 129, 99,  99,  115, 77,  77,  101,  // night
-    36,  36,  244, 18,  18,  224, 48,  222, 48,
+    {500, 500, 500}, {450, 450, 450},                                    // bright
+    {350, 350, 350}, {300, 300, 300}, {255, 255, 255},                   // normal
+    {231, 199, 199}, {209, 185, 185}, {187, 171, 171}, {165, 157, 157},  // darkening
+    {143, 143, 143}, {121, 121, 129}, {99, 99, 115},   {77, 77, 101},    // night
+    {36, 36, 244},   {18, 18, 224},   {48, 222, 48},
 };
 
 // Set this true if you want the shadetables to be loaded from the text file.
@@ -517,10 +517,6 @@ BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
   // bDirection = atan8( iX, iY, iSrcX, iSrcY );
   bDirection = atan8(iSrcX, iSrcY, iX, iY);
 
-  if (usTileNo == 20415 && bDirection == 3) {
-    int i = 0;
-  }
-
   ubTravelCost = gubWorldMovementCosts[usTileNo][bDirection][0];
 
   if (ubTravelCost == TRAVELCOST_WALL) {
@@ -534,51 +530,6 @@ BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
       return (TRUE);
     }
   }
-
-#if 0
-	pStruct = gpWorldLevelData[ usTileNo ].pStructHead;
-	while ( pStruct != NULL )
-	{
-		if ( pStruct->usIndex < NUMBEROFTILES )
-		{
-			GetTileType( pStruct->usIndex, &uiType );
-
-			// ATE: Changed to use last decordations rather than last decal
-			// Could maybe check orientation value? Depends on our
-			// use of the orientation value flags..
-			if((uiType >= FIRSTWALL) && (uiType <=LASTDECORATIONS ))
-			{
-				GetWallOrientation(pStruct->usIndex, &usWallOrientation);
-
-				bWallCount++;
-			}
-		}
-
-		pStruct=pStruct->pNext;
-	}
-
-	if ( bWallCount )
-	{
-		// ATE: If TWO or more - assume it's BLOCKED and return TRUE
-		if ( bWallCount != 1 )
-		{
-			return( TRUE );
-		}
-
-		switch(usWallOrientation)
-		{
-			case INSIDE_TOP_RIGHT:
-			case OUTSIDE_TOP_RIGHT:
-				return( iSrcX < iX );
-
-			case INSIDE_TOP_LEFT:
-			case OUTSIDE_TOP_LEFT:
-				return( iSrcY < iY );
-
-		}
-	}
-
-#endif
 
   return (FALSE);
 }
@@ -1245,7 +1196,6 @@ UINT16 LightGetLastNode(INT32 iLight) { return (usRaySize[iLight]); }
 ***************************************************************************************/
 BOOLEAN LightAddNode(INT32 iLight, INT16 iHotSpotX, INT16 iHotSpotY, INT16 iX, INT16 iY,
                      UINT8 ubIntensity, UINT16 uiFlags) {
-  BOOLEAN fDuplicate = FALSE;
   DOUBLE dDistance;
   UINT8 ubShade;
   INT32 iLightDecay;
@@ -2647,7 +2597,6 @@ BOOLEAN LightSave(INT32 iLight, STR pFilename) {
 ***************************************************************************************/
 INT32 LightLoad(STR pFilename) {
   HWFILE hFile;
-  LIGHT_NODE *pNewLight = NULL, *pLastLight = NULL;
   INT32 iLight;
 
   if ((iLight = LightGetFree()) == (-1))
@@ -2932,7 +2881,6 @@ BOOLEAN LightSpriteRender(void) {
  ********************************************************************************/
 BOOLEAN LightSpriteRenderAll(void) {
   INT32 iCount;
-  BOOLEAN fRenderLights = FALSE;
 
   LightResetAllTiles();
   for (iCount = 0; iCount < MAX_LIGHT_SPRITES; iCount++) {

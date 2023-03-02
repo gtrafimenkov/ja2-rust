@@ -1206,7 +1206,6 @@ void HandleJA2ToolbarSelection(void) {
 extern INT8 gbCurrSelect;
 extern void DeleteSelectedMercsItem();
 void HandleKeyboardShortcuts() {
-  static INT32 iSavedMode;
   static BOOLEAN fShowTrees = TRUE;
   while (DequeueEvent(&EditorInputEvent)) {
     if (!HandleSummaryInput(&EditorInputEvent) && !HandleTextInput(&EditorInputEvent) &&
@@ -2855,7 +2854,6 @@ void EnsureStatusOfEditorButtons() {
 }
 
 void HandleMouseClicksInGameScreen() {
-  EXITGRID dummy = {0, 0, 0, 0};
   INT16 sX, sY;
   BOOLEAN fPrevState;
   if (!GetMouseXY(&sGridX, &sGridY)) return;

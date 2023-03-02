@@ -78,9 +78,6 @@ typedef struct trail_s trail_t;
 #define TRAILCELLTYPE UINT32
 
 static path_t pathQB[MAXpathQ];
-static UINT16 totAPCostB[MAXpathQ];
-static UINT16 gusPathShown, gusAPtsToMove;
-static UINT16 gusMapMovementCostsB[MAP_LENGTH][MAXDIR];
 static TRAILCELLTYPE trailCostB[MAP_LENGTH];
 static trail_t trailStratTreeB[MAXTRAILTREE];
 short trailStratTreedxB = 0;
@@ -183,7 +180,6 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
   UINT16 newLoc, curLoc;
   TRAILCELLTYPE curCost, newTotCost, nextCost;
   INT16 sOrigination;
-  INT16 iCounter = 0;
   BOOLEAN fPlotDirectPath = FALSE;
   static BOOLEAN fPreviousPlotDirectPath = FALSE;  // don't save
   struct GROUP* pGroup;
@@ -425,21 +421,13 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
   INT32 iPathLength;
   INT32 iCount = 0;
   struct path* pNode = NULL;
-  struct path* pNewNode = NULL;
   struct path* pDeleteNode = NULL;
-  BOOLEAN fFlag = FALSE;
   struct path* pHeadOfPathList = pPath;
-  INT32 iOldDelta = 0;
   iCurrentSectorNum = iStartSectorNum;
 
   if (pNode == NULL) {
     // start new path list
     pNode = (struct path*)MemAlloc(sizeof(struct path));
-    /*
-       if ( _KeyDown( CTRL ))
-                     pNode->fSpeed=SLOW_MVT;
-             else
-    */
     pNode->fSpeed = NORMAL_MVT;
     pNode->uiSectorId = iStartSectorNum;
     pNode->pNext = NULL;
@@ -485,27 +473,6 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
       }
       return NULL;
     }
-
-    // for strategic mvt events
-    // we are at the new node, check if previous node was a change in deirection, ie change in
-    // delta..add waypoint if -1, do not
-    /*
-    if( iOldDelta != 0 )
-    {
-            if( iOldDelta != iDelta )
-            {
-                    // ok add last waypt
-                    if( fTempPath == FALSE )
-                    {
-                            // change in direction..add waypoint
-                            AddWaypointToGroup( ( UINT8 )sMvtGroupNumber, ( UINT8 )( (
-    iCurrentSectorNum - iDelta ) % MAP_WORLD_X ), ( UINT8 )( ( iCurrentSectorNum - iDelta ) /
-    MAP_WORLD_X ) );
-                    }
-            }
-    }
-    */
-    iOldDelta = iDelta;
 
     pHeadOfPathList = pNode;
     if (!pNode) return NULL;
@@ -729,7 +696,6 @@ struct path* AppendStrategicPath(struct path* pNewSection, struct path* pHeadOfP
   // list
 
   struct path* pNode = pHeadOfPathList;
-  struct path* pPastNode = NULL;
   // move to end of original section
 
   if (pNewSection == NULL) {

@@ -1931,10 +1931,7 @@ INT16 GetLastSectorOfHelicoptersPath(void) {
 }
 
 BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pPath) {
-  struct path *pCurrentNode = NULL;
   BOOLEAN fSpeedFlag = FALSE;
-  BOOLEAN fUpDate = FALSE;
-  INT32 iDifference = 0;
   INT32 iArrow = -1;
   INT32 iX, iY;
   INT16 sX, sY;
@@ -1942,12 +1939,9 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
   INT32 iDeltaA, iDeltaB, iDeltaB1;
   INT32 iDirection = 0;
   BOOLEAN fUTurnFlag = FALSE;
-  BOOLEAN fNextNode = FALSE;
-  struct path *pTempNode = NULL;
   struct path *pNode = NULL;
   struct path *pPastNode = NULL;
   struct path *pNextNode = NULL;
-  unsigned int ubCounter = 1;
   struct VObject *hMapHandle;
 
   if (pPath == NULL) {
@@ -2393,9 +2387,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             else
               iArrow = ZOOM_EAST_ARROW;
             iX -= 0;
-            MAP_GRID_X;
             iY -= 0;
-            MAP_GRID_Y;
             iArrowX += EAST_OFFSET_X * 2;
             iArrowY += EAST_OFFSET_Y * 2;
           } else {
@@ -2565,14 +2557,12 @@ void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY,
 
 BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN fForceUpDate) {
   static struct path *pCurrentNode = NULL;
-  static INT8 bCurrentChar = -1;
   static BOOLEAN fUpDateFlag = FALSE;
   static BOOLEAN fPauseFlag = TRUE;
   static UINT8 ubCounter = 1;
 
   struct VObject *hMapHandle;
   BOOLEAN fSpeedFlag = FALSE;
-  BOOLEAN fUpDate = FALSE;
   INT32 iDifference = 0;
   INT32 iArrow = -1;
   INT32 iX = 0, iY = 0;
@@ -3984,20 +3974,13 @@ void DisplayDestinationOfHelicopter(void) {
 }
 
 BOOLEAN CheckForClickOverHelicopterIcon(INT16 sClickedSectorX, INT16 sClickedSectorY) {
-  INT32 iDeltaTime = 0;
-  BOOLEAN fIgnoreClick = FALSE;
   struct GROUP *pGroup = NULL;
   BOOLEAN fHelicopterOverNextSector = FALSE;
   FLOAT flRatio = 0.0;
   INT16 sSectorX;
   INT16 sSectorY;
 
-  iDeltaTime = GetJA2Clock() - giClickHeliIconBaseTime;
   giClickHeliIconBaseTime = GetJA2Clock();
-
-  if (iDeltaTime < 400) {
-    fIgnoreClick = TRUE;
-  }
 
   if (!fHelicopterAvailable || !fShowAircraftFlag) {
     return (FALSE);
@@ -4051,12 +4034,11 @@ BOOLEAN CheckForClickOverHelicopterIcon(INT16 sClickedSectorX, INT16 sClickedSec
 void BlitMineIcon(INT16 sMapX, INT16 sMapY) {
   struct VObject *hHandle;
   UINT32 uiDestPitchBYTES;
-  UINT8 *pDestBuf2;
   INT16 sScreenX, sScreenY;
 
   GetVideoObject(&hHandle, guiMINEICON);
 
-  pDestBuf2 = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+  LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                  MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                  MAP_VIEW_HEIGHT - 9);
@@ -4817,7 +4799,6 @@ void CreateDestroyMilitiaSectorButtons(void) {
   INT16 sX = 0, sY = 0;
   INT32 iCounter = 0;
   struct VObject *hVObject;
-  ETRLEObject *pTrav;
 
   if (sOldSectorValue == sSectorMilitiaMapSector && fShowMilitia && sSelectedMilitiaTown &&
       !fCreated && sSectorMilitiaMapSector != -1) {
@@ -4854,7 +4835,6 @@ void CreateDestroyMilitiaSectorButtons(void) {
                                   gsMilitiaSectorButtonColors[iCounter], FONT_BLACK);
 
       GetVideoObject(&hVObject, guiMilitia);
-      pTrav = &(hVObject->pETRLEObject[0]);
 
       SetButtonFastHelpText(giMapMilitiaButton[iCounter], pMilitiaButtonsHelpText[iCounter]);
     }
@@ -5801,7 +5781,6 @@ void ShowSAMSitesOnStrategicMap(void) {
   INT16 sX = 0, sY = 0;
   struct VObject *hHandle;
   INT8 ubVidObjIndex = 0;
-  UINT8 *pDestBuf2;
   UINT32 uiDestPitchBYTES;
   CHAR16 wString[40];
 
@@ -5820,7 +5799,7 @@ void ShowSAMSitesOnStrategicMap(void) {
     sSectorY = gpSamSectorY[iCounter];
 
     if (fZoomFlag) {
-      pDestBuf2 = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+      LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
       SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                      MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                      MAP_VIEW_HEIGHT - 9);
@@ -5938,7 +5917,6 @@ void BlitSAMGridMarkers(void) {
 }
 
 BOOLEAN CanMilitiaAutoDistribute(void) {
-  INT32 iTotalTroopsOnCursor = 0;
   INT32 iCounter = 0;
   INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
   INT16 sSectorX = 0, sSectorY = 0;
@@ -5974,8 +5952,6 @@ BOOLEAN CanMilitiaAutoDistribute(void) {
                             SectorInfo[sCurrentSectorValue].ubNumberOfCivsAtLevel[ELITE_MILITIA];
     }
   }
-
-  iTotalTroopsOnCursor = sGreensOnCursor + sRegularsOnCursor + sElitesOnCursor;
 
   // can't auto-distribute if we don't have any militia in the town
   if (!iTotalTroopsInTown) return (FALSE);
@@ -6080,14 +6056,13 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, 
 }
 
 void DrawOrta() {
-  UINT8 *pDestBuf2;
   UINT32 uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;
 
   if (fZoomFlag) {
-    pDestBuf2 = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+    LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                    MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                    MAP_VIEW_HEIGHT - 9);
@@ -6110,14 +6085,13 @@ void DrawOrta() {
 }
 
 void DrawTixa() {
-  UINT8 *pDestBuf2;
   UINT32 uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;
 
   if (fZoomFlag) {
-    pDestBuf2 = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+    LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                    MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                    MAP_VIEW_HEIGHT - 9);
@@ -6177,7 +6151,6 @@ BOOLEAN CanRedistributeMilitiaInSector(INT16 sClickedSectorX, INT16 sClickedSect
   INT32 iCounter = 0;
   INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
   INT16 sSectorX = 0, sSectorY = 0;
-  INT32 iTotalTroopsInTown = 0;
 
   // if no world is loaded, we can't be in combat (PBI/Auto-resolve locks out normal mapscreen
   // interface for this)

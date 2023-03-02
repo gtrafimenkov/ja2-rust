@@ -442,7 +442,7 @@ void BuildSelectedListFromAToB(INT8 bA, INT8 bB) {
 
   // run through list and set all intermediaries to true
 
-  for (bStart; bStart <= bEnd; bStart++) {
+  for (; bStart <= bEnd; bStart++) {
     SetEntryInSelectedCharacterList(bStart);
   }
 
@@ -2254,14 +2254,9 @@ void DisplayFastHelpRegions(FASTHELPREGION *pRegion, INT32 iSize) {
 
 // show one region
 void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
-  UINT16 usFillColor;
   INT32 iX, iY, iW, iH;
-  INT32 iNumberOfLines = 1;
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
-
-  // grab the color for the background region
-  usFillColor = Get16BPPColor(FROMRGB(250, 240, 188));
 
   iX = pRegion->iX;
   iY = pRegion->iY;
@@ -2548,10 +2543,8 @@ void DeselectSquadForMovement(INT32 iSquadNumber) {
 }
 
 BOOLEAN AllSoldiersInSquadSelected(INT32 iSquadNumber) {
-  INT32 iCounter = 0, iCount = 0;
-
   // is everyone on this squad moving?
-  for (iCounter = 0; iCounter < giNumberOfSoldiersInSectorMoving; iCounter++) {
+  for (int iCounter = 0; iCounter < giNumberOfSoldiersInSectorMoving; iCounter++) {
     if (pSoldierMovingList[iCounter]->bAssignment == (INT8)iSquadNumber) {
       if (fSoldierIsMoving[iCounter] == FALSE) {
         return (FALSE);
@@ -3909,10 +3902,6 @@ void DisplaySoldierUpdateBox() {
   struct VObject *hBackGroundHandle;
   INT32 iCounter = 0;
   CHAR16 sString[32];
-  INT16 sX = 0, sY = 0;
-  INT32 iHeightOfString = 0;
-  INT32 iCounterB = 0;
-  INT32 iOrigNumberHigh = 0, iOrigY = 0;
   INT32 iUpperLimit = 0;
 
   if (fShowUpdateBox == FALSE) {
@@ -4710,7 +4699,6 @@ void NotifyPlayerOfInvasionByEnemyForces(INT16 sSectorX, INT16 sSectorY, INT8 bS
 }
 
 BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber) {
-  BOOLEAN fCanMove = TRUE;
   INT16 sSector = 0;
   BOOLEAN fProblemExists = FALSE;
 

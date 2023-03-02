@@ -411,25 +411,25 @@ SGPPoint gMapSortButtons[MAX_SORT_METHODS] = {
 
 // map screen's inventory panel pockets - top right corner coordinates
 INV_REGION_DESC gMapScreenInvPocketXY[] = {
-    204, 116,  // HELMETPOS
-    204, 145,  // VESTPOS
-    204, 205,  // LEGPOS,
-    21,  116,  // HEAD1POS
-    21,  140,  // HEAD2POS
-    21,  194,  // HANDPOS,
-    21,  218,  // SECONDHANDPOS
-    98,  251,  // BIGPOCK1
-    98,  275,  // BIGPOCK2
-    98,  299,  // BIGPOCK3
-    98,  323,  // BIGPOCK4
-    22,  251,  // SMALLPOCK1
-    22,  275,  // SMALLPOCK2
-    22,  299,  // SMALLPOCK3
-    22,  323,  // SMALLPOCK4
-    60,  251,  // SMALLPOCK5
-    60,  275,  // SMALLPOCK6
-    60,  299,  // SMALLPOCK7
-    60,  323   // SMALLPOCK8
+    {204, 116},  // HELMETPOS
+    {204, 145},  // VESTPOS
+    {204, 205},  // LEGPOS,
+    {21, 116},   // HEAD1POS
+    {21, 140},   // HEAD2POS
+    {21, 194},   // HANDPOS,
+    {21, 218},   // SECONDHANDPOS
+    {98, 251},   // BIGPOCK1
+    {98, 275},   // BIGPOCK2
+    {98, 299},   // BIGPOCK3
+    {98, 323},   // BIGPOCK4
+    {22, 251},   // SMALLPOCK1
+    {22, 275},   // SMALLPOCK2
+    {22, 299},   // SMALLPOCK3
+    {22, 323},   // SMALLPOCK4
+    {60, 251},   // SMALLPOCK5
+    {60, 275},   // SMALLPOCK6
+    {60, 299},   // SMALLPOCK7
+    {60, 323}    // SMALLPOCK8
 };
 
 INV_REGION_DESC gSCamoXY = {
@@ -1133,7 +1133,6 @@ void GlowFace(void) {
   UINT16 usColor;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  INT16 usY = 0;
 
   // not glowing right now, leave
   if (fShowFaceHightLight == FALSE) {
@@ -1185,7 +1184,6 @@ void GlowItem(void) {
   UINT16 usColor;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  INT16 usY = 0;
 
   // not glowing right now, leave
   if (fShowItemHighLight == FALSE) {
@@ -1234,12 +1232,10 @@ void GlowItem(void) {
 
 void GlowTrashCan(void) {
   static INT32 iColorNum = 10;
-  static BOOLEAN fDelta = FALSE;
   static BOOLEAN fOldTrashCanGlow = FALSE;
   UINT16 usColor;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  INT16 usY = 0;
 
   if (fShowInventoryFlag == FALSE) {
     fShowTrashCanHighLight = FALSE;
@@ -1248,7 +1244,6 @@ void GlowTrashCan(void) {
   // not glowing right now, leave
   if (fShowTrashCanHighLight == FALSE) {
     iColorNum = 0;
-    fDelta = TRUE;
 
     if (fOldTrashCanGlow == TRUE) {
       RestoreExternBackgroundRect(TRASH_CAN_X, TRASH_CAN_Y, (UINT16)(TRASH_CAN_WIDTH + 2),
@@ -1731,7 +1726,6 @@ void DrawCharacterInfo(INT16 sCharNumber) {
   INT16 usX, usY;
   INT16 usMercProfileID;
   INT32 iTimeRemaining = 0;
-  INT8 bMorale = 0;
   INT32 iDailyCost = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
   UINT32 uiArrivalTime;
@@ -2640,15 +2634,10 @@ UINT32 MapScreenShutdown(void) {
 
 UINT32 MapScreenHandle(void) {
   UINT32 uiNewScreen;
-  INT32 found = FALSE;
-  UINT32 uiMins = 0;
-  UINT32 uiHours = 0;
-  UINT32 uiDays = 0;
   VSURFACE_DESC vs_desc;
   VOBJECT_DESC VObjectDesc;
   //	static BOOLEAN fSecondFrame = FALSE;
   INT32 iCounter = 0;
-  struct SOLDIERTYPE *pSoldier = NULL;
 
   // DO NOT MOVE THIS FUNCTION CALL!!!
   // This determines if the help screen should be active
@@ -3912,11 +3901,7 @@ void RenderMapCursorsIndexesAnims() {
 UINT32 HandleMapUI() {
   UINT32 uiNewEvent = MAP_EVENT_NONE;
   INT16 sMapX = 0, sMapY = 0;
-  INT8 bMapZ = 0;
   INT16 sX, sY;
-  UINT8 ubCount = 0;
-  struct path *pNode = NULL;
-  BOOLEAN fVehicle = FALSE;
   UINT32 uiNewScreen = MAP_SCREEN;
   BOOLEAN fWasAlreadySelected;
 
@@ -3937,34 +3922,8 @@ UINT32 HandleMapUI() {
     case MAP_EVENT_PLOT_PATH:
       GetMouseMapXY(&sMapX, &sMapY);
 
-      /*
-                                                       // translate screen values to map grid values
-         for zoomed in if(fZoomFlag)
-                                                       {
-                                                                       sMapX=(UINT16)iZoomX/MAP_GRID_X+sMapX;
-                                                                       sMapX=sMapX/2;
-                                                                       sMapY=(UINT16)iZoomY/MAP_GRID_Y+sMapY;
-                                                                       sMapY=sMapY/2;
-                                                       }
-      */
-
       // plotting for the chopper?
       if (fPlotForHelicopter == TRUE) {
-        /*
-                                                                 if( IsSectorOutOfTheWay( sMapX,
-           sMapY ) == TRUE )
-                                                                 {
-                                                                         if(
-           gfAllowSkyriderTooFarQuote == TRUE )
-                                                                         {
-                                                                                 SkyRiderTalk(
-           DESTINATION_TOO_FAR );
-                                                                         }
-
-                                                                         return( MAP_SCREEN );
-                                                                 }
-        */
-
         PlotPathForHelicopter(sMapX, sMapY);
         fTeamPanelDirty = TRUE;
       } else {
@@ -3983,12 +3942,8 @@ UINT32 HandleMapUI() {
           sY = (GetLastSectorIdInCharactersPath(
                     &Menptr[gCharactersList[bSelectedDestChar].usSolID]) /
                 MAP_WORLD_X);
-          struct Point MousePos = GetMousePoint();
           RestoreBackgroundForMapGrid(sX, sY);
-          // fMapPanelDirty = TRUE;
         }
-
-        // SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
 
         if ((IsTheCursorAllowedToHighLightThisSector(sMapX, sMapY) == TRUE) &&
             (SectorInfo[(SECTOR(sMapX, sMapY))].ubTraversability[THROUGH_STRATEGIC_MOVE] !=
@@ -5734,7 +5689,6 @@ void BltCharInvPanel() {
   struct SOLDIERTYPE *pSoldier;
   CHAR16 sString[32];
   INT16 usX, usY;
-  INT32 iCounter = 0;
 
   // make sure we're here legally
   Assert(MapCharacterHasAccessibleInventory(bSelectedInfoChar));
@@ -6381,8 +6335,6 @@ void CheckToSeeIfMouseHasLeftMapRegionDuringPathPlotting() {
 }
 
 void BlitBackgroundToSaveBuffer(void) {
-  INT8 bTempDestChar = -1;
-
   // render map
   RenderMapRegionBackground();
 
@@ -7782,24 +7734,12 @@ void UpdatePausedStatesDueToTimeCompression(void) {
 
 BOOLEAN ContinueDialogue(struct SOLDIERTYPE *pSoldier, BOOLEAN fDone) {
   // continue this grunts dialogue, restore when done
-  static INT8 bOldSelectedInfoChar = -1;
   static BOOLEAN fTalkingingGuy = FALSE;
 
   INT8 bCounter = 0;
 
   if (fDone == TRUE) {
     if (fTalkingingGuy == TRUE) {
-      /*
-      // done, restore
-      if( bOldSelectedInfoChar != -1 )
-      {
-              ChangeSelectedInfoChar( bOldSelectedInfoChar, TRUE );
-
-              SetAutoFaceInActive( MercPtrs[ gCharactersList[ bSelectedInfoChar ].usSolID
-      ]->iFaceIndex );
-      }
-
-*/
       fCharacterInfoPanelDirty = TRUE;
       fTalkingingGuy = FALSE;
     }
@@ -7817,7 +7757,6 @@ BOOLEAN ContinueDialogue(struct SOLDIERTYPE *pSoldier, BOOLEAN fDone) {
     if (gCharactersList[bCounter].fValid == TRUE) {
       if ((&Menptr[gCharactersList[bCounter].usSolID]) == pSoldier) {
         if (bSelectedInfoChar != bCounter) {
-          bOldSelectedInfoChar = bSelectedInfoChar;
           ChangeSelectedInfoChar(bCounter, TRUE);
         }
         fTalkingingGuy = TRUE;
@@ -9070,7 +9009,6 @@ void SortListOfMercsInTeamPanel(BOOLEAN fRetainSelectedMercs) {
   INT32 iCounter = 0, iCounterA = 0;
   INT16 sEndSectorA, sEndSectorB;
   INT32 iExpiryTime, iExpiryTimeA;
-  BOOLEAN fEntrySelected = FALSE;
   struct SOLDIERTYPE *pSelectedSoldier[MAX_CHARACTER_COUNT];
   struct SOLDIERTYPE *pCurrentSoldier = NULL;
   struct SOLDIERTYPE *pPreviousSelectedInfoChar = NULL;
@@ -10513,12 +10451,8 @@ void InitPreviousPaths(void) {
 
 void RememberPreviousPathForAllSelectedChars(void) {
   INT32 iCounter = 0;
-  struct SOLDIERTYPE *pSoldier = NULL;
-
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     if (fSelectedListOfMercsForMapScreen[iCounter] == TRUE) {
-      pSoldier = MercPtrs[gCharactersList[iCounter].usSolID];
-
       // remember his previous path by copying it to his slot in the array kept for that purpose
       gpCharacterPreviousMercPath[iCounter] =
           CopyPaths(GetSoldierMercPathPtr(MercPtrs[gCharactersList[iCounter].usSolID]),

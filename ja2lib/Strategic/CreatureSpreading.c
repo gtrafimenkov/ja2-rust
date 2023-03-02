@@ -457,10 +457,9 @@ BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
                                                  // creature's area of influence.  The chance of
     // increasing the population inside this sector depends on how deep we are within the sector.
     if (node->pLevel->ubNumCreatures < MAX_STRATEGIC_TEAM_SIZE ||
-        node->pLevel->ubNumCreatures < 32 &&
-            node->pLevel->ubCreatureHabitat ==
-                QUEEN_LAIR) {  // there is ALWAYS a chance to habitate an interior sector, though
-                               // the chances are slim for
+        (node->pLevel->ubNumCreatures < 32 && node->pLevel->ubCreatureHabitat == QUEEN_LAIR)) {
+      // there is ALWAYS a chance to habitate an interior sector, though
+      // the chances are slim for
       // highly occupied sectors.  This chance is modified by the type of area we are in.
       INT32 iAbsoluteMaxPopulation;
       INT32 iMaxPopulation = -1;
@@ -517,8 +516,8 @@ BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
       // the ratio of current population to the max population.
       iChanceToPopulate = 100 - node->pLevel->ubNumCreatures * 100 / iMaxPopulation;
 
-      if (!node->pLevel->ubNumCreatures ||
-          iChanceToPopulate > (INT32)Random(100) && iMaxPopulation > node->pLevel->ubNumCreatures) {
+      if (!node->pLevel->ubNumCreatures || (iChanceToPopulate > (INT32)Random(100) &&
+                                            iMaxPopulation > node->pLevel->ubNumCreatures)) {
         AddCreatureToNode(node);
         return TRUE;
       }
@@ -667,9 +666,6 @@ void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 
 
 void ChooseTownSectorToAttack(UINT8 ubSectorID, BOOLEAN fOverrideTest) {
   INT32 iRandom;
-  UINT8 ubSectorX, ubSectorY;
-  ubSectorX = (UINT8)((ubSectorID % 16) + 1);
-  ubSectorY = (UINT8)((ubSectorID / 16) + 1);
 
   if (!fOverrideTest) {
     iRandom = PreRandom(100);
@@ -1075,7 +1071,6 @@ BOOLEAN PrepareCreaturesForBattle() {
   UNDERGROUND_SECTORINFO *pSector;
   INT32 i, iRandom;
   struct SGPPaletteEntry LColors[3];
-  UINT8 ubNumColors;
   BOOLEAN fQueen;
   UINT8 ubLarvaePercentage;
   UINT8 ubInfantPercentage;
@@ -1090,11 +1085,10 @@ BOOLEAN PrepareCreaturesForBattle() {
   UINT8 ubNumYoungFemales = 0;
   UINT8 ubNumAdultMales = 0;
   UINT8 ubNumAdultFemales = 0;
-  UINT8 ubPercentage = 0;
   UINT8 ubNumCreatures;
 
   if (!gubCreatureBattleCode) {
-    ubNumColors = LightGetColors(LColors);
+    LightGetColors(LColors);
     // if( ubNumColors != 1 )
     //	ScreenMsg( FONT_RED, MSG_ERROR, L"This map has more than one light color -- KM, LC : 1" );
 
@@ -1401,7 +1395,6 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   INT32 i;
   INT16 sSectorX, sSectorY;
   INT8 bSectorZ;
-  BOOLEAN fPlayerInSector = FALSE;
 
   if (giLairID <= 0) {  // Creature quest inactive
     return FALSE;
@@ -1457,13 +1450,13 @@ BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSector
   // Now make sure the mercs are in the previously infested mine
   switch (iSwitchValue) {
     case 1:  // Drassen
-      if (gWorldSectorX == 13 && gWorldSectorY == 6 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 13 && gWorldSectorY == 7 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 13 && gWorldSectorY == 7 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 13 && gWorldSectorY == 6 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 13 && gWorldSectorY == 5 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 13 && gWorldSectorY == 5 && gbWorldSectorZ == 1 ||
-          gWorldSectorX == 13 && gWorldSectorY == 4 && gbWorldSectorZ == 1) {
+      if ((gWorldSectorX == 13 && gWorldSectorY == 6 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 7 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 7 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 6 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 5 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 5 && gbWorldSectorZ == 1) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 4 && gbWorldSectorZ == 1)) {
         *psSectorX = 13;
         *psSectorY = 4;
         *pbSectorZ = 0;
@@ -1472,12 +1465,12 @@ BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSector
       }
       break;
     case 3:  // Cambria
-      if (gWorldSectorX == 8 && gWorldSectorY == 9 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 8 && gWorldSectorY == 8 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 8 && gWorldSectorY == 8 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 9 && gWorldSectorY == 8 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 9 && gWorldSectorY == 8 && gbWorldSectorZ == 1 ||
-          gWorldSectorX == 8 && gWorldSectorY == 8 && gbWorldSectorZ == 1) {
+      if ((gWorldSectorX == 8 && gWorldSectorY == 9 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 8 && gWorldSectorY == 8 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 8 && gWorldSectorY == 8 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 9 && gWorldSectorY == 8 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 9 && gWorldSectorY == 8 && gbWorldSectorZ == 1) ||
+          (gWorldSectorX == 8 && gWorldSectorY == 8 && gbWorldSectorZ == 1)) {
         *psSectorX = 8;
         *psSectorY = 8;
         *pbSectorZ = 0;
@@ -1486,12 +1479,12 @@ BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSector
       }
       break;
     case 2:  // Alma
-      if (gWorldSectorX == 13 && gWorldSectorY == 11 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 13 && gWorldSectorY == 10 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 13 && gWorldSectorY == 10 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 14 && gWorldSectorY == 10 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 14 && gWorldSectorY == 10 && gbWorldSectorZ == 1 ||
-          gWorldSectorX == 14 && gWorldSectorY == 9 && gbWorldSectorZ == 1) {
+      if ((gWorldSectorX == 13 && gWorldSectorY == 11 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 10 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 13 && gWorldSectorY == 10 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 14 && gWorldSectorY == 10 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 14 && gWorldSectorY == 10 && gbWorldSectorZ == 1) ||
+          (gWorldSectorX == 14 && gWorldSectorY == 9 && gbWorldSectorZ == 1)) {
         *psSectorX = 14;
         *psSectorY = 9;
         *pbSectorZ = 0;
@@ -1500,13 +1493,13 @@ BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSector
       }
       break;
     case 4:  // Grumm
-      if (gWorldSectorX == 4 && gWorldSectorY == 7 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 4 && gWorldSectorY == 8 && gbWorldSectorZ == 3 ||
-          gWorldSectorX == 3 && gWorldSectorY == 8 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 3 && gWorldSectorY == 8 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 3 && gWorldSectorY == 9 && gbWorldSectorZ == 2 ||
-          gWorldSectorX == 3 && gWorldSectorY == 9 && gbWorldSectorZ == 1 ||
-          gWorldSectorX == 3 && gWorldSectorY == 8 && gbWorldSectorZ == 1) {
+      if ((gWorldSectorX == 4 && gWorldSectorY == 7 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 4 && gWorldSectorY == 8 && gbWorldSectorZ == 3) ||
+          (gWorldSectorX == 3 && gWorldSectorY == 8 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 3 && gWorldSectorY == 8 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 3 && gWorldSectorY == 9 && gbWorldSectorZ == 2) ||
+          (gWorldSectorX == 3 && gWorldSectorY == 9 && gbWorldSectorZ == 1) ||
+          (gWorldSectorX == 3 && gWorldSectorY == 8 && gbWorldSectorZ == 1)) {
         *psSectorX = 3;
         *psSectorY = 8;
         *pbSectorZ = 0;

@@ -458,17 +458,17 @@ INT8 gbWallTileLUT[NUM_WALL_TYPES][7] = {
     //	|			|		The 2nd relative index  ( walltype + 11 )
     //	|			|		|		3rd	4th 5th 6th
     //	|			|		|		|		|   |   |
-    6, 10, 11, 12, 27, 28, 29,  // INTERIOR_L
-    6, 7,  8,  9,  24, 25, 26,  // INTERIOR_R
-    6, 4,  5,  6,  21, 22, 23,  // EXTERIOR_L
-    6, 1,  2,  3,  18, 19, 20,  // EXTERIOR_R
-    1, 14, 0,  0,  0,  0,  0,   // INTERIOR_CORNER
-    1, 15, 0,  0,  0,  0,  0,   // INTERIOR_BOTTOMEND
-    1, 13, 0,  0,  0,  0,  0,   // EXTERIOR_BOTTOMEND
-    1, 16, 0,  0,  0,  0,  0,   // INTERIOR_EXTENDED
-    1, 57, 0,  0,  0,  0,  0,   // EXTERIOR_EXTENDED
-    1, 56, 0,  0,  0,  0,  0,   // INTERIOR_EXTENDED_BOTTOMEND
-    1, 17, 0,  0,  0,  0,  0,   // EXTERIOR_EXTENDED_BOTTOMEND
+    {6, 10, 11, 12, 27, 28, 29},  // INTERIOR_L
+    {6, 7, 8, 9, 24, 25, 26},     // INTERIOR_R
+    {6, 4, 5, 6, 21, 22, 23},     // EXTERIOR_L
+    {6, 1, 2, 3, 18, 19, 20},     // EXTERIOR_R
+    {1, 14, 0, 0, 0, 0, 0},       // INTERIOR_CORNER
+    {1, 15, 0, 0, 0, 0, 0},       // INTERIOR_BOTTOMEND
+    {1, 13, 0, 0, 0, 0, 0},       // EXTERIOR_BOTTOMEND
+    {1, 16, 0, 0, 0, 0, 0},       // INTERIOR_EXTENDED
+    {1, 57, 0, 0, 0, 0, 0},       // EXTERIOR_EXTENDED
+    {1, 56, 0, 0, 0, 0, 0},       // INTERIOR_EXTENDED_BOTTOMEND
+    {1, 17, 0, 0, 0, 0, 0},       // EXTERIOR_EXTENDED_BOTTOMEND
 };
 
 // Roof table -- such a small table, using definitions instead.
@@ -623,7 +623,7 @@ void BuildWallPiece(UINT32 iMapIndex, UINT8 ubWallPiece, UINT16 usWallType) {
         GetTileIndexFromTypeSubIndex(usWallType, INTERIOR_BOTTOMEND_SHADOW_INDEX, &usTileIndex);
         AddExclusiveShadow(iMapIndex - 1, usTileIndex);
       }
-      if (pStruct = GetVerticalWall(iMapIndex))  // right corner
+      if ((pStruct = GetVerticalWall(iMapIndex)))  // right corner
       {  // Special case where placing the new wall will generate a corner to the right, so replace
         // the vertical piece with a bottomend.
         sIndex = PickAWallPiece(EXTERIOR_BOTTOMEND);
@@ -676,15 +676,15 @@ void BuildWallPiece(UINT32 iMapIndex, UINT8 ubWallPiece, UINT16 usWallType) {
       iMapIndex -= WORLD_COLS;
       ubWallClass = INTERIOR_L;
       // check for a lower left corner.
-      if (pStruct = GetVerticalWall(iMapIndex + WORLD_COLS -
-                                    1)) {  // Replace the piece with an extended piece.
+      if ((pStruct = GetVerticalWall(iMapIndex + WORLD_COLS - 1))) {
+        // Replace the piece with an extended piece.
         sIndex = PickAWallPiece(INTERIOR_EXTENDED);
         AddToUndoList(iMapIndex + WORLD_COLS - 1);
         GetTileIndexFromTypeSubIndex(usWallType, sIndex, &usTileIndex);
         ReplaceStructIndex(iMapIndex + WORLD_COLS - 1, pStruct->usIndex, usTileIndex);
         // NOTE:  Not yet checking for interior extended bottomend!
       }
-      if (pStruct = GetVerticalWall(iMapIndex)) {
+      if ((pStruct = GetVerticalWall(iMapIndex))) {
         sIndex = PickAWallPiece(INTERIOR_BOTTOMEND);
         AddToUndoList(iMapIndex);
         GetTileIndexFromTypeSubIndex(usWallType, sIndex, &usTileIndex);
@@ -693,7 +693,7 @@ void BuildWallPiece(UINT32 iMapIndex, UINT8 ubWallPiece, UINT16 usWallType) {
       break;
     case INTERIOR_BOTTOM:
       ubWallClass = EXTERIOR_L;
-      if (pStruct = GetVerticalWall(iMapIndex))  // right corner
+      if ((pStruct = GetVerticalWall(iMapIndex)))  // right corner
       {  // Special case where placing the new wall will generate a corner to the right, so replace
         // the vertical piece with a bottomend.
         sIndex = PickAWallPiece(EXTERIOR_BOTTOMEND);
@@ -906,8 +906,8 @@ void EraseFloorOwnedBuildingPieces(UINT32 iMapIndex) {
   while (pStruct != NULL) {
     if (pStruct->usIndex != NO_TILE) {
       GetTileType(pStruct->usIndex, &uiTileType);
-      if (uiTileType >= FIRSTWALL && uiTileType <= LASTWALL ||
-          uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR) {
+      if ((uiTileType >= FIRSTWALL && uiTileType <= LASTWALL) ||
+          (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)) {
         GetWallOrientation(pStruct->usIndex, &usWallOrientation);
         if (usWallOrientation == INSIDE_TOP_RIGHT || usWallOrientation == OUTSIDE_TOP_RIGHT) {
           AddToUndoList(iMapIndex - 1);
@@ -924,8 +924,8 @@ void EraseFloorOwnedBuildingPieces(UINT32 iMapIndex) {
   while (pStruct != NULL) {
     if (pStruct->usIndex != NO_TILE) {
       GetTileType(pStruct->usIndex, &uiTileType);
-      if (uiTileType >= FIRSTWALL && uiTileType <= LASTWALL ||
-          uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR) {
+      if ((uiTileType >= FIRSTWALL && uiTileType <= LASTWALL) ||
+          (uiTileType >= FIRSTDOOR && uiTileType <= LASTDOOR)) {
         GetWallOrientation(pStruct->usIndex, &usWallOrientation);
         if (usWallOrientation == INSIDE_TOP_LEFT || usWallOrientation == OUTSIDE_TOP_LEFT) {
           AddToUndoList(iMapIndex - WORLD_COLS);
@@ -1055,23 +1055,23 @@ void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion) {
       // cases.
       if (y == top) {
         fFloor = FloorAtGridNo(iMapIndex - WORLD_COLS);
-        if (gfBasement && !fFloor ||
-            !gfBasement && fFloor && !GetHorizontalWall(iMapIndex - WORLD_COLS))
+        if ((gfBasement && !fFloor) ||
+            (!gfBasement && fFloor && !GetHorizontalWall(iMapIndex - WORLD_COLS)))
           BuildWallPiece(iMapIndex, EXTERIOR_TOP, 0);
       }
       if (y == bottom) {
         fFloor = FloorAtGridNo(iMapIndex + WORLD_COLS);
-        if (gfBasement && !fFloor || !gfBasement && fFloor && !GetHorizontalWall(iMapIndex))
+        if ((gfBasement && !fFloor) || (!gfBasement && fFloor && !GetHorizontalWall(iMapIndex)))
           BuildWallPiece(iMapIndex, EXTERIOR_BOTTOM, 0);
       }
       if (x == left) {
         fFloor = FloorAtGridNo(iMapIndex - 1);
-        if (gfBasement && !fFloor || !gfBasement && fFloor && !GetVerticalWall(iMapIndex - 1))
+        if ((gfBasement && !fFloor) || (!gfBasement && fFloor && !GetVerticalWall(iMapIndex - 1)))
           BuildWallPiece(iMapIndex, EXTERIOR_LEFT, 0);
       }
       if (x == right) {
         fFloor = FloorAtGridNo(iMapIndex + 1);
-        if (gfBasement && !fFloor || !gfBasement && fFloor && !GetVerticalWall(iMapIndex))
+        if ((gfBasement && !fFloor) || (!gfBasement && fFloor && !GetVerticalWall(iMapIndex)))
           BuildWallPiece(iMapIndex, EXTERIOR_RIGHT, 0);
       }
     }
@@ -1090,7 +1090,8 @@ void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion) {
     for (x = left - 1; x <= right + 1; x++) {
       iMapIndex = y * WORLD_COLS + x;
       if (y == top - 1 || y == bottom + 1 || x == left - 1 || x == right + 1) {
-        if (!gfBasement && FloorAtGridNo(iMapIndex) || gfBasement && !FloorAtGridNo(iMapIndex)) {
+        if ((!gfBasement && FloorAtGridNo(iMapIndex)) ||
+            (gfBasement && !FloorAtGridNo(iMapIndex))) {
           RebuildRoof(iMapIndex, 0);
         }
       }

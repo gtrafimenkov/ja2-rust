@@ -93,7 +93,7 @@ RENDER_HOOK gDebugRenderOverride[MAX_DEBUG_PAGES] = {
 void DisplayFrameRate() {
   static UINT32 uiFPS = 0;
   static UINT32 uiFrameCount = 0;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   // Increment frame count
@@ -134,11 +134,7 @@ void DisplayFrameRate() {
     UpdateVideoOverlay(&VideoOverlayDesc, giCounterPeriodOverlay, FALSE);
 
     if (GetMouseMapPos(&usMapPos)) {
-      // gprintfdirty( 0, 315, L"(%d)",usMapPos);
-      // mprintf( 0,315,L"(%d)",usMapPos);
     } else {
-      // gprintfdirty( 0, 315, L"(%d %d)",gusMouseXPos, gusMouseYPos - INTERFACE_START_Y );
-      // mprintf( 0,315,L"(%d %d)",gusMouseXPos, gusMouseYPos - INTERFACE_START_Y );
     }
   }
 
@@ -241,7 +237,7 @@ UINT32 ErrorScreenHandle(void) {
   while (DequeueEvent(&InputEvent) == TRUE) {
     if (InputEvent.usEvent == KEY_DOWN) {
       if (InputEvent.usParam == ESC ||
-          InputEvent.usParam == 'x' && InputEvent.usKeyState & ALT_DOWN) {  // Exit the program
+          (InputEvent.usParam == 'x' && InputEvent.usKeyState & ALT_DOWN)) {  // Exit the program
         DebugMsg(TOPIC_GAME, DBG_LEVEL_0, "GameLoop: User pressed ESCape, TERMINATING");
 
         // handle shortcut exit

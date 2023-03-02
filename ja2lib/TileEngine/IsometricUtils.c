@@ -58,57 +58,86 @@ UINT8 gOneCCDirection[NUM_WORLD_DIRECTIONS] = {NORTHWEST, NORTH, NORTHEAST, EAST
 //														DIRECTION
 // FACING			 DIRECTION WE WANT TO GOTO
 UINT8 gPurpendicularDirection[NUM_WORLD_DIRECTIONS][NUM_WORLD_DIRECTIONS] = {
-    // NORTH
-    WEST,  // EITHER
-    NORTHWEST, NORTH, NORTHEAST,
-    EAST,  // EITHER
-    NORTHWEST, NORTH, NORTHEAST,
-
-    // NORTH EAST
-    NORTHWEST,
-    NORTHWEST,  // EITHER
-    SOUTH, NORTHEAST, EAST,
-    SOUTHEAST,  // EITHER
-    NORTH, NORTHEAST,
-
-    // EAST
-    EAST, SOUTHEAST,
-    NORTH,  // EITHER
-    NORTHEAST, EAST, SOUTHEAST,
-    NORTH,  // EITHER
-    NORTHEAST,
-
-    // SOUTHEAST
-    EAST, SOUTHEAST, SOUTH,
-    SOUTHWEST,  // EITHER
-    SOUTHWEST, SOUTHEAST, SOUTH,
-    SOUTHWEST,  // EITHER
-
-    // SOUTH
-    WEST,  // EITHER
-    SOUTHEAST, SOUTH, SOUTHWEST,
-    EAST,  // EITHER
-    SOUTHEAST, SOUTH, SOUTHWEST,
-
-    // SOUTHWEST
-    WEST,
-    NORTHWEST,  // EITHER
-    SOUTH, SOUTHWEST, WEST,
-    SOUTHEAST,  // EITHER
-    SOUTH, SOUTHWEST,
-
-    // WEST
-    WEST, NORTHWEST,
-    NORTH,  // EITHER
-    SOUTHWEST, WEST, NORTHWEST,
-    SOUTH,  // EITHER
-    SOUTHWEST,
-
-    // NORTHWEST
-    WEST, NORTHWEST, NORTH,
-    SOUTHWEST,  // EITHER
-    SOUTHWEST, NORTHWEST, NORTH,
-    NORTHEAST,  // EITHER
+    {
+        // NORTH
+        WEST,  // EITHER
+        NORTHWEST,
+        NORTH,
+        NORTHEAST,
+        EAST,  // EITHER
+        NORTHWEST,
+        NORTH,
+        NORTHEAST,
+    },
+    {
+        // NORTH EAST
+        NORTHWEST,
+        NORTHWEST,  // EITHER
+        SOUTH,
+        NORTHEAST,
+        EAST,
+        SOUTHEAST,  // EITHER
+        NORTH,
+        NORTHEAST,
+    },
+    {
+        // EAST
+        EAST,
+        SOUTHEAST,
+        NORTH,  // EITHER
+        NORTHEAST,
+        EAST,
+        SOUTHEAST,
+        NORTH,  // EITHER
+        NORTHEAST,
+    },
+    {
+        // SOUTHEAST
+        EAST, SOUTHEAST, SOUTH,
+        SOUTHWEST,  // EITHER
+        SOUTHWEST, SOUTHEAST, SOUTH,
+        SOUTHWEST,  // EITHER
+    },
+    {
+        // SOUTH
+        WEST,  // EITHER
+        SOUTHEAST,
+        SOUTH,
+        SOUTHWEST,
+        EAST,  // EITHER
+        SOUTHEAST,
+        SOUTH,
+        SOUTHWEST,
+    },
+    {
+        // SOUTHWEST
+        WEST,
+        NORTHWEST,  // EITHER
+        SOUTH,
+        SOUTHWEST,
+        WEST,
+        SOUTHEAST,  // EITHER
+        SOUTH,
+        SOUTHWEST,
+    },
+    {
+        // WEST
+        WEST,
+        NORTHWEST,
+        NORTH,  // EITHER
+        SOUTHWEST,
+        WEST,
+        NORTHWEST,
+        SOUTH,  // EITHER
+        SOUTHWEST,
+    },
+    {
+        // NORTHWEST
+        WEST, NORTHWEST, NORTH,
+        SOUTHWEST,  // EITHER
+        SOUTHWEST, NORTHWEST, NORTH,
+        NORTHEAST,  // EITHER
+    },
 };
 
 void FromCellToScreenCoordinates(INT16 sCellX, INT16 sCellY, INT16 *psScreenX, INT16 *psScreenY) {
@@ -725,10 +754,9 @@ INT16 CenterX(INT16 sGridNo) {
 
 // Returns the (center ) cell coordinates in Y
 INT16 CenterY(INT16 sGridNo) {
-  INT16 sYPos, sXPos;
+  INT16 sYPos;
 
   sYPos = sGridNo / WORLD_COLS;
-  sXPos = (sGridNo - (sYPos * WORLD_COLS));
 
   return ((sYPos * CELL_Y_SIZE) + (CELL_Y_SIZE / 2));
 }
@@ -743,10 +771,9 @@ INT16 MapX(INT16 sGridNo) {
 }
 
 INT16 MapY(INT16 sGridNo) {
-  INT16 sYPos, sXPos;
+  INT16 sYPos;
 
   sYPos = sGridNo / WORLD_COLS;
-  sXPos = (sGridNo - (sYPos * WORLD_COLS));
 
   return (sYPos);
 }

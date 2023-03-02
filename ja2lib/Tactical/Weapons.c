@@ -1590,7 +1590,6 @@ BOOLEAN UseHandToHand(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN
 
 BOOLEAN UseThrown(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   UINT32 uiHitChance, uiDiceRoll;
-  INT16 sAPCost = 0;
   INT8 bLoop;
   UINT8 ubTargetID;
   struct SOLDIERTYPE *pTargetSoldier;
@@ -1667,8 +1666,6 @@ BOOLEAN UseLauncher(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   struct OBJECTTYPE Launchable;
   struct OBJECTTYPE *pObj;
   UINT16 usItemNum;
-  INT32 iID;
-  REAL_OBJECT *pObject;
 
   usItemNum = pSoldier->usAttackingWeapon;
 
@@ -1754,14 +1751,11 @@ BOOLEAN UseLauncher(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
                                     &Launchable, (INT8)(uiDiceRoll - uiHitChance), THROW_ARM_ITEM,
                                     0);
 
-  iID = CreatePhysicalObject(
+  CreatePhysicalObject(
       pSoldier->pTempObject, pSoldier->pThrowParams->dLifeSpan, pSoldier->pThrowParams->dX,
       pSoldier->pThrowParams->dY, pSoldier->pThrowParams->dZ, pSoldier->pThrowParams->dForceX,
       pSoldier->pThrowParams->dForceY, pSoldier->pThrowParams->dForceZ, pSoldier->ubID,
       pSoldier->pThrowParams->ubActionCode, pSoldier->pThrowParams->uiActionData);
-
-  pObject = &(ObjectSlots[iID]);
-  // pObject->fPotentialForDebug = TRUE;
 
   MemFree(pSoldier->pTempObject);
   pSoldier->pTempObject = NULL;
@@ -1849,10 +1843,7 @@ BOOLEAN DoSpecialEffectAmmoMiss(UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos, 
 void WeaponHit(UINT16 usSoldierID, UINT16 usWeaponIndex, INT16 sDamage, INT16 sBreathLoss,
                UINT16 usDirection, INT16 sXPos, INT16 sYPos, INT16 sZPos, INT16 sRange,
                UINT8 ubAttackerID, BOOLEAN fHit, UINT8 ubSpecial, UINT8 ubHitLocation) {
-  struct SOLDIERTYPE *pTargetSoldier, *pSoldier;
-
-  // Get attacker
-  pSoldier = MercPtrs[ubAttackerID];
+  struct SOLDIERTYPE *pTargetSoldier;
 
   // Get Target
   pTargetSoldier = MercPtrs[usSoldierID];
@@ -2150,7 +2141,6 @@ void WindowHit(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth, BO
   struct DB_STRUCTURE *pWallAndWindowInDB;
   INT16 sShatterGridNo;
   UINT16 usTileIndex;
-  ANITILE *pNode;
   ANITILE_PARAMS AniParams;
 
   // ATE: Make large force always for now ( feel thing )
@@ -2250,7 +2240,7 @@ void WindowHit(INT16 sGridNo, UINT16 usStructureID, BOOLEAN fBlowWindowSouth, BO
   AniParams.sStartFrame = 0;
   AniParams.uiFlags = ANITILE_FORWARD;
 
-  pNode = CreateAnimationTile(&AniParams);
+  CreateAnimationTile(&AniParams);
 
   PlayJA2Sample(GLASS_SHATTER1 + Random(2), RATE_11025, MIDVOLUME, 1, SoundDir(sGridNo));
 }
@@ -2434,7 +2424,7 @@ UINT32 CalcChanceToHitGun(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ub
 
   ubTargetID = WhoIsThere2(sGridNo, pSoldier->bTargetLevel);
   // best to use team knowledge as well, in case of spotting for someone else
-  if (ubTargetID != NOBODY && pSoldier->bOppList[ubTargetID] == SEEN_CURRENTLY ||
+  if ((ubTargetID != NOBODY && pSoldier->bOppList[ubTargetID] == SEEN_CURRENTLY) ||
       gbPublicOpplist[pSoldier->bTeam][ubTargetID] == SEEN_CURRENTLY) {
     iSightRange = SoldierToBodyPartLineOfSightTest(pSoldier, sGridNo, pSoldier->bTargetLevel,
                                                    pSoldier->bAimShotLocation,
@@ -3574,7 +3564,7 @@ UINT32 CalcChanceHTH(struct SOLDIERTYPE *pAttacker, struct SOLDIERTYPE *pDefende
   if ((iDefRating > 0) && (pDefender->bBreath < 100))
     iDefRating -= (iDefRating * (100 - pDefender->bBreath)) / 200;
 
-  if (usInHand == CREATURE_QUEEN_TENTACLES && pDefender->ubBodyType == LARVAE_MONSTER ||
+  if ((usInHand == CREATURE_QUEEN_TENTACLES && pDefender->ubBodyType == LARVAE_MONSTER) ||
       pDefender->ubBodyType == INFANT_MONSTER) {
     // try to prevent queen from killing the kids, ever!
     iDefRating += 10000;
@@ -3976,7 +3966,7 @@ void ChangeWeaponMode(struct SOLDIERTYPE *pSoldier) {
 }
 
 void DishoutQueenSwipeDamage(struct SOLDIERTYPE *pQueenSoldier) {
-  INT8 bValidDishoutDirs[3][3] = {NORTH, NORTHEAST, -1, EAST, SOUTHEAST, -1, SOUTH, -1, -1};
+  INT8 bValidDishoutDirs[3][3] = {{NORTH, NORTHEAST, -1}, {EAST, SOUTHEAST, -1}, {SOUTH, -1, -1}};
 
   UINT32 cnt, cnt2;
   struct SOLDIERTYPE *pSoldier;

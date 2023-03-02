@@ -618,7 +618,6 @@ void DamageStructsFromMapTempFile(MODIFY_MAP *pMap) {
   INT8 bLevel;
   UINT8 ubWallOrientation;
   UINT8 ubBitToSet = 0x80;
-  UINT8 ubHitPoints = 0;
   UINT8 ubType = 0;
 
   // Find the base structure
@@ -937,8 +936,6 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(UINT16 usSectorX, UINT16 us
   UINT32 uiNumBytesWritten;
   UINT32 uiFileSize;
   UINT32 uiNumberOfElements;
-  UINT32 uiNumberOfElementsSavedBackToFile =
-      0;  // added becuase if no files get saved back to disk, the flag needs to be erased
   UINT32 cnt;
   MODIFY_MAP *pMap;
   MODIFY_MAP *pTempArrayOfMaps = NULL;

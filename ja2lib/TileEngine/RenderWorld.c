@@ -38,6 +38,7 @@
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderFun.h"
+#include "TileEngine/RenderZ.c"
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/SysUtil.h"
@@ -49,10 +50,12 @@
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
 
-///////////////////////////
-// C file include here
-#include "TileEngine/RenderZ.c"
-///////////////////////////
+#ifdef __GCC
+// since some of the code is not complied on Linux
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
 
 BOOLEAN fLandLayerDirty = TRUE;
 
@@ -97,12 +100,6 @@ extern BOOLEAN gfTopMessageDirty;
 #define TILES_NOZ 0x04000000
 #define TILES_DOALL 0x02000000
 #define TILES_OBSCURED 0x01000000
-
-//#define TILES_MERC								0x00000400
-//#define TILES_Z_BLITTER						0x00000200
-//#define TILES_Z_WRITE							0x00000100
-//#define TILES_SHADOW							0x00000080
-//#define TILES_BACKWARDS						0x00000040
 
 #define MAX_RENDERED_ITEMS 3
 
@@ -219,13 +216,13 @@ UINT8 ubRGBItemCycleYellowColors[] = {
 #define NUMSPEEDS 5
 
 UINT8 gubNewScrollXSpeeds[2][NUMSPEEDS] = {
-    40, 80, 100, 180, 200,  // Non-video mode scroll
-    20, 40, 80,  80,  80    // Video mode scroll
+    {40, 80, 100, 180, 200},  // Non-video mode scroll
+    {20, 40, 80, 80, 80}      // Video mode scroll
 };
 
 UINT8 gubNewScrollYSpeeds[2][NUMSPEEDS] = {
-    40, 80, 100, 180, 200,  // Non-video mode scroll
-    10, 20, 60,  80,  80    // Video mode scroll
+    {40, 80, 100, 180, 200},  // Non-video mode scroll
+    {10, 20, 60, 80, 80}      // Video mode scroll
 };
 
 // These speeds are only an indication of how long to do each subtile step until moving on to
@@ -389,23 +386,23 @@ typedef struct {
 } RenderFXType;
 
 RenderFXType RenderFX[] = {
-    FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE,  FALSE, FALSE, FALSE,  // STATIC LAND
-    FALSE, TRUE,  TRUE,  FALSE, TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE,  // STATIC OBJECTS
-    FALSE, TRUE,  TRUE,  TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE,  // STATIC SHADOWS
-    FALSE, TRUE,  TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, TRUE,   // STATIC STRUCTS
-    FALSE, TRUE,  TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE,  // STATIC ROOF
-    FALSE, TRUE,  TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, TRUE,   // STATIC ONROOF
-    FALSE, TRUE,  TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE,  // STATIC TOPMOST
-    TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, TRUE,  FALSE, FALSE, FALSE,  // DYNAMIC LAND
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE,  // DYNAMIC OBJECT
-    TRUE,  FALSE, FALSE, TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE,  // DYNAMIC SHADOW
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE,  // DYNAMIC STRUCT MERCS
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE,  // DYNAMIC MERCS
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE,  // DYNAMIC STRUCT
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE,  // DYNAMIC ROOF
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE,  // DYNAMIC HIGHMERCS
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE,  // DYNAMIC ONROOF
-    TRUE,  FALSE, TRUE,  FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE   // DYNAMIC TOPMOST
+    {FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE},  // STATIC LAND
+    {FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE},     // STATIC OBJECTS
+    {FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE},     // STATIC SHADOWS
+    {FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE},     // STATIC STRUCTS
+    {FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE},    // STATIC ROOF
+    {FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE},     // STATIC ONROOF
+    {FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE},    // STATIC TOPMOST
+    {TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE},    // DYNAMIC LAND
+    {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE},     // DYNAMIC OBJECT
+    {TRUE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE},    // DYNAMIC SHADOW
+    {TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE},     // DYNAMIC STRUCT MERCS
+    {TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE},     // DYNAMIC MERCS
+    {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE},    // DYNAMIC STRUCT
+    {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE},    // DYNAMIC ROOF
+    {TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE},     // DYNAMIC HIGHMERCS
+    {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE},    // DYNAMIC ONROOF
+    {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE}     // DYNAMIC TOPMOST
 
 };
 
@@ -6500,4 +6497,8 @@ void RenderGridNoVisibleDebug() {
                                gsEndXS, gsEndYS);
 }
 
+#endif
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
 #endif

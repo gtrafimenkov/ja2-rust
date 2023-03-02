@@ -209,7 +209,6 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
   UINT32 cnt;
   struct ITEM_POOL *pItemPool;
   INT16 sX, sY;
-  struct LEVELNODE *pNode = NULL;
   BOOLEAN fSaidItemSeenQuote = FALSE;
 
   //	struct STRUCTURE					*pStructure;//, *pBase;

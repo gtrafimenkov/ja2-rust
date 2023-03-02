@@ -108,8 +108,6 @@ void DebugAI(STR szOutput) {
 }
 
 BOOLEAN InitAI(void) {
-  FILE *DebugFile;
-
 #ifdef _DEBUG
   if (gfDisplayCoverValues) {
     memset(gsCoverValue, 0x7F, sizeof(INT16) * WORLD_MAX);
@@ -123,6 +121,7 @@ BOOLEAN InitAI(void) {
   }
 
 #ifdef JA2TESTVERSION
+  FILE *DebugFile;
   // Clear the AI debug txt file to prevent it from getting huge
   if ((DebugFile = fopen("aidebug.txt", "w")) != NULL) {
     fputs("\n", DebugFile);
@@ -136,8 +135,6 @@ BOOLEAN InitAI(void) {
 BOOLEAN AimingGun(struct SOLDIERTYPE *pSoldier) { return (FALSE); }
 
 void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiCurrTime = GetJA2Clock();
-
   // ATE
   // Bail if we are engaged in a NPC conversation/ and/or sequence ... or we have a pause because
   // we just saw someone... or if there are bombs on the bomb queue
@@ -1467,61 +1464,7 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
     */
   }
 
-  /*
-          // move this clause outside of the function...
-          if (pSoldier->bNewSituation)
-                  // don't force, don't want escorted mercs reacting to new opponents, etc.
-                  CancelAIAction(pSoldier,DONTFORCE);
-
-  */
-
-  /*
-  if (!pSoldier->stopped)
-   {
- #ifdef DEBUGBUSY
-    AINumMessage("HandleManAI - Moving, skipping guy#",pSoldier->ubID);
- #endif
-
-    return;
-   }
- */
-
   if ((pSoldier->bAction != AI_ACTION_NONE) && pSoldier->bActionInProgress) {
-    /*
-                            if (pSoldier->bAction == AI_ACTION_RANDOM_PATROL)
-                            {
-                                    if (pSoldier->usPathIndex == pSoldier->usPathDataSize)
-                                    //if (pSoldier->usActionData == pSoldier->sGridNo )
-                                    //(IC?) if (pSoldier->bAction == AI_ACTION_RANDOM_PATROL && (
-       pSoldier->usPathIndex == pSoldier->usPathDataSize ) )
-                                    //(old?) if (pSoldier->bAction == AI_ACTION_RANDOM_PATROL && (
-       pSoldier->usActionData == pSoldier->sGridNo ) )
-                                    {
-            #ifdef TESTAI
-                                            DebugMsg( TOPIC_JA2AI, DBG_LEVEL_0, String("OPPONENT %d
-       REACHES DEST - ACTION DONE",pSoldier->ubID ) ); #endif ActionDone(pSoldier);
-                                    }
-
-                                    //*** TRICK- TAKE INTO ACCOUNT PAUSED FOR NO TIME ( FOR NOW )
-                                    if (pSoldier->fNoAPToFinishMove)
-                                    //if (pSoldier->bAction == AI_ACTION_RANDOM_PATROL &&
-       pSoldier->fNoAPToFinishMove)
-                                    {
-                                            // OK, we have a move to finish...
-
-            #ifdef TESTAI
-                                            DebugMsg( TOPIC_JA2AI, DBG_LEVEL_0, String("GONNA TRY TO
-       CONTINUE PATH FOR %d", pSoldier->ubID ) ); #endif
-
-                                            SoldierTriesToContinueAlongPath(pSoldier);
-
-                                            // since we just gave up on our action due to running
-       out of points, better end our turn
-                                            //EndAIGuysTurn(pSoldier);
-                                    }
-                            }
-    */
-
     // if action should remain in progress
     if (ActionInProgress(pSoldier)) {
 #ifdef DEBUGBUSY

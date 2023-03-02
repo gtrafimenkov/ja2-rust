@@ -493,10 +493,7 @@ BOOLEAN RemoveLandEx(UINT32 iMapIndex, UINT16 usIndex) {
 
 BOOLEAN AdjustForFullTile(UINT32 iMapIndex) {
   struct LEVELNODE *pLand = NULL;
-  struct LEVELNODE *pOldLand = NULL;
   TILE_ELEMENT TileElem;
-  //	UINT32 iType;
-  //	UINT16 iNewIndex;
 
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
 
@@ -513,7 +510,6 @@ BOOLEAN AdjustForFullTile(UINT32 iMapIndex) {
         return (TRUE);
       }
     }
-    pOldLand = pLand;
     pLand = pLand->pNext;
   }
 
@@ -832,7 +828,6 @@ BOOLEAN RemoveHigherLandLevels(UINT32 iMapIndex, UINT32 fSrcType, UINT32 **puiHi
 
 BOOLEAN SetLowerLandLevels(UINT32 iMapIndex, UINT32 fSrcType, UINT16 usIndex) {
   struct LEVELNODE *pLand = NULL;
-  struct LEVELNODE *pOldLand = NULL;
   UINT32 fTileType;
   UINT8 ubSrcLogHeight;
   UINT16 NewTile;
@@ -847,7 +842,6 @@ BOOLEAN SetLowerLandLevels(UINT32 iMapIndex, UINT32 fSrcType, UINT16 usIndex) {
     GetTileType(pLand->usIndex, &fTileType);
 
     // Advance to next
-    pOldLand = pLand;
     pLand = pLand->pNext;
 
     if (gTileTypeLogicalHeight[fTileType] < ubSrcLogHeight) {
@@ -1353,10 +1347,10 @@ BOOLEAN AddWallToStructLayer(INT32 iMapIndex, UINT16 usIndex, BOOLEAN fReplace) 
     // New case -- If placing a new wall which is at right angles to the current wall, then
     // we insert it.
     if (usCheckWallOrient > usWallOrientation) {
-      if ((usWallOrientation == INSIDE_TOP_RIGHT || usWallOrientation == OUTSIDE_TOP_RIGHT) &&
-              (usCheckWallOrient == INSIDE_TOP_LEFT || usCheckWallOrient == OUTSIDE_TOP_LEFT) ||
-          (usWallOrientation == INSIDE_TOP_LEFT || usWallOrientation == OUTSIDE_TOP_LEFT) &&
-              (usCheckWallOrient == INSIDE_TOP_RIGHT || usCheckWallOrient == OUTSIDE_TOP_RIGHT)) {
+      if (((usWallOrientation == INSIDE_TOP_RIGHT || usWallOrientation == OUTSIDE_TOP_RIGHT) &&
+           (usCheckWallOrient == INSIDE_TOP_LEFT || usCheckWallOrient == OUTSIDE_TOP_LEFT)) ||
+          ((usWallOrientation == INSIDE_TOP_LEFT || usWallOrientation == OUTSIDE_TOP_LEFT) &&
+           (usCheckWallOrient == INSIDE_TOP_RIGHT || usCheckWallOrient == OUTSIDE_TOP_RIGHT))) {
         fInsertFound = TRUE;
       }
     }
@@ -1376,10 +1370,10 @@ BOOLEAN AddWallToStructLayer(INT32 iMapIndex, UINT16 usIndex, BOOLEAN fReplace) 
     // New check -- we want to check for walls being parallel to each other.  If so, then
     // we we want to replace it.  This is because of an existing problem with say, INSIDE_TOP_LEFT
     // and OUTSIDE_TOP_LEFT walls coexisting.
-    if ((usWallOrientation == INSIDE_TOP_RIGHT || usWallOrientation == OUTSIDE_TOP_RIGHT) &&
-            (usCheckWallOrient == INSIDE_TOP_RIGHT || usCheckWallOrient == OUTSIDE_TOP_RIGHT) ||
-        (usWallOrientation == INSIDE_TOP_LEFT || usWallOrientation == OUTSIDE_TOP_LEFT) &&
-            (usCheckWallOrient == INSIDE_TOP_LEFT || usCheckWallOrient == OUTSIDE_TOP_LEFT)) {
+    if (((usWallOrientation == INSIDE_TOP_RIGHT || usWallOrientation == OUTSIDE_TOP_RIGHT) &&
+         (usCheckWallOrient == INSIDE_TOP_RIGHT || usCheckWallOrient == OUTSIDE_TOP_RIGHT)) ||
+        ((usWallOrientation == INSIDE_TOP_LEFT || usWallOrientation == OUTSIDE_TOP_LEFT) &&
+         (usCheckWallOrient == INSIDE_TOP_LEFT || usCheckWallOrient == OUTSIDE_TOP_LEFT))) {
       // Same, if replace, replace here
       if (fReplace) {
         return (ReplaceStructIndex(iMapIndex, pStruct->usIndex, usIndex));
@@ -2125,7 +2119,6 @@ BOOLEAN TypeRangeExistsInRoofLayer(UINT32 iMapIndex, UINT32 fStartType, UINT32 f
 
 BOOLEAN IndexExistsInRoofLayer(INT16 sGridNo, UINT16 usIndex) {
   struct LEVELNODE *pRoof = NULL;
-  struct LEVELNODE *pOldRoof = NULL;
 
   pRoof = gpWorldLevelData[sGridNo].pRoofHead;
 
@@ -2565,9 +2558,6 @@ BOOLEAN RemoveTopmost(UINT32 iMapIndex, UINT16 usIndex) {
 BOOLEAN RemoveTopmostFromLevelNode(UINT32 iMapIndex, struct LEVELNODE *pNode) {
   struct LEVELNODE *pTopmost = NULL;
   struct LEVELNODE *pOldTopmost = NULL;
-  UINT16 usIndex;
-
-  usIndex = pNode->usIndex;
 
   pTopmost = gpWorldLevelData[iMapIndex].pTopmostHead;
 
@@ -2926,7 +2916,6 @@ struct LEVELNODE *FindShadow(INT16 sGridNo, UINT16 usStructIndex) {
 
 void WorldHideTrees() {
   struct LEVELNODE *pNode;
-  BOOLEAN fRerender = FALSE;
   UINT32 fTileFlags;
   UINT32 cnt;
 
@@ -2939,8 +2928,6 @@ void WorldHideTrees() {
         if (!(pNode->uiFlags & LEVELNODE_REVEALTREES)) {
           pNode->uiFlags |= (LEVELNODE_REVEALTREES);
         }
-
-        fRerender = TRUE;
       }
       pNode = pNode->pNext;
     }
@@ -2951,7 +2938,6 @@ void WorldHideTrees() {
 
 void WorldShowTrees() {
   struct LEVELNODE *pNode;
-  BOOLEAN fRerender = FALSE;
   UINT32 fTileFlags;
   UINT32 cnt;
 
@@ -2964,8 +2950,6 @@ void WorldShowTrees() {
         if ((pNode->uiFlags & LEVELNODE_REVEALTREES)) {
           pNode->uiFlags &= (~(LEVELNODE_REVEALTREES));
         }
-
-        fRerender = TRUE;
       }
       pNode = pNode->pNext;
     }

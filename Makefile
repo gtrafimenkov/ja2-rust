@@ -19,12 +19,12 @@ format-modified:
 ###################################################################
 
 GCC_ERRORS_FLAGS := -Werror
-GCC_ERRORS_FLAGS += -Werror=sizeof-pointer-div
-# GCC_ERRORS_FLAGS += -Wall
+GCC_ERRORS_FLAGS += -Wall
+GCC_FLAGS        := -D__GCC
 CC = gcc
 CXX	= g++
-CFLAG = -fPIC --std=gnu17 $(GCC_ERRORS_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
-CXXFLAG = -fPIC --std=gnu++17 $(GCC_ERRORS_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
+CFLAG = -fPIC --std=gnu17 $(GCC_ERRORS_FLAGS) $(GCC_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
+CXXFLAG = -fPIC --std=gnu++17 $(GCC_ERRORS_FLAGS) $(GCC_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
 
 TARGET_ARCH    ?=
 ifeq "$(TARGET_ARCH)" ""

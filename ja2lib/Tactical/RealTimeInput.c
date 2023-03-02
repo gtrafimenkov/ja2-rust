@@ -56,6 +56,11 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 
+#ifdef __GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wswitch"
+#endif
+
 extern UIKEYBOARD_HOOK gUIKeyboardHook;
 extern BOOLEAN fRightButtonDown;
 extern BOOLEAN fLeftButtonDown;
@@ -90,12 +95,10 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
   struct SOLDIERTYPE *pSoldier;
   UINT32 uiMercFlags;
   static UINT32 uiSingleClickTime;
-  UINT16 usMapPos;
-  BOOLEAN fDone = FALSE;
+  INT16 usMapPos;
   static BOOLEAN fDoubleClickIntercepted = FALSE;
   static BOOLEAN fValidDoubleClickPossible = FALSE;
   static BOOLEAN fCanCheckForSpeechAdvance = FALSE;
-  static INT16 sMoveClickGridNo = 0;
 
   // LEFT MOUSE BUTTON
   if (gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
@@ -777,7 +780,7 @@ void QueryRTRightButton(UINT32 *puiNewEvent) {
   static BOOLEAN fValidDoubleClickPossible = FALSE;
 
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usMapPos;
+  INT16 usMapPos;
 
   if (gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
     if (!GetMouseMapPos(&usMapPos)) {
@@ -1024,11 +1027,10 @@ extern BOOLEAN ConfirmActionCancel(UINT16 usMapPos, UINT16 usOldMapPos);
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
 void GetRTMousePositionInput(UINT32 *puiNewEvent) {
-  UINT16 usMapPos;
+  INT16 usMapPos;
   static UINT16 usOldMapPos = 0;
   static UINT32 uiMoveTargetSoldierId = NO_SOLDIER;
   struct SOLDIERTYPE *pSoldier;
-  static BOOLEAN fOnValidGuy = FALSE;
 
   if (!GetMouseMapPos(&usMapPos)) {
     return;
@@ -1139,12 +1141,7 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
 
         // Check for being on terrain
         if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
-          UINT16 usItem;
           UINT8 ubItemCursor;
-
-          // Alrighty, check what's in our hands = if a 'friendly thing', like med kit, look for our
-          // own guys
-          usItem = pSoldier->inv[HANDPOS].usItem;
 
           // get cursor for item
           ubItemCursor = GetActionModeCursor(pSoldier);
@@ -1192,8 +1189,6 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
         // Check if the guy is visible
         guiUITargetSoldierId = NOBODY;
 
-        fOnValidGuy = FALSE;
-
         if (gfUIFullTargetFound)
         // if ( gfUIFullTargetFound )
         {
@@ -1201,7 +1196,6 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
             guiUITargetSoldierId = gusUIFullTargetID;
 
             if (MercPtrs[gusUIFullTargetID]->bTeam != gbPlayerNum) {
-              fOnValidGuy = TRUE;
             } else {
               if (gUIActionModeChangeDueToMouseOver) {
                 *puiNewEvent = A_CHANGE_TO_MOVE;
@@ -1283,3 +1277,7 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
     usOldMapPos = usMapPos;
   }
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

@@ -449,7 +449,7 @@ void RenderTopmostTacticalInterface() {
   VOBJECT_DESC VObjectDesc;
   INT16 sX, sY;
   INT16 sOffsetX, sOffsetY, sTempY_S, sTempX_S;
-  UINT16 usMapPos;
+  INT16 usMapPos;
   struct ITEM_POOL *pItemPool;
 
   if (gfRerenderInterfaceFromHelpText == TRUE) {

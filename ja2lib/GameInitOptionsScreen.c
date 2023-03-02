@@ -672,8 +672,6 @@ void GetGIOScreenUserInput() {
 
 void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
-
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       UINT8 cnt;
 
@@ -701,8 +699,6 @@ void BtnDifficultyTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void BtnGameStyleTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
-
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       UINT8 cnt;
 
@@ -759,8 +755,6 @@ void BtnGameSaveTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void BtnGunOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
-
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
       UINT8 cnt;
 

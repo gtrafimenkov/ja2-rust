@@ -1749,7 +1749,6 @@ BOOLEAN ValidItemLaunchable(struct OBJECTTYPE *pObj, UINT16 usAttachment) {
 
 UINT16 GetLauncherFromLaunchable(UINT16 usLaunchable) {
   INT32 iLoop = 0;
-  UINT16 usItem = NOTHING;
 
   // look for the section of the array pertaining to this launchable item...
   while (1) {
@@ -2518,7 +2517,7 @@ BOOLEAN AttachObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pTargetObj
     // find an attachment position...
     // second half of this 'if' is for attaching GL grenades to a gun
     if (fValidLaunchable ||
-        pAttachment->usItem >= GL_HE_GRENADE && pAttachment->usItem <= GL_SMOKE_GRENADE) {
+        (pAttachment->usItem >= GL_HE_GRENADE && pAttachment->usItem <= GL_SMOKE_GRENADE)) {
       // try replacing if possible
       bAttachPos = FindAttachmentByClass(pTargetObj, Item[pAttachment->usItem].usItemClass);
       if (bAttachPos != NO_SLOT) {
@@ -3293,7 +3292,6 @@ UINT8 AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct 
 
 UINT8 SwapKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct OBJECTTYPE *pObj) {
   // swap keys in keyring slot and keys in pocket
-  UINT8 ubNumberNotAdded = 0;
   struct OBJECTTYPE TempObj;
 
   // create temp object to hold keys currently in key ring slot

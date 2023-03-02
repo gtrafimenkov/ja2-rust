@@ -268,14 +268,11 @@ void ExamineSlantRoofFOVSlots() {
 void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLocators,
                          UINT8 ubLevel, BOOLEAN fForce) {
   UINT32 maincnt, markercnt, marker, tilesLeftToSee, cnt, prevmarker;
-  INT32 Inc[6], Dir[6];
-  INT8 itemVisible = FALSE;
-  INT8 Blocking, twoMoreTiles, markerDir;
-  INT8 nextDir = 0, AlreadySawItem = FALSE;
-  UINT8 who;  //,itemIndex; // for each square checked
+  UINT32 Inc[6], Dir[6];
+  INT8 Blocking, markerDir;
+  INT8 nextDir = 0;
   UINT8 dir, range, Path2;
   UINT8 ubRoomNo;
-  BOOLEAN fCheckForRooms = FALSE;
   struct ITEM_POOL *pItemPool;
   BOOLEAN fHiddenStructVisible;
   UINT8 ubMovementCost;
@@ -321,7 +318,6 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
   // OK, look for doors
   MercLooksForDoors(pSoldier, TRUE);
 
-  who = pSoldier->ubID;
   dir = pSoldier->bDirection;
 
   // NumMessage("good old reveal",dir);
@@ -361,7 +357,6 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
   for (maincnt = 0; maincnt < MAXVIEWPATHS; maincnt++) {
     marker = pSoldier->sGridNo;
     Blocking = FALSE;
-    twoMoreTiles = FALSE;
     tilesLeftToSee = 99;
     fRevealItems = TRUE;
     fStopRevealingItemsAfterThisTile = FALSE;
@@ -382,7 +377,6 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
       prevmarker = marker;
 
       nextDir = 99;
-      fCheckForRooms = FALSE;
       fTravelCostObs = FALSE;
       if (fStopRevealingItemsAfterThisTile) {
         fRevealItems = FALSE;
@@ -424,10 +418,6 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
       }
 
       marker = NewGridNo((INT16)marker, (INT16)Inc[markerDir]);
-
-      if (marker == 12426) {
-        int i = 0;
-      }
 
       // End if this is a no view...
       if (markerDir == NOVIEW && markercnt != 0) {
@@ -603,8 +593,6 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
               LookForAndMayCommentOnSeeingCorpse(pSoldier, (INT16)marker, ubLevel);
 
               if (GetItemPool((INT16)marker, &pItemPool, ubLevel)) {
-                itemVisible = pItemPool->bVisible;
-
                 if (SetItemPoolVisibilityOn(pItemPool, INVISIBLE, fShowLocators)) {
                   SetRenderFlags(RENDER_FLAG_FULL);
 
@@ -681,22 +669,18 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
 
           // if ( Blocking == NOTHING_BLOCKING || Blocking == BLOCKING_NEXT_TILE )
           if (Blocking == NOTHING_BLOCKING) {
-            fCheckForRooms = TRUE;
           }
 
           if (ubLevel != 0) {
-            fCheckForRooms = FALSE;
           }
 
           // CHECK FOR SLANT ROOF!
           {
-            struct STRUCTURE *pStructure, *pBase;
+            struct STRUCTURE *pStructure;
 
             pStructure = FindStructure((INT16)marker, STRUCTURE_SLANTED_ROOF);
 
             if (pStructure != NULL) {
-              pBase = FindBaseStructure(pStructure);
-
               // ADD TO SLANTED ROOF LIST!
               AddSlantRoofFOVSlot((INT16)marker);
             }
@@ -710,7 +694,6 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
               // 2 ) we are not in a room
               if (gubWorldRoomInfo[marker] == NO_ROOM &&
                   TypeRangeExistsInRoofLayer(marker, FIRSTROOF, FOURTHROOF, &usIndex)) {
-                int i = 0;
               } else {
                 gpWorldLevelData[marker].uiFlags |= MAPELEMENT_REVEALED;
                 if (gfCaves) {

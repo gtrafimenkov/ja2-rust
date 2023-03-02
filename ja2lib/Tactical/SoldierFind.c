@@ -255,7 +255,7 @@ BOOLEAN FindSoldier(INT16 sGridNo, UINT16 *pusSoldierIndex, UINT32 *pMercFlags, 
             if (pSoldier->ubID >= gTacticalStatus.Team[gbPlayerNum].bFirstID &&
                 pSoldier->ubID <= gTacticalStatus.Team[gbPlayerNum].bLastID) {
               // ATE: NOT if we are in action or comfirm action mode
-              if (gCurrentUIMode != ACTION_MODE && gCurrentUIMode != CONFIRM_ACTION_MODE ||
+              if ((gCurrentUIMode != ACTION_MODE && gCurrentUIMode != CONFIRM_ACTION_MODE) ||
                   gUIActionModeChangeDueToMouseOver) {
                 fInScreenRect = FALSE;
               }
@@ -531,10 +531,6 @@ void GetSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *ps
   // OK, noodle here on what we should do... If we take each frame, it will be different slightly
   // depending on the frame and the value returned here will vary thusly. However, for the
   // uses of this function, we should be able to use just the first frame...
-
-  if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->usNumberOfObjects) {
-    int i = 0;
-  }
 
   *psHeight = (INT16)pSoldier->sBoundingBoxHeight;
   *psWidth = (INT16)pSoldier->sBoundingBoxWidth;

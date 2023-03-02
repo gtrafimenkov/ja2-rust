@@ -169,8 +169,3 @@ INT16 gsRDistToCenterY, gsRDistToCenterX;
       }                                                                                  \
     }                                                                                    \
   }
-
-//#if 0
-//		sZOffsetX = pNode->pStructureData->pDBStructureRef->pDBStructure->bZTileOffsetX;\
-////		sZOffsetY = pNode->pStructureData->pDBStructureRef->pDBStructure->bZTileOffsetY;\
-//#endif

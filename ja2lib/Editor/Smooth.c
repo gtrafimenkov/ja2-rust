@@ -45,8 +45,7 @@ BOOLEAN HigherLevel(UINT32 gridno, UINT8 NewLevel);
 BOOLEAN ContainsWater(UINT32 gridno);
 
 void SmoothTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fForceSmooth) {
-  int temp = 0, type = 0;
-  int FullTile = FALSE;
+  int temp = 0;
   UINT16 usOldIndex;
   UINT16 usTempIndex;
   UINT32 cnt;
@@ -160,7 +159,6 @@ void SmoothTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fForceSm
     // this is a "full" tile, so randomize between the
     // five available tiles
     land = (rand() % 10) + 1;
-    FullTile = TRUE;
   }
   GetTileIndexFromTypeSubIndex(origType, land, &usTileIndex);
   *piNewTile = usTileIndex;
@@ -191,8 +189,7 @@ void SmoothExitGridRadius(INT16 sMapIndex, UINT8 ubRadius) {
 }
 
 void SmoothExitGrid(int gridno, UINT16 *piNewTile, BOOLEAN fForceSmooth) {
-  int temp = 0, type = 0;
-  int FullTile = FALSE;
+  int temp = 0;
   UINT16 usOldIndex;
   UINT16 usTempIndex;
   UINT32 cnt;
@@ -298,7 +295,6 @@ void SmoothExitGrid(int gridno, UINT16 *piNewTile, BOOLEAN fForceSmooth) {
     // this is a "full" tile, so randomize between the
     // five available tiles
     usExitGridIndex = (rand() % 10) + 1;
-    FullTile = TRUE;
   }
   GetTileIndexFromTypeSubIndex(EXITTEXTURE, usExitGridIndex, &usTileIndex);
   *piNewTile = usTileIndex;
@@ -414,8 +410,7 @@ void SmoothWaterTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fFo
   // This procedure will calculate the approriate smooth texture for a water texture
   // based on the surrounding water textures. This is done via masking bits within
   // a temp variable, then searching for the right texture and inserting it
-  int temp = 0, type = 0;
-  int FullTile = FALSE;
+  int temp = 0;
   UINT16 usOldIndex;
   UINT16 usTempIndex;
   UINT32 cnt;
@@ -548,7 +543,6 @@ void SmoothWaterTerrain(int gridno, int origType, UINT16 *piNewTile, BOOLEAN fFo
       return;
     }
     land = (rand() % 10) + 1;
-    FullTile = TRUE;
   }
   GetTileIndexFromTypeSubIndex(origType, land, &usTileIndex);
   *piNewTile = usTileIndex;

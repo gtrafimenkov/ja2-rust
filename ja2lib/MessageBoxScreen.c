@@ -806,9 +806,9 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
     GetMousePos(&pPosition);
 
     if ((pPosition.iX > MessageBoxRestrictedCursorRegion.iRight) ||
-        (pPosition.iX > MessageBoxRestrictedCursorRegion.iLeft) &&
-            (pPosition.iY < MessageBoxRestrictedCursorRegion.iTop) &&
-            (pPosition.iY > MessageBoxRestrictedCursorRegion.iBottom)) {
+        ((pPosition.iX > MessageBoxRestrictedCursorRegion.iLeft) &&
+         (pPosition.iY < MessageBoxRestrictedCursorRegion.iTop) &&
+         (pPosition.iY > MessageBoxRestrictedCursorRegion.iBottom))) {
       SimulateMouseMovement(pOldMousePosition.iX, pOldMousePosition.iY);
     }
 

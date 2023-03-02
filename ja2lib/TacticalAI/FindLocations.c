@@ -179,7 +179,7 @@ INT8 CalcBestCTGT(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16 sOppGridNo,
 
   // using only ints for maximum execution speed here
   // CJC: Well, so much for THAT idea!
-  INT16 sCentralGridNo, sAdjSpot, sNorthGridNo, sSouthGridNo, sDir, sCheckSpot, sOKTest;
+  INT16 sCentralGridNo, sAdjSpot, sNorthGridNo, sSouthGridNo, sDir, sCheckSpot;
 
   INT8 bThisCTGT, bBestCTGT = 0;
 
@@ -189,7 +189,6 @@ INT8 CalcBestCTGT(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16 sOppGridNo,
 
   // precalculate these for speed
   // what was struct for?
-  sOKTest = NewOKDestination(pSoldier, sCentralGridNo, IGNOREPEOPLE, bLevel);
   sNorthGridNo = NewGridNo(sCentralGridNo, DirectionInc(NORTH));
   sSouthGridNo = NewGridNo(sCentralGridNo, DirectionInc(SOUTH));
 
@@ -1133,11 +1132,6 @@ INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
   // assume we have to stand up!
   // use the min macro here to make sure we don't wrap the UINT8 to 255...
 
-  gubNPCAPBudget = gubNPCAPBudget =
-      min(gubNPCAPBudget, gubNPCAPBudget - GetAPsToChangeStance(pSoldier, ANIM_STAND));
-  // NumMessage("Search Range = ",iSearchRange);
-  // NumMessage("gubNPCAPBudget = ",gubNPCAPBudget);
-
   // determine maximum horizontal limits
   sMaxLeft = min(iSearchRange, (pSoldier->sGridNo % MAXCOL));
   // NumMessage("sMaxLeft = ",sMaxLeft);
@@ -2051,8 +2045,8 @@ INT16 FindClosestBoxingRingSpot(struct SOLDIERTYPE *pSoldier, BOOLEAN fInRing) {
       sGridNo = pSoldier->sGridNo + sXOffset + (MAXCOL * sYOffset);
       if (InARoom(sGridNo, &ubRoom)) {
         if ((fInRing && ubRoom == BOXING_RING) ||
-            (!fInRing && ubRoom != BOXING_RING) &&
-                LegalNPCDestination(pSoldier, sGridNo, IGNORE_PATH, NOWATER, 0)) {
+            ((!fInRing && ubRoom != BOXING_RING) &&
+             LegalNPCDestination(pSoldier, sGridNo, IGNORE_PATH, NOWATER, 0))) {
           iDistance = abs(sXOffset) + abs(sYOffset);
           if (iDistance < iClosestDistance && WhoIsThere2(sGridNo, 0) == NOBODY) {
             sClosestSpot = sGridNo;

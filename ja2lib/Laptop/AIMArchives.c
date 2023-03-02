@@ -437,14 +437,13 @@ void DisableAimArchiveButton() {
 
 void DisplayAlumniOldMercPopUp() {
   UINT8 i, ubNumLines = 11;  // 17
-  UINT16 usPosY, usTextPosY;
-  UINT8 ubFontHeight, ubNumDescLines;
+  UINT16 usPosY;
+  UINT8 ubNumDescLines;
   struct VObject *hAlumniPopUpHandle;
   struct VObject *hDoneHandle;
   struct VObject *hFacePaneHandle;
   struct VObject *hFaceHandle;
   //	WRAPPED_STRING *pFirstWrappedString, *pTempWrappedString;
-  UINT16 usHeight = GetFontHeight(AIM_ALUMNI_POPUP_FONT);
   wchar_t sName[AIM_ALUMNI_NAME_SIZE];
   wchar_t sDesc[AIM_ALUMNI_DECRIPTION_SIZE];
   UINT32 uiStartLoc;
@@ -455,8 +454,6 @@ void DisplayAlumniOldMercPopUp() {
   GetVideoObject(&hFacePaneHandle, guiPopUpPic);
   GetVideoObject(&hFaceHandle, guiOldAim);
 
-  ubFontHeight = (UINT8)GetFontHeight(AIM_ALUMNI_POPUP_FONT);
-
   // Load the description
   uiStartLoc = AIM_ALUMNI_FILE_RECORD_SIZE * gubDrawOldMerc + AIM_ALUMNI_FULL_NAME_SIZE;
   LoadEncryptedDataFromFile(AIM_ALUMNI_FILE, sDesc, uiStartLoc, AIM_ALUMNI_DECRIPTION_SIZE);
@@ -466,7 +463,6 @@ void DisplayAlumniOldMercPopUp() {
 
   ubNumLines += ubNumDescLines;
 
-  usTextPosY = AIM_POPUP_Y + 5;
   usPosY = AIM_POPUP_Y;
 
   // draw top line of the popup background

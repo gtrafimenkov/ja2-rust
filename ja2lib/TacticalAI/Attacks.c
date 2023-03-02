@@ -1501,10 +1501,6 @@ INT32 EstimateStabDamage(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOppo
                          UINT8 ubChanceToHit, BOOLEAN fBladeAttack) {
   INT32 iImpact, iFluke, iBonus;
 
-  UINT16 usItem;
-
-  usItem = pSoldier->inv[HANDPOS].usItem;
-
   if (fBladeAttack) {
     iImpact = Weapon[pSoldier->usAttackingWeapon].ubImpact;
     iImpact += EffectiveStrength(pSoldier) / 20;  // 0 to 5 for strength, adjusted by damage taken

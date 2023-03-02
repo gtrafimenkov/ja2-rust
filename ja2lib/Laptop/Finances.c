@@ -174,7 +174,6 @@ UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDa
   // outside of the financial system(the code in this .c file), this is the only function you'll
   // ever need
 
-  INT32 iCurPage = iCurrentPage;
   UINT32 uiId = 0;
   FinanceUnitPtr pFinance = pFinanceListHead;
 
@@ -525,7 +524,6 @@ void RemoveFinances(void) {
 void RenderBackGround(void) {
   // render generic background for Finance system
   struct VObject *hHandle;
-  INT32 iCounter = 0;
 
   // get title bar object
   GetVideoObject(&hHandle, guiTITLE);
@@ -568,8 +566,6 @@ void DrawSummaryLines(void) {
 
 void DrawAPageOfRecords(void) {
   // this procedure will draw a series of financial records to the screen
-  INT32 iCurPage = 1;
-  INT32 iCount = 0;
   pCurrentFinance = pFinanceListHead;
 
   // (re-)render background
@@ -593,7 +589,7 @@ void DrawRecordsBackGround(void) {
   RenderBackGround();
 
   // now the columns
-  for (iCounter; iCounter < 35; iCounter++) {
+  for (int iCounter = 0; iCounter < 35; iCounter++) {
     // get and blt middle background to screen
     GetVideoObject(&hHandle, guiLISTCOLUMNS);
     BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 10, TOP_Y + 18 + (iCounter * BLOCK_HEIGHT) + 1,
@@ -661,7 +657,6 @@ void DrawRecordsText(void) {
   FinanceUnitPtr pCurFinance = pCurrentFinance;
   FinanceUnitPtr pTempFinance = pFinanceListHead;
   wchar_t sString[512];
-  INT32 iCounter = 0;
   INT16 usX, usY;
   INT32 iBalance = 0;
 
@@ -687,7 +682,7 @@ void DrawRecordsText(void) {
   }
 
   // loop through record list
-  for (iCounter; iCounter < NUM_RECORDS_PER_PAGE; iCounter++) {
+  for (int iCounter = 0; iCounter < NUM_RECORDS_PER_PAGE; iCounter++) {
     // get and write the date
     swprintf(sString, ARR_SIZE(sString), L"%d", pCurFinance->uiDate / (24 * 60));
 
@@ -1388,9 +1383,7 @@ void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFin
 void DisplayFinancePageNumberAndDateRange(void) {
   // this function will go through the list of 'histories' starting at current until end or
   // MAX_PER_PAGE...it will get the date range and the page number
-  INT32 iLastPage = 0;
   INT32 iCounter = 0;
-  UINT32 uiLastDate;
   FinanceUnitPtr pTempFinance = pFinanceListHead;
   wchar_t sString[50];
 
@@ -1410,7 +1403,6 @@ void DisplayFinancePageNumberAndDateRange(void) {
     }
   }
 
-  uiLastDate = pCurrentFinance->uiDate;
   // find last page
   while (pTempFinance) {
     iCounter++;
@@ -1430,8 +1422,6 @@ void DisplayFinancePageNumberAndDateRange(void) {
 BOOLEAN WriteBalanceToDisk(void) {
   // will write the current balance to disk
   HWFILE hFileHandle;
-  INT32 iBytesWritten = 0;
-  FinanceUnitPtr pFinanceList = pFinanceListHead;
 
   // open file
   hFileHandle = FileMan_Open(FINANCES_DATA_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
@@ -1480,7 +1470,6 @@ void GetBalanceFromDisk(void) {
 BOOLEAN AppendFinanceToEndOfFile(FinanceUnitPtr pFinance) {
   // will write the current finance to disk
   HWFILE hFileHandle;
-  INT32 iBytesWritten = 0;
   FinanceUnitPtr pFinanceList = pFinanceListHead;
 
   // open file
@@ -1519,7 +1508,6 @@ UINT32 ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
   // this function will read in the last unit in the finance list, to grab it's id number
 
   HWFILE hFileHandle;
-  UINT32 iBytesRead = 0;
   INT32 iFileSize = 0;
 
   // no file, return
@@ -1557,7 +1545,6 @@ UINT32 ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
 void SetLastPageInRecords(void) {
   // grabs the size of the file and interprets number of pages it will take up
   HWFILE hFileHandle;
-  UINT32 iBytesRead = 0;
 
   // no file, return
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return;
@@ -1837,7 +1824,6 @@ INT32 GetPreviousBalanceToDate(void) {
 
 INT32 GetPreviousDaysBalance(void) {
   // find out what today is, then go back 2 days, get balance for that day
-  INT32 iPreviousDaysBalance = 0;
   HWFILE hFileHandle;
   UINT32 iBytesRead = 0;
   UINT32 iDateInMinutes = 0;
@@ -1850,7 +1836,6 @@ INT32 GetPreviousDaysBalance(void) {
   INT32 iAmount;
   INT32 iBalanceToDate;
   BOOLEAN fGoneTooFar = FALSE;
-  INT32 iFileSize = 0;
 
   // what day is it?
   iDateInMinutes = GetWorldTotalMin() - (60 * 24);
@@ -1918,7 +1903,6 @@ INT32 GetPreviousDaysBalance(void) {
 
 INT32 GetTodaysBalance(void) {
   // find out what today is, then go back 2 days, get balance for that day
-  INT32 iPreviousDaysBalance = 0;
   HWFILE hFileHandle;
   UINT32 iBytesRead = 0;
   UINT32 iDateInMinutes = 0;
@@ -1991,7 +1975,6 @@ INT32 GetTodaysBalance(void) {
 INT32 GetPreviousDaysIncome(void) {
   // will return the income from the previous day
   // which is todays starting balance - yesterdays starting balance
-  INT32 iPreviousDaysBalance = 0;
   HWFILE hFileHandle;
   UINT32 iBytesRead = 0;
   UINT32 iDateInMinutes = 0;
@@ -2083,7 +2066,6 @@ INT32 GetPreviousDaysIncome(void) {
 INT32 GetTodaysDaysIncome(void) {
   // will return the income from the previous day
   // which is todays starting balance - yesterdays starting balance
-  INT32 iPreviousDaysBalance = 0;
   HWFILE hFileHandle;
   UINT32 iBytesRead = 0;
   UINT32 iDateInMinutes = 0;
@@ -2200,7 +2182,6 @@ void SetFinanceButtonStates(void) {
 INT32 GetTodaysOtherDeposits(void) {
   // grab todays other deposits
 
-  INT32 iPreviousDaysBalance = 0;
   HWFILE hFileHandle;
   UINT32 iBytesRead = 0;
   UINT32 iDateInMinutes = 0;
@@ -2290,7 +2271,6 @@ INT32 GetTodaysOtherDeposits(void) {
 }
 
 INT32 GetYesterdaysOtherDeposits(void) {
-  INT32 iPreviousDaysBalance = 0;
   HWFILE hFileHandle;
   UINT32 iBytesRead = 0;
   UINT32 iDateInMinutes = 0;

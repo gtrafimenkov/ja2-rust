@@ -232,7 +232,6 @@ void HandleIMPAttributeSelection(void) {
       INT32 iCurrentAttributeValue;
       INT32 sNewX = gusMouseXPos;
       INT32 iNewValue;
-      INT32 iCounter;
 
       // get old stat value
       iCurrentAttributeValue = GetCurrentAttributeValue(giCurrentlySelectedStat);
@@ -248,14 +247,14 @@ void HandleIMPAttributeSelection(void) {
       // change is enough
       if (iNewValue - iCurrentAttributeValue > 0) {
         // positive, increment stat
-        iCounter = iNewValue - iCurrentAttributeValue;
-        for (iCounter; iCounter > 0; iCounter--) {
+        int iCounter = iNewValue - iCurrentAttributeValue;
+        for (; iCounter > 0; iCounter--) {
           IncrementStat(giCurrentlySelectedStat);
         }
       } else {
         // negative, decrement stat
-        iCounter = iCurrentAttributeValue - iNewValue;
-        for (iCounter; iCounter > 0; iCounter--) {
+        int iCounter = iCurrentAttributeValue - iNewValue;
+        for (; iCounter > 0; iCounter--) {
           DecrementStat(giCurrentlySelectedStat);
         }
       }
@@ -727,8 +726,6 @@ void RenderAttributeBoxes(void) {
   INT32 iCnt = STRENGTH_ATTRIBUTE;
   INT16 sX = 0;
   INT16 sY = 0;
-  INT16 sTempY = 0;
-  INT16 sTempX = 0;
   CHAR16 sString[3];
 
   // set last char to null
@@ -1128,12 +1125,9 @@ void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   INT32 iAttributeDelta = 0;
   INT32 iCounter = 0;
   INT16 sX = 0;
-  INT16 sY = 0;
   static INT16 sOldX = -1;
-  static INT16 sOldY = -1;
   static INT32 iAttribute = -1;
   INT32 iNewValue = 0;
-  INT32 iCurrentValue = 0;
   INT16 sNewX = -1;
 
   // if we already have an anchored slider bar
@@ -1153,7 +1147,6 @@ void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       // different regions
       iAttribute = MSYS_GetRegionUserData(pRegion, 0);
       sOldX = -1;
-      sOldY = -1;
       return;
     }
 
@@ -1187,13 +1180,13 @@ void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       if (iNewValue - iCurrentAttributeValue > 0) {
         // positive, increment stat
         iCounter = iNewValue - iCurrentAttributeValue;
-        for (iCounter; iCounter > 0; iCounter--) {
+        for (int iCounter; iCounter > 0; iCounter--) {
           IncrementStat(iAttribute);
         }
       } else {
         // negative, decrement stat
         iCounter = iCurrentAttributeValue - iNewValue;
-        for (iCounter; iCounter > 0; iCounter--) {
+        for (int iCounter; iCounter > 0; iCounter--) {
           DecrementStat(iAttribute);
         }
       }
@@ -1210,7 +1203,6 @@ void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     // get mouse XY
 
     sX = pRegion->MouseXPos;
-    sY = pRegion->MouseYPos;
 
     // which region are we in?
 
@@ -1258,7 +1250,6 @@ void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     // get mouse positions
     sX = pRegion->MouseXPos;
-    sY = pRegion->MouseYPos;
 
     // get attribute
     iAttribute = MSYS_GetRegionUserData(pRegion, 0);

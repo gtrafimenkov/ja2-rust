@@ -39,6 +39,13 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 
+#ifdef __GCC
+// since some of the code is not complied on Linux
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 #define STEPS_FOR_BULLET_MOVE_TRAILS 10
 #define STEPS_FOR_BULLET_MOVE_SMALL_TRAILS 5
 #define STEPS_FOR_BULLET_MOVE_FIRE_TRAILS 5
@@ -3993,18 +4000,12 @@ INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDelt
   MAP_ELEMENT *pMapElement;
   struct STRUCTURE *pStructure, *pTempStructure;
 
-  BOOLEAN fRoofPresent = FALSE;
-
   struct SOLDIERTYPE *pTarget;
   FLOAT dTargetX;
   FLOAT dTargetY;
   FLOAT dTargetZMin;
   FLOAT dTargetZMax;
   BOOLEAN fIntended;
-
-  UINT32 uiTileInc = 0;
-
-  // INT8						iImpactReduction;
 
   INT16 sX, sY, sZ;
 
@@ -4034,18 +4035,6 @@ INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDelt
   // Calculate old height and new hieght in pixels
   dOldZUnits = (dZ - dDeltaZ);
   dZUnits = dZ;
-
-  // if (pBullet->fCheckForRoof)
-  //{
-  //	if (pMapElement->pRoofHead != NULL)
-  //	{
-  //		fRoofPresent = TRUE;
-  //	}
-  //	else
-  //	{
-  //		fRoofPresent = FALSE;
-  //	}
-  //}
 
   // if (pMapElement->pMercHead != NULL && pBullet->iLoop != 1)
   if (pMapElement->pMercHead != NULL) {  // a merc! that isn't us :-)
@@ -4087,25 +4076,6 @@ INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDelt
     // we can go as far as we like vertically (so long as we don't hit
     // the ground), but want to stop when we get to the next tile or
     // the end of the LOS path
-
-    // move 1 unit along the bullet path
-    // if (fRoofPresent)
-    //{
-    //	dLastZ = pBullet->dCurrZ;
-    //	(pBullet->dCurrZ) += pBullet->dIncrZ;
-    //	if ( (dLastZ > WALL_HEIGHT && pBullet->dCurrZ < WALL_HEIGHT) || (dLastZ < WALL_HEIGHT &&
-    // pBullet->dCurrZ > WALL_HEIGHT))
-    //	{
-    //		// generate roof-hitting event
-    //		BulletHitStructure( pBullet->pFirer, pBullet->dCurrX, pBullet->dCurrY,
-    // pBullet->dCurrZ
-    //); 		RemoveBullet( pBullet->iBullet ); 		return;
-    //	}
-    //}
-    // else
-    //{
-    //	(pBullet->dCurrZ) += pBullet->dIncrZ;
-    //}
 
     // check for ground collision
     if (dZ < iLandHeight) {
@@ -4288,7 +4258,7 @@ INT32 CheckForCollision(FLOAT dX, FLOAT dY, FLOAT dZ, FLOAT dDeltaX, FLOAT dDelt
   return (COLLISION_NONE);
 }
 
-INT16 gsLOSDirLUT[3][3] = {315, 0, 45, 270, 0, 90, 225, 180, 135};
+INT16 gsLOSDirLUT[3][3] = {{315, 0, 45}, {270, 0, 90}, {225, 180, 135}};
 
 BOOLEAN CalculateLOSNormal(struct STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY, INT8 bLOSZ,
                            FLOAT dDeltaX, FLOAT dDeltaY, FLOAT dDeltaZ, FLOAT *pdNormalX,
@@ -4445,3 +4415,7 @@ BOOLEAN CalculateLOSNormal(struct STRUCTURE *pStructure, INT8 bLOSX, INT8 bLOSY,
     return (FALSE);
   }
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

@@ -1009,7 +1009,6 @@ void SelectFaceMovementRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
 }
 
 BOOLEAN UpdateMercInfo(void) {
-  UINT16 PosY = 300;
   wchar_t MercInfoString[SIZE_MERC_BIO_INFO];
   wchar_t AdditionalInfoString[SIZE_MERC_BIO_INFO];
 
@@ -1622,12 +1621,9 @@ UINT8 GetStatColor(INT8 bStat) {
 
 // displays the dots between the stats and the stat name
 void DisplayDots(UINT16 usNameX, UINT16 usNameY, UINT16 usStatX, STR16 pString) {
-  INT16 sNumberOfDots;
   UINT16 usStringLength = StringPixLength(pString, AIM_M_FONT_STATIC_TEXT);
   INT16 i;
   UINT16 usPosX;
-
-  sNumberOfDots = (usStatX - usNameX - usStringLength) / 7;
 
   usPosX = usStatX;
   for (i = usNameX + usStringLength; i <= usPosX; usPosX -= 7) {
@@ -1922,7 +1918,6 @@ BOOLEAN DisplayVideoConferencingDisplay() {
 
 BOOLEAN DisplayMercsVideoFace() {
   struct VObject *hTerminalHandle;
-  STR sFaceLoc = "FACES\\";
 
   // Get and Blt Terminal Frame
   GetVideoObject(&hTerminalHandle, guiVideoConfTerminal);
@@ -2628,12 +2623,10 @@ BOOLEAN DisplaySnowBackground() {
 
 BOOLEAN DisplayBlackBackground(UINT8 ubMaxNumOfLoops) {
   UINT32 uiCurrentTime = 0;
-  UINT8 ubCount;
 
   uiCurrentTime = GetJA2Clock();
 
   if (gubCurrentCount < ubMaxNumOfLoops) {
-    ubCount = gubCurrentCount;
   } else {
     gubCurrentCount = 0;
     return (TRUE);
@@ -2966,7 +2959,6 @@ void BtnXToCloseVideoConfButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
 BOOLEAN InitDeleteVideoConferencePopUp() {
   static BOOLEAN fXRegionActive = FALSE;
-  static BOOLEAN fVideoConferenceCreated = FALSE;
   UINT8 i;
   UINT16 usPosX, usPosY;
   VOBJECT_DESC VObjectDesc;
@@ -3034,8 +3026,6 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
       EnableDisableCurrentVideoConferenceButtons(FALSE);
     }
 
-    fVideoConferenceCreated = FALSE;
-
     fNewMailFlag = gfIsNewMailFlagSet;
     gfIsNewMailFlagSet = FALSE;
   }
@@ -3083,8 +3073,6 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     gfVideoFaceActive = FALSE;
     guiLastHandleMercTime = 0;
     gfHangUpMerc = FALSE;
-
-    fVideoConferenceCreated = TRUE;
   }
 
   // The screen in which you first contact the merc, you have the option to hang up or goto hire

@@ -36,6 +36,11 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 
+#ifdef __GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+#endif
+
 #define MAX_MERC_IN_HELI 20
 #define MAX_HELI_SCRIPT 30
 #define ME_SCRIPT_DELAY 100
@@ -746,3 +751,7 @@ void HandleFirstHeliDropOfGame() {
   CharacterDialogueWithSpecialEvent(0, 0, 0, DIALOGUE_TACTICAL_UI, FALSE, FALSE,
                                     DIALOGUE_SPECIAL_EVENT_ENABLE_AI, 0, 0);
 }
+
+#ifdef __GCC
+#pragma GCC diagnostic pop
+#endif

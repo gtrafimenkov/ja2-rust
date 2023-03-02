@@ -136,9 +136,10 @@ typedef struct {
 
 } AIR_RAID_POS;
 
-AIR_RAID_DIR ubPerpDirections[] = {2, 6, 3, 7, 0, 4, 1, 5, 2, 6, 3, 7, 0, 4, 1, 5};
+AIR_RAID_DIR ubPerpDirections[] = {{2, 6}, {3, 7}, {0, 4}, {1, 5}, {2, 6}, {3, 7}, {0, 4}, {1, 5}};
 
-AIR_RAID_POS ubXYTragetInvFromDirection[] = {0, -1, 1, -1, 1, 0, 1, 1, 0, 1, -1, 1, -1, 0, -1, -1};
+AIR_RAID_POS ubXYTragetInvFromDirection[] = {{0, -1}, {1, -1}, {1, 0},  {1, 1},
+                                             {0, 1},  {-1, 1}, {-1, 0}, {-1, -1}};
 
 void ScheduleAirRaid(AIR_RAID_DEFINITION *pAirRaidDef) {
   // Make sure only one is cheduled...

@@ -491,7 +491,7 @@ void AddMercToWorld(INT32 iMapIndex) {
     gTempDetailedPlacement.sSectorY = sSectorY;
 
     // Create the soldier, but don't place it yet.
-    if (pSoldier = TacticalCreateSoldier(&gTempDetailedPlacement, &ubID)) {
+    if ((pSoldier = TacticalCreateSoldier(&gTempDetailedPlacement, &ubID))) {
       pSoldier->bVisible = 1;
       pSoldier->bLastRenderVisibleValue = 1;
       // Set up the soldier in the list, so we can track the soldier in the
@@ -2081,12 +2081,12 @@ void SetMercEditingMode(UINT8 ubNewMode) {
   if (gsSelectedMercID != -1 && ubNewMode == MERC_TEAMMODE) {
     // attempt to weed out conditions where we select a team that matches the currently
     // selected merc.  We don't want to deselect him in this case.
-    if (gpSelected->pSoldier->bTeam == ENEMY_TEAM && iDrawMode == DRAW_MODE_ENEMY ||
-        gpSelected->pSoldier->bTeam == CREATURE_TEAM && iDrawMode == DRAW_MODE_CREATURE ||
-        gpSelected->pSoldier->bTeam == MILITIA_TEAM && iDrawMode == DRAW_MODE_REBEL ||
-        gpSelected->pSoldier->bTeam == CIV_TEAM &&
-            iDrawMode == DRAW_MODE_CIVILIAN) {  // Same team, so don't deselect merc.  Instead, keep
-                                                // the previous editing mode
+    if ((gpSelected->pSoldier->bTeam == ENEMY_TEAM && iDrawMode == DRAW_MODE_ENEMY) ||
+        (gpSelected->pSoldier->bTeam == CREATURE_TEAM && iDrawMode == DRAW_MODE_CREATURE) ||
+        (gpSelected->pSoldier->bTeam == MILITIA_TEAM && iDrawMode == DRAW_MODE_REBEL) ||
+        (gpSelected->pSoldier->bTeam == CIV_TEAM &&
+         iDrawMode == DRAW_MODE_CIVILIAN)) {  // Same team, so don't deselect merc.  Instead, keep
+                                              // the previous editing mode
       // because we are still editing this merc.
       gubCurrMercMode = gubPrevMercMode;
       // if we don't have a detailed placement, auto set to basic mode.
@@ -2112,8 +2112,8 @@ void SetMercEditingMode(UINT8 ubNewMode) {
     UnclickEditorButton(MERCS_DETAILEDCHECKBOX);
   // Now we are setting up the button states for the new mode, as well as show the
   // applicable buttons for the detailed placement modes.
-  if (gubCurrMercMode == MERC_APPEARANCEMODE && iDrawMode == DRAW_MODE_CREATURE ||
-      gubCurrMercMode == MERC_SCHEDULEMODE && iDrawMode != DRAW_MODE_CIVILIAN) {
+  if ((gubCurrMercMode == MERC_APPEARANCEMODE && iDrawMode == DRAW_MODE_CREATURE) ||
+      (gubCurrMercMode == MERC_SCHEDULEMODE && iDrawMode != DRAW_MODE_CIVILIAN)) {
     gubCurrMercMode = MERC_GENERALMODE;
   }
   switch (gubCurrMercMode) {
@@ -3493,7 +3493,7 @@ void PasteMercPlacement(INT32 iMapIndex) {
     }
 
     // Create the soldier, but don't place it yet.
-    if (pSoldier = TacticalCreateSoldier(&tempDetailedPlacement, &ubID)) {
+    if ((pSoldier = TacticalCreateSoldier(&tempDetailedPlacement, &ubID))) {
       pSoldier->bVisible = 1;
       pSoldier->bLastRenderVisibleValue = 1;
       // Set up the soldier in the list, so we can track the soldier in the

@@ -269,9 +269,8 @@ void RenderItemsForCurrentPageOfInventoryPool(void) {
 
 BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
   // render item in this slot of the list
-  INT16 sCenX, sCenY, usWidth, usHeight, sX, sY;
+  INT16 sX, sY;
   struct VObject *hHandle;
-  ETRLEObject *pTrav;
   CHAR16 sString[64];
   INT16 sWidth = 0, sHeight = 0;
   INT16 sOutLine = 0;
@@ -286,20 +285,11 @@ BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
                  GetInterfaceGraphicForItem(
                      &(Item[pInventoryPoolList[iCurrentSlot + iFirstSlotOnPage].o.usItem])));
 
-  pTrav = &(hHandle->pETRLEObject[Item[pInventoryPoolList[iCurrentSlot + iFirstSlotOnPage].o.usItem]
-                                      .ubGraphicNum]);
-  usHeight = (UINT16)pTrav->usHeight;
-  usWidth = (UINT16)pTrav->usWidth;
-
   // set sx and sy
   sX = (INT16)(MAP_INVENTORY_POOL_SLOT_OFFSET_X + MAP_INVENTORY_POOL_SLOT_START_X +
                ((MAP_INVEN_SPACE_BTWN_SLOTS) * (iCurrentSlot / MAP_INV_SLOT_COLS)));
   sY = (INT16)(MAP_INVENTORY_POOL_SLOT_START_Y +
                ((MAP_INVEN_SLOT_HEIGHT) * (iCurrentSlot % (MAP_INV_SLOT_COLS))));
-
-  // CENTER IN SLOT!
-  sCenX = sX + (abs(MAP_INVEN_SPACE_BTWN_SLOTS - usWidth) / 2) - pTrav->sOffsetX;
-  sCenY = sY + (abs(MAP_INVEN_SLOT_HEIGHT - 5 - usHeight) / 2) - pTrav->sOffsetY;
 
   if (fMapInventoryItemCompatable[iCurrentSlot]) {
     sOutLine = Get16BPPColor(FROMRGB(255, 255, 255));
@@ -315,13 +305,6 @@ BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
                 (INT16)(sX + 7), sY, 60, 25, DIRTYLEVEL2, NULL, 0, fOutLine, sOutLine);  // 67
 
   SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
-
-  // now blit this object in the box
-  // BltVideoObjectOutlineFromIndex( guiSAVEBUFFER, GetInterfaceGraphicForItem( &(Item[
-  // pInventoryPoolList[ iCurrentSlot + iFirstSlotOnPage ].o.usItem ]) ), 	Item[
-  // pInventoryPoolList[
-  // iCurrentSlot + iFirstSlotOnPage ].o.usItem ].ubGraphicNum, 	sCenX, sCenY, sOutLine, TRUE
-  // );
 
   // now draw bar for condition
   // Display ststus
@@ -684,11 +667,7 @@ void MapInvenPoolSlotsMove(struct MOUSE_REGION *pRegion, INT32 iReason) {
 void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, INT32 iReason) {
   // btn callback handler for assignment screen mask region
   INT32 iCounter = 0;
-  UINT16 usOldItemIndex, usNewItemIndex;
-  INT16 sGridNo = 0;
   INT32 iOldNumberOfObjects = 0;
-  INT16 sDistanceFromObject = 0;
-  struct SOLDIERTYPE *pSoldier = NULL;
   CHAR16 sString[128];
 
   iCounter = MSYS_GetRegionUserData(pRegion, 0);
@@ -772,43 +751,16 @@ void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, INT32 iReason) {
           pInventoryPoolList[(iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT) + iCounter]
               .sGridNo;
 
-      // check if this is the loaded sector, if so, then notify player, can't do anything
-      if ((sSelMapX == gWorldSectorX) && (gWorldSectorY == sSelMapY) &&
-          (gbWorldSectorZ == iCurrentMapSectorZ)) {
-        // notify
-        pSoldier = &(Menptr[gCharactersList[bSelectedInfoChar].usSolID]);
-
-        sDistanceFromObject = PythSpacesAway(sObjectSourceGridNo, pSoldier->sGridNo);
-
-        /*	if( sDistanceFromObject > MAX_DISTANCE_TO_PICKUP_ITEM )
-                {
-                        // see for the loaded sector if the merc is cloase enough?
-                        swprintf( sString, pMapInventoryErrorString[ 0 ], Menptr[ gCharactersList[
-           bSelectedInfoChar ].usSolID ].name ); DoMapMessageBox( MSG_BOX_BASIC_STYLE, sString,
-           MAP_SCREEN, MSG_BOX_FLAG_OK, NULL ); return;
-                }
-                */
-      }
-
       BeginInventoryPoolPtr(&(
           pInventoryPoolList[(iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT) + iCounter]
               .o));
     } else {
-      // if in battle inform player they will have to do this in tactical
-      //			if( ( gTacticalStatus.fEnemyInSector ) ||( ( sSelMapX ==
-      // gWorldSectorX ) && ( sSelMapY == gWorldSectorY ) && ( iCurrentMapSectorZ == gbWorldSectorZ
-      // )
-      //&& ( gTacticalStatus.uiFlags & INCOMBAT ) ) )
       if (!CanPlayerUseSectorInventory(&Menptr[gCharactersList[bSelectedInfoChar].usSolID])) {
         DoMapMessageBox(MSG_BOX_BASIC_STYLE, pMapInventoryErrorString[4], MAP_SCREEN,
                         MSG_BOX_FLAG_OK, NULL);
         return;
       }
 
-      usOldItemIndex =
-          pInventoryPoolList[(iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT) + iCounter]
-              .o.usItem;
-      usNewItemIndex = gpItemPointer->usItem;
       iOldNumberOfObjects =
           pInventoryPoolList[(iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT) + iCounter]
               .o.ubNumberOfObjects;
@@ -903,7 +855,6 @@ void DestroyMapInventoryButtons(void) {
 
 void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
   INT32 iSize = 0;
-  struct OBJECTTYPE *pTempList = NULL;
   UINT32 uiItemCount = 0;
   UINT32 uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;

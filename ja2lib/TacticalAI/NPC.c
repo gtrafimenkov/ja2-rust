@@ -48,12 +48,12 @@
 #define MINERS_CIV_QUOTE_INDEX 16
 
 INT16 gsCivQuoteSector[NUM_CIVQUOTE_SECTORS][2] = {
-    2,  MAP_ROW_A, 2,  MAP_ROW_B, 13, MAP_ROW_B, 13, MAP_ROW_C, 13, MAP_ROW_D,
-    8,  MAP_ROW_F, 9,  MAP_ROW_F, 8,  MAP_ROW_G, 9,  MAP_ROW_G, 1,  MAP_ROW_H,
+    {2, MAP_ROW_A},  {2, MAP_ROW_B},  {13, MAP_ROW_B}, {13, MAP_ROW_C}, {13, MAP_ROW_D},
+    {8, MAP_ROW_F},  {9, MAP_ROW_F},  {8, MAP_ROW_G},  {9, MAP_ROW_G},  {1, MAP_ROW_H},
 
-    2,  MAP_ROW_H, 3,  MAP_ROW_H, 8,  MAP_ROW_H, 13, MAP_ROW_H, 14, MAP_ROW_I,
-    11, MAP_ROW_L, 12, MAP_ROW_L, 0,  0,  // THIS ONE USED NOW - FOR bSectorZ > 0.....
-    0,  0,         0,  0,
+    {2, MAP_ROW_H},  {3, MAP_ROW_H},  {8, MAP_ROW_H},  {13, MAP_ROW_H}, {14, MAP_ROW_I},
+    {11, MAP_ROW_L}, {12, MAP_ROW_L}, {0, 0},  // THIS ONE USED NOW - FOR bSectorZ > 0.....
+    {0, 0},          {0, 0},
 };
 
 #define NO_FACT (MAX_FACTS - 1)
@@ -524,7 +524,6 @@ UINT8 NPCConsiderTalking(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT8 ubReco
   NPCQuoteInfo *pNPCQuoteInfo = NULL;
   UINT8 ubTalkDesire, ubLoop, ubQuote, ubHighestOpinionRequired = 0;
   BOOLEAN fQuoteFound = FALSE;
-  UINT32 uiDay;
   UINT8 ubFirstQuoteRecord, ubLastQuoteRecord;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -578,8 +577,6 @@ UINT8 NPCConsiderTalking(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT8 ubReco
       ubLastQuoteRecord = NUM_NPC_QUOTE_RECORDS - 1;
       break;
   }
-
-  uiDay = GetWorldDay();
 
   for (ubLoop = ubFirstQuoteRecord; ubLoop <= ubLastQuoteRecord; ubLoop++) {
     pNPCQuoteInfo = &(pNPCQuoteInfoArray[ubLoop]);
@@ -644,10 +641,8 @@ UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTT
                                        NPCQuoteInfo **ppResultQuoteInfo, UINT8 *pubQuoteNum) {
   // This function returns the opinion level required of the "most difficult" quote
   // that the NPC is willing to say to the merc.  It can also provide the quote #.
-  MERCPROFILESTRUCT *pNPCProfile;
   NPCQuoteInfo *pNPCQuoteInfo;
-  UINT8 ubTalkDesire, ubLoop, ubHighestOpinionRequired = 0;
-  BOOLEAN fQuoteFound = FALSE;
+  UINT8 ubTalkDesire, ubLoop;
   UINT8 ubFirstQuoteRecord, ubLastQuoteRecord;
   UINT16 usItemToConsider;
 
@@ -658,8 +653,6 @@ UINT8 NPCConsiderReceivingItemFromMerc(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTT
     // don't accept any items when we are the player's enemy
     return (0);
   }
-
-  pNPCProfile = &(gMercProfiles[ubNPC]);
 
   // How much do we want to talk with this merc?
 
@@ -2160,8 +2153,6 @@ void TriggerClosestMercWhoCanSeeNPC(UINT8 ubNPC, NPCQuoteInfo *pQuotePtr) {
 BOOLEAN TriggerNPCWithIHateYouQuote(UINT8 ubTriggerNPC) {
   // Check if we have a quote to trigger...
   NPCQuoteInfo *pNPCQuoteInfoArray;
-  NPCQuoteInfo *pQuotePtr;
-  BOOLEAN fDisplayDialogue = TRUE;
   UINT8 ubLoop;
 
   if (EnsureQuoteFileLoaded(ubTriggerNPC) == FALSE) {
@@ -2172,7 +2163,6 @@ BOOLEAN TriggerNPCWithIHateYouQuote(UINT8 ubTriggerNPC) {
   pNPCQuoteInfoArray = gpNPCQuoteInfoArray[ubTriggerNPC];
 
   for (ubLoop = 0; ubLoop < NUM_NPC_QUOTE_RECORDS; ubLoop++) {
-    pQuotePtr = &(pNPCQuoteInfoArray[ubLoop]);
     if (NPCConsiderQuote(ubTriggerNPC, 0, APPROACH_DECLARATION_OF_HOSTILITY, ubLoop, 0,
                          pNPCQuoteInfoArray)) {
       // trigger this quote!
@@ -2189,7 +2179,6 @@ BOOLEAN TriggerNPCWithIHateYouQuote(UINT8 ubTriggerNPC) {
 BOOLEAN NPCHasUnusedRecordWithGivenApproach(UINT8 ubNPC, UINT8 ubApproach) {
   // Check if we have a quote that could be used
   NPCQuoteInfo *pNPCQuoteInfoArray;
-  NPCQuoteInfo *pQuotePtr;
   UINT8 ubLoop;
 
   if (EnsureQuoteFileLoaded(ubNPC) == FALSE) {
@@ -2200,7 +2189,6 @@ BOOLEAN NPCHasUnusedRecordWithGivenApproach(UINT8 ubNPC, UINT8 ubApproach) {
   pNPCQuoteInfoArray = gpNPCQuoteInfoArray[ubNPC];
 
   for (ubLoop = 0; ubLoop < NUM_NPC_QUOTE_RECORDS; ubLoop++) {
-    pQuotePtr = &(pNPCQuoteInfoArray[ubLoop]);
     if (NPCConsiderQuote(ubNPC, 0, ubApproach, ubLoop, 0, pNPCQuoteInfoArray)) {
       return (TRUE);
     }
@@ -2245,7 +2233,7 @@ BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pOb
   // Check if we have a quote that could be used, that applies to this item
   NPCQuoteInfo *pNPCQuoteInfoArray;
   NPCQuoteInfo *pQuotePtr;
-  UINT8 ubOpinion, ubQuoteNum;
+  UINT8 ubQuoteNum;
 
   if (EnsureQuoteFileLoaded(ubNPC) == FALSE) {
     // error!!!
@@ -2254,8 +2242,8 @@ BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pOb
 
   pNPCQuoteInfoArray = gpNPCQuoteInfoArray[ubNPC];
 
-  ubOpinion = NPCConsiderReceivingItemFromMerc(ubNPC, ubMerc, pObj, pNPCQuoteInfoArray, &pQuotePtr,
-                                               &ubQuoteNum);
+  NPCConsiderReceivingItemFromMerc(ubNPC, ubMerc, pObj, pNPCQuoteInfoArray, &pQuotePtr,
+                                   &ubQuoteNum);
 
   if (pQuotePtr) {
     return (TRUE);
@@ -2267,7 +2255,6 @@ BOOLEAN NPCWillingToAcceptItem(UINT8 ubNPC, UINT8 ubMerc, struct OBJECTTYPE *pOb
 BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, UINT16 *pusQuoteNum, UINT16 *pusFactToSetTrue) {
   // Check if we have a quote that could be used
   NPCQuoteInfo *pNPCQuoteInfoArray;
-  NPCQuoteInfo *pQuotePtr;
   UINT8 ubLoop;
 
   if (EnsureQuoteFileLoaded(ubNPC) == FALSE) {
@@ -2278,7 +2265,6 @@ BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, UINT16 *pusQuoteNum, UINT16 *pusFac
   pNPCQuoteInfoArray = gpNPCQuoteInfoArray[ubNPC];
 
   for (ubLoop = 0; ubLoop < NUM_NPC_QUOTE_RECORDS; ubLoop++) {
-    pQuotePtr = &(pNPCQuoteInfoArray[ubLoop]);
     if (NPCConsiderQuote(ubNPC, 0, APPROACH_EPC_IN_WRONG_SECTOR, ubLoop, 0, pNPCQuoteInfoArray)) {
       *pusQuoteNum = pNPCQuoteInfoArray[ubLoop].ubQuoteNum;
       *pusFactToSetTrue = pNPCQuoteInfoArray[ubLoop].usSetFactTrue;
@@ -2292,7 +2278,6 @@ BOOLEAN TriggerNPCWithGivenApproach(UINT8 ubTriggerNPC, UINT8 ubApproach, BOOLEA
   // Check if we have a quote to trigger...
   NPCQuoteInfo *pNPCQuoteInfoArray;
   NPCQuoteInfo *pQuotePtr;
-  BOOLEAN fDisplayDialogue = TRUE;
   UINT8 ubLoop;
 
   if (EnsureQuoteFileLoaded(ubTriggerNPC) == FALSE) {
@@ -2665,7 +2650,6 @@ UINT8 ActionIDForMovementRecord(UINT8 ubNPC, UINT8 ubRecord) {
   // Check if we have a quote to trigger...
   NPCQuoteInfo *pNPCQuoteInfoArray;
   NPCQuoteInfo *pQuotePtr;
-  BOOLEAN fDisplayDialogue = TRUE;
 
   if (EnsureQuoteFileLoaded(ubNPC) == FALSE) {
     // error!!!

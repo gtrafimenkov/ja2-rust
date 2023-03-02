@@ -1252,11 +1252,10 @@ BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive
 
 BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem, UINT8 ubOwner,
                   INT16 sSubsequent, BOOLEAN *pfMercHit, INT8 bLevel, INT32 iSmokeEffectID) {
-  INT16 sWoundAmt = 0, sBreathAmt = 0, sNewWoundAmt = 0, sNewBreathAmt = 0, sStructDmgAmt;
+  INT16 sWoundAmt = 0, sBreathAmt = 0, sStructDmgAmt;
   UINT8 ubPerson;
   struct SOLDIERTYPE *pSoldier;
   EXPLOSIVETYPE *pExplosive;
-  INT16 sY;
   BOOLEAN fRecompileMovementCosts = FALSE;
   BOOLEAN fSmokeEffect = FALSE;
   BOOLEAN fStunEffect = FALSE;
@@ -2783,7 +2782,6 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
 
 BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
-  UINT32 uiExplosionCount = 0;
   UINT32 uiCnt;
 
   //

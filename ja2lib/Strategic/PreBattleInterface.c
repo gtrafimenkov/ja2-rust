@@ -880,7 +880,6 @@ void RenderPBHeader(INT32 *piX, INT32 *piWidth) {
 }
 
 void RenderPreBattleInterface() {
-  struct GROUP *pGroup;
   struct VObject *hVObject;
   INT32 i, x, y, line, width;
   CHAR16 str[100];
@@ -1084,7 +1083,6 @@ void RenderPreBattleInterface() {
       y = BOTTOM_Y - ROW_HEIGHT + 2;
       mprintf(x, y, str);
     } else {
-      pGroup = gpGroupList;
       y = BOTTOM_Y - ROW_HEIGHT * guiNumUninvolved + 2;
       for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
            i++) {

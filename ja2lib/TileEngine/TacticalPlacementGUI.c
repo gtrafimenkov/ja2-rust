@@ -355,7 +355,7 @@ void InitTacticalPlacementGUI() {
 }
 
 void RenderTacticalPlacementGUI() {
-  INT32 i, xp, yp, width, height;
+  INT32 i, xp, yp, width;
   INT32 iStartY;
   struct SOLDIERTYPE *pSoldier;
   UINT32 uiDestPitchBYTES;
@@ -491,13 +491,13 @@ void RenderTacticalPlacementGUI() {
     xp = 95 + (i / 2) * 54;
     yp = (i % 2) ? 422 : 371;
     // NAME
-    if (gubDefaultButton == GROUP_BUTTON &&
-            gMercPlacement[i].pSoldier->ubGroupID == gubSelectedGroupID ||
-        gubDefaultButton != GROUP_BUTTON && i == gbSelectedMercID) {
+    if ((gubDefaultButton == GROUP_BUTTON &&
+         gMercPlacement[i].pSoldier->ubGroupID == gubSelectedGroupID) ||
+        (gubDefaultButton != GROUP_BUTTON && i == gbSelectedMercID)) {
       ubColor = FONT_YELLOW;
-    } else if (gubDefaultButton == GROUP_BUTTON &&
-                   gMercPlacement[i].pSoldier->ubGroupID == gubHilightedGroupID ||
-               gubDefaultButton != GROUP_BUTTON && i == gbHilightedMercID) {
+    } else if ((gubDefaultButton == GROUP_BUTTON &&
+                gMercPlacement[i].pSoldier->ubGroupID == gubHilightedGroupID) ||
+               (gubDefaultButton != GROUP_BUTTON && i == gbHilightedMercID)) {
       ubColor = FONT_WHITE;
     } else {
       ubColor = FONT_GRAY3;
@@ -515,7 +515,6 @@ void RenderTacticalPlacementGUI() {
     }
     SetFont(BLOCKFONT);
     width = StringPixLength(pSoldier->name, BLOCKFONT);
-    height = GetFontHeight(BLOCKFONT);
     xp = xp + (48 - width) / 2;
     yp = yp + 33;
     mprintf(xp, yp, pSoldier->name);

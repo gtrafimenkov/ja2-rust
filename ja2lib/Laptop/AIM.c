@@ -548,9 +548,6 @@ BOOLEAN ExitAimMenuBar(void) {
 }
 
 void BtnAimBottomButtonsCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT32 bNewValue;
-
-  bNewValue = MSYS_GetBtnUserData(btn, 0);
   gubAimMenuButtonDown = 255;
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
@@ -767,13 +764,11 @@ BOOLEAN DisplayFlowerAd(BOOLEAN fInit, BOOLEAN fRedraw) {
 
 BOOLEAN DrawWarningBox(BOOLEAN fInit, BOOLEAN fRedraw) {
   static UINT32 uiLastTime;
-  static UINT8 ubSubImage = 0;
   UINT32 uiCurTime = GetJA2Clock();
 
   if (fInit || fRedraw) {
     wchar_t sText[400];
     UINT32 uiStartLoc = 0;
-    UINT16 usLocY = AIM_WARNING_TEXT_Y + (GetFontHeight(AIM_WARNING_FONT) + 2) * 2;
     struct VObject *hWarningHandle;
 
     // Warning
@@ -1123,7 +1118,6 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
 UINT8 GetNextAimAd(UINT8 ubCurrentAd) {
   UINT8 ubNextAd;
   UINT32 uiDay = GetWorldDay();
-  BOOLEAN fSkip = FALSE;
 
   if (ubCurrentAd == AIM_AD_WARNING_BOX) {
     if (uiDay < AIM_AD_BOBBYR_AD_STARTS) {

@@ -338,7 +338,6 @@ extern BOOLEAN gfDoDialogOnceGameScreenFadesIn;
 
 UINT32 MainGameScreenHandle(void) {
   UINT32 uiNewScreen = GAME_SCREEN;
-  BOOLEAN fEnterDemoMode = FALSE;
 
   // DO NOT MOVE THIS FUNCTION CALL!!!
   // This determines if the help screen should be active
@@ -359,29 +358,6 @@ UINT32 MainGameScreenHandle(void) {
     return (GAME_SCREEN);
 #endif
   }
-
-#if 0
-	{
-		PTR pData, pDestBuf;
-		UINT32 uiPitch, uiDestPitchBYTES;
-
-		pData = LockMouseBuffer( &uiPitch );
-
-		pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
-
-		Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES,
-					(UINT16 *)pData, uiPitch,
-					0 , 0,
-					0 , 0,
-					64, 64 );
-
-		UnlockMouseBuffer( );
-		UnLockVideoSurface(guiRENDERBUFFER);
-		InvalidateRegion( 0, 0, 64, 64 );
-
-		//mprintf( 0, 55, L"W: %dH: %d", gsCurMouseWidth, gsCurMouseHeight );
-	}
-#endif
 
   if (gfBeginEndTurn) {
     UIHandleEndTurn(NULL);
@@ -879,19 +855,8 @@ void HandleModalTactical() {
 
 void InitHelicopterEntranceByMercs(void) {
   if (DidGameJustStart()) {
-    AIR_RAID_DEFINITION AirRaidDef;
-
     // Update clock ahead from STARTING_TIME to make mercs arrive!
     WarpGameTime(FIRST_ARRIVAL_DELAY, WARPTIME_PROCESS_EVENTS_NORMALLY);
-
-    AirRaidDef.sSectorX = 9;
-    AirRaidDef.sSectorY = 1;
-    AirRaidDef.sSectorZ = 0;
-    AirRaidDef.bIntensity = 2;
-    AirRaidDef.uiFlags = AIR_RAID_BEGINNING_GAME;
-    AirRaidDef.ubNumMinsFromCurrentTime = 1;
-
-    //	ScheduleAirRaid( &AirRaidDef );
 
     gfTacticalDoHeliRun = TRUE;
     gfFirstHeliRun = TRUE;

@@ -2607,7 +2607,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   INT16 sClosestOpponent, sBestCover = NOWHERE;
   INT16 sClosestDisturbance;
   UINT8 ubMinAPCost, ubCanMove;
-  INT8 bInWater, bInDeepWater, bInGas;
+  INT8 bInDeepWater, bInGas;
   INT8 bDirection;
   UINT8 ubBestAttackAction = AI_ACTION_NONE;
   INT8 bCanAttack, bActionReturned;
@@ -2677,7 +2677,6 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
     if (gTacticalStatus.bBoxingState == PRE_BOXING) {
       return (DecideActionBoxerEnteringRing(pSoldier));
     } else if (gTacticalStatus.bBoxingState == BOXING) {
-      bInWater = FALSE;
       bInDeepWater = FALSE;
       bInGas = FALSE;
 
@@ -2690,7 +2689,6 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
     }
   } else {
     // determine if we happen to be in water (in which case we're in BIG trouble!)
-    bInWater = Water(pSoldier->sGridNo);
     bInDeepWater = WaterTooDeepForAttacks(pSoldier->sGridNo);
 
     // check if standing in tear gas without a gas mask on

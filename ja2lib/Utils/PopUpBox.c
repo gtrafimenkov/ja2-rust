@@ -18,6 +18,9 @@
 #define BOTTOM_EDGE 4
 #define BOTTOM_RIGHT_CORNER 3
 
+static PopUpBoxPt PopUpBoxList[MAX_POPUP_BOX_COUNT];
+static UINT32 guiCurrentBox;
+
 struct popupstring popupstring;
 
 BOOLEAN DrawBox(UINT32 uiCounter);

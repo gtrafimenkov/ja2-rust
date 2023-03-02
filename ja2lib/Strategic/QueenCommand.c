@@ -290,7 +290,7 @@ void GetNumberOfEnemiesInSector(INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAdm
 
 void EndTacticalBattleForEnemy() {
   struct GROUP *pGroup;
-  INT32 i, iNumMilitia = 0, iNumEnemies = 0;
+  INT32 i;
 
   // Clear enemies in battle for all stationary groups in the sector.
   if (gbWorldSectorZ > 0) {
@@ -650,7 +650,6 @@ BOOLEAN PrepareEnemyForUndergroundBattle() {
 void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
   INT32 iNumEnemiesInSector;
   SECTORINFO *pSector;
-  CHAR16 str[128];
   EvaluateDeathEffectsToSoldierInitList(pSoldier);
 
   switch (pSoldier->ubProfile) {
@@ -683,7 +682,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
       break;
   }
 
-  if (pSoldier->bNeutral || pSoldier->bTeam != ENEMY_TEAM && pSoldier->bTeam != CREATURE_TEAM)
+  if (pSoldier->bNeutral || (pSoldier->bTeam != ENEMY_TEAM && pSoldier->bTeam != CREATURE_TEAM))
     return;
   // we are recording an enemy death
   if (pSoldier->ubGroupID) {  // The enemy was in a mobile group
@@ -714,6 +713,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
       case SOLDIER_CLASS_ELITE:
 #ifdef JA2BETAVERSION
         if (!pGroup->pEnemyGroup->ubNumElites) {
+          wchar_t str[100];
           swprintf(
               str, ARR_SIZE(str),
               L"Enemy elite killed with ubGroupID of %d, but the group doesn't contain elites!",
@@ -744,6 +744,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
       case SOLDIER_CLASS_ARMY:
 #ifdef JA2BETAVERSION
         if (!pGroup->pEnemyGroup->ubNumTroops) {
+          wchar_t str[100];
           swprintf(
               str, ARR_SIZE(str),
               L"Enemy troop killed with ubGroupID of %d, but the group doesn't contain elites!",
@@ -774,6 +775,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
       case SOLDIER_CLASS_ADMINISTRATOR:
 #ifdef JA2BETAVERSION
         if (!pGroup->pEnemyGroup->ubNumAdmins) {
+          wchar_t str[100];
           swprintf(str, ARR_SIZE(str),
                    L"Enemy administrator killed with ubGroupID of %d, but the group doesn't "
                    L"contain elites!",

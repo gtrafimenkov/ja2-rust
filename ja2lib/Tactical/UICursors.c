@@ -667,7 +667,7 @@ UINT8 HandleNonActivatedTargetCursor(struct SOLDIERTYPE *pSoldier, UINT16 usMapP
 }
 
 void DetermineCursorBodyLocation(UINT8 ubSoldierID, BOOLEAN fDisplay, BOOLEAN fRecalc) {
-  UINT16 usMapPos;
+  INT16 usMapPos;
   struct SOLDIERTYPE *pTargetSoldier = NULL, *pSoldier;
   UINT16 usFlags;
   INT16 sMouseX, sMouseY, sCellX, sCellY, sScreenX, sScreenY;
@@ -1248,8 +1248,6 @@ UINT8 HandleTinCanCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT32 ui
 
 UINT8 HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
                          UINT32 uiCursorFlags) {
-  BOOLEAN fEnoughPoints = TRUE;
-
   // Calculate action points
   if (gTacticalStatus.uiFlags & TURNBASED && (gTacticalStatus.uiFlags & INCOMBAT)) {
     gsCurrentActionPoints = GetAPsToUseRemote(pSoldier);
@@ -1271,8 +1269,6 @@ UINT8 HandleRemoteCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN f
 
 UINT8 HandleBombCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fActivated,
                        UINT32 uiCursorFlags) {
-  BOOLEAN fEnoughPoints = TRUE;
-
   // DRAW PATH TO GUY
   HandleUIMovementCursor(pSoldier, uiCursorFlags, sGridNo, MOVEUI_TARGET_BOMB);
 
@@ -1296,11 +1292,7 @@ UINT8 HandleBombCursor(struct SOLDIERTYPE *pSoldier, UINT16 sGridNo, BOOLEAN fAc
 }
 
 void HandleEndConfirmCursor(struct SOLDIERTYPE *pSoldier) {
-  UINT16 usInHand;
   UINT8 ubItemCursor;
-
-  // LOOK IN GUY'S HAND TO CHECK LOCATION
-  usInHand = pSoldier->inv[HANDPOS].usItem;
 
   ubItemCursor = GetActionModeCursor(pSoldier);
 
@@ -1310,12 +1302,8 @@ void HandleEndConfirmCursor(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier) {
-  UINT16 usInHand;
   UINT8 ubItemCursor;
   INT16 sGridNo;
-
-  // LOOK IN GUY'S HAND TO CHECK LOCATION
-  usInHand = pSoldier->inv[HANDPOS].usItem;
 
   ubItemCursor = GetActionModeCursor(pSoldier);
 
@@ -1391,15 +1379,12 @@ void HandleLeftClickCursor(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleRightClickAdjustCursor(struct SOLDIERTYPE *pSoldier, INT16 usMapPos) {
-  UINT16 usInHand;
   INT16 sAPCosts;
   INT8 bFutureAim;
   UINT8 ubCursor;
   struct SOLDIERTYPE *pTSoldier;
   INT16 sGridNo;
   INT8 bTargetLevel;
-
-  usInHand = pSoldier->inv[HANDPOS].usItem;
 
   ubCursor = GetActionModeCursor(pSoldier);
 

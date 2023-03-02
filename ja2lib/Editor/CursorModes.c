@@ -164,10 +164,10 @@ void UpdateCursorAreas() {
         iDrawMode == DRAW_MODE_REBEL || iDrawMode == DRAW_MODE_CIVILIAN ||
         iDrawMode == DRAW_MODE_SCHEDULEACTION) {
       iMapIndex = gSelectRegion.iTop * WORLD_COLS + gSelectRegion.iLeft;
-      if (!IsLocationSittable(iMapIndex, gfRoofPlacement) &&
-              iDrawMode != DRAW_MODE_SCHEDULEACTION ||
-          !IsLocationSittableExcludingPeople(iMapIndex, gfRoofPlacement) &&
-              iDrawMode == DRAW_MODE_SCHEDULEACTION) {
+      if ((!IsLocationSittable(iMapIndex, gfRoofPlacement) &&
+           iDrawMode != DRAW_MODE_SCHEDULEACTION) ||
+          (!IsLocationSittableExcludingPeople(iMapIndex, gfRoofPlacement) &&
+           iDrawMode == DRAW_MODE_SCHEDULEACTION)) {
         if (sBadMarker != iMapIndex) {
           RemoveBadMarker();
           if (gfRoofPlacement && FlatRoofAboveGridNo(iMapIndex)) {
@@ -228,8 +228,8 @@ void ForceAreaSelectionWidth() {
 BOOLEAN HandleAreaSelection() {
   // When the user releases the left button, then clear and process the area.
   if (fAnchored) {
-    if (!gfLeftButtonState && !gfCurrentSelectionWithRightButton ||
-        !gfRightButtonState && gfCurrentSelectionWithRightButton) {
+    if ((!gfLeftButtonState && !gfCurrentSelectionWithRightButton) ||
+        (!gfRightButtonState && gfCurrentSelectionWithRightButton)) {
       fAnchored = FALSE;
       ProcessAreaSelection((BOOLEAN)!gfCurrentSelectionWithRightButton);
       gfCurrentSelectionWithRightButton = FALSE;
@@ -238,7 +238,7 @@ BOOLEAN HandleAreaSelection() {
   }
   // When the user first clicks, anchor the area.
   if (!fAnchored) {
-    if (gfLeftButtonState || gfRightButtonState && gfAllowRightButtonSelections) {
+    if (gfLeftButtonState || (gfRightButtonState && gfAllowRightButtonSelections)) {
       if (gfRightButtonState && !gfLeftButtonState)
         gfCurrentSelectionWithRightButton = TRUE;
       else
