@@ -21,6 +21,12 @@ TEST(Bugfixes, SectorName) {
   GetSectorIDString(9, 1, 0, buf, ARR_SIZE(buf), false);
   EXPECT_STREQ(L"A9: Omerta", buf);
 
+  GetSectorIDString(13, 2, 0, buf, ARR_SIZE(buf), false);
+  EXPECT_STREQ(L"B13: Drassen", buf);
+
+  GetSectorIDString(13, 2, 0, buf, ARR_SIZE(buf), true);
+  EXPECT_STREQ(L"B13: Drassen Airport", buf);
+
   GetShortSectorString(9, 1, buf, ARR_SIZE(buf));
   EXPECT_STREQ(L"A9", buf);
 

@@ -247,14 +247,12 @@ void HandleIMPAttributeSelection(void) {
       // change is enough
       if (iNewValue - iCurrentAttributeValue > 0) {
         // positive, increment stat
-        int iCounter = iNewValue - iCurrentAttributeValue;
-        for (; iCounter > 0; iCounter--) {
+        for (int cnt = iNewValue - iCurrentAttributeValue; cnt > 0; cnt--) {
           IncrementStat(giCurrentlySelectedStat);
         }
       } else {
         // negative, decrement stat
-        int iCounter = iCurrentAttributeValue - iNewValue;
-        for (; iCounter > 0; iCounter--) {
+        for (int cnt = iCurrentAttributeValue - iNewValue; cnt > 0; cnt--) {
           DecrementStat(giCurrentlySelectedStat);
         }
       }
@@ -1179,14 +1177,12 @@ void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       // change is enough
       if (iNewValue - iCurrentAttributeValue > 0) {
         // positive, increment stat
-        iCounter = iNewValue - iCurrentAttributeValue;
-        for (int iCounter; iCounter > 0; iCounter--) {
+        for (int cnt = iNewValue - iCurrentAttributeValue; cnt > 0; cnt--) {
           IncrementStat(iAttribute);
         }
       } else {
         // negative, decrement stat
-        iCounter = iCurrentAttributeValue - iNewValue;
-        for (int iCounter; iCounter > 0; iCounter--) {
+        for (int cnt = iCurrentAttributeValue - iNewValue; cnt > 0; cnt--) {
           DecrementStat(iAttribute);
         }
       }

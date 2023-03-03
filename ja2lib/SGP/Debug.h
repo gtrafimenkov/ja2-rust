@@ -126,4 +126,7 @@ extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 //*******************************************************************************************
 #endif
 
+void DbgWriteToDebugFile(const char *message);
+void DbgWriteToDebugFileW(const wchar_t *message);
+
 #endif

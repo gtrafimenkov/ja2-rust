@@ -13,9 +13,12 @@
 #include "SGP/LibraryDataBase.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
+#include "StrUtils.h"
 #include "platform.h"
 
-BOOLEAN Plat_SetCurrentDirectory(STR pcDirectory) { return (SetCurrentDirectory(pcDirectory)); }
+BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) {
+  return (SetCurrentDirectory(pcDirectory));
+}
 
 BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) {
   if (GetCurrentDirectory(512, pcDirectory) == 0) {

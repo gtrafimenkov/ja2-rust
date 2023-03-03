@@ -426,3 +426,33 @@ char *String(const char *string, ...) {
 //////////////////////////////////////////////////////////////////////
 // This func is used by Assert()
 void _Null(void) {}
+
+static FILE *debug_txt_file = NULL;
+
+static void openDebugTxt() {
+  if (debug_txt_file == NULL) {
+    char dir[200];
+    char path[256];
+    if (!Plat_GetExecutableDirectory(dir, ARR_SIZE(dir))) {
+      return;
+    }
+    snprintf(path, ARR_SIZE(path), "%s%c%s", dir, FS_SEPARATOR, "debug.txt");
+    debug_txt_file = fopen(path, "wt");
+  }
+}
+
+void DbgWriteToDebugFile(const char *message) {
+  openDebugTxt();
+  if (debug_txt_file != NULL) {
+    fprintf(debug_txt_file, "%s\n", message);
+    fflush(debug_txt_file);
+  }
+}
+
+void DbgWriteToDebugFileW(const wchar_t *message) {
+  openDebugTxt();
+  if (debug_txt_file != NULL) {
+    fprintf(debug_txt_file, "%ls\n", message);
+    fflush(debug_txt_file);
+  }
+}

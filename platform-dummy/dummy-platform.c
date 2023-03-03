@@ -32,7 +32,7 @@ UINT32 GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-BOOLEAN Plat_SetCurrentDirectory(STR pcDirectory) { return FALSE; }
+BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) { return FALSE; }
 
 BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
 
