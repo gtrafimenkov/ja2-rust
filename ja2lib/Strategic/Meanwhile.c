@@ -757,7 +757,6 @@ void DoneFadeOutMeanwhileOnceDone() {
   switch (guiOldScreen) {
     case MAP_SCREEN:
       InternalLeaveTacticalScreen(MAP_SCREEN);
-      // gfEnteringMapScreen = TRUE;
       break;
 
     case GAME_SCREEN:

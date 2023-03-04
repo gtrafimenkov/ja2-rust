@@ -2712,7 +2712,6 @@ void BtnMapScreenCallback(GUI_BUTTON *btn, INT32 reason) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
     // Enter mapscreen...
-    // gfEnteringMapScreen = TRUE;
     GoToMapScreenFromTactical();
   } else if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);

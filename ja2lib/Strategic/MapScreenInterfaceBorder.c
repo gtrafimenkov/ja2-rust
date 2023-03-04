@@ -629,15 +629,6 @@ void ToggleShowMilitiaMode(void) {
       MapBorderButtonOff(MAP_BORDER_TEAMS_BTN);
     }
 
-    /*
-                    // if Airspace is ON, turn it OFF
-                    if( fShowAircraftFlag == TRUE )
-                    {
-                            fShowAircraftFlag = FALSE;
-                            MapBorderButtonOff( MAP_BORDER_AIRSPACE_BTN );
-                    }
-    */
-
     if (fShowItemsFlag == TRUE) {
       fShowItemsFlag = FALSE;
       MapBorderButtonOff(MAP_BORDER_ITEM_BTN);

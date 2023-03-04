@@ -1,0 +1,12 @@
+{
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "selectwin.h": "c",
+        "renderworld.h": "c",
+        "message.h": "c",
+        "textinput.h": "c",
+        "vobject.h": "c",
+        "jascreens.h": "c",
+        "gameinputinternal.h": "c"
+    }
+}

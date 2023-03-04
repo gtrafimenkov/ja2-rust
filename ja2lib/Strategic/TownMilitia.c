@@ -809,9 +809,6 @@ void HandleContinueOfTownTraining(void) {
       fContinueEventPosted = TRUE;
       SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_CONTINUE_TRAINING_MILITIA,
                                     pSoldier->ubProfile, 0, 0, 0, 0);
-
-      // now set all of these peoples assignment done too
-      // HandleInterfaceMessageForContinuingTrainingMilitia( pSoldier );
     }
 
     // next entry
@@ -833,8 +830,6 @@ void HandleContinueOfTownTraining(void) {
       ToggleShowMilitiaMode();
     }
   }
-
-  return;
 }
 
 void BuildListOfUnpaidTrainableSectors(void) {
