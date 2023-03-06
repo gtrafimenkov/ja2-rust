@@ -15,6 +15,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -47,6 +48,7 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldMan.h"
+#include "Town.h"
 #include "Utils/EventPump.h"
 #include "Utils/TimerControl.h"
 
@@ -645,7 +647,7 @@ struct SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMer
   }
 
   for (ubLoop = 0, pSoldier = MercPtrs[0]; ubLoop < ubLoopLimit; ubLoop++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->ubProfile == ubProfileID) {
+    if (IsSolActive(pSoldier) && GetSolProfile(pSoldier) == ubProfileID) {
       return (pSoldier);
     }
   }
@@ -667,7 +669,7 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
   }
 
   // Save merc id for this guy...
-  ubID = pSoldier->ubID;
+  ubID = GetSolID(pSoldier);
 
   sOldGridNo = pSoldier->sGridNo;
 
@@ -677,11 +679,11 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
   // Create a new one!
   memset(&MercCreateStruct, 0, sizeof(MercCreateStruct));
   MercCreateStruct.bTeam = ubTeam;
-  MercCreateStruct.ubProfile = pSoldier->ubProfile;
+  MercCreateStruct.ubProfile = GetSolProfile(pSoldier);
   MercCreateStruct.bBodyType = pSoldier->ubBodyType;
-  MercCreateStruct.sSectorX = pSoldier->sSectorX;
-  MercCreateStruct.sSectorY = pSoldier->sSectorY;
-  MercCreateStruct.bSectorZ = pSoldier->bSectorZ;
+  MercCreateStruct.sSectorX = GetSolSectorX(pSoldier);
+  MercCreateStruct.sSectorY = GetSolSectorY(pSoldier);
+  MercCreateStruct.bSectorZ = GetSolSectorZ(pSoldier);
   MercCreateStruct.sInsertionGridNo = pSoldier->sGridNo;
   MercCreateStruct.bDirection = pSoldier->bDirection;
 
@@ -730,7 +732,7 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
       pGroupMember = MercSlots[uiSlot];
 
       if (pGroupMember != NULL) {
-        if (pGroupMember->ubTargetID == pSoldier->ubID) {
+        if (pGroupMember->ubTargetID == GetSolID(pSoldier)) {
           pGroupMember->ubTargetID = pNewSoldier->ubID;
         }
       }
@@ -744,8 +746,8 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
     }
 
     if (gfWorldLoaded && pSoldier->bInSector
-        // pSoldier->sSectorX == gWorldSectorX && pSoldier->sSectorY == gWorldSectorY &&
-        // pSoldier->bSectorZ == gbWorldSectorZ
+        // GetSolSectorX(pSoldier) == gWorldSectorX && GetSolSectorY(pSoldier) == gWorldSectorY &&
+        // GetSolSectorZ(pSoldier) == gbWorldSectorZ
     ) {
       AddSoldierToSectorNoCalculateDirectionUseAnimation(ubID, pSoldier->usAnimState,
                                                          pSoldier->usAniCode);
@@ -798,7 +800,7 @@ BOOLEAN RecruitRPC(UINT8 ubCharNum) {
 
     KickOutWheelchair(pNewSoldier);
   } else if (ubCharNum == DYNAMO && gubQuest[QUEST_FREE_DYNAMO] == QUESTINPROGRESS) {
-    EndQuest(QUEST_FREE_DYNAMO, pSoldier->sSectorX, pSoldier->sSectorY);
+    EndQuest(QUEST_FREE_DYNAMO, GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
   }
   // handle town loyalty adjustment
   HandleTownLoyaltyForNPCRecruitment(pNewSoldier);
@@ -847,7 +849,7 @@ BOOLEAN RecruitRPC(UINT8 ubCharNum) {
 
   // remove the merc from the Personnel screens departed list ( if they have never been hired
   // before, its ok to call it )
-  RemoveNewlyHiredMercFromPersonnelDepartedList(pSoldier->ubProfile);
+  RemoveNewlyHiredMercFromPersonnelDepartedList(GetSolProfile(pSoldier));
 
   return (TRUE);
 }
@@ -918,7 +920,7 @@ BOOLEAN UnRecruitEPC(UINT8 ubCharNum) {
   RemoveCharacterFromSquads(pSoldier);
 
   // O< check if this is the only guy in the sector....
-  if (gusSelectedSoldier == pSoldier->ubID) {
+  if (gusSelectedSoldier == GetSolID(pSoldier)) {
     gusSelectedSoldier = NOBODY;
   }
 
@@ -928,15 +930,15 @@ BOOLEAN UnRecruitEPC(UINT8 ubCharNum) {
   // update sector values to current
 
   // check to see if this person should disappear from the map after this
-  if ((ubCharNum == JOHN || ubCharNum == MARY) && pSoldier->sSectorX == 13 &&
-      pSoldier->sSectorY == MAP_ROW_B && pSoldier->bSectorZ == 0) {
+  if ((ubCharNum == JOHN || ubCharNum == MARY) && GetSolSectorX(pSoldier) == 13 &&
+      GetSolSectorY(pSoldier) == MAP_ROW_B && GetSolSectorZ(pSoldier) == 0) {
     gMercProfiles[ubCharNum].sSectorX = 0;
     gMercProfiles[ubCharNum].sSectorY = 0;
     gMercProfiles[ubCharNum].bSectorZ = 0;
   } else {
-    gMercProfiles[ubCharNum].sSectorX = pSoldier->sSectorX;
-    gMercProfiles[ubCharNum].sSectorY = pSoldier->sSectorY;
-    gMercProfiles[ubCharNum].bSectorZ = pSoldier->bSectorZ;
+    gMercProfiles[ubCharNum].sSectorX = GetSolSectorX(pSoldier);
+    gMercProfiles[ubCharNum].sSectorY = GetSolSectorY(pSoldier);
+    gMercProfiles[ubCharNum].bSectorZ = GetSolSectorZ(pSoldier);
   }
 
   // how do we decide whether or not to set this?
@@ -1007,23 +1009,23 @@ void UpdateSoldierPointerDataIntoProfile(BOOLEAN fPlayerMercs) {
     pSoldier = MercSlots[uiCount];
 
     if (pSoldier != NULL) {
-      if (pSoldier->ubProfile != NO_PROFILE) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE) {
         fDoCopy = FALSE;
 
         // If we are above player mercs
         if (fPlayerMercs) {
-          if (pSoldier->ubProfile < FIRST_RPC) {
+          if (GetSolProfile(pSoldier) < FIRST_RPC) {
             fDoCopy = TRUE;
           }
         } else {
-          if (pSoldier->ubProfile >= FIRST_RPC) {
+          if (GetSolProfile(pSoldier) >= FIRST_RPC) {
             fDoCopy = TRUE;
           }
         }
 
         if (fDoCopy) {
           // get profile...
-          pProfile = &(gMercProfiles[pSoldier->ubProfile]);
+          pProfile = &(gMercProfiles[GetSolProfile(pSoldier)]);
 
           // Copy....
           pProfile->bLife = pSoldier->bLife;
@@ -1068,10 +1070,10 @@ BOOLEAN DoesMercHaveABuddyOnTheTeam(UINT8 ubMercID) {
 }
 
 BOOLEAN MercIsHot(struct SOLDIERTYPE *pSoldier) {
-  if (pSoldier->ubProfile != NO_PROFILE &&
-      gMercProfiles[pSoldier->ubProfile].bPersonalityTrait == HEAT_INTOLERANT) {
-    if (SectorTemperature(GetWorldMinutesInDay(), pSoldier->sSectorX, pSoldier->sSectorY,
-                          pSoldier->bSectorZ) > 0) {
+  if (GetSolProfile(pSoldier) != NO_PROFILE &&
+      gMercProfiles[GetSolProfile(pSoldier)].bPersonalityTrait == HEAT_INTOLERANT) {
+    if (SectorTemperature(GetWorldMinutesInDay(), GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
+                          GetSolSectorZ(pSoldier)) > 0) {
       return (TRUE);
     }
   }
@@ -1083,7 +1085,7 @@ struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubDestProfile;
   MERCPROFILESTRUCT *pNewProfile;
 
-  ubSrcProfile = pSoldier->ubProfile;
+  ubSrcProfile = GetSolProfile(pSoldier);
   if (ubSrcProfile == LARRY_NORMAL) {
     ubDestProfile = LARRY_DRUNK;
   } else if (ubSrcProfile == LARRY_DRUNK) {
@@ -1180,7 +1182,7 @@ struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
   pSoldier->bMedical = pNewProfile->bMedical + pNewProfile->bMedicalDelta;
   pSoldier->bExplosive = pNewProfile->bExplosive + pNewProfile->bExplosivesDelta;
 
-  if (pSoldier->ubProfile == LARRY_DRUNK) {
+  if (GetSolProfile(pSoldier) == LARRY_DRUNK) {
     SetFactTrue(FACT_LARRY_CHANGED);
   } else {
     SetFactFalse(FACT_LARRY_CHANGED);
@@ -1207,13 +1209,13 @@ BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   }
 
   // OK, check both ranges
-  if (ubRoomInfo >= gMercProfiles[pSoldier->ubProfile].ubRoomRangeStart[0] &&
-      ubRoomInfo <= gMercProfiles[pSoldier->ubProfile].ubRoomRangeEnd[0]) {
+  if (ubRoomInfo >= gMercProfiles[GetSolProfile(pSoldier)].ubRoomRangeStart[0] &&
+      ubRoomInfo <= gMercProfiles[GetSolProfile(pSoldier)].ubRoomRangeEnd[0]) {
     return (TRUE);
   }
 
-  if (ubRoomInfo >= gMercProfiles[pSoldier->ubProfile].ubRoomRangeStart[1] &&
-      ubRoomInfo <= gMercProfiles[pSoldier->ubProfile].ubRoomRangeEnd[1]) {
+  if (ubRoomInfo >= gMercProfiles[GetSolProfile(pSoldier)].ubRoomRangeStart[1] &&
+      ubRoomInfo <= gMercProfiles[GetSolProfile(pSoldier)].ubRoomRangeEnd[1]) {
     return (TRUE);
   }
 

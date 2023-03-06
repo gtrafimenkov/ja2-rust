@@ -104,9 +104,6 @@ void RemoveMilitiaPopUpBox(void);
 // check if anyone left behind, if not, move selected cursor along with movement group
 // void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, INT8 bZ );
 
-// grab the total number of militia in sector
-INT32 GetNumberOfMilitiaInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
-
 // create destroy
 void CreateDestroyMilitiaPopUPRegions(void);
 

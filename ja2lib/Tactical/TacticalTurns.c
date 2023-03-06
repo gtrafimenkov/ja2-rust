@@ -4,6 +4,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QueenCommand.h"
 #include "Strategic/StrategicMap.h"
@@ -184,7 +185,7 @@ void HandleTacticalEndTurn() {
     cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bActive && pSoldier->bLife > 0 &&
+      if (IsSolActive(pSoldier) && pSoldier->bLife > 0 &&
           !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) && !(AM_A_ROBOT(pSoldier))) {
         // Handle everything from getting breath back, to bleeding, etc
         EVENT_BeginMercTurn(pSoldier, TRUE, 0);

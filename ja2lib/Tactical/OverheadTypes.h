@@ -4,6 +4,7 @@
 
 #include "BuildDefines.h"
 #include "SGP/Types.h"
+#include "Team.h"
 
 #define REFINE_AIM_1 0
 #define REFINE_AIM_MID1 1
@@ -166,7 +167,7 @@ enum {
 #define ALLOW_INTERRUPTS 1
 
 #define SIGHT_LOOK 0x1
-//#define SIGHT_SEND      0x2   // no longer needed using LOCAL OPPLISTs
+// #define SIGHT_SEND      0x2   // no longer needed using LOCAL OPPLISTs
 #define SIGHT_RADIO 0x4
 #define SIGHT_INTERRUPT 0x8
 #define SIGHT_ALL 0xF
@@ -180,7 +181,7 @@ enum {
 #define SIDE_RATIO 0.571
 // CJC: Changed SBEHIND_RATIO (side-behind ratio) to be 0 to make stealth attacks easier
 // Changed on September 21, 1998
-//#define SBEHIND_RATIO		0.142
+// #define SBEHIND_RATIO		0.142
 #define SBEHIND_RATIO 0
 #define BEHIND_RATIO 0
 
@@ -234,15 +235,6 @@ typedef enum {
 #define MAX_NUM_SOLDIERS 148
 #define NUM_PLANNING_MERCS 8
 #define TOTAL_SOLDIERS (NUM_PLANNING_MERCS + MAX_NUM_SOLDIERS)
-
-// DEFINE TEAMS
-#define OUR_TEAM 0
-#define ENEMY_TEAM 1
-#define CREATURE_TEAM 2
-#define MILITIA_TEAM 3
-#define CIV_TEAM 4
-#define LAST_TEAM CIV_TEAM
-#define PLAYER_PLAN 5
 
 //-----------------------------------------------
 //

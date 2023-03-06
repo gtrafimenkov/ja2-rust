@@ -8,6 +8,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
 #include "Strategic/Quests.h"
@@ -40,7 +41,7 @@ BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule);
 // waketime is the # of minutes in the day minus the sleep time
 #define WAKETIME(x) (NUM_SEC_IN_DAY / NUM_SEC_IN_MIN - x)
 
-//#define DISABLESCHEDULES
+// #define DISABLESCHEDULES
 
 SCHEDULENODE *gpScheduleList = NULL;
 UINT8 gubScheduleID = 0;
@@ -172,7 +173,7 @@ void ProcessTacticalSchedule(UINT8 ubScheduleID) {
     return;
   }
 
-  if (!pSoldier->bActive) {
+  if (!IsSolActive(pSoldier)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_RED, MSG_BETAVERSION, L"Schedule callback:  Soldier isn't active.  Name is %s.",
               pSoldier->name);
@@ -586,20 +587,20 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
   pSoldier = MercPtrs[pSchedule->ubSoldierID];
 
 #ifdef JA2EDITOR
-  if (pSoldier->ubProfile != NO_PROFILE) {
+  if (GetSolProfile(pSoldier) != NO_PROFILE) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("Autoprocessing schedule action %S for %S (%d) at time %02ld:%02ld (set for "
                     "%02d:%02d), data1 = %d",
-                    gszScheduleActions[pSchedule->ubAction[index]], pSoldier->name, pSoldier->ubID,
-                    GetWorldHour(), guiMin, pSchedule->usTime[index] / 60,
+                    gszScheduleActions[pSchedule->ubAction[index]], pSoldier->name,
+                    GetSolID(pSoldier), GetWorldHour(), guiMin, pSchedule->usTime[index] / 60,
                     pSchedule->usTime[index] % 60, pSchedule->usData1[index]));
   } else {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("Autoprocessing schedule action %S for civ (%d) at time %02ld:%02ld (set for "
                     "%02d:%02d), data1 = %d",
-                    gszScheduleActions[pSchedule->ubAction[index]], pSoldier->ubID, GetWorldHour(),
-                    guiMin, pSchedule->usTime[index] / 60, pSchedule->usTime[index] % 60,
-                    pSchedule->usData1[index]));
+                    gszScheduleActions[pSchedule->ubAction[index]], GetSolID(pSoldier),
+                    GetWorldHour(), guiMin, pSchedule->usTime[index] / 60,
+                    pSchedule->usTime[index] % 60, pSchedule->usData1[index]));
   }
 #endif
 
@@ -634,8 +635,9 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
       pSoldier->usPatrolGrid[0] = pSchedule->usData1[index];
       break;
     case SCHEDULE_ACTION_ENTERSECTOR:
-      if (pSoldier->ubProfile != NO_PROFILE &&
-          gMercProfiles[pSoldier->ubProfile].ubMiscFlags2 & PROFILE_MISC_FLAG2_DONT_ADD_TO_SECTOR) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE &&
+          gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags2 &
+              PROFILE_MISC_FLAG2_DONT_ADD_TO_SECTOR) {
         // never process enter if flag is set
         break;
       }
@@ -693,7 +695,8 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
       (gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] ||
        ((gubQuest[QUEST_KINGPIN_MONEY] == QUESTINPROGRESS) &&
         (CheckFact(FACT_KINGPIN_CAN_SEND_ASSASSINS, KINGPIN)))) &&
-      (gWorldSectorX == 5 && gWorldSectorY == MAP_ROW_C) && (pSoldier->ubProfile == NO_PROFILE)) {
+      (gWorldSectorX == 5 && gWorldSectorY == MAP_ROW_C) &&
+      (GetSolProfile(pSoldier) == NO_PROFILE)) {
     // no schedules for people guarding Tony's!
     return;
   }
@@ -701,8 +704,8 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
   pSchedule = GetSchedule(pSoldier->ubScheduleID);
   if (!pSchedule) return;
 
-  if (pSoldier->ubProfile != NO_PROFILE && gMercProfiles[pSoldier->ubProfile].ubMiscFlags3 &
-                                               PROFILE_MISC_FLAG3_PERMANENT_INSERTION_CODE) {
+  if (GetSolProfile(pSoldier) != NO_PROFILE && gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags3 &
+                                                   PROFILE_MISC_FLAG3_PERMANENT_INSERTION_CODE) {
     // don't process schedule
     return;
   }
@@ -756,7 +759,7 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
     }
   }
 
-  pSchedule->ubSoldierID = pSoldier->ubID;
+  pSchedule->ubSoldierID = GetSolID(pSoldier);
 
   // always process previous 24 hours
   uiEndTime = GetWorldTotalMin();
@@ -857,7 +860,7 @@ void PostDefaultSchedule(struct SOLDIERTYPE *pSoldier) {
   gubScheduleID++;
   // Assign all of the links
   gpScheduleList->ubScheduleID = gubScheduleID;
-  gpScheduleList->ubSoldierID = pSoldier->ubID;
+  gpScheduleList->ubSoldierID = GetSolID(pSoldier);
   pSoldier->ubScheduleID = gubScheduleID;
 
   // Clear the data inside the schedule
@@ -1105,13 +1108,13 @@ void ReconnectSchedules( void )
 CIV_TEAM ].bLastID; uiLoop++ )
         {
                 pSoldier = MercPtrs[ uiLoop ];
-                if ( pSoldier->bActive && pSoldier->bInSector && pSoldier->ubScheduleID != 0 )
+                if ( IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->ubScheduleID != 0 )
                 {
                         pSchedule = GetSchedule( pSoldier->ubScheduleID );
                         if ( pSchedule )
                         {
                                 // set soldier ptr to point to this guy!
-                                pSchedule->ubSoldierID = pSoldier->ubID;
+                                pSchedule->ubSoldierID = GetSolID(pSoldier);
                         }
                         else
                         {
@@ -1153,7 +1156,8 @@ void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, UINT16 usSleepSpot) {
   UINT8 ubDirection;
 
   // start after this soldier's ID so we don't duplicate work done in previous passes
-  for (uiLoop = pSoldier->ubID + 1; uiLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID; uiLoop++) {
+  for (uiLoop = GetSolID(pSoldier) + 1; uiLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID;
+       uiLoop++) {
     pSoldier2 = MercPtrs[uiLoop];
     if (pSoldier2->bActive && pSoldier2->bInSector && pSoldier2->ubScheduleID != 0) {
       pSchedule = GetSchedule(pSoldier2->ubScheduleID);
@@ -1188,7 +1192,7 @@ void SecureSleepSpots( void )
 CIV_TEAM ].bLastID; uiLoop++ )
         {
                 pSoldier = MercPtrs[ uiLoop ];
-                if ( pSoldier->bActive && pSoldier->bInSector && pSoldier->ubScheduleID != 0 )
+                if ( IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->ubScheduleID != 0 )
                 {
                         pSchedule = GetSchedule( pSoldier->ubScheduleID );
                         if ( pSchedule )

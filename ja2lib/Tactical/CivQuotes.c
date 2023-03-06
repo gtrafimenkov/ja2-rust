@@ -8,6 +8,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/QueenCommand.h"
 #include "Strategic/Quests.h"
@@ -22,6 +23,7 @@
 #include "TacticalAI/NPC.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
+#include "Town.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/FontControl.h"
@@ -354,7 +356,7 @@ void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID
 UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
                              BOOLEAN fCanUseHints) {
   UINT8 ubCivType;
-  INT8 bTownId;
+  TownID bTownId;
   BOOLEAN bCivLowLoyalty = FALSE;
   BOOLEAN bCivHighLoyalty = FALSE;
   INT8 bCivHint;

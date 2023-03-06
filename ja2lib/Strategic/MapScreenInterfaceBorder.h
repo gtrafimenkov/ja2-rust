@@ -88,7 +88,6 @@ BOOLEAN CreateButtonsForMapBorder(void);
 
 // render the pop up for eta  in path plotting in map screen
 void RenderMapBorderEtaPopUp(void);
-BOOLEAN DoesPlayerHaveAnyMilitia(void);
 
 // void UpdateLevelButtonStates( void );
 

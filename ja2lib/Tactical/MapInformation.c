@@ -9,6 +9,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationData.h"
 #include "Tactical/SoldierInitList.h"

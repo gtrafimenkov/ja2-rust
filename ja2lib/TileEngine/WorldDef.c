@@ -18,6 +18,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/PreBattleInterface.h"
@@ -2802,7 +2803,7 @@ void TrashWorld(void) {
   cnt = 0;
 
   for (pSoldier = MercPtrs[cnt]; cnt < MAX_NUM_SOLDIERS; pSoldier++, cnt++) {
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       if (pSoldier->bTeam == gbPlayerNum) {
         // Just delete levelnode
         pSoldier->pLevelNode = NULL;

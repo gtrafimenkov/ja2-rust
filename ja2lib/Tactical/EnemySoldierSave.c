@@ -8,6 +8,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QueenCommand.h"
@@ -225,7 +226,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
     ubStrategicCreatures = pSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[SECTOR(sSectorX, sSectorY)];
+    pSector = &SectorInfo[GetSectorID8(sSectorX, sSectorY)];
     ubStrategicCreatures = pSector->ubNumCreatures;
     GetNumberOfEnemiesInSector(sSectorX, sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
                                &ubStrategicElites);
@@ -347,7 +348,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
 #endif
     goto FAIL_LOAD;
   }
-  if (ubSectorID != SECTOR(sSectorX, sSectorY)) {
+  if (ubSectorID != GetSectorID8(sSectorX, sSectorY)) {
 #ifdef JA2TESTVERSION
     sprintf(zReason, "EnemySoldier -- ubSectorID mismatch.  KM");
 #endif
@@ -403,7 +404,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
        i <= gTacticalStatus.Team[ubLastIdTeam].bLastID; i++) {
     pSoldier = MercPtrs[i];
 
-    if (pSoldier->bActive /*&& pSoldier->bInSector*/ &&
+    if (IsSolActive(pSoldier) /*&& pSoldier->bInSector*/ &&
         pSoldier->bLife) {  // soldier is valid, so find the matching soldier init list entry for
                             // modification.
       curr = gSoldierInitHead;
@@ -411,7 +412,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
         curr = curr->next;
       }
       if (curr && curr->pSoldier == pSoldier &&
-          pSoldier->ubProfile == NO_PROFILE) {  // found a match.
+          GetSolProfile(pSoldier) == NO_PROFILE) {  // found a match.
 
         if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
           if (!curr->pDetailedPlacement) {  // need to upgrade the placement to detailed placement
@@ -453,9 +454,9 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
           }
 
           curr->pDetailedPlacement->fHasKeys = pSoldier->bHasKeys;
-          curr->pDetailedPlacement->sSectorX = pSoldier->sSectorX;
-          curr->pDetailedPlacement->sSectorY = pSoldier->sSectorY;
-          curr->pDetailedPlacement->bSectorZ = pSoldier->bSectorZ;
+          curr->pDetailedPlacement->sSectorX = GetSolSectorX(pSoldier);
+          curr->pDetailedPlacement->sSectorY = GetSolSectorY(pSoldier);
+          curr->pDetailedPlacement->bSectorZ = GetSolSectorZ(pSoldier);
           curr->pDetailedPlacement->ubSoldierClass = pSoldier->ubSoldierClass;
           curr->pDetailedPlacement->bTeam = pSoldier->bTeam;
           curr->pDetailedPlacement->bDirection = pSoldier->bDirection;
@@ -611,7 +612,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
   for (i = gTacticalStatus.Team[ubFirstIdTeam].bFirstID;
        i <= gTacticalStatus.Team[ubLastIdTeam].bLastID; i++) {
     pSoldier = MercPtrs[i];
-    if (pSoldier->bActive /*&& pSoldier->bInSector*/ &&
+    if (IsSolActive(pSoldier) /*&& pSoldier->bInSector*/ &&
         pSoldier->bLife) {  // soldier is valid, so find the matching soldier init list entry for
                             // modification.
       curr = gSoldierInitHead;
@@ -619,7 +620,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
         curr = curr->next;
       }
       if (curr && curr->pSoldier == pSoldier &&
-          pSoldier->ubProfile == NO_PROFILE) {  // found a match.
+          GetSolProfile(pSoldier) == NO_PROFILE) {  // found a match.
         FileMan_Write(hfile, curr->pDetailedPlacement, sizeof(SOLDIERCREATE_STRUCT),
                       &uiNumBytesWritten);
         if (uiNumBytesWritten != sizeof(SOLDIERCREATE_STRUCT)) {
@@ -649,7 +650,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSector
 
   // if we are to append to the file
   if (!fAppendToFile) {
-    ubSectorID = SECTOR(sSectorX, sSectorY);
+    ubSectorID = GetSectorID8(sSectorX, sSectorY);
     FileMan_Write(hfile, &ubSectorID, 1, &uiNumBytesWritten);
     if (uiNumBytesWritten != 1) {
       goto FAIL_SAVE;
@@ -713,7 +714,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     }
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
 
     ubNumElites = pSector->ubNumElites;
     ubNumTroops = pSector->ubNumTroops;
@@ -863,7 +864,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     ubStrategicCreatures = pSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[SECTOR(sSectorX, sSectorY)];
+    pSector = &SectorInfo[GetSectorID8(sSectorX, sSectorY)];
     ubStrategicCreatures = pSector->ubNumCreatures;
     GetNumberOfEnemiesInSector(sSectorX, sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
                                &ubStrategicElites);
@@ -983,7 +984,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 #endif
     goto FAIL_LOAD;
   }
-  if (ubSectorID != SECTOR(sSectorX, sSectorY)) {
+  if (ubSectorID != GetSectorID8(sSectorX, sSectorY)) {
 #ifdef JA2TESTVERSION
     sprintf(zReason, "EnemySoldier -- ubSectorID mismatch.  KM");
 #endif
@@ -1289,7 +1290,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   }
 
   /*
-  if( ubSectorID != SECTOR( sSectorX, sSectorY ) )
+  if( ubSectorID != GetSectorID8( sSectorX, sSectorY ) )
   {
           #ifdef JA2TESTVERSION
                   sprintf( zReason, "Civilian -- ubSectorID mismatch.  KM" );
@@ -1352,15 +1353,15 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY,
     pSoldier = MercPtrs[i];
 
     // make sure the person is active, alive, in the sector, and is not a profiled person
-    if (pSoldier->bActive /*&& pSoldier->bInSector*/ && pSoldier->bLife &&
-        pSoldier->ubProfile == NO_PROFILE) {  // soldier is valid, so find the matching soldier init
-                                              // list entry for modification.
+    if (IsSolActive(pSoldier) /*&& pSoldier->bInSector*/ && pSoldier->bLife &&
+        GetSolProfile(pSoldier) == NO_PROFILE) {  // soldier is valid, so find the matching soldier
+                                                  // init list entry for modification.
       curr = gSoldierInitHead;
       while (curr && curr->pSoldier != pSoldier) {
         curr = curr->next;
       }
       if (curr && curr->pSoldier == pSoldier &&
-          pSoldier->ubProfile == NO_PROFILE) {  // found a match.
+          GetSolProfile(pSoldier) == NO_PROFILE) {  // found a match.
 
         if (!fValidateOnly) {
           if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
@@ -1393,9 +1394,9 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY,
             curr->pDetailedPlacement->ubCivilianGroup = pSoldier->ubCivilianGroup;
             curr->pDetailedPlacement->ubScheduleID = pSoldier->ubScheduleID;
             curr->pDetailedPlacement->fHasKeys = pSoldier->bHasKeys;
-            curr->pDetailedPlacement->sSectorX = pSoldier->sSectorX;
-            curr->pDetailedPlacement->sSectorY = pSoldier->sSectorY;
-            curr->pDetailedPlacement->bSectorZ = pSoldier->bSectorZ;
+            curr->pDetailedPlacement->sSectorX = GetSolSectorX(pSoldier);
+            curr->pDetailedPlacement->sSectorY = GetSolSectorY(pSoldier);
+            curr->pDetailedPlacement->bSectorZ = GetSolSectorZ(pSoldier);
             curr->pDetailedPlacement->ubSoldierClass = pSoldier->ubSoldierClass;
             curr->pDetailedPlacement->bTeam = pSoldier->bTeam;
             curr->pDetailedPlacement->bDirection = pSoldier->bDirection;
@@ -1532,13 +1533,13 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY,
        i++) {
     pSoldier = MercPtrs[i];
     // CJC: note that bInSector is not required; the civ could be offmap!
-    if (pSoldier->bActive /*&& pSoldier->bInSector*/ && pSoldier->bLife) {
+    if (IsSolActive(pSoldier) /*&& pSoldier->bInSector*/ && pSoldier->bLife) {
       // soldier is valid, so find the matching soldier init list entry for modification.
       curr = gSoldierInitHead;
       while (curr && curr->pSoldier != pSoldier) {
         curr = curr->next;
       }
-      if (curr && curr->pSoldier == pSoldier && pSoldier->ubProfile == NO_PROFILE) {
+      if (curr && curr->pSoldier == pSoldier && GetSolProfile(pSoldier) == NO_PROFILE) {
         // found a match.
         FileMan_Write(hfile, curr->pDetailedPlacement, sizeof(SOLDIERCREATE_STRUCT),
                       &uiNumBytesWritten);
@@ -1567,7 +1568,7 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY,
     }
   }
 
-  ubSectorID = SECTOR(sSectorX, sSectorY);
+  ubSectorID = GetSectorID8(sSectorX, sSectorY);
   FileMan_Write(hfile, &ubSectorID, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) {
     goto FAIL_SAVE;
@@ -1731,7 +1732,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
           else
           {
                   SECTORINFO *pSector;
-                  pSector = &SectorInfo[ SECTOR( sSectorX, sSectorY ) ];
+                  pSector = &SectorInfo[ GetSectorID8( sSectorX, sSectorY ) ];
                   ubStrategicCreatures = pSector->ubNumCreatures;
                   GetNumberOfEnemiesInSector( sSectorX, sSectorY, &ubStrategicAdmins,
      &ubStrategicTroops, &ubStrategicElites );
@@ -1897,7 +1898,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
     goto FAIL_LOAD;
   }
 
-  if (ubSectorID != SECTOR(sSectorX, sSectorY)) {
+  if (ubSectorID != GetSectorID8(sSectorX, sSectorY)) {
 #ifdef JA2TESTVERSION
     sprintf(zReason, "Check EnemySoldier -- ubSectorID mismatch.  KM");
 #endif

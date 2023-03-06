@@ -6,6 +6,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/Random.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
@@ -29,6 +30,7 @@
 #include "Tactical/TacticalSave.h"
 #include "Tactical/Vehicles.h"
 #include "Tactical/WorldItems.h"
+#include "Town.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 
@@ -65,51 +67,8 @@
 // divisor for dmg to a building by allied rebel
 #define DIVISOR_FOR_REBEL_BUILDING_DMG 2
 
-/*
-// max number of soldiers counted towards town loyalty gain
-#define MAX_SOLDIER_COUNT_FOR_IN_TOWN_LOYALTY_GAIN 6
-// max levels of town militia civs counted towards town loyalty gain
-#define MAX_MILITIA_VALUE_FOR_IN_TOWN_LOYALTY_GAIN	18
-// max # occupying enemy ranks that count for loyalty penalty
-#define MAX_ENEMY_SOLDIER_RANKS_FOR_IN_TOWN_LOYALTY_DROP 15
-// number of ranks counted per regular
-#define NUMBER_OF_RANKS_PER_REGULAR 2
-// number of ranks counted per elite
-#define NUMBER_OF_RANKS_PER_ELITE 4
-
-// THESE VALUES ARE ALL AFFECTED BY CHANGES to "GAIN_PTS_PER_LOYALTY_PT", SO BEWARE IF THAT SHOULD
-CHANGE
-//
-// max. rate of loyalty gain for local RPC being stationed in his home town
-#define HOURLY_GAIN_FOR_LOCAL_NPC_IN_TOWN 20	// roughly 1.00% / day max.
-// number of gain pts per merc in town
-#define HOURLY_GAIN_PER_MERC_IN_TOWN 5				// roughly 0.25% / day
-// number of gain pts per friendly in town
-#define HOURLY_GAIN_PER_MILITIA_IN_TOWN 1			// roughly 0.05% / day
-// loyalty loss for enemies in town
-#define HOURLY_DROP_PER_ENEMY_RANK_IN_TOWN 2	// roughly 0.10% / day
-*/
-//
-// THESE VALUES ARE ALL AFFECTED BY CHANGES to "GAIN_PTS_PER_LOYALTY_PT", SO BEWARE IF THAT SHOULD
-// CHANGE
-
-/* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
-
-// macros for delayed town loyalty events
-// get increment
-#define GET_TOWN_INCREMENT( iValue ) ( ( uiValue << 31 ) >> 31 )
-// town id
-#define GET_TOWN_ID_FOR_LOYALTY( iValue ) ( uiValue >> 24 )
-// the amount
-#define GET_TOWN_LOYALTY_CHANGE( iValue ) ( ( uiValue << 8 ) >> 9 )
-*/
-
 // town loyalty table
 TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
-
-// town name and locations arrays, for town theft and what not
-INT32 pTownNamesList[40];
-INT32 pTownLocationsList[40];
 
 INT32 iTownDistances[NUM_TOWNS][NUM_TOWNS];
 
@@ -179,13 +138,13 @@ extern BOOLEAN fSectorsWithSoldiers[MAP_WORLD_X * MAP_WORLD_X][4];
 extern STR16 pTownNames[];
 
 // update the loyalty rating of the passed town id
-void UpdateTownLoyaltyRating(INT8 bTownId);
+void UpdateTownLoyaltyRating(TownID bTownId);
 
 // update town loyalty based on number of friendlies in this town
-void UpdateTownLoyaltyBasedOnFriendliesInTown(INT8 bTownId);
+void UpdateTownLoyaltyBasedOnFriendliesInTown(TownID bTownId);
 
 // update town loyalty based on number of bad guys in this town
-void UpdateTownLoyaltyBasedOnBadGuysInTown(INT8 bTownId);
+void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 
 /* ARM: Civilian theft of items was removed
 // handle theft by civi in a town sector
@@ -212,7 +171,7 @@ void InitTownLoyalty(void) {
   return;
 }
 
-void StartTownLoyaltyIfFirstTime(INT8 bTownId) {
+void StartTownLoyaltyIfFirstTime(TownID bTownId) {
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
   // if loyalty tracking hasn't yet been started for this town, and the town does use loyalty
@@ -243,7 +202,7 @@ void StartTownLoyaltyIfFirstTime(INT8 bTownId) {
 
 // set a specified town's loyalty rating (ignores previous loyalty value - probably NOT what you
 // want)
-void SetTownLoyalty(INT8 bTownId, UINT8 ubNewLoyaltyRating) {
+void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
   // if the town does use loyalty
@@ -259,7 +218,7 @@ void SetTownLoyalty(INT8 bTownId, UINT8 ubNewLoyaltyRating) {
 }
 
 // increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
-void IncrementTownLoyalty(INT8 bTownId, UINT32 uiLoyaltyIncrease) {
+void IncrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyIncrease) {
   UINT32 uiRemainingIncrement;
   INT16 sThisIncrement;
 
@@ -293,7 +252,7 @@ void IncrementTownLoyalty(INT8 bTownId, UINT32 uiLoyaltyIncrease) {
 
 // decrements the town's loyalty rating by that many HUNDREDTHS of loyalty pts
 // NOTE: This function expects a POSITIVE number for a decrease!!!
-void DecrementTownLoyalty(INT8 bTownId, UINT32 uiLoyaltyDecrease) {
+void DecrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyDecrease) {
   UINT32 uiRemainingDecrement;
   INT16 sThisDecrement;
 
@@ -326,7 +285,7 @@ void DecrementTownLoyalty(INT8 bTownId, UINT32 uiLoyaltyDecrease) {
 }
 
 // update town loyalty rating based on gain values
-void UpdateTownLoyaltyRating(INT8 bTownId) {
+void UpdateTownLoyaltyRating(TownID bTownId) {
   // check gain value and update loyaty
   UINT8 ubOldLoyaltyRating = 0;
   INT16 sRatingChange = 0;
@@ -377,7 +336,7 @@ void UpdateTownLoyaltyRating(INT8 bTownId) {
 
   // check old aginst new, if diff, dirty map panel
   if (ubOldLoyaltyRating != gTownLoyalty[bTownId].ubRating) {
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   return;
@@ -387,217 +346,9 @@ void UpdateTownLoyaltyRating(INT8 bTownId) {
 // updates...player controlled, monsters
 void HandleTownLoyalty(void) { return; }
 
-/*
-// update of town loyalty based on if the player controls the town's sectors
-void UpdateLoyaltyBasedOnControl( INT8 bTownId )
-{
-        // compare current loyalty to percent of sectors controlled, adjust in that direction
-        INT32 iUnderControl = 0;
-
-        Assert( ( bTownId >= FIRST_TOWN ) && ( bTownId < NUM_TOWNS ) );
-
-        // find how much of town is under control
-        iUnderControl = GetTownSectorsUnderControl( bTownId );
-        iUnderControl *= 100;
-        iUnderControl /= GetTownSectorSize( bTownId );
-
-        // the gain value will be the difference in iUnderControl and the current Loyalty rating /
-hours_per_day if( gTownLoyalty[ bTownId ].ubRating < ( UINT8 ) iUnderControl )
-        {
-                // we control more of the town, start moving to more loyal
-                IncrementTownLoyalty( bTownId, ( iUnderControl - gTownLoyalty[ bTownId ].ubRating)
-);
-        }
-        else
-        {
-                // mere lack of sector control never reduces loyalty below the town's current rebel
-sentiment if (gTownLoyalty[ bTownId ].ubRating > gubTownRebelSentiment[ bTownId ])
-                {
-                        // we control less of the town, decrement gain
-                        DecrementTownLoyalty( bTownId, gTownLoyalty[ bTownId ].ubRating -
-iUnderControl );
-                }
-        }
-
-        return;
-}
-
-
-// updates the loyalty of the town in a sector based on number of friendly troops in that sector
-...to a point, after max number to void UpdateTownLoyaltyBasedOnFriendliesInTown( INT8 bTownId )
-{
-        // check if valid town
-        INT32 iUnderControl = 0;
-        struct SOLDIERTYPE *pSoldier;
-        INT32 iCounter = 0;
-        INT32 iSoldierCount = 0;
-        INT32 iLocalNPCBonus = 0;
-        INT32 iMilitiaValue = 0;
-        UINT8 ubMilitiaLevel = 0;
-
-
-        Assert( ( bTownId >= FIRST_TOWN ) && ( bTownId < NUM_TOWNS ) );
-
-        // find how much of town is under control
-        iUnderControl = GetTownSectorsUnderControl( bTownId );
-        iUnderControl *= 100;
-        iUnderControl /= GetTownSectorSize( bTownId );
-
-
-        // count how many of player's mercs are active in this town, then factor by number of
-sectors under control
-
-        // run through list of grunts on team
-  for (iCounter = gTacticalStatus.Team[ OUR_TEAM ].bFirstID; iCounter <= gTacticalStatus.Team[
-OUR_TEAM ].bLastID; iCounter++ )
-        {
-                pSoldier = MercPtrs[ iCounter ];
-
-                if ( pSoldier->bLife >= OKLIFE && pSoldier->bActive )
-                {
-                        // if soldier is in this sector
-                        if( SectorIsPartOfTown( bTownId, pSoldier->sSectorX, pSoldier->sSectorY ) ==
-TRUE )
-                        {
-                                // if onduty or in a vehicle
-                                if( ( pSoldier->bAssignment < ON_DUTY ) || pSoldier->bAssignment ==
-VEHICLE ) )
-                                {
-                                        // increment soldier count
-                                        iSoldierCount++;
-                                }
-
-                                // local influence: if the town is the character's home town
-                                if( bTownId == gMercProfiles[ pSoldier->ubProfile ].bTown )
-                                {
-                                        // he needn't be soldiering to have an impact...  presence
-is enough if( pSoldier->bAssignment < ASSIGNMENT_DEAD )
-                                        {
-                                                iLocalNPCBonus = HOURLY_GAIN_FOR_LOCAL_NPC_IN_TOWN;
-                                                iLocalNPCBonus *= gMercProfiles[ pSoldier->ubProfile
-].bTownAttachment; iLocalNPCBonus /= 100;
-
-                                                // adjust for % town control
-                                                iLocalNPCBonus *= iUnderControl;
-                                                iLocalNPCBonus /= 100;
-
-                                                // do we actually gain from this?
-                                                if( iLocalNPCBonus > 0 )
-                                                {
-                                                        // debug message
-                                                        ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s
-influences loyalty in home town of %s, worth %d", pSoldier->name, pTownNames[ bTownId ],
-iLocalNPCBonus);
-
-                                                        // increment town loyalty
-                                                        IncrementTownLoyalty( bTownId,
-iLocalNPCBonus );
-                                                }
-                                        }
-                                }
-                        }
-                }
-        }
-
-
-        // soldier count is limited by a max number
-        if( iSoldierCount > MAX_SOLDIER_COUNT_FOR_IN_TOWN_LOYALTY_GAIN )
-        {
-                iSoldierCount = MAX_SOLDIER_COUNT_FOR_IN_TOWN_LOYALTY_GAIN;
-        }
-
-        // adjust for % town control
-        iSoldierCount *= iUnderControl;
-        iSoldierCount /= 100;
-
-        // add loyalty gain due to mercs
-        IncrementTownLoyalty( bTownId, iSoldierCount * HOURLY_GAIN_PER_MERC_IN_TOWN );
-
-
-        // find out if there are any militia anywhere in this town
-        iMilitiaValue = 0;
-        for( ubMilitiaLevel = 0; ubMilitiaLevel < MAX_MILITIA_LEVELS; ubMilitiaLevel++ )
-        {
-                // regulars/elites are worth double/triple normal
-                iMilitiaValue += ((ubMilitiaLevel + 1) * GetMilitiaCountAtLevelAnywhereInTown(
-bTownId, ubMilitiaLevel ));
-        }
-
-        // militia count is limited by a max number
-        if( iMilitiaValue > MAX_MILITIA_VALUE_FOR_IN_TOWN_LOYALTY_GAIN )
-        {
-                iMilitiaValue = MAX_MILITIA_VALUE_FOR_IN_TOWN_LOYALTY_GAIN;
-        }
-
-        // adjust for % town control
-        iMilitiaValue *= iUnderControl;
-        iMilitiaValue /= 100;
-
-        // add loyalty gain due to militia
-        IncrementTownLoyalty( bTownId, iMilitiaValue * HOURLY_GAIN_PER_MILITIA_IN_TOWN );
-
-        return;
-}
-
-
-void UpdateTownLoyaltyBasedOnBadGuysInTown( INT8 bTownId )
-{
-        // will update a town's loyalty based on number and type of bad guys in it
-        INT32 iTotalEnemies = 0;
-        INT16 sSectorX =0, sSectorY = 0;
-        UINT8 ubAdmins, ubRegs, ubElites;
-        INT32 iUnderControl;
-
-        // find which sectors are this town and look at bad guys in those sectors
-        // adjust for number of sectors bad guys control...like the player
-        for( sSectorX = 0; sSectorX < MAP_WORLD_X; sSectorX++ )
-        {
-                for( sSectorY = 0; sSectorY < MAP_WORLD_Y; sSectorY++ )
-                {
-                        // check if sector belongs to this town and is controlled by bad guys
-                        if ( ( SectorIsPartOfTown( bTownId, sSectorX, sSectorY ) == TRUE ) && (
-StrategicMap[ sSectorX + sSectorY * MAP_WORLD_X ].fEnemyControlled == TRUE ) )
-                        {
-                                // controlled by bad guys..adjust numbers for type
-                                GetNumberOfEnemiesInSector( sSectorX, sSectorY, &ubAdmins, &ubRegs,
-&ubElites );
-
-                                // administrators
-                                iTotalEnemies += ( INT32 ) ubAdmins;
-                                // regulars
-                                iTotalEnemies += ( INT32 ) ubRegs * NUMBER_OF_RANKS_PER_REGULAR;
-                                // elites
-                          iTotalEnemies += ( INT32 ) ubElites * NUMBER_OF_RANKS_PER_ELITE;
-                        }
-                }
-        }
-
-
-        // check vs. maximum influence possible
-        if( iTotalEnemies > MAX_ENEMY_SOLDIER_RANKS_FOR_IN_TOWN_LOYALTY_DROP )
-        {
-                // we have, adjust
-                iTotalEnemies = MAX_ENEMY_SOLDIER_RANKS_FOR_IN_TOWN_LOYALTY_DROP;
-        }
-
-
-        // find how much of town is under enemy control
-        iUnderControl = GetTownSectorSize( bTownId ) - GetTownSectorsUnderControl( bTownId );
-        iUnderControl *= 100;
-        iUnderControl /= GetTownSectorSize( bTownId );
-
-        // adjust number of enemies for town control
-        iTotalEnemies *= iUnderControl;
-        iTotalEnemies /= 100;
-
-        // adjust loyalty downward for enemies
-        DecrementTownLoyalty( bTownId, iTotalEnemies * HOURLY_DROP_PER_ENEMY_RANK_IN_TOWN );
-}
-*/
-
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) {
   // handle the impact on loyalty of the murder of a civilian
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
   INT32 iLoyaltyChange = 0;
   INT8 bSeenState = 0;
   INT32 iCounter = 0;
@@ -617,10 +368,10 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   }
 
   // if this is a profiled civilian NPC
-  if (pSoldier->ubProfile != NO_PROFILE) {
+  if (GetSolProfile(pSoldier) != NO_PROFILE) {
     // ignore murder of NPCs if they're not loyal to the rebel cause - they're really just enemies
     // in civilian clothing
-    if (gMercProfiles[pSoldier->ubProfile].ubMiscFlags3 &
+    if (gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags3 &
         PROFILE_MISC_FLAG3_TOWN_DOESNT_CARE_ABOUT_DEATH) {
       return;
     }
@@ -651,7 +402,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   }
 
   // get town id
-  bTownId = GetTownIdForSector(pSoldier->sSectorX, pSoldier->sSectorY);
+  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
 
   // if civilian is NOT in a town
   if (bTownId == BLANK_SECTOR) {
@@ -754,7 +505,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
 
     case ENEMY_TEAM:
       // check whose sector this is
-      if (StrategicMap[(pSoldier->sSectorX) + (MAP_WORLD_X * (pSoldier->sSectorY))]
+      if (StrategicMap[(GetSolSectorX(pSoldier)) + (MAP_WORLD_X * (GetSolSectorY(pSoldier)))]
               .fEnemyControlled == TRUE) {
         // enemy soldiers... in enemy controlled sector.  Gain loyalty
         fIncrement = TRUE;
@@ -798,7 +549,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
         iLoyaltyChange *= MULTIPLIER_FOR_MURDER_BY_MONSTER;
 
         // check whose sector this is
-        if (StrategicMap[(pSoldier->sSectorX) + (MAP_WORLD_X * (pSoldier->sSectorY))]
+        if (StrategicMap[(GetSolSectorX(pSoldier)) + (MAP_WORLD_X * (GetSolSectorY(pSoldier)))]
                 .fEnemyControlled == TRUE) {
           // enemy controlled sector - gain loyalty
           fIncrement = TRUE;
@@ -814,34 +565,6 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
       return;
   }
 
-  /* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
-          // figure out how long before the news of the murder spreads and lowers town loyalty
-          if (bSeenState == 0)
-          {
-                  // nobody saw nothing.  Will be some time before the grisly remains are
-     discovered... uiLoyaltyEffectDelay = 60 * (1 + Random(12));	// 1-12 hrs in minutes
-          }
-          else
-          {
-                  // there are witnesses, news reported & spread very quickly
-                  uiLoyaltyEffectDelay = 30;
-          }
-
-
-          // create the event value, with bTownId & for iLoyaltyChange as data
-          uiValue = BuildLoyaltyEventValue( bTownId , iLoyaltyChange, fIncrement );
-          // post the event
-          AddStrategicEvent( EVENT_TOWN_LOYALTY_UPDATE, GetWorldTotalMin() + uiLoyaltyEffectDelay,
-     uiValue );
-
-          // ideally, we'd like to also call AffectAllTownsLoyaltyByDistanceFrom() here to spread
-     the news to all other towns,
-          // but we don't have that available on a delay right now, and it would be a bit of a pain,
-     since we only have 32 bits
-          // of event data to pass in, and that would have to store iLoyaltyChange, sSectorX, and
-     sSectorY (64 bits)
-  */
-
   // if it's a decrement, negate the value
   if (!fIncrement) {
     iLoyaltyChange *= -1;
@@ -852,23 +575,23 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   iLoyaltyChange *= 100;
   iLoyaltyChange /= (100 + (25 * LOYALTY_EVENT_DISTANCE_THRESHOLD));
 
-  AffectAllTownsLoyaltyByDistanceFrom(iLoyaltyChange, pSoldier->sSectorX, pSoldier->sSectorY,
-                                      pSoldier->bSectorZ);
+  AffectAllTownsLoyaltyByDistanceFrom(iLoyaltyChange, GetSolSectorX(pSoldier),
+                                      GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
 }
 
 // check town and raise loyalty value for hiring a merc from a town...not a lot of a gain, but some
 void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
   UINT32 uiLoyaltyValue = 0;
 
   // get town id civilian
-  bTownId = GetTownIdForSector(pSoldier->sSectorX, pSoldier->sSectorY);
+  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
 
   // is the merc currently in their home town?
-  if (bTownId == gMercProfiles[pSoldier->ubProfile].bTown) {
+  if (bTownId == gMercProfiles[GetSolProfile(pSoldier)].bTown) {
     // yep, value of loyalty bonus depends on his importance to this to town
     uiLoyaltyValue =
-        MULTIPLIER_LOCAL_RPC_HIRED * gMercProfiles[pSoldier->ubProfile].bTownAttachment;
+        MULTIPLIER_LOCAL_RPC_HIRED * gMercProfiles[GetSolProfile(pSoldier)].bTownAttachment;
 
     // increment town loyalty gain
     IncrementTownLoyalty(bTownId, uiLoyaltyValue);
@@ -883,28 +606,6 @@ void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier) {
   // not to be implemented at this time
   return (FALSE);
-
-  /*
-          // this function will handle robbery by the passed soldiertype of an object from a town
-    he/she is in
-          // it will check LOS code for all civilians around the stealing soldier if any of them
-    have LOS to the soldier
-          // then roll against thief's dexterity, if fail then you were caught( adjust loyalty base
-    on theft and value of the object and if the object is owned by one of the people with LOS) and
-    return a TRUE
-          // otherwise return false.
-
-          INT8 bTownId = 0;
-
-          // get town id
-          bTownId = GetTownIdForSector( pSoldier->sSectorX, pSoldier->sSectorY );
-
-
-          // debug message
-    ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"Theft not yet implemented.");
-
-          return ( FALSE );
-  */
 }
 
 // handle loyalty adjustment for dmg inflicted on a building
@@ -914,7 +615,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   // have stopped it
   INT16 sLoyaltyValue = 0;
   INT16 sPolicingLoyalty = 0;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
 
   // hurt loyalty for damaging the building
   sLoyaltyValue = sPointsDmg * MULTIPLIER_FOR_DAMAGING_A_BUILDING;
@@ -923,7 +624,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   sPolicingLoyalty = sPointsDmg * MULTIPLIER_FOR_NOT_PREVENTING_BUILDING_DAMAGE;
 
   // get town id
-  bTownId = GetTownIdForSector(pSoldier->sSectorX, pSoldier->sSectorY);
+  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
 
   // penalize the side that did it
   if (pSoldier->bTeam == OUR_TEAM) {
@@ -942,7 +643,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   }
 
   // penalize the side that should have stopped it
-  if (StrategicMap[pSoldier->sSectorX + pSoldier->sSectorY * MAP_WORLD_X].fEnemyControlled ==
+  if (StrategicMap[GetSolSectorX(pSoldier) + pSoldier->sSectorY * MAP_WORLD_X].fEnemyControlled ==
       TRUE) {
     // enemy should have prevented it, let them suffer a little
     IncrementTownLoyalty(bTownId, sPolicingLoyalty);
@@ -1027,89 +728,6 @@ void RemoveRandomItemsInSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, U
       }
     }
   }
-
-  return;
-}
-
-/* ARM: Civilian theft of items was removed
-void HandleTheftByCiviliansInSector( INT16 sX, INT16 sY, INT32 iLoyalty )
-{
-        UINT8 ubChance = 0;
-
-        // any loyalty under the theft threshhold is chance that thefts will occur
-        if( iLoyalty < THRESHOLD_FOR_TOWN_THEFT )
-        {
-                // sectors with mercs are immune
-                if( fSectorsWithSoldiers[ sX + ( MAP_WORLD_X * sY ) ][ 0 ] == FALSE )
-                {
-                        // sectors not yet visited by player are also immune (other sectors in town
-could have been visited) if ( GetSectorFlagStatus( sX, sY, 0, SF_ALREADY_VISITED ) == TRUE )
-                        {
-                                ubChance = 5 + ( THRESHOLD_FOR_TOWN_THEFT - iLoyalty ) / 2;
-
-                                // remove items from sector
-                                RemoveRandomItemsInSector( sX, sY, 0, ubChance);
-                        }
-                }
-        }
-
-        return;
-}
-
-void HandleTownTheft( void )
-{
-        INT32 iCounter = 0;
-        UINT8 ubTown;
-
-        // init sectors with soldiers list
-        InitSectorsWithSoldiersList( );
-
-        // build list
-        BuildSectorsWithSoldiersList(  );
-
-        while( pTownNamesList[ iCounter ] != 0 )
-        {
-                ubTown = StrategicMap[ pTownLocationsList[ iCounter ] ].bNameId;
-
-                // if this town tracks loyalty, and tracking has started
-                if ( ( ubTown != BLANK_SECTOR ) && gfTownUsesLoyalty[ ubTown ] && gTownLoyalty[
-ubTown ].fStarted )
-                {
-                        // handle theft in this town sector
-                        HandleTheftByCiviliansInSector( ( INT16 )( pTownLocationsList[ iCounter ] %
-MAP_WORLD_X ), ( INT16 )( pTownLocationsList[ iCounter ] / MAP_WORLD_X ), gTownLoyalty[ ubTown
-].ubRating );
-                }
-
-                iCounter++;
-        }
-
-        return;
-}
-*/
-
-void BuildListOfTownSectors(void) {
-  INT32 iCounterX = 0, iCounterY = 0, iCounter = 0;
-  UINT16 usSector;
-
-  // initialize
-  memset(pTownNamesList, BLANK_SECTOR, sizeof(pTownNamesList));
-  memset(pTownLocationsList, 0xFF, sizeof(pTownLocationsList));
-
-  // run through list
-  for (iCounterX = 0; iCounterX < MAP_WORLD_X; iCounterX++) {
-    for (iCounterY = 0; iCounterY < MAP_WORLD_Y; iCounterY++) {
-      usSector = iCounterX + iCounterY * MAP_WORLD_X;
-
-      if ((StrategicMap[usSector].bNameId >= FIRST_TOWN) &&
-          (StrategicMap[usSector].bNameId < NUM_TOWNS)) {
-        pTownNamesList[iCounter] = StrategicMap[usSector].bNameId;
-        pTownLocationsList[iCounter] = usSector;
-
-        iCounter++;
-      }
-    }
-  }
 }
 
 #ifdef JA2TESTVERSION
@@ -1138,21 +756,21 @@ void CalcDistancesBetweenTowns(void) {
   // The minimum distances between towns get stored.
   uiCounterA = 0;
   uiCounterB = 0;
-
-  while (pTownNamesList[uiCounterA] != 0) {
+  const TownSectors *townSectors = GetAllTownSectors();
+  while ((*townSectors)[uiCounterA].townID != 0) {
     // reset second counter
     uiCounterB = uiCounterA;
 
-    while (pTownNamesList[uiCounterB] != 0) {
-      ubTownA = (UINT8)pTownNamesList[uiCounterA];
-      ubTownB = (UINT8)pTownNamesList[uiCounterB];
+    while ((*townSectors)[uiCounterB].townID != 0) {
+      ubTownA = (UINT8)(*townSectors)[uiCounterA].townID;
+      ubTownB = (UINT8)(*townSectors)[uiCounterB].townID;
 
       // if they're not in the same town
       if (ubTownA != ubTownB) {
         // calculate fastest distance between them (in sectors) - not necessarily shortest distance,
         // roads are faster!
-        iDistance = FindStratPath((INT16)pTownLocationsList[uiCounterA],
-                                  (INT16)pTownLocationsList[uiCounterB], ubTempGroupId, FALSE);
+        iDistance = FindStratPath((INT16)(*townSectors)[uiCounterA].sectorID,
+                                  (INT16)(*townSectors)[uiCounterB].sectorID, ubTempGroupId, FALSE);
       } else {
         // same town, distance is 0 by definition
         iDistance = 0;
@@ -1248,57 +866,6 @@ void ReadInDistancesBetweenTowns(void) {
 
 INT32 GetTownDistances(UINT8 ubTown, UINT8 ubTownA) { return (iTownDistances[ubTown][ubTownA]); }
 
-/* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
-void HandleDelayedTownLoyaltyEvent( UINT32 uiValue )
-{
-        INT8 bTownId = 0;
-        UINT32 uiLoyaltyChange = 0;
-        BOOLEAN fIncrement = FALSE;
-
-        // first 8 bits are town id, 23 are amount and last is increment or decrement
-
-        // get increment
-        fIncrement = ( BOOLEAN )( GET_TOWN_INCREMENT( iValue ) ) ;
-
-        // town id
-        bTownId = ( INT8 )( GET_TOWN_ID_FOR_LOYALTY( iValue ) );
-
-        // the amount
-        uiLoyaltyChange = ( INT32 )( GET_TOWN_LOYALTY_CHANGE( iValue ) );
-
-        if (fIncrement)
-        {
-                IncrementTownLoyalty( bTownId, uiLoyaltyChange );
-        }
-        else
-        {
-                DecrementTownLoyalty( bTownId, uiLoyaltyChange );
-        }
-}
-
-
-UINT32 BuildLoyaltyEventValue( INT8 bTownValue, UINT32 uiValue, BOOLEAN fIncrement )
-{
-        UINT32 uiReturnValue  = 0;
-        UINT32 uiTempValue = 0;
-
-        // the town name in 8 most sig bits
-        uiTempValue = ( UINT32 )( bTownValue );
-
-        uiReturnValue += ( uiTempValue << 24 );
-
-        // the incrment decrement amount is
-        uiTempValue = ( UINT32 )( uiValue );
-
-        uiTempValue = ( ( uiTempValue << 8 ) >> 7 );
-        uiReturnValue += uiTempValue;
-
-        uiReturnValue += ( fIncrement != 0 ? 1: 0 );
-
-        return( uiReturnValue );
-}
-*/
-
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
@@ -1324,7 +891,7 @@ BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile) {
 }
 
 void ReduceLoyaltyForRebelsBetrayed(void) {
-  INT8 bTownId;
+  TownID bTownId;
 
   // reduce loyalty to player all across Arulco
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
@@ -1346,7 +913,7 @@ void ReduceLoyaltyForRebelsBetrayed(void) {
 
 INT32 GetNumberOfWholeTownsUnderControl(void) {
   INT32 iNumber = 0;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
 
   // run through the list of towns..if the entire town is under player control, then increment the
   // number of towns under player control
@@ -1363,7 +930,7 @@ INT32 GetNumberOfWholeTownsUnderControl(void) {
 
 INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(INT8 bCityToExclude) {
   INT32 iNumber = 0;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
 
   // run through the list of towns..if the entire town is under player control, then increment the
   // number of towns under player control
@@ -1378,7 +945,7 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(INT8 bCityToExclude) {
 }
 
 // is the ENTIRE town under player control?
-INT32 IsTownUnderCompleteControlByPlayer(INT8 bTownId) {
+INT32 IsTownUnderCompleteControlByPlayer(TownID bTownId) {
   if (GetTownSectorSize(bTownId) == GetTownSectorsUnderControl(bTownId)) {
     return (TRUE);
   }
@@ -1387,7 +954,7 @@ INT32 IsTownUnderCompleteControlByPlayer(INT8 bTownId) {
 }
 
 // is the ENTIRE town under enemy control?
-INT32 IsTownUnderCompleteControlByEnemy(INT8 bTownId) {
+INT32 IsTownUnderCompleteControlByEnemy(TownID bTownId) {
   if (GetTownSectorsUnderControl(bTownId) == 0) {
     return (TRUE);
   }
@@ -1396,7 +963,7 @@ INT32 IsTownUnderCompleteControlByEnemy(INT8 bTownId) {
 }
 
 void AdjustLoyaltyForCivsEatenByMonsters(INT16 sSectorX, INT16 sSectorY, UINT8 ubHowMany) {
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
   UINT32 uiLoyaltyChange = 0;
   CHAR16 str[256];
   CHAR16 pSectorString[128];
@@ -1422,7 +989,7 @@ void AdjustLoyaltyForCivsEatenByMonsters(INT16 sSectorX, INT16 sSectorY, UINT8 u
 
 // this applies the SAME change to every town equally, regardless of distance from the event
 void IncrementTownLoyaltyEverywhere(UINT32 uiLoyaltyIncrease) {
-  INT8 bTownId;
+  TownID bTownId;
 
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     IncrementTownLoyalty(bTownId, uiLoyaltyIncrease);
@@ -1430,7 +997,7 @@ void IncrementTownLoyaltyEverywhere(UINT32 uiLoyaltyIncrease) {
 }
 
 void DecrementTownLoyaltyEverywhere(UINT32 uiLoyaltyDecrease) {
-  INT8 bTownId;
+  TownID bTownId;
 
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     DecrementTownLoyalty(bTownId, uiLoyaltyDecrease);
@@ -1439,7 +1006,7 @@ void DecrementTownLoyaltyEverywhere(UINT32 uiLoyaltyDecrease) {
 // this applies the change to every town differently, depending on the distance from the event
 void HandleGlobalLoyaltyEvent(UINT8 ubEventType, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   INT32 iLoyaltyChange;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
 
   if (bSectorZ == 0) {
     // grab town id, if this event occured within one
@@ -1512,7 +1079,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, INT16 sSectorX, I
                                          INT8 bSectorZ) {
   INT16 sEventSector;
   UINT8 ubTempGroupId;
-  INT8 bTownId;
+  TownID bTownId;
   UINT32 uiIndex;
   INT32 iThisDistance;
   INT32 iShortestDistance[NUM_TOWNS];
@@ -1529,17 +1096,18 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, INT16 sSectorX, I
   // need a temporary group create to use for laying down distance paths
   ubTempGroupId = CreateNewPlayerGroupDepartingFromSector((UINT8)sSectorX, (UINT8)sSectorY);
 
-  // calc distance to the event sector from EACH SECTOR of each town, keeping only the shortest one
-  // for every town
+  // calc distance to the event sector from EACH GetSectorID8 of each town, keeping only the
+  // shortest one for every town
   uiIndex = 0;
-  while (pTownNamesList[uiIndex] != 0) {
-    bTownId = (UINT8)pTownNamesList[uiIndex];
+  const TownSectors *townSectors = GetAllTownSectors();
+  while ((*townSectors)[uiIndex].townID != 0) {
+    bTownId = (UINT8)(*townSectors)[uiIndex].townID;
 
     // skip path test if distance is already known to be zero to speed this up a bit
     if (iShortestDistance[bTownId] > 0) {
       // calculate across how many sectors the fastest travel path from event to this town sector
-      iThisDistance =
-          FindStratPath(sEventSector, (INT16)pTownLocationsList[uiIndex], ubTempGroupId, FALSE);
+      iThisDistance = FindStratPath(sEventSector, (INT16)(*townSectors)[uiIndex].sectorID,
+                                    ubTempGroupId, FALSE);
 
       if (iThisDistance < iShortestDistance[bTownId]) {
         iShortestDistance[bTownId] = iThisDistance;
@@ -1600,7 +1168,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, INT16 sSectorX, I
 }
 
 // to be called whenever player gains control of a sector in any way
-void CheckIfEntireTownHasBeenLiberated(INT8 bTownId, INT16 sSectorX, INT16 sSectorY) {
+void CheckIfEntireTownHasBeenLiberated(TownID bTownId, INT16 sSectorX, INT16 sSectorY) {
   // the whole town is under our control, check if we never libed this town before
   if (!gTownLoyalty[bTownId].fLiberatedAlready && IsTownUnderCompleteControlByPlayer(bTownId)) {
     if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0)) {
@@ -1628,7 +1196,7 @@ void CheckIfEntireTownHasBeenLiberated(INT8 bTownId, INT16 sSectorX, INT16 sSect
   }
 }
 
-void CheckIfEntireTownHasBeenLost(INT8 bTownId, INT16 sSectorX, INT16 sSectorY) {
+void CheckIfEntireTownHasBeenLost(TownID bTownId, INT16 sSectorX, INT16 sSectorY) {
   // NOTE:  only towns which allow you to train militia are important enough to get
   // reported here (and they're the only ones you can protect)
   if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0) &&
@@ -1693,12 +1261,12 @@ void SetTheFirstBattleSector(INT16 sSectorValue) {
 }
 
 // did first battle take place here
-BOOLEAN DidFirstBattleTakePlaceInThisTown(INT8 bTownId) {
+BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId) {
   INT8 bTownBattleId = 0;
 
   // get town id for sector
-  bTownBattleId = GetTownIdForSector((INT16)(sWorldSectorLocationOfFirstBattle % MAP_WORLD_X),
-                                     (INT16)(sWorldSectorLocationOfFirstBattle / MAP_WORLD_X));
+  bTownBattleId = GetTownIdForSector((INT16)(SectorID16_X(sWorldSectorLocationOfFirstBattle)),
+                                     (INT16)(SectorID16_Y(sWorldSectorLocationOfFirstBattle)));
 
   return (bTownId == bTownBattleId);
 }
@@ -1711,11 +1279,11 @@ UINT32 PlayerStrength(void) {
   for (ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
        ubLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubLoop++) {
     pSoldier = MercPtrs[ubLoop];
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       if (pSoldier->bInSector ||
           (pSoldier->fBetweenSectors && ((pSoldier->ubPrevSectorID % 16) + 1) == gWorldSectorX &&
            ((pSoldier->ubPrevSectorID / 16) + 1) == gWorldSectorY &&
-           (pSoldier->bSectorZ == gbWorldSectorZ))) {
+           (GetSolSectorZ(pSoldier) == gbWorldSectorZ))) {
         // count this person's strength (condition), calculated as life reduced up to half according
         // to maxbreath
         uiStrength = pSoldier->bLife * (pSoldier->bBreathMax + 100) / 200;
@@ -1734,7 +1302,7 @@ UINT32 EnemyStrength(void) {
   for (ubLoop = gTacticalStatus.Team[ENEMY_TEAM].bFirstID;
        ubLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID; ubLoop++) {
     pSoldier = MercPtrs[ubLoop];
-    if (pSoldier->bActive && pSoldier->bInSector && !pSoldier->bNeutral) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && !pSoldier->bNeutral) {
       // count this person's strength (condition), calculated as life reduced up to half according
       // to maxbreath
       uiStrength = pSoldier->bLife * (pSoldier->bBreathMax + 100) / 200;
@@ -1766,7 +1334,7 @@ void HandleLoyaltyImplicationsOfMercRetreat(INT8 bRetreatCode, INT16 sSectorX, I
 }
 
 void MaximizeLoyaltyForDeidrannaKilled(void) {
-  INT8 bTownId;
+  TownID bTownId;
 
   // max out loyalty to player all across Arulco
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {

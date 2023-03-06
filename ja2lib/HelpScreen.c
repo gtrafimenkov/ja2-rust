@@ -112,7 +112,7 @@ extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurfac
 
 // this is the size of the text buffer where everything will be blitted.
 // 2 ( bytest for char ) * width of buffer * height of 1 line * # of text lines
-//#define	HLP_SCRN__NUMBER_BYTES_IN_TEXT_BUFFER						( 2
+// #define	HLP_SCRN__NUMBER_BYTES_IN_TEXT_BUFFER						( 2
 //* HLP_SCRN__WIDTH_OF_TEXT_BUFFER * HLP_SCRN__HEIGHT_OF_1_LINE_IN_BUFFER *
 // HLP_SCRN__MAX_NUMBER_OF_LINES_IN_BUFFER )
 #define HLP_SCRN__WIDTH_OF_TEXT_BUFFER 280
@@ -1073,7 +1073,7 @@ void HelpScreenSpecialExitCode() {
       fCharacterInfoPanelDirty = TRUE;
       fTeamPanelDirty = TRUE;
       fMapScreenBottomDirty = TRUE;
-      fMapPanelDirty = TRUE;
+      MarkForRedrawalStrategicMap();
       break;
 
     case HELP_SCREEN_TACTICAL:

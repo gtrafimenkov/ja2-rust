@@ -254,19 +254,6 @@ enum {
   NUM_INV_SLOTS,
 };
 
-// used for color codes, but also shows the enemy type for debugging purposes
-enum {
-  SOLDIER_CLASS_NONE,
-  SOLDIER_CLASS_ADMINISTRATOR,
-  SOLDIER_CLASS_ELITE,
-  SOLDIER_CLASS_ARMY,
-  SOLDIER_CLASS_GREEN_MILITIA,
-  SOLDIER_CLASS_REG_MILITIA,
-  SOLDIER_CLASS_ELITE_MILITIA,
-  SOLDIER_CLASS_CREATURE,
-  SOLDIER_CLASS_MINER,
-};
-
 #define SOLDIER_CLASS_ENEMY(bSoldierClass) \
   ((bSoldierClass >= SOLDIER_CLASS_ADMINISTRATOR) && (bSoldierClass <= SOLDIER_CLASS_ARMY))
 #define SOLDIER_CLASS_MILITIA(bSoldierClass) \

@@ -3,7 +3,6 @@
 #include "Laptop/BobbyRMailOrder.h"
 #include "Laptop/Email.h"
 #include "Laptop/History.h"
-#include "Laptop/LaptopSave.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "Strategic/GameClock.h"
@@ -84,7 +83,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
     usStandardMapPos = LOST_SHIPMENT_GRIDNO;
     SetFactFalse(FACT_NEXT_PACKAGE_CAN_BE_DELAYED);
   } else if ((gTownLoyalty[DRASSEN].ubRating < 20) ||
-             StrategicMap[CALCULATE_STRATEGIC_INDEX(13, MAP_ROW_B)].fEnemyControlled) {
+             StrategicMap[GetSectorID16(13, MAP_ROW_B)].fEnemyControlled) {
     // loss of the whole shipment
     gpNewBobbyrShipments[ubOrderID].fActive = FALSE;
 
@@ -935,8 +934,7 @@ void DropOffItemsInMeduna(UINT8 ubOrderNum) {
   UINT32 i;
 
   // if the player doesnt "own" the sector,
-  if (StrategicMap[CALCULATE_STRATEGIC_INDEX(MEDUNA_ITEM_DROP_OFF_SECTOR_X,
-                                             MEDUNA_ITEM_DROP_OFF_SECTOR_Y)]
+  if (StrategicMap[GetSectorID16(MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y)]
           .fEnemyControlled) {
     // the items disappear
     gpNewBobbyrShipments[ubOrderNum].fActive = FALSE;

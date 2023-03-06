@@ -12,6 +12,7 @@
 #include "SGP/Random.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
@@ -1804,10 +1805,10 @@ BOOLEAN AddMercStructureInfoFromAnimSurface(INT16 sGridNo, struct SOLDIERTYPE *p
                     {
                             // try to add default
                             ScreenMsg( MSG_FONT_YELLOW, MSG_DEBUG, L"FAILED: add struct info for
-       merc: %d, at %d direction %d, trying default instead", pSoldier->ubID, sGridNo,
+       merc: %d, at %d direction %d, trying default instead", GetSolID(pSoldier), sGridNo,
        pSoldier->bDirection );
 
-                            pStructureFileRef = GetDefaultStructureRef( pSoldier->ubID );
+                            pStructureFileRef = GetDefaultStructureRef( GetSolID(pSoldier) );
                             if ( pStructureFileRef )
                             {
                                     fReturn = AddStructureToWorld( sGridNo, pSoldier->bLevel, &(
@@ -1820,7 +1821,7 @@ BOOLEAN AddMercStructureInfoFromAnimSurface(INT16 sGridNo, struct SOLDIERTYPE *p
     if (fReturn == FALSE) {
       // Debug msg
       ScreenMsg(MSG_FONT_RED, MSG_DEBUG,
-                L"FAILED: add struct info for merc %d (%s), at %d direction %d", pSoldier->ubID,
+                L"FAILED: add struct info for merc %d (%s), at %d direction %d", GetSolID(pSoldier),
                 pSoldier->name, sGridNo, pSoldier->bDirection);
 
       if (pStructureFileRef->pDBStructureRef[gOneCDirection[pSoldier->bDirection]]

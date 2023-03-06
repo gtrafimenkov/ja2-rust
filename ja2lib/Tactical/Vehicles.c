@@ -5,6 +5,7 @@
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
@@ -19,9 +20,7 @@
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Interface.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfacePanels.h"
-#include "Tactical/Menptr.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierAdd.h"
@@ -33,6 +32,7 @@
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/TileAnimation.h"
+#include "UI.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
@@ -144,7 +144,7 @@ helicopter
 // ap cost per crit
 #define COST_PER_ENGINE_CRIT 15
 #define COST_PER_TIRE_HIT 5
-//#define VEHICLE_MAX_INTERNAL 250
+// #define VEHICLE_MAX_INTERNAL 250
 
 // set the driver of the vehicle
 void SetDriver(INT32 iID, UINT8 ubID);
@@ -357,9 +357,9 @@ BOOLEAN IsThisVehicleAccessibleToSoldier(struct SOLDIERTYPE *pSoldier, INT32 iId
   }
 
   // any sector values off?
-  if ((pSoldier->sSectorX != pVehicleList[iId].sSectorX) ||
-      (pSoldier->sSectorY != pVehicleList[iId].sSectorY) ||
-      (pSoldier->bSectorZ != pVehicleList[iId].sSectorZ)) {
+  if ((GetSolSectorX(pSoldier) != pVehicleList[iId].sSectorX) ||
+      (GetSolSectorY(pSoldier) != pVehicleList[iId].sSectorY) ||
+      (GetSolSectorZ(pSoldier) != pVehicleList[iId].sSectorZ)) {
     return (FALSE);
   }
 
@@ -428,7 +428,7 @@ BOOLEAN AddSoldierToVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
 
   if (pVehicleSoldier) {
     // can't call SelectSoldier in mapscreen, that will initialize interface panels!!!
-    if (guiCurrentScreen == GAME_SCREEN) {
+    if (IsTacticalMode()) {
       SelectSoldier(pVehicleSoldier->ubID, FALSE, TRUE);
     }
 
@@ -443,7 +443,7 @@ BOOLEAN AddSoldierToVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
       // add person in
       pVehicleList[iId].pPassengers[iCounter] = pSoldier;
 
-      if (pSoldier->bAssignment == VEHICLE) {
+      if (GetSolAssignment(pSoldier) == VEHICLE) {
         TakeSoldierOutOfVehicle(pSoldier);
         // NOTE: This will leave the soldier on a squad.  Must be done PRIOR TO and in AS WELL AS
         // the call to RemoveCharacterFromSquads() that's coming up, to permit direct
@@ -481,7 +481,7 @@ BOOLEAN AddSoldierToVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
         // Set as driver...
         pSoldier->uiStatusFlags |= SOLDIER_DRIVER;
 
-        SetDriver(iId, pSoldier->ubID);
+        SetDriver(iId, GetSolID(pSoldier));
 
       } else {
         // Set as driver...
@@ -500,7 +500,7 @@ BOOLEAN AddSoldierToVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
 
         // can't call SetCurrentSquad OR SelectSoldier in mapscreen, that will initialize interface
         // panels!!!
-        if (guiCurrentScreen == GAME_SCREEN) {
+        if (IsTacticalMode()) {
           SetCurrentSquad(pVehicleSoldier->bAssignment, TRUE);
         }
       }
@@ -515,9 +515,9 @@ BOOLEAN AddSoldierToVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
 
 void SetSoldierExitVehicleInsertionData(struct SOLDIERTYPE *pSoldier, INT32 iId) {
   if (iId == iHelicopterVehicleId && !pSoldier->bInSector) {
-    if (pSoldier->sSectorX != BOBBYR_SHIPPING_DEST_SECTOR_X ||
-        pSoldier->sSectorY != BOBBYR_SHIPPING_DEST_SECTOR_Y ||
-        pSoldier->bSectorZ != BOBBYR_SHIPPING_DEST_SECTOR_Z) {
+    if (GetSolSectorX(pSoldier) != BOBBYR_SHIPPING_DEST_SECTOR_X ||
+        GetSolSectorY(pSoldier) != BOBBYR_SHIPPING_DEST_SECTOR_Y ||
+        GetSolSectorZ(pSoldier) != BOBBYR_SHIPPING_DEST_SECTOR_Z) {
       // Not anything different here - just use center gridno......
       pSoldier->ubStrategicInsertionCode = INSERTION_CODE_CENTER;
     } else {
@@ -644,14 +644,15 @@ BOOLEAN RemoveSoldierFromVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
     if (pSoldier->bLife >= OKLIFE) {
       // mark the sector as visited (flying around in the chopper doesn't, so this does it as soon
       // as we get off it)
-      SetSectorFlag(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ, SF_ALREADY_VISITED);
+      SetSectorFlag(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier),
+                    SF_ALREADY_VISITED);
     }
 
     SetSoldierExitVehicleInsertionData(pSoldier, iId);
 
     // Update in sector if this is the current sector.....
-    if (pSoldier->sSectorX == gWorldSectorX && pSoldier->sSectorY == gWorldSectorY &&
-        pSoldier->bSectorZ == gbWorldSectorZ) {
+    if (GetSolSectorX(pSoldier) == gWorldSectorX && GetSolSectorY(pSoldier) == gWorldSectorY &&
+        GetSolSectorZ(pSoldier) == gbWorldSectorZ) {
       UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
     }
   }
@@ -659,105 +660,6 @@ BOOLEAN RemoveSoldierFromVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
   // soldier successfully removed
   return (TRUE);
 }
-
-/*
-void RemoveSoldierFromVehicleBetweenSectors( pSoldier, iId )
-{
-        struct GROUP *pGroup;
-        INT32 iCurrentCostInTime = 0;
-        INT8 bDelta = 0;
-        UINT8 ubCurrent, ubNext, ubDirection, ubSector;
-        UINT8 ubNextX, ubNextY, ubPrevX, ubPrevY;
-        UINT32 uiTraverseTime, uiArriveTime;
-        UINT8 ubGroupId;
-        float flTripFractionCovered;
-
-
-        // set up a mvt group for the grunt
-        pSoldier->fBetweenSectors = TRUE;
-
-        // ok, the guy wasn't in a squad
-        // get his mvt groups position and set the squads to this
-        GetGroupPosition(&ubNextX, &ubNextY, &ubPrevX, &ubPrevY, &uiTraverseTime, &uiArriveTime,
-pVehicleList[ iId ].ubMovementGroup );
-
-        ubGroupId = CreateNewPlayerGroupDepartingFromSector( ( INT8 ) ( pSoldier -> sSectorX ) , (
-INT8 ) ( pSoldier -> sSectorY ) );
-
-        // assign to a group
-        AddPlayerToGroup( ubGroupId, pSoldier );
-
-        // get the group
-        pGroup = GetGroup( ubGroupId );
-
-
-        // find total time for traversal between sectors for foot mvt type
-
-        // get current and next sector values (DON'T use prevX, prevY, that's the sector BEFORE the
-current one!!!) ubCurrent = CALCULATE_STRATEGIC_INDEX( pGroup->ubSectorX, pGroup->ubSectorY );
-        ubNext = CALCULATE_STRATEGIC_INDEX( ubNextX, ubNextY );
-
-        // handle errors
-        Assert( ubCurrent != ubNext );
-        if ( ubCurrent == ubNext )
-                continue;
-
-        // which direction are we moving in?
-        bDelta = (INT8) ubNext - ubCurrent;
-        if( bDelta > 0 )
-        {
-                if( bDelta % SOUTH_MOVE == 0 )
-                {
-                        ubDirection = SOUTH_STRATEGIC_MOVE;
-                }
-                else
-                {
-                        ubDirection = EAST_STRATEGIC_MOVE;
-                }
-        }
-        else
-        {
-                if( bDelta % NORTH_MOVE == 0 )
-                {
-                        ubDirection = NORTH_STRATEGIC_MOVE;
-                }
-                else
-                {
-                        ubDirection = WEST_STRATEGIC_MOVE;
-                }
-        }
-
-
-        // calculate how long the entire trip would have taken on foot
-        ubSector = ( UINT8 ) SECTOR( pGroup->ubSectorX, pGroup->ubSectorY );
-        iCurrentCostInTime = GetSectorMvtTimeForGroup( ubSector, ubDirection, pGroup );
-
-        if( iCurrentCostInTime == 0xffffffff )
-        {
-                AssertMsg( 0, String("Group %d (%s) attempting illegal move from sector %d, dir %d
-(%s).", pGroup->ubGroupID, ( pGroup->fPlayer ) ? "Player" : "AI", ubSector, ubDirection,
-                                gszTerrain[SectorInfo[ubSector].ubTraversability[ubDirection]] ) );
-        }
-
-        // figure out what how far along ( percentage ) the vehicle's trip duration we bailed out at
-        flTripFractionCovered = ( uiTraverseTime - uiArriveTime + GetWorldTotalMin( ) ) /
-(float)uiTraverseTime;
-
-        // calculate how much longer we have to go on foot to get there
-        uiArriveTime = ( UINT32 )( ( ( 1.0 - flTripFractionCovered ) * ( float )iCurrentCostInTime )
-+ GetWorldTotalMin( ) );
-
-        SetGroupPosition( ubNextX, ubNextY, ubPrevX, ubPrevY, iCurrentCostInTime, uiArriveTime,
-pSoldier -> ubGroupID );
-
-// ARM: if this is ever reactivated, there seem to be the following additional problems:
-        1) The soldier removed isn't showing any DEST.  Must set up his strategic path/destination.
-        2) The arrive time seems to be much later than it should have been, suggesting the math
-above is wrong somehow 3) Reassigning multiple mercs at once out of a vehicle onroute doesn't work
-'cause the group is between sectors so only the first merc gets added successfully, the others all
-fail.
-}
-*/
 
 BOOLEAN MoveCharactersPathToVehicle(struct SOLDIERTYPE *pSoldier) {
   INT32 iId;
@@ -1169,9 +1071,7 @@ BOOLEAN AnyAccessibleVehiclesInSoldiersSector(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-struct SOLDIERTYPE *GetDriver(INT32 iID) {
-  return (MercPtrs[pVehicleList[iID].ubDriver]);
-}
+struct SOLDIERTYPE *GetDriver(INT32 iID) { return (MercPtrs[pVehicleList[iID].ubDriver]); }
 
 void SetDriver(INT32 iID, UINT8 ubID) { pVehicleList[iID].ubDriver = ubID; }
 
@@ -1195,8 +1095,8 @@ BOOLEAN IsEnoughSpaceInVehicle(INT32 iID) {
 BOOLEAN PutSoldierInVehicle(struct SOLDIERTYPE *pSoldier, INT8 bVehicleId) {
   struct SOLDIERTYPE *pVehicleSoldier = NULL;
 
-  if ((pSoldier->sSectorX != gWorldSectorX) || (pSoldier->sSectorY != gWorldSectorY) ||
-      (pSoldier->bSectorZ != 0) || (bVehicleId == iHelicopterVehicleId)) {
+  if ((GetSolSectorX(pSoldier) != gWorldSectorX) || (GetSolSectorY(pSoldier) != gWorldSectorY) ||
+      (GetSolSectorZ(pSoldier) != 0) || (bVehicleId == iHelicopterVehicleId)) {
     // add the soldier
     return (AddSoldierToVehicle(pSoldier, bVehicleId));
   } else {
@@ -1214,8 +1114,8 @@ BOOLEAN TakeSoldierOutOfVehicle(struct SOLDIERTYPE *pSoldier) {
     return (FALSE);
   }
 
-  if ((pSoldier->sSectorX != gWorldSectorX) || (pSoldier->sSectorY != gWorldSectorY) ||
-      (pSoldier->bSectorZ != 0) || !pSoldier->bInSector) {
+  if ((GetSolSectorX(pSoldier) != gWorldSectorX) || (GetSolSectorY(pSoldier) != gWorldSectorY) ||
+      (GetSolSectorZ(pSoldier) != 0) || !pSoldier->bInSector) {
     // add the soldier
     return (RemoveSoldierFromVehicle(pSoldier, pSoldier->iVehicleId));
   } else {
@@ -1237,7 +1137,7 @@ BOOLEAN EnterVehicle(struct SOLDIERTYPE *pVehicle, struct SOLDIERTYPE *pSoldier)
       // OK, add....
       AddSoldierToVehicle(pSoldier, pVehicle->bVehicleID);
 
-      if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+      if (!(IsMapScreen())) {
         // Change to team panel if we are not already...
         SetCurrentInterfacePanel(TEAM_PANEL);
       }
@@ -1259,7 +1159,7 @@ struct SOLDIERTYPE *GetVehicleSoldierPointerFromPassenger(struct SOLDIERTYPE *pS
   // look for all mercs on the same team,
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
+    if (IsSolActive(pSoldier) && pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
       // Check ubID....
       if (pSoldier->bVehicleID == pSrcSoldier->iVehicleId) {
         return (pSoldier);
@@ -1316,7 +1216,7 @@ BOOLEAN ExitVehicle(struct SOLDIERTYPE *pSoldier) {
 
     // can't call SetCurrentSquad OR SelectSoldier in mapscreen, that will initialize interface
     // panels!!!
-    if (guiCurrentScreen == GAME_SCREEN) {
+    if (IsTacticalMode()) {
       SetCurrentSquad(pSoldier->bAssignment, TRUE);
 
       SelectSoldier(pSoldier->ubID, FALSE, TRUE);
@@ -1416,7 +1316,7 @@ void HandleCriticalHitForVehicleInLocation(UINT8 ubID, INT16 sDmg, INT16 sGridNo
     if (pSoldier != NULL) {
       // Tacticlly remove soldier....
       // EVENT_InitNewSoldierAnim( pSoldier, VEHICLE_DIE, 0, FALSE );
-      // TacticalRemoveSoldier( pSoldier->ubID );
+      // TacticalRemoveSoldier( GetSolID(pSoldier) );
 
       CheckForAndHandleSoldierDeath(pSoldier, &fMadeCorpse);
     }
@@ -1517,9 +1417,9 @@ struct SOLDIERTYPE *GetSoldierStructureForVehicle(INT32 iId) {
   iNumberOnTeam = TOTAL_SOLDIERS;  // gTacticalStatus.Team[ OUR_TEAM ].bLastID;
 
   for (iCounter = 0; iCounter < iNumberOnTeam; iCounter++) {
-    pSoldier = &Menptr[iCounter];
+    pSoldier = GetSoldierByID(iCounter);
 
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
         if (pSoldier->bVehicleID == iId) {
           pFoundSoldier = pSoldier;
@@ -2004,14 +1904,14 @@ BOOLEAN OnlyThisSoldierCanDriveVehicle(struct SOLDIERTYPE *pThisSoldier, INT32 i
   for (iCounter = gTacticalStatus.Team[OUR_TEAM].bFirstID;
        iCounter <= gTacticalStatus.Team[OUR_TEAM].bLastID; iCounter++) {
     // get the current soldier
-    pSoldier = &Menptr[iCounter];
+    pSoldier = GetSoldierByID(iCounter);
 
     // skip checking THIS soldier, we wanna know about everyone else
     if (pSoldier == pThisSoldier) {
       continue;
     }
 
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       // don't count mercs who are asleep here
       if (CanSoldierDriveVehicle(pSoldier, iVehicleId, FALSE)) {
         // this guy can drive it, too

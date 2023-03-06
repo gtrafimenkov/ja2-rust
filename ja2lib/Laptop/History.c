@@ -10,6 +10,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
+#include "Sector.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QuestText.h"
 #include "Strategic/StrategicMap.h"

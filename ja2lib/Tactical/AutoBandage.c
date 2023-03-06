@@ -1,5 +1,6 @@
 #include "Tactical/AutoBandage.h"
 
+#include "CharList.h"
 #include "MessageBoxScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
@@ -9,6 +10,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterface.h"
@@ -105,8 +107,8 @@ void BeginAutoBandage() {
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
     // if the soldier isn't active or in sector, we have problems..leave
-    if (!(pSoldier->bActive) || !(pSoldier->bInSector) ||
-        (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (pSoldier->bAssignment == VEHICLE)) {
+    if (!(IsSolActive(pSoldier)) || !IsSolInSector(pSoldier) ||
+        (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (GetSolAssignment(pSoldier) == VEHICLE)) {
       continue;
     }
 
@@ -166,9 +168,9 @@ void HandleAutoBandagePending() {
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID;
          cnt++, pSoldier++) {
       // Are we in sector?
-      if (pSoldier->bActive) {
-        if (pSoldier->sSectorX == gWorldSectorX && pSoldier->sSectorY == gWorldSectorY &&
-            pSoldier->bSectorZ == gbWorldSectorZ && !pSoldier->fBetweenSectors) {
+      if (IsSolActive(pSoldier)) {
+        if (GetSolSectorX(pSoldier) == gWorldSectorX && GetSolSectorY(pSoldier) == gWorldSectorY &&
+            GetSolSectorZ(pSoldier) == gbWorldSectorZ && !pSoldier->fBetweenSectors) {
           if (pSoldier->ubPendingAction != NO_PENDING_ACTION) {
             return;
           }
@@ -273,10 +275,10 @@ BOOLEAN CreateAutoBandageString(void) {
 
   cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID; cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
         !(pSoldier->bCollapsed) && pSoldier->bMedical > 0 &&
         FindObjClass(pSoldier, IC_MEDKIT) != NO_SLOT) {
-      ubDoctor[ubDoctors] = pSoldier->ubID;
+      ubDoctor[ubDoctors] = GetSolID(pSoldier);
       ubDoctors++;
       // increase the length of the string by the size of the name
       // plus 2, one for the comma and one for the space after that
@@ -360,7 +362,7 @@ void AutoBandage(BOOLEAN fStart) {
     cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bActive) {
+      if (IsSolActive(pSoldier)) {
         pSoldier->bSlotItemTakenFrom = NO_SLOT;
         pSoldier->ubAutoBandagingMedic = NOBODY;
       }
@@ -397,7 +399,7 @@ void AutoBandage(BOOLEAN fStart) {
     cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bActive) {
+      if (IsSolActive(pSoldier)) {
         ActionDone(pSoldier);
         if (pSoldier->bSlotItemTakenFrom != NO_SLOT) {
           // swap our old hand item back to the main hand
@@ -483,7 +485,7 @@ void SetUpAutoBandageUpdatePanel(void) {
 
   // run through mercs on squad...if they can doctor, add to list
   for (iCounterA = 0; iCounterA < iNumberOnTeam; iCounterA++) {
-    if (CanCharacterAutoBandageTeammate(&Menptr[iCounterA])) {
+    if (CanCharacterAutoBandageTeammate(GetSoldierByID(iCounterA))) {
       // add to list, up the count
       iDoctorList[iNumberDoctoring] = iCounterA;
       iNumberDoctoring++;
@@ -492,7 +494,7 @@ void SetUpAutoBandageUpdatePanel(void) {
 
   // run through mercs on squad, if they can patient, add to list
   for (iCounterA = 0; iCounterA < iNumberOnTeam; iCounterA++) {
-    if (CanCharacterBeAutoBandagedByTeammate(&Menptr[iCounterA])) {
+    if (CanCharacterBeAutoBandagedByTeammate(GetSoldierByID(iCounterA))) {
       // add to list, up the count
       iPatientList[iNumberPatienting] = iCounterA;
       iNumberPatienting++;
@@ -1026,7 +1028,7 @@ BOOLEAN RenderSoldierSmallFaceForAutoBandagePanel(INT32 iIndex, INT16 sCurrentXP
   // see if we are looking into doctor or patient lists?
   if (iIndexCount > iIndex) {
     // HEALTH BAR
-    pSoldier = &Menptr[iDoctorList[iIndex]];
+    pSoldier = GetSoldierByID(iDoctorList[iIndex]);
   } else {
     // HEALTH BAR
     pSoldier = &Menptr[iPatientList[iIndex - iIndexCount]];

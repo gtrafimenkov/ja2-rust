@@ -9,6 +9,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreen.h"
@@ -34,6 +35,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDat.h"
 #include "TileEngine/WorldMan.h"
+#include "Town.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
@@ -574,7 +576,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
                     SoundDir(pDoor->sGridNo));
 
       // Set attacker's ID
-      pSoldier->ubAttackerID = pSoldier->ubID;
+      pSoldier->ubAttackerID = GetSolID(pSoldier);
       // Increment  being attacked count
       pSoldier->bBeingAttackedCount++;
       gTacticalStatus.ubAttackBusyCount++;
@@ -592,7 +594,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
                     SoundDir(pDoor->sGridNo));
 
       // Set attacker's ID
-      pSoldier->ubAttackerID = pSoldier->ubID;
+      pSoldier->ubAttackerID = GetSolID(pSoldier);
       // Increment  being attacked count
       pSoldier->bBeingAttackedCount++;
       gTacticalStatus.ubAttackBusyCount++;
@@ -1123,7 +1125,7 @@ BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
     // ATE: Ok, lets check for some basic things here!
-    if (pSoldier->bLife >= OKLIFE && pSoldier->sGridNo != NOWHERE && pSoldier->bActive &&
+    if (pSoldier->bLife >= OKLIFE && pSoldier->sGridNo != NOWHERE && IsSolActive(pSoldier) &&
         pSoldier->bInSector) {
       // is he close enough to see that gridno if he turns his head?
       sDistVisible =
@@ -1687,7 +1689,7 @@ void ExamineDoorsOnEnteringSector() {
   DOOR_STATUS *pDoorStatus;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
-  INT8 bTownId;
+  TownID bTownId;
 
   // OK, only do this if conditions are met....
   // If this is any omerta tow, don't do it...
@@ -1708,8 +1710,8 @@ void ExamineDoorsOnEnteringSector() {
   // look for all mercs on the same team,
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[LAST_TEAM].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive) {
-      if (pSoldier->bInSector) {
+    if (IsSolActive(pSoldier)) {
+      if (IsSolInSector(pSoldier)) {
         fOK = TRUE;
         break;
       }
@@ -1736,7 +1738,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
   INT32 iNumNewMercs = 0;
-  INT8 bTownId;
+  TownID bTownId;
 
   // OK, only do this if conditions are met....
 
@@ -1759,7 +1761,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   // look for all mercs on the same team,
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[LAST_TEAM].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       fOK = TRUE;
       break;
     }
@@ -1769,7 +1771,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector && gbMercIsNewInThisSector[cnt]) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && gbMercIsNewInThisSector[cnt]) {
       iNumNewMercs++;
     }
   }
@@ -1824,11 +1826,11 @@ void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel,
       if (fAddToDropList) {
         AddItemToLeaveIndex(&Object, iDropListSlot);
       } else {
-        if (pSoldier->sSectorX != gWorldSectorX || pSoldier->sSectorY != gWorldSectorY ||
-            pSoldier->bSectorZ != gbWorldSectorZ || fUseUnLoaded) {
+        if (GetSolSectorX(pSoldier) != gWorldSectorX || GetSolSectorY(pSoldier) != gWorldSectorY ||
+            GetSolSectorZ(pSoldier) != gbWorldSectorZ || fUseUnLoaded) {
           // Set flag for item...
-          AddItemsToUnLoadedSector(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ,
-                                   sGridNo, 1, &Object, bLevel,
+          AddItemsToUnLoadedSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
+                                   pSoldier->bSectorZ, sGridNo, 1, &Object, bLevel,
                                    WOLRD_ITEM_FIND_SWEETSPOT_FROM_GRIDNO | WORLD_ITEM_REACHABLE, 0,
                                    bVisible, FALSE);
         } else {

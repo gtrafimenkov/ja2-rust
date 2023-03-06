@@ -5,6 +5,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
@@ -2679,42 +2680,47 @@ UINT8 ActionIDForMovementRecord(UINT8 ubNPC, UINT8 ubRecord) {
 }
 
 void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
-  if (!pSoldier || pSoldier->ubProfile == NO_PROFILE || (pSoldier->fAIFlags & AI_CHECK_SCHEDULE)) {
+  if (!pSoldier || GetSolProfile(pSoldier) == NO_PROFILE ||
+      (pSoldier->fAIFlags & AI_CHECK_SCHEDULE)) {
     return;
   }
 
   switch (pSoldier->ubQuoteActionID) {
     case QUOTE_ACTION_ID_TRAVERSE_EAST:
-      gMercProfiles[pSoldier->ubProfile].sSectorX++;
+      gMercProfiles[GetSolProfile(pSoldier)].sSectorX++;
 
       // Call to change the NPC's Sector Location
-      ChangeNpcToDifferentSector(pSoldier->ubProfile, gMercProfiles[pSoldier->ubProfile].sSectorX,
-                                 gMercProfiles[pSoldier->ubProfile].sSectorY,
-                                 gMercProfiles[pSoldier->ubProfile].bSectorZ);
+      ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_SOUTH:
-      gMercProfiles[pSoldier->ubProfile].sSectorY++;
+      gMercProfiles[GetSolProfile(pSoldier)].sSectorY++;
 
       // Call to change the NPC's Sector Location
-      ChangeNpcToDifferentSector(pSoldier->ubProfile, gMercProfiles[pSoldier->ubProfile].sSectorX,
-                                 gMercProfiles[pSoldier->ubProfile].sSectorY,
-                                 gMercProfiles[pSoldier->ubProfile].bSectorZ);
+      ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_WEST:
-      gMercProfiles[pSoldier->ubProfile].sSectorX--;
+      gMercProfiles[GetSolProfile(pSoldier)].sSectorX--;
 
       // Call to change the NPC's Sector Location
-      ChangeNpcToDifferentSector(pSoldier->ubProfile, gMercProfiles[pSoldier->ubProfile].sSectorX,
-                                 gMercProfiles[pSoldier->ubProfile].sSectorY,
-                                 gMercProfiles[pSoldier->ubProfile].bSectorZ);
+      ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_NORTH:
-      gMercProfiles[pSoldier->ubProfile].sSectorY--;
+      gMercProfiles[GetSolProfile(pSoldier)].sSectorY--;
 
       // Call to change the NPC's Sector Location
-      ChangeNpcToDifferentSector(pSoldier->ubProfile, gMercProfiles[pSoldier->ubProfile].sSectorX,
-                                 gMercProfiles[pSoldier->ubProfile].sSectorY,
-                                 gMercProfiles[pSoldier->ubProfile].bSectorZ);
+      ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     default:
       break;
@@ -2731,7 +2737,7 @@ void HandleVictoryInNPCSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
   }
 
   // grab sector value
-  sSector = SECTOR(sSectorX, sSectorY);
+  sSector = GetSectorID8(sSectorX, sSectorY);
 
   switch (sSector) {
     case (SEC_F10): {
@@ -2812,7 +2818,7 @@ void UpdateDarrelScriptToGoTo(struct SOLDIERTYPE *pSoldier) {
   EnsureQuoteFileLoaded(DARREL);
   gpNPCQuoteInfoArray[DARREL][10].usGoToGridno = sAdjustedGridNo;
   gpNPCQuoteInfoArray[DARREL][11].sRequiredGridno = -(sAdjustedGridNo);
-  gpNPCQuoteInfoArray[DARREL][11].ubTriggerNPC = pSoldier->ubProfile;
+  gpNPCQuoteInfoArray[DARREL][11].ubTriggerNPC = GetSolProfile(pSoldier);
 }
 
 BOOLEAN RecordHasDialogue(UINT8 ubNPC, UINT8 ubRecord) {

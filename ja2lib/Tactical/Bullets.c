@@ -12,10 +12,10 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Tactical/Faces.h"
 #include "Tactical/Gap.h"
 #include "Tactical/LOS.h"
-#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
@@ -397,7 +397,7 @@ BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile) {
     // Set some parameters
     gBullets[usCnt].uiLastUpdate = 0;
     if (gBullets[usCnt].ubFirerID != NOBODY)
-      gBullets[usCnt].pFirer = &Menptr[gBullets[usCnt].ubFirerID];
+      gBullets[usCnt].pFirer = GetSoldierByID(gBullets[usCnt].ubFirerID);
     else
       gBullets[usCnt].pFirer = NULL;
 

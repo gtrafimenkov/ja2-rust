@@ -19,6 +19,7 @@
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
 #include "TileEngine/RenderDirty.h"
+#include "UI.h"
 #include "Utils/FontControl.h"
 
 #define BASE_REGION_FLAGS (MSYS_REGION_ENABLED | MSYS_SET_CURSOR)
@@ -1019,7 +1020,7 @@ void SetRegionFastHelpText(struct MOUSE_REGION *region, STR16 szText) {
   // ATE: We could be replacing already existing, active text
   // so let's remove the region so it be rebuilt...
 
-  if (guiCurrentScreen != MAP_SCREEN) {
+  if (!IsMapScreen_2()) {
     if (region->uiFlags & MSYS_GOT_BACKGROUND) FreeBackgroundRectPending(region->FastHelpRect);
     region->uiFlags &= (~MSYS_GOT_BACKGROUND);
     region->uiFlags &= (~MSYS_FASTHELP_RESET);

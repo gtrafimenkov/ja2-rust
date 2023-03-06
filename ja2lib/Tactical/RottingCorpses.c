@@ -9,6 +9,7 @@
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
@@ -48,7 +49,7 @@
 
 #define CORPSE_INDEX_OFFSET 10000
 
-//#define		DELAY_UNTIL_ROTTING		( 1 * NUM_SEC_IN_DAY )
+// #define		DELAY_UNTIL_ROTTING		( 1 * NUM_SEC_IN_DAY )
 #define DELAY_UNTIL_ROTTING (1 * NUM_SEC_IN_DAY / 60)
 #define DELAY_UNTIL_DONE_ROTTING (3 * NUM_SEC_IN_DAY / 60)
 
@@ -708,7 +709,7 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
   Corpse.dXPos = pSoldier->dXPos;
   Corpse.dYPos = pSoldier->dYPos;
   Corpse.bLevel = pSoldier->bLevel;
-  Corpse.ubProfile = pSoldier->ubProfile;
+  Corpse.ubProfile = GetSolProfile(pSoldier);
 
   if (Corpse.bLevel > 0) {
     Corpse.sHeightAdjustment = (INT16)(pSoldier->sHeightAdjustment - WALL_HEIGHT);
@@ -759,7 +760,7 @@ BOOLEAN TurnSoldierIntoCorpse(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc,
 
   // ATE: If the queen is killed, she should
   // make items visible because it ruins end sequence....
-  if (pSoldier->ubProfile == QUEEN || pSoldier->bTeam == gbPlayerNum) {
+  if (GetSolProfile(pSoldier) == QUEEN || pSoldier->bTeam == gbPlayerNum) {
     bVisible = 1;
   }
 
@@ -979,7 +980,7 @@ void HandleRottingCorpses() {
 
     for (bLoop = gTacticalStatus.Team[CIV_TEAM].bFirstID, pSoldier = MercPtrs[bLoop];
          bLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID; bLoop++, pSoldier++) {
-      if (pSoldier->bActive && pSoldier->bInSector && (pSoldier->bLife >= OKLIFE) &&
+      if (IsSolActive(pSoldier) && pSoldier->bInSector && (pSoldier->bLife >= OKLIFE) &&
           !(pSoldier->uiStatusFlags & SOLDIER_GASSED)) {
         if (pSoldier->ubBodyType == CROW) {
           bNumCrows++;
@@ -1056,7 +1057,7 @@ void AllMercsOnTeamLookForCorpse(ROTTING_CORPSE *pCorpse, INT8 bTeam) {
   // look for all mercs on the same team,
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[bTeam].bLastID; cnt++, pSoldier++) {
     // ATE: Ok, lets check for some basic things here!
-    if (pSoldier->bLife >= OKLIFE && pSoldier->sGridNo != NOWHERE && pSoldier->bActive &&
+    if (pSoldier->bLife >= OKLIFE && pSoldier->sGridNo != NOWHERE && IsSolActive(pSoldier) &&
         pSoldier->bInSector) {
       // is he close enough to see that gridno if he turns his head?
       sDistVisible = DistanceVisible(pSoldier, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT, sGridNo,
@@ -1086,7 +1087,7 @@ void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier) {
     return;
   }
 
-  if (pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return;
   }
 
@@ -1094,7 +1095,7 @@ void MercLooksForCorpses(struct SOLDIERTYPE *pSoldier) {
     return;
   }
 
-  if (QuoteExp_HeadShotOnly[pSoldier->ubProfile] == 1) {
+  if (QuoteExp_HeadShotOnly[GetSolProfile(pSoldier)] == 1) {
     return;
   }
 
@@ -1603,7 +1604,7 @@ void LookForAndMayCommentOnSeeingCorpse(struct SOLDIERTYPE *pSoldier, INT16 sGri
   INT32 cnt;
   struct SOLDIERTYPE *pTeamSoldier;
 
-  if (QuoteExp_HeadShotOnly[pSoldier->ubProfile] == 1) {
+  if (QuoteExp_HeadShotOnly[GetSolProfile(pSoldier)] == 1) {
     return;
   }
 

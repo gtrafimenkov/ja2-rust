@@ -2,7 +2,6 @@
 
 #include "SGP/Debug.h"
 #include "SGP/WCheck.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
 
 #ifndef WIN32_LEAN_AND_MEAN

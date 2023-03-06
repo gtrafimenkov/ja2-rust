@@ -7,6 +7,7 @@
 #include "Laptop/History.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/StrategicMines.h"
 #include "Strategic/StrategicTownLoyalty.h"
@@ -120,7 +121,7 @@ BOOLEAN MercThinksHisMoraleIsTooLow(struct SOLDIERTYPE *pSoldier) {
   INT8 bRepTolerance;
   INT8 bMoraleTolerance;
 
-  bRepTolerance = gMercProfiles[pSoldier->ubProfile].bReputationTolerance;
+  bRepTolerance = gMercProfiles[GetSolProfile(pSoldier)].bReputationTolerance;
 
   // if he couldn't care less what it is
   if (bRepTolerance == 101) {

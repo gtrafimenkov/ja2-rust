@@ -4,8 +4,8 @@
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
-#include "Laptop/LaptopSave.h"
 #include "MapScreenInterfaceMapInventory.h"
+#include "Money.h"
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
@@ -17,6 +17,7 @@
 #include "SGP/WCheck.h"
 #include "SaveLoadScreen.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
@@ -33,7 +34,6 @@
 #include "Tactical/AirRaid.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/InterfaceItems.h"
-#include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/TacticalSave.h"
@@ -1171,7 +1171,7 @@ void DisplayCurrentBalanceForMapBottom(void) {
   SetFontForeground(183);
   SetFontBackground(FONT_BLACK);
 
-  swprintf(sString, ARR_SIZE(sString), L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(sString, ARR_SIZE(sString), L"%d", MoneyGetBalance());
 
   // insert
 
@@ -1299,9 +1299,9 @@ BOOLEAN AnyUsableRealMercenariesOnTeam(void) {
 
   // get number of mercs on team who are not vehicles or robot, POWs or EPCs
   for (iCounter = 0; iCounter < iNumberOnTeam; iCounter++) {
-    pSoldier = &Menptr[iCounter];
+    pSoldier = GetSoldierByID(iCounter);
 
-    if ((pSoldier->bActive) && (pSoldier->bLife > 0) &&
+    if ((IsSolActive(pSoldier)) && IsSolAlive(pSoldier) &&
         !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) && !AM_A_ROBOT(pSoldier) &&
         (pSoldier->bAssignment != ASSIGNMENT_POW) && (pSoldier->bAssignment != ASSIGNMENT_DEAD) &&
         (pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__EPC)) {

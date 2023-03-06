@@ -7,10 +7,12 @@
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
+#include "UI.h"
 #include "Utils/TimerControl.h"
 
 UINT32 uiMusicHandle = NO_SAMPLE;
@@ -59,7 +61,7 @@ BOOLEAN NoEnemiesInSight() {
   // look for all mercs on the same team,
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bLife >= OKLIFE) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE) {
       if (pSoldier->bOppCnt != 0) {
         return (FALSE);
       }
@@ -265,7 +267,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
       }
     }
 
-    //#endif
+    // #endif
 
     if (gfMusicEnded) {
       // OK, based on our music mode, play another!
@@ -273,7 +275,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
 
       // If we were in victory mode, change!
       if (gbVictorySongCount == 1 || gbDeathSongCount == 1) {
-        if (gbDeathSongCount == 1 && guiCurrentScreen == GAME_SCREEN) {
+        if (gbDeathSongCount == 1 && IsTacticalMode()) {
           CheckAndHandleUnloadingOfCurrentWorld();
         }
 

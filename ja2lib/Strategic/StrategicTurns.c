@@ -14,6 +14,7 @@
 #include "Tactical/TacticalTurns.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/IsometricUtils.h"
+#include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/TimerControl.h"
@@ -42,7 +43,7 @@ void HandleStrategicTurn() {
     RESETCOUNTER(STRATEGIC_OVERHEAD);
 
     // if the game is paused, or we're in mapscreen and time is not being compressed
-    if ((GamePaused() == TRUE) || ((guiCurrentScreen == MAP_SCREEN) && !IsTimeBeingCompressed())) {
+    if ((GamePaused() == TRUE) || ((IsMapScreen_2()) && !IsTimeBeingCompressed())) {
       // don't do any of this
       return;
     }

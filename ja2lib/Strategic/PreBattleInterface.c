@@ -15,6 +15,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/CreatureSpreading.h"
@@ -42,6 +43,8 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
+#include "Town.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
@@ -219,7 +222,7 @@ void ValidateAndCorrectInBattleCounters(struct GROUP *pLocGroup) {
     }
   }
 
-  ubSectorID = (UINT8)SECTOR(pLocGroup->ubSectorX, pLocGroup->ubSectorY);
+  ubSectorID = (UINT8)GetSectorID8(pLocGroup->ubSectorX, pLocGroup->ubSectorY);
   pSector = &SectorInfo[ubSectorID];
 
   if (ubInvalidGroups || pSector->ubAdminsInBattle || pSector->ubTroopsInBattle ||
@@ -303,8 +306,8 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
     // ATE: Added check for fPersistantPBI = TRUE if pBattleGroup == NULL
     // Searched code and saw that this condition only happens for creatures
     // fixing a bug
-    // if( guiCurrentScreen == GAME_SCREEN && pBattleGroup )
-    if (guiCurrentScreen == GAME_SCREEN && (pBattleGroup || fPersistantPBI)) {
+    // if( IsTacticalMode() && pBattleGroup )
+    if (IsTacticalMode() && (pBattleGroup || fPersistantPBI)) {
       gpBattleGroup = pBattleGroup;
       gfEnteringMapScreen = TRUE;
       gfEnteringMapScreenToEnterPreBattleInterface = TRUE;
@@ -331,12 +334,12 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
       gubPBSectorZ = gpBattleGroup->ubSectorZ;
 
       // get number of enemies thought to be here
-      SectorInfo[SECTOR(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies =
+      SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies =
           NumEnemiesInSector(gubPBSectorX, gubPBSectorY);
-      fMapPanelDirty = TRUE;
+      MarkForRedrawalStrategicMap();
     } else {
-      gubPBSectorX = (UINT8)SECTORX(gubSectorIDOfCreatureAttack);
-      gubPBSectorY = (UINT8)SECTORY(gubSectorIDOfCreatureAttack);
+      gubPBSectorX = SectorID8_X(gubSectorIDOfCreatureAttack);
+      gubPBSectorY = SectorID8_Y(gubSectorIDOfCreatureAttack);
       gubPBSectorZ = 0;
     }
   } else {  // calculate the non-persistant situation
@@ -348,7 +351,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
                                              // allowed
       gubExplicitEnemyEncounterCode = HOSTILE_BLOODCATS_CODE;
     } else if (gbWorldSectorZ) {  // We are underground, so no autoresolve allowed
-      pSector = &SectorInfo[SECTOR(gubPBSectorX, gubPBSectorY)];
+      pSector = &SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)];
       if (pSector->ubCreaturesInBattle) {
         gubExplicitEnemyEncounterCode = FIGHTING_CREATURES_CODE;
       } else if (pSector->ubAdminsInBattle || pSector->ubTroopsInBattle ||
@@ -381,7 +384,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
   RenderMapScreenInterfaceBottom();
 
   // If we are currently in tactical, then set the flag to automatically bring up the mapscreen.
-  if (guiCurrentScreen == GAME_SCREEN) {
+  if (IsTacticalMode()) {
     gfEnteringMapScreen = TRUE;
   }
 
@@ -519,7 +522,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
                                         // small chance of the enemies ambushing the group
             if (ubNumMobileEnemies > ubNumMercs) {
               INT32 iChance;
-              pSector = &SectorInfo[SECTOR(gubPBSectorX, gubPBSectorY)];
+              pSector = &SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)];
               if (!(pSector->uiFlags & SF_ALREADY_VISITED)) {
                 iChance = (UINT8)(4 - bBestExpLevel + 2 * gGameOptions.ubDifficultyLevel +
                                   CurrentPlayerProgressPercentage() / 10);
@@ -541,7 +544,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
       if (GetTownIdForSector(gubPBSectorX, gubPBSectorY)) {
         gubEnemyEncounterCode = ENEMY_INVASION_CODE;
       } else {
-        switch (SECTOR(gubPBSectorX, gubPBSectorY)) {
+        switch (GetSectorID8(gubPBSectorX, gubPBSectorY)) {
           case SEC_D2:
           case SEC_D15:
           case SEC_G8:
@@ -588,7 +591,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
       ENEMY_ENCOUNTER_CODE) {  // we know how many enemies are here, so until we leave the sector,
                                // we will continue to display the value.
     // the flag will get cleared when time advances after the fEnemyInSector flag is clear.
-    pSector = &SectorInfo[SECTOR(gubPBSectorX, gubPBSectorY)];
+    pSector = &SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)];
 
     // ALWAYS use these 2 statements together, without setting the boolean, the flag will never be
     // cleaned up!
@@ -805,7 +808,7 @@ void KillPreBattleInterface() {
   // UpdateCharRegionHelpText( );
 
   // re draw affected regions
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
   fTeamPanelDirty = TRUE;
   fMapScreenBottomDirty = TRUE;
   fCharacterInfoPanelDirty = TRUE;
@@ -900,7 +903,7 @@ void RenderPreBattleInterface() {
       fMouseInRetreatButtonArea = TRUE;
     if (fMouseInRetreatButtonArea != gfDisplayPotentialRetreatPaths) {
       gfDisplayPotentialRetreatPaths = fMouseInRetreatButtonArea;
-      fMapPanelDirty = TRUE;
+      MarkForRedrawalStrategicMap();
     }
   }
 
@@ -1009,12 +1012,12 @@ void RenderPreBattleInterface() {
         WhatPlayerKnowsAboutEnemiesInSector(gubPBSectorX, gubPBSectorY) != KNOWS_HOW_MANY) {
       // don't know how many
       swprintf(str, ARR_SIZE(str), L"?");
-      SectorInfo[SECTOR(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies = -2;
+      SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies = -2;
     } else {
       // know exactly how many
       i = NumEnemiesInSector(gubPBSectorX, gubPBSectorY);
       swprintf(str, ARR_SIZE(str), L"%d", i);
-      SectorInfo[SECTOR(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies = (INT8)i;
+      SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies = (INT8)i;
     }
     x = 57 + (27 - StringPixLength(str, FONT14ARIAL)) / 2;
     y = 36;
@@ -1505,7 +1508,7 @@ void CalculateNonPersistantPBIInfo() {
         gubEnemyEncounterCode = ENTERING_ENEMY_SECTOR_CODE;
       }
     } else {
-      SECTORINFO *pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
+      SECTORINFO *pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
       Assert(pSector);
       if (pSector->ubCreaturesInBattle) {
         gubExplicitEnemyEncounterCode = FIGHTING_CREATURES_CODE;
@@ -1582,11 +1585,11 @@ void PutNonSquadMercsInPlayerGroupOnSquads(struct GROUP *pGroup, BOOLEAN fExitVe
     // store ptr to next soldier in group, once removed from group, his info will get memfree'd!
     pNextPlayer = pPlayer->next;
 
-    if (pSoldier->bActive && pSoldier->bLife && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
       // if involved, but off-duty (includes mercs inside vehicles!)
       if (PlayerMercInvolvedInThisCombat(pSoldier) && (pSoldier->bAssignment >= ON_DUTY)) {
         // if in a vehicle, pull him out
-        if (pSoldier->bAssignment == VEHICLE) {
+        if (GetSolAssignment(pSoldier) == VEHICLE) {
           if (fExitVehicles) {
             TakeSoldierOutOfVehicle(pSoldier);
 
@@ -1628,7 +1631,7 @@ void WakeUpAllMercsInSectorUnderAttack(void) {
   for (iCounter = 0; iCounter < iNumberOfMercsOnTeam; iCounter++) {
     pSoldier = &(Menptr[iCounter]);
 
-    if (pSoldier->bActive && pSoldier->bLife && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
       // if involved, but asleep
       if (PlayerMercInvolvedInThisCombat(pSoldier) && (pSoldier->fMercAsleep == TRUE)) {
         // FORCE him wake him up
@@ -1674,7 +1677,7 @@ void RetreatAllInvolvedPlayerGroups(void) {
 
 BOOLEAN PlayerMercInvolvedInThisCombat(struct SOLDIERTYPE *pSoldier) {
   Assert(pSoldier);
-  Assert(pSoldier->bActive);
+  Assert(IsSolActive(pSoldier));
 
   if (!pSoldier->fBetweenSectors && pSoldier->bAssignment != IN_TRANSIT &&
       pSoldier->bAssignment != ASSIGNMENT_POW && pSoldier->bAssignment != ASSIGNMENT_DEAD &&
@@ -1682,7 +1685,8 @@ BOOLEAN PlayerMercInvolvedInThisCombat(struct SOLDIERTYPE *pSoldier) {
       // Robot is involved if it has a valid controller with it, uninvolved otherwise
       (!AM_A_ROBOT(pSoldier) || (pSoldier->ubRobotRemoteHolderID != NOBODY)) &&
       !SoldierAboardAirborneHeli(pSoldier)) {
-    if (CurrentBattleSectorIs(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ)) {
+    if (CurrentBattleSectorIs(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
+                              GetSolSectorZ(pSoldier))) {
       // involved
       return (TRUE);
     }

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "SGP/Debug.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
@@ -31,9 +32,9 @@
 #define PHOBIC_LIMIT -20
 
 // macros
-#define SOLDIER_IN_SECTOR(pSoldier, sX, sY, bZ)                                              \
-  (!pSoldier->fBetweenSectors && (pSoldier->sSectorX == sX) && (pSoldier->sSectorY == sY) && \
-   (pSoldier->bSectorZ == bZ))
+#define SOLDIER_IN_SECTOR(pSoldier, sX, sY, bZ)                     \
+  (!pSoldier->fBetweenSectors && (GetSolSectorX(pSoldier) == sX) && \
+   (GetSolSectorY(pSoldier) == sY) && (GetSolSectorZ(pSoldier) == bZ))
 
 MoraleEvent gbMoraleEvent[NUM_MORALE_EVENTS] = {
     // TACTICAL = Short Term Effect, STRATEGIC = Long Term Effect
@@ -141,20 +142,21 @@ void DecayTacticalMoraleModifiers(void) {
        ubLoop++, pSoldier++) {
     // if the merc is active, in Arulco
     // CJC: decay modifiers while asleep! or POW!
-    if (pSoldier->bActive && pSoldier->ubProfile != NO_PROFILE &&
-        !(pSoldier->bAssignment == IN_TRANSIT || pSoldier->bAssignment == ASSIGNMENT_DEAD)) {
+    if (IsSolActive(pSoldier) && GetSolProfile(pSoldier) != NO_PROFILE &&
+        !(GetSolAssignment(pSoldier) == IN_TRANSIT ||
+          GetSolAssignment(pSoldier) == ASSIGNMENT_DEAD)) {
       // only let morale mod decay if it is positive while merc is a POW
-      if (pSoldier->bAssignment == ASSIGNMENT_POW && pSoldier->bTacticalMoraleMod < 0) {
+      if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW && pSoldier->bTacticalMoraleMod < 0) {
         continue;
       }
 
-      switch (gMercProfiles[pSoldier->ubProfile].bPersonalityTrait) {
+      switch (gMercProfiles[GetSolProfile(pSoldier)].bPersonalityTrait) {
         case CLAUSTROPHOBIC:
           if (pSoldier->bSectorZ > 0) {
             // underground, no recovery... in fact, if tact morale is high, decay
             if (pSoldier->bTacticalMoraleMod > PHOBIC_LIMIT) {
-              HandleMoraleEvent(pSoldier, MORALE_CLAUSTROPHOBE_UNDERGROUND, pSoldier->sSectorX,
-                                pSoldier->sSectorY, pSoldier->bSectorZ);
+              HandleMoraleEvent(pSoldier, MORALE_CLAUSTROPHOBE_UNDERGROUND, GetSolSectorX(pSoldier),
+                                GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
             }
             continue;
           }
@@ -167,7 +169,7 @@ void DecayTacticalMoraleModifiers(void) {
               } else {
                 fHandleNervous = FALSE;
               }
-            } else if (pSoldier->bActive && pSoldier->bInSector) {
+            } else if (IsSolActive(pSoldier) && pSoldier->bInSector) {
               if (DistanceToClosestFriend(pSoldier) > NERVOUS_RADIUS) {
                 fHandleNervous = TRUE;
               } else {
@@ -179,9 +181,9 @@ void DecayTacticalMoraleModifiers(void) {
               for (ubLoop2 = gTacticalStatus.Team[gbPlayerNum].bFirstID;
                    ubLoop2 <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubLoop2++) {
                 if (MercPtrs[ubLoop2] != pSoldier && MercPtrs[ubLoop2]->bActive &&
-                    MercPtrs[ubLoop2]->sSectorX == pSoldier->sSectorX &&
-                    MercPtrs[ubLoop2]->sSectorY == pSoldier->sSectorY &&
-                    MercPtrs[ubLoop2]->bSectorZ == pSoldier->bSectorZ) {
+                    MercPtrs[ubLoop2]->sSectorX == GetSolSectorX(pSoldier) &&
+                    MercPtrs[ubLoop2]->sSectorY == GetSolSectorY(pSoldier) &&
+                    MercPtrs[ubLoop2]->bSectorZ == GetSolSectorZ(pSoldier)) {
                   // found someone!
                   fHandleNervous = FALSE;
                   break;
@@ -200,8 +202,8 @@ void DecayTacticalMoraleModifiers(void) {
                 TacticalCharacterDialogue(pSoldier, QUOTE_PERSONALITY_TRAIT);
                 pSoldier->usQuoteSaidFlags |= SOLDIER_QUOTE_SAID_PERSONALITY;
               }
-              HandleMoraleEvent(pSoldier, MORALE_NERVOUS_ALONE, pSoldier->sSectorX,
-                                pSoldier->sSectorY, pSoldier->bSectorZ);
+              HandleMoraleEvent(pSoldier, MORALE_NERVOUS_ALONE, GetSolSectorX(pSoldier),
+                                GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
               continue;
             }
           }
@@ -222,10 +224,11 @@ void DecayStrategicMoraleModifiers(void) {
        ubLoop++, pSoldier++) {
     // if the merc is active, in Arulco
     // CJC: decay modifiers while asleep! or POW!
-    if (pSoldier->bActive && pSoldier->ubProfile != NO_PROFILE &&
-        !(pSoldier->bAssignment == IN_TRANSIT || pSoldier->bAssignment == ASSIGNMENT_DEAD)) {
+    if (IsSolActive(pSoldier) && GetSolProfile(pSoldier) != NO_PROFILE &&
+        !(GetSolAssignment(pSoldier) == IN_TRANSIT ||
+          GetSolAssignment(pSoldier) == ASSIGNMENT_DEAD)) {
       // only let morale mod decay if it is positive while merc is a POW
-      if (pSoldier->bAssignment == ASSIGNMENT_POW && pSoldier->bStrategicMoraleMod < 0) {
+      if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW && pSoldier->bStrategicMoraleMod < 0) {
         continue;
       }
 
@@ -264,21 +267,22 @@ void UpdateSoldierMorale(struct SOLDIERTYPE *pSoldier, UINT8 ubType, INT8 bMoral
   MERCPROFILESTRUCT *pProfile;
   INT32 iMoraleModTotal;
 
-  if (!pSoldier->bActive || (pSoldier->bLife < CONSCIOUSNESS) ||
+  if (!IsSolActive(pSoldier) || (pSoldier->bLife < CONSCIOUSNESS) ||
       (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || AM_A_ROBOT(pSoldier) || AM_AN_EPC(pSoldier)) {
     return;
   }
 
-  if ((pSoldier->bAssignment == ASSIGNMENT_DEAD) || (pSoldier->bAssignment == ASSIGNMENT_POW) ||
-      (pSoldier->bAssignment == IN_TRANSIT)) {
+  if ((GetSolAssignment(pSoldier) == ASSIGNMENT_DEAD) ||
+      (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) ||
+      (GetSolAssignment(pSoldier) == IN_TRANSIT)) {
     return;
   }
 
-  if (pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return;
   }
 
-  pProfile = &(gMercProfiles[pSoldier->ubProfile]);
+  pProfile = &(gMercProfiles[GetSolProfile(pSoldier)]);
 
   if (bMoraleMod > 0) {
     switch (pProfile->bAttitude) {
@@ -522,7 +526,7 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sM
         if (pTeamSoldier->bActive && pTeamSoldier->ubProfile != NO_PROFILE) {
           pProfile = &(gMercProfiles[pTeamSoldier->ubProfile]);
 
-          if (HATED_MERC(pProfile, pSoldier->ubProfile)) {
+          if (HATED_MERC(pProfile, GetSolProfile(pSoldier))) {
             // yesss!
             HandleMoraleEventForSoldier(pTeamSoldier, MORALE_HATED_DIED);
           } else {
@@ -534,7 +538,7 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sM
             // this is handled for everyone even if in sector, as it's a strategic morale mod
             HandleMoraleEventForSoldier(pTeamSoldier, MORALE_TEAMMATE_DIED);
 
-            if (BUDDY_MERC(pProfile, pSoldier->ubProfile)) {
+            if (BUDDY_MERC(pProfile, GetSolProfile(pSoldier))) {
               // oh no!  buddy died!
               HandleMoraleEventForSoldier(pTeamSoldier, MORALE_BUDDY_DIED);
             }
@@ -551,7 +555,7 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sM
       for (pTeamSoldier = MercPtrs[ubLoop]; ubLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID;
            ubLoop++, pTeamSoldier++) {
         if (pTeamSoldier->bActive && pTeamSoldier->ubProfile != NO_PROFILE) {
-          if (WhichHated(pTeamSoldier->ubProfile, pSoldier->ubProfile) != -1) {
+          if (WhichHated(pTeamSoldier->ubProfile, GetSolProfile(pSoldier)) != -1) {
             // we hate 'em anyways
             continue;
           }
@@ -663,11 +667,12 @@ void HourlyMoraleUpdate(void) {
   // loop through all mercs to calculate their morale
   for (pSoldier = MercPtrs[bMercID]; bMercID <= bLastTeamID; bMercID++, pSoldier++) {
     // if the merc is active, in Arulco, and conscious, not POW
-    if (pSoldier->bActive && pSoldier->ubProfile != NO_PROFILE &&
-        !(pSoldier->bAssignment == IN_TRANSIT || pSoldier->fMercAsleep == TRUE ||
-          pSoldier->bAssignment == ASSIGNMENT_DEAD || pSoldier->bAssignment == ASSIGNMENT_POW)) {
+    if (IsSolActive(pSoldier) && GetSolProfile(pSoldier) != NO_PROFILE &&
+        !(GetSolAssignment(pSoldier) == IN_TRANSIT || pSoldier->fMercAsleep == TRUE ||
+          GetSolAssignment(pSoldier) == ASSIGNMENT_DEAD ||
+          GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
       // calculate the guy's opinion of the people he is with
-      pProfile = &(gMercProfiles[pSoldier->ubProfile]);
+      pProfile = &(gMercProfiles[GetSolProfile(pSoldier)]);
 
       // if we're moving
       if (pSoldier->ubGroupID != 0 && PlayerIDGroupInMotion(pSoldier->ubGroupID)) {
@@ -702,9 +707,9 @@ void HourlyMoraleUpdate(void) {
             }
           } else {
             // check to see if the location is the same
-            if (pOtherSoldier->sSectorX != pSoldier->sSectorX ||
-                pOtherSoldier->sSectorY != pSoldier->sSectorY ||
-                pOtherSoldier->bSectorZ != pSoldier->bSectorZ) {
+            if (pOtherSoldier->sSectorX != GetSolSectorX(pSoldier) ||
+                pOtherSoldier->sSectorY != GetSolSectorY(pSoldier) ||
+                pOtherSoldier->bSectorZ != GetSolSectorZ(pSoldier)) {
               continue;
             }
 
@@ -715,7 +720,7 @@ void HourlyMoraleUpdate(void) {
           }
           bOpinion = pProfile->bMercOpinion[pOtherSoldier->ubProfile];
           if (bOpinion == HATED_OPINION) {
-            bHated = WhichHated(pSoldier->ubProfile, pOtherSoldier->ubProfile);
+            bHated = WhichHated(GetSolProfile(pSoldier), pOtherSoldier->ubProfile);
             if (bHated >= 2) {
               // learn to hate which has become full-blown hatred, full strength
               fFoundHated = TRUE;
@@ -802,7 +807,7 @@ void HourlyMoraleUpdate(void) {
 }
 
 void DailyMoraleUpdate(struct SOLDIERTYPE *pSoldier) {
-  if (pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return;
   }
 
@@ -820,20 +825,20 @@ void DailyMoraleUpdate(struct SOLDIERTYPE *pSoldier) {
   */
 
   // check death rate vs. merc's tolerance once/day (ignores buddies!)
-  if (MercThinksDeathRateTooHigh(pSoldier->ubProfile)) {
+  if (MercThinksDeathRateTooHigh(GetSolProfile(pSoldier))) {
     // too high, morale takes a hit
-    HandleMoraleEvent(pSoldier, MORALE_HIGH_DEATHRATE, pSoldier->sSectorX, pSoldier->sSectorY,
-                      pSoldier->bSectorZ);
+    HandleMoraleEvent(pSoldier, MORALE_HIGH_DEATHRATE, GetSolSectorX(pSoldier),
+                      GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
   }
 
   // check his morale vs. his morale tolerance once/day (ignores buddies!)
   if (MercThinksHisMoraleIsTooLow(pSoldier)) {
     // too low, morale sinks further (merc's in a funk and things aren't getting better)
-    HandleMoraleEvent(pSoldier, MORALE_POOR_MORALE, pSoldier->sSectorX, pSoldier->sSectorY,
-                      pSoldier->bSectorZ);
+    HandleMoraleEvent(pSoldier, MORALE_POOR_MORALE, GetSolSectorX(pSoldier),
+                      GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
   } else if (pSoldier->bMorale >= 75) {
     // very high morale, merc is cheerleading others
-    HandleMoraleEvent(pSoldier, MORALE_GREAT_MORALE, pSoldier->sSectorX, pSoldier->sSectorY,
-                      pSoldier->bSectorZ);
+    HandleMoraleEvent(pSoldier, MORALE_GREAT_MORALE, GetSolSectorX(pSoldier),
+                      GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
   }
 }

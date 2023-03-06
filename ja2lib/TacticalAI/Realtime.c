@@ -1,3 +1,4 @@
+#include "Soldier.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Items.h"
@@ -41,10 +42,11 @@ INT8 RTDecideAction(struct SOLDIERTYPE *pSoldier) {
     return (RTPlayerDecideAction(pSoldier));
   } else {
     // handle traversal
-    if ((pSoldier->ubProfile != NO_PROFILE) && (gMercProfiles[pSoldier->ubProfile].ubMiscFlags3 &
-                                                PROFILE_MISC_FLAG3_HANDLE_DONE_TRAVERSAL)) {
-      TriggerNPCWithGivenApproach(pSoldier->ubProfile, APPROACH_DONE_TRAVERSAL, FALSE);
-      gMercProfiles[pSoldier->ubProfile].ubMiscFlags3 &=
+    if ((GetSolProfile(pSoldier) != NO_PROFILE) &&
+        (gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags3 &
+         PROFILE_MISC_FLAG3_HANDLE_DONE_TRAVERSAL)) {
+      TriggerNPCWithGivenApproach(GetSolProfile(pSoldier), APPROACH_DONE_TRAVERSAL, FALSE);
+      gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags3 &=
           (~PROFILE_MISC_FLAG3_HANDLE_DONE_TRAVERSAL);
       pSoldier->ubQuoteActionID = 0;
       // wait a tiny bit
@@ -83,7 +85,7 @@ void RTHandleAI(struct SOLDIERTYPE *pSoldier) {
     // if action should remain in progress
     if (ActionInProgress(pSoldier)) {
 #ifdef DEBUGBUSY
-      AINumMessage("Busy with action, skipping guy#", pSoldier->ubID);
+      AINumMessage("Busy with action, skipping guy#", GetSolID(pSoldier));
 #endif
       // let it continue
       return;
@@ -172,7 +174,7 @@ void RTHandleAI(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->bAction == AI_ACTION_NONE) {
 #ifdef RECORDNET
       fprintf(NetDebugFile, "\tMOVED BECOMING TRUE: Chose to do nothing, guynum %d\n",
-              pSoldier->ubID);
+              GetSolID(pSoldier));
 #endif
 
       // do a standard wait before doing anything else!

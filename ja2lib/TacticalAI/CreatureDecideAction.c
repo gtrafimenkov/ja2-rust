@@ -1,4 +1,5 @@
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "Tactical/Items.h"
 #include "Tactical/Menptr.h"
 #include "Tactical/OppList.h"
@@ -433,11 +434,12 @@ INT8 CreatureDecideActionYellow(struct SOLDIERTYPE *pSoldier) {
     // then we have no business being under YELLOW status any more!
 #ifdef RECORDNET
     fprintf(NetDebugFile, "\nDecideActionYellow: ERROR - No important noise known by guynum %d\n\n",
-            pSoldier->ubID);
+            GetSolID(pSoldier));
 #endif
 
 #ifdef BETAVERSION
-    NumMessage("DecideActionYellow: ERROR - No important noise known by guynum ", pSoldier->ubID);
+    NumMessage("DecideActionYellow: ERROR - No important noise known by guynum ",
+               GetSolID(pSoldier));
 #endif
 
     return (AI_ACTION_NONE);
@@ -1212,7 +1214,7 @@ INT8 CreatureDecideActionBlack(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef DEBUGDECISIONS
       DebugAI(
-          String("%d(%s) %s %d(%s) at gridno %d (%d APs aim)\n", pSoldier->ubID, pSoldier->name,
+          String("%d(%s) %s %d(%s) at gridno %d (%d APs aim)\n", GetSolID(pSoldier), pSoldier->name,
                  (ubBestAttackAction == AI_ACTION_FIRE_GUN)
                      ? "SHOOTS"
                      : ((ubBestAttackAction == AI_ACTION_TOSS_PROJECTILE) ? "TOSSES AT" : "STABS"),

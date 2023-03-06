@@ -1,5 +1,6 @@
 #include "Tactical/HandleUIPlan.h"
 
+#include "Soldier.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/HandleUI.h"
 #include "Tactical/Interface.h"
@@ -221,7 +222,7 @@ void EndUIPlan() {
   for (cnt = MAX_NUM_SOLDIERS; cnt < TOTAL_SOLDIERS; cnt++) {
     pSoldier = MercPtrs[cnt];
 
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       if (pSoldier->sPlannedTargetX != -1) {
         SetRenderFlags(RENDER_FLAG_FULL);
       }

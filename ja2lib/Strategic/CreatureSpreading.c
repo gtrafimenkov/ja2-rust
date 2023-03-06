@@ -8,6 +8,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -26,6 +27,7 @@
 #include "Tactical/SoldierInitList.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/MapEdgepoints.h"
+#include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
@@ -43,7 +45,7 @@ extern UINT32 uiMeanWhileFlags;
 //								XXX_VALUE + Random( 1 + XXX_BONUS )
 
 // The start day random bonus that the queen begins
-//#define EASY_QUEEN_START_DAY								10
+// #define EASY_QUEEN_START_DAY								10
 ////easy start day 10-13 #define EASY_QUEEN_START_BONUS 3 #define NORMAL_QUEEN_START_DAY 8
 // //normal start day 8-10 #define NORMAL_QUEEN_START_BONUS
 // 2 #define HARD_QUEEN_START_DAY								7
@@ -298,26 +300,26 @@ void InitCreatureQuest() {
 
   if (gMineStatus[DRASSEN_MINE].fAttackedHeadMiner ||
       gMineStatus[DRASSEN_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_D13)]
+      StrategicMap[SectorID8To16(SEC_D13)]
           .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
                                 // controlled
     fMineInfectible[0] = FALSE;
   }
   if (gMineStatus[CAMBRIA_MINE].fAttackedHeadMiner ||
       gMineStatus[CAMBRIA_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_H8)]
+      StrategicMap[SectorID8To16(SEC_H8)]
           .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
                                 // controlled
     fMineInfectible[1] = FALSE;
   }
   if (gMineStatus[ALMA_MINE].fAttackedHeadMiner || gMineStatus[ALMA_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_I14)]
+      StrategicMap[SectorID8To16(SEC_I14)]
           .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
                                 // controlled
     fMineInfectible[2] = FALSE;
   }
   if (gMineStatus[GRUMM_MINE].fAttackedHeadMiner || gMineStatus[GRUMM_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_H3)]
+      StrategicMap[SectorID8To16(SEC_H3)]
           .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
                                 // controlled
     fMineInfectible[3] = FALSE;
@@ -413,7 +415,7 @@ void InitCreatureQuest() {
   AddEveryDayStrategicEvent(EVENT_CREATURE_NIGHT_PLANNING, 1320, 0);
 
   // Got to give the queen some early protection, so do some creature spreading.
-  while (i--) {  //# times spread is based on difficulty, and the values in the defines.
+  while (i--) {  // # times spread is based on difficulty, and the values in the defines.
     SpreadCreatures();
   }
 }
@@ -827,7 +829,7 @@ void CreatureAttackTown(
         !gbWorldSectorZ) {  // This is the currently loaded sector.  All we have to do is change the
                             // music and insert
       // the creatures tactically.
-      if (guiCurrentScreen == GAME_SCREEN) {
+      if (IsTacticalMode()) {
         gubCreatureBattleCode = CREATURE_BATTLE_CODE_TACTICALLYADD;
       } else {
         gubCreatureBattleCode = CREATURE_BATTLE_CODE_PREBATTLEINTERFACE;
@@ -837,7 +839,7 @@ void CreatureAttackTown(
     }
   } else if (CountAllMilitiaInSector(ubSectorX, ubSectorY)) {  // we have militia in the sector
     gubCreatureBattleCode = CREATURE_BATTLE_CODE_AUTORESOLVE;
-  } else if (!StrategicMap[ubSectorX + MAP_WORLD_X * ubSectorY]
+  } else if (!StrategicMap[GetSectorID16(ubSectorX, ubSectorY)]
                   .fEnemyControlled) {  // player controlled sector -- eat some civilians
     AdjustLoyaltyForCivsEatenByMonsters(ubSectorX, ubSectorY, gubNumCreaturesAttackingTown);
     SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (UINT8)GetWorldDay();
@@ -944,8 +946,8 @@ void EndCreatureQuest() {
 UINT8 CreaturesInUndergroundSector(UINT8 ubSectorID, UINT8 ubSectorZ) {
   UNDERGROUND_SECTORINFO *pSector;
   UINT8 ubSectorX, ubSectorY;
-  ubSectorX = (UINT8)SECTORX(ubSectorID);
-  ubSectorY = (UINT8)SECTORY(ubSectorID);
+  ubSectorX = SectorID8_X(ubSectorID);
+  ubSectorY = SectorID8_Y(ubSectorID);
   pSector = FindUnderGroundSector(ubSectorX, ubSectorY, ubSectorZ);
   if (pSector) return pSector->ubNumCreatures;
   return 0;
@@ -1037,14 +1039,14 @@ void DetermineCreatureTownCompositionBasedOnTacticalInformation(UINT8 *pubNumCre
   INT32 i;
   struct SOLDIERTYPE *pSoldier;
 
-  pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
+  pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
   *pubNumCreatures = 0;
   pSector->ubNumCreatures = 0;
   pSector->ubCreaturesInBattle = 0;
   for (i = gTacticalStatus.Team[CREATURE_TEAM].bFirstID;
        i <= gTacticalStatus.Team[CREATURE_TEAM].bLastID; i++) {
     pSoldier = MercPtrs[i];
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife) {
       switch (pSoldier->ubBodyType) {
         case ADULTFEMALEMONSTER:
           (*pubNumCreatures)++;
@@ -1216,7 +1218,7 @@ BOOLEAN PrepareCreaturesForBattle() {
     pUndergroundSector->ubCreaturesInBattle = pUndergroundSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
     pSector->ubNumCreatures = ubNumCreatures;
     pSector->ubCreaturesInBattle = ubNumCreatures;
   }
@@ -1271,16 +1273,16 @@ void CheckConditionsForTriggeringCreatureQuest(INT16 sSectorX, INT16 sSectorY, I
   if (giLairID) return;              // Creature quest already begun
 
   // Count the number of "infectible mines" the player occupies
-  if (!StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_D13)].fEnemyControlled) {
+  if (!StrategicMap[SectorID8To16(SEC_D13)].fEnemyControlled) {
     ubValidMines++;
   }
-  if (!StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_H8)].fEnemyControlled) {
+  if (!StrategicMap[SectorID8To16(SEC_H8)].fEnemyControlled) {
     ubValidMines++;
   }
-  if (!StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_I14)].fEnemyControlled) {
+  if (!StrategicMap[SectorID8To16(SEC_I14)].fEnemyControlled) {
     ubValidMines++;
   }
-  if (!StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_H3)].fEnemyControlled) {
+  if (!StrategicMap[SectorID8To16(SEC_H3)].fEnemyControlled) {
     ubValidMines++;
   }
 
@@ -1411,8 +1413,8 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
     for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
          i++) {
       pSoldier = MercPtrs[i];
-      if (pSoldier->bActive && pSoldier->bLife && pSoldier->sSectorX == sSectorX &&
-          pSoldier->sSectorY == sSectorY && pSoldier->bSectorZ == bSectorZ &&
+      if (IsSolActive(pSoldier) && pSoldier->bLife && GetSolSectorX(pSoldier) == sSectorX &&
+          GetSolSectorY(pSoldier) == sSectorY && GetSolSectorZ(pSoldier) == bSectorZ &&
           !pSoldier->fBetweenSectors) {
         return TRUE;
       }

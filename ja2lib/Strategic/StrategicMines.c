@@ -19,6 +19,7 @@
 #include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/SoldierProfile.h"
+#include "Town.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 
@@ -318,7 +319,7 @@ INT8 GetTownAssociatedWithMine(INT8 bMineIndex) {
   return (gMineLocation[bMineIndex].bAssociatedTown);
 }
 
-INT8 GetMineAssociatedWithThisTown(INT8 bTownId) {
+INT8 GetMineAssociatedWithThisTown(TownID bTownId) {
   INT8 bCounter = 0;
 
   // run through list of mines
@@ -361,7 +362,7 @@ UINT32 ExtractOreFromMine(INT8 bMineIndex, UINT32 uiAmount) {
 
     // tell the strategic AI about this, that mine's and town's value is greatly reduced
     GetMineSector(bMineIndex, &sSectorX, &sSectorY);
-    StrategicHandleMineThatRanOut((UINT8)SECTOR(sSectorX, sSectorY));
+    StrategicHandleMineThatRanOut((UINT8)GetSectorID8(sSectorX, sSectorY));
 
     AddHistoryToPlayersLog(HISTORY_MINE_RAN_OUT, gMineLocation[bMineIndex].bAssociatedTown,
                            GetWorldTotalMin(), gMineLocation[bMineIndex].sSectorX,
@@ -407,7 +408,7 @@ UINT32 ExtractOreFromMine(INT8 bMineIndex, UINT32 uiAmount) {
 INT32 GetAvailableWorkForceForMineForPlayer(INT8 bMineIndex) {
   // look for available workforce in the town associated with the mine
   INT32 iWorkForceSize = 0;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
 
   // return the loyalty of the town associated with the mine
 
@@ -446,7 +447,7 @@ INT32 GetAvailableWorkForceForMineForPlayer(INT8 bMineIndex) {
 INT32 GetAvailableWorkForceForMineForEnemy(INT8 bMineIndex) {
   // look for available workforce in the town associated with the mine
   INT32 iWorkForceSize = 0;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
 
   // return the loyalty of the town associated with the mine
 
@@ -572,7 +573,7 @@ void HandleIncomeFromMines(void) {
     iIncome += MineAMine(bCounter);
   }
   if (iIncome) {
-    AddTransactionToPlayersBook(DEPOSIT_FROM_SILVER_MINE, 0, GetWorldTotalMin(), iIncome);
+    AddTransactionToPlayersBook(DEPOSIT_FROM_SILVER_MINE, 0, iIncome);
   }
 }
 
@@ -646,7 +647,7 @@ void GetMineSector(UINT8 ubMineIndex, INT16 *psX, INT16 *psY) {
 }
 
 // get the index of the mine associated with this town
-INT8 GetMineIndexForTown(INT8 bTownId) {
+INT8 GetMineIndexForTown(TownID bTownId) {
   UINT8 ubMineIndex = 0;
 
   // given town id, send sector value of mine, a 0 means no mine for this town
@@ -660,7 +661,7 @@ INT8 GetMineIndexForTown(INT8 bTownId) {
 }
 
 // get the sector value for the mine associated with this town
-INT16 GetMineSectorForTown(INT8 bTownId) {
+INT16 GetMineSectorForTown(TownID bTownId) {
   INT8 ubMineIndex;
   INT16 sMineSector = -1;
 
@@ -984,7 +985,7 @@ BOOLEAN HasAnyMineBeenAttackedByMonsters(void) {
 
 void PlayerAttackedHeadMiner(UINT8 ubMinerProfileId) {
   UINT8 ubMineIndex;
-  INT8 bTownId;
+  TownID bTownId;
 
   // get the index of his mine
   ubMineIndex = GetHeadMinersMineIndex(ubMinerProfileId);
@@ -1031,7 +1032,7 @@ INT8 GetIdOfMineForSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   }
 
   // now get the sectorvalue
-  sSectorValue = SECTOR(sSectorX, sSectorY);
+  sSectorValue = GetSectorID8(sSectorX, sSectorY);
 
   // support surface
   if (bSectorZ == 0) {

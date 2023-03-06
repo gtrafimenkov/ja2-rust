@@ -19,10 +19,10 @@
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
 #include "SysGlobals.h"
-#include "Tactical/InterfaceControl.h"
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/MercTextBox.h"
@@ -78,7 +78,7 @@ CHAR16 gzUserDefinedButton1[128];
 CHAR16 gzUserDefinedButton2[128];
 
 INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
-                   MSGBOX_CALLBACK ReturnCallback, SGPRect *pCenteringRect) {
+                   MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
   VSURFACE_DESC vs_desc;
   UINT16 usTextBoxWidth;
   UINT16 usTextBoxHeight;
@@ -232,14 +232,14 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   gMsgBox.sX = (INT16)((((aRect.iRight - aRect.iLeft) - usTextBoxWidth) / 2) + aRect.iLeft);
   gMsgBox.sY = (INT16)((((aRect.iBottom - aRect.iTop) - usTextBoxHeight) / 2) + aRect.iTop);
 
-  if (guiCurrentScreen == GAME_SCREEN) {
+  if (IsTacticalMode()) {
     gfStartedFromGameScreen = TRUE;
   }
 
   if ((fInMapMode == TRUE)) {
     //		fMapExitDueToMessageBox = TRUE;
     gfStartedFromMapScreen = TRUE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   // Set pending screen
@@ -832,7 +832,7 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
       }
       break;
     case MAP_SCREEN:
-      fMapPanelDirty = TRUE;
+      MarkForRedrawalStrategicMap();
       break;
   }
 
@@ -1032,8 +1032,7 @@ UINT32 MessageBoxScreenShutdown() { return (FALSE); }
 // a basic box that don't care what screen we came from
 void DoScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
                                    MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y};
-  DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
+  DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, GetMapCenteringRect());
 }
 
 // a basic box that don't care what screen we came from
@@ -1052,14 +1051,14 @@ void DoLowerScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
 
 void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
                                            MSGBOX_CALLBACK ReturnCallback,
-                                           SGPRect *pCenteringRect) {
+                                           const SGPRect *pCenteringRect) {
   /// which screen are we in?
 
   // Map Screen (excluding AI Viewer)
 #ifdef JA2BETAVERSION
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) && (guiCurrentScreen != AIVIEWER_SCREEN))
+  if ((IsMapScreen()) && (guiCurrentScreen != AIVIEWER_SCREEN))
 #else
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN))
+  if ((IsMapScreen()))
 #endif
   {
 
@@ -1094,7 +1093,7 @@ void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
   }
 
   // Tactical
-  else if (guiCurrentScreen == GAME_SCREEN) {
+  else if (IsTacticalMode()) {
     DoMessageBox(MSG_BOX_BASIC_STYLE, zString, guiCurrentScreen, usFlags, ReturnCallback,
                  pCenteringRect);
   }

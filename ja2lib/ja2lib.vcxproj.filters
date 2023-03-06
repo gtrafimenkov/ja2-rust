@@ -698,9 +698,6 @@
     <ClCompile Include="Tactical\MercHiring.c">
       <Filter>Source Files\Tactical</Filter>
     </ClCompile>
-    <ClCompile Include="Tactical\MilitiaControl.c">
-      <Filter>Source Files\Tactical</Filter>
-    </ClCompile>
     <ClCompile Include="Tactical\Morale.c">
       <Filter>Source Files\Tactical</Filter>
     </ClCompile>
@@ -1011,6 +1008,33 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StrUtils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Money.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Militia.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Team.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharList.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Town.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tactical.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1700,9 +1724,6 @@
       <Filter>Header Files\Tactical</Filter>
     </ClInclude>
     <ClInclude Include="Tactical\MercHiring.h">
-      <Filter>Header Files\Tactical</Filter>
-    </ClInclude>
-    <ClInclude Include="Tactical\MilitiaControl.h">
       <Filter>Header Files\Tactical</Filter>
     </ClInclude>
     <ClInclude Include="Tactical\Morale.h">

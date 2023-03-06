@@ -13,6 +13,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterfaceMap.h"
@@ -20,6 +21,7 @@
 #include "Strategic/Quests.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
+#include "Strategic/TownMilitia.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
@@ -200,8 +202,8 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
     if (i == gusSelectedSoldier) {
       continue;
     }
-    if (!pSoldier->fBetweenSectors && pSoldier->sSectorX == gWorldSectorX &&
-        pSoldier->sSectorY == gWorldSectorY && pSoldier->bSectorZ == gbWorldSectorZ &&
+    if (!pSoldier->fBetweenSectors && GetSolSectorX(pSoldier) == gWorldSectorX &&
+        GetSolSectorY(pSoldier) == gWorldSectorY && GetSolSectorZ(pSoldier) == gbWorldSectorZ &&
         pSoldier->bLife >= OKLIFE &&
         pSoldier->bAssignment != MercPtrs[gusSelectedSoldier]->bAssignment &&
         pSoldier->bAssignment != ASSIGNMENT_POW && pSoldier->bAssignment != IN_TRANSIT &&
@@ -267,10 +269,9 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
                                                 // means that we can't load the adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;
       gExitDialog.fGotoSector = FALSE;
-    } else if (GetNumberOfMilitiaInSector(
-                   gWorldSectorX, gWorldSectorY,
-                   gbWorldSectorZ)) {  // Leaving this sector will result in militia being forced to
-                                       // fight the battle, can't load adjacent sector.
+    } else if (GetNumberOfMilitiaInSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+      // Leaving this sector will result in militia being forced to
+      // fight the battle, can't load adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;
       gExitDialog.fGotoSector = FALSE;
     }
@@ -372,7 +373,7 @@ void DoneFadeOutWarpCallback(void) {
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
     // Are we in this sector, On the current squad?
-    if (pSoldier->bActive && pSoldier->bLife >= OKLIFE && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE && pSoldier->bInSector) {
       gfTacticalTraversal = TRUE;
       SetGroupSectorValue(gsWarpWorldX, gsWarpWorldY, gbWarpWorldZ, pSoldier->ubGroupID);
 

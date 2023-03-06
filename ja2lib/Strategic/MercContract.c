@@ -7,13 +7,14 @@
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
 #include "Laptop/InsuranceContract.h"
-#include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/Personnel.h"
+#include "Money.h"
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterface.h"
@@ -25,8 +26,6 @@
 #include "Strategic/StrategicStatus.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/DialogueControl.h"
-#include "Tactical/InterfaceControl.h"
-#include "Tactical/Menptr.h"
 #include "Tactical/RottingCorpses.h"
 #include "Tactical/SoldierAdd.h"
 #include "Tactical/SoldierCreate.h"
@@ -34,6 +33,7 @@
 #include "Tactical/Squads.h"
 #include "Tactical/TacticalSave.h"
 #include "Tactical/Vehicles.h"
+#include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
@@ -129,8 +129,9 @@ void BeginContractRenewalSequence() {
           FindSoldierByProfileID(ContractRenewalList[cnt].ubProfileID, FALSE);  // Steve Willis, 80
 
       if (pSoldier) {
-        if ((pSoldier->bActive == FALSE) || (pSoldier->bLife == 0) ||
-            (pSoldier->bAssignment == IN_TRANSIT) || (pSoldier->bAssignment == ASSIGNMENT_POW)) {
+        if ((IsSolActive(pSoldier) == FALSE) || (pSoldier->bLife == 0) ||
+            (GetSolAssignment(pSoldier) == IN_TRANSIT) ||
+            (GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
           // no
           continue;
         }
@@ -198,7 +199,7 @@ void HandleContractRenewalSequence() {
 
           // Do special dialogue event...
           SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_CONTRACT_NOGO_TO_RENEW,
-                                        pSoldier->ubID, 0, 0, 0, 0);
+                                        GetSolID(pSoldier), 0, 0, 0, 0);
         } else {
           // OK check what dialogue to play
           // If we have not used this one before....
@@ -220,7 +221,7 @@ void HandleContractRenewalSequence() {
 
           // Do special dialogue event...
           SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_CONTRACT_WANTS_TO_RENEW,
-                                        pSoldier->ubID, 0, 0, 0, 0);
+                                        GetSolID(pSoldier), 0, 0, 0, 0);
         }
       } else {
         // Skip to next guy!
@@ -292,7 +293,7 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
   switch (ubDesiredAction) {
     case CONTRACT_EXTEND_1_DAY:
       // check to see if the merc has enough money
-      iContractCharge = gMercProfiles[pSoldier->ubProfile].sSalary;
+      iContractCharge = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
 
       // set the contract length and the charge
       iContractLength = 1;
@@ -302,7 +303,7 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
       break;
 
     case CONTRACT_EXTEND_1_WEEK:
-      iContractCharge = gMercProfiles[pSoldier->ubProfile].uiWeeklySalary;
+      iContractCharge = gMercProfiles[GetSolProfile(pSoldier)].uiWeeklySalary;
 
       // set the contract length and the charge
       iContractLength = 7;
@@ -312,7 +313,7 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
       break;
 
     case CONTRACT_EXTEND_2_WEEK:
-      iContractCharge = gMercProfiles[pSoldier->ubProfile].uiBiWeeklySalary;
+      iContractCharge = gMercProfiles[GetSolProfile(pSoldier)].uiBiWeeklySalary;
 
       // set the contract length and the charge
       iContractLength = 14;
@@ -327,7 +328,7 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
   }
 
   // check to see if the merc has enough money
-  if (LaptopSaveInfo.iCurrentBalance < iContractCharge) return (FALSE);
+  if (MoneyGetBalance() < iContractCharge) return (FALSE);
 
   // Check to see if merc will renew
   if (!WillMercRenew(pSoldier, TRUE)) {
@@ -360,11 +361,11 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
                                                   //  contract && ( iContractLength > 1 )
   {
     // check if player can afford insurance, if not, tell them
-    iCostOfInsurance = CalculateInsuranceContractCost(iContractLength, pSoldier->ubProfile);
+    iCostOfInsurance = CalculateInsuranceContractCost(iContractLength, GetSolProfile(pSoldier));
 
     HandleImportantMercQuote(pSoldier, QUOTE_ACCEPT_CONTRACT_RENEWAL);
 
-    if (iCostOfInsurance > LaptopSaveInfo.iCurrentBalance) {
+    if (iCostOfInsurance > MoneyGetBalance()) {
       // no can afford
       HandleNotifyPlayerCantAffordInsurance();
 
@@ -403,15 +404,14 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
   // ARM: Do not reset because of renewal!  The deposit in the profile goes up when merc levels, but
   // the one in the soldier structure must always reflect the deposit actually paid (which does NOT
   // change when a merc levels).
-  //	pSoldier->usMedicalDeposit = gMercProfiles[ pSoldier->ubProfile ].sMedicalDepositAmount;
+  //	pSoldier->usMedicalDeposit = gMercProfiles[ GetSolProfile(pSoldier) ].sMedicalDepositAmount;
 
   // add an entry in the finacial page for the extending  of the mercs contract
-  AddTransactionToPlayersBook(ubFinancesContractType, pSoldier->ubProfile, GetWorldTotalMin(),
-                              -iContractCharge);
+  AddTransactionToPlayersBook(ubFinancesContractType, GetSolProfile(pSoldier), -iContractCharge);
 
   // add an entry in the history page for the extending of the merc contract
-  AddHistoryToPlayersLog(ubHistoryContractType, pSoldier->ubProfile, GetWorldTotalMin(),
-                         pSoldier->sSectorX, pSoldier->sSectorY);
+  AddHistoryToPlayersLog(ubHistoryContractType, GetSolProfile(pSoldier), GetWorldTotalMin(),
+                         GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
 
   return (TRUE);
 }
@@ -443,7 +443,7 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   // find out if the merc has a buddy working for the player
   // loop through the list of people the merc considers buddies
   for (i = 0; i < 5; i++) {
-    bMercID = gMercProfiles[pSoldier->ubProfile].bBuddy[i];
+    bMercID = gMercProfiles[GetSolProfile(pSoldier)].bBuddy[i];
 
     if (bMercID < 0) continue;
 
@@ -469,19 +469,20 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   // see if someone the merc hates is on the team
   // loop through the list of people the merc hates
   for (i = 0; i < 2; i++) {
-    bMercID = gMercProfiles[pSoldier->ubProfile].bHated[i];
+    bMercID = gMercProfiles[GetSolProfile(pSoldier)].bHated[i];
 
     if (bMercID < 0) continue;
 
     if (IsMercOnTeamAndInOmertaAlreadyAndAlive((UINT8)bMercID)) {
-      if (gMercProfiles[pSoldier->ubProfile].bHatedCount[i] == 0) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].bHatedCount[i] == 0) {
         // our tolerance has run out!
         fUnhappy = TRUE;
       } else  // else tolerance is > 0, only gripe if in same sector
       {
         pHated = FindSoldierByProfileID(bMercID, TRUE);
-        if (pHated && pHated->sSectorX == pSoldier->sSectorX &&
-            pHated->sSectorY == pSoldier->sSectorY && pHated->bSectorZ == pSoldier->bSectorZ) {
+        if (pHated && pHated->sSectorX == GetSolSectorX(pSoldier) &&
+            pHated->sSectorY == GetSolSectorY(pSoldier) &&
+            pHated->bSectorZ == GetSolSectorZ(pSoldier)) {
           fUnhappy = TRUE;
         }
       }
@@ -500,20 +501,21 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
 
   if (!fUnhappy) {
     // now check for learn to hate
-    bMercID = gMercProfiles[pSoldier->ubProfile].bLearnToHate;
+    bMercID = gMercProfiles[GetSolProfile(pSoldier)].bLearnToHate;
 
     if (bMercID >= 0) {
       if (IsMercOnTeamAndInOmertaAlreadyAndAlive((UINT8)bMercID)) {
-        if (gMercProfiles[pSoldier->ubProfile].bLearnToHateCount == 0) {
+        if (gMercProfiles[GetSolProfile(pSoldier)].bLearnToHateCount == 0) {
           // our tolerance has run out!
           fUnhappy = TRUE;
           usReasonQuote = QUOTE_LEARNED_TO_HATE_MERC_1_ON_TEAM_WONT_RENEW;
 
-        } else if (gMercProfiles[pSoldier->ubProfile].bLearnToHateCount <=
-                   gMercProfiles[pSoldier->ubProfile].bLearnToHateTime / 2) {
+        } else if (gMercProfiles[GetSolProfile(pSoldier)].bLearnToHateCount <=
+                   gMercProfiles[GetSolProfile(pSoldier)].bLearnToHateTime / 2) {
           pHated = FindSoldierByProfileID(bMercID, TRUE);
-          if (pHated && pHated->sSectorX == pSoldier->sSectorX &&
-              pHated->sSectorY == pSoldier->sSectorY && pHated->bSectorZ == pSoldier->bSectorZ) {
+          if (pHated && pHated->sSectorX == GetSolSectorX(pSoldier) &&
+              pHated->sSectorY == GetSolSectorY(pSoldier) &&
+              pHated->bSectorZ == GetSolSectorZ(pSoldier)) {
             fUnhappy = TRUE;
             usReasonQuote = QUOTE_LEARNED_TO_HATE_MERC_1_ON_TEAM_WONT_RENEW;
           }
@@ -525,7 +527,7 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   // happy so far?
   if (!fUnhappy) {
     // check if death rate is too high
-    if (MercThinksDeathRateTooHigh(pSoldier->ubProfile)) {
+    if (MercThinksDeathRateTooHigh(GetSolProfile(pSoldier))) {
       fUnhappy = TRUE;
       usReasonQuote = QUOTE_DEATH_RATE_RENEWAL;
     }
@@ -547,21 +549,21 @@ BOOLEAN WillMercRenew(struct SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote) {
   if (fSayQuote) {
     if (fUnhappy) {
       if (fBuddyAround) {
-        if (GetMercPrecedentQuoteBitStatus(pSoldier->ubProfile,
+        if (GetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
                                            GetQuoteBitNumberFromQuoteID((UINT32)(usBuddyQuote))) ==
             TRUE) {
           fSayPrecedent = TRUE;
         } else {
-          SetMercPrecedentQuoteBitStatus(pSoldier->ubProfile,
+          SetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
                                          GetQuoteBitNumberFromQuoteID((UINT32)(usBuddyQuote)));
         }
       } else {
-        if (GetMercPrecedentQuoteBitStatus(pSoldier->ubProfile,
+        if (GetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
                                            GetQuoteBitNumberFromQuoteID((UINT32)(usReasonQuote))) ==
             TRUE) {
           fSayPrecedent = TRUE;
         } else {
-          SetMercPrecedentQuoteBitStatus(pSoldier->ubProfile,
+          SetMercPrecedentQuoteBitStatus(GetSolProfile(pSoldier),
                                          GetQuoteBitNumberFromQuoteID((UINT32)(usReasonQuote)));
         }
       }
@@ -622,15 +624,15 @@ void HandleSoldierLeavingWithLowMorale(struct SOLDIERTYPE *pSoldier) {
   if (MercThinksHisMoraleIsTooLow(pSoldier)) {
     // this will cause him give us lame excuses for a while until he gets over it
     // 3-6 days (but the first 1-2 days of that are spent "returning" home)
-    gMercProfiles[pSoldier->ubProfile].ubDaysOfMoraleHangover = (UINT8)(3 + Random(4));
+    gMercProfiles[GetSolProfile(pSoldier)].ubDaysOfMoraleHangover = (UINT8)(3 + Random(4));
   }
 }
 
 void HandleSoldierLeavingForAnotherContract(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->fSignedAnotherContract) {
     // merc goes to work elsewhere
-    gMercProfiles[pSoldier->ubProfile].bMercStatus = MERC_WORKING_ELSEWHERE;
-    gMercProfiles[pSoldier->ubProfile].uiDayBecomesAvailable +=
+    gMercProfiles[GetSolProfile(pSoldier)].bMercStatus = MERC_WORKING_ELSEWHERE;
+    gMercProfiles[GetSolProfile(pSoldier)].uiDayBecomesAvailable +=
         1 + Random(6 + (pSoldier->bExpLevel / 2));  // 1-(6 to 11) days
   }
 }
@@ -765,7 +767,7 @@ BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier) {
   }
 
   // else if the merc was fired
-  else if (ubHistoryCode == HISTORY_MERC_FIRED || pSoldier->bAssignment == ASSIGNMENT_POW) {
+  else if (ubHistoryCode == HISTORY_MERC_FIRED || GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
     AddCharacterToFiredList(pSoldier);
   }
 
@@ -797,12 +799,12 @@ BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier) {
   }
 
   // if the merc is not dead
-  if (gMercProfiles[pSoldier->ubProfile].bMercStatus != MERC_IS_DEAD) {
+  if (gMercProfiles[GetSolProfile(pSoldier)].bMercStatus != MERC_IS_DEAD) {
     // Set the status to returning home ( delay the merc for rehire )
-    gMercProfiles[pSoldier->ubProfile].bMercStatus = MERC_RETURNING_HOME;
+    gMercProfiles[GetSolProfile(pSoldier)].bMercStatus = MERC_RETURNING_HOME;
 
     // specify how long the merc will continue to be unavailable
-    gMercProfiles[pSoldier->ubProfile].uiDayBecomesAvailable = 1 + Random(2);  // 1-2 days
+    gMercProfiles[GetSolProfile(pSoldier)].uiDayBecomesAvailable = 1 + Random(2);  // 1-2 days
 
     HandleSoldierLeavingWithLowMorale(pSoldier);
     HandleSoldierLeavingForAnotherContract(pSoldier);
@@ -811,13 +813,13 @@ BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier) {
   // add an entry in the history page for the firing/quiting of the merc
   // ATE: Don't do this if they are already dead!
   if (!(pSoldier->uiStatusFlags & SOLDIER_DEAD)) {
-    AddHistoryToPlayersLog(ubHistoryCode, pSoldier->ubProfile, GetWorldTotalMin(),
-                           pSoldier->sSectorX, pSoldier->sSectorY);
+    AddHistoryToPlayersLog(ubHistoryCode, GetSolProfile(pSoldier), GetWorldTotalMin(),
+                           GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
   }
 
   // if the merc was a POW, remember it becuase the merc cant show up in AIM or MERC anymore
-  if (pSoldier->bAssignment == ASSIGNMENT_POW) {
-    gMercProfiles[pSoldier->ubProfile].bMercStatus = MERC_FIRED_AS_A_POW;
+  if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
+    gMercProfiles[GetSolProfile(pSoldier)].bMercStatus = MERC_FIRED_AS_A_POW;
   }
 
   // else the merc CAN get his medical deposit back
@@ -832,11 +834,11 @@ BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier) {
   // Check if we should remove loaded world...
   CheckAndHandleUnloadingOfCurrentWorld();
 
-  if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+  if (IsMapScreen()) {
     ReBuildCharactersList();
   }
 
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
   fTeamPanelDirty = TRUE;
   fCharacterInfoPanelDirty = TRUE;
 
@@ -853,28 +855,26 @@ void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
   INT32 iRefundAmount = 0;
 
   // if the merc didnt have any medical deposit, exit
-  if (!gMercProfiles[pSoldier->ubProfile].bMedicalDeposit) return;
+  if (!gMercProfiles[GetSolProfile(pSoldier)].bMedicalDeposit) return;
 
   // if the merc is at full health, refund the full medical deposit
   if (pSoldier->bLife == pSoldier->bLifeMax) {
     // add an entry in the finacial page for the FULL refund of the medical deposit
     // use the medical deposit in pSoldier, not in profile, which goes up with leveling
-    AddTransactionToPlayersBook(FULL_MEDICAL_REFUND, pSoldier->ubProfile, GetWorldTotalMin(),
+    AddTransactionToPlayersBook(FULL_MEDICAL_REFUND, GetSolProfile(pSoldier),
                                 pSoldier->usMedicalDeposit);
 
     // add an email
     AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_REFUND, AIM_MEDICAL_DEPOSIT_REFUND_LENGTH, AIM_SITE,
-                            GetWorldTotalMin(), pSoldier->usMedicalDeposit, pSoldier->ubProfile);
+                            GetWorldTotalMin(), pSoldier->usMedicalDeposit,
+                            GetSolProfile(pSoldier));
   }
   // else if the merc is a dead, refund NOTHING!!
   else if (pSoldier->bLife <= 0) {
-    // add an entry in the finacial page for NO refund of the medical deposit
-    // AddTransactionToPlayersBook( NO_MEDICAL_REFUND, pSoldier->ubProfile, GetWorldTotalMin(), 0 );
-
     // add an email
     AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_NO_REFUND, AIM_MEDICAL_DEPOSIT_NO_REFUND_LENGTH,
                             AIM_SITE, GetWorldTotalMin(), pSoldier->usMedicalDeposit,
-                            pSoldier->ubProfile);
+                            GetSolProfile(pSoldier));
 
   }
   // else the player is injured, refund a partial amount
@@ -884,13 +884,12 @@ void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
         (INT32)((pSoldier->bLife / (FLOAT)pSoldier->bLifeMax) * pSoldier->usMedicalDeposit + 0.5);
 
     // add an entry in the finacial page for a PARTIAL refund of the medical deposit
-    AddTransactionToPlayersBook(PARTIAL_MEDICAL_REFUND, pSoldier->ubProfile, GetWorldTotalMin(),
-                                iRefundAmount);
+    AddTransactionToPlayersBook(PARTIAL_MEDICAL_REFUND, GetSolProfile(pSoldier), iRefundAmount);
 
     // add an email
     AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND,
                             AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND_LENGTH, AIM_SITE, GetWorldTotalMin(),
-                            iRefundAmount, pSoldier->ubProfile);
+                            iRefundAmount, GetSolProfile(pSoldier));
   }
 }
 
@@ -905,7 +904,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
   // use YES/NO Pop up box, settup for particular screen
   SGPRect pCenteringRect = {0, 0, 640, 480};
 
-  GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, zShortTownIDString,
+  GetShortSectorString(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), zShortTownIDString,
                        ARR_SIZE(zShortTownIDString));
 
   // Set string for generic button
@@ -926,8 +925,8 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
   }
 
   // if the character is an RPC
-  if (pSoldier->ubProfile >= FIRST_RPC && pSoldier->ubProfile < FIRST_NPC) {
-    if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+  if (GetSolProfile(pSoldier) >= FIRST_RPC && GetSolProfile(pSoldier) < FIRST_NPC) {
+    if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
       swprintf(sString, ARR_SIZE(sString), pMercHeLeaveString[4], pSoldier->name,
                zShortTownIDString);
     } else {
@@ -939,9 +938,9 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
 
   // check if drassen controlled
   else if (StrategicMap[(AIRPORT_X + (MAP_WORLD_X * AIRPORT_Y))].fEnemyControlled == FALSE) {
-    if ((pSoldier->sSectorX == AIRPORT_X) && (pSoldier->sSectorY == AIRPORT_Y) &&
-        (pSoldier->bSectorZ == 0)) {
-      if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+    if ((GetSolSectorX(pSoldier) == AIRPORT_X) && (GetSolSectorY(pSoldier) == AIRPORT_Y) &&
+        (GetSolSectorZ(pSoldier) == 0)) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
         swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercHeLeaveString[3]);
       } else {
         swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercSheLeaveString[3]);
@@ -951,7 +950,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
       // Set string for generic button
       swprintf(gzUserDefinedButton2, ARR_SIZE(gzUserDefinedButton2), L"B13");
 
-      if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
         swprintf(sString, ARR_SIZE(sString), pMercHeLeaveString[0], pSoldier->name,
                  zShortTownIDString);
       } else {
@@ -960,9 +959,10 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
       }
     }
   } else {
-    if ((pSoldier->sSectorX == OMERTA_LEAVE_EQUIP_SECTOR_X) &&
-        (pSoldier->sSectorY == OMERTA_LEAVE_EQUIP_SECTOR_Y) && (pSoldier->bSectorZ == 0)) {
-      if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+    if ((GetSolSectorX(pSoldier) == OMERTA_LEAVE_EQUIP_SECTOR_X) &&
+        (GetSolSectorY(pSoldier) == OMERTA_LEAVE_EQUIP_SECTOR_Y) &&
+        (GetSolSectorZ(pSoldier) == 0)) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
         swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercHeLeaveString[2]);
       } else {
         swprintf(sString, ARR_SIZE(sString), L"%s %s", pSoldier->name, pMercSheLeaveString[2]);
@@ -972,7 +972,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
       // Set string for generic button
       swprintf(gzUserDefinedButton2, ARR_SIZE(gzUserDefinedButton2), L"A9");
 
-      if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
         swprintf(sString, ARR_SIZE(sString), pMercHeLeaveString[1], pSoldier->name,
                  zShortTownIDString);
       } else {
@@ -983,7 +983,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
   }
 
   /// which screen are we in?
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     if (fInSector == FALSE) {
       // set up for mapscreen
       DoMapMessageBox(
@@ -1046,7 +1046,7 @@ void MercDepartEquipmentBoxCallBack(UINT8 bExitValue) {
     }
   } else {
     // no
-    if (StrategicMap[BOBBYR_SHIPPING_DEST_SECTOR_X + (BOBBYR_SHIPPING_DEST_SECTOR_Y * MAP_WORLD_X)]
+    if (StrategicMap[GetSectorID16(BOBBYR_SHIPPING_DEST_SECTOR_X, (BOBBYR_SHIPPING_DEST_SECTOR_Y))]
             .fEnemyControlled == FALSE) {
       HandleMercLeavingEquipmentInDrassen(pLeaveSoldier->ubID);
     } else {
@@ -1066,9 +1066,9 @@ BOOLEAN HandleFiredDeadMerc(struct SOLDIERTYPE *pSoldier) {
 
 #if 0
 	//if the dead merc is in the current sector
-	if( pSoldier->sSectorX == gWorldSectorX &&
-			pSoldier->sSectorY == gWorldSectorY &&
-			pSoldier->bSectorZ == gbWorldSectorZ )
+	if( GetSolSectorX(pSoldier) == gWorldSectorX &&
+			GetSolSectorY(pSoldier) == gWorldSectorY &&
+			GetSolSectorZ(pSoldier) == gbWorldSectorZ )
 	{
 		TurnSoldierIntoCorpse( pSoldier, FALSE, FALSE );
 	}
@@ -1097,7 +1097,7 @@ BOOLEAN HandleFiredDeadMerc(struct SOLDIERTYPE *pSoldier) {
 		Corpse.ubType	= (UINT8)gubAnimSurfaceCorpseID[ pSoldier->ubBodyType][ pSoldier->usAnimState ];
 
 		//Add the rotting corpse info to the sectors unloaded rotting corpse file
-		AddRottingCorpseToUnloadedSectorsRottingCorpseFile( pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ, &Corpse);
+		AddRottingCorpseToUnloadedSectorsRottingCorpseFile( GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier), &Corpse);
 	}
 #endif
 
@@ -1105,7 +1105,7 @@ BOOLEAN HandleFiredDeadMerc(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleExtendMercsContract(struct SOLDIERTYPE *pSoldier) {
-  if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if (!(IsMapScreen())) {
     gfEnteringMapScreen = TRUE;
 
     fEnterMapDueToContract = TRUE;
@@ -1140,7 +1140,7 @@ void FindOutIfAnyMercAboutToLeaveIsGonnaRenew(void) {
 
   gfFirstMercSayQuote = FALSE;
 
-  pSoldier = &Menptr[0];
+  pSoldier = GetSoldierByID(0);
   iNumberOnTeam = gTacticalStatus.Team[OUR_TEAM].bLastID;
 
   // run through list of grunts whoose contract are up in the next 2 hours
@@ -1150,11 +1150,12 @@ void FindOutIfAnyMercAboutToLeaveIsGonnaRenew(void) {
   // is any merc that does not want to stay and only display that quote
   // if they are the only one here....
   for (iCounter = 0; iCounter < iNumberOnTeam; iCounter++) {
-    pSoldier = &Menptr[iCounter];
+    pSoldier = GetSoldierByID(iCounter);
 
     // valid soldier?
-    if ((pSoldier->bActive == FALSE) || (pSoldier->bLife == 0) ||
-        (pSoldier->bAssignment == IN_TRANSIT) || (pSoldier->bAssignment == ASSIGNMENT_POW)) {
+    if ((IsSolActive(pSoldier) == FALSE) || (pSoldier->bLife == 0) ||
+        (GetSolAssignment(pSoldier) == IN_TRANSIT) ||
+        (GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
       // no
       continue;
     }
@@ -1166,11 +1167,11 @@ void FindOutIfAnyMercAboutToLeaveIsGonnaRenew(void) {
         pSoldier->ubContractRenewalQuoteCode = SOLDIER_CONTRACT_RENEW_QUOTE_NOT_USED;
 
         // Add this guy to the renewal list
-        ContractRenewalList[ubNumContractRenewals].ubProfileID = pSoldier->ubProfile;
+        ContractRenewalList[ubNumContractRenewals].ubProfileID = GetSolProfile(pSoldier);
         ubNumContractRenewals++;
 
         if (WillMercRenew(pSoldier, FALSE)) {
-          ubPotentialMercs[ubNumMercs] = pSoldier->ubID;
+          ubPotentialMercs[ubNumMercs] = GetSolID(pSoldier);
           ubNumMercs++;
         } else {
           pSoldierWhoWillQuit = pSoldier;
@@ -1262,11 +1263,11 @@ void ExtendMercInsuranceContractCallBack(UINT8 bExitValue) {
 }
 
 void HandleUniqueEventWhenPlayerLeavesTeam(struct SOLDIERTYPE *pSoldier) {
-  switch (pSoldier->ubProfile) {
+  switch (GetSolProfile(pSoldier)) {
     // When iggy leaves the players team,
     case IGGY:
       // if he is owed money ( ie the player didnt pay him )
-      if (gMercProfiles[pSoldier->ubProfile].iBalance < 0) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].iBalance < 0) {
         // iggy is now available to be handled by the enemy
         gubFact[FACT_IGGY_AVAILABLE_TO_ARMY] = TRUE;
       }

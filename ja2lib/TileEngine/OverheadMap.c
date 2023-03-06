@@ -15,6 +15,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "SysGlobals.h"
 #include "Tactical/Faces.h"
@@ -436,7 +437,7 @@ void HandleOverheadMap() {
       if (GetClosestMercInOverheadMap(usMapPos, &pSoldier, 1)) {
         if (pSoldier->bTeam == gbPlayerNum) {
           gfUIHandleSelectionAboveGuy = TRUE;
-          gsSelectedGuy = pSoldier->ubID;
+          gsSelectedGuy = GetSolID(pSoldier);
         }
 
         DisplayMercNameInOverhead(pSoldier);
@@ -974,7 +975,7 @@ void RenderOverheadOverlays() {
   for (i = 0; i < end; i++) {
     // First, check to see if the soldier exists and is in the sector.
     pSoldier = MercPtrs[i];
-    if (!pSoldier->bActive || !pSoldier->bInSector) continue;
+    if (!IsSolActive(pSoldier) || !pSoldier->bInSector) continue;
     // Soldier is here.  Calculate his screen position based on his current gridno.
     GetOverheadScreenXYFromGridNo(pSoldier->sGridNo, &sX, &sY);
     // Now, draw his "doll"
@@ -1232,7 +1233,8 @@ guy
                                                                 SetObjectShade( hVObject, 1 );
                                                         }
 
-                                                        if ( pSoldier->ubID == gusSelectedSoldier )
+                                                        if ( GetSolID(pSoldier) ==
+gusSelectedSoldier )
                                                         {
                                                                 if( gfRadarCurrentGuyFlash &&
 !gfTacticalPlacementGUIActive )

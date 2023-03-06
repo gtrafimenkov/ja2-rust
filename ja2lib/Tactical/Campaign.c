@@ -11,6 +11,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
 #include "Strategic/MapScreen.h"
@@ -36,7 +37,7 @@ extern UINT8 gbPlayerNum;
 
 #ifdef JA2TESTVERSION
 // comment out to get rid of stat change msgs
-//#define STAT_CHANGE_DEBUG
+// #define STAT_CHANGE_DEBUG
 #endif
 
 #ifdef STAT_CHANGE_DEBUG
@@ -53,19 +54,19 @@ UINT8 CalcImportantSectorControl(void);
 // experience level gain
 void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances, UINT8 ubReason) {
   Assert(pSoldier != NULL);
-  Assert(pSoldier->bActive);
+  Assert(IsSolActive(pSoldier));
 
   // ignore non-player soldiers
   if (!PTR_OURTEAM) return;
 
   // ignore anything without a profile
-  if (pSoldier->ubProfile == NO_PROFILE) return;
+  if (GetSolProfile(pSoldier) == NO_PROFILE) return;
 
   // ignore vehicles and robots
   if ((pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (pSoldier->uiStatusFlags & SOLDIER_ROBOT))
     return;
 
-  if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+  if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
     ScreenMsg(FONT_ORANGE, MSG_BETAVERSION,
               L"ERROR: StatChange: %s improving stats while POW! ubStat %d", pSoldier->name,
               ubStat);
@@ -81,7 +82,7 @@ void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances,
   }
 #endif
 
-  ProcessStatChange(&(gMercProfiles[pSoldier->ubProfile]), ubStat, usNumChances, ubReason);
+  ProcessStatChange(&(gMercProfiles[GetSolProfile(pSoldier)]), ubStat, usNumChances, ubReason);
 
   // Update stats....right away... ATE
   UpdateStats(pSoldier);
@@ -359,7 +360,7 @@ void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumCh
 
 // convert hired mercs' stats subpoint changes into actual point changes where warranted
 void UpdateStats(struct SOLDIERTYPE *pSoldier) {
-  ProcessUpdateStats(&(gMercProfiles[pSoldier->ubProfile]), pSoldier);
+  ProcessUpdateStats(&(gMercProfiles[GetSolProfile(pSoldier)]), pSoldier);
 }
 
 // UpdateStats version for mercs not currently on player's team
@@ -624,7 +625,7 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, UINT8
 
           case MERC_TYPE__MERC:
             // M.E.R.C.
-            ubMercMercIdValue = pSoldier->ubProfile;
+            ubMercMercIdValue = GetSolProfile(pSoldier);
 
             // Biff's profile id ( 40 ) is the base
             ubMercMercIdValue -= BIFF;
@@ -711,7 +712,7 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
     if (!PTR_OURTEAM) return;
 
     // ignore anything without a profile
-    if (pSoldier->ubProfile == NO_PROFILE) return;
+    if (GetSolProfile(pSoldier) == NO_PROFILE) return;
 
     // ignore vehicles and robots
     if ((pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (pSoldier->uiStatusFlags & SOLDIER_ROBOT))
@@ -721,7 +722,7 @@ void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldie
     if (pSoldier->bLife < OKLIFE) return;
 
     // ignore POWs - shouldn't ever be getting this far
-    if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+    if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
       return;
     }
   } else {
@@ -843,8 +844,8 @@ void HandleAnyStatChangesAfterAttack(void) {
   // must check everyone on player's team, not just the shooter
   for (cnt = 0, pSoldier = MercPtrs[0]; cnt <= gTacticalStatus.Team[MercPtrs[0]->bTeam].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive) {
-      ProcessUpdateStats(&(gMercProfiles[pSoldier->ubProfile]), pSoldier);
+    if (IsSolActive(pSoldier)) {
+      ProcessUpdateStats(&(gMercProfiles[GetSolProfile(pSoldier)]), pSoldier);
     }
   }
 }
@@ -1295,7 +1296,7 @@ void AwardExperienceBonusToActiveSquad(UINT8 ubExpBonusType) {
   // amount in XPs
   for (ubGuynum = gTacticalStatus.Team[gbPlayerNum].bFirstID, pSoldier = MercPtrs[ubGuynum];
        ubGuynum <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubGuynum++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector && IsMercOnCurrentSquad(pSoldier) &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && IsMercOnCurrentSquad(pSoldier) &&
         (pSoldier->bLife >= CONSCIOUSNESS) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
         !AM_A_ROBOT(pSoldier)) {
       StatChange(pSoldier, EXPERAMT, usXPs, FALSE);
@@ -1337,7 +1338,7 @@ UINT8 CalcImportantSectorControl(void) {
   for (ubMapX = 1; ubMapX < MAP_WORLD_X - 1; ubMapX++) {
     for (ubMapY = 1; ubMapY < MAP_WORLD_Y - 1; ubMapY++) {
       // if player controlled
-      if (StrategicMap[CALCULATE_STRATEGIC_INDEX(ubMapX, ubMapY)].fEnemyControlled == FALSE) {
+      if (StrategicMap[GetSectorID16(ubMapX, ubMapY)].fEnemyControlled == FALSE) {
         // towns where militia can be trained and SAM sites are important sectors
         if (MilitiaTrainingAllowedInSector(ubMapX, ubMapY, 0)) {
           ubSectorControlPts++;

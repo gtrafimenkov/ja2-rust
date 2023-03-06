@@ -18,6 +18,8 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Sector.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/MapScreenInterface.h"
@@ -34,11 +36,9 @@
 #include "Tactical/EndGame.h"
 #include "Tactical/Faces.h"
 #include "Tactical/Gap.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfaceDialogue.h"
 #include "Tactical/InterfaceUtils.h"
 #include "Tactical/LOS.h"
-#include "Tactical/Menptr.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/QArray.h"
@@ -53,6 +53,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/MercTextBox.h"
@@ -379,7 +380,7 @@ void HandleDialogueUIAdjustments() {
             }
 
             // Setup UI again!
-            CreateTalkingUI(gbUIHandlerID, pSoldier->iFaceIndex, pSoldier->ubProfile, pSoldier,
+            CreateTalkingUI(gbUIHandlerID, pSoldier->iFaceIndex, GetSolProfile(pSoldier), pSoldier,
                             gzQuoteStr);
           }
         }
@@ -469,7 +470,7 @@ void HandleDialogue() {
       //    CHANGE FROM TEAM TO INV INTERFACE
 
       // Where are we and where did this face once exist?
-      if (guiScreenIDUsedWhenUICreated == GAME_SCREEN && guiCurrentScreen == MAP_SCREEN) {
+      if (guiScreenIDUsedWhenUICreated == GAME_SCREEN && IsMapScreen_2()) {
         // GO FROM GAMESCREEN TO MAPSCREEN
         // REMOVE OLD UI
         // Set face inactive!
@@ -503,7 +504,7 @@ void HandleDialogue() {
         }
 
         guiScreenIDUsedWhenUICreated = guiCurrentScreen;
-      } else if (guiScreenIDUsedWhenUICreated == MAP_SCREEN && guiCurrentScreen == GAME_SCREEN) {
+      } else if (guiScreenIDUsedWhenUICreated == MAP_SCREEN && IsTacticalMode()) {
         HandleTacticalSpeechUI(gubCurrentTalkingID, gpCurrentTalkingFace->iID);
         guiScreenIDUsedWhenUICreated = guiCurrentScreen;
       }
@@ -637,7 +638,7 @@ void HandleDialogue() {
     }
   }
 
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) && (QItem->uiSpecialEventFlag == 0)) {
+  if ((IsMapScreen()) && (QItem->uiSpecialEventFlag == 0)) {
     QItem->fPauseTime = TRUE;
   }
 
@@ -781,7 +782,7 @@ void HandleDialogue() {
 
       switch (iReason) {
         case (UPDATE_BOX_REASON_ADDSOLDIER):
-          pUpdateSoldier = &Menptr[QItem->uiSpecialEventData2];
+          pUpdateSoldier = GetSoldierByID(QItem->uiSpecialEventData2);
           if (pUpdateSoldier->bActive == TRUE) {
             AddSoldierToUpdateBox(pUpdateSoldier);
           }
@@ -899,7 +900,7 @@ void HandleDialogue() {
     else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_DISPLAY_INVASION_MESSAGE )
     {
             HandlePlayerNotifyInvasionByEnemyForces( (INT16)(QItem->uiSpecialEventData %
-    MAP_WORLD_X), (INT16)(QItem->uiSpecialEventData / MAP_WORLD_X), 0, NULL );
+    MAP_WORLD_X), (INT16)(SectorID16_Y(QItem->uiSpecialEventData)), 0, NULL );
     }
     */
     else if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_SKYRIDERMAPSCREENEVENT) {
@@ -957,7 +958,7 @@ void HandleDialogue() {
         HandleInterfaceMessageForContinuingTrainingMilitia(pSoldier);
       }
     } else if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_ENTER_MAPSCREEN) {
-      if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+      if (!(IsMapScreen())) {
         gfEnteringMapScreen = TRUE;
         fEnterMapDueToContract = TRUE;
       }
@@ -1024,7 +1025,7 @@ BOOLEAN GetDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize,
                     CHAR8 *zSoundString);
 
 BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum) {
-  if (pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return (FALSE);
   }
 
@@ -1038,18 +1039,18 @@ BOOLEAN DelayedTacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 us
 
   if (pSoldier->bLife < OKLIFE && usQuoteNum != QUOTE_SERIOUSLY_WOUNDED) return (FALSE);
 
-  if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+  if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
     return (FALSE);
   }
 
-  return (CharacterDialogue(pSoldier->ubProfile, usQuoteNum, pSoldier->iFaceIndex,
+  return (CharacterDialogue(GetSolProfile(pSoldier), usQuoteNum, pSoldier->iFaceIndex,
                             DIALOGUE_TACTICAL_UI, TRUE, TRUE));
 }
 
 BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
                                                   UINT32 uiFlag, uintptr_t uiData1,
                                                   UINT32 uiData2) {
-  if (pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return (FALSE);
   }
 
@@ -1059,15 +1060,15 @@ BOOLEAN TacticalCharacterDialogueWithSpecialEvent(struct SOLDIERTYPE *pSoldier, 
     if (pSoldier->uiStatusFlags & SOLDIER_GASSED) return (FALSE);
   }
 
-  return (CharacterDialogueWithSpecialEvent(pSoldier->ubProfile, usQuoteNum, pSoldier->iFaceIndex,
-                                            DIALOGUE_TACTICAL_UI, TRUE, FALSE, uiFlag, uiData1,
-                                            uiData2));
+  return (CharacterDialogueWithSpecialEvent(GetSolProfile(pSoldier), usQuoteNum,
+                                            pSoldier->iFaceIndex, DIALOGUE_TACTICAL_UI, TRUE, FALSE,
+                                            uiFlag, uiData1, uiData2));
 }
 
 BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum,
                                                     UINT32 uiFlag, UINT32 uiData1, UINT32 uiData2,
                                                     UINT32 uiData3) {
-  if (pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return (FALSE);
   }
 
@@ -1082,18 +1083,18 @@ BOOLEAN TacticalCharacterDialogueWithSpecialEventEx(struct SOLDIERTYPE *pSoldier
 
     if (pSoldier->bLife < OKLIFE && usQuoteNum != QUOTE_SERIOUSLY_WOUNDED) return (FALSE);
 
-    if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+    if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
       return (FALSE);
     }
   }
 
-  return (CharacterDialogueWithSpecialEventEx(pSoldier->ubProfile, usQuoteNum, pSoldier->iFaceIndex,
-                                              DIALOGUE_TACTICAL_UI, TRUE, FALSE, uiFlag, uiData1,
-                                              uiData2, uiData3));
+  return (CharacterDialogueWithSpecialEventEx(GetSolProfile(pSoldier), usQuoteNum,
+                                              pSoldier->iFaceIndex, DIALOGUE_TACTICAL_UI, TRUE,
+                                              FALSE, uiFlag, uiData1, uiData2, uiData3));
 }
 
 BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNum) {
-  if (pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(pSoldier) == NO_PROFILE) {
     return (FALSE);
   }
 
@@ -1111,12 +1112,12 @@ BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNu
     return (FALSE);
   }
 
-  if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+  if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
     return (FALSE);
   }
 
   // OK, let's check if this is the exact one we just played, if so, skip.
-  if (pSoldier->ubProfile == gTacticalStatus.ubLastQuoteProfileNUm &&
+  if (GetSolProfile(pSoldier) == gTacticalStatus.ubLastQuoteProfileNUm &&
       usQuoteNum == gTacticalStatus.ubLastQuoteSaid) {
     return (FALSE);
   }
@@ -1131,7 +1132,7 @@ BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNu
   }
 
   if (AM_AN_EPC(pSoldier) &&
-      !(gMercProfiles[pSoldier->ubProfile].ubMiscFlags & PROFILE_MISC_FLAG_FORCENPCQUOTE))
+      !(gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags & PROFILE_MISC_FLAG_FORCENPCQUOTE))
     return (FALSE);
 
   // Check for logging of me too bleeds...
@@ -1146,7 +1147,7 @@ BOOLEAN TacticalCharacterDialogue(struct SOLDIERTYPE *pSoldier, UINT16 usQuoteNu
     }
   }
 
-  return (CharacterDialogue(pSoldier->ubProfile, usQuoteNum, pSoldier->iFaceIndex,
+  return (CharacterDialogue(GetSolProfile(pSoldier), usQuoteNum, pSoldier->iFaceIndex,
                             DIALOGUE_TACTICAL_UI, TRUE, FALSE));
 }
 
@@ -1353,7 +1354,7 @@ BOOLEAN ExecuteCharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 
       return (FALSE);
     }
 
-    if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+    if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
       return (FALSE);
     }
 
@@ -1369,42 +1370,6 @@ BOOLEAN ExecuteCharacterDialogue(UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32 
       // may want to wake up any character that has VERY important dialogue to say
       // MC to flesh out
     }
-
-    // now being used in a different way...
-    /*
-    if ( ( (usQuoteNum == QUOTE_PERSONALITY_TRAIT &&
-                            (gMercProfiles[ubCharacterNum].bPersonalityTrait == FORGETFUL ||
-                             gMercProfiles[ubCharacterNum].bPersonalityTrait == CLAUSTROPHOBIC ||
-                             gMercProfiles[ubCharacterNum].bPersonalityTrait == NERVOUS ||
-                             gMercProfiles[ubCharacterNum].bPersonalityTrait == NONSWIMMER ||
-                             gMercProfiles[ubCharacterNum].bPersonalityTrait == FEAR_OF_INSECTS))
-                            //usQuoteNum == QUOTE_STARTING_TO_WHINE ||
-#ifdef JA2BETAVERSION
-                            || usQuoteNum == QUOTE_WHINE_EQUIPMENT) && (guiCurrentScreen !=
-QUEST_DEBUG_SCREEN) ) #else ) ) #endif
-
-    {
-            // This quote might spawn another quote from someone
-            iLoop = 0;
-            for ( pTeamSoldier = MercPtrs[ iLoop ]; iLoop <= gTacticalStatus.Team[ gbPlayerNum
-].bLastID; iLoop++,pTeamSoldier++ )
-            {
-                    if ( (pTeamSoldier->ubProfile != ubCharacterNum) && (OK_INSECTOR_MERC(
-pTeamSoldier )) && (SpacesAway( pSoldier->sGridNo, pTeamSoldier->sGridNo ) < 5) )
-                    {
-                            // if this merc disliked the whining character sufficiently and hasn't
-already retorted if ( gMercProfiles[ pTeamSoldier->ubProfile ].bMercOpinion[ ubCharacterNum ] < -2
-&& !( pTeamSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_ANNOYING_MERC ) )
-                            {
-                                    // make a comment!
-                                    TacticalCharacterDialogue( pTeamSoldier, QUOTE_ANNOYING_PC );
-                                    pTeamSoldier->usQuoteSaidFlags |=
-SOLDIER_QUOTE_SAID_ANNOYING_MERC; break;
-                            }
-                    }
-            }
-    }
-    */
   } else {
     // If from a soldier, and he does not exist anymore, donot play!
     if (fFromSoldier) {
@@ -1613,7 +1578,7 @@ void HandleTacticalNPCTextUI(UINT8 ubCharacterNum, CHAR16 *zQuoteStr) {
   CHAR16 zText[QUOTE_MESSAGE_SIZE];
 
   // Setup dialogue text box
-  if (guiCurrentScreen != MAP_SCREEN) {
+  if (!IsMapScreen_2()) {
     gTalkPanel.fRenderSubTitlesNow = TRUE;
     gTalkPanel.fSetupSubTitles = TRUE;
   }
@@ -1635,7 +1600,7 @@ void DisplayTextForExternalNPC(UINT8 ubCharacterNum, STR16 zQuoteStr) {
   INT16 sLeft;
 
   // Setup dialogue text box
-  if (guiCurrentScreen != MAP_SCREEN) {
+  if (!IsMapScreen_2()) {
     gTalkPanel.fRenderSubTitlesNow = TRUE;
     gTalkPanel.fSetupSubTitles = TRUE;
   }
@@ -1650,7 +1615,7 @@ void DisplayTextForExternalNPC(UINT8 ubCharacterNum, STR16 zQuoteStr) {
   MapScreenMessage(FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s", zText);
 #endif
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     sLeft = (gsExternPanelXPosition + 97);
     gsTopPosition = gsExternPanelYPosition;
   } else {
@@ -1683,7 +1648,7 @@ void HandleTacticalTextUI(INT32 iFaceIndex, struct SOLDIERTYPE *pSoldier, CHAR16
   ExecuteTacticalTextBox(sLeft, zText);
 
 #ifndef TAIWANESE
-  swprintf(zText, ARR_SIZE(zText), L"%s: \"%s\"", gMercProfiles[pSoldier->ubProfile].zNickname,
+  swprintf(zText, ARR_SIZE(zText), L"%s: \"%s\"", gMercProfiles[GetSolProfile(pSoldier)].zNickname,
            zQuoteStr);
   MapScreenMessage(FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s", zText);
 #endif
@@ -1757,7 +1722,7 @@ void HandleExternNPCSpeechFace(INT32 iIndex) {
   // Set flag to say WE control when to set inactive!
   gFacesData[iFaceIndex].uiFlags |= FACE_INACTIVE_HANDLED_ELSEWHERE;
 
-  if (guiCurrentScreen != MAP_SCREEN) {
+  if (!IsMapScreen_2()) {
     // Setup video overlay!
     VideoOverlayDesc.sLeft = 10;
     VideoOverlayDesc.sTop = 20;
@@ -1819,7 +1784,7 @@ void HandleTacticalSpeechUI(UINT8 ubCharacterNum, INT32 iFaceIndex) {
     fDoExternPanel = TRUE;
   } else {
     // If we are not an active face!
-    if (guiCurrentScreen != MAP_SCREEN) {
+    if (!IsMapScreen_2()) {
       fDoExternPanel = TRUE;
     }
   }
@@ -1832,8 +1797,8 @@ void HandleTacticalSpeechUI(UINT8 ubCharacterNum, INT32 iFaceIndex) {
     gFacesData[iFaceIndex].uiFlags |= (FACE_INACTIVE_HANDLED_ELSEWHERE | FACE_MAKEACTIVE_ONCE_DONE);
 
     // IF we are in tactical and this soldier is on the current squad
-    if ((guiCurrentScreen == GAME_SCREEN) && (pSoldier != NULL) &&
-        (pSoldier->bAssignment == iCurrentTacticalSquad)) {
+    if ((IsTacticalMode()) && (pSoldier != NULL) &&
+        (GetSolAssignment(pSoldier) == iCurrentTacticalSquad)) {
       // Make the interface panel dirty..
       // This will dirty the panel next frame...
       gfRerenderInterfaceFromHelpText = TRUE;
@@ -1867,7 +1832,7 @@ void HandleTacticalSpeechUI(UINT8 ubCharacterNum, INT32 iFaceIndex) {
 
     gfFacePanelActive = TRUE;
 
-  } else if (guiCurrentScreen == MAP_SCREEN) {
+  } else if (IsMapScreen_2()) {
     // Are we in mapscreen?
     // If so, set current guy active to talk.....
     if (pSoldier != NULL) {
@@ -2008,10 +1973,10 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
       mprintf(sFontX, sFontY, L"%s", pSoldier->name);
 
       // What sector are we in, ( and is it the same as ours? )
-      if (pSoldier->sSectorX != gWorldSectorX || pSoldier->sSectorY != gWorldSectorY ||
-          pSoldier->bSectorZ != gbWorldSectorZ || pSoldier->fBetweenSectors) {
-        GetSectorIDString(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ, zTownIDString,
-                          ARR_SIZE(zTownIDString), FALSE);
+      if (GetSolSectorX(pSoldier) != gWorldSectorX || GetSolSectorY(pSoldier) != gWorldSectorY ||
+          GetSolSectorZ(pSoldier) != gbWorldSectorZ || pSoldier->fBetweenSectors) {
+        GetSectorIDString(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier),
+                          zTownIDString, ARR_SIZE(zTownIDString), FALSE);
 
         ReduceStringLength(zTownIDString, ARR_SIZE(zTownIDString), 64, BLOCKFONT2);
 
@@ -2311,11 +2276,11 @@ void BeginLoggingForBleedMeToos(BOOLEAN fStart) { gubLogForMeTooBleeds = fStart;
 void SetEngagedInConvFromPCAction(struct SOLDIERTYPE *pSoldier) {
   // OK, If a good give, set engaged in conv...
   gTacticalStatus.uiFlags |= ENGAGED_IN_CONV;
-  gTacticalStatus.ubEngagedInConvFromActionMercID = pSoldier->ubID;
+  gTacticalStatus.ubEngagedInConvFromActionMercID = GetSolID(pSoldier);
 }
 
 void UnSetEngagedInConvFromPCAction(struct SOLDIERTYPE *pSoldier) {
-  if (gTacticalStatus.ubEngagedInConvFromActionMercID == pSoldier->ubID) {
+  if (gTacticalStatus.ubEngagedInConvFromActionMercID == GetSolID(pSoldier)) {
     // OK, If a good give, set engaged in conv...
     gTacticalStatus.uiFlags &= (~ENGAGED_IN_CONV);
   }

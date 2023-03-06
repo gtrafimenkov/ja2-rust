@@ -9,7 +9,7 @@
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"
 #include "Laptop/Laptop.h"
-#include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
@@ -317,7 +317,7 @@ void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn, INT32 reason) {
                            MSG_BOX_FLAG_YESNO, BeginMessageBoxCallBack);
 
       } else {
-        if (LaptopSaveInfo.iCurrentBalance < COST_OF_PROFILE) {
+        if (MoneyGetBalance() < COST_OF_PROFILE) {
           DoLapTopMessageBox(MSG_BOX_IMP_STYLE, pImpPopUpStrings[3], LAPTOP_SCREEN, MSG_BOX_FLAG_OK,
                              BeginMessageBoxCallBack);
 

@@ -16,6 +16,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Menptr.h"
 #include "Tactical/Overhead.h"

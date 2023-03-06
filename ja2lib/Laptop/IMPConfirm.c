@@ -13,6 +13,7 @@
 #include "Laptop/IMPVoices.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
@@ -215,7 +216,7 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
         return;
       }
 
-      if (LaptopSaveInfo.iCurrentBalance < COST_OF_PROFILE) {
+      if (MoneyGetBalance() < COST_OF_PROFILE) {
         // not enough
         return;
       }
@@ -226,7 +227,7 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
       // charge the player
       AddTransactionToPlayersBook(IMP_PROFILE,
                                   (UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
-                                  GetWorldTotalMin(), -(COST_OF_PROFILE));
+                                  -(COST_OF_PROFILE));
       AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetWorldTotalMin(), -1, -1);
       AddCharacterToPlayersTeam();
 
@@ -512,7 +513,7 @@ void LoadInCurrentImpCharacter(void) {
   // close file
   FileMan_Close(hFile);
 
-  if (LaptopSaveInfo.iCurrentBalance < COST_OF_PROFILE) {
+  if (MoneyGetBalance() < COST_OF_PROFILE) {
     // not enough
     return;
   }
@@ -521,7 +522,7 @@ void LoadInCurrentImpCharacter(void) {
   // is the character male?
   fCharacterIsMale = (gMercProfiles[iProfileId].bSex == MALE);
   fLoadingCharacterForPreviousImpProfile = TRUE;
-  AddTransactionToPlayersBook(IMP_PROFILE, 0, GetWorldTotalMin(), -(COST_OF_PROFILE));
+  AddTransactionToPlayersBook(IMP_PROFILE, 0, -(COST_OF_PROFILE));
   AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetWorldTotalMin(), -1, -1);
   LaptopSaveInfo.iVoiceId = iProfileId - PLAYER_GENERATED_CHARACTER_ID;
   AddCharacterToPlayersTeam();

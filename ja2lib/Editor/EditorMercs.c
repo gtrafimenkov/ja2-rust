@@ -20,6 +20,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Scheduling.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/AnimationControl.h"
@@ -247,11 +248,11 @@ CHAR16 *EditMercAttitudes[6] = {L"Defensive",     L"Brave Loner",   L"Brave Budd
 #endif
 #define RANDOM -1
 #define MAX_ENEMYTYPES 7
-//#define MAX_ENEMYRANDOMTYPES	5
+// #define MAX_ENEMYRANDOMTYPES	5
 #define MAX_CREATURETYPES 8
 #define MAX_REBELTYPES 7
 #define MAX_CIVTYPES 18
-//#define MAX_CIVRANDOMTYPES		11
+// #define MAX_CIVRANDOMTYPES		11
 INT8 bEnemyArray[MAX_ENEMYTYPES] = {RANDOM,    REGMALE, BIGMALE, STOCKYMALE,
                                     REGFEMALE, TANK_NW, TANK_NE};
 INT8 bCreatureArray[MAX_CREATURETYPES] = {BLOODCAT,    LARVAE_MONSTER, INFANT_MONSTER,
@@ -1171,7 +1172,7 @@ void DisplayWayPoints(void) {
     return;
 
   GetSoldier(&pSoldier, (UINT16)gsSelectedMercID);
-  if (pSoldier == NULL || !pSoldier->bActive) return;
+  if (pSoldier == NULL || !IsSolActive(pSoldier)) return;
 
   // point 0 is not used!
   for (bPoint = 1; bPoint <= pSoldier->bPatrolCnt; bPoint++) {
@@ -1596,7 +1597,7 @@ void IndicateSelectedMerc(INT16 sID) {
     ClickEditorButton(MERCS_HASKEYS_CHECKBOX);
   else
     UnclickEditorButton(MERCS_HASKEYS_CHECKBOX);
-  if (gpSelected->pSoldier->ubProfile == NO_PROFILE) {
+  if (GetSolProfile(gpSelected->pSoldier) == NO_PROFILE) {
     SetMercRelativeEquipment(gpSelected->pBasicPlacement->bRelativeEquipmentLevel);
     SetMercRelativeAttributes(gpSelected->pBasicPlacement->bRelativeAttributeLevel);
     SetEnemyColorCode(gpSelected->pBasicPlacement->ubSoldierClass);
@@ -2991,7 +2992,7 @@ void RenderMercStrings() {
       SetFont(TINYFONT1);
       SetFontBackground(FONT_BLACK);
       SetFontForeground(FONT_WHITE);
-      if (pSoldier->ubProfile != NO_PROFILE) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE) {
         FindFontCenterCoordinates(sXPos, sYPos, (INT16)(80), 1, pSoldier->name, TINYFONT1, &sX,
                                   &sY);
         if (sY < 352) {
@@ -3014,7 +3015,7 @@ void RenderMercStrings() {
         sYPos += 10;
 
         SetFontForeground(FONT_GRAY2);
-        swprintf(str, ARR_SIZE(str), L"Slot #%d", pSoldier->ubID);
+        swprintf(str, ARR_SIZE(str), L"Slot #%d", GetSolID(pSoldier));
         FindFontCenterCoordinates(sXPos, sYPos, 80, 1, str, TINYFONT1, &sX, &sY);
         if (sY < 352) {
           gprintfdirty(sX, sY, str);
@@ -3036,7 +3037,7 @@ void RenderMercStrings() {
         sYPos += 10;
 
         SetFontForeground(FONT_GRAY2);
-        swprintf(str, ARR_SIZE(str), L"Slot #%d", pSoldier->ubID);
+        swprintf(str, ARR_SIZE(str), L"Slot #%d", GetSolID(pSoldier));
         FindFontCenterCoordinates(sXPos, sYPos, 80, 1, str, TINYFONT1, &sX, &sY);
         if (sY < 352) {
           gprintfdirty(sX, sY, str);

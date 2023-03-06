@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "CharList.h"
 #include "GameLoop.h"
 #include "GameSettings.h"
 #include "JAScreens.h"
@@ -19,6 +20,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
@@ -40,7 +42,6 @@
 #include "Tactical/DialogueControl.h"
 #include "Tactical/HandleItems.h"
 #include "Tactical/Interface.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/Keys.h"
 #include "Tactical/Menptr.h"
@@ -55,6 +56,8 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
+#include "Town.h"
+#include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/PopUpBox.h"
@@ -362,15 +365,12 @@ void CreateDestroyUpdatePanelButtons(INT32 iX, INT32 iY, BOOLEAN fFourWideMode);
 void RenderSoldierSmallFaceForUpdatePanel(INT32 iIndex, INT32 iX, INT32 iY);
 void ContinueUpdateButtonCallback(GUI_BUTTON *btn, INT32 reason);
 void StopUpdateButtonCallback(GUI_BUTTON *btn, INT32 reason);
-// INT32 GetSquadListIndexForSquadNumber( INT32 iSquadNumber );
 INT8 FindSquadThatSoldierCanJoin(struct SOLDIERTYPE *pSoldier);
 BOOLEAN CanSoldierMoveWithVehicleId(struct SOLDIERTYPE *pSoldier, INT32 iVehicle1Id);
 BOOLEAN IsAnythingSelectedForMoving(void);
 BOOLEAN CanMoveBoxSoldierMoveStrategically(struct SOLDIERTYPE *pSoldier, BOOLEAN fShowErrorMessage);
 
 BOOLEAN ValidSelectableCharForNextOrPrev(INT32 iNewCharSlot);
-
-extern void ResumeOldAssignment(struct SOLDIERTYPE *pSoldier);
 
 void InitalizeVehicleAndCharacterList(void) {
   // will init the vehicle and character lists to zero
@@ -455,7 +455,7 @@ BOOLEAN MultipleCharacterListEntriesSelected(void) {
 
   // check if more than one person is selected in the selected list
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (fSelectedListOfMercsForMapScreen[iCounter] == TRUE) {
+    if (IsCharSelected(iCounter)) {
       ubSelectedCnt++;
     }
   }
@@ -467,76 +467,6 @@ BOOLEAN MultipleCharacterListEntriesSelected(void) {
   }
 }
 
-void ResetAssignmentsForMercsTrainingUnpaidSectorsInSelectedList() {
-  INT32 iCounter = 0;
-  struct SOLDIERTYPE *pSoldier = NULL;
-
-  for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    // valid character?
-    if (gCharactersList[iCounter].fValid == FALSE) {
-      // nope
-      continue;
-    }
-
-    pSoldier = &Menptr[gCharactersList[iCounter].usSolID];
-
-    if (pSoldier->bActive == FALSE) {
-      continue;
-    }
-
-    if (pSoldier->bAssignment == TRAIN_TOWN) {
-      if (SectorInfo[SECTOR(pSoldier->sSectorX, pSoldier->sSectorY)].fMilitiaTrainingPaid ==
-          FALSE) {
-        ResumeOldAssignment(pSoldier);
-      }
-    }
-  }
-}
-
-void ResetAssignmentOfMercsThatWereTrainingMilitiaInThisSector(INT16 sSectorX, INT16 sSectorY) {
-  INT32 iCounter = 0;
-  struct SOLDIERTYPE *pSoldier = NULL;
-
-  for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    // valid character?
-    if (gCharactersList[iCounter].fValid == FALSE) {
-      // nope
-      continue;
-    }
-
-    pSoldier = &Menptr[gCharactersList[iCounter].usSolID];
-
-    if (pSoldier->bActive == FALSE) {
-      continue;
-    }
-
-    if (pSoldier->bAssignment == TRAIN_TOWN) {
-      if ((pSoldier->sSectorX == sSectorX) && (pSoldier->sSectorY == sSectorY) &&
-          (pSoldier->bSectorZ == 0)) {
-        ResumeOldAssignment(pSoldier);
-      }
-    }
-  }
-}
-
-/*
-void PlotPathForSelectedCharacterList( INT16 sX, INT16 sY )
-{
-        INT32 iCounter = 0;
-        // run through list and build paths for each character
-        for( iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++ )
-        {
-                if( ( fSelectedListOfMercsForMapScreen[ iCounter ] == TRUE )&&( bSelectedDestChar !=
-iCounter ) )
-                {
-                        // character is valid.. do this for every one not the bSelectedDestChar
-                        PlotPathForCharacter( &Menptr[ gCharactersList[ iCounter ].usSolID ], sX,
-sY, FALSE );
-                }
-        }
-}
-*/
-
 // check if the members of the selected list move with this guy... are they in the same mvt group?
 void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldier) {
   INT32 iCounter = 0;
@@ -544,8 +474,8 @@ void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldie
 
   // deselect any other selected mercs that can't travel together with pSoldier
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid == TRUE) {
-      if (fSelectedListOfMercsForMapScreen[iCounter] == TRUE) {
+    if (IsCharListEntryValid(iCounter)) {
+      if (IsCharSelected(iCounter)) {
         pSoldier2 = &(Menptr[gCharactersList[iCounter].usSolID]);
 
         // skip the guy we are
@@ -560,7 +490,7 @@ void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldie
         // now
 
         // if anchor guy is IN a vehicle
-        if (pSoldier->bAssignment == VEHICLE) {
+        if (GetSolAssignment(pSoldier) == VEHICLE) {
           if (!CanSoldierMoveWithVehicleId(pSoldier2, pSoldier->iVehicleId)) {
             // reset entry for selected list
             ResetEntryForSelectedList((INT8)iCounter);
@@ -592,9 +522,9 @@ void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldie
           ResetEntryForSelectedList((INT8)iCounter);
         } else {
           // reject those not in the same sector
-          if ((pSoldier->sSectorX != pSoldier2->sSectorX) ||
-              (pSoldier->sSectorY != pSoldier2->sSectorY) ||
-              (pSoldier->bSectorZ != pSoldier2->bSectorZ)) {
+          if ((GetSolSectorX(pSoldier) != pSoldier2->sSectorX) ||
+              (GetSolSectorY(pSoldier) != pSoldier2->sSectorY) ||
+              (GetSolSectorZ(pSoldier) != pSoldier2->bSectorZ)) {
             ResetEntryForSelectedList((INT8)iCounter);
           }
 
@@ -618,13 +548,13 @@ void SelectUnselectedMercsWhoMustMoveWithThisGuy(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid == TRUE) {
+    if (IsCharListEntryValid(iCounter)) {
       // if not already selected
       if (fSelectedListOfMercsForMapScreen[iCounter] == FALSE) {
         pSoldier = &(Menptr[gCharactersList[iCounter].usSolID]);
 
         // if on a squad or in a vehicle
-        if ((pSoldier->bAssignment < ON_DUTY) || (pSoldier->bAssignment == VEHICLE)) {
+        if ((pSoldier->bAssignment < ON_DUTY) || (GetSolAssignment(pSoldier) == VEHICLE)) {
           // and a member of that squad or vehicle is selected
           if (AnyMercInSameSquadOrVehicleIsSelected(pSoldier)) {
             // then also select this guy
@@ -641,27 +571,28 @@ BOOLEAN AnyMercInSameSquadOrVehicleIsSelected(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pSoldier2 = NULL;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid == TRUE) {
+    if (IsCharListEntryValid(iCounter)) {
       // if selected
-      if (fSelectedListOfMercsForMapScreen[iCounter] == TRUE) {
+      if (IsCharSelected(iCounter)) {
         pSoldier2 = &(Menptr[gCharactersList[iCounter].usSolID]);
 
         // if they have the same assignment
-        if (pSoldier->bAssignment == pSoldier2->bAssignment) {
+        if (GetSolAssignment(pSoldier) == pSoldier2->bAssignment) {
           // same squad?
           if (pSoldier->bAssignment < ON_DUTY) {
             return (TRUE);
           }
 
           // same vehicle?
-          if ((pSoldier->bAssignment == VEHICLE) &&
+          if ((GetSolAssignment(pSoldier) == VEHICLE) &&
               (pSoldier->iVehicleId == pSoldier2->iVehicleId)) {
             return (TRUE);
           }
         }
 
         // target guy is in a vehicle, and this guy IS that vehicle
-        if ((pSoldier->bAssignment == VEHICLE) && (pSoldier2->uiStatusFlags & SOLDIER_VEHICLE) &&
+        if ((GetSolAssignment(pSoldier) == VEHICLE) &&
+            (pSoldier2->uiStatusFlags & SOLDIER_VEHICLE) &&
             (pSoldier->iVehicleId == pSoldier2->bVehicleID)) {
           return (TRUE);
         }
@@ -922,79 +853,9 @@ void EnableTeamInfoPanels(void) {
   return;
 }
 
-/*
-void ActivateSoldierPopup( struct SOLDIERTYPE *pSoldier, UINT8 ubPopupType, INT16 xp, INT16 yp )
-{
-        // will activate the pop up for prebattle interface
-
-        // get the soldier id number
-        INT8 bCounter = 0;
-        INT8 bCharacter = -1;
-
-
-        for( bCounter = 0; bCounter < MAX_CHARACTER_COUNT; bCounter++ )
-        {
-                if( gCharactersList[ bCounter ].fValid == TRUE )
-                {
-                        // is this guy the passed soldier?
-                        if( pSoldier == &( Menptr[ gCharactersList[ bCounter ].usSolID ] ) )
-                        {
-                                bCharacter = bCounter;
-                                break;
-                        }
-                }
-        }
-
-        giBoxY = ( INT32 ) yp;
-        // which type of box do we show?
-        switch( ubPopupType )
-        {
-                case( ASSIGNMENT_POPUP ):
-                        bSelectedDestChar = -1;
-                        bSelectedContractChar = -1;
-                        bSelectedAssignChar = bCharacter;
-                        if( ( pSoldier->bLife > 0 ) &&( pSoldier->bAssignment != ASSIGNMENT_POW ) )
-                        {
-                                fShowAssignmentMenu = TRUE;
-                        }
-                        else
-                        {
-                                fShowRemoveMenu = TRUE;
-                        }
-
-                        // set box y positions
-                        AssignmentPosition.iY =  giBoxY;
-                        TrainPosition.iY = AssignmentPosition.iY + GetFontHeight( MAP_SCREEN_FONT )*
-ASSIGN_MENU_TRAIN; AttributePosition.iY = 	TrainPosition.iY; SquadPosition.iY =
-AssignmentPosition.iY; break; case( DESTINATION_POPUP ): bSelectedDestChar = bCharacter;
-                        bSelectedContractChar = -1;
-                        bSelectedAssignChar = -1;
-
-                        // set box y value
-                        ContractPosition.iY = giBoxY;
-                        break;
-                case( CONTRACT_POPUP ):
-                        bSelectedDestChar = -1;
-                        bSelectedContractChar = bCharacter;
-                        bSelectedAssignChar = -1;
-                        RebuildContractBoxForMerc( pSoldier );
-
-                        if( ( pSoldier->bLife > 0 ) &&( pSoldier->bAssignment != ASSIGNMENT_POW ) )
-                        {
-                                fShowContractMenu = TRUE;
-                        }
-                        else
-                        {
-                                fShowRemoveMenu = TRUE;
-                        }
-                        break;
-        }
-}
-*/
-
 INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
                               MSGBOX_CALLBACK ReturnCallback,
-                              SGPRect *pCenteringRect) {  // reset the highlighted line
+                              const SGPRect *pCenteringRect) {  // reset the highlighted line
   giHighLine = -1;
   return DoMessageBox(ubStyle, zString, uiExitScreen,
                       (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
@@ -1003,15 +864,13 @@ INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScree
 
 INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
                       MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y};
-
   // reset the highlighted line
   giHighLine = -1;
 
   // do message box and return
   return DoMessageBox(ubStyle, zString, uiExitScreen,
                       (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
-                      &CenteringRect);
+                      GetMapCenteringRect());
 }
 
 void GoDownOneLevelInMap(void) { JumpToLevel(iCurrentMapSectorZ + 1); }
@@ -1054,7 +913,7 @@ void CheckAndUpdateBasedOnContractTimes(void) {
   INT32 iTimeRemaining = 0;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid == TRUE) {
+    if (IsCharListEntryValid(iCounter)) {
       // what kind of merc
       if (Menptr[gCharactersList[iCounter].usSolID].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
         // amount of time left on contract
@@ -1187,7 +1046,7 @@ void HandleDisplayOfItemPopUpForSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
     RemoveScreenMaskForInventoryPoolPopUp();
 
     // drity nessacary regions
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   // showing it
@@ -1566,7 +1425,7 @@ BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, UINT32 uiSlotIndex )
 
 void HandleGroupAboutToArrive(void) {
   // reblit map to change the color of the "people in motion" marker
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
 
   // ARM - commented out - don't see why this is needed
   //	fTeamPanelDirty = TRUE;
@@ -1775,8 +1634,8 @@ void FindAndSetThisContractSoldier(struct SOLDIERTYPE *pSoldier) {
   fShowContractMenu = FALSE;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid == TRUE) {
-      if (gCharactersList[iCounter].usSolID == pSoldier->ubID) {
+    if (IsCharListEntryValid(iCounter)) {
+      if (gCharactersList[iCounter].usSolID == GetSolID(pSoldier)) {
         ChangeSelectedInfoChar((INT8)iCounter, TRUE);
         bSelectedContractChar = (INT8)iCounter;
         fShowContractMenu = TRUE;
@@ -1793,7 +1652,7 @@ void FindAndSetThisContractSoldier(struct SOLDIERTYPE *pSoldier) {
 
 void HandleMAPUILoseCursorFromOtherScreen(void) {
   // rerender map without cursors
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
 
   if (fInMapMode) {
     RenderMapRegionBackground();
@@ -1805,7 +1664,7 @@ void UpdateMapScreenAssignmentPositions(void) {
   // set the position of the pop up boxes
   SGPPoint pPoint;
 
-  if (guiCurrentScreen != MAP_SCREEN) {
+  if (!IsMapScreen_2()) {
     return;
   }
 
@@ -1895,7 +1754,7 @@ void RandomMercInGroupSaysQuote(struct GROUP *pGroup, UINT16 usQuoteNum) {
 
     if (pSoldier->bLife >= OKLIFE && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
         !AM_A_ROBOT(pSoldier) && !AM_AN_EPC(pSoldier) && !pSoldier->fMercAsleep) {
-      ubMercsInGroup[ubNumMercs] = pSoldier->ubID;
+      ubMercsInGroup[ubNumMercs] = GetSolID(pSoldier);
       ubNumMercs++;
     }
 
@@ -1916,7 +1775,7 @@ INT32 GetNumberOfPeopleInCharacterList(void) {
 
   // get the number of valid mercs in the mapscreen character list
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid == TRUE) {
+    if (IsCharListEntryValid(iCounter)) {
       // another valid character
       iCount++;
     }
@@ -2097,7 +1956,7 @@ void HandleMinerEvent(UINT8 bMinerNumber, INT16 sSectorX, INT16 sSectorY, INT16 
                       BOOLEAN fForceMapscreen) {
   BOOLEAN fFromMapscreen = FALSE;
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     fFromMapscreen = TRUE;
   } else {
     // if transition to mapscreen is required
@@ -2120,7 +1979,7 @@ void HandleMinerEvent(UINT8 bMinerNumber, INT16 sSectorX, INT16 sSectorY, INT16 
     gsSectorLocatorX = sSectorX;
     gsSectorLocatorY = sSectorY;
 
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
 
     // post dialogue events for miners to say this quote and flash the sector where his mine is
     CharacterDialogueWithSpecialEvent((UINT8)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
@@ -2361,7 +2220,7 @@ void SetUpMapScreenFastHelpText(void) {
 void StopMapScreenHelpText(void) {
   fShowMapScreenHelpText = FALSE;
   fTeamPanelDirty = TRUE;
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
   fCharacterInfoPanelDirty = TRUE;
   fMapScreenBottomDirty = TRUE;
 
@@ -2498,7 +2357,7 @@ void SelectSquadForMovement(INT32 iSquadNumber) {
       for (iCount = 0; iCount < NUMBER_OF_SOLDIERS_PER_SQUAD; iCount++) {
         pSoldier = Squad[iSquadNumber][iCount];
 
-        if (pSoldier && pSoldier->bActive) {
+        if (pSoldier && IsSolActive(pSoldier)) {
           // is he able & allowed to move?  (Report only the first reason for failure encountered)
           if (CanMoveBoxSoldierMoveStrategically(pSoldier, fFirstFailure)) {
             SelectSoldierForMovement(pSoldier);
@@ -2532,7 +2391,7 @@ void DeselectSquadForMovement(INT32 iSquadNumber) {
       for (iCount = 0; iCount < NUMBER_OF_SOLDIERS_PER_SQUAD; iCount++) {
         pSoldier = Squad[iSquadNumber][iCount];
 
-        if (pSoldier && pSoldier->bActive) {
+        if (pSoldier && IsSolActive(pSoldier)) {
           DeselectSoldierForMovement(pSoldier);
         }
       }
@@ -2804,7 +2663,7 @@ void CreateDestroyMovementBox(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
     CreatePopUpBoxForMovementBox();
     BuildMouseRegionsForMoveBox();
     CreateScreenMaskForMoveBox();
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   } else if ((fShowMapScreenMovementList == FALSE) && (fCreated == TRUE)) {
     fCreated = FALSE;
 
@@ -2813,7 +2672,7 @@ void CreateDestroyMovementBox(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
     RemoveBox(ghMoveBox);
     ghMoveBox = -1;
     RemoveScreenMaskForMoveBox();
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
     fMapScreenBottomDirty = TRUE;  // really long move boxes can overlap bottom panel
   }
 }
@@ -2832,12 +2691,12 @@ void SetUpMovingListsForSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
   // is not in the char list
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid) {
+    if (IsCharListEntryValid(iCounter)) {
       pSoldier = MercPtrs[gCharactersList[iCounter].usSolID];
 
-      if ((pSoldier->bActive) && (pSoldier->bAssignment != IN_TRANSIT) &&
-          (pSoldier->bAssignment != ASSIGNMENT_POW) && (pSoldier->sSectorX == sSectorX) &&
-          (pSoldier->sSectorY == sSectorY) && (pSoldier->bSectorZ == sSectorZ)) {
+      if ((IsSolActive(pSoldier)) && (pSoldier->bAssignment != IN_TRANSIT) &&
+          (pSoldier->bAssignment != ASSIGNMENT_POW) && (GetSolSectorX(pSoldier) == sSectorX) &&
+          (GetSolSectorY(pSoldier) == sSectorY) && (GetSolSectorZ(pSoldier) == sSectorZ)) {
         if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
           // vehicle
           // if it can move (can't be empty)
@@ -3351,7 +3210,7 @@ void MoveMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         if (IsSoldierSelectedForMovement(pSoldier)) {
           // change him to NOT move instead
 
-          if (pSoldier->bAssignment == VEHICLE) {
+          if (GetSolAssignment(pSoldier) == VEHICLE) {
             // if he's the only one left moving in the vehicle, deselect whole vehicle
             if (HowManyMovingSoldiersInVehicle(pSoldier->iVehicleId) == 1) {
               // whole vehicle stays
@@ -3387,7 +3246,7 @@ void MoveMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
               }
             }
             /* ARM: it's more flexible without this - player can take the vehicle along or not
-               without having to exit it. else if( pSoldier->bAssignment == VEHICLE )
+               without having to exit it. else if( GetSolAssignment(pSoldier) == VEHICLE )
                                                             {
                                                                     // his vehicle MUST also go
                while he's moving, but not necessarily others on board SelectVehicleForMovement(
@@ -3413,7 +3272,7 @@ void MoveMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
       fRebuildMoveBox = TRUE;
       fTeamPanelDirty = TRUE;
-      fMapPanelDirty = TRUE;
+      MarkForRedrawalStrategicMap();
       fCharacterInfoPanelDirty = TRUE;
       MarkAllBoxesAsAltered();
     }
@@ -3428,7 +3287,7 @@ BOOLEAN CanMoveBoxSoldierMoveStrategically(struct SOLDIERTYPE *pSoldier,
 
   // valid soldier?
   Assert(pSoldier);
-  Assert(pSoldier->bActive);
+  Assert(IsSolActive(pSoldier));
 
   if (CanCharacterMoveInStrategic(pSoldier, &bErrorNumber)) {
     return (TRUE);
@@ -3499,7 +3358,7 @@ void HandleMoveoutOfSectorMovementTroops(void) {
       }
     }
     // if in a vehicle
-    else if (pSoldier->bAssignment == VEHICLE) {
+    else if (GetSolAssignment(pSoldier) == VEHICLE) {
       // if he and his vehicle are parting ways (soldier is staying behind, but vehicle is leaving,
       // or vice versa)
       if (fSoldierIsMoving[iCounter] != IsVehicleSelectedForMovement(pSoldier->iVehicleId)) {
@@ -3570,7 +3429,7 @@ void HandleSettingTheSelectedListOfMercs(void) {
   // run through the list of grunts
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     // is the current guy a valid character?
-    if (gCharactersList[iCounter].fValid == TRUE) {
+    if (IsCharListEntryValid(iCounter)) {
       pSoldier = MercPtrs[gCharactersList[iCounter].usSolID];
 
       if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
@@ -3603,7 +3462,7 @@ void HandleSettingTheSelectedListOfMercs(void) {
     // set cursor
     SetUpCursorForStrategicMap();
     fTeamPanelDirty = TRUE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
     fCharacterInfoPanelDirty = TRUE;
 
     DeselectSelectedListMercsWhoCantMoveWithThisGuy(
@@ -3613,23 +3472,6 @@ void HandleSettingTheSelectedListOfMercs(void) {
     RememberPreviousPathForAllSelectedChars();
   }
 }
-
-/*
-INT32 GetSquadListIndexForSquadNumber( INT32 iSquadNumber )
-{
-        INT32 iCounter = 0;
-
-        for( iCounter = 0; iCounter < giNumberOfSquadsInSectorMoving; iCounter++ )
-        {
-                if( iSquadMovingList[ iCounter ] == iSquadNumber )
-                {
-                        return( iCounter );
-                }
-        }
-
-        return( -1 );
-}
-*/
 
 BOOLEAN AllOtherSoldiersInListAreSelected(void) {
   INT32 iCounter = 0, iCount = 0;
@@ -3683,8 +3525,8 @@ INT8 FindSquadThatSoldierCanJoin(struct SOLDIERTYPE *pSoldier) {
   // run through the list of squads
   for (bCounter = 0; bCounter < NUMBER_OF_SQUADS; bCounter++) {
     // is this squad in this sector
-    if (IsThisSquadInThisSector(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ,
-                                bCounter)) {
+    if (IsThisSquadInThisSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
+                                pSoldier->bSectorZ, bCounter)) {
       // does it have room?
       if (IsThisSquadFull(bCounter) == FALSE) {
         // is it doing the same thing as the soldier is (staying or going) ?
@@ -3708,7 +3550,7 @@ void ReBuildMoveBox(void) {
   // reset the fact
   fRebuildMoveBox = FALSE;
   fTeamPanelDirty = TRUE;
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
   fCharacterInfoPanelDirty = TRUE;
 
   // stop showing the box
@@ -3811,7 +3653,7 @@ void AddSoldierToWaitingListQueue(struct SOLDIERTYPE *pSoldier) {
   INT32 iSoldierId = 0;
 
   // get soldier profile
-  iSoldierId = pSoldier->ubID;
+  iSoldierId = GetSolID(pSoldier);
 
   SpecialCharacterDialogueEvent(DIALOGUE_ADD_EVENT_FOR_SOLDIER_UPDATE_BOX,
                                 UPDATE_BOX_REASON_ADDSOLDIER, iSoldierId, 0, 0, 0);
@@ -3847,7 +3689,7 @@ void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier) {
     return;
   }
 
-  if (pSoldier->bActive == FALSE) {
+  if (IsSolActive(pSoldier) == FALSE) {
     return;
   }
 
@@ -3866,14 +3708,14 @@ void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier) {
       // add to box
       pUpdateSoldierBox[iCounter] = pSoldier;
 
-      if (gMercProfiles[pSoldier->ubProfile].ubFaceIndex < 100) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].ubFaceIndex < 100) {
         // grab filename of face
         sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%02d.sti",
-                gMercProfiles[pSoldier->ubProfile].ubFaceIndex);
+                gMercProfiles[GetSolProfile(pSoldier)].ubFaceIndex);
       } else {
         // grab filename of face
         sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%03d.sti",
-                gMercProfiles[pSoldier->ubProfile].ubFaceIndex);
+                gMercProfiles[GetSolProfile(pSoldier)].ubFaceIndex);
       }
 
       // load the face
@@ -4227,7 +4069,7 @@ void CreateDestroyTheUpdateBox(void) {
     UnPauseGame();
 
     // dirty screen
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
     fTeamPanelDirty = TRUE;
     fCharacterInfoPanelDirty = TRUE;
 
@@ -4242,15 +4084,14 @@ void CreateDestroyTheUpdateBox(void) {
 
 void UpdateButtonsDuringCharacterDialoguePicture(void) {
   // stop showing buttons during certain instances of dialogue
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     UnMarkButtonDirty(giCharInfoButton[0]);
     UnMarkButtonDirty(giCharInfoButton[1]);
   }
 }
 
 void UpdateButtonsDuringCharacterDialogueSubTitles(void) {
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) &&
-      (gGameSettings.fOptions[TOPTION_SUBTITLES])) {
+  if ((IsMapScreen()) && (gGameSettings.fOptions[TOPTION_SUBTITLES])) {
     UnMarkButtonDirty(giMapContractButton);
   }
 
@@ -4364,19 +4205,19 @@ void SetUpdateBoxFlag(BOOLEAN fFlag) {
 void SetTixaAsFound(void) {
   // set the town of Tixa as found by the player
   fFoundTixa = TRUE;
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
 }
 
 void SetOrtaAsFound(void) {
   // set the town of Orta as found by the player
   fFoundOrta = TRUE;
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
 }
 
 void SetSAMSiteAsFound(UINT8 uiSamIndex) {
   // set this SAM site as being found by the player
   fSamSiteFound[uiSamIndex] = TRUE;
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
 }
 
 // ste up the timers for move menu in mapscreen for double click detection
@@ -4563,7 +4404,7 @@ void HandleDisplayOfExitToTacticalMessageForFirstEntryToMapScreen(void) {
 
   if (iDifference > TIMER_FOR_SHOW_EXIT_TO_TACTICAL_MESSAGE) {
     fShowMapScreenHelpText = FALSE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
     fTeamPanelDirty = TRUE;
     fCharacterInfoPanelDirty = TRUE;
     giExitToTactBaseTime = 0;
@@ -4576,7 +4417,7 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(INT16 sSectorX, INT16
                                                            INT8 bSectorZ, BOOLEAN fContested) {
   CHAR16 sString[128], sStringA[64], sStringB[256], sStringC[64];
   INT32 iValue = 0;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
   INT16 sSector = 0;
   INT8 bMineIndex;
 
@@ -4636,9 +4477,9 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(INT16 sSectorX, INT16
   }
 
   // get the strategic sector value
-  sSector = sSectorX + MAP_WORLD_X * sSectorY;
+  sSector = GetSectorID16(sSectorX, sSectorY);
 
-  if (StrategicMap[sSector].bNameId == BLANK_SECTOR) {
+  if (StrategicMap[sSector].townID == BLANK_SECTOR) {
     return (FALSE);
   }
 
@@ -4657,7 +4498,7 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(INT16 sSectorX, INT16
 void NotifyPlayerOfInvasionByEnemyForces(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
                                          MSGBOX_CALLBACK ReturnCallback) {
   INT16 sSector = 0;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
   CHAR16 sString[128], sStringA[128];
 
   // check if below ground
@@ -4666,7 +4507,7 @@ void NotifyPlayerOfInvasionByEnemyForces(INT16 sSectorX, INT16 sSectorY, INT8 bS
   }
 
   // grab sector value
-  sSector = sSectorX + MAP_WORLD_X * sSectorY;
+  sSector = GetSectorID16(sSectorX, sSectorY);
 
   if (StrategicMap[sSector].fEnemyControlled == TRUE) {
     // enemy controlled any ways, leave
@@ -4674,7 +4515,7 @@ void NotifyPlayerOfInvasionByEnemyForces(INT16 sSectorX, INT16 sSectorY, INT8 bS
   }
 
   // get the town id
-  bTownId = StrategicMap[sSector].bNameId;
+  bTownId = StrategicMap[sSector].townID;
 
   // check if SAM site here
   if (IsThisSectorASAMSector(sSectorX, sSectorY, bSectorZ)) {
@@ -4704,7 +4545,7 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
 
   // valid soldier?
   Assert(pSoldier);
-  Assert(pSoldier->bActive);
+  Assert(IsSolActive(pSoldier));
 
   // NOTE: Check for the most permanent conditions first, and the most easily remedied ones last!
   // In case several cases apply, only the reason found first will be given, so make it a good one!
@@ -4716,13 +4557,13 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
   }
 
   // a POW?
-  if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+  if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
     *pbErrorNumber = 5;
     return (FALSE);
   }
 
   // underground? (can't move strategically, must use tactical traversal )
-  if (pSoldier->bSectorZ != 0) {
+  if (GetSolSectorZ(pSoldier) != 0) {
     *pbErrorNumber = 1;
     return (FALSE);
   }
@@ -4770,8 +4611,9 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
     // and he's NOT flying above it all in a working helicopter
     if (!SoldierAboardAirborneHeli(pSoldier)) {
       // and that sector is loaded...
-      if ((pSoldier->sSectorX == gWorldSectorX) && (pSoldier->sSectorY == gWorldSectorY) &&
-          (pSoldier->bSectorZ == gbWorldSectorZ)) {
+      if ((GetSolSectorX(pSoldier) == gWorldSectorX) &&
+          (GetSolSectorY(pSoldier) == gWorldSectorY) &&
+          (GetSolSectorZ(pSoldier) == gbWorldSectorZ)) {
         // in combat?
         if (gTacticalStatus.uiFlags & INCOMBAT) {
           *pbErrorNumber = 11;
@@ -4792,7 +4634,8 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
       }
 
       // not necessarily loaded - if there are any hostiles there
-      if (NumHostilesInSector(pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ) > 0) {
+      if (NumHostilesInSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
+                              GetSolSectorZ(pSoldier)) > 0) {
         *pbErrorNumber = 2;
         return (FALSE);
       }
@@ -4800,8 +4643,8 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
   }
 
   // if in L12 museum, and the museum alarm went off, and Eldin still around?
-  if ((pSoldier->sSectorX == 12) && (pSoldier->sSectorY == MAP_ROW_L) &&
-      (pSoldier->bSectorZ == 0) && (!pSoldier->fBetweenSectors) &&
+  if ((GetSolSectorX(pSoldier) == 12) && (GetSolSectorY(pSoldier) == MAP_ROW_L) &&
+      (GetSolSectorZ(pSoldier) == 0) && (!pSoldier->fBetweenSectors) &&
       gMercProfiles[ELDIN].bMercStatus != MERC_IS_DEAD) {
     UINT8 ubRoom, cnt;
     struct SOLDIERTYPE *pSoldier2;
@@ -4840,7 +4683,7 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
   // a robot?
   if (AM_A_ROBOT(pSoldier)) {
     // going alone?
-    if (((pSoldier->bAssignment == VEHICLE) &&
+    if (((GetSolAssignment(pSoldier) == VEHICLE) &&
          (!IsRobotControllerInVehicle(pSoldier->iVehicleId))) ||
         ((pSoldier->bAssignment < ON_DUTY) && (!IsRobotControllerInSquad(pSoldier->bAssignment)))) {
       *pbErrorNumber = 49;
@@ -4850,12 +4693,12 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
   // an Escorted NPC?
   else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__EPC) {
     // going alone?
-    if (((pSoldier->bAssignment == VEHICLE) &&
+    if (((GetSolAssignment(pSoldier) == VEHICLE) &&
          (GetNumberOfNonEPCsInVehicle(pSoldier->iVehicleId) == 0)) ||
         ((pSoldier->bAssignment < ON_DUTY) &&
          (NumberOfNonEPCsInSquad(pSoldier->bAssignment) == 0))) {
       // are they male or female
-      if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+      if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
         swprintf(gsCustomErrorString, ARR_SIZE(gsCustomErrorString), L"%s %s", pSoldier->name,
                  pMapErrorString[6]);
       } else {
@@ -4872,10 +4715,10 @@ BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorN
   fProblemExists = FALSE;
 
   // find out if this particular character can't move for some reason
-  switch (pSoldier->ubProfile) {
+  switch (GetSolProfile(pSoldier)) {
     case (MARIA):
       // Maria can't move if she's in sector C5
-      sSector = SECTOR(pSoldier->sSectorX, pSoldier->sSectorY);
+      sSector = GetSolSectorID8(pSoldier);
       if (sSector == SEC_C5) {
         // can't move at this time
         fProblemExists = TRUE;
@@ -4913,7 +4756,7 @@ BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *p
   if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
     // IS a vehicle - use vehicle's group
     ubGroup = pVehicleList[pSoldier->bVehicleID].ubMovementGroup;
-  } else if (pSoldier->bAssignment == VEHICLE) {
+  } else if (GetSolAssignment(pSoldier) == VEHICLE) {
     // IN a vehicle - use vehicle's group
     ubGroup = pVehicleList[pSoldier->iVehicleId].ubMovementGroup;
   } else {
@@ -4925,7 +4768,7 @@ BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *p
 
   // if anyone in the merc's group or also selected cannot move for whatever reason return false
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (gCharactersList[iCounter].fValid == TRUE) {
+    if (IsCharListEntryValid(iCounter)) {
       // get soldier
       pCurrentSoldier = &(Menptr[gCharactersList[iCounter].usSolID]);
 
@@ -4952,7 +4795,7 @@ BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *p
 
       // if he is in the same movement group (i.e. squad), or he is still selected to go with us
       // (legal?)
-      if ((ubCurrentGroup == ubGroup) || (fSelectedListOfMercsForMapScreen[iCounter] == TRUE)) {
+      if ((ubCurrentGroup == ubGroup) || IsCharSelected(iCounter)) {
         // can this character also move strategically?
         if (CanCharacterMoveInStrategic(pCurrentSoldier, pbErrorNumber) == FALSE) {
           // cannot move, fail, and don't bother checking anyone else, either
@@ -5040,7 +4883,7 @@ BOOLEAN CanSoldierMoveWithVehicleId(struct SOLDIERTYPE *pSoldier, INT32 iVehicle
   Assert(iVehicle1Id != -1);
 
   // if soldier is IN a vehicle
-  if (pSoldier->bAssignment == VEHICLE) {
+  if (GetSolAssignment(pSoldier) == VEHICLE) {
     iVehicle2Id = pSoldier->iVehicleId;
   } else
     // if soldier IS a vehicle
@@ -5230,8 +5073,8 @@ void TurnOnSectorLocator(UINT8 ubProfileID) {
 
   pSoldier = FindSoldierByProfileID(ubProfileID, FALSE);
   if (pSoldier) {
-    gsSectorLocatorX = pSoldier->sSectorX;
-    gsSectorLocatorY = pSoldier->sSectorY;
+    gsSectorLocatorX = GetSolSectorX(pSoldier);
+    gsSectorLocatorY = GetSolSectorY(pSoldier);
   } else {
     // if it's Skyrider (when he's not on our team), and his chopper has been setup
     if ((ubProfileID == SKYRIDER) && fSkyRiderSetUp) {
@@ -5256,7 +5099,7 @@ void TurnOnSectorLocator(UINT8 ubProfileID) {
 
 void TurnOffSectorLocator() {
   gubBlitSectorLocatorCode = LOCATOR_COLOR_NONE;
-  fMapPanelDirty = TRUE;
+  MarkForRedrawalStrategicMap();
 }
 
 void HandleBlitOfSectorLocatorIcon(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ,

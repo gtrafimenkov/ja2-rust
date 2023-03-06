@@ -18,9 +18,9 @@
 #include "Laptop/IMPConfirm.h"
 #include "Laptop/IMPPortraits.h"
 #include "Laptop/Laptop.h"
-#include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "LoadingScreen.h"
+#include "Money.h"
 #include "OptionsScreen.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
@@ -30,6 +30,7 @@
 #include "SGP/Video.h"
 #include "SaveLoadScreen.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
@@ -71,7 +72,6 @@
 #include "Tactical/MapInformation.h"
 #include "Tactical/Menptr.h"
 #include "Tactical/MercHiring.h"
-#include "Tactical/MilitiaControl.h"
 #include "Tactical/OppList.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierProfile.h"
@@ -91,6 +91,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SmokeEffects.h"
 #include "TileEngine/TacticalPlacementGUI.h"
+#include "UI.h"
 #include "Utils/AnimatedProgressBar.h"
 #include "Utils/MercTextBox.h"
 #include "Utils/Message.h"
@@ -431,7 +432,6 @@ void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGam
 #ifdef JA2BETAVERSION
 extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
 #endif
-void TruncateStrategicGroupSizes();
 
 /////////////////////////////////////////////////////
 //
@@ -492,12 +492,12 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   //
 
   // if we are in the game screen
-  if (guiCurrentScreen == GAME_SCREEN) {
+  if (IsTacticalMode()) {
     SetRenderFlags(RENDER_FLAG_FULL);
   }
 
-  else if (guiCurrentScreen == MAP_SCREEN) {
-    fMapPanelDirty = TRUE;
+  else if (IsMapScreen_2()) {
+    MarkForRedrawalStrategicMap();
     fTeamPanelDirty = TRUE;
     fCharacterInfoPanelDirty = TRUE;
   }
@@ -598,7 +598,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
                                  &SaveGameHeader.bSectorZ);
 
   SaveGameHeader.ubNumOfMercsOnPlayersTeam = NumberOfMercsOnPlayerTeam();
-  SaveGameHeader.iCurrentBalance = LaptopSaveInfo.iCurrentBalance;
+  SaveGameHeader.iCurrentBalance = MoneyGetBalance();
 
   SaveGameHeader.uiCurrentScreen = guiPreviousOptionScreen;
 
@@ -1010,13 +1010,13 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   if (ubSaveGameID == 0) {
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_INTERFACE, pMessageStrings[MSG_SAVESUCCESS]);
   }
-  //#ifdef JA2BETAVERSION
+  // #ifdef JA2BETAVERSION
   else if (ubSaveGameID == SAVE__END_TURN_NUM) {
     //		ScreenMsg( FONT_MCOLOR_WHITE, MSG_INTERFACE, pMessageStrings[ MSG_END_TURN_AUTO_SAVE
     //]
     //);
   }
-  //#endif
+  // #endif
   else {
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_INTERFACE, pMessageStrings[MSG_SAVESLOTSUCCESS]);
   }
@@ -1173,34 +1173,11 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   guiBrokenSaveGameVersion = SaveGameHeader.uiSavedGameVersion;
 
-  // if the player is loading up an older version of the game, and the person DOESNT have the cheats
-  // on,
-  if (SaveGameHeader.uiSavedGameVersion < 65 && !CHEATER_CHEAT_LEVEL()) {
-#ifdef JA2BETAVERSION
-    gfDisplaySaveGamesNowInvalidatedMsg = TRUE;
-#endif
-    // Fail loading the save
-    FileMan_Close(hFile);
-    guiSaveGameVersion = 0;
-    return (FALSE);
-  }
-
   // Store the loading screenID that was saved
   gubLastLoadingScreenID = SaveGameHeader.ubLoadScreenID;
 
   // HACK
   guiSaveGameVersion = SaveGameHeader.uiSavedGameVersion;
-
-  /*
-          if( !LoadGeneralInfo( hFile ) )
-          {
-                  FileMan_Close( hFile );
-                  return(FALSE);
-          }
-          #ifdef JA2BETAVERSION
-                  LoadGameFilePosition( FileMan_GetPos( hFile ), "Misc info" );
-          #endif
-  */
 
   // Load the gtactical status structure plus the current sector x,y,z
   if (!LoadTacticalStatusFromSavedGame(hFile)) {
@@ -1232,7 +1209,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   }
 
   // if the world was loaded when saved, reload it, otherwise dont
-  if (SaveGameHeader.fWorldLoaded || SaveGameHeader.uiSavedGameVersion < 50) {
+  if (SaveGameHeader.fWorldLoaded) {
     // Get the current world sector coordinates
     sLoadSectorX = gWorldSectorX;
     sLoadSectorY = gWorldSectorY;
@@ -1925,16 +1902,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (SaveGameHeader.uiSavedGameVersion >= 61) {
-    if (SaveGameHeader.uiSavedGameVersion < 84) {
-      if (!LoadVehicleMovementInfoFromSavedGameFile(hFile)) {
-        FileMan_Close(hFile);
-        guiSaveGameVersion = 0;
-        return (FALSE);
-      }
-#ifdef JA2BETAVERSION
-      LoadGameFilePosition(FileMan_GetPos(hFile), "Extra Vehicle Info");
-#endif
-    } else {
+    {
       if (!NewLoadVehicleMovementInfoFromSavedGameFile(hFile)) {
         FileMan_Close(hFile);
         guiSaveGameVersion = 0;
@@ -1951,11 +1919,6 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
                                    L"Contract renweal sequence stuff...");
   RenderProgressBar(0, 100);
   uiRelStartPerc = uiRelEndPerc;
-
-  if (SaveGameHeader.uiSavedGameVersion < 62) {
-    // the older games had a bug where this flag was never being set
-    gfResetAllPlayerKnowsEnemiesFlags = TRUE;
-  }
 
   if (SaveGameHeader.uiSavedGameVersion >= 67) {
     if (!LoadContractRenewalDataFromSaveGameFile(hFile)) {
@@ -1979,11 +1942,6 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 #endif
   }
 
-  if (SaveGameHeader.uiSavedGameVersion <= 73) {
-    // Patch vehicle fuel
-    AddVehicleFuelToSave();
-  }
-
   if (SaveGameHeader.uiSavedGameVersion >= 85) {
     if (!NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(hFile)) {
       FileMan_Close(hFile);
@@ -1993,11 +1951,6 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 #ifdef JA2BETAVERSION
     LoadGameFilePosition(FileMan_GetPos(hFile), "New way of loading Bobby R mailorders");
 #endif
-  }
-
-  // If there are any old Bobby R Mail orders, tranfer them to the new system
-  if (SaveGameHeader.uiSavedGameVersion < 85) {
-    HandleOldBobbyRMailOrders();
   }
 
   /// lll
@@ -2015,16 +1968,8 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   // ATE: Patch? Patch up groups.....( will only do for old saves.. )
   UpdatePersistantGroupsFromOldSave(SaveGameHeader.uiSavedGameVersion);
 
-  if (SaveGameHeader.uiSavedGameVersion <= 40) {
-    // Cancel all pending purchase orders for BobbyRay's.  Starting with version 41, the BR orders
-    // events are posted with the usItemIndex itself as the parameter, rather than the inventory
-    // slot index.  This was done to make it easier to modify BR's traded inventory lists later on
-    // without breaking saves.
-    CancelAllPendingBRPurchaseOrders();
-  }
-
   // if the world is loaded, apply the temp files to the loaded map
-  if (SaveGameHeader.fWorldLoaded || SaveGameHeader.uiSavedGameVersion < 50) {
+  if (SaveGameHeader.fWorldLoaded) {
     // Load the current sectors Information From the temporary files
     if (!LoadCurrentSectorsInformationFromTempItemsFile()) {
       InitExitGameDialogBecauseFileHackDetected();
@@ -2055,16 +2000,11 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   if (gbWorldSectorZ == 0) LightSetBaseLevel(GetTimeOfDayAmbientLightLevel());
 
   // if we have been to this sector before
-  //	if( SectorInfo[ SECTOR( gWorldSectorX,gWorldSectorY) ].uiFlags & SF_ALREADY_VISITED )
+  //	if( SectorInfo[ GetSectorID8( gWorldSectorX,gWorldSectorY) ].uiFlags & SF_ALREADY_VISITED )
   {
     // Reset the fact that we are loading a saved game
     gTacticalStatus.uiFlags &= ~LOADING_SAVED_GAME;
   }
-
-  // CJC January 13: we can't do this because (a) it resets militia IN THE MIDDLE OF
-  // COMBAT, and (b) if we add militia to the teams while LOADING_SAVED_GAME is set,
-  // the team counters will not be updated properly!!!
-  //	ResetMilitia();
 
   uiRelEndPerc += 1;
   SetRelativeStartAndEndPercentage(0, uiRelStartPerc, uiRelEndPerc, L"Final Checks...");
@@ -2126,83 +2066,6 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
     gTacticalStatus.ubAttackBusyCount = 0;
   }
 
-  if (SaveGameHeader.uiSavedGameVersion <
-      64) {  // Militia/enemies/creature team sizes have been changed from 32 to 20.  This function
-    // will simply kill off the excess.  This will allow the ability to load previous saves, though
-    // there will still be problems, though a LOT less than there would be without this call.
-    TruncateStrategicGroupSizes();
-  }
-
-  // ATE: if we are within this window where skyridder was foobared, fix!
-  if (SaveGameHeader.uiSavedGameVersion >= 61 && SaveGameHeader.uiSavedGameVersion <= 65) {
-    struct SOLDIERTYPE *pSoldier;
-    MERCPROFILESTRUCT *pProfile;
-
-    if (!fSkyRiderSetUp) {
-      // see if we can find him and remove him if so....
-      pSoldier = FindSoldierByProfileID(SKYRIDER, FALSE);
-
-      if (pSoldier != NULL) {
-        TacticalRemoveSoldier(pSoldier->ubID);
-      }
-
-      // add the pilot at a random location!
-      pProfile = &(gMercProfiles[SKYRIDER]);
-      switch (Random(4)) {
-        case 0:
-          pProfile->sSectorX = 15;
-          pProfile->sSectorY = MAP_ROW_B;
-          pProfile->bSectorZ = 0;
-          break;
-        case 1:
-          pProfile->sSectorX = 14;
-          pProfile->sSectorY = MAP_ROW_E;
-          pProfile->bSectorZ = 0;
-          break;
-        case 2:
-          pProfile->sSectorX = 12;
-          pProfile->sSectorY = MAP_ROW_D;
-          pProfile->bSectorZ = 0;
-          break;
-        case 3:
-          pProfile->sSectorX = 16;
-          pProfile->sSectorY = MAP_ROW_C;
-          pProfile->bSectorZ = 0;
-          break;
-      }
-    }
-  }
-
-  if (SaveGameHeader.uiSavedGameVersion < 68) {
-    // correct bVehicleUnderRepairID for all mercs
-    UINT8 ubID;
-    for (ubID = 0; ubID < MAXMERCS; ubID++) {
-      Menptr[ubID].bVehicleUnderRepairID = -1;
-    }
-  }
-
-  if (SaveGameHeader.uiSavedGameVersion < 73) {
-    if (LaptopSaveInfo.fMercSiteHasGoneDownYet) LaptopSaveInfo.fFirstVisitSinceServerWentDown = 2;
-  }
-
-  // Update the MERC merc contract lenght.  Before save version 77 the data was stored in the
-  // struct SOLDIERTYPE, after 77 the data is stored in the profile
-  if (SaveGameHeader.uiSavedGameVersion < 77) {
-    UpdateMercMercContractInfo();
-  }
-
-  if (SaveGameHeader.uiSavedGameVersion <= 89) {
-    // ARM: A change was made in version 89 where refuel site availability now also depends on
-    // whether the player has airspace control over that sector.  To update the settings
-    // immediately, must call it here.
-    UpdateRefuelSiteAvailability();
-  }
-
-  if (SaveGameHeader.uiSavedGameVersion < 91) {
-    // update the amount of money that has been paid to speck
-    CalcAproximateAmountPaidToSpeck();
-  }
-
   gfLoadedGame = TRUE;
 
   uiRelEndPerc = 100;
@@ -2253,11 +2116,7 @@ BOOLEAN SaveMercProfiles(HWFILE hFile) {
   // Lopp through all the profiles to save
   for (cnt = 0; cnt < NUM_PROFILES; cnt++) {
     gMercProfiles[cnt].uiProfileChecksum = ProfileChecksum(&(gMercProfiles[cnt]));
-    if (guiSavedGameVersion < 87) {
-      JA2EncryptedFileWrite(hFile, &gMercProfiles[cnt], uiSaveSize, &uiNumBytesWritten);
-    } else {
-      NewJA2EncryptedFileWrite(hFile, &gMercProfiles[cnt], uiSaveSize, &uiNumBytesWritten);
-    }
+    NewJA2EncryptedFileWrite(hFile, &gMercProfiles[cnt], uiSaveSize, &uiNumBytesWritten);
     if (uiNumBytesWritten != uiSaveSize) {
       return (FALSE);
     }
@@ -2338,11 +2197,7 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
       // calculate checksum for soldier
       Menptr[cnt].uiMercChecksum = MercChecksum(&(Menptr[cnt]));
       // Save the soldier structure
-      if (guiSavedGameVersion < 87) {
-        JA2EncryptedFileWrite(hFile, &Menptr[cnt], uiSaveSize, &uiNumBytesWritten);
-      } else {
-        NewJA2EncryptedFileWrite(hFile, &Menptr[cnt], uiSaveSize, &uiNumBytesWritten);
-      }
+      NewJA2EncryptedFileWrite(hFile, GetSoldierByID(cnt), uiSaveSize, &uiNumBytesWritten);
       if (uiNumBytesWritten != uiSaveSize) {
         return (FALSE);
       }
@@ -3257,7 +3112,7 @@ void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName) {
       sprintf(pzNewFileName, "%S\\%S.%S", pMessageStrings[MSG_SAVEDIRECTORY],
               pMessageStrings[MSG_QUICKSAVE_NAME], pMessageStrings[MSG_SAVEEXTENSION]);
   }
-  //#ifdef JA2BETAVERSION
+  // #ifdef JA2BETAVERSION
   else if (ubSaveGameID == SAVE__END_TURN_NUM) {
     // The name of the file
     sprintf(pzNewFileName, "%S\\Auto%02d.%S", pMessageStrings[MSG_SAVEDIRECTORY],
@@ -3271,7 +3126,7 @@ void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName) {
       guiLastSaveGameNum = 0;
     }
   }
-  //#endif
+  // #endif
 
   else
     sprintf(pzNewFileName, "%S\\%S%02d.%S", pMessageStrings[MSG_SAVEDIRECTORY],
@@ -3767,7 +3622,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
   if (sGeneralInfo.sContractRehireSoldierID == -1)
     pContractReHireSoldier = NULL;
   else
-    pContractReHireSoldier = &Menptr[sGeneralInfo.sContractRehireSoldierID];
+    pContractReHireSoldier = GetSoldierByID(sGeneralInfo.sContractRehireSoldierID);
 
   memcpy(&gGameOptions, &sGeneralInfo.GameOptions, sizeof(GAME_OPTIONS));
 
@@ -3783,7 +3638,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
   if (sGeneralInfo.ubSMCurrentMercID == 255)
     gpSMCurrentMerc = NULL;
   else
-    gpSMCurrentMerc = &Menptr[sGeneralInfo.ubSMCurrentMercID];
+    gpSMCurrentMerc = GetSoldierByID(sGeneralInfo.ubSMCurrentMercID);
 
   // Set the interface panel to the team panel
   ShutdownCurrentPanel();
@@ -4080,12 +3935,12 @@ void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pb
 
     // loop through all the mercs on the players team to find the one that is not moving
     for (pSoldier = MercPtrs[sSoldierCnt]; sSoldierCnt <= bLastTeamID; sSoldierCnt++, pSoldier++) {
-      if (pSoldier->bActive) {
+      if (IsSolActive(pSoldier)) {
         if (pSoldier->bAssignment != IN_TRANSIT && !pSoldier->fBetweenSectors) {
           // we found an alive, merc that is not moving
-          *psSectorX = pSoldier->sSectorX;
-          *psSectorY = pSoldier->sSectorY;
-          *pbSectorZ = pSoldier->bSectorZ;
+          *psSectorX = GetSolSectorX(pSoldier);
+          *psSectorY = GetSolSectorY(pSoldier);
+          *pbSectorZ = GetSolSectorZ(pSoldier);
           fFoundAMerc = TRUE;
           break;
         }
@@ -4101,11 +3956,11 @@ void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pb
       // loop through all the mercs and find one that is moving
       for (pSoldier = MercPtrs[sSoldierCnt]; sSoldierCnt <= bLastTeamID;
            sSoldierCnt++, pSoldier++) {
-        if (pSoldier->bActive) {
+        if (IsSolActive(pSoldier)) {
           // we found an alive, merc that is not moving
-          *psSectorX = pSoldier->sSectorX;
-          *psSectorY = pSoldier->sSectorY;
-          *pbSectorZ = pSoldier->bSectorZ;
+          *psSectorX = GetSolSectorX(pSoldier);
+          *psSectorY = GetSolSectorY(pSoldier);
+          *pbSectorZ = GetSolSectorZ(pSoldier);
           fFoundAMerc = TRUE;
           break;
         }
@@ -4134,128 +3989,6 @@ void UnPauseAfterSaveGame(void) {
   if (guiCurrentScreen != SAVE_LOAD_SCREEN) {
     // UnPause time compression
     UnPauseGame();
-  }
-}
-
-void TruncateStrategicGroupSizes() {
-  struct GROUP *pGroup;
-  SECTORINFO *pSector;
-  INT32 i;
-  for (i = SEC_A1; i < SEC_P16; i++) {
-    pSector = &SectorInfo[i];
-    if (pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites >
-        MAX_STRATEGIC_TEAM_SIZE) {
-      if (pSector->ubNumAdmins > pSector->ubNumTroops) {
-        if (pSector->ubNumAdmins > pSector->ubNumElites) {
-          pSector->ubNumAdmins = 20;
-          pSector->ubNumTroops = 0;
-          pSector->ubNumElites = 0;
-        } else {
-          pSector->ubNumAdmins = 0;
-          pSector->ubNumTroops = 0;
-          pSector->ubNumElites = 20;
-        }
-      } else if (pSector->ubNumTroops > pSector->ubNumElites) {
-        if (pSector->ubNumTroops > pSector->ubNumAdmins) {
-          pSector->ubNumAdmins = 0;
-          pSector->ubNumTroops = 20;
-          pSector->ubNumElites = 0;
-        } else {
-          pSector->ubNumAdmins = 20;
-          pSector->ubNumTroops = 0;
-          pSector->ubNumElites = 0;
-        }
-      } else {
-        if (pSector->ubNumElites > pSector->ubNumTroops) {
-          pSector->ubNumAdmins = 0;
-          pSector->ubNumTroops = 0;
-          pSector->ubNumElites = 20;
-        } else {
-          pSector->ubNumAdmins = 0;
-          pSector->ubNumTroops = 20;
-          pSector->ubNumElites = 0;
-        }
-      }
-    }
-    // militia
-    if (pSector->ubNumberOfCivsAtLevel[0] + pSector->ubNumberOfCivsAtLevel[1] +
-            pSector->ubNumberOfCivsAtLevel[2] >
-        MAX_STRATEGIC_TEAM_SIZE) {
-      if (pSector->ubNumberOfCivsAtLevel[0] > pSector->ubNumberOfCivsAtLevel[1]) {
-        if (pSector->ubNumberOfCivsAtLevel[0] > pSector->ubNumberOfCivsAtLevel[2]) {
-          pSector->ubNumberOfCivsAtLevel[0] = 20;
-          pSector->ubNumberOfCivsAtLevel[1] = 0;
-          pSector->ubNumberOfCivsAtLevel[2] = 0;
-        } else {
-          pSector->ubNumberOfCivsAtLevel[0] = 0;
-          pSector->ubNumberOfCivsAtLevel[1] = 0;
-          pSector->ubNumberOfCivsAtLevel[2] = 20;
-        }
-      } else if (pSector->ubNumberOfCivsAtLevel[1] > pSector->ubNumberOfCivsAtLevel[2]) {
-        if (pSector->ubNumberOfCivsAtLevel[1] > pSector->ubNumberOfCivsAtLevel[0]) {
-          pSector->ubNumberOfCivsAtLevel[0] = 0;
-          pSector->ubNumberOfCivsAtLevel[1] = 20;
-          pSector->ubNumberOfCivsAtLevel[2] = 0;
-        } else {
-          pSector->ubNumberOfCivsAtLevel[0] = 20;
-          pSector->ubNumberOfCivsAtLevel[1] = 0;
-          pSector->ubNumberOfCivsAtLevel[2] = 0;
-        }
-      } else {
-        if (pSector->ubNumberOfCivsAtLevel[2] > pSector->ubNumberOfCivsAtLevel[1]) {
-          pSector->ubNumberOfCivsAtLevel[0] = 0;
-          pSector->ubNumberOfCivsAtLevel[1] = 0;
-          pSector->ubNumberOfCivsAtLevel[2] = 20;
-        } else {
-          pSector->ubNumberOfCivsAtLevel[0] = 0;
-          pSector->ubNumberOfCivsAtLevel[1] = 20;
-          pSector->ubNumberOfCivsAtLevel[2] = 0;
-        }
-      }
-    }
-  }
-  // Enemy groups
-  pGroup = gpGroupList;
-  while (pGroup) {
-    if (!pGroup->fPlayer) {
-      if (pGroup->pEnemyGroup->ubNumAdmins + pGroup->pEnemyGroup->ubNumTroops +
-              pGroup->pEnemyGroup->ubNumElites >
-          MAX_STRATEGIC_TEAM_SIZE) {
-        pGroup->ubGroupSize = 20;
-        if (pGroup->pEnemyGroup->ubNumAdmins > pGroup->pEnemyGroup->ubNumTroops) {
-          if (pGroup->pEnemyGroup->ubNumAdmins > pGroup->pEnemyGroup->ubNumElites) {
-            pGroup->pEnemyGroup->ubNumAdmins = 20;
-            pGroup->pEnemyGroup->ubNumTroops = 0;
-            pGroup->pEnemyGroup->ubNumElites = 0;
-          } else {
-            pGroup->pEnemyGroup->ubNumAdmins = 0;
-            pGroup->pEnemyGroup->ubNumTroops = 0;
-            pGroup->pEnemyGroup->ubNumElites = 20;
-          }
-        } else if (pGroup->pEnemyGroup->ubNumTroops > pGroup->pEnemyGroup->ubNumElites) {
-          if (pGroup->pEnemyGroup->ubNumTroops > pGroup->pEnemyGroup->ubNumAdmins) {
-            pGroup->pEnemyGroup->ubNumAdmins = 0;
-            pGroup->pEnemyGroup->ubNumTroops = 20;
-            pGroup->pEnemyGroup->ubNumElites = 0;
-          } else {
-            pGroup->pEnemyGroup->ubNumAdmins = 20;
-            pGroup->pEnemyGroup->ubNumTroops = 0;
-            pGroup->pEnemyGroup->ubNumElites = 0;
-          }
-        } else {
-          if (pGroup->pEnemyGroup->ubNumElites > pGroup->pEnemyGroup->ubNumTroops) {
-            pGroup->pEnemyGroup->ubNumAdmins = 0;
-            pGroup->pEnemyGroup->ubNumTroops = 0;
-            pGroup->pEnemyGroup->ubNumElites = 20;
-          } else {
-            pGroup->pEnemyGroup->ubNumAdmins = 0;
-            pGroup->pEnemyGroup->ubNumTroops = 20;
-            pGroup->pEnemyGroup->ubNumElites = 0;
-          }
-        }
-      }
-    }
-    pGroup = pGroup->next;
   }
 }
 

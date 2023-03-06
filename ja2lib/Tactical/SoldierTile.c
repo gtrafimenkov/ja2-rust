@@ -14,6 +14,7 @@
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationCache.h"
 #include "Tactical/AnimationControl.h"
@@ -158,7 +159,7 @@ void MarkMovementReserved(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   gpWorldLevelData[sGridNo].uiFlags |= MAPELEMENT_MOVEMENT_RESERVED;
 
   // Save soldier's reserved ID #
-  gpWorldLevelData[sGridNo].ubReservedSoldierID = pSoldier->ubID;
+  gpWorldLevelData[sGridNo].ubReservedSoldierID = GetSolID(pSoldier);
 
   pSoldier->sReservedMovementGridNo = sGridNo;
 }
@@ -195,7 +196,7 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
 
   if (ubPerson != NO_SOLDIER) {
     // If this us?
-    if (ubPerson != pSoldier->ubID) {
+    if (ubPerson != GetSolID(pSoldier)) {
       // OK, set flag indicating we are blocked by a merc....
       if (pSoldier->bTeam != gbPlayerNum)  // CJC: shouldn't this be in all cases???
                                            // if ( 0 )
@@ -287,7 +288,7 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
   }
 
   if ((gpWorldLevelData[sGridNo].uiFlags & MAPELEMENT_MOVEMENT_RESERVED)) {
-    if (gpWorldLevelData[sGridNo].ubReservedSoldierID != pSoldier->ubID) {
+    if (gpWorldLevelData[sGridNo].ubReservedSoldierID != GetSolID(pSoldier)) {
       return (MOVE_TILE_TEMP_BLOCKED);
     }
   }
@@ -315,7 +316,7 @@ INT8 TileIsClear(struct SOLDIERTYPE *pSoldier, INT8 bDirection, INT16 sGridNo, I
 
 				if ( ( gpWorldLevelData[ sNewGridNo ].uiFlags & MAPELEMENT_MOVEMENT_RESERVED ) )
 				{
-					if ( gpWorldLevelData[ sNewGridNo ].ubReservedSoldierID != pSoldier->ubID )
+					if ( gpWorldLevelData[ sNewGridNo ].ubReservedSoldierID != GetSolID(pSoldier) )
 					{
 						return( MOVE_TILE_TEMP_BLOCKED );
 					}

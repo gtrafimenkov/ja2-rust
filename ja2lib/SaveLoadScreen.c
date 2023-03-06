@@ -9,8 +9,8 @@
 #include "GameVersion.h"
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
-#include "Laptop/LaptopSave.h"
 #include "Local.h"
+#include "Money.h"
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
@@ -35,6 +35,7 @@
 #include "Tactical/TacticalSave.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -977,7 +978,7 @@ void SaveLoadGameNumber(INT8 bSaveGameID) {
 
 BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                      UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                     SGPRect *pCenteringRect) {
+                                     const SGPRect *pCenteringRect) {
   // do message box and return
   giSaveLoadMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
                                       (UINT8)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
@@ -1137,7 +1138,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
       //			SaveGameHeader.sSectorY = gWorldSectorY;
       //			SaveGameHeader.bSectorZ = gbWorldSectorZ;
       SaveGameHeader.ubNumOfMercsOnPlayersTeam = NumberOfMercsOnPlayerTeam();
-      SaveGameHeader.iCurrentBalance = LaptopSaveInfo.iCurrentBalance;
+      SaveGameHeader.iCurrentBalance = MoneyGetBalance();
       wcscpy(SaveGameHeader.sSavedGameDesc, gzGameDescTextField);
 
       // copy over the initial game options
@@ -2079,7 +2080,7 @@ BOOLEAN DoQuickLoad() {
   gbSelectedSaveLocation = 0;
 
   // if the game is paused, and we are in tactical, unpause
-  if (guiCurrentScreen == GAME_SCREEN) {
+  if (IsTacticalMode()) {
     PauseTime(FALSE);
   }
 

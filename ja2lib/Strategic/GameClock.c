@@ -17,13 +17,13 @@
 #include "Strategic/MapScreenInterfaceBottom.h"
 #include "Strategic/MapScreenInterfaceMap.h"
 #include "Strategic/PreBattleInterface.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/MapInformation.h"
 #include "Tactical/Overhead.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
+#include "UI.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
 #include "Utils/MercTextBox.h"
@@ -31,7 +31,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 
-//#define DEBUG_GAME_CLOCK
+// #define DEBUG_GAME_CLOCK
 
 extern BOOLEAN gfFadeOut;
 
@@ -375,7 +375,7 @@ void IncreaseGameTimeCompressionRate() {
     giTimeCompressMode++;
 
     // in map screen, we wanna have to skip over x1 compression and go straight to 5x
-    if ((guiCurrentScreen == MAP_SCREEN) && (giTimeCompressMode == TIME_COMPRESS_X1)) {
+    if ((IsMapScreen_2()) && (giTimeCompressMode == TIME_COMPRESS_X1)) {
       giTimeCompressMode++;
     }
 
@@ -396,7 +396,7 @@ void DecreaseGameTimeCompressionRate() {
     giTimeCompressMode--;
 
     // in map screen, we wanna have to skip over x1 compression and go straight to 5x
-    if ((guiCurrentScreen == MAP_SCREEN) && (giTimeCompressMode == TIME_COMPRESS_X1)) {
+    if ((IsMapScreen_2()) && (giTimeCompressMode == TIME_COMPRESS_X1)) {
       giTimeCompressMode--;
     }
 
@@ -407,13 +407,13 @@ void DecreaseGameTimeCompressionRate() {
 void SetGameTimeCompressionLevel(UINT32 uiCompressionRate) {
   Assert(uiCompressionRate < NUM_TIME_COMPRESS_SPEEDS);
 
-  if (guiCurrentScreen == GAME_SCREEN) {
+  if (IsTacticalMode()) {
     if (uiCompressionRate != TIME_COMPRESS_X1) {
       uiCompressionRate = TIME_COMPRESS_X1;
     }
   }
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     if (uiCompressionRate == TIME_COMPRESS_X1) {
       uiCompressionRate = TIME_COMPRESS_X0;
     }
@@ -583,11 +583,10 @@ void UpdateClock() {
   CreateDestroyScreenMaskForPauseGame();
 
 #ifdef JA2BETAVERSION
-  if (guiCurrentScreen != GAME_SCREEN && guiCurrentScreen != MAP_SCREEN &&
-      guiCurrentScreen != AIVIEWER_SCREEN && guiCurrentScreen != GAME_SCREEN)
-#else
-  if (guiCurrentScreen != GAME_SCREEN && guiCurrentScreen != MAP_SCREEN &&
+  if (guiCurrentScreen != GAME_SCREEN && !IsMapScreen_2() && guiCurrentScreen != AIVIEWER_SCREEN &&
       guiCurrentScreen != GAME_SCREEN)
+#else
+  if (guiCurrentScreen != GAME_SCREEN && !IsMapScreen_2() && guiCurrentScreen != GAME_SCREEN)
 #endif
   {
     uiLastSecondTime = GetJA2Clock();
@@ -846,7 +845,7 @@ void HandlePlayerPauseUnPauseOfGame(void) {
   // check if the game is paused BY THE PLAYER or not and reverse
   if (gfGamePaused && gfPauseDueToPlayerGamePause) {
     // If in game screen...
-    if (guiCurrentScreen == GAME_SCREEN) {
+    if (IsTacticalMode()) {
       if (giTimeCompressMode == TIME_COMPRESS_X0) {
         giTimeCompressMode++;
       }
@@ -883,7 +882,7 @@ void CreateDestroyScreenMaskForPauseGame(void) {
     iPausedPopUpBox = -1;
     SetRenderFlags(RENDER_FLAG_FULL);
     fTeamPanelDirty = TRUE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
     fMapScreenBottomDirty = TRUE;
     gfJustFinishedAPause = TRUE;
     MarkButtonsDirty();
@@ -946,7 +945,7 @@ BOOLEAN NightTime() {  // before 7AM or after 9PM
 
 void ClearTacticalStuffDueToTimeCompression(void) {
   // is this test the right thing?  ARM
-  if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+  if (IsMapScreen()) {
     // clear tactical event queue
     ClearEventQueue();
 

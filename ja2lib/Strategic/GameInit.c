@@ -14,7 +14,6 @@
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
 #include "Laptop/Laptop.h"
-#include "Laptop/LaptopSave.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -102,23 +101,23 @@ void InitNPCs(void) {
             pProfile->sSectorX);
 #endif
   // use alternate map, with Skyrider's shack, in this sector
-  SectorInfo[SECTOR(pProfile->sSectorX, pProfile->sSectorY)].uiFlags |= SF_USE_ALTERNATE_MAP;
+  SectorInfo[GetSectorID8(pProfile->sSectorX, pProfile->sSectorY)].uiFlags |= SF_USE_ALTERNATE_MAP;
 
   // set up Madlab's secret lab (he'll be added when the meanwhile scene occurs)
 
   switch (Random(4)) {
     case 0:
       // use alternate map in this sector
-      SectorInfo[SECTOR(7, MAP_ROW_H)].uiFlags |= SF_USE_ALTERNATE_MAP;
+      SectorInfo[GetSectorID8(7, MAP_ROW_H)].uiFlags |= SF_USE_ALTERNATE_MAP;
       break;
     case 1:
-      SectorInfo[SECTOR(16, MAP_ROW_H)].uiFlags |= SF_USE_ALTERNATE_MAP;
+      SectorInfo[GetSectorID8(16, MAP_ROW_H)].uiFlags |= SF_USE_ALTERNATE_MAP;
       break;
     case 2:
-      SectorInfo[SECTOR(11, MAP_ROW_I)].uiFlags |= SF_USE_ALTERNATE_MAP;
+      SectorInfo[GetSectorID8(11, MAP_ROW_I)].uiFlags |= SF_USE_ALTERNATE_MAP;
       break;
     case 3:
-      SectorInfo[SECTOR(4, MAP_ROW_E)].uiFlags |= SF_USE_ALTERNATE_MAP;
+      SectorInfo[GetSectorID8(4, MAP_ROW_E)].uiFlags |= SF_USE_ALTERNATE_MAP;
       break;
   }
 
@@ -159,7 +158,8 @@ void InitNPCs(void) {
 #endif
 
   // use alternate map in this sector
-  // SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
+  // SectorInfo[ GetSectorID8( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |=
+  // SF_USE_ALTERNATE_MAP;
 
   gfPlayerTeamSawJoey = FALSE;
 
@@ -191,7 +191,8 @@ void InitNPCs(void) {
 #endif
 
     // use alternate map in this sector
-    SectorInfo[SECTOR(pProfile->sSectorX, pProfile->sSectorY)].uiFlags |= SF_USE_ALTERNATE_MAP;
+    SectorInfo[GetSectorID8(pProfile->sSectorX, pProfile->sSectorY)].uiFlags |=
+        SF_USE_ALTERNATE_MAP;
   } else {  // not scifi, so use alternate map in Tixa's b1 level that doesn't have the stairs going
             // down to the caves.
     UNDERGROUND_SECTORINFO *pSector;
@@ -401,7 +402,7 @@ BOOLEAN InitNewGame(BOOLEAN fReset) {
     }
 
     // Setup initial money
-    AddTransactionToPlayersBook(ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), iStartingCash);
+    AddTransactionToPlayersBook(ANONYMOUS_DEPOSIT, 0, iStartingCash);
 
     {
       UINT32 uiDaysTimeMercSiteAvailable = Random(2) + 1;
@@ -623,12 +624,12 @@ BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier) {
   }
 
   // add an entry in the finacial page for the hiring of the merc
-  AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(),
+  AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier,
                               -(INT32)gMercProfiles[ubCurrentSoldier].uiWeeklySalary);
 
   if (gMercProfiles[ubCurrentSoldier].bMedicalDeposit) {
     // add an entry in the finacial page for the medical deposit
-    AddTransactionToPlayersBook(MEDICAL_DEPOSIT, ubCurrentSoldier, GetWorldTotalMin(),
+    AddTransactionToPlayersBook(MEDICAL_DEPOSIT, ubCurrentSoldier,
                                 -(gMercProfiles[ubCurrentSoldier].sMedicalDepositAmount));
   }
 

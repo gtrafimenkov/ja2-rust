@@ -2,6 +2,7 @@
 
 #include "Laptop/History.h"
 #include "SGP/Random.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/AnimationData.h"
@@ -128,19 +129,19 @@ void TriggerEndOfBoxingRecord(struct SOLDIERTYPE* pSoldier) {
   if (pSoldier) {
     switch (gTacticalStatus.bBoxingState) {
       case WON_ROUND:
-        AddHistoryToPlayersLog(HISTORY_WON_BOXING, pSoldier->ubProfile, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_WON_BOXING, GetSolProfile(pSoldier), GetWorldTotalMin(),
                                gWorldSectorX, gWorldSectorY);
         TriggerNPCRecord(DARREN, 23);
         break;
       case LOST_ROUND:
         // log as lost
-        AddHistoryToPlayersLog(HISTORY_LOST_BOXING, pSoldier->ubProfile, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_LOST_BOXING, GetSolProfile(pSoldier), GetWorldTotalMin(),
                                gWorldSectorX, gWorldSectorY);
         TriggerNPCRecord(DARREN, 24);
         break;
       case DISQUALIFIED:
-        AddHistoryToPlayersLog(HISTORY_DISQUALIFIED_BOXING, pSoldier->ubProfile, GetWorldTotalMin(),
-                               gWorldSectorX, gWorldSectorY);
+        AddHistoryToPlayersLog(HISTORY_DISQUALIFIED_BOXING, GetSolProfile(pSoldier),
+                               GetWorldTotalMin(), gWorldSectorX, gWorldSectorY);
         break;
     }
   }
@@ -375,7 +376,7 @@ BOOLEAN AnotherFightPossible(void) {
   ubLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   pSoldier = MercPtrs[ubLoop];
   for (; ubLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubLoop++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife > (OKLIFE + 5) &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife > (OKLIFE + 5) &&
         !pSoldier->bCollapsed) {
       return (TRUE);
     }
@@ -395,7 +396,7 @@ void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier) {
     // boxer stepped out of the ring!
     BoxingPlayerDisqualified(pSoldier, BOXER_OUT_OF_RING);
     // add the history record here.
-    AddHistoryToPlayersLog(HISTORY_DISQUALIFIED_BOXING, pSoldier->ubProfile, GetWorldTotalMin(),
+    AddHistoryToPlayersLog(HISTORY_DISQUALIFIED_BOXING, GetSolProfile(pSoldier), GetWorldTotalMin(),
                            gWorldSectorX, gWorldSectorY);
     // make not a boxer any more
     pSoldier->uiStatusFlags &= ~(SOLDIER_BOXER);

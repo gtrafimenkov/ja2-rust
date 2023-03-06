@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AniViewScreen.c" />
+    <ClCompile Include="CharList.c" />
     <ClCompile Include="Credits.c" />
     <ClCompile Include="Editor\CursorModes.c" />
     <ClCompile Include="Editor\EditorBuildings.c" />
@@ -111,10 +112,13 @@
     <ClCompile Include="LoadingScreen.c" />
     <ClCompile Include="MainMenuScreen.c" />
     <ClCompile Include="MessageBoxScreen.c" />
+    <ClCompile Include="Militia.c" />
+    <ClCompile Include="Money.c" />
     <ClCompile Include="OptionsScreen.c" />
     <ClCompile Include="SaveLoadGame.c" />
     <ClCompile Include="SaveLoadScreen.c" />
     <ClCompile Include="Screens.c" />
+    <ClCompile Include="Sector.c" />
     <ClCompile Include="SGP\ButtonSoundControl.c" />
     <ClCompile Include="SGP\ButtonSystem.c" />
     <ClCompile Include="SGP\Container.c" />
@@ -140,6 +144,7 @@
     <ClCompile Include="SGP\VObject.c" />
     <ClCompile Include="SGP\VObjectBlitters.c" />
     <ClCompile Include="SGP\WinFont.c" />
+    <ClCompile Include="Soldier.c" />
     <ClCompile Include="Strategic\AIViewer.c" />
     <ClCompile Include="Strategic\Assignments.c" />
     <ClCompile Include="Strategic\AutoResolve.c" />
@@ -183,6 +188,7 @@
     <ClCompile Include="Strategic\TownMilitia.c" />
     <ClCompile Include="StrUtils.c" />
     <ClCompile Include="SysGlobals.c" />
+    <ClCompile Include="Tactical.c" />
     <ClCompile Include="TacticalAI\AIList.c" />
     <ClCompile Include="TacticalAI\AIMain.c" />
     <ClCompile Include="TacticalAI\AIUtils.c" />
@@ -234,7 +240,6 @@
     <ClCompile Include="Tactical\MapInformation.c" />
     <ClCompile Include="Tactical\MercEntering.c" />
     <ClCompile Include="Tactical\MercHiring.c" />
-    <ClCompile Include="Tactical\MilitiaControl.c" />
     <ClCompile Include="Tactical\Morale.c" />
     <ClCompile Include="Tactical\OppList.c" />
     <ClCompile Include="Tactical\Overhead.c" />
@@ -265,6 +270,7 @@
     <ClCompile Include="Tactical\Vehicles.c" />
     <ClCompile Include="Tactical\Weapons.c" />
     <ClCompile Include="Tactical\WorldItems.c" />
+    <ClCompile Include="Team.c" />
     <ClCompile Include="TileEngine\AmbientControl.c" />
     <ClCompile Include="TileEngine\Buildings.c" />
     <ClCompile Include="TileEngine\Environment.c" />
@@ -300,6 +306,8 @@
     <ClCompile Include="TileEngine\WorldDat.c" />
     <ClCompile Include="TileEngine\WorldDef.c" />
     <ClCompile Include="TileEngine\WorldMan.c" />
+    <ClCompile Include="Town.c" />
+    <ClCompile Include="UI.c" />
     <ClCompile Include="Utils\AnimatedProgressBar.c" />
     <ClCompile Include="Utils\Cinematics.c" />
     <ClCompile Include="Utils\Cursors.c" />
@@ -573,7 +581,6 @@
     <ClInclude Include="Tactical\MapInformation.h" />
     <ClInclude Include="Tactical\MercEntering.h" />
     <ClInclude Include="Tactical\MercHiring.h" />
-    <ClInclude Include="Tactical\MilitiaControl.h" />
     <ClInclude Include="Tactical\Morale.h" />
     <ClInclude Include="Tactical\OppList.h" />
     <ClInclude Include="Tactical\Overhead.h" />

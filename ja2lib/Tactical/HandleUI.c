@@ -24,6 +24,7 @@
 #include "SaveLoadGame.h"
 #include "ScreenIDs.h"
 #include "Screens.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
@@ -1123,7 +1124,7 @@ UINT32 UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
     // Add soldier strategic info, so it doesn't break the counters!
     if (pSoldier) {
       if (!gbWorldSectorZ) {
-        SECTORINFO *pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
+        SECTORINFO *pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
         switch (pSoldier->ubSoldierClass) {
           case SOLDIER_CLASS_ADMINISTRATOR:
             pSector->ubNumAdmins++;
@@ -1704,7 +1705,7 @@ UINT32 UIHandleCMoveMerc(UI_EVENT *pUIEvent) {
       // TODO: Only our squad!
       for (bLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID, pSoldier = MercPtrs[bLoop];
            bLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID; bLoop++, pSoldier++) {
-        if (OK_CONTROLLABLE_MERC(pSoldier) && pSoldier->bAssignment == CurrentSquad() &&
+        if (OK_CONTROLLABLE_MERC(pSoldier) && GetSolAssignment(pSoldier) == CurrentSquad() &&
             !pSoldier->fMercAsleep) {
           // If we can't be controlled, returninvalid...
           if (pSoldier->uiStatusFlags & SOLDIER_ROBOT) {
@@ -2263,7 +2264,7 @@ UINT32 UIHandleCAMercShoot(UI_EVENT *pUIEvent) {
             Item[pSoldier->inv[HANDPOS].usItem].usItemClass != IC_MEDKIT &&
             pSoldier->inv[HANDPOS].usItem != GAS_CAN &&
             gTacticalStatus.ubLastRequesterTargetID != pTSoldier->ubProfile &&
-            (pTSoldier->ubID != pSoldier->ubID)) {
+            (pTSoldier->ubID != GetSolID(pSoldier))) {
           CHAR16 zStr[200];
 
           gpRequesterMerc = pSoldier;
@@ -2448,7 +2449,7 @@ void AdjustSoldierCreationStartValues() {
 
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        pSoldier++, cnt++) {
-    if (!pSoldier->bActive) {
+    if (!IsSolActive(pSoldier)) {
       guiCreateGuyIndex = (INT16)cnt;
       break;
     }
@@ -2459,7 +2460,7 @@ void AdjustSoldierCreationStartValues() {
 
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[LAST_TEAM].bLastID;
        pSoldier++, cnt++) {
-    if (!pSoldier->bActive && cnt > gTacticalStatus.Team[gbPlayerNum].bLastID) {
+    if (!IsSolActive(pSoldier) && cnt > gTacticalStatus.Team[gbPlayerNum].bLastID) {
       guiCreateBadGuyIndex = (INT16)cnt;
       break;
     }
@@ -3020,7 +3021,7 @@ BOOLEAN HandleUIMovementCursor(struct SOLDIERTYPE *pSoldier, UINT32 uiCursorFlag
   if (((gTacticalStatus.uiFlags & REALTIME) || !(gTacticalStatus.uiFlags & INCOMBAT)) ||
       ((gAnimControl[pSoldier->usAnimState].uiFlags & ANIM_STATIONARY) ||
        pSoldier->fNoAPToFinishMove) ||
-      pSoldier->ubID >= MAX_NUM_SOLDIERS) {
+      GetSolID(pSoldier) >= MAX_NUM_SOLDIERS) {
     // If we are targeting a merc for some reason, don't go thorugh normal channels if we are on
     // someone now
     if (uiFlags == MOVEUI_TARGET_MERCS || uiFlags == MOVEUI_TARGET_MERCSFORAID) {
@@ -3887,7 +3888,7 @@ UINT32 UIHandleLCLook(UI_EVENT *pUIEvent) {
     cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bActive && pSoldier->bInSector) {
+      if (IsSolActive(pSoldier) && pSoldier->bInSector) {
         if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
           MakeSoldierTurn(pSoldier, sXPos, sYPos);
         }
@@ -4146,7 +4147,7 @@ void EndMultiSoldierSelection(BOOLEAN fAcknowledge) {
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
         gTacticalStatus.fAtLeastOneGuyOnMultiSelect = TRUE;
 
@@ -4188,7 +4189,7 @@ void StopRubberBandedMercFromMoving() {
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
         pSoldier->fDelayedMovement = FALSE;
         pSoldier->sFinalDestination = pSoldier->sGridNo;
@@ -4224,7 +4225,7 @@ BOOLEAN HandleMultiSelectionMove(INT16 sDestGridNo) {
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
         if (pSoldier->ubID == gusSelectedSoldier) {
           fMoveFast = pSoldier->fUIMovementFast;
@@ -4237,7 +4238,7 @@ BOOLEAN HandleMultiSelectionMove(INT16 sDestGridNo) {
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
         // If we can't be controlled, returninvalid...
         if (pSoldier->uiStatusFlags & SOLDIER_ROBOT) {
@@ -4288,7 +4289,7 @@ void ResetMultiSelection() {
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
         pSoldier->uiStatusFlags &= (~SOLDIER_MULTI_SELECTED);
       }
@@ -4533,7 +4534,7 @@ BOOLEAN IsValidTalkableNPC(UINT8 ubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs
   }
 
   // CHECK IF ACTIVE!
-  if (!pSoldier->bActive) {
+  if (!IsSolActive(pSoldier)) {
     return (FALSE);
   }
 
@@ -4557,13 +4558,13 @@ BOOLEAN IsValidTalkableNPC(UINT8 ubSoldierID, BOOLEAN fGive, BOOLEAN fAllowMercs
     }
   }
 
-  if (pSoldier->ubProfile != NO_PROFILE && pSoldier->ubProfile >= FIRST_RPC &&
+  if (GetSolProfile(pSoldier) != NO_PROFILE && GetSolProfile(pSoldier) >= FIRST_RPC &&
       !RPC_RECRUITED(pSoldier) && !AM_AN_EPC(pSoldier)) {
     fValidGuy = TRUE;
   }
 
   // Check for EPC...
-  if (pSoldier->ubProfile != NO_PROFILE && (gCurrentUIMode == TALKCURSOR_MODE || fGive) &&
+  if (GetSolProfile(pSoldier) != NO_PROFILE && (gCurrentUIMode == TALKCURSOR_MODE || fGive) &&
       AM_AN_EPC(pSoldier)) {
     fValidGuy = TRUE;
   }
@@ -4627,7 +4628,7 @@ BOOLEAN HandleTalkInit() {
     if (IsValidTalkableNPC((UINT8)gusUIFullTargetID, FALSE, TRUE, FALSE)) {
       GetSoldier(&pTSoldier, gusUIFullTargetID);
 
-      if (pTSoldier->ubID != pSoldier->ubID) {
+      if (pTSoldier->ubID != GetSolID(pSoldier)) {
         // ATE: Check if we have good LOS
         // is he close enough to see that gridno if he turns his head?
         sDistVisible = DistanceVisible(pSoldier, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT,
@@ -5273,7 +5274,7 @@ BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN
     ubGuyThere = WhoIsThere2(sSpot, pSoldier->bLevel);
 
     // Alright folks, here we are!
-    if (ubGuyThere == pSoldier->ubID) {
+    if (ubGuyThere == GetSolID(pSoldier)) {
       // Double check OK destination......
       if (NewOKDestination(pSoldier, sGridNo, TRUE, (INT8)gsInterfaceLevel)) {
         // If the soldier in the middle of doing stuff?
@@ -5284,7 +5285,7 @@ BOOLEAN IsValidJumpLocation(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN
           ubGuyThere = WhoIsThere2(sIntSpot, pSoldier->bLevel);
 
           // Is there a guy and is he prone?
-          if (ubGuyThere != NOBODY && ubGuyThere != pSoldier->ubID &&
+          if (ubGuyThere != NOBODY && ubGuyThere != GetSolID(pSoldier) &&
               gAnimControl[MercPtrs[ubGuyThere]->usAnimState].ubHeight == ANIM_PRONE) {
             // It's a GO!
             return (TRUE);

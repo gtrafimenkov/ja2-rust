@@ -5,6 +5,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/StrategicMap.h"
@@ -18,6 +19,7 @@
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Vehicles.h"
+#include "UI.h"
 
 typedef struct {
   INT16 uiID;  // The soldiers ID
@@ -391,7 +393,7 @@ BOOLEAN RemoveCharacterFromSquads(struct SOLDIERTYPE *pCharacter) {
         }
 
         // if we are not loading a saved game
-        if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME) && guiCurrentScreen == GAME_SCREEN) {
+        if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME) && IsTacticalMode()) {
           UpdateCurrentlySelectedMerc(pCharacter, (INT8)iCounterA);
         }
 
@@ -635,7 +637,7 @@ BOOLEAN SetCurrentSquad(INT32 iCurrentSquad, BOOLEAN fForce) {
   // ARM: can't call SetCurrentSquad() in mapscreen, it calls SelectSoldier(), that will initialize
   // interface panels!!!
   // ATE: Adjusted conditions a bit ( sometimes were not getting selected )
-  if (guiCurrentScreen == LAPTOP_SCREEN || guiCurrentScreen == MAP_SCREEN) {
+  if (guiCurrentScreen == LAPTOP_SCREEN || IsMapScreen_2()) {
     return (FALSE);
   }
 
@@ -957,7 +959,7 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   for (iCounter = 0; iCounter < NUMBER_OF_SQUADS; iCounter++) {
     for (iCounterB = 0; iCounterB < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounterB++) {
       if (sSquadSaveStruct[iCounter][iCounterB].uiID != -1)
-        Squad[iCounter][iCounterB] = &Menptr[sSquadSaveStruct[iCounter][iCounterB].uiID];
+        Squad[iCounter][iCounterB] = GetSoldierByID(sSquadSaveStruct[iCounter][iCounterB].uiID);
       else
         Squad[iCounter][iCounterB] = NULL;
     }
@@ -1028,7 +1030,7 @@ void UpdateCurrentlySelectedMerc(struct SOLDIERTYPE *pSoldier, INT8 bSquadValue)
   }
 
   // Are we the selected guy?
-  if (gusSelectedSoldier == pSoldier->ubID) {
+  if (gusSelectedSoldier == GetSolID(pSoldier)) {
     ubID = FindNextActiveAndAliveMerc(pSoldier, FALSE, FALSE);
 
     if (ubID != NOBODY && ubID != gusSelectedSoldier) {
@@ -1053,11 +1055,11 @@ BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, UINT8 ubSquad) {
     return (FALSE);
   }
 
-  if (pSoldier->bAssignment == IN_TRANSIT) {
+  if (GetSolAssignment(pSoldier) == IN_TRANSIT) {
     return (FALSE);
   }
 
-  if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+  if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
     return (FALSE);
   }
 
@@ -1065,9 +1067,9 @@ BOOLEAN IsSquadInSector(struct SOLDIERTYPE *pSoldier, UINT8 ubSquad) {
     return (TRUE);
   }
 
-  if ((pSoldier->sSectorX != Squad[ubSquad][0]->sSectorX) ||
-      (pSoldier->sSectorY != Squad[ubSquad][0]->sSectorY) ||
-      (pSoldier->bSectorZ != Squad[ubSquad][0]->bSectorZ)) {
+  if ((GetSolSectorX(pSoldier) != Squad[ubSquad][0]->sSectorX) ||
+      (GetSolSectorY(pSoldier) != Squad[ubSquad][0]->sSectorY) ||
+      (GetSolSectorZ(pSoldier) != Squad[ubSquad][0]->bSectorZ)) {
     return (FALSE);
   }
 
@@ -1127,12 +1129,12 @@ BOOLEAN AddDeadCharacterToSquadDeadGuys(struct SOLDIERTYPE *pSoldier, INT32 iSqu
       // valid soldier?
       if (pTempSoldier == NULL) {
         // nope
-        sDeadMercs[iSquadValue][iCounter] = pSoldier->ubProfile;
+        sDeadMercs[iSquadValue][iCounter] = GetSolProfile(pSoldier);
         return (TRUE);
       }
     } else {
       // nope
-      sDeadMercs[iSquadValue][iCounter] = pSoldier->ubProfile;
+      sDeadMercs[iSquadValue][iCounter] = GetSolProfile(pSoldier);
       return (TRUE);
     }
   }
@@ -1148,7 +1150,7 @@ BOOLEAN IsDeadGuyOnAnySquad(struct SOLDIERTYPE *pSoldier) {
   for (iCounterA = 0; iCounterA < NUMBER_OF_SQUADS; iCounterA++) {
     // slot?
     for (iCounter = 0; iCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounter++) {
-      if (sDeadMercs[iCounterA][iCounter] == pSoldier->ubProfile) {
+      if (sDeadMercs[iCounterA][iCounter] == GetSolProfile(pSoldier)) {
         return (TRUE);
       }
     }
@@ -1192,7 +1194,7 @@ BOOLEAN SoldierIsDeadAndWasOnSquad(struct SOLDIERTYPE *pSoldier, INT8 bSquadValu
 
   // check if guy is on squad
   for (iCounter = 0; iCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounter++) {
-    if (pSoldier->ubProfile == sDeadMercs[bSquadValue][iCounter]) {
+    if (GetSolProfile(pSoldier) == sDeadMercs[bSquadValue][iCounter]) {
       return (TRUE);
     }
   }
@@ -1217,7 +1219,7 @@ BOOLEAN IsMercOnCurrentSquad(struct SOLDIERTYPE *pSoldier) {
   }
 
   // active grunt?
-  if (pSoldier->bActive == FALSE) {
+  if (IsSolActive(pSoldier) == FALSE) {
     // no
     return (FALSE);
   }

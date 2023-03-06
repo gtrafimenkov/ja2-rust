@@ -2,6 +2,7 @@
 
 #include "SGP/Debug.h"
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
 #include "Strategic/StrategicTownLoyalty.h"
@@ -70,7 +71,7 @@ UINT8 GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownI
   Assert(ubTownId < NUM_TOWNS);
 
   // pass on to
-  return (GetTownOpinionOfMerc(pSoldier->ubProfile, ubTownId));
+  return (GetTownOpinionOfMerc(GetSolProfile(pSoldier), ubTownId));
 }
 
 void UpdateTownOpinionOfThisMerc(UINT8 ubProfileId, UINT8 ubTownId, INT8 bAmount) {
@@ -101,7 +102,7 @@ void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 u
   Assert(ubTownId < NUM_TOWNS);
 
   // pass this on to the profile based function
-  UpdateTownOpinionOfThisMerc(pSoldier->ubProfile, ubTownId, bAmount);
+  UpdateTownOpinionOfThisMerc(GetSolProfile(pSoldier), ubTownId, bAmount);
 }
 
 void HandleSpreadOfAllTownsOpinion(void) {
@@ -155,7 +156,7 @@ void HandleSpreadOfTownOpinionForMercForSoldier( struct SOLDIERTYPE *pSoldier )
         }
 
         // let the profile based one do the handling
-        HandleSpreadOfTownOpinionForMerc( pSoldier->ubProfile );
+        HandleSpreadOfTownOpinionForMerc( GetSolProfile(pSoldier) );
 }
 
 

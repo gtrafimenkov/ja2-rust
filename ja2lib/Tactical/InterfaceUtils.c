@@ -12,10 +12,10 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "StrUtils.h"
 #include "Tactical/Faces.h"
 #include "Tactical/Interface.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierMacros.h"
@@ -23,6 +23,7 @@
 #include "Tactical/Weapons.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SysUtil.h"
+#include "UI.h"
 
 #define LIFE_BAR_SHADOW FROMRGB(108, 12, 12)
 #define LIFE_BAR FROMRGB(200, 0, 0)
@@ -211,8 +212,8 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   GetVideoObject(&hHandle, guiBrownBackgroundForTeamPanel);
 
   // DO MAX BREATH
-  if (guiCurrentScreen != MAP_SCREEN) {
-    if (gusSelectedSoldier == pSoldier->ubID && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
+  if (!IsMapScreen_2()) {
+    if (gusSelectedSoldier == GetSolID(pSoldier) && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
         OK_INTERRUPT_MERC(pSoldier)) {
       // gold, the second entry in the .sti
       BltVideoObject(uiBuffer, hHandle, 1, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
@@ -396,7 +397,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
   BOOLEAN fDoFace = FALSE;
   UINT8 ubVehicleType = 0;
 
-  if (pSoldier->bActive) {
+  if (IsSolActive(pSoldier)) {
     if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
       // get the type of vehicle
       ubVehicleType = pVehicleList[pSoldier->bVehicleID].ubVehicleType;
@@ -415,9 +416,10 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
         // Render as an extern face...
         fAutoFace = FALSE;
       } else {
-        SetAutoFaceActiveFromSoldier(FRAME_BUFFER, guiSAVEBUFFER, pSoldier->ubID, sFaceX, sFaceY);
-        //	SetAutoFaceActiveFromSoldier( FRAME_BUFFER, FACE_AUTO_RESTORE_BUFFER, pSoldier->ubID
-        //, sFaceX, sFaceY );
+        SetAutoFaceActiveFromSoldier(FRAME_BUFFER, guiSAVEBUFFER, GetSolID(pSoldier), sFaceX,
+                                     sFaceY);
+        //	SetAutoFaceActiveFromSoldier( FRAME_BUFFER, FACE_AUTO_RESTORE_BUFFER,
+        //GetSolID(pSoldier) , sFaceX, sFaceY );
       }
     }
 
@@ -427,7 +429,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
       if (fAutoFace) {
         RenderAutoFaceFromSoldier(pSoldier->ubID);
       } else {
-        ExternRenderFaceFromSoldier(guiSAVEBUFFER, pSoldier->ubID, sFaceX, sFaceY);
+        ExternRenderFaceFromSoldier(guiSAVEBUFFER, GetSolID(pSoldier), sFaceX, sFaceY);
       }
     }
   } else {

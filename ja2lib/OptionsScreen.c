@@ -28,6 +28,7 @@
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -102,7 +103,7 @@
 
 // Slider bar defines
 #define OPT_GAP_BETWEEN_SLIDER_BARS 60
-//#define		OPT_SLIDER_BAR_WIDTH 200
+// #define		OPT_SLIDER_BAR_WIDTH 200
 #define OPT_SLIDER_BAR_SIZE 258
 
 #define OPT_SLIDER_TEXT_WIDTH 45
@@ -326,7 +327,7 @@ BOOLEAN EnterOptionsScreen() {
 #endif
 
   // if we are coming from mapscreen
-  if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+  if (IsMapScreen()) {
     guiTacticalInterfaceFlags &= ~INTERFACE_MAPSCREEN;
     gfEnteredFromMapScreen = TRUE;
   }
@@ -994,7 +995,7 @@ void MusicSliderChangeCallBack(INT32 iNewValue) { MusicSetVolume(iNewValue); }
 
 BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                     UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                    SGPRect *pCenteringRect) {
+                                    const SGPRect *pCenteringRect) {
   // reset exit mode
   gfExitOptionsDueToMessageBox = TRUE;
 

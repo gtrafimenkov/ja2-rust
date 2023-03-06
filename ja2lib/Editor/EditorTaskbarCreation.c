@@ -5,6 +5,7 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "SGP/Debug.h"
+#include "Soldier.h"
 #include "Tactical/OverheadTypes.h"
 #include "Tactical/SoldierCreate.h"
 #include "Utils/FontControl.h"

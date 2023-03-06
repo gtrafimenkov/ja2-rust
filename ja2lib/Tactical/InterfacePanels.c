@@ -25,6 +25,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreen.h"
@@ -66,6 +67,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -542,7 +544,7 @@ void CheckForDisabledForGiveItem() {
     cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bActive && pSoldier->bLife >= OKLIFE &&
+      if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE &&
           !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) && !AM_A_ROBOT(pSoldier) &&
           pSoldier->bInSector && IsMercOnCurrentSquad(pSoldier)) {
         sDist = PythSpacesAway(gpSMCurrentMerc->sGridNo, pSoldier->sGridNo);
@@ -671,7 +673,7 @@ void UpdateForContOverPortrait(struct SOLDIERTYPE *pSoldier, BOOLEAN fOn) {
     }
   } else {
     for (cnt = 0; cnt < 6; cnt++) {
-      if (gTeamPanel[cnt].ubID == pSoldier->ubID) {
+      if (gTeamPanel[cnt].ubID == GetSolID(pSoldier)) {
         if (IsMouseInRegion(&gTEAM_FaceRegions[cnt])) {
           HandleMouseOverSoldierFaceForContMove(pSoldier, fOn);
         }
@@ -936,7 +938,6 @@ void ReevaluateItemHatches(struct SOLDIERTYPE *pSoldier, BOOLEAN fAllValid) {
 
       // !!! ATTACHING/MERGING ITEMS IN MAP SCREEN IS NOT SUPPORTED !!!
       // CJC: seems to be supported now...
-      // if( guiCurrentScreen != MAP_SCREEN )
       {
         // Check attachments, override to valid placement if valid merge...
         if (ValidAttachment(gpItemPointer->usItem, pSoldier->inv[cnt].usItem)) {
@@ -1949,7 +1950,7 @@ BOOLEAN HandleNailsVestFetish(struct SOLDIERTYPE *pSoldier, UINT32 uiHandPos,
   BOOLEAN fRefuse = FALSE;
 
   // OK are we nails?
-  if (pSoldier->ubProfile == 34) {
+  if (GetSolProfile(pSoldier) == 34) {
     // if this the VEST POS?
     if (uiHandPos == VESTPOS) {
       // Are we trying to pick it up?
@@ -2044,7 +2045,7 @@ void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
   uiHandPos = MSYS_GetRegionUserData(pRegion, 0);
 
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     return;
   }
 
@@ -2289,7 +2290,7 @@ void SMInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     // Check for # of slots in item
     if ((gpSMCurrentMerc->inv[uiHandPos].ubNumberOfObjects > 1 &&
          ItemSlotLimit(gpSMCurrentMerc->inv[uiHandPos].usItem, (UINT8)uiHandPos) > 0) &&
-        (guiCurrentScreen != MAP_SCREEN)) {
+        (!IsMapScreen_2())) {
       if (!InItemStackPopup()) {
         // InitItemStackPopup( gpSMCurrentMerc, (UINT8)uiHandPos, SM_ITEMDESC_START_X,
         // SM_ITEMDESC_START_Y, SM_ITEMDESC_WIDTH, SM_ITEMDESC_HEIGHT );
@@ -2997,7 +2998,7 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
         }
 
         // Render Selected guy if selected
-        if (gusSelectedSoldier == pSoldier->ubID && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
+        if (gusSelectedSoldier == GetSolID(pSoldier) && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
             OK_INTERRUPT_MERC(pSoldier)) {
           BltVideoObjectFromIndex(guiSAVEBUFFER, guiTEAMObjects, 0, sTEAMFaceHighlXY[posIndex],
                                   sTEAMFaceHighlXY[posIndex + 1], VO_BLT_SRCTRANSPARENCY, NULL);
@@ -3154,7 +3155,7 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
 
       HandleSoldierFaceFlash(pSoldier, sTEAMFacesXY[posIndex], sTEAMFacesXY[posIndex + 1]);
 
-      if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+      if (!(IsMapScreen())) {
         // HandlePanelFaceAnimations( pSoldier );
       }
     }
@@ -3247,7 +3248,7 @@ void BtnRostermodeCallback(GUI_BUTTON *btn, INT32 reason) {
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
-    if (guiCurrentScreen == GAME_SCREEN) {
+    if (IsTacticalMode()) {
       GoToMapScreenFromTactical();
       //			EnableRadarScreenRender( );
     }
@@ -3367,7 +3368,7 @@ void MercFacePanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   ubID = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
 
   // If our flags are set to do this, gofoit!
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     return;
   }
 
@@ -3384,7 +3385,7 @@ void MercFacePanelMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
   pSoldier = MercPtrs[ubSoldierID];
 
-  if (!pSoldier->bActive) {
+  if (!IsSolActive(pSoldier)) {
     return;
   }
 
@@ -3442,7 +3443,7 @@ void MercFacePanelCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   ubID = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
 
   // If our flags are set to do this, gofoit!
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
       SetInfoChar(ubID);
     }
@@ -3619,7 +3620,7 @@ void EndRadioLocator(UINT8 ubID) {
 }
 
 void CheckForFacePanelStartAnims(struct SOLDIERTYPE *pSoldier, INT16 sPanelX, INT16 sPanelY) {
-  if (!pSoldier->bActive) {
+  if (!IsSolActive(pSoldier)) {
     return;
   }
 
@@ -3654,7 +3655,7 @@ void HandlePanelFaceAnimations(struct SOLDIERTYPE *pSoldier) {
     return;
   }
 
-  if (!pSoldier->bActive) {
+  if (!IsSolActive(pSoldier)) {
     return;
   }
 
@@ -3802,7 +3803,7 @@ void HandleSoldierFaceFlash(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sF
 
 void RenderSoldierTeamInv(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY, UINT8 ubPanelNum,
                           BOOLEAN fDirty) {
-  if (pSoldier->bActive && !(pSoldier->uiStatusFlags & SOLDIER_DEAD)) {
+  if (IsSolActive(pSoldier) && !(pSoldier->uiStatusFlags & SOLDIER_DEAD)) {
     if (pSoldier->uiStatusFlags & SOLDIER_DRIVER) {
       BltVideoObjectFromIndex(guiSAVEBUFFER, guiVEHINV, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
       RestoreExternBackgroundRect(sX, sY, (INT16)(TM_INV_WIDTH), (INT16)(TM_INV_HEIGHT));
@@ -3833,7 +3834,7 @@ void TMFirstHandInvCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   ubID = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
 
   // If our flags are set to do this, gofoit!
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     return;
   }
 
@@ -4077,17 +4078,17 @@ void RenderTownIDString() {
 }
 
 void CheckForAndAddMercToTeamPanel(struct SOLDIERTYPE *pSoldier) {
-  if (pSoldier->bActive) {
+  if (IsSolActive(pSoldier)) {
     // Add to interface if the are ours
     if (pSoldier->bTeam == gbPlayerNum) {
       // Are we in the loaded sector?
-      if (pSoldier->sSectorX == gWorldSectorX && pSoldier->sSectorY == gWorldSectorY &&
-          pSoldier->bSectorZ == gbWorldSectorZ && !pSoldier->fBetweenSectors &&
+      if (GetSolSectorX(pSoldier) == gWorldSectorX && GetSolSectorY(pSoldier) == gWorldSectorY &&
+          GetSolSectorZ(pSoldier) == gbWorldSectorZ && !pSoldier->fBetweenSectors &&
           pSoldier->bInSector) {
         // IF on duty....
-        if ((pSoldier->bAssignment == CurrentSquad()) ||
+        if ((GetSolAssignment(pSoldier) == CurrentSquad()) ||
             (SoldierIsDeadAndWasOnSquad(pSoldier, (INT8)(CurrentSquad())))) {
-          if (pSoldier->bAssignment == ASSIGNMENT_DEAD) {
+          if (GetSolAssignment(pSoldier) == ASSIGNMENT_DEAD) {
             pSoldier->fUICloseMerc = FALSE;
           }
           // ATE: ALrighty, if we have the insertion code of helicopter..... don't add just yet!
@@ -4139,12 +4140,13 @@ UINT8 FindNextMercInTeamPanel(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLess
       if (fGoodForLessOKLife) {
         if (pTeamSoldier->bLife > 0 && pTeamSoldier->bActive && pTeamSoldier->bInSector &&
             pTeamSoldier->bTeam == gbPlayerNum && pTeamSoldier->bAssignment < ON_DUTY &&
-            OK_INTERRUPT_MERC(pTeamSoldier) && pSoldier->bAssignment == pTeamSoldier->bAssignment) {
+            OK_INTERRUPT_MERC(pTeamSoldier) &&
+            GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
           return ((UINT8)gTeamPanel[cnt].ubID);
         }
       } else {
         if (OK_CONTROLLABLE_MERC(pTeamSoldier) && OK_INTERRUPT_MERC(pTeamSoldier) &&
-            pSoldier->bAssignment == pTeamSoldier->bAssignment) {
+            GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
           return ((UINT8)gTeamPanel[cnt].ubID);
         }
       }
@@ -4166,12 +4168,13 @@ UINT8 FindNextMercInTeamPanel(struct SOLDIERTYPE *pSoldier, BOOLEAN fGoodForLess
       if (fGoodForLessOKLife) {
         if (pTeamSoldier->bLife > 0 && pTeamSoldier->bActive && pTeamSoldier->bInSector &&
             pTeamSoldier->bTeam == gbPlayerNum && pTeamSoldier->bAssignment < ON_DUTY &&
-            OK_INTERRUPT_MERC(pTeamSoldier) && pSoldier->bAssignment == pTeamSoldier->bAssignment) {
+            OK_INTERRUPT_MERC(pTeamSoldier) &&
+            GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
           return ((UINT8)gTeamPanel[cnt].ubID);
         }
       } else {
         if (OK_CONTROLLABLE_MERC(pTeamSoldier) && OK_INTERRUPT_MERC(pTeamSoldier) &&
-            pSoldier->bAssignment == pTeamSoldier->bAssignment) {
+            GetSolAssignment(pSoldier) == pTeamSoldier->bAssignment) {
           return ((UINT8)gTeamPanel[cnt].ubID);
         }
       }
@@ -4224,7 +4227,7 @@ void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
   INT16 sStartYPosition = 0;
   INT16 sWidth = 0, sHeight = 0;
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     if (bSelectedInfoChar == -1) {
       return;
     }
@@ -4256,7 +4259,7 @@ void KeyRingItemPanelButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    if (guiCurrentScreen == MAP_SCREEN) {
+    if (IsMapScreen_2()) {
       // want the inv done button shutdown and the region behind the keyring shaded
       // ForceButtonUnDirty( giMapInvDoneButton );
       // shade the background
@@ -4309,7 +4312,7 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         return;
 
       // If our flags are set to do this, gofoit!
-      if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+      if ((IsMapScreen())) {
       } else {
         if (gpItemPopupSoldier->ubID != gusSelectedSoldier) {
           SelectSoldier(gpItemPopupSoldier->ubID, FALSE, FALSE);
@@ -4392,7 +4395,7 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 
             // Check if it's the same now!
             if (gpItemPointer->ubNumberOfObjects == 0) {
-              if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+              if (IsMapScreen()) {
                 MAPEndItemPointer();
               } else {
                 EndItemPointer();
@@ -4440,7 +4443,7 @@ void KeyRingSlotInvClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     // Some global stuff here - for esc, etc
     // Check for # of slots in item
     if (!InItemDescriptionBox()) {
-      if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+      if (IsMapScreen()) {
         // InitKeyItemDescriptionBox( gpItemPopupSoldier, (UINT8)uiKeyRing, MAP_ITEMDESC_START_X,
         // MAP_ITEMDESC_START_Y, 0 );
       } else {
@@ -4592,7 +4595,7 @@ void SMInvMoneyButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       gfAddingMoneyToMercFromPlayersAccount = TRUE;
 
       // create the temp object from the players account balance
-      //			if( LaptopSaveInfo.iCurrentBalance > MAX_MONEY_PER_SLOT )
+      //			if( MoneyGetBalance() > MAX_MONEY_PER_SLOT )
       //				CreateMoney( MAX_MONEY_PER_SLOT, &gItemPointer );
       //			else
       CreateMoney(LaptopSaveInfo.iCurrentBalance, &gItemPointer);
@@ -4607,7 +4610,7 @@ void ConfirmationToDepositMoneyToPlayersAccount(UINT8 ubExitValue) {
   if (ubExitValue == MSG_BOX_RETURN_YES) {
     // add the money to the players account
     AddTransactionToPlayersBook(MERC_DEPOSITED_MONEY_TO_PLAYER_ACCOUNT, gpSMCurrentMerc->ubProfile,
-                                GetWorldTotalMin(), gpItemPointer->uiMoneyAmount);
+                                gpItemPointer->uiMoneyAmount);
 
     // dirty shopkeeper
     gubSkiDirtyLevel = SKI_DIRTY_LEVEL2;
@@ -4661,7 +4664,7 @@ void HandleTacticalEffectsOfEquipmentChange(struct SOLDIERTYPE *pSoldier, UINT32
   }
 
   // if he is loaded tactically
-  if (pSoldier->bInSector) {
+  if (IsSolInSector(pSoldier)) {
     // If this is our main hand
     if (uiInvPos == HANDPOS || uiInvPos == SECONDHANDPOS) {
       // check if we need to change animation!

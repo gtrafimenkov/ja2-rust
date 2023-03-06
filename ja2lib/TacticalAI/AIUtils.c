@@ -1,5 +1,6 @@
 #include "GameSettings.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Items.h"
@@ -527,7 +528,7 @@ INT16 RandomFriendWithin(struct SOLDIERTYPE *pSoldier) {
     }
 
     // skip ourselves
-    if (pFriend->ubID == pSoldier->ubID) {
+    if (pFriend->ubID == GetSolID(pSoldier)) {
       continue;
     }
 
@@ -627,7 +628,7 @@ INT16 RandDestWithinRange(struct SOLDIERTYPE *pSoldier) {
   usMaxDist = RoamingRange(pSoldier, &usOrigin);
 
   if (pSoldier->bOrders <= CLOSEPATROL &&
-      (pSoldier->bTeam == CIV_TEAM || pSoldier->ubProfile != NO_PROFILE)) {
+      (pSoldier->bTeam == CIV_TEAM || GetSolProfile(pSoldier) != NO_PROFILE)) {
     // any other combo uses the default of ubRoom == 0, set above
     if (!InARoom(pSoldier->usPatrolGrid[0], &ubRoom)) {
       ubRoom = 0;
@@ -1271,7 +1272,7 @@ BOOLEAN GuySawEnemyThisTurnOrBefore(struct SOLDIERTYPE *pSoldier) {
   UINT8 ubIDLoop;
 
   for (ubTeamLoop = 0; ubTeamLoop < MAXTEAMS; ubTeamLoop++) {
-    if (gTacticalStatus.Team[ubTeamLoop].bSide != pSoldier->bSide) {
+    if (GetTeamSide(ubTeamLoop) != pSoldier->bSide) {
       // consider guys in this team, which isn't on our side
       for (ubIDLoop = gTacticalStatus.Team[ubTeamLoop].bFirstID;
            ubIDLoop <= gTacticalStatus.Team[ubTeamLoop].bLastID; ubIDLoop++) {
@@ -1312,7 +1313,7 @@ INT16 ClosestReachableFriendInTrouble(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfC
     }
 
     // if this "friend" is actually US
-    if (pFriend->ubID == pSoldier->ubID) {
+    if (pFriend->ubID == GetSolID(pSoldier)) {
       continue;  // next merc
     }
 
@@ -1373,14 +1374,14 @@ INT16 DistanceToClosestFriend(struct SOLDIERTYPE *pSoldier) {
   ubLoop = gTacticalStatus.Team[pSoldier->bTeam].bFirstID;
 
   for (; ubLoop <= gTacticalStatus.Team[pSoldier->bTeam].bLastID; ubLoop++) {
-    if (ubLoop == pSoldier->ubID) {
+    if (ubLoop == GetSolID(pSoldier)) {
       // same guy - continue!
       continue;
     }
 
     pTargetSoldier = Menptr + ubLoop;
 
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (!pTargetSoldier->bActive || !pTargetSoldier->bInSector) {
         continue;
       }
@@ -1390,9 +1391,9 @@ INT16 DistanceToClosestFriend(struct SOLDIERTYPE *pSoldier) {
       }
     } else {
       // compare sector #s
-      if ((pSoldier->sSectorX != pTargetSoldier->sSectorX) ||
-          (pSoldier->sSectorY != pTargetSoldier->sSectorY) ||
-          (pSoldier->bSectorZ != pTargetSoldier->bSectorZ)) {
+      if ((GetSolSectorX(pSoldier) != pTargetSoldier->sSectorX) ||
+          (GetSolSectorY(pSoldier) != pTargetSoldier->sSectorY) ||
+          (GetSolSectorZ(pSoldier) != pTargetSoldier->bSectorZ)) {
         continue;
       } else if (pTargetSoldier->bLife < OKLIFE) {
         continue;
@@ -1904,7 +1905,7 @@ INT16 RoamingRange(struct SOLDIERTYPE *pSoldier, UINT16 *pusFromGridNo) {
   switch (pSoldier->bOrders) {
     // JA2 GOLD: give non-NPCs a 5 tile roam range for cover in combat when being shot at
     case STATIONARY:
-      if (pSoldier->ubProfile != NO_PROFILE ||
+      if (GetSolProfile(pSoldier) != NO_PROFILE ||
           (pSoldier->bAlertStatus < STATUS_BLACK && !(pSoldier->bUnderFire))) {
         return (0);
       } else {
@@ -2124,7 +2125,7 @@ BOOLEAN ArmySeesOpponents(void) {
        cnt <= gTacticalStatus.Team[ENEMY_TEAM].bLastID; cnt++) {
     pSoldier = MercPtrs[cnt];
 
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
         pSoldier->bOppCnt > 0) {
       return (TRUE);
     }

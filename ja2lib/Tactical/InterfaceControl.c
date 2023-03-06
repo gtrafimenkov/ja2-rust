@@ -43,6 +43,7 @@
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/PopUpBox.h"
@@ -99,7 +100,7 @@ void RenderTacticalInterface() {
   // handle paused render of tactical
   HandlePausedTacticalRender();
 
-  if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if (!(IsMapScreen())) {
     HandleFlashingItems();
 
     HandleMultiPurposeLocator();
@@ -158,7 +159,7 @@ void SetUpInterface() {
   struct SOLDIERTYPE *pSoldier;
   struct LEVELNODE *pIntTile;
 
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     return;
   }
 
@@ -280,7 +281,7 @@ void SetUpInterface() {
 void ResetInterface() {
   struct LEVELNODE *pNode;
 
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     return;
   }
 
@@ -467,7 +468,7 @@ void RenderTopmostTacticalInterface() {
     gfRerenderInterfaceFromHelpText = FALSE;
   }
 
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     if (!(guiTacticalInterfaceFlags & INTERFACE_NORENDERBUTTONS)) {
       // If we want to rederaw whole screen, dirty all buttons!
       if (fInterfacePanelDirty == DIRTYLEVEL2) {

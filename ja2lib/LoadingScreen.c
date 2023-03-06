@@ -19,7 +19,7 @@ UINT8 GetLoadScreenID(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   UINT8 ubSectorID;
   BOOLEAN fNight = FALSE;
 
-  ubSectorID = SECTOR(sSectorX, sSectorY);
+  ubSectorID = GetSectorID8(sSectorX, sSectorY);
   if (NightTime())  // before 5AM or after 9PM
   {
     fNight = TRUE;

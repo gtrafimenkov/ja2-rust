@@ -1,15 +1,12 @@
 #ifndef __TYPES_
 #define __TYPES_
 
+#include <stdbool.h>
 #include <stdint.h>
-
-#ifndef _SIRTECH_TYPES_
-#define _SIRTECH_TYPES_
-
-// build defines header....
-#include <wchar.h>  // for wide-character strings
+#include <wchar.h>
 
 #include "BuildDefines.h"
+#include "LeanTypes.h"
 
 // *** SIR-TECH TYPE DEFINITIONS ***
 
@@ -49,10 +46,6 @@ typedef UINT32 HWFILE;
 
 #define SGPFILENAME_LEN 100
 typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
-
-// *** SIR-TECH TYPE DEFINITIONS ***
-
-#endif
 
 #ifndef TRUE
 #define TRUE 1

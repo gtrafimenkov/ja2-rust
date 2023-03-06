@@ -1,9 +1,8 @@
 #ifndef __STRATEGIC_MINES_H
 #define __STRATEGIC_MINES_H
 
-// the .h to the mine management system
-
 #include "SGP/Types.h"
+#include "Town.h"
 
 // the mines
 enum {
@@ -117,7 +116,7 @@ UINT32 GetMaxDailyRemovalFromMine(INT8 bMineIndex);
 INT8 GetTownAssociatedWithMine(INT8 bMineIndex);
 
 // which mine belongs tot his town
-INT8 GetMineAssociatedWithThisTown(INT8 bTownValue);
+INT8 GetMineAssociatedWithThisTown(TownID bTownId);
 
 // posts the actual mine production events daily
 void PostEventsForMineProduction(void);
@@ -138,10 +137,10 @@ INT32 CalcMaxPlayerIncomeFromMines(void);
 INT8 GetMineIndexForSector(INT16 sX, INT16 sY);
 
 // get the index of the mine associated with this town
-INT8 GetMineIndexForTown(INT8 bTownId);
+INT8 GetMineIndexForTown(TownID bTownId);
 
 // get the sector value for the mine associated with this town
-INT16 GetMineSectorForTown(INT8 bTownId);
+INT16 GetMineSectorForTown(TownID bTownId);
 
 // is there a mine here?
 BOOLEAN IsThereAMineInThisSector(INT16 sX, INT16 sY);

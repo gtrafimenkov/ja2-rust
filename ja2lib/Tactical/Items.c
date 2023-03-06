@@ -5,6 +5,7 @@
 #include "MessageBoxScreen.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
@@ -1180,8 +1181,8 @@ BOOLEAN WeaponInHand(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->inv[HANDPOS].usItem == ROCKET_RIFLE ||
         pSoldier->inv[HANDPOS].usItem == AUTO_ROCKET_RIFLE) {
       if (pSoldier->inv[HANDPOS].ubImprintID != NO_PROFILE) {
-        if (pSoldier->ubProfile != NO_PROFILE) {
-          if (pSoldier->inv[HANDPOS].ubImprintID != pSoldier->ubProfile) {
+        if (GetSolProfile(pSoldier) != NO_PROFILE) {
+          if (pSoldier->inv[HANDPOS].ubImprintID != GetSolProfile(pSoldier)) {
             return (FALSE);
           }
         } else {
@@ -2846,7 +2847,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
   if (Item[pObj->usItem].usItemClass == IC_KEY && pSoldier->uiStatusFlags & SOLDIER_PC) {
     if (KeyTable[pObj->ubKeyID].usDateFound == 0) {
       KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetWorldDay();
-      KeyTable[pObj->ubKeyID].usSectorFound = SECTOR(pSoldier->sSectorX, pSoldier->sSectorY);
+      KeyTable[pObj->ubKeyID].usSectorFound = GetSolSectorID8(pSoldier);
     }
   }
 
@@ -3134,7 +3135,7 @@ BOOLEAN InternalAutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE 
             // hatched out!  Such slots will disappear in their entirety if sold/moved, causing
             // anything added through here to vanish also!
             if (!((guiTacticalInterfaceFlags & INTERFACE_SHOPKEEP_INTERFACE) &&
-                  ShouldSoldierDisplayHatchOnItem(pSoldier->ubProfile, bSlot))) {
+                  ShouldSoldierDisplayHatchOnItem(GetSolProfile(pSoldier), bSlot))) {
               PlaceObject(pSoldier, bSlot, pObj);
               SetNewItem(pSoldier, bSlot, fNewItem);
               if (pObj->ubNumberOfObjects == 0) {
@@ -3258,7 +3259,7 @@ UINT8 AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct 
   {
     if (KeyTable[pObj->ubKeyID].usDateFound == 0) {
       KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetWorldDay();
-      KeyTable[pObj->ubKeyID].usSectorFound = SECTOR(pSoldier->sSectorX, pSoldier->sSectorY);
+      KeyTable[pObj->ubKeyID].usSectorFound = GetSolSectorID8(pSoldier);
     }
   }
 
@@ -3504,7 +3505,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
                   if ( ExtractScheduleEntryAndExitInfo( pSoldier, &uiEntryTime, &uiExitTime ) )
                   {
                           ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Civ %d enters at %ld,
-  exits at %ld", pSoldier->ubID, uiEntryTime, uiExitTime );
+  exits at %ld", GetSolID(pSoldier), uiEntryTime, uiExitTime );
                   }
           }
   }
@@ -3999,7 +4000,7 @@ BOOLEAN PlaceObjectInSoldierProfile(UINT8 ubProfile, struct OBJECTTYPE *pObject)
       if (usItem == MONEY) {
         CreateMoney(gMercProfiles[ubProfile].uiMoney, &(pSoldier->inv[bLoop]));
       } else {
-        if (pSoldier->ubProfile == MADLAB) {
+        if (GetSolProfile(pSoldier) == MADLAB) {
           // remove attachments and drop them
           struct OBJECTTYPE Attachment;
 
@@ -4391,7 +4392,7 @@ void WaterDamage(struct SOLDIERTYPE *pSoldier) {
     }
     if (pSoldier->bCamo == 0) {
       // Reload palettes....
-      if (pSoldier->bInSector) {
+      if (IsSolInSector(pSoldier)) {
         CreateSoldierPalettes(pSoldier);
       }
       ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, Message[STR_CAMMO_WASHED_OFF], pSoldier->name);
@@ -4448,7 +4449,7 @@ BOOLEAN ApplyCammo(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOLEA
   DeductPoints(pSoldier, AP_CAMOFLAGE, 0);
 
   // Reload palettes....
-  if (pSoldier->bInSector) {
+  if (IsSolInSector(pSoldier)) {
     CreateSoldierPalettes(pSoldier);
   }
 
@@ -4477,7 +4478,7 @@ BOOLEAN ApplyCanteen(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, BOOL
   }
 
   if (pSoldier->bTeam == gbPlayerNum) {
-    if (gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+    if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
       PlayJA2Sample(DRINK_CANTEEN_MALE, RATE_11025, MIDVOLUME, 1, MIDDLEPAN);
     } else {
       PlayJA2Sample(DRINK_CANTEEN_FEMALE, RATE_11025, MIDVOLUME, 1, MIDDLEPAN);
@@ -4578,7 +4579,7 @@ void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
     pSoldier2 = MercSlots[uiSlot];
     if (pSoldier2) {
       if ((pSoldier2->ubMiscSoldierFlags & SOLDIER_MISC_XRAYED) &&
-          (pSoldier2->ubXRayedBy == pSoldier->ubID)) {
+          (pSoldier2->ubXRayedBy == GetSolID(pSoldier))) {
         pSoldier2->ubMiscSoldierFlags &= (~SOLDIER_MISC_XRAYED);
         pSoldier2->ubXRayedBy = NOBODY;
       }
@@ -4591,7 +4592,7 @@ void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
       if (pSoldier2->bTeam != pSoldier->bTeam &&
           PythSpacesAway(pSoldier->sGridNo, pSoldier2->sGridNo) < XRAY_RANGE) {
         pSoldier2->ubMiscSoldierFlags |= SOLDIER_MISC_XRAYED;
-        pSoldier2->ubXRayedBy = pSoldier->ubID;
+        pSoldier2->ubXRayedBy = GetSolID(pSoldier);
       }
     }
   }
@@ -4612,7 +4613,7 @@ void TurnOffXRayEffects(struct SOLDIERTYPE *pSoldier) {
     pSoldier2 = MercSlots[uiSlot];
     if (pSoldier2) {
       if ((pSoldier2->ubMiscSoldierFlags & SOLDIER_MISC_XRAYED) &&
-          (pSoldier2->ubXRayedBy == pSoldier->ubID)) {
+          (pSoldier2->ubXRayedBy == GetSolID(pSoldier))) {
         pSoldier2->ubMiscSoldierFlags &= (~SOLDIER_MISC_XRAYED);
         pSoldier2->ubXRayedBy = NOBODY;
       }

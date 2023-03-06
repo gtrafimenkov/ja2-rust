@@ -11,6 +11,7 @@
 #include "SGP/Types.h"
 #include "SaveLoadScreen.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/MapScreenInterfaceMap.h"
 #include "Strategic/Meanwhile.h"
@@ -542,7 +543,7 @@ BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *curr) {
                  gbWorldSectorZ == 0) {
         // Tixa prison, once liberated, should not have any civs without profiles unless
         // they are kids
-        if (!StrategicMap[TIXA_SECTOR_X + TIXA_SECTOR_Y * MAP_WORLD_X].fEnemyControlled &&
+        if (!StrategicMap[GetSectorID16(TIXA_SECTOR_X, TIXA_SECTOR_Y)].fEnemyControlled &&
             tempDetailedPlacement.ubProfile == NO_PROFILE &&
             tempDetailedPlacement.bBodyType != HATKIDCIV &&
             tempDetailedPlacement.bBodyType != KIDCIV) {
@@ -576,7 +577,7 @@ BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *curr) {
     curr->ubSoldierID = ubID;
     AddSoldierToSectorNoCalculateDirection(ubID);
 
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bTeam == ENEMY_TEAM &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bTeam == ENEMY_TEAM &&
         !pSoldier->inv[HANDPOS].usItem) {
       pSoldier = pSoldier;
     }
@@ -1490,7 +1491,7 @@ BOOLEAN SaveSoldierInitListLinks(HWFILE hfile) {
   // Now, go through each node, and save just the ubSoldierID, if that soldier is alive.
   curr = gSoldierInitHead;
   while (curr) {
-    if (curr->pSoldier && !curr->pSoldier->bActive) {
+    if (curr->pSoldier && !IsSolActive(curr->pSoldier)) {
       curr->ubSoldierID = 0;
     }
     FileMan_Write(hfile, &curr->ubNodeID, 1, &uiNumBytesWritten);
@@ -1554,7 +1555,7 @@ void AddSoldierInitListBloodcats() {
     return;  // no bloodcats underground.
   }
 
-  ubSectorID = (UINT8)SECTOR(gWorldSectorX, gWorldSectorY);
+  ubSectorID = (UINT8)GetSectorID8(gWorldSectorX, gWorldSectorY);
   pSector = &SectorInfo[ubSectorID];
 
   if (!pSector->bBloodCatPlacements) {  // This map has no bloodcat placements, so don't waste CPU
@@ -1729,7 +1730,7 @@ void AddProfilesUsingProfileInsertionData() {
       UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
       // CJC: Note well that unless an error occurs, UpdateMercInSector calls
       // AddSoldierToSector
-      // AddSoldierToSector( pSoldier->ubID );
+      // AddSoldierToSector( GetSolID(pSoldier) );
 
       // check action ID values
       if (gMercProfiles[i].ubQuoteRecord) {
@@ -1742,15 +1743,15 @@ void AddProfilesUsingProfileInsertionData() {
       }
 
       // make sure this person's pointer is set properly in the init list
-      curr = FindSoldierInitListNodeByProfile(pSoldier->ubProfile);
+      curr = FindSoldierInitListNodeByProfile(GetSolProfile(pSoldier));
       if (curr) {
         curr->pSoldier = pSoldier;
-        curr->ubSoldierID = pSoldier->ubID;
+        curr->ubSoldierID = GetSolID(pSoldier);
         // also connect schedules here
         if (curr->pDetailedPlacement->ubScheduleID != 0) {
           SCHEDULENODE *pSchedule = GetSchedule(curr->pDetailedPlacement->ubScheduleID);
           if (pSchedule) {
-            pSchedule->ubSoldierID = pSoldier->ubID;
+            pSchedule->ubSoldierID = GetSolID(pSoldier);
             pSoldier->ubScheduleID = curr->pDetailedPlacement->ubScheduleID;
           }
         }
@@ -1804,15 +1805,6 @@ BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode) {
                              ErrorDetectedInSaveCallback);
         break;
       case 2:  // saving game
-        // swprintf( str, L"Error detected WHILE SAVING file.  Please send save and text files
-        // associated with save to Kris and Dave." L" After doing so, go back into the game and try
-        // reloading the new save and saving it again which *could* fix the problem." L"  This is
-        // the bug responsible for mercs disappearing. Be prepared to answer lots of questions..."
-        // ); if( guiPreviousOptionScreen == MAP_SCREEN
-        // )
-        //	DoMapMessageBox( MSG_BOX_BASIC_STYLE, str, MAP_SCREEN, MSG_BOX_FLAG_OK, NULL );
-        // else
-        //	DoMessageBox( MSG_BOX_BASIC_STYLE, str, GAME_SCREEN, MSG_BOX_FLAG_OK, NULL, NULL );
         break;
       case 3:  // entering sector using temp files (before fade in)
         gfDoDialogOnceGameScreenFadesIn = TRUE;
@@ -1956,7 +1948,7 @@ void StripEnemyDetailedPlacementsIfSectorWasPlayerLiberated() {
     return;
   }
 
-  pSector = &SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)];
+  pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
 
   if (!pSector->uiTimeLastPlayerLiberated) {  // The player has never owned the sector.
     return;

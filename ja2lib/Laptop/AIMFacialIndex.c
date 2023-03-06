@@ -11,6 +11,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
@@ -284,7 +285,7 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 
   // else if the merc is currently a POW or, the merc was fired as a pow
   else if (gMercProfiles[AimMercArray[ubMercID]].bMercStatus == MERC_FIRED_AS_A_POW ||
-           (pSoldier && pSoldier->bAssignment == ASSIGNMENT_POW)) {
+           (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
     ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
     DrawTextToScreen(pPOWStrings[0], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),

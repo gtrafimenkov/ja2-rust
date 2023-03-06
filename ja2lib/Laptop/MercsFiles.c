@@ -17,6 +17,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Quests.h"
@@ -448,7 +449,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
 
   // else if the merc is currently a POW or, the merc was fired as a pow
   else if (pMerc->bMercStatus == MERC_FIRED_AS_A_POW ||
-           (pSoldier && pSoldier->bAssignment == ASSIGNMENT_POW)) {
+           (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
     ShadowVideoSurfaceRect(FRAME_BUFFER, MERC_FACE_X, MERC_FACE_Y, MERC_FACE_X + MERC_FACE_WIDTH,
                            MERC_FACE_Y + MERC_FACE_HEIGHT);
     DisplayWrappedString(MERC_FACE_X, MERC_FACE_Y + MERC_PORTRAIT_TEXT_OFFSET_Y, MERC_FACE_WIDTH, 2,

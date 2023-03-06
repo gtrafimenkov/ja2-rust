@@ -6,7 +6,7 @@
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
-#include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/FileMan.h"
 #include "SGP/Input.h"
@@ -772,7 +772,7 @@ void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, INT32 reason) {
 
     if (guiSubTotal && gfCanAcceptOrder) {
       // if the player doesnt have enough money
-      if (LaptopSaveInfo.iCurrentBalance < giGrandTotal) {
+      if (MoneyGetBalance() < giGrandTotal) {
         DoLapTopMessageBox(MSG_BOX_LAPTOP_DEFAULT, BobbyROrderFormText[BOBBYR_CANT_AFFORD_PURCHASE],
                            LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
       } else {
@@ -780,7 +780,7 @@ void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, INT32 reason) {
 
         // if the city is Drassen, and the airport sector is player controlled
         if (gbSelectedCity == BR_DRASSEN &&
-            !StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(SEC_B13)].fEnemyControlled) {
+            !StrategicMap[SectorID8To16(SEC_B13)].fEnemyControlled) {
           // Quick hack to bypass the confirmation box
           ConfirmBobbyRPurchaseMessageBoxCallBack(MSG_BOX_RETURN_YES);
         } else {
@@ -1973,19 +1973,10 @@ void PurchaseBobbyOrder() {
     // add the delivery
     AddNewBobbyRShipment(BobbyRayPurchases, gbSelectedCity, gubSelectedLight, TRUE,
                          CalcPackageTotalWeight());
-
-    /*
-                    //get the length of time to receive the shipment
-                    bDaysAhead = CalculateOrderDelay( gubSelectedLight );
-
-                    //AddStrategicEvent( EVENT_BOBBYRAY_PURCHASE, uiResetTimeSec, cnt);
-                    AddFutureDayStrategicEvent( EVENT_BOBBYRAY_PURCHASE, (8 + Random(4) ) * 60, cnt,
-       bDaysAhead );
-    */
   }
 
   // Add the transaction to the finance page
-  AddTransactionToPlayersBook(BOBBYR_PURCHASE, 0, GetWorldTotalMin(), -giGrandTotal);
+  AddTransactionToPlayersBook(BOBBYR_PURCHASE, 0, -giGrandTotal);
 
   // display the confirm order graphic
   gfDrawConfirmOrderGrpahic = TRUE;

@@ -3,6 +3,7 @@
   <ItemGroup>
     <ClCompile Include="test.cpp" />
     <ClCompile Include="bugfixes.cpp" />
+    <ClCompile Include="savegame-structures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

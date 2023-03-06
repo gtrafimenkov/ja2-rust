@@ -11,9 +11,6 @@ extern BOOLEAN gfPendingEnemies;
 
 UINT8 NumFreeEnemySlots();
 
-// Counts enemies and crepitus, but not bloodcats.
-UINT8 NumHostilesInSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
-
 UINT8 NumEnemiesInAnySector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
 
 UINT8 NumEnemiesInSector(INT16 sSectorX, INT16 sSectorY);

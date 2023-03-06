@@ -4,6 +4,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Random.h"
+#include "Soldier.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/MapScreenInterfaceMap.h"
 #include "Strategic/Strategic.h"
@@ -1094,7 +1095,7 @@ void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
   INT8 bDifficultyRating = CalcDifficultyModifier(pp->ubSoldierClass);
 
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y &&
-      StrategicMap[TIXA_SECTOR_X + TIXA_SECTOR_Y * MAP_WORLD_X]
+      StrategicMap[GetSectorID16(TIXA_SECTOR_X, TIXA_SECTOR_Y)]
           .fEnemyControlled) {  // Tixa is a special case that is handled differently.
     return;
   }
@@ -1307,7 +1308,7 @@ void ChooseLocationSpecificGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) 
   // If this is Tixa and the player doesn't control Tixa then give all enemies gas masks,
   // but somewhere on their person, not in their face positions
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y &&
-      StrategicMap[TIXA_SECTOR_X + TIXA_SECTOR_Y * MAP_WORLD_X].fEnemyControlled) {
+      StrategicMap[GetSectorID16(TIXA_SECTOR_X, TIXA_SECTOR_Y)].fEnemyControlled) {
     CreateItem(GASMASK, (INT8)(95 + Random(6)), &Object);
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }

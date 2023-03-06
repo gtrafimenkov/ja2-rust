@@ -10,6 +10,7 @@
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
@@ -416,7 +417,7 @@ void CrippledVersionEndGameCheckCallBack(UINT8 bExitValue) {
     ReStartingGame();
 
     // go to the main menu
-    if (guiCurrentScreen == MAP_SCREEN) {
+    if (IsMapScreen_2()) {
       SetPendingNewScreen(MAINMENU_SCREEN);
     } else {
       InternalLeaveTacticalScreen(MAINMENU_SCREEN);

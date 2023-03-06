@@ -34,13 +34,13 @@
 #include "Laptop/InsuranceComments.h"
 #include "Laptop/InsuranceContract.h"
 #include "Laptop/InsuranceInfo.h"
-#include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/MercsAccount.h"
 #include "Laptop/MercsFiles.h"
 #include "Laptop/MercsNoAccount.h"
 #include "Laptop/Personnel.h"
 #include "Laptop/SirTech.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
@@ -75,6 +75,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/EventPump.h"
 #include "Utils/Message.h"
@@ -3565,7 +3566,7 @@ void DisplayPlayersBalanceToDate(void) {
   SetFontShadow(NO_SHADOW);
 
   // parse straigth number
-  swprintf(sString, ARR_SIZE(sString), L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(sString, ARR_SIZE(sString), L"%d", MoneyGetBalance());
 
   // put in commas, then dollar sign
   InsertCommasForDollarFigure(sString);
@@ -3747,7 +3748,7 @@ BOOLEAN DoLapTopMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, 
 
 BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                          UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                         SGPRect *pCenteringRect) {
+                                         const SGPRect *pCenteringRect) {
   // reset exit mode
   fExitDueToMessageBox = TRUE;
 
@@ -3762,14 +3763,13 @@ BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 
 
 BOOLEAN DoLapTopSystemMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                  UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y};
   // reset exit mode
   fExitDueToMessageBox = TRUE;
 
   // do message box and return
   iLaptopMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
                                    (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
-                                   ReturnCallback, &CenteringRect);
+                                   ReturnCallback, GetMapCenteringRect());
 
   // send back return state
   return ((iLaptopMessageBox != -1));
@@ -4470,7 +4470,7 @@ void PrintBalance(void) {
   SetFontBackground(FONT_BLACK);
   SetFontShadow(NO_SHADOW);
 
-  swprintf(pString, ARR_SIZE(pString), L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(pString, ARR_SIZE(pString), L"%d", MoneyGetBalance());
   InsertCommasForDollarFigure(pString);
   InsertDollarSignInToString(pString);
 
@@ -4675,7 +4675,7 @@ void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usK
   // adding money
   else if ((usEvent == KEY_DOWN) && (usParam == '=')) {
     if (CHEATER_CHEAT_LEVEL()) {
-      AddTransactionToPlayersBook(ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), 100000);
+      AddTransactionToPlayersBook(ANONYMOUS_DEPOSIT, 0, 100000);
       MarkButtonsDirty();
     }
   }
@@ -4683,7 +4683,7 @@ void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usK
   // subtracting money
   else if ((usEvent == KEY_DOWN) && (usParam == '-')) {
     if (CHEATER_CHEAT_LEVEL()) {
-      AddTransactionToPlayersBook(ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), -10000);
+      AddTransactionToPlayersBook(ANONYMOUS_DEPOSIT, 0, -10000);
       MarkButtonsDirty();
     }
   }

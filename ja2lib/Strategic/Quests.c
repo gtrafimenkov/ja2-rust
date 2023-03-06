@@ -3,10 +3,10 @@
 #include "GameSettings.h"
 #include "Laptop/BobbyRMailOrder.h"
 #include "Laptop/History.h"
-#include "Laptop/LaptopSave.h"
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
@@ -28,6 +28,7 @@
 #include "Tactical/SoldierProfile.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
+#include "Town.h"
 #include "Utils/Message.h"
 
 #define TESTQUESTS
@@ -299,7 +300,7 @@ BOOLEAN PCInSameRoom(UINT8 ubProfileID) {
   for (bLoop = gTacticalStatus.Team[gbPlayerNum].bFirstID;
        bLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID; bLoop++) {
     pSoldier = MercPtrs[bLoop];
-    if (pSoldier && pSoldier->bActive && pSoldier->bInSector) {
+    if (pSoldier && IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (gubWorldRoomInfo[pSoldier->sGridNo] == ubRoom) {
         return (TRUE);
       }
@@ -361,7 +362,8 @@ INT8 NumMalesPresent(UINT8 ubProfileID) {
     pSoldier = MercSlots[uiLoop];
 
     if (pSoldier && pSoldier->bTeam == gbPlayerNum && pSoldier->bLife >= OKLIFE) {
-      if (pSoldier->ubProfile != NO_PROFILE && gMercProfiles[pSoldier->ubProfile].bSex == MALE) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE &&
+          gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
         if (PythSpacesAway(sGridNo, pSoldier->sGridNo) <= 8) {
           bNumber++;
         }
@@ -388,7 +390,8 @@ BOOLEAN FemalePresent(UINT8 ubProfileID) {
     pSoldier = MercSlots[uiLoop];
 
     if (pSoldier && pSoldier->bTeam == gbPlayerNum && pSoldier->bLife >= OKLIFE) {
-      if (pSoldier->ubProfile != NO_PROFILE && gMercProfiles[pSoldier->ubProfile].bSex == FEMALE) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE &&
+          gMercProfiles[GetSolProfile(pSoldier)].bSex == FEMALE) {
         if (PythSpacesAway(sGridNo, pSoldier->sGridNo) <= 10) {
           return (TRUE);
         }
@@ -407,7 +410,7 @@ BOOLEAN CheckPlayerHasHead(void) {
        bLoop <= gTacticalStatus.Team[gbPlayerNum].bLastID; bLoop++) {
     pSoldier = MercPtrs[bLoop];
 
-    if (pSoldier->bActive && pSoldier->bLife > 0) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife > 0) {
       if (FindObjInObjRange(pSoldier, HEAD_2, HEAD_7) != NO_SLOT) {
         return (TRUE);
       }
@@ -423,8 +426,8 @@ BOOLEAN CheckNPCSector(UINT8 ubProfileID, INT16 sSectorX, INT16 sSectorY, INT8 b
   pSoldier = FindSoldierByProfileID(ubProfileID, TRUE);
 
   if (pSoldier) {
-    if (pSoldier->sSectorX == sSectorX && pSoldier->sSectorY == sSectorY &&
-        pSoldier->bSectorZ == bSectorZ) {
+    if (GetSolSectorX(pSoldier) == sSectorX && GetSolSectorY(pSoldier) == sSectorY &&
+        GetSolSectorZ(pSoldier) == bSectorZ) {
       return (TRUE);
     }
   } else if (gMercProfiles[ubProfileID].sSectorX == sSectorX &&
@@ -1014,7 +1017,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
     case FACT_PLAYER_IN_CONTROLLED_DRASSEN_MINE:
       gubFact[usFact] =
           (GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ) == MINE_DRASSEN &&
-           !(StrategicMap[gWorldSectorX + MAP_WORLD_X * gWorldSectorY].fEnemyControlled));
+           !(StrategicMap[GetSectorID16(gWorldSectorX, gWorldSectorY)].fEnemyControlled));
       break;
     case FACT_PLAYER_SPOKE_TO_CAMBRIA_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_CAMBRIA);
@@ -1022,7 +1025,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
     case FACT_PLAYER_IN_CONTROLLED_CAMBRIA_MINE:
       gubFact[usFact] =
           (GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ) == MINE_CAMBRIA &&
-           !(StrategicMap[gWorldSectorX + MAP_WORLD_X * gWorldSectorY].fEnemyControlled));
+           !(StrategicMap[GetSectorID16(gWorldSectorX, gWorldSectorY)].fEnemyControlled));
       break;
     case FACT_PLAYER_SPOKE_TO_CHITZENA_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_CHITZENA);
@@ -1030,7 +1033,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
     case FACT_PLAYER_IN_CONTROLLED_CHITZENA_MINE:
       gubFact[usFact] =
           (GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ) == MINE_CHITZENA &&
-           !(StrategicMap[gWorldSectorX + MAP_WORLD_X * gWorldSectorY].fEnemyControlled));
+           !(StrategicMap[GetSectorID16(gWorldSectorX, gWorldSectorY)].fEnemyControlled));
       break;
     case FACT_PLAYER_SPOKE_TO_ALMA_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_ALMA);
@@ -1038,7 +1041,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
     case FACT_PLAYER_IN_CONTROLLED_ALMA_MINE:
       gubFact[usFact] =
           (GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ) == MINE_ALMA &&
-           !(StrategicMap[gWorldSectorX + MAP_WORLD_X * gWorldSectorY].fEnemyControlled));
+           !(StrategicMap[GetSectorID16(gWorldSectorX, gWorldSectorY)].fEnemyControlled));
       break;
     case FACT_PLAYER_SPOKE_TO_GRUMM_MINER:
       gubFact[usFact] = SpokenToHeadMiner(MINE_GRUMM);
@@ -1046,7 +1049,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
     case FACT_PLAYER_IN_CONTROLLED_GRUMM_MINE:
       gubFact[usFact] =
           (GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ) == MINE_GRUMM &&
-           !(StrategicMap[gWorldSectorX + MAP_WORLD_X * gWorldSectorY].fEnemyControlled));
+           !(StrategicMap[GetSectorID16(gWorldSectorX, gWorldSectorY)].fEnemyControlled));
       break;
 
     case FACT_ENOUGH_LOYALTY_TO_TRAIN_MILITIA:

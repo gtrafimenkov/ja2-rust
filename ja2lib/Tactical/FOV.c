@@ -5,6 +5,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
+#include "Soldier.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Boxing.h"
 #include "Tactical/DialogueControl.h"
@@ -619,7 +620,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
                       if (gTacticalStatus.ubAttackBusyCount > 0 &&
                           (gTacticalStatus.uiFlags & INCOMBAT)) {
                         gTacticalStatus.fItemsSeenOnAttack = TRUE;
-                        gTacticalStatus.ubItemsSeenOnAttackSoldier = pSoldier->ubID;
+                        gTacticalStatus.ubItemsSeenOnAttackSoldier = GetSolID(pSoldier);
                         gTacticalStatus.usItemsSeenOnAttackGridNo = (INT16)(marker);
                       } else {
                         // Display quote!
@@ -751,4 +752,4 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN 
   // LookForDoors(pSoldier,UNAWARE);
 }
 
-//#endif
+// #endif

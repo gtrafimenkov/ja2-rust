@@ -10,6 +10,7 @@
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/AutoResolve.h"
 #include "Strategic/MapScreen.h"
@@ -44,6 +45,7 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Smell.h"
 #include "TileEngine/WorldMan.h"
+#include "Town.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 
@@ -249,7 +251,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
 
     Soldier.bActionPoints = CalcActionPoints(&Soldier);
     Soldier.bInitialActionPoints = Soldier.bActionPoints;
-    Soldier.bSide = gTacticalStatus.Team[Soldier.bTeam].bSide;
+    Soldier.bSide = GetTeamSide(Soldier.bTeam);
     Soldier.bActive = TRUE;
     Soldier.sSectorX = pCreateStruct->sSectorX;
     Soldier.sSectorY = pCreateStruct->sSectorY;
@@ -536,8 +538,8 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
     if (!pSoldier) return NULL;
     memcpy(pSoldier, &Soldier, sizeof(struct SOLDIERTYPE));
     pSoldier->ubID = 255;
-    pSoldier->sSectorX = (INT16)SECTORX(ubSectorID);
-    pSoldier->sSectorY = (INT16)SECTORY(ubSectorID);
+    pSoldier->sSectorX = (INT16)SectorID8_X(ubSectorID);
+    pSoldier->sSectorY = (INT16)SectorID8_Y(ubSectorID);
     pSoldier->bSectorZ = 0;
     *pubID = 255;
     return pSoldier;
@@ -1093,7 +1095,7 @@ BOOLEAN InternalTacticalRemoveSoldier(UINT16 usSoldierIndex, BOOLEAN fRemoveVehi
 }
 
 BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemoveVehicle) {
-  if (!pSoldier->bActive) return FALSE;
+  if (!IsSolActive(pSoldier)) return FALSE;
 
   if (pSoldier->ubScheduleID) {
     DeleteSchedule(pSoldier->ubScheduleID);
@@ -1118,7 +1120,7 @@ BOOLEAN TacticalRemoveSoldierPointer(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemo
 
     // Check if a guy exists here
     // Does another soldier exist here?
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       RemoveSoldierFromGridNo(pSoldier);
 
       // Delete shadow of crow....
@@ -1427,7 +1429,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
 
         case BLOODCAT:
           pp->bExpLevel = 5 + bExpLevelModifier;
-          if (SECTOR(gWorldSectorX, gWorldSectorY) == SEC_I16) {
+          if (GetSectorID8(gWorldSectorX, gWorldSectorY) == SEC_I16) {
             pp->bExpLevel += gGameOptions.ubDifficultyLevel;
           }
           break;
@@ -2188,7 +2190,7 @@ void CopyProfileItems(struct SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreat
                         &(pSoldier->inv[cnt]));
           }
           if (pProfile->inv[cnt] == ROCKET_RIFLE || pProfile->inv[cnt] == AUTO_ROCKET_RIFLE) {
-            pSoldier->inv[cnt].ubImprintID = pSoldier->ubProfile;
+            pSoldier->inv[cnt].ubImprintID = GetSolProfile(pSoldier);
           }
           if (gubItemDroppableFlag[cnt]) {
             if (pProfile->ubInvUndroppable & gubItemDroppableFlag[cnt]) {
@@ -2256,7 +2258,7 @@ void TrashAllSoldiers() {
   cnt = 0;
 
   for (pSoldier = MercPtrs[cnt]; cnt < MAX_NUM_SOLDIERS; pSoldier++, cnt++) {
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       // Delete from world
       TacticalRemoveSoldier((UINT16)cnt);
     }
@@ -2267,7 +2269,7 @@ UINT8 GetLocationModifier(UINT8 ubSoldierClass) {
   UINT8 ubLocationModifier;
   UINT8 ubPalaceDistance;
   INT16 sSectorX, sSectorY, sSectorZ;
-  INT8 bTownId;
+  TownID bTownId;
   BOOLEAN fSuccess;
 
   // where is all this taking place?

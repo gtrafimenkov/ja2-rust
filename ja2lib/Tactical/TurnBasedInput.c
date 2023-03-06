@@ -24,6 +24,7 @@
 #include "SaveLoadGame.h"
 #include "SaveLoadScreen.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEvents.h"
@@ -1947,7 +1948,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
                   if (CHEATER_CHEAT_LEVEL()) {
                     for (pSoldier = MercPtrs[gbPlayerNum], cnt = 0;
                          cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID; cnt++, pSoldier++) {
-                      if (pSoldier->bActive && pSoldier->bLife > 0) {
+                      if (IsSolActive(pSoldier) && pSoldier->bLife > 0) {
                         // Get APs back...
                         CalcNewActionPoints(pSoldier);
 
@@ -2512,7 +2513,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
             if (CHEATER_CHEAT_LEVEL() && gusSelectedSoldier != NOBODY) {
               for (pSoldier = MercPtrs[gbPlayerNum], cnt = 0;
                    cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID; cnt++, pSoldier++) {
-                if (pSoldier->bActive && pSoldier->bLife > 0) {
+                if (IsSolActive(pSoldier) && pSoldier->bLife > 0) {
                   // Get breath back
                   pSoldier->bBreath = pSoldier->bBreathMax;
 
@@ -3116,8 +3117,8 @@ void ChangeSoldiersBodyType(UINT8 ubBodyType, BOOLEAN fCreateNewPalette) {
             // pSoldier->inv[ HANDPOS ].usItem = TANK_CANNON;
 
             pSoldier->inv[HANDPOS].usItem = MINIMI;
-            pSoldier->bVehicleID = (INT8)AddVehicleToList(pSoldier->sSectorX, pSoldier->sSectorY,
-                                                          pSoldier->bSectorZ, HUMMER);
+            pSoldier->bVehicleID = (INT8)AddVehicleToList(
+                GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier), HUMMER);
 
             break;
         }
@@ -3839,7 +3840,7 @@ void TestMeanWhile(INT32 iID) {
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
          cnt++, pSoldier++) {
       // Are we a POW in this sector?
-      if (pSoldier->bActive && pSoldier->bInSector) {
+      if (IsSolActive(pSoldier) && pSoldier->bInSector) {
         ChangeSoldiersAssignment(pSoldier, ASSIGNMENT_POW);
 
         pSoldier->sSectorX = 7;
@@ -3902,7 +3903,7 @@ void HandleStanceChangeFromUIKeys(UINT8 ubAnimHeight) {
     cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bActive && pSoldier->bInSector) {
+      if (IsSolActive(pSoldier) && pSoldier->bInSector) {
         if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
           UIHandleSoldierStanceChange(pSoldier->ubID, ubAnimHeight);
         }
@@ -3920,7 +3921,7 @@ void ToggleStealthMode(struct SOLDIERTYPE *pSoldier) {
   if ((gsCurInterfacePanel != SM_PANEL) ||
       (ButtonList[giSMStealthButton]->uiFlags & BUTTON_ENABLED)) {
     // ATE: Toggle stealth
-    if (gpSMCurrentMerc != NULL && pSoldier->ubID == gpSMCurrentMerc->ubID) {
+    if (gpSMCurrentMerc != NULL && GetSolID(pSoldier) == gpSMCurrentMerc->ubID) {
       gfUIStanceDifferent = TRUE;
     }
 
@@ -3950,7 +3951,7 @@ void HandleStealthChangeFromUIKeys() {
     cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bActive && !AM_A_ROBOT(pSoldier) && pSoldier->bInSector) {
+      if (IsSolActive(pSoldier) && !AM_A_ROBOT(pSoldier) && pSoldier->bInSector) {
         if (pSoldier->uiStatusFlags & SOLDIER_MULTI_SELECTED) {
           ToggleStealthMode(pSoldier);
         }
@@ -3980,7 +3981,7 @@ void TestCapture() {
   // loop through sodliers and pick 3 lucky ones....
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID, pSoldier = MercPtrs[cnt];
        cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID; cnt++, pSoldier++) {
-    if (pSoldier->bLife >= OKLIFE && pSoldier->bActive && pSoldier->bInSector) {
+    if (pSoldier->bLife >= OKLIFE && IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (uiNumChosen < 3) {
         EnemyCapturesPlayerSoldier(pSoldier);
 

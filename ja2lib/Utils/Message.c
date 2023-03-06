@@ -19,6 +19,7 @@
 #include "Tactical/Interface.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
+#include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
@@ -311,7 +312,7 @@ void ScrollString() {
   // might have pop up text timer
   HandleLastQuotePopUpTimer();
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     return;
   }
 
@@ -411,8 +412,7 @@ void ScrollString() {
 
       // check if new meesage we have not seen since mapscreen..if so, beep
       if ((fOkToBeepNewMessage == TRUE) && (gpDisplayList[MAX_LINE_COUNT - 2] == NULL) &&
-          ((guiCurrentScreen == GAME_SCREEN) || (guiCurrentScreen == MAP_SCREEN)) &&
-          (gfFacePanelActive == FALSE)) {
+          ((IsTacticalMode()) || (IsMapScreen_2())) && (gfFacePanelActive == FALSE)) {
         PlayNewMessageSound();
       }
     }
@@ -525,7 +525,7 @@ void ScreenMsg(UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ...) {
   //	if( ( ubPriority != MSG_DEBUG ) && ( ubPriority != MSG_TESTVERSION ) )
   { MapScreenMessage(usColor, ubPriority, DestString); }
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     PlayNewMessageSound();
   } else {
     fOkToBeepNewMessage = TRUE;

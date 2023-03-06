@@ -18,6 +18,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/QuestText.h"
 #include "Strategic/Quests.h"
@@ -45,7 +46,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-//#ifdef JA2BETAVERSION
+// #ifdef JA2BETAVERSION
 
 //*******************************
 //
@@ -2906,10 +2907,10 @@ void AddNPCsInSectorToArray() {
   // Setup array of merc who are in the current sector
   i = 0;
   for (pSoldier = Menptr, cnt = 0; cnt < TOTAL_SOLDIERS; pSoldier++, cnt++) {
-    if ((pSoldier != NULL) && pSoldier->bActive) {
+    if ((pSoldier != NULL) && IsSolActive(pSoldier)) {
       // if soldier is a NPC, add him to the local NPC array
-      if ((pSoldier->ubProfile >= FIRST_RPC) && (pSoldier->ubProfile < NUM_PROFILES)) {
-        gubCurrentNpcInSector[i] = pSoldier->ubProfile;
+      if ((GetSolProfile(pSoldier) >= FIRST_RPC) && (GetSolProfile(pSoldier) < NUM_PROFILES)) {
+        gubCurrentNpcInSector[i] = GetSolProfile(pSoldier);
         i++;
       }
     }
@@ -3247,7 +3248,7 @@ void RefreshAllNPCInventory() {
         // refresh the mercs inventory
         for (usItemCnt = 0; usItemCnt < NUM_INV_SLOTS; usItemCnt++) {
           // null out the items in the npc inventory
-          memset(&Menptr[usCnt].inv[usItemCnt], 0, sizeof(struct OBJECTTYPE));
+          memset(&GetSoldierByID(usCnt)->inv[usItemCnt], 0, sizeof(struct OBJECTTYPE));
 
           if (gMercProfiles[Menptr[usCnt].ubProfile].inv[usItemCnt] != NOTHING) {
             // get the item
@@ -3257,7 +3258,7 @@ void RefreshAllNPCInventory() {
             CreateItem(usItem, 100, &TempObject);
 
             // copy the item into the soldiers inventory
-            memcpy(&Menptr[usCnt].inv[usItemCnt], &TempObject, sizeof(struct OBJECTTYPE));
+            memcpy(&GetSoldierByID(usCnt)->inv[usItemCnt], &TempObject, sizeof(struct OBJECTTYPE));
           }
         }
       }
@@ -3419,7 +3420,7 @@ void SetQDSMercProfile() {
       gfNpcPanelIsUsedForTalkingMerc = TRUE;
 
       InternalInitTalkingMenu(gTalkingMercSoldier->ubProfile, 10, 10);
-      gpDestSoldier = &Menptr[21];
+      gpDestSoldier = GetSoldierByID(21);
     }
   }
 }
@@ -3559,7 +3560,7 @@ void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize) {
   pSoldier = FindSoldierByProfileID((UINT8)usProfileID, FALSE);
 
   // if their is a soldier, the soldier is alive and the soldier is off the map
-  if (pSoldier != NULL && pSoldier->bActive && pSoldier->uiStatusFlags & SOLDIER_OFF_MAP) {
+  if (pSoldier != NULL && IsSolActive(pSoldier) && pSoldier->uiStatusFlags & SOLDIER_OFF_MAP) {
     // the soldier is on schedule
     swprintf(pzText, bufSize, L"On Schdl.");
   }
@@ -3571,7 +3572,7 @@ void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize) {
 
   // the soldier is in this sector
   else if (pSoldier != NULL) {
-    GetShortSectorString(pSoldier->sSectorX, pSoldier->sSectorY, pzText, bufSize);
+    GetShortSectorString(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), pzText, bufSize);
   }
 
   // else the soldier is in a different map

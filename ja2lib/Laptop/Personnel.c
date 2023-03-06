@@ -5,6 +5,7 @@
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "Point.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
@@ -15,6 +16,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreen.h"
@@ -30,6 +32,7 @@
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Weapons.h"
+#include "Town.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/Text.h"
@@ -711,7 +714,7 @@ BOOLEAN RenderPersonnelPictures(void) {
     cnt = gTacticalStatus.Team[pSoldier->bTeam].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[pSoldier->bTeam].bLastID;
          cnt++, pSoldier++) {
-      if (pSoldier->bLife >= OKLIFE && pSoldier->bActive) {
+      if (pSoldier->bLife >= OKLIFE && IsSolActive(pSoldier)) {
         fFound = TRUE;
         iStartPersonId = cnt;
         break;
@@ -1147,7 +1150,7 @@ void DisplayCharName(INT32 iId, INT32 iSlot) {
   struct SOLDIERTYPE *pSoldier;
   CHAR16 sString[64];
   CHAR16 sTownName[256];
-  INT8 bTownId = -1;
+  TownID bTownId = -1;
   INT32 iHeightOfText;
 
   sTownName[0] = L'\0';
@@ -1267,7 +1270,7 @@ void DisplayCharStats(INT32 iId, INT32 iSlot) {
   //	wchar_t sStringA[ 50 ];
   INT16 sX, sY;
   UINT32 uiHits = 0;
-  struct SOLDIERTYPE *pSoldier = &Menptr[iId];
+  struct SOLDIERTYPE *pSoldier = GetSoldierByID(iId);
   BOOLEAN fAmIaRobot = AM_A_ROBOT(pSoldier);
 
   if (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) {
@@ -2226,7 +2229,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   // render the bar for the character
   RenderSliderBarForPersonnelInventory();
 
-  pSoldier = &Menptr[iId];
+  pSoldier = GetSoldierByID(iId);
 
   // if this is a robot, dont display any inventory
   if (AM_A_ROBOT(pSoldier)) {
@@ -2238,7 +2241,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
     PosY = 200 + 8 + (ubItemCount * (29));
 
     // if the character is a robot, only display the inv for the hand pos
-    if (pSoldier->ubProfile == ROBOT && ubCounter != HANDPOS) {
+    if (GetSolProfile(pSoldier) == ROBOT && ubCounter != HANDPOS) {
       continue;
     }
 
@@ -2452,7 +2455,7 @@ INT32 GetNumberOfInventoryItemsOnCurrentMerc(void) {
 
   iId = GetIdOfThisSlot(iCurrentPersonSelectedId);
 
-  pSoldier = &Menptr[iId];
+  pSoldier = GetSoldierByID(iId);
 
   for (ubCounter = 0; ubCounter < NUM_INV_SLOTS; ubCounter++) {
     if ((pSoldier->inv[ubCounter].ubNumberOfObjects) && (pSoldier->inv[ubCounter].usItem)) {
@@ -2576,22 +2579,22 @@ INT32 GetTotalDailyCostOfCurrentTeam(void) {
   for (pSoldier = MercPtrs[0]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID; cnt++) {
     pSoldier = MercPtrs[cnt];
 
-    if ((pSoldier->bActive) && (pSoldier->bLife > 0)) {
+    if ((IsSolActive(pSoldier)) && IsSolAlive(pSoldier)) {
       // valid soldier, get cost
       if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
         // daily rate
         if (pSoldier->bTypeOfLastContract == CONTRACT_EXTEND_2_WEEK) {
           // 2 week contract
-          iCostOfTeam += gMercProfiles[pSoldier->ubProfile].uiBiWeeklySalary / 14;
+          iCostOfTeam += gMercProfiles[GetSolProfile(pSoldier)].uiBiWeeklySalary / 14;
         } else if (pSoldier->bTypeOfLastContract == CONTRACT_EXTEND_1_WEEK) {
           // 1 week contract
-          iCostOfTeam += gMercProfiles[pSoldier->ubProfile].uiWeeklySalary / 7;
+          iCostOfTeam += gMercProfiles[GetSolProfile(pSoldier)].uiWeeklySalary / 7;
         } else {
-          iCostOfTeam += gMercProfiles[pSoldier->ubProfile].sSalary;
+          iCostOfTeam += gMercProfiles[GetSolProfile(pSoldier)].sSalary;
         }
       } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
         // MERC Merc
-        iCostOfTeam += gMercProfiles[pSoldier->ubProfile].sSalary;
+        iCostOfTeam += gMercProfiles[GetSolProfile(pSoldier)].sSalary;
       } else {
         // no cost
         iCostOfTeam += 0;
@@ -2618,23 +2621,23 @@ INT32 GetLowestDailyCostOfCurrentTeam(void) {
   for (pSoldier = MercPtrs[0]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID; cnt++) {
     pSoldier = MercPtrs[cnt];
 
-    if ((pSoldier->bActive) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
-        (pSoldier->bLife > 0)) {
+    if ((IsSolActive(pSoldier)) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
+        IsSolAlive(pSoldier)) {
       // valid soldier, get cost
       if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
         // daily rate
         if (pSoldier->bTypeOfLastContract == CONTRACT_EXTEND_2_WEEK) {
           // 2 week contract
-          iCost = gMercProfiles[pSoldier->ubProfile].uiBiWeeklySalary / 14;
+          iCost = gMercProfiles[GetSolProfile(pSoldier)].uiBiWeeklySalary / 14;
         } else if (pSoldier->bTypeOfLastContract == CONTRACT_EXTEND_1_WEEK) {
           // 1 week contract
-          iCost = gMercProfiles[pSoldier->ubProfile].uiWeeklySalary / 7;
+          iCost = gMercProfiles[GetSolProfile(pSoldier)].uiWeeklySalary / 7;
         } else {
-          iCost = gMercProfiles[pSoldier->ubProfile].sSalary;
+          iCost = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
         }
       } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
         // MERC Merc
-        iCost = gMercProfiles[pSoldier->ubProfile].sSalary;
+        iCost = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
       } else {
         // no cost
         iCost = 0;
@@ -2671,23 +2674,23 @@ INT32 GetHighestDailyCostOfCurrentTeam(void) {
   for (pSoldier = MercPtrs[0]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID; cnt++) {
     pSoldier = MercPtrs[cnt];
 
-    if ((pSoldier->bActive) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
-        (pSoldier->bLife > 0)) {
+    if ((IsSolActive(pSoldier)) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
+        IsSolAlive(pSoldier)) {
       // valid soldier, get cost
       if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
         // daily rate
         if (pSoldier->bTypeOfLastContract == CONTRACT_EXTEND_2_WEEK) {
           // 2 week contract
-          iCost = gMercProfiles[pSoldier->ubProfile].uiBiWeeklySalary / 14;
+          iCost = gMercProfiles[GetSolProfile(pSoldier)].uiBiWeeklySalary / 14;
         } else if (pSoldier->bTypeOfLastContract == CONTRACT_EXTEND_1_WEEK) {
           // 1 week contract
-          iCost = gMercProfiles[pSoldier->ubProfile].uiWeeklySalary / 7;
+          iCost = gMercProfiles[GetSolProfile(pSoldier)].uiWeeklySalary / 7;
         } else {
-          iCost = gMercProfiles[pSoldier->ubProfile].sSalary;
+          iCost = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
         }
       } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
         // MERC Merc
-        iCost = gMercProfiles[pSoldier->ubProfile].sSalary;
+        iCost = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
       } else {
         // no cost
         iCost = 0;
@@ -2816,7 +2819,7 @@ INT32 GetIdOfDepartedMercWithHighestStat(INT32 iStat) {
 
         // if the soldier is a pow, dont use the health cause it aint known
         pSoldier = FindSoldierByProfileID((UINT8)cnt, FALSE);
-        if (pSoldier && pSoldier->bAssignment == ASSIGNMENT_POW) {
+        if (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
           continue;
         }
 
@@ -2966,7 +2969,7 @@ INT32 GetIdOfDepartedMercWithLowestStat(INT32 iStat) {
         // health
 
         pSoldier = FindSoldierByProfileID((UINT8)cnt, FALSE);
-        if (pSoldier && pSoldier->bAssignment == ASSIGNMENT_POW) {
+        if (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
           continue;
         }
 
@@ -4790,14 +4793,14 @@ void AddCharacterToDeadList(struct SOLDIERTYPE *pSoldier) {
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubDeadCharactersList[iCounter] == -1) {
       // valid slot, merc not found yet, inset here
-      LaptopSaveInfo.ubDeadCharactersList[iCounter] = pSoldier->ubProfile;
+      LaptopSaveInfo.ubDeadCharactersList[iCounter] = GetSolProfile(pSoldier);
 
       // leave
       return;
     }
 
     // are they already in the list?
-    if (LaptopSaveInfo.ubDeadCharactersList[iCounter] == pSoldier->ubProfile) {
+    if (LaptopSaveInfo.ubDeadCharactersList[iCounter] == GetSolProfile(pSoldier)) {
       return;
     }
   }
@@ -4809,14 +4812,14 @@ void AddCharacterToFiredList(struct SOLDIERTYPE *pSoldier) {
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubLeftCharactersList[iCounter] == -1) {
       // valid slot, merc not found yet, inset here
-      LaptopSaveInfo.ubLeftCharactersList[iCounter] = pSoldier->ubProfile;
+      LaptopSaveInfo.ubLeftCharactersList[iCounter] = GetSolProfile(pSoldier);
 
       // leave
       return;
     }
 
     // are they already in the list?
-    if (LaptopSaveInfo.ubLeftCharactersList[iCounter] == pSoldier->ubProfile) {
+    if (LaptopSaveInfo.ubLeftCharactersList[iCounter] == GetSolProfile(pSoldier)) {
       return;
     }
   }
@@ -4828,14 +4831,14 @@ void AddCharacterToOtherList(struct SOLDIERTYPE *pSoldier) {
   for (iCounter = 0; iCounter < 256; iCounter++) {
     if (LaptopSaveInfo.ubOtherCharactersList[iCounter] == -1) {
       // valid slot, merc not found yet, inset here
-      LaptopSaveInfo.ubOtherCharactersList[iCounter] = pSoldier->ubProfile;
+      LaptopSaveInfo.ubOtherCharactersList[iCounter] = GetSolProfile(pSoldier);
 
       // leave
       return;
     }
 
     // are they already in the list?
-    if (LaptopSaveInfo.ubOtherCharactersList[iCounter] == pSoldier->ubProfile) {
+    if (LaptopSaveInfo.ubOtherCharactersList[iCounter] == GetSolProfile(pSoldier)) {
       return;
     }
   }
@@ -4887,7 +4890,7 @@ INT32 GetIdOfFirstDisplayedMerc() {
     // cnt = gTacticalStatus.Team[ pSoldier->bTeam ].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[pSoldier->bTeam].bLastID;
          cnt++, pSoldier++) {
-      if ((pSoldier->bActive) && (pSoldier->bLife > 0)) {
+      if ((IsSolActive(pSoldier)) && IsSolAlive(pSoldier)) {
         return (0);
       }
     }
@@ -4911,7 +4914,7 @@ INT32 GetIdOfThisSlot(INT32 iSlot) {
     cnt = gTacticalStatus.Team[pSoldier->bTeam].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[pSoldier->bTeam].bLastID;
          cnt++, pSoldier++) {
-      if ((pSoldier->bActive)) {
+      if ((IsSolActive(pSoldier))) {
         // same character as slot, return this value
         if (iCounter == iSlot) {
           return (cnt);
@@ -5305,7 +5308,7 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
                 }
               } else if (fATMFlags == 3) {
                 // deposit from merc to account
-                if (LaptopSaveInfo.iCurrentBalance >= wcstol(sTransferString, NULL, 10)) {
+                if (MoneyGetBalance() >= wcstol(sTransferString, NULL, 10)) {
                   if ((wcstol(sTransferString, NULL, 10) % 10) != 0) {
                     fOldATMFlags = fATMFlags;
                     fATMFlags = 5;
@@ -5323,7 +5326,7 @@ void ATMOtherButtonCallback(GUI_BUTTON *btn, INT32 reason) {
                 } else {
                   fOldATMFlags = fATMFlags;
                   fATMFlags = 4;
-                  iValue = LaptopSaveInfo.iCurrentBalance;
+                  iValue = MoneyGetBalance();
                   swprintf(sTransferString, ARR_SIZE(sTransferString), L"%d", iValue);
                   fReDrawScreenFlag = TRUE;
                 }
@@ -5512,12 +5515,12 @@ BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, INT32 iCurrent
 
   if (iAmountLeftToTake != 0) {
     // something wrong
-    AddTransactionToPlayersBook(TRANSFER_FUNDS_FROM_MERC, pSoldier->ubProfile, GetWorldTotalMin(),
+    AddTransactionToPlayersBook(TRANSFER_FUNDS_FROM_MERC, GetSolProfile(pSoldier),
                                 (iCurrentBalance - iAmountLeftToTake));
     return (FALSE);
   } else {
     // everything ok
-    AddTransactionToPlayersBook(TRANSFER_FUNDS_FROM_MERC, pSoldier->ubProfile, GetWorldTotalMin(),
+    AddTransactionToPlayersBook(TRANSFER_FUNDS_FROM_MERC, GetSolProfile(pSoldier),
                                 (iCurrentBalance));
     return (TRUE);
   }
@@ -5538,8 +5541,8 @@ BOOLEAN TransferFundsFromBankToMerc(struct SOLDIERTYPE *pSoldier, INT32 iCurrent
   }
 
   // current balance
-  if (iCurrentBalance > LaptopSaveInfo.iCurrentBalance) {
-    iCurrentBalance = LaptopSaveInfo.iCurrentBalance;
+  if (iCurrentBalance > MoneyGetBalance()) {
+    iCurrentBalance = MoneyGetBalance();
   }
 
   // set up object
@@ -5555,7 +5558,7 @@ BOOLEAN TransferFundsFromBankToMerc(struct SOLDIERTYPE *pSoldier, INT32 iCurrent
   // now auto place money object
   if (AutoPlaceObject(pSoldier, &(pMoneyObject), TRUE) == TRUE) {
     // now place transaction
-    AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, pSoldier->ubProfile, GetWorldTotalMin(),
+    AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, GetSolProfile(pSoldier),
                                 -(iCurrentBalance));
   } else {
     // error, notify player that merc doesn't have the spce for this much cash
@@ -5864,7 +5867,7 @@ void DisplayEmploymentinformation(INT32 iId, INT32 iSlot) {
 
         if (Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||
             Menptr[iId].ubProfile == SLAY) {
-          INT32 iTimeLeftOnContract = CalcTimeLeftOnMercContract(&Menptr[iId]);
+          INT32 iTimeLeftOnContract = CalcTimeLeftOnMercContract(GetSoldierByID(iId));
 
           // if the merc is in transit
           if (Menptr[iId].bAssignment == IN_TRANSIT) {
@@ -6135,7 +6138,7 @@ INT32 CalcTimeLeftOnMercContract(struct SOLDIERTYPE *pSoldier) {
 
     if (iTimeLeftOnContract < 0) iTimeLeftOnContract = 0;
   } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
-    iTimeLeftOnContract = gMercProfiles[pSoldier->ubProfile].iMercMercContractLength;
+    iTimeLeftOnContract = gMercProfiles[GetSolProfile(pSoldier)].iMercMercContractLength;
   }
 
   else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER) {

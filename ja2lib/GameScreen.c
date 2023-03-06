@@ -61,6 +61,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
@@ -471,7 +472,7 @@ UINT32 MainGameScreenHandle(void) {
   }
 
   // ATE: check that this flag is not set.... display message if so
-  if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+  if (IsMapScreen()) {
     // Unset
     guiTacticalInterfaceFlags &= (~INTERFACE_MAPSCREEN);
 

@@ -3,6 +3,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Timer.h"
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/QueenCommand.h"
@@ -101,7 +102,7 @@ BOOLEAN BloodcatsPresent(void) {
        iLoop <= gTacticalStatus.Team[CREATURE_TEAM].bLastID; iLoop++) {
     pSoldier = MercPtrs[iLoop];
 
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife > 0 &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife > 0 &&
         pSoldier->ubBodyType == BLOODCAT) {
       return (TRUE);
     }
@@ -137,7 +138,7 @@ void StartPlayerTeamTurn(BOOLEAN fDoBattleSnd, BOOLEAN fEnteringCombatMode) {
     // for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ gbPlayerNum ].bLastID;
     // cnt++,pSoldier++)
     //{
-    //	if ( pSoldier->bActive && pSoldier->bLife > 0 )
+    //	if ( IsSolActive(pSoldier) && pSoldier->bLife > 0 )
     //	{
     //		SBeginTurn.usSoldierID		= (UINT16)cnt;
     //		AddGameEvent( S_BEGINTURN, 0, &SBeginTurn );
@@ -236,7 +237,7 @@ void EndTurn(UINT8 ubNextTeam) {
     cnt = gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bFirstID;
     for (pSoldier = MercPtrs[cnt];
          cnt <= gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bLastID; cnt++, pSoldier++) {
-      if (pSoldier->bActive) {
+      if (IsSolActive(pSoldier)) {
         pSoldier->bMoved = TRUE;
       }
     }
@@ -261,7 +262,7 @@ void EndAITurn(void) {
     cnt = gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bFirstID;
     for (pSoldier = MercPtrs[cnt];
          cnt <= gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bLastID; cnt++, pSoldier++) {
-      if (pSoldier->bActive) {
+      if (IsSolActive(pSoldier)) {
         pSoldier->bMoved = TRUE;
         // record old life value... for creature AI; the human AI might
         // want to use this too at some point
@@ -289,7 +290,7 @@ void EndAllAITurns(void) {
     cnt = gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bFirstID;
     for (pSoldier = MercPtrs[cnt];
          cnt <= gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bLastID; cnt++, pSoldier++) {
-      if (pSoldier->bActive) {
+      if (IsSolActive(pSoldier)) {
         pSoldier->bMoved = TRUE;
         pSoldier->uiStatusFlags &= (~SOLDIER_UNDERAICONTROL);
         // record old life value... for creature AI; the human AI might
@@ -351,7 +352,7 @@ void BeginTeamTurn(UINT8 ubTeam) {
       cnt = gTacticalStatus.Team[ubTeam].bFirstID;
       for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[ubTeam].bLastID;
            cnt++, pSoldier++) {
-        if (pSoldier->bActive && pSoldier->bLife > 0) {
+        if (IsSolActive(pSoldier) && pSoldier->bLife > 0) {
           // decay personal opplist, and refresh APs and BPs
           EVENT_BeginMercTurn(pSoldier, FALSE, 0);
         }
@@ -413,7 +414,7 @@ void DisplayHiddenInterrupt(struct SOLDIERTYPE *pSoldier) {
   EndDeadlockMsg();
 
   if (pSoldier->bVisible != -1) {
-    SlideTo(NOWHERE, pSoldier->ubID, NOBODY, SETLOCATOR);
+    SlideTo(NOWHERE, GetSolID(pSoldier), NOBODY, SETLOCATOR);
   }
 
   guiPendingOverrideEvent = LU_BEGINUILOCK;
@@ -524,7 +525,7 @@ void StartInterrupt(void) {
 
   cnt = 0;
   for (pTempSoldier = MercPtrs[cnt]; cnt <= MAX_NUM_SOLDIERS; cnt++, pTempSoldier++) {
-    if (pTempSoldier->bActive) {
+    if (IsSolActive(pTempSoldier)) {
       pTempSoldier->bMovedPriorToInterrupt = pTempSoldier->bMoved;
       pTempSoldier->bMoved = TRUE;
     }
@@ -560,7 +561,7 @@ void StartInterrupt(void) {
     for (iSquad = 0; iSquad < NUMBER_OF_SQUADS; iSquad++) {
       for (iCounter = 0; iCounter < NUMBER_OF_SOLDIERS_PER_SQUAD; iCounter++) {
         pTempSoldier = Squad[iSquad][iCounter];
-        if (pTempSoldier && pTempSoldier->bActive && pTempSoldier->bInSector &&
+        if (pTempSoldier && IsSolActive(pTempSoldier) && pTempSoldier->bInSector &&
             !pTempSoldier->bMoved) {
           // then this guy got an interrupt...
           ubInterrupters++;
@@ -636,7 +637,7 @@ void StartInterrupt(void) {
     for ( pTempSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ pSoldier->bTeam ].bLastID;
     cnt++,pTempSoldier++)
     {
-            if ( pTempSoldier->bActive )
+            if ( IsSolActive(pTempSoldier) )
             {
                     pTempSoldier->bMovedPriorToInterrupt = pTempSoldier->bMoved;
                     pTempSoldier->bMoved = TRUE;
@@ -724,7 +725,7 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
   cnt = gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bFirstID;
   for (pTempSoldier = MercPtrs[cnt];
        cnt <= gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bLastID; cnt++, pTempSoldier++) {
-    if (pTempSoldier->bActive && pTempSoldier->bInSector && !pTempSoldier->bMoved &&
+    if (IsSolActive(pTempSoldier) && pTempSoldier->bInSector && !pTempSoldier->bMoved &&
         (pTempSoldier->bActionPoints == pTempSoldier->bIntStartAPs)) {
       ubMinAPsToAttack = MinAPsToAttack(pTempSoldier, pTempSoldier->sLastTarget, FALSE);
       if ((ubMinAPsToAttack <= pTempSoldier->bActionPoints) && (ubMinAPsToAttack > 0)) {
@@ -748,7 +749,7 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
 
     cnt = 0;
     for (pTempSoldier = MercPtrs[cnt]; cnt <= MAX_NUM_SOLDIERS; cnt++, pTempSoldier++) {
-      if (pTempSoldier->bActive) {
+      if (IsSolActive(pTempSoldier)) {
         // AI guys only here...
         if (pTempSoldier->bActionPoints == 0) {
           pTempSoldier->bMoved = TRUE;
@@ -772,7 +773,7 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
       for ( pTempSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[
       gTacticalStatus.ubCurrentTeam ].bLastID; cnt++,pTempSoldier++)
       {
-              if ( pTempSoldier->bActive )
+              if ( IsSolActive(pTempSoldier) )
               {
                       pTempSoldier->bMoved = pTempSoldier->bMovedPriorToInterrupt;
               }
@@ -862,7 +863,7 @@ void EndInterrupt(BOOLEAN fMarkInterruptOccurred) {
       for (pTempSoldier = MercPtrs[cnt];
            cnt <= gTacticalStatus.Team[gTacticalStatus.ubCurrentTeam].bLastID;
            cnt++, pTempSoldier++) {
-        if (pTempSoldier->bActive && pTempSoldier->bInSector && pTempSoldier->bLife >= OKLIFE) {
+        if (IsSolActive(pTempSoldier) && pTempSoldier->bInSector && pTempSoldier->bLife >= OKLIFE) {
           fFound = TRUE;
           break;
         }
@@ -1007,7 +1008,7 @@ BOOLEAN StandardInterruptConditionsMet(struct SOLDIERTYPE *pSoldier, UINT8 ubOpp
     }
   }
 
-  if (!(pSoldier->bActive) || !(pSoldier->bInSector)) {
+  if (!(IsSolActive(pSoldier)) || !IsSolInSector(pSoldier)) {
     return (FALSE);
   }
 
@@ -1303,8 +1304,8 @@ INT8 CalcInterruptDuelPts(struct SOLDIERTYPE *pSoldier, UINT8 ubOpponentID,
 
 #ifdef DEBUG_INTERRUPTS
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-           String("Calculating int pts for %d vs %d, number is %d", pSoldier->ubID, ubOpponentID,
-                  bPoints));
+           String("Calculating int pts for %d vs %d, number is %d", GetSolID(pSoldier),
+                  ubOpponentID, bPoints));
 #endif
 
   return (bPoints);
@@ -1328,7 +1329,7 @@ BOOLEAN InterruptDuel(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pOpponen
     }
   }
   //	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Interrupt duel %d (%d pts) vs %d (%d
-  // pts)", pSoldier->ubID, pSoldier->bInterruptDuelPts, pOpponent->ubID,
+  // pts)", GetSolID(pSoldier), pSoldier->bInterruptDuelPts, pOpponent->ubID,
   // pOpponent->bInterruptDuelPts );
   return (fResult);
 }
@@ -1532,8 +1533,8 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
     ubIntCnt = 0;
 
     for (ubTeam = 0; ubTeam < MAXTEAMS; ubTeam++) {
-      if (gTacticalStatus.Team[ubTeam].bTeamActive &&
-          (gTacticalStatus.Team[ubTeam].bSide != pSoldier->bSide) && ubTeam != CIV_TEAM) {
+      if (gTacticalStatus.Team[ubTeam].bTeamActive && (GetTeamSide(ubTeam) != pSoldier->bSide) &&
+          ubTeam != CIV_TEAM) {
         for (ubOpp = gTacticalStatus.Team[ubTeam].bFirstID;
              ubOpp <= gTacticalStatus.Team[ubTeam].bLastID; ubOpp++) {
           pOpponent = MercPtrs[ubOpp];
@@ -1571,7 +1572,7 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
                 fIntOccurs = TRUE;
 #ifdef DEBUG_INTERRUPTS
                 DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-                         String("INTERRUPT: automatic interrupt on %d by %d", pSoldier->ubID,
+                         String("INTERRUPT: automatic interrupt on %d by %d", GetSolID(pSoldier),
                                 pOpponent->ubID));
 #endif
                 break;
@@ -1585,7 +1586,7 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
                 if (fIntOccurs) {
                   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                            String("INTERRUPT: standard interrupt on %d (%d pts) by %d (%d pts)",
-                                  pSoldier->ubID, pSoldier->bInterruptDuelPts, pOpponent->ubID,
+                                  GetSolID(pSoldier), pSoldier->bInterruptDuelPts, pOpponent->ubID,
                                   pOpponent->bInterruptDuelPts));
                 }
 #endif
@@ -1607,7 +1608,7 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
                       if (pOpponent->bInterruptDuelPts != NO_INTERRUPT)
                       {
                               ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"%d fails to
-                 interrupt %d (%d vs %d pts)", pOpponent->ubID, pSoldier->ubID,
+                 interrupt %d (%d vs %d pts)", pOpponent->ubID, GetSolID(pSoldier),
                  pOpponent->bInterruptDuelPts, pSoldier->bInterruptDuelPts);
                       }
                       */
@@ -1616,7 +1617,8 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
 // either way, clear out both sides' bInterruptDuelPts field to prepare next one
 #ifdef DEBUG_INTERRUPTS
             if (pSoldier->bInterruptDuelPts != NO_INTERRUPT) {
-              DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Resetting int pts for %d", pSoldier->ubID));
+              DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+                       String("Resetting int pts for %d", GetSolID(pSoldier)));
             }
 #endif
 

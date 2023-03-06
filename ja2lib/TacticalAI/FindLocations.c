@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include "Soldier.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Boxing.h"
 #include "Tactical/HandleItems.h"
@@ -469,7 +470,7 @@ UINT8 NumberOfTeamMatesAdjacent(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
     sTempGridNo = NewGridNo(sGridNo, DirectionInc(ubLoop));
     if (sTempGridNo != sGridNo) {
       ubWhoIsThere = WhoIsThere2(sGridNo, pSoldier->bLevel);
-      if (ubWhoIsThere != NOBODY && ubWhoIsThere != pSoldier->ubID &&
+      if (ubWhoIsThere != NOBODY && ubWhoIsThere != GetSolID(pSoldier) &&
           MercPtrs[ubWhoIsThere]->bTeam == pSoldier->bTeam) {
         ubCount++;
       }
@@ -1606,7 +1607,7 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
                 // maybe this gun has ammo (adjust for whether it is better than ours!)
                 if (pObj->bGunAmmoStatus < 0 || pObj->ubGunShotsLeft == 0 ||
                     (pObj->usItem == ROCKET_RIFLE && pObj->ubImprintID != NOBODY &&
-                     pObj->ubImprintID != pSoldier->ubID)) {
+                     pObj->ubImprintID != GetSolID(pSoldier))) {
                   iTempValue = 0;
                 } else {
                   iTempValue = pObj->ubGunShotsLeft * Weapon[pObj->usItem].ubDeadliness /
@@ -1632,7 +1633,7 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
                 if ((pItem->usItemClass & IC_GUN) &&
                     (pObj->bGunAmmoStatus < 0 || pObj->ubGunShotsLeft == 0 ||
                      ((pObj->usItem == ROCKET_RIFLE || pObj->usItem == AUTO_ROCKET_RIFLE) &&
-                      pObj->ubImprintID != NOBODY && pObj->ubImprintID != pSoldier->ubID))) {
+                      pObj->ubImprintID != NOBODY && pObj->ubImprintID != GetSolID(pSoldier)))) {
                   // jammed or out of ammo, skip it!
                   iTempValue = 0;
                 } else if (Item[pSoldier->inv[HANDPOS].usItem].usItemClass & IC_WEAPON) {
@@ -1664,7 +1665,7 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
                 if ((pItem->usItemClass & IC_GUN) &&
                     (pObj->bGunAmmoStatus < 0 || pObj->ubGunShotsLeft == 0 ||
                      ((pObj->usItem == ROCKET_RIFLE || pObj->usItem == AUTO_ROCKET_RIFLE) &&
-                      pObj->ubImprintID != NOBODY && pObj->ubImprintID != pSoldier->ubID))) {
+                      pObj->ubImprintID != NOBODY && pObj->ubImprintID != GetSolID(pSoldier)))) {
                   // jammed or out of ammo, skip it!
                   iTempValue = 0;
                 } else if ((Item[pSoldier->inv[HANDPOS].usItem].usItemClass & IC_WEAPON)) {
@@ -1740,7 +1741,7 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
   }
 
   if (sBestSpot != NOWHERE) {
-    DebugAI(String("%d decides to pick up %S", pSoldier->ubID,
+    DebugAI(String("%d decides to pick up %S", GetSolID(pSoldier),
                    ItemNames[gWorldItems[iBestItemIndex].o.usItem]));
     if (Item[gWorldItems[iBestItemIndex].o.usItem].usItemClass == IC_GUN) {
       if (FindBetterSpotForItem(pSoldier, HANDPOS) == FALSE) {
@@ -1749,13 +1750,13 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
         }
         if (pSoldier->inv[HANDPOS].fFlags & OBJECT_UNDROPPABLE) {
           // destroy this item!
-          DebugAI(String("%d decides he must drop %S first so destroys it", pSoldier->ubID,
+          DebugAI(String("%d decides he must drop %S first so destroys it", GetSolID(pSoldier),
                          ItemNames[pSoldier->inv[HANDPOS].usItem]));
           DeleteObj(&(pSoldier->inv[HANDPOS]));
           DeductPoints(pSoldier, AP_PICKUP_ITEM, 0);
         } else {
           // we want to drop this item!
-          DebugAI(String("%d decides he must drop %S first", pSoldier->ubID,
+          DebugAI(String("%d decides he must drop %S first", GetSolID(pSoldier),
                          ItemNames[pSoldier->inv[HANDPOS].usItem]));
 
           pSoldier->bNextAction = AI_ACTION_PICKUP_ITEM;

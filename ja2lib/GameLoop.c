@@ -25,9 +25,9 @@
 #include "Strategic/PreBattleInterface.h"
 #include "SysGlobals.h"
 #include "Tactical/Interface.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/TacticalSave.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
@@ -202,8 +202,7 @@ void GameLoop(void) {
   // if we are to check for free space on the hard drive
   if (gubCheckForFreeSpaceOnHardDriveCount < DONT_CHECK_FOR_FREE_SPACE) {
     // only if we are in a screen that can get this check
-    if (guiCurrentScreen == MAP_SCREEN || guiCurrentScreen == GAME_SCREEN ||
-        guiCurrentScreen == SAVE_LOAD_SCREEN) {
+    if (IsMapScreen_2() || IsTacticalMode() || guiCurrentScreen == SAVE_LOAD_SCREEN) {
       if (gubCheckForFreeSpaceOnHardDriveCount < 1) {
         gubCheckForFreeSpaceOnHardDriveCount++;
       } else {
@@ -307,9 +306,6 @@ void HandleNewScreenChange(UINT32 uiNewScreen, UINT32 uiOldScreen) {
 void HandleShortCutExitState(void) {
   // look at the state of fGameIsRunning, if set false, then prompt user for confirmation
 
-  // use YES/NO Pop up box, settup for particular screen
-  SGPRect pCenteringRect = {0, 0, 640, INV_INTERFACE_START_Y};
-
   if (guiCurrentScreen == ERROR_SCREEN) {  // an assert failure, don't bring up the box!
     gfProgramIsRunning = FALSE;
     return;
@@ -318,12 +314,12 @@ void HandleShortCutExitState(void) {
   if (guiCurrentScreen == AUTORESOLVE_SCREEN) {
     DoMessageBox(MSG_BOX_BASIC_STYLE, pMessageStrings[MSG_EXITGAME], guiCurrentScreen,
                  (UINT8)(MSG_BOX_FLAG_YESNO | MSG_BOX_FLAG_USE_CENTERING_RECT),
-                 EndGameMessageBoxCallBack, &pCenteringRect);
+                 EndGameMessageBoxCallBack, GetMapCenteringRect());
     return;
   }
 
   /// which screen are we in?
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if ((IsMapScreen())) {
     // set up for mapscreen
     DoMapMessageBox(MSG_BOX_BASIC_STYLE, pMessageStrings[MSG_EXITGAME], MAP_SCREEN,
                     MSG_BOX_FLAG_YESNO, EndGameMessageBoxCallBack);
@@ -355,7 +351,7 @@ void HandleShortCutExitState(void) {
     // set up for all otherscreens
     DoMessageBox(MSG_BOX_BASIC_STYLE, pMessageStrings[MSG_EXITGAME], guiCurrentScreen,
                  (UINT8)(MSG_BOX_FLAG_YESNO | MSG_BOX_FLAG_USE_CENTERING_RECT),
-                 EndGameMessageBoxCallBack, &pCenteringRect);
+                 EndGameMessageBoxCallBack, GetMapCenteringRect());
   }
 }
 

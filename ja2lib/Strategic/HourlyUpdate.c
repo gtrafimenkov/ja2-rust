@@ -3,6 +3,7 @@
 #include "Laptop/History.h"
 #include "SGP/Random.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Quests.h"
@@ -17,6 +18,7 @@
 #include "Tactical/Morale.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierControl.h"
+#include "UI.h"
 
 void HourlyQuestUpdate(void);
 void HourlyLarryUpdate(void);
@@ -168,8 +170,8 @@ void HourlyLarryUpdate(void) {
     if (pSoldier->fBetweenSectors) {
       return;
     }
-    if (pSoldier->bActive && pSoldier->bInSector &&
-        (gTacticalStatus.fEnemyInSector || guiCurrentScreen == GAME_SCREEN)) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector &&
+        (gTacticalStatus.fEnemyInSector || IsTacticalMode())) {
       return;
     }
 
@@ -185,13 +187,13 @@ void HourlyLarryUpdate(void) {
     // check to see if we're in a bar sector, if we are, we have access to alcohol
     // which may be better than anything we've got...
     if (usTemptation < BAR_TEMPTATION && GetCurrentBalance() >= Item[ALCOHOL].usPrice) {
-      if (pSoldier->bSectorZ == 0 &&
-          ((pSoldier->sSectorX == 13 && pSoldier->sSectorY == MAP_ROW_B) ||
-           (pSoldier->sSectorX == 13 && pSoldier->sSectorY == MAP_ROW_C) ||
-           (pSoldier->sSectorX == 5 && pSoldier->sSectorY == MAP_ROW_C) ||
-           (pSoldier->sSectorX == 6 && pSoldier->sSectorY == MAP_ROW_C) ||
-           (pSoldier->sSectorX == 5 && pSoldier->sSectorY == MAP_ROW_D) ||
-           (pSoldier->sSectorX == 2 && pSoldier->sSectorY == MAP_ROW_H))) {
+      if (GetSolSectorZ(pSoldier) == 0 &&
+          ((GetSolSectorX(pSoldier) == 13 && GetSolSectorY(pSoldier) == MAP_ROW_B) ||
+           (GetSolSectorX(pSoldier) == 13 && GetSolSectorY(pSoldier) == MAP_ROW_C) ||
+           (GetSolSectorX(pSoldier) == 5 && GetSolSectorY(pSoldier) == MAP_ROW_C) ||
+           (GetSolSectorX(pSoldier) == 6 && GetSolSectorY(pSoldier) == MAP_ROW_C) ||
+           (GetSolSectorX(pSoldier) == 5 && GetSolSectorY(pSoldier) == MAP_ROW_D) ||
+           (GetSolSectorX(pSoldier) == 2 && GetSolSectorY(pSoldier) == MAP_ROW_H))) {
         // in a bar!
         fBar = TRUE;
         usTemptation = BAR_TEMPTATION;
@@ -199,14 +201,14 @@ void HourlyLarryUpdate(void) {
     }
 
     if (usTemptation > 0) {
-      if (pSoldier->ubProfile == LARRY_NORMAL) {
+      if (GetSolProfile(pSoldier) == LARRY_NORMAL) {
         gMercProfiles[LARRY_NORMAL].bNPCData += (INT8)Random(usTemptation);
         if (gMercProfiles[LARRY_NORMAL].bNPCData >= LARRY_FALLS_OFF_WAGON) {
           if (fBar) {
             // take $ from player's account
             usCashAmount = Item[ALCOHOL].usPrice;
-            AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, pSoldier->ubProfile,
-                                        GetWorldTotalMin(), -(usCashAmount));
+            AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, GetSolProfile(pSoldier),
+                                        -(usCashAmount));
             // give Larry some booze and set slot etc values appropriately
             bBoozeSlot = FindEmptySlotWithin(pSoldier, HANDPOS, SMALLPOCK8POS);
             if (bBoozeSlot != NO_SLOT) {
@@ -234,8 +236,8 @@ void HourlyLarryUpdate(void) {
         if (fBar) {
           // take $ from player's account
           usCashAmount = Item[ALCOHOL].usPrice;
-          AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, pSoldier->ubProfile,
-                                      GetWorldTotalMin(), -(usCashAmount));
+          AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, GetSolProfile(pSoldier),
+                                      -(usCashAmount));
           // give Larry some booze and set slot etc values appropriately
           bBoozeSlot = FindEmptySlotWithin(pSoldier, HANDPOS, SMALLPOCK8POS);
           if (bBoozeSlot != NO_SLOT) {
@@ -250,7 +252,7 @@ void HourlyLarryUpdate(void) {
           UseKitPoints(&(pSoldier->inv[bSlot]), LarryItems[bLarryItemLoop][2], pSoldier);
         }
       }
-    } else if (pSoldier->ubProfile == LARRY_DRUNK) {
+    } else if (GetSolProfile(pSoldier) == LARRY_DRUNK) {
       gMercProfiles[LARRY_NORMAL].bNPCData -= (INT8)Random(2);
       if (gMercProfiles[LARRY_NORMAL].bNPCData <= 0) {
         // goes sober!
@@ -269,11 +271,11 @@ void HourlyCheckIfSlayAloneSoHeCanLeave() {
   if (pSoldier->fBetweenSectors) {
     return;
   }
-  if (!pSoldier->bActive || !pSoldier->bLife) {
+  if (!IsSolActive(pSoldier) || !pSoldier->bLife) {
     return;
   }
-  if (PlayerMercsInSector((UINT8)pSoldier->sSectorX, (UINT8)pSoldier->sSectorY,
-                          pSoldier->bSectorZ) == 1) {
+  if (PlayerMercsInSector((UINT8)GetSolSectorX(pSoldier), (UINT8)GetSolSectorY(pSoldier),
+                          GetSolSectorZ(pSoldier)) == 1) {
     if (Chance(15)) {
       pSoldier->ubLeaveHistoryCode = HISTORY_SLAY_MYSTERIOUSLY_LEFT;
       TacticalCharacterDialogueWithSpecialEvent(

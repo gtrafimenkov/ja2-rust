@@ -5,6 +5,7 @@
 #include "QArray.h"
 #include "SGP/Random.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/PlayerCommand.h"
 #include "Strategic/PreBattleInterface.h"
@@ -208,8 +209,8 @@ void DoneFadeOutKilledQueen(void) {
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
     // Are we in this sector, On the current squad?
-    if (pSoldier->bActive && pSoldier->bLife >= OKLIFE && pSoldier->bInSector &&
-        pSoldier->bAssignment == CurrentSquad()) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE && pSoldier->bInSector &&
+        GetSolAssignment(pSoldier) == CurrentSquad()) {
       gfTacticalTraversal = TRUE;
       SetGroupSectorValue(3, MAP_ROW_P, 0, pSoldier->ubGroupID);
 
@@ -309,7 +310,7 @@ void EndQueenDeathEndgameBeginEndCimenatic() {
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
     // Are we in this sector, On the current squad?
-    if (pSoldier->bActive && pSoldier->bLife >= OKLIFE && !AM_AN_EPC(pSoldier)) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE && !AM_AN_EPC(pSoldier)) {
       TacticalCharacterDialogue(pSoldier, QUOTE_END_GAME_COMMENT);
     }
   }

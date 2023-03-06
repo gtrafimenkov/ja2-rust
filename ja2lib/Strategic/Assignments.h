@@ -4,6 +4,7 @@
 // header for assignment manipulation/updating for characters
 
 #include "SGP/Types.h"
+#include "Town.h"
 
 struct GROUP;
 struct MOUSE_REGION;
@@ -87,6 +88,8 @@ typedef struct TOWN_TRAINER_TYPE {
 
 } TOWN_TRAINER_TYPE;
 
+void ResumeOldAssignment(struct SOLDIERTYPE *pSoldier);
+
 // can character do this assignment?
 // BOOLEAN CanSoldierAssignment( struct SOLDIERTYPE *pSoldier, INT8 bAssignment );
 
@@ -137,7 +140,7 @@ INT8 CanCharacterSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue);
 
 // if merc could train militia here, do they have sufficient loyalty?
 BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(struct SOLDIERTYPE *pSoldier);
-BOOLEAN DoesTownHaveRatingToTrainMilitia(INT8 bTownId);
+BOOLEAN DoesTownHaveRatingToTrainMilitia(TownID bTownId);
 
 // is the character in transit?
 BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pCharacter);
@@ -311,5 +314,9 @@ void ChangeSoldiersAssignment(struct SOLDIERTYPE *pSoldier, INT8 bAssignment);
 void UnEscortEPC(struct SOLDIERTYPE *pSoldier);
 
 struct SOLDIERTYPE *AnyDoctorWhoCanHealThisPatient(struct SOLDIERTYPE *pPatient, BOOLEAN fThisHour);
+
+#ifdef JA2BETAVERSION
+void VerifyTownTrainingIsPaidFor(void);
+#endif
 
 #endif

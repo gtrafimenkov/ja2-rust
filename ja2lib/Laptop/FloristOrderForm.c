@@ -684,8 +684,7 @@ void BtnFlowerOrderSendButtonCallback(GUI_BUTTON *btn, INT32 reason) {
       btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
       // add an entry in the finacial page for the medical deposit
-      AddTransactionToPlayersBook(PURCHASED_FLOWERS, 0, GetWorldTotalMin(),
-                                  -(INT32)(guiFlowerPrice));
+      AddTransactionToPlayersBook(PURCHASED_FLOWERS, 0, -(INT32)(guiFlowerPrice));
 
       if (gubCurrentlySelectedFlowerLocation == 7) {
         // sent to meduna!

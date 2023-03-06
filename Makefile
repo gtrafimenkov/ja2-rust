@@ -4,6 +4,20 @@ CLANG_FORMATTER ?= clang-format-13
 
 build: linux-bin unittester-bin
 
+clean:
+	rm -rf tmp
+	rm -rf Debug
+	rm -rf Release
+	rm -rf ReleaseWithDebug
+	rm -rf ja2lib/Debug
+	rm -rf ja2lib/Release
+	rm -rf ja2lib/ReleaseWithDebug
+	rm -rf bin-win32/Debug
+	rm -rf bin-win32/Release
+	rm -rf bin-win32/ReleaseWithDebug
+	rm -rf unittester/Debug
+	rm -rf unittester/Release
+
 test: run-unittester
 
 format:

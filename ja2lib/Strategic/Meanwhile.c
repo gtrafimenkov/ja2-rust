@@ -32,6 +32,8 @@
 #include "Tactical/TacticalSave.h"
 #include "TacticalAI/NPC.h"
 #include "TileEngine/WorldDef.h"
+#include "Town.h"
+#include "UI.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
 
@@ -361,7 +363,7 @@ void CheckForMeanwhileOKStart() {
 
     guiOldScreen = guiCurrentScreen;
 
-    if (guiCurrentScreen == GAME_SCREEN) {
+    if (IsTacticalMode()) {
       LeaveTacticalScreen(GAME_SCREEN);
     }
 
@@ -625,16 +627,16 @@ void ProcessImplicationsOfMeanwhile(void) {
 
       StartQuest(QUEST_FIND_SCIENTIST, -1, -1);
       // place Madlab and robot!
-      if (SectorInfo[SECTOR(7, MAP_ROW_H)].uiFlags & SF_USE_ALTERNATE_MAP) {
+      if (SectorInfo[GetSectorID8(7, MAP_ROW_H)].uiFlags & SF_USE_ALTERNATE_MAP) {
         sSectorX = 7;
         sSectorY = MAP_ROW_H;
-      } else if (SectorInfo[SECTOR(16, MAP_ROW_H)].uiFlags & SF_USE_ALTERNATE_MAP) {
+      } else if (SectorInfo[GetSectorID8(16, MAP_ROW_H)].uiFlags & SF_USE_ALTERNATE_MAP) {
         sSectorX = 16;
         sSectorY = MAP_ROW_H;
-      } else if (SectorInfo[SECTOR(11, MAP_ROW_I)].uiFlags & SF_USE_ALTERNATE_MAP) {
+      } else if (SectorInfo[GetSectorID8(11, MAP_ROW_I)].uiFlags & SF_USE_ALTERNATE_MAP) {
         sSectorX = 11;
         sSectorY = MAP_ROW_I;
-      } else if (SectorInfo[SECTOR(4, MAP_ROW_E)].uiFlags & SF_USE_ALTERNATE_MAP) {
+      } else if (SectorInfo[GetSectorID8(4, MAP_ROW_E)].uiFlags & SF_USE_ALTERNATE_MAP) {
         sSectorX = 4;
         sSectorY = MAP_ROW_E;
       } else {
@@ -1108,7 +1110,7 @@ void HandleDelayedFirstBattleVictory(void) {
 
 void HandleFirstBattleEndingWhileInTown(INT16 sSectorX, INT16 sSectorY, INT16 bSectorZ,
                                         BOOLEAN fFromAutoResolve) {
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
   INT16 sSector = 0;
 
   if (GetMeanWhileFlag(END_OF_PLAYERS_FIRST_BATTLE)) {
@@ -1120,10 +1122,10 @@ void HandleFirstBattleEndingWhileInTown(INT16 sSectorX, INT16 sSectorY, INT16 bS
   // post the first meanwhile OR, on call to trash world, that means player is leaving sector
 
   // grab sector value
-  sSector = sSectorX + sSectorY * MAP_WORLD_X;
+  sSector = GetSectorID16(sSectorX, sSectorY);
 
   // get town name id
-  bTownId = StrategicMap[sSector].bNameId;
+  bTownId = StrategicMap[sSector].townID;
 
   if (bTownId == BLANK_SECTOR) {
     // invalid town

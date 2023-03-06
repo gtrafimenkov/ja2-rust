@@ -14,6 +14,7 @@
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/PreBattleInterface.h"
@@ -314,7 +315,7 @@ void InitTacticalPlacementGUI() {
 
     // Load the faces
     {
-      ubFaceIndex = gMercProfiles[gMercPlacement[i].pSoldier->ubProfile].ubFaceIndex;
+      ubFaceIndex = gMercProfiles[GetSolProfile(gMercPlacement[i].pSoldier)].ubFaceIndex;
       if (ubFaceIndex < 100)
         sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%02d.sti", ubFaceIndex);
       else
@@ -326,7 +327,7 @@ void InitTacticalPlacementGUI() {
       if (!AddVideoObject(&VObjectDesc, &gMercPlacement[i].uiVObjectID)) {
         AssertMsg(0,
                   String("Failed to load %Faces\\65Face\\%03d.sti or it's placeholder, speck.sti",
-                         gMercProfiles[gMercPlacement[i].pSoldier->ubProfile].ubFaceIndex));
+                         gMercProfiles[GetSolProfile(gMercPlacement[i].pSoldier)].ubFaceIndex));
       }
     }
     xp = 91 + (i / 2) * 54;

@@ -31,6 +31,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/Message.h"
 
 extern UINT16 gubAnimSurfaceIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
@@ -39,9 +40,9 @@ extern UINT16 gubAnimSurfaceIndex[TOTALBODYTYPES][NUMANIMATIONSTATES];
 // skiplist has extra level of pointers every 4 elements, so a level 5is optimized for
 // 4 to the power of 5 elements, or 2 to the power of 10, 1024
 
-//#define PATHAI_VISIBLE_DEBUG
+// #define PATHAI_VISIBLE_DEBUG
 
-//#define PATHAI_SKIPLIST_DEBUG
+// #define PATHAI_SKIPLIST_DEBUG
 
 #ifdef PATHAI_VISIBLE_DEBUG
 #include "SGP/Video.h"
@@ -58,7 +59,7 @@ UINT8 gubGlobalPathFlags = 0;
 UINT8 gubBuildingInfoToSet;
 
 // ABSOLUTE maximums
-//#ifdef JA2EDITOR
+// #ifdef JA2EDITOR
 #define ABSMAX_SKIPLIST_LEVEL 5
 #define ABSMAX_TRAIL_TREE (16384)
 #define ABSMAX_PATHQ (512)
@@ -116,8 +117,8 @@ enum {
 #define EASYWATERCOST TRAVELCOST_FLAT / 2
 #define ISWATER(t) (((t) == TRAVELCOST_KNEEDEEP) || ((t) == TRAVELCOST_DEEPWATER))
 #define NOPASS (TRAVELCOST_BLOCKED)
-//#define VEINCOST TRAVELCOST_FLAT     //actual cost for bridges and doors and such
-//#define ISVEIN(v) ((v==TRAVELCOST_VEINMID) || (v==TRAVELCOST_VEINEND))
+// #define VEINCOST TRAVELCOST_FLAT     //actual cost for bridges and doors and such
+// #define ISVEIN(v) ((v==TRAVELCOST_VEINMID) || (v==TRAVELCOST_VEINEND))
 
 static path_t *pathQ;
 static UINT16 gusPathShown, gusAPtsToMove;
@@ -134,20 +135,20 @@ static INT32 iSkipListLevelLimit[8] = {0, 4, 16, 64, 256, 1024, 4192, 16384};
 #define ESTIMATEC                                             \
   (((dx < dy) ? (TRAVELCOST_BUMPY * (dx * 14 + dy * 10) / 10) \
               : (TRAVELCOST_BUMPY * (dy * 14 + dx * 10) / 10)))
-//#define ESTIMATEC (((dx<dy) ? ( (TRAVELCOST_FLAT * dx * 14) / 10 + dy) : (TRAVELCOST_FLAT * dy *
-// 14 ) / 10 + dx) ) )
+// #define ESTIMATEC (((dx<dy) ? ( (TRAVELCOST_FLAT * dx * 14) / 10 + dy) : (TRAVELCOST_FLAT * dy *
+//  14 ) / 10 + dx) ) )
 #define ESTIMATE ESTIMATEC
 
 #define MAXCOST (9990)
-//#define MAXCOST (255)
-//#define TOTALCOST( pCurrPtr ) (pCurrPtr->usCostSoFar + pCurrPtr->usCostToGo)
+// #define MAXCOST (255)
+// #define TOTALCOST( pCurrPtr ) (pCurrPtr->usCostSoFar + pCurrPtr->usCostToGo)
 #define TOTALCOST(ptr) (ptr->usTotalCost)
 #define XLOC(a) (a % MAPWIDTH)
 #define YLOC(a) (a / MAPWIDTH)
-//#define LEGDISTANCE(a,b) ( abs( XLOC(b)-XLOC(a) ) + abs( YLOC(b)-YLOC(a) ) )
+// #define LEGDISTANCE(a,b) ( abs( XLOC(b)-XLOC(a) ) + abs( YLOC(b)-YLOC(a) ) )
 #define LEGDISTANCE(x1, y1, x2, y2) (abs(x2 - x1) + abs(y2 - y1))
-//#define FARTHER(ndx,NDX) ( LEGDISTANCE( ndx->sLocation,sDestination) >
-// LEGDISTANCE(NDX->sLocation,sDestination) )
+// #define FARTHER(ndx,NDX) ( LEGDISTANCE( ndx->sLocation,sDestination) >
+//  LEGDISTANCE(NDX->sLocation,sDestination) )
 #define FARTHER(ndx, NDX) (ndx->ubLegDistance > NDX->ubLegDistance)
 
 #define SETLOC(str, loc) \
@@ -1550,7 +1551,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
         // do a sorted que insert of the new path
         // COMMENTED OUT TO DO BOUNDS CHECKER CC JAN 18 99
         // QUEINSERT(pNewPtr);
-        //#define SkipListInsert( pNewPtr )
+        // #define SkipListInsert( pNewPtr )
         {
           pCurr = pQueueHead;
           uiCost = TOTALCOST(pNewPtr);
@@ -1671,7 +1672,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
 #if defined(PATHAI_VISIBLE_DEBUG)
   if (gfDisplayCoverValues && gfDrawPathPoints) {
     SetRenderFlags(RENDER_FLAG_FULL);
-    if (guiCurrentScreen == GAME_SCREEN) {
+    if (IsTacticalMode()) {
       RenderWorld();
       // RenderCoverDebug( );
       InvalidateScreen();

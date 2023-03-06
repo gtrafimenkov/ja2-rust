@@ -4,6 +4,7 @@
 extern "C" {
 #endif
 
+#include "Sector.h"
 #include "Strategic/StrategicMap.h"
 
 #ifdef __cplusplus

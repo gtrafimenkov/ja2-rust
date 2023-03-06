@@ -1,3 +1,4 @@
+#include "Soldier.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicPathing.h"
@@ -61,21 +62,7 @@ int LegalNPCDestination(struct SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPat
   // Nov 28 98: skip people in destination tile if in turnbased
   if ((NewOKDestination(pSoldier, sGridno, fSkipTilesWithMercs, pSoldier->bLevel)) &&
       (!InGas(pSoldier, sGridno)) && (sGridno != pSoldier->sGridNo) &&
-      (sGridno != pSoldier->sBlackList))
-  /*
-  if ( ( NewOKDestination(pSoldier, sGridno, FALSE, pSoldier->bLevel ) ) &&
-                                 ( !(gpWorldLevelData[ sGridno ].ubExtFlags[0] &
-  (MAPELEMENT_EXT_SMOKE | MAPELEMENT_EXT_TEARGAS | MAPELEMENT_EXT_MUSTARDGAS)) || ( pSoldier->inv[
-  HEAD1POS ].usItem == GASMASK || pSoldier->inv[ HEAD2POS ].usItem == GASMASK ) ) && ( sGridno !=
-  pSoldier->sGridNo ) && ( sGridno != pSoldier->sBlackList ) )*/
-  /*
-  if ( ( NewOKDestination(pSoldier,sGridno,ALLPEOPLE, pSoldier->bLevel ) ) &&
-                                 ( !(gpWorldLevelData[ sGridno ].ubExtFlags[0] &
-  (MAPELEMENT_EXT_SMOKE | MAPELEMENT_EXT_TEARGAS | MAPELEMENT_EXT_MUSTARDGAS)) || ( pSoldier->inv[
-  HEAD1POS ].usItem == GASMASK || pSoldier->inv[ HEAD2POS ].usItem == GASMASK ) ) && ( sGridno !=
-  pSoldier->sGridNo ) && ( sGridno != pSoldier->sBlackList ) )
-                                 */
-  {
+      (sGridno != pSoldier->sBlackList)) {
     // if water's a problem, and gridno is in a water tile (bridges are OK)
     if (!ubWaterOK && Water(sGridno)) return (FALSE);
 
@@ -116,7 +103,7 @@ int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
   // have occupied the destination gridno in the meantime!)
   if (LegalNPCDestination(pSoldier, sGridno, ENSURE_PATH, WATEROK, 0)) {
 #ifdef DEBUGDECISIONS
-    DebugAI(String("%d CONTINUES MOVEMENT to gridno %d...\n", pSoldier->ubID, gridno));
+    DebugAI(String("%d CONTINUES MOVEMENT to gridno %d...\n", GetSolID(pSoldier), gridno));
 #endif
 
     pSoldier->bPathStored = TRUE;  // optimization - Ian
@@ -152,7 +139,7 @@ int TryToResumeMovement(struct SOLDIERTYPE *pSoldier, INT16 sGridno) {
 
 #ifdef BETAVERSION
     sprintf(tempstr, "TryToResumeMovement: %d can't continue to gridno %d, no longer legal!",
-            pSoldier->ubID, gridno);
+            GetSolID(pSoldier), gridno);
 
 #ifdef RECORDNET
     fprintf(NetDebugFile, "\n\t%s\n", tempstr);
@@ -242,7 +229,7 @@ INT8 PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->sGridNo == sPatrolPoint) {
 #ifdef BETAVERSION
       NumMessage("PROBLEM WITH SCENARIO: All other patrol points are invalid for guynum ",
-                 pSoldier->ubID);
+                 GetSolID(pSoldier));
 #endif
       // force change of orders & an abort
       sPatrolPoint = NOWHERE;
@@ -252,7 +239,7 @@ INT8 PointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   // if we don't have a legal patrol point
   if (sPatrolPoint == NOWHERE) {
 #ifdef BETAVERSION
-    NumMessage("PointPatrolAI: ERROR - no legal patrol point for %d", pSoldier->ubID);
+    NumMessage("PointPatrolAI: ERROR - no legal patrol point for %d", GetSolID(pSoldier));
 #endif
 
     // over-ride orders to something safer
@@ -329,7 +316,7 @@ INT8 RandomPointPatrolAI(struct SOLDIERTYPE *pSoldier) {
   // if we don't have a legal patrol point
   if (sPatrolPoint == NOWHERE) {
 #ifdef BETAVERSION
-    NumMessage("PointPatrolAI: ERROR - no legal patrol point for %d", pSoldier->ubID);
+    NumMessage("PointPatrolAI: ERROR - no legal patrol point for %d", GetSolID(pSoldier));
 #endif
 
     // over-ride orders to something safer
@@ -390,7 +377,7 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
   usMaxDist = RoamingRange(pSoldier, &sOrigin);
 
   if (pSoldier->bOrders <= CLOSEPATROL &&
-      (pSoldier->bTeam == CIV_TEAM || pSoldier->ubProfile != NO_PROFILE)) {
+      (pSoldier->bTeam == CIV_TEAM || GetSolProfile(pSoldier) != NO_PROFILE)) {
     if (InARoom(pSoldier->usPatrolGrid[0], &ubRoomRequired)) {
       // make sure this doesn't interfere with pathing for scripts
       if (pSoldier->sAbsoluteFinalDestination != NOWHERE) {
@@ -421,29 +408,8 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
   }
 
   fPathFlags = 0;
-  if (CREATURE_OR_BLOODCAT(
-          pSoldier)) { /*
-                       if ( PythSpacesAway( pSoldier->sGridNo, sDesGrid ) <= PATH_CLOSE_RADIUS )
-                       {
-                               // then do a limited range path search and see if we can get there
-                               gubNPCDistLimit = 10;
-                               if ( !LegalNPCDestination( pSoldier, sDesGrid, ENSURE_PATH, NOWATER,
-                       fPathFlags) )
-                               {
-                                       gubNPCDistLimit = 0;
-                                       return( NOWHERE );
-                               }
-                               else
-                               {
-                                       // allow attempt to path without 'good enough' flag on
-                                       gubNPCDistLimit = 0;
-                               }
-                       }
-                       else
-                       {
-                       */
+  if (CREATURE_OR_BLOODCAT(pSoldier)) {
     fPathFlags = PATH_CLOSE_GOOD_ENOUGH;
-    //}
   }
 
   // first step: try to find an OK destination at or near the desired gridno
@@ -532,7 +498,7 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
       sprintf(tempstr,
               "GoAsFarAsPossibleTowards: ERROR - gridno along valid route is invalid!  guynum %d, "
               "sTempDest = %d",
-              pSoldier->ubID, sTempDest);
+              GetSolID(pSoldier), sTempDest);
 
 #ifdef RECORDNET
       fprintf(NetDebugFile, "\n\t%s\n", tempstr);
@@ -575,31 +541,6 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
     if (gfTurnBasedAI) {
       // if we're just starting the "costing" process (first gridno)
       if (sLoop == 0) {
-        /*
-         // first, add any additional costs - such as intermediate animations, etc.
-         switch(pSoldier->anitype[pSoldier->anim])
-                {
-                 // in theory, no NPC should ever be in one of these animations as
-                 // things stand (they don't medic anyone), but leave it for robustness
-                 case START_AID   :
-                 case GIVING_AID  : sAnimCost = AP_STOP_FIRST_AID;
-                        break;
-
-                 case TWISTOMACH  :
-                 case COLLAPSED   : sAnimCost = AP_GET_UP;
-                        break;
-
-                 case TWISTBACK   :
-                 case UNCONSCIOUS : sAnimCost = (AP_ROLL_OVER + AP_GET_UP);
-                        break;
-
-                 default          : sAnimCost = 0;
-                }
-
-         // this is our first cost
-         sAPCost += sAnimCost;
-         */
-
         if (pSoldier->usUIMovementMode == RUNNING) {
           sAPCost += AP_START_RUN_COST;
         }
@@ -649,8 +590,8 @@ INT16 InternalGoAsFarAsPossibleTowards(struct SOLDIERTYPE *pSoldier, INT16 sDesG
     }
 
 #ifdef DEBUGDECISIONS
-    ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"%d to %d with %d APs left", pSoldier->ubID,
-              sGoToGrid, pSoldier->bActionPoints);
+    ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"%d to %d with %d APs left",
+              GetSolID(pSoldier), sGoToGrid, pSoldier->bActionPoints);
 #endif
 
     return (sGoToGrid);
@@ -698,7 +639,7 @@ void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier) {
     CancelAIAction(pSoldier, DONTFORCE);
 #ifdef TESTAI
     DebugMsg(TOPIC_JA2AI, DBG_LEVEL_3,
-             String("Soldier (%d) HAS NOT ENOUGH AP to continue along path", pSoldier->ubID));
+             String("Soldier (%d) HAS NOT ENOUGH AP to continue along path", GetSolID(pSoldier)));
 #endif
   }
 
@@ -716,13 +657,14 @@ void SoldierTriesToContinueAlongPath(struct SOLDIERTYPE *pSoldier) {
     // maybe we didn't actually start the action last turn...
     pSoldier->bActionInProgress = TRUE;
 #ifdef TESTAI
-    DebugMsg(TOPIC_JA2AI, DBG_LEVEL_3, String("Soldier (%d) continues along path", pSoldier->ubID));
+    DebugMsg(TOPIC_JA2AI, DBG_LEVEL_3,
+             String("Soldier (%d) continues along path", GetSolID(pSoldier)));
 #endif
   } else {
     CancelAIAction(pSoldier, DONTFORCE);
 #ifdef TESTAI
     DebugMsg(TOPIC_JA2AI, DBG_LEVEL_3,
-             String("Soldier (%d) HAS NOT ENOUGH AP to continue along path", pSoldier->ubID));
+             String("Soldier (%d) HAS NOT ENOUGH AP to continue along path", GetSolID(pSoldier)));
 #endif
   }
 }
@@ -737,13 +679,13 @@ void HaltMoveForSoldierOutOfPoints(struct SOLDIERTYPE *pSoldier) {
   AdjustNoAPToFinishMove(pSoldier, TRUE);
 
   // We'll keep his action intact though...
-  DebugAI(
-      String("NO AP TO FINISH MOVE for %d (%d APs left)", pSoldier->ubID, pSoldier->bActionPoints));
+  DebugAI(String("NO AP TO FINISH MOVE for %d (%d APs left)", GetSolID(pSoldier),
+                 pSoldier->bActionPoints));
 
   // if this dude is under AI right now, then pass the baton to someone else
   if (pSoldier->uiStatusFlags & SOLDIER_UNDERAICONTROL) {
 #ifdef TESTAICONTROL
-    DebugAI(String("Ending turn for %d because out of APs for movement", pSoldier->ubID));
+    DebugAI(String("Ending turn for %d because out of APs for movement", GetSolID(pSoldier)));
 #endif
 
     EndAIGuysTurn(pSoldier);
@@ -786,7 +728,7 @@ void SetCivilianDestination(UINT8 ubWho, INT16 sGridno) {
    else
     {
      NetSend.msgType = NET_CIV_DEST;
-     NetSend.ubID  = pSoldier->ubID;
+     NetSend.ubID  = GetSolID(pSoldier);
      NetSend.gridno  = gridno;
 
      // only the civilian's controller needs to know this
@@ -894,146 +836,3 @@ INT16 TrackScent(struct SOLDIERTYPE *pSoldier) {
   }
   return (0);
 }
-
-/*
-UINT16 RunAway( struct SOLDIERTYPE * pSoldier )
-{
-        // "Run away! Run away!!!"
-        // This code should figure out which directions are safe for the enemy
-        // to run in.  They shouldn't try to run off in directions which will
-        // take them into enemy territory.  We must presume that they inform each
-        // other by radio when sectors are taken by the player! :-)
-        // The second wrinkle would be to look at the directions to known player
-        // mercs and use that to influence the direction in which we run.
-
-        // we can only flee in the cardinal directions (NESW) so start with an
-        // alternating pattern of true/false
-        INT8 bOkayDir[8] = {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE};
-        UINT8 ubLoop, ubBestDir, ubDistToEdge, ubBestDistToEdge = WORLD_COLS;
-        INT32	iSector, iSectorX, iSectorY;
-        INT32 iNewSectorX, iNewSectorY, iNewSector;
-        INT32	iRunX, iRunY, iRunGridNo;
-        struct SOLDIERTYPE * pOpponent;
-
-        iSector = pSoldier->sSectorX + pSoldier->sSectorY * MAP_WORLD_X;
-
-        // first start by scanning through opposing mercs and find out what directions are blocked.
-        for (ubLoop = 0,pOpponent = Menptr; ubLoop < MAXMERCS; ubLoop++,pOpponent++)
-        {
-                // if this merc is inactive, at base, on assignment, or dead
-                if (!pOpponent->bActive || !pOpponent->bInSector || !pOpponent->bLife)
-                {
-                        continue;          // next merc
-                }
-
-                // if this man is neutral / on the same side, he's not an opponent
-                if (pOpponent->bNeutral || (pSoldier->bSide == pOpponent->bSide))
-                {
-                        continue;          // next merc
-                }
-
-                // we don't want to run in that direction!
-                bOkayDir[ atan8( pSoldier->sX, pSoldier->sY, pOpponent->sX, pOpponent->sY ) ] =
-FALSE;
-        }
-
-        for (ubLoop = 0; ubLoop < 8; ubLoop += 2)
-        {
-                if (bOkayDir[ubLoop])
-                {
-                        // figure out sector # in that direction
-                        iNewSectorX = pSoldier->sSectorX + DirXIncrementer[ubLoop];
-                        iNewSectorY = pSoldier->sSectorY + DirYIncrementer[ubLoop];
-                        iNewSector = iSectorX + iSectorY * MAP_WORLD_X;
-                        // check movement
-                        if (TravelBetweenSectorsIsBlockedFromFoot( (UINT16) iSector, (UINT16)
-iNewSector ) || StrategicMap[iSector].fEnemyControlled)
-                        {
-                                // sector inaccessible or controlled by the player; skip it!
-                                continue;
-                        }
-                        switch( ubLoop )
-                        {
-                                case 0:
-                                        ubDistToEdge = pSoldier->sGridNo / WORLD_COLS;
-                                        break;
-                                case 2:
-                                        ubDistToEdge = WORLD_COLS - pSoldier->sGridNo % WORLD_COLS;
-                                        break;
-                                case 4:
-                                        ubDistToEdge = WORLD_ROWS - pSoldier->sGridNo / WORLD_COLS;
-                                        break;
-                                case 6:
-                                        ubDistToEdge = pSoldier->sGridNo % WORLD_COLS;
-                                        break;
-                        }
-                        if (ubDistToEdge < ubBestDistToEdge)
-                        {
-                                ubBestDir = ubLoop;
-                                ubBestDistToEdge = ubDistToEdge;
-                        }
-                }
-        }
-        if (ubBestDistToEdge < WORLD_COLS)
-        {
-                switch( ubBestDir )
-                {
-                        case 0:
-                                iRunX = pSoldier->sX + Random( 9 ) - 4;
-                                iRunY = 0;
-                                if (iRunX < 0)
-                                {
-                                        iRunX = 0;
-                                }
-                                else if (iRunX >= WORLD_COLS)
-                                {
-                                        iRunX = WORLD_COLS - 1;
-                                }
-                                break;
-                        case 2:
-                                iRunX = WORLD_COLS;
-                                iRunY = pSoldier->sY + Random( 9 ) - 4;
-                                if (iRunY < 0)
-                                {
-                                        iRunY = 0;
-                                }
-                                else if (iRunY >= WORLD_COLS)
-                                {
-                                        iRunY = WORLD_ROWS - 1;
-                                }
-                                break;
-                        case 4:
-                                iRunX = pSoldier->sX + Random( 9 ) - 4;
-                                iRunY = WORLD_ROWS;
-                                if (iRunX < 0)
-                                {
-                                        iRunX = 0;
-                                }
-                                else if (iRunX >= WORLD_COLS)
-                                {
-                                        iRunX = WORLD_COLS - 1;
-                                }
-                                break;
-                        case 6:
-                                iRunX = 0;
-                                iRunY = pSoldier->sY + Random( 9 ) - 4;
-                                if (iRunY < 0)
-                                {
-                                        iRunY = 0;
-                                }
-                                else if (iRunY >= WORLD_COLS)
-                                {
-                                        iRunY = WORLD_ROWS - 1;
-                                }
-                                break;
-                }
-                iRunGridNo = iRunX + iRunY * WORLD_COLS;
-                if (LegalNPCDestination( pSoldier, (UINT16) iRunGridNo, ENSURE_PATH, TRUE,0))
-                {
-                        return( (UINT16) iRunGridNo );
-                }
-                // otherwise we'll try again another time
-        }
-        return( NOWHERE );
-}
-*/

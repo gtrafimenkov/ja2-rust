@@ -3,16 +3,17 @@
 #include "JAScreens.h"
 #include "Laptop/Personnel.h"
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Tactical/DialogueControl.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/Overhead.h"
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Squads.h"
 #include "Tactical/TacticalSave.h"
 #include "Tactical/Vehicles.h"
 #include "TileEngine/IsometricUtils.h"
+#include "UI.h"
 #include "Utils/MusicControl.h"
 
 StrategicMapElement StrategicMap[MAP_WORLD_X * MAP_WORLD_Y];
@@ -24,13 +25,13 @@ BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier) {
   // AddCharacterToDeadList( pSoldier );
 
   // If in a vehicle, remove them!
-  if ((pSoldier->bAssignment == VEHICLE) && (pSoldier->iVehicleId != -1)) {
+  if ((GetSolAssignment(pSoldier) == VEHICLE) && (pSoldier->iVehicleId != -1)) {
     // remove from vehicle
     TakeSoldierOutOfVehicle(pSoldier);
   }
 
   // if not in mapscreen
-  if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if (!(IsMapScreen())) {
     // ATE; At least make them dead!
     if ((pSoldier->bAssignment != ASSIGNMENT_DEAD)) {
       SetTimeOfAssignmentChangeForMerc(pSoldier);
@@ -65,12 +66,12 @@ BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier) {
     HandleSoldierDeadComments(pSoldier);
 
     // put the dead guys down
-    AddDeadSoldierToUnLoadedSector((UINT8)(pSoldier->sSectorX), (UINT8)(pSoldier->sSectorY),
-                                   pSoldier->bSectorZ, pSoldier, RandomGridNo(),
-                                   ADD_DEAD_SOLDIER_TO_SWEETSPOT);
+    AddDeadSoldierToUnLoadedSector((UINT8)(GetSolSectorX(pSoldier)),
+                                   (UINT8)(GetSolSectorY(pSoldier)), GetSolSectorZ(pSoldier),
+                                   pSoldier, RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT);
 
     fTeamPanelDirty = TRUE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
     fCharacterInfoPanelDirty = TRUE;
 
     StopTimeCompression();
@@ -91,7 +92,7 @@ void HandleSoldierDeadComments(struct SOLDIERTYPE *pSoldier) {
   for (pTeamSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[pSoldier->bTeam].bLastID;
        cnt++, pTeamSoldier++) {
     if (pTeamSoldier->bLife >= OKLIFE && pTeamSoldier->bActive) {
-      bBuddyIndex = WhichBuddy(pTeamSoldier->ubProfile, pSoldier->ubProfile);
+      bBuddyIndex = WhichBuddy(pTeamSoldier->ubProfile, GetSolProfile(pSoldier));
       switch (bBuddyIndex) {
         case 0:
           // buddy #1 died!

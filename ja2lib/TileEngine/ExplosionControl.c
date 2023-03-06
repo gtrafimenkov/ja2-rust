@@ -9,6 +9,7 @@
 #include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Quests.h"
@@ -1105,7 +1106,7 @@ BOOLEAN DamageSoldierFromBlast(UINT8 ubPerson, UINT8 ubOwner, INT16 sBombGridNo,
 
   pSoldier = MercPtrs[ubPerson];  // someone is here, and they're gonna get hurt
 
-  if (!pSoldier->bActive || !pSoldier->bInSector || !pSoldier->bLife) return (FALSE);
+  if (!IsSolActive(pSoldier) || !pSoldier->bInSector || !pSoldier->bLife) return (FALSE);
 
   if (pSoldier->ubMiscSoldierFlags & SOLDIER_MISC_HURT_BY_EXPLOSION) {
     // don't want to damage the guy twice
@@ -1143,7 +1144,7 @@ BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive
                          UINT8 ubOwner) {
   INT8 bPosOfMask = NO_SLOT;
 
-  if (!pSoldier->bActive || !pSoldier->bInSector || !pSoldier->bLife || AM_A_ROBOT(pSoldier)) {
+  if (!IsSolActive(pSoldier) || !pSoldier->bInSector || !pSoldier->bLife || AM_A_ROBOT(pSoldier)) {
     return (fRecompileMovementCosts);
   }
 
@@ -1455,7 +1456,7 @@ BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem
           DishOutGasDamage(pSoldier, pExplosive, sSubsequent, fRecompileMovementCosts, sWoundAmt,
                            sBreathAmt, ubOwner);
       /*
-                       if (!pSoldier->bActive || !pSoldier->bInSector || !pSoldier->bLife ||
+                       if (!IsSolActive(pSoldier) || !pSoldier->bInSector || !pSoldier->bLife ||
          AM_A_ROBOT( pSoldier ) )
                        {
                                return( fRecompileMovementCosts );
@@ -2036,7 +2037,7 @@ BOOLEAN HookerInRoom(UINT8 ubRoom) {
        ubLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID; ubLoop++) {
     pSoldier = MercPtrs[ubLoop];
 
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
         pSoldier->bNeutral && pSoldier->ubBodyType == MINICIV) {
       if (InARoom(pSoldier->sGridNo, &ubTempRoom) && ubTempRoom == ubRoom) {
         return (TRUE);
@@ -2839,7 +2840,7 @@ BOOLEAN DoesSAMExistHere(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, INT16 s
     return (FALSE);
   }
 
-  sSectorNo = SECTOR(sSectorX, sSectorY);
+  sSectorNo = GetSectorID8(sSectorX, sSectorY);
 
   for (cnt = 0; cnt < NUMBER_OF_SAMS; cnt++) {
     // Are we i nthe same sector...
@@ -2864,7 +2865,7 @@ void UpdateAndDamageSAMIfFound(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, I
   }
 
   // Damage.....
-  sSectorNo = CALCULATE_STRATEGIC_INDEX(sSectorX, sSectorY);
+  sSectorNo = GetSectorID16(sSectorX, sSectorY);
 
   if (StrategicMap[sSectorNo].bSAMCondition >= ubDamage) {
     StrategicMap[sSectorNo].bSAMCondition -= ubDamage;
@@ -2893,7 +2894,7 @@ void UpdateSAMDoneRepair(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
     fInSector = TRUE;
   }
 
-  sSectorNo = SECTOR(sSectorX, sSectorY);
+  sSectorNo = GetSectorID8(sSectorX, sSectorY);
 
   for (cnt = 0; cnt < NUMBER_OF_SAMS; cnt++) {
     // Are we i nthe same sector...
@@ -2949,11 +2950,11 @@ void HandleBuldingDestruction(INT16 sGridNo, UINT8 ubOwner) {
 
   cnt = gTacticalStatus.Team[CIV_TEAM].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[CIV_TEAM].bLastID; cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife && pSoldier->bNeutral) {
-      if (pSoldier->ubProfile != NO_PROFILE) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife && pSoldier->bNeutral) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE) {
         // ignore if the player is fighting the enemy here and this is a good guy
         if (gTacticalStatus.Team[ENEMY_TEAM].bMenInSector > 0 &&
-            (gMercProfiles[pSoldier->ubProfile].ubMiscFlags3 & PROFILE_MISC_FLAG3_GOODGUY)) {
+            (gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags3 & PROFILE_MISC_FLAG3_GOODGUY)) {
           continue;
         }
 

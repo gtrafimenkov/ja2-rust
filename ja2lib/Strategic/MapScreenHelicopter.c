@@ -3,9 +3,10 @@
 #include <string.h>
 
 #include "Laptop/Finances.h"
-#include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -46,7 +47,7 @@
 #define REFUEL_HELICOPTER_DELAY 30  // minutes
 
 // total number of sectors one can go
-//#define MAX_HELICOPTER_DISTANCE 25
+// #define MAX_HELICOPTER_DISTANCE 25
 
 // maximum chance out of a hundred per unsafe sector that a SAM site in decent working condition
 // will hit Skyrider
@@ -291,7 +292,7 @@ BOOLEAN HandleHeliEnteringSector(INT16 sX, INT16 sY) {
         }
 
         // make their presence appear on the map while Skyrider remains in the sector
-        SectorInfo[SECTOR(sX, sY)].uiFlags |= SF_SKYRIDER_NOTICED_ENEMIES_HERE;
+        SectorInfo[GetSectorID8(sX, sY)].uiFlags |= SF_SKYRIDER_NOTICED_ENEMIES_HERE;
       }
     }
   }
@@ -339,37 +340,6 @@ BOOLEAN HandleHeliEnteringSector(INT16 sX, INT16 sY) {
   return (FALSE);
 }
 
-/*
-INT32 GetTotalDistanceHelicopterCanTravel( void )
-{
-        return( MAX_HELICOPTER_DISTANCE );
-}
-
-INT32 HowFarHelicopterhasTravelledSinceRefueling( void )
-{
-        // return total distance
-        return( iTotalHeliDistanceSinceRefuel );
-}
-
-INT32 HowFurtherCanHelicopterTravel( void )
-{
-        // how many sectors further can we go on remaining fuel?
-        return( MAX_HELICOPTER_DISTANCE - ( HowFarHelicopterhasTravelledSinceRefueling( ) +
-DistanceOfIntendedHelicopterPath( ) ) );
-}
-
-void AddSectorToHelicopterDistanceTravelled( void )
-{
-        // up the distance
-        iTotalHeliDistanceSinceRefuel++;
-
-        //reset hover time
-        uiStartHoverTime = 0;
-
-        return;
-}
-*/
-
 INT32 LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ) {
   INT32 iClosestLocation = -1;
 
@@ -405,9 +375,9 @@ INT32 FindLocationOfClosestRefuelSite(BOOLEAN fMustBeAvailable) {
     if ((fRefuelingSiteAvailable[iCounter]) || (fMustBeAvailable == FALSE)) {
       // find if sector is under control, find distance from heli to it
       iDistance = (INT32)FindStratPath(
-          (INT16)(CALCULATE_STRATEGIC_INDEX(pVehicleList[iHelicopterVehicleId].sSectorX,
-                                            pVehicleList[iHelicopterVehicleId].sSectorY)),
-          (INT16)(CALCULATE_STRATEGIC_INDEX(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])),
+          (INT16)(GetSectorID16(pVehicleList[iHelicopterVehicleId].sSectorX,
+                                pVehicleList[iHelicopterVehicleId].sSectorY)),
+          (INT16)(GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])),
           pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
 
       if (iDistance < iShortestDistance) {
@@ -429,42 +399,17 @@ INT32 DistanceToNearestRefuelPoint(INT16 sX, INT16 sY) {
   // don't notify player during these checks!
   iClosestLocation = LocationOfNearestRefuelPoint(FALSE);
 
-  iDistance =
-      (INT32)FindStratPath((INT16)(CALCULATE_STRATEGIC_INDEX(sX, sY)),
-                           (INT16)(CALCULATE_STRATEGIC_INDEX(ubRefuelList[iClosestLocation][0],
-                                                             ubRefuelList[iClosestLocation][1])),
-                           pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
+  iDistance = (INT32)FindStratPath(
+      (INT16)(GetSectorID16(sX, sY)),
+      (INT16)(GetSectorID16(ubRefuelList[iClosestLocation][0], ubRefuelList[iClosestLocation][1])),
+      pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
   return (iDistance);
 }
-
-/*
-BOOLEAN IsSectorOutOfTheWay( INT16 sX, INT16 sY )
-{
-        // check distance to nearest refuel point
-        if( DistanceToNearestRefuelPoint( sX, sY ) > HowFurtherCanHelicopterTravel( ) )
-        {
-                return( TRUE );
-        }
-
-
-        return( FALSE );
-}
-*/
 
 void ReFuelHelicopter(void) {
   // land, pay the man, and refuel
 
   LandHelicopter();
-
-  /*
-          AddStrategicEvent( EVENT_HELICOPTER_DONE_REFUELING, GetWorldTotalMin() +
-     REFUEL_HELICOPTER_DELAY, 0 );
-
-          // reset distance traveled
-          iTotalHeliDistanceSinceRefuel = 0;
-  */
-
-  return;
 }
 
 INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY) {
@@ -472,7 +417,7 @@ INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY) {
   INT32 iCost = 0;
 
   // if they don't control it
-  if (StrategicMap[CALCULATE_STRATEGIC_INDEX(sX, sY)].fEnemyAirControlled == FALSE) {
+  if (StrategicMap[GetSectorID16(sX, sY)].fEnemyAirControlled == FALSE) {
     iCost = COST_AIRSPACE_SAFE;
   } else {
     iCost = COST_AIRSPACE_UNSAFE;
@@ -522,14 +467,6 @@ BOOLEAN CanHelicopterFly(void) {
   if (VehicleIdIsValid(iHelicopterVehicleId) == FALSE) {
     return (FALSE);
   }
-
-  /*
-          // travelled too far?
-          if( iTotalHeliDistanceSinceRefuel > MAX_HELICOPTER_DISTANCE )
-          {
-                  return( FALSE );
-          }
-  */
 
   // is the pilot alive, well, and willing to help us?
   if (IsHelicopterPilotAvailable() == FALSE) {
@@ -797,11 +734,9 @@ void UpdateRefuelSiteAvailability(void) {
 
   for (iCounter = 0; iCounter < NUMBER_OF_REFUEL_SITES; iCounter++) {
     // if enemy controlled sector (ground OR air, don't want to fly into enemy air territory)
-    if ((StrategicMap[CALCULATE_STRATEGIC_INDEX(ubRefuelList[iCounter][0],
-                                                ubRefuelList[iCounter][1])]
+    if ((StrategicMap[GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])]
              .fEnemyControlled == TRUE) ||
-        (StrategicMap[CALCULATE_STRATEGIC_INDEX(ubRefuelList[iCounter][0],
-                                                ubRefuelList[iCounter][1])]
+        (StrategicMap[GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])]
              .fEnemyAirControlled == TRUE) ||
         ((iCounter == ESTONI_REFUELING_SITE) &&
          (CheckFact(FACT_ESTONI_REFUELLING_POSSIBLE, 0) == FALSE))) {
@@ -879,7 +814,7 @@ UINT8 MoveAllInHelicopterToFootMovementGroup(void) {
 
     if (pSoldier != NULL) {
       // better really be in there!
-      Assert(pSoldier->bAssignment == VEHICLE);
+      Assert(GetSolAssignment(pSoldier) == VEHICLE);
       Assert(pSoldier->iVehicleId == iHelicopterVehicleId);
 
       fAnyoneAboard = TRUE;
@@ -1107,8 +1042,7 @@ void CheckAndHandleSkyriderMonologues(void) {
       guiHelicopterSkyriderTalkState = 1;
     } else if (guiHelicopterSkyriderTalkState == 1) {
       // if enemy still controls the Cambria hospital sector
-      if (StrategicMap[CALCULATE_STRATEGIC_INDEX(HOSPITAL_SECTOR_X, HOSPITAL_SECTOR_Y)]
-              .fEnemyControlled) {
+      if (StrategicMap[GetSectorID16(HOSPITAL_SECTOR_X, HOSPITAL_SECTOR_Y)].fEnemyControlled) {
         HandleSkyRiderMonologueEvent(SKYRIDER_MONOLOGUE_EVENT_CAMBRIA_HOSPITAL, 0);
       }
       // advance state even if player already has Cambria's hospital sector!!!
@@ -1147,7 +1081,7 @@ void HandleAnimationOfSectors(void) {
     fSkipSpeakersLocator = TRUE;
   } else if (fOldShowDrassenSAMHighLight) {
     fOldShowDrassenSAMHighLight = FALSE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   // Cambria hospital
@@ -1157,7 +1091,7 @@ void HandleAnimationOfSectors(void) {
     fSkipSpeakersLocator = TRUE;
   } else if (fOldShowCambriaHospitalHighLight) {
     fOldShowCambriaHospitalHighLight = FALSE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   // show other SAM sites
@@ -1169,7 +1103,7 @@ void HandleAnimationOfSectors(void) {
     fSkipSpeakersLocator = TRUE;
   } else if (fOldShowOtherSAMHighLight) {
     fOldShowOtherSAMHighLight = FALSE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   // show Estoni site
@@ -1180,7 +1114,7 @@ void HandleAnimationOfSectors(void) {
     fSkipSpeakersLocator = TRUE;
   } else if (fOldShowEstoniRefuelHighLight) {
     fOldShowEstoniRefuelHighLight = FALSE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   // don't show sector locator over the speaker's sector if he is talking about another sector -
@@ -1237,185 +1171,6 @@ INT16 LastSectorInHelicoptersPath(void) {
 
   return ((INT16)uiLocation);
 }
-
-/*
-INT32 GetTotalCostOfHelicopterTrip( void )
-{
-        // get cost of helicopter trip
-
-        struct path* pNode = NULL, pTempNode = NULL;
-        UINT32 uiCost = 0;
-        UINT32 uiLastTempPathSectorId = 0;
-        UINT32 iClosestRefuelPoint = 0;
-        UINT32 uiStartSectorNum = 0;
-        UINT32 uiLength = 0;
-
-        // if the heli is on the move, what is the distance it will move..the length of the merc
-path, less the first node if( CanHelicopterFly( ) == FALSE )
-        {
-                // big number, no go
-                return( 0 );
-        }
-
-        pNode = pVehicleList[ iHelicopterVehicleId ].pMercPath;
-
-        // any path yet?
-        uiLastTempPathSectorId = pVehicleList[ iHelicopterVehicleId ].sSectorX + pVehicleList[
-iHelicopterVehicleId ].sSectorY * MAP_WORLD_X; uiStartSectorNum = uiLastTempPathSectorId;
-
-        if( pNode )
-        {
-                pNode = pNode->pNext;
-        }
-
-        if( pNode != NULL )
-        {
-                while( pNode)
-                {
-                        if( uiLength == 0 )
-                        {
-                                if( pNode->pNext )
-                                {
-                                        if( uiLastTempPathSectorId == pNode->pNext->uiSectorId )
-                                        {
-                                                // do nothing
-                                        }
-                                        else
-                                        {
-                                                uiCost += GetCostOfPassageForHelicopter( ( UINT16 )(
-pNode -> uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pNode->uiSectorId / MAP_WORLD_X ) );
-                                        }
-                                }
-                                else
-                                {
-                                        uiCost += GetCostOfPassageForHelicopter( ( UINT16 )( pNode
--> uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pNode->uiSectorId / MAP_WORLD_X ) );
-                                }
-                        }
-                        else
-                        {
-                                uiCost += GetCostOfPassageForHelicopter( ( UINT16 )( pNode ->
-uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pNode->uiSectorId / MAP_WORLD_X ) );
-                        }
-
-                        uiLength++;
-
-                        uiLastTempPathSectorId = pNode ->uiSectorId;
-                        pNode = pNode ->pNext;
-                }
-        }
-
-
-        pNode = NULL;
-
-        if( pTempHelicopterPath )
-        {
-                pNode = MoveToBeginningOfPathList( pTempHelicopterPath );
-        }
-
-        if( pNode )
-        {
-                pNode = pNode->pNext;
-        }
-
-        // any path yet?
-        if( pNode != NULL )
-        {
-                while( pNode )
-                {
-                        if( uiLength == 0 )
-                        {
-                                if( pNode->pNext )
-                                {
-                                        if( uiLastTempPathSectorId == pNode->pNext->uiSectorId )
-                                        {
-                                                // do nothing
-                                        }
-                                        else
-                                        {
-                                                uiCost += GetCostOfPassageForHelicopter( ( UINT16 )(
-pNode -> uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pNode->uiSectorId / MAP_WORLD_X ) );
-                                        }
-                                }
-                                else
-                                {
-                                        uiCost += GetCostOfPassageForHelicopter( ( UINT16 )( pNode
--> uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pNode->uiSectorId / MAP_WORLD_X ) );
-                                }
-                        }
-                        else
-                        {
-                                uiCost += GetCostOfPassageForHelicopter( ( UINT16 )( pNode ->
-uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pNode->uiSectorId / MAP_WORLD_X ) );
-                        }
-
-                        uiLength++;
-
-                        //uiCost += GetCostOfPassageForHelicopter( ( UINT16 ) ( pNode -> uiSectorId
-% MAP_WORLD_X ), ( UINT16 ) ( pNode->uiSectorId / MAP_WORLD_X ) ); uiLastTempPathSectorId = pNode
-->uiSectorId; pNode = pNode ->pNext;
-                }
-        }
-
-        iClosestRefuelPoint = ( INT16 )( CALCULATE_STRATEGIC_INDEX( ubRefuelList[
-LocationOfNearestRefuelPoint( FALSE ) ][ 0 ], ubRefuelList[ LocationOfNearestRefuelPoint( FALSE ) ][
-1 ] ) );
-
-        pNode = NULL;
-
-        if( uiLastTempPathSectorId != iClosestRefuelPoint )
-        {
-                pNode = BuildAStrategicPath( pNode, ( INT16 )( uiLastTempPathSectorId ), ( INT16
-)iClosestRefuelPoint, pVehicleList[ iHelicopterVehicleId ].ubMovementGroup, FALSE );
-//		pNode = BuildAStrategicPath( pNode, ( INT16 )( uiLastTempPathSectorId ), ( INT16
-)iClosestRefuelPoint, pVehicleList[ iHelicopterVehicleId ].ubMovementGroup, FALSE, TRUE );
-
-                pNode = MoveToBeginningOfPathList( pNode );
-        }
-
-        pTempNode = pNode;
-        uiLength = 0;
-
-        if( pTempNode )
-        {
-                pTempNode = pTempNode->pNext;
-        }
-
-        while( pTempNode )
-        {
-                if( uiLength == 0 )
-                        {
-                                if( pTempNode->pNext )
-                                {
-                                        if( uiLastTempPathSectorId == pNode->pNext->uiSectorId )
-                                        {
-                                                // do nothing
-                                        }
-                                        else
-                                        {
-                                                uiCost += GetCostOfPassageForHelicopter( ( UINT16 )(
-pTempNode -> uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pTempNode->uiSectorId / MAP_WORLD_X ) );
-                                        }
-                                }
-                                else
-                                {
-                                        uiCost += GetCostOfPassageForHelicopter( ( UINT16 )(
-pTempNode -> uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pTempNode->uiSectorId / MAP_WORLD_X ) );
-                                }
-                        }
-                        else
-                        {
-                                uiCost += GetCostOfPassageForHelicopter( ( UINT16 )( pTempNode ->
-uiSectorId % MAP_WORLD_X ), ( UINT16 ) ( pTempNode->uiSectorId / MAP_WORLD_X ) );
-                        }
-
-                uiLength++;
-                pTempNode = pTempNode->pNext;
-        }
-
-        return( ( INT32 )uiCost );
-}
-*/
 
 void HandleHelicopterOnGroundGraphic(void) {
   UINT8 ubSite = 0;
@@ -1539,64 +1294,6 @@ BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite) {
   return (FALSE);
 }
 
-/*
-BOOLEAN WillAirRaidBeStopped( INT16 sSectorX, INT16 sSectorY )
-{
-        UINT8 ubSamNumber = 0;
-        INT8 bSAMCondition;
-        UINT8 ubChance;
-
-
-        // if enemy controls this SAM site, then it can't stop an air raid
-        if( StrategicMap[CALCULATE_STRATEGIC_INDEX( sSectorX, sSectorY ) ].fEnemyAirControlled ==
-TRUE )
-        {
-                return( FALSE );
-        }
-
-        // which SAM controls this sector?
-        ubSamNumber = ubSAMControlledSectors[ sSectorX ][ sSectorY ];
-
-        // if none of them
-        if (ubSamNumber == 0)
-        {
-                return( FALSE);
-        }
-
-        // get the condition of that SAM site (NOTE: SAM #s are 1-4, but indexes are 0-3!!!)
-        Assert( ubSamNumber <= NUMBER_OF_SAMS );
-        bSAMCondition = StrategicMap[ SECTOR_INFO_TO_STRATEGIC_INDEX( pSamList[ ubSamNumber - 1 ] )
-].bSAMCondition;
-
-        // if it's too busted to work, then it can't stop an air raid
-        if( bSAMCondition < MIN_CONDITION_FOR_SAM_SITE_TO_WORK )
-        {
-                // no problem, SAM site not working
-                return( FALSE );
-        }
-
-
-        // Friendly airspace controlled by a working SAM site, so SAM site fires a SAM at air raid
-bomber
-
-        // calc chance that chopper will be shot down
-        ubChance = bSAMCondition;
-
-        // there's a fair chance of a miss even if the SAM site is in perfect working order
-        if (ubChance > MAX_SAM_SITE_ACCURACY)
-        {
-                ubChance = MAX_SAM_SITE_ACCURACY;
-        }
-
-        if( PreRandom( 100 ) < ubChance)
-        {
-                return( TRUE );
-        }
-
-        return( FALSE );
-}
-*/
-
 void HeliCrashSoundStopCallback(void *pData) { SkyriderDestroyed(); }
 
 BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(INT16 sSectorX, INT16 sSectorY) {
@@ -1605,7 +1302,7 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(INT16 sSectorX, INT16 sSectorY) 
   UINT8 ubChance;
 
   // if this sector is in friendly airspace, we're safe
-  if (StrategicMap[CALCULATE_STRATEGIC_INDEX(sSectorX, sSectorY)].fEnemyAirControlled == FALSE) {
+  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyAirControlled == FALSE) {
     // no problem, friendly airspace
     return (FALSE);
   }
@@ -1620,8 +1317,7 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(INT16 sSectorX, INT16 sSectorY) 
 
   // get the condition of that SAM site (NOTE: SAM #s are 1-4, but indexes are 0-3!!!)
   Assert(ubSamNumber <= NUMBER_OF_SAMS);
-  bSAMCondition =
-      StrategicMap[SECTOR_INFO_TO_STRATEGIC_INDEX(pSamList[ubSamNumber - 1])].bSAMCondition;
+  bSAMCondition = StrategicMap[SectorID8To16(pSamList[ubSamNumber - 1])].bSAMCondition;
 
   // if the SAM site is too damaged to be a threat
   if (bSAMCondition < MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {
@@ -1827,8 +1523,8 @@ INT16 GetNumSafeSectorsInPath(void) {
   }
 
   // may need to skip the sector the chopper is currently in
-  iHeliSector = CALCULATE_STRATEGIC_INDEX(pVehicleList[iHelicopterVehicleId].sSectorX,
-                                          pVehicleList[iHelicopterVehicleId].sSectorY);
+  iHeliSector = GetSectorID16(pVehicleList[iHelicopterVehicleId].sSectorX,
+                              pVehicleList[iHelicopterVehicleId].sSectorY);
 
   // get chopper's group ptr
   pGroup = GetGroup(pVehicleList[iHelicopterVehicleId].ubMovementGroup);
@@ -1842,8 +1538,8 @@ INT16 GetNumSafeSectorsInPath(void) {
     // AFTER plotting is done)
     if (((INT32)pNode->uiSectorId == iHeliSector) && (pNode->pNext != NULL) &&
         !GroupBetweenSectorsAndSectorXYIsInDifferentDirection(
-            pGroup, (UINT8)GET_X_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId),
-            (UINT8)GET_Y_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId))) {
+            pGroup, SectorID16_X(pNode->pNext->uiSectorId),
+            SectorID16_Y(pNode->pNext->uiSectorId))) {
       pNode = pNode->pNext;
     }
 
@@ -1867,8 +1563,8 @@ INT16 GetNumSafeSectorsInPath(void) {
     // of it that would count the sector twice
     if ((((INT32)pNode->uiSectorId == iHeliSector) && (pNode->pNext != NULL) &&
          !GroupBetweenSectorsAndSectorXYIsInDifferentDirection(
-             pGroup, (UINT8)GET_X_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId),
-             (UINT8)GET_Y_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId))) ||
+             pGroup, SectorID16_X(pNode->pNext->uiSectorId),
+             SectorID16_Y(pNode->pNext->uiSectorId))) ||
         (GetLengthOfPath(pVehicleList[iHelicopterVehicleId].pMercPath) > 0)) {
       pNode = pNode->pNext;
     }
@@ -1903,8 +1599,8 @@ INT16 GetNumUnSafeSectorsInPath(void) {
   }
 
   // may need to skip the sector the chopper is currently in
-  iHeliSector = CALCULATE_STRATEGIC_INDEX(pVehicleList[iHelicopterVehicleId].sSectorX,
-                                          pVehicleList[iHelicopterVehicleId].sSectorY);
+  iHeliSector = GetSectorID16(pVehicleList[iHelicopterVehicleId].sSectorX,
+                              pVehicleList[iHelicopterVehicleId].sSectorY);
 
   // get chopper's group ptr
   pGroup = GetGroup(pVehicleList[iHelicopterVehicleId].ubMovementGroup);
@@ -1918,8 +1614,8 @@ INT16 GetNumUnSafeSectorsInPath(void) {
     // AFTER plotting is done)
     if (((INT32)pNode->uiSectorId == iHeliSector) && (pNode->pNext != NULL) &&
         !GroupBetweenSectorsAndSectorXYIsInDifferentDirection(
-            pGroup, (UINT8)GET_X_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId),
-            (UINT8)GET_Y_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId))) {
+            pGroup, SectorID16_X(pNode->pNext->uiSectorId),
+            SectorID16_Y(pNode->pNext->uiSectorId))) {
       pNode = pNode->pNext;
     }
 
@@ -1943,8 +1639,8 @@ INT16 GetNumUnSafeSectorsInPath(void) {
     // of it that would count the sector twice
     if ((((INT32)pNode->uiSectorId == iHeliSector) && (pNode->pNext != NULL) &&
          !GroupBetweenSectorsAndSectorXYIsInDifferentDirection(
-             pGroup, (UINT8)GET_X_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId),
-             (UINT8)GET_Y_FROM_STRATEGIC_INDEX(pNode->pNext->uiSectorId))) ||
+             pGroup, SectorID16_X(pNode->pNext->uiSectorId),
+             SectorID16_Y(pNode->pNext->uiSectorId))) ||
         (GetLengthOfPath(pVehicleList[iHelicopterVehicleId].pMercPath) > 0)) {
       pNode = pNode->pNext;
     }
@@ -1967,22 +1663,18 @@ void PaySkyriderBill(void) {
   // if we owe anything for the trip
   if (iTotalAccumulatedCostByPlayer > 0) {
     // if player can afford to pay the Skyrider bill
-    if (LaptopSaveInfo.iCurrentBalance >= iTotalAccumulatedCostByPlayer) {
+    if (MoneyGetBalance() >= iTotalAccumulatedCostByPlayer) {
       // no problem, pay the man
       // add the transaction
-      AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, GetWorldTotalMin(),
-                                  -iTotalAccumulatedCostByPlayer);
+      AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -iTotalAccumulatedCostByPlayer);
       ScreenMsg(FONT_MCOLOR_DKRED, MSG_INTERFACE, pSkyriderText[0], iTotalAccumulatedCostByPlayer);
     } else {
       // money owed
-      if (LaptopSaveInfo.iCurrentBalance > 0) {
-        ScreenMsg(FONT_MCOLOR_DKRED, MSG_INTERFACE, pSkyriderText[0],
-                  LaptopSaveInfo.iCurrentBalance);
-        gMercProfiles[SKYRIDER].iBalance =
-            LaptopSaveInfo.iCurrentBalance - iTotalAccumulatedCostByPlayer;
+      if (MoneyGetBalance() > 0) {
+        ScreenMsg(FONT_MCOLOR_DKRED, MSG_INTERFACE, pSkyriderText[0], MoneyGetBalance());
+        gMercProfiles[SKYRIDER].iBalance = MoneyGetBalance() - iTotalAccumulatedCostByPlayer;
         // add the transaction
-        AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, GetWorldTotalMin(),
-                                    -LaptopSaveInfo.iCurrentBalance);
+        AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -MoneyGetBalance());
       } else {
         gMercProfiles[SKYRIDER].iBalance = -iTotalAccumulatedCostByPlayer;
       }
@@ -2008,13 +1700,13 @@ void PayOffSkyriderDebtIfAny() {
   iAmountOwed = -gMercProfiles[SKYRIDER].iBalance;
 
   // if we owe him anything, and have any money
-  if ((iAmountOwed > 0) && (LaptopSaveInfo.iCurrentBalance > 0)) {
-    iPayAmount = min(iAmountOwed, LaptopSaveInfo.iCurrentBalance);
+  if ((iAmountOwed > 0) && (MoneyGetBalance() > 0)) {
+    iPayAmount = min(iAmountOwed, MoneyGetBalance());
 
     // pay the man what we can
     gMercProfiles[SKYRIDER].iBalance += iPayAmount;
     // add the transaction
-    AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, GetWorldTotalMin(), -iPayAmount);
+    AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -iPayAmount);
     // tell player
     ScreenMsg(FONT_MCOLOR_DKRED, MSG_INTERFACE, pSkyriderText[0], iPayAmount);
 
@@ -2048,8 +1740,7 @@ void MakeHeliReturnToBase(void) {
     pVehicleList[iHelicopterVehicleId].pMercPath = AppendStrategicPath(
         MoveToBeginningOfPathList(BuildAStrategicPath(
             NULL, GetLastSectorIdInVehiclePath(iHelicopterVehicleId),
-            (INT16)(CALCULATE_STRATEGIC_INDEX(ubRefuelList[iLocation][0],
-                                              ubRefuelList[iLocation][1])),
+            (INT16)(GetSectorID16(ubRefuelList[iLocation][0], ubRefuelList[iLocation][1])),
             pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE /*, FALSE */)),
         pVehicleList[iHelicopterVehicleId].pMercPath);
     pVehicleList[iHelicopterVehicleId].pMercPath =

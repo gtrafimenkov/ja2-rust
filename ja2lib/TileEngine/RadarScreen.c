@@ -33,6 +33,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SysUtil.h"
+#include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
@@ -263,8 +264,7 @@ void RenderRadarScreen() {
 
     // If night time and on surface, darken the radarmap.
     if (NightTime()) {
-      if ((guiCurrentScreen == MAP_SCREEN && !iCurrentMapSectorZ) ||
-          (guiCurrentScreen == GAME_SCREEN && !gbWorldSectorZ)) {
+      if ((IsMapScreen_2() && !iCurrentMapSectorZ) || (IsTacticalMode() && !gbWorldSectorZ)) {
         SetObjectHandleShade(gusRadarImage, 1);
       }
     }
@@ -320,7 +320,7 @@ void RenderRadarScreen() {
                                  (RADAR_WINDOW_X + RADAR_WINDOW_WIDTH - 1),
                                  (gsRadarY + RADAR_WINDOW_HEIGHT - 1));
 
-  if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if (!(IsMapScreen())) {
     usLineColor = Get16BPPColor(FROMRGB(0, 255, 0));
     RectangleDraw(TRUE, sRadarTLX, sRadarTLY, sRadarBRX, sRadarBRY - 1, usLineColor, pDestBuf);
   }
@@ -332,7 +332,7 @@ void RenderRadarScreen() {
     gfRadarCurrentGuyFlash = !gfRadarCurrentGuyFlash;
   }
 
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) && (fShowMapInventoryPool == TRUE)) {
+  if ((IsMapScreen()) && (fShowMapInventoryPool == TRUE)) {
     for (iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++) {
       iItemNumber = iCounter + iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT;
       // stolen item
@@ -369,7 +369,7 @@ void RenderRadarScreen() {
     }
   }
 
-  if (!(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+  if (!(IsMapScreen())) {
     // RE-RENDER RADAR
     for (cnt = 0; cnt < guiNumMercSlots; cnt++) {
       pSoldier = MercSlots[cnt];
@@ -448,7 +448,7 @@ void RenderRadarScreen() {
   }
   UnLockVideoSurface(FRAME_BUFFER);
 
-  if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) && (fShowMapInventoryPool == TRUE)) {
+  if ((IsMapScreen()) && (fShowMapInventoryPool == TRUE)) {
     InvalidateRegion(RADAR_WINDOW_X, gsRadarY, RADAR_WINDOW_X + RADAR_WINDOW_WIDTH,
                      gsRadarY + RADAR_WINDOW_HEIGHT);
   }
@@ -583,7 +583,7 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
     // set fact regions are destroyed
     fCreated = FALSE;
 
-    if (guiCurrentScreen == GAME_SCREEN) {
+    if (IsTacticalMode()) {
       // dirty region
       fInterfacePanelDirty = DIRTYLEVEL2;
 

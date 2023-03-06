@@ -7,6 +7,7 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/SpeckQuotes.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
@@ -341,7 +342,7 @@ void SettleMercAccounts() {
           gMercProfiles[ubMercID].sSalary * gMercProfiles[ubMercID].iMercMercContractLength;
 
       // if the player can afford to pay this merc
-      if (LaptopSaveInfo.iCurrentBalance >= iPartialPayment + iContractCharge) {
+      if (MoneyGetBalance() >= iPartialPayment + iContractCharge) {
         // Increment the counter that keeps track of the of the number of days the player has paid
         // for merc services
         LaptopSaveInfo.guiNumberOfMercPaymentsInDays +=
@@ -366,7 +367,7 @@ void SettleMercAccounts() {
 
   // add the transaction to the finance page
   AddTransactionToPlayersBook(PAY_SPECK_FOR_MERC, GetMercIDFromMERCArray(gubCurMercIndex),
-                              GetWorldTotalMin(), -iPartialPayment);
+                              -iPartialPayment);
   AddHistoryToPlayersLog(HISTORY_SETTLED_ACCOUNTS_AT_MERC, GetMercIDFromMERCArray(gubCurMercIndex),
                          GetWorldTotalMin(), -1, -1);
 
@@ -391,105 +392,6 @@ void SettleMercAccounts() {
   // Go to the merc homepage to say the quote
   guiCurrentLaptopMode = LAPTOP_MODE_MERC;
   gubArrivedFromMercSubSite = MERC_CAME_FROM_ACCOUNTS_PAGE;
-
-  /*
-
-          //if the player doesnt have enough money to fully pay for the all the mercs contract
-          if( LaptopSaveInfo.iCurrentBalance < giMercTotalContractCharge )
-          {
-                  INT32	iPartialPayment=0;
-                  INT32	iContractCharge=0;
-                  struct SOLDIERTYPE *pSoldier;
-
-                  //try to make a partial payment by looping through all the mercs and settling them
-  1 at a time for(i=0; i<NUMBER_OF_MERCS; i++)
-                  {
-                          ubMercID = GetMercIDFromMERCArray( (UINT8) i );
-
-                          //if the merc is on the team
-                          if( IsMercOnTeam( ubMercID ) )
-                          {
-
-                                  pSoldier = FindSoldierByProfileID( ubMercID, TRUE );
-
-                                  //if we can get the soldier pointer
-                                  if( pSoldier == NULL )
-                                          continue;
-
-                                  //Calc the contract charge
-                                  iContractCharge = gMercProfiles[ ubMercID ].sSalary *
-  pSoldier->iTotalContractLength;
-
-                                  //if the player can afford to pay this merc
-                                  if( LaptopSaveInfo.iCurrentBalance > iContractCharge )
-                                  {
-                                          sSoldierID = GetSoldierIDFromMercID( ubMercID );
-                                          pSoldier = MercPtrs[ sSoldierID ];
-
-                                          LaptopSaveInfo.guiNumberOfMercPaymentsInDays +=
-  pSoldier->iTotalContractLength;
-
-                                          pSoldier->iTotalContractLength = 0;
-
-                                          iPartialPayment += iContractCharge;
-                                  }
-                          }
-                  }
-
-                  if( iPartialPayment != 0 )
-                  {
-                          // add the transaction to the finance page
-                          AddTransactionToPlayersBook( PAY_SPECK_FOR_MERC, GetMercIDFromMERCArray(
-  gubCurMercIndex ), GetWorldTotalMin(), -iPartialPayment ); AddHistoryToPlayersLog(
-  HISTORY_SETTLED_ACCOUNTS_AT_MERC, GetMercIDFromMERCArray( gubCurMercIndex ), GetWorldTotalMin(),
-  -1, -1 );
-                  }
-
-
-  //		DoLapTopMessageBox( MSG_BOX_BLUE_ON_GREY,
-  MercAccountText[MERC_ACCOUNT_NOT_ENOUGH_MONEY], LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
-                  //return to the main page and have speck say quote
-                  guiCurrentLaptopMode = LAPTOP_MODE_MERC;
-                  gubArrivedFromMercSubSite = MERC_CAME_FROM_ACCOUNTS_PAGE;
-
-                  gusMercVideoSpeckSpeech = SPECK_QUOTE_PLAYER_MAKES_PARTIAL_PAYMENT;
-
-                  return;
-          }
-
-          // add the transaction to the finance page
-          AddTransactionToPlayersBook( PAY_SPECK_FOR_MERC, GetMercIDFromMERCArray( gubCurMercIndex
-  ), GetWorldTotalMin(), -giMercTotalContractCharge); AddHistoryToPlayersLog(
-  HISTORY_SETTLED_ACCOUNTS_AT_MERC, GetMercIDFromMERCArray( gubCurMercIndex ), GetWorldTotalMin(),
-  -1, -1 );
-
-          //reset all the mercs time
-          for(i=0; i<NUMBER_OF_MERCS; i++)
-          {
-                  ubMercID = GetMercIDFromMERCArray( (UINT8) i );
-
-                  if( IsMercOnTeam( ubMercID ) )
-                  {
-                          sSoldierID = GetSoldierIDFromMercID( ubMercID );
-                          pSoldier = MercPtrs[ sSoldierID ];
-
-                          LaptopSaveInfo.guiNumberOfMercPaymentsInDays +=
-  pSoldier->iTotalContractLength;
-
-                          pSoldier->iTotalContractLength = 0;
-                  }
-          }
-
-          //if the merc's account was in suspense, re-enable it
-          if( LaptopSaveInfo.gubPlayersMercAccountStatus != MERC_ACCOUNT_INVALID )
-                  LaptopSaveInfo.gubPlayersMercAccountStatus = MERC_ACCOUNT_VALID;
-
-
-          //Go to the merc homepage to say the quote
-          guiCurrentLaptopMode = LAPTOP_MODE_MERC;
-          gubArrivedFromMercSubSite = MERC_CAME_FROM_ACCOUNTS_PAGE;
-          gusMercVideoSpeckSpeech = SPECK_QUOTE_PLAYER_MAKES_FULL_PAYMENT;
-  */
 }
 
 void MercAuthorizePaymentMessageBoxCallBack(UINT8 bExitValue) {

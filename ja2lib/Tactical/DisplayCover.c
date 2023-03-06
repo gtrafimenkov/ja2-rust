@@ -2,6 +2,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/AnimationControl.h"

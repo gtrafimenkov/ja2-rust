@@ -10,8 +10,8 @@
 #include "JAScreens.h"
 #include "LanguageDefines.h"
 #include "Laptop/Finances.h"
-#include "Laptop/LaptopSave.h"
 #include "MessageBoxScreen.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
@@ -26,6 +26,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreen.h"
@@ -67,6 +68,7 @@
 #include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -1084,7 +1086,6 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
     // IF it's the second hand and this hand cannot contain anything, remove the second hand
     // position graphic
     if (sPocket == SECONDHANDPOS && Item[pSoldier->inv[HANDPOS].usItem].fFlags & ITEM_TWO_HANDED) {
-      //			if( guiCurrentScreen != MAP_SCREEN )
       if (guiCurrentItemDescriptionScreen != MAP_SCREEN) {
         BltVideoObjectFromIndex(guiSAVEBUFFER, guiSecItemHiddenVO, 0, 217, 448,
                                 VO_BLT_SRCTRANSPARENCY, NULL);
@@ -1124,7 +1125,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
 
   // if we are in the shop keeper interface
   if (guiTacticalInterfaceFlags & INTERFACE_SHOPKEEP_INTERFACE) {
-    if (ShouldSoldierDisplayHatchOnItem(pSoldier->ubProfile, sPocket) &&
+    if (ShouldSoldierDisplayHatchOnItem(GetSolProfile(pSoldier), sPocket) &&
         !gbInvalidPlacementSlot[sPocket]) {
       fHatchItOut = TRUE;
     }
@@ -1174,7 +1175,7 @@ BOOLEAN CompatibleItemForApplyingOnMerc(struct OBJECTTYPE *pTestObject) {
   UINT16 usItem = pTestObject->usItem;
 
   // ATE: If in mapscreen, return false always....
-  if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+  if (IsMapScreen()) {
     return (FALSE);
   }
 
@@ -2059,8 +2060,6 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
   // Add region
   if ((Item[pObject->usItem].usItemClass & IC_GUN) && pObject->usItem != ROCKET_LAUNCHER) {
     // Add button
-    //    if( guiCurrentScreen != MAP_SCREEN )
-    // if( guiCurrentItemDescriptionScreen != MAP_SCREEN )
     swprintf(pStr, ARR_SIZE(pStr), L"%d/%d", gpItemDescObject->ubGunShotsLeft,
              Weapon[gpItemDescObject->usItem].ubMagSize);
     FilenameForBPP("INTERFACE\\infobox.sti", ubString);
@@ -2207,7 +2206,6 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
   if (gpItemDescObject->usItem != MONEY) {
     for (cnt = 0; cnt < MAX_ATTACHMENTS; cnt++) {
       // Build a mouse region here that is over any others.....
-      //			if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN )
       if (guiCurrentItemDescriptionScreen == MAP_SCREEN)
         MSYS_DefineRegion(&gItemDescAttachmentRegions[cnt],
                           (INT16)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX),
@@ -2469,7 +2467,7 @@ void DoAttachment(void) {
     if (gpItemPointer->usItem == NOTHING) {
       // attachment attached, merge item consumed, etc
 
-      if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+      if (IsMapScreen()) {
         MAPEndItemPointer();
       } else {
         // End Item pickup
@@ -2554,7 +2552,6 @@ void ItemDescAttachmentsCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
           gpItemPointer = &gItemPointer;
           gpItemPointerSoldier = gpItemDescSoldier;
 
-          //				if( guiCurrentScreen == MAP_SCREEN )
           if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
             // Set mouse
             guiExternVo = GetInterfaceGraphicForItem(&(Item[gpItemPointer->usItem]));
@@ -2684,7 +2681,6 @@ void RenderItemDescriptionBox() {
     // Display attachments
     for (cnt = 0; cnt < MAX_ATTACHMENTS; cnt++) {
       if (gpItemDescObject->usAttachItem[cnt] != NOTHING) {
-        //        if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN )
         if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
           sCenX = (INT16)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX + 5);
           sCenY = (INT16)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY - 1);
@@ -2992,7 +2988,7 @@ void RenderItemDescriptionBox() {
 
       // if the player is taking money from their account
       if (gfAddingMoneyToMercFromPlayersAccount)
-        swprintf(pStr, ARR_SIZE(pStr), L"%ld", LaptopSaveInfo.iCurrentBalance);
+        swprintf(pStr, ARR_SIZE(pStr), L"%ld", MoneyGetBalance());
       else
         swprintf(pStr, ARR_SIZE(pStr), L"%ld", gRemoveMoney.uiTotalAmount);
 
@@ -3129,8 +3125,8 @@ void RenderItemDescriptionBox() {
                 gMapWeaponStats[4].sY + gsInvDescY + GetFontHeight(BLOCKFONT) + 2, pStr);
 
         SetFontForeground(5);
-        GetShortSectorString((INT16)SECTORX(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             (INT16)SECTORY(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+        GetShortSectorString((INT16)SectorID8_X(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+                             (INT16)SectorID8_Y(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
                              sTempString, ARR_SIZE(sTempString));
         swprintf(pStr, ARR_SIZE(pStr), L"%s", sTempString);
         FindFontRightCoordinates((INT16)(gMapWeaponStats[4].sX + gsInvDescX),
@@ -3599,8 +3595,8 @@ void RenderItemDescriptionBox() {
                 gWeaponStats[4].sY + gsInvDescY + GetFontHeight(BLOCKFONT) + 2, pStr);
 
         SetFontForeground(5);
-        GetShortSectorString((INT16)SECTORX(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             (INT16)SECTORY(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+        GetShortSectorString((INT16)SectorID8_X(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+                             (INT16)SectorID8_Y(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
                              sTempString, ARR_SIZE(sTempString));
         swprintf(pStr, ARR_SIZE(pStr), L"%s", sTempString);
         FindFontRightCoordinates((INT16)(gWeaponStats[4].sX + gsInvDescX),
@@ -3708,7 +3704,6 @@ void DeleteItemDescriptionBox() {
 
   gfInItemDescBox = FALSE;
 
-  //	if( guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN  )
   if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
     UnloadButtonImage(giMapInvDescButtonImage);
     RemoveButton(giMapInvDescButton);
@@ -3740,10 +3735,9 @@ void DeleteItemDescriptionBox() {
     UnloadButtonImage(giItemDescAmmoButtonImages);
     RemoveButton(giItemDescAmmoButton);
   }
-  //	if(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN )
   if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
     fCharacterInfoPanelDirty = TRUE;
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
     fTeamPanelDirty = TRUE;
     fMapScreenBottomDirty = TRUE;
   }
@@ -3846,7 +3840,7 @@ void BeginKeyRingItemPointer(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyRingPositi
     gpItemPointerSoldier = pSoldier;
     gbItemPointerSrcSlot = ubKeyRingPosition;
 
-    if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+    if ((IsMapScreen())) {
       guiExternVo = GetInterfaceGraphicForItem(&(Item[gpItemPointer->usItem]));
       gusExternVoSubIndex = Item[gpItemPointer->usItem].ubGraphicNum;
 
@@ -4544,7 +4538,7 @@ BOOLEAN HandleItemPointerClick(UINT16 usMapPos) {
           if (SoldierCanSeeCatchComing(pSoldier, gpItemPointerSoldier->sGridNo)) {
             // Setup as being the catch target
             ubThrowActionCode = THROW_TARGET_MERC_CATCH;
-            uiThrowActionData = pSoldier->ubID;
+            uiThrowActionData = GetSolID(pSoldier);
 
             sGridNo = pSoldier->sGridNo;
 
@@ -4728,7 +4722,6 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16
 
   gfInItemStackPopup = TRUE;
 
-  //	if ( !(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )
   if (guiCurrentItemDescriptionScreen != MAP_SCREEN) {
     EnableSMPanelButtons(FALSE, FALSE);
   }
@@ -4819,7 +4812,6 @@ void DeleteItemStackPopup() {
 
   // guiTacticalInterfaceFlags &= (~INTERFACE_NORENDERBUTTONS);
 
-  //	if ( !(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )
   if (guiCurrentItemDescriptionScreen != MAP_SCREEN) {
     EnableSMPanelButtons(TRUE, FALSE);
   }
@@ -4838,7 +4830,7 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
   INT16 sKeyRingItemWidth = 0;
   INT16 sOffSetY = 0, sOffSetX = 0;
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     gsKeyRingPopupInvX = 0;
     sKeyRingItemWidth = MAP_KEY_RING_ROW_WIDTH;
     sOffSetX = 40;
@@ -4903,7 +4895,6 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
 
   // guiTacticalInterfaceFlags |= INTERFACE_NORENDERBUTTONS;
 
-  //	if ( !(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )
   if (guiCurrentItemDescriptionScreen != MAP_SCREEN) {
     EnableSMPanelButtons(FALSE, FALSE);
   }
@@ -4930,7 +4921,7 @@ void RenderKeyRingPopup(BOOLEAN fFullRender) {
   INT16 sKeyRingItemWidth = 0;
   INT16 sOffSetY = 0, sOffSetX = 0;
 
-  if (guiCurrentScreen != MAP_SCREEN) {
+  if (!IsMapScreen_2()) {
     sOffSetY = 8;
   } else {
     sOffSetX = 40;
@@ -4960,7 +4951,7 @@ void RenderKeyRingPopup(BOOLEAN fFullRender) {
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     sKeyRingItemWidth = MAP_KEY_RING_ROW_WIDTH;
   } else {
     // Set some globals
@@ -5031,9 +5022,6 @@ void DeleteKeyRingPopup() {
 
   fInterfacePanelDirty = DIRTYLEVEL2;
 
-  // guiTacticalInterfaceFlags &= (~INTERFACE_NORENDERBUTTONS);
-
-  //	if ( !(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )
   if (guiCurrentItemDescriptionScreen != MAP_SCREEN) {
     EnableSMPanelButtons(TRUE, FALSE);
   }
@@ -5188,7 +5176,7 @@ void ItemPopupRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     // If one in our hand, place it
     if (gpItemPointer != NULL) {
       if (!PlaceObjectAtObjectIndex(gpItemPointer, gpItemPopupObject, (UINT8)uiItemPos)) {
-        if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+        if ((IsMapScreen())) {
           MAPEndItemPointer();
         } else {
           gpItemPointer = NULL;
@@ -5214,7 +5202,7 @@ void ItemPopupRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         // RemoveObjFrom( struct OBJECTTYPE * pObj, UINT8 ubRemoveIndex )
         GetObjFrom(gpItemPopupObject, (UINT8)uiItemPos, &gItemPointer);
 
-        if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN)) {
+        if ((IsMapScreen())) {
           // pick it up
           InternalMAPBeginItemPointer(gpItemPopupSoldier);
         } else {
@@ -5580,7 +5568,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   gfIgnoreScrolling = TRUE;
 
   HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
-  gubSelectSMPanelToMerc = pSoldier->ubID;
+  gubSelectSMPanelToMerc = GetSolID(pSoldier);
   ReEvaluateDisabledINVPanelButtons();
   DisableTacticalTeamPanelButtons(TRUE);
 
@@ -6327,7 +6315,7 @@ void RemoveMoney() {
 
         // take the money from the player
         AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, gpSMCurrentMerc->ubProfile,
-                                    GetWorldTotalMin(), -(INT32)(gpItemDescObject->uiMoneyAmount));
+                                    -(INT32)(gpItemDescObject->uiMoneyAmount));
       }
 
       memcpy(&gMoveingItem, &InvSlot, sizeof(INVENTORY_IN_SLOT));
@@ -6354,7 +6342,7 @@ void RemoveMoney() {
 
         // take the money from the player
         AddTransactionToPlayersBook(TRANSFER_FUNDS_TO_MERC, gpSMCurrentMerc->ubProfile,
-                                    GetWorldTotalMin(), -(INT32)(gpItemDescObject->uiMoneyAmount));
+                                    -(INT32)(gpItemDescObject->uiMoneyAmount));
       } else
         gpItemDescObject->uiMoneyAmount = gRemoveMoney.uiMoneyRemaining;
 
@@ -6576,7 +6564,7 @@ BOOLEAN SaveItemCursorToSavedGame(HWFILE hFile) {
 void UpdateItemHatches() {
   struct SOLDIERTYPE *pSoldier = NULL;
 
-  if (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) {
+  if (IsMapScreen()) {
     if (fShowInventoryFlag && bSelectedInfoChar >= 0) {
       pSoldier = MercPtrs[gCharactersList[bSelectedInfoChar].usSolID];
     }

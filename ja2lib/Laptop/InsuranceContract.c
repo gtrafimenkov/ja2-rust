@@ -9,6 +9,7 @@
 #include "Laptop/InsuranceText.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/Random.h"
@@ -17,6 +18,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -379,7 +381,7 @@ void RenderInsuranceContract() {
          (sNextMercID <= gTacticalStatus.Team[gbPlayerNum].bLastID)) {
     sMercID = gubInsuranceMercArray[sNextMercID];
 
-    pSoldier = &Menptr[GetSoldierIDFromMercID((UINT8)sMercID)];
+    pSoldier = GetSoldierByID(GetSoldierIDFromMercID((UINT8)sMercID));
 
     if ((sMercID != -1) && MercIsInsurable(pSoldier)) {
       DisplayOrderGrid(ubCount, (UINT8)sMercID);
@@ -476,7 +478,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
 
   struct SOLDIERTYPE *pSoldier;
 
-  pSoldier = &Menptr[GetSoldierIDFromMercID(ubMercID)];
+  pSoldier = GetSoldierByID(GetSoldierIDFromMercID(ubMercID));
 
   usPosX = usPosY = 0;
 
@@ -546,7 +548,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
                    INS_FONT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   // Get the text to display the mercs current insurance contract status
-  if (IsMercDead(pSoldier->ubProfile)) {
+  if (IsMercDead(GetSolProfile(pSoldier))) {
     // if the merc has a contract
     if (pSoldier->usLifeInsurance) {
       // Display the contract text
@@ -669,7 +671,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   // if the soldier can get insurance, calculate a new cost
   if (CanSoldierExtendInsuranceContract(pSoldier)) {
     iCostOfContract = CalculateInsuranceContractCost(
-        CalculateSoldiersInsuranceContractLength(pSoldier), pSoldier->ubProfile);
+        CalculateSoldiersInsuranceContractLength(pSoldier), GetSolProfile(pSoldier));
   }
 
   else {
@@ -860,7 +862,7 @@ contract if( pSoldier->usLifeInsurance )
                 if( uiInsuranceContractLength != 0 )
                 {
                         iAmount = CalculateInsuranceContractCost( uiInsuranceContractLength,
-pSoldier->ubProfile);
+GetSolProfile(pSoldier));
                 }
                 //else we are just calculating the new figure
                 else
@@ -872,7 +874,7 @@ pSoldier->ubProfile);
         else
         {
                 iAmount = CalculateInsuranceContractCost( uiInsuranceContractLength,
-pSoldier->ubProfile);
+GetSolProfile(pSoldier));
         }
 
         return( iAmount );
@@ -1005,7 +1007,8 @@ void HandleAcceptButton(UINT8 ubSoldierID, UINT8 ubFormID) {
   ubFormID--;
 
   PurchaseOrExtendInsuranceForSoldier(
-      &Menptr[ubSoldierID], CalculateSoldiersInsuranceContractLength(&Menptr[ubSoldierID]));
+      GetSoldierByID(ubSoldierID),
+      CalculateSoldiersInsuranceContractLength(GetSoldierByID(ubSoldierID)));
 
   RenderInsuranceContract();
 }
@@ -1021,7 +1024,7 @@ void DailyUpdateOfInsuredMercs() {
 
   for (pSoldier = MercPtrs[cnt]; cnt <= bLastTeamID; cnt++, pSoldier++) {
     // if the soldier is in the team array
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       // if the merc has life insurance
       if (pSoldier->usLifeInsurance) {
         // if the merc wasn't just hired
@@ -1029,7 +1032,7 @@ void DailyUpdateOfInsuredMercs() {
           // if the contract has run out of time
           if (GetTimeRemainingOnSoldiersInsuranceContract(pSoldier) <= 0) {
             // if the soldier isn't dead
-            if (!IsMercDead(pSoldier->ubProfile)) {
+            if (!IsMercDead(GetSolProfile(pSoldier))) {
               pSoldier->usLifeInsurance = 0;
               pSoldier->iTotalLengthOfInsuranceContract = 0;
               pSoldier->iStartOfInsuranceContract = 0;
@@ -1053,7 +1056,7 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID) {
   UINT32 uiTotalInsurancePremium;
   struct SOLDIERTYPE *pSoldier;
 
-  pSoldier = &Menptr[GetSoldierIDFromMercID(ubMercID)];
+  pSoldier = GetSoldierByID(GetSoldierIDFromMercID(ubMercID));
 
   // only mercs with at least 2 days to go on their employment contract are insurable
   // def: 2/5/99.  However if they already have insurance is SHOULD be ok
@@ -1063,7 +1066,7 @@ INT32 CalculateInsuranceContractCost(INT32 iLength, UINT8 ubMercID) {
   }
 
   // If the merc is currently being held captive, get out
-  if (pSoldier->bAssignment == ASSIGNMENT_POW) {
+  if (GetSolAssignment(pSoldier) == ASSIGNMENT_POW) {
     return (0);
   }
 
@@ -1155,7 +1158,7 @@ void BuildInsuranceArray() {
   // store profile #s of all insurable mercs in an array
   for (pSoldier = MercPtrs[cnt]; cnt <= bLastTeamID; cnt++, pSoldier++) {
     if (MercIsInsurable(pSoldier)) {
-      gubInsuranceMercArray[gsMaxPlayersOnTeam] = pSoldier->ubProfile;
+      gubInsuranceMercArray[gsMaxPlayersOnTeam] = GetSolProfile(pSoldier);
       gsMaxPlayersOnTeam++;
     }
   }
@@ -1169,9 +1172,9 @@ BOOLEAN AddLifeInsurancePayout(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiDaysToPay;
 
   Assert(pSoldier != NULL);
-  Assert(pSoldier->ubProfile != NO_PROFILE);
+  Assert(GetSolProfile(pSoldier) != NO_PROFILE);
 
-  pProfile = &(gMercProfiles[pSoldier->ubProfile]);
+  pProfile = &(gMercProfiles[GetSolProfile(pSoldier)]);
 
   // if we need to add more array elements
   if (LaptopSaveInfo.ubNumberLifeInsurancePayouts <=
@@ -1191,8 +1194,8 @@ BOOLEAN AddLifeInsurancePayout(struct SOLDIERTYPE *pSoldier) {
     if (!LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].fActive) break;
   }
 
-  LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].ubSoldierID = pSoldier->ubID;
-  LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].ubMercID = pSoldier->ubProfile;
+  LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].ubSoldierID = GetSolID(pSoldier);
+  LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].ubMercID = GetSolProfile(pSoldier);
   LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].fActive = TRUE;
 
   // This uses the merc's latest salaries, ignoring that they may be higher than the salaries paid
@@ -1310,9 +1313,9 @@ void InsuranceContractPayLifeInsuranceForDeadMerc(UINT8 ubPayoutID) {
   }
 
   // add transaction to players account
-  AddTransactionToPlayersBook(
-      INSURANCE_PAYOUT, LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].ubMercID,
-      GetWorldTotalMin(), LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].iPayOutPrice);
+  AddTransactionToPlayersBook(INSURANCE_PAYOUT,
+                              LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].ubMercID,
+                              LaptopSaveInfo.pLifeInsurancePayouts[ubPayoutID].iPayOutPrice);
 
   // add to the history log the fact that the we paid the insurance claim
   AddHistoryToPlayersLog(HISTORY_INSURANCE_CLAIM_PAYOUT,
@@ -1345,7 +1348,7 @@ void InsuranceContractEndGameShutDown() {
 
 BOOLEAN MercIsInsurable(struct SOLDIERTYPE *pSoldier) {
   // only A.I.M. mercs currently on player's team
-  if ((pSoldier->bActive) && (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)) {
+  if ((IsSolActive(pSoldier)) && (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)) {
     // with more than one day left on their employment contract are eligible for insurance
     // the second part is because the insurance doesn't pay for any working day already started at
     // time of death
@@ -1392,7 +1395,7 @@ void EnableDisableIndividualInsuranceContractButton(UINT8 ubMercIDForMercInForm,
   if (sSoldierID == -1) return;
 
   // if the soldiers contract can be extended, enable the button
-  if (CanSoldierExtendInsuranceContract(&Menptr[sSoldierID])) EnableButton(*puiAcceptButton);
+  if (CanSoldierExtendInsuranceContract(GetSoldierByID(sSoldierID))) EnableButton(*puiAcceptButton);
 
   // else the soldier cant extend their insurance contract, disable the button
   else
@@ -1474,7 +1477,8 @@ void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, UINT32 ui
   }
 
   // transfer money
-  iAmountOfMoneyTransfer = CalculateInsuranceContractCost(uiInsuranceLength, pSoldier->ubProfile);
+  iAmountOfMoneyTransfer =
+      CalculateInsuranceContractCost(uiInsuranceLength, GetSolProfile(pSoldier));
 
   // if the user did have insruance already,
   if (pSoldier->usLifeInsurance) {
@@ -1487,13 +1491,13 @@ void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, UINT32 ui
   if (pSoldier->usLifeInsurance) {
     // if the player is extending the contract
     if (iAmountOfMoneyTransfer > 0)
-      AddTransactionToPlayersBook(EXTENDED_INSURANCE, pSoldier->ubProfile, GetWorldTotalMin(),
+      AddTransactionToPlayersBook(EXTENDED_INSURANCE, GetSolProfile(pSoldier),
                                   -(iAmountOfMoneyTransfer));
     else
       Assert(0);
   } else {
     // if the player doesnt have enough money, tell him
-    if (LaptopSaveInfo.iCurrentBalance < iAmountOfMoneyTransfer) {
+    if (MoneyGetBalance() < iAmountOfMoneyTransfer) {
       wchar_t sText[800];
 
       GetInsuranceText(INS_MLTI_NOT_ENOUGH_FUNDS, sText);
@@ -1505,12 +1509,12 @@ void PurchaseOrExtendInsuranceForSoldier(struct SOLDIERTYPE *pSoldier, UINT32 ui
       // else if the player has enought to cover the bill, let him
 
       // the player just purchased life insurance
-      AddTransactionToPlayersBook(PURCHASED_INSURANCE, pSoldier->ubProfile, GetWorldTotalMin(),
+      AddTransactionToPlayersBook(PURCHASED_INSURANCE, GetSolProfile(pSoldier),
                                   -(iAmountOfMoneyTransfer));
 
       // add an entry in the history page for the purchasing of life insurance
-      AddHistoryToPlayersLog(HISTORY_PURCHASED_INSURANCE, pSoldier->ubProfile, GetWorldTotalMin(),
-                             -1, -1);
+      AddHistoryToPlayersLog(HISTORY_PURCHASED_INSURANCE, GetSolProfile(pSoldier),
+                             GetWorldTotalMin(), -1, -1);
 
       // Set that we have life insurance
       pSoldier->usLifeInsurance = 1;
@@ -1540,7 +1544,7 @@ INT32 CalculateSoldiersInsuranceContractLength(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiTimeRemainingOnSoldiersContract = GetTimeRemainingOnSoldiersContract(pSoldier);
 
   // if the merc is dead
-  if (IsMercDead(pSoldier->ubProfile)) return (0);
+  if (IsMercDead(GetSolProfile(pSoldier))) return (0);
 
   // only mercs with at least 2 days to go on their employment contract are insurable
   // def: 2/5/99.  However if they already have insurance is SHOULD be ok
@@ -1584,7 +1588,7 @@ INT32 CalcStartDayOfInsurance(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiDayToStartInsurance = 0;
 
   // if the soldier was just hired ( in transit ), and the game didnt just start
-  if (pSoldier->bAssignment == IN_TRANSIT && !DidGameJustStart()) {
+  if (GetSolAssignment(pSoldier) == IN_TRANSIT && !DidGameJustStart()) {
     uiDayToStartInsurance = GetWorldDay();
   } else {
     // Get tomorows date ( and convert it to days )
@@ -1600,7 +1604,7 @@ BOOLEAN AreAnyAimMercsOnTeam() {
   struct SOLDIERTYPE *pSoldier = NULL;
 
   for (sNextMercID = 0; sNextMercID <= gTacticalStatus.Team[gbPlayerNum].bLastID; sNextMercID++) {
-    pSoldier = &Menptr[GetSoldierIDFromMercID((UINT8)sNextMercID)];
+    pSoldier = GetSoldierByID(GetSoldierIDFromMercID((UINT8)sNextMercID));
 
     // check to see if any of the mercs are AIM mercs
     if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {

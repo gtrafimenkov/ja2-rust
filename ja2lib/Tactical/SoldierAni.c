@@ -15,6 +15,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/StrategicStatus.h"
 #include "Strategic/StrategicTownLoyalty.h"
@@ -62,6 +63,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/EventPump.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
@@ -69,7 +71,7 @@
 
 #define NO_JUMP 0
 #define MAX_ANIFRAMES_PER_FLASH 2
-//#define		TIME_FOR_RANDOM_ANIM_CHECK	10
+// #define		TIME_FOR_RANDOM_ANIM_CHECK	10
 #define TIME_FOR_RANDOM_ANIM_CHECK 2
 
 BOOLEAN gfLastMercTalkedAboutKillingID = NOBODY;
@@ -307,7 +309,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // SHOOT GUN
           // MAKE AN EVENT, BUT ONLY DO STUFF IF WE OWN THE GUY!
-          SFireWeapon.usSoldierID = pSoldier->ubID;
+          SFireWeapon.usSoldierID = GetSolID(pSoldier);
           SFireWeapon.uiUniqueId = pSoldier->uiUniqueSoldierIdValue;
           SFireWeapon.sTargetGridNo = pSoldier->sTargetGridNo;
           SFireWeapon.bTargetLevel = pSoldier->bTargetLevel;
@@ -670,7 +672,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
               //							DebugMsg( TOPIC_JA2,
               // DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - aborting start of attack") );
               //							FreeUpAttacker(
-              // pSoldier->ubID );
+              // GetSolID(pSoldier) );
             }
 
             // ATE; Reduce it due to animation being stopped...
@@ -853,7 +855,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
                                  pSoldier->pThrowParams->dX, pSoldier->pThrowParams->dY,
                                  pSoldier->pThrowParams->dZ, pSoldier->pThrowParams->dForceX,
                                  pSoldier->pThrowParams->dForceY, pSoldier->pThrowParams->dForceZ,
-                                 pSoldier->ubID, pSoldier->pThrowParams->ubActionCode,
+                                 GetSolID(pSoldier), pSoldier->pThrowParams->ubActionCode,
                                  pSoldier->pThrowParams->uiActionData);
 
             // Remove object
@@ -993,7 +995,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
               pSoldier->uiStatusFlags &= (~SOLDIER_NPC_DOING_PUNCH);
 
               // Trigger approach...
-              TriggerNPCWithGivenApproach(pSoldier->ubProfile,
+              TriggerNPCWithGivenApproach(GetSolProfile(pSoldier),
                                           (UINT8)pSoldier->uiPendingActionData4, FALSE);
             }
 
@@ -1001,9 +1003,9 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             {
               BOOLEAN fMartialArtist = FALSE;
 
-              if (pSoldier->ubProfile != NO_PROFILE) {
-                if (gMercProfiles[pSoldier->ubProfile].bSkillTrait == MARTIALARTS ||
-                    gMercProfiles[pSoldier->ubProfile].bSkillTrait2 == MARTIALARTS) {
+              if (GetSolProfile(pSoldier) != NO_PROFILE) {
+                if (gMercProfiles[GetSolProfile(pSoldier)].bSkillTrait == MARTIALARTS ||
+                    gMercProfiles[GetSolProfile(pSoldier)].bSkillTrait2 == MARTIALARTS) {
                   fMartialArtist = TRUE;
                 }
               }
@@ -1292,8 +1294,8 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // CODE: GIVE ITEM
           SoldierGiveItemFromAnimation(pSoldier);
-          if (pSoldier->ubProfile != NO_PROFILE && pSoldier->ubProfile >= FIRST_NPC) {
-            TriggerNPCWithGivenApproach(pSoldier->ubProfile, APPROACH_DONE_GIVING_ITEM, FALSE);
+          if (GetSolProfile(pSoldier) != NO_PROFILE && GetSolProfile(pSoldier) >= FIRST_NPC) {
+            TriggerNPCWithGivenApproach(GetSolProfile(pSoldier), APPROACH_DONE_GIVING_ITEM, FALSE);
           }
           break;
 
@@ -1309,7 +1311,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // ChangeSoldierState( pSoldier, RAISE_RIFLE, 0 , FALSE );
           // return( TRUE );
           // Delete guy
-          // TacticalRemoveSoldier( pSoldier->ubID );
+          // TacticalRemoveSoldier( GetSolID(pSoldier) );
           // return( FALSE );
           break;
 
@@ -1580,7 +1582,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
                         pSoldier->ubDoorOpeningNoise, NOISE_CREAKING);
               //	gfDelayResolvingBestSighting = FALSE;
 
-              gubInterruptProvoker = pSoldier->ubID;
+              gubInterruptProvoker = GetSolID(pSoldier);
               AllTeamsLookForAll(TRUE);
 
               // ATE: Now, check AI guy to cancel what he was going....
@@ -1703,7 +1705,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
               // ATE: OK - the above call can potentially
               // render the soldier bactive to false - check heare
-              if (!pSoldier->bActive) {
+              if (!IsSolActive(pSoldier)) {
                 return (FALSE);
               }
 
@@ -2077,7 +2079,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             INT32 iSoundID = 0;
             BOOLEAN fDoCry = FALSE;
 
-            // if ( SoldierOnScreen( pSoldier->ubID ) )
+            // if ( SoldierOnScreen( GetSolID(pSoldier) ) )
             {
               switch (pSoldier->usActionData) {
                 case CALL_1_PREY:
@@ -2183,8 +2185,8 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 724:
 
           // Play ass scratch
-          // PlaySoldierJA2Sample( pSoldier->ubID, (UINT8)( IDLE_SCRATCH ), RATE_11025, SoundVolume(
-          // HIGHVOLUME, pSoldier->sGridNo ), 1, SoundDir( pSoldier->sGridNo ), TRUE );
+          // PlaySoldierJA2Sample( GetSolID(pSoldier), (UINT8)( IDLE_SCRATCH ), RATE_11025,
+          // SoundVolume( HIGHVOLUME, pSoldier->sGridNo ), 1, SoundDir( pSoldier->sGridNo ), TRUE );
           break;
 
         case 725:
@@ -2377,7 +2379,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // Dish out damage!
           EVENT_SoldierGotHit(MercPtrs[pSoldier->uiPendingActionData4], TAKE_DAMAGE_BLADE,
                               (INT16)25, (INT16)25, gOppositeDirection[pSoldier->bDirection], 50,
-                              pSoldier->ubID, 0, ANIM_PRONE, 0, 0);
+                              GetSolID(pSoldier), 0, ANIM_PRONE, 0, 0);
         } break;
 
         case 762: {
@@ -2658,7 +2660,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN ShouldMercSayHappyWithGunQuote(struct SOLDIERTYPE *pSoldier) {
   // How do we do this....
 
-  if (QuoteExp_GotGunOrUsedGun[pSoldier->ubProfile] == QUOTE_SATISFACTION_WITH_GUN_AFTER_KILL) {
+  if (QuoteExp_GotGunOrUsedGun[GetSolProfile(pSoldier)] == QUOTE_SATISFACTION_WITH_GUN_AFTER_KILL) {
     // For one, only once a day...
     if (pSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_LIKESGUN) {
       return (FALSE);
@@ -2967,13 +2969,13 @@ BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) 
         if (MercPtrs[pSoldier->ubAttackerID]->bTeam == gbPlayerNum &&
             gTacticalStatus.ubAttackBusyCount > 0) {
           gTacticalStatus.fKilledEnemyOnAttack = TRUE;
-          gTacticalStatus.ubEnemyKilledOnAttack = pSoldier->ubID;
+          gTacticalStatus.ubEnemyKilledOnAttack = GetSolID(pSoldier);
           gTacticalStatus.ubEnemyKilledOnAttackLocation = pSoldier->sGridNo;
           gTacticalStatus.bEnemyKilledOnAttackLevel = pSoldier->bLevel;
           gTacticalStatus.ubEnemyKilledOnAttackKiller = pSoldier->ubAttackerID;
 
           // also check if we are in mapscreen, if so update soldier's list
-          if (guiCurrentScreen == MAP_SCREEN) {
+          if (IsMapScreen_2()) {
             ReBuildCharactersList();
           }
         } else if (pSoldier->bVisible == TRUE) {
@@ -3060,7 +3062,7 @@ BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) 
     }
   }
 
-  if (pSoldier->bLife > 0) {
+  if (IsSolAlive(pSoldier)) {
     // If we are here - something funny has heppende
     // We either have played a death animation when we are not dead, or we are calling
     // this ani code in an animation which is not a death animation
@@ -3144,8 +3146,8 @@ BOOLEAN CheckForAndHandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfM
   return (FALSE);
 }
 
-//#define TESTFALLBACK
-//#define TESTFALLFORWARD
+// #define TESTFALLBACK
+// #define TESTFALLFORWARD
 
 void CheckForAndHandleSoldierIncompacitated(struct SOLDIERTYPE *pSoldier) {
   INT16 sNewGridNo;
@@ -3211,7 +3213,7 @@ void CheckForAndHandleSoldierIncompacitated(struct SOLDIERTYPE *pSoldier) {
       if (0)
 #else
       if (Random(100) > 40 && IS_MERC_BODY_TYPE(pSoldier) &&
-          !IsProfileATerrorist(pSoldier->ubProfile))
+          !IsProfileATerrorist(GetSolProfile(pSoldier)))
 #endif
       {
         // CHECK IF WE HAVE AN ATTACKER, TAKE OPPOSITE DIRECTION!
@@ -3554,7 +3556,7 @@ BOOLEAN OKFallDirection(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel
 
     // must make sure that structure data can be added in the direction of the target
 
-    usStructureID = pSoldier->ubID;
+    usStructureID = GetSolID(pSoldier);
 
     // Okay this is really SCREWY but it's due to the way this function worked before and must
     // work now.  The function is passing in an adjacent gridno but we need to place the structure
@@ -3711,14 +3713,14 @@ void KickOutWheelchair(struct SOLDIERTYPE *pSoldier) {
 
   EVENT_StopMerc(pSoldier, sNewGridNo, pSoldier->bDirection);
   pSoldier->ubBodyType = REGMALE;
-  if (pSoldier->ubProfile == SLAY && pSoldier->bTeam == CIV_TEAM && !pSoldier->bNeutral) {
-    HandleNPCDoAction(pSoldier->ubProfile, NPC_ACTION_THREATENINGLY_RAISE_GUN, 0);
+  if (GetSolProfile(pSoldier) == SLAY && pSoldier->bTeam == CIV_TEAM && !pSoldier->bNeutral) {
+    HandleNPCDoAction(GetSolProfile(pSoldier), NPC_ACTION_THREATENINGLY_RAISE_GUN, 0);
   } else {
     EVENT_InitNewSoldierAnim(pSoldier, STANDING, 0, TRUE);
   }
 
   // If this person has a profile ID, set body type to regmale
-  if (pSoldier->ubProfile != NO_PROFILE) {
-    gMercProfiles[pSoldier->ubProfile].ubBodyType = REGMALE;
+  if (GetSolProfile(pSoldier) != NO_PROFILE) {
+    gMercProfiles[GetSolProfile(pSoldier)].ubBodyType = REGMALE;
   }
 }

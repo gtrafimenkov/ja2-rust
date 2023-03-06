@@ -1,12 +1,14 @@
 #include "Tactical/ShopKeeperInterface.h"
 
 #include "BuildDefines.h"
+#include "CharList.h"
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Personnel.h"
 #include "MessageBoxScreen.h"
+#include "Money.h"
 #include "Rect.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
@@ -20,6 +22,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/MapScreenInterface.h"
 #include "Strategic/Quests.h"
@@ -108,8 +111,8 @@ SKIRGBCOLOR SkiGlowColorsA[] = {
 #define SKI_PAGE_DOWN_ARROWS_Y 102
 
 // Evaluate:
-//#define		SKI_EVALUATE_BUTTON_X							15
-//#define		SKI_EVALUATE_BUTTON_Y							233
+// #define		SKI_EVALUATE_BUTTON_X							15
+// #define		SKI_EVALUATE_BUTTON_Y							233
 
 #define SKI_TRANSACTION_BUTTON_X 147  // 214
 #define SKI_TRANSACTION_BUTTON_Y 233  // SKI_EVALUATE_BUTTON_Y
@@ -196,11 +199,11 @@ SKIRGBCOLOR SkiGlowColorsA[] = {
 #define SKI_ITEM_MOVEMENT_AREA_X 85
 #define SKI_ITEM_MOVEMENT_AREA_Y 263
 #define SKI_ITEM_MOVEMENT_AREA_WIDTH (640 - SKI_ITEM_MOVEMENT_AREA_X)
-//#define		SKI_ITEM_MOVEMENT_AREA_WIDTH					448
+// #define		SKI_ITEM_MOVEMENT_AREA_WIDTH					448
 #define SKI_ITEM_MOVEMENT_AREA_HEIGHT 215  // 72
 
 #define SKI_DEALER_OFFER_AREA_Y 148
-//#define		SKI_DEALER_OFFER_AREA_Y 148
+// #define		SKI_DEALER_OFFER_AREA_Y 148
 
 #define SKI_ITEM_NUMBER_TEXT_OFFSET_X 50
 #define SKI_ITEM_NUMBER_TEXT_OFFSET_Y 15
@@ -833,13 +836,13 @@ BOOLEAN EnterShopKeeperInterface() {
        ubCnt <= gTacticalStatus.Team[OUR_TEAM].bLastID; ubCnt++) {
     pSoldier = MercPtrs[ubCnt];
 
-    if (pSoldier->bActive && (pSoldier->ubProfile != NO_PROFILE) &&
+    if (IsSolActive(pSoldier) && (GetSolProfile(pSoldier) != NO_PROFILE) &&
         !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) && !AM_A_ROBOT(pSoldier)) {
       // remember whose face is in this slot
-      gubArrayOfEmployedMercs[gubNumberMercsInArray] = pSoldier->ubProfile;
+      gubArrayOfEmployedMercs[gubNumberMercsInArray] = GetSolProfile(pSoldier);
 
       // Create the string for the face file name
-      sprintf(zTemp, "FACES\\33FACE\\%02d.sti", gMercProfiles[pSoldier->ubProfile].ubFaceIndex);
+      sprintf(zTemp, "FACES\\33FACE\\%02d.sti", gMercProfiles[GetSolProfile(pSoldier)].ubFaceIndex);
 
       // While we are at it, add their small face
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -1024,7 +1027,7 @@ BOOLEAN EnterShopKeeperInterface() {
     } else {
       // add the item back to the current PC into the slot it came from
       CopyObj(&gItemToAdd.ItemObject,
-              &Menptr[gpSMCurrentMerc->ubID].inv[gItemToAdd.bPreviousInvPos]);
+              &GetSoldierByID(gpSMCurrentMerc->ubID)->inv[gItemToAdd.bPreviousInvPos]);
     }
 
     // Clear the contents of the structure
@@ -1070,7 +1073,7 @@ BOOLEAN InitShopKeepersFace(UINT8 ubMercID) {
 #endif
   } else {
     // Create the facial index
-    giShopKeeperFaceIndex = InitFace(ubMercID, pSoldier->ubID, FACE_BIGFACE);
+    giShopKeeperFaceIndex = InitFace(ubMercID, GetSolID(pSoldier), FACE_BIGFACE);
   }
 
   SetAutoFaceActive(FRAME_BUFFER, FACE_AUTO_RESTORE_BUFFER, giShopKeeperFaceIndex, SKI_FACE_X,
@@ -1328,7 +1331,7 @@ BOOLEAN RenderShopKeeperInterface() {
                        CENTER_JUSTIFIED);
 
   // Display the players current balance value
-  swprintf(zMoney, ARR_SIZE(zMoney), L"%d", LaptopSaveInfo.iCurrentBalance);
+  swprintf(zMoney, ARR_SIZE(zMoney), L"%d", MoneyGetBalance());
 
   InsertCommasForDollarFigure(zMoney);
   InsertDollarSignInToString(zMoney);
@@ -4628,13 +4631,13 @@ void HandleAtmOK() {
 
   } else if (gubCurrentSkiAtmMode == SKI_ATM_GIVE_MODE) {
     // are we tring to take more then we have?
-    if (iAmountToTransfer > LaptopSaveInfo.iCurrentBalance) {
+    if (iAmountToTransfer > MoneyGetBalance()) {
       if (LaptopSaveInfo.iCurrentBalance == 0)
         memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
       else {
         // Set the amount to transfer
         swprintf(gzSkiAtmTransferString, ARR_SIZE(gzSkiAtmTransferString), L"%d",
-                 LaptopSaveInfo.iCurrentBalance);
+                 MoneyGetBalance());
       }
 
       gubCurrentSkiAtmMode = SKI_ATM_ERR_GIVE_MODE;
@@ -4842,7 +4845,7 @@ void HandleCurrentModeText(UINT8 ubMode) {
       break;
 
     case SKI_ATM_DISPLAY_PLAYERS_BALANCE:
-      swprintf(zMoney, ARR_SIZE(zMoney), L"%d", LaptopSaveInfo.iCurrentBalance);
+      swprintf(zMoney, ARR_SIZE(zMoney), L"%d", MoneyGetBalance());
       InsertCommasForDollarFigure(zMoney);
       InsertDollarSignInToString(zMoney);
 
@@ -5428,7 +5431,7 @@ void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(UINT8 bExitValue) 
 
     AddTransactionToPlayersBook(PURCHASED_ITEM_FROM_DEALER,
                                 ArmsDealerInfo[gbSelectedArmsDealerID].ubShopKeeperID,
-                                GetWorldTotalMin(), -iMoneyToDeduct);
+                                -iMoneyToDeduct);
   }
 
   // done, re-enable calls to PerformTransaction()
@@ -6146,7 +6149,7 @@ void IfMercOwnedRemoveItemFromMercInv2(UINT8 ubOwnerProfileId, INT8 bOwnerSlotId
     Assert(CanMercInteractWithSelectedShopkeeper(MercPtrs[sSoldierID]));
 
     // remove the object from that merc's original inventory slot
-    fSuccess = RemoveObjectFromSlot(&Menptr[sSoldierID], bOwnerSlotId, &ObjectToRemove);
+    fSuccess = RemoveObjectFromSlot(GetSoldierByID(sSoldierID), bOwnerSlotId, &ObjectToRemove);
     Assert(fSuccess);
   }
 }
@@ -6248,7 +6251,7 @@ BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier) {
     return (FALSE);
   }
 
-  if (pSoldier->bActive && pSoldier->bInSector && IsMercOnCurrentSquad(pSoldier) &&
+  if (IsSolActive(pSoldier) && pSoldier->bInSector && IsMercOnCurrentSquad(pSoldier) &&
       (pSoldier->bLife >= OKLIFE) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) &&
       !AM_A_ROBOT(pSoldier)) {
     sDestGridNo = pShopkeeper->sGridNo;
@@ -6674,7 +6677,7 @@ UINT32 EvaluateInvSlot(INVENTORY_IN_SLOT *pInvSlot) {
   if (gbSelectedArmsDealerID == ARMS_DEALER_MICKY) {
     INT16 sSoldierID;
     sSoldierID = GetSoldierIDFromMercID(ArmsDealerInfo[gbSelectedArmsDealerID].ubShopKeeperID);
-    if ((sSoldierID != -1) && (GetDrunkLevel(&Menptr[sSoldierID]) == DRUNK)) {
+    if ((sSoldierID != -1) && (GetDrunkLevel(GetSoldierByID(sSoldierID)) == DRUNK)) {
       // Micky is DRUNK, pays more!
       dPriceModifier = ArmsDealerInfo[gbSelectedArmsDealerID].dSellModifier;
     } else {

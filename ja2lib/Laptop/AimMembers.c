@@ -11,6 +11,7 @@
 #include "Laptop/History.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
@@ -22,6 +23,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -188,7 +190,7 @@
 
 #define AIM_MEMBER_OPTIONAL_GEAR_X AIM_MERC_INFO_X
 #define AIM_MEMBER_OPTIONAL_GEAR_Y WEAPONBOX_Y - 13
-//#define		AIM_MEMBER_OPTIONAL_GEAR_NUMBER_X		AIM_MEMBER_OPTIONAL_GEAR_X
+// #define		AIM_MEMBER_OPTIONAL_GEAR_NUMBER_X		AIM_MEMBER_OPTIONAL_GEAR_X
 
 #define AIM_MEMBER_WEAPON_NAME_X WEAPONBOX_X
 #define AIM_MEMBER_WEAPON_NAME_Y WEAPONBOX_Y + WEAPONBOX_SIZE_Y + 1
@@ -1460,7 +1462,7 @@ BOOLEAN DisplayMercsFace() {
 
   // else if the merc is currently a POW or, the merc was fired as a pow
   else if (gMercProfiles[gbCurrentSoldier].bMercStatus == MERC_FIRED_AS_A_POW ||
-           (pSoldier && pSoldier->bAssignment == ASSIGNMENT_POW)) {
+           (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
     ShadowVideoSurfaceRect(FRAME_BUFFER, FACE_X, FACE_Y, FACE_X + FACE_WIDTH, FACE_Y + FACE_HEIGHT);
     DrawTextToScreen(pPOWStrings[0], FACE_X + 1, FACE_Y + 107, FACE_WIDTH, FONT14ARIAL, 145,
                      FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
@@ -1770,7 +1772,7 @@ INT8 AimMemberHireMerc() {
   INT16 sSoldierID = 0;
   INT8 bTypeOfContract = 0;
 
-  if (LaptopSaveInfo.iCurrentBalance < giContractAmount) {
+  if (MoneyGetBalance() < giContractAmount) {
     // wasnt hired because of lack of funds
     InitCreateDeleteAimPopUpBox(AIM_POPUP_CREATE, AimPopUpText[AIM_MEMBER_FUNDS_TRANSFER_FAILED],
                                 AimPopUpText[AIM_MEMBER_NOT_ENOUGH_FUNDS], AIM_POPUP_BOX_X,
@@ -1840,12 +1842,12 @@ INT8 AimMemberHireMerc() {
 
   // add an entry in the finacial page for the hiring of the merc
   AddTransactionToPlayersBook(
-      HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(),
+      HIRED_MERC, ubCurrentSoldier,
       -(giContractAmount - gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount));
 
   if (gMercProfiles[gbCurrentSoldier].bMedicalDeposit) {
     // add an entry in the finacial page for the medical deposit
-    AddTransactionToPlayersBook(MEDICAL_DEPOSIT, ubCurrentSoldier, GetWorldTotalMin(),
+    AddTransactionToPlayersBook(MEDICAL_DEPOSIT, ubCurrentSoldier,
                                 -(gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount));
   }
 
@@ -3791,12 +3793,11 @@ void TempHiringOfMercs(UINT8 ubNumberOfMercs, BOOLEAN fReset) {
     HireMerc(&HireMercStruct);
 
     // add an entry in the finacial page for the hiring of the merc
-    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], GetWorldTotalMin(),
-                                -(INT32)(gMercProfiles[MercID[i]].sSalary));
+    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], -(INT32)(gMercProfiles[MercID[i]].sSalary));
 
     if (gMercProfiles[MercID[i]].bMedicalDeposit) {
       // add an entry in the finacial page for the medical deposit
-      AddTransactionToPlayersBook(MEDICAL_DEPOSIT, MercID[i], GetWorldTotalMin(),
+      AddTransactionToPlayersBook(MEDICAL_DEPOSIT, MercID[i],
                                   -(gMercProfiles[MercID[i]].sMedicalDepositAmount));
     }
 
@@ -3901,13 +3902,11 @@ BOOLEAN QuickHireMerc() {
   // add an entry in the finacial page for the hiring of the merc
   giContractAmount = gMercProfiles[gbCurrentSoldier].sSalary;
 
-  AddTransactionToPlayersBook(
-      HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(),
-      -(giContractAmount));  //- gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount
+  AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, -(giContractAmount));
 
   if (gMercProfiles[gbCurrentSoldier].bMedicalDeposit) {
     // add an entry in the finacial page for the medical deposit
-    AddTransactionToPlayersBook(MEDICAL_DEPOSIT, ubCurrentSoldier, GetWorldTotalMin(),
+    AddTransactionToPlayersBook(MEDICAL_DEPOSIT, ubCurrentSoldier,
                                 -(gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount));
   }
 
@@ -4037,12 +4036,11 @@ void DemoHiringOfMercs() {
     HireMerc(&HireMercStruct);
 
     // add an entry in the finacial page for the hiring of the merc
-    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], GetWorldTotalMin(),
-                                -(INT32)(gMercProfiles[MercID[i]].sSalary));
+    AddTransactionToPlayersBook(HIRED_MERC, MercID[i], -(INT32)(gMercProfiles[MercID[i]].sSalary));
 
     if (gMercProfiles[MercID[i]].bMedicalDeposit) {
       // add an entry in the finacial page for the medical deposit
-      AddTransactionToPlayersBook(MEDICAL_DEPOSIT, MercID[i], GetWorldTotalMin(),
+      AddTransactionToPlayersBook(MEDICAL_DEPOSIT, MercID[i],
                                   -(gMercProfiles[MercID[i]].sMedicalDepositAmount));
     }
 
@@ -4091,12 +4089,12 @@ void DisplayPopUpBoxExplainingMercArrivalLocationAndTime() {
   // Germans version has a different argument order
   swprintf(szLocAndTime, ARR_SIZE(szLocAndTime),
            pMessageStrings[MSG_JUST_HIRED_MERC_ARRIVAL_LOCATION_POPUP],
-           gMercProfiles[pSoldier->ubProfile].zNickname,
+           gMercProfiles[GetSolProfile(pSoldier)].zNickname,
            LaptopSaveInfo.sLastHiredMerc.uiArrivalTime / 1440, zTimeString, zSectorIDString);
 #else
   swprintf(szLocAndTime, ARR_SIZE(szLocAndTime),
            pMessageStrings[MSG_JUST_HIRED_MERC_ARRIVAL_LOCATION_POPUP],
-           gMercProfiles[pSoldier->ubProfile].zNickname, zSectorIDString,
+           gMercProfiles[GetSolProfile(pSoldier)].zNickname, zSectorIDString,
            LaptopSaveInfo.sLastHiredMerc.uiArrivalTime / 1440, zTimeString);
 #endif
 

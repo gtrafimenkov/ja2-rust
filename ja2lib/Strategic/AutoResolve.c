@@ -16,6 +16,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CreatureSpreading.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -62,7 +63,7 @@
 #include "Utils/WordWrap.h"
 #include "platform_strings.h"
 
-//#define INVULNERABILITY
+// #define INVULNERABILITY
 
 extern BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier);
 BOOLEAN gfTransferTacticalOppositionToAutoResolve = FALSE;
@@ -384,7 +385,7 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
   gfBlitBattleSectorLocator = FALSE;
 
   pGroup = gpGroupList;
-  pSector = &SectorInfo[SECTOR(ubSectorX, ubSectorY)];
+  pSector = &SectorInfo[GetSectorID8(ubSectorX, ubSectorY)];
 
   // if we're doing this from the Pre-Battle interface, gpAR is NULL, and
   // RemoveAutoResolveInterface(0 won't happen, so we must process the enemies killed right here &
@@ -426,10 +427,10 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
     }
     // set this sector as taken over
     SetThisSectorAsPlayerControlled(ubSectorX, ubSectorY, 0, TRUE);
-    RecalculateSectorWeight((UINT8)SECTOR(ubSectorX, ubSectorY));
+    RecalculateSectorWeight((UINT8)GetSectorID8(ubSectorX, ubSectorY));
 
     // dirty map panel
-    fMapPanelDirty = TRUE;
+    MarkForRedrawalStrategicMap();
   }
 
   if (gpAR) {
@@ -676,7 +677,7 @@ void AssociateEnemiesWithStrategicGroups() {
 
   if (gubEnemyEncounterCode == CREATURE_ATTACK_CODE) return;
 
-  pSector = &SectorInfo[SECTOR(gpAR->ubSectorX, gpAR->ubSectorY)];
+  pSector = &SectorInfo[GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY)];
 
   // grab the number of each type in the stationary sector
   ubNumAdmins = pSector->ubNumAdmins;
@@ -1523,7 +1524,7 @@ void RenderAutoResolve() {
           HandleMoraleEvent(NULL, MORALE_BATTLE_WON, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_WON, gpAR->ubSectorX, gpAR->ubSectorY, 0);
 
-          SectorInfo[SECTOR(gpAR->ubSectorX, gpAR->ubSectorY)].bLastKnownEnemies = 0;
+          SectorInfo[GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY)].bLastKnownEnemies = 0;
           SetThisSectorAsPlayerControlled(gpAR->ubSectorX, gpAR->ubSectorY, 0, TRUE);
 
           SetMusicMode(MUSIC_TACTICAL_VICTORY);
@@ -1548,15 +1549,15 @@ void RenderAutoResolve() {
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
 
           SetMusicMode(MUSIC_TACTICAL_DEATH);
-          gsEnemyGainedControlOfSectorID = (INT16)SECTOR(gpAR->ubSectorX, gpAR->ubSectorY);
+          gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           break;
         case BATTLE_DEFEAT:
           HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)SECTOR(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else {
-            gsEnemyGainedControlOfSectorID = (INT16)SECTOR(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           SetMusicMode(MUSIC_TACTICAL_DEATH);
@@ -1571,9 +1572,9 @@ void RenderAutoResolve() {
           HandleLoyaltyImplicationsOfMercRetreat(RETREAT_AUTORESOLVE, gpAR->ubSectorX,
                                                  gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)SECTOR(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else if (gpAR->ubAliveEnemies) {
-            gsEnemyGainedControlOfSectorID = (INT16)SECTOR(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           break;
@@ -1634,7 +1635,6 @@ void CreateAutoResolveInterface() {
   VOBJECT_DESC VObjectDesc;
   INT32 i, index;
   struct VObject *hVObject;
-  UINT8 ubGreenMilitia, ubRegMilitia, ubEliteMilitia;
   // Setup new autoresolve blanket interface.
   MSYS_DefineRegion(&gpAR->AutoResolveRegion, 0, 0, 640, 480, MSYS_PRIORITY_HIGH - 1, 0,
                     MSYS_NO_CALLBACK, MSYS_NO_CALLBACK);
@@ -1648,29 +1648,6 @@ void CreateAutoResolveInterface() {
     AssertMsg(0, "Failed to load Interface\\AutoResolve.sti");
   }
 
-  // Load the button images file, and assign it to the first button.
-  /* OLD BEFORE THE MEDICAL BUTTON WAS ADDED
-  gpAR->iButtonImage[ PAUSE_BUTTON ] = LoadButtonImage( "Interface\\AutoBtns.sti", -1, 0, -1, 6, -1
-  ); if( gpAR->iButtonImage[ PAUSE_BUTTON ] == -1 )
-  {
-          AssertMsg( 0, "Failed to load Interface\\AutoBtns.sti" );
-  }
-
-  //Have the other buttons hook into the first button containing the images.
-  gpAR->iButtonImage[ PLAY_BUTTON ]			= UseLoadedButtonImage( gpAR->iButtonImage[
-  PAUSE_BUTTON ], -1, 1, -1, 7, -1 );
-  gpAR->iButtonImage[ FAST_BUTTON ]			= UseLoadedButtonImage( gpAR->iButtonImage[
-  PAUSE_BUTTON ], -1, 2, -1, 8, -1 );
-  gpAR->iButtonImage[ FINISH_BUTTON ]		= UseLoadedButtonImage( gpAR->iButtonImage[
-  PAUSE_BUTTON ], -1, 3, -1, 9, -1 );
-  gpAR->iButtonImage[ YES_BUTTON ]			= UseLoadedButtonImage( gpAR->iButtonImage[
-  PAUSE_BUTTON ], -1, 4, -1, 10, -1 );
-  gpAR->iButtonImage[ NO_BUTTON ]				= UseLoadedButtonImage(
-  gpAR->iButtonImage[ PAUSE_BUTTON ], -1, 5, -1, 11, -1 ); gpAR->iButtonImage[ RETREAT_BUTTON ] =
-  UseLoadedButtonImage( gpAR->iButtonImage[ PAUSE_BUTTON ], -1, 12, -1, 13, -1 );
-  gpAR->iButtonImage[ DONE_BUTTON ]			= UseLoadedButtonImage( gpAR->iButtonImage[
-  PAUSE_BUTTON ], -1, 14, -1, 15, -1 );
-  */
   gpAR->iButtonImage[PAUSE_BUTTON] = LoadButtonImage("Interface\\AutoBtns.sti", -1, 0, -1, 7, -1);
   if (gpAR->iButtonImage[PAUSE_BUTTON] == -1) {
     AssertMsg(0, "Failed to load Interface\\AutoBtns.sti");
@@ -1718,13 +1695,13 @@ void CreateAutoResolveInterface() {
     // Load the face
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%02d.sti",
-            gMercProfiles[gpMercs[i].pSoldier->ubProfile].ubFaceIndex);
+            gMercProfiles[GetSolProfile(gpMercs[i].pSoldier)].ubFaceIndex);
     if (!AddVideoObject(&VObjectDesc, &gpMercs[i].uiVObjectID)) {
       sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\speck.sti");
       if (!AddVideoObject(&VObjectDesc, &gpMercs[i].uiVObjectID)) {
         AssertMsg(0,
                   String("Failed to load %Faces\\65Face\\%02d.sti or it's placeholder, speck.sti",
-                         gMercProfiles[gpMercs[i].pSoldier->ubProfile].ubFaceIndex));
+                         gMercProfiles[GetSolProfile(gpMercs[i].pSoldier)].ubFaceIndex));
       }
     }
     if (GetVideoObject(&hVObject, gpMercs[i].uiVObjectID)) {
@@ -1734,19 +1711,17 @@ void CreateAutoResolveInterface() {
     }
   }
 
-  ubEliteMilitia = MilitiaInSectorOfRank(gpAR->ubSectorX, gpAR->ubSectorY, ELITE_MILITIA);
-  ubRegMilitia = MilitiaInSectorOfRank(gpAR->ubSectorX, gpAR->ubSectorY, REGULAR_MILITIA);
-  ubGreenMilitia = MilitiaInSectorOfRank(gpAR->ubSectorX, gpAR->ubSectorY, GREEN_MILITIA);
-  while (ubEliteMilitia + ubRegMilitia + ubGreenMilitia < gpAR->ubCivs) {
+  struct MilitiaCount milCount = GetMilitiaInSector(gpAR->ubSectorX, gpAR->ubSectorY);
+  while (milCount.elite + milCount.regular + milCount.green < gpAR->ubCivs) {
     switch (PreRandom(3)) {
       case 0:
-        ubEliteMilitia++;
+        milCount.elite++;
         break;
       case 1:
-        ubRegMilitia++;
+        milCount.regular++;
         break;
       case 2:
-        ubGreenMilitia++;
+        milCount.green++;
         break;
     }
   }
@@ -1754,21 +1729,21 @@ void CreateAutoResolveInterface() {
     // reset counter of how many mortars this team has rolled
     ResetMortarsOnTeamCount();
 
-    if (i < ubEliteMilitia) {
+    if (i < milCount.elite) {
       gpCivs[i].pSoldier = TacticalCreateMilitia(SOLDIER_CLASS_ELITE_MILITIA);
       if (gpCivs[i].pSoldier->ubBodyType == REGFEMALE) {
         gpCivs[i].usIndex = MILITIA3F_FACE;
       } else {
         gpCivs[i].usIndex = MILITIA3_FACE;
       }
-    } else if (i < ubRegMilitia + ubEliteMilitia) {
+    } else if (i < milCount.regular + milCount.elite) {
       gpCivs[i].pSoldier = TacticalCreateMilitia(SOLDIER_CLASS_REG_MILITIA);
       if (gpCivs[i].pSoldier->ubBodyType == REGFEMALE) {
         gpCivs[i].usIndex = MILITIA2F_FACE;
       } else {
         gpCivs[i].usIndex = MILITIA2_FACE;
       }
-    } else if (i < ubGreenMilitia + ubRegMilitia + ubEliteMilitia) {
+    } else if (i < milCount.green + milCount.regular + milCount.elite) {
       gpCivs[i].pSoldier = TacticalCreateMilitia(SOLDIER_CLASS_GREEN_MILITIA);
       if (gpCivs[i].pSoldier->ubBodyType == REGFEMALE) {
         gpCivs[i].usIndex = MILITIA1F_FACE;
@@ -1941,11 +1916,8 @@ void CreateAutoResolveInterface() {
 
 void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
   INT32 i;
-  UINT8 ubCurrentRank;
   UINT8 ubCurrentGroupID = 0;
   BOOLEAN fFirstGroup = TRUE;
-
-  // VtResumeSampling();
 
   MSYS_RemoveRegion(&gpAR->AutoResolveRegion);
   DeleteVideoObjectFromIndex(gpAR->iPanelImages);
@@ -1992,7 +1964,7 @@ void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
                    BATTLE_VICTORY) {  // merc is alive, so group them at the center gridno.
           gpMercs[i].pSoldier->ubStrategicInsertionCode = INSERTION_CODE_CENTER;
         }
-        gMercProfiles[gpMercs[i].pSoldier->ubProfile].usBattlesFought++;
+        gMercProfiles[GetSolProfile(gpMercs[i].pSoldier)].usBattlesFought++;
       }
     }
     for (i = 0; i < gpAR->iNumMercFaces; i++) {
@@ -2025,56 +1997,21 @@ void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
       gpMercs[i].pRegion = NULL;
     }
   }
-  // Delete all militia
-  gbGreenToElitePromotions = 0;
-  gbGreenToRegPromotions = 0;
-  gbRegToElitePromotions = 0;
-  gbMilitiaPromotions = 0;
+
+  PrepMilitiaPromotion();
   for (i = 0; i < MAX_ALLOWABLE_MILITIA_PER_SECTOR; i++) {
     if (gpCivs[i].pSoldier) {
-      ubCurrentRank = 255;
-      switch (gpCivs[i].pSoldier->ubSoldierClass) {
-        case SOLDIER_CLASS_GREEN_MILITIA:
-          ubCurrentRank = GREEN_MILITIA;
-          break;
-        case SOLDIER_CLASS_REG_MILITIA:
-          ubCurrentRank = REGULAR_MILITIA;
-          break;
-        case SOLDIER_CLASS_ELITE_MILITIA:
-          ubCurrentRank = ELITE_MILITIA;
-          break;
-        default:
-#ifdef JA2BETAVERSION
-          ScreenMsg(FONT_RED, MSG_ERROR,
-                    L"Removing autoresolve militia with invalid ubSoldierClass %d.",
-                    gpCivs[i].pSoldier->ubSoldierClass);
-#endif
-          break;
-      }
+      UINT8 rank = SoldierClassToMilitiaRank(gpCivs[i].pSoldier->ubSoldierClass);
       if (fDeleteForGood && gpCivs[i].pSoldier->bLife < OKLIFE / 2) {
         AddDeadSoldierToUnLoadedSector(gpAR->ubSectorX, gpAR->ubSectorY, 0, gpCivs[i].pSoldier,
                                        RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT);
-        StrategicRemoveMilitiaFromSector(gpAR->ubSectorX, gpAR->ubSectorY, ubCurrentRank, 1);
+        StrategicRemoveMilitiaFromSector(gpAR->ubSectorX, gpAR->ubSectorY, rank, 1);
         HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_NATIVE_KILLED, gpAR->ubSectorX, gpAR->ubSectorY, 0);
       } else {
-        UINT8 ubPromotions;
-        // this will check for promotions and handle them for you
-        if (fDeleteForGood && (gpCivs[i].pSoldier->ubMilitiaKills > 0) &&
-            (ubCurrentRank < ELITE_MILITIA)) {
-          ubPromotions = CheckOneMilitiaForPromotion(
-              gpAR->ubSectorX, gpAR->ubSectorY, ubCurrentRank, gpCivs[i].pSoldier->ubMilitiaKills);
-          if (ubPromotions) {
-            if (ubPromotions == 2) {
-              gbGreenToElitePromotions++;
-              gbMilitiaPromotions++;
-            } else if (gpCivs[i].pSoldier->ubSoldierClass == SOLDIER_CLASS_GREEN_MILITIA) {
-              gbGreenToRegPromotions++;
-              gbMilitiaPromotions++;
-            } else if (gpCivs[i].pSoldier->ubSoldierClass == SOLDIER_CLASS_REG_MILITIA) {
-              gbRegToElitePromotions++;
-              gbMilitiaPromotions++;
-            }
-          }
+        if (fDeleteForGood && (gpCivs[i].pSoldier->ubMilitiaKills > 0) && (rank < ELITE_MILITIA)) {
+          HandleSingleMilitiaPromotion(gpAR->ubSectorX, gpAR->ubSectorY,
+                                       gpCivs[i].pSoldier->ubSoldierClass,
+                                       gpCivs[i].pSoldier->ubMilitiaKills);
         }
       }
       TacticalRemoveSoldierPointer(gpCivs[i].pSoldier, FALSE);
@@ -3249,7 +3186,7 @@ BOOLEAN FireAShot(SOLDIERCELL *pAttacker) {
       if (pItem->ubGunShotsLeft) {
         PlayAutoResolveSample(Weapon[pItem->usItem].sSound, RATE_11025, 50, 1, MIDDLEPAN);
         if (pAttacker->uiFlags & CELL_MERC) {
-          gMercProfiles[pAttacker->pSoldier->ubProfile].usShotsFired++;
+          gMercProfiles[GetSolProfile(pAttacker->pSoldier)].usShotsFired++;
           // MARKSMANSHIP GAIN: Attacker fires a shot
 
           StatChange(pAttacker->pSoldier, MARKAMT, 3, FALSE);
@@ -3434,13 +3371,13 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
 
     if (pAttacker->uiFlags &
         CELL_MERC) {  // Attacker is a player, so increment the number of shots that hit.
-      gMercProfiles[pAttacker->pSoldier->ubProfile].usShotsHit++;
+      gMercProfiles[GetSolProfile(pAttacker->pSoldier)].usShotsHit++;
       // MARKSMANSHIP GAIN: Attacker's shot hits
       StatChange(pAttacker->pSoldier, MARKAMT, 6, FALSE);  // in addition to 3 for taking a shot
     }
     if (pTarget->uiFlags &
         CELL_MERC) {  // Target is a player, so increment the times he has been wounded.
-      gMercProfiles[pTarget->pSoldier->ubProfile].usTimesWounded++;
+      gMercProfiles[GetSolProfile(pTarget->pSoldier)].usTimesWounded++;
       // EXPERIENCE GAIN: Took some damage
       StatChange(pTarget->pSoldier, EXPERAMT, (UINT16)(5 * (iImpact / 10)), FALSE);
     }
@@ -3457,7 +3394,7 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
     if (iNewLife <= 0) {                     // soldier has been killed
       if (pAttacker->uiFlags & CELL_MERC) {  // Player killed the enemy soldier -- update his stats
                                              // as well as any assisters.
-        gMercProfiles[pAttacker->pSoldier->ubProfile].usKills++;
+        gMercProfiles[GetSolProfile(pAttacker->pSoldier)].usKills++;
         gStrategicStatus.usPlayerKills++;
       } else if (pAttacker->uiFlags & CELL_MILITIA) {
         pAttacker->pSoldier->ubMilitiaKills += 2;
@@ -3548,14 +3485,14 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
 
   if (pAttacker->uiFlags &
       CELL_MERC) {  // Attacker is a player, so increment the number of shots that hit.
-    gMercProfiles[pAttacker->pSoldier->ubProfile].usShotsHit++;
+    gMercProfiles[GetSolProfile(pAttacker->pSoldier)].usShotsHit++;
     // MARKSMANSHIP GAIN: Attacker's shot hits
     StatChange(pAttacker->pSoldier, MARKAMT, 6, FALSE);  // in addition to 3 for taking a shot
   }
   if (pTarget->uiFlags & CELL_MERC &&
       pTarget->usHitDamage[index]) {  // Target is a player, so increment the times he has been
                                       // wounded.
-    gMercProfiles[pTarget->pSoldier->ubProfile].usTimesWounded++;
+    gMercProfiles[GetSolProfile(pTarget->pSoldier)].usTimesWounded++;
     // EXPERIENCE GAIN: Took some damage
     StatChange(pTarget->pSoldier, EXPERAMT, (UINT16)(5 * (pTarget->usHitDamage[index] / 10)),
                FALSE);
@@ -3588,7 +3525,7 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
       if (pAssister1 == pAssister2) pAssister2 = NULL;
       if (pKiller) {
         if (pKiller->uiFlags & CELL_MERC) {
-          gMercProfiles[pKiller->pSoldier->ubProfile].usKills++;
+          gMercProfiles[GetSolProfile(pKiller->pSoldier)].usKills++;
           gStrategicStatus.usPlayerKills++;
           // EXPERIENCE CLASS GAIN:  Earned a kill
           StatChange(pKiller->pSoldier, EXPERAMT, (UINT16)(10 * pTarget->pSoldier->bLevel), FALSE);
@@ -3599,7 +3536,7 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
       }
       if (pAssister1) {
         if (pAssister1->uiFlags & CELL_MERC) {
-          gMercProfiles[pAssister1->pSoldier->ubProfile].usAssists++;
+          gMercProfiles[GetSolProfile(pAssister1->pSoldier)].usAssists++;
           // EXPERIENCE CLASS GAIN:  Earned an assist
           StatChange(pAssister1->pSoldier, EXPERAMT, (UINT16)(5 * pTarget->pSoldier->bLevel),
                      FALSE);
@@ -3607,7 +3544,7 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
           pAssister1->pSoldier->ubMilitiaKills++;
       } else if (pAssister2) {
         if (pAssister2->uiFlags & CELL_MERC) {
-          gMercProfiles[pAssister2->pSoldier->ubProfile].usAssists++;
+          gMercProfiles[GetSolProfile(pAssister2->pSoldier)].usAssists++;
           // EXPERIENCE CLASS GAIN:  Earned an assist
           StatChange(pAssister2->pSoldier, EXPERAMT, (UINT16)(5 * pTarget->pSoldier->bLevel),
                      FALSE);
@@ -3748,7 +3685,7 @@ BOOLEAN IsBattleOver() {
   return TRUE;
 }
 
-//#define TESTSURRENDER
+// #define TESTSURRENDER
 
 BOOLEAN AttemptPlayerCapture() {
   INT32 i;
@@ -4072,7 +4009,7 @@ BOOLEAN IsAutoResolveActive() {
 
 UINT8 GetAutoResolveSectorID() {
   if (gpAR) {
-    return (UINT8)SECTOR(gpAR->ubSectorX, gpAR->ubSectorY);
+    return (UINT8)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
   }
   return 0xff;
 }

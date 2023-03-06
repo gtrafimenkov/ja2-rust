@@ -21,6 +21,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/Meanwhile.h"
@@ -46,7 +47,6 @@
 #include "Tactical/HandleItems.h"
 #include "Tactical/HandleUI.h"
 #include "Tactical/Interface.h"
-#include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfaceDialogue.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/Items.h"
@@ -87,6 +87,7 @@
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
+#include "UI.h"
 #include "Utils/EventPump.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
@@ -543,7 +544,7 @@ void DoNinjaAttack(struct SOLDIERTYPE *pSoldier) {
     }
   }
 
-  if (pSoldier->ubProfile == 33) {
+  if (GetSolProfile(pSoldier) == 33) {
     UINT32 uiSoundID;
     SOUNDPARMS spParms;
     INT32 iFaceIndex;
@@ -575,7 +576,7 @@ void DoNinjaAttack(struct SOLDIERTYPE *pSoldier) {
     if (uiSoundID != SOUND_ERROR) {
       pSoldier->uiBattleSoundID = uiSoundID;
 
-      if (pSoldier->ubProfile != NO_PROFILE) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE) {
         // Get soldier's face ID
         iFaceIndex = pSoldier->iFaceIndex;
 
@@ -834,7 +835,7 @@ BOOLEAN ReCreateSoldierLight(struct SOLDIERTYPE *pSoldier) {
     return (FALSE);
   }
 
-  if (!pSoldier->bActive) {
+  if (!IsSolActive(pSoldier)) {
     return (FALSE);
   }
 
@@ -882,7 +883,7 @@ BOOLEAN ChangeSoldierState(struct SOLDIERTYPE *pSoldier, UINT16 usNewState,
 
   // Send message that we have changed states
   SChangeState.usNewState = usNewState;
-  SChangeState.usSoldierID = pSoldier->ubID;
+  SChangeState.usSoldierID = GetSolID(pSoldier);
   SChangeState.uiUniqueId = pSoldier->uiUniqueSoldierIdValue;
   SChangeState.usStartingAniCode = usStartingAniCode;
   SChangeState.sXPos = pSoldier->sX;
@@ -905,7 +906,7 @@ BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) 
   INT16 sDist, sClosestDist = 10000;
 
   // make the chosen one not turn to face us
-  if (OK_ENEMY_MERC(pSoldier) && pSoldier->ubID != gTacticalStatus.ubTheChosenOne &&
+  if (OK_ENEMY_MERC(pSoldier) && GetSolID(pSoldier) != gTacticalStatus.ubTheChosenOne &&
       gAnimControl[usAnimState].ubEndHeight == ANIM_STAND &&
       !(pSoldier->uiStatusFlags & SOLDIER_UNDERAICONTROL)) {
     if (pSoldier->fTurningFromPronePosition == TURNING_FROM_PRONE_OFF) {
@@ -1356,7 +1357,7 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState
       if (!pSoldier->usDontUpdateNewGridNoOnMoveAnimChange) {
         if (usNewState != SWATTING) {
           DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-                   String("Handling New gridNo for %d: Old %s, New %s", pSoldier->ubID,
+                   String("Handling New gridNo for %d: Old %s, New %s", GetSolID(pSoldier),
                           gAnimControl[pSoldier->usAnimState].zAnimStr,
                           gAnimControl[usNewState].zAnimStr));
 
@@ -1423,7 +1424,7 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState
 
   // ATE: If this is an AI guy.. unlock him!
   if (gTacticalStatus.fEnemySightingOnTheirTurn) {
-    if (gTacticalStatus.ubEnemySightingOnTheirTurnEnemyID == pSoldier->ubID) {
+    if (gTacticalStatus.ubEnemySightingOnTheirTurnEnemyID == GetSolID(pSoldier)) {
       pSoldier->fPauseAllAnimation = FALSE;
       gTacticalStatus.fEnemySightingOnTheirTurn = FALSE;
     }
@@ -1740,8 +1741,8 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState
 
         // Merc on fire!
         pSoldier->uiPendingActionData1 = PlaySoldierJA2Sample(
-            pSoldier->ubID, (FIRE_ON_MERC), RATE_11025, SoundVolume(HIGHVOLUME, pSoldier->sGridNo),
-            5, SoundDir(pSoldier->sGridNo), TRUE);
+            GetSolID(pSoldier), (FIRE_ON_MERC), RATE_11025,
+            SoundVolume(HIGHVOLUME, pSoldier->sGridNo), 5, SoundDir(pSoldier->sGridNo), TRUE);
         break;
     }
   }
@@ -2058,7 +2059,7 @@ void SetSoldierGridNo(struct SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fF
     }
 
     // Alrighty, update UI for this guy, if he's the selected guy...
-    if (gusSelectedSoldier == pSoldier->ubID) {
+    if (gusSelectedSoldier == GetSolID(pSoldier)) {
       if (guiCurrentEvent == C_WAIT_FOR_CONFIRM) {
         // Update path!
         gfPlotNewMovement = TRUE;
@@ -2822,8 +2823,8 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT
                         MercPtrs[pSoldier->ubAttackerID]->bSectorZ);
     }
     if (pSoldier->bTeam == gbPlayerNum) {
-      HandleMoraleEvent(pSoldier, MORALE_TOOK_LOTS_OF_DAMAGE, pSoldier->sSectorX,
-                        pSoldier->sSectorY, pSoldier->bSectorZ);
+      HandleMoraleEvent(pSoldier, MORALE_TOOK_LOTS_OF_DAMAGE, GetSolSectorX(pSoldier),
+                        GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
     }
   }
 
@@ -2896,9 +2897,9 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT
 
     // ATE: If it's from GUNFIRE damage, keep in mind bullets...
     if (Item[usWeaponIndex].usItemClass & IC_GUN) {
-      pNewSoldier = FreeUpAttackerGivenTarget(pSoldier->ubAttackerID, pSoldier->ubID);
+      pNewSoldier = FreeUpAttackerGivenTarget(pSoldier->ubAttackerID, GetSolID(pSoldier));
     } else {
-      pNewSoldier = ReduceAttackBusyGivenTarget(pSoldier->ubAttackerID, pSoldier->ubID);
+      pNewSoldier = ReduceAttackBusyGivenTarget(pSoldier->ubAttackerID, GetSolID(pSoldier));
     }
 
     if (pNewSoldier != NULL) {
@@ -3575,7 +3576,7 @@ BOOLEAN EVENT_InternalGetNewSoldierPath(struct SOLDIERTYPE *pSoldier, UINT16 sDe
   // Only if we can get a path here
   if (fContinue) {
     // Debug messages
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_0, String("Soldier %d: Get new path", pSoldier->ubID));
+    DebugMsg(TOPIC_JA2, DBG_LEVEL_0, String("Soldier %d: Get new path", GetSolID(pSoldier)));
 
     // Set final destination
     pSoldier->sFinalDestination = sDestGridNo;
@@ -3984,7 +3985,7 @@ void EVENT_BeginMercTurn(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromRealTime,
         iBlood = CheckBleeding(pSoldier);  // check if he might lose another life point
 
         // ATE: Only if in sector!
-        if (pSoldier->bInSector) {
+        if (IsSolInSector(pSoldier)) {
           if (iBlood != NOBLOOD) {
             DropBlood(pSoldier, (INT8)iBlood, pSoldier->bVisible);
           }
@@ -4061,7 +4062,7 @@ savedPts = MAX_AP_CARRIED;
       pSoldier->ubTurnsUntilCanSayHeardNoise--;
     }
 
-    if (pSoldier->bInSector) {
+    if (IsSolInSector(pSoldier)) {
       CheckForBreathCollapse(pSoldier);
     }
 
@@ -4069,7 +4070,7 @@ savedPts = MAX_AP_CARRIED;
 
     pSoldier->bTilesMoved = 0;
 
-    if (pSoldier->bInSector) {
+    if (IsSolInSector(pSoldier)) {
       BeginSoldierGetup(pSoldier);
 
       // CJC Nov 30: handle RT opplist decaying in another function which operates less often
@@ -4082,12 +4083,13 @@ savedPts = MAX_AP_CARRIED;
         }
       }
 
-      if ((pSoldier->bTeam == gbPlayerNum) && (pSoldier->ubProfile != NO_PROFILE)) {
-        switch (gMercProfiles[pSoldier->ubProfile].bPersonalityTrait) {
+      if ((pSoldier->bTeam == gbPlayerNum) && (GetSolProfile(pSoldier) != NO_PROFILE)) {
+        switch (gMercProfiles[GetSolProfile(pSoldier)].bPersonalityTrait) {
           case FEAR_OF_INSECTS:
             if (MercSeesCreature(pSoldier)) {
-              HandleMoraleEvent(pSoldier, MORALE_INSECT_PHOBIC_SEES_CREATURE, pSoldier->sSectorX,
-                                pSoldier->sSectorY, pSoldier->bSectorZ);
+              HandleMoraleEvent(pSoldier, MORALE_INSECT_PHOBIC_SEES_CREATURE,
+                                GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
+                                GetSolSectorZ(pSoldier));
               if (!(pSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_PERSONALITY)) {
                 TacticalCharacterDialogue(pSoldier, QUOTE_PERSONALITY_TRAIT);
                 pSoldier->usQuoteSaidFlags |= SOLDIER_QUOTE_SAID_PERSONALITY;
@@ -4097,8 +4099,8 @@ savedPts = MAX_AP_CARRIED;
           case CLAUSTROPHOBIC:
             if (gbWorldSectorZ > 0 && Random(6 - gbWorldSectorZ) == 0) {
               // underground!
-              HandleMoraleEvent(pSoldier, MORALE_CLAUSTROPHOBE_UNDERGROUND, pSoldier->sSectorX,
-                                pSoldier->sSectorY, pSoldier->bSectorZ);
+              HandleMoraleEvent(pSoldier, MORALE_CLAUSTROPHOBE_UNDERGROUND, GetSolSectorX(pSoldier),
+                                GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
               if (!(pSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_PERSONALITY)) {
                 TacticalCharacterDialogue(pSoldier, QUOTE_PERSONALITY_TRAIT);
                 pSoldier->usQuoteSaidFlags |= SOLDIER_QUOTE_SAID_PERSONALITY;
@@ -4109,8 +4111,8 @@ savedPts = MAX_AP_CARRIED;
             if (DistanceToClosestFriend(pSoldier) > NERVOUS_RADIUS) {
               // augh!!
               if (pSoldier->bMorale < 50) {
-                HandleMoraleEvent(pSoldier, MORALE_NERVOUS_ALONE, pSoldier->sSectorX,
-                                  pSoldier->sSectorY, pSoldier->bSectorZ);
+                HandleMoraleEvent(pSoldier, MORALE_NERVOUS_ALONE, GetSolSectorX(pSoldier),
+                                  GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
                 if (!(pSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_PERSONALITY)) {
                   TacticalCharacterDialogue(pSoldier, QUOTE_PERSONALITY_TRAIT);
                   pSoldier->usQuoteSaidFlags |= SOLDIER_QUOTE_SAID_PERSONALITY;
@@ -5251,7 +5253,7 @@ void HandleTakeDamageDeath(struct SOLDIERTYPE *pSoldier, UINT8 bOldLife, UINT8 u
     case TAKE_DAMAGE_ELECTRICITY:
     case TAKE_DAMAGE_GAS:
 
-      if (pSoldier->bInSector) {
+      if (IsSolInSector(pSoldier)) {
         if (pSoldier->bVisible != -1) {
           if (ubReason != TAKE_DAMAGE_BLOODLOSS) {
             DoMercBattleSound(pSoldier, BATTLE_SOUND_DIE1);
@@ -5277,10 +5279,9 @@ void HandleTakeDamageDeath(struct SOLDIERTYPE *pSoldier, UINT8 bOldLife, UINT8 u
         CheckForAndHandleSoldierDyingNotFromHit(pSoldier);
       }
 
-      // if( !( guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )
       { HandleSoldierTakeDamageFeedback(pSoldier); }
 
-      if ((guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN) || !pSoldier->bInSector) {
+      if ((IsMapScreen()) || !pSoldier->bInSector) {
         if (pSoldier->bLife == 0 && !(pSoldier->uiStatusFlags & SOLDIER_DEAD)) {
           StrategicHandlePlayerTeamMercDeath(pSoldier);
 
@@ -5321,8 +5322,8 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
   switch (pSoldier->bTeam) {
     case ENEMY_TEAM:
       // if we're in the wilderness this always counts
-      if (StrategicMap[CALCULATE_STRATEGIC_INDEX(gWorldSectorX, gWorldSectorY)].fEnemyControlled ||
-          SectorInfo[SECTOR(gWorldSectorX, gWorldSectorY)]
+      if (StrategicMap[GetSectorID16(gWorldSectorX, gWorldSectorY)].fEnemyControlled ||
+          SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)]
                   .ubTraversability[THROUGH_STRATEGIC_MOVE] != TOWN) {
         // update current day of activity!
         UpdateLastDayOfPlayerActivity((UINT16)GetWorldDay());
@@ -5383,7 +5384,7 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
   // Calculate bandage
   bBandage = pSoldier->bLifeMax - pSoldier->bLife - pSoldier->bBleeding;
 
-  if (guiCurrentScreen == MAP_SCREEN) {
+  if (IsMapScreen_2()) {
     fReDrawFace = TRUE;
   }
 
@@ -5450,7 +5451,8 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
 
   // ATE: Put some logic in here to allow enemies to die quicker.....
   // Are we an enemy?
-  if (pSoldier->bSide != gbPlayerNum && !pSoldier->bNeutral && pSoldier->ubProfile == NO_PROFILE) {
+  if (pSoldier->bSide != gbPlayerNum && !pSoldier->bNeutral &&
+      GetSolProfile(pSoldier) == NO_PROFILE) {
     // ATE: Give them a chance to fall down...
     if (pSoldier->bLife > 0 && pSoldier->bLife < (OKLIFE - 1)) {
       // Are we taking damage from bleeding?
@@ -5588,7 +5590,7 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
 
   if (!(pSoldier->uiStatusFlags & (SOLDIER_VEHICLE | SOLDIER_ROBOT))) {
     if (ubBlood != 0) {
-      if (pSoldier->bInSector) {
+      if (IsSolInSector(pSoldier)) {
         DropBlood(pSoldier, ubBlood, pSoldier->bVisible);
       }
     }
@@ -5602,7 +5604,7 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
     }
   }
 
-  if (pSoldier->bInSector) {
+  if (IsSolInSector(pSoldier)) {
     CheckForBreathCollapse(pSoldier);
   }
 
@@ -5634,7 +5636,7 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
     // Check for quote
     if (!(pSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_BEING_PUMMELED)) {
       // Check attacker!
-      if (ubAttacker != NOBODY && ubAttacker != pSoldier->ubID) {
+      if (ubAttacker != NOBODY && ubAttacker != GetSolID(pSoldier)) {
         pSoldier->bNumHitsThisTurn++;
 
         if ((pSoldier->bNumHitsThisTurn >= 3) && (pSoldier->bLife - pSoldier->bOldLife > 20)) {
@@ -5649,9 +5651,9 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
   }
 
   if ((ubAttacker != NOBODY) && (Menptr[ubAttacker].bTeam == OUR_TEAM) &&
-      (pSoldier->ubProfile != NO_PROFILE) && (pSoldier->ubProfile >= FIRST_RPC)) {
-    gMercProfiles[pSoldier->ubProfile].ubMiscFlags |= PROFILE_MISC_FLAG_WOUNDEDBYPLAYER;
-    if (pSoldier->ubProfile == 114) {
+      (GetSolProfile(pSoldier) != NO_PROFILE) && (GetSolProfile(pSoldier) >= FIRST_RPC)) {
+    gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags |= PROFILE_MISC_FLAG_WOUNDEDBYPLAYER;
+    if (GetSolProfile(pSoldier) == 114) {
       SetFactTrue(FACT_PACOS_KILLED);
     }
   }
@@ -5857,7 +5859,7 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
   }
 
   // If we are talking now....
-  if (IsMercSayingDialogue(pSoldier->ubProfile)) {
+  if (IsMercSayingDialogue(GetSolProfile(pSoldier))) {
     // We can do a couple of things now...
     if (gBattleSndsData[ubBattleSoundID].fStopDialogue == 1) {
       // Stop dialigue...
@@ -5895,8 +5897,8 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
   }
 
   // OK, build file and play!
-  if (pSoldier->ubProfile != NO_PROFILE) {
-    sprintf(zFilename, "BATTLESNDS\\%03d_%s.wav", pSoldier->ubProfile,
+  if (GetSolProfile(pSoldier) != NO_PROFILE) {
+    sprintf(zFilename, "BATTLESNDS\\%03d_%s.wav", GetSolProfile(pSoldier),
             gBattleSndsData[ubSoundID].zName);
 
     if (!FileMan_Exists(zFilename)) {
@@ -5958,7 +5960,7 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
   } else {
     pSoldier->uiBattleSoundID = uiSoundID;
 
-    if (pSoldier->ubProfile != NO_PROFILE) {
+    if (GetSolProfile(pSoldier) != NO_PROFILE) {
       // Get soldier's face ID
       iFaceIndex = pSoldier->iFaceIndex;
 
@@ -5974,13 +5976,13 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
 
 BOOLEAN DoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID) {
   // We WANT to play some RIGHT AWAY.....
-  if (gBattleSndsData[ubBattleSoundID].fStopDialogue == 1 || (pSoldier->ubProfile == NO_PROFILE) ||
-      InOverheadMap()) {
+  if (gBattleSndsData[ubBattleSoundID].fStopDialogue == 1 ||
+      (GetSolProfile(pSoldier) == NO_PROFILE) || InOverheadMap()) {
     return (InternalDoMercBattleSound(pSoldier, ubBattleSoundID, 0));
   }
 
   // So here, only if we were currently saying dialogue.....
-  if (!IsMercSayingDialogue(pSoldier->ubProfile)) {
+  if (!IsMercSayingDialogue(GetSolProfile(pSoldier))) {
     return (InternalDoMercBattleSound(pSoldier, ubBattleSoundID, 0));
   }
 
@@ -5994,11 +5996,11 @@ BOOLEAN DoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID) {
 BOOLEAN PreloadSoldierBattleSounds(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemove) {
   UINT32 cnt;
 
-  CHECKF(pSoldier->bActive != FALSE);
+  CHECKF(IsSolActive(pSoldier) != FALSE);
 
   for (cnt = 0; cnt < NUM_MERC_BATTLE_SOUNDS; cnt++) {
     // OK, build file and play!
-    if (pSoldier->ubProfile != NO_PROFILE) {
+    if (GetSolProfile(pSoldier) != NO_PROFILE) {
       if (gBattleSndsData[cnt].fPreload) {
         if (fRemove) {
           SoundUnlockSample(gBattleSndsData[cnt].zName);
@@ -6276,7 +6278,7 @@ static int trig[8] = { 2, 3, 4, 5, 6, 7, 8, 1 };
 }
 #endif
 
-//#if 0
+// #if 0
 UINT8 atan8(INT16 sXPos, INT16 sYPos, INT16 sXPos2, INT16 sYPos2) {
   DOUBLE test_x = sXPos2 - sXPos;
   DOUBLE test_y = sYPos2 - sYPos;
@@ -6504,7 +6506,7 @@ void SendSoldierPositionEvent(struct SOLDIERTYPE *pSoldier, FLOAT dNewXPos, FLOA
   // Sent event for position update
   EV_S_SETPOSITION SSetPosition;
 
-  SSetPosition.usSoldierID = pSoldier->ubID;
+  SSetPosition.usSoldierID = GetSolID(pSoldier);
   SSetPosition.uiUniqueId = pSoldier->uiUniqueSoldierIdValue;
 
   SSetPosition.dNewXPos = dNewXPos;
@@ -6517,7 +6519,7 @@ void SendSoldierDestinationEvent(struct SOLDIERTYPE *pSoldier, UINT16 usNewDesti
   // Sent event for position update
   EV_S_CHANGEDEST SChangeDest;
 
-  SChangeDest.usSoldierID = pSoldier->ubID;
+  SChangeDest.usSoldierID = GetSolID(pSoldier);
   SChangeDest.usNewDestination = usNewDestination;
   SChangeDest.uiUniqueId = pSoldier->uiUniqueSoldierIdValue;
 
@@ -6528,7 +6530,7 @@ void SendSoldierSetDirectionEvent(struct SOLDIERTYPE *pSoldier, UINT16 usNewDire
   // Sent event for position update
   EV_S_SETDIRECTION SSetDirection;
 
-  SSetDirection.usSoldierID = pSoldier->ubID;
+  SSetDirection.usSoldierID = GetSolID(pSoldier);
   SSetDirection.usNewDirection = usNewDirection;
   SSetDirection.uiUniqueId = pSoldier->uiUniqueSoldierIdValue;
 
@@ -6539,7 +6541,7 @@ void SendSoldierSetDesiredDirectionEvent(struct SOLDIERTYPE *pSoldier, UINT16 us
   // Sent event for position update
   EV_S_SETDESIREDDIRECTION SSetDesiredDirection;
 
-  SSetDesiredDirection.usSoldierID = pSoldier->ubID;
+  SSetDesiredDirection.usSoldierID = GetSolID(pSoldier);
   SSetDesiredDirection.usDesiredDirection = usDesiredDirection;
   SSetDesiredDirection.uiUniqueId = pSoldier->uiUniqueSoldierIdValue;
 
@@ -6550,7 +6552,7 @@ void SendGetNewSoldierPathEvent(struct SOLDIERTYPE *pSoldier, UINT16 sDestGridNo
                                 UINT16 usMovementAnim) {
   EV_S_GETNEWPATH SGetNewPath;
 
-  SGetNewPath.usSoldierID = pSoldier->ubID;
+  SGetNewPath.usSoldierID = GetSolID(pSoldier);
   SGetNewPath.sDestGridNo = sDestGridNo;
   SGetNewPath.usMovementAnim = usMovementAnim;
   SGetNewPath.uiUniqueId = pSoldier->uiUniqueSoldierIdValue;
@@ -6563,12 +6565,12 @@ void SendChangeSoldierStanceEvent(struct SOLDIERTYPE *pSoldier, UINT8 ubNewStanc
 	EV_S_CHANGESTANCE			SChangeStance;
 
 #ifdef NETWORKED
-	if( !IsTheSolderUnderMyControl( pSoldier->ubID) )
+	if( !IsTheSolderUnderMyControl( GetSolID(pSoldier)) )
 		return;
 #endif
 
 	SChangeStance.ubNewStance   = ubNewStance;
-	SChangeStance.usSoldierID  = pSoldier->ubID;
+	SChangeStance.usSoldierID  = GetSolID(pSoldier);
 	SChangeStance.sXPos				= pSoldier->sX;
 	SChangeStance.sYPos				= pSoldier->sY;
 	SChangeStance.uiUniqueId = pSoldier -> uiUniqueSoldierIdValue;
@@ -6582,7 +6584,7 @@ void SendChangeSoldierStanceEvent(struct SOLDIERTYPE *pSoldier, UINT8 ubNewStanc
 void SendBeginFireWeaponEvent(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   EV_S_BEGINFIREWEAPON SBeginFireWeapon;
 
-  SBeginFireWeapon.usSoldierID = pSoldier->ubID;
+  SBeginFireWeapon.usSoldierID = GetSolID(pSoldier);
   SBeginFireWeapon.sTargetGridNo = sTargetGridNo;
   SBeginFireWeapon.bTargetLevel = pSoldier->bTargetLevel;
   SBeginFireWeapon.bTargetCubeLevel = pSoldier->bTargetCubeLevel;
@@ -6619,7 +6621,7 @@ void ReleaseSoldiersAttacker(struct SOLDIERTYPE *pSoldier) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                  String("@@@@@@@ Freeing up attacker of %d (attacker is %d) - "
                         "releasesoldierattacker num to free is %d",
-                        pSoldier->ubID, pSoldier->ubAttackerID, ubNumToFree));
+                        GetSolID(pSoldier), pSoldier->ubAttackerID, ubNumToFree));
         ReduceAttackBusyCount(pSoldier->ubAttackerID, FALSE);
       }
 
@@ -6659,7 +6661,7 @@ void RevivePlayerTeam() {
 void ReviveSoldier(struct SOLDIERTYPE *pSoldier) {
   INT16 sX, sY;
 
-  if (pSoldier->bLife < OKLIFE && pSoldier->bActive) {
+  if (pSoldier->bLife < OKLIFE && IsSolActive(pSoldier)) {
     // If dead or unconscious, revive!
     pSoldier->uiStatusFlags &= (~SOLDIER_DEAD);
 
@@ -6689,7 +6691,7 @@ void ReviveSoldier(struct SOLDIERTYPE *pSoldier) {
 }
 
 void HandleAnimationProfile(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState, BOOLEAN fRemove) {
-  //#if 0
+  // #if 0
   struct ANIM_PROF *pProfile;
   struct ANIM_PROF_DIR *pProfileDir;
   struct ANIM_PROF_TILE *pProfileTile;
@@ -6739,7 +6741,7 @@ void HandleAnimationProfile(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState, BO
     }
   }
 
-  //#endif
+  // #endif
 }
 
 struct LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags,
@@ -6756,7 +6758,7 @@ struct LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags,
     pNode = pGivenNode->pNext;
   }
 
-  //#if 0
+  // #if 0
 
   if (pNode != NULL) {
     if (pNode->uiFlags & LEVELNODE_MERCPLACEHOLDER) {
@@ -6765,7 +6767,7 @@ struct LEVELNODE *GetAnimProfileFlags(UINT16 sGridNo, UINT16 *usFlags,
     }
   }
 
-  //#endif
+  // #endif
 
   return (pNode);
 }
@@ -7202,7 +7204,7 @@ void EVENT_SoldierBeginFirstAid(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UIN
     pTSoldier->ubServiceCount++;
 
     // If target and doer are no the same guy...
-    if (pTSoldier->ubID != pSoldier->ubID && !pTSoldier->bCollapsed) {
+    if (pTSoldier->ubID != GetSolID(pSoldier) && !pTSoldier->bCollapsed) {
       SoldierGotoStationaryStance(pTSoldier);
     }
   }
@@ -7403,7 +7405,7 @@ void InternalReceivingSoldierCancelServices(struct SOLDIERTYPE *pSoldier, BOOLEA
     // Loop through guys who have us as servicing
     for (pTSoldier = Menptr, cnt = 0; cnt < MAX_NUM_SOLDIERS; pTSoldier++, cnt++) {
       if (pTSoldier->bActive) {
-        if (pTSoldier->ubServicePartner == pSoldier->ubID) {
+        if (pTSoldier->ubServicePartner == GetSolID(pSoldier)) {
           // END SERVICE!
           pSoldier->ubServiceCount--;
 
@@ -7464,7 +7466,7 @@ void HaultSoldierFromSighting(struct SOLDIERTYPE *pSoldier, BOOLEAN fFromSightin
 
   // SStopMerc.sGridNo					= pSoldier->sGridNo;
   // SStopMerc.bDirection			= pSoldier->bDirection;
-  // SStopMerc.usSoldierID			= pSoldier->ubID;
+  // SStopMerc.usSoldierID			= GetSolID(pSoldier);
   // AddGameEvent( S_STOP_MERC, 0, &SStopMerc );
 
   // If we are a 'specialmove... ignore...
@@ -8148,13 +8150,13 @@ void SoldierBleed(struct SOLDIERTYPE *pSoldier, BOOLEAN fBandagedBleed) {
   // A banaged bleed does not show damage taken , just through existing bandages
 
   // ATE: Do this ONLY if buddy is in sector.....
-  if ((pSoldier->bInSector && guiCurrentScreen == GAME_SCREEN) || guiCurrentScreen != GAME_SCREEN) {
+  if ((pSoldier->bInSector && IsTacticalMode()) || guiCurrentScreen != GAME_SCREEN) {
     pSoldier->fFlashPortrait = TRUE;
     pSoldier->bFlashPortraitFrame = FLASH_PORTRAIT_STARTSHADE;
     RESETTIMECOUNTER(pSoldier->PortraitFlashCounter, FLASH_PORTRAIT_DELAY);
 
     // If we are in mapscreen, set this person as selected
-    if (guiCurrentScreen == MAP_SCREEN) {
+    if (IsMapScreen_2()) {
       SetInfoChar(pSoldier->ubID);
     }
   }
@@ -8245,7 +8247,7 @@ void SoldierCollapse(struct SOLDIERTYPE *pSoldier) {
 
   if (pSoldier->uiStatusFlags & SOLDIER_ENEMY) {
     if (!(gTacticalStatus.bPanicTriggerIsAlarm) &&
-        (gTacticalStatus.ubTheChosenOne == pSoldier->ubID)) {
+        (gTacticalStatus.ubTheChosenOne == GetSolID(pSoldier))) {
       // replace this guy as the chosen one!
       gTacticalStatus.ubTheChosenOne = NOBODY;
       MakeClosestEnemyChosenOne();
@@ -8254,7 +8256,7 @@ void SoldierCollapse(struct SOLDIERTYPE *pSoldier) {
     if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) &&
         (pSoldier->uiStatusFlags & SOLDIER_UNDERAICONTROL)) {
 #ifdef TESTAICONTROL
-      DebugAI(String("Ending turn for %d because of error from HandleItem", pSoldier->ubID));
+      DebugAI(String("Ending turn for %d because of error from HandleItem", GetSolID(pSoldier)));
 #endif
 
       EndAIGuysTurn(pSoldier);
@@ -8265,7 +8267,7 @@ void SoldierCollapse(struct SOLDIERTYPE *pSoldier) {
   // else
   //{
   // Check if this is our selected guy...
-  //	if ( pSoldier->ubID == gusSelectedSoldier )
+  //	if ( GetSolID(pSoldier) == gusSelectedSoldier )
   //	{
   //		SelectNextAvailSoldier( pSoldier );
   //		}
@@ -8379,7 +8381,7 @@ void PositionSoldierLight(struct SOLDIERTYPE *pSoldier) {
     CreateSoldierLight(pSoldier);
   }
 
-  // if ( pSoldier->ubID == gusSelectedSoldier )
+  // if ( GetSolID(pSoldier) == gusSelectedSoldier )
   {
     LightSpritePower(pSoldier->iLight, TRUE);
     LightSpriteFake(pSoldier->iLight);
@@ -8434,8 +8436,8 @@ void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 s
           // we have a strucxture with items in it
           // look for orientation and use angle accordingly....
           if (bZLevel > 0) {
-            //#if 0
-            // Get direction to face....
+            // #if 0
+            //  Get direction to face....
             if ((pStructure = FindStructure(
                      (INT16)sGridNo, (STRUCTURE_HASITEMONTOP | STRUCTURE_OPENABLE))) != NULL) {
               fDoNormalPickup = FALSE;
@@ -8467,7 +8469,7 @@ void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 s
               // Change to pickup animation
               EVENT_InitNewSoldierAnim(pSoldier, ADJACENT_GET_ITEM, 0, FALSE);
             }
-            //#endif
+            // #endif
           }
 
           if (fDoNormalPickup) {
@@ -8935,7 +8937,7 @@ BOOLEAN ControllingRobot(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pRobot;
   INT8 bPos;
 
-  if (!pSoldier->bActive) {
+  if (!IsSolActive(pSoldier)) {
     return (FALSE);
   }
 
@@ -8971,8 +8973,9 @@ BOOLEAN ControllingRobot(struct SOLDIERTYPE *pSoldier) {
   if (pRobot->bActive) {
     // Are we in the same sector....?
     // ARM: CHANGED TO WORK IN MAPSCREEN, DON'T USE WorldSector HERE
-    if (pRobot->sSectorX == pSoldier->sSectorX && pRobot->sSectorY == pSoldier->sSectorY &&
-        pRobot->bSectorZ == pSoldier->bSectorZ) {
+    if (pRobot->sSectorX == GetSolSectorX(pSoldier) &&
+        pRobot->sSectorY == GetSolSectorY(pSoldier) &&
+        pRobot->bSectorZ == GetSolSectorZ(pSoldier)) {
       // they have to be either both in sector, or both on the road
       if (pRobot->fBetweenSectors == pSoldier->fBetweenSectors) {
         // if they're on the road...
@@ -9044,7 +9047,7 @@ void UpdateRobotControllerGivenController(struct SOLDIERTYPE *pSoldier) {
   for (pTeamSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pTeamSoldier++) {
     if (pTeamSoldier->bActive && (pTeamSoldier->uiStatusFlags & SOLDIER_ROBOT)) {
-      pTeamSoldier->ubRobotRemoteHolderID = pSoldier->ubID;
+      pTeamSoldier->ubRobotRemoteHolderID = GetSolID(pSoldier);
     }
   }
 }
@@ -9133,7 +9136,7 @@ void InternalPlaySoldierFootstepSound(struct SOLDIERTYPE *pSoldier) {
       return;
     }
 
-    // if ( SoldierOnScreen( pSoldier->ubID ) )
+    // if ( SoldierOnScreen( GetSolID(pSoldier) ) )
     {
       if (pSoldier->usAnimState == CRAWLING) {
         ubSoundBase = CRAWL_1;
@@ -9223,7 +9226,7 @@ void DebugValidateSoldierData() {
   cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       // OK, first check for alive people
       // Don't do this check if we are a vehicle...
       if (pSoldier->bLife > 0 && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
@@ -9252,11 +9255,12 @@ void DebugValidateSoldierData() {
 
       // check for invalid sector data
       if ((pSoldier->bAssignment != IN_TRANSIT) &&
-          ((pSoldier->sSectorX <= 0) || (pSoldier->sSectorX >= 17) || (pSoldier->sSectorY <= 0) ||
-           (pSoldier->sSectorY >= 17) || (pSoldier->bSectorZ < 0) || (pSoldier->bSectorZ > 3))) {
+          ((GetSolSectorX(pSoldier) <= 0) || (GetSolSectorX(pSoldier) >= 17) ||
+           (pSoldier->sSectorY <= 0) || (pSoldier->sSectorY >= 17) || (pSoldier->bSectorZ < 0) ||
+           (pSoldier->bSectorZ > 3))) {
         swprintf(sString, ARR_SIZE(sString),
-                 L"Soldier Data Error: Soldier %d is located at %d/%d/%d.", cnt, pSoldier->sSectorX,
-                 pSoldier->sSectorY, pSoldier->bSectorZ);
+                 L"Soldier Data Error: Soldier %d is located at %d/%d/%d.", cnt,
+                 GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier));
         fProblemDetected = TRUE;
       }
     }
@@ -9264,7 +9268,7 @@ void DebugValidateSoldierData() {
     if (fProblemDetected) {
       SAIReportError(sString);
       /*
-                              if ( guiCurrentScreen == MAP_SCREEN )
+                              if ( IsMapScreen_2() )
                                       DoMapMessageBox( MSG_BOX_BASIC_STYLE, sString, MAP_SCREEN,
          MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback ); else DoMessageBox( MSG_BOX_BASIC_STYLE,
          sString, GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_OK, NULL, NULL );
@@ -9302,7 +9306,7 @@ void SetSoldierAsUnderAiControl(struct SOLDIERTYPE *pSoldierToSet) {
   cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[LAST_TEAM].bLastID;
        cnt++, pSoldier++) {
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       pSoldier->uiStatusFlags &= ~SOLDIER_UNDERAICONTROL;
     }
   }
@@ -9330,7 +9334,7 @@ void EnableDisableSoldierLightEffects(BOOLEAN fEnableLights) {
   cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID; cnt++, pSoldier++) {
     // if the soldier is in the sector
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife >= OKLIFE) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE) {
       // if we are to enable the lights
       if (fEnableLights) {
         // Add the light around the merc

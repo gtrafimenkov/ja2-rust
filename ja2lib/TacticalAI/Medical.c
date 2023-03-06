@@ -1,5 +1,6 @@
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/Items.h"
@@ -158,8 +159,8 @@ BOOLEAN CanCharacterAutoBandageTeammate(struct SOLDIERTYPE *pSoldier)
 // can this soldier autobandage others in sector
 {
   // if the soldier isn't active or in sector, we have problems..leave
-  if (!(pSoldier->bActive) || !(pSoldier->bInSector) ||
-      (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (pSoldier->bAssignment == VEHICLE)) {
+  if (!(IsSolActive(pSoldier)) || !IsSolInSector(pSoldier) ||
+      (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (GetSolAssignment(pSoldier) == VEHICLE)) {
     return (FALSE);
   }
 
@@ -176,12 +177,12 @@ BOOLEAN CanCharacterAutoBandageTeammate(struct SOLDIERTYPE *pSoldier)
 // can this soldier autobandage others in sector
 BOOLEAN CanCharacterBeAutoBandagedByTeammate(struct SOLDIERTYPE *pSoldier) {
   // if the soldier isn't active or in sector, we have problems..leave
-  if (!(pSoldier->bActive) || !(pSoldier->bInSector) ||
-      (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (pSoldier->bAssignment == VEHICLE)) {
+  if (!(IsSolActive(pSoldier)) || !IsSolInSector(pSoldier) ||
+      (pSoldier->uiStatusFlags & SOLDIER_VEHICLE) || (GetSolAssignment(pSoldier) == VEHICLE)) {
     return (FALSE);
   }
 
-  if ((pSoldier->bLife > 0) && (pSoldier->bBleeding > 0)) {
+  if (IsSolAlive(pSoldier) && (pSoldier->bBleeding > 0)) {
     // someone's bleeding and not being given first aid!
     return (TRUE);
   }
@@ -254,7 +255,7 @@ INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
               // we can get there... can anyone else?
 
               if (pPatient->ubAutoBandagingMedic != NOBODY &&
-                  pPatient->ubAutoBandagingMedic != pSoldier->ubID) {
+                  pPatient->ubAutoBandagingMedic != GetSolID(pSoldier)) {
                 // only switch to this patient if our distance is closer than
                 // the other medic's
                 pOtherMedic = MercPtrs[pPatient->ubAutoBandagingMedic];
@@ -312,7 +313,7 @@ INT8 FindBestPatient(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfDoClimb) {
       // cancel that medic
       CancelAIAction(MercPtrs[pBestPatient->ubAutoBandagingMedic], TRUE);
     }
-    pBestPatient->ubAutoBandagingMedic = pSoldier->ubID;
+    pBestPatient->ubAutoBandagingMedic = GetSolID(pSoldier);
     *pfDoClimb = FALSE;
     if (CardinalSpacesAway(pSoldier->sGridNo, sBestPatientGridNo) == 1) {
       pSoldier->usActionData = sBestPatientGridNo;

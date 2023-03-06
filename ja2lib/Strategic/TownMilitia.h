@@ -4,50 +4,46 @@
 // header for town militia strategic control module
 
 #include "SGP/Types.h"
+#include "Town.h"
 
 struct SOLDIERTYPE;
 
 // how many militia of all ranks can be in any one sector at once
 #define MAX_ALLOWABLE_MILITIA_PER_SECTOR 20
 
-// how many new green militia civilians are trained at a time
-#define MILITIA_TRAINING_SQUAD_SIZE 10  // was 6
-
-// cost of starting a new militia training assignment
-#define MILITIA_TRAINING_COST 750
-
 // minimum loyalty rating before training is allowed in a town
 #define MIN_RATING_TO_TRAIN_TOWN 20
 
+struct MilitiaCount {
+  u8 green;
+  u8 regular;
+  u8 elite;
+};
+
 // this handles what happens when a new militia unit is finishes getting trained
-void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY);
+void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY);
 
-// feed this a SOLDIER_CLASS_, it will return you a _MITILIA rank, or -1 if the guy's not militia
-INT8 SoldierClassToMilitiaRank(UINT8 ubSoldierClass);
-// feed this a _MITILIA rank, it will return you a SOLDIER_CLASS_, or -1 if the guy's not militia
-INT8 MilitiaRankToSoldierClass(UINT8 ubRank);
-
-// these add, promote, and remove militias of a certain rank
-void StrategicAddMilitiaToSector(INT16 sMapX, INT16 sMapY, UINT8 ubRank, UINT8 ubHowMany);
-void StrategicPromoteMilitiaInSector(INT16 sMapX, INT16 sMapY, UINT8 ubCurrentRank,
-                                     UINT8 ubHowMany);
-void StrategicRemoveMilitiaFromSector(INT16 sMapX, INT16 sMapY, UINT8 ubRank, UINT8 ubHowMany);
+void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHowMany);
 
 // this will check for promotions and handle them for you
-UINT8 CheckOneMilitiaForPromotion(INT16 sMapX, INT16 sMapY, UINT8 ubCurrentRank,
-                                  UINT8 ubRecentKillPts);
+UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts);
 
 void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
-// call this if the player attacks his own militia
-void HandleMilitiaDefections(INT16 sMapX, INT16 sMapY);
+UINT8 CountAllMilitiaInSector(u8 mapX, u8 mapY);
+UINT8 CountAllMilitiaInSectorID8(SectorID8 sectorID);
+INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+struct MilitiaCount GetMilitiaInSector(u8 mapX, u8 mapY);
+struct MilitiaCount GetMilitiaInSectorID8(SectorID8 sectorID);
+u8 GetMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank);
+void SetMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank, u8 count);
+void IncMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank, u8 increase);
+void SetMilitiaInSector(u8 mapX, u8 mapY, struct MilitiaCount newCount);
+void SetMilitiaInSectorID8(SectorID8 sectorID, struct MilitiaCount newCount);
 
-UINT8 CountAllMilitiaInSector(INT16 sMapX, INT16 sMapY);
-UINT8 MilitiaInSectorOfRank(INT16 sMapX, INT16 sMapY, UINT8 ubRank);
-
-// Returns TRUE if sector is under player control, has no enemies in it, and isn't currently in
-// combat mode
-BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+bool IsMilitiaTrainingPayedForSector(u8 mapX, u8 mapY);
+bool IsMilitiaTrainingPayedForSectorID8(SectorID8 sectorID);
+void SetMilitiaTrainingPayedForSectorID8(SectorID8 sectorID, bool value);
 
 // tell player how much it will cost
 void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier);
@@ -55,27 +51,30 @@ void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier
 // continue training?
 void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSoldier);
 
-// call this when the sector changes...
-void HandleMilitiaStatusInCurrentMapBeforeLoadingNewMap(void);
-
 // is there a town with militia here or nearby?
-BOOLEAN CanNearbyMilitiaScoutThisSector(INT16 sSectorX, INT16 sSectorY);
+BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY);
 
 // is the town militia full?
-BOOLEAN IsTownFullMilitia(INT8 bTownId);
+BOOLEAN IsTownFullMilitia(TownID bTownId);
 // is the SAM site full of militia?
-BOOLEAN IsSAMSiteFullOfMilitia(INT16 sSectorX, INT16 sSectorY);
+BOOLEAN IsSAMSiteFullOfMilitia(u8 mapX, u8 mapY);
 
 // now that town training is complete, handle the continue boxes
 void HandleContinueOfTownTraining(void);
 
-// handle completion of assignment byt his soldier too and inform the player
-void HandleCompletionOfTownTrainingByGroupWithTrainer(struct SOLDIERTYPE *pTrainer);
-
 // clear the list of training completed sectors
 void ClearSectorListForCompletedTrainingOfMilitia(void);
 
-BOOLEAN MilitiaTrainingAllowedInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
-BOOLEAN MilitiaTrainingAllowedInTown(INT8 bTownId);
+BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ);
+BOOLEAN MilitiaTrainingAllowedInTown(TownID bTownId);
+
+void HandleMilitiaPromotions(u8 mapX, u8 mapY);
+void HandleMilitiaDefections(u8 mapX, u8 mapY);
+
+void PrepMilitiaPromotion();
+void HandleSingleMilitiaPromotion(u8 mapX, u8 mapY, u8 soldierClass, u8 kills);
+bool HasNewMilitiaPromotions();
+
+BOOLEAN DoesPlayerHaveAnyMilitia();
 
 #endif

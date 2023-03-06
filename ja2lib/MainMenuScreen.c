@@ -23,6 +23,7 @@
 #include "SaveLoadGame.h"
 #include "SaveLoadScreen.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/GameInit.h"
 #include "SysGlobals.h"
 #include "Tactical/SoldierControl.h"
@@ -42,7 +43,7 @@
 #define MAINMENU_TEXT_FILE "LoadScreens\\MainMenu.edt"
 #define MAINMENU_RECORD_SIZE 80 * 2
 
-//#define TESTFOREIGNFONTS
+// #define TESTFOREIGNFONTS
 
 // MENU ITEMS
 enum {
@@ -530,7 +531,7 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
         // the file was not able to be loaded properly
         struct SOLDIERTYPE *pSoldier = NULL;
 
-        if (pSoldier->bActive != TRUE) {
+        if (IsSolActive(pSoldier) != TRUE) {
           // something is very wrong
           pSoldier->bActive = pSoldier->bLife;
         }

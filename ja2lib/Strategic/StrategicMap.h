@@ -2,6 +2,7 @@
 #define __STRATMAP_H
 
 #include "SGP/Types.h"
+#include "Town.h"
 
 struct SOLDIERTYPE;
 
@@ -47,22 +48,9 @@ extern BOOLEAN gfUseAlternateMap;
 // min condition for sam site to be functional
 #define MIN_CONDITION_FOR_SAM_SITE_TO_WORK 80
 
-// FUNCTIONS FOR DERTERMINING GOOD SECTOR EXIT DATA
+// FUNCTIONS FOR DERTERMINING GOOD GetSectorID8 EXIT DATA
 #define CHECK_DIR_X_DELTA (WORLD_TILE_X * 4)
 #define CHECK_DIR_Y_DELTA (WORLD_TILE_Y * 10)
-
-// get index into aray
-#define CALCULATE_STRATEGIC_INDEX(x, y) (x + (y * MAP_WORLD_X))
-#define GET_X_FROM_STRATEGIC_INDEX(i) (i % MAP_WORLD_X)
-#define GET_Y_FROM_STRATEGIC_INDEX(i) (i / MAP_WORLD_X)
-
-// macros to convert between the 2 different sector numbering systems
-#define SECTOR_INFO_TO_STRATEGIC_INDEX(i) (CALCULATE_STRATEGIC_INDEX(SECTORX(i), SECTORY(i)))
-#define STRATEGIC_INDEX_TO_SECTOR_INFO(i) \
-  (SECTOR(GET_X_FROM_STRATEGIC_INDEX(i), GET_Y_FROM_STRATEGIC_INDEX(i)))
-
-// grab the town id value
-INT8 GetTownIdForSector(INT16 sMapX, INT16 sMapY);
 
 void GetCurrentWorldSector(INT16 *psMapX, INT16 *psMapY);
 BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
@@ -85,10 +73,6 @@ void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString, size_t bufSiz
 // equivalent)
 void GetLoadedSectorString(STR16 pString, size_t bufSize);
 
-// This will get an ID string like A9- OMERTA...
-void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zString,
-                       size_t bufSize, BOOLEAN fDetailed);
-
 void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder,
                     BOOLEAN fAddAlternateMapLetter);
 
@@ -99,19 +83,17 @@ BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ);
 
 void UpdateAirspaceControl(void);
 
-BOOLEAN IsThisSectorASAMSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
-
 // init sam sites
 void InitializeSAMSites(void);
 
 // get town sector size
-UINT8 GetTownSectorSize(INT8 bTownId);
+UINT8 GetTownSectorSize(TownID bTownId);
 
 // get town sector size, that is under play control
-UINT8 GetTownSectorsUnderControl(INT8 bTownId);
+UINT8 GetTownSectorsUnderControl(TownID bTownId);
 
 // is this sector part of this town
-BOOLEAN SectorIsPartOfTown(INT8 bTownId, INT16 sSectorX, INT16 sSectorY);
+BOOLEAN SectorIsPartOfTown(TownID bTownId, INT16 sSectorX, INT16 sSectorY);
 
 // BOOLEAN IsThereAnyOneInThisTown( UINT8 ubTownId );
 
@@ -130,7 +112,6 @@ void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo
                                   UINT8 ubTacticalDirection);
 
 void AllMercsWalkedToExitGrid();
-UINT8 GetMilitiaCountAtLevelAnywhereInTown(UINT8 ubTownValue, UINT8 ubLevelValue);
 
 void PrepareLoadedSector();
 
@@ -169,10 +150,5 @@ extern BOOLEAN gfLoneEPCAttemptingTraversal;
 extern BOOLEAN gfRobotWithoutControllerAttemptingTraversal;
 extern UINT8 gubLoneMercAttemptingToAbandonEPCs;
 extern INT8 gbPotentiallyAbandonedEPCSlotID;
-
-extern INT8 gbGreenToElitePromotions;
-extern INT8 gbGreenToRegPromotions;
-extern INT8 gbRegToElitePromotions;
-extern INT8 gbMilitiaPromotions;
 
 #endif

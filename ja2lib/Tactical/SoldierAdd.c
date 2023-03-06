@@ -2,6 +2,7 @@
 
 #include "SGP/Random.h"
 #include "SGP/Types.h"
+#include "Soldier.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
@@ -971,9 +972,9 @@ BOOLEAN InternalAddSoldierToSector(UINT8 ubID, BOOLEAN fCalculateDirection, BOOL
 
   pSoldier = MercPtrs[ubID];
 
-  if (pSoldier->bActive) {
+  if (IsSolActive(pSoldier)) {
     // ATE: Make sure life of elliot is OK if from a meanwhile
-    if (AreInMeanwhile() && pSoldier->ubProfile == ELLIOT) {
+    if (AreInMeanwhile() && GetSolProfile(pSoldier) == ELLIOT) {
       if (pSoldier->bLife < OKLIFE) {
         pSoldier->bLife = 25;
       }
@@ -1363,11 +1364,11 @@ void AddSoldierToSectorGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8
           SoldierInSectorIncompaciated(pSoldier, pSoldier->sInsertionGridNo);
         } else if (pSoldier->fMercAsleep == TRUE) {
           InternalSoldierInSectorSleep(pSoldier, pSoldier->sInsertionGridNo, FALSE);
-        } else if (pSoldier->bAssignment == PATIENT) {
+        } else if (GetSolAssignment(pSoldier) == PATIENT) {
           SoldierInSectorPatient(pSoldier, pSoldier->sInsertionGridNo);
-        } else if (pSoldier->bAssignment == DOCTOR) {
+        } else if (GetSolAssignment(pSoldier) == DOCTOR) {
           SoldierInSectorDoctor(pSoldier, pSoldier->sInsertionGridNo);
-        } else if (pSoldier->bAssignment == REPAIR) {
+        } else if (GetSolAssignment(pSoldier) == REPAIR) {
           SoldierInSectorRepair(pSoldier, pSoldier->sInsertionGridNo);
         }
 

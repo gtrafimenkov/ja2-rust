@@ -2,6 +2,7 @@
 
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
+#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
@@ -169,7 +170,7 @@ INT32 GetYesterdaysOtherDeposits(void);
 INT32 GetTodaysOtherDeposits(void);
 INT32 GetYesterdaysDebits(void);
 
-UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, INT32 iAmount) {
+UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmount) {
   // adds transaction to player's book(Financial List), returns unique id number of it
   // outside of the financial system(the code in this .c file), this is the only function you'll
   // ever need
@@ -199,8 +200,8 @@ UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDa
   // update balance
   LaptopSaveInfo.iCurrentBalance += iAmount;
 
-  uiId = ProcessAndEnterAFinacialRecord(ubCode, uiDate, iAmount, ubSecondCode,
-                                        LaptopSaveInfo.iCurrentBalance);
+  uiId = ProcessAndEnterAFinacialRecord(ubCode, GetWorldTotalMin(), iAmount, ubSecondCode,
+                                        MoneyGetBalance());
 
   // write balance to disk
   WriteBalanceToDisk();
@@ -337,7 +338,7 @@ INT32 GetYesterdaysIncome(void) {
 
 INT32 GetCurrentBalance(void) {
   // get balance to this minute
-  return (LaptopSaveInfo.iCurrentBalance);
+  return (MoneyGetBalance());
 
   // return(GetTotalDebits((GetWorldTotalMin()))+GetTotalCredits((GetWorldTotalMin())));
 }
@@ -1362,8 +1363,8 @@ void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFin
       CHAR16 str[128];
       UINT8 ubSectorX;
       UINT8 ubSectorY;
-      ubSectorX = (UINT8)SECTORX(pFinance->ubSecondCode);
-      ubSectorY = (UINT8)SECTORY(pFinance->ubSecondCode);
+      ubSectorX = SectorID8_X(pFinance->ubSecondCode);
+      ubSectorY = SectorID8_Y(pFinance->ubSecondCode);
       GetSectorIDString(ubSectorX, ubSectorY, 0, str, ARR_SIZE(str), TRUE);
       swprintf(pString, bufSize, pTransactionText[TRAIN_TOWN_MILITIA], str);
     } break;

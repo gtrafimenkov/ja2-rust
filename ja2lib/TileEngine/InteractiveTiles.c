@@ -12,6 +12,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/AnimationControl.h"
@@ -233,8 +234,8 @@ void HandleStructChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
         fDidMissingQuote = TRUE;
       }
     } else if (pSoldier->bTeam == CIV_TEAM) {
-      if (pSoldier->ubProfile != NO_PROFILE) {
-        TriggerNPCWithGivenApproach(pSoldier->ubProfile, APPROACH_DONE_OPEN_STRUCTURE, FALSE);
+      if (GetSolProfile(pSoldier) != NO_PROFILE) {
+        TriggerNPCWithGivenApproach(GetSolProfile(pSoldier), APPROACH_DONE_OPEN_STRUCTURE, FALSE);
       }
     }
 
@@ -536,9 +537,7 @@ struct LEVELNODE *InternalGetCurInteractiveTile(BOOLEAN fRejectItemsOnTop) {
   return (NULL);
 }
 
-struct LEVELNODE *GetCurInteractiveTile() {
-  return (InternalGetCurInteractiveTile(TRUE));
-}
+struct LEVELNODE *GetCurInteractiveTile() { return (InternalGetCurInteractiveTile(TRUE)); }
 
 struct LEVELNODE *GetCurInteractiveTileGridNo(INT16 *psGridNo) {
   struct LEVELNODE *pNode;

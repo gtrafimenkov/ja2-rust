@@ -19,6 +19,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "Soldier.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"
@@ -129,7 +130,7 @@ enum {
 #define SCROLL_INTERTIA_STEP1 6
 #define SCROLL_INTERTIA_STEP2 8
 
-//#define SHORT_ROUND( x ) ( (INT16)( ( x * 1000 ) / 1000 ) )
+// #define SHORT_ROUND( x ) ( (INT16)( ( x * 1000 ) / 1000 ) )
 #define SHORT_ROUND(x) (x)
 
 #define NUM_ITEM_CYCLE_COLORS 60
@@ -625,7 +626,7 @@ void RenderSetShadows(BOOLEAN fShadows) {
 void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT32 iStartPointX_S,
                  INT32 iStartPointY_S, INT32 iEndXS, INT32 iEndYS, UINT8 ubNumLevels,
                  UINT32 *puiLevels, UINT16 *psLevelIDs) {
-  //#if 0
+  // #if 0
 
   struct LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
   struct SOLDIERTYPE *pSoldier, *pSelSoldier;
@@ -1304,8 +1305,8 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                   }
 
                   // IF we are not active, or are a placeholder for multi-tile animations do nothing
-                  // if ( !pSoldier->bActive  )
-                  if (!pSoldier->bActive || (uiLevelNodeFlags & LEVELNODE_MERCPLACEHOLDER)) {
+                  // if ( !IsSolActive(pSoldier)  )
+                  if (!IsSolActive(pSoldier) || (uiLevelNodeFlags & LEVELNODE_MERCPLACEHOLDER)) {
                     pNode = pNode->pNext;
                     continue;
                   }
@@ -1399,7 +1400,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                       // If a bad guy is highlighted
                       if (gfUIHandleSelectionAboveGuy == TRUE &&
                           MercPtrs[gsSelectedGuy]->bSide != gbPlayerNum) {
-                        if (gsSelectedGuy == pSoldier->ubID) {
+                        if (gsSelectedGuy == GetSolID(pSoldier)) {
                           pShadeTable =
                               pShadeStart[gsGlowFrames[gsCurrentGlowFrame] + bGlowShadeOffset];
                           gsForceSoldierZLevel = TOPMOST_Z_LEVEL;
@@ -1976,7 +1977,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 // RENDR APS ONTOP OF PLANNED MERC GUY
                 if (fRenderTile && !(uiFlags & TILES_DIRTY)) {
                   if (fMerc) {
-                    if (pSoldier != NULL && pSoldier->ubID >= MAX_NUM_SOLDIERS) {
+                    if (pSoldier != NULL && GetSolID(pSoldier) >= MAX_NUM_SOLDIERS) {
                       SetFont(TINYFONT1);
                       SetFontDestBuffer(guiSAVEBUFFER, 0, gsVIEWPORT_WINDOW_START_Y, 640,
                                         gsVIEWPORT_WINDOW_END_Y, FALSE);
@@ -2184,7 +2185,7 @@ void RenderWorld() {
   // gsVIEWPORT_END_Y ); AddBaseDirtyRect(gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X,
   // gsVIEWPORT_END_Y ); return;
 
-  //#if 0
+  // #if 0
 
   if (gRenderFlags & RENDER_FLAG_FULL) {
     gfRenderFullThisFrame = TRUE;
@@ -2241,7 +2242,7 @@ void RenderWorld() {
 
 #endif
 
-  //#endif
+  // #endif
 
   // RenderStaticWorldRect( gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X,
   // gsVIEWPORT_END_Y ); AddBaseDirtyRect(gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X,
@@ -2298,7 +2299,7 @@ void RenderStaticWorldRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom,
   RenderTiles(0, gsLStartPointX_M, gsLStartPointY_M, gsLStartPointX_S, gsLStartPointY_S, gsLEndXS,
               gsLEndYS, 1, uiLevelFlags, sLevelIDs);
 
-  //#if 0
+  // #if 0
 
   uiLevelFlags[0] = TILES_STATIC_OBJECTS;
   sLevelIDs[0] = RENDER_STATIC_OBJECTS;
@@ -2376,7 +2377,7 @@ void RenderStaticWorldRect(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom,
     AddBaseDirtyRect(sLeft, sTop, sRight, sBottom);
   }
 
-  //#endif
+  // #endif
 }
 
 void RenderStaticWorld() {

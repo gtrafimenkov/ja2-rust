@@ -24,6 +24,7 @@
 #include "Tactical/TacticalSave.h"
 #include "TacticalAI/NPC.h"
 #include "TileEngine/RenderDirty.h"
+#include "Town.h"
 #include "Utils/FontControl.h"
 #include "Utils/PopUpBox.h"
 #include "Utils/Text.h"
@@ -107,7 +108,7 @@ void CreateDestroyTownInfoBox(void) {
   static BOOLEAN fCreated = FALSE;
   SGPRect pDimensions;
   SGPPoint pPosition;
-  INT8 bTownId = 0;
+  TownID bTownId = 0;
 
   if ((fCreated == FALSE) && (fShowTownInfo == TRUE)) {
     // create pop up box
@@ -260,7 +261,7 @@ void AddTextToTownBox(void) {
   ubTownId = GetTownIdForSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
   Assert((ubTownId >= FIRST_TOWN) && (ubTownId < NUM_TOWNS));
 
-  usTownSectorIndex = SECTOR(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
+  usTownSectorIndex = GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
 
   switch (usTownSectorIndex) {
     case SEC_B13:
@@ -338,7 +339,7 @@ void AddTextToTownBox(void) {
     // Associated Mine: Sector
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[4]);
     AddMonoString(&hStringHandle, wString);
-    GetShortSectorString((INT16)(sMineSector % MAP_WORLD_X), (INT16)(sMineSector / MAP_WORLD_X),
+    GetShortSectorString((INT16)(SectorID16_X(sMineSector)), (INT16)(SectorID16_Y(sMineSector)),
                          wString, ARR_SIZE(wString));
     AddSecondColumnMonoString(&hStringHandle, wString);
   }
@@ -466,7 +467,7 @@ void AddTextToBlankSectorBox(void) {
   UINT16 usSectorValue = 0;
 
   // get the sector value
-  usSectorValue = SECTOR(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
+  usSectorValue = GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
 
   switch (usSectorValue) {
     case SEC_D2:  // Chitzena SAM
@@ -525,10 +526,9 @@ void AddCommonInfoToBox(void) {
   CHAR16 wString[64];
   UINT32 hStringHandle = 0;
   BOOLEAN fUnknownSAMSite = FALSE;
-  UINT8 ubMilitiaTotal = 0;
   UINT8 ubNumEnemies;
 
-  switch (SECTOR(bCurrentTownMineSectorX, bCurrentTownMineSectorY)) {
+  switch (GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY)) {
     case SEC_D2:  // Chitzena SAM
       if (!fSamSiteFound[SAM_SITE_ONE]) fUnknownSAMSite = TRUE;
       break;
@@ -554,8 +554,8 @@ void AddCommonInfoToBox(void) {
 
     // No/Yes
     swprintf(wString, ARR_SIZE(wString), L"%s",
-             pwMiscSectorStrings[(StrategicMap[CALCULATE_STRATEGIC_INDEX(bCurrentTownMineSectorX,
-                                                                         bCurrentTownMineSectorY)]
+             pwMiscSectorStrings[(StrategicMap[GetSectorID16(bCurrentTownMineSectorX,
+                                                             bCurrentTownMineSectorY)]
                                       .fEnemyControlled)
                                      ? 6
                                      : 5]);
@@ -565,14 +565,14 @@ void AddCommonInfoToBox(void) {
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[11]);
     AddMonoString(&hStringHandle, wString);
 
-    ubMilitiaTotal = CountAllMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
+    UINT8 ubMilitiaTotal =
+        CountAllMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
     if (ubMilitiaTotal > 0) {
       // some militia, show total & their breakdown by level
-      swprintf(
-          wString, ARR_SIZE(wString), L"%d  (%d/%d/%d)", ubMilitiaTotal,
-          MilitiaInSectorOfRank(bCurrentTownMineSectorX, bCurrentTownMineSectorY, GREEN_MILITIA),
-          MilitiaInSectorOfRank(bCurrentTownMineSectorX, bCurrentTownMineSectorY, REGULAR_MILITIA),
-          MilitiaInSectorOfRank(bCurrentTownMineSectorX, bCurrentTownMineSectorY, ELITE_MILITIA));
+      struct MilitiaCount milCount =
+          GetMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
+      swprintf(wString, ARR_SIZE(wString), L"%d  (%d/%d/%d)", ubMilitiaTotal, milCount.green,
+               milCount.regular, milCount.elite);
       AddSecondColumnMonoString(&hStringHandle, wString);
     } else {
       // no militia: don't bother displaying level breakdown
@@ -584,7 +584,7 @@ void AddCommonInfoToBox(void) {
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[10]);
     AddMonoString(&hStringHandle, wString);
     swprintf(wString, ARR_SIZE(wString), L"%d%%%%",
-             SectorInfo[SECTOR(bCurrentTownMineSectorX, bCurrentTownMineSectorY)]
+             SectorInfo[GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY)]
                  .ubMilitiaTrainingPercentDone);
     AddSecondColumnMonoString(&hStringHandle, wString);
   }
@@ -774,7 +774,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 
       // done
       fShowMapInventoryPool = TRUE;
-      fMapPanelDirty = TRUE;
+      MarkForRedrawalStrategicMap();
       fMapScreenBottomDirty = TRUE;
       fShowTownInfo = FALSE;
 
@@ -796,7 +796,7 @@ void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
 
       // done
-      fMapPanelDirty = TRUE;
+      MarkForRedrawalStrategicMap();
       fMapScreenBottomDirty = TRUE;
       fShowTownInfo = FALSE;
     }

@@ -3,6 +3,7 @@
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/QueenCommand.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"
@@ -73,7 +74,7 @@ UINT8 gubAICounter;
 // Very representing if this computer is the host, therefore controlling the ai
 extern BYTE gfAmIHost;
 
-//#define TESTAI
+// #define TESTAI
 
 INT8 GameOption[MAXGAMEOPTIONS] = {0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0};
 
@@ -199,7 +200,8 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->bTeam != gTacticalStatus.ubCurrentTeam) {
 #ifdef JA2BETAVERSION
       ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_ERROR,
-                L"Turning off AI flag for %d because trying to act out of turn", pSoldier->ubID);
+                L"Turning off AI flag for %d because trying to act out of turn",
+                GetSolID(pSoldier));
 #endif
       pSoldier->uiStatusFlags &= ~SOLDIER_UNDERAICONTROL;
       return;
@@ -207,7 +209,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->bMoved) {
 #ifdef TESTAICONTROL
       if (gfTurnBasedAI) {
-        DebugAI(String("Ending turn for %d because set to moved", pSoldier->ubID));
+        DebugAI(String("Ending turn for %d because set to moved", GetSolID(pSoldier)));
       }
 #endif
       // this guy doesn't get to act!
@@ -218,8 +220,8 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
   } else if (!(pSoldier->fAIFlags &
                AI_HANDLE_EVERY_FRAME))  // if set to handle every frame, ignore delay!
   {
-    //#ifndef AI_PROFILING
-    // Time to handle guys in realtime (either combat or not )
+    // #ifndef AI_PROFILING
+    //  Time to handle guys in realtime (either combat or not )
     if (!TIMECOUNTERDONE(pSoldier->AICounter, pSoldier->uiAIDelay)) {
       // CAMFIELD, LOOK HERE!
       return;
@@ -229,7 +231,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
       // DebugMsg( TOPIC_JA2, DBG_LEVEL_0, String( "%s waiting %d from %d", pSoldier->name,
       // pSoldier->AICounter, uiCurrTime ) );
     }
-    //#endif
+    // #endif
   }
 
   if (pSoldier->fAIFlags & AI_HANDLE_EVERY_FRAME)  // if set to handle every frame, ignore delay!
@@ -251,7 +253,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 // do nothing!
 #ifdef TESTAICONTROL
       if (gfTurnBasedAI) {
-        DebugAI(String("Ending turn for %d because not a boxer", pSoldier->ubID));
+        DebugAI(String("Ending turn for %d because not a boxer", GetSolID(pSoldier)));
       }
 #endif
       EndAIGuysTurn(pSoldier);
@@ -260,13 +262,13 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
   }
 
   // if this NPC is dying, bail
-  if (pSoldier->bLife < OKLIFE || !pSoldier->bActive) {
-    if (pSoldier->bActive && pSoldier->fMuzzleFlash) {
+  if (pSoldier->bLife < OKLIFE || !IsSolActive(pSoldier)) {
+    if (IsSolActive(pSoldier) && pSoldier->fMuzzleFlash) {
       EndMuzzleFlash(pSoldier);
     }
 #ifdef TESTAICONTROL
     if (gfTurnBasedAI) {
-      DebugAI(String("Ending turn for %d because bad life/inactive", pSoldier->ubID));
+      DebugAI(String("Ending turn for %d because bad life/inactive", GetSolID(pSoldier)));
     }
 #endif
 
@@ -283,8 +285,8 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 // don't do anything!
 #ifdef TESTAICONTROL
       if (gfTurnBasedAI) {
-        DebugAI(
-            String("Ending turn for %d because asleep and no scheduled action", pSoldier->ubID));
+        DebugAI(String("Ending turn for %d because asleep and no scheduled action",
+                       GetSolID(pSoldier)));
       }
 #endif
 
@@ -298,7 +300,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 #ifdef TESTAICONTROL
     if (gfTurnBasedAI) {
       DebugAI(String("Ending turn for %d because out of sector and no scheduled action",
-                     pSoldier->ubID));
+                     GetSolID(pSoldier)));
     }
 #endif
 
@@ -310,7 +312,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 // bail out!
 #ifdef TESTAICONTROL
     if (gfTurnBasedAI) {
-      DebugAI(String("Ending turn for %d because is vehicle or robot", pSoldier->ubID));
+      DebugAI(String("Ending turn for %d because is vehicle or robot", GetSolID(pSoldier)));
     }
 #endif
 
@@ -326,7 +328,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef TESTAICONTROL
     if (gfTurnBasedAI) {
-      DebugAI(String("Ending turn for %d because unconscious", pSoldier->ubID));
+      DebugAI(String("Ending turn for %d because unconscious", GetSolID(pSoldier)));
     }
 #endif
 
@@ -338,9 +340,9 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 
   // in the unlikely situation (Sgt Krott et al) that we have a quote trigger going on
   // during turnbased, don't do any AI
-  if (pSoldier->ubProfile != NO_PROFILE &&
-      (pSoldier->ubProfile == SERGEANT || pSoldier->ubProfile == MIKE ||
-       pSoldier->ubProfile == JOE) &&
+  if (GetSolProfile(pSoldier) != NO_PROFILE &&
+      (GetSolProfile(pSoldier) == SERGEANT || GetSolProfile(pSoldier) == MIKE ||
+       GetSolProfile(pSoldier) == JOE) &&
       (gTacticalStatus.uiFlags & INCOMBAT) &&
       (gfInTalkPanel || gfWaitingForTriggerTimer || !DialogueQueueIsEmpty())) {
     return;
@@ -360,7 +362,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
         if (guiNumBullets == 0) {
           // abort attack!
           // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String(">>>>>> Attack busy count lobotomized due to
-          // new situation for %d", pSoldier->ubID ) ); gTacticalStatus.ubAttackBusyCount = 0;
+          // new situation for %d", GetSolID(pSoldier) ) ); gTacticalStatus.ubAttackBusyCount = 0;
           fProcessNewSituation = TRUE;
         }
       } else if (pSoldier->bAction == AI_ACTION_TOSS_PROJECTILE) {
@@ -368,7 +370,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
           // abort attack!
           DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
                    String(">>>>>> Attack busy count lobotomized due to new situation for %d",
-                          pSoldier->ubID));
+                          GetSolID(pSoldier)));
           gTacticalStatus.ubAttackBusyCount = 0;
           fProcessNewSituation = TRUE;
         }
@@ -406,7 +408,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
   }
 
 #ifdef TESTAI
-  DebugMsg(TOPIC_JA2AI, DBG_LEVEL_3, String(".... HANDLING AI FOR %d", pSoldier->ubID));
+  DebugMsg(TOPIC_JA2AI, DBG_LEVEL_3, String(".... HANDLING AI FOR %d", GetSolID(pSoldier)));
 #endif
 
   /*********
@@ -422,8 +424,8 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 #ifdef JA2TESTVERSION
       // display deadlock message
       gfUIInDeadlock = TRUE;
-      gUIDeadlockedSoldier = pSoldier->ubID;
-      DebugAI(String("DEADLOCK soldier %d action %s ABC %d", pSoldier->ubID,
+      gUIDeadlockedSoldier = GetSolID(pSoldier);
+      DebugAI(String("DEADLOCK soldier %d action %s ABC %d", GetSolID(pSoldier),
                      gzActionStr[pSoldier->bAction], gTacticalStatus.ubAttackBusyCount));
 #else
 
@@ -431,7 +433,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 #ifdef JA2BETAVERSION
       ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_ERROR,
                 L"Aborting AI deadlock for %d. Please sent DEBUG.TXT file and SAVE.",
-                pSoldier->ubID);
+                GetSolID(pSoldier));
 #endif
       // just abort
       EndAIDeadlock();
@@ -472,7 +474,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
             if (pSoldier->sAbsoluteFinalDestination != pSoldier->sGridNo) {
               // update NPC records to replace our final dest with this location
               ReplaceLocationInNPCDataFromProfileID(
-                  pSoldier->ubProfile, pSoldier->sAbsoluteFinalDestination, pSoldier->sGridNo);
+                  GetSolProfile(pSoldier), pSoldier->sAbsoluteFinalDestination, pSoldier->sGridNo);
             }
             pSoldier->sAbsoluteFinalDestination = pSoldier->sGridNo;
             // change action data so that we consider this our final destination below
@@ -509,7 +511,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 // reached destination
 #ifdef TESTAI
         DebugMsg(TOPIC_JA2AI, DBG_LEVEL_0,
-                 String("OPPONENT %d REACHES DEST - ACTION DONE", pSoldier->ubID));
+                 String("OPPONENT %d REACHES DEST - ACTION DONE", GetSolID(pSoldier)));
 #endif
 
         if (pSoldier->sGridNo == pSoldier->sFinalDestination) {
@@ -547,7 +549,7 @@ void HandleSoldierAI(struct SOLDIERTYPE *pSoldier) {
 // OK, we have a move to finish...
 #ifdef TESTAI
             DebugMsg(TOPIC_JA2AI, DBG_LEVEL_0,
-                     String("GONNA TRY TO CONTINUE PATH FOR %d", pSoldier->ubID));
+                     String("GONNA TRY TO CONTINUE PATH FOR %d", GetSolID(pSoldier)));
 #endif
 
             SoldierTriesToContinueAlongPath(pSoldier);
@@ -619,7 +621,7 @@ void EndAIGuysTurn(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef TESTAICONTROL
     if (!(gTacticalStatus.uiFlags & DEMOMODE))
-      DebugAI(String("Ending control for %d", pSoldier->ubID));
+      DebugAI(String("Ending control for %d", GetSolID(pSoldier)));
 #endif
 
     // find the next AI guy
@@ -647,12 +649,12 @@ void EndAIDeadlock(void) {
 
   // find enemy with problem and free him up...
   for (cnt = 0, pSoldier = Menptr; cnt < MAXMERCS; cnt++, pSoldier++) {
-    if (pSoldier->bActive && pSoldier->bInSector) {
+    if (IsSolActive(pSoldier) && pSoldier->bInSector) {
       if (pSoldier->uiStatusFlags & SOLDIER_UNDERAICONTROL) {
         CancelAIAction(pSoldier, FORCE);
 #ifdef TESTAICONTROL
         if (gfTurnBasedAI) {
-          DebugAI(String("Ending turn for %d because breaking deadlock", pSoldier->ubID));
+          DebugAI(String("Ending turn for %d because breaking deadlock", GetSolID(pSoldier)));
         }
 #endif
 
@@ -695,7 +697,7 @@ void StartNPCAI(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef TESTAICONTROL
   if (!(gTacticalStatus.uiFlags & DEMOMODE))
-    DebugAI(String("Giving control to %d", pSoldier->ubID));
+    DebugAI(String("Giving control to %d", GetSolID(pSoldier)));
 #endif
 
   gTacticalStatus.uiTimeSinceMercAIStart = GetJA2Clock();
@@ -839,18 +841,19 @@ void FreeUpNPCFromPendingAction(struct SOLDIERTYPE *pSoldier) {
         pSoldier->bAction == AI_ACTION_YELLOW_ALERT || pSoldier->bAction == AI_ACTION_RED_ALERT ||
         pSoldier->bAction == AI_ACTION_UNLOCK_DOOR || pSoldier->bAction == AI_ACTION_PULL_TRIGGER ||
         pSoldier->bAction == AI_ACTION_LOCK_DOOR) {
-      if (pSoldier->ubProfile != NO_PROFILE) {
+      if (GetSolProfile(pSoldier) != NO_PROFILE) {
         if (pSoldier->ubQuoteRecord == NPC_ACTION_KYLE_GETS_MONEY) {
           // Kyle after getting money
           pSoldier->ubQuoteRecord = 0;
           TriggerNPCRecord(KYLE, 11);
         } else if (pSoldier->usAnimState == END_OPENSTRUCT) {
-          TriggerNPCWithGivenApproach(pSoldier->ubProfile, APPROACH_DONE_OPEN_STRUCTURE, TRUE);
-          // TriggerNPCWithGivenApproach( pSoldier->ubProfile, APPROACH_DONE_OPEN_STRUCTURE, FALSE
+          TriggerNPCWithGivenApproach(GetSolProfile(pSoldier), APPROACH_DONE_OPEN_STRUCTURE, TRUE);
+          // TriggerNPCWithGivenApproach( GetSolProfile(pSoldier), APPROACH_DONE_OPEN_STRUCTURE,
+          // FALSE
           // );
         } else if (pSoldier->usAnimState == PICKUP_ITEM ||
                    pSoldier->usAnimState == ADJACENT_GET_ITEM) {
-          TriggerNPCWithGivenApproach(pSoldier->ubProfile, APPROACH_DONE_GET_ITEM, TRUE);
+          TriggerNPCWithGivenApproach(GetSolProfile(pSoldier), APPROACH_DONE_GET_ITEM, TRUE);
         }
       }
       ActionDone(pSoldier);
@@ -870,7 +873,7 @@ void FreeUpNPCFromAttacking(UINT8 ubID) {
           {
   #ifdef TESTAI
                   DebugMsg( TOPIC_JA2AI, DBG_LEVEL_0, String( "FreeUpNPCFromAttacking for %d",
-  pSoldier->ubID ) ); #endif if (pSoldier->bAction == AI_ACTION_FIRE_GUN)
+  GetSolID(pSoldier) ) ); #endif if (pSoldier->bAction == AI_ACTION_FIRE_GUN)
                   {
                           if (pSoldier->bDoBurst)
                           {
@@ -1083,7 +1086,7 @@ void NPCDoesNothing(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef TESTAICONTROL
   if (gfTurnBasedAI) {
-    DebugAI(String("Ending turn for %d because doing no-action", pSoldier->ubID));
+    DebugAI(String("Ending turn for %d because doing no-action", GetSolID(pSoldier)));
   }
 #endif
 
@@ -1176,12 +1179,12 @@ void ActionTimeoutExceeded(struct SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
    // we can all agree the action is DONE and we can continue...
    // (otherwise they'll be calling FreeUp... twice and get REAL screwed up)
    NetSend.msgType = NET_FREE_UP_ATTACK;
-   NetSend.ubID  = pSoldier->ubID;
+   NetSend.ubID  = GetSolID(pSoldier);
 
    for (cnt = 0; cnt < MAXPLAYERS; cnt++)
     {
      if ((cnt != Net.pnum) && Net.player[cnt].playerActive &&
-         (Net.player[cnt].actionDone != pSoldier->ubID))
+         (Net.player[cnt].actionDone != GetSolID(pSoldier)))
        SendNetData(cnt);
     }
 
@@ -1204,14 +1207,14 @@ void ActionTimeoutExceeded(struct SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
    // we can all agree the action is DONE and we can continue...
    // (otherwise they'll be calling FreeUp... twice and get REAL screwed up)
    NetSend.msgType    = NET_FREE_UP_TURN;
-   NetSend.ubID     = pSoldier->ubID;
+   NetSend.ubID     = GetSolID(pSoldier);
    NetSend.misc_UCHAR = pSoldier->bDirection;
    NetSend.answer     = pSoldier->bDesiredDirection;
 
    for (cnt = 0; cnt < MAXPLAYERS; cnt++)
     {
      if ((cnt != Net.pnum) && Net.player[cnt].playerActive &&
-         (Net.player[cnt].actionDone != pSoldier->ubID))
+         (Net.player[cnt].actionDone != GetSolID(pSoldier)))
        SendNetData(cnt);
     }
 
@@ -1356,7 +1359,7 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
   //
 
    // If man is inactive/at base/dead/unconscious
-   if (!pSoldier->bActive || !pSoldier->bInSector || (pSoldier->bLife < OKLIFE))
+   if (!IsSolActive(pSoldier) || !pSoldier->bInSector || (pSoldier->bLife < OKLIFE))
     {
   #ifdef DEBUGDECISIONS
      AINumMessage("HandleManAI - Unavailable man, skipping guy#",pSoldier->ubID);
@@ -1391,7 +1394,7 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
      {
  #ifdef RECORDNET
       fprintf(NetDebugFile,"\tAI: %d can't get up (breath %d, AP %d), ending his turn\n",
-                 pSoldier->ubID,pSoldier->bBreath,pSoldier->bActionPoints);
+                 GetSolID(pSoldier),pSoldier->bBreath,pSoldier->bActionPoints);
  #endif
  #ifdef DEBUGDECISIONS
       AINumMessage("HandleManAI - CAN'T GET UP, skipping guy #",pSoldier->ubID);
@@ -1406,7 +1409,7 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
 
  #ifdef RECORDNET
       fprintf(NetDebugFile,"\tAI: waiting for %d to GET UP (breath %d, AP %d)\n",
-                 pSoldier->ubID,pSoldier->bBreath,pSoldier->bActionPoints);
+                 GetSolID(pSoldier),pSoldier->bBreath,pSoldier->bActionPoints);
  #endif
 
  #ifdef DEBUGBUSY
@@ -1468,7 +1471,7 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
     // if action should remain in progress
     if (ActionInProgress(pSoldier)) {
 #ifdef DEBUGBUSY
-      AINumMessage("Busy with action, skipping guy#", pSoldier->ubID);
+      AINumMessage("Busy with action, skipping guy#", GetSolID(pSoldier));
 #endif
 
       // let it continue
@@ -1477,8 +1480,8 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
   }
 
 #ifdef DEBUGDECISIONS
-  DebugAI(String("HandleManAI - DECIDING for guynum %d(%s) at gridno %d, APs %d\n", pSoldier->ubID,
-                 pSoldier->name, pSoldier->sGridNo, pSoldier->bActionPoints));
+  DebugAI(String("HandleManAI - DECIDING for guynum %d(%s) at gridno %d, APs %d\n",
+                 GetSolID(pSoldier), pSoldier->name, pSoldier->sGridNo, pSoldier->bActionPoints));
 #endif
 
   // if man has nothing to do
@@ -1564,7 +1567,7 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
     if (pSoldier->bAction == AI_ACTION_NONE) {
 #ifdef RECORDNET
       fprintf(NetDebugFile, "\tMOVED BECOMING TRUE: Chose to do nothing, guynum %d\n",
-              pSoldier->ubID);
+              GetSolID(pSoldier));
 #endif
 
       NPCDoesNothing(pSoldier);  // sets pSoldier->moved to TRUE
@@ -1599,7 +1602,7 @@ void TurnBasedHandleNPCAI(struct SOLDIERTYPE *pSoldier) {
       }
     } else {
 #ifdef DEBUGDECISIONS
-      AINumMessage("HandleManAI - Not enough APs, skipping guy#", pSoldier->ubID);
+      AINumMessage("HandleManAI - Not enough APs, skipping guy#", GetSolID(pSoldier));
 #endif
       HaltMoveForSoldierOutOfPoints(pSoldier);
       return;
@@ -1684,14 +1687,14 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
 
 #ifdef TESTAICONTROL
   if (gfTurnBasedAI || gTacticalStatus.fAutoBandageMode) {
-    DebugAI(String("%d does %s (a.d. %d) in %d with %d APs left", pSoldier->ubID,
+    DebugAI(String("%d does %s (a.d. %d) in %d with %d APs left", GetSolID(pSoldier),
                    gzActionStr[pSoldier->bAction], pSoldier->usActionData, pSoldier->sGridNo,
                    pSoldier->bActionPoints));
   }
 #endif
 
-  DebugAI(String("%d does %s (a.d. %d) at time %ld", pSoldier->ubID, gzActionStr[pSoldier->bAction],
-                 pSoldier->usActionData, GetJA2Clock()));
+  DebugAI(String("%d does %s (a.d. %d) at time %ld", GetSolID(pSoldier),
+                 gzActionStr[pSoldier->bAction], pSoldier->usActionData, GetJA2Clock()));
 
   switch (pSoldier->bAction) {
     case AI_ACTION_NONE:  // maintain current position & facing
@@ -1704,7 +1707,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
         // do nothing
       } else {
         RESETTIMECOUNTER(pSoldier->AICounter, pSoldier->usActionData);
-        if (pSoldier->ubProfile != NO_PROFILE) {
+        if (GetSolProfile(pSoldier) != NO_PROFILE) {
           // DebugMsg( TOPIC_JA2, DBG_LEVEL_0, String( "%s waiting %d from %d", pSoldier->name,
           // pSoldier->AICounter, GetJA2Clock() ) );
         }
@@ -1801,7 +1804,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
         // check for loop
         else if (pSoldier->usActionData == pSoldier->sLastTwoLocations[1] &&
                  pSoldier->sGridNo == pSoldier->sLastTwoLocations[0]) {
-          DebugAI(String("%d in movement loop, aborting turn", pSoldier->ubID));
+          DebugAI(String("%d in movement loop, aborting turn", GetSolID(pSoldier)));
 
           // loop found!
           ActionDone(pSoldier);
@@ -1859,8 +1862,8 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
                 SpacesAway(pSoldier->sGridNo, pSoldier->sAbsoluteFinalDestination) < 4) {
               // This is close enough...
               ReplaceLocationInNPCDataFromProfileID(
-                  pSoldier->ubProfile, pSoldier->sAbsoluteFinalDestination, pSoldier->sGridNo);
-              NPCGotoGridNo(pSoldier->ubProfile, pSoldier->sGridNo,
+                  GetSolProfile(pSoldier), pSoldier->sAbsoluteFinalDestination, pSoldier->sGridNo);
+              NPCGotoGridNo(GetSolProfile(pSoldier), pSoldier->sGridNo,
                             (UINT8)(pSoldier->ubQuoteRecord - 1));
             } else {
               // This is important, so try taking a path through people (and bumping them aside)
@@ -1933,7 +1936,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
         // temporarily black list this gridno to stop enemy from going there
         pSoldier->sBlackList = (INT16)pSoldier->usActionData;
 
-        DebugAI(String("Setting blacklist for %d to %d", pSoldier->ubID, pSoldier->sBlackList));
+        DebugAI(String("Setting blacklist for %d to %d", GetSolID(pSoldier), pSoldier->sBlackList));
 
         CancelAIAction(pSoldier, FORCE);
         return (FALSE);  // nothing is in progress
@@ -1972,7 +1975,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
       // randomly decide whether to say civ quote
       if (pSoldier->bVisible != -1 && pSoldier->bTeam != MILITIA_TEAM) {
         // ATE: Make sure it's a person :)
-        if (IS_MERC_BODY_TYPE(pSoldier) && pSoldier->ubProfile == NO_PROFILE) {
+        if (IS_MERC_BODY_TYPE(pSoldier) && GetSolProfile(pSoldier) == NO_PROFILE) {
           // CC, ATE here - I put in some TEMP randomness...
           if (Random(50) == 0) {
             StartCivQuote(pSoldier);
@@ -1983,7 +1986,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
       fprintf(NetDebugFile,
               "\tExecuteAction: %d calling HandleItem(), inHand %d, actionData %d, anitype %d, "
               "oldani %d\n",
-              pSoldier->ubID, pSoldier->inv[HANDPOS].item, pSoldier->usActionData,
+              GetSolID(pSoldier), pSoldier->inv[HANDPOS].item, pSoldier->usActionData,
               pSoldier->anitype[pSoldier->anim], pSoldier->oldani);
 #endif
 
@@ -2004,16 +2007,17 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
           DebugAI(
               String("AI %d got error code %ld from HandleItem, doing action %d, has %d APs... "
                      "aborting deadlock!",
-                     pSoldier->ubID, iRetCode, pSoldier->bAction, pSoldier->bActionPoints));
+                     GetSolID(pSoldier), iRetCode, pSoldier->bAction, pSoldier->bActionPoints));
           ScreenMsg(
               FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION,
               L"AI %d got error code %ld from HandleItem, doing action %d... aborting deadlock!",
-              pSoldier->ubID, iRetCode, pSoldier->bAction);
+              GetSolID(pSoldier), iRetCode, pSoldier->bAction);
         }
         CancelAIAction(pSoldier, FORCE);
 #ifdef TESTAICONTROL
         if (gfTurnBasedAI) {
-          DebugAI(String("Ending turn for %d because of error from HandleItem", pSoldier->ubID));
+          DebugAI(
+              String("Ending turn for %d because of error from HandleItem", GetSolID(pSoldier)));
         }
 #endif
         EndAIGuysTurn(pSoldier);
@@ -2069,7 +2073,7 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
       // ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Debug: AI radios about a noise!" );
       /*
                               NetSend.msgType = NET_RADIO_SIGHTINGS;
-                              NetSend.ubID  = pSoldier->ubID;
+                              NetSend.ubID  = GetSolID(pSoldier);
 
                               SendNetData(ALL_NODES);
       */
@@ -2136,12 +2140,13 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
         ScreenMsg(
             FONT_MCOLOR_LTYELLOW, MSG_ERROR,
             L"AI %d got error code %ld from HandleItem, doing action %d... aborting deadlock!",
-            pSoldier->ubID, iRetCode, pSoldier->bAction);
+            GetSolID(pSoldier), iRetCode, pSoldier->bAction);
 #endif
         CancelAIAction(pSoldier, FORCE);
 #ifdef TESTAICONTROL
         if (gfTurnBasedAI) {
-          DebugAI(String("Ending turn for %d because of error from HandleItem", pSoldier->ubID));
+          DebugAI(
+              String("Ending turn for %d because of error from HandleItem", GetSolID(pSoldier)));
         }
 #endif
         EndAIGuysTurn(pSoldier);
@@ -2166,13 +2171,13 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
       if (pStructure == NULL) {
 #ifdef JA2TESTVERSION
         ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_ERROR,
-                  L"AI %d tried to open door it could not then find in %d", pSoldier->ubID,
+                  L"AI %d tried to open door it could not then find in %d", GetSolID(pSoldier),
                   sDoorGridNo);
 #endif
         CancelAIAction(pSoldier, FORCE);
 #ifdef TESTAICONTROL
         if (gfTurnBasedAI) {
-          DebugAI(String("Ending turn for %d because of error opening door", pSoldier->ubID));
+          DebugAI(String("Ending turn for %d because of error opening door", GetSolID(pSoldier)));
         }
 #endif
         EndAIGuysTurn(pSoldier);
@@ -2206,9 +2211,9 @@ INT8 ExecuteAction(struct SOLDIERTYPE *pSoldier) {
       if (gfTurnBasedAI) {
         EndAIGuysTurn(pSoldier);
       }
-      if (pSoldier->ubProfile != NO_PROFILE) {
-        gMercProfiles[pSoldier->ubProfile].bSectorZ++;
-        gMercProfiles[pSoldier->ubProfile].fUseProfileInsertionInfo = FALSE;
+      if (GetSolProfile(pSoldier) != NO_PROFILE) {
+        gMercProfiles[GetSolProfile(pSoldier)].bSectorZ++;
+        gMercProfiles[GetSolProfile(pSoldier)].fUseProfileInsertionInfo = FALSE;
       }
       TacticalRemoveSoldier(pSoldier->ubID);
       CheckForEndOfBattle(TRUE);
@@ -2235,13 +2240,14 @@ void CheckForChangingOrders(struct SOLDIERTYPE *pSoldier) {
   switch (pSoldier->bAlertStatus) {
     case STATUS_GREEN:
       if (!CREATURE_OR_BLOODCAT(pSoldier)) {
-        if (pSoldier->bTeam == CIV_TEAM && pSoldier->ubProfile != NO_PROFILE &&
-            pSoldier->bNeutral && gMercProfiles[pSoldier->ubProfile].sPreCombatGridNo != NOWHERE &&
+        if (pSoldier->bTeam == CIV_TEAM && GetSolProfile(pSoldier) != NO_PROFILE &&
+            pSoldier->bNeutral &&
+            gMercProfiles[GetSolProfile(pSoldier)].sPreCombatGridNo != NOWHERE &&
             pSoldier->ubCivilianGroup != QUEENS_CIV_GROUP) {
           // must make them uncower first, then return to start location
           pSoldier->bNextAction = AI_ACTION_END_COWER_AND_MOVE;
-          pSoldier->usNextActionData = gMercProfiles[pSoldier->ubProfile].sPreCombatGridNo;
-          gMercProfiles[pSoldier->ubProfile].sPreCombatGridNo = NOWHERE;
+          pSoldier->usNextActionData = gMercProfiles[GetSolProfile(pSoldier)].sPreCombatGridNo;
+          gMercProfiles[GetSolProfile(pSoldier)].sPreCombatGridNo = NOWHERE;
         } else if (pSoldier->uiStatusFlags & SOLDIER_COWERING) {
           pSoldier->bNextAction = AI_ACTION_STOP_COWERING;
           pSoldier->usNextActionData = ANIM_STAND;
@@ -2266,7 +2272,7 @@ void CheckForChangingOrders(struct SOLDIERTYPE *pSoldier) {
         }
       }
 
-      if (pSoldier->ubProfile == WARDEN) {
+      if (GetSolProfile(pSoldier) == WARDEN) {
         // Tixa
         MakeClosestEnemyChosenOne();
       }
@@ -2349,7 +2355,7 @@ void ManChecksOnFriends(struct SOLDIERTYPE *pSoldier) {
     if (pFriend->bNeutral || (pSoldier->bSide != pFriend->bSide)) continue;  // next merc
 
     // if this merc is actually ME
-    if (pFriend->ubID == pSoldier->ubID) continue;  // next merc
+    if (pFriend->ubID == GetSolID(pSoldier)) continue;  // next merc
 
     sDistVisible = DistanceVisible(pSoldier, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT,
                                    pFriend->sGridNo, pFriend->bLevel);
@@ -2402,7 +2408,7 @@ void SetNewSituation(struct SOLDIERTYPE *pSoldier) {
 
       if (gTacticalStatus.ubAttackBusyCount != 0) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-                 String("BBBBBB bNewSituation is set for %d when ABC !=0.", pSoldier->ubID));
+                 String("BBBBBB bNewSituation is set for %d when ABC !=0.", GetSolID(pSoldier)));
       }
 
       if (!(gTacticalStatus.uiFlags & INCOMBAT) || (gTacticalStatus.uiFlags & REALTIME)) {
@@ -2416,16 +2422,16 @@ void SetNewSituation(struct SOLDIERTYPE *pSoldier) {
 void HandleAITacticalTraversal(struct SOLDIERTYPE *pSoldier) {
   HandleNPCChangesForTacticalTraversal(pSoldier);
 
-  if (pSoldier->ubProfile != NO_PROFILE &&
-      NPCHasUnusedRecordWithGivenApproach(pSoldier->ubProfile, APPROACH_DONE_TRAVERSAL)) {
-    gMercProfiles[pSoldier->ubProfile].ubMiscFlags3 |= PROFILE_MISC_FLAG3_HANDLE_DONE_TRAVERSAL;
+  if (GetSolProfile(pSoldier) != NO_PROFILE &&
+      NPCHasUnusedRecordWithGivenApproach(GetSolProfile(pSoldier), APPROACH_DONE_TRAVERSAL)) {
+    gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags3 |= PROFILE_MISC_FLAG3_HANDLE_DONE_TRAVERSAL;
   } else {
     pSoldier->ubQuoteActionID = 0;
   }
 
 #ifdef TESTAICONTROL
   if (gfTurnBasedAI) {
-    DebugAI(String("Ending turn for %d because traversing out", pSoldier->ubID));
+    DebugAI(String("Ending turn for %d because traversing out", GetSolID(pSoldier)));
   }
 #endif
 

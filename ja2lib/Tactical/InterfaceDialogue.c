@@ -20,6 +20,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
+#include "Soldier.h"
 #include "Strategic/Assignments.h"
 #include "Strategic/GameClock.h"
 #include "Strategic/GameEventHook.h"
@@ -1575,8 +1576,8 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
              cnt++, pSoldier++) {
           // Are we in this sector, On the current squad?
-          if (pSoldier->bActive && pSoldier->bLife >= OKLIFE && pSoldier->bInSector &&
-              pSoldier->bAssignment == CurrentSquad()) {
+          if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE && pSoldier->bInSector &&
+              GetSolAssignment(pSoldier) == CurrentSquad()) {
             gfTacticalTraversal = TRUE;
             SetGroupSectorValue(10, 1, 1, pSoldier->ubGroupID);
 
@@ -1803,9 +1804,9 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         } else {
           // MakeCivHostile( pSoldier, 2 );
         }
-        if (pSoldier->ubProfile != NO_PROFILE && pSoldier->bLife >= OKLIFE) {
+        if (GetSolProfile(pSoldier) != NO_PROFILE && pSoldier->bLife >= OKLIFE) {
           // trigger quote!
-          // TriggerNPCWithIHateYouQuote( pSoldier->ubProfile );
+          // TriggerNPCWithIHateYouQuote( GetSolProfile(pSoldier) );
           AddToShouldBecomeHostileOrSayQuoteList(pSoldier->ubID);
         }
         break;
@@ -1836,7 +1837,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
              cnt++, pSoldier++) {
           // Are we in this sector, On the current squad?
-          if (pSoldier->bActive && pSoldier->bLife >= OKLIFE && pSoldier->bInSector) {
+          if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE && pSoldier->bInSector) {
             gfTacticalTraversal = TRUE;
             SetGroupSectorValue(10, 1, 0, pSoldier->ubGroupID);
 
@@ -2336,13 +2337,13 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         }
 
         // set the fact that the merc is being married ( used in the personnel screen )
-        gMercProfiles[pSoldier->ubProfile].ubMiscFlags2 |= PROFILE_MISC_FLAG2_MARRIED_TO_HICKS;
+        gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags2 |= PROFILE_MISC_FLAG2_MARRIED_TO_HICKS;
 
-        AddHistoryToPlayersLog(HISTORY_MERC_MARRIED_OFF, pSoldier->ubProfile, GetWorldTotalMin(),
-                               gWorldSectorX, gWorldSectorY);
+        AddHistoryToPlayersLog(HISTORY_MERC_MARRIED_OFF, GetSolProfile(pSoldier),
+                               GetWorldTotalMin(), gWorldSectorX, gWorldSectorY);
 
         // if Flo is going off with Daryl, then set that fact true
-        if (pSoldier->ubProfile == 44) {
+        if (GetSolProfile(pSoldier) == 44) {
           SetFactTrue(FACT_PC_MARRYING_DARYL_IS_FLO);
         }
 
@@ -2802,7 +2803,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
           pSoldier->fInNonintAnim = FALSE;
           pSoldier->fRTInNonintAnim = FALSE;
 
-          if (pSoldier->ubProfile == ARMAND) {
+          if (GetSolProfile(pSoldier) == ARMAND) {
             sGridNo = 6968;
           } else {
             sGridNo = FindNearestOpenableNonDoor(pSoldier->sGridNo);
@@ -2886,8 +2887,8 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
 
             pSoldier->uiStatusFlags |= SOLDIER_NPC_DOING_PUNCH;
           } else {
-            TriggerNPCWithGivenApproach(pSoldier->ubProfile, (UINT8)pSoldier->uiPendingActionData4,
-                                        FALSE);
+            TriggerNPCWithGivenApproach(GetSolProfile(pSoldier),
+                                        (UINT8)pSoldier->uiPendingActionData4, FALSE);
           }
         }
         break;
@@ -2955,7 +2956,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
             pSoldier->uiPendingActionData4 = APPROACH_DONE_PUNCH_1;
 
             // If we are elliot, we can't do unconocious guys....
-            if (pSoldier->ubProfile == ELLIOT) {
+            if (GetSolProfile(pSoldier) == ELLIOT) {
               if (pTarget->bActive && pTarget->bInSector && pTarget->bLife >= OKLIFE) {
                 fGoodTarget = TRUE;
               }
@@ -2983,8 +2984,8 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
 
           if (cnt == 3) {
             // If here, nobody was found...
-            TriggerNPCWithGivenApproach(pSoldier->ubProfile, (UINT8)pSoldier->uiPendingActionData4,
-                                        FALSE);
+            TriggerNPCWithGivenApproach(GetSolProfile(pSoldier),
+                                        (UINT8)pSoldier->uiPendingActionData4, FALSE);
           }
         }
         break;
@@ -3147,12 +3148,12 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
           for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
                cnt++, pSoldier++) {
             // Are we in this sector, On the current squad?
-            if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife > 0 &&
+            if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife > 0 &&
                 pSoldier->bLife < pSoldier->bLifeMax &&
                 pSoldier->bAssignment != ASSIGNMENT_HOSPITAL &&
                 PythSpacesAway(pSoldier->sGridNo, pSoldier2->sGridNo) < HOSPITAL_PATIENT_DISTANCE) {
               SetSoldierAssignment(pSoldier, ASSIGNMENT_HOSPITAL, 0, 0, 0);
-              TriggerNPCRecord(pSoldier->ubProfile, 2);
+              TriggerNPCRecord(GetSolProfile(pSoldier), 2);
               pSoldier->bHospitalPriceModifier = gbHospitalPriceModifier;
               // make sure this person doesn't have an absolute dest any more
               pSoldier->sAbsoluteFinalDestination = NOWHERE;
@@ -3246,7 +3247,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         // find doctors available and trigger record 12 or 13
         pSoldier = FindSoldierByProfileID(STEVE, FALSE);  // Steve Willis, 80
         if (pSoldier) {
-          if (!pSoldier->bActive || !pSoldier->bInSector || !(pSoldier->bTeam == CIV_TEAM) ||
+          if (!IsSolActive(pSoldier) || !pSoldier->bInSector || !(pSoldier->bTeam == CIV_TEAM) ||
               !(pSoldier->bNeutral) || (pSoldier->bLife < OKLIFE)) {
             pSoldier = NULL;
           }
@@ -3540,8 +3541,8 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
           pSoldier = ChangeSoldierTeam(pSoldier, CIV_TEAM);
         }
         // remove profile from map
-        gMercProfiles[pSoldier->ubProfile].sSectorX = 0;
-        gMercProfiles[pSoldier->ubProfile].sSectorY = 0;
+        gMercProfiles[GetSolProfile(pSoldier)].sSectorX = 0;
+        gMercProfiles[GetSolProfile(pSoldier)].sSectorY = 0;
         pSoldier->ubProfile = NO_PROFILE;
         // set to 0 civ group
         pSoldier->ubCivilianGroup = 0;
@@ -3815,7 +3816,7 @@ UINT32 CalcMedicalCost(UINT8 ubId) {
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
        cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID; cnt++) {
     pSoldier = MercPtrs[cnt];
-    if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife > 0 &&
+    if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife > 0 &&
         pSoldier->bAssignment != ASSIGNMENT_HOSPITAL) {
       if (pSoldier->bLife < pSoldier->bLifeMax) {
         if (PythSpacesAway(sGridNo, pSoldier->sGridNo) <= HOSPITAL_PATIENT_DISTANCE) {
@@ -3841,7 +3842,7 @@ BOOLEAN PlayerTeamHasTwoSpotsLeft() {
 
   for (cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID, pSoldier = MercPtrs[cnt];
        cnt <= (UINT32)(gTacticalStatus.Team[gbPlayerNum].bLastID - 2); cnt++, pSoldier++) {
-    if (pSoldier->bActive) {
+    if (IsSolActive(pSoldier)) {
       uiCount++;
     }
   }
@@ -4035,7 +4036,7 @@ void DialogueMessageBoxCallBack(UINT8 ubExitValue) {
         cnt = gTacticalStatus.Team[gbPlayerNum].bFirstID;
         for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
              cnt++, pSoldier++) {
-          if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
+          if (IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
               pSoldier->bBreath >= OKBREATH) {
             if (!pLier || (EffectiveWisdom(pSoldier) + EffectiveLeadership(pSoldier) >
                            EffectiveWisdom(pLier) + EffectiveLeadership(pSoldier))) {
@@ -4180,8 +4181,8 @@ void DoneFadeInActionBasement() {
   for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[gbPlayerNum].bLastID;
        cnt++, pSoldier++) {
     // Are we in this sector, On the current squad?
-    if (pSoldier->bActive && pSoldier->bLife >= OKLIFE && pSoldier->bInSector &&
-        pSoldier->bAssignment == CurrentSquad()) {
+    if (IsSolActive(pSoldier) && pSoldier->bLife >= OKLIFE && pSoldier->bInSector &&
+        GetSolAssignment(pSoldier) == CurrentSquad()) {
       break;
     }
   }
@@ -4233,7 +4234,7 @@ BOOLEAN NPCOpenThing(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor) {
     pStructure = FindStructure(sStructGridNo, STRUCTURE_ANYDOOR);
   } else {
     // for Armand, hard code to tile 6968
-    if (pSoldier->ubProfile == ARMAND) {
+    if (GetSolProfile(pSoldier) == ARMAND) {
       sStructGridNo = 6968;
     } else {
       sStructGridNo = FindNearestOpenableNonDoor(pSoldier->sGridNo);
@@ -4252,7 +4253,7 @@ BOOLEAN NPCOpenThing(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor) {
 
   if (pStructure->fFlags & STRUCTURE_OPEN) {
     // it's already open!
-    TriggerNPCWithGivenApproach(pSoldier->ubProfile, APPROACH_DONE_OPEN_STRUCTURE, FALSE);
+    TriggerNPCWithGivenApproach(GetSolProfile(pSoldier), APPROACH_DONE_OPEN_STRUCTURE, FALSE);
     return (FALSE);
   }
 

@@ -492,7 +492,7 @@ void DeductPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost) {
   pSoldier->bActionPoints = (INT8)sNewAP;
 
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-           String("Deduct Points (%d at %d) %d %d", pSoldier->ubID, pSoldier->sGridNo, sAPCost,
+           String("Deduct Points (%d at %d) %d %d", GetSolID(pSoldier), pSoldier->sGridNo, sAPCost,
                   sBPCost));
 
   if (AM_A_ROBOT(pSoldier)) {
