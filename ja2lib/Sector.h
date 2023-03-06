@@ -3,21 +3,12 @@
 
 #include "Militia.h"
 #include "SGP/Types.h"
-
-// Sector ID 0-255 (16x16)
-typedef u8 SectorID8;
+#include "rustlib.h"
 
 // Sector ID 0-324 (18x18)
 typedef i16 SectorID16;
 
-// Convert coordinates ([1-16], [1-16]) to 0-255 index.
-// This function should be prefered over GetSectorID8_STATIC macro.
-SectorID8 GetSectorID8(u8 x, u8 y);
 #define GetSectorID8_STATIC(x, y) ((y - 1) * 16 + x - 1)
-// Get X [1-16] from SectorID8
-u8 SectorID8_X(SectorID8 sectorID);
-// Get Y [1-16] from SectorID8
-u8 SectorID8_Y(SectorID8 sectorID);
 
 #define MAP_WORLD_X 18
 #define MAP_WORLD_Y 18

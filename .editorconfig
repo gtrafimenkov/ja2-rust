@@ -12,5 +12,5 @@ indent_style = tab
 [*.{h,c,cc,cpp}]
 indent_size = 2
 
-[*.{vcxproj,vcxproj.filters,sln}]
+[*.{vcxproj,vcxproj.filters,sln,bat}]
 end_of_line = crlf

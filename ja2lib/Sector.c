@@ -5,11 +5,7 @@
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Overhead.h"
 
-SectorID8 GetSectorID8(u8 x, u8 y) { return (y - 1) * 16 + x - 1; }
 SectorID16 GetSectorID16(u8 x, u8 y) { return x + y * MAP_WORLD_X; }
-
-u8 SectorID8_X(SectorID8 sectorID) { return (sectorID % 16) + 1; }
-u8 SectorID8_Y(SectorID8 sectorID) { return (sectorID / 16) + 1; }
 
 u8 SectorID16_X(SectorID16 sectorID) { return sectorID % MAP_WORLD_X; };
 u8 SectorID16_Y(SectorID16 sectorID) { return sectorID / MAP_WORLD_X; };

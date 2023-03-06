@@ -22,6 +22,8 @@
         "town.h": "c",
         "townmilitia.h": "c",
         "soldier.h": "c",
-        "screenids.h": "c"
+        "screenids.h": "c",
+        "strategicmap.h": "c",
+        "rustlib.h": "c"
     }
 }

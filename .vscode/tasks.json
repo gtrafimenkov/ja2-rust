@@ -6,7 +6,11 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "make build"
+            "command": "make build",
+            "windows": {
+                "type": "process",
+                "command": ".\\build.bat"
+            }
         }
     ]
 }
