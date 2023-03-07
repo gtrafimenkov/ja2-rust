@@ -23,11 +23,11 @@ test: run-unittester
 
 format:
 	find . \( -iname '*.c' -o -iname '*.cc' -o -iname '*.cpp' -o -iname '*.h' \) \
-		| grep -v rustlib.h | xargs $(CLANG_FORMATTER) -i --style=file
+		| grep -v rust_ | xargs $(CLANG_FORMATTER) -i --style=file
 
 format-modified:
 	git status --porcelain | egrep -e '[.](c|cc|cpp|h)$$' | awk '{print $$2}' \
-		| grep -v rustlib.h | xargs $(CLANG_FORMATTER) -i --style=file
+		| grep -v rust_ | xargs $(CLANG_FORMATTER) -i --style=file
 
 ###################################################################
 # linux build

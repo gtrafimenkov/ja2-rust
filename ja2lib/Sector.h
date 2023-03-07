@@ -3,7 +3,7 @@
 
 #include "Militia.h"
 #include "SGP/Types.h"
-#include "rustlib.h"
+#include "rust_sector.h"
 
 #define GetSectorID8_STATIC(x, y) ((y - 1) * 16 + x - 1)
 

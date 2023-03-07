@@ -4,6 +4,7 @@
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Overhead.h"
+#include "rust_sam_sites.h"
 
 SectorID16 SectorID8To16(SectorID8 sectorID) {
   return GetSectorID16(SectorID8_X(sectorID), SectorID8_Y(sectorID));

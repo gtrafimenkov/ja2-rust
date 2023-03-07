@@ -36,6 +36,7 @@
 #include "UI.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 #define MAX_MEANWHILE_PROFILES 10
 

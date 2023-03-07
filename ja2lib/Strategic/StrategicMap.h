@@ -34,17 +34,6 @@ extern BOOLEAN fSamSiteFound[NUMBER_OF_SAMS];
 
 extern BOOLEAN gfUseAlternateMap;
 
-// SAM sites
-#define SAM_1_X 2
-#define SAM_2_X 15
-#define SAM_3_X 8
-#define SAM_4_X 4
-
-#define SAM_1_Y 4
-#define SAM_2_Y 4
-#define SAM_3_Y 9
-#define SAM_4_Y 14
-
 // min condition for sam site to be functional
 #define MIN_CONDITION_FOR_SAM_SITE_TO_WORK 80
 

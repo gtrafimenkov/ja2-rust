@@ -96,6 +96,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 // Used by PickGridNoToWalkIn
 #define MAX_ATTEMPTS 200

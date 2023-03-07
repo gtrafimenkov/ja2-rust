@@ -2,10 +2,10 @@ pub const MAP_WORLD_X: i16 = 18;
 pub const MAP_WORLD_Y: i16 = 18;
 
 /// Sector ID 0-255 (16x16)
-type SectorID8 = u8;
+pub type SectorID8 = u8;
 
 /// Sector ID 0-324 (18x18)
-type SectorID16 = i16;
+pub type SectorID16 = i16;
 
 /// Convert coordinates ([1-16], [1-16]) to 0-255 index.
 /// This function should be prefered over GetSectorID8_STATIC macro.

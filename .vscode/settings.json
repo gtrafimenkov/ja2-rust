@@ -24,6 +24,7 @@
         "soldier.h": "c",
         "screenids.h": "c",
         "strategicmap.h": "c",
-        "rustlib.h": "c"
+        "rustlib.h": "c",
+        "rust_sector.h": "c"
     }
 }

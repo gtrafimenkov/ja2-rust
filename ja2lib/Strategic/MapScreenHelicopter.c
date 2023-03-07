@@ -36,6 +36,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 // the amounts of time to wait for hover stuff
 #define TIME_DELAY_FOR_HOVER_WAIT 10           // minutes

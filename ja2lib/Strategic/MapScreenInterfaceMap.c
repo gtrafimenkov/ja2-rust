@@ -45,6 +45,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
+#include "rust_sam_sites.h"
 
 // zoom x and y coords for map scrolling
 INT32 iZoomX = 0;
