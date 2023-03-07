@@ -22,8 +22,6 @@ UINT8 NumHostilesInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
 // combat mode
 BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
 
-BOOLEAN IsThisSectorASAMSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-
 // This will get an ID string like A9- OMERTA...
 void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16* zString, size_t bufSize,
                        BOOLEAN fDetailed);

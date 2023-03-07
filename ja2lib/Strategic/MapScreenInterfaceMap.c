@@ -404,9 +404,6 @@ struct Point pTownPoints[] = {
     {15, 20},              // Chitzena
 };
 
-INT16 gpSamSectorX[] = {SAM_1_X, SAM_2_X, SAM_3_X, SAM_4_X};
-INT16 gpSamSectorY[] = {SAM_1_Y, SAM_2_Y, SAM_3_Y, SAM_4_Y};
-
 // map region
 SGPRect MapScreenRect = {(MAP_VIEW_START_X + MAP_GRID_X - 2), (MAP_VIEW_START_Y + MAP_GRID_Y - 1),
                          MAP_VIEW_START_X + MAP_VIEW_WIDTH - 1 + MAP_GRID_X,
@@ -5704,36 +5701,8 @@ void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
   }
 }
 
-/*
-UINT8 NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ )
-{
-        INT32 iCounter = 0;
-        struct SOLDIERTYPE *pSoldier = NULL;
-        UINT8 ubNumberOnTeam = 0;
-
-        for( iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++ )
-        {
-                if( gCharactersList[ iCounter ].fValid )
-                {
-                        pSoldier = &( Menptr[ gCharactersList[ iCounter ].usSolID ] );
-
-                        if( IsSolActive(pSoldier) && ( pSoldier->bLife > 0 ) &&
-                                        ( pSoldier->bAssignment != ASSIGNMENT_POW ) && (
-pSoldier->bAssignment != IN_TRANSIT ) )
-                        {
-                                if( ( GetSolSectorX(pSoldier) == sSectorX ) && ( pSoldier->sSectorY
-== sSectorY ) && ( GetSolSectorZ(pSoldier) == bSectorZ ) ) ubNumberOnTeam++;
-                        }
-                }
-        }
-
-        return( ubNumberOnTeam );
-}
-*/
-
 void ShowSAMSitesOnStrategicMap(void) {
   INT32 iCounter = 0;
-  INT16 sSectorX = 0, sSectorY = 0;
   INT16 sX = 0, sY = 0;
   struct VObject *hHandle;
   INT8 ubVidObjIndex = 0;
@@ -5744,15 +5713,15 @@ void ShowSAMSitesOnStrategicMap(void) {
     BlitSAMGridMarkers();
   }
 
-  for (iCounter = 0; iCounter < NUMBER_OF_SAM_SITES; iCounter++) {
+  for (iCounter = 0; iCounter < ARR_SIZE(SamSiteLocations); iCounter++) {
     // has the sam site here been found?
     if (!fSamSiteFound[iCounter]) {
       continue;
     }
 
     // get the sector x and y
-    sSectorX = gpSamSectorX[iCounter];
-    sSectorY = gpSamSectorY[iCounter];
+    u8 sSectorX = SamSiteLocations[iCounter].x;
+    u8 sSectorY = SamSiteLocations[iCounter].y;
 
     if (fZoomFlag) {
       LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -5837,15 +5806,17 @@ void BlitSAMGridMarkers(void) {
   // clip to view region
   ClipBlitsToMapViewRegionForRectangleAndABit(uiDestPitchBYTES);
 
-  for (iCounter = 0; iCounter < NUMBER_OF_SAM_SITES; iCounter++) {
+  for (iCounter = 0; iCounter < ARR_SIZE(SamSiteLocations); iCounter++) {
     // has the sam site here been found?
     if (!fSamSiteFound[iCounter]) {
       continue;
     }
 
+    u8 sX = SamSiteLocations[iCounter].x;
+    u8 sY = SamSiteLocations[iCounter].y;
+
     if (fZoomFlag) {
-      GetScreenXYFromMapXYStationary(gpSamSectorX[iCounter], gpSamSectorY[iCounter], &sScreenX,
-                                     &sScreenY);
+      GetScreenXYFromMapXYStationary(sX, sY, &sScreenX, &sScreenY);
       sScreenX -= MAP_GRID_X;
       sScreenY -= MAP_GRID_Y;
 
@@ -5853,7 +5824,7 @@ void BlitSAMGridMarkers(void) {
       sHeight = 2 * MAP_GRID_Y;
     } else {
       // get location on screen
-      GetScreenXYFromMapXY(gpSamSectorX[iCounter], gpSamSectorY[iCounter], &sScreenX, &sScreenY);
+      GetScreenXYFromMapXY(sX, sY, &sScreenX, &sScreenY);
       sWidth = MAP_GRID_X;
       sHeight = MAP_GRID_Y;
     }

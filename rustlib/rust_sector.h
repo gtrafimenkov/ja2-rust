@@ -56,6 +56,8 @@ uint8_t SectorID16_X(SectorID16 sector_id);
  */
 uint8_t SectorID16_Y(SectorID16 sector_id);
 
+bool IsThisSectorASAMSector(uint8_t x, uint8_t y, int8_t z);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

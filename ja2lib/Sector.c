@@ -38,25 +38,6 @@ BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN IsThisSectorASAMSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  // is the sector above ground?
-  if (bSectorZ != 0) {
-    return (FALSE);
-  }
-
-  if ((SAM_1_X == sSectorX) && (SAM_1_Y == sSectorY)) {
-    return (TRUE);
-  } else if ((SAM_2_X == sSectorX) && (SAM_2_Y == sSectorY)) {
-    return (TRUE);
-  } else if ((SAM_3_X == sSectorX) && (SAM_3_Y == sSectorY)) {
-    return (TRUE);
-  } else if ((SAM_4_X == sSectorX) && (SAM_4_Y == sSectorY)) {
-    return (TRUE);
-  }
-
-  return (FALSE);
-}
-
 i16 GetLoadedSectorX() { return gWorldSectorX; }
 i16 GetLoadedSectorY() { return gWorldSectorY; }
 

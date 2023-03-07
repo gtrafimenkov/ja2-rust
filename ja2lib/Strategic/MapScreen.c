@@ -108,6 +108,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
+#include "rust_sam_sites.h"
 
 // DEFINES
 
@@ -4462,7 +4463,7 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
             UINT8 ubSamIndex;
 
             // ALT-F9: Reveal all SAM sites
-            for (ubSamIndex = 0; ubSamIndex < NUMBER_OF_SAM_SITES; ubSamIndex++) {
+            for (ubSamIndex = 0; ubSamIndex < ARR_SIZE(SamSiteLocations); ubSamIndex++) {
               SetSAMSiteAsFound(ubSamIndex);
             }
           }

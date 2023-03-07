@@ -1,3 +1,5 @@
+use super::sam_sites;
+
 pub const MAP_WORLD_X: i16 = 18;
 pub const MAP_WORLD_Y: i16 = 18;
 
@@ -48,6 +50,25 @@ pub extern "C" fn SectorID16_Y(sector_id: SectorID16) -> u8 {
     return (sector_id / MAP_WORLD_X) as u8;
 }
 
+#[repr(C)]
+pub struct MapPoint {
+    pub x: u8,
+    pub y: u8,
+}
+
+#[no_mangle]
+pub extern "C" fn IsThisSectorASAMSector(x: u8, y: u8, z: i8) -> bool {
+    if z != 0 {
+        return false;
+    }
+    for s in sam_sites::SamSiteLocations.iter() {
+        if s.x == x && s.y == y {
+            return true;
+        }
+    }
+    return false;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -68,5 +89,16 @@ mod tests {
         let sec0: SectorID16 = 19;
         assert_eq!(1, SectorID16_X(sec0));
         assert_eq!(1, SectorID16_Y(sec0));
+    }
+
+    #[test]
+    fn is_sam_sector() {
+        assert_eq!(false, IsThisSectorASAMSector(1, 1, 0));
+
+        // non-ground sector is always false
+        assert_eq!(false, IsThisSectorASAMSector(2, 4, 1));
+        assert_eq!(false, IsThisSectorASAMSector(2, 4, -1));
+
+        assert_eq!(true, IsThisSectorASAMSector(2, 4, 0));
     }
 }

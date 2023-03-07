@@ -22,3 +22,18 @@
 #define SAM_3_Y 9
 
 #define SAM_4_Y 14
+
+struct SamSiteLocation {
+  uint8_t x;
+  uint8_t y;
+};
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+extern const struct SamSiteLocation SamSiteLocations[4];
+
+#ifdef __cplusplus
+} // extern "C"
+#endif // __cplusplus
