@@ -125,8 +125,6 @@ BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY);
 // sam site under players control?
 INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY);
 
-INT8 GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-
 void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle();

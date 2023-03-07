@@ -2881,29 +2881,6 @@ void SetupNewStrategicGame() {
   StrategicTurnsNewGame();
 }
 
-// a -1 will be returned upon failure
-INT8 GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  INT8 bCounter = 0;
-  INT16 sSectorValue = 0;
-
-  // check if valid sector
-  if (bSectorZ != 0) {
-    return (-1);
-  }
-
-  // get the sector value
-  sSectorValue = GetSectorID8(sSectorX, sSectorY);
-
-  // run through list of sam sites
-  for (bCounter = 0; bCounter < 4; bCounter++) {
-    if (pSamList[bCounter] == sSectorValue) {
-      return (bCounter);
-    }
-  }
-
-  return (-1);
-}
-
 BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;

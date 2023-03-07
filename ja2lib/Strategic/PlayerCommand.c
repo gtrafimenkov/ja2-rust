@@ -21,6 +21,7 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/TacticalSave.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 extern BOOLEAN fMapScreenBottomDirty;
 

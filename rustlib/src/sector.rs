@@ -69,6 +69,23 @@ pub extern "C" fn IsThisSectorASAMSector(x: u8, y: u8, z: i8) -> bool {
     return false;
 }
 
+#[no_mangle]
+/// a -1 will be returned upon failure
+pub extern "C" fn GetSAMIdFromSector(x: u8, y: u8, z: i8) -> i8 {
+    if z != 0 {
+        return -1;
+    }
+
+    // run through list of sam sites
+    for i in 0..sam_sites::SamSiteLocations.len() {
+        if sam_sites::SamSiteLocations[i].x == x && sam_sites::SamSiteLocations[i].y == y {
+            return i as i8;
+        }
+    }
+
+    return -1;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -100,5 +117,16 @@ mod tests {
         assert_eq!(false, IsThisSectorASAMSector(2, 4, -1));
 
         assert_eq!(true, IsThisSectorASAMSector(2, 4, 0));
+    }
+
+    #[test]
+    fn get_sam_id_for_sector() {
+        assert_eq!(-1, GetSAMIdFromSector(1, 1, 0));
+
+        assert_eq!(-1, GetSAMIdFromSector(2, 4, 1));
+        assert_eq!(-1, GetSAMIdFromSector(2, 4, -1));
+
+        assert_eq!(0, GetSAMIdFromSector(2, 4, 0));
+        assert_eq!(3, GetSAMIdFromSector(4, 14, 0));
     }
 }
