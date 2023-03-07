@@ -1317,8 +1317,11 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
   }
 
   // get the condition of that SAM site (NOTE: SAM #s are 1-4, but indexes are 0-3!!!)
-  Assert(ubSamNumber <= NUMBER_OF_SAMS);
-  bSAMCondition = StrategicMap[SectorID8To16(pSamList[ubSamNumber - 1])].bSAMCondition;
+  Assert(ubSamNumber <= ARR_SIZE(SamSiteLocations));
+  SectorID16 samSector =
+      GetSectorID16(SamSiteLocations[ubSamNumber - 1].x, SamSiteLocations[ubSamNumber - 1].y);
+
+  bSAMCondition = StrategicMap[samSector].bSAMCondition;
 
   // if the SAM site is too damaged to be a threat
   if (bSAMCondition < MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {

@@ -5350,7 +5350,6 @@ void RenderShadingForUnControlledSectors(void) {
 void DrawTownMilitiaForcesOnMap(void) {
   INT32 iCounter = 0, iCounterB = 0, iTotalNumberOfTroops = 0, iIconValue = 0;
   struct VObject *hVObject;
-  INT16 sSectorX = 0, sSectorY = 0;
 
   // get militia video object
   GetVideoObject(&hVObject, guiMilitia);
@@ -5362,8 +5361,8 @@ void DrawTownMilitiaForcesOnMap(void) {
   while ((*townSectors)[iCounter].townID != 0) {
     // run through each town sector and plot the icons for the militia forces in the town
     if (!StrategicMap[(*townSectors)[iCounter].sectorID].fEnemyControlled) {
-      sSectorX = SectorID16_X((*townSectors)[iCounter].sectorID);
-      sSectorY = SectorID16_Y((*townSectors)[iCounter].sectorID);
+      u8 sSectorX = SectorID16_X((*townSectors)[iCounter].sectorID);
+      u8 sSectorY = SectorID16_Y((*townSectors)[iCounter].sectorID);
 
       struct MilitiaCount milCount = GetMilitiaInSector(sSectorX, sSectorY);
 
@@ -5396,9 +5395,9 @@ void DrawTownMilitiaForcesOnMap(void) {
   }
 
   // now handle militia for sam sectors
-  for (iCounter = 0; iCounter < NUMBER_OF_SAMS; iCounter++) {
-    sSectorX = SectorID8_X(pSamList[iCounter]);
-    sSectorY = SectorID8_Y(pSamList[iCounter]);
+  for (iCounter = 0; iCounter < ARR_SIZE(SamSiteLocations); iCounter++) {
+    u8 sSectorX = SamSiteLocations[iCounter].x;
+    u8 sSectorY = SamSiteLocations[iCounter].y;
     struct MilitiaCount milCount = GetMilitiaInSector(sSectorX, sSectorY);
 
     if (!StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyControlled) {
@@ -6066,7 +6065,7 @@ void InitMapSecrets(void) {
   fFoundTixa = FALSE;
   fFoundOrta = FALSE;
 
-  for (ubSamIndex = 0; ubSamIndex < NUMBER_OF_SAMS; ubSamIndex++) {
+  for (ubSamIndex = 0; ubSamIndex < ARR_SIZE(SamSiteLocations); ubSamIndex++) {
     fSamSiteFound[ubSamIndex] = FALSE;
   }
 }

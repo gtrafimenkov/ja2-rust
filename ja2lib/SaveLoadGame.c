@@ -98,6 +98,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
 #include "platform.h"
+#include "rust_sam_sites.h"
 
 BOOLEAN fFirstTimeInMapScreen = TRUE;
 
@@ -301,7 +302,7 @@ typedef struct {
 
   UINT32 uiUNUSED;
 
-  BOOLEAN fSamSiteFound[NUMBER_OF_SAMS];
+  BOOLEAN fSamSiteFound[ARR_SIZE(SamSiteLocations)];
 
   UINT8 ubNumTerrorists;
   UINT8 ubCambriaMedicalObjects;
@@ -3474,7 +3475,7 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
 
   sGeneralInfo.fLastBoxingMatchWonByPlayer = gfLastBoxingMatchWonByPlayer;
 
-  memcpy(&sGeneralInfo.fSamSiteFound, &fSamSiteFound, NUMBER_OF_SAMS * sizeof(BOOLEAN));
+  memcpy(&sGeneralInfo.fSamSiteFound, &fSamSiteFound, ARR_SIZE(SamSiteLocations) * sizeof(BOOLEAN));
 
   sGeneralInfo.ubNumTerrorists = gubNumTerrorists;
   sGeneralInfo.ubCambriaMedicalObjects = gubCambriaMedicalObjects;
@@ -3717,7 +3718,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
 
   gfLastBoxingMatchWonByPlayer = sGeneralInfo.fLastBoxingMatchWonByPlayer;
 
-  memcpy(&fSamSiteFound, &sGeneralInfo.fSamSiteFound, NUMBER_OF_SAMS * sizeof(BOOLEAN));
+  memcpy(&fSamSiteFound, &sGeneralInfo.fSamSiteFound, ARR_SIZE(SamSiteLocations) * sizeof(BOOLEAN));
 
   gubNumTerrorists = sGeneralInfo.ubNumTerrorists;
   gubCambriaMedicalObjects = sGeneralInfo.ubCambriaMedicalObjects;

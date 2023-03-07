@@ -61,6 +61,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
 #include "platform_strings.h"
+#include "rust_sam_sites.h"
 
 // MODULE FOR EXPLOSIONS
 
@@ -68,7 +69,7 @@
 BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem, UINT8 ubOwner,
                   INT16 sSubsequent, BOOLEAN *pfMercHit, INT8 bLevel, INT32 iSmokeEffectID);
 
-extern INT8 gbSAMGraphicList[NUMBER_OF_SAMS];
+extern INT8 gbSAMGraphicList[ARR_SIZE(SamSiteLocations)];
 extern void AddToShouldBecomeHostileOrSayQuoteList(UINT8 ubID);
 extern void RecompileLocalMovementCostsForWall(INT16 sGridNo, UINT8 ubOrientation);
 void FatigueCharacter(struct SOLDIERTYPE *pSoldier);
@@ -2831,20 +2832,16 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
+// TODO: rustlib
 BOOLEAN DoesSAMExistHere(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, INT16 sGridNo) {
-  INT32 cnt;
-  INT16 sSectorNo;
-
   // ATE: If we are belwo, return right away...
   if (sSectorZ != 0) {
     return (FALSE);
   }
 
-  sSectorNo = GetSectorID8(sSectorX, sSectorY);
-
-  for (cnt = 0; cnt < NUMBER_OF_SAMS; cnt++) {
+  for (int cnt = 0; cnt < ARR_SIZE(SamSiteLocations); cnt++) {
     // Are we i nthe same sector...
-    if (pSamList[cnt] == sSectorNo) {
+    if (SamSiteLocations[cnt].x == sSectorX && SamSiteLocations[cnt].y == sSectorY) {
       // Are we in the same gridno?
       if (pSamGridNoAList[cnt] == sGridNo || pSamGridNoBList[cnt] == sGridNo) {
         return (TRUE);
@@ -2880,8 +2877,6 @@ void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, INT16 s
 }
 
 void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
-  INT32 cnt;
-  INT16 sSectorNo;
   BOOLEAN fInSector = FALSE;
   UINT16 usGoodGraphic, usDamagedGraphic;
 
@@ -2894,11 +2889,9 @@ void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
     fInSector = TRUE;
   }
 
-  sSectorNo = GetSectorID8(sSectorX, sSectorY);
-
-  for (cnt = 0; cnt < NUMBER_OF_SAMS; cnt++) {
+  for (int cnt = 0; cnt < ARR_SIZE(SamSiteLocations); cnt++) {
     // Are we i nthe same sector...
-    if (pSamList[cnt] == sSectorNo) {
+    if (SamSiteLocations[cnt].x == sSectorX && SamSiteLocations[cnt].y == sSectorY) {
       // get graphic.......
       GetTileIndexFromTypeSubIndex(EIGHTISTRUCT, (UINT16)(gbSAMGraphicList[cnt]), &usGoodGraphic);
 

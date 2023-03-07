@@ -150,29 +150,24 @@ BOOLEAN gfUseAlternateMap = FALSE;
 // whether or not we have found Orta yet
 BOOLEAN fFoundOrta = FALSE;
 
+// TODO: rustlib
 // have any of the sam sites been found
-BOOLEAN fSamSiteFound[NUMBER_OF_SAMS] = {
+BOOLEAN fSamSiteFound[ARR_SIZE(SamSiteLocations)] = {
     FALSE,
     FALSE,
     FALSE,
     FALSE,
 };
 
-INT16 pSamList[NUMBER_OF_SAMS] = {
-    GetSectorID8_STATIC(SAM_1_X, SAM_1_Y),
-    GetSectorID8_STATIC(SAM_2_X, SAM_2_Y),
-    GetSectorID8_STATIC(SAM_3_X, SAM_3_Y),
-    GetSectorID8_STATIC(SAM_4_X, SAM_4_Y),
-};
-
-INT16 pSamGridNoAList[NUMBER_OF_SAMS] = {
+// TODO: rustlib
+INT16 pSamGridNoAList[ARR_SIZE(SamSiteLocations)] = {
     10196,
     11295,
     16080,
     11913,
 };
 
-INT16 pSamGridNoBList[NUMBER_OF_SAMS] = {
+INT16 pSamGridNoBList[ARR_SIZE(SamSiteLocations)] = {
     10195,
     11135,
     15920,
@@ -181,7 +176,7 @@ INT16 pSamGridNoBList[NUMBER_OF_SAMS] = {
 
 // ATE: Update this w/ graphic used
 // Use 3 if / orientation, 4 if \ orientation
-INT8 gbSAMGraphicList[NUMBER_OF_SAMS] = {
+INT8 gbSAMGraphicList[ARR_SIZE(SamSiteLocations)] = {
     4,
     3,
     3,
@@ -193,6 +188,7 @@ INT8 gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
 // the amount of time that a soldier will wait to return to desired/old squad
 #define DESIRE_SQUAD_RESET_DELAY 12 * 60
 
+// TODO: rustlib
 UINT8 ubSAMControlledSectors[MAP_WORLD_Y][MAP_WORLD_X] = {
     //       1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -2911,11 +2907,12 @@ BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ) {
 }
 
 INT32 GetNumberOfSAMSitesUnderPlayerControl(void) {
-  INT32 iNumber = 0, iCounter = 0;
+  INT32 iNumber = 0;
 
   // if the sam site is under player control, up the number
-  for (iCounter = 0; iCounter < NUMBER_OF_SAMS; iCounter++) {
-    if (StrategicMap[SectorID8To16(pSamList[iCounter])].fEnemyControlled == FALSE) {
+  for (int i = 0; i < ARR_SIZE(SamSiteLocations); i++) {
+    if (StrategicMap[GetSectorID16(SamSiteLocations[i].x, SamSiteLocations[i].y)]
+            .fEnemyControlled == FALSE) {
       iNumber++;
     }
   }
@@ -2949,8 +2946,10 @@ void UpdateAirspaceControl(void) {
       // IMPORTANT: B and A are reverse here, since the table is stored transposed
       ubControllingSAM = ubSAMControlledSectors[iCounterB][iCounterA];
 
-      if ((ubControllingSAM >= 1) && (ubControllingSAM <= NUMBER_OF_SAMS)) {
-        pSAMStrategicMap = &(StrategicMap[SectorID8To16(pSamList[ubControllingSAM - 1])]);
+      if ((ubControllingSAM >= 1) && (ubControllingSAM <= ARR_SIZE(SamSiteLocations))) {
+        SectorID16 samSector = GetSectorID16(SamSiteLocations[ubControllingSAM - 1].x,
+                                             SamSiteLocations[ubControllingSAM - 1].y);
+        pSAMStrategicMap = &(StrategicMap[samSector]);
 
         // if the enemies own the controlling SAM site, and it's in working condition
         if ((pSAMStrategicMap->fEnemyControlled) &&

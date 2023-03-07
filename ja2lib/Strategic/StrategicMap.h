@@ -23,14 +23,11 @@ extern INT16 gWorldSectorX;
 extern INT16 gWorldSectorY;
 extern INT8 gbWorldSectorZ;
 
-#define NUMBER_OF_SAMS 4
-
-extern INT16 pSamList[NUMBER_OF_SAMS];
-extern INT16 pSamGridNoAList[NUMBER_OF_SAMS];
-extern INT16 pSamGridNoBList[NUMBER_OF_SAMS];
+extern INT16 pSamGridNoAList[4 /* TODO */];
+extern INT16 pSamGridNoBList[4 /* TODO */];
 
 extern BOOLEAN fFoundOrta;
-extern BOOLEAN fSamSiteFound[NUMBER_OF_SAMS];
+extern BOOLEAN fSamSiteFound[4 /* TODO */];
 
 extern BOOLEAN gfUseAlternateMap;
 
