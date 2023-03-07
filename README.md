@@ -1,3 +1,13 @@
+# Experiment: rust library
+
+Reimplementing some code in Rust and linking it as a dynamic library.
+
+Goals:
+- understand if advantages of using Rust overweight additional complexity
+- estimate speed of development in Rust in comparison to C
+
+---
+
 # Experimenting with JA2 sources
 
 ## Overview
