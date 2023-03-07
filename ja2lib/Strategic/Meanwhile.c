@@ -652,13 +652,16 @@ void ProcessImplicationsOfMeanwhile(void) {
       gMercProfiles[ROBOT].bSectorZ = 0;
     } break;
     case NW_SAM:
-      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SAM_1_X, SAM_1_Y);
+      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SamSiteLocations[0].x,
+                               SamSiteLocations[0].y);
       break;
     case NE_SAM:
-      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SAM_2_X, SAM_2_Y);
+      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SamSiteLocations[1].x,
+                               SamSiteLocations[1].y);
       break;
     case CENTRAL_SAM:
-      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SAM_3_X, SAM_3_X);
+      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SamSiteLocations[2].x,
+                               SamSiteLocations[2].y);
       break;
 
     default:

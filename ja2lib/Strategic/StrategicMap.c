@@ -584,10 +584,9 @@ void InitializeSAMSites(void) {
   gsMercArriveSectorY = 1;
 
   // all SAM sites start game in perfect working condition
-  StrategicMap[(SAM_1_X) + (MAP_WORLD_X * (SAM_1_Y))].bSAMCondition = 100;
-  StrategicMap[(SAM_2_X) + (MAP_WORLD_X * (SAM_2_Y))].bSAMCondition = 100;
-  StrategicMap[(SAM_3_X) + (MAP_WORLD_X * (SAM_3_Y))].bSAMCondition = 100;
-  StrategicMap[(SAM_4_X) + (MAP_WORLD_X * (SAM_4_Y))].bSAMCondition = 100;
+  for (int i = 0; i < ARR_SIZE(SamSiteLocations); i++) {
+    StrategicMap[GetSectorID16(SamSiteLocations[i].x, SamSiteLocations[i].y)].bSAMCondition = 100;
+  }
 
   UpdateAirspaceControl();
 }

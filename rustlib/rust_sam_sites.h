@@ -7,22 +7,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define SAM_1_X 2
-
-#define SAM_2_X 15
-
-#define SAM_3_X 8
-
-#define SAM_4_X 4
-
-#define SAM_1_Y 4
-
-#define SAM_2_Y 4
-
-#define SAM_3_Y 9
-
-#define SAM_4_Y 14
-
 struct SamSiteLocation {
   uint8_t x;
   uint8_t y;

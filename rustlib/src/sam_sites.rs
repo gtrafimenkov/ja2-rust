@@ -2,17 +2,6 @@
 
 // pub const FOO: sector::SectorID8 = 100;
 
-// SAM sites
-pub const SAM_1_X: u8 = 2;
-pub const SAM_2_X: u8 = 15;
-pub const SAM_3_X: u8 = 8;
-pub const SAM_4_X: u8 = 4;
-
-pub const SAM_1_Y: u8 = 4;
-pub const SAM_2_Y: u8 = 4;
-pub const SAM_3_Y: u8 = 9;
-pub const SAM_4_Y: u8 = 14;
-
 #[repr(C)]
 pub struct SamSiteLocation {
     pub x: u8,
@@ -21,22 +10,10 @@ pub struct SamSiteLocation {
 
 #[no_mangle]
 pub static SamSiteLocations: [SamSiteLocation; 4] = [
-    SamSiteLocation {
-        x: SAM_1_X,
-        y: SAM_1_Y,
-    },
-    SamSiteLocation {
-        x: SAM_2_X,
-        y: SAM_2_Y,
-    },
-    SamSiteLocation {
-        x: SAM_3_X,
-        y: SAM_3_Y,
-    },
-    SamSiteLocation {
-        x: SAM_4_X,
-        y: SAM_4_Y,
-    },
+    SamSiteLocation { x: 2, y: 4 },
+    SamSiteLocation { x: 15, y: 4 },
+    SamSiteLocation { x: 8, y: 9 },
+    SamSiteLocation { x: 4, y: 14 },
 ];
 
 // #[no_mangle]
