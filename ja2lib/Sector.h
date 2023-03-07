@@ -5,20 +5,7 @@
 #include "SGP/Types.h"
 #include "rustlib.h"
 
-// Sector ID 0-324 (18x18)
-typedef i16 SectorID16;
-
 #define GetSectorID8_STATIC(x, y) ((y - 1) * 16 + x - 1)
-
-#define MAP_WORLD_X 18
-#define MAP_WORLD_Y 18
-
-// Convert coordinates (1-16, 1-16) to 0-324 index.
-SectorID16 GetSectorID16(u8 x, u8 y);
-// Get X [1-16] from SectorID16
-u8 SectorID16_X(SectorID16 sectorID);
-// Get Y [1-16] from SectorID16
-u8 SectorID16_Y(SectorID16 sectorID);
 
 SectorID16 SectorID8To16(SectorID8 sectorID);
 SectorID8 SectorID16To8(SectorID16 sectorID);
