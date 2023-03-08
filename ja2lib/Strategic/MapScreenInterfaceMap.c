@@ -722,7 +722,7 @@ UINT32 DrawMap(void) {
         //)( iCurrentMapSectorZ ) ) )
         {
           if (fShowAircraftFlag && !iCurrentMapSectorZ) {
-            if (!StrategicMap[cnt + cnt2 * WORLD_MAP_X].fEnemyAirControlled) {
+            if (!StrategicMap[GetSectorID16(cnt, cnt2)].fEnemyAirControlled) {
               // sector not visited, not air controlled
               ShadeMapElem(cnt, cnt2, MAP_SHADE_DK_GREEN);
             } else {
@@ -735,7 +735,7 @@ UINT32 DrawMap(void) {
           }
         } else {
           if (fShowAircraftFlag && !iCurrentMapSectorZ) {
-            if (!StrategicMap[cnt + cnt2 * WORLD_MAP_X].fEnemyAirControlled) {
+            if (!StrategicMap[GetSectorID16(cnt, cnt2)].fEnemyAirControlled) {
               // sector visited and air controlled
               ShadeMapElem(cnt, cnt2, MAP_SHADE_LT_GREEN);
             } else {
