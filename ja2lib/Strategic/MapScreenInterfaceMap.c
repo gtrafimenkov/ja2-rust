@@ -716,13 +716,10 @@ UINT32 DrawMap(void) {
       for (cnt2 = 1; cnt2 < MAP_WORLD_Y - 1; cnt2++) {
         // LATE DESIGN CHANGE: darken sectors not yet visited, instead of those under known enemy
         // control
-        if (GetSectorFlagStatus(cnt, cnt2, (UINT8)iCurrentMapSectorZ, SF_ALREADY_VISITED) == FALSE)
-        //				if ( IsTheSectorPerceivedToBeUnderEnemyControl( cnt, cnt2, (
-        // INT8
-        //)( iCurrentMapSectorZ ) ) )
-        {
+        if (GetSectorFlagStatus(cnt, cnt2, (UINT8)iCurrentMapSectorZ, SF_ALREADY_VISITED) ==
+            FALSE) {
           if (fShowAircraftFlag && !iCurrentMapSectorZ) {
-            if (!StrategicMap[GetSectorID16(cnt, cnt2)].fEnemyAirControlled) {
+            if (!IsSectorEnemyAirControlled(cnt, cnt2)) {
               // sector not visited, not air controlled
               ShadeMapElem(cnt, cnt2, MAP_SHADE_DK_GREEN);
             } else {
@@ -735,7 +732,7 @@ UINT32 DrawMap(void) {
           }
         } else {
           if (fShowAircraftFlag && !iCurrentMapSectorZ) {
-            if (!StrategicMap[GetSectorID16(cnt, cnt2)].fEnemyAirControlled) {
+            if (!IsSectorEnemyAirControlled(cnt, cnt2)) {
               // sector visited and air controlled
               ShadeMapElem(cnt, cnt2, MAP_SHADE_LT_GREEN);
             } else {

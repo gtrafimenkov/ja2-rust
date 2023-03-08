@@ -40,9 +40,3 @@ BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
 
 i16 GetLoadedSectorX() { return gWorldSectorX; }
 i16 GetLoadedSectorY() { return gWorldSectorY; }
-
-bool IsSectorEnemyControlled(i8 sMapX, i8 sMapY) {
-  return StrategicMap[GetSectorID16(sMapX, sMapY)].fEnemyControlled;
-}
-
-// fEnemyControlled

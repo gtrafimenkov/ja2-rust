@@ -58,6 +58,14 @@ uint8_t SectorID16_Y(SectorID16 sector_id);
 
 bool IsThisSectorASAMSector(uint8_t x, uint8_t y, int8_t z);
 
+bool IsSectorEnemyControlled(uint8_t x, uint8_t y);
+
+void SetSectorEnemyControlled(uint8_t x, uint8_t y, bool value);
+
+bool IsSectorEnemyAirControlled(uint8_t x, uint8_t y);
+
+void SetSectorEnemyAirControlled(uint8_t x, uint8_t y, bool value);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

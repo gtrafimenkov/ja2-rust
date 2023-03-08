@@ -2901,15 +2901,14 @@ void UpdateAirspaceControl(void) {
         fEnemyControlsAir = FALSE;
       }
 
-      StrategicMap[GetSectorID16(iCounterA, iCounterB)].fEnemyAirControlled = fEnemyControlsAir;
+      SetSectorEnemyAirControlled(iCounterA, iCounterB, fEnemyControlsAir);
     }
   }
 
   // check if currently selected arrival sector still has secure airspace
 
   // if it's not enemy air controlled
-  if (StrategicMap[GetSectorID16(gsMercArriveSectorX, gsMercArriveSectorY)].fEnemyAirControlled ==
-      TRUE) {
+  if (IsSectorEnemyAirControlled(gsMercArriveSectorX, gsMercArriveSectorY)) {
     // NOPE!
     CHAR16 sMsgString[256], sMsgSubString1[64], sMsgSubString2[64];
 
@@ -2966,6 +2965,13 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
     StrategicMap[sector].__only_storage_bSAMCondition = GetSamCondition(i);
   }
 
+  for (int y = 1; y < 17; y++) {
+    for (int x = 1; x < 17; x++) {
+      SectorID16 sector = GetSectorID16(x, y);
+      StrategicMap[sector].__only_storage_fEnemyAirControlled = IsSectorEnemyAirControlled(x, y);
+    }
+  }
+
   // Save the strategic map information
   FileMan_Write(hFile, StrategicMap, uiSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSize) {
@@ -3020,6 +3026,12 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
     u8 sY = GetSamSiteY(i);
     SectorID16 sector = GetSectorID16(sX, sY);
     SetSamCondition(i, StrategicMap[sector].__only_storage_bSAMCondition);
+  }
+  for (int y = 1; y < 17; y++) {
+    for (int x = 1; x < 17; x++) {
+      SectorID16 sector = GetSectorID16(x, y);
+      SetSectorEnemyAirControlled(x, y, StrategicMap[sector].__only_storage_fEnemyAirControlled);
+    }
   }
 
   // Load the Sector Info

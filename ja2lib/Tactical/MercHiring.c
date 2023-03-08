@@ -574,7 +574,7 @@ void CheckForValidArrivalSector() {
       if (sSector2 >= 1 && sSector2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
           sSector2 >= leftmost && sSector2 < (leftmost + MAP_WORLD_X)) {
         if (!StrategicMap[sSector2].fEnemyControlled &&
-            !StrategicMap[sSector2].fEnemyAirControlled) {
+            !IsSectorEnemyAirControlled(SectorID16_X(sSector2), SectorID16_Y(sSector2))) {
           uiRange = StrategicPythSpacesAway(sSector2, sSector);
 
           if (uiRange < uiLowestRange) {

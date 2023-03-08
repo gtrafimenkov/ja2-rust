@@ -4064,7 +4064,7 @@ UINT32 HandleMapUI() {
           if (SectorInfo[(GetSectorID8(sMapX, sMapY))].ubTraversability[THROUGH_STRATEGIC_MOVE] !=
               GROUNDBARRIER) {
             // if it's not enemy air controlled
-            if (StrategicMap[GetSectorID16(sMapX, sMapY)].fEnemyAirControlled == FALSE) {
+            if (!IsSectorEnemyAirControlled(sMapX, sMapY)) {
               CHAR16 sMsgString[128], sMsgSubString[64];
 
               // move the landing zone over here

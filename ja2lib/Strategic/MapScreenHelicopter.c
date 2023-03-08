@@ -416,7 +416,7 @@ INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY) {
   INT32 iCost = 0;
 
   // if they don't control it
-  if (StrategicMap[GetSectorID16(sX, sY)].fEnemyAirControlled == FALSE) {
+  if (!IsSectorEnemyAirControlled(sX, sY)) {
     iCost = COST_AIRSPACE_SAFE;
   } else {
     iCost = COST_AIRSPACE_UNSAFE;
@@ -735,8 +735,7 @@ void UpdateRefuelSiteAvailability(void) {
     // if enemy controlled sector (ground OR air, don't want to fly into enemy air territory)
     if ((StrategicMap[GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])]
              .fEnemyControlled == TRUE) ||
-        (StrategicMap[GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])]
-             .fEnemyAirControlled == TRUE) ||
+        IsSectorEnemyAirControlled(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1]) ||
         ((iCounter == ESTONI_REFUELING_SITE) &&
          (CheckFact(FACT_ESTONI_REFUELLING_POSSIBLE, 0) == FALSE))) {
       // mark refueling site as unavailable
@@ -1300,7 +1299,7 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
   UINT8 ubChance;
 
   // if this sector is in friendly airspace, we're safe
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyAirControlled == FALSE) {
+  if (!IsSectorEnemyAirControlled(sSectorX, sSectorY)) {
     // no problem, friendly airspace
     return (FALSE);
   }
@@ -1542,7 +1541,7 @@ INT16 GetNumSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (!StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (!IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 
@@ -1568,7 +1567,7 @@ INT16 GetNumSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (!StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (!IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 
@@ -1618,7 +1617,7 @@ INT16 GetNumUnSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 
@@ -1644,7 +1643,7 @@ INT16 GetNumUnSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 
