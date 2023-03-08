@@ -150,30 +150,6 @@ BOOLEAN gfUseAlternateMap = FALSE;
 // whether or not we have found Orta yet
 BOOLEAN fFoundOrta = FALSE;
 
-// TODO: rustlib
-INT16 pSamGridNoAList[4 /* TODO: rustlib */] = {
-    10196,
-    11295,
-    16080,
-    11913,
-};
-
-INT16 pSamGridNoBList[4 /* TODO: rustlib */] = {
-    10195,
-    11135,
-    15920,
-    11912,
-};
-
-// ATE: Update this w/ graphic used
-// Use 3 if / orientation, 4 if \ orientation
-INT8 gbSAMGraphicList[4 /* TODO: rustlib */] = {
-    4,
-    3,
-    3,
-    3,
-};
-
 INT8 gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
 
 // the amount of time that a soldier will wait to return to desired/old squad

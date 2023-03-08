@@ -26,22 +26,30 @@ uint8_t GetSamSiteCount(void);
 /**
  * Return X location of the SAM site
  */
-uint8_t GetSamSiteX(enum SamSite sam_site);
+uint8_t GetSamSiteX(enum SamSite site);
 
 /**
  * Return Y location of the SAM site
  */
-uint8_t GetSamSiteY(enum SamSite sam_site);
+uint8_t GetSamSiteY(enum SamSite site);
 
 /**
  * Check if the SAM site was found.
  */
-bool IsSamSiteFound(enum SamSite sam_site);
+bool IsSamSiteFound(enum SamSite site);
 
 /**
  * Set if the SAM site was found.
  */
-void SetSamSiteFound(enum SamSite sam_site, bool value);
+void SetSamSiteFound(enum SamSite site, bool value);
+
+uint8_t GetSamGraphicsID(enum SamSite site);
+
+int16_t GetSamGridNoA(enum SamSite site);
+
+int16_t GetSamGridNoB(enum SamSite site);
+
+bool DoesSAMExistHere(uint8_t sector_x, uint8_t sector_y, int8_t sector_z, int16_t grid_no);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -23,9 +23,6 @@ extern INT16 gWorldSectorX;
 extern INT16 gWorldSectorY;
 extern INT8 gbWorldSectorZ;
 
-extern INT16 pSamGridNoAList[4 /* TODO */];
-extern INT16 pSamGridNoBList[4 /* TODO */];
-
 extern BOOLEAN fFoundOrta;
 
 extern BOOLEAN gfUseAlternateMap;
