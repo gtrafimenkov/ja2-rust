@@ -937,7 +937,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
   }
 
   // check if drassen controlled
-  else if (StrategicMap[(AIRPORT_X + (MAP_WORLD_X * AIRPORT_Y))].fEnemyControlled == FALSE) {
+  else if (StrategicMap[(GetSectorID16(AIRPORT_X, AIRPORT_Y))].fEnemyControlled == FALSE) {
     if ((GetSolSectorX(pSoldier) == AIRPORT_X) && (GetSolSectorY(pSoldier) == AIRPORT_Y) &&
         (GetSolSectorZ(pSoldier) == 0)) {
       if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {

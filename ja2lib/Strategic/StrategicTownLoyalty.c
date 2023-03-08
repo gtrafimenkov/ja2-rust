@@ -1091,7 +1091,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
     iShortestDistance[bTownId] = 999999;
   }
 
-  sEventSector = sSectorX + (MAP_WORLD_X * sSectorY);
+  sEventSector = GetSectorID16(sSectorX, sSectorY);
 
   // need a temporary group create to use for laying down distance paths
   ubTempGroupId = CreateNewPlayerGroupDepartingFromSector((UINT8)sSectorX, (UINT8)sSectorY);

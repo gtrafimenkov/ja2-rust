@@ -542,17 +542,17 @@ void CheckForValidArrivalSector() {
   INT16 cnt1, cnt2, sGoodX, sGoodY;
   UINT8 ubRadius = 4;
   INT32 leftmost;
-  INT16 sSectorGridNo, sSectorGridNo2;
+  INT16 sSector, sSector2;
   INT32 uiRange, uiLowestRange = 999999;
   BOOLEAN fFound = FALSE;
   CHAR16 sString[1024];
   CHAR16 zShortTownIDString1[50];
   CHAR16 zShortTownIDString2[50];
 
-  sSectorGridNo = gsMercArriveSectorX + (MAP_WORLD_X * gsMercArriveSectorY);
+  sSector = GetSectorID16(gsMercArriveSectorX, gsMercArriveSectorY);
 
   // Check if valid...
-  if (!StrategicMap[sSectorGridNo].fEnemyControlled) {
+  if (!StrategicMap[sSector].fEnemyControlled) {
     return;
   }
 
@@ -566,16 +566,16 @@ void CheckForValidArrivalSector() {
   sRight = ubRadius;
 
   for (cnt1 = sBottom; cnt1 <= sTop; cnt1++) {
-    leftmost = ((sSectorGridNo + (MAP_WORLD_X * cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
+    leftmost = ((GetSectorID16(sSector, cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
 
     for (cnt2 = sLeft; cnt2 <= sRight; cnt2++) {
-      sSectorGridNo2 = sSectorGridNo + (MAP_WORLD_X * cnt1) + cnt2;
+      sSector2 = GetSectorID16(sSector, cnt1) + cnt2;
 
-      if (sSectorGridNo2 >= 1 && sSectorGridNo2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
-          sSectorGridNo2 >= leftmost && sSectorGridNo2 < (leftmost + MAP_WORLD_X)) {
-        if (!StrategicMap[sSectorGridNo2].fEnemyControlled &&
-            !StrategicMap[sSectorGridNo2].fEnemyAirControlled) {
-          uiRange = StrategicPythSpacesAway(sSectorGridNo2, sSectorGridNo);
+      if (sSector2 >= 1 && sSector2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
+          sSector2 >= leftmost && sSector2 < (leftmost + MAP_WORLD_X)) {
+        if (!StrategicMap[sSector2].fEnemyControlled &&
+            !StrategicMap[sSector2].fEnemyAirControlled) {
+          uiRange = StrategicPythSpacesAway(sSector2, sSector);
 
           if (uiRange < uiLowestRange) {
             sGoodY = cnt1;
