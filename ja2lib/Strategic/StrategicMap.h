@@ -27,10 +27,6 @@ extern BOOLEAN fFoundOrta;
 
 extern BOOLEAN gfUseAlternateMap;
 
-// TODO: rustlib
-// min condition for sam site to be functional
-#define MIN_CONDITION_FOR_SAM_SITE_TO_WORK 80
-
 // FUNCTIONS FOR DERTERMINING GOOD GetSectorID8 EXIT DATA
 #define CHECK_DIR_X_DELTA (WORLD_TILE_X * 4)
 #define CHECK_DIR_Y_DELTA (WORLD_TILE_Y * 10)

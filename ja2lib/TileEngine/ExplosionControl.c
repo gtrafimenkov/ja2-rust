@@ -2840,13 +2840,12 @@ void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, INT16 s
     return;
   }
 
-  // Damage.....
-  sSectorNo = GetSectorID16(sSectorX, sSectorY);
-
-  if (StrategicMap[sSectorNo].bSAMCondition >= ubDamage) {
-    StrategicMap[sSectorNo].bSAMCondition -= ubDamage;
+  i8 samID = GetSAMIdFromSector(sSectorX, sSectorY, sSectorZ);
+  u8 condition = GetSamCondition(samID);
+  if (condition >= ubDamage) {
+    SetSamCondition(samID, condition - ubDamage);
   } else {
-    StrategicMap[sSectorNo].bSAMCondition = 0;
+    SetSamCondition(samID, 0);
   }
 
   // SAM site may have been put out of commission...

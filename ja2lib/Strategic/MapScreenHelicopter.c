@@ -1297,7 +1297,6 @@ BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite) {
 void HeliCrashSoundStopCallback(void *pData) { SkyriderDestroyed(); }
 
 BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
-  INT8 bSAMCondition;
   UINT8 ubChance;
 
   // if this sector is in friendly airspace, we're safe
@@ -1314,9 +1313,7 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
     return (FALSE);
   }
 
-  SectorID16 samSector = GetSectorID16(GetSamSiteX(samSite.some), GetSamSiteY(samSite.some));
-
-  bSAMCondition = StrategicMap[samSector].bSAMCondition;
+  u8 bSAMCondition = GetSamCondition(samSite.some);
 
   // if the SAM site is too damaged to be a threat
   if (bSAMCondition < MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {

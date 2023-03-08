@@ -527,7 +527,7 @@ void InitializeSAMSites(void) {
 
   // all SAM sites start game in perfect working condition
   for (int i = 0; i < GetSamSiteCount(); i++) {
-    StrategicMap[GetSectorID16(GetSamSiteX(i), GetSamSiteY(i))].bSAMCondition = 100;
+    SetSamCondition(i, 100);
   }
 
   UpdateAirspaceControl();
@@ -2891,7 +2891,7 @@ void UpdateAirspaceControl(void) {
 
         // if the enemies own the controlling SAM site, and it's in working condition
         if ((pSAMStrategicMap->fEnemyControlled) &&
-            (pSAMStrategicMap->bSAMCondition >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK)) {
+            GetSamCondition(samSite.some) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {
           fEnemyControlsAir = TRUE;
         } else {
           fEnemyControlsAir = FALSE;
@@ -2943,17 +2943,10 @@ void UpdateAirspaceControl(void) {
   UpdateRefuelSiteAvailability();
 }
 
+// TODO: rustlib
 BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  if (IsThisSectorASAMSector(sSectorX, sSectorY, bSectorZ) == FALSE) {
-    return (FALSE);
-  }
-
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].bSAMCondition <
-      MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {
-    return (FALSE);
-  }
-
-  return (TRUE);
+  i8 samID = GetSAMIdFromSector(sSectorX, sSectorY, bSectorZ);
+  return samID != -1 && GetSamCondition(samID) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK;
 }
 
 // is this sector part of the town?
@@ -2970,6 +2963,14 @@ BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY) {
 BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten = 0;
   UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
+
+  // copy data
+  for (int i = 0; i < GetSamSiteCount(); i++) {
+    u8 sX = GetSamSiteX(i);
+    u8 sY = GetSamSiteY(i);
+    SectorID16 sector = GetSectorID16(sX, sY);
+    StrategicMap[sector].__only_storage_bSAMCondition = GetSamCondition(i);
+  }
 
   // Save the strategic map information
   FileMan_Write(hFile, StrategicMap, uiSize, &uiNumBytesWritten);
@@ -3017,6 +3018,14 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
   FileMan_Read(hFile, StrategicMap, uiSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiSize) {
     return (FALSE);
+  }
+
+  // copy data
+  for (int i = 0; i < GetSamSiteCount(); i++) {
+    u8 sX = GetSamSiteX(i);
+    u8 sY = GetSamSiteY(i);
+    SectorID16 sector = GetSectorID16(sX, sY);
+    SetSamCondition(i, StrategicMap[sector].__only_storage_bSAMCondition);
   }
 
   // Load the Sector Info
@@ -3768,8 +3777,9 @@ BOOLEAN HandleDefiniteUnloadingOfWorld(UINT8 ubUnloadCode) {
 BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle() {
   INT32 i;
 
-  // We don't have mercs in the sector.  Now, we check to see if there are BOTH enemies and militia.
-  // If both co-exist in the sector, then make them fight for control of the sector via autoresolve.
+  // We don't have mercs in the sector.  Now, we check to see if there are BOTH enemies and
+  // militia. If both co-exist in the sector, then make them fight for control of the sector via
+  // autoresolve.
   for (i = gTacticalStatus.Team[ENEMY_TEAM].bFirstID;
        i <= gTacticalStatus.Team[CREATURE_TEAM].bLastID; i++) {
     if (MercPtrs[i]->bActive && MercPtrs[i]->bLife) {
@@ -3825,8 +3835,8 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
 
   GetCurrentBattleSectorXYZ(&sBattleSectorX, &sBattleSectorY, &sBattleSectorZ);
 
-  if (guiCurrentScreen ==
-      AUTORESOLVE_SCREEN) {  // The user has decided to let the game autoresolve the current battle.
+  if (guiCurrentScreen == AUTORESOLVE_SCREEN) {  // The user has decided to let the game
+                                                 // autoresolve the current battle.
     if (gWorldSectorX == sBattleSectorX && gWorldSectorY == sBattleSectorY &&
         gbWorldSectorZ == sBattleSectorZ) {
       for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
@@ -3930,8 +3940,8 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
 }
 
 // This is called just before the world is unloaded to preserve location information for RPCs and
-// NPCs either in the sector or strategically in the sector (such as firing an NPC in a sector that
-// isn't yet loaded.)  When loading that sector, the RPC would be added.
+// NPCs either in the sector or strategically in the sector (such as firing an NPC in a sector
+// that isn't yet loaded.)  When loading that sector, the RPC would be added.
 //@@@Evaluate
 void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier) {
   if (!pSoldier || GetSolProfile(pSoldier) == NO_PROFILE) {  // Doesn't have profile information.
@@ -4006,9 +4016,9 @@ void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup) {
 
   if (!gTacticalStatus.fHasEnteredCombatModeSinceEntering && gTacticalStatus.fEnemyInSector) {
     // Flag is set so if "wilderness" enemies are in the adjacent sector of this group, the group
-    // has a 90% chance of ambush.  Because this typically doesn't happen very often, the chance is
-    // high. This reflects the enemies radioing ahead to other enemies of the group's arrival, so
-    // they have time to setup a good ambush!
+    // has a 90% chance of ambush.  Because this typically doesn't happen very often, the chance
+    // is high. This reflects the enemies radioing ahead to other enemies of the group's arrival,
+    // so they have time to setup a good ambush!
     pGroup->uiFlags |= GROUPFLAG_HIGH_POTENTIAL_FOR_AMBUSH;
 
     pPlayer = pGroup->pPlayerList;

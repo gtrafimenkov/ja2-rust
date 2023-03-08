@@ -25,6 +25,7 @@
         "screenids.h": "c",
         "strategicmap.h": "c",
         "rustlib.h": "c",
-        "rust_sector.h": "c"
+        "rust_sector.h": "c",
+        "strategictownloyalty.h": "c"
     }
 }

@@ -21,19 +21,56 @@ pub const LOCATIONS: [SamSiteLocation; 4] = [
     SamSiteLocation { x: 4, y: 14 },
 ];
 
+pub struct SamState {
+    found: bool,
+    condition: u8, // 0 - 100
+}
+
+impl SamState {
+    pub const fn new() -> Self {
+        Self {
+            found: false,
+            condition: 100,
+        }
+    }
+    pub fn get_condition(&self) -> u8 {
+        self.condition
+    }
+    pub fn set_condition(&mut self, condition: u8) {
+        debug_assert!(condition <= 100);
+        self.condition = condition;
+    }
+}
+
 pub struct State {
-    found: [bool; 4],
+    pub sites: [SamState; 4],
+    // found: [bool; 4],
+    // condition: [u8; 4], // 0 - 100
 }
 
 impl State {
     pub const fn new() -> Self {
-        State { found: [false; 4] }
+        State {
+            sites: [
+                SamState::new(),
+                SamState::new(),
+                SamState::new(),
+                SamState::new(),
+            ],
+        }
     }
     pub fn is_found(&self, site: SamSite) -> bool {
-        return self.found[site as usize];
+        self.sites[site as usize].found
     }
     pub fn set_found(&mut self, site: SamSite, value: bool) {
-        self.found[site as usize] = value
+        self.sites[site as usize].found = value;
+    }
+    pub fn get_condition(&self, site: SamSite) -> u8 {
+        self.sites[site as usize].get_condition()
+    }
+    pub fn set_condition(&mut self, site: SamSite, condition: u8) {
+        debug_assert!(condition <= 100);
+        self.sites[site as usize].set_condition(condition);
     }
 }
 
@@ -70,6 +107,14 @@ pub fn get_sam_controlling_sector(x: u8, y: u8) -> Option<SamSite> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn new_state() {
+        let state = State::new();
+        assert_eq!(4, state.sites.len());
+        assert_eq!(false, state.sites[3].found);
+        assert_eq!(100, state.sites[3].condition);
+    }
 
     #[test]
     fn test_get_sam_controlling_sector() {

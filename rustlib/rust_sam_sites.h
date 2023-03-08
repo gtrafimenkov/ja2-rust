@@ -7,6 +7,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * Min condition for sam site to be functional
+ */
+#define MIN_CONDITION_FOR_SAM_SITE_TO_WORK 80
+
 enum SamSite {
   SamSiteChitzena = 0,
   SamSiteDrassen = 1,
@@ -64,6 +69,10 @@ int16_t GetSamGridNoA(enum SamSite site);
 int16_t GetSamGridNoB(enum SamSite site);
 
 bool DoesSAMExistHere(uint8_t sector_x, uint8_t sector_y, int8_t sector_z, int16_t grid_no);
+
+uint8_t GetSamCondition(enum SamSite site);
+
+void SetSamCondition(enum SamSite site, uint8_t value);
 
 /**
  * Returns SAM controlling the given sector.

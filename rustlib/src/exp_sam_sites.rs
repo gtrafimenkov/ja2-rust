@@ -1,6 +1,9 @@
 use super::sam_sites;
 use super::state;
 
+/// Min condition for sam site to be functional
+pub const MIN_CONDITION_FOR_SAM_SITE_TO_WORK: u8 = 80;
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub enum SamSite {
@@ -105,6 +108,18 @@ pub extern "C" fn DoesSAMExistHere(sector_x: u8, sector_y: u8, sector_z: i8, gri
     }
 
     false
+}
+
+#[no_mangle]
+pub extern "C" fn GetSamCondition(site: SamSite) -> u8 {
+    unsafe { state::SAM.sites[site as usize].get_condition() }
+}
+
+#[no_mangle]
+pub extern "C" fn SetSamCondition(site: SamSite, value: u8) {
+    unsafe {
+        state::SAM.sites[site as usize].set_condition(value);
+    }
 }
 
 #[repr(C)]

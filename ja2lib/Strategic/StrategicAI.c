@@ -2713,9 +2713,9 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
                                                       // attack.  Return to original position.
     ReassignAIGroup(&pGroup);
     return TRUE;
-  } else if (pGroup->pEnemyGroup->ubIntention ==
-             REINFORCEMENTS) {  // The group has arrived at the location where he is supposed to
-                                // reinforce.
+  } else if (pGroup->pEnemyGroup->ubIntention == REINFORCEMENTS) {
+    // The group has arrived at the location where he is supposed to
+    // reinforce.
     // Step 1 -- Check for matching garrison location
     for (i = 0; i < giGarrisonArraySize; i++) {
       if (gGarrisonGroup[i].ubSectorID == GetSectorID8(pGroup->ubSectorX, pGroup->ubSectorY) &&
@@ -2734,19 +2734,21 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
                                 pGroup->pEnemyGroup->ubNumElites,
                             pGroup->ubSectorY + 'A' - 1, pGroup->ubSectorX);
 #endif
-          if (IsThisSectorASAMSector(pGroup->ubSectorX, pGroup->ubSectorY, 0)) {
-            StrategicMap[pGroup->ubSectorX + pGroup->ubSectorY * MAP_WORLD_X].bSAMCondition = 100;
+          i8 samID = GetSAMIdFromSector(pGroup->ubSectorX, pGroup->ubSectorY, 0);
+          if (samID != -1) {
+            SetSamCondition(samID, 100);
             UpdateSAMDoneRepair(pGroup->ubSectorX, pGroup->ubSectorY, 0);
           }
-        } else {  // The group was sent back to the queen's palace (probably because they couldn't
-                  // be reassigned
+        } else {
+          // The group was sent back to the queen's palace (probably because they couldn't
+          // be reassigned
           // anywhere else, but it is possible that the queen's sector is requesting the
           // reinforcements.  In any case, if the queen's sector is less than full strength, fill it
           // up first, then simply add the rest to the global pool.
           if (pSector->ubNumElites < MAX_STRATEGIC_TEAM_SIZE) {
-            if (pSector->ubNumElites + pGroup->ubGroupSize >=
-                MAX_STRATEGIC_TEAM_SIZE) {  // Fill up the queen's guards, then apply the rest to
-                                            // the reinforcement pool
+            if (pSector->ubNumElites + pGroup->ubGroupSize >= MAX_STRATEGIC_TEAM_SIZE) {
+              // Fill up the queen's guards, then apply the rest to
+              // the reinforcement pool
               giReinforcementPool += MAX_STRATEGIC_TEAM_SIZE - pSector->ubNumElites;
               pSector->ubNumElites = MAX_STRATEGIC_TEAM_SIZE;
 #ifdef JA2BETAVERSION
@@ -2763,8 +2765,9 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
                                 pGroup->ubSectorX);
 #endif
             }
-          } else {  // Add all the troops to the reinforcement pool as the queen's guard is at full
-                    // strength.
+          } else {
+            // Add all the troops to the reinforcement pool as the queen's guard is at full
+            // strength.
             giReinforcementPool += pGroup->ubGroupSize;
 #ifdef JA2BETAVERSION
             LogStrategicEvent(
