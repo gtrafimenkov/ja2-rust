@@ -35,7 +35,7 @@ TEST(Bugfixes, SectorName) {
 
   GetSectorIDString(15, 4, 0, buf, ARR_SIZE(buf), true);
   EXPECT_STREQ(L"D15: Woods", buf);
-  fSamSiteFound[SamSiteDrassen] = TRUE;
+  SetSamSiteFound(SamSiteDrassen, true);
   GetSectorIDString(15, 4, 0, buf, ARR_SIZE(buf), true);
   EXPECT_STREQ(L"D15: Woods, SAM site", buf);
 

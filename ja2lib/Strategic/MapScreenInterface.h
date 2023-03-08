@@ -494,7 +494,7 @@ void SetTixaAsFound(void);
 void SetOrtaAsFound(void);
 
 // set this SAM site as being found by the player
-void SetSAMSiteAsFound(UINT8 uiSamIndex);
+void SetSAMSiteAsFound(enum SamSite uiSamIndex);
 
 // init time menus
 void InitTimersForMoveMenuMouseRegions(void);

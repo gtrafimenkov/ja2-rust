@@ -5714,7 +5714,7 @@ void ShowSAMSitesOnStrategicMap(void) {
 
   for (iCounter = 0; iCounter < GetSamSiteCount(); iCounter++) {
     // has the sam site here been found?
-    if (!fSamSiteFound[iCounter]) {
+    if (!IsSamSiteFound(iCounter)) {
       continue;
     }
 
@@ -5807,7 +5807,7 @@ void BlitSAMGridMarkers(void) {
 
   for (iCounter = 0; iCounter < GetSamSiteCount(); iCounter++) {
     // has the sam site here been found?
-    if (!fSamSiteFound[iCounter]) {
+    if (!IsSamSiteFound(iCounter)) {
       continue;
     }
 
@@ -6066,7 +6066,7 @@ void InitMapSecrets(void) {
   fFoundOrta = FALSE;
 
   for (ubSamIndex = 0; ubSamIndex < GetSamSiteCount(); ubSamIndex++) {
-    fSamSiteFound[ubSamIndex] = FALSE;
+    SetSamSiteFound(ubSamIndex, false);
   }
 }
 

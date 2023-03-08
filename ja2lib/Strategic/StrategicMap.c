@@ -151,15 +151,6 @@ BOOLEAN gfUseAlternateMap = FALSE;
 BOOLEAN fFoundOrta = FALSE;
 
 // TODO: rustlib
-// have any of the sam sites been found
-BOOLEAN fSamSiteFound[4 /* TODO: rustlib */] = {
-    FALSE,
-    FALSE,
-    FALSE,
-    FALSE,
-};
-
-// TODO: rustlib
 INT16 pSamGridNoAList[4 /* TODO: rustlib */] = {
     10196,
     11295,
@@ -1753,7 +1744,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
       // are we dealing with the unfound towns?
       switch (ubSectorID) {
         case SEC_D2:  // Chitzena SAM
-          if (!fSamSiteFound[SamSiteChitzena])
+          if (!IsSamSiteFound(SamSiteChitzena))
             wcscat(zString, pLandTypeStrings[TROPICS]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[TROPICS_SAM_SITE]);
@@ -1761,7 +1752,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
             wcscat(zString, pLandTypeStrings[SAM_SITE]);
           break;
         case SEC_D15:  // Drassen SAM
-          if (!fSamSiteFound[SamSiteDrassen])
+          if (!IsSamSiteFound(SamSiteDrassen))
             wcscat(zString, pLandTypeStrings[SPARSE]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[SPARSE_SAM_SITE]);
@@ -1769,7 +1760,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
             wcscat(zString, pLandTypeStrings[SAM_SITE]);
           break;
         case SEC_I8:  // Cambria SAM
-          if (!fSamSiteFound[SamSiteCambria])
+          if (!IsSamSiteFound(SamSiteCambria))
             wcscat(zString, pLandTypeStrings[SAND]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[SAND_SAM_SITE]);
@@ -1813,7 +1804,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
             wcscat(zString, pTownNames[MEDUNA]);
           break;
         default:
-          if (ubSectorID == SEC_N4 && fSamSiteFound[SamSiteMeduna]) {  // Meduna's SAM site
+          if (ubSectorID == SEC_N4 && IsSamSiteFound(SamSiteMeduna)) {  // Meduna's SAM site
             if (fDetailed)
               wcscat(zString, pLandTypeStrings[MEDUNA_SAM_SITE]);
             else

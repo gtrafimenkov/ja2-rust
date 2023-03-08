@@ -1,4 +1,6 @@
 use super::sam_sites;
+use super::state;
+use int_enum::IntEnum;
 
 #[repr(C)]
 pub enum SamSite {
@@ -24,6 +26,24 @@ pub extern "C" fn GetSamSiteX(sam_site: SamSite) -> u8 {
 /// Return Y location of the SAM site
 pub extern "C" fn GetSamSiteY(sam_site: SamSite) -> u8 {
     return sam_sites::LOCATIONS[sam_site as usize].y;
+}
+
+#[no_mangle]
+/// Check if the SAM site was found.
+pub extern "C" fn IsSamSiteFound(sam_site: SamSite) -> bool {
+    unsafe {
+        let site = sam_sites::SamSite::from_int(sam_site as u8).unwrap();
+        return state::SAM.is_found(site);
+    }
+}
+
+#[no_mangle]
+/// Set if the SAM site was found.
+pub extern "C" fn SetSamSiteFound(sam_site: SamSite, value: bool) {
+    unsafe {
+        let site = sam_sites::SamSite::from_int(sam_site as u8).unwrap();
+        return state::SAM.set_found(site, value);
+    }
 }
 
 #[cfg(test)]

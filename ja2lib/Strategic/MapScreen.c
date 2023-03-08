@@ -10164,7 +10164,7 @@ void HandleMilitiaRedistributionClick(void) {
         DoScreenIndependantMessageBox(sString, MSG_BOX_FLAG_OK, NULL);
       }
     } else if (IsThisSectorASAMSector(sSelMapX, sSelMapY, 0) &&
-               fSamSiteFound[GetSAMIdFromSector(sSelMapX, sSelMapY, 0)]) {
+               IsSamSiteFound(GetSAMIdFromSector(sSelMapX, sSelMapY, 0))) {
       // can't move militia around sam sites
       DoScreenIndependantMessageBox(pMapErrorString[30], MSG_BOX_FLAG_OK, NULL);
     }

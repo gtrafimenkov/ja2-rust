@@ -33,6 +33,16 @@ uint8_t GetSamSiteX(enum SamSite sam_site);
  */
 uint8_t GetSamSiteY(enum SamSite sam_site);
 
+/**
+ * Check if the SAM site was found.
+ */
+bool IsSamSiteFound(enum SamSite sam_site);
+
+/**
+ * Set if the SAM site was found.
+ */
+void SetSamSiteFound(enum SamSite sam_site, bool value);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

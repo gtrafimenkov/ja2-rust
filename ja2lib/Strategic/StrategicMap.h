@@ -27,7 +27,6 @@ extern INT16 pSamGridNoAList[4 /* TODO */];
 extern INT16 pSamGridNoBList[4 /* TODO */];
 
 extern BOOLEAN fFoundOrta;
-extern BOOLEAN fSamSiteFound[4 /* TODO */];
 
 extern BOOLEAN gfUseAlternateMap;
 

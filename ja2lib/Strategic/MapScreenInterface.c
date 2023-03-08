@@ -4214,9 +4214,9 @@ void SetOrtaAsFound(void) {
   MarkForRedrawalStrategicMap();
 }
 
-void SetSAMSiteAsFound(UINT8 uiSamIndex) {
+void SetSAMSiteAsFound(enum SamSite uiSamIndex) {
   // set this SAM site as being found by the player
-  fSamSiteFound[uiSamIndex] = TRUE;
+  SetSamSiteFound(uiSamIndex, true);
   MarkForRedrawalStrategicMap();
 }
 
