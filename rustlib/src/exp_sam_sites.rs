@@ -1,5 +1,5 @@
 use super::sam_sites;
-use super::state;
+use super::state::STATE;
 
 /// Min condition for sam site to be functional
 pub const MIN_CONDITION_FOR_SAM_SITE_TO_WORK: u8 = 80;
@@ -61,7 +61,7 @@ pub extern "C" fn GetSamSiteY(site: SamSite) -> u8 {
 /// Check if the SAM site was found.
 pub extern "C" fn IsSamSiteFound(site: SamSite) -> bool {
     unsafe {
-        return state::SAM.is_found(site.to_internal());
+        return STATE.sam_sites.is_found(site.to_internal());
     }
 }
 
@@ -69,7 +69,7 @@ pub extern "C" fn IsSamSiteFound(site: SamSite) -> bool {
 /// Set if the SAM site was found.
 pub extern "C" fn SetSamSiteFound(site: SamSite, value: bool) {
     unsafe {
-        return state::SAM.set_found(site.to_internal(), value);
+        return STATE.sam_sites.set_found(site.to_internal(), value);
     }
 }
 
@@ -112,13 +112,13 @@ pub extern "C" fn DoesSAMExistHere(sector_x: u8, sector_y: u8, sector_z: i8, gri
 
 #[no_mangle]
 pub extern "C" fn GetSamCondition(site: SamSite) -> u8 {
-    unsafe { state::SAM.sites[site as usize].get_condition() }
+    unsafe { STATE.sam_sites.sites[site as usize].get_condition() }
 }
 
 #[no_mangle]
 pub extern "C" fn SetSamCondition(site: SamSite, value: u8) {
     unsafe {
-        state::SAM.sites[site as usize].set_condition(value);
+        STATE.sam_sites.sites[site as usize].set_condition(value);
     }
 }
 
@@ -152,7 +152,7 @@ pub extern "C" fn IsThereAFunctionalSamInSector(x: u8, y: u8, z: i8) -> bool {
         match sam_sites::get_sam_at_sector(x, y, z) {
             None => false,
             Some(site) => {
-                state::SAM.sites[site as usize].get_condition()
+                STATE.sam_sites.sites[site as usize].get_condition()
                     >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK
             }
         }
