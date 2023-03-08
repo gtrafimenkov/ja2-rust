@@ -930,7 +930,7 @@ void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
           DIALOGUE_EXTERNAL_NPC_UI, FALSE, TRUE, DIALOGUE_SPECIAL_EVENT_SKYRIDERMAPSCREENEVENT,
           SKYRIDER_MONOLOGUE_EVENT_DRASSEN_SAM_SITE, 1);
 
-      if (SAMSitesUnderPlayerControl(SamSiteLocations[1].x, SamSiteLocations[1].y) == FALSE) {
+      if (SAMSitesUnderPlayerControl(GetSamSiteX(1), GetSamSiteY(1)) == FALSE) {
         CharacterDialogue(SKYRIDER, SECOND_HALF_OF_MENTION_DRASSEN_SAM_SITE,
                           uiExternalStaticNPCFaces[SKYRIDER_EXTERNAL_FACE],
                           DIALOGUE_EXTERNAL_NPC_UI, FALSE, FALSE);
@@ -1077,8 +1077,7 @@ void HandleAnimationOfSectors(void) {
   // Drassen SAM site
   if (fShowDrassenSAMHighLight) {
     fOldShowDrassenSAMHighLight = TRUE;
-    HandleBlitOfSectorLocatorIcon(SamSiteLocations[1].x, SamSiteLocations[1].y, 0,
-                                  LOCATOR_COLOR_RED);
+    HandleBlitOfSectorLocatorIcon(GetSamSiteX(1), GetSamSiteY(1), 0, LOCATOR_COLOR_RED);
     fSkipSpeakersLocator = TRUE;
   } else if (fOldShowDrassenSAMHighLight) {
     fOldShowDrassenSAMHighLight = FALSE;
@@ -1098,10 +1097,9 @@ void HandleAnimationOfSectors(void) {
   // show other SAM sites
   if (fShowOtherSAMHighLight) {
     fOldShowOtherSAMHighLight = TRUE;
-    for (int i = 0; i < ARR_SIZE(SamSiteLocations); i++) {
+    for (int i = 0; i < GetSamSiteCount(); i++) {
       if (i != 1) {
-        HandleBlitOfSectorLocatorIcon(SamSiteLocations[i].x, SamSiteLocations[i].y, 0,
-                                      LOCATOR_COLOR_RED);
+        HandleBlitOfSectorLocatorIcon(GetSamSiteX(i), GetSamSiteY(i), 0, LOCATOR_COLOR_RED);
       }
     }
     fSkipSpeakersLocator = TRUE;
@@ -1320,9 +1318,8 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
   }
 
   // get the condition of that SAM site (NOTE: SAM #s are 1-4, but indexes are 0-3!!!)
-  Assert(ubSamNumber <= ARR_SIZE(SamSiteLocations));
-  SectorID16 samSector =
-      GetSectorID16(SamSiteLocations[ubSamNumber - 1].x, SamSiteLocations[ubSamNumber - 1].y);
+  Assert(ubSamNumber <= GetSamSiteCount());
+  SectorID16 samSector = GetSectorID16(GetSamSiteX(ubSamNumber - 1), GetSamSiteY(ubSamNumber - 1));
 
   bSAMCondition = StrategicMap[samSector].bSAMCondition;
 

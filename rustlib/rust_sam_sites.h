@@ -7,16 +7,24 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-struct SamSiteLocation {
-  uint8_t x;
-  uint8_t y;
-};
-
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-extern const struct SamSiteLocation SamSiteLocations[4];
+/**
+ * Return total number of SAM sites
+ */
+uint8_t GetSamSiteCount(void);
+
+/**
+ * Return X location of i-th SAM site
+ */
+uint8_t GetSamSiteX(uint8_t i);
+
+/**
+ * Return Y location of i-th SAM site
+ */
+uint8_t GetSamSiteY(uint8_t i);
 
 #ifdef __cplusplus
 } // extern "C"

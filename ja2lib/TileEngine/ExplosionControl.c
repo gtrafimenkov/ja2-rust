@@ -69,7 +69,7 @@
 BOOLEAN ExpAffect(INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usItem, UINT8 ubOwner,
                   INT16 sSubsequent, BOOLEAN *pfMercHit, INT8 bLevel, INT32 iSmokeEffectID);
 
-extern INT8 gbSAMGraphicList[ARR_SIZE(SamSiteLocations)];
+extern INT8 gbSAMGraphicList[4 /* TODO: rustlib */];
 extern void AddToShouldBecomeHostileOrSayQuoteList(UINT8 ubID);
 extern void RecompileLocalMovementCostsForWall(INT16 sGridNo, UINT8 ubOrientation);
 void FatigueCharacter(struct SOLDIERTYPE *pSoldier);
@@ -2839,9 +2839,9 @@ BOOLEAN DoesSAMExistHere(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, INT16 sGridNo
     return (FALSE);
   }
 
-  for (int cnt = 0; cnt < ARR_SIZE(SamSiteLocations); cnt++) {
+  for (int cnt = 0; cnt < GetSamSiteCount(); cnt++) {
     // Are we i nthe same sector...
-    if (SamSiteLocations[cnt].x == sSectorX && SamSiteLocations[cnt].y == sSectorY) {
+    if (GetSamSiteX(cnt) == sSectorX && GetSamSiteY(cnt) == sSectorY) {
       // Are we in the same gridno?
       if (pSamGridNoAList[cnt] == sGridNo || pSamGridNoBList[cnt] == sGridNo) {
         return (TRUE);
@@ -2889,9 +2889,9 @@ void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
     fInSector = TRUE;
   }
 
-  for (int cnt = 0; cnt < ARR_SIZE(SamSiteLocations); cnt++) {
+  for (int cnt = 0; cnt < GetSamSiteCount(); cnt++) {
     // Are we i nthe same sector...
-    if (SamSiteLocations[cnt].x == sSectorX && SamSiteLocations[cnt].y == sSectorY) {
+    if (GetSamSiteX(cnt) == sSectorX && GetSamSiteY(cnt) == sSectorY) {
       // get graphic.......
       GetTileIndexFromTypeSubIndex(EIGHTISTRUCT, (UINT16)(gbSAMGraphicList[cnt]), &usGoodGraphic);
 

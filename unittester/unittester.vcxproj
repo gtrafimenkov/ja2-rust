@@ -34,6 +34,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="bugfixes.cpp" />
+    <ClCompile Include="rustlib-export.cpp" />
     <ClCompile Include="savegame-structures.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>

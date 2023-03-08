@@ -152,7 +152,7 @@ BOOLEAN fFoundOrta = FALSE;
 
 // TODO: rustlib
 // have any of the sam sites been found
-BOOLEAN fSamSiteFound[ARR_SIZE(SamSiteLocations)] = {
+BOOLEAN fSamSiteFound[4 /* TODO: rustlib */] = {
     FALSE,
     FALSE,
     FALSE,
@@ -160,14 +160,14 @@ BOOLEAN fSamSiteFound[ARR_SIZE(SamSiteLocations)] = {
 };
 
 // TODO: rustlib
-INT16 pSamGridNoAList[ARR_SIZE(SamSiteLocations)] = {
+INT16 pSamGridNoAList[4 /* TODO: rustlib */] = {
     10196,
     11295,
     16080,
     11913,
 };
 
-INT16 pSamGridNoBList[ARR_SIZE(SamSiteLocations)] = {
+INT16 pSamGridNoBList[4 /* TODO: rustlib */] = {
     10195,
     11135,
     15920,
@@ -176,7 +176,7 @@ INT16 pSamGridNoBList[ARR_SIZE(SamSiteLocations)] = {
 
 // ATE: Update this w/ graphic used
 // Use 3 if / orientation, 4 if \ orientation
-INT8 gbSAMGraphicList[ARR_SIZE(SamSiteLocations)] = {
+INT8 gbSAMGraphicList[4 /* TODO: rustlib */] = {
     4,
     3,
     3,
@@ -584,8 +584,8 @@ void InitializeSAMSites(void) {
   gsMercArriveSectorY = 1;
 
   // all SAM sites start game in perfect working condition
-  for (int i = 0; i < ARR_SIZE(SamSiteLocations); i++) {
-    StrategicMap[GetSectorID16(SamSiteLocations[i].x, SamSiteLocations[i].y)].bSAMCondition = 100;
+  for (int i = 0; i < GetSamSiteCount(); i++) {
+    StrategicMap[GetSectorID16(GetSamSiteX(i), GetSamSiteY(i))].bSAMCondition = 100;
   }
 
   UpdateAirspaceControl();
@@ -2909,9 +2909,8 @@ INT32 GetNumberOfSAMSitesUnderPlayerControl(void) {
   INT32 iNumber = 0;
 
   // if the sam site is under player control, up the number
-  for (int i = 0; i < ARR_SIZE(SamSiteLocations); i++) {
-    if (StrategicMap[GetSectorID16(SamSiteLocations[i].x, SamSiteLocations[i].y)]
-            .fEnemyControlled == FALSE) {
+  for (int i = 0; i < GetSamSiteCount(); i++) {
+    if (StrategicMap[GetSectorID16(GetSamSiteX(i), GetSamSiteY(i))].fEnemyControlled == FALSE) {
       iNumber++;
     }
   }
@@ -2945,9 +2944,9 @@ void UpdateAirspaceControl(void) {
       // IMPORTANT: B and A are reverse here, since the table is stored transposed
       ubControllingSAM = ubSAMControlledSectors[iCounterB][iCounterA];
 
-      if ((ubControllingSAM >= 1) && (ubControllingSAM <= ARR_SIZE(SamSiteLocations))) {
-        SectorID16 samSector = GetSectorID16(SamSiteLocations[ubControllingSAM - 1].x,
-                                             SamSiteLocations[ubControllingSAM - 1].y);
+      if ((ubControllingSAM >= 1) && (ubControllingSAM <= GetSamSiteCount())) {
+        SectorID16 samSector =
+            GetSectorID16(GetSamSiteX(ubControllingSAM - 1), GetSamSiteY(ubControllingSAM - 1));
         pSAMStrategicMap = &(StrategicMap[samSector]);
 
         // if the enemies own the controlling SAM site, and it's in working condition

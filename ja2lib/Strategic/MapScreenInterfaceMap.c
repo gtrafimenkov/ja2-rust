@@ -5395,9 +5395,9 @@ void DrawTownMilitiaForcesOnMap(void) {
   }
 
   // now handle militia for sam sectors
-  for (iCounter = 0; iCounter < ARR_SIZE(SamSiteLocations); iCounter++) {
-    u8 sSectorX = SamSiteLocations[iCounter].x;
-    u8 sSectorY = SamSiteLocations[iCounter].y;
+  for (iCounter = 0; iCounter < GetSamSiteCount(); iCounter++) {
+    u8 sSectorX = GetSamSiteX(iCounter);
+    u8 sSectorY = GetSamSiteY(iCounter);
     struct MilitiaCount milCount = GetMilitiaInSector(sSectorX, sSectorY);
 
     if (!StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyControlled) {
@@ -5712,15 +5712,15 @@ void ShowSAMSitesOnStrategicMap(void) {
     BlitSAMGridMarkers();
   }
 
-  for (iCounter = 0; iCounter < ARR_SIZE(SamSiteLocations); iCounter++) {
+  for (iCounter = 0; iCounter < GetSamSiteCount(); iCounter++) {
     // has the sam site here been found?
     if (!fSamSiteFound[iCounter]) {
       continue;
     }
 
     // get the sector x and y
-    u8 sSectorX = SamSiteLocations[iCounter].x;
-    u8 sSectorY = SamSiteLocations[iCounter].y;
+    u8 sSectorX = GetSamSiteX(iCounter);
+    u8 sSectorY = GetSamSiteY(iCounter);
 
     if (fZoomFlag) {
       LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -5805,14 +5805,14 @@ void BlitSAMGridMarkers(void) {
   // clip to view region
   ClipBlitsToMapViewRegionForRectangleAndABit(uiDestPitchBYTES);
 
-  for (iCounter = 0; iCounter < ARR_SIZE(SamSiteLocations); iCounter++) {
+  for (iCounter = 0; iCounter < GetSamSiteCount(); iCounter++) {
     // has the sam site here been found?
     if (!fSamSiteFound[iCounter]) {
       continue;
     }
 
-    u8 sX = SamSiteLocations[iCounter].x;
-    u8 sY = SamSiteLocations[iCounter].y;
+    u8 sX = GetSamSiteX(iCounter);
+    u8 sY = GetSamSiteY(iCounter);
 
     if (fZoomFlag) {
       GetScreenXYFromMapXYStationary(sX, sY, &sScreenX, &sScreenY);
@@ -6065,7 +6065,7 @@ void InitMapSecrets(void) {
   fFoundTixa = FALSE;
   fFoundOrta = FALSE;
 
-  for (ubSamIndex = 0; ubSamIndex < ARR_SIZE(SamSiteLocations); ubSamIndex++) {
+  for (ubSamIndex = 0; ubSamIndex < GetSamSiteCount(); ubSamIndex++) {
     fSamSiteFound[ubSamIndex] = FALSE;
   }
 }

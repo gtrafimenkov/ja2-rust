@@ -302,7 +302,7 @@ typedef struct {
 
   UINT32 uiUNUSED;
 
-  BOOLEAN fSamSiteFound[ARR_SIZE(SamSiteLocations)];
+  BOOLEAN fSamSiteFound[4 /* TODO: rustlib */];
 
   UINT8 ubNumTerrorists;
   UINT8 ubCambriaMedicalObjects;
@@ -3475,7 +3475,7 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
 
   sGeneralInfo.fLastBoxingMatchWonByPlayer = gfLastBoxingMatchWonByPlayer;
 
-  memcpy(&sGeneralInfo.fSamSiteFound, &fSamSiteFound, ARR_SIZE(SamSiteLocations) * sizeof(BOOLEAN));
+  memcpy(&sGeneralInfo.fSamSiteFound, &fSamSiteFound, sizeof(sGeneralInfo.fSamSiteFound));
 
   sGeneralInfo.ubNumTerrorists = gubNumTerrorists;
   sGeneralInfo.ubCambriaMedicalObjects = gubCambriaMedicalObjects;
@@ -3718,7 +3718,7 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
 
   gfLastBoxingMatchWonByPlayer = sGeneralInfo.fLastBoxingMatchWonByPlayer;
 
-  memcpy(&fSamSiteFound, &sGeneralInfo.fSamSiteFound, ARR_SIZE(SamSiteLocations) * sizeof(BOOLEAN));
+  memcpy(&fSamSiteFound, &sGeneralInfo.fSamSiteFound, sizeof(fSamSiteFound));
 
   gubNumTerrorists = sGeneralInfo.ubNumTerrorists;
   gubCambriaMedicalObjects = sGeneralInfo.ubCambriaMedicalObjects;
