@@ -1753,7 +1753,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
       // are we dealing with the unfound towns?
       switch (ubSectorID) {
         case SEC_D2:  // Chitzena SAM
-          if (!fSamSiteFound[SAM_SITE_ONE])
+          if (!fSamSiteFound[SAM_SITE_CHITZENA])
             wcscat(zString, pLandTypeStrings[TROPICS]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[TROPICS_SAM_SITE]);
@@ -1761,7 +1761,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
             wcscat(zString, pLandTypeStrings[SAM_SITE]);
           break;
         case SEC_D15:  // Drassen SAM
-          if (!fSamSiteFound[SAM_SITE_TWO])
+          if (!fSamSiteFound[SAM_SITE_DRASSEN])
             wcscat(zString, pLandTypeStrings[SPARSE]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[SPARSE_SAM_SITE]);
@@ -1769,7 +1769,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
             wcscat(zString, pLandTypeStrings[SAM_SITE]);
           break;
         case SEC_I8:  // Cambria SAM
-          if (!fSamSiteFound[SAM_SITE_THREE])
+          if (!fSamSiteFound[SAM_SITE_CAMBRIA])
             wcscat(zString, pLandTypeStrings[SAND]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[SAND_SAM_SITE]);
@@ -1813,7 +1813,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
             wcscat(zString, pTownNames[MEDUNA]);
           break;
         default:
-          if (ubSectorID == SEC_N4 && fSamSiteFound[SAM_SITE_FOUR]) {  // Meduna's SAM site
+          if (ubSectorID == SEC_N4 && fSamSiteFound[SAM_SITE_MEDUNA]) {  // Meduna's SAM site
             if (fDetailed)
               wcscat(zString, pLandTypeStrings[MEDUNA_SAM_SITE]);
             else

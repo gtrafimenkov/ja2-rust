@@ -7,6 +7,14 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#define SAM_SITE_CHITZENA 0
+
+#define SAM_SITE_DRASSEN 1
+
+#define SAM_SITE_CAMBRIA 2
+
+#define SAM_SITE_MEDUNA 3
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus

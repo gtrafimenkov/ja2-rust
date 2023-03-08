@@ -7,6 +7,7 @@ extern "C" {
 #include "Sector.h"
 #include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/StrategicMap.h"
+#include "rust_sam_sites.h"
 
 #ifdef __cplusplus
 }
@@ -34,7 +35,7 @@ TEST(Bugfixes, SectorName) {
 
   GetSectorIDString(15, 4, 0, buf, ARR_SIZE(buf), true);
   EXPECT_STREQ(L"D15: Woods", buf);
-  fSamSiteFound[SAM_SITE_TWO] = TRUE;
+  fSamSiteFound[SAM_SITE_DRASSEN] = TRUE;
   GetSectorIDString(15, 4, 0, buf, ARR_SIZE(buf), true);
   EXPECT_STREQ(L"D15: Woods, SAM site", buf);
 

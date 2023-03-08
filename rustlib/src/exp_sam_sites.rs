@@ -1,5 +1,10 @@
 use super::sam_sites;
 
+pub const SAM_SITE_CHITZENA: usize = 0;
+pub const SAM_SITE_DRASSEN: usize = 1;
+pub const SAM_SITE_CAMBRIA: usize = 2;
+pub const SAM_SITE_MEDUNA: usize = 3;
+
 #[no_mangle]
 /// Return total number of SAM sites
 pub extern "C" fn GetSamSiteCount() -> u8 {
