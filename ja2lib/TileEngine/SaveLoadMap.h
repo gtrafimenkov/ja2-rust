@@ -56,7 +56,7 @@ typedef struct {
 // Call this function, to set whether the map changes will be added to the  map temp file
 void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap);
 
-BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, INT16 sSectorX, INT16 sSectorY,
+BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSectorY,
                                            INT8 bSectorZ);
 
 // Applies a change TO THE MAP TEMP file
@@ -75,7 +75,7 @@ void AddRemoveObjectToMapTempFile(UINT32 uiMapIndex, UINT16 usIndex);
 
 void SaveBloodSmellAndRevealedStatesFromMapToTempFile();
 
-BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile();
 
@@ -89,12 +89,12 @@ void AddStructToUnLoadedMapTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSe
                                     INT16 sSectorY, UINT8 ubSectorZ);
 
 // Adds the exit grid to
-void AddExitGridToMapTempFile(UINT16 usGridNo, EXITGRID *pExitGrid, INT16 sSectorX, INT16 sSectorY,
+void AddExitGridToMapTempFile(UINT16 usGridNo, EXITGRID *pExitGrid, u8 sSectorX, u8 sSectorY,
                               UINT8 ubSectorZ);
 
 // This function removes a struct with the same MapIndex and graphic index from the given sectors
 // temp file
-BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, INT16 sSectorX, INT16 sSectorY,
+BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX, u8 sSectorY,
                                   UINT8 ubSectorZ);
 
 void SetOpenableStructStatusFromMapTempFile(UINT32 uiMapIndex, BOOLEAN fOpened);

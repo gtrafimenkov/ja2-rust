@@ -1296,7 +1296,7 @@ BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite) {
 
 void HeliCrashSoundStopCallback(void *pData) { SkyriderDestroyed(); }
 
-BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(INT16 sSectorX, INT16 sSectorY) {
+BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
   UINT8 ubSamNumber = 0;
   INT8 bSAMCondition;
   UINT8 ubChance;
@@ -1480,7 +1480,7 @@ void AddHelicopterToMaps(BOOLEAN fAdd, UINT8 ubSite) {
   }
 }
 
-BOOLEAN IsSkyriderIsFlyingInSector(INT16 sSectorX, INT16 sSectorY) {
+BOOLEAN IsSkyriderIsFlyingInSector(u8 sSectorX, u8 sSectorY) {
   struct GROUP *pGroup;
 
   // up and about?

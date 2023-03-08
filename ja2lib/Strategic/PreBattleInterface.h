@@ -89,7 +89,7 @@ void RetreatAllInvolvedPlayerGroups(void);
 BOOLEAN PlayerGroupInvolvedInThisCombat(struct GROUP *pGroup);
 BOOLEAN PlayerMercInvolvedInThisCombat(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN CurrentBattleSectorIs(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
+BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
 
 enum {
   LOG_DEFEAT,

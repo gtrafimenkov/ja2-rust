@@ -1021,7 +1021,7 @@ BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(UINT8 ubMinerProfileId) {
 }
 
 // gte the id of the mine for this sector x,y,z...-1 is invalid
-INT8 GetIdOfMineForSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+INT8 GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   INT8 bMineIndex = -1;
   INT16 sSectorValue;
 

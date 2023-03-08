@@ -2086,8 +2086,7 @@ void SayQuoteFromAnyBodyInSector(UINT16 usQuoteNum) {
   }
 }
 
-void SayQuoteFromAnyBodyInThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
-                                     UINT16 usQuoteNum) {
+void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT16 usQuoteNum) {
   UINT8 ubMercsInSector[20] = {0};
   UINT8 ubNumMercs = 0;
   UINT8 ubChosenMerc;

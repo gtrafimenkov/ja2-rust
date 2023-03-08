@@ -17,7 +17,7 @@ enum {
 
 };
 
-void ExecuteStrategicAIAction(UINT16 usActionCode, INT16 sSectorX, INT16 sSectorY);
+void ExecuteStrategicAIAction(UINT16 usActionCode, u8 sSectorX, u8 sSectorY);
 
 void CheckEnemyControlledSector(UINT8 ubSectorID);
 void EvaluateQueenSituation();
@@ -33,7 +33,7 @@ void RecalculateGroupWeight(struct GROUP *pGroup);
 BOOLEAN OkayForEnemyToMoveThroughSector(UINT8 ubSectorID);
 BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, UINT8 ubSectorID);
 
-void StrategicHandleQueenLosingControlOfSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
+void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
 
 void InvestigateSector(UINT8 ubSectorID);
 

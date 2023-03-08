@@ -34,9 +34,9 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
 BOOLEAN gfRestoringEnemySoldiersFromTempFile = FALSE;
 BOOLEAN gfRestoringCiviliansFromTempFile = FALSE;
 
-void RemoveCivilianTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
-void RemoveEnemySoldierTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   CHAR8 zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS)) {
     // Delete any temp file that is here and toast the flag that say's one exists.
@@ -53,7 +53,7 @@ void RemoveEnemySoldierTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   }
 }
 
-void RemoveCivilianTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   // CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
   if (GetSectorFlagStatus(sSectorX, sSectorY, bSectorZ, SF_CIV_PRESERVED_TEMP_FILE_EXISTS)) {
@@ -381,7 +381,7 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
                                     UINT8 ubFirstIdTeam, UINT8 ubLastIdTeam,
                                     BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
@@ -1316,7 +1316,7 @@ FAIL_LOAD:
 
 // If we are saving a game and we are in the sector, we will need to preserve the links between the
 // soldiers and the soldier init list.  Otherwise, the temp file will be deleted.
-BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
+BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
                                                  BOOLEAN fEnemy, BOOLEAN fValidateOnly) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;

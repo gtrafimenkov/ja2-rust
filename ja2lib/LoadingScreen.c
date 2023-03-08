@@ -14,7 +14,7 @@
 UINT8 gubLastLoadingScreenID = LOADINGSCREEN_NOTHING;
 
 // returns the UINT8 ID for the specified sector.
-UINT8 GetLoadScreenID(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+UINT8 GetLoadScreenID(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   SECTORINFO* pSector;
   UINT8 ubSectorID;
   BOOLEAN fNight = FALSE;

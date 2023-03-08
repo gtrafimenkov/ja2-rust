@@ -111,7 +111,7 @@ typedef struct history *HistoryUnitPtr;
 extern HistoryUnitPtr pHistoryListHead;
 
 // reset history fact..for quests
-void ResetHistoryFact(UINT8 ubCode, INT16 sSectorX, INT16 sSectorY);
+void ResetHistoryFact(UINT8 ubCode, u8 sSectorX, u8 sSectorY);
 
 // set history fact...to allow for a different color for in progress quests
 UINT32 SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, INT16 sSectorX,

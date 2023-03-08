@@ -659,7 +659,7 @@ void GetCurrentWorldSector(INT16 *psMapX, INT16 *psMapY) {
 // not in overhead.h!
 extern UINT8 NumEnemyInSector();
 
-void HandleRPCDescriptionOfSector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ) {
+void HandleRPCDescriptionOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   UINT32 cnt;
   UINT8 ubSectorDescription[33][3] = {
       // row (letter), column, quote #
@@ -1255,7 +1255,7 @@ void HandleQuestCodeOnSectorExit(INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOld
   SetFactFalse(FACT_MUSEUM_ALARM_WENT_OFF);
 }
 
-BOOLEAN EnterSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   INT32 i;
   UNDERGROUND_SECTORINFO *pNode = NULL;
   CHAR8 bFilename[50];
@@ -1362,7 +1362,7 @@ BOOLEAN EnterSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   return TRUE;  // because the map was loaded.
 }
 
-void UpdateMercsInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fPOWSquadSet = FALSE;
@@ -1468,8 +1468,7 @@ void UpdateMercsInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   }
 }
 
-void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY,
-                        INT8 bSectorZ) {
+void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   BOOLEAN fError = FALSE;
   if (pSoldier->uiStatusFlags & SOLDIER_IS_TACTICALLY_VALID) {
     pSoldier->ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
@@ -1703,8 +1702,8 @@ void InitializeStrategicMapSectorTownNames(void) {
 }
 
 // Get sector ID string makes a string like 'A9 - OMERTA', or just J11 if no town....
-void GetSectorIDString(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, CHAR16 *zString,
-                       size_t bufSize, BOOLEAN fDetailed) {
+void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString, size_t bufSize,
+                       BOOLEAN fDetailed) {
   SECTORINFO *pSector = NULL;
   UNDERGROUND_SECTORINFO *pUnderground;
   INT8 bTownNameID;
@@ -2882,7 +2881,7 @@ void SetupNewStrategicGame() {
 }
 
 // a -1 will be returned upon failure
-INT8 GetSAMIdFromSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+INT8 GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   INT8 bCounter = 0;
   INT16 sSectorValue = 0;
 
@@ -3029,7 +3028,7 @@ void UpdateAirspaceControl(void) {
   UpdateRefuelSiteAvailability();
 }
 
-BOOLEAN IsThereAFunctionalSAMSiteInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   if (IsThisSectorASAMSector(sSectorX, sSectorY, bSectorZ) == FALSE) {
     return (FALSE);
   }
@@ -3043,7 +3042,7 @@ BOOLEAN IsThereAFunctionalSAMSiteInSector(INT16 sSectorX, INT16 sSectorY, INT8 b
 }
 
 // is this sector part of the town?
-BOOLEAN SectorIsPartOfTown(TownID bTownId, INT16 sSectorX, INT16 sSectorY) {
+BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY) {
   if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID == bTownId) {
     // is in the town
     return (TRUE);
@@ -3775,7 +3774,7 @@ void HandleSlayDailyEvent(void) {
   }
 }
 
-BOOLEAN IsSectorDesert(INT16 sSectorX, INT16 sSectorY) {
+BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY) {
   if (SectorInfo[GetSectorID8(sSectorX, sSectorY)].ubTraversability[THROUGH_STRATEGIC_MOVE] ==
       SAND) {
     // desert

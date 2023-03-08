@@ -5,6 +5,7 @@ extern "C" {
 #endif
 
 #include "Sector.h"
+#include "Strategic/MapScreenHelicopter.h"
 #include "Strategic/StrategicMap.h"
 
 #ifdef __cplusplus
@@ -30,6 +31,12 @@ TEST(Bugfixes, SectorName) {
 
   GetShortSectorString(9, 1, buf, ARR_SIZE(buf));
   EXPECT_STREQ(L"A9", buf);
+
+  GetSectorIDString(15, 4, 0, buf, ARR_SIZE(buf), true);
+  EXPECT_STREQ(L"D15: Woods", buf);
+  fSamSiteFound[SAM_SITE_TWO] = TRUE;
+  GetSectorIDString(15, 4, 0, buf, ARR_SIZE(buf), true);
+  EXPECT_STREQ(L"D15: Woods, SAM site", buf);
 
   // when world is not loaded
   GetLoadedSectorString(buf, ARR_SIZE(buf));

@@ -1108,7 +1108,7 @@ void HandleDelayedFirstBattleVictory(void) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleFirstBattleEndingWhileInTown(INT16 sSectorX, INT16 sSectorY, INT16 bSectorZ,
+void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, INT16 bSectorZ,
                                         BOOLEAN fFromAutoResolve) {
   TownID bTownId = 0;
   INT16 sSector = 0;

@@ -189,7 +189,7 @@ void PlayerAttackedHeadMiner(UINT8 ubMinerProfileId);
 BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(UINT8 ubMinerProfileId);
 
 // given sector value, get mine id value
-INT8 GetIdOfMineForSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+INT8 GetIdOfMineForSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 // use this for miner (civilian) quotes when *underground* in a mine
 BOOLEAN PlayerForgotToTakeOverMine(UINT8 ubMineIndex);

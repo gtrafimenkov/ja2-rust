@@ -157,7 +157,7 @@ struct SOLDIERTYPE *TacticalCreateCreature(INT8 bCreatureBodyType);
 void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass);
 
 // get the pythag. distance from the passed sector to the palace..
-UINT8 GetPythDistanceFromPalace(INT16 sSectorX, INT16 sSectorY);
+UINT8 GetPythDistanceFromPalace(u8 sSectorX, u8 sSectorY);
 
 // These following functions are currently used exclusively by the editor.
 // Now, this will be useful for the strategic AI.

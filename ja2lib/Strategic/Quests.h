@@ -541,12 +541,11 @@ extern void SetFactTrue(UINT16 usFact);
 extern void SetFactFalse(UINT16 usFact);
 extern BOOLEAN CheckFact(UINT16 usFact, UINT8 ubProfileID);
 
-extern void StartQuest(UINT8 ubQuest, INT16 sSectorX, INT16 sSectorY);
-extern void EndQuest(UINT8 ubQuest, INT16 sSectorX, INT16 sSectorY);
+extern void StartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY);
+extern void EndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY);
 
-extern void InternalStartQuest(UINT8 ubQuest, INT16 sSectorX, INT16 sSectorY,
-                               BOOLEAN fUpdateHistory);
-extern void InternalEndQuest(UINT8 ubQuest, INT16 sSectorX, INT16 sSectorY, BOOLEAN fUpdateHistory);
+extern void InternalStartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
+extern void InternalEndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
 
 extern void CheckForQuests(UINT32 uiDay);
 

@@ -24,7 +24,7 @@ struct SOLDIERTYPE;
 
 #define SPIEL_ABOUT_ESTONI_AIRSPACE 26
 #define CONFIRM_DESTINATION 27
-//#define DESTINATION_TOO_FAR 28		// unused
+// #define DESTINATION_TOO_FAR 28		// unused
 #define ALTERNATE_FUEL_SITE 26
 #define ARRIVED_IN_HOSTILE_SECTOR 29
 #define BELIEVED_ENEMY_SECTOR 30  // may become unused
@@ -238,17 +238,17 @@ void HandleHelicopterOnGroundSkyriderProfile(void);
 
 BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite);
 
-BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(INT16 sSectorX, INT16 sSectorY);
+BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY);
 
 // will a sam site under the players control shoot down an airraid?
-// BOOLEAN WillAirRaidBeStopped( INT16 sSectorX, INT16 sSectorY );
+// BOOLEAN WillAirRaidBeStopped( u8 sSectorX, u8 sSectorY );
 
 // is the helicopter capable of taking off for the player?
 BOOLEAN CanHelicopterTakeOff(void);
 
 void InitializeHelicopter(void);
 
-BOOLEAN IsSkyriderIsFlyingInSector(INT16 sSectorX, INT16 sSectorY);
+BOOLEAN IsSkyriderIsFlyingInSector(u8 sSectorX, u8 sSectorY);
 
 BOOLEAN IsGroupTheHelicopterGroup(struct GROUP *pGroup);
 

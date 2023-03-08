@@ -14,11 +14,11 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile();
 // c_* temp file
 BOOLEAN NewWayOfLoadingCiviliansFromTempFile();
 
-BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
+BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
                                                  BOOLEAN fEnemy, BOOLEAN fValidateOnly);
 
-BOOLEAN SaveEnemySoldiersToTempFile(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
-                                    UINT8 ubFirstIdTeam, UINT8 ubLastIdTeam, BOOLEAN fAppendToFile);
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubFirstIdTeam,
+                                    UINT8 ubLastIdTeam, BOOLEAN fAppendToFile);
 
 extern BOOLEAN gfRestoringEnemySoldiersFromTempFile;
 

@@ -100,8 +100,8 @@ void CreateHistoryButtons(void);
 void DestroyHistoryButtons(void);
 void CreateHistoryButtons(void);
 void DrawHistoryTitleText(void);
-UINT32 ProcessAndEnterAHistoryRecord(UINT8 ubCode, UINT32 uiDate, UINT8 ubSecondCode,
-                                     INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, UINT8 ubColor);
+UINT32 ProcessAndEnterAHistoryRecord(UINT8 ubCode, UINT32 uiDate, UINT8 ubSecondCode, u8 sSectorX,
+                                     u8 sSectorY, INT8 bSectorZ, UINT8 ubColor);
 void OpenAndReadHistoryFile(void);
 BOOLEAN OpenAndWriteHistoryFile(void);
 void ClearHistoryList(void);
@@ -124,7 +124,7 @@ void GetQuestEndedString(UINT8 ubQuestValue, STR16 sQuestString);
 INT32 GetNumberOfHistoryPages();
 
 #ifdef JA2TESTVERSION
-void PerformCheckOnHistoryRecord(UINT32 uiErrorCode, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+void PerformCheckOnHistoryRecord(UINT32 uiErrorCode, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 #endif
 
 // callbacks
@@ -495,8 +495,8 @@ BOOLEAN IncrementCurrentPageHistoryDisplay(void) {
   return (TRUE);
 }
 
-UINT32 ProcessAndEnterAHistoryRecord(UINT8 ubCode, UINT32 uiDate, UINT8 ubSecondCode,
-                                     INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ, UINT8 ubColor) {
+UINT32 ProcessAndEnterAHistoryRecord(UINT8 ubCode, UINT32 uiDate, UINT8 ubSecondCode, u8 sSectorX,
+                                     u8 sSectorY, INT8 bSectorZ, UINT8 ubColor) {
   UINT32 uiId = 0;
   HistoryUnitPtr pHistory = pHistoryListHead;
 
@@ -1069,7 +1069,7 @@ void ProcessHistoryTransactionString(STR16 pString, size_t bufSize, HistoryUnitP
   }
 }
 
-void DrawHistoryLocation(INT16 sSectorX, INT16 sSectorY) {
+void DrawHistoryLocation(u8 sSectorX, u8 sSectorY) {
   // will draw the location of the history event
 
   return;
@@ -1416,7 +1416,7 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
   return (TRUE);
 }
 
-void ResetHistoryFact(UINT8 ubCode, INT16 sSectorX, INT16 sSectorY) {
+void ResetHistoryFact(UINT8 ubCode, u8 sSectorX, u8 sSectorY) {
   // run through history list
   HistoryUnitPtr pList = pHistoryListHead;
   BOOLEAN fFound = FALSE;
@@ -1507,8 +1507,7 @@ void GetQuestEndedString(UINT8 ubQuestValue, STR16 sQuestString) {
 }
 
 #ifdef JA2TESTVERSION
-void PerformCheckOnHistoryRecord(UINT32 uiErrorCode, INT16 sSectorX, INT16 sSectorY,
-                                 INT8 bSectorZ) {
+void PerformCheckOnHistoryRecord(UINT32 uiErrorCode, u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   char zString[512];
 
   if (sSectorX > 16 || sSectorY > 16 || bSectorZ > 3 || sSectorX < -1 || sSectorY < -1 ||

@@ -301,8 +301,7 @@ void InitalizeStaticExternalNPCFaces(void);
 void ShutdownStaticExternalNPCFaces(void);
 
 void SayQuoteFromAnyBodyInSector(UINT16 usQuoteNum);
-void SayQuoteFromAnyBodyInThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
-                                     UINT16 usQuoteNum);
+void SayQuoteFromAnyBodyInThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT16 usQuoteNum);
 void SayQuoteFromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, UINT16 usQuoteNum);
 void SayQuote58FromNearbyMercInSector(INT16 sGridNo, INT8 bDistance, UINT16 usQuoteNum, INT8 bSex);
 void ExecuteTacticalTextBox(INT16 sLeftPosition, STR16 pString);

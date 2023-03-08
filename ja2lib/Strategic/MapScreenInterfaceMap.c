@@ -505,7 +505,7 @@ void CheckAndUpdateStatesOfSelectedMilitiaSectorButtons(void);
 void HandleLowerLevelMapBlit(void);
 void ShowSAMSitesOnStrategicMap(void);
 
-// UINT8 NumActiveCharactersInSector( INT16 sSectorX, INT16 sSectorY, INT16 bSectorZ );
+// UINT8 NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ );
 // UINT8 NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ );
 
 // callbacks
@@ -513,10 +513,9 @@ void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // display potential path, yes or no?
 void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
-void ShowEnemiesInSector(INT16 sSectorX, INT16 sSectorY, INT16 sNumberOfEnemies,
-                         UINT8 ubIconPosition);
-void ShowUncertainNumberEnemiesInSector(INT16 sSectorX, INT16 sSectorY);
-void HandleShowingOfEnemyForcesInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
+void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, UINT8 ubIconPosition);
+void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY);
+void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
                                         UINT8 ubIconPosition);
 
 BOOLEAN CanMilitiaAutoDistribute(void);
@@ -530,7 +529,7 @@ void DrawTixa();
 void DrawBullseye();
 void HideExistenceOfUndergroundMapSector(UINT8 ubSectorX, UINT8 ubSectorY);
 
-BOOLEAN CanMercsScoutThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN fForceUpDate);
 void AnimateRoute(struct path *pPath);
@@ -1048,8 +1047,7 @@ INT32 ShowVehicles(INT16 sMapX, INT16 sMapY, INT32 iCount) {
   return ubIconPosition;
 }
 
-void ShowEnemiesInSector(INT16 sSectorX, INT16 sSectorY, INT16 sNumberOfEnemies,
-                         UINT8 ubIconPosition) {
+void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, UINT8 ubIconPosition) {
   struct VObject *hIconHandle;
   UINT8 ubEnemy = 0;
 
@@ -1062,7 +1060,7 @@ void ShowEnemiesInSector(INT16 sSectorX, INT16 sSectorY, INT16 sNumberOfEnemies,
   }
 }
 
-void ShowUncertainNumberEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
+void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY) {
   INT16 sXPosition = 0, sYPosition = 0;
   struct VObject *hIconHandle;
 
@@ -3275,7 +3273,7 @@ void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY) {
   return;
 }
 
-BOOLEAN IsTheCursorAllowedToHighLightThisSector(INT16 sSectorX, INT16 sSectorY) {
+BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY) {
   // check to see if this sector is a blocked out sector?
 
   if (sBadSectorsList[sSectorX][sSectorY]) {
@@ -5487,7 +5485,7 @@ void CheckAndUpdateStatesOfSelectedMilitiaSectorButtons(void) {
   return;
 }
 
-BOOLEAN ShadeUndergroundMapElem(INT16 sSectorX, INT16 sSectorY) {
+BOOLEAN ShadeUndergroundMapElem(u8 sSectorX, u8 sSectorY) {
   INT16 sScreenX, sScreenY;
 
   GetScreenXYFromMapXY(sSectorX, sSectorY, &sScreenX, &sScreenY);
@@ -5569,7 +5567,7 @@ void ClearAnySectorsFlashingNumberOfEnemies() {
   MarkForRedrawalStrategicMap();
 }
 
-UINT32 WhatPlayerKnowsAboutEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
+UINT32 WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY) {
   UINT32 uiSectorFlags = SectorInfo[GetSectorID8(sSectorX, sSectorY)].uiFlags;
 
   // if player has militia close enough to scout this sector out, if there are mercs who can scout
@@ -5613,7 +5611,7 @@ UINT32 WhatPlayerKnowsAboutEnemiesInSector(INT16 sSectorX, INT16 sSectorY) {
   return KNOWS_NOTHING;
 }
 
-BOOLEAN CanMercsScoutThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
+BOOLEAN CanMercsScoutThisSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   INT32 iFirstId = 0, iLastId = 0;
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -5665,7 +5663,7 @@ BOOLEAN CanMercsScoutThisSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ) {
   return (FALSE);
 }
 
-void HandleShowingOfEnemyForcesInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ,
+void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
                                         UINT8 ubIconPosition) {
   INT16 sNumberOfEnemies = 0;
 
@@ -5706,7 +5704,7 @@ void HandleShowingOfEnemyForcesInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSe
 }
 
 /*
-UINT8 NumActiveCharactersInSector( INT16 sSectorX, INT16 sSectorY, INT16 bSectorZ )
+UINT8 NumActiveCharactersInSector( u8 sSectorX, u8 sSectorY, INT16 bSectorZ )
 {
         INT32 iCounter = 0;
         struct SOLDIERTYPE *pSoldier = NULL;

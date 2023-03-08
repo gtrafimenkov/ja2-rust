@@ -55,10 +55,9 @@ extern BOOLEAN gfUseAlternateMap;
 void GetCurrentWorldSector(INT16 *psMapX, INT16 *psMapY);
 BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
 
-BOOLEAN EnterSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
-void UpdateMercsInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
-void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY,
-                        INT8 bSectorZ);
+BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 void InitializeMapStructure();
 
@@ -93,7 +92,7 @@ UINT8 GetTownSectorSize(TownID bTownId);
 UINT8 GetTownSectorsUnderControl(TownID bTownId);
 
 // is this sector part of this town
-BOOLEAN SectorIsPartOfTown(TownID bTownId, INT16 sSectorX, INT16 sSectorY);
+BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY);
 
 // BOOLEAN IsThereAnyOneInThisTown( UINT8 ubTownId );
 
@@ -130,14 +129,14 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld();
 INT32 GetNumberOfSAMSitesUnderPlayerControl(void);
 
 // is there a FUNCTIONAL SAM site in this sector?
-BOOLEAN IsThereAFunctionalSAMSiteInSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
-BOOLEAN IsSectorDesert(INT16 sSectorX, INT16 sSectorY);
+BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY);
 
 // sam site under players control?
 INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY);
 
-INT8 GetSAMIdFromSector(INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ);
+INT8 GetSAMIdFromSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
 void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier);
 

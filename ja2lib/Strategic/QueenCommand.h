@@ -11,17 +11,17 @@ extern BOOLEAN gfPendingEnemies;
 
 UINT8 NumFreeEnemySlots();
 
-UINT8 NumEnemiesInAnySector(INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ);
+UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
 
-UINT8 NumEnemiesInSector(INT16 sSectorX, INT16 sSectorY);
-UINT8 NumStationaryEnemiesInSector(INT16 sSectorX, INT16 sSectorY);
-UINT8 NumMobileEnemiesInSector(INT16 sSectorX, INT16 sSectorY);
-void GetNumberOfMobileEnemiesInSector(INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAdmins,
+UINT8 NumEnemiesInSector(u8 sSectorX, u8 sSectorY);
+UINT8 NumStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY);
+UINT8 NumMobileEnemiesInSector(u8 sSectorX, u8 sSectorY);
+void GetNumberOfMobileEnemiesInSector(u8 sSectorX, u8 sSectorY, UINT8 *pubNumAdmins,
                                       UINT8 *pubNumTroops, UINT8 *pubNumElites);
-void GetNumberOfStationaryEnemiesInSector(INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAdmins,
+void GetNumberOfStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY, UINT8 *pubNumAdmins,
                                           UINT8 *pubNumTroops, UINT8 *pubNumElites);
-void GetNumberOfEnemiesInSector(INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAdmins,
-                                UINT8 *pubNumTroops, UINT8 *pubNumElites);
+void GetNumberOfEnemiesInSector(u8 sSectorX, u8 sSectorY, UINT8 *pubNumAdmins, UINT8 *pubNumTroops,
+                                UINT8 *pubNumElites);
 
 // Called when entering a sector so the campaign AI can automatically insert the
 // correct number of troops of each type based on the current number in the sector
