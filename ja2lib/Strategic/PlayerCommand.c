@@ -168,12 +168,9 @@ BOOLEAN SetThisSectorAsPlayerControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
       }
 
       // if it's a SAM site sector
-      if (IsThisSectorASAMSector(sMapX, sMapY, bMapZ)) {
-        if (1 /*!GetSectorFlagStatus( sMapX, sMapY, bMapZ, SF_SECTOR_HAS_BEEN_LIBERATED_ONCE ) */) {
-          // SAM site liberated for first time, schedule meanwhile
-          HandleMeanWhileEventPostingForSAMLiberation(GetSAMIdFromSector(sMapX, sMapY, bMapZ));
-        }
-
+      struct OptionalSamSite samID = GetSamAtSector(sMapX, sMapY, bMapZ);
+      if (samID.tag == Some) {
+        HandleMeanWhileEventPostingForSAMLiberation(samID.some);
         HandleMoraleEvent(NULL, MORALE_SAM_SITE_LIBERATED, sMapX, sMapY, bMapZ);
         HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_GAIN_SAM, sMapX, sMapY, bMapZ);
 

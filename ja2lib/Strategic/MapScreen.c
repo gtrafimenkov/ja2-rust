@@ -10163,10 +10163,12 @@ void HandleMilitiaRedistributionClick(void) {
         swprintf(sString, ARR_SIZE(sString), pMapErrorString[31], pTownNames[bTownId]);
         DoScreenIndependantMessageBox(sString, MSG_BOX_FLAG_OK, NULL);
       }
-    } else if (IsThisSectorASAMSector(sSelMapX, sSelMapY, 0) &&
-               IsSamSiteFound(GetSAMIdFromSector(sSelMapX, sSelMapY, 0))) {
-      // can't move militia around sam sites
-      DoScreenIndependantMessageBox(pMapErrorString[30], MSG_BOX_FLAG_OK, NULL);
+    } else {
+      struct OptionalSamSite samID = GetSamAtSector(sSelMapX, sSelMapY, 0);
+      if (samID.tag == Some && IsSamSiteFound(samID.some)) {
+        // can't move militia around sam sites
+        DoScreenIndependantMessageBox(pMapErrorString[30], MSG_BOX_FLAG_OK, NULL);
+      }
     }
   }
 }

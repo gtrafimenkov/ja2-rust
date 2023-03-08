@@ -2945,8 +2945,8 @@ void UpdateAirspaceControl(void) {
 
 // TODO: rustlib
 BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  i8 samID = GetSAMIdFromSector(sSectorX, sSectorY, bSectorZ);
-  return samID != -1 && GetSamCondition(samID) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK;
+  struct OptionalSamSite samID = GetSamAtSector(sSectorX, sSectorY, bSectorZ);
+  return samID.tag == Some && GetSamCondition(samID.some) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK;
 }
 
 // is this sector part of the town?

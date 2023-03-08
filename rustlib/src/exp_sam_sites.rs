@@ -129,6 +129,15 @@ pub enum OptionalSamSite {
 }
 
 #[no_mangle]
+/// Return SAM if it is in the given sector.
+pub extern "C" fn GetSamAtSector(x: u8, y: u8, z: i8) -> OptionalSamSite {
+    match sam_sites::get_sam_at_sector(x, y, z) {
+        None => OptionalSamSite::None,
+        Some(site) => OptionalSamSite::Some(SamSite::from_internal(site)),
+    }
+}
+
+#[no_mangle]
 /// Returns SAM controlling the given sector.
 pub extern "C" fn GetSamControllingSector(x: u8, y: u8) -> OptionalSamSite {
     match sam_sites::get_sam_controlling_sector(x, y) {

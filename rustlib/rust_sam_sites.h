@@ -75,6 +75,11 @@ uint8_t GetSamCondition(enum SamSite site);
 void SetSamCondition(enum SamSite site, uint8_t value);
 
 /**
+ * Return SAM if it is in the given sector.
+ */
+struct OptionalSamSite GetSamAtSector(uint8_t x, uint8_t y, int8_t z);
+
+/**
  * Returns SAM controlling the given sector.
  */
 struct OptionalSamSite GetSamControllingSector(uint8_t x, uint8_t y);

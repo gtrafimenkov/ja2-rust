@@ -58,11 +58,6 @@ uint8_t SectorID16_Y(SectorID16 sector_id);
 
 bool IsThisSectorASAMSector(uint8_t x, uint8_t y, int8_t z);
 
-/**
- * a -1 will be returned upon failure
- */
-int8_t GetSAMIdFromSector(uint8_t x, uint8_t y, int8_t z);
-
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

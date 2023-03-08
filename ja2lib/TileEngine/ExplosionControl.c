@@ -2831,27 +2831,27 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, INT16 sGridNo,
+void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, i8 sSectorZ, INT16 sGridNo,
                                UINT8 ubDamage) {
-  INT16 sSectorNo;
-
   // OK, First check if SAM exists, and if not, return
   if (!DoesSAMExistHere(sSectorX, sSectorY, sSectorZ, sGridNo)) {
     return;
   }
 
-  i8 samID = GetSAMIdFromSector(sSectorX, sSectorY, sSectorZ);
-  u8 condition = GetSamCondition(samID);
-  if (condition >= ubDamage) {
-    SetSamCondition(samID, condition - ubDamage);
-  } else {
-    SetSamCondition(samID, 0);
+  struct OptionalSamSite samID = GetSamAtSector(sSectorX, sSectorY, sSectorZ);
+  if (samID.tag == Some) {
+    u8 condition = GetSamCondition(samID.some);
+    if (condition >= ubDamage) {
+      SetSamCondition(samID.some, condition - ubDamage);
+    } else {
+      SetSamCondition(samID.some, 0);
+    }
+
+    // SAM site may have been put out of commission...
+    UpdateAirspaceControl();
+
+    // ATE: GRAPHICS UPDATE WILL GET DONE VIA NORMAL EXPLOSION CODE.....
   }
-
-  // SAM site may have been put out of commission...
-  UpdateAirspaceControl();
-
-  // ATE: GRAPHICS UPDATE WILL GET DONE VIA NORMAL EXPLOSION CODE.....
 }
 
 void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {

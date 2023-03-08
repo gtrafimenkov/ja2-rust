@@ -104,6 +104,18 @@ pub fn get_sam_controlling_sector(x: u8, y: u8) -> Option<SamSite> {
     }
 }
 
+pub fn get_sam_at_sector(x: u8, y: u8, z: i8) -> Option<SamSite> {
+    if z == 0 {
+        for i in 0..LOCATIONS.len() {
+            if LOCATIONS[i].x == x && LOCATIONS[i].y == y {
+                return Some(SamSite::from_int(i as u8).unwrap());
+            }
+        }
+    }
+
+    return None;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -122,5 +134,16 @@ mod tests {
         assert_eq!(SamSite::Drassen, get_sam_controlling_sector(15, 4).unwrap());
         assert!(get_sam_controlling_sector(0, 0).is_none()); // invaid coordinates
         assert!(get_sam_controlling_sector(9, 1).is_none()); // Omerta
+    }
+
+    #[test]
+    fn get_sam_id_for_sector() {
+        assert!(get_sam_at_sector(1, 1, 0).is_none());
+
+        assert!(get_sam_at_sector(2, 4, 1).is_none());
+        assert!(get_sam_at_sector(2, 4, -1).is_none());
+
+        assert_eq!(SamSite::Chitzena, get_sam_at_sector(2, 4, 0).unwrap());
+        assert_eq!(SamSite::Meduna, get_sam_at_sector(4, 14, 0).unwrap());
     }
 }

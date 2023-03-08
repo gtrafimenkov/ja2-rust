@@ -34,6 +34,7 @@
 #include "TileEngine/ExplosionControl.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
+#include "rust_sam_sites.h"
 
 #define SAI_VERSION 29
 
@@ -2734,9 +2735,9 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
                                 pGroup->pEnemyGroup->ubNumElites,
                             pGroup->ubSectorY + 'A' - 1, pGroup->ubSectorX);
 #endif
-          i8 samID = GetSAMIdFromSector(pGroup->ubSectorX, pGroup->ubSectorY, 0);
-          if (samID != -1) {
-            SetSamCondition(samID, 100);
+          struct OptionalSamSite samID = GetSamAtSector(pGroup->ubSectorX, pGroup->ubSectorY, 0);
+          if (samID.tag == Some) {
+            SetSamCondition(samID.some, 100);
             UpdateSAMDoneRepair(pGroup->ubSectorX, pGroup->ubSectorY, 0);
           }
         } else {
