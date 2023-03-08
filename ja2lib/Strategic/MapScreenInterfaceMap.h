@@ -94,9 +94,6 @@ void DisplayPositionOfHelicopter(void);
 // check for click
 BOOLEAN CheckForClickOverHelicopterIcon(INT16 sX, INT16 sY);
 
-// show town markers
-void BlitTownGridMarkers(void);
-
 // load and delete the graphics for the map screen map militia
 BOOLEAN LoadMilitiaPopUpBox(void);
 void RemoveMilitiaPopUpBox(void);

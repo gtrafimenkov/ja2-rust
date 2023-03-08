@@ -271,8 +271,8 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
       }
 
       if (gfPlotToAvoidPlayerInfuencedSectors && newLoc != sDestination) {
-        sSectorX = (INT16)(SectorID16_X(newLoc));
-        sSectorY = (INT16)(SectorID16_Y(newLoc));
+        sSectorX = SectorID16_X(newLoc);
+        sSectorY = SectorID16_Y(newLoc);
 
         if (IsThereASoldierInThisSector(sSectorX, sSectorY, 0)) {
           continue;
