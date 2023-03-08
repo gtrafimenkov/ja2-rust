@@ -16,6 +16,7 @@ struct strategicmapelement {
   BOOLEAN fEnemyControlled;  // enemy controlled or not
   BOOLEAN fEnemyAirControlled;
   BOOLEAN UNUSEDfLostControlAtSomeTime;
+  // TODO: rustlib
   INT8 bSAMCondition;  // SAM Condition .. 0 - 100, just like an item's status
   INT8 bPadding[20];
 };

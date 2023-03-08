@@ -27,6 +27,7 @@ extern BOOLEAN fFoundOrta;
 
 extern BOOLEAN gfUseAlternateMap;
 
+// TODO: rustlib
 // min condition for sam site to be functional
 #define MIN_CONDITION_FOR_SAM_SITE_TO_WORK 80
 
