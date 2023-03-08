@@ -13,8 +13,8 @@ extern "C" {
 
 TEST(RustExport, SamSites) {
   EXPECT_EQ(GetSamSiteCount(), 4);
-  EXPECT_EQ(GetSamSiteX(0), 2);
-  EXPECT_EQ(GetSamSiteY(0), 4);
-  EXPECT_EQ(GetSamSiteX(1), 15);
-  EXPECT_EQ(GetSamSiteY(1), 4);
+  EXPECT_EQ(GetSamSiteX(SamSiteChitzena), 2);
+  EXPECT_EQ(GetSamSiteY(SamSiteChitzena), 4);
+  EXPECT_EQ(GetSamSiteX(SamSiteDrassen), 15);
+  EXPECT_EQ(GetSamSiteY(SamSiteDrassen), 4);
 }

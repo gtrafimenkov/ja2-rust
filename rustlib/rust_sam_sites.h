@@ -7,13 +7,12 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define SAM_SITE_CHITZENA 0
-
-#define SAM_SITE_DRASSEN 1
-
-#define SAM_SITE_CAMBRIA 2
-
-#define SAM_SITE_MEDUNA 3
+enum SamSite {
+  SamSiteChitzena = 0,
+  SamSiteDrassen = 1,
+  SamSiteCambria = 2,
+  SamSiteMeduna = 3,
+};
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,14 +24,14 @@ extern "C" {
 uint8_t GetSamSiteCount(void);
 
 /**
- * Return X location of i-th SAM site
+ * Return X location of the SAM site
  */
-uint8_t GetSamSiteX(uint8_t i);
+uint8_t GetSamSiteX(enum SamSite sam_site);
 
 /**
- * Return Y location of i-th SAM site
+ * Return Y location of the SAM site
  */
-uint8_t GetSamSiteY(uint8_t i);
+uint8_t GetSamSiteY(enum SamSite sam_site);
 
 #ifdef __cplusplus
 } // extern "C"

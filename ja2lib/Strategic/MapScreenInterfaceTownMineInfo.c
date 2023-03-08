@@ -287,7 +287,7 @@ void AddTextToTownBox(void) {
       AddMonoString(&hStringHandle, pLandTypeStrings[MEDUNA_AIRPORT_SITE]);
       break;
     default:
-      if (usTownSectorIndex == SEC_N4 && fSamSiteFound[SAM_SITE_MEDUNA]) {  // Meduna's SAM site
+      if (usTownSectorIndex == SEC_N4 && fSamSiteFound[SamSiteMeduna]) {  // Meduna's SAM site
         AddMonoString(&hStringHandle, pLandTypeStrings[MEDUNA_SAM_SITE]);
       } else {  // town name
         swprintf(wString, ARR_SIZE(wString), L"%s", pTownNames[ubTownId]);
@@ -472,19 +472,19 @@ void AddTextToBlankSectorBox(void) {
 
   switch (usSectorValue) {
     case SEC_D2:  // Chitzena SAM
-      if (!fSamSiteFound[SAM_SITE_CHITZENA])
+      if (!fSamSiteFound[SamSiteChitzena])
         AddMonoString(&hStringHandle, pLandTypeStrings[TROPICS]);
       else
         AddMonoString(&hStringHandle, pLandTypeStrings[TROPICS_SAM_SITE]);
       break;
     case SEC_D15:  // Drassen SAM
-      if (!fSamSiteFound[SAM_SITE_DRASSEN])
+      if (!fSamSiteFound[SamSiteDrassen])
         AddMonoString(&hStringHandle, pLandTypeStrings[SPARSE]);
       else
         AddMonoString(&hStringHandle, pLandTypeStrings[SPARSE_SAM_SITE]);
       break;
     case SEC_I8:  // Cambria SAM
-      if (!fSamSiteFound[SAM_SITE_CAMBRIA])
+      if (!fSamSiteFound[SamSiteCambria])
         AddMonoString(&hStringHandle, pLandTypeStrings[SAND]);
       else
         AddMonoString(&hStringHandle, pLandTypeStrings[SAND_SAM_SITE]);
@@ -531,13 +531,13 @@ void AddCommonInfoToBox(void) {
 
   switch (GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY)) {
     case SEC_D2:  // Chitzena SAM
-      if (!fSamSiteFound[SAM_SITE_CHITZENA]) fUnknownSAMSite = TRUE;
+      if (!fSamSiteFound[SamSiteChitzena]) fUnknownSAMSite = TRUE;
       break;
     case SEC_D15:  // Drassen SAM
-      if (!fSamSiteFound[SAM_SITE_DRASSEN]) fUnknownSAMSite = TRUE;
+      if (!fSamSiteFound[SamSiteDrassen]) fUnknownSAMSite = TRUE;
       break;
     case SEC_I8:  // Cambria SAM
-      if (!fSamSiteFound[SAM_SITE_CAMBRIA]) fUnknownSAMSite = TRUE;
+      if (!fSamSiteFound[SamSiteCambria]) fUnknownSAMSite = TRUE;
       break;
     // SAM Site 4 in Meduna is within town limits, so it's always controllable
     default:

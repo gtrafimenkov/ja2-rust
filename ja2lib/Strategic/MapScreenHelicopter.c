@@ -953,7 +953,7 @@ void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
     case (1):
       // highlight Drassen SAM site sector
       fShowDrassenSAMHighLight = TRUE;
-      SetSAMSiteAsFound(SAM_SITE_DRASSEN);
+      SetSAMSiteAsFound(SamSiteDrassen);
       break;
 
     case (2):
@@ -1022,9 +1022,9 @@ void HandleSkyRiderMonologueAboutOtherSAMSites(UINT32 uiSpecialCode) {
       // highlight other SAMs
       fShowOtherSAMHighLight = TRUE;
       // reveal other 3 SAM sites
-      SetSAMSiteAsFound(SAM_SITE_CHITZENA);
-      SetSAMSiteAsFound(SAM_SITE_CAMBRIA);
-      SetSAMSiteAsFound(SAM_SITE_MEDUNA);
+      SetSAMSiteAsFound(SamSiteChitzena);
+      SetSAMSiteAsFound(SamSiteCambria);
+      SetSAMSiteAsFound(SamSiteMeduna);
       break;
 
     case (2):
