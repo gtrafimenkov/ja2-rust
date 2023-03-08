@@ -2,10 +2,10 @@ use super::sam_sites;
 
 #[repr(C)]
 pub enum SamSite {
-    SamSiteChitzena = 0,
-    SamSiteDrassen = 1,
-    SamSiteCambria = 2,
-    SamSiteMeduna = 3,
+    SamSiteChitzena = 0, /* sam_sites::SamSite::Chitzena as isize */
+    SamSiteDrassen = 1,  /* sam_sites::SamSite::Drassen as isize*/
+    SamSiteCambria = 2,  /* sam_sites::SamSite::Cambria as isize*/
+    SamSiteMeduna = 3,   /* sam_sites::SamSite::Meduna as isize*/
 }
 
 #[no_mangle]

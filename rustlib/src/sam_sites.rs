@@ -1,3 +1,10 @@
+pub enum SamSite {
+    Chitzena = 0,
+    Drassen = 1,
+    Cambria = 2,
+    Meduna = 3,
+}
+
 pub struct SamSiteLocation {
     pub x: u8,
     pub y: u8,
