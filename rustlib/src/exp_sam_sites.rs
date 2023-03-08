@@ -11,6 +11,17 @@ pub enum SamSite {
     SamSiteMeduna = 3,   /* sam_sites::SamSite::Meduna as isize*/
 }
 
+impl SamSite {
+    fn from_internal(value: sam_sites::SamSite) -> Self {
+        match value {
+            Chitzena => SamSite::SamSiteChitzena,
+            Drassen => SamSite::SamSiteDrassen,
+            Cambria => SamSite::SamSiteCambria,
+            Meduna => SamSite::SamSiteMeduna,
+        }
+    }
+}
+
 const SITES: [SamSite; 4] = [
     SamSite::SamSiteChitzena,
     SamSite::SamSiteDrassen,
@@ -89,6 +100,21 @@ pub extern "C" fn DoesSAMExistHere(sector_x: u8, sector_y: u8, sector_z: i8, gri
     }
 
     false
+}
+
+#[repr(C)]
+pub enum OptionalSamSite {
+    Some(SamSite),
+    None,
+}
+
+#[no_mangle]
+/// Returns SAM controlling the given sector.
+pub extern "C" fn GetSamControllingSector(x: u8, y: u8) -> OptionalSamSite {
+    match sam_sites::get_sam_controlling_sector(x, y) {
+        None => OptionalSamSite::None,
+        Some(site) => OptionalSamSite::Some(site.int_value() as SamSite),
+    }
 }
 
 #[cfg(test)]

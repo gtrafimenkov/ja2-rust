@@ -14,6 +14,20 @@ enum SamSite {
   SamSiteMeduna = 3,
 };
 
+enum OptionalSamSite_Tag {
+  Some,
+  None,
+};
+
+struct OptionalSamSite {
+  enum OptionalSamSite_Tag tag;
+  union {
+    struct {
+      enum SamSite some;
+    };
+  };
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -50,6 +64,8 @@ int16_t GetSamGridNoA(enum SamSite site);
 int16_t GetSamGridNoB(enum SamSite site);
 
 bool DoesSAMExistHere(uint8_t sector_x, uint8_t sector_y, int8_t sector_z, int16_t grid_no);
+
+struct OptionalSamSite FooOptional(void);
 
 #ifdef __cplusplus
 } // extern "C"
