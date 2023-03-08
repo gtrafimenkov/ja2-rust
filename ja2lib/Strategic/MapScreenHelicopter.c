@@ -60,8 +60,6 @@ extern UINT8 gubCurrentTalkingID;
 // current temp path for dest char
 extern struct path *pTempHelicopterPath;
 
-extern UINT8 ubSAMControlledSectors[MAP_WORLD_X][MAP_WORLD_Y];
-
 // the seating capacities
 extern INT32 iSeatingCapacities[];
 
@@ -1299,7 +1297,6 @@ BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite) {
 void HeliCrashSoundStopCallback(void *pData) { SkyriderDestroyed(); }
 
 BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
-  UINT8 ubSamNumber = 0;
   INT8 bSAMCondition;
   UINT8 ubChance;
 
@@ -1310,16 +1307,14 @@ BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
   }
 
   // which SAM controls this sector?
-  ubSamNumber = ubSAMControlledSectors[sSectorX][sSectorY];
+  struct OptionalSamSite samSite = GetSamControllingSector(sSectorX, sSectorY);
 
   // if none of them
-  if (ubSamNumber == 0) {
+  if (samSite.tag == None) {
     return (FALSE);
   }
 
-  // get the condition of that SAM site (NOTE: SAM #s are 1-4, but indexes are 0-3!!!)
-  Assert(ubSamNumber <= GetSamSiteCount());
-  SectorID16 samSector = GetSectorID16(GetSamSiteX(ubSamNumber - 1), GetSamSiteY(ubSamNumber - 1));
+  SectorID16 samSector = GetSectorID16(GetSamSiteX(samSite.some), GetSamSiteY(samSite.some));
 
   bSAMCondition = StrategicMap[samSector].bSAMCondition;
 

@@ -65,7 +65,10 @@ int16_t GetSamGridNoB(enum SamSite site);
 
 bool DoesSAMExistHere(uint8_t sector_x, uint8_t sector_y, int8_t sector_z, int16_t grid_no);
 
-struct OptionalSamSite FooOptional(void);
+/**
+ * Returns SAM controlling the given sector.
+ */
+struct OptionalSamSite GetSamControllingSector(uint8_t x, uint8_t y);
 
 #ifdef __cplusplus
 } // extern "C"

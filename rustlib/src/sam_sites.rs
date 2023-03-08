@@ -29,11 +29,11 @@ impl State {
     pub const fn new() -> Self {
         State { found: [false; 4] }
     }
-    pub fn is_found(&self, sam_site: SamSite) -> bool {
-        return self.found[sam_site as usize];
+    pub fn is_found(&self, site: SamSite) -> bool {
+        return self.found[site as usize];
     }
-    pub fn set_found(&mut self, sam_site: SamSite, value: bool) {
-        self.found[sam_site as usize] = value
+    pub fn set_found(&mut self, site: SamSite, value: bool) {
+        self.found[site as usize] = value
     }
 }
 

@@ -1,6 +1,5 @@
 use super::sam_sites;
 use super::state;
-use int_enum::IntEnum;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -14,10 +13,18 @@ pub enum SamSite {
 impl SamSite {
     fn from_internal(value: sam_sites::SamSite) -> Self {
         match value {
-            Chitzena => SamSite::SamSiteChitzena,
-            Drassen => SamSite::SamSiteDrassen,
-            Cambria => SamSite::SamSiteCambria,
-            Meduna => SamSite::SamSiteMeduna,
+            sam_sites::SamSite::Chitzena => SamSite::SamSiteChitzena,
+            sam_sites::SamSite::Drassen => SamSite::SamSiteDrassen,
+            sam_sites::SamSite::Cambria => SamSite::SamSiteCambria,
+            sam_sites::SamSite::Meduna => SamSite::SamSiteMeduna,
+        }
+    }
+    fn to_internal(&self) -> sam_sites::SamSite {
+        match self {
+            SamSite::SamSiteChitzena => sam_sites::SamSite::Chitzena,
+            SamSite::SamSiteDrassen => sam_sites::SamSite::Drassen,
+            SamSite::SamSiteCambria => sam_sites::SamSite::Cambria,
+            SamSite::SamSiteMeduna => sam_sites::SamSite::Meduna,
         }
     }
 }
@@ -51,8 +58,7 @@ pub extern "C" fn GetSamSiteY(site: SamSite) -> u8 {
 /// Check if the SAM site was found.
 pub extern "C" fn IsSamSiteFound(site: SamSite) -> bool {
     unsafe {
-        let site = sam_sites::SamSite::from_int(site as u8).unwrap();
-        return state::SAM.is_found(site);
+        return state::SAM.is_found(site.to_internal());
     }
 }
 
@@ -60,8 +66,7 @@ pub extern "C" fn IsSamSiteFound(site: SamSite) -> bool {
 /// Set if the SAM site was found.
 pub extern "C" fn SetSamSiteFound(site: SamSite, value: bool) {
     unsafe {
-        let site = sam_sites::SamSite::from_int(site as u8).unwrap();
-        return state::SAM.set_found(site, value);
+        return state::SAM.set_found(site.to_internal(), value);
     }
 }
 
@@ -113,7 +118,7 @@ pub enum OptionalSamSite {
 pub extern "C" fn GetSamControllingSector(x: u8, y: u8) -> OptionalSamSite {
     match sam_sites::get_sam_controlling_sector(x, y) {
         None => OptionalSamSite::None,
-        Some(site) => OptionalSamSite::Some(site.int_value() as SamSite),
+        Some(site) => OptionalSamSite::Some(SamSite::from_internal(site)),
     }
 }
 

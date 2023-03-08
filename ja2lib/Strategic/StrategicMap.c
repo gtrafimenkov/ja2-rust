@@ -155,31 +155,6 @@ INT8 gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
 // the amount of time that a soldier will wait to return to desired/old squad
 #define DESIRE_SQUAD_RESET_DELAY 12 * 60
 
-// TODO: rustlib
-UINT8 ubSAMControlledSectors[MAP_WORLD_Y][MAP_WORLD_X] = {
-    //       1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 2, 0},    // A
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0},    // B
-    {0, 1, 1, 1, 1, 1, 1, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 0},    // C
-    {0, 1, 01, 1, 1, 1, 1, 1, 3, 3, 2, 2, 2, 2, 2, 02, 2, 0},  // D
-    {0, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 0},    // E
-    {0, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 0},    // F
-    {0, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 0},    // G
-    {0, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // H
-    {0, 1, 1, 3, 3, 3, 3, 3, 03, 3, 3, 3, 3, 3, 2, 2, 2, 0},   // I
-    {0, 1, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // J
-    {0, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // K
-    {0, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // L
-    {0, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // M
-    {0, 4, 4, 4, 04, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 0},   // N
-    {0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 0},    // O
-    {0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 0},    // P
-
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-};
-
 INT16 DirXIncrementer[8] = {
     0,   // N
     1,   // NE
@@ -2908,12 +2883,10 @@ void UpdateAirspaceControl(void) {
 
   for (iCounterA = 1; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
     for (iCounterB = 1; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
-      // IMPORTANT: B and A are reverse here, since the table is stored transposed
-      ubControllingSAM = ubSAMControlledSectors[iCounterB][iCounterA];
+      struct OptionalSamSite samSite = GetSamControllingSector(iCounterA, iCounterB);
 
-      if ((ubControllingSAM >= 1) && (ubControllingSAM <= GetSamSiteCount())) {
-        SectorID16 samSector =
-            GetSectorID16(GetSamSiteX(ubControllingSAM - 1), GetSamSiteY(ubControllingSAM - 1));
+      if (samSite.tag != None) {
+        SectorID16 samSector = GetSectorID16(GetSamSiteX(samSite.some), GetSamSiteY(samSite.some));
         pSAMStrategicMap = &(StrategicMap[samSector]);
 
         // if the enemies own the controlling SAM site, and it's in working condition
