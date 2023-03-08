@@ -367,7 +367,7 @@ UINT32 guiMapBorderEtaPopUp;
 UINT32 guiMapBorderHeliSectors;
 
 // list of map sectors that player isn't allowed to even highlight
-BOOLEAN sBadSectorsList[WORLD_MAP_X][WORLD_MAP_X];
+BOOLEAN sBadSectorsList[MAP_WORLD_Y][MAP_WORLD_X];
 
 INT16 sBaseSectorList[] = {
     // NOTE: These co-ordinates must match the top left corner of the 3x3 town tiles cutouts in
@@ -1992,28 +1992,28 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
         // check to see if out-of sector U-turn
         // for placement of arrows
         iDeltaB1 = pNextNode->uiSectorId - pNextNode->pNext->uiSectorId;
-        if ((iDeltaB1 == -WORLD_MAP_X) && (iDeltaA == -WORLD_MAP_X) && (iDeltaB == -1)) {
+        if ((iDeltaB1 == -MAP_WORLD_X) && (iDeltaA == -MAP_WORLD_X) && (iDeltaB == -1)) {
           fUTurnFlag = TRUE;
-        } else if ((iDeltaB1 == -WORLD_MAP_X) && (iDeltaA == -WORLD_MAP_X) && (iDeltaB == 1)) {
+        } else if ((iDeltaB1 == -MAP_WORLD_X) && (iDeltaA == -MAP_WORLD_X) && (iDeltaB == 1)) {
           fUTurnFlag = TRUE;
-        } else if ((iDeltaB1 == WORLD_MAP_X) && (iDeltaA == WORLD_MAP_X) && (iDeltaB == 1)) {
+        } else if ((iDeltaB1 == MAP_WORLD_X) && (iDeltaA == MAP_WORLD_X) && (iDeltaB == 1)) {
           fUTurnFlag = TRUE;
-        } else if ((iDeltaB1 == -WORLD_MAP_X) && (iDeltaA == -WORLD_MAP_X) && (iDeltaB == 1)) {
+        } else if ((iDeltaB1 == -MAP_WORLD_X) && (iDeltaA == -MAP_WORLD_X) && (iDeltaB == 1)) {
           fUTurnFlag = TRUE;
-        } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == -WORLD_MAP_X)) {
+        } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == -MAP_WORLD_X)) {
           fUTurnFlag = TRUE;
-        } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == WORLD_MAP_X)) {
+        } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == MAP_WORLD_X)) {
           fUTurnFlag = TRUE;
-        } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == -WORLD_MAP_X)) {
+        } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == -MAP_WORLD_X)) {
           fUTurnFlag = TRUE;
-        } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == WORLD_MAP_X)) {
+        } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == MAP_WORLD_X)) {
           fUTurnFlag = TRUE;
         } else
           fUTurnFlag = FALSE;
       }
 
       if ((pPastNode->uiSectorId == pNextNode->uiSectorId)) {
-        if (pPastNode->uiSectorId + WORLD_MAP_X == pNode->uiSectorId) {
+        if (pPastNode->uiSectorId + MAP_WORLD_X == pNode->uiSectorId) {
           if (!(pNode->fSpeed))
             fSpeedFlag = TRUE;
           else
@@ -2036,7 +2036,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += NORTH_OFFSET_X;
             iArrowY += NORTH_OFFSET_Y;
           }
-        } else if (pPastNode->uiSectorId - WORLD_MAP_X == pNode->uiSectorId) {
+        } else if (pPastNode->uiSectorId - MAP_WORLD_X == pNode->uiSectorId) {
           if (fZoomFlag) {
             iDirection = N_TO_S_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2135,7 +2135,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += EAST_OFFSET_X;
             iArrowY += EAST_OFFSET_Y;
           }
-        } else if ((iDeltaA == -WORLD_MAP_X) && (iDeltaB == WORLD_MAP_X)) {
+        } else if ((iDeltaA == -MAP_WORLD_X) && (iDeltaB == MAP_WORLD_X)) {
           if (fZoomFlag) {
             iDirection = NORTH_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2153,7 +2153,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += NORTH_OFFSET_X;
             iArrowY += NORTH_OFFSET_Y;
           }
-        } else if ((iDeltaA == WORLD_MAP_X) && (iDeltaB == -WORLD_MAP_X)) {
+        } else if ((iDeltaA == MAP_WORLD_X) && (iDeltaB == -MAP_WORLD_X)) {
           if (fZoomFlag) {
             iDirection = SOUTH_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2171,7 +2171,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += SOUTH_OFFSET_X;
             iArrowY += SOUTH_OFFSET_Y;
           }
-        } else if ((iDeltaA == -WORLD_MAP_X) && (iDeltaB == -1)) {
+        } else if ((iDeltaA == -MAP_WORLD_X) && (iDeltaB == -1)) {
           if (fZoomFlag) {
             iDirection = N_TO_E_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2189,7 +2189,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += EAST_OFFSET_X;
             iArrowY += EAST_OFFSET_Y;
           }
-        } else if ((iDeltaA == WORLD_MAP_X) && (iDeltaB == 1)) {
+        } else if ((iDeltaA == MAP_WORLD_X) && (iDeltaB == 1)) {
           if (fZoomFlag) {
             iDirection = S_TO_W_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2207,7 +2207,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += WEST_OFFSET_X;
             iArrowY += WEST_OFFSET_Y;
           }
-        } else if ((iDeltaA == 1) && (iDeltaB == -WORLD_MAP_X)) {
+        } else if ((iDeltaA == 1) && (iDeltaB == -MAP_WORLD_X)) {
           if (fZoomFlag) {
             iDirection = E_TO_S_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2225,7 +2225,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += SOUTH_OFFSET_X;
             iArrowY += SOUTH_OFFSET_Y;
           }
-        } else if ((iDeltaA == -1) && (iDeltaB == WORLD_MAP_X)) {
+        } else if ((iDeltaA == -1) && (iDeltaB == MAP_WORLD_X)) {
           if (fZoomFlag) {
             iDirection = W_TO_N_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2243,7 +2243,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += NORTH_OFFSET_X;
             iArrowY += NORTH_OFFSET_Y;
           }
-        } else if ((iDeltaA == -1) && (iDeltaB == -WORLD_MAP_X)) {
+        } else if ((iDeltaA == -1) && (iDeltaB == -MAP_WORLD_X)) {
           if (fZoomFlag) {
             iDirection = W_TO_S_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2261,7 +2261,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += SOUTH_OFFSET_X;
             iArrowY += (SOUTH_OFFSET_Y + WEST_TO_SOUTH_OFFSET_Y);
           }
-        } else if ((iDeltaA == -WORLD_MAP_X) && (iDeltaB == 1)) {
+        } else if ((iDeltaA == -MAP_WORLD_X) && (iDeltaB == 1)) {
           if (fZoomFlag) {
             iDirection = N_TO_W_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2279,7 +2279,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += WEST_OFFSET_X;
             iArrowY += WEST_OFFSET_Y;
           }
-        } else if ((iDeltaA == WORLD_MAP_X) && (iDeltaB == -1)) {
+        } else if ((iDeltaA == MAP_WORLD_X) && (iDeltaB == -1)) {
           if (fZoomFlag) {
             iDirection = S_TO_E_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2297,7 +2297,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowX += EAST_OFFSET_X;
             iArrowY += EAST_OFFSET_Y;
           }
-        } else if ((iDeltaA == 1) && (iDeltaB == WORLD_MAP_X)) {
+        } else if ((iDeltaA == 1) && (iDeltaB == MAP_WORLD_X)) {
           if (fZoomFlag) {
             iDirection = E_TO_N_ZOOM_LINE;
             if (fSpeedFlag)
@@ -2354,7 +2354,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
           } else
             iDirection = RED_X_EAST;
           // iX+=RED_EAST_OFF_X;
-        } else if (iDeltaA == -WORLD_MAP_X) {
+        } else if (iDeltaA == -MAP_WORLD_X) {
           if (fZoomFlag) {
             iDirection = ZOOM_RED_X_NORTH;
           } else
@@ -2416,7 +2416,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
             iArrowY += WEST_OFFSET_Y;
           }
           // iX+=RED_WEST_OFF_X;
-        } else if (iDeltaB == WORLD_MAP_X) {
+        } else if (iDeltaB == MAP_WORLD_X) {
           if (fZoomFlag) {
             iDirection = ZOOM_GREEN_X_NORTH;
             if (fSpeedFlag)
@@ -2698,28 +2698,28 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
       // check to see if out-of sector U-turn
       // for placement of arrows
       iDeltaB1 = pNextNode->uiSectorId - pNextNode->pNext->uiSectorId;
-      if ((iDeltaB1 == -WORLD_MAP_X) && (iDeltaA == -WORLD_MAP_X) && (iDeltaB == -1)) {
+      if ((iDeltaB1 == -MAP_WORLD_X) && (iDeltaA == -MAP_WORLD_X) && (iDeltaB == -1)) {
         fUTurnFlag = TRUE;
-      } else if ((iDeltaB1 == -WORLD_MAP_X) && (iDeltaA == -WORLD_MAP_X) && (iDeltaB == 1)) {
+      } else if ((iDeltaB1 == -MAP_WORLD_X) && (iDeltaA == -MAP_WORLD_X) && (iDeltaB == 1)) {
         fUTurnFlag = TRUE;
-      } else if ((iDeltaB1 == WORLD_MAP_X) && (iDeltaA == WORLD_MAP_X) && (iDeltaB == 1)) {
+      } else if ((iDeltaB1 == MAP_WORLD_X) && (iDeltaA == MAP_WORLD_X) && (iDeltaB == 1)) {
         fUTurnFlag = TRUE;
-      } else if ((iDeltaB1 == -WORLD_MAP_X) && (iDeltaA == -WORLD_MAP_X) && (iDeltaB == 1)) {
+      } else if ((iDeltaB1 == -MAP_WORLD_X) && (iDeltaA == -MAP_WORLD_X) && (iDeltaB == 1)) {
         fUTurnFlag = TRUE;
-      } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == -WORLD_MAP_X)) {
+      } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == -MAP_WORLD_X)) {
         fUTurnFlag = TRUE;
-      } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == WORLD_MAP_X)) {
+      } else if ((iDeltaB1 == -1) && (iDeltaA == -1) && (iDeltaB == MAP_WORLD_X)) {
         fUTurnFlag = TRUE;
-      } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == -WORLD_MAP_X)) {
+      } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == -MAP_WORLD_X)) {
         fUTurnFlag = TRUE;
-      } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == WORLD_MAP_X)) {
+      } else if ((iDeltaB1 == 1) && (iDeltaA == 1) && (iDeltaB == MAP_WORLD_X)) {
         fUTurnFlag = TRUE;
       } else
         fUTurnFlag = FALSE;
     }
 
     if ((pPastNode->uiSectorId == pNextNode->uiSectorId)) {
-      if (pPastNode->uiSectorId + WORLD_MAP_X == pNode->uiSectorId) {
+      if (pPastNode->uiSectorId + MAP_WORLD_X == pNode->uiSectorId) {
         if (fZoomFlag) {
           iDirection = S_TO_N_ZOOM_LINE;
           if (!ubCounter)
@@ -2742,7 +2742,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += NORTH_OFFSET_X;
           iArrowY += NORTH_OFFSET_Y;
         }
-      } else if (pPastNode->uiSectorId - WORLD_MAP_X == pNode->uiSectorId) {
+      } else if (pPastNode->uiSectorId - MAP_WORLD_X == pNode->uiSectorId) {
         if (fZoomFlag) {
           iDirection = N_TO_S_ZOOM_LINE;
           if (!ubCounter)
@@ -2856,7 +2856,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += EAST_OFFSET_X;
           iArrowY += EAST_OFFSET_Y;
         }
-      } else if ((iDeltaA == -WORLD_MAP_X) && (iDeltaB == WORLD_MAP_X)) {
+      } else if ((iDeltaA == -MAP_WORLD_X) && (iDeltaB == MAP_WORLD_X)) {
         if (fZoomFlag) {
           iDirection = NORTH_ZOOM_LINE;
           if (!ubCounter)
@@ -2880,7 +2880,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += NORTH_OFFSET_X;
           iArrowY += NORTH_OFFSET_Y;
         }
-      } else if ((iDeltaA == WORLD_MAP_X) && (iDeltaB == -WORLD_MAP_X)) {
+      } else if ((iDeltaA == MAP_WORLD_X) && (iDeltaB == -MAP_WORLD_X)) {
         if (fZoomFlag) {
           iDirection = SOUTH_ZOOM_LINE;
           if (!ubCounter)
@@ -2904,7 +2904,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += SOUTH_OFFSET_X;
           iArrowY += SOUTH_OFFSET_Y;
         }
-      } else if ((iDeltaA == -WORLD_MAP_X) && (iDeltaB == -1)) {
+      } else if ((iDeltaA == -MAP_WORLD_X) && (iDeltaB == -1)) {
         if (fZoomFlag) {
           iDirection = N_TO_E_ZOOM_LINE;
           if (!ubCounter)
@@ -2928,7 +2928,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += EAST_OFFSET_X;
           iArrowY += EAST_OFFSET_Y;
         }
-      } else if ((iDeltaA == WORLD_MAP_X) && (iDeltaB == 1)) {
+      } else if ((iDeltaA == MAP_WORLD_X) && (iDeltaB == 1)) {
         if (fZoomFlag) {
           iDirection = S_TO_W_ZOOM_LINE;
           if (!ubCounter)
@@ -2952,7 +2952,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += WEST_OFFSET_X;
           iArrowY += WEST_OFFSET_Y;
         }
-      } else if ((iDeltaA == 1) && (iDeltaB == -WORLD_MAP_X)) {
+      } else if ((iDeltaA == 1) && (iDeltaB == -MAP_WORLD_X)) {
         if (fZoomFlag) {
           iDirection = E_TO_S_ZOOM_LINE;
           if (!ubCounter)
@@ -2976,7 +2976,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += SOUTH_OFFSET_X;
           iArrowY += SOUTH_OFFSET_Y;
         }
-      } else if ((iDeltaA == -1) && (iDeltaB == WORLD_MAP_X)) {
+      } else if ((iDeltaA == -1) && (iDeltaB == MAP_WORLD_X)) {
         if (fZoomFlag) {
           iDirection = W_TO_N_ZOOM_LINE;
           if (!ubCounter)
@@ -3000,7 +3000,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += NORTH_OFFSET_X;
           iArrowY += NORTH_OFFSET_Y;
         }
-      } else if ((iDeltaA == -1) && (iDeltaB == -WORLD_MAP_X)) {
+      } else if ((iDeltaA == -1) && (iDeltaB == -MAP_WORLD_X)) {
         if (fZoomFlag) {
           iDirection = W_TO_S_ZOOM_LINE;
           if (!ubCounter)
@@ -3023,7 +3023,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += SOUTH_OFFSET_X;
           iArrowY += (SOUTH_OFFSET_Y + WEST_TO_SOUTH_OFFSET_Y);
         }
-      } else if ((iDeltaA == -WORLD_MAP_X) && (iDeltaB == 1)) {
+      } else if ((iDeltaA == -MAP_WORLD_X) && (iDeltaB == 1)) {
         if (fZoomFlag) {
           iDirection = N_TO_W_ZOOM_LINE;
           if (!ubCounter)
@@ -3047,7 +3047,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += WEST_OFFSET_X;
           iArrowY += WEST_OFFSET_Y;
         }
-      } else if ((iDeltaA == WORLD_MAP_X) && (iDeltaB == -1)) {
+      } else if ((iDeltaA == MAP_WORLD_X) && (iDeltaB == -1)) {
         if (fZoomFlag) {
           iDirection = S_TO_E_ZOOM_LINE;
           if (!ubCounter)
@@ -3069,7 +3069,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
           iArrowX += EAST_OFFSET_X;
           iArrowY += EAST_OFFSET_Y;
         }
-      } else if ((iDeltaA == 1) && (iDeltaB == WORLD_MAP_X)) {
+      } else if ((iDeltaA == 1) && (iDeltaB == MAP_WORLD_X)) {
         if (fZoomFlag) {
           iDirection = E_TO_N_ZOOM_LINE;
           if (!ubCounter)
@@ -3125,7 +3125,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
       } else if (iDeltaA == 1) {
         iDirection = RED_X_EAST;
         // iX+=RED_EAST_OFF_X;
-      } else if (iDeltaA == -WORLD_MAP_X) {
+      } else if (iDeltaA == -MAP_WORLD_X) {
         iDirection = RED_X_NORTH;
         // iY+=RED_NORTH_OFF_Y;
       } else {
@@ -3160,7 +3160,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
         iArrowX += WEST_OFFSET_X;
         iArrowY += WEST_OFFSET_Y;
         // iX+=RED_WEST_OFF_X;
-      } else if (iDeltaB == WORLD_MAP_X) {
+      } else if (iDeltaB == MAP_WORLD_X) {
         iDirection = GREEN_X_NORTH;
         if (!ubCounter)
           iArrow = W_NORTH_ARROW;
@@ -3289,9 +3289,9 @@ void SetUpBadSectorsList(void) {
   memset(&sBadSectorsList, 0, sizeof(sBadSectorsList));
 
   // the border regions
-  for (bY = 0; bY < WORLD_MAP_X; bY++) {
-    sBadSectorsList[0][bY] = sBadSectorsList[WORLD_MAP_X - 1][bY] = sBadSectorsList[bY][0] =
-        sBadSectorsList[bY][WORLD_MAP_X - 1] = TRUE;
+  for (bY = 0; bY < MAP_WORLD_X; bY++) {
+    sBadSectorsList[0][bY] = sBadSectorsList[MAP_WORLD_X - 1][bY] = sBadSectorsList[bY][0] =
+        sBadSectorsList[bY][MAP_WORLD_X - 1] = TRUE;
   }
 
   sBadSectorsList[4][1] = TRUE;

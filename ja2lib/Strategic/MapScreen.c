@@ -7140,17 +7140,6 @@ void PlotTemporaryPaths(void) {
   if (GetMouseMapXY(&sMapX, &sMapY)) {
     if (fPlotForHelicopter == TRUE) {
       Assert(fShowAircraftFlag == TRUE);
-      /*
-                              if( fZoomFlag )
-                              {
-                                      sMapX =  ( INT16 )( ( ( iZoomX ) / ( WORLD_MAP_X ) ) + sMapX
-         ); sMapX /= 2;
-
-                                      sMapY =  ( INT16 )( ( ( iZoomY ) / ( WORLD_MAP_X ) ) + sMapY
-         ); sMapY /= 2;
-                              }
-      */
-
       // plot temp path
       PlotATemporaryPathForHelicopter(sMapX, sMapY);
 
