@@ -2943,12 +2943,6 @@ void UpdateAirspaceControl(void) {
   UpdateRefuelSiteAvailability();
 }
 
-// TODO: rustlib
-BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  struct OptionalSamSite samID = GetSamAtSector(sSectorX, sSectorY, bSectorZ);
-  return samID.tag == Some && GetSamCondition(samID.some) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK;
-}
-
 // is this sector part of the town?
 BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY) {
   if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID == bTownId) {

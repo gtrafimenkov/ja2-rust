@@ -107,9 +107,6 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld();
 // number of SAM sites under player control
 INT32 GetNumberOfSAMSitesUnderPlayerControl(void);
 
-// is there a FUNCTIONAL SAM site in this sector?
-BOOLEAN IsThereAFunctionalSAMSiteInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-
 BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY);
 
 // sam site under players control?

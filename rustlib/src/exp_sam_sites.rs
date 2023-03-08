@@ -146,6 +146,19 @@ pub extern "C" fn GetSamControllingSector(x: u8, y: u8) -> OptionalSamSite {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn IsThereAFunctionalSamInSector(x: u8, y: u8, z: i8) -> bool {
+    unsafe {
+        match sam_sites::get_sam_at_sector(x, y, z) {
+            None => false,
+            Some(site) => {
+                state::SAM.sites[site as usize].get_condition()
+                    >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

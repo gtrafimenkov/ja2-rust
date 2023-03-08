@@ -84,6 +84,8 @@ struct OptionalSamSite GetSamAtSector(uint8_t x, uint8_t y, int8_t z);
  */
 struct OptionalSamSite GetSamControllingSector(uint8_t x, uint8_t y);
 
+bool IsThereAFunctionalSamInSector(uint8_t x, uint8_t y, int8_t z);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
