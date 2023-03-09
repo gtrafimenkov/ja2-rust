@@ -1428,7 +1428,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
 }
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ,
+BOOLEAN GetWarpOutOfMineCodes(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ,
                               INT16 *psInsertionGridNo) {
   INT32 iSwitchValue;
 

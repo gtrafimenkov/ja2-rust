@@ -1768,7 +1768,7 @@ void TeleportVehicleToItsClosestSector(INT32 iVehicleId, UINT8 ubGroupID) {
   struct GROUP *pGroup = NULL;
   UINT32 uiTimeToNextSector;
   UINT32 uiTimeToLastSector;
-  INT16 sPrevX, sPrevY, sNextX, sNextY;
+  u8 sPrevX, sPrevY, sNextX, sNextY;
 
   pGroup = GetGroup(ubGroupID);
   Assert(pGroup);

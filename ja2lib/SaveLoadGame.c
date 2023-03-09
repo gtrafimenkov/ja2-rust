@@ -108,7 +108,7 @@ BOOLEAN fFirstTimeInMapScreen = TRUE;
 //
 /////////////////////////////////////////////////////
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ);
+void GetBestPossibleSectorXYZValues(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ);
 extern void NextLoopCheckForEnoughFreeHardDriveSpace();
 extern void UpdatePersistantGroupsFromOldSave(UINT32 uiSavedGameVersion);
 extern void TrashAllSoldiers();
@@ -595,8 +595,12 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   memcpy(&SaveGameHeader.sInitialGameOptions, &gGameOptions, sizeof(GAME_OPTIONS));
 
   // Get the sector value to save.
-  GetBestPossibleSectorXYZValues(&SaveGameHeader.sSectorX, &SaveGameHeader.sSectorY,
-                                 &SaveGameHeader.bSectorZ);
+  {
+    u8 mapX, mapY;
+    GetBestPossibleSectorXYZValues(&mapX, &mapY, &SaveGameHeader.bSectorZ);
+    SaveGameHeader.sSectorX = mapX;
+    SaveGameHeader.sSectorY = mapY;
+  }
 
   SaveGameHeader.ubNumOfMercsOnPlayersTeam = NumberOfMercsOnPlayerTeam();
   SaveGameHeader.iCurrentBalance = MoneyGetBalance();
@@ -1235,8 +1239,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
       gubLastLoadingScreenID = LOADINGSCREEN_HELI;
     else
       gubLastLoadingScreenID = GetLoadScreenID(
-          (u8)SaveGameHeader.sSectorX, (u8)SaveGameHeader.sSectorY,
-                                               SaveGameHeader.bSectorZ);
+          (u8)SaveGameHeader.sSectorX, (u8)SaveGameHeader.sSectorY, SaveGameHeader.bSectorZ);
 
     BeginLoadScreen();
   }
@@ -3918,16 +3921,16 @@ void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGam
 
 #endif
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ) {
+void GetBestPossibleSectorXYZValues(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ) {
   // if the current sector is valid
   if (gfWorldLoaded) {
-    *psSectorX = gWorldSectorX;
-    *psSectorY = gWorldSectorY;
+    *psSectorX = (u8)gWorldSectorX;
+    *psSectorY = (u8)gWorldSectorY;
     *pbSectorZ = gbWorldSectorZ;
   } else if (iCurrentTacticalSquad != NO_CURRENT_SQUAD && Squad[iCurrentTacticalSquad][0]) {
     if (Squad[iCurrentTacticalSquad][0]->bAssignment != IN_TRANSIT) {
-      *psSectorX = Squad[iCurrentTacticalSquad][0]->sSectorX;
-      *psSectorY = Squad[iCurrentTacticalSquad][0]->sSectorY;
+      *psSectorX = (u8)Squad[iCurrentTacticalSquad][0]->sSectorX;
+      *psSectorY = (u8)Squad[iCurrentTacticalSquad][0]->sSectorY;
       *pbSectorZ = Squad[iCurrentTacticalSquad][0]->bSectorZ;
     }
   } else {
@@ -3975,8 +3978,8 @@ void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pb
 
       // if we STILL havent found a merc, give up and use the -1, -1, -1
       if (!fFoundAMerc) {
-        *psSectorX = gWorldSectorX;
-        *psSectorY = gWorldSectorY;
+        *psSectorX = (u8)gWorldSectorX;
+        *psSectorY = (u8)gWorldSectorY;
         *pbSectorZ = gbWorldSectorZ;
       }
     }

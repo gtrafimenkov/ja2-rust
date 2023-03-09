@@ -71,7 +71,7 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile);
 
 BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 
-void GetBestPossibleSectorXYZValues(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ);
+void GetBestPossibleSectorXYZValues(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ);
 
 extern UINT32 guiLastSaveGameNum;
 INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave);

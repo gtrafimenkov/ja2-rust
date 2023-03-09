@@ -856,8 +856,8 @@ BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ) {
     gTacticalStatus.sCreatureTenseQuoteDelay = (INT16)(10 + Random(20));
 
     {
-      INT16 sWarpWorldX;
-      INT16 sWarpWorldY;
+      u8 sWarpWorldX;
+      u8 sWarpWorldY;
       INT8 bWarpWorldZ;
       INT16 sWarpGridNo;
 

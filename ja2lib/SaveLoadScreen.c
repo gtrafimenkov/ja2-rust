@@ -1131,8 +1131,12 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
       SaveGameHeader.ubMin = (UINT8)guiMin;
 
       // Get the sector value to save.
-      GetBestPossibleSectorXYZValues(&SaveGameHeader.sSectorX, &SaveGameHeader.sSectorY,
-                                     &SaveGameHeader.bSectorZ);
+      {
+        u8 mapX, mapY;
+        GetBestPossibleSectorXYZValues(&mapX, &mapY, &SaveGameHeader.bSectorZ);
+        SaveGameHeader.sSectorX = mapX;
+        SaveGameHeader.sSectorY = mapY;
+      }
 
       //			SaveGameHeader.sSectorX = gWorldSectorX;
       //			SaveGameHeader.sSectorY = gWorldSectorY;
@@ -1207,8 +1211,8 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
         gfGettingNameFromSaveLoadScreen = TRUE;
 
         GetSectorIDString((u8)SaveGameHeader.sSectorX, (u8)SaveGameHeader.sSectorY,
-                          SaveGameHeader.bSectorZ,
-                          zLocationString, ARR_SIZE(zLocationString), FALSE);
+                          SaveGameHeader.bSectorZ, zLocationString, ARR_SIZE(zLocationString),
+                          FALSE);
 
         gfGettingNameFromSaveLoadScreen = FALSE;
       }

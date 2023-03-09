@@ -117,7 +117,7 @@ void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid) {
 
   // Add the exit grid to the sector, only if we call ApplyMapChangesToMapTempFile() first.
   if (!gfEditMode && !gfLoadingExitGrids) {
-    AddExitGridToMapTempFile((UINT16)iMapIndex, pExitGrid, gWorldSectorX, gWorldSectorY,
+    AddExitGridToMapTempFile((UINT16)iMapIndex, pExitGrid, (u8)gWorldSectorX, (u8)gWorldSectorY,
                              gbWorldSectorZ);
   }
 }
