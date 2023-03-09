@@ -589,8 +589,8 @@ void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLE
 }
 
 void GetCurrentWorldSector(u8 *psMapX, u8 *psMapY) {
-  *psMapX = gWorldSectorX;
-  *psMapY = gWorldSectorY;
+  *psMapX = (u8)gWorldSectorX;
+  *psMapY = (u8)gWorldSectorY;
 }
 
 // not in overhead.h!
@@ -671,7 +671,7 @@ void HandleRPCDescriptionOfSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   HandleRPCDescription();
 }
 
-BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ) {
   BOOLEAN fChangeMusic = TRUE;
 
 #ifdef CRIPPLED_VERSION
@@ -1043,7 +1043,7 @@ void PrepareLoadedSector() {
 }
 
 #define RANDOM_HEAD_MINERS 4
-void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNewSectorZ) {
+void HandleQuestCodeOnSectorEntry(u8 sNewSectorX, u8 sNewSectorY, INT8 bNewSectorZ) {
   UINT8 ubRandomMiner[RANDOM_HEAD_MINERS] = {106, 156, 157, 158};
   UINT8 ubMiner, ubMinersPlaced;
   UINT8 ubMine, ubThisMine;
@@ -1052,7 +1052,8 @@ void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNe
 
   if (CheckFact(FACT_ALL_TERRORISTS_KILLED, 0)) {
     // end terrorist quest
-    EndQuest(QUEST_KILL_TERRORISTS, gMercProfiles[CARMEN].sSectorX, gMercProfiles[CARMEN].sSectorY);
+    EndQuest(QUEST_KILL_TERRORISTS, (u8)gMercProfiles[CARMEN].sSectorX,
+             (u8)gMercProfiles[CARMEN].sSectorY);
     // remove Carmen
     gMercProfiles[CARMEN].sSectorX = 0;
     gMercProfiles[CARMEN].sSectorY = 0;
@@ -1120,8 +1121,8 @@ void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNe
     if (pRobot) {
       // robot is on our team and we have changed sectors, so we can
       // replace the robot-under-construction in Madlab's sector
-      RemoveGraphicFromTempFile(gsRobotGridNo, SEVENTHISTRUCT1, gMercProfiles[MADLAB].sSectorX,
-                                gMercProfiles[MADLAB].sSectorY, gMercProfiles[MADLAB].bSectorZ);
+      RemoveGraphicFromTempFile(gsRobotGridNo, SEVENTHISTRUCT1, (u8)gMercProfiles[MADLAB].sSectorX,
+                                (u8)gMercProfiles[MADLAB].sSectorY, gMercProfiles[MADLAB].bSectorZ);
       SetFactTrue(FACT_ROBOT_RECRUITED_AND_MOVED);
     }
   }

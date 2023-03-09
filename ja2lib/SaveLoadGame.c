@@ -1223,7 +1223,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
     // if we should load a sector ( if the person didnt just start the game game )
     if ((gWorldSectorX != 0) && (gWorldSectorY != 0)) {
       // Load the sector
-      SetCurrentWorldSector(sLoadSectorX, sLoadSectorY, bLoadSectorZ);
+      SetCurrentWorldSector((u8)sLoadSectorX, (u8)sLoadSectorY, bLoadSectorZ);
     }
   } else {  // By clearing these values, we can avoid "in sector" checks -- at least, that's the
             // theory.

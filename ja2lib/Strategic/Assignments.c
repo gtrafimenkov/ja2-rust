@@ -2782,7 +2782,7 @@ BOOLEAN IsItemRepairable(UINT16 usItem, INT8 bStatus) {
   return (FALSE);
 }
 
-void HandleRestAndFatigueInSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+void HandleRestAndFatigueInSector(u8 sMapX, u8 sMapY, i8 bMapZ) {
   // this will handle all sleeping characters in this sector
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;

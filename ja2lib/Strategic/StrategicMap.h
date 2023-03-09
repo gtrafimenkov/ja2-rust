@@ -32,7 +32,7 @@ extern BOOLEAN gfUseAlternateMap;
 #define CHECK_DIR_Y_DELTA (WORLD_TILE_Y * 10)
 
 void GetCurrentWorldSector(u8 *psMapX, u8 *psMapY);
-BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ);
 
 BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
@@ -96,7 +96,7 @@ void PrepareLoadedSector();
 // handle for slay...no better place to really put this stuff
 void HandleSlayDailyEvent(void);
 
-void HandleQuestCodeOnSectorEntry(INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNewSectorZ);
+void HandleQuestCodeOnSectorEntry(u8 sNewSectorX, u8 sNewSectorY, INT8 bNewSectorZ);
 
 // handle a soldier leaving thier squad behind, this sets them up for mvt and potential rejoining of
 // group

@@ -36,8 +36,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-extern BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
-                                            UINT32 uiNumberOfItems, WORLDITEM *pData);
+extern BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, i8 bMapZ, UINT32 uiNumberOfItems,
+                                            WORLDITEM *pData);
 
 // status bar colors
 #define DESC_STATUS_BAR FROMRGB(201, 172, 133)
@@ -1069,7 +1069,7 @@ void ReBuildWorldItemStashForLoadedSector(INT32 iNumberSeenItems, INT32 iNumberU
 
   // reset the visible item count in the sector info struct
   SetNumberOfVisibleWorldItemsInSectorStructureForSector(
-      gWorldSectorX, gWorldSectorY, gbWorldSectorZ, uiTotalNumberOfVisibleItems);
+      (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, uiTotalNumberOfVisibleItems);
 
   // clear out allocated space for total list
   MemFree(pTotalList);
