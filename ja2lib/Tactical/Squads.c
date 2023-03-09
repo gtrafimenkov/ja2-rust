@@ -157,7 +157,7 @@ BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
         GetLocationOfSquad(&sX, &sY, &bZ, bSquadValue);
 
         // if not same, return false
-        if ((pCharacter->sSectorX != sX) || (pCharacter->sSectorY != sY) ||
+        if ((GetSolSectorX(pCharacter) != sX) || (GetSolSectorY(pCharacter) != sY) ||
             (pCharacter->bSectorZ != bZ)) {
           return (FALSE);
         }
@@ -206,8 +206,8 @@ BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
         RemoveSoldierFromHelicopter(pCharacter);
 
         AddPlayerToGroup(SquadMovementGroups[bSquadValue], pCharacter);
-        SetGroupSectorValue(pCharacter->sSectorX, pCharacter->sSectorY, pCharacter->bSectorZ,
-                            SquadMovementGroups[bSquadValue]);
+        SetGroupSectorValue(GetSolSectorX(pCharacter), GetSolSectorY(pCharacter),
+                            pCharacter->bSectorZ, SquadMovementGroups[bSquadValue]);
         pCharacter->ubGroupID = SquadMovementGroups[bSquadValue];
 
         // if we've just started a new squad
@@ -233,13 +233,13 @@ BOOLEAN AddCharacterToSquad(struct SOLDIERTYPE *pCharacter, INT8 bSquadValue) {
         fExitingVehicleToSquad = FALSE;
 
         AddPlayerToGroup(SquadMovementGroups[bSquadValue], pCharacter);
-        SetGroupSectorValue(pCharacter->sSectorX, pCharacter->sSectorY, pCharacter->bSectorZ,
-                            SquadMovementGroups[bSquadValue]);
+        SetGroupSectorValue(GetSolSectorX(pCharacter), GetSolSectorY(pCharacter),
+                            pCharacter->bSectorZ, SquadMovementGroups[bSquadValue]);
         pCharacter->ubGroupID = SquadMovementGroups[bSquadValue];
       } else {
         AddPlayerToGroup(SquadMovementGroups[bSquadValue], pCharacter);
-        SetGroupSectorValue(pCharacter->sSectorX, pCharacter->sSectorY, pCharacter->bSectorZ,
-                            SquadMovementGroups[bSquadValue]);
+        SetGroupSectorValue(GetSolSectorX(pCharacter), GetSolSectorY(pCharacter),
+                            pCharacter->bSectorZ, SquadMovementGroups[bSquadValue]);
         pCharacter->ubGroupID = SquadMovementGroups[bSquadValue];
       }
 
@@ -379,8 +379,8 @@ BOOLEAN RemoveCharacterFromSquads(struct SOLDIERTYPE *pCharacter) {
         pCharacter->ubGroupID = 0;
 
         if ((pCharacter->fBetweenSectors) && (pCharacter->uiStatusFlags & SOLDIER_VEHICLE)) {
-          ubGroupId = CreateNewPlayerGroupDepartingFromSector((INT8)(pCharacter->sSectorX),
-                                                              (INT8)(pCharacter->sSectorY));
+          ubGroupId = CreateNewPlayerGroupDepartingFromSector((INT8)(GetSolSectorX(pCharacter)),
+                                                              (INT8)(GetSolSectorY(pCharacter)));
 
           // assign to a group
           AddPlayerToGroup(ubGroupId, pCharacter);

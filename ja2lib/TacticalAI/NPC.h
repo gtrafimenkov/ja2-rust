@@ -200,7 +200,7 @@ BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, UINT16 *pusQuoteNum, UINT16 *pusFac
 
 BOOLEAN RecordHasDialogue(UINT8 ubNPC, UINT8 ubRecord);
 
-INT8 ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed);
+INT8 ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, i8 sSectorZ, BOOLEAN fSetAsUsed);
 
 void ResetOncePerConvoRecordsForNPC(UINT8 ubNPC);
 

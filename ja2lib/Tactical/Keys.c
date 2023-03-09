@@ -876,7 +876,8 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   // add the 'd' for 'Door' to the front of the map name
   //	sprintf( zMapName, "%s\\d_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Check to see if the file exists
@@ -1608,7 +1609,8 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   // add the 'm' for 'Modifed Map' to the front of the map name
   //	sprintf( zMapName, "%s\\ds_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Get rid of the existing door array
@@ -1693,7 +1695,7 @@ void ExamineDoorsOnEnteringSector() {
 
   // OK, only do this if conditions are met....
   // If this is any omerta tow, don't do it...
-  bTownId = GetTownIdForSector(gWorldSectorX, gWorldSectorY);
+  bTownId = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
 
   if (bTownId == OMERTA) {
     return;
@@ -1743,7 +1745,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   // OK, only do this if conditions are met....
 
   // If this is any omerta tow, don't do it...
-  bTownId = GetTownIdForSector(gWorldSectorX, gWorldSectorY);
+  bTownId = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
 
   if (bTownId == OMERTA) {
     return;

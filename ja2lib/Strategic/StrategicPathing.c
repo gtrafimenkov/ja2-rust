@@ -1000,7 +1000,7 @@ struct path* RemoveSectorFromStrategicPathList(struct path* pList, u8 sX, u8 sY)
 
 INT16 GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter) {
   // will return the last sector of the current path, or the current sector if there's no path
-  INT16 sLastSector = (pCharacter->sSectorX) + (pCharacter->sSectorY) * (MAP_WORLD_X);
+  INT16 sLastSector = (GetSolSectorX(pCharacter)) + (GetSolSectorY(pCharacter)) * (MAP_WORLD_X);
   struct path* pNode = NULL;
 
   pNode = GetSoldierMercPathPtr(pCharacter);

@@ -1554,7 +1554,7 @@ UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, u8 s
   // if we're clearing everything beyond the current sector, that's quite different.  Since we're
   // basically cancelling his movement completely, we must also make sure his next X,Y are changed
   // and he officially "returns" to his sector
-  if ((sX == pCharacter->sSectorX) && (sY == pCharacter->sSectorY)) {
+  if ((sX == GetSolSectorX(pCharacter)) && (sY == GetSolSectorY(pCharacter))) {
     // if we're in confirm map move mode, cancel that (before new UI messages are issued)
     EndConfirmMapMoveMode();
 
@@ -1606,7 +1606,7 @@ void CancelPathForCharacter(struct SOLDIERTYPE *pCharacter) {
   // so handle that. They are going to return to their current X,Y sector.
   RebuildWayPointsForGroupPath(pCharacter->pMercPath, pCharacter->ubGroupID);
   //	GroupReversingDirectionsBetweenSectors( GetGroup( pCharacter->ubGroupID ), ( UINT8 )(
-  // pCharacter->sSectorX ), ( UINT8 )( pCharacter->sSectorY ), FALSE );
+  // GetSolSectorX(pCharacter) ), ( UINT8 )( GetSolSectorY(pCharacter) ), FALSE );
 
   // if he's in a vehicle, clear out the vehicle, too
   if (pCharacter->bAssignment == VEHICLE) {
