@@ -4175,7 +4175,7 @@ void PlayerGroupArrivedSafelyInSector(struct GROUP *pGroup, BOOLEAN fCheckForNPC
 }
 
 BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup) {
-  INT16 sSectorX = 0, sSectorY = 0;
+  u8 sSectorX = 0, sSectorY = 0;
   INT8 bSectorZ = 0;
   CHAR16 sString[128];
   CHAR16 wSectorName[128];

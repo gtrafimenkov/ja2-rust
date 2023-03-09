@@ -369,7 +369,7 @@ UINT32 guiMapBorderHeliSectors;
 // list of map sectors that player isn't allowed to even highlight
 BOOLEAN sBadSectorsList[MAP_WORLD_Y][MAP_WORLD_X];
 
-INT16 sBaseSectorList[] = {
+u8 sBaseSectorList[] = {
     // NOTE: These co-ordinates must match the top left corner of the 3x3 town tiles cutouts in
     // Interface/MilitiaMaps.sti!
     GetSectorID8_STATIC(9, 1),    // Omerta
@@ -479,7 +479,7 @@ void BlitMineGridMarkers(void);
 void BlitSAMGridMarkers(void);
 void BlitMineIcon(u8 sMapX, u8 sMapY);
 void BlitMineText(u8 sMapX, u8 sMapY);
-INT16 GetBaseSectorForCurrentTown(void);
+u8 GetBaseSectorForCurrentTown(void);
 void RenderIconsPerSectorForSelectedTown(void);
 void MilitiaRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 void MilitiaRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
@@ -3582,7 +3582,7 @@ void DisplayDistancesForHelicopter(void) {
   struct VObject *hHandle;
   INT16 sTotalOfTrip = 0;
   INT32 iTime = 0;
-  INT16 sMapX, sMapY;
+  u8 sMapX, sMapY;
   INT16 sYPosition = 0;
   static INT16 sOldYPosition = 0;
   INT16 sNumSafeSectors;
@@ -3863,7 +3863,7 @@ void DisplayPositionOfHelicopter(void) {
 void DisplayDestinationOfHelicopter(void) {
   static INT16 sOldMapX = 0, sOldMapY = 0;
   INT16 sSector;
-  INT16 sMapX, sMapY;
+  u8 sMapX, sMapY;
   UINT32 x, y;
   struct VObject *hHandle;
 
@@ -4302,7 +4302,7 @@ void DisplayLevelString(void) {
 }
 
 // function to manipulate the number of towns people on the cursor
-static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, INT16 sX, INT16 sY) {
+static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, u8 sX, u8 sY) {
   // see if there are any militia of this type in this sector
   if (GetMilitiaOfRankInSector(sX, sY, ubType) == 0) {
     // failed, no one here
@@ -4343,7 +4343,7 @@ static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, INT16 sX, INT16 sY) {
   return (TRUE);
 }
 
-BOOLEAN DropAPersonInASector(UINT8 ubType, INT16 sX, INT16 sY) {
+BOOLEAN DropAPersonInASector(UINT8 ubType, u8 sX, u8 sY) {
   // are they in the same town as they were pickedup from
   if (GetTownIdForSector(sX, sY) != sSelectedMilitiaTown) {
     return (FALSE);
@@ -4538,8 +4538,8 @@ void CreateDestroyMilitiaPopUPRegions(void) {
 }
 
 void RenderIconsPerSectorForSelectedTown(void) {
-  INT16 sBaseSectorValue = 0;
-  INT16 sCurrentSectorValue = 0;
+  u8 sBaseSectorValue = 0;
+  u8 sCurrentSectorValue = 0;
   INT32 iCounter = 0;
   INT32 iNumberOfGreens = 0;
   INT32 iNumberOfRegulars = 0;
@@ -4550,7 +4550,7 @@ void RenderIconsPerSectorForSelectedTown(void) {
   INT32 iCurrentIcon = 0;
   INT16 sX, sY;
   CHAR16 sString[32];
-  INT16 sSectorX = 0, sSectorY = 0;
+  u8 sSectorX = 0, sSectorY = 0;
 
   // get the sector value for the upper left corner
   sBaseSectorValue = GetBaseSectorForCurrentTown();
@@ -4643,8 +4643,8 @@ void RenderIconsPerSectorForSelectedTown(void) {
   return;
 }
 
-INT16 GetBaseSectorForCurrentTown(void) {
-  INT16 sBaseSector = 0;
+u8 GetBaseSectorForCurrentTown(void) {
+  u8 sBaseSector = 0;
 
   // is the current town
   if (sSelectedMilitiaTown != 0) {
@@ -4816,7 +4816,7 @@ void SetMilitiaMapButtonsText(void) {
   // now set the militia map button text
   CHAR16 sString[64];
   INT32 iNumberOfGreens = 0, iNumberOfRegulars = 0, iNumberOfElites = 0;
-  INT16 sBaseSectorValue = 0, sGlobalMapSector = 0;
+  u8 sBaseSectorValue = 0, sGlobalMapSector = 0;
 
   if (!fMilitiaMapButtonsCreated) {
     return;
@@ -4848,8 +4848,8 @@ void SetMilitiaMapButtonsText(void) {
 }
 
 void MilitiaButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT16 sGlobalMapSector = 0;
-  INT16 sBaseSectorValue = 0;
+  u8 sGlobalMapSector = 0;
+  u8 sBaseSectorValue = 0;
   INT32 iValue = 0;
 
   // is the button enabled
@@ -4923,7 +4923,7 @@ void DisplayUnallocatedMilitia(void) {
 }
 
 BOOLEAN IsThisMilitiaTownSectorAllowable(INT16 sSectorIndexValue) {
-  INT16 sBaseSectorValue = 0, sGlobalMapSector = 0;
+  u8 sBaseSectorValue = 0, sGlobalMapSector = 0;
   INT16 sSectorX, sSectorY;
 
   // is this sector allowed to be clicked on?
@@ -5375,7 +5375,7 @@ void DrawTownMilitiaForcesOnMap(void) {
 void CheckAndUpdateStatesOfSelectedMilitiaSectorButtons(void) {
   // now set the militia map button text
   INT32 iNumberOfGreens = 0, iNumberOfRegulars = 0, iNumberOfElites = 0;
-  INT16 sBaseSectorValue = 0, sGlobalMapSector = 0;
+  u8 sBaseSectorValue = 0, sGlobalMapSector = 0;
 
   if (!fMilitiaMapButtonsCreated) {
     EnableButton(giMapMilitiaButton[4]);
@@ -5785,7 +5785,7 @@ void BlitSAMGridMarkers(void) {
 BOOLEAN CanMilitiaAutoDistribute(void) {
   INT32 iCounter = 0;
   INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
-  INT16 sSectorX = 0, sSectorY = 0;
+  u8 sSectorX = 0, sSectorY = 0;
   INT32 iTotalTroopsInTown = 0;
 
   // can't auto-distribute if we don't have a town selected (this excludes SAM sites)
@@ -5825,7 +5825,7 @@ BOOLEAN CanMilitiaAutoDistribute(void) {
 }
 
 void ShowItemsOnMap(void) {
-  INT16 sMapX, sMapY;
+  u8 sMapX, sMapY;
   INT16 sXCorner, sYCorner;
   INT16 usXPos, usYPos;
   UINT32 uiItemCnt;
@@ -6014,7 +6014,7 @@ BOOLEAN CanRedistributeMilitiaInSector(INT16 sClickedSectorX, INT16 sClickedSect
                                        INT8 bClickedTownId) {
   INT32 iCounter = 0;
   INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
-  INT16 sSectorX = 0, sSectorY = 0;
+  u8 sSectorX = 0, sSectorY = 0;
 
   // if no world is loaded, we can't be in combat (PBI/Auto-resolve locks out normal mapscreen
   // interface for this)
