@@ -4040,8 +4040,8 @@ BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psS
 }
 
 // Returns TRUE if a battle is happening ONLY
-BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX, INT16 *psSectorY,
-                                                               INT16 *psSectorZ) {
+BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(u8 *psSectorX, u8 *psSectorY,
+                                                               i8 *psSectorZ) {
   if (gpAR) {
     *psSectorX = gpAR->ubSectorX;
     *psSectorY = gpAR->ubSectorY;
@@ -4053,9 +4053,9 @@ BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX,
     *psSectorZ = gubPBSectorZ;
     return TRUE;
   } else if (gfWorldLoaded) {
-    *psSectorX = gWorldSectorX;
-    *psSectorY = gWorldSectorY;
-    *psSectorZ = gbWorldSectorZ;
+    *psSectorX = (u8)gWorldSectorX;
+    *psSectorY = (u8)gWorldSectorY;
+    *psSectorZ = (i8)gbWorldSectorZ;
     if (gTacticalStatus.fEnemyInSector) {
       return TRUE;
     }

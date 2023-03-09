@@ -2268,7 +2268,8 @@ void TrashAllSoldiers() {
 UINT8 GetLocationModifier(UINT8 ubSoldierClass) {
   UINT8 ubLocationModifier;
   UINT8 ubPalaceDistance;
-  INT16 sSectorX, sSectorY, sSectorZ;
+  u8 sSectorX, sSectorY;
+  i8 sSectorZ;
   TownID bTownId;
   BOOLEAN fSuccess;
 

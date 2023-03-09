@@ -1752,7 +1752,8 @@ void CheckForRobotAndIfItsControlled(void) {
 }
 
 void LogBattleResults(UINT8 ubVictoryCode) {
-  INT16 sSectorX, sSectorY, sSectorZ;
+  u8 sSectorX, sSectorY;
+  i8 sSectorZ;
   GetCurrentBattleSectorXYZ(&sSectorX, &sSectorY, &sSectorZ);
   if (ubVictoryCode == LOG_VICTORY) {
     switch (gubEnemyEncounterCode) {

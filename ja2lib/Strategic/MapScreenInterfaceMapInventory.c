@@ -190,9 +190,8 @@ BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier);
 extern void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
                       UINT8 ubNumberToCopy);
 extern void MAPEndItemPointer();
-extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX,
-                                                                      INT16 *psSectorY,
-                                                                      INT16 *psSectorZ);
+extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(u8 *psSectorX, u8 *psSectorY,
+                                                                      i8 *psSectorZ);
 
 // load the background panel graphics for inventory
 BOOLEAN LoadInventoryPoolGraphic(void) {
@@ -1855,7 +1854,8 @@ INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {
 }
 
 BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier) {
-  INT16 sSectorX, sSectorY, sSectorZ;
+  u8 sSectorX, sSectorY;
+  i8 sSectorZ;
   BOOLEAN fInCombat;
 
   // Get the sector that has a battle

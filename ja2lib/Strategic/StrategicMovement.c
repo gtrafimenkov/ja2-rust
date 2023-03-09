@@ -3579,7 +3579,8 @@ WAYPOINT *GetFinalWaypoint(struct GROUP *pGroup) {
 // ResetMovementForEnemyGroup() for more details on what the resetting does.
 void ResetMovementForEnemyGroupsInLocation(UINT8 ubSectorX, UINT8 ubSectorY) {
   struct GROUP *pGroup, *next;
-  INT16 sSectorX, sSectorY, sSectorZ;
+  u8 sSectorX, sSectorY;
+  i8 sSectorZ;
 
   GetCurrentBattleSectorXYZ(&sSectorX, &sSectorY, &sSectorZ);
   pGroup = gpGroupList;
