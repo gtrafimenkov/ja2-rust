@@ -48,13 +48,13 @@ pub extern "C" fn GetSamSiteCount() -> u8 {
 #[no_mangle]
 /// Return X location of the SAM site
 pub extern "C" fn GetSamSiteX(site: SamSite) -> u8 {
-    return sam_sites::LOCATIONS[site as usize].x;
+    sam_sites::get_sam_location(site.to_internal()).x
 }
 
 #[no_mangle]
 /// Return Y location of the SAM site
 pub extern "C" fn GetSamSiteY(site: SamSite) -> u8 {
-    return sam_sites::LOCATIONS[site as usize].y;
+    sam_sites::get_sam_location(site.to_internal()).y
 }
 
 #[no_mangle]
@@ -161,15 +161,7 @@ pub extern "C" fn IsThereAFunctionalSamInSector(x: u8, y: u8, z: i8) -> bool {
 
 #[no_mangle]
 pub extern "C" fn GetNumberOfSAMSitesUnderPlayerControl() -> u8 {
-    let mut counter = 0;
-    for loc in sam_sites::LOCATIONS.iter() {
-        unsafe {
-            if !STATE.get_sector(loc.x, loc.y).enemy_controlled {
-                counter += 1;
-            }
-        }
-    }
-    counter
+    unsafe { STATE.get_number_of_sam_under_player_control() }
 }
 
 #[no_mangle]
