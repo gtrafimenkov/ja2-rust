@@ -63,7 +63,7 @@ extern UINT32 guiExitScreen;
 extern UINT32 uiMeanWhileFlags;
 extern BOOLEAN gfGamePaused;
 
-extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ);
+extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, UINT8 bMapZ);
 extern void InitVehicles();
 
 UINT8 gubScreenCount = 0;

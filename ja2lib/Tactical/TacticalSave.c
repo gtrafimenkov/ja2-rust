@@ -99,8 +99,7 @@ void TempFileLoadErrorMessageReturnCallback(UINT8 ubRetVal);
 
 BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
                                      WORLDITEM *pData);
-BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 sMapY,
-                                      INT8 bMapZ);
+BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, INT8 bMapZ);
 
 BOOLEAN AddTempFileToSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, i8 bMapZ);
 
@@ -1228,8 +1227,7 @@ BOOLEAN AddTempFileToSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, 
   return (TRUE);
 }
 
-BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 sMapY,
-                                      INT8 bMapZ) {
+BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, INT8 bMapZ) {
   CHAR8 zMapName[128];
 
   GetMapTempFileName(uiType, zMapName, sMapX, sMapY, bMapZ);
@@ -2070,7 +2068,7 @@ BOOLEAN GetUnderGroundSectorFlagStatus(u8 sSectorX, u8 sSectorY, UINT8 ubSectorZ
   return (FALSE);
 }
 
-BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
+BOOLEAN SetSectorFlag(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
   if (uiFlagToSet == SF_ALREADY_VISITED) {
     // do certain things when particular sectors are visited
     if ((sMapX == TIXA_SECTOR_X) && (sMapY == TIXA_SECTOR_Y)) {
@@ -2104,7 +2102,7 @@ BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet)
   return (TRUE);
 }
 
-BOOLEAN ReSetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
+BOOLEAN ReSetSectorFlag(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
   if (bMapZ == 0)
     SectorInfo[GetSectorID8(sMapX, sMapY)].uiFlags &= ~(uiFlagToSet);
   else
@@ -2113,14 +2111,14 @@ BOOLEAN ReSetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSe
   return (TRUE);
 }
 
-BOOLEAN GetSectorFlagStatus(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
+BOOLEAN GetSectorFlagStatus(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
   if (bMapZ == 0)
     return ((SectorInfo[GetSectorID8(sMapX, sMapY)].uiFlags & uiFlagToSet) ? 1 : 0);
   else
     return ((GetUnderGroundSectorFlagStatus(sMapX, sMapY, bMapZ, uiFlagToSet)) ? 1 : 0);
 }
 
-BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ,
+BOOLEAN AddDeadSoldierToUnLoadedSector(u8 sMapX, u8 sMapY, UINT8 bMapZ,
                                        struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                        UINT32 uiFlags) {
   UINT32 uiNumberOfItems;
@@ -2566,8 +2564,7 @@ void GetMapTempFileName(UINT32 uiType, STR pMapName, u8 sMapX, u8 sMapY, i8 bMap
   }
 }
 
-UINT32 GetNumberOfVisibleWorldItemsFromSectorStructureForSector(INT16 sMapX, INT16 sMapY,
-                                                                INT8 bMapZ) {
+UINT32 GetNumberOfVisibleWorldItemsFromSectorStructureForSector(u8 sMapX, u8 sMapY, INT8 bMapZ) {
   UINT32 uiNumberOfItems = 0;
   UNDERGROUND_SECTORINFO *pSector = NULL;
 

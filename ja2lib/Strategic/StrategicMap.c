@@ -533,12 +533,12 @@ void InitializeSAMSites(void) {
 }
 
 // get short sector name without town name
-void GetShortSectorString(INT16 sMapX, INT16 sMapY, STR16 sString, size_t bufSize) {
+void GetShortSectorString(u8 sMapX, u8 sMapY, STR16 sString, size_t bufSize) {
   // OK, build string id like J11
   swprintf(sString, bufSize, L"%hs%hs", pVertStrings[sMapY], pHortStrings[sMapX]);
 }
 
-void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder,
+void GetMapFileName(u8 sMapX, u8 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder,
                     BOOLEAN fAddAlternateMapLetter) {
   CHAR8 bTestString[150];
   CHAR8 bExtensionString[15];
@@ -2330,8 +2330,7 @@ void AllMercsHaveWalkedOffSector() {
   }
 
   HandleLoyaltyImplicationsOfMercRetreat(RETREAT_TACTICAL_TRAVERSAL, (u8)gWorldSectorX,
-                                         (u8)gWorldSectorY,
-                                         gbWorldSectorZ);
+                                         (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Setup strategic traversal information
   if (guiAdjacentTraverseTime <= 5) {

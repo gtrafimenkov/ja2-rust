@@ -471,8 +471,8 @@ void DisplayLevelString(void);
 void ShowTownText(void);
 void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFirstY);
 void ShowTeamAndVehicles(INT32 fShowFlags);
-BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor);
-BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor);
+BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor);
+BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor);
 void AdjustXForLeftMapEdge(STR16 wString, INT16 *psX);
 static void BlitTownGridMarkers(void);
 void BlitMineGridMarkers(void);
@@ -518,7 +518,7 @@ void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
 BOOLEAN CanMilitiaAutoDistribute(void);
 
 void ShowItemsOnMap(void);
-void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
+void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, u8 sMapX, u8 sMapY,
                     UINT8 ubIconPosition);
 void DisplayDestinationOfHelicopter(void);
 void DrawOrta();
@@ -761,7 +761,7 @@ UINT32 DrawMap(void) {
   return (TRUE);
 }
 
-void GetScreenXYFromMapXY(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 *psY) {
+void GetScreenXYFromMapXY(u8 sMapX, u8 sMapY, INT16 *psX, INT16 *psY) {
   INT16 sXTempOff = 1;
   INT16 sYTempOff = 1;
   if (fZoomFlag) {
@@ -773,7 +773,7 @@ void GetScreenXYFromMapXY(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 *psY) {
   }
 }
 
-void GetScreenXYFromMapXYStationary(INT16 sMapX, INT16 sMapY, INT16 *psX, INT16 *psY) {
+void GetScreenXYFromMapXYStationary(u8 sMapX, u8 sMapY, INT16 *psX, INT16 *psY) {
   INT16 sXTempOff = 1;
   INT16 sYTempOff = 1;
   //(MAP_VIEW_START_X+((iCount+1)*MAP_GRID_X)*2-iZoomX));
@@ -911,7 +911,7 @@ INT32 ShowOnDutyTeam(u8 sMapX, u8 sMapY) {
   return ubIconPosition;
 }
 
-INT32 ShowAssignedTeam(INT16 sMapX, INT16 sMapY, INT32 iCount) {
+INT32 ShowAssignedTeam(u8 sMapX, u8 sMapY, INT32 iCount) {
   UINT8 ubCounter, ubIconPosition;
   struct VObject *hIconHandle;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -946,7 +946,7 @@ INT32 ShowAssignedTeam(INT16 sMapX, INT16 sMapY, INT32 iCount) {
   return ubIconPosition;
 }
 
-INT32 ShowVehicles(INT16 sMapX, INT16 sMapY, INT32 iCount) {
+INT32 ShowVehicles(u8 sMapX, u8 sMapY, INT32 iCount) {
   UINT8 ubCounter, ubIconPosition;
   struct VObject *hIconHandle;
   struct SOLDIERTYPE *pVehicleSoldier;
@@ -1083,7 +1083,7 @@ void ShowTeamAndVehicles(INT32 fShowFlags) {
   }
 }
 
-BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
+BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   INT16 sScreenX, sScreenY;
   struct VSurface *hSrcVSurface;
   // struct VSurface* hSAMSurface;
@@ -1253,7 +1253,7 @@ BOOLEAN ShadeMapElem(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   return (TRUE);
 }
 
-BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
+BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
   INT16 sScreenX, sScreenY;
   INT32 iX, iY;
   struct VSurface *hSrcVSurface;
@@ -1265,12 +1265,8 @@ BOOLEAN ShadeMapElemZoomIn(INT16 sMapX, INT16 sMapY, INT32 iColor) {
   SGPRect clip;
   UINT16 *pOriginalPallette;
 
-  // get sX and sY
-  iX = (INT32)sMapX;
-  iY = (INT32)sMapY;
-
   // trabslate to screen co-ords for zoomed
-  GetScreenXYFromMapXYStationary(((UINT16)(iX)), ((UINT16)(iY)), &sScreenX, &sScreenY);
+  GetScreenXYFromMapXYStationary(sMapX, sMapY, &sScreenX, &sScreenY);
 
   // shift left by one sector
   iY = (INT32)sScreenY - MAP_GRID_Y;
@@ -3516,7 +3512,7 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           BltVideoObject(guiSAVEBUFFER, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY,
                          VO_BLT_SRCTRANSPARENCY, NULL);
         } else {
-          GetScreenXYFromMapXYStationary(((UINT16)(iX)), ((UINT16)(iY)), &sXPosition, &sYPosition);
+          GetScreenXYFromMapXYStationary(((u8)(iX)), ((u8)(iY)), &sXPosition, &sYPosition);
 
           iY = sYPosition - MAP_GRID_Y + sOffsetY;
           iX = sXPosition - MAP_GRID_X + sOffsetX;
@@ -5872,7 +5868,7 @@ void ShowItemsOnMap(void) {
   RestoreClipRegionToFullScreen();
 }
 
-void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY,
+void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, u8 sMapX, u8 sMapY,
                     UINT8 ubIconPosition) {
   INT32 iRowNumber, iColumnNumber;
   INT32 iX, iY;

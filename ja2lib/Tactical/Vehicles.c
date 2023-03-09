@@ -180,7 +180,7 @@ void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle) {
   pVehicle->ubWhatKindOfMercAmI = MERC_TYPE__VEHICLE;
 }
 
-INT32 AddVehicleToList(INT16 sMapX, INT16 sMapY, INT16 sGridNo, UINT8 ubType) {
+INT32 AddVehicleToList(u8 sMapX, u8 sMapY, INT16 sGridNo, UINT8 ubType) {
   // insert this vehicle into the list
   // how many vehicles are there?
   INT32 iVehicleIdValue = -1;

@@ -1380,7 +1380,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ) {
+UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, UINT8 bMapZ) {
   UNDERGROUND_SECTORINFO *pUnderground;
   pUnderground = gpUndergroundSectorInfoHead;
 
