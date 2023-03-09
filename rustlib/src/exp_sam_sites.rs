@@ -22,7 +22,7 @@ impl SamSite {
             sam_sites::SamSite::Meduna => SamSite::SamSiteMeduna,
         }
     }
-    fn to_internal(&self) -> sam_sites::SamSite {
+    fn to_internal(self) -> sam_sites::SamSite {
         match self {
             SamSite::SamSiteChitzena => sam_sites::SamSite::Chitzena,
             SamSite::SamSiteDrassen => sam_sites::SamSite::Drassen,
@@ -42,7 +42,7 @@ const SITES: [SamSite; 4] = [
 #[no_mangle]
 /// Return total number of SAM sites
 pub extern "C" fn GetSamSiteCount() -> u8 {
-    return sam_sites::LOCATIONS.len() as u8;
+    sam_sites::LOCATIONS.len() as u8
 }
 
 #[no_mangle]
@@ -60,17 +60,13 @@ pub extern "C" fn GetSamSiteY(site: SamSite) -> u8 {
 #[no_mangle]
 /// Check if the SAM site was found.
 pub extern "C" fn IsSamSiteFound(site: SamSite) -> bool {
-    unsafe {
-        return STATE.sam_sites.is_found(site.to_internal());
-    }
+    unsafe { STATE.sam_sites.is_found(site.to_internal()) }
 }
 
 #[no_mangle]
 /// Set if the SAM site was found.
 pub extern "C" fn SetSamSiteFound(site: SamSite, value: bool) {
-    unsafe {
-        return STATE.sam_sites.set_found(site.to_internal(), value);
-    }
+    unsafe { STATE.sam_sites.set_found(site.to_internal(), value) }
 }
 
 #[no_mangle]
@@ -100,10 +96,11 @@ pub extern "C" fn DoesSAMExistHere(sector_x: u8, sector_y: u8, sector_z: i8, gri
     }
 
     for site in SITES.iter() {
-        if GetSamSiteX(*site) == sector_x && GetSamSiteY(*site) == sector_y {
-            if GetSamGridNoA(*site) == grid_no || GetSamGridNoB(*site) == grid_no {
-                return true;
-            }
+        if GetSamSiteX(*site) == sector_x
+            && GetSamSiteY(*site) == sector_y
+            && (GetSamGridNoA(*site) == grid_no || GetSamGridNoB(*site) == grid_no)
+        {
+            return true;
         }
     }
 

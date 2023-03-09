@@ -111,14 +111,13 @@ pub fn get_sam_controlling_sector(x: u8, y: u8) -> Option<SamSite> {
 
 pub fn get_sam_at_sector(x: u8, y: u8, z: i8) -> Option<SamSite> {
     if z == 0 {
-        for i in 0..LOCATIONS.len() {
-            if LOCATIONS[i].x == x && LOCATIONS[i].y == y {
+        for (i, loc) in LOCATIONS.iter().enumerate() {
+            if loc.x == x && loc.y == y {
                 return Some(SamSite::from_int(i as u8).unwrap());
             }
         }
     }
-
-    return None;
+    None
 }
 
 #[cfg(test)]
