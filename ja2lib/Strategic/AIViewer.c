@@ -801,7 +801,7 @@ void RenderViewer() {
         ClipRect.iTop = VIEWER_TOP + y * VIEWER_CELLH;
         ClipRect.iBottom = ClipRect.iTop + VIEWER_CELLH - 1;
         for (x = 0; x < 16; x++) {
-          pUnder = FindUnderGroundSector((INT16)(x + 1), (INT16)(y + 1), gbViewLevel);
+          pUnder = FindUnderGroundSector((u8)(x + 1), (u8)(y + 1), gbViewLevel);
           if (pUnder) {
             xp = VIEWER_LEFT + x * VIEWER_CELLW + 2;
             yp = VIEWER_TOP + y * VIEWER_CELLH + 2;

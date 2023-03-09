@@ -77,7 +77,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  u8 sSectorX, sSectorY;
+  u16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -170,7 +170,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   if (GetWorldTotalMin() >
       uiTimeStamp + 300) {  // the file has aged.  Use the regular method for adding soldiers.
     FileMan_Close(hfile);
-    RemoveEnemySoldierTempFile(sSectorX, sSectorY, bSectorZ);
+    RemoveEnemySoldierTempFile((u8)sSectorX, (u8)sSectorY, bSectorZ);
     gfRestoringEnemySoldiersFromTempFile = FALSE;
     return TRUE;
   }
@@ -213,7 +213,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   // get the number of enemies in this sector.
   if (bSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(sSectorX, sSectorY, bSectorZ);
+    pSector = FindUnderGroundSector((u8)sSectorX, (u8)sSectorY, bSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",
@@ -227,9 +227,9 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
     ubStrategicCreatures = pSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(sSectorX, sSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)sSectorX, (u8)sSectorY)];
     ubStrategicCreatures = pSector->ubNumCreatures;
-    GetNumberOfEnemiesInSector(sSectorX, sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
+    GetNumberOfEnemiesInSector((u8)sSectorX, (u8)sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
                                &ubStrategicElites);
   }
 
@@ -349,7 +349,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
 #endif
     goto FAIL_LOAD;
   }
-  if (ubSectorID != GetSectorID8(sSectorX, sSectorY)) {
+  if (ubSectorID != GetSectorID8((u8)sSectorX, (u8)sSectorY)) {
 #ifdef JA2TESTVERSION
     sprintf(zReason, "EnemySoldier -- ubSectorID mismatch.  KM");
 #endif
@@ -674,7 +674,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  u8 sSectorX, sSectorY;
+  u16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -815,7 +815,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   if (GetWorldTotalMin() >
       uiTimeStamp + 300) {  // the file has aged.  Use the regular method for adding soldiers.
     FileMan_Close(hfile);
-    RemoveEnemySoldierTempFile(sSectorX, sSectorY, bSectorZ);
+    RemoveEnemySoldierTempFile((u8)sSectorX, (u8)sSectorY, bSectorZ);
     gfRestoringEnemySoldiersFromTempFile = FALSE;
     return TRUE;
   }
@@ -851,7 +851,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   // get the number of enemies in this sector.
   if (bSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(sSectorX, sSectorY, bSectorZ);
+    pSector = FindUnderGroundSector((u8)sSectorX, (u8)sSectorY, bSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",
@@ -865,9 +865,9 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     ubStrategicCreatures = pSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(sSectorX, sSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)sSectorX, (u8)sSectorY)];
     ubStrategicCreatures = pSector->ubNumCreatures;
-    GetNumberOfEnemiesInSector(sSectorX, sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
+    GetNumberOfEnemiesInSector((u8)sSectorX, (u8)sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
                                &ubStrategicElites);
   }
 
@@ -985,7 +985,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 #endif
     goto FAIL_LOAD;
   }
-  if (ubSectorID != GetSectorID8(sSectorX, sSectorY)) {
+  if (ubSectorID != GetSectorID8((u8)sSectorX, (u8)sSectorY)) {
 #ifdef JA2TESTVERSION
     sprintf(zReason, "EnemySoldier -- ubSectorID mismatch.  KM");
 #endif
@@ -1043,7 +1043,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   UINT32 uiTimeStamp;
   UINT32 uiTimeSinceLastLoaded;
   HWFILE hfile;
-  u8 sSectorX, sSectorY;
+  i16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];

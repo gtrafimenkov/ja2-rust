@@ -548,7 +548,7 @@ void OpenAndReadHistoryFile(void) {
   HWFILE hFileHandle;
   UINT8 ubCode, ubSecondCode;
   UINT32 uiDate;
-  u8 sSectorX, sSectorY;
+  i16 sSectorX, sSectorY;
   INT8 bSectorZ = 0;
   UINT8 ubColor;
   UINT32 iBytesRead = 0;
@@ -587,7 +587,7 @@ void OpenAndReadHistoryFile(void) {
 
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(1, sSectorX, sSectorY, bSectorZ);
+    PerformCheckOnHistoryRecord(1, (u8)sSectorX, (u8)sSectorY, bSectorZ);
 #endif
 
     // add transaction
@@ -1106,7 +1106,7 @@ BOOLEAN LoadInHistoryRecords(UINT32 uiPage) {
   INT32 iCount = 0;
   HWFILE hFileHandle;
   UINT8 ubCode, ubSecondCode;
-  u8 sSectorX, sSectorY;
+  i16 sSectorX, sSectorY;
   INT8 bSectorZ;
   UINT32 uiDate;
   UINT8 ubColor;
@@ -1160,7 +1160,7 @@ BOOLEAN LoadInHistoryRecords(UINT32 uiPage) {
 
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(3, sSectorX, sSectorY, bSectorZ);
+    PerformCheckOnHistoryRecord(3, (u8)sSectorX, (u8)sSectorY, bSectorZ);
 #endif
 
     // add transaction
