@@ -3731,8 +3731,8 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
 
   gfDisableTacticalPanelButtons = sGeneralInfo.fDisableTacticalPanelButtons;
 
-  sSelMapX = sGeneralInfo.sSelMapX;
-  sSelMapY = sGeneralInfo.sSelMapY;
+  sSelMapX = (u8)sGeneralInfo.sSelMapX;
+  sSelMapY = (u8)sGeneralInfo.sSelMapY;
   iCurrentMapSectorZ = sGeneralInfo.iCurrentMapSectorZ;
 
   // State of email flags

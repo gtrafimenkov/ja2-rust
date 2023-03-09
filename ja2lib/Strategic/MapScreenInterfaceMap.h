@@ -185,8 +185,8 @@ extern INT16 sRegularsOnCursor;
 extern INT16 sElitesOnCursor;
 
 // highlighted sectors
-extern INT16 gsHighlightSectorX;
-extern INT16 gsHighlightSectorY;
+extern u8 gsHighlightSectorX;
+extern u8 gsHighlightSectorY;
 
 // the big map
 extern UINT32 guiBIGMAP;
@@ -243,8 +243,8 @@ extern UINT32 guiMapBorderHeliSectors;
 extern INT16 sSelectedMilitiaTown;
 
 // the selected sectors
-extern UINT16 sSelMapX;
-extern UINT16 sSelMapY;
+extern u8 sSelMapX;
+extern u8 sSelMapY;
 
 extern BOOLEAN fFoundTixa;
 

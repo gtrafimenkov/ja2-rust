@@ -344,12 +344,12 @@ extern BOOLEAN fMapScreenBottomDirty;
 BOOLEAN fFoundTixa = FALSE;
 
 // selected sector
-UINT16 sSelMapX = 9;
-UINT16 sSelMapY = 1;
+u8 sSelMapX = 9;
+u8 sSelMapY = 1;
 
 // highlighted sector
-INT16 gsHighlightSectorX = -1;
-INT16 gsHighlightSectorY = -1;
+u8 gsHighlightSectorX = 0xff;
+u8 gsHighlightSectorY = 0xff;
 
 // the current sector Z value of the map being displayed
 INT32 iCurrentMapSectorZ = 0;
@@ -584,62 +584,6 @@ void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow) {
 
   SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
 }
-
-/*
-void DrawMapIndexSmallMap( BOOLEAN fSelectedCursorIsYellow )
-{
-        // this procedure will draw the coord indexes on the zoomed in map
-        INT16 usX, usY;
-        INT32 iCount=0;
-        BOOLEAN fDrawCursors;
-
-
-        SetFont(MAP_FONT);
-        SetFontDestBuffer( FRAME_BUFFER, MAP_HORT_INDEX_X, MAP_HORT_INDEX_Y,
-MAP_HORT_INDEX_X+(MAX_VIEW_SECTORS)*MAP_GRID_X, MAP_HORT_INDEX_Y+MAP_GRID_Y, FALSE );
-  //SetFontColors(FONT_FCOLOR_GREEN)
-  SetFont(MAP_FONT);
-  SetFontForeground(MAP_INDEX_COLOR);
-  SetFontBackground(FONT_MCOLOR_BLACK);
-
-        fDrawCursors = CanDrawSectorCursor( );
-
-        for(iCount=1; iCount <= MAX_VIEW_SECTORS; iCount++)
-        {
-         if( fDrawCursors && ( iCount == sSelMapX ) && ( bSelectedDestChar == -1 ) && (
-fPlotForHelicopter == FALSE ) ) SetFontForeground( ( UINT8 ) ( fSelectedCursorIsYellow ? FONT_YELLOW
-: FONT_WHITE ) ); else if( fDrawCursors && ( iCount == gsHighlightSectorX ) )
-    SetFontForeground(FONT_WHITE);
-   else
-    SetFontForeground(MAP_INDEX_COLOR);
-
-   FindFontCenterCoordinates(((INT16)(MAP_HORT_INDEX_X+((iCount)*MAP_GRID_X)*2-iZoomX)),
-MAP_HORT_INDEX_Y, MAP_GRID_X*2, MAP_HORT_HEIGHT, pMapHortIndex[iCount], MAP_FONT, &usX, &usY);
-         mprintf(usX,usY,pMapHortIndex[iCount]);
-  }
-        SetFontDestBuffer( FRAME_BUFFER, MAP_VERT_INDEX_X, MAP_VERT_INDEX_Y,
-MAP_VERT_INDEX_X+MAP_GRID_X, MAP_VERT_INDEX_Y+(MAX_VIEW_SECTORS)*MAP_GRID_Y, FALSE );
-
-        for(iCount=1; iCount <= MAX_VIEW_SECTORS; iCount++)
-        {
-         if( fDrawCursors && ( iCount == sSelMapY) && ( bSelectedDestChar == -1 ) && (
-fPlotForHelicopter == FALSE ) ) SetFontForeground( ( UINT8 ) ( fSelectedCursorIsYellow ? FONT_YELLOW
-: FONT_WHITE ) ); else if( fDrawCursors && ( iCount == gsHighlightSectorY ) )
-    SetFontForeground(FONT_WHITE);
-   else
-    SetFontForeground(MAP_INDEX_COLOR);
-
-         FindFontCenterCoordinates(MAP_VERT_INDEX_X,
-((INT16)(MAP_VERT_INDEX_Y+(iCount*MAP_GRID_Y)*2-iZoomY)), MAP_HORT_HEIGHT, MAP_GRID_Y*2,
-pMapVertIndex[iCount], MAP_FONT, &usX, &usY); mprintf(usX,usY,pMapVertIndex[iCount]);
-        }
-
-  InvalidateRegion(MAP_VERT_INDEX_X, MAP_VERT_INDEX_Y,MAP_VERT_INDEX_X+MAP_HORT_HEIGHT,
-MAP_VERT_INDEX_Y+iCount*MAP_GRID_Y ); InvalidateRegion(MAP_HORT_INDEX_X,
-MAP_HORT_INDEX_Y,MAP_HORT_INDEX_X+iCount*MAP_GRID_X,  MAP_HORT_INDEX_Y+ MAP_HORT_HEIGHT);
-  SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
-}
-*/
 
 void HandleShowingOfEnemiesWithMilitiaOn(void) {
   INT16 sX = 0, sY = 0;
