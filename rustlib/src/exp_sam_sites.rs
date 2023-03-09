@@ -170,6 +170,12 @@ pub extern "C" fn IsSamUnderPlayerControl(site: SamSite) -> bool {
     }
 }
 
+#[no_mangle]
+/// Update airspace control map based on which SAM sectors are controlled by the enemy.
+pub extern "C" fn UpdateAirspaceControlMap() {
+    unsafe { STATE.update_airspace_control_map() }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

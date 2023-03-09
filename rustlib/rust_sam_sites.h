@@ -90,6 +90,11 @@ uint8_t GetNumberOfSAMSitesUnderPlayerControl(void);
 
 bool IsSamUnderPlayerControl(enum SamSite site);
 
+/**
+ * Update airspace control map based on which SAM sectors are controlled by the enemy.
+ */
+void UpdateAirspaceControlMap(void);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

@@ -3,6 +3,9 @@
 cargo test
 if errorlevel 1 exit /b 1
 
+cargo clippy
+if errorlevel 1 exit /b 1
+
 @REM cargo build
 @REM cargo build --target x86_64-pc-windows-msvc
 cargo build --target i686-pc-windows-msvc

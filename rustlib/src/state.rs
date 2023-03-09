@@ -41,6 +41,25 @@ impl State {
         }
         counter
     }
+
+    /// Update airspace control map based on which SAM sectors are controlled by the enemy.
+    pub fn update_airspace_control_map(&mut self) {
+        for y in 0..17 {
+            for x in 0..17 {
+                let sam = sam_sites::get_sam_controlling_sector(x, y);
+                self.get_mut_sector(x, y).enemy_air_controlled = match sam {
+                    None => false,
+                    Some(sam) => {
+                        self.get_sector(
+                            sam_sites::get_sam_location(sam).x,
+                            sam_sites::get_sam_location(sam).y,
+                        )
+                        .enemy_controlled
+                    }
+                }
+            }
+        }
+    }
 }
 
 #[cfg(test)]
