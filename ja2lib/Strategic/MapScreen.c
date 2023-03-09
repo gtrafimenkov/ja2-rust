@@ -675,7 +675,7 @@ void CancelMapUIMessage(void);
 void MonitorMapUIMessage(void);
 
 static void RenderMapHighlight(u8 sMapX, u8 sMapY, UINT16 usLineColor, BOOLEAN fStationary);
-void ShadeMapElem(INT16 sMapX, INT16 sMapY);
+void ShadeMapElem(u8 sMapX, u8 sMapY);
 void PopupText(CHAR16 *pFontString, ...);
 void DrawString(STR16 pString, UINT16 uiX, UINT16 uiY, UINT32 uiFont);
 
@@ -916,14 +916,14 @@ BOOLEAN RequestGiveSkyriderNewDestination(void);
 void ExplainWhySkyriderCantFly(void);
 UINT8 PlayerMercsInHelicopterSector(void);
 
-void HandleNewDestConfirmation(INT16 sMapX, INT16 sMapY);
+void HandleNewDestConfirmation(u8 sMapX, u8 sMapY);
 void RandomAwakeSelectedMercConfirmsStrategicMove(void);
 void DestinationPlottingCompleted(void);
 
 void HandleMilitiaRedistributionClick(void);
 
 void StartChangeSectorArrivalMode(void);
-BOOLEAN CanMoveBullseyeAndClickedOnIt(INT16 sMapX, INT16 sMapY);
+BOOLEAN CanMoveBullseyeAndClickedOnIt(u8 sMapX, u8 sMapY);
 void CreateBullsEyeOrChopperSelectionPopup(void);
 void BullsEyeOrChopperSelectionPopupCallback(UINT8 ubExitValue);
 
@@ -945,7 +945,7 @@ void ClearPreviousPaths(void);
 void SelectAllCharactersInSquad(INT8 bSquadNumber);
 
 BOOLEAN CanDrawSectorCursor(void);
-void RestoreMapSectorCursor(INT16 sMapX, INT16 sMapY);
+void RestoreMapSectorCursor(u8 sMapX, u8 sMapY);
 
 void RequestToggleMercInventoryPanel(void);
 
@@ -3996,8 +3996,8 @@ UINT32 HandleMapUI() {
             if ((gpItemPointerSoldier->sSectorX != sSelMapX) ||
                 (gpItemPointerSoldier->sSectorY != sSelMapY) ||
                 (gpItemPointerSoldier->bSectorZ != iCurrentMapSectorZ)) {
-              ChangeSelectedMapSector(gpItemPointerSoldier->sSectorX,
-                                      gpItemPointerSoldier->sSectorY,
+              ChangeSelectedMapSector((u8)gpItemPointerSoldier->sSectorX,
+                                      (u8)gpItemPointerSoldier->sSectorY,
                                       gpItemPointerSoldier->bSectorZ);
             }
           }
@@ -9924,7 +9924,7 @@ UINT8 PlayerMercsInHelicopterSector(void) {
   return (PlayerMercsInSector(pGroup->ubSectorX, pGroup->ubSectorY, 0));
 }
 
-void HandleNewDestConfirmation(INT16 sMapX, INT16 sMapY) {
+void HandleNewDestConfirmation(u8 sMapX, u8 sMapY) {
   UINT8 ubCurrentProgress;
 
   // if moving the chopper itself, or moving a character aboard the chopper
@@ -10112,7 +10112,7 @@ void StartChangeSectorArrivalMode(void) {
   MapScreenMessage(FONT_MCOLOR_LTYELLOW, MSG_MAP_UI_POSITION_MIDDLE, pBullseyeStrings[0]);
 }
 
-BOOLEAN CanMoveBullseyeAndClickedOnIt(INT16 sMapX, INT16 sMapY) {
+BOOLEAN CanMoveBullseyeAndClickedOnIt(u8 sMapX, u8 sMapY) {
   // if in airspace mode, and not plotting paths
   if ((fShowAircraftFlag == TRUE) && (bSelectedDestChar == -1) && (fPlotForHelicopter == FALSE)) {
     // don't allow moving bullseye until after initial arrival
@@ -10526,7 +10526,7 @@ BOOLEAN CanDrawSectorCursor(void) {
   return (FALSE);
 }
 
-void RestoreMapSectorCursor(INT16 sMapX, INT16 sMapY) {
+void RestoreMapSectorCursor(u8 sMapX, u8 sMapY) {
   INT16 sScreenX, sScreenY;
 
   Assert((sMapX >= 1) && (sMapX <= 16));
