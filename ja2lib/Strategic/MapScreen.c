@@ -5245,31 +5245,28 @@ BOOLEAN GetMouseMapXY(u8 *psMapWorldX, u8 *psMapWorldY) {
 }
 
 static BOOLEAN GetMapXY(INT16 sX, INT16 sY, u8 *psMapWorldX, u8 *psMapWorldY) {
-  u8 sMapX, sMapY;
-
   // Subtract start of map view
-  sMapX = sX - MAP_VIEW_START_X;  //+2*MAP_GRID_X;
-  sMapY = sY - MAP_VIEW_START_Y;
+  i16 x = sX - MAP_VIEW_START_X;
+  i16 y = sY - MAP_VIEW_START_Y;
 
   if (!fZoomFlag) {
-    if (sMapX < MAP_GRID_X || sMapY < MAP_GRID_Y) {
+    if (x < MAP_GRID_X || y < MAP_GRID_Y) {
       return (FALSE);
     }
   }
-  if (sMapX < 0 || sMapY < 0) {
+  if (x < 0 || y < 0) {
     return (FALSE);
   }
 
-  if (sMapX > MAP_VIEW_WIDTH + MAP_GRID_X - 1 ||
-      sMapY > MAP_VIEW_HEIGHT + 7 /* +MAP_VIEW_HEIGHT */) {
+  if (x > MAP_VIEW_WIDTH + MAP_GRID_X - 1 || y > MAP_VIEW_HEIGHT + 7 /* +MAP_VIEW_HEIGHT */) {
     return (FALSE);
   }
-  if (sMapX < 1 || sMapY < 1) {
+  if (x < 1 || y < 1) {
     return (FALSE);
   }
 
-  *psMapWorldX = (sMapX / MAP_GRID_X);
-  *psMapWorldY = (sMapY / MAP_GRID_Y);
+  *psMapWorldX = (x / MAP_GRID_X);
+  *psMapWorldY = (y / MAP_GRID_Y);
 
   return (TRUE);
 }

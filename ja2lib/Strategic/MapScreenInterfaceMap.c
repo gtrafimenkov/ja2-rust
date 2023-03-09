@@ -4226,49 +4226,6 @@ void BlitMineGridMarkers(void) {
   return;
 }
 
-/*
-void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, INT8 bZ )
-{
-        // if this map sector is currently selected
-        if( ( sX == sSelMapX ) && ( sY == sSelMapY ) && ( bZ == iCurrentMapSectorZ ) )
-        {
-                // check if anyone left in the old sector
-                if( NumFriendlyInSector( (INT8)sX, (INT8)sY, bZ ) == 0)
-                {
-                        ChangeSelectedMapSector( sNewX, sNewY, bZ );
-                        fMapScreenBottomDirty = TRUE;
-                }
-        }
-
-        return;
-}
-
-
-UINT8 NumFriendlyInSector( INT16 sX, INT16 sY, INT8 bZ )
-{
-        struct SOLDIERTYPE *pTeamSoldier;
-        INT32				cnt = 0;
-        UINT8				ubNumFriendlies = 0;
-
-        // Check if the battle is won!
-        // Loop through all mercs and make go
-        for ( pTeamSoldier = Menptr, cnt = 0; cnt < TOTAL_SOLDIERS; pTeamSoldier++, cnt++ )
-        {
-                if ( pTeamSoldier->bActive && pTeamSoldier->bLife > 0 )
-                {
-                        if ( (pTeamSoldier->bSide == gbPlayerNum ) && ( pTeamSoldier->sSectorX == sX
-) && ( pTeamSoldier->sSectorY == sY ) && ( pTeamSoldier->bSectorZ == bZ ) )
-                        {
-                                ubNumFriendlies++;
-                        }
-                }
-        }
-
-        return( ubNumFriendlies );
-
-}
-*/
-
 void DisplayLevelString(void) {
   CHAR16 sString[32];
 
