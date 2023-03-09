@@ -20,10 +20,10 @@ BOOLEAN InitializePalettesForMap(void);
 void ShutDownPalettesForMap(void);
 
 // plot path for helicopter
-void PlotPathForHelicopter(INT16 sX, INT16 sY);
+void PlotPathForHelicopter(u8 sX, u8 sY);
 
 // the temp path, where the helicopter could go
-void PlotATemporaryPathForHelicopter(INT16 sX, INT16 sY);
+void PlotATemporaryPathForHelicopter(u8 sX, u8 sY);
 
 // trace a route for a passed path...doesn't require dest char - most more general
 BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pPath);
@@ -35,11 +35,10 @@ void DisplayPathArrows(UINT16 usCharNum, struct VObject *hMapHandle);
 void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY, BOOLEAN fZoom);
 
 // build path for character
-void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY,
-                          BOOLEAN fTacticalTraversal);
+void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY, BOOLEAN fTacticalTraversal);
 
 // build temp path for character
-void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
+void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY);
 
 // display current/temp paths
 void DisplaySoldierPath(struct SOLDIERTYPE *pCharacter);
@@ -48,7 +47,7 @@ void DisplayHelicopterPath(void);
 void DisplayHelicopterTempPath(void);
 
 // clear path after this sector
-UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY);
+UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY);
 
 // cancel path : clear the path completely and gives player feedback message that the route was
 // canceled
@@ -60,7 +59,7 @@ void CancelPathForGroup(struct GROUP *pGroup);
 void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
 
 // clear out helicopter list after this sector
-UINT32 ClearPathAfterThisSectorForHelicopter(INT16 sX, INT16 sY);
+UINT32 ClearPathAfterThisSectorForHelicopter(u8 sX, u8 sY);
 
 // check to see if sector is highlightable
 BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY);
@@ -80,7 +79,7 @@ void RestoreClipRegionToFullScreen(void);
 void RestoreClipRegionToFullScreenForRectangle(UINT32 uiDestPitchBYTES);
 
 // show the icons for people in motion
-void ShowPeopleInMotion(INT16 sX, INT16 sY);
+void ShowPeopleInMotion(u8 sX, u8 sY);
 
 // last sector in helicopter's path
 INT16 GetLastSectorOfHelicoptersPath(void);

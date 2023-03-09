@@ -429,8 +429,8 @@ void SetUpMapScreenFastHelpText(void);
 void TurnOnSectorLocator(UINT8 ubProfileID);
 void TurnOffSectorLocator();
 
-extern INT16 gsSectorLocatorX;
-extern INT16 gsSectorLocatorY;
+extern u8 gsSectorLocatorX;
+extern u8 gsSectorLocatorY;
 extern UINT8 gubBlitSectorLocatorCode;
 
 enum { LOCATOR_COLOR_NONE, LOCATOR_COLOR_RED, LOCATOR_COLOR_YELLOW };

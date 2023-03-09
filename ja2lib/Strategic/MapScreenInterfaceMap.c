@@ -586,7 +586,7 @@ void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow) {
 }
 
 void HandleShowingOfEnemiesWithMilitiaOn(void) {
-  INT16 sX = 0, sY = 0;
+  u8 sX = 0, sY = 0;
 
   // if show militia flag is false, leave
   if (!fShowMilitia) {
@@ -610,7 +610,7 @@ UINT32 DrawMap(void) {
   UINT16 *pDestBuf;
   UINT8 *pSrcBuf;
   SGPRect clip;
-  INT16 cnt, cnt2;
+  u8 cnt, cnt2;
   INT32 iCounter = 0;
 
   if (!iCurrentMapSectorZ) {
@@ -1051,8 +1051,8 @@ void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY) {
 
 void ShowTeamAndVehicles(INT32 fShowFlags) {
   // go through each sector, display the on duty, assigned, and vehicles
-  INT16 sMapX = 0;
-  INT16 sMapY = 0;
+  u8 sMapX = 0;
+  u8 sMapY = 0;
   INT32 iIconOffset = 0;
   BOOLEAN fContemplatingRetreating = FALSE;
 
@@ -1464,7 +1464,7 @@ void ShutDownPalettesForMap(void) {
   return;
 }
 
-void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY,
+void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY,
                           BOOLEAN fTacticalTraversal) {
   // will plot a path for this character
 
@@ -1519,7 +1519,7 @@ void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY,
   }
 }
 
-void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
+void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY) {
   // make sure we're at the beginning
   pTempCharacterPath = MoveToBeginningOfPathList(pTempCharacterPath);
 
@@ -1540,7 +1540,7 @@ void PlotATemporaryPathForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, IN
 }
 
 // clear out character path list, after and including this sector
-UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, INT16 sX, INT16 sY) {
+UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY) {
   INT32 iOrigLength = 0;
   VEHICLETYPE *pVehicle = NULL;
 
@@ -1753,7 +1753,7 @@ void DisplayHelicopterTempPath(void) {
   return;
 }
 
-void PlotPathForHelicopter(INT16 sX, INT16 sY) {
+void PlotPathForHelicopter(u8 sX, u8 sY) {
   // will plot the path for the helicopter
 
   // no heli...go back
@@ -1791,7 +1791,7 @@ void PlotPathForHelicopter(INT16 sX, INT16 sY) {
   return;
 }
 
-void PlotATemporaryPathForHelicopter(INT16 sX, INT16 sY) {
+void PlotATemporaryPathForHelicopter(u8 sX, u8 sY) {
   // clear old temp path
   pTempHelicopterPath = ClearStrategicPathList(pTempHelicopterPath, 0);
 
@@ -1809,7 +1809,7 @@ void PlotATemporaryPathForHelicopter(INT16 sX, INT16 sY) {
 }
 
 // clear out helicopter path list, after and including this sector
-UINT32 ClearPathAfterThisSectorForHelicopter(INT16 sX, INT16 sY) {
+UINT32 ClearPathAfterThisSectorForHelicopter(u8 sX, u8 sY) {
   VEHICLETYPE *pVehicle = NULL;
   INT32 iOrigLength = 0;
 
@@ -3372,7 +3372,7 @@ void RestoreClipRegionToFullScreenForRectangle(UINT32 uiDestPitchBYTES) {
 
 #define ICON_WIDTH 8
 
-void ShowPeopleInMotion(INT16 sX, INT16 sY) {
+void ShowPeopleInMotion(u8 sX, u8 sY) {
   INT32 sExiting = 0;
   INT32 sEntering = 0;
   INT16 sDest = 0;
