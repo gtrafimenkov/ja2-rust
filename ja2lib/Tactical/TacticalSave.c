@@ -97,7 +97,7 @@ INT32 giErrorMessageBox = 0;
 
 void TempFileLoadErrorMessageReturnCallback(UINT8 ubRetVal);
 
-BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
+BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
                                      WORLDITEM *pData);
 BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 sMapY,
                                       INT8 bMapZ);
@@ -457,7 +457,7 @@ BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
+BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
                                      WORLDITEM *pData) {
   HWFILE hFile;
   UINT32 uiNumBytesWritten = 0;
@@ -500,7 +500,7 @@ BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, UINT3
   return (TRUE);
 }
 
-BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WORLDITEM *pData) {
+BOOLEAN LoadWorldItemsFromTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, WORLDITEM *pData) {
   UINT32 uiNumBytesRead = 0;
   HWFILE hFile;
   CHAR8 zMapName[128];
@@ -615,7 +615,7 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMa
   return (TRUE);
 }
 
-BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
+BOOLEAN AddItemsToUnLoadedSector(u8 sMapX, u8 sMapY, INT8 bMapZ, INT16 sGridNo,
                                  UINT32 uiNumberOfItemsToAdd, struct OBJECTTYPE *pObject,
                                  UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel,
                                  INT8 bVisible, BOOLEAN fReplaceEntireFile) {
@@ -1457,7 +1457,7 @@ BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMap
   return (TRUE);
 }
 
-BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
+BOOLEAN AddWorldItemsToUnLoadedSector(u8 sMapX, u8 sMapY, INT8 bMapZ, INT16 sGridNo,
                                       UINT32 uiNumberOfItems, WORLDITEM *pWorldItem,
                                       BOOLEAN fOverWrite) {
   UINT32 uiLoop;

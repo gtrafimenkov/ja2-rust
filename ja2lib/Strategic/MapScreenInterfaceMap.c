@@ -5063,7 +5063,7 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
   INT32 iCounter = 0, iNumberUnderControl = 0, iNumberOfGreens = 0, iNumberOfRegulars = 0,
         iNumberOfElites = 0, iTotalNumberOfTroops = 0;
   INT32 iNumberLeftOverGreen = 0, iNumberLeftOverRegular = 0, iNumberLeftOverElite = 0;
-  INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
+  u8 sBaseSectorValue = 0, sCurrentSectorValue = 0;
   INT16 sTotalSoFar = 0;
 
   // how many sectors in the selected town do we control?
@@ -5257,7 +5257,7 @@ void MilitiaDoneButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 void RenderShadingForUnControlledSectors(void) {
   // now render shading over any uncontrolled sectors
   // get the sector value for the upper left corner
-  INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0, sX = 0, sY = 0;
+  u8 sBaseSectorValue = 0, sCurrentSectorValue = 0, sX = 0, sY = 0;
   INT32 iCounter = 0;
 
   // get the base sector value
@@ -5784,7 +5784,7 @@ void BlitSAMGridMarkers(void) {
 
 BOOLEAN CanMilitiaAutoDistribute(void) {
   INT32 iCounter = 0;
-  INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
+  u8 sBaseSectorValue = 0, sCurrentSectorValue = 0;
   u8 sSectorX = 0, sSectorY = 0;
   INT32 iTotalTroopsInTown = 0;
 
@@ -6013,7 +6013,7 @@ void InitMapSecrets(void) {
 BOOLEAN CanRedistributeMilitiaInSector(INT16 sClickedSectorX, INT16 sClickedSectorY,
                                        INT8 bClickedTownId) {
   INT32 iCounter = 0;
-  INT16 sBaseSectorValue = 0, sCurrentSectorValue = 0;
+  u8 sBaseSectorValue = 0, sCurrentSectorValue = 0;
   u8 sSectorX = 0, sSectorY = 0;
 
   // if no world is loaded, we can't be in combat (PBI/Auto-resolve locks out normal mapscreen

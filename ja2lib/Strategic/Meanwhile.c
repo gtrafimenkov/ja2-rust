@@ -81,12 +81,12 @@ MEANWHILE_DEFINITION gMeanwhileDef[NUM_MEANWHILES];
 BOOLEAN gfMeanwhileTryingToStart = FALSE;
 BOOLEAN gfInMeanwhile = FALSE;
 // END SERIALIZATION
-INT16 gsOldSectorX;
-INT16 gsOldSectorY;
-INT16 gsOldSectorZ;
-INT16 gsOldSelectedSectorX;
-INT16 gsOldSelectedSectorY;
-INT16 gsOldSelectedSectorZ;
+u8 gsOldSectorX;
+u8 gsOldSectorY;
+u8 gsOldSectorZ;
+u8 gsOldSelectedSectorX;
+u8 gsOldSelectedSectorY;
+u8 gsOldSelectedSectorZ;
 
 UINT32 guiOldScreen;
 NPC_SAVE_INFO gNPCSaveData[MAX_MEANWHILE_PROFILES];
@@ -381,14 +381,14 @@ void StartMeanwhile() {
 
   // OK, save old position...
   if (gfWorldLoaded) {
-    gsOldSectorX = gWorldSectorX;
-    gsOldSectorY = gWorldSectorY;
-    gsOldSectorZ = gbWorldSectorZ;
+    gsOldSectorX = (u8)gWorldSectorX;
+    gsOldSectorY = (u8)gWorldSectorY;
+    gsOldSectorZ = (u8)gbWorldSectorZ;
   }
 
   gsOldSelectedSectorX = sSelMapX;
   gsOldSelectedSectorY = sSelMapY;
-  gsOldSelectedSectorZ = (INT16)iCurrentMapSectorZ;
+  gsOldSelectedSectorZ = iCurrentMapSectorZ;
 
   gfInMeanwhile = TRUE;
 

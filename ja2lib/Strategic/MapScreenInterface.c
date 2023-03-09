@@ -1136,7 +1136,7 @@ void HandleLeavingOfEquipmentInCurrentSector(UINT32 uiMercId) {
           Menptr[uiMercId].bSectorZ != gbWorldSectorZ) {
         // Set flag for item...
         AddItemsToUnLoadedSector(
-            Menptr[uiMercId].sSectorX, Menptr[uiMercId].sSectorY, Menptr[uiMercId].bSectorZ,
+            (u8)Menptr[uiMercId].sSectorX, (u8)Menptr[uiMercId].sSectorY, Menptr[uiMercId].bSectorZ,
             sGridNo, 1, &(Menptr[uiMercId].inv[iCounter]), Menptr[uiMercId].bLevel,
             WOLRD_ITEM_FIND_SWEETSPOT_FROM_GRIDNO | WORLD_ITEM_REACHABLE, 0, 1, FALSE);
       } else {
