@@ -621,7 +621,7 @@ BOOLEAN OpenAndWriteHistoryFile(void) {
   while (pHistoryList) {
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(2, pHistoryList->sSectorX, pHistoryList->sSectorY,
+    PerformCheckOnHistoryRecord(2, (u8)pHistoryList->sSectorX, (u8)pHistoryList->sSectorY,
                                 pHistoryList->bSectorZ);
 #endif
 
@@ -1246,7 +1246,7 @@ BOOLEAN WriteOutHistoryRecords(UINT32 uiPage) {
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue)) {
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(4, pList->sSectorX, pList->sSectorY, pList->bSectorZ);
+    PerformCheckOnHistoryRecord(4, (u8)pList->sSectorX, (u8)pList->sSectorY, pList->bSectorZ);
 #endif
 
     FileMan_Write(hFileHandle, &(pList->ubCode), sizeof(UINT8), NULL);
@@ -1396,7 +1396,7 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
 
 #ifdef JA2TESTVERSION
   // perform a check on the data to see if it is pooched
-  PerformCheckOnHistoryRecord(5, pHistoryList->sSectorX, pHistoryList->sSectorY,
+  PerformCheckOnHistoryRecord(5, (u8)pHistoryList->sSectorX, (u8)pHistoryList->sSectorY,
                               pHistoryList->bSectorZ);
 #endif
 
