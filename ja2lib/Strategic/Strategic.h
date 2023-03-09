@@ -14,7 +14,7 @@ struct strategicmapelement {
   UINT8 uiBadVehicleSector[4];     // blocking mvt from vehicles
   INT8 townID;
   BOOLEAN __only_storage_fEnemyControlled;  // enemy controlled or not
-  BOOLEAN __only_storage_fEnemyAirControlled;
+  BOOLEAN __unused_fEnemyAirControlled;     // unused beause can be recalculated after load
   BOOLEAN __unused_fLostControlAtSomeTime;
   INT8 __only_storage_bSAMCondition;  // SAM Condition .. 0 - 100, just like an item's status
   INT8 bPadding[20];

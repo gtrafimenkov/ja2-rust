@@ -4037,9 +4037,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
   InitStrategicMovementCosts();
 #endif
 
-  // KM : Aug 11, 1999 -- Patch fix:  Blindly update the airspace control.  There is a bug somewhere
-  //		 that is failing to keep this information up to date, and I failed to find it.  At
-  // least this 		 will patch saves.
+  // Recalculating airspace control
   UpdateAirspaceControl();
 
   EvolveQueenPriorityPhase(TRUE);

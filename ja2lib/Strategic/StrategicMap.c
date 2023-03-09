@@ -2912,7 +2912,6 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   for (int y = 1; y < 17; y++) {
     for (int x = 1; x < 17; x++) {
       SectorID16 sector = GetSectorID16(x, y);
-      StrategicMap[sector].__only_storage_fEnemyAirControlled = IsSectorEnemyAirControlled(x, y);
       StrategicMap[sector].__only_storage_fEnemyControlled = IsSectorEnemyControlled(x, y);
     }
   }
@@ -2975,7 +2974,6 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
   for (int y = 1; y < 17; y++) {
     for (int x = 1; x < 17; x++) {
       SectorID16 sector = GetSectorID16(x, y);
-      SetSectorEnemyAirControlled(x, y, StrategicMap[sector].__only_storage_fEnemyAirControlled);
       SetSectorEnemyControlled(x, y, StrategicMap[sector].__only_storage_fEnemyControlled);
     }
   }
