@@ -733,8 +733,7 @@ void UpdateRefuelSiteAvailability(void) {
 
   for (iCounter = 0; iCounter < NUMBER_OF_REFUEL_SITES; iCounter++) {
     // if enemy controlled sector (ground OR air, don't want to fly into enemy air territory)
-    if ((StrategicMap[GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])]
-             .fEnemyControlled == TRUE) ||
+    if (IsSectorEnemyControlled(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1]) ||
         IsSectorEnemyAirControlled(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1]) ||
         ((iCounter == ESTONI_REFUELING_SITE) &&
          (CheckFact(FACT_ESTONI_REFUELLING_POSSIBLE, 0) == FALSE))) {
@@ -1040,7 +1039,7 @@ void CheckAndHandleSkyriderMonologues(void) {
       guiHelicopterSkyriderTalkState = 1;
     } else if (guiHelicopterSkyriderTalkState == 1) {
       // if enemy still controls the Cambria hospital sector
-      if (StrategicMap[GetSectorID16(HOSPITAL_SECTOR_X, HOSPITAL_SECTOR_Y)].fEnemyControlled) {
+      if (IsSectorEnemyControlled(HOSPITAL_SECTOR_X, HOSPITAL_SECTOR_Y)) {
         HandleSkyRiderMonologueEvent(SKYRIDER_MONOLOGUE_EVENT_CAMBRIA_HOSPITAL, 0);
       }
       // advance state even if player already has Cambria's hospital sector!!!

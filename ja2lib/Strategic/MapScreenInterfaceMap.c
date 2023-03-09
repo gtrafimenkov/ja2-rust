@@ -5147,7 +5147,7 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
       continue;
     }
 
-    if (!StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyControlled) {
+    if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       struct MilitiaCount milCount = GetMilitiaInSector(sSectorX, sSectorY);
       iNumberOfGreens += milCount.green;
       iNumberOfRegulars += milCount.regular;
@@ -5397,7 +5397,7 @@ void DrawTownMilitiaForcesOnMap(void) {
     u8 sSectorY = GetSamSiteY(iCounter);
     struct MilitiaCount milCount = GetMilitiaInSector(sSectorX, sSectorY);
 
-    if (!StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyControlled) {
+    if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       // ste the total for loop upper bound
       iTotalNumberOfTroops = milCount.green + milCount.regular + milCount.elite;
 
@@ -5868,7 +5868,7 @@ BOOLEAN CanMilitiaAutoDistribute(void) {
       continue;
     }
 
-    if (!StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyControlled) {
+    if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       // get number of each
       iTotalTroopsInTown += CountAllMilitiaInSectorID8(sCurrentSectorValue);
     }

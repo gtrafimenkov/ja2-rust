@@ -505,8 +505,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
 
     case ENEMY_TEAM:
       // check whose sector this is
-      if (StrategicMap[(GetSolSectorX(pSoldier)) + (MAP_WORLD_X * (GetSolSectorY(pSoldier)))]
-              .fEnemyControlled == TRUE) {
+      if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))) {
         // enemy soldiers... in enemy controlled sector.  Gain loyalty
         fIncrement = TRUE;
 
@@ -549,8 +548,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
         iLoyaltyChange *= MULTIPLIER_FOR_MURDER_BY_MONSTER;
 
         // check whose sector this is
-        if (StrategicMap[(GetSolSectorX(pSoldier)) + (MAP_WORLD_X * (GetSolSectorY(pSoldier)))]
-                .fEnemyControlled == TRUE) {
+        if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))) {
           // enemy controlled sector - gain loyalty
           fIncrement = TRUE;
         } else {
@@ -643,8 +641,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   }
 
   // penalize the side that should have stopped it
-  if (StrategicMap[GetSolSectorX(pSoldier) + pSoldier->sSectorY * MAP_WORLD_X].fEnemyControlled ==
-      TRUE) {
+  if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), pSoldier->sSectorY)) {
     // enemy should have prevented it, let them suffer a little
     IncrementTownLoyalty(bTownId, sPolicingLoyalty);
   } else {

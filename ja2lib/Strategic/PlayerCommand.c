@@ -359,37 +359,6 @@ void ClearMapControlledFlags(void) {
 }
 #endif
 
-/*
-BOOLEAN IsTheSectorPerceivedToBeUnderEnemyControl( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
-{
-
-        // are we in battle in this sector?
-        if( ( sMapX == gWorldSectorX ) && ( sMapY == gWorldSectorY ) && ( bMapZ == gbWorldSectorZ )
-&& ( gTacticalStatus.uiFlags & INCOMBAT ) )
-        {
-                return( TRUE );
-        }
-
-
-        // does the player believe this sector is under enemy control?
-        return( !( SectorInfo[ GetSectorID8( sMapX, sMapY ) ].fPlayer[ bMapZ ] ) );
-}
-
-
-void MakePlayerPerceptionOfSectorControlCorrect( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
-{
-        if (bMapZ == 0)
-        {
-                SectorInfo[ GetSectorID8( sMapX, sMapY ) ].fPlayer[ bMapZ ] = !( StrategicMap[
-GetSectorID16( sMapX, sMapY ) ].fEnemyControlled );
-        }
-        // else nothing, underground sector control is always up to date, because we don't track
-control down there
-
-        MarkForRedrawalStrategicMap();
-}
-*/
-
 void ReplaceSoldierProfileInPlayerGroup(UINT8 ubGroupID, UINT8 ubOldProfile, UINT8 ubNewProfile) {
   struct GROUP *pGroup;
   PLAYERGROUP *curr;

@@ -554,12 +554,10 @@ void AddCommonInfoToBox(void) {
     AddMonoString(&hStringHandle, wString);
 
     // No/Yes
-    swprintf(wString, ARR_SIZE(wString), L"%s",
-             pwMiscSectorStrings[(StrategicMap[GetSectorID16(bCurrentTownMineSectorX,
-                                                             bCurrentTownMineSectorY)]
-                                      .fEnemyControlled)
-                                     ? 6
-                                     : 5]);
+    swprintf(
+        wString, ARR_SIZE(wString), L"%s",
+        pwMiscSectorStrings
+            [IsSectorEnemyControlled(bCurrentTownMineSectorX, bCurrentTownMineSectorY) ? 6 : 5]);
     AddSecondColumnMonoString(&hStringHandle, wString);
 
     // militia - is there any?

@@ -2777,7 +2777,7 @@ void SetupNewStrategicGame() {
   // Set all sectors as enemy controlled
   for (sSectorX = 0; sSectorX < MAP_WORLD_X; sSectorX++) {
     for (sSectorY = 0; sSectorY < MAP_WORLD_Y; sSectorY++) {
-      StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyControlled = TRUE;
+      IsSectorEnemyControlled(sSectorX, sSectorY) = TRUE;
     }
   }
 
@@ -2847,12 +2847,13 @@ BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ) {
   return (FALSE);
 }
 
+// TODO: rustlib
 INT32 GetNumberOfSAMSitesUnderPlayerControl(void) {
   INT32 iNumber = 0;
 
   // if the sam site is under player control, up the number
   for (int i = 0; i < GetSamSiteCount(); i++) {
-    if (StrategicMap[GetSectorID16(GetSamSiteX(i), GetSamSiteY(i))].fEnemyControlled == FALSE) {
+    if (!IsSectorEnemyControlled(GetSamSiteX(i), GetSamSiteY(i))) {
       iNumber++;
     }
   }
@@ -2860,13 +2861,14 @@ INT32 GetNumberOfSAMSitesUnderPlayerControl(void) {
   return (iNumber);
 }
 
+// TODO: rustlib
 INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY) {
   BOOLEAN fSamSiteUnderControl = FALSE;
 
   // is this sector a SAM sector?
   if (IsThisSectorASAMSector(sX, sY, 0) == TRUE) {
     // is it under control by the player
-    if (StrategicMap[GetSectorID16(sX, sY)].fEnemyControlled == FALSE) {
+    if (!IsSectorEnemyControlled(sX, sY)) {
       // yes
       fSamSiteUnderControl = TRUE;
     }
@@ -2969,6 +2971,7 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
     for (int x = 1; x < 17; x++) {
       SectorID16 sector = GetSectorID16(x, y);
       StrategicMap[sector].__only_storage_fEnemyAirControlled = IsSectorEnemyAirControlled(x, y);
+      StrategicMap[sector].__only_storage_fEnemyControlled = IsSectorEnemyControlled(x, y);
     }
   }
 
@@ -3031,6 +3034,7 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
     for (int x = 1; x < 17; x++) {
       SectorID16 sector = GetSectorID16(x, y);
       SetSectorEnemyAirControlled(x, y, StrategicMap[sector].__only_storage_fEnemyAirControlled);
+      SetSectorEnemyControlled(x, y, StrategicMap[sector].__only_storage_fEnemyControlled);
     }
   }
 

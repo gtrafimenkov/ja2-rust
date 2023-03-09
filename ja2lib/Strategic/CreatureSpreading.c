@@ -300,28 +300,28 @@ void InitCreatureQuest() {
 
   if (gMineStatus[DRASSEN_MINE].fAttackedHeadMiner ||
       gMineStatus[DRASSEN_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SectorID8To16(SEC_D13)]
-          .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
-                                // controlled
+      StrategicMap[SectorID8To16(SEC_D13)].fEnemyControlled) {
+    // If head miner was attacked, ore will/has run out, or enemy
+    // controlled
     fMineInfectible[0] = FALSE;
   }
   if (gMineStatus[CAMBRIA_MINE].fAttackedHeadMiner ||
       gMineStatus[CAMBRIA_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SectorID8To16(SEC_H8)]
-          .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
-                                // controlled
+      StrategicMap[SectorID8To16(SEC_H8)].fEnemyControlled) {
+    // If head miner was attacked, ore will/has run out, or enemy
+    // controlled
     fMineInfectible[1] = FALSE;
   }
   if (gMineStatus[ALMA_MINE].fAttackedHeadMiner || gMineStatus[ALMA_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SectorID8To16(SEC_I14)]
-          .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
-                                // controlled
+      StrategicMap[SectorID8To16(SEC_I14)].fEnemyControlled) {
+    // If head miner was attacked, ore will/has run out, or enemy
+    // controlled
     fMineInfectible[2] = FALSE;
   }
   if (gMineStatus[GRUMM_MINE].fAttackedHeadMiner || gMineStatus[GRUMM_MINE].uiOreRunningOutPoint ||
-      StrategicMap[SectorID8To16(SEC_H3)]
-          .fEnemyControlled) {  // If head miner was attacked, ore will/has run out, or enemy
-                                // controlled
+      StrategicMap[SectorID8To16(SEC_H3)].fEnemyControlled) {
+    // If head miner was attacked, ore will/has run out, or enemy
+    // controlled
     fMineInfectible[3] = FALSE;
   }
 
@@ -839,8 +839,8 @@ void CreatureAttackTown(
     }
   } else if (CountAllMilitiaInSector(ubSectorX, ubSectorY)) {  // we have militia in the sector
     gubCreatureBattleCode = CREATURE_BATTLE_CODE_AUTORESOLVE;
-  } else if (!StrategicMap[GetSectorID16(ubSectorX, ubSectorY)]
-                  .fEnemyControlled) {  // player controlled sector -- eat some civilians
+  } else if (!IsSectorEnemyControlled(ubSectorX, ubSectorY)) {
+    // player controlled sector -- eat some civilians
     AdjustLoyaltyForCivsEatenByMonsters(ubSectorX, ubSectorY, gubNumCreaturesAttackingTown);
     SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (UINT8)GetWorldDay();
     return;
