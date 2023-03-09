@@ -42,4 +42,6 @@ The game is tested on Windows 10.
 
 ## License
 
+This is not open source as defined by [The Open Source Definition](https://opensource.org/osd/).
 The original JA2 sources were released under the terms of [SFI-SCLA](SFI-SCLA.txt) license.
+Please read it carefully and make your own mind regarding this.
