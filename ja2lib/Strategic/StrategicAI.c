@@ -4126,7 +4126,9 @@ void EvolveQueenPriorityPhase(BOOLEAN fForceChange) {
   // controls.
   for (i = 0; i < giGarrisonArraySize; i++) {
     index = gGarrisonGroup[i].ubComposition;
-    if (StrategicMap[SectorID8To16(gGarrisonGroup[i].ubSectorID)].fEnemyControlled) {
+    u8 sX = SectorID8_X(gGarrisonGroup[i].ubSectorID);
+    u8 sY = SectorID8_Y(gGarrisonGroup[i].ubSectorID);
+    if (IsSectorEnemyControlled(sX, sY)) {
       ubOwned[index]++;
     }
     ubTotal[index]++;

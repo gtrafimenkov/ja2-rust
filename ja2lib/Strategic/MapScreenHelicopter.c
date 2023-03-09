@@ -1394,18 +1394,13 @@ BOOLEAN EndOfHelicoptersPath(void) {
 
 // check if helicopter can take off?
 BOOLEAN CanHelicopterTakeOff(void) {
-  INT16 sHelicopterSector = 0;
-
   // if it's already in the air
   if (fHelicopterIsAirBorne == TRUE) {
     return (TRUE);
   }
 
-  // grab location
-  sHelicopterSector = pVehicleList[iHelicopterVehicleId].sSectorX +
-                      pVehicleList[iHelicopterVehicleId].sSectorY * MAP_WORLD_X;
-  // if it's not in enemy control, we can take off
-  if (StrategicMap[sHelicopterSector].fEnemyControlled == FALSE) {
+  if (!IsSectorEnemyControlled(pVehicleList[iHelicopterVehicleId].sSectorX,
+                               pVehicleList[iHelicopterVehicleId].sSectorY)) {
     return (TRUE);
   }
 

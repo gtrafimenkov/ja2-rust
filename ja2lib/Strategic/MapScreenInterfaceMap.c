@@ -4648,7 +4648,8 @@ void RenderIconsPerSectorForSelectedTown(void) {
                              MILITIA_BOX_BOX_WIDTH, 0, sString, FONT10ARIAL, &sX, &sY);
 
     if (StrategicMap[SectorID8To16(sCurrentSectorValue)].townID != BLANK_SECTOR &&
-        !StrategicMap[SectorID8To16(sCurrentSectorValue)].fEnemyControlled) {
+        !IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
+                                 SectorID8_Y(sCurrentSectorValue))) {
       if (sSectorMilitiaMapSector != iCounter) {
         mprintf(sX, (INT16)(sY + MILITIA_BOX_BOX_HEIGHT - 5), sString);
       } else {
@@ -5179,8 +5180,7 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
       u8 sX = SectorID16_X((*townSectors)[iCounter].sectorID);
       u8 sY = SectorID16_Y((*townSectors)[iCounter].sectorID);
 
-      if (!StrategicMap[(*townSectors)[iCounter].sectorID].fEnemyControlled &&
-          !NumHostilesInSector(sX, sY, 0)) {
+      if (!IsSectorEnemyControlled(sX, sY) && !NumHostilesInSector(sX, sY, 0)) {
         // distribute here
         SetMilitiaOfRankInSector(sX, sY, GREEN_MILITIA, iNumberOfGreens / iNumberUnderControl);
         SetMilitiaOfRankInSector(sX, sY, REGULAR_MILITIA, iNumberOfRegulars / iNumberUnderControl);
@@ -5327,7 +5327,8 @@ void RenderShadingForUnControlledSectors(void) {
         sBaseSectorValue + ((iCounter % MILITIA_BOX_ROWS) + (iCounter / MILITIA_BOX_ROWS) * (16));
 
     if ((StrategicMap[SectorID8To16(sCurrentSectorValue)].townID != BLANK_SECTOR) &&
-        ((StrategicMap[SectorID8To16(sCurrentSectorValue)].fEnemyControlled) ||
+        ((IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
+                                  SectorID8_Y(sCurrentSectorValue))) ||
          (NumHostilesInSector((INT16)SectorID8_X(sCurrentSectorValue),
                               (INT16)SectorID8_Y(sCurrentSectorValue), 0)))) {
       // shade this sector, not under our control
@@ -5357,10 +5358,9 @@ void DrawTownMilitiaForcesOnMap(void) {
   const TownSectors *townSectors = GetAllTownSectors();
   while ((*townSectors)[iCounter].townID != 0) {
     // run through each town sector and plot the icons for the militia forces in the town
-    if (!StrategicMap[(*townSectors)[iCounter].sectorID].fEnemyControlled) {
-      u8 sSectorX = SectorID16_X((*townSectors)[iCounter].sectorID);
-      u8 sSectorY = SectorID16_Y((*townSectors)[iCounter].sectorID);
-
+    u8 sSectorX = SectorID16_X((*townSectors)[iCounter].sectorID);
+    u8 sSectorY = SectorID16_Y((*townSectors)[iCounter].sectorID);
+    if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       struct MilitiaCount milCount = GetMilitiaInSector(sSectorX, sSectorY);
 
       // set the total for loop upper bound

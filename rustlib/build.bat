@@ -1,6 +1,7 @@
 @echo off
 
 cargo test
+if errorlevel 1 exit /b 1
 
 @REM cargo build
 @REM cargo build --target x86_64-pc-windows-msvc
@@ -11,7 +12,10 @@ cargo build --target i686-pc-windows-msvc
 cargo build --release --target i686-pc-windows-msvc
 
 call generate_single_file.bat sector
+if errorlevel 1 exit /b 1
+
 call generate_single_file.bat sam_sites
+if errorlevel 1 exit /b 1
 
 mkdir ..\Debug             2>nul
 mkdir ..\Release           2>nul

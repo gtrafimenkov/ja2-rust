@@ -69,7 +69,7 @@ extern BOOLEAN gfFirstHeliRun;
 INT16 gsMercArriveSectorX = 9;
 INT16 gsMercArriveSectorY = 1;
 
-void CheckForValidArrivalSector();
+static void CheckForValidArrivalSector();
 
 INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   struct SOLDIERTYPE *pSoldier;
@@ -536,7 +536,7 @@ INT16 StrategicPythSpacesAway(INT16 sOrigin, INT16 sDest) {
 // is valid
 // if there are enemies present, it's invalid
 // if so, search around for nearest non-occupied sector.
-void CheckForValidArrivalSector() {
+static void CheckForValidArrivalSector() {
   INT16 sTop, sBottom;
   INT16 sLeft, sRight;
   INT16 cnt1, cnt2, sGoodX, sGoodY;
@@ -552,7 +552,7 @@ void CheckForValidArrivalSector() {
   sSector = GetSectorID16(gsMercArriveSectorX, gsMercArriveSectorY);
 
   // Check if valid...
-  if (!StrategicMap[sSector].fEnemyControlled) {
+  if (!IsSectorEnemyControlled(gsMercArriveSectorX, gsMercArriveSectorY)) {
     return;
   }
 
@@ -573,7 +573,7 @@ void CheckForValidArrivalSector() {
 
       if (sSector2 >= 1 && sSector2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
           sSector2 >= leftmost && sSector2 < (leftmost + MAP_WORLD_X)) {
-        if (!StrategicMap[sSector2].fEnemyControlled &&
+        if (!IsSectorEnemyControlled(SectorID16_X(sSector2), SectorID16_Y(sSector2)) &&
             !IsSectorEnemyAirControlled(SectorID16_X(sSector2), SectorID16_Y(sSector2))) {
           uiRange = StrategicPythSpacesAway(sSector2, sSector);
 

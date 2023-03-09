@@ -98,16 +98,8 @@ BOOLEAN SetThisSectorAsPlayerControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
   }
 
   if (bMapZ == 0) {
-    usMapSector = GetSectorID16(sMapX, (sMapY));
+    usMapSector = GetSectorID16(sMapX, sMapY);
 
-    /*
-                    // if enemies formerly controlled this sector
-                    if (StrategicMap[ usMapSector ].fEnemyControlled)
-                    {
-                            // remember that the enemies have lost it
-                            StrategicMap[ usMapSector ].fLostControlAtSomeTime = TRUE;
-                    }
-    */
     if (NumHostilesInSector(sMapX, sMapY, bMapZ)) {  // too premature:  enemies still in sector.
       return FALSE;
     }
@@ -128,9 +120,8 @@ BOOLEAN SetThisSectorAsPlayerControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
       }
     }
 
-    fWasEnemyControlled = StrategicMap[usMapSector].fEnemyControlled;
-
-    StrategicMap[usMapSector].fEnemyControlled = FALSE;
+    fWasEnemyControlled = IsSectorEnemyControlled(sMapX, sMapY);
+    SetSectorEnemyControlled(sMapX, sMapY, FALSE);
     SectorInfo[GetSectorID8(sMapX, sMapY)].fPlayer[bMapZ] = TRUE;
 
     bTownId = StrategicMap[usMapSector].townID;
@@ -235,7 +226,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
 }
 
 // ALL changes of control to enemy must be funneled through here!
-BOOLEAN SetThisSectorAsEnemyControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fContested) {
+BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN fContested) {
   UINT16 usMapSector = 0;
   BOOLEAN fWasPlayerControlled = FALSE;
   TownID bTownId = 0;
@@ -251,16 +242,16 @@ BOOLEAN SetThisSectorAsEnemyControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOO
   }
 
   if (bMapZ == 0) {
-    usMapSector = GetSectorID16(sMapX, (sMapY));
+    usMapSector = GetSectorID16(sMapX, sMapY);
 
-    fWasPlayerControlled = !StrategicMap[usMapSector].fEnemyControlled;
+    fWasPlayerControlled = !IsSectorEnemyControlled(sMapX, sMapY);
 
-    StrategicMap[usMapSector].fEnemyControlled = TRUE;
+    SetSectorEnemyControlled(sMapX, sMapY, TRUE);
 
     // if player lost control to the enemy
     if (fWasPlayerControlled) {
-      if (PlayerMercsInSector((UINT8)sMapX, (UINT8)sMapY,
-                              (UINT8)bMapZ)) {  // too premature:  Player mercs still in sector.
+      if (PlayerMercsInSector(sMapX, sMapY, bMapZ)) {
+        // too premature:  Player mercs still in sector.
         return FALSE;
       }
 
@@ -275,7 +266,6 @@ BOOLEAN SetThisSectorAsEnemyControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOO
         if (!bMapZ && ubSectorID != SEC_J9 && ubSectorID != SEC_K4) {
           HandleMoraleEvent(NULL, MORALE_TOWN_LOST, sMapX, sMapY, bMapZ);
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_LOSE_TOWN_SECTOR, sMapX, sMapY, bMapZ);
-
           CheckIfEntireTownHasBeenLost(bTownId, sMapX, sMapY);
         }
       }
@@ -343,21 +333,6 @@ BOOLEAN SetThisSectorAsEnemyControlled(INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOO
 
   return fWasPlayerControlled;
 }
-
-#ifdef JA2TESTVERSION
-void ClearMapControlledFlags(void) {
-  INT32 iCounterA = 0, iCounterB = 0;
-  UINT16 usMapSector = 0;
-
-  for (iCounterA = 1; iCounterA < MAP_WORLD_X - 1; iCounterA++) {
-    for (iCounterB = 1; iCounterB < MAP_WORLD_Y - 1; iCounterB++) {
-      usMapSector = GetSectorID16(iCounterA, (iCounterB));
-      StrategicMap[usMapSector].fEnemyControlled = FALSE;
-      SectorInfo[GetSectorID8(iCounterA, iCounterB)].fPlayer[0] = TRUE;
-    }
-  }
-}
-#endif
 
 void ReplaceSoldierProfileInPlayerGroup(UINT8 ubGroupID, UINT8 ubOldProfile, UINT8 ubNewProfile) {
   struct GROUP *pGroup;

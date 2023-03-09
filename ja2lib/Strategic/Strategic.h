@@ -13,8 +13,7 @@ struct strategicmapelement {
   UINT8 uiBadFootSector[4];        // blocking mvt for foot
   UINT8 uiBadVehicleSector[4];     // blocking mvt from vehicles
   INT8 townID;
-  // TODO: rustlib
-  BOOLEAN fEnemyControlled;  // enemy controlled or not
+  BOOLEAN __only_storage_fEnemyControlled;  // enemy controlled or not
   BOOLEAN __only_storage_fEnemyAirControlled;
   BOOLEAN __unused_fLostControlAtSomeTime;
   INT8 __only_storage_bSAMCondition;  // SAM Condition .. 0 - 100, just like an item's status

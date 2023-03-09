@@ -4481,18 +4481,6 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
 #endif
           break;
 
-          /*
-                                          case F11:
-                                                  #ifdef JA2TESTVERSION
-                                                          if( fAlt )
-                                                          {
-                                                                  // ALT-F11: make all sectors
-             player controlled ClearMapControlledFlags( ); MarkForRedrawalStrategicMap();
-                                                          }
-                                                  #endif
-                                                  break;
-          */
-
         case F12:
 #ifdef JA2BETAVERSION
           *puiNewEvent = MAP_EVENT_VIEWAI;

@@ -496,16 +496,15 @@ UINT8 GetTownSectorSize(TownID bTownId) {
 // return number of sectors under player control for this town
 UINT8 GetTownSectorsUnderControl(TownID bTownId) {
   INT8 ubSectorsControlled = 0;
-  INT32 iCounterA = 0, iCounterB = 0;
   UINT16 usSector = 0;
 
-  for (iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
-    for (iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
+  for (u8 iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
+    for (u8 iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
       usSector = (UINT16)GetSectorID16(iCounterA, iCounterB);
 
       if ((StrategicMap[usSector].townID == bTownId) &&
-          (StrategicMap[usSector].fEnemyControlled == FALSE) &&
-          (NumEnemiesInSector((INT16)iCounterA, (INT16)iCounterB) == 0)) {
+          (!IsSectorEnemyControlled(iCounterA, iCounterB)) &&
+          (NumEnemiesInSector(iCounterA, iCounterB) == 0)) {
         ubSectorsControlled++;
       }
     }
@@ -2777,7 +2776,7 @@ void SetupNewStrategicGame() {
   // Set all sectors as enemy controlled
   for (sSectorX = 0; sSectorX < MAP_WORLD_X; sSectorX++) {
     for (sSectorY = 0; sSectorY < MAP_WORLD_Y; sSectorY++) {
-      IsSectorEnemyControlled(sSectorX, sSectorY) = TRUE;
+      SetSectorEnemyControlled(sSectorX, sSectorY, true);
     }
   }
 
@@ -2878,32 +2877,12 @@ INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY) {
 }
 
 void UpdateAirspaceControl(void) {
-  INT32 iCounterA = 0, iCounterB = 0;
-  UINT8 ubControllingSAM;
-  StrategicMapElement *pSAMStrategicMap = NULL;
-  BOOLEAN fEnemyControlsAir;
-
-  for (iCounterA = 1; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
-    for (iCounterB = 1; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
-      struct OptionalSamSite samSite = GetSamControllingSector(iCounterA, iCounterB);
-
-      if (samSite.tag != None) {
-        SectorID16 samSector = GetSectorID16(GetSamSiteX(samSite.some), GetSamSiteY(samSite.some));
-        pSAMStrategicMap = &(StrategicMap[samSector]);
-
-        // if the enemies own the controlling SAM site, and it's in working condition
-        if ((pSAMStrategicMap->fEnemyControlled) &&
-            GetSamCondition(samSite.some) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {
-          fEnemyControlsAir = TRUE;
-        } else {
-          fEnemyControlsAir = FALSE;
-        }
-      } else {
-        // no controlling SAM site
-        fEnemyControlsAir = FALSE;
-      }
-
-      SetSectorEnemyAirControlled(iCounterA, iCounterB, fEnemyControlsAir);
+  for (u8 sX = 1; sX < MAP_WORLD_X - 1; sX++) {
+    for (u8 sY = 1; sY < MAP_WORLD_Y - 1; sY++) {
+      struct OptionalSamSite samSite = GetSamControllingSector(sX, sY);
+      bool fEnemyControlsAir = samSite.tag != None && IsSectorEnemyControlled(sX, sY) &&
+                               GetSamCondition(samSite.some) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK;
+      SetSectorEnemyAirControlled(sX, sY, fEnemyControlsAir);
     }
   }
 
