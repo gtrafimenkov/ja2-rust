@@ -101,7 +101,8 @@ void InitNPCs(void) {
             pProfile->sSectorX);
 #endif
   // use alternate map, with Skyrider's shack, in this sector
-  SectorInfo[GetSectorID8(pProfile->sSectorX, pProfile->sSectorY)].uiFlags |= SF_USE_ALTERNATE_MAP;
+  SectorInfo[GetSectorID8((u8)pProfile->sSectorX, (u8)pProfile->sSectorY)].uiFlags |=
+      SF_USE_ALTERNATE_MAP;
 
   // set up Madlab's secret lab (he'll be added when the meanwhile scene occurs)
 
@@ -191,7 +192,7 @@ void InitNPCs(void) {
 #endif
 
     // use alternate map in this sector
-    SectorInfo[GetSectorID8(pProfile->sSectorX, pProfile->sSectorY)].uiFlags |=
+    SectorInfo[GetSectorID8((u8)pProfile->sSectorX, (u8)pProfile->sSectorY)].uiFlags |=
         SF_USE_ALTERNATE_MAP;
   } else {  // not scifi, so use alternate map in Tixa's b1 level that doesn't have the stairs going
             // down to the caves.

@@ -666,8 +666,7 @@ void BlitBackgroundToSaveBuffer(void);
 // Drawing the Map
 UINT32 HandleMapUI();
 void RenderMapCursorsIndexesAnims(void);
-BOOLEAN GetMapXY(INT16 sX, INT16 sY, INT16 *psMapWorldX, INT16 *psMapWorldY);
-BOOLEAN GetMouseMapXY(INT16 *psMapWorldX, INT16 *psMapWorldY);
+static BOOLEAN GetMapXY(INT16 sX, INT16 sY, u8 *psMapWorldX, u8 *psMapWorldY);
 
 void StartConfirmMapMoveMode(INT16 sMapY);
 void EndConfirmMapMoveMode(void);
@@ -5277,7 +5276,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
   gfRequestGiveSkyriderNewDestination = FALSE;
 }
 
-BOOLEAN GetMouseMapXY(INT16 *psMapWorldX, INT16 *psMapWorldY) {
+BOOLEAN GetMouseMapXY(u8 *psMapWorldX, u8 *psMapWorldY) {
   if (IsMapScreenHelpTextUp()) {
     // don't show highlight while global help text is up
     return (FALSE);
@@ -5296,7 +5295,7 @@ BOOLEAN GetMouseMapXY(INT16 *psMapWorldX, INT16 *psMapWorldY) {
   return (GetMapXY((INT16)MousePos.x, (INT16)MousePos.y, psMapWorldX, psMapWorldY));
 }
 
-BOOLEAN GetMapXY(INT16 sX, INT16 sY, INT16 *psMapWorldX, INT16 *psMapWorldY) {
+static BOOLEAN GetMapXY(INT16 sX, INT16 sY, u8 *psMapWorldX, u8 *psMapWorldY) {
   INT16 sMapX, sMapY;
 
   // Subtract start of map view

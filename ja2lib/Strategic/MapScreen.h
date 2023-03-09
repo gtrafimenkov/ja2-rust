@@ -49,4 +49,6 @@ BOOLEAN CanChangeSleepStatusForSoldier(struct SOLDIERTYPE* pSoldier);
 
 BOOLEAN MapCharacterHasAccessibleInventory(INT8 bCharNumber);
 
+BOOLEAN GetMouseMapXY(u8* psMapWorldX, u8* psMapWorldY);
+
 #endif

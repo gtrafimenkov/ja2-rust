@@ -330,7 +330,8 @@ int TownTrainerQsortCompare(const void *pArg1, const void *pArg2);
 void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts);
 
 // train militia in this sector with this soldier
-BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, INT16 sMapY, UINT16 sTrainingPts);
+static BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, u8 sMapY,
+                                 UINT16 sTrainingPts);
 
 // is the character between secotrs in mvt
 BOOLEAN CharacterIsBetweenSectors(struct SOLDIERTYPE *pSoldier);
@@ -3530,7 +3531,8 @@ void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts) {
 }
 
 // will train a town in sector by character
-BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, u8 sMapY, UINT16 sTrainingPts) {
+static BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, u8 sMapY,
+                                 UINT16 sTrainingPts) {
   SECTORINFO *pSectorInfo = &(SectorInfo[GetSectorID8(sMapX, sMapY)]);
   UINT8 ubTownId = 0;
   BOOLEAN fSamSiteInSector = FALSE;

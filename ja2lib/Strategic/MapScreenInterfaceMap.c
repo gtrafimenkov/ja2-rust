@@ -479,7 +479,6 @@ void BlitMineGridMarkers(void);
 void BlitSAMGridMarkers(void);
 void BlitMineIcon(INT16 sMapX, INT16 sMapY);
 void BlitMineText(INT16 sMapX, INT16 sMapY);
-extern BOOLEAN GetMouseMapXY(INT16 *psMapWorldX, INT16 *psMapWorldY);
 INT16 GetBaseSectorForCurrentTown(void);
 void RenderIconsPerSectorForSelectedTown(void);
 void MilitiaRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);

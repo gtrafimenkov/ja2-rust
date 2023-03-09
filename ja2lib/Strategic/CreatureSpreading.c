@@ -652,7 +652,7 @@ void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 
     } else {
       pSoldier->usStrategicInsertionData = gsCreatureInsertionGridNo;
     }
-    UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+    UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, 0);
   }
   gsCreatureInsertionCode = 0;
   gsCreatureInsertionGridNo = 0;
