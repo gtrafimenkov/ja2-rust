@@ -26,7 +26,7 @@ BOOLEAN SectorOursAndPeaceful(u8 sMapX, u8 sMapY, INT8 bMapZ);
 void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16* zString, size_t bufSize,
                        BOOLEAN fDetailed);
 
-i16 GetLoadedSectorX();
-i16 GetLoadedSectorY();
+u8 GetLoadedSectorX();
+u8 GetLoadedSectorY();
 
 #endif

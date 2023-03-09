@@ -1478,7 +1478,7 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
         // add them to the tactical engine!
         if (pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY &&
             pGroup->ubSectorZ == gbWorldSectorZ) {
-          UpdateMercInSector(curr->pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          UpdateMercInSector(curr->pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
         }
         curr = curr->next;
       }
@@ -1562,14 +1562,15 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
           if (pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY &&
               pGroup->ubSectorZ == gbWorldSectorZ) {
             // add passenger to the tactical engine!
-            UpdateMercInSector(curr->pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+            UpdateMercInSector(curr->pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY,
+                               gbWorldSectorZ);
           }
 
           curr = curr->next;
         }
       } else {
-        if (HandleHeliEnteringSector(pVehicleList[iVehId].sSectorX,
-                                     pVehicleList[iVehId].sSectorY) == TRUE) {
+        if (HandleHeliEnteringSector((u8)pVehicleList[iVehId].sSectorX,
+                                     (u8)pVehicleList[iVehId].sSectorY) == TRUE) {
           // helicopter destroyed
           fGroupDestroyed = TRUE;
         }
@@ -2200,7 +2201,7 @@ void RemoveAllGroups() {
   gfRemovingAllGroups = FALSE;
 }
 
-void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubGroupID) {
+void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, i8 sSectorZ, UINT8 ubGroupID) {
   struct GROUP *pGroup;
   PLAYERGROUP *pPlayer;
 
@@ -4062,12 +4063,12 @@ void NotifyPlayerOfBloodcatBattle(UINT8 ubSectorX, UINT8 ubSectorY) {
   DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, TriggerPrebattleInterface);
 }
 
-void PlaceGroupInSector(UINT8 ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNextX, INT16 sNextY,
-                        INT8 bZ, BOOLEAN fCheckForBattle) {
+void PlaceGroupInSector(UINT8 ubGroupID, u8 sPrevX, u8 sPrevY, u8 sNextX, u8 sNextY, INT8 bZ,
+                        BOOLEAN fCheckForBattle) {
   ClearMercPathsAndWaypointsForAllInGroup(GetGroup(ubGroupID));
 
   // change where they are and where they're going
-  SetGroupPrevSectors(ubGroupID, (UINT8)sPrevX, (UINT8)sPrevY);
+  SetGroupPrevSectors(ubGroupID, sPrevX, sPrevY);
   SetGroupSectorValue(sPrevX, sPrevY, bZ, ubGroupID);
   SetGroupNextSectorValue(sNextX, sNextY, ubGroupID);
 

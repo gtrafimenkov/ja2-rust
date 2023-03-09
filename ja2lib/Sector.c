@@ -38,5 +38,5 @@ BOOLEAN SectorOursAndPeaceful(u8 sMapX, u8 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-i16 GetLoadedSectorX() { return gWorldSectorX; }
-i16 GetLoadedSectorY() { return gWorldSectorY; }
+u8 GetLoadedSectorX() { return (u8)gWorldSectorX; }
+u8 GetLoadedSectorY() { return (u8)gWorldSectorY; }

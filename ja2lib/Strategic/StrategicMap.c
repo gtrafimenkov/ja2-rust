@@ -128,7 +128,7 @@ INT16 gWorldSectorX = 0;
 INT16 gWorldSectorY = 0;
 INT8 gbWorldSectorZ = -1;
 
-INT16 gsAdjacentSectorX, gsAdjacentSectorY;
+u8 gsAdjacentSectorX, gsAdjacentSectorY;
 INT8 gbAdjacentSectorZ;
 struct GROUP *gpAdjacentGroup = NULL;
 UINT8 gubAdjacentJumpCode;
@@ -2040,8 +2040,8 @@ void JumpIntoAdjacentSector(UINT8 ubTacticalDirection, UINT8 ubJumpCode, INT16 s
 
   // If normal direction, use it!
   if (ubTacticalDirection != 255) {
-    gsAdjacentSectorX = (INT16)(gWorldSectorX + DirXIncrementer[ubTacticalDirection]);
-    gsAdjacentSectorY = (INT16)(gWorldSectorY + DirYIncrementer[ubTacticalDirection]);
+    gsAdjacentSectorX = (u8)(gWorldSectorX + DirXIncrementer[ubTacticalDirection]);
+    gsAdjacentSectorY = (u8)(gWorldSectorY + DirYIncrementer[ubTacticalDirection]);
     gbAdjacentSectorZ = pValidSoldier->bSectorZ;
   } else {
     // Take directions from exit grid info!
@@ -2327,7 +2327,8 @@ void AllMercsHaveWalkedOffSector() {
     fEnemiesInLoadedSector = TRUE;
   }
 
-  HandleLoyaltyImplicationsOfMercRetreat(RETREAT_TACTICAL_TRAVERSAL, gWorldSectorX, gWorldSectorY,
+  HandleLoyaltyImplicationsOfMercRetreat(RETREAT_TACTICAL_TRAVERSAL, (u8)gWorldSectorX,
+                                         (u8)gWorldSectorY,
                                          gbWorldSectorZ);
 
   // Setup strategic traversal information
@@ -2927,12 +2928,12 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   {
     // copying actual data about militia count
     for (uint16_t sectorID = 0; sectorID < 256; sectorID++) {
-      struct MilitiaCount milCount = GetMilitiaInSectorID8(sectorID);
+      struct MilitiaCount milCount = GetMilitiaInSectorID8((u8)sectorID);
       SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[0] = milCount.green;
       SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[1] = milCount.regular;
       SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[2] = milCount.elite;
       SectorInfo[sectorID]._only_savedgame_fMilitiaTrainingPaid =
-          IsMilitiaTrainingPayedForSectorID8(sectorID);
+          IsMilitiaTrainingPayedForSectorID8((u8)sectorID);
     }
 
     uiSize = sizeof(SECTORINFO) * 256;
@@ -2994,9 +2995,9 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
           SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[1],
           SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[2],
       };
-      SetMilitiaInSectorID8(sectorID, milCount);
+      SetMilitiaInSectorID8((u8)sectorID, milCount);
       SetMilitiaTrainingPayedForSectorID8(
-          sectorID, SectorInfo[sectorID]._only_savedgame_fMilitiaTrainingPaid != 0);
+          (u8)sectorID, SectorInfo[sectorID]._only_savedgame_fMilitiaTrainingPaid != 0);
     }
   }
 

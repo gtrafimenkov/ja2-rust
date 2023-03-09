@@ -70,8 +70,8 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
       sSectorX = GetSolSectorX(pSoldier);
       sSectorY = GetSolSectorY(pSoldier);
     } else {
-      sSectorX = gWorldSectorX;
-      sSectorY = gWorldSectorY;
+      sSectorX = (u8)gWorldSectorX;
+      sSectorY = (u8)gWorldSectorY;
     }
 
     if (pKiller && pKiller->bTeam == OUR_TEAM) {

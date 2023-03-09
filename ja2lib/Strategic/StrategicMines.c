@@ -639,7 +639,7 @@ INT8 GetMineIndexForSector(INT16 sX, INT16 sY) {
   return (-1);
 }
 
-void GetMineSector(UINT8 ubMineIndex, INT16 *psX, INT16 *psY) {
+void GetMineSector(UINT8 ubMineIndex, u8 *psX, u8 *psY) {
   Assert((ubMineIndex >= 0) && (ubMineIndex < MAX_NUMBER_OF_MINES));
 
   *psX = gMineLocation[ubMineIndex].sSectorX;
