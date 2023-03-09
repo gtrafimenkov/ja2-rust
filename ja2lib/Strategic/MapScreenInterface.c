@@ -2650,7 +2650,7 @@ BOOLEAN IsAnythingSelectedForMoving(void) {
   return (FALSE);
 }
 
-void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   static BOOLEAN fCreated = FALSE;
 
   // not allowed for underground movement!
@@ -2677,7 +2677,7 @@ void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   }
 }
 
-void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   INT32 iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -3555,11 +3555,11 @@ void ReBuildMoveBox(void) {
 
   // stop showing the box
   fShowMapScreenMovementList = FALSE;
-  CreateDestroyMovementBox(sSelMapX, sSelMapY, (INT16)iCurrentMapSectorZ);
+  CreateDestroyMovementBox(sSelMapX, sSelMapY, (i8)iCurrentMapSectorZ);
 
   // show the box
   fShowMapScreenMovementList = TRUE;
-  CreateDestroyMovementBox(sSelMapX, sSelMapY, (INT16)iCurrentMapSectorZ);
+  CreateDestroyMovementBox(sSelMapX, sSelMapY, (i8)iCurrentMapSectorZ);
   ShowBox(ghMoveBox);
   MarkAllBoxesAsAltered();
 }

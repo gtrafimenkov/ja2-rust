@@ -4131,7 +4131,7 @@ UINT32 HandleMapUI() {
                 // be centralized in CanCharacterMoveInStrategic()
 
                 // start the move box menu
-                SetUpMovingListsForSector(sMapX, sMapY, (INT16)iCurrentMapSectorZ);
+                SetUpMovingListsForSector(sMapX, sMapY, (i8)iCurrentMapSectorZ);
               } else {
                 // no strategic movement is possible from underground sectors
                 DoMapMessageBox(MSG_BOX_BASIC_STYLE, pMapErrorString[1], MAP_SCREEN,

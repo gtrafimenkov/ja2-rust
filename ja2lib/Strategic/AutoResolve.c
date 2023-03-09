@@ -4015,7 +4015,7 @@ UINT8 GetAutoResolveSectorID() {
 }
 
 // Returns TRUE if a battle is happening or sector is loaded
-BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psSectorZ) {
+BOOLEAN GetCurrentBattleSectorXYZ(u8 *psSectorX, u8 *psSectorY, i8 *psSectorZ) {
   if (gpAR) {
     *psSectorX = gpAR->ubSectorX;
     *psSectorY = gpAR->ubSectorY;
@@ -4027,9 +4027,9 @@ BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psS
     *psSectorZ = gubPBSectorZ;
     return TRUE;
   } else if (gfWorldLoaded) {
-    *psSectorX = gWorldSectorX;
-    *psSectorY = gWorldSectorY;
-    *psSectorZ = gbWorldSectorZ;
+    *psSectorX = (u8)gWorldSectorX;
+    *psSectorY = (u8)gWorldSectorY;
+    *psSectorZ = (i8)gbWorldSectorZ;
     return TRUE;
   } else {
     *psSectorX = 0;

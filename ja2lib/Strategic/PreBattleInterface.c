@@ -1714,8 +1714,9 @@ BOOLEAN PlayerGroupInvolvedInThisCombat(struct GROUP *pGroup) {
   return (FALSE);
 }
 
-BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
-  INT16 sBattleSectorX, sBattleSectorY, sBattleSectorZ;
+BOOLEAN CurrentBattleSectorIs(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
+  u8 sBattleSectorX, sBattleSectorY;
+  i8 sBattleSectorZ;
   BOOLEAN fSuccess;
 
   fSuccess = GetCurrentBattleSectorXYZ(&sBattleSectorX, &sBattleSectorY, &sBattleSectorZ);

@@ -177,7 +177,7 @@ extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPCId, UINT32 uiMoneyAmo
                                                 UINT8 *pQuoteValue);
 
 // given a victory in this sector, handle specific facts
-void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 
 // check if this shopkeep has been shutdown, if so do soething and return the fact
 BOOLEAN HandleShopKeepHasBeenShutDown(UINT8 ubCharNum);

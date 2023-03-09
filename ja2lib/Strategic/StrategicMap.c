@@ -596,7 +596,7 @@ void GetCurrentWorldSector(u8 *psMapX, u8 *psMapY) {
 // not in overhead.h!
 extern UINT8 NumEnemyInSector();
 
-void HandleRPCDescriptionOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+void HandleRPCDescriptionOfSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   UINT32 cnt;
   UINT8 ubSectorDescription[33][3] = {
       // row (letter), column, quote #
@@ -3771,7 +3771,8 @@ BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle() {
 
 BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
   INT32 i;
-  INT16 sBattleSectorX, sBattleSectorY, sBattleSectorZ;
+  u8 sBattleSectorX, sBattleSectorY;
+  i8 sBattleSectorZ;
 
   // Don't bother checking this if we don't have a world loaded.
   if (!gfWorldLoaded) {

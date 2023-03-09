@@ -11,7 +11,7 @@ extern BOOLEAN gfPendingEnemies;
 
 UINT8 NumFreeEnemySlots();
 
-UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 
 UINT8 NumEnemiesInSector(u8 sSectorX, u8 sSectorY);
 UINT8 NumStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY);

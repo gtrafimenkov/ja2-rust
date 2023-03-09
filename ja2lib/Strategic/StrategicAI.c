@@ -4473,7 +4473,7 @@ void ClearStrategicLog() {
 }
 #endif
 
-void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   SECTORINFO *pSector;
   UINT8 ubSectorID;
   if (sSectorZ) {  // The queen doesn't care about anything happening under the ground.

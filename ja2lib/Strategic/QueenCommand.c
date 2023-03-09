@@ -96,7 +96,7 @@ void ValidateEnemiesHaveWeapons() {
 }
 
 // Counts enemies and crepitus, but not bloodcats.
-UINT8 NumHostilesInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+UINT8 NumHostilesInSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   UINT8 ubNumHostiles = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -133,7 +133,7 @@ UINT8 NumHostilesInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   return ubNumHostiles;
 }
 
-UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   UINT8 ubNumEnemies = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -341,7 +341,8 @@ void EndTacticalBattleForEnemy() {
         if (MercPtrs[i]->bActive && MercPtrs[i]->bInSector &&
             MercPtrs[i]->bLife >=
                 OKLIFE) {  // confirmed at least one enemy here, so do the loyalty penalty.
-          HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, gWorldSectorX, gWorldSectorY, 0);
+          HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, (u8)gWorldSectorX,
+                                   (u8)gWorldSectorY, 0);
           break;
         }
       }
@@ -401,7 +402,7 @@ BOOLEAN PrepareEnemyForSectorBattle() {
   }
 
   if (!gbWorldSectorZ) {
-    if (NumEnemiesInSector(gWorldSectorX, gWorldSectorY) > 32) {
+    if (NumEnemiesInSector((u8)gWorldSectorX, (u8)gWorldSectorY) > 32) {
       gfPendingEnemies = TRUE;
     }
   }
@@ -1022,7 +1023,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
               InvalidateWorldRedundency();
               // Now that the queen is dead, turn off the creature quest.
               EndCreatureQuest();
-              EndQuest(QUEST_CREATURES, gWorldSectorX, gWorldSectorY);
+              EndQuest(QUEST_CREATURES, (u8)gWorldSectorX, (u8)gWorldSectorY);
             }
             break;
         }
@@ -1254,7 +1255,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UI
       } else {  // no edgepoints left, so put him at the entrypoint.
         pSoldier->ubStrategicInsertionCode = ubStrategicInsertionCode;
       }
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, 0);
     } else if (ubNumTroops && (UINT8)Random(ubTotalSoldiers) < (UINT8)(ubNumElites + ubNumTroops)) {
       ubNumTroops--;
       ubTotalSoldiers--;
@@ -1271,7 +1272,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UI
       } else {  // no edgepoints left, so put him at the entrypoint.
         pSoldier->ubStrategicInsertionCode = ubStrategicInsertionCode;
       }
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, 0);
     } else if (ubNumAdmins &&
                (UINT8)Random(ubTotalSoldiers) < (UINT8)(ubNumElites + ubNumTroops + ubNumAdmins)) {
       ubNumAdmins--;
@@ -1289,7 +1290,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UI
       } else {  // no edgepoints left, so put him at the entrypoint.
         pSoldier->ubStrategicInsertionCode = ubStrategicInsertionCode;
       }
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, 0);
     }
   }
 }
@@ -1413,13 +1414,13 @@ void EndCaptureSequence() {
     if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTNOTSTARTED) {
       // CJC Dec 1 2002: fixing multiple captures:
       gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE;
-      StartQuest(QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY);
+      StartQuest(QUEST_HELD_IN_ALMA, (u8)gWorldSectorX, (u8)gWorldSectorY);
     }
     // CJC Dec 1 2002: fixing multiple captures:
     // else if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTDONE )
     else if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTDONE &&
              gubQuest[QUEST_INTERROGATION] == QUESTNOTSTARTED) {
-      StartQuest(QUEST_INTERROGATION, gWorldSectorX, gWorldSectorY);
+      StartQuest(QUEST_INTERROGATION, (u8)gWorldSectorX, (u8)gWorldSectorY);
       // CJC Dec 1 2002: fixing multiple captures:
       gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_ESCAPE;
 
@@ -1487,8 +1488,8 @@ void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
 
   // IF there are no enemies, and we need to do alma, skip!
   if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTNOTSTARTED && iNumEnemiesInSector == 0) {
-    InternalStartQuest(QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY, FALSE);
-    InternalEndQuest(QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY, FALSE);
+    InternalStartQuest(QUEST_HELD_IN_ALMA, (u8)gWorldSectorX, (u8)gWorldSectorY, FALSE);
+    InternalEndQuest(QUEST_HELD_IN_ALMA, (u8)gWorldSectorX, (u8)gWorldSectorY, FALSE);
   }
 
   HandleMoraleEvent(pSoldier, MORALE_MERC_CAPTURED, GetSolSectorX(pSoldier),
