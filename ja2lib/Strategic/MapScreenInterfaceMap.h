@@ -68,7 +68,7 @@ BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY);
 void SetUpBadSectorsList(void);
 
 // restore background for map grids
-void RestoreBackgroundForMapGrid(INT16 sMapX, INT16 sMapY);
+void RestoreBackgroundForMapGrid(u8 sMapX, u8 sMapY);
 
 // clip blits to map view region
 void ClipBlitsToMapViewRegion(void);
@@ -91,7 +91,7 @@ void DisplayDistancesForHelicopter(void);
 void DisplayPositionOfHelicopter(void);
 
 // check for click
-BOOLEAN CheckForClickOverHelicopterIcon(INT16 sX, INT16 sY);
+BOOLEAN CheckForClickOverHelicopterIcon(u8 sClickedSectorX, u8 sClickedSectorY);
 
 // load and delete the graphics for the map screen map militia
 BOOLEAN LoadMilitiaPopUpBox(void);

@@ -3901,7 +3901,7 @@ void RenderMapCursorsIndexesAnims() {
 UINT32 HandleMapUI() {
   UINT32 uiNewEvent = MAP_EVENT_NONE;
   u8 sMapX = 0, sMapY = 0;
-  INT16 sX, sY;
+  u8 sX, sY;
   UINT32 uiNewScreen = MAP_SCREEN;
   BOOLEAN fWasAlreadySelected;
 

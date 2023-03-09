@@ -3261,7 +3261,7 @@ void SetUpBadSectorsList(void) {
   return;
 }
 
-void RestoreBackgroundForMapGrid(INT16 sMapX, INT16 sMapY) {
+void RestoreBackgroundForMapGrid(u8 sMapX, u8 sMapY) {
   INT16 sX, sY;
 
   if (!fZoomFlag) {
@@ -3911,7 +3911,7 @@ void DisplayDestinationOfHelicopter(void) {
   }
 }
 
-BOOLEAN CheckForClickOverHelicopterIcon(INT16 sClickedSectorX, INT16 sClickedSectorY) {
+BOOLEAN CheckForClickOverHelicopterIcon(u8 sClickedSectorX, u8 sClickedSectorY) {
   struct GROUP *pGroup = NULL;
   BOOLEAN fHelicopterOverNextSector = FALSE;
   FLOAT flRatio = 0.0;
