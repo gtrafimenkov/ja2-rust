@@ -1,12 +1,21 @@
-use int_enum::IntEnum;
-
-#[repr(u8)]
-#[derive(IntEnum, Copy, Clone, PartialEq, Debug)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub enum SamSite {
     Chitzena = 0,
     Drassen = 1,
     Cambria = 2,
     Meduna = 3,
+}
+
+impl SamSite {
+    fn from_int(value: u8) -> Self {
+        match value {
+            0 => SamSite::Chitzena,
+            1 => SamSite::Drassen,
+            2 => SamSite::Cambria,
+            3 => SamSite::Meduna,
+            _ => panic!("invalid value {value} for SamSite enum"),
+        }
+    }
 }
 
 #[derive(Clone, Copy)]
@@ -105,7 +114,7 @@ pub fn get_sam_controlling_sector(x: u8, y: u8) -> Option<SamSite> {
     let index = SAM_CONTROLLED_SECTORS[y as usize][x as usize];
     match index {
         0 => None,
-        _ => SamSite::from_int(index - 1).ok(),
+        _ => Some(SamSite::from_int(index - 1)),
     }
 }
 
@@ -113,7 +122,7 @@ pub fn get_sam_at_sector(x: u8, y: u8, z: i8) -> Option<SamSite> {
     if z == 0 {
         for (i, loc) in LOCATIONS.iter().enumerate() {
             if loc.x == x && loc.y == y {
-                return Some(SamSite::from_int(i as u8).unwrap());
+                return Some(SamSite::from_int(i as u8));
             }
         }
     }
