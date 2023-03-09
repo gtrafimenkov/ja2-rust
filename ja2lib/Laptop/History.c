@@ -131,8 +131,7 @@ void PerformCheckOnHistoryRecord(UINT32 uiErrorCode, u8 sSectorX, u8 sSectorY, I
 void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason);
 void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason);
 
-UINT32 SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, INT16 sSectorX,
-                      INT16 sSectorY) {
+UINT32 SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, u8 sSectorX, u8 sSectorY) {
   // adds History item to player's log(History List), returns unique id number of it
   // outside of the History system(the code in this .c file), this is the only function you'll ever
   // need
@@ -171,8 +170,8 @@ UINT32 SetHistoryFact(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, INT16 sSe
   return uiId;
 }
 
-UINT32 AddHistoryToPlayersLog(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, INT16 sSectorX,
-                              INT16 sSectorY) {
+UINT32 AddHistoryToPlayersLog(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, u8 sSectorX,
+                              u8 sSectorY) {
   // adds History item to player's log(History List), returns unique id number of it
   // outside of the History system(the code in this .c file), this is the only function you'll ever
   // need
@@ -592,7 +591,8 @@ void OpenAndReadHistoryFile(void) {
 #endif
 
     // add transaction
-    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, sSectorX, sSectorY, bSectorZ,
+    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, (u8)sSectorX, (u8)sSectorY,
+                                  bSectorZ,
                                   ubColor);
 
     // increment byte counter
@@ -766,7 +766,7 @@ void DrawHistoryRecordsText(void) {
                                 pHistoryLocations[0], HISTORY_TEXT_FONT, &sX, &sY);
       mprintf(sX, RECORD_Y + (iCounter * (BOX_HEIGHT)) + 3, pHistoryLocations[0]);
     } else {
-      GetSectorIDString(pCurHistory->sSectorX, pCurHistory->sSectorY, pCurHistory->bSectorZ,
+      GetSectorIDString((u8)pCurHistory->sSectorX, (u8)pCurHistory->sSectorY, pCurHistory->bSectorZ,
                         sString, ARR_SIZE(sString), TRUE);
       FindFontCenterCoordinates(RECORD_DATE_X + RECORD_DATE_WIDTH, 0, RECORD_LOCATION_WIDTH + 10, 0,
                                 sString, HISTORY_TEXT_FONT, &sX, &sY);
@@ -1165,7 +1165,8 @@ BOOLEAN LoadInHistoryRecords(UINT32 uiPage) {
 #endif
 
     // add transaction
-    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, sSectorX, sSectorY, bSectorZ,
+    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, (u8)sSectorX, (u8)sSectorY,
+                                  bSectorZ,
                                   ubColor);
 
     // increment byte counter
