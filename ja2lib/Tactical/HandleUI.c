@@ -1162,7 +1162,7 @@ UINT32 UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
 
       pSoldier->ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
       pSoldier->usStrategicInsertionData = usMapPos;
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       AllTeamsLookForAll(NO_INTERRUPTS);
     }
   }

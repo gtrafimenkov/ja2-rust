@@ -769,7 +769,7 @@ struct path* ClearStrategicPathList(struct path* pHeadOfPath, INT16 sMvtGroup) {
   return (pNode);
 }
 
-struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, INT16 sX, INT16 sY,
+struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, u8 sX, u8 sY,
                                                    INT16 sMvtGroup) {
   // will clear out a strategic path and return head of list as NULL
   struct path* pNode = pHeadOfPath;
@@ -784,7 +784,7 @@ struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, INT
   }
 
   // get sector value
-  sSector = GetSectorID16(sX, (sY));
+  sSector = GetSectorID16(sX, sY);
 
   // go to end of list
   pNode = MoveToEndOfPathList(pNode);
@@ -946,7 +946,7 @@ struct path* RemoveHeadFromStrategicPath(struct path* pList) {
   return (pNewHead);
 }
 
-struct path* RemoveSectorFromStrategicPathList(struct path* pList, INT16 sX, INT16 sY) {
+struct path* RemoveSectorFromStrategicPathList(struct path* pList, u8 sX, u8 sY) {
   // find sector sX, sY ...then remove it
   INT16 sSector = 0;
   INT16 sCurrentSector = -1;
@@ -954,7 +954,7 @@ struct path* RemoveSectorFromStrategicPathList(struct path* pList, INT16 sX, INT
   struct path* pPastNode = pList;
 
   // get sector value
-  sSector = GetSectorID16(sX, (sY));
+  sSector = GetSectorID16(sX, sY);
 
   // check if there is a valid list
   if (pNode == NULL) {
@@ -1461,13 +1461,12 @@ void ClearMvtForThisSoldierAndGang(struct SOLDIERTYPE* pSoldier) {
   ClearMercPathsAndWaypointsForAllInGroup(pGroup);
 }
 
-BOOLEAN MoveGroupFromSectorToSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX,
-                                    INT16 sDestY) {
+BOOLEAN MoveGroupFromSectorToSector(u8 ubGroupID, u8 sStartX, u8 sStartY, u8 sDestX, u8 sDestY) {
   struct path* pNode = NULL;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
+  pNode = BuildAStrategicPath(pNode, GetSectorID16(sStartX, sStartY), GetSectorID16(sDestX, sDestY),
+                              ubGroupID, FALSE /*, FALSE */);
 
   if (pNode == NULL) {
     return (FALSE);
@@ -1484,13 +1483,13 @@ BOOLEAN MoveGroupFromSectorToSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStart
   return (TRUE);
 }
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(UINT8 ubGroupID, INT16 sStartX, INT16 sStartY,
-                                                      INT16 sDestX, INT16 sDestY) {
+BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(UINT8 ubGroupID, u8 sStartX, u8 sStartY,
+                                                      u8 sDestX, u8 sDestY) {
   struct path* pNode = NULL;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE*/);
+  pNode = BuildAStrategicPath(pNode, GetSectorID16(sStartX, sStartY), GetSectorID16(sDestX, sDestY),
+                              ubGroupID, FALSE /*, FALSE*/);
 
   if (pNode == NULL) {
     return (FALSE);
@@ -1510,9 +1509,9 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidLastSector(UINT8 ubGroupID, INT16 sSt
   return (TRUE);
 }
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroupID, INT16 sStartX,
-                                                                   INT16 sStartY, INT16 sDestX,
-                                                                   INT16 sDestY) {
+BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroupID, u8 sStartX,
+                                                                   u8 sStartY, u8 sDestX,
+                                                                   u8 sDestY) {
   struct path* pNode = NULL;
 
   // init sectors with soldiers in them
@@ -1525,8 +1524,8 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroup
   gfPlotToAvoidPlayerInfuencedSectors = TRUE;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
+  pNode = BuildAStrategicPath(pNode, GetSectorID16(sStartX, sStartY), GetSectorID16(sDestX, sDestY),
+                              ubGroupID, FALSE /*, FALSE */);
 
   // turn off the avoid flag
   gfPlotToAvoidPlayerInfuencedSectors = FALSE;
@@ -1551,7 +1550,7 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroup
 }
 
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSectorBeforeEnd(
-    UINT8 ubGroupID, INT16 sStartX, INT16 sStartY, INT16 sDestX, INT16 sDestY) {
+    UINT8 ubGroupID, u8 sStartX, u8 sStartY, u8 sDestX, u8 sDestY) {
   struct path* pNode = NULL;
 
   // init sectors with soldiers in them
@@ -1564,8 +1563,8 @@ BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSect
   gfPlotToAvoidPlayerInfuencedSectors = TRUE;
 
   // build the path
-  pNode = BuildAStrategicPath(pNode, (INT16)GetSectorID16(sStartX, sStartY),
-                              (INT16)GetSectorID16(sDestX, sDestY), ubGroupID, FALSE /*, FALSE */);
+  pNode = BuildAStrategicPath(pNode, GetSectorID16(sStartX, sStartY), GetSectorID16(sDestX, sDestY),
+                              ubGroupID, FALSE /*, FALSE */);
 
   // turn off the avoid flag
   gfPlotToAvoidPlayerInfuencedSectors = FALSE;

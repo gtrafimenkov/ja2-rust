@@ -1096,8 +1096,10 @@ void HandleQuestCodeOnSectorEntry(u8 sNewSectorX, u8 sNewSectorY, INT8 bNewSecto
             ubMiner = (UINT8)Random(RANDOM_HEAD_MINERS);
           } while (ubRandomMiner[ubMiner] == 0);
 
-          GetMineSector(ubMine, (INT16 *)&(gMercProfiles[ubRandomMiner[ubMiner]].sSectorX),
-                        (INT16 *)&(gMercProfiles[ubRandomMiner[ubMiner]].sSectorY));
+          u8 mineX, mineY;
+          GetMineSector(ubMine, &mineX, &mineY);
+          gMercProfiles[ubRandomMiner[ubMiner]].sSectorX = mineX;
+          gMercProfiles[ubRandomMiner[ubMiner]].sSectorY = mineY;
           gMercProfiles[ubRandomMiner[ubMiner]].bSectorZ = 0;
           gMercProfiles[ubRandomMiner[ubMiner]].bTown = gMineLocation[ubMine].bAssociatedTown;
 

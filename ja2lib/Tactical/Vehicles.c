@@ -653,7 +653,7 @@ BOOLEAN RemoveSoldierFromVehicle(struct SOLDIERTYPE *pSoldier, INT32 iId) {
     // Update in sector if this is the current sector.....
     if (GetSolSectorX(pSoldier) == gWorldSectorX && GetSolSectorY(pSoldier) == gWorldSectorY &&
         GetSolSectorZ(pSoldier) == gbWorldSectorZ) {
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     }
   }
 

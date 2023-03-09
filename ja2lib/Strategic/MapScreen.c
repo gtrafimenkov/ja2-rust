@@ -4813,7 +4813,7 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
             if ((bSelectedDestChar != -1) && (fPlotForHelicopter == FALSE) &&
                 (iCurrentMapSectorZ == 0) && (GetMouseMapXY(&sMapX, &sMapY))) {
               INT16 sDeltaX, sDeltaY;
-              INT16 sPrevX, sPrevY;
+              u8 sPrevX, sPrevY;
               struct SOLDIERTYPE *pSoldier = MercPtrs[gCharactersList[bSelectedDestChar].usSolID];
 
               // can't teleport to where we already are

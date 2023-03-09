@@ -641,7 +641,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   }
 
   // penalize the side that should have stopped it
-  if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), pSoldier->sSectorY)) {
+  if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))) {
     // enemy should have prevented it, let them suffer a little
     IncrementTownLoyalty(bTownId, sPolicingLoyalty);
   } else {

@@ -1541,7 +1541,7 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
         if (pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY &&
             pGroup->ubSectorZ == gbWorldSectorZ) {
           // add vehicle to the tactical engine!
-          UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
         }
 
         // set directions of insertion

@@ -1727,7 +1727,7 @@ void AddProfilesUsingProfileInsertionData() {
     if (pSoldier) {  // Now, insert the soldier.
       pSoldier->ubStrategicInsertionCode = gMercProfiles[i].ubStrategicInsertionCode;
       pSoldier->usStrategicInsertionData = gMercProfiles[i].usStrategicInsertionData;
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       // CJC: Note well that unless an error occurs, UpdateMercInSector calls
       // AddSoldierToSector
       // AddSoldierToSector( GetSolID(pSoldier) );
