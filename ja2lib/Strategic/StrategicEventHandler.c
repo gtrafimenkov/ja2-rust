@@ -82,11 +82,9 @@ void BobbyRayPurchaseEventCallback(uint8_t ubOrderID) {
     SetFactTrue(FACT_LAST_SHIPMENT_WENT_TO_WRONG_AIRPORT);
     usStandardMapPos = LOST_SHIPMENT_GRIDNO;
     SetFactFalse(FACT_NEXT_PACKAGE_CAN_BE_DELAYED);
-  } else if ((gTownLoyalty[DRASSEN].ubRating < 20) ||
-             StrategicMap[GetSectorID16(13, MAP_ROW_B)].fEnemyControlled) {
+  } else if ((gTownLoyalty[DRASSEN].ubRating < 20) || IsSectorEnemyControlled(13, MAP_ROW_B)) {
     // loss of the whole shipment
     gpNewBobbyrShipments[ubOrderID].fActive = FALSE;
-
     SetFactTrue(FACT_AGENTS_PREVENTED_SHIPMENT);
     return;
   }
@@ -934,8 +932,7 @@ void DropOffItemsInMeduna(uint8_t ubOrderNum) {
   uint32_t i;
 
   // if the player doesnt "own" the sector,
-  if (StrategicMap[GetSectorID16(MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y)]
-          .fEnemyControlled) {
+  if (IsSectorEnemyControlled(MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y)) {
     // the items disappear
     gpNewBobbyrShipments[ubOrderNum].fActive = FALSE;
     return;

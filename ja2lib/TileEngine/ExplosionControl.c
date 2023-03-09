@@ -61,6 +61,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
 #include "platform_strings.h"
+#include "rust_sam_sites.h"
 
 // MODULE FOR EXPLOSIONS
 
@@ -69,7 +70,6 @@ BOOLEAN ExpAffect(int16_t sBombGridNo, int16_t sGridNo, uint32_t uiDist, uint16_
                   uint8_t ubOwner, int16_t sSubsequent, BOOLEAN *pfMercHit, int8_t bLevel,
                   int32_t iSmokeEffectID);
 
-extern int8_t gbSAMGraphicList[NUMBER_OF_SAMS];
 extern void AddToShouldBecomeHostileOrSayQuoteList(uint8_t ubID);
 extern void RecompileLocalMovementCostsForWall(int16_t sGridNo, uint8_t ubOrientation);
 void FatigueCharacter(struct SOLDIERTYPE *pSoldier);
@@ -2836,57 +2836,30 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN DoesSAMExistHere(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ, int16_t sGridNo) {
-  int32_t cnt;
-  int16_t sSectorNo;
-
-  // ATE: If we are belwo, return right away...
-  if (sSectorZ != 0) {
-    return (FALSE);
-  }
-
-  sSectorNo = GetSectorID8(sSectorX, sSectorY);
-
-  for (cnt = 0; cnt < NUMBER_OF_SAMS; cnt++) {
-    // Are we i nthe same sector...
-    if (pSamList[cnt] == sSectorNo) {
-      // Are we in the same gridno?
-      if (pSamGridNoAList[cnt] == sGridNo || pSamGridNoBList[cnt] == sGridNo) {
-        return (TRUE);
-      }
-    }
-  }
-
-  return (FALSE);
-}
-
-void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
-                               int16_t sGridNo, uint8_t ubDamage) {
-  int16_t sSectorNo;
-
+void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ, int16_t sGridNo,
+                               uint8_t ubDamage) {
   // OK, First check if SAM exists, and if not, return
   if (!DoesSAMExistHere(sSectorX, sSectorY, sSectorZ, sGridNo)) {
     return;
   }
 
-  // Damage.....
-  sSectorNo = GetSectorID16(sSectorX, sSectorY);
+  struct OptionalSamSite samID = GetSamAtSector(sSectorX, sSectorY, sSectorZ);
+  if (samID.tag == Some) {
+    uint8_t condition = GetSamCondition(samID.some);
+    if (condition >= ubDamage) {
+      SetSamCondition(samID.some, condition - ubDamage);
+    } else {
+      SetSamCondition(samID.some, 0);
+    }
 
-  if (StrategicMap[sSectorNo].bSAMCondition >= ubDamage) {
-    StrategicMap[sSectorNo].bSAMCondition -= ubDamage;
-  } else {
-    StrategicMap[sSectorNo].bSAMCondition = 0;
+    // SAM site may have been put out of commission...
+    UpdateAirspaceControl();
+
+    // ATE: GRAPHICS UPDATE WILL GET DONE VIA NORMAL EXPLOSION CODE.....
   }
-
-  // SAM site may have been put out of commission...
-  UpdateAirspaceControl();
-
-  // ATE: GRAPHICS UPDATE WILL GET DONE VIA NORMAL EXPLOSION CODE.....
 }
 
 void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
-  int32_t cnt;
-  int16_t sSectorNo;
   BOOLEAN fInSector = FALSE;
   uint16_t usGoodGraphic, usDamagedGraphic;
 
@@ -2899,13 +2872,11 @@ void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
     fInSector = TRUE;
   }
 
-  sSectorNo = GetSectorID8(sSectorX, sSectorY);
-
-  for (cnt = 0; cnt < NUMBER_OF_SAMS; cnt++) {
+  for (int cnt = 0; cnt < GetSamSiteCount(); cnt++) {
     // Are we i nthe same sector...
-    if (pSamList[cnt] == sSectorNo) {
+    if (GetSamSiteX(cnt) == sSectorX && GetSamSiteY(cnt) == sSectorY) {
       // get graphic.......
-      GetTileIndexFromTypeSubIndex(EIGHTISTRUCT, (uint16_t)(gbSAMGraphicList[cnt]), &usGoodGraphic);
+      GetTileIndexFromTypeSubIndex(EIGHTISTRUCT, GetSamGraphicsID(cnt), &usGoodGraphic);
 
       // Damaged one ( current ) is 2 less...
       usDamagedGraphic = usGoodGraphic - 2;
@@ -2918,17 +2889,17 @@ void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
         // Remove old!
         ApplyMapChangesToMapTempFile(TRUE);
 
-        RemoveStruct(pSamGridNoAList[cnt], usDamagedGraphic);
-        AddStructToHead(pSamGridNoAList[cnt], usGoodGraphic);
+        RemoveStruct(GetSamGridNoA(cnt), usDamagedGraphic);
+        AddStructToHead(GetSamGridNoA(cnt), usGoodGraphic);
 
         ApplyMapChangesToMapTempFile(FALSE);
       } else {
         // We add temp changes to map not loaded....
         // Remove old
-        RemoveStructFromUnLoadedMapTempFile(pSamGridNoAList[cnt], usDamagedGraphic, sSectorX,
+        RemoveStructFromUnLoadedMapTempFile(GetSamGridNoA(cnt), usDamagedGraphic, sSectorX,
                                             sSectorY, (uint8_t)sSectorZ);
         // Add new
-        AddStructToUnLoadedMapTempFile(pSamGridNoAList[cnt], usGoodGraphic, sSectorX, sSectorY,
+        AddStructToUnLoadedMapTempFile(GetSamGridNoA(cnt), usGoodGraphic, sSectorX, sSectorY,
                                        (uint8_t)sSectorZ);
       }
     }

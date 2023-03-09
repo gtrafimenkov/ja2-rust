@@ -69,7 +69,7 @@ extern BOOLEAN gfFirstHeliRun;
 int16_t gsMercArriveSectorX = 9;
 int16_t gsMercArriveSectorY = 1;
 
-void CheckForValidArrivalSector();
+static void CheckForValidArrivalSector();
 
 int8_t HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   struct SOLDIERTYPE *pSoldier;
@@ -536,23 +536,23 @@ int16_t StrategicPythSpacesAway(int16_t sOrigin, int16_t sDest) {
 // is valid
 // if there are enemies present, it's invalid
 // if so, search around for nearest non-occupied sector.
-void CheckForValidArrivalSector() {
+static void CheckForValidArrivalSector() {
   int16_t sTop, sBottom;
   int16_t sLeft, sRight;
   int16_t cnt1, cnt2, sGoodX, sGoodY;
   uint8_t ubRadius = 4;
   int32_t leftmost;
-  int16_t sSectorGridNo, sSectorGridNo2;
+  int16_t sSector, sSector2;
   int32_t uiRange, uiLowestRange = 999999;
   BOOLEAN fFound = FALSE;
   wchar_t sString[1024];
   wchar_t zShortTownIDString1[50];
   wchar_t zShortTownIDString2[50];
 
-  sSectorGridNo = gsMercArriveSectorX + (MAP_WORLD_X * gsMercArriveSectorY);
+  sSector = GetSectorID16(gsMercArriveSectorX, gsMercArriveSectorY);
 
   // Check if valid...
-  if (!StrategicMap[sSectorGridNo].fEnemyControlled) {
+  if (!IsSectorEnemyControlled(gsMercArriveSectorX, gsMercArriveSectorY)) {
     return;
   }
 
@@ -566,16 +566,16 @@ void CheckForValidArrivalSector() {
   sRight = ubRadius;
 
   for (cnt1 = sBottom; cnt1 <= sTop; cnt1++) {
-    leftmost = ((sSectorGridNo + (MAP_WORLD_X * cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
+    leftmost = ((GetSectorID16(sSector, cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
 
     for (cnt2 = sLeft; cnt2 <= sRight; cnt2++) {
-      sSectorGridNo2 = sSectorGridNo + (MAP_WORLD_X * cnt1) + cnt2;
+      sSector2 = GetSectorID16(sSector, cnt1) + cnt2;
 
-      if (sSectorGridNo2 >= 1 && sSectorGridNo2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
-          sSectorGridNo2 >= leftmost && sSectorGridNo2 < (leftmost + MAP_WORLD_X)) {
-        if (!StrategicMap[sSectorGridNo2].fEnemyControlled &&
-            !StrategicMap[sSectorGridNo2].fEnemyAirControlled) {
-          uiRange = StrategicPythSpacesAway(sSectorGridNo2, sSectorGridNo);
+      if (sSector2 >= 1 && sSector2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
+          sSector2 >= leftmost && sSector2 < (leftmost + MAP_WORLD_X)) {
+        if (!IsSectorEnemyControlled(SectorID16_X(sSector2), SectorID16_Y(sSector2)) &&
+            !IsSectorEnemyAirControlled(SectorID16_X(sSector2), SectorID16_Y(sSector2))) {
+          uiRange = StrategicPythSpacesAway(sSector2, sSector);
 
           if (uiRange < uiLowestRange) {
             sGoodY = cnt1;

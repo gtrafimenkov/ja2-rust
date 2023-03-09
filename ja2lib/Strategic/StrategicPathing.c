@@ -295,7 +295,7 @@ int32_t FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNum
               sMvtGroupNumber == pVehicleList[iHelicopterVehicleId].ubMovementGroup) {
             // is a heli, its pathing is determined not by time (it's always the same) but by total
             // cost Skyrider will avoid uncontrolled airspace as much as possible...
-            if (StrategicMap[curLoc].fEnemyAirControlled == TRUE) {
+            if (IsSectorEnemyAirControlled(SectorID16_X(curLoc), SectorID16_Y(curLoc))) {
               nextCost = COST_AIRSPACE_UNSAFE;
             } else {
               nextCost = COST_AIRSPACE_SAFE;

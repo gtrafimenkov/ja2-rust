@@ -5322,7 +5322,7 @@ uint8_t SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, int8_t bHeight, int16_t 
   switch (pSoldier->bTeam) {
     case ENEMY_TEAM:
       // if we're in the wilderness this always counts
-      if (StrategicMap[GetSectorID16(gWorldSectorX, gWorldSectorY)].fEnemyControlled ||
+      if (IsSectorEnemyControlled(gWorldSectorX, gWorldSectorY) ||
           SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)]
                   .ubTraversability[THROUGH_STRATEGIC_MOVE] != TOWN) {
         // update current day of activity!

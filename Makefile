@@ -1,4 +1,4 @@
-CLANG_FORMATTER ?= clang-format-13
+CLANG_FORMATTER ?= clang-format
 
 .PHONY: format format-modified linux-bin run-linux-bin unittester-bin run-unittester
 
@@ -17,16 +17,17 @@ clean:
 	rm -rf bin-win32/ReleaseWithDebug
 	rm -rf unittester/Debug
 	rm -rf unittester/Release
+	rm -rf rustlib/target
 
 test: run-unittester
 
 format:
 	find . \( -iname '*.c' -o -iname '*.cc' -o -iname '*.cpp' -o -iname '*.h' \) \
-		| xargs $(CLANG_FORMATTER) -i --style=file
+		| grep -v rust_ | xargs $(CLANG_FORMATTER) -i --style=file
 
 format-modified:
 	git status --porcelain | egrep -e '[.](c|cc|cpp|h)$$' | awk '{print $$2}' \
-		| xargs $(CLANG_FORMATTER) -i --style=file
+		| grep -v rust_ | xargs $(CLANG_FORMATTER) -i --style=file
 
 ###################################################################
 # linux build
@@ -35,10 +36,11 @@ format-modified:
 GCC_ERRORS_FLAGS := -Werror
 GCC_ERRORS_FLAGS += -Wall
 GCC_FLAGS        := -D__GCC
+INCLUDE_FLAGS    := -I./ja2lib -I./rustlib
 CC = gcc
 CXX	= g++
-CFLAG = -fPIC --std=gnu17 $(GCC_ERRORS_FLAGS) $(GCC_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
-CXXFLAG = -fPIC --std=gnu++17 $(GCC_ERRORS_FLAGS) $(GCC_FLAGS) -DFORCE_ASSERTS_ON -I./ja2lib
+CFLAG = -fPIC --std=gnu17 $(GCC_ERRORS_FLAGS) $(GCC_FLAGS) -DFORCE_ASSERTS_ON $(INCLUDE_FLAGS)
+CXXFLAG = -fPIC --std=gnu++17 $(GCC_ERRORS_FLAGS) $(GCC_FLAGS) -DFORCE_ASSERTS_ON $(INCLUDE_FLAGS)
 
 TARGET_ARCH    ?=
 ifeq "$(TARGET_ARCH)" ""
@@ -46,6 +48,11 @@ BUILD_DIR      := tmp/default
 else
 BUILD_DIR      := tmp/$(TARGET_ARCH)
 endif
+
+RUSTLIB_PATH       := ./rustlib/target/debug
+RUSTLIB_NAME       := rustlib
+RUSTLIB_FILENAME   := librustlib.so
+RUSTLIB_FILEPATH   := rustlib/target/debug/$(RUSTLIB_FILENAME)
 
 # JA2LIB_SOURCES := $(shell grep -l "// build:linux" -r ja2lib)
 JA2LIB_SOURCES := $(shell find ja2lib -name '*.c')
@@ -98,7 +105,7 @@ $(BUILD_DIR)/linux-platform.a: $(LINUX_PLATFORM_OBJS)
 
 linux-bin: $(BUILD_DIR)/bin/ja2-linux
 
-$(BUILD_DIR)/bin/ja2-linux: bin-linux/main.c $(BUILD_DIR)/linux-platform.a $(BUILD_DIR)/ja2lib.a
+$(BUILD_DIR)/bin/ja2-linux: bin-linux/main.c $(BUILD_DIR)/linux-platform.a $(BUILD_DIR)/ja2lib.a $(BUILD_DIR)/bin/$(RUSTLIB_FILENAME)
 	@echo .. building $@
 	@mkdir -p $(BUILD_DIR)/bin
 	@$(CC) $(CFLAG) $(COMPILE_FLAGS) $^ -o $@
@@ -110,10 +117,17 @@ run-linux-bin: $(BUILD_DIR)/bin/ja2-linux
 
 unittester-bin: $(BUILD_DIR)/bin/unittester
 
-$(BUILD_DIR)/bin/unittester: $(UNITTESTER_OBJS) $(BUILD_DIR)/ja2lib.a $(BUILD_DIR)/linux-platform.a
+$(RUSTLIB_FILEPATH):
+	make -C rustlib
+
+$(BUILD_DIR)/bin/$(RUSTLIB_FILENAME): $(RUSTLIB_FILEPATH)
+	mkdir -p $(BUILD_DIR)/bin
+	cp $(RUSTLIB_FILEPATH) $@
+
+$(BUILD_DIR)/bin/unittester: $(UNITTESTER_OBJS) $(BUILD_DIR)/ja2lib.a $(BUILD_DIR)/linux-platform.a $(BUILD_DIR)/bin/$(RUSTLIB_FILENAME)
 	@echo .. building $@
 	@mkdir -p $(BUILD_DIR)/bin
-	@$(CXX) $(CFLAG) $(COMPILE_FLAGS) $^ -o $@ -lgtest_main -lgtest -lpthread
+	@$(CXX) $(CFLAG) $(COMPILE_FLAGS) $^ -o $@ -lgtest_main -lgtest -lpthread -L$(RUSTLIB_PATH) -lrustlib
 
 run-unittester: $(BUILD_DIR)/bin/unittester
 	./$(BUILD_DIR)/bin/unittester

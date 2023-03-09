@@ -56,15 +56,6 @@ enum {
   NUMBER_OF_REFUEL_SITES,
 };
 
-// the sam site enums
-enum {
-  SAM_SITE_ONE = 0,  // near Chitzena
-  SAM_SITE_TWO,      // near Drassen
-  SAM_SITE_THREE,    // near Cambria
-  SAM_SITE_FOUR,     // near Meduna
-  NUMBER_OF_SAM_SITES,
-};
-
 // list of refueling site's sector locations
 extern uint8_t ubRefuelList[NUMBER_OF_REFUEL_SITES][2];
 

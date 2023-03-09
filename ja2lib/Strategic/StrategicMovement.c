@@ -51,6 +51,7 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 // the delay for a group about to arrive
 #define ABOUT_TO_ARRIVE_DELAY 5
@@ -1427,8 +1428,12 @@ void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fN
         SetTixaAsFound();
       else if (bTownId == ORTA)
         SetOrtaAsFound();
-      else if (IsThisSectorASAMSector(pGroup->ubSectorX, pGroup->ubSectorY, 0))
-        SetSAMSiteAsFound(GetSAMIdFromSector(pGroup->ubSectorX, pGroup->ubSectorY, 0));
+      else {
+        struct OptionalSamSite samID = GetSamAtSector(pGroup->ubSectorX, pGroup->ubSectorY, 0);
+        if (samID.tag == Some) {
+          SetSAMSiteAsFound(samID.some);
+        }
+      }
     }
 
     if (pGroup->ubSectorX < pGroup->ubPrevX) {
@@ -1691,9 +1696,9 @@ void HandleNonCombatGroupArrival(struct GROUP *pGroup, BOOLEAN fMainGroup, BOOLE
 }
 
 // Because a battle is about to start, we need to go through the event list and look for other
-// groups that may arrive at the same time -- enemies or players, and blindly add them to the sector
-// without checking for battle conditions, as it has already determined that a new battle is about
-// to start.
+// groups that may arrive at the same time -- enemies or players, and blindly add them to the
+// sector without checking for battle conditions, as it has already determined that a new battle
+// is about to start.
 void HandleOtherGroupsArrivingSimultaneously(uint8_t ubSectorX, uint8_t ubSectorY,
                                              uint8_t ubSectorZ) {
   STRATEGICEVENT *pEvent;
@@ -1732,8 +1737,8 @@ void PrepareGroupsForSimultaneousArrival() {
   int32_t iVehId = 0;
 
   pGroup = gpGroupList;
-  while (pGroup) {  // For all of the groups that haven't arrived yet, determine which one is going
-                    // to take the longest.
+  while (pGroup) {  // For all of the groups that haven't arrived yet, determine which one is
+                    // going to take the longest.
     if (pGroup != gpPendingSimultaneousGroup && pGroup->fPlayer && pGroup->fBetweenSectors &&
         pGroup->ubNextX == gpPendingSimultaneousGroup->ubSectorX &&
         pGroup->ubNextY == gpPendingSimultaneousGroup->ubSectorY &&
@@ -1750,8 +1755,8 @@ void PrepareGroupsForSimultaneousArrival() {
       DeleteStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->ubGroupID);
 
       // NOTE: This can cause the arrival time to be > GetWorldTotalMin() + TraverseTime, so keep
-      // that in mind if you have any code that uses these 3 values to figure out how far along its
-      // route a group is!
+      // that in mind if you have any code that uses these 3 values to figure out how far along
+      // its route a group is!
       SetGroupArrivalTime(pGroup, uiLatestArrivalTime);
       AddStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->uiArrivalTime, pGroup->ubGroupID);
 
@@ -1817,10 +1822,10 @@ BOOLEAN PossibleToCoordinateSimultaneousGroupArrivals(struct GROUP *pFirstGroup)
     return FALSE;
   }
 
-  // We can't coordinate simultaneous attacks on a sector without any stationary forces!  Otherwise,
-  // it is possible that they will be gone when you finally arrive. if(
-  // !NumStationaryEnemiesInSector( pFirstGroup->ubSectorX, pFirstGroup->ubSectorY ) ) 	return
-  // FALSE;
+  // We can't coordinate simultaneous attacks on a sector without any stationary forces!
+  // Otherwise, it is possible that they will be gone when you finally arrive. if(
+  // !NumStationaryEnemiesInSector( pFirstGroup->ubSectorX, pFirstGroup->ubSectorY ) )
+  // return FALSE;
 
   // Count the number of groups that are scheduled to arrive in the same sector and are currently
   // adjacent to the sector in question.
@@ -1894,14 +1899,14 @@ void DelayEnemyGroupsIfPathsCross(struct GROUP *pPlayerGroup) {
     if (!pGroup->fPlayer) {  // then check to see if this group will arrive in next sector before
                              // the player group.
       if (pGroup->uiArrivalTime <
-          pPlayerGroup
-              ->uiArrivalTime) {  // check to see if enemy group will cross paths with player group.
+          pPlayerGroup->uiArrivalTime) {  // check to see if enemy group will cross paths with
+                                          // player group.
         if (pGroup->ubNextX == pPlayerGroup->ubSectorX &&
             pGroup->ubNextY == pPlayerGroup->ubSectorY &&
             pGroup->ubSectorX == pPlayerGroup->ubNextX &&
             pGroup->ubSectorY ==
-                pPlayerGroup->ubNextY) {  // Okay, the enemy group will cross paths with the player,
-                                          // so find and delete the arrival event
+                pPlayerGroup->ubNextY) {  // Okay, the enemy group will cross paths with the
+                                          // player, so find and delete the arrival event
           // and repost it in the future (like a minute or so after the player arrives)
           DeleteStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->ubGroupID);
 
@@ -2315,8 +2320,8 @@ int32_t CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
 
   // if already on the road
   if (pGroup->fBetweenSectors) {
-    // to get travel time to the first sector, use the arrival time, this way it accounts for delays
-    // due to simul. arrival
+    // to get travel time to the first sector, use the arrival time, this way it accounts for
+    // delays due to simul. arrival
     if (pGroup->uiArrivalTime >= GetWorldTotalMin()) {
       uiEtaTime += (pGroup->uiArrivalTime - GetWorldTotalMin());
     }
@@ -2442,11 +2447,12 @@ int32_t GetSectorMvtTimeForGroup(uint8_t ubSector, uint8_t ubDirection, struct G
 
   if (ubTraverseType == EDGEOFWORLD) return 0xffffffff;  // can't travel here!
 
-  // ARM: Made air-only travel take its normal time per sector even through towns.  Because Skyrider
-  // charges by the sector, not by flying time, it's annoying when his default route detours through
-  // a town to save time, but costs extra money. This isn't exactly unrealistic, since the chopper
-  // shouldn't be faster flying over a town anyway...  Not that other kinds of travel should be
-  // either - but the towns represents a kind of warping of our space-time scale as it is...
+  // ARM: Made air-only travel take its normal time per sector even through towns.  Because
+  // Skyrider charges by the sector, not by flying time, it's annoying when his default route
+  // detours through a town to save time, but costs extra money. This isn't exactly unrealistic,
+  // since the chopper shouldn't be faster flying over a town anyway...  Not that other kinds of
+  // travel should be either - but the towns represents a kind of warping of our space-time scale
+  // as it is...
   if ((ubTraverseType == TOWN) && (pGroup->ubTransportationMask != AIR))
     return 5;  // very fast, and vehicle types don't matter.
 
@@ -2690,8 +2696,8 @@ void HandleArrivalOfReinforcements(struct GROUP *pGroup) {
   int32_t iNumEnemiesInSector;
   int32_t cnt;
 
-  if (pGroup->fPlayer) {  // We don't have to worry about filling up the player slots, because it is
-                          // impossible
+  if (pGroup->fPlayer) {  // We don't have to worry about filling up the player slots, because it
+                          // is impossible
     // to have more player's in the game then the number of slots available for the player.
     PLAYERGROUP *pPlayer;
     uint8_t ubStrategicInsertionCode;
@@ -2769,8 +2775,8 @@ BOOLEAN PlayersBetweenTheseSectors(int16_t sSource, int16_t sDest, int32_t *iCou
   }
 
   // get number of characters entering/existing between these two sectors.  Special conditions
-  // during pre-battle interface to return where this function is used to show potential retreating
-  // directions instead!
+  // during pre-battle interface to return where this function is used to show potential
+  // retreating directions instead!
 
   //	check all groups
   while (curr) {
@@ -3279,7 +3285,8 @@ void CheckMembersOfMvtGroupAndComplainAboutBleeding(struct SOLDIERTYPE *pSoldier
     return;
   }
 
-  // make sure there are members in the group..if so, then run through and make each bleeder compain
+  // make sure there are members in the group..if so, then run through and make each bleeder
+  // compain
   pPlayer = pGroup->pPlayerList;
 
   // is there a player list?
@@ -3425,8 +3432,8 @@ void CalculateGroupRetreatSector(struct GROUP *pGroup) {
   }
 }
 
-// Called when all checks have been made for the group (if possible to retreat, etc.)  This function
-// blindly determines where to move the group.
+// Called when all checks have been made for the group (if possible to retreat, etc.)  This
+// function blindly determines where to move the group.
 void RetreatGroupToPreviousSector(struct GROUP *pGroup) {
   uint8_t ubSector, ubDirection = 255;
   int32_t iVehId, dx, dy;
@@ -3757,7 +3764,8 @@ BOOLEAN GroupWillMoveThroughSector(struct GROUP *pGroup, uint8_t ubSectorX, uint
       // Advance the sector value
       pGroup->ubSectorX = (uint8_t)(dx + pGroup->ubSectorX);
       pGroup->ubSectorY = (uint8_t)(dy + pGroup->ubSectorY);
-      // Check to see if it the sector we are checking to see if this group will be moving through.
+      // Check to see if it the sector we are checking to see if this group will be moving
+      // through.
       if (pGroup->ubSectorX == ubSectorX && pGroup->ubSectorY == ubSectorY) {
         pGroup->ubSectorX = ubOrigX;
         pGroup->ubSectorY = ubOrigY;
@@ -3906,8 +3914,8 @@ void RandomizePatrolGroupLocation(
     }
     wp = wp->next;
   }
-  // double it (they go back and forth) -- it's using zero based indices, so you have to add one to
-  // get the number of actual waypoints in one direction.
+  // double it (they go back and forth) -- it's using zero based indices, so you have to add one
+  // to get the number of actual waypoints in one direction.
   ubTotalWaypoints = (uint8_t)((ubMaxWaypointID) * 2);
 
   // pick the waypoint they start at
@@ -3992,8 +4000,8 @@ BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup) {
       // respectively
       bDifficultyMaxCats = (int8_t)(Random(4) + gGameOptions.ubDifficultyLevel * 2 + 3);
 
-      // maximum of 3 bloodcats or 1 for every 6%, 5%, 4% progress based on easy, normal, and hard,
-      // respectively
+      // maximum of 3 bloodcats or 1 for every 6%, 5%, 4% progress based on easy, normal, and
+      // hard, respectively
       bProgressMaxCats =
           (int8_t)max(CurrentPlayerProgressPercentage() / (7 - gGameOptions.ubDifficultyLevel), 3);
 
@@ -4071,19 +4079,19 @@ void PlaceGroupInSector(uint8_t ubGroupID, int16_t sPrevX, int16_t sPrevY, int16
   GroupArrivedAtSector(ubGroupID, fCheckForBattle, FALSE);
 }
 
-// ARM: centralized it so we can do a comprehensive Assert on it.  Causing problems with helicopter
-// group!
+// ARM: centralized it so we can do a comprehensive Assert on it.  Causing problems with
+// helicopter group!
 void SetGroupArrivalTime(struct GROUP *pGroup, uint32_t uiArrivalTime) {
   // PLEASE CENTRALIZE ALL CHANGES TO THE ARRIVAL TIMES OF GROUPS THROUGH HERE, ESPECIALLY THE
   // HELICOPTER struct GROUP!!!
 
   // if this group is the helicopter group, we have to make sure that its arrival time is never
-  // greater than the sum of the current time and its traverse time, 'cause those 3 values are used
-  // to plot its map position!  Because of this the chopper groups must NEVER be delayed for any
-  // reason - it gets excluded from simultaneous arrival logic
+  // greater than the sum of the current time and its traverse time, 'cause those 3 values are
+  // used to plot its map position!  Because of this the chopper groups must NEVER be delayed for
+  // any reason - it gets excluded from simultaneous arrival logic
 
-  // Also note that non-chopper groups can currently be delayed such that this assetion would fail -
-  // enemy groups by DelayEnemyGroupsIfPathsCross(), and player groups via
+  // Also note that non-chopper groups can currently be delayed such that this assetion would fail
+  // - enemy groups by DelayEnemyGroupsIfPathsCross(), and player groups via
   // PrepareGroupsForSimultaneousArrival().  So we skip the assert.
 
   if (IsGroupTheHelicopterGroup(pGroup)) {
@@ -4154,12 +4162,12 @@ void PlayerGroupArrivedSafelyInSector(struct GROUP *pGroup, BOOLEAN fCheckForNPC
         // stop: clear their strategic movement (mercpaths and waypoints)
         ClearMercPathsAndWaypointsForAllInGroup(pGroup);
 
-        // NOTE: Of course, it would be better if they continued onwards once everyone was ready to
-        // go again, in which case we'd want to preserve the plotted path, but since the player can
-        // mess with the squads, etc. in the mean-time, that just seemed to risky to try to support.
-        // They could get into a fight and be too injured to move, etc.  Basically, we'd have run a
-        // complete CanCharacterMoveInStrategic(0 check on all of them. It's a wish list task for
-        // AM...
+        // NOTE: Of course, it would be better if they continued onwards once everyone was ready
+        // to go again, in which case we'd want to preserve the plotted path, but since the player
+        // can mess with the squads, etc. in the mean-time, that just seemed to risky to try to
+        // support. They could get into a fight and be too injured to move, etc.  Basically, we'd
+        // have run a complete CanCharacterMoveInStrategic(0 check on all of them. It's a wish
+        // list task for AM...
 
         // stop time so player can react if group was already on the move and suddenly halts
         StopTimeCompression();
@@ -4275,8 +4283,8 @@ BOOLEAN WildernessSectorWithAllProfiledNPCsNotSpokenWith(uint8_t sSectorX, uint8
         // then this is a guy we need to stop for...
         fFoundSomebody = TRUE;
       } else {
-        // already spoke to this guy, don't prompt about this sector again, regardless of status of
-        // other NPCs here (although Hamous wanders around, he never shares the same wilderness
+        // already spoke to this guy, don't prompt about this sector again, regardless of status
+        // of other NPCs here (although Hamous wanders around, he never shares the same wilderness
         // sector as other important NPCs)
         return (FALSE);
       }

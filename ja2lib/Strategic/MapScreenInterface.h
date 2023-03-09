@@ -4,6 +4,7 @@
 #include "MessageBoxScreen.h"
 #include "SGP/Types.h"
 #include "Tactical/SoldierControl.h"
+#include "rust_sam_sites.h"
 
 typedef struct FASTHELPREGION {
   // the string
@@ -496,7 +497,7 @@ void SetTixaAsFound(void);
 void SetOrtaAsFound(void);
 
 // set this SAM site as being found by the player
-void SetSAMSiteAsFound(uint8_t uiSamIndex);
+void SetSAMSiteAsFound(enum SamSite uiSamIndex);
 
 // init time menus
 void InitTimersForMoveMenuMouseRegions(void);

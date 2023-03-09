@@ -89,8 +89,8 @@ void SetOffPanicBombs(uint8_t ubID, int8_t bPanicTrigger);
 void UpdateExplosionFrame(int32_t iIndex, int16_t sCurrentFrame);
 void RemoveExplosionData(int32_t iIndex);
 
-void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
-                               int16_t sGridNo, uint8_t ubDamage);
+void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ, int16_t sGridNo,
+                               uint8_t ubDamage);
 void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ);
 
 BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile);

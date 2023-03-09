@@ -1,27 +1,6 @@
 {
     "editor.formatOnSave": true,
     "files.associations": {
-        "selectwin.h": "c",
-        "renderworld.h": "c",
-        "message.h": "c",
-        "textinput.h": "c",
-        "vobject.h": "c",
-        "jascreens.h": "c",
-        "gameinputinternal.h": "c",
-        "himage.h": "c",
-        "menptr.h": "c",
-        "mapscreeninterfacemap.h": "c",
-        "laptop.h": "c",
-        "types.h": "c",
-        "mapscreeninterfaceborder.h": "c",
-        "queencommand.h": "c",
-        "mapscreeninterface.h": "c",
-        "drugsandalcohol.h": "c",
-        "text.h": "c",
-        "mapscreeninterfacebottom.h": "c",
-        "town.h": "c",
-        "townmilitia.h": "c",
-        "soldier.h": "c",
-        "screenids.h": "c"
+        "*.h": "c"
     }
 }

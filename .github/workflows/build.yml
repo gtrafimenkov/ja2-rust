@@ -7,59 +7,33 @@ on:
       - 'dev'
   pull_request:
 
-env:
-  SOLUTION_FILE_PATH: JA2.sln
-
 jobs:
 
   build-on-windows:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        config: [
-            "Debug",
-            "Release",
-            # "ReleaseWithDebug",
-            ]
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        # fetching everything because we need all the tags to correctly
-        # build BUILD_INFO
-        fetch-depth: 0
+
+    - name: Install latest rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+    #   uses: actions-rs/toolchain@v1
+    #   with:
+    #     toolchain: stable
+    #     default: true
+    #     override: true
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
 
-    - name: Get the version
-      id: get_version
-      run: echo "#define BUILD_INFO \"$(git describe --long --tags --always)\"" >ja2lib/BuildInfo.h
-      shell: bash
-
-    - name: Check version
-      run: cat ja2lib/BuildInfo.h
-      shell: bash
-
-    - name: Restore NuGet packages
-      run: msbuild /m /p:Configuration="${{ matrix.config }}" /p:RestorePackagesConfig=true /t:restore ${{env.SOLUTION_FILE_PATH}}
-
     - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration="${{ matrix.config }}" ${{env.SOLUTION_FILE_PATH}}
+      run: .\build.bat
 
-    - name: Run Tests
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: .\${{ matrix.config }}\unittester.exe
+    - name: Run Tests Debug
+      run: .\Debug\unittester.exe
 
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
-      with:
-        name: ja2-vanilla-exe
-        path: Release/ja2-win32.exe
-        retention-days: 2
+    - name: Run Tests Release
+      run: .\Release\unittester.exe
 
   build-on-linux:
 
@@ -67,6 +41,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Install latest rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+    #   uses: actions-rs/toolchain@v1
+    #   with:
+    #     toolchain: stable
+    #     default: true
+    #     override: true
 
     - name: Install build dependencies
       run: make install-build-dependencies-deb

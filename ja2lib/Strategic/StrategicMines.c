@@ -693,9 +693,8 @@ BOOLEAN IsThereAMineInThisSector(int16_t sX, int16_t sY) {
 
 BOOLEAN PlayerControlsMine(int8_t bMineIndex) {
   // a value of TRUE is from the enemy's point of view
-  if (StrategicMap[(gMineLocation[bMineIndex].sSectorX) +
-                   (MAP_WORLD_X * (gMineLocation[bMineIndex].sSectorY))]
-          .fEnemyControlled == TRUE)
+  if (IsSectorEnemyControlled(gMineLocation[bMineIndex].sSectorX,
+                              gMineLocation[bMineIndex].sSectorY))
     return (FALSE);
   else {
     // player only controls the actual mine after he has made arrangements to do so with the head
@@ -1097,9 +1096,8 @@ BOOLEAN PlayerForgotToTakeOverMine(uint8_t ubMineIndex) {
   // mine not empty
   // player hasn't spoken to the head miner, but hasn't attacked him either
   // miner is alive
-  if ((StrategicMap[(gMineLocation[ubMineIndex].sSectorX) +
-                    (MAP_WORLD_X * (gMineLocation[ubMineIndex].sSectorY))]
-           .fEnemyControlled == FALSE) &&
+  if ((!IsSectorEnemyControlled(gMineLocation[ubMineIndex].sSectorX,
+                                gMineLocation[ubMineIndex].sSectorY)) &&
       (!pMineStatus->fEmpty) && (!pMineStatus->fSpokeToHeadMiner) &&
       (!pMineStatus->fAttackedHeadMiner) &&
       (gMercProfiles[GetHeadMinerProfileIdForMine(ubMineIndex)].bLife > 0)) {

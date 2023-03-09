@@ -96,6 +96,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 // Used by PickGridNoToWalkIn
 #define MAX_ATTEMPTS 200
@@ -149,72 +150,10 @@ BOOLEAN gfUseAlternateMap = FALSE;
 // whether or not we have found Orta yet
 BOOLEAN fFoundOrta = FALSE;
 
-// have any of the sam sites been found
-BOOLEAN fSamSiteFound[NUMBER_OF_SAMS] = {
-    FALSE,
-    FALSE,
-    FALSE,
-    FALSE,
-};
-
-int16_t pSamList[NUMBER_OF_SAMS] = {
-    GetSectorID8_STATIC(SAM_1_X, SAM_1_Y),
-    GetSectorID8_STATIC(SAM_2_X, SAM_2_Y),
-    GetSectorID8_STATIC(SAM_3_X, SAM_3_Y),
-    GetSectorID8_STATIC(SAM_4_X, SAM_4_Y),
-};
-
-int16_t pSamGridNoAList[NUMBER_OF_SAMS] = {
-    10196,
-    11295,
-    16080,
-    11913,
-};
-
-int16_t pSamGridNoBList[NUMBER_OF_SAMS] = {
-    10195,
-    11135,
-    15920,
-    11912,
-};
-
-// ATE: Update this w/ graphic used
-// Use 3 if / orientation, 4 if \ orientation
-int8_t gbSAMGraphicList[NUMBER_OF_SAMS] = {
-    4,
-    3,
-    3,
-    3,
-};
-
 int8_t gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
 
 // the amount of time that a soldier will wait to return to desired/old squad
 #define DESIRE_SQUAD_RESET_DELAY 12 * 60
-
-uint8_t ubSAMControlledSectors[MAP_WORLD_Y][MAP_WORLD_X] = {
-    //       1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 2, 0},    // A
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0},    // B
-    {0, 1, 1, 1, 1, 1, 1, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 0},    // C
-    {0, 1, 01, 1, 1, 1, 1, 1, 3, 3, 2, 2, 2, 2, 2, 02, 2, 0},  // D
-    {0, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 0},    // E
-    {0, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 0},    // F
-    {0, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 0},    // G
-    {0, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // H
-    {0, 1, 1, 3, 3, 3, 3, 3, 03, 3, 3, 3, 3, 3, 2, 2, 2, 0},   // I
-    {0, 1, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // J
-    {0, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // K
-    {0, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // L
-    {0, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 2, 2, 2, 0},    // M
-    {0, 4, 4, 4, 04, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 0},   // N
-    {0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 0},    // O
-    {0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 0},    // P
-
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-};
 
 int16_t DirXIncrementer[8] = {
     0,   // N
@@ -557,16 +496,15 @@ uint8_t GetTownSectorSize(TownID bTownId) {
 // return number of sectors under player control for this town
 uint8_t GetTownSectorsUnderControl(TownID bTownId) {
   int8_t ubSectorsControlled = 0;
-  int32_t iCounterA = 0, iCounterB = 0;
   uint16_t usSector = 0;
 
-  for (iCounterA = 0; iCounterA < (int32_t)(MAP_WORLD_X - 1); iCounterA++) {
-    for (iCounterB = 0; iCounterB < (int32_t)(MAP_WORLD_Y - 1); iCounterB++) {
+  for (uint8_t iCounterA = 0; iCounterA < (int32_t)(MAP_WORLD_X - 1); iCounterA++) {
+    for (uint8_t iCounterB = 0; iCounterB < (int32_t)(MAP_WORLD_Y - 1); iCounterB++) {
       usSector = (uint16_t)GetSectorID16(iCounterA, iCounterB);
 
       if ((StrategicMap[usSector].townID == bTownId) &&
-          (StrategicMap[usSector].fEnemyControlled == FALSE) &&
-          (NumEnemiesInSector((int16_t)iCounterA, (int16_t)iCounterB) == 0)) {
+          (!IsSectorEnemyControlled(iCounterA, iCounterB)) &&
+          (NumEnemiesInSector(iCounterA, iCounterB) == 0)) {
         ubSectorsControlled++;
       }
     }
@@ -587,10 +525,9 @@ void InitializeSAMSites(void) {
   gsMercArriveSectorY = 1;
 
   // all SAM sites start game in perfect working condition
-  StrategicMap[(SAM_1_X) + (MAP_WORLD_X * (SAM_1_Y))].bSAMCondition = 100;
-  StrategicMap[(SAM_2_X) + (MAP_WORLD_X * (SAM_2_Y))].bSAMCondition = 100;
-  StrategicMap[(SAM_3_X) + (MAP_WORLD_X * (SAM_3_Y))].bSAMCondition = 100;
-  StrategicMap[(SAM_4_X) + (MAP_WORLD_X * (SAM_4_Y))].bSAMCondition = 100;
+  for (int i = 0; i < GetSamSiteCount(); i++) {
+    SetSamCondition(i, 100);
+  }
 
   UpdateAirspaceControl();
 }
@@ -1759,7 +1696,7 @@ void GetSectorIDString(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ, wcha
       // are we dealing with the unfound towns?
       switch (ubSectorID) {
         case SEC_D2:  // Chitzena SAM
-          if (!fSamSiteFound[SAM_SITE_ONE])
+          if (!IsSamSiteFound(SamSiteChitzena))
             wcscat(zString, pLandTypeStrings[TROPICS]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[TROPICS_SAM_SITE]);
@@ -1767,7 +1704,7 @@ void GetSectorIDString(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ, wcha
             wcscat(zString, pLandTypeStrings[SAM_SITE]);
           break;
         case SEC_D15:  // Drassen SAM
-          if (!fSamSiteFound[SAM_SITE_TWO])
+          if (!IsSamSiteFound(SamSiteDrassen))
             wcscat(zString, pLandTypeStrings[SPARSE]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[SPARSE_SAM_SITE]);
@@ -1775,7 +1712,7 @@ void GetSectorIDString(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ, wcha
             wcscat(zString, pLandTypeStrings[SAM_SITE]);
           break;
         case SEC_I8:  // Cambria SAM
-          if (!fSamSiteFound[SAM_SITE_THREE])
+          if (!IsSamSiteFound(SamSiteCambria))
             wcscat(zString, pLandTypeStrings[SAND]);
           else if (fDetailed)
             wcscat(zString, pLandTypeStrings[SAND_SAM_SITE]);
@@ -1819,7 +1756,7 @@ void GetSectorIDString(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ, wcha
             wcscat(zString, pTownNames[MEDUNA]);
           break;
         default:
-          if (ubSectorID == SEC_N4 && fSamSiteFound[SAM_SITE_FOUR]) {  // Meduna's SAM site
+          if (ubSectorID == SEC_N4 && IsSamSiteFound(SamSiteMeduna)) {  // Meduna's SAM site
             if (fDetailed)
               wcscat(zString, pLandTypeStrings[MEDUNA_SAM_SITE]);
             else
@@ -2845,7 +2782,7 @@ void SetupNewStrategicGame() {
   // Set all sectors as enemy controlled
   for (sSectorX = 0; sSectorX < MAP_WORLD_X; sSectorX++) {
     for (sSectorY = 0; sSectorY < MAP_WORLD_Y; sSectorY++) {
-      StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyControlled = TRUE;
+      SetSectorEnemyControlled(sSectorX, sSectorY, true);
     }
   }
 
@@ -2886,29 +2823,6 @@ void SetupNewStrategicGame() {
   StrategicTurnsNewGame();
 }
 
-// a -1 will be returned upon failure
-int8_t GetSAMIdFromSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
-  int8_t bCounter = 0;
-  int16_t sSectorValue = 0;
-
-  // check if valid sector
-  if (bSectorZ != 0) {
-    return (-1);
-  }
-
-  // get the sector value
-  sSectorValue = GetSectorID8(sSectorX, sSectorY);
-
-  // run through list of sam sites
-  for (bCounter = 0; bCounter < 4; bCounter++) {
-    if (pSamList[bCounter] == sSectorValue) {
-      return (bCounter);
-    }
-  }
-
-  return (-1);
-}
-
 BOOLEAN CanGoToTacticalInSector(int16_t sX, int16_t sY, uint8_t ubZ) {
   int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
@@ -2938,69 +2852,13 @@ BOOLEAN CanGoToTacticalInSector(int16_t sX, int16_t sY, uint8_t ubZ) {
   return (FALSE);
 }
 
-int32_t GetNumberOfSAMSitesUnderPlayerControl(void) {
-  int32_t iNumber = 0, iCounter = 0;
-
-  // if the sam site is under player control, up the number
-  for (iCounter = 0; iCounter < NUMBER_OF_SAMS; iCounter++) {
-    if (StrategicMap[SectorID8To16(pSamList[iCounter])].fEnemyControlled == FALSE) {
-      iNumber++;
-    }
-  }
-
-  return (iNumber);
-}
-
-int32_t SAMSitesUnderPlayerControl(int16_t sX, int16_t sY) {
-  BOOLEAN fSamSiteUnderControl = FALSE;
-
-  // is this sector a SAM sector?
-  if (IsThisSectorASAMSector(sX, sY, 0) == TRUE) {
-    // is it under control by the player
-    if (StrategicMap[GetSectorID16(sX, sY)].fEnemyControlled == FALSE) {
-      // yes
-      fSamSiteUnderControl = TRUE;
-    }
-  }
-
-  return (fSamSiteUnderControl);
-}
-
 void UpdateAirspaceControl(void) {
-  int32_t iCounterA = 0, iCounterB = 0;
-  uint8_t ubControllingSAM;
-  StrategicMapElement *pSAMStrategicMap = NULL;
-  BOOLEAN fEnemyControlsAir;
-
-  for (iCounterA = 1; iCounterA < (int32_t)(MAP_WORLD_X - 1); iCounterA++) {
-    for (iCounterB = 1; iCounterB < (int32_t)(MAP_WORLD_Y - 1); iCounterB++) {
-      // IMPORTANT: B and A are reverse here, since the table is stored transposed
-      ubControllingSAM = ubSAMControlledSectors[iCounterB][iCounterA];
-
-      if ((ubControllingSAM >= 1) && (ubControllingSAM <= NUMBER_OF_SAMS)) {
-        pSAMStrategicMap = &(StrategicMap[SectorID8To16(pSamList[ubControllingSAM - 1])]);
-
-        // if the enemies own the controlling SAM site, and it's in working condition
-        if ((pSAMStrategicMap->fEnemyControlled) &&
-            (pSAMStrategicMap->bSAMCondition >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK)) {
-          fEnemyControlsAir = TRUE;
-        } else {
-          fEnemyControlsAir = FALSE;
-        }
-      } else {
-        // no controlling SAM site
-        fEnemyControlsAir = FALSE;
-      }
-
-      StrategicMap[GetSectorID16(iCounterA, iCounterB)].fEnemyAirControlled = fEnemyControlsAir;
-    }
-  }
+  UpdateAirspaceControlMap();
 
   // check if currently selected arrival sector still has secure airspace
 
   // if it's not enemy air controlled
-  if (StrategicMap[GetSectorID16(gsMercArriveSectorX, gsMercArriveSectorY)].fEnemyAirControlled ==
-      TRUE) {
+  if (IsSectorEnemyAirControlled(gsMercArriveSectorX, gsMercArriveSectorY)) {
     // NOPE!
     wchar_t sMsgString[256], sMsgSubString1[64], sMsgSubString2[64];
 
@@ -3034,19 +2892,6 @@ void UpdateAirspaceControl(void) {
   UpdateRefuelSiteAvailability();
 }
 
-BOOLEAN IsThereAFunctionalSAMSiteInSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
-  if (IsThisSectorASAMSector(sSectorX, sSectorY, bSectorZ) == FALSE) {
-    return (FALSE);
-  }
-
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].bSAMCondition <
-      MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {
-    return (FALSE);
-  }
-
-  return (TRUE);
-}
-
 // is this sector part of the town?
 BOOLEAN SectorIsPartOfTown(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY) {
   if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID == bTownId) {
@@ -3061,6 +2906,21 @@ BOOLEAN SectorIsPartOfTown(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY) {
 BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten = 0;
   uint32_t uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
+
+  // copy data
+  for (int i = 0; i < GetSamSiteCount(); i++) {
+    uint8_t sX = GetSamSiteX(i);
+    uint8_t sY = GetSamSiteY(i);
+    SectorID16 sector = GetSectorID16(sX, sY);
+    StrategicMap[sector].__only_storage_bSAMCondition = GetSamCondition(i);
+  }
+
+  for (int y = 1; y < 17; y++) {
+    for (int x = 1; x < 17; x++) {
+      SectorID16 sector = GetSectorID16(x, y);
+      StrategicMap[sector].__only_storage_fEnemyControlled = IsSectorEnemyControlled(x, y);
+    }
+  }
 
   // Save the strategic map information
   FileMan_Write(hFile, StrategicMap, uiSize, &uiNumBytesWritten);
@@ -3108,6 +2968,20 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
   FileMan_Read(hFile, StrategicMap, uiSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiSize) {
     return (FALSE);
+  }
+
+  // copy data
+  for (int i = 0; i < GetSamSiteCount(); i++) {
+    uint8_t sX = GetSamSiteX(i);
+    uint8_t sY = GetSamSiteY(i);
+    SectorID16 sector = GetSectorID16(sX, sY);
+    SetSamCondition(i, StrategicMap[sector].__only_storage_bSAMCondition);
+  }
+  for (int y = 1; y < 17; y++) {
+    for (int x = 1; x < 17; x++) {
+      SectorID16 sector = GetSectorID16(x, y);
+      SetSectorEnemyControlled(x, y, StrategicMap[sector].__only_storage_fEnemyControlled);
+    }
   }
 
   // Load the Sector Info
@@ -3859,8 +3733,9 @@ BOOLEAN HandleDefiniteUnloadingOfWorld(uint8_t ubUnloadCode) {
 BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle() {
   int32_t i;
 
-  // We don't have mercs in the sector.  Now, we check to see if there are BOTH enemies and militia.
-  // If both co-exist in the sector, then make them fight for control of the sector via autoresolve.
+  // We don't have mercs in the sector.  Now, we check to see if there are BOTH enemies and
+  // militia. If both co-exist in the sector, then make them fight for control of the sector via
+  // autoresolve.
   for (i = gTacticalStatus.Team[ENEMY_TEAM].bFirstID;
        i <= gTacticalStatus.Team[CREATURE_TEAM].bLastID; i++) {
     if (MercPtrs[i]->bActive && MercPtrs[i]->bLife) {
@@ -3916,8 +3791,8 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
 
   GetCurrentBattleSectorXYZ(&sBattleSectorX, &sBattleSectorY, &sBattleSectorZ);
 
-  if (guiCurrentScreen ==
-      AUTORESOLVE_SCREEN) {  // The user has decided to let the game autoresolve the current battle.
+  if (guiCurrentScreen == AUTORESOLVE_SCREEN) {  // The user has decided to let the game
+                                                 // autoresolve the current battle.
     if (gWorldSectorX == sBattleSectorX && gWorldSectorY == sBattleSectorY &&
         gbWorldSectorZ == sBattleSectorZ) {
       for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
@@ -4021,8 +3896,8 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
 }
 
 // This is called just before the world is unloaded to preserve location information for RPCs and
-// NPCs either in the sector or strategically in the sector (such as firing an NPC in a sector that
-// isn't yet loaded.)  When loading that sector, the RPC would be added.
+// NPCs either in the sector or strategically in the sector (such as firing an NPC in a sector
+// that isn't yet loaded.)  When loading that sector, the RPC would be added.
 //@@@Evaluate
 void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier) {
   if (!pSoldier || GetSolProfile(pSoldier) == NO_PROFILE) {  // Doesn't have profile information.
@@ -4097,9 +3972,9 @@ void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup) {
 
   if (!gTacticalStatus.fHasEnteredCombatModeSinceEntering && gTacticalStatus.fEnemyInSector) {
     // Flag is set so if "wilderness" enemies are in the adjacent sector of this group, the group
-    // has a 90% chance of ambush.  Because this typically doesn't happen very often, the chance is
-    // high. This reflects the enemies radioing ahead to other enemies of the group's arrival, so
-    // they have time to setup a good ambush!
+    // has a 90% chance of ambush.  Because this typically doesn't happen very often, the chance
+    // is high. This reflects the enemies radioing ahead to other enemies of the group's arrival,
+    // so they have time to setup a good ambush!
     pGroup->uiFlags |= GROUPFLAG_HIGH_POTENTIAL_FOR_AMBUSH;
 
     pPlayer = pGroup->pPlayerList;

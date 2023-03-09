@@ -1097,8 +1097,8 @@ void ChooseFaceGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) {
   int8_t bDifficultyRating = CalcDifficultyModifier(pp->ubSoldierClass);
 
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y &&
-      StrategicMap[GetSectorID16(TIXA_SECTOR_X, TIXA_SECTOR_Y)]
-          .fEnemyControlled) {  // Tixa is a special case that is handled differently.
+      IsSectorEnemyControlled(TIXA_SECTOR_X, TIXA_SECTOR_Y)) {
+    // Tixa is a special case that is handled differently.
     return;
   }
 
@@ -1310,7 +1310,7 @@ void ChooseLocationSpecificGearForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp) 
   // If this is Tixa and the player doesn't control Tixa then give all enemies gas masks,
   // but somewhere on their person, not in their face positions
   if (gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y &&
-      StrategicMap[GetSectorID16(TIXA_SECTOR_X, TIXA_SECTOR_Y)].fEnemyControlled) {
+      IsSectorEnemyControlled(TIXA_SECTOR_X, TIXA_SECTOR_Y)) {
     CreateItem(GASMASK, (int8_t)(95 + Random(6)), &Object);
     PlaceObjectInSoldierCreateStruct(pp, &Object);
   }
