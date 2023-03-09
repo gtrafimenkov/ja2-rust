@@ -3577,7 +3577,8 @@ void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize) {
 
   // else the soldier is in a different map
   else {
-    GetShortSectorString(gMercProfiles[usProfileID].sSectorX, gMercProfiles[usProfileID].sSectorY,
+    GetShortSectorString((u8)gMercProfiles[usProfileID].sSectorX,
+                         (u8)gMercProfiles[usProfileID].sSectorY,
                          pzText, bufSize);
   }
 }

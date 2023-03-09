@@ -98,7 +98,8 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   // add the 'e' for 'Enemy preserved' to the front of the map name
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Open the file for reading
@@ -694,7 +695,8 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   // add the 'e' for 'Enemy preserved' to the front of the map name
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Count the number of enemies ( elites, regulars, admins and creatures ) that are in the temp
@@ -730,7 +732,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     if (ubStrategicElites != ubNumElites || ubStrategicTroops != ubNumTroops ||
         ubStrategicAdmins != ubNumAdmins || ubStrategicCreatures != ubNumCreatures) {
       // remove the file
-      RemoveEnemySoldierTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      RemoveEnemySoldierTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       return (TRUE);
     }
   }
@@ -1062,7 +1064,8 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 
   // add the 'e' for 'Enemy preserved' to the front of the map name
   // sprintf( zMapName, "%s\\c_%s", MAPS_DIR, zTempName);
-  GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Open the file for reading
@@ -1622,7 +1625,8 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   // add the 'e' for 'Enemy preserved' to the front of the map name
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Open the file for reading

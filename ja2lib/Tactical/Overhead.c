@@ -2668,7 +2668,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       }
       if (pKiller && pKiller->bTeam == OUR_TEAM) {
         AddHistoryToPlayersLog(HISTORY_MERC_KILLED_CHARACTER, pSoldierOld->ubProfile,
-                               GetWorldTotalMin(), gWorldSectorX, gWorldSectorY);
+                               GetWorldTotalMin(), (u8)gWorldSectorX, (u8)gWorldSectorY);
       } else {
         AddHistoryToPlayersLog(HISTORY_NPC_KILLED, pSoldierOld->ubProfile, GetWorldTotalMin(),
                                gWorldSectorX, gWorldSectorY);
