@@ -713,7 +713,7 @@ INT32 GetNumberOfPassengersInHelicopter(void) {
   return (iNumber);
 }
 
-BOOLEAN IsRefuelSiteInSector(INT16 sMapX, INT16 sMapY) {
+BOOLEAN IsRefuelSiteInSector(u8 sMapX, u8 sMapY) {
   INT32 iCounter = 0;
 
   for (iCounter = 0; iCounter < NUMBER_OF_REFUEL_SITES; iCounter++) {

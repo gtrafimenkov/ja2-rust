@@ -54,8 +54,8 @@ enum {
 
 // the strategic mine structures
 typedef struct MINE_LOCATION_TYPE {
-  INT16 sSectorX;        // x value of sector mine is in
-  INT16 sSectorY;        // y value of sector mine is in
+  u8 sSectorX;           // x value of sector mine is in
+  u8 sSectorY;           // y value of sector mine is in
   INT8 bAssociatedTown;  // associated town of this mine
 
 } MINE_LOCATION_TYPE;

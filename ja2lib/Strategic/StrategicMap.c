@@ -469,7 +469,7 @@ BOOLEAN InitStrategicEngine() {
   return (TRUE);
 }
 
-INT8 GetTownIdForSector(INT16 sMapX, INT16 sMapY) {
+INT8 GetTownIdForSector(u8 sMapX, u8 sMapY) {
   // return the name value of the town in this sector
 
   return GetTownIdForStrategicMapIndex(GetSectorID16(sMapX, sMapY));

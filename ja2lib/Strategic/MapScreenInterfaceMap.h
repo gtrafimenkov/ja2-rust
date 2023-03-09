@@ -56,7 +56,7 @@ void CancelPathForVehicle(VEHICLETYPE *pVehicle, BOOLEAN fAlreadyReversed);
 void CancelPathForGroup(struct GROUP *pGroup);
 
 // check if we have waited long enought o update temp path
-void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
+void DisplayThePotentialPathForHelicopter(u8 sMapX, u8 sMapY);
 
 // clear out helicopter list after this sector
 UINT32 ClearPathAfterThisSectorForHelicopter(u8 sX, u8 sY);

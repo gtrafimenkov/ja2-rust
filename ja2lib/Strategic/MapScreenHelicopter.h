@@ -170,7 +170,7 @@ void LandHelicopter(void);
 void TakeOffHelicopter(void);
 
 // test whether or not a sector contains a fuel site
-BOOLEAN IsRefuelSiteInSector(INT16 sMapX, INT16 sMapY);
+BOOLEAN IsRefuelSiteInSector(u8 sMapX, u8 sMapY);
 
 // update which refueling sites are controlled by player & therefore available
 void UpdateRefuelSiteAvailability(void);

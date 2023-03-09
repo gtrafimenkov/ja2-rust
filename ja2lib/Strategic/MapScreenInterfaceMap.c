@@ -477,8 +477,8 @@ void AdjustXForLeftMapEdge(STR16 wString, INT16 *psX);
 static void BlitTownGridMarkers(void);
 void BlitMineGridMarkers(void);
 void BlitSAMGridMarkers(void);
-void BlitMineIcon(INT16 sMapX, INT16 sMapY);
-void BlitMineText(INT16 sMapX, INT16 sMapY);
+void BlitMineIcon(u8 sMapX, u8 sMapY);
+void BlitMineText(u8 sMapX, u8 sMapY);
 INT16 GetBaseSectorForCurrentTown(void);
 void RenderIconsPerSectorForSelectedTown(void);
 void MilitiaRegionClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
@@ -509,7 +509,7 @@ void ShowSAMSitesOnStrategicMap(void);
 void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 
 // display potential path, yes or no?
-void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY);
+void DisplayThePotentialPathForHelicopter(u8 sMapX, u8 sMapY);
 void ShowEnemiesInSector(u8 sSectorX, u8 sSectorY, INT16 sNumberOfEnemies, UINT8 ubIconPosition);
 void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY);
 void HandleShowingOfEnemyForcesInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
@@ -886,7 +886,7 @@ void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFir
 }
 
 // "on duty" includes mercs inside vehicles
-INT32 ShowOnDutyTeam(INT16 sMapX, INT16 sMapY) {
+INT32 ShowOnDutyTeam(u8 sMapX, u8 sMapY) {
   UINT8 ubCounter = 0, ubIconPosition = 0;
   struct VObject *hIconHandle;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -3165,7 +3165,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
   return FALSE;
 }
 
-void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY) {
+void DisplayThePotentialPathForHelicopter(u8 sMapX, u8 sMapY) {
   // simply check if we want to refresh the screen to display path
   static BOOLEAN fOldShowAirCraft = FALSE;
   static INT16 sOldMapX, sOldMapY;
@@ -3969,7 +3969,7 @@ BOOLEAN CheckForClickOverHelicopterIcon(u8 sClickedSectorX, u8 sClickedSectorY) 
   return (TRUE);
 }
 
-void BlitMineIcon(INT16 sMapX, INT16 sMapY) {
+void BlitMineIcon(u8 sMapX, u8 sMapY) {
   struct VObject *hHandle;
   UINT32 uiDestPitchBYTES;
   INT16 sScreenX, sScreenY;
@@ -3995,7 +3995,7 @@ void BlitMineIcon(INT16 sMapX, INT16 sMapY) {
   }
 }
 
-void BlitMineText(INT16 sMapX, INT16 sMapY) {
+void BlitMineText(u8 sMapX, u8 sMapY) {
   INT16 sScreenX, sScreenY;
   CHAR16 wString[32], wSubString[32];
   UINT8 ubMineIndex;
