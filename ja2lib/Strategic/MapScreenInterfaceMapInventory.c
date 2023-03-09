@@ -153,7 +153,7 @@ void CreateMapInventoryButtons(void);
 void DestroyMapInventoryButtons(void);
 void ReSizeStashListByThisAmount(INT32 iNumberOfItems);
 void DestroyStash(void);
-void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ);
+void BuildStashForSelectedSector(u8 sMapX, u8 sMapY, i8 sMapZ);
 BOOLEAN GetObjFromInventoryStashSlot(struct OBJECTTYPE *pInventorySlot,
                                      struct OBJECTTYPE *pItemPtr);
 BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr);
@@ -445,7 +445,7 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen) {
     CreateMapInventoryButtons();
 
     // build stash
-    BuildStashForSelectedSector(sSelMapX, sSelMapY, (INT16)(iCurrentMapSectorZ));
+    BuildStashForSelectedSector(sSelMapX, sSelMapY, (i8)(iCurrentMapSectorZ));
 
     CreateMapInventoryPoolDoneButton();
 
@@ -856,7 +856,7 @@ void DestroyMapInventoryButtons(void) {
   return;
 }
 
-void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
+void BuildStashForSelectedSector(u8 sMapX, u8 sMapY, i8 sMapZ) {
   INT32 iSize = 0;
   UINT32 uiItemCount = 0;
   UINT32 uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
@@ -1118,7 +1118,7 @@ void DestroyStash(void) {
   MemFree(pInventoryPoolList);
 }
 
-INT32 GetSizeOfStashInSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCountStacksAsOne) {
+INT32 GetSizeOfStashInSector(u8 sMapX, u8 sMapY, i8 sMapZ, BOOLEAN fCountStacksAsOne) {
   // get # of items in sector that are visible to the player
   UINT32 uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;

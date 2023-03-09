@@ -4321,8 +4321,8 @@ void ExecuteStrategicAIAction(UINT16 usActionCode, u8 sSectorX, u8 sSectorY) {
       // following checks succeed, the enemies will be sent to attack and reinforce that sector.
       // Otherwise, the enemies will simply check it out, then leave.
       if (pSector->ubGarrisonID != NO_GARRISON) {  // sector has a garrison
-        if (!NumEnemiesInSector((INT16)SectorID8_X(ubSectorID),
-                                (INT16)SectorID8_Y(ubSectorID))) {  // no enemies are here
+        if (!NumEnemiesInSector(SectorID8_X(ubSectorID),
+                                SectorID8_Y(ubSectorID))) {  // no enemies are here
           if (gArmyComp[!gGarrisonGroup[pSector->ubGarrisonID].ubComposition]
                   .bPriority) {  // the garrison is important
             if (!gGarrisonGroup[pSector->ubGarrisonID]

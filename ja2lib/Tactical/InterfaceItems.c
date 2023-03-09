@@ -3125,8 +3125,8 @@ void RenderItemDescriptionBox() {
                 gMapWeaponStats[4].sY + gsInvDescY + GetFontHeight(BLOCKFONT) + 2, pStr);
 
         SetFontForeground(5);
-        GetShortSectorString((INT16)SectorID8_X(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             (INT16)SectorID8_Y(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+        GetShortSectorString(SectorID8_X((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+                             SectorID8_Y((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
                              sTempString, ARR_SIZE(sTempString));
         swprintf(pStr, ARR_SIZE(pStr), L"%s", sTempString);
         FindFontRightCoordinates((INT16)(gMapWeaponStats[4].sX + gsInvDescX),
@@ -3595,8 +3595,8 @@ void RenderItemDescriptionBox() {
                 gWeaponStats[4].sY + gsInvDescY + GetFontHeight(BLOCKFONT) + 2, pStr);
 
         SetFontForeground(5);
-        GetShortSectorString((INT16)SectorID8_X(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
-                             (INT16)SectorID8_Y(KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+        GetShortSectorString(SectorID8_X((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
+                             SectorID8_Y((u8)KeyTable[gpItemDescObject->ubKeyID].usSectorFound),
                              sTempString, ARR_SIZE(sTempString));
         swprintf(pStr, ARR_SIZE(pStr), L"%s", sTempString);
         FindFontRightCoordinates((INT16)(gWeaponStats[4].sX + gsInvDescX),

@@ -538,8 +538,8 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
     if (!pSoldier) return NULL;
     memcpy(pSoldier, &Soldier, sizeof(struct SOLDIERTYPE));
     pSoldier->ubID = 255;
-    pSoldier->sSectorX = (INT16)SectorID8_X(ubSectorID);
-    pSoldier->sSectorY = (INT16)SectorID8_Y(ubSectorID);
+    pSoldier->sSectorX = SectorID8_X(ubSectorID);
+    pSoldier->sSectorY = SectorID8_Y(ubSectorID);
     pSoldier->bSectorZ = 0;
     *pubID = 255;
     return pSoldier;

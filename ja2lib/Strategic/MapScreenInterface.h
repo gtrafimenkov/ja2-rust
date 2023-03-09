@@ -331,7 +331,7 @@ void JumpToLevel(INT32 iLevel);
 void CheckAndUpdateBasedOnContractTimes(void);
 
 // check if are just about to display this pop up or stopping display
-void HandleDisplayOfItemPopUpForSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ);
+void HandleDisplayOfItemPopUpForSector(u8 sMapX, u8 sMapY, i8 sMapZ);
 
 // display red arrow by name of selected merc
 void HandleDisplayOfSelectedMercArrows(void);

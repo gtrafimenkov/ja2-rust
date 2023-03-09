@@ -1011,7 +1011,7 @@ void HandleDisplayOfSelectedMercArrows(void) {
   return;
 }
 
-void HandleDisplayOfItemPopUpForSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
+void HandleDisplayOfItemPopUpForSector(u8 sMapX, u8 sMapY, i8 sMapZ) {
   // handle display of item pop up for this sector
   // check if anyone alive in this sector
   struct ITEM_POOL *pItemPool = NULL;

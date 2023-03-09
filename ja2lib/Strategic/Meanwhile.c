@@ -383,7 +383,7 @@ void StartMeanwhile() {
   if (gfWorldLoaded) {
     gsOldSectorX = (u8)gWorldSectorX;
     gsOldSectorY = (u8)gWorldSectorY;
-    gsOldSectorZ = (u8)gbWorldSectorZ;
+    gsOldSectorZ = (i8)gbWorldSectorZ;
   }
 
   gsOldSelectedSectorX = sSelMapX;

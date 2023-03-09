@@ -5272,8 +5272,8 @@ void RenderShadingForUnControlledSectors(void) {
     if ((StrategicMap[SectorID8To16(sCurrentSectorValue)].townID != BLANK_SECTOR) &&
         ((IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
                                   SectorID8_Y(sCurrentSectorValue))) ||
-         (NumHostilesInSector((INT16)SectorID8_X(sCurrentSectorValue),
-                              (INT16)SectorID8_Y(sCurrentSectorValue), 0)))) {
+         (NumHostilesInSector(SectorID8_X(sCurrentSectorValue), SectorID8_Y(sCurrentSectorValue),
+                              0)))) {
       // shade this sector, not under our control
       sX = MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X +
            ((iCounter % MILITIA_BOX_ROWS) * MILITIA_BOX_BOX_WIDTH);
