@@ -856,7 +856,8 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ
   }
 
   // Set the sector flag indicating that there is a Door table temp file present
-  SetSectorFlag(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, SF_DOOR_TABLE_TEMP_FILES_EXISTS);
+  SetSectorFlag((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ,
+                SF_DOOR_TABLE_TEMP_FILES_EXISTS);
 
   FileMan_Close(hFile);
 

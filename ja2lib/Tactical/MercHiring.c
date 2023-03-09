@@ -566,10 +566,10 @@ static void CheckForValidArrivalSector() {
   sRight = ubRadius;
 
   for (cnt1 = sBottom; cnt1 <= sTop; cnt1++) {
-    leftmost = ((GetSectorID16(sSector, cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
+    leftmost = ((GetSectorID16((u8)sSector, (u8)cnt1)) / MAP_WORLD_X) * MAP_WORLD_X;
 
     for (cnt2 = sLeft; cnt2 <= sRight; cnt2++) {
-      sSector2 = GetSectorID16(sSector, cnt1) + cnt2;
+      sSector2 = GetSectorID16((u8)sSector, (u8)cnt1) + cnt2;
 
       if (sSector2 >= 1 && sSector2 < ((MAP_WORLD_X - 1) * (MAP_WORLD_X - 1)) &&
           sSector2 >= leftmost && sSector2 < (leftmost + MAP_WORLD_X)) {

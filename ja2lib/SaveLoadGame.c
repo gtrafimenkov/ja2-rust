@@ -603,8 +603,8 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
 
   SaveGameHeader.uiCurrentScreen = guiPreviousOptionScreen;
 
-  SaveGameHeader.fAlternateSector =
-      GetSectorFlagStatus(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, SF_USE_ALTERNATE_MAP);
+  SaveGameHeader.fAlternateSector = GetSectorFlagStatus((u8)gWorldSectorX, (u8)gWorldSectorY,
+                                                        gbWorldSectorZ, SF_USE_ALTERNATE_MAP);
 
   if (gfWorldLoaded) {
     SaveGameHeader.fWorldLoaded = TRUE;
@@ -1206,7 +1206,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // if we are suppose to use the alternate sector
   if (SaveGameHeader.fAlternateSector) {
-    SetSectorFlag(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, SF_USE_ALTERNATE_MAP);
+    SetSectorFlag((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, SF_USE_ALTERNATE_MAP);
     gfUseAlternateMap = TRUE;
   }
 

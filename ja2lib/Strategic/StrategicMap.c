@@ -817,7 +817,7 @@ BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ) {
     UpdateDoorGraphicsFromStatus(TRUE, FALSE);
 
     // Set the fact we have visited the  sector
-    SetSectorFlag(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, SF_ALREADY_LOADED);
+    SetSectorFlag((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, SF_ALREADY_LOADED);
 
     // Check for helicopter being on the ground in this sector...
     HandleHelicopterOnGroundGraphic();

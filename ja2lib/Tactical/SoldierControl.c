@@ -2818,8 +2818,8 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT
     if (pSoldier->ubAttackerID != NOBODY &&
         MercPtrs[pSoldier->ubAttackerID]->bTeam == gbPlayerNum) {
       HandleMoraleEvent(MercPtrs[pSoldier->ubAttackerID], MORALE_DID_LOTS_OF_DAMAGE,
-                        MercPtrs[pSoldier->ubAttackerID]->sSectorX,
-                        MercPtrs[pSoldier->ubAttackerID]->sSectorY,
+                        (u8)MercPtrs[pSoldier->ubAttackerID]->sSectorX,
+                        (u8)MercPtrs[pSoldier->ubAttackerID]->sSectorY,
                         MercPtrs[pSoldier->ubAttackerID]->bSectorZ);
     }
     if (pSoldier->bTeam == gbPlayerNum) {

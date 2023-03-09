@@ -469,7 +469,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
           Soldier.bVehicleID = pCreateStruct->bUseGivenVehicleID;
         } else {
           // Add vehicle to list....
-          Soldier.bVehicleID = (INT8)AddVehicleToList(Soldier.sSectorX, Soldier.sSectorY,
+          Soldier.bVehicleID = (INT8)AddVehicleToList((u8)Soldier.sSectorX, (u8)Soldier.sSectorY,
                                                       Soldier.bSectorZ, ubVehicleID);
         }
         SetVehicleValuesIntoSoldierType(&Soldier);
@@ -2084,7 +2084,9 @@ void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass) {
 void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID) {
   // Create guy # X
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 sWorldX, sWorldY, sSectorX, sSectorY, sGridX, sGridY;
+  INT16 sWorldX, sWorldY;
+  u8 sSectorX, sSectorY;
+  INT16 sGridX, sGridY;
   UINT8 ubID;
   UINT16 usMapPos;
 
