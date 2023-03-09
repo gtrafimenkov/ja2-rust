@@ -13,6 +13,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
+#include "rust_sam_sites.h"
 
 BOOLEAN IsFencePresentAtGridno(INT16 sGridNo) {
   if (FindStructure(sGridNo, STRUCTURE_ANYFENCE) != NULL) {
