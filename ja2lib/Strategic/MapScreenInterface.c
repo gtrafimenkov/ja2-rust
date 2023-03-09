@@ -4214,9 +4214,9 @@ void SetOrtaAsFound(void) {
   MarkForRedrawalStrategicMap();
 }
 
-void SetSAMSiteAsFound(UINT8 uiSamIndex) {
+void SetSAMSiteAsFound(enum SamSite uiSamIndex) {
   // set this SAM site as being found by the player
-  fSamSiteFound[uiSamIndex] = TRUE;
+  SetSamSiteFound(uiSamIndex, true);
   MarkForRedrawalStrategicMap();
 }
 
@@ -4509,7 +4509,7 @@ void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, INT8 bSectorZ
   // grab sector value
   sSector = GetSectorID16(sSectorX, sSectorY);
 
-  if (StrategicMap[sSector].fEnemyControlled == TRUE) {
+  if (IsSectorEnemyControlled(sSectorX, sSectorY)) {
     // enemy controlled any ways, leave
     return;
   }

@@ -34,6 +34,7 @@
 #include "TileEngine/ExplosionControl.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
+#include "rust_sam_sites.h"
 
 #define SAI_VERSION 29
 
@@ -2713,9 +2714,9 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
                                                       // attack.  Return to original position.
     ReassignAIGroup(&pGroup);
     return TRUE;
-  } else if (pGroup->pEnemyGroup->ubIntention ==
-             REINFORCEMENTS) {  // The group has arrived at the location where he is supposed to
-                                // reinforce.
+  } else if (pGroup->pEnemyGroup->ubIntention == REINFORCEMENTS) {
+    // The group has arrived at the location where he is supposed to
+    // reinforce.
     // Step 1 -- Check for matching garrison location
     for (i = 0; i < giGarrisonArraySize; i++) {
       if (gGarrisonGroup[i].ubSectorID == GetSectorID8(pGroup->ubSectorX, pGroup->ubSectorY) &&
@@ -2734,19 +2735,21 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
                                 pGroup->pEnemyGroup->ubNumElites,
                             pGroup->ubSectorY + 'A' - 1, pGroup->ubSectorX);
 #endif
-          if (IsThisSectorASAMSector(pGroup->ubSectorX, pGroup->ubSectorY, 0)) {
-            StrategicMap[pGroup->ubSectorX + pGroup->ubSectorY * MAP_WORLD_X].bSAMCondition = 100;
+          struct OptionalSamSite samID = GetSamAtSector(pGroup->ubSectorX, pGroup->ubSectorY, 0);
+          if (samID.tag == Some) {
+            SetSamCondition(samID.some, 100);
             UpdateSAMDoneRepair(pGroup->ubSectorX, pGroup->ubSectorY, 0);
           }
-        } else {  // The group was sent back to the queen's palace (probably because they couldn't
-                  // be reassigned
+        } else {
+          // The group was sent back to the queen's palace (probably because they couldn't
+          // be reassigned
           // anywhere else, but it is possible that the queen's sector is requesting the
           // reinforcements.  In any case, if the queen's sector is less than full strength, fill it
           // up first, then simply add the rest to the global pool.
           if (pSector->ubNumElites < MAX_STRATEGIC_TEAM_SIZE) {
-            if (pSector->ubNumElites + pGroup->ubGroupSize >=
-                MAX_STRATEGIC_TEAM_SIZE) {  // Fill up the queen's guards, then apply the rest to
-                                            // the reinforcement pool
+            if (pSector->ubNumElites + pGroup->ubGroupSize >= MAX_STRATEGIC_TEAM_SIZE) {
+              // Fill up the queen's guards, then apply the rest to
+              // the reinforcement pool
               giReinforcementPool += MAX_STRATEGIC_TEAM_SIZE - pSector->ubNumElites;
               pSector->ubNumElites = MAX_STRATEGIC_TEAM_SIZE;
 #ifdef JA2BETAVERSION
@@ -2763,8 +2766,9 @@ BOOLEAN EvaluateGroupSituation(struct GROUP *pGroup) {
                                 pGroup->ubSectorX);
 #endif
             }
-          } else {  // Add all the troops to the reinforcement pool as the queen's guard is at full
-                    // strength.
+          } else {
+            // Add all the troops to the reinforcement pool as the queen's guard is at full
+            // strength.
             giReinforcementPool += pGroup->ubGroupSize;
 #ifdef JA2BETAVERSION
             LogStrategicEvent(
@@ -3470,16 +3474,17 @@ void SendReinforcementsForGarrison(INT32 iDstGarrisonID, UINT16 usDefencePoints,
     return;
   }
   iRandom = Random(giReinforcementPoints + giReinforcementPool);
-  if (iRandom < giReinforcementPool) {  // use the pool and send the requested amount from
-                                        // GetSectorID8 P3 (queen's palace)
+  if (iRandom < giReinforcementPool) {
+    // use the pool and send the requested amount from
+    // GetSectorID8 P3 (queen's palace)
   QUEEN_POOL:
 
     // KM : Sep 9, 1999
     // If the player owns sector P3, any troops that spawned there were causing serious problems,
     // seeing battle checks were not performed!
-    if (!StrategicMap[GetSectorID16(3, 16)]
-             .fEnemyControlled) {  // Queen can no longer send reinforcements from the palace if she
-                                   // doesn't control it!
+    if (!IsSectorEnemyControlled(3, 16)) {
+      // Queen can no longer send reinforcements from the palace if she
+      // doesn't control it!
       return;
     }
 
@@ -4032,9 +4037,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
   InitStrategicMovementCosts();
 #endif
 
-  // KM : Aug 11, 1999 -- Patch fix:  Blindly update the airspace control.  There is a bug somewhere
-  //		 that is failing to keep this information up to date, and I failed to find it.  At
-  // least this 		 will patch saves.
+  // Recalculating airspace control
   UpdateAirspaceControl();
 
   EvolveQueenPriorityPhase(TRUE);
@@ -4121,7 +4124,9 @@ void EvolveQueenPriorityPhase(BOOLEAN fForceChange) {
   // controls.
   for (i = 0; i < giGarrisonArraySize; i++) {
     index = gGarrisonGroup[i].ubComposition;
-    if (StrategicMap[SectorID8To16(gGarrisonGroup[i].ubSectorID)].fEnemyControlled) {
+    u8 sX = SectorID8_X(gGarrisonGroup[i].ubSectorID);
+    u8 sY = SectorID8_Y(gGarrisonGroup[i].ubSectorID);
+    if (IsSectorEnemyControlled(sX, sY)) {
       ubOwned[index]++;
     }
     ubTotal[index]++;
@@ -4468,122 +4473,6 @@ void ClearStrategicLog() {
 }
 #endif
 
-void InvestigateSector(UINT8 ubSectorID) {
-  /*
-          INT32 i;
-          SECTORINFO *pSector;
-          INT16 sSectorX, sSectorY;
-          UINT8 ubAdmins[4], ubTroops[4], ubElites[4], ubNumToSend, ubTotal;
-
-          //@@@ Disabled!  Also commented out the posting of the event
-          return;
-
-          sSectorX = (INT16)SectorID8_X( ubSectorID );
-          sSectorY = (INT16)SectorID8_Y( ubSectorID );
-
-          if( guiCurrentScreen != GAME_SCREEN )
-          { //If we aren't in tactical, then don't do this.  It is strictly added flavour and would
-     be irritating if
-                  //you got the prebattle interface in mapscreen while compressing time (right after
-     clearing it...) return;
-          }
-
-          if( sSectorX != gWorldSectorX || sSectorY != gWorldSectorY || gbWorldSectorZ )
-          { //The sector isn't loaded, so don't bother...
-                  return;
-          }
-
-          //Now, we will investigate this sector if there are forces in adjacent towns.  For each
-          //sector that applies, we will add 1-2 soldiers.
-
-          ubTotal = 0;
-          for( i = 0; i < 4; i++ )
-          {
-                  ubAdmins[i] = ubTroops[i] = ubElites[i] = 0;
-                  switch( i )
-                  {
-                          case 0: //NORTH
-                                  if( sSectorY == 1 )
-                                          continue;
-                                  pSector = &SectorInfo[ ubSectorID - 16 ];
-                                  break;
-                          case 1: //EAST
-                                  if( sSectorX == 16 )
-                                          continue;
-                                  pSector = &SectorInfo[ ubSectorID + 1 ];
-                                  break;
-                          case 2: //SOUTH
-                                  if( sSectorY == 16 )
-                                          continue;
-                                  pSector = &SectorInfo[ ubSectorID + 16 ];
-                                  break;
-                          case 3: //WEST
-                                  if( sSectorX == 1 )
-                                          continue;
-                                  pSector = &SectorInfo[ ubSectorID - 1 ];
-                                  break;
-                  }
-                  if( pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites > 4 )
-                  {
-                          ubNumToSend = (UINT8)(Random( 2 ) + 1);
-                          while( ubNumToSend )
-                          {
-                                  if( pSector->ubNumAdmins )
-                                  {
-                                          pSector->ubNumAdmins--;
-                                          ubNumToSend--;
-                                          ubAdmins[i]++;
-                                          ubTotal++;
-                                  }
-                                  else if( pSector->ubNumTroops )
-                                  {
-                                          pSector->ubNumTroops--;
-                                          ubNumToSend--;
-                                          ubTroops[i]++;
-                                          ubTotal++;
-                                  }
-                                  else if( pSector->ubNumElites )
-                                  {
-                                          pSector->ubNumTroops--;
-                                          ubNumToSend--;
-                                          ubTroops[i]++;
-                                          ubTotal++;
-                                  }
-                                  else
-                                  {
-                                          break; //???
-                                  }
-                          }
-                  }
-          }
-          if( !ubTotal )
-          { //Nobody is available to investigate
-                  return;
-          }
-          //Now we have decided who to send, so send them.
-          for( i = 0; i < 4; i++ )
-          {
-                  if( ubAdmins[i] + ubTroops[i] + ubElites[i] )
-                  {
-                          switch( i )
-                          {
-                                  case 0: //NORTH
-                                          AddEnemiesToBattle( NULL, INSERTION_CODE_NORTH,
-     ubAdmins[i], ubTroops[i], ubElites[i], TRUE ); break; case 1: //EAST AddEnemiesToBattle( NULL,
-     INSERTION_CODE_EAST, ubAdmins[i], ubTroops[i], ubElites[i], TRUE ); break; case 2: //SOUTH
-                                          AddEnemiesToBattle( NULL, INSERTION_CODE_SOUTH,
-     ubAdmins[i], ubTroops[i], ubElites[i], TRUE ); break; case 3: //WEST AddEnemiesToBattle( NULL,
-     INSERTION_CODE_WEST, ubAdmins[i], ubTroops[i], ubElites[i], TRUE ); break;
-                          }
-                  }
-          }
-          if( !gfQueenAIAwake )
-          {
-                  gfFirstBattleMeanwhileScenePending = TRUE;
-          }
-  */
-}
-
 void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
   SECTORINFO *pSector;
   UINT8 ubSectorID;
@@ -4591,9 +4480,9 @@ void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 s
     return;
   }
 
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)]
-          .fEnemyControlled) {  // If the sector doesn't belong to the player, then we shouldn't be
-                                // calling this function!
+  if (IsSectorEnemyControlled(sSectorX, sSectorY)) {
+    // If the sector doesn't belong to the player, then we shouldn't be
+    // calling this function!
     SAIReportError(
         L"StrategicHandleQueenLosingControlOfSector() was called for a sector that is internally "
         L"considered to be enemy controlled.");

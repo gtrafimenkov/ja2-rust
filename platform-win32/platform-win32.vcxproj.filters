@@ -15,18 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
+    <ClInclude Include="Mss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="platform_win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Smack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="platform-win32.cpp">
+    <ClCompile Include="Input_win.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="platform_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="platform_win_io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundMan_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerControl_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Video_win.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

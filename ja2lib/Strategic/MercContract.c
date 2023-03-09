@@ -937,7 +937,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
   }
 
   // check if drassen controlled
-  else if (StrategicMap[(AIRPORT_X + (MAP_WORLD_X * AIRPORT_Y))].fEnemyControlled == FALSE) {
+  else if (!IsSectorEnemyControlled(AIRPORT_X, AIRPORT_Y)) {
     if ((GetSolSectorX(pSoldier) == AIRPORT_X) && (GetSolSectorY(pSoldier) == AIRPORT_Y) &&
         (GetSolSectorZ(pSoldier) == 0)) {
       if (gMercProfiles[GetSolProfile(pSoldier)].bSex == MALE) {
@@ -1046,8 +1046,7 @@ void MercDepartEquipmentBoxCallBack(UINT8 bExitValue) {
     }
   } else {
     // no
-    if (StrategicMap[GetSectorID16(BOBBYR_SHIPPING_DEST_SECTOR_X, (BOBBYR_SHIPPING_DEST_SECTOR_Y))]
-            .fEnemyControlled == FALSE) {
+    if (!IsSectorEnemyControlled(BOBBYR_SHIPPING_DEST_SECTOR_X, BOBBYR_SHIPPING_DEST_SECTOR_Y)) {
       HandleMercLeavingEquipmentInDrassen(pLeaveSoldier->ubID);
     } else {
       HandleMercLeavingEquipmentInOmerta(pLeaveSoldier->ubID);

@@ -1338,7 +1338,7 @@ UINT8 CalcImportantSectorControl(void) {
   for (ubMapX = 1; ubMapX < MAP_WORLD_X - 1; ubMapX++) {
     for (ubMapY = 1; ubMapY < MAP_WORLD_Y - 1; ubMapY++) {
       // if player controlled
-      if (StrategicMap[GetSectorID16(ubMapX, ubMapY)].fEnemyControlled == FALSE) {
+      if (!IsSectorEnemyControlled(ubMapX, ubMapY)) {
         // towns where militia can be trained and SAM sites are important sectors
         if (MilitiaTrainingAllowedInSector(ubMapX, ubMapY, 0)) {
           ubSectorControlPts++;

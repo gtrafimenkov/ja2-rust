@@ -3063,8 +3063,8 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         break;
 
       case NPC_ACTION_TRIGGER_ELLIOT_BY_SAM_DISABLED:
-        if (IsThereAFunctionalSAMSiteInSector(gTacticalStatus.ubLastBattleSectorX,
-                                              gTacticalStatus.ubLastBattleSectorY, 0)) {
+        if (IsThereAFunctionalSamInSector(gTacticalStatus.ubLastBattleSectorX,
+                                          gTacticalStatus.ubLastBattleSectorY, 0)) {
           TriggerNPCRecord(QUEEN, 6);
         } else {
           TriggerNPCRecord(ELLIOT, 2);

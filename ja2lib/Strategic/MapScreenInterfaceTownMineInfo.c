@@ -29,6 +29,7 @@
 #include "Utils/PopUpBox.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
+#include "rust_sam_sites.h"
 
 #define BOX_BUTTON_WIDTH 100
 #define BOX_BUTTON_HEIGHT 20
@@ -286,7 +287,7 @@ void AddTextToTownBox(void) {
       AddMonoString(&hStringHandle, pLandTypeStrings[MEDUNA_AIRPORT_SITE]);
       break;
     default:
-      if (usTownSectorIndex == SEC_N4 && fSamSiteFound[SAM_SITE_FOUR]) {  // Meduna's SAM site
+      if (usTownSectorIndex == SEC_N4 && IsSamSiteFound(SamSiteMeduna)) {  // Meduna's SAM site
         AddMonoString(&hStringHandle, pLandTypeStrings[MEDUNA_SAM_SITE]);
       } else {  // town name
         swprintf(wString, ARR_SIZE(wString), L"%s", pTownNames[ubTownId]);
@@ -471,19 +472,19 @@ void AddTextToBlankSectorBox(void) {
 
   switch (usSectorValue) {
     case SEC_D2:  // Chitzena SAM
-      if (!fSamSiteFound[SAM_SITE_ONE])
+      if (!IsSamSiteFound(SamSiteChitzena))
         AddMonoString(&hStringHandle, pLandTypeStrings[TROPICS]);
       else
         AddMonoString(&hStringHandle, pLandTypeStrings[TROPICS_SAM_SITE]);
       break;
     case SEC_D15:  // Drassen SAM
-      if (!fSamSiteFound[SAM_SITE_TWO])
+      if (!IsSamSiteFound(SamSiteDrassen))
         AddMonoString(&hStringHandle, pLandTypeStrings[SPARSE]);
       else
         AddMonoString(&hStringHandle, pLandTypeStrings[SPARSE_SAM_SITE]);
       break;
     case SEC_I8:  // Cambria SAM
-      if (!fSamSiteFound[SAM_SITE_THREE])
+      if (!IsSamSiteFound(SamSiteCambria))
         AddMonoString(&hStringHandle, pLandTypeStrings[SAND]);
       else
         AddMonoString(&hStringHandle, pLandTypeStrings[SAND_SAM_SITE]);
@@ -530,13 +531,13 @@ void AddCommonInfoToBox(void) {
 
   switch (GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY)) {
     case SEC_D2:  // Chitzena SAM
-      if (!fSamSiteFound[SAM_SITE_ONE]) fUnknownSAMSite = TRUE;
+      if (!IsSamSiteFound(SamSiteChitzena)) fUnknownSAMSite = TRUE;
       break;
     case SEC_D15:  // Drassen SAM
-      if (!fSamSiteFound[SAM_SITE_TWO]) fUnknownSAMSite = TRUE;
+      if (!IsSamSiteFound(SamSiteDrassen)) fUnknownSAMSite = TRUE;
       break;
     case SEC_I8:  // Cambria SAM
-      if (!fSamSiteFound[SAM_SITE_THREE]) fUnknownSAMSite = TRUE;
+      if (!IsSamSiteFound(SamSiteCambria)) fUnknownSAMSite = TRUE;
       break;
     // SAM Site 4 in Meduna is within town limits, so it's always controllable
     default:
@@ -553,12 +554,10 @@ void AddCommonInfoToBox(void) {
     AddMonoString(&hStringHandle, wString);
 
     // No/Yes
-    swprintf(wString, ARR_SIZE(wString), L"%s",
-             pwMiscSectorStrings[(StrategicMap[GetSectorID16(bCurrentTownMineSectorX,
-                                                             bCurrentTownMineSectorY)]
-                                      .fEnemyControlled)
-                                     ? 6
-                                     : 5]);
+    swprintf(
+        wString, ARR_SIZE(wString), L"%s",
+        pwMiscSectorStrings
+            [IsSectorEnemyControlled(bCurrentTownMineSectorX, bCurrentTownMineSectorY) ? 6 : 5]);
     AddSecondColumnMonoString(&hStringHandle, wString);
 
     // militia - is there any?

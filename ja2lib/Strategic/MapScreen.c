@@ -108,6 +108,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
+#include "rust_sam_sites.h"
 
 // DEFINES
 
@@ -4063,7 +4064,7 @@ UINT32 HandleMapUI() {
           if (SectorInfo[(GetSectorID8(sMapX, sMapY))].ubTraversability[THROUGH_STRATEGIC_MOVE] !=
               GROUNDBARRIER) {
             // if it's not enemy air controlled
-            if (StrategicMap[GetSectorID16(sMapX, sMapY)].fEnemyAirControlled == FALSE) {
+            if (!IsSectorEnemyAirControlled(sMapX, sMapY)) {
               CHAR16 sMsgString[128], sMsgSubString[64];
 
               // move the landing zone over here
@@ -4462,7 +4463,7 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
             UINT8 ubSamIndex;
 
             // ALT-F9: Reveal all SAM sites
-            for (ubSamIndex = 0; ubSamIndex < NUMBER_OF_SAM_SITES; ubSamIndex++) {
+            for (ubSamIndex = 0; ubSamIndex < GetSamSiteCount(); ubSamIndex++) {
               SetSAMSiteAsFound(ubSamIndex);
             }
           }
@@ -4479,18 +4480,6 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
           }
 #endif
           break;
-
-          /*
-                                          case F11:
-                                                  #ifdef JA2TESTVERSION
-                                                          if( fAlt )
-                                                          {
-                                                                  // ALT-F11: make all sectors
-             player controlled ClearMapControlledFlags( ); MarkForRedrawalStrategicMap();
-                                                          }
-                                                  #endif
-                                                  break;
-          */
 
         case F12:
 #ifdef JA2BETAVERSION
@@ -7139,17 +7128,6 @@ void PlotTemporaryPaths(void) {
   if (GetMouseMapXY(&sMapX, &sMapY)) {
     if (fPlotForHelicopter == TRUE) {
       Assert(fShowAircraftFlag == TRUE);
-      /*
-                              if( fZoomFlag )
-                              {
-                                      sMapX =  ( INT16 )( ( ( iZoomX ) / ( WORLD_MAP_X ) ) + sMapX
-         ); sMapX /= 2;
-
-                                      sMapY =  ( INT16 )( ( ( iZoomY ) / ( WORLD_MAP_X ) ) + sMapY
-         ); sMapY /= 2;
-                              }
-      */
-
       // plot temp path
       PlotATemporaryPathForHelicopter(sMapX, sMapY);
 
@@ -10162,10 +10140,12 @@ void HandleMilitiaRedistributionClick(void) {
         swprintf(sString, ARR_SIZE(sString), pMapErrorString[31], pTownNames[bTownId]);
         DoScreenIndependantMessageBox(sString, MSG_BOX_FLAG_OK, NULL);
       }
-    } else if (IsThisSectorASAMSector(sSelMapX, sSelMapY, 0) &&
-               fSamSiteFound[GetSAMIdFromSector(sSelMapX, sSelMapY, 0)]) {
-      // can't move militia around sam sites
-      DoScreenIndependantMessageBox(pMapErrorString[30], MSG_BOX_FLAG_OK, NULL);
+    } else {
+      struct OptionalSamSite samID = GetSamAtSector(sSelMapX, sSelMapY, 0);
+      if (samID.tag == Some && IsSamSiteFound(samID.some)) {
+        // can't move militia around sam sites
+        DoScreenIndependantMessageBox(pMapErrorString[30], MSG_BOX_FLAG_OK, NULL);
+      }
     }
   }
 }

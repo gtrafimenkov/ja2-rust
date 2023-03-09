@@ -154,9 +154,6 @@ enum {
 #define MAP_GRID_ZOOM_X MAP_GRID_X * 2
 #define MAP_GRID_ZOOM_Y MAP_GRID_Y * 2
 
-// number of units wide
-#define WORLD_MAP_X 18
-
 // dirty regions for the map
 #define DMAP_GRID_X (MAP_GRID_X + 1)
 #define DMAP_GRID_Y (MAP_GRID_Y + 1)

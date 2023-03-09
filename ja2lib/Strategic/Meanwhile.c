@@ -36,6 +36,7 @@
 #include "UI.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 #define MAX_MEANWHILE_PROFILES 10
 
@@ -651,13 +652,13 @@ void ProcessImplicationsOfMeanwhile(void) {
       gMercProfiles[ROBOT].bSectorZ = 0;
     } break;
     case NW_SAM:
-      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SAM_1_X, SAM_1_Y);
+      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, GetSamSiteX(0), GetSamSiteY(0));
       break;
     case NE_SAM:
-      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SAM_2_X, SAM_2_Y);
+      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, GetSamSiteX(1), GetSamSiteY(1));
       break;
     case CENTRAL_SAM:
-      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, SAM_3_X, SAM_3_X);
+      ExecuteStrategicAIAction(NPC_ACTION_SEND_TROOPS_TO_SAM, GetSamSiteX(2), GetSamSiteY(2));
       break;
 
     default:

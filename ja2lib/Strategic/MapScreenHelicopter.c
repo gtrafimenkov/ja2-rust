@@ -36,6 +36,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_sam_sites.h"
 
 // the amounts of time to wait for hover stuff
 #define TIME_DELAY_FOR_HOVER_WAIT 10           // minutes
@@ -58,8 +59,6 @@ extern UINT8 gubCurrentTalkingID;
 
 // current temp path for dest char
 extern struct path *pTempHelicopterPath;
-
-extern UINT8 ubSAMControlledSectors[MAP_WORLD_X][MAP_WORLD_Y];
 
 // the seating capacities
 extern INT32 iSeatingCapacities[];
@@ -417,7 +416,7 @@ INT32 GetCostOfPassageForHelicopter(INT16 sX, INT16 sY) {
   INT32 iCost = 0;
 
   // if they don't control it
-  if (StrategicMap[GetSectorID16(sX, sY)].fEnemyAirControlled == FALSE) {
+  if (!IsSectorEnemyAirControlled(sX, sY)) {
     iCost = COST_AIRSPACE_SAFE;
   } else {
     iCost = COST_AIRSPACE_UNSAFE;
@@ -734,10 +733,8 @@ void UpdateRefuelSiteAvailability(void) {
 
   for (iCounter = 0; iCounter < NUMBER_OF_REFUEL_SITES; iCounter++) {
     // if enemy controlled sector (ground OR air, don't want to fly into enemy air territory)
-    if ((StrategicMap[GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])]
-             .fEnemyControlled == TRUE) ||
-        (StrategicMap[GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])]
-             .fEnemyAirControlled == TRUE) ||
+    if (IsSectorEnemyControlled(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1]) ||
+        IsSectorEnemyAirControlled(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1]) ||
         ((iCounter == ESTONI_REFUELING_SITE) &&
          (CheckFact(FACT_ESTONI_REFUELLING_POSSIBLE, 0) == FALSE))) {
       // mark refueling site as unavailable
@@ -917,9 +914,6 @@ void HandleSkyRiderMonologueAboutEstoniRefuel(UINT32 uiSpecialCode) {
 void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
   switch (uiSpecialCode) {
     case (0):
-      // gpCurrentTalkingFace = &gFacesData[ uiExternalStaticNPCFaces[ SKYRIDER_EXTERNAL_FACE ] ];
-      // gubCurrentTalkingID = SKYRIDER;
-
       // if special event data 2 is true, then do dialogue, else this is just a trigger for an event
       CharacterDialogue(SKYRIDER, MENTION_DRASSEN_SAM_SITE,
                         uiExternalStaticNPCFaces[SKYRIDER_EXTERNAL_FACE], DIALOGUE_EXTERNAL_NPC_UI,
@@ -929,7 +923,7 @@ void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
           DIALOGUE_EXTERNAL_NPC_UI, FALSE, TRUE, DIALOGUE_SPECIAL_EVENT_SKYRIDERMAPSCREENEVENT,
           SKYRIDER_MONOLOGUE_EVENT_DRASSEN_SAM_SITE, 1);
 
-      if (SAMSitesUnderPlayerControl(SAM_2_X, SAM_2_Y) == FALSE) {
+      if (!IsSamUnderPlayerControl(SamSiteDrassen)) {
         CharacterDialogue(SKYRIDER, SECOND_HALF_OF_MENTION_DRASSEN_SAM_SITE,
                           uiExternalStaticNPCFaces[SKYRIDER_EXTERNAL_FACE],
                           DIALOGUE_EXTERNAL_NPC_UI, FALSE, FALSE);
@@ -952,7 +946,7 @@ void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
     case (1):
       // highlight Drassen SAM site sector
       fShowDrassenSAMHighLight = TRUE;
-      SetSAMSiteAsFound(SAM_SITE_TWO);
+      SetSAMSiteAsFound(SamSiteDrassen);
       break;
 
     case (2):
@@ -1021,9 +1015,9 @@ void HandleSkyRiderMonologueAboutOtherSAMSites(UINT32 uiSpecialCode) {
       // highlight other SAMs
       fShowOtherSAMHighLight = TRUE;
       // reveal other 3 SAM sites
-      SetSAMSiteAsFound(SAM_SITE_ONE);
-      SetSAMSiteAsFound(SAM_SITE_THREE);
-      SetSAMSiteAsFound(SAM_SITE_FOUR);
+      SetSAMSiteAsFound(SamSiteChitzena);
+      SetSAMSiteAsFound(SamSiteCambria);
+      SetSAMSiteAsFound(SamSiteMeduna);
       break;
 
     case (2):
@@ -1042,7 +1036,7 @@ void CheckAndHandleSkyriderMonologues(void) {
       guiHelicopterSkyriderTalkState = 1;
     } else if (guiHelicopterSkyriderTalkState == 1) {
       // if enemy still controls the Cambria hospital sector
-      if (StrategicMap[GetSectorID16(HOSPITAL_SECTOR_X, HOSPITAL_SECTOR_Y)].fEnemyControlled) {
+      if (IsSectorEnemyControlled(HOSPITAL_SECTOR_X, HOSPITAL_SECTOR_Y)) {
         HandleSkyRiderMonologueEvent(SKYRIDER_MONOLOGUE_EVENT_CAMBRIA_HOSPITAL, 0);
       }
       // advance state even if player already has Cambria's hospital sector!!!
@@ -1076,8 +1070,7 @@ void HandleAnimationOfSectors(void) {
   // Drassen SAM site
   if (fShowDrassenSAMHighLight) {
     fOldShowDrassenSAMHighLight = TRUE;
-    // Drassen's SAM site is #3
-    HandleBlitOfSectorLocatorIcon(SAM_2_X, SAM_2_Y, 0, LOCATOR_COLOR_RED);
+    HandleBlitOfSectorLocatorIcon(GetSamSiteX(1), GetSamSiteY(1), 0, LOCATOR_COLOR_RED);
     fSkipSpeakersLocator = TRUE;
   } else if (fOldShowDrassenSAMHighLight) {
     fOldShowDrassenSAMHighLight = FALSE;
@@ -1097,9 +1090,11 @@ void HandleAnimationOfSectors(void) {
   // show other SAM sites
   if (fShowOtherSAMHighLight) {
     fOldShowOtherSAMHighLight = TRUE;
-    HandleBlitOfSectorLocatorIcon(SAM_1_X, SAM_1_Y, 0, LOCATOR_COLOR_RED);
-    HandleBlitOfSectorLocatorIcon(SAM_3_X, SAM_3_Y, 0, LOCATOR_COLOR_RED);
-    HandleBlitOfSectorLocatorIcon(SAM_4_X, SAM_4_Y, 0, LOCATOR_COLOR_RED);
+    for (int i = 0; i < GetSamSiteCount(); i++) {
+      if (i != 1) {
+        HandleBlitOfSectorLocatorIcon(GetSamSiteX(i), GetSamSiteY(i), 0, LOCATOR_COLOR_RED);
+      }
+    }
     fSkipSpeakersLocator = TRUE;
   } else if (fOldShowOtherSAMHighLight) {
     fOldShowOtherSAMHighLight = FALSE;
@@ -1297,27 +1292,23 @@ BOOLEAN IsHelicopterOnGroundAtRefuelingSite(UINT8 ubRefuelingSite) {
 void HeliCrashSoundStopCallback(void *pData) { SkyriderDestroyed(); }
 
 BOOLEAN HandleSAMSiteAttackOfHelicopterInSector(u8 sSectorX, u8 sSectorY) {
-  UINT8 ubSamNumber = 0;
-  INT8 bSAMCondition;
   UINT8 ubChance;
 
   // if this sector is in friendly airspace, we're safe
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].fEnemyAirControlled == FALSE) {
+  if (!IsSectorEnemyAirControlled(sSectorX, sSectorY)) {
     // no problem, friendly airspace
     return (FALSE);
   }
 
   // which SAM controls this sector?
-  ubSamNumber = ubSAMControlledSectors[sSectorX][sSectorY];
+  struct OptionalSamSite samSite = GetSamControllingSector(sSectorX, sSectorY);
 
   // if none of them
-  if (ubSamNumber == 0) {
+  if (samSite.tag == None) {
     return (FALSE);
   }
 
-  // get the condition of that SAM site (NOTE: SAM #s are 1-4, but indexes are 0-3!!!)
-  Assert(ubSamNumber <= NUMBER_OF_SAMS);
-  bSAMCondition = StrategicMap[SectorID8To16(pSamList[ubSamNumber - 1])].bSAMCondition;
+  u8 bSAMCondition = GetSamCondition(samSite.some);
 
   // if the SAM site is too damaged to be a threat
   if (bSAMCondition < MIN_CONDITION_FOR_SAM_SITE_TO_WORK) {
@@ -1400,18 +1391,13 @@ BOOLEAN EndOfHelicoptersPath(void) {
 
 // check if helicopter can take off?
 BOOLEAN CanHelicopterTakeOff(void) {
-  INT16 sHelicopterSector = 0;
-
   // if it's already in the air
   if (fHelicopterIsAirBorne == TRUE) {
     return (TRUE);
   }
 
-  // grab location
-  sHelicopterSector = pVehicleList[iHelicopterVehicleId].sSectorX +
-                      pVehicleList[iHelicopterVehicleId].sSectorY * MAP_WORLD_X;
-  // if it's not in enemy control, we can take off
-  if (StrategicMap[sHelicopterSector].fEnemyControlled == FALSE) {
+  if (!IsSectorEnemyControlled(pVehicleList[iHelicopterVehicleId].sSectorX,
+                               pVehicleList[iHelicopterVehicleId].sSectorY)) {
     return (TRUE);
   }
 
@@ -1546,7 +1532,7 @@ INT16 GetNumSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (!StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (!IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 
@@ -1572,7 +1558,7 @@ INT16 GetNumSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (!StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (!IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 
@@ -1622,7 +1608,7 @@ INT16 GetNumUnSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 
@@ -1648,7 +1634,7 @@ INT16 GetNumUnSafeSectorsInPath(void) {
     while (pNode) {
       uiLocation = pNode->uiSectorId;
 
-      if (StrategicMap[uiLocation].fEnemyAirControlled) {
+      if (IsSectorEnemyAirControlled(SectorID16_X(uiLocation), SectorID16_Y(uiLocation))) {
         uiCount++;
       }
 

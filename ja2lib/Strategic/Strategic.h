@@ -8,15 +8,15 @@
 struct SOLDIERTYPE;
 
 struct strategicmapelement {
-  UINT8 UNUSEDuiFootEta[4];     // eta/mvt costs for feet
-  UINT8 UNUSEDuiVehicleEta[4];  // eta/mvt costs for vehicles
-  UINT8 uiBadFootSector[4];     // blocking mvt for foot
-  UINT8 uiBadVehicleSector[4];  // blocking mvt from vehicles
+  UINT8 __unused_uiFootEta[4];     // eta/mvt costs for feet
+  UINT8 __unused_uiVehicleEta[4];  // eta/mvt costs for vehicles
+  UINT8 uiBadFootSector[4];        // blocking mvt for foot
+  UINT8 uiBadVehicleSector[4];     // blocking mvt from vehicles
   INT8 townID;
-  BOOLEAN fEnemyControlled;  // enemy controlled or not
-  BOOLEAN fEnemyAirControlled;
-  BOOLEAN UNUSEDfLostControlAtSomeTime;
-  INT8 bSAMCondition;  // SAM Condition .. 0 - 100, just like an item's status
+  BOOLEAN __only_storage_fEnemyControlled;  // enemy controlled or not
+  BOOLEAN __unused_fEnemyAirControlled;     // unused beause can be recalculated after load
+  BOOLEAN __unused_fLostControlAtSomeTime;
+  INT8 __only_storage_bSAMCondition;  // SAM Condition .. 0 - 100, just like an item's status
   INT8 bPadding[20];
 };
 

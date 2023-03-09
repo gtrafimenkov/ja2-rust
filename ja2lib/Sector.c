@@ -4,15 +4,7 @@
 #include "Strategic/Strategic.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Overhead.h"
-
-SectorID8 GetSectorID8(u8 x, u8 y) { return (y - 1) * 16 + x - 1; }
-SectorID16 GetSectorID16(u8 x, u8 y) { return x + y * MAP_WORLD_X; }
-
-u8 SectorID8_X(SectorID8 sectorID) { return (sectorID % 16) + 1; }
-u8 SectorID8_Y(SectorID8 sectorID) { return (sectorID / 16) + 1; }
-
-u8 SectorID16_X(SectorID16 sectorID) { return sectorID % MAP_WORLD_X; };
-u8 SectorID16_Y(SectorID16 sectorID) { return sectorID / MAP_WORLD_X; };
+#include "rust_sam_sites.h"
 
 SectorID16 SectorID8To16(SectorID8 sectorID) {
   return GetSectorID16(SectorID8_X(sectorID), SectorID8_Y(sectorID));
@@ -46,30 +38,5 @@ BOOLEAN SectorOursAndPeaceful(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN IsThisSectorASAMSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  // is the sector above ground?
-  if (bSectorZ != 0) {
-    return (FALSE);
-  }
-
-  if ((SAM_1_X == sSectorX) && (SAM_1_Y == sSectorY)) {
-    return (TRUE);
-  } else if ((SAM_2_X == sSectorX) && (SAM_2_Y == sSectorY)) {
-    return (TRUE);
-  } else if ((SAM_3_X == sSectorX) && (SAM_3_Y == sSectorY)) {
-    return (TRUE);
-  } else if ((SAM_4_X == sSectorX) && (SAM_4_Y == sSectorY)) {
-    return (TRUE);
-  }
-
-  return (FALSE);
-}
-
 i16 GetLoadedSectorX() { return gWorldSectorX; }
 i16 GetLoadedSectorY() { return gWorldSectorY; }
-
-bool IsSectorEnemyControlled(i8 sMapX, i8 sMapY) {
-  return StrategicMap[GetSectorID16(sMapX, sMapY)].fEnemyControlled;
-}
-
-// fEnemyControlled
