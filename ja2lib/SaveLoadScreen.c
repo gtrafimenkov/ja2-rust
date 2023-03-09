@@ -1206,7 +1206,8 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
       } else {
         gfGettingNameFromSaveLoadScreen = TRUE;
 
-        GetSectorIDString(SaveGameHeader.sSectorX, SaveGameHeader.sSectorY, SaveGameHeader.bSectorZ,
+        GetSectorIDString((u8)SaveGameHeader.sSectorX, (u8)SaveGameHeader.sSectorY,
+                          SaveGameHeader.bSectorZ,
                           zLocationString, ARR_SIZE(zLocationString), FALSE);
 
         gfGettingNameFromSaveLoadScreen = FALSE;

@@ -321,7 +321,7 @@ BOOLEAN CanCharacterRepairRobot(struct SOLDIERTYPE *pSoldier);
 BOOLEAN CanCharacterRepairVehicle(struct SOLDIERTYPE *pSoldier, INT32 iVehicleId);
 
 // handle training of character in sector
-void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ);
+void HandleTrainingInSector(u8 sMapX, u8 sMapY, INT8 bZ);
 
 // QSort compare function for town training
 int TownTrainerQsortCompare(const void *pArg1, const void *pArg2);
@@ -330,8 +330,7 @@ int TownTrainerQsortCompare(const void *pArg1, const void *pArg2);
 void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts);
 
 // train militia in this sector with this soldier
-BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY,
-                          UINT16 sTrainingPts);
+BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, INT16 sMapY, UINT16 sTrainingPts);
 
 // is the character between secotrs in mvt
 BOOLEAN CharacterIsBetweenSectors(struct SOLDIERTYPE *pSoldier);
@@ -1718,7 +1717,7 @@ void VerifyTownTrainingIsPaidFor(void) {
 }
 #endif
 
-UINT8 FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment) {
+UINT8 FindNumberInSectorWithAssignment(u8 sX, u8 sY, INT8 bAssignment) {
   // run thought list of characters find number with this assignment
   struct SOLDIERTYPE *pSoldier, *pTeamSoldier;
   INT32 cnt = 0;
@@ -2915,7 +2914,7 @@ void FatigueCharacter(struct SOLDIERTYPE *pSoldier) {
 }
 
 // ONCE PER HOUR, will handle ALL kinds of training (self, teaching, and town) in this sector
-void HandleTrainingInSector(INT16 sMapX, INT16 sMapY, INT8 bZ) {
+void HandleTrainingInSector(u8 sMapX, u8 sMapY, INT8 bZ) {
   struct SOLDIERTYPE *pTrainer;
   struct SOLDIERTYPE *pStudent;
   UINT8 ubStat;
@@ -3531,8 +3530,7 @@ void TrainSoldierWithPts(struct SOLDIERTYPE *pSoldier, INT16 sTrainPts) {
 }
 
 // will train a town in sector by character
-BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY,
-                          UINT16 sTrainingPts) {
+BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, u8 sMapY, UINT16 sTrainingPts) {
   SECTORINFO *pSectorInfo = &(SectorInfo[GetSectorID8(sMapX, sMapY)]);
   UINT8 ubTownId = 0;
   BOOLEAN fSamSiteInSector = FALSE;
