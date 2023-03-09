@@ -7,7 +7,7 @@
 //	Keeps track of the game version
 //
 
-const wchar_t* zBuildInfo = L"JA2 Vanilla (" BUILD_INFO ")";
+const wchar_t* zBuildInfo = L"JA2 Rust (" BUILD_INFO ")";
 
 // RELEASE BUILD VERSION
 char czVersionNumber[16] = {"Build 04.12.02"};
