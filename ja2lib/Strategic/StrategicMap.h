@@ -31,7 +31,7 @@ extern BOOLEAN gfUseAlternateMap;
 #define CHECK_DIR_X_DELTA (WORLD_TILE_X * 4)
 #define CHECK_DIR_Y_DELTA (WORLD_TILE_Y * 10)
 
-void GetCurrentWorldSector(INT16 *psMapX, INT16 *psMapY);
+void GetCurrentWorldSector(u8 *psMapX, u8 *psMapY);
 BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
 
 BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);

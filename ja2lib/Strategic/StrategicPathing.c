@@ -178,7 +178,7 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
                     BOOLEAN fTacticalTraversal) {
   INT32 iCnt, ndx, insertNdx, qNewNdx;
   INT32 iDestX, iDestY, locX, locY, dx, dy;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   UINT16 newLoc, curLoc;
   TRAILCELLTYPE curCost, newTotCost, nextCost;
   INT16 sOrigination;

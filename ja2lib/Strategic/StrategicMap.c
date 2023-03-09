@@ -588,7 +588,7 @@ void GetMapFileName(INT16 sMapX, INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLE
   return;
 }
 
-void GetCurrentWorldSector(INT16 *psMapX, INT16 *psMapY) {
+void GetCurrentWorldSector(u8 *psMapX, u8 *psMapY) {
   *psMapX = gWorldSectorX;
   *psMapY = gWorldSectorY;
 }
@@ -2771,7 +2771,7 @@ BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
 }
 
 void SetupNewStrategicGame() {
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
 
   // Set all sectors as enemy controlled
   for (sSectorX = 0; sSectorX < MAP_WORLD_X; sSectorX++) {

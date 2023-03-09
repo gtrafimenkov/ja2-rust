@@ -2627,7 +2627,7 @@ void DestroyQuestDebugTextInputBoxes() { KillTextInputMode(); }
 
 void AddNPCToGridNo(INT32 iGridNo) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   UINT8 ubID;
 
   GetCurrentWorldSector(&sSectorX, &sSectorY);

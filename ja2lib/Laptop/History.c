@@ -548,7 +548,7 @@ void OpenAndReadHistoryFile(void) {
   HWFILE hFileHandle;
   UINT8 ubCode, ubSecondCode;
   UINT32 uiDate;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   INT8 bSectorZ = 0;
   UINT8 ubColor;
   UINT32 iBytesRead = 0;
@@ -592,8 +592,7 @@ void OpenAndReadHistoryFile(void) {
 
     // add transaction
     ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, (u8)sSectorX, (u8)sSectorY,
-                                  bSectorZ,
-                                  ubColor);
+                                  bSectorZ, ubColor);
 
     // increment byte counter
     uiByteCount += SIZE_OF_HISTORY_FILE_RECORD;
@@ -1107,7 +1106,7 @@ BOOLEAN LoadInHistoryRecords(UINT32 uiPage) {
   INT32 iCount = 0;
   HWFILE hFileHandle;
   UINT8 ubCode, ubSecondCode;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   INT8 bSectorZ;
   UINT32 uiDate;
   UINT8 ubColor;
@@ -1166,8 +1165,7 @@ BOOLEAN LoadInHistoryRecords(UINT32 uiPage) {
 
     // add transaction
     ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, (u8)sSectorX, (u8)sSectorY,
-                                  bSectorZ,
-                                  ubColor);
+                                  bSectorZ, ubColor);
 
     // increment byte counter
     uiByteCount += SIZE_OF_HISTORY_FILE_RECORD;

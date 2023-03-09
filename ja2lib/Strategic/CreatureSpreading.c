@@ -1396,7 +1396,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   CREATURE_DIRECTIVE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   INT8 bSectorZ;
 
   if (giLairID <= 0) {  // Creature quest inactive

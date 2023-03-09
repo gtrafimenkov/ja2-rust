@@ -624,7 +624,7 @@ void ProcessImplicationsOfMeanwhile(void) {
       HandleNPCDoAction(QUEEN, NPC_ACTION_ADD_RAT, 0);
       break;
     case AWOL_SCIENTIST: {
-      INT16 sSectorX, sSectorY;
+      u8 sSectorX, sSectorY;
 
       StartQuest(QUEST_FIND_SCIENTIST, -1, -1);
       // place Madlab and robot!

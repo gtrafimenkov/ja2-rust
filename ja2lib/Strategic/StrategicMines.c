@@ -337,7 +337,7 @@ INT8 GetMineAssociatedWithThisTown(TownID bTownId) {
 UINT32 ExtractOreFromMine(INT8 bMineIndex, UINT32 uiAmount) {
   // will remove the ore from the mine and return the amount that was removed
   UINT32 uiAmountExtracted = 0;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 

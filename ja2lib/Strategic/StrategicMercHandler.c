@@ -55,7 +55,7 @@ void BuildMercQuitList(struct SOLDIERTYPE *pMercList);
 
 void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
   struct SOLDIERTYPE *pKiller = NULL;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
 
   // if the soldier HAS a profile
   if (GetSolProfile(pSoldier) != NO_PROFILE) {

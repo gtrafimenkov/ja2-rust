@@ -4924,7 +4924,7 @@ void DisplayUnallocatedMilitia(void) {
 
 BOOLEAN IsThisMilitiaTownSectorAllowable(INT16 sSectorIndexValue) {
   u8 sBaseSectorValue = 0, sGlobalMapSector = 0;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
 
   // is this sector allowed to be clicked on?
   sBaseSectorValue = GetBaseSectorForCurrentTown();

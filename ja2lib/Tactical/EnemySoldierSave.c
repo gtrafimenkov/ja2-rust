@@ -77,7 +77,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -673,7 +673,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -1041,7 +1041,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   UINT32 uiTimeStamp;
   UINT32 uiTimeSinceLastLoaded;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
@@ -1597,7 +1597,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   UINT16 usCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
