@@ -1039,7 +1039,7 @@ void DetermineCreatureTownCompositionBasedOnTacticalInformation(UINT8 *pubNumCre
   INT32 i;
   struct SOLDIERTYPE *pSoldier;
 
-  pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+  pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
   *pubNumCreatures = 0;
   pSector->ubNumCreatures = 0;
   pSector->ubCreaturesInBattle = 0;
@@ -1103,7 +1103,7 @@ BOOLEAN PrepareCreaturesForBattle() {
       gfUseCreatureMusic = FALSE;
 
     if (!gbWorldSectorZ) return FALSE;  // Creatures don't attack overworld with this battle code.
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) {
       return FALSE;
     }
@@ -1208,7 +1208,8 @@ BOOLEAN PrepareCreaturesForBattle() {
 
   if (gbWorldSectorZ) {
     UNDERGROUND_SECTORINFO *pUndergroundSector;
-    pUndergroundSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pUndergroundSector =
+        FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pUndergroundSector) {  // No info?!!!!!
       AssertMsg(0,
                 "Please report underground sector you are in or going to and send save if "
@@ -1218,7 +1219,7 @@ BOOLEAN PrepareCreaturesForBattle() {
     pUndergroundSector->ubCreaturesInBattle = pUndergroundSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
     pSector->ubNumCreatures = ubNumCreatures;
     pSector->ubCreaturesInBattle = ubNumCreatures;
   }

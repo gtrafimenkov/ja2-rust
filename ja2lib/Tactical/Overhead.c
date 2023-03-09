@@ -2832,7 +2832,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
 
     if (bMilitiaRank != -1) {
       // remove this militia from the strategic records
-      StrategicRemoveMilitiaFromSector(gWorldSectorX, gWorldSectorY, bMilitiaRank, 1);
+      StrategicRemoveMilitiaFromSector((u8)gWorldSectorX, (u8)gWorldSectorY, bMilitiaRank, 1);
     }
 
     // If the militia's killer is known
@@ -5029,7 +5029,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
 
   if ((fBattleLost) || (fBattleWon)) {
     if (!gbWorldSectorZ) {
-      SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].bLastKnownEnemies =
+      SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)].bLastKnownEnemies =
           NumEnemiesInSector(gWorldSectorX, gWorldSectorY);
     }
   }
@@ -5244,7 +5244,7 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       LogBattleResults(LOG_VICTORY);
 
       SetThisSectorAsPlayerControlled(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE);
-      HandleVictoryInNPCSector(gWorldSectorX, gWorldSectorY, (INT16)gbWorldSectorZ);
+      HandleVictoryInNPCSector((u8)gWorldSectorX, (u8)gWorldSectorY, (INT16)gbWorldSectorZ);
       if (CheckFact(FACT_FIRST_BATTLE_BEING_FOUGHT, 0)) {
         // ATE: Need to trigger record for this event .... for NPC scripting
         TriggerNPCRecord(PACOS, 18);

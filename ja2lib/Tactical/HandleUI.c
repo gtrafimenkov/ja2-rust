@@ -1124,7 +1124,7 @@ UINT32 UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
     // Add soldier strategic info, so it doesn't break the counters!
     if (pSoldier) {
       if (!gbWorldSectorZ) {
-        SECTORINFO *pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+        SECTORINFO *pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
         switch (pSoldier->ubSoldierClass) {
           case SOLDIER_CLASS_ADMINISTRATOR:
             pSector->ubNumAdmins++;
@@ -1141,7 +1141,7 @@ UINT32 UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
         }
       } else {
         UNDERGROUND_SECTORINFO *pSector =
-            FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+            FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
         if (pSector) {
           switch (pSoldier->ubSoldierClass) {
             case SOLDIER_CLASS_ADMINISTRATOR:

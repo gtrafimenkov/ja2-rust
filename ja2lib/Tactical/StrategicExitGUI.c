@@ -269,7 +269,7 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
                                                 // means that we can't load the adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;
       gExitDialog.fGotoSector = FALSE;
-    } else if (GetNumberOfMilitiaInSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+    } else if (GetNumberOfMilitiaInSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
       // Leaving this sector will result in militia being forced to
       // fight the battle, can't load adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;

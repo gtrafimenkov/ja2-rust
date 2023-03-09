@@ -297,13 +297,13 @@ void EndTacticalBattleForEnemy() {
   // Clear enemies in battle for all stationary groups in the sector.
   if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;
     pSector->ubElitesInBattle = 0;
   } else if (!gbWorldSectorZ) {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
     // grab the number of each type in the stationary sector
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;
@@ -406,7 +406,7 @@ BOOLEAN PrepareEnemyForSectorBattle() {
     }
   }
 
-  pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+  pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
   if (pSector->uiFlags &
       SF_USE_MAP_SETTINGS) {  // count the number of enemy placements in a map and use those
     SOLDIERINITNODE *curr;
@@ -922,7 +922,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
       RecalculateSectorWeight((UINT8)GetSolSectorID8(pSoldier));
     } else {  // basement level (UNDERGROUND_SECTORINFO)
       UNDERGROUND_SECTORINFO *pSector =
-          FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
 #ifdef JA2BETAVERSION
       UINT32 ubTotalEnemies = pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites;
 #endif
@@ -1209,7 +1209,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UI
 
   if (fMagicallyAppeared) {  // update the strategic counters
     if (!gbWorldSectorZ) {
-      SECTORINFO *pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+      SECTORINFO *pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
       pSector->ubNumAdmins += ubNumAdmins;
       pSector->ubAdminsInBattle += ubNumAdmins;
       pSector->ubNumTroops += ubNumTroops;
@@ -1218,7 +1218,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UI
       pSector->ubElitesInBattle += ubNumElites;
     } else {
       UNDERGROUND_SECTORINFO *pSector =
-          FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       if (pSector) {
         pSector->ubNumAdmins += ubNumAdmins;
         pSector->ubAdminsInBattle += ubNumAdmins;
@@ -1658,7 +1658,7 @@ void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap() {
 
   if (!gbWorldSectorZ) {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;
     pSector->ubElitesInBattle = 0;
@@ -1666,7 +1666,7 @@ void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap() {
     // RecalculateSectorWeight(
   } else if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) return;
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;

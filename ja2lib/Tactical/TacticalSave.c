@@ -732,7 +732,7 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   SaveBloodSmellAndRevealedStatesFromMapToTempFile();
 
   // handle all reachable before save
-  HandleAllReachAbleItemsInTheSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+  HandleAllReachAbleItemsInTheSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Save the Items to the the file
   if (!SaveWorldItemsToTempItemFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, guiNumWorldItems,
@@ -776,8 +776,8 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // Save the enemies to the temp file
-  if (!NewWayOfSavingEnemyAndCivliansToTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE,
-                                                FALSE)) {
+  if (!NewWayOfSavingEnemyAndCivliansToTempFile((u8)gWorldSectorX, (u8)gWorldSectorY,
+                                                gbWorldSectorZ, TRUE, FALSE)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "NewWayOfSavingEnemyAndCivliansToTempFile( Enemy, Creature Team )"));
@@ -785,8 +785,8 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // Save the civilian info to the temp file
-  if (!NewWayOfSavingEnemyAndCivliansToTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE,
-                                                FALSE)) {
+  if (!NewWayOfSavingEnemyAndCivliansToTempFile((u8)gWorldSectorX, (u8)gWorldSectorY,
+                                                gbWorldSectorZ, FALSE, FALSE)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "NewWayOfSavingEnemyAndCivliansToTempFile( Civ Team )"));
@@ -1073,8 +1073,8 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile() {
 
 void SetLastTimePlayerWasInSector() {
   if (!gbWorldSectorZ)
-    SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].uiTimeCurrentSectorWasLastLoaded =
-        GetWorldTotalMin();
+    SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
+        .uiTimeCurrentSectorWasLastLoaded = GetWorldTotalMin();
   else if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 
@@ -1099,8 +1099,8 @@ void SetLastTimePlayerWasInSector() {
 
 UINT32 GetLastTimePlayerWasInSector() {
   if (!gbWorldSectorZ)
-    return (
-        SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].uiTimeCurrentSectorWasLastLoaded);
+    return (SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
+                .uiTimeCurrentSectorWasLastLoaded);
   else if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 

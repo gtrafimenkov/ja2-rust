@@ -1257,7 +1257,7 @@ void ReloadSectorCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfOverrideSector = TRUE;
     ExtractAndUpdatePopulations();
-    SetCurrentWorldSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    SetCurrentWorldSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     gfOverrideSector = FALSE;
     DestroyAIViewer();
   }

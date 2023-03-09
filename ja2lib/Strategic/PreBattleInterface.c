@@ -1498,7 +1498,7 @@ void CalculateNonPersistantPBIInfo() {
       gubExplicitEnemyEncounterCode = HOSTILE_BLOODCATS_CODE;
     } else if (gbWorldSectorZ) {
       UNDERGROUND_SECTORINFO *pSector =
-          FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       Assert(pSector);
       if (pSector->ubCreaturesInBattle) {
         gubExplicitEnemyEncounterCode = FIGHTING_CREATURES_CODE;
@@ -1508,7 +1508,7 @@ void CalculateNonPersistantPBIInfo() {
         gubEnemyEncounterCode = ENTERING_ENEMY_SECTOR_CODE;
       }
     } else {
-      SECTORINFO *pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+      SECTORINFO *pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
       Assert(pSector);
       if (pSector->ubCreaturesInBattle) {
         gubExplicitEnemyEncounterCode = FIGHTING_CREATURES_CODE;

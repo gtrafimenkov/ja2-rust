@@ -2872,7 +2872,7 @@ UINT32 MapScreenHandle(void) {
       ChangeSelectedMapSector(9, 1, 0);
     } else if ((gWorldSectorX > 0) && (gWorldSectorY > 0) && (gbWorldSectorZ != -1)) {
       // select currently loaded sector as the map sector
-      ChangeSelectedMapSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      ChangeSelectedMapSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     } else  // no loaded sector
     {
       // only select A9 - Omerta IF there is no current selection, otherwise leave it as is

@@ -328,7 +328,7 @@ void BeginLoadScreen() {
     if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) {
       DisplayLoadScreenWithID(gubLastLoadingScreenID);
     } else {
-      ubLoadScreenID = GetLoadScreenID(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      ubLoadScreenID = GetLoadScreenID((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       DisplayLoadScreenWithID(ubLoadScreenID);
     }
   }
@@ -703,7 +703,7 @@ BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
         PrepareEnemyForSectorBattle();
       }
       if (gubNumCreaturesAttackingTown && !gbWorldSectorZ &&
-          gubSectorIDOfCreatureAttack == GetSectorID8(gWorldSectorX, gWorldSectorY)) {
+          gubSectorIDOfCreatureAttack == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
         PrepareCreaturesForBattle();
       }
       if (gfGotoSectorTransition) {
@@ -795,7 +795,7 @@ BOOLEAN SetCurrentWorldSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   }
 
   // Load and enter the new sector
-  if (EnterSector(gWorldSectorX, gWorldSectorY, bMapZ)) {
+  if (EnterSector((u8)gWorldSectorX, (u8)gWorldSectorY, bMapZ)) {
     // CJC: moved this here Feb 17
     if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
       InitAI();
@@ -917,12 +917,12 @@ void PrepareLoadedSector() {
       // gWorldSectorY, gbWorldSectorZ );
     } else {
       // we always think we control underground sectors once we've visited them
-      SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].fPlayer[gbWorldSectorZ] = TRUE;
+      SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)].fPlayer[gbWorldSectorZ] = TRUE;
     }
   }
 
   if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
-    UpdateMercsInSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    UpdateMercsInSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
   }
 
   // Reset ambients!
@@ -940,7 +940,7 @@ void PrepareLoadedSector() {
     // Check to see if civilians should be added.  Always add civs to maps unless they are
     // in a mine that is shutdown.
     if (gbWorldSectorZ) {
-      bMineIndex = GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      bMineIndex = GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       if (bMineIndex != -1) {
         if (!AreThereMinersInsideThisMine((UINT8)bMineIndex)) {
           fAddCivs = FALSE;
@@ -961,14 +961,14 @@ void PrepareLoadedSector() {
     if (gfOverrideSector) {
       if (gbWorldSectorZ > 0) {
         UNDERGROUND_SECTORINFO *pSector;
-        pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+        pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
         pSector->ubNumAdmins = (UINT8)(gsAINumAdmins > 0 ? gsAINumAdmins : 0);
         pSector->ubNumTroops = (UINT8)(gsAINumTroops > 0 ? gsAINumTroops : 0);
         pSector->ubNumElites = (UINT8)(gsAINumElites > 0 ? gsAINumElites : 0);
         pSector->ubNumCreatures = (UINT8)(gsAINumCreatures > 0 ? gsAINumCreatures : 0);
       } else if (!gbWorldSectorZ) {
         SECTORINFO *pSector;
-        pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+        pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
         pSector->ubNumAdmins = (UINT8)(gsAINumAdmins > 0 ? gsAINumAdmins : 0);
         pSector->ubNumTroops = (UINT8)(gsAINumTroops > 0 ? gsAINumTroops : 0);
         pSector->ubNumElites = (UINT8)(gsAINumElites > 0 ? gsAINumElites : 0);
@@ -1002,7 +1002,7 @@ void PrepareLoadedSector() {
 
     if (gbWorldSectorZ > 0) {
       // we always think we control underground sectors once we've visited them
-      SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].fPlayer[gbWorldSectorZ] = TRUE;
+      SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)].fPlayer[gbWorldSectorZ] = TRUE;
     }
 
     //@@@Evaluate
@@ -2322,7 +2322,7 @@ void AllMercsHaveWalkedOffSector() {
   PLAYERGROUP *pPlayer;
   BOOLEAN fEnemiesInLoadedSector = FALSE;
 
-  if (NumEnemiesInAnySector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+  if (NumEnemiesInAnySector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
     fEnemiesInLoadedSector = TRUE;
   }
 

@@ -4978,7 +4978,7 @@ void UpgradeAdminsToTroops() {
   // check all garrisons for administrators
   for (i = 0; i < giGarrisonArraySize; i++) {
     // skip sector if it's currently loaded, we'll never upgrade guys in those
-    if (GetSectorID8(gWorldSectorX, gWorldSectorY) == gGarrisonGroup[i].ubSectorID) {
+    if (GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY) == gGarrisonGroup[i].ubSectorID) {
       continue;
     }
 

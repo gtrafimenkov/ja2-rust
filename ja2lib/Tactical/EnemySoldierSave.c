@@ -381,9 +381,8 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                    UINT8 ubFirstIdTeam, UINT8 ubLastIdTeam,
-                                    BOOLEAN fAppendToFile) {
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubFirstIdTeam,
+                                    UINT8 ubLastIdTeam, BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
@@ -703,7 +702,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 
   if (gbWorldSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",
@@ -714,7 +713,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     }
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
 
     ubNumElites = pSector->ubNumElites;
     ubNumTroops = pSector->ubNumTroops;
@@ -1005,7 +1004,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   // set the number of enemies in the sector
   if (bSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",

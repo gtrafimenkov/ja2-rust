@@ -430,7 +430,7 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen) {
     if ((gWorldSectorX == sSelMapX) && (gWorldSectorY == sSelMapY) &&
         (gbWorldSectorZ == iCurrentMapSectorZ)) {
       // handle all reachable before save
-      HandleAllReachAbleItemsInTheSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      HandleAllReachAbleItemsInTheSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     }
 
     // destroy buttons for map border

@@ -520,7 +520,7 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
       // Not done yet.
 
       // Are they working for us?
-      bMineId = GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      bMineId = GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
 
       if (PlayerControlsMine(bMineId)) {
         return (CIV_QUOTE_MINERS_FOR_PLAYER);

@@ -573,10 +573,10 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   // struct because the NewWayOfSavingEnemyAndCivliansToTempFile will RESET the civ or enemy flag
   // AFTER they have been saved.
   //
-  NewWayOfSavingEnemyAndCivliansToTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE,
-                                           TRUE);
-  NewWayOfSavingEnemyAndCivliansToTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE,
-                                           TRUE);
+  NewWayOfSavingEnemyAndCivliansToTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ,
+                                           TRUE, TRUE);
+  NewWayOfSavingEnemyAndCivliansToTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ,
+                                           FALSE, TRUE);
 
   //
   // Setup the save game header
@@ -608,7 +608,8 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
 
   if (gfWorldLoaded) {
     SaveGameHeader.fWorldLoaded = TRUE;
-    SaveGameHeader.ubLoadScreenID = GetLoadScreenID(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    SaveGameHeader.ubLoadScreenID =
+        GetLoadScreenID((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
   } else {
     SaveGameHeader.fWorldLoaded = FALSE;
     SaveGameHeader.ubLoadScreenID = 0;
@@ -1233,7 +1234,8 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
         SaveGameHeader.bSectorZ == -1)
       gubLastLoadingScreenID = LOADINGSCREEN_HELI;
     else
-      gubLastLoadingScreenID = GetLoadScreenID(SaveGameHeader.sSectorX, SaveGameHeader.sSectorY,
+      gubLastLoadingScreenID = GetLoadScreenID(
+          (u8)SaveGameHeader.sSectorX, (u8)SaveGameHeader.sSectorY,
                                                SaveGameHeader.bSectorZ);
 
     BeginLoadScreen();
@@ -1987,7 +1989,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   InitAI();
 
   // Update the mercs in the sector with the new soldier info
-  UpdateMercsInSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+  UpdateMercsInSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
 
   // ReconnectSchedules();
   PostSchedules();
@@ -3751,8 +3753,8 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
   gubDesertTemperature = sGeneralInfo.ubDesertTemperature;
   gubGlobalTemperature = sGeneralInfo.ubGlobalTemperature;
 
-  gsMercArriveSectorX = sGeneralInfo.sMercArriveSectorX;
-  gsMercArriveSectorY = sGeneralInfo.sMercArriveSectorY;
+  gsMercArriveSectorX = (u8)sGeneralInfo.sMercArriveSectorX;
+  gsMercArriveSectorY = (u8)sGeneralInfo.sMercArriveSectorY;
 
   gfCreatureMeanwhileScenePlayed = sGeneralInfo.fCreatureMeanwhileScenePlayed;
 

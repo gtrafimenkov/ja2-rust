@@ -194,7 +194,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
         else
           ScreenMsg(FONT_YELLOW, MSG_INTERFACE, pMessageStrings[MSG_LEAVING_BASEMENT]);
 
-        SetCurrentWorldSector(gWorldSectorX, gWorldSectorY, ubLookForLevel);
+        SetCurrentWorldSector((u8)gWorldSectorX, (u8)gWorldSectorY, ubLookForLevel);
         gfOverrideInsertionWithExitGrid = FALSE;
       }
     }

@@ -4375,7 +4375,7 @@ static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, INT16 sX, INT16 sY) {
     return (FALSE);
   }
 
-  if (GetSectorID8(sX, sY) == GetSectorID8(gWorldSectorX, gWorldSectorY)) {
+  if (GetSectorID8(sX, sY) == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
     TacticalMilitiaRefreshRequired();
   }
 
@@ -4414,7 +4414,7 @@ BOOLEAN DropAPersonInASector(UINT8 ubType, INT16 sX, INT16 sY) {
     return (FALSE);
   }
 
-  if (GetSectorID8(sX, sY) == GetSectorID8(gWorldSectorX, gWorldSectorY)) {
+  if (GetSectorID8(sX, sY) == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
     TacticalMilitiaRefreshRequired();
   }
 
@@ -5077,7 +5077,7 @@ void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor(INT16 sTownValue) {
           }
         }
 
-        if (SectorID16To8(sectorID) == GetSectorID8(gWorldSectorX, gWorldSectorY)) {
+        if (SectorID16To8(sectorID) == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
           TacticalMilitiaRefreshRequired();
         }
       }
@@ -5207,7 +5207,7 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
         }
 
         // if this sector is currently loaded
-        if (GetSectorID8(sX, sY) == GetSectorID8(gWorldSectorX, gWorldSectorY) &&
+        if (GetSectorID8(sX, sY) == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY) &&
             gWorldSectorY != 0) {
           TacticalMilitiaRefreshRequired();
         }

@@ -1429,7 +1429,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
 
         case BLOODCAT:
           pp->bExpLevel = 5 + bExpLevelModifier;
-          if (GetSectorID8(gWorldSectorX, gWorldSectorY) == SEC_I16) {
+          if (GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY) == SEC_I16) {
             pp->bExpLevel += gGameOptions.ubDifficultyLevel;
           }
           break;
