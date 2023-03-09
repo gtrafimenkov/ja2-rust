@@ -86,6 +86,10 @@ struct OptionalSamSite GetSamControllingSector(uint8_t x, uint8_t y);
 
 bool IsThereAFunctionalSamInSector(uint8_t x, uint8_t y, int8_t z);
 
+uint8_t GetNumberOfSAMSitesUnderPlayerControl(void);
+
+bool IsSamUnderPlayerControl(enum SamSite site);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

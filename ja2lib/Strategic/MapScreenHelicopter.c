@@ -914,9 +914,6 @@ void HandleSkyRiderMonologueAboutEstoniRefuel(UINT32 uiSpecialCode) {
 void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
   switch (uiSpecialCode) {
     case (0):
-      // gpCurrentTalkingFace = &gFacesData[ uiExternalStaticNPCFaces[ SKYRIDER_EXTERNAL_FACE ] ];
-      // gubCurrentTalkingID = SKYRIDER;
-
       // if special event data 2 is true, then do dialogue, else this is just a trigger for an event
       CharacterDialogue(SKYRIDER, MENTION_DRASSEN_SAM_SITE,
                         uiExternalStaticNPCFaces[SKYRIDER_EXTERNAL_FACE], DIALOGUE_EXTERNAL_NPC_UI,
@@ -926,7 +923,7 @@ void HandleSkyRiderMonologueAboutDrassenSAMSite(UINT32 uiSpecialCode) {
           DIALOGUE_EXTERNAL_NPC_UI, FALSE, TRUE, DIALOGUE_SPECIAL_EVENT_SKYRIDERMAPSCREENEVENT,
           SKYRIDER_MONOLOGUE_EVENT_DRASSEN_SAM_SITE, 1);
 
-      if (SAMSitesUnderPlayerControl(GetSamSiteX(1), GetSamSiteY(1)) == FALSE) {
+      if (!IsSamUnderPlayerControl(SamSiteDrassen)) {
         CharacterDialogue(SKYRIDER, SECOND_HALF_OF_MENTION_DRASSEN_SAM_SITE,
                           uiExternalStaticNPCFaces[SKYRIDER_EXTERNAL_FACE],
                           DIALOGUE_EXTERNAL_NPC_UI, FALSE, FALSE);

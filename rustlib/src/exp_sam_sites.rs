@@ -159,6 +159,28 @@ pub extern "C" fn IsThereAFunctionalSamInSector(x: u8, y: u8, z: i8) -> bool {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn GetNumberOfSAMSitesUnderPlayerControl() -> u8 {
+    let mut counter = 0;
+    for loc in sam_sites::LOCATIONS.iter() {
+        unsafe {
+            if !STATE.get_sector(loc.x, loc.y).enemy_controlled {
+                counter += 1;
+            }
+        }
+    }
+    counter
+}
+
+#[no_mangle]
+pub extern "C" fn IsSamUnderPlayerControl(site: SamSite) -> bool {
+    unsafe {
+        !STATE
+            .get_sector(GetSamSiteX(site), GetSamSiteY(site))
+            .enemy_controlled
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

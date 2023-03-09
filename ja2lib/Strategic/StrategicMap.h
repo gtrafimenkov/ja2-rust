@@ -104,13 +104,7 @@ void HandleSoldierLeavingSectorByThemSelf(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN CheckAndHandleUnloadingOfCurrentWorld();
 
-// number of SAM sites under player control
-INT32 GetNumberOfSAMSitesUnderPlayerControl(void);
-
 BOOLEAN IsSectorDesert(u8 sSectorX, u8 sSectorY);
-
-// sam site under players control?
-INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY);
 
 void SetupProfileInsertionDataForSoldier(struct SOLDIERTYPE *pSoldier);
 

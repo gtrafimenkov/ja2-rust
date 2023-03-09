@@ -53,15 +53,7 @@ pub extern "C" fn SectorID16_Y(sector_id: SectorID16) -> u8 {
 
 #[no_mangle]
 pub extern "C" fn IsThisSectorASAMSector(x: u8, y: u8, z: i8) -> bool {
-    if z != 0 {
-        return false;
-    }
-    for s in sam_sites::LOCATIONS.iter() {
-        if s.x == x && s.y == y {
-            return true;
-        }
-    }
-    return false;
+    sam_sites::get_sam_at_sector(x, y, z).is_some()
 }
 
 #[no_mangle]

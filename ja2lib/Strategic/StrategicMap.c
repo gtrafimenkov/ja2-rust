@@ -2846,36 +2846,6 @@ BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ) {
   return (FALSE);
 }
 
-// TODO: rustlib
-INT32 GetNumberOfSAMSitesUnderPlayerControl(void) {
-  INT32 iNumber = 0;
-
-  // if the sam site is under player control, up the number
-  for (int i = 0; i < GetSamSiteCount(); i++) {
-    if (!IsSectorEnemyControlled(GetSamSiteX(i), GetSamSiteY(i))) {
-      iNumber++;
-    }
-  }
-
-  return (iNumber);
-}
-
-// TODO: rustlib
-INT32 SAMSitesUnderPlayerControl(INT16 sX, INT16 sY) {
-  BOOLEAN fSamSiteUnderControl = FALSE;
-
-  // is this sector a SAM sector?
-  if (IsThisSectorASAMSector(sX, sY, 0) == TRUE) {
-    // is it under control by the player
-    if (!IsSectorEnemyControlled(sX, sY)) {
-      // yes
-      fSamSiteUnderControl = TRUE;
-    }
-  }
-
-  return (fSamSiteUnderControl);
-}
-
 void UpdateAirspaceControl(void) {
   for (u8 sX = 1; sX < MAP_WORLD_X - 1; sX++) {
     for (u8 sY = 1; sY < MAP_WORLD_Y - 1; sY++) {
