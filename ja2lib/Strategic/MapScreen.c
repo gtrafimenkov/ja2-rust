@@ -10188,8 +10188,8 @@ void HandlePostAutoresolveMessages() {
   // An additional case is when creatures kill all opposition in the sector.  For each surviving
   // monster, civilians are "virtually" murdered and loyalty hits will be processed.
   if (gsCiviliansEatenByMonsters >= 1) {
-    AdjustLoyaltyForCivsEatenByMonsters(SectorID8_X(gsEnemyGainedControlOfSectorID),
-                                        SectorID8_Y(gsEnemyGainedControlOfSectorID),
+    AdjustLoyaltyForCivsEatenByMonsters(SectorID8_X((u8)gsEnemyGainedControlOfSectorID),
+                                        SectorID8_Y((u8)gsEnemyGainedControlOfSectorID),
                                         (UINT8)gsCiviliansEatenByMonsters);
     gsCiviliansEatenByMonsters = -2;
   } else if (gsCiviliansEatenByMonsters == -2) {
@@ -10197,8 +10197,8 @@ void HandlePostAutoresolveMessages() {
     gsCiviliansEatenByMonsters = -1;
     gsEnemyGainedControlOfSectorID = -1;
   } else if (gsEnemyGainedControlOfSectorID >= 0) {  // bring up the dialog box
-    SetThisSectorAsEnemyControlled(SectorID8_X(gsEnemyGainedControlOfSectorID),
-                                   SectorID8_Y(gsEnemyGainedControlOfSectorID), 0, TRUE);
+    SetThisSectorAsEnemyControlled(SectorID8_X((u8)gsEnemyGainedControlOfSectorID),
+                                   SectorID8_Y((u8)gsEnemyGainedControlOfSectorID), 0, TRUE);
     gsEnemyGainedControlOfSectorID = -2;
   } else if (gsEnemyGainedControlOfSectorID == -2) {
     // dirty the mapscreen after the dialog box goes away.

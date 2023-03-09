@@ -1549,15 +1549,15 @@ void RenderAutoResolve() {
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
 
           SetMusicMode(MUSIC_TACTICAL_DEATH);
-          gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+          gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           break;
         case BATTLE_DEFEAT:
           HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           SetMusicMode(MUSIC_TACTICAL_DEATH);
@@ -1572,9 +1572,9 @@ void RenderAutoResolve() {
           HandleLoyaltyImplicationsOfMercRetreat(RETREAT_AUTORESOLVE, gpAR->ubSectorX,
                                                  gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else if (gpAR->ubAliveEnemies) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           break;
