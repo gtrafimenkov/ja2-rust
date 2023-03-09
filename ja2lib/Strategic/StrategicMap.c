@@ -2850,8 +2850,10 @@ void UpdateAirspaceControl(void) {
   for (u8 sX = 1; sX < MAP_WORLD_X - 1; sX++) {
     for (u8 sY = 1; sY < MAP_WORLD_Y - 1; sY++) {
       struct OptionalSamSite samSite = GetSamControllingSector(sX, sY);
-      bool fEnemyControlsAir = samSite.tag != None && IsSectorEnemyControlled(sX, sY) &&
-                               GetSamCondition(samSite.some) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK;
+      bool fEnemyControlsAir =
+          samSite.tag != None &&
+          IsSectorEnemyControlled(GetSamSiteX(samSite.some), GetSamSiteY(samSite.some)) &&
+          GetSamCondition(samSite.some) >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK;
       SetSectorEnemyAirControlled(sX, sY, fEnemyControlsAir);
     }
   }
