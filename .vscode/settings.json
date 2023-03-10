@@ -26,6 +26,8 @@
         "strategicmap.h": "c",
         "rustlib.h": "c",
         "rust_sector.h": "c",
-        "strategictownloyalty.h": "c"
+        "strategictownloyalty.h": "c",
+        "strutils.h": "c",
+        "stdint.h": "c"
     }
 }
