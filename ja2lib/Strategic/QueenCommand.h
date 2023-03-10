@@ -11,7 +11,7 @@ extern BOOLEAN gfPendingEnemies;
 
 UINT8 NumFreeEnemySlots();
 
-UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+UINT8 NumEnemiesInAnySector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 
 UINT8 NumEnemiesInSector(u8 sSectorX, u8 sSectorY);
 UINT8 NumStationaryEnemiesInSector(u8 sSectorX, u8 sSectorY);
@@ -41,7 +41,7 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile);
 BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile);
 
 // Finds and returns the specified underground structure ( DONT MODIFY IT ).  Else returns NULL
-UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ);
+UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, UINT8 bMapZ);
 
 void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier);
 void BeginCaptureSquence();

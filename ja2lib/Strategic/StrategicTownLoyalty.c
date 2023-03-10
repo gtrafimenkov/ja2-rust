@@ -397,7 +397,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
     struct SOLDIERTYPE *pKiller = MercPtrs[pSoldier->ubAttackerID];
 
     // apply morale penalty for killing a civilian!
-    HandleMoraleEvent(pKiller, MORALE_KILLED_CIVILIAN, pKiller->sSectorX, pKiller->sSectorY,
+    HandleMoraleEvent(pKiller, MORALE_KILLED_CIVILIAN, (u8)pKiller->sSectorX, (u8)pKiller->sSectorY,
                       pKiller->bSectorZ);
   }
 
@@ -641,7 +641,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   }
 
   // penalize the side that should have stopped it
-  if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), pSoldier->sSectorY)) {
+  if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))) {
     // enemy should have prevented it, let them suffer a little
     IncrementTownLoyalty(bTownId, sPolicingLoyalty);
   } else {

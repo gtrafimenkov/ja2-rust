@@ -50,6 +50,6 @@ void PrepareMilitiaForTactical() {
   // Do we have a loaded sector?
   if (gWorldSectorX == 0 && gWorldSectorY == 0) return;
 
-  struct MilitiaCount milCount = GetMilitiaInSector(gWorldSectorX, gWorldSectorY);
+  struct MilitiaCount milCount = GetMilitiaInSector((u8)gWorldSectorX, (u8)gWorldSectorY);
   AddSoldierInitListMilitia(milCount.green, milCount.regular, milCount.elite);
 }

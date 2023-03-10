@@ -31,7 +31,7 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen);
 // bail out of sector inventory mode if it is on
 void CancelSectorInventoryDisplayIfOn(BOOLEAN fExitFromMapScreen);
 
-INT32 GetSizeOfStashInSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCountStacksAsOne);
+INT32 GetSizeOfStashInSector(u8 sMapX, u8 sMapY, i8 sMapZ, BOOLEAN fCountStacksAsOne);
 
 // get total number of items in sector
 INT32 GetTotalNumberOfItems(void);

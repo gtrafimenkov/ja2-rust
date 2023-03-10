@@ -18,7 +18,7 @@ struct SOLDIERTYPE;
 
 // ATE: This define has been moved to be a function so that
 // we pick the most appropriate time of day to use...
-//#define		MERC_ARRIVAL_TIME_OF_DAY				 (7 * 60 + 30)
+// #define		MERC_ARRIVAL_TIME_OF_DAY				 (7 * 60 + 30)
 //// 7:30 am
 
 typedef struct {
@@ -36,8 +36,8 @@ typedef struct {
 } MERC_HIRE_STRUCT;
 
 // ATE: Globals that dictate where the mercs will land once being hired
-extern INT16 gsMercArriveSectorX;
-extern INT16 gsMercArriveSectorY;
+extern u8 gsMercArriveSectorX;
+extern u8 gsMercArriveSectorY;
 
 INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc);
 void MercArrivesCallback(UINT8 ubSoldierID);

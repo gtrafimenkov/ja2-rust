@@ -331,7 +331,7 @@ void JumpToLevel(INT32 iLevel);
 void CheckAndUpdateBasedOnContractTimes(void);
 
 // check if are just about to display this pop up or stopping display
-void HandleDisplayOfItemPopUpForSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ);
+void HandleDisplayOfItemPopUpForSector(u8 sMapX, u8 sMapY, i8 sMapZ);
 
 // display red arrow by name of selected merc
 void HandleDisplayOfSelectedMercArrows(void);
@@ -429,8 +429,8 @@ void SetUpMapScreenFastHelpText(void);
 void TurnOnSectorLocator(UINT8 ubProfileID);
 void TurnOffSectorLocator();
 
-extern INT16 gsSectorLocatorX;
-extern INT16 gsSectorLocatorY;
+extern u8 gsSectorLocatorX;
+extern u8 gsSectorLocatorY;
 extern UINT8 gubBlitSectorLocatorCode;
 
 enum { LOCATOR_COLOR_NONE, LOCATOR_COLOR_RED, LOCATOR_COLOR_YELLOW };
@@ -469,8 +469,8 @@ void DeselectVehicleForMovement(INT32 iVehicleId);
 void AddVehicleToMovingLists(INT32 iVehicleId);
 void AddSquadToMovingLists(INT32 iSquadNumber);
 void AddSoldierToMovingLists(struct SOLDIERTYPE *pSoldier);
-void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
-void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
+void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 void ReBuildMoveBox(void);
 BOOLEAN IsCharacterSelectedForAssignment(INT16 sCharNumber);
 BOOLEAN IsCharacterSelectedForSleep(INT16 sCharNumber);

@@ -23,7 +23,7 @@ void ReBuildCharactersList(void);
 BOOLEAN HandlePreloadOfMapGraphics(void);
 void HandleRemovalOfPreLoadedMapGraphics(void);
 
-void ChangeSelectedMapSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+void ChangeSelectedMapSector(u8 sMapX, u8 sMapY, INT8 bMapZ);
 
 BOOLEAN CanToggleSelectedCharInventory(void);
 
@@ -48,5 +48,7 @@ BOOLEAN CanChangeSleepStatusForCharSlot(INT8 bCharNumber);
 BOOLEAN CanChangeSleepStatusForSoldier(struct SOLDIERTYPE* pSoldier);
 
 BOOLEAN MapCharacterHasAccessibleInventory(INT8 bCharNumber);
+
+BOOLEAN GetMouseMapXY(u8* psMapWorldX, u8* psMapWorldY);
 
 #endif

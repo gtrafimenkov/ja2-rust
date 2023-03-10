@@ -2818,8 +2818,8 @@ void EVENT_SoldierGotHit(struct SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT
     if (pSoldier->ubAttackerID != NOBODY &&
         MercPtrs[pSoldier->ubAttackerID]->bTeam == gbPlayerNum) {
       HandleMoraleEvent(MercPtrs[pSoldier->ubAttackerID], MORALE_DID_LOTS_OF_DAMAGE,
-                        MercPtrs[pSoldier->ubAttackerID]->sSectorX,
-                        MercPtrs[pSoldier->ubAttackerID]->sSectorY,
+                        (u8)MercPtrs[pSoldier->ubAttackerID]->sSectorX,
+                        (u8)MercPtrs[pSoldier->ubAttackerID]->sSectorY,
                         MercPtrs[pSoldier->ubAttackerID]->bSectorZ);
     }
     if (pSoldier->bTeam == gbPlayerNum) {
@@ -5322,8 +5322,8 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
   switch (pSoldier->bTeam) {
     case ENEMY_TEAM:
       // if we're in the wilderness this always counts
-      if (IsSectorEnemyControlled(gWorldSectorX, gWorldSectorY) ||
-          SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)]
+      if (IsSectorEnemyControlled((u8)gWorldSectorX, (u8)gWorldSectorY) ||
+          SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
                   .ubTraversability[THROUGH_STRATEGIC_MOVE] != TOWN) {
         // update current day of activity!
         UpdateLastDayOfPlayerActivity((UINT16)GetWorldDay());

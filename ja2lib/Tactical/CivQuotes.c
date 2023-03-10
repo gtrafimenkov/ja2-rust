@@ -391,7 +391,7 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
 
   // Are we in a town sector?
   // get town id
-  bTownId = GetTownIdForSector(gWorldSectorX, gWorldSectorY);
+  bTownId = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
 
   // If a married PC...
   if (ubCivType == CIV_TYPE_MARRIED_PC) {
@@ -503,7 +503,7 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
 
   // ATE: OK, check if we should look for a civ hint....
   if (fCanUseHints) {
-    bCivHint = ConsiderCivilianQuotes(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE);
+    bCivHint = ConsiderCivilianQuotes((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, FALSE);
   } else {
     bCivHint = -1;
   }
@@ -520,7 +520,7 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
       // Not done yet.
 
       // Are they working for us?
-      bMineId = GetIdOfMineForSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      bMineId = GetIdOfMineForSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
 
       if (PlayerControlsMine(bMineId)) {
         return (CIV_QUOTE_MINERS_FOR_PLAYER);
@@ -545,7 +545,7 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
       (*pubCivHintToUse) = bCivHint;
 
       // Set quote as used...
-      ConsiderCivilianQuotes(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE);
+      ConsiderCivilianQuotes((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, TRUE);
 
       // retrun value....
       return (CIV_QUOTE_HINT);

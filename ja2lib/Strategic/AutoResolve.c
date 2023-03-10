@@ -1549,15 +1549,15 @@ void RenderAutoResolve() {
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
 
           SetMusicMode(MUSIC_TACTICAL_DEATH);
-          gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+          gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           break;
         case BATTLE_DEFEAT:
           HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gpAR->ubSectorX, gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           SetMusicMode(MUSIC_TACTICAL_DEATH);
@@ -1572,9 +1572,9 @@ void RenderAutoResolve() {
           HandleLoyaltyImplicationsOfMercRetreat(RETREAT_AUTORESOLVE, gpAR->ubSectorX,
                                                  gpAR->ubSectorY, 0);
           if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
           } else if (gpAR->ubAliveEnemies) {
-            gsEnemyGainedControlOfSectorID = (INT16)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+            gsEnemyGainedControlOfSectorID = GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
             gsCiviliansEatenByMonsters = gpAR->ubAliveEnemies;
           }
           break;
@@ -4015,7 +4015,7 @@ UINT8 GetAutoResolveSectorID() {
 }
 
 // Returns TRUE if a battle is happening or sector is loaded
-BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psSectorZ) {
+BOOLEAN GetCurrentBattleSectorXYZ(u8 *psSectorX, u8 *psSectorY, i8 *psSectorZ) {
   if (gpAR) {
     *psSectorX = gpAR->ubSectorX;
     *psSectorY = gpAR->ubSectorY;
@@ -4027,9 +4027,9 @@ BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psS
     *psSectorZ = gubPBSectorZ;
     return TRUE;
   } else if (gfWorldLoaded) {
-    *psSectorX = gWorldSectorX;
-    *psSectorY = gWorldSectorY;
-    *psSectorZ = gbWorldSectorZ;
+    *psSectorX = (u8)gWorldSectorX;
+    *psSectorY = (u8)gWorldSectorY;
+    *psSectorZ = (i8)gbWorldSectorZ;
     return TRUE;
   } else {
     *psSectorX = 0;
@@ -4040,8 +4040,8 @@ BOOLEAN GetCurrentBattleSectorXYZ(INT16 *psSectorX, INT16 *psSectorY, INT16 *psS
 }
 
 // Returns TRUE if a battle is happening ONLY
-BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX, INT16 *psSectorY,
-                                                               INT16 *psSectorZ) {
+BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(u8 *psSectorX, u8 *psSectorY,
+                                                               i8 *psSectorZ) {
   if (gpAR) {
     *psSectorX = gpAR->ubSectorX;
     *psSectorY = gpAR->ubSectorY;
@@ -4053,9 +4053,9 @@ BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX,
     *psSectorZ = gubPBSectorZ;
     return TRUE;
   } else if (gfWorldLoaded) {
-    *psSectorX = gWorldSectorX;
-    *psSectorY = gWorldSectorY;
-    *psSectorZ = gbWorldSectorZ;
+    *psSectorX = (u8)gWorldSectorX;
+    *psSectorY = (u8)gWorldSectorY;
+    *psSectorZ = (i8)gbWorldSectorZ;
     if (gTacticalStatus.fEnemyInSector) {
       return TRUE;
     }

@@ -36,8 +36,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-extern BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
-                                            UINT32 uiNumberOfItems, WORLDITEM *pData);
+extern BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, i8 bMapZ, UINT32 uiNumberOfItems,
+                                            WORLDITEM *pData);
 
 // status bar colors
 #define DESC_STATUS_BAR FROMRGB(201, 172, 133)
@@ -153,7 +153,7 @@ void CreateMapInventoryButtons(void);
 void DestroyMapInventoryButtons(void);
 void ReSizeStashListByThisAmount(INT32 iNumberOfItems);
 void DestroyStash(void);
-void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ);
+void BuildStashForSelectedSector(u8 sMapX, u8 sMapY, i8 sMapZ);
 BOOLEAN GetObjFromInventoryStashSlot(struct OBJECTTYPE *pInventorySlot,
                                      struct OBJECTTYPE *pItemPtr);
 BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr);
@@ -190,9 +190,8 @@ BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier);
 extern void StackObjs(struct OBJECTTYPE *pSourceObj, struct OBJECTTYPE *pTargetObj,
                       UINT8 ubNumberToCopy);
 extern void MAPEndItemPointer();
-extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(INT16 *psSectorX,
-                                                                      INT16 *psSectorY,
-                                                                      INT16 *psSectorZ);
+extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(u8 *psSectorX, u8 *psSectorY,
+                                                                      i8 *psSectorZ);
 
 // load the background panel graphics for inventory
 BOOLEAN LoadInventoryPoolGraphic(void) {
@@ -430,7 +429,7 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen) {
     if ((gWorldSectorX == sSelMapX) && (gWorldSectorY == sSelMapY) &&
         (gbWorldSectorZ == iCurrentMapSectorZ)) {
       // handle all reachable before save
-      HandleAllReachAbleItemsInTheSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      HandleAllReachAbleItemsInTheSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     }
 
     // destroy buttons for map border
@@ -445,7 +444,7 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen) {
     CreateMapInventoryButtons();
 
     // build stash
-    BuildStashForSelectedSector(sSelMapX, sSelMapY, (INT16)(iCurrentMapSectorZ));
+    BuildStashForSelectedSector(sSelMapX, sSelMapY, (i8)(iCurrentMapSectorZ));
 
     CreateMapInventoryPoolDoneButton();
 
@@ -856,7 +855,7 @@ void DestroyMapInventoryButtons(void) {
   return;
 }
 
-void BuildStashForSelectedSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ) {
+void BuildStashForSelectedSector(u8 sMapX, u8 sMapY, i8 sMapZ) {
   INT32 iSize = 0;
   UINT32 uiItemCount = 0;
   UINT32 uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
@@ -1070,7 +1069,7 @@ void ReBuildWorldItemStashForLoadedSector(INT32 iNumberSeenItems, INT32 iNumberU
 
   // reset the visible item count in the sector info struct
   SetNumberOfVisibleWorldItemsInSectorStructureForSector(
-      gWorldSectorX, gWorldSectorY, gbWorldSectorZ, uiTotalNumberOfVisibleItems);
+      (u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, uiTotalNumberOfVisibleItems);
 
   // clear out allocated space for total list
   MemFree(pTotalList);
@@ -1118,7 +1117,7 @@ void DestroyStash(void) {
   MemFree(pInventoryPoolList);
 }
 
-INT32 GetSizeOfStashInSector(INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCountStacksAsOne) {
+INT32 GetSizeOfStashInSector(u8 sMapX, u8 sMapY, i8 sMapZ, BOOLEAN fCountStacksAsOne) {
   // get # of items in sector that are visible to the player
   UINT32 uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;
@@ -1855,7 +1854,8 @@ INT32 MapScreenSectorInventoryCompare(const void *pNum1, const void *pNum2) {
 }
 
 BOOLEAN CanPlayerUseSectorInventory(struct SOLDIERTYPE *pSelectedSoldier) {
-  INT16 sSectorX, sSectorY, sSectorZ;
+  u8 sSectorX, sSectorY;
+  i8 sSectorZ;
   BOOLEAN fInCombat;
 
   // Get the sector that has a battle

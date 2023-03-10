@@ -77,7 +77,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  u16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -98,7 +98,8 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   // add the 'e' for 'Enemy preserved' to the front of the map name
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Open the file for reading
@@ -169,7 +170,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   if (GetWorldTotalMin() >
       uiTimeStamp + 300) {  // the file has aged.  Use the regular method for adding soldiers.
     FileMan_Close(hfile);
-    RemoveEnemySoldierTempFile(sSectorX, sSectorY, bSectorZ);
+    RemoveEnemySoldierTempFile((u8)sSectorX, (u8)sSectorY, bSectorZ);
     gfRestoringEnemySoldiersFromTempFile = FALSE;
     return TRUE;
   }
@@ -212,7 +213,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   // get the number of enemies in this sector.
   if (bSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(sSectorX, sSectorY, bSectorZ);
+    pSector = FindUnderGroundSector((u8)sSectorX, (u8)sSectorY, bSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",
@@ -226,9 +227,9 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
     ubStrategicCreatures = pSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(sSectorX, sSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)sSectorX, (u8)sSectorY)];
     ubStrategicCreatures = pSector->ubNumCreatures;
-    GetNumberOfEnemiesInSector(sSectorX, sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
+    GetNumberOfEnemiesInSector((u8)sSectorX, (u8)sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
                                &ubStrategicElites);
   }
 
@@ -348,7 +349,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
 #endif
     goto FAIL_LOAD;
   }
-  if (ubSectorID != GetSectorID8(sSectorX, sSectorY)) {
+  if (ubSectorID != GetSectorID8((u8)sSectorX, (u8)sSectorY)) {
 #ifdef JA2TESTVERSION
     sprintf(zReason, "EnemySoldier -- ubSectorID mismatch.  KM");
 #endif
@@ -381,9 +382,8 @@ FAIL_LOAD:
 
 // OLD SAVE METHOD:  This is the older way of saving the civilian and the enemies placement into a
 // temp file
-BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
-                                    UINT8 ubFirstIdTeam, UINT8 ubLastIdTeam,
-                                    BOOLEAN fAppendToFile) {
+BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UINT8 ubFirstIdTeam,
+                                    UINT8 ubLastIdTeam, BOOLEAN fAppendToFile) {
   SOLDIERINITNODE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
@@ -674,7 +674,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  u16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -695,7 +695,8 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   // add the 'e' for 'Enemy preserved' to the front of the map name
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Count the number of enemies ( elites, regulars, admins and creatures ) that are in the temp
@@ -703,7 +704,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 
   if (gbWorldSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",
@@ -714,7 +715,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     }
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
 
     ubNumElites = pSector->ubNumElites;
     ubNumTroops = pSector->ubNumTroops;
@@ -731,7 +732,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     if (ubStrategicElites != ubNumElites || ubStrategicTroops != ubNumTroops ||
         ubStrategicAdmins != ubNumAdmins || ubStrategicCreatures != ubNumCreatures) {
       // remove the file
-      RemoveEnemySoldierTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      RemoveEnemySoldierTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
       return (TRUE);
     }
   }
@@ -814,7 +815,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   if (GetWorldTotalMin() >
       uiTimeStamp + 300) {  // the file has aged.  Use the regular method for adding soldiers.
     FileMan_Close(hfile);
-    RemoveEnemySoldierTempFile(sSectorX, sSectorY, bSectorZ);
+    RemoveEnemySoldierTempFile((u8)sSectorX, (u8)sSectorY, bSectorZ);
     gfRestoringEnemySoldiersFromTempFile = FALSE;
     return TRUE;
   }
@@ -850,7 +851,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   // get the number of enemies in this sector.
   if (bSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(sSectorX, sSectorY, bSectorZ);
+    pSector = FindUnderGroundSector((u8)sSectorX, (u8)sSectorY, bSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",
@@ -864,9 +865,9 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     ubStrategicCreatures = pSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(sSectorX, sSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)sSectorX, (u8)sSectorY)];
     ubStrategicCreatures = pSector->ubNumCreatures;
-    GetNumberOfEnemiesInSector(sSectorX, sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
+    GetNumberOfEnemiesInSector((u8)sSectorX, (u8)sSectorY, &ubStrategicAdmins, &ubStrategicTroops,
                                &ubStrategicElites);
   }
 
@@ -984,7 +985,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
 #endif
     goto FAIL_LOAD;
   }
-  if (ubSectorID != GetSectorID8(sSectorX, sSectorY)) {
+  if (ubSectorID != GetSectorID8((u8)sSectorX, (u8)sSectorY)) {
 #ifdef JA2TESTVERSION
     sprintf(zReason, "EnemySoldier -- ubSectorID mismatch.  KM");
 #endif
@@ -1005,7 +1006,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   // set the number of enemies in the sector
   if (bSectorZ) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) {
 #ifdef JA2TESTVERSION
       sprintf(zReason, "EnemySoldier -- Couldn't find underground sector info for (%d,%d,%d)  KM",
@@ -1042,7 +1043,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   UINT32 uiTimeStamp;
   UINT32 uiTimeSinceLastLoaded;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  i16 sSectorX, sSectorY;
   UINT16 usCheckSum, usFileCheckSum;
   //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
@@ -1063,7 +1064,8 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
 
   // add the 'e' for 'Enemy preserved' to the front of the map name
   // sprintf( zMapName, "%s\\c_%s", MAPS_DIR, zTempName);
-  GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Open the file for reading
@@ -1598,7 +1600,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   UINT32 uiNumBytesRead;
   UINT32 uiTimeStamp;
   HWFILE hfile;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   UINT16 usCheckSum;
   CHAR8 zMapName[128];
 #ifdef JA2TESTVERSION
@@ -1623,7 +1625,8 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   // add the 'e' for 'Enemy preserved' to the front of the map name
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
+  GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
+                     (u8)gWorldSectorY,
                      gbWorldSectorZ);
 
   // Open the file for reading

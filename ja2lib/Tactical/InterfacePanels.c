@@ -4070,7 +4070,7 @@ void RenderTownIDString() {
   SetFontForeground(183);
   SetFontBackground(FONT_BLACK);
 
-  GetSectorIDString(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, zTownIDString,
+  GetSectorIDString((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ, zTownIDString,
                     ARR_SIZE(zTownIDString), TRUE);
   ReduceStringLength(zTownIDString, ARR_SIZE(zTownIDString), 80, COMPFONT);
   VarFindFontCenterCoordinates(548, 425, 80, 16, COMPFONT, &sFontX, &sFontY, zTownIDString);

@@ -191,7 +191,7 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup);
 void CalculateNextMoveIntention(struct GROUP *pGroup);
 
 // set current sector of the group..used for player controlled mercs
-void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubGroupID);
+void SetGroupSectorValue(u8 sSectorX, u8 sSectorY, i8 sSectorZ, UINT8 ubGroupID);
 
 void SetEnemyGroupSector(struct GROUP *pGroup, UINT8 ubSectorID);
 
@@ -296,8 +296,8 @@ void RandomizePatrolGroupLocation(struct GROUP *pGroup);
 
 void InitStrategicMovementCosts();
 
-void PlaceGroupInSector(UINT8 ubGroupID, INT16 sPrevX, INT16 sPrevY, INT16 sNextX, INT16 sNextY,
-                        INT8 bZ, BOOLEAN fCheckForBattle);
+void PlaceGroupInSector(UINT8 ubGroupID, u8 sPrevX, u8 sPrevY, u8 sNextX, u8 sNextY, INT8 bZ,
+                        BOOLEAN fCheckForBattle);
 
 void SetGroupArrivalTime(struct GROUP *pGroup, UINT32 uiArrivalTime);
 

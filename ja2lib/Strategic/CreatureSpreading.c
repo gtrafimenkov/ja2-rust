@@ -130,7 +130,7 @@ UINT8 gubAdultFemalesAttackingTown = 0;
 UINT8 gubCreatureBattleCode = CREATURE_BATTLE_CODE_NONE;
 UINT8 gubSectorIDOfCreatureAttack = 0;
 
-extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ);
+extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, UINT8 bMapZ);
 extern UNDERGROUND_SECTORINFO *NewUndergroundNode(UINT8 ubSectorX, UINT8 ubSectorY,
                                                   UINT8 ubSectorZ);
 extern void BuildUndergroundSectorInfoList();
@@ -652,7 +652,7 @@ void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 
     } else {
       pSoldier->usStrategicInsertionData = gsCreatureInsertionGridNo;
     }
-    UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+    UpdateMercInSector(pSoldier, (u8)gWorldSectorX, (u8)gWorldSectorY, 0);
   }
   gsCreatureInsertionCode = 0;
   gsCreatureInsertionGridNo = 0;
@@ -1039,7 +1039,7 @@ void DetermineCreatureTownCompositionBasedOnTacticalInformation(UINT8 *pubNumCre
   INT32 i;
   struct SOLDIERTYPE *pSoldier;
 
-  pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+  pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
   *pubNumCreatures = 0;
   pSector->ubNumCreatures = 0;
   pSector->ubCreaturesInBattle = 0;
@@ -1103,7 +1103,7 @@ BOOLEAN PrepareCreaturesForBattle() {
       gfUseCreatureMusic = FALSE;
 
     if (!gbWorldSectorZ) return FALSE;  // Creatures don't attack overworld with this battle code.
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) {
       return FALSE;
     }
@@ -1208,7 +1208,8 @@ BOOLEAN PrepareCreaturesForBattle() {
 
   if (gbWorldSectorZ) {
     UNDERGROUND_SECTORINFO *pUndergroundSector;
-    pUndergroundSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pUndergroundSector =
+        FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     if (!pUndergroundSector) {  // No info?!!!!!
       AssertMsg(0,
                 "Please report underground sector you are in or going to and send save if "
@@ -1218,7 +1219,7 @@ BOOLEAN PrepareCreaturesForBattle() {
     pUndergroundSector->ubCreaturesInBattle = pUndergroundSector->ubNumCreatures;
   } else {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
     pSector->ubNumCreatures = ubNumCreatures;
     pSector->ubCreaturesInBattle = ubNumCreatures;
   }
@@ -1395,7 +1396,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   CREATURE_DIRECTIVE *curr;
   struct SOLDIERTYPE *pSoldier;
   INT32 i;
-  INT16 sSectorX, sSectorY;
+  u8 sSectorX, sSectorY;
   INT8 bSectorZ;
 
   if (giLairID <= 0) {  // Creature quest inactive
@@ -1427,7 +1428,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
 }
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ,
+BOOLEAN GetWarpOutOfMineCodes(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ,
                               INT16 *psInsertionGridNo) {
   INT32 iSwitchValue;
 

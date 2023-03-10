@@ -24,7 +24,7 @@ typedef enum {
 
 #define FIRST_TOWN OMERTA
 
-i8 GetTownIdForSector(i16 sMapX, i16 sMapY);
+i8 GetTownIdForSector(u8 sMapX, u8 sMapY);
 i8 GetTownIdForStrategicMapIndex(i32 index);
 
 // Mapping townID -> sectorID

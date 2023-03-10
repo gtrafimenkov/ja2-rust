@@ -575,7 +575,7 @@ BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN SaveSmokeEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   UINT32 uiNumSmokeEffects = 0;
   HWFILE hFile;
   UINT32 uiNumBytesWritten = 0;
@@ -640,7 +640,7 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN LoadSmokeEffectsFromMapTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN LoadSmokeEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   UINT32 uiNumBytesRead;
   UINT32 uiCount;
   UINT32 uiCnt = 0;

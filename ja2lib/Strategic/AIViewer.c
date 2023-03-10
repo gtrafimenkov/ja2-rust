@@ -801,7 +801,7 @@ void RenderViewer() {
         ClipRect.iTop = VIEWER_TOP + y * VIEWER_CELLH;
         ClipRect.iBottom = ClipRect.iTop + VIEWER_CELLH - 1;
         for (x = 0; x < 16; x++) {
-          pUnder = FindUnderGroundSector((INT16)(x + 1), (INT16)(y + 1), gbViewLevel);
+          pUnder = FindUnderGroundSector((u8)(x + 1), (u8)(y + 1), gbViewLevel);
           if (pUnder) {
             xp = VIEWER_LEFT + x * VIEWER_CELLW + 2;
             yp = VIEWER_TOP + y * VIEWER_CELLH + 2;
@@ -868,12 +868,12 @@ void HandleViewerInput() {
             pSector = NULL;
             if (gsSelSectorX && gsSelSectorY) {
               struct MilitiaCount newCount = {15, 4, 1};
-              SetMilitiaInSector(gsSelSectorX, gsSelSectorY, newCount);
+              SetMilitiaInSector((u8)gsSelSectorX, (u8)gsSelSectorY, newCount);
               gfRenderMap = TRUE;
               EliminateAllEnemies((UINT8)gsSelSectorX, (UINT8)gsSelSectorY);
             } else if (gsHiSectorX && gsHiSectorY) {
               struct MilitiaCount newCount = {15, 4, 1};
-              SetMilitiaInSector(gsHiSectorX, gsHiSectorY, newCount);
+              SetMilitiaInSector((u8)gsHiSectorX, (u8)gsHiSectorY, newCount);
               gfRenderMap = TRUE;
               EliminateAllEnemies((UINT8)gsHiSectorX, (UINT8)gsHiSectorY);
             }
@@ -895,11 +895,11 @@ void HandleViewerInput() {
         case 'g':
           // Add a group of 8 stationary enemies
           if (gsSelSectorX && gsSelSectorY) {
-            pSector = &SectorInfo[GetSectorID8(gsSelSectorX, gsSelSectorY)];
+            pSector = &SectorInfo[GetSectorID8((u8)gsSelSectorX, (u8)gsSelSectorY)];
             pSector->ubNumElites += 1;
             pSector->ubNumTroops += 7;
           } else if (gsHiSectorX && gsHiSectorY) {
-            pSector = &SectorInfo[GetSectorID8(gsHiSectorX, gsHiSectorY)];
+            pSector = &SectorInfo[GetSectorID8((u8)gsHiSectorX, (u8)gsHiSectorY)];
             pSector->ubNumElites += 1;
             pSector->ubNumTroops += 7;
           }
@@ -907,10 +907,10 @@ void HandleViewerInput() {
         case 'c':
           // Add a group of 8 creatures.
           if (gsSelSectorX && gsSelSectorY) {
-            pSector = &SectorInfo[GetSectorID8(gsSelSectorX, gsSelSectorY)];
+            pSector = &SectorInfo[GetSectorID8((u8)gsSelSectorX, (u8)gsSelSectorY)];
             pSector->ubNumCreatures += 8;
           } else if (gsHiSectorX && gsHiSectorY) {
-            pSector = &SectorInfo[GetSectorID8(gsHiSectorX, gsHiSectorY)];
+            pSector = &SectorInfo[GetSectorID8((u8)gsHiSectorX, (u8)gsHiSectorY)];
             pSector->ubNumCreatures += 8;
           }
           break;
@@ -1114,7 +1114,7 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, INT32 reason) {
     Compression0Callback(ButtonList[iViewerButton[COMPRESSION0]], MSYS_CALLBACK_REASON_LBUTTON_UP);
     if ((gsSelSectorX == 0) || (gsSelSectorY == 0)) gsSelSectorX = 9, gsSelSectorY = 1;
 
-    ubSector = GetSectorID8(gsSelSectorX, gsSelSectorY);
+    ubSector = GetSectorID8((u8)gsSelSectorX, (u8)gsSelSectorY);
     uiWorldMin = GetWorldTotalMin();
     gfRenderViewer = TRUE;
     if (gsSelSectorY > 1) {
@@ -1192,9 +1192,9 @@ void CreatureAttackCallback(GUI_BUTTON *btn, INT32 reason) {
     if ((gsSelSectorX != 0) && (gsSelSectorX != 0)) {
       if (_KeyDown(ALT)) {
         AddStrategicEventUsingSeconds(EVENT_CREATURE_ATTACK, GetWorldTotalSeconds() + 4,
-                                      GetSectorID8(gsSelSectorX, gsSelSectorY));
+                                      GetSectorID8((u8)gsSelSectorX, (u8)gsSelSectorY));
       } else {
-        CreatureAttackTown((UINT8)GetSectorID8(gsSelSectorX, gsSelSectorY), TRUE);
+        CreatureAttackTown((UINT8)GetSectorID8((u8)gsSelSectorX, (u8)gsSelSectorY), TRUE);
       }
     }
   }
@@ -1257,7 +1257,7 @@ void ReloadSectorCallback(GUI_BUTTON *btn, INT32 reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfOverrideSector = TRUE;
     ExtractAndUpdatePopulations();
-    SetCurrentWorldSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    SetCurrentWorldSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
     gfOverrideSector = FALSE;
     DestroyAIViewer();
   }

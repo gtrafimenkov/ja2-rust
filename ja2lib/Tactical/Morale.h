@@ -53,8 +53,8 @@ typedef struct MoraleEvent {
   INT8 bChange;
 } MoraleEvent;
 
-extern void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, INT16 sMapX,
-                              INT16 sMapY, INT8 bMapZ);
+extern void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, u8 sMapX, u8 sMapY,
+                              INT8 bMapZ);
 extern void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier);
 extern INT8 GetMoraleModifier(struct SOLDIERTYPE *pSoldier);
 

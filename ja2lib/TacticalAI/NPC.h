@@ -177,7 +177,7 @@ extern BOOLEAN HandleNPCBeingGivenMoneyByPlayer(UINT8 ubNPCId, UINT32 uiMoneyAmo
                                                 UINT8 *pQuoteValue);
 
 // given a victory in this sector, handle specific facts
-void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ);
+void HandleVictoryInNPCSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 
 // check if this shopkeep has been shutdown, if so do soething and return the fact
 BOOLEAN HandleShopKeepHasBeenShutDown(UINT8 ubCharNum);
@@ -200,7 +200,7 @@ BOOLEAN GetInfoForAbandoningEPC(UINT8 ubNPC, UINT16 *pusQuoteNum, UINT16 *pusFac
 
 BOOLEAN RecordHasDialogue(UINT8 ubNPC, UINT8 ubRecord);
 
-INT8 ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, BOOLEAN fSetAsUsed);
+INT8 ConsiderCivilianQuotes(u8 sSectorX, u8 sSectorY, i8 sSectorZ, BOOLEAN fSetAsUsed);
 
 void ResetOncePerConvoRecordsForNPC(UINT8 ubNPC);
 

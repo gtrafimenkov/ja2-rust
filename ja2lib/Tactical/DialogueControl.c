@@ -876,7 +876,7 @@ void HandleDialogue() {
 
     if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_EXIT_MAP_SCREEN) {
       // select sector
-      ChangeSelectedMapSector((INT16)QItem->uiSpecialEventData, (INT16)QItem->uiSpecialEventData2,
+      ChangeSelectedMapSector((u8)QItem->uiSpecialEventData, (u8)QItem->uiSpecialEventData2,
                               (INT8)QItem->uiSpecialEventData3);
       RequestTriggerExitFromMapscreen(MAP_EXIT_TO_TACTICAL);
     } else if (QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_DISPLAY_STAT_CHANGE) {

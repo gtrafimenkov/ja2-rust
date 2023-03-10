@@ -102,8 +102,8 @@ EXIT_DIALOG_STRUCT gExitDialog;
 
 UINT8 gubExitGUIDirection;
 INT16 gsExitGUIAdditionalData;
-INT16 gsWarpWorldX;
-INT16 gsWarpWorldY;
+u8 gsWarpWorldX;
+u8 gsWarpWorldY;
 INT8 gbWarpWorldZ;
 INT16 gsWarpGridNo;
 
@@ -269,7 +269,7 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
                                                 // means that we can't load the adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;
       gExitDialog.fGotoSector = FALSE;
-    } else if (GetNumberOfMilitiaInSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+    } else if (GetNumberOfMilitiaInSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
       // Leaving this sector will result in militia being forced to
       // fight the battle, can't load adjacent sector.
       gExitDialog.fGotoSectorDisabled = TRUE;
@@ -418,7 +418,10 @@ BOOLEAN InitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
   gsExitGUIAdditionalData = sAdditionalData;
 
   if (gbWorldSectorZ >= 2 && gubQuest[QUEST_CREATURES] == QUESTDONE) {
-    if (GetWarpOutOfMineCodes(&gsWarpWorldX, &gsWarpWorldY, &gbWarpWorldZ, &gsWarpGridNo)) {
+    u8 mapX, mapY;
+    if (GetWarpOutOfMineCodes(&mapX, &mapY, &gbWarpWorldZ, &gsWarpGridNo)) {
+      gsWarpWorldX = mapX;
+      gsWarpWorldY = mapY;
       // ATE: Check if we are in a creature lair and bring up box if so....
       DoMessageBox(MSG_BOX_BASIC_STYLE, gzLateLocalizedString[33], GAME_SCREEN,
                    (UINT8)MSG_BOX_FLAG_YESNO, WarpToSurfaceCallback, NULL);

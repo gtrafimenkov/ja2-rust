@@ -97,20 +97,19 @@ INT32 giErrorMessageBox = 0;
 
 void TempFileLoadErrorMessageReturnCallback(UINT8 ubRetVal);
 
-BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
+BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
                                      WORLDITEM *pData);
-BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 sMapY,
-                                      INT8 bMapZ);
+BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, INT8 bMapZ);
 
-BOOLEAN AddTempFileToSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN AddTempFileToSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, i8 bMapZ);
 
-BOOLEAN SaveRottingCorpsesToTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
-BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN SaveRottingCorpsesToTempCorpseFile(u8 sMapX, u8 sMapY, i8 bMapZ);
+BOOLEAN LoadRottingCorpsesFromTempCorpseFile(u8 sMapX, u8 sMapY, i8 bMapZ);
 
 void LoadNPCInformationFromProfileStruct();
 void SaveNPCInformationToProfileStruct();
 
-BOOLEAN DoesTempFileExistsForMap(UINT32 uiType, INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN DoesTempFileExistsForMap(UINT32 uiType, u8 sMapX, u8 sMapY, i8 bMapZ);
 
 INT16 GetSoldierIDFromAnyMercID(UINT8 ubMercID);
 
@@ -118,7 +117,7 @@ BOOLEAN SetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, UINT8 ubSectorZ, UINT
 BOOLEAN GetUnderGroundSectorFlagStatus(u8 sSectorX, u8 sSectorY, UINT8 ubSectorZ,
                                        UINT32 uiFlagToCheck);
 
-BOOLEAN LoadAndAddWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ);
+BOOLEAN LoadAndAddWorldItemsFromTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);
 
 BOOLEAN InitTempNpcQuoteInfoForNPCFromTempFile();
 BOOLEAN SaveTempNpcQuoteInfoForNPCToTempFile(UINT8 ubNpcId);
@@ -135,10 +134,9 @@ extern void StripEnemyDetailedPlacementsIfSectorWasPlayerLiberated();
 extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
 #endif
 
-void SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+void SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems(u8 sMapX, u8 sMapY, i8 bMapZ,
                                                                BOOLEAN fLoadingGame);
-UINT32 UpdateLoadedSectorsItemInventory(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
-                                        UINT32 uiNumberOfItems);
+UINT32 UpdateLoadedSectorsItemInventory(u8 sMapX, u8 sMapY, i8 bMapZ, UINT32 uiNumberOfItems);
 
 // ppp
 
@@ -152,8 +150,8 @@ UINT32 UpdateLoadedSectorsItemInventory(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
 // mod file to the save game file.
 BOOLEAN SaveMapTempFilesToSavedGameFile(HWFILE hFile) {
   UNDERGROUND_SECTORINFO *TempNode = gpUndergroundSectorInfoHead;
-  INT16 sMapX;
-  INT16 sMapY;
+  u8 sMapX;
+  u8 sMapY;
 
   // Save the current sectors open temp files to the disk
   //	SaveCurrentSectorsItemsToTempItemFile();
@@ -283,8 +281,8 @@ BOOLEAN SaveMapTempFilesToSavedGameFile(HWFILE hFile) {
 // them into the temp directory
 BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile) {
   UNDERGROUND_SECTORINFO *TempNode = gpUndergroundSectorInfoHead;
-  INT16 sMapX;
-  INT16 sMapY;
+  u8 sMapX;
+  u8 sMapY;
   UINT32 uiPercentage;
   UINT32 iCounter = 0;
 
@@ -457,7 +455,7 @@ BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
+BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, UINT32 uiNumberOfItems,
                                      WORLDITEM *pData) {
   HWFILE hFile;
   UINT32 uiNumBytesWritten = 0;
@@ -500,7 +498,7 @@ BOOLEAN SaveWorldItemsToTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, UINT3
   return (TRUE);
 }
 
-BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WORLDITEM *pData) {
+BOOLEAN LoadWorldItemsFromTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, WORLDITEM *pData) {
   UINT32 uiNumBytesRead = 0;
   HWFILE hFile;
   CHAR8 zMapName[128];
@@ -542,8 +540,8 @@ BOOLEAN LoadWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ, WOR
   return (TRUE);
 }
 
-BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
-                                              UINT32 *pSizeOfData, BOOLEAN fIfEmptyCreate) {
+BOOLEAN GetNumberOfWorldItemsFromTempItemFile(u8 sMapX, u8 sMapY, i8 bMapZ, UINT32 *pSizeOfData,
+                                              BOOLEAN fIfEmptyCreate) {
   UINT32 uiNumBytesRead = 0;
   HWFILE hFile;
   CHAR8 zMapName[128];
@@ -615,7 +613,7 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(INT16 sMapX, INT16 sMapY, INT8 bMa
   return (TRUE);
 }
 
-BOOLEAN AddItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
+BOOLEAN AddItemsToUnLoadedSector(u8 sMapX, u8 sMapY, INT8 bMapZ, INT16 sGridNo,
                                  UINT32 uiNumberOfItemsToAdd, struct OBJECTTYPE *pObject,
                                  UINT8 ubLevel, UINT16 usFlags, INT8 bRenderZHeightAboveLevel,
                                  INT8 bVisible, BOOLEAN fReplaceEntireFile) {
@@ -732,11 +730,11 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   SaveBloodSmellAndRevealedStatesFromMapToTempFile();
 
   // handle all reachable before save
-  HandleAllReachAbleItemsInTheSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+  HandleAllReachAbleItemsInTheSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Save the Items to the the file
-  if (!SaveWorldItemsToTempItemFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, guiNumWorldItems,
-                                    gWorldItems)) {
+  if (!SaveWorldItemsToTempItemFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ,
+                                    guiNumWorldItems, gWorldItems)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "SaveWorldItemsToTempItemFile()"));
@@ -744,7 +742,7 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // Save the rotting corpse array to the temp rotting corpse file
-  if (!SaveRottingCorpsesToTempCorpseFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+  if (!SaveRottingCorpsesToTempCorpseFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "SaveRottingCorpsesToTempCorpseFile()"));
@@ -752,7 +750,7 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // save the Doortable array to the temp door map file
-  if (!SaveDoorTableToDoorTableTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+  if (!SaveDoorTableToDoorTableTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "SaveDoorTableToDoorTableTempFile()"));
@@ -760,7 +758,8 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // save the 'revealed'status of the tiles
-  if (!SaveRevealedStatusArrayToRevealedTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+  if (!SaveRevealedStatusArrayToRevealedTempFile((u8)gWorldSectorX, (u8)gWorldSectorY,
+                                                 gbWorldSectorZ)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "SaveRevealedStatusArrayToRevealedTempFile()"));
@@ -768,7 +767,8 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // save the door open status to the saved game file
-  if (!SaveDoorStatusArrayToDoorStatusTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+  if (!SaveDoorStatusArrayToDoorStatusTempFile((u8)gWorldSectorX, (u8)gWorldSectorY,
+                                               gbWorldSectorZ)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "SaveDoorStatusArrayToDoorStatusTempFile()"));
@@ -776,8 +776,8 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // Save the enemies to the temp file
-  if (!NewWayOfSavingEnemyAndCivliansToTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE,
-                                                FALSE)) {
+  if (!NewWayOfSavingEnemyAndCivliansToTempFile((u8)gWorldSectorX, (u8)gWorldSectorY,
+                                                gbWorldSectorZ, TRUE, FALSE)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "NewWayOfSavingEnemyAndCivliansToTempFile( Enemy, Creature Team )"));
@@ -785,8 +785,8 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // Save the civilian info to the temp file
-  if (!NewWayOfSavingEnemyAndCivliansToTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE,
-                                                FALSE)) {
+  if (!NewWayOfSavingEnemyAndCivliansToTempFile((u8)gWorldSectorX, (u8)gWorldSectorY,
+                                                gbWorldSectorZ, FALSE, FALSE)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "NewWayOfSavingEnemyAndCivliansToTempFile( Civ Team )"));
@@ -794,7 +794,7 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // Save the smoke effects info to the temp file
-  if (!SaveSmokeEffectsToMapTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+  if (!SaveSmokeEffectsToMapTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "SaveSmokeEffectsToMapTempFile"));
@@ -802,7 +802,7 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile() {
   }
 
   // Save the smoke effects info to the temp file
-  if (!SaveLightEffectsToMapTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ)) {
+  if (!SaveLightEffectsToMapTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("SaveCurrentSectorsInformationToTempItemFile:  failed in "
                     "SaveLightEffectsToMapTempFile"));
@@ -952,9 +952,9 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile() {
     // processed!
     if (GetMeanwhileID() == INTERROGATION) {
       // If there is a file, load in the Items array
-      if (DoesTempFileExistsForMap(SF_ITEM_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
+      if (DoesTempFileExistsForMap(SF_ITEM_TEMP_FILE_EXISTS, (u8)gWorldSectorX, (u8)gWorldSectorY,
                                    gbWorldSectorZ)) {
-        if (!LoadAndAddWorldItemsFromTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ))
+        if (!LoadAndAddWorldItemsFromTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ))
           return (FALSE);
       }
 
@@ -966,53 +966,53 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile() {
   // if we are in an above ground sector
 
   // If there is a file, load in the Items array
-  if (DoesTempFileExistsForMap(SF_ITEM_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
+  if (DoesTempFileExistsForMap(SF_ITEM_TEMP_FILE_EXISTS, (u8)gWorldSectorX, (u8)gWorldSectorY,
                                gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
-    if (!LoadAndAddWorldItemsFromTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ))
+    if (!LoadAndAddWorldItemsFromTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ))
       return (FALSE);
   }
 
   // If there is a rotting corpse temp file, load the data from the temp file
-  if (DoesTempFileExistsForMap(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                               gbWorldSectorZ)) {
+  if (DoesTempFileExistsForMap(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                               (u8)gWorldSectorY, gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
-    if (!LoadRottingCorpsesFromTempCorpseFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ))
+    if (!LoadRottingCorpsesFromTempCorpseFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ))
       return (FALSE);
   }
 
   // If there is a map modifications file, load the data from the temp file
-  if (DoesTempFileExistsForMap(SF_MAP_MODIFICATIONS_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                               gbWorldSectorZ)) {
+  if (DoesTempFileExistsForMap(SF_MAP_MODIFICATIONS_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                               (u8)gWorldSectorY, gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
     if (!LoadAllMapChangesFromMapTempFileAndApplyThem()) return (FALSE);
   }
 
   // if there is a door table temp file, load the data from the temp file
-  if (DoesTempFileExistsForMap(SF_DOOR_TABLE_TEMP_FILES_EXISTS, gWorldSectorX, gWorldSectorY,
-                               gbWorldSectorZ)) {
+  if (DoesTempFileExistsForMap(SF_DOOR_TABLE_TEMP_FILES_EXISTS, (u8)gWorldSectorX,
+                               (u8)gWorldSectorY, gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
     if (!LoadDoorTableFromDoorTableTempFile()) return (FALSE);
   }
 
   // if there is a revealed status temp file, load the data from the temp file
-  if (DoesTempFileExistsForMap(SF_REVEALED_STATUS_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                               gbWorldSectorZ)) {
+  if (DoesTempFileExistsForMap(SF_REVEALED_STATUS_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                               (u8)gWorldSectorY, gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
     if (!LoadRevealedStatusArrayFromRevealedTempFile()) return (FALSE);
   }
 
   // if there is a door status temp file, load the data from the temp file
-  if (DoesTempFileExistsForMap(SF_DOOR_STATUS_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                               gbWorldSectorZ)) {
+  if (DoesTempFileExistsForMap(SF_DOOR_STATUS_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                               (u8)gWorldSectorY, gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
     if (!LoadDoorStatusArrayFromDoorStatusTempFile()) return (FALSE);
   }
 
   // if the save is an older version, use theold way of oading it up
   if (guiSavedGameVersion < 57) {
-    if (DoesTempFileExistsForMap(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                                 gbWorldSectorZ)) {
+    if (DoesTempFileExistsForMap(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                                 (u8)gWorldSectorY, gbWorldSectorZ)) {
       fUsedTempFile = TRUE;
       if (!LoadEnemySoldiersFromTempFile()) return (FALSE);
     }
@@ -1020,30 +1020,30 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile() {
 
   // else use the new way of loading the enemy and civilian placements
   else {
-    if (DoesTempFileExistsForMap(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                                 gbWorldSectorZ)) {
+    if (DoesTempFileExistsForMap(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                                 (u8)gWorldSectorY, gbWorldSectorZ)) {
       fUsedTempFile = TRUE;
       if (!NewWayOfLoadingEnemySoldiersFromTempFile()) return (FALSE);
     }
 
-    if (DoesTempFileExistsForMap(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                                 gbWorldSectorZ)) {
+    if (DoesTempFileExistsForMap(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                                 (u8)gWorldSectorY, gbWorldSectorZ)) {
       fUsedTempFile = TRUE;
       if (!NewWayOfLoadingCiviliansFromTempFile()) return (FALSE);
     }
   }
 
-  if (DoesTempFileExistsForMap(SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                               gbWorldSectorZ)) {
+  if (DoesTempFileExistsForMap(SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                               (u8)gWorldSectorY, gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
-    if (!LoadSmokeEffectsFromMapTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ))
+    if (!LoadSmokeEffectsFromMapTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ))
       return (FALSE);
   }
 
-  if (DoesTempFileExistsForMap(SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS, gWorldSectorX, gWorldSectorY,
-                               gbWorldSectorZ)) {
+  if (DoesTempFileExistsForMap(SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS, (u8)gWorldSectorX,
+                               (u8)gWorldSectorY, gbWorldSectorZ)) {
     fUsedTempFile = TRUE;
-    if (!LoadLightEffectsFromMapTempFile(gWorldSectorX, gWorldSectorY, gbWorldSectorZ))
+    if (!LoadLightEffectsFromMapTempFile((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ))
       return (FALSE);
   }
 
@@ -1073,8 +1073,8 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile() {
 
 void SetLastTimePlayerWasInSector() {
   if (!gbWorldSectorZ)
-    SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].uiTimeCurrentSectorWasLastLoaded =
-        GetWorldTotalMin();
+    SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
+        .uiTimeCurrentSectorWasLastLoaded = GetWorldTotalMin();
   else if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 
@@ -1099,8 +1099,8 @@ void SetLastTimePlayerWasInSector() {
 
 UINT32 GetLastTimePlayerWasInSector() {
   if (!gbWorldSectorZ)
-    return (
-        SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].uiTimeCurrentSectorWasLastLoaded);
+    return (SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
+                .uiTimeCurrentSectorWasLastLoaded);
   else if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 
@@ -1126,7 +1126,7 @@ UINT32 GetLastTimePlayerWasInSector() {
   return (0);
 }
 
-BOOLEAN LoadAndAddWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN LoadAndAddWorldItemsFromTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   UINT32 uiNumberOfItems = 0;
   WORLDITEM *pWorldItems = NULL;
   UINT32 cnt;
@@ -1216,7 +1216,7 @@ BOOLEAN LoadAndAddWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN AddTempFileToSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN AddTempFileToSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, i8 bMapZ) {
   CHAR8 zMapName[128];
 
   GetMapTempFileName(uiType, zMapName, sMapX, sMapY, bMapZ);
@@ -1227,8 +1227,7 @@ BOOLEAN AddTempFileToSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 s
   return (TRUE);
 }
 
-BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, INT16 sMapX, INT16 sMapY,
-                                      INT8 bMapZ) {
+BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 sMapY, INT8 bMapZ) {
   CHAR8 zMapName[128];
 
   GetMapTempFileName(uiType, zMapName, sMapX, sMapY, bMapZ);
@@ -1261,7 +1260,7 @@ BOOLEAN InitTacticalSave(BOOLEAN fCreateTempDir) {
   return (TRUE);
 }
 
-BOOLEAN SaveRottingCorpsesToTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN SaveRottingCorpsesToTempCorpseFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   HWFILE hFile;
   UINT32 uiNumBytesWritten = 0;
   //	CHAR8		zTempName[ 128 ];
@@ -1322,7 +1321,7 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ)
   return (TRUE);
 }
 
-BOOLEAN DeleteTempItemMapFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN DeleteTempItemMapFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   CHAR8 zMapName[128];
 
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
@@ -1339,7 +1338,7 @@ BOOLEAN DeleteTempItemMapFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
   return (TRUE);
 }
 
-BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN LoadRottingCorpsesFromTempCorpseFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   HWFILE hFile;
   UINT32 uiNumBytesRead = 0;
   //	CHAR8		zTempName[ 128 ];
@@ -1382,7 +1381,7 @@ BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMap
   }
 
   // Get town ID for use later....
-  bTownId = GetTownIdForSector(gWorldSectorX, gWorldSectorY);
+  bTownId = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
 
   for (cnt = 0; cnt < uiNumberOfCorpses; cnt++) {
     fDontAddCorpse = FALSE;
@@ -1457,7 +1456,7 @@ BOOLEAN LoadRottingCorpsesFromTempCorpseFile(INT16 sMapX, INT16 sMapY, INT8 bMap
   return (TRUE);
 }
 
-BOOLEAN AddWorldItemsToUnLoadedSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sGridNo,
+BOOLEAN AddWorldItemsToUnLoadedSector(u8 sMapX, u8 sMapY, INT8 bMapZ, INT16 sGridNo,
                                       UINT32 uiNumberOfItems, WORLDITEM *pWorldItem,
                                       BOOLEAN fOverWrite) {
   UINT32 uiLoop;
@@ -1678,7 +1677,7 @@ void LoadNPCInformationFromProfileStruct() {
   */
 }
 
-BOOLEAN GetNumberOfActiveWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+BOOLEAN GetNumberOfActiveWorldItemsFromTempFile(u8 sMapX, u8 sMapY, i8 bMapZ,
                                                 UINT32 *pNumberOfData) {
   UINT32 uiNumberOfItems = 0;
   WORLDITEM *pWorldItems;
@@ -1742,7 +1741,7 @@ BOOLEAN GetNumberOfActiveWorldItemsFromTempFile(INT16 sMapX, INT16 sMapY, INT8 b
   return (TRUE);
 }
 
-BOOLEAN DoesTempFileExistsForMap(UINT32 uiType, INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+BOOLEAN DoesTempFileExistsForMap(UINT32 uiType, u8 sMapX, u8 sMapY, i8 bMapZ) {
   UNDERGROUND_SECTORINFO *TempNode = gpUndergroundSectorInfoHead;
 
   if (bMapZ == 0) {
@@ -1936,7 +1935,7 @@ void ChangeNpcToDifferentSector(UINT8 ubNpcId, u8 sSectorX, u8 sSectorY, INT8 bS
 }
 
 BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
-    INT16 sMapX, INT16 sMapY, INT8 bMapZ, ROTTING_CORPSE_DEFINITION *pRottingCorpseDef) {
+    u8 sMapX, u8 sMapY, i8 bMapZ, ROTTING_CORPSE_DEFINITION *pRottingCorpseDef) {
   HWFILE hFile;
   UINT32 uiNumberOfCorpses;
   //	CHAR8		zTempName[ 128 ];
@@ -2069,7 +2068,7 @@ BOOLEAN GetUnderGroundSectorFlagStatus(u8 sSectorX, u8 sSectorY, UINT8 ubSectorZ
   return (FALSE);
 }
 
-BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
+BOOLEAN SetSectorFlag(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
   if (uiFlagToSet == SF_ALREADY_VISITED) {
     // do certain things when particular sectors are visited
     if ((sMapX == TIXA_SECTOR_X) && (sMapY == TIXA_SECTOR_Y)) {
@@ -2103,7 +2102,7 @@ BOOLEAN SetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet)
   return (TRUE);
 }
 
-BOOLEAN ReSetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
+BOOLEAN ReSetSectorFlag(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
   if (bMapZ == 0)
     SectorInfo[GetSectorID8(sMapX, sMapY)].uiFlags &= ~(uiFlagToSet);
   else
@@ -2112,14 +2111,14 @@ BOOLEAN ReSetSectorFlag(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSe
   return (TRUE);
 }
 
-BOOLEAN GetSectorFlagStatus(INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
+BOOLEAN GetSectorFlagStatus(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
   if (bMapZ == 0)
     return ((SectorInfo[GetSectorID8(sMapX, sMapY)].uiFlags & uiFlagToSet) ? 1 : 0);
   else
     return ((GetUnderGroundSectorFlagStatus(sMapX, sMapY, bMapZ, uiFlagToSet)) ? 1 : 0);
 }
 
-BOOLEAN AddDeadSoldierToUnLoadedSector(INT16 sMapX, INT16 sMapY, UINT8 bMapZ,
+BOOLEAN AddDeadSoldierToUnLoadedSector(u8 sMapX, u8 sMapY, UINT8 bMapZ,
                                        struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                        UINT32 uiFlags) {
   UINT32 uiNumberOfItems;
@@ -2506,7 +2505,7 @@ BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
   return (fRet);
 }
 
-void GetMapTempFileName(UINT32 uiType, STR pMapName, INT16 sMapX, INT16 sMapY, INT8 bMapZ) {
+void GetMapTempFileName(UINT32 uiType, STR pMapName, u8 sMapX, u8 sMapY, i8 bMapZ) {
   char zTempName[512];
 
   // Convert the current sector location into a file name
@@ -2565,8 +2564,7 @@ void GetMapTempFileName(UINT32 uiType, STR pMapName, INT16 sMapX, INT16 sMapY, I
   }
 }
 
-UINT32 GetNumberOfVisibleWorldItemsFromSectorStructureForSector(INT16 sMapX, INT16 sMapY,
-                                                                INT8 bMapZ) {
+UINT32 GetNumberOfVisibleWorldItemsFromSectorStructureForSector(u8 sMapX, u8 sMapY, INT8 bMapZ) {
   UINT32 uiNumberOfItems = 0;
   UNDERGROUND_SECTORINFO *pSector = NULL;
 
@@ -2595,7 +2593,7 @@ UINT32 GetNumberOfVisibleWorldItemsFromSectorStructureForSector(INT16 sMapX, INT
   return (uiNumberOfItems);
 }
 
-void SetNumberOfVisibleWorldItemsInSectorStructureForSector(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+void SetNumberOfVisibleWorldItemsInSectorStructureForSector(u8 sMapX, u8 sMapY, i8 bMapZ,
                                                             UINT32 uiNumberOfItems) {
   UNDERGROUND_SECTORINFO *pSector = NULL;
 
@@ -2613,7 +2611,7 @@ void SetNumberOfVisibleWorldItemsInSectorStructureForSector(INT16 sMapX, INT16 s
   }
 }
 
-void SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
+void SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems(u8 sMapX, u8 sMapY, i8 bMapZ,
                                                                BOOLEAN fLoadingGame) {
   UINT32 uiTotalNumberOfItems = 0, uiTotalNumberOfRealItems = 0;
   WORLDITEM *pTotalSectorList = NULL;
@@ -2668,8 +2666,7 @@ void SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems(INT16 sMapX, INT1
   SetNumberOfVisibleWorldItemsInSectorStructureForSector(sMapX, sMapY, bMapZ, uiItemCount);
 }
 
-UINT32 UpdateLoadedSectorsItemInventory(INT16 sMapX, INT16 sMapY, INT8 bMapZ,
-                                        UINT32 uiNumberOfItems) {
+UINT32 UpdateLoadedSectorsItemInventory(u8 sMapX, u8 sMapY, i8 bMapZ, UINT32 uiNumberOfItems) {
   UINT32 uiCounter;
   UINT32 uiItemCounter = 0;
 

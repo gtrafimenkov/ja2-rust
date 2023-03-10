@@ -469,7 +469,7 @@ void AddMercToWorld(INT32 iMapIndex) {
 
   if (IsLocationSittable(iMapIndex, gfRoofPlacement)) {
     UINT8 ubID;
-    INT16 sSectorX, sSectorY;
+    u8 sSectorX, sSectorY;
     SOLDIERINITNODE *pNode;
 
     GetCurrentWorldSector(&sSectorX, &sSectorY);
@@ -3466,7 +3466,7 @@ void PasteMercPlacement(INT32 iMapIndex) {
 
   if (IsLocationSittable(iMapIndex, gfRoofPlacement)) {
     UINT8 ubID;
-    INT16 sSectorX, sSectorY;
+    u8 sSectorX, sSectorY;
     SOLDIERINITNODE *pNode;
 
     GetCurrentWorldSector(&sSectorX, &sSectorY);

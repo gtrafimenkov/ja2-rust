@@ -4321,8 +4321,8 @@ void ExecuteStrategicAIAction(UINT16 usActionCode, u8 sSectorX, u8 sSectorY) {
       // following checks succeed, the enemies will be sent to attack and reinforce that sector.
       // Otherwise, the enemies will simply check it out, then leave.
       if (pSector->ubGarrisonID != NO_GARRISON) {  // sector has a garrison
-        if (!NumEnemiesInSector((INT16)SectorID8_X(ubSectorID),
-                                (INT16)SectorID8_Y(ubSectorID))) {  // no enemies are here
+        if (!NumEnemiesInSector(SectorID8_X(ubSectorID),
+                                SectorID8_Y(ubSectorID))) {  // no enemies are here
           if (gArmyComp[!gGarrisonGroup[pSector->ubGarrisonID].ubComposition]
                   .bPriority) {  // the garrison is important
             if (!gGarrisonGroup[pSector->ubGarrisonID]
@@ -4473,7 +4473,7 @@ void ClearStrategicLog() {
 }
 #endif
 
-void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ) {
+void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
   SECTORINFO *pSector;
   UINT8 ubSectorID;
   if (sSectorZ) {  // The queen doesn't care about anything happening under the ground.
@@ -4978,7 +4978,7 @@ void UpgradeAdminsToTroops() {
   // check all garrisons for administrators
   for (i = 0; i < giGarrisonArraySize; i++) {
     // skip sector if it's currently loaded, we'll never upgrade guys in those
-    if (GetSectorID8(gWorldSectorX, gWorldSectorY) == gGarrisonGroup[i].ubSectorID) {
+    if (GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY) == gGarrisonGroup[i].ubSectorID) {
       continue;
     }
 

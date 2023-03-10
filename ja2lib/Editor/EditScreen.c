@@ -505,7 +505,7 @@ BOOLEAN EditModeShutdown(void) {
     gfNeedToInitGame = FALSE;
   } else {
     if (!gfBasement && !gfCaves) LightSetBaseLevel((UINT8)gusGameLightLevel);
-    UpdateMercsInSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    UpdateMercsInSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
   }
 
   gGameOptions.fGunNut = gfRealGunNut;

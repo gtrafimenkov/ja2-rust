@@ -469,7 +469,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
           Soldier.bVehicleID = pCreateStruct->bUseGivenVehicleID;
         } else {
           // Add vehicle to list....
-          Soldier.bVehicleID = (INT8)AddVehicleToList(Soldier.sSectorX, Soldier.sSectorY,
+          Soldier.bVehicleID = (INT8)AddVehicleToList((u8)Soldier.sSectorX, (u8)Soldier.sSectorY,
                                                       Soldier.bSectorZ, ubVehicleID);
         }
         SetVehicleValuesIntoSoldierType(&Soldier);
@@ -538,8 +538,8 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, U
     if (!pSoldier) return NULL;
     memcpy(pSoldier, &Soldier, sizeof(struct SOLDIERTYPE));
     pSoldier->ubID = 255;
-    pSoldier->sSectorX = (INT16)SectorID8_X(ubSectorID);
-    pSoldier->sSectorY = (INT16)SectorID8_Y(ubSectorID);
+    pSoldier->sSectorX = SectorID8_X(ubSectorID);
+    pSoldier->sSectorY = SectorID8_Y(ubSectorID);
     pSoldier->bSectorZ = 0;
     *pubID = 255;
     return pSoldier;
@@ -1429,7 +1429,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
 
         case BLOODCAT:
           pp->bExpLevel = 5 + bExpLevelModifier;
-          if (GetSectorID8(gWorldSectorX, gWorldSectorY) == SEC_I16) {
+          if (GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY) == SEC_I16) {
             pp->bExpLevel += gGameOptions.ubDifficultyLevel;
           }
           break;
@@ -2084,7 +2084,9 @@ void RandomizeRelativeLevel(INT8 *pbRelLevel, UINT8 ubSoldierClass) {
 void QuickCreateProfileMerc(INT8 bTeam, UINT8 ubProfileID) {
   // Create guy # X
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  INT16 sWorldX, sWorldY, sSectorX, sSectorY, sGridX, sGridY;
+  INT16 sWorldX, sWorldY;
+  u8 sSectorX, sSectorY;
+  INT16 sGridX, sGridY;
   UINT8 ubID;
   UINT16 usMapPos;
 
@@ -2268,7 +2270,8 @@ void TrashAllSoldiers() {
 UINT8 GetLocationModifier(UINT8 ubSoldierClass) {
   UINT8 ubLocationModifier;
   UINT8 ubPalaceDistance;
-  INT16 sSectorX, sSectorY, sSectorZ;
+  u8 sSectorX, sSectorY;
+  i8 sSectorZ;
   TownID bTownId;
   BOOLEAN fSuccess;
 

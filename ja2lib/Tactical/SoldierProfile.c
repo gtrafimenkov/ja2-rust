@@ -468,7 +468,7 @@ void DecideOnAssassin(void) {
   return;
 #endif
 
-  ubTown = GetTownIdForSector(gWorldSectorX, gWorldSectorY);
+  ubTown = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
 
   for (ubLoop = 0; ubLoop < NUM_ASSASSINS; ubLoop++) {
     // make sure alive and not placed already
@@ -845,7 +845,7 @@ BOOLEAN RecruitRPC(UINT8 ubCharNum) {
   // ( pass in pNewSoldier->sSectorX cause if its invalid, -1, n/a will appear as the sector in the
   // history log )
   AddHistoryToPlayersLog(HISTORY_RPC_JOINED_TEAM, pNewSoldier->ubProfile, GetWorldTotalMin(),
-                         pNewSoldier->sSectorX, pNewSoldier->sSectorY);
+                         (u8)pNewSoldier->sSectorX, (u8)pNewSoldier->sSectorY);
 
   // remove the merc from the Personnel screens departed list ( if they have never been hired
   // before, its ok to call it )

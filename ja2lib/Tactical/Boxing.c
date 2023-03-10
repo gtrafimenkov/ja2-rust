@@ -130,18 +130,18 @@ void TriggerEndOfBoxingRecord(struct SOLDIERTYPE* pSoldier) {
     switch (gTacticalStatus.bBoxingState) {
       case WON_ROUND:
         AddHistoryToPlayersLog(HISTORY_WON_BOXING, GetSolProfile(pSoldier), GetWorldTotalMin(),
-                               gWorldSectorX, gWorldSectorY);
+                               (u8)gWorldSectorX, (u8)gWorldSectorY);
         TriggerNPCRecord(DARREN, 23);
         break;
       case LOST_ROUND:
         // log as lost
         AddHistoryToPlayersLog(HISTORY_LOST_BOXING, GetSolProfile(pSoldier), GetWorldTotalMin(),
-                               gWorldSectorX, gWorldSectorY);
+                               (u8)gWorldSectorX, (u8)gWorldSectorY);
         TriggerNPCRecord(DARREN, 24);
         break;
       case DISQUALIFIED:
         AddHistoryToPlayersLog(HISTORY_DISQUALIFIED_BOXING, GetSolProfile(pSoldier),
-                               GetWorldTotalMin(), gWorldSectorX, gWorldSectorY);
+                               GetWorldTotalMin(), (u8)gWorldSectorX, (u8)gWorldSectorY);
         break;
     }
   }
@@ -397,7 +397,7 @@ void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier) {
     BoxingPlayerDisqualified(pSoldier, BOXER_OUT_OF_RING);
     // add the history record here.
     AddHistoryToPlayersLog(HISTORY_DISQUALIFIED_BOXING, GetSolProfile(pSoldier), GetWorldTotalMin(),
-                           gWorldSectorX, gWorldSectorY);
+                           (u8)gWorldSectorX, (u8)gWorldSectorY);
     // make not a boxer any more
     pSoldier->uiStatusFlags &= ~(SOLDIER_BOXER);
     pSoldier->uiStatusFlags &= (~SOLDIER_PCUNDERAICONTROL);

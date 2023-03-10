@@ -149,7 +149,7 @@ BOOLEAN IsCharacterInTransit(struct SOLDIERTYPE *pCharacter);
 void UpdateAssignments();
 
 // how many people in this secotr have this assignment?
-UINT8 FindNumberInSectorWithAssignment(INT16 sX, INT16 sY, INT8 bAssignment);
+UINT8 FindNumberInSectorWithAssignment(u8 sX, u8 sY, INT8 bAssignment);
 
 void MakeSoldiersTacticalAnimationReflectAssignment(struct SOLDIERTYPE *pSoldier);
 
