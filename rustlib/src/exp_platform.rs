@@ -71,3 +71,12 @@ pub extern "C" fn Plat_RemoveFilesInDirectory(path_utf8: *const c_char) -> bool 
         Some(path) => platform::remove_files_in_directory(&path).is_ok(),
     }
 }
+
+#[no_mangle]
+/// Remove the directory and all its content including subdirectories.
+pub extern "C" fn Plat_RemoveDirectory(path_utf8: *const c_char) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => fs::remove_dir_all(path).is_ok(),
+    }
+}

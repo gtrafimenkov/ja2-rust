@@ -78,8 +78,6 @@ INT32 FileMan_GetPos(HWFILE hFile) { return 0; }
 
 UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
 
-BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) { return FALSE; }
-
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }

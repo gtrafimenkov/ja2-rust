@@ -185,4 +185,4 @@ BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   return TRUE;
 }
 
-BOOLEAN DeleteShadeTableDir() { return (Plat_RemoveDirectory(SHADE_TABLE_DIR, TRUE)); }
+BOOLEAN DeleteShadeTableDir() { return (Plat_RemoveDirectory(SHADE_TABLE_DIR)); }
