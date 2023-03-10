@@ -80,3 +80,12 @@ pub extern "C" fn Plat_RemoveDirectory(path_utf8: *const c_char) -> bool {
         Some(path) => fs::remove_dir_all(path).is_ok(),
     }
 }
+
+#[no_mangle]
+/// Remove read-only attribute from a file.
+pub extern "C" fn Plat_RemoveReadOnlyAttribute(path_utf8: *const c_char) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => platform::remove_readonly_attribute(&path).is_ok(),
+    }
+}

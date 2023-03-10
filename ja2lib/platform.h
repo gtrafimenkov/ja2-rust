@@ -43,8 +43,6 @@ UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
 BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory);
 
-BOOLEAN Plat_ClearFileAttributes(STR filename);
-
 struct GetFile {
   INT32 iFindHandle;
   CHAR8 zFileName[260];  // changed from UINT16, Alex Meduna, Mar-20'98

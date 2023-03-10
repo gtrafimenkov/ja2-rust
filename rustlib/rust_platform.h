@@ -44,6 +44,11 @@ bool Plat_RemoveFilesInDirectory(const char *path_utf8);
  */
 bool Plat_RemoveDirectory(const char *path_utf8);
 
+/**
+ * Remove read-only attribute from a file.
+ */
+bool Plat_RemoveReadOnlyAttribute(const char *path_utf8);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

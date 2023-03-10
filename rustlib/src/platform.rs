@@ -11,3 +11,11 @@ pub fn remove_files_in_directory(path: &PathBuf) -> std::io::Result<()> {
     }
     Ok(())
 }
+
+// Remove read-only attribute from a file.
+pub fn remove_readonly_attribute(path: &PathBuf) -> std::io::Result<()> {
+    let mut perms = std::fs::metadata(path)?.permissions();
+    perms.set_readonly(false);
+    std::fs::set_permissions(path, perms)?;
+    Ok(())
+}

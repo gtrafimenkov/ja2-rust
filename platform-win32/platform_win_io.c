@@ -781,10 +781,6 @@ void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct) {
   }
 }
 
-BOOLEAN Plat_ClearFileAttributes(STR strFilename) {
-  return SetFileAttributes(strFilename, FILE_ATTRIBUTE_NORMAL);
-}
-
 // returns true if at end of file, else false
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) {
   INT16 sLibraryID;

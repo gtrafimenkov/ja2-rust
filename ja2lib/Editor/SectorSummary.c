@@ -1951,7 +1951,7 @@ void SummarySaveMapCallback(GUI_BUTTON *btn, INT32 reason) {
       if (gubOverrideStatus == READONLY) {
         CHAR8 filename[1024];
         snprintf(filename, ARR_SIZE(filename), "MAPS\\%S", gszDisplayName);
-        Plat_ClearFileAttributes(filename);
+        Plat_RemoveReadOnlyAttribute(filename);
       }
       if (ExternalSaveMap(gszDisplayName)) {
         if (gsSelSectorX && gsSelSectorY) {

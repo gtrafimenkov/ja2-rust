@@ -1889,7 +1889,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
   if (gfMajorUpdate) {
     if (!LoadWorld(szFilename))  // error
       return FALSE;
-    Plat_ClearFileAttributes(szDirFilename);
+    Plat_RemoveReadOnlyAttribute(szDirFilename);
     SaveWorld(szFilename);
   }
 
