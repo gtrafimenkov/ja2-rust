@@ -29,9 +29,6 @@ BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32
 BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle);
 void Plat_CloseFile(SYS_FILE_HANDLE handle);
 
-// Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize);
-
 // Change file pointer.
 // In case of an error returns 0xFFFFFFFF
 u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType);

@@ -86,8 +86,6 @@ BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { retur
 
 UINT32 FileMan_Size(STR strFilename) { return 0; }
 
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) { outputBuf[0] = 0; }
-
 /////////////////////////////////////////////////////////////////////////////////
 // Input
 /////////////////////////////////////////////////////////////////////////////////
@@ -247,9 +245,7 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
-  return NULL;
-}
+struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) { return NULL; }
 
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   return FALSE;

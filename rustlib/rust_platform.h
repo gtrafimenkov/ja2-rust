@@ -64,6 +64,11 @@ bool Plat_GetCurrentDirectory(struct Str512 *dest);
 bool Plat_GetExecutableDirectory(struct Str512 *dest);
 
 /**
+ * Given a path, fill dest with the file name.
+ */
+bool Plat_FileBaseName(const char *path_utf8, struct Str512 *dest);
+
+/**
  * Copy string "Foo" into the buffer.
  * If not enough space, return false and fill the buffer with zeroes.
  */

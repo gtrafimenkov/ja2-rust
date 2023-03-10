@@ -120,6 +120,18 @@ pub extern "C" fn Plat_GetExecutableDirectory(dest: &mut Str512) -> bool {
     }
 }
 
+#[no_mangle]
+/// Given a path, fill dest with the file name.
+pub extern "C" fn Plat_FileBaseName(path_utf8: *const c_char, dest: &mut Str512) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => match path.file_name() {
+            None => false,
+            Some(path) => strcpy(dest, &path.to_string_lossy()),
+        },
+    }
+}
+
 /// Copy a rust string into a buffer from C.
 /// The result string will be in utf-8 encoding.
 /// If the buffer is too small, the buffer will be filled with zeroes, but the string will not be copied.

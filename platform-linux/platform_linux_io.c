@@ -11,32 +11,6 @@
 
 #include "platform.h"
 
-// Copy of strcopy function from StrUtils.  We cannot have ja2lib dependent on platform-linux
-// and platform-linux dependent on ja2lib.
-//
-// Copy a string safely.
-// 0 character at the end of dest is always added.
-static void _strcopy(char *dest, size_t destSize, const char *src) {
-  if (destSize > 0) {
-    strncpy(dest, src, destSize);
-    dest[destSize - 1] = 0;
-  }
-}
-
-// Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
-  char *copy = strdup(path);
-  if (copy == NULL) {
-    outputBuf[0] = 0;
-    return;
-  }
-  const char *fileName = basename(copy);
-
-  _strcopy(outputBuf, bufSize, fileName);
-
-  free(copy);
-}
-
 void Plat_CloseFile(SYS_FILE_HANDLE handle) {
   fclose(handle);
   // TODO: check for errors

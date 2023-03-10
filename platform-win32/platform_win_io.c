@@ -906,18 +906,6 @@ HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
   return (0);
 }
 
-// Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
-  CHAR8 sName[_MAX_FNAME];
-  CHAR8 sPath[_MAX_DIR];
-  CHAR8 sDrive[_MAX_DRIVE];
-  CHAR8 sExt[_MAX_EXT];
-
-  _splitpath(path, sDrive, sPath, sName, sExt);
-
-  strcopy(outputBuf, bufSize, sName);
-}
-
 /////////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////////
