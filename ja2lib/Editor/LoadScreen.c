@@ -189,10 +189,10 @@ uint32_t ProcessLoadSaveScreenMessageBoxResult() {
       }
       if (curr) {
         if (gfReadOnly) {
-          Plat_ClearFileAttributes(gszCurrFilename);
+          Plat_RemoveReadOnlyAttribute(gszCurrFilename);
           gfReadOnly = FALSE;
         }
-        FileMan_Delete(gszCurrFilename);
+        Plat_DeleteFile(gszCurrFilename);
 
         // File is deleted so redo the text fields so they show the
         // next file in the list.

@@ -384,8 +384,8 @@ extern BOOLEAN gfLoadShadeTablesFromTextFile;
 
 void BuildTileShadeTables() {
   HWFILE hfile;
-  char DataDir[256];
-  char ShadeTableDir[300];
+  struct Str512 DataDir;
+  char ShadeTableDir[600];
   uint32_t uiLoop;
   char cRootFile[128];
   BOOLEAN fForceRebuildForSlot = FALSE;
@@ -403,8 +403,10 @@ void BuildTileShadeTables() {
 #endif
 
   // Set the directory to the shadetable directory
-  Plat_GetCurrentDirectory(DataDir);
-  sprintf(ShadeTableDir, "%s\\ShadeTables", DataDir);
+  if (!Plat_GetCurrentDirectory(&DataDir)) {
+    return;
+  }
+  snprintf(ShadeTableDir, ARR_SIZE(ShadeTableDir), "%s\\ShadeTables", DataDir.buf);
   if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
     AssertMsg(0, "Can't set the directory to Data\\ShadeTable.  Kris' big problem!");
   }
@@ -462,7 +464,7 @@ void BuildTileShadeTables() {
   }
 
   // Restore the data directory once we are finished.
-  Plat_SetCurrentDirectory(DataDir);
+  Plat_SetCurrentDirectory(DataDir.buf);
 
   ubLastRed = gpLightColors[0].peRed;
   ubLastGreen = gpLightColors[0].peGreen;
@@ -1892,7 +1894,7 @@ BOOLEAN EvaluateWorld(char *pSector, uint8_t ubLevel) {
   if (gfMajorUpdate) {
     if (!LoadWorld(szFilename))  // error
       return FALSE;
-    Plat_ClearFileAttributes(szDirFilename);
+    Plat_RemoveReadOnlyAttribute(szDirFilename);
     SaveWorld(szFilename);
   }
 

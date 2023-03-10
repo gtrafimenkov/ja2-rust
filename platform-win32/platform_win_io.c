@@ -16,18 +16,6 @@
 #include "StrUtils.h"
 #include "platform.h"
 
-BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) {
-  return (SetCurrentDirectory(pcDirectory));
-}
-
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) {
-  if (GetCurrentDirectory(512, pcDirectory) == 0) {
-    return (FALSE);
-  }
-  return (TRUE);
-}
-
-BOOLEAN Plat_DeleteFile(const char *filename) { return DeleteFile(filename); }
 uint32_t Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, uint32_t bytesToRead,
                       uint32_t *readBytes) {
@@ -64,7 +52,7 @@ uint32_t Plat_SetFilePointer(SYS_FILE_HANDLE handle, int32_t distance, int seekT
 static uint32_t GetFreeSpaceOnHardDrive(char *pzDriveLetter);
 
 uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
-  STRING512 zExecDir;
+  struct Str512 zExecDir;
   STRING512 zDrive;
   STRING512 zDir;
   STRING512 zFileName;
@@ -72,10 +60,12 @@ uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
 
   uint32_t uiFreeSpace = 0;
 
-  Plat_GetExecutableDirectory(zExecDir, sizeof(zExecDir));
+  if (!Plat_GetExecutableDirectory(&zExecDir)) {
+    return 0;
+  }
 
   // get the drive letter from the exec dir
-  _splitpath(zExecDir, zDrive, zDir, zFileName, zExt);
+  _splitpath(zExecDir.buf, zDrive, zDir, zFileName, zExt);
 
   sprintf(zDrive, "%s\\", zDrive);
 
@@ -104,8 +94,6 @@ static uint32_t GetFreeSpaceOnHardDrive(char *pzDriveLetter) {
 
   return (uiBytesFree);
 }
-
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory) { return CreateDirectory(pcDirectory, NULL); }
 
 // GetFile file attributes
 #define FILE_IS_READONLY 1
@@ -684,160 +672,6 @@ uint32_t FileMan_GetSize(HWFILE hFile) {
     return (uiFileSize);
 }
 
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory) {
-  uint32_t uiAttribs;
-  DWORD uiLastError;
-
-  uiAttribs = GetFileAttributes(pcDirectory);
-
-  if (uiAttribs == 0xFFFFFFFF) {
-    // an error, make sure it's the right error
-    uiLastError = GetLastError();
-
-    if (uiLastError != ERROR_FILE_NOT_FOUND) {
-      FastDebugMsg(
-          String("Plat_DirectoryExists: ERROR - GetFileAttributes failed, error #%d on file %s",
-                 uiLastError, pcDirectory));
-    }
-  } else {
-    // something's there, make sure it's a directory
-    if (uiAttribs & FILE_ATTRIBUTE_DIRECTORY) {
-      return TRUE;
-    }
-  }
-
-  // this could also mean that the name given is that of a file, or that an error occurred
-  return FALSE;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Removes ALL FILES in the specified directory (and all subdirectories with their files if
-// fRecursive is TRUE) Use Plat_EraseDirectory() to simply delete directory contents without
-// deleting the directory itself
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) {
-  WIN32_FIND_DATA sFindData;
-  HANDLE SearchHandle;
-  const char *pFileSpec = "*.*";
-  BOOLEAN fDone = FALSE;
-  BOOLEAN fRetval = FALSE;
-  char zOldDir[512];
-  char zSubdirectory[512];
-
-  Plat_GetCurrentDirectory(zOldDir);
-
-  if (!Plat_SetCurrentDirectory(pcDirectory)) {
-    FastDebugMsg(
-        String("Plat_RemoveDirectory: ERROR - Plat_SetCurrentDirectory on %s failed, error %d",
-               pcDirectory, GetLastError()));
-    return (FALSE);  // Error going into directory
-  }
-
-  // If there are files in the directory, DELETE THEM
-  SearchHandle = FindFirstFile(pFileSpec, &sFindData);
-  if (SearchHandle != INVALID_HANDLE_VALUE) {
-    fDone = FALSE;
-    do {
-      // if the object is a directory
-      if (GetFileAttributes(sFindData.cFileName) == FILE_ATTRIBUTE_DIRECTORY) {
-        // only go in if the fRecursive flag is TRUE (like Deltree)
-        if (fRecursive) {
-          sprintf(zSubdirectory, "%s\\%s", pcDirectory, sFindData.cFileName);
-
-          if ((strcmp(sFindData.cFileName, ".") != 0) && (strcmp(sFindData.cFileName, "..") != 0)) {
-            if (!Plat_RemoveDirectory(zSubdirectory, TRUE)) {
-              FastDebugMsg(String("Plat_RemoveDirectory: ERROR - Recursive call on %s failed",
-                                  zSubdirectory));
-              break;
-            }
-          }
-        }
-        // otherwise, all the individual files will be deleted, but the subdirectories remain,
-        // causing RemoveDirectory() at the end to fail, thus this function will return FALSE in
-        // that event (failure)
-      } else {
-        FileMan_Delete(sFindData.cFileName);
-      }
-
-      // find the next file in the directory
-      fRetval = FindNextFile(SearchHandle, &sFindData);
-      if (fRetval == 0) {
-        fDone = TRUE;
-      }
-    } while (!fDone);
-
-    // very important: close the find handle, or subsequent RemoveDirectory() calls will fail
-    FindClose(SearchHandle);
-  }
-
-  if (!Plat_SetCurrentDirectory(zOldDir)) {
-    FastDebugMsg(
-        String("Plat_RemoveDirectory: ERROR - Plat_SetCurrentDirectory on %s failed, error %d",
-               zOldDir, GetLastError()));
-    return (FALSE);  // Error returning from subdirectory
-  }
-
-  // The directory MUST be empty
-  fRetval = RemoveDirectory(pcDirectory);
-  if (!fRetval) {
-    FastDebugMsg(String("Plat_RemoveDirectory: ERROR - RemoveDirectory on %s failed, error %d",
-                        pcDirectory, GetLastError()));
-  }
-
-  return fRetval;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Removes ALL FILES in the specified directory but leaves the directory alone.  Does not affect any
-// subdirectories! Use RemoveFilemanDirectory() to also delete the directory itself, or to
-// recursively delete subdirectories.
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-BOOLEAN Plat_EraseDirectory(const char *pcDirectory) {
-  WIN32_FIND_DATA sFindData;
-  HANDLE SearchHandle;
-  const char *pFileSpec = "*.*";
-  BOOLEAN fDone = FALSE;
-  char zOldDir[512];
-
-  Plat_GetCurrentDirectory(zOldDir);
-
-  if (!Plat_SetCurrentDirectory(pcDirectory)) {
-    FastDebugMsg(
-        String("Plat_EraseDirectory: ERROR - Plat_SetCurrentDirectory on %s failed, error %d",
-               pcDirectory, GetLastError()));
-    return (FALSE);  // Error going into directory
-  }
-
-  // If there are files in the directory, DELETE THEM
-  SearchHandle = FindFirstFile(pFileSpec, &sFindData);
-  if (SearchHandle != INVALID_HANDLE_VALUE) {
-    fDone = FALSE;
-    do {
-      // if it's a file, not a directory
-      if (GetFileAttributes(sFindData.cFileName) != FILE_ATTRIBUTE_DIRECTORY) {
-        FileMan_Delete(sFindData.cFileName);
-      }
-
-      // find the next file in the directory
-      if (!FindNextFile(SearchHandle, &sFindData)) {
-        fDone = TRUE;
-      }
-    } while (!fDone);
-
-    // very important: close the find handle, or subsequent RemoveDirectory() calls will fail
-    FindClose(SearchHandle);
-  }
-
-  if (!Plat_SetCurrentDirectory(zOldDir)) {
-    FastDebugMsg(
-        String("Plat_EraseDirectory: ERROR - Plat_SetCurrentDirectory on %s failed, error %d",
-               zOldDir, GetLastError()));
-    return (FALSE);  // Error returning from directory
-  }
-
-  return (TRUE);
-}
-
 BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) {
   int32_t x, iWhich = 0;
   BOOLEAN fFound;
@@ -942,10 +776,6 @@ void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct) {
         break;
     }
   }
-}
-
-BOOLEAN Plat_ClearFileAttributes(char *strFilename) {
-  return SetFileAttributes(strFilename, FILE_ATTRIBUTE_NORMAL);
 }
 
 // returns true if at end of file, else false
@@ -1076,27 +906,6 @@ HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
     }
   }
   return (0);
-}
-
-// Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, uint32_t bufSize) {
-  char sName[_MAX_FNAME];
-  char sPath[_MAX_DIR];
-  char sDrive[_MAX_DRIVE];
-  char sExt[_MAX_EXT];
-
-  _splitpath(path, sDrive, sPath, sName, sExt);
-
-  strcopy(outputBuf, bufSize, sName);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// Platform-independent file access
-/////////////////////////////////////////////////////////////////////////////////
-
-// Check if file (or directory) exists.
-BOOLEAN Plat_FileEntityExists(const char *path) {
-  return GetFileAttributes(path) != INVALID_FILE_ATTRIBUTES;
 }
 
 /////////////////////////////////////////////////////////////////////////////////

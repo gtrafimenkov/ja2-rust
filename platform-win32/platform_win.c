@@ -11,27 +11,6 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, uint16_t bufSize) {
-  char ModuleFilename[100];
-  uint32_t cnt;
-
-  if (GetModuleFileName(NULL, ModuleFilename, sizeof(ModuleFilename)) == 0) {
-    return FALSE;
-  }
-
-  // Now get directory
-  strcopy(buf, bufSize, ModuleFilename);
-
-  for (cnt = strlen(buf) - 1; cnt >= 0; cnt--) {
-    if (buf[cnt] == '\\') {
-      buf[cnt] = '\0';
-      break;
-    }
-  }
-
-  return (TRUE);
-}
-
 void DebugPrint(const char *message) { OutputDebugStringA(message); }
 
 /////////////////////////////////////////////////////////////////////////////////

@@ -1720,15 +1720,17 @@ BOOLEAN HandleSummaryInput(InputAtom *pEvent) {
 
 void CreateGlobalSummary() {
   FILE *fp;
-  char Dir[300];
-  char ExecDir[256];
+  char Dir[600];
+  struct Str512 ExecDir;
 
   DebugPrint("Generating GlobalSummary Information...\n");
 
   gfGlobalSummaryExists = FALSE;
   // Set current directory to JA2\DevInfo which contains all of the summary data
-  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir);
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir.buf);
 
   // Directory doesn't exist, so create it, and continue.
   if (!Plat_CreateDirectory(Dir))
@@ -1742,7 +1744,7 @@ void CreateGlobalSummary() {
           "This directory or it's contents shouldn't be included with final release.");
   fclose(fp);
 
-  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(Dir);
 
   LoadGlobalSummary();
@@ -1952,7 +1954,7 @@ void SummarySaveMapCallback(GUI_BUTTON *btn, int32_t reason) {
       if (gubOverrideStatus == READONLY) {
         char filename[1024];
         snprintf(filename, ARR_SIZE(filename), "MAPS\\%S", gszDisplayName);
-        Plat_ClearFileAttributes(filename);
+        Plat_RemoveReadOnlyAttribute(filename);
       }
       if (ExternalSaveMap(gszDisplayName)) {
         if (gsSelSectorX && gsSelSectorY) {
@@ -2015,9 +2017,9 @@ void CalculateOverrideStatus() {
 
 void LoadGlobalSummary() {
   HWFILE hfile;
-  char ExecDir[256];
-  char DevInfoDir[300];
-  char MapsDir[300];
+  struct Str512 ExecDir;
+  char DevInfoDir[600];
+  char MapsDir[600];
   uint32_t uiNumBytesRead;
   float dMajorVersion;
   int32_t x, y;
@@ -2030,9 +2032,11 @@ void LoadGlobalSummary() {
   gusNumberOfMapsToBeForceUpdated = 0;
   gfGlobalSummaryExists = FALSE;
   // Set current directory to JA2\DevInfo which contains all of the summary data
-  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  sprintf(DevInfoDir, "%s\\DevInfo", ExecDir);
-  sprintf(MapsDir, "%s\\Data\\Maps", ExecDir);
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  snprintf(DevInfoDir, ARR_SIZE(DevInfoDir), "%s\\DevInfo", ExecDir.buf);
+  snprintf(MapsDir, ARR_SIZE(MapsDir), "%s\\Data\\Maps", ExecDir.buf);
 
   // Check to make sure we have a DevInfo directory.  If we don't create one!
   if (!Plat_SetCurrentDirectory(DevInfoDir)) {
@@ -2171,7 +2175,7 @@ void LoadGlobalSummary() {
     DebugPrint(String("Sector Row %c complete... \n", y + 'A'));
   }
 
-  sprintf(MapsDir, "%s\\Data", ExecDir);
+  snprintf(MapsDir, ARR_SIZE(MapsDir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(MapsDir);
 
   if (gfMustForceUpdateAllMaps) {
@@ -2184,12 +2188,14 @@ void LoadGlobalSummary() {
 
 void GenerateSummaryList() {
   FILE *fp;
-  char ExecDir[256];
-  char Dir[300];
+  struct Str512 ExecDir;
+  char Dir[600];
 
   // Set current directory to JA2\DevInfo which contains all of the summary data
-  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir);
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir.buf);
   if (!Plat_SetCurrentDirectory(Dir)) {
     // Directory doesn't exist, so create it, and continue.
     if (!Plat_CreateDirectory(Dir))
@@ -2205,20 +2211,22 @@ void GenerateSummaryList() {
   }
 
   // Set current directory back to data directory!
-  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(Dir);
 }
 
 void WriteSectorSummaryUpdate(char *puiFilename, uint8_t ubLevel, SUMMARYFILE *pSummaryFileInfo) {
   FILE *fp;
-  char ExecDir[256];
-  char Dir[300];
+  struct Str512 ExecDir;
+  char Dir[600];
   char *ptr;
   int8_t x, y;
 
   // Set current directory to JA2\DevInfo which contains all of the summary data
-  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir);
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\DevInfo", ExecDir.buf);
   if (!Plat_SetCurrentDirectory(Dir))
     AssertMsg(0, "JA2\\DevInfo folder not found and should exist!");
 
@@ -2248,7 +2256,7 @@ void WriteSectorSummaryUpdate(char *puiFilename, uint8_t ubLevel, SUMMARYFILE *p
   gpSectorSummary[x][y][ubLevel] = pSummaryFileInfo;
 
   // Set current directory back to data directory!
-  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir);
+  snprintf(Dir, ARR_SIZE(Dir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(Dir);
 }
 

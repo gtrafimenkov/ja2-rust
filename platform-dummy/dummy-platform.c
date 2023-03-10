@@ -14,8 +14,6 @@
 
 char gzCommandLine[100];
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, uint16_t bufSize) { return FALSE; }
-
 void DebugPrint(const char *message) {}
 
 int strcasecmp(const char *s1, const char *s2) { return 0; }
@@ -32,12 +30,6 @@ uint32_t GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) { return FALSE; }
-
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
-
-BOOLEAN Plat_DeleteFile(const char *filename) { return FALSE; }
-
 uint32_t Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
 
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, uint32_t bytesToRead,
@@ -52,8 +44,6 @@ BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) { return 
 uint32_t Plat_SetFilePointer(SYS_FILE_HANDLE handle, int32_t distance, int seekType) { return 0; }
 
 uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
-
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs) { return FALSE; }
 
@@ -86,29 +76,17 @@ int32_t FileMan_GetPos(HWFILE hFile) { return 0; }
 
 uint32_t FileMan_GetSize(HWFILE hFile) { return 0; }
 
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory) { return FALSE; }
-
-BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) { return FALSE; }
-
-BOOLEAN Plat_EraseDirectory(const char *pcDirectory) { return FALSE; }
-
 BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
 void Plat_GetFileClose(struct GetFile *pGFStruct) {}
 
-BOOLEAN Plat_ClearFileAttributes(char *strFilename) { return FALSE; }
-
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
 
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
 
 uint32_t FileMan_Size(char *strFilename) { return 0; }
-
-void Plat_FileBaseName(const char *path, char *outputBuf, uint32_t bufSize) { outputBuf[0] = 0; }
-
-BOOLEAN Plat_FileEntityExists(const char *path) { return FALSE; }
 
 /////////////////////////////////////////////////////////////////////////////////
 // Input

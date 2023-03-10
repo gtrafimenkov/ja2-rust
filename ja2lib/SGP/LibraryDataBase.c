@@ -799,9 +799,11 @@ BOOLEAN IsLibraryOpened(int16_t sLibraryID) {
 BOOLEAN CheckIfFileIsAlreadyOpen(char *pFileName, int16_t sLibraryID) {
   uint16_t usLoop1 = 0;
 
-  char filename[256];
+  struct Str512 filename;
 
-  Plat_FileBaseName(pFileName, filename, ARR_SIZE(filename));
+  if (!Plat_FileBaseName(pFileName, &filename)) {
+    return false;
+  }
 
   // loop through all the open files to see if 'new' file to open is already open
   for (usLoop1 = 1; usLoop1 < gFileDataBase.pLibraries[sLibraryID].iSizeOfOpenFileArray;
@@ -810,7 +812,7 @@ BOOLEAN CheckIfFileIsAlreadyOpen(char *pFileName, int16_t sLibraryID) {
     if (gFileDataBase.pLibraries[sLibraryID].pOpenFiles[usLoop1].uiFileID != 0) {
       // Check if the file already exists
       if (strcasecmp(
-              filename,
+              filename.buf,
               gFileDataBase.pLibraries[sLibraryID].pOpenFiles[usLoop1].pFileHeader->pFileName) == 0)
         return (TRUE);
     }
