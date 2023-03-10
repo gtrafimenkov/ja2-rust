@@ -17,6 +17,16 @@ extern "C" {
  */
 bool Plat_SetCurrentDirectory(const char *path_utf8);
 
+/**
+ * Check if directory exists.
+ */
+bool Plat_DirectoryExists(const char *path_utf8);
+
+/**
+ * Create directory.
+ */
+bool Plat_CreateDirectory(const char *path_utf8);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

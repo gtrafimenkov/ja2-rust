@@ -100,8 +100,6 @@ static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter) {
   return (uiBytesFree);
 }
 
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory) { return CreateDirectory(pcDirectory, NULL); }
-
 // GetFile file attributes
 #define FILE_IS_READONLY 1
 #define FILE_IS_DIRECTORY 2
@@ -676,32 +674,6 @@ UINT32 FileMan_GetSize(HWFILE hFile) {
     return (0);
   else
     return (uiFileSize);
-}
-
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory) {
-  UINT32 uiAttribs;
-  DWORD uiLastError;
-
-  uiAttribs = GetFileAttributes(pcDirectory);
-
-  if (uiAttribs == 0xFFFFFFFF) {
-    // an error, make sure it's the right error
-    uiLastError = GetLastError();
-
-    if (uiLastError != ERROR_FILE_NOT_FOUND) {
-      FastDebugMsg(
-          String("Plat_DirectoryExists: ERROR - GetFileAttributes failed, error #%d on file %s",
-                 uiLastError, pcDirectory));
-    }
-  } else {
-    // something's there, make sure it's a directory
-    if (uiAttribs & FILE_ATTRIBUTE_DIRECTORY) {
-      return TRUE;
-    }
-  }
-
-  // this could also mean that the name given is that of a file, or that an error occurred
-  return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

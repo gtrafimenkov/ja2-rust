@@ -2,6 +2,7 @@
 
 use std::env;
 use std::ffi::{c_char, CStr};
+use std::fs;
 use std::path::PathBuf;
 
 /// Converts utf-8 encoded null-terminated C string into PathBuf.
@@ -23,5 +24,23 @@ pub extern "C" fn Plat_SetCurrentDirectory(path_utf8: *const c_char) -> bool {
     match cstr_utf8_to_pathbuf(path_utf8) {
         None => false,
         Some(path) => env::set_current_dir(path).is_ok(),
+    }
+}
+
+#[no_mangle]
+/// Check if directory exists.
+pub extern "C" fn Plat_DirectoryExists(path_utf8: *const c_char) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => path.is_dir(),
+    }
+}
+
+#[no_mangle]
+/// Create directory.
+pub extern "C" fn Plat_CreateDirectory(path_utf8: *const c_char) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => fs::create_dir(path).is_ok(),
     }
 }

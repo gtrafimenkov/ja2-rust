@@ -36,8 +36,6 @@ BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
 
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
 
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory) { return FALSE; }
-
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsSystem(const struct GetFile *gfs) { return FALSE; }
@@ -67,8 +65,6 @@ BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) { return FALS
 INT32 FileMan_GetPos(HWFILE hFile) { return 0; }
 
 UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
-
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory) { return FALSE; }
 
 BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) { return FALSE; }
 
@@ -247,9 +243,7 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
-  return NULL;
-}
+struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) { return NULL; }
 
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   return FALSE;

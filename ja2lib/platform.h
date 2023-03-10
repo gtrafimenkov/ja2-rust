@@ -43,9 +43,6 @@ UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
 BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory);
 
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory);
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory);
-
 BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive);
 BOOLEAN Plat_EraseDirectory(const char *pcDirectory);
 

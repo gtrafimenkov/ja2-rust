@@ -50,8 +50,6 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) { re
 
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
 
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory) { return FALSE; }
-
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsSystem(const struct GetFile *gfs) { return FALSE; }
@@ -81,8 +79,6 @@ BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) { return FALS
 INT32 FileMan_GetPos(HWFILE hFile) { return 0; }
 
 UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
-
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory) { return FALSE; }
 
 BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) { return FALSE; }
 
