@@ -14,8 +14,6 @@
 
 CHAR8 gzCommandLine[100];
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) { return FALSE; }
-
 void DebugPrint(const char *message) {}
 
 int strcasecmp(const char *s1, const char *s2) { return 0; }
@@ -32,12 +30,6 @@ UINT32 GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) { return FALSE; }
-
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
-
-BOOLEAN Plat_DeleteFile(const char *filename) { return FALSE; }
-
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
 
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
@@ -51,8 +43,6 @@ BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) { return 
 u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) { return 0; }
 
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
-
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs) { return FALSE; }
 
@@ -84,29 +74,17 @@ INT32 FileMan_GetPos(HWFILE hFile) { return 0; }
 
 UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
 
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory) { return FALSE; }
-
-BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) { return FALSE; }
-
-BOOLEAN Plat_EraseDirectory(const char *pcDirectory) { return FALSE; }
-
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
 void Plat_GetFileClose(struct GetFile *pGFStruct) {}
 
-BOOLEAN Plat_ClearFileAttributes(STR strFilename) { return FALSE; }
-
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
 
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
 
 UINT32 FileMan_Size(STR strFilename) { return 0; }
-
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) { outputBuf[0] = 0; }
-
-BOOLEAN Plat_FileEntityExists(const char *path) { return FALSE; }
 
 /////////////////////////////////////////////////////////////////////////////////
 // Input
@@ -267,9 +245,7 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
-  return NULL;
-}
+struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) { return NULL; }
 
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   return FALSE;

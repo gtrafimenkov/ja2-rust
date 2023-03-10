@@ -54,10 +54,13 @@ RUSTLIB_NAME       := rustlib
 RUSTLIB_FILENAME   := librustlib.so
 RUSTLIB_FILEPATH   := rustlib/target/debug/$(RUSTLIB_FILENAME)
 
-# JA2LIB_SOURCES := $(shell grep -l "// build:linux" -r ja2lib)
 JA2LIB_SOURCES := $(shell find ja2lib -name '*.c')
 JA2LIB_OBJS0   := $(filter %.o, $(JA2LIB_SOURCES:.c=.o) $(JA2LIB_SOURCES:.cc=.o) $(JA2LIB_SOURCES:.cpp=.o))
 JA2LIB_OBJS    := $(addprefix $(BUILD_DIR)/,$(JA2LIB_OBJS0))
+
+LINUX_BIN_SOURCES      := $(shell find bin-linux -name '*.c')
+LINUX_BIN_OBJS0        := $(filter %.o, $(LINUX_BIN_SOURCES:.c=.o) $(LINUX_BIN_SOURCES:.cc=.o) $(LINUX_BIN_SOURCES:.cpp=.o))
+LINUX_BIN_OBJS         := $(addprefix $(BUILD_DIR)/,$(LINUX_BIN_OBJS0))
 
 UNITTESTER_SOURCES := $(shell find unittester -name '*.c' -o -name '*.cc' -o -name '*.cpp')
 UNITTESTER_OBJS0   := $(filter %.o, $(UNITTESTER_SOURCES:.c=.o) $(UNITTESTER_SOURCES:.cc=.o) $(UNITTESTER_SOURCES:.cpp=.o))
@@ -77,17 +80,17 @@ LIBS         := -lpthread
 $(BUILD_DIR)/%.o: %.c
 	@echo .. compiling $<
 	@mkdir -p $$(dirname $@)
-	@$(CC) $(CFLAG) -c $(COMPILE_FLAGS) -o $@ $<
+	@$(CC) $(CFLAG) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: %.cc
 	@echo .. compiling $<
 	@mkdir -p $$(dirname $@)
-	@$(CXX) $(CXXFLAG) -c $(COMPILE_FLAGS) -o $@ $<
+	@$(CXX) $(CXXFLAG) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: %.cpp
 	@echo .. compiling $<
 	@mkdir -p $$(dirname $@)
-	@$(CXX) $(CXXFLAG) -c $(COMPILE_FLAGS) -o $@ $<
+	@$(CXX) $(CXXFLAG) -c -o $@ $<
 
 libs: $(BUILD_DIR)/ja2lib.a $(BUILD_DIR)/dummy-platform.a
 
@@ -105,10 +108,10 @@ $(BUILD_DIR)/linux-platform.a: $(LINUX_PLATFORM_OBJS)
 
 linux-bin: $(BUILD_DIR)/bin/ja2-linux
 
-$(BUILD_DIR)/bin/ja2-linux: bin-linux/main.c $(BUILD_DIR)/linux-platform.a $(BUILD_DIR)/ja2lib.a $(BUILD_DIR)/bin/$(RUSTLIB_FILENAME)
+$(BUILD_DIR)/bin/ja2-linux: $(LINUX_BIN_OBJS) $(BUILD_DIR)/ja2lib.a $(BUILD_DIR)/linux-platform.a $(BUILD_DIR)/bin/$(RUSTLIB_FILENAME)
 	@echo .. building $@
 	@mkdir -p $(BUILD_DIR)/bin
-	@$(CC) $(CFLAG) $(COMPILE_FLAGS) $^ -o $@
+	@$(CC) $(CFLAG) $^ -o $@ -lpthread -L$(RUSTLIB_PATH) -lrustlib
 
 run-linux-bin: $(BUILD_DIR)/bin/ja2-linux
 	@cp $(BUILD_DIR)/bin/ja2-linux ../ja2-installed
@@ -127,7 +130,7 @@ $(BUILD_DIR)/bin/$(RUSTLIB_FILENAME): $(RUSTLIB_FILEPATH)
 $(BUILD_DIR)/bin/unittester: $(UNITTESTER_OBJS) $(BUILD_DIR)/ja2lib.a $(BUILD_DIR)/linux-platform.a $(BUILD_DIR)/bin/$(RUSTLIB_FILENAME)
 	@echo .. building $@
 	@mkdir -p $(BUILD_DIR)/bin
-	@$(CXX) $(CFLAG) $(COMPILE_FLAGS) $^ -o $@ -lgtest_main -lgtest -lpthread -L$(RUSTLIB_PATH) -lrustlib
+	@$(CXX) $(CFLAG) $^ -o $@ -lgtest_main -lgtest -lpthread -L$(RUSTLIB_PATH) -lrustlib
 
 run-unittester: $(BUILD_DIR)/bin/unittester
 	./$(BUILD_DIR)/bin/unittester

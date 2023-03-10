@@ -194,8 +194,8 @@ UINT32 AddFilesToPlayersLog(UINT8 ubCode, UINT32 uiDate, UINT8 ubFormat, STR8 pF
 }
 void GameInitFiles() {
   if ((FileMan_Exists(FILES_DAT_FILE) == TRUE)) {
-    Plat_ClearFileAttributes(FILES_DAT_FILE);
-    FileMan_Delete(FILES_DAT_FILE);
+    Plat_RemoveReadOnlyAttribute(FILES_DAT_FILE);
+    Plat_DeleteFile(FILES_DAT_FILE);
   }
 
   ClearFilesList();

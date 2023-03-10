@@ -5248,26 +5248,26 @@ void ClearOutTempLaptopFiles(void) {
 
   // file file
   if ((FileMan_Exists("files.dat") == TRUE)) {
-    Plat_ClearFileAttributes("files.dat");
-    FileMan_Delete("files.dat");
+    Plat_RemoveReadOnlyAttribute("files.dat");
+    Plat_DeleteFile("files.dat");
   }
 
   // finances
   if ((FileMan_Exists("finances.dat") == TRUE)) {
-    Plat_ClearFileAttributes("finances.dat");
-    FileMan_Delete("finances.dat");
+    Plat_RemoveReadOnlyAttribute("finances.dat");
+    Plat_DeleteFile("finances.dat");
   }
 
   // email
   if ((FileMan_Exists("email.dat") == TRUE)) {
-    Plat_ClearFileAttributes("email.dat");
-    FileMan_Delete("email.dat");
+    Plat_RemoveReadOnlyAttribute("email.dat");
+    Plat_DeleteFile("email.dat");
   }
 
   // history
   if ((FileMan_Exists("history.dat") == TRUE)) {
-    Plat_ClearFileAttributes("history.dat");
-    FileMan_Delete("history.dat");
+    Plat_RemoveReadOnlyAttribute("history.dat");
+    Plat_DeleteFile("history.dat");
   }
 }
 

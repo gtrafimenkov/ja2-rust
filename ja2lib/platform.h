@@ -5,6 +5,7 @@
 
 #include "Rect.h"
 #include "SGP/Types.h"
+#include "rust_platform.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 // Files
@@ -28,33 +29,12 @@ BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32
 BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle);
 void Plat_CloseFile(SYS_FILE_HANDLE handle);
 
-// Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize);
-
 // Change file pointer.
 // In case of an error returns 0xFFFFFFFF
 u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType);
 
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize);
-
 // Gets the amount of free space on the hard drive that the main executeablt is runnning from
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
-
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory);
-BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory);
-
-BOOLEAN Plat_DirectoryExists(const char *pcDirectory);
-BOOLEAN Plat_CreateDirectory(const char *pcDirectory);
-
-BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive);
-BOOLEAN Plat_EraseDirectory(const char *pcDirectory);
-
-BOOLEAN Plat_ClearFileAttributes(STR filename);
-
-// Check if file (or directory) exists.
-BOOLEAN Plat_FileEntityExists(const char *path);
-
-BOOLEAN Plat_DeleteFile(const char *filename);
 
 struct GetFile {
   INT32 iFindHandle;

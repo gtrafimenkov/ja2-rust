@@ -10,21 +10,26 @@
 #include "SGP/Video.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
+#include "rust_platform.h"
 
 UINT32 guiSplashFrameFade = 10;
 UINT32 guiSplashStartTime = 0;
 
 // Simply create videosurface, load image, and draw it to the screen.
 void InitJA2SplashScreen() {
-  char CurrentDir[256];
-  char DataDir[300];
+  struct Str512 CurrentDir;
+  char DataDir[600];
 
   InitializeJA2Clock();
+
   // Get Executable Directory
-  Plat_GetExecutableDirectory(CurrentDir, sizeof(CurrentDir));
+  if (!Plat_GetExecutableDirectory(&CurrentDir)) {
+    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not find the executable directory, shutting down");
+    return;
+  }
 
   // Adjust Current Dir
-  snprintf(DataDir, ARR_SIZE(DataDir), "%s\\Data", CurrentDir);
+  snprintf(DataDir, ARR_SIZE(DataDir), "%s\\Data", CurrentDir.buf);
   if (!Plat_SetCurrentDirectory(DataDir)) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not find data directory, shutting down");
     return;

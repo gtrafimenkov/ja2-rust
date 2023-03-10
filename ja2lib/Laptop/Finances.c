@@ -382,8 +382,8 @@ void GameInitFinances() {
   // initialize finances on game start up
   // unlink Finances data file
   if ((FileMan_Exists(FINANCES_DATA_FILE))) {
-    Plat_ClearFileAttributes(FINANCES_DATA_FILE);
-    FileMan_Delete(FINANCES_DATA_FILE);
+    Plat_RemoveReadOnlyAttribute(FINANCES_DATA_FILE);
+    Plat_DeleteFile(FINANCES_DATA_FILE);
   }
   GetBalanceFromDisk();
 }

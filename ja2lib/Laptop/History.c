@@ -206,8 +206,8 @@ UINT32 AddHistoryToPlayersLog(UINT8 ubCode, UINT8 ubSecondCode, UINT32 uiDate, u
 void GameInitHistory() {
   if ((FileMan_Exists(HISTORY_DATA_FILE))) {
     // unlink history file
-    Plat_ClearFileAttributes(HISTORY_DATA_FILE);
-    FileMan_Delete(HISTORY_DATA_FILE);
+    Plat_RemoveReadOnlyAttribute(HISTORY_DATA_FILE);
+    Plat_DeleteFile(HISTORY_DATA_FILE);
   }
 
   AddHistoryToPlayersLog(HISTORY_ACCEPTED_ASSIGNMENT_FROM_ENRICO, 0, GetWorldTotalMin(), -1, -1);

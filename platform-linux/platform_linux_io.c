@@ -4,29 +4,12 @@
 #include <linux/limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "SGP/Types.h"
-#include "StrUtils.h"
 #include "platform.h"
-
-BOOLEAN Plat_DeleteFile(const char *filename) { return unlink(filename) == 0; }
-
-// Given a path, fill outputBuf with the file name.
-void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
-  char *copy = strdup(path);
-  if (copy == NULL) {
-    outputBuf[0] = 0;
-    return;
-  }
-  const char *fileName = basename(copy);
-
-  strcopy(outputBuf, bufSize, fileName);
-
-  free(copy);
-}
 
 void Plat_CloseFile(SYS_FILE_HANDLE handle) {
   fclose(handle);
@@ -56,13 +39,6 @@ u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) {
   return st.st_size;
 }
 
-// Check if file (or directory) exists.
-BOOLEAN Plat_FileEntityExists(const char *path) {
-  struct stat st;
-  int ret = stat(path, &st);
-  return ret == 0;
-}
-
 // Change file pointer.
 // In case of an error returns 0xFFFFFFFF
 u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
@@ -83,19 +59,3 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
   int res = fseek(handle, distance, whence);
   return res;
 }
-
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
-  char result[PATH_MAX];
-  ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
-
-  if (count == -1) {
-    buf[0] = 0;
-    return FALSE;
-  }
-
-  const char *path = dirname(result);
-  strcopy(buf, bufSize, path);
-  return TRUE;
-}
-
-BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) { return chdir(pcDirectory) == 0; }

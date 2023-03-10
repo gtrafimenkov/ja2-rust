@@ -23,9 +23,9 @@ extern UINT32 uiNumTablesLoaded;
 #endif
 
 void DetermineRGBDistributionSettings() {
-  STRING512 DataDir;
-  char ExecDir[256];
-  STRING512 ShadeTableDir;
+  char DataDir[600];
+  struct Str512 ExecDir;
+  char ShadeTableDir[600];
   UINT32 uiRBitMask, uiGBitMask, uiBBitMask;
   UINT32 uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
   UINT32 uiNumBytesRead;
@@ -37,8 +37,10 @@ void DetermineRGBDistributionSettings() {
   // First, determine if we have a file saved.  If not, then this is the first time, and
   // all shade tables will have to be built and saved to disk.  This can be time consuming, adding
   // up to 3-4 seconds to the time of a map load.
-  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  sprintf(ShadeTableDir, "%s\\Data\\%s", ExecDir, SHADE_TABLE_DIR);
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  snprintf(ShadeTableDir, ARR_SIZE(ShadeTableDir), "%s\\Data\\%s", ExecDir.buf, SHADE_TABLE_DIR);
 
   // Check to make sure we have a ShadeTable directory.  If we don't create one!
   if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
@@ -89,7 +91,7 @@ void DetermineRGBDistributionSettings() {
   if (fCleanShadeTable) {  // This means that we are going to remove all of the current shade
                            // tables, if any exist, and
     // start fresh.
-    Plat_EraseDirectory(ShadeTableDir);
+    Plat_RemoveFilesInDirectory(ShadeTableDir);
   }
   if (fSaveRGBDist) {  // The RGB distribution is going to be saved in a tiny file for future
                        // reference.  As long as the
@@ -106,7 +108,7 @@ void DetermineRGBDistributionSettings() {
   }
 
   // We're done, so restore the executable directory to JA2\Data.
-  sprintf(DataDir, "%s\\Data", ExecDir);
+  snprintf(DataDir, ARR_SIZE(DataDir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(DataDir);
 }
 
@@ -185,4 +187,4 @@ BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   return TRUE;
 }
 
-BOOLEAN DeleteShadeTableDir() { return (Plat_RemoveDirectory(SHADE_TABLE_DIR, TRUE)); }
+BOOLEAN DeleteShadeTableDir() { return (Plat_RemoveDirectory(SHADE_TABLE_DIR)); }
