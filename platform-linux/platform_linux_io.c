@@ -74,17 +74,3 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
   int res = fseek(handle, distance, whence);
   return res;
 }
-
-BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
-  char result[PATH_MAX];
-  ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
-
-  if (count == -1) {
-    buf[0] = 0;
-    return FALSE;
-  }
-
-  const char *path = dirname(result);
-  strcopy(buf, bufSize, path);
-  return TRUE;
-}

@@ -108,6 +108,18 @@ pub extern "C" fn Plat_GetCurrentDirectory(dest: &mut Str512) -> bool {
     }
 }
 
+#[no_mangle]
+/// Return the directory where executable file is located.
+pub extern "C" fn Plat_GetExecutableDirectory(dest: &mut Str512) -> bool {
+    match std::env::current_exe() {
+        Err(_) => false,
+        Ok(path) => match path.parent() {
+            None => false,
+            Some(parent) => strcpy(dest, &parent.to_string_lossy()),
+        },
+    }
+}
+
 /// Copy a rust string into a buffer from C.
 /// The result string will be in utf-8 encoding.
 /// If the buffer is too small, the buffer will be filled with zeroes, but the string will not be copied.

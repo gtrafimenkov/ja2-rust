@@ -59,6 +59,11 @@ bool Plat_RemoveReadOnlyAttribute(const char *path_utf8);
 bool Plat_GetCurrentDirectory(struct Str512 *dest);
 
 /**
+ * Return the directory where executable file is located.
+ */
+bool Plat_GetExecutableDirectory(struct Str512 *dest);
+
+/**
  * Copy string "Foo" into the buffer.
  * If not enough space, return false and fill the buffer with zeroes.
  */

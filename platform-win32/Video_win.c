@@ -1475,11 +1475,13 @@ void RefreshScreen(void *DummyVariable) {
     FILE *OutputFile;
     CHAR8 FileName[64];
     INT32 iIndex;
-    STRING512 ExecDir;
+    struct Str512 ExecDir;
     UINT16 *p16BPPData;
 
-    Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-    Plat_SetCurrentDirectory(ExecDir);
+    if (!Plat_GetExecutableDirectory(&ExecDir)) {
+      return;
+    }
+    Plat_SetCurrentDirectory(ExecDir.buf);
 
     //
     // Create temporary system memory surface. This is used to correct problems with the backbuffer
@@ -1596,8 +1598,8 @@ void RefreshScreen(void *DummyVariable) {
     gfPrintFrameBuffer = FALSE;
     IDirectDrawSurface2_Release(pTmpBuffer);
 
-    strcat(ExecDir, "\\Data");
-    Plat_SetCurrentDirectory(ExecDir);
+    strcat(ExecDir.buf, "\\Data");
+    Plat_SetCurrentDirectory(ExecDir.buf);
   }
 
   //
@@ -2470,12 +2472,14 @@ void RefreshMovieCache() {
   static UINT32 uiPicNum = 0;
   UINT16 *pDest;
   INT32 cnt;
-  STRING512 ExecDir;
+  struct Str512 ExecDir;
 
   PauseTime(TRUE);
 
-  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  Plat_SetCurrentDirectory(ExecDir);
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  Plat_SetCurrentDirectory(ExecDir.buf);
 
   for (cnt = 0; cnt < giNumFrames; cnt++) {
     sprintf(cFilename, "JA%5.5d.TGA", uiPicNum++);
@@ -2506,8 +2510,8 @@ void RefreshMovieCache() {
 
   giNumFrames = 0;
 
-  strcat(ExecDir, "\\Data");
-  Plat_SetCurrentDirectory(ExecDir);
+  strcat(ExecDir.buf, "\\Data");
+  Plat_SetCurrentDirectory(ExecDir.buf);
 }
 
 #include "SGP/VSurface.h"

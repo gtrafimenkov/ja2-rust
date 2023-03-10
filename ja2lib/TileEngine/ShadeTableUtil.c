@@ -24,7 +24,7 @@ extern UINT32 uiNumTablesLoaded;
 
 void DetermineRGBDistributionSettings() {
   STRING512 DataDir;
-  char ExecDir[256];
+  struct Str512 ExecDir;
   STRING512 ShadeTableDir;
   UINT32 uiRBitMask, uiGBitMask, uiBBitMask;
   UINT32 uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
@@ -37,8 +37,10 @@ void DetermineRGBDistributionSettings() {
   // First, determine if we have a file saved.  If not, then this is the first time, and
   // all shade tables will have to be built and saved to disk.  This can be time consuming, adding
   // up to 3-4 seconds to the time of a map load.
-  Plat_GetExecutableDirectory(ExecDir, sizeof(ExecDir));
-  sprintf(ShadeTableDir, "%s\\Data\\%s", ExecDir, SHADE_TABLE_DIR);
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  sprintf(ShadeTableDir, "%s\\Data\\%s", ExecDir.buf, SHADE_TABLE_DIR);
 
   // Check to make sure we have a ShadeTable directory.  If we don't create one!
   if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
@@ -106,7 +108,7 @@ void DetermineRGBDistributionSettings() {
   }
 
   // We're done, so restore the executable directory to JA2\Data.
-  sprintf(DataDir, "%s\\Data", ExecDir);
+  sprintf(DataDir, "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(DataDir);
 }
 

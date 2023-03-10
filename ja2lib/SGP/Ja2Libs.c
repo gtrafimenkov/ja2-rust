@@ -13,17 +13,17 @@ STR8 LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
 
 INT8 DetectLocale() {
   INT8 bLoc;
-  CHAR8 zPath[_MAX_PATH];
+  struct Str512 zPath;
   CHAR8 zLocalePath[_MAX_PATH];
 
-  if (!Plat_GetExecutableDirectory(zPath, sizeof(zPath))) {
+  if (!Plat_GetExecutableDirectory(&zPath)) {
     return ENGLISH_LANG;
   }
 
-  strcpy(zPath, "\\Data\\");
+  strcpy(zPath.buf, "\\Data\\");
 
   for (bLoc = RUSSIAN_LANG; bLoc < LANG_NUMBER; bLoc++) {
-    strcpy(zLocalePath, zPath);
+    strcpy(zLocalePath, zPath.buf);
     strcat(zLocalePath, LocaleNames[bLoc]);
     strcat(zLocalePath, ".slf");
 

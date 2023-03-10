@@ -51,7 +51,7 @@ u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
 static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter);
 
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
-  STRING512 zExecDir;
+  struct Str512 zExecDir;
   STRING512 zDrive;
   STRING512 zDir;
   STRING512 zFileName;
@@ -59,10 +59,12 @@ UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
 
   UINT32 uiFreeSpace = 0;
 
-  Plat_GetExecutableDirectory(zExecDir, sizeof(zExecDir));
+  if (!Plat_GetExecutableDirectory(&zExecDir)) {
+    return 0;
+  }
 
   // get the drive letter from the exec dir
-  _splitpath(zExecDir, zDrive, zDir, zFileName, zExt);
+  _splitpath(zExecDir.buf, zDrive, zDir, zFileName, zExt);
 
   sprintf(zDrive, "%s\\", zDrive);
 
