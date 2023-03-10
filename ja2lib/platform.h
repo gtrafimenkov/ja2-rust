@@ -48,11 +48,6 @@ BOOLEAN Plat_EraseDirectory(const char *pcDirectory);
 
 BOOLEAN Plat_ClearFileAttributes(STR filename);
 
-// Check if file (or directory) exists.
-BOOLEAN Plat_FileEntityExists(const char *path);
-
-BOOLEAN Plat_DeleteFile(const char *filename);
-
 struct GetFile {
   INT32 iFindHandle;
   CHAR8 zFileName[260];  // changed from UINT16, Alex Meduna, Mar-20'98

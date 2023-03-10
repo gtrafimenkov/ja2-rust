@@ -34,8 +34,6 @@ BOOLEAN gfProgramIsRunning;
 
 BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
 
-BOOLEAN Plat_DeleteFile(const char *filename) { return FALSE; }
-
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
 
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
@@ -99,8 +97,6 @@ BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { retur
 UINT32 FileMan_Size(STR strFilename) { return 0; }
 
 void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) { outputBuf[0] = 0; }
-
-BOOLEAN Plat_FileEntityExists(const char *path) { return FALSE; }
 
 /////////////////////////////////////////////////////////////////////////////////
 // Input

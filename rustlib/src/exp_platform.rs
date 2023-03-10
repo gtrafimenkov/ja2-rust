@@ -37,10 +37,27 @@ pub extern "C" fn Plat_DirectoryExists(path_utf8: *const c_char) -> bool {
 }
 
 #[no_mangle]
+/// Check if file or directory exists.
+pub extern "C" fn Plat_FileEntityExists(path_utf8: *const c_char) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => path.is_dir() || path.is_file(),
+    }
+}
+
+#[no_mangle]
 /// Create directory.
 pub extern "C" fn Plat_CreateDirectory(path_utf8: *const c_char) -> bool {
     match cstr_utf8_to_pathbuf(path_utf8) {
         None => false,
         Some(path) => fs::create_dir(path).is_ok(),
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn Plat_DeleteFile(path_utf8: *const c_char) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => fs::remove_file(path).is_ok(),
     }
 }

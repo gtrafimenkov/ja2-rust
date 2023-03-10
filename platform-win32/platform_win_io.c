@@ -23,7 +23,6 @@ BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) {
   return (TRUE);
 }
 
-BOOLEAN Plat_DeleteFile(const char *filename) { return DeleteFile(filename); }
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
   return ReadFile(handle, buffer, bytesToRead, (LPDWORD)readBytes, NULL);
@@ -1054,15 +1053,6 @@ void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
   _splitpath(path, sDrive, sPath, sName, sExt);
 
   strcopy(outputBuf, bufSize, sName);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// Platform-independent file access
-/////////////////////////////////////////////////////////////////////////////////
-
-// Check if file (or directory) exists.
-BOOLEAN Plat_FileEntityExists(const char *path) {
-  return GetFileAttributes(path) != INVALID_FILE_ATTRIBUTES;
 }
 
 /////////////////////////////////////////////////////////////////////////////////

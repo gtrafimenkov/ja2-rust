@@ -12,8 +12,6 @@
 #include "StrUtils.h"
 #include "platform.h"
 
-BOOLEAN Plat_DeleteFile(const char *filename) { return unlink(filename) == 0; }
-
 // Given a path, fill outputBuf with the file name.
 void Plat_FileBaseName(const char *path, char *outputBuf, u32 bufSize) {
   char *copy = strdup(path);
@@ -54,13 +52,6 @@ u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) {
     return 0;
   }
   return st.st_size;
-}
-
-// Check if file (or directory) exists.
-BOOLEAN Plat_FileEntityExists(const char *path) {
-  struct stat st;
-  int ret = stat(path, &st);
-  return ret == 0;
 }
 
 // Change file pointer.

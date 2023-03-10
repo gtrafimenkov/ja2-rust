@@ -23,9 +23,16 @@ bool Plat_SetCurrentDirectory(const char *path_utf8);
 bool Plat_DirectoryExists(const char *path_utf8);
 
 /**
+ * Check if file or directory exists.
+ */
+bool Plat_FileEntityExists(const char *path_utf8);
+
+/**
  * Create directory.
  */
 bool Plat_CreateDirectory(const char *path_utf8);
+
+bool Plat_DeleteFile(const char *path_utf8);
 
 #ifdef __cplusplus
 } // extern "C"
