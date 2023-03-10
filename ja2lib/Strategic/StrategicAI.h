@@ -33,8 +33,7 @@ void RecalculateGroupWeight(struct GROUP *pGroup);
 BOOLEAN OkayForEnemyToMoveThroughSector(uint8_t ubSectorID);
 BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, uint8_t ubSectorID);
 
-void StrategicHandleQueenLosingControlOfSector(uint8_t sSectorX, uint8_t sSectorY,
-                                               int16_t sSectorZ);
+void StrategicHandleQueenLosingControlOfSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ);
 
 void WakeUpQueen();
 

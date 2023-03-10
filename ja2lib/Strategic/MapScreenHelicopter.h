@@ -140,7 +140,7 @@ BOOLEAN IsSectorOutOfTheWay( int16_t sX, int16_t sY );
 */
 
 // how far to nearest refuel point from this sector?
-int32_t DistanceToNearestRefuelPoint(int16_t sX, int16_t sY);
+int32_t DistanceToNearestRefuelPoint(uint8_t sX, uint8_t sY);
 
 // location of closest
 int32_t LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
@@ -149,7 +149,7 @@ int32_t LocationOfNearestRefuelPoint(BOOLEAN fNotifyPlayerIfNoSafeLZ);
 void ReFuelHelicopter(void);
 
 // how much will it cost for helicopter to travel through this sector?
-int32_t GetCostOfPassageForHelicopter(int16_t sX, int16_t sY);
+int32_t GetCostOfPassageForHelicopter(uint8_t sX, uint8_t sY);
 
 // helicopter shot down, kill all on board
 void SkyriderDestroyed(void);
@@ -170,13 +170,13 @@ void LandHelicopter(void);
 void TakeOffHelicopter(void);
 
 // test whether or not a sector contains a fuel site
-BOOLEAN IsRefuelSiteInSector(int16_t sMapX, int16_t sMapY);
+BOOLEAN IsRefuelSiteInSector(uint8_t sMapX, uint8_t sMapY);
 
 // update which refueling sites are controlled by player & therefore available
 void UpdateRefuelSiteAvailability(void);
 
 // setup helicopter for player
-void SetUpHelicopterForPlayer(int16_t sX, int16_t sY);
+void SetUpHelicopterForPlayer(uint8_t sX, uint8_t sY);
 
 // the intended path of the helicopter
 int32_t DistanceOfIntendedHelicopterPath(void);
@@ -194,7 +194,7 @@ void StartHoverTime(void);
 void DropOffEveryOneInHelicopter(void);
 
 // handle heli entering this sector
-BOOLEAN HandleHeliEnteringSector(int16_t sX, int16_t sY);
+BOOLEAN HandleHeliEnteringSector(uint8_t sX, uint8_t sY);
 
 // check for arrival at refuel
 BOOLEAN CheckForArrivalAtRefuelPoint(void);

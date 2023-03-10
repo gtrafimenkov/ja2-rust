@@ -25,7 +25,7 @@
 
 extern BOOLEAN fMapScreenBottomDirty;
 
-void GetSectorFacilitiesFlags(int16_t sMapX, int16_t sMapY, wchar_t *sFacilitiesString,
+void GetSectorFacilitiesFlags(uint8_t sMapX, uint8_t sMapY, wchar_t *sFacilitiesString,
                               size_t bufSize) {
   // will build a string stating current facilities present in sector
 
@@ -86,7 +86,7 @@ void GetSectorFacilitiesFlags(int16_t sMapX, int16_t sMapY, wchar_t *sFacilities
 }
 
 // ALL changes of control to player must be funneled through here!
-BOOLEAN SetThisSectorAsPlayerControlled(int16_t sMapX, int16_t sMapY, int8_t bMapZ,
+BOOLEAN SetThisSectorAsPlayerControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ,
                                         BOOLEAN fContested) {
   // NOTE: MapSector must be 16-bit, cause MAX_WORLD_X is actually 18, so the sector numbers exceed
   // 256 although we use only 16x16

@@ -6293,7 +6293,7 @@ BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier) {
 
 void AddShopkeeperToGridNo(uint8_t ubProfile, int16_t sGridNo) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  int16_t sSectorX, sSectorY;
+  uint8_t sSectorX, sSectorY;
   uint8_t ubID;
 
   GetCurrentWorldSector(&sSectorX, &sSectorY);

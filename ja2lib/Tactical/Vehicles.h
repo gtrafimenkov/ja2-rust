@@ -90,7 +90,7 @@ extern int32_t iMvtTypes[];
 void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle);
 
 // add vehicle to list and return id value
-int32_t AddVehicleToList(int16_t sMapX, int16_t sMapY, int16_t sGridNo, uint8_t ubType);
+int32_t AddVehicleToList(uint8_t sMapX, uint8_t sMapY, int16_t sGridNo, uint8_t ubType);
 
 // remove this vehicle from the list
 BOOLEAN RemoveVehicleFromList(int32_t iId);

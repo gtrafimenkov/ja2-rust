@@ -91,7 +91,7 @@ void RemoveExplosionData(int32_t iIndex);
 
 void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ, int16_t sGridNo,
                                uint8_t ubDamage);
-void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ);
+void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ);
 
 BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile);
 

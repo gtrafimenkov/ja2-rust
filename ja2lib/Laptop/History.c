@@ -133,8 +133,8 @@ void PerformCheckOnHistoryRecord(uint32_t uiErrorCode, uint8_t sSectorX, uint8_t
 void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, int32_t reason);
 void BtnHistoryDisplayPrevPageCallBack(GUI_BUTTON *btn, int32_t reason);
 
-uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, int16_t sSectorX,
-                        int16_t sSectorY) {
+uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, uint8_t sSectorX,
+                        uint8_t sSectorY) {
   // adds History item to player's log(History List), returns unique id number of it
   // outside of the History system(the code in this .c file), this is the only function you'll ever
   // need
@@ -174,7 +174,7 @@ uint32_t SetHistoryFact(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate, i
 }
 
 uint32_t AddHistoryToPlayersLog(uint8_t ubCode, uint8_t ubSecondCode, uint32_t uiDate,
-                                int16_t sSectorX, int16_t sSectorY) {
+                                uint8_t sSectorX, uint8_t sSectorY) {
   // adds History item to player's log(History List), returns unique id number of it
   // outside of the History system(the code in this .c file), this is the only function you'll ever
   // need
@@ -592,12 +592,12 @@ void OpenAndReadHistoryFile(void) {
 
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(1, sSectorX, sSectorY, bSectorZ);
+    PerformCheckOnHistoryRecord(1, (uint8_t)sSectorX, (uint8_t)sSectorY, bSectorZ);
 #endif
 
     // add transaction
-    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, sSectorX, sSectorY, bSectorZ,
-                                  ubColor);
+    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, (uint8_t)sSectorX,
+                                  (uint8_t)sSectorY, bSectorZ, ubColor);
 
     // increment byte counter
     uiByteCount += SIZE_OF_HISTORY_FILE_RECORD;
@@ -626,7 +626,7 @@ BOOLEAN OpenAndWriteHistoryFile(void) {
   while (pHistoryList) {
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(2, pHistoryList->sSectorX, pHistoryList->sSectorY,
+    PerformCheckOnHistoryRecord(2, (uint8_t)pHistoryList->sSectorX, (uint8_t)pHistoryList->sSectorY,
                                 pHistoryList->bSectorZ);
 #endif
 
@@ -770,8 +770,8 @@ void DrawHistoryRecordsText(void) {
                                 pHistoryLocations[0], HISTORY_TEXT_FONT, &sX, &sY);
       mprintf(sX, RECORD_Y + (iCounter * (BOX_HEIGHT)) + 3, pHistoryLocations[0]);
     } else {
-      GetSectorIDString(pCurHistory->sSectorX, pCurHistory->sSectorY, pCurHistory->bSectorZ,
-                        sString, ARR_SIZE(sString), TRUE);
+      GetSectorIDString((uint8_t)pCurHistory->sSectorX, (uint8_t)pCurHistory->sSectorY,
+                        pCurHistory->bSectorZ, sString, ARR_SIZE(sString), TRUE);
       FindFontCenterCoordinates(RECORD_DATE_X + RECORD_DATE_WIDTH, 0, RECORD_LOCATION_WIDTH + 10, 0,
                                 sString, HISTORY_TEXT_FONT, &sX, &sY);
 
@@ -1165,12 +1165,12 @@ BOOLEAN LoadInHistoryRecords(uint32_t uiPage) {
 
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(3, sSectorX, sSectorY, bSectorZ);
+    PerformCheckOnHistoryRecord(3, (uint8_t)sSectorX, (uint8_t)sSectorY, bSectorZ);
 #endif
 
     // add transaction
-    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, sSectorX, sSectorY, bSectorZ,
-                                  ubColor);
+    ProcessAndEnterAHistoryRecord(ubCode, uiDate, ubSecondCode, (uint8_t)sSectorX,
+                                  (uint8_t)sSectorY, bSectorZ, ubColor);
 
     // increment byte counter
     uiByteCount += SIZE_OF_HISTORY_FILE_RECORD;
@@ -1251,7 +1251,8 @@ BOOLEAN WriteOutHistoryRecords(uint32_t uiPage) {
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue)) {
 #ifdef JA2TESTVERSION
     // perform a check on the data to see if it is pooched
-    PerformCheckOnHistoryRecord(4, pList->sSectorX, pList->sSectorY, pList->bSectorZ);
+    PerformCheckOnHistoryRecord(4, (uint8_t)pList->sSectorX, (uint8_t)pList->sSectorY,
+                                pList->bSectorZ);
 #endif
 
     FileMan_Write(hFileHandle, &(pList->ubCode), sizeof(uint8_t), NULL);
@@ -1401,7 +1402,7 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
 
 #ifdef JA2TESTVERSION
   // perform a check on the data to see if it is pooched
-  PerformCheckOnHistoryRecord(5, pHistoryList->sSectorX, pHistoryList->sSectorY,
+  PerformCheckOnHistoryRecord(5, (uint8_t)pHistoryList->sSectorX, (uint8_t)pHistoryList->sSectorY,
                               pHistoryList->bSectorZ);
 #endif
 

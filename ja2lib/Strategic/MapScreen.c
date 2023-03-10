@@ -666,8 +666,7 @@ void BlitBackgroundToSaveBuffer(void);
 // Drawing the Map
 uint32_t HandleMapUI();
 void RenderMapCursorsIndexesAnims(void);
-BOOLEAN GetMapXY(int16_t sX, int16_t sY, int16_t *psMapWorldX, int16_t *psMapWorldY);
-BOOLEAN GetMouseMapXY(int16_t *psMapWorldX, int16_t *psMapWorldY);
+static BOOLEAN GetMapXY(int16_t sX, int16_t sY, uint8_t *psMapWorldX, uint8_t *psMapWorldY);
 
 void StartConfirmMapMoveMode(int16_t sMapY);
 void EndConfirmMapMoveMode(void);
@@ -675,8 +674,9 @@ void EndConfirmMapMoveMode(void);
 void CancelMapUIMessage(void);
 void MonitorMapUIMessage(void);
 
-void RenderMapHighlight(int16_t sMapX, int16_t sMapY, uint16_t usLineColor, BOOLEAN fStationary);
-void ShadeMapElem(int16_t sMapX, int16_t sMapY);
+static void RenderMapHighlight(uint8_t sMapX, uint8_t sMapY, uint16_t usLineColor,
+                               BOOLEAN fStationary);
+void ShadeMapElem(uint8_t sMapX, uint8_t sMapY);
 void PopupText(wchar_t *pFontString, ...);
 void DrawString(wchar_t *pString, uint16_t uiX, uint16_t uiY, uint32_t uiFont);
 
@@ -847,7 +847,7 @@ void CreateVehicleBox();
 
 void TestMessageSystem(void);
 
-BOOLEAN CheckIfClickOnLastSectorInPath(int16_t sX, int16_t sY);
+BOOLEAN CheckIfClickOnLastSectorInPath(uint8_t sX, uint8_t sY);
 
 // update any bad assignments..error checking
 void UpdateBadAssignments(void);
@@ -917,14 +917,14 @@ BOOLEAN RequestGiveSkyriderNewDestination(void);
 void ExplainWhySkyriderCantFly(void);
 uint8_t PlayerMercsInHelicopterSector(void);
 
-void HandleNewDestConfirmation(int16_t sMapX, int16_t sMapY);
+void HandleNewDestConfirmation(uint8_t sMapX, uint8_t sMapY);
 void RandomAwakeSelectedMercConfirmsStrategicMove(void);
 void DestinationPlottingCompleted(void);
 
 void HandleMilitiaRedistributionClick(void);
 
 void StartChangeSectorArrivalMode(void);
-BOOLEAN CanMoveBullseyeAndClickedOnIt(int16_t sMapX, int16_t sMapY);
+BOOLEAN CanMoveBullseyeAndClickedOnIt(uint8_t sMapX, uint8_t sMapY);
 void CreateBullsEyeOrChopperSelectionPopup(void);
 void BullsEyeOrChopperSelectionPopupCallback(uint8_t ubExitValue);
 
@@ -946,7 +946,7 @@ void ClearPreviousPaths(void);
 void SelectAllCharactersInSquad(int8_t bSquadNumber);
 
 BOOLEAN CanDrawSectorCursor(void);
-void RestoreMapSectorCursor(int16_t sMapX, int16_t sMapY);
+void RestoreMapSectorCursor(uint8_t sMapX, uint8_t sMapY);
 
 void RequestToggleMercInventoryPanel(void);
 
@@ -2872,7 +2872,7 @@ uint32_t MapScreenHandle(void) {
       ChangeSelectedMapSector(9, 1, 0);
     } else if ((gWorldSectorX > 0) && (gWorldSectorY > 0) && (gbWorldSectorZ != -1)) {
       // select currently loaded sector as the map sector
-      ChangeSelectedMapSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      ChangeSelectedMapSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
     } else  // no loaded sector
     {
       // only select A9 - Omerta IF there is no current selection, otherwise leave it as is
@@ -3797,8 +3797,8 @@ void RenderMapCursorsIndexesAnims() {
   BOOLEAN fSelectedCursorIsYellow = TRUE;
   uint16_t usCursorColor;
   uint32_t uiDeltaTime;
-  static int16_t sPrevHighlightedMapX = -1, sPrevHighlightedMapY = -1;
-  static int16_t sPrevSelectedMapX = -1, sPrevSelectedMapY = -1;
+  static uint8_t sPrevHighlightedMapX = 0xff, sPrevHighlightedMapY = 0xff;
+  static uint8_t sPrevSelectedMapX = 0xff, sPrevSelectedMapY = 0xff;
   static BOOLEAN fFlashCursorIsYellow = FALSE;
   BOOLEAN fDrawCursors;
   BOOLEAN fHighlightChanged = FALSE;
@@ -3818,7 +3818,7 @@ void RenderMapCursorsIndexesAnims() {
     // if we're over a different sector than when we previously blitted this
     if ((gsHighlightSectorX != sPrevHighlightedMapX) ||
         (gsHighlightSectorY != sPrevHighlightedMapY) || gfMapPanelWasRedrawn) {
-      if (sPrevHighlightedMapX != -1 && sPrevHighlightedMapY != -1) {
+      if (sPrevHighlightedMapX != 0xff && sPrevHighlightedMapY != 0xff) {
         RestoreMapSectorCursor(sPrevHighlightedMapX, sPrevHighlightedMapY);
       }
 
@@ -3832,16 +3832,16 @@ void RenderMapCursorsIndexesAnims() {
     }
   } else {
     // nothing now highlighted
-    gsHighlightSectorX = -1;
-    gsHighlightSectorY = -1;
+    gsHighlightSectorX = 0xff;
+    gsHighlightSectorY = 0xff;
 
-    if (sPrevHighlightedMapX != -1 && sPrevHighlightedMapY != -1) {
+    if (sPrevHighlightedMapX != 0xff && sPrevHighlightedMapY != 0xff) {
       RestoreMapSectorCursor(sPrevHighlightedMapX, sPrevHighlightedMapY);
       fHighlightChanged = TRUE;
     }
 
-    sPrevHighlightedMapX = -1;
-    sPrevHighlightedMapY = -1;
+    sPrevHighlightedMapX = 0xff;
+    sPrevHighlightedMapY = 0xff;
   }
 
   // handle highlighting of selected sector ( YELLOW ) - don't show it while plotting movement
@@ -3885,30 +3885,25 @@ void RenderMapCursorsIndexesAnims() {
     }
   } else {
     // erase yellow highlight cursor
-    if (sPrevSelectedMapX != -1 && sPrevSelectedMapY != -1) {
+    if (sPrevSelectedMapX != 0xff && sPrevSelectedMapY != 0xff) {
       RestoreMapSectorCursor(sPrevSelectedMapX, sPrevSelectedMapY);
       fHighlightChanged = TRUE;
     }
 
-    sPrevSelectedMapX = -1;
-    sPrevSelectedMapY = -1;
+    sPrevSelectedMapX = 0xff;
+    sPrevSelectedMapY = 0xff;
   }
 
   if (fHighlightChanged || gfMapPanelWasRedrawn) {
     // redraw sector index letters and numbers
-    /*
-                    if( fZoomFlag )
-                            DrawMapIndexSmallMap( fSelectedCursorIsYellow );
-                    else
-    */
     DrawMapIndexBigMap(fSelectedCursorIsYellow);
   }
 }
 
 uint32_t HandleMapUI() {
   uint32_t uiNewEvent = MAP_EVENT_NONE;
-  int16_t sMapX = 0, sMapY = 0;
-  int16_t sX, sY;
+  uint8_t sMapX = 0, sMapY = 0;
+  uint8_t sX, sY;
   uint32_t uiNewScreen = MAP_SCREEN;
   BOOLEAN fWasAlreadySelected;
 
@@ -3979,46 +3974,10 @@ uint32_t HandleMapUI() {
       CancelOrShortenPlottedPath();
       break;
 
-      /*
-          case MAP_EVENT_SELECT_SECTOR:
-                              // will select the sector the selected merc is in
-
-                              sMapX=Menptr[gCharactersList[bSelectedInfoChar].usSolID].sSectorX;
-                              sMapY=Menptr[gCharactersList[bSelectedInfoChar].usSolID].sSectorY;
-                              bMapZ=Menptr[gCharactersList[bSelectedInfoChar].usSolID].bSectorZ;
-
-                              if( ( sSelMapX != sMapX || sSelMapY != sMapY || iCurrentMapSectorZ !=
-         bMapZ ) && ( gTacticalStatus.fDidGameJustStart == FALSE ) && ( gfPreBattleInterfaceActive
-         == FALSE ) )
-                              {
-                                      ChangeSelectedMapSector( sMapX, sMapY, bMapZ );
-
-                                      fTeamPanelDirty = TRUE;
-
-                                      fMapScreenBottomDirty = TRUE;
-              bSelectedDestChar=-1;
-                              }
-
-                              break;
-      */
-
     case MAP_EVENT_CLICK_SECTOR:
 
       // Get Current mouse position
       if (GetMouseMapXY(&sMapX, &sMapY)) {
-        /*
-                                        if( fZoomFlag == TRUE )
-                                        {
-                                                // convert to zoom out coords from screen coords
-                              sMapX = ( int16_t )( iZoomX / MAP_GRID_X + sMapX ) / 2;
-                              sMapY = ( int16_t )( iZoomY / MAP_GRID_Y + sMapY ) / 2;
-                                                //sMapX = ( int16_t ) ( ( ( iZoomX ) / ( MAP_GRID_X
-           * 2) ) + sMapX / 2 );
-                                                //sMapX = ( int16_t ) ( ( ( iZoomY ) / ( MAP_GRID_Y
-           * 2) ) + sMapY / 2 );
-                                        }
-        */
-
         // not zoomed out, make sure this is a valid sector
         if (IsTheCursorAllowedToHighLightThisSector(sMapX, sMapY) == FALSE) {
           // do nothing, return
@@ -4039,8 +3998,8 @@ uint32_t HandleMapUI() {
             if ((gpItemPointerSoldier->sSectorX != sSelMapX) ||
                 (gpItemPointerSoldier->sSectorY != sSelMapY) ||
                 (gpItemPointerSoldier->bSectorZ != iCurrentMapSectorZ)) {
-              ChangeSelectedMapSector(gpItemPointerSoldier->sSectorX,
-                                      gpItemPointerSoldier->sSectorY,
+              ChangeSelectedMapSector((uint8_t)gpItemPointerSoldier->sSectorX,
+                                      (uint8_t)gpItemPointerSoldier->sSectorY,
                                       gpItemPointerSoldier->bSectorZ);
             }
           }
@@ -4174,7 +4133,7 @@ uint32_t HandleMapUI() {
                 // be centralized in CanCharacterMoveInStrategic()
 
                 // start the move box menu
-                SetUpMovingListsForSector(sMapX, sMapY, (int16_t)iCurrentMapSectorZ);
+                SetUpMovingListsForSector(sMapX, sMapY, (int8_t)iCurrentMapSectorZ);
               } else {
                 // no strategic movement is possible from underground sectors
                 DoMapMessageBox(MSG_BOX_BASIC_STYLE, pMapErrorString[1], MAP_SCREEN,
@@ -4209,7 +4168,7 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
   int8_t bSquadNumber;
   uint8_t ubGroupId = 0;
   BOOLEAN fCtrl, fAlt;
-  int16_t sMapX, sMapY;
+  uint8_t sMapX, sMapY;
 
   fCtrl = _KeyDown(CTRL);
   fAlt = _KeyDown(ALT);
@@ -4856,21 +4815,11 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
             if ((bSelectedDestChar != -1) && (fPlotForHelicopter == FALSE) &&
                 (iCurrentMapSectorZ == 0) && (GetMouseMapXY(&sMapX, &sMapY))) {
               int16_t sDeltaX, sDeltaY;
-              int16_t sPrevX, sPrevY;
+              uint8_t sPrevX, sPrevY;
               struct SOLDIERTYPE *pSoldier = MercPtrs[gCharactersList[bSelectedDestChar].usSolID];
 
               // can't teleport to where we already are
               if ((sMapX == GetSolSectorX(pSoldier)) && (sMapY == GetSolSectorY(pSoldier))) break;
-
-              /*
-                                                                      if( fZoomFlag == TRUE )
-                                                                      {
-                                                                              // convert to zoom out
-                 coords from screen coords sMapX = ( int16_t )( iZoomX / MAP_GRID_X + sMapX ) / 2;
-                                                                              sMapY = ( int16_t )(
-                 iZoomY / MAP_GRID_Y + sMapY ) / 2;
-                                                                      }
-              */
 
               // cancel movement plotting
               AbortMovementPlottingMode();
@@ -5278,7 +5227,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
   gfRequestGiveSkyriderNewDestination = FALSE;
 }
 
-BOOLEAN GetMouseMapXY(int16_t *psMapWorldX, int16_t *psMapWorldY) {
+BOOLEAN GetMouseMapXY(uint8_t *psMapWorldX, uint8_t *psMapWorldY) {
   if (IsMapScreenHelpTextUp()) {
     // don't show highlight while global help text is up
     return (FALSE);
@@ -5297,37 +5246,35 @@ BOOLEAN GetMouseMapXY(int16_t *psMapWorldX, int16_t *psMapWorldY) {
   return (GetMapXY((int16_t)MousePos.x, (int16_t)MousePos.y, psMapWorldX, psMapWorldY));
 }
 
-BOOLEAN GetMapXY(int16_t sX, int16_t sY, int16_t *psMapWorldX, int16_t *psMapWorldY) {
-  int16_t sMapX, sMapY;
-
+static BOOLEAN GetMapXY(int16_t sX, int16_t sY, uint8_t *psMapWorldX, uint8_t *psMapWorldY) {
   // Subtract start of map view
-  sMapX = sX - MAP_VIEW_START_X;  //+2*MAP_GRID_X;
-  sMapY = sY - MAP_VIEW_START_Y;
+  int16_t x = sX - MAP_VIEW_START_X;
+  int16_t y = sY - MAP_VIEW_START_Y;
 
   if (!fZoomFlag) {
-    if (sMapX < MAP_GRID_X || sMapY < MAP_GRID_Y) {
+    if (x < MAP_GRID_X || y < MAP_GRID_Y) {
       return (FALSE);
     }
   }
-  if (sMapX < 0 || sMapY < 0) {
+  if (x < 0 || y < 0) {
     return (FALSE);
   }
 
-  if (sMapX > MAP_VIEW_WIDTH + MAP_GRID_X - 1 ||
-      sMapY > MAP_VIEW_HEIGHT + 7 /* +MAP_VIEW_HEIGHT */) {
+  if (x > MAP_VIEW_WIDTH + MAP_GRID_X - 1 || y > MAP_VIEW_HEIGHT + 7 /* +MAP_VIEW_HEIGHT */) {
     return (FALSE);
   }
-  if (sMapX < 1 || sMapY < 1) {
+  if (x < 1 || y < 1) {
     return (FALSE);
   }
 
-  *psMapWorldX = (sMapX / MAP_GRID_X);
-  *psMapWorldY = (sMapY / MAP_GRID_Y);
+  *psMapWorldX = (x / MAP_GRID_X);
+  *psMapWorldY = (y / MAP_GRID_Y);
 
   return (TRUE);
 }
 
-void RenderMapHighlight(int16_t sMapX, int16_t sMapY, uint16_t usLineColor, BOOLEAN fStationary) {
+static void RenderMapHighlight(uint8_t sMapX, uint8_t sMapY, uint16_t usLineColor,
+                               BOOLEAN fStationary) {
   int16_t sScreenX, sScreenY;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
@@ -5360,7 +5307,7 @@ void RenderMapHighlight(int16_t sMapX, int16_t sMapY, uint16_t usLineColor, BOOL
 
 void PollLeftButtonInMapView(uint32_t *puiNewEvent) {
   static BOOLEAN fLBBeenPressedInMapView = FALSE;
-  int16_t sMapX, sMapY;
+  uint8_t sMapX, sMapY;
 
   // if the mouse is currently over the MAP area
   if (gMapViewRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
@@ -5414,17 +5361,6 @@ void PollLeftButtonInMapView(uint32_t *puiNewEvent) {
 
           GetMouseMapXY(&sMapX, &sMapY);
 
-          /*
-                                                  // translate screen values to map grid values for
-             zoomed in if(fZoomFlag)
-                                                  {
-                                                          sMapX=(uint16_t)iZoomX/MAP_GRID_X+sMapX;
-                                                          sMapX=sMapX/2;
-                                                          sMapY=(uint16_t)iZoomY/MAP_GRID_Y+sMapY;
-                                                          sMapY=sMapY/2;
-                                                  }
-          */
-
           // if he clicked on the last sector in his current path
           if (CheckIfClickOnLastSectorInPath(sMapX, sMapY)) {
             DestinationPlottingCompleted();
@@ -5458,7 +5394,7 @@ void PollLeftButtonInMapView(uint32_t *puiNewEvent) {
 
 void PollRightButtonInMapView(uint32_t *puiNewEvent) {
   static BOOLEAN fRBBeenPressedInMapView = FALSE;
-  int16_t sMapX, sMapY;
+  uint8_t sMapX, sMapY;
 
   // if the mouse is currently over the MAP area
   if (gMapViewRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
@@ -5513,16 +5449,6 @@ void PollRightButtonInMapView(uint32_t *puiNewEvent) {
           *puiNewEvent = MAP_EVENT_CANCEL_PATH;
         } else {
           if (GetMouseMapXY(&sMapX, &sMapY)) {
-            /*
-                                                            if(fZoomFlag)
-                                                            {
-                                                                    sMapX=(uint16_t)iZoomX/MAP_GRID_X+sMapX;
-                                                                    sMapX=sMapX/2;
-                                                                    sMapY=(uint16_t)iZoomY/MAP_GRID_Y+sMapY;
-                                                                    sMapY=sMapY/2;
-                                                            }
-            */
-
             if ((sSelMapX != sMapX) || (sSelMapY != sMapY)) {
               ChangeSelectedMapSector(sMapX, sMapY, (int8_t)iCurrentMapSectorZ);
             }
@@ -7124,7 +7050,7 @@ void PlotPermanentPaths(void) {
 }
 
 void PlotTemporaryPaths(void) {
-  int16_t sMapX, sMapY;
+  uint8_t sMapX, sMapY;
 
   // check to see if we have in fact moved are are plotting a path?
   if (GetMouseMapXY(&sMapX, &sMapY)) {
@@ -7767,7 +7693,7 @@ void HandleSpontanousTalking() {
   return;
 }
 
-BOOLEAN CheckIfClickOnLastSectorInPath(int16_t sX, int16_t sY) {
+BOOLEAN CheckIfClickOnLastSectorInPath(uint8_t sX, uint8_t sY) {
   struct path **ppMovePath = NULL;
   BOOLEAN fLastSectorInPath = FALSE;
   int32_t iVehicleId = -1;
@@ -7908,7 +7834,7 @@ void RebuildWayPointsForAllSelectedCharsGroups(void) {
 }
 
 void UpdateCursorIfInLastSector(void) {
-  int16_t sMapX = 0, sMapY = 0;
+  uint8_t sMapX = 0, sMapY = 0;
 
   // check to see if we are plotting a path, if so, see if we are highlighting the last sector int
   // he path, if so, change the cursor
@@ -8917,8 +8843,8 @@ void TellPlayerWhyHeCantCompressTime(void) {
     if (OnlyHostileCivsInSector()) {
       wchar_t str[256];
       wchar_t pSectorString[128];
-      GetSectorIDString(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, pSectorString,
-                        ARR_SIZE(pSectorString), TRUE);
+      GetSectorIDString((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ,
+                        pSectorString, ARR_SIZE(pSectorString), TRUE);
       swprintf(str, ARR_SIZE(str), gzLateLocalizedString[27], pSectorString);
       DoMapMessageBox(MSG_BOX_BASIC_STYLE, str, MAP_SCREEN, MSG_BOX_FLAG_OK,
                       MapScreenDefaultOkBoxCallback);
@@ -9430,7 +9356,7 @@ void CheckForInventoryModeCancellation() {
   }
 }
 
-void ChangeSelectedMapSector(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
+void ChangeSelectedMapSector(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ) {
   // ignore while map inventory pool is showing, or else items can be replicated, since sector
   // inventory always applies only to the currently selected sector!!!
   if (fShowMapInventoryPool) return;
@@ -9568,21 +9494,10 @@ void ChangeMapScreenMaskCursor(uint16_t usCursor) {
 }
 
 void CancelOrShortenPlottedPath(void) {
-  int16_t sMapX, sMapY;
+  uint8_t sMapX, sMapY;
   uint32_t uiReturnValue;
 
   GetMouseMapXY(&sMapX, &sMapY);
-
-  /*
-          // translate zoom in to zoom out coords
-          if(fZoomFlag)
-          {
-                  sMapX=(uint16_t)iZoomX/MAP_GRID_X+sMapX;
-                  sMapX=sMapX/2;
-                  sMapY=(uint16_t)iZoomY/MAP_GRID_Y+sMapY;
-                  sMapY=sMapY/2;
-           }
-  */
 
   // check if we are in aircraft mode
   if (fShowAircraftFlag == TRUE) {
@@ -10013,7 +9928,7 @@ uint8_t PlayerMercsInHelicopterSector(void) {
   return (PlayerMercsInSector(pGroup->ubSectorX, pGroup->ubSectorY, 0));
 }
 
-void HandleNewDestConfirmation(int16_t sMapX, int16_t sMapY) {
+void HandleNewDestConfirmation(uint8_t sMapX, uint8_t sMapY) {
   uint8_t ubCurrentProgress;
 
   // if moving the chopper itself, or moving a character aboard the chopper
@@ -10201,7 +10116,7 @@ void StartChangeSectorArrivalMode(void) {
   MapScreenMessage(FONT_MCOLOR_LTYELLOW, MSG_MAP_UI_POSITION_MIDDLE, pBullseyeStrings[0]);
 }
 
-BOOLEAN CanMoveBullseyeAndClickedOnIt(int16_t sMapX, int16_t sMapY) {
+BOOLEAN CanMoveBullseyeAndClickedOnIt(uint8_t sMapX, uint8_t sMapY) {
   // if in airspace mode, and not plotting paths
   if ((fShowAircraftFlag == TRUE) && (bSelectedDestChar == -1) && (fPlotForHelicopter == FALSE)) {
     // don't allow moving bullseye until after initial arrival
@@ -10277,8 +10192,8 @@ void HandlePostAutoresolveMessages() {
   // An additional case is when creatures kill all opposition in the sector.  For each surviving
   // monster, civilians are "virtually" murdered and loyalty hits will be processed.
   if (gsCiviliansEatenByMonsters >= 1) {
-    AdjustLoyaltyForCivsEatenByMonsters(SectorID8_X(gsEnemyGainedControlOfSectorID),
-                                        SectorID8_Y(gsEnemyGainedControlOfSectorID),
+    AdjustLoyaltyForCivsEatenByMonsters(SectorID8_X((uint8_t)gsEnemyGainedControlOfSectorID),
+                                        SectorID8_Y((uint8_t)gsEnemyGainedControlOfSectorID),
                                         (uint8_t)gsCiviliansEatenByMonsters);
     gsCiviliansEatenByMonsters = -2;
   } else if (gsCiviliansEatenByMonsters == -2) {
@@ -10286,8 +10201,8 @@ void HandlePostAutoresolveMessages() {
     gsCiviliansEatenByMonsters = -1;
     gsEnemyGainedControlOfSectorID = -1;
   } else if (gsEnemyGainedControlOfSectorID >= 0) {  // bring up the dialog box
-    SetThisSectorAsEnemyControlled(SectorID8_X(gsEnemyGainedControlOfSectorID),
-                                   SectorID8_Y(gsEnemyGainedControlOfSectorID), 0, TRUE);
+    SetThisSectorAsEnemyControlled(SectorID8_X((uint8_t)gsEnemyGainedControlOfSectorID),
+                                   SectorID8_Y((uint8_t)gsEnemyGainedControlOfSectorID), 0, TRUE);
     gsEnemyGainedControlOfSectorID = -2;
   } else if (gsEnemyGainedControlOfSectorID == -2) {
     // dirty the mapscreen after the dialog box goes away.
@@ -10615,7 +10530,7 @@ BOOLEAN CanDrawSectorCursor(void) {
   return (FALSE);
 }
 
-void RestoreMapSectorCursor(int16_t sMapX, int16_t sMapY) {
+void RestoreMapSectorCursor(uint8_t sMapX, uint8_t sMapY) {
   int16_t sScreenX, sScreenY;
 
   Assert((sMapX >= 1) && (sMapX <= 16));

@@ -89,7 +89,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason);
 void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason);
 void MinWidthOfTownMineInfoBox(void);
 
-void DisplayTownInfo(int16_t sMapX, int16_t sMapY, int8_t bMapZ) {
+void DisplayTownInfo(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ) {
   // will display town info for a particular town
 
   // set current sector

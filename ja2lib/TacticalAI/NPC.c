@@ -1646,10 +1646,10 @@ void Converse(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uintptr_t uiAppro
           SetFactTrue(pQuotePtr->usSetFactTrue);
         }
         if (pQuotePtr->ubEndQuest != NO_QUEST) {
-          EndQuest(pQuotePtr->ubEndQuest, gWorldSectorX, gWorldSectorY);
+          EndQuest(pQuotePtr->ubEndQuest, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         }
         if (pQuotePtr->ubStartQuest != NO_QUEST) {
-          StartQuest(pQuotePtr->ubStartQuest, gWorldSectorX, gWorldSectorY);
+          StartQuest(pQuotePtr->ubStartQuest, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         }
 
         // Give item to merc?
@@ -2692,8 +2692,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_SOUTH:
@@ -2701,8 +2701,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_WEST:
@@ -2710,8 +2710,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     case QUOTE_ACTION_ID_TRAVERSE_NORTH:
@@ -2719,8 +2719,8 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
 
       // Call to change the NPC's Sector Location
       ChangeNpcToDifferentSector(GetSolProfile(pSoldier),
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
-                                 gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorX,
+                                 (uint8_t)gMercProfiles[GetSolProfile(pSoldier)].sSectorY,
                                  gMercProfiles[GetSolProfile(pSoldier)].bSectorZ);
       break;
     default:
@@ -2728,7 +2728,7 @@ void HandleNPCChangesForTacticalTraversal(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-void HandleVictoryInNPCSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
+void HandleVictoryInNPCSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   // handle special cases of victory in certain sector
   int16_t sSector = 0;
 
@@ -2836,7 +2836,7 @@ BOOLEAN RecordHasDialogue(uint8_t ubNPC, uint8_t ubRecord) {
   }
 }
 
-int8_t FindCivQuoteFileIndex(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
+int8_t FindCivQuoteFileIndex(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   uint8_t ubLoop;
 
   if (sSectorZ > 0) {
@@ -2851,7 +2851,7 @@ int8_t FindCivQuoteFileIndex(uint8_t sSectorX, uint8_t sSectorY, int16_t sSector
   return (-1);
 }
 
-int8_t ConsiderCivilianQuotes(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,
+int8_t ConsiderCivilianQuotes(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ,
                               BOOLEAN fSetAsUsed) {
   int8_t bLoop, bCivQuoteSectorIndex;
   NPCQuoteInfo *pCivQuoteInfoArray;
@@ -2876,7 +2876,8 @@ int8_t ConsiderCivilianQuotes(uint8_t sSectorX, uint8_t sSectorY, int16_t sSecto
       }
 
       if (pCivQuoteInfoArray[bLoop].ubStartQuest != NO_QUEST) {
-        StartQuest(pCivQuoteInfoArray[bLoop].ubStartQuest, gWorldSectorX, gWorldSectorY);
+        StartQuest(pCivQuoteInfoArray[bLoop].ubStartQuest, (uint8_t)gWorldSectorX,
+                   (uint8_t)gWorldSectorY);
       }
 
       // return quote #

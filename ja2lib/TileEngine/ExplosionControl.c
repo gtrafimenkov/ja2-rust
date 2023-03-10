@@ -2859,7 +2859,7 @@ void UpdateAndDamageSAMIfFound(uint8_t sSectorX, uint8_t sSectorY, int8_t sSecto
   }
 }
 
-void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
+void UpdateSAMDoneRepair(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   BOOLEAN fInSector = FALSE;
   uint16_t usGoodGraphic, usDamagedGraphic;
 

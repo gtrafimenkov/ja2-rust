@@ -117,8 +117,8 @@ void AddExitGridToWorld(int32_t iMapIndex, EXITGRID *pExitGrid) {
 
   // Add the exit grid to the sector, only if we call ApplyMapChangesToMapTempFile() first.
   if (!gfEditMode && !gfLoadingExitGrids) {
-    AddExitGridToMapTempFile((uint16_t)iMapIndex, pExitGrid, gWorldSectorX, gWorldSectorY,
-                             gbWorldSectorZ);
+    AddExitGridToMapTempFile((uint16_t)iMapIndex, pExitGrid, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
   }
 }
 
@@ -194,7 +194,7 @@ void AttemptToChangeFloorLevel(int8_t bRelativeZLevel) {
         else
           ScreenMsg(FONT_YELLOW, MSG_INTERFACE, pMessageStrings[MSG_LEAVING_BASEMENT]);
 
-        SetCurrentWorldSector(gWorldSectorX, gWorldSectorY, ubLookForLevel);
+        SetCurrentWorldSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, ubLookForLevel);
         gfOverrideInsertionWithExitGrid = FALSE;
       }
     }

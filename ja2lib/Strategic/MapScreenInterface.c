@@ -137,8 +137,8 @@ BOOLEAN fReBuildCharacterList = FALSE;
 int32_t giSizeOfInterfaceFastHelpTextList = 0;
 
 // Animated sector locator icon variables.
-int16_t gsSectorLocatorX;
-int16_t gsSectorLocatorY;
+uint8_t gsSectorLocatorX;
+uint8_t gsSectorLocatorY;
 uint8_t gubBlitSectorLocatorCode;    // color
 uint32_t guiSectorLocatorGraphicID;  // icon graphic ID
 // the animate time per frame in milliseconds
@@ -1011,7 +1011,7 @@ void HandleDisplayOfSelectedMercArrows(void) {
   return;
 }
 
-void HandleDisplayOfItemPopUpForSector(int16_t sMapX, int16_t sMapY, int16_t sMapZ) {
+void HandleDisplayOfItemPopUpForSector(uint8_t sMapX, uint8_t sMapY, int8_t sMapZ) {
   // handle display of item pop up for this sector
   // check if anyone alive in this sector
   struct ITEM_POOL *pItemPool = NULL;
@@ -1136,9 +1136,10 @@ void HandleLeavingOfEquipmentInCurrentSector(uint32_t uiMercId) {
           Menptr[uiMercId].bSectorZ != gbWorldSectorZ) {
         // Set flag for item...
         AddItemsToUnLoadedSector(
-            Menptr[uiMercId].sSectorX, Menptr[uiMercId].sSectorY, Menptr[uiMercId].bSectorZ,
-            sGridNo, 1, &(Menptr[uiMercId].inv[iCounter]), Menptr[uiMercId].bLevel,
-            WOLRD_ITEM_FIND_SWEETSPOT_FROM_GRIDNO | WORLD_ITEM_REACHABLE, 0, 1, FALSE);
+            (uint8_t)Menptr[uiMercId].sSectorX, (uint8_t)Menptr[uiMercId].sSectorY,
+            Menptr[uiMercId].bSectorZ, sGridNo, 1, &(Menptr[uiMercId].inv[iCounter]),
+            Menptr[uiMercId].bLevel, WOLRD_ITEM_FIND_SWEETSPOT_FROM_GRIDNO | WORLD_ITEM_REACHABLE,
+            0, 1, FALSE);
       } else {
         AddItemToPool(sGridNo, &(Menptr[uiMercId].inv[iCounter]), 1, Menptr[uiMercId].bLevel,
                       WORLD_ITEM_REACHABLE, 0);
@@ -2652,7 +2653,7 @@ BOOLEAN IsAnythingSelectedForMoving(void) {
   return (FALSE);
 }
 
-void CreateDestroyMovementBox(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
+void CreateDestroyMovementBox(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   static BOOLEAN fCreated = FALSE;
 
   // not allowed for underground movement!
@@ -2679,7 +2680,7 @@ void CreateDestroyMovementBox(uint8_t sSectorX, uint8_t sSectorY, int16_t sSecto
   }
 }
 
-void SetUpMovingListsForSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
+void SetUpMovingListsForSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
@@ -3561,11 +3562,11 @@ void ReBuildMoveBox(void) {
 
   // stop showing the box
   fShowMapScreenMovementList = FALSE;
-  CreateDestroyMovementBox(sSelMapX, sSelMapY, (int16_t)iCurrentMapSectorZ);
+  CreateDestroyMovementBox(sSelMapX, sSelMapY, (int8_t)iCurrentMapSectorZ);
 
   // show the box
   fShowMapScreenMovementList = TRUE;
-  CreateDestroyMovementBox(sSelMapX, sSelMapY, (int16_t)iCurrentMapSectorZ);
+  CreateDestroyMovementBox(sSelMapX, sSelMapY, (int8_t)iCurrentMapSectorZ);
   ShowBox(ghMoveBox);
   MarkAllBoxesAsAltered();
 }
@@ -5091,14 +5092,14 @@ void TurnOnSectorLocator(uint8_t ubProfileID) {
       if (!fShowAircraftFlag) {
         // can't use his profile, he's where his chopper is
         Assert(iHelicopterVehicleId != -1);
-        gsSectorLocatorX = pVehicleList[iHelicopterVehicleId].sSectorX;
-        gsSectorLocatorY = pVehicleList[iHelicopterVehicleId].sSectorY;
+        gsSectorLocatorX = (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorX;
+        gsSectorLocatorY = (uint8_t)pVehicleList[iHelicopterVehicleId].sSectorY;
       } else {
         return;
       }
     } else {
-      gsSectorLocatorX = gMercProfiles[ubProfileID].sSectorX;
-      gsSectorLocatorY = gMercProfiles[ubProfileID].sSectorY;
+      gsSectorLocatorX = (uint8_t)gMercProfiles[ubProfileID].sSectorX;
+      gsSectorLocatorY = (uint8_t)gMercProfiles[ubProfileID].sSectorY;
     }
   }
   gubBlitSectorLocatorCode = LOCATOR_COLOR_YELLOW;

@@ -180,7 +180,7 @@ void SetVehicleValuesIntoSoldierType(struct SOLDIERTYPE *pVehicle) {
   pVehicle->ubWhatKindOfMercAmI = MERC_TYPE__VEHICLE;
 }
 
-int32_t AddVehicleToList(int16_t sMapX, int16_t sMapY, int16_t sGridNo, uint8_t ubType) {
+int32_t AddVehicleToList(uint8_t sMapX, uint8_t sMapY, int16_t sGridNo, uint8_t ubType) {
   // insert this vehicle into the list
   // how many vehicles are there?
   int32_t iVehicleIdValue = -1;
@@ -653,7 +653,7 @@ BOOLEAN RemoveSoldierFromVehicle(struct SOLDIERTYPE *pSoldier, int32_t iId) {
     // Update in sector if this is the current sector.....
     if (GetSolSectorX(pSoldier) == gWorldSectorX && GetSolSectorY(pSoldier) == gWorldSectorY &&
         GetSolSectorZ(pSoldier) == gbWorldSectorZ) {
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
     }
   }
 
@@ -1769,7 +1769,7 @@ void TeleportVehicleToItsClosestSector(int32_t iVehicleId, uint8_t ubGroupID) {
   struct GROUP *pGroup = NULL;
   uint32_t uiTimeToNextSector;
   uint32_t uiTimeToLastSector;
-  int16_t sPrevX, sPrevY, sNextX, sNextY;
+  uint8_t sPrevX, sPrevY, sNextX, sNextY;
 
   pGroup = GetGroup(ubGroupID);
   Assert(pGroup);

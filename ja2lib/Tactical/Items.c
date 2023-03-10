@@ -3494,8 +3494,8 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
       case HISTORY_SLAUGHTEREDBLOODCATS:
       case HISTORY_GAVE_CARMEN_HEAD:
       case HISTORY_SLAY_MYSTERIOUSLY_LEFT:
-        AddHistoryToPlayersLog((uint8_t)uiLoop, 0, GetWorldTotalMin(), gWorldSectorX,
-                               gWorldSectorY);
+        AddHistoryToPlayersLog((uint8_t)uiLoop, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+                               (uint8_t)gWorldSectorY);
         break;
       default:
         break;

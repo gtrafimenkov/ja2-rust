@@ -31,8 +31,8 @@ extern BOOLEAN gfUseAlternateMap;
 #define CHECK_DIR_X_DELTA (WORLD_TILE_X * 4)
 #define CHECK_DIR_Y_DELTA (WORLD_TILE_Y * 10)
 
-void GetCurrentWorldSector(int16_t *psMapX, int16_t *psMapY);
-BOOLEAN SetCurrentWorldSector(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
+void GetCurrentWorldSector(uint8_t *psMapX, uint8_t *psMapY);
+BOOLEAN SetCurrentWorldSector(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
 
 BOOLEAN EnterSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 void UpdateMercsInSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
@@ -42,7 +42,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t 
 void InitializeMapStructure();
 
 // get short sector name without town name
-void GetShortSectorString(int16_t sMapX, int16_t sMapY, wchar_t *sString, size_t bufSize);
+void GetShortSectorString(uint8_t sMapX, uint8_t sMapY, wchar_t *sString, size_t bufSize);
 
 // NEW!
 // Calculates the name of the sector based on the loaded sector values.
@@ -52,7 +52,7 @@ void GetShortSectorString(int16_t sMapX, int16_t sMapY, wchar_t *sString, size_t
 // equivalent)
 void GetLoadedSectorString(wchar_t *pString, size_t bufSize);
 
-void GetMapFileName(int16_t sMapX, int16_t sMapY, int8_t bSectorZ, char *bString,
+void GetMapFileName(uint8_t sMapX, uint8_t sMapY, int8_t bSectorZ, char *bString,
                     BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter);
 
 // Called from within tactical.....
@@ -97,7 +97,7 @@ void PrepareLoadedSector();
 // handle for slay...no better place to really put this stuff
 void HandleSlayDailyEvent(void);
 
-void HandleQuestCodeOnSectorEntry(int16_t sNewSectorX, int16_t sNewSectorY, int8_t bNewSectorZ);
+void HandleQuestCodeOnSectorEntry(uint8_t sNewSectorX, uint8_t sNewSectorY, int8_t bNewSectorZ);
 
 // handle a soldier leaving thier squad behind, this sets them up for mvt and potential rejoining of
 // group

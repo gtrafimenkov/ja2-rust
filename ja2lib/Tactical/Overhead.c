@@ -2672,10 +2672,10 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       }
       if (pKiller && pKiller->bTeam == OUR_TEAM) {
         AddHistoryToPlayersLog(HISTORY_MERC_KILLED_CHARACTER, pSoldierOld->ubProfile,
-                               GetWorldTotalMin(), gWorldSectorX, gWorldSectorY);
+                               GetWorldTotalMin(), (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
       } else {
         AddHistoryToPlayersLog(HISTORY_NPC_KILLED, pSoldierOld->ubProfile, GetWorldTotalMin(),
-                               gWorldSectorX, gWorldSectorY);
+                               (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
       }
     }
   }
@@ -2783,13 +2783,15 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       case DYNAMO:
         // check to see if dynamo quest is on
         if (gubQuest[QUEST_FREE_DYNAMO] == QUESTINPROGRESS) {
-          EndQuest(QUEST_FREE_DYNAMO, pSoldierOld->sSectorX, pSoldierOld->sSectorY);
+          EndQuest(QUEST_FREE_DYNAMO, (uint8_t)pSoldierOld->sSectorX,
+                   (uint8_t)pSoldierOld->sSectorY);
         }
         break;
       case KINGPIN:
         // check to see if Kingpin money quest is on
         if (gubQuest[QUEST_KINGPIN_MONEY] == QUESTINPROGRESS) {
-          EndQuest(QUEST_KINGPIN_MONEY, pSoldierOld->sSectorX, pSoldierOld->sSectorY);
+          EndQuest(QUEST_KINGPIN_MONEY, (uint8_t)pSoldierOld->sSectorX,
+                   (uint8_t)pSoldierOld->sSectorY);
           HandleNPCDoAction(KINGPIN, NPC_ACTION_GRANT_EXPERIENCE_3, 0);
         }
         SetFactTrue(FACT_KINGPIN_DEAD);
@@ -2805,7 +2807,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
         IncrementTownLoyalty(DRASSEN, LOYALTY_BONUS_CHILDREN_FREED_DOREEN_KILLED);
         // set the fact true so we have a universal check for whether the kids can go
         SetFactTrue(FACT_DOREEN_HAD_CHANGE_OF_HEART);
-        EndQuest(QUEST_FREE_CHILDREN, gWorldSectorX, gWorldSectorY);
+        EndQuest(QUEST_FREE_CHILDREN, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         if (CheckFact(FACT_KIDS_ARE_FREE, 0) == FALSE) {
           HandleNPCDoAction(DOREEN, NPC_ACTION_FREE_KIDS, 0);
         }
@@ -2836,7 +2838,8 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
 
     if (bMilitiaRank != -1) {
       // remove this militia from the strategic records
-      StrategicRemoveMilitiaFromSector(gWorldSectorX, gWorldSectorY, bMilitiaRank, 1);
+      StrategicRemoveMilitiaFromSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, bMilitiaRank,
+                                       1);
     }
 
     // If the militia's killer is known
@@ -2846,8 +2849,8 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       HandleMurderOfCivilian(pSoldierOld, pSoldierOld->fIntendedTarget);
     }
 
-    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_NATIVE_KILLED, gWorldSectorX, gWorldSectorY,
-                             gbWorldSectorZ);
+    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_NATIVE_KILLED, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
   } else  // enemies and creatures... should any of this stuff not be called if a creature dies?
   {
     if (pSoldierOld->ubBodyType == QUEENMONSTER) {
@@ -2867,12 +2870,12 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
     // If enemy guy was killed by the player, give morale boost to player's team!
     if (pSoldierOld->ubAttackerID != NOBODY &&
         MercPtrs[pSoldierOld->ubAttackerID]->bTeam == gbPlayerNum) {
-      HandleMoraleEvent(MercPtrs[pSoldierOld->ubAttackerID], MORALE_KILLED_ENEMY, gWorldSectorX,
-                        gWorldSectorY, gbWorldSectorZ);
+      HandleMoraleEvent(MercPtrs[pSoldierOld->ubAttackerID], MORALE_KILLED_ENEMY,
+                        (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
     }
 
-    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ENEMY_KILLED, gWorldSectorX, gWorldSectorY,
-                             gbWorldSectorZ);
+    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ENEMY_KILLED, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
     CheckForAlertWhenEnemyDies(pSoldierOld);
 
@@ -2882,12 +2885,12 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
     }
 
     if (pSoldierOld->ubProfile == QUEEN) {
-      HandleMoraleEvent(NULL, MORALE_DEIDRANNA_KILLED, gWorldSectorX, gWorldSectorY,
-                        gbWorldSectorZ);
+      HandleMoraleEvent(NULL, MORALE_DEIDRANNA_KILLED, (uint8_t)gWorldSectorX,
+                        (uint8_t)gWorldSectorY, gbWorldSectorZ);
       MaximizeLoyaltyForDeidrannaKilled();
     } else if (pSoldierOld->ubBodyType == QUEENMONSTER) {
-      HandleMoraleEvent(NULL, MORALE_MONSTER_QUEEN_KILLED, gWorldSectorX, gWorldSectorY,
-                        gbWorldSectorZ);
+      HandleMoraleEvent(NULL, MORALE_MONSTER_QUEEN_KILLED, (uint8_t)gWorldSectorX,
+                        (uint8_t)gWorldSectorY, gbWorldSectorZ);
       IncrementTownLoyaltyEverywhere(LOYALTY_BONUS_KILL_QUEEN_MONSTER);
 
       // Grant experience gain.....
@@ -5035,8 +5038,8 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
 
   if ((fBattleLost) || (fBattleWon)) {
     if (!gbWorldSectorZ) {
-      SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)].bLastKnownEnemies =
-          NumEnemiesInSector(gWorldSectorX, gWorldSectorY);
+      SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)].bLastKnownEnemies =
+          NumEnemiesInSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
     }
   }
 
@@ -5059,9 +5062,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       ExitCombatMode();
     }
 
-    HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
-    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, gWorldSectorX, gWorldSectorY,
-                             gbWorldSectorZ);
+    HandleMoraleEvent(NULL, MORALE_HEARD_BATTLE_LOST, (uint8_t)gWorldSectorX,
+                      (uint8_t)gWorldSectorY, gbWorldSectorZ);
+    HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_LOST, (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
     // Play death music
     SetMusicMode(MUSIC_TACTICAL_DEATH);
@@ -5071,12 +5075,15 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
       // this is our first battle... and we lost it!
       SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
       SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-      SetTheFirstBattleSector((int16_t)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
-      HandleFirstBattleEndingWhileInTown(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE);
+      SetTheFirstBattleSector(
+          (int16_t)(GetSectorID16((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)));
+      HandleFirstBattleEndingWhileInTown((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                                         gbWorldSectorZ, FALSE);
     }
 
     if (NumEnemyInSectorExceptCreatures()) {
-      SetThisSectorAsEnemyControlled(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE);
+      SetThisSectorAsEnemyControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ,
+                                     TRUE);
     }
 
     // ATE: Important! THis is delayed until music ends so we can have proper effect!
@@ -5170,9 +5177,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
           }
         }
 
-        HandleMoraleEvent(NULL, MORALE_BATTLE_WON, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
-        HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_WON, gWorldSectorX, gWorldSectorY,
-                                 gbWorldSectorZ);
+        HandleMoraleEvent(NULL, MORALE_BATTLE_WON, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                          gbWorldSectorZ);
+        HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_BATTLE_WON, (uint8_t)gWorldSectorX,
+                                 (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
         // Change music modes
         if (gfLastMercTalkedAboutKillingID == NOBODY ||
@@ -5249,8 +5257,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
     {
       LogBattleResults(LOG_VICTORY);
 
-      SetThisSectorAsPlayerControlled(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE);
-      HandleVictoryInNPCSector(gWorldSectorX, gWorldSectorY, (int16_t)gbWorldSectorZ);
+      SetThisSectorAsPlayerControlled((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                                      gbWorldSectorZ, TRUE);
+      HandleVictoryInNPCSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                               (int16_t)gbWorldSectorZ);
       if (CheckFact(FACT_FIRST_BATTLE_BEING_FOUGHT, 0)) {
         // ATE: Need to trigger record for this event .... for NPC scripting
         TriggerNPCRecord(PACOS, 18);
@@ -5259,8 +5269,10 @@ BOOLEAN CheckForEndOfBattle(BOOLEAN fAnEnemyRetreated) {
         SetFactTrue(FACT_FIRST_BATTLE_FOUGHT);
         SetFactTrue(FACT_FIRST_BATTLE_WON);
         SetFactFalse(FACT_FIRST_BATTLE_BEING_FOUGHT);
-        SetTheFirstBattleSector((int16_t)(GetSectorID16(gWorldSectorX, gWorldSectorY)));
-        HandleFirstBattleEndingWhileInTown(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE);
+        SetTheFirstBattleSector(
+            (int16_t)(GetSectorID16((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)));
+        HandleFirstBattleEndingWhileInTown((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                                           gbWorldSectorZ, FALSE);
       }
     }
 

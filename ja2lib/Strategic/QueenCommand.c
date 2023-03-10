@@ -96,7 +96,7 @@ void ValidateEnemiesHaveWeapons() {
 }
 
 // Counts enemies and crepitus, but not bloodcats.
-uint8_t NumHostilesInSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
+uint8_t NumHostilesInSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   uint8_t ubNumHostiles = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -133,7 +133,7 @@ uint8_t NumHostilesInSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ
   return ubNumHostiles;
 }
 
-uint8_t NumEnemiesInAnySector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ) {
+uint8_t NumEnemiesInAnySector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ) {
   uint8_t ubNumEnemies = 0;
 
   Assert(sSectorX >= 1 && sSectorX <= 16);
@@ -297,13 +297,13 @@ void EndTacticalBattleForEnemy() {
   // Clear enemies in battle for all stationary groups in the sector.
   if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;
     pSector->ubElitesInBattle = 0;
   } else if (!gbWorldSectorZ) {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)];
     // grab the number of each type in the stationary sector
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;
@@ -341,7 +341,8 @@ void EndTacticalBattleForEnemy() {
         if (MercPtrs[i]->bActive && MercPtrs[i]->bInSector &&
             MercPtrs[i]->bLife >=
                 OKLIFE) {  // confirmed at least one enemy here, so do the loyalty penalty.
-          HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, gWorldSectorX, gWorldSectorY, 0);
+          HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, (uint8_t)gWorldSectorX,
+                                   (uint8_t)gWorldSectorY, 0);
           break;
         }
       }
@@ -401,12 +402,12 @@ BOOLEAN PrepareEnemyForSectorBattle() {
   }
 
   if (!gbWorldSectorZ) {
-    if (NumEnemiesInSector(gWorldSectorX, gWorldSectorY) > 32) {
+    if (NumEnemiesInSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY) > 32) {
       gfPendingEnemies = TRUE;
     }
   }
 
-  pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+  pSector = &SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)];
   if (pSector->uiFlags &
       SF_USE_MAP_SETTINGS) {  // count the number of enemy placements in a map and use those
     SOLDIERINITNODE *curr;
@@ -922,7 +923,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
       RecalculateSectorWeight((uint8_t)GetSolSectorID8(pSoldier));
     } else {  // basement level (UNDERGROUND_SECTORINFO)
       UNDERGROUND_SECTORINFO *pSector =
-          FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          FindUnderGroundSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
 #ifdef JA2BETAVERSION
       uint32_t ubTotalEnemies = pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites;
 #endif
@@ -1022,7 +1023,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
               InvalidateWorldRedundency();
               // Now that the queen is dead, turn off the creature quest.
               EndCreatureQuest();
-              EndQuest(QUEST_CREATURES, gWorldSectorX, gWorldSectorY);
+              EndQuest(QUEST_CREATURES, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
             }
             break;
         }
@@ -1209,7 +1210,8 @@ void AddEnemiesToBattle(struct GROUP *pGroup, uint8_t ubStrategicInsertionCode, 
 
   if (fMagicallyAppeared) {  // update the strategic counters
     if (!gbWorldSectorZ) {
-      SECTORINFO *pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+      SECTORINFO *pSector =
+          &SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)];
       pSector->ubNumAdmins += ubNumAdmins;
       pSector->ubAdminsInBattle += ubNumAdmins;
       pSector->ubNumTroops += ubNumTroops;
@@ -1218,7 +1220,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, uint8_t ubStrategicInsertionCode, 
       pSector->ubElitesInBattle += ubNumElites;
     } else {
       UNDERGROUND_SECTORINFO *pSector =
-          FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          FindUnderGroundSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
       if (pSector) {
         pSector->ubNumAdmins += ubNumAdmins;
         pSector->ubAdminsInBattle += ubNumAdmins;
@@ -1254,7 +1256,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, uint8_t ubStrategicInsertionCode, 
       } else {  // no edgepoints left, so put him at the entrypoint.
         pSoldier->ubStrategicInsertionCode = ubStrategicInsertionCode;
       }
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+      UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, 0);
     } else if (ubNumTroops &&
                (uint8_t)Random(ubTotalSoldiers) < (uint8_t)(ubNumElites + ubNumTroops)) {
       ubNumTroops--;
@@ -1272,7 +1274,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, uint8_t ubStrategicInsertionCode, 
       } else {  // no edgepoints left, so put him at the entrypoint.
         pSoldier->ubStrategicInsertionCode = ubStrategicInsertionCode;
       }
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+      UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, 0);
     } else if (ubNumAdmins && (uint8_t)Random(ubTotalSoldiers) <
                                   (uint8_t)(ubNumElites + ubNumTroops + ubNumAdmins)) {
       ubNumAdmins--;
@@ -1290,7 +1292,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, uint8_t ubStrategicInsertionCode, 
       } else {  // no edgepoints left, so put him at the entrypoint.
         pSoldier->ubStrategicInsertionCode = ubStrategicInsertionCode;
       }
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, 0);
+      UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, 0);
     }
   }
 }
@@ -1380,7 +1382,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-UNDERGROUND_SECTORINFO *FindUnderGroundSector(int16_t sMapX, int16_t sMapY, uint8_t bMapZ) {
+UNDERGROUND_SECTORINFO *FindUnderGroundSector(uint8_t sMapX, uint8_t sMapY, uint8_t bMapZ) {
   UNDERGROUND_SECTORINFO *pUnderground;
   pUnderground = gpUndergroundSectorInfoHead;
 
@@ -1414,13 +1416,13 @@ void EndCaptureSequence() {
     if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTNOTSTARTED) {
       // CJC Dec 1 2002: fixing multiple captures:
       gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE;
-      StartQuest(QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY);
+      StartQuest(QUEST_HELD_IN_ALMA, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
     }
     // CJC Dec 1 2002: fixing multiple captures:
     // else if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTDONE )
     else if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTDONE &&
              gubQuest[QUEST_INTERROGATION] == QUESTNOTSTARTED) {
-      StartQuest(QUEST_INTERROGATION, gWorldSectorX, gWorldSectorY);
+      StartQuest(QUEST_INTERROGATION, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
       // CJC Dec 1 2002: fixing multiple captures:
       gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_ESCAPE;
 
@@ -1488,8 +1490,8 @@ void EnemyCapturesPlayerSoldier(struct SOLDIERTYPE *pSoldier) {
 
   // IF there are no enemies, and we need to do alma, skip!
   if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTNOTSTARTED && iNumEnemiesInSector == 0) {
-    InternalStartQuest(QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY, FALSE);
-    InternalEndQuest(QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY, FALSE);
+    InternalStartQuest(QUEST_HELD_IN_ALMA, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, FALSE);
+    InternalEndQuest(QUEST_HELD_IN_ALMA, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, FALSE);
   }
 
   HandleMoraleEvent(pSoldier, MORALE_MERC_CAPTURED, GetSolSectorX(pSoldier),
@@ -1659,7 +1661,7 @@ void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap() {
 
   if (!gbWorldSectorZ) {
     SECTORINFO *pSector;
-    pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+    pSector = &SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)];
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;
     pSector->ubElitesInBattle = 0;
@@ -1667,7 +1669,7 @@ void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap() {
     // RecalculateSectorWeight(
   } else if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pSector;
-    pSector = FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+    pSector = FindUnderGroundSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
     if (!pSector) return;
     pSector->ubAdminsInBattle = 0;
     pSector->ubTroopsInBattle = 0;

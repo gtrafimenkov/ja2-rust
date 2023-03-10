@@ -469,8 +469,8 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, u
           Soldier.bVehicleID = pCreateStruct->bUseGivenVehicleID;
         } else {
           // Add vehicle to list....
-          Soldier.bVehicleID = (int8_t)AddVehicleToList(Soldier.sSectorX, Soldier.sSectorY,
-                                                        Soldier.bSectorZ, ubVehicleID);
+          Soldier.bVehicleID = (int8_t)AddVehicleToList(
+              (uint8_t)Soldier.sSectorX, (uint8_t)Soldier.sSectorY, Soldier.bSectorZ, ubVehicleID);
         }
         SetVehicleValuesIntoSoldierType(&Soldier);
         break;
@@ -538,8 +538,8 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, u
     if (!pSoldier) return NULL;
     memcpy(pSoldier, &Soldier, sizeof(struct SOLDIERTYPE));
     pSoldier->ubID = 255;
-    pSoldier->sSectorX = (int16_t)SectorID8_X(ubSectorID);
-    pSoldier->sSectorY = (int16_t)SectorID8_Y(ubSectorID);
+    pSoldier->sSectorX = SectorID8_X(ubSectorID);
+    pSoldier->sSectorY = SectorID8_Y(ubSectorID);
     pSoldier->bSectorZ = 0;
     *pubID = 255;
     return pSoldier;
@@ -1429,7 +1429,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo(SOLDIERCREATE_STRUCT *pp,
 
         case BLOODCAT:
           pp->bExpLevel = 5 + bExpLevelModifier;
-          if (GetSectorID8(gWorldSectorX, gWorldSectorY) == SEC_I16) {
+          if (GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY) == SEC_I16) {
             pp->bExpLevel += gGameOptions.ubDifficultyLevel;
           }
           break;
@@ -2084,7 +2084,9 @@ void RandomizeRelativeLevel(int8_t *pbRelLevel, uint8_t ubSoldierClass) {
 void QuickCreateProfileMerc(int8_t bTeam, uint8_t ubProfileID) {
   // Create guy # X
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  int16_t sWorldX, sWorldY, sSectorX, sSectorY, sGridX, sGridY;
+  int16_t sWorldX, sWorldY;
+  uint8_t sSectorX, sSectorY;
+  int16_t sGridX, sGridY;
   uint8_t ubID;
   uint16_t usMapPos;
 
@@ -2268,7 +2270,8 @@ void TrashAllSoldiers() {
 uint8_t GetLocationModifier(uint8_t ubSoldierClass) {
   uint8_t ubLocationModifier;
   uint8_t ubPalaceDistance;
-  int16_t sSectorX, sSectorY, sSectorZ;
+  uint8_t sSectorX, sSectorY;
+  int8_t sSectorZ;
   TownID bTownId;
   BOOLEAN fSuccess;
 

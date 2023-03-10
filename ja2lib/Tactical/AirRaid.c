@@ -200,7 +200,8 @@ BOOLEAN BeginAirRaid() {
     return (FALSE);
   }
 
-  ChangeSelectedMapSector(gAirRaidDef.sSectorX, gAirRaidDef.sSectorY, (int8_t)gAirRaidDef.sSectorZ);
+  ChangeSelectedMapSector((uint8_t)gAirRaidDef.sSectorX, (uint8_t)gAirRaidDef.sSectorY,
+                          (int8_t)gAirRaidDef.sSectorZ);
 
   if (gAirRaidDef.sSectorX != gWorldSectorX || gAirRaidDef.sSectorY != gWorldSectorY ||
       gAirRaidDef.sSectorZ != gbWorldSectorZ || IsMapScreen_2()) {
@@ -208,7 +209,7 @@ BOOLEAN BeginAirRaid() {
     // Set flag for handling raid....
     gubAirRaidMode = AIR_RAID_TRYING_TO_START;
     gfQuoteSaid = TRUE;
-    SayQuoteFromAnyBodyInThisSector(gAirRaidDef.sSectorX, gAirRaidDef.sSectorY,
+    SayQuoteFromAnyBodyInThisSector((uint8_t)gAirRaidDef.sSectorX, (uint8_t)gAirRaidDef.sSectorY,
                                     (int8_t)gAirRaidDef.sSectorZ, QUOTE_AIR_RAID);
     SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_EXIT_MAP_SCREEN, gAirRaidDef.sSectorX,
                                   gAirRaidDef.sSectorY, gAirRaidDef.sSectorZ, 0, 0);
@@ -377,8 +378,8 @@ void AirRaidLookForDive() {
     giNumTurnsSinceLastDive = 0;
 
     // Do morale hit on our guys
-    HandleMoraleEvent(NULL, MORALE_AIRSTRIKE, gAirRaidDef.sSectorX, gAirRaidDef.sSectorY,
-                      (int8_t)gAirRaidDef.sSectorZ);
+    HandleMoraleEvent(NULL, MORALE_AIRSTRIKE, (uint8_t)gAirRaidDef.sSectorX,
+                      (uint8_t)gAirRaidDef.sSectorY, (int8_t)gAirRaidDef.sSectorZ);
   }
 
   // If NOT in combat....

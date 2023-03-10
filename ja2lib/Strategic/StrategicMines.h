@@ -54,8 +54,8 @@ enum {
 
 // the strategic mine structures
 typedef struct MINE_LOCATION_TYPE {
-  int16_t sSectorX;        // x value of sector mine is in
-  int16_t sSectorY;        // y value of sector mine is in
+  uint8_t sSectorX;        // x value of sector mine is in
+  uint8_t sSectorY;        // y value of sector mine is in
   int8_t bAssociatedTown;  // associated town of this mine
 
 } MINE_LOCATION_TYPE;
@@ -164,7 +164,7 @@ uint8_t GetHeadMinerIndexForMine(int8_t bMineIndex);
 uint16_t GetHeadMinerProfileIdForMine(int8_t bMineIndex);
 
 // Find the sector location of a mine
-void GetMineSector(uint8_t ubMineIndex, int16_t* psX, int16_t* psY);
+void GetMineSector(uint8_t ubMineIndex, uint8_t* psX, uint8_t* psY);
 
 void IssueHeadMinerQuote(int8_t bMineIndex, uint8_t ubQuoteType);
 

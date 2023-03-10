@@ -1124,7 +1124,8 @@ uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
     // Add soldier strategic info, so it doesn't break the counters!
     if (pSoldier) {
       if (!gbWorldSectorZ) {
-        SECTORINFO *pSector = &SectorInfo[GetSectorID8(gWorldSectorX, gWorldSectorY)];
+        SECTORINFO *pSector =
+            &SectorInfo[GetSectorID8((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY)];
         switch (pSoldier->ubSoldierClass) {
           case SOLDIER_CLASS_ADMINISTRATOR:
             pSector->ubNumAdmins++;
@@ -1141,7 +1142,7 @@ uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
         }
       } else {
         UNDERGROUND_SECTORINFO *pSector =
-            FindUnderGroundSector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+            FindUnderGroundSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
         if (pSector) {
           switch (pSoldier->ubSoldierClass) {
             case SOLDIER_CLASS_ADMINISTRATOR:
@@ -1162,7 +1163,7 @@ uint32_t UIHandleNewBadMerc(UI_EVENT *pUIEvent) {
 
       pSoldier->ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
       pSoldier->usStrategicInsertionData = usMapPos;
-      UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+      UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
       AllTeamsLookForAll(NO_INTERRUPTS);
     }
   }

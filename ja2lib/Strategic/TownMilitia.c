@@ -1133,7 +1133,7 @@ void BuildMilitiaPromotionsString(wchar_t *str, size_t bufSize) {
 bool HasNewMilitiaPromotions() { return _st.gbMilitiaPromotions > 0; }
 
 BOOLEAN DoesPlayerHaveAnyMilitia() {
-  int16_t sX, sY;
+  uint8_t sX, sY;
 
   // run through list of towns that might have militia..if any return TRUE..else return FALSE
   for (sX = 1; sX < MAP_WORLD_X - 1; sX++) {

@@ -4,7 +4,7 @@
 #include "SGP/Types.h"
 
 // build main facilities strings for sector
-void GetSectorFacilitiesFlags(int16_t sMapX, int16_t sMapY, wchar_t* sFacilitiesString,
+void GetSectorFacilitiesFlags(uint8_t sMapX, uint8_t sMapY, wchar_t* sFacilitiesString,
                               size_t bufSize);
 
 // set sector as enemy controlled
@@ -12,7 +12,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMap
                                        BOOLEAN fContested);
 
 // set sector as player controlled
-BOOLEAN SetThisSectorAsPlayerControlled(int16_t sMapX, int16_t sMapY, int8_t bMapZ,
+BOOLEAN SetThisSectorAsPlayerControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ,
                                         BOOLEAN fContested);
 
 void ReplaceSoldierProfileInPlayerGroup(uint8_t ubGroupID, uint8_t ubOldProfile,

@@ -373,8 +373,8 @@ void EnvDoLightning(void) {
 }
 
 uint8_t GetTimeOfDayAmbientLightLevel() {
-  if (SectorTemperature(GetWorldMinutesInDay(), gWorldSectorX, gWorldSectorY, gbWorldSectorZ) ==
-      HOT) {
+  if (SectorTemperature(GetWorldMinutesInDay(), (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                        gbWorldSectorZ) == HOT) {
     return (HOT_DAY_LIGHTLEVEL);
   } else {
     return (gubEnvLightValue);

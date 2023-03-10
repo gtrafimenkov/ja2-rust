@@ -27,7 +27,7 @@ extern BOOLEAN gfUseCreatureMusic;
 BOOLEAN MineClearOfMonsters(uint8_t ubMineIndex);
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(int16_t *psSectorX, int16_t *psSectorY, int8_t *pbSectorZ,
+BOOLEAN GetWarpOutOfMineCodes(uint8_t *psSectorX, uint8_t *psSectorY, int8_t *pbSectorZ,
                               int16_t *psInsertionGridNo);
 
 extern int16_t gsCreatureInsertionCode;

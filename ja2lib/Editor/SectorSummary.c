@@ -187,13 +187,13 @@ BOOLEAN gfOverrideDirty;
 BOOLEAN gfOverride;
 
 // The sector coordinates of the map currently loaded in memory (blue)
-int16_t gsSectorX, gsSectorY;
+uint8_t gsSectorX, gsSectorY;
 // The layer of the sector that is currently loaded in memory.
 int32_t gsSectorLayer;
 // The sector coordinates of the mouse position (yellow)
 int16_t gsHiSectorX = 0, gsHiSectorY = 0;
 // The sector coordinates of the selected sector (red)
-int16_t gsSelSectorX = 0, gsSelSectorY = 0;
+uint8_t gsSelSectorX = 0, gsSelSectorY = 0;
 
 // Used to determine how long the F5 key has been held down for to determine whether or not the
 // summary is going to be persistant or not.
@@ -1426,7 +1426,7 @@ void UpdateSectorSummary(wchar_t *gszFilename, BOOLEAN fUpdate) {
   wchar_t str[50];
   char szCoord[40];
   wchar_t *ptr;
-  int16_t x, y;
+  uint8_t x, y;
 
   gfRenderSummary = TRUE;
   // Extract the sector

@@ -36,8 +36,8 @@ int32_t NewLightEffect(int16_t sGridNo, int8_t bType);
 BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile);
 BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile);
 
-BOOLEAN SaveLightEffectsToMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
-BOOLEAN LoadLightEffectsFromMapTempFile(int16_t sMapX, int16_t sMapY, int8_t bMapZ);
+BOOLEAN SaveLightEffectsToMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
+BOOLEAN LoadLightEffectsFromMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
 void ResetLightEffects();
 
 #endif

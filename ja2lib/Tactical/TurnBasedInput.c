@@ -2334,8 +2334,8 @@ void GetKeyboardInput(uint32_t *puiNewEvent) {
 
           if (fAlt) {
             if (CHEATER_CHEAT_LEVEL()) {
-              gStrategicStatus.usPlayerKills +=
-                  NumEnemiesInAnySector(gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+              gStrategicStatus.usPlayerKills += NumEnemiesInAnySector(
+                  (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ);
               ObliterateSector();
             }
           } else if (fCtrl) {

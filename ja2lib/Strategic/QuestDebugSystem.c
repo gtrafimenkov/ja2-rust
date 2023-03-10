@@ -2632,7 +2632,7 @@ void DestroyQuestDebugTextInputBoxes() { KillTextInputMode(); }
 
 void AddNPCToGridNo(int32_t iGridNo) {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  int16_t sSectorX, sSectorY;
+  uint8_t sSectorX, sSectorY;
   uint8_t ubID;
 
   GetCurrentWorldSector(&sSectorX, &sSectorY);
@@ -3583,7 +3583,7 @@ void GetDebugLocationString(uint16_t usProfileID, wchar_t *pzText, size_t bufSiz
 
   // else the soldier is in a different map
   else {
-    GetShortSectorString(gMercProfiles[usProfileID].sSectorX, gMercProfiles[usProfileID].sSectorY,
-                         pzText, bufSize);
+    GetShortSectorString((uint8_t)gMercProfiles[usProfileID].sSectorX,
+                         (uint8_t)gMercProfiles[usProfileID].sSectorY, pzText, bufSize);
   }
 }

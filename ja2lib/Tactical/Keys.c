@@ -856,7 +856,8 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int
   }
 
   // Set the sector flag indicating that there is a Door table temp file present
-  SetSectorFlag(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, SF_DOOR_TABLE_TEMP_FILES_EXISTS);
+  SetSectorFlag((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ,
+                SF_DOOR_TABLE_TEMP_FILES_EXISTS);
 
   FileMan_Close(hFile);
 
@@ -876,8 +877,8 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   // add the 'd' for 'Door' to the front of the map name
   //	sprintf( zMapName, "%s\\d_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
-                     gbWorldSectorZ);
+  GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, (uint8_t)gWorldSectorX,
+                     (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
   // Check to see if the file exists
   if (!FileMan_Exists(zMapName)) {
@@ -1610,8 +1611,8 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   // add the 'm' for 'Modifed Map' to the front of the map name
   //	sprintf( zMapName, "%s\\ds_%s", MAPS_DIR, zTempName);
 
-  GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, gWorldSectorX, gWorldSectorY,
-                     gbWorldSectorZ);
+  GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, (uint8_t)gWorldSectorX,
+                     (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
   // Get rid of the existing door array
   TrashDoorStatusArray();
@@ -1695,7 +1696,7 @@ void ExamineDoorsOnEnteringSector() {
 
   // OK, only do this if conditions are met....
   // If this is any omerta tow, don't do it...
-  bTownId = GetTownIdForSector(gWorldSectorX, gWorldSectorY);
+  bTownId = GetTownIdForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
 
   if (bTownId == OMERTA) {
     return;
@@ -1745,7 +1746,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   // OK, only do this if conditions are met....
 
   // If this is any omerta tow, don't do it...
-  bTownId = GetTownIdForSector(gWorldSectorX, gWorldSectorY);
+  bTownId = GetTownIdForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
 
   if (bTownId == OMERTA) {
     return;

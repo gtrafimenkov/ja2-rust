@@ -80,30 +80,30 @@ BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(uint8_t sSectorX, uint8_t sSec
 
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile();
 
-void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
-                                          int16_t sSectorY, uint8_t ubSectorZ);
-void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
-                                         int16_t sSectorY, uint8_t ubSectorZ);
-void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
-                                    int16_t sSectorY, uint8_t ubSectorZ);
-void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, int16_t sSectorX,
-                                    int16_t sSectorY, uint8_t ubSectorZ);
+void AddRemoveObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t sSectorX,
+                                          uint8_t sSectorY, int8_t ubSectorZ);
+void RemoveStructFromUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t sSectorX,
+                                         uint8_t sSectorY, int8_t ubSectorZ);
+void AddObjectToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t sSectorX,
+                                    uint8_t sSectorY, int8_t ubSectorZ);
+void AddStructToUnLoadedMapTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t sSectorX,
+                                    uint8_t sSectorY, int8_t ubSectorZ);
 
 // Adds the exit grid to
 void AddExitGridToMapTempFile(uint16_t usGridNo, EXITGRID *pExitGrid, uint8_t sSectorX,
-                              uint8_t sSectorY, uint8_t ubSectorZ);
+                              uint8_t sSectorY, int8_t ubSectorZ);
 
 // This function removes a struct with the same MapIndex and graphic index from the given sectors
 // temp file
 BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t sSectorX,
-                                  uint8_t sSectorY, uint8_t ubSectorZ);
+                                  uint8_t sSectorY, int8_t ubSectorZ);
 
 void SetOpenableStructStatusFromMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened);
 void AddOpenableStructStatusToMapTempFile(uint32_t uiMapIndex, BOOLEAN fOpened);
 
 void AddWindowHitToMapTempFile(uint32_t uiMapIndex);
 
-BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(uint16_t usSectorX, uint16_t usSectorY,
+BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(uint8_t usSectorX, uint8_t usSectorY,
                                                      int8_t bSectorZ, uint16_t usGridNo,
                                                      BOOLEAN fChangeToOpen);
 

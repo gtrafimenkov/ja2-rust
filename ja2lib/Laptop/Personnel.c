@@ -1172,7 +1172,7 @@ void DisplayCharName(int32_t iId, int32_t iSlot) {
   } else if (Menptr[iId].bAssignment == IN_TRANSIT) {
   } else {
     // name of town, if any
-    bTownId = GetTownIdForSector(Menptr[iId].sSectorX, Menptr[iId].sSectorY);
+    bTownId = GetTownIdForSector((uint8_t)Menptr[iId].sSectorX, (uint8_t)Menptr[iId].sSectorY);
 
     if (bTownId != BLANK_SECTOR) {
       swprintf(sTownName, ARR_SIZE(sTownName), L"%s", pTownNames[bTownId]);

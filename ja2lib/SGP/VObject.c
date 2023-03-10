@@ -1349,14 +1349,13 @@ void DumpVObjectInfoIntoFile(char *filename, BOOLEAN fAppend) {
 // Debug wrapper for adding vObjects
 BOOLEAN _AddAndRecordVObject(VOBJECT_DESC *VObjectDesc, uint32_t *uiIndex, uint32_t uiLineNum,
                              char *pSourceFile) {
-  uint16_t usLength;
   char str[256];
   if (!AddStandardVideoObject(VObjectDesc, uiIndex)) {
     return FALSE;
   }
 
   // record the filename of the vObject (some are created via memory though)
-  usLength = strlen(VObjectDesc->ImageFile) + 1;
+  size_t usLength = strlen(VObjectDesc->ImageFile) + 1;
   gpVObjectTail->pName = (char *)MemAlloc(usLength);
   memset(gpVObjectTail->pName, 0, usLength);
   strcpy(gpVObjectTail->pName, VObjectDesc->ImageFile);

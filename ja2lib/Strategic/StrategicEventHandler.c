@@ -477,8 +477,8 @@ void CheckForKingpinsMoneyMissing(BOOLEAN fFirstCheck) {
 
     if (uiTotalCash < 30000) {
       // add history log here
-      AddHistoryToPlayersLog(HISTORY_FOUND_MONEY, 0, GetWorldTotalMin(), gWorldSectorX,
-                             gWorldSectorY);
+      AddHistoryToPlayersLog(HISTORY_FOUND_MONEY, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+                             (uint8_t)gWorldSectorY);
 
       SetFactTrue(FACT_KINGPIN_WILL_LEARN_OF_MONEY_GONE);
     }

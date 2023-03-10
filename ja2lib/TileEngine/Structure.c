@@ -1412,7 +1412,8 @@ BOOLEAN DamageStructure(
   }
 
   // OK, LOOK FOR A SAM SITE, UPDATE....
-  UpdateAndDamageSAMIfFound(gWorldSectorX, gWorldSectorY, gbWorldSectorZ, sGridNo, ubDamage);
+  UpdateAndDamageSAMIfFound((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ, sGridNo,
+                            ubDamage);
 
   // find the base so we can reduce the hit points!
   pBase = FindBaseStructure(pStructure);

@@ -337,7 +337,7 @@ int8_t GetMineAssociatedWithThisTown(TownID bTownId) {
 uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
   // will remove the ore from the mine and return the amount that was removed
   uint32_t uiAmountExtracted = 0;
-  int16_t sSectorX, sSectorY;
+  uint8_t sSectorX, sSectorY;
 
   Assert((bMineIndex >= 0) && (bMineIndex < MAX_NUMBER_OF_MINES));
 
@@ -639,7 +639,7 @@ int8_t GetMineIndexForSector(int16_t sX, int16_t sY) {
   return (-1);
 }
 
-void GetMineSector(uint8_t ubMineIndex, int16_t *psX, int16_t *psY) {
+void GetMineSector(uint8_t ubMineIndex, uint8_t *psX, uint8_t *psY) {
   Assert((ubMineIndex >= 0) && (ubMineIndex < MAX_NUMBER_OF_MINES));
 
   *psX = gMineLocation[ubMineIndex].sSectorX;

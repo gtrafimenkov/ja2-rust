@@ -1480,7 +1480,8 @@ void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fN
         // add them to the tactical engine!
         if (pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY &&
             pGroup->ubSectorZ == gbWorldSectorZ) {
-          UpdateMercInSector(curr->pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          UpdateMercInSector(curr->pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                             gbWorldSectorZ);
         }
         curr = curr->next;
       }
@@ -1543,7 +1544,8 @@ void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fN
         if (pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY &&
             pGroup->ubSectorZ == gbWorldSectorZ) {
           // add vehicle to the tactical engine!
-          UpdateMercInSector(pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+          UpdateMercInSector(pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                             gbWorldSectorZ);
         }
 
         // set directions of insertion
@@ -1564,14 +1566,15 @@ void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fN
           if (pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY &&
               pGroup->ubSectorZ == gbWorldSectorZ) {
             // add passenger to the tactical engine!
-            UpdateMercInSector(curr->pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ);
+            UpdateMercInSector(curr->pSoldier, (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
+                               gbWorldSectorZ);
           }
 
           curr = curr->next;
         }
       } else {
-        if (HandleHeliEnteringSector(pVehicleList[iVehId].sSectorX,
-                                     pVehicleList[iVehId].sSectorY) == TRUE) {
+        if (HandleHeliEnteringSector((uint8_t)pVehicleList[iVehId].sSectorX,
+                                     (uint8_t)pVehicleList[iVehId].sSectorY) == TRUE) {
           // helicopter destroyed
           fGroupDestroyed = TRUE;
         }
@@ -2204,7 +2207,7 @@ void RemoveAllGroups() {
   gfRemovingAllGroups = FALSE;
 }
 
-void SetGroupSectorValue(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ, uint8_t ubGroupID) {
+void SetGroupSectorValue(uint8_t sSectorX, uint8_t sSectorY, int8_t sSectorZ, uint8_t ubGroupID) {
   struct GROUP *pGroup;
   PLAYERGROUP *pPlayer;
 
@@ -3583,7 +3586,8 @@ WAYPOINT *GetFinalWaypoint(struct GROUP *pGroup) {
 // ResetMovementForEnemyGroup() for more details on what the resetting does.
 void ResetMovementForEnemyGroupsInLocation(uint8_t ubSectorX, uint8_t ubSectorY) {
   struct GROUP *pGroup, *next;
-  int16_t sSectorX, sSectorY, sSectorZ;
+  uint8_t sSectorX, sSectorY;
+  int8_t sSectorZ;
 
   GetCurrentBattleSectorXYZ(&sSectorX, &sSectorY, &sSectorZ);
   pGroup = gpGroupList;
@@ -4066,12 +4070,12 @@ void NotifyPlayerOfBloodcatBattle(uint8_t ubSectorX, uint8_t ubSectorY) {
   DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, TriggerPrebattleInterface);
 }
 
-void PlaceGroupInSector(uint8_t ubGroupID, int16_t sPrevX, int16_t sPrevY, int16_t sNextX,
-                        int16_t sNextY, int8_t bZ, BOOLEAN fCheckForBattle) {
+void PlaceGroupInSector(uint8_t ubGroupID, uint8_t sPrevX, uint8_t sPrevY, uint8_t sNextX,
+                        uint8_t sNextY, int8_t bZ, BOOLEAN fCheckForBattle) {
   ClearMercPathsAndWaypointsForAllInGroup(GetGroup(ubGroupID));
 
   // change where they are and where they're going
-  SetGroupPrevSectors(ubGroupID, (uint8_t)sPrevX, (uint8_t)sPrevY);
+  SetGroupPrevSectors(ubGroupID, sPrevX, sPrevY);
   SetGroupSectorValue(sPrevX, sPrevY, bZ, ubGroupID);
   SetGroupNextSectorValue(sNextX, sNextY, ubGroupID);
 
@@ -4180,7 +4184,7 @@ void PlayerGroupArrivedSafelyInSector(struct GROUP *pGroup, BOOLEAN fCheckForNPC
 }
 
 BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup) {
-  int16_t sSectorX = 0, sSectorY = 0;
+  uint8_t sSectorX = 0, sSectorY = 0;
   int8_t bSectorZ = 0;
   wchar_t sString[128];
   wchar_t wSectorName[128];
