@@ -89,3 +89,45 @@ pub extern "C" fn Plat_RemoveReadOnlyAttribute(path_utf8: *const c_char) -> bool
         Some(path) => platform::remove_readonly_attribute(&path).is_ok(),
     }
 }
+
+/// Copy a rust string into a buffer from C.
+/// The result string will be in utf-8 encoding.
+/// If the buffer is too small, the buffer will be filled with zeroes, but the string will not be copied.
+/// Returns true if the string was successfully copied.
+fn copy_string_to_c_buffer(str: &str, buf: *mut c_char, buf_size: usize) -> bool {
+    if buf_size == 0 {
+        return false;
+    }
+
+    let str_bytes = str.as_bytes();
+    let str_bytes_len = str_bytes.len();
+
+    unsafe {
+        // first fill the buffer with zeroes; this is a safey measure
+        let buffer = std::slice::from_raw_parts_mut(buf as *mut u8, buf_size);
+        buffer.fill(0);
+
+        if str_bytes_len + 1 > buf_size {
+            // not enough space
+            return false;
+        }
+
+        buffer[..str_bytes_len].copy_from_slice(str_bytes);
+        true
+    }
+}
+
+#[no_mangle]
+/// Copy string "Foo" into the buffer.
+/// If not enough space, return false and fill the buffer with zeroes.
+pub extern "C" fn GetStrTest_Foo(buf: *mut c_char, buf_size: usize) -> bool {
+    copy_string_to_c_buffer("Foo", buf, buf_size)
+}
+
+#[no_mangle]
+/// Copy string "Привет" into the buffer.
+/// The string will be utf-8 encoded.
+/// If not enough space, return false and fill the buffer with zeroes.
+pub extern "C" fn GetStrTest_HelloRus(buf: *mut c_char, buf_size: usize) -> bool {
+    copy_string_to_c_buffer("Привет", buf, buf_size)
+}

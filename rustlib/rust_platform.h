@@ -49,6 +49,19 @@ bool Plat_RemoveDirectory(const char *path_utf8);
  */
 bool Plat_RemoveReadOnlyAttribute(const char *path_utf8);
 
+/**
+ * Copy string "Foo" into the buffer.
+ * If not enough space, return false and fill the buffer with zeroes.
+ */
+bool GetStrTest_Foo(char *buf, uintptr_t buf_size);
+
+/**
+ * Copy string "Привет" into the buffer.
+ * The string will be utf-8 encoded.
+ * If not enough space, return false and fill the buffer with zeroes.
+ */
+bool GetStrTest_HelloRus(char *buf, uintptr_t buf_size);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
