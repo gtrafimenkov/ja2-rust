@@ -32,8 +32,6 @@ UINT32 GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) { return FALSE; }
-
 BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
 
 BOOLEAN Plat_DeleteFile(const char *filename) { return FALSE; }
@@ -267,9 +265,7 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
-  return NULL;
-}
+struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) { return NULL; }
 
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   return FALSE;

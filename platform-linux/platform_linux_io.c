@@ -97,5 +97,3 @@ BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize) {
   strcopy(buf, bufSize, path);
   return TRUE;
 }
-
-BOOLEAN Plat_SetCurrentDirectory(const char *pcDirectory) { return chdir(pcDirectory) == 0; }
