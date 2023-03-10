@@ -7,6 +7,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+struct Str512 {
+  char buf[512];
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -50,6 +54,11 @@ bool Plat_RemoveDirectory(const char *path_utf8);
 bool Plat_RemoveReadOnlyAttribute(const char *path_utf8);
 
 /**
+ * Return the current working directory.
+ */
+bool Plat_GetCurrentDirectory(struct Str512 *dest);
+
+/**
  * Copy string "Foo" into the buffer.
  * If not enough space, return false and fill the buffer with zeroes.
  */
@@ -61,6 +70,11 @@ bool GetStrTest_Foo(char *buf, uintptr_t buf_size);
  * If not enough space, return false and fill the buffer with zeroes.
  */
 bool GetStrTest_HelloRus(char *buf, uintptr_t buf_size);
+
+/**
+ * Copy string "Hello String512" to str.
+ */
+bool GetStrTest_Hello512(struct Str512 *str);
 
 #ifdef __cplusplus
 } // extern "C"

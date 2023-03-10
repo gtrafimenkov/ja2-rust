@@ -41,8 +41,6 @@ BOOLEAN Plat_GetExecutableDirectory(char *buf, u16 bufSize);
 // Gets the amount of free space on the hard drive that the main executeablt is runnning from
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory);
-
 struct GetFile {
   INT32 iFindHandle;
   CHAR8 zFileName[260];  // changed from UINT16, Alex Meduna, Mar-20'98

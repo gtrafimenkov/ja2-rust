@@ -32,8 +32,6 @@ UINT32 GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
-
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
 
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {

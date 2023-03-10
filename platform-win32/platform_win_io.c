@@ -16,13 +16,6 @@
 #include "StrUtils.h"
 #include "platform.h"
 
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) {
-  if (GetCurrentDirectory(512, pcDirectory) == 0) {
-    return (FALSE);
-  }
-  return (TRUE);
-}
-
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
   return ReadFile(handle, buffer, bytesToRead, (LPDWORD)readBytes, NULL);

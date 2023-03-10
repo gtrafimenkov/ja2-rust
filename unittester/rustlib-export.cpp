@@ -37,4 +37,9 @@ TEST(RustExport, GetStr) {
   res = GetStrTest_HelloRus(buf, 20);
   EXPECT_EQ(res, true);
   EXPECT_STREQ(buf, "Привет");
+
+  Str512 s1;
+  res = GetStrTest_Hello512(&s1);
+  EXPECT_EQ(res, true);
+  EXPECT_STREQ(s1.buf, "Hello String512");
 }

@@ -32,8 +32,6 @@ UINT32 GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-BOOLEAN Plat_GetCurrentDirectory(STRING512 pcDirectory) { return FALSE; }
-
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
 
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs) { return FALSE; }
