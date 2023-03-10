@@ -1,5 +1,6 @@
 //! Exported functions to implement platform-dependent code.
 
+use super::platform;
 use std::env;
 use std::ffi::{c_char, CStr};
 use std::fs;
@@ -59,5 +60,14 @@ pub extern "C" fn Plat_DeleteFile(path_utf8: *const c_char) -> bool {
     match cstr_utf8_to_pathbuf(path_utf8) {
         None => false,
         Some(path) => fs::remove_file(path).is_ok(),
+    }
+}
+
+#[no_mangle]
+/// Remove all files in a directory, but not the directory itself or any subdirectories.
+pub extern "C" fn Plat_RemoveFilesInDirectory(path_utf8: *const c_char) -> bool {
+    match cstr_utf8_to_pathbuf(path_utf8) {
+        None => false,
+        Some(path) => platform::remove_files_in_directory(&path).is_ok(),
     }
 }

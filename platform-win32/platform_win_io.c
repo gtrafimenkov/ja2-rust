@@ -677,7 +677,7 @@ UINT32 FileMan_GetSize(HWFILE hFile) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Removes ALL FILES in the specified directory (and all subdirectories with their files if
-// fRecursive is TRUE) Use Plat_EraseDirectory() to simply delete directory contents without
+// fRecursive is TRUE) Use Plat_RemoveFilesInDirectory() to simply delete directory contents without
 // deleting the directory itself
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) {
@@ -750,57 +750,6 @@ BOOLEAN Plat_RemoveDirectory(const char *pcDirectory, BOOLEAN fRecursive) {
   }
 
   return fRetval;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Removes ALL FILES in the specified directory but leaves the directory alone.  Does not affect any
-// subdirectories! Use RemoveFilemanDirectory() to also delete the directory itself, or to
-// recursively delete subdirectories.
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-BOOLEAN Plat_EraseDirectory(const char *pcDirectory) {
-  WIN32_FIND_DATA sFindData;
-  HANDLE SearchHandle;
-  const CHAR8 *pFileSpec = "*.*";
-  BOOLEAN fDone = FALSE;
-  CHAR8 zOldDir[512];
-
-  Plat_GetCurrentDirectory(zOldDir);
-
-  if (!Plat_SetCurrentDirectory(pcDirectory)) {
-    FastDebugMsg(
-        String("Plat_EraseDirectory: ERROR - Plat_SetCurrentDirectory on %s failed, error %d",
-               pcDirectory, GetLastError()));
-    return (FALSE);  // Error going into directory
-  }
-
-  // If there are files in the directory, DELETE THEM
-  SearchHandle = FindFirstFile(pFileSpec, &sFindData);
-  if (SearchHandle != INVALID_HANDLE_VALUE) {
-    fDone = FALSE;
-    do {
-      // if it's a file, not a directory
-      if (GetFileAttributes(sFindData.cFileName) != FILE_ATTRIBUTE_DIRECTORY) {
-        FileMan_Delete(sFindData.cFileName);
-      }
-
-      // find the next file in the directory
-      if (!FindNextFile(SearchHandle, &sFindData)) {
-        fDone = TRUE;
-      }
-    } while (!fDone);
-
-    // very important: close the find handle, or subsequent RemoveDirectory() calls will fail
-    FindClose(SearchHandle);
-  }
-
-  if (!Plat_SetCurrentDirectory(zOldDir)) {
-    FastDebugMsg(
-        String("Plat_EraseDirectory: ERROR - Plat_SetCurrentDirectory on %s failed, error %d",
-               zOldDir, GetLastError()));
-    return (FALSE);  // Error returning from directory
-  }
-
-  return (TRUE);
 }
 
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {

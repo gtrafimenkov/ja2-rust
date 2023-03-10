@@ -1242,7 +1242,7 @@ BOOLEAN RetrieveTempFileFromSavedGame(HWFILE hFile, UINT32 uiType, u8 sMapX, u8 
 BOOLEAN InitTacticalSave(BOOLEAN fCreateTempDir) {
   // If the Map Temp directory exists, removes the temp files
   if (Plat_DirectoryExists(MAPS_DIR)) {
-    if (!Plat_EraseDirectory(MAPS_DIR)) {
+    if (!Plat_RemoveFilesInDirectory(MAPS_DIR)) {
       // error erasing the temporary maps directory
     }
   } else {

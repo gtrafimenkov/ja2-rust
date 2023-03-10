@@ -89,7 +89,7 @@ void DetermineRGBDistributionSettings() {
   if (fCleanShadeTable) {  // This means that we are going to remove all of the current shade
                            // tables, if any exist, and
     // start fresh.
-    Plat_EraseDirectory(ShadeTableDir);
+    Plat_RemoveFilesInDirectory(ShadeTableDir);
   }
   if (fSaveRGBDist) {  // The RGB distribution is going to be saved in a tiny file for future
                        // reference.  As long as the

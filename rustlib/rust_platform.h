@@ -34,6 +34,11 @@ bool Plat_CreateDirectory(const char *path_utf8);
 
 bool Plat_DeleteFile(const char *path_utf8);
 
+/**
+ * Remove all files in a directory, but not the directory itself or any subdirectories.
+ */
+bool Plat_RemoveFilesInDirectory(const char *path_utf8);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
