@@ -432,7 +432,7 @@ static FILE *debug_txt_file = NULL;
 static void openDebugTxt() {
   if (debug_txt_file == NULL) {
     struct Str512 dir;
-    char path[256];
+    char path[600];
     if (!Plat_GetExecutableDirectory(&dir)) {
       return;
     }

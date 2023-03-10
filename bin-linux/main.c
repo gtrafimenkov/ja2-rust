@@ -8,7 +8,7 @@
 
 int main() {
   struct Str512 CurrentDir;
-  char DataDir[200];
+  char DataDir[600];
 
   if (!Plat_GetExecutableDirectory(&CurrentDir)) {
     printf("error: failed to get the executable directory\n");

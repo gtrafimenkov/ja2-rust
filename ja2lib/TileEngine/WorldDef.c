@@ -384,7 +384,7 @@ extern BOOLEAN gfLoadShadeTablesFromTextFile;
 void BuildTileShadeTables() {
   HWFILE hfile;
   struct Str512 DataDir;
-  char ShadeTableDir[300];
+  char ShadeTableDir[600];
   UINT32 uiLoop;
   CHAR8 cRootFile[128];
   BOOLEAN fForceRebuildForSlot = FALSE;
@@ -405,7 +405,7 @@ void BuildTileShadeTables() {
   if (!Plat_GetCurrentDirectory(&DataDir)) {
     return;
   }
-  sprintf(ShadeTableDir, "%s\\ShadeTables", DataDir.buf);
+  snprintf(ShadeTableDir, ARR_SIZE(ShadeTableDir), "%s\\ShadeTables", DataDir.buf);
   if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
     AssertMsg(0, "Can't set the directory to Data\\ShadeTable.  Kris' big problem!");
   }

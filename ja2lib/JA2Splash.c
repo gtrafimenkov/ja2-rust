@@ -18,7 +18,7 @@ UINT32 guiSplashStartTime = 0;
 // Simply create videosurface, load image, and draw it to the screen.
 void InitJA2SplashScreen() {
   struct Str512 CurrentDir;
-  char DataDir[300];
+  char DataDir[600];
 
   InitializeJA2Clock();
 

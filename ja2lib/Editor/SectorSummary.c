@@ -1719,7 +1719,7 @@ BOOLEAN HandleSummaryInput(InputAtom *pEvent) {
 
 void CreateGlobalSummary() {
   FILE *fp;
-  char Dir[300];
+  char Dir[600];
   struct Str512 ExecDir;
 
   DebugPrint("Generating GlobalSummary Information...\n");
@@ -2017,8 +2017,8 @@ void CalculateOverrideStatus() {
 void LoadGlobalSummary() {
   HWFILE hfile;
   struct Str512 ExecDir;
-  char DevInfoDir[300];
-  char MapsDir[300];
+  char DevInfoDir[600];
+  char MapsDir[600];
   UINT32 uiNumBytesRead;
   FLOAT dMajorVersion;
   INT32 x, y;
@@ -2034,8 +2034,8 @@ void LoadGlobalSummary() {
   if (!Plat_GetExecutableDirectory(&ExecDir)) {
     return;
   }
-  sprintf(DevInfoDir, "%s\\DevInfo", ExecDir.buf);
-  sprintf(MapsDir, "%s\\Data\\Maps", ExecDir.buf);
+  snprintf(DevInfoDir, ARR_SIZE(DevInfoDir), "%s\\DevInfo", ExecDir.buf);
+  snprintf(MapsDir, ARR_SIZE(MapsDir), "%s\\Data\\Maps", ExecDir.buf);
 
   // Check to make sure we have a DevInfo directory.  If we don't create one!
   if (!Plat_SetCurrentDirectory(DevInfoDir)) {
@@ -2174,7 +2174,7 @@ void LoadGlobalSummary() {
     DebugPrint(String("Sector Row %c complete... \n", y + 'A'));
   }
 
-  sprintf(MapsDir, "%s\\Data", ExecDir.buf);
+  snprintf(MapsDir, ARR_SIZE(MapsDir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(MapsDir);
 
   if (gfMustForceUpdateAllMaps) {
@@ -2188,7 +2188,7 @@ void LoadGlobalSummary() {
 void GenerateSummaryList() {
   FILE *fp;
   struct Str512 ExecDir;
-  char Dir[300];
+  char Dir[600];
 
   // Set current directory to JA2\DevInfo which contains all of the summary data
   if (!Plat_GetExecutableDirectory(&ExecDir)) {
@@ -2217,7 +2217,7 @@ void GenerateSummaryList() {
 void WriteSectorSummaryUpdate(CHAR8 *puiFilename, UINT8 ubLevel, SUMMARYFILE *pSummaryFileInfo) {
   FILE *fp;
   struct Str512 ExecDir;
-  char Dir[300];
+  char Dir[600];
   CHAR8 *ptr;
   INT8 x, y;
 

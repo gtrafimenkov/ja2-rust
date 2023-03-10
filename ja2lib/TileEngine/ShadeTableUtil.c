@@ -23,9 +23,9 @@ extern UINT32 uiNumTablesLoaded;
 #endif
 
 void DetermineRGBDistributionSettings() {
-  STRING512 DataDir;
+  char DataDir[600];
   struct Str512 ExecDir;
-  STRING512 ShadeTableDir;
+  char ShadeTableDir[600];
   UINT32 uiRBitMask, uiGBitMask, uiBBitMask;
   UINT32 uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
   UINT32 uiNumBytesRead;
@@ -40,7 +40,7 @@ void DetermineRGBDistributionSettings() {
   if (!Plat_GetExecutableDirectory(&ExecDir)) {
     return;
   }
-  sprintf(ShadeTableDir, "%s\\Data\\%s", ExecDir.buf, SHADE_TABLE_DIR);
+  snprintf(ShadeTableDir, ARR_SIZE(ShadeTableDir), "%s\\Data\\%s", ExecDir.buf, SHADE_TABLE_DIR);
 
   // Check to make sure we have a ShadeTable directory.  If we don't create one!
   if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
@@ -108,7 +108,7 @@ void DetermineRGBDistributionSettings() {
   }
 
   // We're done, so restore the executable directory to JA2\Data.
-  sprintf(DataDir, "%s\\Data", ExecDir.buf);
+  snprintf(DataDir, ARR_SIZE(DataDir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(DataDir);
 }
 
