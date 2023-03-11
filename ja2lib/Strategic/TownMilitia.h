@@ -17,8 +17,6 @@ struct SOLDIERTYPE;
 // this handles what happens when a new militia unit is finishes getting trained
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY);
 
-void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHowMany);
-
 // this will check for promotions and handle them for you
 UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts);
 

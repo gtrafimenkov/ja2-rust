@@ -52,6 +52,10 @@ bool IsMilitiaTrainingPayedForSector(uint8_t x, uint8_t y);
 
 void SetMilitiaTrainingPayedForSector(uint8_t x, uint8_t y, bool value);
 
+void RemoveMilitiaFromSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t how_many);
+
+void PromoteMilitia(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t how_many);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

@@ -2832,7 +2832,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
 
     if (bMilitiaRank != -1) {
       // remove this militia from the strategic records
-      StrategicRemoveMilitiaFromSector((u8)gWorldSectorX, (u8)gWorldSectorY, bMilitiaRank, 1);
+      RemoveMilitiaFromSector((u8)gWorldSectorX, (u8)gWorldSectorY, bMilitiaRank, 1);
     }
 
     // If the militia's killer is known

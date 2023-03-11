@@ -53,8 +53,6 @@ struct militiaState {
 
 static struct militiaState _st;
 
-static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMany);
-
 // handle completion of assignment byt his soldier too and inform the player
 static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer);
 
@@ -125,7 +123,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
         // are there any GREEN militia men in the training sector itself?
         if (GetMilitiaInSector(mapX, mapY).green > 0) {
           // great! Promote a GREEN militia guy in the training sector to a REGULAR
-          promoteMilitia(mapX, mapY, GREEN_MILITIA, 1);
+          PromoteMilitia(mapX, mapY, GREEN_MILITIA, 1);
         } else {
           if (ubTownId != BLANK_SECTOR) {
             // dammit! Last chance - try to find other eligible sectors in the same town with a
@@ -137,7 +135,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
               // are there any GREEN militia men in the neighbouring sector ?
               if (GetMilitiaInSector(sNeighbourX, sNeighbourY).green > 0) {
                 // great! Promote a GREEN militia guy in the neighbouring sector to a REGULAR
-                promoteMilitia(sNeighbourX, sNeighbourY, GREEN_MILITIA, 1);
+                PromoteMilitia(sNeighbourX, sNeighbourY, GREEN_MILITIA, 1);
 
                 fFoundOne = TRUE;
                 break;
@@ -177,43 +175,6 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
   handleTrainingComplete(pTrainer);
 }
 
-// TODO: rustlib
-static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMany) {
-  u8 currentCount = GetMilitiaOfRankInSector(mapX, mapY, ubCurrentRank);
-
-  // damn well better have that many around to promote!
-  Assert(currentCount >= ubHowMany);
-
-  // KM : July 21, 1999 patch fix
-  if (currentCount < ubHowMany) {
-    return;
-  }
-
-  SetMilitiaOfRankInSector(mapX, mapY, ubCurrentRank, currentCount - ubHowMany);
-  IncMilitiaOfRankInSector(mapX, mapY, ubCurrentRank + 1, ubHowMany);
-
-  // update the screen display
-  SetMapPanelDirty(true);
-}
-
-// TODO: rustlib
-void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHowMany) {
-  u8 currentCount = GetMilitiaOfRankInSector(mapX, mapY, ubRank);
-
-  // damn well better have that many around to remove!
-  Assert(currentCount >= ubHowMany);
-
-  // KM : July 21, 1999 patch fix
-  if (currentCount < ubHowMany) {
-    return;
-  }
-
-  SetMilitiaOfRankInSector(mapX, mapY, ubRank, currentCount - ubHowMany);
-
-  // update the screen display
-  SetMapPanelDirty(true);
-}
-
 // kill pts are (2 * kills) + assists
 UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts) {
   UINT32 uiChanceToLevel = 0;
@@ -239,7 +200,7 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
   }
   // roll the bones, and see if he makes it
   if (Random(100) < uiChanceToLevel) {
-    promoteMilitia(mapX, mapY, ubCurrentRank, 1);
+    PromoteMilitia(mapX, mapY, ubCurrentRank, 1);
     if (ubCurrentRank == GREEN_MILITIA) {  // Attempt yet another level up if sufficient points
       if (ubRecentKillPts > 2) {
         if (CheckOneMilitiaForPromotion(
@@ -284,7 +245,7 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
       // roll the bones; should I stay or should I go now?  (for you music fans out there)
       if (Random(100) < uiChanceToDefect) {
         // B'bye!  (for you SNL fans out there)
-        StrategicRemoveMilitiaFromSector(mapX, mapY, ubRank, 1);
+        RemoveMilitiaFromSector(mapX, mapY, ubRank, 1);
       }
     }
   }

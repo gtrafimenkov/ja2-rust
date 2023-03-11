@@ -2005,7 +2005,7 @@ void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
       if (fDeleteForGood && gpCivs[i].pSoldier->bLife < OKLIFE / 2) {
         AddDeadSoldierToUnLoadedSector(gpAR->ubSectorX, gpAR->ubSectorY, 0, gpCivs[i].pSoldier,
                                        RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT);
-        StrategicRemoveMilitiaFromSector(gpAR->ubSectorX, gpAR->ubSectorY, rank, 1);
+        RemoveMilitiaFromSector(gpAR->ubSectorX, gpAR->ubSectorY, rank, 1);
         HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_NATIVE_KILLED, gpAR->ubSectorX, gpAR->ubSectorY, 0);
       } else {
         if (fDeleteForGood && (gpCivs[i].pSoldier->ubMilitiaKills > 0) && (rank < ELITE_MILITIA)) {
