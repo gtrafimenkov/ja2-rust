@@ -3616,16 +3616,6 @@ INT16 GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, UINT16 *pusMaxPt
   // adjust for fatigue of trainer
   ReducePointsForFatigue(pTrainer, &sTotalTrainingPts);
 
-  /* ARM: Decided this didn't make much sense - the guys I'm training damn well BETTER be loyal -
-     and screw the rest!
-          // get town index
-          ubTownId = StrategicMap[ pTrainer -> sSectorX + pTrainer -> sSectorY * MAP_WORLD_X
-     ].townID; Assert(ubTownId != BLANK_SECTOR);
-
-          // adjust for town loyalty
-          sTotalTrainingPts = (sTotalTrainingPts * gTownLoyalty[ ubTownId ].ubRating) / 100;
-  */
-
   return (sTotalTrainingPts);
 }
 

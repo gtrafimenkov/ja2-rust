@@ -186,8 +186,6 @@ STR8 pHortStrings[] = {
     "9", "10", "11", "12", "13", "14", "15", "16", "17",
 };
 
-void InitializeStrategicMapSectorTownNames(void);
-
 void DoneFadeOutAdjacentSector(void);
 void DoneFadeOutExitGridSector(void);
 
@@ -505,11 +503,7 @@ UINT8 GetTownSectorsUnderControl(TownID bTownId) {
   return (ubSectorsControlled);
 }
 
-void InitializeMapStructure() {
-  memset(StrategicMap, 0, sizeof(StrategicMap));
-
-  InitializeStrategicMapSectorTownNames();
-}
+void InitializeMapStructure() { memset(StrategicMap, 0, sizeof(StrategicMap)); }
 
 void InitializeSAMSites(void) {
   // move the landing zone over to Omerta
@@ -1603,33 +1597,6 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, 
       AddSoldierToSector(pSoldier->ubID);
     }
   }
-}
-
-void InitializeStrategicMapSectorTownNames(void) {
-  StrategicMap[GetSectorID16(2, 2)].townID = StrategicMap[GetSectorID16(2, 1)].townID = CHITZENA;
-  StrategicMap[GetSectorID16(5, 3)].townID = StrategicMap[GetSectorID16(6, 3)].townID =
-      StrategicMap[GetSectorID16(5, 4)].townID = StrategicMap[GetSectorID16(4, 4)].townID =
-          SAN_MONA;
-  StrategicMap[GetSectorID16(9, 1)].townID = StrategicMap[GetSectorID16(10, 1)].townID = OMERTA;
-  StrategicMap[GetSectorID16(13, 2)].townID = StrategicMap[GetSectorID16(13, 3)].townID =
-      StrategicMap[GetSectorID16(13, 4)].townID = DRASSEN;
-  StrategicMap[GetSectorID16(1, 7)].townID = StrategicMap[GetSectorID16(1, 8)].townID =
-      StrategicMap[GetSectorID16(2, 7)].townID = StrategicMap[GetSectorID16(2, 8)].townID =
-          StrategicMap[GetSectorID16(3, 8)].townID = GRUMM;
-  StrategicMap[GetSectorID16(6, 9)].townID = ESTONI;
-  StrategicMap[GetSectorID16(9, 10)].townID = TIXA;
-  StrategicMap[GetSectorID16(8, 6)].townID = StrategicMap[GetSectorID16(9, 6)].townID =
-      StrategicMap[GetSectorID16(8, 7)].townID = StrategicMap[GetSectorID16(9, 7)].townID =
-          StrategicMap[GetSectorID16(8, 8)].townID = CAMBRIA;
-  StrategicMap[GetSectorID16(13, 9)].townID = StrategicMap[GetSectorID16(14, 9)].townID =
-      StrategicMap[GetSectorID16(13, 8)].townID = StrategicMap[GetSectorID16(14, 8)].townID = ALMA;
-  StrategicMap[GetSectorID16(4, 11)].townID = ORTA;
-  StrategicMap[GetSectorID16(11, 12)].townID = StrategicMap[GetSectorID16(12, 12)].townID = BALIME;
-  StrategicMap[GetSectorID16(3, 14)].townID = StrategicMap[GetSectorID16(4, 14)].townID =
-      StrategicMap[GetSectorID16(5, 14)].townID = StrategicMap[GetSectorID16(3, 15)].townID =
-          StrategicMap[GetSectorID16(4, 15)].townID = StrategicMap[GetSectorID16(3, 16)].townID =
-              MEDUNA;
-  return;
 }
 
 // Get sector ID string makes a string like 'A9 - OMERTA', or just J11 if no town....
