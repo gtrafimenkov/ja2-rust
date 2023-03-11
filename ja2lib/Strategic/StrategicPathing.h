@@ -25,7 +25,7 @@ enum {
   MVT_MODE_FOOT,
 };
 
-INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber,
+INT32 FindStratPath(u8 startX, u8 startY, u8 destX, u8 destY, INT16 sMvtGroupNumber,
                     BOOLEAN fTacticalTraversal);
 
 BOOLEAN AddSectorToPathList(struct path* pPath, UINT16 uiSectorNum);

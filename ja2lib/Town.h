@@ -10,9 +10,6 @@ typedef enum TownID TownID;
 #define NUM_TOWNS 13
 #define FIRST_TOWN OMERTA
 
-// build list of town sectors
-void BuildListOfTownSectors();
-
 // gain pts per real loyalty pt
 #define GAIN_PTS_PER_LOYALTY_PT 500
 

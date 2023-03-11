@@ -762,8 +762,9 @@ void CalcDistancesBetweenTowns(void) {
         // calculate fastest distance between them (in sectors) - not necessarily shortest distance,
         // roads are faster!
         iDistance =
-            FindStratPath((INT16)townSectors.sectors[uiCounterA].sectorID,
-                          (INT16)townSectors.sectors[uiCounterB].sectorID, ubTempGroupId, FALSE);
+            FindStratPath(townSectors.sectors[uiCounterA].x, townSectors.sectors[uiCounterA].y,
+                          townSectors.sectors[uiCounterB].x, townSectors.sectors[uiCounterB].y,
+                          ubTempGroupId, FALSE);
       } else {
         // same town, distance is 0 by definition
         iDistance = 0;
@@ -1066,21 +1067,16 @@ void HandleGlobalLoyaltyEvent(UINT8 ubEventType, u8 sSectorX, u8 sSectorY, INT8 
 
 void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 sSectorY,
                                          INT8 bSectorZ) {
-  INT16 sEventSector;
   UINT8 ubTempGroupId;
-  TownID bTownId;
-  UINT32 uiIndex;
   INT32 iThisDistance;
   INT32 iShortestDistance[NUM_TOWNS];
   INT32 iPercentAdjustment;
   INT32 iDistanceAdjustedLoyalty;
 
   // preset shortest distances to high values prior to searching for a minimum
-  for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
+  for (TownID bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     iShortestDistance[bTownId] = 999999;
   }
-
-  sEventSector = GetSectorID16(sSectorX, sSectorY);
 
   // need a temporary group create to use for laying down distance paths
   ubTempGroupId = CreateNewPlayerGroupDepartingFromSector((UINT8)sSectorX, (UINT8)sSectorY);
@@ -1090,13 +1086,13 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
   struct TownSectors townSectors;
   GetAllTownSectors(&townSectors);
   for (int i = 0; i < townSectors.count; i++) {
-    bTownId = (UINT8)townSectors.sectors[uiIndex].townID;
+    TownID bTownId = townSectors.sectors[i].townID;
 
     // skip path test if distance is already known to be zero to speed this up a bit
     if (iShortestDistance[bTownId] > 0) {
       // calculate across how many sectors the fastest travel path from event to this town sector
-      iThisDistance = FindStratPath(sEventSector, (INT16)townSectors.sectors[uiIndex].sectorID,
-                                    ubTempGroupId, FALSE);
+      iThisDistance = FindStratPath(sSectorX, sSectorY, townSectors.sectors[i].x,
+                                    townSectors.sectors[i].y, ubTempGroupId, FALSE);
 
       if (iThisDistance < iShortestDistance[bTownId]) {
         iShortestDistance[bTownId] = iThisDistance;
@@ -1107,7 +1103,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
   // must always remove that temporary group!
   RemoveGroup(ubTempGroupId);
 
-  for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
+  for (TownID bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     // doesn't affect towns where player hasn't established a "presence" yet
     if (!gTownLoyalty[bTownId].fStarted) {
       continue;

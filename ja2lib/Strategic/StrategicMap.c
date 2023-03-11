@@ -449,9 +449,6 @@ BOOLEAN InitStrategicEngine() {
 
   InitializeMapStructure();
 
-  // set up town stuff
-  BuildListOfTownSectors();
-
   // town distances are pre-calculated and read in from a data file
   // since it takes quite a while to plot strategic paths between all pairs of town sectors...
 
