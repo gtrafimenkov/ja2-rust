@@ -16,8 +16,6 @@
 #include "UI.h"
 #include "Utils/MusicControl.h"
 
-StrategicMapElement StrategicMap[MAP_WORLD_X * MAP_WORLD_Y];
-
 extern BOOLEAN fReDrawFace;
 
 BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier) {

@@ -1,4 +1,4 @@
-#include "Strategic/StrategicMap.h"
+#include "Strategic/strategicMap.h"
 
 #include <math.h>
 #include <memory.h>
@@ -447,8 +447,6 @@ BOOLEAN InitStrategicEngine() {
   // this runs every time we start the application, so don't put anything in here that's only
   // supposed to run when a new *game* is started!  Those belong in InitStrategicLayer() instead.
 
-  InitializeMapStructure();
-
   // town distances are pre-calculated and read in from a data file
   // since it takes quite a while to plot strategic paths between all pairs of town sectors...
 
@@ -495,8 +493,6 @@ UINT8 GetTownSectorsUnderControl(TownID bTownId) {
 
   return (ubSectorsControlled);
 }
-
-void InitializeMapStructure() { memset(StrategicMap, 0, sizeof(StrategicMap)); }
 
 void InitializeSAMSites(void) {
   // move the landing zone over to Omerta
@@ -2840,27 +2836,30 @@ void UpdateAirspaceControl(void) {
   UpdateRefuelSiteAvailability();
 }
 
+typedef struct strategicmapelement StrategicMapElement;
+
 BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten = 0;
-  UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
+  StrategicMapElement strategicMap[MAP_WORLD_X * MAP_WORLD_Y];
+  UINT32 uiSize = sizeof(strategicMap);
 
   // copy data
   for (int i = 0; i < GetSamSiteCount(); i++) {
     u8 sX = GetSamSiteX(i);
     u8 sY = GetSamSiteY(i);
     SectorID16 sector = GetSectorID16(sX, sY);
-    StrategicMap[sector].__only_storage_bSAMCondition = GetSamCondition(i);
+    strategicMap[sector].__only_storage_bSAMCondition = GetSamCondition(i);
   }
 
   for (int y = 1; y < 17; y++) {
     for (int x = 1; x < 17; x++) {
       SectorID16 sector = GetSectorID16(x, y);
-      StrategicMap[sector].__only_storage_fEnemyControlled = IsSectorEnemyControlled(x, y);
+      strategicMap[sector].__only_storage_fEnemyControlled = IsSectorEnemyControlled(x, y);
     }
   }
 
   // Save the strategic map information
-  FileMan_Write(hFile, StrategicMap, uiSize, &uiNumBytesWritten);
+  FileMan_Write(hFile, strategicMap, uiSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSize) {
     return (FALSE);
   }
@@ -2899,10 +2898,11 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
 
 BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
   UINT32 uiNumBytesRead = 0;
-  UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);
+  StrategicMapElement strategicMap[MAP_WORLD_X * MAP_WORLD_Y];
+  UINT32 uiSize = sizeof(strategicMap);
 
   // Load the strategic map information
-  FileMan_Read(hFile, StrategicMap, uiSize, &uiNumBytesRead);
+  FileMan_Read(hFile, strategicMap, uiSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiSize) {
     return (FALSE);
   }
@@ -2912,12 +2912,12 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
     u8 sX = GetSamSiteX(i);
     u8 sY = GetSamSiteY(i);
     SectorID16 sector = GetSectorID16(sX, sY);
-    SetSamCondition(i, StrategicMap[sector].__only_storage_bSAMCondition);
+    SetSamCondition(i, strategicMap[sector].__only_storage_bSAMCondition);
   }
   for (int y = 1; y < 17; y++) {
     for (int x = 1; x < 17; x++) {
       SectorID16 sector = GetSectorID16(x, y);
-      SetSectorEnemyControlled(x, y, StrategicMap[sector].__only_storage_fEnemyControlled);
+      SetSectorEnemyControlled(x, y, strategicMap[sector].__only_storage_fEnemyControlled);
     }
   }
 
