@@ -1,8 +1,8 @@
 #include "Soldier.h"
 
-#include "Militia.h"
 #include "Tactical/Menptr.h"
 #include "Town.h"
+#include "rust_militia.h"
 
 // Get soldier by index.
 // Valid indeces are [0..TOTAL_SOLDIERS).

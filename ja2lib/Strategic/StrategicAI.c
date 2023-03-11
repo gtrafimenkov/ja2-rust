@@ -1542,14 +1542,11 @@ INT32 ReinforcementsAvailable(INT32 iGarrisonID) {
   return iReinforcementsAvailable;
 }
 
-//
 BOOLEAN PlayerForceTooStrong(UINT8 ubSectorID, UINT16 usOffensePoints, UINT16 *pusDefencePoints) {
-  UINT8 ubSectorX, ubSectorY;
+  u8 ubSectorX = SectorID8_X(ubSectorID);
+  u8 ubSectorY = SectorID8_Y(ubSectorID);
 
-  ubSectorX = SectorID8_X(ubSectorID);
-  ubSectorY = SectorID8_Y(ubSectorID);
-
-  struct MilitiaCount milCount = GetMilitiaInSectorID8(ubSectorID);
+  struct MilitiaCount milCount = GetMilitiaInSector(ubSectorX, ubSectorY);
   *pusDefencePoints = milCount.green * 1 + milCount.regular * 2 + milCount.elite * 3 +
                       PlayerMercsInSector(ubSectorX, ubSectorY, 0) * 5;
   if (*pusDefencePoints > usOffensePoints) {

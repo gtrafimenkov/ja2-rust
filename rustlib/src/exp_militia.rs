@@ -2,6 +2,16 @@ use super::state::STATE;
 use crate::militia;
 
 #[repr(C)]
+#[allow(non_camel_case_types)]
+pub enum MilitiaRank {
+    GREEN_MILITIA = 0,
+    REGULAR_MILITIA,
+    ELITE_MILITIA,
+}
+
+pub const MAX_MILITIA_LEVELS: u8 = 3;
+
+#[repr(C)]
 #[allow(non_snake_case)]
 /// Militia force in a sector.
 pub struct MilitiaCount {
@@ -40,4 +50,35 @@ pub extern "C" fn SetMilitiaInSector(x: u8, y: u8, value: MilitiaCount) {
     force.green = value.green;
     force.regular = value.regular;
     force.elite = value.elite;
+}
+
+#[no_mangle]
+/// Return militia force in a sector.
+pub extern "C" fn GetMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank) -> u8 {
+    let mil = unsafe { STATE.get_militia_force(x, y) };
+    match rank {
+        MilitiaRank::GREEN_MILITIA => mil.green,
+        MilitiaRank::REGULAR_MILITIA => mil.regular,
+        MilitiaRank::ELITE_MILITIA => mil.elite,
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn SetMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank, value: u8) {
+    let mut mil = unsafe { STATE.get_mut_militia_force(x, y) };
+    match rank {
+        MilitiaRank::GREEN_MILITIA => mil.green = value,
+        MilitiaRank::REGULAR_MILITIA => mil.regular = value,
+        MilitiaRank::ELITE_MILITIA => mil.elite = value,
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn IncMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank, increase: u8) {
+    let mut mil = unsafe { STATE.get_mut_militia_force(x, y) };
+    match rank {
+        MilitiaRank::GREEN_MILITIA => mil.green += increase,
+        MilitiaRank::REGULAR_MILITIA => mil.regular += increase,
+        MilitiaRank::ELITE_MILITIA => mil.elite += increase,
+    }
 }

@@ -26,9 +26,6 @@ void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
 UINT8 CountAllMilitiaInSector(u8 mapX, u8 mapY);
 INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-u8 GetMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank);
-void SetMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank, u8 count);
-void IncMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank, u8 increase);
 
 bool IsMilitiaTrainingPayedForSector(u8 mapX, u8 mapY);
 void SetMilitiaTrainingPayedForSector(u8 mapX, u8 mapY, bool value);

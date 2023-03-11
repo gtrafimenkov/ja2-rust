@@ -7,6 +7,14 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#define MAX_MILITIA_LEVELS 3
+
+enum MilitiaRank {
+  GREEN_MILITIA = 0,
+  REGULAR_MILITIA,
+  ELITE_MILITIA,
+};
+
 /**
  * Militia force in a sector.
  */
@@ -29,6 +37,15 @@ struct MilitiaCount GetMilitiaInSector(uint8_t x, uint8_t y);
  * Set militia force in a sector.
  */
 void SetMilitiaInSector(uint8_t x, uint8_t y, struct MilitiaCount value);
+
+/**
+ * Return militia force in a sector.
+ */
+uint8_t GetMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank);
+
+void SetMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t value);
+
+void IncMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t increase);
 
 #ifdef __cplusplus
 } // extern "C"
