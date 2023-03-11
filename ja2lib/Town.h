@@ -10,18 +10,6 @@ typedef enum TownID TownID;
 #define NUM_TOWNS 13
 #define FIRST_TOWN OMERTA
 
-// Mapping townID -> sectorID
-struct TownSector {
-  TownID townID;
-  SectorID16 sectorID;
-};
-
-// Mapping of all town sectors.  There may be max 40 mappings.
-// The mapping is over, when townID is BLANK_SECTOR.
-typedef struct TownSector TownSectors[40];
-
-const TownSectors* GetAllTownSectors();
-
 // build list of town sectors
 void BuildListOfTownSectors();
 

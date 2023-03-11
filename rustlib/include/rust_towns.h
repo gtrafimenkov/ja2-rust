@@ -24,7 +24,7 @@ enum TownID {
 };
 
 struct TownSector {
-  enum TownID town;
+  enum TownID townID;
   uint8_t x;
   uint8_t y;
 };

@@ -401,18 +401,18 @@ static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkip
 static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
   BOOLEAN fStopLooking = FALSE;
 
-  const TownSectors *townSectors = GetAllTownSectors();
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
 
   do {
     // have we reached the end of the town list?
-    if ((*townSectors)[_st.sectorSearch.townSectorsIndex].townID == BLANK_SECTOR) {
+    if (townSectors.sectors[_st.sectorSearch.townSectorsIndex].townID == BLANK_SECTOR) {
       // end of list reached
       return (FALSE);
     }
 
-    INT32 iTownSector = (*townSectors)[_st.sectorSearch.townSectorsIndex].sectorID;
-    u8 mapX = SectorID16_X(iTownSector);
-    u8 mapY = SectorID16_Y(iTownSector);
+    u8 mapX = townSectors.sectors[_st.sectorSearch.townSectorsIndex].x;
+    u8 mapY = townSectors.sectors[_st.sectorSearch.townSectorsIndex].y;
 
     // if this sector is in the town we're looking for
     if (GetTownIdForSector(mapX, mapY) == _st.sectorSearch.townID) {
@@ -701,18 +701,17 @@ BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY) {
 }
 
 BOOLEAN IsTownFullMilitia(TownID bTownId) {
-  INT32 iCounter = 0;
-  u8 mapX = 0, mapY = 0;
   INT32 iNumberOfMilitia = 0;
   INT32 iMaxNumber = 0;
 
-  const TownSectors *townSectors = GetAllTownSectors();
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
 
-  while ((*townSectors)[iCounter].townID != 0) {
-    if ((*townSectors)[iCounter].townID == bTownId) {
+  for (int iCounter = 0; iCounter < townSectors.count; iCounter++) {
+    if (townSectors.sectors[iCounter].townID == bTownId) {
       // get the sector x and y
-      mapX = SectorID16_X((*townSectors)[iCounter].sectorID);
-      mapY = SectorID16_Y((*townSectors)[iCounter].sectorID);
+      u8 mapX = townSectors.sectors[iCounter].x;
+      u8 mapY = townSectors.sectors[iCounter].y;
 
       // if sector is ours get number of militia here
       if (SectorOursAndPeaceful(mapX, mapY, 0)) {
@@ -723,8 +722,6 @@ BOOLEAN IsTownFullMilitia(TownID bTownId) {
         iMaxNumber += MAX_ALLOWABLE_MILITIA_PER_SECTOR;
       }
     }
-
-    iCounter++;
   }
 
   // now check the number of militia

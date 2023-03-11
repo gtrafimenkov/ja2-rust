@@ -731,7 +731,6 @@ void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 u
 void CalcDistancesBetweenTowns(void) {
   // run though each town sector and compare it to the next in terms of distance
   UINT8 ubTownA, ubTownB;
-  UINT32 uiCounterA, uiCounterB;
   UINT8 ubTempGroupId = 0;
   INT32 iDistance = 0;
 
@@ -751,23 +750,20 @@ void CalcDistancesBetweenTowns(void) {
 
   // now, measure distance from every town sector to every other town sector!
   // The minimum distances between towns get stored.
-  uiCounterA = 0;
-  uiCounterB = 0;
-  const TownSectors *townSectors = GetAllTownSectors();
-  while ((*townSectors)[uiCounterA].townID != 0) {
-    // reset second counter
-    uiCounterB = uiCounterA;
-
-    while ((*townSectors)[uiCounterB].townID != 0) {
-      ubTownA = (UINT8)(*townSectors)[uiCounterA].townID;
-      ubTownB = (UINT8)(*townSectors)[uiCounterB].townID;
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
+  for (int uiCounterA = 0; uiCounterA < townSectors.count; uiCounterA++) {
+    for (int uiCounterB = uiCounterA; uiCounterB < townSectors.count; uiCounterB++) {
+      ubTownA = (UINT8)townSectors.sectors[uiCounterA].townID;
+      ubTownB = (UINT8)townSectors.sectors[uiCounterB].townID;
 
       // if they're not in the same town
       if (ubTownA != ubTownB) {
         // calculate fastest distance between them (in sectors) - not necessarily shortest distance,
         // roads are faster!
-        iDistance = FindStratPath((INT16)(*townSectors)[uiCounterA].sectorID,
-                                  (INT16)(*townSectors)[uiCounterB].sectorID, ubTempGroupId, FALSE);
+        iDistance =
+            FindStratPath((INT16)townSectors.sectors[uiCounterA].sectorID,
+                          (INT16)townSectors.sectors[uiCounterB].sectorID, ubTempGroupId, FALSE);
       } else {
         // same town, distance is 0 by definition
         iDistance = 0;
@@ -780,11 +776,7 @@ void CalcDistancesBetweenTowns(void) {
         iTownDistances[ubTownA][ubTownB] = iDistance;
         iTownDistances[ubTownB][ubTownA] = iDistance;
       }
-
-      uiCounterB++;
     }
-
-    uiCounterA++;
   }
 
   RemoveGroup(ubTempGroupId);
@@ -1095,23 +1087,21 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
 
   // calc distance to the event sector from EACH GetSectorID8 of each town, keeping only the
   // shortest one for every town
-  uiIndex = 0;
-  const TownSectors *townSectors = GetAllTownSectors();
-  while ((*townSectors)[uiIndex].townID != 0) {
-    bTownId = (UINT8)(*townSectors)[uiIndex].townID;
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
+  for (int i = 0; i < townSectors.count; i++) {
+    bTownId = (UINT8)townSectors.sectors[uiIndex].townID;
 
     // skip path test if distance is already known to be zero to speed this up a bit
     if (iShortestDistance[bTownId] > 0) {
       // calculate across how many sectors the fastest travel path from event to this town sector
-      iThisDistance = FindStratPath(sEventSector, (INT16)(*townSectors)[uiIndex].sectorID,
+      iThisDistance = FindStratPath(sEventSector, (INT16)townSectors.sectors[uiIndex].sectorID,
                                     ubTempGroupId, FALSE);
 
       if (iThisDistance < iShortestDistance[bTownId]) {
         iShortestDistance[bTownId] = iThisDistance;
       }
     }
-
-    uiIndex++;
   }
 
   // must always remove that temporary group!

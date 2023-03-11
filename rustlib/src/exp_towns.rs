@@ -64,8 +64,9 @@ impl TownID {
 }
 
 #[repr(C)]
+#[allow(non_snake_case)]
 pub struct TownSector {
-    town: TownID,
+    townID: TownID,
     x: u8,
     y: u8,
 }
@@ -84,7 +85,7 @@ pub extern "C" fn GetAllTownSectors(data: &mut TownSectors) {
         for sec in town.get_sectors() {
             data.sectors[cnt].x = sec.x;
             data.sectors[cnt].y = sec.y;
-            data.sectors[cnt].town = TownID::from_internal(town);
+            data.sectors[cnt].townID = TownID::from_internal(town);
             cnt += 1;
         }
     }
