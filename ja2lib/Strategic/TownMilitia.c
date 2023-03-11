@@ -49,8 +49,6 @@ struct militiaState {
   i8 gbMilitiaPromotions;
 
   struct sectorSearch sectorSearch;
-
-  bool trainingPaid[256];
 };
 
 static struct militiaState _st;
@@ -288,12 +286,6 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
       }
     }
   }
-}
-
-bool IsMilitiaTrainingPayedForSector(u8 x, u8 y) { return _st.trainingPaid[GetSectorID8(x, y)]; }
-
-void SetMilitiaTrainingPayedForSector(u8 x, u8 y, bool value) {
-  _st.trainingPaid[GetSectorID8(x, y)] = value;
 }
 
 static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY) {

@@ -48,6 +48,10 @@ void SetMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8
 
 void IncMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t increase);
 
+bool IsMilitiaTrainingPayedForSector(uint8_t x, uint8_t y);
+
+void SetMilitiaTrainingPayedForSector(uint8_t x, uint8_t y, bool value);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

@@ -94,3 +94,13 @@ pub extern "C" fn IncMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank, incr
         MilitiaRank::ELITE_MILITIA => mil.elite += increase,
     }
 }
+
+#[no_mangle]
+pub extern "C" fn IsMilitiaTrainingPayedForSector(x: u8, y: u8) -> bool {
+    unsafe { STATE.militia.training_paid[y as usize][x as usize] }
+}
+
+#[no_mangle]
+pub extern "C" fn SetMilitiaTrainingPayedForSector(x: u8, y: u8, value: bool) {
+    unsafe { STATE.militia.training_paid[y as usize][x as usize] = value }
+}

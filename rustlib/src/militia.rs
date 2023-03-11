@@ -1,5 +1,6 @@
 pub struct State {
     pub force: [[Force; 18]; 18],
+    pub training_paid: [[bool; 18]; 18],
 }
 
 impl Default for State {
@@ -12,6 +13,7 @@ impl State {
     pub fn new() -> Self {
         State {
             force: Default::default(),
+            training_paid: Default::default(),
         }
     }
 }

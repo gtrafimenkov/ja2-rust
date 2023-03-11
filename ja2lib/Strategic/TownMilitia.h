@@ -24,9 +24,6 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
 
 void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
-bool IsMilitiaTrainingPayedForSector(u8 mapX, u8 mapY);
-void SetMilitiaTrainingPayedForSector(u8 mapX, u8 mapY, bool value);
-
 // tell player how much it will cost
 void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier);
 
