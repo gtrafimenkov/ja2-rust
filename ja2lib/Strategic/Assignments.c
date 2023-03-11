@@ -919,8 +919,7 @@ BOOLEAN BasicCanCharacterTrainMilitia(struct SOLDIERTYPE *pSoldier) {
   }
 
   // is there a town in the character's current sector?
-  if (StrategicMap[GetSectorID16(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))].townID ==
-      BLANK_SECTOR) {
+  if (GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier)) == BLANK_SECTOR) {
     fSamSitePresent = IsThisSectorASAMSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
                                              GetSolSectorZ(pSoldier));
 
@@ -3038,8 +3037,7 @@ void HandleTrainingInSector(u8 sMapX, u8 sMapY, INT8 bZ) {
   }
 
   // check if we're doing a sector where militia can be trained
-  if (((StrategicMap[GetSectorID16(sMapX, (sMapY))].townID != BLANK_SECTOR) ||
-       (fSamSiteInSector == TRUE)) &&
+  if (((GetTownIdForSector(sMapX, sMapY) != BLANK_SECTOR) || (fSamSiteInSector == TRUE)) &&
       (bZ == 0)) {
     // init town trainer list
     memset(TownTrainer, 0, sizeof(TownTrainer));
@@ -3541,7 +3539,7 @@ static BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, u8 sMap
   fSamSiteInSector = IsThisSectorASAMSector(sMapX, sMapY, 0);
 
   // get town index
-  ubTownId = StrategicMap[pTrainer->sSectorX + pTrainer->sSectorY * MAP_WORLD_X].townID;
+  ubTownId = GetTownIdForSector(GetSolSectorX(pTrainer), GetSolSectorY(pTrainer));
   if (fSamSiteInSector == FALSE) {
     Assert(ubTownId != BLANK_SECTOR);
   }

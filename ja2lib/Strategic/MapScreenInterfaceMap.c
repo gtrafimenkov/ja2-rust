@@ -4888,7 +4888,7 @@ BOOLEAN IsThisMilitiaTownSectorAllowable(INT16 sSectorIndexValue) {
   sSectorY = SectorID8_Y(sGlobalMapSector);
 
   // is this in fact part of a town?
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID == BLANK_SECTOR) {
+  if (GetTownIdForSector(sSectorX, sSectorY) == BLANK_SECTOR) {
     return (FALSE);
   }
 
@@ -6004,7 +6004,7 @@ BOOLEAN CanRedistributeMilitiaInSector(INT16 sClickedSectorX, INT16 sClickedSect
     sSectorY = SectorID8_Y(sCurrentSectorValue);
 
     // not in the same town?
-    if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID != bClickedTownId) {
+    if (GetTownIdForSector(sSectorX, sSectorY) != bClickedTownId) {
       continue;
     }
 

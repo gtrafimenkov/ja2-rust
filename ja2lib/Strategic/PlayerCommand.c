@@ -91,15 +91,12 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
   UINT16 usMapSector = 0;
   BOOLEAN fWasEnemyControlled = FALSE;
   TownID bTownId = 0;
-  UINT8 ubSectorID;
 
   if (AreInMeanwhile()) {
     return FALSE;
   }
 
   if (bMapZ == 0) {
-    usMapSector = GetSectorID16(sMapX, sMapY);
-
     if (NumHostilesInSector(sMapX, sMapY, bMapZ)) {  // too premature:  enemies still in sector.
       return FALSE;
     }
@@ -124,7 +121,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
     SetSectorEnemyControlled(sMapX, sMapY, FALSE);
     SectorInfo[GetSectorID8(sMapX, sMapY)].fPlayer[bMapZ] = TRUE;
 
-    bTownId = StrategicMap[usMapSector].townID;
+    bTownId = GetTownIdForSector(sMapX, sMapY);
 
     // check if there's a town in the sector
     if ((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS)) {
@@ -138,7 +135,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
       if ((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS)) {
         // don't do these for takeovers of Omerta sectors at the beginning of the game
         if ((bTownId != OMERTA) || (GetWorldDay() != 1)) {
-          ubSectorID = (UINT8)GetSectorID8(sMapX, sMapY);
+          SectorID8 ubSectorID = GetSectorID8(sMapX, sMapY);
           if (!bMapZ && ubSectorID != SEC_J9 && ubSectorID != SEC_K4) {
             HandleMoraleEvent(NULL, MORALE_TOWN_LIBERATED, sMapX, sMapY, bMapZ);
             HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_GAIN_TOWN_SECTOR, sMapX, sMapY, bMapZ);

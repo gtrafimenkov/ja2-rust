@@ -484,7 +484,7 @@ UINT8 GetTownSectorSize(TownID bTownId) {
 
   for (iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
     for (iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
-      if (StrategicMap[GetSectorID16(iCounterA, iCounterB)].townID == bTownId) {
+      if (GetTownIdForSector(iCounterA, iCounterB) == bTownId) {
         ubSectorSize++;
       }
     }
@@ -1637,7 +1637,6 @@ void InitializeStrategicMapSectorTownNames(void) {
       StrategicMap[GetSectorID16(5, 14)].townID = StrategicMap[GetSectorID16(3, 15)].townID =
           StrategicMap[GetSectorID16(4, 15)].townID = StrategicMap[GetSectorID16(3, 16)].townID =
               MEDUNA;
-  // StrategicMap[3+16*MAP_WORLD_X].townID=PALACE;
   return;
 }
 
@@ -1686,7 +1685,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
       wcscpy(zString, L"");
     }
   } else {
-    bTownNameID = StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID;
+    bTownNameID = GetTownIdForSector(sSectorX, sSectorY);
     ubSectorID = (UINT8)GetSectorID8(sSectorX, sSectorY);
     pSector = &SectorInfo[ubSectorID];
     ubLandType = pSector->ubTraversability[4];
@@ -2891,13 +2890,7 @@ void UpdateAirspaceControl(void) {
 
 // is this sector part of the town?
 BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY) {
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID == bTownId) {
-    // is in the town
-    return (TRUE);
-  }
-
-  // not in the town
-  return (FALSE);
+  return GetTownIdForSector(sSectorX, sSectorY) == bTownId;
 }
 
 BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
