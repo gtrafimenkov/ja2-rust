@@ -772,7 +772,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 
       // done
       fShowMapInventoryPool = TRUE;
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       fMapScreenBottomDirty = TRUE;
       fShowTownInfo = FALSE;
 
@@ -794,7 +794,7 @@ void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
 
       // done
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       fMapScreenBottomDirty = TRUE;
       fShowTownInfo = FALSE;
     }

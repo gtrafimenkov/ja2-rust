@@ -1615,7 +1615,7 @@ void CancelPathForCharacter(struct SOLDIERTYPE *pCharacter) {
 
   CopyPathToCharactersSquadIfInOne(pCharacter);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fTeamPanelDirty = TRUE;
   fCharacterInfoPanelDirty = TRUE;  // to update ETA
 }
@@ -1644,7 +1644,7 @@ void CancelPathForVehicle(VEHICLETYPE *pVehicle, BOOLEAN fAlreadyReversed) {
   fPlotForHelicopter = FALSE;
 
   fTeamPanelDirty = TRUE;
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fCharacterInfoPanelDirty = TRUE;  // to update ETA
 }
 
@@ -1783,7 +1783,7 @@ void PlotPathForHelicopter(u8 sX, u8 sY) {
   pVehicleList[iHelicopterVehicleId].pMercPath =
       MoveToBeginningOfPathList(pVehicleList[iHelicopterVehicleId].pMercPath);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   return;
 }
@@ -3186,7 +3186,7 @@ void DisplayThePotentialPathForHelicopter(u8 sMapX, u8 sMapY) {
 
     // path was plotted and we moved, re draw map..to clean up mess
     if (fTempPathAlreadyDrawn) {
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     }
 
     fTempPathAlreadyDrawn = FALSE;
@@ -4290,7 +4290,7 @@ static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, u8 sX, u8 sY) {
   // reduce number in this sector
   SetMilitiaOfRankInSector(sX, sY, ubType, GetMilitiaOfRankInSector(sX, sY, ubType) - 1);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   return (TRUE);
 }
@@ -4338,7 +4338,7 @@ BOOLEAN DropAPersonInASector(UINT8 ubType, u8 sX, u8 sY) {
   // up the number in this sector of this type of militia
   IncMilitiaOfRankInSector(sX, sY, ubType, 1);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   return (TRUE);
 }
@@ -5158,7 +5158,7 @@ void DeleteMilitiaPanelBottomButton(void) {
   }
 
   // redraw the map
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 void MilitiaAutoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
@@ -5170,7 +5170,7 @@ void MilitiaAutoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
       // distribute troops over all the sectors under control
       HandleEveningOutOfTroopsAmongstSectors();
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     }
   }
 
@@ -5186,7 +5186,7 @@ void MilitiaDoneButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
       // reset fact we are in the box
       sSelectedMilitiaTown = 0;
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     }
   }
 
@@ -5440,7 +5440,7 @@ void ClearAnySectorsFlashingNumberOfEnemies() {
   }
 
   // redraw map
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 UINT32 WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY) {

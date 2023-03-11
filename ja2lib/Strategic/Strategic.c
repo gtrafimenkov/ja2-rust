@@ -69,7 +69,7 @@ BOOLEAN HandleStrategicDeath(struct SOLDIERTYPE *pSoldier) {
                                    pSoldier, RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT);
 
     fTeamPanelDirty = TRUE;
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fCharacterInfoPanelDirty = TRUE;
 
     StopTimeCompression();

@@ -2826,7 +2826,7 @@ void UpdateAirspaceControl(void) {
     DoScreenIndependantMessageBox(sMsgString, MSG_BOX_FLAG_OK, NULL);
 
     // update position of bullseye
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
 
     // update destination column for any mercs in transit
     fTeamPanelDirty = TRUE;

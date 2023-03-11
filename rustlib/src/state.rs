@@ -1,8 +1,8 @@
 use crate::militia;
-
-use super::sam_sites;
-use super::sector;
-use super::towns;
+use crate::sam_sites;
+use crate::sector;
+use crate::towns;
+use crate::ui;
 use once_cell::sync::Lazy;
 
 pub static mut STATE: Lazy<State> = Lazy::new(State::new);
@@ -12,6 +12,7 @@ pub struct State {
     pub sectors: [[sector::State; 18]; 18],
     pub town_map: towns::TownMap,
     pub militia: militia::State,
+    pub ui: ui::State,
 }
 
 impl Default for State {
@@ -27,6 +28,7 @@ impl State {
             sectors: [[sector::State::new(); 18]; 18],
             town_map: Default::default(),
             militia: Default::default(),
+            ui: Default::default(),
         };
         for y in 1..17 {
             for x in 1..17 {

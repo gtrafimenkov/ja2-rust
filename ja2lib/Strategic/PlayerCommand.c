@@ -213,7 +213,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
   UpdateAirspaceControl();
 
   // redraw map/income if in mapscreen
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fMapScreenBottomDirty = TRUE;
 
   return fWasEnemyControlled;
@@ -319,7 +319,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN f
   UpdateAirspaceControl();
 
   // redraw map/income if in mapscreen
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fMapScreenBottomDirty = TRUE;
 
   return fWasPlayerControlled;

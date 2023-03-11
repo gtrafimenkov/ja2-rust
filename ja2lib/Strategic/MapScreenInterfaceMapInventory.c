@@ -448,7 +448,7 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen) {
 
     CreateMapInventoryPoolDoneButton();
 
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fMapScreenBottomDirty = TRUE;
   } else if ((fShowMapInventoryPool == FALSE) && (fCreated == TRUE)) {
     // check fi we are in fact leaving mapscreen
@@ -474,7 +474,7 @@ void CreateDestroyMapInventoryPoolButtons(BOOLEAN fExitFromMapScreen) {
 
     DestroyStash();
 
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fTeamPanelDirty = TRUE;
     fCharacterInfoPanelDirty = TRUE;
 
@@ -823,7 +823,7 @@ void MapInvenPoolSlots(struct MOUSE_REGION *pRegion, INT32 iReason) {
     }
 
     // dirty region, force update
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 }
 
@@ -1213,7 +1213,7 @@ void BeginInventoryPoolPtr(struct OBJECTTYPE *pInventorySlot) {
 
   if (fOk) {
     // Dirty interface
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     gpItemPointer = &gItemPointer;
 
     gpItemPointerSoldier = NULL;
@@ -1385,7 +1385,7 @@ void MapInventoryPoolNextBtn(GUI_BUTTON *btn, INT32 reason) {
       // if can go to next page, go there
       if (iCurrentInventoryPoolPage < (iLastInventoryPoolPage)) {
         iCurrentInventoryPoolPage++;
-        MarkForRedrawalStrategicMap();
+        SetMapPanelDirty(true);
       }
     }
   }
@@ -1401,7 +1401,7 @@ void MapInventoryPoolPrevBtn(GUI_BUTTON *btn, INT32 reason) {
       // if can go to next page, go there
       if (iCurrentInventoryPoolPage > 0) {
         iCurrentInventoryPoolPage--;
-        MarkForRedrawalStrategicMap();
+        SetMapPanelDirty(true);
       }
     }
   }
@@ -1698,7 +1698,7 @@ void HandleMouseInCompatableItemForMapSectorInventory(INT32 iCurrentSlot) {
 
     if (fItemWasHighLighted == TRUE) {
       fTeamPanelDirty = TRUE;
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       fItemWasHighLighted = FALSE;
     }
   }
@@ -1744,7 +1744,7 @@ void HandleMouseInCompatableItemForMapSectorInventory(INT32 iCurrentSlot) {
         if (GetJA2Clock() - giCompatibleItemBaseTime > 100) {
           if (fItemWasHighLighted == FALSE) {
             fItemWasHighLighted = TRUE;
-            MarkForRedrawalStrategicMap();
+            SetMapPanelDirty(true);
           }
         }
       }

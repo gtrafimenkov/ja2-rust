@@ -239,7 +239,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   if ((fInMapMode == TRUE)) {
     //		fMapExitDueToMessageBox = TRUE;
     gfStartedFromMapScreen = TRUE;
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 
   // Set pending screen
@@ -832,7 +832,7 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
       }
       break;
     case MAP_SCREEN:
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       break;
   }
 

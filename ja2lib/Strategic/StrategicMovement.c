@@ -1406,7 +1406,7 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
   SetGroupArrivalTime(pGroup, 0);
   pGroup->fBetweenSectors = FALSE;
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fMapScreenBottomDirty = TRUE;
 
   // if a player group
@@ -4053,7 +4053,7 @@ void NotifyPlayerOfBloodcatBattle(UINT8 ubSectorX, UINT8 ubSectorY) {
 
   if (IsMapScreen_2()) {  // Force render mapscreen (need to update the position of
                           // the group before the dialog appears.
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     MapScreenHandle();
     InvalidateScreen();
     RefreshScreen(NULL);
@@ -4313,7 +4313,7 @@ void HandlePlayerGroupEnteringSectorToCheckForNPCsOfNoteCallback(UINT8 ubExitVal
 
   gpGroupPrompting = NULL;
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fMapScreenBottomDirty = TRUE;
 
   return;

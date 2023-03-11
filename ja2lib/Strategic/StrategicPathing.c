@@ -199,7 +199,7 @@ INT32 FindStratPath(u8 startX, u8 startY, u8 destX, u8 destY, INT16 sMvtGroupNum
 
     if (fPlotDirectPath != fPreviousPlotDirectPath) {
       // must redraw map to erase the previous path...
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       fPreviousPlotDirectPath = fPlotDirectPath;
     }
   }

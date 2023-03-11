@@ -336,7 +336,7 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
 
   // check old aginst new, if diff, dirty map panel
   if (ubOldLoyaltyRating != gTownLoyalty[bTownId].ubRating) {
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 
   return;

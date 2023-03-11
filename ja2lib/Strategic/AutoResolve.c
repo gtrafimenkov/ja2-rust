@@ -430,7 +430,7 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
     RecalculateSectorWeight((UINT8)GetSectorID8(ubSectorX, ubSectorY));
 
     // dirty map panel
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 
   if (gpAR) {

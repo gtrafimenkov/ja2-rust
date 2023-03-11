@@ -98,7 +98,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
     if (CountMilitiaInSector(mapX, mapY) < MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
       // great! Create a new GREEN militia guy in the training sector
       IncMilitiaOfRankInSector(mapX, mapY, GREEN_MILITIA, 1);
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     } else {
       fFoundOne = FALSE;
 
@@ -111,7 +111,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
           if (CountMilitiaInSector(sNeighbourX, sNeighbourY) < MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
             // great! Create a new GREEN militia guy in the neighbouring sector
             IncMilitiaOfRankInSector(sNeighbourX, sNeighbourY, GREEN_MILITIA, 1);
-            MarkForRedrawalStrategicMap();
+            SetMapPanelDirty(true);
             fFoundOne = TRUE;
             break;
           }
@@ -162,7 +162,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
   // if anyone actually got trained
   if (ubMilitiaTrained > 0) {
     // update the screen display
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
 
     if (ubTownId != BLANK_SECTOR) {
       // loyalty in this town increases a bit because we obviously care about them...
@@ -192,7 +192,7 @@ static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMan
   IncMilitiaOfRankInSector(mapX, mapY, ubCurrentRank + 1, ubHowMany);
 
   // update the screen display
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHowMany) {
@@ -209,7 +209,7 @@ void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHo
   SetMilitiaOfRankInSector(mapX, mapY, ubRank, currentCount - ubHowMany);
 
   // update the screen display
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 // kill pts are (2 * kills) + assists
