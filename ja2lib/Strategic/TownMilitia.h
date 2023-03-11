@@ -1,11 +1,10 @@
 #ifndef _TOWN_MILITIA_H
 #define _TOWN_MILITIA_H
 
-// header for town militia strategic control module
-
 #include "SGP/Types.h"
 #include "Sector.h"
 #include "Town.h"
+#include "rust_militia.h"
 
 struct SOLDIERTYPE;
 
@@ -14,12 +13,6 @@ struct SOLDIERTYPE;
 
 // minimum loyalty rating before training is allowed in a town
 #define MIN_RATING_TO_TRAIN_TOWN 20
-
-struct MilitiaCount {
-  u8 green;
-  u8 regular;
-  u8 elite;
-};
 
 // this handles what happens when a new militia unit is finishes getting trained
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY);
@@ -32,19 +25,13 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
 void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
 UINT8 CountAllMilitiaInSector(u8 mapX, u8 mapY);
-UINT8 CountAllMilitiaInSectorID8(SectorID8 sectorID);
 INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-// struct MilitiaCount GetMilitiaInSector(u8 mapX, u8 mapY);
-// struct MilitiaCount GetMilitiaInSectorID8(SectorID8 sectorID);
 u8 GetMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank);
 void SetMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank, u8 count);
 void IncMilitiaOfRankInSector(u8 mapX, u8 mapY, u8 ubRank, u8 increase);
-// void SetMilitiaInSector(u8 mapX, u8 mapY, struct MilitiaCount newCount);
-// void SetMilitiaInSectorID8(SectorID8 sectorID, struct MilitiaCount newCount);
 
 bool IsMilitiaTrainingPayedForSector(u8 mapX, u8 mapY);
-bool IsMilitiaTrainingPayedForSectorID8(SectorID8 sectorID);
-void SetMilitiaTrainingPayedForSectorID8(SectorID8 sectorID, bool value);
+void SetMilitiaTrainingPayedForSector(u8 mapX, u8 mapY, bool value);
 
 // tell player how much it will cost
 void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier);

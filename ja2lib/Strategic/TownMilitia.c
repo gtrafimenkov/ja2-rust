@@ -70,8 +70,8 @@ static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY);
 static INT32 GetNumberOfUnpaidTrainableSectors(void);
 static void ContinueTrainingInThisSector();
 static void StartTrainingInAllUnpaidTrainableSectors();
-static void PayForTrainingInSector(SectorID8 ubSector);
-static void ResetDoneFlagForAllMilitiaTrainersInSector(SectorID8 ubSector);
+static void PayForTrainingInSector(u8 x, u8 y);
+static void ResetDoneFlagForAllMilitiaTrainersInSector(u8 x, u8 y);
 
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY) {
   UINT8 ubMilitiaTrained = 0;
@@ -298,11 +298,6 @@ UINT8 CountAllMilitiaInSector(u8 mapX, u8 mapY) {
   return milCount.green + milCount.regular + milCount.elite;
 }
 
-UINT8 CountAllMilitiaInSectorID8(SectorID8 sectorID) {
-  struct MilitiaCount milCount = GetMilitiaInSectorID8(sectorID);
-  return milCount.green + milCount.regular + milCount.elite;
-}
-
 INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   if (!bSectorZ) {
     return CountAllMilitiaInSector(sSectorX, sSectorY);
@@ -378,14 +373,10 @@ UINT8 GetMilitiaOfRankInSector(u8 mapX, u8 mapY, UINT8 ubRank) {
   }
 }
 
-bool IsMilitiaTrainingPayedForSector(u8 mapX, u8 mapY) {
-  return IsMilitiaTrainingPayedForSectorID8(GetSectorID8(mapX, mapY));
-}
+bool IsMilitiaTrainingPayedForSector(u8 x, u8 y) { return _st.trainingPaid[GetSectorID8(x, y)]; }
 
-bool IsMilitiaTrainingPayedForSectorID8(SectorID8 sectorID) { return _st.trainingPaid[sectorID]; }
-
-void SetMilitiaTrainingPayedForSectorID8(SectorID8 sectorID, bool value) {
-  _st.trainingPaid[sectorID] = value;
+void SetMilitiaTrainingPayedForSector(u8 x, u8 y, bool value) {
+  _st.trainingPaid[GetSectorID8(x, y)] = value;
 }
 
 static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY) {
@@ -651,7 +642,7 @@ static void resetAssignmentsForUnpaidSectors() {
     }
 
     if (GetSolAssignment(pSoldier) == TRAIN_TOWN) {
-      if (!IsMilitiaTrainingPayedForSectorID8(GetSolSectorID8(pSoldier))) {
+      if (!IsMilitiaTrainingPayedForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))) {
         ResumeOldAssignment(pSoldier);
       }
     }
@@ -885,7 +876,7 @@ static void BuildListOfUnpaidTrainableSectors(void) {
         if (IsCharSelected(iCounter) || iCounter == GetCharForAssignmentIndex()) {
           struct SOLDIERTYPE *sol = GetMercFromCharacterList(iCounter);
           if (CanCharacterTrainMilitia(sol) == TRUE) {
-            if (!IsMilitiaTrainingPayedForSectorID8(GetSolSectorID8(sol))) {
+            if (!IsMilitiaTrainingPayedForSector(GetSolSectorX(sol), GetSolSectorY(sol))) {
               // check to see if this sector is a town and needs equipment
               _st.unpaidSectors[iCounter].x = GetSolSectorX(sol);
               _st.unpaidSectors[iCounter].y = GetSolSectorY(sol);
@@ -900,7 +891,7 @@ static void BuildListOfUnpaidTrainableSectors(void) {
     iCounter = 0;
 
     if (CanCharacterTrainMilitia(sol) == TRUE) {
-      if (!IsMilitiaTrainingPayedForSectorID8(GetSolSectorID8(sol))) {
+      if (!IsMilitiaTrainingPayedForSector(GetSolSectorX(sol), GetSolSectorY(sol))) {
         // check to see if this sector is a town and needs equipment
         _st.unpaidSectors[iCounter].x = GetSolSectorX(sol);
         _st.unpaidSectors[iCounter].y = GetSolSectorY(sol);
@@ -943,7 +934,7 @@ static void StartTrainingInAllUnpaidTrainableSectors() {
   BuildListOfUnpaidTrainableSectors();
   for (int i = 0; i < MAX_CHARACTER_COUNT; i++) {
     if (_st.unpaidSectors[i].x > 0 && _st.unpaidSectors[i].y > 0) {
-      PayForTrainingInSector(GetSectorID8(_st.unpaidSectors[i].x, _st.unpaidSectors[i].y));
+      PayForTrainingInSector(_st.unpaidSectors[i].x, _st.unpaidSectors[i].y);
     }
   }
 }
@@ -951,29 +942,29 @@ static void StartTrainingInAllUnpaidTrainableSectors() {
 static void ContinueTrainingInThisSector() {
   Assert(_st.trainer);
   // pay up in the sector where trainer is
-  PayForTrainingInSector(GetSolSectorID8(_st.trainer));
+  PayForTrainingInSector(GetSolSectorX(_st.trainer), GetSolSectorY(_st.trainer));
 }
 
-static void PayForTrainingInSector(SectorID8 ubSector) {
-  Assert(!IsMilitiaTrainingPayedForSectorID8(ubSector));
+static void PayForTrainingInSector(u8 x, u8 y) {
+  Assert(!IsMilitiaTrainingPayedForSector(x, y));
 
   // spend the money
-  AddTransactionToPlayersBook(TRAIN_TOWN_MILITIA, ubSector, -(MILITIA_TRAINING_COST));
+  AddTransactionToPlayersBook(TRAIN_TOWN_MILITIA, GetSectorID8(x, y), -(MILITIA_TRAINING_COST));
 
   // mark this sector sectors as being paid up
-  SetMilitiaTrainingPayedForSectorID8(ubSector, true);
+  SetMilitiaTrainingPayedForSector(x, y, true);
 
   // reset done flags
-  ResetDoneFlagForAllMilitiaTrainersInSector(ubSector);
+  ResetDoneFlagForAllMilitiaTrainersInSector(x, y);
 }
 
-static void ResetDoneFlagForAllMilitiaTrainersInSector(SectorID8 ubSector) {
+static void ResetDoneFlagForAllMilitiaTrainersInSector(u8 x, u8 y) {
   struct SoldierList sols;
   GetTeamSoldiers_Active(OUR_TEAM, &sols);
   for (int i = 0; i < sols.num; i++) {
     struct SOLDIERTYPE *sol = sols.soldiers[i];
     if (GetSolAssignment(sol) == TRAIN_TOWN) {
-      if (GetSolSectorID8(sol) == ubSector && GetSolSectorZ(sol) == 0) {
+      if (GetSolSectorX(sol) == x && GetSolSectorY(sol) == y && GetSolSectorZ(sol) == 0) {
         SetSolAssignmentDone(sol);
       }
     }

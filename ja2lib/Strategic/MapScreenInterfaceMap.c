@@ -4777,7 +4777,8 @@ void SetMilitiaMapButtonsText(void) {
   sGlobalMapSector = sBaseSectorValue + ((sSectorMilitiaMapSector % MILITIA_BOX_ROWS) +
                                          (sSectorMilitiaMapSector / MILITIA_BOX_ROWS) * (16));
 
-  struct MilitiaCount milCount = GetMilitiaInSectorID8(sGlobalMapSector);
+  struct MilitiaCount milCount =
+      GetMilitiaInSector(SectorID8_X(sGlobalMapSector), SectorID8_Y(sGlobalMapSector));
   iNumberOfGreens = milCount.green;
   iNumberOfRegulars = milCount.regular;
   iNumberOfElites = milCount.elite;
@@ -5324,7 +5325,8 @@ void CheckAndUpdateStatesOfSelectedMilitiaSectorButtons(void) {
   sGlobalMapSector = sBaseSectorValue + ((sSectorMilitiaMapSector % MILITIA_BOX_ROWS) +
                                          (sSectorMilitiaMapSector / MILITIA_BOX_ROWS) * (16));
 
-  struct MilitiaCount milCount = GetMilitiaInSectorID8(sGlobalMapSector);
+  struct MilitiaCount milCount =
+      GetMilitiaInSector(SectorID8_X(sGlobalMapSector), SectorID8_Y(sGlobalMapSector));
   iNumberOfGreens = milCount.green + sGreensOnCursor;
   iNumberOfRegulars = milCount.regular + sRegularsOnCursor;
   iNumberOfElites = milCount.elite + sElitesOnCursor;
@@ -5750,7 +5752,7 @@ BOOLEAN CanMilitiaAutoDistribute(void) {
 
     if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       // get number of each
-      iTotalTroopsInTown += CountAllMilitiaInSectorID8(sCurrentSectorValue);
+      iTotalTroopsInTown += CountAllMilitiaInSector(sSectorX, sSectorY);
     }
   }
 

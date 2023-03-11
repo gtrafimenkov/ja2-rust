@@ -1,4 +1,4 @@
-#include "Strategic/strategicMap.h"
+#include "Strategic/StrategicMap.h"
 
 #include <math.h>
 #include <memory.h>
@@ -96,6 +96,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_militia.h"
 #include "rust_sam_sites.h"
 
 // Used by PickGridNoToWalkIn
@@ -2867,13 +2868,16 @@ BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   // Save the Sector Info
   {
     // copying actual data about militia count
-    for (uint16_t sectorID = 0; sectorID < 256; sectorID++) {
-      struct MilitiaCount milCount = GetMilitiaInSectorID8((u8)sectorID);
-      SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[0] = milCount.green;
-      SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[1] = milCount.regular;
-      SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[2] = milCount.elite;
-      SectorInfo[sectorID]._only_savedgame_fMilitiaTrainingPaid =
-          IsMilitiaTrainingPayedForSectorID8((u8)sectorID);
+    for (u8 y = 1; y < 17; y++) {
+      for (u8 x = 1; x < 17; x++) {
+        SectorID8 sectorID = GetSectorID8(x, y);
+        struct MilitiaCount milCount = GetMilitiaInSector(x, y);
+        SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[0] = milCount.green;
+        SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[1] = milCount.regular;
+        SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[2] = milCount.elite;
+        SectorInfo[sectorID]._only_savedgame_fMilitiaTrainingPaid =
+            IsMilitiaTrainingPayedForSector(x, y);
+      }
     }
 
     uiSize = sizeof(SECTORINFO) * 256;
@@ -2930,15 +2934,18 @@ BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile) {
     }
 
     // copying actual data about militia
-    for (uint16_t sectorID = 0; sectorID < 256; sectorID++) {
-      struct MilitiaCount milCount = {
-          SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[0],
-          SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[1],
-          SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[2],
-      };
-      SetMilitiaInSectorID8((u8)sectorID, milCount);
-      SetMilitiaTrainingPayedForSectorID8(
-          (u8)sectorID, SectorInfo[sectorID]._only_savedgame_fMilitiaTrainingPaid != 0);
+    for (u8 y = 1; y < 17; y++) {
+      for (u8 x = 1; x < 17; x++) {
+        SectorID8 sectorID = GetSectorID8(x, y);
+        struct MilitiaCount milCount = {
+            SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[0],
+            SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[1],
+            SectorInfo[sectorID]._only_savedgame_ubNumberOfCivsAtLevel[2],
+        };
+        SetMilitiaInSector(x, y, milCount);
+        SetMilitiaTrainingPayedForSector(
+            x, y, SectorInfo[sectorID]._only_savedgame_fMilitiaTrainingPaid != 0);
+      }
     }
   }
 
