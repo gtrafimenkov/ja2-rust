@@ -35,6 +35,11 @@ bool MilitiaTrainingAllowedInTown(enum TownID town);
 /**
  * Return TownID the sector belongs to.
  */
+enum TownID GetTownIdForSectorID16(SectorID16 sector_id);
+
+/**
+ * Return TownID the sector belongs to.
+ */
 enum TownID GetTownIdForSector(uint8_t x, uint8_t y);
 
 #ifdef __cplusplus

@@ -4144,22 +4144,22 @@ void BlitTownGridMarkers(void) {
         sScreenX += 2;
       }
 
-      if (StrategicMap[sectorID - MAP_WORLD_X].townID == BLANK_SECTOR) {
+      if (GetTownIdForSectorID16(sectorID - MAP_WORLD_X) == BLANK_SECTOR) {
         LineDraw(TRUE, sScreenX - 1, sScreenY - 1, sScreenX + sWidth - 1, sScreenY - 1, usColor,
                  pDestBuf);
       }
 
-      if ((StrategicMap[sectorID + MAP_WORLD_X].townID == BLANK_SECTOR)) {
+      if ((GetTownIdForSectorID16(sectorID + MAP_WORLD_X) == BLANK_SECTOR)) {
         LineDraw(TRUE, sScreenX - 1, sScreenY + sHeight - 1, sScreenX + sWidth - 1,
                  sScreenY + sHeight - 1, usColor, pDestBuf);
       }
 
-      if (StrategicMap[sectorID - 1].townID == BLANK_SECTOR) {
+      if (GetTownIdForSectorID16(sectorID - 1) == BLANK_SECTOR) {
         LineDraw(TRUE, sScreenX - 2, sScreenY - 1, sScreenX - 2, sScreenY + sHeight - 1, usColor,
                  pDestBuf);
       }
 
-      if (StrategicMap[sectorID + 1].townID == BLANK_SECTOR) {
+      if (GetTownIdForSectorID16(sectorID + 1) == BLANK_SECTOR) {
         LineDraw(TRUE, sScreenX + sWidth - 1, sScreenY - 1, sScreenX + sWidth - 1,
                  sScreenY + sHeight - 1, usColor, pDestBuf);
       }
@@ -4543,7 +4543,7 @@ void RenderIconsPerSectorForSelectedTown(void) {
                                      ((iCounter / MILITIA_BOX_ROWS) * MILITIA_BOX_BOX_HEIGHT)),
                              MILITIA_BOX_BOX_WIDTH, 0, sString, FONT10ARIAL, &sX, &sY);
 
-    if (StrategicMap[SectorID8To16(sCurrentSectorValue)].townID != BLANK_SECTOR &&
+    if (GetTownIdForSectorID16(SectorID8To16(sCurrentSectorValue)) != BLANK_SECTOR &&
         !IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
                                  SectorID8_Y(sCurrentSectorValue))) {
       if (sSectorMilitiaMapSector != iCounter) {
@@ -5222,7 +5222,7 @@ void RenderShadingForUnControlledSectors(void) {
     sCurrentSectorValue =
         sBaseSectorValue + ((iCounter % MILITIA_BOX_ROWS) + (iCounter / MILITIA_BOX_ROWS) * (16));
 
-    if ((StrategicMap[SectorID8To16(sCurrentSectorValue)].townID != BLANK_SECTOR) &&
+    if ((GetTownIdForSectorID16(SectorID8To16(sCurrentSectorValue)) != BLANK_SECTOR) &&
         ((IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
                                   SectorID8_Y(sCurrentSectorValue))) ||
          (NumHostilesInSector(SectorID8_X(sCurrentSectorValue), SectorID8_Y(sCurrentSectorValue),

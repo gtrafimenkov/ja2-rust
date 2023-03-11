@@ -8,10 +8,13 @@ pub struct Point {
 
 impl Point {
     pub const fn new(x: u8, y: u8) -> Self {
-        debug_assert!(x >= 1 && x <= 16);
-        debug_assert!(y >= 1 && y <= 16);
+        debug_assert!(valid_coords(x, y));
         Point { x, y }
     }
+}
+
+pub const fn valid_coords(x: u8, y: u8) -> bool {
+    (x >= 1) && (x <= 16) && (y >= 1) && (y <= 16)
 }
 
 #[derive(Copy, Clone)]

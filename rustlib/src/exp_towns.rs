@@ -1,4 +1,9 @@
-use crate::{state::STATE, towns};
+use crate::{
+    exp_sector::{SectorID16, SectorID16_X, SectorID16_Y},
+    sector,
+    state::STATE,
+    towns,
+};
 
 #[repr(C)]
 #[allow(non_camel_case_types)]
@@ -69,7 +74,16 @@ pub extern "C" fn MilitiaTrainingAllowedInTown(town: TownID) -> bool {
 
 /// Return TownID the sector belongs to.
 #[no_mangle]
+pub extern "C" fn GetTownIdForSectorID16(sector_id: SectorID16) -> TownID {
+    GetTownIdForSector(SectorID16_X(sector_id), SectorID16_Y(sector_id))
+}
+
+/// Return TownID the sector belongs to.
+#[no_mangle]
 pub extern "C" fn GetTownIdForSector(x: u8, y: u8) -> TownID {
+    if !sector::valid_coords(x, y) {
+        return TownID::BLANK_SECTOR;
+    }
     let town = unsafe { STATE.town_map.get(x, y) };
     match town {
         None => TownID::BLANK_SECTOR,

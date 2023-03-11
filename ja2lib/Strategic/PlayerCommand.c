@@ -221,7 +221,6 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
 
 // ALL changes of control to enemy must be funneled through here!
 BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN fContested) {
-  UINT16 usMapSector = 0;
   BOOLEAN fWasPlayerControlled = FALSE;
   TownID bTownId = 0;
   UINT8 ubTheftChance;
@@ -236,8 +235,6 @@ BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN f
   }
 
   if (bMapZ == 0) {
-    usMapSector = GetSectorID16(sMapX, sMapY);
-
     fWasPlayerControlled = !IsSectorEnemyControlled(sMapX, sMapY);
 
     SetSectorEnemyControlled(sMapX, sMapY, TRUE);
@@ -250,7 +247,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN f
       }
 
       // check if there's a town in the sector
-      bTownId = StrategicMap[usMapSector].townID;
+      bTownId = GetTownIdForSector(sMapX, sMapY);
 
       SectorInfo[GetSectorID8(sMapX, sMapY)].fPlayer[bMapZ] = FALSE;
 

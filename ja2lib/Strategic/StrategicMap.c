@@ -486,15 +486,11 @@ UINT8 GetTownSectorSize(TownID bTownId) {
 // return number of sectors under player control for this town
 UINT8 GetTownSectorsUnderControl(TownID bTownId) {
   INT8 ubSectorsControlled = 0;
-  UINT16 usSector = 0;
 
-  for (u8 iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
-    for (u8 iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
-      usSector = (UINT16)GetSectorID16(iCounterA, iCounterB);
-
-      if ((StrategicMap[usSector].townID == bTownId) &&
-          (!IsSectorEnemyControlled(iCounterA, iCounterB)) &&
-          (NumEnemiesInSector(iCounterA, iCounterB) == 0)) {
+  for (u8 x = 0; x < (INT32)(MAP_WORLD_X - 1); x++) {
+    for (u8 y = 0; y < (INT32)(MAP_WORLD_Y - 1); y++) {
+      if ((GetTownIdForSector(x, y) == bTownId) && (!IsSectorEnemyControlled(x, y)) &&
+          (NumEnemiesInSector(x, y) == 0)) {
         ubSectorsControlled++;
       }
     }
