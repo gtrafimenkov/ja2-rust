@@ -51,7 +51,7 @@ struct militiaState {
 
   struct sectorSearch sectorSearch;
 
-  struct MilitiaCount sectorForce[256];
+  // struct MilitiaCount sectorForce[256];
   bool trainingPaid[256];
 };
 
@@ -310,26 +310,26 @@ INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   return 0;
 }
 
-struct MilitiaCount GetMilitiaInSector(u8 mapX, u8 mapY) {
-  return GetMilitiaInSectorID8(GetSectorID8(mapX, mapY));
-}
+// struct MilitiaCount GetMilitiaInSector(u8 mapX, u8 mapY) {
+//   return GetMilitiaInSectorID8(GetSectorID8(mapX, mapY));
+// }
 
-struct MilitiaCount GetMilitiaInSectorID8(SectorID8 sectorID) {
-  struct MilitiaCount res = {
-      _st.sectorForce[sectorID].green,
-      _st.sectorForce[sectorID].regular,
-      _st.sectorForce[sectorID].elite,
-  };
-  return res;
-}
+// struct MilitiaCount GetMilitiaInSectorID8(SectorID8 sectorID) {
+//   struct MilitiaCount res = {
+//       _st.sectorForce[sectorID].green,
+//       _st.sectorForce[sectorID].regular,
+//       _st.sectorForce[sectorID].elite,
+//   };
+//   return res;
+// }
 
-void SetMilitiaInSectorID8(SectorID8 sectorID, struct MilitiaCount newCount) {
-  _st.sectorForce[sectorID] = newCount;
-}
+// void SetMilitiaInSectorID8(SectorID8 sectorID, struct MilitiaCount newCount) {
+//   _st.sectorForce[sectorID] = newCount;
+// }
 
-void SetMilitiaInSector(u8 mapX, u8 mapY, struct MilitiaCount newCount) {
-  SetMilitiaInSectorID8(GetSectorID8(mapX, mapY), newCount);
-}
+// void SetMilitiaInSector(u8 mapX, u8 mapY, struct MilitiaCount newCount) {
+//   SetMilitiaInSectorID8(GetSectorID8(mapX, mapY), newCount);
+// }
 
 void SetMilitiaOfRankInSector(u8 mapX, u8 mapY, UINT8 ubRank, u8 count) {
   SectorID8 sectorID = GetSectorID8(mapX, mapY);
