@@ -23,9 +23,25 @@ enum TownID {
   CHITZENA = 12,
 };
 
+struct TownSector {
+  enum TownID town;
+  uint8_t x;
+  uint8_t y;
+};
+
+struct TownSectors {
+  uint8_t count;
+  struct TownSector sectors[40];
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+/**
+ * Returs the list of all sectors belonging to towns
+ */
+void GetAllTownSectors(struct TownSectors *data);
 
 /**
  * Is militia training allowed in this town?
