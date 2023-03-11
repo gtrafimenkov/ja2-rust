@@ -80,6 +80,21 @@ pub extern "C" fn SetSectorEnemyAirControlled(x: u8, y: u8, value: bool) {
     }
 }
 
+// #[no_mangle]
+// pub extern "C" fn MilitiaTrainingAllowedInSector(x: u8, y: u8, z: i8) -> bool {
+//     if z != 0 {
+//         return false;
+//     }
+
+//     if sam_sites::get_sam_at_sector(x, y, z).is_some() {
+//         // all SAM sites may have militia trained at them
+//         return true;
+//     }
+
+//     //     bTownId = GetTownIdForSector(mapX, mapY);
+//     //     return (MilitiaTrainingAllowedInTown(bTownId));
+// }
+
 #[cfg(test)]
 mod tests {
     use super::*;

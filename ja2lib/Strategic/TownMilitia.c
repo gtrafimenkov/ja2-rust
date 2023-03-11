@@ -399,25 +399,24 @@ static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkip
 // initialization it will skip an entry that matches the skip X/Y value if one was specified at
 // initialization MUST CALL initNextSectorSearch() before using!!!
 static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
-  u8 mapX, mapY;
   BOOLEAN fStopLooking = FALSE;
 
-  const TownSectors *townSectors = GetAllTownSectors();
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
 
   do {
     // have we reached the end of the town list?
-    if ((*townSectors)[_st.sectorSearch.townSectorsIndex].townID == BLANK_SECTOR) {
+    if (townSectors.sectors[_st.sectorSearch.townSectorsIndex].townID == BLANK_SECTOR) {
       // end of list reached
       return (FALSE);
     }
 
-    INT32 iTownSector = (*townSectors)[_st.sectorSearch.townSectorsIndex].sectorID;
+    u8 mapX = townSectors.sectors[_st.sectorSearch.townSectorsIndex].x;
+    u8 mapY = townSectors.sectors[_st.sectorSearch.townSectorsIndex].y;
 
     // if this sector is in the town we're looking for
-    if (GetTownIdForStrategicMapIndex(iTownSector) == _st.sectorSearch.townID) {
+    if (GetTownIdForSector(mapX, mapY) == _st.sectorSearch.townID) {
       // A sector in the specified town.  Calculate its X & Y sector compotents
-      mapX = SectorID16_X(iTownSector);
-      mapY = SectorID16_Y(iTownSector);
 
       // Make sure we're not supposed to skip it
       if ((mapX != _st.sectorSearch.skipX) || (mapY != _st.sectorSearch.skipY)) {
@@ -702,18 +701,17 @@ BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY) {
 }
 
 BOOLEAN IsTownFullMilitia(TownID bTownId) {
-  INT32 iCounter = 0;
-  u8 mapX = 0, mapY = 0;
   INT32 iNumberOfMilitia = 0;
   INT32 iMaxNumber = 0;
 
-  const TownSectors *townSectors = GetAllTownSectors();
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
 
-  while ((*townSectors)[iCounter].townID != 0) {
-    if ((*townSectors)[iCounter].townID == bTownId) {
+  for (int iCounter = 0; iCounter < townSectors.count; iCounter++) {
+    if (townSectors.sectors[iCounter].townID == bTownId) {
       // get the sector x and y
-      mapX = SectorID16_X((*townSectors)[iCounter].sectorID);
-      mapY = SectorID16_Y((*townSectors)[iCounter].sectorID);
+      u8 mapX = townSectors.sectors[iCounter].x;
+      u8 mapY = townSectors.sectors[iCounter].y;
 
       // if sector is ours get number of militia here
       if (SectorOursAndPeaceful(mapX, mapY, 0)) {
@@ -724,8 +722,6 @@ BOOLEAN IsTownFullMilitia(TownID bTownId) {
         iMaxNumber += MAX_ALLOWABLE_MILITIA_PER_SECTOR;
       }
     }
-
-    iCounter++;
   }
 
   // now check the number of militia
@@ -1007,32 +1003,6 @@ BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ) {
   bTownId = GetTownIdForSector(mapX, mapY);
 
   return (MilitiaTrainingAllowedInTown(bTownId));
-}
-
-BOOLEAN MilitiaTrainingAllowedInTown(TownID bTownId) {
-  switch (bTownId) {
-    case DRASSEN:
-    case ALMA:
-    case GRUMM:
-    case CAMBRIA:
-    case BALIME:
-    case MEDUNA:
-    case CHITZENA:
-      return (TRUE);
-
-    case OMERTA:
-    case ESTONI:
-    case SAN_MONA:
-    case TIXA:
-    case ORTA:
-      // can't keep militia in these towns
-      return (FALSE);
-
-    case BLANK_SECTOR:
-    default:
-      // not a town sector!
-      return (FALSE);
-  }
 }
 
 void PrepMilitiaPromotion() {

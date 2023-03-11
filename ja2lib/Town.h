@@ -1,46 +1,12 @@
 #ifndef __TOWN_H
 #define __TOWN_H
 
-#include "LeanTypes.h"
-#include "Sector.h"
+#include "rust_towns.h"
 
-// Sector name identifiers.  Also town names.
-typedef enum {
-  BLANK_SECTOR = 0,
-  OMERTA,
-  DRASSEN,
-  ALMA,
-  GRUMM,
-  TIXA,
-  CAMBRIA,
-  SAN_MONA,
-  ESTONI,
-  ORTA,
-  BALIME,
-  MEDUNA,
-  CHITZENA,
-  NUM_TOWNS
-} TownID;
+typedef enum TownID TownID;
 
+#define NUM_TOWNS 13
 #define FIRST_TOWN OMERTA
-
-i8 GetTownIdForSector(u8 sMapX, u8 sMapY);
-i8 GetTownIdForStrategicMapIndex(i32 index);
-
-// Mapping townID -> sectorID
-struct TownSector {
-  TownID townID;
-  SectorID16 sectorID;
-};
-
-// Mapping of all town sectors.  There may be max 40 mappings.
-// The mapping is over, when townID is BLANK_SECTOR.
-typedef struct TownSector TownSectors[40];
-
-const TownSectors* GetAllTownSectors();
-
-// build list of town sectors
-void BuildListOfTownSectors();
 
 // gain pts per real loyalty pt
 #define GAIN_PTS_PER_LOYALTY_PT 500

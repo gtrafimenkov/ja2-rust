@@ -186,8 +186,6 @@ STR8 pHortStrings[] = {
     "9", "10", "11", "12", "13", "14", "15", "16", "17",
 };
 
-void InitializeStrategicMapSectorTownNames(void);
-
 void DoneFadeOutAdjacentSector(void);
 void DoneFadeOutExitGridSector(void);
 
@@ -451,9 +449,6 @@ BOOLEAN InitStrategicEngine() {
 
   InitializeMapStructure();
 
-  // set up town stuff
-  BuildListOfTownSectors();
-
   // town distances are pre-calculated and read in from a data file
   // since it takes quite a while to plot strategic paths between all pairs of town sectors...
 
@@ -469,14 +464,6 @@ BOOLEAN InitStrategicEngine() {
   return (TRUE);
 }
 
-INT8 GetTownIdForSector(u8 sMapX, u8 sMapY) {
-  // return the name value of the town in this sector
-
-  return GetTownIdForStrategicMapIndex(GetSectorID16(sMapX, sMapY));
-}
-
-i8 GetTownIdForStrategicMapIndex(i32 index) { return StrategicMap[index].townID; }
-
 // return number of sectors this town takes up
 UINT8 GetTownSectorSize(TownID bTownId) {
   UINT8 ubSectorSize = 0;
@@ -484,7 +471,7 @@ UINT8 GetTownSectorSize(TownID bTownId) {
 
   for (iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
     for (iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
-      if (StrategicMap[GetSectorID16(iCounterA, iCounterB)].townID == bTownId) {
+      if (GetTownIdForSector(iCounterA, iCounterB) == bTownId) {
         ubSectorSize++;
       }
     }
@@ -496,15 +483,11 @@ UINT8 GetTownSectorSize(TownID bTownId) {
 // return number of sectors under player control for this town
 UINT8 GetTownSectorsUnderControl(TownID bTownId) {
   INT8 ubSectorsControlled = 0;
-  UINT16 usSector = 0;
 
-  for (u8 iCounterA = 0; iCounterA < (INT32)(MAP_WORLD_X - 1); iCounterA++) {
-    for (u8 iCounterB = 0; iCounterB < (INT32)(MAP_WORLD_Y - 1); iCounterB++) {
-      usSector = (UINT16)GetSectorID16(iCounterA, iCounterB);
-
-      if ((StrategicMap[usSector].townID == bTownId) &&
-          (!IsSectorEnemyControlled(iCounterA, iCounterB)) &&
-          (NumEnemiesInSector(iCounterA, iCounterB) == 0)) {
+  for (u8 x = 0; x < (INT32)(MAP_WORLD_X - 1); x++) {
+    for (u8 y = 0; y < (INT32)(MAP_WORLD_Y - 1); y++) {
+      if ((GetTownIdForSector(x, y) == bTownId) && (!IsSectorEnemyControlled(x, y)) &&
+          (NumEnemiesInSector(x, y) == 0)) {
         ubSectorsControlled++;
       }
     }
@@ -513,11 +496,7 @@ UINT8 GetTownSectorsUnderControl(TownID bTownId) {
   return (ubSectorsControlled);
 }
 
-void InitializeMapStructure() {
-  memset(StrategicMap, 0, sizeof(StrategicMap));
-
-  InitializeStrategicMapSectorTownNames();
-}
+void InitializeMapStructure() { memset(StrategicMap, 0, sizeof(StrategicMap)); }
 
 void InitializeSAMSites(void) {
   // move the landing zone over to Omerta
@@ -1613,34 +1592,6 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, 
   }
 }
 
-void InitializeStrategicMapSectorTownNames(void) {
-  StrategicMap[GetSectorID16(2, 2)].townID = StrategicMap[GetSectorID16(2, 1)].townID = CHITZENA;
-  StrategicMap[GetSectorID16(5, 3)].townID = StrategicMap[GetSectorID16(6, 3)].townID =
-      StrategicMap[GetSectorID16(5, 4)].townID = StrategicMap[GetSectorID16(4, 4)].townID =
-          SAN_MONA;
-  StrategicMap[GetSectorID16(9, 1)].townID = StrategicMap[GetSectorID16(10, 1)].townID = OMERTA;
-  StrategicMap[GetSectorID16(13, 2)].townID = StrategicMap[GetSectorID16(13, 3)].townID =
-      StrategicMap[GetSectorID16(13, 4)].townID = DRASSEN;
-  StrategicMap[GetSectorID16(1, 7)].townID = StrategicMap[GetSectorID16(1, 8)].townID =
-      StrategicMap[GetSectorID16(2, 7)].townID = StrategicMap[GetSectorID16(2, 8)].townID =
-          StrategicMap[GetSectorID16(3, 8)].townID = GRUMM;
-  StrategicMap[GetSectorID16(6, 9)].townID = ESTONI;
-  StrategicMap[GetSectorID16(9, 10)].townID = TIXA;
-  StrategicMap[GetSectorID16(8, 6)].townID = StrategicMap[GetSectorID16(9, 6)].townID =
-      StrategicMap[GetSectorID16(8, 7)].townID = StrategicMap[GetSectorID16(9, 7)].townID =
-          StrategicMap[GetSectorID16(8, 8)].townID = CAMBRIA;
-  StrategicMap[GetSectorID16(13, 9)].townID = StrategicMap[GetSectorID16(14, 9)].townID =
-      StrategicMap[GetSectorID16(13, 8)].townID = StrategicMap[GetSectorID16(14, 8)].townID = ALMA;
-  StrategicMap[GetSectorID16(4, 11)].townID = ORTA;
-  StrategicMap[GetSectorID16(11, 12)].townID = StrategicMap[GetSectorID16(12, 12)].townID = BALIME;
-  StrategicMap[GetSectorID16(3, 14)].townID = StrategicMap[GetSectorID16(4, 14)].townID =
-      StrategicMap[GetSectorID16(5, 14)].townID = StrategicMap[GetSectorID16(3, 15)].townID =
-          StrategicMap[GetSectorID16(4, 15)].townID = StrategicMap[GetSectorID16(3, 16)].townID =
-              MEDUNA;
-  // StrategicMap[3+16*MAP_WORLD_X].townID=PALACE;
-  return;
-}
-
 // Get sector ID string makes a string like 'A9 - OMERTA', or just J11 if no town....
 void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString, size_t bufSize,
                        BOOLEAN fDetailed) {
@@ -1686,7 +1637,7 @@ void GetSectorIDString(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, CHAR16 *zString,
       wcscpy(zString, L"");
     }
   } else {
-    bTownNameID = StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID;
+    bTownNameID = GetTownIdForSector(sSectorX, sSectorY);
     ubSectorID = (UINT8)GetSectorID8(sSectorX, sSectorY);
     pSector = &SectorInfo[ubSectorID];
     ubLandType = pSector->ubTraversability[4];
@@ -2887,17 +2838,6 @@ void UpdateAirspaceControl(void) {
   // ARM: airspace control now affects refueling site availability, so update that too with every
   // change!
   UpdateRefuelSiteAvailability();
-}
-
-// is this sector part of the town?
-BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY) {
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID == bTownId) {
-    // is in the town
-    return (TRUE);
-  }
-
-  // not in the town
-  return (FALSE);
 }
 
 BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {

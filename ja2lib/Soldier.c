@@ -2,6 +2,7 @@
 
 #include "Militia.h"
 #include "Tactical/Menptr.h"
+#include "Town.h"
 
 // Get soldier by index.
 // Valid indeces are [0..TOTAL_SOLDIERS).
@@ -9,6 +10,11 @@ struct SOLDIERTYPE *GetSoldierByID(int index) { return &Menptr[index]; }
 
 u8 GetSolID(const struct SOLDIERTYPE *s) { return s->ubID; }
 u8 GetSolProfile(const struct SOLDIERTYPE *s) { return s->ubProfile; }
+
+// Get town where the soldier is located
+TownID GetSolTown(const struct SOLDIERTYPE *s) {
+  return GetTownIdForSector(GetSolSectorX(s), GetSolSectorY(s));
+}
 
 u8 GetSolSectorX(const struct SOLDIERTYPE *s) { return (u8)s->sSectorX; }
 u8 GetSolSectorY(const struct SOLDIERTYPE *s) { return (u8)s->sSectorY; }

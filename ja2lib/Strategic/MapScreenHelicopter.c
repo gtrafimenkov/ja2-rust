@@ -373,11 +373,10 @@ INT32 FindLocationOfClosestRefuelSite(BOOLEAN fMustBeAvailable) {
     // if this refuelling site is available
     if ((fRefuelingSiteAvailable[iCounter]) || (fMustBeAvailable == FALSE)) {
       // find if sector is under control, find distance from heli to it
-      iDistance = (INT32)FindStratPath(
-          (INT16)(GetSectorID16((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
-                                (u8)pVehicleList[iHelicopterVehicleId].sSectorY)),
-          (INT16)(GetSectorID16(ubRefuelList[iCounter][0], ubRefuelList[iCounter][1])),
-          pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
+      iDistance = (INT32)FindStratPath((u8)pVehicleList[iHelicopterVehicleId].sSectorX,
+                                       (u8)pVehicleList[iHelicopterVehicleId].sSectorY,
+                                       ubRefuelList[iCounter][0], ubRefuelList[iCounter][1],
+                                       pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
 
       if (iDistance < iShortestDistance) {
         // shorter, copy over
@@ -398,10 +397,9 @@ INT32 DistanceToNearestRefuelPoint(u8 sX, u8 sY) {
   // don't notify player during these checks!
   iClosestLocation = LocationOfNearestRefuelPoint(FALSE);
 
-  iDistance = (INT32)FindStratPath(
-      (INT16)(GetSectorID16(sX, sY)),
-      (INT16)(GetSectorID16(ubRefuelList[iClosestLocation][0], ubRefuelList[iClosestLocation][1])),
-      pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
+  iDistance = (INT32)FindStratPath(sX, sY, ubRefuelList[iClosestLocation][0],
+                                   ubRefuelList[iClosestLocation][1],
+                                   pVehicleList[iHelicopterVehicleId].ubMovementGroup, FALSE);
   return (iDistance);
 }
 

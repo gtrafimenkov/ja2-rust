@@ -46,6 +46,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "rust_sam_sites.h"
+#include "rust_towns.h"
 
 // zoom x and y coords for map scrolling
 INT32 iZoomX = 0;
@@ -4106,7 +4107,6 @@ void BlitTownGridMarkers(void) {
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usColor = 0;
-  INT32 iCounter = 0;
   INT16 sWidth = 0, sHeight = 0;
 
   // get 16 bpp color
@@ -4118,18 +4118,19 @@ void BlitTownGridMarkers(void) {
   // clip to view region
   ClipBlitsToMapViewRegionForRectangleAndABit(uiDestPitchBYTES);
 
-  const TownSectors *townSectors = GetAllTownSectors();
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
 
   // go through list of towns and place on screen
-  while ((*townSectors)[iCounter].townID != 0) {
-    TownID townID = (*townSectors)[iCounter].townID;
-    SectorID16 sectorID = (*townSectors)[iCounter].sectorID;
+  for (int iCounter = 0; iCounter < townSectors.count; iCounter++) {
+    TownID townID = townSectors.sectors[iCounter].townID;
+    u8 sX = townSectors.sectors[iCounter].x;
+    u8 sY = townSectors.sectors[iCounter].y;
     // skip Orta/Tixa until found
     if (((fFoundOrta != FALSE) || (townID != ORTA)) &&
         ((townID != TIXA) || (fFoundTixa != FALSE))) {
       if (fZoomFlag) {
-        GetScreenXYFromMapXYStationary(SectorID16_X(sectorID), SectorID16_Y(sectorID), &sScreenX,
-                                       &sScreenY);
+        GetScreenXYFromMapXYStationary(sX, sY, &sScreenX, &sScreenY);
         sScreenX -= MAP_GRID_X - 1;
         sScreenY -= MAP_GRID_Y;
 
@@ -4137,35 +4138,33 @@ void BlitTownGridMarkers(void) {
         sHeight = 2 * MAP_GRID_Y;
       } else {
         // get location on screen
-        GetScreenXYFromMapXY(SectorID16_X(sectorID), SectorID16_Y(sectorID), &sScreenX, &sScreenY);
+        GetScreenXYFromMapXY(sX, sY, &sScreenX, &sScreenY);
         sWidth = MAP_GRID_X - 1;
         sHeight = MAP_GRID_Y;
 
         sScreenX += 2;
       }
 
-      if (StrategicMap[sectorID - MAP_WORLD_X].townID == BLANK_SECTOR) {
+      if (GetTownIdForSector(sX, sY - 1) == BLANK_SECTOR) {
         LineDraw(TRUE, sScreenX - 1, sScreenY - 1, sScreenX + sWidth - 1, sScreenY - 1, usColor,
                  pDestBuf);
       }
 
-      if ((StrategicMap[sectorID + MAP_WORLD_X].townID == BLANK_SECTOR)) {
+      if ((GetTownIdForSector(sX, sY + 1) == BLANK_SECTOR)) {
         LineDraw(TRUE, sScreenX - 1, sScreenY + sHeight - 1, sScreenX + sWidth - 1,
                  sScreenY + sHeight - 1, usColor, pDestBuf);
       }
 
-      if (StrategicMap[sectorID - 1].townID == BLANK_SECTOR) {
+      if (GetTownIdForSector(sX - 1, sY) == BLANK_SECTOR) {
         LineDraw(TRUE, sScreenX - 2, sScreenY - 1, sScreenX - 2, sScreenY + sHeight - 1, usColor,
                  pDestBuf);
       }
 
-      if (StrategicMap[sectorID + 1].townID == BLANK_SECTOR) {
+      if (GetTownIdForSector(sX + 1, sY) == BLANK_SECTOR) {
         LineDraw(TRUE, sScreenX + sWidth - 1, sScreenY - 1, sScreenX + sWidth - 1,
                  sScreenY + sHeight - 1, usColor, pDestBuf);
       }
     }
-
-    iCounter++;
   }
 
   // restore clips
@@ -4543,9 +4542,8 @@ void RenderIconsPerSectorForSelectedTown(void) {
                                      ((iCounter / MILITIA_BOX_ROWS) * MILITIA_BOX_BOX_HEIGHT)),
                              MILITIA_BOX_BOX_WIDTH, 0, sString, FONT10ARIAL, &sX, &sY);
 
-    if (StrategicMap[SectorID8To16(sCurrentSectorValue)].townID != BLANK_SECTOR &&
-        !IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
-                                 SectorID8_Y(sCurrentSectorValue))) {
+    if (GetTownIdForSector(sSectorX, sSectorY) != BLANK_SECTOR &&
+        !IsSectorEnemyControlled(sSectorX, sSectorY)) {
       if (sSectorMilitiaMapSector != iCounter) {
         mprintf(sX, (INT16)(sY + MILITIA_BOX_BOX_HEIGHT - 5), sString);
       } else {
@@ -4727,10 +4725,9 @@ void CreateDestroyMilitiaSectorButtons(void) {
     }
 
     // mark here the militia box left click region
-    // MSYS_DefineRegion( &gMapScreenMilitiaRegion, ( INT16 ) ( MAP_MILITIA_BOX_POS_X ), ( INT16 )(
-    // MAP_MILITIA_BOX_POS_Y  ), ( INT16 )( MAP_MILITIA_BOX_POS_X + pTrav->usWidth ), ( INT16 )(
-    // MAP_MILITIA_BOX_POS_Y + pTrav->usHeight ), MSYS_PRIORITY_HIGHEST - 2,
-    // MSYS_NO_CURSOR,
+    // MSYS_DefineRegion( &gMapScreenMilitiaRegion, ( INT16 ) ( MAP_MILITIA_BOX_POS_X ), ( INT16
+    // )( MAP_MILITIA_BOX_POS_Y  ), ( INT16 )( MAP_MILITIA_BOX_POS_X + pTrav->usWidth ), ( INT16
+    // )( MAP_MILITIA_BOX_POS_Y + pTrav->usHeight ), MSYS_PRIORITY_HIGHEST - 2, MSYS_NO_CURSOR,
     // MilitiaRegionMoveCallback, MilitiaBoxMaskBtnCallback );
 
     CreateScreenMaskForMoveBox();
@@ -4888,7 +4885,7 @@ BOOLEAN IsThisMilitiaTownSectorAllowable(INT16 sSectorIndexValue) {
   sSectorY = SectorID8_Y(sGlobalMapSector);
 
   // is this in fact part of a town?
-  if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID == BLANK_SECTOR) {
+  if (GetTownIdForSector(sSectorX, sSectorY) == BLANK_SECTOR) {
     return (FALSE);
   }
 
@@ -4924,8 +4921,7 @@ void DrawTownMilitiaName(void) {
 }
 
 void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor(INT16 sTownValue) {
-  INT32 iCounter = 0, iCounterB = 0, iNumberUnderControl = 0, iNumberThatCanFitInSector = 0,
-        iCount = 0;
+  INT32 iNumberUnderControl = 0, iNumberThatCanFitInSector = 0, iCount = 0;
   BOOLEAN fLastOne = FALSE;
 
   // check if anyone still on the cursor
@@ -4937,17 +4933,16 @@ void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor(INT16 sTownValue) {
   iNumberUnderControl = GetTownSectorsUnderControl((INT8)sTownValue);
 
   // find number of sectors under player's control
-  const TownSectors *townSectors = GetAllTownSectors();
-  while ((*townSectors)[iCounter].townID != 0) {
-    if ((*townSectors)[iCounter].townID == sTownValue) {
-      SectorID16 sectorID = (*townSectors)[iCounter].sectorID;
-      if (SectorOursAndPeaceful(SectorID16_X(sectorID), SectorID16_Y(sectorID), 0)) {
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
+  for (int iCounter = 0; iCounter < townSectors.count; iCounter++) {
+    if (townSectors.sectors[iCounter].townID == sTownValue) {
+      u8 sX = townSectors.sectors[iCounter].x;
+      u8 sY = townSectors.sectors[iCounter].y;
+      if (SectorOursAndPeaceful(sX, sY, 0)) {
         iCount = 0;
         iNumberThatCanFitInSector = MAX_ALLOWABLE_MILITIA_PER_SECTOR;
-        iNumberThatCanFitInSector -= CountAllMilitiaInSectorID8(SectorID16To8(sectorID));
-
-        u8 sX = SectorID16_X(sectorID);
-        u8 sY = SectorID16_Y(sectorID);
+        iNumberThatCanFitInSector -= CountAllMilitiaInSector(sX, sY);
 
         while ((iCount < iNumberThatCanFitInSector) &&
                ((sGreensOnCursor) || (sRegularsOnCursor) || (sElitesOnCursor))) {
@@ -4973,34 +4968,25 @@ void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor(INT16 sTownValue) {
           }
         }
 
-        if (SectorID16To8(sectorID) == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
+        if (GetSectorID8(sX, sY) == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
           TacticalMilitiaRefreshRequired();
         }
       }
 
       fLastOne = TRUE;
 
-      iCounterB = iCounter + 1;
-
-      const TownSectors *townSectors = GetAllTownSectors();
-      while ((*townSectors)[iCounterB].townID != 0) {
-        if ((*townSectors)[iCounterB].townID == sTownValue) {
+      for (int iCounterB = iCounter + 1; iCounterB < townSectors.count; iCounterB++) {
+        if (townSectors.sectors[iCounterB].townID == sTownValue) {
           fLastOne = FALSE;
         }
-
-        iCounterB++;
       }
 
       if (fLastOne) {
-        u8 sX = SectorID16_X(sectorID);
-        u8 sY = SectorID16_Y(sectorID);
         IncMilitiaOfRankInSector(sX, sY, GREEN_MILITIA, sGreensOnCursor % iNumberUnderControl);
         IncMilitiaOfRankInSector(sX, sY, REGULAR_MILITIA, sRegularsOnCursor % iNumberUnderControl);
         IncMilitiaOfRankInSector(sX, sY, ELITE_MILITIA, sElitesOnCursor % iNumberUnderControl);
       }
     }
-
-    iCounter++;
   }
 
   // zero out numbers on the cursor
@@ -5070,11 +5056,12 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
   }
 
   iCounter = 0;
-  const TownSectors *townSectors = GetAllTownSectors();
-  while ((*townSectors)[iCounter].townID != 0) {
-    if ((*townSectors)[iCounter].townID == sSelectedMilitiaTown) {
-      u8 sX = SectorID16_X((*townSectors)[iCounter].sectorID);
-      u8 sY = SectorID16_Y((*townSectors)[iCounter].sectorID);
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
+  for (int iCounter = 0; iCounter < townSectors.count; iCounter++) {
+    if (townSectors.sectors[iCounter].townID == sSelectedMilitiaTown) {
+      u8 sX = townSectors.sectors[iCounter].x;
+      u8 sY = townSectors.sectors[iCounter].y;
 
       if (!IsSectorEnemyControlled(sX, sY) && !NumHostilesInSector(sX, sY, 0)) {
         // distribute here
@@ -5109,8 +5096,6 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
         }
       }
     }
-
-    iCounter++;
   }
 
   // zero out numbers on the cursor
@@ -5222,11 +5207,11 @@ void RenderShadingForUnControlledSectors(void) {
     sCurrentSectorValue =
         sBaseSectorValue + ((iCounter % MILITIA_BOX_ROWS) + (iCounter / MILITIA_BOX_ROWS) * (16));
 
-    if ((StrategicMap[SectorID8To16(sCurrentSectorValue)].townID != BLANK_SECTOR) &&
-        ((IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
-                                  SectorID8_Y(sCurrentSectorValue))) ||
-         (NumHostilesInSector(SectorID8_X(sCurrentSectorValue), SectorID8_Y(sCurrentSectorValue),
-                              0)))) {
+    u8 sSectorX = SectorID8_X(sCurrentSectorValue);
+    u8 sSectorY = SectorID8_Y(sCurrentSectorValue);
+    if ((GetTownIdForSector(sSectorX, sSectorY) != BLANK_SECTOR) &&
+        ((IsSectorEnemyControlled(sSectorX, sSectorY)) ||
+         (NumHostilesInSector(sSectorX, sSectorY, 0)))) {
       // shade this sector, not under our control
       sX = MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X +
            ((iCounter % MILITIA_BOX_ROWS) * MILITIA_BOX_BOX_WIDTH);
@@ -5251,11 +5236,12 @@ void DrawTownMilitiaForcesOnMap(void) {
   // clip blits to mapscreen region
   ClipBlitsToMapViewRegion();
 
-  const TownSectors *townSectors = GetAllTownSectors();
-  while ((*townSectors)[iCounter].townID != 0) {
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
+  for (int iCounter = 0; iCounter < townSectors.count; iCounter++) {
     // run through each town sector and plot the icons for the militia forces in the town
-    u8 sSectorX = SectorID16_X((*townSectors)[iCounter].sectorID);
-    u8 sSectorY = SectorID16_Y((*townSectors)[iCounter].sectorID);
+    u8 sSectorX = townSectors.sectors[iCounter].x;
+    u8 sSectorY = townSectors.sectors[iCounter].y;
     if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       struct MilitiaCount milCount = GetMilitiaInSector(sSectorX, sSectorY);
 
@@ -5283,8 +5269,6 @@ void DrawTownMilitiaForcesOnMap(void) {
         DrawMapBoxIcon(hVObject, (UINT16)iIconValue, sSectorX, sSectorY, (UINT8)iCounterB);
       }
     }
-
-    iCounter++;
   }
 
   // now handle militia for sam sectors
@@ -5443,10 +5427,10 @@ void MilitiaBoxMaskBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   return;
 }
 
-// There is a special case flag used when players encounter enemies in a sector, then retreat.  The
+// There is a special case flag used when players encounter enemies in a sector, then retreat. The
 // number of enemies will display on mapscreen until time is compressed.  When time is compressed,
-// the flag is cleared, and a question mark is displayed to reflect that the player no longer knows.
-// This is the function that clears that flag.
+// the flag is cleared, and a question mark is displayed to reflect that the player no longer
+// knows. This is the function that clears that flag.
 void ClearAnySectorsFlashingNumberOfEnemies() {
   INT32 i;
   for (i = 0; i < 256; i++) {
@@ -5462,9 +5446,9 @@ UINT32 WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY) {
 
   // if player has militia close enough to scout this sector out, if there are mercs who can scout
   // here, OR
-  // Special case flag used when players encounter enemies in a sector, then retreat.  The number of
-  // enemies will display on mapscreen until time is compressed.  When time is compressed, the flag
-  // is cleared, and a question mark is displayed to reflect that the player no longer knows.
+  // Special case flag used when players encounter enemies in a sector, then retreat.  The number
+  // of enemies will display on mapscreen until time is compressed.  When time is compressed, the
+  // flag is cleared, and a question mark is displayed to reflect that the player no longer knows.
   if (CanMercsScoutThisSector(sSectorX, sSectorY, 0) ||
       CanNearbyMilitiaScoutThisSector(sSectorX, sSectorY) ||
       (uiSectorFlags & SF_PLAYER_KNOWS_ENEMIES_ARE_HERE)) {
@@ -6004,7 +5988,7 @@ BOOLEAN CanRedistributeMilitiaInSector(INT16 sClickedSectorX, INT16 sClickedSect
     sSectorY = SectorID8_Y(sCurrentSectorValue);
 
     // not in the same town?
-    if (StrategicMap[GetSectorID16(sSectorX, sSectorY)].townID != bClickedTownId) {
+    if (GetTownIdForSector(sSectorX, sSectorY) != bClickedTownId) {
       continue;
     }
 

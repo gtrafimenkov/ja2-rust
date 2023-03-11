@@ -1800,8 +1800,7 @@ void DrawCharacterInfo(INT16 sCharNumber) {
   }
   // train town?
   else if (GetSolAssignment(pSoldier) == TRAIN_TOWN) {
-    wcscpy(sString,
-           pTownNames[GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))]);
+    wcscpy(sString, pTownNames[GetSolTown(pSoldier)]);
   }
   // repairing?
   else if (GetSolAssignment(pSoldier) == REPAIR) {

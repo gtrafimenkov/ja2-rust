@@ -919,8 +919,7 @@ BOOLEAN BasicCanCharacterTrainMilitia(struct SOLDIERTYPE *pSoldier) {
   }
 
   // is there a town in the character's current sector?
-  if (StrategicMap[GetSectorID16(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))].townID ==
-      BLANK_SECTOR) {
+  if (GetSolTown(pSoldier) == BLANK_SECTOR) {
     fSamSitePresent = IsThisSectorASAMSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
                                              GetSolSectorZ(pSoldier));
 
@@ -1008,7 +1007,7 @@ BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(struct SOLDIERTYPE
     return (FALSE);
   }
 
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // is there a town really here
   if (bTownId == BLANK_SECTOR) {
@@ -1059,7 +1058,7 @@ BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(struct SOLDIERTYPE *pSoldier) 
     return (TRUE);
   }
 
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // is there a town really here
   if (bTownId == BLANK_SECTOR) {
@@ -3038,8 +3037,7 @@ void HandleTrainingInSector(u8 sMapX, u8 sMapY, INT8 bZ) {
   }
 
   // check if we're doing a sector where militia can be trained
-  if (((StrategicMap[GetSectorID16(sMapX, (sMapY))].townID != BLANK_SECTOR) ||
-       (fSamSiteInSector == TRUE)) &&
+  if (((GetTownIdForSector(sMapX, sMapY) != BLANK_SECTOR) || (fSamSiteInSector == TRUE)) &&
       (bZ == 0)) {
     // init town trainer list
     memset(TownTrainer, 0, sizeof(TownTrainer));
@@ -3541,7 +3539,7 @@ static BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, u8 sMap
   fSamSiteInSector = IsThisSectorASAMSector(sMapX, sMapY, 0);
 
   // get town index
-  ubTownId = StrategicMap[pTrainer->sSectorX + pTrainer->sSectorY * MAP_WORLD_X].townID;
+  ubTownId = GetSolTown(pTrainer);
   if (fSamSiteInSector == FALSE) {
     Assert(ubTownId != BLANK_SECTOR);
   }
@@ -3617,16 +3615,6 @@ INT16 GetTownTrainPtsForCharacter(struct SOLDIERTYPE *pTrainer, UINT16 *pusMaxPt
 
   // adjust for fatigue of trainer
   ReducePointsForFatigue(pTrainer, &sTotalTrainingPts);
-
-  /* ARM: Decided this didn't make much sense - the guys I'm training damn well BETTER be loyal -
-     and screw the rest!
-          // get town index
-          ubTownId = StrategicMap[ pTrainer -> sSectorX + pTrainer -> sSectorY * MAP_WORLD_X
-     ].townID; Assert(ubTownId != BLANK_SECTOR);
-
-          // adjust for town loyalty
-          sTotalTrainingPts = (sTotalTrainingPts * gTownLoyalty[ ubTownId ].ubRating) / 100;
-  */
 
   return (sTotalTrainingPts);
 }
@@ -6345,7 +6333,7 @@ void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         break;
       case (TRAIN_MENU_TOWN):
         if (BasicCanCharacterTrainMilitia(pSoldier)) {
-          bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+          bTownId = GetSolTown(pSoldier);
 
           // if it's a town sector (the following 2 errors can't happen at non-town SAM sites)
           if (bTownId != BLANK_SECTOR) {
