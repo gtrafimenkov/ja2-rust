@@ -86,9 +86,6 @@ void GetSectorFacilitiesFlags(u8 sMapX, u8 sMapY, STR16 sFacilitiesString, size_
 
 // ALL changes of control to player must be funneled through here!
 BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN fContested) {
-  // NOTE: MapSector must be 16-bit, cause MAX_WORLD_X is actually 18, so the sector numbers exceed
-  // 256 although we use only 16x16
-  UINT16 usMapSector = 0;
   BOOLEAN fWasEnemyControlled = FALSE;
   TownID bTownId = 0;
 
