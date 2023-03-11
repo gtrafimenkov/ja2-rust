@@ -1,9 +1,4 @@
-use crate::{
-    exp_sector::{SectorID16, SectorID16_X, SectorID16_Y},
-    sector,
-    state::STATE,
-    towns,
-};
+use crate::{sector, state::STATE, towns};
 
 #[repr(C)]
 #[allow(non_camel_case_types)]
@@ -99,12 +94,6 @@ pub extern "C" fn MilitiaTrainingAllowedInTown(town: TownID) -> bool {
         TownID::BLANK_SECTOR => false,
         _ => town.to_internal().is_militia_training_allowed(),
     }
-}
-
-/// Return TownID the sector belongs to.
-#[no_mangle]
-pub extern "C" fn GetTownIdForSectorID16(sector_id: SectorID16) -> TownID {
-    GetTownIdForSector(SectorID16_X(sector_id), SectorID16_Y(sector_id))
 }
 
 /// Return TownID the sector belongs to.

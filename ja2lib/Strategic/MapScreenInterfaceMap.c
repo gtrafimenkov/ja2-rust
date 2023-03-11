@@ -5207,11 +5207,11 @@ void RenderShadingForUnControlledSectors(void) {
     sCurrentSectorValue =
         sBaseSectorValue + ((iCounter % MILITIA_BOX_ROWS) + (iCounter / MILITIA_BOX_ROWS) * (16));
 
-    if ((GetTownIdForSectorID16(SectorID8To16(sCurrentSectorValue)) != BLANK_SECTOR) &&
-        ((IsSectorEnemyControlled(SectorID8_X(sCurrentSectorValue),
-                                  SectorID8_Y(sCurrentSectorValue))) ||
-         (NumHostilesInSector(SectorID8_X(sCurrentSectorValue), SectorID8_Y(sCurrentSectorValue),
-                              0)))) {
+    u8 sSectorX = SectorID8_X(sCurrentSectorValue);
+    u8 sSectorY = SectorID8_Y(sCurrentSectorValue);
+    if ((GetTownIdForSector(sSectorX, sSectorY) != BLANK_SECTOR) &&
+        ((IsSectorEnemyControlled(sSectorX, sSectorY)) ||
+         (NumHostilesInSector(sSectorX, sSectorY, 0)))) {
       // shade this sector, not under our control
       sX = MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X +
            ((iCounter % MILITIA_BOX_ROWS) * MILITIA_BOX_BOX_WIDTH);
