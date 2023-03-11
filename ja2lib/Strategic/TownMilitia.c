@@ -1009,32 +1009,6 @@ BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ) {
   return (MilitiaTrainingAllowedInTown(bTownId));
 }
 
-BOOLEAN MilitiaTrainingAllowedInTown(TownID bTownId) {
-  switch (bTownId) {
-    case DRASSEN:
-    case ALMA:
-    case GRUMM:
-    case CAMBRIA:
-    case BALIME:
-    case MEDUNA:
-    case CHITZENA:
-      return (TRUE);
-
-    case OMERTA:
-    case ESTONI:
-    case SAN_MONA:
-    case TIXA:
-    case ORTA:
-      // can't keep militia in these towns
-      return (FALSE);
-
-    case BLANK_SECTOR:
-    default:
-      // not a town sector!
-      return (FALSE);
-  }
-}
-
 void PrepMilitiaPromotion() {
   _st.gbGreenToElitePromotions = 0;
   _st.gbGreenToRegPromotions = 0;

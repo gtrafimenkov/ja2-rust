@@ -66,7 +66,6 @@ void HandleContinueOfTownTraining(void);
 void ClearSectorListForCompletedTrainingOfMilitia(void);
 
 BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ);
-BOOLEAN MilitiaTrainingAllowedInTown(TownID bTownId);
 
 void HandleMilitiaPromotions(u8 mapX, u8 mapY);
 void HandleMilitiaDefections(u8 mapX, u8 mapY);

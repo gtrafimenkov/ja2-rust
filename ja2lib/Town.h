@@ -3,25 +3,11 @@
 
 #include "LeanTypes.h"
 #include "Sector.h"
+#include "rust_towns.h"
 
-// Sector name identifiers.  Also town names.
-typedef enum {
-  BLANK_SECTOR = 0,
-  OMERTA,
-  DRASSEN,
-  ALMA,
-  GRUMM,
-  TIXA,
-  CAMBRIA,
-  SAN_MONA,
-  ESTONI,
-  ORTA,
-  BALIME,
-  MEDUNA,
-  CHITZENA,
-  NUM_TOWNS
-} TownID;
+typedef enum TownID TownID;
 
+#define NUM_TOWNS 13
 #define FIRST_TOWN OMERTA
 
 i8 GetTownIdForSector(u8 sMapX, u8 sMapY);

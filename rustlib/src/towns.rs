@@ -1,0 +1,15 @@
+// pub enum Town {
+//     BLANK_SECTOR = 0,
+//     OMERTA = 1,
+//     DRASSEN = 2,
+//     ALMA = 3,
+//     GRUMM = 4,
+//     TIXA = 5,
+//     CAMBRIA = 6,
+//     SAN_MONA = 7,
+//     ESTONI = 8,
+//     ORTA = 9,
+//     BALIME = 10,
+//     MEDUNA = 11,
+//     CHITZENA = 12,
+// }
