@@ -2,6 +2,7 @@ use super::sector::Point;
 
 /// Town IDs.
 /// It is almost the same as exp_towns::TownID, but without BLANK_SECTOR.
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Town {
     Omerta = 1,
     Drassen = 2,
@@ -17,7 +18,53 @@ pub enum Town {
     Chitzena = 12,
 }
 
-const OMERTA_SECTORS: [Point; 2] = [Point::new(9, 1), Point::new(9, 1)];
+pub const ALL_TOWNS: [Town; 12] = [
+    Town::Omerta,
+    Town::Drassen,
+    Town::Alma,
+    Town::Grumm,
+    Town::Tixa,
+    Town::Cambria,
+    Town::SanMona,
+    Town::Estoni,
+    Town::Orta,
+    Town::Balime,
+    Town::Meduna,
+    Town::Chitzena,
+];
+
+/// TownMap implements mapping from sector to Town.
+pub struct TownMap {
+    towns: [[Option<Town>; 17]; 17],
+}
+
+impl Default for TownMap {
+    fn default() -> Self {
+        TownMap::new()
+    }
+}
+impl TownMap {
+    pub fn new() -> Self {
+        let mut map = TownMap {
+            towns: [[None; 17]; 17],
+        };
+        for town in ALL_TOWNS {
+            for sector in town.get_sectors() {
+                map.towns[sector.y as usize][sector.x as usize] = Some(town);
+            }
+        }
+        map
+    }
+
+    /// Returns a town associated with the give sector
+    pub const fn get(&self, x: u8, y: u8) -> Option<Town> {
+        debug_assert!(x >= 1 && x <= 16);
+        debug_assert!(y >= 1 && y <= 16);
+        self.towns[y as usize][x as usize]
+    }
+}
+
+const OMERTA_SECTORS: [Point; 2] = [Point::new(9, 1), Point::new(10, 1)];
 const CHITZENA_SECTORS: [Point; 2] = [Point::new(2, 2), Point::new(2, 1)];
 const SAN_MONA_SECTORS: [Point; 4] = [
     Point::new(5, 3),
@@ -104,5 +151,25 @@ mod tests {
     #[test]
     fn omerta_sectors_count() {
         assert_eq!(2, Town::Omerta.get_sectors().len());
+    }
+
+    #[test]
+    fn town_sectors() {
+        let map = TownMap::new();
+
+        assert_eq!(None, map.get(8, 1));
+        assert_eq!(Some(Town::Omerta), map.get(9, 1));
+        assert_eq!(Some(Town::Omerta), map.get(10, 1));
+        assert_eq!(None, map.get(11, 1));
+        assert_eq!(None, map.get(8, 2));
+        assert_eq!(None, map.get(9, 2));
+        assert_eq!(None, map.get(10, 2));
+        assert_eq!(None, map.get(11, 2));
+
+        assert_eq!(None, map.get(13, 1));
+        assert_eq!(Some(Town::Drassen), map.get(13, 2));
+        assert_eq!(Some(Town::Drassen), map.get(13, 3));
+        assert_eq!(Some(Town::Drassen), map.get(13, 4));
+        assert_eq!(None, map.get(13, 5));
     }
 }
