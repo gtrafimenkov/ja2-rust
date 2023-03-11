@@ -2334,7 +2334,7 @@ void CalculateAutoResolveInfo() {
         gpAR->ubYMCreatures + gpAR->ubYFCreatures + gpAR->ubAMCreatures + gpAR->ubAFCreatures, 32);
   }
   gfTransferTacticalOppositionToAutoResolve = FALSE;
-  gpAR->ubCivs = CountAllMilitiaInSector(gpAR->ubSectorX, gpAR->ubSectorY);
+  gpAR->ubCivs = CountMilitiaInSector(gpAR->ubSectorX, gpAR->ubSectorY);
   gpAR->ubMercs = 0;
   pGroup = gpGroupList;
   while (pGroup) {

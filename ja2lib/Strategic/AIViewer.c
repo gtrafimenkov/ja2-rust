@@ -425,7 +425,7 @@ void RenderStationaryGroups() {
       SetFontForeground(FONT_YELLOW);
       xp = VIEWER_LEFT + VIEWER_CELLW * x + 1;
       SECTORINFO *pSector = &SectorInfo[GetSectorID8(x + 1, y + 1)];
-      u8 allMilCount = CountAllMilitiaInSector(x + 1, y + 1);
+      u8 allMilCount = CountMilitiaInSector(x + 1, y + 1);
 
       if (pSector->uiFlags & SF_MINING_SITE)
         BltVideoObject(FRAME_BUFFER, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY,

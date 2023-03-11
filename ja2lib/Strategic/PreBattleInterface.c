@@ -1027,7 +1027,7 @@ void RenderPreBattleInterface() {
     x = 142 + (27 - StringPixLength(str, FONT14ARIAL)) / 2;
     mprintf(x, y, str);
     // militia
-    swprintf(str, ARR_SIZE(str), L"%d", CountAllMilitiaInSector(gubPBSectorX, gubPBSectorY));
+    swprintf(str, ARR_SIZE(str), L"%d", CountMilitiaInSector(gubPBSectorX, gubPBSectorY));
     x = 227 + (27 - StringPixLength(str, FONT14ARIAL)) / 2;
     mprintf(x, y, str);
     SetFontShadow(FONT_NEARBLACK);
@@ -1252,7 +1252,7 @@ void RetreatMercsCallback(GUI_BUTTON *btn, INT32 reason) {
 
       // NOTE: this code assumes you can never retreat while underground
       HandleLoyaltyImplicationsOfMercRetreat(RETREAT_PBI, gubPBSectorX, gubPBSectorY, 0);
-      if (CountAllMilitiaInSector(
+      if (CountMilitiaInSector(
               gubPBSectorX,
               gubPBSectorY)) {  // Mercs retreat, but enemies still need to fight the militia
         gfEnterAutoResolveMode = TRUE;

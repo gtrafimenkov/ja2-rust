@@ -19,4 +19,8 @@ impl Force {
             elite: 0,
         }
     }
+
+    pub const fn count(&self) -> u8 {
+        self.green + self.regular + self.elite
+    }
 }

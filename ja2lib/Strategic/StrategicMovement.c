@@ -653,7 +653,7 @@ struct GROUP *CreateNewEnemyGroupDepartingFromSector(UINT32 uiSector, UINT8 ubNu
   {
     CHAR16 str[512];
     if (PlayerMercsInSector(pNew->ubSectorX, pNew->ubSectorY, 0) ||
-        CountAllMilitiaInSector(pNew->ubSectorX, pNew->ubSectorY)) {
+        CountMilitiaInSector(pNew->ubSectorX, pNew->ubSectorY)) {
       swprintf(str, ARR_SIZE(str),
                L"Attempting to send enemy troops from player occupied location.  "
                L"Please ALT+TAB out of the game before doing anything else and send 'Strategic "
@@ -996,7 +996,7 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
       }
     }
   } else {
-    if (CountAllMilitiaInSector(pGroup->ubSectorX, pGroup->ubSectorY)) {
+    if (CountMilitiaInSector(pGroup->ubSectorX, pGroup->ubSectorY)) {
       fMilitiaPresent = TRUE;
       fBattlePending = TRUE;
     }

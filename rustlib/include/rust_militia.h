@@ -38,10 +38,9 @@ struct MilitiaCount GetMilitiaInSector(uint8_t x, uint8_t y);
  */
 void SetMilitiaInSector(uint8_t x, uint8_t y, struct MilitiaCount value);
 
-/**
- * Return militia force in a sector.
- */
 uint8_t GetMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank);
+
+uint8_t CountMilitiaInSector(uint8_t x, uint8_t y);
 
 void SetMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t value);
 

@@ -2924,8 +2924,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                (UINT8)(pEnemyGroup->ubSectorY - 1), TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector(pEnemyGroup->ubSectorX,
-                                         (UINT8)(pEnemyGroup->ubSectorY - 1)) &&
+      } else if (CountMilitiaInSector(pEnemyGroup->ubSectorX,
+                                      (UINT8)(pEnemyGroup->ubSectorY - 1)) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX, pEnemyGroup->ubSectorY - 1), pEnemyGroup);
@@ -2940,8 +2940,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                pEnemyGroup->ubSectorY, TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX - 1),
-                                         pEnemyGroup->ubSectorY) &&
+      } else if (CountMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX - 1),
+                                      pEnemyGroup->ubSectorY) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX - 1, pEnemyGroup->ubSectorY), pEnemyGroup);
@@ -2956,8 +2956,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                (UINT8)(pEnemyGroup->ubSectorY + 1), TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector(pEnemyGroup->ubSectorX,
-                                         (UINT8)(pEnemyGroup->ubSectorY + 1)) &&
+      } else if (CountMilitiaInSector(pEnemyGroup->ubSectorX,
+                                      (UINT8)(pEnemyGroup->ubSectorY + 1)) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX, pEnemyGroup->ubSectorY + 1), pEnemyGroup);
@@ -2972,8 +2972,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                pEnemyGroup->ubSectorY, TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX + 1),
-                                         pEnemyGroup->ubSectorY) &&
+      } else if (CountMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX + 1),
+                                      pEnemyGroup->ubSectorY) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX + 1, pEnemyGroup->ubSectorY), pEnemyGroup);
@@ -4832,7 +4832,7 @@ BOOLEAN GarrisonCanProvideMinimumReinforcements(INT32 iGarrisonID) {
     ubSectorX = SectorID8_X(gGarrisonGroup[iGarrisonID].ubSectorID);
     ubSectorY = SectorID8_Y(gGarrisonGroup[iGarrisonID].ubSectorID);
     if (PlayerMercsInSector(ubSectorX, ubSectorY, 0) ||
-        CountAllMilitiaInSector(ubSectorX, ubSectorY)) {
+        CountMilitiaInSector(ubSectorX, ubSectorY)) {
       return FALSE;
     }
     return TRUE;

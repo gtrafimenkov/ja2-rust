@@ -97,7 +97,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
 
   while (ubMilitiaTrained < MILITIA_TRAINING_SQUAD_SIZE) {
     // is there room for another militia in the training sector itself?
-    if (CountAllMilitiaInSector(mapX, mapY) < MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
+    if (CountMilitiaInSector(mapX, mapY) < MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
       // great! Create a new GREEN militia guy in the training sector
       IncMilitiaOfRankInSector(mapX, mapY, GREEN_MILITIA, 1);
       MarkForRedrawalStrategicMap();
@@ -110,8 +110,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
         // check other eligible sectors in this town for room for another militia
         while (getNextSectorInTown(&sNeighbourX, &sNeighbourY)) {
           // is there room for another militia in this neighbouring sector ?
-          if (CountAllMilitiaInSector(sNeighbourX, sNeighbourY) <
-              MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
+          if (CountMilitiaInSector(sNeighbourX, sNeighbourY) < MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
             // great! Create a new GREEN militia guy in the neighbouring sector
             IncMilitiaOfRankInSector(sNeighbourX, sNeighbourY, GREEN_MILITIA, 1);
             MarkForRedrawalStrategicMap();
@@ -291,14 +290,9 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
   }
 }
 
-UINT8 CountAllMilitiaInSector(u8 mapX, u8 mapY) {
-  struct MilitiaCount milCount = GetMilitiaInSector(mapX, mapY);
-  return milCount.green + milCount.regular + milCount.elite;
-}
-
 INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   if (!bSectorZ) {
-    return CountAllMilitiaInSector(sSectorX, sSectorY);
+    return CountMilitiaInSector(sSectorX, sSectorY);
   }
   return 0;
 }
@@ -612,7 +606,7 @@ BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY) {
         continue;
       }
 
-      if (CountAllMilitiaInSector(sCounterA, sCounterB) > 0) {
+      if (CountMilitiaInSector(sCounterA, sCounterB) > 0) {
         return (TRUE);
       }
     }
@@ -1022,7 +1016,7 @@ BOOLEAN DoesPlayerHaveAnyMilitia() {
   // run through list of towns that might have militia..if any return TRUE..else return FALSE
   for (sX = 1; sX < MAP_WORLD_X - 1; sX++) {
     for (sY = 1; sY < MAP_WORLD_Y - 1; sY++) {
-      if (CountAllMilitiaInSector(sX, sY) > 0) {
+      if (CountMilitiaInSector(sX, sY) > 0) {
         // found at least one
         return (TRUE);
       }

@@ -53,7 +53,6 @@ pub extern "C" fn SetMilitiaInSector(x: u8, y: u8, value: MilitiaCount) {
 }
 
 #[no_mangle]
-/// Return militia force in a sector.
 pub extern "C" fn GetMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank) -> u8 {
     let mil = unsafe { STATE.get_militia_force(x, y) };
     match rank {
@@ -61,6 +60,12 @@ pub extern "C" fn GetMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank) -> u
         MilitiaRank::REGULAR_MILITIA => mil.regular,
         MilitiaRank::ELITE_MILITIA => mil.elite,
     }
+}
+
+#[no_mangle]
+pub extern "C" fn CountMilitiaInSector(x: u8, y: u8) -> u8 {
+    let mil = unsafe { STATE.get_militia_force(x, y) };
+    mil.count()
 }
 
 #[no_mangle]
@@ -82,3 +87,8 @@ pub extern "C" fn IncMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank, incr
         MilitiaRank::ELITE_MILITIA => mil.elite += increase,
     }
 }
+
+// UINT8 CountMilitiaInSector(u8 mapX, u8 mapY) {
+//     struct MilitiaCount milCount = GetMilitiaInSector(mapX, mapY);
+//     return milCount.green + milCount.regular + milCount.elite;
+//   }

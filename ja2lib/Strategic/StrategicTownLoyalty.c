@@ -1299,7 +1299,7 @@ UINT32 EnemyStrength(void) {
 // which poses as a serious loyalty penalty.
 void HandleLoyaltyImplicationsOfMercRetreat(INT8 bRetreatCode, u8 sSectorX, u8 sSectorY,
                                             INT16 sSectorZ) {
-  if (CountAllMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
+  if (CountMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
     HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, sSectorX, sSectorY, (INT8)sSectorZ);
   }
 

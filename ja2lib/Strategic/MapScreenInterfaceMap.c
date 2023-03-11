@@ -597,7 +597,7 @@ void HandleShowingOfEnemiesWithMilitiaOn(void) {
   for (sX = 1; sX < (MAP_WORLD_X - 1); sX++) {
     for (sY = 1; sY < (MAP_WORLD_Y - 1); sY++) {
       HandleShowingOfEnemyForcesInSector(sX, sY, (INT8)iCurrentMapSectorZ,
-                                         CountAllMilitiaInSector(sX, sY));
+                                         CountMilitiaInSector(sX, sY));
     }
   }
 
@@ -4301,7 +4301,7 @@ BOOLEAN DropAPersonInASector(UINT8 ubType, u8 sX, u8 sY) {
     return (FALSE);
   }
 
-  if (CountAllMilitiaInSector(sX, sY) >= MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
+  if (CountMilitiaInSector(sX, sY) >= MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
     return (FALSE);
   }
 
@@ -4943,7 +4943,7 @@ void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor(INT16 sTownValue) {
       if (SectorOursAndPeaceful(sX, sY, 0)) {
         iCount = 0;
         iNumberThatCanFitInSector = MAX_ALLOWABLE_MILITIA_PER_SECTOR;
-        iNumberThatCanFitInSector -= CountAllMilitiaInSector(sX, sY);
+        iNumberThatCanFitInSector -= CountMilitiaInSector(sX, sY);
 
         while ((iCount < iNumberThatCanFitInSector) &&
                ((sGreensOnCursor) || (sRegularsOnCursor) || (sElitesOnCursor))) {
@@ -5069,7 +5069,7 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
         SetMilitiaOfRankInSector(sX, sY, GREEN_MILITIA, iNumberOfGreens / iNumberUnderControl);
         SetMilitiaOfRankInSector(sX, sY, REGULAR_MILITIA, iNumberOfRegulars / iNumberUnderControl);
         SetMilitiaOfRankInSector(sX, sY, ELITE_MILITIA, iNumberOfElites / iNumberUnderControl);
-        sTotalSoFar = CountAllMilitiaInSector(sX, sY);
+        sTotalSoFar = CountMilitiaInSector(sX, sY);
 
         // add leftovers that weren't included in the div operation
         if ((iNumberLeftOverGreen) && (sTotalSoFar < MAX_ALLOWABLE_MILITIA_PER_SECTOR)) {
@@ -5752,7 +5752,7 @@ BOOLEAN CanMilitiaAutoDistribute(void) {
 
     if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       // get number of each
-      iTotalTroopsInTown += CountAllMilitiaInSector(sSectorX, sSectorY);
+      iTotalTroopsInTown += CountMilitiaInSector(sSectorX, sSectorY);
     }
   }
 
