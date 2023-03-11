@@ -280,7 +280,7 @@ INT32 FindStratPath(u8 startX, u8 startY, u8 destX, u8 destY, INT16 sMvtGroupNum
         if (IsThereASoldierInThisSector(sSectorX, sSectorY, 0)) {
           continue;
         }
-        if (GetNumberOfMilitiaInSector(sSectorX, sSectorY, 0)) {
+        if (CountMilitiaInSector3D(sSectorX, sSectorY, 0)) {
           continue;
         }
         if (!OkayForEnemyToMoveThroughSector((UINT8)GetSectorID8(sSectorX, sSectorY))) {

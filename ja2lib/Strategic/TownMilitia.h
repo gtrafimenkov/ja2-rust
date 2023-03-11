@@ -24,8 +24,6 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
 
 void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
 
-INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-
 bool IsMilitiaTrainingPayedForSector(u8 mapX, u8 mapY);
 void SetMilitiaTrainingPayedForSector(u8 mapX, u8 mapY, bool value);
 

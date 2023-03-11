@@ -42,6 +42,8 @@ uint8_t GetMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank);
 
 uint8_t CountMilitiaInSector(uint8_t x, uint8_t y);
 
+uint8_t CountMilitiaInSector3D(uint8_t x, uint8_t y, int8_t z);
+
 void SetMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t value);
 
 void IncMilitiaOfRankInSector(uint8_t x, uint8_t y, enum MilitiaRank rank, uint8_t increase);

@@ -290,13 +290,6 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
   }
 }
 
-INT32 GetNumberOfMilitiaInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  if (!bSectorZ) {
-    return CountMilitiaInSector(sSectorX, sSectorY);
-  }
-  return 0;
-}
-
 bool IsMilitiaTrainingPayedForSector(u8 x, u8 y) { return _st.trainingPaid[GetSectorID8(x, y)]; }
 
 void SetMilitiaTrainingPayedForSector(u8 x, u8 y, bool value) {

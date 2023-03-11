@@ -1121,7 +1121,7 @@ void HandleQuestCodeOnSectorEntry(u8 sNewSectorX, u8 sNewSectorY, INT8 bNewSecto
   if ((gubQuest[QUEST_KINGPIN_MONEY] == QUESTINPROGRESS) &&
       CheckFact(FACT_KINGPIN_CAN_SEND_ASSASSINS, 0) &&
       (GetTownIdForSector(sNewSectorX, sNewSectorY) != BLANK_SECTOR) &&
-      Random(10 + GetNumberOfMilitiaInSector(sNewSectorX, sNewSectorY, bNewSectorZ)) < 3) {
+      Random(10 + CountMilitiaInSector3D(sNewSectorX, sNewSectorY, bNewSectorZ)) < 3) {
     DecideOnAssassin();
   }
 
