@@ -177,6 +177,7 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
   handleTrainingComplete(pTrainer);
 }
 
+// TODO: rustlib
 static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMany) {
   u8 currentCount = GetMilitiaOfRankInSector(mapX, mapY, ubCurrentRank);
 
@@ -195,6 +196,7 @@ static void promoteMilitia(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubHowMan
   SetMapPanelDirty(true);
 }
 
+// TODO: rustlib
 void StrategicRemoveMilitiaFromSector(u8 mapX, u8 mapY, UINT8 ubRank, UINT8 ubHowMany) {
   u8 currentCount = GetMilitiaOfRankInSector(mapX, mapY, ubRank);
 
