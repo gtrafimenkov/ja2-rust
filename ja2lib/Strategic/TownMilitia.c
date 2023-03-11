@@ -399,7 +399,6 @@ static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkip
 // initialization it will skip an entry that matches the skip X/Y value if one was specified at
 // initialization MUST CALL initNextSectorSearch() before using!!!
 static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
-  u8 mapX, mapY;
   BOOLEAN fStopLooking = FALSE;
 
   const TownSectors *townSectors = GetAllTownSectors();
@@ -412,12 +411,12 @@ static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
     }
 
     INT32 iTownSector = (*townSectors)[_st.sectorSearch.townSectorsIndex].sectorID;
+    u8 mapX = SectorID16_X(iTownSector);
+    u8 mapY = SectorID16_Y(iTownSector);
 
     // if this sector is in the town we're looking for
-    if (GetTownIdForStrategicMapIndex(iTownSector) == _st.sectorSearch.townID) {
+    if (GetTownIdForSector(mapX, mapY) == _st.sectorSearch.townID) {
       // A sector in the specified town.  Calculate its X & Y sector compotents
-      mapX = SectorID16_X(iTownSector);
-      mapY = SectorID16_Y(iTownSector);
 
       // Make sure we're not supposed to skip it
       if ((mapX != _st.sectorSearch.skipX) || (mapY != _st.sectorSearch.skipY)) {

@@ -10,9 +10,6 @@ typedef enum TownID TownID;
 #define NUM_TOWNS 13
 #define FIRST_TOWN OMERTA
 
-i8 GetTownIdForSector(u8 sMapX, u8 sMapY);
-i8 GetTownIdForStrategicMapIndex(i32 index);
-
 // Mapping townID -> sectorID
 struct TownSector {
   TownID townID;
