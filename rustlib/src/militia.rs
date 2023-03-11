@@ -1,3 +1,21 @@
+pub struct State {
+    pub force: [[Force; 18]; 18],
+}
+
+impl Default for State {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl State {
+    pub fn new() -> Self {
+        State {
+            force: Default::default(),
+        }
+    }
+}
+
 /// Militia force in a sector.
 pub struct Force {
     pub green: u8,

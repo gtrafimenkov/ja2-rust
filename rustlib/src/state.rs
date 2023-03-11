@@ -11,7 +11,7 @@ pub struct State {
     pub sam_sites: sam_sites::State,
     pub sectors: [[sector::State; 18]; 18],
     pub town_map: towns::TownMap,
-    pub militia_force: [[militia::Force; 18]; 18],
+    pub militia: militia::State,
 }
 
 impl Default for State {
@@ -26,7 +26,7 @@ impl State {
             sam_sites: sam_sites::State::new(),
             sectors: [[sector::State::new(); 18]; 18],
             town_map: Default::default(),
-            militia_force: Default::default(),
+            militia: Default::default(),
         };
         for y in 1..17 {
             for x in 1..17 {
@@ -45,11 +45,11 @@ impl State {
     }
 
     pub fn get_militia_force(&self, x: u8, y: u8) -> &militia::Force {
-        &self.militia_force[y as usize][x as usize]
+        &self.militia.force[y as usize][x as usize]
     }
 
     pub fn get_mut_militia_force(&mut self, x: u8, y: u8) -> &mut militia::Force {
-        &mut self.militia_force[y as usize][x as usize]
+        &mut self.militia.force[y as usize][x as usize]
     }
 
     pub fn get_number_of_sam_under_player_control(&self) -> u8 {
