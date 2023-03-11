@@ -4425,7 +4425,6 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(uint8_t sSectorX, uin
   wchar_t sString[128], sStringA[64], sStringB[256], sStringC[64];
   int32_t iValue = 0;
   TownID bTownId = 0;
-  int16_t sSector = 0;
   int8_t bMineIndex;
 
   // are we below ground?
@@ -4483,10 +4482,7 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(uint8_t sSectorX, uin
     return (TRUE);
   }
 
-  // get the strategic sector value
-  sSector = GetSectorID16(sSectorX, sSectorY);
-
-  if (StrategicMap[sSector].townID == BLANK_SECTOR) {
+  if (GetTownIdForSector(sSectorX, sSectorY) == BLANK_SECTOR) {
     return (FALSE);
   }
 
@@ -4504,7 +4500,6 @@ BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(uint8_t sSectorX, uin
 
 void NotifyPlayerOfInvasionByEnemyForces(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ,
                                          MSGBOX_CALLBACK ReturnCallback) {
-  int16_t sSector = 0;
   TownID bTownId = 0;
   wchar_t sString[128], sStringA[128];
 
@@ -4513,16 +4508,13 @@ void NotifyPlayerOfInvasionByEnemyForces(uint8_t sSectorX, uint8_t sSectorY, int
     return;
   }
 
-  // grab sector value
-  sSector = GetSectorID16(sSectorX, sSectorY);
-
   if (IsSectorEnemyControlled(sSectorX, sSectorY)) {
     // enemy controlled any ways, leave
     return;
   }
 
   // get the town id
-  bTownId = StrategicMap[sSector].townID;
+  bTownId = GetTownIdForSector(sSectorX, sSectorY);
 
   // check if SAM site here
   if (IsThisSectorASAMSector(sSectorX, sSectorY, bSectorZ)) {

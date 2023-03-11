@@ -174,8 +174,8 @@ extern uint8_t GetTraversability(int16_t sStartSector, int16_t sEndSector);
 
 // this will find if a shortest strategic path
 
-int32_t FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNumber,
-                      BOOLEAN fTacticalTraversal) {
+int32_t FindStratPath(uint8_t startX, uint8_t startY, uint8_t destX, uint8_t destY,
+                      int16_t sMvtGroupNumber, BOOLEAN fTacticalTraversal) {
   int32_t iCnt, ndx, insertNdx, qNewNdx;
   int32_t iDestX, iDestY, locX, locY, dx, dy;
   uint8_t sSectorX, sSectorY;
@@ -212,6 +212,9 @@ int32_t FindStratPath(int16_t sStart, int16_t sDestination, int16_t sMvtGroupNum
 
   // memset(trailCostB,255*PATHFACTOR,MAP_LENGTH);
   memset(pathQB, 0, sizeof(pathQB));
+
+  SectorID16 sStart = GetSectorID16(startX, startY);
+  SectorID16 sDestination = GetSectorID16(destX, destY);
 
   // FOLLOWING LINE COMMENTED OUT ON MARCH 7/97 BY IC
   memset(gusMapPathingData, ((uint16_t)sStart), sizeof(gusMapPathingData));
@@ -442,8 +445,9 @@ struct path* BuildAStrategicPath(struct path* pPath, int16_t iStartSectorNum, in
 
   if (iEndSectorNum < MAP_WORLD_X - 1) return NULL;
 
-  iPathLength = ((int32_t)FindStratPath(((int16_t)iStartSectorNum), ((int16_t)iEndSectorNum),
-                                        sMvtGroupNumber, fTacticalTraversal));
+  iPathLength = ((int32_t)FindStratPath(
+      SectorID16_X(iStartSectorNum), SectorID16_Y(iStartSectorNum), SectorID16_X(iEndSectorNum),
+      SectorID16_Y(iEndSectorNum), sMvtGroupNumber, fTacticalTraversal));
   while (iPathLength > iCount) {
     switch (gusMapPathingData[iCount]) {
       case (NORTH):

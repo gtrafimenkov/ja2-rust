@@ -1479,7 +1479,7 @@ void RefreshScreen(void *DummyVariable) {
     char FileName[64];
     int32_t iIndex;
     struct Str512 ExecDir;
-    UINT16 *p16BPPData;
+    uint16_t *p16BPPData;
 
     if (!Plat_GetExecutableDirectory(&ExecDir)) {
       return;
@@ -2474,7 +2474,7 @@ void RefreshMovieCache() {
   FILE *disk;
   char cFilename[_MAX_PATH];
   static uint32_t uiPicNum = 0;
-  UINT16 *pDest;
+  uint16_t *pDest;
   int32_t cnt;
   struct Str512 ExecDir;
 

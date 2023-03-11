@@ -1031,9 +1031,6 @@
     <ClCompile Include="CharList.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Town.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Tactical.c">
       <Filter>Source Files</Filter>
     </ClCompile>

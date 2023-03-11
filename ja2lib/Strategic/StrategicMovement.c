@@ -4188,7 +4188,6 @@ BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup
   int8_t bSectorZ = 0;
   wchar_t sString[128];
   wchar_t wSectorName[128];
-  int16_t sStrategicSector;
 
   Assert(pGroup);
   Assert(pGroup->fPlayer);
@@ -4219,11 +4218,8 @@ BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote(struct GROUP *pGroup
     return (FALSE);
   }
 
-  // get the strategic sector value
-  sStrategicSector = GetSectorID16(sSectorX, sSectorY);
-
   // skip towns/pseudo-towns (anything that shows up on the map as being special)
-  if (StrategicMap[sStrategicSector].townID != BLANK_SECTOR) {
+  if (GetTownIdForSector(sSectorX, sSectorY) != BLANK_SECTOR) {
     return (FALSE);
   }
 

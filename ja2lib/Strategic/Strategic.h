@@ -12,7 +12,7 @@ struct strategicmapelement {
   uint8_t __unused_uiVehicleEta[4];  // eta/mvt costs for vehicles
   uint8_t uiBadFootSector[4];        // blocking mvt for foot
   uint8_t uiBadVehicleSector[4];     // blocking mvt from vehicles
-  int8_t townID;
+  int8_t __unused_townID;
   BOOLEAN __only_storage_fEnemyControlled;  // enemy controlled or not
   BOOLEAN __unused_fEnemyAirControlled;     // unused beause can be recalculated after load
   BOOLEAN __unused_fLostControlAtSomeTime;

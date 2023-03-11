@@ -67,5 +67,5 @@ bool IsSectorEnemyAirControlled(uint8_t x, uint8_t y);
 void SetSectorEnemyAirControlled(uint8_t x, uint8_t y, bool value);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus

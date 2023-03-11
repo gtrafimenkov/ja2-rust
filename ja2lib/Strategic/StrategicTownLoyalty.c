@@ -402,7 +402,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   }
 
   // get town id
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // if civilian is NOT in a town
   if (bTownId == BLANK_SECTOR) {
@@ -583,7 +583,7 @@ void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
   uint32_t uiLoyaltyValue = 0;
 
   // get town id civilian
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // is the merc currently in their home town?
   if (bTownId == gMercProfiles[GetSolProfile(pSoldier)].bTown) {
@@ -622,7 +622,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, int16_t 
   sPolicingLoyalty = sPointsDmg * MULTIPLIER_FOR_NOT_PREVENTING_BUILDING_DAMAGE;
 
   // get town id
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // penalize the side that did it
   if (pSoldier->bTeam == OUR_TEAM) {
@@ -732,7 +732,6 @@ void RemoveRandomItemsInSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSect
 void CalcDistancesBetweenTowns(void) {
   // run though each town sector and compare it to the next in terms of distance
   uint8_t ubTownA, ubTownB;
-  uint32_t uiCounterA, uiCounterB;
   uint8_t ubTempGroupId = 0;
   int32_t iDistance = 0;
 
@@ -752,24 +751,21 @@ void CalcDistancesBetweenTowns(void) {
 
   // now, measure distance from every town sector to every other town sector!
   // The minimum distances between towns get stored.
-  uiCounterA = 0;
-  uiCounterB = 0;
-  const TownSectors *townSectors = GetAllTownSectors();
-  while ((*townSectors)[uiCounterA].townID != 0) {
-    // reset second counter
-    uiCounterB = uiCounterA;
-
-    while ((*townSectors)[uiCounterB].townID != 0) {
-      ubTownA = (uint8_t)(*townSectors)[uiCounterA].townID;
-      ubTownB = (uint8_t)(*townSectors)[uiCounterB].townID;
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
+  for (int uiCounterA = 0; uiCounterA < townSectors.count; uiCounterA++) {
+    for (int uiCounterB = uiCounterA; uiCounterB < townSectors.count; uiCounterB++) {
+      ubTownA = (uint8_t)townSectors.sectors[uiCounterA].townID;
+      ubTownB = (uint8_t)townSectors.sectors[uiCounterB].townID;
 
       // if they're not in the same town
       if (ubTownA != ubTownB) {
         // calculate fastest distance between them (in sectors) - not necessarily shortest distance,
         // roads are faster!
         iDistance =
-            FindStratPath((int16_t)(*townSectors)[uiCounterA].sectorID,
-                          (int16_t)(*townSectors)[uiCounterB].sectorID, ubTempGroupId, FALSE);
+            FindStratPath(townSectors.sectors[uiCounterA].x, townSectors.sectors[uiCounterA].y,
+                          townSectors.sectors[uiCounterB].x, townSectors.sectors[uiCounterB].y,
+                          ubTempGroupId, FALSE);
       } else {
         // same town, distance is 0 by definition
         iDistance = 0;
@@ -782,11 +778,7 @@ void CalcDistancesBetweenTowns(void) {
         iTownDistances[ubTownA][ubTownB] = iDistance;
         iTownDistances[ubTownB][ubTownA] = iDistance;
       }
-
-      uiCounterB++;
     }
-
-    uiCounterA++;
   }
 
   RemoveGroup(ubTempGroupId);
@@ -1079,50 +1071,43 @@ void HandleGlobalLoyaltyEvent(uint8_t ubEventType, uint8_t sSectorX, uint8_t sSe
 
 void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, uint8_t sSectorX, uint8_t sSectorY,
                                          int8_t bSectorZ) {
-  int16_t sEventSector;
   uint8_t ubTempGroupId;
-  TownID bTownId;
-  uint32_t uiIndex;
   int32_t iThisDistance;
   int32_t iShortestDistance[NUM_TOWNS];
   int32_t iPercentAdjustment;
   int32_t iDistanceAdjustedLoyalty;
 
   // preset shortest distances to high values prior to searching for a minimum
-  for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
+  for (TownID bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     iShortestDistance[bTownId] = 999999;
   }
-
-  sEventSector = GetSectorID16(sSectorX, sSectorY);
 
   // need a temporary group create to use for laying down distance paths
   ubTempGroupId = CreateNewPlayerGroupDepartingFromSector((uint8_t)sSectorX, (uint8_t)sSectorY);
 
   // calc distance to the event sector from EACH GetSectorID8 of each town, keeping only the
   // shortest one for every town
-  uiIndex = 0;
-  const TownSectors *townSectors = GetAllTownSectors();
-  while ((*townSectors)[uiIndex].townID != 0) {
-    bTownId = (uint8_t)(*townSectors)[uiIndex].townID;
+  struct TownSectors townSectors;
+  GetAllTownSectors(&townSectors);
+  for (int i = 0; i < townSectors.count; i++) {
+    TownID bTownId = townSectors.sectors[i].townID;
 
     // skip path test if distance is already known to be zero to speed this up a bit
     if (iShortestDistance[bTownId] > 0) {
       // calculate across how many sectors the fastest travel path from event to this town sector
-      iThisDistance = FindStratPath(sEventSector, (int16_t)(*townSectors)[uiIndex].sectorID,
-                                    ubTempGroupId, FALSE);
+      iThisDistance = FindStratPath(sSectorX, sSectorY, townSectors.sectors[i].x,
+                                    townSectors.sectors[i].y, ubTempGroupId, FALSE);
 
       if (iThisDistance < iShortestDistance[bTownId]) {
         iShortestDistance[bTownId] = iThisDistance;
       }
     }
-
-    uiIndex++;
   }
 
   // must always remove that temporary group!
   RemoveGroup(ubTempGroupId);
 
-  for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
+  for (TownID bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     // doesn't affect towns where player hasn't established a "presence" yet
     if (!gTownLoyalty[bTownId].fStarted) {
       continue;

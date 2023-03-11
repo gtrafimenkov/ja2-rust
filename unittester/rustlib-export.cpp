@@ -6,6 +6,8 @@ extern "C" {
 
 #include "rust_platform.h"
 #include "rust_sam_sites.h"
+#include "rust_sector.h"
+#include "rust_towns.h"
 
 #ifdef __cplusplus
 }
@@ -49,4 +51,9 @@ TEST(RustExport, GetStr) {
   res = GetStrTest_Hello512(&s1);
   EXPECT_EQ(res, true);
   EXPECT_STREQ(s1.buf, "Hello String512");
+}
+
+TEST(RustExport, TownSectors) {
+  EXPECT_EQ(BLANK_SECTOR, GetTownIdForSector(1, 1));
+  EXPECT_EQ(OMERTA, GetTownIdForSector(9, 1));
 }

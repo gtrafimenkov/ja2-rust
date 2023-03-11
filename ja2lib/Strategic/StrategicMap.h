@@ -71,11 +71,6 @@ uint8_t GetTownSectorSize(TownID bTownId);
 // get town sector size, that is under play control
 uint8_t GetTownSectorsUnderControl(TownID bTownId);
 
-// is this sector part of this town
-BOOLEAN SectorIsPartOfTown(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY);
-
-// BOOLEAN IsThereAnyOneInThisTown( uint8_t ubTownId );
-
 BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, int8_t bExitDirection,
                                uint16_t usAdditionalData);
 BOOLEAN OKForSectorExit(int8_t bExitDirection, uint16_t usAdditionalData,

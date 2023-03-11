@@ -1,27 +1,35 @@
 use super::sam_sites;
 use super::sector;
+use super::towns;
+use once_cell::sync::Lazy;
 
-pub static mut STATE: State = State::new();
+pub static mut STATE: Lazy<State> = Lazy::new(State::new);
 
 pub struct State {
     pub sam_sites: sam_sites::State,
     pub sectors: [[sector::State; 18]; 18],
+    pub town_map: towns::TownMap,
+}
+
+impl Default for State {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl State {
-    pub const fn new() -> Self {
-        State {
+    pub fn new() -> Self {
+        let mut state = State {
             sam_sites: sam_sites::State::new(),
             sectors: [[sector::State::new(); 18]; 18],
-        }
-    }
-
-    pub fn reset_to_clean_state(&mut self) {
+            town_map: Default::default(),
+        };
         for y in 1..17 {
             for x in 1..17 {
-                self.sectors[y][x].enemy_controlled = true;
+                state.sectors[y][x].enemy_controlled = true;
             }
         }
+        state
     }
 
     pub fn get_sector(&self, x: u8, y: u8) -> &sector::State {
@@ -70,7 +78,7 @@ mod tests {
     fn sector_enemy_controlled() {
         let mut state = State::new();
 
-        assert_eq!(false, state.get_sector(1, 1).enemy_controlled);
+        assert_eq!(true, state.get_sector(1, 1).enemy_controlled);
         assert_eq!(false, state.get_sector(1, 1).enemy_air_controlled);
 
         state.get_mut_sector(1, 1).enemy_controlled = true;
@@ -88,7 +96,6 @@ mod tests {
     fn sam_controlled_by_player() {
         let mut st = State::new();
 
-        st.reset_to_clean_state();
         assert_eq!(0, st.get_number_of_sam_under_player_control());
 
         let loc = sam_sites::get_sam_location(sam_sites::SamSite::Cambria);

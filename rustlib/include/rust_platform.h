@@ -87,5 +87,5 @@ bool GetStrTest_HelloRus(char *buf, uintptr_t buf_size);
 bool GetStrTest_Hello512(struct Str512 *str);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus

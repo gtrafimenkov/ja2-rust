@@ -4,6 +4,7 @@
 // header for town militia strategic control module
 
 #include "SGP/Types.h"
+#include "Sector.h"
 #include "Town.h"
 
 struct SOLDIERTYPE;
@@ -68,7 +69,6 @@ void HandleContinueOfTownTraining(void);
 void ClearSectorListForCompletedTrainingOfMilitia(void);
 
 BOOLEAN MilitiaTrainingAllowedInSector(uint8_t mapX, uint8_t mapY, int8_t bSectorZ);
-BOOLEAN MilitiaTrainingAllowedInTown(TownID bTownId);
 
 void HandleMilitiaPromotions(uint8_t mapX, uint8_t mapY);
 void HandleMilitiaDefections(uint8_t mapX, uint8_t mapY);

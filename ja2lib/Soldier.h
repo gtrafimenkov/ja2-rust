@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 #include "Sector.h"
+#include "Town.h"
 
 struct SOLDIERTYPE;
 
@@ -12,6 +13,9 @@ struct SOLDIERTYPE *GetSoldierByID(int index);
 
 uint8_t GetSolID(const struct SOLDIERTYPE *s);
 uint8_t GetSolProfile(const struct SOLDIERTYPE *s);
+
+// Get town where the soldier is located
+TownID GetSolTown(const struct SOLDIERTYPE *s);
 
 uint8_t GetSolSectorX(const struct SOLDIERTYPE *s);
 uint8_t GetSolSectorY(const struct SOLDIERTYPE *s);

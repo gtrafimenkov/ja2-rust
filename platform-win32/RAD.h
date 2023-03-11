@@ -179,7 +179,7 @@
 RADDEFSTART
 
 #define s8 signed char
-#define u8 unsigned char
+#define uint8_t unsigned char
 #define uint32_t unsigned long
 #define s32 signed long
 #define u64 unsigned __int64
@@ -314,7 +314,7 @@ void radmemset16(void* dest, u16 value, uint32_t size);
     "and cl,1"            \
     "rep stosw" parm[EDI][EAX][ECX] modify[EAX EDX EBX ECX EDI];
 
-void radmemset(void* dest, u8 value, uint32_t size);
+void radmemset(void* dest, uint8_t value, uint32_t size);
 #pragma aux radmemset = \
     "cld"               \
     "mov ah,al"         \
@@ -684,14 +684,14 @@ s32 __inline radabs(s32 ab) {
   }
 }
 
-u8 __inline radinp(u16 p) {
+uint8_t __inline radinp(u16 p) {
   _asm {
             mov dx,[p]
             in al,dx
   }
 }
 
-void __inline radoutp(u16 p, u8 v) {
+void __inline radoutp(u16 p, uint8_t v) {
   _asm {
             mov dx,[p]
             mov al,[v]
@@ -858,7 +858,7 @@ void ErrOutNum(const char far* str, u16 len);
     "int 0x21"          \
     "pop ds" parm[cx dx][bx] modify[ax bx cx];
 
-void radmemset(void far* dest, u8 value, uint32_t size);
+void radmemset(void far* dest, uint8_t value, uint32_t size);
 #pragma aux radmemset = "cld" "and edi,0ffffh" "shl ecx,16" "mov cx,bx" "mov ah,al" "mov bx,ax" "shl eax,16" "mov ax,bx" "mov bl,cl" "shr ecx,2" 0x67 "rep stosd" "mov cl,bl" "and cl,3" "rep stosb" parm [ES DI] [AL] [CX BX];
 
 void radmemset16(void far* dest, u16 value, uint32_t size);
@@ -997,17 +997,17 @@ RADDEFEND
 #define u32neg1 ((uint32_t)(s32) - 1)
 #define RAD_align(var) \
   var;                 \
-  u8 junk##var[4 - (sizeof(var) & 3)];
-#define RAD_align_after(var) u8 junk##var[4 - (sizeof(var) & 3)] = {0};
+  uint8_t junk##var[4 - (sizeof(var) & 3)];
+#define RAD_align_after(var) uint8_t junk##var[4 - (sizeof(var) & 3)] = {0};
 #define RAD_align_init(var, val) \
   var = val;                     \
-  u8 junk##var[4 - (sizeof(var) & 3)] = {0};
+  uint8_t junk##var[4 - (sizeof(var) & 3)] = {0};
 #define RAD_align_array(var, num) \
   var[num];                       \
-  u8 junk##var[4 - (sizeof(var) & 3)];
+  uint8_t junk##var[4 - (sizeof(var) & 3)];
 #define RAD_align_string(var, str) \
   char var[] = str;                \
-  u8 junk##var[4 - (sizeof(var) & 3)] = {0};
+  uint8_t junk##var[4 - (sizeof(var) & 3)] = {0};
 
 RADEXPFUNC void PTR4* RADEXPLINK radmalloc(uint32_t numbytes);
 RADEXPFUNC void RADEXPLINK radfree(void PTR4* ptr);
@@ -1036,10 +1036,10 @@ char bgetch();
 void BreakPoint();
 #pragma aux BreakPoint = "int 3";
 
-u8 radinp(u16 p);
+uint8_t radinp(u16 p);
 #pragma aux radinp = "in al,dx" parm[DX];
 
-u8 radtoupper(u8 p);
+uint8_t radtoupper(uint8_t p);
 #pragma aux radtoupper = \
     "cmp al,'a'"         \
     "jb c1"              \
@@ -1048,7 +1048,7 @@ u8 radtoupper(u8 p);
     "sub al,32"          \
     "c1:" parm[al] value[al];
 
-void radoutp(u16 p, u8 v);
+void radoutp(u16 p, uint8_t v);
 #pragma aux radoutp = "out dx,al" parm[DX][AL];
 
 #endif

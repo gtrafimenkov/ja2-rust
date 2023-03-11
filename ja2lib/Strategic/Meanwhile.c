@@ -1113,7 +1113,6 @@ void HandleDelayedFirstBattleVictory(void) {
 void HandleFirstBattleEndingWhileInTown(uint8_t sSectorX, uint8_t sSectorY, int16_t bSectorZ,
                                         BOOLEAN fFromAutoResolve) {
   TownID bTownId = 0;
-  int16_t sSector = 0;
 
   if (GetMeanWhileFlag(END_OF_PLAYERS_FIRST_BATTLE)) {
     return;
@@ -1123,11 +1122,8 @@ void HandleFirstBattleEndingWhileInTown(uint8_t sSectorX, uint8_t sSectorY, int1
   // gfFirstBattleMeanwhileScenePending true if  is true then this is the end of the second battle,
   // post the first meanwhile OR, on call to trash world, that means player is leaving sector
 
-  // grab sector value
-  sSector = GetSectorID16(sSectorX, sSectorY);
-
   // get town name id
-  bTownId = StrategicMap[sSector].townID;
+  bTownId = GetTownIdForSector(sSectorX, sSectorY);
 
   if (bTownId == BLANK_SECTOR) {
     // invalid town
