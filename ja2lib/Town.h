@@ -1,8 +1,6 @@
 #ifndef __TOWN_H
 #define __TOWN_H
 
-#include "LeanTypes.h"
-#include "Sector.h"
 #include "rust_towns.h"
 
 typedef enum TownID TownID;

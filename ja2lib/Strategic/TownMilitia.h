@@ -4,6 +4,7 @@
 // header for town militia strategic control module
 
 #include "SGP/Types.h"
+#include "Sector.h"
 #include "Town.h"
 
 struct SOLDIERTYPE;

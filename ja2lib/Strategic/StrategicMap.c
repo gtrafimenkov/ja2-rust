@@ -2840,11 +2840,6 @@ void UpdateAirspaceControl(void) {
   UpdateRefuelSiteAvailability();
 }
 
-// is this sector part of the town?
-BOOLEAN SectorIsPartOfTown(TownID bTownId, u8 sSectorX, u8 sSectorY) {
-  return GetTownIdForSector(sSectorX, sSectorY) == bTownId;
-}
-
 BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten = 0;
   UINT32 uiSize = sizeof(StrategicMapElement) * (MAP_WORLD_X * MAP_WORLD_Y);

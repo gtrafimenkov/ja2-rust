@@ -306,7 +306,6 @@
     <ClCompile Include="TileEngine\WorldDat.c" />
     <ClCompile Include="TileEngine\WorldDef.c" />
     <ClCompile Include="TileEngine\WorldMan.c" />
-    <ClCompile Include="Town.c" />
     <ClCompile Include="UI.c" />
     <ClCompile Include="Utils\AnimatedProgressBar.c" />
     <ClCompile Include="Utils\Cinematics.c" />
