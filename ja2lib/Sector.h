@@ -7,9 +7,6 @@
 
 #define GetSectorID8_STATIC(x, y) ((y - 1) * 16 + x - 1)
 
-SectorID16 SectorID8To16(SectorID8 sectorID);
-SectorID8 SectorID16To8(SectorID16 sectorID);
-
 struct SectorInfo;
 
 struct SectorInfo* GetSectorInfoByID8(SectorID8 sectorIndex);

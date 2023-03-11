@@ -337,20 +337,6 @@ INT32 FindStratPath(u8 startX, u8 startY, u8 destX, u8 destY, INT16 sMvtGroupNum
         }
       }
 
-      /*
-      // Commented out by CJC Feb 4 1999... causing errors!
-
-      //make the destination look very attractive
-      if( ( newLoc == sDestination ) )
-      {
-              if( GetTraversability( ( INT16 )( GetSectorID8( curLoc % 18, curLoc / 18 ) ), ( INT16
-      ) ( GetSectorID8( newLoc %18,  newLoc / 18 ) ) ) != GROUNDBARRIER )
-              {
-                      nextCost = 0;
-              }
-      }
-      */
-      // if (_KeyDown(CTRL_DOWN) && nextCost < TRAVELCOST_VEINEND)
       newTotCost = curCost + nextCost;
       if (newTotCost < trailCostB[newLoc]) {
         NEWQUENODE;
