@@ -1,4 +1,6 @@
-use std::{os::unix::prelude::PermissionsExt, path::PathBuf};
+#[cfg(not(target_os = "windows"))]
+use std::os::unix::prelude::PermissionsExt;
+use std::path::PathBuf;
 
 /// Remove all files in a directory, but not the directory itself or any subdirectories.
 pub fn remove_files_in_directory(path: &PathBuf) -> std::io::Result<()> {
