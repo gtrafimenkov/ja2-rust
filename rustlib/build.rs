@@ -21,8 +21,7 @@ fn main() {
     for file in files {
         let new_name = file.file_name().unwrap().to_string_lossy().to_string();
         let new_name = new_name.replace("exp_", "rust_").replace(".rs", ".h");
-        // let dest = PathBuf::from(&crate_dir).join("include").join(new_name);
-        let dest = PathBuf::from(&crate_dir).join(new_name);
+        let dest = PathBuf::from(&crate_dir).join("include").join(new_name);
         cbindgen::Builder::new()
             .with_config(config.clone())
             .with_src(file)
