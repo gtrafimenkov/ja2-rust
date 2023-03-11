@@ -402,7 +402,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   }
 
   // get town id
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // if civilian is NOT in a town
   if (bTownId == BLANK_SECTOR) {
@@ -583,7 +583,7 @@ void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiLoyaltyValue = 0;
 
   // get town id civilian
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // is the merc currently in their home town?
   if (bTownId == gMercProfiles[GetSolProfile(pSoldier)].bTown) {
@@ -622,7 +622,7 @@ void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sP
   sPolicingLoyalty = sPointsDmg * MULTIPLIER_FOR_NOT_PREVENTING_BUILDING_DAMAGE;
 
   // get town id
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // penalize the side that did it
   if (pSoldier->bTeam == OUR_TEAM) {

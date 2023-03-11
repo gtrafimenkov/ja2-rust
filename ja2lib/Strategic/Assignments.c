@@ -919,7 +919,7 @@ BOOLEAN BasicCanCharacterTrainMilitia(struct SOLDIERTYPE *pSoldier) {
   }
 
   // is there a town in the character's current sector?
-  if (GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier)) == BLANK_SECTOR) {
+  if (GetSolTown(pSoldier) == BLANK_SECTOR) {
     fSamSitePresent = IsThisSectorASAMSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
                                              GetSolSectorZ(pSoldier));
 
@@ -1007,7 +1007,7 @@ BOOLEAN DoesSectorMercIsInHaveSufficientLoyaltyToTrainMilitia(struct SOLDIERTYPE
     return (FALSE);
   }
 
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // is there a town really here
   if (bTownId == BLANK_SECTOR) {
@@ -1058,7 +1058,7 @@ BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed(struct SOLDIERTYPE *pSoldier) 
     return (TRUE);
   }
 
-  bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+  bTownId = GetSolTown(pSoldier);
 
   // is there a town really here
   if (bTownId == BLANK_SECTOR) {
@@ -3539,7 +3539,7 @@ static BOOLEAN TrainTownInSector(struct SOLDIERTYPE *pTrainer, u8 sMapX, u8 sMap
   fSamSiteInSector = IsThisSectorASAMSector(sMapX, sMapY, 0);
 
   // get town index
-  ubTownId = GetTownIdForSector(GetSolSectorX(pTrainer), GetSolSectorY(pTrainer));
+  ubTownId = GetSolTown(pTrainer);
   if (fSamSiteInSector == FALSE) {
     Assert(ubTownId != BLANK_SECTOR);
   }
@@ -6343,7 +6343,7 @@ void TrainingMenuBtnCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
         break;
       case (TRAIN_MENU_TOWN):
         if (BasicCanCharacterTrainMilitia(pSoldier)) {
-          bTownId = GetTownIdForSector(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
+          bTownId = GetSolTown(pSoldier);
 
           // if it's a town sector (the following 2 errors can't happen at non-town SAM sites)
           if (bTownId != BLANK_SECTOR) {
