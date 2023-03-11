@@ -31,11 +31,11 @@ unittester         - an application to run unit tests
 
 On Windows:
 - Visual Studio Community 2022
-- Rust
+- Rust v1.67.0 or later
 
 On Linux:
 - GCC
-- Rust
+- Rust v1.67.0 or later
 
 ## How to build
 

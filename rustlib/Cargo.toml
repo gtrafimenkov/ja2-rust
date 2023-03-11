@@ -8,3 +8,6 @@ edition = "2021"
 [lib]
 name = "rustlib"
 crate-type = ["cdylib"]      # Creates dynamic lib
+
+[build-dependencies]
+cbindgen = "0.24.3"

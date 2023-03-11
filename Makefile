@@ -36,7 +36,7 @@ format-modified:
 GCC_ERRORS_FLAGS := -Werror
 GCC_ERRORS_FLAGS += -Wall
 GCC_FLAGS        := -D__GCC
-INCLUDE_FLAGS    := -I./ja2lib -I./rustlib
+INCLUDE_FLAGS    := -I./ja2lib -I./rustlib/include
 CC = gcc
 CXX	= g++
 CFLAG = -fPIC --std=gnu17 $(GCC_ERRORS_FLAGS) $(GCC_FLAGS) -DFORCE_ASSERTS_ON $(INCLUDE_FLAGS)

@@ -14,15 +14,6 @@ cargo build --target i686-pc-windows-msvc
 @REM cargo build --release --target x86_64-pc-windows-msvc
 cargo build --release --target i686-pc-windows-msvc
 
-call generate_single_file.bat sector
-if errorlevel 1 exit /b 1
-
-call generate_single_file.bat sam_sites
-if errorlevel 1 exit /b 1
-
-call generate_single_file.bat platform
-if errorlevel 1 exit /b 1
-
 mkdir ..\Debug             2>nul
 mkdir ..\Release           2>nul
 mkdir ..\ReleaseWithDebug  2>nul

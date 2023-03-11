@@ -4,16 +4,12 @@
 
 ### Windows
 
-- install rust
+- install rust v1.67.0 or later
 - `rustup target add i686-pc-windows-msvc`
-- `cargo install --force cbindgen`
 
 ### Linux
 
-```
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install --force cbindgen
-```
+- install rust v1.67.0 or later
 
 ## Docs on integration C and Rust
 
