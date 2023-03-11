@@ -42,7 +42,7 @@ struct militiaState {
   struct SOLDIERTYPE *trainer;
 
   // note that these sector values are STRATEGIC INDEXES, not 0-255!
-  SectorID16 unpaidSectors[MAX_CHARACTER_COUNT];
+  struct SectorPoint unpaidSectors[MAX_CHARACTER_COUNT];
 
   i8 gbGreenToElitePromotions;
   i8 gbGreenToRegPromotions;
@@ -875,7 +875,7 @@ void HandleContinueOfTownTraining(void) {
 static void BuildListOfUnpaidTrainableSectors(void) {
   INT32 iCounter = 0, iCounterB = 0;
 
-  memset(_st.unpaidSectors, 0, sizeof(INT16) * MAX_CHARACTER_COUNT);
+  memset(_st.unpaidSectors, 0, sizeof(struct SectorPoint) * MAX_CHARACTER_COUNT);
 
   if (IsMapScreen()) {
     for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
@@ -887,7 +887,8 @@ static void BuildListOfUnpaidTrainableSectors(void) {
           if (CanCharacterTrainMilitia(sol) == TRUE) {
             if (!IsMilitiaTrainingPayedForSectorID8(GetSolSectorID8(sol))) {
               // check to see if this sector is a town and needs equipment
-              _st.unpaidSectors[iCounter] = GetSolSectorID16(sol);
+              _st.unpaidSectors[iCounter].x = GetSolSectorX(sol);
+              _st.unpaidSectors[iCounter].y = GetSolSectorY(sol);
             }
           }
         }
@@ -901,17 +902,20 @@ static void BuildListOfUnpaidTrainableSectors(void) {
     if (CanCharacterTrainMilitia(sol) == TRUE) {
       if (!IsMilitiaTrainingPayedForSectorID8(GetSolSectorID8(sol))) {
         // check to see if this sector is a town and needs equipment
-        _st.unpaidSectors[iCounter] = GetSolSectorID16(sol);
+        _st.unpaidSectors[iCounter].x = GetSolSectorX(sol);
+        _st.unpaidSectors[iCounter].y = GetSolSectorY(sol);
       }
     }
   }
 
   // now clean out repeated sectors
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT - 1; iCounter++) {
-    if (_st.unpaidSectors[iCounter] > 0) {
+    if (_st.unpaidSectors[iCounter].x > 0 && _st.unpaidSectors[iCounter].y > 0) {
       for (iCounterB = iCounter + 1; iCounterB < MAX_CHARACTER_COUNT; iCounterB++) {
-        if (_st.unpaidSectors[iCounterB] == _st.unpaidSectors[iCounter]) {
-          _st.unpaidSectors[iCounterB] = 0;
+        if ((_st.unpaidSectors[iCounterB].x == _st.unpaidSectors[iCounter].x) &&
+            (_st.unpaidSectors[iCounterB].y == _st.unpaidSectors[iCounter].y)) {
+          _st.unpaidSectors[iCounterB].x = 0;
+          _st.unpaidSectors[iCounterB].y = 0;
         }
       }
     }
@@ -919,14 +923,13 @@ static void BuildListOfUnpaidTrainableSectors(void) {
 }
 
 static INT32 GetNumberOfUnpaidTrainableSectors(void) {
-  INT32 iCounter = 0;
   INT32 iNumberOfSectors = 0;
 
   BuildListOfUnpaidTrainableSectors();
 
   // now count up the results
-  for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (_st.unpaidSectors[iCounter] > 0) {
+  for (int i = 0; i < MAX_CHARACTER_COUNT; i++) {
+    if (_st.unpaidSectors[i].x > 0 && _st.unpaidSectors[i].y > 0) {
       iNumberOfSectors++;
     }
   }
@@ -936,19 +939,11 @@ static INT32 GetNumberOfUnpaidTrainableSectors(void) {
 }
 
 static void StartTrainingInAllUnpaidTrainableSectors() {
-  INT32 iCounter = 0;
-  SectorID8 ubSector;
-
   SetAssignmentForList(TRAIN_TOWN, 0);
-
   BuildListOfUnpaidTrainableSectors();
-
-  // pay up in each sector
-  for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
-    if (_st.unpaidSectors[iCounter] > 0) {
-      // convert strategic sector to 0-255 system
-      ubSector = SectorID16To8(_st.unpaidSectors[iCounter]);
-      PayForTrainingInSector(ubSector);
+  for (int i = 0; i < MAX_CHARACTER_COUNT; i++) {
+    if (_st.unpaidSectors[i].x > 0 && _st.unpaidSectors[i].y > 0) {
+      PayForTrainingInSector(GetSectorID8(_st.unpaidSectors[i].x, _st.unpaidSectors[i].y));
     }
   }
 }

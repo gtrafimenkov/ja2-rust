@@ -22,10 +22,6 @@ i8 GetSolSectorZ(const struct SOLDIERTYPE *s) { return s->bSectorZ; }
 SectorID8 GetSolSectorID8(const struct SOLDIERTYPE *s) {
   return GetSectorID8((u8)s->sSectorX, (u8)s->sSectorY);
 }
-SectorID16 GetSolSectorID16(const struct SOLDIERTYPE *s) {
-  return GetSectorID16((u8)s->sSectorX, (u8)s->sSectorY);
-}
-
 i8 GetSolAssignment(const struct SOLDIERTYPE *s) { return s->bAssignment; }
 u8 GetSolClass(const struct SOLDIERTYPE *s) { return s->ubSoldierClass; }
 

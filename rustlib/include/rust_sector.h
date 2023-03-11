@@ -11,6 +11,11 @@
 
 #define MAP_WORLD_Y 18
 
+struct SectorPoint {
+  uint8_t x;
+  uint8_t y;
+};
+
 /**
  * Sector ID 0-255 (16x16)
  */
@@ -24,6 +29,8 @@ typedef int16_t SectorID16;
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+struct SectorPoint GetSectorPoint(uint8_t x, uint8_t y);
 
 /**
  * Convert coordinates ([1-16], [1-16]) to 0-255 index.
