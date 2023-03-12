@@ -861,9 +861,8 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
     townLoyalty[i] = GetRawTownLoyalty(i);
   }
 
-  FileMan_Write(hFile, townLoyalty, sizeof(struct SAVE_LOAD_TOWN_LOYALTY) * NUM_TOWNS,
-                &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(struct SAVE_LOAD_TOWN_LOYALTY) * NUM_TOWNS) {
+  FileMan_Write(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(townLoyalty)) {
     return (FALSE);
   }
 
@@ -873,10 +872,16 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
 BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
+  struct SAVE_LOAD_TOWN_LOYALTY townLoyalty[NUM_TOWNS];
+
   // Restore the Town Loyalty
-  FileMan_Read(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(TOWN_LOYALTY) * NUM_TOWNS) {
+  FileMan_Read(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(townLoyalty)) {
     return (FALSE);
+  }
+
+  for (int i = 0; i < NUM_TOWNS; i++) {
+    SetRawTownLoyalty(i, &townLoyalty[i]);
   }
 
   return (TRUE);
@@ -1177,7 +1182,7 @@ void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY)
 
     // set flag even for towns where you can't train militia, useful for knowing Orta/Tixa were
     // previously controlled
-    IsTownLiberated(bTownId) = TRUE;
+    SetTownAsLiberated(bTownId);
   }
 }
 
@@ -1326,12 +1331,3 @@ void MaximizeLoyaltyForDeidrannaKilled(void) {
     SetTownLoyalty(bTownId, 100);
   }
 }
-
-// TODO: rustlib
-// u8 GetTownLoyaltyRating(TownID townID) { return gTownLoyalty[townID].ubRating; }
-
-// TODO: rustlib
-// bool IsTownLoyaltyStarted(TownID townID) { return gTownLoyalty[townID].fStarted; }
-
-// TODO: rustlib
-// bool IsTownLiberated(TownID townID) { return gTownLoyalty[townID].fLiberatedAlready; }

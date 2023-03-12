@@ -71,6 +71,14 @@ struct SAVE_LOAD_TOWN_LOYALTY GetRawTownLoyalty(enum TownID town);
 
 void SetRawTownLoyalty(enum TownID town, const struct SAVE_LOAD_TOWN_LOYALTY *data);
 
+uint8_t GetTownLoyaltyRating(enum TownID town);
+
+bool IsTownLoyaltyStarted(enum TownID town);
+
+bool IsTownLiberated(enum TownID town);
+
+void SetTownAsLiberated(enum TownID town);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

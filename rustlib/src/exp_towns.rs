@@ -169,6 +169,26 @@ pub extern "C" fn SetRawTownLoyalty(town: TownID, data: &SAVE_LOAD_TOWN_LOYALTY)
     }
 }
 
+#[no_mangle]
+pub extern "C" fn GetTownLoyaltyRating(town: TownID) -> u8 {
+    unsafe { STATE.towns.loyalty[town as usize].rating }
+}
+
+#[no_mangle]
+pub extern "C" fn IsTownLoyaltyStarted(town: TownID) -> bool {
+    unsafe { STATE.towns.loyalty[town as usize].started }
+}
+
+#[no_mangle]
+pub extern "C" fn IsTownLiberated(town: TownID) -> bool {
+    unsafe { STATE.towns.loyalty[town as usize].liberated }
+}
+
+#[no_mangle]
+pub extern "C" fn SetTownAsLiberated(town: TownID) {
+    unsafe { STATE.towns.loyalty[town as usize].liberated = true }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
