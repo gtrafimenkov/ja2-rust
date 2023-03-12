@@ -217,6 +217,12 @@ void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
   return;
 }
 
+// TODO rustlib: implement IncrementTownLoyalty in Rust
+// - move gTownLoyalty
+// - move gubTownRebelSentiment
+// - move UpdateTownLoyaltyRating
+//   - move gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP]
+
 // increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
 void IncrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyIncrease) {
   UINT32 uiRemainingIncrement;
