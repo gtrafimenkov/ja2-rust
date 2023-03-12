@@ -96,6 +96,15 @@ pub extern "C" fn MilitiaTrainingAllowedInTown(town: TownID) -> bool {
     }
 }
 
+/// Does town uses loyalty mechanic
+#[no_mangle]
+pub extern "C" fn DoesTownUseLoyalty(town: TownID) -> bool {
+    match town {
+        TownID::BLANK_SECTOR => false,
+        _ => town.to_internal().does_use_loyalty(),
+    }
+}
+
 /// Return TownID the sector belongs to.
 #[no_mangle]
 pub extern "C" fn GetTownIdForSector(x: u8, y: u8) -> TownID {
@@ -106,6 +115,112 @@ pub extern "C" fn GetTownIdForSector(x: u8, y: u8) -> TownID {
     match town {
         None => TownID::BLANK_SECTOR,
         Some(town) => TownID::from_internal(town),
+    }
+}
+
+#[repr(C)]
+#[allow(non_camel_case_types)]
+// Data structure for saving and loading the town loyalty
+pub struct SAVE_LOAD_TOWN_LOYALTY {
+    rating: u8,
+    change: i16,
+    started: u8,
+    unused1: u8,
+    liberated: u8,
+    unused2: [u8; 19],
+}
+
+#[no_mangle]
+pub extern "C" fn GetRawTownLoyalty(town: TownID) -> SAVE_LOAD_TOWN_LOYALTY {
+    match town {
+        TownID::BLANK_SECTOR => SAVE_LOAD_TOWN_LOYALTY {
+            rating: 0,
+            change: 0,
+            started: 0,
+            unused1: 0,
+            liberated: 0,
+            unused2: [0; 19],
+        },
+        _ => {
+            let internal = unsafe { STATE.towns.get_loyalty(town.to_internal()) };
+            SAVE_LOAD_TOWN_LOYALTY {
+                rating: internal.rating,
+                change: internal.change,
+                started: internal.started as u8,
+                unused1: 0,
+                liberated: internal.liberated as u8,
+                unused2: [0; 19],
+            }
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn SetRawTownLoyalty(town: TownID, data: &SAVE_LOAD_TOWN_LOYALTY) {
+    match town {
+        TownID::BLANK_SECTOR => {}
+        _ => {
+            let internal = unsafe { STATE.towns.get_mut_loyalty(town.to_internal()) };
+            internal.change = data.change;
+            internal.rating = data.rating;
+            internal.started = data.started != 0;
+            internal.liberated = data.liberated != 0;
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn GetTownLoyaltyRating(town: TownID) -> u8 {
+    unsafe { STATE.towns.get_loyalty(town.to_internal()).rating }
+}
+
+#[no_mangle]
+pub extern "C" fn IsTownLoyaltyStarted(town: TownID) -> bool {
+    unsafe { STATE.towns.get_loyalty(town.to_internal()).started }
+}
+
+#[no_mangle]
+pub extern "C" fn IsTownLiberated(town: TownID) -> bool {
+    unsafe { STATE.towns.get_loyalty(town.to_internal()).liberated }
+}
+
+#[no_mangle]
+pub extern "C" fn SetTownAsLiberated(town: TownID) {
+    unsafe { STATE.towns.get_mut_loyalty(town.to_internal()).liberated = true }
+}
+
+#[no_mangle]
+pub extern "C" fn InitTownLoyalty() {
+    unsafe { STATE.towns.init_loyalty() }
+}
+
+#[no_mangle]
+pub extern "C" fn SetTownLoyalty(town: TownID, rating: u8) {
+    unsafe { STATE.towns.set_town_loyalty(town.to_internal(), rating) }
+}
+
+#[no_mangle]
+pub extern "C" fn IncrementTownLoyalty(town: TownID, increase: u32) {
+    unsafe { STATE.inc_town_loyalty(town.to_internal(), increase) }
+}
+
+#[no_mangle]
+pub extern "C" fn DecrementTownLoyalty(town: TownID, decrease: u32) {
+    unsafe { STATE.dec_town_loyalty(town.to_internal(), decrease) }
+}
+
+#[no_mangle]
+pub extern "C" fn StartTownLoyaltyFirstTime(
+    town: TownID,
+    fact_miguel_read_letter: bool,
+    fact_rebels_hate_player: bool,
+) {
+    unsafe {
+        STATE.start_town_loyalty_first_time(
+            town.to_internal(),
+            fact_miguel_read_letter,
+            fact_rebels_hate_player,
+        )
     }
 }
 

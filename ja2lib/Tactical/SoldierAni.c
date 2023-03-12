@@ -18,7 +18,6 @@
 #include "Soldier.h"
 #include "Strategic/Meanwhile.h"
 #include "Strategic/StrategicStatus.h"
-#include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/AnimationCache.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"

@@ -68,9 +68,6 @@
 // divisor for dmg to a building by allied rebel
 #define DIVISOR_FOR_REBEL_BUILDING_DMG 2
 
-// town loyalty table
-TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
-
 int32_t iTownDistances[NUM_TOWNS][NUM_TOWNS];
 
 #define BASIC_COST_FOR_CIV_MURDER (10 * GAIN_PTS_PER_LOYALTY_PT)
@@ -88,45 +85,6 @@ uint32_t uiPercentLoyaltyDecreaseForCivMurder[] = {
     (1 * GAIN_PTS_PER_LOYALTY_PT),   // cow
 };
 
-// on a scale of 1-100, this is a measure of how much each town hates the Queen's opression & is
-// willing to stand against it it primarily controls the RATE of loyalty change in each town: the
-// loyalty effect of the same events depends on it
-uint8_t gubTownRebelSentiment[NUM_TOWNS] = {
-    0,   // not a town - blank sector index
-    90,  // OMERTA,	- They ARE the rebels!!!
-    30,  // DRASSEN,	- Rebel friendly, makes it pretty easy to get first mine's income going at
-         // the start
-    12,  // ALMA			- Military town, high loyalty to Queen, need quests to get
-         // 100%
-    15,  // GRUMM,		- Close to Meduna, strong influence
-    20,  // TIXA,		- Not a real town
-    15,  // CAMBRIA, - Artificially much lower 'cause it's big and central and too easy to get
-         // loyalty up there
-    20,  // SAN_MONA,- Neutral ground, loyalty doesn't vary
-    20,  // ESTONI,	- Not a real town
-    20,  // ORTA,		- Not a real town
-    12,  // BALIME,	- Rich town, high loyalty to Queen
-    10,  // MEDUNA,	- Enemy HQ, for God's sake!
-    35,  // CHITZENA, - Artificially high 'cause there's not enough fights near it to get the
-         // loyalty up otherwise
-};
-
-BOOLEAN gfTownUsesLoyalty[NUM_TOWNS] = {
-    FALSE,  // not a town - blank sector index
-    TRUE,   // OMERTA
-    TRUE,   // DRASSEN
-    TRUE,   // ALMA
-    TRUE,   // GRUMM
-    FALSE,  // TIXA
-    TRUE,   // CAMBRIA
-    FALSE,  // SAN_MONA
-    FALSE,  // ESTONI
-    FALSE,  // ORTA
-    TRUE,   // BALIME
-    TRUE,   // MEDUNA
-    TRUE,   // CHITZENA
-};
-
 // location of first enocunter with enemy
 struct SectorPoint locationOfFirstBattle = {.x = 0, .y = 0};
 
@@ -138,219 +96,18 @@ extern BOOLEAN fSectorsWithSoldiers[MAP_WORLD_X * MAP_WORLD_X][4];
 
 extern wchar_t *pTownNames[];
 
-// update the loyalty rating of the passed town id
-void UpdateTownLoyaltyRating(TownID bTownId);
-
 // update town loyalty based on number of friendlies in this town
 void UpdateTownLoyaltyBasedOnFriendliesInTown(TownID bTownId);
 
 // update town loyalty based on number of bad guys in this town
 void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 
-/* ARM: Civilian theft of items was removed
-// handle theft by civi in a town sector
-void HandleTheftByCiviliansInSector( int16_t sX, int16_t sY, int32_t iLoyalty );
-
-// handle theft in all towns
-void HandleTownTheft( void );
-*/
-
 extern void MapScreenDefaultOkBoxCallback(uint8_t bExitValue);
 
-void InitTownLoyalty(void) {
-  uint8_t ubTown = 0;
-
-  // set up town loyalty table
-  for (ubTown = FIRST_TOWN; ubTown < NUM_TOWNS; ubTown++) {
-    gTownLoyalty[ubTown].ubRating = 0;
-    gTownLoyalty[ubTown].sChange = 0;
-    gTownLoyalty[ubTown].fStarted = FALSE;
-    //		gTownLoyalty[ ubTown ].ubRebelSentiment = gubTownRebelSentiment[ ubTown ];
-    gTownLoyalty[ubTown].fLiberatedAlready = FALSE;
-  }
-
-  return;
-}
-
 void StartTownLoyaltyIfFirstTime(TownID bTownId) {
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
-
-  // if loyalty tracking hasn't yet been started for this town, and the town does use loyalty
-  if (!gTownLoyalty[bTownId].fStarted && gfTownUsesLoyalty[bTownId]) {
-    // set starting town loyalty now, equally to that town's current rebel sentiment - not all towns
-    // begin equally loyal
-    gTownLoyalty[bTownId].ubRating = gubTownRebelSentiment[bTownId];
-
-    // if player hasn't made contact with Miguel yet, or the rebels hate the player
-    if (!CheckFact(FACT_MIGUEL_READ_LETTER, 0) || CheckFact(FACT_REBELS_HATE_PLAYER, 0)) {
-      // if town is Omerta
-      if (bTownId == OMERTA) {
-        // start loyalty there at 0, since rebels distrust the player until Miguel receives the
-        // letter
-        gTownLoyalty[bTownId].ubRating = 0;
-      } else {
-        // starting loyalty is halved - locals not sure what to make of the player's presence
-        gTownLoyalty[bTownId].ubRating /= 2;
-      }
-    }
-
-    gTownLoyalty[bTownId].sChange = 0;
-
-    // remember we've started
-    gTownLoyalty[bTownId].fStarted = TRUE;
-  }
+  StartTownLoyaltyFirstTime(bTownId, CheckFact(FACT_MIGUEL_READ_LETTER, 0),
+                            CheckFact(FACT_REBELS_HATE_PLAYER, 0));
 }
-
-// set a specified town's loyalty rating (ignores previous loyalty value - probably NOT what you
-// want)
-void SetTownLoyalty(TownID bTownId, uint8_t ubNewLoyaltyRating) {
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
-
-  // if the town does use loyalty
-  if (gfTownUsesLoyalty[bTownId]) {
-    gTownLoyalty[bTownId].ubRating = ubNewLoyaltyRating;
-    gTownLoyalty[bTownId].sChange = 0;
-
-    // this is just like starting the loyalty if it happens first
-    gTownLoyalty[bTownId].fStarted = TRUE;
-  }
-
-  return;
-}
-
-// TODO rustlib: implement IncrementTownLoyalty in Rust
-// - move gTownLoyalty
-// - move gubTownRebelSentiment
-// - move UpdateTownLoyaltyRating
-//   - [x] move gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP]
-
-// increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
-void IncrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyIncrease) {
-  uint32_t uiRemainingIncrement;
-  int16_t sThisIncrement;
-
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
-
-  // doesn't affect towns where player hasn't established a "presence" yet
-  if (!gTownLoyalty[bTownId].fStarted) {
-    return;
-  }
-
-  // modify loyalty change by town's individual attitude toward rebelling (20 is typical)
-  uiLoyaltyIncrease *= (5 * gubTownRebelSentiment[bTownId]);
-  uiLoyaltyIncrease /= 100;
-
-  // this whole thing is a hack to avoid rolling over the -32 to 32k range on the sChange value
-  // only do a maximum of 10000 pts at a time...
-  uiRemainingIncrement = uiLoyaltyIncrease;
-  while (uiRemainingIncrement) {
-    sThisIncrement = (int16_t)min(uiRemainingIncrement, 10000);
-
-    // up the gain value
-    gTownLoyalty[bTownId].sChange += (int16_t)sThisIncrement;
-    // update town value now
-    UpdateTownLoyaltyRating(bTownId);
-
-    uiRemainingIncrement -= sThisIncrement;
-  }
-
-  return;
-}
-
-// decrements the town's loyalty rating by that many HUNDREDTHS of loyalty pts
-// NOTE: This function expects a POSITIVE number for a decrease!!!
-void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease) {
-  uint32_t uiRemainingDecrement;
-  int16_t sThisDecrement;
-
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
-
-  // doesn't affect towns where player hasn't established a "presence" yet
-  if (!gTownLoyalty[bTownId].fStarted) {
-    return;
-  }
-
-  // modify loyalty change by town's individual attitude toward rebelling (20 is typical)
-  uiLoyaltyDecrease *= 100;
-  uiLoyaltyDecrease /= (5 * gubTownRebelSentiment[bTownId]);
-
-  // this whole thing is a hack to avoid rolling over the -32 to 32k range on the sChange value
-  // only do a maximum of 10000 pts at a time...
-  uiRemainingDecrement = uiLoyaltyDecrease;
-  while (uiRemainingDecrement) {
-    sThisDecrement = (int16_t)min(uiRemainingDecrement, 10000);
-
-    // down the gain value
-    gTownLoyalty[bTownId].sChange -= sThisDecrement;
-    // update town value now
-    UpdateTownLoyaltyRating(bTownId);
-
-    uiRemainingDecrement -= sThisDecrement;
-  }
-
-  return;
-}
-
-// update town loyalty rating based on gain values
-void UpdateTownLoyaltyRating(TownID bTownId) {
-  // check gain value and update loyaty
-  uint8_t ubOldLoyaltyRating = 0;
-  int16_t sRatingChange = 0;
-  uint8_t ubMaxLoyalty = 0;
-
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
-
-  // remember previous loyalty value
-  ubOldLoyaltyRating = gTownLoyalty[bTownId].ubRating;
-
-  sRatingChange = gTownLoyalty[bTownId].sChange / GAIN_PTS_PER_LOYALTY_PT;
-
-  // if loyalty is ready to increase
-  if (sRatingChange > 0) {
-    // if the town is Omerta, and the rebels are/will become hostile
-    if ((bTownId == OMERTA) && (GetCivGroupHostility(REBEL_CIV_GROUP) != CIV_GROUP_NEUTRAL)) {
-      // maximum loyalty is much less than normal
-      ubMaxLoyalty = HOSTILE_OMERTA_LOYALTY_RATING;
-    } else {
-      ubMaxLoyalty = MAX_LOYALTY_VALUE;
-    }
-
-    // check if we'd be going over the max
-    if ((gTownLoyalty[bTownId].ubRating + sRatingChange) >= ubMaxLoyalty) {
-      // set to max and null out gain pts
-      gTownLoyalty[bTownId].ubRating = ubMaxLoyalty;
-      gTownLoyalty[bTownId].sChange = 0;
-    } else {
-      // increment loyalty rating, reduce sChange
-      gTownLoyalty[bTownId].ubRating += sRatingChange;
-      gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
-    }
-  } else
-    // if loyalty is ready to decrease
-    if (sRatingChange < 0) {
-      // check if we'd be going below zero
-      if ((gTownLoyalty[bTownId].ubRating + sRatingChange) < 0) {
-        // set to zero and null out gain pts
-        gTownLoyalty[bTownId].ubRating = 0;
-        gTownLoyalty[bTownId].sChange = 0;
-      } else {
-        // decrement loyalty rating, reduce sChange
-        gTownLoyalty[bTownId].ubRating += sRatingChange;
-        gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
-      }
-    }
-
-  // check old aginst new, if diff, dirty map panel
-  if (ubOldLoyaltyRating != gTownLoyalty[bTownId].ubRating) {
-    SetMapPanelDirty(true);
-  }
-
-  return;
-}
-
-// strategic handler, goes through and handles all strategic events for town loyalty
-// updates...player controlled, monsters
-void HandleTownLoyalty(void) { return; }
 
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) {
   // handle the impact on loyalty of the murder of a civilian
@@ -416,7 +173,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   }
 
   // check if this town does use loyalty (to skip a lot of unnecessary computation)
-  if (!gfTownUsesLoyalty[bTownId]) {
+  if (!DoesTownUseLoyalty(bTownId)) {
     return;
   }
 
@@ -465,7 +222,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
       case 0:
         // nobody saw anything.  When body is found, chance player is blamed depends on the town's
         // loyalty at this time
-        uiChanceFalseAccusal = MAX_LOYALTY_VALUE - gTownLoyalty[bTownId].ubRating;
+        uiChanceFalseAccusal = MAX_LOYALTY_VALUE - GetTownLoyaltyRating(bTownId);
         break;
       case 1:
         // civilians saw the killer, but not the victim. 10 % chance of blaming player whether or
@@ -602,57 +359,6 @@ void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
 
     // DESIGN QUESTION: How easy is it to abuse this bonus by repeatedly hiring the guy over & over
     // (at worst daily? even more often if terminated & rehired?)  (ARM)
-  }
-
-  return;
-}
-
-BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier) {
-  // not to be implemented at this time
-  return (FALSE);
-}
-
-// handle loyalty adjustment for dmg inflicted on a building
-void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, int16_t sPointsDmg) {
-  // find this soldier's team and decrement the loyalty rating for them and for the people who
-  // police the sector more penalty for the people who did it, a lesser one for those who should
-  // have stopped it
-  int16_t sLoyaltyValue = 0;
-  int16_t sPolicingLoyalty = 0;
-  TownID bTownId = 0;
-
-  // hurt loyalty for damaging the building
-  sLoyaltyValue = sPointsDmg * MULTIPLIER_FOR_DAMAGING_A_BUILDING;
-
-  // penalty for not preventing the action
-  sPolicingLoyalty = sPointsDmg * MULTIPLIER_FOR_NOT_PREVENTING_BUILDING_DAMAGE;
-
-  // get town id
-  bTownId = GetSolTown(pSoldier);
-
-  // penalize the side that did it
-  if (pSoldier->bTeam == OUR_TEAM) {
-    DecrementTownLoyalty(bTownId, sLoyaltyValue);
-  } else if (pSoldier->bTeam == ENEMY_TEAM) {
-    // enemy damaged sector, it's their fault
-    IncrementTownLoyalty(bTownId, sLoyaltyValue);
-  } else if (pSoldier->ubCivilianGroup == REBEL_CIV_GROUP) {
-    // the rebels did it...are they on our side
-    if (CheckFact(FACT_REBELS_HATE_PLAYER, 0) == FALSE) {
-      sLoyaltyValue /= DIVISOR_FOR_REBEL_BUILDING_DMG;
-
-      // decrement loyalty value for rebels on our side dmging town
-      DecrementTownLoyalty(bTownId, sLoyaltyValue);
-    }
-  }
-
-  // penalize the side that should have stopped it
-  if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))) {
-    // enemy should have prevented it, let them suffer a little
-    IncrementTownLoyalty(bTownId, sPolicingLoyalty);
-  } else {
-    // we should have prevented it, we shall suffer
-    DecrementTownLoyalty(bTownId, sPolicingLoyalty);
   }
 
   return;
@@ -868,9 +574,13 @@ int32_t GetTownDistances(uint8_t ubTown, uint8_t ubTownA) {
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
   uint32_t uiNumBytesWritten;
 
-  // Save the Town Loyalty
-  FileMan_Write(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(TOWN_LOYALTY) * NUM_TOWNS) {
+  struct SAVE_LOAD_TOWN_LOYALTY townLoyalty[NUM_TOWNS];
+  for (int i = 1; i < NUM_TOWNS; i++) {
+    townLoyalty[i] = GetRawTownLoyalty(i);
+  }
+
+  FileMan_Write(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(townLoyalty)) {
     return (FALSE);
   }
 
@@ -880,10 +590,16 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
 BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile) {
   uint32_t uiNumBytesRead;
 
+  struct SAVE_LOAD_TOWN_LOYALTY townLoyalty[NUM_TOWNS];
+
   // Restore the Town Loyalty
-  FileMan_Read(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(TOWN_LOYALTY) * NUM_TOWNS) {
+  FileMan_Read(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(townLoyalty)) {
     return (FALSE);
+  }
+
+  for (int i = 1; i < NUM_TOWNS; i++) {
+    SetRawTownLoyalty(i, &townLoyalty[i]);
   }
 
   return (TRUE);
@@ -896,7 +612,7 @@ void ReduceLoyaltyForRebelsBetrayed(void) {
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     if (bTownId == OMERTA) {
       // if not already really low
-      if (gTownLoyalty[bTownId].ubRating > HOSTILE_OMERTA_LOYALTY_RATING) {
+      if (GetTownLoyaltyRating(bTownId) > HOSTILE_OMERTA_LOYALTY_RATING) {
         // loyalty in Omerta tanks big time, and will stay low permanently since this becomes its
         // maximum
         SetTownLoyalty(bTownId, HOSTILE_OMERTA_LOYALTY_RATING);
@@ -905,7 +621,7 @@ void ReduceLoyaltyForRebelsBetrayed(void) {
     } else {
       // loyalty in other places is also strongly affected by this falling out with rebels, but this
       // is not permanent
-      SetTownLoyalty(bTownId, (uint8_t)(gTownLoyalty[bTownId].ubRating / 3));
+      SetTownLoyalty(bTownId, (uint8_t)(GetTownLoyaltyRating(bTownId) / 3));
     }
   }
 }
@@ -919,7 +635,7 @@ int32_t GetNumberOfWholeTownsUnderControl(void) {
 
   // make sure that each town is one for which loyalty matters
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
-    if (IsTownUnderCompleteControlByPlayer(bTownId) && gfTownUsesLoyalty[bTownId]) {
+    if (IsTownUnderCompleteControlByPlayer(bTownId) && DoesTownUseLoyalty(bTownId)) {
       iNumber++;
     }
   }
@@ -935,7 +651,7 @@ int32_t GetNumberOfWholeTownsUnderControlButExcludeCity(int8_t bCityToExclude) {
   // number of towns under player control
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     if (IsTownUnderCompleteControlByPlayer(bTownId) && (bCityToExclude != bTownId) &&
-        gfTownUsesLoyalty[bTownId]) {
+        DoesTownUseLoyalty(bTownId)) {
       iNumber++;
     }
   }
@@ -986,6 +702,7 @@ void AdjustLoyaltyForCivsEatenByMonsters(uint8_t sSectorX, uint8_t sSectorY, uin
   DecrementTownLoyalty(bTownId, uiLoyaltyChange);
 }
 
+// TODO: rustlib
 // this applies the SAME change to every town equally, regardless of distance from the event
 void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease) {
   TownID bTownId;
@@ -995,6 +712,7 @@ void IncrementTownLoyaltyEverywhere(uint32_t uiLoyaltyIncrease) {
   }
 }
 
+// TODO: rustlib
 void DecrementTownLoyaltyEverywhere(uint32_t uiLoyaltyDecrease) {
   TownID bTownId;
 
@@ -1115,7 +833,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, uint8_t sSector
 
   for (TownID bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     // doesn't affect towns where player hasn't established a "presence" yet
-    if (!gTownLoyalty[bTownId].fStarted) {
+    if (!IsTownLoyaltyStarted(bTownId)) {
       continue;
     }
 
@@ -1163,7 +881,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(int32_t iLoyaltyChange, uint8_t sSector
 // to be called whenever player gains control of a sector in any way
 void CheckIfEntireTownHasBeenLiberated(TownID bTownId, uint8_t sSectorX, uint8_t sSectorY) {
   // the whole town is under our control, check if we never libed this town before
-  if (!gTownLoyalty[bTownId].fLiberatedAlready && IsTownUnderCompleteControlByPlayer(bTownId)) {
+  if (!IsTownLiberated(bTownId) && IsTownUnderCompleteControlByPlayer(bTownId)) {
     if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0)) {
       // give a loyalty bonus
       HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_LIBERATE_WHOLE_TOWN, sSectorX, sSectorY, 0);
@@ -1185,7 +903,7 @@ void CheckIfEntireTownHasBeenLiberated(TownID bTownId, uint8_t sSectorX, uint8_t
 
     // set flag even for towns where you can't train militia, useful for knowing Orta/Tixa were
     // previously controlled
-    gTownLoyalty[bTownId].fLiberatedAlready = TRUE;
+    SetTownAsLiberated(bTownId);
   }
 }
 
@@ -1195,7 +913,7 @@ void CheckIfEntireTownHasBeenLost(TownID bTownId, uint8_t sSectorX, uint8_t sSec
   if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0) &&
       IsTownUnderCompleteControlByEnemy(bTownId)) {
     // the whole town is under enemy control, check if we libed this town before
-    if (gTownLoyalty[bTownId].fLiberatedAlready) {
+    if (IsTownLiberated(bTownId)) {
       HandleMeanWhileEventPostingForTownLoss(bTownId);
     }
   }
