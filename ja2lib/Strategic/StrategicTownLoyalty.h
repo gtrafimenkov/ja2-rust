@@ -38,12 +38,6 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional);
 // handle town loyalty adjustment for recruitment
 void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier);
 
-// handle loyalty adjustment for theft
-BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier);
-
-// handle loyalty adjustments for dmg/destruction of buildings
-void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sPointsDmg);
-
 // remove random item from this sector
 void RemoveRandomItemsInSector(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubChance);
 

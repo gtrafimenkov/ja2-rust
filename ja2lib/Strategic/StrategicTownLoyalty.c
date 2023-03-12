@@ -68,22 +68,6 @@
 // divisor for dmg to a building by allied rebel
 #define DIVISOR_FOR_REBEL_BUILDING_DMG 2
 
-// sizeof(TOWN_LOYALTY)
-
-// typedef struct TOWN_LOYALTY {
-//   UINT8 ubRating;
-//   INT16 sChange;
-//   BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first
-//   enters
-//                      // that town
-//   UINT8 __unused1;
-//   BOOLEAN fLiberatedAlready;
-//   BYTE __unused2[19];  // reserved for expansion
-// } TOWN_LOYALTY;
-
-// town loyalty table
-// TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
-
 INT32 iTownDistances[NUM_TOWNS][NUM_TOWNS];
 
 #define BASIC_COST_FOR_CIV_MURDER (10 * GAIN_PTS_PER_LOYALTY_PT)
@@ -375,57 +359,6 @@ void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier) {
 
     // DESIGN QUESTION: How easy is it to abuse this bonus by repeatedly hiring the guy over & over
     // (at worst daily? even more often if terminated & rehired?)  (ARM)
-  }
-
-  return;
-}
-
-BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier) {
-  // not to be implemented at this time
-  return (FALSE);
-}
-
-// handle loyalty adjustment for dmg inflicted on a building
-void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, INT16 sPointsDmg) {
-  // find this soldier's team and decrement the loyalty rating for them and for the people who
-  // police the sector more penalty for the people who did it, a lesser one for those who should
-  // have stopped it
-  INT16 sLoyaltyValue = 0;
-  INT16 sPolicingLoyalty = 0;
-  TownID bTownId = 0;
-
-  // hurt loyalty for damaging the building
-  sLoyaltyValue = sPointsDmg * MULTIPLIER_FOR_DAMAGING_A_BUILDING;
-
-  // penalty for not preventing the action
-  sPolicingLoyalty = sPointsDmg * MULTIPLIER_FOR_NOT_PREVENTING_BUILDING_DAMAGE;
-
-  // get town id
-  bTownId = GetSolTown(pSoldier);
-
-  // penalize the side that did it
-  if (pSoldier->bTeam == OUR_TEAM) {
-    DecrementTownLoyalty(bTownId, sLoyaltyValue);
-  } else if (pSoldier->bTeam == ENEMY_TEAM) {
-    // enemy damaged sector, it's their fault
-    IncrementTownLoyalty(bTownId, sLoyaltyValue);
-  } else if (pSoldier->ubCivilianGroup == REBEL_CIV_GROUP) {
-    // the rebels did it...are they on our side
-    if (CheckFact(FACT_REBELS_HATE_PLAYER, 0) == FALSE) {
-      sLoyaltyValue /= DIVISOR_FOR_REBEL_BUILDING_DMG;
-
-      // decrement loyalty value for rebels on our side dmging town
-      DecrementTownLoyalty(bTownId, sLoyaltyValue);
-    }
-  }
-
-  // penalize the side that should have stopped it
-  if (IsSectorEnemyControlled(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier))) {
-    // enemy should have prevented it, let them suffer a little
-    IncrementTownLoyalty(bTownId, sPolicingLoyalty);
-  } else {
-    // we should have prevented it, we shall suffer
-    DecrementTownLoyalty(bTownId, sPolicingLoyalty);
   }
 
   return;
@@ -766,6 +699,7 @@ void AdjustLoyaltyForCivsEatenByMonsters(u8 sSectorX, u8 sSectorY, UINT8 ubHowMa
   DecrementTownLoyalty(bTownId, uiLoyaltyChange);
 }
 
+// TODO: rustlib
 // this applies the SAME change to every town equally, regardless of distance from the event
 void IncrementTownLoyaltyEverywhere(UINT32 uiLoyaltyIncrease) {
   TownID bTownId;
@@ -775,6 +709,7 @@ void IncrementTownLoyaltyEverywhere(UINT32 uiLoyaltyIncrease) {
   }
 }
 
+// TODO: rustlib
 void DecrementTownLoyaltyEverywhere(UINT32 uiLoyaltyDecrease) {
   TownID bTownId;
 
