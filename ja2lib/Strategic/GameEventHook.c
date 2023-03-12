@@ -27,7 +27,6 @@
 #include "Strategic/StrategicMines.h"
 #include "Strategic/StrategicMovement.h"
 #include "Strategic/StrategicStatus.h"
-#include "Strategic/StrategicTownLoyalty.h"
 #include "Strategic/StrategicTownReputation.h"
 #include "Tactical/AirRaid.h"
 #include "Tactical/ArmsDealerInit.h"

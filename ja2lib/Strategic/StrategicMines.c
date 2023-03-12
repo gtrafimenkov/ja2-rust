@@ -431,12 +431,6 @@ INT32 GetAvailableWorkForceForMineForPlayer(INT8 bMineIndex) {
   // get workforce size (is 0-100 based on local town's loyalty)
   iWorkForceSize = GetTownLoyaltyRating(bTownId);
 
-  /*
-          // adjust for monster infestation
-          iWorkForceSize *= gubMonsterMineInfestation[ gMineStatus[ bMineIndex ].bMonsters ];
-          iWorkForceSize /= 100;
-  */
-
   // now adjust for town size.. the number of sectors you control
   iWorkForceSize *= GetTownSectorsUnderControl(bTownId);
   iWorkForceSize /= GetTownSectorSize(bTownId);

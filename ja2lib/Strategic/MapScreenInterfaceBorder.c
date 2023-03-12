@@ -17,7 +17,6 @@
 #include "Strategic/MapScreenInterfaceMap.h"
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/StrategicMap.h"
-#include "Strategic/StrategicTownLoyalty.h"
 #include "Strategic/TownMilitia.h"
 #include "TileEngine/SysUtil.h"
 #include "Utils/Message.h"

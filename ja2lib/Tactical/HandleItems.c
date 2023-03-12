@@ -12,7 +12,6 @@
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"
-#include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/ActionItems.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/ArmsDealerInit.h"
