@@ -30,6 +30,7 @@
 #include "TileEngine/RenderFun.h"
 #include "Town.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 #define TESTQUESTS
 

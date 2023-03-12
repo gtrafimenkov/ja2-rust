@@ -79,6 +79,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
+#include "rust_civ_groups.h"
 
 INT16 sBasementEnterGridNos[] = {13362, 13363, 13364, 13365, 13525, 13524};
 INT16 sBasementExitGridNos[] = {8047, 8207, 8208, 8048, 7888, 7728, 7727, 7567};

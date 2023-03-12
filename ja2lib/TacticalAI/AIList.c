@@ -20,6 +20,7 @@
 #include "Tactical/TacticalSave.h"
 #include "TacticalAI/AI.h"
 #include "TacticalAI/AIInternals.h"
+#include "rust_civ_groups.h"
 
 #define AI_LIST_SIZE TOTAL_SOLDIERS
 

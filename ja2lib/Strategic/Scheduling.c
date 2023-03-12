@@ -27,6 +27,7 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 #ifdef JA2EDITOR
 extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];

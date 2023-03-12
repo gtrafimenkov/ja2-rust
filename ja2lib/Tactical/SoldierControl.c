@@ -93,6 +93,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
+#include "rust_civ_groups.h"
 
 extern INT16 DirIncrementer[8];
 

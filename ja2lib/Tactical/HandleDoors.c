@@ -34,6 +34,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_civ_groups.h"
 
 BOOLEAN gfSetPerceivedDoorState = FALSE;
 

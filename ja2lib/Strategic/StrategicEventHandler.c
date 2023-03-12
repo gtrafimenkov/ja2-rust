@@ -25,6 +25,7 @@
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 #define MEDUNA_ITEM_DROP_OFF_GRIDNO 10959
 #define MEDUNA_ITEM_DROP_OFF_SECTOR_X 3

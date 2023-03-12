@@ -29,6 +29,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 extern BOOLEAN InternalIsValidStance(struct SOLDIERTYPE *pSoldier, INT8 bDirection,
                                      INT8 bNewStance);

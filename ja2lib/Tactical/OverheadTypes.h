@@ -5,7 +5,6 @@
 #include "BuildDefines.h"
 #include "SGP/Types.h"
 #include "Team.h"
-#include "rust_civ_groups.h"
 
 #define REFINE_AIM_1 0
 #define REFINE_AIM_MID1 1
@@ -247,11 +246,6 @@ typedef enum {
   WON_ROUND,
   LOST_ROUND
 } BoxingStates;
-
-// NOTE:  The editor uses these enumerations, so please update the text as well if you modify or
-//			 add new groups.  Try to abbreviate the team name as much as possible.  The
-// text is in 			 EditorMercs.c
-extern CHAR16 gszCivGroupNames[NUM_CIV_GROUPS][20];
 
 // PALETTE SUBSITUTION TYPES
 typedef struct {

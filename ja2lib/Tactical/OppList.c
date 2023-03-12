@@ -50,6 +50,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "rust_civ_groups.h"
 
 #define WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 

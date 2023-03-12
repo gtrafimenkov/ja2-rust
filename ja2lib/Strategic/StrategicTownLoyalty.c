@@ -33,6 +33,7 @@
 #include "Town.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "rust_civ_groups.h"
 
 // the max loyalty rating for any given town
 #define MAX_LOYALTY_VALUE 100
