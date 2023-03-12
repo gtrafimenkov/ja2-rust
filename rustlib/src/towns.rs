@@ -6,18 +6,18 @@ use super::sector::Point;
 /// It is almost the same as exp_towns::TownID, but without BLANK_SECTOR.
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Town {
-    Omerta = 1,
-    Drassen = 2,
-    Alma = 3,
-    Grumm = 4,
-    Tixa = 5,
-    Cambria = 6,
-    SanMona = 7,
-    Estoni = 8,
-    Orta = 9,
-    Balime = 10,
-    Meduna = 11,
-    Chitzena = 12,
+    Omerta,
+    Drassen,
+    Alma,
+    Grumm,
+    Tixa,
+    Cambria,
+    SanMona,
+    Estoni,
+    Orta,
+    Balime,
+    Meduna,
+    Chitzena,
 }
 
 const NUM_TOWNS: usize = 12;
@@ -411,5 +411,180 @@ mod tests {
         assert_eq!(false, Town::Tixa.does_use_loyalty());
         assert_eq!(true, Town::Omerta.does_use_loyalty());
         assert_eq!(true, Town::Alma.does_use_loyalty());
+    }
+
+    #[test]
+    fn loyalty_start() {
+        // half the value (30% / 2) for Drassen when Miguel hasn't read the letter
+        {
+            let mut loyalty = Loyalty::new();
+            loyalty.start_loyalty_first_time(Town::Drassen, false, false);
+            assert_eq!(15, loyalty.rating);
+            assert_eq!(0, loyalty.change);
+        }
+
+        // normal value for Drassen (30%) when Miguel has read the letter
+        {
+            let mut loyalty = Loyalty::new();
+            loyalty.start_loyalty_first_time(Town::Drassen, true, false);
+            assert_eq!(30, loyalty.rating); // half the value becuase Miguel hasn't read the letter
+            assert_eq!(0, loyalty.change);
+        }
+
+        // half the value for Alma (12% / 2) when rebels hate the player
+        {
+            let mut loyalty = Loyalty::new();
+            loyalty.start_loyalty_first_time(Town::Alma, false, true);
+            assert_eq!(6, loyalty.rating); // half the value becuase Miguel hasn't read the letter
+            assert_eq!(0, loyalty.change);
+        }
+    }
+
+    #[test]
+    fn loyalty_increase_and_decrease() {
+        let mut loyalty = Loyalty::new();
+        loyalty.start_loyalty_first_time(Town::Drassen, false, false);
+        assert_eq!(15, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+
+        // increase by 10% but because the rebel santiment for Drassen is 1.5x the increase
+        // will be 15%
+        loyalty.inc_loyalty(
+            Town::Drassen,
+            10 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::Neutral,
+        );
+        assert_eq!(30, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+    }
+
+    #[test]
+    fn loyalty_increase_in_omerta() {
+        // Initial rating is 0% if miguel hasn't read the letter.
+        {
+            let mut loyalty = Loyalty::new();
+            loyalty.start_loyalty_first_time(Town::Omerta, false, false);
+            assert_eq!(0, loyalty.rating);
+            assert_eq!(0, loyalty.change);
+        }
+
+        // Initial rating is 90% if Miguel read the letter, but in the game this
+        // condition never happens because the town is visited before Miguel can read the letter.
+        {
+            let mut loyalty = Loyalty::new();
+            loyalty.start_loyalty_first_time(Town::Omerta, true, false);
+            assert_eq!(90, loyalty.rating);
+            assert_eq!(0, loyalty.change);
+        }
+
+        // under normal circumstances the sentiment multiplicator is 4.5 for Omerta
+        {
+            let mut loyalty = Loyalty::new();
+            loyalty.start_loyalty_first_time(Town::Omerta, false, false);
+            assert_eq!(0, loyalty.rating);
+            assert_eq!(0, loyalty.change);
+
+            loyalty.inc_loyalty(
+                Town::Omerta,
+                10 * GAIN_PTS_PER_LOYALTY_PT as u32,
+                civ_groups::Hostility::Neutral,
+            );
+            assert_eq!(45, loyalty.rating);
+            assert_eq!(0, loyalty.change);
+        }
+
+        // when rebels are not neutral to the player, the max rating is 10%
+        {
+            let mut loyalty = Loyalty::new();
+            loyalty.start_loyalty_first_time(Town::Omerta, false, false);
+            assert_eq!(0, loyalty.rating);
+            assert_eq!(0, loyalty.change);
+
+            loyalty.inc_loyalty(
+                Town::Omerta,
+                5 * GAIN_PTS_PER_LOYALTY_PT as u32,
+                civ_groups::Hostility::WillEventuallyBecomeHostile,
+            );
+            assert_eq!(10, loyalty.rating);
+            assert_eq!(0, loyalty.change);
+        }
+    }
+
+    #[test]
+    fn loyalty_small_increases() {
+        // One rating point corresponds 500 change points.
+        // When adding rating in rating points because of the sentiment multiplicator,
+        // there can be some change.
+        // For example, when adding 1% rating to Drassen, 4.5 multiplicator gives 4.5% increase,
+        // which will be 4 points increase to rating and 250 points increase to change (500/2).
+        let mut loyalty = Loyalty::new();
+        loyalty.start_loyalty_first_time(Town::Omerta, false, false);
+        assert_eq!(0, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+
+        loyalty.inc_loyalty(
+            Town::Omerta,
+            1 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::WillEventuallyBecomeHostile,
+        );
+        assert_eq!(4, loyalty.rating);
+        assert_eq!(250, loyalty.change);
+
+        loyalty.inc_loyalty(
+            Town::Omerta,
+            1 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::WillEventuallyBecomeHostile,
+        );
+        assert_eq!(9, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+    }
+
+    #[test]
+    fn loyalty_decrease() {
+        let mut loyalty = Loyalty::new();
+        loyalty.start_loyalty_first_time(Town::Omerta, false, false);
+        assert_eq!(0, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+
+        loyalty.inc_loyalty(
+            Town::Omerta,
+            10 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::Neutral,
+        );
+        assert_eq!(45, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+
+        loyalty.dec_loyalty(
+            Town::Omerta,
+            2 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::Neutral,
+        );
+        assert_eq!(36, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+
+        loyalty.dec_loyalty(
+            Town::Omerta,
+            1 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::Neutral,
+        );
+        assert_eq!(32, loyalty.rating);
+        assert_eq!(-250, loyalty.change);
+
+        loyalty.dec_loyalty(
+            Town::Omerta,
+            1 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::Neutral,
+        );
+        assert_eq!(27, loyalty.rating);
+        assert_eq!(0, loyalty.change);
+
+        // must not go negative
+        loyalty.dec_loyalty(
+            Town::Omerta,
+            10 * GAIN_PTS_PER_LOYALTY_PT as u32,
+            civ_groups::Hostility::Neutral,
+        );
+        assert_eq!(0, loyalty.rating);
+        assert_eq!(0, loyalty.change);
     }
 }
