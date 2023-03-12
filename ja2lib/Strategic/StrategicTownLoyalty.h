@@ -26,51 +26,17 @@ typedef enum {
 
 } GlobalLoyaltyEventTypes;
 
-typedef struct TOWN_LOYALTY {
-  uint8_t ubRating;
-  int16_t sChange;
-  BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first enters
-                     // that town
-  uint8_t UNUSEDubRebelSentiment;  // current rebel sentiment.  Events could change the starting
-                                   // value...
-  BOOLEAN fLiberatedAlready;
-  uint8_t filler[19];  // reserved for expansion
-
-} TOWN_LOYALTY;
-
-// the loyalty variables for each town
-extern TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
-
-// whether town maintains/displays loyalty or not
-extern BOOLEAN gfTownUsesLoyalty[NUM_TOWNS];
-
 // initialize a specific town's loyalty if it hasn't already been
 void StartTownLoyaltyIfFirstTime(TownID bTownId);
 
-// set a speciafied town's loyalty rating
-void SetTownLoyalty(TownID bTownId, uint8_t ubLoyaltyValue);
-
 // update the loyalty based on current % control of the town
 void UpdateLoyaltyBasedOnControl(TownID bTownId);
-
-// strategic handler, goes through and handles all strategic events for town loyalty
-// updates...player controlled, monsters
-void HandleTownLoyalty(void);
-
-// init town loyalty lists
-void InitTownLoyalty(void);
 
 // handle the death of a civ
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional);
 
 // handle town loyalty adjustment for recruitment
 void HandleTownLoyaltyForNPCRecruitment(struct SOLDIERTYPE *pSoldier);
-
-// handle loyalty adjustment for theft
-BOOLEAN HandleLoyaltyAdjustmentForRobbery(struct SOLDIERTYPE *pSoldier);
-
-// handle loyalty adjustments for dmg/destruction of buildings
-void HandleLoyaltyForDemolitionOfBuilding(struct SOLDIERTYPE *pSoldier, int16_t sPointsDmg);
 
 // remove random item from this sector
 void RemoveRandomItemsInSector(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,

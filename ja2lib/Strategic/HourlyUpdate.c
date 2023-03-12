@@ -10,7 +10,6 @@
 #include "Strategic/StrategicMercHandler.h"
 #include "Strategic/StrategicMines.h"
 #include "Strategic/StrategicMovement.h"
-#include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/Boxing.h"
 #include "Tactical/Campaign.h"
 #include "Tactical/DialogueControl.h"
@@ -38,9 +37,6 @@ void HandleMinuteUpdate() {}
 void HandleHourlyUpdate() {
   // if the game hasnt even started yet ( we havent arrived in the sector ) dont process this
   if (DidGameJustStart()) return;
-
-  // hourly update of town loyalty
-  HandleTownLoyalty();
 
   // hourly update of team assignments
   UpdateAssignments();

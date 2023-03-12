@@ -429,13 +429,7 @@ int32_t GetAvailableWorkForceForMineForPlayer(int8_t bMineIndex) {
   Assert(GetTownSectorSize(bTownId) != 0);
 
   // get workforce size (is 0-100 based on local town's loyalty)
-  iWorkForceSize = gTownLoyalty[bTownId].ubRating;
-
-  /*
-          // adjust for monster infestation
-          iWorkForceSize *= gubMonsterMineInfestation[ gMineStatus[ bMineIndex ].bMonsters ];
-          iWorkForceSize /= 100;
-  */
+  iWorkForceSize = GetTownLoyaltyRating(bTownId);
 
   // now adjust for town size.. the number of sectors you control
   iWorkForceSize *= GetTownSectorsUnderControl(bTownId);
@@ -465,7 +459,7 @@ int32_t GetAvailableWorkForceForMineForEnemy(int8_t bMineIndex) {
   }
 
   // get workforce size (is 0-100 based on REVERSE of local town's loyalty)
-  iWorkForceSize = 100 - gTownLoyalty[bTownId].ubRating;
+  iWorkForceSize = 100 - GetTownLoyaltyRating(bTownId);
 
   /*
           // adjust for monster infestation
@@ -910,7 +904,7 @@ BOOLEAN IsHisMineDisloyal(uint8_t ubMinerProfileId) {
 
   ubMineIndex = GetHeadMinersMineIndex(ubMinerProfileId);
 
-  if (gTownLoyalty[gMineLocation[ubMineIndex].bAssociatedTown].ubRating <
+  if (GetTownLoyaltyRating(gMineLocation[ubMineIndex].bAssociatedTown) <
       LOW_MINE_LOYALTY_THRESHOLD) {
     // pretty disloyal
     return (TRUE);

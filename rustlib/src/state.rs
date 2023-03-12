@@ -12,6 +12,7 @@ pub struct State {
     pub sam_sites: sam_sites::State,
     pub sectors: [[sector::State; 18]; 18],
     pub town_map: towns::TownMap,
+    pub towns: towns::State,
     pub militia: militia::State,
     pub ui: ui::State,
     pub civ_groups: civ_groups::State,
@@ -29,6 +30,7 @@ impl State {
             sam_sites: sam_sites::State::new(),
             sectors: [[sector::State::new(); 18]; 18],
             town_map: Default::default(),
+            towns: Default::default(),
             militia: Default::default(),
             ui: Default::default(),
             civ_groups: Default::default(),
@@ -84,6 +86,39 @@ impl State {
                 }
             }
         }
+    }
+
+    pub fn inc_town_loyalty(&mut self, town: towns::Town, increase: u32) {
+        let loyalty = &mut self.towns.loyalty[town as usize];
+        let old_rating = loyalty.rating;
+        let rebels_hostility = self.civ_groups.get_hostility(civ_groups::Group::Rebel);
+        loyalty.inc_loyalty(town, increase, rebels_hostility);
+        if old_rating != loyalty.rating {
+            self.ui.map_panel_dirty = true;
+        }
+    }
+
+    pub fn dec_town_loyalty(&mut self, town: towns::Town, decrease: u32) {
+        let loyalty = &mut self.towns.loyalty[town as usize];
+        let old_rating = loyalty.rating;
+        let rebels_hostility = self.civ_groups.get_hostility(civ_groups::Group::Rebel);
+        loyalty.dec_loyalty(town, decrease, rebels_hostility);
+        if old_rating != loyalty.rating {
+            self.ui.map_panel_dirty = true;
+        }
+    }
+
+    pub fn start_town_loyalty_first_time(
+        &mut self,
+        town: towns::Town,
+        fact_miguel_read_letter: bool,
+        fact_rebels_hate_player: bool,
+    ) {
+        self.towns.loyalty[town as usize].start_loyalty_first_time(
+            town,
+            fact_miguel_read_letter,
+            fact_rebels_hate_player,
+        )
     }
 }
 

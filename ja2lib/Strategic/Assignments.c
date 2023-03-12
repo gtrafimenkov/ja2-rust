@@ -992,7 +992,7 @@ BOOLEAN CanCharacterTrainMilitia(struct SOLDIERTYPE *pSoldier) {
 
 BOOLEAN DoesTownHaveRatingToTrainMilitia(TownID bTownId) {
   // min loyalty rating?
-  if ((gTownLoyalty[bTownId].ubRating < MIN_RATING_TO_TRAIN_TOWN)) {
+  if ((GetTownLoyaltyRating(bTownId) < MIN_RATING_TO_TRAIN_TOWN)) {
     // nope
     return (FALSE);
   }

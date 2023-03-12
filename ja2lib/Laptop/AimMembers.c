@@ -33,7 +33,6 @@
 #include "Strategic/StrategicMap.h"
 #include "Strategic/StrategicMercHandler.h"
 #include "Strategic/StrategicStatus.h"
-#include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/DialogueControl.h"
 #include "Tactical/Faces.h"
 #include "Tactical/InterfaceItems.h"

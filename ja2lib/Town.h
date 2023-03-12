@@ -56,10 +56,4 @@ typedef enum TownID TownID;
 // Loyalty penalty for being inactive, per day after the third
 #define LOYALTY_PENALTY_INACTIVE (10 * GAIN_PTS_PER_LOYALTY_PT)
 
-// increment the town loyalty rating (hundredths!)
-void IncrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyIncrease);
-
-// decrement the town loyalty rating (hundredths!)
-void DecrementTownLoyalty(TownID bTownId, uint32_t uiLoyaltyDecrease);
-
 #endif
