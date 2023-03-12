@@ -326,11 +326,11 @@ void AddTextToTownBox(void) {
   }
 
   // the concept of town loyalty is only meaningful in towns where loyalty is tracked
-  if (gTownLoyalty[ubTownId].fStarted && gfTownUsesLoyalty[ubTownId]) {
+  if (IsTownLoyaltyStarted(ubTownId) && DoesTownUseLoyalty(ubTownId)) {
     // town loyalty
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[5]);
     AddMonoString(&hStringHandle, wString);
-    swprintf(wString, ARR_SIZE(wString), L"%d%%%%", gTownLoyalty[ubTownId].ubRating);
+    swprintf(wString, ARR_SIZE(wString), L"%d%%%%", GetTownLoyaltyRating(ubTownId));
     AddSecondColumnMonoString(&hStringHandle, wString);
   }
 
@@ -426,12 +426,12 @@ void AddTextToMineBox(void) {
     AddSecondColumnMonoString(&hStringHandle, wString);
 
     ubTown = gMineLocation[ubMineIndex].bAssociatedTown;
-    if (gTownLoyalty[ubTown].fStarted && gfTownUsesLoyalty[ubTown]) {
+    if (IsTownLoyaltyStarted(ubTown) && DoesTownUseLoyalty(ubTown)) {
       // town loyalty percentage
       swprintf(wString, ARR_SIZE(wString), L"%s:", pwMineStrings[13]);
       AddMonoString(&hStringHandle, wString);
       swprintf(wString, ARR_SIZE(wString), L"%d%%%%",
-               gTownLoyalty[gMineLocation[ubMineIndex].bAssociatedTown].ubRating);
+               GetTownLoyaltyRating(gMineLocation[ubMineIndex].bAssociatedTown));
       AddSecondColumnMonoString(&hStringHandle, wString);
     }
 

@@ -83,7 +83,7 @@ void BobbyRayPurchaseEventCallback(UINT8 ubOrderID) {
     SetFactTrue(FACT_LAST_SHIPMENT_WENT_TO_WRONG_AIRPORT);
     usStandardMapPos = LOST_SHIPMENT_GRIDNO;
     SetFactFalse(FACT_NEXT_PACKAGE_CAN_BE_DELAYED);
-  } else if ((gTownLoyalty[DRASSEN].ubRating < 20) || IsSectorEnemyControlled(13, MAP_ROW_B)) {
+  } else if ((GetTownLoyaltyRating(DRASSEN) < 20) || IsSectorEnemyControlled(13, MAP_ROW_B)) {
     // loss of the whole shipment
     gpNewBobbyrShipments[ubOrderID].fActive = FALSE;
     SetFactTrue(FACT_AGENTS_PREVENTED_SHIPMENT);

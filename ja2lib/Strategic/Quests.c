@@ -503,8 +503,8 @@ BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
   UINT8 ubTown;
 
   ubTown = GetTownIdForSector(sSectorX, sSectorY);
-  if ((ubTown != BLANK_SECTOR) && gTownLoyalty[ubTown].fStarted && gfTownUsesLoyalty[ubTown]) {
-    return (gTownLoyalty[ubTown].ubRating >= MIN_RATING_TO_TRAIN_TOWN);
+  if ((ubTown != BLANK_SECTOR) && IsTownLoyaltyStarted(ubTown) && DoesTownUseLoyalty(ubTown)) {
+    return (GetTownLoyaltyRating(ubTown) >= MIN_RATING_TO_TRAIN_TOWN);
   } else {
     return (FALSE);
   }
@@ -804,9 +804,9 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
 
     case FACT_LOYALTY_OKAY:
       bTown = gMercProfiles[ubProfileID].bTown;
-      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
-        gubFact[usFact] = ((gTownLoyalty[bTown].ubRating >= LOYALTY_LOW_THRESHOLD) &&
-                           (gTownLoyalty[bTown].ubRating < LOYALTY_OK_THRESHOLD));
+      if ((bTown != BLANK_SECTOR) && IsTownLoyaltyStarted(bTown) && DoesTownUseLoyalty(bTown)) {
+        gubFact[usFact] = ((GetTownLoyaltyRating(bTown) >= LOYALTY_LOW_THRESHOLD) &&
+                           (GetTownLoyaltyRating(bTown) < LOYALTY_OK_THRESHOLD));
       } else {
         gubFact[usFact] = FALSE;
       }
@@ -814,7 +814,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
 
     case FACT_LOYALTY_LOW:
       bTown = gMercProfiles[ubProfileID].bTown;
-      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
+      if ((bTown != BLANK_SECTOR) && IsTownLoyaltyStarted(bTown) && DoesTownUseLoyalty(bTown)) {
         // if Skyrider, ignore low loyalty until he has monologues, and wait at least a day since
         // the latest monologue to avoid a hot/cold attitude
         if ((ubProfileID == SKYRIDER) &&
@@ -822,7 +822,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
              ((GetWorldTotalMin() - guiTimeOfLastSkyriderMonologue) < (24 * 60)))) {
           gubFact[usFact] = FALSE;
         } else {
-          gubFact[usFact] = (gTownLoyalty[bTown].ubRating < LOYALTY_LOW_THRESHOLD);
+          gubFact[usFact] = (GetTownLoyaltyRating(bTown) < LOYALTY_LOW_THRESHOLD);
         }
       } else {
         gubFact[usFact] = FALSE;
@@ -831,9 +831,9 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
 
     case FACT_LOYALTY_HIGH:
       bTown = gMercProfiles[ubProfileID].bTown;
-      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
+      if ((bTown != BLANK_SECTOR) && IsTownLoyaltyStarted(bTown) && DoesTownUseLoyalty(bTown)) {
         gubFact[usFact] =
-            (gTownLoyalty[gMercProfiles[ubProfileID].bTown].ubRating >= LOYALTY_HIGH_THRESHOLD);
+            (GetTownLoyaltyRating(gMercProfiles[ubProfileID].bTown) >= LOYALTY_HIGH_THRESHOLD);
       } else {
         gubFact[usFact] = FALSE;
       }

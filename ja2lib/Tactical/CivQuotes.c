@@ -487,15 +487,15 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
   }
 
   // if in a town
-  if ((bTownId != BLANK_SECTOR) && (gbWorldSectorZ == 0) && gfTownUsesLoyalty[bTownId]) {
+  if ((bTownId != BLANK_SECTOR) && (gbWorldSectorZ == 0) && DoesTownUseLoyalty(bTownId)) {
     // Check loyalty special quotes.....
     // EXTREMELY LOW TOWN LOYALTY...
-    if (gTownLoyalty[bTownId].ubRating < EXTREAMLY_LOW_TOWN_LOYALTY) {
+    if (GetTownLoyaltyRating(bTownId) < EXTREAMLY_LOW_TOWN_LOYALTY) {
       bCivLowLoyalty = TRUE;
     }
 
     // HIGH TOWN LOYALTY...
-    if (gTownLoyalty[bTownId].ubRating >= HIGH_TOWN_LOYALTY) {
+    if (GetTownLoyaltyRating(bTownId) >= HIGH_TOWN_LOYALTY) {
       bCivHighLoyalty = TRUE;
     }
   }

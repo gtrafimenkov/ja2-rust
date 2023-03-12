@@ -12,7 +12,6 @@
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"
-#include "Strategic/StrategicTownLoyalty.h"
 #include "Tactical/ActionItems.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/ArmsDealerInit.h"
@@ -1420,27 +1419,6 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
                 // continue, to try and place ay others...
                 continue;
               }
-              /*
-              // handle theft.. will return true if theft has failed ( if soldier was caught )
-              if( pSoldier->bTeam == OUR_TEAM )
-              {
-                      // check to see if object was owned by another
-                      if( Object.fFlags & OBJECT_OWNED_BY_CIVILIAN )
-                      {
-                              // owned by a civilian
-                              if( HandleLoyaltyAdjustmentForRobbery( pSoldier ) == TRUE )
-                              {
-                                      // implememnt actual tactical reaction for theft..shoot
-              robber, yell out, etc
-                              }
-
-                              // reset who owns object
-                              Object.fFlags &= ~( OBJECT_OWNED_BY_CIVILIAN );
-                      }
-              }
-              */
-
-              // pItemPoolToDelete = pItemPool;
               iItemIndexToDelete = pItemPool->iItemIndex;
               pItemPool = pItemPool->pNext;
               RemoveItemFromPool(sGridNo, iItemIndexToDelete, pSoldier->bLevel);
@@ -1483,27 +1461,6 @@ void SoldierGetItemFromWorld(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT
           DoMessageBox(MSG_BOX_BASIC_STYLE, TacticalStr[ACTIVATE_SWITCH_PROMPT], GAME_SCREEN,
                        (UINT8)MSG_BOX_FLAG_YESNO, SwitchMessageBoxCallBack, NULL);
         } else {
-          /*
-                                                  // handle theft.. will return true if theft has
-             failed ( if soldier was caught ) if( pSoldier->bTeam == OUR_TEAM )
-                                                  {
-                                                          // check to see if object was owned by
-             another if( Object.fFlags & OBJECT_OWNED_BY_CIVILIAN )
-                                                          {
-                                                                  // owned by a civilian
-                                                                  if(
-             HandleLoyaltyAdjustmentForRobbery( pSoldier ) == TRUE )
-                                                                  {
-                                                                          // implememnt actual
-             tactical reaction for theft..shoot robber, yell out, etc
-                                                                  }
-
-                                                                  // reset who owns object
-                                                                  Object.fFlags &= ~(
-             OBJECT_OWNED_BY_CIVILIAN );
-                                                          }
-                                                  }
-          */
           RemoveItemFromPool(sGridNo, iItemIndex, pSoldier->bLevel);
 
           if (!AutoPlaceObject(pSoldier, &(gWorldItems[iItemIndex].o), TRUE)) {
