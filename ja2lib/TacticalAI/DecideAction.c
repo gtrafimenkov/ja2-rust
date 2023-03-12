@@ -29,6 +29,7 @@
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 extern BOOLEAN InternalIsValidStance(struct SOLDIERTYPE *pSoldier, int8_t bDirection,
                                      int8_t bNewStance);
@@ -1520,11 +1521,10 @@ int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
 #endif
   BOOLEAN fClimb;
   BOOLEAN fCivilian =
-      (PTR_CIVILIAN &&
-       (pSoldier->ubCivilianGroup == NON_CIV_GROUP ||
-        (pSoldier->bNeutral &&
-         gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] == CIV_GROUP_NEUTRAL) ||
-        (pSoldier->ubBodyType >= FATCIV && pSoldier->ubBodyType <= CRIPPLECIV)));
+      (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP ||
+                        (pSoldier->bNeutral &&
+                         GetCivGroupHostility(pSoldier->ubCivilianGroup) == CIV_GROUP_NEUTRAL) ||
+                        (pSoldier->ubBodyType >= FATCIV && pSoldier->ubBodyType <= CRIPPLECIV)));
 
   // if we have absolutely no action points, we can't do a thing under RED!
   if (!pSoldier->bActionPoints) {

@@ -3,6 +3,12 @@
 
 #include "BuildDefines.h"
 #include "SGP/Types.h"
+#include "rust_civ_groups.h"
+
+// NOTE:  The editor uses these enumerations, so please update the text as well if you modify or
+//			 add new groups.  Try to abbreviate the team name as much as possible.  The
+// text is in 			 EditorMercs.c
+extern wchar_t gszCivGroupNames[NUM_CIV_GROUPS][20];
 
 // Merc editing modes.  These are used to determine which buttons to show and hide.
 enum {

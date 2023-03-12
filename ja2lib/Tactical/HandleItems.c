@@ -64,6 +64,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "rust_civ_groups.h"
 
 #define NUM_ITEMS_LISTED 8
 #define NUM_ITEM_FLASH_SLOTS 50

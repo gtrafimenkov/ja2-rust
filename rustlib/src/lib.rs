@@ -1,3 +1,5 @@
+pub mod civ_groups;
+pub mod exp_civ_groups;
 pub mod exp_militia;
 pub mod exp_platform;
 pub mod exp_sam_sites;
