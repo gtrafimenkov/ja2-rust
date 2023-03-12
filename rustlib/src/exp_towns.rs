@@ -142,7 +142,7 @@ pub extern "C" fn GetRawTownLoyalty(town: TownID) -> SAVE_LOAD_TOWN_LOYALTY {
             unused2: [0; 19],
         },
         _ => {
-            let internal = unsafe { &STATE.towns.loyalty[town as usize] };
+            let internal = unsafe { STATE.towns.get_loyalty(town.to_internal()) };
             SAVE_LOAD_TOWN_LOYALTY {
                 rating: internal.rating,
                 change: internal.change,
@@ -160,7 +160,7 @@ pub extern "C" fn SetRawTownLoyalty(town: TownID, data: &SAVE_LOAD_TOWN_LOYALTY)
     match town {
         TownID::BLANK_SECTOR => {}
         _ => {
-            let internal = unsafe { &mut STATE.towns.loyalty[town as usize] };
+            let internal = unsafe { STATE.towns.get_mut_loyalty(town.to_internal()) };
             internal.change = data.change;
             internal.rating = data.rating;
             internal.started = data.started != 0;
@@ -171,22 +171,22 @@ pub extern "C" fn SetRawTownLoyalty(town: TownID, data: &SAVE_LOAD_TOWN_LOYALTY)
 
 #[no_mangle]
 pub extern "C" fn GetTownLoyaltyRating(town: TownID) -> u8 {
-    unsafe { STATE.towns.loyalty[town as usize].rating }
+    unsafe { STATE.towns.get_loyalty(town.to_internal()).rating }
 }
 
 #[no_mangle]
 pub extern "C" fn IsTownLoyaltyStarted(town: TownID) -> bool {
-    unsafe { STATE.towns.loyalty[town as usize].started }
+    unsafe { STATE.towns.get_loyalty(town.to_internal()).started }
 }
 
 #[no_mangle]
 pub extern "C" fn IsTownLiberated(town: TownID) -> bool {
-    unsafe { STATE.towns.loyalty[town as usize].liberated }
+    unsafe { STATE.towns.get_loyalty(town.to_internal()).liberated }
 }
 
 #[no_mangle]
 pub extern "C" fn SetTownAsLiberated(town: TownID) {
-    unsafe { STATE.towns.loyalty[town as usize].liberated = true }
+    unsafe { STATE.towns.get_mut_loyalty(town.to_internal()).liberated = true }
 }
 
 #[no_mangle]

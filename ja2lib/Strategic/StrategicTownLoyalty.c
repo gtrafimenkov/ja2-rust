@@ -572,7 +572,7 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
   struct SAVE_LOAD_TOWN_LOYALTY townLoyalty[NUM_TOWNS];
-  for (int i = 0; i < NUM_TOWNS; i++) {
+  for (int i = 1; i < NUM_TOWNS; i++) {
     townLoyalty[i] = GetRawTownLoyalty(i);
   }
 
@@ -595,7 +595,7 @@ BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile) {
     return (FALSE);
   }
 
-  for (int i = 0; i < NUM_TOWNS; i++) {
+  for (int i = 1; i < NUM_TOWNS; i++) {
     SetRawTownLoyalty(i, &townLoyalty[i]);
   }
 

@@ -337,6 +337,14 @@ impl State {
         }
     }
 
+    pub fn get_loyalty(&self, town: Town) -> &Loyalty {
+        &self.loyalty[town as usize]
+    }
+
+    pub fn get_mut_loyalty(&mut self, town: Town) -> &mut Loyalty {
+        &mut self.loyalty[town as usize]
+    }
+
     pub fn init_loyalty(&mut self) {
         for mut item in self.loyalty {
             item.rating = 0;
