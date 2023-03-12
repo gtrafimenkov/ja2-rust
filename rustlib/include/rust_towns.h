@@ -83,11 +83,13 @@ void InitTownLoyalty(void);
 
 void SetTownLoyalty(enum TownID town, uint8_t rating);
 
-void UpdateTownLoyaltyRating(enum TownID town);
-
 void IncrementTownLoyalty(enum TownID town, uint32_t increase);
 
 void DecrementTownLoyalty(enum TownID town, uint32_t decrease);
+
+void StartTownLoyaltyFirstTime(enum TownID town,
+                               bool fact_miguel_read_letter,
+                               bool fact_rebels_hate_player);
 
 #ifdef __cplusplus
 } // extern "C"

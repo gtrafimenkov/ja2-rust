@@ -200,11 +200,6 @@ pub extern "C" fn SetTownLoyalty(town: TownID, rating: u8) {
 }
 
 #[no_mangle]
-pub extern "C" fn UpdateTownLoyaltyRating(town: TownID) {
-    unsafe { STATE.update_town_rating(town.to_internal()) }
-}
-
-#[no_mangle]
 pub extern "C" fn IncrementTownLoyalty(town: TownID, increase: u32) {
     unsafe { STATE.inc_town_loyalty(town.to_internal(), increase) }
 }
@@ -212,6 +207,21 @@ pub extern "C" fn IncrementTownLoyalty(town: TownID, increase: u32) {
 #[no_mangle]
 pub extern "C" fn DecrementTownLoyalty(town: TownID, decrease: u32) {
     unsafe { STATE.dec_town_loyalty(town.to_internal(), decrease) }
+}
+
+#[no_mangle]
+pub extern "C" fn StartTownLoyaltyFirstTime(
+    town: TownID,
+    fact_miguel_read_letter: bool,
+    fact_rebels_hate_player: bool,
+) {
+    unsafe {
+        STATE.start_town_loyalty_first_time(
+            town.to_internal(),
+            fact_miguel_read_letter,
+            fact_rebels_hate_player,
+        )
+    }
 }
 
 #[cfg(test)]

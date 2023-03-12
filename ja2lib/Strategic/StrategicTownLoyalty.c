@@ -112,9 +112,6 @@ extern BOOLEAN fSectorsWithSoldiers[MAP_WORLD_X * MAP_WORLD_X][4];
 
 extern STR16 pTownNames[];
 
-// update the loyalty rating of the passed town id
-void UpdateTownLoyaltyRating(TownID bTownId);
-
 // update town loyalty based on number of friendlies in this town
 void UpdateTownLoyaltyBasedOnFriendliesInTown(TownID bTownId);
 
@@ -123,42 +120,10 @@ void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 
 extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
 
-// TODO: rustlib
-// void StartTownLoyaltyIfFirstTime(TownID bTownId) {
-//   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
-
-//   // if loyalty tracking hasn't yet been started for this town, and the town does use loyalty
-//   if (!gTownLoyalty[bTownId].fStarted && DoesTownUseLoyalty(bTownId)) {
-//     // set starting town loyalty now, equally to that town's current rebel sentiment - not all
-//     towns
-//     // begin equally loyal
-//     gTownLoyalty[bTownId].ubRating = gubTownRebelSentiment[bTownId];
-
-//     // if player hasn't made contact with Miguel yet, or the rebels hate the player
-//     if (!CheckFact(FACT_MIGUEL_READ_LETTER, 0) || CheckFact(FACT_REBELS_HATE_PLAYER, 0)) {
-//       // if town is Omerta
-//       if (bTownId == OMERTA) {
-//         // start loyalty there at 0, since rebels distrust the player until Miguel receives the
-//         // letter
-//         gTownLoyalty[bTownId].ubRating = 0;
-//       } else {
-//         // starting loyalty is halved - locals not sure what to make of the player's presence
-//         gTownLoyalty[bTownId].ubRating /= 2;
-//       }
-//     }
-
-//     gTownLoyalty[bTownId].sChange = 0;
-
-//     // remember we've started
-//     gTownLoyalty[bTownId].fStarted = TRUE;
-//   }
-// }
-
-// TODO rustlib: implement IncrementTownLoyalty in Rust
-// - move gTownLoyalty
-// - move gubTownRebelSentiment
-// - move UpdateTownLoyaltyRating
-//   - [x] move gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP]
+void StartTownLoyaltyIfFirstTime(TownID bTownId) {
+  StartTownLoyaltyFirstTime(bTownId, CheckFact(FACT_MIGUEL_READ_LETTER, 0),
+                            CheckFact(FACT_REBELS_HATE_PLAYER, 0));
+}
 
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) {
   // handle the impact on loyalty of the murder of a civilian

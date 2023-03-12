@@ -120,6 +120,19 @@ impl State {
             self.ui.map_panel_dirty = true;
         }
     }
+
+    pub fn start_town_loyalty_first_time(
+        &mut self,
+        town: towns::Town,
+        fact_miguel_read_letter: bool,
+        fact_rebels_hate_player: bool,
+    ) {
+        self.towns.loyalty[town as usize].start_loyalty_first_time(
+            town,
+            fact_miguel_read_letter,
+            fact_rebels_hate_player,
+        )
+    }
 }
 
 #[cfg(test)]

@@ -287,6 +287,37 @@ impl Loyalty {
             remaining -= this_decrement as u32;
         }
     }
+
+    pub fn start_loyalty_first_time(
+        &mut self,
+        town: Town,
+        fact_miguel_read_letter: bool,
+        fact_rebels_hate_player: bool,
+    ) {
+        if self.started || !town.does_use_loyalty() {
+            return;
+        }
+
+        self.rating = REBEL_SENTIMENT[town as usize];
+
+        // if player hasn't made contact with Miguel yet, or the rebels hate the player
+        if !fact_miguel_read_letter || fact_rebels_hate_player {
+            // if town is Omerta
+            if town == Town::Omerta {
+                // start loyalty there at 0, since rebels distrust the player until Miguel receives the
+                // letter
+                self.rating = 0;
+            } else {
+                // starting loyalty is halved - locals not sure what to make of the player's presence
+                self.rating /= 2;
+            }
+        }
+
+        self.change = 0;
+
+        // remember we've started
+        self.started = true;
+    }
 }
 
 pub struct State {
