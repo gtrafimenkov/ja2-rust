@@ -1677,7 +1677,7 @@ void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap() {
 }
 
 BOOLEAN PlayerSectorDefended(UINT8 ubSectorID) {
-  if (CountAllMilitiaInSectorID8(ubSectorID) > 0) {
+  if (CountMilitiaInSector(SectorID8_X(ubSectorID), SectorID8_Y(ubSectorID)) > 0) {
     // militia in sector
     return TRUE;
   }

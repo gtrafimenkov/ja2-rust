@@ -8,7 +8,6 @@ struct path;
 
 extern BOOLEAN fCharacterInfoPanelDirty;
 extern BOOLEAN fTeamPanelDirty;
-extern BOOLEAN fMapPanelDirty;
 
 extern BOOLEAN fMapInventoryItem;
 extern BOOLEAN gfInConfirmMapMoveMode;

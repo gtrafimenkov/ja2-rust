@@ -3737,7 +3737,7 @@ void DeleteItemDescriptionBox() {
   }
   if (guiCurrentItemDescriptionScreen == MAP_SCREEN) {
     fCharacterInfoPanelDirty = TRUE;
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fTeamPanelDirty = TRUE;
     fMapScreenBottomDirty = TRUE;
   }

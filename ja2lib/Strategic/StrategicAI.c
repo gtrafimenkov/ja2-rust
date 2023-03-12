@@ -1450,8 +1450,6 @@ UINT8 RedirectEnemyGroupsMovingThroughSector(UINT8 ubSectorX, UINT8 ubSectorY);
 // increase the numbers so she would send larger attack forces.  This is questionable.
 void EvolveQueenPriorityPhase(BOOLEAN fForceChange);
 
-extern INT16 sWorldSectorLocationOfFirstBattle;
-
 void ReassignAIGroup(struct GROUP **pGroup);
 void TransferGroupToPool(struct GROUP **pGroup);
 void SendGroupToPool(struct GROUP **pGroup);
@@ -1544,14 +1542,11 @@ INT32 ReinforcementsAvailable(INT32 iGarrisonID) {
   return iReinforcementsAvailable;
 }
 
-//
 BOOLEAN PlayerForceTooStrong(UINT8 ubSectorID, UINT16 usOffensePoints, UINT16 *pusDefencePoints) {
-  UINT8 ubSectorX, ubSectorY;
+  u8 ubSectorX = SectorID8_X(ubSectorID);
+  u8 ubSectorY = SectorID8_Y(ubSectorID);
 
-  ubSectorX = SectorID8_X(ubSectorID);
-  ubSectorY = SectorID8_Y(ubSectorID);
-
-  struct MilitiaCount milCount = GetMilitiaInSectorID8(ubSectorID);
+  struct MilitiaCount milCount = GetMilitiaInSector(ubSectorX, ubSectorY);
   *pusDefencePoints = milCount.green * 1 + milCount.regular * 2 + milCount.elite * 3 +
                       PlayerMercsInSector(ubSectorX, ubSectorY, 0) * 5;
   if (*pusDefencePoints > usOffensePoints) {
@@ -2929,8 +2924,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                (UINT8)(pEnemyGroup->ubSectorY - 1), TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector(pEnemyGroup->ubSectorX,
-                                         (UINT8)(pEnemyGroup->ubSectorY - 1)) &&
+      } else if (CountMilitiaInSector(pEnemyGroup->ubSectorX,
+                                      (UINT8)(pEnemyGroup->ubSectorY - 1)) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX, pEnemyGroup->ubSectorY - 1), pEnemyGroup);
@@ -2945,8 +2940,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                pEnemyGroup->ubSectorY, TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX - 1),
-                                         pEnemyGroup->ubSectorY) &&
+      } else if (CountMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX - 1),
+                                      pEnemyGroup->ubSectorY) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX - 1, pEnemyGroup->ubSectorY), pEnemyGroup);
@@ -2961,8 +2956,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                (UINT8)(pEnemyGroup->ubSectorY + 1), TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector(pEnemyGroup->ubSectorX,
-                                         (UINT8)(pEnemyGroup->ubSectorY + 1)) &&
+      } else if (CountMilitiaInSector(pEnemyGroup->ubSectorX,
+                                      (UINT8)(pEnemyGroup->ubSectorY + 1)) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX, pEnemyGroup->ubSectorY + 1), pEnemyGroup);
@@ -2977,8 +2972,8 @@ BOOLEAN StrategicAILookForAdjacentGroups(struct GROUP *pGroup) {
                                                pEnemyGroup->ubSectorY, TRUE);
       if (pPlayerGroup && AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandlePlayerGroupNoticedByPatrolGroup(pPlayerGroup, pEnemyGroup);
-      } else if (CountAllMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX + 1),
-                                         pEnemyGroup->ubSectorY) &&
+      } else if (CountMilitiaInSector((UINT8)(pEnemyGroup->ubSectorX + 1),
+                                      pEnemyGroup->ubSectorY) &&
                  AttemptToNoticeAdjacentGroupSucceeds()) {
         return HandleMilitiaNoticedByPatrolGroup(
             (UINT8)GetSectorID8(pEnemyGroup->ubSectorX + 1, pEnemyGroup->ubSectorY), pEnemyGroup);
@@ -4246,6 +4241,8 @@ void EvolveQueenPriorityPhase(BOOLEAN fForceChange) {
   }
 }
 
+extern struct SectorPoint locationOfFirstBattle;
+
 void ExecuteStrategicAIAction(UINT16 usActionCode, u8 sSectorX, u8 sSectorY) {
   struct GROUP *pGroup, *pPendingGroup = NULL;
   SECTORINFO *pSector;
@@ -4261,23 +4258,6 @@ void ExecuteStrategicAIAction(UINT16 usActionCode, u8 sSectorX, u8 sSectorY) {
       break;
 
     case STRATEGIC_AI_ACTION_KINGPIN_DEAD:
-      // Immediate send a small garrison to C5 (to discourage access to Tony the dealer)
-      /*
-      for( i = 0; i < giGarrisonArraySize; i++ )
-      {
-              if( gGarrisonGroup[ i ].ubComposition == SANMONA_SMALL )
-              {
-                      //Setup the composition so from now on the queen will consider this an
-      important sector
-                      //to hold.
-                      gArmyComp[ gGarrisonGroup[ i ].ubComposition ].bPriority = 65;
-                      gArmyComp[ gGarrisonGroup[ i ].ubComposition ].bTroopPercentage = 100;
-                      gArmyComp[ gGarrisonGroup[ i ].ubComposition ].bDesiredPopulation = 5;
-                      RequestHighPriorityGarrisonReinforcements( i, (UINT8)(2 + Random( 4 )) );
-      //send 2-5 soldiers now. break;
-              }
-      }
-      */
       break;
     case NPC_ACTION_SEND_SOLDIERS_TO_DRASSEN:
       // Send 6, 9, or 12 troops (based on difficulty) one of the Drassen sectors.  If nobody is
@@ -4310,7 +4290,7 @@ void ExecuteStrategicAIAction(UINT16 usActionCode, u8 sSectorX, u8 sSectorY) {
 
       // Send 4, 8, or 12 troops (based on difficulty) to the location of the first battle.  If
       // nobody is there when they arrive, those troops will get reassigned.
-      ubSectorID = (UINT8)SectorID16To8(sWorldSectorLocationOfFirstBattle);
+      ubSectorID = GetSectorID8(locationOfFirstBattle.x, locationOfFirstBattle.y);
       pSector = &SectorInfo[ubSectorID];
       ubNumSoldiers = (UINT8)(gGameOptions.ubDifficultyLevel * 4);
       pGroup = CreateNewEnemyGroupDepartingFromSector(SEC_P3, 0, ubNumSoldiers, 0);
@@ -4321,13 +4301,13 @@ void ExecuteStrategicAIAction(UINT16 usActionCode, u8 sSectorX, u8 sSectorY) {
       // following checks succeed, the enemies will be sent to attack and reinforce that sector.
       // Otherwise, the enemies will simply check it out, then leave.
       if (pSector->ubGarrisonID != NO_GARRISON) {  // sector has a garrison
-        if (!NumEnemiesInSector(SectorID8_X(ubSectorID),
-                                SectorID8_Y(ubSectorID))) {  // no enemies are here
-          if (gArmyComp[!gGarrisonGroup[pSector->ubGarrisonID].ubComposition]
-                  .bPriority) {  // the garrison is important
-            if (!gGarrisonGroup[pSector->ubGarrisonID]
-                     .ubPendingGroupID) {  // the garrison doesn't have reinforcements already on
-                                           // route.
+        if (!NumEnemiesInSector(SectorID8_X(ubSectorID), SectorID8_Y(ubSectorID))) {
+          // no enemies are here
+          if (gArmyComp[!gGarrisonGroup[pSector->ubGarrisonID].ubComposition].bPriority) {
+            // the garrison is important
+            if (!gGarrisonGroup[pSector->ubGarrisonID].ubPendingGroupID) {
+              // the garrison doesn't have reinforcements already on
+              // route.
               gGarrisonGroup[pSector->ubGarrisonID].ubPendingGroupID = pGroup->ubGroupID;
               MoveSAIGroupToSector(&pGroup, ubSectorID, STAGE, REINFORCEMENTS);
               break;
@@ -4852,7 +4832,7 @@ BOOLEAN GarrisonCanProvideMinimumReinforcements(INT32 iGarrisonID) {
     ubSectorX = SectorID8_X(gGarrisonGroup[iGarrisonID].ubSectorID);
     ubSectorY = SectorID8_Y(gGarrisonGroup[iGarrisonID].ubSectorID);
     if (PlayerMercsInSector(ubSectorX, ubSectorY, 0) ||
-        CountAllMilitiaInSector(ubSectorX, ubSectorY)) {
+        CountMilitiaInSector(ubSectorX, ubSectorY)) {
       return FALSE;
     }
     return TRUE;

@@ -127,7 +127,7 @@ BOOLEAN gfTownUsesLoyalty[NUM_TOWNS] = {
 };
 
 // location of first enocunter with enemy
-INT16 sWorldSectorLocationOfFirstBattle = 0;
+struct SectorPoint locationOfFirstBattle = {.x = 0, .y = 0};
 
 // number of items in currently loaded sector
 extern UINT32 guiNumWorldItems;
@@ -336,7 +336,7 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
 
   // check old aginst new, if diff, dirty map panel
   if (ubOldLoyaltyRating != gTownLoyalty[bTownId].ubRating) {
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 
   return;
@@ -1236,11 +1236,10 @@ void HandleLoyaltyChangeForNPCAction(UINT8 ubNPCProfileId) {
 
 // set the location of the first encounter with enemy
 void SetTheFirstBattleSector(INT16 sSectorValue) {
-  if (sWorldSectorLocationOfFirstBattle == 0) {
-    sWorldSectorLocationOfFirstBattle = sSectorValue;
+  if (locationOfFirstBattle.x == 0 && locationOfFirstBattle.y == 0) {
+    locationOfFirstBattle.x = SectorID16_X(sSectorValue);
+    locationOfFirstBattle.y = SectorID16_Y(sSectorValue);
   }
-
-  return;
 }
 
 // did first battle take place here
@@ -1248,8 +1247,7 @@ BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId) {
   INT8 bTownBattleId = 0;
 
   // get town id for sector
-  bTownBattleId = GetTownIdForSector(SectorID16_X(sWorldSectorLocationOfFirstBattle),
-                                     SectorID16_Y(sWorldSectorLocationOfFirstBattle));
+  bTownBattleId = GetTownIdForSector(locationOfFirstBattle.x, locationOfFirstBattle.y);
 
   return (bTownId == bTownBattleId);
 }
@@ -1301,7 +1299,7 @@ UINT32 EnemyStrength(void) {
 // which poses as a serious loyalty penalty.
 void HandleLoyaltyImplicationsOfMercRetreat(INT8 bRetreatCode, u8 sSectorX, u8 sSectorY,
                                             INT16 sSectorZ) {
-  if (CountAllMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
+  if (CountMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
     HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, sSectorX, sSectorY, (INT8)sSectorZ);
   }
 

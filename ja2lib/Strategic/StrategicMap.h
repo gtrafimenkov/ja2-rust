@@ -38,8 +38,6 @@ BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
 
-void InitializeMapStructure();
-
 // get short sector name without town name
 void GetShortSectorString(u8 sMapX, u8 sMapY, STR16 sString, size_t bufSize);
 

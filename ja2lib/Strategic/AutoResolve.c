@@ -430,7 +430,7 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
     RecalculateSectorWeight((UINT8)GetSectorID8(ubSectorX, ubSectorY));
 
     // dirty map panel
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 
   if (gpAR) {
@@ -2005,7 +2005,7 @@ void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
       if (fDeleteForGood && gpCivs[i].pSoldier->bLife < OKLIFE / 2) {
         AddDeadSoldierToUnLoadedSector(gpAR->ubSectorX, gpAR->ubSectorY, 0, gpCivs[i].pSoldier,
                                        RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT);
-        StrategicRemoveMilitiaFromSector(gpAR->ubSectorX, gpAR->ubSectorY, rank, 1);
+        RemoveMilitiaFromSector(gpAR->ubSectorX, gpAR->ubSectorY, rank, 1);
         HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_NATIVE_KILLED, gpAR->ubSectorX, gpAR->ubSectorY, 0);
       } else {
         if (fDeleteForGood && (gpCivs[i].pSoldier->ubMilitiaKills > 0) && (rank < ELITE_MILITIA)) {
@@ -2334,7 +2334,7 @@ void CalculateAutoResolveInfo() {
         gpAR->ubYMCreatures + gpAR->ubYFCreatures + gpAR->ubAMCreatures + gpAR->ubAFCreatures, 32);
   }
   gfTransferTacticalOppositionToAutoResolve = FALSE;
-  gpAR->ubCivs = CountAllMilitiaInSector(gpAR->ubSectorX, gpAR->ubSectorY);
+  gpAR->ubCivs = CountMilitiaInSector(gpAR->ubSectorX, gpAR->ubSectorY);
   gpAR->ubMercs = 0;
   pGroup = gpGroupList;
   while (pGroup) {

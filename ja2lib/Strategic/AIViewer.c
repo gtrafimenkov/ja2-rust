@@ -410,7 +410,6 @@ void RenderStationaryGroups() {
   struct VObject *hVObject;
   INT32 x, y, xp, yp;
   CHAR16 str[20];
-  INT32 iSector = 0;
   UINT8 ubIconColor;
   UINT8 ubGroupSize = 0;
 
@@ -425,8 +424,8 @@ void RenderStationaryGroups() {
     for (x = 0; x < 16; x++) {
       SetFontForeground(FONT_YELLOW);
       xp = VIEWER_LEFT + VIEWER_CELLW * x + 1;
-      SECTORINFO *pSector = &SectorInfo[iSector];
-      u8 allMilCount = CountAllMilitiaInSectorID8(iSector);
+      SECTORINFO *pSector = &SectorInfo[GetSectorID8(x + 1, y + 1)];
+      u8 allMilCount = CountMilitiaInSector(x + 1, y + 1);
 
       if (pSector->uiFlags & SF_MINING_SITE)
         BltVideoObject(FRAME_BUFFER, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY,
@@ -468,8 +467,6 @@ void RenderStationaryGroups() {
         swprintf(str, ARR_SIZE(str), L"%d", ubGroupSize);
         mprintf(xp + 2, yp + 2, str);
       }
-
-      iSector++;
     }
   }
 }

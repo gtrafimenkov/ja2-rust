@@ -597,7 +597,7 @@ void HandleShowingOfEnemiesWithMilitiaOn(void) {
   for (sX = 1; sX < (MAP_WORLD_X - 1); sX++) {
     for (sY = 1; sY < (MAP_WORLD_Y - 1); sY++) {
       HandleShowingOfEnemyForcesInSector(sX, sY, (INT8)iCurrentMapSectorZ,
-                                         CountAllMilitiaInSector(sX, sY));
+                                         CountMilitiaInSector(sX, sY));
     }
   }
 
@@ -1615,7 +1615,7 @@ void CancelPathForCharacter(struct SOLDIERTYPE *pCharacter) {
 
   CopyPathToCharactersSquadIfInOne(pCharacter);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fTeamPanelDirty = TRUE;
   fCharacterInfoPanelDirty = TRUE;  // to update ETA
 }
@@ -1644,7 +1644,7 @@ void CancelPathForVehicle(VEHICLETYPE *pVehicle, BOOLEAN fAlreadyReversed) {
   fPlotForHelicopter = FALSE;
 
   fTeamPanelDirty = TRUE;
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fCharacterInfoPanelDirty = TRUE;  // to update ETA
 }
 
@@ -1783,7 +1783,7 @@ void PlotPathForHelicopter(u8 sX, u8 sY) {
   pVehicleList[iHelicopterVehicleId].pMercPath =
       MoveToBeginningOfPathList(pVehicleList[iHelicopterVehicleId].pMercPath);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   return;
 }
@@ -3186,7 +3186,7 @@ void DisplayThePotentialPathForHelicopter(u8 sMapX, u8 sMapY) {
 
     // path was plotted and we moved, re draw map..to clean up mess
     if (fTempPathAlreadyDrawn) {
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     }
 
     fTempPathAlreadyDrawn = FALSE;
@@ -4290,7 +4290,7 @@ static BOOLEAN PickUpATownPersonFromSector(UINT8 ubType, u8 sX, u8 sY) {
   // reduce number in this sector
   SetMilitiaOfRankInSector(sX, sY, ubType, GetMilitiaOfRankInSector(sX, sY, ubType) - 1);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   return (TRUE);
 }
@@ -4301,7 +4301,7 @@ BOOLEAN DropAPersonInASector(UINT8 ubType, u8 sX, u8 sY) {
     return (FALSE);
   }
 
-  if (CountAllMilitiaInSector(sX, sY) >= MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
+  if (CountMilitiaInSector(sX, sY) >= MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
     return (FALSE);
   }
 
@@ -4338,7 +4338,7 @@ BOOLEAN DropAPersonInASector(UINT8 ubType, u8 sX, u8 sY) {
   // up the number in this sector of this type of militia
   IncMilitiaOfRankInSector(sX, sY, ubType, 1);
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   return (TRUE);
 }
@@ -4777,7 +4777,8 @@ void SetMilitiaMapButtonsText(void) {
   sGlobalMapSector = sBaseSectorValue + ((sSectorMilitiaMapSector % MILITIA_BOX_ROWS) +
                                          (sSectorMilitiaMapSector / MILITIA_BOX_ROWS) * (16));
 
-  struct MilitiaCount milCount = GetMilitiaInSectorID8(sGlobalMapSector);
+  struct MilitiaCount milCount =
+      GetMilitiaInSector(SectorID8_X(sGlobalMapSector), SectorID8_Y(sGlobalMapSector));
   iNumberOfGreens = milCount.green;
   iNumberOfRegulars = milCount.regular;
   iNumberOfElites = milCount.elite;
@@ -4942,7 +4943,7 @@ void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor(INT16 sTownValue) {
       if (SectorOursAndPeaceful(sX, sY, 0)) {
         iCount = 0;
         iNumberThatCanFitInSector = MAX_ALLOWABLE_MILITIA_PER_SECTOR;
-        iNumberThatCanFitInSector -= CountAllMilitiaInSector(sX, sY);
+        iNumberThatCanFitInSector -= CountMilitiaInSector(sX, sY);
 
         while ((iCount < iNumberThatCanFitInSector) &&
                ((sGreensOnCursor) || (sRegularsOnCursor) || (sElitesOnCursor))) {
@@ -5068,7 +5069,7 @@ void HandleEveningOutOfTroopsAmongstSectors(void) {
         SetMilitiaOfRankInSector(sX, sY, GREEN_MILITIA, iNumberOfGreens / iNumberUnderControl);
         SetMilitiaOfRankInSector(sX, sY, REGULAR_MILITIA, iNumberOfRegulars / iNumberUnderControl);
         SetMilitiaOfRankInSector(sX, sY, ELITE_MILITIA, iNumberOfElites / iNumberUnderControl);
-        sTotalSoFar = CountAllMilitiaInSector(sX, sY);
+        sTotalSoFar = CountMilitiaInSector(sX, sY);
 
         // add leftovers that weren't included in the div operation
         if ((iNumberLeftOverGreen) && (sTotalSoFar < MAX_ALLOWABLE_MILITIA_PER_SECTOR)) {
@@ -5157,7 +5158,7 @@ void DeleteMilitiaPanelBottomButton(void) {
   }
 
   // redraw the map
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 void MilitiaAutoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
@@ -5169,7 +5170,7 @@ void MilitiaAutoButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
       // distribute troops over all the sectors under control
       HandleEveningOutOfTroopsAmongstSectors();
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     }
   }
 
@@ -5185,7 +5186,7 @@ void MilitiaDoneButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 
       // reset fact we are in the box
       sSelectedMilitiaTown = 0;
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     }
   }
 
@@ -5324,7 +5325,8 @@ void CheckAndUpdateStatesOfSelectedMilitiaSectorButtons(void) {
   sGlobalMapSector = sBaseSectorValue + ((sSectorMilitiaMapSector % MILITIA_BOX_ROWS) +
                                          (sSectorMilitiaMapSector / MILITIA_BOX_ROWS) * (16));
 
-  struct MilitiaCount milCount = GetMilitiaInSectorID8(sGlobalMapSector);
+  struct MilitiaCount milCount =
+      GetMilitiaInSector(SectorID8_X(sGlobalMapSector), SectorID8_Y(sGlobalMapSector));
   iNumberOfGreens = milCount.green + sGreensOnCursor;
   iNumberOfRegulars = milCount.regular + sRegularsOnCursor;
   iNumberOfElites = milCount.elite + sElitesOnCursor;
@@ -5438,7 +5440,7 @@ void ClearAnySectorsFlashingNumberOfEnemies() {
   }
 
   // redraw map
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 UINT32 WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY) {
@@ -5750,7 +5752,7 @@ BOOLEAN CanMilitiaAutoDistribute(void) {
 
     if (!IsSectorEnemyControlled(sSectorX, sSectorY)) {
       // get number of each
-      iTotalTroopsInTown += CountAllMilitiaInSectorID8(sCurrentSectorValue);
+      iTotalTroopsInTown += CountMilitiaInSector(sSectorX, sSectorY);
     }
   }
 
