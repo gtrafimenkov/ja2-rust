@@ -177,6 +177,12 @@ impl Loyalty {
             liberated: false,
         }
     }
+
+    pub fn set_loyalty(&mut self, rating: u8) {
+        self.rating = rating;
+        self.change = 0;
+        self.started = true;
+    }
 }
 
 pub struct State {
@@ -202,6 +208,12 @@ impl State {
             item.change = 0;
             item.started = false;
             item.liberated = false;
+        }
+    }
+
+    pub fn set_town_loyalty(&mut self, town: Town, rating: u8) {
+        if town.does_use_loyalty() {
+            self.loyalty[town as usize].set_loyalty(rating)
         }
     }
 }

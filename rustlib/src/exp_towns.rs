@@ -194,6 +194,11 @@ pub extern "C" fn InitTownLoyalty() {
     unsafe { STATE.towns.init_loyalty() }
 }
 
+#[no_mangle]
+pub extern "C" fn SetTownLoyalty(town: TownID, rating: u8) {
+    unsafe { STATE.towns.set_town_loyalty(town.to_internal(), rating) }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

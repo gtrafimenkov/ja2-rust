@@ -81,6 +81,8 @@ void SetTownAsLiberated(enum TownID town);
 
 void InitTownLoyalty(void);
 
+void SetTownLoyalty(enum TownID town, uint8_t rating);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

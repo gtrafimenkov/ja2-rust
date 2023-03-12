@@ -29,9 +29,6 @@ typedef enum {
 // initialize a specific town's loyalty if it hasn't already been
 void StartTownLoyaltyIfFirstTime(TownID bTownId);
 
-// set a speciafied town's loyalty rating
-void SetTownLoyalty(TownID bTownId, UINT8 ubLoyaltyValue);
-
 // update the loyalty based on current % control of the town
 void UpdateLoyaltyBasedOnControl(TownID bTownId);
 

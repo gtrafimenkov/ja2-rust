@@ -177,24 +177,6 @@ extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
 //   }
 // }
 
-// TODO: rustlib
-// // set a specified town's loyalty rating (ignores previous loyalty value - probably NOT what you
-// // want)
-// void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
-//   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
-
-//   // if the town does use loyalty
-//   if (DoesTownUseLoyalty(bTownId)) {
-//     gTownLoyalty[bTownId].ubRating = ubNewLoyaltyRating;
-//     gTownLoyalty[bTownId].sChange = 0;
-
-//     // this is just like starting the loyalty if it happens first
-//     gTownLoyalty[bTownId].fStarted = TRUE;
-//   }
-
-//   return;
-// }
-
 // TODO rustlib: implement IncrementTownLoyalty in Rust
 // - move gTownLoyalty
 // - move gubTownRebelSentiment
