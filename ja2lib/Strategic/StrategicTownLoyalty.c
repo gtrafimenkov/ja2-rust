@@ -70,15 +70,16 @@
 
 // sizeof(TOWN_LOYALTY)
 
-typedef struct TOWN_LOYALTY {
-  UINT8 ubRating;
-  INT16 sChange;
-  BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first enters
-                     // that town
-  UINT8 __unused1;
-  BOOLEAN fLiberatedAlready;
-  BYTE __unused2[19];  // reserved for expansion
-} TOWN_LOYALTY;
+// typedef struct TOWN_LOYALTY {
+//   UINT8 ubRating;
+//   INT16 sChange;
+//   BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first
+//   enters
+//                      // that town
+//   UINT8 __unused1;
+//   BOOLEAN fLiberatedAlready;
+//   BYTE __unused2[19];  // reserved for expansion
+// } TOWN_LOYALTY;
 
 // town loyalty table
 // TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
@@ -855,9 +856,14 @@ INT32 GetTownDistances(UINT8 ubTown, UINT8 ubTownA) { return (iTownDistances[ubT
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
   UINT32 uiNumBytesWritten;
 
-  // Save the Town Loyalty
-  FileMan_Write(hFile, gTownLoyalty, sizeof(TOWN_LOYALTY) * NUM_TOWNS, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(TOWN_LOYALTY) * NUM_TOWNS) {
+  struct SAVE_LOAD_TOWN_LOYALTY townLoyalty[NUM_TOWNS];
+  for (int i = 0; i < NUM_TOWNS; i++) {
+    townLoyalty[i] = GetRawTownLoyalty(i);
+  }
+
+  FileMan_Write(hFile, townLoyalty, sizeof(struct SAVE_LOAD_TOWN_LOYALTY) * NUM_TOWNS,
+                &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(struct SAVE_LOAD_TOWN_LOYALTY) * NUM_TOWNS) {
     return (FALSE);
   }
 
