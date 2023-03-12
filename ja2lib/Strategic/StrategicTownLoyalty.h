@@ -35,10 +35,6 @@ void SetTownLoyalty(TownID bTownId, UINT8 ubLoyaltyValue);
 // update the loyalty based on current % control of the town
 void UpdateLoyaltyBasedOnControl(TownID bTownId);
 
-// strategic handler, goes through and handles all strategic events for town loyalty
-// updates...player controlled, monsters
-void HandleTownLoyalty(void);
-
 // init town loyalty lists
 void InitTownLoyalty(void);
 

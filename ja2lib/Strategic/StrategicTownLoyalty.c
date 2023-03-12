@@ -73,11 +73,9 @@ typedef struct TOWN_LOYALTY {
   INT16 sChange;
   BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first enters
                      // that town
-  UINT8 UNUSEDubRebelSentiment;  // current rebel sentiment.  Events could change the starting
-                                 // value...
+  UINT8 __unused1;
   BOOLEAN fLiberatedAlready;
-  BYTE filler[19];  // reserved for expansion
-
+  BYTE __unused2[19];  // reserved for expansion
 } TOWN_LOYALTY;
 
 // town loyalty table
@@ -143,14 +141,6 @@ void UpdateTownLoyaltyBasedOnFriendliesInTown(TownID bTownId);
 // update town loyalty based on number of bad guys in this town
 void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 
-/* ARM: Civilian theft of items was removed
-// handle theft by civi in a town sector
-void HandleTheftByCiviliansInSector( INT16 sX, INT16 sY, INT32 iLoyalty );
-
-// handle theft in all towns
-void HandleTownTheft( void );
-*/
-
 extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
 
 void InitTownLoyalty(void) {
@@ -161,7 +151,6 @@ void InitTownLoyalty(void) {
     gTownLoyalty[ubTown].ubRating = 0;
     gTownLoyalty[ubTown].sChange = 0;
     gTownLoyalty[ubTown].fStarted = FALSE;
-    //		gTownLoyalty[ ubTown ].ubRebelSentiment = gubTownRebelSentiment[ ubTown ];
     gTownLoyalty[ubTown].fLiberatedAlready = FALSE;
   }
 
@@ -343,10 +332,6 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
 
   return;
 }
-
-// strategic handler, goes through and handles all strategic events for town loyalty
-// updates...player controlled, monsters
-void HandleTownLoyalty(void) { return; }
 
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) {
   // handle the impact on loyalty of the murder of a civilian
