@@ -79,7 +79,7 @@ typedef struct TOWN_LOYALTY {
 } TOWN_LOYALTY;
 
 // town loyalty table
-TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
+// TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
 
 INT32 iTownDistances[NUM_TOWNS][NUM_TOWNS];
 
@@ -143,65 +143,69 @@ void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 
 extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
 
-void InitTownLoyalty(void) {
-  UINT8 ubTown = 0;
+// TODO: rustlib
+// void InitTownLoyalty(void) {
+//   UINT8 ubTown = 0;
 
-  // set up town loyalty table
-  for (ubTown = FIRST_TOWN; ubTown < NUM_TOWNS; ubTown++) {
-    gTownLoyalty[ubTown].ubRating = 0;
-    gTownLoyalty[ubTown].sChange = 0;
-    gTownLoyalty[ubTown].fStarted = FALSE;
-    gTownLoyalty[ubTown].fLiberatedAlready = FALSE;
-  }
+//   // set up town loyalty table
+//   for (ubTown = FIRST_TOWN; ubTown < NUM_TOWNS; ubTown++) {
+//     gTownLoyalty[ubTown].ubRating = 0;
+//     gTownLoyalty[ubTown].sChange = 0;
+//     gTownLoyalty[ubTown].fStarted = FALSE;
+//     gTownLoyalty[ubTown].fLiberatedAlready = FALSE;
+//   }
 
-  return;
-}
+//   return;
+// }
 
-void StartTownLoyaltyIfFirstTime(TownID bTownId) {
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
+// TODO: rustlib
+// void StartTownLoyaltyIfFirstTime(TownID bTownId) {
+//   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
-  // if loyalty tracking hasn't yet been started for this town, and the town does use loyalty
-  if (!gTownLoyalty[bTownId].fStarted && DoesTownUseLoyalty(bTownId)) {
-    // set starting town loyalty now, equally to that town's current rebel sentiment - not all towns
-    // begin equally loyal
-    gTownLoyalty[bTownId].ubRating = gubTownRebelSentiment[bTownId];
+//   // if loyalty tracking hasn't yet been started for this town, and the town does use loyalty
+//   if (!gTownLoyalty[bTownId].fStarted && DoesTownUseLoyalty(bTownId)) {
+//     // set starting town loyalty now, equally to that town's current rebel sentiment - not all
+//     towns
+//     // begin equally loyal
+//     gTownLoyalty[bTownId].ubRating = gubTownRebelSentiment[bTownId];
 
-    // if player hasn't made contact with Miguel yet, or the rebels hate the player
-    if (!CheckFact(FACT_MIGUEL_READ_LETTER, 0) || CheckFact(FACT_REBELS_HATE_PLAYER, 0)) {
-      // if town is Omerta
-      if (bTownId == OMERTA) {
-        // start loyalty there at 0, since rebels distrust the player until Miguel receives the
-        // letter
-        gTownLoyalty[bTownId].ubRating = 0;
-      } else {
-        // starting loyalty is halved - locals not sure what to make of the player's presence
-        gTownLoyalty[bTownId].ubRating /= 2;
-      }
-    }
+//     // if player hasn't made contact with Miguel yet, or the rebels hate the player
+//     if (!CheckFact(FACT_MIGUEL_READ_LETTER, 0) || CheckFact(FACT_REBELS_HATE_PLAYER, 0)) {
+//       // if town is Omerta
+//       if (bTownId == OMERTA) {
+//         // start loyalty there at 0, since rebels distrust the player until Miguel receives the
+//         // letter
+//         gTownLoyalty[bTownId].ubRating = 0;
+//       } else {
+//         // starting loyalty is halved - locals not sure what to make of the player's presence
+//         gTownLoyalty[bTownId].ubRating /= 2;
+//       }
+//     }
 
-    gTownLoyalty[bTownId].sChange = 0;
+//     gTownLoyalty[bTownId].sChange = 0;
 
-    // remember we've started
-    gTownLoyalty[bTownId].fStarted = TRUE;
-  }
-}
+//     // remember we've started
+//     gTownLoyalty[bTownId].fStarted = TRUE;
+//   }
+// }
 
-// set a specified town's loyalty rating (ignores previous loyalty value - probably NOT what you
-// want)
-void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
+// TODO: rustlib
+// // set a specified town's loyalty rating (ignores previous loyalty value - probably NOT what you
+// // want)
+// void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
+//   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
-  // if the town does use loyalty
-  if (DoesTownUseLoyalty(bTownId)) {
-    gTownLoyalty[bTownId].ubRating = ubNewLoyaltyRating;
-    gTownLoyalty[bTownId].sChange = 0;
+//   // if the town does use loyalty
+//   if (DoesTownUseLoyalty(bTownId)) {
+//     gTownLoyalty[bTownId].ubRating = ubNewLoyaltyRating;
+//     gTownLoyalty[bTownId].sChange = 0;
 
-    // this is just like starting the loyalty if it happens first
-    gTownLoyalty[bTownId].fStarted = TRUE;
-  }
+//     // this is just like starting the loyalty if it happens first
+//     gTownLoyalty[bTownId].fStarted = TRUE;
+//   }
 
-  return;
-}
+//   return;
+// }
 
 // TODO rustlib: implement IncrementTownLoyalty in Rust
 // - move gTownLoyalty
@@ -209,129 +213,132 @@ void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
 // - move UpdateTownLoyaltyRating
 //   - [x] move gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP]
 
-// increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
-void IncrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyIncrease) {
-  UINT32 uiRemainingIncrement;
-  INT16 sThisIncrement;
+// TODO: rustlib
+// // increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
+// void IncrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyIncrease) {
+//   UINT32 uiRemainingIncrement;
+//   INT16 sThisIncrement;
 
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
+//   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
-  // doesn't affect towns where player hasn't established a "presence" yet
-  if (!gTownLoyalty[bTownId].fStarted) {
-    return;
-  }
+//   // doesn't affect towns where player hasn't established a "presence" yet
+//   if (!gTownLoyalty[bTownId].fStarted) {
+//     return;
+//   }
 
-  // modify loyalty change by town's individual attitude toward rebelling (20 is typical)
-  uiLoyaltyIncrease *= (5 * gubTownRebelSentiment[bTownId]);
-  uiLoyaltyIncrease /= 100;
+//   // modify loyalty change by town's individual attitude toward rebelling (20 is typical)
+//   uiLoyaltyIncrease *= (5 * gubTownRebelSentiment[bTownId]);
+//   uiLoyaltyIncrease /= 100;
 
-  // this whole thing is a hack to avoid rolling over the -32 to 32k range on the sChange value
-  // only do a maximum of 10000 pts at a time...
-  uiRemainingIncrement = uiLoyaltyIncrease;
-  while (uiRemainingIncrement) {
-    sThisIncrement = (INT16)min(uiRemainingIncrement, 10000);
+//   // this whole thing is a hack to avoid rolling over the -32 to 32k range on the sChange value
+//   // only do a maximum of 10000 pts at a time...
+//   uiRemainingIncrement = uiLoyaltyIncrease;
+//   while (uiRemainingIncrement) {
+//     sThisIncrement = (INT16)min(uiRemainingIncrement, 10000);
 
-    // up the gain value
-    gTownLoyalty[bTownId].sChange += (INT16)sThisIncrement;
-    // update town value now
-    UpdateTownLoyaltyRating(bTownId);
+//     // up the gain value
+//     gTownLoyalty[bTownId].sChange += (INT16)sThisIncrement;
+//     // update town value now
+//     UpdateTownLoyaltyRating(bTownId);
 
-    uiRemainingIncrement -= sThisIncrement;
-  }
+//     uiRemainingIncrement -= sThisIncrement;
+//   }
 
-  return;
-}
+//   return;
+// }
 
-// decrements the town's loyalty rating by that many HUNDREDTHS of loyalty pts
-// NOTE: This function expects a POSITIVE number for a decrease!!!
-void DecrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyDecrease) {
-  UINT32 uiRemainingDecrement;
-  INT16 sThisDecrement;
+// TODO: rustlib
+// // decrements the town's loyalty rating by that many HUNDREDTHS of loyalty pts
+// // NOTE: This function expects a POSITIVE number for a decrease!!!
+// void DecrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyDecrease) {
+//   UINT32 uiRemainingDecrement;
+//   INT16 sThisDecrement;
 
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
+//   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
-  // doesn't affect towns where player hasn't established a "presence" yet
-  if (!gTownLoyalty[bTownId].fStarted) {
-    return;
-  }
+//   // doesn't affect towns where player hasn't established a "presence" yet
+//   if (!gTownLoyalty[bTownId].fStarted) {
+//     return;
+//   }
 
-  // modify loyalty change by town's individual attitude toward rebelling (20 is typical)
-  uiLoyaltyDecrease *= 100;
-  uiLoyaltyDecrease /= (5 * gubTownRebelSentiment[bTownId]);
+//   // modify loyalty change by town's individual attitude toward rebelling (20 is typical)
+//   uiLoyaltyDecrease *= 100;
+//   uiLoyaltyDecrease /= (5 * gubTownRebelSentiment[bTownId]);
 
-  // this whole thing is a hack to avoid rolling over the -32 to 32k range on the sChange value
-  // only do a maximum of 10000 pts at a time...
-  uiRemainingDecrement = uiLoyaltyDecrease;
-  while (uiRemainingDecrement) {
-    sThisDecrement = (INT16)min(uiRemainingDecrement, 10000);
+//   // this whole thing is a hack to avoid rolling over the -32 to 32k range on the sChange value
+//   // only do a maximum of 10000 pts at a time...
+//   uiRemainingDecrement = uiLoyaltyDecrease;
+//   while (uiRemainingDecrement) {
+//     sThisDecrement = (INT16)min(uiRemainingDecrement, 10000);
 
-    // down the gain value
-    gTownLoyalty[bTownId].sChange -= sThisDecrement;
-    // update town value now
-    UpdateTownLoyaltyRating(bTownId);
+//     // down the gain value
+//     gTownLoyalty[bTownId].sChange -= sThisDecrement;
+//     // update town value now
+//     UpdateTownLoyaltyRating(bTownId);
 
-    uiRemainingDecrement -= sThisDecrement;
-  }
+//     uiRemainingDecrement -= sThisDecrement;
+//   }
 
-  return;
-}
+//   return;
+// }
 
-// update town loyalty rating based on gain values
-void UpdateTownLoyaltyRating(TownID bTownId) {
-  // check gain value and update loyaty
-  UINT8 ubOldLoyaltyRating = 0;
-  INT16 sRatingChange = 0;
-  UINT8 ubMaxLoyalty = 0;
+// TODO: rustlib
+// // update town loyalty rating based on gain values
+// void UpdateTownLoyaltyRating(TownID bTownId) {
+//   // check gain value and update loyaty
+//   UINT8 ubOldLoyaltyRating = 0;
+//   INT16 sRatingChange = 0;
+//   UINT8 ubMaxLoyalty = 0;
 
-  Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
+//   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
-  // remember previous loyalty value
-  ubOldLoyaltyRating = gTownLoyalty[bTownId].ubRating;
+//   // remember previous loyalty value
+//   ubOldLoyaltyRating = gTownLoyalty[bTownId].ubRating;
 
-  sRatingChange = gTownLoyalty[bTownId].sChange / GAIN_PTS_PER_LOYALTY_PT;
+//   sRatingChange = gTownLoyalty[bTownId].sChange / GAIN_PTS_PER_LOYALTY_PT;
 
-  // if loyalty is ready to increase
-  if (sRatingChange > 0) {
-    // if the town is Omerta, and the rebels are/will become hostile
-    if ((bTownId == OMERTA) && (GetCivGroupHostility(REBEL_CIV_GROUP) != CIV_GROUP_NEUTRAL)) {
-      // maximum loyalty is much less than normal
-      ubMaxLoyalty = HOSTILE_OMERTA_LOYALTY_RATING;
-    } else {
-      ubMaxLoyalty = MAX_LOYALTY_VALUE;
-    }
+//   // if loyalty is ready to increase
+//   if (sRatingChange > 0) {
+//     // if the town is Omerta, and the rebels are/will become hostile
+//     if ((bTownId == OMERTA) && (GetCivGroupHostility(REBEL_CIV_GROUP) != CIV_GROUP_NEUTRAL)) {
+//       // maximum loyalty is much less than normal
+//       ubMaxLoyalty = HOSTILE_OMERTA_LOYALTY_RATING;
+//     } else {
+//       ubMaxLoyalty = MAX_LOYALTY_VALUE;
+//     }
 
-    // check if we'd be going over the max
-    if ((GetTownLoyaltyRating(bTownId) + sRatingChange) >= ubMaxLoyalty) {
-      // set to max and null out gain pts
-      gTownLoyalty[bTownId].ubRating = ubMaxLoyalty;
-      gTownLoyalty[bTownId].sChange = 0;
-    } else {
-      // increment loyalty rating, reduce sChange
-      gTownLoyalty[bTownId].ubRating += sRatingChange;
-      gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
-    }
-  } else
-    // if loyalty is ready to decrease
-    if (sRatingChange < 0) {
-      // check if we'd be going below zero
-      if ((GetTownLoyaltyRating(bTownId) + sRatingChange) < 0) {
-        // set to zero and null out gain pts
-        gTownLoyalty[bTownId].ubRating = 0;
-        gTownLoyalty[bTownId].sChange = 0;
-      } else {
-        // decrement loyalty rating, reduce sChange
-        gTownLoyalty[bTownId].ubRating += sRatingChange;
-        gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
-      }
-    }
+//     // check if we'd be going over the max
+//     if ((GetTownLoyaltyRating(bTownId) + sRatingChange) >= ubMaxLoyalty) {
+//       // set to max and null out gain pts
+//       gTownLoyalty[bTownId].ubRating = ubMaxLoyalty;
+//       gTownLoyalty[bTownId].sChange = 0;
+//     } else {
+//       // increment loyalty rating, reduce sChange
+//       gTownLoyalty[bTownId].ubRating += sRatingChange;
+//       gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
+//     }
+//   } else
+//     // if loyalty is ready to decrease
+//     if (sRatingChange < 0) {
+//       // check if we'd be going below zero
+//       if ((GetTownLoyaltyRating(bTownId) + sRatingChange) < 0) {
+//         // set to zero and null out gain pts
+//         gTownLoyalty[bTownId].ubRating = 0;
+//         gTownLoyalty[bTownId].sChange = 0;
+//       } else {
+//         // decrement loyalty rating, reduce sChange
+//         gTownLoyalty[bTownId].ubRating += sRatingChange;
+//         gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
+//       }
+//     }
 
-  // check old aginst new, if diff, dirty map panel
-  if (ubOldLoyaltyRating != GetTownLoyaltyRating(bTownId)) {
-    SetMapPanelDirty(true);
-  }
+//   // check old aginst new, if diff, dirty map panel
+//   if (ubOldLoyaltyRating != GetTownLoyaltyRating(bTownId)) {
+//     SetMapPanelDirty(true);
+//   }
 
-  return;
-}
+//   return;
+// }
 
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) {
   // handle the impact on loyalty of the murder of a civilian
@@ -1092,7 +1099,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
 
   for (TownID bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     // doesn't affect towns where player hasn't established a "presence" yet
-    if (!gTownLoyalty[bTownId].fStarted) {
+    if (!IsTownLoyaltyStarted(bTownId)) {
       continue;
     }
 
@@ -1140,7 +1147,7 @@ void AffectAllTownsLoyaltyByDistanceFrom(INT32 iLoyaltyChange, u8 sSectorX, u8 s
 // to be called whenever player gains control of a sector in any way
 void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY) {
   // the whole town is under our control, check if we never libed this town before
-  if (!gTownLoyalty[bTownId].fLiberatedAlready && IsTownUnderCompleteControlByPlayer(bTownId)) {
+  if (!IsTownLiberated(bTownId) && IsTownUnderCompleteControlByPlayer(bTownId)) {
     if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0)) {
       // give a loyalty bonus
       HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_LIBERATE_WHOLE_TOWN, sSectorX, sSectorY, 0);
@@ -1162,7 +1169,7 @@ void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY)
 
     // set flag even for towns where you can't train militia, useful for knowing Orta/Tixa were
     // previously controlled
-    gTownLoyalty[bTownId].fLiberatedAlready = TRUE;
+    IsTownLiberated(bTownId) = TRUE;
   }
 }
 
@@ -1172,7 +1179,7 @@ void CheckIfEntireTownHasBeenLost(TownID bTownId, u8 sSectorX, u8 sSectorY) {
   if (MilitiaTrainingAllowedInSector(sSectorX, sSectorY, 0) &&
       IsTownUnderCompleteControlByEnemy(bTownId)) {
     // the whole town is under enemy control, check if we libed this town before
-    if (gTownLoyalty[bTownId].fLiberatedAlready) {
+    if (IsTownLiberated(bTownId)) {
       HandleMeanWhileEventPostingForTownLoss(bTownId);
     }
   }
@@ -1312,6 +1319,11 @@ void MaximizeLoyaltyForDeidrannaKilled(void) {
   }
 }
 
-u8 GetTownLoyaltyRating(TownID townID) { return gTownLoyalty[townID].ubRating; }
+// TODO: rustlib
+// u8 GetTownLoyaltyRating(TownID townID) { return gTownLoyalty[townID].ubRating; }
 
-bool IsTownLoyaltyStarted(TownID townID) { return gTownLoyalty[townID].fStarted; }
+// TODO: rustlib
+// bool IsTownLoyaltyStarted(TownID townID) { return gTownLoyalty[townID].fStarted; }
+
+// TODO: rustlib
+// bool IsTownLiberated(TownID townID) { return gTownLoyalty[townID].fLiberatedAlready; }
