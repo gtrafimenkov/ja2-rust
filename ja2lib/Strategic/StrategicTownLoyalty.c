@@ -316,7 +316,7 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
     }
 
     // check if we'd be going over the max
-    if ((gTownLoyalty[bTownId].ubRating + sRatingChange) >= ubMaxLoyalty) {
+    if ((GetTownLoyaltyRating(bTownId) + sRatingChange) >= ubMaxLoyalty) {
       // set to max and null out gain pts
       gTownLoyalty[bTownId].ubRating = ubMaxLoyalty;
       gTownLoyalty[bTownId].sChange = 0;
@@ -329,7 +329,7 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
     // if loyalty is ready to decrease
     if (sRatingChange < 0) {
       // check if we'd be going below zero
-      if ((gTownLoyalty[bTownId].ubRating + sRatingChange) < 0) {
+      if ((GetTownLoyaltyRating(bTownId) + sRatingChange) < 0) {
         // set to zero and null out gain pts
         gTownLoyalty[bTownId].ubRating = 0;
         gTownLoyalty[bTownId].sChange = 0;
@@ -341,7 +341,7 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
     }
 
   // check old aginst new, if diff, dirty map panel
-  if (ubOldLoyaltyRating != gTownLoyalty[bTownId].ubRating) {
+  if (ubOldLoyaltyRating != GetTownLoyaltyRating(bTownId)) {
     SetMapPanelDirty(true);
   }
 
@@ -465,7 +465,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
       case 0:
         // nobody saw anything.  When body is found, chance player is blamed depends on the town's
         // loyalty at this time
-        uiChanceFalseAccusal = MAX_LOYALTY_VALUE - gTownLoyalty[bTownId].ubRating;
+        uiChanceFalseAccusal = MAX_LOYALTY_VALUE - GetTownLoyaltyRating(bTownId);
         break;
       case 1:
         // civilians saw the killer, but not the victim. 10 % chance of blaming player whether or
@@ -893,7 +893,7 @@ void ReduceLoyaltyForRebelsBetrayed(void) {
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     if (bTownId == OMERTA) {
       // if not already really low
-      if (gTownLoyalty[bTownId].ubRating > HOSTILE_OMERTA_LOYALTY_RATING) {
+      if (GetTownLoyaltyRating(bTownId) > HOSTILE_OMERTA_LOYALTY_RATING) {
         // loyalty in Omerta tanks big time, and will stay low permanently since this becomes its
         // maximum
         SetTownLoyalty(bTownId, HOSTILE_OMERTA_LOYALTY_RATING);
@@ -902,7 +902,7 @@ void ReduceLoyaltyForRebelsBetrayed(void) {
     } else {
       // loyalty in other places is also strongly affected by this falling out with rebels, but this
       // is not permanent
-      SetTownLoyalty(bTownId, (UINT8)(gTownLoyalty[bTownId].ubRating / 3));
+      SetTownLoyalty(bTownId, (UINT8)(GetTownLoyaltyRating(bTownId) / 3));
     }
   }
 }
@@ -1330,3 +1330,5 @@ void MaximizeLoyaltyForDeidrannaKilled(void) {
     SetTownLoyalty(bTownId, 100);
   }
 }
+
+u8 GetTownLoyaltyRating(TownID townID) { return gTownLoyalty[townID].ubRating; }

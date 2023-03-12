@@ -470,7 +470,7 @@ UINT8 CalcDesireToTalk(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach) {
 
   // ARM: NOTE - for towns which don't use loyalty (San Mona, Estoni, Tixa, Orta )
   // loyalty will always remain 0 (this was OKed by Ian)
-  iTownVal = gTownLoyalty[pNPCProfile->bTown].ubRating;
+  iTownVal = GetTownLoyaltyRating(pNPCProfile->bTown);
   iTownVal = iTownVal * pNPCProfile->bTownAttachment / 100;
 
   if (bApproach == NPC_INITIATING_CONV || bApproach == APPROACH_GIVINGITEM) {

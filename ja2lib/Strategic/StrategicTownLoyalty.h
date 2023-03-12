@@ -146,4 +146,6 @@ void HandleLoyaltyImplicationsOfMercRetreat(INT8 bRetreatCode, u8 sSectorX, u8 s
 
 void MaximizeLoyaltyForDeidrannaKilled(void);
 
+u8 GetTownLoyaltyRating(TownID townID);
+
 #endif

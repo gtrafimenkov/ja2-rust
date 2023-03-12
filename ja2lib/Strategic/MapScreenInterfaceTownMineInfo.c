@@ -330,7 +330,7 @@ void AddTextToTownBox(void) {
     // town loyalty
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[5]);
     AddMonoString(&hStringHandle, wString);
-    swprintf(wString, ARR_SIZE(wString), L"%d%%%%", gTownLoyalty[ubTownId].ubRating);
+    swprintf(wString, ARR_SIZE(wString), L"%d%%%%", GetTownLoyaltyRating(ubTownId));
     AddSecondColumnMonoString(&hStringHandle, wString);
   }
 
@@ -431,7 +431,7 @@ void AddTextToMineBox(void) {
       swprintf(wString, ARR_SIZE(wString), L"%s:", pwMineStrings[13]);
       AddMonoString(&hStringHandle, wString);
       swprintf(wString, ARR_SIZE(wString), L"%d%%%%",
-               gTownLoyalty[gMineLocation[ubMineIndex].bAssociatedTown].ubRating);
+               GetTownLoyaltyRating(gMineLocation[ubMineIndex].bAssociatedTown));
       AddSecondColumnMonoString(&hStringHandle, wString);
     }
 

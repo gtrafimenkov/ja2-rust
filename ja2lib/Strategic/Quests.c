@@ -504,7 +504,7 @@ BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
 
   ubTown = GetTownIdForSector(sSectorX, sSectorY);
   if ((ubTown != BLANK_SECTOR) && gTownLoyalty[ubTown].fStarted && gfTownUsesLoyalty[ubTown]) {
-    return (gTownLoyalty[ubTown].ubRating >= MIN_RATING_TO_TRAIN_TOWN);
+    return (GetTownLoyaltyRating(ubTown) >= MIN_RATING_TO_TRAIN_TOWN);
   } else {
     return (FALSE);
   }
@@ -805,8 +805,8 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
     case FACT_LOYALTY_OKAY:
       bTown = gMercProfiles[ubProfileID].bTown;
       if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
-        gubFact[usFact] = ((gTownLoyalty[bTown].ubRating >= LOYALTY_LOW_THRESHOLD) &&
-                           (gTownLoyalty[bTown].ubRating < LOYALTY_OK_THRESHOLD));
+        gubFact[usFact] = ((GetTownLoyaltyRating(bTown) >= LOYALTY_LOW_THRESHOLD) &&
+                           (GetTownLoyaltyRating(bTown) < LOYALTY_OK_THRESHOLD));
       } else {
         gubFact[usFact] = FALSE;
       }
@@ -822,7 +822,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
              ((GetWorldTotalMin() - guiTimeOfLastSkyriderMonologue) < (24 * 60)))) {
           gubFact[usFact] = FALSE;
         } else {
-          gubFact[usFact] = (gTownLoyalty[bTown].ubRating < LOYALTY_LOW_THRESHOLD);
+          gubFact[usFact] = (GetTownLoyaltyRating(bTown) < LOYALTY_LOW_THRESHOLD);
         }
       } else {
         gubFact[usFact] = FALSE;
@@ -833,7 +833,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
       bTown = gMercProfiles[ubProfileID].bTown;
       if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
         gubFact[usFact] =
-            (gTownLoyalty[gMercProfiles[ubProfileID].bTown].ubRating >= LOYALTY_HIGH_THRESHOLD);
+            (GetTownLoyaltyRating(gMercProfiles[ubProfileID].bTown) >= LOYALTY_HIGH_THRESHOLD);
       } else {
         gubFact[usFact] = FALSE;
       }

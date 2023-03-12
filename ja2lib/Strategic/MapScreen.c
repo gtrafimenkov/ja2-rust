@@ -4648,7 +4648,7 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
             SetUpHelicopterForPlayer(9, 1);
             // raise Drassen loyalty to minimum that will allow Skyrider to fly
             if (gTownLoyalty[DRASSEN].fStarted &&
-                (gTownLoyalty[DRASSEN].ubRating < LOYALTY_LOW_THRESHOLD)) {
+                (GetTownLoyaltyRating(DRASSEN) < LOYALTY_LOW_THRESHOLD)) {
               SetTownLoyalty(DRASSEN, LOYALTY_LOW_THRESHOLD);
             }
             TurnOnAirSpaceMode();
