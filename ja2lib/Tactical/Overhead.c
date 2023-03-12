@@ -3159,7 +3159,7 @@ struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacke
           }
   */
 
-  if (gTacticalStatus.fCivGroupHostile[pNewAttacked->ubCivilianGroup] == CIV_GROUP_NEUTRAL) {
+  if (GetCivGroupHostility(pNewAttacked->ubCivilianGroup) == CIV_GROUP_NEUTRAL) {
     // if the civilian group turning hostile is the Rebels
     if (pAttacked->ubCivilianGroup == REBEL_CIV_GROUP) {
       // we haven't already reduced the loyalty back when we first set the flag to BECOME hostile
@@ -3168,8 +3168,7 @@ struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacke
 
     AddStrategicEvent(EVENT_MAKE_CIV_GROUP_HOSTILE_ON_NEXT_SECTOR_ENTRANCE,
                       GetWorldTotalMin() + 300, pNewAttacked->ubCivilianGroup);
-    gTacticalStatus.fCivGroupHostile[pNewAttacked->ubCivilianGroup] =
-        CIV_GROUP_WILL_EVENTUALLY_BECOME_HOSTILE;
+    SetCivGroupHostility(pNewAttacked->ubCivilianGroup, CIV_GROUP_WILL_EVENTUALLY_BECOME_HOSTILE);
   }
 
   return (pNewAttacked);
@@ -3180,7 +3179,7 @@ void CivilianGroupChangesSides(UINT8 ubCivilianGroup) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
 
-  gTacticalStatus.fCivGroupHostile[ubCivilianGroup] = CIV_GROUP_HOSTILE;
+  SetCivGroupHostility(ubCivilianGroup, CIV_GROUP_HOSTILE);
 
   // now change sides for anyone on the civ team
   cnt = gTacticalStatus.Team[CIV_TEAM].bFirstID;

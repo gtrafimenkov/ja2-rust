@@ -221,7 +221,7 @@ void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
 // - move gTownLoyalty
 // - move gubTownRebelSentiment
 // - move UpdateTownLoyaltyRating
-//   - move gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP]
+//   - [x] move gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP]
 
 // increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
 void IncrementTownLoyalty(TownID bTownId, UINT32 uiLoyaltyIncrease) {
@@ -307,8 +307,7 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
   // if loyalty is ready to increase
   if (sRatingChange > 0) {
     // if the town is Omerta, and the rebels are/will become hostile
-    if ((bTownId == OMERTA) &&
-        (gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP] != CIV_GROUP_NEUTRAL)) {
+    if ((bTownId == OMERTA) && (GetCivGroupHostility(REBEL_CIV_GROUP) != CIV_GROUP_NEUTRAL)) {
       // maximum loyalty is much less than normal
       ubMaxLoyalty = HOSTILE_OMERTA_LOYALTY_RATING;
     } else {

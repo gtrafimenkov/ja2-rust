@@ -64,6 +64,7 @@ pub enum CivGroup {
     UNNAMED_CIV_GROUP_18,
     UNNAMED_CIV_GROUP_19,
 }
+pub const FIRST_CIV_GROUP: u8 = 1;
 pub const NUM_CIV_GROUPS: u8 = 20;
 
 impl CivGroup {

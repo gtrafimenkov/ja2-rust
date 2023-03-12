@@ -2632,7 +2632,7 @@ void TriggerFriendWithHostileQuote(UINT8 ubNPC) {
   }
 
   if (bTeam == CIV_TEAM && pSoldier->ubCivilianGroup != NON_CIV_GROUP &&
-      gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] == CIV_GROUP_NEUTRAL) {
+      GetCivGroupHostility(pSoldier->ubCivilianGroup) == CIV_GROUP_NEUTRAL) {
     CivilianGroupMemberChangesSides(pSoldier);
   }
 

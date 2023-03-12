@@ -164,8 +164,7 @@ BOOLEAN CheckNPCIsEnemy(UINT8 ubProfileID) {
     if (pNPC->ubCivilianGroup != NON_CIV_GROUP) {
       // although the soldier is NOW the same side, this civ group could be set to "will become
       // hostile"
-      return (gTacticalStatus.fCivGroupHostile[pNPC->ubCivilianGroup] >=
-              CIV_GROUP_WILL_BECOME_HOSTILE);
+      return (GetCivGroupHostility(pNPC->ubCivilianGroup) >= CIV_GROUP_WILL_BECOME_HOSTILE);
     } else {
       return (FALSE);
     }
@@ -687,7 +686,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
       gubFact[usFact] = (NumMercsNear(ubProfileID, 5) > 0);
       break;
     case FACT_REBELS_HATE_PLAYER:
-      gubFact[usFact] = (gTacticalStatus.fCivGroupHostile[REBEL_CIV_GROUP] == CIV_GROUP_HOSTILE);
+      gubFact[usFact] = (GetCivGroupHostility(REBEL_CIV_GROUP) == CIV_GROUP_HOSTILE);
       break;
     case FACT_CURRENT_SECTOR_G9:
       gubFact[usFact] = (gWorldSectorX == 9 && gWorldSectorY == MAP_ROW_G && gbWorldSectorZ == 0);
@@ -1088,8 +1087,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
       break;
 
     case FACT_KINGPIN_IS_ENEMY:
-      gubFact[usFact] =
-          (gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] >= CIV_GROUP_WILL_BECOME_HOSTILE);
+      gubFact[usFact] = (GetCivGroupHostility(KINGPIN_CIV_GROUP) >= CIV_GROUP_WILL_BECOME_HOSTILE);
       break;
 
     case FACT_DYNAMO_NOT_SPEAKER:

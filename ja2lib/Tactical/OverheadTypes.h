@@ -5,6 +5,7 @@
 #include "BuildDefines.h"
 #include "SGP/Types.h"
 #include "Team.h"
+#include "rust_civ_groups.h"
 
 #define REFINE_AIM_1 0
 #define REFINE_AIM_MID1 1
@@ -235,39 +236,6 @@ typedef enum {
 #define MAX_NUM_SOLDIERS 148
 #define NUM_PLANNING_MERCS 8
 #define TOTAL_SOLDIERS (NUM_PLANNING_MERCS + MAX_NUM_SOLDIERS)
-
-//-----------------------------------------------
-//
-// civilian "sub teams":
-enum {
-  NON_CIV_GROUP = 0,
-  REBEL_CIV_GROUP,
-  KINGPIN_CIV_GROUP,
-  SANMONA_ARMS_GROUP,
-  ANGELS_GROUP,
-  BEGGARS_CIV_GROUP,
-  TOURISTS_CIV_GROUP,
-  ALMA_MILITARY_CIV_GROUP,
-  DOCTORS_CIV_GROUP,
-  COUPLE1_CIV_GROUP,
-  HICKS_CIV_GROUP,
-  WARDEN_CIV_GROUP,
-  JUNKYARD_CIV_GROUP,
-  FACTORY_KIDS_GROUP,
-  QUEENS_CIV_GROUP,
-  UNNAMED_CIV_GROUP_15,
-  UNNAMED_CIV_GROUP_16,
-  UNNAMED_CIV_GROUP_17,
-  UNNAMED_CIV_GROUP_18,
-  UNNAMED_CIV_GROUP_19,
-
-  NUM_CIV_GROUPS
-};
-
-#define CIV_GROUP_NEUTRAL 0
-#define CIV_GROUP_WILL_EVENTUALLY_BECOME_HOSTILE 1
-#define CIV_GROUP_WILL_BECOME_HOSTILE 2
-#define CIV_GROUP_HOSTILE 3
 
 // boxing state
 typedef enum {

@@ -2493,7 +2493,7 @@ void HandleNPCDoAction(UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum)
         pSoldier = FindSoldierByProfileID(ubTargetNPC, FALSE);
         if (pSoldier) {
           if (pSoldier->ubCivilianGroup != NON_CIV_GROUP) {
-            if (gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] == CIV_GROUP_NEUTRAL) {
+            if (GetCivGroupHostility(pSoldier->ubCivilianGroup) == CIV_GROUP_NEUTRAL) {
               CivilianGroupMemberChangesSides(pSoldier);
             }
           } else {

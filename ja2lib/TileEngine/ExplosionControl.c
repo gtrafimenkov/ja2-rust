@@ -2276,7 +2276,7 @@ void PerformItemAction(INT16 sGridNo, struct OBJECTTYPE *pObj) {
                     SoundDir(sGridNo));
       CallAvailableKingpinMenTo(sGridNo);
 
-      gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] = CIV_GROUP_HOSTILE;
+      SetCivGroupHostility(KINGPIN_CIV_GROUP, CIV_GROUP_HOSTILE);
 
       {
         UINT8 ubID, ubID2;

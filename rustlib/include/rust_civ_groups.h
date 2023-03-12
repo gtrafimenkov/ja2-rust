@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#define FIRST_CIV_GROUP 1
+
 #define NUM_CIV_GROUPS 20
 
 enum CivGroup {

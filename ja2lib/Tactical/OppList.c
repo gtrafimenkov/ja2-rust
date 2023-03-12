@@ -646,9 +646,8 @@ void CheckHostileOrSayQuoteList(void) {
           MakeCivHostile(pSoldier, 2);
           // make civ group, if any, hostile
           if (pSoldier->bTeam == CIV_TEAM && pSoldier->ubCivilianGroup != NON_CIV_GROUP &&
-              gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] ==
-                  CIV_GROUP_WILL_BECOME_HOSTILE) {
-            gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] = CIV_GROUP_HOSTILE;
+              GetCivGroupHostility(pSoldier->ubCivilianGroup) == CIV_GROUP_WILL_BECOME_HOSTILE) {
+            SetCivGroupHostility(pSoldier->ubCivilianGroup, CIV_GROUP_HOSTILE);
           }
         }
       }
@@ -1752,8 +1751,7 @@ PopMessage(tempstr);
           // "I hate you" quote
           if (pSoldier->bNeutral) {
             if (pSoldier->ubCivilianGroup != NON_CIV_GROUP &&
-                gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] >=
-                    CIV_GROUP_WILL_BECOME_HOSTILE) {
+                GetCivGroupHostility(pSoldier->ubCivilianGroup) >= CIV_GROUP_WILL_BECOME_HOSTILE) {
               AddToShouldBecomeHostileOrSayQuoteList(pSoldier->ubID);
               fNotAddedToList = FALSE;
             }
@@ -1862,8 +1860,7 @@ PopMessage(tempstr);
       } else {
         if (pSoldier->bTeam == CIV_TEAM) {
           if (pSoldier->ubCivilianGroup != NON_CIV_GROUP &&
-              gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] >=
-                  CIV_GROUP_WILL_BECOME_HOSTILE &&
+              GetCivGroupHostility(pSoldier->ubCivilianGroup) >= CIV_GROUP_WILL_BECOME_HOSTILE &&
               pSoldier->bNeutral) {
             AddToShouldBecomeHostileOrSayQuoteList(pSoldier->ubID);
           } else if (pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) {
