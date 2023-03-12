@@ -402,7 +402,6 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
   // Hicks.....
   if (pCiv->ubCivilianGroup == HICKS_CIV_GROUP) {
     // Are they friendly?
-    // if ( gTacticalStatus.fCivGroupHostile[ HICKS_CIV_GROUP ] < CIV_GROUP_WILL_BECOME_HOSTILE )
     if (pCiv->bNeutral) {
       return (CIV_QUOTE_HICKS_FRIENDLY);
     } else {
@@ -413,7 +412,6 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
   // Goons.....
   if (pCiv->ubCivilianGroup == KINGPIN_CIV_GROUP) {
     // Are they friendly?
-    // if ( gTacticalStatus.fCivGroupHostile[ KINGPIN_CIV_GROUP ] < CIV_GROUP_WILL_BECOME_HOSTILE )
     if (pCiv->bNeutral) {
       return (CIV_QUOTE_GOONS_FRIENDLY);
     } else {

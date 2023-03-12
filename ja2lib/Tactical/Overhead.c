@@ -3248,23 +3248,6 @@ void MilitiaChangesSides(void) {
   }
 }
 
-/*
-void MakePotentiallyHostileCivGroupsHostile( void )
-{
-        UINT8		ubLoop;
-
-        // loop through all civ groups that might become hostile and set them
-        // to hostile
-        for ( ubLoop = REBEL_CIV_GROUP; ubLoop < NUM_CIV_GROUPS; ubLoop++ )
-        {
-                if (gTacticalStatus.fCivGroupHostile[ ubLoop ] == CIV_GROUP_WILL_BECOME_HOSTILE)
-                {
-                        gTacticalStatus.fCivGroupHostile[ ubLoop ] = CIV_GROUP_HOSTILE;
-                }
-        }
-}
-*/
-
 INT8 NumActiveAndConsciousTeamMembers(UINT8 ubTeam) {
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;
