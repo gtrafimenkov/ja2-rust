@@ -41,9 +41,6 @@ typedef struct TOWN_LOYALTY {
 // the loyalty variables for each town
 extern TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
 
-// whether town maintains/displays loyalty or not
-extern BOOLEAN gfTownUsesLoyalty[NUM_TOWNS];
-
 // initialize a specific town's loyalty if it hasn't already been
 void StartTownLoyaltyIfFirstTime(TownID bTownId);
 

@@ -111,22 +111,6 @@ UINT8 gubTownRebelSentiment[NUM_TOWNS] = {
          // loyalty up otherwise
 };
 
-BOOLEAN gfTownUsesLoyalty[NUM_TOWNS] = {
-    FALSE,  // not a town - blank sector index
-    TRUE,   // OMERTA
-    TRUE,   // DRASSEN
-    TRUE,   // ALMA
-    TRUE,   // GRUMM
-    FALSE,  // TIXA
-    TRUE,   // CAMBRIA
-    FALSE,  // SAN_MONA
-    FALSE,  // ESTONI
-    FALSE,  // ORTA
-    TRUE,   // BALIME
-    TRUE,   // MEDUNA
-    TRUE,   // CHITZENA
-};
-
 // location of first enocunter with enemy
 struct SectorPoint locationOfFirstBattle = {.x = 0, .y = 0};
 
@@ -176,7 +160,7 @@ void StartTownLoyaltyIfFirstTime(TownID bTownId) {
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
   // if loyalty tracking hasn't yet been started for this town, and the town does use loyalty
-  if (!gTownLoyalty[bTownId].fStarted && gfTownUsesLoyalty[bTownId]) {
+  if (!gTownLoyalty[bTownId].fStarted && DoesTownUseLoyalty(bTownId)) {
     // set starting town loyalty now, equally to that town's current rebel sentiment - not all towns
     // begin equally loyal
     gTownLoyalty[bTownId].ubRating = gubTownRebelSentiment[bTownId];
@@ -207,7 +191,7 @@ void SetTownLoyalty(TownID bTownId, UINT8 ubNewLoyaltyRating) {
   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
   // if the town does use loyalty
-  if (gfTownUsesLoyalty[bTownId]) {
+  if (DoesTownUseLoyalty(bTownId)) {
     gTownLoyalty[bTownId].ubRating = ubNewLoyaltyRating;
     gTownLoyalty[bTownId].sChange = 0;
 
@@ -416,7 +400,7 @@ void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional) 
   }
 
   // check if this town does use loyalty (to skip a lot of unnecessary computation)
-  if (!gfTownUsesLoyalty[bTownId]) {
+  if (!DoesTownUseLoyalty(bTownId)) {
     return;
   }
 
@@ -916,7 +900,7 @@ INT32 GetNumberOfWholeTownsUnderControl(void) {
 
   // make sure that each town is one for which loyalty matters
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
-    if (IsTownUnderCompleteControlByPlayer(bTownId) && gfTownUsesLoyalty[bTownId]) {
+    if (IsTownUnderCompleteControlByPlayer(bTownId) && DoesTownUseLoyalty(bTownId)) {
       iNumber++;
     }
   }
@@ -932,7 +916,7 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity(INT8 bCityToExclude) {
   // number of towns under player control
   for (bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++) {
     if (IsTownUnderCompleteControlByPlayer(bTownId) && (bCityToExclude != bTownId) &&
-        gfTownUsesLoyalty[bTownId]) {
+        DoesTownUseLoyalty(bTownId)) {
       iNumber++;
     }
   }

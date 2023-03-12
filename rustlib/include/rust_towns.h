@@ -49,6 +49,11 @@ void GetAllTownSectors(struct TownSectors *data);
 bool MilitiaTrainingAllowedInTown(enum TownID town);
 
 /**
+ * Does town uses loyalty mechanic
+ */
+bool DoesTownUseLoyalty(enum TownID town);
+
+/**
  * Return TownID the sector belongs to.
  */
 enum TownID GetTownIdForSector(uint8_t x, uint8_t y);

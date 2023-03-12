@@ -802,7 +802,7 @@ void ShowTownText(void) {
       fLoyaltyTooLowToTrainMilitia = FALSE;
 
       // don't show loyalty string until loyalty tracking for that town has been started
-      if (gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
+      if (gTownLoyalty[bTown].fStarted && DoesTownUseLoyalty(bTown)) {
         swprintf(sStringA, ARR_SIZE(sStringA), L"%d%%%% %s", GetTownLoyaltyRating(bTown),
                  gsLoyalString[0]);
 

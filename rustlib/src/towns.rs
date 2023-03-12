@@ -120,6 +120,20 @@ impl Town {
         )
     }
 
+    pub const fn does_use_loyalty(&self) -> bool {
+        matches!(
+            self,
+            Town::Omerta
+                | Town::Drassen
+                | Town::Alma
+                | Town::Grumm
+                | Town::Cambria
+                | Town::Balime
+                | Town::Meduna
+                | Town::Chitzena
+        )
+    }
+
     pub fn get_sectors(&self) -> core::slice::Iter<Point> {
         match self {
             Town::Omerta => OMERTA_SECTORS.iter(),
@@ -171,5 +185,12 @@ mod tests {
         assert_eq!(Some(Town::Drassen), map.get(13, 3));
         assert_eq!(Some(Town::Drassen), map.get(13, 4));
         assert_eq!(None, map.get(13, 5));
+    }
+
+    #[test]
+    fn does_use_loyalty() {
+        assert_eq!(false, Town::Tixa.does_use_loyalty());
+        assert_eq!(true, Town::Omerta.does_use_loyalty());
+        assert_eq!(true, Town::Alma.does_use_loyalty());
     }
 }

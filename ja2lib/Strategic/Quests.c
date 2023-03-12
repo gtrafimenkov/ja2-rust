@@ -503,7 +503,7 @@ BOOLEAN InTownSectorWithTrainingLoyalty(u8 sSectorX, u8 sSectorY) {
   UINT8 ubTown;
 
   ubTown = GetTownIdForSector(sSectorX, sSectorY);
-  if ((ubTown != BLANK_SECTOR) && gTownLoyalty[ubTown].fStarted && gfTownUsesLoyalty[ubTown]) {
+  if ((ubTown != BLANK_SECTOR) && gTownLoyalty[ubTown].fStarted && DoesTownUseLoyalty(ubTown)) {
     return (GetTownLoyaltyRating(ubTown) >= MIN_RATING_TO_TRAIN_TOWN);
   } else {
     return (FALSE);
@@ -804,7 +804,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
 
     case FACT_LOYALTY_OKAY:
       bTown = gMercProfiles[ubProfileID].bTown;
-      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
+      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && DoesTownUseLoyalty(bTown)) {
         gubFact[usFact] = ((GetTownLoyaltyRating(bTown) >= LOYALTY_LOW_THRESHOLD) &&
                            (GetTownLoyaltyRating(bTown) < LOYALTY_OK_THRESHOLD));
       } else {
@@ -814,7 +814,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
 
     case FACT_LOYALTY_LOW:
       bTown = gMercProfiles[ubProfileID].bTown;
-      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
+      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && DoesTownUseLoyalty(bTown)) {
         // if Skyrider, ignore low loyalty until he has monologues, and wait at least a day since
         // the latest monologue to avoid a hot/cold attitude
         if ((ubProfileID == SKYRIDER) &&
@@ -831,7 +831,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
 
     case FACT_LOYALTY_HIGH:
       bTown = gMercProfiles[ubProfileID].bTown;
-      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && gfTownUsesLoyalty[bTown]) {
+      if ((bTown != BLANK_SECTOR) && gTownLoyalty[bTown].fStarted && DoesTownUseLoyalty(bTown)) {
         gubFact[usFact] =
             (GetTownLoyaltyRating(gMercProfiles[ubProfileID].bTown) >= LOYALTY_HIGH_THRESHOLD);
       } else {

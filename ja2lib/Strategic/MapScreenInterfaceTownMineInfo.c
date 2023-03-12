@@ -326,7 +326,7 @@ void AddTextToTownBox(void) {
   }
 
   // the concept of town loyalty is only meaningful in towns where loyalty is tracked
-  if (gTownLoyalty[ubTownId].fStarted && gfTownUsesLoyalty[ubTownId]) {
+  if (gTownLoyalty[ubTownId].fStarted && DoesTownUseLoyalty(ubTownId)) {
     // town loyalty
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[5]);
     AddMonoString(&hStringHandle, wString);
@@ -426,7 +426,7 @@ void AddTextToMineBox(void) {
     AddSecondColumnMonoString(&hStringHandle, wString);
 
     ubTown = gMineLocation[ubMineIndex].bAssociatedTown;
-    if (gTownLoyalty[ubTown].fStarted && gfTownUsesLoyalty[ubTown]) {
+    if (gTownLoyalty[ubTown].fStarted && DoesTownUseLoyalty(ubTown)) {
       // town loyalty percentage
       swprintf(wString, ARR_SIZE(wString), L"%s:", pwMineStrings[13]);
       AddMonoString(&hStringHandle, wString);

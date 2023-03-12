@@ -96,6 +96,15 @@ pub extern "C" fn MilitiaTrainingAllowedInTown(town: TownID) -> bool {
     }
 }
 
+/// Does town uses loyalty mechanic
+#[no_mangle]
+pub extern "C" fn DoesTownUseLoyalty(town: TownID) -> bool {
+    match town {
+        TownID::BLANK_SECTOR => false,
+        _ => town.to_internal().does_use_loyalty(),
+    }
+}
+
 /// Return TownID the sector belongs to.
 #[no_mangle]
 pub extern "C" fn GetTownIdForSector(x: u8, y: u8) -> TownID {
