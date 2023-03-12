@@ -66,6 +66,11 @@ static void StartTrainingInAllUnpaidTrainableSectors();
 static void PayForTrainingInSector(u8 x, u8 y);
 static void ResetDoneFlagForAllMilitiaTrainersInSector(u8 x, u8 y);
 
+// TODO rustlib:
+//   - implement IncrementTownLoyalty in Rust
+//   - move content of this function to Rust except the last two commands: AssignmentDone,
+//   handleTrainingComplete
+
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY) {
   UINT8 ubMilitiaTrained = 0;
   BOOLEAN fFoundOne;
