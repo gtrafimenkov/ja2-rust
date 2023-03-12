@@ -47,8 +47,6 @@ struct militiaState {
   i8 gbGreenToRegPromotions;
   i8 gbRegToElitePromotions;
   i8 gbMilitiaPromotions;
-
-  struct sectorSearch sectorSearch;
 };
 
 static struct militiaState _st;
@@ -59,8 +57,9 @@ static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer);
 static void PayMilitiaTrainingYesNoBoxCallback(UINT8 bExitValue);
 static void CantTrainMilitiaOkBoxCallback(UINT8 bExitValue);
 static void MilitiaTrainingRejected(void);
-static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY);
-static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY);
+static struct sectorSearch initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX,
+                                                INT16 sSkipSectorY);
+static BOOLEAN getNextSectorInTown(struct sectorSearch *search, u8 *sNeighbourX, u8 *sNeighbourY);
 static INT32 GetNumberOfUnpaidTrainableSectors(void);
 static void ContinueTrainingInThisSector();
 static void StartTrainingInAllUnpaidTrainableSectors();
@@ -101,10 +100,10 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
       fFoundOne = FALSE;
 
       if (ubTownId != BLANK_SECTOR) {
-        initNextSectorSearch(ubTownId, mapX, mapY);
+        struct sectorSearch search = initNextSectorSearch(ubTownId, mapX, mapY);
 
         // check other eligible sectors in this town for room for another militia
-        while (getNextSectorInTown(&sNeighbourX, &sNeighbourY)) {
+        while (getNextSectorInTown(&search, &sNeighbourX, &sNeighbourY)) {
           // is there room for another militia in this neighbouring sector ?
           if (CountMilitiaInSector(sNeighbourX, sNeighbourY) < MAX_ALLOWABLE_MILITIA_PER_SECTOR) {
             // great! Create a new GREEN militia guy in the neighbouring sector
@@ -128,10 +127,10 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
           if (ubTownId != BLANK_SECTOR) {
             // dammit! Last chance - try to find other eligible sectors in the same town with a
             // Green guy to be promoted
-            initNextSectorSearch(ubTownId, mapX, mapY);
+            struct sectorSearch search = initNextSectorSearch(ubTownId, mapX, mapY);
 
             // check other eligible sectors in this town for room for another militia
-            while (getNextSectorInTown(&sNeighbourX, &sNeighbourY)) {
+            while (getNextSectorInTown(&search, &sNeighbourX, &sNeighbourY)) {
               // are there any GREEN militia men in the neighbouring sector ?
               if (GetMilitiaInSector(sNeighbourX, sNeighbourY).green > 0) {
                 // great! Promote a GREEN militia guy in the neighbouring sector to a REGULAR
@@ -251,17 +250,20 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
   }
 }
 
-static void initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY) {
-  _st.sectorSearch.townID = ubTownId;
-  _st.sectorSearch.skipX = sSkipSectorX;
-  _st.sectorSearch.skipY = sSkipSectorY;
-  _st.sectorSearch.townSectorsIndex = 0;
+static struct sectorSearch initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX,
+                                                INT16 sSkipSectorY) {
+  struct sectorSearch search;
+  search.townID = ubTownId;
+  search.skipX = sSkipSectorX;
+  search.skipY = sSkipSectorY;
+  search.townSectorsIndex = 0;
+  return search;
 }
 
 // this feeds the X,Y of the next town sector on the town list for the town specified at
 // initialization it will skip an entry that matches the skip X/Y value if one was specified at
 // initialization MUST CALL initNextSectorSearch() before using!!!
-static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
+static BOOLEAN getNextSectorInTown(struct sectorSearch *search, u8 *sNeighbourX, u8 *sNeighbourY) {
   BOOLEAN fStopLooking = FALSE;
 
   struct TownSectors townSectors;
@@ -269,20 +271,20 @@ static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
 
   do {
     // have we reached the end of the town list?
-    if (townSectors.sectors[_st.sectorSearch.townSectorsIndex].townID == BLANK_SECTOR) {
+    if (townSectors.sectors[search->townSectorsIndex].townID == BLANK_SECTOR) {
       // end of list reached
       return (FALSE);
     }
 
-    u8 mapX = townSectors.sectors[_st.sectorSearch.townSectorsIndex].x;
-    u8 mapY = townSectors.sectors[_st.sectorSearch.townSectorsIndex].y;
+    u8 mapX = townSectors.sectors[search->townSectorsIndex].x;
+    u8 mapY = townSectors.sectors[search->townSectorsIndex].y;
 
     // if this sector is in the town we're looking for
-    if (GetTownIdForSector(mapX, mapY) == _st.sectorSearch.townID) {
+    if (GetTownIdForSector(mapX, mapY) == search->townID) {
       // A sector in the specified town.  Calculate its X & Y sector compotents
 
       // Make sure we're not supposed to skip it
-      if ((mapX != _st.sectorSearch.skipX) || (mapY != _st.sectorSearch.skipY)) {
+      if ((mapX != search->skipX) || (mapY != search->skipY)) {
         // check if it's "friendly" - not enemy controlled, no enemies in it, no combat in progress
         if (SectorOursAndPeaceful(mapX, mapY, 0)) {
           // then that's it!
@@ -295,7 +297,7 @@ static BOOLEAN getNextSectorInTown(u8 *sNeighbourX, u8 *sNeighbourY) {
     }
 
     // advance to next entry in town list
-    _st.sectorSearch.townSectorsIndex++;
+    search->townSectorsIndex++;
 
   } while (!fStopLooking);
 
