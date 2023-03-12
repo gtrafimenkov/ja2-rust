@@ -83,6 +83,12 @@ void InitTownLoyalty(void);
 
 void SetTownLoyalty(enum TownID town, uint8_t rating);
 
+void UpdateTownLoyaltyRating(enum TownID town);
+
+void IncrementTownLoyalty(enum TownID town, uint32_t increase);
+
+void DecrementTownLoyalty(enum TownID town, uint32_t decrease);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

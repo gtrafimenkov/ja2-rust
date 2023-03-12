@@ -87,6 +87,39 @@ impl State {
             }
         }
     }
+
+    /// Update town rating
+    pub fn update_town_rating(&mut self, town: towns::Town) {
+        let loyalty = &mut self.towns.loyalty[town as usize];
+        let old_rating = loyalty.rating;
+        loyalty.update_rating(
+            town,
+            self.civ_groups.get_hostility(civ_groups::Group::Rebel),
+        );
+        if old_rating != loyalty.rating {
+            self.ui.map_panel_dirty = true;
+        }
+    }
+
+    pub fn inc_town_loyalty(&mut self, town: towns::Town, increase: u32) {
+        let loyalty = &mut self.towns.loyalty[town as usize];
+        let old_rating = loyalty.rating;
+        let rebels_hostility = self.civ_groups.get_hostility(civ_groups::Group::Rebel);
+        loyalty.inc_loyalty(town, increase, rebels_hostility);
+        if old_rating != loyalty.rating {
+            self.ui.map_panel_dirty = true;
+        }
+    }
+
+    pub fn dec_town_loyalty(&mut self, town: towns::Town, decrease: u32) {
+        let loyalty = &mut self.towns.loyalty[town as usize];
+        let old_rating = loyalty.rating;
+        let rebels_hostility = self.civ_groups.get_hostility(civ_groups::Group::Rebel);
+        loyalty.dec_loyalty(town, decrease, rebels_hostility);
+        if old_rating != loyalty.rating {
+            self.ui.map_panel_dirty = true;
+        }
+    }
 }
 
 #[cfg(test)]

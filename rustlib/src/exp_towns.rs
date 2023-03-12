@@ -199,6 +199,21 @@ pub extern "C" fn SetTownLoyalty(town: TownID, rating: u8) {
     unsafe { STATE.towns.set_town_loyalty(town.to_internal(), rating) }
 }
 
+#[no_mangle]
+pub extern "C" fn UpdateTownLoyaltyRating(town: TownID) {
+    unsafe { STATE.update_town_rating(town.to_internal()) }
+}
+
+#[no_mangle]
+pub extern "C" fn IncrementTownLoyalty(town: TownID, increase: u32) {
+    unsafe { STATE.inc_town_loyalty(town.to_internal(), increase) }
+}
+
+#[no_mangle]
+pub extern "C" fn DecrementTownLoyalty(town: TownID, decrease: u32) {
+    unsafe { STATE.dec_town_loyalty(town.to_internal(), decrease) }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
