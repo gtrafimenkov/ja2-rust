@@ -88,19 +88,6 @@ impl State {
         }
     }
 
-    /// Update town rating
-    pub fn update_town_rating(&mut self, town: towns::Town) {
-        let loyalty = &mut self.towns.loyalty[town as usize];
-        let old_rating = loyalty.rating;
-        loyalty.update_rating(
-            town,
-            self.civ_groups.get_hostility(civ_groups::Group::Rebel),
-        );
-        if old_rating != loyalty.rating {
-            self.ui.map_panel_dirty = true;
-        }
-    }
-
     pub fn inc_town_loyalty(&mut self, town: towns::Town, increase: u32) {
         let loyalty = &mut self.towns.loyalty[town as usize];
         let old_rating = loyalty.rating;

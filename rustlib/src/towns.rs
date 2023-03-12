@@ -193,7 +193,7 @@ impl Loyalty {
         self.started = true;
     }
 
-    pub fn update_rating(&mut self, town: Town, rebels_hostility: civ_groups::Hostility) {
+    fn update_rating(&mut self, town: Town, rebels_hostility: civ_groups::Hostility) {
         let rating_change = self.change / GAIN_PTS_PER_LOYALTY_PT;
 
         // if loyalty is ready to increase
