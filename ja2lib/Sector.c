@@ -6,13 +6,6 @@
 #include "Tactical/Overhead.h"
 #include "rust_sam_sites.h"
 
-SectorID16 SectorID8To16(SectorID8 sectorID) {
-  return GetSectorID16(SectorID8_X(sectorID), SectorID8_Y(sectorID));
-}
-SectorID8 SectorID16To8(SectorID16 sectorID) {
-  return GetSectorID8(SectorID16_X(sectorID), SectorID16_Y(sectorID));
-}
-
 struct SectorInfo* GetSectorInfoByID8(SectorID8 sectorID) { return &SectorInfo[sectorID]; }
 struct SectorInfo* GetSectorInfoByXY(uint8_t x, uint8_t y) {
   return &SectorInfo[GetSectorID8(x, y)];

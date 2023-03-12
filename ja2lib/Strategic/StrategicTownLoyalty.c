@@ -127,7 +127,7 @@ BOOLEAN gfTownUsesLoyalty[NUM_TOWNS] = {
 };
 
 // location of first enocunter with enemy
-int16_t sWorldSectorLocationOfFirstBattle = 0;
+struct SectorPoint locationOfFirstBattle = {.x = 0, .y = 0};
 
 // number of items in currently loaded sector
 extern uint32_t guiNumWorldItems;
@@ -336,7 +336,7 @@ void UpdateTownLoyaltyRating(TownID bTownId) {
 
   // check old aginst new, if diff, dirty map panel
   if (ubOldLoyaltyRating != gTownLoyalty[bTownId].ubRating) {
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 
   return;
@@ -1240,11 +1240,10 @@ void HandleLoyaltyChangeForNPCAction(uint8_t ubNPCProfileId) {
 
 // set the location of the first encounter with enemy
 void SetTheFirstBattleSector(int16_t sSectorValue) {
-  if (sWorldSectorLocationOfFirstBattle == 0) {
-    sWorldSectorLocationOfFirstBattle = sSectorValue;
+  if (locationOfFirstBattle.x == 0 && locationOfFirstBattle.y == 0) {
+    locationOfFirstBattle.x = SectorID16_X(sSectorValue);
+    locationOfFirstBattle.y = SectorID16_Y(sSectorValue);
   }
-
-  return;
 }
 
 // did first battle take place here
@@ -1252,8 +1251,7 @@ BOOLEAN DidFirstBattleTakePlaceInThisTown(TownID bTownId) {
   int8_t bTownBattleId = 0;
 
   // get town id for sector
-  bTownBattleId = GetTownIdForSector(SectorID16_X(sWorldSectorLocationOfFirstBattle),
-                                     SectorID16_Y(sWorldSectorLocationOfFirstBattle));
+  bTownBattleId = GetTownIdForSector(locationOfFirstBattle.x, locationOfFirstBattle.y);
 
   return (bTownId == bTownBattleId);
 }
@@ -1305,7 +1303,7 @@ uint32_t EnemyStrength(void) {
 // which poses as a serious loyalty penalty.
 void HandleLoyaltyImplicationsOfMercRetreat(int8_t bRetreatCode, uint8_t sSectorX, uint8_t sSectorY,
                                             int16_t sSectorZ) {
-  if (CountAllMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
+  if (CountMilitiaInSector(sSectorX, sSectorY)) {  // Big morale penalty!
     HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_ABANDON_MILITIA, sSectorX, sSectorY, (int8_t)sSectorZ);
   }
 

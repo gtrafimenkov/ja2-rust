@@ -39,8 +39,6 @@ void UpdateMercsInSector(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ);
 void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t sSectorY,
                         int8_t bSectorZ);
 
-void InitializeMapStructure();
-
 // get short sector name without town name
 void GetShortSectorString(uint8_t sMapX, uint8_t sMapY, wchar_t *sString, size_t bufSize);
 

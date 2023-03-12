@@ -564,8 +564,7 @@ void AddCommonInfoToBox(void) {
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[11]);
     AddMonoString(&hStringHandle, wString);
 
-    uint8_t ubMilitiaTotal =
-        CountAllMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
+    uint8_t ubMilitiaTotal = CountMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
     if (ubMilitiaTotal > 0) {
       // some militia, show total & their breakdown by level
       struct MilitiaCount milCount =
@@ -773,7 +772,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
 
       // done
       fShowMapInventoryPool = TRUE;
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       fMapScreenBottomDirty = TRUE;
       fShowTownInfo = FALSE;
 
@@ -795,7 +794,7 @@ void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
       btn->uiFlags &= ~(BUTTON_CLICKED_ON);
 
       // done
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       fMapScreenBottomDirty = TRUE;
       fShowTownInfo = FALSE;
     }

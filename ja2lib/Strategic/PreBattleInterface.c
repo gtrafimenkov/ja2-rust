@@ -336,7 +336,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
       // get number of enemies thought to be here
       SectorInfo[GetSectorID8(gubPBSectorX, gubPBSectorY)].bLastKnownEnemies =
           NumEnemiesInSector(gubPBSectorX, gubPBSectorY);
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     } else {
       gubPBSectorX = SectorID8_X(gubSectorIDOfCreatureAttack);
       gubPBSectorY = SectorID8_Y(gubSectorIDOfCreatureAttack);
@@ -808,7 +808,7 @@ void KillPreBattleInterface() {
   // UpdateCharRegionHelpText( );
 
   // re draw affected regions
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fTeamPanelDirty = TRUE;
   fMapScreenBottomDirty = TRUE;
   fCharacterInfoPanelDirty = TRUE;
@@ -903,7 +903,7 @@ void RenderPreBattleInterface() {
       fMouseInRetreatButtonArea = TRUE;
     if (fMouseInRetreatButtonArea != gfDisplayPotentialRetreatPaths) {
       gfDisplayPotentialRetreatPaths = fMouseInRetreatButtonArea;
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
     }
   }
 
@@ -1027,7 +1027,7 @@ void RenderPreBattleInterface() {
     x = 142 + (27 - StringPixLength(str, FONT14ARIAL)) / 2;
     mprintf(x, y, str);
     // militia
-    swprintf(str, ARR_SIZE(str), L"%d", CountAllMilitiaInSector(gubPBSectorX, gubPBSectorY));
+    swprintf(str, ARR_SIZE(str), L"%d", CountMilitiaInSector(gubPBSectorX, gubPBSectorY));
     x = 227 + (27 - StringPixLength(str, FONT14ARIAL)) / 2;
     mprintf(x, y, str);
     SetFontShadow(FONT_NEARBLACK);
@@ -1252,7 +1252,7 @@ void RetreatMercsCallback(GUI_BUTTON *btn, int32_t reason) {
 
       // NOTE: this code assumes you can never retreat while underground
       HandleLoyaltyImplicationsOfMercRetreat(RETREAT_PBI, gubPBSectorX, gubPBSectorY, 0);
-      if (CountAllMilitiaInSector(
+      if (CountMilitiaInSector(
               gubPBSectorX,
               gubPBSectorY)) {  // Mercs retreat, but enemies still need to fight the militia
         gfEnterAutoResolveMode = TRUE;

@@ -655,7 +655,7 @@ struct GROUP *CreateNewEnemyGroupDepartingFromSector(uint32_t uiSector, uint8_t 
   {
     wchar_t str[512];
     if (PlayerMercsInSector(pNew->ubSectorX, pNew->ubSectorY, 0) ||
-        CountAllMilitiaInSector(pNew->ubSectorX, pNew->ubSectorY)) {
+        CountMilitiaInSector(pNew->ubSectorX, pNew->ubSectorY)) {
       swprintf(str, ARR_SIZE(str),
                L"Attempting to send enemy troops from player occupied location.  "
                L"Please ALT+TAB out of the game before doing anything else and send 'Strategic "
@@ -998,7 +998,7 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
       }
     }
   } else {
-    if (CountAllMilitiaInSector(pGroup->ubSectorX, pGroup->ubSectorY)) {
+    if (CountMilitiaInSector(pGroup->ubSectorX, pGroup->ubSectorY)) {
       fMilitiaPresent = TRUE;
       fBattlePending = TRUE;
     }
@@ -1408,7 +1408,7 @@ void GroupArrivedAtSector(uint8_t ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fN
   SetGroupArrivalTime(pGroup, 0);
   pGroup->fBetweenSectors = FALSE;
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fMapScreenBottomDirty = TRUE;
 
   // if a player group
@@ -4060,7 +4060,7 @@ void NotifyPlayerOfBloodcatBattle(uint8_t ubSectorX, uint8_t ubSectorY) {
 
   if (IsMapScreen_2()) {  // Force render mapscreen (need to update the position of
                           // the group before the dialog appears.
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     MapScreenHandle();
     InvalidateScreen();
     RefreshScreen(NULL);
@@ -4321,7 +4321,7 @@ void HandlePlayerGroupEnteringSectorToCheckForNPCsOfNoteCallback(uint8_t ubExitV
 
   gpGroupPrompting = NULL;
 
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fMapScreenBottomDirty = TRUE;
 
   return;

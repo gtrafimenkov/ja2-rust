@@ -129,7 +129,6 @@ extern int16_t sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 extern int32_t giRTAILastUpdateTime;
 extern BOOLEAN gfRedrawSaveLoadScreen;
 extern uint8_t gubScreenCount;
-extern int16_t sWorldSectorLocationOfFirstBattle;
 extern BOOLEAN gfGamePaused;
 extern BOOLEAN gfLockPauseState;
 extern BOOLEAN gfLoadedGame;
@@ -498,7 +497,7 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize) {
   }
 
   else if (IsMapScreen_2()) {
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fTeamPanelDirty = TRUE;
     fCharacterInfoPanelDirty = TRUE;
   }
@@ -3325,6 +3324,8 @@ void LoadGameFilePosition(int32_t iPos, char *pMsg) {
 }
 #endif
 
+extern struct SectorPoint locationOfFirstBattle;
+
 BOOLEAN SaveGeneralInfo(HWFILE hFile) {
   uint32_t uiNumBytesWritten;
 
@@ -3468,7 +3469,8 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
   sGeneralInfo.iPortraitNumber = iPortraitNumber;
 
   // location of first enocunter with enemy
-  sGeneralInfo.sWorldSectorLocationOfFirstBattle = sWorldSectorLocationOfFirstBattle;
+  sGeneralInfo.sWorldSectorLocationOfFirstBattle =
+      GetSectorID16(locationOfFirstBattle.x, locationOfFirstBattle.y);
 
   // State of email flags
   sGeneralInfo.fUnReadMailFlag = fUnReadMailFlag;
@@ -3719,7 +3721,8 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
   iPortraitNumber = sGeneralInfo.iPortraitNumber;
 
   // location of first enocunter with enemy
-  sWorldSectorLocationOfFirstBattle = sGeneralInfo.sWorldSectorLocationOfFirstBattle;
+  locationOfFirstBattle.x = SectorID16_X(sGeneralInfo.sWorldSectorLocationOfFirstBattle);
+  locationOfFirstBattle.y = SectorID16_Y(sGeneralInfo.sWorldSectorLocationOfFirstBattle);
 
   fShowMilitia = sGeneralInfo.fShowMilitia;
 

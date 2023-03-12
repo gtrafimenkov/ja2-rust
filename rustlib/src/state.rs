@@ -1,6 +1,8 @@
-use super::sam_sites;
-use super::sector;
-use super::towns;
+use crate::militia;
+use crate::sam_sites;
+use crate::sector;
+use crate::towns;
+use crate::ui;
 use once_cell::sync::Lazy;
 
 pub static mut STATE: Lazy<State> = Lazy::new(State::new);
@@ -9,6 +11,8 @@ pub struct State {
     pub sam_sites: sam_sites::State,
     pub sectors: [[sector::State; 18]; 18],
     pub town_map: towns::TownMap,
+    pub militia: militia::State,
+    pub ui: ui::State,
 }
 
 impl Default for State {
@@ -23,6 +27,8 @@ impl State {
             sam_sites: sam_sites::State::new(),
             sectors: [[sector::State::new(); 18]; 18],
             town_map: Default::default(),
+            militia: Default::default(),
+            ui: Default::default(),
         };
         for y in 1..17 {
             for x in 1..17 {
@@ -38,6 +44,14 @@ impl State {
 
     pub fn get_mut_sector(&mut self, x: u8, y: u8) -> &mut sector::State {
         &mut self.sectors[y as usize][x as usize]
+    }
+
+    pub fn get_militia_force(&self, x: u8, y: u8) -> &militia::Force {
+        &self.militia.force[y as usize][x as usize]
+    }
+
+    pub fn get_mut_militia_force(&mut self, x: u8, y: u8) -> &mut militia::Force {
+        &mut self.militia.force[y as usize][x as usize]
     }
 
     pub fn get_number_of_sam_under_player_control(&self) -> u8 {
@@ -73,6 +87,14 @@ impl State {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn empty_state() {
+        let state = State::new();
+        assert_eq!(0, state.get_militia_force(1, 1).green);
+        assert_eq!(0, state.get_militia_force(1, 1).regular);
+        assert_eq!(0, state.get_militia_force(1, 1).elite);
+    }
 
     #[test]
     fn sector_enemy_controlled() {
