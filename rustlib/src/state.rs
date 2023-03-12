@@ -1,3 +1,4 @@
+use crate::civ_groups;
 use crate::militia;
 use crate::sam_sites;
 use crate::sector;
@@ -13,6 +14,7 @@ pub struct State {
     pub town_map: towns::TownMap,
     pub militia: militia::State,
     pub ui: ui::State,
+    pub civ_groups: civ_groups::State,
 }
 
 impl Default for State {
@@ -29,6 +31,7 @@ impl State {
             town_map: Default::default(),
             militia: Default::default(),
             ui: Default::default(),
+            civ_groups: Default::default(),
         };
         for y in 1..17 {
             for x in 1..17 {

@@ -20,6 +20,7 @@
 #include "Tactical/TacticalSave.h"
 #include "TacticalAI/AI.h"
 #include "TacticalAI/AIInternals.h"
+#include "rust_civ_groups.h"
 
 #define AI_LIST_SIZE TOTAL_SOLDIERS
 
@@ -190,7 +191,7 @@ BOOLEAN SatisfiesAIListConditions(struct SOLDIERTYPE* pSoldier, uint8_t* pubDone
     // the time
     if (pSoldier->bNeutral &&
         (pSoldier->ubCivilianGroup == NON_CIV_GROUP ||
-         gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] == CIV_GROUP_NEUTRAL)) {
+         GetCivGroupHostility(pSoldier->ubCivilianGroup) == CIV_GROUP_NEUTRAL)) {
       if (pSoldier->bAlertStatus < STATUS_RED) {
         // unalerted, barely handle
         if (fDoRandomChecks && PreRandom(10) && !(pSoldier->ubQuoteRecord)) {

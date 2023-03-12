@@ -61,6 +61,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
 #include "platform_strings.h"
+#include "rust_civ_groups.h"
 #include "rust_sam_sites.h"
 
 // MODULE FOR EXPLOSIONS
@@ -2281,7 +2282,7 @@ void PerformItemAction(int16_t sGridNo, struct OBJECTTYPE *pObj) {
                     SoundDir(sGridNo));
       CallAvailableKingpinMenTo(sGridNo);
 
-      gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] = CIV_GROUP_HOSTILE;
+      SetCivGroupHostility(KINGPIN_CIV_GROUP, CIV_GROUP_HOSTILE);
 
       {
         uint8_t ubID, ubID2;

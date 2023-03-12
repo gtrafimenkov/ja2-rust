@@ -9,6 +9,7 @@
 #include "TacticalAI/AIInternals.h"
 #include "TacticalAI/NPC.h"
 #include "TileEngine/RenderFun.h"
+#include "rust_civ_groups.h"
 
 void CallAvailableEnemiesTo(int16_t sGridNo) {
   int32_t iLoop;

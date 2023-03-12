@@ -487,7 +487,7 @@ BOOLEAN AddPlacementToWorld(SOLDIERINITNODE *curr) {
 
         // Kinpin guys might be guarding Tony
         if (tempDetailedPlacement.ubCivilianGroup == KINGPIN_CIV_GROUP &&
-            (gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] == CIV_GROUP_WILL_BECOME_HOSTILE ||
+            (GetCivGroupHostility(KINGPIN_CIV_GROUP) == CIV_GROUP_WILL_BECOME_HOSTILE ||
              ((gubQuest[QUEST_KINGPIN_MONEY] == QUESTINPROGRESS) &&
               (CheckFact(FACT_KINGPIN_CAN_SEND_ASSASSINS, KINGPIN))))) {
           if (tempDetailedPlacement.ubProfile == NO_PROFILE) {

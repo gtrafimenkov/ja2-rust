@@ -39,6 +39,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "rust_civ_groups.h"
 
 #ifdef JA2TESTVERSION
 #include "Strategic/QuestDebugSystem.h"
@@ -2633,7 +2634,7 @@ void TriggerFriendWithHostileQuote(uint8_t ubNPC) {
   }
 
   if (bTeam == CIV_TEAM && pSoldier->ubCivilianGroup != NON_CIV_GROUP &&
-      gTacticalStatus.fCivGroupHostile[pSoldier->ubCivilianGroup] == CIV_GROUP_NEUTRAL) {
+      GetCivGroupHostility(pSoldier->ubCivilianGroup) == CIV_GROUP_NEUTRAL) {
     CivilianGroupMemberChangesSides(pSoldier);
   }
 

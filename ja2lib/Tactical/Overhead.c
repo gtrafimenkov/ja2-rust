@@ -3165,7 +3165,7 @@ struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacke
           }
   */
 
-  if (gTacticalStatus.fCivGroupHostile[pNewAttacked->ubCivilianGroup] == CIV_GROUP_NEUTRAL) {
+  if (GetCivGroupHostility(pNewAttacked->ubCivilianGroup) == CIV_GROUP_NEUTRAL) {
     // if the civilian group turning hostile is the Rebels
     if (pAttacked->ubCivilianGroup == REBEL_CIV_GROUP) {
       // we haven't already reduced the loyalty back when we first set the flag to BECOME hostile
@@ -3174,8 +3174,7 @@ struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacke
 
     AddStrategicEvent(EVENT_MAKE_CIV_GROUP_HOSTILE_ON_NEXT_SECTOR_ENTRANCE,
                       GetWorldTotalMin() + 300, pNewAttacked->ubCivilianGroup);
-    gTacticalStatus.fCivGroupHostile[pNewAttacked->ubCivilianGroup] =
-        CIV_GROUP_WILL_EVENTUALLY_BECOME_HOSTILE;
+    SetCivGroupHostility(pNewAttacked->ubCivilianGroup, CIV_GROUP_WILL_EVENTUALLY_BECOME_HOSTILE);
   }
 
   return (pNewAttacked);
@@ -3186,7 +3185,7 @@ void CivilianGroupChangesSides(uint8_t ubCivilianGroup) {
   int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
-  gTacticalStatus.fCivGroupHostile[ubCivilianGroup] = CIV_GROUP_HOSTILE;
+  SetCivGroupHostility(ubCivilianGroup, CIV_GROUP_HOSTILE);
 
   // now change sides for anyone on the civ team
   cnt = gTacticalStatus.Team[CIV_TEAM].bFirstID;
@@ -3254,23 +3253,6 @@ void MilitiaChangesSides(void) {
     }
   }
 }
-
-/*
-void MakePotentiallyHostileCivGroupsHostile( void )
-{
-        uint8_t		ubLoop;
-
-        // loop through all civ groups that might become hostile and set them
-        // to hostile
-        for ( ubLoop = REBEL_CIV_GROUP; ubLoop < NUM_CIV_GROUPS; ubLoop++ )
-        {
-                if (gTacticalStatus.fCivGroupHostile[ ubLoop ] == CIV_GROUP_WILL_BECOME_HOSTILE)
-                {
-                        gTacticalStatus.fCivGroupHostile[ ubLoop ] = CIV_GROUP_HOSTILE;
-                }
-        }
-}
-*/
 
 int8_t NumActiveAndConsciousTeamMembers(uint8_t ubTeam) {
   int32_t cnt;

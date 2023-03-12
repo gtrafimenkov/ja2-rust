@@ -143,7 +143,6 @@ mod tests {
 
     #[test]
     fn test_get_sam_controlling_sector() {
-        // assert_
         assert_eq!(SamSite::Drassen, get_sam_controlling_sector(15, 4).unwrap());
         assert!(get_sam_controlling_sector(0, 0).is_none()); // invaid coordinates
         assert!(get_sam_controlling_sector(9, 1).is_none()); // Omerta

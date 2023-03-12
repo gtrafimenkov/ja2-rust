@@ -15,6 +15,7 @@
 #include "TacticalAI/NPC.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
+#include "rust_civ_groups.h"
 
 int8_t RTPlayerDecideAction(struct SOLDIERTYPE *pSoldier) {
   int8_t bAction = AI_ACTION_NONE;

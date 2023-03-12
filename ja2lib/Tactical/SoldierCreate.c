@@ -269,7 +269,7 @@ struct SOLDIERTYPE *TacticalCreateSoldier(SOLDIERCREATE_STRUCT *pCreateStruct, u
       if (Soldier.ubProfile == WARDEN) {
         Soldier.bNeutral = FALSE;
       } else if (Soldier.ubCivilianGroup != NON_CIV_GROUP) {
-        if (gTacticalStatus.fCivGroupHostile[Soldier.ubCivilianGroup] == CIV_GROUP_HOSTILE) {
+        if (GetCivGroupHostility(Soldier.ubCivilianGroup) == CIV_GROUP_HOSTILE) {
           Soldier.bNeutral = FALSE;
         } else {
           Soldier.bNeutral = TRUE;
