@@ -18,7 +18,9 @@ pub enum Town {
     Chitzena = 12,
 }
 
-pub const ALL_TOWNS: [Town; 12] = [
+const NUM_TOWNS: usize = 12;
+
+pub const ALL_TOWNS: [Town; NUM_TOWNS] = [
     Town::Omerta,
     Town::Drassen,
     Town::Alma,
@@ -148,6 +150,49 @@ impl Town {
             Town::Orta => ORTA_SECTORS.iter(),
             Town::Balime => BALIME_SECTORS.iter(),
             Town::Meduna => MEDUNA_SECTORS.iter(),
+        }
+    }
+}
+
+#[derive(Clone, Copy)]
+pub struct Loyalty {
+    pub rating: u8,
+    pub change: i16,
+    pub started: bool,
+    pub liberated: bool,
+}
+
+impl Default for Loyalty {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl Loyalty {
+    pub fn new() -> Self {
+        Loyalty {
+            rating: 0,
+            change: 0,
+            started: false,
+            liberated: false,
+        }
+    }
+}
+
+pub struct State {
+    pub loyalty: [Loyalty; NUM_TOWNS],
+}
+
+impl Default for State {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl State {
+    pub fn new() -> Self {
+        State {
+            loyalty: [Loyalty::new(); NUM_TOWNS],
         }
     }
 }
