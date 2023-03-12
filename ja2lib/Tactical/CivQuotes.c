@@ -30,6 +30,7 @@
 #include "Utils/MercTextBox.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "rust_civ_groups.h"
 
 #define DIALOGUE_DEFAULT_WIDTH 200
 #define EXTREAMLY_LOW_TOWN_LOYALTY 20
@@ -402,7 +403,6 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
   // Hicks.....
   if (pCiv->ubCivilianGroup == HICKS_CIV_GROUP) {
     // Are they friendly?
-    // if ( gTacticalStatus.fCivGroupHostile[ HICKS_CIV_GROUP ] < CIV_GROUP_WILL_BECOME_HOSTILE )
     if (pCiv->bNeutral) {
       return (CIV_QUOTE_HICKS_FRIENDLY);
     } else {
@@ -413,7 +413,6 @@ UINT8 DetermineCivQuoteEntry(struct SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse,
   // Goons.....
   if (pCiv->ubCivilianGroup == KINGPIN_CIV_GROUP) {
     // Are they friendly?
-    // if ( gTacticalStatus.fCivGroupHostile[ KINGPIN_CIV_GROUP ] < CIV_GROUP_WILL_BECOME_HOSTILE )
     if (pCiv->bNeutral) {
       return (CIV_QUOTE_GOONS_FRIENDLY);
     } else {

@@ -21,6 +21,7 @@
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 //
 // CJC's DG->JA2 conversion notes

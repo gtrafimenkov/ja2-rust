@@ -72,7 +72,7 @@ typedef struct {
   BOOLEAN fGoingToEnterDemo;
   BOOLEAN fNOTDOLASTDEMO;
   BOOLEAN fMultiplayer;
-  BOOLEAN fCivGroupHostile[NUM_CIV_GROUPS];
+  BOOLEAN __only_storage_fCivGroupHostile[20 /* NUM_CIV_GROUPS */];
   UINT8 ubLastBattleSectorX;
   UINT8 ubLastBattleSectorY;
   BOOLEAN fLastBattleWon;

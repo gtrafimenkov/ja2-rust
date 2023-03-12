@@ -25,6 +25,7 @@
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 #define MEDUNA_ITEM_DROP_OFF_GRIDNO 10959
 #define MEDUNA_ITEM_DROP_OFF_SECTOR_X 3
@@ -566,7 +567,7 @@ void HandleNPCSystemEvent(UINT32 uiEvent) {
             SetFactTrue(FACT_KINGPIN_CAN_SEND_ASSASSINS);
             gMercProfiles[SPIKE].sSectorX = 5;
             gMercProfiles[SPIKE].sSectorY = MAP_ROW_C;
-            gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] = CIV_GROUP_WILL_BECOME_HOSTILE;
+            SetCivGroupHostility(KINGPIN_CIV_GROUP, CIV_GROUP_WILL_BECOME_HOSTILE);
           }
         }
         break;
@@ -859,12 +860,11 @@ void HandleEarlyMorningEvents(void) {
 
 void MakeCivGroupHostileOnNextSectorEntrance(UINT8 ubCivGroup) {
   // if it's the rebels that will become hostile, reduce town loyalties NOW, not later
-  if (ubCivGroup == REBEL_CIV_GROUP &&
-      gTacticalStatus.fCivGroupHostile[ubCivGroup] == CIV_GROUP_NEUTRAL) {
+  if (ubCivGroup == REBEL_CIV_GROUP && GetCivGroupHostility(ubCivGroup) == CIV_GROUP_NEUTRAL) {
     ReduceLoyaltyForRebelsBetrayed();
   }
 
-  gTacticalStatus.fCivGroupHostile[ubCivGroup] = CIV_GROUP_WILL_BECOME_HOSTILE;
+  SetCivGroupHostility(ubCivGroup, CIV_GROUP_WILL_BECOME_HOSTILE);
 }
 
 void RemoveAssassin(UINT8 ubProfile) {

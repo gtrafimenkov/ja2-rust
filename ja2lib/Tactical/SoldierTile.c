@@ -50,6 +50,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_civ_groups.h"
 
 extern INT8 gbNumMercsUntilWaitingOver;
 extern UINT8 gubWaitingForAllMercsToExitCode;

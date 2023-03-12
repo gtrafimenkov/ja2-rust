@@ -27,6 +27,7 @@
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "rust_civ_groups.h"
 
 #ifdef JA2EDITOR
 extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
@@ -692,7 +693,7 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
   UINT16 usTemp;
 
   if ((pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) &&
-      (gTacticalStatus.fCivGroupHostile[KINGPIN_CIV_GROUP] ||
+      (GetCivGroupHostility(KINGPIN_CIV_GROUP) ||
        ((gubQuest[QUEST_KINGPIN_MONEY] == QUESTINPROGRESS) &&
         (CheckFact(FACT_KINGPIN_CAN_SEND_ASSASSINS, KINGPIN)))) &&
       (gWorldSectorX == 5 && gWorldSectorY == MAP_ROW_C) &&
