@@ -68,6 +68,18 @@
 // divisor for dmg to a building by allied rebel
 #define DIVISOR_FOR_REBEL_BUILDING_DMG 2
 
+typedef struct TOWN_LOYALTY {
+  UINT8 ubRating;
+  INT16 sChange;
+  BOOLEAN fStarted;  // starting loyalty of each town is initialized only when player first enters
+                     // that town
+  UINT8 UNUSEDubRebelSentiment;  // current rebel sentiment.  Events could change the starting
+                                 // value...
+  BOOLEAN fLiberatedAlready;
+  BYTE filler[19];  // reserved for expansion
+
+} TOWN_LOYALTY;
+
 // town loyalty table
 TOWN_LOYALTY gTownLoyalty[NUM_TOWNS];
 
@@ -1316,3 +1328,5 @@ void MaximizeLoyaltyForDeidrannaKilled(void) {
 }
 
 u8 GetTownLoyaltyRating(TownID townID) { return gTownLoyalty[townID].ubRating; }
+
+bool IsTownLoyaltyStarted(TownID townID) { return gTownLoyalty[townID].fStarted; }

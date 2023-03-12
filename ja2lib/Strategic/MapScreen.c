@@ -4647,7 +4647,7 @@ void GetMapKeyboardInput(UINT32 *puiNewEvent) {
             // set up the helicopter over Omerta (if it's not already set up)
             SetUpHelicopterForPlayer(9, 1);
             // raise Drassen loyalty to minimum that will allow Skyrider to fly
-            if (gTownLoyalty[DRASSEN].fStarted &&
+            if (IsTownLoyaltyStarted(DRASSEN) &&
                 (GetTownLoyaltyRating(DRASSEN) < LOYALTY_LOW_THRESHOLD)) {
               SetTownLoyalty(DRASSEN, LOYALTY_LOW_THRESHOLD);
             }
