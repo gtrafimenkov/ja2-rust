@@ -10,6 +10,17 @@ pub type SectorID8 = u8;
 /// Sector ID 0-324 (18x18)
 pub type SectorID16 = i16;
 
+#[repr(C)]
+pub struct SectorPoint {
+    pub x: u8,
+    pub y: u8,
+}
+
+#[no_mangle]
+pub extern "C" fn GetSectorPoint(x: u8, y: u8) -> SectorPoint {
+    SectorPoint { x, y }
+}
+
 /// Convert coordinates ([1-16], [1-16]) to 0-255 index.
 /// This function should be prefered over GetSectorID8_STATIC macro.
 #[no_mangle]

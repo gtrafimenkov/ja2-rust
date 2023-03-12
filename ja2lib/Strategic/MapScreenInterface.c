@@ -1046,7 +1046,7 @@ void HandleDisplayOfItemPopUpForSector(uint8_t sMapX, uint8_t sMapY, int8_t sMap
     RemoveScreenMaskForInventoryPoolPopUp();
 
     // drity nessacary regions
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   }
 
   // showing it
@@ -1426,7 +1426,7 @@ BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, uint32_t uiSlotIndex )
 
 void HandleGroupAboutToArrive(void) {
   // reblit map to change the color of the "people in motion" marker
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   // ARM - commented out - don't see why this is needed
   //	fTeamPanelDirty = TRUE;
@@ -1655,7 +1655,7 @@ void FindAndSetThisContractSoldier(struct SOLDIERTYPE *pSoldier) {
 
 void HandleMAPUILoseCursorFromOtherScreen(void) {
   // rerender map without cursors
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 
   if (fInMapMode) {
     RenderMapRegionBackground();
@@ -1982,7 +1982,7 @@ void HandleMinerEvent(uint8_t bMinerNumber, uint8_t sSectorX, uint8_t sSectorY,
     gsSectorLocatorX = sSectorX;
     gsSectorLocatorY = sSectorY;
 
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
 
     // post dialogue events for miners to say this quote and flash the sector where his mine is
     CharacterDialogueWithSpecialEvent((uint8_t)uiExternalFaceProfileIds[bMinerNumber], sQuoteNumber,
@@ -2223,7 +2223,7 @@ void SetUpMapScreenFastHelpText(void) {
 void StopMapScreenHelpText(void) {
   fShowMapScreenHelpText = FALSE;
   fTeamPanelDirty = TRUE;
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fCharacterInfoPanelDirty = TRUE;
   fMapScreenBottomDirty = TRUE;
 
@@ -2666,7 +2666,7 @@ void CreateDestroyMovementBox(uint8_t sSectorX, uint8_t sSectorY, int8_t sSector
     CreatePopUpBoxForMovementBox();
     BuildMouseRegionsForMoveBox();
     CreateScreenMaskForMoveBox();
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
   } else if ((fShowMapScreenMovementList == FALSE) && (fCreated == TRUE)) {
     fCreated = FALSE;
 
@@ -2675,7 +2675,7 @@ void CreateDestroyMovementBox(uint8_t sSectorX, uint8_t sSectorY, int8_t sSector
     RemoveBox(ghMoveBox);
     ghMoveBox = -1;
     RemoveScreenMaskForMoveBox();
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fMapScreenBottomDirty = TRUE;  // really long move boxes can overlap bottom panel
   }
 }
@@ -3278,7 +3278,7 @@ void MoveMenuBtnCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
 
       fRebuildMoveBox = TRUE;
       fTeamPanelDirty = TRUE;
-      MarkForRedrawalStrategicMap();
+      SetMapPanelDirty(true);
       fCharacterInfoPanelDirty = TRUE;
       MarkAllBoxesAsAltered();
     }
@@ -3468,7 +3468,7 @@ void HandleSettingTheSelectedListOfMercs(void) {
     // set cursor
     SetUpCursorForStrategicMap();
     fTeamPanelDirty = TRUE;
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fCharacterInfoPanelDirty = TRUE;
 
     DeselectSelectedListMercsWhoCantMoveWithThisGuy(
@@ -3557,7 +3557,7 @@ void ReBuildMoveBox(void) {
   // reset the fact
   fRebuildMoveBox = FALSE;
   fTeamPanelDirty = TRUE;
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
   fCharacterInfoPanelDirty = TRUE;
 
   // stop showing the box
@@ -4076,7 +4076,7 @@ void CreateDestroyTheUpdateBox(void) {
     UnPauseGame();
 
     // dirty screen
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fTeamPanelDirty = TRUE;
     fCharacterInfoPanelDirty = TRUE;
 
@@ -4212,19 +4212,19 @@ void SetUpdateBoxFlag(BOOLEAN fFlag) {
 void SetTixaAsFound(void) {
   // set the town of Tixa as found by the player
   fFoundTixa = TRUE;
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 void SetOrtaAsFound(void) {
   // set the town of Orta as found by the player
   fFoundOrta = TRUE;
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 void SetSAMSiteAsFound(enum SamSite uiSamIndex) {
   // set this SAM site as being found by the player
   SetSamSiteFound(uiSamIndex, true);
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 // ste up the timers for move menu in mapscreen for double click detection
@@ -4411,7 +4411,7 @@ void HandleDisplayOfExitToTacticalMessageForFirstEntryToMapScreen(void) {
 
   if (iDifference > TIMER_FOR_SHOW_EXIT_TO_TACTICAL_MESSAGE) {
     fShowMapScreenHelpText = FALSE;
-    MarkForRedrawalStrategicMap();
+    SetMapPanelDirty(true);
     fTeamPanelDirty = TRUE;
     fCharacterInfoPanelDirty = TRUE;
     giExitToTactBaseTime = 0;
@@ -5099,7 +5099,7 @@ void TurnOnSectorLocator(uint8_t ubProfileID) {
 
 void TurnOffSectorLocator() {
   gubBlitSectorLocatorCode = LOCATOR_COLOR_NONE;
-  MarkForRedrawalStrategicMap();
+  SetMapPanelDirty(true);
 }
 
 void HandleBlitOfSectorLocatorIcon(uint8_t sSectorX, uint8_t sSectorY, int16_t sSectorZ,

@@ -21,7 +21,6 @@ uint8_t GetSolSectorX(const struct SOLDIERTYPE *s);
 uint8_t GetSolSectorY(const struct SOLDIERTYPE *s);
 int8_t GetSolSectorZ(const struct SOLDIERTYPE *s);
 SectorID8 GetSolSectorID8(const struct SOLDIERTYPE *s);
-SectorID16 GetSolSectorID16(const struct SOLDIERTYPE *s);
 
 int8_t GetSolAssignment(const struct SOLDIERTYPE *s);
 uint8_t GetSolClass(const struct SOLDIERTYPE *s);

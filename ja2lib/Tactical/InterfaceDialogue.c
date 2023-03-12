@@ -190,7 +190,6 @@ struct SOLDIERTYPE *gpPendingDestSoldier;
 struct SOLDIERTYPE *gpPendingSrcSoldier;
 int8_t gbPendingApproach;
 uintptr_t guiPendingApproachData;
-extern BOOLEAN fMapPanelDirty;
 
 int32_t giHospitalTempBalance;  // stores amount of money for current doctoring
 int32_t

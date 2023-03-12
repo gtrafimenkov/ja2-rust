@@ -1,8 +1,8 @@
 #include "Soldier.h"
 
-#include "Militia.h"
 #include "Tactical/Menptr.h"
 #include "Town.h"
+#include "rust_militia.h"
 
 // Get soldier by index.
 // Valid indeces are [0..TOTAL_SOLDIERS).
@@ -22,10 +22,6 @@ int8_t GetSolSectorZ(const struct SOLDIERTYPE *s) { return s->bSectorZ; }
 SectorID8 GetSolSectorID8(const struct SOLDIERTYPE *s) {
   return GetSectorID8((uint8_t)s->sSectorX, (uint8_t)s->sSectorY);
 }
-SectorID16 GetSolSectorID16(const struct SOLDIERTYPE *s) {
-  return GetSectorID16((uint8_t)s->sSectorX, (uint8_t)s->sSectorY);
-}
-
 int8_t GetSolAssignment(const struct SOLDIERTYPE *s) { return s->bAssignment; }
 uint8_t GetSolClass(const struct SOLDIERTYPE *s) { return s->ubSoldierClass; }
 

@@ -33,12 +33,6 @@ enum {
   INSERTION_CODE_CENTER,
 };
 
-// PLEASE USE GetSectorID16() macro instead (they're identical).
-// #define			GETWORLDMAPNO( x, y )		( x+(MAP_WORLD_X*y) )
-
-typedef struct strategicmapelement StrategicMapElement;
-extern StrategicMapElement StrategicMap[MAP_WORLD_X * MAP_WORLD_Y];
-
 BOOLEAN InitStrategicEngine();
 
 void HandleSoldierDeadComments(struct SOLDIERTYPE *pSoldier);

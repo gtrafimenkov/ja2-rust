@@ -837,7 +837,7 @@ void CreatureAttackTown(
     } else {
       gubCreatureBattleCode = CREATURE_BATTLE_CODE_PREBATTLEINTERFACE;
     }
-  } else if (CountAllMilitiaInSector(ubSectorX, ubSectorY)) {  // we have militia in the sector
+  } else if (CountMilitiaInSector(ubSectorX, ubSectorY)) {  // we have militia in the sector
     gubCreatureBattleCode = CREATURE_BATTLE_CODE_AUTORESOLVE;
   } else if (!IsSectorEnemyControlled(ubSectorX, ubSectorY)) {
     // player controlled sector -- eat some civilians

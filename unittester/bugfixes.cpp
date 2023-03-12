@@ -16,8 +16,6 @@ extern "C" {
 TEST(Bugfixes, SectorName) {
   wchar_t buf[100];
 
-  InitializeMapStructure();
-
   GetSectorIDString(1, 1, 0, buf, ARR_SIZE(buf), false);
   EXPECT_STREQ(L"A1: Urban", buf);
 
