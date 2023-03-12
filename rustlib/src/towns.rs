@@ -183,6 +183,64 @@ impl Loyalty {
         self.change = 0;
         self.started = true;
     }
+
+    // TODO: rustlib
+    // // update town loyalty rating based on gain values
+    // void UpdateTownLoyaltyRating(TownID bTownId) {
+    //   // check gain value and update loyaty
+    //   UINT8 ubOldLoyaltyRating = 0;
+    //   INT16 sRatingChange = 0;
+    //   UINT8 ubMaxLoyalty = 0;
+
+    //   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
+
+    //   // remember previous loyalty value
+    //   ubOldLoyaltyRating = gTownLoyalty[bTownId].ubRating;
+
+    //   sRatingChange = gTownLoyalty[bTownId].sChange / GAIN_PTS_PER_LOYALTY_PT;
+
+    //   // if loyalty is ready to increase
+    //   if (sRatingChange > 0) {
+    //     // if the town is Omerta, and the rebels are/will become hostile
+    //     if ((bTownId == OMERTA) && (GetCivGroupHostility(REBEL_CIV_GROUP) != CIV_GROUP_NEUTRAL)) {
+    //       // maximum loyalty is much less than normal
+    //       ubMaxLoyalty = HOSTILE_OMERTA_LOYALTY_RATING;
+    //     } else {
+    //       ubMaxLoyalty = MAX_LOYALTY_VALUE;
+    //     }
+
+    //     // check if we'd be going over the max
+    //     if ((GetTownLoyaltyRating(bTownId) + sRatingChange) >= ubMaxLoyalty) {
+    //       // set to max and null out gain pts
+    //       gTownLoyalty[bTownId].ubRating = ubMaxLoyalty;
+    //       gTownLoyalty[bTownId].sChange = 0;
+    //     } else {
+    //       // increment loyalty rating, reduce sChange
+    //       gTownLoyalty[bTownId].ubRating += sRatingChange;
+    //       gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
+    //     }
+    //   } else
+    //     // if loyalty is ready to decrease
+    //     if (sRatingChange < 0) {
+    //       // check if we'd be going below zero
+    //       if ((GetTownLoyaltyRating(bTownId) + sRatingChange) < 0) {
+    //         // set to zero and null out gain pts
+    //         gTownLoyalty[bTownId].ubRating = 0;
+    //         gTownLoyalty[bTownId].sChange = 0;
+    //       } else {
+    //         // decrement loyalty rating, reduce sChange
+    //         gTownLoyalty[bTownId].ubRating += sRatingChange;
+    //         gTownLoyalty[bTownId].sChange %= GAIN_PTS_PER_LOYALTY_PT;
+    //       }
+    //     }
+
+    //   // check old aginst new, if diff, dirty map panel
+    //   if (ubOldLoyaltyRating != GetTownLoyaltyRating(bTownId)) {
+    //     SetMapPanelDirty(true);
+    //   }
+
+    //   return;
+    // }
 }
 
 pub struct State {
@@ -217,6 +275,24 @@ impl State {
         }
     }
 }
+
+// on a scale of 1-100, this is a measure of how much each town hates the Queen's opression & is
+// willing to stand against it it primarily controls the RATE of loyalty change in each town: the
+// loyalty effect of the same events depends on it
+const REBEL_SENTIMENT: [u8; NUM_TOWNS] = [
+    90, // OMERTA	- They ARE the rebels!!!
+    30, // DRASSEN	- Rebel friendly, makes it pretty easy to get first mine's income going at the start
+    12, // ALMA	- Military town, high loyalty to Queen, need quests to get 100%
+    15, // GRUMM - Close to Meduna, strong influence
+    20, // TIXA - Not a real town
+    15, // CAMBRIA, - Artificially much lower 'cause it's big and central and too easy to get loyalty up there
+    20, // SAN_MONA - Neutral ground, loyalty doesn't vary
+    20, // ESTONI,	- Not a real town
+    20, // ORTA - Not a real town
+    12, // BALIME,	- Rich town, high loyalty to Queen
+    10, // MEDUNA,	- Enemy HQ, for God's sake!
+    35, // CHITZENA, - Artificially high 'cause there's not enough fights near it to get the loyalty up otherwise
+];
 
 #[cfg(test)]
 mod tests {
