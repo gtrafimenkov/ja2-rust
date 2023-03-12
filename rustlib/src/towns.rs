@@ -195,6 +195,15 @@ impl State {
             loyalty: [Loyalty::new(); NUM_TOWNS],
         }
     }
+
+    pub fn init_loyalty(&mut self) {
+        for mut item in self.loyalty {
+            item.rating = 0;
+            item.change = 0;
+            item.started = false;
+            item.liberated = false;
+        }
+    }
 }
 
 #[cfg(test)]

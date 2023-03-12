@@ -189,6 +189,11 @@ pub extern "C" fn SetTownAsLiberated(town: TownID) {
     unsafe { STATE.towns.loyalty[town as usize].liberated = true }
 }
 
+#[no_mangle]
+pub extern "C" fn InitTownLoyalty() {
+    unsafe { STATE.towns.init_loyalty() }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

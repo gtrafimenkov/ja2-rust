@@ -35,9 +35,6 @@ void SetTownLoyalty(TownID bTownId, UINT8 ubLoyaltyValue);
 // update the loyalty based on current % control of the town
 void UpdateLoyaltyBasedOnControl(TownID bTownId);
 
-// init town loyalty lists
-void InitTownLoyalty(void);
-
 // handle the death of a civ
 void HandleMurderOfCivilian(struct SOLDIERTYPE *pSoldier, BOOLEAN fIntentional);
 

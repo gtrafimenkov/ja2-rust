@@ -79,6 +79,8 @@ bool IsTownLiberated(enum TownID town);
 
 void SetTownAsLiberated(enum TownID town);
 
+void InitTownLoyalty(void);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

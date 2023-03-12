@@ -147,21 +147,6 @@ void UpdateTownLoyaltyBasedOnBadGuysInTown(TownID bTownId);
 extern void MapScreenDefaultOkBoxCallback(UINT8 bExitValue);
 
 // TODO: rustlib
-// void InitTownLoyalty(void) {
-//   UINT8 ubTown = 0;
-
-//   // set up town loyalty table
-//   for (ubTown = FIRST_TOWN; ubTown < NUM_TOWNS; ubTown++) {
-//     gTownLoyalty[ubTown].ubRating = 0;
-//     gTownLoyalty[ubTown].sChange = 0;
-//     gTownLoyalty[ubTown].fStarted = FALSE;
-//     gTownLoyalty[ubTown].fLiberatedAlready = FALSE;
-//   }
-
-//   return;
-// }
-
-// TODO: rustlib
 // void StartTownLoyaltyIfFirstTime(TownID bTownId) {
 //   Assert((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS));
 
