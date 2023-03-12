@@ -68,6 +68,8 @@
 // divisor for dmg to a building by allied rebel
 #define DIVISOR_FOR_REBEL_BUILDING_DMG 2
 
+// sizeof(TOWN_LOYALTY)
+
 typedef struct TOWN_LOYALTY {
   UINT8 ubRating;
   INT16 sChange;

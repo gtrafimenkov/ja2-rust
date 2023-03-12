@@ -34,6 +34,15 @@ struct TownSectors {
   struct TownSector sectors[40];
 };
 
+struct SAVE_LOAD_TOWN_LOYALTY {
+  uint8_t rating;
+  int16_t change;
+  uint8_t started;
+  uint8_t unused1;
+  uint8_t liberated;
+  uint8_t unused2[19];
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -57,6 +66,10 @@ bool DoesTownUseLoyalty(enum TownID town);
  * Return TownID the sector belongs to.
  */
 enum TownID GetTownIdForSector(uint8_t x, uint8_t y);
+
+struct SAVE_LOAD_TOWN_LOYALTY GetRawTownLoyalty(enum TownID town);
+
+void SetRawTownLoyalty(enum TownID town, const struct SAVE_LOAD_TOWN_LOYALTY *data);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -118,6 +118,57 @@ pub extern "C" fn GetTownIdForSector(x: u8, y: u8) -> TownID {
     }
 }
 
+#[repr(C)]
+#[allow(non_camel_case_types)]
+// Data structure for saving and loading the town loyalty
+pub struct SAVE_LOAD_TOWN_LOYALTY {
+    rating: u8,
+    change: i16,
+    started: u8,
+    unused1: u8,
+    liberated: u8,
+    unused2: [u8; 19],
+}
+
+#[no_mangle]
+pub extern "C" fn GetRawTownLoyalty(town: TownID) -> SAVE_LOAD_TOWN_LOYALTY {
+    match town {
+        TownID::BLANK_SECTOR => SAVE_LOAD_TOWN_LOYALTY {
+            rating: 0,
+            change: 0,
+            started: 0,
+            unused1: 0,
+            liberated: 0,
+            unused2: [0; 19],
+        },
+        _ => {
+            let internal = unsafe { &STATE.towns.loyalty[town as usize] };
+            SAVE_LOAD_TOWN_LOYALTY {
+                rating: internal.rating,
+                change: internal.change,
+                started: internal.started as u8,
+                unused1: 0,
+                liberated: internal.liberated as u8,
+                unused2: [0; 19],
+            }
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn SetRawTownLoyalty(town: TownID, data: &SAVE_LOAD_TOWN_LOYALTY) {
+    match town {
+        TownID::BLANK_SECTOR => {}
+        _ => {
+            let internal = unsafe { &mut STATE.towns.loyalty[town as usize] };
+            internal.change = data.change;
+            internal.rating = data.rating;
+            internal.started = data.started != 0;
+            internal.liberated = data.liberated != 0;
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
