@@ -7,6 +7,7 @@
 #include "SGP/Debug.h"
 #include "SGP/FileMan.h"
 #include "Utils/Message.h"
+#include "platform.h"
 
 #define QUEST_DEBUG_FILE "QuestDebug.txt"
 
@@ -102,7 +103,7 @@ void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
     // if the file exists
     if (FileMan_Exists(QUEST_DEBUG_FILE)) {
       // delete the file
-      if (!FileMan_Delete(QUEST_DEBUG_FILE)) {
+      if (!Plat_DeleteFile(QUEST_DEBUG_FILE)) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to delete %s file", QUEST_DEBUG_FILE));
         return;
       }

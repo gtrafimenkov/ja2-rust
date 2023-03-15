@@ -44,6 +44,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "platform.h"
 
 BOOLEAN gfSchedulesHosed = FALSE;
 extern UINT32 guiBrokenSaveGameVersion;
@@ -1824,7 +1825,7 @@ void DeleteSaveGameNumber(UINT8 ubSaveGameSlotID) {
   CreateSavedGameFileNameFromNumber(ubSaveGameSlotID, zSaveGameName);
 
   // Delete the saved game file
-  FileMan_Delete(zSaveGameName);
+  Plat_DeleteFile(zSaveGameName);
 }
 
 void DisplayOnScreenNumber(BOOLEAN fErase) {

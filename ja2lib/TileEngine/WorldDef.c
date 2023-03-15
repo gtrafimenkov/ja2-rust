@@ -3414,7 +3414,7 @@ void ReloadTileset(UINT8 ubID) {
   // Delete file
   sprintf(aFilename, "MAPS\\%s", TEMP_FILE_FOR_TILESET_CHANGE);
 
-  FileMan_Delete(aFilename);
+  Plat_DeleteFile(aFilename);
 }
 
 void SaveMapLights(HWFILE hfile) {
