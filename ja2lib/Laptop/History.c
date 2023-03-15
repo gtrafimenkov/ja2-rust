@@ -81,6 +81,7 @@ INT32 giHistoryButtonImage[2];
 BOOLEAN fInHistoryMode = FALSE;
 
 // current page displayed
+// TODO: rustlib
 INT32 iCurrentHistoryPage = 1;
 
 // the History record list
@@ -449,6 +450,7 @@ void BtnHistoryDisplayNextPageCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
+// TODO: rustlib
 BOOLEAN IncrementCurrentPageHistoryDisplay(void) {
   // run through list, from pCurrentHistory, to NUM_RECORDS_PER_PAGE +1 HistoryUnits
   HWFILE hFileHandle;
