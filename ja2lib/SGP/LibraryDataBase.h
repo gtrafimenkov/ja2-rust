@@ -121,7 +121,6 @@ extern DatabaseManagerHeaderStruct gFileDataBase;
 
 // Function Prototypes
 
-BOOLEAN CheckForLibraryExistence(STR pLibraryName);
 BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibheader, BOOLEAN fCanBeOnCDrom);
 
 BOOLEAN CheckIfFileExistInLibrary(STR pFileName);
