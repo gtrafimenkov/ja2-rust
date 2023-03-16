@@ -2045,7 +2045,7 @@ void LoadGlobalSummary() {
   }
 
   // TEMP
-  FileMan_Delete("_global.sum");
+  Plat_DeleteFile("_global.sum");
 
   gfGlobalSummaryExists = TRUE;
 
@@ -2070,7 +2070,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 0, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
       // main B1 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1.dat", 'A' + y, x + 1);
@@ -2084,7 +2084,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 1, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b1.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
       // main B2 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2.dat", 'A' + y, x + 1);
@@ -2098,7 +2098,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 2, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b2.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
       // main B3 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3.dat", 'A' + y, x + 1);
@@ -2112,7 +2112,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 3, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b3.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
       // alternate ground level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_a.dat", 'A' + y, x + 1);
@@ -2126,7 +2126,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 4, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_a.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
       // alternate B1 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1_a.dat", 'A' + y, x + 1);
@@ -2140,7 +2140,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 5, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b1_a.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
       // alternate B2 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2_a.dat", 'A' + y, x + 1);
@@ -2154,7 +2154,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 6, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b2_a.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
       // alternate B3 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3_a.dat", 'A' + y, x + 1);
@@ -2169,7 +2169,7 @@ void LoadGlobalSummary() {
         LoadSummary(szSector, 7, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b3_a.sum", szSector);
-        FileMan_Delete(szFilename);
+        Plat_DeleteFile(szFilename);
       }
     }
     DebugPrint(String("Sector Row %c complete... \n", y + 'A'));

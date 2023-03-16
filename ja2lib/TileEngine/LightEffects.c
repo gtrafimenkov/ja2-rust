@@ -23,6 +23,7 @@
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "platform.h"
 
 #define NUM_LIGHT_EFFECT_SLOTS 25
 
@@ -289,7 +290,7 @@ BOOLEAN SaveLightEffectsToMapTempFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ
   GetMapTempFileName(SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // delete file the file.
-  FileMan_Delete(zMapName);
+  Plat_DeleteFile(zMapName);
 
   // loop through and count the number of Light effects
   for (uiCnt = 0; uiCnt < guiNumLightEffects; uiCnt++) {

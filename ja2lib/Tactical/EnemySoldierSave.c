@@ -27,6 +27,7 @@
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
+#include "platform.h"
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
     uint8_t *pubNumElites, uint8_t *pubNumRegulars, uint8_t *pubNumAdmins,
@@ -50,7 +51,7 @@ void RemoveEnemySoldierTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSect
     GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
     // Delete the temp file.
-    FileMan_Delete(zMapName);
+    Plat_DeleteFile(zMapName);
   }
 }
 
@@ -65,7 +66,7 @@ void RemoveCivilianTempFile(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ)
     GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
     // Delete the temp file.
-    FileMan_Delete(zMapName);
+    Plat_DeleteFile(zMapName);
   }
 }
 

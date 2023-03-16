@@ -45,6 +45,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "platform.h"
 
 // #ifdef JA2BETAVERSION
 
@@ -3014,7 +3015,7 @@ void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
     // if the file exists
     if (FileMan_Exists(QUEST_DEBUG_FILE)) {
       // delete the file
-      if (!FileMan_Delete(QUEST_DEBUG_FILE)) {
+      if (!Plat_DeleteFile(QUEST_DEBUG_FILE)) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to delete %s file", QUEST_DEBUG_FILE));
         return;
       }
