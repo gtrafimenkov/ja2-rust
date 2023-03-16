@@ -29,8 +29,6 @@ BOOLEAN FileMan_ExistsNoDB(char* strFilename) {
   return (fExists);
 }
 
-BOOLEAN FileMan_Delete(char* strFilename) { return (Plat_DeleteFile(strFilename)); }
-
 BOOLEAN FileMan_Exists(char* strFilename) {
   BOOLEAN fExists = FALSE;
   FILE* file;
