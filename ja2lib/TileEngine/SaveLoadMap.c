@@ -18,6 +18,7 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "platform.h"
 
 #define NUM_REVEALED_BYTES 3200
 
@@ -134,7 +135,7 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
   FileMan_Close(hFile);
 
   // Delete the file
-  FileMan_Delete(zMapName);
+  Plat_DeleteFile(zMapName);
 
   uiNumberOfElements = uiFileSize / sizeof(MODIFY_MAP);
 
@@ -824,7 +825,7 @@ BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX
   FileMan_Close(hFile);
 
   // Delete the file
-  FileMan_Delete(zMapName);
+  Plat_DeleteFile(zMapName);
 
   // Get the number of elements in the file
   uiNumberOfElements = uiFileSize / sizeof(MODIFY_MAP);
@@ -990,7 +991,7 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(u8 usSectorX, u8 usSectorY,
   FileMan_Close(hFile);
 
   // Delete the file
-  FileMan_Delete(zMapName);
+  Plat_DeleteFile(zMapName);
 
   uiNumberOfElements = uiFileSize / sizeof(MODIFY_MAP);
 

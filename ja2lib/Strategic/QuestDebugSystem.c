@@ -45,6 +45,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "platform.h"
 
 // #ifdef JA2BETAVERSION
 
@@ -3008,7 +3009,7 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
     // if the file exists
     if (FileMan_Exists(QUEST_DEBUG_FILE)) {
       // delete the file
-      if (!FileMan_Delete(QUEST_DEBUG_FILE)) {
+      if (!Plat_DeleteFile(QUEST_DEBUG_FILE)) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to delete %s file", QUEST_DEBUG_FILE));
         return;
       }
@@ -3578,7 +3579,6 @@ void GetDebugLocationString(UINT16 usProfileID, STR16 pzText, size_t bufSize) {
   // else the soldier is in a different map
   else {
     GetShortSectorString((u8)gMercProfiles[usProfileID].sSectorX,
-                         (u8)gMercProfiles[usProfileID].sSectorY,
-                         pzText, bufSize);
+                         (u8)gMercProfiles[usProfileID].sSectorY, pzText, bufSize);
   }
 }

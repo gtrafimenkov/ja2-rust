@@ -28,6 +28,7 @@
         "rust_sector.h": "c",
         "strategictownloyalty.h": "c",
         "strutils.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "platform.h": "c"
     }
 }

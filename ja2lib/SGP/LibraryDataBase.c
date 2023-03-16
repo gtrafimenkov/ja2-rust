@@ -143,15 +143,6 @@ BOOLEAN ShutDownFileDatabase() {
   return (TRUE);
 }
 
-BOOLEAN CheckForLibraryExistence(STR pLibraryName) {
-  SYS_FILE_HANDLE handle;
-  if (Plat_OpenForReading(pLibraryName, &handle)) {
-    Plat_CloseFile(handle);
-    return TRUE;
-  }
-  return FALSE;
-}
-
 BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
                           BOOLEAN fCanBeOnCDrom) {
   SYS_FILE_HANDLE hFile;

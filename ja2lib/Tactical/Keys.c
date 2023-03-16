@@ -39,6 +39,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "platform.h"
 
 DOOR_STATUS *gpDoorStatus = NULL;
 UINT8 gubNumDoorStatus = 0;
@@ -826,7 +827,7 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ
   // if the file already exists, delete it
   if (FileMan_Exists(zMapName)) {
     // We are going to be overwriting the file
-    if (!FileMan_Delete(zMapName)) {
+    if (!Plat_DeleteFile(zMapName)) {
       return (FALSE);
     }
   }
@@ -878,8 +879,7 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   //	sprintf( zMapName, "%s\\d_%s", MAPS_DIR, zTempName);
 
   GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY,
-                     gbWorldSectorZ);
+                     (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Check to see if the file exists
   if (!FileMan_Exists(zMapName)) {
@@ -1611,8 +1611,7 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   //	sprintf( zMapName, "%s\\ds_%s", MAPS_DIR, zTempName);
 
   GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY,
-                     gbWorldSectorZ);
+                     (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Get rid of the existing door array
   TrashDoorStatusArray();

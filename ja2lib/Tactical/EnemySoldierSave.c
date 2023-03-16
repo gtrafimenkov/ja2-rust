@@ -27,6 +27,7 @@
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
+#include "platform.h"
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
     UINT8 *pubNumElites, UINT8 *pubNumRegulars, UINT8 *pubNumAdmins, UINT8 *pubNumCreatures);
@@ -49,7 +50,7 @@ void RemoveEnemySoldierTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
     GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
     // Delete the temp file.
-    FileMan_Delete(zMapName);
+    Plat_DeleteFile(zMapName);
   }
 }
 
@@ -64,7 +65,7 @@ void RemoveCivilianTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
     GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
     // Delete the temp file.
-    FileMan_Delete(zMapName);
+    Plat_DeleteFile(zMapName);
   }
 }
 
@@ -99,8 +100,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
   GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY,
-                     gbWorldSectorZ);
+                     (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Open the file for reading
   hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
@@ -696,8 +696,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
   GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY,
-                     gbWorldSectorZ);
+                     (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Count the number of enemies ( elites, regulars, admins and creatures ) that are in the temp
   // file.
@@ -1065,8 +1064,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
   // add the 'e' for 'Enemy preserved' to the front of the map name
   // sprintf( zMapName, "%s\\c_%s", MAPS_DIR, zTempName);
   GetMapTempFileName(SF_CIV_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY,
-                     gbWorldSectorZ);
+                     (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Open the file for reading
   hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
@@ -1626,8 +1624,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
   //	sprintf( zMapName, "%s\\e_%s", MAPS_DIR, zTempName);
 
   GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, (u8)gWorldSectorX,
-                     (u8)gWorldSectorY,
-                     gbWorldSectorZ);
+                     (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Open the file for reading
   hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);

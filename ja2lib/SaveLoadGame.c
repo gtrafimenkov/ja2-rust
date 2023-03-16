@@ -553,7 +553,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
 
   // if the file already exists, delete it
   if (FileMan_Exists(zSaveGameName)) {
-    if (!FileMan_Delete(zSaveGameName)) {
+    if (!Plat_DeleteFile(zSaveGameName)) {
       goto FAILED_TO_SAVE;
     }
   }
@@ -2570,7 +2570,7 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
 
   // If the source file exists, delete it
   if (FileMan_Exists(pSrcFileName)) {
-    if (!FileMan_Delete(pSrcFileName)) {
+    if (!Plat_DeleteFile(pSrcFileName)) {
       // unable to delete the original file
       return (FALSE);
     }
@@ -3260,7 +3260,7 @@ void InitSaveGameFilePosition() {
   sprintf(zFileName, "%S\\SaveGameFilePos%2d.txt", pMessageStrings[MSG_SAVEDIRECTORY],
           gubSaveGameLoc);
 
-  FileMan_Delete(zFileName);
+  Plat_DeleteFile(zFileName);
 }
 
 void SaveGameFilePosition(INT32 iPos, STR pMsg) {
@@ -3300,7 +3300,7 @@ void InitLoadGameFilePosition() {
   sprintf(zFileName, "%S\\LoadGameFilePos%2d.txt", pMessageStrings[MSG_SAVEDIRECTORY],
           gubSaveGameLoc);
 
-  FileMan_Delete(zFileName);
+  Plat_DeleteFile(zFileName);
 }
 void LoadGameFilePosition(INT32 iPos, STR pMsg) {
   HWFILE hFile;
@@ -3909,7 +3909,7 @@ void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGam
     guiSizeOfTempFiles = 0;
 
     if (FileMan_Exists(zFileName)) {
-      FileMan_Delete(zFileName);
+      Plat_DeleteFile(zFileName);
     }
   } else {
     // create the save game file

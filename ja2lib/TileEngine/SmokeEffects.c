@@ -24,6 +24,7 @@
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
+#include "platform.h"
 
 INT8 FromWorldFlagsToSmokeType(UINT8 ubWorldFlags);
 UINT8 FromSmokeTypeToWorldFlags(INT8 bType);
@@ -586,7 +587,7 @@ BOOLEAN SaveSmokeEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   GetMapTempFileName(SF_SMOKE_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // delete file the file.
-  FileMan_Delete(zMapName);
+  Plat_DeleteFile(zMapName);
 
   // loop through and count the number of smoke effects
   for (uiCnt = 0; uiCnt < guiNumSmokeEffects; uiCnt++) {
