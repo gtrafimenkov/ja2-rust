@@ -10,6 +10,7 @@
 #include "SGP/Video.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
+#include "rust_fileman.h"
 #include "rust_platform.h"
 
 UINT32 guiSplashFrameFade = 10;
@@ -34,6 +35,8 @@ void InitJA2SplashScreen() {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not find data directory, shutting down");
     return;
   }
+
+  File_RegisterSlfLibraries(".");
 
   // Initialize the file database
   InitializeFileDatabase();

@@ -15,6 +15,7 @@
 #include "SGP/Types.h"
 #include "StrUtils.h"
 #include "platform.h"
+#include "rust_debug.h"
 
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
@@ -22,7 +23,8 @@ BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32
 }
 void Plat_CloseFile(SYS_FILE_HANDLE handle) { CloseHandle(handle); }
 BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) {
-  *handle = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_FLAG_RANDOM_ACCESS, NULL);
+  *handle = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+                       FILE_FLAG_RANDOM_ACCESS, NULL);
   return *handle != INVALID_HANDLE_VALUE;
 }
 
@@ -231,7 +233,8 @@ HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
 
   // if the file is on the disk
   if (fExists) {
-    hRealFile = CreateFile(strFilename, dwAccess, 0, NULL, OPEN_ALWAYS, dwFlagsAndAttributes, NULL);
+    hRealFile = CreateFile(strFilename, dwAccess, FILE_SHARE_READ, NULL, OPEN_ALWAYS,
+                           dwFlagsAndAttributes, NULL);
 
     if (hRealFile == INVALID_HANDLE_VALUE) {
       return (0);
@@ -240,7 +243,6 @@ HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
     // create a file handle for the 'real file'
     hFile = CreateRealFileHandle(hRealFile);
   }
-
   // if the file did not exist, try to open it from the database
   else if (gFileDataBase.fInitialized) {
     // if the file is to be opened for writing, return an error cause you cant write a file that is
@@ -257,15 +259,7 @@ HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
           (uiOptions & FILE_CREATE_ALWAYS) || (uiOptions & FILE_TRUNCATE_EXISTING)) {
         hFile = 0;
       }
-    }
-    // else if the file is to be opened using FILE_OPEN_EXISTING, and the file doesnt exists, fail
-    // out of the function)
-    //		else if( uiOptions & FILE_OPEN_EXISTING )
-    //		{
-    // fail out of the function
-    //			return( 0 );
-    //		}
-    else {
+    } else {
       // If the file is in the library, get a handle to it.
       hLibFile = OpenFileFromLibrary(strFilename);
 
@@ -292,8 +286,8 @@ HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
       dwCreationFlags = OPEN_ALWAYS;
     }
 
-    hRealFile =
-        CreateFile(strFilename, dwAccess, 0, NULL, dwCreationFlags, dwFlagsAndAttributes, NULL);
+    hRealFile = CreateFile(strFilename, dwAccess, FILE_SHARE_READ, NULL, dwCreationFlags,
+                           dwFlagsAndAttributes, NULL);
     if (hRealFile == INVALID_HANDLE_VALUE) {
       UINT32 uiLastError = GetLastError();
       char zString[1024];

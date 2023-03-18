@@ -7,6 +7,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "rust_debug.h"
 
 BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);
 BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, HWFILE hFile, STCIHeader *pHeader);

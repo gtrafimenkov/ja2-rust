@@ -4,6 +4,8 @@
 extern "C" {
 #endif
 
+#include "rust_debug.h"
+#include "rust_fileman.h"
 #include "rust_platform.h"
 #include "rust_sam_sites.h"
 #include "rust_sector.h"
@@ -57,3 +59,125 @@ TEST(RustExport, TownSectors) {
   EXPECT_EQ(BLANK_SECTOR, GetTownIdForSector(1, 1));
   EXPECT_EQ(OMERTA, GetTownIdForSector(9, 1));
 }
+
+TEST(RustExport, FileMan) {
+  File_RegisterSlfLibraries("tools/editor");
+
+  {
+    auto id = File_OpenForReading("Editor/EXITGRIDBUT.STI");
+    EXPECT_NE(id, FILE_ID_ERR);
+    EXPECT_TRUE(File_Close(id));
+  }
+
+  {
+    auto id = File_OpenForReading("Editor/EXITGRIDBUT.STI");
+    EXPECT_NE(id, FILE_ID_ERR);
+    uint8_t buf[10];
+    uint32_t read_bytes;
+    auto res = File_Read(id, buf, sizeof(buf), &read_bytes);
+    EXPECT_TRUE(res);
+    EXPECT_EQ(10, read_bytes);
+    EXPECT_EQ('S', buf[0]);
+    EXPECT_EQ('T', buf[1]);
+    EXPECT_EQ('C', buf[2]);
+  }
+
+  {
+    auto id = File_OpenForReading("JA2.sln");
+    EXPECT_NE(id, FILE_ID_ERR);
+    uint8_t buf[4];
+    uint32_t read_bytes;
+    auto res = File_Read(id, buf, sizeof(buf), &read_bytes);
+    EXPECT_TRUE(res);
+    EXPECT_EQ(sizeof(buf), read_bytes);
+    EXPECT_EQ('M', buf[0]);
+    EXPECT_EQ('i', buf[1]);
+    EXPECT_EQ('c', buf[2]);
+    EXPECT_EQ('r', buf[3]);
+
+    // seek backward from current position is not supported (because distance is u32)
+
+    // seek forward
+    {
+      EXPECT_TRUE(File_Read(id, buf, 1, &read_bytes));
+      EXPECT_EQ(1, read_bytes);
+      EXPECT_EQ('o', buf[0]);
+
+      // skip "sof"
+      EXPECT_TRUE(File_Seek(id, 3, FILE_SEEK_CURRENT));
+      EXPECT_TRUE(File_Read(id, buf, 1, &read_bytes));
+      EXPECT_EQ(1, read_bytes);
+      EXPECT_EQ('t', buf[0]);
+    }
+
+    EXPECT_TRUE(File_Close(id));
+  }
+}
+
+TEST(RustExport, FileManRW) {
+  // first write
+  {
+    auto id = File_OpenForWriting("./tmp-test-write01.txt");
+    EXPECT_NE(id, FILE_ID_ERR);
+    const char *message = "Hello there 1\n";
+    uint32_t written_bytes;
+    auto res = File_Write(id, message, strlen(message), &written_bytes);
+    EXPECT_TRUE(res);
+    EXPECT_EQ(strlen(message), written_bytes);
+    EXPECT_TRUE(File_Close(id));
+  }
+
+  // second write
+  {
+    auto id = File_OpenForWriting("./tmp-test-write01.txt");
+    EXPECT_NE(id, FILE_ID_ERR);
+    const char *message = "Hello there 2\n";
+    uint32_t written_bytes;
+    auto res = File_Write(id, message, strlen(message), &written_bytes);
+    EXPECT_TRUE(res);
+    EXPECT_EQ(strlen(message), written_bytes);
+    EXPECT_TRUE(File_Close(id));
+  }
+
+  // append
+  {
+    auto id = File_OpenForAppending("./tmp-test-write01.txt");
+    EXPECT_NE(id, FILE_ID_ERR);
+    const char *message = "Hello there 3\n";
+    uint32_t written_bytes;
+    auto res = File_Write(id, message, strlen(message), &written_bytes);
+    EXPECT_TRUE(res);
+    EXPECT_EQ(strlen(message), written_bytes);
+    EXPECT_TRUE(File_Close(id));
+  }
+
+  // read
+  {
+    char buf[100];
+    auto id = File_OpenForReading("./tmp-test-write01.txt");
+    EXPECT_NE(id, FILE_ID_ERR);
+    uint32_t read_bytes;
+    auto res = File_Read(id, buf, sizeof(buf) - 1, &read_bytes);
+    EXPECT_TRUE(res);
+    EXPECT_EQ(28, read_bytes);
+    EXPECT_TRUE(File_Close(id));
+
+    buf[read_bytes] = 0;
+    EXPECT_TRUE(strcmp(buf, "Hello there 2\nHello there 3\n") == 0);
+  }
+
+  Plat_DeleteFile("./tmp-test-write01.txt");
+}
+
+TEST(RustExport, ReadingGameRes) {
+  if (Plat_DirectoryExists("./ReleaseWithDebug/Data")) {
+    EXPECT_TRUE(File_RegisterSlfLibraries("./ReleaseWithDebug/Data"));
+    EXPECT_TRUE(File_Exists("FONTS\\LARGEFONT1.sti"));
+    EXPECT_TRUE(File_Exists("Anims\\VEHICLES\\JEEP.STI"));
+  }
+}
+
+// TEST(RustExport, DebugLog) {
+//   EXPECT_TRUE(DebugLogWrite("hello there"));
+//   EXPECT_TRUE(DebugLogWrite("hello there again"));
+// }

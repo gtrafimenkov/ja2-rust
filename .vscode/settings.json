@@ -29,6 +29,8 @@
         "strategictownloyalty.h": "c",
         "strutils.h": "c",
         "stdint.h": "c",
-        "platform.h": "c"
+        "platform.h": "c",
+        "buttonsystem.h": "c",
+        "rust_fileman.h": "c"
     }
 }
