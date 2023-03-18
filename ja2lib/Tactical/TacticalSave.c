@@ -464,7 +464,7 @@ BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, INT8 bMapZ, UINT32 uiNu
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
@@ -557,7 +557,7 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(u8 sMapX, u8 sMapY, i8 bMapZ, UINT
       UINT32 uiNumBytesWritten = 0;
 
       // If the file doesnt exists, create a file that has an initial amount of Items
-      hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+      hFile = FileMan_OpenForAppending(zMapName);
       if (hFile == 0) {
         // Error opening item modification file
         return (FALSE);
@@ -1279,7 +1279,7 @@ BOOLEAN SaveRottingCorpsesToTempCorpseFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   GetMapTempFileName(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
@@ -1790,7 +1790,7 @@ BOOLEAN InitTempNpcQuoteInfoForNPCFromTempFile() {
   HWFILE hFile;
 
   // Open the temp npc file
-  hFile = FileMan_Open(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_OpenForAppending(NPC_TEMP_QUOTE_FILE);
   if (hFile == 0) {
     // Error opening temp npc quote info
     return (FALSE);
@@ -1831,7 +1831,7 @@ BOOLEAN SaveTempNpcQuoteInfoForNPCToTempFile(UINT8 ubNpcId) {
 
   // if there are records to save
   if (gpNPCQuoteInfoArray[ubNpcId]) {
-    hFile = FileMan_Open(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+    hFile = FileMan_OpenForAppending(NPC_TEMP_QUOTE_FILE);
     if (hFile == 0) {
       // Error opening temp npc quote info
       return (FALSE);
@@ -1970,7 +1970,7 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
     }
   } else {
     // the file doesnt exists, create a new one
-    hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+    hFile = FileMan_OpenForAppending(zMapName);
     if (hFile == 0) {
       // Error opening map modification file
       return (FALSE);

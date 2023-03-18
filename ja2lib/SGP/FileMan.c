@@ -36,3 +36,7 @@ BOOLEAN FileMan_Exists(STR strFilename) { return File_Exists(strFilename); }
 HWFILE FileMan_OpenForWriting(const char *path) {
   return FileMan_Open(path, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 }
+
+HWFILE FileMan_OpenForAppending(const char *path) {
+  return FileMan_Open(path, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+}

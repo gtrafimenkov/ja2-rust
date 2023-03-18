@@ -537,7 +537,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UIN
     FileMan_Close(hfile);
 
     // Open the file for writing, Create it if it doesnt exist
-    hfile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+    hfile = FileMan_OpenForAppending(zMapName);
     if (hfile == 0) {  // Error opening map modification file
       return FALSE;
     }
@@ -554,7 +554,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UIN
     FileMan_Seek(hfile, 0, FILE_SEEK_FROM_END);
   } else {
     // Open the file for writing, Create it if it doesnt exist
-    hfile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+    hfile = FileMan_OpenForAppending(zMapName);
     if (hfile == 0) {  // Error opening map modification file
       return FALSE;
     }
@@ -1471,7 +1471,7 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 
   }
 
   // Open the file for writing, Create it if it doesnt exist
-  hfile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hfile = FileMan_OpenForAppending(zMapName);
   if (hfile == 0) {  // Error opening map modification file
     return FALSE;
   }

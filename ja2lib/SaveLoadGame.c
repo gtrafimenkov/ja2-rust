@@ -3274,7 +3274,7 @@ void SaveGameFilePosition(INT32 iPos, STR pMsg) {
           gubSaveGameLoc);
 
   // create the save game file
-  hFile = FileMan_Open(zFileName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_OpenForAppending(zFileName);
   if (!hFile) {
     FileMan_Close(hFile);
     return;
@@ -3314,7 +3314,7 @@ void LoadGameFilePosition(INT32 iPos, STR pMsg) {
           gubSaveGameLoc);
 
   // create the save game file
-  hFile = FileMan_Open(zFileName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_OpenForAppending(zFileName);
   if (!hFile) {
     FileMan_Close(hFile);
     return;
@@ -3913,7 +3913,7 @@ void InitShutDownMapTempFileTest(BOOLEAN fInit, STR pNameOfFile, UINT8 ubSaveGam
     }
   } else {
     // create the save game file
-    hFile = FileMan_Open(zFileName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+    hFile = FileMan_OpenForAppending(zFileName);
     if (!hFile) {
       FileMan_Close(hFile);
       return;
