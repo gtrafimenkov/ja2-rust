@@ -112,7 +112,7 @@ void QuestDebugFileMsg(UINT8 ubQuoteType, UINT8 ubPriority, STR pStringA, ...) {
   }
 
   // open the file
-  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_ACCESS_WRITE, FALSE);
+  hFile = FileMan_OpenForWriting(QUEST_DEBUG_FILE);
   if (!hFile) {
     FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,

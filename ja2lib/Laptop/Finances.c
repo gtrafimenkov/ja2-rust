@@ -1474,7 +1474,7 @@ BOOLEAN AppendFinanceToEndOfFile(FinanceUnitPtr pFinance) {
   FinanceUnitPtr pFinanceList = pFinanceListHead;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFileHandle = FileMan_OpenForAppending(FINANCES_DATA_FILE);
 
   // if no file exits, do nothing
   if (!hFileHandle) {

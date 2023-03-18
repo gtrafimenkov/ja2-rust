@@ -3018,7 +3018,7 @@ void NpcRecordLoggingInit(UINT8 ubNpcID, UINT8 ubMercID, UINT8 ubQuoteNum, UINT8
   }
 
   // open the file
-  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
+  hFile = FileMan_OpenForAppending(QUEST_DEBUG_FILE);
   if (!hFile) {
     FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
@@ -3077,7 +3077,7 @@ void NpcRecordLogging(UINT8 ubApproach, STR pStringA, ...) {
   va_end(argptr);
 
   // open the file
-  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
+  hFile = FileMan_OpenForAppending(QUEST_DEBUG_FILE);
   if (!hFile) {
     FileMan_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,

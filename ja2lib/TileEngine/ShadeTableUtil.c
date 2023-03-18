@@ -93,11 +93,12 @@ void DetermineRGBDistributionSettings() {
     // start fresh.
     Plat_RemoveFilesInDirectory(ShadeTableDir);
   }
-  if (fSaveRGBDist) {  // The RGB distribution is going to be saved in a tiny file for future
-                       // reference.  As long as the
+  if (fSaveRGBDist) {
+    // The RGB distribution is going to be saved in a tiny file for future
+    // reference.  As long as the
     // RGB distribution never changes, the shade table will grow until eventually, all tilesets are
     // loaded, shadetables generated and saved in this directory.
-    hfile = FileMan_Open("RGBDist.dat", FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+    hfile = FileMan_OpenForWriting("RGBDist.dat");
     if (!hfile) {
       AssertMsg(0, "Couldn't create RGBDist.dat for writing!");
     }

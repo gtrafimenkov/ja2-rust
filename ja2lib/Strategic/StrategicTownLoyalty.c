@@ -498,8 +498,7 @@ void CalcDistancesBetweenTowns(void) {
 void WriteOutDistancesBetweenTowns(void) {
   HWFILE hFileHandle;
 
-  hFileHandle =
-      FileMan_Open("BinaryData\\TownDistances.dat", FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFileHandle = FileMan_OpenForWriting("BinaryData\\TownDistances.dat");
 
   FileMan_Write(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
 

@@ -1206,8 +1206,6 @@ BOOLEAN WriteOutHistoryRecords(UINT32 uiPage) {
   if (!(File_Exists(HISTORY_DATA_FILE))) return (FALSE);
 
   // open file
-  // HWFILE hFileHandle = File_Open(HISTORY_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_WRITE),
-  // FALSE);
   FileID hFileHandle = File_OpenForAppending(HISTORY_DATA_FILE);
 
   // failed to get file, return
