@@ -174,6 +174,8 @@ TEST(RustExport, ReadingGameRes) {
     EXPECT_TRUE(File_RegisterSlfLibraries("./ReleaseWithDebug/Data"));
     EXPECT_TRUE(File_Exists("FONTS\\LARGEFONT1.sti"));
     EXPECT_TRUE(File_Exists("Anims\\VEHICLES\\JEEP.STI"));
+    EXPECT_TRUE(File_Exists("GENBUTN.STI"));
+    EXPECT_TRUE(File_Exists("TILESETS\\9\\trapdoor.sti"));
   }
 }
 

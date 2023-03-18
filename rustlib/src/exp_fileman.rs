@@ -90,11 +90,15 @@ pub extern "C" fn File_OpenForWriting(path: *const c_char) -> FileID {
 #[no_mangle]
 /// Read data from earlier opened file to the buffer.
 /// Buffer must be no less than bytes_to_read in size.
-pub extern "C" fn File_Read(
+///
+/// # Safety
+///
+/// `bytes_read` can be null.
+pub unsafe extern "C" fn File_Read(
     file_id: FileID,
     buf: *mut c_void,
     bytes_to_read: u32,
-    bytes_read: &mut u32,
+    bytes_read: *mut u32,
 ) -> bool {
     let buf = buf.cast::<u8>();
     let buf = std::ptr::slice_from_raw_parts_mut(buf, bytes_to_read as usize);
@@ -102,11 +106,15 @@ pub extern "C" fn File_Read(
         match FILE_DB.read_file(file_id, &mut *buf) {
             Ok(n) => {
                 let n = n as u32;
-                *bytes_read = n;
+                if !bytes_read.is_null() {
+                    *bytes_read = n;
+                }
                 true
             }
             Err(_) => {
-                *bytes_read = 0;
+                if !bytes_read.is_null() {
+                    *bytes_read = 0;
+                }
                 false
             }
         }
@@ -115,11 +123,15 @@ pub extern "C" fn File_Read(
 
 #[no_mangle]
 /// Write data to an earlier opened file.
-pub extern "C" fn File_Write(
+///
+/// # Safety
+///
+/// `bytes_written` can be null.
+pub unsafe extern "C" fn File_Write(
     file_id: FileID,
     buf: *const c_void,
     bytes_to_write: u32,
-    bytes_written: &mut u32,
+    bytes_written: *mut u32,
 ) -> bool {
     let buf = buf.cast::<u8>();
     let buf = std::ptr::slice_from_raw_parts(buf, bytes_to_write as usize);
@@ -127,11 +139,15 @@ pub extern "C" fn File_Write(
         match FILE_DB.write_file(file_id, &*buf) {
             Ok(n) => {
                 let n = n as u32;
-                *bytes_written = n;
+                if !bytes_written.is_null() {
+                    *bytes_written = n;
+                }
                 true
             }
             Err(_) => {
-                *bytes_written = 0;
+                if !bytes_written.is_null() {
+                    *bytes_written = 0;
+                }
                 false
             }
         }

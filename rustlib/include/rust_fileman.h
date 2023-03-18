@@ -59,11 +59,19 @@ FileID File_OpenForWriting(const char *path);
 /**
  * Read data from earlier opened file to the buffer.
  * Buffer must be no less than bytes_to_read in size.
+ *
+ * # Safety
+ *
+ * `bytes_read` can be null.
  */
 bool File_Read(FileID file_id, void *buf, uint32_t bytes_to_read, uint32_t *bytes_read);
 
 /**
  * Write data to an earlier opened file.
+ *
+ * # Safety
+ *
+ * `bytes_written` can be null.
  */
 bool File_Write(FileID file_id, const void *buf, uint32_t bytes_to_write, uint32_t *bytes_written);
 

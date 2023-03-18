@@ -52,6 +52,7 @@ pub struct Entry {
     pub file_name: String,
     pub offset: u32,
     pub size: u32,
+    pub state: u8,
 }
 
 #[repr(C)]
@@ -59,7 +60,8 @@ struct RawEntry {
     file_name: [u8; 256],
     offset: u32,
     size: u32,
-    unused1: u32,
+    state: u8,
+    reserved: u8,
     unused2: u32,
     unused3: u32,
     unused4: u32,
@@ -78,6 +80,7 @@ pub fn read_entry(reader: &mut dyn io::Read) -> io::Result<Entry> {
         file_name: decode_str(&mut reader, 256)?,
         offset: reader.read_u32::<LittleEndian>()?,
         size: reader.read_u32::<LittleEndian>()?,
+        state: reader.read_u8()?,
     })
 }
 
@@ -89,13 +92,26 @@ pub struct Slf {
 
 pub fn read_slf<T: io::Read + io::Seek>(reader: &mut T) -> io::Result<Slf> {
     let header = read_header(reader)?;
-    let mut entries = Vec::with_capacity(header.used_entries as usize);
-    if header.used_entries > 0 {
+    let mut entries = Vec::with_capacity(header.num_entries as usize);
+    if header.num_entries > 0 {
         let entries_start: i64 = header.num_entries as i64 * RAW_ENTRY_SIZE as i64;
         reader.seek(io::SeekFrom::End(-entries_start))?;
-        for _i in 0..header.used_entries {
-            entries.push(read_entry(reader)?);
+        for _i in 0..header.num_entries {
+            let entry = read_entry(reader)?;
+            if entry.state == 0 {
+                entries.push(entry);
+            }
         }
     }
     Ok(Slf { header, entries })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn datastructures_sizes() {
+        assert_eq!(280, RAW_ENTRY_SIZE);
+    }
 }

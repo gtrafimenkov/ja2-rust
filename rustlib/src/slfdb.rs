@@ -181,11 +181,15 @@ impl Default for DB {
 /// Build canonical path for a library file given the library path (from slf header)
 /// and the file name from slf entry.
 fn build_canonical_libfile_path(lib_path: &str, file_name: &str) -> String {
-    canonize_libfile_path(&format!(
-        "{}/{}",
-        lib_path.trim_end_matches('\\').trim_end_matches('/'),
-        file_name
-    ))
+    if lib_path.is_empty() {
+        canonize_libfile_path(file_name)
+    } else {
+        canonize_libfile_path(&format!(
+            "{}/{}",
+            lib_path.trim_end_matches('\\').trim_end_matches('/'),
+            file_name
+        ))
+    }
 }
 
 // Modify library file path to the form which is used internally.
@@ -315,6 +319,10 @@ mod tests {
         assert_eq!(
             "editor/exitgridbut.sti",
             build_canonical_libfile_path("Editor\\", "EXITGRIDBUT.STI")
+        );
+        assert_eq!(
+            "genbutn.sti",
+            build_canonical_libfile_path("", "GENBUTN.STI")
         );
     }
 }
