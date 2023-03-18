@@ -27,6 +27,7 @@ extern void FileMan_Shutdown(void);
 extern BOOLEAN FileMan_Exists(STR strFilename);
 extern BOOLEAN FileMan_ExistsNoDB(STR strFilename);
 extern HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose);
+extern HWFILE FileMan_OpenForWriting(const char *path);
 extern void FileMan_Close(HWFILE);
 
 extern BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead);

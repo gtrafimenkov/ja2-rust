@@ -31,46 +31,8 @@ BOOLEAN FileMan_ExistsNoDB(STR strFilename) {
   return (fExists);
 }
 
-// BOOLEAN FileMan_Exists_1(STR strFilename) {
-//   // DebugLogWrite(strFilename);
+BOOLEAN FileMan_Exists(STR strFilename) { return File_Exists(strFilename); }
 
-//   BOOLEAN fExists = FALSE;
-//   FILE *file;
-
-//   // open up the file to see if it exists on the disk
-//   file = fopen(strFilename, "r");
-//   if (file) {
-//     fExists = TRUE;
-//     fclose(file);
-//   }
-
-//   // if the file wasnt on disk, check to see if its in a library
-//   if (fExists == FALSE) {
-//     // if the database is initialized
-//     if (gFileDataBase.fInitialized) fExists = CheckIfFileExistInLibrary(strFilename);
-//   }
-
-//   return (fExists);
-// }
-
-// BOOLEAN FileMan_Exists_2(STR strFilename) {
-//   // DebugLogWrite(strFilename);
-//   return File_Exists(strFilename);
-// }
-
-BOOLEAN FileMan_Exists(STR strFilename) {
-  // BOOLEAN res1 = FileMan_Exists_1(strFilename);
-  // BOOLEAN res2 = FileMan_Exists_2(strFilename);
-  // if (res1 != res2) {
-  //   DebugLogWrite("not the same results for:");
-  //   DebugLogWrite(strFilename);
-  //   if (res1) {
-  //     DebugLogWrite("res1 - yes");
-  //   }
-  //   if (res2) {
-  //     DebugLogWrite("res2 - yes");
-  //   }
-  // }
-  // return res1;
-  return File_Exists(strFilename);
+HWFILE FileMan_OpenForWriting(const char *path) {
+  return FileMan_Open(path, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
 }

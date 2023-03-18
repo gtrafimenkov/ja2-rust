@@ -1379,7 +1379,7 @@ BOOLEAN SaveWorld(STR8 puiFilename) {
   sprintf(aFilename, "MAPS\\%s", puiFilename);
 
   // Open file
-  hfile = FileMan_Open(aFilename, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hfile = FileMan_OpenForWriting(aFilename);
 
   if (!hfile) {
     return (FALSE);
@@ -3053,7 +3053,7 @@ BOOLEAN SaveMapTileset(INT32 iTilesetID) {
   sprintf(zTilesetName, "TSET%04d.SET", iTilesetID);
 
   // Open file
-  hTSet = FileMan_Open(zTilesetName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hTSet = FileMan_OpenForWriting(zTilesetName);
 
   if (!hTSet) {
     return (FALSE);

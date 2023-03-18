@@ -2575,7 +2575,7 @@ BOOLEAN LightSave(INT32 iLight, STR pFilename) {
     else
       pName = pFilename;
 
-    if ((hFile = FileMan_Open(pName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE)) != 0) {
+    if ((hFile = FileMan_OpenForWriting(pName)) != 0) {
       FileMan_Write(hFile, &usTemplateSize[iLight], sizeof(UINT16), NULL);
       FileMan_Write(hFile, pLightList[iLight], sizeof(LIGHT_NODE) * usTemplateSize[iLight], NULL);
       FileMan_Write(hFile, &usRaySize[iLight], sizeof(UINT16), NULL);

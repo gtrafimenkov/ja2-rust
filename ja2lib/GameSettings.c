@@ -130,7 +130,7 @@ BOOLEAN SaveGameSettings() {
   UINT32 uiNumBytesWritten;
 
   // create the file
-  hFile = FileMan_Open(GAME_SETTINGS_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFile = FileMan_OpenForWriting(GAME_SETTINGS_FILE);
   if (!hFile) {
     FileMan_Close(hFile);
     return (FALSE);

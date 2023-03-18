@@ -510,7 +510,7 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   }
 
   // open file
-  hFileHandle = FileMan_Open(FILES_DAT_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFileHandle = FileMan_OpenForWriting(FILES_DAT_FILE);
 
   // if no file exits, do nothing
   if (!hFileHandle) {

@@ -458,7 +458,7 @@ void WriteOutCurrentImpCharacter(INT32 iProfileId) {
   UINT32 uiBytesWritten = 0;
 
   // open the file for writing
-  hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFile = FileMan_OpenForWriting(IMP_MERC_FILE);
 
   // write out the profile id
   if (!FileMan_Write(hFile, &iProfileId, sizeof(INT32), &uiBytesWritten)) {

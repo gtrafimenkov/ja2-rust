@@ -559,7 +559,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   }
 
   // create the save game file
-  hFile = FileMan_Open(zSaveGameName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFile = FileMan_OpenForWriting(zSaveGameName);
   if (!hFile) {
     goto FAILED_TO_SAVE;
   }
@@ -2581,7 +2581,7 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
 #endif
 
   // open the destination file to write to
-  hSrcFile = FileMan_Open(pSrcFileName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hSrcFile = FileMan_OpenForWriting(pSrcFileName);
   if (!hSrcFile) {
     // error, we cant open the saved game file
     return (FALSE);

@@ -610,8 +610,6 @@ BOOLEAN OpenAndWriteHistoryFile(void) {
   HistoryUnitPtr pHistoryList = pHistoryListHead;
 
   // open file
-  // HWFILE hFileHandle = File_Open(HISTORY_DATA_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS,
-  // FALSE);
   FileID hFileHandle = File_OpenForWriting(HISTORY_DATA_FILE);
 
   // if no file exits, do nothing

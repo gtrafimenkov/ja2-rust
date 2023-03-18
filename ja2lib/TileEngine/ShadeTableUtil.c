@@ -173,7 +173,7 @@ BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   ptr++;
   sprintf(ptr, "sha");
 
-  hfile = FileMan_Open(ShadeFileName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hfile = FileMan_OpenForWriting(ShadeFileName);
   if (!hfile) {
     FileMan_Close(hfile);
     AssertMsg(0, String("Can't create %s", ShadeFileName));
