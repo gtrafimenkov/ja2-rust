@@ -17,20 +17,6 @@ BOOLEAN FileMan_Initialize() {
 
 void FileMan_Shutdown(void) { UnRegisterDebugTopic(TOPIC_FILE_MANAGER, "File Manager"); }
 
-BOOLEAN FileMan_ExistsNoDB(STR strFilename) {
-  BOOLEAN fExists = FALSE;
-  FILE *file;
-
-  // open up the file to see if it exists on the disk
-  file = fopen(strFilename, "r");
-  if (file) {
-    fExists = TRUE;
-    fclose(file);
-  }
-
-  return (fExists);
-}
-
 BOOLEAN FileMan_Exists(STR strFilename) { return File_Exists(strFilename); }
 
 HWFILE FileMan_OpenForWriting(const char *path) {

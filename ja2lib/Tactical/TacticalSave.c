@@ -550,7 +550,7 @@ BOOLEAN GetNumberOfWorldItemsFromTempItemFile(u8 sMapX, u8 sMapY, i8 bMapZ, UINT
   GetMapTempFileName(SF_ITEM_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Check if the file DOESNT exists
-  if (!FileMan_ExistsNoDB(zMapName)) {
+  if (!FileMan_Exists(zMapName)) {
     if (fIfEmptyCreate) {
       WORLDITEM TempWorldItems[10];
       UINT32 uiNumberOfItems = 10;

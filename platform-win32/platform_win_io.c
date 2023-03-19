@@ -208,6 +208,20 @@ static void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Str
 //
 //**************************************************************************
 
+static BOOLEAN FileMan_ExistsNoDB(STR strFilename) {
+  BOOLEAN fExists = FALSE;
+  FILE *file;
+
+  // open up the file to see if it exists on the disk
+  file = fopen(strFilename, "r");
+  if (file) {
+    fExists = TRUE;
+    fclose(file);
+  }
+
+  return (fExists);
+}
+
 HWFILE FileMan_Open(const char *strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
   HWFILE hFile;
   HANDLE hRealFile;
