@@ -375,9 +375,6 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
         return (SoundStartStream(pFilename, uiChannel, pParms));
       }
 
-      DebugLogWrite("= Starting sound streaming:");
-      DebugLogWrite(pFilename);
-
       // Get the real file handle of the file
       u64 hRealFileHandle = File_GetWinHandleToReadFile(hFile);
       if (hRealFileHandle == 0) {
@@ -390,8 +387,6 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
 
       // Convert the file handle into a 'name'
       sprintf(pFileHandlefileName, "\\\\\\\\%lld", hRealFileHandle);
-
-      DebugLogWrite(pFileHandlefileName);
 
       // Start the sound stream
       uiRetVal = SoundStartStream(pFileHandlefileName, uiChannel, pParms);

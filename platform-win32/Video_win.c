@@ -4982,9 +4982,6 @@ struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLE
 struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
   struct SmkFlic *pSmack;
 
-  DebugLogWrite("= SmkOpenFlic:");
-  DebugLogWrite(cFilename);
-
   // Get an available flic slot from the list
   if (!(pSmack = SmkGetFreeFlic())) {
     ErrorMsg("SMK ERROR: Out of flic slots, cannot open another");
