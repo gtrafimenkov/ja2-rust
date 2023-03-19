@@ -12,7 +12,6 @@
 
 #include "Mss.h"
 #include "SGP/Debug.h"
-#include "SGP/LibraryDataBasePub.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"

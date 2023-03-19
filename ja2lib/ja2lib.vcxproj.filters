@@ -89,9 +89,6 @@
     <ClCompile Include="SGP\Ja2Libs.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
-    <ClCompile Include="SGP\LibraryDataBase.c">
-      <Filter>Source Files\SGP</Filter>
-    </ClCompile>
     <ClCompile Include="SGP\MemMan.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
@@ -1070,12 +1067,6 @@
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\Ja2Libs.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
-    <ClInclude Include="SGP\LibraryDataBase.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
-    <ClInclude Include="SGP\LibraryDataBasePub.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\Line.h">

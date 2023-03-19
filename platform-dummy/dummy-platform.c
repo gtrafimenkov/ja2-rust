@@ -7,7 +7,6 @@
 #include "Utils/Cinematics.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
-// #include "../platform-win32/platform_win.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -30,18 +29,6 @@ UINT32 GetClock(void) { return 0; }
 /////////////////////////////////////////////////////////////////////////////////
 
 BOOLEAN gfProgramIsRunning;
-
-u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
-
-BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
-  return FALSE;
-}
-
-void Plat_CloseFile(SYS_FILE_HANDLE handle) {}
-
-BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) { return FALSE; }
-
-u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) { return 0; }
 
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
 

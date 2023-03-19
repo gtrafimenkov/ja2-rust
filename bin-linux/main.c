@@ -2,7 +2,6 @@
 #include <wchar.h>
 
 #include "SGP/Ja2Libs.h"
-#include "SGP/LibraryDataBase.h"
 #include "SGP/Types.h"
 #include "rust_debug.h"
 #include "rust_fileman.h"
@@ -22,7 +21,6 @@ int main() {
     printf("error: failed to switch to data dir\n");
     return 1;
   }
-  InitializeFileDatabase();
 
   int locale = DetectLocale();
   printf("locale:          %d\n", locale);

@@ -2,7 +2,6 @@
 
 #include "MainMenuScreen.h"
 #include "SGP/Debug.h"
-#include "SGP/LibraryDataBasePub.h"
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
 #include "SGP/VSurface.h"
@@ -37,9 +36,6 @@ void InitJA2SplashScreen() {
   }
 
   File_RegisterSlfLibraries(".");
-
-  // Initialize the file database
-  InitializeFileDatabase();
 
 #if !defined(ENGLISH) && defined(JA2TESTVERSION)
   UINT32 uiLogoID = 0;

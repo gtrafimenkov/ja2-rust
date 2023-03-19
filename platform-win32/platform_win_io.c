@@ -9,44 +9,12 @@
 
 #include "SGP/Container.h"
 #include "SGP/Debug.h"
-#include "SGP/LibraryDataBase.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "StrUtils.h"
 #include "platform.h"
 #include "platform_win.h"
 #include "rust_debug.h"
-
-u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
-BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes) {
-  return ReadFile(handle, buffer, bytesToRead, (LPDWORD)readBytes, NULL);
-}
-void Plat_CloseFile(SYS_FILE_HANDLE handle) { CloseHandle(handle); }
-BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) {
-  *handle = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
-                       FILE_FLAG_RANDOM_ACCESS, NULL);
-  return *handle != INVALID_HANDLE_VALUE;
-}
-
-// Change file pointer.
-// In case of an error returns 0xFFFFFFFF
-u32 Plat_SetFilePointer(SYS_FILE_HANDLE handle, i32 distance, int seekType) {
-  DWORD moveMethod;
-  switch (seekType) {
-    case FILE_SEEK_FROM_START:
-      moveMethod = FILE_BEGIN;
-      break;
-    case FILE_SEEK_FROM_END:
-      moveMethod = FILE_END;
-      break;
-    case FILE_SEEK_FROM_CURRENT:
-      moveMethod = FILE_CURRENT;
-      break;
-    default:
-      return 0xFFFFFFFF;
-  }
-  return SetFilePointer(handle, distance, NULL, moveMethod);
-}
 
 // Gets the free hard drive space from the drive letter passed in.  It has to be the root dir.  (
 // eg. c:\ )
@@ -294,27 +262,6 @@ void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct) {
         break;
     }
   }
-}
-
-HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
-  INT16 sLibraryID;
-  UINT32 uiFileNum;
-
-  GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
-
-  // if its the 'real file' library
-  if (sLibraryID == REAL_FILE_LIBRARY_ID) {
-    // if its not already closed
-    if (gFileDataBase.RealFiles.pRealFilesOpen[uiFileNum].uiFileID != 0) {
-      return (gFileDataBase.RealFiles.pRealFilesOpen[uiFileNum].hRealFileHandle);
-    }
-  } else {
-    // if the file is not opened, dont close it
-    if (gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiFileID != 0) {
-      return (gFileDataBase.pLibraries[sLibraryID].hLibraryHandle);
-    }
-  }
-  return (0);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

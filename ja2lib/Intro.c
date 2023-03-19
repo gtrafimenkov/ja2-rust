@@ -9,7 +9,6 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Ja2Libs.h"
-#include "SGP/LibraryDataBasePub.h"
 #include "SGP/Line.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -163,12 +162,6 @@ BOOLEAN EnterIntroScreen() {
     return (TRUE);
   }
 #endif
-
-  // if the library doesnt exist, exit
-  if (!IsLibraryOpened(LIBRARY_INTRO)) {
-    PrepareToExitIntroScreen();
-    return (TRUE);
-  }
 
   // initialize smacker
   SmkInitialize(640, 480);

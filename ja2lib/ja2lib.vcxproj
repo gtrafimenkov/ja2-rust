@@ -129,7 +129,6 @@
     <ClCompile Include="SGP\ImpTGA.c" />
     <ClCompile Include="SGP\Input.c" />
     <ClCompile Include="SGP\Ja2Libs.c" />
-    <ClCompile Include="SGP\LibraryDataBase.c" />
     <ClCompile Include="SGP\Line.c" />
     <ClCompile Include="SGP\MemMan.c" />
     <ClCompile Include="SGP\MouseSystem.c" />
@@ -468,8 +467,6 @@
     <ClInclude Include="SGP\ImpTGA.h" />
     <ClInclude Include="SGP\Input.h" />
     <ClInclude Include="SGP\Ja2Libs.h" />
-    <ClInclude Include="SGP\LibraryDataBase.h" />
-    <ClInclude Include="SGP\LibraryDataBasePub.h" />
     <ClInclude Include="SGP\Line.h" />
     <ClInclude Include="SGP\MemMan.h" />
     <ClInclude Include="SGP\MouseSystem.h" />
