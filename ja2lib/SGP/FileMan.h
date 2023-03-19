@@ -25,6 +25,7 @@ extern BOOLEAN FileMan_Initialize();
 extern void FileMan_Shutdown(void);
 
 extern BOOLEAN FileMan_Exists(STR strFilename);
+// TODO: rustlib
 extern BOOLEAN FileMan_ExistsNoDB(STR strFilename);
 extern HWFILE FileMan_Open(const char *strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose);
 extern HWFILE FileMan_OpenForAppending(const char *path);
@@ -37,14 +38,18 @@ extern BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
                              UINT32 *puiBytesWritten);
 
 extern BOOLEAN FileMan_Seek(HWFILE, UINT32 uiDistance, UINT8 uiHow);
+// TODO: rustlib
 extern INT32 FileMan_GetPos(HWFILE);
 
+// TODO: rustlib
 // returns true if at end of file, else false
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile);
 
 extern UINT32 FileMan_GetSize(HWFILE);
+// TODO: rustlib
 extern UINT32 FileMan_Size(STR strFilename);
 
+// TODO: rustlib
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime);
 
 /////////////////////////////////////////////////////////////////////////////////
