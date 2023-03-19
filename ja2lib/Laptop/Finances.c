@@ -2016,14 +2016,10 @@ INT32 GetPreviousDaysIncome(void) {
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
   while ((iByteCount < FileMan_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
-    FileMan_GetPos(hFileHandle);
-
     FileMan_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_FROM_END);
 
     // incrment byte count
     iByteCount += RECORD_SIZE;
-
-    FileMan_GetPos(hFileHandle);
 
     FileMan_Read(hFileHandle, &ubCode, sizeof(UINT8), &iBytesRead);
     FileMan_Read(hFileHandle, &ubSecondCode, sizeof(UINT8), &iBytesRead);
