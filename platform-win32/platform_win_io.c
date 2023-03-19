@@ -572,63 +572,6 @@ BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) {
 
 //**************************************************************************
 //
-// FileMan_GetPos
-//
-//		To get the current position in a file.
-//
-// Parameter List :
-//
-//		HWFILE	-> handle to file
-//
-// Return Value :
-//
-//		INT32		-> current offset in file if successful
-//					-> -1 if not
-//
-// Modification history :
-//
-//		24sep96:HJH		-> creation
-//
-//		9 Feb 98	DEF - modified to work with the library system
-//
-//**************************************************************************
-
-INT32 FileMan_GetPos(HWFILE hFile) {
-  HANDLE hRealFile;
-  UINT32 uiPositionInFile = 0;
-
-  INT16 sLibraryID;
-  UINT32 uiFileNum;
-
-  GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
-
-  // if its a real file, read the data from the file
-  if (sLibraryID == REAL_FILE_LIBRARY_ID) {
-    // Get the handle to the real file
-    hRealFile = gFileDataBase.RealFiles.pRealFilesOpen[uiFileNum].hRealFileHandle;
-
-    uiPositionInFile = Plat_SetFilePointer(hRealFile, 0, FILE_SEEK_FROM_CURRENT);
-    if (uiPositionInFile == 0xFFFFFFFF) {
-      uiPositionInFile = 0;
-    }
-    return (uiPositionInFile);
-  } else {
-    // if the library is open
-    if (IsLibraryOpened(sLibraryID)) {
-      // check if the file is open
-      if (gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiFileID != 0) {
-        uiPositionInFile =
-            gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiFilePosInFile;
-        return (uiPositionInFile);
-      }
-    }
-  }
-
-  return (BAD_INDEX);
-}
-
-//**************************************************************************
-//
 // FileMan_GetSize
 //
 //		To get the current file size.

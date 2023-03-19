@@ -70,8 +70,6 @@ BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *pu
 
 BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) { return FALSE; }
 
-INT32 FileMan_GetPos(HWFILE hFile) { return 0; }
-
 UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
 
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) { return FALSE; }

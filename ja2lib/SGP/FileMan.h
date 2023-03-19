@@ -36,8 +36,6 @@ extern BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
                              UINT32 *puiBytesWritten);
 
 extern BOOLEAN FileMan_Seek(HWFILE, UINT32 uiDistance, UINT8 uiHow);
-// TODO: rustlib
-extern INT32 FileMan_GetPos(HWFILE);
 
 // TODO: rustlib
 // returns true if at end of file, else false
