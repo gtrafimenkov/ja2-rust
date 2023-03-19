@@ -1937,18 +1937,16 @@ void ChangeNpcToDifferentSector(UINT8 ubNpcId, u8 sSectorX, u8 sSectorY, INT8 bS
 BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
     u8 sMapX, u8 sMapY, i8 bMapZ, ROTTING_CORPSE_DEFINITION *pRottingCorpseDef) {
   HWFILE hFile;
-  UINT32 uiNumberOfCorpses;
-  //	CHAR8		zTempName[ 128 ];
   CHAR8 zMapName[128];
   UINT32 uiNumBytesRead;
   UINT32 uiNumBytesWritten;
 
   GetMapTempFileName(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
-  // CHECK TO SEE if the file exist
+  UINT32 uiNumberOfCorpses = 0;
   if (FileMan_Exists(zMapName)) {
     // Open the file for reading
-    hFile = FileMan_Open(zMapName, FILE_ACCESS_READWRITE | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_OpenForReading(zMapName);
     if (hFile == 0) {
       // Error opening map modification file,
       return (FALSE);
@@ -1961,14 +1959,13 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
       FileMan_Close(hFile);
       return (FALSE);
     }
-  } else {
-    // the file doesnt exists, create a new one
-    hFile = FileMan_OpenForAppending(zMapName);
-    if (hFile == 0) {
-      // Error opening map modification file
-      return (FALSE);
-    }
-    uiNumberOfCorpses = 0;
+    FileMan_Close(hFile);
+  }
+
+  hFile = FileMan_OpenForAppending(zMapName);
+  if (hFile == 0) {
+    // Error opening map modification file
+    return (FALSE);
   }
 
   // Start at the begining of the file
