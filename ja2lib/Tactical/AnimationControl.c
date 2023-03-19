@@ -5288,7 +5288,7 @@ BOOLEAN LoadAnimationStateInstructions() {
   UINT32 uiBytesRead;
 
   // Open ani file
-  hFile = FileMan_Open(ANIMFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(ANIMFILENAME);
 
   if (!hFile) {
     return (FALSE);

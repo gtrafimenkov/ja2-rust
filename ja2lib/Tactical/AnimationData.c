@@ -4425,7 +4425,7 @@ BOOLEAN LoadAnimationProfiles() {
   UINT32 uiBytesRead;
 
   //	pInput = fopen( ANIMPROFILEFILENAME, "rb" );
-  pInput = FileMan_Open(ANIMPROFILEFILENAME, FILE_ACCESS_READ, FALSE);
+  pInput = FileMan_OpenForReading(ANIMPROFILEFILENAME);
 
   if (!pInput) {
     return (FALSE);

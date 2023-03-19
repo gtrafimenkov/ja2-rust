@@ -555,7 +555,7 @@ void DumpDistancesBetweenTowns(void) {
 void ReadInDistancesBetweenTowns(void) {
   HWFILE hFileHandle;
 
-  hFileHandle = FileMan_Open("BinaryData\\TownDistances.dat", FILE_ACCESS_READ, FALSE);
+  hFileHandle = FileMan_OpenForReading("BinaryData\\TownDistances.dat");
 
   FileMan_Read(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
 

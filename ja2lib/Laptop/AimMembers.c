@@ -1073,7 +1073,7 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   UINT16 i;
   UINT32 uiStartSeekAmount;
 
-  hFile = FileMan_Open(MERCBIOSFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(MERCBIOSFILENAME);
   if (!hFile) {
     return (FALSE);
   }

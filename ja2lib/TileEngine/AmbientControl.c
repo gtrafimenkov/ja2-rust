@@ -195,7 +195,7 @@ BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
   sprintf(zFilename, "AMBIENT\\%d.bad", ubAmbientID);
 
   // OPEN, LOAD
-  hFile = FileMan_Open(zFilename, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(zFilename);
   if (!hFile) {
     return (FALSE);
   }

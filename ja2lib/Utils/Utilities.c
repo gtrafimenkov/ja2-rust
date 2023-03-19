@@ -31,7 +31,7 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
   }
 
   // Open and read in the file
-  if ((hFileHandle = FileMan_Open(ColFile, FILE_ACCESS_READ, FALSE)) == 0) {
+  if ((hFileHandle = FileMan_OpenForReading(ColFile)) == 0) {
     // Return FALSE w/ debug
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot open COL file");
     return (FALSE);

@@ -9,7 +9,7 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   UINT16 i;
   UINT32 uiStartSeekAmount;
 
-  hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(ITEMSTRINGFILENAME);
   if (!hFile) {
     return (FALSE);
   }
@@ -189,7 +189,7 @@ BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
   UINT16 i;
   UINT32 uiStartSeekAmount;
 
-  hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(ITEMSTRINGFILENAME);
   if (!hFile) {
     return (FALSE);
   }

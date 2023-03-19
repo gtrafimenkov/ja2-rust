@@ -860,7 +860,7 @@ BOOLEAN MapExists(CHAR8 *szFilename) {
   CHAR8 str[50];
   HWFILE fp;
   sprintf(str, "MAPS\\%s", szFilename);
-  fp = FileMan_Open(str, FILE_ACCESS_READ, FALSE);
+  fp = FileMan_OpenForReading(str);
   if (!fp) return FALSE;
   FileMan_Close(fp);
   return TRUE;

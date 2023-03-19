@@ -10,7 +10,7 @@ BOOLEAN LoadEncryptedDataFromFile(STR pFileName, STR16 pDestString, UINT32 uiSee
   UINT16 i;
   UINT32 uiBytesRead;
 
-  hFile = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(pFileName);
   if (!hFile) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed to FileMan_Open");
     return (FALSE);

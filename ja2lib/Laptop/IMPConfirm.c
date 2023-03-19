@@ -488,7 +488,7 @@ void LoadInCurrentImpCharacter(void) {
   UINT32 uiBytesRead = 0;
 
   // open the file for writing
-  hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(IMP_MERC_FILE);
 
   // valid file?
   if (hFile == -1) {

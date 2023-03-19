@@ -82,7 +82,7 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
   pDestFileName[counter + 3] = 'p';
   pDestFileName[counter + 4] = '\0';
 
-  pFile = FileMan_Open(pDestFileName, FILE_ACCESS_READ, FALSE);
+  pFile = FileMan_OpenForReading(pDestFileName);
   if (pFile) {
     counter = 0;
     // gap file exists

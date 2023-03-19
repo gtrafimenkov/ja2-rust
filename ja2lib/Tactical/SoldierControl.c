@@ -4871,7 +4871,7 @@ BOOLEAN LoadPaletteData() {
   HWFILE hFile;
   UINT32 cnt, cnt2;
 
-  hFile = FileMan_Open(PALETTEFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(PALETTEFILENAME);
 
   // Read # of types
   if (!FileMan_Read(hFile, &guiNumPaletteSubRanges, sizeof(guiNumPaletteSubRanges), NULL)) {

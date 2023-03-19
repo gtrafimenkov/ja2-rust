@@ -27,7 +27,7 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
   CHECKF(FileMan_Exists(TempImage.ImageFile));
 
   // Open the file and read the header
-  hFile = FileMan_Open(TempImage.ImageFile, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(TempImage.ImageFile);
   CHECKF(hFile);
 
   if (!FileMan_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
@@ -319,7 +319,7 @@ BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
   CHECKF(FileMan_Exists(ImageFile));
 
   // Open the file and read the header
-  hFile = FileMan_Open(ImageFile, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(ImageFile);
   CHECKF(hFile);
 
   if (!FileMan_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||

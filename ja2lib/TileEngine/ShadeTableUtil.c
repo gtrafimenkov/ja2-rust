@@ -61,7 +61,7 @@ void DetermineRGBDistributionSettings() {
       fSaveRGBDist = TRUE;
       fCleanShadeTable = TRUE;
     } else {
-      hfile = FileMan_Open("RGBDist.dat", FILE_ACCESS_READ, FALSE);
+      hfile = FileMan_OpenForReading("RGBDist.dat");
       if (!hfile) {
         AssertMsg(0, "Couldn't open RGBDist.dat, even though it exists!");
       }
@@ -131,7 +131,7 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   ptr++;
   sprintf(ptr, "sha");
 
-  hfile = FileMan_Open(ShadeFileName, FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_OpenForReading(ShadeFileName);
   if (!hfile) {  // File doesn't exist, so generate it
     FileMan_Close(hfile);
     return FALSE;

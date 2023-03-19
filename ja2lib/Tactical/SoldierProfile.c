@@ -148,7 +148,7 @@ BOOLEAN LoadMercProfiles(void) {
   UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
   UINT32 uiNumBytesRead;
 
-  fptr = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
+  fptr = FileMan_OpenForReading(pFileName);
   if (!fptr) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to LoadMercProfiles from file %s", pFileName));
     return (FALSE);

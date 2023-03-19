@@ -520,8 +520,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UIN
 
   // if we are to append to the file
   if (fAppendToFile) {
-    // Open the file for writing, Create it if it doesnt exist
-    hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_ALWAYS, FALSE);
+    hfile = FileMan_OpenForReading(zMapName);
     if (hfile == 0) {  // Error opening map modification file
       return FALSE;
     }

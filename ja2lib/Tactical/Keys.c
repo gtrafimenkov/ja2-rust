@@ -134,7 +134,7 @@ BOOLEAN LoadLockTable(void) {
 
   // Load the Lock Table
 
-  hFile = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
+  hFile = FileMan_OpenForReading(pFileName);
   if (!hFile) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to LoadLockTable from file %s", pFileName));
     return (FALSE);

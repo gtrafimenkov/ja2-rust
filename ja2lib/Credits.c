@@ -65,7 +65,7 @@ enum {
 #define CRDT_FLAG__START_SECTION 0x00000002
 #define CRDT_FLAG__END_SECTION 0x00000004
 
-//#define		CRDT_NAME_OF_CREDIT_FILE
+// #define		CRDT_NAME_OF_CREDIT_FILE
 //"BINARYDATA\\Credits.txt"
 #define CRDT_NAME_OF_CREDIT_FILE "BINARYDATA\\Credits.edt"
 
@@ -437,21 +437,6 @@ BOOLEAN EnterCreditsScreen() {
 
     MSYS_SetRegionUserData(&gCrdtMouseRegions[uiCnt], 0, uiCnt);
   }
-
-  // Test Node
-  {
-    //		AddCreditNode( CRDT_NODE_DEFAULT, L"This is a test" );
-  }
-
-  /*
-          //open the credit text file
-          ghFile = FileMan_Open( CRDT_NAME_OF_CREDIT_FILE, FILE_ACCESS_READ | FILE_OPEN_EXISTING,
-     FALSE
-     ); if( !ghFile )
-          {
-                  return( FALSE );
-          }
-  */
 
   giCurrentlySelectedFace = -1;
   gfPauseCreditScreen = FALSE;

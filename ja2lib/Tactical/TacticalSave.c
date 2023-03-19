@@ -1883,7 +1883,7 @@ BOOLEAN LoadTempNpcQuoteInfoForNPCFromTempFile(UINT8 ubNpcId) {
     if (gpNPCQuoteInfoArray[ubNpcId] == NULL) return (FALSE);
   }
 
-  hFile = FileMan_Open(NPC_TEMP_QUOTE_FILE, FILE_ACCESS_READ | FILE_OPEN_ALWAYS, FALSE);
+  hFile = FileMan_OpenForReading(NPC_TEMP_QUOTE_FILE);
   if (hFile == 0) {
     // Error opening temp npc quote info
     return (FALSE);
@@ -1943,13 +1943,6 @@ BOOLEAN AddRottingCorpseToUnloadedSectorsRottingCorpseFile(
   UINT32 uiNumBytesRead;
   UINT32 uiNumBytesWritten;
 
-  /*
-          //Convert the current sector location into a file name
-          GetMapFileName( sMapX,sMapY, bMapZ, zTempName, FALSE );
-
-          //add the 'r' for 'Rotting Corpses' to the front of the map name
-          sprintf( zMapName, "%s\\r_%s", MAPS_DIR, zTempName);
-  */
   GetMapTempFileName(SF_ROTTING_CORPSE_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // CHECK TO SEE if the file exist

@@ -1120,7 +1120,7 @@ UINT32 SoundLoadDisk(STR pFilename) {
 
   Assert(pFilename != NULL);
 
-  if ((hFile = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
+  if ((hFile = FileMan_OpenForReading(pFilename)) != 0) {
     uiSize = FileMan_GetSize(hFile);
 
     // if insufficient memory, start unloading old samples until either
@@ -1698,7 +1698,7 @@ BOOLEAN SoundPlayStreamed(STR pFilename) {
   HWFILE hDisk;
   UINT32 uiFilesize;
 
-  if ((hDisk = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
+  if ((hDisk = FileMan_OpenForReading(pFilename)) != 0) {
     uiFilesize = FileMan_GetSize(hDisk);
     FileMan_Close(hDisk);
     return (uiFilesize >= guiSoundCacheThreshold);

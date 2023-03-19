@@ -2602,7 +2602,7 @@ INT32 LightLoad(STR pFilename) {
   if ((iLight = LightGetFree()) == (-1))
     return (-1);
   else {
-    if ((hFile = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
+    if ((hFile = FileMan_OpenForReading(pFilename)) != 0) {
       FileMan_Read(hFile, &usTemplateSize[iLight], sizeof(UINT16), NULL);
       if ((pLightList[iLight] =
                (LIGHT_NODE *)MemAlloc(usTemplateSize[iLight] * sizeof(LIGHT_NODE))) == NULL) {

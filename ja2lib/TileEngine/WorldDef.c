@@ -409,7 +409,7 @@ void BuildTileShadeTables() {
   if (!Plat_SetCurrentDirectory(ShadeTableDir)) {
     AssertMsg(0, "Can't set the directory to Data\\ShadeTable.  Kris' big problem!");
   }
-  hfile = FileMan_Open("IgnoreShadeTables.txt", FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_OpenForReading("IgnoreShadeTables.txt");
   if (hfile) {
     FileMan_Close(hfile);
     gfForceBuildShadeTables = TRUE;
@@ -1895,7 +1895,7 @@ BOOLEAN EvaluateWorld(CHAR8 *pSector, UINT8 ubLevel) {
     SaveWorld(szFilename);
   }
 
-  hfile = FileMan_Open(szDirFilename, FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_OpenForReading(szDirFilename);
   if (!hfile) return FALSE;
 
   uiFileSize = FileMan_GetSize(hfile);
@@ -2275,7 +2275,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   gfCaves = FALSE;
 
   // Open file
-  hfile = FileMan_Open(aFilename, FILE_ACCESS_READ, FALSE);
+  hfile = FileMan_OpenForReading(aFilename);
 
   if (!hfile) {
     SET_ERROR("Could not load map file %S", aFilename);

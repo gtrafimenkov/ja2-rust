@@ -1508,7 +1508,7 @@ FontTranslationTable *CreateEnglishTransTable() {
   }
 
   // Open and read in the file
-  if ((hFileHandle = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) == 0)
+  if ((hFileHandle = FileMan_OpenForReading(pFilename)) == 0)
   { // damn we failed to open the file
     DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Cannot open font file");
     return NULL;
