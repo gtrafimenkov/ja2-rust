@@ -4,6 +4,8 @@ use crate::slf;
 use std::collections::HashMap;
 use std::fs::{self, File};
 use std::io::{self, Read, Seek};
+
+#[cfg(windows)]
 use std::os::windows::prelude::AsRawHandle;
 
 /// Name of an slf library.  The name is taken from slf file header.

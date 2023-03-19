@@ -5,6 +5,7 @@
 #include "SGP/Types.h"
 #include "rust_debug.h"
 #include "rust_fileman.h"
+#include "rust_platform.h"
 
 int main() {
   struct Str512 CurrentDir;
