@@ -19,10 +19,10 @@ enum {
 BOOLEAN AddMapModification(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
 
 // Load the Map modifications from the saved game file
-BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile);
+BOOLEAN LoadMapTempFilesFromSavedGameFile(FileID hFile);
 
 // Save the Map Temp files to the saved game file
-BOOLEAN SaveMapTempFilesToSavedGameFile(HWFILE hFile);
+BOOLEAN SaveMapTempFilesToSavedGameFile(FileID hFile);
 
 // delete temp file
 BOOLEAN DeleteTempItemMapFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
@@ -92,21 +92,21 @@ BOOLEAN ReSetUnderGroundSectorFlag(uint8_t sSectorX, uint8_t sSectorY, uint8_t u
 BOOLEAN ReSetSectorFlag(uint8_t sMapX, uint8_t sMapY, uint8_t bMapZ, uint32_t uiFlagToSet);
 
 // Saves the NPC temp Quote file to the saved game file
-BOOLEAN LoadTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);
+BOOLEAN LoadTempNpcQuoteArrayToSaveGameFile(FileID hFile);
 
 // Loads the NPC temp Quote file from the saved game file
-BOOLEAN SaveTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveTempNpcQuoteArrayToSaveGameFile(FileID hFile);
 
 uint32_t MercChecksum(struct SOLDIERTYPE *pSoldier);
 uint32_t ProfileChecksum(MERCPROFILESTRUCT *pProfile);
-BOOLEAN JA2EncryptedFileRead(HWFILE hFile, void *pDest, uint32_t uiBytesToRead,
+BOOLEAN JA2EncryptedFileRead(FileID hFile, void *pDest, uint32_t uiBytesToRead,
                              uint32_t *puiBytesRead);
-BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
+BOOLEAN JA2EncryptedFileWrite(FileID hFile, void *pDest, uint32_t uiBytesToWrite,
                               uint32_t *puiBytesWritten);
 
-BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, void *pDest, uint32_t uiBytesToRead,
+BOOLEAN NewJA2EncryptedFileRead(FileID hFile, void *pDest, uint32_t uiBytesToRead,
                                 uint32_t *puiBytesRead);
-BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
+BOOLEAN NewJA2EncryptedFileWrite(FileID hFile, void *pDest, uint32_t uiBytesToWrite,
                                  uint32_t *puiBytesWritten);
 
 // If hacker's mess with our save/temp files, this is our final line of defence.

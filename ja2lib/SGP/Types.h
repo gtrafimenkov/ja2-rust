@@ -22,8 +22,9 @@ typedef unsigned long FLAGS32;
 // other
 typedef unsigned char BOOLEAN;
 typedef uint16_t HNDL;
+typedef uint8_t BYTE;
 typedef char STRING512[512];
-typedef uint32_t HWFILE;
+typedef uint32_t FileID;
 
 #define SGPFILENAME_LEN 100
 typedef char SGPFILENAME[SGPFILENAME_LEN];

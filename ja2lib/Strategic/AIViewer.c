@@ -7,7 +7,6 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
@@ -41,6 +40,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/TimerControl.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 #ifdef JA2BETAVERSION
 
@@ -226,8 +226,8 @@ BOOLEAN CreateAIViewer() {
   wchar_t str[6];
 
   // Check to see if data exists.
-  if (!FileMan_Exists("DevTools\\arulco.sti") || !FileMan_Exists("DevTools\\icons.sti") ||
-      !FileMan_Exists("DevTools\\SmCheckbox.sti")) {
+  if (!File_Exists("DevTools\\arulco.sti") || !File_Exists("DevTools\\icons.sti") ||
+      !File_Exists("DevTools\\SmCheckbox.sti")) {
     ScreenMsg(FONT_WHITE, MSG_BETAVERSION, L"AIViewer missing data.  Aborted.");
     gfExitViewer = FALSE;
     gfViewerEntry = TRUE;

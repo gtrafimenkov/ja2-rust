@@ -1,5 +1,7 @@
 pub mod civ_groups;
 pub mod exp_civ_groups;
+pub mod exp_debug;
+pub mod exp_fileman;
 pub mod exp_militia;
 pub mod exp_platform;
 pub mod exp_sam_sites;
@@ -10,6 +12,8 @@ pub mod militia;
 pub mod platform;
 pub mod sam_sites;
 pub mod sector;
+pub mod slf;
+pub mod slfdb;
 pub mod state;
 pub mod towns;
 pub mod ui;

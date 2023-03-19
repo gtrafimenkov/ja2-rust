@@ -13,7 +13,6 @@
 #include "Local.h"
 #include "Res/Resource.h"
 #include "SGP/ButtonSystem.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/Input.h"
 #include "SGP/Random.h"
@@ -177,7 +176,6 @@ void ShutdownStandardGamingPlatform(void) {
 
   ShutdownInputManager();
   ShutdownContainers();
-  FileMan_Shutdown();
 
   ShutdownMemoryManager();  // must go last (except for Debug), for MemDebugCounter to work right...
 

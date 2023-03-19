@@ -125,10 +125,10 @@ void ExamineCurrentSquadLights(void);
 void GetLocationOfSquad(int16_t *sX, int16_t *sY, int8_t *bZ, int8_t bSquadValue);
 
 // Save the squad information to the saved game file
-BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile);
+BOOLEAN SaveSquadInfoToSavedGameFile(FileID hFile);
 
 // Load all the squad info from the saved game file
-BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile);
+BOOLEAN LoadSquadInfoFromSavedGameFile(FileID hFile);
 
 // get squad id of first free squad
 int8_t GetFirstEmptySquad(void);

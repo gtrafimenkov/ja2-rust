@@ -1,15 +1,15 @@
 #include "GameSettings.h"
 #include "LanguageDefines.h"
-#include "SGP/FileMan.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 
 BOOLEAN LoadItemInfo(uint16_t ubIndex, wchar_t* pNameString, wchar_t* pInfoString) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   uint32_t uiBytesRead;
   uint16_t i;
   uint32_t uiStartSeekAmount;
 
-  hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(ITEMSTRINGFILENAME);
   if (!hFile) {
     return (FALSE);
   }
@@ -20,13 +20,13 @@ BOOLEAN LoadItemInfo(uint16_t ubIndex, wchar_t* pNameString, wchar_t* pInfoStrin
   // Skip short names
   uiStartSeekAmount += SIZE_SHORT_ITEM_NAME;
 
-  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
-    FileMan_Close(hFile);
+  if (File_Seek(hFile, uiStartSeekAmount, FILE_SEEK_START) == FALSE) {
+    File_Close(hFile);
     return (FALSE);
   }
 
-  if (!FileMan_Read(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
-    FileMan_Close(hFile);
+  if (!File_Read(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -102,13 +102,13 @@ BOOLEAN LoadItemInfo(uint16_t ubIndex, wchar_t* pNameString, wchar_t* pInfoStrin
     // Get the additional info
     uiStartSeekAmount = ((SIZE_ITEM_NAME + SIZE_SHORT_ITEM_NAME + SIZE_ITEM_INFO) * ubIndex) +
                         SIZE_ITEM_NAME + SIZE_SHORT_ITEM_NAME;
-    if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
-      FileMan_Close(hFile);
+    if (File_Seek(hFile, uiStartSeekAmount, FILE_SEEK_START) == FALSE) {
+      File_Close(hFile);
       return (FALSE);
     }
 
-    if (!FileMan_Read(hFile, pInfoString, SIZE_ITEM_INFO, &uiBytesRead)) {
-      FileMan_Close(hFile);
+    if (!File_Read(hFile, pInfoString, SIZE_ITEM_INFO, &uiBytesRead)) {
+      File_Close(hFile);
       return (FALSE);
     }
 
@@ -178,18 +178,18 @@ BOOLEAN LoadItemInfo(uint16_t ubIndex, wchar_t* pNameString, wchar_t* pInfoStrin
     }
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
   return (TRUE);
 }
 
 BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, wchar_t* pNameString) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   //  wchar_t		DestString[ SIZE_MERC_BIO_INFO ];
   uint32_t uiBytesRead;
   uint16_t i;
   uint32_t uiStartSeekAmount;
 
-  hFile = FileMan_Open(ITEMSTRINGFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(ITEMSTRINGFILENAME);
   if (!hFile) {
     return (FALSE);
   }
@@ -197,13 +197,13 @@ BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, wchar_t* pNameString) {
   // Get current mercs bio info
   uiStartSeekAmount = ((SIZE_SHORT_ITEM_NAME + SIZE_ITEM_NAME + SIZE_ITEM_INFO) * ubIndex);
 
-  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
-    FileMan_Close(hFile);
+  if (File_Seek(hFile, uiStartSeekAmount, FILE_SEEK_START) == FALSE) {
+    File_Close(hFile);
     return (FALSE);
   }
 
-  if (!FileMan_Read(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
-    FileMan_Close(hFile);
+  if (!File_Read(hFile, pNameString, SIZE_ITEM_NAME, &uiBytesRead)) {
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -272,7 +272,7 @@ BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, wchar_t* pNameString) {
 #endif
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
   return (TRUE);
 }
 

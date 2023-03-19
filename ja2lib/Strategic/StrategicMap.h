@@ -75,8 +75,8 @@ BOOLEAN OKForSectorExit(int8_t bExitDirection, uint16_t usAdditionalData,
                         uint32_t *puiTraverseTimeInMinutes);
 void SetupNewStrategicGame();
 
-BOOLEAN LoadStrategicInfoFromSavedFile(HWFILE hFile);
-BOOLEAN SaveStrategicInfoToSavedFile(HWFILE hFile);
+BOOLEAN LoadStrategicInfoFromSavedFile(FileID hFile);
+BOOLEAN SaveStrategicInfoToSavedFile(FileID hFile);
 
 void AllMercsHaveWalkedOffSector();
 

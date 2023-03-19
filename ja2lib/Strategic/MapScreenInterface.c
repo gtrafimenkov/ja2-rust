@@ -11,7 +11,6 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
@@ -64,6 +63,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 // inventory pool position on screen
 #define MAP_INVEN_POOL_X 300
@@ -4919,7 +4919,7 @@ BOOLEAN CanSoldierMoveWithVehicleId(struct SOLDIERTYPE *pSoldier, int32_t iVehic
   return (FALSE);
 }
 
-BOOLEAN SaveLeaveItemList(HWFILE hFile) {
+BOOLEAN SaveLeaveItemList(FileID hFile) {
   int32_t iCounter = 0;
   MERC_LEAVE_ITEM *pCurrentItem;
   uint32_t uiCount = 0;
@@ -4933,7 +4933,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
       fNodeExists = TRUE;
 
       // Save the to specify that a node DOES exist
-      FileMan_Write(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
+      File_Write(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(BOOLEAN)) {
         return (FALSE);
       }
@@ -4948,7 +4948,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
       }
 
       // Save the number specifing how many items there are in the list
-      FileMan_Write(hFile, &uiCount, sizeof(uint32_t), &uiNumBytesWritten);
+      File_Write(hFile, &uiCount, sizeof(uint32_t), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(uint32_t)) {
         return (FALSE);
       }
@@ -4958,7 +4958,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
       // loop through all the nodes to see how many there are
       for (uiCnt = 0; uiCnt < uiCount; uiCnt++) {
         // Save the items
-        FileMan_Write(hFile, pCurrentItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesWritten);
+        File_Write(hFile, pCurrentItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesWritten);
         if (uiNumBytesWritten != sizeof(MERC_LEAVE_ITEM)) {
           return (FALSE);
         }
@@ -4968,7 +4968,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
     } else {
       fNodeExists = FALSE;
       // Save the to specify that a node DOENST exist
-      FileMan_Write(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
+      File_Write(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(BOOLEAN)) {
         return (FALSE);
       }
@@ -4977,8 +4977,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
 
   // Save the leave list profile id's
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
-    FileMan_Write(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(uint32_t),
-                  &uiNumBytesWritten);
+    File_Write(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(uint32_t), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(uint32_t)) {
       return (FALSE);
     }
@@ -4987,7 +4986,7 @@ BOOLEAN SaveLeaveItemList(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadLeaveItemList(HWFILE hFile) {
+BOOLEAN LoadLeaveItemList(FileID hFile) {
   int32_t iCounter = 0;
   MERC_LEAVE_ITEM *pCurrentItem;
   MERC_LEAVE_ITEM *pItem;
@@ -5005,7 +5004,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
   // loop through all the lists
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
     // load the flag that specifis that a node DOES exist
-    FileMan_Read(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesRead);
+    File_Read(hFile, &fNodeExists, sizeof(BOOLEAN), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(BOOLEAN)) {
       return (FALSE);
     }
@@ -5013,7 +5012,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
     // if a root node is supposed to exist
     if (fNodeExists) {
       // load the number specifing how many items there are in the list
-      FileMan_Read(hFile, &uiCount, sizeof(uint32_t), &uiNumBytesRead);
+      File_Read(hFile, &uiCount, sizeof(uint32_t), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(uint32_t)) {
         return (FALSE);
       }
@@ -5036,7 +5035,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
         memset(pItem, 0, sizeof(MERC_LEAVE_ITEM));
 
         // Load the items
-        FileMan_Read(hFile, pItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesRead);
+        File_Read(hFile, pItem, sizeof(MERC_LEAVE_ITEM), &uiNumBytesRead);
         if (uiNumBytesRead != sizeof(MERC_LEAVE_ITEM)) {
           return (FALSE);
         }
@@ -5057,7 +5056,7 @@ BOOLEAN LoadLeaveItemList(HWFILE hFile) {
 
   // Load the leave list profile id's
   for (iCounter = 0; iCounter < NUM_LEAVE_LIST_SLOTS; iCounter++) {
-    FileMan_Read(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(uint32_t), &uiNumBytesRead);
+    File_Read(hFile, &guiLeaveListOwnerProfileId[iCounter], sizeof(uint32_t), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(uint32_t)) {
       return (FALSE);
     }

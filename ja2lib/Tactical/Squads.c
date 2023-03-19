@@ -2,7 +2,6 @@
 
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
 #include "Soldier.h"
@@ -20,6 +19,7 @@
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Vehicles.h"
 #include "UI.h"
+#include "rust_fileman.h"
 
 typedef struct {
   int16_t uiID;  // The soldiers ID
@@ -896,7 +896,7 @@ void SetSquadPositionBetweenSectors(uint8_t ubNextX, uint8_t ubNextY, uint8_t ub
   return;
 }
 
-BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile) {
+BOOLEAN SaveSquadInfoToSavedGameFile(FileID hFile) {
   SAVE_SQUAD_INFO_STRUCT sSquadSaveStruct[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
   uint32_t uiNumBytesWritten = 0;
   uint32_t uiSaveSize = 0;
@@ -916,13 +916,13 @@ BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile) {
   // Save the squad info to the Saved Game File
   uiSaveSize = sizeof(SAVE_SQUAD_INFO_STRUCT) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD;
 
-  FileMan_Write(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save all the squad movement id's
-  FileMan_Write(hFile, SquadMovementGroups, sizeof(int8_t) * NUMBER_OF_SQUADS, &uiNumBytesWritten);
+  File_Write(hFile, SquadMovementGroups, sizeof(int8_t) * NUMBER_OF_SQUADS, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(int8_t) * NUMBER_OF_SQUADS) {
     return (FALSE);
   }
@@ -930,7 +930,7 @@ BOOLEAN SaveSquadInfoToSavedGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
+BOOLEAN LoadSquadInfoFromSavedGameFile(FileID hFile) {
   SAVE_SQUAD_INFO_STRUCT sSquadSaveStruct[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
   uint32_t uiNumBytesRead = 0;
   uint32_t uiSaveSize = 0;
@@ -950,7 +950,7 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   // Load in the squad info
   uiSaveSize = sizeof(SAVE_SQUAD_INFO_STRUCT) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD;
 
-  FileMan_Read(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesRead);
+  File_Read(hFile, sSquadSaveStruct, uiSaveSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiSaveSize) {
     return (FALSE);
   }
@@ -966,7 +966,7 @@ BOOLEAN LoadSquadInfoFromSavedGameFile(HWFILE hFile) {
   }
 
   // Load in the Squad movement id's
-  FileMan_Read(hFile, SquadMovementGroups, sizeof(int8_t) * NUMBER_OF_SQUADS, &uiNumBytesRead);
+  File_Read(hFile, SquadMovementGroups, sizeof(int8_t) * NUMBER_OF_SQUADS, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(int8_t) * NUMBER_OF_SQUADS) {
     return (FALSE);
   }

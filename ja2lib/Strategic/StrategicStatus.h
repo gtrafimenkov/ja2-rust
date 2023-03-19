@@ -105,9 +105,9 @@ void InitStrategicStatus();
 
 extern STRATEGIC_STATUS gStrategicStatus;
 
-BOOLEAN SaveStrategicStatusToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveStrategicStatusToSaveGameFile(FileID hFile);
 
-BOOLEAN LoadStrategicStatusFromSaveGameFile(HWFILE hFile);
+BOOLEAN LoadStrategicStatusFromSaveGameFile(FileID hFile);
 
 uint8_t CalcDeathRate(void);
 

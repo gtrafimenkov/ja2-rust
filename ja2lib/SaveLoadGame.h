@@ -66,14 +66,13 @@ BOOLEAN LoadSavedGame(uint8_t ubSavedGameID);
 BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
                                          struct SOLDIERTYPE *pSourceInfo);
 
-BOOLEAN SaveFilesToSavedGame(char *pSrcFileName, HWFILE hFile);
-BOOLEAN LoadFilesFromSavedGame(char *pSrcFileName, HWFILE hFile);
+BOOLEAN SaveFilesToSavedGame(char *pSrcFileName, FileID hFile);
+BOOLEAN LoadFilesFromSavedGame(char *pSrcFileName, FileID hFile);
 
 BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 
 void GetBestPossibleSectorXYZValues(uint8_t *psSectorX, uint8_t *psSectorY, int8_t *pbSectorZ);
 
 extern uint32_t guiLastSaveGameNum;
-int8_t GetNumberForAutoSave(BOOLEAN fLatestAutoSave);
 
 #endif

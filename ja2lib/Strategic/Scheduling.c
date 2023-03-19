@@ -4,7 +4,6 @@
 
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
@@ -28,6 +27,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 #include "rust_civ_groups.h"
+#include "rust_fileman.h"
 
 #ifdef JA2EDITOR
 extern wchar_t gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
@@ -355,7 +355,7 @@ void LoadSchedules(int8_t **hBuffer) {
 }
 
 extern BOOLEAN gfSchedulesHosed;
-BOOLEAN LoadSchedulesFromSave(HWFILE hFile) {
+BOOLEAN LoadSchedulesFromSave(FileID hFile) {
   SCHEDULENODE *pSchedule = NULL;
   SCHEDULENODE temp;
   uint8_t ubNum;
@@ -365,9 +365,9 @@ BOOLEAN LoadSchedulesFromSave(HWFILE hFile) {
 
   // LOADDATA( &ubNum, *hBuffer, sizeof( uint8_t ) );
   uiNumBytesToRead = sizeof(uint8_t);
-  FileMan_Read(hFile, &ubNum, uiNumBytesToRead, &uiNumBytesRead);
+  File_Read(hFile, &ubNum, uiNumBytesToRead, &uiNumBytesRead);
   if (uiNumBytesRead != uiNumBytesToRead) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -377,9 +377,9 @@ BOOLEAN LoadSchedulesFromSave(HWFILE hFile) {
   gubScheduleID = 1;
   while (ubRealNum) {
     uiNumBytesToRead = sizeof(SCHEDULENODE);
-    FileMan_Read(hFile, &temp, uiNumBytesToRead, &uiNumBytesRead);
+    File_Read(hFile, &temp, uiNumBytesToRead, &uiNumBytesRead);
     if (uiNumBytesRead != uiNumBytesToRead) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
     // LOADDATA( &temp, *hBuffer, sizeof( SCHEDULENODE ) );
@@ -453,7 +453,7 @@ void ClearAllSchedules() {
   }
 }
 
-BOOLEAN SaveSchedules(HWFILE hFile) {
+BOOLEAN SaveSchedules(FileID hFile) {
   SCHEDULENODE *curr;
   uint32_t uiBytesWritten;
   uint8_t ubNum, ubNumFucker;
@@ -470,7 +470,7 @@ BOOLEAN SaveSchedules(HWFILE hFile) {
   }
   ubNum = (uint8_t)((iNum >= 32) ? 32 : iNum);
 
-  FileMan_Write(hFile, &ubNum, sizeof(uint8_t), &uiBytesWritten);
+  File_Write(hFile, &ubNum, sizeof(uint8_t), &uiBytesWritten);
   if (uiBytesWritten != sizeof(uint8_t)) {
     return (FALSE);
   }
@@ -484,7 +484,7 @@ BOOLEAN SaveSchedules(HWFILE hFile) {
       if (ubNumFucker > ubNum) {
         return (TRUE);
       }
-      FileMan_Write(hFile, curr, sizeof(SCHEDULENODE), &uiBytesWritten);
+      File_Write(hFile, curr, sizeof(SCHEDULENODE), &uiBytesWritten);
       if (uiBytesWritten != sizeof(SCHEDULENODE)) {
         return (FALSE);
       }

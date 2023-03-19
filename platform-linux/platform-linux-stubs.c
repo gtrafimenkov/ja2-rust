@@ -46,36 +46,11 @@ BOOLEAN Plat_GetFileIsOffline(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) { return FALSE; }
 
-HWFILE FileMan_Open(char *strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
-
-void FileMan_Close(HWFILE hFile) {}
-
-BOOLEAN FileMan_Read(HWFILE hFile, void *pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Write(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
-                      uint32_t *puiBytesWritten) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) { return FALSE; }
-
-int32_t FileMan_GetPos(HWFILE hFile) { return 0; }
-
-uint32_t FileMan_GetSize(HWFILE hFile) { return 0; }
-
 BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
 void Plat_GetFileClose(struct GetFile *pGFStruct) {}
-
-BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
-
-BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
-
-uint32_t FileMan_Size(char *strFilename) { return 0; }
 
 /////////////////////////////////////////////////////////////////////////////////
 // Input

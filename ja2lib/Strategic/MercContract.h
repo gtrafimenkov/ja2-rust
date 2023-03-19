@@ -66,8 +66,8 @@ BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier);
 uint32_t GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier);
 BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile);
-BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile);
+BOOLEAN LoadContractRenewalDataFromSaveGameFile(FileID hFile);
+BOOLEAN SaveContractRenewalDataToSaveGameFile(FileID hFile);
 
 // rehiring of mercs from leave equipment pop up
 extern BOOLEAN fEnterMapDueToContract;

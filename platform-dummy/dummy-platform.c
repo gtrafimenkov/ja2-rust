@@ -30,19 +30,6 @@ uint32_t GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-uint32_t Plat_GetFileSize(SYS_FILE_HANDLE handle) { return 0; }
-
-BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, uint32_t bytesToRead,
-                      uint32_t *readBytes) {
-  return FALSE;
-}
-
-void Plat_CloseFile(SYS_FILE_HANDLE handle) {}
-
-BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle) { return FALSE; }
-
-uint32_t Plat_SetFilePointer(SYS_FILE_HANDLE handle, int32_t distance, int seekType) { return 0; }
-
 uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
 
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs) { return FALSE; }
@@ -57,36 +44,11 @@ BOOLEAN Plat_GetFileIsOffline(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) { return FALSE; }
 
-HWFILE FileMan_Open(char *strFilename, uint32_t uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
-
-void FileMan_Close(HWFILE hFile) {}
-
-BOOLEAN FileMan_Read(HWFILE hFile, void *pDest, uint32_t uiBytesToRead, uint32_t *puiBytesRead) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Write(HWFILE hFile, void *pDest, uint32_t uiBytesToWrite,
-                      uint32_t *puiBytesWritten) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Seek(HWFILE hFile, uint32_t uiDistance, uint8_t uiHow) { return FALSE; }
-
-int32_t FileMan_GetPos(HWFILE hFile) { return 0; }
-
-uint32_t FileMan_GetSize(HWFILE hFile) { return 0; }
-
 BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
 void Plat_GetFileClose(struct GetFile *pGFStruct) {}
-
-BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
-
-BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
-
-uint32_t FileMan_Size(char *strFilename) { return 0; }
 
 /////////////////////////////////////////////////////////////////////////////////
 // Input

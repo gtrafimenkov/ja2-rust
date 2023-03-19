@@ -67,7 +67,7 @@ BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, uint8_t ub
 
 uint16_t CountNumberOfBobbyPurchasesThatAreInTransit();
 
-BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile);
-BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile);
+BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(FileID hFile);
+BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(FileID hFile);
 
 #endif

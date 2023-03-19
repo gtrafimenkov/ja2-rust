@@ -48,10 +48,10 @@ BOOLEAN InAirRaid();
 BOOLEAN HandleAirRaidEndTurn(uint8_t ubTeam);
 
 // Save the air raid info to the saved game
-BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveAirRaidInfoToSaveGameFile(FileID hFile);
 
 // load the air raid info from the saved game
-BOOLEAN LoadAirRaidInfoFromSaveGameFile(HWFILE hFile);
+BOOLEAN LoadAirRaidInfoFromSaveGameFile(FileID hFile);
 
 void EndAirRaid();
 
