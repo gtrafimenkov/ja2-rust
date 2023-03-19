@@ -57,6 +57,18 @@ FileID File_OpenForAppending(const char *path);
 FileID File_OpenForWriting(const char *path);
 
 /**
+ * Get Windows handle that can be used to read the file.
+ * The file position will be changed to point to the corrent place
+ * in the slf file if the file_id belongs to a library file.
+ *
+ * The handle must be used as soon as possible before other operations
+ * on files from the same slf archive will change the file position.
+ *
+ * On Linux 0 is returned.  In case of an error, 0 is returned.
+ */
+uint64_t File_GetWinHandleToReadFile(FileID file_id);
+
+/**
  * Read data from earlier opened file to the buffer.
  * Buffer must be no less than bytes_to_read in size.
  *

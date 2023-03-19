@@ -10,6 +10,9 @@ use std::ffi::{c_char, c_void, CStr};
 use std::io::{Read, Seek, Write};
 use std::{collections::HashMap, fs, io};
 
+#[cfg(windows)]
+use std::os::windows::io::AsRawHandle;
+
 /// Identifier of an open file.  The file can be a regular file or
 /// a file inside of an slf archive.  This is opaque to the user of the library.
 pub type FileID = u32;
@@ -85,6 +88,19 @@ pub extern "C" fn File_OpenForWriting(path: *const c_char) -> FileID {
             Ok(id) => id,
         },
     }
+}
+
+#[no_mangle]
+/// Get Windows handle that can be used to read the file.
+/// The file position will be changed to point to the corrent place
+/// in the slf file if the file_id belongs to a library file.
+///
+/// The handle must be used as soon as possible before other operations
+/// on files from the same slf archive will change the file position.
+///
+/// On Linux 0 is returned.  In case of an error, 0 is returned.
+pub extern "C" fn File_GetWinHandleToReadFile(file_id: FileID) -> u64 {
+    unsafe { FILE_DB.get_win_handle_to_read_file(file_id) }
 }
 
 #[no_mangle]
@@ -192,7 +208,6 @@ pub extern "C" fn File_Seek(file_id: FileID, distance: u32, how: FileSeekMode) -
     };
     unsafe {
         let res = FILE_DB.seek(file_id, pos);
-        // eprintln!("{:?}", res);
         res.is_ok()
     }
 }
@@ -345,6 +360,22 @@ impl DB {
             None => Err(io::Error::from(io::ErrorKind::NotFound)),
             Some(OpenedFile::LibFile(path)) => self.slfdb.seek_libfile(path, pos),
             Some(OpenedFile::Regular(f)) => f.seek(pos),
+        }
+    }
+
+    /// Get windows handle that can be used to read the file.
+    /// On Linux 0 is returned.  In case of an error, 0 is returned.
+    pub fn get_win_handle_to_read_file(&mut self, file_id: FileID) -> u64 {
+        match self.file_map.get(&file_id) {
+            None => 0,
+            Some(OpenedFile::LibFile(f)) => self.slfdb.get_win_handle_to_read_libfile(f),
+            Some(OpenedFile::Regular(f)) => {
+                #[cfg(windows)]
+                let handle = f.as_raw_handle();
+                #[cfg(not(windows))]
+                let handle = 0;
+                handle as u64
+            }
         }
     }
 }

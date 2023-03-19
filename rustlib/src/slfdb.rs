@@ -4,6 +4,7 @@ use crate::slf;
 use std::collections::HashMap;
 use std::fs::{self, File};
 use std::io::{self, Read, Seek};
+use std::os::windows::prelude::AsRawHandle;
 
 /// Name of an slf library.  The name is taken from slf file header.
 type LibName = String;
@@ -41,6 +42,9 @@ impl OpenedLibFile {
     pub fn get_size(&self) -> u32 {
         self.info.size
     }
+    pub fn get_lib_name(&self) -> &str {
+        &self.info.lib
+    }
 }
 
 #[derive(Debug)]
@@ -66,6 +70,30 @@ impl DB {
         DB {
             libs: HashMap::new(),
             lib_files: HashMap::new(),
+        }
+    }
+
+    /// Get Windows handle that can be used to read the library file.
+    /// On Linux return 0.
+    pub fn get_win_handle_to_read_libfile(&mut self, f: &OpenedLibFile) -> u64 {
+        match self.libs.get_mut(f.get_lib_name()) {
+            Some(lib) => {
+                #[cfg(windows)]
+                {
+                    let handle = lib.opened_file.as_raw_handle();
+                    // Also set file position at the beginning of the library file.
+                    // So that reading using this handle will read the library file.
+                    if lib
+                        .opened_file
+                        .seek(io::SeekFrom::Start(f.info.offset as u64))
+                        .is_ok()
+                    {
+                        return handle as u64;
+                    }
+                }
+                0
+            }
+            None => 0,
         }
     }
 

@@ -20,6 +20,7 @@
 #include "platform.h"
 #include "platform_strings.h"
 #include "platform_win.h"
+#include "rust_debug.h"
 
 // Sample status flags
 #define SAMPLE_ALLOCATED 0x00000001
@@ -376,6 +377,9 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
         return (SoundStartStream(pFilename, uiChannel, pParms));
       }
 
+      DebugLogWrite("= Starting sound streaming:");
+      DebugLogWrite(pFilename);
+
       // Get the real file handle of the file
       hRealFileHandle = GetRealFileHandleFromFileManFileHandle(hFile);
       if (hRealFileHandle == 0) {
@@ -388,6 +392,8 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
 
       // Convert the file handle into a 'name'
       sprintf(pFileHandlefileName, "\\\\\\\\%d", (unsigned int)hRealFileHandle);
+
+      DebugLogWrite(pFileHandlefileName);
 
       // Start the sound stream
       uiRetVal = SoundStartStream(pFileHandlefileName, uiChannel, pParms);

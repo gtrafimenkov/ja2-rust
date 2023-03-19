@@ -8,7 +8,6 @@ static mut DEBUG_FILE: Lazy<Option<fs::File>> = Lazy::new(create_debug_file);
 
 fn create_debug_file() -> Option<fs::File> {
     if let Ok(path) = std::env::current_exe() {
-        // eprintln!("{}", path.to_string_lossy());
         if let Some(path) = path.parent() {
             let name = format!("debug-{}.txt", Local::now().format("%Y%m%d-%H%M%S"));
             let mut path = path.to_path_buf();
