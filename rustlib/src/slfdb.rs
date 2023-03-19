@@ -9,15 +9,38 @@ use std::io::{self, Read, Seek};
 type LibName = String;
 
 /// Information about a file from an slf library.
-#[derive(Debug)]
-struct LibFile {
+#[derive(Debug, Clone)]
+struct LibFileInfo {
     lib: LibName,
     /// offset from the beginning of the slf file
     offset: u32,
     /// size of the file
     size: u32,
+}
+
+impl LibFileInfo {
+    fn copy(&self) -> Self {
+        LibFileInfo {
+            lib: self.lib.clone(),
+            offset: self.offset,
+            size: self.size,
+        }
+    }
+}
+
+/// Opened library file
+#[derive(Debug)]
+pub struct OpenedLibFile {
+    // path: String,
+    info: LibFileInfo,
     /// read position for the file relative to offset
     read_pos: u32,
+}
+
+impl OpenedLibFile {
+    pub fn get_size(&self) -> u32 {
+        self.info.size
+    }
 }
 
 #[derive(Debug)]
@@ -35,7 +58,7 @@ pub struct DB {
     libs: HashMap<LibName, Lib>,
 
     /// Mapping of file names (paths) contained in libraries to library names.
-    lib_files: HashMap<String, LibFile>,
+    lib_files: HashMap<String, LibFileInfo>,
 }
 
 impl DB {
@@ -61,11 +84,10 @@ impl DB {
                     for entry in slf.entries.iter() {
                         let libfile_path =
                             build_canonical_libfile_path(&slf.header.lib_path, &entry.file_name);
-                        let location = LibFile {
+                        let location = LibFileInfo {
                             lib: slf.header.lib_name.clone(),
                             offset: entry.offset,
                             size: entry.size,
-                            read_pos: 0,
                         };
                         self.lib_files.insert(libfile_path, location);
                     }
@@ -108,67 +130,68 @@ impl DB {
         }
     }
 
+    /// Open library file for reading.
+    pub fn open_for_reading(&self, path: &str) -> io::Result<OpenedLibFile> {
+        let path = canonize_libfile_path(path);
+        match self.lib_files.get(&path) {
+            None => Err(io::Error::from(io::ErrorKind::NotFound)),
+            Some(info) => Ok(OpenedLibFile {
+                // path,
+                info: info.copy(),
+                read_pos: 0,
+            }),
+        }
+    }
+
     /// Read a library file into buffer.
     /// The buffer must not be bigger that the size of the file.
-    pub fn read_libfile_exact(&mut self, path: &str, buffer: &mut [u8]) -> io::Result<()> {
-        match self.lib_files.get_mut(&canonize_libfile_path(path)) {
-            None => Err(io::Error::from(io::ErrorKind::NotFound)),
-            Some(loc) => {
-                if buffer.len() + loc.read_pos as usize > loc.size as usize {
-                    return Err(io::Error::from(io::ErrorKind::InvalidInput));
-                }
-                let lib = self.libs.get_mut(&loc.lib).unwrap();
-                let read_pos = loc.offset + loc.read_pos;
-                lib.opened_file.seek(io::SeekFrom::Start(read_pos as u64))?;
-                lib.opened_file.read_exact(buffer)?;
-                loc.read_pos += buffer.len() as u32;
-                Ok(())
-            }
+    pub fn read_libfile_exact(
+        &mut self,
+        file: &mut OpenedLibFile,
+        buffer: &mut [u8],
+    ) -> io::Result<()> {
+        if buffer.len() + file.read_pos as usize > file.info.size as usize {
+            return Err(io::Error::from(io::ErrorKind::InvalidInput));
         }
+        let lib = self.libs.get_mut(&file.info.lib).unwrap();
+        let read_pos = file.info.offset + file.read_pos;
+        lib.opened_file.seek(io::SeekFrom::Start(read_pos as u64))?;
+        lib.opened_file.read_exact(buffer)?;
+        file.read_pos += buffer.len() as u32;
+        Ok(())
     }
 
     /// Read up to buf.len() bytes from a file.
     /// Return number of bytes read (n).  If n == 0, the file end was reached.
-    pub fn read_libfile(&mut self, path: &str, buf: &mut [u8]) -> io::Result<usize> {
-        match self.lib_files.get_mut(&canonize_libfile_path(path)) {
-            None => Err(io::Error::from(io::ErrorKind::NotFound)),
-            Some(loc) => {
-                let max_bytes_to_read =
-                    std::cmp::min((loc.size - loc.read_pos) as usize, buf.len());
-                let buffer = &mut buf[0..max_bytes_to_read];
-                let lib = self.libs.get_mut(&loc.lib).unwrap();
-                let read_pos = loc.offset + loc.read_pos;
-                lib.opened_file.seek(io::SeekFrom::Start(read_pos as u64))?;
-                let n = lib.opened_file.read(buffer)?;
-                loc.read_pos += n as u32;
-                Ok(n)
-            }
-        }
+    pub fn read_libfile(&mut self, file: &mut OpenedLibFile, buf: &mut [u8]) -> io::Result<usize> {
+        let max_bytes_to_read = std::cmp::min((file.info.size - file.read_pos) as usize, buf.len());
+        let buffer = &mut buf[0..max_bytes_to_read];
+        let lib = self.libs.get_mut(&file.info.lib).unwrap();
+        let read_pos = file.info.offset + file.read_pos;
+        lib.opened_file.seek(io::SeekFrom::Start(read_pos as u64))?;
+        let n = lib.opened_file.read(buffer)?;
+        file.read_pos += n as u32;
+        Ok(n)
     }
 
     /// Change read position for the library file.
-    pub fn seek_libfile(&mut self, path: &str, pos: io::SeekFrom) -> io::Result<u64> {
-        match self.lib_files.get_mut(&canonize_libfile_path(path)) {
-            None => Err(io::Error::from(io::ErrorKind::NotFound)),
-            Some(loc) => {
-                // checking that we are not going out of the available range
-                let cur_abs_pos = (loc.offset + loc.read_pos) as i64;
-                let end_abs_pos = (loc.offset + loc.size) as i64;
-                let new_abs_pos = match pos {
-                    io::SeekFrom::Start(val) => loc.offset as i64 + val as i64,
-                    io::SeekFrom::Current(val) => cur_abs_pos + val,
-                    io::SeekFrom::End(val) => end_abs_pos + val,
-                };
-                if new_abs_pos < loc.offset as i64 || new_abs_pos >= end_abs_pos {
-                    return Err(io::Error::from(io::ErrorKind::InvalidInput));
-                }
-
-                // actual seek will happen just before the read
-                // for now just storing the new position
-                loc.read_pos = (new_abs_pos - loc.offset as i64) as u32;
-                Ok(loc.read_pos as u64)
-            }
+    pub fn seek_libfile(&mut self, file: &mut OpenedLibFile, pos: io::SeekFrom) -> io::Result<u64> {
+        // checking that we are not going out of the available range
+        let cur_abs_pos = (file.info.offset + file.read_pos) as i64;
+        let end_abs_pos = (file.info.offset + file.info.size) as i64;
+        let new_abs_pos = match pos {
+            io::SeekFrom::Start(val) => file.info.offset as i64 + val as i64,
+            io::SeekFrom::Current(val) => cur_abs_pos + val,
+            io::SeekFrom::End(val) => end_abs_pos + val,
+        };
+        if new_abs_pos < file.info.offset as i64 || new_abs_pos >= end_abs_pos {
+            return Err(io::Error::from(io::ErrorKind::InvalidInput));
         }
+
+        // actual seek will happen just before the read
+        // for now just storing the new position
+        file.read_pos = (new_abs_pos - file.info.offset as i64) as u32;
+        Ok(file.read_pos as u64)
     }
 }
 
@@ -229,10 +252,12 @@ mod tests {
 
         assert_eq!(5712, fdb.get_libfile_size(path).unwrap());
 
+        let f = &mut fdb.open_for_reading(path).unwrap();
+
         // reading the file and testing the content
         {
             let mut buffer = [0; 5712];
-            fdb.read_libfile_exact(path, &mut buffer).unwrap();
+            fdb.read_libfile_exact(f, &mut buffer).unwrap();
 
             let mut hasher = Sha256::new();
             hasher.input(&buffer);
@@ -241,10 +266,10 @@ mod tests {
 
         // reading again
         {
-            fdb.seek_libfile(path, io::SeekFrom::Start(0)).unwrap();
+            fdb.seek_libfile(f, io::SeekFrom::Start(0)).unwrap();
 
             let mut buffer = [0; 5712];
-            fdb.read_libfile_exact(path, &mut buffer).unwrap();
+            fdb.read_libfile_exact(f, &mut buffer).unwrap();
 
             let mut hasher = Sha256::new();
             hasher.input(&buffer);
@@ -253,10 +278,10 @@ mod tests {
 
         // reading again with read_libfile function
         {
-            fdb.seek_libfile(path, io::SeekFrom::Start(0)).unwrap();
+            fdb.seek_libfile(f, io::SeekFrom::Start(0)).unwrap();
 
             let mut buffer = [0; 6000];
-            let bytes_read = fdb.read_libfile(path, &mut buffer).unwrap();
+            let bytes_read = fdb.read_libfile(f, &mut buffer).unwrap();
             assert_eq!(5712, bytes_read);
 
             let mut hasher = Sha256::new();
@@ -266,18 +291,12 @@ mod tests {
 
         // reading again with many read_libfile reads
         {
-            fdb.seek_libfile(path, io::SeekFrom::Start(0)).unwrap();
+            fdb.seek_libfile(f, io::SeekFrom::Start(0)).unwrap();
 
             let mut buffer = [0; 6000];
-            assert_eq!(2000, fdb.read_libfile(path, &mut buffer[0..2000]).unwrap());
-            assert_eq!(
-                2000,
-                fdb.read_libfile(path, &mut buffer[2000..4000]).unwrap()
-            );
-            assert_eq!(
-                1712,
-                fdb.read_libfile(path, &mut buffer[4000..5712]).unwrap()
-            );
+            assert_eq!(2000, fdb.read_libfile(f, &mut buffer[0..2000]).unwrap());
+            assert_eq!(2000, fdb.read_libfile(f, &mut buffer[2000..4000]).unwrap());
+            assert_eq!(1712, fdb.read_libfile(f, &mut buffer[4000..5712]).unwrap());
 
             let mut hasher = Sha256::new();
             hasher.input(&buffer[0..5712]);
@@ -288,21 +307,15 @@ mod tests {
         {
             let mut buffer = [0; 6000];
 
-            fdb.seek_libfile(path, io::SeekFrom::Start(0)).unwrap();
-            assert_eq!(2000, fdb.read_libfile(path, &mut buffer[0..2000]).unwrap());
+            fdb.seek_libfile(f, io::SeekFrom::Start(0)).unwrap();
+            assert_eq!(2000, fdb.read_libfile(f, &mut buffer[0..2000]).unwrap());
 
-            fdb.seek_libfile(path, io::SeekFrom::End(-1712)).unwrap();
-            assert_eq!(
-                1712,
-                fdb.read_libfile(path, &mut buffer[4000..5712]).unwrap()
-            );
+            fdb.seek_libfile(f, io::SeekFrom::End(-1712)).unwrap();
+            assert_eq!(1712, fdb.read_libfile(f, &mut buffer[4000..5712]).unwrap());
 
-            fdb.seek_libfile(path, io::SeekFrom::Start(0)).unwrap();
-            fdb.seek_libfile(path, io::SeekFrom::Current(2000)).unwrap();
-            assert_eq!(
-                2000,
-                fdb.read_libfile(path, &mut buffer[2000..4000]).unwrap()
-            );
+            fdb.seek_libfile(f, io::SeekFrom::Start(0)).unwrap();
+            fdb.seek_libfile(f, io::SeekFrom::Current(2000)).unwrap();
+            assert_eq!(2000, fdb.read_libfile(f, &mut buffer[2000..4000]).unwrap());
 
             let mut hasher = Sha256::new();
             hasher.input(&buffer[0..5712]);

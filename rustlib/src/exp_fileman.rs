@@ -210,7 +210,7 @@ const MAX_FILE_ID: u32 = 0xffff;
 
 enum OpenedFile {
     Regular(fs::File),
-    LibFile(String),
+    LibFile(slfdb::OpenedLibFile),
 }
 struct DB {
     next_id: FileID,
@@ -270,11 +270,8 @@ impl DB {
             Ok(f) => Ok(self.store_opened_file(OpenedFile::Regular(f))),
 
             Err(_) => {
-                // checking slf libraries
-                match self.slfdb.has_libfile(path) {
-                    true => Ok(self.store_opened_file(OpenedFile::LibFile(path.to_owned()))),
-                    false => Err(io::Error::from(io::ErrorKind::NotFound)),
-                }
+                let f = self.slfdb.open_for_reading(path)?;
+                Ok(self.store_opened_file(OpenedFile::LibFile(f)))
             }
         }
     }
@@ -334,10 +331,7 @@ impl DB {
     pub fn get_size(&mut self, file_id: FileID) -> io::Result<u64> {
         match self.file_map.get_mut(&file_id) {
             None => Err(io::Error::from(io::ErrorKind::NotFound)),
-            Some(OpenedFile::LibFile(path)) => match self.slfdb.get_libfile_size(path) {
-                Ok(size) => Ok(size as u64),
-                Err(err) => Err(err),
-            },
+            Some(OpenedFile::LibFile(f)) => Ok(f.get_size() as u64),
             Some(OpenedFile::Regular(f)) => match f.metadata() {
                 Ok(metadata) => Ok(metadata.len()),
                 Err(err) => Err(err),

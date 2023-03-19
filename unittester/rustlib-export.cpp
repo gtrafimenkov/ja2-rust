@@ -190,3 +190,50 @@ TEST(RustExport, ReadingGameRes) {
 //   EXPECT_TRUE(DebugLogWrite("hello there"));
 //   EXPECT_TRUE(DebugLogWrite("hello there again"));
 // }
+
+#include "TileEngine/StructureInternals.h"
+
+TEST(FileMan, LoadStructureData) {
+  if (Plat_DirectoryExists("./ReleaseWithDebug/Data")) {
+    EXPECT_TRUE(File_RegisterSlfLibraries("./ReleaseWithDebug/Data"));
+
+    const char *file_name = "ANIMS\\STRUCTDATA\\M_CROUCH.JSD";
+
+    FileID hInput = FILE_ID_ERR;
+    hInput = File_OpenForReading(file_name);
+    EXPECT_TRUE(hInput != 0);
+
+    STRUCTURE_FILE_HEADER Header;
+    UINT32 uiBytesRead;
+    BOOLEAN fOk = File_Read(hInput, &Header, sizeof(STRUCTURE_FILE_HEADER), &uiBytesRead);
+    EXPECT_TRUE(fOk);
+    EXPECT_EQ(16, uiBytesRead);
+  }
+}
+
+TEST(RustExport, FileManParallelRead) {
+  // It should be possible to open file two times and read content independently.
+  if (Plat_DirectoryExists("./ReleaseWithDebug/Data")) {
+    EXPECT_TRUE(File_RegisterSlfLibraries("./ReleaseWithDebug/Data"));
+
+    const char *file_name = "ANIMS\\STRUCTDATA\\M_CROUCH.JSD";
+
+    {
+      uint8_t buf[400];
+      FileID file_id = File_OpenForReading(file_name);
+      EXPECT_TRUE(file_id != 0);
+      uint32_t bytesRead = 0xffffffff;
+      EXPECT_TRUE(File_Read(file_id, &buf, sizeof(buf), &bytesRead));
+      EXPECT_EQ(400, bytesRead);
+    }
+
+    {
+      uint8_t buf[400];
+      FileID file_id = File_OpenForReading(file_name);
+      EXPECT_TRUE(file_id != 0);
+      uint32_t bytesRead = 0xffffffff;
+      EXPECT_TRUE(File_Read(file_id, &buf, sizeof(buf), &bytesRead));
+      EXPECT_EQ(400, bytesRead);
+    }
+  }
+}
