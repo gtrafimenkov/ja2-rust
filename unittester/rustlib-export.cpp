@@ -114,6 +114,13 @@ TEST(RustExport, FileMan) {
   }
 }
 
+TEST(RustExport, FileSize) {
+  EXPECT_EQ(3444529, File_Size("tools/editor/Editor.slf"));
+
+  File_RegisterSlfLibraries("tools/editor");
+  EXPECT_EQ(5712, File_Size("Editor\\EXITGRIDBUT.STI"));
+}
+
 TEST(RustExport, FileManRW) {
   // first write
   {

@@ -44,8 +44,6 @@ extern INT32 FileMan_GetPos(HWFILE);
 BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile);
 
 extern UINT32 FileMan_GetSize(HWFILE);
-// TODO: rustlib
-extern UINT32 FileMan_Size(STR strFilename);
 
 // TODO: rustlib
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime);

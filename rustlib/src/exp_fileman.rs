@@ -174,6 +174,15 @@ pub extern "C" fn File_GetSize(file_id: FileID) -> u32 {
 }
 
 #[no_mangle]
+/// Return size of the file.  Return 0 in case of an error.
+pub extern "C" fn File_Size(path: *const c_char) -> u32 {
+    let id = File_OpenForReading(path);
+    let size = File_GetSize(id);
+    File_Close(id);
+    size
+}
+
+#[no_mangle]
 /// Change file read or write position.
 pub extern "C" fn File_Seek(file_id: FileID, distance: u32, how: FileSeekMode) -> bool {
     let pos = match how {

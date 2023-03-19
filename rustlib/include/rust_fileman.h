@@ -86,6 +86,11 @@ bool File_Exists(const char *path);
 uint32_t File_GetSize(FileID file_id);
 
 /**
+ * Return size of the file.  Return 0 in case of an error.
+ */
+uint32_t File_Size(const char *path);
+
+/**
  * Change file read or write position.
  */
 bool File_Seek(FileID file_id, uint32_t distance, enum FileSeekMode how);

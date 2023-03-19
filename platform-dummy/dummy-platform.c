@@ -84,8 +84,6 @@ BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
 
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
 
-UINT32 FileMan_Size(STR strFilename) { return 0; }
-
 /////////////////////////////////////////////////////////////////////////////////
 // Input
 /////////////////////////////////////////////////////////////////////////////////

@@ -28,6 +28,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
     UINT8 *pubNumElites, UINT8 *pubNumRegulars, UINT8 *pubNumAdmins, UINT8 *pubNumCreatures);
@@ -513,7 +514,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UIN
   GetMapTempFileName(SF_ENEMY_PRESERVED_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
   // if the file doesnt exist
-  if (FileMan_Size(zMapName) == 0) {
+  if (File_Size(zMapName) == 0) {
     // set it so we are not appending
     fAppendToFile = FALSE;
   }

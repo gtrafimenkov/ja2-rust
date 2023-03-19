@@ -24,6 +24,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 
 #define GAME_SETTINGS_FILE "..\\Ja2.set"
 
@@ -47,7 +48,7 @@ BOOLEAN LoadGameSettings() {
 
   // if the game settings file does NOT exist, or if it is smaller then what it should be
   if (!FileMan_Exists(GAME_SETTINGS_FILE) ||
-      FileMan_Size(GAME_SETTINGS_FILE) != sizeof(GAME_SETTINGS)) {
+      File_Size(GAME_SETTINGS_FILE) != sizeof(GAME_SETTINGS)) {
     // Initialize the settings
     InitGameSettings();
 

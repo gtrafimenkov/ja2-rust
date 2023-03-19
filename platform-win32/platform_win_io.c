@@ -880,18 +880,6 @@ BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) {
   return (TRUE);
 }
 
-UINT32 FileMan_Size(STR strFilename) {
-  HWFILE hFile;
-  UINT32 uiSize;
-
-  if ((hFile = FileMan_OpenForReading(strFilename)) == 0) return (0);
-
-  uiSize = FileMan_GetSize(hFile);
-  FileMan_Close(hFile);
-
-  return (uiSize);
-}
-
 HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
   INT16 sLibraryID;
   UINT32 uiFileNum;
