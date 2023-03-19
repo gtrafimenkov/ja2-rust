@@ -450,7 +450,7 @@ void OpenAndReadFilesFile(void) {
   if (!(FileMan_Exists(FILES_DAT_FILE))) return;
 
   // open file
-  hFileHandle = FileMan_Open(FILES_DAT_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FILES_DAT_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {

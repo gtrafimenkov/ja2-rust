@@ -870,8 +870,7 @@ UINT32 FileMan_Size(STR strFilename) {
   HWFILE hFile;
   UINT32 uiSize;
 
-  if ((hFile = FileMan_Open(strFilename, FILE_OPEN_EXISTING | FILE_ACCESS_READ, FALSE)) == 0)
-    return (0);
+  if ((hFile = FileMan_OpenForReading(strFilename)) == 0) return (0);
 
   uiSize = FileMan_GetSize(hFile);
   FileMan_Close(hFile);

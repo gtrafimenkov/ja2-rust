@@ -986,7 +986,7 @@ void OpenAndReadFinancesFile(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1444,7 +1444,7 @@ void GetBalanceFromDisk(void) {
   UINT32 iBytesRead = 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1515,7 +1515,7 @@ UINT32 ReadInLastElementOfFinanceListAndReturnIdNumber(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1551,7 +1551,7 @@ void SetLastPageInRecords(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1631,7 +1631,7 @@ BOOLEAN LoadInRecords(UINT32 uiPage) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return (FALSE);
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1797,7 +1797,7 @@ INT32 GetPreviousBalanceToDate(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1846,7 +1846,7 @@ INT32 GetPreviousDaysBalance(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1925,7 +1925,7 @@ INT32 GetTodaysBalance(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -1999,7 +1999,7 @@ INT32 GetPreviousDaysIncome(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -2090,7 +2090,7 @@ INT32 GetTodaysDaysIncome(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -2206,7 +2206,7 @@ INT32 GetTodaysOtherDeposits(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -2295,7 +2295,7 @@ INT32 GetYesterdaysOtherDeposits(void) {
   if (!(FileMan_Exists(FINANCES_DATA_FILE))) return 0;
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -2386,7 +2386,7 @@ void LoadCurrentBalance(void) {
   }
 
   // open file
-  hFileHandle = FileMan_Open(FINANCES_DATA_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = FileMan_OpenForReading(FINANCES_DATA_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {

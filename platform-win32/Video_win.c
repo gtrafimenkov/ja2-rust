@@ -4274,21 +4274,13 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   return (hVSurface);
 }
 
-struct VSurface *GetPrimaryVideoSurface() {
-  return (ghPrimary);
-}
+struct VSurface *GetPrimaryVideoSurface() { return (ghPrimary); }
 
-struct VSurface *GetBackBufferVideoSurface() {
-  return (ghBackBuffer);
-}
+struct VSurface *GetBackBufferVideoSurface() { return (ghBackBuffer); }
 
-struct VSurface *GetFrameBufferVideoSurface() {
-  return (ghFrameBuffer);
-}
+struct VSurface *GetFrameBufferVideoSurface() { return (ghFrameBuffer); }
 
-struct VSurface *GetMouseBufferVideoSurface() {
-  return (ghMouseBuffer);
-}
+struct VSurface *GetMouseBufferVideoSurface() { return (ghMouseBuffer); }
 
 // UTILITY FUNCTIONS FOR BLITTING
 
@@ -4996,8 +4988,7 @@ struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
   }
 
   // Attempt opening the filename
-  if (!(pSmack->hFileHandle =
-            FileMan_Open(cFilename, FILE_OPEN_EXISTING | FILE_ACCESS_READ, FALSE))) {
+  if (!(pSmack->hFileHandle = FileMan_OpenForReading(cFilename))) {
     ErrorMsg("SMK ERROR: Can't open the SMK file");
     return (NULL);
   }
