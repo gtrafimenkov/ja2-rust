@@ -46,7 +46,7 @@ BOOLEAN Plat_GetFileIsOffline(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) { return FALSE; }
 
-HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
+HWFILE FileMan_Open(const char *strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
 
 void FileMan_Close(HWFILE hFile) {}
 

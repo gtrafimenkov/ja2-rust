@@ -1315,7 +1315,7 @@ BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
 
   if (FileMan_Exists(zSavedGameName)) {
     // create the save game file
-    hFile = FileMan_Open(zSavedGameName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_OpenForReading(zSavedGameName);
     if (!hFile) {
       FileMan_Close(hFile);
       gbSaveGameArray[bEntry] = FALSE;

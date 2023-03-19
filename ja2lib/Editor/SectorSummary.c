@@ -2060,7 +2060,7 @@ void LoadGlobalSummary() {
       // main ground level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= GROUND_LEVEL_MASK;
@@ -2074,7 +2074,7 @@ void LoadGlobalSummary() {
       // main B1 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT1_LEVEL_MASK;
@@ -2088,7 +2088,7 @@ void LoadGlobalSummary() {
       // main B2 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT2_LEVEL_MASK;
@@ -2102,7 +2102,7 @@ void LoadGlobalSummary() {
       // main B3 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT3_LEVEL_MASK;
@@ -2116,7 +2116,7 @@ void LoadGlobalSummary() {
       // alternate ground level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_GROUND_MASK;
@@ -2130,7 +2130,7 @@ void LoadGlobalSummary() {
       // alternate B1 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B1_MASK;
@@ -2144,7 +2144,7 @@ void LoadGlobalSummary() {
       // alternate B2 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B2_MASK;
@@ -2158,7 +2158,7 @@ void LoadGlobalSummary() {
       // alternate B3 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hfile = FileMan_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B1_MASK;
@@ -2616,7 +2616,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   }
   // Open the original map for the sector
   snprintf(szFilename, ARR_SIZE(szFilename), "MAPS\\%ls", gszFilename);
-  hfile = FileMan_Open(szFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hfile = FileMan_OpenForReading(szFilename);
   if (!hfile) {  // The file couldn't be found!
     return;
   }

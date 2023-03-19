@@ -239,7 +239,7 @@ BOOLEAN LoadStructureData(STR szFileName, struct STRUCTURE_FILE_REF *pFileRef,
 
   CHECKF(szFileName);
   CHECKF(pFileRef);
-  hInput = FileMan_Open(szFileName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hInput = FileMan_OpenForReading(szFileName);
   if (hInput == 0) {
     return (FALSE);
   }

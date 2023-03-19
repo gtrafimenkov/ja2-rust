@@ -40,3 +40,7 @@ HWFILE FileMan_OpenForWriting(const char *path) {
 HWFILE FileMan_OpenForAppending(const char *path) {
   return FileMan_Open(path, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
 }
+
+HWFILE FileMan_OpenForReading(const char *path) {
+  return FileMan_Open(path, FILE_ACCESS_READ | FILE_ACCESS_READ, FALSE);
+}

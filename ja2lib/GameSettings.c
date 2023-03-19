@@ -54,7 +54,7 @@ BOOLEAN LoadGameSettings() {
     // delete the shade tables aswell
     DeleteShadeTableDir();
   } else {
-    hFile = FileMan_Open(GAME_SETTINGS_FILE, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_OpenForReading(GAME_SETTINGS_FILE);
     if (!hFile) {
       FileMan_Close(hFile);
       InitGameSettings();

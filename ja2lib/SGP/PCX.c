@@ -78,8 +78,7 @@ PcxObject *LoadPcx(STR8 pFilename) {
   UINT8 *pPcxBuffer;
 
   // Open and read in the file
-  if ((hFileHandle = FileMan_Open(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE)) ==
-      0) {  // damn we failed to open the file
+  if ((hFileHandle = FileMan_OpenForReading(pFilename)) == 0) {  // damn we failed to open the file
     return NULL;
   }
 

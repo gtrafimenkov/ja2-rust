@@ -208,7 +208,7 @@ static void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Str
 //
 //**************************************************************************
 
-HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
+HWFILE FileMan_Open(const char *strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
   HWFILE hFile;
   HANDLE hRealFile;
   DWORD dwAccess;

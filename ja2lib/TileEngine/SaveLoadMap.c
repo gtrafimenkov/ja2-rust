@@ -108,7 +108,7 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
   }
 
   // Open the file for reading
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
@@ -555,7 +555,7 @@ BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
   }
 
   // Open the file for reading
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
@@ -798,7 +798,7 @@ BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX
   }
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
@@ -964,7 +964,7 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(u8 usSectorX, u8 usSectorY,
   }
 
   // Open the file for reading
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);

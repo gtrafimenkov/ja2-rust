@@ -85,7 +85,7 @@ typedef struct {
 } SOUNDTAG;
 
 // Uncomment this to disable the startup of sound hardware
-//#define SOUND_DISABLE
+// #define SOUND_DISABLE
 
 #pragma pack(push, 1)
 
@@ -360,7 +360,7 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
   if (fSoundSystemInit) {
     if ((uiChannel = SoundGetFreeChannel()) != SOUND_ERROR) {
       // Open the file
-      hFile = FileMan_Open(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+      hFile = FileMan_OpenForReading(pFilename);
       if (!hFile) {
         FastDebugMsg(
             String("\n*******\nSoundPlayStreamedFile():  ERROR:  Couldnt open '%s' in "

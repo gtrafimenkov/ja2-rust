@@ -1154,7 +1154,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   CreateSavedGameFileNameFromNumber(ubSavedGameID, zSaveGameName);
 
   // open the save game file
-  hFile = FileMan_Open(zSaveGameName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = FileMan_OpenForReading(zSaveGameName);
   if (!hFile) {
     FileMan_Close(hFile);
     guiSaveGameVersion = 0;
@@ -2510,7 +2510,7 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   UINT32 uiNumBytesRead;
 
   // open the file
-  hSrcFile = FileMan_Open(pSrcFileName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hSrcFile = FileMan_OpenForReading(pSrcFileName);
   if (!hSrcFile) {
     return (FALSE);
   }
@@ -4052,7 +4052,7 @@ INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave) {
           pMessageStrings[MSG_SAVEEXTENSION]);
 
   if (FileMan_Exists(zFileName1)) {
-    hFile = FileMan_Open(zFileName1, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_OpenForReading(zFileName1);
 
     FileMan_GetFileWriteTime(hFile, &LastWriteTime1);
 
@@ -4062,7 +4062,7 @@ INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave) {
   }
 
   if (FileMan_Exists(zFileName2)) {
-    hFile = FileMan_Open(zFileName2, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = FileMan_OpenForReading(zFileName2);
 
     FileMan_GetFileWriteTime(hFile, &LastWriteTime2);
 

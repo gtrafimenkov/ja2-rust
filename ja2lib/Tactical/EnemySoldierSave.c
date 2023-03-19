@@ -103,7 +103,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
                      (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Open the file for reading
-  hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hfile = FileMan_OpenForReading(zMapName);
   if (hfile == 0) {  // Error opening map modification file
     return FALSE;
   }
@@ -740,7 +740,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
   ubNumElites = ubNumTroops = ubNumAdmins = ubNumCreatures = 0;
 
   // Open the file for reading
-  hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hfile = FileMan_OpenForReading(zMapName);
   if (hfile == 0) {  // Error opening map modification file
     return FALSE;
   }
@@ -1067,7 +1067,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
                      (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Open the file for reading
-  hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hfile = FileMan_OpenForReading(zMapName);
   if (hfile == 0) {  // Error opening map modification file
     return FALSE;
   }
@@ -1627,7 +1627,7 @@ BOOLEAN CountNumberOfElitesRegularsAdminsAndCreaturesFromEnemySoldiersTempFile(
                      (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Open the file for reading
-  hfile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hfile = FileMan_OpenForReading(zMapName);
   if (hfile == 0) {  // Error opening map modification file
     return FALSE;
   }
