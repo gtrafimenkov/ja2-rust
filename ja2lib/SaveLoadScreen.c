@@ -818,35 +818,6 @@ void GetSaveLoadScreenUserInput() {
 
     if (Event.usEvent == KEY_UP) {
       switch (Event.usParam) {
-        case 'a':
-          if (gfKeyState[ALT] && !gfSaveGame) {
-            INT8 iFile = GetNumberForAutoSave(TRUE);
-
-            if (iFile == -1) break;
-
-            guiLastSaveGameNum = iFile;
-
-            gbSelectedSaveLocation = SAVE__END_TURN_NUM;
-            StartFadeOutForSaveLoadScreen();
-          }
-          break;
-
-        case 'b':
-          if (gfKeyState[ALT] && !gfSaveGame) {
-            INT8 iFile = GetNumberForAutoSave(FALSE);
-
-            if (iFile == -1)
-              break;
-            else if (iFile == 0)
-              guiLastSaveGameNum = 1;
-            else if (iFile == 1)
-              guiLastSaveGameNum = 0;
-
-            gbSelectedSaveLocation = SAVE__END_TURN_NUM;
-            StartFadeOutForSaveLoadScreen();
-          }
-          break;
-
         case UPARROW:
           MoveSelectionUpOrDown(TRUE);
           break;

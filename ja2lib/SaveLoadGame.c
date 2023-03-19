@@ -3559,63 +3559,6 @@ void UpdateMercMercContractInfo() {
   }
 }
 
-INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave) {
-  char zFileName1[256];
-  char zFileName2[256];
-  HWFILE hFile;
-  BOOLEAN fFile1Exist, fFile2Exist;
-  uint64_t LastWriteTime1;
-  uint64_t LastWriteTime2;
-
-  fFile1Exist = FALSE;
-  fFile2Exist = FALSE;
-
-  // The name of the file
-  sprintf(zFileName1, "%S\\Auto%02d.%S", pMessageStrings[MSG_SAVEDIRECTORY], 0,
-          pMessageStrings[MSG_SAVEEXTENSION]);
-  sprintf(zFileName2, "%S\\Auto%02d.%S", pMessageStrings[MSG_SAVEDIRECTORY], 1,
-          pMessageStrings[MSG_SAVEEXTENSION]);
-
-  if (FileMan_Exists(zFileName1)) {
-    hFile = FileMan_OpenForReading(zFileName1);
-
-    FileMan_GetFileWriteTime(hFile, &LastWriteTime1);
-
-    FileMan_Close(hFile);
-
-    fFile1Exist = TRUE;
-  }
-
-  if (FileMan_Exists(zFileName2)) {
-    hFile = FileMan_OpenForReading(zFileName2);
-
-    FileMan_GetFileWriteTime(hFile, &LastWriteTime2);
-
-    FileMan_Close(hFile);
-
-    fFile2Exist = TRUE;
-  }
-
-  if (!fFile1Exist && !fFile2Exist)
-    return (-1);
-  else if (fFile1Exist && !fFile2Exist) {
-    if (fLatestAutoSave)
-      return (0);
-    else
-      return (-1);
-  } else if (!fFile1Exist && fFile2Exist) {
-    if (fLatestAutoSave)
-      return (1);
-    else
-      return (-1);
-  } else {
-    if (LastWriteTime1 > LastWriteTime2)
-      return (0);
-    else
-      return (1);
-  }
-}
-
 void HandleOldBobbyRMailOrders() {
   INT32 iCnt;
   INT32 iNewListCnt = 0;

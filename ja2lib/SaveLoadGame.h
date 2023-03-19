@@ -74,6 +74,5 @@ BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 void GetBestPossibleSectorXYZValues(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ);
 
 extern UINT32 guiLastSaveGameNum;
-INT8 GetNumberForAutoSave(BOOLEAN fLatestAutoSave);
 
 #endif

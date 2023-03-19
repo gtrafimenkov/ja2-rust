@@ -727,38 +727,6 @@ void W32toSGPFileFind(struct GetFile *pGFStruct, WIN32_FIND_DATA *pW32Struct) {
   }
 }
 
-BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) {
-  *pLastWriteTime = 0;
-
-  INT16 sLibraryID;
-  UINT32 uiFileNum;
-  GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
-
-  // if its a real file, read the data from the file
-  if (sLibraryID == REAL_FILE_LIBRARY_ID) {
-    // get the real file handle to the file
-    HANDLE hRealFile = gFileDataBase.RealFiles.pRealFilesOpen[uiFileNum].hRealFileHandle;
-
-    // Gets the UTC file time for the 'real' file
-    FILETIME sCreationUtcFileTime;
-    FILETIME sLastAccessedUtcFileTime;
-    FILETIME sLastWriteUtcFileTime;
-    GetFileTime(hRealFile, &sCreationUtcFileTime, &sLastAccessedUtcFileTime,
-                &sLastWriteUtcFileTime);
-
-    // converts the write UTC file time to the current time used for the file
-    FILETIME localWriteTime;
-    FileTimeToLocalFileTime(&sLastWriteUtcFileTime, &localWriteTime);
-    *pLastWriteTime = (((uint64_t)localWriteTime.dwHighDateTime) << 32) |
-                      ((uint64_t)localWriteTime.dwLowDateTime);
-  } else {
-    // not supporting file time for files in libraries
-    return (FALSE);
-  }
-
-  return (TRUE);
-}
-
 HANDLE GetRealFileHandleFromFileManFileHandle(HWFILE hFile) {
   INT16 sLibraryID;
   UINT32 uiFileNum;
