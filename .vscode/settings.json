@@ -31,6 +31,7 @@
         "stdint.h": "c",
         "platform.h": "c",
         "buttonsystem.h": "c",
-        "rust_fileman.h": "c"
+        "rust_fileman.h": "c",
+        "vobjectblitters.h": "c"
     }
 }

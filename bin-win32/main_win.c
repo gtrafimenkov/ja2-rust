@@ -177,7 +177,6 @@ void ShutdownStandardGamingPlatform(void) {
 
   ShutdownInputManager();
   ShutdownContainers();
-  FileMan_Shutdown();
 
   ShutdownMemoryManager();  // must go last (except for Debug), for MemDebugCounter to work right...
 

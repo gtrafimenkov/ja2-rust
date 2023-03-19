@@ -1,4 +1,5 @@
 #include "Point.h"
+#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -7,7 +8,7 @@
 #include "Utils/Cinematics.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
-#include "SGP/FileMan.h"
+// #include "../platform-win32/platform_win.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -57,21 +58,16 @@ BOOLEAN Plat_GetFileIsOffline(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) { return FALSE; }
 
-HWFILE FileMan_Open(const char *strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
+// HWFILE FileMan_Open(const char *strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) { return
+// 0; }
 
-void FileMan_Close(HWFILE hFile) {}
+// void FileMan_Close(HWFILE hFile) {}
 
-BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead) {
-  return FALSE;
-}
+// BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead) {
+//   return FALSE;
+// }
 
-BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *puiBytesWritten) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) { return FALSE; }
-
-UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
+// UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
 
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 

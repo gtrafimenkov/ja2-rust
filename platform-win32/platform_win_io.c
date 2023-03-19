@@ -15,6 +15,7 @@
 #include "SGP/Types.h"
 #include "StrUtils.h"
 #include "platform.h"
+#include "platform_win.h"
 #include "rust_debug.h"
 
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle) { return GetFileSize(handle, NULL); }
@@ -220,6 +221,10 @@ static BOOLEAN FileMan_ExistsNoDB(STR strFilename) {
   }
 
   return (fExists);
+}
+
+HWFILE FileMan_OpenForReading(const char *path) {
+  return FileMan_Open(path, FILE_ACCESS_READ | FILE_ACCESS_READ, FALSE);
 }
 
 HWFILE FileMan_Open(const char *strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) {
@@ -454,120 +459,6 @@ BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiB
 #endif
 
   return (fRet);
-}
-
-//**************************************************************************
-//
-// FileMan_Write
-//
-//		To write a file.
-//
-// Parameter List :
-//
-//		HWFILE		-> handle to file to write to
-//		void	*	-> destination buffer
-//		UINT32	-> num bytes to write
-//		UINT32	-> num bytes written
-//
-// Return Value :
-//
-//		BOOLEAN	-> TRUE if successful
-//					-> FALSE if not
-//
-// Modification history :
-//
-//		24sep96:HJH		-> creation
-//		08Dec97:ARM		-> return FALSE if dwNumBytesToWrite != dwNumBytesWritten
-//
-//		9 Feb 98	DEF - modified to work with the library system
-//
-//**************************************************************************
-
-BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *puiBytesWritten) {
-  HANDLE hRealFile;
-  DWORD dwNumBytesToWrite, dwNumBytesWritten;
-  BOOLEAN fRet;
-  INT16 sLibraryID;
-  UINT32 uiFileNum;
-
-  GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
-
-  // if its a real file, read the data from the file
-  if (sLibraryID == REAL_FILE_LIBRARY_ID) {
-    dwNumBytesToWrite = (DWORD)uiBytesToWrite;
-
-    // get the real file handle to the file
-    hRealFile = gFileDataBase.RealFiles.pRealFilesOpen[uiFileNum].hRealFileHandle;
-
-    fRet = WriteFile(hRealFile, pDest, dwNumBytesToWrite, &dwNumBytesWritten, NULL);
-
-    if (dwNumBytesToWrite != dwNumBytesWritten) fRet = FALSE;
-
-    if (puiBytesWritten) *puiBytesWritten = (UINT32)dwNumBytesWritten;
-  } else {
-    // we cannot write to a library file
-    if (puiBytesWritten) *puiBytesWritten = 0;
-    return (FALSE);
-  }
-
-  return (fRet);
-}
-
-//**************************************************************************
-//
-// FileMan_Seek
-//
-//		To seek to a position in a file.
-//
-// Parameter List :
-//
-//		HWFILE	-> handle to file to seek in
-//		UINT32	-> distance to seek
-//		UINT8		-> how to seek
-//
-// Return Value :
-//
-//		BOOLEAN	-> TRUE if successful
-//					-> FALSE if not
-//
-// Modification history :
-//
-//		24sep96:HJH		-> creation
-//
-//		9 Feb 98	DEF - modified to work with the library system
-//
-//**************************************************************************
-
-BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) {
-  HANDLE hRealFile;
-  LONG lDistanceToMove;
-  INT32 iDistance = 0;
-
-  INT16 sLibraryID;
-  UINT32 uiFileNum;
-
-  GetLibraryAndFileIDFromLibraryFileHandle(hFile, &sLibraryID, &uiFileNum);
-
-  // if its a real file, read the data from the file
-  if (sLibraryID == REAL_FILE_LIBRARY_ID) {
-    // Get the handle to the real file
-    hRealFile = gFileDataBase.RealFiles.pRealFilesOpen[uiFileNum].hRealFileHandle;
-
-    iDistance = (INT32)uiDistance;
-
-    if (uiHow == FILE_SEEK_FROM_END) {
-      if (iDistance > 0) iDistance = -(iDistance);
-    }
-
-    lDistanceToMove = (LONG)uiDistance;
-
-    if (Plat_SetFilePointer(hRealFile, iDistance, uiHow) == 0xFFFFFFFF) return (FALSE);
-  } else {
-    // if the database is initialized
-    if (gFileDataBase.fInitialized) LibraryFileSeek(sLibraryID, uiFileNum, uiDistance, uiHow);
-  }
-
-  return (TRUE);
 }
 
 //**************************************************************************

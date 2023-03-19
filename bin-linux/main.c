@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <wchar.h>
 
-#include "SGP/FileMan.h"
 #include "SGP/Ja2Libs.h"
 #include "SGP/LibraryDataBase.h"
 #include "SGP/Types.h"
 #include "rust_debug.h"
+#include "rust_fileman.h"
 
 int main() {
   struct Str512 CurrentDir;
@@ -23,11 +23,10 @@ int main() {
     return 1;
   }
   InitializeFileDatabase();
-  FileMan_Initialize();
 
   int locale = DetectLocale();
   printf("locale:          %d\n", locale);
-  printf("? exists cursors\\THROWB.STI:   %d\n", FileMan_Exists("cursors\\THROWB.STI"));
+  printf("? exists cursors\\THROWB.STI:   %d\n", File_Exists("cursors\\THROWB.STI"));
 
   DebugLogWrite("hello there");
   DebugLogWrite("hello there again");

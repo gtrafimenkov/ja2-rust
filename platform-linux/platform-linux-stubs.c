@@ -1,6 +1,7 @@
 // Temporary stubs for missing linux platform functionality.
 
 #include "Point.h"
+#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -53,12 +54,6 @@ void FileMan_Close(HWFILE hFile) {}
 BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead) {
   return FALSE;
 }
-
-BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *puiBytesWritten) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) { return FALSE; }
 
 UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
 
