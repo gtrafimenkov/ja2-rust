@@ -67,8 +67,8 @@ void HandleDelayedTownLoyaltyEvent( UINT32 uiValue );
 UINT32 BuildLoyaltyEventValue( TownID bTownId, UINT32 uiValue, BOOLEAN fIncrement );
 */
 
-BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile);
-BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile);
+BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(FileID hFile);
+BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(FileID hFile);
 
 void ReduceLoyaltyForRebelsBetrayed(void);
 

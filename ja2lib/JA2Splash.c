@@ -2,7 +2,6 @@
 
 #include "MainMenuScreen.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/TopicIDs.h"
 #include "SGP/TopicOps.h"
@@ -10,6 +9,7 @@
 #include "SGP/Video.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
+#include "rust_debug.h"
 #include "rust_fileman.h"
 #include "rust_platform.h"
 

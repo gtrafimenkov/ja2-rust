@@ -7,6 +7,7 @@
 #include <windows.h>
 
 #include "SGP/Types.h"
+#include "SGP/FileMan.h"
 
 //	Pass in the Fileman file handle of an OPEN file and it will return..
 //		if its a Real File, the return will be the handle of the REAL file

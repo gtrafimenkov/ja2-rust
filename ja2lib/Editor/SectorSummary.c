@@ -11,7 +11,6 @@
 #include "Editor/SummaryInfo.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Shading.h"
@@ -33,6 +32,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 extern BOOLEAN gfOverheadMapDirty;
 
@@ -2015,7 +2015,7 @@ void CalculateOverrideStatus() {
 }
 
 void LoadGlobalSummary() {
-  HWFILE hfile;
+  FileID hfile = FILE_ID_ERR;
   struct Str512 ExecDir;
   char DevInfoDir[600];
   char MapsDir[600];
@@ -2060,12 +2060,12 @@ void LoadGlobalSummary() {
       // main ground level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= GROUND_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 0, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s.sum", szSector);
@@ -2074,12 +2074,12 @@ void LoadGlobalSummary() {
       // main B1 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT1_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 1, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b1.sum", szSector);
@@ -2088,12 +2088,12 @@ void LoadGlobalSummary() {
       // main B2 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT2_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 2, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b2.sum", szSector);
@@ -2102,12 +2102,12 @@ void LoadGlobalSummary() {
       // main B3 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= BASEMENT3_LEVEL_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 3, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b3.sum", szSector);
@@ -2116,12 +2116,12 @@ void LoadGlobalSummary() {
       // alternate ground level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_GROUND_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 4, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_a.sum", szSector);
@@ -2130,12 +2130,12 @@ void LoadGlobalSummary() {
       // alternate B1 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b1_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B1_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 5, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b1_a.sum", szSector);
@@ -2144,12 +2144,12 @@ void LoadGlobalSummary() {
       // alternate B2 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b2_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B2_MASK;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 6, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b2_a.sum", szSector);
@@ -2158,13 +2158,13 @@ void LoadGlobalSummary() {
       // alternate B3 level
       snprintf(szFilename, ARR_SIZE(szFilename), "%c%d_b3_a.dat", 'A' + y, x + 1);
       Plat_SetCurrentDirectory(MapsDir);
-      hfile = FileMan_OpenForReading(szFilename);
+      hfile = File_OpenForReading(szFilename);
       Plat_SetCurrentDirectory(DevInfoDir);
       if (hfile) {
         gbSectorLevels[x][y] |= ALTERNATE_B1_MASK;
         ;
-        FileMan_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
-        FileMan_Close(hfile);
+        File_Read(hfile, &dMajorVersion, sizeof(FLOAT), &uiNumBytesRead);
+        File_Close(hfile);
         LoadSummary(szSector, 7, dMajorVersion);
       } else {
         snprintf(szFilename, ARR_SIZE(szFilename), "%s_b3_a.sum", szSector);
@@ -2579,7 +2579,7 @@ void ApologizeOverrideAndForceUpdateEverything() {
 }
 
 void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
-  HWFILE hfile;
+  FileID hfile = FILE_ID_ERR;
   UINT32 uiNumBytesRead;
   UINT32 uiNumItems;
   CHAR8 szFilename[1024];
@@ -2616,27 +2616,27 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   }
   // Open the original map for the sector
   snprintf(szFilename, ARR_SIZE(szFilename), "MAPS\\%ls", gszFilename);
-  hfile = FileMan_OpenForReading(szFilename);
+  hfile = File_OpenForReading(szFilename);
   if (!hfile) {  // The file couldn't be found!
     return;
   }
   // Now fileseek directly to the file position where the number of world items are stored
-  if (!FileMan_Seek(hfile, gpCurrentSectorSummary->uiNumItemsPosition,
-                    FILE_SEEK_FROM_START)) {  // Position couldn't be found!
-    FileMan_Close(hfile);
+  if (!File_Seek(hfile, gpCurrentSectorSummary->uiNumItemsPosition,
+                 FILE_SEEK_START)) {  // Position couldn't be found!
+    File_Close(hfile);
     return;
   }
   // Now load the number of world items from the map.
-  FileMan_Read(hfile, &uiNumItems, 4, &uiNumBytesRead);
+  File_Read(hfile, &uiNumItems, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) {  // Invalid situation.
-    FileMan_Close(hfile);
+    File_Close(hfile);
     return;
   }
   // Now compare this number with the number the summary thinks we should have.  If they are
   // different, the the summary doesn't match the map.  What we will do is force regenerate the map
   // so that they do match
   if (uiNumItems != gpCurrentSectorSummary->usNumItems && fAllowRecursion) {
-    FileMan_Close(hfile);
+    File_Close(hfile);
     gpCurrentSectorSummary->uiNumItemsPosition = 0;
     SetupItemDetailsMode(FALSE);
     return;
@@ -2648,7 +2648,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   ShowButton(iSummaryButton[SUMMARY_ENEMY]);
   gpWorldItemsSummaryArray = (WORLDITEM *)MemAlloc(sizeof(WORLDITEM) * uiNumItems);
   gusWorldItemsSummaryArraySize = gpCurrentSectorSummary->usNumItems;
-  FileMan_Read(hfile, gpWorldItemsSummaryArray, sizeof(WORLDITEM) * uiNumItems, &uiNumBytesRead);
+  File_Read(hfile, gpWorldItemsSummaryArray, sizeof(WORLDITEM) * uiNumItems, &uiNumBytesRead);
 
   // NOW, do the enemy's items!
   // We need to do two passes.  The first pass simply processes all the enemies and counts all the
@@ -2659,21 +2659,21 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   // second pass will repeat the process, except it will record the actual items.
 
   // PASS #1
-  if (!FileMan_Seek(hfile, gpCurrentSectorSummary->uiEnemyPlacementPosition,
-                    FILE_SEEK_FROM_START)) {  // Position couldn't be found!
-    FileMan_Close(hfile);
+  if (!File_Seek(hfile, gpCurrentSectorSummary->uiEnemyPlacementPosition,
+                 FILE_SEEK_START)) {  // Position couldn't be found!
+    File_Close(hfile);
     return;
   }
   for (i = 0; i < gpCurrentSectorSummary->MapInfo.ubNumIndividuals; i++) {
-    FileMan_Read(hfile, &basic, sizeof(BASIC_SOLDIERCREATE_STRUCT), &uiNumBytesRead);
+    File_Read(hfile, &basic, sizeof(BASIC_SOLDIERCREATE_STRUCT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(BASIC_SOLDIERCREATE_STRUCT)) {  // Invalid situation.
-      FileMan_Close(hfile);
+      File_Close(hfile);
       return;
     }
     if (basic.fDetailedPlacement) {  // skip static priority placement
-      FileMan_Read(hfile, &priority, sizeof(SOLDIERCREATE_STRUCT), &uiNumBytesRead);
+      File_Read(hfile, &priority, sizeof(SOLDIERCREATE_STRUCT), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(SOLDIERCREATE_STRUCT)) {  // Invalid situation.
-        FileMan_Close(hfile);
+        File_Close(hfile);
         return;
       }
     } else {  // non detailed placements don't have items, so skip
@@ -2714,21 +2714,21 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
   // During this pass, simply copy all the data instead of counting it, now that we have already
   // done so.
   usPEnemyIndex = usNEnemyIndex = 0;
-  if (!FileMan_Seek(hfile, gpCurrentSectorSummary->uiEnemyPlacementPosition,
-                    FILE_SEEK_FROM_START)) {  // Position couldn't be found!
-    FileMan_Close(hfile);
+  if (!File_Seek(hfile, gpCurrentSectorSummary->uiEnemyPlacementPosition,
+                 FILE_SEEK_START)) {  // Position couldn't be found!
+    File_Close(hfile);
     return;
   }
   for (i = 0; i < gpCurrentSectorSummary->MapInfo.ubNumIndividuals; i++) {
-    FileMan_Read(hfile, &basic, sizeof(BASIC_SOLDIERCREATE_STRUCT), &uiNumBytesRead);
+    File_Read(hfile, &basic, sizeof(BASIC_SOLDIERCREATE_STRUCT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(BASIC_SOLDIERCREATE_STRUCT)) {  // Invalid situation.
-      FileMan_Close(hfile);
+      File_Close(hfile);
       return;
     }
     if (basic.fDetailedPlacement) {  // skip static priority placement
-      FileMan_Read(hfile, &priority, sizeof(SOLDIERCREATE_STRUCT), &uiNumBytesRead);
+      File_Read(hfile, &priority, sizeof(SOLDIERCREATE_STRUCT), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(SOLDIERCREATE_STRUCT)) {  // Invalid situation.
-        FileMan_Close(hfile);
+        File_Close(hfile);
         return;
       }
     } else {  // non detailed placements don't have items, so skip
@@ -2751,7 +2751,7 @@ void SetupItemDetailsMode(BOOLEAN fAllowRecursion) {
       }
     }
   }
-  FileMan_Close(hfile);
+  File_Close(hfile);
 }
 
 UINT8 GetCurrentSummaryVersion() {

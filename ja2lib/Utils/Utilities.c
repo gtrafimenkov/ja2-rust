@@ -5,7 +5,6 @@
 #include <time.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"
 #include "SGP/VObject.h"
@@ -15,40 +14,41 @@
 #include "Tactical/OverheadTypes.h"
 #include "Tactical/SoldierControl.h"
 #include "Utils/FontControl.h"
+#include "rust_fileman.h"
 
 void FilenameForBPP(STR pFilename, STR pDestination) { strcpy(pDestination, pFilename); }
 
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
-  HWFILE hFileHandle;
+  FileID hFileHandle = FILE_ID_ERR;
   BYTE bColHeader[8];
   UINT32 cnt;
 
   // See if files exists, if not, return error
-  if (!FileMan_Exists(ColFile)) {
+  if (!File_Exists(ColFile)) {
     // Return FALSE w/ debug
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot find COL file");
     return (FALSE);
   }
 
   // Open and read in the file
-  if ((hFileHandle = FileMan_OpenForReading(ColFile)) == 0) {
+  if ((hFileHandle = File_OpenForReading(ColFile)) == 0) {
     // Return FALSE w/ debug
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot open COL file");
     return (FALSE);
   }
 
   // Skip header
-  FileMan_Read(hFileHandle, bColHeader, sizeof(bColHeader), NULL);
+  File_Read(hFileHandle, bColHeader, sizeof(bColHeader), NULL);
 
   // Read in a palette entry at a time
   for (cnt = 0; cnt < 256; cnt++) {
-    FileMan_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(UINT8), NULL);
-    FileMan_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(UINT8), NULL);
-    FileMan_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(UINT8), NULL);
+    File_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(UINT8), NULL);
+    File_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(UINT8), NULL);
+    File_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(UINT8), NULL);
   }
 
   // Close file
-  FileMan_Close(hFileHandle);
+  File_Close(hFileHandle);
 
   return (TRUE);
 }

@@ -20,10 +20,6 @@
 // Handler to underlying OS file handle.
 typedef void *SYS_FILE_HANDLE;
 
-#define FILE_SEEK_FROM_START 0x01
-#define FILE_SEEK_FROM_END 0x02
-#define FILE_SEEK_FROM_CURRENT 0x04
-
 u32 Plat_GetFileSize(SYS_FILE_HANDLE handle);
 BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, u32 bytesToRead, u32 *readBytes);
 BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle);

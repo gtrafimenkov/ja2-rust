@@ -6,7 +6,6 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Soldier.h"
@@ -62,6 +61,7 @@
 #include "Utils/Utilities.h"
 #include "platform_strings.h"
 #include "rust_civ_groups.h"
+#include "rust_fileman.h"
 #include "rust_sam_sites.h"
 
 // MODULE FOR EXPLOSIONS
@@ -2723,7 +2723,7 @@ void ActivateSwitchInGridNo(UINT8 ubID, INT16 sGridNo) {
   }
 }
 
-BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveExplosionTableToSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
   UINT32 uiExplosionCount = 0;
   UINT32 uiCnt;
@@ -2733,18 +2733,17 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
   //
 
   // Write the number of explosion queues
-  FileMan_Write(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // loop through and add all the explosions
   for (uiCnt = 0; uiCnt < MAX_BOMB_QUEUE; uiCnt++) {
-    FileMan_Write(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement),
-                  &uiNumBytesWritten);
+    File_Write(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(ExplosionQueueElement)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
@@ -2762,18 +2761,18 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of explosions
-  FileMan_Write(hFile, &uiExplosionCount, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &uiExplosionCount, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // loop through and count all the active explosions
   for (uiCnt = 0; uiCnt < NUM_EXPLOSION_SLOTS; uiCnt++) {
     if (gExplosionData[uiCnt].fAllocated) {
-      FileMan_Write(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesWritten);
+      File_Write(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(EXPLOSIONTYPE)) {
-        FileMan_Close(hFile);
+        File_Close(hFile);
         return (FALSE);
       }
     }
@@ -2782,7 +2781,7 @@ BOOLEAN SaveExplosionTableToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
+BOOLEAN LoadExplosionTableFromSavedGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
   UINT32 uiCnt;
 
@@ -2794,14 +2793,14 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   memset(gExplosionQueue, 0, sizeof(ExplosionQueueElement) * MAX_BOMB_QUEUE);
 
   // Read the number of explosions queue's
-  FileMan_Read(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &gubElementsOnExplosionQueue, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
 
   // loop through read all the active explosions fro the file
   for (uiCnt = 0; uiCnt < MAX_BOMB_QUEUE; uiCnt++) {
-    FileMan_Read(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement), &uiNumBytesRead);
+    File_Read(hFile, &gExplosionQueue[uiCnt], sizeof(ExplosionQueueElement), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(ExplosionQueueElement)) {
       return (FALSE);
     }
@@ -2812,14 +2811,14 @@ BOOLEAN LoadExplosionTableFromSavedGameFile(HWFILE hFile) {
   //
 
   // Load the number of explosions
-  FileMan_Read(hFile, &guiNumExplosions, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &guiNumExplosions, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
 
   // loop through and load all the active explosions
   for (uiCnt = 0; uiCnt < guiNumExplosions; uiCnt++) {
-    FileMan_Read(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesRead);
+    File_Read(hFile, &gExplosionData[uiCnt], sizeof(EXPLOSIONTYPE), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(EXPLOSIONTYPE)) {
       return (FALSE);
     }

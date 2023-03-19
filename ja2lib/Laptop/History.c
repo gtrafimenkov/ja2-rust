@@ -1141,7 +1141,7 @@ BOOLEAN LoadInHistoryRecords(UINT32 uiPage) {
   }
 
   File_Seek(hFileHandle, (uiPage - 1) * NUM_RECORDS_PER_PAGE * (SIZE_OF_HISTORY_FILE_RECORD),
-            FILE_SEEK_FROM_START);
+            FILE_SEEK_START);
 
   uiByteCount = (uiPage - 1) * NUM_RECORDS_PER_PAGE * (SIZE_OF_HISTORY_FILE_RECORD);
   // file exists, read in data, continue until end of page
@@ -1235,7 +1235,7 @@ BOOLEAN WriteOutHistoryRecords(UINT32 uiPage) {
 
   File_Seek(hFileHandle,
             sizeof(INT32) + (uiPage - 1) * NUM_RECORDS_PER_PAGE * SIZE_OF_HISTORY_FILE_RECORD,
-            FILE_SEEK_FROM_START);
+            FILE_SEEK_START);
 
   // file exists, read in data, continue until end of page
   while ((iCount < NUM_RECORDS_PER_PAGE) && (fOkToContinue)) {
@@ -1380,7 +1380,7 @@ BOOLEAN AppendHistoryToEndOfFile(HistoryUnitPtr pHistory) {
   }
 
   // go to the end
-  if (File_Seek(hFileHandle, 0, FILE_SEEK_FROM_END) == FALSE) {
+  if (File_Seek(hFileHandle, 0, FILE_SEEK_END) == FALSE) {
     // error
     File_Close(hFileHandle);
     return (FALSE);

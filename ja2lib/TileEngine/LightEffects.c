@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"
@@ -24,6 +23,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 #define NUM_LIGHT_EFFECT_SLOTS 25
 
@@ -200,7 +200,7 @@ void DecayLightEffects(UINT32 uiTime) {
   }
 }
 
-BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveLightEffectsToSaveGameFile(FileID hFile) {
   /*
   UINT32	uiNumBytesWritten;
   UINT32	uiNumberOfLights=0;
@@ -216,7 +216,7 @@ BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile) {
   }
 
   //Save the Number of Light Effects
-  FileMan_Write( hFile, &uiNumberOfLights, sizeof( UINT32 ), &uiNumBytesWritten );
+  File_Write( hFile, &uiNumberOfLights, sizeof( UINT32 ), &uiNumBytesWritten );
   if( uiNumBytesWritten != sizeof( UINT32 ) )
   {
           return( FALSE );
@@ -232,7 +232,7 @@ BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile) {
                   if( gLightEffectData[ uiCnt ].fAllocated )
                   {
                           //Save the Light effect Data
-                          FileMan_Write( hFile, &gLightEffectData[ uiCnt ], sizeof( LIGHTEFFECT ),
+                          File_Write( hFile, &gLightEffectData[ uiCnt ], sizeof( LIGHTEFFECT ),
   &uiNumBytesWritten ); if( uiNumBytesWritten != sizeof( LIGHTEFFECT ) )
                           {
                                   return( FALSE );
@@ -244,7 +244,7 @@ BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile) {
+BOOLEAN LoadLightEffectsFromLoadGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
   UINT32 uiCount;
 
@@ -253,7 +253,7 @@ BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile) {
     memset(gLightEffectData, 0, sizeof(LIGHTEFFECT) * NUM_LIGHT_EFFECT_SLOTS);
 
     // Load the Number of Light Effects
-    FileMan_Read(hFile, &guiNumLightEffects, sizeof(UINT32), &uiNumBytesRead);
+    File_Read(hFile, &guiNumLightEffects, sizeof(UINT32), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UINT32)) {
       return (FALSE);
     }
@@ -263,7 +263,7 @@ BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile) {
       // loop through and apply the light effects to the map
       for (uiCount = 0; uiCount < guiNumLightEffects; uiCount++) {
         // Load the Light effect Data
-        FileMan_Read(hFile, &gLightEffectData[uiCount], sizeof(LIGHTEFFECT), &uiNumBytesRead);
+        File_Read(hFile, &gLightEffectData[uiCount], sizeof(LIGHTEFFECT), &uiNumBytesRead);
         if (uiNumBytesRead != sizeof(LIGHTEFFECT)) {
           return (FALSE);
         }
@@ -281,7 +281,7 @@ BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile) {
 
 BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   UINT32 uiNumLightEffects = 0;
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiNumBytesWritten = 0;
   CHAR8 zMapName[128];
   UINT32 uiCnt;
@@ -306,17 +306,17 @@ BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   }
 
   // Open the file for writing
-  hFile = FileMan_OpenForAppending(zMapName);
+  hFile = File_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Save the Number of Light Effects
-  FileMan_Write(hFile, &uiNumLightEffects, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumLightEffects, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     // Close the file
-    FileMan_Close(hFile);
+    File_Close(hFile);
 
     return (FALSE);
   }
@@ -326,10 +326,10 @@ BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
     // if the Light is active
     if (gLightEffectData[uiCnt].fAllocated) {
       // Save the Light effect Data
-      FileMan_Write(hFile, &gLightEffectData[uiCnt], sizeof(LIGHTEFFECT), &uiNumBytesWritten);
+      File_Write(hFile, &gLightEffectData[uiCnt], sizeof(LIGHTEFFECT), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(LIGHTEFFECT)) {
         // Close the file
-        FileMan_Close(hFile);
+        File_Close(hFile);
 
         return (FALSE);
       }
@@ -337,7 +337,7 @@ BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   }
 
   // Close the file
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   SetSectorFlag(sMapX, sMapY, bMapZ, SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS);
 
@@ -348,13 +348,13 @@ BOOLEAN LoadLightEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   UINT32 uiNumBytesRead;
   UINT32 uiCount;
   UINT32 uiCnt = 0;
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   CHAR8 zMapName[128];
 
   GetMapTempFileName(SF_LIGHTING_EFFECTS_TEMP_FILE_EXISTS, zMapName, sMapX, sMapY, bMapZ);
 
   // Open the file for reading, Create it if it doesnt exist
-  hFile = FileMan_OpenForReading(zMapName);
+  hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening file
     return (FALSE);
@@ -364,18 +364,18 @@ BOOLEAN LoadLightEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
   ResetLightEffects();
 
   // Load the Number of Light Effects
-  FileMan_Read(hFile, &guiNumLightEffects, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &guiNumLightEffects, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // loop through and load the list
   for (uiCnt = 0; uiCnt < guiNumLightEffects; uiCnt++) {
     // Load the Light effect Data
-    FileMan_Read(hFile, &gLightEffectData[uiCnt], sizeof(LIGHTEFFECT), &uiNumBytesRead);
+    File_Read(hFile, &gLightEffectData[uiCnt], sizeof(LIGHTEFFECT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(LIGHTEFFECT)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
@@ -385,7 +385,7 @@ BOOLEAN LoadLightEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
     if (gLightEffectData[uiCount].fAllocated) UpdateLightingSprite(&(gLightEffectData[uiCount]));
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return (TRUE);
 }

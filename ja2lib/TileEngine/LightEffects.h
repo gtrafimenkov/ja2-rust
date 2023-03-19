@@ -33,8 +33,8 @@ void RemoveLightEffectFromTile(INT16 sGridNo);
 
 INT32 NewLightEffect(INT16 sGridNo, INT8 bType);
 
-BOOLEAN SaveLightEffectsToSaveGameFile(HWFILE hFile);
-BOOLEAN LoadLightEffectsFromLoadGameFile(HWFILE hFile);
+BOOLEAN SaveLightEffectsToSaveGameFile(FileID hFile);
+BOOLEAN LoadLightEffectsFromLoadGameFile(FileID hFile);
 
 BOOLEAN SaveLightEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);
 BOOLEAN LoadLightEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);

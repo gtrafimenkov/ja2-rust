@@ -240,10 +240,10 @@ void SetGroupPosition(UINT8 ubNextX, UINT8 ubNextY, UINT8 ubPrevX, UINT8 ubPrevY
                       UINT32 uiTraverseTime, UINT32 uiArriveTime, UINT8 ubGroupId);
 
 // Save the strategic movemnet Group paths to the saved game file
-BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(FileID hFile);
 
 // Load the strategic movement Group paths from the saved game file
-BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile);
+BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(FileID hFile);
 
 // check members of mvt group, if any are bleeding, complain before moving
 void CheckMembersOfMvtGroupAndComplainAboutBleeding(struct SOLDIERTYPE *pSoldier);

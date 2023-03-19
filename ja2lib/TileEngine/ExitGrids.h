@@ -22,7 +22,7 @@ BOOLEAN GetExitGrid(UINT16 usMapIndex, EXITGRID *pExitGrid);
 void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid);
 void RemoveExitGridFromWorld(INT32 iMapIndex);
 
-void SaveExitGrids(HWFILE fp, UINT16 usNumExitGrids);
+void SaveExitGrids(FileID fp, UINT16 usNumExitGrids);
 void LoadExitGrids(INT8 **hBuffer);
 
 void AttemptToChangeFloorLevel(INT8 bRelativeZLevel);

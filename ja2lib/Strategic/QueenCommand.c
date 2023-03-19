@@ -3,7 +3,6 @@
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "ScreenIDs.h"
 #include "Soldier.h"
@@ -41,6 +40,7 @@
 #include "TownMilitia.h"
 #include "UI.h"
 #include "Utils/Message.h"
+#include "rust_fileman.h"
 
 #ifdef JA2BETAVERSION
 extern BOOLEAN gfClearCreatureQuest;
@@ -1295,7 +1295,7 @@ void AddEnemiesToBattle(struct GROUP *pGroup, UINT8 ubStrategicInsertionCode, UI
   }
 }
 
-BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
+BOOLEAN SaveUnderGroundSectorInfoToSaveGame(FileID hFile) {
   UINT32 uiNumBytesWritten;
   UINT32 uiNumOfRecords = 0;
   UNDERGROUND_SECTORINFO *TempNode = gpUndergroundSectorInfoHead;
@@ -1307,7 +1307,7 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
   }
 
   // Write how many nodes there are
-  FileMan_Write(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -1316,7 +1316,7 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
 
   // Go through each node and save it.
   while (TempNode) {
-    FileMan_Write(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesWritten);
+    File_Write(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(UNDERGROUND_SECTORINFO)) {
       return (FALSE);
     }
@@ -1327,7 +1327,7 @@ BOOLEAN SaveUnderGroundSectorInfoToSaveGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
+BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(FileID hFile) {
   UINT32 uiNumBytesRead;
   UINT32 uiNumOfRecords = 0;
   UINT32 cnt = 0;
@@ -1338,7 +1338,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
   TrashUndergroundSectorInfo();
 
   // Read in the number of nodes stored
-  FileMan_Read(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &uiNumOfRecords, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -1349,7 +1349,7 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame(HWFILE hFile) {
     if (TempNode == NULL) return (FALSE);
 
     // read in the new node
-    FileMan_Read(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesRead);
+    File_Read(hFile, TempNode, sizeof(UNDERGROUND_SECTORINFO), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UNDERGROUND_SECTORINFO)) {
       return (FALSE);
     }

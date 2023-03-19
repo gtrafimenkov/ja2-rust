@@ -3,7 +3,6 @@
 #include "GameSettings.h"
 #include "Laptop/History.h"
 #include "MessageBoxScreen.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/Random.h"
 #include "Soldier.h"
@@ -34,6 +33,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "rust_civ_groups.h"
+#include "rust_fileman.h"
 
 // the max loyalty rating for any given town
 #define MAX_LOYALTY_VALUE 100
@@ -496,14 +496,14 @@ void CalcDistancesBetweenTowns(void) {
 }
 
 void WriteOutDistancesBetweenTowns(void) {
-  HWFILE hFileHandle;
+  FileID hFileHandle = FILE_ID_ERR;
 
-  hFileHandle = FileMan_OpenForWriting("BinaryData\\TownDistances.dat");
+  hFileHandle = File_OpenForWriting("BinaryData\\TownDistances.dat");
 
-  FileMan_Write(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
+  File_Write(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
 
   // close file
-  FileMan_Close(hFileHandle);
+  File_Close(hFileHandle);
 
   return;
 }
@@ -553,21 +553,21 @@ void DumpDistancesBetweenTowns(void) {
 #endif  // JA2TESTVERSION
 
 void ReadInDistancesBetweenTowns(void) {
-  HWFILE hFileHandle;
+  FileID hFileHandle = FILE_ID_ERR;
 
-  hFileHandle = FileMan_OpenForReading("BinaryData\\TownDistances.dat");
+  hFileHandle = File_OpenForReading("BinaryData\\TownDistances.dat");
 
-  FileMan_Read(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
+  File_Read(hFileHandle, &(iTownDistances), (sizeof(INT32) * NUM_TOWNS * NUM_TOWNS), NULL);
 
   // close file
-  FileMan_Close(hFileHandle);
+  File_Close(hFileHandle);
 
   return;
 }
 
 INT32 GetTownDistances(UINT8 ubTown, UINT8 ubTownA) { return (iTownDistances[ubTown][ubTownA]); }
 
-BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
 
   struct SAVE_LOAD_TOWN_LOYALTY townLoyalty[NUM_TOWNS];
@@ -575,7 +575,7 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
     townLoyalty[i] = GetRawTownLoyalty(i);
   }
 
-  FileMan_Write(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesWritten);
+  File_Write(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(townLoyalty)) {
     return (FALSE);
   }
@@ -583,13 +583,13 @@ BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(HWFILE hFile) {
+BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
 
   struct SAVE_LOAD_TOWN_LOYALTY townLoyalty[NUM_TOWNS];
 
   // Restore the Town Loyalty
-  FileMan_Read(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesRead);
+  File_Read(hFile, townLoyalty, sizeof(townLoyalty), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(townLoyalty)) {
     return (FALSE);
   }

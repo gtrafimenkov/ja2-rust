@@ -8,6 +8,6 @@
 BOOLEAN InitializeFileDatabase();
 BOOLEAN ShutDownFileDatabase();
 BOOLEAN IsLibraryOpened(INT16 sLibraryID);
-BOOLEAN IsLibraryRealFile(HWFILE hFile);
+BOOLEAN IsLibraryRealFile(FileID hFile);
 
 #endif

@@ -1,10 +1,10 @@
 #ifndef _LIBRARY_DATABASE_H
 #define _LIBRARY_DATABASE_H
 
-#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Types.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 #define FILENAME_SIZE 256
 
@@ -125,10 +125,10 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibheader, BOO
 
 BOOLEAN CheckIfFileExistInLibrary(STR pFileName);
 INT16 GetLibraryIDFromFileName(STR pFileName);
-HWFILE OpenFileFromLibrary(STR pName);
-HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile);
+FileID OpenFileFromLibrary(STR pName);
+FileID CreateRealFileHandle(SYS_FILE_HANDLE hFile);
 BOOLEAN CloseLibraryFile(INT16 sLibraryID, UINT32 uiFileID);
-BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibraryID,
+BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(FileID hlibFile, INT16 *pLibraryID,
                                                  UINT32 *pFileNum);
 BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, UINT32 uiFileIndex, PTR pData, UINT32 uiBytesToRead,
                             UINT32 *pBytesRead);

@@ -13,7 +13,7 @@ UINT16 ChooseMapEdgepoint(UINT8 ubStrategicInsertionCode);
 void ChooseMapEdgepoints(MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategicInsertionCode,
                          UINT8 ubNumDesiredPoints);
 void GenerateMapEdgepoints();
-void SaveMapEdgepoints(HWFILE fp);
+void SaveMapEdgepoints(FileID fp);
 BOOLEAN LoadMapEdgepoints(INT8 **hBuffer);
 void TrashMapEdgepoints();
 

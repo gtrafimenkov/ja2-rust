@@ -5,11 +5,11 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/WCheck.h"
 #include "platform.h"
 #include "platform_strings.h"
+#include "rust_fileman.h"
 
 // The FileDatabaseHeader
 DatabaseManagerHeaderStruct gFileDataBase;
@@ -29,7 +29,7 @@ typedef struct {
   UINT16 usReserved2;
 } DIRENTRY;
 
-BOOLEAN IsLibraryRealFile(HWFILE hFile) {
+BOOLEAN IsLibraryRealFile(FileID hFile) {
   return DB_EXTRACT_LIBRARY(hFile) == REAL_FILE_LIBRARY_ID;
 }
 
@@ -40,7 +40,7 @@ static int CompareFileNames(CHAR8 *arg1, FileHeaderStruct *arg2);
 BOOLEAN GetFileHeaderFromLibrary(INT16 sLibraryID, STR pstrFileName,
                                  FileHeaderStruct **pFileHeader);
 void AddSlashToPath(STR pName);
-HWFILE CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum);
+FileID CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum);
 BOOLEAN CheckIfFileIsAlreadyOpen(STR pFileName, INT16 sLibraryID);
 
 INT32 CompareDirEntryFileNames(CHAR8 *arg1, DIRENTRY *arg2);
@@ -167,8 +167,7 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
   }
 
   // place the file pointer at the begining of the file headers ( they are at the end of the file )
-  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)),
-                      FILE_SEEK_FROM_END);
+  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)), FILE_SEEK_END);
 
   // loop through the library and determine the number of files that are FILE_OK
   // ie.  so we dont load the old or deleted files
@@ -188,8 +187,7 @@ BOOLEAN InitializeLibrary(STR pLibraryName, LibraryHeaderStruct *pLibHeader,
 #endif
 
   // place the file pointer at the begining of the file headers ( they are at the end of the file )
-  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)),
-                      FILE_SEEK_FROM_END);
+  Plat_SetFilePointer(hFile, -(LibFileHeader.iEntries * (INT32)sizeof(DIRENTRY)), FILE_SEEK_END);
 
   // loop through all the entries
   uiCount = 0;
@@ -289,7 +287,7 @@ BOOLEAN LoadDataFromLibrary(INT16 sLibraryID, UINT32 uiFileNum, PTR pData, UINT3
   uiCurPos = gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiFilePosInFile;
 
   // set the file pointer to the right location
-  Plat_SetFilePointer(hLibraryFile, (uiOffsetInLibrary + uiCurPos), FILE_SEEK_FROM_START);
+  Plat_SetFilePointer(hLibraryFile, (uiOffsetInLibrary + uiCurPos), FILE_SEEK_START);
 
   // if we are trying to read more data then the size of the file, return an error
   if (uiBytesToRead + uiCurPos > uiLength) {
@@ -461,9 +459,9 @@ void AddSlashToPath(STR pName) {
 //
 //************************************************************************
 
-HWFILE OpenFileFromLibrary(STR pName) {
+FileID OpenFileFromLibrary(STR pName) {
   FileHeaderStruct *pFileHeader;
-  HWFILE hLibFile;
+  FileID hLibFile = FILE_ID_ERR;
   INT16 sLibraryID;
   UINT16 uiLoop1;
   UINT32 uiFileNum = 0;
@@ -527,13 +525,13 @@ HWFILE OpenFileFromLibrary(STR pName) {
       // Save the current file position in the library
       gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiActualPositionInLibrary =
           Plat_SetFilePointer(gFileDataBase.pLibraries[sLibraryID].hLibraryHandle, 0,
-                              FILE_SEEK_FROM_CURRENT);
+                              FILE_SEEK_CURRENT);
 
       // Set the file position in the library to the begining of the 'file' in the library
       Plat_SetFilePointer(
           gFileDataBase.pLibraries[sLibraryID].hLibraryHandle,
           gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].pFileHeader->uiFileOffset,
-          FILE_SEEK_FROM_START);
+          FILE_SEEK_START);
 
       Plat_GetFileSize(gFileDataBase.pLibraries[sLibraryID].hLibraryHandle);
 
@@ -553,8 +551,8 @@ HWFILE OpenFileFromLibrary(STR pName) {
   return (hLibFile);
 }
 
-HWFILE CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum) {
-  HWFILE hLibFile;
+FileID CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum) {
+  FileID hLibFile = FILE_ID_ERR;
 
   hLibFile = uiFileNum;
   hLibFile |= DB_ADD_LIBRARY_ID(sLibraryID);
@@ -562,8 +560,8 @@ HWFILE CreateLibraryFileHandle(INT16 sLibraryID, UINT32 uiFileNum) {
   return (hLibFile);
 }
 
-HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile) {
-  HWFILE hLibFile;
+FileID CreateRealFileHandle(SYS_FILE_HANDLE hFile) {
+  FileID hLibFile = FILE_ID_ERR;
   INT32 iLoop1;
   UINT32 uiFileNum = 0;
   UINT32 uiSize;
@@ -607,7 +605,7 @@ HWFILE CreateRealFileHandle(SYS_FILE_HANDLE hFile) {
   return (hLibFile);
 }
 
-BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(HWFILE hlibFile, INT16 *pLibraryID,
+BOOLEAN GetLibraryAndFileIDFromLibraryFileHandle(FileID hlibFile, INT16 *pLibraryID,
                                                  UINT32 *pFileNum) {
   *pFileNum = DB_EXTRACT_FILE_ID(hlibFile);
   *pLibraryID = (UINT16)DB_EXTRACT_LIBRARY(hlibFile);
@@ -644,7 +642,7 @@ BOOLEAN CloseLibraryFile(INT16 sLibraryID, UINT32 uiFileID) {
       Plat_SetFilePointer(
           gFileDataBase.pLibraries[sLibraryID].hLibraryHandle,
           gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileID].uiActualPositionInLibrary,
-          FILE_SEEK_FROM_CURRENT);
+          FILE_SEEK_CURRENT);
 
       // decrement the number of files that are open
       gFileDataBase.pLibraries[sLibraryID].iNumFilesOpen--;
@@ -668,11 +666,11 @@ BOOLEAN LibraryFileSeek(INT16 sLibraryID, UINT32 uiFileNum, UINT32 uiDistance, U
   uiCurPos = gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].uiFilePosInFile;
   uiSize = gFileDataBase.pLibraries[sLibraryID].pOpenFiles[uiFileNum].pFileHeader->uiFileLength;
 
-  if (uiHowToSeek == FILE_SEEK_FROM_START)
+  if (uiHowToSeek == FILE_SEEK_START)
     uiCurPos = uiDistance;
-  else if (uiHowToSeek == FILE_SEEK_FROM_END)
+  else if (uiHowToSeek == FILE_SEEK_END)
     uiCurPos = uiSize - uiDistance;
-  else if (uiHowToSeek == FILE_SEEK_FROM_CURRENT)
+  else if (uiHowToSeek == FILE_SEEK_CURRENT)
     uiCurPos += uiDistance;
   else
     return (FALSE);

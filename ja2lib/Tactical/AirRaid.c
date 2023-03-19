@@ -4,7 +4,6 @@
 
 #include "GameSettings.h"
 #include "JAScreens.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -37,6 +36,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "rust_fileman.h"
 
 #define SCRIPT_DELAY 10
 #define AIR_RAID_SAY_QUOTE_TIME 3000
@@ -1035,7 +1035,7 @@ BOOLEAN HandleAirRaidEndTurn(UINT8 ubTeam) {
   return (FALSE);
 }
 
-BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveAirRaidInfoToSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
   AIR_RAID_SAVE_STRUCT sAirRaidSaveStruct;
 
@@ -1085,7 +1085,7 @@ BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile) {
   memcpy(&sAirRaidSaveStruct.AirRaidDef, &gAirRaidDef, sizeof(AIR_RAID_DEFINITION));
 
   // Save the Air Raid Save Struct
-  FileMan_Write(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesWritten);
+  File_Write(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(AIR_RAID_SAVE_STRUCT)) {
     return (FALSE);
   }
@@ -1093,12 +1093,12 @@ BOOLEAN SaveAirRaidInfoToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadAirRaidInfoFromSaveGameFile(HWFILE hFile) {
+BOOLEAN LoadAirRaidInfoFromSaveGameFile(FileID hFile) {
   AIR_RAID_SAVE_STRUCT sAirRaidSaveStruct;
   UINT32 uiNumBytesRead;
 
   // Load the number of REAL_OBJECTs in the array
-  FileMan_Read(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesRead);
+  File_Read(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(AIR_RAID_SAVE_STRUCT)) {
     return (FALSE);
   }

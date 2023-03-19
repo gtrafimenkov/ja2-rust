@@ -8,7 +8,6 @@
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Ja2Libs.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/Line.h"
@@ -31,6 +30,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 extern STR16 gzIntroScreen[];
 
@@ -158,7 +158,7 @@ BOOLEAN EnterIntroScreen() {
   SetMusicMode(MUSIC_NONE);
 
 #ifdef JA2BETAVERSION
-  if (FileMan_Exists("..\\NoIntro.txt")) {
+  if (File_Exists("..\\NoIntro.txt")) {
     PrepareToExitIntroScreen();
     return (TRUE);
   }

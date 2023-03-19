@@ -146,10 +146,10 @@ INT16 GetMineSectorForTown(TownID bTownId);
 BOOLEAN IsThereAMineInThisSector(INT16 sX, INT16 sY);
 
 // Save the mine status to the save game file
-BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveMineStatusToSaveGameFile(FileID hFile);
 
 // Load the mine status from the saved game file
-BOOLEAN LoadMineStatusFromSavedGameFile(HWFILE hFile);
+BOOLEAN LoadMineStatusFromSavedGameFile(FileID hFile);
 
 // if the player controls a given mine
 BOOLEAN PlayerControlsMine(INT8 bMineIndex);

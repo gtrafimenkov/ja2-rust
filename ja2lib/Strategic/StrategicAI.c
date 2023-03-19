@@ -6,7 +6,6 @@
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
@@ -34,6 +33,7 @@
 #include "TileEngine/ExplosionControl.h"
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
+#include "rust_fileman.h"
 #include "rust_sam_sites.h"
 
 #define SAI_VERSION 29
@@ -3817,7 +3817,7 @@ void EvaluateQueenSituation() {
   ValidateWeights(27);
 }
 
-BOOLEAN SaveStrategicAI(HWFILE hFile) {
+BOOLEAN SaveStrategicAI(FileID hFile) {
   GARRISON_GROUP gTempGarrisonGroup;
   PATROL_GROUP gTempPatrolGroup;
   ARMY_COMPOSITION gTempArmyComp;
@@ -3827,82 +3827,82 @@ BOOLEAN SaveStrategicAI(HWFILE hFile) {
   memset(&gTempPatrolGroup, 0, sizeof(PATROL_GROUP));
   memset(&gTempArmyComp, 0, sizeof(ARMY_COMPOSITION));
 
-  FileMan_Write(hFile, gbPadding2, 3, &uiNumBytesWritten);
+  File_Write(hFile, gbPadding2, 3, &uiNumBytesWritten);
   if (uiNumBytesWritten != 3) return FALSE;
-  FileMan_Write(hFile, &gfExtraElites, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gfExtraElites, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &giGarrisonArraySize, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giGarrisonArraySize, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &giPatrolArraySize, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giPatrolArraySize, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &giReinforcementPool, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giReinforcementPool, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &giForcePercentage, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giForcePercentage, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &giArmyAlertness, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giArmyAlertness, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &giArmyAlertnessDecay, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giArmyAlertnessDecay, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &gfQueenAIAwake, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gfQueenAIAwake, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &giReinforcementPoints, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giReinforcementPoints, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &giRequestPoints, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giRequestPoints, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) return FALSE;
-  FileMan_Write(hFile, &gubNumAwareBattles, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gubNumAwareBattles, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &gubSAIVersion, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gubSAIVersion, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &gubQueenPriorityPhase, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gubQueenPriorityPhase, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &gfFirstBattleMeanwhileScenePending, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gfFirstBattleMeanwhileScenePending, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &gfMassFortificationOrdered, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gfMassFortificationOrdered, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &gubMinEnemyGroupSize, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gubMinEnemyGroupSize, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &gubHoursGracePeriod, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gubHoursGracePeriod, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, &gusPlayerBattleVictories, 2, &uiNumBytesWritten);
+  File_Write(hFile, &gusPlayerBattleVictories, 2, &uiNumBytesWritten);
   if (uiNumBytesWritten != 2) return FALSE;
-  FileMan_Write(hFile, &gfUseAlternateQueenPosition, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gfUseAlternateQueenPosition, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != 1) return FALSE;
-  FileMan_Write(hFile, gbPadding, SAI_PADDING_BYTES, &uiNumBytesWritten);
+  File_Write(hFile, gbPadding, SAI_PADDING_BYTES, &uiNumBytesWritten);
   if (uiNumBytesWritten != SAI_PADDING_BYTES) return FALSE;
   // Save the army composition (which does get modified)
-  FileMan_Write(hFile, gArmyComp, NUM_ARMY_COMPOSITIONS * sizeof(ARMY_COMPOSITION),
-                &uiNumBytesWritten);
+  File_Write(hFile, gArmyComp, NUM_ARMY_COMPOSITIONS * sizeof(ARMY_COMPOSITION),
+             &uiNumBytesWritten);
   if (uiNumBytesWritten != NUM_ARMY_COMPOSITIONS * sizeof(ARMY_COMPOSITION)) return FALSE;
   i = SAVED_ARMY_COMPOSITIONS - NUM_ARMY_COMPOSITIONS;
   while (i--) {
-    FileMan_Write(hFile, &gTempArmyComp, sizeof(ARMY_COMPOSITION), &uiNumBytesWritten);
+    File_Write(hFile, &gTempArmyComp, sizeof(ARMY_COMPOSITION), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(ARMY_COMPOSITION)) return FALSE;
   }
   // Save the patrol group definitions
-  FileMan_Write(hFile, gPatrolGroup, giPatrolArraySize * sizeof(PATROL_GROUP), &uiNumBytesWritten);
+  File_Write(hFile, gPatrolGroup, giPatrolArraySize * sizeof(PATROL_GROUP), &uiNumBytesWritten);
   if (uiNumBytesWritten != giPatrolArraySize * sizeof(PATROL_GROUP)) return FALSE;
   i = SAVED_PATROL_GROUPS - giPatrolArraySize;
   while (i--) {
-    FileMan_Write(hFile, &gTempPatrolGroup, sizeof(PATROL_GROUP), &uiNumBytesWritten);
+    File_Write(hFile, &gTempPatrolGroup, sizeof(PATROL_GROUP), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(PATROL_GROUP)) return FALSE;
   }
   // Save the garrison information!
   memset(&gTempGarrisonGroup, 0, sizeof(GARRISON_GROUP));
-  FileMan_Write(hFile, gGarrisonGroup, giGarrisonArraySize * sizeof(GARRISON_GROUP),
-                &uiNumBytesWritten);
+  File_Write(hFile, gGarrisonGroup, giGarrisonArraySize * sizeof(GARRISON_GROUP),
+             &uiNumBytesWritten);
   if (uiNumBytesWritten != giGarrisonArraySize * sizeof(GARRISON_GROUP)) return FALSE;
   i = SAVED_GARRISON_GROUPS - giGarrisonArraySize;
   while (i--) {
-    FileMan_Write(hFile, &gTempGarrisonGroup, sizeof(GARRISON_GROUP), &uiNumBytesWritten);
+    File_Write(hFile, &gTempGarrisonGroup, sizeof(GARRISON_GROUP), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(GARRISON_GROUP)) return FALSE;
   }
 
-  FileMan_Write(hFile, gubPatrolReinforcementsDenied, giPatrolArraySize, &uiNumBytesWritten);
+  File_Write(hFile, gubPatrolReinforcementsDenied, giPatrolArraySize, &uiNumBytesWritten);
   if (uiNumBytesWritten != (UINT32)giPatrolArraySize) {
     return FALSE;
   }
 
-  FileMan_Write(hFile, gubGarrisonReinforcementsDenied, giGarrisonArraySize, &uiNumBytesWritten);
+  File_Write(hFile, gubGarrisonReinforcementsDenied, giGarrisonArraySize, &uiNumBytesWritten);
   if (uiNumBytesWritten != (UINT32)giGarrisonArraySize) {
     return FALSE;
   }
@@ -3914,7 +3914,7 @@ BOOLEAN SaveStrategicAI(HWFILE hFile) {
   return TRUE;
 }
 
-BOOLEAN LoadStrategicAI(HWFILE hFile) {
+BOOLEAN LoadStrategicAI(FileID hFile) {
   struct GROUP *pGroup, *next;
   GARRISON_GROUP gTempGarrisonGroup;
   PATROL_GROUP gTempPatrolGroup;
@@ -3923,54 +3923,54 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
   INT32 i;
   UINT8 ubSAIVersion;
 
-  FileMan_Read(hFile, gbPadding2, 3, &uiNumBytesRead);
+  File_Read(hFile, gbPadding2, 3, &uiNumBytesRead);
   if (uiNumBytesRead != 3) return FALSE;
-  FileMan_Read(hFile, &gfExtraElites, 1, &uiNumBytesRead);
+  File_Read(hFile, &gfExtraElites, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &giGarrisonArraySize, 4, &uiNumBytesRead);
+  File_Read(hFile, &giGarrisonArraySize, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &giPatrolArraySize, 4, &uiNumBytesRead);
+  File_Read(hFile, &giPatrolArraySize, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &giReinforcementPool, 4, &uiNumBytesRead);
+  File_Read(hFile, &giReinforcementPool, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &giForcePercentage, 4, &uiNumBytesRead);
+  File_Read(hFile, &giForcePercentage, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &giArmyAlertness, 4, &uiNumBytesRead);
+  File_Read(hFile, &giArmyAlertness, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &giArmyAlertnessDecay, 4, &uiNumBytesRead);
+  File_Read(hFile, &giArmyAlertnessDecay, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &gfQueenAIAwake, 1, &uiNumBytesRead);
+  File_Read(hFile, &gfQueenAIAwake, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &giReinforcementPoints, 4, &uiNumBytesRead);
+  File_Read(hFile, &giReinforcementPoints, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &giRequestPoints, 4, &uiNumBytesRead);
+  File_Read(hFile, &giRequestPoints, 4, &uiNumBytesRead);
   if (uiNumBytesRead != 4) return FALSE;
-  FileMan_Read(hFile, &gubNumAwareBattles, 1, &uiNumBytesRead);
+  File_Read(hFile, &gubNumAwareBattles, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &ubSAIVersion, 1, &uiNumBytesRead);
+  File_Read(hFile, &ubSAIVersion, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &gubQueenPriorityPhase, 1, &uiNumBytesRead);
+  File_Read(hFile, &gubQueenPriorityPhase, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &gfFirstBattleMeanwhileScenePending, 1, &uiNumBytesRead);
+  File_Read(hFile, &gfFirstBattleMeanwhileScenePending, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &gfMassFortificationOrdered, 1, &uiNumBytesRead);
+  File_Read(hFile, &gfMassFortificationOrdered, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &gubMinEnemyGroupSize, 1, &uiNumBytesRead);
+  File_Read(hFile, &gubMinEnemyGroupSize, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &gubHoursGracePeriod, 1, &uiNumBytesRead);
+  File_Read(hFile, &gubHoursGracePeriod, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, &gusPlayerBattleVictories, 2, &uiNumBytesRead);
+  File_Read(hFile, &gusPlayerBattleVictories, 2, &uiNumBytesRead);
   if (uiNumBytesRead != 2) return FALSE;
-  FileMan_Read(hFile, &gfUseAlternateQueenPosition, 1, &uiNumBytesRead);
+  File_Read(hFile, &gfUseAlternateQueenPosition, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) return FALSE;
-  FileMan_Read(hFile, gbPadding, SAI_PADDING_BYTES, &uiNumBytesRead);
+  File_Read(hFile, gbPadding, SAI_PADDING_BYTES, &uiNumBytesRead);
   if (uiNumBytesRead != SAI_PADDING_BYTES) return FALSE;
   // Restore the army composition
-  FileMan_Read(hFile, gArmyComp, NUM_ARMY_COMPOSITIONS * sizeof(ARMY_COMPOSITION), &uiNumBytesRead);
+  File_Read(hFile, gArmyComp, NUM_ARMY_COMPOSITIONS * sizeof(ARMY_COMPOSITION), &uiNumBytesRead);
   if (uiNumBytesRead != NUM_ARMY_COMPOSITIONS * sizeof(ARMY_COMPOSITION)) return FALSE;
   i = SAVED_ARMY_COMPOSITIONS - NUM_ARMY_COMPOSITIONS;
   while (i--) {
-    FileMan_Read(hFile, &gTempArmyComp, sizeof(ARMY_COMPOSITION), &uiNumBytesRead);
+    File_Read(hFile, &gTempArmyComp, sizeof(ARMY_COMPOSITION), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(ARMY_COMPOSITION)) return FALSE;
   }
 
@@ -3979,11 +3979,11 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
     MemFree(gPatrolGroup);
   }
   gPatrolGroup = (PATROL_GROUP *)MemAlloc(giPatrolArraySize * sizeof(PATROL_GROUP));
-  FileMan_Read(hFile, gPatrolGroup, giPatrolArraySize * sizeof(PATROL_GROUP), &uiNumBytesRead);
+  File_Read(hFile, gPatrolGroup, giPatrolArraySize * sizeof(PATROL_GROUP), &uiNumBytesRead);
   if (uiNumBytesRead != giPatrolArraySize * sizeof(PATROL_GROUP)) return FALSE;
   i = SAVED_PATROL_GROUPS - giPatrolArraySize;
   while (i--) {
-    FileMan_Read(hFile, &gTempPatrolGroup, sizeof(PATROL_GROUP), &uiNumBytesRead);
+    File_Read(hFile, &gTempPatrolGroup, sizeof(PATROL_GROUP), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(PATROL_GROUP)) return FALSE;
   }
 
@@ -3993,14 +3993,13 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
     MemFree(gGarrisonGroup);
   }
   gGarrisonGroup = (GARRISON_GROUP *)MemAlloc(giGarrisonArraySize * sizeof(GARRISON_GROUP));
-  FileMan_Read(hFile, gGarrisonGroup, giGarrisonArraySize * sizeof(GARRISON_GROUP),
-               &uiNumBytesRead);
+  File_Read(hFile, gGarrisonGroup, giGarrisonArraySize * sizeof(GARRISON_GROUP), &uiNumBytesRead);
   if (uiNumBytesRead != giGarrisonArraySize * sizeof(GARRISON_GROUP)) {
     return FALSE;
   }
   i = SAVED_GARRISON_GROUPS - giGarrisonArraySize;
   while (i--) {
-    FileMan_Read(hFile, &gTempGarrisonGroup, sizeof(GARRISON_GROUP), &uiNumBytesRead);
+    File_Read(hFile, &gTempGarrisonGroup, sizeof(GARRISON_GROUP), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(GARRISON_GROUP)) {
       return FALSE;
     }
@@ -4012,7 +4011,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
     gubPatrolReinforcementsDenied = NULL;
   }
   gubPatrolReinforcementsDenied = (UINT8 *)MemAlloc(giPatrolArraySize);
-  FileMan_Read(hFile, gubPatrolReinforcementsDenied, giPatrolArraySize, &uiNumBytesRead);
+  File_Read(hFile, gubPatrolReinforcementsDenied, giPatrolArraySize, &uiNumBytesRead);
   if (uiNumBytesRead != (UINT32)giPatrolArraySize) {
     return FALSE;
   }
@@ -4023,7 +4022,7 @@ BOOLEAN LoadStrategicAI(HWFILE hFile) {
     gubGarrisonReinforcementsDenied = NULL;
   }
   gubGarrisonReinforcementsDenied = (UINT8 *)MemAlloc(giGarrisonArraySize);
-  FileMan_Read(hFile, gubGarrisonReinforcementsDenied, giGarrisonArraySize, &uiNumBytesRead);
+  File_Read(hFile, gubGarrisonReinforcementsDenied, giGarrisonArraySize, &uiNumBytesRead);
   if (uiNumBytesRead != (UINT32)giGarrisonArraySize) {
     return FALSE;
   }

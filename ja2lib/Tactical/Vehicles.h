@@ -189,10 +189,10 @@ BOOLEAN DoesVehicleNeedAnyRepairs(INT32 iVehicleId);
 INT8 RepairVehicle(INT32 iVehicleId, INT8 bTotalPts, BOOLEAN *pfNothingToRepair);
 
 // Save all the vehicle information to the saved game file
-BOOLEAN SaveVehicleInformationToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveVehicleInformationToSaveGameFile(FileID hFile);
 
 // Load all the vehicle information From the saved game file
-BOOLEAN LoadVehicleInformationFromSavedGameFile(HWFILE hFile, UINT32 uiSavedGameVersion);
+BOOLEAN LoadVehicleInformationFromSavedGameFile(FileID hFile, UINT32 uiSavedGameVersion);
 
 // take soldier out of vehicle
 BOOLEAN TakeSoldierOutOfVehicle(struct SOLDIERTYPE *pSoldier);
@@ -204,10 +204,10 @@ void SetVehicleSectorValues(INT32 iVehId, UINT8 ubSectorX, UINT8 ubSectorY);
 
 void UpdateAllVehiclePassengersGridNo(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN SaveVehicleMovementInfoToSavedGameFile(HWFILE hFile);
-BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile);
-BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(HWFILE hFile);
-BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(HWFILE hFile);
+BOOLEAN SaveVehicleMovementInfoToSavedGameFile(FileID hFile);
+BOOLEAN LoadVehicleMovementInfoFromSavedGameFile(FileID hFile);
+BOOLEAN NewSaveVehicleMovementInfoToSavedGameFile(FileID hFile);
+BOOLEAN NewLoadVehicleMovementInfoFromSavedGameFile(FileID hFile);
 
 BOOLEAN OKUseVehicle(UINT8 ubProfile);
 

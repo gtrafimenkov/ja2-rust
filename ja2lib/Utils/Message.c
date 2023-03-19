@@ -7,7 +7,6 @@
 #include "BuildDefines.h"
 #include "JAScreens.h"
 #include "Local.h"
-#include "SGP/FileMan.h"
 #include "SGP/Font.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -24,6 +23,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 // #include "mbstring.h"
 
@@ -948,25 +948,25 @@ void PlayNewMessageSound(void) {
   return;
 }
 
-BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveMapScreenMessagesToSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
   UINT32 uiCount;
   UINT32 uiSizeOfString;
   StringSaveStruct StringSave;
 
   //	write to the begining of the message list
-  FileMan_Write(hFile, &gubEndOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesWritten);
+  File_Write(hFile, &gubEndOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) {
     return (FALSE);
   }
 
-  FileMan_Write(hFile, &gubStartOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesWritten);
+  File_Write(hFile, &gubStartOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) {
     return (FALSE);
   }
 
   //	write the current message string
-  FileMan_Write(hFile, &gubCurrentMapMessageString, sizeof(UINT8), &uiNumBytesWritten);
+  File_Write(hFile, &gubCurrentMapMessageString, sizeof(UINT8), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8)) {
     return (FALSE);
   }
@@ -979,7 +979,7 @@ BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
       uiSizeOfString = 0;
 
     //	write to the file the size of the message
-    FileMan_Write(hFile, &uiSizeOfString, sizeof(UINT32), &uiNumBytesWritten);
+    File_Write(hFile, &uiSizeOfString, sizeof(UINT32), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(UINT32)) {
       return (FALSE);
     }
@@ -987,8 +987,8 @@ BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
     // if there is a message
     if (uiSizeOfString) {
       //	write the message to the file
-      FileMan_Write(hFile, gMapScreenMessageList[uiCount]->pString16, uiSizeOfString,
-                    &uiNumBytesWritten);
+      File_Write(hFile, gMapScreenMessageList[uiCount]->pString16, uiSizeOfString,
+                 &uiNumBytesWritten);
       if (uiNumBytesWritten != uiSizeOfString) {
         return (FALSE);
       }
@@ -1001,7 +1001,7 @@ BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
       StringSave.uiFlags = gMapScreenMessageList[uiCount]->uiFlags;
 
       // Write the rest of the message information to the saved game file
-      FileMan_Write(hFile, &StringSave, sizeof(StringSaveStruct), &uiNumBytesWritten);
+      File_Write(hFile, &StringSave, sizeof(StringSaveStruct), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(StringSaveStruct)) {
         return (FALSE);
       }
@@ -1011,7 +1011,7 @@ BOOLEAN SaveMapScreenMessagesToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
+BOOLEAN LoadMapScreenMessagesFromSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
   UINT32 uiCount;
   UINT32 uiSizeOfString;
@@ -1026,19 +1026,19 @@ BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
   gubCurrentMapMessageString = 0;
 
   //	Read to the begining of the message list
-  FileMan_Read(hFile, &gubEndOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesRead);
+  File_Read(hFile, &gubEndOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) {
     return (FALSE);
   }
 
   //	Read the current message string
-  FileMan_Read(hFile, &gubStartOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesRead);
+  File_Read(hFile, &gubStartOfMapScreenMessageList, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) {
     return (FALSE);
   }
 
   //	Read the current message string
-  FileMan_Read(hFile, &gubCurrentMapMessageString, sizeof(UINT8), &uiNumBytesRead);
+  File_Read(hFile, &gubCurrentMapMessageString, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) {
     return (FALSE);
   }
@@ -1046,7 +1046,7 @@ BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
   // Loopthrough all the messages
   for (uiCount = 0; uiCount < 256; uiCount++) {
     //	Read to the file the size of the message
-    FileMan_Read(hFile, &uiSizeOfString, sizeof(UINT32), &uiNumBytesRead);
+    File_Read(hFile, &uiSizeOfString, sizeof(UINT32), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UINT32)) {
       return (FALSE);
     }
@@ -1054,7 +1054,7 @@ BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
     // if there is a message
     if (uiSizeOfString) {
       //	Read the message from the file
-      FileMan_Read(hFile, SavedString, uiSizeOfString, &uiNumBytesRead);
+      File_Read(hFile, SavedString, uiSizeOfString, &uiNumBytesRead);
       if (uiNumBytesRead != uiSizeOfString) {
         return (FALSE);
       }
@@ -1087,7 +1087,7 @@ BOOLEAN LoadMapScreenMessagesFromSaveGameFile(HWFILE hFile) {
       wcscpy(gMapScreenMessageList[uiCount]->pString16, SavedString);
 
       // Read the rest of the message information to the saved game file
-      FileMan_Read(hFile, &StringSave, sizeof(StringSaveStruct), &uiNumBytesRead);
+      File_Read(hFile, &StringSave, sizeof(StringSaveStruct), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(StringSaveStruct)) {
         return (FALSE);
       }

@@ -4,12 +4,12 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
+#include "rust_fileman.h"
 
 #if 0
 static void AILCALLBACK timer_func( UINT32 user )
@@ -48,7 +48,7 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
   // while counting the number of elements loaded
 
   //	FILE *pFile;
-  HWFILE pFile;
+  FileID pFile = FILE_ID_ERR;
   STR pSourceFileName;
   STR pDestFileName;
   char sFileName[256];
@@ -82,15 +82,15 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
   pDestFileName[counter + 3] = 'p';
   pDestFileName[counter + 4] = '\0';
 
-  pFile = FileMan_OpenForReading(pDestFileName);
+  pFile = File_OpenForReading(pDestFileName);
   if (pFile) {
     counter = 0;
     // gap file exists
     // now read in the AUDIO_GAPs
 
-    while (FileMan_Read(pFile, &Start, sizeof(UINT32), &uiNumBytesRead) && uiNumBytesRead != 0) {
+    while (File_Read(pFile, &Start, sizeof(UINT32), &uiNumBytesRead) && uiNumBytesRead != 0) {
       // can read the first element, there exists a second
-      FileMan_Read(pFile, &End, sizeof(UINT32), &uiNumBytesRead);
+      File_Read(pFile, &End, sizeof(UINT32), &uiNumBytesRead);
 
       // allocate space for AUDIO_GAP
       pCurrentGap = (AUDIO_GAP *)MemAlloc(sizeof(AUDIO_GAP));
@@ -116,7 +116,7 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
     pGapList->current_time = 0;
 
     // fclose(pFile);
-    FileMan_Close(pFile);
+    File_Close(pFile);
   }
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
            String("Gap List Started From File %s and has %d gaps", pDestFileName, pGapList->size));

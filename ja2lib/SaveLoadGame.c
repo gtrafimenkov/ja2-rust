@@ -23,7 +23,6 @@
 #include "Money.h"
 #include "OptionsScreen.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
@@ -99,6 +98,7 @@
 #include "Utils/Text.h"
 #include "platform.h"
 #include "rust_civ_groups.h"
+#include "rust_fileman.h"
 #include "rust_sam_sites.h"
 
 BOOLEAN fFirstTimeInMapScreen = TRUE;
@@ -381,39 +381,39 @@ extern BOOLEAN gfHavePurchasedItemsFromTony;
 //
 /////////////////////////////////////////////////////
 
-BOOLEAN SaveMercProfiles(HWFILE hFile);
-BOOLEAN LoadSavedMercProfiles(HWFILE hwFile);
+BOOLEAN SaveMercProfiles(FileID hFile);
+BOOLEAN LoadSavedMercProfiles(FileID hwFile);
 
-BOOLEAN SaveSoldierStructure(HWFILE hFile);
-BOOLEAN LoadSoldierStructure(HWFILE hFile);
+BOOLEAN SaveSoldierStructure(FileID hFile);
+BOOLEAN LoadSoldierStructure(FileID hFile);
 
-// BOOLEAN		SavePtrInfo( PTR *pData, UINT32 uiSizeOfObject, HWFILE hFile );
-// BOOLEAN		LoadPtrInfo( PTR *pData, UINT32 uiSizeOfObject, HWFILE hFile );
+// BOOLEAN		SavePtrInfo( PTR *pData, UINT32 uiSizeOfObject, FileID hFile );
+// BOOLEAN		LoadPtrInfo( PTR *pData, UINT32 uiSizeOfObject, FileID hFile );
 
-BOOLEAN SaveEmailToSavedGame(HWFILE hFile);
-BOOLEAN LoadEmailFromSavedGame(HWFILE hFile);
+BOOLEAN SaveEmailToSavedGame(FileID hFile);
+BOOLEAN LoadEmailFromSavedGame(FileID hFile);
 
-BOOLEAN SaveTacticalStatusToSavedGame(HWFILE hFile);
-BOOLEAN LoadTacticalStatusFromSavedGame(HWFILE hFile);
+BOOLEAN SaveTacticalStatusToSavedGame(FileID hFile);
+BOOLEAN LoadTacticalStatusFromSavedGame(FileID hFile);
 
 BOOLEAN SetMercsInsertionGridNo();
 
-BOOLEAN LoadOppListInfoFromSavedGame(HWFILE hFile);
-BOOLEAN SaveOppListInfoToSavedGame(HWFILE hFile);
+BOOLEAN LoadOppListInfoFromSavedGame(FileID hFile);
+BOOLEAN SaveOppListInfoToSavedGame(FileID hFile);
 
-BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFilem, UINT8 ubID);
-BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFilem, UINT8 ubID);
+BOOLEAN LoadMercPathToSoldierStruct(FileID hFilem, UINT8 ubID);
+BOOLEAN SaveMercPathFromSoldierStruct(FileID hFilem, UINT8 ubID);
 
-BOOLEAN LoadGeneralInfo(HWFILE hFile);
-BOOLEAN SaveGeneralInfo(HWFILE hFile);
-BOOLEAN SavePreRandomNumbersToSaveGameFile(HWFILE hFile);
-BOOLEAN LoadPreRandomNumbersFromSaveGameFile(HWFILE hFile);
+BOOLEAN LoadGeneralInfo(FileID hFile);
+BOOLEAN SaveGeneralInfo(FileID hFile);
+BOOLEAN SavePreRandomNumbersToSaveGameFile(FileID hFile);
+BOOLEAN LoadPreRandomNumbersFromSaveGameFile(FileID hFile);
 
-BOOLEAN SaveWatchedLocsToSavedGame(HWFILE hFile);
-BOOLEAN LoadWatchedLocsFromSavedGame(HWFILE hFile);
+BOOLEAN SaveWatchedLocsToSavedGame(FileID hFile);
+BOOLEAN LoadWatchedLocsFromSavedGame(FileID hFile);
 
-BOOLEAN LoadMeanwhileDefsFromSaveGameFile(HWFILE hFile);
-BOOLEAN SaveMeanwhileDefsFromSaveGameFile(HWFILE hFile);
+BOOLEAN LoadMeanwhileDefsFromSaveGameFile(FileID hFile);
+BOOLEAN SaveMeanwhileDefsFromSaveGameFile(FileID hFile);
 
 void PauseBeforeSaveGame(void);
 void UnPauseAfterSaveGame(void);
@@ -432,7 +432,7 @@ extern BOOLEAN ValidateSoldierInitLinks(UINT8 ubCode);
 
 BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   UINT32 uiNumBytesWritten = 0;
-  HWFILE hFile = 0;
+  FileID hFile = FILE_ID_ERR;
   SAVED_GAME_HEADER SaveGameHeader;
   CHAR8 zSaveGameName[512];
   CHAR8 saveDir[100];
@@ -534,14 +534,14 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   CreateSavedGameFileNameFromNumber(ubSaveGameID, zSaveGameName);
 
   // if the file already exists, delete it
-  if (FileMan_Exists(zSaveGameName)) {
+  if (File_Exists(zSaveGameName)) {
     if (!Plat_DeleteFile(zSaveGameName)) {
       goto FAILED_TO_SAVE;
     }
   }
 
   // create the save game file
-  hFile = FileMan_OpenForWriting(zSaveGameName);
+  hFile = File_OpenForWriting(zSaveGameName);
   if (!hFile) {
     goto FAILED_TO_SAVE;
   }
@@ -603,7 +603,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   // Save the Save Game header file
   //
 
-  FileMan_Write(hFile, &SaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesWritten);
+  File_Write(hFile, &SaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(SAVED_GAME_HEADER)) {
     goto FAILED_TO_SAVE;
   }
@@ -824,7 +824,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   }
 
   // Close the saved game file
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // if we succesfully saved the game, mark this entry as the last saved game file
   if (ubSaveGameID != SAVE__ERROR_NUM && ubSaveGameID != SAVE__END_TURN_NUM) {
@@ -873,7 +873,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
   // if there is an error saving the game
 FAILED_TO_SAVE:
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   if (fWePausedIt) {
     UnPauseAfterSaveGame();
@@ -900,7 +900,7 @@ FAILED_TO_SAVE:
 UINT32 guiBrokenSaveGameVersion = 0;
 
 BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   SAVED_GAME_HEADER SaveGameHeader;
   UINT32 uiNumBytesRead = 0;
 
@@ -961,17 +961,17 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   CreateSavedGameFileNameFromNumber(ubSavedGameID, zSaveGameName);
 
   // open the save game file
-  hFile = FileMan_OpenForReading(zSaveGameName);
+  hFile = File_OpenForReading(zSaveGameName);
   if (!hFile) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
 
   // Load the Save Game header file
-  FileMan_Read(hFile, &SaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesRead);
+  File_Read(hFile, &SaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(SAVED_GAME_HEADER)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -987,7 +987,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load the gtactical status structure plus the current sector x,y,z
   if (!LoadTacticalStatusFromSavedGame(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -997,7 +997,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load the game clock ingo
   if (!LoadGameClock(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1065,7 +1065,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // load the game events
   if (!LoadStrategicEventsFromSavedGame(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1076,7 +1076,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadLaptopInfoFromSavedGame(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1090,7 +1090,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   // Load all the saved Merc profiles
   //
   if (!LoadSavedMercProfiles(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1103,7 +1103,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   // Load the soldier structure info
   //
   if (!LoadSoldierStructure(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1117,7 +1117,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   // Load the Finances Data and write it to a new file
   //
   if (!LoadFilesFromSavedGame(FINANCES_DATA_FILE, hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1131,7 +1131,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   // Load the History Data and write it to a new file
   //
   if (!LoadFilesFromSavedGame(HISTORY_DATA_FILE, hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1145,7 +1145,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   // Load the Files Data and write it to a new file
   //
   if (!LoadFilesFromSavedGame(FILES_DAT_FILE, hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1157,7 +1157,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load the data for the emails
   if (!LoadEmailFromSavedGame(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1169,7 +1169,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load the strategic Information
   if (!LoadStrategicInfoFromSavedFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1181,7 +1181,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load the underground information
   if (!LoadUnderGroundSectorInfoFromSavedGame(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1193,7 +1193,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load all the squad info from the saved game file
   if (!LoadSquadInfoFromSavedGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1206,7 +1206,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load the group linked list
   if (!LoadStrategicMovementGroupsFromSavedGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1217,7 +1217,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   // Load all the map temp files from the saved game file into the maps\temp directory
   if (!LoadMapTempFilesFromSavedGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1228,7 +1228,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadQuestInfoFromSavedGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1239,7 +1239,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadOppListInfoFromSavedGame(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1250,7 +1250,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadMapScreenMessagesFromSaveGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1261,7 +1261,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadNPCInfoFromSavedGameFile(hFile, SaveGameHeader.uiSavedGameVersion)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1272,7 +1272,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadKeyTableFromSaveedGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1283,7 +1283,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadTempNpcQuoteArrayToSaveGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1295,7 +1295,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadPreRandomNumbersFromSaveGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1306,7 +1306,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadSmokeEffectsFromLoadGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1319,7 +1319,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   if (!LoadArmsDealerInventoryFromSavedGameFile(
           hFile, (BOOLEAN)(SaveGameHeader.uiSavedGameVersion >= 54),
           (BOOLEAN)(SaveGameHeader.uiSavedGameVersion >= 55))) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1330,7 +1330,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadGeneralInfo(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1341,7 +1341,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   uiRelStartPerc = uiRelEndPerc;
 
   if (!LoadMineStatusFromSavedGameFile(hFile)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     guiSaveGameVersion = 0;
     return (FALSE);
   }
@@ -1353,7 +1353,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 21) {
     if (!LoadStrategicTownLoyaltyFromSavedGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1366,7 +1366,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 22) {
     if (!LoadVehicleInformationFromSavedGameFile(hFile, SaveGameHeader.uiSavedGameVersion)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1379,7 +1379,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 24) {
     if (!LoadBulletStructureFromSavedGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1392,7 +1392,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 24) {
     if (!LoadPhysicsTableFromSavedGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1405,7 +1405,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 24) {
     if (!LoadAirRaidInfoFromSaveGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1418,7 +1418,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 24) {
     if (!LoadTeamTurnsFromTheSavedGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1431,7 +1431,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 25) {
     if (!LoadExplosionTableFromSavedGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1444,7 +1444,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 27) {
     if (!LoadCreatureDirectives(hFile, SaveGameHeader.uiSavedGameVersion)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1457,7 +1457,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 28) {
     if (!LoadStrategicStatusFromSaveGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1470,7 +1470,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 31) {
     if (!LoadStrategicAI(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1483,7 +1483,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 37) {
     if (!LoadLightEffectsFromLoadGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1496,7 +1496,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 38) {
     if (!LoadWatchedLocsFromSavedGame(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1509,7 +1509,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 39) {
     if (!LoadItemCursorFromSavedGame(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1522,7 +1522,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 51) {
     if (!LoadCivQuotesFromLoadGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return FALSE;
     }
@@ -1535,7 +1535,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 53) {
     if (!LoadBackupNPCInfoFromSavedGameFile(hFile, SaveGameHeader.uiSavedGameVersion)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1548,7 +1548,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 58) {
     if (!LoadMeanwhileDefsFromSaveGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1566,7 +1566,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
     // trash schedules loaded from map
     DestroyAllSchedulesWithoutDestroyingEvents();
     if (!LoadSchedulesFromSave(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1580,7 +1580,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   if (SaveGameHeader.uiSavedGameVersion >= 61) {
     {
       if (!NewLoadVehicleMovementInfoFromSavedGameFile(hFile)) {
-        FileMan_Close(hFile);
+        File_Close(hFile);
         guiSaveGameVersion = 0;
         return (FALSE);
       }
@@ -1595,7 +1595,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 67) {
     if (!LoadContractRenewalDataFromSaveGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1603,7 +1603,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 70) {
     if (!LoadLeaveItemList(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1611,7 +1611,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
 
   if (SaveGameHeader.uiSavedGameVersion >= 85) {
     if (!NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(hFile)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       guiSaveGameVersion = 0;
       return (FALSE);
     }
@@ -1627,7 +1627,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   //
   // Close the saved game file
   //
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // ATE: Patch? Patch up groups.....( will only do for old saves.. )
   UpdatePersistantGroupsFromOldSave(SaveGameHeader.uiSavedGameVersion);
@@ -1768,7 +1768,7 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   return (TRUE);
 }
 
-BOOLEAN SaveMercProfiles(HWFILE hFile) {
+BOOLEAN SaveMercProfiles(FileID hFile) {
   UINT16 cnt;
   UINT32 uiNumBytesWritten = 0;
   UINT32 uiSaveSize = sizeof(MERCPROFILESTRUCT);
@@ -1785,7 +1785,7 @@ BOOLEAN SaveMercProfiles(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
+BOOLEAN LoadSavedMercProfiles(FileID hFile) {
   UINT16 cnt;
   UINT32 uiNumBytesRead = 0;
 
@@ -1828,7 +1828,7 @@ BOOLEAN LoadSavedMercProfiles(HWFILE hFile) {
 //	UINT16 *pShades[ NUM_SOLDIER_SHADES ]; // Shading tables 	UINT16 *p16BPPPalette;
 // struct SGPPaletteEntry *p8BPPPalette 	struct OBJECTTYPE *pTempObject;
 
-BOOLEAN SaveSoldierStructure(HWFILE hFile) {
+BOOLEAN SaveSoldierStructure(FileID hFile) {
   UINT16 cnt;
   UINT32 uiNumBytesWritten = 0;
   UINT8 ubOne = 1;
@@ -1841,7 +1841,7 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
     // if the soldier isnt active, dont add them to the saved game file.
     if (!Menptr[cnt].bActive) {
       // Save the byte specifing to NOT load the soldiers
-      FileMan_Write(hFile, &ubZero, 1, &uiNumBytesWritten);
+      File_Write(hFile, &ubZero, 1, &uiNumBytesWritten);
       if (uiNumBytesWritten != 1) {
         return (FALSE);
       }
@@ -1849,7 +1849,7 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
 
     else {
       // Save the byte specifing to load the soldiers
-      FileMan_Write(hFile, &ubOne, 1, &uiNumBytesWritten);
+      File_Write(hFile, &ubOne, 1, &uiNumBytesWritten);
       if (uiNumBytesWritten != 1) {
         return (FALSE);
       }
@@ -1876,20 +1876,19 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
 
       if (Menptr[cnt].pKeyRing != NULL) {
         // write to the file saying we have the ....
-        FileMan_Write(hFile, &ubOne, 1, &uiNumBytesWritten);
+        File_Write(hFile, &ubOne, 1, &uiNumBytesWritten);
         if (uiNumBytesWritten != 1) {
           return (FALSE);
         }
 
         // Now save the ....
-        FileMan_Write(hFile, Menptr[cnt].pKeyRing, NUM_KEYS * sizeof(KEY_ON_RING),
-                      &uiNumBytesWritten);
+        File_Write(hFile, Menptr[cnt].pKeyRing, NUM_KEYS * sizeof(KEY_ON_RING), &uiNumBytesWritten);
         if (uiNumBytesWritten != NUM_KEYS * sizeof(KEY_ON_RING)) {
           return (FALSE);
         }
       } else {
         // write to the file saying we DO NOT have the Key ring
-        FileMan_Write(hFile, &ubZero, 1, &uiNumBytesWritten);
+        File_Write(hFile, &ubZero, 1, &uiNumBytesWritten);
         if (uiNumBytesWritten != 1) {
           return (FALSE);
         }
@@ -1900,7 +1899,7 @@ BOOLEAN SaveSoldierStructure(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadSoldierStructure(HWFILE hFile) {
+BOOLEAN LoadSoldierStructure(FileID hFile) {
   UINT16 cnt;
   UINT32 uiNumBytesRead = 0;
   struct SOLDIERTYPE SavedSoldierInfo;
@@ -1925,7 +1924,7 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
     RenderProgressBar(0, uiPercentage);
 
     // Read in a byte to tell us whether or not there is a soldier loaded here.
-    FileMan_Read(hFile, &ubActive, 1, &uiNumBytesRead);
+    File_Read(hFile, &ubActive, 1, &uiNumBytesRead);
     if (uiNumBytesRead != 1) {
       return (FALSE);
     }
@@ -1991,14 +1990,14 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
       //
 
       // Read the file to see if we have to load the keys
-      FileMan_Read(hFile, &ubOne, 1, &uiNumBytesRead);
+      File_Read(hFile, &ubOne, 1, &uiNumBytesRead);
       if (uiNumBytesRead != 1) {
         return (FALSE);
       }
 
       if (ubOne) {
         // Now Load the ....
-        FileMan_Read(hFile, Menptr[cnt].pKeyRing, NUM_KEYS * sizeof(KEY_ON_RING), &uiNumBytesRead);
+        File_Read(hFile, Menptr[cnt].pKeyRing, NUM_KEYS * sizeof(KEY_ON_RING), &uiNumBytesRead);
         if (uiNumBytesRead != NUM_KEYS * sizeof(KEY_ON_RING)) {
           return (FALSE);
         }
@@ -2069,7 +2068,7 @@ BOOLEAN LoadSoldierStructure(HWFILE hFile) {
 }
 
 /*
-BOOLEAN SavePtrInfo( PTR *pData, UINT32 uiSizeOfObject, HWFILE hFile )
+BOOLEAN SavePtrInfo( PTR *pData, UINT32 uiSizeOfObject, FileID hFile )
 {
         UINT8		ubOne = 1;
         UINT8		ubZero = 0;
@@ -2078,7 +2077,7 @@ BOOLEAN SavePtrInfo( PTR *pData, UINT32 uiSizeOfObject, HWFILE hFile )
         if( pData != NULL )
         {
                 // write to the file saying we have the ....
-                FileMan_Write( hFile, &ubOne, 1, &uiNumBytesWritten );
+                File_Write( hFile, &ubOne, 1, &uiNumBytesWritten );
                 if( uiNumBytesWritten != 1 )
                 {
                         DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("FAILED to Write Soldier Structure
@@ -2086,7 +2085,7 @@ to File" ) ); return(FALSE);
                 }
 
                 // Now save the ....
-                FileMan_Write( hFile, pData, uiSizeOfObject, &uiNumBytesWritten );
+                File_Write( hFile, pData, uiSizeOfObject, &uiNumBytesWritten );
                 if( uiNumBytesWritten != uiSizeOfObject )
                 {
                         DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("FAILED to Write Soldier Structure
@@ -2096,7 +2095,7 @@ to File" ) ); return(FALSE);
         else
         {
                 // write to the file saying we DO NOT have the ...
-                FileMan_Write( hFile, &ubZero, 1, &uiNumBytesWritten );
+                File_Write( hFile, &ubZero, 1, &uiNumBytesWritten );
                 if( uiNumBytesWritten != 1 )
                 {
                         DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("FAILED to Write Soldier Structure
@@ -2109,14 +2108,14 @@ to File" ) ); return(FALSE);
 
 
 
-BOOLEAN LoadPtrInfo( PTR *pData, UINT32 uiSizeOfObject, HWFILE hFile )
+BOOLEAN LoadPtrInfo( PTR *pData, UINT32 uiSizeOfObject, FileID hFile )
 {
         UINT8		ubOne = 1;
         UINT8		ubZero = 0;
         UINT32	uiNumBytesRead;
 
         // Read the file to see if we have to load the ....
-        FileMan_Read( hFile, &ubOne, 1, &uiNumBytesRead );
+        File_Read( hFile, &ubOne, 1, &uiNumBytesRead );
         if( uiNumBytesRead != 1 )
         {
                 DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("FAILED to Read Soldier Structure from
@@ -2134,7 +2133,7 @@ File" ) ); return(FALSE);
                         return( FALSE );
 
                 // Now Load the ....
-                FileMan_Read( hFile, pData, uiSizeOfObject, &uiNumBytesRead );
+                File_Read( hFile, pData, uiSizeOfObject, &uiNumBytesRead );
                 if( uiNumBytesRead != uiSizeOfObject )
                 {
                         DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("FAILED to Write Soldier Structure
@@ -2156,15 +2155,15 @@ to File" ) ); return(FALSE);
 }
 */
 
-BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
+BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, FileID hFile) {
   UINT32 uiFileSize;
   UINT32 uiNumBytesWritten = 0;
-  HWFILE hSrcFile;
+  FileID hSrcFile = FILE_ID_ERR;
   UINT8 *pData;
   UINT32 uiNumBytesRead;
 
   // open the file
-  hSrcFile = FileMan_OpenForReading(pSrcFileName);
+  hSrcFile = File_OpenForReading(pSrcFileName);
   if (!hSrcFile) {
     return (FALSE);
   }
@@ -2174,11 +2173,11 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
 #endif
 
   // Get the file size of the source data file
-  uiFileSize = FileMan_GetSize(hSrcFile);
+  uiFileSize = File_GetSize(hSrcFile);
   if (uiFileSize == 0) return (FALSE);
 
   // Write the the size of the file to the saved game file
-  FileMan_Write(hFile, &uiFileSize, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &uiFileSize, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2189,7 +2188,7 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   memset(pData, 0, uiFileSize);
 
   // Read the saource file into the buffer
-  FileMan_Read(hSrcFile, pData, uiFileSize, &uiNumBytesRead);
+  File_Read(hSrcFile, pData, uiFileSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiFileSize) {
     // Free the buffer
     MemFree(pData);
@@ -2198,7 +2197,7 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   }
 
   // Write the buffer to the saved game file
-  FileMan_Write(hFile, pData, uiFileSize, &uiNumBytesWritten);
+  File_Write(hFile, pData, uiFileSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiFileSize) {
     // Free the buffer
     MemFree(pData);
@@ -2210,20 +2209,20 @@ BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, HWFILE hFile) {
   MemFree(pData);
 
   // Clsoe the source data file
-  FileMan_Close(hSrcFile);
+  File_Close(hSrcFile);
 
   return (TRUE);
 }
 
-BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
+BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, FileID hFile) {
   UINT32 uiFileSize;
   UINT32 uiNumBytesWritten = 0;
-  HWFILE hSrcFile;
+  FileID hSrcFile = FILE_ID_ERR;
   UINT8 *pData;
   UINT32 uiNumBytesRead;
 
   // If the source file exists, delete it
-  if (FileMan_Exists(pSrcFileName)) {
+  if (File_Exists(pSrcFileName)) {
     if (!Plat_DeleteFile(pSrcFileName)) {
       // unable to delete the original file
       return (FALSE);
@@ -2235,37 +2234,37 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
 #endif
 
   // open the destination file to write to
-  hSrcFile = FileMan_OpenForWriting(pSrcFileName);
+  hSrcFile = File_OpenForWriting(pSrcFileName);
   if (!hSrcFile) {
     // error, we cant open the saved game file
     return (FALSE);
   }
 
   // Read the size of the data
-  FileMan_Read(hFile, &uiFileSize, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &uiFileSize, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
-    FileMan_Close(hSrcFile);
+    File_Close(hSrcFile);
 
     return (FALSE);
   }
 
   // if there is nothing in the file, return;
   if (uiFileSize == 0) {
-    FileMan_Close(hSrcFile);
+    File_Close(hSrcFile);
     return (TRUE);
   }
 
   // Allocate a buffer to read the data into
   pData = (UINT8 *)MemAlloc(uiFileSize);
   if (pData == NULL) {
-    FileMan_Close(hSrcFile);
+    File_Close(hSrcFile);
     return (FALSE);
   }
 
   // Read into the buffer
-  FileMan_Read(hFile, pData, uiFileSize, &uiNumBytesRead);
+  File_Read(hFile, pData, uiFileSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiFileSize) {
-    FileMan_Close(hSrcFile);
+    File_Close(hSrcFile);
 
     // Free the buffer
     MemFree(pData);
@@ -2274,9 +2273,9 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
   }
 
   // Write the buffer to the new file
-  FileMan_Write(hSrcFile, pData, uiFileSize, &uiNumBytesWritten);
+  File_Write(hSrcFile, pData, uiFileSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiFileSize) {
-    FileMan_Close(hSrcFile);
+    File_Close(hSrcFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to Write to the %s File", pSrcFileName));
     // Free the buffer
     MemFree(pData);
@@ -2288,12 +2287,12 @@ BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, HWFILE hFile) {
   MemFree(pData);
 
   // Close the source data file
-  FileMan_Close(hSrcFile);
+  File_Close(hSrcFile);
 
   return (TRUE);
 }
 
-BOOLEAN SaveEmailToSavedGame(HWFILE hFile) {
+BOOLEAN SaveEmailToSavedGame(FileID hFile) {
   UINT32 uiNumOfEmails = 0;
   EmailPtr pEmail = pEmailList;
   UINT32 cnt;
@@ -2309,7 +2308,7 @@ BOOLEAN SaveEmailToSavedGame(HWFILE hFile) {
   }
 
   // write the number of email messages
-  FileMan_Write(hFile, &uiNumOfEmails, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumOfEmails, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2321,13 +2320,13 @@ BOOLEAN SaveEmailToSavedGame(HWFILE hFile) {
     uiStringLength = (wcslen(pEmail->pSubject) + 1) * 2;
 
     // write the length of the current emails subject to the saved game file
-    FileMan_Write(hFile, &uiStringLength, sizeof(UINT32), &uiNumBytesWritten);
+    File_Write(hFile, &uiStringLength, sizeof(UINT32), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(UINT32)) {
       return (FALSE);
     }
 
     // write the subject of the current email to the saved game file
-    FileMan_Write(hFile, pEmail->pSubject, uiStringLength, &uiNumBytesWritten);
+    File_Write(hFile, pEmail->pSubject, uiStringLength, &uiNumBytesWritten);
     if (uiNumBytesWritten != uiStringLength) {
       return (FALSE);
     }
@@ -2348,7 +2347,7 @@ BOOLEAN SaveEmailToSavedGame(HWFILE hFile) {
     SavedEmail.uiSixData = pEmail->uiSixData;
 
     // write the email header to the saved game file
-    FileMan_Write(hFile, &SavedEmail, sizeof(SavedEmailStruct), &uiNumBytesWritten);
+    File_Write(hFile, &SavedEmail, sizeof(SavedEmailStruct), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(SavedEmailStruct)) {
       return (FALSE);
     }
@@ -2360,7 +2359,7 @@ BOOLEAN SaveEmailToSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
+BOOLEAN LoadEmailFromSavedGame(FileID hFile) {
   UINT32 uiNumOfEmails = 0;
   UINT32 uiSizeOfSubject = 0;
   EmailPtr pEmail = pEmailList;
@@ -2381,7 +2380,7 @@ BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
   memset(pEmailList, 0, sizeof(Email));
 
   // read in the number of email messages
-  FileMan_Read(hFile, &uiNumOfEmails, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &uiNumOfEmails, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2390,7 +2389,7 @@ BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
   pEmail = pEmailList;
   for (cnt = 0; cnt < uiNumOfEmails; cnt++) {
     // get the length of the email subject
-    FileMan_Read(hFile, &uiSizeOfSubject, sizeof(UINT32), &uiNumBytesRead);
+    File_Read(hFile, &uiSizeOfSubject, sizeof(UINT32), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(UINT32)) {
       return (FALSE);
     }
@@ -2401,13 +2400,13 @@ BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
     memset(pData, 0, EMAIL_SUBJECT_LENGTH * sizeof(wchar_t));
 
     // Get the subject
-    FileMan_Read(hFile, pData, uiSizeOfSubject, &uiNumBytesRead);
+    File_Read(hFile, pData, uiSizeOfSubject, &uiNumBytesRead);
     if (uiNumBytesRead != uiSizeOfSubject) {
       return (FALSE);
     }
 
     // get the rest of the data from the email
-    FileMan_Read(hFile, &SavedEmail, sizeof(SavedEmailStruct), &uiNumBytesRead);
+    File_Read(hFile, &SavedEmail, sizeof(SavedEmailStruct), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(SavedEmailStruct)) {
       return (FALSE);
     }
@@ -2461,7 +2460,7 @@ BOOLEAN LoadEmailFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveTacticalStatusToSavedGame(HWFILE hFile) {
+BOOLEAN SaveTacticalStatusToSavedGame(FileID hFile) {
   UINT32 uiNumBytesWritten;
 
   // copy data
@@ -2471,7 +2470,7 @@ BOOLEAN SaveTacticalStatusToSavedGame(HWFILE hFile) {
   }
 
   // write the gTacticalStatus to the saved game file
-  FileMan_Write(hFile, &gTacticalStatus, sizeof(TacticalStatusType), &uiNumBytesWritten);
+  File_Write(hFile, &gTacticalStatus, sizeof(TacticalStatusType), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(TacticalStatusType)) {
     return (FALSE);
   }
@@ -2481,19 +2480,19 @@ BOOLEAN SaveTacticalStatusToSavedGame(HWFILE hFile) {
   //
 
   // save gWorldSectorX
-  FileMan_Write(hFile, &gWorldSectorX, sizeof(gWorldSectorX), &uiNumBytesWritten);
+  File_Write(hFile, &gWorldSectorX, sizeof(gWorldSectorX), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(gWorldSectorX)) {
     return (FALSE);
   }
 
   // save gWorldSectorY
-  FileMan_Write(hFile, &gWorldSectorY, sizeof(gWorldSectorY), &uiNumBytesWritten);
+  File_Write(hFile, &gWorldSectorY, sizeof(gWorldSectorY), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(gWorldSectorY)) {
     return (FALSE);
   }
 
   // save gbWorldSectorZ
-  FileMan_Write(hFile, &gbWorldSectorZ, sizeof(gbWorldSectorZ), &uiNumBytesWritten);
+  File_Write(hFile, &gbWorldSectorZ, sizeof(gbWorldSectorZ), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(gbWorldSectorZ)) {
     return (FALSE);
   }
@@ -2501,11 +2500,11 @@ BOOLEAN SaveTacticalStatusToSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadTacticalStatusFromSavedGame(HWFILE hFile) {
+BOOLEAN LoadTacticalStatusFromSavedGame(FileID hFile) {
   UINT32 uiNumBytesRead;
 
   // Read the gTacticalStatus to the saved game file
-  FileMan_Read(hFile, &gTacticalStatus, sizeof(TacticalStatusType), &uiNumBytesRead);
+  File_Read(hFile, &gTacticalStatus, sizeof(TacticalStatusType), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(TacticalStatusType)) {
     return (FALSE);
   }
@@ -2521,19 +2520,19 @@ BOOLEAN LoadTacticalStatusFromSavedGame(HWFILE hFile) {
   //
 
   // Load gWorldSectorX
-  FileMan_Read(hFile, &gWorldSectorX, sizeof(gWorldSectorX), &uiNumBytesRead);
+  File_Read(hFile, &gWorldSectorX, sizeof(gWorldSectorX), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(gWorldSectorX)) {
     return (FALSE);
   }
 
   // Load gWorldSectorY
-  FileMan_Read(hFile, &gWorldSectorY, sizeof(gWorldSectorY), &uiNumBytesRead);
+  File_Read(hFile, &gWorldSectorY, sizeof(gWorldSectorY), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(gWorldSectorY)) {
     return (FALSE);
   }
 
   // Load gbWorldSectorZ
-  FileMan_Read(hFile, &gbWorldSectorZ, sizeof(gbWorldSectorZ), &uiNumBytesRead);
+  File_Read(hFile, &gbWorldSectorZ, sizeof(gbWorldSectorZ), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(gbWorldSectorZ)) {
     return (FALSE);
   }
@@ -2572,62 +2571,62 @@ BOOLEAN SetMercsInsertionGridNo() {
   return (TRUE);
 }
 
-BOOLEAN SaveOppListInfoToSavedGame(HWFILE hFile) {
+BOOLEAN SaveOppListInfoToSavedGame(FileID hFile) {
   UINT32 uiSaveSize = 0;
   UINT32 uiNumBytesWritten = 0;
 
   // Save the Public Opplist
   uiSaveSize = MAXTEAMS * TOTAL_SOLDIERS;
-  FileMan_Write(hFile, gbPublicOpplist, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gbPublicOpplist, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save the Seen Oppenents
   uiSaveSize = TOTAL_SOLDIERS * TOTAL_SOLDIERS;
-  FileMan_Write(hFile, gbSeenOpponents, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gbSeenOpponents, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save the Last Known Opp Locations
   uiSaveSize = TOTAL_SOLDIERS * TOTAL_SOLDIERS;
-  FileMan_Write(hFile, gsLastKnownOppLoc, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gsLastKnownOppLoc, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save the Last Known Opp Level
   uiSaveSize = TOTAL_SOLDIERS * TOTAL_SOLDIERS;
-  FileMan_Write(hFile, gbLastKnownOppLevel, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gbLastKnownOppLevel, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save the Public Last Known Opp Locations
   uiSaveSize = MAXTEAMS * TOTAL_SOLDIERS;
-  FileMan_Write(hFile, gsPublicLastKnownOppLoc, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gsPublicLastKnownOppLoc, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save the Public Last Known Opp Level
   uiSaveSize = MAXTEAMS * TOTAL_SOLDIERS;
-  FileMan_Write(hFile, gbPublicLastKnownOppLevel, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gbPublicLastKnownOppLevel, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save the Public Noise Volume
   uiSaveSize = MAXTEAMS;
-  FileMan_Write(hFile, gubPublicNoiseVolume, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gubPublicNoiseVolume, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   // Save the Public Last Noise Gridno
   uiSaveSize = MAXTEAMS;
-  FileMan_Write(hFile, gsPublicNoiseGridno, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gsPublicNoiseGridno, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
@@ -2635,62 +2634,62 @@ BOOLEAN SaveOppListInfoToSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadOppListInfoFromSavedGame(HWFILE hFile) {
+BOOLEAN LoadOppListInfoFromSavedGame(FileID hFile) {
   UINT32 uiLoadSize = 0;
   UINT32 uiNumBytesRead = 0;
 
   // Load the Public Opplist
   uiLoadSize = MAXTEAMS * TOTAL_SOLDIERS;
-  FileMan_Read(hFile, gbPublicOpplist, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gbPublicOpplist, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   // Load the Seen Oppenents
   uiLoadSize = TOTAL_SOLDIERS * TOTAL_SOLDIERS;
-  FileMan_Read(hFile, gbSeenOpponents, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gbSeenOpponents, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   // Load the Last Known Opp Locations
   uiLoadSize = TOTAL_SOLDIERS * TOTAL_SOLDIERS;
-  FileMan_Read(hFile, gsLastKnownOppLoc, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gsLastKnownOppLoc, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   // Load the Last Known Opp Level
   uiLoadSize = TOTAL_SOLDIERS * TOTAL_SOLDIERS;
-  FileMan_Read(hFile, gbLastKnownOppLevel, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gbLastKnownOppLevel, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   // Load the Public Last Known Opp Locations
   uiLoadSize = MAXTEAMS * TOTAL_SOLDIERS;
-  FileMan_Read(hFile, gsPublicLastKnownOppLoc, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gsPublicLastKnownOppLoc, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   // Load the Public Last Known Opp Level
   uiLoadSize = MAXTEAMS * TOTAL_SOLDIERS;
-  FileMan_Read(hFile, gbPublicLastKnownOppLevel, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gbPublicLastKnownOppLevel, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   // Load the Public Noise Volume
   uiLoadSize = MAXTEAMS;
-  FileMan_Read(hFile, gubPublicNoiseVolume, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gubPublicNoiseVolume, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   // Load the Public Last Noise Gridno
   uiLoadSize = MAXTEAMS;
-  FileMan_Read(hFile, gsPublicNoiseGridno, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gsPublicNoiseGridno, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
@@ -2698,7 +2697,7 @@ BOOLEAN LoadOppListInfoFromSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveWatchedLocsToSavedGame(HWFILE hFile) {
+BOOLEAN SaveWatchedLocsToSavedGame(FileID hFile) {
   UINT32 uiArraySize;
   UINT32 uiSaveSize = 0;
   UINT32 uiNumBytesWritten = 0;
@@ -2707,24 +2706,24 @@ BOOLEAN SaveWatchedLocsToSavedGame(HWFILE hFile) {
 
   // save locations of watched points
   uiSaveSize = uiArraySize * sizeof(INT16);
-  FileMan_Write(hFile, gsWatchedLoc, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gsWatchedLoc, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
   uiSaveSize = uiArraySize * sizeof(INT8);
 
-  FileMan_Write(hFile, gbWatchedLocLevel, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gbWatchedLocLevel, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
-  FileMan_Write(hFile, gubWatchedLocPoints, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gubWatchedLocPoints, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
 
-  FileMan_Write(hFile, gfWatchedLocReset, uiSaveSize, &uiNumBytesWritten);
+  File_Write(hFile, gfWatchedLocReset, uiSaveSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiSaveSize) {
     return (FALSE);
   }
@@ -2732,7 +2731,7 @@ BOOLEAN SaveWatchedLocsToSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadWatchedLocsFromSavedGame(HWFILE hFile) {
+BOOLEAN LoadWatchedLocsFromSavedGame(FileID hFile) {
   UINT32 uiArraySize;
   UINT32 uiLoadSize = 0;
   UINT32 uiNumBytesRead = 0;
@@ -2740,23 +2739,23 @@ BOOLEAN LoadWatchedLocsFromSavedGame(HWFILE hFile) {
   uiArraySize = TOTAL_SOLDIERS * NUM_WATCHED_LOCS;
 
   uiLoadSize = uiArraySize * sizeof(INT16);
-  FileMan_Read(hFile, gsWatchedLoc, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gsWatchedLoc, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
   uiLoadSize = uiArraySize * sizeof(INT8);
-  FileMan_Read(hFile, gbWatchedLocLevel, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gbWatchedLocLevel, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
-  FileMan_Read(hFile, gubWatchedLocPoints, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gubWatchedLocPoints, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
 
-  FileMan_Read(hFile, gfWatchedLocReset, uiLoadSize, &uiNumBytesRead);
+  File_Read(hFile, gfWatchedLocReset, uiLoadSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiLoadSize) {
     return (FALSE);
   }
@@ -2805,7 +2804,7 @@ void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName) {
             pMessageStrings[MSG_SAVE_NAME], ubSaveGameID, pMessageStrings[MSG_SAVEEXTENSION]);
 }
 
-BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
+BOOLEAN SaveMercPathFromSoldierStruct(FileID hFile, UINT8 ubID) {
   UINT32 uiNumOfNodes = 0;
   struct path *pTempPath = Menptr[ubID].pMercPath;
   UINT32 uiNumBytesWritten = 0;
@@ -2817,7 +2816,7 @@ BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
   }
 
   // Save the number of the nodes
-  FileMan_Write(hFile, &uiNumOfNodes, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumOfNodes, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2828,7 +2827,7 @@ BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
   // loop through nodes and save all the nodes
   while (pTempPath) {
     // Save the number of the nodes
-    FileMan_Write(hFile, pTempPath, sizeof(struct path), &uiNumBytesWritten);
+    File_Write(hFile, pTempPath, sizeof(struct path), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(struct path)) {
       return (FALSE);
     }
@@ -2839,7 +2838,7 @@ BOOLEAN SaveMercPathFromSoldierStruct(HWFILE hFile, UINT8 ubID) {
   return (TRUE);
 }
 
-BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, UINT8 ubID) {
+BOOLEAN LoadMercPathToSoldierStruct(FileID hFile, UINT8 ubID) {
   UINT32 uiNumOfNodes = 0;
   struct path *pTempPath = NULL;
   struct path *pTemp = NULL;
@@ -2866,7 +2865,7 @@ BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, UINT8 ubID) {
   */
 
   // Load the number of the nodes
-  FileMan_Read(hFile, &uiNumOfNodes, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &uiNumOfNodes, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2879,7 +2878,7 @@ BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, UINT8 ubID) {
     memset(pTemp, 0, sizeof(struct path));
 
     // Load the node
-    FileMan_Read(hFile, pTemp, sizeof(struct path), &uiNumBytesRead);
+    File_Read(hFile, pTemp, sizeof(struct path), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(struct path)) {
       return (FALSE);
     }
@@ -2909,7 +2908,7 @@ BOOLEAN LoadMercPathToSoldierStruct(HWFILE hFile, UINT8 ubID) {
 
 extern struct SectorPoint locationOfFirstBattle;
 
-BOOLEAN SaveGeneralInfo(HWFILE hFile) {
+BOOLEAN SaveGeneralInfo(FileID hFile) {
   UINT32 uiNumBytesWritten;
 
   GENERAL_SAVE_INFO sGeneralInfo;
@@ -3121,25 +3120,25 @@ BOOLEAN SaveGeneralInfo(HWFILE hFile) {
 
   // Setup the
   // Save the current music mode
-  FileMan_Write(hFile, &sGeneralInfo, sizeof(GENERAL_SAVE_INFO), &uiNumBytesWritten);
+  File_Write(hFile, &sGeneralInfo, sizeof(GENERAL_SAVE_INFO), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(GENERAL_SAVE_INFO)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   return (TRUE);
 }
 
-BOOLEAN LoadGeneralInfo(HWFILE hFile) {
+BOOLEAN LoadGeneralInfo(FileID hFile) {
   UINT32 uiNumBytesRead;
 
   GENERAL_SAVE_INFO sGeneralInfo;
   memset(&sGeneralInfo, 0, sizeof(GENERAL_SAVE_INFO));
 
   // Load the current music mode
-  FileMan_Read(hFile, &sGeneralInfo, sizeof(GENERAL_SAVE_INFO), &uiNumBytesRead);
+  File_Read(hFile, &sGeneralInfo, sizeof(GENERAL_SAVE_INFO), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(GENERAL_SAVE_INFO)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -3374,18 +3373,17 @@ BOOLEAN LoadGeneralInfo(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SavePreRandomNumbersToSaveGameFile(HWFILE hFile) {
+BOOLEAN SavePreRandomNumbersToSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
 
   // Save the Prerandom number index
-  FileMan_Write(hFile, &guiPreRandomIndex, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &guiPreRandomIndex, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
 
   // Save the Prerandom number index
-  FileMan_Write(hFile, guiPreRandomNums, sizeof(UINT32) * MAX_PREGENERATED_NUMS,
-                &uiNumBytesWritten);
+  File_Write(hFile, guiPreRandomNums, sizeof(UINT32) * MAX_PREGENERATED_NUMS, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32) * MAX_PREGENERATED_NUMS) {
     return (FALSE);
   }
@@ -3393,17 +3391,17 @@ BOOLEAN SavePreRandomNumbersToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadPreRandomNumbersFromSaveGameFile(HWFILE hFile) {
+BOOLEAN LoadPreRandomNumbersFromSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
 
   // Load the Prerandom number index
-  FileMan_Read(hFile, &guiPreRandomIndex, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &guiPreRandomIndex, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
 
   // Load the Prerandom number index
-  FileMan_Read(hFile, guiPreRandomNums, sizeof(UINT32) * MAX_PREGENERATED_NUMS, &uiNumBytesRead);
+  File_Read(hFile, guiPreRandomNums, sizeof(UINT32) * MAX_PREGENERATED_NUMS, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32) * MAX_PREGENERATED_NUMS) {
     return (FALSE);
   }
@@ -3411,13 +3409,13 @@ BOOLEAN LoadPreRandomNumbersFromSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadMeanwhileDefsFromSaveGameFile(HWFILE hFile) {
+BOOLEAN LoadMeanwhileDefsFromSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
 
   if (guiSaveGameVersion < 72) {
     // Load the array of meanwhile defs
-    FileMan_Read(hFile, gMeanwhileDef, sizeof(MEANWHILE_DEFINITION) * (NUM_MEANWHILES - 1),
-                 &uiNumBytesRead);
+    File_Read(hFile, gMeanwhileDef, sizeof(MEANWHILE_DEFINITION) * (NUM_MEANWHILES - 1),
+              &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(MEANWHILE_DEFINITION) * (NUM_MEANWHILES - 1)) {
       return (FALSE);
     }
@@ -3426,8 +3424,7 @@ BOOLEAN LoadMeanwhileDefsFromSaveGameFile(HWFILE hFile) {
 
   } else {
     // Load the array of meanwhile defs
-    FileMan_Read(hFile, gMeanwhileDef, sizeof(MEANWHILE_DEFINITION) * NUM_MEANWHILES,
-                 &uiNumBytesRead);
+    File_Read(hFile, gMeanwhileDef, sizeof(MEANWHILE_DEFINITION) * NUM_MEANWHILES, &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(MEANWHILE_DEFINITION) * NUM_MEANWHILES) {
       return (FALSE);
     }
@@ -3436,12 +3433,12 @@ BOOLEAN LoadMeanwhileDefsFromSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN SaveMeanwhileDefsFromSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveMeanwhileDefsFromSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
 
   // Save the array of meanwhile defs
-  FileMan_Write(hFile, &gMeanwhileDef, sizeof(MEANWHILE_DEFINITION) * NUM_MEANWHILES,
-                &uiNumBytesWritten);
+  File_Write(hFile, &gMeanwhileDef, sizeof(MEANWHILE_DEFINITION) * NUM_MEANWHILES,
+             &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(MEANWHILE_DEFINITION) * NUM_MEANWHILES) {
     return (FALSE);
   }

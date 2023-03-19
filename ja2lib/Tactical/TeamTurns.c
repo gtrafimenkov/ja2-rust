@@ -1,6 +1,5 @@
 #include "Tactical/TeamTurns.h"
 
-#include "SGP/FileMan.h"
 #include "SGP/Timer.h"
 #include "SGP/Types.h"
 #include "Soldier.h"
@@ -43,6 +42,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 
 #ifdef DEBUG_INTERRUPTS
 #include "SGP/Debug.h"
@@ -1697,12 +1697,12 @@ void ResolveInterruptsVs(struct SOLDIERTYPE *pSoldier, UINT8 ubInterruptType) {
   }
 }
 
-BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveTeamTurnsToTheSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Save the gubTurn Order Array
-  FileMan_Write(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesWritten);
+  File_Write(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT8) * MAXMERCS) {
     return (FALSE);
   }
@@ -1716,7 +1716,7 @@ BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
   TeamTurnStruct.ubLastInterruptedGuy = gubLastInterruptedGuy;
 
   // Save the Team turn save structure
-  FileMan_Write(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesWritten);
+  File_Write(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(TEAM_TURN_SAVE_STRUCT)) {
     return (FALSE);
   }
@@ -1724,18 +1724,18 @@ BOOLEAN SaveTeamTurnsToTheSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadTeamTurnsFromTheSavedGameFile(HWFILE hFile) {
+BOOLEAN LoadTeamTurnsFromTheSavedGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
   TEAM_TURN_SAVE_STRUCT TeamTurnStruct;
 
   // Load the gubTurn Order Array
-  FileMan_Read(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesRead);
+  File_Read(hFile, gubOutOfTurnOrder, sizeof(UINT8) * MAXMERCS, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8) * MAXMERCS) {
     return (FALSE);
   }
 
   // Load the Team turn save structure
-  FileMan_Read(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesRead);
+  File_Read(hFile, &TeamTurnStruct, sizeof(TEAM_TURN_SAVE_STRUCT), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(TEAM_TURN_SAVE_STRUCT)) {
     return (FALSE);
   }

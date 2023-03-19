@@ -7,6 +7,7 @@
 #include "Utils/Cinematics.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
+#include "SGP/FileMan.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 //

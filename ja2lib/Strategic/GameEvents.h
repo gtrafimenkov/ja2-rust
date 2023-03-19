@@ -23,8 +23,8 @@ void LockStrategicEventFromDeletion(STRATEGICEVENT *pEvent);
 void UnlockStrategicEventFromDeletion(STRATEGICEVENT *pEvent);
 
 // part of the game.sav files (not map files)
-BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile);
-BOOLEAN LoadStrategicEventsFromSavedGame(HWFILE hFile);
+BOOLEAN SaveStrategicEventsToSavedGame(FileID hFile);
+BOOLEAN LoadStrategicEventsFromSavedGame(FileID hFile);
 
 STRATEGICEVENT *AddAdvancedStrategicEvent(UINT8 ubEventType, UINT8 ubCallbackID, UINT32 uiTimeStamp,
                                           UINT32 uiParam);

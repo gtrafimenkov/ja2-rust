@@ -2,7 +2,6 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/StrategicMap.h"
@@ -19,6 +18,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/Message.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 #define NUM_REVEALED_BYTES 3200
 
@@ -44,7 +44,7 @@ void ApplyMapChangesToMapTempFile(BOOLEAN fAddToMap) { gfApplyChangesToTempFile 
 BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSectorY,
                                            INT8 bSectorZ) {
   CHAR8 zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiNumBytesWritten;
 
   // Convert the current sector location into a file name
@@ -56,23 +56,23 @@ BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSe
   GetMapTempFileName(SF_MAP_MODIFICATIONS_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_OpenForAppending(zMapName);
+  hFile = File_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Move to the end of the file
-  FileMan_Seek(hFile, 0, FILE_SEEK_FROM_END);
+  File_Seek(hFile, 0, FILE_SEEK_END);
 
-  FileMan_Write(hFile, pMap, sizeof(MODIFY_MAP), &uiNumBytesWritten);
+  File_Write(hFile, pMap, sizeof(MODIFY_MAP), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(MODIFY_MAP)) {
     // Error Writing size of array to disk
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   SetSectorFlag(sSectorX, sSectorY, bSectorZ, SF_MAP_MODIFICATIONS_TEMP_FILE_EXISTS);
 
@@ -81,7 +81,7 @@ BOOLEAN SaveModifiedMapStructToMapTempFile(MODIFY_MAP *pMap, u8 sSectorX, u8 sSe
 
 BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
   CHAR8 zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiNumBytesRead;
   UINT32 uiFileSize;
   UINT32 uiNumberOfElements;
@@ -102,20 +102,20 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
                      (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Check to see if the file exists
-  if (!FileMan_Exists(zMapName)) {
+  if (!File_Exists(zMapName)) {
     // If the file doesnt exists, its no problem.
     return (TRUE);
   }
 
   // Open the file for reading
-  hFile = FileMan_OpenForReading(zMapName);
+  hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
   }
 
   // Get the size of the file
-  uiFileSize = FileMan_GetSize(hFile);
+  uiFileSize = File_GetSize(hFile);
 
   // Allocate memory for the buffer
   pTempArrayOfMaps = (MODIFY_MAP *)MemAlloc(uiFileSize);
@@ -125,14 +125,14 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
   }
 
   // Read the map temp file into a buffer
-  FileMan_Read(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesRead);
+  File_Read(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiFileSize) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // Close the file
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // Delete the file
   Plat_DeleteFile(zMapName);
@@ -273,7 +273,7 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem() {
                     SF_MAP_MODIFICATIONS_TEMP_FILE_EXISTS);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // Free the memory used for the temp array
   MemFree(pTempArrayOfMaps);
@@ -496,7 +496,7 @@ void AddBloodOrSmellFromMapTempFileToMap(MODIFY_MAP *pMap) {
 
 BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
   CHAR8 zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiNumBytesWritten;
 
   Assert(gpRevealedMap != NULL);
@@ -510,21 +510,21 @@ BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8
   GetMapTempFileName(SF_REVEALED_STATUS_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_OpenForAppending(zMapName);
+  hFile = File_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Write the revealed array to the Revealed temp file
-  FileMan_Write(hFile, gpRevealedMap, NUM_REVEALED_BYTES, &uiNumBytesWritten);
+  File_Write(hFile, gpRevealedMap, NUM_REVEALED_BYTES, &uiNumBytesWritten);
   if (uiNumBytesWritten != NUM_REVEALED_BYTES) {
     // Error Writing size of array to disk
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   SetSectorFlag(sSectorX, sSectorY, bSectorZ, SF_REVEALED_STATUS_TEMP_FILE_EXISTS);
 
@@ -536,7 +536,7 @@ BOOLEAN SaveRevealedStatusArrayToRevealedTempFile(u8 sSectorX, u8 sSectorY, INT8
 
 BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
   CHAR8 zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiNumBytesRead;
 
   // Convert the current sector location into a file name
@@ -549,13 +549,13 @@ BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
                      (u8)gWorldSectorY, gbWorldSectorZ);
 
   // Check to see if the file exists
-  if (!FileMan_Exists(zMapName)) {
+  if (!File_Exists(zMapName)) {
     // If the file doesnt exists, its no problem.
     return (TRUE);
   }
 
   // Open the file for reading
-  hFile = FileMan_OpenForReading(zMapName);
+  hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
@@ -568,12 +568,12 @@ BOOLEAN LoadRevealedStatusArrayFromRevealedTempFile() {
   memset(gpRevealedMap, 0, NUM_REVEALED_BYTES);
 
   // Load the Reveal map array structure
-  FileMan_Read(hFile, gpRevealedMap, NUM_REVEALED_BYTES, &uiNumBytesRead);
+  File_Read(hFile, gpRevealedMap, NUM_REVEALED_BYTES, &uiNumBytesRead);
   if (uiNumBytesRead != NUM_REVEALED_BYTES) {
     return (FALSE);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // Loop through and set the bits in the map that are revealed
   SetMapRevealedStatus();
@@ -771,7 +771,7 @@ void AddExitGridToMapTempFile(UINT16 usGridNo, EXITGRID *pExitGrid, u8 sSectorX,
 BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX, u8 sSectorY,
                                   i8 ubSectorZ) {
   CHAR8 zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiNumBytesRead;
   MODIFY_MAP *pTempArrayOfMaps = NULL;
   MODIFY_MAP *pMap;
@@ -792,20 +792,20 @@ BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX
                      ubSectorZ);
 
   // Check to see if the file exists
-  if (!FileMan_Exists(zMapName)) {
+  if (!File_Exists(zMapName)) {
     // If the file doesnt exists,
     return (FALSE);
   }
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_OpenForReading(zMapName);
+  hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Get the size of the temp file
-  uiFileSize = FileMan_GetSize(hFile);
+  uiFileSize = File_GetSize(hFile);
 
   // Allocate memory for the buffer
   pTempArrayOfMaps = (MODIFY_MAP *)MemAlloc(uiFileSize);
@@ -815,14 +815,14 @@ BOOLEAN RemoveGraphicFromTempFile(UINT32 uiMapIndex, UINT16 usIndex, u8 sSectorX
   }
 
   // Read the map temp file into a buffer
-  FileMan_Read(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesRead);
+  File_Read(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiFileSize) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // Close the file
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // Delete the file
   Plat_DeleteFile(zMapName);
@@ -938,7 +938,7 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(u8 usSectorX, u8 usSectorY,
   //	struct STRUCTURE * pStructure;
   //	MODIFY_MAP Map;
   CHAR8 zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiNumBytesRead;
   UINT32 uiNumBytesWritten;
   UINT32 uiFileSize;
@@ -958,20 +958,20 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(u8 usSectorX, u8 usSectorY,
                      bSectorZ);
 
   // Check to see if the file exists
-  if (!FileMan_Exists(zMapName)) {
+  if (!File_Exists(zMapName)) {
     // If the file doesnt exists, its no problem.
     return (TRUE);
   }
 
   // Open the file for reading
-  hFile = FileMan_OpenForReading(zMapName);
+  hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
   }
 
   // Get the size of the file
-  uiFileSize = FileMan_GetSize(hFile);
+  uiFileSize = File_GetSize(hFile);
 
   // Allocate memory for the buffer
   pTempArrayOfMaps = (MODIFY_MAP *)MemAlloc(uiFileSize);
@@ -981,14 +981,14 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(u8 usSectorX, u8 usSectorY,
   }
 
   // Read the map temp file into a buffer
-  FileMan_Read(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesRead);
+  File_Read(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesRead);
   if (uiNumBytesRead != uiFileSize) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // Close the file
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // Delete the file
   Plat_DeleteFile(zMapName);
@@ -1012,20 +1012,20 @@ BOOLEAN ChangeStatusOfOpenableStructInUnloadedSector(u8 usSectorX, u8 usSectorY,
   }
 
   // Open the file for writing
-  hFile = FileMan_OpenForAppending(zMapName);
+  hFile = File_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
   }
 
   // Write the map temp file into a buffer
-  FileMan_Write(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesWritten);
+  File_Write(hFile, pTempArrayOfMaps, uiFileSize, &uiNumBytesWritten);
   if (uiNumBytesWritten != uiFileSize) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return (TRUE);
 }

@@ -4,10 +4,10 @@
 #include <string.h>
 #include <wchar.h>
 
-#include "SGP/FileMan.h"
 #include "SysGlobals.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
+#include "rust_fileman.h"
 
 // THIS FILE CONTAINS DEFINITIONS FOR TILESET FILES
 
@@ -20,13 +20,13 @@ void InitEngineTilesets() {
   UINT8 ubNumSets;
   UINT32 cnt, cnt2, uiNumFiles;
   //	FILE					*hfile;
-  HWFILE hfile;
+  FileID hfile = FILE_ID_ERR;
   CHAR8 zName[32];
   UINT32 uiNumBytesRead;
 
   // OPEN FILE
   //	hfile = fopen( "BINARYDATA\\JA2SET.DAT", "rb" );
-  hfile = FileMan_OpenForReading("BINARYDATA\\JA2SET.DAT");
+  hfile = File_OpenForReading("BINARYDATA\\JA2SET.DAT");
   if (!hfile) {
     SET_ERROR("Cannot open tileset data file");
     return;
@@ -34,7 +34,7 @@ void InitEngineTilesets() {
 
   // READ # TILESETS and compare
   //	fread( &ubNumSets, sizeof( ubNumSets ), 1, hfile );
-  FileMan_Read(hfile, &ubNumSets, sizeof(ubNumSets), &uiNumBytesRead);
+  File_Read(hfile, &ubNumSets, sizeof(ubNumSets), &uiNumBytesRead);
   // CHECK
   if (ubNumSets != NUM_TILESETS) {
     // Report error
@@ -44,7 +44,7 @@ void InitEngineTilesets() {
 
   // READ #files
   //	fread( &uiNumFiles, sizeof( uiNumFiles ), 1, hfile );
-  FileMan_Read(hfile, &uiNumFiles, sizeof(uiNumFiles), &uiNumBytesRead);
+  File_Read(hfile, &uiNumFiles, sizeof(uiNumFiles), &uiNumBytesRead);
 
   // COMPARE
   if (uiNumFiles != NUMBEROFTILETYPES) {
@@ -57,11 +57,11 @@ void InitEngineTilesets() {
   for (cnt = 0; cnt < NUM_TILESETS; cnt++) {
     // Read name
     //		fread( &zName, sizeof( zName ), 1, hfile );
-    FileMan_Read(hfile, &zName, sizeof(zName), &uiNumBytesRead);
+    File_Read(hfile, &zName, sizeof(zName), &uiNumBytesRead);
 
     // Read ambience value
     //		fread( &(gTilesets[ cnt ].ubAmbientID), sizeof( UINT8), 1, hfile );
-    FileMan_Read(hfile, &(gTilesets[cnt].ubAmbientID), sizeof(UINT8), &uiNumBytesRead);
+    File_Read(hfile, &(gTilesets[cnt].ubAmbientID), sizeof(UINT8), &uiNumBytesRead);
 
     // Set into tileset
     swprintf(gTilesets[cnt].zName, ARR_SIZE(gTilesets[cnt].zName), L"%S", zName);
@@ -70,7 +70,7 @@ void InitEngineTilesets() {
     for (cnt2 = 0; cnt2 < uiNumFiles; cnt2++) {
       // Read file name
       //			fread( &zName, sizeof( zName ), 1, hfile );
-      FileMan_Read(hfile, &zName, sizeof(zName), &uiNumBytesRead);
+      File_Read(hfile, &zName, sizeof(zName), &uiNumBytesRead);
 
       // Set into database
       strcpy(gTilesets[cnt].TileSurfaceFilenames[cnt2], zName);
@@ -78,7 +78,7 @@ void InitEngineTilesets() {
   }
 
   //	fclose( hfile );
-  FileMan_Close(hfile);
+  File_Close(hfile);
 
   // SET CALLBACK FUNTIONS!!!!!!!!!!!!!
   gTilesets[CAVES_1].MovementCostFnc = (TILESET_CALLBACK)SetTilesetTwoTerrainValues;

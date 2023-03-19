@@ -543,8 +543,8 @@ void RequestDecreaseInTimeCompression(void);
 void SelectUnselectedMercsWhoMustMoveWithThisGuy(void);
 BOOLEAN AnyMercInSameSquadOrVehicleIsSelected(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN LoadLeaveItemList(HWFILE hFile);
-BOOLEAN SaveLeaveItemList(HWFILE hFile);
+BOOLEAN LoadLeaveItemList(FileID hFile);
+BOOLEAN SaveLeaveItemList(FileID hFile);
 
 BOOLEAN CheckIfSalaryIncreasedAndSayQuote(struct SOLDIERTYPE *pSoldier,
                                           BOOLEAN fTriggerContractMenu);

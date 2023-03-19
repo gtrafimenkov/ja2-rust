@@ -96,8 +96,8 @@ void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGrid
 // SIMULATE WORLD
 void SimulateWorld();
 
-BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile);
+BOOLEAN SavePhysicsTableToSaveGameFile(FileID hFile);
 
-BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile);
+BOOLEAN LoadPhysicsTableFromSavedGameFile(FileID hFile);
 
 #endif
