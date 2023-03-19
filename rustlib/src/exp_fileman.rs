@@ -1,8 +1,5 @@
-//! Unified file access interface for the C code.
-//!
-//! This module exports functions File_* similar to C functions FileMan_*.
-//! They privide unified access to regular files and files located inside
-//! of slf archives.
+//! Unified file access to regular files and files inside of *.slf
+//! archives.
 
 use crate::slfdb;
 use once_cell::sync::Lazy;
