@@ -29,10 +29,6 @@ typedef struct {
   UINT16 usReserved2;
 } DIRENTRY;
 
-BOOLEAN IsLibraryRealFile(FileID hFile) {
-  return DB_EXTRACT_LIBRARY(hFile) == REAL_FILE_LIBRARY_ID;
-}
-
 // used when doing the binary search of the libraries
 INT16 gsCurrentLibrary = -1;
 

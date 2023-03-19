@@ -218,6 +218,12 @@ pub extern "C" fn File_Close(file_id: FileID) -> bool {
     unsafe { FILE_DB.close_file(file_id).is_ok() }
 }
 
+#[no_mangle]
+/// Return true if the file is inside slf archive.
+pub extern "C" fn File_IsInsideArchive(file_id: FileID) -> bool {
+    unsafe { FILE_DB.is_inside_archive(file_id) }
+}
+
 /// Special FileID value meaning an error.
 pub const FILE_ID_ERR: u32 = 0;
 
@@ -327,6 +333,15 @@ impl DB {
         }
     }
 
+    /// Return true if the file is inside slf archive.
+    pub fn is_inside_archive(&mut self, file_id: FileID) -> bool {
+        match self.file_map.get(&file_id) {
+            None => false,
+            Some(OpenedFile::LibFile(_)) => true,
+            Some(OpenedFile::Regular(_)) => false,
+        }
+    }
+
     /// Close opened earlier file
     pub fn close_file(&mut self, file_id: FileID) -> io::Result<()> {
         match self.file_map.get_mut(&file_id) {
@@ -409,6 +424,7 @@ mod tests {
             fdb.load_slf_from_dir("../tools/editor").unwrap();
             let file_id = fdb.open_for_reading("Editor\\EXITGRIDBUT.STI").unwrap();
             assert_eq!(5712, fdb.get_size(file_id).unwrap());
+            assert_eq!(true, fdb.is_inside_archive(file_id));
         }
 
         // get size of a regular file
@@ -417,6 +433,7 @@ mod tests {
             fdb.load_slf_from_dir("../tools/editor").unwrap();
             let file_id = fdb.open_for_reading("../tools/editor/Editor.slf").unwrap();
             assert_eq!(3444529, fdb.get_size(file_id).unwrap());
+            assert_eq!(false, fdb.is_inside_archive(file_id));
         }
     }
 }

@@ -112,6 +112,11 @@ bool File_Seek(FileID file_id, uint32_t distance, enum FileSeekMode how);
  */
 bool File_Close(FileID file_id);
 
+/**
+ * Return true if the file is inside slf archive.
+ */
+bool File_IsInsideArchive(FileID file_id);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

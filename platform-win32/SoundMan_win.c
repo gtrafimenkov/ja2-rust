@@ -12,7 +12,6 @@
 
 #include "Mss.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/LibraryDataBasePub.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
@@ -21,6 +20,7 @@
 #include "platform_strings.h"
 #include "platform_win.h"
 #include "rust_debug.h"
+#include "rust_fileman.h"
 
 // Sample status flags
 #define SAMPLE_ALLOCATED 0x00000001
@@ -77,7 +77,7 @@ typedef struct {
   void *pCallbackData;
   UINT32 uiTimeStamp;
   BOOLEAN fLooping;
-  HWFILE hFile;
+  FileID hFile;
   BOOLEAN fMusic;
   BOOLEAN fStopAtZero;
   UINT32 uiFadeVolume;
@@ -353,15 +353,13 @@ UINT32 SoundPlay(STR pFilename, SOUNDPARMS *pParms) {
 //*******************************************************************************
 UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
   UINT32 uiChannel;
-  HANDLE hRealFileHandle;
   CHAR8 pFileHandlefileName[128];
-  HWFILE hFile;
   UINT32 uiRetVal = FALSE;
 
   if (fSoundSystemInit) {
     if ((uiChannel = SoundGetFreeChannel()) != SOUND_ERROR) {
       // Open the file
-      hFile = FileMan_OpenForReading(pFilename);
+      FileID hFile = File_OpenForReading(pFilename);
       if (!hFile) {
         FastDebugMsg(
             String("\n*******\nSoundPlayStreamedFile():  ERROR:  Couldnt open '%s' in "
@@ -372,8 +370,8 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
 
       // MSS cannot determine which provider to play if you don't give it a real filename
       // so if the file isn't in a library, play it normally
-      if (IsLibraryRealFile(hFile)) {
-        FileMan_Close(hFile);
+      if (!File_IsInsideArchive(hFile)) {
+        File_Close(hFile);
         return (SoundStartStream(pFilename, uiChannel, pParms));
       }
 
@@ -381,7 +379,7 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
       DebugLogWrite(pFilename);
 
       // Get the real file handle of the file
-      hRealFileHandle = GetRealFileHandleFromFileManFileHandle(hFile);
+      u64 hRealFileHandle = File_GetWinHandleToReadFile(hFile);
       if (hRealFileHandle == 0) {
         FastDebugMsg(
             String("\n*******\nSoundPlayStreamedFile():  ERROR:  Couldnt get a real file handle "
@@ -391,7 +389,7 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
       }
 
       // Convert the file handle into a 'name'
-      sprintf(pFileHandlefileName, "\\\\\\\\%d", (unsigned int)hRealFileHandle);
+      sprintf(pFileHandlefileName, "\\\\\\\\%lld", hRealFileHandle);
 
       DebugLogWrite(pFileHandlefileName);
 
@@ -402,7 +400,7 @@ UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) {
       if (uiRetVal != SOUND_ERROR)
         pSoundList[uiChannel].hFile = hFile;
       else
-        FileMan_Close(hFile);
+        File_Close(hFile);
 
       return (uiRetVal);
     }
@@ -1120,14 +1118,14 @@ UINT32 SoundGetCached(STR pFilename) {
 //
 //*******************************************************************************
 UINT32 SoundLoadDisk(STR pFilename) {
-  HWFILE hFile;
+  FileID hFile;
   UINT32 uiSize, uiSample;
   BOOLEAN fRemoved = TRUE;
 
   Assert(pFilename != NULL);
 
-  if ((hFile = FileMan_OpenForReading(pFilename)) != 0) {
-    uiSize = FileMan_GetSize(hFile);
+  if ((hFile = File_OpenForReading(pFilename)) != 0) {
+    uiSize = File_GetSize(hFile);
 
     // if insufficient memory, start unloading old samples until either
     // there's nothing left to unload, or we fit
@@ -1139,7 +1137,7 @@ UINT32 SoundLoadDisk(STR pFilename) {
     if ((uiSize + guiSoundMemoryUsed) > guiSoundMemoryLimit) {
       FastDebugMsg(
           String("SoundLoadDisk:  ERROR:  trying to play %s, not enough memory\n", pFilename));
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (NO_SAMPLE);
     }
 
@@ -1153,7 +1151,7 @@ UINT32 SoundLoadDisk(STR pFilename) {
     if (uiSample == NO_SAMPLE) {
       FastDebugMsg(
           String("SoundLoadDisk:  ERROR: Trying to play %s, sound channels are full\n", pFilename));
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (NO_SAMPLE);
     }
 
@@ -1162,14 +1160,14 @@ UINT32 SoundLoadDisk(STR pFilename) {
     if ((pSampleList[uiSample].pData = AIL_mem_alloc_lock(uiSize)) == NULL) {
       FastDebugMsg(
           String("SoundLoadDisk:  ERROR: Trying to play %s, AIL channels are full\n", pFilename));
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (NO_SAMPLE);
     }
 
     guiSoundMemoryUsed += uiSize;
 
-    FileMan_Read(hFile, pSampleList[uiSample].pData, uiSize, NULL);
-    FileMan_Close(hFile);
+    File_Read(hFile, pSampleList[uiSample].pData, uiSize, NULL);
+    File_Close(hFile);
 
     strcpy(pSampleList[uiSample].pName, pFilename);
     strupr(pSampleList[uiSample].pName);
@@ -1701,12 +1699,12 @@ UINT32 SoundGetUniqueID(void) {
 //
 //*******************************************************************************
 BOOLEAN SoundPlayStreamed(STR pFilename) {
-  HWFILE hDisk;
+  FileID hDisk;
   UINT32 uiFilesize;
 
-  if ((hDisk = FileMan_OpenForReading(pFilename)) != 0) {
-    uiFilesize = FileMan_GetSize(hDisk);
-    FileMan_Close(hDisk);
+  if ((hDisk = File_OpenForReading(pFilename)) != 0) {
+    uiFilesize = File_GetSize(hDisk);
+    File_Close(hDisk);
     return (uiFilesize >= guiSoundCacheThreshold);
   }
 
@@ -1775,7 +1773,7 @@ BOOLEAN SoundStopIndex(UINT32 uiChannel) {
       }
 
       if (pSoundList[uiChannel].hFile != 0) {
-        FileMan_Close(pSoundList[uiChannel].hFile);
+        File_Close(pSoundList[uiChannel].hFile);
         pSoundList[uiChannel].hFile = 0;
 
         pSoundList[uiChannel].uiSample = NO_SAMPLE;
