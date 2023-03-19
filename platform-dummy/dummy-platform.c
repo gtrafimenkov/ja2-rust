@@ -78,8 +78,6 @@ BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
 void Plat_GetFileClose(struct GetFile *pGFStruct) {}
 
-BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
-
 BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
 
 /////////////////////////////////////////////////////////////////////////////////

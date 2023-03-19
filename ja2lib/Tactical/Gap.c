@@ -88,13 +88,8 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
     // gap file exists
     // now read in the AUDIO_GAPs
 
-    // fread(&Start,sizeof(UINT32), 1, pFile);
-    FileMan_Read(pFile, &Start, sizeof(UINT32), &uiNumBytesRead);
-
-    //	while ( !feof(pFile) )
-    while (!FileMan_CheckEndOfFile(pFile)) {
+    while (FileMan_Read(pFile, &Start, sizeof(UINT32), &uiNumBytesRead) && uiNumBytesRead != 0) {
       // can read the first element, there exists a second
-      // fread(&End, sizeof(UINT32),1,pFile);
       FileMan_Read(pFile, &End, sizeof(UINT32), &uiNumBytesRead);
 
       // allocate space for AUDIO_GAP
@@ -115,9 +110,6 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
 
       // Increment pointer
       pPreviousGap = pCurrentGap;
-
-      //	fread(&Start,sizeof(UINT32), 1, pFile);
-      FileMan_Read(pFile, &Start, sizeof(UINT32), &uiNumBytesRead);
     }
 
     pGapList->audio_gap_active = FALSE;

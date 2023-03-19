@@ -37,10 +37,6 @@ extern BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
 
 extern BOOLEAN FileMan_Seek(HWFILE, UINT32 uiDistance, UINT8 uiHow);
 
-// TODO: rustlib
-// returns true if at end of file, else false
-BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile);
-
 extern UINT32 FileMan_GetSize(HWFILE);
 
 // TODO: rustlib
