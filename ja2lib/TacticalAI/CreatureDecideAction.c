@@ -1,3 +1,4 @@
+#include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "Soldier.h"
 #include "Tactical/Items.h"

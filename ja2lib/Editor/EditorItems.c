@@ -8,6 +8,7 @@
 #include "Editor/EditorTaskbarUtils.h"
 #include "Editor/ItemStatistics.h"
 #include "Editor/SelectWin.h"
+#include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"

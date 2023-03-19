@@ -1,3 +1,4 @@
+#include "SGP/Debug.h"
 #include "Soldier.h"
 #include "Strategic/MapScreen.h"
 #include "Strategic/Strategic.h"

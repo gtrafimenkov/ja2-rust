@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "SGP/CursorControl.h"
-#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/SoundMan.h"
 #include "SGP/WCheck.h"

@@ -3,6 +3,7 @@
 #include "GameSettings.h"
 #include "Laptop/History.h"
 #include "MessageBoxScreen.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Soldier.h"

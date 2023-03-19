@@ -256,7 +256,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // Register debug topics
   //
 
-  RegisterDebugTopic(TOPIC_VIDEO, "Video");
   DebugMsg(TOPIC_VIDEO, DBG_LEVEL_0, "Initializing the video manager");
 
   WindowClass.style = CS_HREDRAW | CS_VREDRAW;
@@ -617,8 +616,6 @@ void ShutdownVideoManager(void) {
 
   // ATE: Release mouse cursor!
   FreeMouseCursor();
-
-  UnRegisterDebugTopic(TOPIC_VIDEO, "Video");
 }
 
 void SuspendVideoManager(void) { guiVideoManagerState = VIDEO_SUSPENDED; }
@@ -2604,7 +2601,6 @@ void DeletePrimaryVideoSurfaces() {
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "SGP/Debug.h"
 #include "SGP/HImage.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -2686,14 +2682,13 @@ BOOLEAN InitializeVideoSurfaceManager() {
   // Call shutdown first...
   Assert(!gpVSurfaceHead);
   Assert(!gpVSurfaceTail);
-  RegisterDebugTopic(TOPIC_VIDEOSURFACE, "Video Surface Manager");
   gpVSurfaceHead = gpVSurfaceTail = NULL;
 
   giMemUsedInSurfaces = 0;
 
   // Create primary and backbuffer from globals
   if (!SetPrimaryVideoSurfaces()) {
-    DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_1, String("Could not create primary surfaces"));
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_1, String("Could not create primary surfaces"));
     return FALSE;
   }
 
@@ -2703,7 +2698,7 @@ BOOLEAN InitializeVideoSurfaceManager() {
 BOOLEAN ShutdownVideoSurfaceManager() {
   VSURFACE_NODE *curr;
 
-  DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_0, "Shutting down the Video Surface manager");
+  DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_0, "Shutting down the Video Surface manager");
 
   // Delete primary viedeo surfaces
   DeletePrimaryVideoSurfaces();
@@ -2723,7 +2718,6 @@ BOOLEAN ShutdownVideoSurfaceManager() {
   guiVSurfaceIndex = 0;
   guiVSurfaceSize = 0;
   guiVSurfaceTotalAdded = 0;
-  UnRegisterDebugTopic(TOPIC_VIDEOSURFACE, "Video Objects");
   return TRUE;
 }
 
@@ -3219,7 +3213,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
       hImage = CreateImage(VSurfaceDesc->ImageFile, IMAGE_ALLIMAGEDATA);
 
       if (hImage == NULL) {
-        DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, "Invalid Image Filename given");
+        DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, "Invalid Image Filename given");
         return (NULL);
       }
 
@@ -3288,7 +3282,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
       // If Here, an invalid format was given
       //
 
-      DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, "Invalid BPP value, can only be 8 or 16.");
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, "Invalid BPP value, can only be 8 or 16.");
       return (FALSE);
   }
 
@@ -3374,8 +3368,8 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
     // Return failure due to not in video
     //
 
-    DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-               String("Failed to create Video Surface in video memory"));
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+             String("Failed to create Video Surface in video memory"));
     DDReleaseSurface(&lpDDS, &lpDDS2);
     MemFree(hVSurface);
     return (NULL);
@@ -3459,7 +3453,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
 
   giMemUsedInSurfaces += (hVSurface->usHeight * hVSurface->usWidth * (hVSurface->ubBitDepth / 8));
 
-  DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_3, String("Success in Creating Video Surface"));
+  DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_3, String("Success in Creating Video Surface"));
 
   return (hVSurface);
 }
@@ -3486,7 +3480,7 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
     // No second surfaace has been allocated, return failure
     //
 
-    DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, String("Failed to restore Video Surface surface"));
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, String("Failed to restore Video Surface surface"));
     return (FALSE);
   }
 
@@ -3499,8 +3493,8 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
     // No secondary surface available
     //
 
-    DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-               String("Failure in retoring- no secondary surface found"));
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+             String("Failure in retoring- no secondary surface found"));
     return (FALSE);
   }
 
@@ -3620,8 +3614,8 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage,
   // This HIMAGE function will transparently copy buffer
   if (!CopyImageToBuffer(hImage, fBufferBPP, pDest, usEffectiveWidth, hVSurface->usHeight, usX, usY,
                          &aRect)) {
-    DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-               String("Error Occured Copying HIMAGE to struct VSurface*"));
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+             String("Error Occured Copying HIMAGE to struct VSurface*"));
     UnLockVideoSurfaceBuffer(hVSurface);
     return (FALSE);
   }
@@ -3656,7 +3650,7 @@ BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntr
   // Create 16BPP Palette
   hVSurface->p16BPPPalette = Create16BPPPalette(pSrcPalette);
 
-  DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_3, String("Video Surface Palette change successfull"));
+  DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_3, String("Video Surface Palette change successfull"));
   return (TRUE);
 }
 
@@ -4014,7 +4008,7 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
   // Check that both region and subrect are not given
   if ((fBltFlags & VS_BLT_SRCREGION) && (fBltFlags & VS_BLT_SRCSUBRECT)) {
-    DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, String("Inconsistant blit flags given"));
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, String("Inconsistant blit flags given"));
     return (FALSE);
   }
 
@@ -4070,13 +4064,13 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
     // Here, use default, which is entire Video Surface
     // Check Sizes, SRC size MUST be <= DEST size
     if (hDestVSurface->usHeight < hSrcVSurface->usHeight) {
-      DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-                 String("Incompatible height size given in Video Surface blit"));
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+               String("Incompatible height size given in Video Surface blit"));
       return (FALSE);
     }
     if (hDestVSurface->usWidth < hSrcVSurface->usWidth) {
-      DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-                 String("Incompatible height size given in Video Surface blit"));
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+               String("Incompatible height size given in Video Surface blit"));
       return (FALSE);
     }
 
@@ -4129,16 +4123,16 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
   if (hDestVSurface->ubBitDepth == 16 && hSrcVSurface->ubBitDepth == 16) {
     if (fBltFlags & VS_BLT_MIRROR_Y) {
       if ((pSrcSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
-        DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-                   String("Failed on lock of 16BPP surface for blitting"));
+        DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+                 String("Failed on lock of 16BPP surface for blitting"));
         return (FALSE);
       }
 
       if ((pDestSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) ==
           NULL) {
         UnLockVideoSurfaceBuffer(hSrcVSurface);
-        DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-                   String("Failed on lock of 16BPP dest surface for blitting"));
+        DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+                 String("Failed on lock of 16BPP dest surface for blitting"));
         return (FALSE);
       }
 
@@ -4153,15 +4147,15 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
   } else if (hDestVSurface->ubBitDepth == 8 && hSrcVSurface->ubBitDepth == 8) {
     if ((pSrcSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
-      DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-                 String("Failed on lock of 8BPP surface for blitting"));
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+               String("Failed on lock of 8BPP surface for blitting"));
       return (FALSE);
     }
 
     if ((pDestSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) == NULL) {
       UnLockVideoSurfaceBuffer(hSrcVSurface);
-      DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-                 String("Failed on lock of 8BPP dest surface for blitting"));
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+               String("Failed on lock of 8BPP dest surface for blitting"));
       return (FALSE);
     }
 
@@ -4171,8 +4165,8 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
     UnLockVideoSurfaceBuffer(hDestVSurface);
     return (TRUE);
   } else {
-    DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
-               String("Incompatible BPP values with src and dest Video Surfaces for blitting"));
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_2,
+             String("Incompatible BPP values with src and dest Video Surfaces for blitting"));
     return (FALSE);
   }
 
@@ -4269,19 +4263,27 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   }
 
   // All is well
-  DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_0,
-             String("Success in Creating Video Surface from DD Surface"));
+  DebugMsg(TOPIC_VIDEOSURFACE, DBG_LEVEL_0,
+           String("Success in Creating Video Surface from DD Surface"));
 
   return (hVSurface);
 }
 
-struct VSurface *GetPrimaryVideoSurface() { return (ghPrimary); }
+struct VSurface *GetPrimaryVideoSurface() {
+  return (ghPrimary);
+}
 
-struct VSurface *GetBackBufferVideoSurface() { return (ghBackBuffer); }
+struct VSurface *GetBackBufferVideoSurface() {
+  return (ghBackBuffer);
+}
 
-struct VSurface *GetFrameBufferVideoSurface() { return (ghFrameBuffer); }
+struct VSurface *GetFrameBufferVideoSurface() {
+  return (ghFrameBuffer);
+}
 
-struct VSurface *GetMouseBufferVideoSurface() { return (ghMouseBuffer); }
+struct VSurface *GetMouseBufferVideoSurface() {
+  return (ghMouseBuffer);
+}
 
 // UTILITY FUNCTIONS FOR BLITTING
 
@@ -4835,7 +4837,6 @@ BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "SGP/Debug.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"

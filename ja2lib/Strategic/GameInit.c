@@ -14,6 +14,7 @@
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
 #include "Laptop/Laptop.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"

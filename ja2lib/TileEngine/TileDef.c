@@ -17,7 +17,7 @@
 #include "TileEngine/TileSurface.h"
 #include "TileEngine/WorldMan.h"
 
-//#include "Editor/EditScreen.h"
+// #include "Editor/EditScreen.h"
 
 // GLobals
 TILE_ELEMENT gTileDatabase[NUMBEROFTILES];

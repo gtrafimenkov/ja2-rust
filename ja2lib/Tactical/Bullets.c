@@ -6,6 +6,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Container.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"

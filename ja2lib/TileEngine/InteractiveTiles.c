@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "GameSettings.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/HImage.h"
 #include "SGP/Random.h"
@@ -537,7 +538,9 @@ struct LEVELNODE *InternalGetCurInteractiveTile(BOOLEAN fRejectItemsOnTop) {
   return (NULL);
 }
 
-struct LEVELNODE *GetCurInteractiveTile() { return (InternalGetCurInteractiveTile(TRUE)); }
+struct LEVELNODE *GetCurInteractiveTile() {
+  return (InternalGetCurInteractiveTile(TRUE));
+}
 
 struct LEVELNODE *GetCurInteractiveTileGridNo(INT16 *psGridNo) {
   struct LEVELNODE *pNode;

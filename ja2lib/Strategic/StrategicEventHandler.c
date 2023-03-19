@@ -3,6 +3,7 @@
 #include "Laptop/BobbyRMailOrder.h"
 #include "Laptop/Email.h"
 #include "Laptop/History.h"
+#include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "Strategic/GameClock.h"

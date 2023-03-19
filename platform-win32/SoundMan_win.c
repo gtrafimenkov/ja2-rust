@@ -1516,7 +1516,7 @@ UINT32 SoundStartSample(UINT32 uiSample, UINT32 uiChannel, SOUNDPARMS *pParms) {
     pSoundList[uiChannel].hMSS = NULL;
 
     sprintf(AILString, "AIL Set Sample Error: %s", AIL_last_error());
-    DbgMessage(TOPIC_GAME, DBG_LEVEL_0, AILString);
+    DebugMsg(TOPIC_GAME, DBG_LEVEL_0, AILString);
     return (SOUND_ERROR);
   }
 
@@ -1615,7 +1615,7 @@ UINT32 SoundStartStream(STR pFilename, UINT32 uiChannel, SOUNDPARMS *pParms) {
 
   if (pSoundList[uiChannel].hMSSStream == NULL) {
     sprintf(AILString, "Stream Error: %s", AIL_last_error());
-    DbgMessage(TOPIC_GAME, DBG_LEVEL_0, AILString);
+    DebugMsg(TOPIC_GAME, DBG_LEVEL_0, AILString);
     return (SOUND_ERROR);
   }
 

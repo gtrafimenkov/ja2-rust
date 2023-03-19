@@ -98,6 +98,7 @@
 #include "Utils/Text.h"
 #include "platform.h"
 #include "rust_civ_groups.h"
+#include "rust_debug.h"
 #include "rust_fileman.h"
 #include "rust_sam_sites.h"
 

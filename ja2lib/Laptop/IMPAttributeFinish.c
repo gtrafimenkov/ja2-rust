@@ -8,7 +8,6 @@
 #include "Laptop/IMPVideoObjects.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
-#include "SGP/Debug.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/IsometricUtils.h"
 #include "Utils/Cursors.h"

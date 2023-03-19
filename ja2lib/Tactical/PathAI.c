@@ -8,7 +8,6 @@
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "SGP/Container.h"
-#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"

@@ -1,5 +1,6 @@
 #include "Tactical/TeamTurns.h"
 
+#include "SGP/Debug.h"
 #include "SGP/Timer.h"
 #include "SGP/Types.h"
 #include "Soldier.h"
@@ -45,7 +46,7 @@
 #include "rust_fileman.h"
 
 #ifdef DEBUG_INTERRUPTS
-#include "SGP/Debug.h"
+
 #endif
 
 extern void DecayPublicOpplist(INT8 bTeam);

@@ -5,6 +5,7 @@
 #include "CharList.h"
 #include "Laptop/Finances.h"
 #include "Money.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "ScreenIDs.h"
 #include "Sector.h"

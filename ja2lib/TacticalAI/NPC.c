@@ -1,6 +1,7 @@
 #include "TacticalAI/NPC.h"
 
 #include "Laptop/Finances.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"

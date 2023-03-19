@@ -8,6 +8,7 @@
 #include "JAScreens.h"
 #include "Laptop/History.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"

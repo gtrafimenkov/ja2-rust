@@ -8,6 +8,7 @@
 #include "Laptop/AIMMembers.h"
 #include "MessageBoxScreen.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"

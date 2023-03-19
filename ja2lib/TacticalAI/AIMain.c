@@ -1,5 +1,6 @@
 #include <math.h>
 
+#include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"

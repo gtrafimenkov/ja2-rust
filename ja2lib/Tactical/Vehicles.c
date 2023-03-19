@@ -1,6 +1,7 @@
 #include "Tactical/Vehicles.h"
 
 #include "JAScreens.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "ScreenIDs.h"
@@ -1071,7 +1072,9 @@ BOOLEAN AnyAccessibleVehiclesInSoldiersSector(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-struct SOLDIERTYPE *GetDriver(INT32 iID) { return (MercPtrs[pVehicleList[iID].ubDriver]); }
+struct SOLDIERTYPE *GetDriver(INT32 iID) {
+  return (MercPtrs[pVehicleList[iID].ubDriver]);
+}
 
 void SetDriver(INT32 iID, UINT8 ubID) { pVehicleList[iID].ubDriver = ubID; }
 

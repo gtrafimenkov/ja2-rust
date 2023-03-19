@@ -15,6 +15,7 @@
 #include "LanguageDefines.h"
 #include "MainMenuScreen.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"

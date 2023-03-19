@@ -67,6 +67,8 @@ extern char gubAssertString[128];
 extern BOOLEAN DbgInitialize(void);
 extern void DbgShutdown(void);
 
+void DebugMsg(u16 topic, u8 debug_level, const char *message);
+
 #ifdef SGP_DEBUG
 // If DEBUG_ is defined, we need to initialize all the debug macros. Otherwise all the
 // debug macros will be substituted by blank lines at compile time
@@ -78,28 +80,13 @@ extern BOOLEAN gfDebugTopics[MAX_TOPICS_ALLOTED];
 // These are the debug macros (the ones the use will use). The user should never call
 // the actual debug functions directly
 
-#define DbgMessage(a, b, c) \
-  DbgMessageReal((UINT16)(a), (UINT8)(TOPIC_MESSAGE), (UINT8)(b), (char *)(c))
 #define FastDebugMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
-
-#define UnRegisterDebugTopic(a, b) \
-  DbgTopicRegistration((UINT8)TOPIC_UNREGISTER, (UINT16 *)(&(a)), (char *)(b))
-#define ClearAllDebugTopics() DbgClearAllTopics()
 
 #define ErrorMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
 
-// Enable the debug topic we want
-#define RegisterJA2DebugTopic(a, b) DbgTopicRegistration(TOPIC_REGISTER, &(a), (b))
-#define RegisterDebugTopic(a, b)
-#define DebugMsg(a, b, c) DbgMessageReal((a), TOPIC_MESSAGE, (b), (c))
-
 // public interface to debug methods:
-extern void DbgMessageReal(UINT16 TopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *Str);
 extern BOOLEAN DbgSetDebugLevel(UINT16 TopicId, UINT8 uiDebugLevel);
 extern void DbgFailedAssertion(BOOLEAN fExpression, char *szFile, int nLine);
-// extern	void		_FailMessage(UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile );
-extern void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage);
-extern void DbgClearAllTopics(void);
 extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 
 //*******************************************************************************************
@@ -110,18 +97,8 @@ extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
 // Release Mode
 //*******************************************************************************************
 
-#define RegisterDebugTopic(a, b)
-#define UnRegisterDebugTopic(a, b)
-#define ClearAllDebugTopics()
-
 #define FastDebugMsg(a) _Null()
 #define ErrorMsg(a)
-
-#define DbgTopicRegistration(a, b, c)
-#define DbgMessage(a, b, c)
-
-#define RegisterJA2DebugTopic(a, b)
-#define DebugMsg(a, b, c)
 
 //*******************************************************************************************
 #endif

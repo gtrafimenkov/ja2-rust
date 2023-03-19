@@ -26,6 +26,7 @@
 #include "GameSettings.h"
 #include "Globals.h"
 #include "JAScreens.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"

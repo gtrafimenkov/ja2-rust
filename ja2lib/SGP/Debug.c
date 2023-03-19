@@ -6,6 +6,7 @@
 
 #include "SGP/Types.h"
 #include "platform.h"
+#include "rust_debug.h"
 
 BOOLEAN gfRecordToFile = FALSE;
 BOOLEAN gfRecordToDebugger = TRUE;
@@ -115,129 +116,15 @@ UINT16 TOPIC_JA2AI = INVALID_TOPIC;
 //   return (TRUE);
 // }
 
-BOOLEAN DbgInitialize(void) {
-  //   INT32 iX;
+BOOLEAN DbgInitialize(void) { return (TRUE); }
 
-  //   for (iX = 0; iX < MAX_TOPICS_ALLOTED; iX++) {
-  //     gpDbgTopicPtrs[iX] = NULL;
-  //   }
+void DbgShutdown(void) { DebugMsg(0, CLIENT_SHUTDOWN, "SGP Going Down"); }
 
-  //   DbgClearAllTopics();
-
-  //   gfRecordToFile = TRUE;
-  //   gfRecordToDebugger = TRUE;
-  //   gubAssertString[0] = '\0';
-
-  // #ifndef _NO_DEBUG_TXT
-  //   if (!DbgGetLogFileName(gpcDebugLogFileName)) {
-  //     return (FALSE);
-  //   }
-  //   // clear debug text file out
-  //   RemoveDebugText();
-  // #endif
-
-  return (TRUE);
+void DebugMsg(u16 topic, u8 debug_level, const char *message) {
+  char buf[300];
+  snprintf(buf, ARR_SIZE(buf), "%03d/%02d %s", topic, debug_level, message);
+  DebugLogWrite(buf);
 }
-
-void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage);
-
-void DbgShutdown(void) { DbgMessageReal((UINT16)(-1), CLIENT_SHUTDOWN, 0, "SGP Going Down"); }
-
-#ifdef SGP_DEBUG
-
-void DbgTopicRegistration(UINT8 ubCmd, UINT16 *usTopicID, char *zMessage) {
-  //   UINT16 usIndex, usUse;
-  //   BOOLEAN fFound;
-
-  //   if (usTopicID == NULL) return;
-
-  //   if (ubCmd == TOPIC_REGISTER) {
-  //     usUse = INVALID_TOPIC;
-  //     fFound = FALSE;
-  //     for (usIndex = 0; usIndex < MAX_TOPICS_ALLOTED && !fFound; usIndex++) {
-  //       if (!gfDebugTopics[usIndex]) {
-  //         fFound = TRUE;
-  //         usUse = usIndex;
-  //       }
-  //     }
-
-  //     gfDebugTopics[usUse] = TRUE;
-  //     *usTopicID = usUse;
-  //     gpDbgTopicPtrs[usUse] = usTopicID;
-  //     DbgMessageReal(usUse, TOPIC_MESSAGE, DBG_LEVEL_0, zMessage);
-  //   } else if (ubCmd == TOPIC_UNREGISTER) {
-  //     if (*usTopicID >= MAX_TOPICS_ALLOTED) return;
-
-  //     DbgMessageReal(*usTopicID, TOPIC_MESSAGE, DBG_LEVEL_0, zMessage);
-  //     gfDebugTopics[*usTopicID] = FALSE;
-
-  //     if (gpDbgTopicPtrs[*usTopicID] != NULL) {
-  //       gpDbgTopicPtrs[*usTopicID] = NULL;
-  //     }
-
-  //     *usTopicID = INVALID_TOPIC;
-  //   }
-}
-
-#endif
-
-// // *************************************************************************
-// // Clear the debug txt file out to prevent it from getting huge
-// //
-// //
-// // *************************************************************************
-
-// void RemoveDebugText(void) { Plat_DeleteFile(gpcDebugLogFileName); }
-
-// //**************************************************************************
-// //
-// // DbgClearAllTopics
-// //
-// //
-// // Parameter List :
-// // Return Value :
-// // Modification history :
-// //
-// //		June 97: BR		-> creation
-// //
-// //**************************************************************************
-
-void DbgClearAllTopics(void) {
-  //   UINT16 usIndex;
-
-  //   for (usIndex = 0; usIndex < MAX_TOPICS_ALLOTED; usIndex++) {
-  //     gfDebugTopics[usIndex] = FALSE;
-  //     if (gpDbgTopicPtrs[usIndex] != NULL) {
-  //       *gpDbgTopicPtrs[usIndex] = INVALID_TOPIC;
-  //       gpDbgTopicPtrs[usIndex] = NULL;
-  //     }
-  //   }
-}
-
-void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
-  printf("%4d / %4d / %4d / %s\n", uiTopicId, uiCommand, uiDebugLevel, strMessage);
-}
-
-// void DbgMessageReal(UINT16 uiTopicId, UINT8 uiCommand, UINT8 uiDebugLevel, char *strMessage) {
-// #ifndef _NO_DEBUG_TXT
-//   FILE *OutFile;
-// #endif
-
-//   // Check for a registered topic ID
-//   if (uiTopicId < MAX_TOPICS_ALLOTED && gfDebugTopics[uiTopicId]) {
-//     DebugPrint(strMessage);
-//     DebugPrint("\n");
-
-// // add _NO_DEBUG_TXT to your SGP preprocessor definitions to avoid this f**king huge file from
-// // slowly growing behind the scenes!!!!
-// #ifndef _NO_DEBUG_TXT
-//     if ((OutFile = fopen(gpcDebugLogFileName, "a+t")) != NULL) {
-//       fprintf(OutFile, "%s\n", strMessage);
-//       fclose(OutFile);
-//     }
-// #endif
-//   }
-// }
 
 // //**************************************************************************
 // //

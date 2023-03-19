@@ -7,7 +7,6 @@
 
 #include "Editor/EditorMercs.h"
 #include "GameSettings.h"
-#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"

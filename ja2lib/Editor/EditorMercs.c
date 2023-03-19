@@ -11,6 +11,7 @@
 #include "Editor/ItemStatistics.h"
 #include "Editor/PopupMenu.h"
 #include "Editor/SelectWin.h"
+#include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"

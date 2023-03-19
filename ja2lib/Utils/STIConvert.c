@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "SGP/Debug.h"
 #include "SGP/HImage.h"
 #include "SGP/ImgFmt.h"
 #include "SGP/ImpTGA.h"
@@ -55,7 +54,7 @@ BOOLEAN ConvertToETRLE(UINT8 **ppDest, UINT32 *puiDestLen, UINT8 **ppSubImageBuf
 #define GREEN_MASK_24 0x0000FF00
 #define BLUE_MASK_24 0x000000FF
 
-//#define JA2_OBJECT_DATA_SIZE	16
+// #define JA2_OBJECT_DATA_SIZE	16
 
 // this funky union is used for fast 16-bit pixel format conversions
 typedef union {
