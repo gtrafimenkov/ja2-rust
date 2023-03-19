@@ -5,7 +5,6 @@
 #include "Editor/EditorUndo.h"
 #include "Editor/Smooth.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "Strategic/Quests.h"
 #include "Strategic/StrategicMap.h"
@@ -21,6 +20,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 
 BOOLEAN gfLoadingExitGrids = FALSE;
 
@@ -129,16 +129,16 @@ void RemoveExitGridFromWorld(int32_t iMapIndex) {
   }
 }
 
-void SaveExitGrids(HWFILE fp, uint16_t usNumExitGrids) {
+void SaveExitGrids(FileID fp, uint16_t usNumExitGrids) {
   EXITGRID exitGrid;
   uint16_t usNumSaved = 0;
   uint16_t x;
   uint32_t uiBytesWritten;
-  FileMan_Write(fp, &usNumExitGrids, 2, &uiBytesWritten);
+  File_Write(fp, &usNumExitGrids, 2, &uiBytesWritten);
   for (x = 0; x < WORLD_MAX; x++) {
     if (GetExitGrid(x, &exitGrid)) {
-      FileMan_Write(fp, &x, 2, &uiBytesWritten);
-      FileMan_Write(fp, &exitGrid, 5, &uiBytesWritten);
+      File_Write(fp, &x, 2, &uiBytesWritten);
+      File_Write(fp, &exitGrid, 5, &uiBytesWritten);
       usNumSaved++;
     }
   }
@@ -153,12 +153,12 @@ void LoadExitGrids(int8_t **hBuffer) {
   uint16_t usMapIndex;
   gfLoadingExitGrids = TRUE;
   LOADDATA(&usNumSaved, *hBuffer, 2);
-  // FileMan_Read( hfile, &usNumSaved, 2, NULL);
+  // File_Read( hfile, &usNumSaved, 2, NULL);
   for (x = 0; x < usNumSaved; x++) {
     LOADDATA(&usMapIndex, *hBuffer, 2);
-    // FileMan_Read( hfile, &usMapIndex, 2, NULL);
+    // File_Read( hfile, &usMapIndex, 2, NULL);
     LOADDATA(&exitGrid, *hBuffer, 5);
-    // FileMan_Read( hfile, &exitGrid, 5, NULL);
+    // File_Read( hfile, &exitGrid, 5, NULL);
     AddExitGridToWorld(usMapIndex, &exitGrid);
   }
   gfLoadingExitGrids = FALSE;

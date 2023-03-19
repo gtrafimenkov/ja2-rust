@@ -5,7 +5,6 @@
 
 #include "Editor/Smooth.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/VObject.h"
 #include "SGP/Video.h"
@@ -20,6 +19,7 @@
 #include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "platform_strings.h"
+#include "rust_fileman.h"
 
 struct TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
 uint8_t gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
@@ -67,7 +67,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
     strcat(cStructureFilename, ".");
   }
   strcat(cStructureFilename, STRUCTURE_FILE_EXTENSION);
-  if (FileMan_Exists(cStructureFilename)) {
+  if (File_Exists(cStructureFilename)) {
     pStructureFileRef = LoadStructureFile(cStructureFilename);
     if (pStructureFileRef == NULL ||
         hVObject->usNumberOfObjects != pStructureFileRef->usNumberOfStructures) {

@@ -9,7 +9,6 @@
 #include "MessageBoxScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
@@ -46,6 +45,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 // #ifdef JA2BETAVERSION
 
@@ -2994,7 +2994,7 @@ void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
                           uint8_t ubApproach) {
   static BOOLEAN fFirstTimeIn = TRUE;
 
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   uint32_t uiByteWritten;
   char DestString[1024];
   //	char			MercName[ NICKNAME_LENGTH ];
@@ -3013,7 +3013,7 @@ void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
     // open a new file for writing
 
     // if the file exists
-    if (FileMan_Exists(QUEST_DEBUG_FILE)) {
+    if (File_Exists(QUEST_DEBUG_FILE)) {
       // delete the file
       if (!Plat_DeleteFile(QUEST_DEBUG_FILE)) {
         DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to delete %s file", QUEST_DEBUG_FILE));
@@ -3024,17 +3024,17 @@ void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
   }
 
   // open the file
-  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
+  hFile = File_OpenForAppending(QUEST_DEBUG_FILE);
   if (!hFile) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("FAILED to open Quest Debug File %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  if (FileMan_Seek(hFile, 0, FILE_SEEK_FROM_END) == FALSE) {
+  if (File_Seek(hFile, 0, FILE_SEEK_END) == FALSE) {
     // error
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return;
   }
 
@@ -3043,8 +3043,8 @@ void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
   //	sprintf( DestString, "\n\n\nNew Approach for NPC ID: %d  against Merc: %d ", ubNpcID,
   // ubMercID );
 
-  if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
-    FileMan_Close(hFile);
+  if (!File_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
+    File_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to write to %s", QUEST_DEBUG_FILE));
     return;
   }
@@ -3053,17 +3053,17 @@ void NpcRecordLoggingInit(uint8_t ubNpcID, uint8_t ubMercID, uint8_t ubQuoteNum,
   sprintf(DestString, "\n\tTesting Record #: %d", ubQuoteNum);
 
   // append to file
-  if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
-    FileMan_Close(hFile);
+  if (!File_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
+    File_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to write to %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 }
 
 void NpcRecordLogging(uint8_t ubApproach, char *pStringA, ...) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   uint32_t uiByteWritten;
   va_list argptr;
   char TempString[1000];
@@ -3083,30 +3083,30 @@ void NpcRecordLogging(uint8_t ubApproach, char *pStringA, ...) {
   va_end(argptr);
 
   // open the file
-  hFile = FileMan_Open(QUEST_DEBUG_FILE, FILE_OPEN_ALWAYS | FILE_ACCESS_WRITE, FALSE);
+  hFile = File_OpenForAppending(QUEST_DEBUG_FILE);
   if (!hFile) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
              String("FAILED to open Quest Debug File %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  if (FileMan_Seek(hFile, 0, FILE_SEEK_FROM_END) == FALSE) {
+  if (File_Seek(hFile, 0, FILE_SEEK_END) == FALSE) {
     // error
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return;
   }
 
   snprintf(DestString, ARR_SIZE(DestString), "\n\t\t%s", TempString);
 
   // append to file
-  if (!FileMan_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
-    FileMan_Close(hFile);
+  if (!File_Write(hFile, DestString, strlen(DestString), &uiByteWritten)) {
+    File_Close(hFile);
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to write to %s", QUEST_DEBUG_FILE));
     return;
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 }
 
 void EnableQDSButtons() {

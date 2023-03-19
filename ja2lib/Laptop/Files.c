@@ -7,7 +7,6 @@
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
@@ -18,6 +17,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 #define TOP_X 0 + LAPTOP_SCREEN_UL_X
 #define TOP_Y LAPTOP_SCREEN_UL_Y
@@ -193,7 +193,7 @@ uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat,
   return uiId;
 }
 void GameInitFiles() {
-  if ((FileMan_Exists(FILES_DAT_FILE) == TRUE)) {
+  if ((File_Exists(FILES_DAT_FILE) == TRUE)) {
     Plat_RemoveReadOnlyAttribute(FILES_DAT_FILE);
     Plat_DeleteFile(FILES_DAT_FILE);
   }
@@ -433,7 +433,7 @@ uint32_t ProcessAndEnterAFilesRecord(uint8_t ubCode, uint32_t uiDate, uint8_t ub
 
 void OpenAndReadFilesFile(void) {
   // this procedure will open and read in data to the finance list
-  HWFILE hFileHandle;
+  FileID hFileHandle = FILE_ID_ERR;
   uint8_t ubCode;
   uint32_t uiDate;
   uint32_t iBytesRead = 0;
@@ -447,10 +447,10 @@ void OpenAndReadFilesFile(void) {
   ClearFilesList();
 
   // no file, return
-  if (!(FileMan_Exists(FILES_DAT_FILE))) return;
+  if (!(File_Exists(FILES_DAT_FILE))) return;
 
   // open file
-  hFileHandle = FileMan_Open(FILES_DAT_FILE, (FILE_OPEN_EXISTING | FILE_ACCESS_READ), FALSE);
+  hFileHandle = File_OpenForReading(FILES_DAT_FILE);
 
   // failed to get file, return
   if (!hFileHandle) {
@@ -458,25 +458,25 @@ void OpenAndReadFilesFile(void) {
   }
 
   // make sure file is more than 0 length
-  if (FileMan_GetSize(hFileHandle) == 0) {
-    FileMan_Close(hFileHandle);
+  if (File_GetSize(hFileHandle) == 0) {
+    File_Close(hFileHandle);
     return;
   }
 
   // file exists, read in data, continue until file end
-  while (FileMan_GetSize(hFileHandle) > uiByteCount) {
+  while (File_GetSize(hFileHandle) > uiByteCount) {
     // read in data
-    FileMan_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
+    File_Read(hFileHandle, &ubCode, sizeof(uint8_t), &iBytesRead);
 
-    FileMan_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
+    File_Read(hFileHandle, &uiDate, sizeof(uint32_t), &iBytesRead);
 
-    FileMan_Read(hFileHandle, &pFirstFilePath, 128, &iBytesRead);
+    File_Read(hFileHandle, &pFirstFilePath, 128, &iBytesRead);
 
-    FileMan_Read(hFileHandle, &pSecondFilePath, 128, &iBytesRead);
+    File_Read(hFileHandle, &pSecondFilePath, 128, &iBytesRead);
 
-    FileMan_Read(hFileHandle, &ubFormat, sizeof(uint8_t), &iBytesRead);
+    File_Read(hFileHandle, &ubFormat, sizeof(uint8_t), &iBytesRead);
 
-    FileMan_Read(hFileHandle, &fRead, sizeof(uint8_t), &iBytesRead);
+    File_Read(hFileHandle, &fRead, sizeof(uint8_t), &iBytesRead);
     // add transaction
     ProcessAndEnterAFilesRecord(ubCode, uiDate, ubFormat, pFirstFilePath, pSecondFilePath, fRead);
 
@@ -486,14 +486,14 @@ void OpenAndReadFilesFile(void) {
   }
 
   // close file
-  FileMan_Close(hFileHandle);
+  File_Close(hFileHandle);
 
   return;
 }
 
 BOOLEAN OpenAndWriteFilesFile(void) {
   // this procedure will open and write out data from the finance list
-  HWFILE hFileHandle;
+  FileID hFileHandle = FILE_ID_ERR;
   FilesUnitPtr pFilesList = pFilesListHead;
   char pFirstFilePath[128];
   char pSecondFilePath[128];
@@ -511,7 +511,7 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   }
 
   // open file
-  hFileHandle = FileMan_Open(FILES_DAT_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFileHandle = File_OpenForWriting(FILES_DAT_FILE);
 
   // if no file exits, do nothing
   if (!hFileHandle) {
@@ -520,19 +520,19 @@ BOOLEAN OpenAndWriteFilesFile(void) {
   // write info, while there are elements left in the list
   while (pFilesList) {
     // now write date and amount, and code
-    FileMan_Write(hFileHandle, &(pFilesList->ubCode), sizeof(uint8_t), NULL);
-    FileMan_Write(hFileHandle, &(pFilesList->uiDate), sizeof(uint32_t), NULL);
-    FileMan_Write(hFileHandle, &(pFirstFilePath), 128, NULL);
-    FileMan_Write(hFileHandle, &(pSecondFilePath), 128, NULL);
-    FileMan_Write(hFileHandle, &(pFilesList->ubFormat), sizeof(uint8_t), NULL);
-    FileMan_Write(hFileHandle, &(pFilesList->fRead), sizeof(uint8_t), NULL);
+    File_Write(hFileHandle, &(pFilesList->ubCode), sizeof(uint8_t), NULL);
+    File_Write(hFileHandle, &(pFilesList->uiDate), sizeof(uint32_t), NULL);
+    File_Write(hFileHandle, &(pFirstFilePath), 128, NULL);
+    File_Write(hFileHandle, &(pSecondFilePath), 128, NULL);
+    File_Write(hFileHandle, &(pFilesList->ubFormat), sizeof(uint8_t), NULL);
+    File_Write(hFileHandle, &(pFilesList->fRead), sizeof(uint8_t), NULL);
 
     // next element in list
     pFilesList = pFilesList->Next;
   }
 
   // close file
-  FileMan_Close(hFileHandle);
+  File_Close(hFileHandle);
   // clear out the old list
   ClearFilesList();
 

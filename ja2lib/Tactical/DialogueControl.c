@@ -8,7 +8,6 @@
 #include "Laptop/History.h"
 #include "Laptop/Mercs.h"
 #include "SGP/ButtonSystem.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -61,6 +60,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 #define DIALOGUESIZE 480
 #define QUOTE_MESSAGE_SIZE 520
@@ -1535,7 +1535,7 @@ BOOLEAN DialogueDataFileExistsForProfile(uint8_t ubCharacterNum, uint16_t usQuot
     (*ppStr) = pFilename;
   }
 
-  return (FileMan_Exists(pFilename));
+  return (File_Exists(pFilename));
 }
 
 BOOLEAN GetDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, uint32_t iDataSize,

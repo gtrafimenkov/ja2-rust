@@ -40,7 +40,7 @@ void RemoveItemFromWorld(int32_t iItemIndex);
 int32_t FindWorldItem(uint16_t usItem);
 
 void LoadWorldItemsFromMap(int8_t **hBuffer);
-void SaveWorldItemsToMap(HWFILE fp);
+void SaveWorldItemsToMap(FileID fp);
 
 void TrashWorldItems();
 

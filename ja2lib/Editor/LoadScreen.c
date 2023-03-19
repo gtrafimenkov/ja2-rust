@@ -23,7 +23,6 @@
 #include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -46,6 +45,7 @@
 #include "Utils/TextInput.h"
 #include "platform.h"
 #include "platform_strings.h"
+#include "rust_fileman.h"
 
 struct FileDialogList;
 
@@ -339,7 +339,7 @@ uint32_t LoadSaveScreenHandle(void) {
         return LOADSAVE_SCREEN;
       }
       snprintf(gszCurrFilename, ARR_SIZE(gszCurrFilename), "MAPS\\%ls", gzFilename);
-      if (FileMan_Exists(gszCurrFilename)) {
+      if (File_Exists(gszCurrFilename)) {
         gfFileExists = TRUE;
         gfReadOnly = FALSE;
         if (Plat_GetFileFirst(gszCurrFilename, &FileInfo)) {

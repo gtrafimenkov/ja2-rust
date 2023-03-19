@@ -10,7 +10,6 @@
 #include "Laptop/Mercs.h"
 #include "Laptop/Personnel.h"
 #include "Money.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
@@ -37,6 +36,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 
 void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier);
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,
@@ -85,15 +85,15 @@ BOOLEAN gfInContractMenuFromRenewSequence = FALSE;
 #define AIRPORT_X 13
 #define AIRPORT_Y 2
 
-BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveContractRenewalDataToSaveGameFile(FileID hFile) {
   uint32_t uiNumBytesWritten;
 
-  FileMan_Write(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesWritten);
+  File_Write(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(ContractRenewalList)) {
     return (FALSE);
   }
 
-  FileMan_Write(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesWritten);
+  File_Write(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(ubNumContractRenewals)) {
     return (FALSE);
   }
@@ -101,15 +101,15 @@ BOOLEAN SaveContractRenewalDataToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadContractRenewalDataFromSaveGameFile(HWFILE hFile) {
+BOOLEAN LoadContractRenewalDataFromSaveGameFile(FileID hFile) {
   uint32_t uiNumBytesRead;
 
-  FileMan_Read(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesRead);
+  File_Read(hFile, ContractRenewalList, sizeof(ContractRenewalList), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(ContractRenewalList)) {
     return (FALSE);
   }
 
-  FileMan_Read(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesRead);
+  File_Read(hFile, &ubNumContractRenewals, sizeof(ubNumContractRenewals), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(ubNumContractRenewals)) {
     return (FALSE);
   }

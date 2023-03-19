@@ -37,7 +37,7 @@ typedef struct {
 
 extern MAPCREATE_STRUCT gMapInformation;
 
-void SaveMapInformation(HWFILE fp);
+void SaveMapInformation(FileID fp);
 void LoadMapInformation(int8_t **hBuffer);
 void ValidateAndUpdateMapVersionIfNecessary();
 BOOLEAN ValidateEntryPointGridNo(int16_t *sGridNo);

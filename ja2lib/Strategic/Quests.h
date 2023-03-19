@@ -553,7 +553,7 @@ extern void CheckForQuests(uint32_t uiDay);
 
 void InitQuestEngine();
 
-BOOLEAN LoadQuestInfoFromSavedGameFile(HWFILE hFile);
-BOOLEAN SaveQuestInfoToSavedGameFile(HWFILE hFile);
+BOOLEAN LoadQuestInfoFromSavedGameFile(FileID hFile);
+BOOLEAN SaveQuestInfoToSavedGameFile(FileID hFile);
 
 #endif

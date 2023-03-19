@@ -44,8 +44,6 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
-#include "SGP/LibraryDataBasePub.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -86,6 +84,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 // icons text id's
 enum {
@@ -5245,36 +5244,36 @@ void ClearOutTempLaptopFiles(void) {
   // clear out all temp files from laptop
 
   // file file
-  if ((FileMan_Exists("files.dat") == TRUE)) {
+  if ((File_Exists("files.dat") == TRUE)) {
     Plat_RemoveReadOnlyAttribute("files.dat");
     Plat_DeleteFile("files.dat");
   }
 
   // finances
-  if ((FileMan_Exists("finances.dat") == TRUE)) {
+  if ((File_Exists("finances.dat") == TRUE)) {
     Plat_RemoveReadOnlyAttribute("finances.dat");
     Plat_DeleteFile("finances.dat");
   }
 
   // email
-  if ((FileMan_Exists("email.dat") == TRUE)) {
+  if ((File_Exists("email.dat") == TRUE)) {
     Plat_RemoveReadOnlyAttribute("email.dat");
     Plat_DeleteFile("email.dat");
   }
 
   // history
-  if ((FileMan_Exists("history.dat") == TRUE)) {
+  if ((File_Exists("history.dat") == TRUE)) {
     Plat_RemoveReadOnlyAttribute("history.dat");
     Plat_DeleteFile("history.dat");
   }
 }
 
-BOOLEAN SaveLaptopInfoToSavedGame(HWFILE hFile) {
+BOOLEAN SaveLaptopInfoToSavedGame(FileID hFile) {
   uint32_t uiNumBytesWritten = 0;
   uint32_t uiSize;
 
   // Save The laptop information
-  FileMan_Write(hFile, &LaptopSaveInfo, sizeof(LaptopSaveInfoStruct), &uiNumBytesWritten);
+  File_Write(hFile, &LaptopSaveInfo, sizeof(LaptopSaveInfoStruct), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(LaptopSaveInfoStruct)) {
     return (FALSE);
   }
@@ -5285,7 +5284,7 @@ BOOLEAN SaveLaptopInfoToSavedGame(HWFILE hFile) {
     uiSize = sizeof(BobbyRayOrderStruct) * LaptopSaveInfo.usNumberOfBobbyRayOrderItems;
 
     // Load The laptop information
-    FileMan_Write(hFile, LaptopSaveInfo.BobbyRayOrdersOnDeliveryArray, uiSize, &uiNumBytesWritten);
+    File_Write(hFile, LaptopSaveInfo.BobbyRayOrdersOnDeliveryArray, uiSize, &uiNumBytesWritten);
     if (uiNumBytesWritten != uiSize) {
       return (FALSE);
     }
@@ -5297,7 +5296,7 @@ BOOLEAN SaveLaptopInfoToSavedGame(HWFILE hFile) {
     uiSize = sizeof(LIFE_INSURANCE_PAYOUT) * LaptopSaveInfo.ubNumberLifeInsurancePayouts;
 
     // Load The laptop information
-    FileMan_Write(hFile, LaptopSaveInfo.pLifeInsurancePayouts, uiSize, &uiNumBytesWritten);
+    File_Write(hFile, LaptopSaveInfo.pLifeInsurancePayouts, uiSize, &uiNumBytesWritten);
     if (uiNumBytesWritten != uiSize) {
       return (FALSE);
     }
@@ -5306,7 +5305,7 @@ BOOLEAN SaveLaptopInfoToSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadLaptopInfoFromSavedGame(HWFILE hFile) {
+BOOLEAN LoadLaptopInfoFromSavedGame(FileID hFile) {
   uint32_t uiNumBytesRead = 0;
   uint32_t uiSize;
 
@@ -5331,7 +5330,7 @@ BOOLEAN LoadLaptopInfoFromSavedGame(HWFILE hFile) {
   }
 
   // Load The laptop information
-  FileMan_Read(hFile, &LaptopSaveInfo, sizeof(LaptopSaveInfoStruct), &uiNumBytesRead);
+  File_Read(hFile, &LaptopSaveInfo, sizeof(LaptopSaveInfoStruct), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(LaptopSaveInfoStruct)) {
     return (FALSE);
   }
@@ -5345,7 +5344,7 @@ BOOLEAN LoadLaptopInfoFromSavedGame(HWFILE hFile) {
     Assert(LaptopSaveInfo.BobbyRayOrdersOnDeliveryArray);
 
     // Load The laptop information
-    FileMan_Read(hFile, LaptopSaveInfo.BobbyRayOrdersOnDeliveryArray, uiSize, &uiNumBytesRead);
+    File_Read(hFile, LaptopSaveInfo.BobbyRayOrdersOnDeliveryArray, uiSize, &uiNumBytesRead);
     if (uiNumBytesRead != uiSize) {
       return (FALSE);
     }
@@ -5363,7 +5362,7 @@ BOOLEAN LoadLaptopInfoFromSavedGame(HWFILE hFile) {
     Assert(LaptopSaveInfo.pLifeInsurancePayouts);
 
     // Load The laptop information
-    FileMan_Read(hFile, LaptopSaveInfo.pLifeInsurancePayouts, uiSize, &uiNumBytesRead);
+    File_Read(hFile, LaptopSaveInfo.pLifeInsurancePayouts, uiSize, &uiNumBytesRead);
     if (uiNumBytesRead != uiSize) {
       return (FALSE);
     }

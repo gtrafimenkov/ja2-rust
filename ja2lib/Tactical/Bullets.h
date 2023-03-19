@@ -78,9 +78,9 @@ void HandleBulletSpecialFlags(int32_t iBulletIndex);
 void AddMissileTrail(BULLET *pBullet, FIXEDPT qCurrX, FIXEDPT qCurrY, FIXEDPT qCurrZ);
 
 // Save the bullet table to the saved game file
-BOOLEAN SaveBulletStructureToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveBulletStructureToSaveGameFile(FileID hFile);
 
 // Load the bullet table from the saved game file
-BOOLEAN LoadBulletStructureFromSavedGameFile(HWFILE hFile);
+BOOLEAN LoadBulletStructureFromSavedGameFile(FileID hFile);
 
 #endif

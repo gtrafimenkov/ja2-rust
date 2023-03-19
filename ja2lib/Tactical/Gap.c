@@ -4,12 +4,12 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
+#include "rust_fileman.h"
 
 #if 0
 static void AILCALLBACK timer_func( uint32_t user )
@@ -48,7 +48,7 @@ void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
   // while counting the number of elements loaded
 
   //	FILE *pFile;
-  HWFILE pFile;
+  FileID pFile = FILE_ID_ERR;
   char *pSourceFileName;
   char *pDestFileName;
   char sFileName[256];
@@ -82,20 +82,15 @@ void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
   pDestFileName[counter + 3] = 'p';
   pDestFileName[counter + 4] = '\0';
 
-  pFile = FileMan_Open(pDestFileName, FILE_ACCESS_READ, FALSE);
+  pFile = File_OpenForReading(pDestFileName);
   if (pFile) {
     counter = 0;
     // gap file exists
     // now read in the AUDIO_GAPs
 
-    // fread(&Start,sizeof(uint32_t), 1, pFile);
-    FileMan_Read(pFile, &Start, sizeof(uint32_t), &uiNumBytesRead);
-
-    //	while ( !feof(pFile) )
-    while (!FileMan_CheckEndOfFile(pFile)) {
+    while (File_Read(pFile, &Start, sizeof(uint32_t), &uiNumBytesRead) && uiNumBytesRead != 0) {
       // can read the first element, there exists a second
-      // fread(&End, sizeof(uint32_t),1,pFile);
-      FileMan_Read(pFile, &End, sizeof(uint32_t), &uiNumBytesRead);
+      File_Read(pFile, &End, sizeof(uint32_t), &uiNumBytesRead);
 
       // allocate space for AUDIO_GAP
       pCurrentGap = (AUDIO_GAP *)MemAlloc(sizeof(AUDIO_GAP));
@@ -115,16 +110,13 @@ void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
 
       // Increment pointer
       pPreviousGap = pCurrentGap;
-
-      //	fread(&Start,sizeof(uint32_t), 1, pFile);
-      FileMan_Read(pFile, &Start, sizeof(uint32_t), &uiNumBytesRead);
     }
 
     pGapList->audio_gap_active = FALSE;
     pGapList->current_time = 0;
 
     // fclose(pFile);
-    FileMan_Close(pFile);
+    File_Close(pFile);
   }
   DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
            String("Gap List Started From File %s and has %d gaps", pDestFileName, pGapList->size));

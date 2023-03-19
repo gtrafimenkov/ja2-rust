@@ -242,8 +242,8 @@ void RemoveSpecialItemFromArmsDealerInventoryAtElement(uint8_t ubArmsDealer, uin
 BOOLEAN IsMercADealer(uint8_t ubMercID);
 int8_t GetArmsDealerIDFromMercID(uint8_t ubMercID);
 
-BOOLEAN SaveArmsDealerInventoryToSaveGameFile(HWFILE hFile);
-BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(HWFILE hFile, BOOLEAN fIncludesElgin,
+BOOLEAN SaveArmsDealerInventoryToSaveGameFile(FileID hFile);
+BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(FileID hFile, BOOLEAN fIncludesElgin,
                                                  BOOLEAN fIncludesManny);
 
 void DailyUpdateOfArmsDealersInventory();

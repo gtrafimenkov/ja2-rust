@@ -3,7 +3,6 @@
 #include "Editor/LoadScreen.h"
 #include "Globals.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Line.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -20,6 +19,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/STIConvert.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 #ifdef JA2EDITOR
 

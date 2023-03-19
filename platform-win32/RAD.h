@@ -182,13 +182,13 @@ RADDEFSTART
 #define uint8_t unsigned char
 #define uint32_t unsigned long
 #define s32 signed long
-#define u64 unsigned __int64
+#define uint64_t unsigned __int64
 #define s64 signed __int64
 
 #ifdef __RAD32__
 #define PTR4
 
-#define u16 unsigned short
+#define uint16_t unsigned short
 #define s16 signed short
 
 #ifdef __RADMAC__
@@ -301,7 +301,7 @@ void ErrOutNum(const char* str, uint32_t len);
     "xor ebx,ebx"       \
     "int 0x21" parm[edx][ecx] modify[eax ebx];
 
-void radmemset16(void* dest, u16 value, uint32_t size);
+void radmemset16(void* dest, uint16_t value, uint32_t size);
 #pragma aux radmemset16 = \
     "cld"                 \
     "mov bx,ax"           \
@@ -614,14 +614,15 @@ uint32_t radstru32(const void* dest);
     "neg ecx"           \
     "pos:" parm[ESI] modify[EAX EBX EDX EDI ESI] value[ecx];
 
-u16 GetDS();
+uint16_t GetDS();
 #pragma aux GetDS = "mov ax,ds" value[ax];
 
 #ifdef __RADWINEXT__
 
-#define _16To32(ptr16)                                                                       \
-  ((void*)(((GetSelectorBase((u16)(((uint32_t)(ptr16)) >> 16)) + ((u16)(uint32_t)(ptr16))) - \
-            GetSelectorBase(GetDS()))))
+#define _16To32(ptr16)                                                                           \
+  ((void*)((                                                                                     \
+      (GetSelectorBase((uint16_t)(((uint32_t)(ptr16)) >> 16)) + ((uint16_t)(uint32_t)(ptr16))) - \
+      GetSelectorBase(GetDS()))))
 
 #endif
 
@@ -684,14 +685,14 @@ s32 __inline radabs(s32 ab) {
   }
 }
 
-uint8_t __inline radinp(u16 p) {
+uint8_t __inline radinp(uint16_t p) {
   _asm {
             mov dx,[p]
             in al,dx
   }
 }
 
-void __inline radoutp(u16 p, uint8_t v) {
+void __inline radoutp(uint16_t p, uint8_t v) {
   _asm {
             mov dx,[p]
             mov al,[v]
@@ -733,7 +734,7 @@ RADPCHAR __inline radstpcpyrs(char* p1, char* p2) {
   }
 }
 
-void __inline radmemset16(void* dest, u16 value, uint32_t sizeb) {
+void __inline radmemset16(void* dest, uint16_t value, uint32_t sizeb) {
   _asm {
             mov edi,[dest]
             mov ax,[value]
@@ -800,7 +801,7 @@ uint32_t __inline RADCycleTimerDeltaAddr(uint32_t* addr) {
 
 #define PTR4 __far
 
-#define u16 unsigned int
+#define uint16_t unsigned int
 #define s16 signed int
 
 #ifdef __WATCOMC__
@@ -834,7 +835,7 @@ uint32_t DOSOut(const char far* dest);
 #pragma aux DOSOut = "cld" "and edi,0xffff" "mov dx,di" "mov ecx,0xffffffff" "xor eax,eax" 0x67 "repne scasb" "not ecx" "dec ecx" "mov bx,1" "push ds" "push es" "pop ds" "mov ah,0x40" "int 0x21" "pop ds" "movzx eax,cx" "shr ecx,16" \
        parm [ES DI] modify [AX BX CX DX DI ES] value [CX AX];
 
-void DOSOutNum(const char far* str, u16 len);
+void DOSOutNum(const char far* str, uint16_t len);
 #pragma aux DOSOutNum = \
     "push ds"           \
     "mov ds,cx"         \
@@ -848,7 +849,7 @@ uint32_t ErrOut(const char far* dest);
 #pragma aux ErrOut = "cld" "and edi,0xffff" "mov dx,di" "mov ecx,0xffffffff" "xor eax,eax" 0x67 "repne scasb" "not ecx" "dec ecx" "xor bx,bx" "push ds" "push es" "pop ds" "mov ah,0x40" "int 0x21" "pop ds" "movzx eax,cx" "shr ecx,16" \
        parm [ES DI] modify [AX BX CX DX DI ES] value [CX AX];
 
-void ErrOutNum(const char far* str, u16 len);
+void ErrOutNum(const char far* str, uint16_t len);
 #pragma aux ErrOutNum = \
     "push ds"           \
     "mov ds,cx"         \
@@ -861,7 +862,7 @@ void ErrOutNum(const char far* str, u16 len);
 void radmemset(void far* dest, uint8_t value, uint32_t size);
 #pragma aux radmemset = "cld" "and edi,0ffffh" "shl ecx,16" "mov cx,bx" "mov ah,al" "mov bx,ax" "shl eax,16" "mov ax,bx" "mov bl,cl" "shr ecx,2" 0x67 "rep stosd" "mov cl,bl" "and cl,3" "rep stosb" parm [ES DI] [AL] [CX BX];
 
-void radmemset16(void far* dest, u16 value, uint32_t size);
+void radmemset16(void far* dest, uint16_t value, uint32_t size);
 #pragma aux radmemset16 = \
     "cld"                 \
     "and edi,0ffffh"      \
@@ -1036,7 +1037,7 @@ char bgetch();
 void BreakPoint();
 #pragma aux BreakPoint = "int 3";
 
-uint8_t radinp(u16 p);
+uint8_t radinp(uint16_t p);
 #pragma aux radinp = "in al,dx" parm[DX];
 
 uint8_t radtoupper(uint8_t p);
@@ -1048,7 +1049,7 @@ uint8_t radtoupper(uint8_t p);
     "sub al,32"          \
     "c1:" parm[al] value[al];
 
-void radoutp(u16 p, uint8_t v);
+void radoutp(uint16_t p, uint8_t v);
 #pragma aux radoutp = "out dx,al" parm[DX][AL];
 
 #endif

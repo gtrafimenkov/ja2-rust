@@ -3,7 +3,7 @@
 
 #ifdef __RADWINEXT__
 
-uint32_t GetLimit(u16 sel);
+uint32_t GetLimit(uint16_t sel);
 #pragma aux GetLimit = "lsl eax,ax" parm[ax];
 
 RADEXPFUNC void PTR4* RADEXPLINK radmalloc(uint32_t numbytes) {

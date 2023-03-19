@@ -1,7 +1,6 @@
 #include "Tactical/CivQuotes.h"
 
 #include "MessageBoxScreen.h"
-#include "SGP/FileMan.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
@@ -31,6 +30,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "rust_civ_groups.h"
+#include "rust_fileman.h"
 
 #define DIALOGUE_DEFAULT_WIDTH 200
 #define EXTREAMLY_LOW_TOWN_LOYALTY 20
@@ -98,7 +98,7 @@ BOOLEAN GetCivQuoteText(uint8_t ubCivQuoteID, uint8_t ubEntryID, wchar_t *zQuote
     sprintf(zFileName, "NPCDATA\\CIV%02d.edt", ubCivQuoteID);
   }
 
-  CHECKF(FileMan_Exists(zFileName));
+  CHECKF(File_Exists(zFileName));
 
   // Get data...
   LoadEncryptedDataFromFile(zFileName, zQuote, ubEntryID * 320, 320);
@@ -654,10 +654,10 @@ void InitCivQuoteSystem() {
   gCivQuoteData.iDialogueBox = -1;
 }
 
-BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveCivQuotesToSaveGameFile(FileID hFile) {
   uint32_t uiNumBytesWritten;
 
-  FileMan_Write(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesWritten);
+  File_Write(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(gCivQuotes)) {
     return (FALSE);
   }
@@ -665,10 +665,10 @@ BOOLEAN SaveCivQuotesToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadCivQuotesFromLoadGameFile(HWFILE hFile) {
+BOOLEAN LoadCivQuotesFromLoadGameFile(FileID hFile) {
   uint32_t uiNumBytesRead;
 
-  FileMan_Read(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesRead);
+  File_Read(hFile, &gCivQuotes, sizeof(gCivQuotes), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(gCivQuotes)) {
     return (FALSE);
   }

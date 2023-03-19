@@ -2,29 +2,29 @@
 
 #include "LanguageDefines.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
+#include "rust_fileman.h"
 
 BOOLEAN LoadEncryptedDataFromFile(char* pFileName, wchar_t* pDestString, uint32_t uiSeekFrom,
                                   uint32_t uiSeekAmount) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   uint16_t i;
   uint32_t uiBytesRead;
 
-  hFile = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(pFileName);
   if (!hFile) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed to FileMan_Open");
+    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed to open");
     return (FALSE);
   }
 
-  if (FileMan_Seek(hFile, uiSeekFrom, FILE_SEEK_FROM_START) == FALSE) {
-    FileMan_Close(hFile);
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed FileMan_Seek");
+  if (File_Seek(hFile, uiSeekFrom, FILE_SEEK_START) == FALSE) {
+    File_Close(hFile);
+    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed File_Seek");
     return (FALSE);
   }
 
-  if (!FileMan_Read(hFile, pDestString, uiSeekAmount, &uiBytesRead)) {
-    FileMan_Close(hFile);
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed FileMan_Read");
+  if (!File_Read(hFile, pDestString, uiSeekAmount, &uiBytesRead)) {
+    File_Close(hFile);
+    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed File_Read");
     return (FALSE);
   }
 
@@ -93,6 +93,6 @@ BOOLEAN LoadEncryptedDataFromFile(char* pFileName, wchar_t* pDestString, uint32_
 #endif
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
   return (TRUE);
 }

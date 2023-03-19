@@ -5,7 +5,6 @@
 
 #include "Editor/SmoothingUtils.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
@@ -40,6 +39,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 DOOR_STATUS *gpDoorStatus = NULL;
 uint8_t gubNumDoorStatus = 0;
@@ -130,20 +130,20 @@ BOOLEAN LoadLockTable(void) {
   uint32_t uiNumBytesRead = 0;
   uint32_t uiBytesToRead;
   char *pFileName = "BINARYDATA\\Locks.bin";
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
 
   // Load the Lock Table
 
-  hFile = FileMan_Open(pFileName, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(pFileName);
   if (!hFile) {
     DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to LoadLockTable from file %s", pFileName));
     return (FALSE);
   }
 
   uiBytesToRead = sizeof(LOCK) * NUM_LOCKS;
-  FileMan_Read(hFile, LockTable, uiBytesToRead, &uiNumBytesRead);
+  File_Read(hFile, LockTable, uiBytesToRead, &uiNumBytesRead);
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   if (uiNumBytesRead != uiBytesToRead) {
     return (FALSE);
@@ -711,7 +711,7 @@ void LoadDoorTableFromMap(int8_t **hBuffer) {
 // Saves the existing door information to the map.  Before it actually saves, it'll verify that the
 // door still exists.  Otherwise, it'll ignore it.  It is possible in the editor to delete doors in
 // many different ways, so I opted to put it in the saving routine.
-void SaveDoorTableToMap(HWFILE fp) {
+void SaveDoorTableToMap(FileID fp) {
   int32_t i = 0;
   uint32_t uiBytesWritten;
 
@@ -721,8 +721,8 @@ void SaveDoorTableToMap(HWFILE fp) {
     else
       i++;
   }
-  FileMan_Write(fp, &gubNumDoors, 1, &uiBytesWritten);
-  FileMan_Write(fp, DoorTable, sizeof(DOOR) * gubNumDoors, &uiBytesWritten);
+  File_Write(fp, &gubNumDoors, 1, &uiBytesWritten);
+  File_Write(fp, DoorTable, sizeof(DOOR) * gubNumDoors, &uiBytesWritten);
 }
 
 // The editor adds locks to the world.  If the gridno already exists, then the currently existing
@@ -810,7 +810,7 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int
   uint32_t uiNumBytesWritten;
   uint32_t uiSizeToSave = 0;
   char zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
 
   //	return( TRUE );
 
@@ -825,7 +825,7 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int
   GetMapTempFileName(SF_DOOR_TABLE_TEMP_FILES_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
   // if the file already exists, delete it
-  if (FileMan_Exists(zMapName)) {
+  if (File_Exists(zMapName)) {
     // We are going to be overwriting the file
     if (!Plat_DeleteFile(zMapName)) {
       return (FALSE);
@@ -833,25 +833,25 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int
   }
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = File_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Save the number of doors
-  FileMan_Write(hFile, &gubNumDoors, sizeof(uint8_t), &uiNumBytesWritten);
+  File_Write(hFile, &gubNumDoors, sizeof(uint8_t), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(uint8_t)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // if there are doors to save
   if (uiSizeToSave != 0) {
     // Save the door table
-    FileMan_Write(hFile, DoorTable, uiSizeToSave, &uiNumBytesWritten);
+    File_Write(hFile, DoorTable, uiSizeToSave, &uiNumBytesWritten);
     if (uiNumBytesWritten != uiSizeToSave) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
@@ -860,14 +860,14 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(uint8_t sSectorX, uint8_t sSectorY, int
   SetSectorFlag((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ,
                 SF_DOOR_TABLE_TEMP_FILES_EXISTS);
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return (TRUE);
 }
 
 BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   uint32_t uiNumBytesRead;
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   char zMapName[128];
 
   //	return( TRUE );
@@ -882,7 +882,7 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
                      (uint8_t)gWorldSectorY, gbWorldSectorZ);
 
   // Check to see if the file exists
-  if (!FileMan_Exists(zMapName)) {
+  if (!File_Exists(zMapName)) {
     // If the file doesnt exists, its no problem.
     return (TRUE);
   }
@@ -891,16 +891,16 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   TrashDoorTable();
 
   // Open the file for reading
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
   }
 
   // Read in the number of doors
-  FileMan_Read(hFile, &gubMaxDoors, sizeof(uint8_t), &uiNumBytesRead);
+  File_Read(hFile, &gubMaxDoors, sizeof(uint8_t), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(uint8_t)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -911,19 +911,19 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
     // Allocate space for the door table
     DoorTable = (DOOR *)MemAlloc(sizeof(DOOR) * gubMaxDoors);
     if (DoorTable == NULL) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
 
     // Read in the number of doors
-    FileMan_Read(hFile, DoorTable, sizeof(DOOR) * gubMaxDoors, &uiNumBytesRead);
+    File_Read(hFile, DoorTable, sizeof(DOOR) * gubMaxDoors, &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(DOOR) * gubMaxDoors) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return (TRUE);
 }
@@ -1548,7 +1548,7 @@ BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen) {
 BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(uint8_t sSectorX, uint8_t sSectorY,
                                                 int8_t bSectorZ) {
   char zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   uint32_t uiNumBytesWritten;
   uint8_t ubCnt;
 
@@ -1566,33 +1566,32 @@ BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(uint8_t sSectorX, uint8_t sSecto
   GetMapTempFileName(SF_DOOR_STATUS_TEMP_FILE_EXISTS, zMapName, sSectorX, sSectorY, bSectorZ);
 
   // Open the file for writing, Create it if it doesnt exist
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE);
+  hFile = File_OpenForAppending(zMapName);
   if (hFile == 0) {
     // Error opening map modification file
     return (FALSE);
   }
 
   // Save the number of elements in the door array
-  FileMan_Write(hFile, &gubNumDoorStatus, sizeof(uint8_t), &uiNumBytesWritten);
+  File_Write(hFile, &gubNumDoorStatus, sizeof(uint8_t), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(uint8_t)) {
     // Error Writing size of array to disk
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // if there is some to save
   if (gubNumDoorStatus != 0) {
     // Save the door array
-    FileMan_Write(hFile, gpDoorStatus, (sizeof(DOOR_STATUS) * gubNumDoorStatus),
-                  &uiNumBytesWritten);
+    File_Write(hFile, gpDoorStatus, (sizeof(DOOR_STATUS) * gubNumDoorStatus), &uiNumBytesWritten);
     if (uiNumBytesWritten != (sizeof(DOOR_STATUS) * gubNumDoorStatus)) {
       // Error Writing size of array to disk
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // Set the flag indicating that there is a door status array
   SetSectorFlag(sSectorX, sSectorY, bSectorZ, SF_DOOR_STATUS_TEMP_FILE_EXISTS);
@@ -1602,7 +1601,7 @@ BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(uint8_t sSectorX, uint8_t sSecto
 
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   char zMapName[128];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   uint32_t uiNumBytesRead;
   uint8_t ubLoop;
 
@@ -1619,21 +1618,21 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   TrashDoorStatusArray();
 
   // Open the file for reading
-  hFile = FileMan_Open(zMapName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+  hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file,
     return (FALSE);
   }
 
   // Load the number of elements in the door status array
-  FileMan_Read(hFile, &gubNumDoorStatus, sizeof(uint8_t), &uiNumBytesRead);
+  File_Read(hFile, &gubNumDoorStatus, sizeof(uint8_t), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(uint8_t)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   if (gubNumDoorStatus == 0) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (TRUE);
   }
 
@@ -1643,13 +1642,13 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   memset(gpDoorStatus, 0, sizeof(DOOR_STATUS) * gubNumDoorStatus);
 
   // Load the number of elements in the door status array
-  FileMan_Read(hFile, gpDoorStatus, (sizeof(DOOR_STATUS) * gubNumDoorStatus), &uiNumBytesRead);
+  File_Read(hFile, gpDoorStatus, (sizeof(DOOR_STATUS) * gubNumDoorStatus), &uiNumBytesRead);
   if (uiNumBytesRead != (sizeof(DOOR_STATUS) * gubNumDoorStatus)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // the graphics will be updated later in the loading process.
 
@@ -1664,11 +1663,11 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   return (TRUE);
 }
 
-BOOLEAN SaveKeyTableToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveKeyTableToSaveGameFile(FileID hFile) {
   uint32_t uiNumBytesWritten = 0;
 
   // Save the KeyTable
-  FileMan_Write(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesWritten);
+  File_Write(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(KEY) * NUM_KEYS) {
     return (FALSE);
   }
@@ -1676,11 +1675,11 @@ BOOLEAN SaveKeyTableToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadKeyTableFromSaveedGameFile(HWFILE hFile) {
+BOOLEAN LoadKeyTableFromSaveedGameFile(FileID hFile) {
   uint32_t uiNumBytesRead = 0;
 
   // Load the KeyTable
-  FileMan_Read(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesRead);
+  File_Read(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(KEY) * NUM_KEYS) {
     return (FALSE);
   }

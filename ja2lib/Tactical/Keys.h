@@ -153,7 +153,7 @@ extern void LoadDoorTableFromMap(int8_t **hBuffer);
 // Saves the existing door information to the map.  Before it actually saves, it'll verify that the
 // door still exists.  Otherwise, it'll ignore it.  It is possible in the editor to delete doors in
 // many different ways, so I opted to put it in the saving routine.
-extern void SaveDoorTableToMap(HWFILE fp);
+extern void SaveDoorTableToMap(FileID fp);
 // The editor adds locks to the world.  If the gridno already exists, then the currently existing
 // door information is overwritten.
 extern void AddDoorInfoToTable(DOOR *pDoor);
@@ -214,10 +214,10 @@ BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen);
 BOOLEAN SetDoorPerceivedOpenStatus(int16_t sGridNo, BOOLEAN fPerceivedOpen);
 
 // Save the key table to the saved game file
-BOOLEAN SaveKeyTableToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveKeyTableToSaveGameFile(FileID hFile);
 
 // Load the key table from the saved game file
-BOOLEAN LoadKeyTableFromSaveedGameFile(HWFILE hFile);
+BOOLEAN LoadKeyTableFromSaveedGameFile(FileID hFile);
 
 // Returns a doors status value, NULL if not found
 DOOR_STATUS *GetDoorStatus(int16_t sGridNo);

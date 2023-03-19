@@ -26,7 +26,6 @@
 #include "Editor/EditSys.h"
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/VObject.h"
@@ -53,6 +52,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"
 #include "platform_strings.h"
+#include "rust_fileman.h"
 
 #define LVL1_L1_PER (50)
 #define LVL1_L2_PER (50)
@@ -2566,7 +2566,7 @@ BOOLEAN LightCalcRect(int32_t iLight) {
 
 ***************************************************************************************/
 BOOLEAN LightSave(int32_t iLight, char *pFilename) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   char *pName;
 
   if (pLightList[iLight] == NULL)
@@ -2577,13 +2577,13 @@ BOOLEAN LightSave(int32_t iLight, char *pFilename) {
     else
       pName = pFilename;
 
-    if ((hFile = FileMan_Open(pName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE)) != 0) {
-      FileMan_Write(hFile, &usTemplateSize[iLight], sizeof(uint16_t), NULL);
-      FileMan_Write(hFile, pLightList[iLight], sizeof(LIGHT_NODE) * usTemplateSize[iLight], NULL);
-      FileMan_Write(hFile, &usRaySize[iLight], sizeof(uint16_t), NULL);
-      FileMan_Write(hFile, pLightRayList[iLight], sizeof(uint16_t) * usRaySize[iLight], NULL);
+    if ((hFile = File_OpenForWriting(pName)) != 0) {
+      File_Write(hFile, &usTemplateSize[iLight], sizeof(uint16_t), NULL);
+      File_Write(hFile, pLightList[iLight], sizeof(LIGHT_NODE) * usTemplateSize[iLight], NULL);
+      File_Write(hFile, &usRaySize[iLight], sizeof(uint16_t), NULL);
+      File_Write(hFile, pLightRayList[iLight], sizeof(uint16_t) * usRaySize[iLight], NULL);
 
-      FileMan_Close(hFile);
+      File_Close(hFile);
     } else
       return (FALSE);
   }
@@ -2598,22 +2598,22 @@ BOOLEAN LightSave(int32_t iLight, char *pFilename) {
 
 ***************************************************************************************/
 int32_t LightLoad(char *pFilename) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   int32_t iLight;
 
   if ((iLight = LightGetFree()) == (-1))
     return (-1);
   else {
-    if ((hFile = FileMan_Open(pFilename, FILE_ACCESS_READ, FALSE)) != 0) {
-      FileMan_Read(hFile, &usTemplateSize[iLight], sizeof(uint16_t), NULL);
+    if ((hFile = File_OpenForReading(pFilename)) != 0) {
+      File_Read(hFile, &usTemplateSize[iLight], sizeof(uint16_t), NULL);
       if ((pLightList[iLight] =
                (LIGHT_NODE *)MemAlloc(usTemplateSize[iLight] * sizeof(LIGHT_NODE))) == NULL) {
         usTemplateSize[iLight] = 0;
         return (-1);
       }
-      FileMan_Read(hFile, pLightList[iLight], sizeof(LIGHT_NODE) * usTemplateSize[iLight], NULL);
+      File_Read(hFile, pLightList[iLight], sizeof(LIGHT_NODE) * usTemplateSize[iLight], NULL);
 
-      FileMan_Read(hFile, &usRaySize[iLight], sizeof(uint16_t), NULL);
+      File_Read(hFile, &usRaySize[iLight], sizeof(uint16_t), NULL);
       if ((pLightRayList[iLight] = (uint16_t *)MemAlloc(usRaySize[iLight] * sizeof(uint16_t))) ==
           NULL) {
         usTemplateSize[iLight] = 0;
@@ -2621,9 +2621,9 @@ int32_t LightLoad(char *pFilename) {
         MemFree(pLightList[iLight]);
         return (-1);
       }
-      FileMan_Read(hFile, pLightRayList[iLight], sizeof(uint16_t) * usRaySize[iLight], NULL);
+      File_Read(hFile, pLightRayList[iLight], sizeof(uint16_t) * usRaySize[iLight], NULL);
 
-      FileMan_Close(hFile);
+      File_Close(hFile);
 
       pLightNames[iLight] = (char *)MemAlloc(strlen(pFilename) + 1);
       strcpy(pLightNames[iLight], pFilename);

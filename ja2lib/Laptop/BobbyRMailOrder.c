@@ -8,7 +8,6 @@
 #include "Laptop/Laptop.h"
 #include "Money.h"
 #include "SGP/ButtonSystem.h"
-#include "SGP/FileMan.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
@@ -29,6 +28,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 typedef struct {
   uint16_t usOverNightExpress;
@@ -2264,24 +2264,24 @@ uint16_t CountNumberOfBobbyPurchasesThatAreInTransit() {
   return (usItemCount);
 }
 
-BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
+BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(FileID hFile) {
   int32_t iCnt;
   uint32_t uiNumBytesWritten;
 
   // Write the number of orders
-  FileMan_Write(hFile, &giNumberOfNewBobbyRShipment, sizeof(int32_t), &uiNumBytesWritten);
+  File_Write(hFile, &giNumberOfNewBobbyRShipment, sizeof(int32_t), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(int32_t)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // loop through and save all the mail order slots
   for (iCnt = 0; iCnt < giNumberOfNewBobbyRShipment; iCnt++) {
     // Write the order
-    FileMan_Write(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct),
-                  &uiNumBytesWritten);
+    File_Write(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct),
+               &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(NewBobbyRayOrderStruct)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
@@ -2289,7 +2289,7 @@ BOOLEAN NewWayOfSavingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
+BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(FileID hFile) {
   int32_t iCnt;
   uint32_t uiNumBytesRead;
 
@@ -2297,9 +2297,9 @@ BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
   ShutDownBobbyRNewMailOrders();
 
   // Read the number of orders
-  FileMan_Read(hFile, &giNumberOfNewBobbyRShipment, sizeof(int32_t), &uiNumBytesRead);
+  File_Read(hFile, &giNumberOfNewBobbyRShipment, sizeof(int32_t), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(int32_t)) {
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -2317,10 +2317,10 @@ BOOLEAN NewWayOfLoadingBobbyRMailOrdersToSaveGameFile(HWFILE hFile) {
     // loop through and load all the mail order slots
     for (iCnt = 0; iCnt < giNumberOfNewBobbyRShipment; iCnt++) {
       // Read the order
-      FileMan_Read(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct),
-                   &uiNumBytesRead);
+      File_Read(hFile, &gpNewBobbyrShipments[iCnt], sizeof(NewBobbyRayOrderStruct),
+                &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(NewBobbyRayOrderStruct)) {
-        FileMan_Close(hFile);
+        File_Close(hFile);
         return (FALSE);
       }
     }

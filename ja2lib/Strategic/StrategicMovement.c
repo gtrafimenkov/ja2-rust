@@ -6,7 +6,6 @@
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/Video.h"
@@ -51,6 +50,7 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 #include "rust_sam_sites.h"
 
 // the delay for a group about to arrive
@@ -106,16 +106,16 @@ struct GROUP *gpInitPrebattleGroup = NULL;
 void TriggerPrebattleInterface(uint8_t ubResult);
 
 // Save the L.L. for the playerlist into the save game file
-BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup);
+BOOLEAN SavePlayerGroupList(FileID hFile, struct GROUP *pGroup);
 
 // Loads the LL for the playerlist from the savegame file
-BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup);
+BOOLEAN LoadPlayerGroupList(FileID hFile, struct GROUP **pGroup);
 
-BOOLEAN SaveEnemyGroupStruct(HWFILE hFile, struct GROUP *pGroup);
-BOOLEAN LoadEnemyGroupStructFromSavedGame(HWFILE hFile, struct GROUP *pGroup);
+BOOLEAN SaveEnemyGroupStruct(FileID hFile, struct GROUP *pGroup);
+BOOLEAN LoadEnemyGroupStructFromSavedGame(FileID hFile, struct GROUP *pGroup);
 
-BOOLEAN LoadWayPointList(HWFILE hFile, struct GROUP *pGroup);
-BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup);
+BOOLEAN LoadWayPointList(FileID hFile, struct GROUP *pGroup);
+BOOLEAN SaveWayPointList(FileID hFile, struct GROUP *pGroup);
 
 extern void RandomMercInGroupSaysQuote(struct GROUP *pGroup, uint16_t usQuoteNum);
 
@@ -2955,7 +2955,7 @@ void SetGroupPosition(uint8_t ubNextX, uint8_t ubNextY, uint8_t ubPrevX, uint8_t
   return;
 }
 
-BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(FileID hFile) {
   struct GROUP *pGroup = NULL;
   uint32_t uiNumberOfGroups = 0;
   uint32_t uiNumBytesWritten = 0;
@@ -2969,7 +2969,7 @@ BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of movement groups to the saved game file
-  FileMan_Write(hFile, &uiNumberOfGroups, sizeof(uint32_t), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumberOfGroups, sizeof(uint32_t), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -2980,7 +2980,7 @@ BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
   // Loop through the linked lists and add each node
   while (pGroup) {
     // Save each node in the LL
-    FileMan_Write(hFile, pGroup, sizeof(struct GROUP), &uiNumBytesWritten);
+    File_Write(hFile, pGroup, sizeof(struct GROUP), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(struct GROUP)) {
       // Error Writing group node to disk
       return (FALSE);
@@ -3013,7 +3013,7 @@ BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the unique id mask
-  FileMan_Write(hFile, uniqueIDMask, sizeof(uint32_t) * 8, &uiNumBytesWritten);
+  File_Write(hFile, uniqueIDMask, sizeof(uint32_t) * 8, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(uint32_t) * 8) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3022,7 +3022,7 @@ BOOLEAN SaveStrategicMovementGroupsToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
+BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(FileID hFile) {
   struct GROUP *pGroup = NULL;
   struct GROUP *pTemp = NULL;
   uint32_t uiNumberOfGroups = 0;
@@ -3039,7 +3039,7 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
   while (gpGroupList) RemoveGroupFromList(gpGroupList);
 
   // load the number of nodes in the list
-  FileMan_Read(hFile, &uiNumberOfGroups, sizeof(uint32_t), &uiNumBytesRead);
+  File_Read(hFile, &uiNumberOfGroups, sizeof(uint32_t), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3055,7 +3055,7 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
     memset(pTemp, 0, sizeof(struct GROUP));
 
     // Read in the node
-    FileMan_Read(hFile, pTemp, sizeof(struct GROUP), &uiNumBytesRead);
+    File_Read(hFile, pTemp, sizeof(struct GROUP), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(struct GROUP)) {
       // Error Writing size of L.L. to disk
       return (FALSE);
@@ -3094,7 +3094,7 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
   }
 
   // Load the unique id mask
-  FileMan_Read(hFile, uniqueIDMask, sizeof(uint32_t) * 8, &uiNumBytesRead);
+  File_Read(hFile, uniqueIDMask, sizeof(uint32_t) * 8, &uiNumBytesRead);
 
   //@@@ TEMP!
   // Rebuild the uniqueIDMask as a very old bug broke the uniqueID assignments in extremely rare
@@ -3133,7 +3133,7 @@ BOOLEAN LoadStrategicMovementGroupsFromSavedGameFile(HWFILE hFile) {
 }
 
 // Saves the Player's group list to the saved game file
-BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
+BOOLEAN SavePlayerGroupList(FileID hFile, struct GROUP *pGroup) {
   uint32_t uiNumberOfNodesInList = 0;
   PLAYERGROUP *pTemp = NULL;
   uint32_t uiNumBytesWritten = 0;
@@ -3147,7 +3147,7 @@ BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
   }
 
   // Save the number of nodes in the list
-  FileMan_Write(hFile, &uiNumberOfNodesInList, sizeof(uint32_t), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumberOfNodesInList, sizeof(uint32_t), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3159,7 +3159,7 @@ BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
   while (pTemp) {
     // Save the ubProfile ID for this node
     uiProfileID = pTemp->ubProfileID;
-    FileMan_Write(hFile, &uiProfileID, sizeof(uint32_t), &uiNumBytesWritten);
+    File_Write(hFile, &uiProfileID, sizeof(uint32_t), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(uint32_t)) {
       // Error Writing size of L.L. to disk
       return (FALSE);
@@ -3171,7 +3171,7 @@ BOOLEAN SavePlayerGroupList(HWFILE hFile, struct GROUP *pGroup) {
   return (TRUE);
 }
 
-BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
+BOOLEAN LoadPlayerGroupList(FileID hFile, struct GROUP **pGroup) {
   PLAYERGROUP *pTemp = NULL;
   PLAYERGROUP *pHead = NULL;
   uint32_t uiNumberOfNodes = 0;
@@ -3186,7 +3186,7 @@ BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
   //	pHead = *pGroup->pPlayerList;
 
   // Load the number of nodes in the player list
-  FileMan_Read(hFile, &uiNumberOfNodes, sizeof(uint32_t), &uiNumBytesRead);
+  File_Read(hFile, &uiNumberOfNodes, sizeof(uint32_t), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3199,7 +3199,7 @@ BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
     if (pTemp == NULL) return (FALSE);
 
     // Load the ubProfile ID for this node
-    FileMan_Read(hFile, &uiProfileID, sizeof(uint32_t), &uiNumBytesRead);
+    File_Read(hFile, &uiProfileID, sizeof(uint32_t), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(uint32_t)) {
       // Error Writing size of L.L. to disk
       return (FALSE);
@@ -3233,11 +3233,11 @@ BOOLEAN LoadPlayerGroupList(HWFILE hFile, struct GROUP **pGroup) {
 }
 
 // Saves the enemy group struct to the saved game struct
-BOOLEAN SaveEnemyGroupStruct(HWFILE hFile, struct GROUP *pGroup) {
+BOOLEAN SaveEnemyGroupStruct(FileID hFile, struct GROUP *pGroup) {
   uint32_t uiNumBytesWritten = 0;
 
   // Save the enemy struct info to the saved game file
-  FileMan_Write(hFile, pGroup->pEnemyGroup, sizeof(ENEMYGROUP), &uiNumBytesWritten);
+  File_Write(hFile, pGroup->pEnemyGroup, sizeof(ENEMYGROUP), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(ENEMYGROUP)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3247,7 +3247,7 @@ BOOLEAN SaveEnemyGroupStruct(HWFILE hFile, struct GROUP *pGroup) {
 }
 
 // Loads the enemy group struct from the saved game file
-BOOLEAN LoadEnemyGroupStructFromSavedGame(HWFILE hFile, struct GROUP *pGroup) {
+BOOLEAN LoadEnemyGroupStructFromSavedGame(FileID hFile, struct GROUP *pGroup) {
   uint32_t uiNumBytesRead = 0;
   ENEMYGROUP *pEnemyGroup = NULL;
 
@@ -3257,7 +3257,7 @@ BOOLEAN LoadEnemyGroupStructFromSavedGame(HWFILE hFile, struct GROUP *pGroup) {
   memset(pEnemyGroup, 0, sizeof(ENEMYGROUP));
 
   // Load the enemy struct
-  FileMan_Read(hFile, pEnemyGroup, sizeof(ENEMYGROUP), &uiNumBytesRead);
+  File_Read(hFile, pEnemyGroup, sizeof(ENEMYGROUP), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(ENEMYGROUP)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3312,7 +3312,7 @@ void CheckMembersOfMvtGroupAndComplainAboutBleeding(struct SOLDIERTYPE *pSoldier
   BeginLoggingForBleedMeToos(FALSE);
 }
 
-BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup) {
+BOOLEAN SaveWayPointList(FileID hFile, struct GROUP *pGroup) {
   uint32_t cnt = 0;
   uint32_t uiNumberOfWayPoints = 0;
   uint32_t uiNumBytesWritten = 0;
@@ -3325,7 +3325,7 @@ BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup) {
   }
 
   // Save the number of waypoints
-  FileMan_Write(hFile, &uiNumberOfWayPoints, sizeof(uint32_t), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumberOfWayPoints, sizeof(uint32_t), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3335,7 +3335,7 @@ BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup) {
     pWayPoints = pGroup->pWaypoints;
     for (cnt = 0; cnt < uiNumberOfWayPoints; cnt++) {
       // Save the waypoint node
-      FileMan_Write(hFile, pWayPoints, sizeof(WAYPOINT), &uiNumBytesWritten);
+      File_Write(hFile, pWayPoints, sizeof(WAYPOINT), &uiNumBytesWritten);
       if (uiNumBytesWritten != sizeof(WAYPOINT)) {
         // Error Writing size of L.L. to disk
         return (FALSE);
@@ -3349,7 +3349,7 @@ BOOLEAN SaveWayPointList(HWFILE hFile, struct GROUP *pGroup) {
   return (TRUE);
 }
 
-BOOLEAN LoadWayPointList(HWFILE hFile, struct GROUP *pGroup) {
+BOOLEAN LoadWayPointList(FileID hFile, struct GROUP *pGroup) {
   uint32_t cnt = 0;
   uint32_t uiNumberOfWayPoints = 0;
   uint32_t uiNumBytesRead = 0;
@@ -3357,7 +3357,7 @@ BOOLEAN LoadWayPointList(HWFILE hFile, struct GROUP *pGroup) {
   WAYPOINT *pTemp = NULL;
 
   // Load the number of waypoints
-  FileMan_Read(hFile, &uiNumberOfWayPoints, sizeof(uint32_t), &uiNumBytesRead);
+  File_Read(hFile, &uiNumberOfWayPoints, sizeof(uint32_t), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(uint32_t)) {
     // Error Writing size of L.L. to disk
     return (FALSE);
@@ -3372,7 +3372,7 @@ BOOLEAN LoadWayPointList(HWFILE hFile, struct GROUP *pGroup) {
       memset(pTemp, 0, sizeof(WAYPOINT));
 
       // Load the waypoint node
-      FileMan_Read(hFile, pTemp, sizeof(WAYPOINT), &uiNumBytesRead);
+      File_Read(hFile, pTemp, sizeof(WAYPOINT), &uiNumBytesRead);
       if (uiNumBytesRead != sizeof(WAYPOINT)) {
         // Error Writing size of L.L. to disk
         return (FALSE);

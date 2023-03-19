@@ -20,20 +20,6 @@
 // Handler to underlying OS file handle.
 typedef void *SYS_FILE_HANDLE;
 
-#define FILE_SEEK_FROM_START 0x01
-#define FILE_SEEK_FROM_END 0x02
-#define FILE_SEEK_FROM_CURRENT 0x04
-
-uint32_t Plat_GetFileSize(SYS_FILE_HANDLE handle);
-BOOLEAN Plat_ReadFile(SYS_FILE_HANDLE handle, void *buffer, uint32_t bytesToRead,
-                      uint32_t *readBytes);
-BOOLEAN Plat_OpenForReading(const char *path, SYS_FILE_HANDLE *handle);
-void Plat_CloseFile(SYS_FILE_HANDLE handle);
-
-// Change file pointer.
-// In case of an error returns 0xFFFFFFFF
-uint32_t Plat_SetFilePointer(SYS_FILE_HANDLE handle, int32_t distance, int seekType);
-
 // Gets the amount of free space on the hard drive that the main executeablt is runnning from
 uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 

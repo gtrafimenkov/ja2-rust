@@ -1,19 +1,20 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/ImgFmt.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
+#include "rust_debug.h"
+#include "rust_fileman.h"
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader);
-BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader);
+BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, FileID hFile, STCIHeader *pHeader);
+BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, FileID hFile, STCIHeader *pHeader);
 BOOLEAN STCISetPalette(void *pSTCIPalette, HIMAGE hImage);
 
 BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, uint16_t fContents) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   STCIHeader Header;
   uint32_t uiBytesRead;
   image_type TempImage;
@@ -23,16 +24,16 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, uint16_t fContents) {
 
   TempImage = *hImage;
 
-  CHECKF(FileMan_Exists(TempImage.ImageFile));
+  CHECKF(File_Exists(TempImage.ImageFile));
 
   // Open the file and read the header
-  hFile = FileMan_Open(TempImage.ImageFile, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(TempImage.ImageFile);
   CHECKF(hFile);
 
-  if (!FileMan_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
+  if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
       uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
     DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem reading STCI header.");
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
@@ -40,23 +41,23 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, uint16_t fContents) {
   if (Header.fFlags & STCI_RGB) {
     if (!STCILoadRGB(&TempImage, fContents, hFile, &Header)) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem loading RGB image.");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   } else if (Header.fFlags & STCI_INDEXED) {
     if (!STCILoadIndexed(&TempImage, fContents, hFile, &Header)) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem loading palettized image.");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   } else {  // unsupported type of data, or the right flags weren't set!
     DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Unknown data organization in STCI file.");
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
 
   // Requested data loaded successfully.
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   // Set some more flags in the temporary image structure, copy it so that hImage points
   // to it, and return.
@@ -71,7 +72,7 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, uint16_t fContents) {
   return (TRUE);
 }
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, FileID hFile, STCIHeader *pHeader) {
   uint32_t uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
@@ -84,7 +85,7 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader 
     hImage->pImageData = MemAlloc(pHeader->uiStoredSize);
     if (hImage->pImageData == NULL) {
       return (FALSE);
-    } else if (!FileMan_Read(hFile, hImage->pImageData, pHeader->uiStoredSize, &uiBytesRead) ||
+    } else if (!File_Read(hFile, hImage->pImageData, pHeader->uiStoredSize, &uiBytesRead) ||
                uiBytesRead != pHeader->uiStoredSize) {
       MemFree(hImage->pImageData);
       return (FALSE);
@@ -133,7 +134,7 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader 
   return (TRUE);
 }
 
-BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, FileID hFile, STCIHeader *pHeader) {
   uint32_t uiFileSectionSize;
   uint32_t uiBytesRead;
   void *pSTCIPalette;
@@ -147,7 +148,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
     pSTCIPalette = MemAlloc(uiFileSectionSize);
     if (pSTCIPalette == NULL) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
 
@@ -155,15 +156,15 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
     memset(pSTCIPalette, 0, uiFileSectionSize);
 
     // Read in the palette
-    if (!FileMan_Read(hFile, pSTCIPalette, uiFileSectionSize, &uiBytesRead) ||
+    if (!File_Read(hFile, pSTCIPalette, uiFileSectionSize, &uiBytesRead) ||
         uiBytesRead != uiFileSectionSize) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem loading palette!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       MemFree(pSTCIPalette);
       return (FALSE);
     } else if (!STCISetPalette(pSTCIPalette, hImage)) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem setting hImage-format palette!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       MemFree(pSTCIPalette);
       return (FALSE);
     }
@@ -172,9 +173,9 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
     MemFree(pSTCIPalette);
   } else if (fContents & (IMAGE_BITMAPDATA | IMAGE_APPDATA)) {  // seek past the palette
     uiFileSectionSize = pHeader->Indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
-    if (FileMan_Seek(hFile, uiFileSectionSize, FILE_SEEK_FROM_CURRENT) == FALSE) {
+    if (File_Seek(hFile, uiFileSectionSize, FILE_SEEK_CURRENT) == FALSE) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem seeking past palette!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
@@ -187,16 +188,16 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
       hImage->pETRLEObject = (ETRLEObject *)MemAlloc(uiFileSectionSize);
       if (hImage->pETRLEObject == NULL) {
         DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
-        FileMan_Close(hFile);
+        File_Close(hFile);
         if (fContents & IMAGE_PALETTE) {
           MemFree(hImage->pPalette);
         }
         return (FALSE);
       }
-      if (!FileMan_Read(hFile, hImage->pETRLEObject, uiFileSectionSize, &uiBytesRead) ||
+      if (!File_Read(hFile, hImage->pETRLEObject, uiFileSectionSize, &uiBytesRead) ||
           uiBytesRead != uiFileSectionSize) {
         DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Error loading subimage structures!");
-        FileMan_Close(hFile);
+        File_Close(hFile);
         if (fContents & IMAGE_PALETTE) {
           MemFree(hImage->pPalette);
         }
@@ -210,7 +211,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
     hImage->pImageData = MemAlloc(pHeader->uiStoredSize);
     if (hImage->pImageData == NULL) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       if (fContents & IMAGE_PALETTE) {
         MemFree(hImage->pPalette);
       }
@@ -218,10 +219,10 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
         MemFree(hImage->pETRLEObject);
       }
       return (FALSE);
-    } else if (!FileMan_Read(hFile, hImage->pImageData, pHeader->uiStoredSize, &uiBytesRead) ||
+    } else if (!File_Read(hFile, hImage->pImageData, pHeader->uiStoredSize, &uiBytesRead) ||
                uiBytesRead != pHeader->uiStoredSize) {  // Problem reading in the image data!
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Error loading image data!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       MemFree(hImage->pImageData);
       if (fContents & IMAGE_PALETTE) {
         MemFree(hImage->pPalette);
@@ -234,9 +235,9 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
     hImage->fFlags |= IMAGE_BITMAPDATA;
   } else if (fContents & IMAGE_APPDATA)  // then there's a point in seeking ahead
   {
-    if (FileMan_Seek(hFile, pHeader->uiStoredSize, FILE_SEEK_FROM_CURRENT) == FALSE) {
+    if (File_Seek(hFile, pHeader->uiStoredSize, FILE_SEEK_CURRENT) == FALSE) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem seeking past image data!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       return (FALSE);
     }
   }
@@ -246,7 +247,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
     hImage->pAppData = (uint8_t *)MemAlloc(pHeader->uiAppDataSize);
     if (hImage->pAppData == NULL) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       MemFree(hImage->pAppData);
       if (fContents & IMAGE_PALETTE) {
         MemFree(hImage->pPalette);
@@ -259,10 +260,10 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, uint16_t fContents, HWFILE hFile, STCIHea
       }
       return (FALSE);
     }
-    if (!FileMan_Read(hFile, hImage->pAppData, pHeader->uiAppDataSize, &uiBytesRead) ||
+    if (!File_Read(hFile, hImage->pAppData, pHeader->uiAppDataSize, &uiBytesRead) ||
         uiBytesRead != pHeader->uiAppDataSize) {
       DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Error loading application-specific data!");
-      FileMan_Close(hFile);
+      File_Close(hFile);
       MemFree(hImage->pAppData);
       if (fContents & IMAGE_PALETTE) {
         MemFree(hImage->pPalette);
@@ -311,23 +312,23 @@ BOOLEAN STCISetPalette(void *pSTCIPalette, HIMAGE hImage) {
 }
 
 BOOLEAN IsSTCIETRLEFile(char *ImageFile) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   STCIHeader Header;
   uint32_t uiBytesRead;
 
-  CHECKF(FileMan_Exists(ImageFile));
+  CHECKF(File_Exists(ImageFile));
 
   // Open the file and read the header
-  hFile = FileMan_Open(ImageFile, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(ImageFile);
   CHECKF(hFile);
 
-  if (!FileMan_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
+  if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
       uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
     DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem reading STCI header.");
-    FileMan_Close(hFile);
+    File_Close(hFile);
     return (FALSE);
   }
-  FileMan_Close(hFile);
+  File_Close(hFile);
   if (Header.fFlags & STCI_ETRLE_COMPRESSED) {
     return (TRUE);
   } else {
