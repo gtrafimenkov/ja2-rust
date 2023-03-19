@@ -6,7 +6,6 @@
 
 #include "JAScreens.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/VObject.h"
 #include "SGP/WCheck.h"
@@ -18,6 +17,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/DebugControl.h"
 #include "Utils/Utilities.h"
+#include "rust_fileman.h"
 
 #ifdef __GCC
 #pragma GCC diagnostic push
@@ -4182,7 +4182,7 @@ BOOLEAN InitAnimationSystem() {
     for (cnt2 = 0; cnt2 < NUM_STRUCT_IDS; cnt2++) {
       strcpy(sFilename, gAnimStructureDatabase[cnt1][cnt2].Filename);
 
-      if (FileMan_Exists(sFilename)) {
+      if (File_Exists(sFilename)) {
         pStructureFileRef = LoadStructureFile(sFilename);
         if (pStructureFileRef == NULL) {
           SET_ERROR("Animation structure file load failed - %s", sFilename);
@@ -4419,13 +4419,13 @@ void ClearAnimationSurfacesUsageHistory(UINT16 usSoldierID) {
 
 BOOLEAN LoadAnimationProfiles() {
   //	FILE *			pInput;
-  HWFILE pInput;
+  FileID pInput = FILE_ID_ERR;
   INT32 iProfileCount, iDirectionCount, iTileCount;
   struct ANIM_PROF_DIR *pProfileDirs;
   UINT32 uiBytesRead;
 
   //	pInput = fopen( ANIMPROFILEFILENAME, "rb" );
-  pInput = FileMan_Open(ANIMPROFILEFILENAME, FILE_ACCESS_READ, FALSE);
+  pInput = File_OpenForReading(ANIMPROFILEFILENAME);
 
   if (!pInput) {
     return (FALSE);
@@ -4433,7 +4433,7 @@ BOOLEAN LoadAnimationProfiles() {
 
   // Writeout profile data!
   //	if ( fread( &gubNumAnimProfiles, sizeof( gubNumAnimProfiles ), 1, pInput ) != 1 )
-  if (FileMan_Read(pInput, &gubNumAnimProfiles, sizeof(gubNumAnimProfiles), &uiBytesRead) != 1) {
+  if (File_Read(pInput, &gubNumAnimProfiles, sizeof(gubNumAnimProfiles), &uiBytesRead) != 1) {
     return (FALSE);
   }
 
@@ -4450,7 +4450,7 @@ BOOLEAN LoadAnimationProfiles() {
       // Read # tiles
       //			if ( fread( &pProfileDirs->ubNumTiles, sizeof( UINT8 ), 1, pInput )
       //!= 1 )
-      if (FileMan_Read(pInput, &pProfileDirs->ubNumTiles, sizeof(UINT8), &uiBytesRead) != 1) {
+      if (File_Read(pInput, &pProfileDirs->ubNumTiles, sizeof(UINT8), &uiBytesRead) != 1) {
         return (FALSE);
       }
 
@@ -4462,22 +4462,22 @@ BOOLEAN LoadAnimationProfiles() {
       for (iTileCount = 0; iTileCount < pProfileDirs->ubNumTiles; iTileCount++) {
         //				if ( fread( &pProfileDirs->pTiles[ iTileCount ].usTileFlags,
         // sizeof( UINT16 ), 1, pInput ) != 1 )
-        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].usTileFlags, sizeof(UINT16),
-                         &uiBytesRead) != 1) {
+        if (File_Read(pInput, &pProfileDirs->pTiles[iTileCount].usTileFlags, sizeof(UINT16),
+                      &uiBytesRead) != 1) {
           return (FALSE);
         }
 
         //				if ( fread( &pProfileDirs->pTiles[ iTileCount ].bTileX,
         // sizeof( INT8 ), 1, pInput ) != 1 )
-        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileX, sizeof(INT8),
-                         &uiBytesRead) != 1) {
+        if (File_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileX, sizeof(INT8),
+                      &uiBytesRead) != 1) {
           return (FALSE);
         }
 
         //				if ( fread( &pProfileDirs->pTiles[ iTileCount ].bTileY,
         // sizeof( INT8 ), 1, pInput ) != 1 )
-        if (FileMan_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileY, sizeof(INT8),
-                         &uiBytesRead) != 1) {
+        if (File_Read(pInput, &pProfileDirs->pTiles[iTileCount].bTileY, sizeof(INT8),
+                      &uiBytesRead) != 1) {
           return (FALSE);
         }
       }
@@ -4485,7 +4485,7 @@ BOOLEAN LoadAnimationProfiles() {
   }
 
   //	fclose( pInput );
-  FileMan_Close(pInput);
+  File_Close(pInput);
 
   return (TRUE);
 }

@@ -46,8 +46,8 @@ void RemoveSmokeEffectFromTile(INT16 sGridNo, INT8 bLevel);
 
 INT32 NewSmokeEffect(INT16 sGridNo, UINT16 usItem, INT8 bLevel, UINT8 ubOwner);
 
-BOOLEAN SaveSmokeEffectsToSaveGameFile(HWFILE hFile);
-BOOLEAN LoadSmokeEffectsFromLoadGameFile(HWFILE hFile);
+BOOLEAN SaveSmokeEffectsToSaveGameFile(FileID hFile);
+BOOLEAN LoadSmokeEffectsFromLoadGameFile(FileID hFile);
 
 BOOLEAN SaveSmokeEffectsToMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);
 BOOLEAN LoadSmokeEffectsFromMapTempFile(u8 sMapX, u8 sMapY, i8 bMapZ);

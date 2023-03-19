@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/Types.h"
@@ -12,6 +11,7 @@
 #include "TileEngine/Environment.h"
 #include "TileEngine/Lighting.h"
 #include "Utils/SoundControl.h"
+#include "rust_fileman.h"
 
 AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
 INT16 gsNumAmbData = 0;
@@ -188,26 +188,26 @@ STEADY_STATE_AMBIENCE gSteadyStateAmbientTable[NUM_STEADY_STATE_AMBIENCES] = {
 
 BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
   char zFilename[200];
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   INT32 cnt;
 
   // BUILD FILENAME
   sprintf(zFilename, "AMBIENT\\%d.bad", ubAmbientID);
 
   // OPEN, LOAD
-  hFile = FileMan_Open(zFilename, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(zFilename);
   if (!hFile) {
     return (FALSE);
   }
 
   // READ #
-  if (!FileMan_Read(hFile, &gsNumAmbData, sizeof(INT16), NULL)) {
+  if (!File_Read(hFile, &gsNumAmbData, sizeof(INT16), NULL)) {
     return (FALSE);
   }
 
   // LOOP FOR OTHERS
   for (cnt = 0; cnt < gsNumAmbData; cnt++) {
-    if (!FileMan_Read(hFile, &(gAmbData[cnt]), sizeof(AMBIENTDATA_STRUCT), NULL)) {
+    if (!File_Read(hFile, &(gAmbData[cnt]), sizeof(AMBIENTDATA_STRUCT), NULL)) {
       return (FALSE);
     }
 
@@ -215,7 +215,7 @@ BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID) {
     strcpy(gAmbData[cnt].zFilename, zFilename);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return (TRUE);
 }

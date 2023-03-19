@@ -12,7 +12,6 @@
 #include "SGP/Container.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
@@ -94,6 +93,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "rust_civ_groups.h"
+#include "rust_fileman.h"
 
 extern INT16 DirIncrementer[8];
 
@@ -4868,13 +4868,13 @@ void SetSoldierAniSpeed(struct SOLDIERTYPE *pSoldier) {
 // PALETTE REPLACEMENT FUNCTIONS
 ///////////////////////////////////////////////////////
 BOOLEAN LoadPaletteData() {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 cnt, cnt2;
 
-  hFile = FileMan_Open(PALETTEFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(PALETTEFILENAME);
 
   // Read # of types
-  if (!FileMan_Read(hFile, &guiNumPaletteSubRanges, sizeof(guiNumPaletteSubRanges), NULL)) {
+  if (!File_Read(hFile, &guiNumPaletteSubRanges, sizeof(guiNumPaletteSubRanges), NULL)) {
     return (FALSE);
   }
 
@@ -4885,23 +4885,23 @@ BOOLEAN LoadPaletteData() {
 
   // Read # of types for each!
   for (cnt = 0; cnt < guiNumPaletteSubRanges; cnt++) {
-    if (!FileMan_Read(hFile, &gubpNumReplacementsPerRange[cnt], sizeof(UINT8), NULL)) {
+    if (!File_Read(hFile, &gubpNumReplacementsPerRange[cnt], sizeof(UINT8), NULL)) {
       return (FALSE);
     }
   }
 
   // Loop for each one, read in data
   for (cnt = 0; cnt < guiNumPaletteSubRanges; cnt++) {
-    if (!FileMan_Read(hFile, &gpPaletteSubRanges[cnt].ubStart, sizeof(UINT8), NULL)) {
+    if (!File_Read(hFile, &gpPaletteSubRanges[cnt].ubStart, sizeof(UINT8), NULL)) {
       return (FALSE);
     }
-    if (!FileMan_Read(hFile, &gpPaletteSubRanges[cnt].ubEnd, sizeof(UINT8), NULL)) {
+    if (!File_Read(hFile, &gpPaletteSubRanges[cnt].ubEnd, sizeof(UINT8), NULL)) {
       return (FALSE);
     }
   }
 
   // Read # of palettes
-  if (!FileMan_Read(hFile, &guiNumReplacements, sizeof(guiNumReplacements), NULL)) {
+  if (!File_Read(hFile, &guiNumReplacements, sizeof(guiNumReplacements), NULL)) {
     return (FALSE);
   }
 
@@ -4912,17 +4912,17 @@ BOOLEAN LoadPaletteData() {
   // Read!
   for (cnt = 0; cnt < guiNumReplacements; cnt++) {
     // type
-    if (!FileMan_Read(hFile, &gpPalRep[cnt].ubType, sizeof(gpPalRep[cnt].ubType), NULL)) {
+    if (!File_Read(hFile, &gpPalRep[cnt].ubType, sizeof(gpPalRep[cnt].ubType), NULL)) {
       return (FALSE);
     }
 
-    if (!FileMan_Read(hFile, &gpPalRep[cnt].ID, sizeof(gpPalRep[cnt].ID), NULL)) {
+    if (!File_Read(hFile, &gpPalRep[cnt].ID, sizeof(gpPalRep[cnt].ID), NULL)) {
       return (FALSE);
     }
 
     // # entries
-    if (!FileMan_Read(hFile, &gpPalRep[cnt].ubPaletteSize, sizeof(gpPalRep[cnt].ubPaletteSize),
-                      NULL)) {
+    if (!File_Read(hFile, &gpPalRep[cnt].ubPaletteSize, sizeof(gpPalRep[cnt].ubPaletteSize),
+                   NULL)) {
       return (FALSE);
     }
 
@@ -4935,19 +4935,19 @@ BOOLEAN LoadPaletteData() {
     CHECKF(gpPalRep[cnt].b != NULL);
 
     for (cnt2 = 0; cnt2 < gpPalRep[cnt].ubPaletteSize; cnt2++) {
-      if (!FileMan_Read(hFile, &gpPalRep[cnt].r[cnt2], sizeof(UINT8), NULL)) {
+      if (!File_Read(hFile, &gpPalRep[cnt].r[cnt2], sizeof(UINT8), NULL)) {
         return (FALSE);
       }
-      if (!FileMan_Read(hFile, &gpPalRep[cnt].g[cnt2], sizeof(UINT8), NULL)) {
+      if (!File_Read(hFile, &gpPalRep[cnt].g[cnt2], sizeof(UINT8), NULL)) {
         return (FALSE);
       }
-      if (!FileMan_Read(hFile, &gpPalRep[cnt].b[cnt2], sizeof(UINT8), NULL)) {
+      if (!File_Read(hFile, &gpPalRep[cnt].b[cnt2], sizeof(UINT8), NULL)) {
         return (FALSE);
       }
     }
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return (TRUE);
 }
@@ -5902,7 +5902,7 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
     sprintf(zFilename, "BATTLESNDS\\%03d_%s.wav", GetSolProfile(pSoldier),
             gBattleSndsData[ubSoundID].zName);
 
-    if (!FileMan_Exists(zFilename)) {
+    if (!File_Exists(zFilename)) {
       // OK, temp build file...
       if (pSoldier->ubBodyType == REGFEMALE) {
         sprintf(zFilename, "BATTLESNDS\\f_%s.wav", gBattleSndsData[ubSoundID].zName);

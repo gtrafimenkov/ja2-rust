@@ -15,7 +15,6 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
@@ -45,6 +44,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 BOOLEAN gfSchedulesHosed = FALSE;
 extern UINT32 guiBrokenSaveGameVersion;
@@ -818,35 +818,6 @@ void GetSaveLoadScreenUserInput() {
 
     if (Event.usEvent == KEY_UP) {
       switch (Event.usParam) {
-        case 'a':
-          if (gfKeyState[ALT] && !gfSaveGame) {
-            INT8 iFile = GetNumberForAutoSave(TRUE);
-
-            if (iFile == -1) break;
-
-            guiLastSaveGameNum = iFile;
-
-            gbSelectedSaveLocation = SAVE__END_TURN_NUM;
-            StartFadeOutForSaveLoadScreen();
-          }
-          break;
-
-        case 'b':
-          if (gfKeyState[ALT] && !gfSaveGame) {
-            INT8 iFile = GetNumberForAutoSave(FALSE);
-
-            if (iFile == -1)
-              break;
-            else if (iFile == 0)
-              guiLastSaveGameNum = 1;
-            else if (iFile == 1)
-              guiLastSaveGameNum = 0;
-
-            gbSelectedSaveLocation = SAVE__END_TURN_NUM;
-            StartFadeOutForSaveLoadScreen();
-          }
-          break;
-
         case UPARROW:
           MoveSelectionUpOrDown(TRUE);
           break;
@@ -1010,7 +981,7 @@ BOOLEAN InitSaveGameArray() {
   for (cnt = 0; cnt < NUM_SAVE_GAMES; cnt++) {
     CreateSavedGameFileNameFromNumber(cnt, zSaveGameName);
 
-    if (FileMan_Exists(zSaveGameName)) {
+    if (File_Exists(zSaveGameName)) {
       // Get the header for the saved game
       if (!LoadSavedGameHeader(cnt, &SaveGameHeader))
         gbSaveGameArray[cnt] = FALSE;
@@ -1300,7 +1271,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
 }
 
 BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   CHAR8 zSavedGameName[512];
   UINT32 uiNumBytesRead;
 
@@ -1313,24 +1284,24 @@ BOOLEAN LoadSavedGameHeader(INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader) {
   // Get the name of the file
   CreateSavedGameFileNameFromNumber(bEntry, zSavedGameName);
 
-  if (FileMan_Exists(zSavedGameName)) {
+  if (File_Exists(zSavedGameName)) {
     // create the save game file
-    hFile = FileMan_Open(zSavedGameName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE);
+    hFile = File_OpenForReading(zSavedGameName);
     if (!hFile) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       gbSaveGameArray[bEntry] = FALSE;
       return (FALSE);
     }
 
     // Load the Save Game header file
-    FileMan_Read(hFile, pSaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesRead);
+    File_Read(hFile, pSaveGameHeader, sizeof(SAVED_GAME_HEADER), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(SAVED_GAME_HEADER)) {
-      FileMan_Close(hFile);
+      File_Close(hFile);
       gbSaveGameArray[bEntry] = FALSE;
       return (FALSE);
     }
 
-    FileMan_Close(hFile);
+    File_Close(hFile);
 
     //
     // Do some Tests on the header to make sure it is valid
@@ -2107,7 +2078,7 @@ BOOLEAN IsThereAnySavedGameFiles() {
   for (cnt = 0; cnt < NUM_SAVE_GAMES; cnt++) {
     CreateSavedGameFileNameFromNumber(cnt, zSaveGameName);
 
-    if (FileMan_Exists(zSaveGameName)) return (TRUE);
+    if (File_Exists(zSaveGameName)) return (TRUE);
   }
 
   return (FALSE);

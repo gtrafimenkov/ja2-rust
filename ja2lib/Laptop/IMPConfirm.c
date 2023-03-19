@@ -16,7 +16,6 @@
 #include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Strategic/GameClock.h"
@@ -30,6 +29,7 @@
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 #define IMP_MERC_FILE "IMP.dat"
 
@@ -454,41 +454,40 @@ INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem) {
 
 void WriteOutCurrentImpCharacter(INT32 iProfileId) {
   // grab the profile number and write out what is contained there in
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiBytesWritten = 0;
 
   // open the file for writing
-  hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hFile = File_OpenForWriting(IMP_MERC_FILE);
 
   // write out the profile id
-  if (!FileMan_Write(hFile, &iProfileId, sizeof(INT32), &uiBytesWritten)) {
+  if (!File_Write(hFile, &iProfileId, sizeof(INT32), &uiBytesWritten)) {
     return;
   }
 
   // write out the portrait id
-  if (!FileMan_Write(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesWritten)) {
+  if (!File_Write(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesWritten)) {
     return;
   }
 
   // write out the profile itself
-  if (!FileMan_Write(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT),
-                     &uiBytesWritten)) {
+  if (!File_Write(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT), &uiBytesWritten)) {
     return;
   }
 
   // close file
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return;
 }
 
 void LoadInCurrentImpCharacter(void) {
   INT32 iProfileId = 0;
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiBytesRead = 0;
 
   // open the file for writing
-  hFile = FileMan_Open(IMP_MERC_FILE, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(IMP_MERC_FILE);
 
   // valid file?
   if (hFile == -1) {
@@ -496,22 +495,22 @@ void LoadInCurrentImpCharacter(void) {
   }
 
   // read in the profile
-  if (!FileMan_Read(hFile, &iProfileId, sizeof(INT32), &uiBytesRead)) {
+  if (!File_Read(hFile, &iProfileId, sizeof(INT32), &uiBytesRead)) {
     return;
   }
 
   // read in the portrait
-  if (!FileMan_Read(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesRead)) {
+  if (!File_Read(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesRead)) {
     return;
   }
 
   // read in the profile
-  if (!FileMan_Read(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT), &uiBytesRead)) {
+  if (!File_Read(hFile, &gMercProfiles[iProfileId], sizeof(MERCPROFILESTRUCT), &uiBytesRead)) {
     return;
   }
 
   // close file
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   if (MoneyGetBalance() < COST_OF_PROFILE) {
     // not enough

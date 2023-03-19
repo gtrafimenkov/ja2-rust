@@ -147,8 +147,8 @@ UINT8 GetPrefferedItemSlotGraphicNum(UINT16 usItem);
 
 void CancelItemPointer();
 
-BOOLEAN LoadItemCursorFromSavedGame(HWFILE hFile);
-BOOLEAN SaveItemCursorToSavedGame(HWFILE hFile);
+BOOLEAN LoadItemCursorFromSavedGame(FileID hFile);
+BOOLEAN SaveItemCursorToSavedGame(FileID hFile);
 
 void EnableKeyRing(BOOLEAN fEnable);
 

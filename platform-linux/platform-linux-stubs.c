@@ -46,35 +46,11 @@ BOOLEAN Plat_GetFileIsOffline(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) { return FALSE; }
 
-HWFILE FileMan_Open(STR strFilename, UINT32 uiOptions, BOOLEAN fDeleteOnClose) { return 0; }
-
-void FileMan_Close(HWFILE hFile) {}
-
-BOOLEAN FileMan_Read(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Write(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite, UINT32 *puiBytesWritten) {
-  return FALSE;
-}
-
-BOOLEAN FileMan_Seek(HWFILE hFile, UINT32 uiDistance, UINT8 uiHow) { return FALSE; }
-
-INT32 FileMan_GetPos(HWFILE hFile) { return 0; }
-
-UINT32 FileMan_GetSize(HWFILE hFile) { return 0; }
-
 BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
 void Plat_GetFileClose(struct GetFile *pGFStruct) {}
-
-BOOLEAN FileMan_CheckEndOfFile(HWFILE hFile) { return FALSE; }
-
-BOOLEAN FileMan_GetFileWriteTime(HWFILE hFile, uint64_t *pLastWriteTime) { return FALSE; }
-
-UINT32 FileMan_Size(STR strFilename) { return 0; }
 
 /////////////////////////////////////////////////////////////////////////////////
 // Input

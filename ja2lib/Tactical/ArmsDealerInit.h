@@ -68,10 +68,10 @@ enum {
 #define ARMS_DEALER_KIT 0x00008000
 
 #define ARMS_DEALER_FACE 0x00010000
-//#define		ARMS_DEALER_THROWN						0x00020000
-//#define		ARMS_DEALER_KEY 0x00040000
+// #define		ARMS_DEALER_THROWN						0x00020000
+// #define		ARMS_DEALER_KEY 0x00040000
 
-//#define		ARMS_DEALER_VIDEO_CAMERA			0x00020000
+// #define		ARMS_DEALER_VIDEO_CAMERA			0x00020000
 
 #define ARMS_DEALER_DETONATORS 0x00040000
 
@@ -83,7 +83,7 @@ enum {
 
 #define ARMS_DEALER_MEDICAL 0x00800000 | ARMS_DEALER_MEDKIT
 
-//#define		ARMS_DEALER_EMPTY_JAR					0x01000000
+// #define		ARMS_DEALER_EMPTY_JAR					0x01000000
 #define ARMS_DEALER_CREATURE_PARTS 0x02000000
 #define ARMS_DEALER_ROCKET_RIFLE 0x04000000
 
@@ -241,8 +241,8 @@ void RemoveSpecialItemFromArmsDealerInventoryAtElement(UINT8 ubArmsDealer, UINT1
 BOOLEAN IsMercADealer(UINT8 ubMercID);
 INT8 GetArmsDealerIDFromMercID(UINT8 ubMercID);
 
-BOOLEAN SaveArmsDealerInventoryToSaveGameFile(HWFILE hFile);
-BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(HWFILE hFile, BOOLEAN fIncludesElgin,
+BOOLEAN SaveArmsDealerInventoryToSaveGameFile(FileID hFile);
+BOOLEAN LoadArmsDealerInventoryFromSavedGameFile(FileID hFile, BOOLEAN fIncludesElgin,
                                                  BOOLEAN fIncludesManny);
 
 void DailyUpdateOfArmsDealersInventory();

@@ -4,13 +4,13 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/Video.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/WorldDat.h"
 #include "platform.h"
+#include "rust_fileman.h"
 
 #define SHADE_TABLE_DIR "ShadeTables"
 
@@ -29,7 +29,7 @@ void DetermineRGBDistributionSettings() {
   UINT32 uiRBitMask, uiGBitMask, uiBBitMask;
   UINT32 uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
   UINT32 uiNumBytesRead;
-  HWFILE hfile;
+  FileID hfile = FILE_ID_ERR;
   BOOLEAN fSaveRGBDist = FALSE;
   BOOLEAN fCleanShadeTable = FALSE;
   BOOLEAN fLoadedPrevRGBDist = FALSE;
@@ -54,22 +54,22 @@ void DetermineRGBDistributionSettings() {
   }
 
   if (!fSaveRGBDist) {  // Load the previous RGBDist and determine if it is the same one
-    if (!FileMan_Exists("RGBDist.dat") ||
-        FileMan_Exists("ResetShadeTables.txt")) {  // Can't find the RGBDist.dat file.  The
-                                                   // directory exists, but the file doesn't, which
+    if (!File_Exists("RGBDist.dat") ||
+        File_Exists("ResetShadeTables.txt")) {  // Can't find the RGBDist.dat file.  The
+                                                // directory exists, but the file doesn't, which
       // means the user deleted the file manually.  Now, set it up to create a new one.
       fSaveRGBDist = TRUE;
       fCleanShadeTable = TRUE;
     } else {
-      hfile = FileMan_Open("RGBDist.dat", FILE_ACCESS_READ, FALSE);
+      hfile = File_OpenForReading("RGBDist.dat");
       if (!hfile) {
         AssertMsg(0, "Couldn't open RGBDist.dat, even though it exists!");
       }
-      FileMan_Read(hfile, &uiPrevRBitMask, sizeof(UINT32), &uiNumBytesRead);
-      FileMan_Read(hfile, &uiPrevGBitMask, sizeof(UINT32), &uiNumBytesRead);
-      FileMan_Read(hfile, &uiPrevBBitMask, sizeof(UINT32), &uiNumBytesRead);
+      File_Read(hfile, &uiPrevRBitMask, sizeof(UINT32), &uiNumBytesRead);
+      File_Read(hfile, &uiPrevGBitMask, sizeof(UINT32), &uiNumBytesRead);
+      File_Read(hfile, &uiPrevBBitMask, sizeof(UINT32), &uiNumBytesRead);
       fLoadedPrevRGBDist = TRUE;
-      FileMan_Close(hfile);
+      File_Close(hfile);
     }
   }
 
@@ -93,18 +93,19 @@ void DetermineRGBDistributionSettings() {
     // start fresh.
     Plat_RemoveFilesInDirectory(ShadeTableDir);
   }
-  if (fSaveRGBDist) {  // The RGB distribution is going to be saved in a tiny file for future
-                       // reference.  As long as the
+  if (fSaveRGBDist) {
+    // The RGB distribution is going to be saved in a tiny file for future
+    // reference.  As long as the
     // RGB distribution never changes, the shade table will grow until eventually, all tilesets are
     // loaded, shadetables generated and saved in this directory.
-    hfile = FileMan_Open("RGBDist.dat", FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+    hfile = File_OpenForWriting("RGBDist.dat");
     if (!hfile) {
       AssertMsg(0, "Couldn't create RGBDist.dat for writing!");
     }
-    FileMan_Write(hfile, &uiRBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileMan_Write(hfile, &uiGBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileMan_Write(hfile, &uiBBitMask, sizeof(UINT32), &uiNumBytesRead);
-    FileMan_Close(hfile);
+    File_Write(hfile, &uiRBitMask, sizeof(UINT32), &uiNumBytesRead);
+    File_Write(hfile, &uiGBitMask, sizeof(UINT32), &uiNumBytesRead);
+    File_Write(hfile, &uiBBitMask, sizeof(UINT32), &uiNumBytesRead);
+    File_Close(hfile);
   }
 
   // We're done, so restore the executable directory to JA2\Data.
@@ -113,7 +114,7 @@ void DetermineRGBDistributionSettings() {
 }
 
 BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
-  HWFILE hfile;
+  FileID hfile = FILE_ID_ERR;
   INT32 i;
   UINT32 uiNumBytesRead;
   CHAR8 ShadeFileName[100];
@@ -130,9 +131,9 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   ptr++;
   sprintf(ptr, "sha");
 
-  hfile = FileMan_Open(ShadeFileName, FILE_ACCESS_READ, FALSE);
+  hfile = File_OpenForReading(ShadeFileName);
   if (!hfile) {  // File doesn't exist, so generate it
-    FileMan_Close(hfile);
+    File_Close(hfile);
     return FALSE;
   }
 
@@ -141,11 +142,11 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   for (i = 0; i < 16; i++) {
     pObj->pShades[i] = (UINT16*)MemAlloc(512);
     Assert(pObj->pShades[i]);
-    FileMan_Read(hfile, pObj->pShades[i], 512, &uiNumBytesRead);
+    File_Read(hfile, pObj->pShades[i], 512, &uiNumBytesRead);
   }
 
   // The file exists, now make sure the
-  FileMan_Close(hfile);
+  File_Close(hfile);
 #ifdef JA2TESTVERSION
   uiNumTablesLoaded++;
 #endif
@@ -153,7 +154,7 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
 }
 
 BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
-  HWFILE hfile;
+  FileID hfile = FILE_ID_ERR;
   INT32 i;
   UINT32 uiNumBytesWritten;
   CHAR8 ShadeFileName[100];
@@ -173,17 +174,17 @@ BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   ptr++;
   sprintf(ptr, "sha");
 
-  hfile = FileMan_Open(ShadeFileName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE);
+  hfile = File_OpenForWriting(ShadeFileName);
   if (!hfile) {
-    FileMan_Close(hfile);
+    File_Close(hfile);
     AssertMsg(0, String("Can't create %s", ShadeFileName));
     return FALSE;
   }
   for (i = 0; i < 16; i++) {
-    FileMan_Write(hfile, pObj->pShades[i], 512, &uiNumBytesWritten);
+    File_Write(hfile, pObj->pShades[i], 512, &uiNumBytesWritten);
   }
 
-  FileMan_Close(hfile);
+  File_Close(hfile);
   return TRUE;
 }
 

@@ -3,7 +3,6 @@
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
-#include "SGP/FileMan.h"
 #include "SGP/HImage.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
@@ -31,6 +30,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
+#include "rust_fileman.h"
 
 #ifdef JA2BETAVERSION
 BOOLEAN gfClearCreatureQuest = FALSE;
@@ -1292,27 +1292,27 @@ void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, INT8 bS
   }
 }
 
-BOOLEAN SaveCreatureDirectives(HWFILE hFile) {
+BOOLEAN SaveCreatureDirectives(FileID hFile) {
   UINT32 uiNumBytesWritten;
 
-  FileMan_Write(hFile, &giHabitatedDistance, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giHabitatedDistance, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) {
     return (FALSE);
   }
 
-  FileMan_Write(hFile, &giPopulationModifier, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giPopulationModifier, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) {
     return (FALSE);
   }
-  FileMan_Write(hFile, &giLairID, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giLairID, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) {
     return (FALSE);
   }
-  FileMan_Write(hFile, &gfUseCreatureMusic, 1, &uiNumBytesWritten);
+  File_Write(hFile, &gfUseCreatureMusic, 1, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) {
     return (FALSE);
   }
-  FileMan_Write(hFile, &giDestroyedLairID, 4, &uiNumBytesWritten);
+  File_Write(hFile, &giDestroyedLairID, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) {
     return (FALSE);
   }
@@ -1320,29 +1320,29 @@ BOOLEAN SaveCreatureDirectives(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadCreatureDirectives(HWFILE hFile, UINT32 uiSavedGameVersion) {
+BOOLEAN LoadCreatureDirectives(FileID hFile, UINT32 uiSavedGameVersion) {
   UINT32 uiNumBytesRead;
-  FileMan_Read(hFile, &giHabitatedDistance, 4, &uiNumBytesRead);
+  File_Read(hFile, &giHabitatedDistance, 4, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) {
     return (FALSE);
   }
 
-  FileMan_Read(hFile, &giPopulationModifier, 4, &uiNumBytesRead);
+  File_Read(hFile, &giPopulationModifier, 4, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) {
     return (FALSE);
   }
-  FileMan_Read(hFile, &giLairID, 4, &uiNumBytesRead);
+  File_Read(hFile, &giLairID, 4, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) {
     return (FALSE);
   }
 
-  FileMan_Read(hFile, &gfUseCreatureMusic, 1, &uiNumBytesRead);
+  File_Read(hFile, &gfUseCreatureMusic, 1, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) {
     return (FALSE);
   }
 
   if (uiSavedGameVersion >= 82) {
-    FileMan_Read(hFile, &giDestroyedLairID, 4, &uiNumBytesRead);
+    File_Read(hFile, &giDestroyedLairID, 4, &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(INT32)) {
       return (FALSE);
     }

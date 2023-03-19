@@ -4,13 +4,13 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 
 #ifdef JA2TESTVERSION
 
@@ -599,7 +599,7 @@ BOOLEAN DeleteStrategicEvent(UINT8 ubCallbackID, UINT32 uiParam) {
 }
 
 // part of the game.sav files (not map files)
-BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile) {
+BOOLEAN SaveStrategicEventsToSavedGame(FileID hFile) {
   UINT32 uiNumBytesWritten = 0;
   STRATEGICEVENT sGameEvent;
 
@@ -613,7 +613,7 @@ BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile) {
   }
 
   // write the number of strategic events
-  FileMan_Write(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -625,7 +625,7 @@ BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile) {
     memcpy(&sGameEvent, pTempEvent, sizeof(STRATEGICEVENT));
 
     // write the current strategic event
-    FileMan_Write(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesWritten);
+    File_Write(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(STRATEGICEVENT)) {
       return (FALSE);
     }
@@ -636,7 +636,7 @@ BOOLEAN SaveStrategicEventsToSavedGame(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadStrategicEventsFromSavedGame(HWFILE hFile) {
+BOOLEAN LoadStrategicEventsFromSavedGame(FileID hFile) {
   UINT32 uiNumGameEvents;
   STRATEGICEVENT sGameEvent;
   UINT32 cnt;
@@ -647,7 +647,7 @@ BOOLEAN LoadStrategicEventsFromSavedGame(HWFILE hFile) {
   DeleteAllStrategicEvents();
 
   // Read the number of strategic events
-  FileMan_Read(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -663,7 +663,7 @@ BOOLEAN LoadStrategicEventsFromSavedGame(HWFILE hFile) {
     if (pTempEvent == NULL) return (FALSE);
 
     // Read the current strategic event
-    FileMan_Read(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesRead);
+    File_Read(hFile, &sGameEvent, sizeof(STRATEGICEVENT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(STRATEGICEVENT)) {
       return (FALSE);
     }

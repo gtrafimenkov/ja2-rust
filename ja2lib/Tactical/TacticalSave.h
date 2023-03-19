@@ -19,10 +19,10 @@ enum {
 BOOLEAN AddMapModification(u8 sMapX, u8 sMapY, i8 bMapZ);
 
 // Load the Map modifications from the saved game file
-BOOLEAN LoadMapTempFilesFromSavedGameFile(HWFILE hFile);
+BOOLEAN LoadMapTempFilesFromSavedGameFile(FileID hFile);
 
 // Save the Map Temp files to the saved game file
-BOOLEAN SaveMapTempFilesToSavedGameFile(HWFILE hFile);
+BOOLEAN SaveMapTempFilesToSavedGameFile(FileID hFile);
 
 // delete temp file
 BOOLEAN DeleteTempItemMapFile(u8 sMapX, u8 sMapY, i8 bMapZ);
@@ -88,20 +88,20 @@ BOOLEAN ReSetUnderGroundSectorFlag(u8 sSectorX, u8 sSectorY, UINT8 ubSectorZ, UI
 BOOLEAN ReSetSectorFlag(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet);
 
 // Saves the NPC temp Quote file to the saved game file
-BOOLEAN LoadTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);
+BOOLEAN LoadTempNpcQuoteArrayToSaveGameFile(FileID hFile);
 
 // Loads the NPC temp Quote file from the saved game file
-BOOLEAN SaveTempNpcQuoteArrayToSaveGameFile(HWFILE hFile);
+BOOLEAN SaveTempNpcQuoteArrayToSaveGameFile(FileID hFile);
 
 UINT32 MercChecksum(struct SOLDIERTYPE *pSoldier);
 UINT32 ProfileChecksum(MERCPROFILESTRUCT *pProfile);
-BOOLEAN JA2EncryptedFileRead(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead);
-BOOLEAN JA2EncryptedFileWrite(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
+BOOLEAN JA2EncryptedFileRead(FileID hFile, PTR pDest, UINT32 uiBytesToRead, UINT32 *puiBytesRead);
+BOOLEAN JA2EncryptedFileWrite(FileID hFile, PTR pDest, UINT32 uiBytesToWrite,
                               UINT32 *puiBytesWritten);
 
-BOOLEAN NewJA2EncryptedFileRead(HWFILE hFile, PTR pDest, UINT32 uiBytesToRead,
+BOOLEAN NewJA2EncryptedFileRead(FileID hFile, PTR pDest, UINT32 uiBytesToRead,
                                 UINT32 *puiBytesRead);
-BOOLEAN NewJA2EncryptedFileWrite(HWFILE hFile, PTR pDest, UINT32 uiBytesToWrite,
+BOOLEAN NewJA2EncryptedFileWrite(FileID hFile, PTR pDest, UINT32 uiBytesToWrite,
                                  UINT32 *puiBytesWritten);
 
 // If hacker's mess with our save/temp files, this is our final line of defence.

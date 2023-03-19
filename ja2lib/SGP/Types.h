@@ -42,7 +42,7 @@ typedef void* PTR;
 typedef uint16_t HNDL;
 typedef UINT8 BYTE;
 typedef CHAR8 STRING512[512];
-typedef UINT32 HWFILE;
+typedef UINT32 FileID;
 
 #define SGPFILENAME_LEN 100
 typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];

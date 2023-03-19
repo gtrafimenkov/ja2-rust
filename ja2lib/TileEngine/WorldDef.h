@@ -23,7 +23,7 @@ struct VObject;
 #define WORLD_CLIFF_HEIGHT 80
 
 // A macro that actually memcpy's over data and increments the pointer automatically
-// based on the size.  Works like a FileMan_Read except with a buffer instead of a file pointer.
+// based on the size.  Works like a File_Read except with a buffer instead of a file pointer.
 // Used by LoadWorld() and child functions.
 #define LOADDATA(dst, src, size) \
   memcpy(dst, src, size);        \

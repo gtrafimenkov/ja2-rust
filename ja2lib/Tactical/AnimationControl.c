@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/FileMan.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationData.h"
 #include "Tactical/Points.h"
@@ -16,6 +15,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/DebugControl.h"
 #include "Utils/Message.h"
+#include "rust_fileman.h"
 
 #ifdef __GCC
 #pragma GCC diagnostic push
@@ -5284,22 +5284,22 @@ void InitAnimationSurfacesPerBodytype() {
 }
 
 BOOLEAN LoadAnimationStateInstructions() {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiBytesRead;
 
   // Open ani file
-  hFile = FileMan_Open(ANIMFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(ANIMFILENAME);
 
   if (!hFile) {
     return (FALSE);
   }
 
   // Read in block
-  if (!FileMan_Read(hFile, gusAnimInst, sizeof(gusAnimInst), &uiBytesRead)) {
+  if (!File_Read(hFile, gusAnimInst, sizeof(gusAnimInst), &uiBytesRead)) {
     return (FALSE);
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
 
   return (TRUE);
 }

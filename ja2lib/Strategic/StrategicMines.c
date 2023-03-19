@@ -5,7 +5,6 @@
 #include "GameSettings.h"
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/CreatureSpreading.h"
@@ -22,6 +21,7 @@
 #include "Town.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "rust_fileman.h"
 
 // this .c file will handle the strategic level of mines and income from them
 
@@ -701,12 +701,12 @@ BOOLEAN PlayerControlsMine(INT8 bMineIndex) {
   }
 }
 
-BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile) {
+BOOLEAN SaveMineStatusToSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten;
 
   // Save the MineStatus
-  FileMan_Write(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES,
-                &uiNumBytesWritten);
+  File_Write(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES,
+             &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES) {
     return (FALSE);
   }
@@ -714,11 +714,11 @@ BOOLEAN SaveMineStatusToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadMineStatusFromSavedGameFile(HWFILE hFile) {
+BOOLEAN LoadMineStatusFromSavedGameFile(FileID hFile) {
   UINT32 uiNumBytesRead;
 
   // Load the MineStatus
-  FileMan_Read(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES, &uiNumBytesRead);
+  File_Read(hFile, gMineStatus, sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES, &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(MINE_STATUS_TYPE) * MAX_NUMBER_OF_MINES) {
     return (FALSE);
   }

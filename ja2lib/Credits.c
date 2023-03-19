@@ -20,6 +20,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 // local Defines
 enum {
@@ -65,7 +66,7 @@ enum {
 #define CRDT_FLAG__START_SECTION 0x00000002
 #define CRDT_FLAG__END_SECTION 0x00000004
 
-//#define		CRDT_NAME_OF_CREDIT_FILE
+// #define		CRDT_NAME_OF_CREDIT_FILE
 //"BINARYDATA\\Credits.txt"
 #define CRDT_NAME_OF_CREDIT_FILE "BINARYDATA\\Credits.edt"
 
@@ -292,13 +293,6 @@ UINT8 gubCreditScreenTitleColor;   // color of a Title node
 // UINT32		guiCreditScreenActiveDisplayFlags;	//
 
 UINT32 guiCrdtNodeScrollSpeed = CRDT_NODE_DELAY_AMOUNT;  // speed credits go up at
-// UINT32		guiCrdtTimeTillReadNextCredit = CRDT_DELAY_BN_SECTIONS;		//the delay
-// before reading the next credit ( normall = guiCrdtDelayBetweenCreditSection or
-// guiCrdtDelayBetweenNodes )
-// UINT32		guiCrdtDelayBetweenCreditSection = CRDT_DELAY_BN_SECTIONS;
-// //delay between major credits sections ( programming and art ) appearing on the screen UINT32
-// guiCrdtDelayBetweenNodes = CRDT_DELAY_BN_NODES;		//delay between credits appearing on
-// the screen
 UINT32 guiCrdtLastTimeUpdatingNode = 0;         // the last time a node was read from the file
 UINT8 gubCrdtJustification = CENTER_JUSTIFIED;  // the current justification
 
@@ -309,7 +303,7 @@ UINT32 guiGapTillReadNextCredit = CRDT_SPACE_BN_NODES;
 UINT32 guiCurrentCreditRecord = 0;
 BOOLEAN gfPauseCreditScreen = FALSE;
 
-HWFILE ghFile;
+FileID ghFile = FILE_ID_ERR;
 
 // ggg
 
@@ -438,21 +432,6 @@ BOOLEAN EnterCreditsScreen() {
     MSYS_SetRegionUserData(&gCrdtMouseRegions[uiCnt], 0, uiCnt);
   }
 
-  // Test Node
-  {
-    //		AddCreditNode( CRDT_NODE_DEFAULT, L"This is a test" );
-  }
-
-  /*
-          //open the credit text file
-          ghFile = FileMan_Open( CRDT_NAME_OF_CREDIT_FILE, FILE_ACCESS_READ | FILE_OPEN_EXISTING,
-     FALSE
-     ); if( !ghFile )
-          {
-                  return( FALSE );
-          }
-  */
-
   giCurrentlySelectedFace = -1;
   gfPauseCreditScreen = FALSE;
 
@@ -479,7 +458,7 @@ BOOLEAN ExitCreditScreen() {
 
   /*
           //close the text file
-          FileMan_Close( ghFile );
+          File_Close( ghFile );
           ghFile = 0;
   */
 

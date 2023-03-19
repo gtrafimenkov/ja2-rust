@@ -3,8 +3,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include "SGP/FileMan.h"
 #include "SGP/MemMan.h"
+#include "rust_fileman.h"
 
 // Local typedefs
 
@@ -73,17 +73,16 @@ BOOLEAN LoadPCXFileToImage(HIMAGE hImage, UINT16 fContents) {
 PcxObject *LoadPcx(STR8 pFilename) {
   PcxHeader Header;
   PcxObject *pCurrentPcxObject;
-  HWFILE hFileHandle;
+  FileID hFileHandle = FILE_ID_ERR;
   UINT32 uiFileSize;
   UINT8 *pPcxBuffer;
 
   // Open and read in the file
-  if ((hFileHandle = FileMan_Open(pFilename, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE)) ==
-      0) {  // damn we failed to open the file
+  if ((hFileHandle = File_OpenForReading(pFilename)) == 0) {  // damn we failed to open the file
     return NULL;
   }
 
-  uiFileSize = FileMan_GetSize(hFileHandle);
+  uiFileSize = File_GetSize(hFileHandle);
   if (uiFileSize == 0) {  // we failed to size up the file
     return NULL;
   }
@@ -102,7 +101,7 @@ PcxObject *LoadPcx(STR8 pFilename) {
   }
 
   // Ok we now have a file handle, so let's read in the data
-  FileMan_Read(hFileHandle, &Header, sizeof(PcxHeader), NULL);
+  File_Read(hFileHandle, &Header, sizeof(PcxHeader), NULL);
   if ((Header.ubManufacturer != 10) || (Header.ubEncoding != 1)) {  // We have an invalid pcx format
     // Delete the object
     MemFree(pCurrentPcxObject->pPcxBuffer);
@@ -123,13 +122,13 @@ PcxObject *LoadPcx(STR8 pFilename) {
   // We are ready to read in the pcx buffer data. Therefore we must lock the buffer
   pPcxBuffer = pCurrentPcxObject->pPcxBuffer;
 
-  FileMan_Read(hFileHandle, pPcxBuffer, pCurrentPcxObject->uiBufferSize, NULL);
+  File_Read(hFileHandle, pPcxBuffer, pCurrentPcxObject->uiBufferSize, NULL);
 
   // Read in the palette
-  FileMan_Read(hFileHandle, &(pCurrentPcxObject->ubPalette[0]), 768, NULL);
+  File_Read(hFileHandle, &(pCurrentPcxObject->ubPalette[0]), 768, NULL);
 
   // Close file
-  FileMan_Close(hFileHandle);
+  File_Close(hFileHandle);
 
   return pCurrentPcxObject;
 }

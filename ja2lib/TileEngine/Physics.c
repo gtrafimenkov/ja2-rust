@@ -1,6 +1,5 @@
 #include "TileEngine/Physics.h"
 
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"
@@ -31,6 +30,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
+#include "rust_fileman.h"
 
 #define NO_TEST_OBJECT 0
 #define TEST_OBJECT_NO_COLLISIONS 1
@@ -39,8 +39,8 @@
 
 #define OUTDOORS_START_ANGLE (FLOAT)(PI / 4)
 #define INDOORS_START_ANGLE (FLOAT)(PI / 30)
-//#define INDOORS_START_ANGLE (FLOAT)(
-// 0
+// #define INDOORS_START_ANGLE (FLOAT)(
+//  0
 //)
 #define GLAUNCHER_START_ANGLE (FLOAT)(PI / 8)
 #define GLAUNCHER_HIGHER_LEVEL_START_ANGLE (FLOAT)(PI / 6)
@@ -57,12 +57,12 @@
 
 #define TIME_MULTI 1.8
 
-//#define					TIME_MULTI			2.2
+// #define					TIME_MULTI			2.2
 
 #define DELTA_T (1.0 * TIME_MULTI)
 
 #define GRAVITY (9.8 * 2.5)
-//#define					GRAVITY ( 9.8
+// #define					GRAVITY ( 9.8
 //* 2.8
 //)
 
@@ -2017,7 +2017,7 @@ BOOLEAN DoCatchObject(REAL_OBJECT *pObject) {
   return (TRUE);
 }
 
-//#define TESTDUDEXPLOSIVES
+// #define TESTDUDEXPLOSIVES
 
 void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   INT16 sZ;
@@ -2134,7 +2134,7 @@ void HandleArmedObjectImpact(REAL_OBJECT *pObject) {
   }
 }
 
-BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
+BOOLEAN SavePhysicsTableToSaveGameFile(FileID hFile) {
   UINT32 uiNumBytesWritten = 0;
   UINT16 usCnt = 0;
   UINT32 usPhysicsCount = 0;
@@ -2147,7 +2147,7 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
   }
 
   // Save the number of REAL_OBJECTs in the array
-  FileMan_Write(hFile, &usPhysicsCount, sizeof(UINT32), &uiNumBytesWritten);
+  File_Write(hFile, &usPhysicsCount, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2157,7 +2157,7 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
       // if the REAL_OBJECT is active, save it
       if (ObjectSlots[usCnt].fAllocated) {
         // Save the the REAL_OBJECT structure
-        FileMan_Write(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesWritten);
+        File_Write(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesWritten);
         if (uiNumBytesWritten != sizeof(REAL_OBJECT)) {
           return (FALSE);
         }
@@ -2168,7 +2168,7 @@ BOOLEAN SavePhysicsTableToSaveGameFile(HWFILE hFile) {
   return (TRUE);
 }
 
-BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
+BOOLEAN LoadPhysicsTableFromSavedGameFile(FileID hFile) {
   UINT32 uiNumBytesRead = 0;
   UINT16 usCnt = 0;
 
@@ -2176,7 +2176,7 @@ BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
   memset(ObjectSlots, 0, NUM_OBJECT_SLOTS * sizeof(REAL_OBJECT));
 
   // Load the number of REAL_OBJECTs in the array
-  FileMan_Read(hFile, &guiNumObjectSlots, sizeof(UINT32), &uiNumBytesRead);
+  File_Read(hFile, &guiNumObjectSlots, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) {
     return (FALSE);
   }
@@ -2184,7 +2184,7 @@ BOOLEAN LoadPhysicsTableFromSavedGameFile(HWFILE hFile) {
   // loop through and add the objects
   for (usCnt = 0; usCnt < guiNumObjectSlots; usCnt++) {
     // Load the the REAL_OBJECT structure
-    FileMan_Read(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesRead);
+    File_Read(hFile, &ObjectSlots[usCnt], sizeof(REAL_OBJECT), &uiNumBytesRead);
     if (uiNumBytesRead != sizeof(REAL_OBJECT)) {
       return (FALSE);
     }

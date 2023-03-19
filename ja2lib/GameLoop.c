@@ -13,7 +13,6 @@
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
-#include "SGP/LibraryDataBasePub.h"
 #include "SGP/Types.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -141,9 +140,6 @@ void ShutdownGame(void) {
 
   // Save the general save game settings to disk
   SaveGameSettings();
-
-  // shutdown the file database manager
-  ShutDownFileDatabase();
 
   // Deletes all the Temp files in the Maps\Temp directory
   InitTacticalSave(FALSE);

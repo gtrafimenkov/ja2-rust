@@ -15,7 +15,6 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
-#include "SGP/FileMan.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"
@@ -49,6 +48,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_fileman.h"
 
 //
 //******  Defines  ******
@@ -1068,12 +1068,12 @@ BOOLEAN UpdateMercInfo(void) {
 }
 
 BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
-  HWFILE hFile;
+  FileID hFile = FILE_ID_ERR;
   UINT32 uiBytesRead;
   UINT16 i;
   UINT32 uiStartSeekAmount;
 
-  hFile = FileMan_Open(MERCBIOSFILENAME, FILE_ACCESS_READ, FALSE);
+  hFile = File_OpenForReading(MERCBIOSFILENAME);
   if (!hFile) {
     return (FALSE);
   }
@@ -1081,11 +1081,11 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   // Get current mercs bio info
   uiStartSeekAmount = (SIZE_MERC_BIO_INFO + SIZE_MERC_ADDITIONAL_INFO) * ubIndex;
 
-  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
+  if (File_Seek(hFile, uiStartSeekAmount, FILE_SEEK_START) == FALSE) {
     return (FALSE);
   }
 
-  if (!FileMan_Read(hFile, pInfoString, SIZE_MERC_BIO_INFO, &uiBytesRead)) {
+  if (!File_Read(hFile, pInfoString, SIZE_MERC_BIO_INFO, &uiBytesRead)) {
     return (FALSE);
   }
 
@@ -1157,11 +1157,11 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
   // Get the additional info
   uiStartSeekAmount =
       ((SIZE_MERC_BIO_INFO + SIZE_MERC_ADDITIONAL_INFO) * ubIndex) + SIZE_MERC_BIO_INFO;
-  if (FileMan_Seek(hFile, uiStartSeekAmount, FILE_SEEK_FROM_START) == FALSE) {
+  if (File_Seek(hFile, uiStartSeekAmount, FILE_SEEK_START) == FALSE) {
     return (FALSE);
   }
 
-  if (!FileMan_Read(hFile, pAddInfo, SIZE_MERC_ADDITIONAL_INFO, &uiBytesRead)) {
+  if (!File_Read(hFile, pAddInfo, SIZE_MERC_ADDITIONAL_INFO, &uiBytesRead)) {
     return (FALSE);
   }
 
@@ -1230,7 +1230,7 @@ BOOLEAN LoadMercBioInfo(UINT8 ubIndex, STR16 pInfoString, STR16 pAddInfo) {
 #endif
   }
 
-  FileMan_Close(hFile);
+  File_Close(hFile);
   return (TRUE);
 }
 

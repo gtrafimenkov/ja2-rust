@@ -20,16 +20,16 @@ extern SOLDIERINITNODE *gSoldierInitTail;
 // pointer to the beginning of the save/load area, at the correct part of the
 // map file.
 BOOLEAN LoadSoldiersFromMap(INT8 **hBuffer);
-BOOLEAN SaveSoldiersToMap(HWFILE fp);
+BOOLEAN SaveSoldiersToMap(FileID fp);
 
 // For the purpose of keeping track of which soldier belongs to which placement within the game,
 // the only way we can do this properly is to save the soldier ID from the list and reconnect the
 // soldier pointer whenever we load the game.
-BOOLEAN SaveSoldierInitListLinks(HWFILE hfile);
-BOOLEAN LoadSoldierInitListLinks(HWFILE hfile);
-BOOLEAN NewWayOfLoadingEnemySoldierInitListLinks(HWFILE hfile);
-BOOLEAN NewWayOfLoadingCivilianInitListLinks(HWFILE hfile);
-BOOLEAN LookAtButDontProcessEnemySoldierInitListLinks(HWFILE hfile);
+BOOLEAN SaveSoldierInitListLinks(FileID hfile);
+BOOLEAN LoadSoldierInitListLinks(FileID hfile);
+BOOLEAN NewWayOfLoadingEnemySoldierInitListLinks(FileID hfile);
+BOOLEAN NewWayOfLoadingCivilianInitListLinks(FileID hfile);
+BOOLEAN LookAtButDontProcessEnemySoldierInitListLinks(FileID hfile);
 
 void InitSoldierInitList();
 void KillSoldierInitList();
