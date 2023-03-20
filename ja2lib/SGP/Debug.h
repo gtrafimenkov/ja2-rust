@@ -38,29 +38,24 @@ extern void _AssertFailedMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFil
 extern void _Null(void);
 extern char *String(const char *String, ...);
 
-#if defined(_DEBUG) || defined(FORCE_ASSERTS_ON)
-
-#define Assert(a) (a) ? _Null() : _AssertFailedMessage((STR8)NULL, __LINE__, (STR8)__FILE__)
-#define AssertMsg(a, b) (a) ? _Null() : _AssertFailedMessage((STR8)b, __LINE__, (STR8)__FILE__)
-
-extern char gubAssertString[128];
-
-#else
-
-#define Assert(a) _Null()
-#define AssertMsg(a, b) _Null()
-
-#endif
-
 extern BOOLEAN InitializeDebugManager(void);
 extern void ShutdownDebugManager(void);
 
-#ifdef SGP_DEBUG
+// #if defined(_DEBUG) || defined(FORCE_ASSERTS_ON)
+#define Assert(a) (a) ? _Null() : _AssertFailedMessage((STR8)NULL, __LINE__, (STR8)__FILE__)
+#define AssertMsg(a, b) (a) ? _Null() : _AssertFailedMessage((STR8)b, __LINE__, (STR8)__FILE__)
+extern char gubAssertString[128];
+// #else
+// #define Assert(a) _Null()
+// #define AssertMsg(a, b) _Null()
+// #endif
+
+// #ifdef SGP_DEBUG
 #define FastDebugMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
 #define ErrorMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
-#else
-#define FastDebugMsg(a) _Null()
-#define ErrorMsg(a)
-#endif
+// #else
+// #define FastDebugMsg(a) _Null()
+// #define ErrorMsg(a)
+// #endif
 
 #endif
