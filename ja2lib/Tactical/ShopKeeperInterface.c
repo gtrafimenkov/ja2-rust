@@ -800,7 +800,6 @@ BOOLEAN EnterShopKeeperInterface() {
   SetSMPanelCurrentMerc((UINT8)gusSelectedSoldier);
 
   // load the Main trade screen backgroiund image
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("InterFace\\TradeScreen.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMainTradeScreenImage)) {
 #ifdef JA2BETAVERSION
@@ -811,7 +810,6 @@ BOOLEAN EnterShopKeeperInterface() {
   }
 
   // load the Main trade screen background image
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("InterFace\\itemcrossout.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiItemCrossOut)) {
 #ifdef JA2BETAVERSION
@@ -846,7 +844,6 @@ BOOLEAN EnterShopKeeperInterface() {
       sprintf(zTemp, "FACES\\33FACE\\%02d.sti", gMercProfiles[GetSolProfile(pSoldier)].ubFaceIndex);
 
       // While we are at it, add their small face
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(zTemp, VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &guiSmallSoldiersFace[gubNumberMercsInArray])) {
 #ifdef JA2BETAVERSION

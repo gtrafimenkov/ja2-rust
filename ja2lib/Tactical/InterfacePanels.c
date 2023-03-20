@@ -1073,31 +1073,26 @@ BOOLEAN InitializeSMPanel() {
   VOBJECT_DESC VObjectDesc;
 
   // failing the CHECKF after this will cause you to lose your mouse
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(VObjectDesc.ImageFile, "INTERFACE\\inventory_bottom_panel.STI");
   if (!AddVideoObject(&VObjectDesc, &guiSMPanel)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_gold_front.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSMObjects)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inv_frn.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSMObjects2)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel)) {
     return FALSE;
@@ -2790,19 +2785,16 @@ BOOLEAN InitializeTEAMPanel() {
 
   // Load interface panels
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\bottom_bar.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiTEAMPanel)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\gold_front.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiTEAMObjects)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel)) {
     return FALSE;

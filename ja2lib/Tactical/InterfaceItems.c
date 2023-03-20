@@ -838,56 +838,47 @@ BOOLEAN InitInvSlotInterface(INV_REGION_DESC *pRegionDesc, INV_REGION_DESC *pCam
   VOBJECT_DESC VObjectDesc;
 
   // Load all four body type images
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_figure_large_male.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[1][0]))) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_figure_large_male_H.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[1][1]))) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[0][0]))) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_normal_male_H.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[0][1]))) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[2][0]))) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[2][1]))) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_figure_female.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[3][0]))) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\inventory_figure_female_H.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[3][1]))) {
     return FALSE;
   }
 
   // add gold key graphic
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\gold_key_button.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiGoldKeyVO)) {
     return FALSE;
@@ -2209,19 +2200,16 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
   }
 
   // Load graphic
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(VObjectDesc.ImageFile, "INTERFACE\\infobox.sti");
   if (!AddVideoObject(&VObjectDesc, &guiItemDescBox)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(VObjectDesc.ImageFile, "INTERFACE\\iteminfoc.STI");
   if (!AddVideoObject(&VObjectDesc, &guiMapItemDescBox)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(VObjectDesc.ImageFile, "INTERFACE\\bullet.STI");
   if (!AddVideoObject(&VObjectDesc, &guiBullet)) {
     return FALSE;
@@ -2269,7 +2257,6 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
     gRemoveMoney.uiMoneyRemoving = 0;
 
     // Load graphic
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     strcpy(VObjectDesc.ImageFile, "INTERFACE\\info_bil.sti");
     if (!AddVideoObject(&VObjectDesc, &guiMoneyGraphicsForDescBox)) {
       return FALSE;
@@ -4678,7 +4665,6 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16
   }
 
   // Load graphics
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(VObjectDesc.ImageFile, "INTERFACE\\extra_inventory.STI");
   if (!AddVideoObject(&VObjectDesc, &guiItemPopupBoxes)) {
     return FALSE;
@@ -4879,7 +4865,6 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
   gpItemPopupSoldier = pSoldier;
 
   // Load graphics
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(VObjectDesc.ImageFile, "INTERFACE\\extra_inventory.STI");
   if (!AddVideoObject(&VObjectDesc, &guiItemPopupBoxes)) {
     return FALSE;
@@ -5129,7 +5114,6 @@ BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, UINT32 *puiVo) {
   }
 
   // Load item
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   sprintf(VObjectDesc.ImageFile, "BIGITEMS\\%s", zName);
   if (!AddVideoObject(&VObjectDesc, &uiVo)) {
     return FALSE;
@@ -5453,7 +5437,6 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
     gItemPickupMenu.bNumSlotsPerPage = gItemPickupMenu.ubTotalItems;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\itembox.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &(gItemPickupMenu.uiPanelVo))) {
     return FALSE;

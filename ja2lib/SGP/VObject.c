@@ -120,21 +120,46 @@ UINT32 CountVideoObjectNodes() {
   return i;
 }
 
+// This structure describes the creation parameters for a Video Object
+typedef struct {
+  UINT32 fCreateFlags;  // Specifies creation flags like from file or not
+  union {
+    struct {
+      SGPFILENAME ImageFile;  // Filename of image data to use
+    };
+    struct {
+      HIMAGE hImage;
+    };
+  };
+} VOBJECT_INFO;
+
+#define VOBJECT_CREATE_FROMFILE 0x00000040    // Creates a video object from a file ( using HIMAGE )
+#define VOBJECT_CREATE_FROMHIMAGE 0x00000080  // Creates a video object from a pre-loaded hImage
+
+BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex);
+
+BOOLEAN AddVideoObject(VOBJECT_DESC *desc, UINT32 *puiIndex) {
+  VOBJECT_INFO info;
+  info.fCreateFlags = VOBJECT_CREATE_FROMFILE;
+  strcpy(info.ImageFile, desc->ImageFile);
+  return _AddVideoObject(&info, puiIndex);
+}
+
 BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
-  VOBJECT_DESC desc;
+  VOBJECT_INFO desc;
   desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   strcpy(desc.ImageFile, path);
-  return AddVideoObject(&desc, puiIndex);
+  return _AddVideoObject(&desc, puiIndex);
 }
 
 BOOLEAN AddVObjectFromHImage(HIMAGE hImage, UINT32 *puiIndex) {
-  VOBJECT_DESC desc;
+  VOBJECT_INFO desc;
   desc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
   desc.hImage = hImage;
-  return AddVideoObject(&desc, puiIndex);
+  return _AddVideoObject(&desc, puiIndex);
 }
 
-BOOLEAN AddVideoObject(VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex) {
+BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
   struct VObject *hVObject;
 
   // Assertions

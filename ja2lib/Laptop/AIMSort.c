@@ -172,35 +172,30 @@ BOOLEAN EnterAimSort() {
   InitAimDefaults();
 
   // load the SortBy box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\SortBy.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSortByBox)) {
     return FALSE;
   }
 
   // load the ToAlumni graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_TOALUMNI);
   if (!AddVideoObject(&VObjectDesc, &guiToAlumni)) {
     return FALSE;
   }
 
   // load the ToMugShots graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_TOMUGSHOTS);
   if (!AddVideoObject(&VObjectDesc, &guiToMugShots)) {
     return FALSE;
   }
 
   // load the ToStats graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_TOSTATS);
   if (!AddVideoObject(&VObjectDesc, &guiToStats)) {
     return FALSE;
   }
 
   // load the SelectLight graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\SelectLight.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSelectLight)) {
     return FALSE;

@@ -583,7 +583,6 @@ BOOLEAN LoadCharacterPortraitForMainPage(void) {
 
   if (iCurrentProfileMode >= 4) {
     // load it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename(pPlayerSelectedFaceFileNames[iPortraitNumber], VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &guiCHARACTERPORTRAITFORMAINPAGE)) {
       return FALSE;

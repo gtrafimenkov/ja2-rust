@@ -648,7 +648,6 @@ UINT32 SexScreenHandle(void) {
 
   if (ubCurrentScreen == 0) {
     // Load face....
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("INTERFACE\\luckysmile.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &guiSMILY)) AssertMsg(0, "Missing INTERFACE\\luckysmile.sti");
 

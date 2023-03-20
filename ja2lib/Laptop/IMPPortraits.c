@@ -99,7 +99,6 @@ BOOLEAN RenderPortrait(INT16 sX, INT16 sY) {
 
   if (fCharacterIsMale) {
     // load it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename(pPlayerSelectedBigFaceFileNames[iCurrentPortrait], VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
       return FALSE;
@@ -115,7 +114,6 @@ BOOLEAN RenderPortrait(INT16 sX, INT16 sY) {
 
   } else {
     // load it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename(pPlayerSelectedBigFaceFileNames[iCurrentPortrait + 8], VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
       return FALSE;

@@ -478,12 +478,10 @@ void GoIntoOverheadMap() {
   MSYS_AddRegion(&OverheadRegion);
 
   // LOAD CLOSE ANIM
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\MAP_BORD.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &uiOVERMAP)) AssertMsg(0, "Missing INTERFACE\\MAP_BORD.sti");
 
   // LOAD PERSONS
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\PERSONS.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &uiPERSONS)) AssertMsg(0, "Missing INTERFACE\\PERSONS.sti");
 

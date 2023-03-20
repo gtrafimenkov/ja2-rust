@@ -89,7 +89,7 @@ BOOLEAN InitRadarScreen() {
 
 BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
   VOBJECT_DESC VObjectDesc;
-  CHAR8 zFilename[90];
+  CHAR8 zFilename[80];
   INT32 cnt;
   struct VObject *hVObject;
 
@@ -102,11 +102,6 @@ BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
     fImageLoaded = FALSE;
   }
 
-  /* ARM - Restriction removed Nov.29/98.  Must be able to view different radar maps from map screen
-     while underground!
-           // If we are in a cave or basement..... dont get a new one...
-           if( !gfBasement && !gfCaves )
-  */
   {
     // Remove extension
     for (cnt = strlen(zFilename) - 1; cnt >= 0; cnt--) {
@@ -116,7 +111,6 @@ BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
     }
 
     // Grab the Map image
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     sprintf(VObjectDesc.ImageFile, "RADARMAPS\\%s.STI", zFilename);
 
     if (!AddVideoObject(&VObjectDesc, &gusRadarImage)) {
@@ -525,7 +519,6 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
   if ((fRenderRadarScreen == FALSE) && (fCreated == FALSE)) {
     // create regions
     // load graphics
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("INTERFACE\\squadpanel.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiHandle)) {
       return FALSE;

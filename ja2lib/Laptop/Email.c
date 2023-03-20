@@ -364,35 +364,30 @@ BOOLEAN EnterEmail() {
   iCurrentPage = LaptopSaveInfo.iCurrentEmailPage;
 
   // title bar
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiEmailTitle)) {
     return FALSE;
   }
 
   // the list background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Mailwindow.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiEmailBackground)) {
     return FALSE;
   }
 
   // the indication/notification box
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\MailIndicator.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiEmailIndicator)) {
     return FALSE;
   }
 
   // the message background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\emailviewer.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiEmailMessage)) {
     return FALSE;
   }
 
   // the message background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\maillistdivider.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMAILDIVIDER)) {
     return FALSE;

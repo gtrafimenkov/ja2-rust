@@ -397,7 +397,6 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
   MSYS_DefineRegion(&PBInterfaceBlanket, 0, 0, 261, 359, MSYS_PRIORITY_HIGHEST - 5, 0, 0, 0);
 
   // Create the panel
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_PREBATTLEPANEL);
   if (!AddVideoObject(&VObjectDesc, &uiInterfaceImages))
     AssertMsg(0, "Failed to load interface\\PreBattlePanel.sti");

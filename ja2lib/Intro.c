@@ -411,7 +411,6 @@ void DisplaySirtechSplashScreen() {
   UnLockVideoSurface(FRAME_BUFFER);
 
   memset(&VObjectDesc, 0, sizeof(VOBJECT_DESC));
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\SirtechSplash.sti", VObjectDesc.ImageFile);
 
   //	CopyFilename("INTERFACE\\TShold.sti", VObjectDesc.ImageFile);

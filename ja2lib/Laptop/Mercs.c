@@ -336,42 +336,36 @@ BOOLEAN EnterMercs() {
   InitMercBackGround();
 
   // load the Account box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\AccountBox.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiAccountBox)) {
     return FALSE;
   }
 
   // load the files Box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\FilesBox.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiFilesBox)) {
     return FALSE;
   }
 
   // load the MercSymbol graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\MERCSymbol.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMercSymbol)) {
     return FALSE;
   }
 
   // load the SpecPortrait graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\SpecPortrait.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSpecPortrait)) {
     return FALSE;
   }
 
   // load the Arrow graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Arrow.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiArrow)) {
     return FALSE;
   }
 
   // load the Merc video conf background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\SpeckComWindow.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMercVideoPopupBackground)) {
     return FALSE;
@@ -616,7 +610,6 @@ BOOLEAN InitMercBackGround() {
   VOBJECT_DESC VObjectDesc;
 
   // load the Merc background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\MERCBackGround.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMercBackGround)) {
     return FALSE;

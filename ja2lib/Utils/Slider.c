@@ -107,7 +107,6 @@ BOOLEAN InitSlider() {
   VOBJECT_DESC VObjectDesc;
 
   // load Slider Box Graphic graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\SliderBox.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSliderBoxImage)) {
     return FALSE;

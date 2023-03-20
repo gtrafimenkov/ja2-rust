@@ -199,7 +199,6 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   if ((iFaceIndex = GetFreeFace()) == (-1)) return (-1);
 
   // Load face file
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
 
   // ATE: If we are merc profile ID #151-154, all use 151's protrait....
   if (usMercProfileID >= 151 && usMercProfileID <= 154) {

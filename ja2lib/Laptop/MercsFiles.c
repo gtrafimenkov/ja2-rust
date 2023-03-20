@@ -148,21 +148,18 @@ BOOLEAN EnterMercsFiles() {
   InitMercBackGround();
 
   // load the stats box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_STATSBOX);
   if (!AddVideoObject(&VObjectDesc, &guiStatsBox)) {
     return FALSE;
   }
 
   // load the Portrait box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\PortraitBox.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiPortraitBox)) {
     return FALSE;
   }
 
   // load the bio box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BioBox.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiBioBox)) {
     return FALSE;
@@ -414,7 +411,6 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
 
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, ubMercID);
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename(sTemp, VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMercFace)) {
     return FALSE;

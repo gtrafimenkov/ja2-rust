@@ -26,14 +26,12 @@ BOOLEAN EnterBobbyRAmmo() {
   VOBJECT_DESC VObjectDesc;
 
   // load the background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\ammobackground.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiAmmoBackground)) {
     return FALSE;
   }
 
   // load the gunsgrid graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\ammogrid.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiAmmoGrid)) {
     return FALSE;

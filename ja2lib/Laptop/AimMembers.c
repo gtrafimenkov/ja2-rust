@@ -597,77 +597,66 @@ BOOLEAN EnterAIMMembers() {
   }
 
   // load the stats graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\stats.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiStats)) {
     return FALSE;
   }
 
   // load the Price graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\price.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiPrice)) {
     return FALSE;
   }
 
   // load the Portait graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\portrait.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiPortrait)) {
     return FALSE;
   }
 
   // load the WeaponBox graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\weaponbox.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiWeaponBox)) {
     return FALSE;
   }
 
   // load the videoconf Popup graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\VideoConfPopup.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiVideoConfPopup)) {
     return FALSE;
   }
 
   // load the video conf terminal graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\VideoConfTerminal.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiVideoConfTerminal)) {
     return FALSE;
   }
 
   // load the background snow for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BWSnow.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiBWSnow)) {
     return FALSE;
   }
 
   // load the fuzzy line for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\FuzzLine.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiFuzzLine)) {
     return FALSE;
   }
 
   // load the line distortion for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LineInterference.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiStraightLine)) {
     return FALSE;
   }
 
   // load the translucent snow for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\TransSnow.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiTransSnow)) {
     return FALSE;
   }
 
   // load the translucent snow for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\VideoContractCharge.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiVideoContractCharge)) {
     return FALSE;
@@ -1453,7 +1442,6 @@ BOOLEAN DisplayMercsFace() {
 
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, gbCurrentSoldier);
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename(sTemp, VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiFace)) {
     return FALSE;
@@ -2102,7 +2090,6 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
       usPopUpBoxPosY = usPosY;
 
       // load the popup box graphic
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("LAPTOP\\VideoConfPopUp.sti", VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &guiPopUpBox)) {
         return FALSE;
@@ -3063,7 +3050,6 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
       struct VObject *hImageHandle;
 
       // load the answering machine graphic and add it
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("LAPTOP\\VideoTitleBar.sti", VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &uiVideoBackgroundGraphic)) {
         return FALSE;
@@ -3295,7 +3281,6 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     gfIsAnsweringMachineActive = FALSE;
 
     // load the Video conference background graphic and add it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\VideoTitleBar.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiVideoBackgroundGraphic)) {
       return FALSE;

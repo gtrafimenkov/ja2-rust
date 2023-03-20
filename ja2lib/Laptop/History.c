@@ -304,21 +304,18 @@ BOOLEAN LoadHistory(void) {
   // load History video objects into memory
 
   // title bar
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiTITLE)) {
     return FALSE;
   }
 
   // top portion of the screen background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\historywindow.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiTOP)) {
     return FALSE;
   }
 
   // shaded line
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\historylines.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSHADELINE)) {
     return FALSE;
@@ -332,7 +329,6 @@ BOOLEAN LoadHistory(void) {
           if (!AddVideoObject(&VObjectDesc, &guiVERTLINE)) { return FALSE; }
   */
   // black divider line - long ( 480 length)
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\divisionline480.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiLONGLINE)) {
     return FALSE;

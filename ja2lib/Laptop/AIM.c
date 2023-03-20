@@ -201,70 +201,60 @@ BOOLEAN EnterAIM() {
   InitAimDefaults();
 
   // load the MemberShipcard graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\membercard.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMemberCard)) {
     return FALSE;
   }
 
   // load the Policies graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Policies.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiPolicies)) {
     return FALSE;
   }
 
   // load the Links graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Links.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiLinks)) {
     return FALSE;
   }
 
   // load the History graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_HISTORY);
   if (!AddVideoObject(&VObjectDesc, &guiHistory)) {
     return FALSE;
   }
 
   // load the Wanring graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_WARNING);
   if (!AddVideoObject(&VObjectDesc, &guiWarning)) {
     return FALSE;
   }
 
   // load the flower advertisment and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\flowerad_16.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiFlowerAdvertisement)) {
     return FALSE;
   }
 
   // load the your ad advertisment and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_YOURAD13);
   if (!AddVideoObject(&VObjectDesc, &guiAdForAdsImages)) {
     return FALSE;
   }
 
   // load the insurance advertisment and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCEAD10);
   if (!AddVideoObject(&VObjectDesc, &guiInsuranceAdImages)) {
     return FALSE;
   }
 
   // load the funeral advertisment and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_FUNERALAD9);
   if (!AddVideoObject(&VObjectDesc, &guiFuneralAdImages)) {
     return FALSE;
   }
 
   // load the funeral advertisment and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYRAYAD21);
   if (!AddVideoObject(&VObjectDesc, &guiBobbyRAdImages)) {
     return FALSE;
@@ -433,14 +423,12 @@ BOOLEAN InitAimDefaults() {
   VOBJECT_DESC VObjectDesc;
 
   // load the Rust bacground graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\rustbackground.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiRustBackGround)) {
     return FALSE;
   }
 
   // load the Aim Symbol graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_AIMSYMBOL);
   if (!AddVideoObject(&VObjectDesc, &guiAimSymbol)) {
     return FALSE;

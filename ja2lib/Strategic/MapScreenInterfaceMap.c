@@ -4393,25 +4393,21 @@ BOOLEAN LoadMilitiaPopUpBox(void) {
   VOBJECT_DESC VObjectDesc;
 
   // load the militia pop up box
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Militia.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMilitia)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Militiamaps.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMilitiaMaps)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\MilitiamapsectorOutline2.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMilitiaSectorHighLight)) {
     return FALSE;
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\MilitiamapsectorOutline.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMilitiaSectorOutline)) {
     return FALSE;

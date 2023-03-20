@@ -3685,7 +3685,6 @@ void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier) {
   VOBJECT_DESC VObjectDesc;
 
   // going to load face
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
 
   if (pSoldier->bLife == 0) {
     return;

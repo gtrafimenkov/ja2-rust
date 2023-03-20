@@ -315,28 +315,24 @@ BOOLEAN LoadFiles(void) {
   // load files video objects into memory
 
   // title bar
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiTITLE)) {
     return FALSE;
   }
 
   // top portion of the screen background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\fileviewer.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiTOP)) {
     return FALSE;
   }
 
   // the highlight
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\highlight.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiHIGHLIGHT)) {
     return FALSE;
   }
 
   // top portion of the screen background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\fileviewerwhite.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiFileBack)) {
     return FALSE;
@@ -778,7 +774,6 @@ BOOLEAN DisplayFormattedText(void) {
       // second format, one picture, all text below
 
       // load graphic
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &uiFirstTempPicture)) {
         return FALSE;
@@ -820,14 +815,12 @@ BOOLEAN DisplayFormattedText(void) {
       // third format, two pictures, side by side with all text below
 
       // load first graphic
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &uiFirstTempPicture)) {
         return FALSE;
       }
 
       // load second graphic
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(pFilesList->pPicFileNameList[1], VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &uiSecondTempPicture)) {
         return FALSE;
@@ -1048,7 +1041,6 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
   // page 1 picture of country
   if (giFilesPage == 0) {
     // title bar
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\ArucoFilesMap.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
       return FALSE;
@@ -1064,7 +1056,6 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
 
   } else if (giFilesPage == 4) {
     // kid pic
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\Enrico_Y.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
       return FALSE;
@@ -1080,7 +1071,6 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
 
   } else if (giFilesPage == 5) {
     // wedding pic
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\Enrico_W.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
       return FALSE;
@@ -1532,7 +1522,6 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
                 usProfileIdsForTerroristFiles[iFileNumber + 1]);
       }
 
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(sTemp, VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
         return FALSE;
@@ -1549,7 +1538,6 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
 
       DeleteVideoObjectFromIndex(uiPicture);
 
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("LAPTOP\\InterceptBorder.sti", VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
         return FALSE;

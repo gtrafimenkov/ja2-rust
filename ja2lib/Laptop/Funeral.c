@@ -107,49 +107,42 @@ BOOLEAN EnterFuneral() {
   UINT16 usPosX, i;
 
   // load the Closed graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_CLOSED);
   if (!AddVideoObject(&VObjectDesc, &guiClosedSign)) {
     return FALSE;
   }
 
   // load the Left column graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LeftColumn.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiLeftColumn)) {
     return FALSE;
   }
 
   // load the Link carving graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LinkCarving.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiLinkCarving)) {
     return FALSE;
   }
 
   // load the Marble graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Marble.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMarbleBackground)) {
     return FALSE;
   }
 
   // load the McGillicuttys sign graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_MCGILLICUTTYS);
   if (!AddVideoObject(&VObjectDesc, &guiMcGillicuttys)) {
     return FALSE;
   }
 
   // load the Mortuary  graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_MORTUARY);
   if (!AddVideoObject(&VObjectDesc, &guiMortuary)) {
     return FALSE;
   }
 
   // load the right column graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\RightColumn.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiRightColumn)) {
     return FALSE;

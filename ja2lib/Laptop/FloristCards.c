@@ -61,7 +61,6 @@ BOOLEAN EnterFloristCards() {
   InitFloristDefaults();
 
   // load the Flower Account Box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\CardBlank.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiCardBackground)) {
     return FALSE;

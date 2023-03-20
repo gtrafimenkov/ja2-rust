@@ -85,7 +85,6 @@ BOOLEAN EnterFlorist() {
   InitFloristDefaults();
 
   // load the handbullet graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\HandBullet.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiHandBullet)) {
     return FALSE;
@@ -189,7 +188,6 @@ BOOLEAN InitFloristDefaults() {
   VOBJECT_DESC VObjectDesc;
 
   // load the Florist background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\leafback.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiFloristBackground)) {
     return FALSE;
@@ -198,14 +196,12 @@ BOOLEAN InitFloristDefaults() {
   // if its the first page
   if (guiCurrentLaptopMode == LAPTOP_MODE_FLORIST) {
     // load the small title graphic and add it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     GetMLGFilename(VObjectDesc.ImageFile, MLG_LARGEFLORISTSYMBOL);
     if (!AddVideoObject(&VObjectDesc, &guiLargeTitleSymbol)) {
       return FALSE;
     }
   } else {
     // load the leaf back graphic and add it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLFLORISTSYMBOL);
     if (!AddVideoObject(&VObjectDesc, &guiSmallTitleSymbol)) {
       return FALSE;
