@@ -34,8 +34,6 @@ struct VSurface *ghMouseBuffer = NULL;
 
 static PTR LockFrameBuffer(UINT32 *uiPitch);
 static void UnlockFrameBuffer(void);
-static BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch);
-static void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
 static BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
 
 // The following structure is used to define a region of the video Surface
@@ -2187,15 +2185,6 @@ BOOLEAN GetRGBDistribution(void) {
   return TRUE;
 }
 
-BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
-                                       UINT32 *BlueBitMask) {
-  *RedBitMask = gusRedMask;
-  *GreenBitMask = gusGreenMask;
-  *BlueBitMask = gusBlueMask;
-
-  return TRUE;
-}
-
 BOOLEAN EraseMouseCursor() {
   PTR pTmpPointer;
   UINT32 uiPitch;
@@ -3186,22 +3175,13 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
 
   switch (ubBitDepth) {
     case 8:
-
       PixelFormat.dwFlags = DDPF_RGB | DDPF_PALETTEINDEXED8;
       PixelFormat.dwRGBBitCount = 8;
       break;
 
     case 16:
-
       PixelFormat.dwFlags = DDPF_RGB;
       PixelFormat.dwRGBBitCount = 16;
-
-      //
-      // Get current Pixel Format from DirectDraw
-      //
-
-      // We're using pixel formats too -- DB/Wiz
-
       if (!(GetPrimaryRGBDistributionMasks(&uiRBitMask, &uiGBitMask, &uiBBitMask))) {
         return FALSE;
       }
@@ -3211,11 +3191,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
       break;
 
     default:
-
-      //
-      // If Here, an invalid format was given
-      //
-
       DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid BPP value, can only be 8 or 16.");
       return (FALSE);
   }
@@ -3451,7 +3426,7 @@ static BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
 // Lock must be followed by release
 // Pitch MUST be used for all width calculations ( Pitch is in bytes )
 // The time between Locking and unlocking must be minimal
-static BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
+BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
   DDSURFACEDESC SurfaceDescription;
 
   // Assertions
@@ -3469,7 +3444,7 @@ static BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) 
   return (BYTE *)SurfaceDescription.lpSurface;
 }
 
-static void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
+void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
   Assert(hVSurface != NULL);
 
   DDUnlockSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, NULL);
@@ -3478,90 +3453,6 @@ static void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
   if ((hVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
     UpdateBackupSurface(hVSurface);
   }
-}
-
-// Given an struct Image* object, blit imagery into existing Video Surface. Can be from 8->16
-// BPP
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
-                                      UINT16 usY, SGPRect *pSrcRect) {
-  BYTE *pDest;
-  UINT32 fBufferBPP = 0;
-  UINT32 uiPitch;
-  UINT16 usEffectiveWidth;
-  SGPRect aRect;
-
-  // Assertions
-  Assert(hVSurface != NULL);
-  Assert(hImage != NULL);
-
-  // Get Size of hImage and determine if it can fit
-  if (!(hImage->usWidth >= hVSurface->usWidth)) {
-    return FALSE;
-  }
-  if (!(hImage->usHeight >= hVSurface->usHeight)) {
-    return FALSE;
-  }
-
-  // Check BPP and see if they are the same
-  if (hImage->ubBitDepth != hVSurface->ubBitDepth) {
-    // They are not the same, but we can go from 8->16 without much cost
-    if (hImage->ubBitDepth == 8 && hVSurface->ubBitDepth == 16) {
-      fBufferBPP = BUFFER_16BPP;
-    }
-  } else {
-    // Set buffer BPP
-    switch (hImage->ubBitDepth) {
-      case 8:
-
-        fBufferBPP = BUFFER_8BPP;
-        break;
-
-      case 16:
-
-        fBufferBPP = BUFFER_16BPP;
-        break;
-    }
-  }
-
-  Assert(fBufferBPP != 0);
-
-  // Get surface buffer data
-  pDest = LockVideoSurfaceBuffer(hVSurface, &uiPitch);
-
-  // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-  usEffectiveWidth = (UINT16)(uiPitch / (hVSurface->ubBitDepth / 8));
-
-  if (!(pDest != NULL)) {
-    return FALSE;
-  }
-
-  // Blit Surface
-  // If rect is NULL, use entrie image size
-  if (pSrcRect == NULL) {
-    aRect.iLeft = 0;
-    aRect.iTop = 0;
-    aRect.iRight = hImage->usWidth;
-    aRect.iBottom = hImage->usHeight;
-  } else {
-    aRect.iLeft = pSrcRect->iLeft;
-    aRect.iTop = pSrcRect->iTop;
-    aRect.iRight = pSrcRect->iRight;
-    aRect.iBottom = pSrcRect->iBottom;
-  }
-
-  // This struct Image* function will transparently copy buffer
-  if (!CopyImageToBuffer(hImage, fBufferBPP, pDest, usEffectiveWidth, hVSurface->usHeight, usX, usY,
-                         &aRect)) {
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-             String("Error Occured Copying struct Image* to struct VSurface*"));
-    UnLockVideoSurfaceBuffer(hVSurface);
-    return (FALSE);
-  }
-
-  // All is OK
-  UnLockVideoSurfaceBuffer(hVSurface);
-
-  return (TRUE);
 }
 
 // Palette setting is expensive, need to set both DDPalette and create 16BPP palette

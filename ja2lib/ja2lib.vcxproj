@@ -140,6 +140,7 @@
     <ClCompile Include="SGP\Video.c" />
     <ClCompile Include="SGP\VObject.c" />
     <ClCompile Include="SGP\VObjectBlitters.c" />
+    <ClCompile Include="SGP\VSurface.c" />
     <ClCompile Include="SGP\WinFont.c" />
     <ClCompile Include="Soldier.c" />
     <ClCompile Include="Strategic\AIViewer.c" />

@@ -1022,6 +1022,9 @@
     <ClCompile Include="Tactical.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SGP\VSurface.c">
+      <Filter>Source Files\SGP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SGP\Bitmap.h">

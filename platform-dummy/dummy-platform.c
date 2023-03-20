@@ -155,11 +155,6 @@ void InvalidateScreen(void) {}
 
 void RefreshScreen() {}
 
-BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
-                                       UINT32 *BlueBitMask) {
-  return FALSE;
-}
-
 BOOLEAN EraseMouseCursor() { return FALSE; }
 
 BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,

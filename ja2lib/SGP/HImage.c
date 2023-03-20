@@ -766,3 +766,12 @@ void ConvertRGBDistribution565ToAny(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
     pPixel++;
   }
 }
+
+BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
+                                       UINT32 *BlueBitMask) {
+  *RedBitMask = gusRedMask;
+  *GreenBitMask = gusGreenMask;
+  *BlueBitMask = gusBlueMask;
+
+  return TRUE;
+}
