@@ -3023,7 +3023,7 @@ BOOLEAN LoadMapTileset(INT32 iTilesetID) {
   if (gTilesets[iTilesetID].MovementCostFnc != NULL) {
     gTilesets[iTilesetID].MovementCostFnc();
   } else {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("Tileset %d has no callback function for movement costs. Using default.",
                     iTilesetID));
     SetTilesetOneTerrainValues();

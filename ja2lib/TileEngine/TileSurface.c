@@ -77,7 +77,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
       return (NULL);
     }
 
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, cStructureFilename);
+    DebugMsg(TOPIC_JA2, DBG_INFO, cStructureFilename);
 
     fOk = AddZStripInfoToVObject(hVObject, pStructureFileRef, FALSE, 0);
     if (fOk == FALSE) {

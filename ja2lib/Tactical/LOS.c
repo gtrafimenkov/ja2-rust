@@ -3133,7 +3133,7 @@ INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY,
   for (ubLoop = 0; ubLoop < ubShots; ubLoop++) {
     iBullet = CreateBullet(pFirer->ubID, fFake, usBulletFlags);
     if (iBullet == -1) {
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Failed to create bullet"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Failed to create bullet"));
 
       return (FALSE);
     }
@@ -3867,7 +3867,7 @@ void MoveBullet(INT32 iBullet) {
                         RemoveBullet(pBullet->iBullet);
 
                         CorpseHit((INT16)pBullet->sGridNo, pStructure->usStructureID);
-                        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+                        DebugMsg(TOPIC_JA2, DBG_INFO,
                                  String("@@@@@@@ Reducing attacker busy count..., CORPSE HIT"));
 
                         FreeUpAttacker(pBullet->pFirer->ubID);

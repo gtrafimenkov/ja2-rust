@@ -1003,9 +1003,9 @@ void RaiseWorldLand() {
       pTileElement = &(gTileDatabase[pStruct->usIndex]);
       if (pTileElement->fType == FIRSTCLIFF) {
         fSomethingRaised = TRUE;
-        // DebugMsg(TOPIC_JA2,DBG_LEVEL_3,String("Cliff found at count=%d",cnt));
+        // DebugMsg(TOPIC_JA2,DBG_INFO,String("Cliff found at count=%d",cnt));
         if (pTileElement->ubNumberOfTiles > 1) {
-          // DebugMsg(TOPIC_JA2,DBG_LEVEL_3,String("Cliff has %d children",
+          // DebugMsg(TOPIC_JA2,DBG_INFO,String("Cliff has %d children",
           // pTileElement->ubNumberOfTiles));
           for (ubLoop = 0; ubLoop < pTileElement->ubNumberOfTiles; ubLoop++) {
             usIndex = pStruct->usIndex;
@@ -1115,8 +1115,8 @@ void RaiseWorldLand() {
           MAPELEMENT_RAISE_LAND_START;
       // gpWorldLevelData[cnt].uiFlags|=MAPELEMENT_RAISE_LAND_START;
       // gpWorldLevelData[cnt-1].uiFlags|=MAPELEMENT_RAISE_LAND_START;
-      // DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Land Raise start at count: %d is raised",cnt ));
-      // DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Land Raise start at count: %d is raised",cnt - 1
+      // DebugMsg(TOPIC_JA2, DBG_INFO, String("Land Raise start at count: %d is raised",cnt ));
+      // DebugMsg(TOPIC_JA2, DBG_INFO, String("Land Raise start at count: %d is raised",cnt - 1
       // ));
     }
   }
@@ -1164,7 +1164,7 @@ void RaiseWorldLand() {
     }
 
     if (iNumberOfRaises >= 0) {
-      // DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Land Raise start at count: %d is raised",cnt ));
+      // DebugMsg(TOPIC_JA2, DBG_INFO, String("Land Raise start at count: %d is raised",cnt ));
       gpWorldLevelData[cnt].sHeight = iNumberOfRaises * WORLD_CLIFF_HEIGHT;
     }
   }

@@ -97,7 +97,7 @@ BOOLEAN InitializeJA2Clock(void) {
   mmResult = timeGetDevCaps(&tc, sizeof(tc));
 
   if (mmResult != TIMERR_NOERROR) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not get timer properties");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Could not get timer properties");
   }
 
   // Set timer at lowest resolution. Could use middle of lowest/highest, we'll see how this performs
@@ -105,7 +105,7 @@ BOOLEAN InitializeJA2Clock(void) {
   gTimerID = timeSetEvent(BASETIMESLICE, BASETIMESLICE, TimeProc, (DWORD)0, TIME_PERIODIC);
 
   if (!gTimerID) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not create timer callback");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Could not create timer callback");
   }
 
   return TRUE;

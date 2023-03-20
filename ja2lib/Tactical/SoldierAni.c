@@ -651,7 +651,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
                 // ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Gun jammed!" );
               }
 
-              DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+              DebugMsg(TOPIC_JA2, DBG_INFO,
                        String("@@@@@@@ Freeing up attacker - aborting start of attack due to burst "
                               "gun jam"));
               FreeUpAttacker(pSoldier->ubID);
@@ -669,13 +669,13 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
             //						pSoldier->fBurstCompleted = TRUE;
             if (fFreeUpAttacker) {
               //							DebugMsg( TOPIC_JA2,
-              // DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - aborting start of attack") );
+              // DBG_INFO, String("@@@@@@@ Freeing up attacker - aborting start of attack") );
               //							FreeUpAttacker(
               // GetSolID(pSoldier) );
             }
 
             // ATE; Reduce it due to animation being stopped...
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+            DebugMsg(TOPIC_JA2, DBG_INFO,
                      String("@@@@@@@ Freeing up attacker - Burst animation ended"));
             ReduceAttackBusyCount((UINT8)pSoldier->ubID, FALSE);
 
@@ -1043,7 +1043,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           bOKFireWeapon = OKFireWeapon(pSoldier);
 
           if (bOKFireWeapon == FALSE) {
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Fire Weapon: Gun Cannot fire, code 470"));
+            DebugMsg(TOPIC_JA2, DBG_INFO, String("Fire Weapon: Gun Cannot fire, code 470"));
 
             // OK, SKIP x # OF FRAMES
             // Skip 3 frames, ( a third ia added at the end of switch.. ) For a total of 4
@@ -1056,7 +1056,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
                           SoundDir(pSoldier->sGridNo));
 
             // Free-up!
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+            DebugMsg(TOPIC_JA2, DBG_INFO,
                      String("@@@@@@@ Freeing up attacker - gun failed to fire"));
             FreeUpAttacker(pSoldier->ubID);
 
@@ -1251,7 +1251,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // CODE: FORCE FREE ATTACKER
           // Release attacker
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Releasesoldierattacker, code 480"));
+          DebugMsg(TOPIC_JA2, DBG_INFO, String("@@@@@@@ Releasesoldierattacker, code 480"));
 
           ReleaseSoldiersAttacker(pSoldier);
 
@@ -1532,7 +1532,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           //}
           // else
           //{
-          //	 DebugMsg( TOPIC_JA2, DBG_LEVEL_3, "Soldier Ani: CODE 493 Error, Pickup item action
+          //	 DebugMsg( TOPIC_JA2, DBG_INFO, "Soldier Ani: CODE 493 Error, Pickup item action
           // called but not setup" );
           //}
           break;
@@ -1551,7 +1551,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           //}
           // else
           //{
-          //	 DebugMsg( TOPIC_JA2, DBG_LEVEL_3, "Soldier Ani: CODE 494 Error, OPen door action
+          //	 DebugMsg( TOPIC_JA2, DBG_INFO, "Soldier Ani: CODE 494 Error, OPen door action
           // called but not setup" );
           //}
           break;
@@ -1677,7 +1677,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
                 default:
                   // IF we are here - something is wrong - we should have a death animation here
-                  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+                  DebugMsg(TOPIC_JA2, DBG_INFO,
                            String("Soldier Ani: Death sequence needed for animation %d",
                                   pSoldier->usAnimState));
               }
@@ -1698,7 +1698,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
               gfPotentialTeamChangeDuringDeath = TRUE;
 
               // Release attacker
-              DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+              DebugMsg(TOPIC_JA2, DBG_INFO,
                        String("@@@@@@@ Releasesoldierattacker, code 497 = check for death"));
               ReleaseSoldiersAttacker(pSoldier);
 
@@ -1784,7 +1784,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
             if (pSoldier->fChangingStanceDueToSuppression) {
               pSoldier->fChangingStanceDueToSuppression = FALSE;
-              DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+              DebugMsg(TOPIC_JA2, DBG_INFO,
                        String("@@@@@@@ Freeing up attacker - end of suppression stance change"));
               ReduceAttackBusyCount(pSoldier->ubSuppressorID, FALSE);
             }
@@ -2276,14 +2276,14 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
         case 753:
 
           // code: freeup attcker
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+          DebugMsg(TOPIC_JA2, DBG_INFO,
                    String("@@@@@@@ Reducing attacker busy count..., CODE FROM ANIMATION %s ( %d )",
                           gAnimControl[pSoldier->usAnimState].zAnimStr, pSoldier->usAnimState));
           ReduceAttackBusyCount((UINT8)pSoldier->ubID, FALSE);
 
           // ATE: Here, reduce again if creaturequeen tentical attack...
           if (pSoldier->usAnimState == QUEEN_SWIPE) {
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+            DebugMsg(TOPIC_JA2, DBG_INFO,
                      String("@@@@@@@ Reducing attacker busy count for end of queen swipe"));
             ReduceAttackBusyCount((UINT8)pSoldier->ubID, FALSE);
           }
@@ -2330,7 +2330,7 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
 
           // INcrement attacker busy count....
           gTacticalStatus.ubAttackBusyCount++;
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+          DebugMsg(TOPIC_JA2, DBG_INFO,
                    String("!!!!! Incrementing attacker busy count..., CODE FROM ANIMATION %s ( %d "
                           ") : Count now %d",
                           gAnimControl[pSoldier->usAnimState].zAnimStr, pSoldier->usAnimState,
@@ -3050,7 +3050,7 @@ BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) 
     if (pSoldier->bTeam != gbPlayerNum) {
       if (!pSoldier->fDoingExternalDeath) {
         // Release attacker
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("@@@@@@@ Releasesoldierattacker, code 497 = handle soldier death"));
         ReleaseSoldiersAttacker(pSoldier);
       }
@@ -3065,7 +3065,7 @@ BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) 
     // If we are here - something funny has heppende
     // We either have played a death animation when we are not dead, or we are calling
     // this ani code in an animation which is not a death animation
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Soldier Ani: Death animation called when not dead...");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Soldier Ani: Death animation called when not dead...");
   }
 
   return (fBuddyJustDead);
@@ -3074,7 +3074,7 @@ BOOLEAN HandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfMadeCorpse) 
 void HandlePlayerTeamMemberDeathAfterSkullAnimation(struct SOLDIERTYPE *pSoldier) {
   // Release attacker
   if (!pSoldier->fDoingExternalDeath) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("@@@@@@@ Releasesoldierattacker, code 497 = handle soldier death"));
     ReleaseSoldiersAttacker(pSoldier);
   }
@@ -3136,7 +3136,7 @@ BOOLEAN CheckForAndHandleSoldierDeath(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfM
       default:
 
         // IF we are here - something is wrong - we should have an animation stop here
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Soldier Ani: CODE 440 Error, Death STOP not handled");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Soldier Ani: CODE 440 Error, Death STOP not handled");
     }
 
     return (TRUE);
@@ -3298,7 +3298,7 @@ void CheckForAndHandleSoldierIncompacitated(struct SOLDIERTYPE *pSoldier) {
       return;
     } else {
       // We have missed something here - send debug msg
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Soldier Ani: Genmeric hit not chained");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Soldier Ani: Genmeric hit not chained");
     }
   }
 }
@@ -3375,7 +3375,7 @@ BOOLEAN CheckForAndHandleSoldierDyingNotFromHit(struct SOLDIERTYPE *pSoldier) {
 
         default:
           DebugMsg(
-              TOPIC_JA2, DBG_LEVEL_3,
+              TOPIC_JA2, DBG_INFO,
               String("Soldier Control: Death state %d has no death hit", pSoldier->usAnimState));
           {
             BOOLEAN fMadeCorpse;
@@ -3639,7 +3639,7 @@ BOOLEAN HandleCheckForDeathCommonCode(struct SOLDIERTYPE *pSoldier) {
 
     default:
       // IF we are here - something is wrong - we should have a death animation here
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Soldier Ani: unconscious hit sequence needed for animation %d",
                       pSoldier->usAnimState));
   }
@@ -3690,7 +3690,7 @@ BOOLEAN HandleCheckForDeathCommonCode(struct SOLDIERTYPE *pSoldier) {
 
     default:
       // IF we are here - something is wrong - we should have a death animation here
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Soldier Ani: unconscious hit sequence needed for animation %d",
                       pSoldier->usAnimState));
   }

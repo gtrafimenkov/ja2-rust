@@ -12,19 +12,19 @@ BOOLEAN LoadEncryptedDataFromFile(STR pFileName, STR16 pDestString, UINT32 uiSee
 
   hFile = File_OpenForReading(pFileName);
   if (!hFile) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed to open");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "LoadEncryptedDataFromFile: Failed to open");
     return (FALSE);
   }
 
   if (File_Seek(hFile, uiSeekFrom, FILE_SEEK_START) == FALSE) {
     File_Close(hFile);
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed File_Seek");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "LoadEncryptedDataFromFile: Failed File_Seek");
     return (FALSE);
   }
 
   if (!File_Read(hFile, pDestString, uiSeekAmount, &uiBytesRead)) {
     File_Close(hFile);
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "LoadEncryptedDataFromFile: Failed File_Read");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "LoadEncryptedDataFromFile: Failed File_Read");
     return (FALSE);
   }
 

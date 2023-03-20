@@ -216,11 +216,11 @@ BOOLEAN InitializeInputManager(void) {
   // Activate the hook functions for both keyboard and Mouse
   ghKeyboardHook =
       SetWindowsHookEx(WH_KEYBOARD, (HOOKPROC)KeyboardHandler, (HINSTANCE)0, GetCurrentThreadId());
-  DebugMsg(TOPIC_INPUT, DBG_LEVEL_2, String("Set keyboard hook returned %d", ghKeyboardHook));
+  DebugMsg(TOPIC_INPUT, DBG_NORMAL, String("Set keyboard hook returned %d", ghKeyboardHook));
 
   ghMouseHook =
       SetWindowsHookEx(WH_MOUSE, (HOOKPROC)MouseHandler, (HINSTANCE)0, GetCurrentThreadId());
-  DebugMsg(TOPIC_INPUT, DBG_LEVEL_2, String("Set mouse hook returned %d", ghMouseHook));
+  DebugMsg(TOPIC_INPUT, DBG_NORMAL, String("Set mouse hook returned %d", ghMouseHook));
   return TRUE;
 }
 
@@ -690,7 +690,7 @@ void KeyChange(UINT32 usParam, UINT32 uiParam, UINT8 ufKeyState) {
         QueueEvent(KEY_DOWN, ubChar, uiTmpLParam);
       } else {  // There is a current input string which will capture this event
         RedirectToString(ubChar);
-        DebugMsg(TOPIC_INPUT, DBG_LEVEL_0, String("Pressed character %d (%d)", ubChar, ubKey));
+        DebugMsg(TOPIC_INPUT, DBG_ERROR, String("Pressed character %d (%d)", ubChar, ubKey));
       }
     } else {  // Well the key gets repeated
       if (gfCurrentStringInputState ==

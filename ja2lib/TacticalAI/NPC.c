@@ -1474,7 +1474,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
           break;
         case TRIGGER_NPC:
           // if triggering, pass in the approach data as the record to consider
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_0,
+          DebugMsg(TOPIC_JA2, DBG_ERROR,
                    String("Handling trigger %S/%d at %ld", gMercProfiles[ubNPC].zNickname,
                           (UINT8)uiApproachData, GetJA2Clock()));
           NPCConsiderTalking(ubNPC, ubMerc, bApproach, (UINT8)uiApproachData, pNPCQuoteInfoArray,
@@ -2007,7 +2007,7 @@ void TriggerNPCRecord(UINT8 ubTriggerNPC, UINT8 ubTriggerNPCRec) {
     NPCTriggerNPC(ubTriggerNPC, ubTriggerNPCRec, TRIGGER_NPC, fDisplayDialogue);
   } else {
     // don't do anything
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("WARNING: trigger of %d, record %d cannot proceed, possible error",
                     ubTriggerNPC, ubTriggerNPCRec));
   }
@@ -2033,7 +2033,7 @@ void TriggerNPCRecordImmediately(UINT8 ubTriggerNPC, UINT8 ubTriggerNPCRec) {
     HandleNPCTriggerNPC(ubTriggerNPC, ubTriggerNPCRec, fDisplayDialogue, TRIGGER_NPC);
   } else {
     // don't do anything
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("WARNING: trigger of %d, record %d cannot proceed, possible error",
                     ubTriggerNPC, ubTriggerNPCRec));
   }

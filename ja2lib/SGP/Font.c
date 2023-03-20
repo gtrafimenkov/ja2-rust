@@ -291,7 +291,7 @@ INT32 LoadFontFile(STR8 filename) {
   Assert(strlen(filename));
 
   if ((LoadIndex = FindFreeFont()) == (-1)) {
-    DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, String("Out of font slots (%s)", filename));
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, String("Out of font slots (%s)", filename));
     FatalError("Cannot init FONT file %s", filename);
     return (-1);
   }
@@ -300,7 +300,7 @@ INT32 LoadFontFile(STR8 filename) {
   strcpy(vo_desc.ImageFile, filename);
 
   if ((FontObjs[LoadIndex] = CreateVideoObject(&vo_desc)) == NULL) {
-    DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, String("Error creating VOBJECT (%s)", filename));
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, String("Error creating VOBJECT (%s)", filename));
     FatalError("Cannot init FONT file %s", filename);
     return (-1);
   }
@@ -578,7 +578,7 @@ INT16 GetIndex(UINT16 siChar) {
   }
 
   // If here, present warning and give the first index
-  DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, String("Error: Invalid character given %d", siChar));
+  DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, String("Error: Invalid character given %d", siChar));
 
   // Return 0 here, NOT -1 - we should see A's here now...
   return 0;
@@ -1501,21 +1501,21 @@ FileID           hFileHandle = FILE_ID_ERR;
 
   if (pFManager == NULL)
   {
-    DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Did not Initialize Font Manager");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Did not Initialize Font Manager");
     return NULL;
   }
 
   // Open and read in the file
   if ((hFileHandle = File_OpenForReading(pFilename)) == 0)
   { // damn we failed to open the file
-    DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Cannot open font file");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Cannot open font file");
     return NULL;
   }
 
   uiFileSize = File_GetSize(hFileHandle);
   if (uiFileSize == 0)
   { // we failed to size up the file
-    DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Font file is empty");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Font file is empty");
     File_Close(hFileHandle);
     return NULL;
   }
@@ -1523,21 +1523,21 @@ FileID           hFileHandle = FILE_ID_ERR;
   // Allocate memory for the font header file
   if ((pFontBase = (FontBase *)MemAlloc(sizeof(FontBase))) == NULL)
   {
-    DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not malloc memory");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not malloc memory");
           File_Close(hFileHandle);
   }
 
   // read in these values from the file
   if (File_Read(hFileHandle, &uiHeightEach, sizeof(UINT32), NULL) == FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Height from File");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not read Height from File");
           File_Close(hFileHandle);
           return NULL;
   }
 
   if (File_Read(hFileHandle, &uiTotalSymbol, sizeof(UINT32), NULL) == FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Total Symbol from File");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not read Total Symbol from File");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1554,7 +1554,7 @@ FileID           hFileHandle = FILE_ID_ERR;
   //seek past the FontHeader
   if (File_Seek(hFileHandle, sizeof(FontHeader), FILE_SEEK_START) == FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek FileHeader");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek FileHeader");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1563,14 +1563,14 @@ FileID           hFileHandle = FILE_ID_ERR;
   if (File_Read(hFileHandle, pFontBase->pFontObject, (uiTotalSymbol)*sizeof(FontHeader), NULL) ==
 FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Font Objects");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Font Objects");
           File_Close(hFileHandle);
           return NULL;
   }
 
   if (File_Seek(hFileHandle, uiOldoffst, FILE_SEEK_START) == FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Old offset");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Old offset");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1578,7 +1578,7 @@ FALSE)
   // read in the Pixel data
   if (File_Read(hFileHandle, pFontBase->pPixData8, uiNewoffst, NULL) == FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Pixel data");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Pixel data");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1586,7 +1586,7 @@ FALSE)
   // seek proper position to read in Palette
   if (File_Seek(hFileHandle, sizeof(UINT32)*3, FILE_SEEK_START) == FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Palette Start");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Palette Start");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1594,7 +1594,7 @@ FALSE)
   // read in Palette
   if (File_Read(hFileHandle, pPalette, PALETTE_SIZE, NULL) == FALSE)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Palette");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not read Palette");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1610,7 +1610,7 @@ FALSE)
   // create the 16BPer Pixel palette
   if ((pFontBase->pPalet16 = Create16BPPPalette(pNewPalette)) == NULL)
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not create 16 bit palette");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not create 16 bit palette");
           return NULL;
   }
   // return the FontBase structure
@@ -1692,7 +1692,7 @@ struct SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 
 
         pPalEntry = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
         pInitEntry = pPalEntry;
-  DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Converting RGB palette to struct SGPPaletteEntry");
+  DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Converting RGB palette to struct SGPPaletteEntry");
   for(Index=0; Index <= (sbEnd-sbStart);Index++)
   {
     pPalEntry->peRed = *(pOldPalette + (Index*3));
@@ -1920,7 +1920,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
         UINT32  row,count;
   UINT16  modamount,divamount;
 
-        DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Blitting 8 to 8");
+        DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Blitting 8 to 8");
   Assert(pFontBase != NULL);
         Assert(pFrameBuffer != NULL);
 
@@ -2021,7 +2021,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
   UINT16  modamount,divamount;
         UINT16  usEffectiveWidth;
 
-        DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Blitting 16 to 16");
+        DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Blitting 16 to 16");
   Assert(pFontBase != NULL);
         Assert(pFrameBuffer != NULL);
 
@@ -2115,7 +2115,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
   // gets the offset based on the index
   if (((UINT32)ssIndex > pFontBase->uiTotalElements) || (ssIndex < 0))
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Incorrect index value passed");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Incorrect index value passed");
     return 0;
   }
   pTrav = pFontBase->pFontObject;
@@ -2150,7 +2150,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
   // gets the offset based on the index
   if (((UINT32)ssIndex > pFontBase->uiTotalElements) || (ssIndex < 0))
   {
-          DebugMsg(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Incorrect index value passed");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Incorrect index value passed");
     return 0;
   }
   pTrav = pFontBase->pFontObject;

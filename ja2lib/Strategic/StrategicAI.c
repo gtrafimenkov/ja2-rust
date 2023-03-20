@@ -1974,7 +1974,7 @@ void SAIReportError(STR16 wErrorString) {
     if (guiCurrentScreen == AIVIEWER_SCREEN) {
       CHAR8 str[512];
       sprintf(str, "%S\n", wErrorString);
-      DebugPrint(str);
+      PrintToDebuggerConsole(str);
     }
 
     // this should keep it from repeating endlessly and allow player to save/bail
@@ -4410,7 +4410,7 @@ void LogStrategicMsg(CHAR8 *str, ...) {
     ScreenMsg(FONT_LTKHAKI, MSG_DIALOG, L"%S", string);
   }
   if (guiCurrentScreen == AIVIEWER_SCREEN) {
-    DebugPrint(String("%s\n", string));
+    PrintToDebuggerConsole(String("%s\n", string));
   }
 
   fclose(fp);
@@ -4436,7 +4436,7 @@ void LogStrategicEvent(CHAR8 *str, ...) {
     ScreenMsg(FONT_LTKHAKI, MSG_DIALOG, L"%S", string);
   }
   if (guiCurrentScreen == AIVIEWER_SCREEN) {
-    DebugPrint(String("%s\n", string));
+    PrintToDebuggerConsole(String("%s\n", string));
   }
 
   fclose(fp);

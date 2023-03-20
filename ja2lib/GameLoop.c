@@ -93,7 +93,7 @@ BOOLEAN InitializeGame(void) {
   // Init Fonts
   if (!InitializeFonts()) {
     // Send debug message and quit
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "COULD NOT INUT FONT SYSTEM...");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "COULD NOT INUT FONT SYSTEM...");
     return (ERROR_SCREEN);
   }
 

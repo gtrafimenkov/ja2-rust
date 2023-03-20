@@ -426,7 +426,7 @@ void AirRaidLookForDive() {
       if (giNumGridNosMovedThisTurn == 0) {
         // Free up attacker...
         FreeUpAttacker(gpRaidSoldier->ubID);
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("!!!!!!! Tried to free up attacker AIR RAID NO DIVE, attack count now %d",
                         gTacticalStatus.ubAttackBusyCount));
       }
@@ -499,7 +499,7 @@ void BeginDive() {
 
   // Increment attacker bust count....
   gTacticalStatus.ubAttackBusyCount++;
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("!!!!!!! Starting attack BEGIN DIVE %d", gTacticalStatus.ubAttackBusyCount));
 
   // Pick location...
@@ -642,7 +642,7 @@ void DoDive() {
           {
             // Increase attacker busy...
             // gTacticalStatus.ubAttackBusyCount++;
-            // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("!!!!!!! Starting attack AIR RAID ( fire gun
+            // DebugMsg( TOPIC_JA2, DBG_INFO, String("!!!!!!! Starting attack AIR RAID ( fire gun
             // ), attack count now %d", gTacticalStatus.ubAttackBusyCount) );
 
             // INcrement bullet fired...
@@ -677,7 +677,7 @@ void DoDive() {
           {
             // Increase attacker busy...
             // gTacticalStatus.ubAttackBusyCount++;
-            // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("!!!!!!! Starting attack AIR RAID ( second
+            // DebugMsg( TOPIC_JA2, DBG_INFO, String("!!!!!!! Starting attack AIR RAID ( second
             // one ), attack count now %d", gTacticalStatus.ubAttackBusyCount) );
 
             // INcrement bullet fired...
@@ -694,7 +694,7 @@ void DoDive() {
         if ((gTacticalStatus.uiFlags & INCOMBAT)) {
           // Free up attacker...
           FreeUpAttacker(gpRaidSoldier->ubID);
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+          DebugMsg(TOPIC_JA2, DBG_INFO,
                    String("!!!!!!! Tried to free up attacker AIR RAID DIVE DONE FOR THIS TURN, "
                           "attack count now %d",
                           gTacticalStatus.ubAttackBusyCount));
@@ -804,7 +804,7 @@ void DoBombing() {
               // Increase attacker busy...
               gTacticalStatus.ubAttackBusyCount++;
               DebugMsg(
-                  TOPIC_JA2, DBG_LEVEL_3,
+                  TOPIC_JA2, DBG_INFO,
                   String("!!!!!!! Starting attack AIR RAID ( bombs away ), attack count now %d",
                          gTacticalStatus.ubAttackBusyCount));
             }
@@ -820,7 +820,7 @@ void DoBombing() {
           if ((gTacticalStatus.uiFlags & INCOMBAT)) {
             // Free up attacker...
             FreeUpAttacker(gpRaidSoldier->ubID);
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+            DebugMsg(TOPIC_JA2, DBG_INFO,
                      String("!!!!!!! Tried to free up attacker AIR RAID BOMB ATTACK DONE FOR THIS "
                             "TURN, attack count now %d",
                             gTacticalStatus.ubAttackBusyCount));
@@ -936,7 +936,7 @@ void HandleAirRaid() {
             // Free up attacker...
             FreeUpAttacker(gpRaidSoldier->ubID);
             DebugMsg(
-                TOPIC_JA2, DBG_LEVEL_3,
+                TOPIC_JA2, DBG_INFO,
                 String(
                     "!!!!!!! Tried to free up attacker AIR RAID ENDING DIVE, attack count now %d",
                     gTacticalStatus.ubAttackBusyCount));
@@ -954,7 +954,7 @@ void HandleAirRaid() {
             // Free up attacker...
             FreeUpAttacker(gpRaidSoldier->ubID);
             DebugMsg(
-                TOPIC_JA2, DBG_LEVEL_3,
+                TOPIC_JA2, DBG_INFO,
                 String(
                     "!!!!!!! Tried to free up attacker AIR RAID ENDING DIVE, attack count now %d",
                     gTacticalStatus.ubAttackBusyCount));
@@ -1011,7 +1011,7 @@ BOOLEAN HandleAirRaidEndTurn(UINT8 ubTeam) {
 
   // Increment attacker bust count....
   gTacticalStatus.ubAttackBusyCount++;
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("!!!!!!! Starting attack AIR RAID, attack count now %d",
                   gTacticalStatus.ubAttackBusyCount));
 

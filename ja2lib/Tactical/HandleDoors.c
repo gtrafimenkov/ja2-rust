@@ -248,7 +248,7 @@ void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *
       if (pSoldier->bTeam == gbPlayerNum) {
         ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, TacticalStr[DOOR_IS_BUSY]);
       } else {
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("Trying to open door and door is busy: %d", GetSolID(pSoldier)));
       }
       return;

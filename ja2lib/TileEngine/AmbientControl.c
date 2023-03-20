@@ -240,7 +240,7 @@ void HandleNewSectorAmbience(UINT8 ubAmbientID) {
       // OK, load them up!
       BuildDayAmbientSounds();
     } else {
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_0, String("Cannot load Ambient data for tileset"));
+      DebugMsg(TOPIC_JA2, DBG_ERROR, String("Cannot load Ambient data for tileset"));
     }
   }
 }

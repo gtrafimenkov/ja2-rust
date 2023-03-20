@@ -112,7 +112,7 @@ INT16 TerrainActionPoints(struct SOLDIERTYPE *pSoldier, INT16 sGridno, INT8 bDir
 
     default:
 
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Calc AP: Unrecongnized MP type %d in %d, direction %d", sSwitchValue,
                       sGridno, bDir));
       break;
@@ -301,7 +301,7 @@ INT16 ActionPointCost(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bDir,
       default:
 
         // Invalid movement mode
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("Invalid movement mode %d used in ActionPointCost", usMovementMode));
         sPoints = 1;
     }
@@ -368,7 +368,7 @@ INT16 EstimateActionPointCost(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 
       default:
 
         // Invalid movement mode
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("Invalid movement mode %d used in ActionPointCost", usMovementMode));
         sPoints = 1;
     }
@@ -491,7 +491,7 @@ void DeductPoints(struct SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost) {
 
   pSoldier->bActionPoints = (INT8)sNewAP;
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("Deduct Points (%d at %d) %d %d", GetSolID(pSoldier), pSoldier->sGridNo, sAPCost,
                   sBPCost));
 
@@ -761,7 +761,7 @@ INT16 GetBreathPerAP(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState) {
   }
 
   if (!fAnimTypeFound) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("Unknown end-of-turn breath anim: %s", gAnimControl[usAnimState].zAnimStr));
   }
 

@@ -533,7 +533,7 @@ UINT32 MainGameScreenHandle(void) {
     }
 #ifdef JA2EDITOR
     else if (gfIntendOnEnteringEditor) {
-      DebugPrint("Aborting normal game mode and entering editor mode...\n");
+      PrintToDebuggerConsole("Aborting normal game mode and entering editor mode...\n");
       SetPendingNewScreen(0xffff);  // NO_SCREEN
       return EDIT_SCREEN;
     }

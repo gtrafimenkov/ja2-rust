@@ -2538,7 +2538,7 @@ BOOLEAN DetermineArmsDealersSellingInventory() {
   BOOLEAN fAddSpecialItem;
   SPECIAL_ITEM_INFO SpclItemInfo;
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("DEF: DetermineArmsDealer"));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("DEF: DetermineArmsDealer"));
 
   // if there is an old inventory, delete it
   if (gpTempDealersInventory) {

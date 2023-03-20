@@ -96,9 +96,9 @@ void RenderMainMenu();
 void RestoreButtonBackGrounds();
 
 UINT32 MainMenuScreenInit() {
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Version Label: %S", zBuildInfo));
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Version #:     %s", czVersionNumber));
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Tracking #:    %S", zTrackingNumber));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("Version Label: %S", zBuildInfo));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("Version #:     %s", czVersionNumber));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("Tracking #:    %S", zTrackingNumber));
 
   return (TRUE);
 }

@@ -98,7 +98,7 @@ BOOLEAN MusicPlay(UINT32 uiNum) {
   uiMusicHandle = SoundPlayStreamedFile(szMusicList[uiNum], &spParms);
 
   if (uiMusicHandle != SOUND_ERROR) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Music PLay %d %d", uiMusicHandle, gubMusicMode));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("Music PLay %d %d", uiMusicHandle, gubMusicMode));
 
     gfMusicEnded = FALSE;
     fMusicPlaying = TRUE;
@@ -106,7 +106,7 @@ BOOLEAN MusicPlay(UINT32 uiNum) {
     return (TRUE);
   }
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Music PLay %d %d", uiMusicHandle, gubMusicMode));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("Music PLay %d %d", uiMusicHandle, gubMusicMode));
 
 #endif
 
@@ -174,7 +174,7 @@ BOOLEAN MusicStop(void) {
 #ifndef WINDOWED_MODE
 
   if (uiMusicHandle != NO_SAMPLE) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Music Stop %d %d", uiMusicHandle, gubMusicMode));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("Music Stop %d %d", uiMusicHandle, gubMusicMode));
 
     SoundStop(uiMusicHandle);
     fMusicPlaying = FALSE;
@@ -182,7 +182,7 @@ BOOLEAN MusicStop(void) {
     return (TRUE);
   }
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Music Stop %d %d", uiMusicHandle, gubMusicMode));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("Music Stop %d %d", uiMusicHandle, gubMusicMode));
 
 #endif
 
@@ -272,7 +272,7 @@ BOOLEAN MusicPoll(BOOLEAN fForce) {
 
     if (gfMusicEnded) {
       // OK, based on our music mode, play another!
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Music End Loop %d %d", uiMusicHandle, gubMusicMode));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Music End Loop %d %d", uiMusicHandle, gubMusicMode));
 
       // If we were in victory mode, change!
       if (gbVictorySongCount == 1 || gbDeathSongCount == 1) {
@@ -318,7 +318,7 @@ BOOLEAN SetMusicMode(UINT8 ubMusicMode) {
     // Set mode....
     gubMusicMode = ubMusicMode;
 
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Music New Mode %d %d", uiMusicHandle, gubMusicMode));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("Music New Mode %d %d", uiMusicHandle, gubMusicMode));
 
     gbVictorySongCount = 0;
     gbDeathSongCount = 0;
@@ -349,7 +349,7 @@ BOOLEAN StartMusicBasedOnMode() {
     bBattleModeSong = BATTLE_A_MUSIC + (INT8)Random(2);
   }
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("StartMusicBasedOnMode() %d %d", uiMusicHandle, gubMusicMode));
 
   // Setup a song based on mode we're in!
@@ -428,7 +428,7 @@ BOOLEAN StartMusicBasedOnMode() {
 }
 
 void MusicStopCallback(void *pData) {
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Music EndCallback %d %d", uiMusicHandle, gubMusicMode));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("Music EndCallback %d %d", uiMusicHandle, gubMusicMode));
 
   gfMusicEnded = TRUE;
   uiMusicHandle = NO_SAMPLE;
