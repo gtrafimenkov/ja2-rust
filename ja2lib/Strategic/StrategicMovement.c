@@ -4056,7 +4056,7 @@ void NotifyPlayerOfBloodcatBattle(UINT8 ubSectorX, UINT8 ubSectorY) {
     SetMapPanelDirty(true);
     MapScreenHandle();
     InvalidateScreen();
-    RefreshScreen(NULL);
+    RefreshScreen();
   }
 
   gfUsePersistantPBI = TRUE;

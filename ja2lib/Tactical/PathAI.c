@@ -1676,7 +1676,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
       // RenderCoverDebug( );
       InvalidateScreen();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
     }
   }
 #endif
@@ -1729,7 +1729,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
       // RenderCoverDebug( );
       InvalidateScreen();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
     }
 #endif
 

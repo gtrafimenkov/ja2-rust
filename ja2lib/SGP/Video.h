@@ -22,6 +22,8 @@ extern BOOLEAN RestoreVideoManager(void);
 extern void GetCurrentVideoSettings(UINT16 *usWidth, UINT16 *usHeight, UINT8 *ubBitDepth);
 
 extern void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom);
+extern void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom,
+                               UINT32 uiFlags);
 extern void InvalidateScreen(void);
 
 extern BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
@@ -40,9 +42,7 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette);
 
 void VideoCaptureToggle(void);
 
-void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags);
-
-void RefreshScreen(void *DummyVariable);
+void RefreshScreen();
 
 void FatalError(STR8 pError, ...);
 

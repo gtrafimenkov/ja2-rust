@@ -469,7 +469,7 @@ BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize) {
 
   ExecuteBaseDirtyRectQueue();
   EndFrameBufferRender();
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   if (RemoveMercPopupBoxFromIndex(iSaveLoadGameMessageBoxID)) {
     iSaveLoadGameMessageBoxID = -1;

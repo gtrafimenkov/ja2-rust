@@ -1261,7 +1261,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
   // SaveBackgroundRects();
 }
 
-void RefreshScreen(void *DummyVariable) {
+void RefreshScreen() {
   static UINT32 uiRefreshThreadState, uiIndex;
   UINT16 usScreenWidth, usScreenHeight;
   static BOOLEAN fShowMouse;

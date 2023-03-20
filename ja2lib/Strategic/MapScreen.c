@@ -5213,7 +5213,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
     ExecuteBaseDirtyRectQueue();
     EndFrameBufferRender();
     DeleteVideoObjectFromIndex(uiLaptopOn);
-    RefreshScreen(NULL);
+    RefreshScreen();
   }
 
   // Kris:  Removes the pre battle interface, but only if it exists.

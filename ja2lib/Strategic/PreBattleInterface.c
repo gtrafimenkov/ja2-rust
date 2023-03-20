@@ -742,7 +742,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
   BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, 0, 0, 261, 359);
   PlayJA2SampleFromFile("SOUNDS\\Laptop power up (8-11).wav", RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
   InvalidateScreen();
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   while (iPercentage < 100) {
     uiCurrTime = GetJA2Clock();
@@ -771,7 +771,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     BltStretchVideoSurface(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 0, &PBIRect, &DstRect);
 
     InvalidateScreen();
-    RefreshScreen(NULL);
+    RefreshScreen();
 
     // Restore the previous rect.
     BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop,
@@ -1169,7 +1169,7 @@ void AutoResolveBattleCallback(GUI_BUTTON *btn, INT32 reason) {
                          btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
         ExecuteBaseDirtyRectQueue();
         EndFrameBufferRender();
-        RefreshScreen(NULL);
+        RefreshScreen();
         KillPreBattleInterface();
         StopTimeCompression();
         SetMusicMode(MUSIC_TACTICAL_NOTHING);
@@ -1202,7 +1202,7 @@ void GoToSectorCallback(GUI_BUTTON *btn, INT32 reason) {
                          btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
         ExecuteBaseDirtyRectQueue();
         EndFrameBufferRender();
-        RefreshScreen(NULL);
+        RefreshScreen();
         KillPreBattleInterface();
         StopTimeCompression();
         SetMusicMode(MUSIC_TACTICAL_NOTHING);
@@ -1220,7 +1220,7 @@ void GoToSectorCallback(GUI_BUTTON *btn, INT32 reason) {
                        btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
       ExecuteBaseDirtyRectQueue();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
       if (gubPBSectorX == gWorldSectorX && gubPBSectorY == gWorldSectorY && !gbWorldSectorZ) {
         gfGotoSectorTransition = TRUE;
       }
@@ -1270,7 +1270,7 @@ void RetreatMercsCallback(GUI_BUTTON *btn, INT32 reason) {
                        btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
       ExecuteBaseDirtyRectQueue();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
       KillPreBattleInterface();
       StopTimeCompression();
       gpBattleGroup = NULL;

@@ -425,5 +425,5 @@ void DisplaySirtechSplashScreen() {
   DeleteVideoObjectFromIndex(uiLogoID);
 
   InvalidateScreen();
-  RefreshScreen(NULL);
+  RefreshScreen();
 }

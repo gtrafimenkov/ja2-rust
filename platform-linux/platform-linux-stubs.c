@@ -155,7 +155,7 @@ void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UI
 
 void InvalidateScreen(void) {}
 
-void RefreshScreen(void *DummyVariable) {}
+void RefreshScreen() {}
 
 BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
                                        UINT32 *BlueBitMask) {

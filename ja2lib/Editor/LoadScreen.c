@@ -972,7 +972,7 @@ BOOLEAN ExternalLoadMap(STR16 szFilename) {
   ProcessFileIO();  // always returns loadsave_screen and changes iostatus to loading_map.
   ExecuteBaseDirtyRectQueue();
   EndFrameBufferRender();
-  RefreshScreen(NULL);
+  RefreshScreen();
   if (ProcessFileIO() == EDIT_SCREEN) return TRUE;
   return FALSE;
 }
@@ -986,7 +986,7 @@ BOOLEAN ExternalSaveMap(STR16 szFilename) {
   if (ProcessFileIO() == ERROR_SCREEN) return FALSE;
   ExecuteBaseDirtyRectQueue();
   EndFrameBufferRender();
-  RefreshScreen(NULL);
+  RefreshScreen();
   if (ProcessFileIO() == EDIT_SCREEN) return TRUE;
   return FALSE;
 }

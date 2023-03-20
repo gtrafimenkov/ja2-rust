@@ -51,14 +51,14 @@ void InitJA2SplashScreen() {
   DeleteVideoSurfaceFromIndex(uiLogoID);
 
   InvalidateScreen();
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   guiSplashStartTime = GetJA2Clock();
   while (i < 60 * 15)  // guiSplashStartTime + 15000 > GetJA2Clock() )
   {
     // Allow the user to pick his bum.
     InvalidateScreen();
-    RefreshScreen(NULL);
+    RefreshScreen();
     i++;
   }
 #endif
@@ -82,7 +82,7 @@ void InitJA2SplashScreen() {
 #endif
 
   InvalidateScreen();
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   guiSplashStartTime = GetJA2Clock();
 }

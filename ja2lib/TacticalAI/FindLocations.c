@@ -964,7 +964,7 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
     RenderCoverDebug();
     InvalidateScreen();
     EndFrameBufferRender();
-    RefreshScreen(NULL);
+    RefreshScreen();
     /*
 iLoop = GetJA2Clock();
 do
