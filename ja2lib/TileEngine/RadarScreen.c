@@ -524,7 +524,7 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
     // create regions
     // load graphics
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("INTERFACE\\squadpanel.sti", VObjectDesc.ImageFile);
+    CopyFilename("INTERFACE\\squadpanel.sti", VObjectDesc.ImageFile);
     CHECKF(AddVideoObject(&VObjectDesc, &uiHandle));
 
     GetVideoObject(&hHandle, uiHandle);

@@ -238,32 +238,16 @@ BOOLEAN InitMainMenu() {
 
   // load background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LOADSCREENS\\MainMenuBackGround.sti", VObjectDesc.ImageFile);
+  CopyFilename("LOADSCREENS\\MainMenuBackGround.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMainMenuBackGroundImage));
 
   // load ja2 logo graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  //	FilenameForBPP("INTERFACE\\Ja2_2.sti", VObjectDesc.ImageFile);
-  FilenameForBPP("LOADSCREENS\\Ja2Logo.sti", VObjectDesc.ImageFile);
+  CopyFilename("LOADSCREENS\\Ja2Logo.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiJa2LogoImage));
-
-  /*
-          // Gray out some buttons based on status of game!
-          if( gGameSettings.bLastSavedGameSlot < 0 || gGameSettings.bLastSavedGameSlot >=
-     NUM_SAVE_GAMES )
-          {
-                  DisableButton( iMenuButtons[ LOAD_GAME ] );
-          }
-          //The ini file said we have a saved game, but there is no saved game
-          else if( gbSaveGameArray[ gGameSettings.bLastSavedGameSlot ] == FALSE )
-                  DisableButton( iMenuButtons[ LOAD_GAME ] );
-  */
 
   // if there are no saved games, disable the button
   if (!IsThereAnySavedGameFiles()) DisableButton(iMenuButtons[LOAD_GAME]);
-
-  //	DisableButton( iMenuButtons[ CREDITS ] );
-  //	DisableButton( iMenuButtons[ TITLE ] );
 
   gbHandledMainMenu = 0;
   fInitialRender = TRUE;

@@ -365,27 +365,27 @@ BOOLEAN EnterEmail() {
 
   // title bar
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiEmailTitle));
 
   // the list background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Mailwindow.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\Mailwindow.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiEmailBackground));
 
   // the indication/notification box
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\MailIndicator.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\MailIndicator.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiEmailIndicator));
 
   // the message background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\emailviewer.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\emailviewer.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiEmailMessage));
 
   // the message background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\maillistdivider.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\maillistdivider.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMAILDIVIDER));
 
   // AddEmail(IMP_EMAIL_PROFILE_RESULTS, IMP_EMAIL_PROFILE_RESULTS_LENGTH, IMP_PROFILE_RESULTS,
@@ -4148,7 +4148,7 @@ BOOLEAN DisplayNumberOfPagesToThisEmail(INT32 iViewerY) {
   // get and blt the email list background
   // load, blt and delete graphics
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-  //	FilenameForBPP( "LAPTOP\\mailindent.sti", VObjectDesc.ImageFile );
+  //	CopyFilename( "LAPTOP\\mailindent.sti", VObjectDesc.ImageFile );
   // CHECKF( AddVideoObject( &VObjectDesc, &uiMailIndent ) );
   // GetVideoObject( &hHandle, uiMailIndent );
   // BltVideoObject( FRAME_BUFFER, hHandle, 0,VIEWER_X + INDENT_X_OFFSET, VIEWER_Y + iViewerY +

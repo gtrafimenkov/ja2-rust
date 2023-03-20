@@ -801,7 +801,7 @@ BOOLEAN EnterShopKeeperInterface() {
 
   // load the Main trade screen backgroiund image
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("InterFace\\TradeScreen.sti", VObjectDesc.ImageFile);
+  CopyFilename("InterFace\\TradeScreen.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMainTradeScreenImage)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load TradeScreen.sti");
@@ -812,7 +812,7 @@ BOOLEAN EnterShopKeeperInterface() {
 
   // load the Main trade screen background image
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("InterFace\\itemcrossout.sti", VObjectDesc.ImageFile);
+  CopyFilename("InterFace\\itemcrossout.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiItemCrossOut)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load itemcrossout.sti");
@@ -824,7 +824,7 @@ BOOLEAN EnterShopKeeperInterface() {
   ATM:
           // load the Main trade screen backgroiund image
           VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-          FilenameForBPP("InterFace\\TradeScreenAtm.sti", VObjectDesc.ImageFile);
+          CopyFilename("InterFace\\TradeScreenAtm.sti", VObjectDesc.ImageFile);
           CHECKF(AddVideoObject(&VObjectDesc, &guiSkiAtmImage ));
   */
 
@@ -847,7 +847,7 @@ BOOLEAN EnterShopKeeperInterface() {
 
       // While we are at it, add their small face
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP(zTemp, VObjectDesc.ImageFile);
+      CopyFilename(zTemp, VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &guiSmallSoldiersFace[gubNumberMercsInArray])) {
 #ifdef JA2BETAVERSION
         ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load %s", zTemp);

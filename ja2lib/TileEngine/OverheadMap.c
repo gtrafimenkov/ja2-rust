@@ -120,7 +120,7 @@ void InitNewOverheadDB(UINT8 ubTilesetID) {
     // Create video object
 
     // Adjust for BPP
-    FilenameForBPP(gTilesets[ubTilesetID].TileSurfaceFilenames[uiLoop], cFileBPP);
+    CopyFilename(gTilesets[ubTilesetID].TileSurfaceFilenames[uiLoop], cFileBPP);
 
     // Adjust for tileset position
     sprintf(cAdjustedFile, "TILESETS\\%d\\T\\%s", ubTilesetID, cFileBPP);
@@ -131,7 +131,7 @@ void InitNewOverheadDB(UINT8 ubTilesetID) {
 
     if (hVObject == NULL) {
       // TRY loading from default directory
-      FilenameForBPP(gTilesets[GENERIC_1].TileSurfaceFilenames[uiLoop], cFileBPP);
+      CopyFilename(gTilesets[GENERIC_1].TileSurfaceFilenames[uiLoop], cFileBPP);
       // Adjust for tileset position
       sprintf(cAdjustedFile, "TILESETS\\0\\T\\%s", cFileBPP);
 
@@ -486,12 +486,12 @@ void GoIntoOverheadMap() {
 
   // LOAD CLOSE ANIM
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\MAP_BORD.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\MAP_BORD.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &uiOVERMAP)) AssertMsg(0, "Missing INTERFACE\\MAP_BORD.sti");
 
   // LOAD PERSONS
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\PERSONS.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\PERSONS.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &uiPERSONS)) AssertMsg(0, "Missing INTERFACE\\PERSONS.sti");
 
   // Add shades to persons....

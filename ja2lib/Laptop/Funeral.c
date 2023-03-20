@@ -113,17 +113,17 @@ BOOLEAN EnterFuneral() {
 
   // load the Left column graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\LeftColumn.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\LeftColumn.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiLeftColumn));
 
   // load the Link carving graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\LinkCarving.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\LinkCarving.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiLinkCarving));
 
   // load the Marble graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Marble.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\Marble.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMarbleBackground));
 
   // load the McGillicuttys sign graphic and add it
@@ -138,7 +138,7 @@ BOOLEAN EnterFuneral() {
 
   // load the right column graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\RightColumn.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\RightColumn.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiRightColumn));
 
   usPosX = FUNERAL_LINK_1_X;

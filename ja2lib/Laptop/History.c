@@ -305,29 +305,29 @@ BOOLEAN LoadHistory(void) {
 
   // title bar
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTITLE));
 
   // top portion of the screen background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\historywindow.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\historywindow.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTOP));
 
   // shaded line
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\historylines.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\historylines.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSHADELINE));
 
   /*
   Not being used???  DF commented out
     // vert  line
     VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-          FilenameForBPP("LAPTOP\\historyvertline.sti", VObjectDesc.ImageFile);
+          CopyFilename("LAPTOP\\historyvertline.sti", VObjectDesc.ImageFile);
           CHECKF(AddVideoObject(&VObjectDesc, &guiVERTLINE));
   */
   // black divider line - long ( 480 length)
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\divisionline480.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\divisionline480.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiLONGLINE));
 
   return (TRUE);

@@ -316,22 +316,22 @@ BOOLEAN LoadFiles(void) {
 
   // title bar
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTITLE));
 
   // top portion of the screen background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\fileviewer.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\fileviewer.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTOP));
 
   // the highlight
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\highlight.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\highlight.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiHIGHLIGHT));
 
   // top portion of the screen background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\fileviewerwhite.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\fileviewerwhite.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiFileBack));
 
   return (TRUE);
@@ -771,7 +771,7 @@ BOOLEAN DisplayFormattedText(void) {
 
       // load graphic
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
+      CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
       CHECKF(AddVideoObject(&VObjectDesc, &uiFirstTempPicture));
 
       GetVideoObjectETRLESubregionProperties(uiFirstTempPicture, 0, &usFirstWidth, &usFirstHeight);
@@ -811,12 +811,12 @@ BOOLEAN DisplayFormattedText(void) {
 
       // load first graphic
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
+      CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
       CHECKF(AddVideoObject(&VObjectDesc, &uiFirstTempPicture));
 
       // load second graphic
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP(pFilesList->pPicFileNameList[1], VObjectDesc.ImageFile);
+      CopyFilename(pFilesList->pPicFileNameList[1], VObjectDesc.ImageFile);
       CHECKF(AddVideoObject(&VObjectDesc, &uiSecondTempPicture));
 
       GetVideoObjectETRLESubregionProperties(uiFirstTempPicture, 0, &usFirstWidth, &usFirstHeight);
@@ -1035,7 +1035,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
   if (giFilesPage == 0) {
     // title bar
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("LAPTOP\\ArucoFilesMap.sti", VObjectDesc.ImageFile);
+    CopyFilename("LAPTOP\\ArucoFilesMap.sti", VObjectDesc.ImageFile);
     CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
 
     // get title bar object
@@ -1049,7 +1049,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
   } else if (giFilesPage == 4) {
     // kid pic
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("LAPTOP\\Enrico_Y.sti", VObjectDesc.ImageFile);
+    CopyFilename("LAPTOP\\Enrico_Y.sti", VObjectDesc.ImageFile);
     CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
 
     // get title bar object
@@ -1063,7 +1063,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
   } else if (giFilesPage == 5) {
     // wedding pic
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("LAPTOP\\Enrico_W.sti", VObjectDesc.ImageFile);
+    CopyFilename("LAPTOP\\Enrico_W.sti", VObjectDesc.ImageFile);
     CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
 
     // get title bar object
@@ -1513,7 +1513,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP(sTemp, VObjectDesc.ImageFile);
+      CopyFilename(sTemp, VObjectDesc.ImageFile);
       CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
 
       // Blt face to screen to
@@ -1528,7 +1528,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       DeleteVideoObjectFromIndex(uiPicture);
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP("LAPTOP\\InterceptBorder.sti", VObjectDesc.ImageFile);
+      CopyFilename("LAPTOP\\InterceptBorder.sti", VObjectDesc.ImageFile);
       CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
 
       // Blt face to screen to

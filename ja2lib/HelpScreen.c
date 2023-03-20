@@ -633,7 +633,7 @@ BOOLEAN EnterHelpScreen() {
 
   // load the help screen background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\HelpScreen.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\HelpScreen.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiHelpScreenBackGround));
 
   // create the text buffer

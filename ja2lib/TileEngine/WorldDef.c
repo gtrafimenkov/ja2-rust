@@ -348,7 +348,7 @@ BOOLEAN AddTileSurface(char *cFilename, UINT32 ubType, UINT8 ubTilesetID, BOOLEA
   gbSameAsDefaultSurfaceUsed[ubType] = FALSE;
 
   // Adjust for BPP
-  FilenameForBPP(cFilename, cFileBPP);
+  CopyFilename(cFilename, cFileBPP);
 
   if (!fGetFromRoot) {
     // Adjust for tileset position

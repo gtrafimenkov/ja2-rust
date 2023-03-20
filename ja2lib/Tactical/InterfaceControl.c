@@ -507,7 +507,7 @@ void RenderTopmostTacticalInterface() {
           if (uiBogTarget == 0) {
             // Loadup cursor!
             VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-            FilenameForBPP("CURSORS\\targblak.sti", VObjectDesc.ImageFile);
+            CopyFilename("CURSORS\\targblak.sti", VObjectDesc.ImageFile);
             AddVideoObject(&VObjectDesc, &uiBogTarget);
           }
 

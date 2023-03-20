@@ -96,7 +96,7 @@ BOOLEAN EnterMercsAccount() {
 
   // load the Arrow graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\AccountNumber.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\AccountNumber.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiAccountNumberGrid));
 
   guiMercAuthorizeButtonImage = LoadButtonImage("LAPTOP\\BigButtons.sti", -1, 0, -1, 1, -1);

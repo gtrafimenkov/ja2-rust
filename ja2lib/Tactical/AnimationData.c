@@ -4284,7 +4284,7 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
     sprintf(gSystemDebugStr, "Cache Load");
 
     // Create video object
-    FilenameForBPP(gAnimSurfaceDatabase[usSurfaceIndex].Filename, sFilename);
+    CopyFilename(gAnimSurfaceDatabase[usSurfaceIndex].Filename, sFilename);
     hImage =
         CreateImage(/*gAnimSurfaceDatabase[ usSurfaceIndex ].Filename*/ sFilename, IMAGE_ALLDATA);
 

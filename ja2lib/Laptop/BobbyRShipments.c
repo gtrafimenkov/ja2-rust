@@ -56,7 +56,7 @@
 #define BOBBYR_SHIPMENT_NUM_ITEMS_Y BOBBYR_SHIPMENT_SHIPMENT_ORDER_NUM_Y
 #define BOBBYR_SHIPMENT_NUM_ITEMS_WIDTH 116
 
-//#define		BOBBYR_SHIPMENT_
+// #define		BOBBYR_SHIPMENT_
 
 UINT32 guiBobbyRShipmentGrid;
 
@@ -102,7 +102,7 @@ BOOLEAN EnterBobbyRShipments() {
 
   // load the Order Grid graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyRay_OnOrder.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyRay_OnOrder.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyRShipmentGrid));
 
   guiBobbyRShipmentBackImage = LoadButtonImage("LAPTOP\\CatalogueButton.sti", -1, 0, -1, 1, -1);

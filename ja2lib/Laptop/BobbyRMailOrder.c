@@ -349,17 +349,17 @@ BOOLEAN EnterBobbyRMailOrder() {
 
   // load the Order Grid graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyOrderGrid.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyOrderGrid.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyROrderGrid));
 
   // load the Location graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyLocationBox.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyLocationBox.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyRLocationGraphic));
 
   // load the delivery speed graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyDeliverySpeed.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyDeliverySpeed.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiDeliverySpeedGraphic));
 
   // load the delivery speed graphic and add it
@@ -369,22 +369,22 @@ BOOLEAN EnterBobbyRMailOrder() {
 
   // load the delivery speed graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\TotalSaveArea.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\TotalSaveArea.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTotalSaveArea));
 
   // border
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\TactPopUp.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\TactPopUp.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiDropDownBorder));
 
   // Gold Arrow for the scroll area
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\GoldArrows.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\GoldArrows.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiGoldArrowImages));
 
   // Package Weight Graphic
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\PackageWeight.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\PackageWeight.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiPackageWeightImage));
 
   InitBobbyRWoodBackground();
@@ -2140,7 +2140,7 @@ BOOLEAN CreateBobbyRayOrderTitle() {
 
   // load BobbyRayTitle graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyRayTitle.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyRayTitle.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyRayTitle));
 
   // the link to home page from the title

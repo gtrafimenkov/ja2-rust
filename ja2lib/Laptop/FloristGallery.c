@@ -42,7 +42,7 @@
 #define FLOR_GALLERY_FLOWER_BUTTON_X LAPTOP_SCREEN_UL_X + 7
 #define FLOR_GALLERY_FLOWER_BUTTON_Y LAPTOP_SCREEN_WEB_UL_Y + 74
 
-//#define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
+// #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
 
 #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_Y 112
 
@@ -267,7 +267,7 @@ BOOLEAN InitFlowerButtons() {
     // load the handbullet graphic and add it
     sprintf(sTemp, "LAPTOP\\Flower_%d.sti", count);
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP(sTemp, VObjectDesc.ImageFile);
+    CopyFilename(sTemp, VObjectDesc.ImageFile);
     CHECKF(AddVideoObject(&VObjectDesc, &guiFlowerImages[i]));
     count++;
   }

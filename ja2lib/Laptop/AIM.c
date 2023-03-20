@@ -202,17 +202,17 @@ BOOLEAN EnterAIM() {
 
   // load the MemberShipcard graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\membercard.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\membercard.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMemberCard));
 
   // load the Policies graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Policies.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\Policies.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiPolicies));
 
   // load the Links graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Links.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\Links.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiLinks));
 
   // load the History graphic and add it
@@ -227,7 +227,7 @@ BOOLEAN EnterAIM() {
 
   // load the flower advertisment and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\flowerad_16.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\flowerad_16.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiFlowerAdvertisement));
 
   // load the your ad advertisment and add it
@@ -414,7 +414,7 @@ BOOLEAN InitAimDefaults() {
 
   // load the Rust bacground graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\rustbackground.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\rustbackground.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiRustBackGround));
 
   // load the Aim Symbol graphic and add it

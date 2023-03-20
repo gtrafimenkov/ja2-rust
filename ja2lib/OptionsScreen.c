@@ -350,7 +350,7 @@ BOOLEAN EnterOptionsScreen() {
 
   // load the options screen background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\OptionScreenBase.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\OptionScreenBase.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiOptionBackGroundImage));
 
   // load button, title graphic and add it

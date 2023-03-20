@@ -839,40 +839,40 @@ BOOLEAN InitInvSlotInterface(INV_REGION_DESC *pRegionDesc, INV_REGION_DESC *pCam
 
   // Load all four body type images
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_figure_large_male.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_figure_large_male.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[1][0])));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_figure_large_male_H.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_figure_large_male_H.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[1][1])));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[0][0])));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_normal_male_H.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_normal_male_H.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[0][1])));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[2][0])));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[2][1])));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_figure_female.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_figure_female.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[3][0])));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_figure_female_H.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_figure_female_H.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(guiBodyInvVO[3][1])));
 
   // add gold key graphic
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\gold_key_button.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\gold_key_button.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiGoldKeyVO));
 
   // Add cammo region
@@ -2062,7 +2062,7 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
     // Add button
     swprintf(pStr, ARR_SIZE(pStr), L"%d/%d", gpItemDescObject->ubGunShotsLeft,
              Weapon[gpItemDescObject->usItem].ubMagSize);
-    FilenameForBPP("INTERFACE\\infobox.sti", ubString);
+    CopyFilename("INTERFACE\\infobox.sti", ubString);
     sForeColour = ITEMDESC_AMMO_FORE;
 
     switch (pObject->ubGunAmmoType) {
@@ -5420,7 +5420,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\itembox.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\itembox.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &(gItemPickupMenu.uiPanelVo)));
 
   // Memalloc selection array...
@@ -5478,7 +5478,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   gItemPickupMenu.fAllSelected = FALSE;
 
   // Load images for buttons
-  FilenameForBPP("INTERFACE\\itembox.sti", ubString);
+  CopyFilename("INTERFACE\\itembox.sti", ubString);
   gItemPickupMenu.iUpButtonImages = LoadButtonImage(ubString, -1, 5, -1, 10, -1);
   gItemPickupMenu.iDownButtonImages =
       UseLoadedButtonImage(gItemPickupMenu.iUpButtonImages, -1, 7, -1, 12, -1);

@@ -154,12 +154,12 @@ BOOLEAN EnterMercsFiles() {
 
   // load the Portrait box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\PortraitBox.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\PortraitBox.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiPortraitBox));
 
   // load the bio box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BioBox.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BioBox.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBioBox));
 
   // Prev Box button
@@ -409,7 +409,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, ubMercID);
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP(sTemp, VObjectDesc.ImageFile);
+  CopyFilename(sTemp, VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMercFace));
 
   // Blt face to screen

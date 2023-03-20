@@ -16,7 +16,7 @@
 #include "Utils/FontControl.h"
 #include "rust_fileman.h"
 
-void FilenameForBPP(STR pFilename, STR pDestination) { strcpy(pDestination, pFilename); }
+void CopyFilename(STR pFilename, STR pDestination) { strcpy(pDestination, pFilename); }
 
 BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAME ColFile) {
   FileID hFileHandle = FILE_ID_ERR;

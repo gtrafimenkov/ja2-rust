@@ -403,7 +403,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-        FilenameForBPP("Faces\\SmallFaces\\00.sti", VObjectDesc.ImageFile);
+        CopyFilename("Faces\\SmallFaces\\00.sti", VObjectDesc.ImageFile);
         CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
 
         // show it
@@ -420,7 +420,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-        FilenameForBPP("Faces\\SmallFaces\\01.sti", VObjectDesc.ImageFile);
+        CopyFilename("Faces\\SmallFaces\\01.sti", VObjectDesc.ImageFile);
         CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
 
         // show it
@@ -437,7 +437,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-        FilenameForBPP("Faces\\SmallFaces\\02.sti", VObjectDesc.ImageFile);
+        CopyFilename("Faces\\SmallFaces\\02.sti", VObjectDesc.ImageFile);
         CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
 
         // show it
@@ -458,7 +458,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-        FilenameForBPP("Faces\\SmallFaces\\03.sti", VObjectDesc.ImageFile);
+        CopyFilename("Faces\\SmallFaces\\03.sti", VObjectDesc.ImageFile);
         CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
 
         // show it
@@ -475,7 +475,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-        FilenameForBPP("Faces\\SmallFaces\\04.sti", VObjectDesc.ImageFile);
+        CopyFilename("Faces\\SmallFaces\\04.sti", VObjectDesc.ImageFile);
         CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
 
         // show it
@@ -492,7 +492,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
 
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-        FilenameForBPP("Faces\\SmallFaces\\05.sti", VObjectDesc.ImageFile);
+        CopyFilename("Faces\\SmallFaces\\05.sti", VObjectDesc.ImageFile);
         CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
 
         // show it
@@ -540,7 +540,7 @@ BOOLEAN LoadCharacterPortrait(void) {
 
   // load it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP(pPlayerSelectedFaceFileNames[iPortraitNumber], VObjectDesc.ImageFile);
+  CopyFilename(pPlayerSelectedFaceFileNames[iPortraitNumber], VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiCHARACTERPORTRAIT));
 
   return (TRUE);

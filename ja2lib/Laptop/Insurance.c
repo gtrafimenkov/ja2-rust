@@ -100,7 +100,7 @@ BOOLEAN EnterInsurance() {
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Bullet.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\Bullet.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceBulletImage));
 
   usPosX = INSURANCE_BOTTOM_LINK_RED_BAR_X;
@@ -237,17 +237,17 @@ BOOLEAN InitInsuranceDefaults() {
 
   // load the Flower Account Box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BackGroundTile.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BackGroundTile.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceBackGround));
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\LeftTile.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\LeftTile.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceRedBarImage));
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\LargeBar.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\LargeBar.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceBigRedLineImage));
 
   // if it is not the first page, display the small title

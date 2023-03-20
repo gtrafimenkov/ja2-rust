@@ -202,7 +202,7 @@ void HandleLoadOfMapBottomGraphics(void) {
 
   // will create buttons for interface bottom
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\map_screen_bottom.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\map_screen_bottom.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiMAPBOTTOMPANEL)) return;
 
   // load slider bar icon
@@ -805,7 +805,7 @@ void LoadMessageSliderBar(void) {
   VOBJECT_DESC VObjectDesc;
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\map_screen_bottom_arrows.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\map_screen_bottom_arrows.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiSliderBar)) return;
 }
 

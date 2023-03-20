@@ -1078,19 +1078,19 @@ BOOLEAN InitializeSMPanel() {
   CHECKF(AddVideoObject(&VObjectDesc, &guiSMPanel));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventory_gold_front.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inventory_gold_front.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSMObjects));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inv_frn.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\inv_frn.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSMObjects2));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel));
 
   // Clear inv display stuff
@@ -1177,7 +1177,7 @@ BOOLEAN CreateSMPanelButtons() {
   gfUIStanceDifferent = TRUE;
   gfAllDisabled = FALSE;
 
-  FilenameForBPP("INTERFACE\\inventory_buttons.sti", ubString);
+  CopyFilename("INTERFACE\\inventory_buttons.sti", ubString);
   // Load button Graphics
   iSMPanelImages[STANCEUP_IMAGES] = LoadButtonImage(ubString, -1, 0, -1, 10, -1);
 
@@ -1211,11 +1211,11 @@ BOOLEAN CreateSMPanelButtons() {
   iBurstButtonImages[WM_ATTACHED] =
       UseLoadedButtonImage(iSMPanelImages[STANCEUP_IMAGES], -1, 26, -1, -1, -1);
 
-  FilenameForBPP("INTERFACE\\invadd-ons.sti", ubString);
+  CopyFilename("INTERFACE\\invadd-ons.sti", ubString);
   // Load button Graphics
   iSMPanelImages[STANCE_IMAGES] = LoadButtonImage(ubString, 0, 0, -1, 2, -1);
 
-  FilenameForBPP("INTERFACE\\inventory_buttons_2.sti", ubString);
+  CopyFilename("INTERFACE\\inventory_buttons_2.sti", ubString);
   // Load button Graphics
   iSMPanelImages[DONE_IMAGES] = LoadButtonImage(ubString, -1, 1, -1, 3, -1);
   iSMPanelImages[MAPSCREEN_IMAGES] =
@@ -2779,15 +2779,15 @@ BOOLEAN InitializeTEAMPanel() {
   // Load interface panels
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\bottom_bar.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\bottom_bar.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTEAMPanel));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\gold_front.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\gold_front.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTEAMObjects));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel));
 
   // Clear inv display stuff
@@ -3174,7 +3174,7 @@ void RenderTEAMPanel(BOOLEAN fDirty) {
 BOOLEAN CreateTEAMPanelButtons() {
   CHAR8 ubString[48];
 
-  FilenameForBPP("INTERFACE\\bottom_bar_buttons.sti", ubString);
+  CopyFilename("INTERFACE\\bottom_bar_buttons.sti", ubString);
 
   // Load button Graphics
   iTEAMPanelImages[ENDTURN_IMAGES] = LoadButtonImage(ubString, -1, 0, -1, 3, -1);

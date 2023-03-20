@@ -116,7 +116,7 @@ BOOLEAN EnterAimHistory() {
 
   // load the Content Buttons graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\ContentButton.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\ContentButton.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiContentButton));
 
   gubCurPageNum = (UINT8)giCurrentSubPage;
@@ -223,11 +223,11 @@ BOOLEAN InitAimHistoryMenuBar(void) {
 
   // load the Bottom Buttons graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BottomButton.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BottomButton.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBottomButton));
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BottomButton2.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BottomButton2.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBottomButton2));
 
   guiHistoryMenuButtonImage = LoadButtonImage("LAPTOP\\BottomButtons2.sti", -1, 0, -1, 1, -1);

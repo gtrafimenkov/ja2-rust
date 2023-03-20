@@ -433,7 +433,7 @@ BOOLEAN EnterSaveLoadScreen() {
 
   // load Main background  graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\LoadScreen.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\LoadScreen.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSlgBackGroundImage));
 
   // load Load Screen Add ons graphic and add it

@@ -217,17 +217,17 @@ BOOLEAN EnterBobbyR() {
 
   // load the plaque graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyPlaques.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyPlaques.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiPlaque));
 
   // load the TopHinge graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyTopHinge.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyTopHinge.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiTopHinge));
 
   // load the BottomHinge graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyBottomHinge.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyBottomHinge.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiBottomHinge));
 
   // load the Store Plaque graphic and add it
@@ -237,7 +237,7 @@ BOOLEAN EnterBobbyR() {
 
   // load the Handle graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyHandle.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyHandle.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiHandle));
 
   InitBobbiesMouseRegion(BOBBIES_NUMBER_SIGNS, usMouseRegionPosArray,
@@ -246,7 +246,7 @@ BOOLEAN EnterBobbyR() {
   if (!LaptopSaveInfo.fBobbyRSiteCanBeAccessed) {
     // load the Handle graphic and add it
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("LAPTOP\\UnderConstruction.sti", VObjectDesc.ImageFile);
+    CopyFilename("LAPTOP\\UnderConstruction.sti", VObjectDesc.ImageFile);
     CHECKF(AddVideoObject(&VObjectDesc, &guiUnderConstructionImage));
 
     for (i = 0; i < BOBBIES_NUMBER_SIGNS; i++) {
@@ -403,7 +403,7 @@ BOOLEAN InitBobbyRWoodBackground() {
 
   // load the Wood bacground graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyWood.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\BobbyWood.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiWoodBackground));
 
   return (TRUE);

@@ -412,9 +412,9 @@ void DisplaySirtechSplashScreen() {
 
   memset(&VObjectDesc, 0, sizeof(VOBJECT_DESC));
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\SirtechSplash.sti", VObjectDesc.ImageFile);
+  CopyFilename("INTERFACE\\SirtechSplash.sti", VObjectDesc.ImageFile);
 
-  //	FilenameForBPP("INTERFACE\\TShold.sti", VObjectDesc.ImageFile);
+  //	CopyFilename("INTERFACE\\TShold.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &uiLogoID)) {
     AssertMsg(0, String("Failed to load %s", VObjectDesc.ImageFile));
     return;

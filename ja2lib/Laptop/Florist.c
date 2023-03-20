@@ -86,7 +86,7 @@ BOOLEAN EnterFlorist() {
 
   // load the handbullet graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\HandBullet.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\HandBullet.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiHandBullet));
 
   guiGalleryButtonImage = LoadButtonImage("LAPTOP\\FloristButtons.sti", -1, 0, -1, 1, -1);
@@ -188,7 +188,7 @@ BOOLEAN InitFloristDefaults() {
 
   // load the Florist background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\leafback.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\leafback.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiFloristBackground));
 
   // if its the first page

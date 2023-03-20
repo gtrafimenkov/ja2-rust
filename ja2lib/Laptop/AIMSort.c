@@ -173,7 +173,7 @@ BOOLEAN EnterAimSort() {
 
   // load the SortBy box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\SortBy.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\SortBy.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSortByBox));
 
   // load the ToAlumni graphic and add it
@@ -193,7 +193,7 @@ BOOLEAN EnterAimSort() {
 
   // load the SelectLight graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\SelectLight.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\SelectLight.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSelectLight));
 
   //** Mouse Regions **

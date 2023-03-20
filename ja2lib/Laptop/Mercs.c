@@ -337,32 +337,32 @@ BOOLEAN EnterMercs() {
 
   // load the Account box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\AccountBox.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\AccountBox.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiAccountBox));
 
   // load the files Box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\FilesBox.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\FilesBox.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiFilesBox));
 
   // load the MercSymbol graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\MERCSymbol.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\MERCSymbol.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMercSymbol));
 
   // load the SpecPortrait graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\SpecPortrait.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\SpecPortrait.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiSpecPortrait));
 
   // load the Arrow graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Arrow.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\Arrow.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiArrow));
 
   // load the Merc video conf background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\SpeckComWindow.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\SpeckComWindow.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMercVideoPopupBackground));
 
   // Account Box button
@@ -603,7 +603,7 @@ BOOLEAN InitMercBackGround() {
 
   // load the Merc background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\MERCBackGround.sti", VObjectDesc.ImageFile);
+  CopyFilename("LAPTOP\\MERCBackGround.sti", VObjectDesc.ImageFile);
   CHECKF(AddVideoObject(&VObjectDesc, &guiMercBackGround));
 
   return (TRUE);
