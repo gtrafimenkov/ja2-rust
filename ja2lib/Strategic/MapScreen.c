@@ -2637,8 +2637,6 @@ UINT32 MapScreenShutdown(void) {
 UINT32 MapScreenHandle(void) {
   UINT32 uiNewScreen;
   VSURFACE_DESC vs_desc;
-  VOBJECT_DESC VObjectDesc;
-  //	static BOOLEAN fSecondFrame = FALSE;
   INT32 iCounter = 0;
 
   // DO NOT MOVE THIS FUNCTION CALL!!!
@@ -2840,8 +2838,7 @@ UINT32 MapScreenHandle(void) {
         return FALSE;
       }
 
-      strcpy(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
-      AddVideoObject(&VObjectDesc, &guiSectorLocatorGraphicID);
+      AddVObjectFromFile("INTERFACE\\hilite.sti", &guiSectorLocatorGraphicID);
 
       if (!AddVObjectFromFile("INTERFACE\\BullsEye.sti", &guiBULLSEYE)) {
         return FALSE;
@@ -2856,8 +2853,7 @@ UINT32 MapScreenHandle(void) {
       LoadInventoryPoolGraphic();
 
       // Kris:  Added this because I need to blink the icons button.
-      strcpy(VObjectDesc.ImageFile, "INTERFACE\\newemail.sti");
-      AddVideoObject(&VObjectDesc, &guiNewMailIcons);
+      AddVObjectFromFile("INTERFACE\\newemail.sti", &guiNewMailIcons);
     }
 
     // create buttons
@@ -8429,7 +8425,6 @@ BOOLEAN AnyMercsLeavingRealSoon() {
 BOOLEAN HandlePreloadOfMapGraphics(void) {
   // check amt of memory, if above required amt...use it
   VSURFACE_DESC vs_desc;
-  VOBJECT_DESC VObjectDesc;
 
   fPreLoadedMapGraphics = TRUE;
 
@@ -8552,12 +8547,10 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
     return FALSE;
   }
 
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
-  AddVideoObject(&VObjectDesc, &guiSectorLocatorGraphicID);
+  AddVObjectFromFile("INTERFACE\\hilite.sti", &guiSectorLocatorGraphicID);
 
   // Kris:  Added this because I need to blink the icons button.
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\newemail.sti");
-  AddVideoObject(&VObjectDesc, &guiNewMailIcons);
+  AddVObjectFromFile("INTERFACE\\newemail.sti", &guiNewMailIcons);
 
   if (!AddVObjectFromFile("INTERFACE\\BullsEye.sti", &guiBULLSEYE)) {
     return FALSE;

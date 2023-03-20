@@ -112,7 +112,6 @@ BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
 
     // Grab the Map image
     sprintf(VObjectDesc.ImageFile, "RADARMAPS\\%s.STI", zFilename);
-
     if (!AddVideoObject(&VObjectDesc, &gusRadarImage)) {
       return FALSE;
     }

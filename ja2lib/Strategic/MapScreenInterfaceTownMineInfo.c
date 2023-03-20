@@ -692,15 +692,13 @@ void AddInventoryButtonForMapPopUpBox(void) {
   INT16 sX, sY;
   SGPRect pDimensions;
   SGPPoint pPosition;
-  VOBJECT_DESC VObjectDesc;
   UINT32 uiObject;
   ETRLEObject *pTrav;
   INT16 sWidthA = 0, sTotalBoxWidth = 0;
   struct VObject *hHandle;
 
   // load the button
-  CopyFilename("INTERFACE\\mapinvbtns.sti", VObjectDesc.ImageFile);
-  AddVideoObject(&VObjectDesc, &uiObject);
+  AddVObjectFromFile("INTERFACE\\mapinvbtns.sti", &uiObject);
 
   // Calculate smily face positions...
   GetVideoObject(&hHandle, uiObject);
@@ -803,13 +801,11 @@ void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 // get the min width of the town mine info pop up box
 void MinWidthOfTownMineInfoBox(void) {
   struct VObject *hHandle;
-  VOBJECT_DESC VObjectDesc;
   INT16 sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
   UINT32 uiObject;
   ETRLEObject *pTrav;
 
-  CopyFilename("INTERFACE\\mapinvbtns.sti", VObjectDesc.ImageFile);
-  AddVideoObject(&VObjectDesc, &uiObject);
+  AddVObjectFromFile("INTERFACE\\mapinvbtns.sti", &uiObject);
 
   // Calculate smily face positions...
   GetVideoObject(&hHandle, uiObject);

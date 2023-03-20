@@ -195,13 +195,7 @@ extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(u8 *psSect
 
 // load the background panel graphics for inventory
 BOOLEAN LoadInventoryPoolGraphic(void) {
-  VOBJECT_DESC VObjectDesc;
-
-  // load the file
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\sector_inventory.sti");
-
-  // add to V-object index
-  if (!AddVideoObject(&VObjectDesc, &guiMapInventoryPoolBackground)) {
+  if (!AddVObjectFromFile("INTERFACE\\sector_inventory.sti", &guiMapInventoryPoolBackground)) {
     return FALSE;
   }
 

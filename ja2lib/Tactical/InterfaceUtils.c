@@ -73,14 +73,12 @@ STR pbCarPortraitFileNames[] = {
 // load int he portraits for the car faces that will be use in mapscreen
 BOOLEAN LoadCarPortraitValues(void) {
   INT32 iCounter = 0;
-  VOBJECT_DESC VObjectDesc;
 
   if (giCarPortraits[0] != 0xffffffff) {
     return FALSE;
   }
   for (iCounter = 0; iCounter < NUMBER_CAR_PORTRAITS; iCounter++) {
-    strcopy(VObjectDesc.ImageFile, sizeof(VObjectDesc.ImageFile), pbCarPortraitFileNames[iCounter]);
-    if (!AddVideoObject(&VObjectDesc, &giCarPortraits[iCounter])) {
+    if (!AddVObjectFromFile(pbCarPortraitFileNames[iCounter], &giCarPortraits[iCounter])) {
       return FALSE;
     }
   }
