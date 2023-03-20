@@ -141,9 +141,6 @@ BOOLEAN BltVideoObjectFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject, UINT
 struct VObject *CreateVObjectFromFile(const char *path);
 struct VObject *CreateVObjectFromHImage(HIMAGE hImage);
 
-// Created from a VOBJECT_DESC structure. Can be from a file via HIMAGE or empty.
-struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc);
-
 // Deletes all data
 BOOLEAN DeleteVideoObject(struct VObject *hVObject);
 

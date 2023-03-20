@@ -107,7 +107,6 @@ void RenderOverheadOverlays();
 
 void InitNewOverheadDB(UINT8 ubTilesetID) {
   UINT32 uiLoop;
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hVObject;
   CHAR8 cFileBPP[128];
   CHAR8 cAdjustedFile[200];
@@ -125,9 +124,7 @@ void InitNewOverheadDB(UINT8 ubTilesetID) {
     // Adjust for tileset position
     sprintf(cAdjustedFile, "TILESETS\\%d\\T\\%s", ubTilesetID, cFileBPP);
 
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(VObjectDesc.ImageFile, cAdjustedFile);
-    hVObject = CreateVideoObject(&VObjectDesc);
+    hVObject = CreateVObjectFromFile(cAdjustedFile);
 
     if (hVObject == NULL) {
       // TRY loading from default directory
@@ -136,15 +133,11 @@ void InitNewOverheadDB(UINT8 ubTilesetID) {
       sprintf(cAdjustedFile, "TILESETS\\0\\T\\%s", cFileBPP);
 
       // LOAD ONE WE KNOW ABOUT!
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      strcpy(VObjectDesc.ImageFile, cAdjustedFile);
-      hVObject = CreateVideoObject(&VObjectDesc);
+      hVObject = CreateVObjectFromFile(cAdjustedFile);
 
       if (hVObject == NULL) {
         // LOAD ONE WE KNOW ABOUT!
-        VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-        strcpy(VObjectDesc.ImageFile, "TILESETS\\0\\T\\grass.sti");
-        hVObject = CreateVideoObject(&VObjectDesc);
+        hVObject = CreateVObjectFromFile("TILESETS\\0\\T\\grass.sti");
       }
     }
 

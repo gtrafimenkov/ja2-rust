@@ -167,7 +167,6 @@ INT32 FindFreeButtonSlot(void) {
 //
 INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHilite, INT32 OnNormal,
                       INT32 OnHilite) {
-  VOBJECT_DESC VObjectDesc;
   UINT32 UseSlot;
   ETRLEObject *pTrav;
   UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
@@ -191,10 +190,7 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
   }
 
   // Load the image
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, filename);
-
-  if ((ButtonPictures[UseSlot].vobj = CreateVideoObject(&VObjectDesc)) == NULL) {
+  if ((ButtonPictures[UseSlot].vobj = CreateVObjectFromFile(filename)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, String("Couldn't create VOBJECT for %s", filename));
     return (-1);
   }
@@ -609,7 +605,6 @@ BOOLEAN DisableButton(INT32 iButtonID) {
 //	InitButtonSystem.
 //
 BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, INT32 DefaultBPP) {
-  VOBJECT_DESC VObjectDesc;
   UINT8 Pix;
   int x;
 
@@ -659,19 +654,13 @@ BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, IN
   for (x = 0; x < MAX_BUTTON_ICONS; x++) GenericButtonIcons[x] = NULL;
 
   // Load the default generic button images
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, DEFAULT_GENERIC_BUTTON_OFF);
-
-  if ((GenericButtonOffNormal[0] = CreateVideoObject(&VObjectDesc)) == NULL) {
+  if ((GenericButtonOffNormal[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_OFF)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_OFF);
     return (FALSE);
   }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, DEFAULT_GENERIC_BUTTON_ON);
-
-  if ((GenericButtonOnNormal[0] = CreateVideoObject(&VObjectDesc)) == NULL) {
+  if ((GenericButtonOnNormal[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_ON)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_ON);
     return (FALSE);
@@ -680,13 +669,9 @@ BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, IN
   // Load up the off hilite and on hilite images. We won't check for errors because if the file
   // doesn't exists, the system simply ignores that file. These are only here as extra images, they
   // aren't required for operation (only OFF Normal and ON Normal are required).
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, DEFAULT_GENERIC_BUTTON_OFF_HI);
-  GenericButtonOffHilite[0] = CreateVideoObject(&VObjectDesc);
+  GenericButtonOffHilite[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_OFF_HI);
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, DEFAULT_GENERIC_BUTTON_ON_HI);
-  GenericButtonOnHilite[0] = CreateVideoObject(&VObjectDesc);
+  GenericButtonOnHilite[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_ON_HI);
 
   Pix = 0;
   if (!GetETRLEPixelValue(&Pix, GenericButtonOffNormal[0], 8, 0, 0)) {
@@ -739,7 +724,6 @@ INT16 FindFreeIconSlot(void) {
 //
 INT16 LoadGenericButtonIcon(STR8 filename) {
   INT16 ImgSlot;
-  VOBJECT_DESC VObjectDesc;
 
   AssertMsg(filename != BUTTON_NO_FILENAME,
             "Attempting to LoadGenericButtonIcon() with null filename.");
@@ -752,10 +736,7 @@ INT16 LoadGenericButtonIcon(STR8 filename) {
   }
 
   // Load the icon
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, filename);
-
-  if ((GenericButtonIcons[ImgSlot] = CreateVideoObject(&VObjectDesc)) == NULL) {
+  if ((GenericButtonIcons[ImgSlot] = CreateVObjectFromFile(filename)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              String("LoadGenericButtonIcon: Couldn't create VOBJECT for %s", filename));
     return (-1);
@@ -851,7 +832,6 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
                               STR8 OnHiliteName, STR8 BkGrndName, INT16 Index, INT16 OffsetX,
                               INT16 OffsetY) {
   INT16 ImgSlot;
-  VOBJECT_DESC VObjectDesc;
   UINT8 Pix;
 
   // if the images for Off-Normal and On-Normal don't exist, abort call
@@ -869,20 +849,14 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
   }
 
   // Load the image for the Off-Normal button state (required)
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, OffNormName);
-
-  if ((GenericButtonOffNormal[ImgSlot] = CreateVideoObject(&VObjectDesc)) == NULL) {
+  if ((GenericButtonOffNormal[ImgSlot] = CreateVObjectFromFile(OffNormName)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffNormName));
     return (-1);
   }
 
   // Load the image for the On-Normal button state (required)
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(VObjectDesc.ImageFile, OnNormName);
-
-  if ((GenericButtonOnNormal[ImgSlot] = CreateVideoObject(&VObjectDesc)) == NULL) {
+  if ((GenericButtonOnNormal[ImgSlot] = CreateVObjectFromFile(OnNormName)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnNormName));
     return (-1);
@@ -892,10 +866,7 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
   // if so, load it.
 
   if (GrayName != BUTTON_NO_FILENAME) {
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(VObjectDesc.ImageFile, GrayName);
-
-    if ((GenericButtonGrayed[ImgSlot] = CreateVideoObject(&VObjectDesc)) == NULL) {
+    if ((GenericButtonGrayed[ImgSlot] = CreateVObjectFromFile(GrayName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", GrayName));
       return (-1);
@@ -904,10 +875,7 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
     GenericButtonGrayed[ImgSlot] = NULL;
 
   if (OffHiliteName != BUTTON_NO_FILENAME) {
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(VObjectDesc.ImageFile, OffHiliteName);
-
-    if ((GenericButtonOffHilite[ImgSlot] = CreateVideoObject(&VObjectDesc)) == NULL) {
+    if ((GenericButtonOffHilite[ImgSlot] = CreateVObjectFromFile(OffHiliteName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffHiliteName));
       return (-1);
@@ -916,10 +884,7 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
     GenericButtonOffHilite[ImgSlot] = NULL;
 
   if (OnHiliteName != BUTTON_NO_FILENAME) {
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(VObjectDesc.ImageFile, OnHiliteName);
-
-    if ((GenericButtonOnHilite[ImgSlot] = CreateVideoObject(&VObjectDesc)) == NULL) {
+    if ((GenericButtonOnHilite[ImgSlot] = CreateVObjectFromFile(OnHiliteName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnHiliteName));
       return (-1);
@@ -928,10 +893,7 @@ INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteNam
     GenericButtonOnHilite[ImgSlot] = NULL;
 
   if (BkGrndName != BUTTON_NO_FILENAME) {
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(VObjectDesc.ImageFile, BkGrndName);
-
-    if ((GenericButtonBackground[ImgSlot] = CreateVideoObject(&VObjectDesc)) == NULL) {
+    if ((GenericButtonBackground[ImgSlot] = CreateVObjectFromFile(BkGrndName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", BkGrndName));
       return (-1);

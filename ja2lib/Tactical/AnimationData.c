@@ -4273,7 +4273,6 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
 
   } else {
     // Load into memory
-    VOBJECT_DESC VObjectDesc;
     struct VObject *hVObject;
     HIMAGE hImage;
     CHAR8 sFilename[48];
@@ -4285,17 +4284,13 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
 
     // Create video object
     CopyFilename(gAnimSurfaceDatabase[usSurfaceIndex].Filename, sFilename);
-    hImage =
-        CreateImage(/*gAnimSurfaceDatabase[ usSurfaceIndex ].Filename*/ sFilename, IMAGE_ALLDATA);
+    hImage = CreateImage(sFilename, IMAGE_ALLDATA);
 
     if (hImage == NULL) {
       return (SET_ERROR("Error: Could not load animation file %s", sFilename));
     }
 
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
-    VObjectDesc.hImage = hImage;
-
-    hVObject = CreateVideoObject(&VObjectDesc);
+    hVObject = CreateVObjectFromHImage(hImage);
 
     if (hVObject == NULL) {
       // Report error

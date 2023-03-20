@@ -128,7 +128,14 @@ BOOLEAN AddVideoObject(VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex) {
   Assert(pVObjectDesc);
 
   // Create video object
-  hVObject = CreateVideoObject(pVObjectDesc);
+  if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMFILE) {
+    hVObject = CreateVObjectFromFile(pVObjectDesc->ImageFile);
+  } else if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMHIMAGE) {
+    hVObject = CreateVObjectFromHImage(pVObjectDesc->hImage);
+  } else {
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid VObject creation flags given.");
+    return FALSE;
+  }
 
   if (!hVObject) {
     // Video Object will set error condition.
@@ -394,17 +401,6 @@ struct VObject *CreateVObjectFromHImage(HIMAGE hImage) {
   }
 
   return (hVObject);
-}
-
-struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
-  if (VObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMFILE) {
-    return CreateVObjectFromFile(VObjectDesc->ImageFile);
-  } else if (VObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMHIMAGE) {
-    return CreateVObjectFromHImage(VObjectDesc->hImage);
-  } else {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid VObject creation flags given.");
-    return (NULL);
-  }
 }
 
 // Palette setting is expensive, need to set both DDPalette and create 16BPP palette
