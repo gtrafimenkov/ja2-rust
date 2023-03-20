@@ -11,15 +11,6 @@
 // Files
 /////////////////////////////////////////////////////////////////////////////////
 
-#ifdef WIN32
-#define FS_SEPARATOR '\\'
-#else
-#define FS_SEPARATOR '/'
-#endif
-
-// Handler to underlying OS file handle.
-typedef void *SYS_FILE_HANDLE;
-
 // Gets the amount of free space on the hard drive that the main executeablt is runnning from
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
