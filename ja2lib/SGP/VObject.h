@@ -99,7 +99,6 @@ typedef struct {
       HIMAGE hImage;
     };
   };
-  UINT8 ubBitDepth;  // BPP, ignored if given from file
 } VOBJECT_DESC;
 
 // **********************************************************************************

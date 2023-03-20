@@ -5091,7 +5091,7 @@ UINT16 GetTileGraphicForItem(INVTYPE *pItem) {
 }
 
 BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, UINT32 *puiVo) {
-  CHAR8 zName[100];
+  CHAR8 zName[80];
   UINT32 uiVo;
   VOBJECT_DESC VObjectDesc;
   UINT8 ubGraphic;
