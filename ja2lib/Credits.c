@@ -386,13 +386,11 @@ BOOLEAN EnterCreditsScreen() {
   UINT32 uiCnt;
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("INTERFACE\\Credits.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCreditBackGroundImage)) {
+  if (!AddVObjectFromFile("INTERFACE\\Credits.sti", &guiCreditBackGroundImage)) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\Credit Faces.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCreditFaces)) {
+  if (!AddVObjectFromFile("INTERFACE\\Credit Faces.sti", &guiCreditFaces)) {
     return FALSE;
   }
 

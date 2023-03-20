@@ -243,7 +243,6 @@ void FlowerOrderUserTextFieldCallBack(UINT8 ubID, BOOLEAN fEntering);
 void GameInitFloristOrderForm() {}
 
 BOOLEAN EnterFloristOrderForm() {
-  VOBJECT_DESC VObjectDesc;
   UINT8 i;
   char sTemp[40];
   UINT16 usPosX, usWidth, usHeight;
@@ -251,45 +250,38 @@ BOOLEAN EnterFloristOrderForm() {
   InitFloristDefaults();
 
   // load the DeliveryLocation graphic and add it
-  CopyFilename("LAPTOP\\DeliveryLocation.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDeliveryLocation)) {
+  if (!AddVObjectFromFile("LAPTOP\\DeliveryLocation.sti", &guiDeliveryLocation)) {
     return FALSE;
   }
 
   // load the Flower frame graphic and add it
-  CopyFilename("LAPTOP\\FlowerFrame.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFlowerFrame)) {
+  if (!AddVObjectFromFile("LAPTOP\\FlowerFrame.sti", &guiFlowerFrame)) {
     return FALSE;
   }
 
   // load the Personel sentiments graphic and add it
-  CopyFilename("LAPTOP\\PersonalSentiments.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPersonalSentiments)) {
+  if (!AddVObjectFromFile("LAPTOP\\PersonalSentiments.sti", &guiPersonalSentiments)) {
     return FALSE;
   }
 
   // load the Name Box graphic and add it
-  CopyFilename("LAPTOP\\NameBox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiNameBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\NameBox.sti", &guiNameBox)) {
     return FALSE;
   }
 
   // load the Check Box graphic and add it
-  CopyFilename("LAPTOP\\OrderCheckBox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFlowerOrderCheckBoxButtonImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\OrderCheckBox.sti", &guiFlowerOrderCheckBoxButtonImage)) {
     return FALSE;
   }
 
   // load the currently selected flower bouquet
   sprintf(sTemp, "LAPTOP\\Flower_%d.sti", guiCurrentlySelectedFlower);
-  CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCurrentlySelectedFlowerImage)) {
+  if (!AddVObjectFromFile(sTemp, &guiCurrentlySelectedFlowerImage)) {
     return FALSE;
   }
 
   // border
-  CopyFilename("INTERFACE\\TactPopUp.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDropDownBorder)) {
+  if (!AddVObjectFromFile("INTERFACE\\TactPopUp.sti", &guiDropDownBorder)) {
     return FALSE;
   }
 

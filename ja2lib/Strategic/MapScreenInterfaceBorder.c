@@ -86,8 +86,7 @@ BOOLEAN LoadMapBorderGraphics(void) {
   VOBJECT_DESC VObjectDesc;
 
   // will load map border
-  CopyFilename("INTERFACE\\MBS.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMapBorder)) {
+  if (!AddVObjectFromFile("INTERFACE\\MBS.sti", &guiMapBorder)) {
     return FALSE;
   }
 

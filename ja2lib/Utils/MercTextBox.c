@@ -117,13 +117,11 @@ BOOLEAN InitMercPopupBox() {
   }
 
   // LOAD STOP ICON...
-  CopyFilename("INTERFACE\\msgboxicons.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBoxIcons))
+  if (!AddVObjectFromFile("INTERFACE\\msgboxicons.sti", &guiBoxIcons))
     AssertMsg(0, "Missing INTERFACE\\msgboxicons.sti");
 
   // LOAD SKULL ICON...
-  CopyFilename("INTERFACE\\msgboxiconskull.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSkullIcons))
+  if (!AddVObjectFromFile("INTERFACE\\msgboxiconskull.sti", &guiSkullIcons))
     AssertMsg(0, "Missing INTERFACE\\msgboxiconskull.sti");
 
   return (TRUE);
@@ -158,8 +156,8 @@ BOOLEAN LoadTextMercPopupImages(UINT8 ubBackgroundIndex, UINT8 ubBorderIndex) {
   }
 
   // border
-  CopyFilename(zMercBorderPopupFilenames[ubBorderIndex], VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &gPopUpTextBox->uiMercTextPopUpBorder)) {
+  if (!AddVObjectFromFile(zMercBorderPopupFilenames[ubBorderIndex],
+                          &gPopUpTextBox->uiMercTextPopUpBorder)) {
     return FALSE;
   }
 

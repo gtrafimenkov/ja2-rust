@@ -100,8 +100,7 @@ BOOLEAN EnterInsurance() {
   }
 
   // load the red bar on the side of the page and add it
-  CopyFilename("LAPTOP\\Bullet.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceBulletImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\Bullet.sti", &guiInsuranceBulletImage)) {
     return FALSE;
   }
 
@@ -238,20 +237,17 @@ BOOLEAN InitInsuranceDefaults() {
   VOBJECT_DESC VObjectDesc;
 
   // load the Flower Account Box graphic and add it
-  CopyFilename("LAPTOP\\BackGroundTile.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceBackGround)) {
+  if (!AddVObjectFromFile("LAPTOP\\BackGroundTile.sti", &guiInsuranceBackGround)) {
     return FALSE;
   }
 
   // load the red bar on the side of the page and add it
-  CopyFilename("LAPTOP\\LeftTile.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceRedBarImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\LeftTile.sti", &guiInsuranceRedBarImage)) {
     return FALSE;
   }
 
   // load the red bar on the side of the page and add it
-  CopyFilename("LAPTOP\\LargeBar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceBigRedLineImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\LargeBar.sti", &guiInsuranceBigRedLineImage)) {
     return FALSE;
   }
 

@@ -632,8 +632,7 @@ BOOLEAN EnterHelpScreen() {
   }
 
   // load the help screen background graphic and add it
-  CopyFilename("INTERFACE\\HelpScreen.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiHelpScreenBackGround)) {
+  if (!AddVObjectFromFile("INTERFACE\\HelpScreen.sti", &guiHelpScreenBackGround)) {
     return FALSE;
   }
 

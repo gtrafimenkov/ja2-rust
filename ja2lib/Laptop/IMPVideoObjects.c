@@ -65,8 +65,7 @@ BOOLEAN LoadProfileBackGround(void) {
 
   // this procedure will load in the graphics for the generic background
 
-  CopyFilename("LAPTOP\\MetalBackGround.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBACKGROUND)) {
+  if (!AddVObjectFromFile("LAPTOP\\MetalBackGround.sti", &guiBACKGROUND)) {
     return FALSE;
   }
 
@@ -155,8 +154,7 @@ BOOLEAN LoadBeginIndent(void) {
   // this procedure will load the indent main symbol into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\BeginScreenIndent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBEGININDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\BeginScreenIndent.sti", &guiBEGININDENT)) {
     return FALSE;
   }
 
@@ -188,8 +186,7 @@ BOOLEAN LoadActivationIndent(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\ActivationIndent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiACTIVATIONINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\ActivationIndent.sti", &guiACTIVATIONINDENT)) {
     return FALSE;
   }
 
@@ -220,8 +217,7 @@ BOOLEAN LoadFrontPageIndent(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\FrontPageIndent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFRONTPAGEINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\FrontPageIndent.sti", &guiFRONTPAGEINDENT)) {
     return FALSE;
   }
 
@@ -252,8 +248,7 @@ BOOLEAN LoadAnalyse(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\Analyze.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiANALYSE)) {
+  if (!AddVObjectFromFile("LAPTOP\\Analyze.sti", &guiANALYSE)) {
     return FALSE;
   }
 
@@ -284,8 +279,7 @@ BOOLEAN LoadAttributeGraph(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\Attributegraph.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiATTRIBUTEGRAPH)) {
+  if (!AddVObjectFromFile("LAPTOP\\Attributegraph.sti", &guiATTRIBUTEGRAPH)) {
     return FALSE;
   }
 
@@ -316,8 +310,7 @@ BOOLEAN LoadAttributeGraphBar(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\AttributegraphBar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiATTRIBUTEGRAPHBAR)) {
+  if (!AddVObjectFromFile("LAPTOP\\AttributegraphBar.sti", &guiATTRIBUTEGRAPHBAR)) {
     return FALSE;
   }
 
@@ -348,8 +341,7 @@ BOOLEAN LoadFullNameIndent(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\FullNameIndent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFULLNAMEINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\FullNameIndent.sti", &guiFULLNAMEINDENT)) {
     return FALSE;
   }
 
@@ -380,8 +372,7 @@ BOOLEAN LoadNickNameIndent(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\NickName.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiNICKNAMEINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\NickName.sti", &guiNICKNAMEINDENT)) {
     return FALSE;
   }
 
@@ -412,8 +403,7 @@ BOOLEAN LoadNameIndent(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\NameIndent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiNAMEINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\NameIndent.sti", &guiNAMEINDENT)) {
     return FALSE;
   }
 
@@ -444,8 +434,7 @@ BOOLEAN LoadGenderIndent(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\GenderIndent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGENDERINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\GenderIndent.sti", &guiGENDERINDENT)) {
     return FALSE;
   }
 
@@ -476,8 +465,7 @@ BOOLEAN LoadSmallFrame(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\SmallFrame.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSMALLFRAME)) {
+  if (!AddVObjectFromFile("LAPTOP\\SmallFrame.sti", &guiSMALLFRAME)) {
     return FALSE;
   }
 
@@ -508,8 +496,7 @@ BOOLEAN LoadSmallSilhouette(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\SmallSilhouette.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSMALLSILHOUETTE)) {
+  if (!AddVObjectFromFile("LAPTOP\\SmallSilhouette.sti", &guiSMALLSILHOUETTE)) {
     return FALSE;
   }
 
@@ -540,8 +527,7 @@ BOOLEAN LoadLargeSilhouette(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\largesilhouette.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLARGESILHOUETTE)) {
+  if (!AddVObjectFromFile("LAPTOP\\largesilhouette.sti", &guiLARGESILHOUETTE)) {
     return FALSE;
   }
 
@@ -569,11 +555,7 @@ void RenderLargeSilhouette(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadAttributeFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\attributeframe.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiATTRIBUTEFRAME)) {
+  if (!AddVObjectFromFile("LAPTOP\\attributeframe.sti", &guiATTRIBUTEFRAME)) {
     return FALSE;
   }
 
@@ -651,11 +633,7 @@ void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex) {
 }
 
 BOOLEAN LoadSliderBar(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\attributeslider.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSLIDERBAR)) {
+  if (!AddVObjectFromFile("LAPTOP\\attributeslider.sti", &guiSLIDERBAR)) {
     return FALSE;
   }
 
@@ -686,8 +664,7 @@ BOOLEAN LoadButton2Image(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\button_2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBUTTON2IMAGE)) {
+  if (!AddVObjectFromFile("LAPTOP\\button_2.sti", &guiBUTTON2IMAGE)) {
     return FALSE;
   }
 
@@ -718,8 +695,7 @@ BOOLEAN LoadButton4Image(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\button_4.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBUTTON4IMAGE)) {
+  if (!AddVObjectFromFile("LAPTOP\\button_4.sti", &guiBUTTON4IMAGE)) {
     return FALSE;
   }
 
@@ -747,11 +723,7 @@ void RenderButton4Image(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadButton1Image(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\button_1.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBUTTON1IMAGE)) {
+  if (!AddVObjectFromFile("LAPTOP\\button_1.sti", &guiBUTTON1IMAGE)) {
     return FALSE;
   }
 
@@ -782,8 +754,7 @@ BOOLEAN LoadPortraitFrame(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\Voice_PortraitFrame.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPORTRAITFRAME)) {
+  if (!AddVObjectFromFile("LAPTOP\\Voice_PortraitFrame.sti", &guiPORTRAITFRAME)) {
     return FALSE;
   }
 
@@ -811,11 +782,7 @@ void RenderPortraitFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadMainIndentFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\mainprofilepageindent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMAININDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\mainprofilepageindent.sti", &guiMAININDENT)) {
     return FALSE;
   }
 
@@ -846,8 +813,7 @@ BOOLEAN LoadQtnLongIndentFrame(void) {
   // this procedure will load the activation indent into memory
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\longindent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLONGINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\longindent.sti", &guiLONGINDENT)) {
     return FALSE;
   }
 
@@ -875,11 +841,7 @@ void RenderQtnLongIndentFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadQtnShortIndentFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\shortindent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSHORTINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\shortindent.sti", &guiSHORTINDENT)) {
     return FALSE;
   }
 
@@ -907,11 +869,7 @@ void RenderQtnShortIndentFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadQtnLongIndentHighFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\longindenthigh.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLONGHINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\longindenthigh.sti", &guiLONGHINDENT)) {
     return FALSE;
   }
 
@@ -939,11 +897,7 @@ void RenderQtnLongIndentHighFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadQtnShortIndentHighFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\shortindenthigh.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSHORTHINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\shortindenthigh.sti", &guiSHORTHINDENT)) {
     return FALSE;
   }
 
@@ -971,11 +925,7 @@ void RenderQtnShortIndentHighFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadQtnIndentFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\questionindent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiQINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\questionindent.sti", &guiQINDENT)) {
     return FALSE;
   }
 
@@ -1003,11 +953,7 @@ void RenderQtnIndentFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadAttrib1IndentFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\attributescreenindent_1.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiA1INDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\attributescreenindent_1.sti", &guiA1INDENT)) {
     return FALSE;
   }
 
@@ -1035,11 +981,7 @@ void RenderAttrib1IndentFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadAttrib2IndentFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\attributescreenindent_2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiA2INDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\attributescreenindent_2.sti", &guiA2INDENT)) {
     return FALSE;
   }
 
@@ -1067,11 +1009,7 @@ void RenderAttrib2IndentFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadAvgMercIndentFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\anaveragemercindent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAVGMERCINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\anaveragemercindent.sti", &guiAVGMERCINDENT)) {
     return FALSE;
   }
 
@@ -1099,11 +1037,7 @@ void RenderAvgMercIndentFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadAboutUsIndentFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\aboutusindent.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiABOUTUSINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\aboutusindent.sti", &guiABOUTUSINDENT)) {
     return FALSE;
   }
 
@@ -1132,10 +1066,8 @@ void RenderAboutUsIndentFrame(INT16 sX, INT16 sY) {
 
 BOOLEAN LoadQtnShort2IndentFrame(void) {
   // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\shortindent2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSHORT2INDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\shortindent2.sti", &guiSHORT2INDENT)) {
     return FALSE;
   }
 
@@ -1163,11 +1095,7 @@ void RenderQtnShort2IndentFrame(INT16 sX, INT16 sY) {
 }
 
 BOOLEAN LoadQtnShort2IndentHighFrame(void) {
-  // this procedure will load the activation indent into memory
-  VOBJECT_DESC VObjectDesc;
-
-  CopyFilename("LAPTOP\\shortindent2High.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSHORT2HINDENT)) {
+  if (!AddVObjectFromFile("LAPTOP\\shortindent2High.sti", &guiSHORT2HINDENT)) {
     return FALSE;
   }
 

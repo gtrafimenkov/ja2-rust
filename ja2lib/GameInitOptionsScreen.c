@@ -281,8 +281,7 @@ BOOLEAN EnterGIOScreen() {
   SetCurrentCursorFromDatabase(CURSOR_NORMAL);
 
   // load the Main trade screen backgroiund image
-  CopyFilename("InterFace\\OptionsScreenBackGround.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGIOMainBackGroundImage)) {
+  if (!AddVObjectFromFile("InterFace\\OptionsScreenBackGround.sti", &guiGIOMainBackGroundImage)) {
     return FALSE;
   }
 

@@ -113,20 +113,17 @@ BOOLEAN EnterFuneral() {
   }
 
   // load the Left column graphic and add it
-  CopyFilename("LAPTOP\\LeftColumn.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLeftColumn)) {
+  if (!AddVObjectFromFile("LAPTOP\\LeftColumn.sti", &guiLeftColumn)) {
     return FALSE;
   }
 
   // load the Link carving graphic and add it
-  CopyFilename("LAPTOP\\LinkCarving.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLinkCarving)) {
+  if (!AddVObjectFromFile("LAPTOP\\LinkCarving.sti", &guiLinkCarving)) {
     return FALSE;
   }
 
   // load the Marble graphic and add it
-  CopyFilename("LAPTOP\\Marble.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMarbleBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\Marble.sti", &guiMarbleBackground)) {
     return FALSE;
   }
 
@@ -143,8 +140,7 @@ BOOLEAN EnterFuneral() {
   }
 
   // load the right column graphic and add it
-  CopyFilename("LAPTOP\\RightColumn.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiRightColumn)) {
+  if (!AddVObjectFromFile("LAPTOP\\RightColumn.sti", &guiRightColumn)) {
     return FALSE;
   }
 

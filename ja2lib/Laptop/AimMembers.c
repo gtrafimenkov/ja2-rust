@@ -584,7 +584,6 @@ void EnterInitAimMembers() {
 }
 
 BOOLEAN EnterAIMMembers() {
-  VOBJECT_DESC VObjectDesc;
   VSURFACE_DESC vs_desc;
 
   // Create a background video surface to blt the face onto
@@ -597,68 +596,57 @@ BOOLEAN EnterAIMMembers() {
   }
 
   // load the stats graphic and add it
-  CopyFilename("LAPTOP\\stats.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiStats)) {
+  if (!AddVObjectFromFile("LAPTOP\\stats.sti", &guiStats)) {
     return FALSE;
   }
 
   // load the Price graphic and add it
-  CopyFilename("LAPTOP\\price.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPrice)) {
+  if (!AddVObjectFromFile("LAPTOP\\price.sti", &guiPrice)) {
     return FALSE;
   }
 
   // load the Portait graphic and add it
-  CopyFilename("LAPTOP\\portrait.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPortrait)) {
+  if (!AddVObjectFromFile("LAPTOP\\portrait.sti", &guiPortrait)) {
     return FALSE;
   }
 
   // load the WeaponBox graphic and add it
-  CopyFilename("LAPTOP\\weaponbox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiWeaponBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\weaponbox.sti", &guiWeaponBox)) {
     return FALSE;
   }
 
   // load the videoconf Popup graphic and add it
-  CopyFilename("LAPTOP\\VideoConfPopup.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiVideoConfPopup)) {
+  if (!AddVObjectFromFile("LAPTOP\\VideoConfPopup.sti", &guiVideoConfPopup)) {
     return FALSE;
   }
 
   // load the video conf terminal graphic and add it
-  CopyFilename("LAPTOP\\VideoConfTerminal.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiVideoConfTerminal)) {
+  if (!AddVObjectFromFile("LAPTOP\\VideoConfTerminal.sti", &guiVideoConfTerminal)) {
     return FALSE;
   }
 
   // load the background snow for the video conf terminal
-  CopyFilename("LAPTOP\\BWSnow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBWSnow)) {
+  if (!AddVObjectFromFile("LAPTOP\\BWSnow.sti", &guiBWSnow)) {
     return FALSE;
   }
 
   // load the fuzzy line for the video conf terminal
-  CopyFilename("LAPTOP\\FuzzLine.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFuzzLine)) {
+  if (!AddVObjectFromFile("LAPTOP\\FuzzLine.sti", &guiFuzzLine)) {
     return FALSE;
   }
 
   // load the line distortion for the video conf terminal
-  CopyFilename("LAPTOP\\LineInterference.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiStraightLine)) {
+  if (!AddVObjectFromFile("LAPTOP\\LineInterference.sti", &guiStraightLine)) {
     return FALSE;
   }
 
   // load the translucent snow for the video conf terminal
-  CopyFilename("LAPTOP\\TransSnow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTransSnow)) {
+  if (!AddVObjectFromFile("LAPTOP\\TransSnow.sti", &guiTransSnow)) {
     return FALSE;
   }
 
   // load the translucent snow for the video conf terminal
-  CopyFilename("LAPTOP\\VideoContractCharge.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiVideoContractCharge)) {
+  if (!AddVObjectFromFile("LAPTOP\\VideoContractCharge.sti", &guiVideoContractCharge)) {
     return FALSE;
   }
 
@@ -1429,7 +1417,6 @@ BOOLEAN DisplayMercsFace() {
   struct VObject *hPortraitHandle;
   STR sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
-  VOBJECT_DESC VObjectDesc;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // See if the merc is currently hired
@@ -1442,8 +1429,7 @@ BOOLEAN DisplayMercsFace() {
 
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, gbCurrentSoldier);
-  CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFace)) {
+  if (!AddVObjectFromFile(sTemp, &guiFace)) {
     return FALSE;
   }
 

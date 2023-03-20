@@ -201,8 +201,7 @@ void HandleLoadOfMapBottomGraphics(void) {
   VOBJECT_DESC VObjectDesc;
 
   // will create buttons for interface bottom
-  CopyFilename("INTERFACE\\map_screen_bottom.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMAPBOTTOMPANEL)) return;
+  if (!AddVObjectFromFile("INTERFACE\\map_screen_bottom.sti", &guiMAPBOTTOMPANEL)) return;
 
   // load slider bar icon
   LoadMessageSliderBar();
@@ -803,8 +802,7 @@ void LoadMessageSliderBar(void) {
   // this function will load the message slider bar
   VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("INTERFACE\\map_screen_bottom_arrows.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSliderBar)) return;
+  if (!AddVObjectFromFile("INTERFACE\\map_screen_bottom_arrows.sti", &guiSliderBar)) return;
 }
 
 void DeleteMessageSliderBar(void) {

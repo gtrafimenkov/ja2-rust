@@ -203,19 +203,16 @@ BOOLEAN EnterAimPolicies() {
   gfInPolicyToc = FALSE;
 
   // load the Bottom Buttons graphic and add it
-  CopyFilename("LAPTOP\\BottomButton.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBottomButton)) {
+  if (!AddVObjectFromFile("LAPTOP\\BottomButton.sti", &guiBottomButton)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\BottomButton2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBottomButton2)) {
+  if (!AddVObjectFromFile("LAPTOP\\BottomButton2.sti", &guiBottomButton2)) {
     return FALSE;
   }
 
   // load the Content Buttons graphic and add it
-  CopyFilename("LAPTOP\\ContentButton.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiContentButton)) {
+  if (!AddVObjectFromFile("LAPTOP\\ContentButton.sti", &guiContentButton)) {
     return FALSE;
   }
 

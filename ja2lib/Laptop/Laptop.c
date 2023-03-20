@@ -742,8 +742,6 @@ UINT32 LaptopScreenShutdown() {
 INT32 EnterLaptop() {
   // Create, load, initialize data -- just entered the laptop.
 
-  VOBJECT_DESC VObjectDesc;
-
   // we are re entering due to message box, leave NOW!
   if (fExitDueToMessageBox == TRUE) {
     return (TRUE);
@@ -752,12 +750,6 @@ INT32 EnterLaptop() {
   // if the radar map mouse region is still active, disable it.
   if (gRadarRegion.uiFlags & MSYS_REGION_ENABLED) {
     MSYS_DisableRegion(&gRadarRegion);
-    /*
-                    #ifdef JA2BETAVERSION
-                            DoLapTopMessageBox( MSG_BOX_LAPTOP_DEFAULT, L"Mapscreen's radar region
-       is still active, please tell Dave how you entered Laptop.", LAPTOP_SCREEN, MSG_BOX_FLAG_OK,
-       NULL ); #endif
-    */
   }
 
   gfDontStartTransitionFromLaptop = FALSE;
@@ -812,38 +804,32 @@ INT32 EnterLaptop() {
   giCurrentRegion = EMAIL_REGION;
 
   // load the laptop graphic and add it
-  CopyFilename("LAPTOP\\laptop3.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLAPTOP)) {
+  if (!AddVObjectFromFile("LAPTOP\\laptop3.sti", &guiLAPTOP)) {
     return FALSE;
   }
 
   // background for panel
-  CopyFilename("LAPTOP\\taskbar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLaptopBACKGROUND)) {
+  if (!AddVObjectFromFile("LAPTOP\\taskbar.sti", &guiLaptopBACKGROUND)) {
     return FALSE;
   }
 
   // background for panel
-  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTITLEBARLAPTOP)) {
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &guiTITLEBARLAPTOP)) {
     return FALSE;
   }
 
   // lights for power and HD
-  CopyFilename("LAPTOP\\lights.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLIGHTS)) {
+  if (!AddVObjectFromFile("LAPTOP\\lights.sti", &guiLIGHTS)) {
     return FALSE;
   }
 
   // icons for title bars
-  CopyFilename("LAPTOP\\ICONS.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTITLEBARICONS)) {
+  if (!AddVObjectFromFile("LAPTOP\\ICONS.sti", &guiTITLEBARICONS)) {
     return FALSE;
   }
 
   // load, blt and delete graphics
-  CopyFilename("LAPTOP\\NewMailWarning.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiEmailWarning)) {
+  if (!AddVObjectFromFile("LAPTOP\\NewMailWarning.sti", &guiEmailWarning)) {
     return FALSE;
   }
   // load background
@@ -2768,46 +2754,36 @@ BOOLEAN RemoveBookMark(INT32 iBookId) {
 }
 
 BOOLEAN LoadBookmark() {
-  VOBJECT_DESC VObjectDesc;
-
   // grab download bars too
 
-  CopyFilename("LAPTOP\\downloadtop.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDOWNLOADTOP)) {
+  if (!AddVObjectFromFile("LAPTOP\\downloadtop.sti", &guiDOWNLOADTOP)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\downloadmid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDOWNLOADMID)) {
+  if (!AddVObjectFromFile("LAPTOP\\downloadmid.sti", &guiDOWNLOADMID)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\downloadbot.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDOWNLOADBOT)) {
+  if (!AddVObjectFromFile("LAPTOP\\downloadbot.sti", &guiDOWNLOADBOT)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\bookmarktop.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBOOKTOP)) {
+  if (!AddVObjectFromFile("LAPTOP\\bookmarktop.sti", &guiBOOKTOP)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\bookmarkmiddle.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBOOKMID)) {
+  if (!AddVObjectFromFile("LAPTOP\\bookmarkmiddle.sti", &guiBOOKMID)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\webpages.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBOOKMARK)) {
+  if (!AddVObjectFromFile("LAPTOP\\webpages.sti", &guiBOOKMARK)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\hilite.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBOOKHIGH)) {
+  if (!AddVObjectFromFile("LAPTOP\\hilite.sti", &guiBOOKHIGH)) {
     return FALSE;
   }
-  CopyFilename("LAPTOP\\Bookmarkbottom.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBOOKBOT)) {
+  if (!AddVObjectFromFile("LAPTOP\\Bookmarkbottom.sti", &guiBOOKBOT)) {
     return FALSE;
   }
 
@@ -3212,14 +3188,11 @@ BOOLEAN LoadLoadPending(void) {
   // function will load the load pending graphics
   // reuse bookmark
   // load graph window and bar
-  VOBJECT_DESC VObjectDesc;
 
-  CopyFilename("LAPTOP\\graphwindow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGRAPHWINDOW)) {
+  if (!AddVObjectFromFile("LAPTOP\\graphwindow.sti", &guiGRAPHWINDOW)) {
     return FALSE;
   }
-  CopyFilename("LAPTOP\\graphsegment.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGRAPHBAR)) {
+  if (!AddVObjectFromFile("LAPTOP\\graphsegment.sti", &guiGRAPHBAR)) {
     return FALSE;
   }
 
@@ -4789,13 +4762,11 @@ BOOLEAN RenderWWWProgramTitleBar(void) {
   // will render the title bar for the www program
   UINT32 uiTITLEFORWWW;
   struct VObject *hHandle;
-  VOBJECT_DESC VObjectDesc;
   INT32 iIndex = 0;
   CHAR16 sString[256];
 
   // title bar - load
-  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiTITLEFORWWW)) {
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &uiTITLEFORWWW)) {
     return FALSE;
   }
 

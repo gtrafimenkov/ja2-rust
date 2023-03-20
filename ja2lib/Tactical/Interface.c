@@ -296,54 +296,52 @@ BOOLEAN InitializeTacticalInterface() {
   SetVideoSurfaceTransparency(guiINTEXT, FROMRGB(255, 0, 0));
 
   // LOAD CLOSE ANIM
-  CopyFilename("INTERFACE\\p_close.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCLOSE)) AssertMsg(0, "Missing INTERFACE\\p_close.sti");
+  if (!AddVObjectFromFile("INTERFACE\\p_close.sti", &guiCLOSE))
+    AssertMsg(0, "Missing INTERFACE\\p_close.sti");
 
   // LOAD DEAD ANIM
-  CopyFilename("INTERFACE\\p_dead.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDEAD)) AssertMsg(0, "Missing INTERFACE\\p_dead.sti");
+  if (!AddVObjectFromFile("INTERFACE\\p_dead.sti", &guiDEAD))
+    AssertMsg(0, "Missing INTERFACE\\p_dead.sti");
 
   // LOAD HATCH
-  CopyFilename("INTERFACE\\hatch.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiHATCH)) AssertMsg(0, "Missing INTERFACE\\hatch.sti");
+  if (!AddVObjectFromFile("INTERFACE\\hatch.sti", &guiHATCH))
+    AssertMsg(0, "Missing INTERFACE\\hatch.sti");
 
   // LOAD INTERFACE GUN PICTURES
-  CopyFilename("INTERFACE\\mdguns.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGUNSM)) AssertMsg(0, "Missing INTERFACE\\mdguns.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdguns.sti", &guiGUNSM))
+    AssertMsg(0, "Missing INTERFACE\\mdguns.sti");
 
   // LOAD INTERFACE ITEM PICTURES
-  CopyFilename("INTERFACE\\mdp1items.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiP1ITEMS)) AssertMsg(0, "Missing INTERFACE\\mdplitems.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdp1items.sti", &guiP1ITEMS))
+    AssertMsg(0, "Missing INTERFACE\\mdplitems.sti");
 
   // LOAD INTERFACE ITEM PICTURES
-  CopyFilename("INTERFACE\\mdp2items.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiP2ITEMS)) AssertMsg(0, "Missing INTERFACE\\mdp2items.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdp2items.sti", &guiP2ITEMS))
+    AssertMsg(0, "Missing INTERFACE\\mdp2items.sti");
 
   // LOAD INTERFACE ITEM PICTURES
-  CopyFilename("INTERFACE\\mdp3items.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiP3ITEMS)) AssertMsg(0, "Missing INTERFACE\\mdp3items.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdp3items.sti", &guiP3ITEMS))
+    AssertMsg(0, "Missing INTERFACE\\mdp3items.sti");
 
   // LOAD INTERFACE BUTTON BORDER
-  CopyFilename("INTERFACE\\button_frame.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBUTTONBORDER))
+  if (!AddVObjectFromFile("INTERFACE\\button_frame.sti", &guiBUTTONBORDER))
     AssertMsg(0, "Missing INTERFACE\\button_frame.sti");
 
   // LOAD AIM CUBES
-  CopyFilename("INTERFACE\\aimcubes.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAIMCUBES)) AssertMsg(0, "Missing INTERFACE\\aimcubes.sti");
+  if (!AddVObjectFromFile("INTERFACE\\aimcubes.sti", &guiAIMCUBES))
+    AssertMsg(0, "Missing INTERFACE\\aimcubes.sti");
 
   // LOAD AIM BARS
-  CopyFilename("INTERFACE\\aimbars.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAIMBARS)) AssertMsg(0, "Missing INTERFACE\\aimbars.sti");
+  if (!AddVObjectFromFile("INTERFACE\\aimbars.sti", &guiAIMBARS))
+    AssertMsg(0, "Missing INTERFACE\\aimbars.sti");
 
-  CopyFilename("INTERFACE\\inventor.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiVEHINV)) AssertMsg(0, "Missing INTERFACE\\inventor.sti");
+  if (!AddVObjectFromFile("INTERFACE\\inventor.sti", &guiVEHINV))
+    AssertMsg(0, "Missing INTERFACE\\inventor.sti");
 
-  CopyFilename("INTERFACE\\burst1.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBURSTACCUM)) AssertMsg(0, "Missing INTERFACE\\burst1.sti");
+  if (!AddVObjectFromFile("INTERFACE\\burst1.sti", &guiBURSTACCUM))
+    AssertMsg(0, "Missing INTERFACE\\burst1.sti");
 
-  CopyFilename("INTERFACE\\portraiticons.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPORTRAITICONS))
+  if (!AddVObjectFromFile("INTERFACE\\portraiticons.sti", &guiPORTRAITICONS))
     AssertMsg(0, "Missing INTERFACE\\portraiticons.sti");
 
   // LOAD RADIO
@@ -354,21 +352,18 @@ BOOLEAN InitializeTacticalInterface() {
     AssertMsg(0, "Missing INTERFACE\\radio.sti");
 
   // LOAD RADIO2
-  CopyFilename("INTERFACE\\radio2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiRADIO2)) AssertMsg(0, "Missing INTERFACE\\radio2.sti");
+  if (!AddVObjectFromFile("INTERFACE\\radio2.sti", &guiRADIO2))
+    AssertMsg(0, "Missing INTERFACE\\radio2.sti");
 
   // LOAD com panel 2
-  CopyFilename("INTERFACE\\communicationpopup.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCOMPANEL))
+  if (!AddVObjectFromFile("INTERFACE\\communicationpopup.sti", &guiCOMPANEL))
     AssertMsg(0, "Missing INTERFACE\\communicationpopup.sti");
 
   // LOAD ITEM GRIDS....
-  CopyFilename("INTERFACE\\itemgrid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiITEMPOINTERHATCHES))
+  if (!AddVObjectFromFile("INTERFACE\\itemgrid.sti", &guiITEMPOINTERHATCHES))
     AssertMsg(0, "Missing INTERFACE\\itemgrid.sti");
 
-  CopyFilename("INTERFACE\\communicationpopup_2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCOMPANELB))
+  if (!AddVObjectFromFile("INTERFACE\\communicationpopup_2.sti", &guiCOMPANELB))
     AssertMsg(0, "Missing INTERFACE\\communicationpopup_2.sti");
 
   // Alocate message surfaces
@@ -2478,8 +2473,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
       AssertMsg(0, "Missing INTERFACE\\timebargreen.sti");
   }
 
-  CopyFilename("INTERFACE\\timebaryellow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiINTBAR))
+  if (!AddVObjectFromFile("INTERFACE\\timebaryellow.sti", &uiINTBAR))
     AssertMsg(0, "Missing INTERFACE\\timebaryellow.sti");
 
   // Change dest buffer

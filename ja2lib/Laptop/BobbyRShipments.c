@@ -101,8 +101,7 @@ BOOLEAN EnterBobbyRShipments() {
   InitBobbyRWoodBackground();
 
   // load the Order Grid graphic and add it
-  CopyFilename("LAPTOP\\BobbyRay_OnOrder.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBobbyRShipmentGrid)) {
+  if (!AddVObjectFromFile("LAPTOP\\BobbyRay_OnOrder.sti", &guiBobbyRShipmentGrid)) {
     return FALSE;
   }
 

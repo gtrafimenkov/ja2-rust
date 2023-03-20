@@ -432,8 +432,7 @@ BOOLEAN EnterSaveLoadScreen() {
   }
 
   // load Main background  graphic and add it
-  CopyFilename("INTERFACE\\LoadScreen.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSlgBackGroundImage)) {
+  if (!AddVObjectFromFile("INTERFACE\\LoadScreen.sti", &guiSlgBackGroundImage)) {
     return FALSE;
   }
 

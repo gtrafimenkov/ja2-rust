@@ -154,14 +154,12 @@ BOOLEAN EnterMercsFiles() {
   }
 
   // load the Portrait box graphic and add it
-  CopyFilename("LAPTOP\\PortraitBox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPortraitBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\PortraitBox.sti", &guiPortraitBox)) {
     return FALSE;
   }
 
   // load the bio box graphic and add it
-  CopyFilename("LAPTOP\\BioBox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBioBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\BioBox.sti", &guiBioBox)) {
     return FALSE;
   }
 
@@ -411,8 +409,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
 
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, ubMercID);
-  CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMercFace)) {
+  if (!AddVObjectFromFile(sTemp, &guiMercFace)) {
     return FALSE;
   }
 

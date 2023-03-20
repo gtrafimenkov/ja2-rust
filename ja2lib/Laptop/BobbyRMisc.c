@@ -22,14 +22,12 @@ BOOLEAN EnterBobbyRMisc() {
   VOBJECT_DESC VObjectDesc;
 
   // load the background graphic and add it
-  CopyFilename("LAPTOP\\miscbackground.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMiscBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\miscbackground.sti", &guiMiscBackground)) {
     return FALSE;
   }
 
   // load the gunsgrid graphic and add it
-  CopyFilename("LAPTOP\\miscgrid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMiscGrid)) {
+  if (!AddVObjectFromFile("LAPTOP\\miscgrid.sti", &guiMiscGrid)) {
     return FALSE;
   }
 

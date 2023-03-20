@@ -480,36 +480,30 @@ void RenderFinances(void) {
 }
 
 BOOLEAN LoadFinances(void) {
-  VOBJECT_DESC VObjectDesc;
   // load Finance video objects into memory
 
   // title bar
-  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTITLE)) {
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &guiTITLE)) {
     return FALSE;
   }
 
   // top portion of the screen background
-  CopyFilename("LAPTOP\\Financeswindow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTOP)) {
+  if (!AddVObjectFromFile("LAPTOP\\Financeswindow.sti", &guiTOP)) {
     return FALSE;
   }
 
   // black divider line - long ( 480 length)
-  CopyFilename("LAPTOP\\divisionline480.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLONGLINE)) {
+  if (!AddVObjectFromFile("LAPTOP\\divisionline480.sti", &guiLONGLINE)) {
     return FALSE;
   }
 
   // the records columns
-  CopyFilename("LAPTOP\\recordcolumns.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLISTCOLUMNS)) {
+  if (!AddVObjectFromFile("LAPTOP\\recordcolumns.sti", &guiLISTCOLUMNS)) {
     return FALSE;
   }
 
   // black divider line - long ( 480 length)
-  CopyFilename("LAPTOP\\divisionline.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLINE)) {
+  if (!AddVObjectFromFile("LAPTOP\\divisionline.sti", &guiLINE)) {
     return FALSE;
   }
 

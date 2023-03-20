@@ -588,19 +588,16 @@ BOOLEAN LoadPersonnelGraphics(void) {
   // load graphics
 
   // title bar
-  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTITLE)) {
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &guiTITLE)) {
     return FALSE;
   }
 
   // the background grpahics
-  CopyFilename("LAPTOP\\personnelwindow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSCREEN)) {
+  if (!AddVObjectFromFile("LAPTOP\\personnelwindow.sti", &guiSCREEN)) {
     return FALSE;
   }
 
-  CopyFilename("LAPTOP\\personnel_inventory.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPersonnelInventory)) {
+  if (!AddVObjectFromFile("LAPTOP\\personnel_inventory.sti", &guiPersonnelInventory)) {
     return FALSE;
   }
 
@@ -805,8 +802,7 @@ BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFire
     }
   }
 
-  CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFACE)) {
+  if (!AddVObjectFromFile(sTemp, &guiFACE)) {
     return FALSE;
   }
 
@@ -1876,14 +1872,12 @@ BOOLEAN LoadPersonnelScreenBackgroundGraphics(void) {
   VOBJECT_DESC VObjectDesc;
 
   // departed bar
-  CopyFilename("LAPTOP\\departed.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDEPARTEDTEAM)) {
+  if (!AddVObjectFromFile("LAPTOP\\departed.sti", &guiDEPARTEDTEAM)) {
     return FALSE;
   }
 
   // current bar
-  CopyFilename("LAPTOP\\CurrentTeam.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCURRENTTEAM)) {
+  if (!AddVObjectFromFile("LAPTOP\\CurrentTeam.sti", &guiCURRENTTEAM)) {
     return FALSE;
   }
 
@@ -4362,8 +4356,7 @@ BOOLEAN DisplayPortraitOfPastMerc(INT32 iId, INT32 iCounter, BOOLEAN fDead, BOOL
     }
   }
 
-  CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFACE)) {
+  if (!AddVObjectFromFile(sTemp, &guiFACE)) {
     return FALSE;
   }
 
@@ -4773,8 +4766,7 @@ BOOLEAN DisplayHighLightBox(void) {
   }
 
   // bounding
-  CopyFilename("LAPTOP\\PicBorde.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\PicBorde.sti", &uiBox)) {
     return FALSE;
   }
 

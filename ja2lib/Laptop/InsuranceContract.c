@@ -194,7 +194,6 @@ void EnterLaptopInitInsuranceContract() {
 }
 
 BOOLEAN EnterInsuranceContract() {
-  VOBJECT_DESC VObjectDesc;
   UINT16 usPosX, i;
 
   // build the list of mercs that are can be displayed
@@ -207,14 +206,12 @@ BOOLEAN EnterInsuranceContract() {
   InitInsuranceDefaults();
 
   // load the Insurance title graphic and add it
-  CopyFilename("LAPTOP\\InsOrderGrid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiInsOrderGridImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\InsOrderGrid.sti", &guiInsOrderGridImage)) {
     return FALSE;
   }
 
   // load the Insurance bullet graphic and add it
-  CopyFilename("LAPTOP\\bullet.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiInsOrderBulletImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\bullet.sti", &guiInsOrderBulletImage)) {
     return FALSE;
   }
 
@@ -470,7 +467,6 @@ void BtnInsContractNextButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 }
 
 BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hPixHandle;
   UINT16 usPosX, usPosY;
   UINT32 uiInsMercFaceImage;
@@ -517,8 +513,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
 
   // load the mercs face graphic and add it
   sprintf(sTemp, "FACES\\%02d.sti", ubMercID);
-  CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiInsMercFaceImage)) {
+  if (!AddVObjectFromFile(sTemp, &uiInsMercFaceImage)) {
     return FALSE;
   }
 

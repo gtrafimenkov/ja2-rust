@@ -69,8 +69,7 @@ BOOLEAN EnterAimFacialIndex() {
   char sTemp[100];
 
   // load the Portait graphic and add it
-  CopyFilename("LAPTOP\\MugShotBorder3.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMugShotBorder)) {
+  if (!AddVObjectFromFile("LAPTOP\\MugShotBorder3.sti", &guiMugShotBorder)) {
     return FALSE;
   }
 

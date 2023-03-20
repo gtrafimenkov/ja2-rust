@@ -336,38 +336,32 @@ BOOLEAN EnterMercs() {
   InitMercBackGround();
 
   // load the Account box graphic and add it
-  CopyFilename("LAPTOP\\AccountBox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAccountBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\AccountBox.sti", &guiAccountBox)) {
     return FALSE;
   }
 
   // load the files Box graphic and add it
-  CopyFilename("LAPTOP\\FilesBox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFilesBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\FilesBox.sti", &guiFilesBox)) {
     return FALSE;
   }
 
   // load the MercSymbol graphic and add it
-  CopyFilename("LAPTOP\\MERCSymbol.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMercSymbol)) {
+  if (!AddVObjectFromFile("LAPTOP\\MERCSymbol.sti", &guiMercSymbol)) {
     return FALSE;
   }
 
   // load the SpecPortrait graphic and add it
-  CopyFilename("LAPTOP\\SpecPortrait.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSpecPortrait)) {
+  if (!AddVObjectFromFile("LAPTOP\\SpecPortrait.sti", &guiSpecPortrait)) {
     return FALSE;
   }
 
   // load the Arrow graphic and add it
-  CopyFilename("LAPTOP\\Arrow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiArrow)) {
+  if (!AddVObjectFromFile("LAPTOP\\Arrow.sti", &guiArrow)) {
     return FALSE;
   }
 
   // load the Merc video conf background graphic and add it
-  CopyFilename("LAPTOP\\SpeckComWindow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMercVideoPopupBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\SpeckComWindow.sti", &guiMercVideoPopupBackground)) {
     return FALSE;
   }
 
@@ -610,8 +604,7 @@ BOOLEAN InitMercBackGround() {
   VOBJECT_DESC VObjectDesc;
 
   // load the Merc background graphic and add it
-  CopyFilename("LAPTOP\\MERCBackGround.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMercBackGround)) {
+  if (!AddVObjectFromFile("LAPTOP\\MERCBackGround.sti", &guiMercBackGround)) {
     return FALSE;
   }
 

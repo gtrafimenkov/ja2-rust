@@ -96,8 +96,7 @@ BOOLEAN EnterMercsAccount() {
   }
 
   // load the Arrow graphic and add it
-  CopyFilename("LAPTOP\\AccountNumber.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAccountNumberGrid)) {
+  if (!AddVObjectFromFile("LAPTOP\\AccountNumber.sti", &guiAccountNumberGrid)) {
     return FALSE;
   }
 

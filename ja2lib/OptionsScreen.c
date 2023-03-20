@@ -349,8 +349,7 @@ BOOLEAN EnterOptionsScreen() {
   gfExitOptionsDueToMessageBox = FALSE;
 
   // load the options screen background graphic and add it
-  CopyFilename("INTERFACE\\OptionScreenBase.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiOptionBackGroundImage)) {
+  if (!AddVObjectFromFile("INTERFACE\\OptionScreenBase.sti", &guiOptionBackGroundImage)) {
     return FALSE;
   }
 

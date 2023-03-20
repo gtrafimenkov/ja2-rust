@@ -253,32 +253,22 @@ void EnterInitBobbyRGuns() {
 }
 
 BOOLEAN EnterBobbyRGuns() {
-  VOBJECT_DESC VObjectDesc;
-
   gfBigImageMouseRegionCreated = FALSE;
 
   // load the background graphic and add it
-  CopyFilename("LAPTOP\\gunbackground.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGunBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\gunbackground.sti", &guiGunBackground)) {
     return FALSE;
   }
 
   // load the gunsgrid graphic and add it
-  CopyFilename("LAPTOP\\gunsgrid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGunsGrid)) {
+  if (!AddVObjectFromFile("LAPTOP\\gunsgrid.sti", &guiGunsGrid)) {
     return FALSE;
   }
 
   InitBobbyBrTitle();
 
   SetFirstLastPagesForNew(IC_BOBBY_GUN);
-  //	CalculateFirstAndLastIndexs();
-  /*
-          if(giCurrentSubPage == 0)
-                  gusCurWeaponIndex = gusFirstGunIndex;
-          else
-                  gusCurWeaponIndex = (UINT8)giCurrentSubPage;
-  */
+
   // Draw menu bar
   InitBobbyMenuBar();
 
@@ -353,11 +343,8 @@ BOOLEAN DisplayBobbyRBrTitle() {
 }
 
 BOOLEAN InitBobbyBrTitle() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the br title graphic and add it
-  CopyFilename("LAPTOP\\br.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBrTitle)) {
+  if (!AddVObjectFromFile("LAPTOP\\br.sti", &guiBrTitle)) {
     return FALSE;
   }
 

@@ -315,26 +315,22 @@ BOOLEAN LoadFiles(void) {
   // load files video objects into memory
 
   // title bar
-  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTITLE)) {
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &guiTITLE)) {
     return FALSE;
   }
 
   // top portion of the screen background
-  CopyFilename("LAPTOP\\fileviewer.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTOP)) {
+  if (!AddVObjectFromFile("LAPTOP\\fileviewer.sti", &guiTOP)) {
     return FALSE;
   }
 
   // the highlight
-  CopyFilename("LAPTOP\\highlight.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiHIGHLIGHT)) {
+  if (!AddVObjectFromFile("LAPTOP\\highlight.sti", &guiHIGHLIGHT)) {
     return FALSE;
   }
 
   // top portion of the screen background
-  CopyFilename("LAPTOP\\fileviewerwhite.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFileBack)) {
+  if (!AddVObjectFromFile("LAPTOP\\fileviewerwhite.sti", &guiFileBack)) {
     return FALSE;
   }
 

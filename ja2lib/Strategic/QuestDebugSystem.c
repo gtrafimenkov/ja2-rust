@@ -925,13 +925,11 @@ BOOLEAN EnterQuestDebugSystem() {
   }
 
   // load Scroll Horizontal Arrow graphic and add it
-  CopyFilename("INTERFACE\\Qd_ScrollArrows.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiQdScrollArrowImage)) {
+  if (!AddVObjectFromFile("INTERFACE\\Qd_ScrollArrows.sti", &guiQdScrollArrowImage)) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel)) {
+  if (!AddVObjectFromFile("INTERFACE\\Bars.sti", &guiBrownBackgroundForTeamPanel)) {
     return FALSE;
   }
 

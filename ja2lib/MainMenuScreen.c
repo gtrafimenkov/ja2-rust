@@ -237,14 +237,12 @@ BOOLEAN InitMainMenu() {
   CreateDestroyMainMenuButtons(TRUE);
 
   // load background graphic and add it
-  CopyFilename("LOADSCREENS\\MainMenuBackGround.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMainMenuBackGroundImage)) {
+  if (!AddVObjectFromFile("LOADSCREENS\\MainMenuBackGround.sti", &guiMainMenuBackGroundImage)) {
     return FALSE;
   }
 
   // load ja2 logo graphic and add it
-  CopyFilename("LOADSCREENS\\Ja2Logo.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiJa2LogoImage)) {
+  if (!AddVObjectFromFile("LOADSCREENS\\Ja2Logo.sti", &guiJa2LogoImage)) {
     return FALSE;
   }
 

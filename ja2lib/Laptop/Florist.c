@@ -85,8 +85,7 @@ BOOLEAN EnterFlorist() {
   InitFloristDefaults();
 
   // load the handbullet graphic and add it
-  CopyFilename("LAPTOP\\HandBullet.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiHandBullet)) {
+  if (!AddVObjectFromFile("LAPTOP\\HandBullet.sti", &guiHandBullet)) {
     return FALSE;
   }
 
@@ -188,8 +187,7 @@ BOOLEAN InitFloristDefaults() {
   VOBJECT_DESC VObjectDesc;
 
   // load the Florist background graphic and add it
-  CopyFilename("LAPTOP\\leafback.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFloristBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\leafback.sti", &guiFloristBackground)) {
     return FALSE;
   }
 

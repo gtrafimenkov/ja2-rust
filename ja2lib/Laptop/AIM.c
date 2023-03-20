@@ -201,20 +201,17 @@ BOOLEAN EnterAIM() {
   InitAimDefaults();
 
   // load the MemberShipcard graphic and add it
-  CopyFilename("LAPTOP\\membercard.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMemberCard)) {
+  if (!AddVObjectFromFile("LAPTOP\\membercard.sti", &guiMemberCard)) {
     return FALSE;
   }
 
   // load the Policies graphic and add it
-  CopyFilename("LAPTOP\\Policies.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPolicies)) {
+  if (!AddVObjectFromFile("LAPTOP\\Policies.sti", &guiPolicies)) {
     return FALSE;
   }
 
   // load the Links graphic and add it
-  CopyFilename("LAPTOP\\Links.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiLinks)) {
+  if (!AddVObjectFromFile("LAPTOP\\Links.sti", &guiLinks)) {
     return FALSE;
   }
 
@@ -231,8 +228,7 @@ BOOLEAN EnterAIM() {
   }
 
   // load the flower advertisment and add it
-  CopyFilename("LAPTOP\\flowerad_16.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiFlowerAdvertisement)) {
+  if (!AddVObjectFromFile("LAPTOP\\flowerad_16.sti", &guiFlowerAdvertisement)) {
     return FALSE;
   }
 
@@ -423,8 +419,7 @@ BOOLEAN InitAimDefaults() {
   VOBJECT_DESC VObjectDesc;
 
   // load the Rust bacground graphic and add it
-  CopyFilename("LAPTOP\\rustbackground.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiRustBackGround)) {
+  if (!AddVObjectFromFile("LAPTOP\\rustbackground.sti", &guiRustBackGround)) {
     return FALSE;
   }
 

@@ -217,20 +217,17 @@ BOOLEAN EnterBobbyR() {
   }
 
   // load the plaque graphic and add it
-  CopyFilename("LAPTOP\\BobbyPlaques.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPlaque)) {
+  if (!AddVObjectFromFile("LAPTOP\\BobbyPlaques.sti", &guiPlaque)) {
     return FALSE;
   }
 
   // load the TopHinge graphic and add it
-  CopyFilename("LAPTOP\\BobbyTopHinge.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTopHinge)) {
+  if (!AddVObjectFromFile("LAPTOP\\BobbyTopHinge.sti", &guiTopHinge)) {
     return FALSE;
   }
 
   // load the BottomHinge graphic and add it
-  CopyFilename("LAPTOP\\BobbyBottomHinge.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBottomHinge)) {
+  if (!AddVObjectFromFile("LAPTOP\\BobbyBottomHinge.sti", &guiBottomHinge)) {
     return FALSE;
   }
 
@@ -241,8 +238,7 @@ BOOLEAN EnterBobbyR() {
   }
 
   // load the Handle graphic and add it
-  CopyFilename("LAPTOP\\BobbyHandle.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiHandle)) {
+  if (!AddVObjectFromFile("LAPTOP\\BobbyHandle.sti", &guiHandle)) {
     return FALSE;
   }
 
@@ -406,11 +402,8 @@ void RenderBobbyR() {
 }
 
 BOOLEAN InitBobbyRWoodBackground() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the Wood bacground graphic and add it
-  CopyFilename("LAPTOP\\BobbyWood.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiWoodBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\BobbyWood.sti", &guiWoodBackground)) {
     return FALSE;
   }
 

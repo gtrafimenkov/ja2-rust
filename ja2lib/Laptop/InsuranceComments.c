@@ -42,15 +42,13 @@ BOOLEAN DisplayComment(UINT8 ubCommentorsName, UINT8 ubComment, UINT16 usPosY);
 void GameInitInsuranceComments() {}
 
 BOOLEAN EnterInsuranceComments() {
-  VOBJECT_DESC VObjectDesc;
   UINT8 i;
   UINT16 usPosX;
 
   InitInsuranceDefaults();
 
   // load the Insurance bullet graphic and add it
-  CopyFilename("LAPTOP\\bullet.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiInsCmntBulletImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\bullet.sti", &guiInsCmntBulletImage)) {
     return FALSE;
   }
 

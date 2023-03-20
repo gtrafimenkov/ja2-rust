@@ -1078,23 +1078,19 @@ BOOLEAN InitializeSMPanel() {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_gold_front.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSMObjects)) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_gold_front.sti", &guiSMObjects)) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inv_frn.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSMObjects2)) {
+  if (!AddVObjectFromFile("INTERFACE\\inv_frn.sti", &guiSMObjects2)) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO)) {
+  if (!AddVObjectFromFile("INTERFACE\\secondary_gun_hidden.sti", &guiSecItemHiddenVO)) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel)) {
+  if (!AddVObjectFromFile("INTERFACE\\Bars.sti", &guiBrownBackgroundForTeamPanel)) {
     return FALSE;
   }
 
@@ -2785,18 +2781,15 @@ BOOLEAN InitializeTEAMPanel() {
 
   // Load interface panels
 
-  CopyFilename("INTERFACE\\bottom_bar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTEAMPanel)) {
+  if (!AddVObjectFromFile("INTERFACE\\bottom_bar.sti", &guiTEAMPanel)) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\gold_front.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiTEAMObjects)) {
+  if (!AddVObjectFromFile("INTERFACE\\gold_front.sti", &guiTEAMObjects)) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel)) {
+  if (!AddVObjectFromFile("INTERFACE\\Bars.sti", &guiBrownBackgroundForTeamPanel)) {
     return FALSE;
   }
 

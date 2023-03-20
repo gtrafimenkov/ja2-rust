@@ -22,14 +22,12 @@ BOOLEAN EnterBobbyRArmour() {
   VOBJECT_DESC VObjectDesc;
 
   // load the background graphic and add it
-  CopyFilename("LAPTOP\\Armourbackground.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiArmourBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\Armourbackground.sti", &guiArmourBackground)) {
     return FALSE;
   }
 
   // load the gunsgrid graphic and add it
-  CopyFilename("LAPTOP\\Armourgrid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiArmourGrid)) {
+  if (!AddVObjectFromFile("LAPTOP\\Armourgrid.sti", &guiArmourGrid)) {
     return FALSE;
   }
 

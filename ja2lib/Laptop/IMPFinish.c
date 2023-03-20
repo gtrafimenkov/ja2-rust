@@ -542,11 +542,9 @@ void RenderCharFullName(void) {
 
 BOOLEAN LoadCharacterPortrait(void) {
   // this function will load the character's portrait, to be used on portrait button
-  VOBJECT_DESC VObjectDesc;
 
   // load it
-  CopyFilename(pPlayerSelectedFaceFileNames[iPortraitNumber], VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCHARACTERPORTRAIT)) {
+  if (!AddVObjectFromFile(pPlayerSelectedFaceFileNames[iPortraitNumber], &guiCHARACTERPORTRAIT)) {
     return FALSE;
   }
 

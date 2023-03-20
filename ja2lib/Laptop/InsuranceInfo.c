@@ -95,8 +95,7 @@ BOOLEAN EnterInsuranceInfo() {
   InitInsuranceDefaults();
 
   // load the Insurance bullet graphic and add it
-    CopyFilename("LAPTOP\\bullet.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBulletImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\bullet.sti", &guiBulletImage)) {
     return FALSE;
   }
 

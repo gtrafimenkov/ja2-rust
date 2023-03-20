@@ -22,14 +22,12 @@ BOOLEAN EnterBobbyRUsed() {
   VOBJECT_DESC VObjectDesc;
 
   // load the background graphic and add it
-  CopyFilename("LAPTOP\\usedbackground.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiUsedBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\usedbackground.sti", &guiUsedBackground)) {
     return FALSE;
   }
 
   // load the gunsgrid graphic and add it
-  CopyFilename("LAPTOP\\usedgrid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiUsedGrid)) {
+  if (!AddVObjectFromFile("LAPTOP\\usedgrid.sti", &guiUsedGrid)) {
     return FALSE;
   }
 

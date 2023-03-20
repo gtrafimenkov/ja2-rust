@@ -168,38 +168,32 @@ BOOLEAN EnterAimArchives() {
   gubPageNum = (UINT8)giCurrentSubPage;
 
   // load the Alumni Frame and add it
-  CopyFilename("LAPTOP\\AlumniFrame.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAlumniFrame)) {
+  if (!AddVObjectFromFile("LAPTOP\\AlumniFrame.sti", &guiAlumniFrame)) {
     return FALSE;
   }
 
   // load the 1st set of faces and add it
-  CopyFilename("LAPTOP\\Old_Aim.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiOldAim)) {
+  if (!AddVObjectFromFile("LAPTOP\\Old_Aim.sti", &guiOldAim)) {
     return FALSE;
   }
 
   // load the Bottom Buttons graphic and add it
-  CopyFilename("LAPTOP\\BottomButton.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPageButtons)) {
+  if (!AddVObjectFromFile("LAPTOP\\BottomButton.sti", &guiPageButtons)) {
     return FALSE;
   }
 
   // load the PopupPic graphic and add it
-  CopyFilename("LAPTOP\\PopupPicFrame.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPopUpPic)) {
+  if (!AddVObjectFromFile("LAPTOP\\PopupPicFrame.sti", &guiPopUpPic)) {
     return FALSE;
   }
 
   // load the AlumniPopUp graphic and add it
-  CopyFilename("LAPTOP\\AlumniPopUp.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAlumniPopUp)) {
+  if (!AddVObjectFromFile("LAPTOP\\AlumniPopUp.sti", &guiAlumniPopUp)) {
     return FALSE;
   }
 
   // load the Done Button graphic and add it
-  CopyFilename("LAPTOP\\DoneButton.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDoneButton)) {
+  if (!AddVObjectFromFile("LAPTOP\\DoneButton.sti", &guiDoneButton)) {
     return FALSE;
   }
 

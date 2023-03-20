@@ -172,8 +172,7 @@ BOOLEAN EnterAimSort() {
   InitAimDefaults();
 
   // load the SortBy box graphic and add it
-  CopyFilename("LAPTOP\\SortBy.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSortByBox)) {
+  if (!AddVObjectFromFile("LAPTOP\\SortBy.sti", &guiSortByBox)) {
     return FALSE;
   }
 
@@ -196,8 +195,7 @@ BOOLEAN EnterAimSort() {
   }
 
   // load the SelectLight graphic and add it
-  CopyFilename("LAPTOP\\SelectLight.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSelectLight)) {
+  if (!AddVObjectFromFile("LAPTOP\\SelectLight.sti", &guiSelectLight)) {
     return FALSE;
   }
 

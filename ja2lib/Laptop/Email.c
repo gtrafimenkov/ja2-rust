@@ -358,38 +358,32 @@ void GameInitEmail() {
 }
 
 BOOLEAN EnterEmail() {
-  VOBJECT_DESC VObjectDesc;
   // load graphics
 
   iCurrentPage = LaptopSaveInfo.iCurrentEmailPage;
 
   // title bar
-  CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiEmailTitle)) {
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &guiEmailTitle)) {
     return FALSE;
   }
 
   // the list background
-  CopyFilename("LAPTOP\\Mailwindow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiEmailBackground)) {
+  if (!AddVObjectFromFile("LAPTOP\\Mailwindow.sti", &guiEmailBackground)) {
     return FALSE;
   }
 
   // the indication/notification box
-  CopyFilename("LAPTOP\\MailIndicator.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiEmailIndicator)) {
+  if (!AddVObjectFromFile("LAPTOP\\MailIndicator.sti", &guiEmailIndicator)) {
     return FALSE;
   }
 
   // the message background
-  CopyFilename("LAPTOP\\emailviewer.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiEmailMessage)) {
+  if (!AddVObjectFromFile("LAPTOP\\emailviewer.sti", &guiEmailMessage)) {
     return FALSE;
   }
 
   // the message background
-  CopyFilename("LAPTOP\\maillistdivider.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMAILDIVIDER)) {
+  if (!AddVObjectFromFile("LAPTOP\\maillistdivider.sti", &guiMAILDIVIDER)) {
     return FALSE;
   }
 

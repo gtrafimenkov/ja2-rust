@@ -478,12 +478,12 @@ void GoIntoOverheadMap() {
   MSYS_AddRegion(&OverheadRegion);
 
   // LOAD CLOSE ANIM
-  CopyFilename("INTERFACE\\MAP_BORD.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiOVERMAP)) AssertMsg(0, "Missing INTERFACE\\MAP_BORD.sti");
+  if (!AddVObjectFromFile("INTERFACE\\MAP_BORD.sti", &uiOVERMAP))
+    AssertMsg(0, "Missing INTERFACE\\MAP_BORD.sti");
 
   // LOAD PERSONS
-  CopyFilename("INTERFACE\\PERSONS.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiPERSONS)) AssertMsg(0, "Missing INTERFACE\\PERSONS.sti");
+  if (!AddVObjectFromFile("INTERFACE\\PERSONS.sti", &uiPERSONS))
+    AssertMsg(0, "Missing INTERFACE\\PERSONS.sti");
 
   // Add shades to persons....
   GetVideoObject(&hVObject, uiPERSONS);

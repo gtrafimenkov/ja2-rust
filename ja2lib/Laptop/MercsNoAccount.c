@@ -50,8 +50,7 @@ BOOLEAN EnterMercsNoAccount() {
   InitMercBackGround();
 
   // load the Account box graphic and add it
-  CopyFilename("LAPTOP\\NoAccountBox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiNoAccountImage)) {
+  if (!AddVObjectFromFile("LAPTOP\\NoAccountBox.sti", &guiNoAccountImage)) {
     return FALSE;
   }
 

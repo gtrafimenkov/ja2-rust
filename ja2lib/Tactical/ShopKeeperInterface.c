@@ -800,8 +800,7 @@ BOOLEAN EnterShopKeeperInterface() {
   SetSMPanelCurrentMerc((UINT8)gusSelectedSoldier);
 
   // load the Main trade screen backgroiund image
-  CopyFilename("InterFace\\TradeScreen.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMainTradeScreenImage)) {
+  if (!AddVObjectFromFile("InterFace\\TradeScreen.sti", &guiMainTradeScreenImage)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load TradeScreen.sti");
 #endif
@@ -810,8 +809,7 @@ BOOLEAN EnterShopKeeperInterface() {
   }
 
   // load the Main trade screen background image
-  CopyFilename("InterFace\\itemcrossout.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiItemCrossOut)) {
+  if (!AddVObjectFromFile("InterFace\\itemcrossout.sti", &guiItemCrossOut)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load itemcrossout.sti");
 #endif

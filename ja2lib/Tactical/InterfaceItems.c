@@ -838,49 +838,40 @@ BOOLEAN InitInvSlotInterface(INV_REGION_DESC *pRegionDesc, INV_REGION_DESC *pCam
   VOBJECT_DESC VObjectDesc;
 
   // Load all four body type images
-  CopyFilename("INTERFACE\\inventory_figure_large_male.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[1][0]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_figure_large_male.sti", &(guiBodyInvVO[1][0]))) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_figure_large_male_H.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[1][1]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_figure_large_male_H.sti", &(guiBodyInvVO[1][1]))) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[0][0]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_normal_male.sti", &(guiBodyInvVO[0][0]))) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_normal_male_H.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[0][1]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_normal_male_H.sti", &(guiBodyInvVO[0][1]))) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[2][0]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_normal_male.sti", &(guiBodyInvVO[2][0]))) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_normal_male.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[2][1]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_normal_male.sti", &(guiBodyInvVO[2][1]))) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_figure_female.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[3][0]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_figure_female.sti", &(guiBodyInvVO[3][0]))) {
     return FALSE;
   }
 
-  CopyFilename("INTERFACE\\inventory_figure_female_H.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(guiBodyInvVO[3][1]))) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_figure_female_H.sti", &(guiBodyInvVO[3][1]))) {
     return FALSE;
   }
 
   // add gold key graphic
-  CopyFilename("INTERFACE\\gold_key_button.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGoldKeyVO)) {
+  if (!AddVObjectFromFile("INTERFACE\\gold_key_button.sti", &guiGoldKeyVO)) {
     return FALSE;
   }
 
@@ -5437,8 +5428,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
     gItemPickupMenu.bNumSlotsPerPage = gItemPickupMenu.ubTotalItems;
   }
 
-  CopyFilename("INTERFACE\\itembox.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &(gItemPickupMenu.uiPanelVo))) {
+  if (!AddVObjectFromFile("INTERFACE\\itembox.sti", &(gItemPickupMenu.uiPanelVo))) {
     return FALSE;
   }
 
