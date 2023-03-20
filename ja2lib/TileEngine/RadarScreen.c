@@ -121,8 +121,8 @@ BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
 
     if (GetVideoObject(&hVObject, gusRadarImage)) {
       // ATE: Add a shade table!
-      hVObject->pShades[0] = VObjectUpdateShade(hVObject, 255, 255, 255, FALSE);
-      hVObject->pShades[1] = VObjectUpdateShade(hVObject, 100, 100, 100, FALSE);
+      VObjectUpdateShade(hVObject, 0, 255, 255, 255, FALSE);
+      VObjectUpdateShade(hVObject, 1, 100, 100, 100, FALSE);
     }
   }
 

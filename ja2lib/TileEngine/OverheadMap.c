@@ -487,9 +487,9 @@ void GoIntoOverheadMap() {
 
   // Add shades to persons....
   GetVideoObject(&hVObject, uiPERSONS);
-  hVObject->pShades[0] = VObjectUpdateShade(hVObject, 256, 256, 256, FALSE);
-  hVObject->pShades[1] = VObjectUpdateShade(hVObject, 310, 310, 310, FALSE);
-  hVObject->pShades[2] = VObjectUpdateShade(hVObject, 0, 0, 0, FALSE);
+  VObjectUpdateShade(hVObject, 0, 256, 256, 256, FALSE);
+  VObjectUpdateShade(hVObject, 1, 310, 310, 310, FALSE);
+  VObjectUpdateShade(hVObject, 2, 0, 0, 0, FALSE);
 
   gfOverheadMapDirty = TRUE;
 

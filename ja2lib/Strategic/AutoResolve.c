@@ -1677,8 +1677,8 @@ void CreateAutoResolveInterface() {
     AssertMsg(0, "Failed to load Interface\\SmFaces.sti");
   }
   if (GetVideoObject(&hVObject, gpAR->iFaces)) {
-    hVObject->pShades[0] = VObjectUpdateShade(hVObject, 255, 255, 255, FALSE);
-    hVObject->pShades[1] = VObjectUpdateShade(hVObject, 250, 25, 25, TRUE);
+    VObjectUpdateShade(hVObject, 0, 255, 255, 255, FALSE);
+    VObjectUpdateShade(hVObject, 1, 250, 25, 25, TRUE);
   }
 
   // Add the battle over panels
@@ -1700,8 +1700,8 @@ void CreateAutoResolveInterface() {
       }
     }
     if (GetVideoObject(&hVObject, gpMercs[i].uiVObjectID)) {
-      hVObject->pShades[0] = VObjectUpdateShade(hVObject, 255, 255, 255, FALSE);
-      hVObject->pShades[1] = VObjectUpdateShade(hVObject, 250, 25, 25, TRUE);
+      VObjectUpdateShade(hVObject, 0, 255, 255, 255, FALSE);
+      VObjectUpdateShade(hVObject, 1, 250, 25, 25, TRUE);
     }
   }
 

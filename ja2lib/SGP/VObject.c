@@ -582,23 +582,23 @@ UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType) {
 
   switch (uiType) {
     case HVOBJECT_GLOW_GREEN:  // green glow
-      pObj->pShades[0] = VObjectUpdateShade(pObj, 0, 255, 0, TRUE);
+      VObjectUpdateShade(pObj, 0, 0, 255, 0, TRUE);
       break;
     case HVOBJECT_GLOW_BLUE:  // blue glow
-      pObj->pShades[0] = VObjectUpdateShade(pObj, 0, 0, 255, TRUE);
+      VObjectUpdateShade(pObj, 0, 0, 0, 255, TRUE);
       break;
     case HVOBJECT_GLOW_YELLOW:  // yellow glow
-      pObj->pShades[0] = VObjectUpdateShade(pObj, 255, 255, 0, TRUE);
+      VObjectUpdateShade(pObj, 0, 255, 255, 0, TRUE);
       break;
     case HVOBJECT_GLOW_RED:  // red glow
-      pObj->pShades[0] = VObjectUpdateShade(pObj, 255, 0, 0, TRUE);
+      VObjectUpdateShade(pObj, 0, 255, 0, 0, TRUE);
       break;
   }
 
   // these are the brightening tables, 115%-150% brighter than original
-  pObj->pShades[1] = VObjectUpdateShade(pObj, 293, 293, 293, FALSE);
-  pObj->pShades[2] = VObjectUpdateShade(pObj, 281, 281, 281, FALSE);
-  pObj->pShades[3] = VObjectUpdateShade(pObj, 268, 268, 268, FALSE);
+  VObjectUpdateShade(pObj, 1, 293, 293, 293, FALSE);
+  VObjectUpdateShade(pObj, 2, 281, 281, 281, FALSE);
+  VObjectUpdateShade(pObj, 3, 268, 268, 268, FALSE);
 
   // palette 4 is the non-modified palette.
   // if the standard one has already been made, we'll use it
@@ -606,22 +606,22 @@ UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType) {
     pObj->pShades[4] = pObj->p16BPPPalette;
   else {
     // or create our own, and assign it to the standard one
-    pObj->pShades[4] = VObjectUpdateShade(pObj, 255, 255, 255, FALSE);
+    VObjectUpdateShade(pObj, 4, 255, 255, 255, FALSE);
     pObj->p16BPPPalette = pObj->pShades[4];
   }
 
   // the rest are darkening tables, right down to all-black.
-  pObj->pShades[5] = VObjectUpdateShade(pObj, 195, 195, 195, FALSE);
-  pObj->pShades[6] = VObjectUpdateShade(pObj, 165, 165, 165, FALSE);
-  pObj->pShades[7] = VObjectUpdateShade(pObj, 135, 135, 135, FALSE);
-  pObj->pShades[8] = VObjectUpdateShade(pObj, 105, 105, 105, FALSE);
-  pObj->pShades[9] = VObjectUpdateShade(pObj, 75, 75, 75, FALSE);
-  pObj->pShades[10] = VObjectUpdateShade(pObj, 45, 45, 45, FALSE);
-  pObj->pShades[11] = VObjectUpdateShade(pObj, 36, 36, 36, FALSE);
-  pObj->pShades[12] = VObjectUpdateShade(pObj, 27, 27, 27, FALSE);
-  pObj->pShades[13] = VObjectUpdateShade(pObj, 18, 18, 18, FALSE);
-  pObj->pShades[14] = VObjectUpdateShade(pObj, 9, 9, 9, FALSE);
-  pObj->pShades[15] = VObjectUpdateShade(pObj, 0, 0, 0, FALSE);
+  VObjectUpdateShade(pObj, 5, 195, 195, 195, FALSE);
+  VObjectUpdateShade(pObj, 6, 165, 165, 165, FALSE);
+  VObjectUpdateShade(pObj, 7, 135, 135, 135, FALSE);
+  VObjectUpdateShade(pObj, 8, 105, 105, 105, FALSE);
+  VObjectUpdateShade(pObj, 9, 75, 75, 75, FALSE);
+  VObjectUpdateShade(pObj, 10, 45, 45, 45, FALSE);
+  VObjectUpdateShade(pObj, 11, 36, 36, 36, FALSE);
+  VObjectUpdateShade(pObj, 12, 27, 27, 27, FALSE);
+  VObjectUpdateShade(pObj, 13, 18, 18, 18, FALSE);
+  VObjectUpdateShade(pObj, 14, 9, 9, 9, FALSE);
+  VObjectUpdateShade(pObj, 15, 0, 0, 0, FALSE);
 
   // Set current shade table to neutral color
   pObj->pShadeCurrent = pObj->pShades[4];
@@ -965,7 +965,8 @@ BOOLEAN BltVideoObjectOutlineShadowFromIndex(UINT32 uiDestVSurface, UINT32 uiSrc
   return (TRUE);
 }
 
-UINT16 *VObjectUpdateShade(struct VObject *obj, UINT32 rscale, UINT32 gscale, UINT32 bscale,
-                           BOOLEAN mono) {
-  return Create16BPPPaletteShaded(obj->pPaletteEntry, rscale, gscale, bscale, mono);
+void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,
+                        BOOLEAN mono) {
+  obj->pShades[shade_num] =
+      Create16BPPPaletteShaded(obj->pPaletteEntry, rscale, gscale, bscale, mono);
 }

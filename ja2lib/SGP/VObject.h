@@ -135,7 +135,7 @@ BOOLEAN BltVideoObjectOutline(UINT32 uiDestVSurface, struct VObject *hSrcVObject
 BOOLEAN BltVideoObjectOutlineShadowFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject,
                                              UINT16 usIndex, INT32 iDestX, INT32 iDestY);
 
-UINT16 *VObjectUpdateShade(struct VObject *obj, UINT32 rscale, UINT32 gscale, UINT32 bscale,
-                           BOOLEAN mono);
+void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,
+                        BOOLEAN mono);
 
 #endif
