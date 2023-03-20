@@ -3,6 +3,7 @@
 #include "GameSettings.h"
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
+#include "SGP/Debug.h"
 #include "SGP/HImage.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"

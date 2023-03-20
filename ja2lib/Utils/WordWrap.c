@@ -297,7 +297,7 @@ WRAPPED_STRING *LineWrap(uint32_t ulFont, uint16_t usLineWidthPixels,
                 "into the required width of %d!  Please fix!!",
                 pString, &TempString[usCurIndex], usLineWidthPixels);
 
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, zText);
+        DebugMsg(TOPIC_JA2, DBG_INFO, zText);
 
         // error
         usLineWidthPixels = 1 + WFStringPixLength(&TempString[usCurIndex], ulFont);

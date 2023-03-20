@@ -2,8 +2,6 @@
 
 #include "MainMenuScreen.h"
 #include "SGP/Debug.h"
-#include "SGP/TopicIDs.h"
-#include "SGP/TopicOps.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "Utils/TimerControl.h"
@@ -24,14 +22,14 @@ void InitJA2SplashScreen() {
 
   // Get Executable Directory
   if (!Plat_GetExecutableDirectory(&CurrentDir)) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not find the executable directory, shutting down");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Could not find the executable directory, shutting down");
     return;
   }
 
   // Adjust Current Dir
   snprintf(DataDir, ARR_SIZE(DataDir), "%s\\Data", CurrentDir.buf);
   if (!Plat_SetCurrentDirectory(DataDir)) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Could not find data directory, shutting down");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Could not find data directory, shutting down");
     return;
   }
 

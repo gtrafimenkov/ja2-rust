@@ -6,7 +6,6 @@
 #include <string.h>
 
 #include "MessageBoxScreen.h"
-#include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 

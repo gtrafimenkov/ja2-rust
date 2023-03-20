@@ -281,24 +281,24 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent);
 
 BOOLEAN AddGameEvent(uint32_t uiEvent, uint16_t usDelay, void *pEventData) {
   if (usDelay == DEMAND_EVENT_DELAY) {
-// DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("AddGameEvent: Sending Local and network #%d",
+// DebugMsg( TOPIC_JA2, DBG_INFO, String("AddGameEvent: Sending Local and network #%d",
 // uiEvent));
 #ifdef NETWORKED
     if (gfAmINetworked) SendEventToNetwork(uiEvent, usDelay, pEventData);
 #endif
     return (AddGameEventToQueue(uiEvent, 0, pEventData, DEMAND_EVENT_QUEUE));
   } else if (uiEvent < EVENTS_LOCAL_AND_NETWORK) {
-// DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("AddGameEvent: Sending Local and network #%d",
+// DebugMsg( TOPIC_JA2, DBG_INFO, String("AddGameEvent: Sending Local and network #%d",
 // uiEvent));
 #ifdef NETWORKED
     if (gfAmINetworked) SendEventToNetwork(uiEvent, usDelay, pEventData);
 #endif
     return (AddGameEventToQueue(uiEvent, usDelay, pEventData, PRIMARY_EVENT_QUEUE));
   } else if (uiEvent < EVENTS_ONLY_USED_LOCALLY) {
-    // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("AddGameEvent: Sending Local #%d", uiEvent));
+    // DebugMsg( TOPIC_JA2, DBG_INFO, String("AddGameEvent: Sending Local #%d", uiEvent));
     return (AddGameEventToQueue(uiEvent, usDelay, pEventData, PRIMARY_EVENT_QUEUE));
   } else if (uiEvent < EVENTS_ONLY_SENT_OVER_NETWORK) {
-// DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("AddGameEvent: Sending network #%d", uiEvent));
+// DebugMsg( TOPIC_JA2, DBG_INFO, String("AddGameEvent: Sending network #%d", uiEvent));
 #ifdef NETWORKED
     if (gfAmINetworked) SendEventToNetwork(uiEvent, usDelay, pEventData);
 #endif
@@ -320,7 +320,7 @@ BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, void *pEventData
   // Check range of Event ui
   if (uiEvent < 0 || uiEvent > NUM_EVENTS) {
     // Set debug message!
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Unknown event type");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Unknown event type");
     return (FALSE);
   }
 
@@ -418,7 +418,7 @@ BOOLEAN AddGameEventToQueue(uint32_t uiEvent, uint16_t usDelay, void *pEventData
     default:
 
       // Set debug msg: unknown message!
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Event Type mismatch");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Event Type mismatch");
       return (FALSE);
   }
 
@@ -535,7 +535,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
 
       memcpy(&EPlaySound, pEvent->pData, pEvent->uiDataSize);
 
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Play Sound");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Play Sound");
       PlayJA2Sample(EPlaySound.usIndex, EPlaySound.usRate, EPlaySound.ubVolume, EPlaySound.ubLoops,
                     EPlaySound.uiPan);
       break;
@@ -547,7 +547,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SChangeState.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -557,7 +557,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      //				DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("Event Pump:
+      //				DebugMsg( TOPIC_JA2, DBG_INFO, String("Event Pump:
       // ChangeState %S (%d)", gAnimControl[ SChangeState.ubNewState ].zAnimStr,
       // SChangeState.usSoldierID ) );
       EVENT_InitNewSoldierAnim(pSoldier, SChangeState.usNewState, SChangeState.usStartingAniCode,
@@ -571,7 +571,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SChangeDest.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("Event Pump: Invalid Soldier ID #%d", SChangeDest.usSoldierID));
         break;
       }
@@ -582,7 +582,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Change Dest");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Change Dest");
       EVENT_SetSoldierDestination(pSoldier, SChangeDest.usNewDestination);
       break;
 
@@ -593,7 +593,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SSetPosition.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -603,7 +603,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      //				DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Event Pump:
+      //				DebugMsg( TOPIC_JA2, DBG_INFO, String( "Event Pump:
       // SetPosition ( %f %f ) ( %d )", SSetPosition.dNewXPos, SSetPosition.dNewYPos,
       // SSetPosition.usSoldierID ) );
       EVENT_SetSoldierPosition(pSoldier, SSetPosition.dNewXPos, SSetPosition.dNewYPos);
@@ -616,7 +616,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SGetNewPath.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -625,7 +625,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
         break;
       }
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: GetNewPath");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: GetNewPath");
       EVENT_GetNewSoldierPath(pSoldier, SGetNewPath.sDestGridNo, SGetNewPath.usMovementAnim);
       break;
 
@@ -636,7 +636,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SBeginTurn.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -646,7 +646,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: BeginTurn");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: BeginTurn");
       EVENT_BeginMercTurn(pSoldier, FALSE, 0);
       break;
 
@@ -657,7 +657,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SChangeStance.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -666,7 +666,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
         break;
       }
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: ChangeStance");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: ChangeStance");
       ChangeSoldierStance(pSoldier, SChangeStance.ubNewStance);
       break;
 
@@ -677,7 +677,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SSetDirection.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -687,7 +687,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Event Pump: SetDirection: Dir( %d )", SSetDirection.usNewDirection));
       EVENT_SetSoldierDirection(pSoldier, SSetDirection.usNewDirection);
       break;
@@ -699,7 +699,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SSetDesiredDirection.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -709,7 +709,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Event Pump: SetDesiredDirection: Dir( %d )",
                       SSetDesiredDirection.usDesiredDirection));
       EVENT_SetSoldierDesiredDirection(pSoldier, SSetDesiredDirection.usDesiredDirection);
@@ -724,7 +724,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
         pSoldier = NULL;
         break;
         // Handle Error?
-        // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        // DebugMsg( TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
       }
 
       // check for error
@@ -733,7 +733,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Begin Fire Weapon");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Begin Fire Weapon");
       pSoldier->sTargetGridNo = SBeginFireWeapon.sTargetGridNo;
       pSoldier->bTargetLevel = SBeginFireWeapon.bTargetLevel;
       pSoldier->bTargetCubeLevel = SBeginFireWeapon.bTargetCubeLevel;
@@ -747,7 +747,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SFireWeapon.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -757,7 +757,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: FireWeapon");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: FireWeapon");
       pSoldier->sTargetGridNo = SFireWeapon.sTargetGridNo;
       pSoldier->bTargetLevel = SFireWeapon.bTargetLevel;
       pSoldier->bTargetCubeLevel = SFireWeapon.bTargetCubeLevel;
@@ -767,8 +767,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
     case S_WEAPONHIT:
 
       memcpy(&SWeaponHit, pEvent->pData, pEvent->uiDataSize);
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-               String("Event Pump: WeaponHit %d Damage", SWeaponHit.sDamage));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Event Pump: WeaponHit %d Damage", SWeaponHit.sDamage));
       WeaponHit(SWeaponHit.usSoldierID, SWeaponHit.usWeaponIndex, SWeaponHit.sDamage,
                 SWeaponHit.sBreathLoss, SWeaponHit.usDirection, SWeaponHit.sXPos, SWeaponHit.sYPos,
                 SWeaponHit.sZPos, SWeaponHit.sRange, SWeaponHit.ubAttackerID, SWeaponHit.fHit,
@@ -778,7 +777,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
     case S_STRUCTUREHIT:
 
       memcpy(&SStructureHit, pEvent->pData, pEvent->uiDataSize);
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Event Pump: StructureHit"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Event Pump: StructureHit"));
       StructureHit(SStructureHit.iBullet, SStructureHit.usWeaponIndex, SStructureHit.bWeaponStatus,
                    SStructureHit.ubAttackerID, SStructureHit.sXPos, SStructureHit.sYPos,
                    SStructureHit.sZPos, SStructureHit.usStructureID, SStructureHit.iImpact, TRUE);
@@ -787,7 +786,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
     case S_WINDOWHIT:
 
       memcpy(&SWindowHit, pEvent->pData, pEvent->uiDataSize);
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Event Pump: WindowHit"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Event Pump: WindowHit"));
       WindowHit(SWindowHit.sGridNo, SWindowHit.usStructureID, SWindowHit.fBlowWindowSouth,
                 SWindowHit.fLargeForce);
       break;
@@ -795,13 +794,13 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
     case S_MISS:
 
       memcpy(&SMiss, pEvent->pData, pEvent->uiDataSize);
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Event Pump: Shot Miss ( obsolete )"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Event Pump: Shot Miss ( obsolete )"));
       // ShotMiss( SMiss.ubAttackerID );
       break;
 
     case S_NOISE:
       memcpy(&SNoise, pEvent->pData, pEvent->uiDataSize);
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Event Pump: Noise from %d at %d/%d, type %d volume %d", SNoise.ubNoiseMaker,
                       SNoise.sGridNo, SNoise.bLevel, SNoise.ubNoiseType, SNoise.ubVolume));
       OurNoise(SNoise.ubNoiseMaker, SNoise.sGridNo, SNoise.bLevel, SNoise.ubTerrType,
@@ -815,7 +814,7 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       // Get soldier pointer from ID
       if (GetSoldier(&pSoldier, SStopMerc.usSoldierID) == FALSE) {
         // Handle Error?
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Soldier ID");
+        DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Soldier ID");
         break;
       }
 
@@ -824,14 +823,14 @@ BOOLEAN ExecuteGameEvent(EVENT *pEvent) {
       }
 
       // Call soldier function
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Event Pump: Stop Merc at Gridno %d", SStopMerc.sGridNo));
       EVENT_StopMerc(pSoldier, SStopMerc.sGridNo, SStopMerc.bDirection);
       break;
 
     default:
 
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Event Pump: Invalid Event Received");
+      DebugMsg(TOPIC_JA2, DBG_INFO, "Event Pump: Invalid Event Received");
       return (FALSE);
   }
 

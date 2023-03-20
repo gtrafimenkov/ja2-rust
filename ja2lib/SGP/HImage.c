@@ -53,7 +53,7 @@ HIMAGE CreateImage(const char *ImageFile, uint16_t fContents) {
 
   if (StrPtr == NULL) {
     // No extension given, use default internal loader extension
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2, "No extension given, using default");
+    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "No extension given, using default");
     strcat(imageFileCopy, ".PCX");
     strcpy(Extension, ".PCX");
   } else {
@@ -83,8 +83,7 @@ HIMAGE CreateImage(const char *ImageFile, uint16_t fContents) {
 
   // Determine if resource exists before creating image structure
   if (!File_Exists(imageFileCopy)) {
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2,
-               String("Resource file %s does not exist.", imageFileCopy));
+    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, String("Resource file %s does not exist.", imageFileCopy));
     return (NULL);
   }
 
@@ -190,11 +189,11 @@ BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents) {
 
     default:
 
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2, "Unknown image loader was specified.");
+      DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Unknown image loader was specified.");
   }
 
   if (!fReturnVal) {
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2, "Error occured while reading image data.");
+    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Error occured while reading image data.");
   }
 
   return (fReturnVal);
@@ -208,20 +207,20 @@ BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, uint8_t *pDestBuf
 
   if (hImage->ubBitDepth == 8 && fBufferType == BUFFER_8BPP) {
     // Default do here
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_2, "Copying 8 BPP Imagery.");
+    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Copying 8 BPP Imagery.");
     return (
         Copy8BPPImageTo8BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
   if (hImage->ubBitDepth == 8 && fBufferType == BUFFER_16BPP) {
     // Default do here
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Copying 8 BPP Imagery to 16BPP Buffer.");
+    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Copying 8 BPP Imagery to 16BPP Buffer.");
     return (
         Copy8BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
   if (hImage->ubBitDepth == 16 && fBufferType == BUFFER_16BPP) {
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Automatically Copying 16 BPP Imagery.");
+    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Automatically Copying 16 BPP Imagery.");
     return (Copy16BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY,
                                         srcRect));
   }
@@ -354,7 +353,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t us
   // Convert to Pixel specification
   pDest = (uint16_t *)pDestBuf + uiDestStart;
   pSrc = hImage->p8BPPData + uiSrcStart;
-  DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, String("Start Copying at %p", pDest));
+  DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("Start Copying at %p", pDest));
 
   // For every entry, look up into 16BPP palette
   for (rows = 0; rows < uiNumLines - 1; rows++) {
@@ -371,7 +370,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t us
     pSrc += hImage->usWidth;
   }
   // Do last line
-  DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, String("End Copying at %p", pDest));
+  DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("End Copying at %p", pDest));
 
   return (TRUE);
 }
@@ -589,7 +588,7 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
 
   pPalEntry = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
   pInitEntry = pPalEntry;
-  DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_0, "Converting RGB palette to struct SGPPaletteEntry");
+  DebugMsg(TOPIC_HIMAGE, DBG_ERROR, "Converting RGB palette to struct SGPPaletteEntry");
   for (Index = 0; Index <= (sbEnd - sbStart); Index++) {
     pPalEntry->peRed = *(pOldPalette + (Index * 3));
     pPalEntry->peGreen = *(pOldPalette + (Index * 3) + 1);

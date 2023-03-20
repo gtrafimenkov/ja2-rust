@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "SaveLoadGame.h"

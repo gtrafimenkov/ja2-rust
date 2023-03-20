@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 #include "JAScreens.h"
-#include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"

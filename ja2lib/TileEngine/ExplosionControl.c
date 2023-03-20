@@ -173,7 +173,7 @@ void InternalIgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ
   }
 
   gTacticalStatus.ubAttackBusyCount++;
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("Incrementing Attack: Explosion gone off, COunt now %d",
                   gTacticalStatus.ubAttackBusyCount));
 
@@ -1122,7 +1122,7 @@ BOOLEAN DamageSoldierFromBlast(uint8_t ubPerson, uint8_t ubOwner, int16_t sBombG
 
   // Increment attack counter...
   gTacticalStatus.ubAttackBusyCount++;
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("Incrementing Attack: Explosion dishing out damage, Count now %d",
                   gTacticalStatus.ubAttackBusyCount));
 
@@ -1857,7 +1857,7 @@ void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ub
       if (ubKeepGoing) {
         uiTempSpot = uiNewSpot;
 
-        // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("Explosion affects %d", uiNewSpot) );
+        // DebugMsg( TOPIC_JA2, DBG_INFO, String("Explosion affects %d", uiNewSpot) );
         // ok, do what we do here...
         if (ExpAffect(sGridNo, (int16_t)uiNewSpot, cnt / 2, usItem, ubOwner, fSubsequent,
                       &fAnyMercHit, bLevel, iSmokeEffectID)) {
@@ -1892,7 +1892,7 @@ void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ub
 
               if (ubKeepGoing) {
                 // ok, do what we do here
-                // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("Explosion affects %d", uiNewSpot) );
+                // DebugMsg( TOPIC_JA2, DBG_INFO, String("Explosion affects %d", uiNewSpot) );
                 if (ExpAffect(sGridNo, (int16_t)uiNewSpot, (int16_t)((cnt + branchCnt) / 2), usItem,
                               ubOwner, fSubsequent, &fAnyMercHit, bLevel, iSmokeEffectID)) {
                   fRecompileMovement = TRUE;

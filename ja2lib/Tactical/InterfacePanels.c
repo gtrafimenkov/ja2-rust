@@ -1255,7 +1255,7 @@ BOOLEAN CreateSMPanelButtons() {
       iSMPanelImages[STANCEUP_IMAGES], SM_STANCEUPB_X, SM_STANCEUPB_Y, BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGH - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnStanceUpCallback);
   if (iSMPanelButtons[STANCEUP_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   SetButtonFastHelpText(iSMPanelButtons[STANCEUP_BUTTON], TacticalStr[CHANGE_STANCE_UP_POPUPTEXT]);
@@ -1267,7 +1267,7 @@ BOOLEAN CreateSMPanelButtons() {
       QuickCreateButton(iSMPanelImages[UPDOWN_IMAGES], SM_UPDOWNB_X, SM_UPDOWNB_Y, BUTTON_NEWTOGGLE,
                         MSYS_PRIORITY_HIGH - 1, MSYS_NO_CALLBACK, (GUI_CALLBACK)BtnUpdownCallback);
   if (iSMPanelButtons[UPDOWN_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   // SetButtonFastHelpText( iSMPanelButtons[ UPDOWN_BUTTON ],L"Whatever");
@@ -1278,7 +1278,7 @@ BOOLEAN CreateSMPanelButtons() {
       iSMPanelImages[CLIMB_IMAGES], SM_CLIMBB_X, SM_CLIMBB_Y, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH - 1,
       DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnClimbCallback);
   if (iSMPanelButtons[CLIMB_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   // SetButtonFastHelpText( iSMPanelButtons[ CLIMB_BUTTON ],L"Climb");
@@ -1289,7 +1289,7 @@ BOOLEAN CreateSMPanelButtons() {
       iSMPanelImages[STANCEDOWN_IMAGES], SM_STANCEDOWNB_X, SM_STANCEDOWNB_Y, BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGH - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnStanceDownCallback);
   if (iSMPanelButtons[STANCEDOWN_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   // SetButtonFastHelpText( iSMPanelButtons[ STANCEDOWN_BUTTON ],L"Change Stance Down");
@@ -1301,7 +1301,7 @@ BOOLEAN CreateSMPanelButtons() {
       iSMPanelImages[HANDCURSOR_IMAGES], SM_HANDCURSORB_X, SM_HANDCURSORB_Y, BUTTON_NEWTOGGLE,
       MSYS_PRIORITY_HIGH - 1, MSYS_NO_CALLBACK, (GUI_CALLBACK)BtnHandCursorCallback);
   if (iSMPanelButtons[HANDCURSOR_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   // SetButtonFastHelpText( iSMPanelButtons[ HANDCURSOR_BUTTON ],L"Change Stance Down");
@@ -1312,7 +1312,7 @@ BOOLEAN CreateSMPanelButtons() {
       iSMPanelImages[PREVMERC_IMAGES], SM_PREVMERCB_X, SM_PREVMERCB_Y, BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGH - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnPrevMercCallback);
   if (iSMPanelButtons[PREVMERC_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   // SetButtonFastHelpText( iSMPanelButtons[ PREVMERC_BUTTON ],L"Change Stance Down");
@@ -1323,7 +1323,7 @@ BOOLEAN CreateSMPanelButtons() {
       iSMPanelImages[NEXTMERC_IMAGES], SM_NEXTMERCB_X, SM_NEXTMERCB_Y, BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGH - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnNextMercCallback);
   if (iSMPanelButtons[NEXTMERC_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   SetButtonFastHelpText(iSMPanelButtons[NEXTMERC_BUTTON], TacticalStr[NEXT_MERC_POPUPTEXT]);
@@ -1334,7 +1334,7 @@ BOOLEAN CreateSMPanelButtons() {
       iSMPanelImages[OPTIONS_IMAGES], SM_OPTIONSB_X, SM_OPTIONSB_Y, BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGH - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnOptionsCallback);
   if (iSMPanelButtons[OPTIONS_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   // SetButtonFastHelpText( iSMPanelButtons[ OPTIONS_BUTTON ],L"Change Stance Down");
@@ -1349,7 +1349,7 @@ BOOLEAN CreateSMPanelButtons() {
       MSYS_PRIORITY_HIGH, MSYS_NO_CALLBACK, (GUI_CALLBACK)BtnBurstModeCallback);
 
   if (iSMPanelButtons[BURSTMODE_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   SetButtonFastHelpText(iSMPanelButtons[BURSTMODE_BUTTON], TacticalStr[TOGGLE_BURSTMODE_POPUPTEXT]);
@@ -1360,7 +1360,7 @@ BOOLEAN CreateSMPanelButtons() {
       QuickCreateButton(iSMPanelImages[LOOK_IMAGES], SM_LOOKB_X, SM_LOOKB_Y, BUTTON_NEWTOGGLE,
                         MSYS_PRIORITY_HIGH - 1, MSYS_NO_CALLBACK, (GUI_CALLBACK)BtnLookCallback);
   if (iSMPanelButtons[LOOK_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   // SetButtonFastHelpText( iSMPanelButtons[ LOOK_BUTTON ],L"Change Stance Down");
@@ -3189,7 +3189,7 @@ BOOLEAN CreateTEAMPanelButtons() {
       iTEAMPanelImages[ENDTURN_IMAGES], TM_ENDTURN_X, TM_ENDTURN_Y, BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGH - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnEndTurnCallback);
   if (iTEAMPanelButtons[TEAM_DONE_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   SetButtonFastHelpText(iTEAMPanelButtons[TEAM_DONE_BUTTON], TacticalStr[END_TURN_POPUPTEXT]);
@@ -3198,7 +3198,7 @@ BOOLEAN CreateTEAMPanelButtons() {
       iTEAMPanelImages[ROSTERMODE_IMAGES], TM_ROSTERMODE_X, TM_ROSTERMODE_Y, BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGH - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnRostermodeCallback);
   if (iTEAMPanelButtons[TEAM_MAP_SCREEN_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   SetButtonFastHelpText(iTEAMPanelButtons[TEAM_MAP_SCREEN_BUTTON],
@@ -3208,7 +3208,7 @@ BOOLEAN CreateTEAMPanelButtons() {
       iTEAMPanelImages[DISK_IMAGES], TM_DISK_X, TM_DISK_Y, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH - 1,
       DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnSquadCallback);
   if (iTEAMPanelButtons[CHANGE_SQUAD_BUTTON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return (FALSE);
   }
   SetButtonFastHelpText(iTEAMPanelButtons[CHANGE_SQUAD_BUTTON],

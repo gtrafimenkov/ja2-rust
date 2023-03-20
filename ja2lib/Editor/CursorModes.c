@@ -6,6 +6,7 @@
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorMercs.h"
 #include "Editor/EditorTaskbarUtils.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"

@@ -1599,25 +1599,7 @@ void SummaryToggleProgressCallback(GUI_BUTTON *btn, int32_t reason) {
 
 #include "TileEngine/TileSurface.h"
 
-void PerformTest() {
-#if 0
-	DebugPrint( "PERFORMING A NEW TEST -------------------------------------------------\n" );
-	memset( gbDefaultSurfaceUsed, 0, sizeof( gbDefaultSurfaceUsed ) );
-	giCurrentTilesetID = -1;
-	switch( Random( 3 ) )
-	{
-		case 0:
-			LoadWorld( "J9.dat" );
-			break;
-		case 1:
-			LoadWorld( "J9_b1.dat" );
-			break;
-		case 2:
-			LoadWorld( "J9_b2.dat" );
-			break;
-	}
-#endif
-}
+void PerformTest() {}
 
 BOOLEAN HandleSummaryInput(InputAtom *pEvent) {
   if (!gfSummaryWindowActive) return FALSE;
@@ -1723,7 +1705,7 @@ void CreateGlobalSummary() {
   char Dir[600];
   struct Str512 ExecDir;
 
-  DebugPrint("Generating GlobalSummary Information...\n");
+  PrintToDebuggerConsole("Generating GlobalSummary Information...\n");
 
   gfGlobalSummaryExists = FALSE;
   // Set current directory to JA2\DevInfo which contains all of the summary data
@@ -1751,7 +1733,7 @@ void CreateGlobalSummary() {
   RegenerateSummaryInfoForAllOutdatedMaps();
   gfRenderSummary = TRUE;
 
-  DebugPrint("GlobalSummary Information generated successfully.\n");
+  PrintToDebuggerConsole("GlobalSummary Information generated successfully.\n");
 }
 
 void MapMoveCallback(struct MOUSE_REGION *reg, int32_t reason) {
@@ -2026,7 +2008,7 @@ void LoadGlobalSummary() {
   char szFilename[40];
   char szSector[6];
 
-  DebugPrint("Executing LoadGlobalSummary()...\n");
+  PrintToDebuggerConsole("Executing LoadGlobalSummary()...\n");
 
   gfMustForceUpdateAllMaps = FALSE;
   gusNumberOfMapsToBeForceUpdated = 0;
@@ -2040,7 +2022,8 @@ void LoadGlobalSummary() {
 
   // Check to make sure we have a DevInfo directory.  If we don't create one!
   if (!Plat_SetCurrentDirectory(DevInfoDir)) {
-    DebugPrint("LoadGlobalSummary() aborted -- doesn't exist on this local computer.\n");
+    PrintToDebuggerConsole(
+        "LoadGlobalSummary() aborted -- doesn't exist on this local computer.\n");
     return;
   }
 
@@ -2172,18 +2155,18 @@ void LoadGlobalSummary() {
         Plat_DeleteFile(szFilename);
       }
     }
-    DebugPrint(String("Sector Row %c complete... \n", y + 'A'));
+    PrintToDebuggerConsole(String("Sector Row %c complete... \n", y + 'A'));
   }
 
   snprintf(MapsDir, ARR_SIZE(MapsDir), "%s\\Data", ExecDir.buf);
   Plat_SetCurrentDirectory(MapsDir);
 
   if (gfMustForceUpdateAllMaps) {
-    DebugPrint(String("A MAJOR MAP UPDATE EVENT HAS BEEN DETECTED FOR %d MAPS!!!!.\n",
-                      gusNumberOfMapsToBeForceUpdated));
+    PrintToDebuggerConsole(String("A MAJOR MAP UPDATE EVENT HAS BEEN DETECTED FOR %d MAPS!!!!.\n",
+                                  gusNumberOfMapsToBeForceUpdated));
   }
 
-  DebugPrint("LoadGlobalSummary() finished...\n");
+  PrintToDebuggerConsole("LoadGlobalSummary() finished...\n");
 }
 
 void GenerateSummaryList() {

@@ -248,7 +248,7 @@ BOOLEAN InitLightingSystem(void) {
     memset(&LightSprites[uiCount], 0, sizeof(LIGHT_SPRITE));
 
   if (LightLoad("TRANSLUC.LHT") != 0) {
-    DebugMsg(TOPIC_GAME, DBG_LEVEL_0, String("Failed to load translucency template"));
+    DebugMsg(TOPIC_GAME, DBG_ERROR, String("Failed to load translucency template"));
     return (FALSE);
   }
 
@@ -306,7 +306,7 @@ BOOLEAN LightReset(void) {
     memset(&LightSprites[uiCount], 0, sizeof(LIGHT_SPRITE));
 
   if (LightLoad("TRANSLUC.LHT") != 0) {
-    DebugMsg(TOPIC_GAME, DBG_LEVEL_0, String("Failed to load translucency template"));
+    DebugMsg(TOPIC_GAME, DBG_ERROR, String("Failed to load translucency template"));
     return (FALSE);
   }
 
@@ -1312,7 +1312,7 @@ going horizontally */
   // Check for 0 length ray
   if ((XDelta == 0) && (YDelta == 0)) return (FALSE);
 
-  // DebugMsg(TOPIC_GAME, DBG_LEVEL_0, String("Drawing (%d,%d) to (%d,%d)", iXPos, iYPos, iEndX,
+  // DebugMsg(TOPIC_GAME, DBG_ERROR, String("Drawing (%d,%d) to (%d,%d)", iXPos, iYPos, iEndX,
   // iEndY));
   LightAddNode(iLight, 32767, 32767, 32767, 32767, 0, LIGHT_NEW_RAY);
   if (fInsertNodes) usCurNode = LightGetLastNode(iLight);

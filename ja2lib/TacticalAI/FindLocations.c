@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include "SGP/Debug.h"
 #include "Soldier.h"
 #include "Strategic/StrategicMap.h"
 #include "Tactical/Boxing.h"

@@ -7,6 +7,7 @@
 #include "Laptop/MercsAccount.h"
 #include "Laptop/SpeckQuotes.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"

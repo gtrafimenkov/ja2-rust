@@ -8,7 +8,6 @@
 #include <windows.h>
 
 #include "SGP/Container.h"
-#include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "StrUtils.h"

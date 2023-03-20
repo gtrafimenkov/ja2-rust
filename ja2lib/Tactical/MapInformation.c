@@ -6,6 +6,7 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/RoadSmoothing.h"
 #include "JA2.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "Soldier.h"

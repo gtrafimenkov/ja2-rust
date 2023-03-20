@@ -26,14 +26,14 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
   // See if files exists, if not, return error
   if (!File_Exists(ColFile)) {
     // Return FALSE w/ debug
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot find COL file");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot find COL file");
     return (FALSE);
   }
 
   // Open and read in the file
   if ((hFileHandle = File_OpenForReading(ColFile)) == 0) {
     // Return FALSE w/ debug
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot open COL file");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot open COL file");
     return (FALSE);
   }
 

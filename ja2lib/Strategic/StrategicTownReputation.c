@@ -1,6 +1,8 @@
 #include "Strategic/StrategicTownReputation.h"
 
 #include "SGP/Debug.h"
+
+// #include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "Soldier.h"
 #include "Strategic/GameClock.h"

@@ -323,7 +323,7 @@ uint32_t SoundPlay(char *pFilename, SOUNDPARMS *pParms) {
       // This line was causing a page fault in the Wiz 8 project, so
       // I changed it to the second line, which works OK. -- DB
 
-      // DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("\n*******\nSoundPlay():  ERROR:  trying to play
+      // DebugMsg( TOPIC_JA2, DBG_INFO, String("\n*******\nSoundPlay():  ERROR:  trying to play
       // %s which is bigger then the 'guiSoundCacheThreshold', use SoundPlayStreamedFile()
       // instead\n", pFilename ) );
 
@@ -1516,7 +1516,7 @@ uint32_t SoundStartSample(uint32_t uiSample, uint32_t uiChannel, SOUNDPARMS *pPa
     pSoundList[uiChannel].hMSS = NULL;
 
     sprintf(AILString, "AIL Set Sample Error: %s", AIL_last_error());
-    DbgMessage(TOPIC_GAME, DBG_LEVEL_0, AILString);
+    DebugMsg(TOPIC_GAME, DBG_ERROR, AILString);
     return (SOUND_ERROR);
   }
 
@@ -1616,7 +1616,7 @@ uint32_t SoundStartStream(char *pFilename, uint32_t uiChannel, SOUNDPARMS *pParm
 
   if (pSoundList[uiChannel].hMSSStream == NULL) {
     sprintf(AILString, "Stream Error: %s", AIL_last_error());
-    DbgMessage(TOPIC_GAME, DBG_LEVEL_0, AILString);
+    DebugMsg(TOPIC_GAME, DBG_ERROR, AILString);
     return (SOUND_ERROR);
   }
 

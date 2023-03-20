@@ -7,7 +7,6 @@
 #include "Editor/EditScreen.h"
 #include "Editor/EditorUndo.h"
 #include "Editor/SelectWin.h"
-#include "SGP/Debug.h"
 #include "Tactical/StructureWrap.h"
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/IsometricUtils.h"

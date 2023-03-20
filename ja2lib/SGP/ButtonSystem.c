@@ -179,15 +179,14 @@ int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32
   if ((Grayed == BUTTON_NO_IMAGE) && (OffNormal == BUTTON_NO_IMAGE) &&
       (OffHilite == BUTTON_NO_IMAGE) && (OnNormal == BUTTON_NO_IMAGE) &&
       (OnHilite == BUTTON_NO_IMAGE)) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("No button pictures selected for %s", filename));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("No button pictures selected for %s", filename));
     return (-1);
   }
 
   // Get a button image slot
   if ((UseSlot = FindFreeButtonSlot()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("Out of button image slots for %s", filename));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, String("Out of button image slots for %s", filename));
     return (-1);
   }
 
@@ -196,8 +195,7 @@ int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32
   strcpy(vo_desc.ImageFile, filename);
 
   if ((ButtonPictures[UseSlot].vobj = CreateVideoObject(&vo_desc)) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("Couldn't create VOBJECT for %s", filename));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, String("Couldn't create VOBJECT for %s", filename));
     return (-1);
   }
 
@@ -279,16 +277,16 @@ int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNorma
 
   // Is button image index given valid?
   if (ButtonPictures[LoadedImg].vobj == NULL) {
-    DbgMessage(
-        TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
+    DebugMsg(
+        TOPIC_BUTTON_HANDLER, DBG_ERROR,
         String("Invalid button picture handle given for pre-loaded button image %d", LoadedImg));
     return (-1);
   }
 
   // Is button image an external vobject?
   if (ButtonPictures[LoadedImg].fFlags & GUI_BTN_EXTERNAL_VOBJ) {
-    DbgMessage(
-        TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
+    DebugMsg(
+        TOPIC_BUTTON_HANDLER, DBG_ERROR,
         String(
             "Invalid button picture handle given (%d), cannot use external images as duplicates.",
             LoadedImg));
@@ -299,15 +297,15 @@ int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNorma
   if ((Grayed == BUTTON_NO_IMAGE) && (OffNormal == BUTTON_NO_IMAGE) &&
       (OffHilite == BUTTON_NO_IMAGE) && (OnNormal == BUTTON_NO_IMAGE) &&
       (OnHilite == BUTTON_NO_IMAGE)) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("No button pictures selected for pre-loaded button image %d", LoadedImg));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("No button pictures selected for pre-loaded button image %d", LoadedImg));
     return (-1);
   }
 
   // Get a button image slot
   if ((UseSlot = FindFreeButtonSlot()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("Out of button image slots for pre-loaded button image %d", LoadedImg));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("Out of button image slots for pre-loaded button image %d", LoadedImg));
     return (-1);
   }
 
@@ -395,8 +393,8 @@ int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t O
 
   // Is button image index given valid?
   if (hVObject == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("UseVObjAsButtonImage: Invalid VObject image given"));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("UseVObjAsButtonImage: Invalid VObject image given"));
     return (-1);
   }
 
@@ -404,15 +402,15 @@ int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t O
   if ((Grayed == BUTTON_NO_IMAGE) && (OffNormal == BUTTON_NO_IMAGE) &&
       (OffHilite == BUTTON_NO_IMAGE) && (OnNormal == BUTTON_NO_IMAGE) &&
       (OnHilite == BUTTON_NO_IMAGE)) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("UseVObjAsButtonImage: No button pictures indexes selected for VObject"));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("UseVObjAsButtonImage: No button pictures indexes selected for VObject"));
     return (-1);
   }
 
   // Get a button image slot
   if ((UseSlot = FindFreeButtonSlot()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("UseVObjAsButtonImage: Out of button image slots for VObject"));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("UseVObjAsButtonImage: Out of button image slots for VObject"));
     return (-1);
   }
 
@@ -666,8 +664,8 @@ BOOLEAN InitializeButtonImageManager(int32_t DefaultBuffer, int32_t DefaultPitch
   strcpy(vo_desc.ImageFile, DEFAULT_GENERIC_BUTTON_OFF);
 
   if ((GenericButtonOffNormal[0] = CreateVideoObject(&vo_desc)) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_OFF);
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_OFF);
     return (FALSE);
   }
 
@@ -675,8 +673,8 @@ BOOLEAN InitializeButtonImageManager(int32_t DefaultBuffer, int32_t DefaultPitch
   strcpy(vo_desc.ImageFile, DEFAULT_GENERIC_BUTTON_ON);
 
   if ((GenericButtonOnNormal[0] = CreateVideoObject(&vo_desc)) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_ON);
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_ON);
     return (FALSE);
   }
 
@@ -693,8 +691,8 @@ BOOLEAN InitializeButtonImageManager(int32_t DefaultBuffer, int32_t DefaultPitch
 
   Pix = 0;
   if (!GetETRLEPixelValue(&Pix, GenericButtonOffNormal[0], 8, 0, 0)) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "Couldn't get generic button's background pixel value");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "Couldn't get generic button's background pixel value");
     return (FALSE);
   }
 
@@ -749,8 +747,8 @@ int16_t LoadGenericButtonIcon(char *filename) {
 
   // Get slot for icon image
   if ((ImgSlot = FindFreeIconSlot()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "LoadGenericButtonIcon: Out of generic button icon slots");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "LoadGenericButtonIcon: Out of generic button icon slots");
     return (-1);
   }
 
@@ -759,8 +757,8 @@ int16_t LoadGenericButtonIcon(char *filename) {
   strcpy(vo_desc.ImageFile, filename);
 
   if ((GenericButtonIcons[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("LoadGenericButtonIcon: Couldn't create VOBJECT for %s", filename));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("LoadGenericButtonIcon: Couldn't create VOBJECT for %s", filename));
     return (-1);
   }
 
@@ -859,15 +857,15 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
 
   // if the images for Off-Normal and On-Normal don't exist, abort call
   if ((OffNormName == BUTTON_NO_FILENAME) || (OnNormName == BUTTON_NO_FILENAME)) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "LoadGenericButtonImages: No filenames for OFFNORMAL and/or ONNORMAL images");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "LoadGenericButtonImages: No filenames for OFFNORMAL and/or ONNORMAL images");
     return (-1);
   }
 
   // Get a slot number for these images
   if ((ImgSlot = FindFreeGenericSlot()) == -1) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "LoadGenericButtonImages: Out of generic button slots");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "LoadGenericButtonImages: Out of generic button slots");
     return (-1);
   }
 
@@ -876,8 +874,8 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
   strcpy(vo_desc.ImageFile, OffNormName);
 
   if ((GenericButtonOffNormal[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffNormName));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffNormName));
     return (-1);
   }
 
@@ -886,8 +884,8 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
   strcpy(vo_desc.ImageFile, OnNormName);
 
   if ((GenericButtonOnNormal[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnNormName));
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnNormName));
     return (-1);
   }
 
@@ -899,8 +897,8 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
     strcpy(vo_desc.ImageFile, GrayName);
 
     if ((GenericButtonGrayed[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
-      DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-                 String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", GrayName));
+      DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+               String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", GrayName));
       return (-1);
     }
   } else
@@ -911,8 +909,8 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
     strcpy(vo_desc.ImageFile, OffHiliteName);
 
     if ((GenericButtonOffHilite[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
-      DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-                 String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffHiliteName));
+      DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+               String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffHiliteName));
       return (-1);
     }
   } else
@@ -923,8 +921,8 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
     strcpy(vo_desc.ImageFile, OnHiliteName);
 
     if ((GenericButtonOnHilite[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
-      DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-                 String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnHiliteName));
+      DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+               String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnHiliteName));
       return (-1);
     }
   } else
@@ -935,8 +933,8 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
     strcpy(vo_desc.ImageFile, BkGrndName);
 
     if ((GenericButtonBackground[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
-      DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-                 String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", BkGrndName));
+      DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+               String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", BkGrndName));
       return (-1);
     }
   } else
@@ -948,8 +946,8 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
   // Off-Normal image.
   Pix = 0;
   if (!GetETRLEPixelValue(&Pix, GenericButtonOffNormal[ImgSlot], 8, 0, 0)) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "LoadGenericButtonImages: Couldn't get generic button's background pixel value");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "LoadGenericButtonImages: Couldn't get generic button's background pixel value");
     return (-1);
   }
 
@@ -1037,8 +1035,6 @@ BOOLEAN InitButtonSystem(void) {
   gfIgnoreShutdownAssertions = FALSE;
 #endif
 
-  RegisterDebugTopic(TOPIC_BUTTON_HANDLER, "Button System & Button Image Manager");
-
   // Clear out button list
   for (x = 0; x < MAX_BUTTONS; x++) {
     ButtonList[x] = NULL;
@@ -1046,7 +1042,7 @@ BOOLEAN InitButtonSystem(void) {
 
   // Initialize the button image manager sub-system
   if (InitializeButtonImageManager(-1, -1, -1) == FALSE) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "Failed button image manager init\n");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "Failed button image manager init\n");
     return (FALSE);
   }
 
@@ -1071,8 +1067,6 @@ void ShutdownButtonSystem(void) {
   }
   // Shutdown the button image manager sub-system
   ShutdownButtonImageManager();
-
-  UnRegisterDebugTopic(TOPIC_BUTTON_HANDLER, "Button System & Button Image Manager");
 }
 
 void RemoveButtonsMarkedForDeletion() {
@@ -1331,14 +1325,14 @@ int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_
 
   // Get a button number (slot) for this new button
   if ((ButtonNum = GetNextButtonNumber()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateIconButton: No more button slots");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "CreateIconButton: No more button slots");
     return (-1);
   }
 
   // Allocate memory for the GUI_BUTTON structure
   if ((b = (GUI_BUTTON *)MemAlloc(sizeof(GUI_BUTTON))) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "CreateIconButton: Can't alloc mem for button struct");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "CreateIconButton: Can't alloc mem for button struct");
     return (-1);
   }
 
@@ -1450,14 +1444,14 @@ int32_t CreateTextButton(wchar_t *string, uint32_t uiFont, int16_t sForeColor, i
 
   // Get a button number for this new button
   if ((ButtonNum = GetNextButtonNumber()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateTextButton: No more button slots");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "CreateTextButton: No more button slots");
     return (-1);
   }
 
   // Allocate memory for a GUI_BUTTON structure
   if ((b = (GUI_BUTTON *)MemAlloc(sizeof(GUI_BUTTON))) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "CreateTextButton: Can't alloc mem for button struct");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "CreateTextButton: Can't alloc mem for button struct");
     return (-1);
   }
 
@@ -1572,14 +1566,13 @@ int32_t CreateHotSpot(int16_t xloc, int16_t yloc, int16_t Width, int16_t Height,
 
   // Get a button number for this hotspot
   if ((ButtonNum = GetNextButtonNumber()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateHotSpot: No more button slots");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "CreateHotSpot: No more button slots");
     return (-1);
   }
 
   // Allocate memory for the GUI_BUTTON structure
   if ((b = (GUI_BUTTON *)MemAlloc(sizeof(GUI_BUTTON))) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "CreateHotSpot: Can't alloc mem for button struct");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "CreateHotSpot: Can't alloc mem for button struct");
     return (-1);
   }
 
@@ -1672,20 +1665,20 @@ int32_t QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, int32_t Ty
 
   // Is there a QuickButton image in the given image slot?
   if (ButtonPictures[Image].vobj == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "QuickCreateButton: Invalid button image number");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "QuickCreateButton: Invalid button image number");
     return (-1);
   }
 
   // Get a new button number
   if ((ButtonNum = GetNextButtonNumber()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "QuickCreateButton: No more button slots");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "QuickCreateButton: No more button slots");
     return (-1);
   }
 
   // Allocate memory for a GUI_BUTTON structure
   if ((b = (GUI_BUTTON *)MemAlloc(sizeof(GUI_BUTTON))) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "QuickCreateButton: Can't alloc mem for button struct");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "QuickCreateButton: Can't alloc mem for button struct");
     return (-1);
   }
 
@@ -1811,7 +1804,7 @@ int32_t CreateSimpleButton(int32_t x, int32_t y, char *filename, int32_t Type, i
     AssertMsg(0, "Attempting to CreateSimpleButton with null filename.");
 
   if ((ButPic = LoadButtonImage(filename, -1, 1, 2, 3, 4)) == -1) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "Can't load button image");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "Can't load button image");
     return (-1);
   }
 
@@ -1851,20 +1844,20 @@ int32_t CreateIconAndTextButton(int32_t Image, wchar_t *string, uint32_t uiFont,
 
   // Is there a QuickButton image in the given image slot?
   if (ButtonPictures[Image].vobj == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "QuickCreateButton: Invalid button image number");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "QuickCreateButton: Invalid button image number");
     return (-1);
   }
 
   // Get a new button number
   if ((iButtonID = GetNextButtonNumber()) == BUTTON_NO_SLOT) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "QuickCreateButton: No more button slots");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "QuickCreateButton: No more button slots");
     return (-1);
   }
 
   // Allocate memory for a GUI_BUTTON structure
   if ((b = (GUI_BUTTON *)MemAlloc(sizeof(GUI_BUTTON))) == NULL) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0,
-               "QuickCreateButton: Can't alloc mem for button struct");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
+             "QuickCreateButton: Can't alloc mem for button struct");
     return (-1);
   }
 
@@ -3309,13 +3302,13 @@ int32_t CreateCheckBoxButton(int16_t x, int16_t y, char *filename, int16_t Prior
   Assert(filename != NULL);
   Assert(strlen(filename));
   if ((ButPic = LoadButtonImage(filename, -1, 0, 1, 2, 3)) == -1) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateCheckBoxButton: Can't load button image");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "CreateCheckBoxButton: Can't load button image");
     return (-1);
   }
   iButtonID = (int16_t)QuickCreateButton((uint32_t)ButPic, x, y, BUTTON_CHECKBOX, Priority,
                                          MSYS_NO_CALLBACK, ClickCallback);
   if (iButtonID == -1) {
-    DbgMessage(TOPIC_BUTTON_HANDLER, DBG_LEVEL_0, "CreateCheckBoxButton: Can't create button");
+    DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "CreateCheckBoxButton: Can't create button");
     return (-1);
   }
 

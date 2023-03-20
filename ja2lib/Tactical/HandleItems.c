@@ -2,6 +2,7 @@
 
 #include "GameSettings.h"
 #include "MessageBoxScreen.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
@@ -218,7 +219,7 @@ int32_t HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, int8_t bLeve
 
   // ATE: If in realtime, set attacker count to 0...
   if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Setting attack busy count to 0 due to no combat"));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("Setting attack busy count to 0 due to no combat"));
     gTacticalStatus.ubAttackBusyCount = 0;
   }
 
@@ -1020,7 +1021,7 @@ int32_t HandleItem(struct SOLDIERTYPE *pSoldier, uint16_t usGridNo, int8_t bLeve
     // pSoldier->ubTargetID = WhoIsThere2( sTargetGridNo, pSoldier->bTargetLevel );
 
     gTacticalStatus.ubAttackBusyCount++;
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("!!!!!!! Starting swipe attack, incrementing a.b.c in HandleItems to %d",
                     gTacticalStatus.ubAttackBusyCount));
 
