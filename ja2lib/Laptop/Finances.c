@@ -486,35 +486,35 @@ BOOLEAN LoadFinances(void) {
   // title bar
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiTITLE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiTITLE)) {
     return FALSE;
   }
 
   // top portion of the screen background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Financeswindow.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiTOP))) {
+  if (!AddVideoObject(&VObjectDesc, &guiTOP)) {
     return FALSE;
   }
 
   // black divider line - long ( 480 length)
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\divisionline480.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiLONGLINE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiLONGLINE)) {
     return FALSE;
   }
 
   // the records columns
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\recordcolumns.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiLISTCOLUMNS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiLISTCOLUMNS)) {
     return FALSE;
   }
 
   // black divider line - long ( 480 length)
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\divisionline.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiLINE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiLINE)) {
     return FALSE;
   }
 

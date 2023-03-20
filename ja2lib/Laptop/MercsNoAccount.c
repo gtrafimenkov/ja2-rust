@@ -52,7 +52,7 @@ BOOLEAN EnterMercsNoAccount() {
   // load the Account box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\NoAccountBox.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiNoAccountImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiNoAccountImage)) {
     return FALSE;
   }
 

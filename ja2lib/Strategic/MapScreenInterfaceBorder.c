@@ -114,7 +114,7 @@ BOOLEAN LoadMapBorderGraphics(void) {
   // will load map border
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\MBS.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMapBorder))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMapBorder)) {
     return FALSE;
   }
 

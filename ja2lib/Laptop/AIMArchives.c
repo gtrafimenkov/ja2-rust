@@ -170,42 +170,42 @@ BOOLEAN EnterAimArchives() {
   // load the Alumni Frame and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\AlumniFrame.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiAlumniFrame))) {
+  if (!AddVideoObject(&VObjectDesc, &guiAlumniFrame)) {
     return FALSE;
   }
 
   // load the 1st set of faces and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Old_Aim.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiOldAim))) {
+  if (!AddVideoObject(&VObjectDesc, &guiOldAim)) {
     return FALSE;
   }
 
   // load the Bottom Buttons graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BottomButton.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiPageButtons))) {
+  if (!AddVideoObject(&VObjectDesc, &guiPageButtons)) {
     return FALSE;
   }
 
   // load the PopupPic graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\PopupPicFrame.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiPopUpPic))) {
+  if (!AddVideoObject(&VObjectDesc, &guiPopUpPic)) {
     return FALSE;
   }
 
   // load the AlumniPopUp graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\AlumniPopUp.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiAlumniPopUp))) {
+  if (!AddVideoObject(&VObjectDesc, &guiAlumniPopUp)) {
     return FALSE;
   }
 
   // load the Done Button graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\DoneButton.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiDoneButton))) {
+  if (!AddVideoObject(&VObjectDesc, &guiDoneButton)) {
     return FALSE;
   }
 

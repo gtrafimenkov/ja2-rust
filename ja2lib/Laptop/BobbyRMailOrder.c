@@ -350,56 +350,56 @@ BOOLEAN EnterBobbyRMailOrder() {
   // load the Order Grid graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyOrderGrid.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBobbyROrderGrid))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBobbyROrderGrid)) {
     return FALSE;
   }
 
   // load the Location graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyLocationBox.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBobbyRLocationGraphic))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBobbyRLocationGraphic)) {
     return FALSE;
   }
 
   // load the delivery speed graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyDeliverySpeed.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiDeliverySpeedGraphic))) {
+  if (!AddVideoObject(&VObjectDesc, &guiDeliverySpeedGraphic)) {
     return FALSE;
   }
 
   // load the delivery speed graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_CONFIRMORDER);
-  if (!(AddVideoObject(&VObjectDesc, &guiConfirmGraphic))) {
+  if (!AddVideoObject(&VObjectDesc, &guiConfirmGraphic)) {
     return FALSE;
   }
 
   // load the delivery speed graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\TotalSaveArea.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiTotalSaveArea))) {
+  if (!AddVideoObject(&VObjectDesc, &guiTotalSaveArea)) {
     return FALSE;
   }
 
   // border
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\TactPopUp.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiDropDownBorder))) {
+  if (!AddVideoObject(&VObjectDesc, &guiDropDownBorder)) {
     return FALSE;
   }
 
   // Gold Arrow for the scroll area
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\GoldArrows.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiGoldArrowImages))) {
+  if (!AddVideoObject(&VObjectDesc, &guiGoldArrowImages)) {
     return FALSE;
   }
 
   // Package Weight Graphic
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\PackageWeight.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiPackageWeightImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiPackageWeightImage)) {
     return FALSE;
   }
 
@@ -2157,7 +2157,7 @@ BOOLEAN CreateBobbyRayOrderTitle() {
   // load BobbyRayTitle graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyRayTitle.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBobbyRayTitle))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBobbyRayTitle)) {
     return FALSE;
   }
 

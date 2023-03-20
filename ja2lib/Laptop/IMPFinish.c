@@ -404,7 +404,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
         CopyFilename("Faces\\SmallFaces\\00.sti", VObjectDesc.ImageFile);
-        if (!(AddVideoObject(&VObjectDesc, &uiGraphicHandle))) {
+        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -423,7 +423,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
         CopyFilename("Faces\\SmallFaces\\01.sti", VObjectDesc.ImageFile);
-        if (!(AddVideoObject(&VObjectDesc, &uiGraphicHandle))) {
+        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -442,7 +442,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
         CopyFilename("Faces\\SmallFaces\\02.sti", VObjectDesc.ImageFile);
-        if (!(AddVideoObject(&VObjectDesc, &uiGraphicHandle))) {
+        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -465,7 +465,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
         CopyFilename("Faces\\SmallFaces\\03.sti", VObjectDesc.ImageFile);
-        if (!(AddVideoObject(&VObjectDesc, &uiGraphicHandle))) {
+        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -484,7 +484,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
         CopyFilename("Faces\\SmallFaces\\04.sti", VObjectDesc.ImageFile);
-        if (!(AddVideoObject(&VObjectDesc, &uiGraphicHandle))) {
+        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -503,7 +503,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // load it
         VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
         CopyFilename("Faces\\SmallFaces\\05.sti", VObjectDesc.ImageFile);
-        if (!(AddVideoObject(&VObjectDesc, &uiGraphicHandle))) {
+        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -553,7 +553,7 @@ BOOLEAN LoadCharacterPortrait(void) {
   // load it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename(pPlayerSelectedFaceFileNames[iPortraitNumber], VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCHARACTERPORTRAIT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCHARACTERPORTRAIT)) {
     return FALSE;
   }
 

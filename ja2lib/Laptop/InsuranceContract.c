@@ -209,14 +209,14 @@ BOOLEAN EnterInsuranceContract() {
   // load the Insurance title graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\InsOrderGrid.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiInsOrderGridImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiInsOrderGridImage)) {
     return FALSE;
   }
 
   // load the Insurance bullet graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\bullet.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiInsOrderBulletImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiInsOrderBulletImage)) {
     return FALSE;
   }
 
@@ -521,7 +521,7 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   sprintf(sTemp, "FACES\\%02d.sti", ubMercID);
   CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &uiInsMercFaceImage))) {
+  if (!AddVideoObject(&VObjectDesc, &uiInsMercFaceImage)) {
     return FALSE;
   }
 

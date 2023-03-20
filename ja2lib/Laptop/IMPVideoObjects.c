@@ -67,7 +67,7 @@ BOOLEAN LoadProfileBackGround(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\MetalBackGround.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBACKGROUND))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBACKGROUND)) {
     return FALSE;
   }
 
@@ -126,7 +126,7 @@ BOOLEAN LoadIMPSymbol(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_IMPSYMBOL);
-  if (!(AddVideoObject(&VObjectDesc, &guiIMPSYMBOL))) {
+  if (!AddVideoObject(&VObjectDesc, &guiIMPSYMBOL)) {
     return FALSE;
   }
 
@@ -159,7 +159,7 @@ BOOLEAN LoadBeginIndent(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BeginScreenIndent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBEGININDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBEGININDENT)) {
     return FALSE;
   }
 
@@ -193,7 +193,7 @@ BOOLEAN LoadActivationIndent(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\ActivationIndent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiACTIVATIONINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiACTIVATIONINDENT)) {
     return FALSE;
   }
 
@@ -226,7 +226,7 @@ BOOLEAN LoadFrontPageIndent(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\FrontPageIndent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiFRONTPAGEINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiFRONTPAGEINDENT)) {
     return FALSE;
   }
 
@@ -259,7 +259,7 @@ BOOLEAN LoadAnalyse(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Analyze.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiANALYSE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiANALYSE)) {
     return FALSE;
   }
 
@@ -292,7 +292,7 @@ BOOLEAN LoadAttributeGraph(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Attributegraph.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiATTRIBUTEGRAPH))) {
+  if (!AddVideoObject(&VObjectDesc, &guiATTRIBUTEGRAPH)) {
     return FALSE;
   }
 
@@ -325,7 +325,7 @@ BOOLEAN LoadAttributeGraphBar(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\AttributegraphBar.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiATTRIBUTEGRAPHBAR))) {
+  if (!AddVideoObject(&VObjectDesc, &guiATTRIBUTEGRAPHBAR)) {
     return FALSE;
   }
 
@@ -358,7 +358,7 @@ BOOLEAN LoadFullNameIndent(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\FullNameIndent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiFULLNAMEINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiFULLNAMEINDENT)) {
     return FALSE;
   }
 
@@ -391,7 +391,7 @@ BOOLEAN LoadNickNameIndent(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\NickName.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiNICKNAMEINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiNICKNAMEINDENT)) {
     return FALSE;
   }
 
@@ -424,7 +424,7 @@ BOOLEAN LoadNameIndent(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\NameIndent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiNAMEINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiNAMEINDENT)) {
     return FALSE;
   }
 
@@ -457,7 +457,7 @@ BOOLEAN LoadGenderIndent(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\GenderIndent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiGENDERINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiGENDERINDENT)) {
     return FALSE;
   }
 
@@ -490,7 +490,7 @@ BOOLEAN LoadSmallFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\SmallFrame.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSMALLFRAME))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSMALLFRAME)) {
     return FALSE;
   }
 
@@ -523,7 +523,7 @@ BOOLEAN LoadSmallSilhouette(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\SmallSilhouette.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSMALLSILHOUETTE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSMALLSILHOUETTE)) {
     return FALSE;
   }
 
@@ -556,7 +556,7 @@ BOOLEAN LoadLargeSilhouette(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\largesilhouette.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiLARGESILHOUETTE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiLARGESILHOUETTE)) {
     return FALSE;
   }
 
@@ -589,7 +589,7 @@ BOOLEAN LoadAttributeFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\attributeframe.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiATTRIBUTEFRAME))) {
+  if (!AddVideoObject(&VObjectDesc, &guiATTRIBUTEFRAME)) {
     return FALSE;
   }
 
@@ -672,7 +672,7 @@ BOOLEAN LoadSliderBar(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\attributeslider.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSLIDERBAR))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSLIDERBAR)) {
     return FALSE;
   }
 
@@ -705,7 +705,7 @@ BOOLEAN LoadButton2Image(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\button_2.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBUTTON2IMAGE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBUTTON2IMAGE)) {
     return FALSE;
   }
 
@@ -738,7 +738,7 @@ BOOLEAN LoadButton4Image(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\button_4.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBUTTON4IMAGE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBUTTON4IMAGE)) {
     return FALSE;
   }
 
@@ -771,7 +771,7 @@ BOOLEAN LoadButton1Image(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\button_1.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBUTTON1IMAGE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBUTTON1IMAGE)) {
     return FALSE;
   }
 
@@ -804,7 +804,7 @@ BOOLEAN LoadPortraitFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Voice_PortraitFrame.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiPORTRAITFRAME))) {
+  if (!AddVideoObject(&VObjectDesc, &guiPORTRAITFRAME)) {
     return FALSE;
   }
 
@@ -837,7 +837,7 @@ BOOLEAN LoadMainIndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\mainprofilepageindent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMAININDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMAININDENT)) {
     return FALSE;
   }
 
@@ -870,7 +870,7 @@ BOOLEAN LoadQtnLongIndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\longindent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiLONGINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiLONGINDENT)) {
     return FALSE;
   }
 
@@ -903,7 +903,7 @@ BOOLEAN LoadQtnShortIndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\shortindent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSHORTINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSHORTINDENT)) {
     return FALSE;
   }
 
@@ -936,7 +936,7 @@ BOOLEAN LoadQtnLongIndentHighFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\longindenthigh.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiLONGHINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiLONGHINDENT)) {
     return FALSE;
   }
 
@@ -969,7 +969,7 @@ BOOLEAN LoadQtnShortIndentHighFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\shortindenthigh.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSHORTHINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSHORTHINDENT)) {
     return FALSE;
   }
 
@@ -1002,7 +1002,7 @@ BOOLEAN LoadQtnIndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\questionindent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiQINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiQINDENT)) {
     return FALSE;
   }
 
@@ -1035,7 +1035,7 @@ BOOLEAN LoadAttrib1IndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\attributescreenindent_1.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiA1INDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiA1INDENT)) {
     return FALSE;
   }
 
@@ -1068,7 +1068,7 @@ BOOLEAN LoadAttrib2IndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\attributescreenindent_2.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiA2INDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiA2INDENT)) {
     return FALSE;
   }
 
@@ -1101,7 +1101,7 @@ BOOLEAN LoadAvgMercIndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\anaveragemercindent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiAVGMERCINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiAVGMERCINDENT)) {
     return FALSE;
   }
 
@@ -1134,7 +1134,7 @@ BOOLEAN LoadAboutUsIndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\aboutusindent.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiABOUTUSINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiABOUTUSINDENT)) {
     return FALSE;
   }
 
@@ -1167,7 +1167,7 @@ BOOLEAN LoadQtnShort2IndentFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\shortindent2.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSHORT2INDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSHORT2INDENT)) {
     return FALSE;
   }
 
@@ -1200,7 +1200,7 @@ BOOLEAN LoadQtnShort2IndentHighFrame(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\shortindent2High.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSHORT2HINDENT))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSHORT2HINDENT)) {
     return FALSE;
   }
 

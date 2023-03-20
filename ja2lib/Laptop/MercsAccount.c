@@ -92,14 +92,14 @@ BOOLEAN EnterMercsAccount() {
   // load the Arrow graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_ORDERGRID);
-  if (!(AddVideoObject(&VObjectDesc, &guiMercOrderGrid))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMercOrderGrid)) {
     return FALSE;
   }
 
   // load the Arrow graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\AccountNumber.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiAccountNumberGrid))) {
+  if (!AddVideoObject(&VObjectDesc, &guiAccountNumberGrid)) {
     return FALSE;
   }
 

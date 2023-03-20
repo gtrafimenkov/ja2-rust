@@ -2612,13 +2612,13 @@ UINT32 MapScreenInit(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\group_confirm.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiUpdatePanel))) {
+  if (!AddVideoObject(&VObjectDesc, &guiUpdatePanel)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\group_confirm_tactical.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiUpdatePanelTactical))) {
+  if (!AddVideoObject(&VObjectDesc, &guiUpdatePanelTactical)) {
     return FALSE;
   }
 
@@ -2748,146 +2748,146 @@ UINT32 MapScreenHandle(void) {
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\SAM.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiSAMICON))) {
+      if (!AddVideoObject(&VObjectDesc, &guiSAMICON)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+      if (!AddVideoObject(&VObjectDesc, &guiMAPCURSORS)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Mine_1.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiSubLevel1))) {
+      if (!AddVideoObject(&VObjectDesc, &guiSubLevel1)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Mine_2.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiSubLevel2))) {
+      if (!AddVideoObject(&VObjectDesc, &guiSubLevel2)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Mine_3.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiSubLevel3))) {
+      if (!AddVideoObject(&VObjectDesc, &guiSubLevel3)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\sleepicon.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiSleepIcon))) {
+      if (!AddVideoObject(&VObjectDesc, &guiSleepIcon)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\charinfo.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiCHARINFO))) {
+      if (!AddVideoObject(&VObjectDesc, &guiCHARINFO)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\newgoldpiece3.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiCHARLIST))) {
+      if (!AddVideoObject(&VObjectDesc, &guiCHARLIST)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\boxes.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiCHARICONS))) {
+      if (!AddVideoObject(&VObjectDesc, &guiCHARICONS)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\incross.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiCROSS))) {
+      if (!AddVideoObject(&VObjectDesc, &guiCROSS)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\mapinv.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiMAPINV))) {
+      if (!AddVideoObject(&VObjectDesc, &guiMAPINV)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\map_inv_2nd_gun_cover.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout))) {
+      if (!AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout)) {
         return FALSE;
       }
 
       // the upper left corner piece icons
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\top_left_corner_icons.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiULICONS))) {
+      if (!AddVideoObject(&VObjectDesc, &guiULICONS)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\map_item.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiORTAICON))) {
+      if (!AddVideoObject(&VObjectDesc, &guiORTAICON)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\prison.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiTIXAICON))) {
+      if (!AddVideoObject(&VObjectDesc, &guiTIXAICON)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\merc_between_sector_icons.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS))) {
+      if (!AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\merc_mvt_green_arrows.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE))) {
+      if (!AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\GreenArr.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiLEVELMARKER))) {
+      if (!AddVideoObject(&VObjectDesc, &guiLEVELMARKER)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Helicop.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiHelicopterIcon))) {
+      if (!AddVideoObject(&VObjectDesc, &guiHelicopterIcon)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\eta_pop_up.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp))) {
+      if (!AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\pos2.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors))) {
+      if (!AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO))) {
+      if (!AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\selectedchararrow.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiSelectedCharArrow))) {
+      if (!AddVideoObject(&VObjectDesc, &guiSelectedCharArrow)) {
         return FALSE;
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\mine.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiMINEICON))) {
+      if (!AddVideoObject(&VObjectDesc, &guiMINEICON)) {
         return FALSE;
       }
 
@@ -2897,7 +2897,7 @@ UINT32 MapScreenHandle(void) {
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\BullsEye.sti", VObjectDesc.ImageFile);
-      if (!(AddVideoObject(&VObjectDesc, &guiBULLSEYE))) {
+      if (!AddVideoObject(&VObjectDesc, &guiBULLSEYE)) {
         return FALSE;
       }
 
@@ -2939,7 +2939,7 @@ UINT32 MapScreenHandle(void) {
 
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
-    if (!(AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel))) {
+    if (!AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel)) {
       return FALSE;
     }
 
@@ -8503,39 +8503,39 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMAPCURSORS)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\SAM.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSAMICON))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSAMICON)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMAPCURSORS)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\sleepicon.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSleepIcon))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSleepIcon)) {
     return FALSE;
   }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\addonslcp.sti", VObjectDesc.ImageFile);
-  // if (!(AddVideoObject(&VObjectDesc, &guiCORNERADDONS))) { return FALSE; }
+  // if (!AddVideoObject(&VObjectDesc, &guiCORNERADDONS)) { return FALSE; }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\mapborder.sti", VObjectDesc.ImageFile);
-  // if (!(AddVideoObject(&VObjectDesc, &guiMAPBORDER))) { return FALSE; }
+  // if (!AddVideoObject(&VObjectDesc, &guiMAPBORDER)) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\charinfo.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCHARINFO))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCHARINFO)) {
     return FALSE;
   }
   /*strcpy(vs_desc.ImageFile, "INTERFACE\\playlist3.pcx");
@@ -8543,71 +8543,71 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\newgoldpiece3.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCHARLIST))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCHARLIST)) {
     return FALSE;
   }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\mapbordercorner.sti", VObjectDesc.ImageFile);
-  // if (!(AddVideoObject(&VObjectDesc, &guiMAPCORNER))) { return FALSE; }
+  // if (!AddVideoObject(&VObjectDesc, &guiMAPCORNER)) { return FALSE; }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\popup.sti", VObjectDesc.ImageFile);
-  // if (!(AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS))) { return FALSE; }
+  // if (!AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS)) { return FALSE; }
 
   // the sublevels
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Mine_1.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSubLevel1))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSubLevel1)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Mine_2.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSubLevel2))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSubLevel2)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Mine_3.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSubLevel3))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSubLevel3)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\boxes.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCHARICONS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCHARICONS)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\incross.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCROSS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCROSS)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapinv.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMAPINV))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMAPINV)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\map_inv_2nd_gun_cover.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout)) {
     return FALSE;
   }
 
   // the upper left corner piece icons
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\top_left_corner_icons.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiULICONS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiULICONS)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\prison.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiTIXAICON))) {
+  if (!AddVideoObject(&VObjectDesc, &guiTIXAICON)) {
     return FALSE;
   }
 
@@ -8615,67 +8615,67 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\map_item.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiORTAICON))) {
+  if (!AddVideoObject(&VObjectDesc, &guiORTAICON)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMAPCURSORS)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\merc_between_sector_icons.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\merc_mvt_green_arrows.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\GreenArr.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiLEVELMARKER))) {
+  if (!AddVideoObject(&VObjectDesc, &guiLEVELMARKER)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Helicop.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiHelicopterIcon))) {
+  if (!AddVideoObject(&VObjectDesc, &guiHelicopterIcon)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\eta_pop_up.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\pos2.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\selectedchararrow.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiSelectedCharArrow))) {
+  if (!AddVideoObject(&VObjectDesc, &guiSelectedCharArrow)) {
     return FALSE;
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mine.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiMINEICON))) {
+  if (!AddVideoObject(&VObjectDesc, &guiMINEICON)) {
     return FALSE;
   }
 
@@ -8690,7 +8690,7 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\BullsEye.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBULLSEYE))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBULLSEYE)) {
     return FALSE;
   }
 

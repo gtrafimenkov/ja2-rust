@@ -351,14 +351,14 @@ BOOLEAN EnterOptionsScreen() {
   // load the options screen background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\OptionScreenBase.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiOptionBackGroundImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiOptionBackGroundImage)) {
     return FALSE;
   }
 
   // load button, title graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_OPTIONHEADER);
-  if (!(AddVideoObject(&VObjectDesc, &guiOptionsAddOnImages))) {
+  if (!AddVideoObject(&VObjectDesc, &guiOptionsAddOnImages)) {
     return FALSE;
   }
 

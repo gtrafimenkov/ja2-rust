@@ -253,35 +253,35 @@ BOOLEAN EnterFloristOrderForm() {
   // load the DeliveryLocation graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\DeliveryLocation.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiDeliveryLocation))) {
+  if (!AddVideoObject(&VObjectDesc, &guiDeliveryLocation)) {
     return FALSE;
   }
 
   // load the Flower frame graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\FlowerFrame.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiFlowerFrame))) {
+  if (!AddVideoObject(&VObjectDesc, &guiFlowerFrame)) {
     return FALSE;
   }
 
   // load the Personel sentiments graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\PersonalSentiments.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiPersonalSentiments))) {
+  if (!AddVideoObject(&VObjectDesc, &guiPersonalSentiments)) {
     return FALSE;
   }
 
   // load the Name Box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\NameBox.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiNameBox))) {
+  if (!AddVideoObject(&VObjectDesc, &guiNameBox)) {
     return FALSE;
   }
 
   // load the Check Box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\OrderCheckBox.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiFlowerOrderCheckBoxButtonImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiFlowerOrderCheckBoxButtonImage)) {
     return FALSE;
   }
 
@@ -289,14 +289,14 @@ BOOLEAN EnterFloristOrderForm() {
   sprintf(sTemp, "LAPTOP\\Flower_%d.sti", guiCurrentlySelectedFlower);
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename(sTemp, VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiCurrentlySelectedFlowerImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiCurrentlySelectedFlowerImage)) {
     return FALSE;
   }
 
   // border
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\TactPopUp.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiDropDownBorder))) {
+  if (!AddVideoObject(&VObjectDesc, &guiDropDownBorder)) {
     return FALSE;
   }
 

@@ -213,42 +213,42 @@ BOOLEAN EnterBobbyR() {
   // load the Bobbyname graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYNAME);
-  if (!(AddVideoObject(&VObjectDesc, &guiBobbyName))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBobbyName)) {
     return FALSE;
   }
 
   // load the plaque graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyPlaques.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiPlaque))) {
+  if (!AddVideoObject(&VObjectDesc, &guiPlaque)) {
     return FALSE;
   }
 
   // load the TopHinge graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyTopHinge.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiTopHinge))) {
+  if (!AddVideoObject(&VObjectDesc, &guiTopHinge)) {
     return FALSE;
   }
 
   // load the BottomHinge graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyBottomHinge.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiBottomHinge))) {
+  if (!AddVideoObject(&VObjectDesc, &guiBottomHinge)) {
     return FALSE;
   }
 
   // load the Store Plaque graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_STOREPLAQUE);
-  if (!(AddVideoObject(&VObjectDesc, &guiStorePlaque))) {
+  if (!AddVideoObject(&VObjectDesc, &guiStorePlaque)) {
     return FALSE;
   }
 
   // load the Handle graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyHandle.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiHandle))) {
+  if (!AddVideoObject(&VObjectDesc, &guiHandle)) {
     return FALSE;
   }
 
@@ -259,7 +259,7 @@ BOOLEAN EnterBobbyR() {
     // load the Handle graphic and add it
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\UnderConstruction.sti", VObjectDesc.ImageFile);
-    if (!(AddVideoObject(&VObjectDesc, &guiUnderConstructionImage))) {
+    if (!AddVideoObject(&VObjectDesc, &guiUnderConstructionImage)) {
       return FALSE;
     }
 
@@ -418,7 +418,7 @@ BOOLEAN InitBobbyRWoodBackground() {
   // load the Wood bacground graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyWood.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiWoodBackground))) {
+  if (!AddVideoObject(&VObjectDesc, &guiWoodBackground)) {
     return FALSE;
   }
 

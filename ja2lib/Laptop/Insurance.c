@@ -96,14 +96,14 @@ BOOLEAN EnterInsurance() {
   // load the Insurance title graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCETITLE);
-  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceTitleImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiInsuranceTitleImage)) {
     return FALSE;
   }
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Bullet.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceBulletImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiInsuranceBulletImage)) {
     return FALSE;
   }
 
@@ -242,21 +242,21 @@ BOOLEAN InitInsuranceDefaults() {
   // load the Flower Account Box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BackGroundTile.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceBackGround))) {
+  if (!AddVideoObject(&VObjectDesc, &guiInsuranceBackGround)) {
     return FALSE;
   }
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LeftTile.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceRedBarImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiInsuranceRedBarImage)) {
     return FALSE;
   }
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LargeBar.sti", VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceBigRedLineImage))) {
+  if (!AddVideoObject(&VObjectDesc, &guiInsuranceBigRedLineImage)) {
     return FALSE;
   }
 
@@ -265,7 +265,7 @@ BOOLEAN InitInsuranceDefaults() {
     // load the small title for the every page other then the first page
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLTITLE);
-    if (!(AddVideoObject(&VObjectDesc, &guiInsuranceSmallTitleImage))) {
+    if (!AddVideoObject(&VObjectDesc, &guiInsuranceSmallTitleImage)) {
       return FALSE;
     }
 

@@ -268,7 +268,7 @@ BOOLEAN InitFlowerButtons() {
     sprintf(sTemp, "LAPTOP\\Flower_%d.sti", count);
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename(sTemp, VObjectDesc.ImageFile);
-    if (!(AddVideoObject(&VObjectDesc, &guiFlowerImages[i]))) {
+    if (!AddVideoObject(&VObjectDesc, &guiFlowerImages[i])) {
       return FALSE;
     }
     count++;

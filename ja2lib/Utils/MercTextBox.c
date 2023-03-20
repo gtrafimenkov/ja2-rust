@@ -162,7 +162,7 @@ BOOLEAN LoadTextMercPopupImages(UINT8 ubBackgroundIndex, UINT8 ubBorderIndex) {
   // border
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename(zMercBorderPopupFilenames[ubBorderIndex], VObjectDesc.ImageFile);
-  if (!(AddVideoObject(&VObjectDesc, &gPopUpTextBox->uiMercTextPopUpBorder))) {
+  if (!AddVideoObject(&VObjectDesc, &gPopUpTextBox->uiMercTextPopUpBorder)) {
     return FALSE;
   }
 
