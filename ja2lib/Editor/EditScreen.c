@@ -2398,8 +2398,8 @@ void ShowCurrentSlotSurface(UINT32 vSurface, INT32 iWindow) {
 
   GetVideoSurface(&hvSurface, vSurface);
 
-  iPicWidth = (INT32)hvSurface->usWidth;
-  iPicHeight = (INT32)hvSurface->usHeight;
+  iPicWidth = (INT32)GetVSurfaceWidth(hvSurface);
+  iPicHeight = (INT32)GetVSurfaceHeight(hvSurface);
 
   if (iPicWidth > iWinWidth) {
     ClipRect.iLeft = (iPicWidth - iWinWidth) / 2;

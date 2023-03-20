@@ -3,7 +3,6 @@
 #include "Laptop/Finances.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
-// #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
@@ -636,12 +635,12 @@ UINT32 DrawMap(void) {
       clip.iTop = iZoomY - 3;
       clip.iBottom = clip.iTop + MAP_VIEW_HEIGHT - 1;
 
-      if (clip.iBottom > hSrcVSurface->usHeight) {
-        clip.iBottom = hSrcVSurface->usHeight;
+      if (clip.iBottom > GetVSurfaceHeight(hSrcVSurface)) {
+        clip.iBottom = GetVSurfaceHeight(hSrcVSurface);
       }
 
-      if (clip.iRight > hSrcVSurface->usWidth) {
-        clip.iRight = hSrcVSurface->usWidth;
+      if (clip.iRight > GetVSurfaceWidth(hSrcVSurface)) {
+        clip.iRight = GetVSurfaceWidth(hSrcVSurface);
       }
 
       Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
@@ -1105,7 +1104,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   // CHECKF( GetVideoSurface( &hMineSurface, guiMINEICON ) );
   // get original video surface palette
 
-  pOriginalPallette = hSrcVSurface->p16BPPPalette;
+  pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
 
   if (fZoomFlag)
     ShadeMapElemZoomIn(sMapX, sMapY, iColor);
@@ -1151,7 +1150,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
 
-        hSrcVSurface->p16BPPPalette = pMapLTGreenPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTGreenPalette);
         // hMineSurface->p16BPPPalette = pMapLTGreenPalette;
         // hSAMSurface->p16BPPPalette = pMapLTGreenPalette;
 
@@ -1175,7 +1174,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_DK_GREEN):
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKGreenPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKGreenPalette);
         // hMineSurface->p16BPPPalette = pMapDKGreenPalette;
         // hSAMSurface->p16BPPPalette = pMapDKGreenPalette;
 
@@ -1199,7 +1198,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_LT_RED):
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapLTRedPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTRedPalette);
         // hMineSurface->p16BPPPalette = pMapLTRedPalette;
         // hSAMSurface->p16BPPPalette = pMapLTRedPalette;
 
@@ -1223,7 +1222,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_DK_RED):
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKRedPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKRedPalette);
         // hMineSurface->p16BPPPalette = pMapDKRedPalette;
         // hSAMSurface->p16BPPPalette = pMapDKRedPalette;
 
@@ -1247,7 +1246,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
 
     // restore original palette
     CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-    hSrcVSurface->p16BPPPalette = pOriginalPallette;
+    SetVSurface16BPPPalette(hSrcVSurface, pOriginalPallette);
     // hMineSurface->p16BPPPalette = pOriginalPallette;
     // hSAMSurface->p16BPPPalette = pOriginalPallette;
   }
@@ -1276,7 +1275,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
 
   // get original video surface palette
   CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-  pOriginalPallette = hSrcVSurface->p16BPPPalette;
+  pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
 
   if ((iX > MapScreenRect.iLeft - MAP_GRID_X * 2) && (iX < MapScreenRect.iRight) &&
       (iY > MapScreenRect.iTop - MAP_GRID_Y * 2) && (iY < MapScreenRect.iBottom)) {
@@ -1334,7 +1333,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_LT_GREEN):
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapLTGreenPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTGreenPalette);
 
         // lock source and dest buffers
         pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -1354,7 +1353,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_DK_GREEN):
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKGreenPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKGreenPalette);
 
         /// lock source and dest buffers
         pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -1374,7 +1373,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_LT_RED):
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapLTRedPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTRedPalette);
 
         // lock source and dest buffers
         pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -1394,7 +1393,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_DK_RED):
         // grab video surface and set palette
         CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKRedPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKRedPalette);
 
         // lock source and dest buffers
         pDestBuf = (UINT16 *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
@@ -1415,7 +1414,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
 
   // restore original palette
   CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-  hSrcVSurface->p16BPPPalette = pOriginalPallette;
+  SetVSurface16BPPPalette(hSrcVSurface, pOriginalPallette);
 
   return (TRUE);
 }

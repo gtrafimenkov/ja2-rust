@@ -75,26 +75,12 @@ typedef struct {
 // This structure is a video Surface. Contains a HLIST of regions
 //
 
-struct VSurface {
-  UINT16 usHeight;         // Height of Video Surface
-  UINT16 usWidth;          // Width of Video Surface
-  UINT8 ubBitDepth;        // BPP ALWAYS 16!
-  PTR pSurfaceData;        // A void pointer, but for this implementation, is really a
-                           // lpDirectDrawSurface;
-  PTR pSurfaceData1;       // Direct Draw One Interface
-  PTR pSavedSurfaceData1;  // A void pointer, but for this implementation, is really a
-                           // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
-                           // memory Surfaces so that they my be restored
-  PTR pSavedSurfaceData;   // A void pointer, but for this implementation, is really a
-                          // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video memory
-                          // Surfaces so that they my be restored
-  UINT32 fFlags;              // Used to describe memory usage, etc
-  PTR pPalette;               // A void pointer, but for this implementation a DDPalette
-  UINT16 *p16BPPPalette;      // A 16BPP palette used for 8->16 blits
-  COLORVAL TransparentColor;  // Defaults to 0,0,0
-  PTR pClipper;               // A void pointer encapsolated as a clipper Surface
-  HLIST RegionList;           // A List of regions within the video Surface
-};
+struct VSurface;
+
+UINT16 GetVSurfaceHeight(const struct VSurface *vs);
+UINT16 GetVSurfaceWidth(const struct VSurface *vs);
+UINT16 *GetVSurface16BPPPalette(struct VSurface *vs);
+void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette);
 
 //
 // This structure describes the creation parameters for a Video Surface

@@ -9,7 +9,7 @@
 #include "SGP/Input.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
-#include "SGP/VSurface.h"
+#include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/VideoInternal.h"
 #include "TileEngine/RenderDirty.h"
@@ -5276,6 +5276,15 @@ char *DirectXErrorDescription(INT32 iDXReturn) {
       return "Unrecognized error value.\0";
   }
 }
+
+//////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////
+
+UINT16 GetVSurfaceHeight(const struct VSurface *vs) { return vs->usHeight; }
+UINT16 GetVSurfaceWidth(const struct VSurface *vs) { return vs->usWidth; }
+UINT16 *GetVSurface16BPPPalette(struct VSurface *vs) { return vs->p16BPPPalette; }
+void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette) { vs->p16BPPPalette = palette; }
 
 //////////////////////////////////////////////////////////////////
 //
