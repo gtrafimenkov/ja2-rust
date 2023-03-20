@@ -91,6 +91,7 @@ impl DB {
                 {
                     return handle as u64;
                 }
+                0
             }
             None => 0,
         }
