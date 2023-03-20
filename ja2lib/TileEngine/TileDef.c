@@ -9,6 +9,7 @@
 #include "GameLoop.h"
 #include "SGP/Debug.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Tactical/PathAI.h"

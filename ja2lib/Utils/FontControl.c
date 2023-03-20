@@ -7,6 +7,7 @@
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "SGP/WinFont.h"
@@ -303,28 +304,25 @@ UINT16 CreateFontPaletteTables(struct VObject* pObj) {
     }
   }
 
-  pObj->pShades[FONT_SHADE_RED] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 255, 0, 0, TRUE);
-  pObj->pShades[FONT_SHADE_BLUE] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 0, 0, 255, TRUE);
-  pObj->pShades[FONT_SHADE_GREEN] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 0, 255, 0, TRUE);
-  pObj->pShades[FONT_SHADE_YELLOW] =
-      Create16BPPPaletteShaded(pObj->pPaletteEntry, 255, 255, 0, TRUE);
-  pObj->pShades[FONT_SHADE_NEUTRAL] =
-      Create16BPPPaletteShaded(pObj->pPaletteEntry, 255, 255, 255, FALSE);
+  pObj->pShades[FONT_SHADE_RED] = VObjectCreate16BPPPaletteShaded(pObj, 255, 0, 0, TRUE);
+  pObj->pShades[FONT_SHADE_BLUE] = VObjectCreate16BPPPaletteShaded(pObj, 0, 0, 255, TRUE);
+  pObj->pShades[FONT_SHADE_GREEN] = VObjectCreate16BPPPaletteShaded(pObj, 0, 255, 0, TRUE);
+  pObj->pShades[FONT_SHADE_YELLOW] = VObjectCreate16BPPPaletteShaded(pObj, 255, 255, 0, TRUE);
+  pObj->pShades[FONT_SHADE_NEUTRAL] = VObjectCreate16BPPPaletteShaded(pObj, 255, 255, 255, FALSE);
 
-  pObj->pShades[FONT_SHADE_WHITE] =
-      Create16BPPPaletteShaded(pObj->pPaletteEntry, 255, 255, 255, TRUE);
+  pObj->pShades[FONT_SHADE_WHITE] = VObjectCreate16BPPPaletteShaded(pObj, 255, 255, 255, TRUE);
 
   // the rest are darkening tables, right down to all-black.
-  pObj->pShades[0] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 165, 165, 165, FALSE);
-  pObj->pShades[7] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 135, 135, 135, FALSE);
-  pObj->pShades[8] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 105, 105, 105, FALSE);
-  pObj->pShades[9] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 75, 75, 75, FALSE);
-  pObj->pShades[10] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 45, 45, 45, FALSE);
-  pObj->pShades[11] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 36, 36, 36, FALSE);
-  pObj->pShades[12] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 27, 27, 27, FALSE);
-  pObj->pShades[13] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 18, 18, 18, FALSE);
-  pObj->pShades[14] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 9, 9, 9, FALSE);
-  pObj->pShades[15] = Create16BPPPaletteShaded(pObj->pPaletteEntry, 0, 0, 0, FALSE);
+  pObj->pShades[0] = VObjectCreate16BPPPaletteShaded(pObj, 165, 165, 165, FALSE);
+  pObj->pShades[7] = VObjectCreate16BPPPaletteShaded(pObj, 135, 135, 135, FALSE);
+  pObj->pShades[8] = VObjectCreate16BPPPaletteShaded(pObj, 105, 105, 105, FALSE);
+  pObj->pShades[9] = VObjectCreate16BPPPaletteShaded(pObj, 75, 75, 75, FALSE);
+  pObj->pShades[10] = VObjectCreate16BPPPaletteShaded(pObj, 45, 45, 45, FALSE);
+  pObj->pShades[11] = VObjectCreate16BPPPaletteShaded(pObj, 36, 36, 36, FALSE);
+  pObj->pShades[12] = VObjectCreate16BPPPaletteShaded(pObj, 27, 27, 27, FALSE);
+  pObj->pShades[13] = VObjectCreate16BPPPaletteShaded(pObj, 18, 18, 18, FALSE);
+  pObj->pShades[14] = VObjectCreate16BPPPaletteShaded(pObj, 9, 9, 9, FALSE);
+  pObj->pShades[15] = VObjectCreate16BPPPaletteShaded(pObj, 0, 0, 0, FALSE);
 
   // Set current shade table to neutral color
   pObj->pShadeCurrent = pObj->pShades[4];

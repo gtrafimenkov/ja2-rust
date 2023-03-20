@@ -13,6 +13,7 @@
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -286,15 +287,15 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
     }
 
     hVObject->pShades[FLASH_PORTRAIT_NOSHADE] =
-        Create16BPPPaletteShaded(hVObject->pPaletteEntry, 255, 255, 255, FALSE);
+        VObjectCreate16BPPPaletteShaded(hVObject, 255, 255, 255, FALSE);
     hVObject->pShades[FLASH_PORTRAIT_STARTSHADE] =
         Create16BPPPaletteShaded(Pal, 255, 255, 255, FALSE);
     hVObject->pShades[FLASH_PORTRAIT_ENDSHADE] =
-        Create16BPPPaletteShaded(hVObject->pPaletteEntry, 250, 25, 25, TRUE);
+        VObjectCreate16BPPPaletteShaded(hVObject, 250, 25, 25, TRUE);
     hVObject->pShades[FLASH_PORTRAIT_DARKSHADE] =
-        Create16BPPPaletteShaded(hVObject->pPaletteEntry, 100, 100, 100, TRUE);
+        VObjectCreate16BPPPaletteShaded(hVObject, 100, 100, 100, TRUE);
     hVObject->pShades[FLASH_PORTRAIT_LITESHADE] =
-        Create16BPPPaletteShaded(hVObject->pPaletteEntry, 100, 100, 100, FALSE);
+        VObjectCreate16BPPPaletteShaded(hVObject, 100, 100, 100, FALSE);
 
     for (uiCount = 0; uiCount < 256; uiCount++) {
       Pal[uiCount].peRed = (UINT8)(uiCount % 128) + 128;

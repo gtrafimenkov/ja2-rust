@@ -1,9 +1,3 @@
-/***********************************************************************************************
-        Button System.c
-
-        Rewritten mostly by Kris Morness
-***********************************************************************************************/
-
 #include "SGP/ButtonSystem.h"
 
 #include <memory.h>
@@ -22,6 +16,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "TileEngine/RenderDirty.h"

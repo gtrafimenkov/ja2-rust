@@ -11,6 +11,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -120,10 +121,8 @@ BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
 
     if (GetVideoObject(&hVObject, gusRadarImage)) {
       // ATE: Add a shade table!
-      hVObject->pShades[0] =
-          Create16BPPPaletteShaded(hVObject->pPaletteEntry, 255, 255, 255, FALSE);
-      hVObject->pShades[1] =
-          Create16BPPPaletteShaded(hVObject->pPaletteEntry, 100, 100, 100, FALSE);
+      hVObject->pShades[0] = VObjectCreate16BPPPaletteShaded(hVObject, 255, 255, 255, FALSE);
+      hVObject->pShades[1] = VObjectCreate16BPPPaletteShaded(hVObject, 100, 100, 100, FALSE);
     }
   }
 

@@ -1,5 +1,3 @@
-#include "SGP/VObjectBlitters.h"
-
 #include <stdio.h>
 #include <string.h>
 
@@ -7,6 +5,7 @@
 #include "SGP/HImage.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"

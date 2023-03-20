@@ -12,6 +12,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -486,9 +487,9 @@ void GoIntoOverheadMap() {
 
   // Add shades to persons....
   GetVideoObject(&hVObject, uiPERSONS);
-  hVObject->pShades[0] = Create16BPPPaletteShaded(hVObject->pPaletteEntry, 256, 256, 256, FALSE);
-  hVObject->pShades[1] = Create16BPPPaletteShaded(hVObject->pPaletteEntry, 310, 310, 310, FALSE);
-  hVObject->pShades[2] = Create16BPPPaletteShaded(hVObject->pPaletteEntry, 0, 0, 0, FALSE);
+  hVObject->pShades[0] = VObjectCreate16BPPPaletteShaded(hVObject, 256, 256, 256, FALSE);
+  hVObject->pShades[1] = VObjectCreate16BPPPaletteShaded(hVObject, 310, 310, 310, FALSE);
+  hVObject->pShades[2] = VObjectCreate16BPPPaletteShaded(hVObject, 0, 0, 0, FALSE);
 
   gfOverheadMapDirty = TRUE;
 

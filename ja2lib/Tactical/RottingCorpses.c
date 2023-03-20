@@ -9,6 +9,7 @@
 #include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/WCheck.h"
 #include "Soldier.h"
 #include "Strategic/GameClock.h"

@@ -6,6 +6,7 @@
 #include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/Video.h"
 #include "TileEngine/Lighting.h"
 #include "TileEngine/WorldDat.h"

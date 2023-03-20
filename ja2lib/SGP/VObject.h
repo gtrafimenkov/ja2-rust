@@ -37,16 +37,6 @@ typedef struct {
   INT8 *pbZChange;           // change to the Z value in each strip (after the first)
 } ZStripInfo;
 
-typedef struct {
-  UINT16 *p16BPPData;
-  UINT16 usRegionIndex;
-  UINT8 ubShadeLevel;
-  UINT16 usWidth;
-  UINT16 usHeight;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
-} SixteenBPPObjectInfo;
-
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
 // From RGB to COLORVAL
 #define FROMRGB(r, g, b) \
@@ -57,33 +47,6 @@ typedef struct {
 
 // VOBJECT FLAGS
 #define VOBJECT_FLAG_SHADETABLE_SHARED 0x00000100
-
-// This structure is a video object.
-// The video object contains different data based on it's type, compressed or not
-struct VObject {
-  UINT32 fFlags;                          // Special flags
-  UINT32 uiSizePixData;                   // ETRLE data size
-  struct SGPPaletteEntry *pPaletteEntry;  // 8BPP Palette
-  COLORVAL TransparentColor;              // Defaults to 0,0,0
-  UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
-
-  PTR pPixData;               // ETRLE pixel data
-  ETRLEObject *pETRLEObject;  // Object offset data etc
-  SixteenBPPObjectInfo *p16BPPObject;
-  UINT16 *pShades[HVOBJECT_SHADE_TABLES];  // Shading tables
-  UINT16 *pShadeCurrent;
-  UINT16 *pGlow;              // glow highlight table
-  UINT8 *pShade8;             // 8-bit shading index table
-  UINT8 *pGlow8;              // 8-bit glow table
-  ZStripInfo **ppZStripInfo;  // Z-value strip info arrays
-
-  UINT16 usNumberOf16BPPObjects;
-  UINT16 usNumberOfObjects;  // Total number of objects
-  UINT8 ubBitDepth;          // BPP
-
-  // Reserved for added room and 32-byte boundaries
-  BYTE bReserved[1];
-};
 
 // This structure describes the creation parameters for a Video Object
 typedef struct {
@@ -171,5 +134,8 @@ BOOLEAN BltVideoObjectOutline(UINT32 uiDestVSurface, struct VObject *hSrcVObject
                               INT32 iDestX, INT32 iDestY, INT16 s16BPPColor, BOOLEAN fDoOutline);
 BOOLEAN BltVideoObjectOutlineShadowFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject,
                                              UINT16 usIndex, INT32 iDestX, INT32 iDestY);
+
+UINT16 *VObjectCreate16BPPPaletteShaded(struct VObject *obj, UINT32 rscale, UINT32 gscale,
+                                        UINT32 bscale, BOOLEAN mono);
 
 #endif

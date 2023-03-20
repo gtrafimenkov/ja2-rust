@@ -14,6 +14,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
@@ -1676,8 +1677,8 @@ void CreateAutoResolveInterface() {
     AssertMsg(0, "Failed to load Interface\\SmFaces.sti");
   }
   if (GetVideoObject(&hVObject, gpAR->iFaces)) {
-    hVObject->pShades[0] = Create16BPPPaletteShaded(hVObject->pPaletteEntry, 255, 255, 255, FALSE);
-    hVObject->pShades[1] = Create16BPPPaletteShaded(hVObject->pPaletteEntry, 250, 25, 25, TRUE);
+    hVObject->pShades[0] = VObjectCreate16BPPPaletteShaded(hVObject, 255, 255, 255, FALSE);
+    hVObject->pShades[1] = VObjectCreate16BPPPaletteShaded(hVObject, 250, 25, 25, TRUE);
   }
 
   // Add the battle over panels
@@ -1699,9 +1700,8 @@ void CreateAutoResolveInterface() {
       }
     }
     if (GetVideoObject(&hVObject, gpMercs[i].uiVObjectID)) {
-      hVObject->pShades[0] =
-          Create16BPPPaletteShaded(hVObject->pPaletteEntry, 255, 255, 255, FALSE);
-      hVObject->pShades[1] = Create16BPPPaletteShaded(hVObject->pPaletteEntry, 250, 25, 25, TRUE);
+      hVObject->pShades[0] = VObjectCreate16BPPPaletteShaded(hVObject, 255, 255, 255, FALSE);
+      hVObject->pShades[1] = VObjectCreate16BPPPaletteShaded(hVObject, 250, 25, 25, TRUE);
     }
   }
 

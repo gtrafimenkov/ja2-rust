@@ -7,6 +7,7 @@
 #include "JAScreens.h"
 #include "SGP/HImage.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
