@@ -1,6 +1,7 @@
 //! Unified file access to regular files and files inside of *.slf
 //! archives.
 
+use crate::exp_debug::debug_log_write;
 use crate::slfdb;
 use once_cell::sync::Lazy;
 use std::ffi::{c_char, c_void, CStr};
@@ -53,21 +54,30 @@ pub extern "C" fn File_OpenForReading(path: *const c_char) -> FileID {
     match cstr_utf8_to_string(path) {
         None => FILE_ID_ERR,
         Some(path) => match unsafe { FILE_DB.open_for_reading(&path) } {
-            Err(_) => FILE_ID_ERR,
+            Err(err) => {
+                debug_log_write(&format!("failed to open file {path} for reading: {err}"));
+                FILE_ID_ERR
+            }
             Ok(id) => id,
         },
     }
 }
 
 #[no_mangle]
-/// Open file for appending.  `path` must be utf-8 encoded string.
+/// Open file for appending.  If the file doesn't exist, it will be created
+/// and opened for writing.
+/// `path` must be utf-8 encoded string.
 /// A recular file will be created in the process.
 /// Writing to an slf library file is not supported.
 pub extern "C" fn File_OpenForAppending(path: *const c_char) -> FileID {
     match cstr_utf8_to_string(path) {
         None => FILE_ID_ERR,
-        Some(path) => match unsafe { FILE_DB.open_for_appending(&path) } {
-            Err(_) => FILE_ID_ERR,
+        Some(path_str) => match unsafe { FILE_DB.open_for_appending(&path_str) } {
+            Err(err) => {
+                debug_log_write(&format!("failed to open file {path_str} for appending: {err}; trying opening for writing"));
+                // probably file doesn't exist
+                File_OpenForWriting(path)
+            }
             Ok(id) => id,
         },
     }
@@ -81,7 +91,10 @@ pub extern "C" fn File_OpenForWriting(path: *const c_char) -> FileID {
     match cstr_utf8_to_string(path) {
         None => FILE_ID_ERR,
         Some(path) => match unsafe { FILE_DB.open_for_writing(&path) } {
-            Err(_) => FILE_ID_ERR,
+            Err(err) => {
+                debug_log_write(&format!("failed to open file {path} for writing: {err}"));
+                FILE_ID_ERR
+            }
             Ok(id) => id,
         },
     }
