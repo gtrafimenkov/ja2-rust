@@ -632,7 +632,6 @@ UINT32 SexScreenInit(void) { return (TRUE); }
 
 UINT32 SexScreenHandle(void) {
   static UINT8 ubCurrentScreen = 0;
-  VOBJECT_DESC VObjectDesc;
   static UINT32 guiSMILY;
   static INT8 bCurFrame = 0;
   static UINT32 uiTimeOfLastUpdate = 0, uiTime;
@@ -648,8 +647,8 @@ UINT32 SexScreenHandle(void) {
 
   if (ubCurrentScreen == 0) {
     // Load face....
-    CopyFilename("INTERFACE\\luckysmile.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &guiSMILY)) AssertMsg(0, "Missing INTERFACE\\luckysmile.sti");
+    if (!AddVObjectFromFile("INTERFACE\\luckysmile.sti", &guiSMILY))
+      AssertMsg(0, "Missing INTERFACE\\luckysmile.sti");
 
     // Init screen
     bCurFrame = 0;

@@ -2740,132 +2740,110 @@ UINT32 MapScreenHandle(void) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\SAM.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSAMICON)) {
+      if (!AddVObjectFromFile("INTERFACE\\SAM.sti", &guiSAMICON)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiMAPCURSORS)) {
+      if (!AddVObjectFromFile("INTERFACE\\mapcursr.sti", &guiMAPCURSORS)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\Mine_1.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSubLevel1)) {
+      if (!AddVObjectFromFile("INTERFACE\\Mine_1.sti", &guiSubLevel1)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\Mine_2.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSubLevel2)) {
+      if (!AddVObjectFromFile("INTERFACE\\Mine_2.sti", &guiSubLevel2)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\Mine_3.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSubLevel3)) {
+      if (!AddVObjectFromFile("INTERFACE\\Mine_3.sti", &guiSubLevel3)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\sleepicon.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSleepIcon)) {
+      if (!AddVObjectFromFile("INTERFACE\\sleepicon.sti", &guiSleepIcon)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\charinfo.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiCHARINFO)) {
+      if (!AddVObjectFromFile("INTERFACE\\charinfo.sti", &guiCHARINFO)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\newgoldpiece3.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiCHARLIST)) {
+      if (!AddVObjectFromFile("INTERFACE\\newgoldpiece3.sti", &guiCHARLIST)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\boxes.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiCHARICONS)) {
+      if (!AddVObjectFromFile("INTERFACE\\boxes.sti", &guiCHARICONS)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\incross.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiCROSS)) {
+      if (!AddVObjectFromFile("INTERFACE\\incross.sti", &guiCROSS)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\mapinv.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiMAPINV)) {
+      if (!AddVObjectFromFile("INTERFACE\\mapinv.sti", &guiMAPINV)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\map_inv_2nd_gun_cover.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout)) {
+      if (!AddVObjectFromFile("INTERFACE\\map_inv_2nd_gun_cover.sti",
+                              &guiMapInvSecondHandBlockout)) {
         return FALSE;
       }
 
       // the upper left corner piece icons
-      CopyFilename("INTERFACE\\top_left_corner_icons.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiULICONS)) {
+      if (!AddVObjectFromFile("INTERFACE\\top_left_corner_icons.sti", &guiULICONS)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\map_item.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiORTAICON)) {
+      if (!AddVObjectFromFile("INTERFACE\\map_item.sti", &guiORTAICON)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\prison.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiTIXAICON)) {
+      if (!AddVObjectFromFile("INTERFACE\\prison.sti", &guiTIXAICON)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\merc_between_sector_icons.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS)) {
+      if (!AddVObjectFromFile("INTERFACE\\merc_between_sector_icons.sti",
+                              &guiCHARBETWEENSECTORICONS)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\merc_mvt_green_arrows.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE)) {
+      if (!AddVObjectFromFile("INTERFACE\\merc_mvt_green_arrows.sti",
+                              &guiCHARBETWEENSECTORICONSCLOSE)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\GreenArr.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiLEVELMARKER)) {
+      if (!AddVObjectFromFile("INTERFACE\\GreenArr.sti", &guiLEVELMARKER)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\Helicop.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiHelicopterIcon)) {
+      if (!AddVObjectFromFile("INTERFACE\\Helicop.sti", &guiHelicopterIcon)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\eta_pop_up.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp)) {
+      if (!AddVObjectFromFile("INTERFACE\\eta_pop_up.sti", &guiMapBorderEtaPopUp)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\pos2.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors)) {
+      if (!AddVObjectFromFile("INTERFACE\\pos2.sti", &guiMapBorderHeliSectors)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO)) {
+      if (!AddVObjectFromFile("INTERFACE\\secondary_gun_hidden.sti", &guiSecItemHiddenVO)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\selectedchararrow.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSelectedCharArrow)) {
+      if (!AddVObjectFromFile("INTERFACE\\selectedchararrow.sti", &guiSelectedCharArrow)) {
         return FALSE;
       }
 
-      CopyFilename("INTERFACE\\mine.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiMINEICON)) {
+      if (!AddVObjectFromFile("INTERFACE\\mine.sti", &guiMINEICON)) {
         return FALSE;
       }
 
       strcpy(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
       AddVideoObject(&VObjectDesc, &guiSectorLocatorGraphicID);
 
-      CopyFilename("INTERFACE\\BullsEye.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiBULLSEYE)) {
+      if (!AddVObjectFromFile("INTERFACE\\BullsEye.sti", &guiBULLSEYE)) {
         return FALSE;
       }
 
@@ -2904,8 +2882,7 @@ UINT32 MapScreenHandle(void) {
       }
     }
 
-    CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel)) {
+    if (!AddVObjectFromFile("INTERFACE\\Bars.sti", &guiBrownBackgroundForTeamPanel)) {
       return FALSE;
     }
 
@@ -5218,14 +5195,12 @@ void EndMapScreen(BOOLEAN fDuringFade) {
   UpdatePausedStatesDueToTimeCompression();
 
   if (!gfDontStartTransitionFromLaptop) {
-    VOBJECT_DESC VObjectDesc;
     UINT32 uiLaptopOn;
 
     // Load a tiny graphic of the on screen and draw it to the buffer.
     PlayJA2SampleFromFile("SOUNDS\\Initial Power Up (8-11).wav", RATE_11025, HIGHVOLUME, 1,
                           MIDDLEPAN);
-    strcpy(VObjectDesc.ImageFile, "INTERFACE\\LaptopOn.sti");
-    if (!AddVideoObject(&VObjectDesc, &uiLaptopOn))
+    if (!AddVObjectFromFile("INTERFACE\\LaptopOn.sti", &uiLaptopOn))
       AssertMsg(0, "Failed to load data\\Interface\\LaptopOn.sti");
     BltVideoObjectFromIndex(FRAME_BUFFER, uiLaptopOn, 0, 465, 417, VO_BLT_SRCTRANSPARENCY, NULL);
     InvalidateRegion(465, 417, 480, 427);

@@ -252,7 +252,6 @@ BOOLEAN InitFlowerButtons() {
   UINT16 i, j, count;
   UINT16 usPosY;
   char sTemp[40];
-  VOBJECT_DESC VObjectDesc;
 
   if ((FLOR_GALLERY_NUMBER_FLORAL_IMAGES - gubCurFlowerIndex) >= 3)
     gubCurNumberOfFlowers = 3;
@@ -266,8 +265,7 @@ BOOLEAN InitFlowerButtons() {
   for (i = 0; i < gubCurNumberOfFlowers; i++) {
     // load the handbullet graphic and add it
     sprintf(sTemp, "LAPTOP\\Flower_%d.sti", count);
-    CopyFilename(sTemp, VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &guiFlowerImages[i])) {
+    if (!AddVObjectFromFile(sTemp, &guiFlowerImages[i])) {
       return FALSE;
     }
     count++;

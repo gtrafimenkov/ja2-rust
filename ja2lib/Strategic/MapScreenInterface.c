@@ -3696,8 +3696,7 @@ void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier) {
 
   // if update
   if (pUpdateSoldierBox[iCounter] == NULL) {
-    strcpy(VObjectDesc.ImageFile, "Interface\\panels.sti");
-    if (!AddVideoObject(&VObjectDesc, &giMercPanelImage)) {
+    if (!AddVObjectFromFile("Interface\\panels.sti", &giMercPanelImage)) {
       AssertMsg(0, "Failed to load Interface\\panels.sti");
     }
   }

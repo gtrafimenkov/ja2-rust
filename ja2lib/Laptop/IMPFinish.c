@@ -392,7 +392,6 @@ void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn, INT32 reason) {
 
 BOOLEAN RenderCharProfileFinishFace(void) {
   // render the portrait of the current picture
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;
   UINT32 uiGraphicHandle;
 
@@ -402,8 +401,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // first portrait
 
         // load it
-        CopyFilename("Faces\\SmallFaces\\00.sti", VObjectDesc.ImageFile);
-        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
+        if (!AddVObjectFromFile("Faces\\SmallFaces\\00.sti", &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -420,8 +418,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // first portrait
 
         // load it
-        CopyFilename("Faces\\SmallFaces\\01.sti", VObjectDesc.ImageFile);
-        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
+        if (!AddVObjectFromFile("Faces\\SmallFaces\\01.sti", &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -438,8 +435,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // first portrait
 
         // load it
-        CopyFilename("Faces\\SmallFaces\\02.sti", VObjectDesc.ImageFile);
-        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
+        if (!AddVObjectFromFile("Faces\\SmallFaces\\02.sti", &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -460,8 +456,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // first portrait
 
         // load it
-        CopyFilename("Faces\\SmallFaces\\03.sti", VObjectDesc.ImageFile);
-        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
+        if (!AddVObjectFromFile("Faces\\SmallFaces\\03.sti", &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -478,8 +473,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // first portrait
 
         // load it
-        CopyFilename("Faces\\SmallFaces\\04.sti", VObjectDesc.ImageFile);
-        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
+        if (!AddVObjectFromFile("Faces\\SmallFaces\\04.sti", &uiGraphicHandle)) {
           return FALSE;
         }
 
@@ -496,8 +490,7 @@ BOOLEAN RenderCharProfileFinishFace(void) {
         // first portrait
 
         // load it
-        CopyFilename("Faces\\SmallFaces\\05.sti", VObjectDesc.ImageFile);
-        if (!AddVideoObject(&VObjectDesc, &uiGraphicHandle)) {
+        if (!AddVObjectFromFile("Faces\\SmallFaces\\05.sti", &uiGraphicHandle)) {
           return FALSE;
         }
 

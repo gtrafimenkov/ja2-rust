@@ -695,7 +695,6 @@ BOOLEAN DisplayFormattedText(void) {
   struct VObject *hHandle;
   UINT32 uiFirstTempPicture;
   UINT32 uiSecondTempPicture;
-  VOBJECT_DESC VObjectDesc;
   INT16 usFreeSpace = 0;
 
   fWaitAFrame = FALSE;
@@ -769,8 +768,7 @@ BOOLEAN DisplayFormattedText(void) {
       // second format, one picture, all text below
 
       // load graphic
-      CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &uiFirstTempPicture)) {
+      if (!AddVObjectFromFile(pFilesList->pPicFileNameList[0], &uiFirstTempPicture)) {
         return FALSE;
       }
 
@@ -810,14 +808,12 @@ BOOLEAN DisplayFormattedText(void) {
       // third format, two pictures, side by side with all text below
 
       // load first graphic
-      CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &uiFirstTempPicture)) {
+      if (!AddVObjectFromFile(pFilesList->pPicFileNameList[0], &uiFirstTempPicture)) {
         return FALSE;
       }
 
       // load second graphic
-      CopyFilename(pFilesList->pPicFileNameList[1], VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &uiSecondTempPicture)) {
+      if (!AddVObjectFromFile(pFilesList->pPicFileNameList[1], &uiSecondTempPicture)) {
         return FALSE;
       }
 
@@ -902,7 +898,6 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
 
   UINT32 uiPicture;
   struct VObject *hHandle;
-  VOBJECT_DESC VObjectDesc;
 
   ClearFileStringList();
 
@@ -1036,8 +1031,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
   // page 1 picture of country
   if (giFilesPage == 0) {
     // title bar
-    CopyFilename("LAPTOP\\ArucoFilesMap.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
+    if (!AddVObjectFromFile("LAPTOP\\ArucoFilesMap.sti", &uiPicture)) {
       return FALSE;
     }
 
@@ -1051,8 +1045,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
 
   } else if (giFilesPage == 4) {
     // kid pic
-    CopyFilename("LAPTOP\\Enrico_Y.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
+    if (!AddVObjectFromFile("LAPTOP\\Enrico_Y.sti", &uiPicture)) {
       return FALSE;
     }
 
@@ -1066,8 +1059,7 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
 
   } else if (giFilesPage == 5) {
     // wedding pic
-    CopyFilename("LAPTOP\\Enrico_W.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
+    if (!AddVObjectFromFile("LAPTOP\\Enrico_W.sti", &uiPicture)) {
       return FALSE;
     }
 
@@ -1417,7 +1409,6 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
   INT32 iOffset = 0;
   UINT32 uiPicture;
   struct VObject *hHandle;
-  VOBJECT_DESC VObjectDesc;
   char sTemp[128];
 
   iOffset = ubFileOffsets[iFileNumber];
@@ -1517,8 +1508,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
                 usProfileIdsForTerroristFiles[iFileNumber + 1]);
       }
 
-      CopyFilename(sTemp, VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
+      if (!AddVObjectFromFile(sTemp, &uiPicture)) {
         return FALSE;
       }
 
@@ -1533,8 +1523,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
 
       DeleteVideoObjectFromIndex(uiPicture);
 
-      CopyFilename("LAPTOP\\InterceptBorder.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &uiPicture)) {
+      if (!AddVObjectFromFile("LAPTOP\\InterceptBorder.sti", &uiPicture)) {
         return FALSE;
       }
 

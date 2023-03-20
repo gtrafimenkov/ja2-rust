@@ -7439,11 +7439,9 @@ void CreateMercRemoveAssignBox(void) {
 BOOLEAN CreateDestroyAssignmentPopUpBoxes(void) {
   static BOOLEAN fCreated = FALSE;
   VSURFACE_DESC vs_desc;
-  VOBJECT_DESC VObjectDesc;
 
   if ((fShowAssignmentMenu == TRUE) && (fCreated == FALSE)) {
-    CopyFilename("INTERFACE\\popup.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS)) {
+    if (!AddVObjectFromFile("INTERFACE\\popup.sti", &guiPOPUPBORDERS)) {
       return FALSE;
     }
 

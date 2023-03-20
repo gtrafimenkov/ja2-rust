@@ -247,8 +247,7 @@ BOOLEAN EnterBobbyR() {
 
   if (!LaptopSaveInfo.fBobbyRSiteCanBeAccessed) {
     // load the Handle graphic and add it
-    CopyFilename("LAPTOP\\UnderConstruction.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &guiUnderConstructionImage)) {
+    if (!AddVObjectFromFile("LAPTOP\\UnderConstruction.sti", &guiUnderConstructionImage)) {
       return FALSE;
     }
 

@@ -2018,9 +2018,7 @@ BOOLEAN DisplayPicturesOfCurrentTeam(void) {
         }
       }
 
-      VOBJECT_DESC VObjectDesc;
-      CopyFilename(sTemp, VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiFACE)) {
+      if (!AddVObjectFromFile(sTemp, &guiFACE)) {
         return FALSE;
       }
 
@@ -4933,9 +4931,7 @@ BOOLEAN RenderAtmPanel(void) {
 
   // render the ATM panel
   if (fShowAtmPanel) {
-    VOBJECT_DESC VObjectDesc;
-    CopyFilename("LAPTOP\\AtmButtons.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiBox)) {
+    if (!AddVObjectFromFile("LAPTOP\\AtmButtons.sti", &uiBox)) {
       return FALSE;
     }
 
@@ -4964,9 +4960,7 @@ BOOLEAN RenderAtmPanel(void) {
   } else {
     // just show basic panel
     // bounding
-    VOBJECT_DESC VObjectDesc;
-    CopyFilename("LAPTOP\\AtmButtons.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiBox)) {
+    if (!AddVObjectFromFile("LAPTOP\\AtmButtons.sti", &uiBox)) {
       return FALSE;
     }
 

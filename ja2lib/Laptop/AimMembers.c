@@ -782,14 +782,6 @@ void HandleAIMMembers() {
   if (gfStopMercFromTalking) {
     StopMercTalking();
     gfStopMercFromTalking = FALSE;
-    /*
-                    //if we were waiting for the merc to stop talking
-                    if( gfWaitingForMercToStopTalkingOrUserToClick )
-                    {
-                            gubVideoConferencingMode = AIM_VIDEO_POPDOWN_MODE;
-                            gfWaitingForMercToStopTalkingOrUserToClick = FALSE;
-                    }
-    */
   }
 
   // If we have to change video conference modes, change to new mode
@@ -2048,7 +2040,6 @@ UINT32 DisplayMercChargeAmount() {
 
 BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, UINT16 usPosX,
                                     UINT16 usPosY, UINT8 ubData) {
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hPopupBoxHandle;
   static UINT16 usPopUpBoxPosX, usPopUpBoxPosY;
   static wchar_t sPopUpString1[400], sPopUpString2[400];
@@ -2076,8 +2067,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
       usPopUpBoxPosY = usPosY;
 
       // load the popup box graphic
-      CopyFilename("LAPTOP\\VideoConfPopUp.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiPopUpBox)) {
+      if (!AddVObjectFromFile("LAPTOP\\VideoConfPopUp.sti", &guiPopUpBox)) {
         return FALSE;
       }
 
@@ -2959,7 +2949,6 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
   static BOOLEAN fXRegionActive = FALSE;
   UINT8 i;
   UINT16 usPosX, usPosY;
-  VOBJECT_DESC VObjectDesc;
   VSURFACE_DESC vs_desc;
 
   // remove the face help text
@@ -3036,8 +3025,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
       struct VObject *hImageHandle;
 
       // load the answering machine graphic and add it
-      CopyFilename("LAPTOP\\VideoTitleBar.sti", VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &uiVideoBackgroundGraphic)) {
+      if (!AddVObjectFromFile("LAPTOP\\VideoTitleBar.sti", &uiVideoBackgroundGraphic)) {
         return FALSE;
       }
 
@@ -3224,8 +3212,8 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     //
     /*		// load the answering machine graphic and add it
                     VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-                    CopyFilename("LAPTOP\\explosion.sti", VObjectDesc.ImageFile);
-                    if (!AddVideoObject(&VObjectDesc, &guiAnsweringMachineImage)) { return FALSE;
+                    if (!AddVObjectFromFile("LAPTOP\\explosion.sti", &guiAnsweringMachineImage)) {
+       return FALSE;
        }
     */
     gubCurrentStaticMode = VC_NO_STATIC;
@@ -3267,8 +3255,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     gfIsAnsweringMachineActive = FALSE;
 
     // load the Video conference background graphic and add it
-    CopyFilename("LAPTOP\\VideoTitleBar.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiVideoBackgroundGraphic)) {
+    if (!AddVObjectFromFile("LAPTOP\\VideoTitleBar.sti", &uiVideoBackgroundGraphic)) {
       return FALSE;
     }
 
@@ -3481,9 +3468,6 @@ BOOLEAN HandleCurrentVideoConfMode() {
       break;
     }
   }
-
-  // Gets set in the InitDeleteVideoConferencePopUp() function
-  //	gfJustSwitchedVideoConferenceMode = FALSE;
 
   return (TRUE);
 }

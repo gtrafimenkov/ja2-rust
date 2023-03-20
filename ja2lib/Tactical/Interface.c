@@ -242,7 +242,6 @@ UINT32 CalcUIMessageDuration(STR16 wString);
 
 BOOLEAN InitializeTacticalInterface() {
   VSURFACE_DESC vs_desc;
-  VOBJECT_DESC VObjectDesc;
 
   // Load button Interfaces
   iIconImages[WALK_IMAGES] = LoadButtonImage("INTERFACE\\newicons3.sti", -1, 3, 4, 5, -1);
@@ -345,9 +344,7 @@ BOOLEAN InitializeTacticalInterface() {
     AssertMsg(0, "Missing INTERFACE\\portraiticons.sti");
 
   // LOAD RADIO
-  CopyFilename("INTERFACE\\radio.sti", VObjectDesc.ImageFile);
-
-  if (!AddVideoObject(&VObjectDesc, &guiRADIO))
+  if (!AddVObjectFromFile("INTERFACE\\radio.sti", &guiRADIO))
     //	AssertMsg(0, "Missing INTERFACE\\bracket.sti" );
     AssertMsg(0, "Missing INTERFACE\\radio.sti");
 
@@ -2462,14 +2459,12 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
 
   memset(&VObjectDesc, 0, sizeof(VObjectDesc));
 
-  CopyFilename("INTERFACE\\rect.sti", VObjectDesc.ImageFile);
-
-  if (!AddVideoObject(&VObjectDesc, &uiBAR)) AssertMsg(0, "Missing INTERFACE\\rect.sti");
+  if (!AddVObjectFromFile("INTERFACE\\rect.sti", &uiBAR))
+    AssertMsg(0, "Missing INTERFACE\\rect.sti");
 
   // if ( gGameOptions.fTurnTimeLimit )
   {
-    CopyFilename("INTERFACE\\timebargreen.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiPLAYERBAR))
+    if (!AddVObjectFromFile("INTERFACE\\timebargreen.sti", &uiPLAYERBAR))
       AssertMsg(0, "Missing INTERFACE\\timebargreen.sti");
   }
 

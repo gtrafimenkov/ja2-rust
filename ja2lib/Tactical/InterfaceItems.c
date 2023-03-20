@@ -2010,7 +2010,6 @@ BOOLEAN InitKeyItemDescriptionBox(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition
 
 BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT16 sY,
                                        UINT8 ubStatusIndex, struct SOLDIERTYPE *pSoldier) {
-  VOBJECT_DESC VObjectDesc;
   CHAR8 ubString[48];
   INT32 cnt;
   CHAR16 pStr[10];
@@ -2244,8 +2243,7 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
     gRemoveMoney.uiMoneyRemoving = 0;
 
     // Load graphic
-    strcpy(VObjectDesc.ImageFile, "INTERFACE\\info_bil.sti");
-    if (!AddVideoObject(&VObjectDesc, &guiMoneyGraphicsForDescBox)) {
+    if (!AddVObjectFromFile("INTERFACE\\info_bil.sti", &guiMoneyGraphicsForDescBox)) {
       return FALSE;
     }
 

@@ -579,12 +579,11 @@ void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, INT32 iRe
 
 BOOLEAN LoadCharacterPortraitForMainPage(void) {
   // this function will load the character's portrait, to be used on portrait button
-  VOBJECT_DESC VObjectDesc;
 
   if (iCurrentProfileMode >= 4) {
     // load it
-    CopyFilename(pPlayerSelectedFaceFileNames[iPortraitNumber], VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &guiCHARACTERPORTRAITFORMAINPAGE)) {
+    if (!AddVObjectFromFile(pPlayerSelectedFaceFileNames[iPortraitNumber],
+                            &guiCHARACTERPORTRAITFORMAINPAGE)) {
       return FALSE;
     }
 

@@ -758,7 +758,6 @@ UINT32 ShopKeeperScreenShutdown() {
 //
 
 BOOLEAN EnterShopKeeperInterface() {
-  VOBJECT_DESC VObjectDesc;
   UINT8 ubCnt;
   CHAR8 zTemp[32];
   VSURFACE_DESC vs_desc;
@@ -820,8 +819,8 @@ BOOLEAN EnterShopKeeperInterface() {
   ATM:
           // load the Main trade screen backgroiund image
           VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-          CopyFilename("InterFace\\TradeScreenAtm.sti", VObjectDesc.ImageFile);
-          if (!AddVideoObject(&VObjectDesc, &guiSkiAtmImage )) { return FALSE; }
+          if (!AddVObjectFromFile("InterFace\\TradeScreenAtm.sti", &guiSkiAtmImage )) { return
+  FALSE; }
   */
 
   // Create an array of all mercs (anywhere!) currently in the player's employ, and load their small
@@ -842,8 +841,7 @@ BOOLEAN EnterShopKeeperInterface() {
       sprintf(zTemp, "FACES\\33FACE\\%02d.sti", gMercProfiles[GetSolProfile(pSoldier)].ubFaceIndex);
 
       // While we are at it, add their small face
-      CopyFilename(zTemp, VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSmallSoldiersFace[gubNumberMercsInArray])) {
+      if (!AddVObjectFromFile(zTemp, &guiSmallSoldiersFace[gubNumberMercsInArray])) {
 #ifdef JA2BETAVERSION
         ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load %s", zTemp);
 #endif
