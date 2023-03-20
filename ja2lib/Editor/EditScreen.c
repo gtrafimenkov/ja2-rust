@@ -29,6 +29,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/Shading.h"
 #include "SGP/Types.h"

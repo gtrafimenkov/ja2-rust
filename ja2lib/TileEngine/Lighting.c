@@ -1,20 +1,3 @@
-/****************************************************************************************
- * JA2 Lighting Module
- *
- *		Tile-based, ray-casted lighting system.
- *
- *		Lights are precalculated into linked lists containing offsets from 0,0, and a light
- * level to add at that tile. Lists are constructed by casting a ray from the origin of
- * the light, and each tile stopped at is stored as a node in the list. To draw the light
- * during runtime, you traverse the list, checking at each tile that it isn't of the type
- * that can obscure light. If it is, you keep traversing the list until you hit a node
- * with a marker LIGHT_NEW_RAY, which means you're back at the origin, and have skipped
- * the remainder of the last ray.
- *
- * Written by Derek Beland, April 14, 1997
- *
- ***************************************************************************************/
-
 #include "TileEngine/Lighting.h"
 
 #include <errno.h>
@@ -28,6 +11,7 @@
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"

@@ -7,6 +7,7 @@
 #include "SGP/Debug.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/STCI.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"

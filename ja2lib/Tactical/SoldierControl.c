@@ -13,6 +13,7 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/MemMan.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"

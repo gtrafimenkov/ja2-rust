@@ -7,6 +7,7 @@
 #include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"

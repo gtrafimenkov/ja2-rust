@@ -7,6 +7,7 @@
 #include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurfaceInternal.h"
@@ -4060,13 +4061,21 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   return (hVSurface);
 }
 
-struct VSurface *GetPrimaryVideoSurface() { return (ghPrimary); }
+struct VSurface *GetPrimaryVideoSurface() {
+  return (ghPrimary);
+}
 
-struct VSurface *GetBackBufferVideoSurface() { return (ghBackBuffer); }
+struct VSurface *GetBackBufferVideoSurface() {
+  return (ghBackBuffer);
+}
 
-struct VSurface *GetFrameBufferVideoSurface() { return (ghFrameBuffer); }
+struct VSurface *GetFrameBufferVideoSurface() {
+  return (ghFrameBuffer);
+}
 
-struct VSurface *GetMouseBufferVideoSurface() { return (ghMouseBuffer); }
+struct VSurface *GetMouseBufferVideoSurface() {
+  return (ghMouseBuffer);
+}
 
 // UTILITY FUNCTIONS FOR BLITTING
 

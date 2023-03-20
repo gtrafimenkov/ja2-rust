@@ -12,6 +12,7 @@
 #include "JAScreens.h"
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
 #include "SGP/Video.h"

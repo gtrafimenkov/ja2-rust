@@ -8,6 +8,7 @@
 #include "JAScreens.h"
 #include "SGP/Container.h"
 #include "SGP/Line.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"

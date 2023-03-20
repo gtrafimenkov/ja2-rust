@@ -23,6 +23,7 @@
 #include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
