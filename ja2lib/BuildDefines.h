@@ -10,7 +10,7 @@
 // #define JA2TESTVERSION
 
 // If we want to include the editor
-//#define JA2EDITOR
+// #define JA2EDITOR
 
 #ifdef _DEBUG
 #ifndef JA2TESTVERSION
@@ -26,7 +26,6 @@
 
 #ifdef JA2BETAVERSION
 #define FORCE_ASSERTS_ON
-#define SGP_VIDEO_DEBUGGING
 #endif
 
 #endif

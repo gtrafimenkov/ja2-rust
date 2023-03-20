@@ -183,7 +183,7 @@ void FatalError(STR8 pError, ...) {}
 
 UINT32 guiVSurfaceSize = 0;
 
-BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) { return FALSE; };
+BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) { return FALSE; };
 
 BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *puiPitch) { return NULL; }
 
@@ -251,13 +251,6 @@ BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT3
 
 BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
                                 INT32 iPosY) {
-  return FALSE;
-}
-
-void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {}
-
-BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT32 uiLineNum,
-                              CHAR8 *pSourceFile) {
   return FALSE;
 }
 

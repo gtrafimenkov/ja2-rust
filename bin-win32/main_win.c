@@ -167,10 +167,6 @@ void ShutdownStandardGamingPlatform(void) {
 
   ShutdownClockManager();  // must shutdown before VideoManager, 'cause it uses ghWindow
 
-#ifdef SGP_VIDEO_DEBUGGING
-  PerformVideoInfoDumpIntoFile("SGPVideoShutdownDump.txt", FALSE);
-#endif
-
   ShutdownVideoSurfaceManager();
   ShutdownVideoObjectManager();
   ShutdownVideoManager();

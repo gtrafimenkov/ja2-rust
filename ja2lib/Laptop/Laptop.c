@@ -4717,12 +4717,6 @@ void HandleKeyBoardShortCutsForLapTop(UINT16 usEvent, UINT32 usParam, UINT16 usK
       AdvanceToNextDay();
     }
   } else if (usEvent == KEY_DOWN && usParam == 'v' && usKeyState & CTRL_DOWN) {
-#ifdef SGP_VIDEO_DEBUGGING
-    ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"VObjects:  %d", guiVObjectSize);
-    ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"VSurfaces:  %d", guiVSurfaceSize);
-    ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"SGPVideoDump.txt updated...");
-    PerformVideoInfoDumpIntoFile("SGPVideoDump.txt", TRUE);
-#endif
   } else {
     if ((usEvent == KEY_DOWN) && (usParam == '1')) {
       TempHiringOfMercs(1, FALSE);

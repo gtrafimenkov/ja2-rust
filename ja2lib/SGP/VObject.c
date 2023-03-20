@@ -58,12 +58,6 @@ typedef struct VOBJECT_NODE {
   struct VObject *hVObject;
   UINT32 uiIndex;
   struct VOBJECT_NODE *next, *prev;
-
-#ifdef SGP_VIDEO_DEBUGGING
-  CHAR8 *pName;
-  CHAR8 *pCode;
-#endif
-
 } VOBJECT_NODE;
 
 VOBJECT_NODE *gpVObjectHead = NULL;
@@ -115,10 +109,6 @@ BOOLEAN ShutdownVideoObjectManager() {
     curr = gpVObjectHead;
     gpVObjectHead = gpVObjectHead->next;
     DeleteVideoObject(curr->hVObject);
-#ifdef SGP_VIDEO_DEBUGGING
-    if (curr->pName) MemFree(curr->pName);
-    if (curr->pCode) MemFree(curr->pCode);
-#endif
     MemFree(curr);
   }
   gpVObjectHead = NULL;
@@ -172,10 +162,6 @@ BOOLEAN AddStandardVideoObject(VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex) {
     gpVObjectHead->prev = gpVObjectHead->next = NULL;
     gpVObjectTail = gpVObjectHead;
   }
-#ifdef SGP_VIDEO_DEBUGGING
-  gpVObjectTail->pName = NULL;
-  gpVObjectTail->pCode = NULL;
-#endif
   // Set the hVObject into the node.
   gpVObjectTail->hVObject = hVObject;
   gpVObjectTail->uiIndex = guiVObjectIndex += 2;
@@ -291,11 +277,7 @@ BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject) {
       if (curr->prev) {  // Make the next node point to the prev
         curr->prev->next = curr->next;
       }
-// The node is now detached.  Now deallocate it.
-#ifdef SGP_VIDEO_DEBUGGING
-      if (curr->pName) MemFree(curr->pName);
-      if (curr->pCode) MemFree(curr->pCode);
-#endif
+      // The node is now detached.  Now deallocate it.
       MemFree(curr);
       curr = NULL;
       guiVObjectSize--;
@@ -1264,110 +1246,4 @@ void CheckValidVObjectIndex(UINT32 uiIndex) {
     }
   }
 }
-#endif
-
-#ifdef SGP_VIDEO_DEBUGGING
-
-typedef struct DUMPFILENAME {
-  CHAR8 str[256];
-} DUMPFILENAME;
-
-void DumpVObjectInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
-  VOBJECT_NODE *curr;
-  FILE *fp;
-  DUMPFILENAME *pName, *pCode;
-  UINT32 *puiCounter;
-  CHAR8 tempName[256];
-  CHAR8 tempCode[256];
-  UINT32 i, uiUniqueID;
-  BOOLEAN fFound;
-  if (!guiVObjectSize) {
-    return;
-  }
-
-  if (fAppend) {
-    fp = fopen(filename, "a");
-  } else {
-    fp = fopen(filename, "w");
-  }
-  Assert(fp);
-
-  // Allocate enough strings and counters for each node.
-  pName = (DUMPFILENAME *)MemAlloc(sizeof(DUMPFILENAME) * guiVObjectSize);
-  pCode = (DUMPFILENAME *)MemAlloc(sizeof(DUMPFILENAME) * guiVObjectSize);
-  memset(pName, 0, sizeof(DUMPFILENAME) * guiVObjectSize);
-  memset(pCode, 0, sizeof(DUMPFILENAME) * guiVObjectSize);
-  puiCounter = (UINT32 *)MemAlloc(4 * guiVObjectSize);
-  memset(puiCounter, 0, 4 * guiVObjectSize);
-
-  // Loop through the list and record every unique filename and count them
-  uiUniqueID = 0;
-  curr = gpVObjectHead;
-  while (curr) {
-    strcpy(tempName, curr->pName);
-    strcpy(tempCode, curr->pCode);
-    fFound = FALSE;
-    for (i = 0; i < uiUniqueID; i++) {
-      if (!strcasecmp(tempName, pName[i].str) &&
-          !strcasecmp(tempCode, pCode[i].str)) {  // same string
-        fFound = TRUE;
-        (puiCounter[i])++;
-        break;
-      }
-    }
-    if (!fFound) {
-      strcpy(pName[i].str, tempName);
-      strcpy(pCode[i].str, tempCode);
-      (puiCounter[i])++;
-      uiUniqueID++;
-    }
-    curr = curr->next;
-  }
-
-  // Now dump the info.
-  fprintf(fp, "-----------------------------------------------\n");
-  fprintf(fp, "%d unique vObject names exist in %d VObjects\n", uiUniqueID, guiVObjectSize);
-  fprintf(fp, "-----------------------------------------------\n\n");
-  for (i = 0; i < uiUniqueID; i++) {
-    fprintf(fp, "%d occurrences of %s\n", puiCounter[i], pName[i].str);
-    fprintf(fp, "%s\n\n", pCode[i].str);
-  }
-  fprintf(fp, "\n-----------------------------------------------\n\n");
-
-  // Free all memory associated with this operation.
-  MemFree(pName);
-  MemFree(pCode);
-  MemFree(puiCounter);
-  fclose(fp);
-}
-
-// Debug wrapper for adding vObjects
-BOOLEAN _AddAndRecordVObject(VOBJECT_DESC *VObjectDesc, UINT32 *uiIndex, UINT32 uiLineNum,
-                             CHAR8 *pSourceFile) {
-  CHAR8 str[256];
-  if (!AddStandardVideoObject(VObjectDesc, uiIndex)) {
-    return FALSE;
-  }
-
-  // record the filename of the vObject (some are created via memory though)
-  size_t usLength = strlen(VObjectDesc->ImageFile) + 1;
-  gpVObjectTail->pName = (CHAR8 *)MemAlloc(usLength);
-  memset(gpVObjectTail->pName, 0, usLength);
-  strcpy(gpVObjectTail->pName, VObjectDesc->ImageFile);
-
-  // record the code location of the calling creating function.
-  sprintf(str, "%s -- line(%d)", pSourceFile, uiLineNum);
-  usLength = strlen(str) + 1;
-  gpVObjectTail->pCode = (CHAR8 *)MemAlloc(usLength);
-  memset(gpVObjectTail->pCode, 0, usLength);
-  strcpy(gpVObjectTail->pCode, str);
-
-  return TRUE;
-}
-
-void PerformVideoInfoDumpIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
-  DumpVObjectInfoIntoFile(filename, fAppend);
-  DumpVSurfaceInfoIntoFile(filename, TRUE);
-}
-
 #endif

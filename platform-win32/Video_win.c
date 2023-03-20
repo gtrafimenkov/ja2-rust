@@ -32,6 +32,17 @@ struct VSurface *ghMouseBuffer = NULL;
 
 static PTR LockFrameBuffer(UINT32 *uiPitch);
 static void UnlockFrameBuffer(void);
+static BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch);
+static void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
+static BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
+
+// The following structure is used to define a region of the video Surface
+// These regions are stored via a HLIST
+typedef struct {
+  SGPRect RegionCoords;  // Rectangle describing coordinates of region
+  SGPPoint Origin;       // Origin used for hot spots, etc
+  UINT8 ubHitMask;       // Byte flags for hit detection
+} VSURFACE_REGION;
 
 #define BUFFER_READY 0x00
 #define BUFFER_BUSY 0x01
@@ -2516,7 +2527,8 @@ extern struct VSurface *ghMouseBuffer;
 
 extern void DeletePrimaryVideoSurfaces();
 
-BOOLEAN SetPrimaryVideoSurfaces() {
+// This function sets the global video Surfaces for primary and backbuffer
+static BOOLEAN SetPrimaryVideoSurfaces() {
   LPDIRECTDRAWSURFACE2 pSurface;
 
   // Delete surfaces if they exist
@@ -2636,12 +2648,6 @@ typedef struct VSURFACE_NODE {
   struct VSurface *hVSurface;
   UINT32 uiIndex;
   struct VSURFACE_NODE *next, *prev;
-
-#ifdef SGP_VIDEO_DEBUGGING
-  CHAR8 *pName;
-  CHAR8 *pCode;
-#endif
-
 } VSURFACE_NODE;
 
 VSURFACE_NODE *gpVSurfaceHead = NULL;
@@ -2649,26 +2655,6 @@ VSURFACE_NODE *gpVSurfaceTail = NULL;
 UINT32 guiVSurfaceIndex = 0;
 UINT32 guiVSurfaceSize = 0;
 UINT32 guiVSurfaceTotalAdded = 0;
-
-#ifdef _DEBUG
-enum {
-  DEBUGSTR_NONE,
-  DEBUGSTR_SETVIDEOSURFACETRANSPARENCY,
-  DEBUGSTR_ADDVIDEOSURFACEREGION,
-  DEBUGSTR_GETVIDEOSURFACEDESCRIPTION,
-  DEBUGSTR_BLTVIDEOSURFACE_DST,
-  DEBUGSTR_BLTVIDEOSURFACE_SRC,
-  DEBUGSTR_COLORFILLVIDEOSURFACEAREA,
-  DEBUGSTR_SHADOWVIDEOSURFACERECT,
-  DEBUGSTR_BLTSTRETCHVIDEOSURFACE_DST,
-  DEBUGSTR_BLTSTRETCHVIDEOSURFACE_SRC,
-  DEBUGSTR_DELETEVIDEOSURFACEFROMINDEX
-};
-
-UINT8 gubVSDebugCode = 0;
-
-void CheckValidVSurfaceIndex(UINT32 uiIndex);
-#endif
 
 INT32 giMemUsedInSurfaces;
 
@@ -2702,10 +2688,6 @@ BOOLEAN ShutdownVideoSurfaceManager() {
     curr = gpVSurfaceHead;
     gpVSurfaceHead = gpVSurfaceHead->next;
     DeleteVideoSurface(curr->hVSurface);
-#ifdef SGP_VIDEO_DEBUGGING
-    if (curr->pName) MemFree(curr->pName);
-    if (curr->pCode) MemFree(curr->pCode);
-#endif
     MemFree(curr);
   }
   gpVSurfaceHead = NULL;
@@ -2732,7 +2714,7 @@ BOOLEAN RestoreVideoSurfaces() {
   return TRUE;
 }
 
-BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) {
+BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) {
   struct VSurface *hVSurface;
 
   // Assertions
@@ -2763,10 +2745,6 @@ BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) 
     gpVSurfaceHead->prev = gpVSurfaceHead->next = NULL;
     gpVSurfaceTail = gpVSurfaceHead;
   }
-#ifdef SGP_VIDEO_DEBUGGING
-  gpVSurfaceTail->pName = NULL;
-  gpVSurfaceTail->pCode = NULL;
-#endif
   // Set the hVSurface into the node.
   gpVSurfaceTail->hVSurface = hVSurface;
   gpVSurfaceTail->uiIndex = guiVSurfaceIndex += 2;
@@ -2874,9 +2852,6 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   // Get Video Surface
   //
 
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_SETVIDEOSURFACETRANSPARENCY;
-#endif
   CHECKF(GetVideoSurface(&hVSurface, uiIndex));
 
   //
@@ -2888,57 +2863,8 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   return (TRUE);
 }
 
-BOOLEAN AddVideoSurfaceRegion(UINT32 uiIndex, VSURFACE_REGION *pNewRegion) {
-  struct VSurface *hVSurface;
-
-  //
-  // Get Video Surface
-  //
-
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_ADDVIDEOSURFACEREGION;
-#endif
-  CHECKF(GetVideoSurface(&hVSurface, uiIndex));
-
-  //
-  // Add Region
-  //
-
-  CHECKF(AddVSurfaceRegion(hVSurface, pNewRegion));
-
-  return (TRUE);
-}
-
-BOOLEAN GetVideoSurfaceDescription(UINT32 uiIndex, UINT16 *usWidth, UINT16 *usHeight,
-                                   UINT8 *ubBitDepth) {
-  struct VSurface *hVSurface;
-
-  Assert(usWidth != NULL);
-  Assert(usHeight != NULL);
-  Assert(ubBitDepth != NULL);
-
-  //
-  // Get Video Surface
-  //
-
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_GETVIDEOSURFACEDESCRIPTION;
-#endif
-  CHECKF(GetVideoSurface(&hVSurface, uiIndex));
-
-  *usWidth = hVSurface->usWidth;
-  *usHeight = hVSurface->usHeight;
-  *ubBitDepth = hVSurface->ubBitDepth;
-
-  return TRUE;
-}
-
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex) {
   VSURFACE_NODE *curr;
-
-#ifdef _DEBUG
-  CheckValidVSurfaceIndex(uiIndex);
-#endif
 
   if (uiIndex == PRIMARY_SURFACE) {
     *hVSurface = ghPrimary;
@@ -2985,15 +2911,9 @@ BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRe
   struct VSurface *hDestVSurface;
   struct VSurface *hSrcVSurface;
 
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_BLTVIDEOSURFACE_DST;
-#endif
   if (!GetVideoSurface(&hDestVSurface, uiDestVSurface)) {
     return FALSE;
   }
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_BLTVIDEOSURFACE_SRC;
-#endif
   if (!GetVideoSurface(&hSrcVSurface, uiSrcVSurface)) {
     return FALSE;
   }
@@ -3017,9 +2937,6 @@ BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
   struct VSurface *hDestVSurface;
   SGPRect Clip;
 
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_COLORFILLVIDEOSURFACEAREA;
-#endif
   if (!GetVideoSurface(&hDestVSurface, uiDestVSurface)) {
     return FALSE;
   }
@@ -3459,7 +3376,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
+static BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
   LPDIRECTDRAWSURFACE2 lpDDSurface;
   LPDIRECTDRAWSURFACE2 lpBackupDDSurface;
   RECT aRect;
@@ -3514,7 +3431,7 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
 // Lock must be followed by release
 // Pitch MUST be used for all width calculations ( Pitch is in bytes )
 // The time between Locking and unlocking must be minimal
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
+static BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
   DDSURFACEDESC SurfaceDescription;
 
   // Assertions
@@ -3532,7 +3449,7 @@ BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
   return (BYTE *)SurfaceDescription.lpSurface;
 }
 
-void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
+static void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
   Assert(hVSurface != NULL);
 
   DDUnlockSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, NULL);
@@ -3703,11 +3620,6 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
 BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex) {
   VSURFACE_NODE *curr;
 
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_DELETEVIDEOSURFACEFROMINDEX;
-  CheckValidVSurfaceIndex(uiIndex);
-#endif
-
   curr = gpVSurfaceHead;
   while (curr) {
     if (curr->uiIndex == uiIndex) {  // Found the node, so detach it and delete it.
@@ -3731,16 +3643,6 @@ BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex) {
         curr->prev->next = curr->next;
       }
       // The node is now detached.  Now deallocate it.
-
-#ifdef SGP_VIDEO_DEBUGGING
-      if (curr->pName) {
-        MemFree(curr->pName);
-      }
-      if (curr->pCode) {
-        MemFree(curr->pCode);
-      }
-#endif
-
       MemFree(curr);
       guiVSurfaceSize--;
       return TRUE;
@@ -3802,135 +3704,12 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
 
 // ********************************************************
 //
-// Clipper manipulation functions
-//
-// ********************************************************
-
-BOOLEAN SetClipList(struct VSurface *hVSurface, SGPRect *RegionData, UINT16 usNumRegions) {
-  RGNDATA *pRgnData;
-  UINT16 cnt;
-  RECT aRect;
-  LPDIRECTDRAW2 lpDD2Object;
-
-  // Get Direct Draw Object
-  lpDD2Object = GetDirectDraw2Object();
-
-  // Assertions
-  Assert(hVSurface != NULL);
-  Assert(RegionData != NULL);
-
-  // Varifications
-  CHECKF(usNumRegions > 0);
-
-  // If Clipper already created, release
-  if (hVSurface->pClipper != NULL) {
-    // Release Clipper
-    DDReleaseClipper((LPDIRECTDRAWCLIPPER)hVSurface->pClipper);
-  }
-
-  // Create Clipper Object
-  DDCreateClipper(lpDD2Object, 0, (LPDIRECTDRAWCLIPPER *)&hVSurface->pClipper);
-
-  // Allocate region data
-  pRgnData = (LPRGNDATA)MemAlloc(sizeof(RGNDATAHEADER) + (usNumRegions * sizeof(RECT)));
-  CHECKF(pRgnData);
-
-  // Setup header
-  pRgnData->rdh.dwSize = sizeof(RGNDATA);
-  pRgnData->rdh.iType = RDH_RECTANGLES;
-  pRgnData->rdh.nCount = usNumRegions;
-  pRgnData->rdh.nRgnSize = usNumRegions * sizeof(RECT);
-  pRgnData->rdh.rcBound.top = 0;
-  pRgnData->rdh.rcBound.left = 0;
-  pRgnData->rdh.rcBound.bottom = (int)hVSurface->usHeight;
-  pRgnData->rdh.rcBound.right = (int)hVSurface->usWidth;
-
-  // Copy rectangles into region
-  for (cnt = 0; cnt < usNumRegions; cnt++) {
-    aRect.top = (UINT32)RegionData[cnt].iTop;
-    aRect.left = (UINT32)RegionData[cnt].iLeft;
-    aRect.bottom = (UINT32)RegionData[cnt].iBottom;
-    aRect.right = (UINT32)RegionData[cnt].iRight;
-
-    memcpy(pRgnData + sizeof(RGNDATAHEADER) + (cnt * sizeof(RECT)), &aRect, sizeof(RECT));
-  }
-
-  // Set items into clipper
-  DDSetClipperList((LPDIRECTDRAWCLIPPER)hVSurface->pClipper, pRgnData, 0);
-
-  // Set Clipper into Surface
-  DDSetClipper((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData,
-               (LPDIRECTDRAWCLIPPER)hVSurface->pClipper);
-
-  // Delete region data
-  MemFree(pRgnData);
-
-  return (TRUE);
-}
-
-// ********************************************************
-//
 // Region manipulation functions
 //
 // ********************************************************
 
-BOOLEAN GetNumRegions(struct VSurface *hVSurface, UINT32 *puiNumRegions) {
-  Assert(hVSurface);
-
-  *puiNumRegions = ListSize(hVSurface->RegionList);
-
-  return (TRUE);
-}
-
-BOOLEAN AddVSurfaceRegion(struct VSurface *hVSurface, VSURFACE_REGION *pNewRegion) {
-  Assert(hVSurface != NULL);
-  Assert(pNewRegion != NULL);
-
-  // Add new region to list
-  hVSurface->RegionList =
-      AddtoList(hVSurface->RegionList, pNewRegion, ListSize(hVSurface->RegionList));
-
-  return (TRUE);
-}
-
-// Add a group of regions
-BOOLEAN AddVSurfaceRegions(struct VSurface *hVSurface, VSURFACE_REGION **ppNewRegions,
-                           UINT16 uiNumRegions) {
-  UINT16 cnt;
-
-  Assert(hVSurface != NULL);
-  Assert(ppNewRegions != NULL);
-
-  for (cnt = 0; cnt < uiNumRegions; cnt++) {
-    AddVSurfaceRegion(hVSurface, ppNewRegions[cnt]);
-  }
-
-  return (TRUE);
-}
-
-BOOLEAN RemoveVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex) {
-  VSURFACE_REGION aRegion;
-
-  Assert(hVSurface != NULL);
-
-  return (RemfromList(hVSurface->RegionList, &aRegion, usIndex));
-}
-
-BOOLEAN ClearAllVSurfaceRegions(struct VSurface *hVSurface) {
-  UINT32 uiListSize, cnt;
-
-  Assert(hVSurface != NULL);
-
-  uiListSize = ListSize(hVSurface->RegionList);
-
-  for (cnt = uiListSize - 1; cnt >= 0; cnt--) {
-    RemoveVSurfaceRegion(hVSurface, (UINT16)cnt);
-  }
-
-  return (TRUE);
-}
-
-BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex, VSURFACE_REGION *aRegion) {
+static BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex,
+                                 VSURFACE_REGION *aRegion) {
   Assert(hVSurface != NULL);
 
   if (!PeekList(hVSurface->RegionList, aRegion, usIndex)) {
@@ -3948,34 +3727,6 @@ BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, RECT *pRect) {
   pRect->top = 0;
   pRect->right = hVSurface->usWidth;
   pRect->bottom = hVSurface->usHeight;
-
-  return (TRUE);
-}
-
-BOOLEAN ReplaceVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex,
-                              VSURFACE_REGION *aRegion) {
-  VSURFACE_REGION OldRegion;
-
-  Assert(hVSurface != NULL);
-
-  // Validate index given
-  if (!PeekList(hVSurface->RegionList, &OldRegion, usIndex)) {
-    return (FALSE);
-  }
-
-  // Replace information
-  hVSurface->RegionList = AddtoList(hVSurface->RegionList, aRegion, usIndex);
-
-  return (TRUE);
-}
-
-BOOLEAN AddVSurfaceRegionAtIndex(struct VSurface *hVSurface, UINT16 usIndex,
-                                 VSURFACE_REGION *pNewRegion) {
-  Assert(hVSurface != NULL);
-  Assert(pNewRegion != NULL);
-
-  // Add new region to list
-  hVSurface->RegionList = AddtoList(hVSurface->RegionList, pNewRegion, usIndex);
 
   return (TRUE);
 }
@@ -4474,9 +4225,6 @@ BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1
   //
   // Get Video Surface
   //
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_SHADOWVIDEOSURFACERECT;
-#endif
   CHECKF(GetVideoSurface(&hVSurface, uiDestVSurface));
 
   if (X1 < 0) X1 = 0;
@@ -4584,15 +4332,9 @@ BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT3
   struct VSurface *hDestVSurface;
   struct VSurface *hSrcVSurface;
 
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_BLTSTRETCHVIDEOSURFACE_DST;
-#endif
   if (!GetVideoSurface(&hDestVSurface, uiDestVSurface)) {
     return FALSE;
   }
-#ifdef _DEBUG
-  gubVSDebugCode = DEBUGSTR_BLTSTRETCHVIDEOSURFACE_SRC;
-#endif
   if (!GetVideoSurface(&hSrcVSurface, uiSrcVSurface)) {
     return FALSE;
   }
@@ -4626,188 +4368,6 @@ BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHan
                          iPosY + hImageHandle->pETRLEObject->usHeight);
   return (TRUE);
 }
-
-BOOLEAN MakeVSurfaceFromVObject(UINT32 uiVObject, UINT16 usSubIndex, UINT32 *puiVSurface) {
-  struct VObject *hSrcVObject;
-  UINT32 uiVSurface;
-  VSURFACE_DESC hDesc;
-
-  if (GetVideoObject(&hSrcVObject, uiVObject)) {
-    // ATE: Memset
-    memset(&hDesc, 0, sizeof(VSURFACE_DESC));
-    hDesc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
-    hDesc.usWidth = hSrcVObject->pETRLEObject[usSubIndex].usWidth;
-    hDesc.usHeight = hSrcVObject->pETRLEObject[usSubIndex].usHeight;
-    hDesc.ubBitDepth = PIXEL_DEPTH;
-
-    if (AddVideoSurface(&hDesc, &uiVSurface)) {
-      if (BltVideoObjectFromIndex(uiVSurface, uiVObject, usSubIndex, 0, 0, VO_BLT_SRCTRANSPARENCY,
-                                  NULL)) {
-        *puiVSurface = uiVSurface;
-        return (TRUE);
-      } else
-        DeleteVideoSurfaceFromIndex(uiVSurface);
-    }
-  }
-
-  return (FALSE);
-}
-
-#ifdef _DEBUG
-void CheckValidVSurfaceIndex(UINT32 uiIndex) {
-  BOOLEAN fAssertError = FALSE;
-  if (uiIndex == 0xffffffff) {  //-1 index -- deleted
-    fAssertError = TRUE;
-  } else if (uiIndex % 2 && uiIndex < 0xfffffff0) {  // odd numbers are reserved for vobjects
-    fAssertError = TRUE;
-  }
-
-  if (fAssertError) {
-    CHAR8 str[60];
-    switch (gubVSDebugCode) {
-      case DEBUGSTR_SETVIDEOSURFACETRANSPARENCY:
-        sprintf(str, "SetVideoSurfaceTransparency");
-        break;
-      case DEBUGSTR_ADDVIDEOSURFACEREGION:
-        sprintf(str, "AddVideoSurfaceRegion");
-        break;
-      case DEBUGSTR_GETVIDEOSURFACEDESCRIPTION:
-        sprintf(str, "GetVideoSurfaceDescription");
-        break;
-      case DEBUGSTR_BLTVIDEOSURFACE_DST:
-        sprintf(str, "BltVideoSurface (dest)");
-        break;
-      case DEBUGSTR_BLTVIDEOSURFACE_SRC:
-        sprintf(str, "BltVideoSurface (src)");
-        break;
-      case DEBUGSTR_COLORFILLVIDEOSURFACEAREA:
-        sprintf(str, "ColorFillVideoSurfaceArea");
-        break;
-      case DEBUGSTR_SHADOWVIDEOSURFACERECT:
-        sprintf(str, "ShadowVideoSurfaceRect");
-        break;
-      case DEBUGSTR_BLTSTRETCHVIDEOSURFACE_DST:
-        sprintf(str, "BltStretchVideoSurface (dest)");
-        break;
-      case DEBUGSTR_BLTSTRETCHVIDEOSURFACE_SRC:
-        sprintf(str, "BltStretchVideoSurface (src)");
-        break;
-      case DEBUGSTR_DELETEVIDEOSURFACEFROMINDEX:
-        sprintf(str, "DeleteVideoSurfaceFromIndex");
-        break;
-      case DEBUGSTR_NONE:
-      default:
-        sprintf(str, "GetVideoSurface");
-        break;
-    }
-    if (uiIndex == 0xffffffff) {
-      AssertMsg(0, String("Trying to %s with deleted index -1.", str));
-    } else {
-      AssertMsg(0, String("Trying to %s using a VOBJECT ID %d!", str, uiIndex));
-    }
-  }
-}
-#endif
-
-#ifdef SGP_VIDEO_DEBUGGING
-typedef struct DUMPFILENAME {
-  CHAR8 str[256];
-} DUMPFILENAME;
-void DumpVSurfaceInfoIntoFile(CHAR8 *filename, BOOLEAN fAppend) {
-  VSURFACE_NODE *curr;
-  FILE *fp;
-  DUMPFILENAME *pName, *pCode;
-  UINT32 *puiCounter;
-  CHAR8 tempName[256];
-  CHAR8 tempCode[256];
-  UINT32 i, uiUniqueID;
-  BOOLEAN fFound;
-  if (!guiVSurfaceSize) {
-    return;
-  }
-
-  if (fAppend) {
-    fp = fopen(filename, "a");
-  } else {
-    fp = fopen(filename, "w");
-  }
-  Assert(fp);
-
-  // Allocate enough strings and counters for each node.
-  pName = (DUMPFILENAME *)MemAlloc(sizeof(DUMPFILENAME) * guiVSurfaceSize);
-  pCode = (DUMPFILENAME *)MemAlloc(sizeof(DUMPFILENAME) * guiVSurfaceSize);
-  memset(pName, 0, sizeof(DUMPFILENAME) * guiVSurfaceSize);
-  memset(pCode, 0, sizeof(DUMPFILENAME) * guiVSurfaceSize);
-  puiCounter = (UINT32 *)MemAlloc(4 * guiVSurfaceSize);
-  memset(puiCounter, 0, 4 * guiVSurfaceSize);
-
-  // Loop through the list and record every unique filename and count them
-  uiUniqueID = 0;
-  curr = gpVSurfaceHead;
-  while (curr) {
-    strcpy(tempName, curr->pName);
-    strcpy(tempCode, curr->pCode);
-    fFound = FALSE;
-    for (i = 0; i < uiUniqueID; i++) {
-      if (!strcasecmp(tempName, pName[i].str) &&
-          !strcasecmp(tempCode, pCode[i].str)) {  // same string
-        fFound = TRUE;
-        (puiCounter[i])++;
-        break;
-      }
-    }
-    if (!fFound) {
-      strcpy(pName[i].str, tempName);
-      strcpy(pCode[i].str, tempCode);
-      (puiCounter[i])++;
-      uiUniqueID++;
-    }
-    curr = curr->next;
-  }
-
-  // Now dump the info.
-  fprintf(fp, "-----------------------------------------------\n");
-  fprintf(fp, "%d unique vSurface names exist in %d VSurfaces\n", uiUniqueID, guiVSurfaceSize);
-  fprintf(fp, "-----------------------------------------------\n\n");
-  for (i = 0; i < uiUniqueID; i++) {
-    fprintf(fp, "%d occurrences of %s\n", puiCounter[i], pName[i].str);
-    fprintf(fp, "%s\n\n", pCode[i].str);
-  }
-  fprintf(fp, "\n-----------------------------------------------\n\n");
-
-  // Free all memory associated with this operation.
-  MemFree(pName);
-  MemFree(pCode);
-  MemFree(puiCounter);
-  fclose(fp);
-}
-
-// Debug wrapper for adding vsurfaces
-BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex, UINT32 uiLineNum,
-                              CHAR8 *pSourceFile) {
-  UINT16 usLength;
-  CHAR8 str[256];
-  if (!AddStandardVideoSurface(VSurfaceDesc, uiIndex)) {
-    return FALSE;
-  }
-
-  // record the filename of the vsurface (some are created via memory though)
-  usLength = strlen(VSurfaceDesc->ImageFile) + 1;
-  gpVSurfaceTail->pName = (CHAR8 *)MemAlloc(usLength);
-  memset(gpVSurfaceTail->pName, 0, usLength);
-  strcpy(gpVSurfaceTail->pName, VSurfaceDesc->ImageFile);
-
-  // record the code location of the calling creating function.
-  sprintf(str, "%s -- line(%d)", pSourceFile, uiLineNum);
-  usLength = strlen(str) + 1;
-  gpVSurfaceTail->pCode = (CHAR8 *)MemAlloc(usLength);
-  memset(gpVSurfaceTail->pCode, 0, usLength);
-  strcpy(gpVSurfaceTail->pCode, str);
-
-  return TRUE;
-}
-
-#endif
 
 //////////////////////////////////////////////////////////////////
 // Cinematics
