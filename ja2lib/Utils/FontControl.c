@@ -304,25 +304,25 @@ UINT16 CreateFontPaletteTables(struct VObject* pObj) {
     }
   }
 
-  pObj->pShades[FONT_SHADE_RED] = VObjectCreate16BPPPaletteShaded(pObj, 255, 0, 0, TRUE);
-  pObj->pShades[FONT_SHADE_BLUE] = VObjectCreate16BPPPaletteShaded(pObj, 0, 0, 255, TRUE);
-  pObj->pShades[FONT_SHADE_GREEN] = VObjectCreate16BPPPaletteShaded(pObj, 0, 255, 0, TRUE);
-  pObj->pShades[FONT_SHADE_YELLOW] = VObjectCreate16BPPPaletteShaded(pObj, 255, 255, 0, TRUE);
-  pObj->pShades[FONT_SHADE_NEUTRAL] = VObjectCreate16BPPPaletteShaded(pObj, 255, 255, 255, FALSE);
+  pObj->pShades[FONT_SHADE_RED] = VObjectUpdateShade(pObj, 255, 0, 0, TRUE);
+  pObj->pShades[FONT_SHADE_BLUE] = VObjectUpdateShade(pObj, 0, 0, 255, TRUE);
+  pObj->pShades[FONT_SHADE_GREEN] = VObjectUpdateShade(pObj, 0, 255, 0, TRUE);
+  pObj->pShades[FONT_SHADE_YELLOW] = VObjectUpdateShade(pObj, 255, 255, 0, TRUE);
+  pObj->pShades[FONT_SHADE_NEUTRAL] = VObjectUpdateShade(pObj, 255, 255, 255, FALSE);
 
-  pObj->pShades[FONT_SHADE_WHITE] = VObjectCreate16BPPPaletteShaded(pObj, 255, 255, 255, TRUE);
+  pObj->pShades[FONT_SHADE_WHITE] = VObjectUpdateShade(pObj, 255, 255, 255, TRUE);
 
   // the rest are darkening tables, right down to all-black.
-  pObj->pShades[0] = VObjectCreate16BPPPaletteShaded(pObj, 165, 165, 165, FALSE);
-  pObj->pShades[7] = VObjectCreate16BPPPaletteShaded(pObj, 135, 135, 135, FALSE);
-  pObj->pShades[8] = VObjectCreate16BPPPaletteShaded(pObj, 105, 105, 105, FALSE);
-  pObj->pShades[9] = VObjectCreate16BPPPaletteShaded(pObj, 75, 75, 75, FALSE);
-  pObj->pShades[10] = VObjectCreate16BPPPaletteShaded(pObj, 45, 45, 45, FALSE);
-  pObj->pShades[11] = VObjectCreate16BPPPaletteShaded(pObj, 36, 36, 36, FALSE);
-  pObj->pShades[12] = VObjectCreate16BPPPaletteShaded(pObj, 27, 27, 27, FALSE);
-  pObj->pShades[13] = VObjectCreate16BPPPaletteShaded(pObj, 18, 18, 18, FALSE);
-  pObj->pShades[14] = VObjectCreate16BPPPaletteShaded(pObj, 9, 9, 9, FALSE);
-  pObj->pShades[15] = VObjectCreate16BPPPaletteShaded(pObj, 0, 0, 0, FALSE);
+  pObj->pShades[0] = VObjectUpdateShade(pObj, 165, 165, 165, FALSE);
+  pObj->pShades[7] = VObjectUpdateShade(pObj, 135, 135, 135, FALSE);
+  pObj->pShades[8] = VObjectUpdateShade(pObj, 105, 105, 105, FALSE);
+  pObj->pShades[9] = VObjectUpdateShade(pObj, 75, 75, 75, FALSE);
+  pObj->pShades[10] = VObjectUpdateShade(pObj, 45, 45, 45, FALSE);
+  pObj->pShades[11] = VObjectUpdateShade(pObj, 36, 36, 36, FALSE);
+  pObj->pShades[12] = VObjectUpdateShade(pObj, 27, 27, 27, FALSE);
+  pObj->pShades[13] = VObjectUpdateShade(pObj, 18, 18, 18, FALSE);
+  pObj->pShades[14] = VObjectUpdateShade(pObj, 9, 9, 9, FALSE);
+  pObj->pShades[15] = VObjectUpdateShade(pObj, 0, 0, 0, FALSE);
 
   // Set current shade table to neutral color
   pObj->pShadeCurrent = pObj->pShades[4];

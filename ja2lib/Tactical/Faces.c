@@ -286,16 +286,13 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
       Pal[uiCount].peBlue = 255;
     }
 
-    hVObject->pShades[FLASH_PORTRAIT_NOSHADE] =
-        VObjectCreate16BPPPaletteShaded(hVObject, 255, 255, 255, FALSE);
+    hVObject->pShades[FLASH_PORTRAIT_NOSHADE] = VObjectUpdateShade(hVObject, 255, 255, 255, FALSE);
     hVObject->pShades[FLASH_PORTRAIT_STARTSHADE] =
         Create16BPPPaletteShaded(Pal, 255, 255, 255, FALSE);
-    hVObject->pShades[FLASH_PORTRAIT_ENDSHADE] =
-        VObjectCreate16BPPPaletteShaded(hVObject, 250, 25, 25, TRUE);
-    hVObject->pShades[FLASH_PORTRAIT_DARKSHADE] =
-        VObjectCreate16BPPPaletteShaded(hVObject, 100, 100, 100, TRUE);
+    hVObject->pShades[FLASH_PORTRAIT_ENDSHADE] = VObjectUpdateShade(hVObject, 250, 25, 25, TRUE);
+    hVObject->pShades[FLASH_PORTRAIT_DARKSHADE] = VObjectUpdateShade(hVObject, 100, 100, 100, TRUE);
     hVObject->pShades[FLASH_PORTRAIT_LITESHADE] =
-        VObjectCreate16BPPPaletteShaded(hVObject, 100, 100, 100, FALSE);
+        VObjectUpdateShade(hVObject, 100, 100, 100, FALSE);
 
     for (uiCount = 0; uiCount < 256; uiCount++) {
       Pal[uiCount].peRed = (UINT8)(uiCount % 128) + 128;
