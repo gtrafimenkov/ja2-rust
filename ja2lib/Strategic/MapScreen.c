@@ -8525,14 +8525,6 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
     return FALSE;
   }
 
-  // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-  // CopyFilename("INTERFACE\\addonslcp.sti", VObjectDesc.ImageFile);
-  // if (!AddVideoObject(&VObjectDesc, &guiCORNERADDONS)) { return FALSE; }
-
-  // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-  // CopyFilename("INTERFACE\\mapborder.sti", VObjectDesc.ImageFile);
-  // if (!AddVideoObject(&VObjectDesc, &guiMAPBORDER)) { return FALSE; }
-
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\charinfo.sti", VObjectDesc.ImageFile);
   if (!AddVideoObject(&VObjectDesc, &guiCHARINFO)) {
@@ -8546,14 +8538,6 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
   if (!AddVideoObject(&VObjectDesc, &guiCHARLIST)) {
     return FALSE;
   }
-
-  // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-  // CopyFilename("INTERFACE\\mapbordercorner.sti", VObjectDesc.ImageFile);
-  // if (!AddVideoObject(&VObjectDesc, &guiMAPCORNER)) { return FALSE; }
-
-  // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-  // CopyFilename("INTERFACE\\popup.sti", VObjectDesc.ImageFile);
-  // if (!AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS)) { return FALSE; }
 
   // the sublevels
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
