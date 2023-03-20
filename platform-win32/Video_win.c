@@ -30,9 +30,8 @@ struct VSurface *ghMouseBuffer = NULL;
 #include "Smack.h"
 #include "platform_win.h"
 
-#ifndef _MT
-#define _MT
-#endif
+static PTR LockFrameBuffer(UINT32 *uiPitch);
+static void UnlockFrameBuffer(void);
 
 #define BUFFER_READY 0x00
 #define BUFFER_BUSY 0x01
@@ -1976,7 +1975,7 @@ LPDIRECTDRAWSURFACE2 GetMouseBufferObject(void) {
   return gpMouseCursor;
 }
 
-PTR LockPrimarySurface(UINT32 *uiPitch) {
+static PTR LockPrimarySurface(UINT32 *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -1997,7 +1996,7 @@ PTR LockPrimarySurface(UINT32 *uiPitch) {
   return SurfaceDescription.lpSurface;
 }
 
-void UnlockPrimarySurface(void) {
+static void UnlockPrimarySurface(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
 
@@ -2009,7 +2008,7 @@ void UnlockPrimarySurface(void) {
   }
 }
 
-PTR LockBackBuffer(UINT32 *uiPitch) {
+static PTR LockBackBuffer(UINT32 *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2038,7 +2037,7 @@ PTR LockBackBuffer(UINT32 *uiPitch) {
   return SurfaceDescription.lpSurface;
 }
 
-void UnlockBackBuffer(void) {
+static void UnlockBackBuffer(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
 
@@ -2092,7 +2091,7 @@ void UnlockFrameBuffer(void) {
   }
 }
 
-PTR LockMouseBuffer(UINT32 *uiPitch) {
+static PTR LockMouseBuffer(UINT32 *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
 
@@ -2109,7 +2108,7 @@ PTR LockMouseBuffer(UINT32 *uiPitch) {
   return SurfaceDescription.lpSurface;
 }
 
-void UnlockMouseBuffer(void) {
+static void UnlockMouseBuffer(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
 
