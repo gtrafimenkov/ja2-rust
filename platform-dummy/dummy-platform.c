@@ -144,14 +144,7 @@ void SoundRemoveSampleFlags(UINT32 uiSample, UINT32 uiFlags) {}
 // Video
 /////////////////////////////////////////////////////////////////////////////////
 
-struct VSurface *ghFrameBuffer = NULL;
 INT32 giNumFrames = 0;
-
-void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {}
-
-void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags) {}
-
-void InvalidateScreen(void) {}
 
 void RefreshScreen() {}
 
@@ -176,31 +169,7 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 
 void FatalError(STR8 pError, ...) {}
 
-UINT32 guiVSurfaceSize = 0;
-
-BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) { return FALSE; };
-
-BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *puiPitch) { return NULL; }
-
-void UnLockVideoSurface(UINT32 uiVSurface) {}
-
-BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) { return FALSE; }
-
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex) { return FALSE; }
-
-BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRegionIndex,
-                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_vs_fx *pBltFx) {
-  return FALSE;
-}
-
-BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP) {
-  return FALSE;
-}
-
-BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  UINT16 Index, INT16 Ox, INT16 Oy) {
+BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
   return FALSE;
 }
 
@@ -214,38 +183,10 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
   return FALSE;
 }
 
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex) { return FALSE; }
-
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }
-
-BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
-                                      blt_vs_fx *pBltFx) {
-  return FALSE;
-}
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                            UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect) {
-  return FALSE;
-}
-
-BOOLEAN ShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2) {
-  return FALSE;
-}
-
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 X1, INT32 Y1,
-                                                   INT32 X2, INT32 Y2) {
-  return FALSE;
-}
-
-BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, SGPRect *SrcRect,
-                               SGPRect *DestRect) {
-  return FALSE;
-}
-
-BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
-                                INT32 iPosY) {
   return FALSE;
 }
 
@@ -269,15 +210,28 @@ INT16 GetWinFontHeight(STR16 string2, INT32 iFont) { return 0; }
 
 UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) { return 0; }
 
-/////////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////////
-
 UINT16 GetVSurfaceHeight(const struct VSurface *vs) { return 0; }
 UINT16 GetVSurfaceWidth(const struct VSurface *vs) { return 0; }
 UINT16 *GetVSurface16BPPPalette(struct VSurface *vs) { return NULL; }
 void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette) {}
+BOOLEAN FillSurface(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
+BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
 
-/////////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////////
+void UnlockBackBuffer() {}
+void UnlockFrameBuffer() {}
+void UnlockMouseBuffer() {}
+void UnlockPrimarySurface() {}
+PTR LockBackBuffer(UINT32 *uiPitch) { return NULL; }
+PTR LockFrameBuffer(UINT32 *uiPitch) { return NULL; }
+PTR LockMouseBuffer(UINT32 *uiPitch) { return NULL; }
+PTR LockPrimarySurface(UINT32 *uiPitch) { return NULL; }
+BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) { return NULL; }
+void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {}
+BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) { return FALSE; }
+BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
+                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
+                              struct Rect *DestRect) {
+  return FALSE;
+}
+void DeletePrimaryVideoSurfaces() {}
+BOOLEAN SetPrimaryVideoSurfaces() { return FALSE; }

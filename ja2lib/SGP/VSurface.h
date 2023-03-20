@@ -35,12 +35,12 @@ struct VObject;
 // Effects structure for specialized blitting
 //
 
-typedef struct {
+struct BltOpts {
   COLORVAL ColorFill;  // Used for fill effect
   SGPRect SrcRect;     // Given SRC subrect instead of srcregion
   SGPRect FillRect;    // Given SRC subrect instead of srcregion
   UINT16 DestRegion;   // Given a DEST region for dest positions within the VO
-} blt_vs_fx;
+};
 
 //
 // Video Surface Flags
@@ -113,7 +113,7 @@ void UnLockVideoSurface(UINT32 uiVSurface);
 
 // Blits a video Surface to another video Surface
 BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRegionIndex,
-                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_vs_fx *pBltFx);
+                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, struct BltOpts *pBltFx);
 
 BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
                                   INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP);
@@ -162,7 +162,7 @@ BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
 
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                                       UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
-                                      blt_vs_fx *pBltFx);
+                                      struct BltOpts *pBltFx);
 
 struct VSurface *GetPrimaryVideoSurface();
 struct VSurface *GetBackBufferVideoSurface();
@@ -178,5 +178,15 @@ BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT3
 
 BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 X1, INT32 Y1,
                                                    INT32 X2, INT32 Y2);
+
+// The following structure is used to define a region of the video Surface
+// These regions are stored via a HLIST
+typedef struct {
+  SGPRect RegionCoords;  // Rectangle describing coordinates of region
+  SGPPoint Origin;       // Origin used for hot spots, etc
+  UINT8 ubHitMask;       // Byte flags for hit detection
+} VSURFACE_REGION;
+
+void SetClippingRect(SGPRect *clip);
 
 #endif

@@ -2670,7 +2670,7 @@ void CheckForAndHandleEndPlayerTimeLimit() {
 
 void HandleTopMessages() {
   // UINT32		uiTime;
-  blt_vs_fx BltFx;
+  struct BltOpts BltFx;
 
   // OK, is out current count > 0 ?
   if (gTacticalStatus.fInTopMessage) {
@@ -2802,7 +2802,7 @@ void HandleTopMessages() {
 }
 
 void EndTopMessage() {
-  //	blt_vs_fx BltFx;
+  //	struct BltOpts BltFx;
 
   // OK, end the topmost message!
   if (gTacticalStatus.fInTopMessage) {

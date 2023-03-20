@@ -62,6 +62,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "platform.h"
 
 // temp
 struct skirgbcolor {
@@ -376,10 +377,6 @@ extern struct OBJECTTYPE *gpItemDescObject;
 extern void HandleShortCutExitState(void);
 extern UINT8 gubSelectSMPanelToMerc;
 extern INT32 giItemDescAmmoButton;
-
-extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
-                                  struct Rect *SrcRect);
 
 extern UINT8 gubLastSpecialItemAddedAtElement;
 

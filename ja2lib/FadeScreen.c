@@ -468,7 +468,7 @@ void FadeFrameBufferSquare() {
 void FadeInBackBufferSquare() {
   INT32 iX1, iX2, iY1, iY2;
   INT16 sFadeXMove, sFadeYMove;
-  blt_vs_fx BltFx;
+  struct BltOpts BltFx;
 
   sFadeXMove = SQUARE_STEP;
   sFadeYMove = (INT16)(sFadeXMove * .75);

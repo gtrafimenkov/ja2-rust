@@ -9,7 +9,6 @@ struct VObject;
 extern SGPRect ClippingRect;
 extern UINT32 guiTranslucentMask;
 
-extern void SetClippingRect(SGPRect *clip);
 void GetClippingRect(SGPRect *clip);
 
 BOOLEAN BltIsClipped(struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,

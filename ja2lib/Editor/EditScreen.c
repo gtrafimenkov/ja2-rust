@@ -2385,7 +2385,7 @@ void ShowCurrentSlotSurface(UINT32 vSurface, INT32 iWindow) {
   INT32 iPicHeight, iPicWidth;
   struct VSurface *hvSurface;
   INT32 iWinWidth, iWinHeight;
-  blt_vs_fx vSfx;
+  struct BltOpts vSfx;
 
   WinRect.iLeft = (iWindow == 0) ? (336) : (488);
   WinRect.iTop = 211;

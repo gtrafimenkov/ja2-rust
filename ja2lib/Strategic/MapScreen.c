@@ -543,7 +543,6 @@ INT32 giMapInvPrevImage;
 INT32 giMapInvNextImage;
 */
 extern UINT32 guiVObjectSize;
-extern UINT32 guiVSurfaceSize;
 
 extern UINT8 gubHandPos;
 extern UINT16 gusOldItemIndex;

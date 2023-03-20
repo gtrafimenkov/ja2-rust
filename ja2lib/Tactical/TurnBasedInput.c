@@ -124,7 +124,6 @@ extern BOOLEAN gfReportHitChances;
 BOOLEAN gfFirstCycleMovementStarted = FALSE;
 
 extern UINT32 guiVObjectSize;
-extern UINT32 guiVSurfaceSize;
 
 extern BOOLEAN gfNextShotKills;
 

@@ -31,6 +31,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "platform.h"
 
 extern INT16 gsVIEWPORT_END_Y;
 extern void PrintDate(void);
@@ -42,10 +43,6 @@ extern BOOLEAN fTeamPanelDirty;
 extern BOOLEAN fMapScreenBottomDirty;
 extern BOOLEAN gfGamePaused;
 extern BOOLEAN fShowMapInventoryPool;
-
-extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
-                                  struct Rect *SrcRect);
 
 #define HELP_SCREEN_ACTIVE 0x00000001
 
