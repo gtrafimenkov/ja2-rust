@@ -47,11 +47,10 @@ void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACED
                    UINT32 uiFlags, HANDLE hEvent);
 void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
-void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, UINT32 uiX, UINT32 uiY,
-                      LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiTrans);
-void DDBltSurface(LPDIRECTDRAWSURFACE2 pDestSurface, LPRECT pDestRect,
-                  LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiFlags,
-                  LPDDBLTFX pDDBltFx);
+void DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
+                      LPRECT pSrcRect, UINT32 uiTrans);
+void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
+                  LPRECT pSrcRect, UINT32 uiFlags, LPDDBLTFX pDDBltFx);
 void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOLORKEY pDDColorKey);
 
 // Palette Functions
@@ -741,13 +740,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
             0, sScrollXIncrement * 2);
       }
 
-      // for(uiCountY=0; uiCountY < usHeight; uiCountY++)
-      //{
-      //	memcpy(pDestBuf+(uiCountY*uiDestPitchBYTES),
-      //					pSrcBuf+(uiCountY*uiDestPitchBYTES)+sScrollXIncrement*uiBPP,
-      //					uiDestPitchBYTES-sScrollXIncrement*uiBPP);
-      //}
-
       StripRegions[0].left = (INT16)(gsVIEWPORT_END_X - sScrollXIncrement);
       usMouseXPos -= sScrollXIncrement;
 
@@ -779,12 +771,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
         memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
 
-      // for(uiCountY=usHeight-1; uiCountY >= sScrollYIncrement; uiCountY--)
-      //{
-      //	memcpy(pDestBuf+(uiCountY*uiDestPitchBYTES),
-      //					pSrcBuf+((uiCountY-sScrollYIncrement)*uiDestPitchBYTES),
-      //					uiDestPitchBYTES);
-      //}
       StripRegions[0].bottom = (INT16)(gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement);
       usNumStrips = 1;
 
@@ -816,13 +802,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
            uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
         memset((UINT8 *)gpZBuffer + (uiCountY * 1280), 0, 1280);
       }
-
-      // for(uiCountY=0; uiCountY < (usHeight-sScrollYIncrement); uiCountY++)
-      //{
-      //	memcpy(pDestBuf+(uiCountY*uiDestPitchBYTES),
-      //					pSrcBuf+((uiCountY+sScrollYIncrement)*uiDestPitchBYTES),
-      //					uiDestPitchBYTES);
-      //}
 
       StripRegions[0].top = (INT16)(gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
       usNumStrips = 1;
@@ -994,24 +973,10 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 
   if (fRenderStrip) {
     // Memset to 0
-#ifdef SCROLL_TEST
-    {
-      DDBLTFX BlitterFX;
-
-      BlitterFX.dwSize = sizeof(DDBLTFX);
-      BlitterFX.dwFillColor = 0;
-
-      DDBltSurface((LPDIRECTDRAWSURFACE2)pDest, NULL, NULL, NULL, DDBLT_COLORFILL, &BlitterFX);
-    }
-#endif
 
     for (cnt = 0; cnt < usNumStrips; cnt++) {
       RenderStaticWorldRect((INT16)StripRegions[cnt].left, (INT16)StripRegions[cnt].top,
                             (INT16)StripRegions[cnt].right, (INT16)StripRegions[cnt].bottom, TRUE);
-      // Optimize Redundent tiles too!
-      // ExamineZBufferRect( (INT16)StripRegions[ cnt ].left, (INT16)StripRegions[ cnt ].top,
-      // (INT16)StripRegions[ cnt ].right, (INT16)StripRegions[ cnt ].bottom );
-
       do {
         ReturnCode = IDirectDrawSurface2_BltFast(
             pDest, StripRegions[cnt].left, StripRegions[cnt].top, gpFrameBuffer,
@@ -1087,35 +1052,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
 
     // BLIT NEW
     ExecuteVideoOverlaysToAlternateBuffer(BACKBUFFER);
-
-#if 0
-
-		// Erase mouse from old position
-		if (gMouseCursorBackground[ uiCurrentMouseBackbuffer ].fRestore == TRUE )
-		{
-
-			do
-			{
-				ReturnCode = IDirectDrawSurface2_BltFast(gpBackBuffer, usMouseXPos, usMouseYPos, gMouseCursorBackground[uiCurrentMouseBackbuffer].pSurface, (LPRECT)&MouseRegion, DDBLTFAST_NOCOLORKEY);
-				if ((ReturnCode != DD_OK)&&(ReturnCode != DDERR_WASSTILLDRAWING))
-				{
-					DirectXAttempt ( ReturnCode, __LINE__, __FILE__ );
-
-					if (ReturnCode == DDERR_SURFACELOST)
-					{
-
-					}
-				}
-			} while (ReturnCode != DD_OK);
-		}
-
-#endif
   }
-
-  // InvalidateRegion( sLeftDraw, sTopDraw, sRightDraw, sBottomDraw );
-
-  // UpdateSaveBuffer();
-  // SaveBackgroundRects();
 }
 
 void RefreshScreen() {
@@ -3841,30 +3778,27 @@ void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface) {
   ATTEMPT(IDirectDrawSurface2_Restore(pSurface));
 }
 
-void DDBltFastSurface(LPDIRECTDRAWSURFACE2 pDestSurface, UINT32 uiX, UINT32 uiY,
-                      LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiTrans) {
+void DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
+                      LPRECT pSrcRect, UINT32 uiTrans) {
   HRESULT ReturnCode;
 
-  Assert(pDestSurface != NULL);
-  Assert(pSrcSurface != NULL);
+  Assert(dest != NULL);
+  Assert(src != NULL);
 
   do {
-    ReturnCode =
-        IDirectDrawSurface2_BltFast(pDestSurface, uiX, uiY, pSrcSurface, pSrcRect, uiTrans);
+    ReturnCode = IDirectDrawSurface2_BltFast(dest, uiX, uiY, src, pSrcRect, uiTrans);
 
   } while (ReturnCode == DDERR_WASSTILLDRAWING);
 }
 
-void DDBltSurface(LPDIRECTDRAWSURFACE2 pDestSurface, LPRECT pDestRect,
-                  LPDIRECTDRAWSURFACE2 pSrcSurface, LPRECT pSrcRect, UINT32 uiFlags,
-                  LPDDBLTFX pDDBltFx) {
+void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
+                  LPRECT pSrcRect, UINT32 uiFlags, LPDDBLTFX pDDBltFx) {
   HRESULT ReturnCode;
 
-  Assert(pDestSurface != NULL);
+  Assert(dest != NULL);
 
   do {
-    ReturnCode =
-        IDirectDrawSurface2_Blt(pDestSurface, pDestRect, pSrcSurface, pSrcRect, uiFlags, pDDBltFx);
+    ReturnCode = IDirectDrawSurface2_Blt(dest, pDestRect, src, pSrcRect, uiFlags, pDDBltFx);
 
   } while (ReturnCode == DDERR_WASSTILLDRAWING);
 
