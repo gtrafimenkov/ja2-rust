@@ -105,12 +105,12 @@ typedef struct AUTORESOLVE_STRUCT {
   SOLDIERCELL *pRobotCell;
 
   // IDs into the graphic images
-  INT32 iPanelImages;
+  UINT32 iPanelImages;
   INT32 iButton[NUM_AR_BUTTONS];
   INT32 iButtonImage[NUM_AR_BUTTONS];
-  INT32 iFaces;          // for generic civs and enemies
+  UINT32 iFaces;         // for generic civs and enemies
   INT32 iMercFaces[20];  // for each merc face
-  INT32 iIndent;
+  UINT32 iIndent;
   UINT32 iInterfaceBuffer;
   INT32 iNumMercFaces;
   INT32 iActualMercFaces;  // this represents the real number of merc faces.  Because

@@ -60,7 +60,7 @@ enum {
 };
 
 // the ids for the car portraits
-INT32 giCarPortraits[4] = {-1, -1, -1, -1};
+UINT32 giCarPortraits[4] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
 
 // the car portrait file names
 STR pbCarPortraitFileNames[] = {
@@ -75,7 +75,7 @@ BOOLEAN LoadCarPortraitValues(void) {
   INT32 iCounter = 0;
   VOBJECT_DESC VObjectDesc;
 
-  if (giCarPortraits[0] != -1) {
+  if (giCarPortraits[0] != 0xffffffff) {
     return FALSE;
   }
   for (iCounter = 0; iCounter < NUMBER_CAR_PORTRAITS; iCounter++) {
@@ -91,12 +91,12 @@ void UnLoadCarPortraits(void) {
   INT32 iCounter = 0;
 
   // car protraits loaded?
-  if (giCarPortraits[0] == -1) {
+  if (giCarPortraits[0] == 0xffffffff) {
     return;
   }
   for (iCounter = 0; iCounter < NUMBER_CAR_PORTRAITS; iCounter++) {
     DeleteVideoObjectFromIndex(giCarPortraits[iCounter]);
-    giCarPortraits[iCounter] = -1;
+    giCarPortraits[iCounter] = 0xffffffff;
   }
   return;
 }
@@ -419,7 +419,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
         SetAutoFaceActiveFromSoldier(FRAME_BUFFER, guiSAVEBUFFER, GetSolID(pSoldier), sFaceX,
                                      sFaceY);
         //	SetAutoFaceActiveFromSoldier( FRAME_BUFFER, FACE_AUTO_RESTORE_BUFFER,
-        //GetSolID(pSoldier) , sFaceX, sFaceY );
+        // GetSolID(pSoldier) , sFaceX, sFaceY );
       }
     }
 

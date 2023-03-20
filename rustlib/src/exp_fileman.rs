@@ -390,18 +390,18 @@ impl DB {
 
     /// Get windows handle that can be used to read the file.
     /// On Linux 0 is returned.  In case of an error, 0 is returned.
+    #[cfg(windows)]
     pub fn get_win_handle_to_read_file(&mut self, file_id: FileID) -> u64 {
         match self.file_map.get(&file_id) {
             None => 0,
             Some(OpenedFile::LibFile(f)) => self.slfdb.get_win_handle_to_read_libfile(f),
-            Some(OpenedFile::Regular(f)) => {
-                #[cfg(windows)]
-                let handle = f.as_raw_handle();
-                #[cfg(not(windows))]
-                let handle = 0;
-                handle as u64
-            }
+            Some(OpenedFile::Regular(f)) => f.as_raw_handle() as u64,
         }
+    }
+
+    #[cfg(not(windows))]
+    pub fn get_win_handle_to_read_file(&mut self, _file_id: FileID) -> u64 {
+        0
     }
 }
 

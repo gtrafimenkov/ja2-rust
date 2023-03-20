@@ -77,26 +77,28 @@ impl DB {
 
     /// Get Windows handle that can be used to read the library file.
     /// On Linux return 0.
+    #[cfg(windows)]
     pub fn get_win_handle_to_read_libfile(&mut self, f: &OpenedLibFile) -> u64 {
         match self.libs.get_mut(f.get_lib_name()) {
             Some(lib) => {
-                #[cfg(windows)]
+                let handle = lib.opened_file.as_raw_handle();
+                // Also set file position at the beginning of the library file.
+                // So that reading using this handle will read the library file.
+                if lib
+                    .opened_file
+                    .seek(io::SeekFrom::Start(f.info.offset as u64))
+                    .is_ok()
                 {
-                    let handle = lib.opened_file.as_raw_handle();
-                    // Also set file position at the beginning of the library file.
-                    // So that reading using this handle will read the library file.
-                    if lib
-                        .opened_file
-                        .seek(io::SeekFrom::Start(f.info.offset as u64))
-                        .is_ok()
-                    {
-                        return handle as u64;
-                    }
+                    return handle as u64;
                 }
-                0
             }
             None => 0,
         }
+    }
+
+    #[cfg(not(windows))]
+    pub fn get_win_handle_to_read_libfile(&mut self, _f: &OpenedLibFile) -> u64 {
+        0
     }
 
     /// Load slf files from directory `dir`.

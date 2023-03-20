@@ -65,7 +65,7 @@ INT32 iDoctorList[MAX_CHARACTER_COUNT];
 INT32 iPatientList[MAX_CHARACTER_COUNT];
 
 // faces for update panel
-INT32 giAutoBandagesSoldierFaces[2 * MAX_CHARACTER_COUNT];
+UINT32 giAutoBandagesSoldierFaces[2 * MAX_CHARACTER_COUNT];
 
 // has the button for autobandage end been setup yet
 BOOLEAN fAutoEndBandageButtonCreated = FALSE;
