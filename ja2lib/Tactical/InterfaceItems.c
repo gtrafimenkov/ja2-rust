@@ -835,7 +835,6 @@ BOOLEAN InitInvSlotInterface(INV_REGION_DESC *pRegionDesc, INV_REGION_DESC *pCam
                              MOUSE_CALLBACK INVMoveCammoCallback,
                              MOUSE_CALLBACK INVClickCammoCallback, BOOLEAN fSetHighestPrioity) {
   INT32 cnt;
-  VOBJECT_DESC VObjectDesc;
 
   // Load all four body type images
   if (!AddVObjectFromFile("INTERFACE\\inventory_figure_large_male.sti", &(guiBodyInvVO[1][0]))) {
@@ -5377,7 +5376,6 @@ void SetItemPickupMenuDirty(BOOLEAN fDirtyLevel) { gItemPickupMenu.fDirtyLevel =
 BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
                                  struct ITEM_POOL *pItemPool, INT16 sScreenX, INT16 sScreenY,
                                  INT8 bZLevel) {
-  VOBJECT_DESC VObjectDesc;
   CHAR8 ubString[48];
   struct ITEM_POOL *pTempItemPool;
   INT32 cnt;

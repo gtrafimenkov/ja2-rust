@@ -462,7 +462,6 @@ void HandleOverheadMap() {
 BOOLEAN InOverheadMap() { return (gfInOverheadMap); }
 
 void GoIntoOverheadMap() {
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hVObject;
 
   gfInOverheadMap = TRUE;

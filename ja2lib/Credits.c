@@ -384,7 +384,6 @@ UINT32 CreditScreenShutdown(void) { return (1); }
 // eee
 BOOLEAN EnterCreditsScreen() {
   UINT32 uiCnt;
-  VOBJECT_DESC VObjectDesc;
 
   if (!AddVObjectFromFile("INTERFACE\\Credits.sti", &guiCreditBackGroundImage)) {
     return FALSE;

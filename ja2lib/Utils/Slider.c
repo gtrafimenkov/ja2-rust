@@ -104,8 +104,6 @@ void CalculateNewSliderIncrement(UINT32 uiSliderID, UINT16 usPosX);
 ///////////////////////////////////////////////////
 
 BOOLEAN InitSlider() {
-  VOBJECT_DESC VObjectDesc;
-
   // load Slider Box Graphic graphic and add it
   if (!AddVObjectFromFile("INTERFACE\\SliderBox.sti", &guiSliderBoxImage)) {
     return FALSE;

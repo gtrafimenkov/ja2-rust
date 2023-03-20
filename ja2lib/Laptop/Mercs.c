@@ -325,7 +325,6 @@ void GameInitMercs() {
 }
 
 BOOLEAN EnterMercs() {
-  VOBJECT_DESC VObjectDesc;
   VSURFACE_DESC vs_desc;
 
   SetBookMark(MERC_BOOKMARK);
@@ -601,8 +600,6 @@ void RenderMercs() {
 }
 
 BOOLEAN InitMercBackGround() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the Merc background graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\MERCBackGround.sti", &guiMercBackGround)) {
     return FALSE;

@@ -154,7 +154,6 @@ void EnterInitAimArchives() {
 }
 
 BOOLEAN EnterAimArchives() {
-  VOBJECT_DESC VObjectDesc;
   UINT16 usPosX, i;
 
   gfExitingAimArchives = FALSE;

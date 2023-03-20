@@ -224,10 +224,6 @@ void HandleMainMenuScreen() {
 }
 
 BOOLEAN InitMainMenu() {
-  VOBJECT_DESC VObjectDesc;
-
-  //	gfDoHelpScreen = 0;
-
   // Check to see whatr saved game files exist
   InitSaveGameArray();
 

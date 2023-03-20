@@ -45,8 +45,6 @@ UINT32 guiCancelBoxButton;
 void GameInitMercsNoAccount() {}
 
 BOOLEAN EnterMercsNoAccount() {
-  VOBJECT_DESC VObjectDesc;
-
   InitMercBackGround();
 
   // load the Account box graphic and add it

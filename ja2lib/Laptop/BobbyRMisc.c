@@ -19,8 +19,6 @@ UINT32 guiMiscGrid;
 void GameInitBobbyRMisc() {}
 
 BOOLEAN EnterBobbyRMisc() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the background graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\miscbackground.sti", &guiMiscBackground)) {
     return FALSE;

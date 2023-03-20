@@ -78,8 +78,6 @@ void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT3
 void GameInitFlorist() {}
 
 BOOLEAN EnterFlorist() {
-  VOBJECT_DESC VObjectDesc;
-
   SetBookMark(FLORIST_BOOKMARK);
 
   InitFloristDefaults();

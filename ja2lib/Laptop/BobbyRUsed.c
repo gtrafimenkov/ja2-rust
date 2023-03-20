@@ -19,8 +19,6 @@ UINT32 guiUsedGrid;
 void GameInitBobbyRUsed() {}
 
 BOOLEAN EnterBobbyRUsed() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the background graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\usedbackground.sti", &guiUsedBackground)) {
     return FALSE;

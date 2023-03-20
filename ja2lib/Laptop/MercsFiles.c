@@ -394,7 +394,6 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
   STR sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
   MERCPROFILESTRUCT *pMerc;
-  VOBJECT_DESC VObjectDesc;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // Portrait Frame

@@ -4390,8 +4390,6 @@ BOOLEAN DropAPersonInASector(UINT8 ubType, u8 sX, u8 sY) {
 }
 
 BOOLEAN LoadMilitiaPopUpBox(void) {
-  VOBJECT_DESC VObjectDesc;
-
   // load the militia pop up box
   if (!AddVObjectFromFile("INTERFACE\\Militia.sti", &guiMilitia)) {
     return FALSE;

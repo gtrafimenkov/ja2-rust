@@ -583,7 +583,6 @@ void HandlePersonnel(void) {
 
 BOOLEAN LoadPersonnelGraphics(void) {
   // load graphics needed for personnel screen
-  VOBJECT_DESC VObjectDesc;
 
   // load graphics
 
@@ -772,7 +771,6 @@ void RenderPersonnelStats(INT32 iId, INT32 iSlot) {
 BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFired, BOOLEAN fOther) {
   char sTemp[100];
   struct VObject *hFaceHandle;
-  VOBJECT_DESC VObjectDesc;
 
   // draw face to soldier iId in slot iSlot
 
@@ -1869,7 +1867,6 @@ void RenderPersonnelScreenBackground(void) {
 
 BOOLEAN LoadPersonnelScreenBackgroundGraphics(void) {
   // will load the graphics for the personeel screen background
-  VOBJECT_DESC VObjectDesc;
 
   // departed bar
   if (!AddVObjectFromFile("LAPTOP\\departed.sti", &guiDEPARTEDTEAM)) {
@@ -1988,7 +1985,6 @@ BOOLEAN DisplayPicturesOfCurrentTeam(void) {
   INT32 iTotalOnTeam = 0;
   char sTemp[100];
   struct VObject *hFaceHandle;
-  VOBJECT_DESC VObjectDesc;
   struct SOLDIERTYPE *pSoldier;
   INT32 iId = 0;
   INT32 iCnt = 0;
@@ -2022,6 +2018,7 @@ BOOLEAN DisplayPicturesOfCurrentTeam(void) {
         }
       }
 
+      VOBJECT_DESC VObjectDesc;
       CopyFilename(sTemp, VObjectDesc.ImageFile);
       if (!AddVideoObject(&VObjectDesc, &guiFACE)) {
         return FALSE;
@@ -4344,7 +4341,6 @@ BOOLEAN DisplayPortraitOfPastMerc(INT32 iId, INT32 iCounter, BOOLEAN fDead, BOOL
                                   BOOLEAN fOther) {
   char sTemp[100];
   struct VObject *hFaceHandle;
-  VOBJECT_DESC VObjectDesc;
 
   if ((50 < iId) && (57 > iId)) {
     sprintf(sTemp, "%s%03d.sti", SMALL_FACES_DIR, gMercProfiles[iId].ubFaceIndex);
@@ -4753,7 +4749,6 @@ void DisplayPersonnelTextOnTitleBar(void) {
 
 BOOLEAN DisplayHighLightBox(void) {
   // will display highlight box around selected merc
-  VOBJECT_DESC VObjectDesc;
   UINT32 uiBox = 0;
   struct VObject *hHandle;
 
@@ -4933,12 +4928,12 @@ INT32 GetIdOfThisSlot(INT32 iSlot) {
 }
 
 BOOLEAN RenderAtmPanel(void) {
-  VOBJECT_DESC VObjectDesc;
   UINT32 uiBox = 0;
   struct VObject *hHandle;
 
   // render the ATM panel
   if (fShowAtmPanel) {
+    VOBJECT_DESC VObjectDesc;
     CopyFilename("LAPTOP\\AtmButtons.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiBox)) {
       return FALSE;
@@ -4969,6 +4964,7 @@ BOOLEAN RenderAtmPanel(void) {
   } else {
     // just show basic panel
     // bounding
+    VOBJECT_DESC VObjectDesc;
     CopyFilename("LAPTOP\\AtmButtons.sti", VObjectDesc.ImageFile);
     if (!AddVideoObject(&VObjectDesc, &uiBox)) {
       return FALSE;

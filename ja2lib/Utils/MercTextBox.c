@@ -108,7 +108,6 @@ BOOLEAN ResetOverrideMercPopupBox() {
 
 BOOLEAN InitMercPopupBox() {
   INT32 iCounter = 0;
-  VOBJECT_DESC VObjectDesc;
 
   // init the pop up box list
   for (iCounter = 0; iCounter < MAX_NUMBER_OF_POPUP_BOXES; iCounter++) {
@@ -144,7 +143,6 @@ void GetMercPopupBoxFontColor(UINT8 ubBackgroundIndex, UINT8 *pubFontColor,
 // Tactical Popup
 BOOLEAN LoadTextMercPopupImages(UINT8 ubBackgroundIndex, UINT8 ubBorderIndex) {
   VSURFACE_DESC vs_desc;
-  VOBJECT_DESC VObjectDesc;
 
   // this function will load the graphics associated with the background and border index values
 

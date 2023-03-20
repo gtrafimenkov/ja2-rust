@@ -96,8 +96,6 @@ INT32 CountNumberValidShipmentForTheShipmentsPage();
 void GameInitBobbyRShipments() {}
 
 BOOLEAN EnterBobbyRShipments() {
-  VOBJECT_DESC VObjectDesc;
-
   InitBobbyRWoodBackground();
 
   // load the Order Grid graphic and add it

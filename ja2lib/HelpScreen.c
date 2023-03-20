@@ -561,10 +561,7 @@ void HelpScreenHandler() {
 }
 
 BOOLEAN EnterHelpScreen() {
-  VOBJECT_DESC VObjectDesc;
-  UINT16 usPosX, usPosY;  //, usWidth, usHeight;
-                          //	INT32	iStartLoc;
-                          //	CHAR16 zText[1024];
+  UINT16 usPosX, usPosY;
 
   // Clear out all the save background rects
   EmptyBackgroundRects();

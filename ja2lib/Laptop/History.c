@@ -300,7 +300,6 @@ void RenderHistory(void) {
 }
 
 BOOLEAN LoadHistory(void) {
-  VOBJECT_DESC VObjectDesc;
   // load History video objects into memory
 
   // title bar
@@ -318,13 +317,6 @@ BOOLEAN LoadHistory(void) {
     return FALSE;
   }
 
-  /*
-  Not being used???  DF commented out
-    // vert  line
-    VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-          CopyFilename("LAPTOP\\historyvertline.sti", VObjectDesc.ImageFile);
-          if (!AddVideoObject(&VObjectDesc, &guiVERTLINE)) { return FALSE; }
-  */
   // black divider line - long ( 480 length)
   if (!AddVObjectFromFile("LAPTOP\\divisionline480.sti", &guiLONGLINE)) {
     return FALSE;

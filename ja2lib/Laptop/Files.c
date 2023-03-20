@@ -311,7 +311,6 @@ void DrawFilesTitleText(void) {
 }
 
 BOOLEAN LoadFiles(void) {
-  VOBJECT_DESC VObjectDesc;
   // load files video objects into memory
 
   // title bar

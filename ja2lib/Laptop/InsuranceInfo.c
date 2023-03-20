@@ -89,7 +89,6 @@ void EnterInitInsuranceInfo() {
 }
 
 BOOLEAN EnterInsuranceInfo() {
-  VOBJECT_DESC VObjectDesc;
   UINT16 usPosX;
 
   InitInsuranceDefaults();

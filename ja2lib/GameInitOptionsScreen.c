@@ -272,7 +272,6 @@ UINT32 GameInitOptionsScreenHandle(void) {
 UINT32 GameInitOptionsScreenShutdown(void) { return (1); }
 
 BOOLEAN EnterGIOScreen() {
-  VOBJECT_DESC VObjectDesc;
   UINT16 cnt;
   UINT16 usPosY;
 

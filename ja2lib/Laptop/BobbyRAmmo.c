@@ -23,8 +23,6 @@ BOOLEAN DisplayAmmoInfo();
 void GameInitBobbyRAmmo() {}
 
 BOOLEAN EnterBobbyRAmmo() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the background graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\ammobackground.sti", &guiAmmoBackground)) {
     return FALSE;

@@ -108,8 +108,6 @@ void GameInitAimHistory() {}
 void EnterInitAimHistory() { memset(&AimHistorySubPagesVisitedFlag, 0, NUM_AIM_HISTORY_PAGES); }
 
 BOOLEAN EnterAimHistory() {
-  VOBJECT_DESC VObjectDesc;
-
   gfExitingAimHistory = FALSE;
   InitAimDefaults();
   InitAimHistoryMenuBar();
@@ -218,7 +216,6 @@ void RenderAimHistory() {
 }
 
 BOOLEAN InitAimHistoryMenuBar(void) {
-  VOBJECT_DESC VObjectDesc;
   UINT16 i, usPosX;
 
   // load the Bottom Buttons graphic and add it

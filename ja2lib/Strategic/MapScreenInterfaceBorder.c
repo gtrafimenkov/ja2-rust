@@ -83,7 +83,6 @@ void CommonBtnCallbackBtnDownChecks(void);
 
 BOOLEAN LoadMapBorderGraphics(void) {
   // this procedure will load the graphics needed for the map border
-  VOBJECT_DESC VObjectDesc;
 
   // will load map border
   if (!AddVObjectFromFile("INTERFACE\\MBS.sti", &guiMapBorder)) {

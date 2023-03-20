@@ -186,8 +186,6 @@ void GameInitAimPolicies() {}
 void EnterInitAimPolicies() { memset(&AimPoliciesSubPagesVisitedFlag, 0, NUM_AIM_POLICY_PAGES); }
 
 BOOLEAN EnterAimPolicies() {
-  VOBJECT_DESC VObjectDesc;
-
   InitAimDefaults();
 
   gubCurPageNum = (UINT8)giCurrentSubPage;

@@ -2768,7 +2768,6 @@ void BtnPositionShowCallback(GUI_BUTTON *btn, INT32 reason) {}
 
 // TEAM PANEL!!!!!!!!!!!!!!
 BOOLEAN InitializeTEAMPanel() {
-  VOBJECT_DESC VObjectDesc;
   UINT32 cnt, posIndex;
 
   // INit viewport region

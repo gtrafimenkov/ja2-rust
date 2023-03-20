@@ -2137,8 +2137,6 @@ void BtnBobbyRGotoShipmentPageCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 BOOLEAN CreateBobbyRayOrderTitle() {
-  VOBJECT_DESC VObjectDesc;
-
   // load BobbyRayTitle graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\BobbyRayTitle.sti", &guiBobbyRayTitle)) {
     return FALSE;

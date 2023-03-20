@@ -2594,8 +2594,6 @@ void DisplayCharacterList() {
 
 // THIS IS STUFF THAT RUNS *ONCE* DURING APPLICATION EXECUTION, AT INITIAL STARTUP
 UINT32 MapScreenInit(void) {
-  VOBJECT_DESC VObjectDesc;
-
   SetUpBadSectorsList();
 
   // setup message box system

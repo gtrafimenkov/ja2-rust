@@ -19,8 +19,6 @@ UINT32 guiArmourGrid;
 void GameInitBobbyRArmour() {}
 
 BOOLEAN EnterBobbyRArmour() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the background graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\Armourbackground.sti", &guiArmourBackground)) {
     return FALSE;

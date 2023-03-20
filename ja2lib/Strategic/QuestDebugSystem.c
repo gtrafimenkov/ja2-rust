@@ -753,13 +753,8 @@ BOOLEAN EnterQuestDebugSystem() {
   UINT8 i;
   UINT16 usPosX, usPosY;
   wchar_t zName[128];
-  //	UINT16	usListBoxFontHeight = GetFontHeight( QUEST_DBS_FONT_LISTBOX_TEXT ) + 2;
-
-  //	CHAR16	zItemName[ SIZE_ITEM_NAME ];
-  //	CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
 
   UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
-  VOBJECT_DESC VObjectDesc;
 
   if (gfExitQdsDueToMessageBox) {
     gfRedrawQuestDebugSystem = TRUE;

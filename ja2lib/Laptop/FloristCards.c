@@ -55,7 +55,6 @@ void GameInitFloristCards() {}
 
 BOOLEAN EnterFloristCards() {
   UINT16 i, j, usPosX, usPosY;
-  VOBJECT_DESC VObjectDesc;
   UINT8 ubCount;
 
   InitFloristDefaults();
