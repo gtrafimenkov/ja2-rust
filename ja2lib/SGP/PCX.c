@@ -23,12 +23,12 @@
 #define PCX_INVALIDLEN 4
 #define PCX_OUTOFMEMORY 8
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, HIMAGE hImage);
+BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
 BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usBufferWidth,
                         UINT16 usBufferHeight, UINT16 usX, UINT16 usY, BOOLEAN fTransp);
 PcxObject *LoadPcx(CHAR8 *pFilename);
 
-BOOLEAN LoadPCXFileToImage(HIMAGE hImage, UINT16 fContents) {
+BOOLEAN LoadPCXFileToImage(struct Image *hImage, UINT16 fContents) {
   PcxObject *pPcxObject;
 
   // First Load a PCX Image
@@ -293,7 +293,7 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usB
   return (TRUE);
 }
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, HIMAGE hImage) {
+BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
   UINT16 Index;
   UINT8 *pubPalette;
 

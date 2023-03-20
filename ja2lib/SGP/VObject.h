@@ -103,7 +103,7 @@ BOOLEAN InitializeVideoObjectManager();
 BOOLEAN ShutdownVideoObjectManager();
 
 BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex);
-BOOLEAN AddVObjectFromHImage(HIMAGE hImage, UINT32 *puiIndex);
+BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex);
 
 // Creates and adds a video object to list
 BOOLEAN AddVideoObject(VOBJECT_DESC *VObjectDesc, UINT32 *uiIndex);
@@ -130,7 +130,7 @@ BOOLEAN BltVideoObjectFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject, UINT
 // **********************************************************************************
 
 struct VObject *CreateVObjectFromFile(const char *path);
-struct VObject *CreateVObjectFromHImage(HIMAGE hImage);
+struct VObject *CreateVObjectFromHImage(struct Image *hImage);
 
 // Deletes all data
 BOOLEAN DeleteVideoObject(struct VObject *hVObject);

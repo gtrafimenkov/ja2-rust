@@ -9,15 +9,15 @@
 #include "rust_debug.h"
 #include "rust_fileman.h"
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader);
-BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader);
-BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage);
+BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader);
+BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader);
+BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
-BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
+BOOLEAN LoadSTCIFileToImage(struct Image *hImage, UINT16 fContents) {
   FileID hFile = FILE_ID_ERR;
   STCIHeader Header;
   UINT32 uiBytesRead;
-  image_type TempImage;
+  struct Image TempImage;
 
   // Check that hImage is valid, and that the file in question exists
   Assert(hImage != NULL);
@@ -76,7 +76,7 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
   return (TRUE);
 }
 
-BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader) {
   UINT32 uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
@@ -138,7 +138,7 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeader *p
   return (TRUE);
 }
 
-BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader) {
   UINT32 uiFileSectionSize;
   UINT32 uiBytesRead;
   PTR pSTCIPalette;
@@ -290,7 +290,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
   return (TRUE);
 }
 
-BOOLEAN STCISetPalette(PTR pSTCIPalette, HIMAGE hImage) {
+BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage) {
   UINT16 usIndex;
   STCIPaletteElement *pubPalette;
 

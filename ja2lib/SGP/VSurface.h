@@ -69,7 +69,8 @@ typedef struct {
 
 #define VSURFACE_CREATE_DEFAULT \
   0x00000020  // Creates and empty Surface of given width, height and BPP
-#define VSURFACE_CREATE_FROMFILE 0x00000040  // Creates a video Surface from a file ( using HIMAGE )
+#define VSURFACE_CREATE_FROMFILE \
+  0x00000040  // Creates a video Surface from a file ( using struct Image* )
 
 //
 // This structure is a video Surface. Contains a HLIST of regions
@@ -140,14 +141,14 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor);
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Created from a VSurface_DESC structure. Can be from a file via HIMAGE or empty.
+// Created from a VSurface_DESC structure. Can be from a file via struct Image* or empty.
 struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc);
 
 // Gets the RGB palette entry values
 BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteEntry *pPalette);
 
-// Set data from HIMAGE.
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, UINT16 usX,
+// Set data from struct Image*.
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
                                       UINT16 usY, SGPRect *pSrcRect);
 
 // Sets Transparency color into HVSurface and the underlying DD surface

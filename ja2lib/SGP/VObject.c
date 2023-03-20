@@ -128,12 +128,13 @@ typedef struct {
       SGPFILENAME ImageFile;  // Filename of image data to use
     };
     struct {
-      HIMAGE hImage;
+      struct Image *hImage;
     };
   };
 } VOBJECT_INFO;
 
-#define VOBJECT_CREATE_FROMFILE 0x00000040    // Creates a video object from a file ( using HIMAGE )
+#define VOBJECT_CREATE_FROMFILE \
+  0x00000040  // Creates a video object from a file ( using struct Image* )
 #define VOBJECT_CREATE_FROMHIMAGE 0x00000080  // Creates a video object from a pre-loaded hImage
 
 BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex);
@@ -152,7 +153,7 @@ BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
   return _AddVideoObject(&desc, puiIndex);
 }
 
-BOOLEAN AddVObjectFromHImage(HIMAGE hImage, UINT32 *puiIndex) {
+BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex) {
   VOBJECT_INFO desc;
   desc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
   desc.hImage = hImage;
@@ -349,7 +350,7 @@ BOOLEAN BltVideoObject(UINT32 uiDestVSurface, struct VObject *hSrcVObject, UINT1
 
 struct VObject *CreateVObjectFromFile(const char *path) {
   struct VObject *hVObject;
-  HIMAGE hImage;
+  struct Image *hImage;
   ETRLEData TempETRLEData;
 
   // Allocate memory for video object data and initialize
@@ -403,7 +404,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   return (hVObject);
 }
 
-struct VObject *CreateVObjectFromHImage(HIMAGE hImage) {
+struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   struct VObject *hVObject;
   ETRLEData TempETRLEData;
 

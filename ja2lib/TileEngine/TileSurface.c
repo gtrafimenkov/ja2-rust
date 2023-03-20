@@ -29,7 +29,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   // Add tile surface
   struct TILE_IMAGERY *pTileSurf = NULL;
   struct VObject *hVObject;
-  HIMAGE hImage;
+  struct Image *hImage;
   SGPFILENAME cStructureFilename;
   STR cEndOfName;
   struct STRUCTURE_FILE_REF *pStructureFileRef;

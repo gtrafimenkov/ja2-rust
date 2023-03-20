@@ -4278,7 +4278,7 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
   } else {
     // Load into memory
     struct VObject *hVObject;
-    HIMAGE hImage;
+    struct Image *hImage;
     CHAR8 sFilename[48];
     struct STRUCTURE_FILE_REF *pStructureFileRef;
 

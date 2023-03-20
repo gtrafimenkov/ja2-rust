@@ -104,8 +104,8 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
       //
       // The file containing the video object hasn't been loaded yet. Let's load it now
       //
-      // FIRST LOAD AS AN HIMAGE SO WE CAN GET AUX DATA!
-      HIMAGE hImage;
+      // FIRST LOAD AS AN struct Image* SO WE CAN GET AUX DATA!
+      struct Image *hImage;
       struct AuxObjectData *pAuxData;
 
       // ATE: First check if we are using an extern vo cursor...

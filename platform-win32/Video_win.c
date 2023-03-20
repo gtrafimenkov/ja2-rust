@@ -3101,7 +3101,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   LPDIRECTDRAWSURFACE lpDDS;
   LPDIRECTDRAWSURFACE2 lpDDS2;
   struct VSurface *hVSurface;
-  HIMAGE hImage;
+  struct Image *hImage;
   SGPRect tempRect;
   UINT16 usHeight;
   UINT16 usWidth;
@@ -3483,8 +3483,9 @@ static void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
   }
 }
 
-// Given an HIMAGE object, blit imagery into existing Video Surface. Can be from 8->16 BPP
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage, UINT16 usX,
+// Given an struct Image* object, blit imagery into existing Video Surface. Can be from 8->16
+// BPP
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
                                       UINT16 usY, SGPRect *pSrcRect) {
   BYTE *pDest;
   UINT32 fBufferBPP = 0;
@@ -3551,11 +3552,11 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage,
     aRect.iBottom = pSrcRect->iBottom;
   }
 
-  // This HIMAGE function will transparently copy buffer
+  // This struct Image* function will transparently copy buffer
   if (!CopyImageToBuffer(hImage, fBufferBPP, pDest, usEffectiveWidth, hVSurface->usHeight, usX, usY,
                          &aRect)) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-             String("Error Occured Copying HIMAGE to struct VSurface*"));
+             String("Error Occured Copying struct Image* to struct VSurface*"));
     UnLockVideoSurfaceBuffer(hVSurface);
     return (FALSE);
   }
