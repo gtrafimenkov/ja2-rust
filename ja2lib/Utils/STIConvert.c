@@ -243,7 +243,9 @@ BOOLEAN ConvertToETRLE(UINT8 **ppDest, UINT32 *puiDestLen, UINT8 **ppSubImageBuf
   // worst-case situation	estimate
   uiSpaceLeft = (UINT32)usWidth * (UINT32)usHeight * 3;
   *ppDest = (UINT8 *)MemAlloc(uiSpaceLeft);
-  CHECKF(*ppDest);
+  if (!(*ppDest)) {
+    return FALSE;
+  }
   *puiDestLen = uiSpaceLeft;
 
   pOutputNext = *ppDest;

@@ -331,7 +331,9 @@ INT32 AddMercSlot(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCount;
 
-  CHECKF(pSoldier != NULL);
+  if (!(pSoldier != NULL)) {
+    return FALSE;
+  }
 
   for (uiCount = 0; uiCount < guiNumMercSlots; uiCount++) {
     if (MercSlots[uiCount] == pSoldier) {
@@ -385,7 +387,9 @@ INT32 AddAwaySlot(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN RemoveAwaySlot(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCount;
 
-  CHECKF(pSoldier != NULL);
+  if (!(pSoldier != NULL)) {
+    return FALSE;
+  }
 
   for (uiCount = 0; uiCount < guiNumAwaySlots; uiCount++) {
     if (AwaySlots[uiCount] == pSoldier) {

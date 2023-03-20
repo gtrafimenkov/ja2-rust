@@ -243,7 +243,9 @@ BOOLEAN InitializeWorld() {
   // Initialize world data
 
   gpWorldLevelData = (MAP_ELEMENT *)MemAlloc(WORLD_MAX * sizeof(MAP_ELEMENT));
-  CHECKF(gpWorldLevelData);
+  if (!(gpWorldLevelData)) {
+    return FALSE;
+  }
 
   // Zero world
   memset(gpWorldLevelData, 0, WORLD_MAX * sizeof(MAP_ELEMENT));
@@ -2331,7 +2333,9 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 #ifdef JA2TESTVERSION
   uiStartTime = GetJA2Clock();
 #endif
-  CHECKF(LoadMapTileset(iTilesetID) != FALSE);
+  if (!(LoadMapTileset(iTilesetID) != FALSE)) {
+    return FALSE;
+  }
 #ifdef JA2TESTVERSION
   uiLoadMapTilesetTime = GetJA2Clock() - uiStartTime;
 #endif

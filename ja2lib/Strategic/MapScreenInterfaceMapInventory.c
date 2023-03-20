@@ -202,7 +202,9 @@ BOOLEAN LoadInventoryPoolGraphic(void) {
   sprintf(VObjectDesc.ImageFile, "INTERFACE\\sector_inventory.sti");
 
   // add to V-object index
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMapInventoryPoolBackground));
+  if (!(AddVideoObject(&VObjectDesc, &guiMapInventoryPoolBackground))) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -1261,7 +1263,9 @@ BOOLEAN GetObjFromInventoryStashSlot(struct OBJECTTYPE *pInventorySlot,
 }
 
 BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr) {
-  CHECKF(pInventorySlot);
+  if (!(pInventorySlot)) {
+    return FALSE;
+  }
 
   if (pInventorySlot->ubNumberOfObjects == 0) {
     return (FALSE);

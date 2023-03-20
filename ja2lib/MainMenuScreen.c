@@ -239,12 +239,16 @@ BOOLEAN InitMainMenu() {
   // load background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LOADSCREENS\\MainMenuBackGround.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMainMenuBackGroundImage));
+  if (!(AddVideoObject(&VObjectDesc, &guiMainMenuBackGroundImage))) {
+    return FALSE;
+  }
 
   // load ja2 logo graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LOADSCREENS\\Ja2Logo.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiJa2LogoImage));
+  if (!(AddVideoObject(&VObjectDesc, &guiJa2LogoImage))) {
+    return FALSE;
+  }
 
   // if there are no saved games, disable the button
   if (!IsThereAnySavedGameFiles()) DisableButton(iMenuButtons[LOAD_GAME]);

@@ -71,7 +71,9 @@ BOOLEAN EnterAimFacialIndex() {
   // load the Portait graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\MugShotBorder3.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMugShotBorder));
+  if (!(AddVideoObject(&VObjectDesc, &guiMugShotBorder))) {
+    return FALSE;
+  }
 
   usPosX = AIM_FI_FIRST_MUGSHOT_X;
   usPosY = AIM_FI_FIRST_MUGSHOT_Y;

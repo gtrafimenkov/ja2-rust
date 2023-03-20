@@ -7444,11 +7444,15 @@ BOOLEAN CreateDestroyAssignmentPopUpBoxes(void) {
   if ((fShowAssignmentMenu == TRUE) && (fCreated == FALSE)) {
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("INTERFACE\\popup.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS));
+    if (!(AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS))) {
+      return FALSE;
+    }
 
     vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
     strcpy(vs_desc.ImageFile, "INTERFACE\\popupbackground.pcx");
-    CHECKF(AddVideoSurface(&vs_desc, &guiPOPUPTEX));
+    if (!(AddVideoSurface(&vs_desc, &guiPOPUPTEX))) {
+      return FALSE;
+    }
 
     // these boxes are always created while in mapscreen...
     CreateEPCBox();

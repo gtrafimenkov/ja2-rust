@@ -419,7 +419,9 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   // Create face ( a big face! )....
   iFaceIndex = InitFace(ubCharacterNum, NOBODY, FACE_BIGFACE | FACE_POTENTIAL_KEYWAIT);
 
-  CHECKF(iFaceIndex != -1);
+  if (!(iFaceIndex != -1)) {
+    return FALSE;
+  }
 
   // Set face
   gTalkPanel.iFaceIndex = iFaceIndex;
@@ -475,7 +477,9 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   vs_desc.usWidth = pFace->usFaceWidth;
   vs_desc.usHeight = pFace->usFaceHeight;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &(gTalkPanel.uiSaveBuffer)));
+  if (!(AddVideoSurface(&vs_desc, &(gTalkPanel.uiSaveBuffer)))) {
+    return FALSE;
+  }
 
   // Set face to auto
   SetAutoFaceActive(gTalkPanel.uiSaveBuffer, FACE_AUTO_RESTORE_BUFFER, iFaceIndex, 0, 0);

@@ -634,7 +634,9 @@ BOOLEAN EnterHelpScreen() {
   // load the help screen background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\HelpScreen.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiHelpScreenBackGround));
+  if (!(AddVideoObject(&VObjectDesc, &guiHelpScreenBackGround))) {
+    return FALSE;
+  }
 
   // create the text buffer
   CreateHelpScreenTextBuffer();
@@ -1988,7 +1990,9 @@ BOOLEAN CreateHelpScreenTextBuffer() {
   vs_desc.usWidth = HLP_SCRN__WIDTH_OF_TEXT_BUFFER;
   vs_desc.usHeight = HLP_SCRN__HEIGHT_OF_TEXT_BUFFER;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &guiHelpScreenTextBufferSurface));
+  if (!(AddVideoSurface(&vs_desc, &guiHelpScreenTextBufferSurface))) {
+    return FALSE;
+  }
 
   return (TRUE);
 }

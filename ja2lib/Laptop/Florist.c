@@ -87,7 +87,9 @@ BOOLEAN EnterFlorist() {
   // load the handbullet graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\HandBullet.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiHandBullet));
+  if (!(AddVideoObject(&VObjectDesc, &guiHandBullet))) {
+    return FALSE;
+  }
 
   guiGalleryButtonImage = LoadButtonImage("LAPTOP\\FloristButtons.sti", -1, 0, -1, 1, -1);
 
@@ -189,19 +191,25 @@ BOOLEAN InitFloristDefaults() {
   // load the Florist background graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\leafback.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiFloristBackground));
+  if (!(AddVideoObject(&VObjectDesc, &guiFloristBackground))) {
+    return FALSE;
+  }
 
   // if its the first page
   if (guiCurrentLaptopMode == LAPTOP_MODE_FLORIST) {
     // load the small title graphic and add it
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     GetMLGFilename(VObjectDesc.ImageFile, MLG_LARGEFLORISTSYMBOL);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiLargeTitleSymbol));
+    if (!(AddVideoObject(&VObjectDesc, &guiLargeTitleSymbol))) {
+      return FALSE;
+    }
   } else {
     // load the leaf back graphic and add it
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLFLORISTSYMBOL);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiSmallTitleSymbol));
+    if (!(AddVideoObject(&VObjectDesc, &guiSmallTitleSymbol))) {
+      return FALSE;
+    }
 
     // flower title homepage link
     MSYS_DefineRegion(

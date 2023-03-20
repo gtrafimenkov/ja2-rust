@@ -96,12 +96,16 @@ BOOLEAN EnterInsurance() {
   // load the Insurance title graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCETITLE);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceTitleImage));
+  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceTitleImage))) {
+    return FALSE;
+  }
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Bullet.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceBulletImage));
+  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceBulletImage))) {
+    return FALSE;
+  }
 
   usPosX = INSURANCE_BOTTOM_LINK_RED_BAR_X;
   for (i = 0; i < 3; i++) {
@@ -238,24 +242,32 @@ BOOLEAN InitInsuranceDefaults() {
   // load the Flower Account Box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BackGroundTile.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceBackGround));
+  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceBackGround))) {
+    return FALSE;
+  }
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LeftTile.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceRedBarImage));
+  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceRedBarImage))) {
+    return FALSE;
+  }
 
   // load the red bar on the side of the page and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LargeBar.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceBigRedLineImage));
+  if (!(AddVideoObject(&VObjectDesc, &guiInsuranceBigRedLineImage))) {
+    return FALSE;
+  }
 
   // if it is not the first page, display the small title
   if (guiCurrentLaptopMode != LAPTOP_MODE_INSURANCE) {
     // load the small title for the every page other then the first page
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLTITLE);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceSmallTitleImage));
+    if (!(AddVideoObject(&VObjectDesc, &guiInsuranceSmallTitleImage))) {
+      return FALSE;
+    }
 
     // create the link to the home page on the small titles
     MSYS_DefineRegion(

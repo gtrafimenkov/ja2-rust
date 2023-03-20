@@ -1479,7 +1479,9 @@ BOOLEAN UpdateDoorStatusPerceivedValue(INT16 sGridNo) {
   DOOR_STATUS *pDoorStatus = NULL;
 
   pDoorStatus = GetDoorStatus(sGridNo);
-  CHECKF(pDoorStatus != NULL);
+  if (!(pDoorStatus != NULL)) {
+    return FALSE;
+  }
 
   InternalUpdateDoorsPerceivedValue(pDoorStatus);
 
@@ -1522,7 +1524,9 @@ BOOLEAN SetDoorPerceivedOpenStatus(INT16 sGridNo, BOOLEAN fPerceivedOpen) {
 
   pDoorStatus = GetDoorStatus(sGridNo);
 
-  CHECKF(pDoorStatus != NULL);
+  if (!(pDoorStatus != NULL)) {
+    return FALSE;
+  }
 
   return (InternalSetDoorPerceivedOpenStatus(pDoorStatus, fPerceivedOpen));
 }

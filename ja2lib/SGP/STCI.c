@@ -24,11 +24,15 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
 
   TempImage = *hImage;
 
-  CHECKF(File_Exists(TempImage.ImageFile));
+  if (!(File_Exists(TempImage.ImageFile))) {
+    return FALSE;
+  }
 
   // Open the file and read the header
   hFile = File_OpenForReading(TempImage.ImageFile);
-  CHECKF(hFile);
+  if (!(hFile)) {
+    return FALSE;
+  }
 
   if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
       uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
@@ -316,11 +320,15 @@ BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
   STCIHeader Header;
   UINT32 uiBytesRead;
 
-  CHECKF(File_Exists(ImageFile));
+  if (!(File_Exists(ImageFile))) {
+    return FALSE;
+  }
 
   // Open the file and read the header
   hFile = File_OpenForReading(ImageFile);
-  CHECKF(hFile);
+  if (!(hFile)) {
+    return FALSE;
+  }
 
   if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
       uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {

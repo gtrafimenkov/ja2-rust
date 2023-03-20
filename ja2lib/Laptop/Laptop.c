@@ -814,32 +814,32 @@ INT32 EnterLaptop() {
   // load the laptop graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\laptop3.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLAPTOP));
+  if (!(AddVideoObject(&VObjectDesc, &guiLAPTOP))) { return FALSE; }
 
   // background for panel
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\taskbar.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLaptopBACKGROUND));
+  if (!(AddVideoObject(&VObjectDesc, &guiLaptopBACKGROUND))) { return FALSE; }
 
   // background for panel
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTITLEBARLAPTOP));
+  if (!(AddVideoObject(&VObjectDesc, &guiTITLEBARLAPTOP))) { return FALSE; }
 
   // lights for power and HD
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\lights.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLIGHTS));
+  if (!(AddVideoObject(&VObjectDesc, &guiLIGHTS))) { return FALSE; }
 
   // icons for title bars
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\ICONS.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTITLEBARICONS));
+  if (!(AddVideoObject(&VObjectDesc, &guiTITLEBARICONS))) { return FALSE; }
 
   // load, blt and delete graphics
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\NewMailWarning.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiEmailWarning));
+  if (!(AddVideoObject(&VObjectDesc, &guiEmailWarning))) { return FALSE; }
   // load background
   LoadDesktopBackground();
 
@@ -2768,34 +2768,34 @@ BOOLEAN LoadBookmark() {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\downloadtop.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiDOWNLOADTOP));
+  if (!(AddVideoObject(&VObjectDesc, &guiDOWNLOADTOP))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\downloadmid.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiDOWNLOADMID));
+  if (!(AddVideoObject(&VObjectDesc, &guiDOWNLOADMID))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\downloadbot.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiDOWNLOADBOT));
+  if (!(AddVideoObject(&VObjectDesc, &guiDOWNLOADBOT))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\bookmarktop.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBOOKTOP));
+  if (!(AddVideoObject(&VObjectDesc, &guiBOOKTOP))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\bookmarkmiddle.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBOOKMID));
+  if (!(AddVideoObject(&VObjectDesc, &guiBOOKMID))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\webpages.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBOOKMARK));
+  if (!(AddVideoObject(&VObjectDesc, &guiBOOKMARK))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\hilite.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBOOKHIGH));
+  if (!(AddVideoObject(&VObjectDesc, &guiBOOKHIGH))) { return FALSE; }
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Bookmarkbottom.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBOOKBOT));
+  if (!(AddVideoObject(&VObjectDesc, &guiBOOKBOT))) { return FALSE; }
 
   return (TRUE);
 }
@@ -3202,10 +3202,10 @@ BOOLEAN LoadLoadPending(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\graphwindow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiGRAPHWINDOW));
+  if (!(AddVideoObject(&VObjectDesc, &guiGRAPHWINDOW))) { return FALSE; }
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\graphsegment.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiGRAPHBAR));
+  if (!(AddVideoObject(&VObjectDesc, &guiGRAPHBAR))) { return FALSE; }
 
   return (TRUE);
 }
@@ -3809,7 +3809,7 @@ BOOLEAN InitTitleBarMaximizeGraphics(UINT32 uiBackgroundGraphic, STR16 pTitle, U
   vs_desc.usWidth = LAPTOP_TITLE_BAR_WIDTH;
   vs_desc.usHeight = LAPTOP_TITLE_BAR_HEIGHT;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &guiTitleBarSurface));
+  if (!(AddVideoSurface(&vs_desc, &guiTitleBarSurface))) { return FALSE; }
 
   // blit the toolbar grapgucs onto the surface
   GetVideoObject(&hImageHandle, uiBackgroundGraphic);
@@ -4429,7 +4429,7 @@ BOOLEAN DrawDeskTopBackground(void) {
   clip.iBottom = 408 + 19;
   // get surfaces
   pDestBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
-  CHECKF(GetVideoSurface(&hSrcVSurface, guiDESKTOP));
+  if (!(GetVideoSurface(&hSrcVSurface, guiDESKTOP))) { return FALSE; }
   pSrcBuf = LockVideoSurface(guiDESKTOP, &uiSrcPitchBYTES);
 
   // blit .pcx for the background onto desktop
@@ -4449,7 +4449,7 @@ BOOLEAN LoadDesktopBackground(void) {
 
   vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
   GetMLGFilename(vs_desc.ImageFile, MLG_DESKTOP);
-  CHECKF(AddVideoSurface(&vs_desc, &guiDESKTOP));
+  if (!(AddVideoSurface(&vs_desc, &guiDESKTOP))) { return FALSE; }
 
   return (TRUE);
 }
@@ -4774,7 +4774,7 @@ BOOLEAN RenderWWWProgramTitleBar(void) {
   // title bar - load
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &uiTITLEFORWWW));
+  if (!(AddVideoObject(&VObjectDesc, &uiTITLEFORWWW))) { return FALSE; }
 
   // blit title
   GetVideoObject(&hHandle, uiTITLEFORWWW);

@@ -2538,39 +2538,55 @@ static BOOLEAN SetPrimaryVideoSurfaces() {
   // Get Primary surface
   //
   pSurface = GetPrimarySurfaceObject();
-  CHECKF(pSurface != NULL);
+  if (!(pSurface != NULL)) {
+    return FALSE;
+  }
 
   ghPrimary = CreateVideoSurfaceFromDDSurface(pSurface);
-  CHECKF(ghPrimary != NULL);
+  if (!(ghPrimary != NULL)) {
+    return FALSE;
+  }
 
   //
   // Get Backbuffer surface
   //
 
   pSurface = GetBackBufferObject();
-  CHECKF(pSurface != NULL);
+  if (!(pSurface != NULL)) {
+    return FALSE;
+  }
 
   ghBackBuffer = CreateVideoSurfaceFromDDSurface(pSurface);
-  CHECKF(ghBackBuffer != NULL);
+  if (!(ghBackBuffer != NULL)) {
+    return FALSE;
+  }
 
   //
   // Get mouse buffer surface
   //
   pSurface = GetMouseBufferObject();
-  CHECKF(pSurface != NULL);
+  if (!(pSurface != NULL)) {
+    return FALSE;
+  }
 
   ghMouseBuffer = CreateVideoSurfaceFromDDSurface(pSurface);
-  CHECKF(ghMouseBuffer != NULL);
+  if (!(ghMouseBuffer != NULL)) {
+    return FALSE;
+  }
 
   //
   // Get frame buffer surface
   //
 
   pSurface = GetFrameBufferObject();
-  CHECKF(pSurface != NULL);
+  if (!(pSurface != NULL)) {
+    return FALSE;
+  }
 
   ghFrameBuffer = CreateVideoSurfaceFromDDSurface(pSurface);
-  CHECKF(ghFrameBuffer != NULL);
+  if (!(ghFrameBuffer != NULL)) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -2852,7 +2868,9 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   // Get Video Surface
   //
 
-  CHECKF(GetVideoSurface(&hVSurface, uiIndex));
+  if (!(GetVideoSurface(&hVSurface, uiIndex))) {
+    return FALSE;
+  }
 
   //
   // Set transparency
@@ -3182,7 +3200,9 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
 
       // We're using pixel formats too -- DB/Wiz
 
-      CHECKF(GetPrimaryRGBDistributionMasks(&uiRBitMask, &uiGBitMask, &uiBBitMask));
+      if (!(GetPrimaryRGBDistributionMasks(&uiRBitMask, &uiGBitMask, &uiBBitMask))) {
+        return FALSE;
+      }
       PixelFormat.dwRBitMask = uiRBitMask;
       PixelFormat.dwGBitMask = uiGBitMask;
       PixelFormat.dwBBitMask = uiBBitMask;
@@ -3248,7 +3268,9 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
 
   hVSurface = (struct VSurface *)MemAlloc(sizeof(struct VSurface));
   memset(hVSurface, 0, sizeof(struct VSurface));
-  CHECKF(hVSurface != NULL);
+  if (!(hVSurface != NULL)) {
+    return FALSE;
+  }
 
   hVSurface->usHeight = usHeight;
   hVSurface->usWidth = usWidth;
@@ -3475,8 +3497,12 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage,
   Assert(hImage != NULL);
 
   // Get Size of hImage and determine if it can fit
-  CHECKF(hImage->usWidth >= hVSurface->usWidth);
-  CHECKF(hImage->usHeight >= hVSurface->usHeight);
+  if (!(hImage->usWidth >= hVSurface->usWidth)) {
+    return FALSE;
+  }
+  if (!(hImage->usHeight >= hVSurface->usHeight)) {
+    return FALSE;
+  }
 
   // Check BPP and see if they are the same
   if (hImage->ubBitDepth != hVSurface->ubBitDepth) {
@@ -3507,7 +3533,9 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, HIMAGE hImage,
   // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
   usEffectiveWidth = (UINT16)(uiPitch / (hVSurface->ubBitDepth / 8));
 
-  CHECKF(pDest != NULL);
+  if (!(pDest != NULL)) {
+    return FALSE;
+  }
 
   // Blit Surface
   // If rect is NULL, use entrie image size
@@ -3581,7 +3609,9 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
 
   // Get surface pointer
   lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
-  CHECKF(lpDDSurface != NULL);
+  if (!(lpDDSurface != NULL)) {
+    return FALSE;
+  }
 
   // Get right pixel format, based on bit depth
 
@@ -3609,7 +3639,9 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
 }
 
 BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteEntry *pPalette) {
-  CHECKF(hVSurface->pPalette != NULL);
+  if (!(hVSurface->pPalette != NULL)) {
+    return FALSE;
+  }
 
   DDGetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
                       (PALETTEENTRY *)pPalette);
@@ -3657,7 +3689,9 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
   LPDIRECTDRAWSURFACE2 lpDDSurface;
 
   // Assertions
-  CHECKF(hVSurface != NULL);
+  if (!(hVSurface != NULL)) {
+    return FALSE;
+  }
 
   // Release palette
   if (hVSurface->pPalette != NULL) {
@@ -3760,8 +3794,12 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
   // Check for dest src options
   if (fBltFlags & VS_BLT_DESTREGION) {
-    CHECKF(pBltFx != NULL);
-    CHECKF(GetVSurfaceRegion(hDestVSurface, pBltFx->DestRegion, &aRegion));
+    if (!(pBltFx != NULL)) {
+      return FALSE;
+    }
+    if (!(GetVSurfaceRegion(hDestVSurface, pBltFx->DestRegion, &aRegion))) {
+      return FALSE;
+    }
 
     // Set starting coordinates from destination region
     iDestY = aRegion.RegionCoords.iTop;
@@ -3795,7 +3833,9 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
     if (fBltFlags & VS_BLT_SRCSUBRECT) {
       SGPRect aSubRect;
 
-      CHECKF(pBltFx != NULL);
+      if (!(pBltFx != NULL)) {
+        return FALSE;
+      }
 
       aSubRect = pBltFx->SrcRect;
 
@@ -3889,7 +3929,9 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
       return (TRUE);
     }
     struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
-    CHECKF(BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &srcRect));
+    if (!(BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &srcRect))) {
+      return FALSE;
+    }
 
   } else if (hDestVSurface->ubBitDepth == 8 && hSrcVSurface->ubBitDepth == 8) {
     if ((pSrcSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
@@ -3933,7 +3975,9 @@ BOOLEAN UpdateBackupSurface(struct VSurface *hVSurface) {
   Assert(hVSurface != NULL);
 
   // Validations
-  CHECKF(hVSurface->pSavedSurfaceData != NULL);
+  if (!(hVSurface->pSavedSurfaceData != NULL)) {
+    return FALSE;
+  }
 
   aRect.top = (int)0;
   aRect.left = (int)0;
@@ -4097,7 +4141,9 @@ BOOLEAN FillSurface(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx) {
   DDBLTFX BlitterFX;
 
   Assert(hDestVSurface != NULL);
-  CHECKF(pBltFx != NULL);
+  if (!(pBltFx != NULL)) {
+    return FALSE;
+  }
 
   BlitterFX.dwSize = sizeof(DDBLTFX);
   BlitterFX.dwFillColor = pBltFx->ColorFill;
@@ -4117,7 +4163,9 @@ BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx) {
   DDBLTFX BlitterFX;
 
   Assert(hDestVSurface != NULL);
-  CHECKF(pBltFx != NULL);
+  if (!(pBltFx != NULL)) {
+    return FALSE;
+  }
 
   BlitterFX.dwSize = sizeof(DDBLTFX);
   BlitterFX.dwFillColor = pBltFx->ColorFill;
@@ -4143,8 +4191,12 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
   // Blit using the correct blitter
   if (fBltFlags & VS_BLT_FAST) {
     // Validations
-    CHECKF(iDestX >= 0);
-    CHECKF(iDestY >= 0);
+    if (!(iDestX >= 0)) {
+      return FALSE;
+    }
+    if (!(iDestY >= 0)) {
+      return FALSE;
+    }
 
     // Default flags
     uiDDFlags = 0;
@@ -4225,7 +4277,9 @@ BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1
   //
   // Get Video Surface
   //
-  CHECKF(GetVideoSurface(&hVSurface, uiDestVSurface));
+  if (!(GetVideoSurface(&hVSurface, uiDestVSurface))) {
+    return FALSE;
+  }
 
   if (X1 < 0) X1 = 0;
 

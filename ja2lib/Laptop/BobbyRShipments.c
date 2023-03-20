@@ -103,7 +103,9 @@ BOOLEAN EnterBobbyRShipments() {
   // load the Order Grid graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BobbyRay_OnOrder.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyRShipmentGrid));
+  if (!(AddVideoObject(&VObjectDesc, &guiBobbyRShipmentGrid))) {
+    return FALSE;
+  }
 
   guiBobbyRShipmentBackImage = LoadButtonImage("LAPTOP\\CatalogueButton.sti", -1, 0, -1, 1, -1);
   guiBobbyRShipmetBack = CreateIconAndTextButton(

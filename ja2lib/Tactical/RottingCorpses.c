@@ -633,7 +633,9 @@ BOOLEAN CreateCorpsePalette(ROTTING_CORPSE *pCorpse) {
 
   pCorpse->p8BPPPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
 
-  CHECKF(pCorpse->p8BPPPalette != NULL);
+  if (!(pCorpse->p8BPPPalette != NULL)) {
+    return FALSE;
+  }
 
   bBodyTypePalette =
       GetBodyTypePaletteSubstitutionCode(NULL, pCorpse->def.ubBodyType, zColFilename);

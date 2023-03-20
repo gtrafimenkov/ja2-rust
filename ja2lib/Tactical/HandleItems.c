@@ -2856,7 +2856,9 @@ INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callb
 BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool) {
   UINT32 uiCount;
 
-  CHECKF(pItemPool != NULL);
+  if (!(pItemPool != NULL)) {
+    return FALSE;
+  }
 
   for (uiCount = 0; uiCount < guiNumFlashItemSlots; uiCount++) {
     if (FlashItemSlots[uiCount].fAllocated) {

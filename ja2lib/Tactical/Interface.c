@@ -394,7 +394,9 @@ BOOLEAN InitializeTacticalInterface() {
   vs_desc.usWidth = 640;
   vs_desc.usHeight = 20;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &(gTopMessage.uiSurface)));
+  if (!(AddVideoSurface(&vs_desc, &(gTopMessage.uiSurface)))) {
+    return FALSE;
+  }
 
   InitItemInterface();
 
@@ -403,7 +405,8 @@ BOOLEAN InitializeTacticalInterface() {
   InitTEAMSlots();
 
   // Init popup box images
-  //	CHECKF( LoadTextMercPopupImages( BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER ) );
+  //	if (!( LoadTextMercPopupImages( BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER ) )) {
+  //return FALSE; }
 
   return (TRUE);
 }

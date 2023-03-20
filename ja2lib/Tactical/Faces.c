@@ -961,7 +961,9 @@ void SetFaceShade(struct SOLDIERTYPE *pSoldier, FACETYPE *pFace, BOOLEAN fExtern
 
 BOOLEAN RenderAutoFaceFromSoldier(UINT8 ubSoldierID) {
   // Check for valid soldier
-  CHECKF(ubSoldierID != NOBODY);
+  if (!(ubSoldierID != NOBODY)) {
+    return FALSE;
+  }
 
   return (RenderAutoFace(MercPtrs[ubSoldierID]->iFaceIndex));
 }
@@ -1341,15 +1343,21 @@ BOOLEAN RenderAutoFace(INT32 iFaceIndex) {
   FACETYPE *pFace;
 
   // Check face index
-  CHECKF(iFaceIndex != -1);
+  if (!(iFaceIndex != -1)) {
+    return FALSE;
+  }
 
   pFace = &gFacesData[iFaceIndex];
 
   // Check for a valid slot!
-  CHECKF(pFace->fAllocated != FALSE);
+  if (!(pFace->fAllocated != FALSE)) {
+    return FALSE;
+  }
 
   // Check for disabled guy!
-  CHECKF(pFace->fDisabled != TRUE);
+  if (!(pFace->fDisabled != TRUE)) {
+    return FALSE;
+  }
 
   // Set shade
   if (pFace->ubSoldierID != NOBODY) {
@@ -1385,7 +1393,9 @@ BOOLEAN RenderAutoFace(INT32 iFaceIndex) {
 
 BOOLEAN ExternRenderFaceFromSoldier(UINT32 uiBuffer, UINT8 ubSoldierID, INT16 sX, INT16 sY) {
   // Check for valid soldier
-  CHECKF(ubSoldierID != NOBODY);
+  if (!(ubSoldierID != NOBODY)) {
+    return FALSE;
+  }
 
   return (ExternRenderFace(uiBuffer, MercPtrs[ubSoldierID]->iFaceIndex, sX, sY));
 }
@@ -1398,12 +1408,16 @@ BOOLEAN ExternRenderFace(UINT32 uiBuffer, INT32 iFaceIndex, INT16 sX, INT16 sY) 
   FACETYPE *pFace;
 
   // Check face index
-  CHECKF(iFaceIndex != -1);
+  if (!(iFaceIndex != -1)) {
+    return FALSE;
+  }
 
   pFace = &gFacesData[iFaceIndex];
 
   // Check for a valid slot!
-  CHECKF(pFace->fAllocated != FALSE);
+  if (!(pFace->fAllocated != FALSE)) {
+    return FALSE;
+  }
 
   // Here, any face can be rendered, even if disabled
 
@@ -1758,7 +1772,9 @@ BOOLEAN FaceRestoreSavedBackgroundRect(INT32 iFaceIndex, INT16 sDestLeft, INT16 
   UINT8 *pDestBuf, *pSrcBuf;
 
   // Check face index
-  CHECKF(iFaceIndex != -1);
+  if (!(iFaceIndex != -1)) {
+    return FALSE;
+  }
 
   pFace = &gFacesData[iFaceIndex];
 

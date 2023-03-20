@@ -92,12 +92,16 @@ BOOLEAN EnterMercsAccount() {
   // load the Arrow graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_ORDERGRID);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMercOrderGrid));
+  if (!(AddVideoObject(&VObjectDesc, &guiMercOrderGrid))) {
+    return FALSE;
+  }
 
   // load the Arrow graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\AccountNumber.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiAccountNumberGrid));
+  if (!(AddVideoObject(&VObjectDesc, &guiAccountNumberGrid))) {
+    return FALSE;
+  }
 
   guiMercAuthorizeButtonImage = LoadButtonImage("LAPTOP\\BigButtons.sti", -1, 0, -1, 1, -1);
 

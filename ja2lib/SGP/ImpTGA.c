@@ -70,10 +70,14 @@ BOOLEAN LoadTGAFileToImage(HIMAGE hImage, UINT16 fContents) {
 
   Assert(hImage != NULL);
 
-  CHECKF(File_Exists(hImage->ImageFile));
+  if (!(File_Exists(hImage->ImageFile))) {
+    return FALSE;
+  }
 
   hFile = File_OpenForReading(hImage->ImageFile);
-  CHECKF(hFile);
+  if (!(hFile)) {
+    return FALSE;
+  }
 
   if (!File_Read(hFile, &uiImgID, sizeof(UINT8), &uiBytesRead)) goto end;
   if (!File_Read(hFile, &uiColMap, sizeof(UINT8), &uiBytesRead)) goto end;
@@ -336,7 +340,8 @@ BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage )
         // Basic algorithm for coonverting to different rgb distributions
 
         // Get current Pixel Format from DirectDraw
-        CHECKF( GetPrimaryRGBDistributionMasks( &uiRBitMask, &uiGBitMask, &uiBBitMask ) );
+        if (!( GetPrimaryRGBDistributionMasks( &uiRBitMask, &uiGBitMask, &uiBBitMask ) )) { return
+FALSE; }
 
         // Only convert if different
         if ( uiRBitMask == 0x7c00 && uiGBitMask == 0x3e0 && uiBBitMask == 0x1f )

@@ -150,17 +150,23 @@ BOOLEAN EnterMercsFiles() {
   // load the stats box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_STATSBOX);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiStatsBox));
+  if (!(AddVideoObject(&VObjectDesc, &guiStatsBox))) {
+    return FALSE;
+  }
 
   // load the Portrait box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\PortraitBox.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiPortraitBox));
+  if (!(AddVideoObject(&VObjectDesc, &guiPortraitBox))) {
+    return FALSE;
+  }
 
   // load the bio box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\BioBox.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBioBox));
+  if (!(AddVideoObject(&VObjectDesc, &guiBioBox))) {
+    return FALSE;
+  }
 
   // Prev Box button
   guiButtonImage = LoadButtonImage("LAPTOP\\BigButtons.sti", -1, 0, -1, 1, -1);
@@ -410,7 +416,9 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, ubMercID);
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename(sTemp, VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMercFace));
+  if (!(AddVideoObject(&VObjectDesc, &guiMercFace))) {
+    return FALSE;
+  }
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiMercFace);

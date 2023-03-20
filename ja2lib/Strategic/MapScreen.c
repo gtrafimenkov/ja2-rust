@@ -2612,11 +2612,15 @@ UINT32 MapScreenInit(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\group_confirm.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiUpdatePanel));
+  if (!(AddVideoObject(&VObjectDesc, &guiUpdatePanel))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\group_confirm_tactical.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiUpdatePanelTactical));
+  if (!(AddVideoObject(&VObjectDesc, &guiUpdatePanelTactical))) {
+    return FALSE;
+  }
 
   return TRUE;
 }
@@ -2733,107 +2737,159 @@ UINT32 MapScreenHandle(void) {
       // Grab the Map image
 
       strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
-      CHECKF(AddVideoSurface(&vs_desc, &guiBIGMAP));
+      if (!(AddVideoSurface(&vs_desc, &guiBIGMAP))) {
+        return FALSE;
+      }
 
       strcpy(vs_desc.ImageFile, "INTERFACE\\popupbackground.pcx");
-      CHECKF(AddVideoSurface(&vs_desc, &guiPOPUPTEX));
+      if (!(AddVideoSurface(&vs_desc, &guiPOPUPTEX))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\SAM.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiSAMICON));
+      if (!(AddVideoObject(&VObjectDesc, &guiSAMICON))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiMAPCURSORS));
+      if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Mine_1.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiSubLevel1));
+      if (!(AddVideoObject(&VObjectDesc, &guiSubLevel1))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Mine_2.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiSubLevel2));
+      if (!(AddVideoObject(&VObjectDesc, &guiSubLevel2))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Mine_3.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiSubLevel3));
+      if (!(AddVideoObject(&VObjectDesc, &guiSubLevel3))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\sleepicon.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiSleepIcon));
+      if (!(AddVideoObject(&VObjectDesc, &guiSleepIcon))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\charinfo.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiCHARINFO));
+      if (!(AddVideoObject(&VObjectDesc, &guiCHARINFO))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\newgoldpiece3.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiCHARLIST));
+      if (!(AddVideoObject(&VObjectDesc, &guiCHARLIST))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\boxes.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiCHARICONS));
+      if (!(AddVideoObject(&VObjectDesc, &guiCHARICONS))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\incross.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiCROSS));
+      if (!(AddVideoObject(&VObjectDesc, &guiCROSS))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\mapinv.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiMAPINV));
+      if (!(AddVideoObject(&VObjectDesc, &guiMAPINV))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\map_inv_2nd_gun_cover.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout));
+      if (!(AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout))) {
+        return FALSE;
+      }
 
       // the upper left corner piece icons
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\top_left_corner_icons.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiULICONS));
+      if (!(AddVideoObject(&VObjectDesc, &guiULICONS))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\map_item.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiORTAICON));
+      if (!(AddVideoObject(&VObjectDesc, &guiORTAICON))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\prison.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiTIXAICON));
+      if (!(AddVideoObject(&VObjectDesc, &guiTIXAICON))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\merc_between_sector_icons.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS));
+      if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\merc_mvt_green_arrows.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE));
+      if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\GreenArr.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiLEVELMARKER));
+      if (!(AddVideoObject(&VObjectDesc, &guiLEVELMARKER))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\Helicop.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiHelicopterIcon));
+      if (!(AddVideoObject(&VObjectDesc, &guiHelicopterIcon))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\eta_pop_up.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp));
+      if (!(AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\pos2.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors));
+      if (!(AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO));
+      if (!(AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\selectedchararrow.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiSelectedCharArrow));
+      if (!(AddVideoObject(&VObjectDesc, &guiSelectedCharArrow))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\mine.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiMINEICON));
+      if (!(AddVideoObject(&VObjectDesc, &guiMINEICON))) {
+        return FALSE;
+      }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       sprintf(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
@@ -2841,7 +2897,9 @@ UINT32 MapScreenHandle(void) {
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("INTERFACE\\BullsEye.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiBULLSEYE));
+      if (!(AddVideoObject(&VObjectDesc, &guiBULLSEYE))) {
+        return FALSE;
+      }
 
       HandleLoadOfMapBottomGraphics();
 
@@ -2881,7 +2939,9 @@ UINT32 MapScreenHandle(void) {
 
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel));
+    if (!(AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel))) {
+      return FALSE;
+    }
 
     // we are in fact in the map, do not repeat this sequence
     fInMapMode = TRUE;
@@ -8435,135 +8495,189 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
   strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
-  CHECKF(AddVideoSurface(&vs_desc, &guiBIGMAP));
+  if (!(AddVideoSurface(&vs_desc, &guiBIGMAP))) {
+    return FALSE;
+  }
   // strcpy(vs_desc.ImageFile, "INTERFACE\\popupbackground.pcx");
-  // CHECKF(AddVideoSurface(&vs_desc, &guiPOPUPTEX));
+  // if (!(AddVideoSurface(&vs_desc, &guiPOPUPTEX))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMAPCURSORS));
+  if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\SAM.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSAMICON));
+  if (!(AddVideoObject(&VObjectDesc, &guiSAMICON))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMAPCURSORS));
+  if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\sleepicon.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSleepIcon));
+  if (!(AddVideoObject(&VObjectDesc, &guiSleepIcon))) {
+    return FALSE;
+  }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\addonslcp.sti", VObjectDesc.ImageFile);
-  // CHECKF(AddVideoObject(&VObjectDesc, &guiCORNERADDONS));
+  // if (!(AddVideoObject(&VObjectDesc, &guiCORNERADDONS))) { return FALSE; }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\mapborder.sti", VObjectDesc.ImageFile);
-  // CHECKF(AddVideoObject(&VObjectDesc, &guiMAPBORDER));
+  // if (!(AddVideoObject(&VObjectDesc, &guiMAPBORDER))) { return FALSE; }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\charinfo.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCHARINFO));
+  if (!(AddVideoObject(&VObjectDesc, &guiCHARINFO))) {
+    return FALSE;
+  }
   /*strcpy(vs_desc.ImageFile, "INTERFACE\\playlist3.pcx");
-  CHECKF(AddVideoSurface( &vs_desc, &guiCHARLIST ));*/
+  if (!(AddVideoSurface( &vs_desc, &guiCHARLIST ))) { return FALSE; }*/
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\newgoldpiece3.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCHARLIST));
+  if (!(AddVideoObject(&VObjectDesc, &guiCHARLIST))) {
+    return FALSE;
+  }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\mapbordercorner.sti", VObjectDesc.ImageFile);
-  // CHECKF(AddVideoObject(&VObjectDesc, &guiMAPCORNER));
+  // if (!(AddVideoObject(&VObjectDesc, &guiMAPCORNER))) { return FALSE; }
 
   // VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
   // CopyFilename("INTERFACE\\popup.sti", VObjectDesc.ImageFile);
-  // CHECKF(AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS));
+  // if (!(AddVideoObject(&VObjectDesc, &guiPOPUPBORDERS))) { return FALSE; }
 
   // the sublevels
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Mine_1.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSubLevel1));
+  if (!(AddVideoObject(&VObjectDesc, &guiSubLevel1))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Mine_2.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSubLevel2));
+  if (!(AddVideoObject(&VObjectDesc, &guiSubLevel2))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Mine_3.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSubLevel3));
+  if (!(AddVideoObject(&VObjectDesc, &guiSubLevel3))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\boxes.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCHARICONS));
+  if (!(AddVideoObject(&VObjectDesc, &guiCHARICONS))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\incross.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCROSS));
+  if (!(AddVideoObject(&VObjectDesc, &guiCROSS))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapinv.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMAPINV));
+  if (!(AddVideoObject(&VObjectDesc, &guiMAPINV))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\map_inv_2nd_gun_cover.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout));
+  if (!(AddVideoObject(&VObjectDesc, &guiMapInvSecondHandBlockout))) {
+    return FALSE;
+  }
 
   // the upper left corner piece icons
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\top_left_corner_icons.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiULICONS));
+  if (!(AddVideoObject(&VObjectDesc, &guiULICONS))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\prison.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTIXAICON));
+  if (!(AddVideoObject(&VObjectDesc, &guiTIXAICON))) {
+    return FALSE;
+  }
 
   HandleLoadOfMapBottomGraphics();
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\map_item.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiORTAICON));
+  if (!(AddVideoObject(&VObjectDesc, &guiORTAICON))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMAPCURSORS));
+  if (!(AddVideoObject(&VObjectDesc, &guiMAPCURSORS))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\merc_between_sector_icons.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS));
+  if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONS))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\merc_mvt_green_arrows.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE));
+  if (!(AddVideoObject(&VObjectDesc, &guiCHARBETWEENSECTORICONSCLOSE))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\GreenArr.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLEVELMARKER));
+  if (!(AddVideoObject(&VObjectDesc, &guiLEVELMARKER))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\Helicop.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiHelicopterIcon));
+  if (!(AddVideoObject(&VObjectDesc, &guiHelicopterIcon))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\eta_pop_up.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp));
+  if (!(AddVideoObject(&VObjectDesc, &guiMapBorderEtaPopUp))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\pos2.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors));
+  if (!(AddVideoObject(&VObjectDesc, &guiMapBorderHeliSectors))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\secondary_gun_hidden.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO));
+  if (!(AddVideoObject(&VObjectDesc, &guiSecItemHiddenVO))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\selectedchararrow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSelectedCharArrow));
+  if (!(AddVideoObject(&VObjectDesc, &guiSelectedCharArrow))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\mine.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMINEICON));
+  if (!(AddVideoObject(&VObjectDesc, &guiMINEICON))) {
+    return FALSE;
+  }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   sprintf(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
@@ -8576,7 +8690,9 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("INTERFACE\\BullsEye.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBULLSEYE));
+  if (!(AddVideoObject(&VObjectDesc, &guiBULLSEYE))) {
+    return FALSE;
+  }
 
   // graphic for pool inventory
   LoadInventoryPoolGraphic();

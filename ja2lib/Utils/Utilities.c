@@ -61,7 +61,9 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
   UINT8 ubPaletteRep;
 
   // Create 16BPP Palette
-  CHECKF(GetPaletteRepIndexFromID(aPalRep, &ubPaletteRep));
+  if (!(GetPaletteRepIndexFromID(aPalRep, &ubPaletteRep))) {
+    return FALSE;
+  }
 
   SetFont(LARGEFONT1);
 

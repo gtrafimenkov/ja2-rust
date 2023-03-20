@@ -1824,7 +1824,9 @@ INT16 NPCConsiderInitiatingConv(struct SOLDIERTYPE *pNPC, UINT8 *pubDesiredMerc)
   struct SOLDIERTYPE *pDesiredMerc;
   NPCQuoteInfo *pNPCQuoteInfoArray;
 
-  CHECKF(pubDesiredMerc);
+  if (!(pubDesiredMerc)) {
+    return FALSE;
+  }
   sMyGridNo = pNPC->sGridNo;
 
   ubNPC = pNPC->ubProfile;

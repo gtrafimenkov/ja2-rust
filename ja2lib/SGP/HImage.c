@@ -238,12 +238,24 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestWi
   Assert(hImage->p16BPPData != NULL);
 
   // Validations
-  CHECKF(usX >= 0);
-  CHECKF(usX < usDestWidth);
-  CHECKF(usY >= 0);
-  CHECKF(usY < usDestHeight);
-  CHECKF(srcRect->iRight > srcRect->iLeft);
-  CHECKF(srcRect->iBottom > srcRect->iTop);
+  if (!(usX >= 0)) {
+    return FALSE;
+  }
+  if (!(usX < usDestWidth)) {
+    return FALSE;
+  }
+  if (!(usY >= 0)) {
+    return FALSE;
+  }
+  if (!(usY < usDestHeight)) {
+    return FALSE;
+  }
+  if (!(srcRect->iRight > srcRect->iLeft)) {
+    return FALSE;
+  }
+  if (!(srcRect->iBottom > srcRect->iTop)) {
+    return FALSE;
+  }
 
   // Determine memcopy coordinates
   uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
@@ -279,12 +291,24 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDest
   Assert(hImage->p16BPPData != NULL);
 
   // Validations
-  CHECKF(usX >= 0);
-  CHECKF(usX < hImage->usWidth);
-  CHECKF(usY >= 0);
-  CHECKF(usY < hImage->usHeight);
-  CHECKF(srcRect->iRight > srcRect->iLeft);
-  CHECKF(srcRect->iBottom > srcRect->iTop);
+  if (!(usX >= 0)) {
+    return FALSE;
+  }
+  if (!(usX < hImage->usWidth)) {
+    return FALSE;
+  }
+  if (!(usY >= 0)) {
+    return FALSE;
+  }
+  if (!(usY < hImage->usHeight)) {
+    return FALSE;
+  }
+  if (!(srcRect->iRight > srcRect->iLeft)) {
+    return FALSE;
+  }
+  if (!(srcRect->iBottom > srcRect->iTop)) {
+    return FALSE;
+  }
 
   // Determine memcopy coordinates
   uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
@@ -292,8 +316,12 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDest
   uiNumLines = (srcRect->iBottom - srcRect->iTop) + 1;
   uiLineSize = (srcRect->iRight - srcRect->iLeft) + 1;
 
-  CHECKF(usDestWidth >= uiLineSize);
-  CHECKF(usDestHeight >= uiNumLines);
+  if (!(usDestWidth >= uiLineSize)) {
+    return FALSE;
+  }
+  if (!(usDestHeight >= uiNumLines)) {
+    return FALSE;
+  }
 
   // Copy line by line
   pDest = (UINT16 *)pDestBuf + uiDestStart;
@@ -329,13 +357,27 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestW
   Assert(hImage != NULL);
 
   // Validations
-  CHECKF(hImage->p16BPPData != NULL);
-  CHECKF(usX >= 0);
-  CHECKF(usX < usDestWidth);
-  CHECKF(usY >= 0);
-  CHECKF(usY < usDestHeight);
-  CHECKF(srcRect->iRight > srcRect->iLeft);
-  CHECKF(srcRect->iBottom > srcRect->iTop);
+  if (!(hImage->p16BPPData != NULL)) {
+    return FALSE;
+  }
+  if (!(usX >= 0)) {
+    return FALSE;
+  }
+  if (!(usX < usDestWidth)) {
+    return FALSE;
+  }
+  if (!(usY >= 0)) {
+    return FALSE;
+  }
+  if (!(usY < usDestHeight)) {
+    return FALSE;
+  }
+  if (!(srcRect->iRight > srcRect->iLeft)) {
+    return FALSE;
+  }
+  if (!(srcRect->iBottom > srcRect->iTop)) {
+    return FALSE;
+  }
 
   // Determine memcopy coordinates
   uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
@@ -343,8 +385,12 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, BYTE *pDestBuf, UINT16 usDestW
   uiNumLines = (srcRect->iBottom - srcRect->iTop);
   uiLineSize = (srcRect->iRight - srcRect->iLeft);
 
-  CHECKF(usDestWidth >= uiLineSize);
-  CHECKF(usDestHeight >= uiNumLines);
+  if (!(usDestWidth >= uiLineSize)) {
+    return FALSE;
+  }
+  if (!(usDestHeight >= uiNumLines)) {
+    return FALSE;
+  }
 
   // Convert to Pixel specification
   pDest = (UINT16 *)pDestBuf + uiDestStart;
@@ -604,7 +650,9 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer) {
 
   // Create buffer for objects
   pBuffer->pETRLEObject = (ETRLEObject *)MemAlloc(sizeof(ETRLEObject) * pBuffer->usNumberOfObjects);
-  CHECKF(pBuffer->pETRLEObject != NULL);
+  if (!(pBuffer->pETRLEObject != NULL)) {
+    return FALSE;
+  }
 
   // Copy into buffer
   memcpy(pBuffer->pETRLEObject, hImage->pETRLEObject,
@@ -612,7 +660,9 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer) {
 
   // Allocate memory for pixel data
   pBuffer->pPixData = MemAlloc(hImage->uiSizePixData);
-  CHECKF(pBuffer->pPixData != NULL);
+  if (!(pBuffer->pPixData != NULL)) {
+    return FALSE;
+  }
 
   pBuffer->uiSizePixData = hImage->uiSizePixData;
 

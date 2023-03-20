@@ -825,7 +825,7 @@ BOOLEAN EnterShopKeeperInterface() {
           // load the Main trade screen backgroiund image
           VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
           CopyFilename("InterFace\\TradeScreenAtm.sti", VObjectDesc.ImageFile);
-          CHECKF(AddVideoObject(&VObjectDesc, &guiSkiAtmImage ));
+          if (!(AddVideoObject(&VObjectDesc, &guiSkiAtmImage ))) { return FALSE; }
   */
 
   // Create an array of all mercs (anywhere!) currently in the player's employ, and load their small

@@ -98,7 +98,9 @@ BOOLEAN GetCivQuoteText(UINT8 ubCivQuoteID, UINT8 ubEntryID, CHAR16 *zQuote) {
     sprintf(zFileName, "NPCDATA\\CIV%02d.edt", ubCivQuoteID);
   }
 
-  CHECKF(File_Exists(zFileName));
+  if (!(File_Exists(zFileName))) {
+    return FALSE;
+  }
 
   // Get data...
   LoadEncryptedDataFromFile(zFileName, zQuote, ubEntryID * 320, 320);

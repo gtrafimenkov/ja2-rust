@@ -420,7 +420,9 @@ BOOLEAN AddGameEventToQueue(UINT32 uiEvent, UINT16 usDelay, PTR pEventData, UINT
       return (FALSE);
   }
 
-  CHECKF(AddEvent(uiEvent, usDelay, pEventData, uiDataSize, ubQueueID));
+  if (!(AddEvent(uiEvent, usDelay, pEventData, uiDataSize, ubQueueID))) {
+    return FALSE;
+  }
 
   // successful
   return (TRUE);

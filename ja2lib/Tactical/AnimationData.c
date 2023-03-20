@@ -4168,7 +4168,9 @@ BOOLEAN InitAnimationSystem() {
   CHAR8 sFilename[50];
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
-  CHECKF(LoadAnimationStateInstructions());
+  if (!(LoadAnimationStateInstructions())) {
+    return FALSE;
+  }
 
   InitAnimationSurfacesPerBodytype();
 
@@ -4264,7 +4266,9 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
   struct AuxObjectData *pAuxData;
 
   // Check for valid surface
-  CHECKF(usSurfaceIndex < NUMANIMATIONSURFACETYPES);
+  if (!(usSurfaceIndex < NUMANIMATIONSURFACETYPES)) {
+    return FALSE;
+  }
 
   // Check if surface is loaded
   if (gAnimSurfaceDatabase[usSurfaceIndex].hVideoObject != NULL) {

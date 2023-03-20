@@ -96,109 +96,151 @@ BOOLEAN InitializeFonts() {
   //	gpLargeFontType1  = LoadFontFile( "FONTS\\lfont1.sti" );
   gpLargeFontType1 = LoadFontFile("FONTS\\LARGEFONT1.sti");
   gvoLargeFontType1 = GetFontObject(gpLargeFontType1);
-  CHECKF(CreateFontPaletteTables(gvoLargeFontType1));
+  if (!(CreateFontPaletteTables(gvoLargeFontType1))) {
+    return FALSE;
+  }
 
   //	gpSmallFontType1  = LoadFontFile( "FONTS\\6b-font.sti" );
   gpSmallFontType1 = LoadFontFile("FONTS\\SMALLFONT1.sti");
   gvoSmallFontType1 = GetFontObject(gpSmallFontType1);
-  CHECKF(CreateFontPaletteTables(gvoSmallFontType1));
+  if (!(CreateFontPaletteTables(gvoSmallFontType1))) {
+    return FALSE;
+  }
 
   //	gpTinyFontType1  = LoadFontFile( "FONTS\\tfont1.sti" );
   gpTinyFontType1 = LoadFontFile("FONTS\\TINYFONT1.sti");
   gvoTinyFontType1 = GetFontObject(gpTinyFontType1);
-  CHECKF(CreateFontPaletteTables(gvoTinyFontType1));
+  if (!(CreateFontPaletteTables(gvoTinyFontType1))) {
+    return FALSE;
+  }
 
   //	gp12PointFont1	= LoadFontFile( "FONTS\\font-12.sti" );
   gp12PointFont1 = LoadFontFile("FONTS\\FONT12POINT1.sti");
   gvo12PointFont1 = GetFontObject(gp12PointFont1);
-  CHECKF(CreateFontPaletteTables(gvo12PointFont1));
+  if (!(CreateFontPaletteTables(gvo12PointFont1))) {
+    return FALSE;
+  }
 
   //  gpClockFont  = LoadFontFile( "FONTS\\DIGI.sti" );
   gpClockFont = LoadFontFile("FONTS\\CLOCKFONT.sti");
   gvoClockFont = GetFontObject(gpClockFont);
-  CHECKF(CreateFontPaletteTables(gvoClockFont));
+  if (!(CreateFontPaletteTables(gvoClockFont))) {
+    return FALSE;
+  }
 
   //  gpCompFont  = LoadFontFile( "FONTS\\compfont.sti" );
   gpCompFont = LoadFontFile("FONTS\\COMPFONT.sti");
   gvoCompFont = GetFontObject(gpCompFont);
-  CHECKF(CreateFontPaletteTables(gvoCompFont));
+  if (!(CreateFontPaletteTables(gvoCompFont))) {
+    return FALSE;
+  }
 
   //  gpSmallCompFont  = LoadFontFile( "FONTS\\scfont.sti" );
   gpSmallCompFont = LoadFontFile("FONTS\\SMALLCOMPFONT.sti");
   gvoSmallCompFont = GetFontObject(gpSmallCompFont);
-  CHECKF(CreateFontPaletteTables(gvoSmallCompFont));
+  if (!(CreateFontPaletteTables(gvoSmallCompFont))) {
+    return FALSE;
+  }
 
   //  gp10PointRoman  = LoadFontFile( "FONTS\\Roman10.sti" );
   gp10PointRoman = LoadFontFile("FONTS\\FONT10ROMAN.sti");
   gvo10PointRoman = GetFontObject(gp10PointRoman);
-  CHECKF(CreateFontPaletteTables(gvo10PointRoman));
+  if (!(CreateFontPaletteTables(gvo10PointRoman))) {
+    return FALSE;
+  }
 
   //  gp12PointRoman  = LoadFontFile( "FONTS\\Roman12.sti" );
   gp12PointRoman = LoadFontFile("FONTS\\FONT12ROMAN.sti");
   gvo12PointRoman = GetFontObject(gp12PointRoman);
-  CHECKF(CreateFontPaletteTables(gvo12PointRoman));
+  if (!(CreateFontPaletteTables(gvo12PointRoman))) {
+    return FALSE;
+  }
 
   //  gp14PointSansSerif  = LoadFontFile( "FONTS\\SansSerif14.sti" );
   gp14PointSansSerif = LoadFontFile("FONTS\\FONT14SANSERIF.sti");
   gvo14PointSansSerif = GetFontObject(gp14PointSansSerif);
-  CHECKF(CreateFontPaletteTables(gvo14PointSansSerif));
+  if (!(CreateFontPaletteTables(gvo14PointSansSerif))) {
+    return FALSE;
+  }
 
   //	DEF:	Removed.  Replaced with BLOCKFONT
   //  gpMilitaryFont1  = LoadFontFile( "FONTS\\milfont.sti" );
   //  gvoMilitaryFont1 = GetFontObject( gpMilitaryFont1);
-  //  CHECKF( CreateFontPaletteTables( gvoMilitaryFont1) );
+  //  if (!( CreateFontPaletteTables( gvoMilitaryFont1) )) { return FALSE; }
 
   //  gp10PointArial  = LoadFontFile( "FONTS\\Arial10.sti" );
   gp10PointArial = LoadFontFile("FONTS\\FONT10ARIAL.sti");
   gvo10PointArial = GetFontObject(gp10PointArial);
-  CHECKF(CreateFontPaletteTables(gvo10PointArial));
+  if (!(CreateFontPaletteTables(gvo10PointArial))) {
+    return FALSE;
+  }
 
   //  gp14PointArial  = LoadFontFile( "FONTS\\Arial14.sti" );
   gp14PointArial = LoadFontFile("FONTS\\FONT14ARIAL.sti");
   gvo14PointArial = GetFontObject(gp14PointArial);
-  CHECKF(CreateFontPaletteTables(gvo14PointArial));
+  if (!(CreateFontPaletteTables(gvo14PointArial))) {
+    return FALSE;
+  }
 
   //  gp10PointArialBold  = LoadFontFile( "FONTS\\Arial10Bold2.sti" );
   gp10PointArialBold = LoadFontFile("FONTS\\FONT10ARIALBOLD.sti");
   gvo10PointArialBold = GetFontObject(gp10PointArialBold);
-  CHECKF(CreateFontPaletteTables(gvo10PointArialBold));
+  if (!(CreateFontPaletteTables(gvo10PointArialBold))) {
+    return FALSE;
+  }
 
   //  gp12PointArial  = LoadFontFile( "FONTS\\Arial12.sti" );
   gp12PointArial = LoadFontFile("FONTS\\FONT12ARIAL.sti");
   gvo12PointArial = GetFontObject(gp12PointArial);
-  CHECKF(CreateFontPaletteTables(gvo12PointArial));
+  if (!(CreateFontPaletteTables(gvo12PointArial))) {
+    return FALSE;
+  }
 
   //	gpBlockyFont  = LoadFontFile( "FONTS\\FONT2.sti" );
   gpBlockyFont = LoadFontFile("FONTS\\BLOCKFONT.sti");
   gvoBlockyFont = GetFontObject(gpBlockyFont);
-  CHECKF(CreateFontPaletteTables(gvoBlockyFont));
+  if (!(CreateFontPaletteTables(gvoBlockyFont))) {
+    return FALSE;
+  }
 
   //	gpBlockyFont2  = LoadFontFile( "FONTS\\interface_font.sti" );
   gpBlockyFont2 = LoadFontFile("FONTS\\BLOCKFONT2.sti");
   gvoBlockyFont2 = GetFontObject(gpBlockyFont2);
-  CHECKF(CreateFontPaletteTables(gvoBlockyFont2));
+  if (!(CreateFontPaletteTables(gvoBlockyFont2))) {
+    return FALSE;
+  }
 
   //	gp12PointArialFixedFont = LoadFontFile( "FONTS\\Arial12FixedWidth.sti" );
   gp12PointArialFixedFont = LoadFontFile("FONTS\\FONT12ARIALFIXEDWIDTH.sti");
   gvo12PointArialFixedFont = GetFontObject(gp12PointArialFixedFont);
-  CHECKF(CreateFontPaletteTables(gvo12PointArialFixedFont));
+  if (!(CreateFontPaletteTables(gvo12PointArialFixedFont))) {
+    return FALSE;
+  }
 
   gp16PointArial = LoadFontFile("FONTS\\FONT16ARIAL.sti");
   gvo16PointArial = GetFontObject(gp16PointArial);
-  CHECKF(CreateFontPaletteTables(gvo16PointArial));
+  if (!(CreateFontPaletteTables(gvo16PointArial))) {
+    return FALSE;
+  }
 
   gpBlockFontNarrow = LoadFontFile("FONTS\\BLOCKFONTNARROW.sti");
   gvoBlockFontNarrow = GetFontObject(gpBlockFontNarrow);
-  CHECKF(CreateFontPaletteTables(gvoBlockFontNarrow));
+  if (!(CreateFontPaletteTables(gvoBlockFontNarrow))) {
+    return FALSE;
+  }
 
   gp14PointHumanist = LoadFontFile("FONTS\\FONT14HUMANIST.sti");
   gvo14PointHumanist = GetFontObject(gp14PointHumanist);
-  CHECKF(CreateFontPaletteTables(gvo14PointHumanist));
+  if (!(CreateFontPaletteTables(gvo14PointHumanist))) {
+    return FALSE;
+  }
 
 #if defined(JA2EDITOR) && defined(ENGLISH)
   gpHugeFont = LoadFontFile("FONTS\\HUGEFONT.sti");
   gvoHugeFont = GetFontObject(gpHugeFont);
-  CHECKF(CreateFontPaletteTables(gvoHugeFont));
+  if (!(CreateFontPaletteTables(gvoHugeFont))) {
+    return FALSE;
+  }
 #endif
 
   // Set default for font system
@@ -235,8 +277,12 @@ void ShutdownFonts() {
 BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
   struct VObject* pFont;
 
-  CHECKF(bColorID > 0);
-  CHECKF(bColorID < 16);
+  if (!(bColorID > 0)) {
+    return FALSE;
+  }
+  if (!(bColorID < 16)) {
+    return FALSE;
+  }
 
   pFont = GetFontObject(uiFontID);
 

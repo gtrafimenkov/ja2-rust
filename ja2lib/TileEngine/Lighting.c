@@ -957,7 +957,9 @@ BOOLEAN LightSetNaturalTile(INT16 iX, INT16 iY, UINT8 ubShade) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
   UINT32 uiIndex;
 
-  CHECKF(gpWorldLevelData != NULL);
+  if (!(gpWorldLevelData != NULL)) {
+    return FALSE;
+  }
 
   uiIndex = MAPROWCOLTOPOS(iY, iX);
 
@@ -1037,11 +1039,15 @@ BOOLEAN LightResetTile(INT16 iX, INT16 iY) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
   UINT32 uiTile;
 
-  CHECKF(gpWorldLevelData != NULL);
+  if (!(gpWorldLevelData != NULL)) {
+    return FALSE;
+  }
 
   uiTile = MAPROWCOLTOPOS(iY, iX);
 
-  CHECKF(uiTile != 0xffff);
+  if (!(uiTile != 0xffff)) {
+    return FALSE;
+  }
 
   pLand = gpWorldLevelData[uiTile].pLandHead;
 

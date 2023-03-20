@@ -180,7 +180,9 @@ BOOLEAN SetVideoObjectTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   struct VObject *hVObject;
 
   // Get video object
-  CHECKF(GetVideoObject(&hVObject, uiIndex));
+  if (!(GetVideoObject(&hVObject, uiIndex))) {
+    return FALSE;
+  }
 
   // Set transparency
   SetVideoObjectTransparencyColor(hVObject, TransColor);
@@ -313,7 +315,9 @@ struct VObject *CreateVObjectFromFile(const char *path) {
 
   // Allocate memory for video object data and initialize
   hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
-  CHECKF(hVObject != NULL);
+  if (!(hVObject != NULL)) {
+    return FALSE;
+  }
   memset(hVObject, 0, sizeof(struct VObject));
 
   // Create himage object from file
@@ -337,7 +341,9 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
-  CHECKF(GetETRLEImageData(hImage, &TempETRLEData));
+  if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
+    return FALSE;
+  }
 
   // Set values
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
@@ -364,7 +370,9 @@ struct VObject *CreateVObjectFromHImage(HIMAGE hImage) {
 
   // Allocate memory for video object data and initialize
   hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
-  CHECKF(hVObject != NULL);
+  if (!(hVObject != NULL)) {
+    return FALSE;
+  }
   memset(hVObject, 0, sizeof(struct VObject));
 
   if (hImage == NULL) {
@@ -385,7 +393,9 @@ struct VObject *CreateVObjectFromHImage(HIMAGE hImage) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
-  CHECKF(GetETRLEImageData(hImage, &TempETRLEData));
+  if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
+    return FALSE;
+  }
 
   // Set values
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
@@ -414,7 +424,9 @@ static BOOLEAN SetVideoObjectPalette(struct VObject *hVObject,
     // Create palette
     hVObject->pPaletteEntry =
         (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
-    CHECKF(hVObject->pPaletteEntry != NULL);
+    if (!(hVObject->pPaletteEntry != NULL)) {
+      return FALSE;
+    }
 
     // Copy src into palette
     memcpy(hVObject->pPaletteEntry, pSrcPalette, sizeof(struct SGPPaletteEntry) * 256);
@@ -456,7 +468,9 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
   UINT16 usLoop;
 
   // Assertions
-  CHECKF(hVObject != NULL);
+  if (!(hVObject != NULL)) {
+    return FALSE;
+  }
 
   DestroyObjectPaletteTables(hVObject);
 
@@ -711,13 +725,21 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   ETRLEObject *pETRLEObject;
 
   // Do a bunch of checks
-  CHECKF(hVObject != NULL);
-  CHECKF(usETRLEIndex < hVObject->usNumberOfObjects);
+  if (!(hVObject != NULL)) {
+    return FALSE;
+  }
+  if (!(usETRLEIndex < hVObject->usNumberOfObjects)) {
+    return FALSE;
+  }
 
   pETRLEObject = &(hVObject->pETRLEObject[usETRLEIndex]);
 
-  CHECKF(usX < pETRLEObject->usWidth);
-  CHECKF(usY < pETRLEObject->usHeight);
+  if (!(usX < pETRLEObject->usWidth)) {
+    return FALSE;
+  }
+  if (!(usY < pETRLEObject->usHeight)) {
+    return FALSE;
+  }
 
   // Assuming everything's okay, go ahead and look...
   pCurrent = &((UINT8 *)hVObject->pPixData)[pETRLEObject->uiDataOffset];
@@ -763,8 +785,12 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
 
 BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, ETRLEObject *pETRLEObject,
                                       UINT16 usIndex) {
-  CHECKF(usIndex >= 0);
-  CHECKF(usIndex < hVObject->usNumberOfObjects);
+  if (!(usIndex >= 0)) {
+    return FALSE;
+  }
+  if (!(usIndex < hVObject->usNumberOfObjects)) {
+    return FALSE;
+  }
 
   memcpy(pETRLEObject, &(hVObject->pETRLEObject[usIndex]), sizeof(ETRLEObject));
 
@@ -777,9 +803,13 @@ BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIn
   ETRLEObject ETRLEObject;
 
   // Get video object
-  CHECKF(GetVideoObject(&hVObject, uiVideoObject));
+  if (!(GetVideoObject(&hVObject, uiVideoObject))) {
+    return FALSE;
+  }
 
-  CHECKF(GetVideoObjectETRLEProperties(hVObject, &ETRLEObject, usIndex));
+  if (!(GetVideoObjectETRLEProperties(hVObject, &ETRLEObject, usIndex))) {
+    return FALSE;
+  }
 
   *pusWidth = ETRLEObject.usWidth;
   *pusHeight = ETRLEObject.usHeight;
@@ -792,9 +822,13 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, ETRLEObject
   struct VObject *hVObject;
 
   // Get video object
-  CHECKF(GetVideoObject(&hVObject, uiVideoObject));
+  if (!(GetVideoObject(&hVObject, uiVideoObject))) {
+    return FALSE;
+  }
 
-  CHECKF(GetVideoObjectETRLEProperties(hVObject, pETRLEObject, usIndex));
+  if (!(GetVideoObjectETRLEProperties(hVObject, pETRLEObject, usIndex))) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -814,7 +848,9 @@ BOOLEAN BltVideoObjectOutlineFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObjec
   }
 
   // Get video object
-  CHECKF(GetVideoObject(&hSrcVObject, uiSrcVObject));
+  if (!(GetVideoObject(&hSrcVObject, uiSrcVObject))) {
+    return FALSE;
+  }
 
   if (BltIsClipped(hSrcVObject, iDestX, iDestY, usIndex, &ClippingRect)) {
     Blt8BPPDataTo16BPPBufferOutlineClip((UINT16 *)pBuffer, uiPitch, hSrcVObject, iDestX, iDestY,
@@ -869,7 +905,9 @@ BOOLEAN BltVideoObjectOutlineShadowFromIndex(UINT32 uiDestVSurface, UINT32 uiSrc
   }
 
   // Get video object
-  CHECKF(GetVideoObject(&hSrcVObject, uiSrcVObject));
+  if (!(GetVideoObject(&hSrcVObject, uiSrcVObject))) {
+    return FALSE;
+  }
 
   if (BltIsClipped(hSrcVObject, iDestX, iDestY, usIndex, &ClippingRect)) {
     Blt8BPPDataTo16BPPBufferOutlineShadowClip((UINT16 *)pBuffer, uiPitch, hSrcVObject, iDestX,

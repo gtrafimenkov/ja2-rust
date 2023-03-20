@@ -155,12 +155,16 @@ BOOLEAN LoadTextMercPopupImages(UINT8 ubBackgroundIndex, UINT8 ubBorderIndex) {
   // the background
   vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
   strcpy(vs_desc.ImageFile, zMercBackgroundPopupFilenames[ubBackgroundIndex]);
-  CHECKF(AddVideoSurface(&vs_desc, &gPopUpTextBox->uiMercTextPopUpBackground));
+  if (!(AddVideoSurface(&vs_desc, &gPopUpTextBox->uiMercTextPopUpBackground))) {
+    return FALSE;
+  }
 
   // border
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename(zMercBorderPopupFilenames[ubBorderIndex], VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &gPopUpTextBox->uiMercTextPopUpBorder));
+  if (!(AddVideoObject(&VObjectDesc, &gPopUpTextBox->uiMercTextPopUpBorder))) {
+    return FALSE;
+  }
 
   gPopUpTextBox->fMercTextPopupInitialized = TRUE;
 
@@ -391,7 +395,9 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   vs_desc.usWidth = usWidth;
   vs_desc.usHeight = usHeight;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &pPopUpTextBox->uiSourceBufferIndex));
+  if (!(AddVideoSurface(&vs_desc, &pPopUpTextBox->uiSourceBufferIndex))) {
+    return FALSE;
+  }
   pPopUpTextBox->fMercTextPopupSurfaceInitialized = TRUE;
 
   pPopUpTextBox->sWidth = usWidth;

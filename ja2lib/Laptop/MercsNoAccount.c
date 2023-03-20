@@ -52,7 +52,9 @@ BOOLEAN EnterMercsNoAccount() {
   // load the Account box graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\NoAccountBox.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiNoAccountImage));
+  if (!(AddVideoObject(&VObjectDesc, &guiNoAccountImage))) {
+    return FALSE;
+  }
 
   // Open Accouint button
   guiOpenAccountBoxButtonImage = LoadButtonImage("LAPTOP\\BigButtons.sti", -1, 0, -1, 1, -1);

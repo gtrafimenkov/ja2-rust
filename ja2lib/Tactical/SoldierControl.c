@@ -1022,7 +1022,9 @@ BOOLEAN EVENT_InitNewSoldierAnim(struct SOLDIERTYPE *pSoldier, UINT16 usNewState
   UINT16 usItem;
   BOOLEAN fTryingToRestart = FALSE;
 
-  CHECKF(usNewState < NUMANIMATIONSTATES);
+  if (!(usNewState < NUMANIMATIONSTATES)) {
+    return FALSE;
+  }
 
   ///////////////////////////////////////////////////////////////////////
   //			DO SOME CHECKS ON OUR NEW ANIMATION!
@@ -4159,7 +4161,9 @@ BOOLEAN ConvertAniCodeToAniFrame(struct SOLDIERTYPE *pSoldier, UINT16 usAniFrame
   // get anim surface and determine # of frames
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
-  CHECKF(usAnimSurface != INVALID_ANIMATION_SURFACE);
+  if (!(usAnimSurface != INVALID_ANIMATION_SURFACE)) {
+    return FALSE;
+  }
 
   // COnvert world direction into sprite direction
   ubTempDir = gOneCDirection[pSoldier->bDirection];
@@ -4573,12 +4577,16 @@ BOOLEAN CreateSoldierPalettes(struct SOLDIERTYPE *pSoldier) {
   pSoldier->p8BPPPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
   memset(pSoldier->p8BPPPalette, 0, sizeof(struct SGPPaletteEntry) * 256);
 
-  CHECKF(pSoldier->p8BPPPalette != NULL);
+  if (!(pSoldier->p8BPPPalette != NULL)) {
+    return FALSE;
+  }
 
   // --- TAKE FROM CURRENT ANIMATION struct VObject*!
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
-  CHECKF(usAnimSurface != INVALID_ANIMATION_SURFACE);
+  if (!(usAnimSurface != INVALID_ANIMATION_SURFACE)) {
+    return FALSE;
+  }
 
   if ((bBodyTypePalette = GetBodyTypePaletteSubstitutionCode(pSoldier, pSoldier->ubBodyType,
                                                              zColFilename)) == -1) {
@@ -4928,11 +4936,17 @@ BOOLEAN LoadPaletteData() {
 
     // Malloc
     gpPalRep[cnt].r = (UINT8 *)MemAlloc(gpPalRep[cnt].ubPaletteSize);
-    CHECKF(gpPalRep[cnt].r != NULL);
+    if (!(gpPalRep[cnt].r != NULL)) {
+      return FALSE;
+    }
     gpPalRep[cnt].g = (UINT8 *)MemAlloc(gpPalRep[cnt].ubPaletteSize);
-    CHECKF(gpPalRep[cnt].g != NULL);
+    if (!(gpPalRep[cnt].g != NULL)) {
+      return FALSE;
+    }
     gpPalRep[cnt].b = (UINT8 *)MemAlloc(gpPalRep[cnt].ubPaletteSize);
-    CHECKF(gpPalRep[cnt].b != NULL);
+    if (!(gpPalRep[cnt].b != NULL)) {
+      return FALSE;
+    }
 
     for (cnt2 = 0; cnt2 < gpPalRep[cnt].ubPaletteSize; cnt2++) {
       if (!File_Read(hFile, &gpPalRep[cnt].r[cnt2], sizeof(UINT8), NULL)) {
@@ -4957,7 +4971,9 @@ BOOLEAN SetPaletteReplacement(struct SGPPaletteEntry *p8BPPPalette, PaletteRepID
   UINT8 ubType;
   UINT8 ubPalIndex;
 
-  CHECKF(GetPaletteRepIndexFromID(aPalRep, &ubPalIndex));
+  if (!(GetPaletteRepIndexFromID(aPalRep, &ubPalIndex))) {
+    return FALSE;
+  }
 
   // Get range type
   ubType = gpPalRep[ubPalIndex].ubType;
@@ -5686,7 +5702,9 @@ BOOLEAN InternalDoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSo
   INT32 uiSubSoundID = 0;
 
   // DOUBLECHECK RANGE
-  CHECKF(ubBattleSoundID < NUM_MERC_BATTLE_SOUNDS);
+  if (!(ubBattleSoundID < NUM_MERC_BATTLE_SOUNDS)) {
+    return FALSE;
+  }
 
   if ((pSoldier->uiStatusFlags & SOLDIER_VEHICLE)) {
     // Pick a passenger from vehicle....
@@ -5997,7 +6015,9 @@ BOOLEAN DoMercBattleSound(struct SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID) {
 BOOLEAN PreloadSoldierBattleSounds(struct SOLDIERTYPE *pSoldier, BOOLEAN fRemove) {
   UINT32 cnt;
 
-  CHECKF(IsSolActive(pSoldier) != FALSE);
+  if (!(IsSolActive(pSoldier) != FALSE)) {
+    return FALSE;
+  }
 
   for (cnt = 0; cnt < NUM_MERC_BATTLE_SOUNDS; cnt++) {
     // OK, build file and play!
@@ -6786,7 +6806,9 @@ BOOLEAN GetProfileFlagsFromGridno(struct SOLDIERTYPE *pSoldier, UINT16 usAnimSta
   // Get Surface Index
   usAnimSurface = DetermineSoldierAnimationSurface(pSoldier, usAnimState);
 
-  CHECKF(usAnimSurface != INVALID_ANIMATION_SURFACE);
+  if (!(usAnimSurface != INVALID_ANIMATION_SURFACE)) {
+    return FALSE;
+  }
 
   bProfileID = gAnimSurfaceDatabase[usAnimSurface].bProfile;
 

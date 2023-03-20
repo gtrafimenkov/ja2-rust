@@ -109,37 +109,51 @@ BOOLEAN EnterFuneral() {
   // load the Closed graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_CLOSED);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiClosedSign));
+  if (!(AddVideoObject(&VObjectDesc, &guiClosedSign))) {
+    return FALSE;
+  }
 
   // load the Left column graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LeftColumn.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLeftColumn));
+  if (!(AddVideoObject(&VObjectDesc, &guiLeftColumn))) {
+    return FALSE;
+  }
 
   // load the Link carving graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\LinkCarving.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLinkCarving));
+  if (!(AddVideoObject(&VObjectDesc, &guiLinkCarving))) {
+    return FALSE;
+  }
 
   // load the Marble graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\Marble.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMarbleBackground));
+  if (!(AddVideoObject(&VObjectDesc, &guiMarbleBackground))) {
+    return FALSE;
+  }
 
   // load the McGillicuttys sign graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_MCGILLICUTTYS);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMcGillicuttys));
+  if (!(AddVideoObject(&VObjectDesc, &guiMcGillicuttys))) {
+    return FALSE;
+  }
 
   // load the Mortuary  graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_MORTUARY);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMortuary));
+  if (!(AddVideoObject(&VObjectDesc, &guiMortuary))) {
+    return FALSE;
+  }
 
   // load the right column graphic and add it
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\RightColumn.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiRightColumn));
+  if (!(AddVideoObject(&VObjectDesc, &guiRightColumn))) {
+    return FALSE;
+  }
 
   usPosX = FUNERAL_LINK_1_X;
   for (i = 0; i < FUNERAL_NUMBER_OF_LINKS; i++) {

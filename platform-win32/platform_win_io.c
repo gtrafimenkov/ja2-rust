@@ -161,8 +161,12 @@ BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {
   INT32 x, iWhich = 0;
   BOOLEAN fFound;
 
-  CHECKF(pSpec != NULL);
-  CHECKF(pGFStruct != NULL);
+  if (!(pSpec != NULL)) {
+    return FALSE;
+  }
+  if (!(pGFStruct != NULL)) {
+    return FALSE;
+  }
 
   fFound = FALSE;
   for (x = 0; x < 20 && !fFound; x++) {
@@ -187,7 +191,9 @@ BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {
 }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) {
-  CHECKF(pGFStruct != NULL);
+  if (!(pGFStruct != NULL)) {
+    return FALSE;
+  }
 
   if (FindNextFile(hFindInfoHandle[pGFStruct->iFindHandle],
                    &Win32FindInfo[pGFStruct->iFindHandle])) {

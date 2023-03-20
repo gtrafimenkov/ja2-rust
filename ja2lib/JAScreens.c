@@ -402,7 +402,9 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
     GetSoldier(&pSoldier, gusSelectedSoldier);
 
     // Get index of current
-    CHECKF(GetPaletteRepIndexFromID(pSoldier->HeadPal, &ubPaletteRep));
+    if (!(GetPaletteRepIndexFromID(pSoldier->HeadPal, &ubPaletteRep))) {
+      return FALSE;
+    }
     ubType = gpPalRep[ubPaletteRep].ubType;
 
     ubPaletteRep++;
@@ -429,7 +431,9 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
     GetSoldier(&pSoldier, gusSelectedSoldier);
 
     // Get index of current
-    CHECKF(GetPaletteRepIndexFromID(pSoldier->VestPal, &ubPaletteRep));
+    if (!(GetPaletteRepIndexFromID(pSoldier->VestPal, &ubPaletteRep))) {
+      return FALSE;
+    }
     ubType = gpPalRep[ubPaletteRep].ubType;
 
     ubPaletteRep++;
@@ -456,7 +460,9 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
     GetSoldier(&pSoldier, gusSelectedSoldier);
 
     // Get index of current
-    CHECKF(GetPaletteRepIndexFromID(pSoldier->PantsPal, &ubPaletteRep));
+    if (!(GetPaletteRepIndexFromID(pSoldier->PantsPal, &ubPaletteRep))) {
+      return FALSE;
+    }
     ubType = gpPalRep[ubPaletteRep].ubType;
 
     ubPaletteRep++;
@@ -483,7 +489,9 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
     GetSoldier(&pSoldier, gusSelectedSoldier);
 
     // Get index of current
-    CHECKF(GetPaletteRepIndexFromID(pSoldier->SkinPal, &ubPaletteRep));
+    if (!(GetPaletteRepIndexFromID(pSoldier->SkinPal, &ubPaletteRep))) {
+      return FALSE;
+    }
     ubType = gpPalRep[ubPaletteRep].ubType;
 
     ubPaletteRep++;

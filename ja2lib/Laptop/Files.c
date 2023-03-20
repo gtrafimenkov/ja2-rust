@@ -317,22 +317,30 @@ BOOLEAN LoadFiles(void) {
   // title bar
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTITLE));
+  if (!(AddVideoObject(&VObjectDesc, &guiTITLE))) {
+    return FALSE;
+  }
 
   // top portion of the screen background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\fileviewer.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTOP));
+  if (!(AddVideoObject(&VObjectDesc, &guiTOP))) {
+    return FALSE;
+  }
 
   // the highlight
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\highlight.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiHIGHLIGHT));
+  if (!(AddVideoObject(&VObjectDesc, &guiHIGHLIGHT))) {
+    return FALSE;
+  }
 
   // top portion of the screen background
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   CopyFilename("LAPTOP\\fileviewerwhite.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiFileBack));
+  if (!(AddVideoObject(&VObjectDesc, &guiFileBack))) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -772,7 +780,9 @@ BOOLEAN DisplayFormattedText(void) {
       // load graphic
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &uiFirstTempPicture));
+      if (!(AddVideoObject(&VObjectDesc, &uiFirstTempPicture))) {
+        return FALSE;
+      }
 
       GetVideoObjectETRLESubregionProperties(uiFirstTempPicture, 0, &usFirstWidth, &usFirstHeight);
 
@@ -812,12 +822,16 @@ BOOLEAN DisplayFormattedText(void) {
       // load first graphic
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(pFilesList->pPicFileNameList[0], VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &uiFirstTempPicture));
+      if (!(AddVideoObject(&VObjectDesc, &uiFirstTempPicture))) {
+        return FALSE;
+      }
 
       // load second graphic
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(pFilesList->pPicFileNameList[1], VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &uiSecondTempPicture));
+      if (!(AddVideoObject(&VObjectDesc, &uiSecondTempPicture))) {
+        return FALSE;
+      }
 
       GetVideoObjectETRLESubregionProperties(uiFirstTempPicture, 0, &usFirstWidth, &usFirstHeight);
       GetVideoObjectETRLESubregionProperties(uiSecondTempPicture, 0, &usSecondWidth,
@@ -1036,7 +1050,9 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
     // title bar
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\ArucoFilesMap.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
+    if (!(AddVideoObject(&VObjectDesc, &uiPicture))) {
+      return FALSE;
+    }
 
     // get title bar object
     GetVideoObject(&hHandle, uiPicture);
@@ -1050,7 +1066,9 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
     // kid pic
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\Enrico_Y.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
+    if (!(AddVideoObject(&VObjectDesc, &uiPicture))) {
+      return FALSE;
+    }
 
     // get title bar object
     GetVideoObject(&hHandle, uiPicture);
@@ -1064,7 +1082,9 @@ BOOLEAN HandleSpecialFiles(UINT8 ubFormat) {
     // wedding pic
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     CopyFilename("LAPTOP\\Enrico_W.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
+    if (!(AddVideoObject(&VObjectDesc, &uiPicture))) {
+      return FALSE;
+    }
 
     // get title bar object
     GetVideoObject(&hHandle, uiPicture);
@@ -1514,7 +1534,9 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename(sTemp, VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
+      if (!(AddVideoObject(&VObjectDesc, &uiPicture))) {
+        return FALSE;
+      }
 
       // Blt face to screen to
       GetVideoObject(&hHandle, uiPicture);
@@ -1529,7 +1551,9 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
       CopyFilename("LAPTOP\\InterceptBorder.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
+      if (!(AddVideoObject(&VObjectDesc, &uiPicture))) {
+        return FALSE;
+      }
 
       // Blt face to screen to
       GetVideoObject(&hHandle, uiPicture);
