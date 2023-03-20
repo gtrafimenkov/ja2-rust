@@ -210,10 +210,6 @@ INT16 GetWinFontHeight(STR16 string2, INT32 iFont) { return 0; }
 
 UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) { return 0; }
 
-UINT16 GetVSurfaceHeight(const struct VSurface *vs) { return 0; }
-UINT16 GetVSurfaceWidth(const struct VSurface *vs) { return 0; }
-UINT16 *GetVSurface16BPPPalette(struct VSurface *vs) { return NULL; }
-void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette) {}
 BOOLEAN FillSurface(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
 BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
 
