@@ -1070,11 +1070,8 @@ void EnableSMPanelButtons(BOOLEAN fEnable, BOOLEAN fFromItemPickup) {
 UINT16 GetSMPanelCurrentMerc() { return (gusSMCurrentMerc); }
 
 BOOLEAN InitializeSMPanel() {
-  VOBJECT_DESC VObjectDesc;
-
   // failing the CHECKF after this will cause you to lose your mouse
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\inventory_bottom_panel.STI");
-  if (!AddVideoObject(&VObjectDesc, &guiSMPanel)) {
+  if (!AddVObjectFromFile("INTERFACE\\inventory_bottom_panel.STI", &guiSMPanel)) {
     return FALSE;
   }
 

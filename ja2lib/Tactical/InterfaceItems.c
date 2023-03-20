@@ -2190,18 +2190,15 @@ BOOLEAN InternalInitItemDescriptionBox(struct OBJECTTYPE *pObject, INT16 sX, INT
   }
 
   // Load graphic
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\infobox.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiItemDescBox)) {
+  if (!AddVObjectFromFile("INTERFACE\\infobox.sti", &guiItemDescBox)) {
     return FALSE;
   }
 
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\iteminfoc.STI");
-  if (!AddVideoObject(&VObjectDesc, &guiMapItemDescBox)) {
+  if (!AddVObjectFromFile("INTERFACE\\iteminfoc.STI", &guiMapItemDescBox)) {
     return FALSE;
   }
 
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\bullet.STI");
-  if (!AddVideoObject(&VObjectDesc, &guiBullet)) {
+  if (!AddVObjectFromFile("INTERFACE\\bullet.STI", &guiBullet)) {
     return FALSE;
   }
 
@@ -4621,7 +4618,6 @@ BOOLEAN InKeyRingPopup() { return (gfInKeyRingPopup); }
 
 BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16 sInvX, INT16 sInvY,
                            INT16 sInvWidth, INT16 sInvHeight) {
-  VOBJECT_DESC VObjectDesc;
   INT16 sX, sY, sCenX, sCenY;
   SGPRect aRect;
   UINT8 ubLimit;
@@ -4655,8 +4651,7 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16
   }
 
   // Load graphics
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\extra_inventory.STI");
-  if (!AddVideoObject(&VObjectDesc, &guiItemPopupBoxes)) {
+  if (!AddVObjectFromFile("INTERFACE\\extra_inventory.STI", &guiItemPopupBoxes)) {
     return FALSE;
   }
 
@@ -4827,7 +4822,6 @@ void DeleteItemStackPopup() {
 
 BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY, INT16 sInvWidth,
                          INT16 sInvHeight) {
-  VOBJECT_DESC VObjectDesc;
   SGPRect aRect;
   ETRLEObject *pTrav;
   struct VObject *hVObject;
@@ -4855,8 +4849,7 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
   gpItemPopupSoldier = pSoldier;
 
   // Load graphics
-  strcpy(VObjectDesc.ImageFile, "INTERFACE\\extra_inventory.STI");
-  if (!AddVideoObject(&VObjectDesc, &guiItemPopupBoxes)) {
+  if (!AddVObjectFromFile("INTERFACE\\extra_inventory.STI", &guiItemPopupBoxes)) {
     return FALSE;
   }
 

@@ -237,11 +237,9 @@ BOOLEAN CreateAIViewer() {
   DisableScrollMessages();
   giSaveTCMode = giTimeCompressMode;
 
-  strcpy(VObjectDesc.ImageFile, "DevTools\\arulco.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiMapGraphicID))
+  if (!AddVObjectFromFile("DevTools\\arulco.sti", &guiMapGraphicID))
     AssertMsg(0, "Failed to load data\\DevTools\\arulco.sti");
-  strcpy(VObjectDesc.ImageFile, "DevTools\\icons.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiMapIconsID))
+  if (!AddVObjectFromFile("DevTools\\icons.sti", &guiMapIconsID))
     AssertMsg(0, "Failed to load data\\DevTools\\icons.sti");
 
   gfRenderViewer = TRUE;

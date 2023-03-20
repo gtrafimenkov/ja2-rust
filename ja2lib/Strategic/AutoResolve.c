@@ -1633,7 +1633,6 @@ void RenderAutoResolve() {
 }
 
 void CreateAutoResolveInterface() {
-  VOBJECT_DESC VObjectDesc;
   INT32 i, index;
   struct VObject *hVObject;
   // Setup new autoresolve blanket interface.
@@ -1643,8 +1642,7 @@ void CreateAutoResolveInterface() {
   gpAR->fExitAutoResolve = FALSE;
 
   // Load the general panel image pieces, to be combined to make the dynamically sized window.
-  strcpy(VObjectDesc.ImageFile, "Interface\\AutoResolve.sti");
-  if (!AddVideoObject(&VObjectDesc, &gpAR->iPanelImages)) {
+  if (!AddVObjectFromFile("Interface\\AutoResolve.sti", &gpAR->iPanelImages)) {
     AssertMsg(0, "Failed to load Interface\\AutoResolve.sti");
   }
 
@@ -1674,8 +1672,7 @@ void CreateAutoResolveInterface() {
       UseLoadedButtonImage(gpAR->iButtonImage[PAUSE_BUTTON], -1, 16, -1, 17, -1);
 
   // Load the generic faces for civs and enemies
-  strcpy(VObjectDesc.ImageFile, "Interface\\SmFaces.sti");
-  if (!AddVideoObject(&VObjectDesc, &gpAR->iFaces)) {
+  if (!AddVObjectFromFile("Interface\\SmFaces.sti", &gpAR->iFaces)) {
     AssertMsg(0, "Failed to load Interface\\SmFaces.sti");
   }
   if (GetVideoObject(&hVObject, gpAR->iFaces)) {
@@ -1684,8 +1681,7 @@ void CreateAutoResolveInterface() {
   }
 
   // Add the battle over panels
-  strcpy(VObjectDesc.ImageFile, "Interface\\indent.sti");
-  if (!AddVideoObject(&VObjectDesc, &gpAR->iIndent)) {
+  if (!AddVObjectFromFile("Interface\\indent.sti", &gpAR->iIndent)) {
     AssertMsg(0, "Failed to load Interface\\indent.sti");
   }
 

@@ -191,12 +191,10 @@ void InitTacticalPlacementGUI() {
   GoIntoOverheadMap();
 
   // Load the images
-  strcpy(VObjectDesc.ImageFile, "Interface\\OverheadInterface.sti");
-  if (!AddVideoObject(&VObjectDesc, &giOverheadPanelImage)) {
+  if (!AddVObjectFromFile("Interface\\OverheadInterface.sti", &giOverheadPanelImage)) {
     AssertMsg(0, "Failed to load Interface\\OverheadInterface.sti");
   }
-  strcpy(VObjectDesc.ImageFile, "Interface\\panels.sti");
-  if (!AddVideoObject(&VObjectDesc, &giMercPanelImage)) {
+  if (!AddVObjectFromFile("Interface\\panels.sti", &giMercPanelImage)) {
     AssertMsg(0, "Failed to load Interface\\panels.sti");
   }
 
