@@ -7,12 +7,6 @@
 
 struct VObject;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Video Surface SGP Module
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 //
 // Defines for special video object handles given to blit function
 //
@@ -53,14 +47,10 @@ typedef struct {
 // Used to describe the memory usage of a video Surface
 //
 
-#define VSURFACE_DEFAULT_MEM_USAGE \
-  0x00000001  // Default mem usage is same as DD, try video and then try system. Will usually work
 #define VSURFACE_VIDEO_MEM_USAGE \
   0x00000002  // Will force surface into video memory and will fail if it can't
 #define VSURFACE_SYSTEM_MEM_USAGE \
   0x00000004  // Will force surface into system memory and will fail if it can't
-#define VSURFACE_RESERVED_SURFACE \
-  0x00000100  // Reserved for special purposes, like a primary surface
 
 //
 // Video Surface creation flags

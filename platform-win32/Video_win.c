@@ -3227,10 +3227,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   //
 
   do {
-    if (fMemUsage & VSURFACE_DEFAULT_MEM_USAGE) {
-      SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-      break;
-    }
     if (fMemUsage & VSURFACE_VIDEO_MEM_USAGE) {
       SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
       break;
@@ -3479,8 +3475,7 @@ static void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
   DDUnlockSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, NULL);
 
   // Copy contents if surface is in video
-  if ((hVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE) &&
-      !(hVSurface->fFlags & VSURFACE_RESERVED_SURFACE)) {
+  if ((hVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
     UpdateBackupSurface(hVSurface);
   }
 }
@@ -4062,21 +4057,13 @@ struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurfac
   return (hVSurface);
 }
 
-struct VSurface *GetPrimaryVideoSurface() {
-  return (ghPrimary);
-}
+struct VSurface *GetPrimaryVideoSurface() { return (ghPrimary); }
 
-struct VSurface *GetBackBufferVideoSurface() {
-  return (ghBackBuffer);
-}
+struct VSurface *GetBackBufferVideoSurface() { return (ghBackBuffer); }
 
-struct VSurface *GetFrameBufferVideoSurface() {
-  return (ghFrameBuffer);
-}
+struct VSurface *GetFrameBufferVideoSurface() { return (ghFrameBuffer); }
 
-struct VSurface *GetMouseBufferVideoSurface() {
-  return (ghMouseBuffer);
-}
+struct VSurface *GetMouseBufferVideoSurface() { return (ghMouseBuffer); }
 
 // UTILITY FUNCTIONS FOR BLITTING
 
@@ -4162,8 +4149,7 @@ BOOLEAN FillSurface(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx) {
   DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, NULL, NULL, NULL, DDBLT_COLORFILL,
                &BlitterFX);
 
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE) &&
-      !(hDestVSurface->fFlags & VSURFACE_RESERVED_SURFACE)) {
+  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
     UpdateBackupSurface(hDestVSurface);
   }
 
@@ -4184,8 +4170,7 @@ BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, blt_vs_fx *pBltFx) {
   DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, (LPRECT) & (pBltFx->FillRect),
                NULL, NULL, DDBLT_COLORFILL, &BlitterFX);
 
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE) &&
-      !(hDestVSurface->fFlags & VSURFACE_RESERVED_SURFACE)) {
+  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
     UpdateBackupSurface(hDestVSurface);
   }
 
@@ -4264,8 +4249,7 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
   }
 
   // Update backup surface with new data
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE) &&
-      !(hDestVSurface->fFlags & VSURFACE_RESERVED_SURFACE)) {
+  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
     UpdateBackupSurface(hDestVSurface);
   }
 
@@ -4378,8 +4362,7 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *h
                (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags, NULL);
 
   // Update backup surface with new data
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE) &&
-      !(hDestVSurface->fFlags & VSURFACE_RESERVED_SURFACE)) {
+  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
     UpdateBackupSurface(hDestVSurface);
   }
 
