@@ -85,10 +85,6 @@ void ReportMapscreenErrorLock() {
 BOOLEAN InitializeGame(void) {
   UINT32 uiIndex;
 
-  ClearAllDebugTopics();
-  RegisterJA2DebugTopic(TOPIC_JA2OPPLIST, "Reg");
-  // RegisterJA2DebugTopic( TOPIC_MEMORY_MANAGER, "Reg" );
-
   // Initlaize mouse subsystems
   MSYS_Init();
   InitButtonSystem();
@@ -97,7 +93,7 @@ BOOLEAN InitializeGame(void) {
   // Init Fonts
   if (!InitializeFonts()) {
     // Send debug message and quit
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "COULD NOT INUT FONT SYSTEM...");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "COULD NOT INUT FONT SYSTEM...");
     return (ERROR_SCREEN);
   }
 

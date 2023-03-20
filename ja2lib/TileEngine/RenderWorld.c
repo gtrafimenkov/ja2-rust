@@ -3141,7 +3141,7 @@ void InitRenderParams(UINT8 ubRestrictionID) {
   gsTilesX = (gsTRX - gsTLX) / WORLD_TILE_X;
   gsTilesY = (gsBRY - gsTRY) / WORLD_TILE_Y;
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_0,
+  DebugMsg(TOPIC_JA2, DBG_ERROR,
            String("World Screen Width %d Height %d", (gsTRX - gsTLX), (gsBRY - gsTRY)));
 
   // Determine scale factors
@@ -3532,13 +3532,13 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
   if (hSrcVObject->ppZStripInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
   // setup for the z-column blitting stuff
   pZInfo = hSrcVObject->ppZStripInfo[usIndex];
   if (pZInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
 
@@ -3919,13 +3919,13 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
   if (hSrcVObject->ppZStripInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
   // setup for the z-column blitting stuff
   pZInfo = hSrcVObject->ppZStripInfo[usIndex];
   if (pZInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
 
@@ -4313,13 +4313,13 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
   if (hSrcVObject->ppZStripInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
   // setup for the z-column blitting stuff
   pZInfo = hSrcVObject->ppZStripInfo[usIndex];
   if (pZInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
 
@@ -4717,13 +4717,13 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
   if (hSrcVObject->ppZStripInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
   // setup for the z-column blitting stuff
   pZInfo = hSrcVObject->ppZStripInfo[sZIndex];
   if (pZInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
 
@@ -5165,13 +5165,13 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
 
   if (hSrcVObject->ppZStripInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
   // setup for the z-column blitting stuff
   pZInfo = hSrcVObject->ppZStripInfo[sZIndex];
   if (pZInfo == NULL) {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR, String("Missing Z-Strip info on multi-Z object"));
     return (FALSE);
   }
 

@@ -7,6 +7,7 @@
 #include "Editor/EditorBuildings.h"
 #include "Editor/EditorUndo.h"
 #include "Editor/SmoothingUtils.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/IsometricUtils.h"

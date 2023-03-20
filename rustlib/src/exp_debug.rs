@@ -43,6 +43,7 @@ pub fn debug_log_write(message: &str) -> bool {
     unsafe {
         let ts = Local::now().format("%Y-%m-%d %H:%M:%S");
         if let Some(f) = DEBUG_FILE.as_mut() {
+            let message = message.trim_end();
             if f.write_fmt(format_args!("{ts}: {message}\n")).is_ok() {
                 return f.flush().is_ok();
             }

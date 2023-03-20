@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/Random.h"
 #include "SGP/VSurface.h"

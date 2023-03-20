@@ -150,14 +150,14 @@ BOOLEAN LoadMercProfiles(void) {
 
   fptr = File_OpenForReading(pFileName);
   if (!fptr) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to LoadMercProfiles from file %s", pFileName));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("FAILED to LoadMercProfiles from file %s", pFileName));
     return (FALSE);
   }
 
   for (uiLoop = 0; uiLoop < NUM_PROFILES; uiLoop++) {
     if (JA2EncryptedFileRead(fptr, &gMercProfiles[uiLoop], sizeof(MERCPROFILESTRUCT),
                              &uiNumBytesRead) != 1) {
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("FAILED to Read Merc Profiles from File %d %s", uiLoop, pFileName));
       File_Close(fptr);
       return (FALSE);

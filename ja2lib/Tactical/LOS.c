@@ -179,9 +179,9 @@ static UINT16 guiStructureHitChance[MAX_DIST_FOR_LESS_THAN_MAX_CHANCE_TO_HIT_STR
 #define MAX_AIMING_SCREWUP (RADIANS_IN_CIRCLE * 15 / 360)
 // min aiming screwup is X degrees, gets divided by distance in tiles
 #define MIN_AIMING_SCREWUP (RADIANS_IN_CIRCLE * 22 / 360)
-//#define MAX_AIMING_SCREWUP 0.2618
-// equal to 10 degrees
-//#define MAX_AIMING_SCREWUP_VERTIC 0.1745
+// #define MAX_AIMING_SCREWUP 0.2618
+//  equal to 10 degrees
+// #define MAX_AIMING_SCREWUP_VERTIC 0.1745
 
 #define SMELL_REDUCTION_FOR_NEARBY_OBSTACLE 80
 
@@ -234,7 +234,7 @@ FLOAT Distance2D(FLOAT dDeltaX, FLOAT dDeltaY) {
   return ((FLOAT)sqrt((DOUBLE)(dDeltaX * dDeltaX + dDeltaY * dDeltaY)));
 }
 
-//#define DEBUGLOS
+// #define DEBUGLOS
 
 #if defined(JA2BETAVERSION) && defined(DEBUGLOS)
 void DebugLOS(STR szOutput) {
@@ -3133,7 +3133,7 @@ INT8 FireBulletGivenTarget(struct SOLDIERTYPE *pFirer, FLOAT dEndX, FLOAT dEndY,
   for (ubLoop = 0; ubLoop < ubShots; ubLoop++) {
     iBullet = CreateBullet(pFirer->ubID, fFake, usBulletFlags);
     if (iBullet == -1) {
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Failed to create bullet"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Failed to create bullet"));
 
       return (FALSE);
     }
@@ -3867,7 +3867,7 @@ void MoveBullet(INT32 iBullet) {
                         RemoveBullet(pBullet->iBullet);
 
                         CorpseHit((INT16)pBullet->sGridNo, pStructure->usStructureID);
-                        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+                        DebugMsg(TOPIC_JA2, DBG_INFO,
                                  String("@@@@@@@ Reducing attacker busy count..., CORPSE HIT"));
 
                         FreeUpAttacker(pBullet->pFirer->ubID);

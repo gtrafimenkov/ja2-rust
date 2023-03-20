@@ -136,7 +136,7 @@ BOOLEAN LoadLockTable(void) {
 
   hFile = File_OpenForReading(pFileName);
   if (!hFile) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("FAILED to LoadLockTable from file %s", pFileName));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("FAILED to LoadLockTable from file %s", pFileName));
     return (FALSE);
   }
 
@@ -581,7 +581,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
       // Increment  being attacked count
       pSoldier->bBeingAttackedCount++;
       gTacticalStatus.ubAttackBusyCount++;
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("!!!!!!! Trap gone off %d", gTacticalStatus.ubAttackBusyCount));
 
       SoldierTakeDamage(pSoldier, 0, (UINT16)(10 + PreRandom(10)),
@@ -599,7 +599,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
       // Increment  being attacked count
       pSoldier->bBeingAttackedCount++;
       gTacticalStatus.ubAttackBusyCount++;
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("!!!!!!! Trap gone off %d", gTacticalStatus.ubAttackBusyCount));
 
       SoldierTakeDamage(pSoldier, 0, (UINT16)(20 + PreRandom(20)),

@@ -7,7 +7,6 @@
 #include "HelpScreen.h"
 #include "LanguageDefines.h"
 #include "OptionsScreen.h"
-#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SaveLoadGame.h"

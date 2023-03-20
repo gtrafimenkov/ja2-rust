@@ -15,6 +15,7 @@
 #include "LanguageDefines.h"
 #include "MainMenuScreen.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"
@@ -110,7 +111,7 @@ void DisplayFrameRate() {
   // Create string
   SetFont(SMALLFONT1);
 
-  // DebugMsg(TOPIC_JA2, DBG_LEVEL_0, String( "FPS: %d ", min( uiFPS, 1000 ) ) );
+  // DebugMsg(TOPIC_JA2, DBG_ERROR, String( "FPS: %d ", min( uiFPS, 1000 ) ) );
 
   if (uiFPS < 20) {
     SetFontBackground(FONT_MCOLOR_BLACK);
@@ -225,7 +226,7 @@ UINT32 ErrorScreenHandle(void) {
 #endif
 
   if (!fFirstTime) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_0, String("Runtime Error: %s ", gubErrorText));
+    DebugMsg(TOPIC_JA2, DBG_ERROR, String("Runtime Error: %s ", gubErrorText));
     fFirstTime = TRUE;
   }
 
@@ -238,7 +239,7 @@ UINT32 ErrorScreenHandle(void) {
     if (InputEvent.usEvent == KEY_DOWN) {
       if (InputEvent.usParam == ESC ||
           (InputEvent.usParam == 'x' && InputEvent.usKeyState & ALT_DOWN)) {  // Exit the program
-        DebugMsg(TOPIC_GAME, DBG_LEVEL_0, "GameLoop: User pressed ESCape, TERMINATING");
+        DebugMsg(TOPIC_GAME, DBG_ERROR, "GameLoop: User pressed ESCape, TERMINATING");
 
         // handle shortcut exit
         HandleShortCutExitState();

@@ -8,7 +8,6 @@
 #include "Money.h"
 #include "Point.h"
 #include "SGP/ButtonSystem.h"
-#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"

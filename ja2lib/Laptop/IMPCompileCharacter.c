@@ -17,7 +17,6 @@
 #include "Laptop/IMPVoices.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationData.h"

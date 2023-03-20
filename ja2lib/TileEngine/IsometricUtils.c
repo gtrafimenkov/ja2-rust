@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 #include "JAScreens.h"
-#include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
@@ -446,9 +445,9 @@ INT16 NewGridNo(INT16 sGridno, INT16 sDirInc) {
 
 INT16 DirectionInc(INT16 sDirection) {
   if ((sDirection < 0) || (sDirection > 7)) {
-    //#ifdef BETAVERSION
-    //   NumMessage("DirectionInc: Invalid direction received, = ",direction);
-    //#endif
+    // #ifdef BETAVERSION
+    //    NumMessage("DirectionInc: Invalid direction received, = ",direction);
+    // #endif
 
     // direction = random(8);	// replace garbage with random direction
     sDirection = 1;

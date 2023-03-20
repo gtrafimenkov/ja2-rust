@@ -32,7 +32,7 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
 
   if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
       uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem reading STCI header.");
+    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
     File_Close(hFile);
     return (FALSE);
   }
@@ -40,18 +40,18 @@ BOOLEAN LoadSTCIFileToImage(HIMAGE hImage, UINT16 fContents) {
   // Determine from the header the data stored in the file. and run the appropriate loader
   if (Header.fFlags & STCI_RGB) {
     if (!STCILoadRGB(&TempImage, fContents, hFile, &Header)) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem loading RGB image.");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading RGB image.");
       File_Close(hFile);
       return (FALSE);
     }
   } else if (Header.fFlags & STCI_INDEXED) {
     if (!STCILoadIndexed(&TempImage, fContents, hFile, &Header)) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem loading palettized image.");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
       File_Close(hFile);
       return (FALSE);
     }
   } else {  // unsupported type of data, or the right flags weren't set!
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Unknown data organization in STCI file.");
+    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Unknown data organization in STCI file.");
     File_Close(hFile);
     return (FALSE);
   }
@@ -100,7 +100,7 @@ BOOLEAN STCILoadRGB(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeader *p
           gusGreenMask != (UINT16)pHeader->RGB.uiGreenMask ||
           gusBlueMask != (UINT16)pHeader->RGB.uiBlueMask) {
         // colour distribution of the file is different from hardware!  We have to change it!
-        DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Converting to current RGB distribution!");
+        DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Converting to current RGB distribution!");
         // Convert the image to the current hardware's specifications
         if (gusRedMask > gusGreenMask && gusGreenMask > gusBlueMask) {
           // hardware wants RGB!
@@ -141,13 +141,13 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
 
   if (fContents & IMAGE_PALETTE) {  // Allocate memory for reading in the palette
     if (pHeader->Indexed.uiNumberOfColours != 256) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Palettized image has bad palette size.");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Palettized image has bad palette size.");
       return (FALSE);
     }
     uiFileSectionSize = pHeader->Indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
     pSTCIPalette = MemAlloc(uiFileSectionSize);
     if (pSTCIPalette == NULL) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
       return (FALSE);
     }
@@ -158,12 +158,12 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
     // Read in the palette
     if (!File_Read(hFile, pSTCIPalette, uiFileSectionSize, &uiBytesRead) ||
         uiBytesRead != uiFileSectionSize) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem loading palette!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palette!");
       File_Close(hFile);
       MemFree(pSTCIPalette);
       return (FALSE);
     } else if (!STCISetPalette(pSTCIPalette, hImage)) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem setting hImage-format palette!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem setting hImage-format palette!");
       File_Close(hFile);
       MemFree(pSTCIPalette);
       return (FALSE);
@@ -174,7 +174,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
   } else if (fContents & (IMAGE_BITMAPDATA | IMAGE_APPDATA)) {  // seek past the palette
     uiFileSectionSize = pHeader->Indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
     if (File_Seek(hFile, uiFileSectionSize, FILE_SEEK_CURRENT) == FALSE) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem seeking past palette!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem seeking past palette!");
       File_Close(hFile);
       return (FALSE);
     }
@@ -187,7 +187,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
       uiFileSectionSize = hImage->usNumberOfObjects * STCI_SUBIMAGE_SIZE;
       hImage->pETRLEObject = (ETRLEObject *)MemAlloc(uiFileSectionSize);
       if (hImage->pETRLEObject == NULL) {
-        DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
+        DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
         File_Close(hFile);
         if (fContents & IMAGE_PALETTE) {
           MemFree(hImage->pPalette);
@@ -196,7 +196,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
       }
       if (!File_Read(hFile, hImage->pETRLEObject, uiFileSectionSize, &uiBytesRead) ||
           uiBytesRead != uiFileSectionSize) {
-        DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Error loading subimage structures!");
+        DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading subimage structures!");
         File_Close(hFile);
         if (fContents & IMAGE_PALETTE) {
           MemFree(hImage->pPalette);
@@ -210,7 +210,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
     // allocate memory for and read in the image data
     hImage->pImageData = MemAlloc(pHeader->uiStoredSize);
     if (hImage->pImageData == NULL) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
       if (fContents & IMAGE_PALETTE) {
         MemFree(hImage->pPalette);
@@ -221,7 +221,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
       return (FALSE);
     } else if (!File_Read(hFile, hImage->pImageData, pHeader->uiStoredSize, &uiBytesRead) ||
                uiBytesRead != pHeader->uiStoredSize) {  // Problem reading in the image data!
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Error loading image data!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading image data!");
       File_Close(hFile);
       MemFree(hImage->pImageData);
       if (fContents & IMAGE_PALETTE) {
@@ -236,7 +236,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
   } else if (fContents & IMAGE_APPDATA)  // then there's a point in seeking ahead
   {
     if (File_Seek(hFile, pHeader->uiStoredSize, FILE_SEEK_CURRENT) == FALSE) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem seeking past image data!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem seeking past image data!");
       File_Close(hFile);
       return (FALSE);
     }
@@ -246,7 +246,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
     // load application-specific data
     hImage->pAppData = (UINT8 *)MemAlloc(pHeader->uiAppDataSize);
     if (hImage->pAppData == NULL) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Out of memory!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
       MemFree(hImage->pAppData);
       if (fContents & IMAGE_PALETTE) {
@@ -262,7 +262,7 @@ BOOLEAN STCILoadIndexed(HIMAGE hImage, UINT16 fContents, FileID hFile, STCIHeade
     }
     if (!File_Read(hFile, hImage->pAppData, pHeader->uiAppDataSize, &uiBytesRead) ||
         uiBytesRead != pHeader->uiAppDataSize) {
-      DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Error loading application-specific data!");
+      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading application-specific data!");
       File_Close(hFile);
       MemFree(hImage->pAppData);
       if (fContents & IMAGE_PALETTE) {
@@ -324,7 +324,7 @@ BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
 
   if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
       uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
-    DbgMessage(TOPIC_HIMAGE, DBG_LEVEL_3, "Problem reading STCI header.");
+    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
     File_Close(hFile);
     return (FALSE);
   }

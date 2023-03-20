@@ -384,10 +384,10 @@ void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, u8 sMapX
   // Those that do need it have Asserts on a case by case basis below
   if (pSoldier == NULL) {
     DebugMsg(
-        TOPIC_JA2, DBG_LEVEL_3,
+        TOPIC_JA2, DBG_INFO,
         String("Handling morale event %d at X=%d, Y=%d,Z=%d", bMoraleEvent, sMapX, sMapY, bMapZ));
   } else {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("Handling morale event %d for %S at X=%d, Y=%d, Z=%d", bMoraleEvent,
                     pSoldier->name, sMapX, sMapY, bMapZ));
   }

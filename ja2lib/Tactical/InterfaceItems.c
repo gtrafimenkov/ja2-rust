@@ -4582,7 +4582,7 @@ BOOLEAN HandleItemPointerClick(UINT16 usMapPos) {
 
       // Increment attacker count...
       gTacticalStatus.ubAttackBusyCount++;
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("INcremtning ABC: Throw item to %d", gTacticalStatus.ubAttackBusyCount));
 
       // Given our gridno, throw grenate!

@@ -3,6 +3,7 @@
 #include "GameSettings.h"
 #include "Laptop/History.h"
 #include "MessageBoxScreen.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
 #include "Soldier.h"
@@ -3414,22 +3415,22 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
           {
                   if ( MercSlots[ uiLoop ]->ubSkillTrait1 == NIGHTOPS )
                   {
-                          DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Soldier %d has nightops 1",
+                          DebugMsg( TOPIC_JA2, DBG_INFO, String( "Soldier %d has nightops 1",
   MercSlots[ uiLoop ]->ubID ) );
                   }
                   if ( MercSlots[ uiLoop ]->ubSkillTrait2 == NIGHTOPS )
                   {
-                          DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Soldier %d has nightops 2",
+                          DebugMsg( TOPIC_JA2, DBG_INFO, String( "Soldier %d has nightops 2",
   MercSlots[ uiLoop ]->ubID ) );
                   }
                   if ( MercSlots[ uiLoop ]->inv[ HEAD1POS ].usItem != NOTHING )
                   {
-                          DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "%S", ItemNames[ MercSlots[
+                          DebugMsg( TOPIC_JA2, DBG_INFO, String( "%S", ItemNames[ MercSlots[
   uiLoop ]->inv[ HEAD1POS ].usItem ] ) );
                   }
                   if ( MercSlots[ uiLoop ]->inv[ HEAD2POS ].usItem != NOTHING )
                   {
-                          DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "%S", ItemNames[ MercSlots[
+                          DebugMsg( TOPIC_JA2, DBG_INFO, String( "%S", ItemNames[ MercSlots[
   uiLoop ]->inv[ HEAD2POS ].usItem ] ) );
                   }
 
@@ -3533,7 +3534,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
                           FindBestPath( pSoldier, sGridNo, pSoldier->bLevel, WALKING, COPYROUTE );
                   }
                   uiEndTime = GetJA2Clock();
-                  DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "50000 path calls from %d to %d took %ld
+                  DebugMsg( TOPIC_JA2, DBG_INFO, String( "50000 path calls from %d to %d took %ld
      ms", pSoldier->sGridNo, sGridNo, uiEndTime - uiStartTime ) );
           }
           */

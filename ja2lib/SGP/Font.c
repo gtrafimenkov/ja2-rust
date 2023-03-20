@@ -291,7 +291,7 @@ INT32 LoadFontFile(STR8 filename) {
   Assert(strlen(filename));
 
   if ((LoadIndex = FindFreeFont()) == (-1)) {
-    DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, String("Out of font slots (%s)", filename));
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, String("Out of font slots (%s)", filename));
     FatalError("Cannot init FONT file %s", filename);
     return (-1);
   }
@@ -300,7 +300,7 @@ INT32 LoadFontFile(STR8 filename) {
   strcpy(vo_desc.ImageFile, filename);
 
   if ((FontObjs[LoadIndex] = CreateVideoObject(&vo_desc)) == NULL) {
-    DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, String("Error creating VOBJECT (%s)", filename));
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, String("Error creating VOBJECT (%s)", filename));
     FatalError("Cannot init FONT file %s", filename);
     return (-1);
   }
@@ -578,7 +578,7 @@ INT16 GetIndex(UINT16 siChar) {
   }
 
   // If here, present warning and give the first index
-  DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, String("Error: Invalid character given %d", siChar));
+  DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, String("Error: Invalid character given %d", siChar));
 
   // Return 0 here, NOT -1 - we should see A's here now...
   return 0;
@@ -1055,7 +1055,6 @@ BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *
   if (pTransTable == NULL) {
     return FALSE;
   }
-  RegisterDebugTopic(TOPIC_FONT_HANDLER, "Font Manager");
 
   if ((pFManager = (FontManager *)MemAlloc(sizeof(FontManager))) == NULL) {
     return FALSE;
@@ -1084,7 +1083,6 @@ BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *
 void ShutdownFontManager(void) {
   INT32 count;
 
-  UnRegisterDebugTopic(TOPIC_FONT_HANDLER, "Font Manager");
   if (pFManager) MemFree(pFManager);
 
   for (count = 0; count < MAX_FONTS; count++) {
@@ -1503,21 +1501,21 @@ FileID           hFileHandle = FILE_ID_ERR;
 
   if (pFManager == NULL)
   {
-    DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Did not Initialize Font Manager");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Did not Initialize Font Manager");
     return NULL;
   }
 
   // Open and read in the file
   if ((hFileHandle = File_OpenForReading(pFilename)) == 0)
   { // damn we failed to open the file
-    DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Cannot open font file");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Cannot open font file");
     return NULL;
   }
 
   uiFileSize = File_GetSize(hFileHandle);
   if (uiFileSize == 0)
   { // we failed to size up the file
-    DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Font file is empty");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Font file is empty");
     File_Close(hFileHandle);
     return NULL;
   }
@@ -1525,21 +1523,21 @@ FileID           hFileHandle = FILE_ID_ERR;
   // Allocate memory for the font header file
   if ((pFontBase = (FontBase *)MemAlloc(sizeof(FontBase))) == NULL)
   {
-    DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not malloc memory");
+    DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not malloc memory");
           File_Close(hFileHandle);
   }
 
   // read in these values from the file
   if (File_Read(hFileHandle, &uiHeightEach, sizeof(UINT32), NULL) == FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Height from File");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not read Height from File");
           File_Close(hFileHandle);
           return NULL;
   }
 
   if (File_Read(hFileHandle, &uiTotalSymbol, sizeof(UINT32), NULL) == FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Total Symbol from File");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not read Total Symbol from File");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1556,7 +1554,7 @@ FileID           hFileHandle = FILE_ID_ERR;
   //seek past the FontHeader
   if (File_Seek(hFileHandle, sizeof(FontHeader), FILE_SEEK_START) == FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek FileHeader");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek FileHeader");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1565,14 +1563,14 @@ FileID           hFileHandle = FILE_ID_ERR;
   if (File_Read(hFileHandle, pFontBase->pFontObject, (uiTotalSymbol)*sizeof(FontHeader), NULL) ==
 FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Font Objects");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Font Objects");
           File_Close(hFileHandle);
           return NULL;
   }
 
   if (File_Seek(hFileHandle, uiOldoffst, FILE_SEEK_START) == FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Old offset");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Old offset");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1580,7 +1578,7 @@ FALSE)
   // read in the Pixel data
   if (File_Read(hFileHandle, pFontBase->pPixData8, uiNewoffst, NULL) == FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Pixel data");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Pixel data");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1588,7 +1586,7 @@ FALSE)
   // seek proper position to read in Palette
   if (File_Seek(hFileHandle, sizeof(UINT32)*3, FILE_SEEK_START) == FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not seek Palette Start");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not seek Palette Start");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1596,7 +1594,7 @@ FALSE)
   // read in Palette
   if (File_Read(hFileHandle, pPalette, PALETTE_SIZE, NULL) == FALSE)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not read Palette");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not read Palette");
           File_Close(hFileHandle);
           return NULL;
   }
@@ -1612,7 +1610,7 @@ FALSE)
   // create the 16BPer Pixel palette
   if ((pFontBase->pPalet16 = Create16BPPPalette(pNewPalette)) == NULL)
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Could not create 16 bit palette");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Could not create 16 bit palette");
           return NULL;
   }
   // return the FontBase structure
@@ -1694,7 +1692,7 @@ struct SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 
 
         pPalEntry = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
         pInitEntry = pPalEntry;
-  DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Converting RGB palette to struct SGPPaletteEntry");
+  DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Converting RGB palette to struct SGPPaletteEntry");
   for(Index=0; Index <= (sbEnd-sbStart);Index++)
   {
     pPalEntry->peRed = *(pOldPalette + (Index*3));
@@ -1922,7 +1920,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
         UINT32  row,count;
   UINT16  modamount,divamount;
 
-        DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Blitting 8 to 8");
+        DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Blitting 8 to 8");
   Assert(pFontBase != NULL);
         Assert(pFrameBuffer != NULL);
 
@@ -2023,7 +2021,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
   UINT16  modamount,divamount;
         UINT16  usEffectiveWidth;
 
-        DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Blitting 16 to 16");
+        DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Blitting 16 to 16");
   Assert(pFontBase != NULL);
         Assert(pFrameBuffer != NULL);
 
@@ -2117,7 +2115,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
   // gets the offset based on the index
   if (((UINT32)ssIndex > pFontBase->uiTotalElements) || (ssIndex < 0))
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Incorrect index value passed");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Incorrect index value passed");
     return 0;
   }
   pTrav = pFontBase->pFontObject;
@@ -2152,7 +2150,7 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
   // gets the offset based on the index
   if (((UINT32)ssIndex > pFontBase->uiTotalElements) || (ssIndex < 0))
   {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Incorrect index value passed");
+          DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, "Incorrect index value passed");
     return 0;
   }
   pTrav = pFontBase->pFontObject;
@@ -2164,204 +2162,3 @@ uiWidth, FontBase *pFontBase, UINT8 *pFrameBuffer, UINT16 siDestPitch, UINT16 si
 
   return pTrav->uiOffLen;
 } */
-
-//*****************************************************************************
-//
-// PrintFontString
-//
-// Parameter List : pointer to \0 (NULL) terminated font string
-//                  x,y,TotalWidth, TotalHeight is the bounding rectangle where
-//                  the font is to be printed
-//                  Multiline if true will print on multiple lines otherwise on 1 line
-//                  Pointer to base structure
-//
-// Return Value  : BOOLEAN
-//
-// Modification History :
-// Nov 26th 1996 -> modified for use by Wizardry
-//
-//*****************************************************************************
-
-/*BOOLEAN PrintFontString(STR16 pFontString, UINT8 *pDestBuffer, UINT16 siDestWidth, UINT16
-siDestPixelDepth, UINT16 siDestPitch, UINT16 siDestHeight, UINT16 siX, UINT16 siY, UINT16
-siTotalWidth, UINT16 siTotalHeight, BOOLEAN fMultiLine, FontBase *pFontBase)
-{
-  UINT16  siScreenHt;
-        UINT16  siScreenWt;
-        UINT16  siChar, siHeightEach;
-        INT16   ssIndex;
-        UINT32  uiWidth, uiOffsetSt, uiOffsetEnd, uiOldoffst;
-        UINT16 *pTempFStr;
-        UINT16  siNewX, siNewY;
-        UINT16  siInitX, siInitY;
-        UINT32  uiLen;
-
-        // check for NULL pointers passed in
-        Assert(pFontBase != NULL);
-        Assert(pFontString != NULL);
-        Assert(pDestBuffer != NULL);
-
-        siScreenWt = siDestWidth;
-        siScreenHt = siDestHeight;
-
-        // check for invalid coordinates
-        if((siX<0) || (siX>siScreenWt) || (siY<0) || (siY>siScreenHt) || (siTotalWidth<0) ||
-(siTotalWidth>siScreenWt) ||	(siTotalHeight<0) || (siTotalHeight>siScreenHt))
-        {
-          DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Invalid coordinates passed in");
-    return FALSE;
-  }
-        pTempFStr = pFontString;
-
-        siNewX = siX;
-        siNewY = siY;
-        siInitX = siX;
-  siInitY = siY;
-
-        // Get the height of each font and the offset
-        siHeightEach = GetFontHeight(pFontBase);
-        uiOldoffst = (sizeof(FontHeader) + sizeof(FontObject)*pFontBase->uiTotalElements);
-
-        // calls the blt routine until the string != to \0
-        while(*pTempFStr != STRING_DELIMITER)
-        {
-          siChar = *pTempFStr;
-          // get the index value for the font
-          if((ssIndex = GetIndex(siChar)) == -1)
-                {
-      return FALSE;
-    }
-
-          // get the width of the font
-          uiWidth = GetWidth(pFontBase, ssIndex);
-
-          // get the font offset
-          uiOffsetSt = GetOffset(pFontBase, ssIndex);
-
-          uiLen = GetOffLen(pFontBase,ssIndex);
-
-          // uiOffsetSt -= uiOldoffst;
-          uiOffsetEnd = uiOffsetSt + uiLen;
-
-          // if Multiline = FALSE and reached the end of line - cannot continue
-          if ((((siNewX+uiWidth) > siScreenWt) || ((siNewX+uiWidth) >= siTotalWidth)) && (fMultiLine
-== FALSE))
-          {
-            DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Cannot continue writing");
-      return FALSE;
-    }
-
-          // check if boundary is reached
-          if ((((siNewX+uiWidth) >= siScreenWt) || ((siNewX+uiWidth) >= siTotalWidth)) &&
-(fMultiLine == TRUE))
-          {
-                  if (((siInitY+siHeightEach) > siScreenHt) || ((siInitY+siHeightEach) >=
-siTotalHeight))
-                  {
-              DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Cannot continue writing");
-        return FALSE;
-      }
-                  //call the appropriate blit routines
-      siNewX = siInitX;
-                  siNewY += siHeightEach;
-                  siInitY = siNewY;
-      if ((siDestPixelDepth == 16) && (pFontBase->siPixelDepth == 16))
-                {
-        Blt16Imageto16Dest(uiOffsetSt, uiOffsetEnd, siNewX, siNewY, uiWidth, pFontBase, pDestBuffer,
-siDestPitch, siHeightEach);
-      }
-                  else
-            {
-        if ((siDestPixelDepth == 16) && (pFontBase->siPixelDepth == 8))
-        {
-                      Blt8Imageto16Dest(uiOffsetSt, uiOffsetEnd, siNewX, siNewY, uiWidth, pFontBase,
-pDestBuffer, siDestPitch, siHeightEach);
-        }
-                    else
-              {
-          if ((siDestPixelDepth == 8) && (pFontBase->siPixelDepth == 8))
-                      { // if(SetPalette(pFontBase->pPalette) == FALSE)
-                  //		    return FALSE;
-                        Blt8Imageto8Dest(uiOffsetSt, uiOffsetEnd, siNewX, siNewY, uiWidth,
-pFontBase, pDestBuffer, siDestPitch, siHeightEach);
-                      }
-                      else
-                      {
-                  DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Invalid pixel depth / destination
-surface depth"); return FALSE;
-                      }
-        }
-              siNewX += (UINT16)uiWidth;
-      }
-          } else
-          { // if it isnt end of boundary copy at current location
-            if((siDestPixelDepth == 16) && (pFontBase->siPixelDepth == 16))
-            {
-        Blt16Imageto16Dest(uiOffsetSt, uiOffsetEnd, siNewX, siNewY, uiWidth, pFontBase, pDestBuffer,
-siDestPitch, siHeightEach);
-      }
-                  else
-            {
-        if((siDestPixelDepth == 16) && (pFontBase->siPixelDepth == 8))
-                    {
-          Blt8Imageto16Dest(uiOffsetSt, uiOffsetEnd, siNewX, siNewY, uiWidth, pFontBase,
-pDestBuffer, siDestPitch, siHeightEach);
-        }
-              else
-                    {
-          if ((siDestPixelDepth == 8) && (pFontBase->siPixelDepth == 8))
-                      {
-            Blt8Imageto8Dest(uiOffsetSt, uiOffsetEnd, siNewX, siNewY, uiWidth, pFontBase,
-pDestBuffer, siDestPitch, siHeightEach);
-          }
-          else
-                      {
-                  DbgMessage(TOPIC_FONT_HANDLER, DBG_LEVEL_0, "Invalid pixel depth / destination
-surface depth"); return FALSE;
-                      }
-              }
-                  siNewX += (UINT16)uiWidth;
-            }
-    }
-    // increment string pointer
-          pTempFStr++;
-  }
-        return TRUE;
-}
-
-*/
-
-/*BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *pTransTable)
-{
-FontTranslationTable *pTransTab;
-
-        // register the appropriate debug topics
-        if(pTransTable == NULL)
-        {
-    return FALSE;
-  }
-        RegisterDebugTopic(TOPIC_FONT_HANDLER, "Font Manager");
-
-        if ((pFManager = (FontManager *)MemAlloc(sizeof(FontManager)))==NULL)
-        {
-    return FALSE;
-  }
-
-        if((pTransTab = (FontTranslationTable *)MemAlloc(sizeof(FontTranslationTable)))==NULL)
-        {
-    return FALSE;
-  }
-
-        pFManager->pTranslationTable = pTransTab;
-        pFManager->usDefaultPixelDepth = usDefaultPixelDepth;
-        pTransTab->usNumberOfSymbols = pTransTable->usNumberOfSymbols;
-  pTransTab->DynamicArrayOf16BitValues = pTransTable->DynamicArrayOf16BitValues;
-
-        return TRUE;
-}	*/
-
-/*void ShutdownFontManager(void)
-{
-  UnRegisterDebugTopic(TOPIC_FONT_HANDLER, "Font Manager");
-  MemFree(pFManager);
-}	*/

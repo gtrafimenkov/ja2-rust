@@ -6,6 +6,7 @@
 
 #include "GameSettings.h"
 #include "SGP/Container.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -143,7 +144,7 @@ void RemoveBullet(INT32 iBullet) {
     // decrement reference to bullet in the firer
     gBullets[iBullet].pFirer->bBulletsLeft--;
     DebugMsg(
-        TOPIC_JA2, DBG_LEVEL_3,
+        TOPIC_JA2, DBG_INFO,
         String("!!!!!!! Ending bullet, bullets left %d", gBullets[iBullet].pFirer->bBulletsLeft));
 
     if (gBullets[iBullet].usFlags & (BULLET_FLAG_KNIFE)) {

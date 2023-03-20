@@ -337,7 +337,7 @@ void DeleteAniTile(ANITILE *pAniTile) {
           }
 
           // Freeup attacker from explosion
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+          DebugMsg(TOPIC_JA2, DBG_INFO,
                    String("@@@@@@@ Reducing attacker busy count..., EXPLOSION effect gone off"));
           ReduceAttackBusyCount((UINT8)pAniNode->ubUserData2, FALSE);
         }
@@ -346,7 +346,7 @@ void DeleteAniTile(ANITILE *pAniTile) {
           // First delete the bullet!
           RemoveBullet(pAniNode->uiUserData3);
 
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+          DebugMsg(TOPIC_JA2, DBG_INFO,
                    String("@@@@@@@ Freeing up attacker - miss finished animation"));
           FreeUpAttacker((UINT8)pAniNode->ubAttackerMissed);
         }

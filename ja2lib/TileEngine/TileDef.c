@@ -17,7 +17,7 @@
 #include "TileEngine/TileSurface.h"
 #include "TileEngine/WorldMan.h"
 
-//#include "Editor/EditScreen.h"
+// #include "Editor/EditScreen.h"
 
 // GLobals
 TILE_ELEMENT gTileDatabase[NUMBEROFTILES];
@@ -301,7 +301,7 @@ void CreateTileDatabase() {
         NumRegions = gNumTilesPerType[cnt1];
       }
 
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("Type: %s Size: %d Index: %d", gTileSurfaceName[cnt1], gNumTilesPerType[cnt1],
                       gTileDatabaseSize));
 

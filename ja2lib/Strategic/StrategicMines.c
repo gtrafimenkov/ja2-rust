@@ -5,6 +5,7 @@
 #include "GameSettings.h"
 #include "Laptop/Finances.h"
 #include "Laptop/History.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/CreatureSpreading.h"

@@ -119,8 +119,6 @@ BOOLEAN gfRefreshUpdate = FALSE;
 //	Initialize the mouse system.
 //
 INT32 MSYS_Init(void) {
-  RegisterDebugTopic(TOPIC_MOUSE_SYSTEM, "Mouse Region System");
-
   if (MSYS_RegList != NULL) MSYS_TrashRegList();
 
   MSYS_CurrentID = MSYS_ID_SYSTEM;
@@ -188,7 +186,6 @@ void MSYS_Shutdown(void) {
   MSYS_SystemInitialized = FALSE;
   MSYS_UseMouseHandlerHook = FALSE;
   MSYS_TrashRegList();
-  UnRegisterDebugTopic(TOPIC_MOUSE_SYSTEM, "Mouse Region System");
 }
 
 //======================================================================================================
@@ -279,7 +276,7 @@ void MSYS_SGP_Mouse_Handler_Hook(UINT16 Type, UINT16 Xcoord, UINT16 Ycoord, BOOL
       break;
 
     default:
-      DbgMessage(TOPIC_MOUSE_SYSTEM, DBG_LEVEL_0, "ERROR -- MSYS 2 SGP Mouse Hook got bad type");
+      DebugMsg(TOPIC_MOUSE_SYSTEM, DBG_ERROR, "ERROR -- MSYS 2 SGP Mouse Hook got bad type");
       break;
   }
 }

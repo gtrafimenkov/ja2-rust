@@ -2368,51 +2368,53 @@ void InitStrategicMovementCosts() {
 #ifdef JA2TESTVERSION
   {  // Simply make sure all shared borders between sectors match.
     INT32 x, y;
-    DebugPrint(
+    PrintToDebuggerConsole(
         "STRATEGIC MOVE COSTS:  Testing validity of data (okay if no following debug msgs)...\n");
     for (y = 1; y <= 16; y++)
       for (x = 1; x <= 16; x++) {
         if (y > 1) {
           if (SectorInfo[GetSectorID8(x, y)].ubTraversability[NORTH_STRATEGIC_MOVE] !=
               SectorInfo[GetSectorID8(x, y - 1)].ubTraversability[SOUTH_STRATEGIC_MOVE]) {  // north
-            DebugPrint(
+            PrintToDebuggerConsole(
                 String("STRATEGIC MOVE COSTS:  North mismatch for sector %c%d\n", y + 'A' - 1, x));
           }
           if (y == 16 &&
               SectorInfo[GetSectorID8(x, y)].ubTraversability[SOUTH_STRATEGIC_MOVE] != EDGEOFWORLD)
-            DebugPrint(
+            PrintToDebuggerConsole(
                 String("STRATEGIC MOVE COSTS:  South should be EDGEOFWORLD for sector %c%d\n",
                        y + 'A' - 1, x));
         } else {
           if (SectorInfo[GetSectorID8(x, y)].ubTraversability[SOUTH_STRATEGIC_MOVE] !=
               SectorInfo[GetSectorID8(x, y + 1)].ubTraversability[NORTH_STRATEGIC_MOVE]) {  // south
-            DebugPrint(
+            PrintToDebuggerConsole(
                 String("STRATEGIC MOVE COSTS:  South mismatch for sector %c%d\n", y + 'A' - 1, x));
           }
           if (SectorInfo[GetSectorID8(x, y)].ubTraversability[NORTH_STRATEGIC_MOVE] != EDGEOFWORLD)
-            DebugPrint(
+            PrintToDebuggerConsole(
                 String("STRATEGIC MOVE COSTS:  North should be EDGEOFWORLD for sector %c%d\n",
                        y + 'A' - 1, x));
         }
         if (x < 16) {
           if (SectorInfo[GetSectorID8(x, y)].ubTraversability[EAST_STRATEGIC_MOVE] !=
               SectorInfo[GetSectorID8(x + 1, y)].ubTraversability[WEST_STRATEGIC_MOVE]) {  // east
-            DebugPrint(
+            PrintToDebuggerConsole(
                 String("STRATEGIC MOVE COSTS:  East mismatch for sector %c%d\n", y + 'A' - 1, x));
           }
           if (x == 1 &&
               SectorInfo[GetSectorID8(x, y)].ubTraversability[WEST_STRATEGIC_MOVE] != EDGEOFWORLD)
-            DebugPrint(String("STRATEGIC MOVE COSTS:  West should be EDGEOFWORLD for sector %c%d\n",
-                              y + 'A' - 1, x));
+            PrintToDebuggerConsole(
+                String("STRATEGIC MOVE COSTS:  West should be EDGEOFWORLD for sector %c%d\n",
+                       y + 'A' - 1, x));
         } else {
           if (SectorInfo[GetSectorID8(x, y)].ubTraversability[WEST_STRATEGIC_MOVE] !=
               SectorInfo[GetSectorID8(x - 1, y)].ubTraversability[EAST_STRATEGIC_MOVE]) {  // west
-            DebugPrint(
+            PrintToDebuggerConsole(
                 String("STRATEGIC MOVE COSTS:  West mismatch for sector %c%d\n", y + 'A' - 1, x));
           }
           if (SectorInfo[GetSectorID8(x, y)].ubTraversability[EAST_STRATEGIC_MOVE] != EDGEOFWORLD)
-            DebugPrint(String("STRATEGIC MOVE COSTS:  East should be EDGEOFWORLD for sector %c%d\n",
-                              y + 'A' - 1, x));
+            PrintToDebuggerConsole(
+                String("STRATEGIC MOVE COSTS:  East should be EDGEOFWORLD for sector %c%d\n",
+                       y + 'A' - 1, x));
         }
       }
   }

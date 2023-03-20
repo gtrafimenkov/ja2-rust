@@ -33,6 +33,8 @@
         "buttonsystem.h": "c",
         "rust_fileman.h": "c",
         "vobjectblitters.h": "c",
-        "librarydatabase.h": "c"
+        "librarydatabase.h": "c",
+        "rust_platform.h": "c",
+        "rust_debug.h": "c"
     }
 }

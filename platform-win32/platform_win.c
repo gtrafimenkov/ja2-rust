@@ -4,7 +4,6 @@
 
 #include <windows.h>
 
-#include "SGP/Debug.h"
 #include "SGP/Timer.h"
 #include "StrUtils.h"
 #include "platform.h"
@@ -13,7 +12,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-void DebugPrint(const char *message) { OutputDebugStringA(message); }
+void PrintToDebuggerConsole(const char *message) { OutputDebugStringA(message); }
 
 /////////////////////////////////////////////////////////////////////////////////
 // String

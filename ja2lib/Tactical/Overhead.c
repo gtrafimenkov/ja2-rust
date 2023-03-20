@@ -783,7 +783,7 @@ BOOLEAN ExecuteOverhead() {
             pSoldier->fReloading = FALSE;
             pSoldier->fPauseAim = FALSE;
             /*
-            DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - realtime
+            DebugMsg( TOPIC_JA2, DBG_INFO, String("@@@@@@@ Freeing up attacker - realtime
             reloading") ); FreeUpAttacker( GetSolID(pSoldier) );
             */
           }
@@ -1059,7 +1059,7 @@ BOOLEAN ExecuteOverhead() {
                       }
                     }
                   } else if (pSoldier->ubPendingAction != NO_PENDING_ACTION) {
-                    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+                    DebugMsg(TOPIC_JA2, DBG_INFO,
                              String("We are inside the IF PENDING Animation with soldier #%d",
                                     GetSolID(pSoldier)));
 
@@ -1522,14 +1522,14 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
         UnSetUIBusy(pSoldier->ubID);
       }
 
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("HandleGotoNewGridNo() Failed: Out of Breath"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("HandleGotoNewGridNo() Failed: Out of Breath"));
       return (FALSE);
     }
 
     // OK, if we are collapsed now, check for OK breath instead...
     if (pSoldier->bCollapsed) {
       // Collapse!
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("HandleGotoNewGridNo() Failed: Has Collapsed"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("HandleGotoNewGridNo() Failed: Has Collapsed"));
       pSoldier->bBreathCollapsed = TRUE;
       pSoldier->bEndDoorOpenCode = FALSE;
       return (FALSE);
@@ -1608,7 +1608,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
                 L"ERROR: Invalid Direction to approach door. (Soldier loc: %d, dir: %d).",
                 pSoldier->sGridNo, bDirection);
 #endif
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("HandleGotoNewGridNo() Failed: Open door - invalid approach direction"));
 
       HaltGuyFromNewGridNoBecauseOfNoAPs(pSoldier);
@@ -1625,7 +1625,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
       ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION,
                 L"ERROR: Told to open door that does not exist at %d.", sDoorGridNo);
 #endif
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("HandleGotoNewGridNo() Failed: Door does not exist"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("HandleGotoNewGridNo() Failed: Door does not exist"));
       HaltGuyFromNewGridNoBecauseOfNoAPs(pSoldier);
       pSoldier->bEndDoorOpenCode = FALSE;
       (*pfKeepMoving) = FALSE;
@@ -1655,7 +1655,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
   // CHECK IF THIS TILE IS A GOOD ONE!
   if (!HandleNextTile(pSoldier, (INT8)pSoldier->usPathingData[pSoldier->usPathIndex], usNewGridNo,
                       pSoldier->sFinalDestination)) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("HandleGotoNewGridNo() Failed: Tile %d Was blocked", usNewGridNo));
 
     // ATE: If our own guy and an initial move.. display message
@@ -1722,12 +1722,12 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
   // ATE: Check if we have sighted anyone, if so, don't do anything else...
   // IN other words, we have stopped from sighting...
   if (pSoldier->fNoAPToFinishMove && !fInitialMove) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("HandleGotoNewGridNo() Failed: No APs to finish move set"));
     pSoldier->bEndDoorOpenCode = FALSE;
     (*pfKeepMoving) = FALSE;
   } else if (pSoldier->usPathIndex == pSoldier->usPathDataSize && pSoldier->usPathDataSize == 0) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("HandleGotoNewGridNo() Failed: No Path"));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("HandleGotoNewGridNo() Failed: No Path"));
     pSoldier->bEndDoorOpenCode = FALSE;
     (*pfKeepMoving) = FALSE;
   }
@@ -1917,7 +1917,7 @@ BOOLEAN HandleGotoNewGridNo(struct SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving,
   } else {
     // HALT GUY HERE
     DebugMsg(
-        TOPIC_JA2, DBG_LEVEL_3,
+        TOPIC_JA2, DBG_INFO,
         String("HandleGotoNewGridNo() Failed: No APs %d %d", sAPCost, pSoldier->bActionPoints));
     HaltGuyFromNewGridNoBecauseOfNoAPs(pSoldier);
     pSoldier->bEndDoorOpenCode = FALSE;
@@ -4575,19 +4575,19 @@ void EnterCombatMode(UINT8 ubStartingTeam) {
   struct SOLDIERTYPE *pTeamSoldier;
 
   if (gTacticalStatus.uiFlags & INCOMBAT) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Can't enter combat when already in combat");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Can't enter combat when already in combat");
     // we're already in combat!
     return;
   }
 
   // Alrighty, don't do this if no enemies in sector
   if (NumCapableEnemyInSector() == 0) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Can't enter combat when no capable enemies");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Can't enter combat when no capable enemies");
     // ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"Trying to init combat when no enemies around!." );
     return;
   }
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Entering combat mode");
+  DebugMsg(TOPIC_JA2, DBG_INFO, "Entering combat mode");
 
   // ATE: Added here to guarentee we have fEnemyInSector
   // Mostly this was not getting set if:
@@ -4623,7 +4623,7 @@ void ExitCombatMode() {
   UINT32 cnt;
   struct SOLDIERTYPE *pSoldier;
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Exiting combat mode");
+  DebugMsg(TOPIC_JA2, DBG_INFO, "Exiting combat mode");
 
   // Leave combat mode
   gTacticalStatus.uiFlags &= (~INCOMBAT);
@@ -5891,7 +5891,7 @@ void HandleSuppressionFire(UINT8 ubTargetedMerc, UINT8 ubCausedAttacker) {
 
         // This person will be busy while they crouch or go prone
         if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT)) {
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+          DebugMsg(TOPIC_JA2, DBG_INFO,
                    String("!!!!!!! Starting suppression, on %d", GetSolID(pSoldier)));
 
           gTacticalStatus.ubAttackBusyCount++;
@@ -6083,7 +6083,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
       pTarget = MercPtrs[ubTargetID];
     } else {
       pTarget = NULL;
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String(">>Target ptr is null!"));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String(">>Target ptr is null!"));
     }
   }
 
@@ -6102,7 +6102,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
     // ATE: We have a problem here... if testversion, report error......
     // But for all means.... DON'T wrap!
     if ((gTacticalStatus.uiFlags & INCOMBAT)) {
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("!!!!!!! &&&&&&& Problem with attacker busy count decrementing past 0.... "
                       "preventing wrap-around."));
 #ifdef JA2BETAVERSION
@@ -6114,7 +6114,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
     gTacticalStatus.ubAttackBusyCount--;
   }
 
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("!!!!!!! Ending attack, attack count now %d", gTacticalStatus.ubAttackBusyCount));
   //	}
 
@@ -6134,7 +6134,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
 
     // suppression fire might cause the count to be increased, so check it again
     if (gTacticalStatus.ubAttackBusyCount > 0) {
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+      DebugMsg(TOPIC_JA2, DBG_INFO,
                String("!!!!!!! Starting suppression, attack count now %d",
                       gTacticalStatus.ubAttackBusyCount));
       return (pTarget);
@@ -6166,7 +6166,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
         if (pSoldier->bTeam == gbPlayerNum) {
           fEnterCombat = ProcessImplicationsOfPCAttack(pSoldier, &pTarget, REASON_NORMAL_ATTACK);
           if (!fEnterCombat) {
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3, ">>Not entering combat as a result of PC attack");
+            DebugMsg(TOPIC_JA2, DBG_INFO, ">>Not entering combat as a result of PC attack");
           }
         }
       }
@@ -6223,9 +6223,9 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
     } else if (pTarget) {
       // something is wrong here!
       if (!pTarget->bActive || !pTarget->bInSector) {
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, ">>Invalid target attacked!");
+        DebugMsg(TOPIC_JA2, DBG_INFO, ">>Invalid target attacked!");
       } else if (!(pSoldier->uiStatusFlags & SOLDIER_ATTACK_NOTICED)) {
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3, ">>Attack not noticed");
+        DebugMsg(TOPIC_JA2, DBG_INFO, ">>Attack not noticed");
       }
     } else {
       // no target, don't enter combat
@@ -6244,7 +6244,7 @@ struct SOLDIERTYPE *InternalReduceAttackBusyCount(UINT8 ubID, BOOLEAN fCalledByA
     }
 
     if (!fEnterCombat) {
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, ">>Not to enter combat from this attack");
+      DebugMsg(TOPIC_JA2, DBG_INFO, ">>Not to enter combat from this attack");
     }
 
     if (fEnterCombat && !(gTacticalStatus.uiFlags & INCOMBAT)) {

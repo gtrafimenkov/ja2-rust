@@ -4,6 +4,8 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
+
+// #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 #include "Strategic/GameClock.h"
