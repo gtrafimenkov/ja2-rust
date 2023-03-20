@@ -2892,7 +2892,7 @@ UINT32 MapScreenHandle(void) {
       }
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      sprintf(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
+      strcpy(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
       AddVideoObject(&VObjectDesc, &guiSectorLocatorGraphicID);
 
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -2911,7 +2911,7 @@ UINT32 MapScreenHandle(void) {
 
       // Kris:  Added this because I need to blink the icons button.
       VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      sprintf(VObjectDesc.ImageFile, "INTERFACE\\newemail.sti");
+      strcpy(VObjectDesc.ImageFile, "INTERFACE\\newemail.sti");
       AddVideoObject(&VObjectDesc, &guiNewMailIcons);
     }
 
@@ -5259,7 +5259,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
     PlayJA2SampleFromFile("SOUNDS\\Initial Power Up (8-11).wav", RATE_11025, HIGHVOLUME, 1,
                           MIDDLEPAN);
     VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    sprintf(VObjectDesc.ImageFile, "INTERFACE\\LaptopOn.sti");
+    strcpy(VObjectDesc.ImageFile, "INTERFACE\\LaptopOn.sti");
     if (!AddVideoObject(&VObjectDesc, &uiLaptopOn))
       AssertMsg(0, "Failed to load data\\Interface\\LaptopOn.sti");
     BltVideoObjectFromIndex(FRAME_BUFFER, uiLaptopOn, 0, 465, 417, VO_BLT_SRCTRANSPARENCY, NULL);
@@ -8664,12 +8664,12 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
   }
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
+  strcpy(VObjectDesc.ImageFile, "INTERFACE\\hilite.sti");
   AddVideoObject(&VObjectDesc, &guiSectorLocatorGraphicID);
 
   // Kris:  Added this because I need to blink the icons button.
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "INTERFACE\\newemail.sti");
+  strcpy(VObjectDesc.ImageFile, "INTERFACE\\newemail.sti");
   AddVideoObject(&VObjectDesc, &guiNewMailIcons);
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;

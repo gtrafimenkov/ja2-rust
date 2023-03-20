@@ -113,6 +113,8 @@ BOOLEAN InitializeVideoObjectManager();
 // Deletes any video object placed into list
 BOOLEAN ShutdownVideoObjectManager();
 
+BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex);
+
 // Creates and adds a video object to list
 BOOLEAN AddVideoObject(VOBJECT_DESC *VObjectDesc, UINT32 *uiIndex);
 

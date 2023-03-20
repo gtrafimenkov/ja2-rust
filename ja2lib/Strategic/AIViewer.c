@@ -238,10 +238,10 @@ BOOLEAN CreateAIViewer() {
   giSaveTCMode = giTimeCompressMode;
 
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "DevTools\\arulco.sti");
+  strcpy(VObjectDesc.ImageFile, "DevTools\\arulco.sti");
   if (!AddVideoObject(&VObjectDesc, &guiMapGraphicID))
     AssertMsg(0, "Failed to load data\\DevTools\\arulco.sti");
-  sprintf(VObjectDesc.ImageFile, "DevTools\\icons.sti");
+  strcpy(VObjectDesc.ImageFile, "DevTools\\icons.sti");
   if (!AddVideoObject(&VObjectDesc, &guiMapIconsID))
     AssertMsg(0, "Failed to load data\\DevTools\\icons.sti");
 

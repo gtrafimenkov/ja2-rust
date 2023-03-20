@@ -199,7 +199,7 @@ BOOLEAN LoadInventoryPoolGraphic(void) {
 
   // load the file
   VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "INTERFACE\\sector_inventory.sti");
+  strcpy(VObjectDesc.ImageFile, "INTERFACE\\sector_inventory.sti");
 
   // add to V-object index
   if (!AddVideoObject(&VObjectDesc, &guiMapInventoryPoolBackground)) {

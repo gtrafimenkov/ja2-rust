@@ -120,6 +120,13 @@ UINT32 CountVideoObjectNodes() {
   return i;
 }
 
+BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
+  VOBJECT_DESC desc;
+  desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
+  strcpy(desc.ImageFile, path);
+  return AddVideoObject(&desc, puiIndex);
+}
+
 BOOLEAN AddVideoObject(VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex) {
   struct VObject *hVObject;
 
