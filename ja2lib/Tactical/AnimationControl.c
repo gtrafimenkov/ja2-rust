@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "SGP/Debug.h"
 #include "SGP/WCheck.h"
 #include "Tactical/AnimationData.h"
 #include "Tactical/Points.h"

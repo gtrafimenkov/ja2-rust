@@ -1102,12 +1102,6 @@
     <ClInclude Include="SGP\Timer.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
-    <ClInclude Include="SGP\TopicIDs.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
-    <ClInclude Include="SGP\TopicOps.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
     <ClInclude Include="SGP\TRLE.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>

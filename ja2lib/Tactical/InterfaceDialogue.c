@@ -13,6 +13,7 @@
 #include "Laptop/Personnel.h"
 #include "MessageBoxScreen.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"

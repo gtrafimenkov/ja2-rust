@@ -1,7 +1,6 @@
 #include "Tactical/WorldItems.h"
 
 #include "GameSettings.h"
-#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "Strategic/CampaignTypes.h"
 #include "Strategic/Quests.h"

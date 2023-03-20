@@ -150,7 +150,7 @@ uint32_t InitializeJA2(void) {
 #ifdef JA2EDITOR
   // CHECK COMMANDLINE FOR SPECIAL UTILITY
   if (!strcmp(gzCommandLine, "-EDITORAUTO")) {
-    DebugPrint("Beginning JA2 using -EDITORAUTO commandline argument...\n");
+    PrintToDebuggerConsole("Beginning JA2 using -EDITORAUTO commandline argument...\n");
     // For editor purposes, need to know the default map file.
     sprintf(gubFilename, "none");
     // also set the sector
@@ -162,7 +162,7 @@ uint32_t InitializeJA2(void) {
     return (GAME_SCREEN);
   }
   if (strcmp(gzCommandLine, "-EDITOR") == 0) {
-    DebugPrint("Beginning JA2 using -EDITOR commandline argument...\n");
+    PrintToDebuggerConsole("Beginning JA2 using -EDITOR commandline argument...\n");
     // For editor purposes, need to know the default map file.
     sprintf(gubFilename, "none");
     // also set the sector

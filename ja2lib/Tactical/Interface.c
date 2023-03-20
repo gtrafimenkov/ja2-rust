@@ -604,7 +604,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[RUN_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   SetButtonFastHelpText(iActionIcons[RUN_ICON], pTacticalPopupButtonStrings[RUN_ICON]);
@@ -621,7 +621,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[WALK_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   // SetButtonSavedRect( iActionIcons[ WALK_ICON ] );
@@ -645,7 +645,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[SNEAK_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   SetButtonFastHelpText(iActionIcons[SNEAK_ICON], pTacticalPopupButtonStrings[SNEAK_ICON]);
@@ -662,7 +662,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[CRAWL_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   SetButtonFastHelpText(iActionIcons[CRAWL_ICON], pTacticalPopupButtonStrings[CRAWL_ICON]);
@@ -678,7 +678,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
       iIconImages[LOOK_IMAGES], (int16_t)(iMenuAnchorX), (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE,
       MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[LOOK_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   SetButtonFastHelpText(iActionIcons[LOOK_ICON], TacticalStr[LOOK_CURSOR_POPUPTEXT]);
@@ -760,7 +760,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[ACTIONC_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   // SetButtonSavedRect( iActionIcons[ ACTIONC_ICON ] );
@@ -776,7 +776,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[TALK_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   // SetButtonSavedRect( iActionIcons[ TALK_ICON ] );
@@ -792,7 +792,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[HAND_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   // SetButtonSavedRect( iActionIcons[ HAND_ICON ] );
@@ -808,7 +808,7 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
                         (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnMovementCallback);
   if (iActionIcons[CANCEL_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   // SetButtonSavedRect( iActionIcons[ CANCEL_ICON ] );
@@ -1594,7 +1594,7 @@ void BeginOverlayMessage(uint32_t uiFont, wchar_t *pFontString, ...) {
 
 void EndOverlayMessage() {
   if (giPopupSlideMessageOverlay != -1) {
-    //		DebugMsg( TOPIC_JA2, DBG_LEVEL_0, String( "Removing Overlay message") );
+    //		DebugMsg( TOPIC_JA2, DBG_ERROR, String( "Removing Overlay message") );
 
     RemoveVideoOverlay(giPopupSlideMessageOverlay);
 
@@ -1852,7 +1852,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[USE_KEYRING_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -1879,7 +1879,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[USE_CROWBAR_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -1905,7 +1905,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[LOCKPICK_DOOR_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -1932,7 +1932,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[EXPLOSIVE_DOOR_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -1960,7 +1960,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[OPEN_DOOR_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -1991,7 +1991,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[EXAMINE_DOOR_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -2013,7 +2013,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[BOOT_DOOR_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -2035,7 +2035,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY + 40), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[UNTRAP_DOOR_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
 
@@ -2057,7 +2057,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
                         (int16_t)(iMenuAnchorY + 20), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)BtnDoorMenuCallback);
   if (iActionIcons[CANCEL_ICON] == -1) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "Cannot create Interface button");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "Cannot create Interface button");
     return;
   }
   SetButtonFastHelpText(iActionIcons[CANCEL_ICON], pTacticalPopupButtonStrings[CANCEL_ICON]);
@@ -2415,7 +2415,7 @@ void EndUIMessage() {
       }
     }
 
-    //		DebugMsg( TOPIC_JA2, DBG_LEVEL_0, String( "Removing Overlay message") );
+    //		DebugMsg( TOPIC_JA2, DBG_ERROR, String( "Removing Overlay message") );
 
     RemoveVideoOverlay(giUIMessageOverlay);
 

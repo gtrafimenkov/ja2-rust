@@ -478,8 +478,6 @@
     <ClInclude Include="SGP\SoundMan.h" />
     <ClInclude Include="SGP\STCI.h" />
     <ClInclude Include="SGP\Timer.h" />
-    <ClInclude Include="SGP\TopicIDs.h" />
-    <ClInclude Include="SGP\TopicOps.h" />
     <ClInclude Include="SGP\TRLE.h" />
     <ClInclude Include="SGP\Types.h" />
     <ClInclude Include="SGP\Video.h" />

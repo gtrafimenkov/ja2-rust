@@ -68,7 +68,7 @@ void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
   pGapList->pCurrent = 0;
   pGapList->audio_gap_active = FALSE;
   pPreviousGap = pCurrentGap = 0;
-  // DebugMsg(TOPIC_JA2, DBG_LEVEL_3,String("File is %s", szSoundEffects[uiSampleNum]));
+  // DebugMsg(TOPIC_JA2, DBG_INFO,String("File is %s", szSoundEffects[uiSampleNum]));
   // Get filename
   strcpy(pDestFileName, pSourceFileName);
   // strip .wav and change to .gap
@@ -106,7 +106,7 @@ void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
       pCurrentGap->pNext = 0;
       pCurrentGap->uiStart = Start;
       pCurrentGap->uiEnd = End;
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Gap Start %d and Ends %d", Start, End));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Gap Start %d and Ends %d", Start, End));
 
       // Increment pointer
       pPreviousGap = pCurrentGap;
@@ -118,7 +118,7 @@ void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
     // fclose(pFile);
     File_Close(pFile);
   }
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+  DebugMsg(TOPIC_JA2, DBG_INFO,
            String("Gap List Started From File %s and has %d gaps", pDestFileName, pGapList->size));
 }
 
@@ -144,7 +144,7 @@ void AudioGapListDone(AudioGapList *pGapList) {
   pGapList->pHead = 0;
   pGapList->pCurrent = 0;
   pGapList->size = 0;
-  DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Audio Gap List Deleted"));
+  DebugMsg(TOPIC_JA2, DBG_INFO, String("Audio Gap List Deleted"));
 }
 
 void PollAudioGap(uint32_t uiSampleNum, AudioGapList *pGapList) {
@@ -167,7 +167,7 @@ void PollAudioGap(uint32_t uiSampleNum, AudioGapList *pGapList) {
 
   if (pGapList->size > 0) {
     time = SoundGetPosition(uiSampleNum);
-    //  DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("Sound Sample Time is %d", time) );
+    //  DebugMsg( TOPIC_JA2, DBG_INFO, String("Sound Sample Time is %d", time) );
   } else {
     pGapList->audio_gap_active = (FALSE);
     return;
@@ -193,13 +193,13 @@ void PollAudioGap(uint32_t uiSampleNum, AudioGapList *pGapList) {
   if ((time > pCurrent->uiStart) && (time < pCurrent->uiEnd)) {
     if ((time > pCurrent->uiStart) && (time < pCurrent->uiEnd)) {
       // we are within the time frame
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Gap Started at %d", time));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Gap Started at %d", time));
       pGapList->audio_gap_active = (TRUE);
 
     } else if ((time > pCurrent->uiEnd) && (pGapList->audio_gap_active == TRUE)) {
       // reset if already set
       pGapList->audio_gap_active = (FALSE);
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3, String("Gap Ended at %d", time));
+      DebugMsg(TOPIC_JA2, DBG_INFO, String("Gap Ended at %d", time));
     }
   } else {
     pGapList->audio_gap_active = (FALSE);

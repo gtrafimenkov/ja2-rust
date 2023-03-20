@@ -110,7 +110,7 @@ int8_t HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
   MercCreateStruct.fCopyProfileItemsOver = pHireMerc->fCopyProfileItemsOver;
 
   if (!TacticalCreateSoldier(&MercCreateStruct, &iNewIndex)) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3, "TacticalCreateSoldier in HireMerc():  Failed to Add Merc");
+    DebugMsg(TOPIC_JA2, DBG_INFO, "TacticalCreateSoldier in HireMerc():  Failed to Add Merc");
     return (MERC_HIRE_FAILED);
   }
 

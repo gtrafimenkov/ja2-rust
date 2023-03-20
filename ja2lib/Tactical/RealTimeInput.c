@@ -9,7 +9,6 @@
 #include "JAScreens.h"
 #include "MessageBoxScreen.h"
 #include "SGP/CursorControl.h"
-#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"

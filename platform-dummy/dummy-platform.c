@@ -14,7 +14,7 @@
 
 char gzCommandLine[100];
 
-void DebugPrint(const char *message) {}
+void PrintToDebuggerConsole(const char *message) {}
 
 int strcasecmp(const char *s1, const char *s2) { return 0; }
 

@@ -4,6 +4,7 @@
 
 #include "Laptop/Finances.h"
 #include "Money.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "Soldier.h"

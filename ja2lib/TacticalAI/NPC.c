@@ -1,6 +1,7 @@
 #include "TacticalAI/NPC.h"
 
 #include "Laptop/Finances.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
@@ -1474,7 +1475,7 @@ void Converse(uint8_t ubNPC, uint8_t ubMerc, int8_t bApproach, uintptr_t uiAppro
           break;
         case TRIGGER_NPC:
           // if triggering, pass in the approach data as the record to consider
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_0,
+          DebugMsg(TOPIC_JA2, DBG_ERROR,
                    String("Handling trigger %S/%d at %ld", gMercProfiles[ubNPC].zNickname,
                           (uint8_t)uiApproachData, GetJA2Clock()));
           NPCConsiderTalking(ubNPC, ubMerc, bApproach, (uint8_t)uiApproachData, pNPCQuoteInfoArray,
@@ -2007,7 +2008,7 @@ void TriggerNPCRecord(uint8_t ubTriggerNPC, uint8_t ubTriggerNPCRec) {
     NPCTriggerNPC(ubTriggerNPC, ubTriggerNPCRec, TRIGGER_NPC, fDisplayDialogue);
   } else {
     // don't do anything
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("WARNING: trigger of %d, record %d cannot proceed, possible error",
                     ubTriggerNPC, ubTriggerNPCRec));
   }
@@ -2033,7 +2034,7 @@ void TriggerNPCRecordImmediately(uint8_t ubTriggerNPC, uint8_t ubTriggerNPCRec) 
     HandleNPCTriggerNPC(ubTriggerNPC, ubTriggerNPCRec, fDisplayDialogue, TRIGGER_NPC);
   } else {
     // don't do anything
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("WARNING: trigger of %d, record %d cannot proceed, possible error",
                     ubTriggerNPC, ubTriggerNPCRec));
   }

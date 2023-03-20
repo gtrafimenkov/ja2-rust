@@ -14,7 +14,6 @@
 #include "Editor/EditorMercs.h"
 #include "Editor/ItemStatistics.h"
 #include "Editor/SelectWin.h"
-#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"

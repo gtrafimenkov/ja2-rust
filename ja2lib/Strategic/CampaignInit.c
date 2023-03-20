@@ -1,6 +1,7 @@
 #include "Strategic/CampaignInit.h"
 
 #include "GameSettings.h"
+#include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"

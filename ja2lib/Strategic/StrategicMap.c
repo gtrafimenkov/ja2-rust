@@ -15,6 +15,7 @@
 #include "LoadingScreen.h"
 #include "MessageBoxScreen.h"
 #include "SGP/CursorControl.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -556,8 +557,7 @@ void GetMapFileName(uint8_t sMapX, uint8_t sMapY, int8_t bSectorZ, char *bString
 
   if (fUsePlaceholder && !File_Exists(bTestString)) {
     // Debug str
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-             String("Map does not exist for %s, using default.", bTestString));
+    DebugMsg(TOPIC_JA2, DBG_INFO, String("Map does not exist for %s, using default.", bTestString));
     // Set to a string we know!
     sprintf(bString, "%s", "H10.DAT");
     ScreenMsg(FONT_YELLOW, MSG_DEBUG, L"Using PLACEHOLDER map!");
@@ -1462,7 +1462,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t 
                     "insertion code.",
                     pSoldier->name, pSoldier->sInsertionGridNo, pSoldier->sPendingActionData2,
                     pSoldier->usStrategicInsertionData);
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3, str);
+            DebugMsg(TOPIC_JA2, DBG_INFO, str);
           }
 #endif
           if (pSoldier->sInsertionGridNo == NOWHERE) {
@@ -1484,7 +1484,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t 
                     "insertion code.",
                     pSoldier->name, pSoldier->sInsertionGridNo, pSoldier->sPendingActionData2,
                     pSoldier->usStrategicInsertionData);
-            DebugMsg(TOPIC_JA2, DBG_LEVEL_3, str);
+            DebugMsg(TOPIC_JA2, DBG_INFO, str);
           }
 #endif
           if (pSoldier->sInsertionGridNo == NOWHERE) {
@@ -1516,7 +1516,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t 
           break;
         default:
           pSoldier->sInsertionGridNo = 12880;
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+          DebugMsg(TOPIC_JA2, DBG_INFO,
                    String("Improper insertion code %d given to UpdateMercsInSector",
                           pSoldier->ubStrategicInsertionCode));
           break;
@@ -1589,7 +1589,7 @@ void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, uint8_t sSectorX, uint8_t 
       }
       // If no insertion direction exists, this is bad!
       if (pSoldier->sInsertionGridNo == -1) {
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("Insertion gridno for direction %d not added to map sector %d %d",
                         pSoldier->ubStrategicInsertionCode, sSectorX, sSectorY));
         pSoldier->sInsertionGridNo = 12880;
@@ -1783,10 +1783,11 @@ uint8_t SetInsertionDataFromAdjacentMoveDirection(struct SOLDIERTYPE *pSoldier,
     default:
 // Wrong direction given!
 #ifdef JA2BETAVERSION
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-               String("Improper insertion direction %d given to "
-                      "SetInsertionDataFromAdjacentMoveDirection",
-                      ubTacticalDirection));
+      DebugMsg(
+          TOPIC_JA2, DBG_INFO,
+          String(
+              "Improper insertion direction %d given to SetInsertionDataFromAdjacentMoveDirection",
+              ubTacticalDirection));
       ScreenMsg(
           FONT_RED, MSG_ERROR,
           L"Improper insertion direction %d given to SetInsertionDataFromAdjacentMoveDirection",
@@ -1827,10 +1828,11 @@ uint8_t GetInsertionDataFromAdjacentMoveDirection(uint8_t ubTacticalDirection,
     default:
 // Wrong direction given!
 #ifdef JA2BETAVERSION
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-               String("Improper insertion direction %d given to "
-                      "GetInsertionDataFromAdjacentMoveDirection",
-                      ubTacticalDirection));
+      DebugMsg(
+          TOPIC_JA2, DBG_INFO,
+          String(
+              "Improper insertion direction %d given to GetInsertionDataFromAdjacentMoveDirection",
+              ubTacticalDirection));
       ScreenMsg(
           FONT_RED, MSG_ERROR,
           L"Improper insertion direction %d given to GetInsertionDataFromAdjacentMoveDirection",
@@ -1870,10 +1872,11 @@ uint8_t GetStrategicInsertionDataFromAdjacentMoveDirection(uint8_t ubTacticalDir
     default:
 // Wrong direction given!
 #ifdef JA2BETAVERSION
-      DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
-               String("Improper insertion direction %d given to "
-                      "SetInsertionDataFromAdjacentMoveDirection",
-                      ubTacticalDirection));
+      DebugMsg(
+          TOPIC_JA2, DBG_INFO,
+          String(
+              "Improper insertion direction %d given to SetInsertionDataFromAdjacentMoveDirection",
+              ubTacticalDirection));
       ScreenMsg(FONT_RED, MSG_ERROR,
                 L"Improper insertion direction %d given to "
                 L"GetStrategicInsertionDataFromAdjacentMoveDirection",
@@ -1958,7 +1961,7 @@ void JumpIntoAdjacentSector(uint8_t ubTacticalDirection, uint8_t ubJumpCode,
     }
   } else {
     // OK, no jump code here given...
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("Improper jump code %d given to JumpIntoAdjacentSector", ubJumpCode));
   }
 
@@ -2445,7 +2448,7 @@ void DoneFadeOutAdjacentSector() {
           char str[256];
           sprintf(str, "%S's gridno is NOWHERE, and is attempting to walk into sector.",
                   curr->pSoldier->name);
-          DebugMsg(TOPIC_JA2, DBG_LEVEL_3, str);
+          DebugMsg(TOPIC_JA2, DBG_INFO, str);
 #endif
         }
       }

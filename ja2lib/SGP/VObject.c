@@ -104,7 +104,6 @@ BOOLEAN InitializeVideoObjectManager() {
   // Call shutdown first...
   Assert(!gpVObjectHead);
   Assert(!gpVObjectTail);
-  RegisterDebugTopic(TOPIC_VIDEOOBJECT, "Video Object Manager");
   gpVObjectHead = gpVObjectTail = NULL;
   gfVideoObjectsInit = TRUE;
   return TRUE;
@@ -127,7 +126,6 @@ BOOLEAN ShutdownVideoObjectManager() {
   guiVObjectIndex = 1;
   guiVObjectSize = 0;
   guiVObjectTotalAdded = 0;
-  UnRegisterDebugTopic(TOPIC_VIDEOOBJECT, "Video Objects");
   gfVideoObjectsInit = FALSE;
   return TRUE;
 }
@@ -370,14 +368,14 @@ struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
 
       if (hImage == NULL) {
         MemFree(hVObject);
-        DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_2, "Invalid Image Filename given");
+        DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image Filename given");
         return (NULL);
       }
     } else {  // create video object from provided hImage
       hImage = VObjectDesc->hImage;
       if (hImage == NULL) {
         MemFree(hVObject);
-        DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_2, "Invalid hImage pointer given");
+        DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid hImage pointer given");
         return (NULL);
       }
     }
@@ -385,7 +383,7 @@ struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
     // Check if returned himage is TRLE compressed - return error if not
     if (!(hImage->fFlags & IMAGE_TRLECOMPRESSED)) {
       MemFree(hVObject);
-      DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_2, "Invalid Image format given.");
+      DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
       DestroyImage(hImage);
       return (NULL);
     }
@@ -417,7 +415,7 @@ struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
     //		break;
   } else {
     MemFree(hVObject);
-    DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_2, "Invalid VObject creation flags given.");
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid VObject creation flags given.");
     return (NULL);
   }
 
@@ -428,7 +426,7 @@ struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
   //	while( FALSE );
 
   // All is well
-  //  DbgMessage( TOPIC_VIDEOOBJECT, DBG_LEVEL_3, String("Success in Creating Video Object" ) );
+  //  DebugMsg( TOPIC_VIDEOOBJECT, DBG_INFO, String("Success in Creating Video Object" ) );
 
   return (hVObject);
 }
@@ -463,7 +461,7 @@ BOOLEAN SetVideoObjectPalette(struct VObject *hVObject, struct SGPPaletteEntry *
   hVObject->p16BPPPalette = Create16BPPPalette(pSrcPalette);
   hVObject->pShadeCurrent = hVObject->p16BPPPalette;
 
-  //  DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_3, String("Video Object Palette change successfull"
+  //  DebugMsg(TOPIC_VIDEOOBJECT, DBG_INFO, String("Video Object Palette change successfull"
   //  ));
   return (TRUE);
 }
@@ -744,7 +742,7 @@ uint16_t SetObjectShade(struct VObject *pObj, uint32_t uiShade) {
   Assert(uiShade < HVOBJECT_SHADE_TABLES);
 
   if (pObj->pShades[uiShade] == NULL) {
-    DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_2, String("Attempt to set shade level to NULL table"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, String("Attempt to set shade level to NULL table"));
     return (FALSE);
   }
 
@@ -759,8 +757,8 @@ uint16_t SetObjectHandleShade(uint32_t uiHandle, uint32_t uiShade) {
   gubVODebugCode = DEBUGSTR_SETOBJECTHANDLESHADE;
 #endif
   if (!GetVideoObject(&hObj, uiHandle)) {
-    DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_2,
-               String("Invalid object handle for setting shade level"));
+    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL,
+             String("Invalid object handle for setting shade level"));
     return (FALSE);
   }
   return (SetObjectShade(hObj, uiShade));
@@ -1055,8 +1053,8 @@ BOOLEAN ConvertVObjectRegionTo16BPP(struct VObject *hVObject, uint16_t usRegionI
       pInput++;
       // uiDataLoop++;
       if (uiLen != p16BPPObject->usWidth) {
-        DbgMessage(TOPIC_VIDEOOBJECT, DBG_LEVEL_1,
-                   String("Actual pixel width different from header width"));
+        DebugMsg(TOPIC_VIDEOOBJECT, DBG_ERROR,
+                 String("Actual pixel width different from header width"));
       }
       uiLen = 0;
     }

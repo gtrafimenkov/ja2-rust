@@ -184,8 +184,6 @@ LRESULT CALLBACK MouseHandler(int Code, WPARAM wParam, LPARAM lParam) {
 }
 
 BOOLEAN InitializeInputManager(void) {
-  // Link to debugger
-  RegisterDebugTopic(TOPIC_INPUT, "Input Manager");
   // Initialize the gfKeyState table to FALSE everywhere
   memset(gfKeyState, FALSE, 256);
   // Initialize the Event Queue
@@ -218,18 +216,17 @@ BOOLEAN InitializeInputManager(void) {
   // Activate the hook functions for both keyboard and Mouse
   ghKeyboardHook =
       SetWindowsHookEx(WH_KEYBOARD, (HOOKPROC)KeyboardHandler, (HINSTANCE)0, GetCurrentThreadId());
-  DbgMessage(TOPIC_INPUT, DBG_LEVEL_2, String("Set keyboard hook returned %d", ghKeyboardHook));
+  DebugMsg(TOPIC_INPUT, DBG_NORMAL, String("Set keyboard hook returned %d", ghKeyboardHook));
 
   ghMouseHook =
       SetWindowsHookEx(WH_MOUSE, (HOOKPROC)MouseHandler, (HINSTANCE)0, GetCurrentThreadId());
-  DbgMessage(TOPIC_INPUT, DBG_LEVEL_2, String("Set mouse hook returned %d", ghMouseHook));
+  DebugMsg(TOPIC_INPUT, DBG_NORMAL, String("Set mouse hook returned %d", ghMouseHook));
   return TRUE;
 }
 
-void ShutdownInputManager(void) {  // There's very little to do when shutting down the input
-                                   // manager. In the future, this is where the keyboard and
-  // mouse hooks will be destroyed
-  UnRegisterDebugTopic(TOPIC_INPUT, "Input Manager");
+void ShutdownInputManager(void) {
+  // There's very little to do when shutting down the input
+  // manager. In the future, this is where the keyboard and
   UnhookWindowsHookEx(ghKeyboardHook);
   UnhookWindowsHookEx(ghMouseHook);
 }
@@ -693,7 +690,7 @@ void KeyChange(uint32_t usParam, uint32_t uiParam, uint8_t ufKeyState) {
         QueueEvent(KEY_DOWN, ubChar, uiTmpLParam);
       } else {  // There is a current input string which will capture this event
         RedirectToString(ubChar);
-        DbgMessage(TOPIC_INPUT, DBG_LEVEL_0, String("Pressed character %d (%d)", ubChar, ubKey));
+        DebugMsg(TOPIC_INPUT, DBG_ERROR, String("Pressed character %d (%d)", ubChar, ubKey));
       }
     } else {  // Well the key gets repeated
       if (gfCurrentStringInputState ==

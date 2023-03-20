@@ -69,25 +69,25 @@ void OutputDebugInfoForTurnBasedNextTileWaiting(struct SOLDIERTYPE *pSoldier) {
                             DirectionInc((uint8_t)pSoldier->usPathingData[pSoldier->usPathIndex]));
 
     // provide more info!!
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("  Soldier path size %d, index %d", pSoldier->usPathDataSize,
                     pSoldier->usPathIndex));
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("  Who is at blocked gridno: %d", WhoIsThere2(usNewGridNo, pSoldier->bLevel)));
 
     for (uiLoop = 0; uiLoop < pSoldier->usPathDataSize; uiLoop++) {
       if (uiLoop > pSoldier->usPathIndex) {
         usTemp = NewGridNo(usTemp, DirectionInc((uint8_t)pSoldier->usPathingData[uiLoop]));
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("  Soldier path[%d]: %d == gridno %d", uiLoop,
                         pSoldier->usPathingData[uiLoop], usTemp));
       } else if (uiLoop == pSoldier->usPathIndex) {
         usTemp = usNewGridNo;
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("  Soldier path[%d]: %d == gridno %d", uiLoop,
                         pSoldier->usPathingData[uiLoop], usTemp));
       } else {
-        DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+        DebugMsg(TOPIC_JA2, DBG_INFO,
                  String("  Soldier path[%d]: %d", uiLoop, pSoldier->usPathingData[uiLoop]));
       }
     }

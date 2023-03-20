@@ -589,14 +589,14 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, int32_t index) {
 
 #ifdef JA2EDITOR
   if (GetSolProfile(pSoldier) != NO_PROFILE) {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("Autoprocessing schedule action %S for %S (%d) at time %02ld:%02ld (set for "
                     "%02d:%02d), data1 = %d",
                     gszScheduleActions[pSchedule->ubAction[index]], pSoldier->name,
                     GetSolID(pSoldier), GetWorldHour(), guiMin, pSchedule->usTime[index] / 60,
                     pSchedule->usTime[index] % 60, pSchedule->usData1[index]));
   } else {
-    DebugMsg(TOPIC_JA2, DBG_LEVEL_3,
+    DebugMsg(TOPIC_JA2, DBG_INFO,
              String("Autoprocessing schedule action %S for civ (%d) at time %02ld:%02ld (set for "
                     "%02d:%02d), data1 = %d",
                     gszScheduleActions[pSchedule->ubAction[index]], GetSolID(pSoldier),

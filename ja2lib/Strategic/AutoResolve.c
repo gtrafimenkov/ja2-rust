@@ -6,6 +6,7 @@
 #include "GameLoop.h"
 #include "GameScreen.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"

@@ -10,6 +10,7 @@
 #include "Laptop/History.h"
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Debug.h"
 #include "SGP/Line.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"

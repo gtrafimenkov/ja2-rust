@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "SGP/Debug.h"
 #include "SGP/HImage.h"
 #include "SGP/ImgFmt.h"
 #include "SGP/ImpTGA.h"

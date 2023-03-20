@@ -1,6 +1,7 @@
 #include "Tactical/Vehicles.h"
 
 #include "JAScreens.h"
+#include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "ScreenIDs.h"
