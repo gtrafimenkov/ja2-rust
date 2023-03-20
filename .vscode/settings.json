@@ -35,6 +35,7 @@
         "vobjectblitters.h": "c",
         "librarydatabase.h": "c",
         "rust_platform.h": "c",
-        "rust_debug.h": "c"
+        "rust_debug.h": "c",
+        "fontcontrol.h": "c"
     }
 }

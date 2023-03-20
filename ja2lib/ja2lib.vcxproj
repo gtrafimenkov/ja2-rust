@@ -319,7 +319,6 @@
     <ClCompile Include="Utils\ItalianText.c" />
     <ClCompile Include="Utils\JA25EnglishText.c" />
     <ClCompile Include="Utils\JA25GermanText.c" />
-    <ClCompile Include="Utils\MapUtility.c" />
     <ClCompile Include="Utils\MercTextBox.c" />
     <ClCompile Include="Utils\Message.c" />
     <ClCompile Include="Utils\MultiLanguageGraphicUtils.c" />
@@ -655,7 +654,6 @@
     <ClInclude Include="Utils\FontControl.h" />
     <ClInclude Include="Utils\JA25EnglishText.h" />
     <ClInclude Include="Utils\JA25GermanText.h" />
-    <ClInclude Include="Utils\MapUtility.h" />
     <ClInclude Include="Utils\MercTextBox.h" />
     <ClInclude Include="Utils\Message.h" />
     <ClInclude Include="Utils\MultiLanguageGraphicUtils.h" />

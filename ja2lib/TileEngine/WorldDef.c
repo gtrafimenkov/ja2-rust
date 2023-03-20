@@ -2609,7 +2609,7 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
   } else {  // We are above ground.
     gfBasement = FALSE;
     gfCaves = FALSE;
-    if (!gfEditMode && guiCurrentScreen != MAPUTILITY_SCREEN) {
+    if (!gfEditMode) {
       ubAmbientLightLevel = GetTimeOfDayAmbientLightLevel();
     } else {
       ubAmbientLightLevel = 4;
@@ -2724,15 +2724,6 @@ BOOLEAN LoadWorld(STR8 puiFilename) {
 
 #ifdef JA2TESTVERSION
   uiLoadWorldTime = GetJA2Clock() - uiLoadWorldStartTime;
-#endif
-
-#ifdef JA2TESTVERSION
-
-  // ATE: Not while updating maps!
-  if (guiCurrentScreen != MAPUTILITY_SCREEN) {
-    GenerateBuildings();
-  }
-
 #endif
 
   RenderProgressBar(0, 100);
@@ -3523,7 +3514,7 @@ void LoadMapLights(INT8 **hBuffer) {
     iLSprite = LightSpriteCreate(str, TmpLight.uiLightType);
     // if this fails, then we will ignore the light.
     // ATE: Don't add ANY lights of mapscreen util is on
-    if (iLSprite != -1 && guiCurrentScreen != MAPUTILITY_SCREEN) {
+    if (iLSprite != -1) {
       if (!gfCaves || gfEditMode) {
         if (gfEditMode || (TmpLight.uiFlags & LIGHT_PRIMETIME && fPrimeTime) ||
             (TmpLight.uiFlags & LIGHT_NIGHTTIME && fNightTime) ||

@@ -527,9 +527,6 @@
     <ClCompile Include="Utils\JA25GermanText.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\MapUtility.c">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\MercTextBox.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
@@ -1532,9 +1529,6 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\JA25GermanText.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\MapUtility.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\MercTextBox.h">

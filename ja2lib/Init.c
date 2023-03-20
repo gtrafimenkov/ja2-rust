@@ -41,7 +41,6 @@
 #include "Utils/Cursors.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
-#include "Utils/MapUtility.h"
 #include "Utils/MercTextBox.h"
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
@@ -129,13 +128,6 @@ UINT32 InitializeJA2(void) {
     ApologizeOverrideAndForceUpdateEverything();
   }
 #endif
-#endif
-
-#ifdef JA2BETAVERSION
-  // CHECK COMMANDLINE FOR SPECIAL UTILITY
-  if (strcmp(gzCommandLine, "-DOMAPS") == 0) {
-    return (MAPUTILITY_SCREEN);
-  }
 #endif
 
 #ifdef JA2BETAVERSION

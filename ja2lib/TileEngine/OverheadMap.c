@@ -361,7 +361,7 @@ void HandleOverheadMap() {
   RestoreBackgroundRects();
 
   // RENDER!!!!!!!!
-  RenderOverheadMap(0, (WORLD_COLS / 2), 0, 0, 640, 320, FALSE);
+  RenderOverheadMap(0, (WORLD_COLS / 2), 0, 0, 640, 320);
 
   HandleTalkingAutoFaces();
 
@@ -595,7 +595,7 @@ INT16 GetModifiedOffsetLandHeight(INT32 sGridNo) {
 }
 
 void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
-                       INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, BOOLEAN fFromMapUtility) {
+                       INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS) {
   INT8 bXOddFlag = 0;
   INT16 sModifiedHeight = 0;
   INT16 sAnchorPosX_M, sAnchorPosY_M;
@@ -614,9 +614,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
   INT16 sX1, sX2, sY1, sY2;
 
   // Get video object for persons...
-  if (!fFromMapUtility) {
-    GetVideoObject(&hVObject, uiPERSONS);
-  }
+  GetVideoObject(&hVObject, uiPERSONS);
 
   if (gfOverheadMapDirty) {
     // Black out.......
@@ -829,7 +827,6 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
 
     } while (!fEndRenderCol);
 
-    // if ( !fFromMapUtility && !gfEditMode )
     {
       // ROOF RENDR LOOP
       // Begin Render Loop
@@ -924,10 +921,8 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
       ColorFillVideoSurfaceArea(FRAME_BUFFER, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
 
-    if (!fFromMapUtility) {
-      // Render border!
-      BltVideoObjectFromIndex(FRAME_BUFFER, uiOVERMAP, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
-    }
+    // Render border!
+    BltVideoObjectFromIndex(FRAME_BUFFER, uiOVERMAP, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Update the save buffer
     {

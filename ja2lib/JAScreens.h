@@ -61,10 +61,6 @@ UINT32 LaptopScreenInit(void);
 UINT32 LaptopScreenHandle(void);
 UINT32 LaptopScreenShutdown(void);
 
-UINT32 MapUtilScreenInit(void);
-UINT32 MapUtilScreenHandle(void);
-UINT32 MapUtilScreenShutdown(void);
-
 UINT32 FadeScreenInit(void);
 UINT32 FadeScreenHandle(void);
 UINT32 FadeScreenShutdown(void);
