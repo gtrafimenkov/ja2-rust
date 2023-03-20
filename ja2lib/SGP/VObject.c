@@ -131,7 +131,7 @@ UINT32 CountVideoObjectNodes() {
   return i;
 }
 
-BOOLEAN AddStandardVideoObject(VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex) {
+BOOLEAN AddVideoObject(VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex) {
   struct VObject *hVObject;
 
   // Assertions
@@ -336,11 +336,6 @@ struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
   CHECKF(hVObject != NULL);
   memset(hVObject, 0, sizeof(struct VObject));
 
-  // default of all members of the vobject is 0
-
-  // Check creation options
-  //	do
-  //	{
   if (VObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMFILE ||
       VObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMHIMAGE) {
     if (VObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMFILE) {
@@ -399,15 +394,6 @@ struct VObject *CreateVideoObject(VOBJECT_DESC *VObjectDesc) {
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid VObject creation flags given.");
     return (NULL);
   }
-
-  // If here, no special options given, use structure given in paraneters
-  // TO DO:
-
-  //	}
-  //	while( FALSE );
-
-  // All is well
-  //  DebugMsg( TOPIC_VIDEOOBJECT, DBG_INFO, String("Success in Creating Video Object" ) );
 
   return (hVObject);
 }
