@@ -127,6 +127,13 @@ BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
   return AddVideoObject(&desc, puiIndex);
 }
 
+BOOLEAN AddVObjectFromHImage(HIMAGE hImage, UINT32 *puiIndex) {
+  VOBJECT_DESC desc;
+  desc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
+  desc.hImage = hImage;
+  return AddVideoObject(&desc, puiIndex);
+}
+
 BOOLEAN AddVideoObject(VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex) {
   struct VObject *hVObject;
 
