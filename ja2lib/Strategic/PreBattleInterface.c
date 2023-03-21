@@ -692,8 +692,6 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
   INT32 iLeft, iTop, iWidth, iHeight;
   BOOLEAN fEnterAutoResolveMode = FALSE;
 
-  if (!gfExtraBuffer) return;
-
   PauseTime(FALSE);
 
   PBIRect.iLeft = 0;

@@ -623,10 +623,7 @@ UINT32 AutoResolveScreenHandle() {
     DetermineTeamLeader(TRUE);   // friendly team
     DetermineTeamLeader(FALSE);  // enemy team
     CalculateAttackValues();
-    if (gfExtraBuffer)
-      DoTransitionFromPreBattleInterfaceToAutoResolve();
-    else
-      gpAR->fExpanding = TRUE;
+    DoTransitionFromPreBattleInterfaceToAutoResolve();
     gpAR->fRenderAutoResolve = TRUE;
   }
   if (gpAR->fExitAutoResolve) {

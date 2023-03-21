@@ -11,8 +11,6 @@ extern UINT32 guiRIGHTPANEL;
 extern UINT32 guiSAVEBUFFER;
 extern UINT32 guiEXTRABUFFER;
 
-extern BOOLEAN gfExtraBuffer;
-
 BOOLEAN InitializeSystemVideoObjects();
 BOOLEAN InitializeGameVideoObjects();
 

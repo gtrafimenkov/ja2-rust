@@ -1428,12 +1428,10 @@ void HandleExitsFromMapScreen(void) {
         case MAP_EXIT_TO_LAPTOP:
           fLapTop = TRUE;
           SetPendingNewScreen(LAPTOP_SCREEN);
-
-          if (gfExtraBuffer) {  // Then initiate the transition animation from the mapscreen to
-                                // laptop...
-            BlitBufferToBuffer(FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480);
-            gfStartMapScreenToLaptopTransition = TRUE;
-          }
+          // Then initiate the transition animation from the mapscreen to
+          // laptop...
+          BlitBufferToBuffer(FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480);
+          gfStartMapScreenToLaptopTransition = TRUE;
           break;
 
         case MAP_EXIT_TO_TACTICAL:

@@ -15,8 +15,6 @@ UINT32 guiRIGHTPANEL = 0;
 UINT32 guiSAVEBUFFER = 0;
 UINT32 guiEXTRABUFFER = 0;
 
-BOOLEAN gfExtraBuffer = FALSE;
-
 BOOLEAN InitializeSystemVideoObjects() { return (TRUE); }
 
 BOOLEAN InitializeGameVideoObjects() {
@@ -39,7 +37,6 @@ BOOLEAN InitializeGameVideoObjects() {
   if (!(AddVideoSurface(&vs_desc, &guiEXTRABUFFER))) {
     return FALSE;
   }
-  gfExtraBuffer = TRUE;
 
   return (TRUE);
 }
