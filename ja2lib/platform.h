@@ -89,7 +89,5 @@ extern void UnlockBackBuffer();
 extern void UnlockMouseBuffer();
 extern PTR LockMouseBuffer(UINT32 *uiPitch);
 extern PTR LockBackBuffer(UINT32 *uiPitch);
-void DeletePrimaryVideoSurfaces();
-BOOLEAN SetPrimaryVideoSurfaces();
 
 #endif

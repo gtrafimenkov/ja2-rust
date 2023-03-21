@@ -233,5 +233,3 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *h
                               struct Rect *DestRect) {
   return FALSE;
 }
-void DeletePrimaryVideoSurfaces() {}
-BOOLEAN SetPrimaryVideoSurfaces() { return FALSE; }

@@ -803,9 +803,6 @@ BOOLEAN ShutdownVideoSurfaceManager() {
 
   DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, "Shutting down the Video Surface manager");
 
-  // Delete primary viedeo surfaces
-  DeletePrimaryVideoSurfaces();
-
   while (gpVSurfaceHead) {
     curr = gpVSurfaceHead;
     gpVSurfaceHead = gpVSurfaceHead->next;
@@ -828,12 +825,6 @@ BOOLEAN InitializeVideoSurfaceManager() {
   gpVSurfaceHead = gpVSurfaceTail = NULL;
 
   giMemUsedInSurfaces = 0;
-
-  // Create primary and backbuffer from globals
-  if (!SetPrimaryVideoSurfaces()) {
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, String("Could not create primary surfaces"));
-    return FALSE;
-  }
 
   return TRUE;
 }

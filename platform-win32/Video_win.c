@@ -27,6 +27,9 @@
 #include "Smack.h"
 #include "platform_win.h"
 
+static BOOLEAN SetPrimaryVideoSurfaces();
+static void DeletePrimaryVideoSurfaces();
+
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
                              LPRECT pSrcRect, u32 flags);
 
@@ -219,15 +222,16 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   DDSCAPS SurfaceCaps;
 #endif
 
-  vsBackBuffer = VSurfaceNew();
-  if (!vsBackBuffer) {
-    return FALSE;
-  }
+  // TODO
+  // vsBackBuffer = VSurfaceNew();
+  // if (!vsBackBuffer) {
+  //   return FALSE;
+  // }
 
-  vsFrameBuffer = VSurfaceNew();
-  if (!vsFrameBuffer) {
-    return FALSE;
-  }
+  // vsFrameBuffer = VSurfaceNew();
+  // if (!vsFrameBuffer) {
+  //   return FALSE;
+  // }
 
   //
   // Register debug topics
@@ -414,8 +418,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
-  vsBackBuffer->pSurfaceData = gpBackBuffer;
-  vsFrameBuffer->pSurfaceData = gpFrameBuffer;
+  // TODO
+  // vsBackBuffer->pSurfaceData = gpBackBuffer;
+  // vsFrameBuffer->pSurfaceData = gpFrameBuffer;
 
   //
   // Blank out the frame buffer
@@ -542,6 +547,11 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
 
   GetRGBDistribution();
 
+  if (!SetPrimaryVideoSurfaces()) {
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, String("Could not create primary surfaces"));
+    return FALSE;
+  }
+
   return TRUE;
 }
 
@@ -549,6 +559,8 @@ void ShutdownVideoManager(void) {
   // UINT32  uiRefreshThreadState;
 
   DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Shutting down the video manager");
+
+  DeletePrimaryVideoSurfaces();
 
   //
   // Toggle the state of the video manager to indicate to the refresh thread that it needs to shut
@@ -1947,11 +1959,8 @@ extern struct VSurface *ghMouseBuffer;
 
 // TODO
 // This function sets the global video Surfaces for primary and backbuffer
-BOOLEAN SetPrimaryVideoSurfaces() {
+static BOOLEAN SetPrimaryVideoSurfaces() {
   LPDIRECTDRAWSURFACE2 pSurface;
-
-  // Delete surfaces if they exist
-  DeletePrimaryVideoSurfaces();
 
   //
   // Get Primary surface
@@ -2010,7 +2019,7 @@ BOOLEAN SetPrimaryVideoSurfaces() {
   return (TRUE);
 }
 
-void DeletePrimaryVideoSurfaces() {
+static void DeletePrimaryVideoSurfaces() {
   if (ghPrimary != NULL) {
     DeleteVideoSurface(ghPrimary);
     ghPrimary = NULL;
