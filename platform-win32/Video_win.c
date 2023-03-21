@@ -27,6 +27,9 @@
 #include "Smack.h"
 #include "platform_win.h"
 
+bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
+                             LPRECT pSrcRect, u32 uiTrans);
+
 #define MAX_CURSOR_WIDTH 64
 #define MAX_CURSOR_HEIGHT 64
 #define VIDEO_NO_CURSOR 0xFFFF
@@ -48,7 +51,7 @@ void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACED
 void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
 bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
-                      LPRECT pSrcRect, UINT32 uiTrans);
+                      LPRECT pSrcRect);
 void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
                   LPRECT pSrcRect, UINT32 uiFlags, LPDDBLTFX pDDBltFx);
 void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOLORKEY pDDColorKey);
@@ -660,7 +663,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.right = usWidth - (sScrollXIncrement);
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
       DDBltFastSurface(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y, pSource,
-                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
+                       (LPRECT)&Region);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -679,8 +682,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region,
-                       DDBLTFAST_NOCOLORKEY);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -702,7 +704,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight - sScrollYIncrement;
       DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement, pSource,
-                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
+                       (LPRECT)&Region);
 
       for (uiCountY = sScrollYIncrement - 1 + gsVIEWPORT_WINDOW_START_Y;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
@@ -722,8 +724,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region,
-                       DDBLTFAST_NOCOLORKEY);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region);
 
       // Zero out z
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
@@ -745,7 +746,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.right = usWidth - (sScrollXIncrement);
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight - sScrollYIncrement;
       DDBltFastSurface(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
-                       pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
+                       pSource, (LPRECT)&Region);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -773,7 +774,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight - sScrollYIncrement;
       DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement, pSource,
-                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
+                       (LPRECT)&Region);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -803,7 +804,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.right = usWidth - (sScrollXIncrement);
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
       DDBltFastSurface(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y, pSource,
-                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
+                       (LPRECT)&Region);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -831,8 +832,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region,
-                       DDBLTFAST_NOCOLORKEY);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -863,7 +863,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       RenderStaticWorldRect((INT16)StripRegions[cnt].left, (INT16)StripRegions[cnt].top,
                             (INT16)StripRegions[cnt].right, (INT16)StripRegions[cnt].bottom, TRUE);
       DDBltFastSurface(pDest, StripRegions[cnt].left, StripRegions[cnt].top, gpFrameBuffer,
-                       (LPRECT) & (StripRegions[cnt]), DDBLTFAST_NOCOLORKEY);
+                       (LPRECT) & (StripRegions[cnt]));
     }
 
     sShiftX = 0;
@@ -989,8 +989,7 @@ void RefreshScreen() {
     Region.bottom = gMouseCursorBackground[CURRENT_MOUSE_DATA].usBottom;
     if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
                           gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos,
-                          gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface, (LPRECT)&Region,
-                          DDBLTFAST_NOCOLORKEY)) {
+                          gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface, (LPRECT)&Region)) {
       goto ENDOFLOOP;
     }
 
@@ -1016,8 +1015,7 @@ void RefreshScreen() {
         Region.top = 0;
         Region.right = usScreenWidth;
         Region.bottom = usScreenHeight;
-        if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpFrameBuffer, (LPRECT)&Region,
-                              DDBLTFAST_NOCOLORKEY)) {
+        if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpFrameBuffer, (LPRECT)&Region)) {
           goto ENDOFLOOP;
         }
 
@@ -1028,7 +1026,7 @@ void RefreshScreen() {
           Region.right = gListOfDirtyRegions[uiIndex].iRight;
           Region.bottom = gListOfDirtyRegions[uiIndex].iBottom;
           if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
-                                (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+                                (LPRECT)&Region)) {
             goto ENDOFLOOP;
           }
         }
@@ -1049,7 +1047,7 @@ void RefreshScreen() {
           }
 
           if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
-                                (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+                                (LPRECT)&Region)) {
             goto ENDOFLOOP;
           }
         }
@@ -1126,7 +1124,7 @@ void RefreshScreen() {
     Region.right = usScreenWidth;
     Region.bottom = usScreenHeight;
 
-    DDBltFastSurface(pTmpBuffer, 0, 0, gpPrimarySurface, &Region, DDBLTFAST_NOCOLORKEY);
+    DDBltFastSurface(pTmpBuffer, 0, 0, gpPrimarySurface, &Region);
 
     //
     // Ok now that temp surface has contents of backbuffer, copy temp surface to disk
@@ -1219,8 +1217,7 @@ void RefreshScreen() {
     Region.right = gusMouseCursorWidth;
     Region.bottom = gusMouseCursorHeight;
 
-    DDBltFastSurface(gpMouseCursor, 0, 0, gpMouseCursorOriginal, (LPRECT)&Region,
-                     DDBLTFAST_NOCOLORKEY);
+    DDBltFastSurface(gpMouseCursor, 0, 0, gpMouseCursorOriginal, (LPRECT)&Region);
 
     guiMouseBufferState = BUFFER_READY;
   }
@@ -1300,7 +1297,7 @@ void RefreshScreen() {
         if (!DDBltFastSurface(gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface,
                               gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft,
                               gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop, gpBackBuffer,
-                              &Region, DDBLTFAST_NOCOLORKEY)) {
+                              &Region)) {
           goto ENDOFLOOP;
         }
 
@@ -1315,7 +1312,7 @@ void RefreshScreen() {
 
         if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
                               gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpMouseCursor,
-                              &Region, DDBLTFAST_SRCCOLORKEY)) {
+                              &Region)) {
           goto ENDOFLOOP;
         }
       } else {
@@ -1385,7 +1382,7 @@ void RefreshScreen() {
     Region.right = 640;
     Region.bottom = 360;
 
-    if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpPrimarySurface, &Region, DDBLTFAST_NOCOLORKEY)) {
+    if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpPrimarySurface, &Region)) {
       goto ENDOFLOOP;
     }
 
@@ -1407,7 +1404,7 @@ void RefreshScreen() {
 
     if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[PREVIOUS_MOUSE_DATA].usMouseXPos,
                           gMouseCursorBackground[PREVIOUS_MOUSE_DATA].usMouseYPos, gpPrimarySurface,
-                          (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+                          (LPRECT)&Region)) {
       goto ENDOFLOOP;
     }
   }
@@ -1417,7 +1414,7 @@ void RefreshScreen() {
     Region = gMouseCursorBackground[CURRENT_MOUSE_DATA].Region;
     if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
                           gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpPrimarySurface,
-                          (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+                          (LPRECT)&Region)) {
       goto ENDOFLOOP;
     }
   }
@@ -1430,7 +1427,7 @@ void RefreshScreen() {
     Region.top = 0;
     Region.right = SCREEN_WIDTH;
     Region.bottom = SCREEN_HEIGHT;
-    if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpPrimarySurface, &Region, DDBLTFAST_NOCOLORKEY)) {
+    if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpPrimarySurface, &Region)) {
       goto ENDOFLOOP;
     }
 
@@ -1444,7 +1441,7 @@ void RefreshScreen() {
       Region.right = gListOfDirtyRegions[uiIndex].iRight;
       Region.bottom = gListOfDirtyRegions[uiIndex].iBottom;
       if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpPrimarySurface,
-                            (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+                            (LPRECT)&Region)) {
         goto ENDOFLOOP;
       }
     }
@@ -1463,8 +1460,8 @@ void RefreshScreen() {
     if ((Region.top < gsVIEWPORT_WINDOW_END_Y) && gfRenderScroll) {
       continue;
     }
-    if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpPrimarySurface, (LPRECT)&Region,
-                          DDBLTFAST_NOCOLORKEY)) {
+    if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpPrimarySurface,
+                          (LPRECT)&Region)) {
       goto ENDOFLOOP;
     }
   }
@@ -2481,7 +2478,7 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
   aRect.right = (int)hVSurface->usWidth;
 
   DDBltFastSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSavedSurfaceData, 0, 0,
-                   (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, &aRect, DDBLTFAST_NOCOLORKEY);
+                   (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, &aRect);
 
   return (TRUE);
 }
@@ -2669,8 +2666,7 @@ static BOOLEAN UpdateBackupSurface(struct VSurface *hVSurface) {
 
   // Copy all contents into backup buffer
   DDBltFastSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, 0, 0,
-                   (LPDIRECTDRAWSURFACE2)hVSurface->pSavedSurfaceData, &aRect,
-                   DDBLTFAST_NOCOLORKEY);
+                   (LPDIRECTDRAWSURFACE2)hVSurface->pSavedSurfaceData, &aRect);
 
   return (TRUE);
 }
@@ -2876,13 +2872,7 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
       uiDDFlags |= DDBLTFAST_SRCCOLORKEY;
     }
 
-    if (uiDDFlags == 0) {
-      // Default here is no colorkey
-      uiDDFlags = DDBLTFAST_NOCOLORKEY;
-    }
-
-    DDBltFastSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, iDestX, iDestY,
-                     (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags);
+    BltFastSurfaceWithFlags(hDestVSurface, iDestX, iDestY, hSrcVSurface, &srcRect, uiDDFlags);
   } else {
     // Normal, specialized blit for clipping, etc
 
@@ -3504,8 +3494,8 @@ void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface) {
   IDirectDrawSurface2_Restore(pSurface);
 }
 
-bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
-                      LPRECT pSrcRect, UINT32 uiTrans) {
+static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY,
+                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, UINT32 uiTrans) {
   HRESULT ReturnCode;
 
   Assert(dest != NULL);
@@ -3520,6 +3510,17 @@ bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIREC
     }
   } while (ReturnCode != DD_OK);
   return true;
+}
+
+bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
+                             LPRECT pSrcRect, u32 uiTrans) {
+  return DDBltFastSurfaceWithFlags((LPDIRECTDRAWSURFACE2)dest->pSurfaceData, x, y,
+                                   (LPDIRECTDRAWSURFACE2)src->pSurfaceData, pSrcRect, uiTrans);
+}
+
+bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
+                      LPRECT pSrcRect) {
+  return DDBltFastSurfaceWithFlags(dest, uiX, uiY, src, pSrcRect, DDBLTFAST_NOCOLORKEY);
 }
 
 void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
