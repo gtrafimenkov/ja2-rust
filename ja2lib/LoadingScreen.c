@@ -320,18 +320,18 @@ void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
     SetFont(FONT10ARIAL);
     SetFontForeground(FONT_YELLOW);
     SetFontShadow(FONT_NEARBLACK);
-    VSurfaceColorFill(vsFrameBuffer, 0, 0, 640, 480, 0);
+    VSurfaceColorFill(vsFB, 0, 0, 640, 480, 0);
     mprintf(5, 5, L"Error loading save, attempting to patch save to version 1.02...",
             vs_desc.ImageFile);
   } else if (AddVideoSurface(&vs_desc, &uiLoadScreen)) {  // Blit the background image
     GetVideoSurface(&hVSurface, uiLoadScreen);
-    BltVideoSurfaceToVideoSurface(vsFrameBuffer, hVSurface, 0, 0, 0, NULL);
+    BltVideoSurfaceToVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
     DeleteVideoSurfaceFromIndex(uiLoadScreen);
   } else {  // Failed to load the file, so use a black screen and print out message.
     SetFont(FONT10ARIAL);
     SetFontForeground(FONT_YELLOW);
     SetFontShadow(FONT_NEARBLACK);
-    VSurfaceColorFill(vsFrameBuffer, 0, 0, 640, 480, 0);
+    VSurfaceColorFill(vsFB, 0, 0, 640, 480, 0);
     mprintf(5, 5, L"%S loadscreen data file not found...", vs_desc.ImageFile);
   }
 

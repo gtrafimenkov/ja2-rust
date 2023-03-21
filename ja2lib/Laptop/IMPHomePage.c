@@ -201,7 +201,7 @@ void DisplayActivationStringCursor(void) {
            pDestBuf);
 
   // unlock frame buffer
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   InvalidateRegion((UINT16)uiCursorPosition, CURSOR_Y, (UINT16)uiCursorPosition + 1,
                    CURSOR_Y + CURSOR_HEIGHT + 1);

@@ -14,7 +14,7 @@
 
 struct VSurface *vsPrimary = NULL;
 struct VSurface *vsBackBuffer = NULL;
-struct VSurface *vsFrameBuffer = NULL;
+struct VSurface *vsFB = NULL;
 struct VSurface *vsMouseCursor = NULL;
 struct VSurface *vsMouseCursorOriginal = NULL;
 
@@ -617,7 +617,7 @@ BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
   }
 
   if (uiVSurface == FRAME_BUFFER) {
-    struct BufferLockInfo res = VSurfaceLock(vsFrameBuffer);
+    struct BufferLockInfo res = VSurfaceLock(vsFB);
     *puiPitch = res.pitch;
     return res.dest;
   }
@@ -661,7 +661,7 @@ void UnLockVideoSurface(VSurfID uiVSurface) {
   }
 
   if (uiVSurface == FRAME_BUFFER) {
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
     return;
   }
 
@@ -717,7 +717,7 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
   }
 
   if (uiIndex == FRAME_BUFFER) {
-    *hVSurface = vsFrameBuffer;
+    *hVSurface = vsFB;
     return TRUE;
   }
 

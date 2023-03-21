@@ -740,43 +740,42 @@ void DisplayEditMercWindow(void) {
   iXPos = 0;
 
   // Main window
-  VSurfaceColorFill(vsFrameBuffer, iXPos, iYPos, iXPos + iWidth, iYPos + iHeight, usFillColorLight);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 1, iYPos + 1, iXPos + iWidth, iYPos + iHeight,
-                    usFillColorDark);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 1, iYPos + 1, iXPos + iWidth - 1, iYPos + iHeight - 1,
+  VSurfaceColorFill(vsFB, iXPos, iYPos, iXPos + iWidth, iYPos + iHeight, usFillColorLight);
+  VSurfaceColorFill(vsFB, iXPos + 1, iYPos + 1, iXPos + iWidth, iYPos + iHeight, usFillColorDark);
+  VSurfaceColorFill(vsFB, iXPos + 1, iYPos + 1, iXPos + iWidth - 1, iYPos + iHeight - 1,
                     usFillColorBack);
 
   SetFont(FONT12POINT1);
 
   // Name window
   gprintf(iXPos + 128, iYPos + 3, L"Merc Name:");
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 128, iYPos + 16, iXPos + 128 + 104, iYPos + 16 + 19,
+  VSurfaceColorFill(vsFB, iXPos + 128, iYPos + 16, iXPos + 128 + 104, iYPos + 16 + 19,
                     usFillColorDark);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 129, iYPos + 17, iXPos + 128 + 104, iYPos + 17 + 19,
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 17, iXPos + 128 + 104, iYPos + 17 + 19,
                     usFillColorLight);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 129, iYPos + 17, iXPos + 128 + 103, iYPos + 17 + 18,
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 17, iXPos + 128 + 103, iYPos + 17 + 18,
                     usFillColorTextBk);
   iXOff = (105 - StringPixLength(pSoldier->name, FONT12POINT1)) / 2;
   gprintf(iXPos + 130 + iXOff, iYPos + 20, L"%s", pSoldier->name);
 
   // Orders window
   gprintf(iXPos + 128, iYPos + 38, L"Orders:");
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 128, iYPos + 51, iXPos + 128 + 104, iYPos + 51 + 19,
+  VSurfaceColorFill(vsFB, iXPos + 128, iYPos + 51, iXPos + 128 + 104, iYPos + 51 + 19,
                     usFillColorDark);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 129, iYPos + 52, iXPos + 128 + 104, iYPos + 52 + 19,
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 52, iXPos + 128 + 104, iYPos + 52 + 19,
                     usFillColorLight);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 129, iYPos + 52, iXPos + 128 + 103, iYPos + 52 + 18,
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 52, iXPos + 128 + 103, iYPos + 52 + 18,
                     usFillColorTextBk);
   iXOff = (105 - StringPixLength(EditMercOrders[pSoldier->bOrders], FONT12POINT1)) / 2;
   gprintf(iXPos + 130 + iXOff, iYPos + 55, L"%s", EditMercOrders[pSoldier->bOrders]);
 
   // Combat window
   gprintf(iXPos + 128, iYPos + 73, L"Combat Attitude:");
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 128, iYPos + 86, iXPos + 128 + 104, iYPos + 86 + 19,
+  VSurfaceColorFill(vsFB, iXPos + 128, iYPos + 86, iXPos + 128 + 104, iYPos + 86 + 19,
                     usFillColorDark);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 129, iYPos + 87, iXPos + 128 + 104, iYPos + 87 + 19,
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 87, iXPos + 128 + 104, iYPos + 87 + 19,
                     usFillColorLight);
-  VSurfaceColorFill(vsFrameBuffer, iXPos + 129, iYPos + 87, iXPos + 128 + 103, iYPos + 87 + 18,
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 87, iXPos + 128 + 103, iYPos + 87 + 18,
                     usFillColorTextBk);
   iXOff = (105 - StringPixLength(EditMercAttitudes[pSoldier->bAttitude], FONT12POINT1)) / 2;
   gprintf(iXPos + 130 + iXOff, iYPos + 90, L"%s", EditMercAttitudes[pSoldier->bAttitude]);
@@ -798,11 +797,11 @@ void DisplayEditMercWindow(void) {
   // Stat value windows
   for (x = 0; x < 12; x++) {
     gprintf(iXPos + 6, iYPos + 114 + (20 * x), L"%s", EditMercStat[x]);
-    VSurfaceColorFill(vsFrameBuffer, iXPos + 116, iYPos + 110 + (20 * x), iXPos + 116 + 30,
+    VSurfaceColorFill(vsFB, iXPos + 116, iYPos + 110 + (20 * x), iXPos + 116 + 30,
                       iYPos + 110 + (20 * x) + 19, usFillColorDark);
-    VSurfaceColorFill(vsFrameBuffer, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 30,
+    VSurfaceColorFill(vsFB, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 30,
                       iYPos + 111 + (20 * x) + 19, usFillColorLight);
-    VSurfaceColorFill(vsFrameBuffer, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 29,
+    VSurfaceColorFill(vsFB, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 29,
                       iYPos + 111 + (20 * x) + 18, usFillColorTextBk);
 
     swprintf(TempString, ARR_SIZE(TempString), L"%d", iEditStat[x]);
@@ -1128,8 +1127,8 @@ void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet) {
   usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
 
   // Draw color bar window area
-  VSurfaceColorFill(vsFrameBuffer, sLeft, sTop, sRight, sBottom, usFillColorDark);
-  VSurfaceColorFill(vsFrameBuffer, sLeft + 1, sTop + 1, sRight, sBottom, usFillColorLight);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, usFillColorDark);
+  VSurfaceColorFill(vsFB, sLeft + 1, sTop + 1, sRight, sBottom, usFillColorLight);
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 
   sTop++;
@@ -1146,7 +1145,7 @@ void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet) {
       us16BPPColor =
           Get16BPPColor(FROMRGB(gpPalRep[ubPaletteRep].r[cnt1], gpPalRep[ubPaletteRep].g[cnt1],
                                 gpPalRep[ubPaletteRep].b[cnt1]));
-    VSurfaceColorFill(vsFrameBuffer, sLeft, sTop, sRight, sBottom, us16BPPColor);
+    VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, us16BPPColor);
 
     sLeft += sUnitSize;
     sRight += sUnitSize;
@@ -2486,7 +2485,7 @@ void UpdateMercsInfo() {
       if (gubScheduleInstructions) {
         CHAR16 str[255];
         CHAR16 keyword[10] = L"";
-        VSurfaceColorFill(vsFrameBuffer, 431, 388, 590, 450, Get16BPPColor(FROMRGB(32, 45, 72)));
+        VSurfaceColorFill(vsFB, 431, 388, 590, 450, Get16BPPColor(FROMRGB(32, 45, 72)));
         switch (gCurrSchedule.ubAction[gubCurrentScheduleActionIndex]) {
           case SCHEDULE_ACTION_LOCKDOOR:
             swprintf(keyword, ARR_SIZE(keyword), L"lock");
@@ -2556,7 +2555,7 @@ void DrawRect(SGPRect *pRect, INT16 color) {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, pRect->iLeft + MERCPANEL_X, pRect->iTop + MERCPANEL_Y,
                 pRect->iRight + MERCPANEL_X, pRect->iBottom + MERCPANEL_Y, color, pDestBuf);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
   // InvalidateRegion( pRect->iLeft+175, pRect->iTop+361, pRect->iRight+176, pRect->iBottom+362 );
 }
 
@@ -2576,7 +2575,7 @@ void RenderSelectedMercsInventory() {
       pSrc = LockVideoSurface(guiMercInvPanelBuffers[i], &uiSrcPitchBYTES);
       Blt16BPPTo16BPPTrans((UINT16 *)pDst, uiDstPitchBYTES, (UINT16 *)pSrc, uiSrcPitchBYTES, xp, yp,
                            0, 0, i < 3 ? 22 : 44, 15, 0);
-      VSurfaceUnlock(vsFrameBuffer);
+      VSurfaceUnlock(vsFB);
       UnLockVideoSurface(guiMercInvPanelBuffers[i]);
       LoadItemInfo(gpMercSlotItem[i]->usItem, pItemName, NULL);
       // Render the text

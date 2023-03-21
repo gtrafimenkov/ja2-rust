@@ -2019,7 +2019,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
               // is easier on the eyes, and prevent the drawing of the 	end of the world if it would
               // be drawn on the editor's taskbar.
               if (iTempPosY_S < 360) {
-                if (!(uiFlags & TILES_DIRTY)) VSurfaceUnlock(vsFrameBuffer);
+                if (!(uiFlags & TILES_DIRTY)) VSurfaceUnlock(vsFB);
                 ColorFillVideoSurfaceArea(
                     FRAME_BUFFER, iTempPosX_S, iTempPosY_S, (INT16)(iTempPosX_S + 40),
                     (INT16)(min(iTempPosY_S + 20, 360)), Get16BPPColor(FROMRGB(0, 0, 0)));
@@ -2056,7 +2056,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
     }
   } while (!fEndRenderCol);
 
-  if (!(uiFlags & TILES_DIRTY)) VSurfaceUnlock(vsFrameBuffer);
+  if (!(uiFlags & TILES_DIRTY)) VSurfaceUnlock(vsFB);
 
   if (uiFlags & TILES_DYNAMIC_CHECKFOR_INT_TILE) {
     EndCurInteractiveTileCheck();
@@ -2136,7 +2136,7 @@ void RenderWorld() {
 
   // If we are testing renderer, set background to pink!
   if (gTacticalStatus.uiFlags & DEBUGCLIFFS) {
-    VSurfaceColorFill(vsFrameBuffer, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
+    VSurfaceColorFill(vsFB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
                       Get16BPPColor(FROMRGB(0, 255, 0)));
     SetRenderFlags(RENDER_FLAG_FULL);
   }
@@ -5584,7 +5584,7 @@ void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoin
 
   } while (!fEndRenderCol);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 #ifdef _DEBUG
@@ -5677,7 +5677,7 @@ void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 
   } while (!fEndRenderCol);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
@@ -5762,7 +5762,7 @@ void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSta
 
   } while (!fEndRenderCol);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S,
@@ -5843,7 +5843,7 @@ void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
 
   } while (!fEndRenderCol);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 #endif
@@ -5966,7 +5966,7 @@ void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
 
   } while (!fEndRenderCol);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void CalcRenderParameters(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {

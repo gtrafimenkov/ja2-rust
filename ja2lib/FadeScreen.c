@@ -143,7 +143,7 @@ void BeginFade(UINT32 uiExitScreen, INT8 bFadeValue, INT8 bType, UINT32 uiDelay)
       UpdateSaveBufferWithBackbuffer();
 
       // Clear framebuffer
-      VSurfaceColorFill(vsFrameBuffer, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
       break;
 
     case FADE_OUT_REALFADE:
@@ -200,7 +200,7 @@ UINT32 FadeScreenHandle() {
         case FADE_OUT_REALFADE:
 
           // Clear framebuffer
-          VSurfaceColorFill(vsFrameBuffer, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+          VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
           break;
       }
 
@@ -257,7 +257,7 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0, 0,
                   0, 640, 480);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
   UnLockVideoSurface(guiSAVEBUFFER);
 
   return (TRUE);

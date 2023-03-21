@@ -613,7 +613,7 @@ BOOLEAN EnterSaveLoadScreen() {
     // CLEAR THE FRAME BUFFER
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
     memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
 
     // CLEAR THE guiRENDERBUFFER
     pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);

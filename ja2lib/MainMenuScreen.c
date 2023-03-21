@@ -115,7 +115,7 @@ UINT32 MainMenuScreenHandle() {
     if (guiSplashFrameFade > 2)
       ShadowVideoSurfaceRectUsingLowPercentTable(FRAME_BUFFER, 0, 0, 640, 480);
     else if (guiSplashFrameFade > 1)
-      VSurfaceColorFill(vsFrameBuffer, 0, 0, 640, 480, 0);
+      VSurfaceColorFill(vsFB, 0, 0, 640, 480, 0);
     else {
       SetMusicMode(MUSIC_MAIN_MENU);
     }
@@ -381,7 +381,7 @@ void ClearMainMenu() {
   // CLEAR THE FRAME BUFFER
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
   InvalidateScreen();
 }
 

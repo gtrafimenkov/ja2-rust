@@ -672,7 +672,7 @@ void RenderTalkingMenu() {
                     (INT16)(gTalkPanel.sY + TALK_PANEL_FACE_Y), 0, 0, pFace->usFaceWidth,
                     pFace->usFaceHeight);
 
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
     UnLockVideoSurface(gTalkPanel.uiSaveBuffer);
 
     MarkButtonsDirty();

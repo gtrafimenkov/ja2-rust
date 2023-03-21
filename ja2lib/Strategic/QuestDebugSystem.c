@@ -1353,7 +1353,7 @@ void DisplaySectionLine() {
            pDestBuf);
 
   // unlock frame buffer
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void DisplayQuestInformation() {
@@ -1835,7 +1835,7 @@ void DisplaySelectedNPC() {
     if (usPosY > 424) usPosY = usPosY;
 
     // display the name in the list
-    VSurfaceColorFill(vsFrameBuffer, gpActiveListBox->usScrollPosX, usPosY - 1,
+    VSurfaceColorFill(vsFB, gpActiveListBox->usScrollPosX, usPosY - 1,
                       gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
                       usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
 
@@ -1915,7 +1915,7 @@ void DisplaySelectedItem() {
              gpActiveListBox->usScrollPosY + 2;
 
     // display the name in the list
-    VSurfaceColorFill(vsFrameBuffer, gpActiveListBox->usScrollPosX, usPosY - 1,
+    VSurfaceColorFill(vsFB, gpActiveListBox->usScrollPosX, usPosY - 1,
                       gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
                       usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
 
@@ -2033,7 +2033,7 @@ void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, UINT16 usStartPosX, UINT
   gpActiveListBox->usScrollBoxY = usPosY;
   gpActiveListBox->usScrollBoxEndY = usPosY + usHeight;
 
-  VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY, usPosX + usWidth - 1, usPosY + usHeight,
+  VSurfaceColorFill(vsFB, usPosX, usPosY, usPosX + usWidth - 1, usPosY + usHeight,
                     Get16BPPColor(FROMRGB(130, 132, 128)));
 
   // display the line
@@ -2053,7 +2053,7 @@ void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, UINT16 usStartPosX, UINT
            Get16BPPColor(FROMRGB(112, 110, 112)), pDestBuf);
 
   // unlock frame buffer
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void ScrollArrowsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
@@ -2776,7 +2776,7 @@ void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
 
       if (pSoldier) {
         // color the background of the popup
-        VSurfaceColorFill(vsFrameBuffer, QUEST_DBS_NPC_INV_POPUP_X, QUEST_DBS_NPC_INV_POPUP_Y,
+        VSurfaceColorFill(vsFB, QUEST_DBS_NPC_INV_POPUP_X, QUEST_DBS_NPC_INV_POPUP_Y,
                           QUEST_DBS_NPC_INV_POPUP_X + QUEST_DBS_NPC_INV_POPUP_WIDTH,
                           QUEST_DBS_NPC_INV_POPUP_Y + QUEST_DBS_NPC_INV_POPUP_HEIGHT,
                           Get16BPPColor(FROMRGB(45, 59, 74)));
@@ -3425,7 +3425,7 @@ void DisplayQDSCurrentlyQuoteNum() {
   UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_TEXT_ENTRY) + 2;
 
   // Display the box frame
-  VSurfaceColorFill(vsFrameBuffer, QDS_CURRENT_QUOTE_NUM_BOX_X, QDS_CURRENT_QUOTE_NUM_BOX_Y,
+  VSurfaceColorFill(vsFB, QDS_CURRENT_QUOTE_NUM_BOX_X, QDS_CURRENT_QUOTE_NUM_BOX_Y,
                     QDS_CURRENT_QUOTE_NUM_BOX_X + QDS_CURRENT_QUOTE_NUM_BOX_WIDTH,
                     QDS_CURRENT_QUOTE_NUM_BOX_Y + QDS_CURRENT_QUOTE_NUM_BOX_HEIGHT,
                     Get16BPPColor(FROMRGB(32, 41, 53)));

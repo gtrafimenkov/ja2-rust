@@ -228,7 +228,7 @@ void RenderPopupMenu() {
   UINT16 usStart;
 
   // Draw the menu
-  VSurfaceColorFill(vsFrameBuffer, gPopup.usLeft, gPopup.usTop, gPopup.usRight, gPopup.usBottom,
+  VSurfaceColorFill(vsFB, gPopup.usLeft, gPopup.usTop, gPopup.usRight, gPopup.usBottom,
                     Get16BPPColor(FROMRGB(128, 128, 128)));
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
@@ -242,7 +242,7 @@ void RenderPopupMenu() {
     }
     usStart += (UINT16)gPopup.ubColumnWidth[ubColumn];
   }
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   // Set up the text attributes.
   SetFont(gPopup.usFont);

@@ -1020,21 +1020,21 @@ void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {
 void RenderBackgroundField(TEXTINPUTNODE *pNode) {
   UINT16 usColor;
   if (pColors->fBevelling) {
-    VSurfaceColorFill(vsFrameBuffer, pNode->region.RegionTopLeftX, pNode->region.RegionTopLeftY,
+    VSurfaceColorFill(vsFB, pNode->region.RegionTopLeftX, pNode->region.RegionTopLeftY,
                       pNode->region.RegionBottomRightX, pNode->region.RegionBottomRightY,
                       pColors->usDarkerColor);
-    VSurfaceColorFill(vsFrameBuffer, pNode->region.RegionTopLeftX + 1,
-                      pNode->region.RegionTopLeftY + 1, pNode->region.RegionBottomRightX,
-                      pNode->region.RegionBottomRightY, pColors->usBrighterColor);
+    VSurfaceColorFill(vsFB, pNode->region.RegionTopLeftX + 1, pNode->region.RegionTopLeftY + 1,
+                      pNode->region.RegionBottomRightX, pNode->region.RegionBottomRightY,
+                      pColors->usBrighterColor);
   }
   if (!pNode->fEnabled && !pColors->fUseDisabledAutoShade)
     usColor = pColors->usDisabledTextFieldColor;
   else
     usColor = pColors->usTextFieldColor;
 
-  VSurfaceColorFill(vsFrameBuffer, pNode->region.RegionTopLeftX + 1,
-                    pNode->region.RegionTopLeftY + 1, pNode->region.RegionBottomRightX - 1,
-                    pNode->region.RegionBottomRightY - 1, usColor);
+  VSurfaceColorFill(vsFB, pNode->region.RegionTopLeftX + 1, pNode->region.RegionTopLeftY + 1,
+                    pNode->region.RegionBottomRightX - 1, pNode->region.RegionBottomRightY - 1,
+                    usColor);
 
   InvalidateRegion(pNode->region.RegionTopLeftX, pNode->region.RegionTopLeftY,
                    pNode->region.RegionBottomRightX, pNode->region.RegionBottomRightY);
@@ -1166,7 +1166,7 @@ void RenderInactiveTextFieldNode(TEXTINPUTNODE *pNode) {
     ClipRect.iBottom = pNode->region.RegionBottomRightY;
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
     Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
   }
 }
 

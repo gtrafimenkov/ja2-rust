@@ -164,12 +164,12 @@ void SetRelativeStartAndEndPercentage(UINT8 ubID, UINT32 uiRelStartPerc, UINT32 
   // Render the entire panel now, as it doesn't need update during the normal rendering
   if (pCurr->fPanel) {
     // Draw panel
-    VSurfaceColorFill(vsFrameBuffer, pCurr->usPanelLeft, pCurr->usPanelTop, pCurr->usPanelRight,
+    VSurfaceColorFill(vsFB, pCurr->usPanelLeft, pCurr->usPanelTop, pCurr->usPanelRight,
                       pCurr->usPanelBottom, pCurr->usLtColor);
-    VSurfaceColorFill(vsFrameBuffer, pCurr->usPanelLeft + 1, pCurr->usPanelTop + 1,
-                      pCurr->usPanelRight, pCurr->usPanelBottom, pCurr->usDkColor);
-    VSurfaceColorFill(vsFrameBuffer, pCurr->usPanelLeft + 1, pCurr->usPanelTop + 1,
-                      pCurr->usPanelRight - 1, pCurr->usPanelBottom - 1, pCurr->usColor);
+    VSurfaceColorFill(vsFB, pCurr->usPanelLeft + 1, pCurr->usPanelTop + 1, pCurr->usPanelRight,
+                      pCurr->usPanelBottom, pCurr->usDkColor);
+    VSurfaceColorFill(vsFB, pCurr->usPanelLeft + 1, pCurr->usPanelTop + 1, pCurr->usPanelRight - 1,
+                      pCurr->usPanelBottom - 1, pCurr->usColor);
     InvalidateRegion(pCurr->usPanelLeft, pCurr->usPanelTop, pCurr->usPanelRight,
                      pCurr->usPanelBottom);
     // Draw title
@@ -248,13 +248,12 @@ void RenderProgressBar(UINT8 ubID, UINT32 uiPercentage) {
       //}
     } else {
       // Border edge of the progress bar itself in gray
-      VSurfaceColorFill(vsFrameBuffer, pCurr->usBarLeft, pCurr->usBarTop, pCurr->usBarRight,
+      VSurfaceColorFill(vsFB, pCurr->usBarLeft, pCurr->usBarTop, pCurr->usBarRight,
                         pCurr->usBarBottom, Get16BPPColor(FROMRGB(160, 160, 160)));
       // Interior of progress bar in black
-      VSurfaceColorFill(vsFrameBuffer, pCurr->usBarLeft + 2, pCurr->usBarTop + 2,
-                        pCurr->usBarRight - 2, pCurr->usBarBottom - 2,
-                        Get16BPPColor(FROMRGB(0, 0, 0)));
-      VSurfaceColorFill(vsFrameBuffer, pCurr->usBarLeft + 2, pCurr->usBarTop + 2, end,
+      VSurfaceColorFill(vsFB, pCurr->usBarLeft + 2, pCurr->usBarTop + 2, pCurr->usBarRight - 2,
+                        pCurr->usBarBottom - 2, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, pCurr->usBarLeft + 2, pCurr->usBarTop + 2, end,
                         pCurr->usBarBottom - 2, Get16BPPColor(FROMRGB(72, 155, 24)));
     }
     InvalidateRegion(pCurr->usBarLeft, pCurr->usBarTop, pCurr->usBarRight, pCurr->usBarBottom);

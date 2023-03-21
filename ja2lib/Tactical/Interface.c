@@ -1630,7 +1630,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (INT32)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
                 pDestBuf);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void EndDeadlockMsg() {

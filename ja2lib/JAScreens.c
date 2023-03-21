@@ -636,7 +636,7 @@ UINT32 SexScreenHandle(void) {
   INT16 sX, sY;
 
   // OK, Clear screen and show smily face....
-  VSurfaceColorFill(vsFrameBuffer, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
   InvalidateScreen();
   // Remove cursor....
   SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);

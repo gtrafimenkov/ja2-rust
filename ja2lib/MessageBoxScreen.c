@@ -263,7 +263,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
                   gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight);
 
   UnLockVideoSurface(gMsgBox.uiSaveBuffer);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   // Create top-level mouse region
   MSYS_DefineRegion(&(gMsgBox.BackRegion), 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST, usCursor,
@@ -793,7 +793,7 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
                     gMsgBox.sX, gMsgBox.sY, 0, 0, gMsgBox.usWidth, gMsgBox.usHeight);
 
     UnLockVideoSurface(gMsgBox.uiSaveBuffer);
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
 
     InvalidateRegion(gMsgBox.sX, gMsgBox.sY, (INT16)(gMsgBox.sX + gMsgBox.usWidth),
                      (INT16)(gMsgBox.sY + gMsgBox.usHeight));

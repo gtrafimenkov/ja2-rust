@@ -1935,16 +1935,16 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
     if (gubContractLength == i) {
       if (fContractDown) {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_ON_X;
-        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
                           usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
-        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
                           usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
-      VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+      VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
                         usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
@@ -1956,16 +1956,16 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
     if (gfBuyEquipment == i) {
       if (fBuyEquipDown) {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_ON_X;
-        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
                           usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
-        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
                           usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
-      VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+      VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
                         usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
@@ -2624,7 +2624,7 @@ BOOLEAN DisplayBlackBackground(UINT8 ubMaxNumOfLoops) {
     guiLastHandleMercTime = uiCurrentTime;
   }
   // Blit color to screen
-  VSurfaceColorFill(vsFrameBuffer, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
+  VSurfaceColorFill(vsFB, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                     AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
                     AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT,
                     Get16BPPColor(FROMRGB(0, 0, 0)));

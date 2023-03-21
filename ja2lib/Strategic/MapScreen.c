@@ -1054,7 +1054,7 @@ void ContractListRegionBoxGlow(UINT16 usCount) {
                 usY + GetFontHeight(MAP_SCREEN_FONT) + 2, usColor, pDestBuf);
   InvalidateRegion(TIME_REMAINING_X - 1, usY, TIME_REMAINING_X + TIME_REMAINING_WIDTH + 1,
                    usY + GetFontHeight(MAP_SCREEN_FONT) + 3);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   /*
           // restore background
@@ -1108,7 +1108,7 @@ void GlowFace(void) {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, 9, 18, 60, 63, usColor, pDestBuf);
   InvalidateRegion(9, 18, 61, 64);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   // restore background
   if ((iColorNum == 0) || (iColorNum == 1))
@@ -1165,7 +1165,7 @@ void GlowItem(void) {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, 3, 80, 64, 104, usColor, pDestBuf);
   InvalidateRegion(3, 80, 65, 105);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void GlowTrashCan(void) {
@@ -1206,7 +1206,7 @@ void GlowTrashCan(void) {
                 TRASH_CAN_Y + TRASH_CAN_HEIGHT, usColor, pDestBuf);
   InvalidateRegion(TRASH_CAN_X, TRASH_CAN_Y, TRASH_CAN_X + TRASH_CAN_WIDTH + 1,
                    TRASH_CAN_Y + TRASH_CAN_HEIGHT + 1);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   // restore background
   if ((iColorNum == 0) || (iColorNum == 1))
@@ -2198,7 +2198,7 @@ void HighLightAssignLine() {
     }
   }
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void HighLightDestLine() {
@@ -2276,7 +2276,7 @@ void HighLightDestLine() {
   }
   // InvalidateRegion( usX+4, usY, DEST_ETA_WIDTH-10, usY+GetFontHeight(MAP_SCREEN_FONT)+3);
   // InvalidateRegion( usX+10, usY, usX+ASSIGN_WIDTH, usY+GetFontHeight(MAP_SCREEN_FONT)+3);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void HighLightSleepLine() {
@@ -2353,7 +2353,7 @@ void HighLightSleepLine() {
       InvalidateRegion(usX, usY, usX2 + 5, usY + GetFontHeight(MAP_SCREEN_FONT) + 3);
     }
   }
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void AddCharacter(struct SOLDIERTYPE *pCharacter) {
@@ -2940,7 +2940,7 @@ UINT32 MapScreenHandle(void) {
 
     // fill in
     ColorFillVideoSurfaceArea(guiSAVEBUFFER, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
-    VSurfaceColorFill(vsFrameBuffer, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
+    VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
 
     if ((fFirstTimeInMapScreen == TRUE) && (AnyMercsHired() == FALSE)) {
       // render both panels for the restore
@@ -5224,7 +5224,7 @@ static void RenderMapHighlight(u8 sMapX, u8 sMapY, UINT16 usLineColor, BOOLEAN f
   InvalidateRegion(sScreenX, sScreenY - 2, sScreenX + DMAP_GRID_X + 1, sScreenY + DMAP_GRID_Y - 1);
 
   RestoreClipRegionToFullScreenForRectangle(uiDestPitchBYTES);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void PollLeftButtonInMapView(UINT32 *puiNewEvent) {
@@ -5431,7 +5431,7 @@ void PopupText(CHAR16 *pFontString, ...) {
 
   mprintf_buffer(pDestBuf, uiDestPitchBYTES, LARGEFONT1, sX, sY, PopupString);
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   InvalidateScreen();
 }
@@ -9154,7 +9154,7 @@ void CheckForAndRenderNewMailOverlay() {
 
           pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
           Blt16BPPBufferHatchRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &area);
-          VSurfaceUnlock(vsFrameBuffer);
+          VSurfaceUnlock(vsFB);
         }
         InvalidateRegion(463, 417, 481, 430);
       }

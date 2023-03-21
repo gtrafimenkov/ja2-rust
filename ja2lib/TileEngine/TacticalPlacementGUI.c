@@ -389,7 +389,7 @@ void RenderTacticalPlacementGUI() {
       pSoldier = gMercPlacement[i].pSoldier;
       xp = 95 + (i / 2) * 54;
       yp = (i % 2) ? 422 : 371;
-      VSurfaceColorFill(vsFrameBuffer, xp + 36, yp + 2, xp + 44, yp + 30, 0);
+      VSurfaceColorFill(vsFB, xp + 36, yp + 2, xp + 44, yp + 30, 0);
       BltVideoObjectFromIndex(FRAME_BUFFER, giMercPanelImage, 0, xp, yp, VO_BLT_SRCTRANSPARENCY,
                               NULL);
       BltVideoObjectFromIndex(FRAME_BUFFER, gMercPlacement[i].uiVObjectID, 0, xp + 2, yp + 2,
@@ -398,33 +398,33 @@ void RenderTacticalPlacementGUI() {
       if (!pSoldier->bLife) continue;
       // yellow one for bleeding
       iStartY = yp + 29 - 27 * pSoldier->bLifeMax / 100;
-      VSurfaceColorFill(vsFrameBuffer, xp + 36, iStartY, xp + 37, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 36, iStartY, xp + 37, yp + 29,
                         Get16BPPColor(FROMRGB(107, 107, 57)));
-      VSurfaceColorFill(vsFrameBuffer, xp + 37, iStartY, xp + 38, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 37, iStartY, xp + 38, yp + 29,
                         Get16BPPColor(FROMRGB(222, 181, 115)));
       // pink one for bandaged.
       iStartY += 27 * pSoldier->bBleeding / 100;
-      VSurfaceColorFill(vsFrameBuffer, xp + 36, iStartY, xp + 37, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 36, iStartY, xp + 37, yp + 29,
                         Get16BPPColor(FROMRGB(156, 57, 57)));
-      VSurfaceColorFill(vsFrameBuffer, xp + 37, iStartY, xp + 38, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 37, iStartY, xp + 38, yp + 29,
                         Get16BPPColor(FROMRGB(222, 132, 132)));
       // red one for actual health
       iStartY = yp + 29 - 27 * pSoldier->bLife / 100;
-      VSurfaceColorFill(vsFrameBuffer, xp + 36, iStartY, xp + 37, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 36, iStartY, xp + 37, yp + 29,
                         Get16BPPColor(FROMRGB(107, 8, 8)));
-      VSurfaceColorFill(vsFrameBuffer, xp + 37, iStartY, xp + 38, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 37, iStartY, xp + 38, yp + 29,
                         Get16BPPColor(FROMRGB(206, 0, 0)));
       // BREATH BAR
       iStartY = yp + 29 - 27 * pSoldier->bBreathMax / 100;
-      VSurfaceColorFill(vsFrameBuffer, xp + 39, iStartY, xp + 40, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 39, iStartY, xp + 40, yp + 29,
                         Get16BPPColor(FROMRGB(8, 8, 132)));
-      VSurfaceColorFill(vsFrameBuffer, xp + 40, iStartY, xp + 41, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 40, iStartY, xp + 41, yp + 29,
                         Get16BPPColor(FROMRGB(8, 8, 107)));
       // MORALE BAR
       iStartY = yp + 29 - 27 * pSoldier->bMorale / 100;
-      VSurfaceColorFill(vsFrameBuffer, xp + 42, iStartY, xp + 43, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 42, iStartY, xp + 43, yp + 29,
                         Get16BPPColor(FROMRGB(8, 156, 8)));
-      VSurfaceColorFill(vsFrameBuffer, xp + 43, iStartY, xp + 44, yp + 29,
+      VSurfaceColorFill(vsFB, xp + 43, iStartY, xp + 44, yp + 29,
                         Get16BPPColor(FROMRGB(8, 107, 8)));
     }
     SetFont(BLOCKFONT);
@@ -479,7 +479,7 @@ void RenderTacticalPlacementGUI() {
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
     RectangleDraw(TRUE, gTPClipRect.iLeft, gTPClipRect.iTop, gTPClipRect.iRight,
                   gTPClipRect.iBottom, usHatchColor, pDestBuf);
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
   }
   for (i = 0; i < giPlacements; i++) {  // Render the merc's names
     pSoldier = gMercPlacement[i].pSoldier;

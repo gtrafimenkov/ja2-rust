@@ -1156,7 +1156,7 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, UINT16 usPosX, UINT16 usPosY, UINT16
     }
   }
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   return (fReturnStatus);
 }
@@ -1209,7 +1209,7 @@ BOOLEAN DistortVideoMercImage(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT
       }
     }
   }
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   return (uiReturnValue);
 }

@@ -440,7 +440,7 @@ void RenderRubberBanding() {
     SetBackgroundRectFilled(iBack);
   }
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void RenderTopmostTacticalInterface() {

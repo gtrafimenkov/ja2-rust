@@ -614,7 +614,7 @@ UINT32 AutoResolveScreenHandle() {
     ClipRect.iBottom = 480;
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
     Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
     BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
     KillPreBattleInterface();
     CalculateAutoResolveInfo();
@@ -853,8 +853,7 @@ void CalculateSoldierCells(BOOLEAN fReset) {
 void RenderSoldierCell(SOLDIERCELL *pCell) {
   UINT8 x;
   if (pCell->uiFlags & CELL_MERC) {
-    VSurfaceColorFill(vsFrameBuffer, pCell->xp + 36, pCell->yp + 2, pCell->xp + 44, pCell->yp + 30,
-                      0);
+    VSurfaceColorFill(vsFB, pCell->xp + 36, pCell->yp + 2, pCell->xp + 44, pCell->yp + 30, 0);
     BltVideoObjectFromIndex(FRAME_BUFFER, gpAR->iPanelImages, MERC_PANEL, pCell->xp, pCell->yp,
                             VO_BLT_SRCTRANSPARENCY, NULL);
     RenderSoldierCellBars(pCell);
@@ -874,11 +873,11 @@ void RenderSoldierCell(SOLDIERCELL *pCell) {
                               pCell->yp + 3, VO_BLT_SRCTRANSPARENCY, NULL);
   } else {
     if (pCell->uiFlags & CELL_HITBYATTACKER) {
-      VSurfaceColorFill(vsFrameBuffer, pCell->xp + 3 + x, pCell->yp + 3, pCell->xp + 33 + x,
-                        pCell->yp + 29, 65535);
+      VSurfaceColorFill(vsFB, pCell->xp + 3 + x, pCell->yp + 3, pCell->xp + 33 + x, pCell->yp + 29,
+                        65535);
     } else if (pCell->uiFlags & CELL_HITLASTFRAME) {
-      VSurfaceColorFill(vsFrameBuffer, pCell->xp + 3 + x, pCell->yp + 3, pCell->xp + 33 + x,
-                        pCell->yp + 29, 0);
+      VSurfaceColorFill(vsFB, pCell->xp + 3 + x, pCell->yp + 3, pCell->xp + 33 + x, pCell->yp + 29,
+                        0);
       SetObjectHandleShade(pCell->uiVObjectID, 1);
       BltVideoObjectFromIndex(FRAME_BUFFER, pCell->uiVObjectID, pCell->usIndex, pCell->xp + 3 + x,
                               pCell->yp + 3, VO_BLT_SRCTRANSPARENCY, NULL);
@@ -902,7 +901,7 @@ void RenderSoldierCell(SOLDIERCELL *pCell) {
     ClipRect.iBottom = pCell->yp + 29;
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
     Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
   }
 
   // Draw the health text
@@ -933,33 +932,33 @@ void RenderSoldierCellBars(SOLDIERCELL *pCell) {
   if (!pCell->pSoldier->bLife) return;
   // yellow one for bleeding
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bLifeMax / 100;
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(107, 107, 57)));
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(222, 181, 115)));
   // pink one for bandaged.
   iStartY += 25 * pCell->pSoldier->bBleeding / 100;
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(156, 57, 57)));
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(222, 132, 132)));
   // red one for actual health
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bLife / 100;
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(107, 8, 8)));
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(206, 0, 0)));
   // BREATH BAR
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bBreathMax / 100;
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 41, iStartY, pCell->xp + 42, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 41, iStartY, pCell->xp + 42, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(8, 8, 132)));
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 42, iStartY, pCell->xp + 43, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 42, iStartY, pCell->xp + 43, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(8, 8, 107)));
   // MORALE BAR
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bMorale / 100;
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 45, iStartY, pCell->xp + 46, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 45, iStartY, pCell->xp + 46, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(8, 156, 8)));
-  VSurfaceColorFill(vsFrameBuffer, pCell->xp + 46, iStartY, pCell->xp + 47, pCell->yp + 29,
+  VSurfaceColorFill(vsFB, pCell->xp + 46, iStartY, pCell->xp + 47, pCell->yp + 29,
                     Get16BPPColor(FROMRGB(8, 107, 8)));
 }
 
@@ -1143,7 +1142,7 @@ void ExpandWindow() {
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iRight,
                 gpAR->ExRect.iBottom, Get16BPPColor(FROMRGB(200, 200, 100)), pDestBuf);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
   // left
   InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iLeft + 1,
                    gpAR->ExRect.iBottom + 1);
@@ -1434,7 +1433,7 @@ void RenderAutoResolve() {
   gpAR->fRenderAutoResolve = FALSE;
 
   GetVideoSurface(&hVSurface, gpAR->iInterfaceBuffer);
-  BltVideoSurfaceToVideoSurface(vsFrameBuffer, hVSurface, gpAR->Rect.iLeft, gpAR->Rect.iTop,
+  BltVideoSurfaceToVideoSurface(vsFB, hVSurface, gpAR->Rect.iLeft, gpAR->Rect.iTop,
                                 VO_BLT_SRCTRANSPARENCY, 0);
 
   for (i = 0; i < gpAR->ubMercs; i++) {
@@ -2765,7 +2764,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, xp, yp,
                   xp - gpAR->Rect.iLeft, yp - gpAR->Rect.iTop, 46, 10);
   UnLockVideoSurface(gpAR->iInterfaceBuffer);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   if (pCell->pSoldier->bLife) {
     if (pCell->pSoldier->bLife == pCell->pSoldier->bLifeMax) {

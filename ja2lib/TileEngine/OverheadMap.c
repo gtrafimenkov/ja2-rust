@@ -609,7 +609,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
 
   if (gfOverheadMapDirty) {
     // Black out.......
-    VSurfaceColorFill(vsFrameBuffer, sStartPointX_S, sStartPointY_S, sEndXS, sEndYS, 0);
+    VSurfaceColorFill(vsFB, sStartPointX_S, sStartPointY_S, sEndXS, sEndYS, 0);
 
     InvalidateScreen();
     gfOverheadMapDirty = FALSE;
@@ -891,21 +891,21 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
       } while (!fEndRenderCol);
     }
 
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
 
     // OK, blacken out edges of smaller maps...
     if (gMapInformation.ubRestrictedScrollID != 0) {
       CalculateRestrictedMapCoords(NORTH, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS);
-      VSurfaceColorFill(vsFrameBuffer, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
 
       CalculateRestrictedMapCoords(WEST, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS);
-      VSurfaceColorFill(vsFrameBuffer, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
 
       CalculateRestrictedMapCoords(SOUTH, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS);
-      VSurfaceColorFill(vsFrameBuffer, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
 
       CalculateRestrictedMapCoords(EAST, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS);
-      VSurfaceColorFill(vsFrameBuffer, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, sX1, sY1, sX2, sY2, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
 
     // Render border!
@@ -1091,7 +1091,7 @@ void RenderOverheadOverlays() {
     }
   }
 
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void MoveInOverheadRegionCallback(struct MOUSE_REGION *reg, INT32 reason) {}

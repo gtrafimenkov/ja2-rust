@@ -2140,7 +2140,7 @@ void DisplayHelpScreenTextBufferScrollBox() {
              Get16BPPColor(FROMRGB(65, 49, 6)), pDestBuf);
 
     // unlock frame buffer
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
   }
 }
 

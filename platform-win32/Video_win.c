@@ -398,9 +398,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // Blank out the frame buffer
   //
   {
-    struct BufferLockInfo lock = VSurfaceLock(vsFrameBuffer);
+    struct BufferLockInfo lock = VSurfaceLock(vsFB);
     memset(lock.dest, 0, 480 * lock.pitch);
-    VSurfaceUnlock(vsFrameBuffer);
+    VSurfaceUnlock(vsFB);
   }
 
   //
@@ -520,8 +520,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   vsBackBuffer = CreateVideoSurfaceFromDDSurface(gpBackBuffer);
   vsMouseCursor = CreateVideoSurfaceFromDDSurface(gpMouseCursor);
   vsMouseCursorOriginal = CreateVideoSurfaceFromDDSurface(gpMouseCursorOriginal);
-  vsFrameBuffer = CreateVideoSurfaceFromDDSurface(gpFrameBuffer);
-  if (!vsPrimary || !vsBackBuffer || !vsMouseCursor || !vsMouseCursorOriginal || !vsFrameBuffer) {
+  vsFB = CreateVideoSurfaceFromDDSurface(gpFrameBuffer);
+  if (!vsPrimary || !vsBackBuffer || !vsMouseCursor || !vsMouseCursorOriginal || !vsFB) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, String("Could not create primary surfaces"));
     return FALSE;
   }
@@ -534,7 +534,7 @@ void ShutdownVideoManager(void) {
 
   DeleteVideoSurface(vsPrimary);
   DeleteVideoSurface(vsBackBuffer);
-  DeleteVideoSurface(vsFrameBuffer);
+  DeleteVideoSurface(vsFB);
   DeleteVideoSurface(vsMouseCursor);
   DeleteVideoSurface(vsMouseCursorOriginal);
 

@@ -4387,7 +4387,7 @@ BOOLEAN DrawDeskTopBackground(void) {
 
   // release surfaces
   UnLockVideoSurface(guiDESKTOP);
-  VSurfaceUnlock(vsFrameBuffer);
+  VSurfaceUnlock(vsFB);
 
   return (TRUE);
 }
