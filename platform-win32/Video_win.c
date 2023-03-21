@@ -1592,7 +1592,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   DDPIXELFORMAT PixelFormat;
   LPDIRECTDRAWSURFACE lpDDS;
   LPDIRECTDRAWSURFACE2 lpDDS2;
-  struct VSurface *hVSurface;
   struct Image *hImage;
   UINT16 usHeight;
   UINT16 usWidth;
@@ -1606,20 +1605,9 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   lpDD2Object = dd2Object;
   fMemUsage = VSurfaceDesc->fCreateFlags;
 
-  if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
-    hImage = CreateImage(VSurfaceDesc->ImageFile, IMAGE_ALLIMAGEDATA);
-    if (hImage == NULL) {
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
-      return (NULL);
-    }
-    usHeight = hImage->usHeight;
-    usWidth = hImage->usWidth;
-    ubBitDepth = hImage->ubBitDepth;
-  } else {
-    usHeight = VSurfaceDesc->usHeight;
-    usWidth = VSurfaceDesc->usWidth;
-    ubBitDepth = VSurfaceDesc->ubBitDepth;
-  }
+  usHeight = VSurfaceDesc->usHeight;
+  usWidth = VSurfaceDesc->usWidth;
+  ubBitDepth = VSurfaceDesc->ubBitDepth;
 
   Assert(usHeight > 0);
   Assert(usWidth > 0);
@@ -1659,41 +1647,23 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   SurfaceDescription.ddpfPixelFormat = PixelFormat;
   DDCreateSurface(lpDD2Object, &SurfaceDescription, &lpDDS, &lpDDS2);
 
-  hVSurface = VSurfaceNew();
-  if (!hVSurface) {
+  struct VSurface *vs = VSurfaceNew();
+  if (!vs) {
     return FALSE;
   }
 
-  hVSurface->usHeight = usHeight;
-  hVSurface->usWidth = usWidth;
-  hVSurface->ubBitDepth = ubBitDepth;
-  hVSurface->pSurfaceData1 = (PTR)lpDDS;
-  hVSurface->pSurfaceData = (PTR)lpDDS2;
-  hVSurface->pPalette = NULL;
-  hVSurface->p16BPPPalette = NULL;
-  hVSurface->TransparentColor = FROMRGB(0, 0, 0);
-  hVSurface->fFlags = 0;
-  hVSurface->pClipper = NULL;
-  DDGetSurfaceDescription(lpDDS2, &SurfaceDescription);
+  vs->usHeight = usHeight;
+  vs->usWidth = usWidth;
+  vs->ubBitDepth = ubBitDepth;
+  vs->pSurfaceData1 = (PTR)lpDDS;
+  vs->pSurfaceData = (PTR)lpDDS2;
+  vs->pPalette = NULL;
+  vs->p16BPPPalette = NULL;
+  vs->TransparentColor = FROMRGB(0, 0, 0);
+  vs->fFlags = 0;
+  vs->pClipper = NULL;
 
-  if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
-    SGPRect tempRect;
-    tempRect.iLeft = 0;
-    tempRect.iTop = 0;
-    tempRect.iRight = hImage->usWidth - 1;
-    tempRect.iBottom = hImage->usHeight - 1;
-    SetVideoSurfaceDataFromHImage(hVSurface, hImage, 0, 0, &tempRect);
-    if (hImage->ubBitDepth == 8) {
-      SetVideoSurfacePalette(hVSurface, hImage->pPalette);
-    }
-    DestroyImage(hImage);
-  }
-
-  hVSurface->usHeight = usHeight;
-  hVSurface->usWidth = usWidth;
-  hVSurface->ubBitDepth = ubBitDepth;
-
-  return (hVSurface);
+  return (vs);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
