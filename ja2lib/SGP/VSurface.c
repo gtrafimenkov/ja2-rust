@@ -13,7 +13,7 @@
 #include "platform.h"
 
 struct VSurface *vsPrimary = NULL;
-struct VSurface *vsBackBuffer = NULL;
+struct VSurface *vsBB = NULL;
 struct VSurface *vsFB = NULL;
 struct VSurface *vsMouseCursor = NULL;
 struct VSurface *vsMouseCursorOriginal = NULL;
@@ -611,7 +611,7 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
 // TODO
 BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
   if (uiVSurface == BACKBUFFER) {
-    struct BufferLockInfo res = VSurfaceLock(vsBackBuffer);
+    struct BufferLockInfo res = VSurfaceLock(vsBB);
     *puiPitch = res.pitch;
     return res.dest;
   }
@@ -656,7 +656,7 @@ void UnLockVideoSurface(VSurfID uiVSurface) {
   VSURFACE_NODE *curr;
 
   if (uiVSurface == BACKBUFFER) {
-    VSurfaceUnlock(vsBackBuffer);
+    VSurfaceUnlock(vsBB);
     return;
   }
 
@@ -712,7 +712,7 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
   VSURFACE_NODE *curr;
 
   if (uiIndex == BACKBUFFER) {
-    *hVSurface = vsBackBuffer;
+    *hVSurface = vsBB;
     return TRUE;
   }
 
