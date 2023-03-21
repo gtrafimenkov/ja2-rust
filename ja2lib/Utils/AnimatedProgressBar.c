@@ -237,10 +237,9 @@ void RenderProgressBar(UINT8 ubID, UINT32 uiPercentage) {
       return;
     }
     if (gfUseLoadScreenProgressBar) {
-      ColorFillVideoSurfaceArea(
-          FRAME_BUFFER, pCurr->usBarLeft, pCurr->usBarTop, end, pCurr->usBarBottom,
-          Get16BPPColor(
-              FROMRGB(pCurr->ubColorFillRed, pCurr->ubColorFillGreen, pCurr->ubColorFillBlue)));
+      VSurfaceColorFill(vsFB, pCurr->usBarLeft, pCurr->usBarTop, end, pCurr->usBarBottom,
+                        Get16BPPColor(FROMRGB(pCurr->ubColorFillRed, pCurr->ubColorFillGreen,
+                                              pCurr->ubColorFillBlue)));
       // if( pCurr->usBarRight > gusLeftmostShaded )
       //{
       //	ShadowVideoSurfaceRect( FRAME_BUFFER, gusLeftmostShaded+1, pCurr->usBarTop, end,

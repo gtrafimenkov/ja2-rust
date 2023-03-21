@@ -604,9 +604,8 @@ void RenderSquadList(void) {
   RestoreExternBackgroundRect(RADAR_WINDOW_X, gsRadarY, RADAR_WINDOW_WIDTH, SQUAD_REGION_HEIGHT);
 
   // fill area
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, RADAR_WINDOW_X, RADAR_WINDOW_TM_Y, RADAR_WINDOW_X + RADAR_WINDOW_WIDTH,
-      RADAR_WINDOW_TM_Y + SQUAD_REGION_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, RADAR_WINDOW_X, RADAR_WINDOW_TM_Y, RADAR_WINDOW_X + RADAR_WINDOW_WIDTH,
+                    RADAR_WINDOW_TM_Y + SQUAD_REGION_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)));
 
   // set font
   SetFont(SQUAD_FONT);

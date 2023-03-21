@@ -1753,9 +1753,8 @@ void DisplaySelectedListBox() {
   usPosY = gpActiveListBox->usScrollPosY + 2;
 
   // clear the background
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollWidth,
-      usPosY + gpActiveListBox->usScrollHeight, Get16BPPColor(FROMRGB(45, 59, 74)));
+  VSurfaceColorFill(vsFB, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollWidth,
+                    usPosY + gpActiveListBox->usScrollHeight, Get16BPPColor(FROMRGB(45, 59, 74)));
 
   // Display the selected list box's display function
   (*(gpActiveListBox->DisplayFunction))();
@@ -1765,9 +1764,9 @@ void DisplaySelectedListBox() {
   usPosX = gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth;
   usPosY = gpActiveListBox->usScrollPosY + 2;
 
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollBarWidth,
-      usPosY + gpActiveListBox->usScrollHeight, Get16BPPColor(FROMRGB(192, 192, 192)));
+  VSurfaceColorFill(vsFB, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollBarWidth,
+                    usPosY + gpActiveListBox->usScrollHeight,
+                    Get16BPPColor(FROMRGB(192, 192, 192)));
 
   // get and display the up and down arrows
   GetVideoObject(&hImageHandle, guiQdScrollArrowImage);
@@ -2503,9 +2502,9 @@ BOOLEAN CreateDestroyDisplayTextEntryBox(UINT8 ubAction, STR16 pString,
 
     case QD_DROP_DOWN_DISPLAY: {
       // Display the text entry box frame
-      ColorFillVideoSurfaceArea(
-          FRAME_BUFFER, QUEST_DBS_TEB_X, QUEST_DBS_TEB_Y, QUEST_DBS_TEB_X + QUEST_DBS_TEB_WIDTH,
-          QUEST_DBS_TEB_Y + QUEST_DBS_TEB_HEIGHT, Get16BPPColor(FROMRGB(45, 59, 74)));
+      VSurfaceColorFill(vsFB, QUEST_DBS_TEB_X, QUEST_DBS_TEB_Y,
+                        QUEST_DBS_TEB_X + QUEST_DBS_TEB_WIDTH,
+                        QUEST_DBS_TEB_Y + QUEST_DBS_TEB_HEIGHT, Get16BPPColor(FROMRGB(45, 59, 74)));
 
       // Display the text box caption
       DisplayWrappedString(QUEST_DBS_TEB_X + 10, QUEST_DBS_TEB_Y + 10, QUEST_DBS_TEB_WIDTH - 20, 2,

@@ -2117,9 +2117,8 @@ void DisplayHelpScreenTextBufferScrollBox() {
   // if there ARE scroll bars, draw the
   if (!(gHelpScreen.usTotalNumberOfLinesInBuffer <=
         HLP_SCRN__MAX_NUMBER_DISPLAYED_LINES_IN_BUFFER)) {
-    ColorFillVideoSurfaceArea(
-        FRAME_BUFFER, usPosX, iTopPosScrollBox, usPosX + HLP_SCRN__WIDTH_OF_SCROLL_AREA,
-        iTopPosScrollBox + iSizeOfBox - 1, Get16BPPColor(FROMRGB(227, 198, 88)));
+    VSurfaceColorFill(vsFB, usPosX, iTopPosScrollBox, usPosX + HLP_SCRN__WIDTH_OF_SCROLL_AREA,
+                      iTopPosScrollBox + iSizeOfBox - 1, Get16BPPColor(FROMRGB(227, 198, 88)));
 
     // display the line
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);

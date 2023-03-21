@@ -1096,12 +1096,11 @@ void RenderActiveTextField() {
     DoublePercentileCharacterFromStringIntoString(gpActive->szString, str);
     uiCursorXPos = StringPixLengthArg(pColors->usFont, gubCursorPos, str) + 2;
     if (GetJA2Clock() % 1000 < 500) {  // draw the blinking ibeam cursor during the on blink period.
-      ColorFillVideoSurfaceArea(
-          FRAME_BUFFER, gpActive->region.RegionTopLeftX + uiCursorXPos,
-          gpActive->region.RegionTopLeftY + usOffset,
-          gpActive->region.RegionTopLeftX + uiCursorXPos + 1,
-          gpActive->region.RegionTopLeftY + usOffset + GetFontHeight(pColors->usFont),
-          pColors->usCursorColor);
+      VSurfaceColorFill(vsFB, gpActive->region.RegionTopLeftX + uiCursorXPos,
+                        gpActive->region.RegionTopLeftY + usOffset,
+                        gpActive->region.RegionTopLeftX + uiCursorXPos + 1,
+                        gpActive->region.RegionTopLeftY + usOffset + GetFontHeight(pColors->usFont),
+                        pColors->usCursorColor);
     }
   }
   RestoreFontSettings();

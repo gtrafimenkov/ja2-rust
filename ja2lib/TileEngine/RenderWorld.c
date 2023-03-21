@@ -2020,9 +2020,9 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
               // be drawn on the editor's taskbar.
               if (iTempPosY_S < 360) {
                 if (!(uiFlags & TILES_DIRTY)) VSurfaceUnlock(vsFB);
-                ColorFillVideoSurfaceArea(
-                    FRAME_BUFFER, iTempPosX_S, iTempPosY_S, (INT16)(iTempPosX_S + 40),
-                    (INT16)(min(iTempPosY_S + 20, 360)), Get16BPPColor(FROMRGB(0, 0, 0)));
+                VSurfaceColorFill(vsFB, iTempPosX_S, iTempPosY_S, (INT16)(iTempPosX_S + 40),
+                                  (INT16)(min(iTempPosY_S + 20, 360)),
+                                  Get16BPPColor(FROMRGB(0, 0, 0)));
                 if (!(uiFlags & TILES_DIRTY))
                   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
               }

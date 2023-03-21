@@ -1076,8 +1076,8 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
         MSYS_RemoveRegion(&gSelectedFlowerDropDownRegion[i]);
 
       // display the name on the title bar
-      ColorFillVideoSurfaceArea(
-          FRAME_BUFFER, FLOWER_ORDER_DROP_DOWN_LOCATION_X + 3, FLOWER_ORDER_DELIVERY_LOCATION_Y + 3,
+      VSurfaceColorFill(
+          vsFB, FLOWER_ORDER_DROP_DOWN_LOCATION_X + 3, FLOWER_ORDER_DELIVERY_LOCATION_Y + 3,
           FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
           FLOWER_ORDER_DELIVERY_LOCATION_Y + FLOWER_ORDER_DELIVERY_LOCATION_HEIGHT - 2,
           Get16BPPColor(FROMRGB(0, 0, 0)));
@@ -1104,10 +1104,10 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
       struct VObject *hImageHandle;
 
       // Display the background for the drop down window
-      ColorFillVideoSurfaceArea(
-          FRAME_BUFFER, FLOWER_ORDER_DROP_DOWN_LOCATION_X, FLOWER_ORDER_DROP_DOWN_LOCATION_Y,
-          FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
-          FLOWER_ORDER_DROP_DOWN_LOCATION_Y + usHeight, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, FLOWER_ORDER_DROP_DOWN_LOCATION_X, FLOWER_ORDER_DROP_DOWN_LOCATION_Y,
+                        FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
+                        FLOWER_ORDER_DROP_DOWN_LOCATION_Y + usHeight,
+                        Get16BPPColor(FROMRGB(0, 0, 0)));
 
       //
       // Place the border around the background
@@ -1182,10 +1182,9 @@ void FlowerOrderDrawSelectedCity(UINT8 ubNumber) {
   usPosY = (usFontHeight + 2) * ubNumber + FLOWER_ORDER_DROP_DOWN_CITY_START_Y;
 
   // display the name in the list
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, FLOWER_ORDER_DROP_DOWN_CITY_START_X, usPosY + 2,
-      FLOWER_ORDER_DROP_DOWN_CITY_START_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 9,
-      usPosY + usFontHeight + 4, Get16BPPColor(FROMRGB(255, 255, 255)));
+  VSurfaceColorFill(vsFB, FLOWER_ORDER_DROP_DOWN_CITY_START_X, usPosY + 2,
+                    FLOWER_ORDER_DROP_DOWN_CITY_START_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 9,
+                    usPosY + usFontHeight + 4, Get16BPPColor(FROMRGB(255, 255, 255)));
 
   SetFontShadow(NO_SHADOW);
   DrawTextToScreen(pDeliveryLocationStrings[ubNumber], FLOWER_ORDER_DROP_DOWN_CITY_START_X + 6,
@@ -1199,11 +1198,11 @@ void FlowerOrderDrawSelectedCity(UINT8 ubNumber) {
 
 void FlowerOrderDisplayShippingLocationCity() {
   // display the name on the title bar
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, FLOWER_ORDER_DROP_DOWN_LOCATION_X + 3, FLOWER_ORDER_DELIVERY_LOCATION_Y + 3,
-      FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
-      FLOWER_ORDER_DELIVERY_LOCATION_Y + FLOWER_ORDER_DELIVERY_LOCATION_HEIGHT - 2,
-      Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, FLOWER_ORDER_DROP_DOWN_LOCATION_X + 3,
+                    FLOWER_ORDER_DELIVERY_LOCATION_Y + 3,
+                    FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
+                    FLOWER_ORDER_DELIVERY_LOCATION_Y + FLOWER_ORDER_DELIVERY_LOCATION_HEIGHT - 2,
+                    Get16BPPColor(FROMRGB(0, 0, 0)));
   DrawTextToScreen(pDeliveryLocationStrings[gubCurrentlySelectedFlowerLocation],
                    FLOWER_ORDER_DELIVERY_LOCATION_X + 5, FLOWER_ORDER_DELIVERY_LOCATION_Y + 5, 0,
                    FLOWER_ORDEER_SMALL_FONT, FLOWER_ORDEER_SMALL_COLOR, FONT_MCOLOR_BLACK, FALSE,
