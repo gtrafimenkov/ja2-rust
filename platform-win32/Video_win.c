@@ -2027,8 +2027,8 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
   return (TRUE);
 }
 
-BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
+BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *dest, struct VSurface *src, UINT32 fBltFlags,
+                              INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
                               struct Rect *DestRect) {
   UINT32 uiDDFlags;
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
@@ -2048,8 +2048,8 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *h
         .top = DestRect->top,
         .bottom = DestRect->bottom,
     };
-    DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, &destRect,
-                 (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags, NULL);
+    DDBltSurface((LPDIRECTDRAWSURFACE2)dest->pSurfaceData, &destRect,
+                 (LPDIRECTDRAWSURFACE2)src->pSurfaceData, &srcRect, uiDDFlags, NULL);
   }
 
   return (TRUE);
