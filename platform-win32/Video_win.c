@@ -126,12 +126,11 @@ INT32 giNumFrames = 0;
 // Direct Draw objects for both the Primary and Backbuffer surfaces
 //
 
-static LPDIRECTDRAW _gpDirectDrawObject = NULL;
-static LPDIRECTDRAW2 gpDirectDrawObject = NULL;
+static LPDIRECTDRAW ddObject = NULL;
+static LPDIRECTDRAW2 dd2Object = NULL;
 
 static LPDIRECTDRAWSURFACE _gpPrimarySurface = NULL;
 static LPDIRECTDRAWSURFACE2 gpPrimarySurface = NULL;
-static LPDIRECTDRAWSURFACE2 gpBackBuffer = NULL;
 
 //
 // Direct Draw Objects for the frame buffer
@@ -141,12 +140,10 @@ static LPDIRECTDRAWSURFACE _gpFrameBuffer = NULL;
 static LPDIRECTDRAWSURFACE2 gpFrameBuffer = NULL;
 
 #ifdef WINDOWED_MODE
-
 static LPDIRECTDRAWSURFACE _gpBackBuffer = NULL;
-
 extern RECT rcWindow;
-
 #endif
+static LPDIRECTDRAWSURFACE2 gpBackBuffer = NULL;
 
 //
 // Globals for mouse cursor
@@ -275,14 +272,13 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   UpdateWindow(hWindow);
   SetFocus(hWindow);
 
-  ReturnCode = DirectDrawCreate(NULL, &_gpDirectDrawObject, NULL);
+  ReturnCode = DirectDrawCreate(NULL, &ddObject, NULL);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
 
   IID tmpID = IID_IDirectDraw2;
-  ReturnCode =
-      IDirectDraw_QueryInterface(_gpDirectDrawObject, &tmpID, (LPVOID *)&gpDirectDrawObject);
+  ReturnCode = IDirectDraw_QueryInterface(ddObject, &tmpID, (LPVOID *)&dd2Object);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
@@ -291,10 +287,10 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // Set the exclusive mode
   //
 #ifdef WINDOWED_MODE
-  ReturnCode = IDirectDraw2_SetCooperativeLevel(gpDirectDrawObject, ghWindow, DDSCL_NORMAL);
+  ReturnCode = IDirectDraw2_SetCooperativeLevel(dd2Object, ghWindow, DDSCL_NORMAL);
 #else
-  ReturnCode = IDirectDraw2_SetCooperativeLevel(gpDirectDrawObject, ghWindow,
-                                                DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
+  ReturnCode =
+      IDirectDraw2_SetCooperativeLevel(dd2Object, ghWindow, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
 #endif
   if (ReturnCode != DD_OK) {
     return FALSE;
@@ -304,8 +300,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // Set the display mode
   //
 #ifndef WINDOWED_MODE
-  ReturnCode =
-      IDirectDraw2_SetDisplayMode(gpDirectDrawObject, SCREEN_WIDTH, SCREEN_HEIGHT, 16, 0, 0);
+  ReturnCode = IDirectDraw2_SetDisplayMode(dd2Object, SCREEN_WIDTH, SCREEN_HEIGHT, 16, 0, 0);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
@@ -326,8 +321,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   SurfaceDescription.dwFlags = DDSD_CAPS;
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 
-  ReturnCode =
-      IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpPrimarySurface, NULL);
+  ReturnCode = IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription, &_gpPrimarySurface, NULL);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
@@ -346,8 +340,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
   SurfaceDescription.dwWidth = SCREEN_WIDTH;
   SurfaceDescription.dwHeight = SCREEN_HEIGHT;
-  ReturnCode =
-      IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpBackBuffer, NULL);
+  ReturnCode = IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription, &_gpBackBuffer, NULL);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
@@ -364,8 +357,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
   SurfaceDescription.dwBackBufferCount = 1;
 
-  ReturnCode =
-      IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpPrimarySurface, NULL);
+  ReturnCode = IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription, &_gpPrimarySurface, NULL);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
@@ -396,8 +388,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
   SurfaceDescription.dwWidth = SCREEN_WIDTH;
   SurfaceDescription.dwHeight = SCREEN_HEIGHT;
-  ReturnCode =
-      IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpFrameBuffer, NULL);
+  ReturnCode = IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription, &_gpFrameBuffer, NULL);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
@@ -428,8 +419,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
   SurfaceDescription.dwWidth = MAX_CURSOR_WIDTH;
   SurfaceDescription.dwHeight = MAX_CURSOR_HEIGHT;
-  ReturnCode =
-      IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpMouseCursor, NULL);
+  ReturnCode = IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription, &_gpMouseCursor, NULL);
   if (ReturnCode != DD_OK) {
     DebugMsg(TOPIC_VIDEO, DBG_ERROR,
              String("Failed to create MouseCursor witd %ld", ReturnCode & 0x0f));
@@ -459,8 +449,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
   SurfaceDescription.dwWidth = MAX_CURSOR_WIDTH;
   SurfaceDescription.dwHeight = MAX_CURSOR_HEIGHT;
-  ReturnCode = IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription,
-                                          &_gpMouseCursorOriginal, NULL);
+  ReturnCode =
+      IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription, &_gpMouseCursorOriginal, NULL);
   if (ReturnCode != DD_OK) {
     DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to create MouseCursorOriginal");
     return FALSE;
@@ -496,7 +486,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
     SurfaceDescription.dwWidth = MAX_CURSOR_WIDTH;
     SurfaceDescription.dwHeight = MAX_CURSOR_HEIGHT;
-    ReturnCode = IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription,
+    ReturnCode = IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription,
                                             &(gMouseCursorBackground[uiIndex]._pSurface), NULL);
     if (ReturnCode != DD_OK) {
       DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to create MouseCursorBackground");
@@ -555,23 +545,15 @@ void ShutdownVideoManager(void) {
   DeleteVideoSurface(vsMouseCursor);
   DeleteVideoSurface(vsMouseCursorOriginal);
 
-  //
-  // Toggle the state of the video manager to indicate to the refresh thread that it needs to shut
-  // itself down
-  //
-
   IDirectDrawSurface2_Release(gpMouseCursorOriginal);
   IDirectDrawSurface2_Release(gpMouseCursor);
   IDirectDrawSurface2_Release(gMouseCursorBackground[0].pSurface);
   IDirectDrawSurface2_Release(gpBackBuffer);
   IDirectDrawSurface2_Release(gpPrimarySurface);
 
-  IDirectDraw2_RestoreDisplayMode(gpDirectDrawObject);
-  IDirectDraw2_SetCooperativeLevel(gpDirectDrawObject, ghWindow, DDSCL_NORMAL);
-  IDirectDraw2_Release(gpDirectDrawObject);
-
-  // destroy the window
-  // DestroyWindow( ghWindow );
+  IDirectDraw2_RestoreDisplayMode(dd2Object);
+  IDirectDraw2_SetCooperativeLevel(dd2Object, ghWindow, DDSCL_NORMAL);
+  IDirectDraw2_Release(dd2Object);
 
   guiVideoManagerState = VIDEO_OFF;
 
@@ -580,17 +562,10 @@ void ShutdownVideoManager(void) {
     gpCursorStore = NULL;
   }
 
-  // ATE: Release mouse cursor!
   FreeMouseCursor();
 }
 
 void SuspendVideoManager(void) { guiVideoManagerState = VIDEO_SUSPENDED; }
-
-void DoTester() {
-  IDirectDraw2_RestoreDisplayMode(gpDirectDrawObject);
-  IDirectDraw2_SetCooperativeLevel(gpDirectDrawObject, ghWindow, DDSCL_NORMAL);
-  ShowCursor(TRUE);
-}
 
 BOOLEAN RestoreVideoManager(void) {
   HRESULT ReturnCode;
@@ -978,7 +953,7 @@ void printFramebuffer() {
   SurfaceDescription.dwWidth = gusScreenWidth;
   SurfaceDescription.dwHeight = gusScreenHeight;
   HRESULT ReturnCode =
-      IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_pTmpBuffer, NULL);
+      IDirectDraw2_CreateSurface(dd2Object, &SurfaceDescription, &_pTmpBuffer, NULL);
 
   IID tmpID = IID_IDirectDrawSurface2;
   ReturnCode = IDirectDrawSurface_QueryInterface((IDirectDrawSurface *)_pTmpBuffer, &tmpID,
@@ -1443,12 +1418,6 @@ ENDOFLOOP:
   fFirstTime = FALSE;
 }
 
-static LPDIRECTDRAW2 GetDirectDraw2Object(void) {
-  Assert(gpDirectDrawObject != NULL);
-
-  return gpDirectDrawObject;
-}
-
 static BOOLEAN GetRGBDistribution(void) {
   DDSURFACEDESC SurfaceDescription;
   UINT16 usBit;
@@ -1562,22 +1531,16 @@ BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 
 
 void StartFrameBufferRender(void) { return; }
 
-void EndFrameBufferRender(void) {
-  guiFrameBufferState = BUFFER_DIRTY;
-
-  return;
-}
+void EndFrameBufferRender(void) { guiFrameBufferState = BUFFER_DIRTY; }
 
 void PrintScreen(void) { gfPrintFrameBuffer = TRUE; }
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) {
-  HRESULT ReturnCode;
-
   // If we are in 256 colors, then we have to initialize the palette system to 0 (faded out)
   memcpy(gSgpPalette, pPalette, sizeof(struct SGPPaletteEntry) * 256);
 
-  ReturnCode =
-      IDirectDraw_CreatePalette(gpDirectDrawObject, (DDPCAPS_8BIT | DDPCAPS_ALLOW256),
+  HRESULT ReturnCode =
+      IDirectDraw_CreatePalette(dd2Object, (DDPCAPS_8BIT | DDPCAPS_ALLOW256),
                                 (LPPALETTEENTRY)(&gSgpPalette[0]), &gpDirectDrawPalette, NULL);
   if (ReturnCode != DD_OK) {
     DebugMsg(TOPIC_VIDEO, DBG_ERROR, String("Failed to create palette (Rc = %d)", ReturnCode));
@@ -1615,49 +1578,14 @@ void FatalError(STR8 pError, ...) {
   gfFatalError = TRUE;
 
   // Release DDraw
-  IDirectDraw2_RestoreDisplayMode(gpDirectDrawObject);
-  IDirectDraw2_Release(gpDirectDrawObject);
+  IDirectDraw2_RestoreDisplayMode(dd2Object);
+  IDirectDraw2_Release(dd2Object);
   ShowWindow(ghWindow, SW_HIDE);
-
-  // destroy the window
-  // DestroyWindow( ghWindow );
 
   gfProgramIsRunning = FALSE;
 
   MessageBox(ghWindow, gFatalErrorString, "JA2 Fatal Error", MB_OK | MB_TASKMODAL);
 }
-
-#pragma pack(push, 1)
-
-typedef struct {
-  UINT8 ubIDLength;
-  UINT8 ubColorMapType;
-  UINT8 ubTargaType;
-  UINT16 usColorMapOrigin;
-  UINT16 usColorMapLength;
-  UINT8 ubColorMapEntrySize;
-  UINT16 usOriginX;
-  UINT16 usOriginY;
-  UINT16 usImageWidth;
-  UINT16 usImageHeight;
-  UINT8 ubBitsPerPixel;
-  UINT8 ubImageDescriptor;
-
-} TARGA_HEADER;
-
-#pragma pack(pop)
-
-//////////////////////////////////////////////////////////////////
-// VSurface
-//////////////////////////////////////////////////////////////////
-
-LPDIRECTDRAW2 GetDirectDraw2Object();
-LPDIRECTDRAWSURFACE2 GetPrimarySurfaceInterface();
-LPDIRECTDRAWSURFACE2 GetBackbufferInterface();
-
-BOOLEAN SetDirectDraw2Object(LPDIRECTDRAW2 pDirectDraw);
-BOOLEAN SetPrimarySurfaceInterface(LPDIRECTDRAWSURFACE2 pSurface);
-BOOLEAN SetBackbufferInterface(LPDIRECTDRAWSURFACE2 pSurface);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -1682,7 +1610,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   UINT32 uiGBitMask;
   UINT32 uiBBitMask;
 
-  lpDD2Object = GetDirectDraw2Object();
+  lpDD2Object = dd2Object;
   fMemUsage = VSurfaceDesc->fCreateFlags;
 
   if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
@@ -1742,7 +1670,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   SurfaceDescription.dwWidth = usWidth;
   SurfaceDescription.dwHeight = usHeight;
   SurfaceDescription.ddpfPixelFormat = PixelFormat;
-
   DDCreateSurface(lpDD2Object, &SurfaceDescription, &lpDDS, &lpDDS2);
 
   hVSurface = VSurfaceNew();
@@ -1760,7 +1687,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   hVSurface->TransparentColor = FROMRGB(0, 0, 0);
   hVSurface->fFlags = 0;
   hVSurface->pClipper = NULL;
-
   DDGetSurfaceDescription(lpDDS2, &SurfaceDescription);
 
   if (SurfaceDescription.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY) {
@@ -1778,10 +1704,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
     }
     DestroyImage(hImage);
   }
-
-  //
-  // All is well
-  //
 
   hVSurface->usHeight = usHeight;
   hVSurface->usWidth = usWidth;
@@ -1826,9 +1748,8 @@ BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntr
 
   // Create palette object if not already done so
   if (hVSurface->pPalette == NULL) {
-    DDCreatePalette(GetDirectDraw2Object(), (DDPCAPS_8BIT | DDPCAPS_ALLOW256),
-                    (LPPALETTEENTRY)(&pSrcPalette[0]), (LPDIRECTDRAWPALETTE *)&hVSurface->pPalette,
-                    NULL);
+    DDCreatePalette(dd2Object, (DDPCAPS_8BIT | DDPCAPS_ALLOW256), (LPPALETTEENTRY)(&pSrcPalette[0]),
+                    (LPDIRECTDRAWPALETTE *)&hVSurface->pPalette, NULL);
   } else {
     // Just Change entries
     DDSetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
