@@ -73,7 +73,6 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *h
                               UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
                               struct Rect *DestRect);
 
-extern BOOLEAN FillSurface(struct VSurface *hDestVSurface, struct BltOpts *pBltFx);
 extern BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx);
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                                   UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,

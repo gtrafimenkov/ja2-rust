@@ -210,7 +210,6 @@ INT16 GetWinFontHeight(STR16 string2, INT32 iFont) { return 0; }
 
 UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) { return 0; }
 
-BOOLEAN FillSurface(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
 BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
 
 void VSurfaceUnlock(struct VSurface *vs) {}

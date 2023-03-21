@@ -1818,36 +1818,18 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   return (hVSurface);
 }
 
-BOOLEAN FillSurface(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) {
-  DDBLTFX BlitterFX;
-
-  Assert(hDestVSurface != NULL);
-  if (!(pBltFx != NULL)) {
+BOOLEAN FillSurfaceRect(struct VSurface *dest, struct BltOpts *pBltFx) {
+  Assert(dest != NULL);
+  if (!pBltFx) {
     return FALSE;
   }
 
-  BlitterFX.dwSize = sizeof(DDBLTFX);
-  BlitterFX.dwFillColor = pBltFx->ColorFill;
-
-  DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, NULL, NULL, NULL, DDBLT_COLORFILL,
-               &BlitterFX);
-
-  return (TRUE);
-}
-
-BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) {
   DDBLTFX BlitterFX;
-
-  Assert(hDestVSurface != NULL);
-  if (!(pBltFx != NULL)) {
-    return FALSE;
-  }
-
   BlitterFX.dwSize = sizeof(DDBLTFX);
   BlitterFX.dwFillColor = pBltFx->ColorFill;
 
-  DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, (LPRECT) & (pBltFx->FillRect),
-               NULL, NULL, DDBLT_COLORFILL, &BlitterFX);
+  DDBltSurface((LPDIRECTDRAWSURFACE2)dest->pSurfaceData, (LPRECT) & (pBltFx->FillRect), NULL, NULL,
+               DDBLT_COLORFILL, &BlitterFX);
 
   return (TRUE);
 }
