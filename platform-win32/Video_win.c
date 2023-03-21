@@ -1594,7 +1594,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   LPDIRECTDRAWSURFACE2 lpDDS2;
   struct VSurface *hVSurface;
   struct Image *hImage;
-  SGPRect tempRect;
   UINT16 usHeight;
   UINT16 usWidth;
   UINT8 ubBitDepth;
@@ -1678,6 +1677,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   DDGetSurfaceDescription(lpDDS2, &SurfaceDescription);
 
   if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
+    SGPRect tempRect;
     tempRect.iLeft = 0;
     tempRect.iTop = 0;
     tempRect.iRight = hImage->usWidth - 1;

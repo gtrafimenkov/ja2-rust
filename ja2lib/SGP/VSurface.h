@@ -179,4 +179,6 @@ void VSurfaceUnlock(struct VSurface *vs);
 BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *uiPitch);
 void UnLockVideoSurface(VSurfID uiVSurface);
 
+struct VSurface *CreateVideoSurfaceFromFile(const char *path);
+
 #endif

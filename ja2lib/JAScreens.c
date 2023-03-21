@@ -275,11 +275,7 @@ UINT32 InitScreenHandle(void) {
 
   if (ubCurrentScreen == 0) {
     // Load init screen and blit!
-    vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
-
-    strcpy(vs_desc.ImageFile, "ja2_logo.STI");
-
-    hVSurface = CreateVideoSurface(&vs_desc);
+    hVSurface = CreateVideoSurfaceFromFile("ja2_logo.STI");
     if (!hVSurface) AssertMsg(0, "Failed to load ja2_logo.sti!");
 
     ubCurrentScreen = 1;

@@ -604,7 +604,12 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(pVSurfaceDesc);
 
-  struct VSurface *vs = CreateVideoSurface(pVSurfaceDesc);
+  struct VSurface *vs = NULL;
+  if (pVSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
+    vs = CreateVideoSurfaceFromFile(pVSurfaceDesc->ImageFile);
+  } else {
+    vs = CreateVideoSurface(pVSurfaceDesc);
+  }
 
   if (!vs) {
     return FALSE;
@@ -925,3 +930,32 @@ struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
 // void VSurfaceErase(struct VSurface *vs) {
 //   // TODO
 // }
+
+struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
+  struct Image *hImage = CreateImage(path, IMAGE_ALLIMAGEDATA);
+  if (hImage == NULL) {
+    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
+    return (NULL);
+  }
+  VSURFACE_DESC desc;
+  desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  desc.usHeight = hImage->usHeight;
+  desc.usWidth = hImage->usWidth;
+  desc.ubBitDepth = hImage->ubBitDepth;
+
+  struct VSurface *vs = CreateVideoSurface(&desc);
+  if (vs) {
+    SGPRect tempRect;
+    tempRect.iLeft = 0;
+    tempRect.iTop = 0;
+    tempRect.iRight = hImage->usWidth - 1;
+    tempRect.iBottom = hImage->usHeight - 1;
+    SetVideoSurfaceDataFromHImage(vs, hImage, 0, 0, &tempRect);
+    if (hImage->ubBitDepth == 8) {
+      SetVideoSurfacePalette(vs, hImage->pPalette);
+    }
+    DestroyImage(hImage);
+  }
+
+  return vs;
+}
