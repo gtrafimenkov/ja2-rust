@@ -1,7 +1,6 @@
 #include <process.h>
 #include <stdio.h>
 
-#include "FadeScreen.h"
 #include "Globals.h"
 #include "Local.h"
 #include "Rect.h"
@@ -18,6 +17,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
+#include "platform_callbacks.h"
 #include "rust_debug.h"
 
 #define INITGUID
@@ -1138,16 +1138,9 @@ void RefreshScreen() {
   // if not, release the frame buffer stuff right away
   //
   if (guiFrameBufferState == BUFFER_DIRTY) {
-    // Well the frame buffer is dirty.
-    //
-
-    if (gfFadeInitialized && gfFadeInVideo) {
-      gFadeFunction();
-    } else
-    //
-    // Either Method (1) or (2)
-    //
-    {
+    if (PlatformCallback_IsInFade()) {
+      PlatformCallback_Fade();
+    } else {
       if (gfForceFullScreenRefresh == TRUE) {
         //
         // Method (1) - We will be refreshing the entire screen

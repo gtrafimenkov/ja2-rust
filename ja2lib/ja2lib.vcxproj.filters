@@ -1025,6 +1025,9 @@
     <ClCompile Include="SGP\VSurface.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
+    <ClCompile Include="platform_callbacks.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SGP\Bitmap.h">

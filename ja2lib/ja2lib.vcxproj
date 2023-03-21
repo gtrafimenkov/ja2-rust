@@ -114,6 +114,7 @@
     <ClCompile Include="MessageBoxScreen.c" />
     <ClCompile Include="Money.c" />
     <ClCompile Include="OptionsScreen.c" />
+    <ClCompile Include="platform_callbacks.c" />
     <ClCompile Include="SaveLoadGame.c" />
     <ClCompile Include="SaveLoadScreen.c" />
     <ClCompile Include="Screens.c" />
