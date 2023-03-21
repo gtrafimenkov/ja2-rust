@@ -952,6 +952,124 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
   }
 }
 
+void printFramebuffer() {
+  LPDIRECTDRAWSURFACE _pTmpBuffer;
+  LPDIRECTDRAWSURFACE2 pTmpBuffer;
+  DDSURFACEDESC SurfaceDescription;
+  FILE *OutputFile;
+  CHAR8 FileName[64];
+  struct Str512 ExecDir;
+  UINT16 *p16BPPData;
+
+  if (!Plat_GetExecutableDirectory(&ExecDir)) {
+    return;
+  }
+  Plat_SetCurrentDirectory(ExecDir.buf);
+
+  //
+  // Create temporary system memory surface. This is used to correct problems with the
+  // backbuffer surface which can be interlaced or have a funky pitch
+  //
+
+  ZEROMEM(SurfaceDescription);
+  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
+  SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
+  SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
+  SurfaceDescription.dwWidth = gusScreenWidth;
+  SurfaceDescription.dwHeight = gusScreenHeight;
+  HRESULT ReturnCode =
+      IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_pTmpBuffer, NULL);
+
+  IID tmpID = IID_IDirectDrawSurface2;
+  ReturnCode = IDirectDrawSurface_QueryInterface((IDirectDrawSurface *)_pTmpBuffer, &tmpID,
+                                                 (LPVOID *)&pTmpBuffer);
+
+  //
+  // Copy the primary surface to the temporary surface
+  //
+
+  RECT Region;
+  Region.left = 0;
+  Region.top = 0;
+  Region.right = gusScreenWidth;
+  Region.bottom = gusScreenHeight;
+  DDBltFastSurface(pTmpBuffer, 0, 0, gpPrimarySurface, &Region);
+
+  //
+  // Ok now that temp surface has contents of backbuffer, copy temp surface to disk
+  //
+
+  sprintf(FileName, "SCREEN%03d.TGA", guiPrintFrameBufferIndex++);
+  if ((OutputFile = fopen(FileName, "wb")) != NULL) {
+    fprintf(OutputFile, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0x80, 0x02, 0xe0, 0x01, 0x10, 0);
+
+    //
+    // Lock temp surface
+    //
+
+    ZEROMEM(SurfaceDescription);
+    SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
+    ReturnCode = IDirectDrawSurface2_Lock(pTmpBuffer, NULL, &SurfaceDescription, 0, NULL);
+    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
+    }
+
+    //
+    // Copy 16 bit buffer to file
+    //
+
+    // 5/6/5.. create buffer...
+    if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
+      p16BPPData = (UINT16 *)MemAlloc(640 * 2);
+    }
+
+    for (INT32 iIndex = 479; iIndex >= 0; iIndex--) {
+      // ATE: OK, fix this such that it converts pixel format to 5/5/5
+      // if current settings are 5/6/5....
+      if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
+        // Read into a buffer...
+        memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2);
+
+        // Convert....
+        ConvertRGBDistribution565To555(p16BPPData, 640);
+
+        // Write
+        fwrite(p16BPPData, 640 * 2, 1, OutputFile);
+      } else {
+        fwrite((void *)(((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2, 1,
+               OutputFile);
+      }
+    }
+
+    // 5/6/5.. Delete buffer...
+    if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
+      MemFree(p16BPPData);
+    }
+
+    fclose(OutputFile);
+
+    //
+    // Unlock temp surface
+    //
+
+    ZEROMEM(SurfaceDescription);
+    SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
+    ReturnCode = IDirectDrawSurface2_Unlock(pTmpBuffer, &SurfaceDescription);
+    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
+    }
+  }
+
+  //
+  // Release temp surface
+  //
+
+  gfPrintFrameBuffer = FALSE;
+  IDirectDrawSurface2_Release(pTmpBuffer);
+
+  strcat(ExecDir.buf, "\\Data");
+  Plat_SetCurrentDirectory(ExecDir.buf);
+}
+
 void RefreshScreen() {
   static UINT32 uiRefreshThreadState, uiIndex;
   UINT16 usScreenWidth, usScreenHeight;
@@ -966,32 +1084,26 @@ void RefreshScreen() {
     fShowMouse = FALSE;
   }
 
-  // DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Looping in refresh");
-
   switch (guiVideoManagerState) {
-    case VIDEO_ON:  //
+    case VIDEO_ON:
       // Excellent, everything is cosher, we continue on
-      //
       uiRefreshThreadState = guiRefreshThreadState = THREAD_ON;
       usScreenWidth = gusScreenWidth;
       usScreenHeight = gusScreenHeight;
       break;
-    case VIDEO_OFF:  //
+    case VIDEO_OFF:
       // Hot damn, the video manager is suddenly off. We have to bugger out of here. Don't forget to
       // leave the critical section
-      //
       guiRefreshThreadState = THREAD_OFF;
       return;
     case VIDEO_SUSPENDED:  //
       // This are suspended. Make sure the refresh function does try to access any of the direct
       // draw surfaces
-      //
       uiRefreshThreadState = guiRefreshThreadState = THREAD_SUSPENDED;
       break;
-    case VIDEO_SHUTTING_DOWN:  //
-                               // Well things are shutting down. So we need to bugger out of there.
-                               // Don't forget to leave the critical section before returning
-                               //
+    case VIDEO_SHUTTING_DOWN:
+      // Well things are shutting down. So we need to bugger out of there.
+      // Don't forget to leave the critical section before returning
       guiRefreshThreadState = THREAD_OFF;
       return;
   }
@@ -1019,18 +1131,14 @@ void RefreshScreen() {
            &(gMouseCursorBackground[CURRENT_MOUSE_DATA]), sizeof(MouseCursorBackground));
   }
 
-  //
   // Ok we were able to get a hold of the frame buffer stuff. Check to see if it needs updating
   // if not, release the frame buffer stuff right away
-  //
   if (guiFrameBufferState == BUFFER_DIRTY) {
     if (PlatformCallback_IsInFade()) {
       PlatformCallback_Fade();
     } else {
       if (gfForceFullScreenRefresh == TRUE) {
-        //
         // Method (1) - We will be refreshing the entire screen
-        //
 
         Region.left = 0;
         Region.top = 0;
@@ -1039,7 +1147,6 @@ void RefreshScreen() {
         if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpFrameBuffer, (LPRECT)&Region)) {
           goto ENDOFLOOP;
         }
-
       } else {
         for (uiIndex = 0; uiIndex < guiDirtyRegionCount; uiIndex++) {
           Region.left = gListOfDirtyRegions[uiIndex].iLeft;
@@ -1080,158 +1187,23 @@ void RefreshScreen() {
     }
     gfIgnoreScrollDueToCenterAdjust = FALSE;
 
-    //
     // Update the guiFrameBufferState variable to reflect that the frame buffer can now be handled
-    //
-
     guiFrameBufferState = BUFFER_READY;
   }
 
-  //
-  // Do we want to print the frame stuff ??
-  //
-
   if (gfPrintFrameBuffer == TRUE) {
-    LPDIRECTDRAWSURFACE _pTmpBuffer;
-    LPDIRECTDRAWSURFACE2 pTmpBuffer;
-    DDSURFACEDESC SurfaceDescription;
-    FILE *OutputFile;
-    CHAR8 FileName[64];
-    INT32 iIndex;
-    struct Str512 ExecDir;
-    UINT16 *p16BPPData;
-
-    if (!Plat_GetExecutableDirectory(&ExecDir)) {
-      return;
-    }
-    Plat_SetCurrentDirectory(ExecDir.buf);
-
-    //
-    // Create temporary system memory surface. This is used to correct problems with the
-    // backbuffer surface which can be interlaced or have a funky pitch
-    //
-
-    ZEROMEM(SurfaceDescription);
-    SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-    SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
-    SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
-    SurfaceDescription.dwWidth = usScreenWidth;
-    SurfaceDescription.dwHeight = usScreenHeight;
-    ReturnCode =
-        IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_pTmpBuffer, NULL);
-    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    }
-
-    IID tmpID = IID_IDirectDrawSurface2;
-    ReturnCode = IDirectDrawSurface_QueryInterface((IDirectDrawSurface *)_pTmpBuffer, &tmpID,
-                                                   (LPVOID *)&pTmpBuffer);
-    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    }
-
-    //
-    // Copy the primary surface to the temporary surface
-    //
-
-    Region.left = 0;
-    Region.top = 0;
-    Region.right = usScreenWidth;
-    Region.bottom = usScreenHeight;
-
-    DDBltFastSurface(pTmpBuffer, 0, 0, gpPrimarySurface, &Region);
-
-    //
-    // Ok now that temp surface has contents of backbuffer, copy temp surface to disk
-    //
-
-    sprintf(FileName, "SCREEN%03d.TGA", guiPrintFrameBufferIndex++);
-    if ((OutputFile = fopen(FileName, "wb")) != NULL) {
-      fprintf(OutputFile, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0,
-              0, 0x80, 0x02, 0xe0, 0x01, 0x10, 0);
-
-      //
-      // Lock temp surface
-      //
-
-      ZEROMEM(SurfaceDescription);
-      SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-      ReturnCode = IDirectDrawSurface2_Lock(pTmpBuffer, NULL, &SurfaceDescription, 0, NULL);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      }
-
-      //
-      // Copy 16 bit buffer to file
-      //
-
-      // 5/6/5.. create buffer...
-      if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-        p16BPPData = (UINT16 *)MemAlloc(640 * 2);
-      }
-
-      for (iIndex = 479; iIndex >= 0; iIndex--) {
-        // ATE: OK, fix this such that it converts pixel format to 5/5/5
-        // if current settings are 5/6/5....
-        if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-          // Read into a buffer...
-          memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)),
-                 640 * 2);
-
-          // Convert....
-          ConvertRGBDistribution565To555(p16BPPData, 640);
-
-          // Write
-          fwrite(p16BPPData, 640 * 2, 1, OutputFile);
-        } else {
-          fwrite((void *)(((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2, 1,
-                 OutputFile);
-        }
-      }
-
-      // 5/6/5.. Delete buffer...
-      if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-        MemFree(p16BPPData);
-      }
-
-      fclose(OutputFile);
-
-      //
-      // Unlock temp surface
-      //
-
-      ZEROMEM(SurfaceDescription);
-      SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-      ReturnCode = IDirectDrawSurface2_Unlock(pTmpBuffer, &SurfaceDescription);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      }
-    }
-
-    //
-    // Release temp surface
-    //
-
-    gfPrintFrameBuffer = FALSE;
-    IDirectDrawSurface2_Release(pTmpBuffer);
-
-    strcat(ExecDir.buf, "\\Data");
-    Plat_SetCurrentDirectory(ExecDir.buf);
+    printFramebuffer();
   }
 
-  //
   // Ok we were able to get a hold of the frame buffer stuff. Check to see if it needs updating
   // if not, release the frame buffer stuff right away
-  //
-
   if (guiMouseBufferState == BUFFER_DIRTY) {
-    //
     // Well the mouse buffer is dirty. Upload the whole thing
-    //
-
     Region.left = 0;
     Region.top = 0;
     Region.right = gusMouseCursorWidth;
     Region.bottom = gusMouseCursorHeight;
-
     DDBltFastSurface(gpMouseCursor, 0, 0, gpMouseCursorOriginal, (LPRECT)&Region);
-
     guiMouseBufferState = BUFFER_READY;
   }
 
@@ -1330,25 +1302,16 @@ void RefreshScreen() {
           goto ENDOFLOOP;
         }
       } else {
-        //
         // Hum, the mouse was not blitted this round. Henceforth we will flag fRestore as FALSE
-        //
-
         gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore = FALSE;
       }
 
     } else {
-      //
       // Hum, the mouse was not blitted this round. Henceforth we will flag fRestore as FALSE
-      //
-
       gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore = FALSE;
     }
   } else {
-    //
     // Well since there was no mouse handling this round, we disable the mouse restore
-    //
-
     gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore = FALSE;
   }
 
@@ -1398,11 +1361,7 @@ void RefreshScreen() {
     }
 
     // Get new background for mouse
-    //
     // Ok, do the actual data save to the mouse background
-
-    //
-
     gfRenderScroll = FALSE;
     gfScrollStart = FALSE;
   }
