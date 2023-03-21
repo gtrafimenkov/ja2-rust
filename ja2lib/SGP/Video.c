@@ -11,6 +11,3 @@ void GetCurrentVideoSettings(UINT16 *usWidth, UINT16 *usHeight, UINT8 *ubBitDept
   *usHeight = (UINT16)gusScreenHeight;
   *ubBitDepth = 16;
 }
-
-struct VSurface *vsBackBuffer;
-struct VSurface *vsFrameBuffer;

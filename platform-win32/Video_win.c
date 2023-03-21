@@ -228,17 +228,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   DDSCAPS SurfaceCaps;
 #endif
 
-  // TODO
-  // vsBackBuffer = VSurfaceNew();
-  // if (!vsBackBuffer) {
-  //   return FALSE;
-  // }
-
-  // vsFrameBuffer = VSurfaceNew();
-  // if (!vsFrameBuffer) {
-  //   return FALSE;
-  // }
-
   //
   // Register debug topics
   //
@@ -423,10 +412,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
-
-  // TODO
-  // vsBackBuffer->pSurfaceData = gpBackBuffer;
-  // vsFrameBuffer->pSurfaceData = gpFrameBuffer;
 
   //
   // Blank out the frame buffer
