@@ -181,4 +181,12 @@ void SetClippingRect(SGPRect *clip);
 // Allocate a new empty instance of VSurface
 struct VSurface *VSurfaceNew();
 
+// This information can be used to write into video surface buffer.
+struct BufferLockInfo {
+  uint8_t *dest;   // address to write
+  uint32_t pitch;  // size of one line of pixels in bytes
+};
+
+struct BufferLockInfo VSurfaceLock(struct VSurface *vs);
+
 #endif

@@ -56,9 +56,7 @@ INT32 giMemUsedInSurfaces;
 // BPP
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
                                       UINT16 usY, SGPRect *pSrcRect) {
-  BYTE *pDest;
   UINT32 fBufferBPP = 0;
-  UINT32 uiPitch;
   UINT16 usEffectiveWidth;
   SGPRect aRect;
 
@@ -98,12 +96,12 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   Assert(fBufferBPP != 0);
 
   // Get surface buffer data
-  pDest = LockVideoSurfaceBuffer(hVSurface, &uiPitch);
+  struct BufferLockInfo lock = VSurfaceLock(hVSurface);
 
   // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-  usEffectiveWidth = (UINT16)(uiPitch / (hVSurface->ubBitDepth / 8));
+  usEffectiveWidth = (UINT16)(lock.pitch / (hVSurface->ubBitDepth / 8));
 
-  if (!(pDest != NULL)) {
+  if (!lock.dest) {
     return FALSE;
   }
 
@@ -122,8 +120,8 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   }
 
   // This struct Image* function will transparently copy buffer
-  if (!CopyImageToBuffer(hImage, fBufferBPP, pDest, usEffectiveWidth, hVSurface->usHeight, usX, usY,
-                         &aRect)) {
+  if (!CopyImageToBuffer(hImage, fBufferBPP, lock.dest, usEffectiveWidth, hVSurface->usHeight, usX,
+                         usY, &aRect)) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
              String("Error Occured Copying struct Image* to struct VSurface*"));
     UnLockVideoSurfaceBuffer(hVSurface);
@@ -205,9 +203,7 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
                                       struct BltOpts *pBltFx) {
   VSURFACE_REGION aRegion;
   struct Rect SrcRect, DestRect;
-  UINT8 *pSrcSurface8, *pDestSurface8;
-  UINT16 *pDestSurface16, *pSrcSurface16;
-  UINT32 uiSrcPitch, uiDestPitch, uiWidth, uiHeight;
+  UINT32 uiWidth, uiHeight;
 
   // Assertions
   Assert(hDestVSurface != NULL);
@@ -296,20 +292,20 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
     }
 
   } else if (hDestVSurface->ubBitDepth == 8 && hSrcVSurface->ubBitDepth == 8) {
-    if ((pSrcSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-               String("Failed on lock of 8BPP surface for blitting"));
+    struct BufferLockInfo srcLock = VSurfaceLock(hSrcVSurface);
+    if (!srcLock.dest) {
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP surface for blitting");
       return (FALSE);
     }
 
-    if ((pDestSurface8 = (UINT8 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) == NULL) {
+    struct BufferLockInfo destLock = VSurfaceLock(hDestVSurface);
+    if (!destLock.dest) {
       UnLockVideoSurfaceBuffer(hSrcVSurface);
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-               String("Failed on lock of 8BPP dest surface for blitting"));
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP dest surface for blitting");
       return (FALSE);
     }
 
-    Blt8BPPTo8BPP(pDestSurface8, uiDestPitch, pSrcSurface8, uiSrcPitch, iDestX, iDestY,
+    Blt8BPPTo8BPP(destLock.dest, destLock.pitch, srcLock.dest, srcLock.pitch, iDestX, iDestY,
                   SrcRect.left, SrcRect.top, uiWidth, uiHeight);
     UnLockVideoSurfaceBuffer(hSrcVSurface);
     UnLockVideoSurfaceBuffer(hDestVSurface);
@@ -658,7 +654,9 @@ BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
   // Lock buffer
   //
 
-  return LockVideoSurfaceBuffer(curr->hVSurface, puiPitch);
+  struct BufferLockInfo res = VSurfaceLock(curr->hVSurface);
+  *puiPitch = res.pitch;
+  return res.dest;
 }
 
 void UnLockVideoSurface(VSurfID uiVSurface) {

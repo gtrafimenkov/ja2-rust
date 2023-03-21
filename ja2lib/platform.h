@@ -62,7 +62,6 @@ void Plat_ClipCursor(const struct Rect *rect);
 struct VSurface;
 struct BltOpts;
 
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch);
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
 PTR LockFrameBuffer(UINT32 *uiPitch);
 void UnlockFrameBuffer(void);

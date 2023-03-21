@@ -2296,25 +2296,15 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
   return (TRUE);
 }
 
-// Lock must be followed by release
-// Pitch MUST be used for all width calculations ( Pitch is in bytes )
-// The time between Locking and unlocking must be minimal
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) {
-  DDSURFACEDESC SurfaceDescription;
-
-  // Assertions
-  if (hVSurface == NULL) {
-    int i = 0;
+struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
+  struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
+  if (vs) {
+    DDSURFACEDESC SurfaceDescription;
+    DDLockSurface((LPDIRECTDRAWSURFACE2)vs->pSurfaceData, NULL, &SurfaceDescription, 0, NULL);
+    res.pitch = SurfaceDescription.lPitch;
+    res.dest = (uint8_t *)SurfaceDescription.lpSurface;
   }
-
-  Assert(hVSurface != NULL);
-  Assert(pPitch != NULL);
-
-  DDLockSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, NULL, &SurfaceDescription, 0, NULL);
-
-  *pPitch = SurfaceDescription.lPitch;
-
-  return (BYTE *)SurfaceDescription.lpSurface;
+  return res;
 }
 
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {

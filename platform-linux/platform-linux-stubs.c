@@ -225,7 +225,10 @@ void UnlockMouseBuffer() {}
 PTR LockBackBuffer(UINT32 *uiPitch) { return NULL; }
 PTR LockFrameBuffer(UINT32 *uiPitch) { return NULL; }
 PTR LockMouseBuffer(UINT32 *uiPitch) { return NULL; }
-BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) { return NULL; }
+struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
+  struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
+  return res;
+}
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {}
 BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) { return FALSE; }
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
