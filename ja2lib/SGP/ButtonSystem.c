@@ -100,7 +100,6 @@ BOOLEAN gfRenderHilights = TRUE;
 BUTTON_PICS ButtonPictures[MAX_BUTTON_PICS];
 INT32 ButtonPicsLoaded;
 
-UINT32 ButtonDestBuffer = FRAME_BUFFER;
 UINT32 ButtonDestPitch = 640 * 2;
 UINT32 ButtonDestBPP = 16;
 
@@ -2595,8 +2594,8 @@ void DrawQuickButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc,
-                 b->YLoc, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject(FRAME_BUFFER, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc,
+                 VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void DrawHatchOnButton(GUI_BUTTON *b) {
@@ -2607,9 +2606,9 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   Blt16BPPBufferHatchRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-  UnLockVideoSurface(ButtonDestBuffer);
+  UnLockVideoSurface(FRAME_BUFFER);
 }
 
 void DrawShadeOnButton(GUI_BUTTON *b) {
@@ -2620,15 +2619,15 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-  UnLockVideoSurface(ButtonDestBuffer);
+  UnLockVideoSurface(FRAME_BUFFER);
 }
 
 void DrawDefaultOnButton(GUI_BUTTON *b) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   if (b->bDefaultStatus == DEFAULT_STATUS_DARKBORDER ||
       b->bDefaultStatus == DEFAULT_STATUS_WINDOWS95) {
@@ -2654,7 +2653,7 @@ void DrawDefaultOnButton(GUI_BUTTON *b) {
   if (b->bDefaultStatus == DEFAULT_STATUS_DOTTEDINTERIOR ||
       b->bDefaultStatus == DEFAULT_STATUS_WINDOWS95) {  // Draw an internal dotted rectangle.
   }
-  UnLockVideoSurface(ButtonDestBuffer);
+  UnLockVideoSurface(FRAME_BUFFER);
 }
 
 void DrawCheckBoxButtonOn(INT32 iButtonID) {
@@ -2734,8 +2733,8 @@ void DrawCheckBoxButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc,
-                 b->YLoc, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject(FRAME_BUFFER, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc,
+                 VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void DrawIconOnButton(GUI_BUTTON *b) {
@@ -2820,10 +2819,10 @@ void DrawIconOnButton(GUI_BUTTON *b) {
     SetClippingRect(&NewClip);
     // Blit the icon
     if (b->uiFlags & BUTTON_GENERIC)
-      BltVideoObject(ButtonDestBuffer, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp,
+      BltVideoObject(FRAME_BUFFER, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp,
                      (INT16)yp, VO_BLT_SRCTRANSPARENCY, NULL);
     else
-      BltVideoObject(ButtonDestBuffer, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp,
+      BltVideoObject(FRAME_BUFFER, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp,
                      VO_BLT_SRCTRANSPARENCY, NULL);
     // Restore previous clip region
     SetClippingRect(&OldClip);
@@ -2880,8 +2879,8 @@ void DrawTextOnButton(GUI_BUTTON *b) {
     if ((NewClip.iRight <= NewClip.iLeft) || (NewClip.iBottom <= NewClip.iTop)) return;
 
     // Set the font printing settings to the buttons viewable area
-    SetFontDestBuffer(ButtonDestBuffer, NewClip.iLeft, NewClip.iTop, NewClip.iRight,
-                      NewClip.iBottom, FALSE);
+    SetFontDestBuffer(FRAME_BUFFER, NewClip.iLeft, NewClip.iTop, NewClip.iRight, NewClip.iBottom,
+                      FALSE);
 
     // Compute the coordinates to center the text
     if (b->bTextYOffset == -1)
@@ -3051,9 +3050,9 @@ void DrawGenericButton(GUI_BUTTON *b) {
   cy = (b->YLoc + ((NumChunksHigh - 1) * iBorderHeight) + hremain);
 
   // Fill the button's area with the button's background color
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, b->Area.RegionTopLeftX, b->Area.RegionTopLeftY,
-                            b->Area.RegionBottomRightX, b->Area.RegionBottomRightY,
-                            GenericButtonFillColors[b->ImageNum]);
+  VSurfaceColorFill(vsFB, b->Area.RegionTopLeftX, b->Area.RegionTopLeftY,
+                    b->Area.RegionBottomRightX, b->Area.RegionBottomRightY,
+                    GenericButtonFillColors[b->ImageNum]);
 
   // If there is a background image, fill the button's area with it
   if (GenericButtonBackground[b->ImageNum] != NULL) {
@@ -3063,7 +3062,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
     if (b->uiFlags & BUTTON_CLICKED_ON) ox = oy = 1;
 
     // Fill the area with the image, tilling it if need be.
-    ImageFillVideoSurfaceArea(ButtonDestBuffer, b->Area.RegionTopLeftX + ox,
+    ImageFillVideoSurfaceArea(FRAME_BUFFER, b->Area.RegionTopLeftX + ox,
                               b->Area.RegionTopLeftY + oy, b->Area.RegionBottomRightX,
                               b->Area.RegionBottomRightY, GenericButtonBackground[b->ImageNum],
                               GenericButtonBackgroundIndex[b->ImageNum],
@@ -3071,7 +3070,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   }
 
   // Lock the dest buffer
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
 
   GetClippingRect(&ClipRect);
 
@@ -3123,7 +3122,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   }
 
   // Unlock buffer
-  UnLockVideoSurface(ButtonDestBuffer);
+  UnLockVideoSurface(FRAME_BUFFER);
 }
 
 //=======================================================================================================

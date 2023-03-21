@@ -444,20 +444,18 @@ void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...) {
 }
 
 void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusEditorTaskbarColor);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, gusEditorTaskbarColor);
 
   if (!sLeft) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 0, sTop, 1, sBottom, gusEditorTaskbarHiColor);
+    VSurfaceColorFill(vsFB, 0, sTop, 1, sBottom, gusEditorTaskbarHiColor);
     sLeft++;
   }
   if (sTop == 360) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 360, sRight, 361, gusEditorTaskbarHiColor);
+    VSurfaceColorFill(vsFB, sLeft, 360, sRight, 361, gusEditorTaskbarHiColor);
     sTop++;
   }
-  if (sBottom == 480)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 479, sRight, 480, gusEditorTaskbarLoColor);
-  if (sRight == 640)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 639, sTop, 640, sBottom, gusEditorTaskbarLoColor);
+  if (sBottom == 480) VSurfaceColorFill(vsFB, sLeft, 479, sRight, 480, gusEditorTaskbarLoColor);
+  if (sRight == 640) VSurfaceColorFill(vsFB, 639, sTop, 640, sBottom, gusEditorTaskbarLoColor);
 
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 }
@@ -478,9 +476,9 @@ void DrawEditorInfoBox(STR16 str, UINT32 uiFont, UINT16 x, UINT16 y, UINT16 w, U
   usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
   usFillColorBack = Get16BPPColor(FROMRGB(250, 240, 188));
 
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, x, y, x2, y2, usFillColorDark);
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, x + 1, y + 1, x2, y2, usFillColorLight);
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, x + 1, y + 1, x2 - 1, y2 - 1, usFillColorBack);
+  VSurfaceColorFill(vsFB, x, y, x2, y2, usFillColorDark);
+  VSurfaceColorFill(vsFB, x + 1, y + 1, x2, y2, usFillColorLight);
+  VSurfaceColorFill(vsFB, x + 1, y + 1, x2 - 1, y2 - 1, usFillColorBack);
 
   usStrWidth = StringPixLength(str, uiFont);
   if (usStrWidth > w) {  // the string is too long, so use the wrapped method

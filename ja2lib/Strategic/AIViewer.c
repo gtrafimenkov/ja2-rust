@@ -386,21 +386,19 @@ void DestroyAIViewer() {
 }
 
 void ClearViewerRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusBlue);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, gusBlue);
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 
   if (!sLeft) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 0, sTop, 1, sBottom, gusLtBlue);
+    VSurfaceColorFill(vsFB, 0, sTop, 1, sBottom, gusLtBlue);
     sLeft++;
   }
   if (!sTop) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 0, sRight, 1, gusLtBlue);
+    VSurfaceColorFill(vsFB, sLeft, 0, sRight, 1, gusLtBlue);
     sTop++;
   }
-  if (sBottom == 480)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 479, sRight, 480, gusDkBlue);
-  if (sRight == 640)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 639, sTop, 640, sBottom, gusDkBlue);
+  if (sBottom == 480) VSurfaceColorFill(vsFB, sLeft, 479, sRight, 480, gusDkBlue);
+  if (sRight == 640) VSurfaceColorFill(vsFB, 639, sTop, 640, sBottom, gusDkBlue);
 }
 
 void RenderStationaryGroups() {

@@ -87,7 +87,7 @@ struct _GUI_BUTTON;
 #define GUI_SND_DCLK BUTTON_SOUND_DISABLED_CLICK
 #define GUI_SND_DMOV BUTTON_SOUND_DISABLED_MOVED_ONTO
 
-extern UINT32 ButtonDestBuffer;
+extern UINT32 FRAME_BUFFER;
 
 // GUI_BUTTON callback function type
 typedef void (*GUI_CALLBACK)(struct _GUI_BUTTON *, INT32);

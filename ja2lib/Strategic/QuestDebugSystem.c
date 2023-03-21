@@ -1313,7 +1313,7 @@ void GetUserInput() {
 }
 
 void ColorFillQuestDebugScreenScreen(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusQuestDebugBlue);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, gusQuestDebugBlue);
 }
 
 void QuestDebug_ExitTactical() {}
