@@ -100,7 +100,7 @@ BOOLEAN gfRenderHilights = TRUE;
 BUTTON_PICS ButtonPictures[MAX_BUTTON_PICS];
 INT32 ButtonPicsLoaded;
 
-UINT32 ButtonDestBuffer = BACKBUFFER;
+UINT32 ButtonDestBuffer = FRAME_BUFFER;
 UINT32 ButtonDestPitch = 640 * 2;
 UINT32 ButtonDestBPP = 16;
 
@@ -470,17 +470,6 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
   return (UseSlot);
 }
 
-//=============================================================================
-//	SetButtonDestBuffer
-//
-//	Sets the destination buffer for all button blits.
-//
-BOOLEAN SetButtonDestBuffer(UINT32 DestBuffer) {
-  if (DestBuffer != BUTTON_USE_DEFAULT) ButtonDestBuffer = DestBuffer;
-
-  return (TRUE);
-}
-
 // Removes a QuickButton image from the system.
 void UnloadButtonImage(INT32 Index) {
   INT32 x;
@@ -593,31 +582,9 @@ BOOLEAN DisableButton(INT32 iButtonID) {
   return ((OldState == BUTTON_ENABLED) ? TRUE : FALSE);
 }
 
-//=============================================================================
-//	InitializeButtonImageManager
-//
-//	Initializes the button image sub-system. This function is called by
-//	InitButtonSystem.
-//
-BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, INT32 DefaultBPP) {
+static BOOLEAN InitializeButtonImageManager() {
   UINT8 Pix;
   int x;
-
-  // Set up the default settings
-  if (DefaultBuffer != BUTTON_USE_DEFAULT)
-    ButtonDestBuffer = (UINT32)DefaultBuffer;
-  else
-    ButtonDestBuffer = FRAME_BUFFER;
-
-  if (DefaultPitch != BUTTON_USE_DEFAULT)
-    ButtonDestPitch = (UINT32)DefaultPitch;
-  else
-    ButtonDestPitch = 640 * 2;
-
-  if (DefaultBPP != BUTTON_USE_DEFAULT)
-    ButtonDestBPP = (UINT32)DefaultBPP;
-  else
-    ButtonDestBPP = 16;
 
   // Blank out all QuickButton images
   for (x = 0; x < MAX_BUTTON_PICS; x++) {
@@ -997,7 +964,7 @@ BOOLEAN InitButtonSystem(void) {
   }
 
   // Initialize the button image manager sub-system
-  if (InitializeButtonImageManager(-1, -1, -1) == FALSE) {
+  if (InitializeButtonImageManager() == FALSE) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "Failed button image manager init\n");
     return (FALSE);
   }
