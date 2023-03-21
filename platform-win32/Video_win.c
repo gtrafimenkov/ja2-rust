@@ -30,6 +30,9 @@
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
                              LPRECT pSrcRect, u32 flags);
 
+static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY,
+                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, u32 ddFlags);
+
 #define MAX_CURSOR_WIDTH 64
 #define MAX_CURSOR_HEIGHT 64
 #define VIDEO_NO_CURSOR 0xFFFF
@@ -1310,9 +1313,10 @@ void RefreshScreen() {
         Region.right = gMouseCursorBackground[CURRENT_MOUSE_DATA].usRight;
         Region.bottom = gMouseCursorBackground[CURRENT_MOUSE_DATA].usBottom;
 
-        if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
-                              gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpMouseCursor,
-                              &Region)) {
+        if (!DDBltFastSurfaceWithFlags(gpBackBuffer,
+                                       gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
+                                       gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos,
+                                       gpMouseCursor, &Region, DDBLTFAST_SRCCOLORKEY)) {
           goto ENDOFLOOP;
         }
       } else {
