@@ -47,7 +47,7 @@ void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACED
                    UINT32 uiFlags, HANDLE hEvent);
 void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
-void DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
+bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
                       LPRECT pSrcRect, UINT32 uiTrans);
 void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
                   LPRECT pSrcRect, UINT32 uiFlags, LPDDBLTFX pDDBltFx);
@@ -624,7 +624,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
                          BOOLEAN fRenderStrip, UINT32 uiCurrentMouseBackbuffer) {
   UINT16 usWidth, usHeight;
   UINT8 ubBitDepth;
-  HRESULT ReturnCode;
   static RECT Region;
   static UINT16 usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;
@@ -660,17 +659,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y;
       Region.right = usWidth - (sScrollXIncrement);
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-
-      do {
-        ReturnCode =
-            IDirectDrawSurface2_BltFast(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y,
-                                        pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y, pSource,
+                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -689,16 +679,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-
-      do {
-        ReturnCode = IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource,
-                                                 (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region,
+                       DDBLTFAST_NOCOLORKEY);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -719,17 +701,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight - sScrollYIncrement;
-
-      do {
-        ReturnCode =
-            IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
-                                        pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement, pSource,
+                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
 
       for (uiCountY = sScrollYIncrement - 1 + gsVIEWPORT_WINDOW_START_Y;
            uiCountY >= gsVIEWPORT_WINDOW_START_Y; uiCountY--) {
@@ -749,16 +722,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-
-      do {
-        ReturnCode = IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource,
-                                                 (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region,
+                       DDBLTFAST_NOCOLORKEY);
 
       // Zero out z
       for (uiCountY = (gsVIEWPORT_WINDOW_END_Y - sScrollYIncrement);
@@ -779,17 +744,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y;
       Region.right = usWidth - (sScrollXIncrement);
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight - sScrollYIncrement;
-
-      do {
-        ReturnCode = IDirectDrawSurface2_BltFast(pDest, sScrollXIncrement,
-                                                 gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
-                                                 pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
+                       pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -816,17 +772,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight - sScrollYIncrement;
-
-      do {
-        ReturnCode =
-            IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
-                                        pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement, pSource,
+                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -855,17 +802,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement;
       Region.right = usWidth - (sScrollXIncrement);
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-
-      do {
-        ReturnCode =
-            IDirectDrawSurface2_BltFast(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y,
-                                        pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y, pSource,
+                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -893,16 +831,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
       Region.top = gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement;
       Region.right = usWidth;
       Region.bottom = gsVIEWPORT_WINDOW_START_Y + usHeight;
-
-      do {
-        ReturnCode = IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource,
-                                                 (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          if (ReturnCode == DDERR_SURFACELOST) {
-            break;
-          }
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource, (LPRECT)&Region,
+                       DDBLTFAST_NOCOLORKEY);
 
       // memset z-buffer
       for (uiCountY = gsVIEWPORT_WINDOW_START_Y; uiCountY < gsVIEWPORT_WINDOW_END_Y; uiCountY++) {
@@ -932,17 +862,8 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
     for (cnt = 0; cnt < usNumStrips; cnt++) {
       RenderStaticWorldRect((INT16)StripRegions[cnt].left, (INT16)StripRegions[cnt].top,
                             (INT16)StripRegions[cnt].right, (INT16)StripRegions[cnt].bottom, TRUE);
-      do {
-        ReturnCode = IDirectDrawSurface2_BltFast(
-            pDest, StripRegions[cnt].left, StripRegions[cnt].top, gpFrameBuffer,
-            (LPRECT) & (StripRegions[cnt]), DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        }
-
-        if (ReturnCode == DDERR_SURFACELOST) {
-          break;
-        }
-      } while (ReturnCode != DD_OK);
+      DDBltFastSurface(pDest, StripRegions[cnt].left, StripRegions[cnt].top, gpFrameBuffer,
+                       (LPRECT) & (StripRegions[cnt]), DDBLTFAST_NOCOLORKEY);
     }
 
     sShiftX = 0;
@@ -1066,19 +987,12 @@ void RefreshScreen() {
     Region.top = gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop;
     Region.right = gMouseCursorBackground[CURRENT_MOUSE_DATA].usRight;
     Region.bottom = gMouseCursorBackground[CURRENT_MOUSE_DATA].usBottom;
-
-    do {
-      ReturnCode = IDirectDrawSurface2_BltFast(
-          gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
-          gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos,
-          gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface, (LPRECT)&Region,
-          DDBLTFAST_NOCOLORKEY);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        if (ReturnCode == DDERR_SURFACELOST) {
-          goto ENDOFLOOP;
-        }
-      }
-    } while (ReturnCode != DD_OK);
+    if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
+                          gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos,
+                          gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface, (LPRECT)&Region,
+                          DDBLTFAST_NOCOLORKEY)) {
+      goto ENDOFLOOP;
+    }
 
     // Save position into other background region
     memcpy(&(gMouseCursorBackground[PREVIOUS_MOUSE_DATA]),
@@ -1102,16 +1016,10 @@ void RefreshScreen() {
         Region.top = 0;
         Region.right = usScreenWidth;
         Region.bottom = usScreenHeight;
-
-        do {
-          ReturnCode = IDirectDrawSurface2_BltFast(gpBackBuffer, 0, 0, gpFrameBuffer,
-                                                   (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-          if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-            if (ReturnCode == DDERR_SURFACELOST) {
-              goto ENDOFLOOP;
-            }
-          }
-        } while (ReturnCode != DD_OK);
+        if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpFrameBuffer, (LPRECT)&Region,
+                              DDBLTFAST_NOCOLORKEY)) {
+          goto ENDOFLOOP;
+        }
 
       } else {
         for (uiIndex = 0; uiIndex < guiDirtyRegionCount; uiIndex++) {
@@ -1119,18 +1027,10 @@ void RefreshScreen() {
           Region.top = gListOfDirtyRegions[uiIndex].iTop;
           Region.right = gListOfDirtyRegions[uiIndex].iRight;
           Region.bottom = gListOfDirtyRegions[uiIndex].iBottom;
-
-          do {
-            ReturnCode =
-                IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
-                                            (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-            if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-            }
-
-            if (ReturnCode == DDERR_SURFACELOST) {
-              goto ENDOFLOOP;
-            }
-          } while (ReturnCode != DD_OK);
+          if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
+                                (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+            goto ENDOFLOOP;
+          }
         }
 
         // Now do new, extended dirty regions
@@ -1148,17 +1048,10 @@ void RefreshScreen() {
             }
           }
 
-          do {
-            ReturnCode =
-                IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
-                                            (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-            if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-            }
-
-            if (ReturnCode == DDERR_SURFACELOST) {
-              goto ENDOFLOOP;
-            }
-          } while (ReturnCode != DD_OK);
+          if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
+                                (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+            goto ENDOFLOOP;
+          }
         }
       }
     }
@@ -1203,8 +1096,8 @@ void RefreshScreen() {
     Plat_SetCurrentDirectory(ExecDir.buf);
 
     //
-    // Create temporary system memory surface. This is used to correct problems with the backbuffer
-    // surface which can be interlaced or have a funky pitch
+    // Create temporary system memory surface. This is used to correct problems with the
+    // backbuffer surface which can be interlaced or have a funky pitch
     //
 
     ZEROMEM(SurfaceDescription);
@@ -1413,19 +1306,12 @@ void RefreshScreen() {
         // Ok, do the actual data save to the mouse background
         //
 
-        do {
-          ReturnCode =
-              IDirectDrawSurface2_BltFast(gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface,
-                                          gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft,
-                                          gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop,
-                                          gpBackBuffer, &Region, DDBLTFAST_NOCOLORKEY);
-          if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          }
-
-          if (ReturnCode == DDERR_SURFACELOST) {
-            goto ENDOFLOOP;
-          }
-        } while (ReturnCode != DD_OK);
+        if (!DDBltFastSurface(gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface,
+                              gMouseCursorBackground[CURRENT_MOUSE_DATA].usLeft,
+                              gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop, gpBackBuffer,
+                              &Region, DDBLTFAST_NOCOLORKEY)) {
+          goto ENDOFLOOP;
+        }
 
         //
         // Step (2) - Blit mouse cursor to back buffer
@@ -1436,18 +1322,11 @@ void RefreshScreen() {
         Region.right = gMouseCursorBackground[CURRENT_MOUSE_DATA].usRight;
         Region.bottom = gMouseCursorBackground[CURRENT_MOUSE_DATA].usBottom;
 
-        do {
-          ReturnCode = IDirectDrawSurface2_BltFast(
-              gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
-              gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpMouseCursor, &Region,
-              DDBLTFAST_SRCCOLORKEY);
-          if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          }
-
-          if (ReturnCode == DDERR_SURFACELOST) {
-            goto ENDOFLOOP;
-          }
-        } while (ReturnCode != DD_OK);
+        if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
+                              gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpMouseCursor,
+                              &Region, DDBLTFAST_SRCCOLORKEY)) {
+          goto ENDOFLOOP;
+        }
       } else {
         //
         // Hum, the mouse was not blitted this round. Henceforth we will flag fRestore as FALSE
@@ -1515,15 +1394,9 @@ void RefreshScreen() {
     Region.right = 640;
     Region.bottom = 360;
 
-    do {
-      ReturnCode = IDirectDrawSurface2_BltFast(gpBackBuffer, 0, 0, gpPrimarySurface, &Region,
-                                               DDBLTFAST_NOCOLORKEY);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        if (ReturnCode == DDERR_SURFACELOST) {
-          goto ENDOFLOOP;
-        }
-      }
-    } while (ReturnCode != DD_OK);
+    if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpPrimarySurface, &Region, DDBLTFAST_NOCOLORKEY)) {
+      goto ENDOFLOOP;
+    }
 
     // Get new background for mouse
     //
@@ -1541,34 +1414,21 @@ void RefreshScreen() {
   if (gMouseCursorBackground[PREVIOUS_MOUSE_DATA].fRestore == TRUE) {
     Region = gMouseCursorBackground[PREVIOUS_MOUSE_DATA].Region;
 
-    do {
-      ReturnCode = IDirectDrawSurface2_BltFast(
-          gpBackBuffer, gMouseCursorBackground[PREVIOUS_MOUSE_DATA].usMouseXPos,
-          gMouseCursorBackground[PREVIOUS_MOUSE_DATA].usMouseYPos, gpPrimarySurface,
-          (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-      if (ReturnCode != DD_OK && ReturnCode != DDERR_WASSTILLDRAWING) {
-        if (ReturnCode == DDERR_SURFACELOST) {
-          goto ENDOFLOOP;
-        }
-      }
-    } while (ReturnCode != DD_OK);
+    if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[PREVIOUS_MOUSE_DATA].usMouseXPos,
+                          gMouseCursorBackground[PREVIOUS_MOUSE_DATA].usMouseYPos, gpPrimarySurface,
+                          (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+      goto ENDOFLOOP;
+    }
   }
 
   // NOW NEW MOUSE AREA
   if (gMouseCursorBackground[CURRENT_MOUSE_DATA].fRestore == TRUE) {
     Region = gMouseCursorBackground[CURRENT_MOUSE_DATA].Region;
-
-    do {
-      ReturnCode = IDirectDrawSurface2_BltFast(
-          gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
-          gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpPrimarySurface, (LPRECT)&Region,
-          DDBLTFAST_NOCOLORKEY);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        if (ReturnCode == DDERR_SURFACELOST) {
-          goto ENDOFLOOP;
-        }
-      }
-    } while (ReturnCode != DD_OK);
+    if (!DDBltFastSurface(gpBackBuffer, gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseXPos,
+                          gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpPrimarySurface,
+                          (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+      goto ENDOFLOOP;
+    }
   }
 
   if (gfForceFullScreenRefresh == TRUE) {
@@ -1579,16 +1439,9 @@ void RefreshScreen() {
     Region.top = 0;
     Region.right = SCREEN_WIDTH;
     Region.bottom = SCREEN_HEIGHT;
-
-    do {
-      ReturnCode = IDirectDrawSurface2_BltFast(gpBackBuffer, 0, 0, gpPrimarySurface, &Region,
-                                               DDBLTFAST_NOCOLORKEY);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        if (ReturnCode == DDERR_SURFACELOST) {
-          goto ENDOFLOOP;
-        }
-      }
-    } while (ReturnCode != DD_OK);
+    if (!DDBltFastSurface(gpBackBuffer, 0, 0, gpPrimarySurface, &Region, DDBLTFAST_NOCOLORKEY)) {
+      goto ENDOFLOOP;
+    }
 
     guiDirtyRegionCount = 0;
     guiDirtyRegionExCount = 0;
@@ -1599,18 +1452,10 @@ void RefreshScreen() {
       Region.top = gListOfDirtyRegions[uiIndex].iTop;
       Region.right = gListOfDirtyRegions[uiIndex].iRight;
       Region.bottom = gListOfDirtyRegions[uiIndex].iBottom;
-
-      do {
-        ReturnCode =
-            IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpPrimarySurface,
-                                        (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-        if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        }
-
-        if (ReturnCode == DDERR_SURFACELOST) {
-          goto ENDOFLOOP;
-        }
-      } while (ReturnCode != DD_OK);
+      if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpPrimarySurface,
+                            (LPRECT)&Region, DDBLTFAST_NOCOLORKEY)) {
+        goto ENDOFLOOP;
+      }
     }
 
     guiDirtyRegionCount = 0;
@@ -1627,18 +1472,10 @@ void RefreshScreen() {
     if ((Region.top < gsVIEWPORT_WINDOW_END_Y) && gfRenderScroll) {
       continue;
     }
-
-    do {
-      ReturnCode =
-          IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpPrimarySurface,
-                                      (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      }
-
-      if (ReturnCode == DDERR_SURFACELOST) {
-        goto ENDOFLOOP;
-      }
-    } while (ReturnCode != DD_OK);
+    if (!DDBltFastSurface(gpBackBuffer, Region.left, Region.top, gpPrimarySurface, (LPRECT)&Region,
+                          DDBLTFAST_NOCOLORKEY)) {
+      goto ENDOFLOOP;
+    }
   }
 
   guiDirtyRegionExCount = 0;
@@ -1714,7 +1551,8 @@ PTR LockBackBuffer(UINT32 *uiPitch) {
   DDSURFACEDESC SurfaceDescription;
 
   //
-  // W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ----
+  // W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G
+  // ----
   //
   // This function is intended to be called by a thread which has already locked the
   // FRAME_BUFFER_MUTEX mutual exclusion section. Anything else will cause the application to
@@ -1742,7 +1580,8 @@ void UnlockBackBuffer(void) {
   HRESULT ReturnCode;
 
   //
-  // W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ----
+  // W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G
+  // ----
   //
   // This function is intended to be called by a thread which has already locked the
   // FRAME_BUFFER_MUTEX mutual exclusion section. Anything else will cause the application to
@@ -3674,7 +3513,7 @@ void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface) {
   IDirectDrawSurface2_Restore(pSurface);
 }
 
-void DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
+bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
                       LPRECT pSrcRect, UINT32 uiTrans) {
   HRESULT ReturnCode;
 
@@ -3683,7 +3522,13 @@ void DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIREC
 
   do {
     ReturnCode = IDirectDrawSurface2_BltFast(dest, uiX, uiY, src, pSrcRect, uiTrans);
-  } while (ReturnCode == DDERR_WASSTILLDRAWING);
+    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
+      if (ReturnCode == DDERR_SURFACELOST) {
+        return false;
+      }
+    }
+  } while (ReturnCode != DD_OK);
+  return true;
 }
 
 void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFACE2 src,
