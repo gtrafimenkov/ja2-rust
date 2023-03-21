@@ -3144,11 +3144,6 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
       uiDDFlags |= DDBLTFAST_SRCCOLORKEY;
     }
 
-    // Convert flags into DD flags, ( for transparency use, etc )
-    if (fBltFlags & VS_BLT_USEDESTCOLORKEY) {
-      uiDDFlags |= DDBLTFAST_DESTCOLORKEY;
-    }
-
     if (uiDDFlags == 0) {
       // Default here is no colorkey
       uiDDFlags = DDBLTFAST_NOCOLORKEY;

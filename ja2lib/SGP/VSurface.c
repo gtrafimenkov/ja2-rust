@@ -220,16 +220,6 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
   // Assertions
   Assert(hDestVSurface != NULL);
 
-  // Check for fill, if true, fill entire region with color
-  if (fBltFlags & VS_BLT_COLORFILL) {
-    return (FillSurface(hDestVSurface, pBltFx));
-  }
-
-  // Check for colorfill rectangle
-  if (fBltFlags & VS_BLT_COLORFILLRECT) {
-    return (FillSurfaceRect(hDestVSurface, pBltFx));
-  }
-
   // Check for source coordinate options - from region, specific rect or full src dimensions
   do {
     // Use SUBRECT if specified
@@ -284,9 +274,7 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
   if ((iDestX + (INT32)uiWidth) < (INT32)DestRect.left) return (FALSE);
   if ((iDestY + (INT32)uiHeight) < (INT32)DestRect.top) return (FALSE);
 
-  // DB The mirroring stuff has to do it's own clipping because
-  // it needs to invert some of the numbers
-  if (!(fBltFlags & VS_BLT_MIRROR_Y)) {
+  {
     if ((iDestX + (INT32)uiWidth) >= (INT32)DestRect.right) {
       SrcRect.right -= ((iDestX + uiWidth) - DestRect.right);
       uiWidth -= ((iDestX + uiWidth) - DestRect.right);
@@ -310,27 +298,6 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
   // Send dest position, rectangle, etc to DD bltfast function
   // First check BPP values for compatibility
   if (hDestVSurface->ubBitDepth == 16 && hSrcVSurface->ubBitDepth == 16) {
-    if (fBltFlags & VS_BLT_MIRROR_Y) {
-      if ((pSrcSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch)) == NULL) {
-        DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-                 String("Failed on lock of 16BPP surface for blitting"));
-        return (FALSE);
-      }
-
-      if ((pDestSurface16 = (UINT16 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch)) ==
-          NULL) {
-        UnLockVideoSurfaceBuffer(hSrcVSurface);
-        DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-                 String("Failed on lock of 16BPP dest surface for blitting"));
-        return (FALSE);
-      }
-
-      Blt16BPPTo16BPPMirror(pDestSurface16, uiDestPitch, pSrcSurface16, uiSrcPitch, iDestX, iDestY,
-                            SrcRect.left, SrcRect.top, uiWidth, uiHeight);
-      UnLockVideoSurfaceBuffer(hSrcVSurface);
-      UnLockVideoSurfaceBuffer(hDestVSurface);
-      return (TRUE);
-    }
     struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
     if (!(BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &srcRect))) {
       return FALSE;

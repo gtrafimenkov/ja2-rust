@@ -153,15 +153,10 @@ void BeginFade(UINT32 uiExitScreen, INT8 bFadeValue, INT8 bType, UINT32 uiDelay)
       break;
 
     case FADE_OUT_REALFADE:
-
       gsFadeRealCount = -1;
       gsFadeLimit = 10;
       gFadeFunction = (FADE_FUNCTION)FadeFrameBufferRealFade;
       gfFadeInVideo = FALSE;
-
-      // Clear framebuffer
-      // ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, 640, 480, Get16BPPColor( FROMRGB( 0, 0, 0 )
-      // ) );
       break;
 
     case FADE_OUT_VERSION_ONE:
@@ -181,11 +176,6 @@ void BeginFade(UINT32 uiExitScreen, INT8 bFadeValue, INT8 bType, UINT32 uiDelay)
 
       // Zero frame buffer
       ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
-      // ColorFillVideoSurfaceArea( guiSAVEBUFFER, 0, 0, 640,	480, Get16BPPColor( FROMRGB( 0, 0, 0
-      // ) ) );
-
-      //	SetMusicFadeSpeed( 25 );
-      // SetMusicMode( MUSIC_NONE );
       break;
 
     case FADE_IN_VERSION_ONE:
