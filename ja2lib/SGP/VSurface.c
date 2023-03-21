@@ -777,22 +777,6 @@ BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, I
   return TRUE;
 }
 
-BOOLEAN RestoreVideoSurfaces() {
-  VSURFACE_NODE *curr;
-
-  //
-  // Loop through Video Surfaces and Restore
-  //
-  curr = gpVSurfaceTail;
-  while (curr) {
-    if (!RestoreVideoSurface(curr->hVSurface)) {
-      return FALSE;
-    }
-    curr = curr->prev;
-  }
-  return TRUE;
-}
-
 BOOLEAN ShutdownVideoSurfaceManager() {
   VSURFACE_NODE *curr;
 

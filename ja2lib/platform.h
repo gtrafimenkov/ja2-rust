@@ -63,7 +63,6 @@ struct VSurface;
 struct BltOpts;
 
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
-BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
 
 #define BUFFER_READY 0x00
 #define BUFFER_BUSY 0x01

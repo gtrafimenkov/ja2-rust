@@ -17,16 +17,6 @@ struct VSurface {
   // Direct Draw One Interface
   PTR pSurfaceData1;
 
-  // A void pointer, but for this implementation, is really a
-  // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video
-  // memory Surfaces so that they my be restored
-  PTR pSavedSurfaceData1;
-
-  // A void pointer, but for this implementation, is really a
-  // lpDirectDrawSurface; pSavedSurfaceData is used to hold all video memory
-  // Surfaces so that they my be restored
-  PTR pSavedSurfaceData;
-
   // A void pointer, but for this implementation a DDPalette
   PTR pPalette;
 

@@ -102,7 +102,6 @@ INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LP
         case TRUE:  // We are restarting DirectDraw
           if (fRestore == TRUE) {
             RestoreVideoManager();
-            RestoreVideoSurfaces();  // Restore any video surfaces
 
             // unpause the JA2 Global clock
             if (!gfPauseDueToPlayerGamePause) {

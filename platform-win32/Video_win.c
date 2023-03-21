@@ -1700,8 +1700,6 @@ BOOLEAN SetDirectDraw2Object(LPDIRECTDRAW2 pDirectDraw);
 BOOLEAN SetPrimarySurfaceInterface(LPDIRECTDRAWSURFACE2 pSurface);
 BOOLEAN SetBackbufferInterface(LPDIRECTDRAWSURFACE2 pSurface);
 
-static BOOLEAN UpdateBackupSurface(struct VSurface *hVSurface);
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Video Surface Manipulation Functions
@@ -1710,7 +1708,6 @@ static BOOLEAN UpdateBackupSurface(struct VSurface *hVSurface);
 
 struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   LPDIRECTDRAW2 lpDD2Object;
-  DDSURFACEDESC SurfaceDescription;
   DDPIXELFORMAT PixelFormat;
   LPDIRECTDRAWSURFACE lpDDS;
   LPDIRECTDRAWSURFACE2 lpDDS2;
@@ -1726,72 +1723,26 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   UINT32 uiGBitMask;
   UINT32 uiBBitMask;
 
-  // Clear the memory
-  memset(&SurfaceDescription, 0, sizeof(DDSURFACEDESC));
-
-  //
-  // Get Direct Draw Object
-  //
-
   lpDD2Object = GetDirectDraw2Object();
-
-  //
-  // The description structure contains memory usage flag
-  //
   fMemUsage = VSurfaceDesc->fCreateFlags;
 
-  //
-  // Check creation options
-  //
-
-  do {
-    //
-    // Check if creating from file
-    //
-
-    if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
-      //
-      // Create himage object from file
-      //
-
-      hImage = CreateImage(VSurfaceDesc->ImageFile, IMAGE_ALLIMAGEDATA);
-
-      if (hImage == NULL) {
-        DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
-        return (NULL);
-      }
-
-      //
-      // Set values from himage
-      //
-      usHeight = hImage->usHeight;
-      usWidth = hImage->usWidth;
-      ubBitDepth = hImage->ubBitDepth;
-      break;
+  if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
+    hImage = CreateImage(VSurfaceDesc->ImageFile, IMAGE_ALLIMAGEDATA);
+    if (hImage == NULL) {
+      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
+      return (NULL);
     }
-
-    //
-    // If here, no special options given,
-    // Set values from given description structure
-    //
-
+    usHeight = hImage->usHeight;
+    usWidth = hImage->usWidth;
+    ubBitDepth = hImage->ubBitDepth;
+  } else {
     usHeight = VSurfaceDesc->usHeight;
     usWidth = VSurfaceDesc->usWidth;
     ubBitDepth = VSurfaceDesc->ubBitDepth;
-
-  } while (FALSE);
-
-  //
-  // Assertions
-  //
+  }
 
   Assert(usHeight > 0);
   Assert(usWidth > 0);
-
-  //
-  // Setup Direct Draw Description
-  // First do Pixel Format
-  //
 
   memset(&PixelFormat, 0, sizeof(PixelFormat));
   PixelFormat.dwSize = sizeof(DDPIXELFORMAT);
@@ -1818,53 +1769,25 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
       return (FALSE);
   }
 
+  DDSURFACEDESC SurfaceDescription;
+  memset(&SurfaceDescription, 0, sizeof(DDSURFACEDESC));
   SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
 
-  //
-  // Do memory description, based on specified flags
-  //
-
-  do {
-    if (fMemUsage & VSURFACE_VIDEO_MEM_USAGE) {
-      SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-      break;
-    }
-
-    if (fMemUsage & VSURFACE_SYSTEM_MEM_USAGE) {
-      SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
-      break;
-    }
-
-    //
-    // Once here, no mem flags were given, use default
-    //
-
+  if (fMemUsage & VSURFACE_SYSTEM_MEM_USAGE) {
+    SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
+  } else {
     SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-
-  } while (FALSE);
-
-  //
-  // Set other, common structure elements
-  //
+  }
 
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   SurfaceDescription.dwWidth = usWidth;
   SurfaceDescription.dwHeight = usHeight;
   SurfaceDescription.ddpfPixelFormat = PixelFormat;
 
-  //
-  // Create Surface
-  //
-
   DDCreateSurface(lpDD2Object, &SurfaceDescription, &lpDDS, &lpDDS2);
 
-  //
-  // Allocate memory for Video Surface data and initialize
-  //
-
-  hVSurface = (struct VSurface *)MemAlloc(sizeof(struct VSurface));
-  memset(hVSurface, 0, sizeof(struct VSurface));
-  if (!(hVSurface != NULL)) {
+  hVSurface = VSurfaceNew();
+  if (!hVSurface) {
     return FALSE;
   }
 
@@ -1873,82 +1796,17 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   hVSurface->ubBitDepth = ubBitDepth;
   hVSurface->pSurfaceData1 = (PTR)lpDDS;
   hVSurface->pSurfaceData = (PTR)lpDDS2;
-  hVSurface->pSavedSurfaceData1 = NULL;
-  hVSurface->pSavedSurfaceData = NULL;
   hVSurface->pPalette = NULL;
   hVSurface->p16BPPPalette = NULL;
   hVSurface->TransparentColor = FROMRGB(0, 0, 0);
   hVSurface->fFlags = 0;
   hVSurface->pClipper = NULL;
 
-  //
-  // Determine memory and other attributes of newly created surface
-  //
-
   DDGetSurfaceDescription(lpDDS2, &SurfaceDescription);
-
-  //
-  // Fail if create tried for video but it's in system
-  //
-
-  if (VSurfaceDesc->fCreateFlags & VSURFACE_VIDEO_MEM_USAGE &&
-      SurfaceDescription.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY) {
-    //
-    // Return failure due to not in video
-    //
-
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-             String("Failed to create Video Surface in video memory"));
-    DDReleaseSurface(&lpDDS, &lpDDS2);
-    MemFree(hVSurface);
-    return (NULL);
-  }
-
-  //
-  // Look for system memory
-  //
 
   if (SurfaceDescription.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY) {
     hVSurface->fFlags |= VSURFACE_SYSTEM_MEM_USAGE;
   }
-
-  //
-  // Look for video memory
-  //
-
-  if (SurfaceDescription.ddsCaps.dwCaps & DDSCAPS_VIDEOMEMORY) {
-    hVSurface->fFlags |= VSURFACE_VIDEO_MEM_USAGE;
-  }
-
-  //
-  // If in video memory, create backup surface
-  //
-
-  if (hVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE) {
-    SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
-    SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
-    SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-    SurfaceDescription.dwWidth = usWidth;
-    SurfaceDescription.dwHeight = usHeight;
-    SurfaceDescription.ddpfPixelFormat = PixelFormat;
-
-    //
-    // Create Surface
-    //
-
-    DDCreateSurface(lpDD2Object, &SurfaceDescription, &lpDDS, &lpDDS2);
-
-    //
-    // Save surface to backup
-    //
-
-    hVSurface->pSavedSurfaceData1 = lpDDS;
-    hVSurface->pSavedSurfaceData = lpDDS2;
-  }
-
-  //
-  // Initialize surface with hImage , if given
-  //
 
   if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
     tempRect.iLeft = 0;
@@ -1956,19 +1814,9 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
     tempRect.iRight = hImage->usWidth - 1;
     tempRect.iBottom = hImage->usHeight - 1;
     SetVideoSurfaceDataFromHImage(hVSurface, hImage, 0, 0, &tempRect);
-
-    //
-    // Set palette from himage
-    //
-
     if (hImage->ubBitDepth == 8) {
       SetVideoSurfacePalette(hVSurface, hImage->pPalette);
     }
-
-    //
-    // Delete himage object
-    //
-
     DestroyImage(hImage);
   }
 
@@ -1993,58 +1841,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
-  LPDIRECTDRAWSURFACE2 lpDDSurface;
-  LPDIRECTDRAWSURFACE2 lpBackupDDSurface;
-  RECT aRect;
-
-  Assert(hVSurface != NULL);
-
-  //
-  // Restore is only for VIDEO MEMORY - should check if VIDEO and QUIT if not
-  //
-
-  if (!(hVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
-    //
-    // No second surfaace has been allocated, return failure
-    //
-
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, String("Failed to restore Video Surface surface"));
-    return (FALSE);
-  }
-
-  //
-  // Check for valid secondary surface
-  //
-
-  if (hVSurface->pSavedSurfaceData1 == NULL) {
-    //
-    // No secondary surface available
-    //
-
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-             String("Failure in retoring- no secondary surface found"));
-    return (FALSE);
-  }
-
-  // Restore primary surface
-  lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
-  DDRestoreSurface(lpDDSurface);
-
-  // Blit backup surface data into primary
-  lpBackupDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSavedSurfaceData;
-
-  aRect.top = (int)0;
-  aRect.left = (int)0;
-  aRect.bottom = (int)hVSurface->usHeight;
-  aRect.right = (int)hVSurface->usWidth;
-
-  DDBltFastSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSavedSurfaceData, 0, 0,
-                   (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, &aRect);
-
-  return (TRUE);
-}
-
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
   if (vs) {
@@ -2062,11 +1858,6 @@ void VSurfaceUnlock(struct VSurface *vs) {
 void UnLockVideoSurfaceBuffer(struct VSurface *vs) {
   if (vs) {
     VSurfaceUnlock(vs);
-  }
-
-  // Copy contents if surface is in video
-  if ((vs->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
-    UpdateBackupSurface(vs);
   }
 }
 
@@ -2174,11 +1965,11 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
     DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSurfaceData1, &lpDDSurface);
   }
 
-  // Release backup surface
-  if (hVSurface->pSavedSurfaceData != NULL) {
-    DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSavedSurfaceData1,
-                     (LPDIRECTDRAWSURFACE2 *)&hVSurface->pSavedSurfaceData);
-  }
+  // // Release backup surface
+  // if (hVSurface->pSavedSurfaceData != NULL) {
+  //   DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSavedSurfaceData1,
+  //                    (LPDIRECTDRAWSURFACE2 *)&hVSurface->pSavedSurfaceData);
+  // }
 
   // If there is a 16bpp palette, free it
   if (hVSurface->p16BPPPalette != NULL) {
@@ -2190,36 +1981,6 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
 
   // Release object
   MemFree(hVSurface);
-
-  return (TRUE);
-}
-
-// ******************************************************************************************
-//
-// UTILITY FUNCTIONS
-//
-// ******************************************************************************************
-
-// Blt to backup buffer
-static BOOLEAN UpdateBackupSurface(struct VSurface *hVSurface) {
-  RECT aRect;
-
-  // Assertions
-  Assert(hVSurface != NULL);
-
-  // Validations
-  if (!(hVSurface->pSavedSurfaceData != NULL)) {
-    return FALSE;
-  }
-
-  aRect.top = (int)0;
-  aRect.left = (int)0;
-  aRect.bottom = (int)hVSurface->usHeight;
-  aRect.right = (int)hVSurface->usWidth;
-
-  // Copy all contents into backup buffer
-  DDBltFastSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, 0, 0,
-                   (LPDIRECTDRAWSURFACE2)hVSurface->pSavedSurfaceData, &aRect);
 
   return (TRUE);
 }
@@ -2272,9 +2033,9 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
     hVSurface->fFlags |= VSURFACE_SYSTEM_MEM_USAGE;
   }
 
-  if (DDSurfaceDesc.ddsCaps.dwCaps & DDSCAPS_VIDEOMEMORY) {
-    hVSurface->fFlags |= VSURFACE_VIDEO_MEM_USAGE;
-  }
+  // if (DDSurfaceDesc.ddsCaps.dwCaps & DDSCAPS_VIDEOMEMORY) {
+  //   hVSurface->fFlags |= VSURFACE_VIDEO_MEM_USAGE;
+  // }
 
   return (hVSurface);
 }
@@ -2293,10 +2054,6 @@ BOOLEAN FillSurface(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) {
   DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, NULL, NULL, NULL, DDBLT_COLORFILL,
                &BlitterFX);
 
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
-    UpdateBackupSurface(hDestVSurface);
-  }
-
   return (TRUE);
 }
 
@@ -2313,10 +2070,6 @@ BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) 
 
   DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, (LPRECT) & (pBltFx->FillRect),
                NULL, NULL, DDBLT_COLORFILL, &BlitterFX);
-
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
-    UpdateBackupSurface(hDestVSurface);
-  }
 
   return (TRUE);
 }
@@ -2440,11 +2193,6 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
                  (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags, NULL);
   }
 
-  // Update backup surface with new data
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
-    UpdateBackupSurface(hDestVSurface);
-  }
-
   return (TRUE);
 }
 
@@ -2471,11 +2219,6 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *h
     };
     DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, &destRect,
                  (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags, NULL);
-  }
-
-  // Update backup surface with new data
-  if ((hDestVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
-    UpdateBackupSurface(hDestVSurface);
   }
 
   return (TRUE);

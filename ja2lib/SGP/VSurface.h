@@ -91,9 +91,6 @@ BOOLEAN InitializeVideoSurfaceManager();
 // Deletes any video Surface placed into list
 BOOLEAN ShutdownVideoSurfaceManager();
 
-// Restores all video Surfaces in list
-BOOLEAN RestoreVideoSurfaces();
-
 // Creates and adds a video Surface to list
 BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
 

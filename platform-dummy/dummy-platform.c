@@ -219,7 +219,6 @@ struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   return res;
 }
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {}
-BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) { return FALSE; }
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                               UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
                               struct Rect *DestRect) {
