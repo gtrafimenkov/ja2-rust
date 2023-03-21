@@ -34,12 +34,6 @@
 
 // https://learn.microsoft.com/en-us/windows/win32/api/_directdraw/
 
-extern struct VSurface *vsPrimary;
-extern struct VSurface *vsBackBuffer;
-extern struct VSurface *vsMouseCursor;
-extern struct VSurface *vsMouseCursor;
-extern struct VSurface *vsMouseCursorOriginal;
-
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
                              LPRECT pSrcRect, u32 flags);
 

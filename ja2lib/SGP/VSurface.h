@@ -6,7 +6,16 @@
 #include "SGP/Types.h"
 
 struct VObject;
+struct VSurface;
+
 typedef uint32_t VSurfID;
+
+extern struct VSurface *vsBackBuffer;
+extern struct VSurface *vsFrameBuffer;
+extern struct VSurface *vsMouseCursor;
+extern struct VSurface *vsMouseCursor;
+extern struct VSurface *vsMouseCursorOriginal;
+extern struct VSurface *vsPrimary;
 
 //
 // Defines for special video object handles given to blit function
@@ -43,8 +52,6 @@ struct BltOpts {
   0x00000020  // Creates and empty Surface of given width, height and BPP
 #define VSURFACE_CREATE_FROMFILE \
   0x00000040  // Creates a video Surface from a file ( using struct Image* )
-
-struct VSurface;
 
 UINT16 GetVSurfaceHeight(const struct VSurface *vs);
 UINT16 GetVSurfaceWidth(const struct VSurface *vs);
