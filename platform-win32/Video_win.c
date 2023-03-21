@@ -3228,7 +3228,11 @@ static struct BufferLockInfo DDLockSurface(LPDIRECTDRAWSURFACE2 src) {
   HRESULT ReturnCode;
   do {
     ReturnCode = IDirectDrawSurface2_Lock(src, NULL, &descr, 0, 0);
-  } while (ReturnCode == DDERR_WASSTILLDRAWING);
+    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
+      DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to lock surface");
+      return res;
+    }
+  } while (ReturnCode != DD_OK);
 
   res.pitch = descr.lPitch;
   res.dest = (uint8_t *)descr.lpSurface;
