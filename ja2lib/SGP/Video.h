@@ -6,14 +6,14 @@
 struct SGPPaletteEntry;
 struct VSurface;
 
-extern struct VSurface *vsBackBuffer;
-extern struct VSurface *vsFrameBuffer;
+// TODO
+// extern struct VSurface *vsBackBuffer;
+// extern struct VSurface *vsFrameBuffer;
+extern struct VSurface *ghFrameBuffer;
 
 #define VIDEO_NO_CURSOR 0xFFFF
 
 extern INT32 giNumFrames;
-
-extern struct VSurface *ghFrameBuffer;
 
 struct PlatformInitParams;
 extern BOOLEAN InitializeVideoManager(struct PlatformInitParams *params);

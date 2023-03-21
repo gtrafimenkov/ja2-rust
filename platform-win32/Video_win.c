@@ -1,23 +1,28 @@
 #include <process.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "Globals.h"
 #include "Local.h"
 #include "Rect.h"
 #include "SGP/Debug.h"
+#include "SGP/HImage.h"
 #include "SGP/Input.h"
 #include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
+#include "SGP/VSurface.h"
 #include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/VideoInternal.h"
+#include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
 #include "platform_callbacks.h"
+#include "platform_strings.h"
 #include "rust_debug.h"
 
 #define INITGUID
@@ -27,8 +32,9 @@
 #include "Smack.h"
 #include "platform_win.h"
 
-static BOOLEAN SetPrimaryVideoSurfaces();
-static void DeletePrimaryVideoSurfaces();
+extern struct VSurface *ghPrimary;
+extern struct VSurface *ghBackBuffer;
+extern struct VSurface *ghMouseBuffer;
 
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
                              LPRECT pSrcRect, u32 flags);
@@ -547,7 +553,12 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
 
   GetRGBDistribution();
 
-  if (!SetPrimaryVideoSurfaces()) {
+  // create video surfaces from DD surfaces
+  ghPrimary = CreateVideoSurfaceFromDDSurface(gpPrimarySurface);
+  ghBackBuffer = CreateVideoSurfaceFromDDSurface(gpBackBuffer);
+  ghMouseBuffer = CreateVideoSurfaceFromDDSurface(gpMouseCursor);
+  ghFrameBuffer = CreateVideoSurfaceFromDDSurface(gpFrameBuffer);
+  if (!ghPrimary || !ghBackBuffer || !ghMouseBuffer || !ghFrameBuffer) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, String("Could not create primary surfaces"));
     return FALSE;
   }
@@ -556,11 +567,12 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
 }
 
 void ShutdownVideoManager(void) {
-  // UINT32  uiRefreshThreadState;
-
   DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Shutting down the video manager");
 
-  DeletePrimaryVideoSurfaces();
+  DeleteVideoSurface(ghPrimary);
+  DeleteVideoSurface(ghBackBuffer);
+  DeleteVideoSurface(ghFrameBuffer);
+  DeleteVideoSurface(ghMouseBuffer);
 
   //
   // Toggle the state of the video manager to indicate to the refresh thread that it needs to shut
@@ -1506,14 +1518,6 @@ static LPDIRECTDRAW2 GetDirectDraw2Object(void) {
   return gpDirectDrawObject;
 }
 
-LPDIRECTDRAWSURFACE2 GetPrimarySurfaceObject(void) { return gpPrimarySurface; }
-
-LPDIRECTDRAWSURFACE2 GetBackBufferObject(void) { return gpBackBuffer; }
-
-LPDIRECTDRAWSURFACE2 GetFrameBufferObject(void) { return gpFrameBuffer; }
-
-LPDIRECTDRAWSURFACE2 GetMouseBufferObject(void) { return gpMouseCursor; }
-
 PTR LockBackBuffer(UINT32 *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
@@ -1950,110 +1954,9 @@ void RefreshMovieCache() {
   Plat_SetCurrentDirectory(ExecDir.buf);
 }
 
-#include "SGP/VSurface.h"
-#include "SGP/WCheck.h"
-
-extern struct VSurface *ghPrimary;
-extern struct VSurface *ghBackBuffer;
-extern struct VSurface *ghMouseBuffer;
-
-// TODO
-// This function sets the global video Surfaces for primary and backbuffer
-static BOOLEAN SetPrimaryVideoSurfaces() {
-  LPDIRECTDRAWSURFACE2 pSurface;
-
-  //
-  // Get Primary surface
-  //
-  pSurface = GetPrimarySurfaceObject();
-  if (!(pSurface != NULL)) {
-    return FALSE;
-  }
-
-  ghPrimary = CreateVideoSurfaceFromDDSurface(pSurface);
-  if (!(ghPrimary != NULL)) {
-    return FALSE;
-  }
-
-  //
-  // Get Backbuffer surface
-  //
-
-  pSurface = GetBackBufferObject();
-  if (!(pSurface != NULL)) {
-    return FALSE;
-  }
-
-  ghBackBuffer = CreateVideoSurfaceFromDDSurface(pSurface);
-  if (!(ghBackBuffer != NULL)) {
-    return FALSE;
-  }
-
-  //
-  // Get mouse buffer surface
-  //
-  pSurface = GetMouseBufferObject();
-  if (!(pSurface != NULL)) {
-    return FALSE;
-  }
-
-  ghMouseBuffer = CreateVideoSurfaceFromDDSurface(pSurface);
-  if (!(ghMouseBuffer != NULL)) {
-    return FALSE;
-  }
-
-  //
-  // Get frame buffer surface
-  //
-
-  pSurface = GetFrameBufferObject();
-  if (!(pSurface != NULL)) {
-    return FALSE;
-  }
-
-  ghFrameBuffer = CreateVideoSurfaceFromDDSurface(pSurface);
-  if (!(ghFrameBuffer != NULL)) {
-    return FALSE;
-  }
-
-  return (TRUE);
-}
-
-static void DeletePrimaryVideoSurfaces() {
-  if (ghPrimary != NULL) {
-    DeleteVideoSurface(ghPrimary);
-    ghPrimary = NULL;
-  }
-
-  if (ghBackBuffer != NULL) {
-    DeleteVideoSurface(ghBackBuffer);
-    ghBackBuffer = NULL;
-  }
-
-  if (ghFrameBuffer != NULL) {
-    DeleteVideoSurface(ghFrameBuffer);
-    ghFrameBuffer = NULL;
-  }
-
-  if (ghMouseBuffer != NULL) {
-    DeleteVideoSurface(ghMouseBuffer);
-    ghMouseBuffer = NULL;
-  }
-}
-
 //////////////////////////////////////////////////////////////////
 // VSurface
 //////////////////////////////////////////////////////////////////
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "SGP/HImage.h"
-#include "SGP/VObjectBlitters.h"
-#include "SGP/VSurface.h"
-#include "SGP/Video.h"
-#include "SGP/WCheck.h"
-#include "platform_strings.h"
 
 LPDIRECTDRAW2 GetDirectDraw2Object();
 LPDIRECTDRAWSURFACE2 GetPrimarySurfaceInterface();
@@ -2525,8 +2428,6 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
 
 // Deletes all palettes, surfaces and region data
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
-  LPDIRECTDRAWSURFACE2 lpDDSurface;
-
   // Assertions
   if (!(hVSurface != NULL)) {
     return FALSE;
@@ -2539,7 +2440,7 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
   }
 
   // Get surface pointer
-  lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
+  LPDIRECTDRAWSURFACE2 lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
 
   // Release surface
   if (hVSurface->pSurfaceData1 != NULL) {
@@ -2610,42 +2511,35 @@ LPDIRECTDRAWSURFACE2 GetVideoSurfaceDDSurface(struct VSurface *hVSurface) {
 
 static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface) {
   // Create Video Surface
-  DDPIXELFORMAT PixelFormat;
-  struct VSurface *hVSurface;
-  DDSURFACEDESC DDSurfaceDesc;
-  LPDIRECTDRAWPALETTE pDDPalette;
-  struct SGPPaletteEntry SGPPalette[256];
-  HRESULT ReturnCode;
-
-  // Allocate Video Surface struct
-  hVSurface = (struct VSurface *)MemAlloc(sizeof(struct VSurface));
 
   // Set values based on DD Surface given
+  DDSURFACEDESC DDSurfaceDesc;
   DDGetSurfaceDescription(lpDDSurface, &DDSurfaceDesc);
-  PixelFormat = DDSurfaceDesc.ddpfPixelFormat;
+  DDPIXELFORMAT PixelFormat = DDSurfaceDesc.ddpfPixelFormat;
 
+  struct VSurface *hVSurface = VSurfaceNew();
   hVSurface->usHeight = (UINT16)DDSurfaceDesc.dwHeight;
   hVSurface->usWidth = (UINT16)DDSurfaceDesc.dwWidth;
   hVSurface->ubBitDepth = (UINT8)PixelFormat.dwRGBBitCount;
   hVSurface->pSurfaceData = (PTR)lpDDSurface;
-  hVSurface->pSurfaceData1 = NULL;
-  hVSurface->pSavedSurfaceData = NULL;
-  hVSurface->fFlags = 0;
 
   // Get and Set palette, if attached, allow to fail
-  ReturnCode = IDirectDrawSurface2_GetPalette(lpDDSurface, &pDDPalette);
+  LPDIRECTDRAWPALETTE pDDPalette;
+  HRESULT ReturnCode = IDirectDrawSurface2_GetPalette(lpDDSurface, &pDDPalette);
 
   if (ReturnCode == DD_OK) {
     // Set 8-bit Palette and 16 BPP palette
     hVSurface->pPalette = pDDPalette;
 
     // Create 16-BPP Palette
+    struct SGPPaletteEntry SGPPalette[256];
     DDGetPaletteEntries(pDDPalette, 0, 0, 256, (LPPALETTEENTRY)SGPPalette);
     hVSurface->p16BPPPalette = Create16BPPPalette(SGPPalette);
   } else {
     hVSurface->pPalette = NULL;
     hVSurface->p16BPPPalette = NULL;
   }
+
   // Set meory flags
   if (DDSurfaceDesc.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY) {
     hVSurface->fFlags |= VSURFACE_SYSTEM_MEM_USAGE;
@@ -2654,10 +2548,6 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   if (DDSurfaceDesc.ddsCaps.dwCaps & DDSCAPS_VIDEOMEMORY) {
     hVSurface->fFlags |= VSURFACE_VIDEO_MEM_USAGE;
   }
-
-  // All is well
-  DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR,
-           String("Success in Creating Video Surface from DD Surface"));
 
   return (hVSurface);
 }
