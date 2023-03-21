@@ -600,15 +600,15 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
   return gpVSurfaceTail->uiIndex;
 }
 
-BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
+BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
-  Assert(pVSurfaceDesc);
+  Assert(desc);
 
   struct VSurface *vs = NULL;
-  if (pVSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
-    vs = CreateVideoSurfaceFromFile(pVSurfaceDesc->ImageFile);
+  if (desc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
+    vs = CreateVideoSurfaceFromFile(desc->ImageFile);
   } else {
-    vs = CreateVideoSurface(pVSurfaceDesc);
+    vs = CreateVideoSurface(desc->usWidth, desc->usHeight, desc->ubBitDepth);
   }
 
   if (!vs) {
@@ -932,29 +932,25 @@ struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
 // }
 
 struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
-  struct Image *hImage = CreateImage(path, IMAGE_ALLIMAGEDATA);
-  if (hImage == NULL) {
+  struct Image *image = CreateImage(path, IMAGE_ALLIMAGEDATA);
+  if (image == NULL) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
     return (NULL);
   }
-  VSURFACE_DESC desc;
-  desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
-  desc.usHeight = hImage->usHeight;
-  desc.usWidth = hImage->usWidth;
-  desc.ubBitDepth = hImage->ubBitDepth;
 
-  struct VSurface *vs = CreateVideoSurface(&desc);
+  struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, image->ubBitDepth);
+
   if (vs) {
     SGPRect tempRect;
     tempRect.iLeft = 0;
     tempRect.iTop = 0;
-    tempRect.iRight = hImage->usWidth - 1;
-    tempRect.iBottom = hImage->usHeight - 1;
-    SetVideoSurfaceDataFromHImage(vs, hImage, 0, 0, &tempRect);
-    if (hImage->ubBitDepth == 8) {
-      SetVideoSurfacePalette(vs, hImage->pPalette);
+    tempRect.iRight = image->usWidth - 1;
+    tempRect.iBottom = image->usHeight - 1;
+    SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
+    if (image->ubBitDepth == 8) {
+      SetVideoSurfacePalette(vs, image->pPalette);
     }
-    DestroyImage(hImage);
+    DestroyImage(image);
   }
 
   return vs;

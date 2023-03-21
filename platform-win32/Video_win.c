@@ -6,7 +6,6 @@
 #include "Local.h"
 #include "Rect.h"
 #include "SGP/Debug.h"
-#include "SGP/HImage.h"
 #include "SGP/Input.h"
 #include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
@@ -1587,41 +1586,24 @@ void FatalError(STR8 pError, ...) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
-  LPDIRECTDRAW2 lpDD2Object;
+struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth) {
+  Assert(height > 0);
+  Assert(width > 0);
+
   DDPIXELFORMAT PixelFormat;
-  LPDIRECTDRAWSURFACE lpDDS;
-  LPDIRECTDRAWSURFACE2 lpDDS2;
-  struct Image *hImage;
-  UINT16 usHeight;
-  UINT16 usWidth;
-  UINT8 ubBitDepth;
-  UINT32 fMemUsage;
-
-  UINT32 uiRBitMask;
-  UINT32 uiGBitMask;
-  UINT32 uiBBitMask;
-
-  lpDD2Object = dd2Object;
-  fMemUsage = VSurfaceDesc->fCreateFlags;
-
-  usHeight = VSurfaceDesc->usHeight;
-  usWidth = VSurfaceDesc->usWidth;
-  ubBitDepth = VSurfaceDesc->ubBitDepth;
-
-  Assert(usHeight > 0);
-  Assert(usWidth > 0);
-
   memset(&PixelFormat, 0, sizeof(PixelFormat));
   PixelFormat.dwSize = sizeof(DDPIXELFORMAT);
 
-  switch (ubBitDepth) {
+  switch (bitDepth) {
     case 8:
       PixelFormat.dwFlags = DDPF_RGB | DDPF_PALETTEINDEXED8;
       PixelFormat.dwRGBBitCount = 8;
       break;
 
-    case 16:
+    case 16: {
+      UINT32 uiRBitMask;
+      UINT32 uiGBitMask;
+      UINT32 uiBBitMask;
       PixelFormat.dwFlags = DDPF_RGB;
       PixelFormat.dwRGBBitCount = 16;
       if (!(GetPrimaryRGBDistributionMasks(&uiRBitMask, &uiGBitMask, &uiBBitMask))) {
@@ -1630,7 +1612,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
       PixelFormat.dwRBitMask = uiRBitMask;
       PixelFormat.dwGBitMask = uiGBitMask;
       PixelFormat.dwBBitMask = uiBBitMask;
-      break;
+    } break;
 
     default:
       DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid BPP value, can only be 8 or 16.");
@@ -1642,19 +1624,21 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  SurfaceDescription.dwWidth = usWidth;
-  SurfaceDescription.dwHeight = usHeight;
+  SurfaceDescription.dwWidth = width;
+  SurfaceDescription.dwHeight = height;
   SurfaceDescription.ddpfPixelFormat = PixelFormat;
-  DDCreateSurface(lpDD2Object, &SurfaceDescription, &lpDDS, &lpDDS2);
+  LPDIRECTDRAWSURFACE lpDDS;
+  LPDIRECTDRAWSURFACE2 lpDDS2;
+  DDCreateSurface(dd2Object, &SurfaceDescription, &lpDDS, &lpDDS2);
 
   struct VSurface *vs = VSurfaceNew();
   if (!vs) {
     return FALSE;
   }
 
-  vs->usHeight = usHeight;
-  vs->usWidth = usWidth;
-  vs->ubBitDepth = ubBitDepth;
+  vs->usHeight = height;
+  vs->usWidth = width;
+  vs->ubBitDepth = bitDepth;
   vs->pSurfaceData1 = (PTR)lpDDS;
   vs->pSurfaceData = (PTR)lpDDS2;
   vs->pPalette = NULL;

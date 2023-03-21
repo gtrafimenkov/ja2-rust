@@ -109,9 +109,6 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor);
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Created from a VSurface_DESC structure. Can be from a file via struct Image* or empty.
-struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc);
-
 // Gets the RGB palette entry values
 BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteEntry *pPalette);
 
@@ -179,6 +176,7 @@ void VSurfaceUnlock(struct VSurface *vs);
 BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *uiPitch);
 void UnLockVideoSurface(VSurfID uiVSurface);
 
+struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth);
 struct VSurface *CreateVideoSurfaceFromFile(const char *path);
 
 #endif
