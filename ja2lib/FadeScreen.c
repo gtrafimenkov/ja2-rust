@@ -488,7 +488,7 @@ void FadeInBackBufferSquare() {
   BltFx.SrcRect.iBottom = iY2;
 
   if (BltFx.SrcRect.iRight != BltFx.SrcRect.iLeft) {
-    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, 0, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
+    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
   }
 
   iX1 = giX2;
@@ -502,7 +502,7 @@ void FadeInBackBufferSquare() {
   BltFx.SrcRect.iBottom = iY2;
 
   if (BltFx.SrcRect.iRight != BltFx.SrcRect.iLeft) {
-    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, 0, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
+    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
   }
 
   iX1 = giX1;
@@ -516,7 +516,7 @@ void FadeInBackBufferSquare() {
   BltFx.SrcRect.iBottom = iY2;
 
   if (BltFx.SrcRect.iBottom != BltFx.SrcRect.iTop) {
-    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, 0, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
+    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
   }
 
   iX1 = giX1;
@@ -530,7 +530,7 @@ void FadeInBackBufferSquare() {
   BltFx.SrcRect.iBottom = iY2;
 
   if (BltFx.SrcRect.iBottom != BltFx.SrcRect.iTop) {
-    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, 0, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
+    BltVideoSurface(BACKBUFFER, FRAME_BUFFER, iX1, iY1, VS_BLT_SRCSUBRECT, &BltFx);
   }
 
   giX1 -= sFadeXMove;

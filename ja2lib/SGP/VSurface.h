@@ -26,8 +26,6 @@ typedef uint32_t VSurfID;
 #define VS_BLT_USEDESTCOLORKEY 0x000000200
 #define VS_BLT_FAST 0x000000004
 #define VS_BLT_CLIPPED 0x000000008
-#define VS_BLT_SRCREGION 0x000000010
-#define VS_BLT_DESTREGION 0x000000080
 #define VS_BLT_SRCSUBRECT 0x000000040
 #define VS_BLT_COLORFILLRECT 0x000000100
 #define VS_BLT_MIRROR_Y 0x000001000
@@ -40,7 +38,6 @@ struct BltOpts {
   COLORVAL ColorFill;  // Used for fill effect
   SGPRect SrcRect;     // Given SRC subrect instead of srcregion
   SGPRect FillRect;    // Given SRC subrect instead of srcregion
-  UINT16 DestRegion;   // Given a DEST region for dest positions within the VO
 };
 
 //
@@ -113,8 +110,8 @@ BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *uiPitch);
 void UnLockVideoSurface(UINT32 uiVSurface);
 
 // Blits a video Surface to another video Surface
-BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, UINT16 usRegionIndex, INT32 iDestX,
-                        INT32 iDestY, UINT32 fBltFlags, struct BltOpts *pBltFx);
+BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
+                        UINT32 fBltFlags, struct BltOpts *pBltFx);
 
 BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDestY1, INT32 iDestX2,
                                   INT32 iDestY2, UINT16 Color16BPP);
@@ -162,7 +159,7 @@ BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
 // Blitting, giving an API layer for portability.
 
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
+                                      INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
                                       struct BltOpts *pBltFx);
 
 struct VSurface *GetPrimaryVideoSurface();

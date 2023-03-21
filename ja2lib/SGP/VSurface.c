@@ -209,7 +209,7 @@ static BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, struct Rect *pRect) {
 // Will drop down into user-defined blitter if 8->16 BPP blitting is being done
 
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      UINT16 usIndex, INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
+                                      INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
                                       struct BltOpts *pBltFx) {
   VSURFACE_REGION aRegion;
   struct Rect SrcRect, DestRect;
@@ -219,26 +219,6 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
   // Assertions
   Assert(hDestVSurface != NULL);
-
-  // Check that both region and subrect are not given
-  if ((fBltFlags & VS_BLT_SRCREGION) && (fBltFlags & VS_BLT_SRCSUBRECT)) {
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, String("Inconsistant blit flags given"));
-    return (FALSE);
-  }
-
-  // Check for dest src options
-  if (fBltFlags & VS_BLT_DESTREGION) {
-    if (!(pBltFx != NULL)) {
-      return FALSE;
-    }
-    if (!(GetVSurfaceRegion(hDestVSurface, pBltFx->DestRegion, &aRegion))) {
-      return FALSE;
-    }
-
-    // Set starting coordinates from destination region
-    iDestY = aRegion.RegionCoords.iTop;
-    iDestX = aRegion.RegionCoords.iLeft;
-  }
 
   // Check for fill, if true, fill entire region with color
   if (fBltFlags & VS_BLT_COLORFILL) {
@@ -252,17 +232,6 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
   // Check for source coordinate options - from region, specific rect or full src dimensions
   do {
-    // Get Region from index, if specified
-    if (fBltFlags & VS_BLT_SRCREGION) {
-      CHECKF(GetVSurfaceRegion(hSrcVSurface, usIndex, &aRegion));
-
-      SrcRect.top = (int)aRegion.RegionCoords.iTop;
-      SrcRect.left = (int)aRegion.RegionCoords.iLeft;
-      SrcRect.bottom = (int)aRegion.RegionCoords.iBottom;
-      SrcRect.right = (int)aRegion.RegionCoords.iRight;
-      break;
-    }
-
     // Use SUBRECT if specified
     if (fBltFlags & VS_BLT_SRCSUBRECT) {
       SGPRect aSubRect;
@@ -627,7 +596,6 @@ BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDes
   }
 
   BltFx.ColorFill = Color16BPP;
-  BltFx.DestRegion = 0;
 
   //
   // Clip fill region coords
@@ -855,8 +823,8 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, UINT16 usRegionIndex, INT32 iDestX,
-                        INT32 iDestY, UINT32 fBltFlags, struct BltOpts *pBltFx) {
+BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
+                        UINT32 fBltFlags, struct BltOpts *pBltFx) {
   struct VSurface *hDestVSurface;
   struct VSurface *hSrcVSurface;
 
@@ -866,9 +834,9 @@ BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, UINT16 usRegion
   if (!GetVideoSurface(&hSrcVSurface, srcSurface)) {
     return FALSE;
   }
-  if (!BltVideoSurfaceToVideoSurface(
-          hDestVSurface, hSrcVSurface, usRegionIndex, iDestX, iDestY, fBltFlags,
-          pBltFx)) {  // VO Blitter will set debug messages for error conditions
+  if (!BltVideoSurfaceToVideoSurface(hDestVSurface, hSrcVSurface, iDestX, iDestY, fBltFlags,
+                                     pBltFx)) {
+    // VO Blitter will set debug messages for error conditions
     return FALSE;
   }
   return TRUE;
