@@ -1935,20 +1935,17 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
     if (gubContractLength == i) {
       if (fContractDown) {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_ON_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_ON_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
   }
@@ -1959,20 +1956,17 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
     if (gfBuyEquipment == i) {
       if (fBuyEquipDown) {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_ON_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_ON_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
   }
@@ -2630,10 +2624,10 @@ BOOLEAN DisplayBlackBackground(UINT8 ubMaxNumOfLoops) {
     guiLastHandleMercTime = uiCurrentTime;
   }
   // Blit color to screen
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
-                            AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
-                            AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT,
-                            Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFrameBuffer, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
+                    AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
+                    AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT,
+                    Get16BPPColor(FROMRGB(0, 0, 0)));
   InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                    AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
                    AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT);
@@ -3502,97 +3496,6 @@ BOOLEAN EnableDisableCurrentVideoConferenceButtons(BOOLEAN fEnable) {
   }
   return (TRUE);
 }
-
-/*
-BOOLEAN HandleAnsweringMachineMessage()
-{
-        static BOOLEAN fDone;
-
-        if( gfJustSwitchedVideoConferenceMode )
-                fDone = DisplayAnimatedAnsweringMachineMsg( TRUE,  12);
-        else if( !fDone )
-        {
-                fDone = DisplayAnimatedAnsweringMachineMsg( FALSE,  12);
-                if( fDone )
-                {
-                        fDone = FALSE;
-                }
-        }
-
-        return(TRUE);
-}
-*/
-/*
-BOOLEAN DisplayAnimatedAnsweringMachineMsg( BOOLEAN fInit, UINT8 ubNumSubImages)
-{
-//  struct VObject*	hImageHandle;
-        static UINT8	ubSubImage=0;
-        static UINT32 uiLastTime=0;
-        UINT32 uiCurTime = GetJA2Clock();
-        static UINT8		ubMode=0;
-
-        if( fInit )
-        {
-                ubSubImage = 0;
-                uiLastTime = 0;
-                ubMode = 0;
-        }
-
-        if( (uiCurTime - uiLastTime) > VC_ANSWER_IMAGE_DELAY )
-        {
-
-                if( ubMode == 0)
-                {
-                        if( ubSubImage >= ubNumSubImages)
-                                ubSubImage = 0;
-
-                        // Display the Answering machine graphic
-
-                        // For now just blit the guys face, and shade it
-//			GetVideoObject(&hImageHandle, guiAnsweringMachineImage);
-//			BltVideoObject(FRAME_BUFFER, hImageHandle, ubSubImage,
-AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
-                        InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X,AIM_MEMBER_VIDEO_FACE_Y,
-AIM_MEMBER_VIDEO_FACE_X+AIM_MEMBER_VIDEO_FACE_WIDTH,AIM_MEMBER_VIDEO_FACE_Y+AIM_MEMBER_VIDEO_FACE_HEIGHT);
-
-                        ubSubImage ++;
-                        if( ubSubImage == ubNumSubImages)
-                        {
-                                ubSubImage = 0;
-                                ubMode++;
-                                return(TRUE);
-                        }
-                }
-                else
-                {
-
-                        //display the black background with text over it.
-                        ColorFillVideoSurfaceArea( FRAME_BUFFER, AIM_MEMBER_VIDEO_FACE_X,
-AIM_MEMBER_VIDEO_FACE_Y, AIM_MEMBER_VIDEO_FACE_X+AIM_MEMBER_VIDEO_FACE_WIDTH,
-AIM_MEMBER_VIDEO_FACE_Y+AIM_MEMBER_VIDEO_FACE_HEIGHT, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
-                        DisplayWrappedString(AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y+20,
-AIM_MEMBER_VIDEO_FACE_WIDTH, 2, FONT14ARIAL, 145,  AimPopUpText[AIM_MEMBER_LEAVE_MSG],
-FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
-                        InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X,AIM_MEMBER_VIDEO_FACE_Y,
-AIM_MEMBER_VIDEO_FACE_X+AIM_MEMBER_VIDEO_FACE_WIDTH,AIM_MEMBER_VIDEO_FACE_Y+AIM_MEMBER_VIDEO_FACE_HEIGHT);
-
-                        ubSubImage ++;
-                        if( ubSubImage == ubNumSubImages * 2)
-                        {
-                                ubSubImage = 0;
-                                ubMode=0;
-                                return(TRUE);
-                        }
-                }
-
-
-                //reset clock
-                uiLastTime = GetJA2Clock();
-        }
-
-        return(FALSE);
-}
-*/
 
 void ResetMercAnnoyanceAtPlayer(UINT8 ubMercID) {
   // if merc is still annoyed, reset back to 0

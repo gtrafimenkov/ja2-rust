@@ -1003,8 +1003,8 @@ BOOLEAN RenderSoldierSmallFaceForAutoBandagePanel(INT32 iIndex, INT16 sCurrentXP
   GetVideoObject(&hHandle, giAutoBandagesSoldierFaces[iIndex]);
 
   // fill the background for the info bars black
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 36, sCurrentYPosition + 2,
-                            sCurrentXPosition + 44, sCurrentYPosition + 30, 0);
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 36, sCurrentYPosition + 2,
+                    sCurrentXPosition + 44, sCurrentYPosition + 30, 0);
 
   // put down the background
   BltVideoObjectFromIndex(FRAME_BUFFER, giMercPanelImage, 0, sCurrentXPosition, sCurrentYPosition,
@@ -1035,38 +1035,38 @@ BOOLEAN RenderSoldierSmallFaceForAutoBandagePanel(INT32 iIndex, INT16 sCurrentXP
 
   // yellow one for bleeding
   iStartY = sCurrentYPosition + 29 - 27 * pSoldier->bLifeMax / 100;
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 36, iStartY, sCurrentXPosition + 37,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(107, 107, 57)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 37, iStartY, sCurrentXPosition + 38,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(222, 181, 115)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 36, iStartY, sCurrentXPosition + 37,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(107, 107, 57)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 37, iStartY, sCurrentXPosition + 38,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(222, 181, 115)));
 
   // pink one for bandaged.
   iStartY += 27 * pSoldier->bBleeding / 100;
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 36, iStartY, sCurrentXPosition + 37,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(156, 57, 57)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 37, iStartY, sCurrentXPosition + 38,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(222, 132, 132)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 36, iStartY, sCurrentXPosition + 37,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(156, 57, 57)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 37, iStartY, sCurrentXPosition + 38,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(222, 132, 132)));
 
   // red one for actual health
   iStartY = sCurrentYPosition + 29 - 27 * pSoldier->bLife / 100;
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 36, iStartY, sCurrentXPosition + 37,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(107, 8, 8)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 37, iStartY, sCurrentXPosition + 38,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(206, 0, 0)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 36, iStartY, sCurrentXPosition + 37,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(107, 8, 8)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 37, iStartY, sCurrentXPosition + 38,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(206, 0, 0)));
 
   // BREATH BAR
   iStartY = sCurrentYPosition + 29 - 27 * pSoldier->bBreathMax / 100;
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 39, iStartY, sCurrentXPosition + 40,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 8, 132)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 40, iStartY, sCurrentXPosition + 41,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 8, 107)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 39, iStartY, sCurrentXPosition + 40,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 8, 132)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 40, iStartY, sCurrentXPosition + 41,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 8, 107)));
 
   // MORALE BAR
   iStartY = sCurrentYPosition + 29 - 27 * pSoldier->bMorale / 100;
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 42, iStartY, sCurrentXPosition + 43,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 156, 8)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sCurrentXPosition + 43, iStartY, sCurrentXPosition + 44,
-                            sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 107, 8)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 42, iStartY, sCurrentXPosition + 43,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 156, 8)));
+  VSurfaceColorFill(vsFrameBuffer, sCurrentXPosition + 43, iStartY, sCurrentXPosition + 44,
+                    sCurrentYPosition + 29, Get16BPPColor(FROMRGB(8, 107, 8)));
 
   return (TRUE);
 }

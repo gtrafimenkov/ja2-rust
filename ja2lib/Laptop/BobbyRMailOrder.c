@@ -1123,37 +1123,37 @@ void SelectShippingSpeedRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReas
 
 BOOLEAN DrawShippingSpeedLights(UINT8 ubSelected) {
   if (ubSelected == 0)
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gShippingSpeedAreas[0], gShippingSpeedAreas[1],
-                              gShippingSpeedAreas[0] + SHIPPING_SPEED_LIGHT_WIDTH,
-                              gShippingSpeedAreas[1] + SHIPPING_SPEED_LIGHT_HEIGHT,
-                              Get16BPPColor(FROMRGB(0, 255, 0)));
+    VSurfaceColorFill(vsFrameBuffer, gShippingSpeedAreas[0], gShippingSpeedAreas[1],
+                      gShippingSpeedAreas[0] + SHIPPING_SPEED_LIGHT_WIDTH,
+                      gShippingSpeedAreas[1] + SHIPPING_SPEED_LIGHT_HEIGHT,
+                      Get16BPPColor(FROMRGB(0, 255, 0)));
   else
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gShippingSpeedAreas[0], gShippingSpeedAreas[1],
-                              gShippingSpeedAreas[0] + SHIPPING_SPEED_LIGHT_WIDTH,
-                              gShippingSpeedAreas[1] + SHIPPING_SPEED_LIGHT_HEIGHT,
-                              Get16BPPColor(FROMRGB(0, 0, 0)));
+    VSurfaceColorFill(vsFrameBuffer, gShippingSpeedAreas[0], gShippingSpeedAreas[1],
+                      gShippingSpeedAreas[0] + SHIPPING_SPEED_LIGHT_WIDTH,
+                      gShippingSpeedAreas[1] + SHIPPING_SPEED_LIGHT_HEIGHT,
+                      Get16BPPColor(FROMRGB(0, 0, 0)));
 
   if (ubSelected == 1)
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gShippingSpeedAreas[2], gShippingSpeedAreas[3],
-                              gShippingSpeedAreas[2] + SHIPPING_SPEED_LIGHT_WIDTH,
-                              gShippingSpeedAreas[3] + SHIPPING_SPEED_LIGHT_HEIGHT,
-                              Get16BPPColor(FROMRGB(0, 255, 0)));
+    VSurfaceColorFill(vsFrameBuffer, gShippingSpeedAreas[2], gShippingSpeedAreas[3],
+                      gShippingSpeedAreas[2] + SHIPPING_SPEED_LIGHT_WIDTH,
+                      gShippingSpeedAreas[3] + SHIPPING_SPEED_LIGHT_HEIGHT,
+                      Get16BPPColor(FROMRGB(0, 255, 0)));
   else
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gShippingSpeedAreas[2], gShippingSpeedAreas[3],
-                              gShippingSpeedAreas[2] + SHIPPING_SPEED_LIGHT_WIDTH,
-                              gShippingSpeedAreas[3] + SHIPPING_SPEED_LIGHT_HEIGHT,
-                              Get16BPPColor(FROMRGB(0, 0, 0)));
+    VSurfaceColorFill(vsFrameBuffer, gShippingSpeedAreas[2], gShippingSpeedAreas[3],
+                      gShippingSpeedAreas[2] + SHIPPING_SPEED_LIGHT_WIDTH,
+                      gShippingSpeedAreas[3] + SHIPPING_SPEED_LIGHT_HEIGHT,
+                      Get16BPPColor(FROMRGB(0, 0, 0)));
 
   if (ubSelected == 2)
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gShippingSpeedAreas[4], gShippingSpeedAreas[5],
-                              gShippingSpeedAreas[4] + SHIPPING_SPEED_LIGHT_WIDTH,
-                              gShippingSpeedAreas[5] + SHIPPING_SPEED_LIGHT_HEIGHT,
-                              Get16BPPColor(FROMRGB(0, 255, 0)));
+    VSurfaceColorFill(vsFrameBuffer, gShippingSpeedAreas[4], gShippingSpeedAreas[5],
+                      gShippingSpeedAreas[4] + SHIPPING_SPEED_LIGHT_WIDTH,
+                      gShippingSpeedAreas[5] + SHIPPING_SPEED_LIGHT_HEIGHT,
+                      Get16BPPColor(FROMRGB(0, 255, 0)));
   else
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gShippingSpeedAreas[4], gShippingSpeedAreas[5],
-                              gShippingSpeedAreas[4] + SHIPPING_SPEED_LIGHT_WIDTH,
-                              gShippingSpeedAreas[5] + SHIPPING_SPEED_LIGHT_HEIGHT,
-                              Get16BPPColor(FROMRGB(0, 0, 0)));
+    VSurfaceColorFill(vsFrameBuffer, gShippingSpeedAreas[4], gShippingSpeedAreas[5],
+                      gShippingSpeedAreas[4] + SHIPPING_SPEED_LIGHT_WIDTH,
+                      gShippingSpeedAreas[5] + SHIPPING_SPEED_LIGHT_HEIGHT,
+                      Get16BPPColor(FROMRGB(0, 0, 0)));
 
   InvalidateRegion(585, 218, 594, 287);
   return (TRUE);
@@ -1291,10 +1291,10 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
         MSYS_RemoveRegion(&gSelectedScrollAreaDropDownRegion[i]);
 
       // display the name on the title bar
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, BOBBYR_SHIPPING_LOC_AREA_L_X,
-                                BOBBYR_SHIPPING_LOC_AREA_T_Y, BOBBYR_SHIPPING_LOC_AREA_L_X + 175,
-                                BOBBYR_SHIPPING_LOC_AREA_T_Y + BOBBYR_DROP_DOWN_HEIGHT,
-                                Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFrameBuffer, BOBBYR_SHIPPING_LOC_AREA_L_X, BOBBYR_SHIPPING_LOC_AREA_T_Y,
+                        BOBBYR_SHIPPING_LOC_AREA_L_X + 175,
+                        BOBBYR_SHIPPING_LOC_AREA_T_Y + BOBBYR_DROP_DOWN_HEIGHT,
+                        Get16BPPColor(FROMRGB(0, 0, 0)));
 
       if (gbSelectedCity == -1)
         DrawTextToScreen(BobbyROrderFormText[BOBBYR_SELECT_DEST],
@@ -1334,11 +1334,10 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
       struct VObject *hArrowHandle;
 
       // Display the background for the drop down window
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, BOBBYR_CITY_START_LOCATION_X,
-                                BOBBYR_CITY_START_LOCATION_Y,
-                                BOBBYR_CITY_START_LOCATION_X + BOBBYR_DROP_DOWN_WIDTH,
-                                BOBBYR_CITY_START_LOCATION_Y + BOBBYR_SCROLL_AREA_HEIGHT,
-                                Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFrameBuffer, BOBBYR_CITY_START_LOCATION_X, BOBBYR_CITY_START_LOCATION_Y,
+                        BOBBYR_CITY_START_LOCATION_X + BOBBYR_DROP_DOWN_WIDTH,
+                        BOBBYR_CITY_START_LOCATION_Y + BOBBYR_SCROLL_AREA_HEIGHT,
+                        Get16BPPColor(FROMRGB(0, 0, 0)));
 
       //
       // Place the border around the background
@@ -1388,10 +1387,10 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
       DrawSelectedCity(gbSelectedCity);
 
       // display the scroll bars regions
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, BOBBYR_SCROLL_AREA_X, BOBBYR_SCROLL_AREA_Y,
-                                BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH,
-                                BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT,
-                                Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFrameBuffer, BOBBYR_SCROLL_AREA_X, BOBBYR_SCROLL_AREA_Y,
+                        BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH,
+                        BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT,
+                        Get16BPPColor(FROMRGB(0, 0, 0)));
 
       // blt right bar of scroll area
       usPosX = 0;
@@ -1509,9 +1508,9 @@ void DrawSelectedCity(UINT8 ubCityNumber) {
     usPosY = (usFontHeight + 2) * (gubCityAtTopOfList) + BOBBYR_CITY_START_LOCATION_Y;
 
   // display the name in the list
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, BOBBYR_CITY_START_LOCATION_X + 4, usPosY + 4,
-                            BOBBYR_CITY_START_LOCATION_X + BOBBYR_DROP_DOWN_WIDTH - 4,
-                            usPosY + usFontHeight + 6, Get16BPPColor(FROMRGB(200, 169, 87)));
+  VSurfaceColorFill(vsFrameBuffer, BOBBYR_CITY_START_LOCATION_X + 4, usPosY + 4,
+                    BOBBYR_CITY_START_LOCATION_X + BOBBYR_DROP_DOWN_WIDTH - 4,
+                    usPosY + usFontHeight + 6, Get16BPPColor(FROMRGB(200, 169, 87)));
 
   SetFontShadow(NO_SHADOW);
   if (ubCityNumber == 255)
@@ -1541,10 +1540,10 @@ void DisplayShippingLocationCity() {
   UINT16 usPosY;
 
   // display the name on the title bar
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, BOBBYR_SHIPPING_LOC_AREA_L_X,
-                            BOBBYR_SHIPPING_LOC_AREA_T_Y, BOBBYR_SHIPPING_LOC_AREA_L_X + 175,
-                            BOBBYR_SHIPPING_LOC_AREA_T_Y + BOBBYR_DROP_DOWN_HEIGHT,
-                            Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFrameBuffer, BOBBYR_SHIPPING_LOC_AREA_L_X, BOBBYR_SHIPPING_LOC_AREA_T_Y,
+                    BOBBYR_SHIPPING_LOC_AREA_L_X + 175,
+                    BOBBYR_SHIPPING_LOC_AREA_T_Y + BOBBYR_DROP_DOWN_HEIGHT,
+                    Get16BPPColor(FROMRGB(0, 0, 0)));
 
   // if there is no city selected
   if (gbSelectedCity == -1)
@@ -1792,9 +1791,8 @@ void DrawGoldRectangle(INT8 bCityNum) {
     usPosY = BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT - BOBBYR_SCROLL_ARROW_HEIGHT -
              usHeight - 5;
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, BOBBYR_SCROLL_AREA_X, usPosY,
-                            BOBBYR_SCROLL_AREA_X + usWidth, usPosY + usHeight,
-                            Get16BPPColor(FROMRGB(186, 165, 68)));
+  VSurfaceColorFill(vsFrameBuffer, BOBBYR_SCROLL_AREA_X, usPosY, BOBBYR_SCROLL_AREA_X + usWidth,
+                    usPosY + usHeight, Get16BPPColor(FROMRGB(186, 165, 68)));
 
   // display the line
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);

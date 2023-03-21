@@ -2154,11 +2154,6 @@ void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
   ShadowVideoSurfaceRect(FRAME_BUFFER, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
   ShadowVideoSurfaceRect(FRAME_BUFFER, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
 
-  // fillt he video surface areas
-  // ColorFillVideoSurfaceArea(FRAME_BUFFER, iX, iY, (iX + iW), (iY + iH), 0);
-  // ColorFillVideoSurfaceArea(FRAME_BUFFER, (iX + 1), (iY + 1), (iX + iW - 1), (iY + iH - 1),
-  // usFillColor);
-
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BEIGE);
 

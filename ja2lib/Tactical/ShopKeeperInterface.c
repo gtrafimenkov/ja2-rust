@@ -4689,10 +4689,10 @@ void DisplaySkiAtmTransferString() {
   UINT32 uiMoney;
 
   // Erase the background behind the string
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, SKI_TRANSFER_STRING_X, SKI_TRANSFER_STRING_Y,
-                            SKI_TRANSFER_STRING_X + SKI_TRANSFER_STRING_WIDTH,
-                            SKI_TRANSFER_STRING_Y + SKI_TRANSFER_STRING_HEIGHT,
-                            Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFrameBuffer, SKI_TRANSFER_STRING_X, SKI_TRANSFER_STRING_Y,
+                    SKI_TRANSFER_STRING_X + SKI_TRANSFER_STRING_WIDTH,
+                    SKI_TRANSFER_STRING_Y + SKI_TRANSFER_STRING_HEIGHT,
+                    Get16BPPColor(FROMRGB(0, 0, 0)));
 
   wcscpy(zSkiAtmTransferString, gzSkiAtmTransferString);
   InsertCommasForDollarFigure(zSkiAtmTransferString);

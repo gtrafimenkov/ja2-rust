@@ -530,48 +530,36 @@ BOOLEAN ImageFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDes
   return (TRUE);
 }
 
-BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDestY1, INT32 iDestX2,
-                                  INT32 iDestY2, UINT16 Color16BPP) {
-  struct BltOpts BltFx;
-  struct VSurface *hDestVSurface;
+BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP) {
   SGPRect Clip;
+  GetClippingRect(&Clip);
+  if (x1 < Clip.iLeft) x1 = Clip.iLeft;
+  if (x1 > Clip.iRight) return (FALSE);
+  if (x2 > Clip.iRight) x2 = Clip.iRight;
+  if (x2 < Clip.iLeft) return (FALSE);
+  if (y1 < Clip.iTop) y1 = Clip.iTop;
+  if (y1 > Clip.iBottom) return (FALSE);
+  if (y2 > Clip.iBottom) y2 = Clip.iBottom;
+  if (y2 < Clip.iTop) return (FALSE);
+  if ((x2 <= x1) || (y2 <= y1)) return (FALSE);
 
-  if (!GetVideoSurface(&hDestVSurface, destSurface)) {
+  struct BltOpts opts;
+  opts.ColorFill = Color16BPP;
+  opts.SrcRect.iLeft = opts.FillRect.iLeft = x1;
+  opts.SrcRect.iTop = opts.FillRect.iTop = y1;
+  opts.SrcRect.iRight = opts.FillRect.iRight = x2;
+  opts.SrcRect.iBottom = opts.FillRect.iBottom = y2;
+
+  return FillSurfaceRect(dest, &opts);
+}
+
+BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, i32 x1, i32 y1, i32 x2, i32 y2,
+                                  u16 Color16BPP) {
+  struct VSurface *dest;
+  if (!GetVideoSurface(&dest, destSurface)) {
     return FALSE;
   }
-
-  BltFx.ColorFill = Color16BPP;
-
-  //
-  // Clip fill region coords
-  //
-
-  GetClippingRect(&Clip);
-
-  if (iDestX1 < Clip.iLeft) iDestX1 = Clip.iLeft;
-
-  if (iDestX1 > Clip.iRight) return (FALSE);
-
-  if (iDestX2 > Clip.iRight) iDestX2 = Clip.iRight;
-
-  if (iDestX2 < Clip.iLeft) return (FALSE);
-
-  if (iDestY1 < Clip.iTop) iDestY1 = Clip.iTop;
-
-  if (iDestY1 > Clip.iBottom) return (FALSE);
-
-  if (iDestY2 > Clip.iBottom) iDestY2 = Clip.iBottom;
-
-  if (iDestY2 < Clip.iTop) return (FALSE);
-
-  if ((iDestX2 <= iDestX1) || (iDestY2 <= iDestY1)) return (FALSE);
-
-  BltFx.SrcRect.iLeft = BltFx.FillRect.iLeft = iDestX1;
-  BltFx.SrcRect.iTop = BltFx.FillRect.iTop = iDestY1;
-  BltFx.SrcRect.iRight = BltFx.FillRect.iRight = iDestX2;
-  BltFx.SrcRect.iBottom = BltFx.FillRect.iBottom = iDestY2;
-
-  return (FillSurfaceRect(hDestVSurface, &BltFx));
+  return VSurfaceColorFill(dest, x1, y1, x2, y2, Color16BPP);
 }
 
 static uint32_t addVSurfaceToList(struct VSurface *vs) {

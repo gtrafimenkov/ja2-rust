@@ -1835,9 +1835,9 @@ void DisplaySelectedNPC() {
     if (usPosY > 424) usPosY = usPosY;
 
     // display the name in the list
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gpActiveListBox->usScrollPosX, usPosY - 1,
-                              gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
-                              usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
+    VSurfaceColorFill(vsFrameBuffer, gpActiveListBox->usScrollPosX, usPosY - 1,
+                      gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
+                      usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
 
     SetFontShadow(NO_SHADOW);
 
@@ -1915,9 +1915,9 @@ void DisplaySelectedItem() {
              gpActiveListBox->usScrollPosY + 2;
 
     // display the name in the list
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gpActiveListBox->usScrollPosX, usPosY - 1,
-                              gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
-                              usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
+    VSurfaceColorFill(vsFrameBuffer, gpActiveListBox->usScrollPosX, usPosY - 1,
+                      gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
+                      usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
 
     SetFontShadow(NO_SHADOW);
 
@@ -2033,8 +2033,8 @@ void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, UINT16 usStartPosX, UINT
   gpActiveListBox->usScrollBoxY = usPosY;
   gpActiveListBox->usScrollBoxEndY = usPosY + usHeight;
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY, usPosX + usWidth - 1, usPosY + usHeight,
-                            Get16BPPColor(FROMRGB(130, 132, 128)));
+  VSurfaceColorFill(vsFrameBuffer, usPosX, usPosY, usPosX + usWidth - 1, usPosY + usHeight,
+                    Get16BPPColor(FROMRGB(130, 132, 128)));
 
   // display the line
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
@@ -2776,11 +2776,10 @@ void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
 
       if (pSoldier) {
         // color the background of the popup
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, QUEST_DBS_NPC_INV_POPUP_X,
-                                  QUEST_DBS_NPC_INV_POPUP_Y,
-                                  QUEST_DBS_NPC_INV_POPUP_X + QUEST_DBS_NPC_INV_POPUP_WIDTH,
-                                  QUEST_DBS_NPC_INV_POPUP_Y + QUEST_DBS_NPC_INV_POPUP_HEIGHT,
-                                  Get16BPPColor(FROMRGB(45, 59, 74)));
+        VSurfaceColorFill(vsFrameBuffer, QUEST_DBS_NPC_INV_POPUP_X, QUEST_DBS_NPC_INV_POPUP_Y,
+                          QUEST_DBS_NPC_INV_POPUP_X + QUEST_DBS_NPC_INV_POPUP_WIDTH,
+                          QUEST_DBS_NPC_INV_POPUP_Y + QUEST_DBS_NPC_INV_POPUP_HEIGHT,
+                          Get16BPPColor(FROMRGB(45, 59, 74)));
 
         // Dispaly the NPC inve title
         DrawTextToScreen(QuestDebugText[QUEST_DBS_NPC_INVENTORY], QUEST_DBS_NPC_INV_POPUP_X,
@@ -3426,10 +3425,10 @@ void DisplayQDSCurrentlyQuoteNum() {
   UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_TEXT_ENTRY) + 2;
 
   // Display the box frame
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, QDS_CURRENT_QUOTE_NUM_BOX_X, QDS_CURRENT_QUOTE_NUM_BOX_Y,
-                            QDS_CURRENT_QUOTE_NUM_BOX_X + QDS_CURRENT_QUOTE_NUM_BOX_WIDTH,
-                            QDS_CURRENT_QUOTE_NUM_BOX_Y + QDS_CURRENT_QUOTE_NUM_BOX_HEIGHT,
-                            Get16BPPColor(FROMRGB(32, 41, 53)));
+  VSurfaceColorFill(vsFrameBuffer, QDS_CURRENT_QUOTE_NUM_BOX_X, QDS_CURRENT_QUOTE_NUM_BOX_Y,
+                    QDS_CURRENT_QUOTE_NUM_BOX_X + QDS_CURRENT_QUOTE_NUM_BOX_WIDTH,
+                    QDS_CURRENT_QUOTE_NUM_BOX_Y + QDS_CURRENT_QUOTE_NUM_BOX_HEIGHT,
+                    Get16BPPColor(FROMRGB(32, 41, 53)));
 
   swprintf(zTemp, ARR_SIZE(zTemp), L"'%s' is currently saying quote #%d",
            gMercProfiles[gTalkingMercSoldier->ubProfile].zNickname, giSelectedMercCurrentQuote - 1);

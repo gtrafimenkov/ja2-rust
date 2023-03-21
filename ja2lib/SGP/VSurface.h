@@ -93,12 +93,13 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
 BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
                         UINT32 fBltFlags, struct BltOpts *pBltFx);
 
-BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDestY1, INT32 iDestX2,
-                                  INT32 iDestY2, UINT16 Color16BPP);
+BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP);
 
-BOOLEAN ImageFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDestY1, INT32 iDestX2,
-                                  INT32 iDestY2, struct VObject *BkgrndImg, UINT16 Index, INT16 Ox,
-                                  INT16 Oy);
+BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 x1, INT32 y1, INT32 x2, INT32 y2,
+                                  u16 Color16BPP);
+
+BOOLEAN ImageFillVideoSurfaceArea(VSurfID destSurface, INT32 x1, INT32 y1, INT32 x2, INT32 y2,
+                                  struct VObject *BkgrndImg, UINT16 Index, INT16 Ox, INT16 Oy);
 
 // Sets transparency
 BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor);

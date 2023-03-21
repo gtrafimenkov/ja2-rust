@@ -787,10 +787,6 @@ INT32 EnterLaptop() {
   // set the fact we are currently in laptop, for rendering purposes
   fCurrentlyInLaptop = TRUE;
 
-  // clear guiSAVEBUFFER
-  // ColorFillVideoSurfaceArea(guiSAVEBUFFER,	0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)) );
-  // disable characters panel buttons
-
   // reset redraw flag and redraw new mail
   fReDrawScreenFlag = FALSE;
   fReDrawNewMailFlag = TRUE;
