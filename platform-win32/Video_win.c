@@ -58,8 +58,7 @@ void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfa
                      LPDIRECTDRAWSURFACE *ppNewSurface1, LPDIRECTDRAWSURFACE2 *ppNewSurface2);
 void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurfaceDesc);
 void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *ppOldSurface2);
-void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACEDESC pSurfaceDesc,
-                   UINT32 uiFlags, HANDLE hEvent);
+static struct BufferLockInfo DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface);
 void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
 bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
@@ -2299,10 +2298,7 @@ BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) {
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
   if (vs) {
-    DDSURFACEDESC SurfaceDescription;
-    DDLockSurface((LPDIRECTDRAWSURFACE2)vs->pSurfaceData, NULL, &SurfaceDescription, 0, NULL);
-    res.pitch = SurfaceDescription.lPitch;
-    res.dest = (uint8_t *)SurfaceDescription.lpSurface;
+    res = DDLockSurface((LPDIRECTDRAWSURFACE2)vs->pSurfaceData);
   }
   return res;
 }
@@ -2804,20 +2800,18 @@ void SmkShutdownVideo(void);
 BOOLEAN SmkPollFlics(void) {
   UINT32 uiCount;
   BOOLEAN fFlicStatus = FALSE;
-  DDSURFACEDESC SurfaceDescription;
 
   for (uiCount = 0; uiCount < SMK_NUM_FLICS; uiCount++) {
     if (SmkList[uiCount].uiFlags & SMK_FLIC_PLAYING) {
       fFlicStatus = TRUE;
       if (!fSuspendFlics) {
         if (!SmackWait(SmkList[uiCount].SmackHandle)) {
-          DDLockSurface(SmkList[uiCount].lpDDS, NULL, &SurfaceDescription, 0, NULL);
+          struct BufferLockInfo lock = DDLockSurface(SmkList[uiCount].lpDDS);
           SmackToBuffer(SmkList[uiCount].SmackHandle, SmkList[uiCount].uiLeft,
-                        SmkList[uiCount].uiTop, SurfaceDescription.lPitch,
-                        SmkList[uiCount].SmackHandle->Height, SurfaceDescription.lpSurface,
-                        guiSmackPixelFormat);
+                        SmkList[uiCount].uiTop, lock.pitch, SmkList[uiCount].SmackHandle->Height,
+                        lock.dest, guiSmackPixelFormat);
           SmackDoFrame(SmkList[uiCount].SmackHandle);
-          DDUnlockSurface(SmkList[uiCount].lpDDS, SurfaceDescription.lpSurface);
+          DDUnlockSurface(SmkList[uiCount].lpDDS, lock.dest);
           // temp til I figure out what to do with it
           // InvalidateRegion(0,0, 640, 480, FALSE);
 
@@ -3221,23 +3215,24 @@ void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfa
   IDirectDrawSurface_QueryInterface(*ppNewSurface1, &tmpID, (LPVOID *)ppNewSurface2);
 }
 
-// Lock, unlock calls
-void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACEDESC pSurfaceDesc,
-                   UINT32 uiFlags, HANDLE hEvent) {
+static struct BufferLockInfo DDLockSurface(LPDIRECTDRAWSURFACE2 src) {
+  struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
+  if (!src) {
+    return res;
+  }
+
+  DDSURFACEDESC descr;
+  ZEROMEM(descr);
+  descr.dwSize = sizeof(descr);
+
   HRESULT ReturnCode;
-
-  Assert(pSurface != NULL);
-  Assert(pSurfaceDesc != NULL);
-
-  ZEROMEM(*pSurfaceDesc);
-  pSurfaceDesc->dwSize = sizeof(DDSURFACEDESC);
-
   do {
-    ReturnCode = IDirectDrawSurface2_Lock(pSurface, pDestRect, pSurfaceDesc, uiFlags, hEvent);
-
+    ReturnCode = IDirectDrawSurface2_Lock(src, NULL, &descr, 0, 0);
   } while (ReturnCode == DDERR_WASSTILLDRAWING);
 
-  ReturnCode;
+  res.pitch = descr.lPitch;
+  res.dest = (uint8_t *)descr.lpSurface;
+  return res;
 }
 
 void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData) {
