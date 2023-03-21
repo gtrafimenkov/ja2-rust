@@ -135,29 +135,31 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   return (TRUE);
 }
 
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex) {
+BOOLEAN DeleteVideoSurfaceFromIndex(VSurfID uiIndex) {
   VSURFACE_NODE *curr;
 
   curr = gpVSurfaceHead;
   while (curr) {
-    if (curr->uiIndex == uiIndex) {  // Found the node, so detach it and delete it.
-
+    if (curr->uiIndex == uiIndex) {
+      // Found the node, so detach it and delete it.
       // Deallocate the memory for the video surface
       DeleteVideoSurface(curr->hVSurface);
 
-      if (curr ==
-          gpVSurfaceHead) {  // Advance the head, because we are going to remove the head node.
+      if (curr == gpVSurfaceHead) {
+        // Advance the head, because we are going to remove the head node.
         gpVSurfaceHead = gpVSurfaceHead->next;
       }
-      if (curr ==
-          gpVSurfaceTail) {  // Back up the tail, because we are going to remove the tail node.
+      if (curr == gpVSurfaceTail) {
+        // Back up the tail, because we are going to remove the tail node.
         gpVSurfaceTail = gpVSurfaceTail->prev;
       }
       // Detach the node from the vsurface list
-      if (curr->next) {  // Make the prev node point to the next
+      if (curr->next) {
+        // Make the prev node point to the next
         curr->next->prev = curr->prev;
       }
-      if (curr->prev) {  // Make the next node point to the prev
+      if (curr->prev) {
+        // Make the next node point to the prev
         curr->prev->next = curr->next;
       }
       // The node is now detached.  Now deallocate it.
@@ -596,7 +598,7 @@ BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDes
   return (FillSurfaceRect(hDestVSurface, &BltFx));
 }
 
-BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) {
+BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
   struct VSurface *hVSurface;
 
   // Assertions
@@ -639,7 +641,7 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, UINT32 *puiIndex) {
   return TRUE;
 }
 
-BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *puiPitch) {
+BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
   VSURFACE_NODE *curr;
 
   //
@@ -683,7 +685,7 @@ BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *puiPitch) {
   return LockVideoSurfaceBuffer(curr->hVSurface, puiPitch);
 }
 
-void UnLockVideoSurface(UINT32 uiVSurface) {
+void UnLockVideoSurface(VSurfID uiVSurface) {
   VSURFACE_NODE *curr;
 
   //
@@ -747,7 +749,7 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   return (TRUE);
 }
 
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex) {
+BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
   VSURFACE_NODE *curr;
 
   if (uiIndex == PRIMARY_SURFACE) {

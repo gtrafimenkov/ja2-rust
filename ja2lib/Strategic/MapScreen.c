@@ -8432,8 +8432,6 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
   if (!(AddVideoSurface(&vs_desc, &guiBIGMAP))) {
     return FALSE;
   }
-  // strcpy(vs_desc.ImageFile, "INTERFACE\\popupbackground.pcx");
-  // if (!(AddVideoSurface(&vs_desc, &guiPOPUPTEX))) { return FALSE; }
 
   if (!AddVObjectFromFile("INTERFACE\\mapcursr.sti", &guiMAPCURSORS)) {
     return FALSE;

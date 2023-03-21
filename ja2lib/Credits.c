@@ -49,7 +49,7 @@ typedef struct _CRDT_NODE {
 
   UINT32 uiLastTime;  // The last time the node was udated
 
-  UINT32 uiVideoSurfaceImage;
+  VSurfID uiVideoSurfaceImage;
 
   struct _CRDT_NODE *pPrev;
   struct _CRDT_NODE *pNext;
@@ -443,10 +443,7 @@ BOOLEAN EnterCreditsScreen() {
 BOOLEAN ExitCreditScreen() {
   UINT32 uiCnt;
 
-  // Blit the background image
-  //	DeleteVideoSurfaceFromIndex( guiCreditBackGroundImage );
   DeleteVideoObjectFromIndex(guiCreditBackGroundImage);
-
   DeleteVideoObjectFromIndex(guiCreditFaces);
 
   // ShutDown Credit link list
@@ -455,12 +452,6 @@ BOOLEAN ExitCreditScreen() {
   for (uiCnt = 0; uiCnt < NUM_PEOPLE_IN_CREDITS; uiCnt++) {
     MSYS_RemoveRegion(&gCrdtMouseRegions[uiCnt]);
   }
-
-  /*
-          //close the text file
-          File_Close( ghFile );
-          ghFile = 0;
-  */
 
   return (TRUE);
 }

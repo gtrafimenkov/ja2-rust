@@ -96,13 +96,13 @@ BOOLEAN ShutdownVideoSurfaceManager();
 BOOLEAN RestoreVideoSurfaces();
 
 // Creates and adds a video Surface to list
-BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, UINT32 *uiIndex);
+BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
 
 // Returns a HVSurface for the specified index
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex);
+BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
 
-BYTE *LockVideoSurface(UINT32 uiVSurface, UINT32 *uiPitch);
-void UnLockVideoSurface(UINT32 uiVSurface);
+BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *uiPitch);
+void UnLockVideoSurface(VSurfID uiVSurface);
 
 // Blits a video Surface to another video Surface
 BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
@@ -142,7 +142,7 @@ BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntr
 
 // Deletes all data, including palettes, regions, DD Surfaces
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface);
-BOOLEAN DeleteVideoSurfaceFromIndex(UINT32 uiIndex);
+BOOLEAN DeleteVideoSurfaceFromIndex(VSurfID uiIndex);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
