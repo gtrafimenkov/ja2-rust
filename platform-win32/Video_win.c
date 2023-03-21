@@ -61,7 +61,6 @@ void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfa
 void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurfaceDesc);
 void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *ppOldSurface2);
 static struct BufferLockInfo DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface);
-void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData);
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface);
 bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
                       LPRECT pSrcRect);
@@ -2202,14 +2201,14 @@ void VSurfaceUnlock(struct VSurface *vs) {
   }
 }
 
-void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {
-  Assert(hVSurface != NULL);
-
-  DDUnlockSurface((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, NULL);
+void UnLockVideoSurfaceBuffer(struct VSurface *vs) {
+  if (vs) {
+    VSurfaceUnlock(vs);
+  }
 
   // Copy contents if surface is in video
-  if ((hVSurface->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
-    UpdateBackupSurface(hVSurface);
+  if ((vs->fFlags & VSURFACE_VIDEO_MEM_USAGE)) {
+    UpdateBackupSurface(vs);
   }
 }
 
@@ -2710,9 +2709,7 @@ BOOLEAN SmkPollFlics(void) {
                         SmkList[uiCount].uiTop, lock.pitch, SmkList[uiCount].SmackHandle->Height,
                         lock.dest, guiSmackPixelFormat);
           SmackDoFrame(SmkList[uiCount].SmackHandle);
-          DDUnlockSurface(SmkList[uiCount].lpDDS, lock.dest);
-          // temp til I figure out what to do with it
-          // InvalidateRegion(0,0, 640, 480, FALSE);
+          IDirectDrawSurface2_Unlock(SmkList[uiCount].lpDDS, lock.dest);
 
           // Check to see if the flic is done the last frame
           if (SmkList[uiCount].SmackHandle->FrameNum ==
@@ -3136,12 +3133,6 @@ static struct BufferLockInfo DDLockSurface(LPDIRECTDRAWSURFACE2 src) {
   res.pitch = descr.lPitch;
   res.dest = (uint8_t *)descr.lpSurface;
   return res;
-}
-
-void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData) {
-  Assert(pSurface != NULL);
-
-  IDirectDrawSurface2_Unlock(pSurface, pSurfaceData);
 }
 
 void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurfaceDesc) {
