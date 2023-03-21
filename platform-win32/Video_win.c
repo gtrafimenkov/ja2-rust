@@ -69,13 +69,8 @@ void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper);
 void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags);
 
 // local functions
-char *DirectXErrorDescription(INT32 iDXReturn);
-void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename);
 void DirectXAssert(BOOLEAN fValue, INT32 nLine, char *szFilename);
 void DirectXZeroMem(void *pMemory, int nSize);
-
-#undef ATTEMPT
-#define ATTEMPT(x) DirectXAttempt((x), __LINE__, __FILE__)
 
 #undef ZEROMEM
 #define ZEROMEM(x) DirectXZeroMem((void *)&(x), sizeof(x))
@@ -273,7 +268,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
 
   ReturnCode = DirectDrawCreate(NULL, &_gpDirectDrawObject, NULL);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -281,7 +275,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDraw_QueryInterface(_gpDirectDrawObject, &tmpID, (LPVOID *)&gpDirectDrawObject);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -295,7 +288,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
                                                 DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
 #endif
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -306,7 +298,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDraw2_SetDisplayMode(gpDirectDrawObject, SCREEN_WIDTH, SCREEN_HEIGHT, 16, 0, 0);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 #endif
@@ -329,7 +320,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpPrimarySurface, NULL);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -337,7 +327,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDrawSurface_QueryInterface(_gpPrimarySurface, &tmpID, (LPVOID *)&gpPrimarySurface);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -351,14 +340,12 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpBackBuffer, NULL);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
   tmpID = IID_IDirectDrawSurface2;
   ReturnCode = IDirectDrawSurface_QueryInterface(_gpBackBuffer, &tmpID, (LPVOID *)&gpBackBuffer);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -371,7 +358,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpPrimarySurface, NULL);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -379,7 +365,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDrawSurface_QueryInterface(_gpPrimarySurface, &tmpID, (LPVOID *)&gpPrimarySurface);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -387,7 +372,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDrawSurface2_GetAttachedSurface(gpPrimarySurface, &SurfaceCaps, &gpBackBuffer);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -406,14 +390,12 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode =
       IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_gpFrameBuffer, NULL);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
   tmpID = IID_IDirectDrawSurface2;
   ReturnCode = IDirectDrawSurface_QueryInterface(_gpFrameBuffer, &tmpID, (LPVOID *)&gpFrameBuffer);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -441,14 +423,12 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   if (ReturnCode != DD_OK) {
     DebugMsg(TOPIC_VIDEO, DBG_ERROR,
              String("Failed to create MouseCursor witd %ld", ReturnCode & 0x0f));
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
   tmpID = IID_IDirectDrawSurface2;
   ReturnCode = IDirectDrawSurface_QueryInterface(_gpMouseCursor, &tmpID, (LPVOID *)&gpMouseCursor);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -456,7 +436,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ColorKey.dwColorSpaceHighValue = 0;
   ReturnCode = IDirectDrawSurface2_SetColorKey(gpMouseCursor, DDCKEY_SRCBLT, &ColorKey);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -474,7 +453,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
                                           &_gpMouseCursorOriginal, NULL);
   if (ReturnCode != DD_OK) {
     DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to create MouseCursorOriginal");
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -482,7 +460,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ReturnCode = IDirectDrawSurface_QueryInterface(_gpMouseCursorOriginal, &tmpID,
                                                  (LPVOID *)&gpMouseCursorOriginal);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -513,7 +490,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
                                             &(gMouseCursorBackground[uiIndex]._pSurface), NULL);
     if (ReturnCode != DD_OK) {
       DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to create MouseCursorBackground");
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return FALSE;
     }
 
@@ -522,7 +498,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
         (IDirectDrawSurface *)gMouseCursorBackground[uiIndex]._pSurface, &tmpID,
         (LPVOID *)&(gMouseCursorBackground[uiIndex].pSurface));
     if (ReturnCode != DD_OK) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return FALSE;
     }
   }
@@ -606,13 +581,11 @@ BOOLEAN RestoreVideoManager(void) {
 
     ReturnCode = IDirectDrawSurface2_Restore(gpPrimarySurface);
     if (ReturnCode != DD_OK) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return FALSE;
     }
 
     ReturnCode = IDirectDrawSurface2_Restore(gpBackBuffer);
     if (ReturnCode != DD_OK) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return FALSE;
     }
 
@@ -622,13 +595,11 @@ BOOLEAN RestoreVideoManager(void) {
 
     ReturnCode = IDirectDrawSurface2_Restore(gMouseCursorBackground[0].pSurface);
     if (ReturnCode != DD_OK) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return FALSE;
     }
 
     ReturnCode = IDirectDrawSurface2_Restore(gpMouseCursor);
     if (ReturnCode != DD_OK) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return FALSE;
     } else {
       guiMouseBufferState = BUFFER_DIRTY;
@@ -695,8 +666,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
             IDirectDrawSurface2_BltFast(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y,
                                         pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -725,8 +694,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
         ReturnCode = IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource,
                                                  (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -758,8 +725,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
             IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
                                         pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -789,8 +754,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
         ReturnCode = IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource,
                                                  (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -822,8 +785,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
                                                  gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
                                                  pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -861,8 +822,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
             IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y + sScrollYIncrement,
                                         pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -902,8 +861,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
             IDirectDrawSurface2_BltFast(pDest, sScrollXIncrement, gsVIEWPORT_WINDOW_START_Y,
                                         pSource, (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -941,8 +898,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
         ReturnCode = IDirectDrawSurface2_BltFast(pDest, 0, gsVIEWPORT_WINDOW_START_Y, pSource,
                                                  (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
           if (ReturnCode == DDERR_SURFACELOST) {
             break;
           }
@@ -982,7 +937,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
             pDest, StripRegions[cnt].left, StripRegions[cnt].top, gpFrameBuffer,
             (LPRECT) & (StripRegions[cnt]), DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
         }
 
         if (ReturnCode == DDERR_SURFACELOST) {
@@ -1120,8 +1074,6 @@ void RefreshScreen() {
           gMouseCursorBackground[CURRENT_MOUSE_DATA].pSurface, (LPRECT)&Region,
           DDBLTFAST_NOCOLORKEY);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
         if (ReturnCode == DDERR_SURFACELOST) {
           goto ENDOFLOOP;
         }
@@ -1155,8 +1107,6 @@ void RefreshScreen() {
           ReturnCode = IDirectDrawSurface2_BltFast(gpBackBuffer, 0, 0, gpFrameBuffer,
                                                    (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
           if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-            DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
             if (ReturnCode == DDERR_SURFACELOST) {
               goto ENDOFLOOP;
             }
@@ -1175,7 +1125,6 @@ void RefreshScreen() {
                 IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
                                             (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
             if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-              DirectXAttempt(ReturnCode, __LINE__, __FILE__);
             }
 
             if (ReturnCode == DDERR_SURFACELOST) {
@@ -1204,7 +1153,6 @@ void RefreshScreen() {
                 IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpFrameBuffer,
                                             (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
             if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-              DirectXAttempt(ReturnCode, __LINE__, __FILE__);
             }
 
             if (ReturnCode == DDERR_SURFACELOST) {
@@ -1268,14 +1216,12 @@ void RefreshScreen() {
     ReturnCode =
         IDirectDraw2_CreateSurface(gpDirectDrawObject, &SurfaceDescription, &_pTmpBuffer, NULL);
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     }
 
     IID tmpID = IID_IDirectDrawSurface2;
     ReturnCode = IDirectDrawSurface_QueryInterface((IDirectDrawSurface *)_pTmpBuffer, &tmpID,
                                                    (LPVOID *)&pTmpBuffer);
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     }
 
     //
@@ -1291,7 +1237,6 @@ void RefreshScreen() {
       ReturnCode = IDirectDrawSurface2_BltFast(pTmpBuffer, 0, 0, gpPrimarySurface, &Region,
                                                DDBLTFAST_NOCOLORKEY);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       }
     } while (ReturnCode != DD_OK);
 
@@ -1312,7 +1257,6 @@ void RefreshScreen() {
       SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
       ReturnCode = IDirectDrawSurface2_Lock(pTmpBuffer, NULL, &SurfaceDescription, 0, NULL);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       }
 
       //
@@ -1358,7 +1302,6 @@ void RefreshScreen() {
       SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
       ReturnCode = IDirectDrawSurface2_Unlock(pTmpBuffer, &SurfaceDescription);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       }
     }
 
@@ -1392,7 +1335,6 @@ void RefreshScreen() {
       ReturnCode = IDirectDrawSurface2_BltFast(gpMouseCursor, 0, 0, gpMouseCursorOriginal,
                                                (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       }
     } while (ReturnCode != DD_OK);
 
@@ -1478,7 +1420,6 @@ void RefreshScreen() {
                                           gMouseCursorBackground[CURRENT_MOUSE_DATA].usTop,
                                           gpBackBuffer, &Region, DDBLTFAST_NOCOLORKEY);
           if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-            DirectXAttempt(ReturnCode, __LINE__, __FILE__);
           }
 
           if (ReturnCode == DDERR_SURFACELOST) {
@@ -1501,7 +1442,6 @@ void RefreshScreen() {
               gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpMouseCursor, &Region,
               DDBLTFAST_SRCCOLORKEY);
           if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-            DirectXAttempt(ReturnCode, __LINE__, __FILE__);
           }
 
           if (ReturnCode == DDERR_SURFACELOST) {
@@ -1544,8 +1484,6 @@ void RefreshScreen() {
                                         DDBLT_WAIT, NULL);
 
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
       if (ReturnCode == DDERR_SURFACELOST) {
         goto ENDOFLOOP;
       }
@@ -1559,8 +1497,6 @@ void RefreshScreen() {
     ReturnCode = IDirectDrawSurface_Flip(_gpPrimarySurface, NULL, DDFLIP_WAIT);
     //    if ((ReturnCode != DD_OK)&&(ReturnCode != DDERR_WASSTILLDRAWING))
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
       if (ReturnCode == DDERR_SURFACELOST) {
         goto ENDOFLOOP;
       }
@@ -1583,8 +1519,6 @@ void RefreshScreen() {
       ReturnCode = IDirectDrawSurface2_BltFast(gpBackBuffer, 0, 0, gpPrimarySurface, &Region,
                                                DDBLTFAST_NOCOLORKEY);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
         if (ReturnCode == DDERR_SURFACELOST) {
           goto ENDOFLOOP;
         }
@@ -1613,8 +1547,6 @@ void RefreshScreen() {
           gMouseCursorBackground[PREVIOUS_MOUSE_DATA].usMouseYPos, gpPrimarySurface,
           (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
       if (ReturnCode != DD_OK && ReturnCode != DDERR_WASSTILLDRAWING) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
         if (ReturnCode == DDERR_SURFACELOST) {
           goto ENDOFLOOP;
         }
@@ -1632,8 +1564,6 @@ void RefreshScreen() {
           gMouseCursorBackground[CURRENT_MOUSE_DATA].usMouseYPos, gpPrimarySurface, (LPRECT)&Region,
           DDBLTFAST_NOCOLORKEY);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
         if (ReturnCode == DDERR_SURFACELOST) {
           goto ENDOFLOOP;
         }
@@ -1654,8 +1584,6 @@ void RefreshScreen() {
       ReturnCode = IDirectDrawSurface2_BltFast(gpBackBuffer, 0, 0, gpPrimarySurface, &Region,
                                                DDBLTFAST_NOCOLORKEY);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
-
         if (ReturnCode == DDERR_SURFACELOST) {
           goto ENDOFLOOP;
         }
@@ -1677,7 +1605,6 @@ void RefreshScreen() {
             IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpPrimarySurface,
                                         (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
         if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-          DirectXAttempt(ReturnCode, __LINE__, __FILE__);
         }
 
         if (ReturnCode == DDERR_SURFACELOST) {
@@ -1706,7 +1633,6 @@ void RefreshScreen() {
           IDirectDrawSurface2_BltFast(gpBackBuffer, Region.left, Region.top, gpPrimarySurface,
                                       (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
       if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-        DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       }
 
       if (ReturnCode == DDERR_SURFACELOST) {
@@ -1763,7 +1689,6 @@ PTR LockPrimarySurface(UINT32 *uiPitch) {
     ReturnCode = IDirectDrawSurface2_Lock(gpPrimarySurface, NULL, &SurfaceDescription, 0, NULL);
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
       DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to lock backbuffer");
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return NULL;
     }
 
@@ -1781,7 +1706,6 @@ void UnlockPrimarySurface(void) {
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   ReturnCode = IDirectDrawSurface2_Unlock(gpPrimarySurface, &SurfaceDescription);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
   }
 }
 
@@ -1804,7 +1728,6 @@ PTR LockBackBuffer(UINT32 *uiPitch) {
     ReturnCode = IDirectDrawSurface2_Lock(gpBackBuffer, NULL, &SurfaceDescription, 0, NULL);
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
       DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to lock backbuffer");
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return NULL;
     }
 
@@ -1830,7 +1753,6 @@ void UnlockBackBuffer(void) {
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   ReturnCode = IDirectDrawSurface2_Unlock(gpBackBuffer, &SurfaceDescription);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
   }
 }
 
@@ -1845,7 +1767,6 @@ PTR LockFrameBuffer(UINT32 *uiPitch) {
     ReturnCode = IDirectDrawSurface2_Lock(gpFrameBuffer, NULL, &SurfaceDescription, 0, NULL);
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
       DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to lock backbuffer");
-      DirectXAttempt(ReturnCode, __LINE__, __FILE__);
       return NULL;
     }
 
@@ -1864,7 +1785,6 @@ void UnlockFrameBuffer(void) {
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   ReturnCode = IDirectDrawSurface2_Unlock(gpFrameBuffer, &SurfaceDescription);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
   }
 }
 
@@ -1876,7 +1796,6 @@ PTR LockMouseBuffer(UINT32 *uiPitch) {
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   ReturnCode = IDirectDrawSurface2_Lock(gpMouseCursorOriginal, NULL, &SurfaceDescription, 0, NULL);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return NULL;
   }
 
@@ -1893,7 +1812,6 @@ void UnlockMouseBuffer(void) {
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   ReturnCode = IDirectDrawSurface2_Unlock(gpMouseCursorOriginal, &SurfaceDescription);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
   }
 }
 
@@ -1909,7 +1827,6 @@ static BOOLEAN GetRGBDistribution(void) {
   SurfaceDescription.dwFlags = DDSD_PIXELFORMAT;
   ReturnCode = IDirectDrawSurface2_GetSurfaceDesc(gpPrimarySurface, &SurfaceDescription);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return FALSE;
   }
 
@@ -2190,7 +2107,6 @@ void SnapshotSmall(void) {
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   ReturnCode = IDirectDrawSurface2_Unlock(gpPrimarySurface, &SurfaceDescription);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
   }
 
   //	fclose(disk);
@@ -3453,7 +3369,6 @@ void SmkSetupVideo(void) {
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   ReturnCode = IDirectDrawSurface2_GetSurfaceDesc(lpVideoPlayback2, &SurfaceDescription);
   if (ReturnCode != DD_OK) {
-    DirectXAttempt(ReturnCode, __LINE__, __FILE__);
     return;
   }
 
@@ -3698,11 +3613,11 @@ void DDCreateSurface(LPDIRECTDRAW2 pExistingDirectDraw, DDSURFACEDESC *pNewSurfa
   Assert(ppNewSurface2 != NULL);
 
   // create the directdraw surface
-  ATTEMPT(IDirectDraw2_CreateSurface(pExistingDirectDraw, pNewSurfaceDesc, ppNewSurface1, NULL));
+  IDirectDraw2_CreateSurface(pExistingDirectDraw, pNewSurfaceDesc, ppNewSurface1, NULL);
 
   // get the direct draw surface 2 interface
   IID tmpID = IID_IDirectDrawSurface2;
-  ATTEMPT(IDirectDrawSurface_QueryInterface(*ppNewSurface1, &tmpID, (LPVOID *)ppNewSurface2));
+  IDirectDrawSurface_QueryInterface(*ppNewSurface1, &tmpID, (LPVOID *)ppNewSurface2);
 }
 
 // Lock, unlock calls
@@ -3721,13 +3636,13 @@ void DDLockSurface(LPDIRECTDRAWSURFACE2 pSurface, LPRECT pDestRect, LPDDSURFACED
 
   } while (ReturnCode == DDERR_WASSTILLDRAWING);
 
-  ATTEMPT(ReturnCode);
+  ReturnCode;
 }
 
 void DDUnlockSurface(LPDIRECTDRAWSURFACE2 pSurface, PTR pSurfaceData) {
   Assert(pSurface != NULL);
 
-  ATTEMPT(IDirectDrawSurface2_Unlock(pSurface, pSurfaceData));
+  IDirectDrawSurface2_Unlock(pSurface, pSurfaceData);
 }
 
 void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurfaceDesc) {
@@ -3737,7 +3652,7 @@ void DDGetSurfaceDescription(LPDIRECTDRAWSURFACE2 pSurface, DDSURFACEDESC *pSurf
   ZEROMEM(*pSurfaceDesc);
   pSurfaceDesc->dwSize = sizeof(DDSURFACEDESC);
 
-  ATTEMPT(IDirectDrawSurface2_GetSurfaceDesc(pSurface, pSurfaceDesc));
+  IDirectDrawSurface2_GetSurfaceDesc(pSurface, pSurfaceDesc);
 }
 
 void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *ppOldSurface2) {
@@ -3746,8 +3661,8 @@ void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *
   Assert(*ppOldSurface1 != NULL);
   Assert(*ppOldSurface2 != NULL);
 
-  ATTEMPT(IDirectDrawSurface2_Release(*ppOldSurface2));
-  ATTEMPT(IDirectDrawSurface_Release(*ppOldSurface1));
+  IDirectDrawSurface2_Release(*ppOldSurface2);
+  IDirectDrawSurface_Release(*ppOldSurface1);
 
   *ppOldSurface1 = NULL;
   *ppOldSurface2 = NULL;
@@ -3756,7 +3671,7 @@ void DDReleaseSurface(LPDIRECTDRAWSURFACE *ppOldSurface1, LPDIRECTDRAWSURFACE2 *
 void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface) {
   Assert(pSurface != NULL);
 
-  ATTEMPT(IDirectDrawSurface2_Restore(pSurface));
+  IDirectDrawSurface2_Restore(pSurface);
 }
 
 void DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
@@ -3768,7 +3683,6 @@ void DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIREC
 
   do {
     ReturnCode = IDirectDrawSurface2_BltFast(dest, uiX, uiY, src, pSrcRect, uiTrans);
-
   } while (ReturnCode == DDERR_WASSTILLDRAWING);
 }
 
@@ -3783,14 +3697,14 @@ void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFA
 
   } while (ReturnCode == DDERR_WASSTILLDRAWING);
 
-  ATTEMPT(ReturnCode);
+  ReturnCode;
 }
 
 void DDCreatePalette(LPDIRECTDRAW2 pDirectDraw, UINT32 uiFlags, LPPALETTEENTRY pColorTable,
                      LPDIRECTDRAWPALETTE FAR *ppDDPalette, IUnknown FAR *pUnkOuter) {
   Assert(pDirectDraw != NULL);
 
-  ATTEMPT(IDirectDraw2_CreatePalette(pDirectDraw, uiFlags, pColorTable, ppDDPalette, pUnkOuter));
+  IDirectDraw2_CreatePalette(pDirectDraw, uiFlags, pColorTable, ppDDPalette, pUnkOuter);
 }
 
 void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiStartingEntry,
@@ -3798,7 +3712,7 @@ void DDSetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 ui
   Assert(pPalette != NULL);
   Assert(pEntries != NULL);
 
-  ATTEMPT(IDirectDrawPalette_SetEntries(pPalette, uiFlags, uiStartingEntry, uiCount, pEntries));
+  IDirectDrawPalette_SetEntries(pPalette, uiFlags, uiStartingEntry, uiCount, pEntries);
 }
 
 void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 uiBase,
@@ -3806,20 +3720,20 @@ void DDGetPaletteEntries(LPDIRECTDRAWPALETTE pPalette, UINT32 uiFlags, UINT32 ui
   Assert(pPalette != NULL);
   Assert(pEntries != NULL);
 
-  ATTEMPT(IDirectDrawPalette_GetEntries(pPalette, uiFlags, uiBase, uiNumEntries, pEntries));
+  IDirectDrawPalette_GetEntries(pPalette, uiFlags, uiBase, uiNumEntries, pEntries);
 }
 
 void DDReleasePalette(LPDIRECTDRAWPALETTE pPalette) {
   Assert(pPalette != NULL);
 
-  ATTEMPT(IDirectDrawPalette_Release(pPalette));
+  IDirectDrawPalette_Release(pPalette);
 }
 
 void DDSetSurfaceColorKey(LPDIRECTDRAWSURFACE2 pSurface, UINT32 uiFlags, LPDDCOLORKEY pDDColorKey) {
   Assert(pSurface != NULL);
   Assert(pDDColorKey != NULL);
 
-  ATTEMPT(IDirectDrawSurface2_SetColorKey(pSurface, uiFlags, pDDColorKey));
+  IDirectDrawSurface2_SetColorKey(pSurface, uiFlags, pDDColorKey);
 }
 
 // Clipper FUnctions
@@ -3827,27 +3741,27 @@ void DDCreateClipper(LPDIRECTDRAW2 pDirectDraw, UINT32 fFlags, LPDIRECTDRAWCLIPP
   Assert(pDirectDraw != NULL);
   Assert(pDDClipper != NULL);
 
-  ATTEMPT(IDirectDraw2_CreateClipper(pDirectDraw, 0, pDDClipper, NULL));
+  IDirectDraw2_CreateClipper(pDirectDraw, 0, pDDClipper, NULL);
 }
 
 void DDSetClipper(LPDIRECTDRAWSURFACE2 pSurface, LPDIRECTDRAWCLIPPER pDDClipper) {
   Assert(pSurface != NULL);
   Assert(pDDClipper != NULL);
 
-  ATTEMPT(IDirectDrawSurface2_SetClipper(pSurface, pDDClipper));
+  IDirectDrawSurface2_SetClipper(pSurface, pDDClipper);
 }
 
 void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper) {
   Assert(pDDClipper != NULL);
 
-  ATTEMPT(IDirectDrawClipper_Release(pDDClipper));
+  IDirectDrawClipper_Release(pDDClipper);
 }
 
 void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags) {
   Assert(pDDClipper != NULL);
   Assert(pClipList != NULL);
 
-  ATTEMPT(IDirectDrawClipper_SetClipList(pDDClipper, pClipList, uiFlags));
+  IDirectDrawClipper_SetClipList(pDDClipper, pClipList, uiFlags);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -3855,264 +3769,3 @@ void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT3
 //////////////////////////////////////////////////////////////////
 
 void DirectXZeroMem(void *pMemory, int nSize) { memset(pMemory, 0, nSize); }
-
-void DirectXAttempt(INT32 iErrorCode, INT32 nLine, char *szFilename) {
-#ifdef _DEBUG
-  if (iErrorCode != DD_OK) {
-    FastDebugMsg("DIRECTX COMMON: DirectX Error\n");
-    FastDebugMsg(DirectXErrorDescription(iErrorCode));
-  }
-#endif
-}
-
-char *DirectXErrorDescription(INT32 iDXReturn) {
-  switch (iDXReturn) {
-    case DD_OK:
-      return "No error.\0";
-    case DDERR_ALREADYINITIALIZED:
-      return "The object has already been initialized.";
-    case DDERR_BLTFASTCANTCLIP:
-      return "A DirectDrawClipper object is attached to a source surface that has passed into a "
-             "call to the IDirectDrawSurface2::BltFast method.";
-    case DDERR_CANNOTATTACHSURFACE:
-      return "A surface cannot be attached to another requested surface.";
-    case DDERR_CANNOTDETACHSURFACE:
-      return "A surface cannot be detached from another requested surface.";
-    case DDERR_CANTCREATEDC:
-      return "Windows cannot create any more device contexts (DCs).";
-    case DDERR_CANTDUPLICATE:
-      return "Primary and 3D surfaces, or surfaces that are implicitly created, cannot be "
-             "duplicated.";
-    case DDERR_CANTLOCKSURFACE:
-      return "Access to this surface is refused because an attempt was made to lock the primary "
-             "surface without DCI support.";
-    case DDERR_CANTPAGELOCK:
-      return "An attempt to page lock a surface failed. Page lock will not work on a "
-             "display-memory surface or an emulated primary surface.";
-    case DDERR_CANTPAGEUNLOCK:
-      return "An attempt to page unlock a surface failed. Page unlock will not work on a "
-             "display-memory surface or an emulated primary surface.";
-    case DDERR_CLIPPERISUSINGHWND:
-      return "An attempt was made to set a clip list for a DirectDrawClipper object that is "
-             "already monitoring a window handle.";
-    case DDERR_COLORKEYNOTSET:
-      return "No source color key is specified for this operation.";
-    case DDERR_CURRENTLYNOTAVAIL:
-      return "No support is currently available.";
-    case DDERR_DCALREADYCREATED:
-      return "A device context (DC) has already been returned for this surface. Only one DC can be "
-             "retrieved for each surface.";
-    case DDERR_DIRECTDRAWALREADYCREATED:
-      return "A DirectDraw object representing this driver has already been created for this "
-             "process.";
-    case DDERR_EXCEPTION:
-      return "An exception was encountered while performing the requested operation.";
-    case DDERR_EXCLUSIVEMODEALREADYSET:
-      return "An attempt was made to set the cooperative level when it was already set to "
-             "exclusive.";
-    case DDERR_GENERIC:
-      return "There is an undefined error condition.";
-    case DDERR_HEIGHTALIGN:
-      return "The height of the provided rectangle is not a multiple of the required alignment.";
-    case DDERR_HWNDALREADYSET:
-      return "The DirectDraw cooperative level window handle has already been set. It cannot be "
-             "reset while the process has surfaces or palettes created.";
-    case DDERR_HWNDSUBCLASSED:
-      return "DirectDraw is prevented from restoring state because the DirectDraw cooperative "
-             "level window handle has been subclassed.";
-    case DDERR_IMPLICITLYCREATED:
-      return "The surface cannot be restored because it is an implicitly created surface.";
-    case DDERR_INCOMPATIBLEPRIMARY:
-      return "The primary surface creation request does not match with the existing primary "
-             "surface.";
-    case DDERR_INVALIDCAPS:
-      return "One or more of the capability bits passed to the callback function are incorrect.";
-    case DDERR_INVALIDCLIPLIST:
-      return "DirectDraw does not support the provided clip list.";
-    case DDERR_INVALIDDIRECTDRAWGUID:
-      return "The globally unique identifier (GUID) passed to the DirectDrawCreate function is not "
-             "a valid DirectDraw driver identifier.";
-    case DDERR_INVALIDMODE:
-      return "DirectDraw does not support the requested mode.";
-    case DDERR_INVALIDOBJECT:
-      return "DirectDraw received a pointer that was an invalid DirectDraw object.";
-    case DDERR_INVALIDPARAMS:
-      return "One or more of the parameters passed to the method are incorrect.";
-    case DDERR_INVALIDPIXELFORMAT:
-      return "The pixel format was invalid as specified.";
-    case DDERR_INVALIDPOSITION:
-      return "The position of the overlay on the destination is no longer legal.";
-    case DDERR_INVALIDRECT:
-      return "The provided rectangle was invalid.";
-    case DDERR_INVALIDSURFACETYPE:
-      return "The requested operation could not be performed because the surface was of the wrong "
-             "type.";
-    case DDERR_LOCKEDSURFACES:
-      return "One or more surfaces are locked, causing the failure of the requested operation.";
-    case DDERR_NO3D:
-      return "No 3D hardware or emulation is present.";
-    case DDERR_NOALPHAHW:
-      return "No alpha acceleration hardware is present or available, causing the failure of the "
-             "requested operation.";
-    case DDERR_NOBLTHW:
-      return "No blitter hardware is present.";
-    case DDERR_NOCLIPLIST:
-      return "No clip list is available.";
-    case DDERR_NOCLIPPERATTACHED:
-      return "No DirectDrawClipper object is attached to the surface object.";
-    case DDERR_NOCOLORCONVHW:
-      return "The operation cannot be carried out because no color-conversion hardware is present "
-             "or available.";
-    case DDERR_NOCOLORKEY:
-      return "The surface does not currently have a color key.";
-    case DDERR_NOCOLORKEYHW:
-      return "The operation cannot be carried out because there is no hardware support for the "
-             "destination color key.";
-    case DDERR_NOCOOPERATIVELEVELSET:
-      return "A create function is called without the IDirectDraw2::SetCooperativeLevel method "
-             "being called.";
-    case DDERR_NODC:
-      return "No DC has ever been created for this surface.";
-    case DDERR_NODDROPSHW:
-      return "No DirectDraw raster operation (ROP) hardware is available.";
-    case DDERR_NODIRECTDRAWHW:
-      return "Hardware-only DirectDraw object creation is not possible; the driver does not "
-             "support any hardware.";
-    case DDERR_NODIRECTDRAWSUPPORT:
-      return "DirectDraw support is not possible with the current display driver.";
-    case DDERR_NOEMULATION:
-      return "Software emulation is not available.";
-    case DDERR_NOEXCLUSIVEMODE:
-      return "The operation requires the application to have exclusive mode, but the application "
-             "does not have exclusive mode.";
-    case DDERR_NOFLIPHW:
-      return "Flipping visible surfaces is not supported.";
-    case DDERR_NOGDI:
-      return "No GDI is present.";
-    case DDERR_NOHWND:
-      return "Clipper notification requires a window handle, or no window handle has been "
-             "previously set as the cooperative level window handle.";
-    case DDERR_NOMIPMAPHW:
-      return "The operation cannot be carried out because no mipmap texture mapping hardware is "
-             "present or available.";
-    case DDERR_NOMIRRORHW:
-      return "The operation cannot be carried out because no mirroring hardware is present or "
-             "available.";
-    case DDERR_NOOVERLAYDEST:
-      return "The IDirectDrawSurface2::GetOverlayPosition method is called on an overlay that the "
-             "IDirectDrawSurface2::UpdateOverlay method has not been called on to establish a "
-             "destination.";
-    case DDERR_NOOVERLAYHW:
-      return "The operation cannot be carried out because no overlay hardware is present or "
-             "available.";
-    case DDERR_NOPALETTEATTACHED:
-      return "No palette object is attached to this surface.";
-    case DDERR_NOPALETTEHW:
-      return "There is no hardware support for 16- or 256-color palettes.";
-    case DDERR_NORASTEROPHW:
-      return "The operation cannot be carried out because no appropriate raster operation hardware "
-             "is present or available.";
-    case DDERR_NOROTATIONHW:
-      return "The operation cannot be carried out because no rotation hardware is present or "
-             "available.";
-    case DDERR_NOSTRETCHHW:
-      return "The operation cannot be carried out because there is no hardware support for "
-             "stretching.";
-    case DDERR_NOT4BITCOLOR:
-      return "The DirectDrawSurface object is not using a 4-bit color palette and the requested "
-             "operation requires a 4-bit color palette.";
-    case DDERR_NOT4BITCOLORINDEX:
-      return "The DirectDrawSurface object is not using a 4-bit color index palette and the "
-             "requested operation requires a 4-bit color index palette.";
-    case DDERR_NOT8BITCOLOR:
-      return "The DirectDrawSurface object is not using an 8-bit color palette and the requested "
-             "operation requires an 8-bit color palette.";
-    case DDERR_NOTAOVERLAYSURFACE:
-      return "An overlay component is called for a non-overlay surface.";
-    case DDERR_NOTEXTUREHW:
-      return "The operation cannot be carried out because no texture-mapping hardware is present "
-             "or available.";
-    case DDERR_NOTFLIPPABLE:
-      return "An attempt has been made to flip a surface that cannot be flipped.";
-    case DDERR_NOTFOUND:
-      return "The requested item was not found.";
-    case DDERR_NOTINITIALIZED:
-      return "An attempt was made to call an interface method of a DirectDraw object created by "
-             "CoCreateInstance before the object was initialized.";
-    case DDERR_NOTLOCKED:
-      return "An attempt is made to unlock a surface that was not locked.";
-    case DDERR_NOTPAGELOCKED:
-      return "An attempt is made to page unlock a surface with no outstanding page locks.";
-    case DDERR_NOTPALETTIZED:
-      return "The surface being used is not a palette-based surface.";
-    case DDERR_NOVSYNCHW:
-      return "The operation cannot be carried out because there is no hardware support for "
-             "vertical blank synchronized operations.";
-    case DDERR_NOZBUFFERHW:
-      return "The operation to create a z-buffer in display memory or to perform a blit using a "
-             "z-buffer cannot be carried out because there is no hardware support for z-buffers.";
-    case DDERR_NOZOVERLAYHW:
-      return "The overlay surfaces cannot be z-layered based on the z-order because the hardware "
-             "does not support z-ordering of overlays.";
-    case DDERR_OUTOFCAPS:
-      return "The hardware needed for the requested operation has already been allocated.";
-    case DDERR_OUTOFMEMORY:
-      return "DirectDraw does not have enough memory to perform the operation.";
-    case DDERR_OUTOFVIDEOMEMORY:
-      return "DirectDraw does not have enough display memory to perform the operation.";
-    case DDERR_OVERLAYCANTCLIP:
-      return "The hardware does not support clipped overlays.";
-    case DDERR_OVERLAYCOLORKEYONLYONEACTIVE:
-      return "An attempt was made to have more than one color key active on an overlay.";
-    case DDERR_OVERLAYNOTVISIBLE:
-      return "The IDirectDrawSurface2::GetOverlayPosition method is called on a hidden overlay.";
-    case DDERR_PALETTEBUSY:
-      return "Access to this palette is refused because the palette is locked by another thread.";
-    case DDERR_PRIMARYSURFACEALREADYEXISTS:
-      return "This process has already created a primary surface.";
-    case DDERR_REGIONTOOSMALL:
-      return "The region passed to the IDirectDrawClipper::GetClipList method is too small.";
-    case DDERR_SURFACEALREADYATTACHED:
-      return "An attempt was made to attach a surface to another surface to which it is already "
-             "attached.";
-    case DDERR_SURFACEALREADYDEPENDENT:
-      return "An attempt was made to make a surface a dependency of another surface to which it is "
-             "already dependent.";
-    case DDERR_SURFACEBUSY:
-      return "Access to the surface is refused because the surface is locked by another thread.";
-    case DDERR_SURFACEISOBSCURED:
-      return "Access to the surface is refused because the surface is obscured.";
-    case DDERR_SURFACELOST:
-      return "Access to the surface is refused because the surface memory is gone. The "
-             "DirectDrawSurface object representing this surface should have the "
-             "IDirectDrawSurface2::Restore method called on it.";
-    case DDERR_SURFACENOTATTACHED:
-      return "The requested surface is not attached.";
-    case DDERR_TOOBIGHEIGHT:
-      return "The height requested by DirectDraw is too large.";
-    case DDERR_TOOBIGSIZE:
-      return "The size requested by DirectDraw is too large. However, the individual height and "
-             "width are OK.";
-    case DDERR_TOOBIGWIDTH:
-      return "The width requested by DirectDraw is too large.";
-    case DDERR_UNSUPPORTED:
-      return "The operation is not supported.";
-    case DDERR_UNSUPPORTEDFORMAT:
-      return "The FourCC format requested is not supported by DirectDraw.";
-    case DDERR_UNSUPPORTEDMASK:
-      return "The bitmask in the pixel format requested is not supported by DirectDraw.";
-    case DDERR_UNSUPPORTEDMODE:
-      return "The display is currently in an unsupported mode.";
-    case DDERR_VERTICALBLANKINPROGRESS:
-      return "A vertical blank is in progress.";
-    case DDERR_WASSTILLDRAWING:
-      return "The previous blit operation that is transferring information to or from this surface "
-             "is incomplete.";
-    case DDERR_WRONGMODE:
-      return "This surface cannot be restored because it was created in a different mode.";
-    case DDERR_XALIGN:
-      return "The provided rectangle was not horizontally aligned on a required boundary.";
-    default:
-      return "Unrecognized error value.\0";
-  }
-}
