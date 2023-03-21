@@ -85,11 +85,9 @@ extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurfac
                                   UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
                                   struct Rect *SrcRect);
 
-extern void UnlockPrimarySurface();
 extern void UnlockBackBuffer();
 extern void UnlockMouseBuffer();
 extern PTR LockMouseBuffer(UINT32 *uiPitch);
-extern PTR LockPrimarySurface(UINT32 *uiPitch);
 extern PTR LockBackBuffer(UINT32 *uiPitch);
 void DeletePrimaryVideoSurfaces();
 BOOLEAN SetPrimaryVideoSurfaces();

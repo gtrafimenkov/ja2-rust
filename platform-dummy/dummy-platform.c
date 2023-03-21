@@ -216,11 +216,9 @@ BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) 
 void UnlockBackBuffer() {}
 void UnlockFrameBuffer() {}
 void UnlockMouseBuffer() {}
-void UnlockPrimarySurface() {}
 PTR LockBackBuffer(UINT32 *uiPitch) { return NULL; }
 PTR LockFrameBuffer(UINT32 *uiPitch) { return NULL; }
 PTR LockMouseBuffer(UINT32 *uiPitch) { return NULL; }
-PTR LockPrimarySurface(UINT32 *uiPitch) { return NULL; }
 BYTE *LockVideoSurfaceBuffer(struct VSurface *hVSurface, UINT32 *pPitch) { return NULL; }
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {}
 BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface) { return FALSE; }

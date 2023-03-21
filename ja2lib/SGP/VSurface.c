@@ -631,15 +631,9 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
   return TRUE;
 }
 
+// TODO
 BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
   VSURFACE_NODE *curr;
-
-  //
-  // Check if given backbuffer or primary buffer
-  //
-  if (uiVSurface == PRIMARY_SURFACE) {
-    return (BYTE *)LockPrimarySurface(puiPitch);
-  }
 
   if (uiVSurface == BACKBUFFER) {
     return (BYTE *)LockBackBuffer(puiPitch);
@@ -677,14 +671,6 @@ BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
 
 void UnLockVideoSurface(VSurfID uiVSurface) {
   VSURFACE_NODE *curr;
-
-  //
-  // Check if given backbuffer or primary buffer
-  //
-  if (uiVSurface == PRIMARY_SURFACE) {
-    UnlockPrimarySurface();
-    return;
-  }
 
   if (uiVSurface == BACKBUFFER) {
     UnlockBackBuffer();
@@ -741,11 +727,6 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
 
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
   VSURFACE_NODE *curr;
-
-  if (uiIndex == PRIMARY_SURFACE) {
-    *hVSurface = ghPrimary;
-    return TRUE;
-  }
 
   if (uiIndex == BACKBUFFER) {
     *hVSurface = ghBackBuffer;

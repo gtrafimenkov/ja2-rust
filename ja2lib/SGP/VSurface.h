@@ -12,7 +12,6 @@ typedef uint32_t VSurfID;
 // Defines for special video object handles given to blit function
 //
 
-#define PRIMARY_SURFACE 0xFFFFFFF0
 #define BACKBUFFER 0xFFFFFFF1
 #define FRAME_BUFFER 0xFFFFFFF2
 #define MOUSE_BUFFER 0xFFFFFFF3

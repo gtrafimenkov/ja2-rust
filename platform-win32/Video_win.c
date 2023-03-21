@@ -1362,11 +1362,8 @@ void RefreshScreen() {
 #ifdef WINDOWED_MODE
 
   do {
-    ReturnCode = IDirectDrawSurface_Blt(gpPrimarySurface,  // dest surface
-                                        &rcWindow,         // dest rect
-                                        gpBackBuffer,      // src surface
-                                        NULL,              // src rect (all of it)
-                                        DDBLT_WAIT, NULL);
+    ReturnCode =
+        IDirectDrawSurface_Blt(gpPrimarySurface, &rcWindow, gpBackBuffer, NULL, DDBLT_WAIT, NULL);
 
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
       if (ReturnCode == DDERR_SURFACELOST) {
@@ -1497,73 +1494,17 @@ static LPDIRECTDRAW2 GetDirectDraw2Object(void) {
   return gpDirectDrawObject;
 }
 
-LPDIRECTDRAWSURFACE2 GetPrimarySurfaceObject(void) {
-  Assert(gpPrimarySurface != NULL);
+LPDIRECTDRAWSURFACE2 GetPrimarySurfaceObject(void) { return gpPrimarySurface; }
 
-  return gpPrimarySurface;
-}
+LPDIRECTDRAWSURFACE2 GetBackBufferObject(void) { return gpBackBuffer; }
 
-LPDIRECTDRAWSURFACE2 GetBackBufferObject(void) {
-  Assert(gpPrimarySurface != NULL);
+LPDIRECTDRAWSURFACE2 GetFrameBufferObject(void) { return gpFrameBuffer; }
 
-  return gpBackBuffer;
-}
-
-LPDIRECTDRAWSURFACE2 GetFrameBufferObject(void) {
-  Assert(gpPrimarySurface != NULL);
-
-  return gpFrameBuffer;
-}
-
-LPDIRECTDRAWSURFACE2 GetMouseBufferObject(void) {
-  Assert(gpPrimarySurface != NULL);
-
-  return gpMouseCursor;
-}
-
-PTR LockPrimarySurface(UINT32 *uiPitch) {
-  HRESULT ReturnCode;
-  DDSURFACEDESC SurfaceDescription;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-
-  do {
-    ReturnCode = IDirectDrawSurface2_Lock(gpPrimarySurface, NULL, &SurfaceDescription, 0, NULL);
-    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to lock backbuffer");
-      return NULL;
-    }
-
-  } while (ReturnCode != DD_OK);
-
-  *uiPitch = SurfaceDescription.lPitch;
-  return SurfaceDescription.lpSurface;
-}
-
-void UnlockPrimarySurface(void) {
-  DDSURFACEDESC SurfaceDescription;
-  HRESULT ReturnCode;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  ReturnCode = IDirectDrawSurface2_Unlock(gpPrimarySurface, &SurfaceDescription);
-  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-  }
-}
+LPDIRECTDRAWSURFACE2 GetMouseBufferObject(void) { return gpMouseCursor; }
 
 PTR LockBackBuffer(UINT32 *uiPitch) {
   HRESULT ReturnCode;
   DDSURFACEDESC SurfaceDescription;
-
-  //
-  // W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G
-  // ----
-  //
-  // This function is intended to be called by a thread which has already locked the
-  // FRAME_BUFFER_MUTEX mutual exclusion section. Anything else will cause the application to
-  // yack
-  //
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
@@ -1584,15 +1525,6 @@ PTR LockBackBuffer(UINT32 *uiPitch) {
 void UnlockBackBuffer(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
-
-  //
-  // W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G
-  // ----
-  //
-  // This function is intended to be called by a thread which has already locked the
-  // FRAME_BUFFER_MUTEX mutual exclusion section. Anything else will cause the application to
-  // yack
-  //
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
@@ -1664,8 +1596,6 @@ static BOOLEAN GetRGBDistribution(void) {
   DDSURFACEDESC SurfaceDescription;
   UINT16 usBit;
   HRESULT ReturnCode;
-
-  Assert(gpPrimarySurface != NULL);
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
@@ -1904,20 +1834,6 @@ void SnapshotSmall(void) {
     return;
   }
 
-  //	sprintf( cFilename, "JA%5.5d.TGA", uiPicNum++ );
-
-  //	if( ( disk = fopen(cFilename, "wb"))==NULL )
-  //		return;
-
-  //	memset(&Header, 0, sizeof(TARGA_HEADER));
-
-  //	Header.ubTargaType=2;			// Uncompressed 16/24/32 bit
-  //	Header.usImageWidth=320;
-  //	Header.usImageHeight=240;
-  //	Header.ubBitsPerPixel=16;
-
-  //	fwrite(&Header, sizeof(TARGA_HEADER), 1, disk);
-
   // Get the write pointer
   pVideo = (UINT16 *)SurfaceDescription.lpSurface;
 
@@ -1925,19 +1841,6 @@ void SnapshotSmall(void) {
 
   for (iCountY = SCREEN_HEIGHT - 1; iCountY >= 0; iCountY -= 1) {
     for (iCountX = 0; iCountX < SCREEN_WIDTH; iCountX += 1) {
-      //		uiData=(UINT16)*(pVideo+(iCountY*640*2)+ ( iCountX * 2 ) );
-
-      //				1111 1111 1100 0000
-      //				f		 f		c
-      //		usPixel555=	(UINT16)(uiData&0xffff);
-      //			usPixel555= ((usPixel555 & 0xffc0) >> 1) | (usPixel555 & 0x1f);
-
-      //		usPixel555=	(UINT16)(uiData);
-
-      //	fwrite( &usPixel555, sizeof(UINT16), 1, disk);
-      //		fwrite(	(void *)(((UINT8 *)SurfaceDescription.lpSurface) + ( iCountY * 640 *
-      // 2) + ( iCountX * 2 ) ), 2 * sizeof( BYTE ), 1, disk );
-
       *(pDest + (iCountY * 640) + (iCountX)) = *(pVideo + (iCountY * 640) + (iCountX));
     }
   }
@@ -1953,8 +1856,6 @@ void SnapshotSmall(void) {
   ReturnCode = IDirectDrawSurface2_Unlock(gpPrimarySurface, &SurfaceDescription);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
   }
-
-  //	fclose(disk);
 }
 
 void VideoCaptureToggle(void) {
@@ -2044,6 +1945,7 @@ extern struct VSurface *ghPrimary;
 extern struct VSurface *ghBackBuffer;
 extern struct VSurface *ghMouseBuffer;
 
+// TODO
 // This function sets the global video Surfaces for primary and backbuffer
 BOOLEAN SetPrimaryVideoSurfaces() {
   LPDIRECTDRAWSURFACE2 pSurface;
@@ -2109,10 +2011,6 @@ BOOLEAN SetPrimaryVideoSurfaces() {
 }
 
 void DeletePrimaryVideoSurfaces() {
-  //
-  // If globals are not null, delete them
-  //
-
   if (ghPrimary != NULL) {
     DeleteVideoSurface(ghPrimary);
     ghPrimary = NULL;
