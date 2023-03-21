@@ -83,9 +83,6 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
 // Returns a HVSurface for the specified index
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
 
-BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *uiPitch);
-void UnLockVideoSurface(VSurfID uiVSurface);
-
 // Blits a video Surface to another video Surface
 BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
                         UINT32 fBltFlags, struct BltOpts *pBltFx);
@@ -172,5 +169,8 @@ struct BufferLockInfo {
 
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs);
 void VSurfaceUnlock(struct VSurface *vs);
+
+BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *uiPitch);
+void UnLockVideoSurface(VSurfID uiVSurface);
 
 #endif

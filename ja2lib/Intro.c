@@ -408,7 +408,7 @@ void DisplaySirtechSplashScreen() {
   // CLEAR THE FRAME BUFFER
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
 
   if (!AddVObjectFromFile("INTERFACE\\SirtechSplash.sti", &uiLogoID)) {
     AssertMsg(0, String("Failed to load %s", VObjectDesc.ImageFile));

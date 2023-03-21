@@ -5886,7 +5886,7 @@ void RenderItemPickupMenu() {
 
     SetFontShadow(DEFAULT_SHADOW);
 
-    UnLockVideoSurface(FRAME_BUFFER);
+    VSurfaceUnlock(vsFrameBuffer);
 
     InvalidateRegion(gItemPickupMenu.sX, gItemPickupMenu.sY,
                      gItemPickupMenu.sX + gItemPickupMenu.sWidth,

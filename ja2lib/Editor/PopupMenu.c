@@ -242,7 +242,7 @@ void RenderPopupMenu() {
     }
     usStart += (UINT16)gPopup.ubColumnWidth[ubColumn];
   }
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
 
   // Set up the text attributes.
   SetFont(gPopup.usFont);

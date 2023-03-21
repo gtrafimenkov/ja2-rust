@@ -5785,7 +5785,7 @@ void RenderRectangleForPersonnelTransactionAmount(void) {
   RectangleDraw(TRUE, (ATM_DISPLAY_X + ATM_DISPLAY_WIDTH) - iLength - 2, ATM_DISPLAY_Y + 35,
                 ATM_DISPLAY_X + ATM_DISPLAY_WIDTH + 1, ATM_DISPLAY_Y + iHeight + 36,
                 Get16BPPColor(FROMRGB(255, 255, 255)), pDestBuf);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
 }
 
 void HandleTimedAtmModes(void) {

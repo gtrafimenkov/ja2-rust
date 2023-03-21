@@ -257,7 +257,7 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0, 0,
                   0, 640, 480);
 
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
   UnLockVideoSurface(guiSAVEBUFFER);
 
   return (TRUE);

@@ -1353,7 +1353,7 @@ void DisplaySectionLine() {
            pDestBuf);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
 }
 
 void DisplayQuestInformation() {
@@ -2053,7 +2053,7 @@ void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, UINT16 usStartPosX, UINT
            Get16BPPColor(FROMRGB(112, 110, 112)), pDestBuf);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
 }
 
 void ScrollArrowsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {

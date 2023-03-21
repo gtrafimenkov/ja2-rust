@@ -582,7 +582,7 @@ void DisplayFullNameStringCursor(void) {
                    FULL_NAME_CURSOR_Y + CURSOR_HEIGHT + 1 - 2);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
   return;
 }
 
@@ -637,7 +637,7 @@ void DisplayNickNameStringCursor(void) {
                    (UINT16)uiNickNameCursorPosition + 1, NICK_NAME_CURSOR_Y + CURSOR_HEIGHT + 1);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
   return;
 }
 
@@ -742,7 +742,7 @@ void DisplayMaleGlowCursor(void) {
                    MALE_BOX_Y + MALE_BOX_HEIGHT + 1);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
   return;
 }
 
@@ -797,7 +797,7 @@ void DisplayFemaleGlowCursor(void) {
                    MALE_BOX_Y + MALE_BOX_HEIGHT + 1);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
   return;
 }
 

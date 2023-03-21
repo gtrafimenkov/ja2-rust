@@ -936,7 +936,7 @@ void ShowCurrentDrawingMode(void) {
   pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
   RectangleDraw(FALSE, 0, 400, 99, 458, usFillColor, pDestBuf);
 
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
 
   InvalidateRegion(0, 400, 100, 458);
   SetClippingRect(&ClipRect);

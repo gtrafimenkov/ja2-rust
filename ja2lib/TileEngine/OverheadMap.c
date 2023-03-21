@@ -895,7 +895,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
       } while (!fEndRenderCol);
     }
 
-    UnLockVideoSurface(FRAME_BUFFER);
+    VSurfaceUnlock(vsFrameBuffer);
 
     // OK, blacken out edges of smaller maps...
     if (gMapInformation.ubRestrictedScrollID != 0) {
@@ -1095,7 +1095,7 @@ void RenderOverheadOverlays() {
     }
   }
 
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFrameBuffer);
 }
 
 /*//Render the soldiers and items on top of the pristine overhead map.
