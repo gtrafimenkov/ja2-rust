@@ -621,25 +621,32 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
 
 // TODO
 BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
-  VSURFACE_NODE *curr;
-
   if (uiVSurface == BACKBUFFER) {
-    return (BYTE *)LockBackBuffer(puiPitch);
+    // return (BYTE *)LockBackBuffer(puiPitch);
+    struct BufferLockInfo res = VSurfaceLock(vsBackBuffer);
+    *puiPitch = res.pitch;
+    return res.dest;
   }
 
   if (uiVSurface == FRAME_BUFFER) {
-    return (BYTE *)LockFrameBuffer(puiPitch);
+    // return (BYTE *)LockFrameBuffer(puiPitch);
+    struct BufferLockInfo res = VSurfaceLock(vsFrameBuffer);
+    *puiPitch = res.pitch;
+    return res.dest;
   }
 
   if (uiVSurface == MOUSE_BUFFER) {
     return (BYTE *)LockMouseBuffer(puiPitch);
+    // struct BufferLockInfo res = VSurfaceLock(vsMouseBuffer);
+    // *puiPitch = res.pitch;
+    // return res.dest;
   }
 
   //
   // Otherwise, use list
   //
 
-  curr = gpVSurfaceHead;
+  VSURFACE_NODE *curr = gpVSurfaceHead;
   while (curr) {
     if (curr->uiIndex == uiVSurface) {
       break;
