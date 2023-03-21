@@ -1693,10 +1693,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   hVSurface->usWidth = usWidth;
   hVSurface->ubBitDepth = ubBitDepth;
 
-  giMemUsedInSurfaces += (hVSurface->usHeight * hVSurface->usWidth * (hVSurface->ubBitDepth / 8));
-
-  DebugMsg(TOPIC_VIDEOSURFACE, DBG_INFO, String("Success in Creating Video Surface"));
-
   return (hVSurface);
 }
 
@@ -1829,9 +1825,6 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
     hVSurface->p16BPPPalette = NULL;
   }
 
-  giMemUsedInSurfaces -= (hVSurface->usHeight * hVSurface->usWidth * (hVSurface->ubBitDepth / 8));
-
-  // Release object
   MemFree(hVSurface);
 
   return (TRUE);

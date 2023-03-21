@@ -51,8 +51,6 @@ UINT32 guiVSurfaceIndex = 0;
 UINT32 guiVSurfaceSize = 0;
 UINT32 guiVSurfaceTotalAdded = 0;
 
-INT32 giMemUsedInSurfaces;
-
 // Given an struct Image* object, blit imagery into existing Video Surface. Can be from 8->16
 // BPP
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
@@ -576,46 +574,44 @@ BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDes
   return (FillSurfaceRect(hDestVSurface, &BltFx));
 }
 
-BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
-  struct VSurface *hVSurface;
-
-  // Assertions
-  Assert(puiIndex);
-  Assert(pVSurfaceDesc);
-
-  // Create video object
-  hVSurface = CreateVideoSurface(pVSurfaceDesc);
-
-  if (!hVSurface) {
-    // Video Object will set error condition.
-    return FALSE;
-  }
-
-  // Set transparency to default
-  SetVideoSurfaceTransparencyColor(hVSurface, FROMRGB(0, 0, 0));
-
+static uint32_t addVSurfaceToList(struct VSurface *vs) {
   // Set into video object list
-  if (gpVSurfaceHead) {  // Add node after tail
+  if (gpVSurfaceHead) {
+    // Add node after tail
     gpVSurfaceTail->next = (VSURFACE_NODE *)MemAlloc(sizeof(VSURFACE_NODE));
     Assert(gpVSurfaceTail->next);  // out of memory?
     gpVSurfaceTail->next->prev = gpVSurfaceTail;
     gpVSurfaceTail->next->next = NULL;
     gpVSurfaceTail = gpVSurfaceTail->next;
-  } else {  // new list
+  } else {
+    // new list
     gpVSurfaceHead = (VSURFACE_NODE *)MemAlloc(sizeof(VSURFACE_NODE));
     Assert(gpVSurfaceHead);  // out of memory?
     gpVSurfaceHead->prev = gpVSurfaceHead->next = NULL;
     gpVSurfaceTail = gpVSurfaceHead;
   }
   // Set the hVSurface into the node.
-  gpVSurfaceTail->hVSurface = hVSurface;
+  gpVSurfaceTail->hVSurface = vs;
   gpVSurfaceTail->uiIndex = guiVSurfaceIndex += 2;
-  *puiIndex = gpVSurfaceTail->uiIndex;
   Assert(guiVSurfaceIndex < 0xfffffff0);  // unlikely that we will ever use 2 billion VSurfaces!
   // We would have to create about 70 VSurfaces per second for 1 year straight to achieve this...
   guiVSurfaceSize++;
   guiVSurfaceTotalAdded++;
+  return gpVSurfaceTail->uiIndex;
+}
 
+BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
+  Assert(puiIndex);
+  Assert(pVSurfaceDesc);
+
+  struct VSurface *vs = CreateVideoSurface(pVSurfaceDesc);
+
+  if (!vs) {
+    return FALSE;
+  }
+
+  SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
+  *puiIndex = addVSurfaceToList(vs);
   return TRUE;
 }
 
@@ -801,9 +797,6 @@ BOOLEAN InitializeVideoSurfaceManager() {
   Assert(!gpVSurfaceHead);
   Assert(!gpVSurfaceTail);
   gpVSurfaceHead = gpVSurfaceTail = NULL;
-
-  giMemUsedInSurfaces = 0;
-
   return TRUE;
 }
 

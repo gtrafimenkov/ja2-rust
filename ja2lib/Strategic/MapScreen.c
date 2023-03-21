@@ -8389,8 +8389,6 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
   if (!AddVObjectFromFile("INTERFACE\\charinfo.sti", &guiCHARINFO)) {
     return FALSE;
   }
-  /*strcpy(vs_desc.ImageFile, "INTERFACE\\playlist3.pcx");
-  if (!(AddVideoSurface( &vs_desc, &guiCHARLIST ))) { return FALSE; }*/
 
   if (!AddVObjectFromFile("INTERFACE\\newgoldpiece3.sti", &guiCHARLIST)) {
     return FALSE;
