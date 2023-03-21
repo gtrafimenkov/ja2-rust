@@ -179,7 +179,7 @@ void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
   struct VSurface* hVSurface;
   UINT32 uiLoadScreen;
 
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
 
   switch (ubLoadScreenID) {
     case LOADINGSCREEN_NOTHING:

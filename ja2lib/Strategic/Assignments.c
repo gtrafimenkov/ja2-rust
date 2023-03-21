@@ -7445,7 +7445,7 @@ BOOLEAN CreateDestroyAssignmentPopUpBoxes(void) {
       return FALSE;
     }
 
-    vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+    vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
     strcpy(vs_desc.ImageFile, "INTERFACE\\popupbackground.pcx");
     if (!(AddVideoSurface(&vs_desc, &guiPOPUPTEX))) {
       return FALSE;

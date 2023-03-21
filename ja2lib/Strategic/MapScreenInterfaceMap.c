@@ -1471,7 +1471,7 @@ BOOLEAN InitializePalettesForMap(void) {
   UINT32 uiTempMap;
 
   // load image
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
   strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
   if (!(AddVideoSurface(&vs_desc, &uiTempMap))) {
     return FALSE;

@@ -2724,7 +2724,7 @@ UINT32 MapScreenHandle(void) {
 
       // fInterfacePanelDirty=DIRTYLEVEL2;
       // RenderTacticalInterface();
-      vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+      vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
       // Grab the Map image
 
       strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
@@ -8427,7 +8427,7 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   fPreLoadedMapGraphics = TRUE;
 
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
   strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
   if (!(AddVideoSurface(&vs_desc, &guiBIGMAP))) {
     return FALSE;

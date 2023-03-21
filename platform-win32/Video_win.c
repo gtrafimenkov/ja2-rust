@@ -32,6 +32,8 @@
 #include "Smack.h"
 #include "platform_win.h"
 
+// https://learn.microsoft.com/en-us/windows/win32/api/_directdraw/
+
 extern struct VSurface *vsPrimary;
 extern struct VSurface *vsBackBuffer;
 extern struct VSurface *vsMouseCursor;
@@ -415,7 +417,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
-  // SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
   SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
   SurfaceDescription.dwWidth = MAX_CURSOR_WIDTH;
   SurfaceDescription.dwHeight = MAX_CURSOR_HEIGHT;
@@ -482,7 +483,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     ZEROMEM(SurfaceDescription);
     SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
     SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
-    // SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
     SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
     SurfaceDescription.dwWidth = MAX_CURSOR_WIDTH;
     SurfaceDescription.dwHeight = MAX_CURSOR_HEIGHT;
@@ -1659,13 +1659,7 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   DDSURFACEDESC SurfaceDescription;
   memset(&SurfaceDescription, 0, sizeof(DDSURFACEDESC));
   SurfaceDescription.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
-
-  if (fMemUsage & VSURFACE_SYSTEM_MEM_USAGE) {
-    SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
-  } else {
-    SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-  }
-
+  SurfaceDescription.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   SurfaceDescription.dwWidth = usWidth;
   SurfaceDescription.dwHeight = usHeight;
@@ -1688,10 +1682,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   hVSurface->fFlags = 0;
   hVSurface->pClipper = NULL;
   DDGetSurfaceDescription(lpDDS2, &SurfaceDescription);
-
-  if (SurfaceDescription.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY) {
-    hVSurface->fFlags |= VSURFACE_SYSTEM_MEM_USAGE;
-  }
 
   if (VSurfaceDesc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
     tempRect.iLeft = 0;
@@ -1882,11 +1872,6 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   } else {
     hVSurface->pPalette = NULL;
     hVSurface->p16BPPPalette = NULL;
-  }
-
-  // Set meory flags
-  if (DDSurfaceDesc.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY) {
-    hVSurface->fFlags |= VSURFACE_SYSTEM_MEM_USAGE;
   }
 
   return (hVSurface);

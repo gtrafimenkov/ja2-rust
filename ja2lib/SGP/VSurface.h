@@ -35,14 +35,6 @@ struct BltOpts {
 };
 
 //
-// Video Surface Flags
-// Used to describe the memory usage of a video Surface
-//
-
-#define VSURFACE_SYSTEM_MEM_USAGE \
-  0x00000004  // Will force surface into system memory and will fail if it can't
-
-//
 // Video Surface creation flags
 // Used in the VSurface_DESC structure to describe creation flags
 //
@@ -51,10 +43,6 @@ struct BltOpts {
   0x00000020  // Creates and empty Surface of given width, height and BPP
 #define VSURFACE_CREATE_FROMFILE \
   0x00000040  // Creates a video Surface from a file ( using struct Image* )
-
-//
-// This structure is a video Surface. Contains a HLIST of regions
-//
 
 struct VSurface;
 

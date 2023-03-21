@@ -40,7 +40,7 @@ void InitJA2SplashScreen() {
   VSURFACE_DESC VSurfaceDesc;
   struct VSurface* hVSurface;
   memset(&VSurfaceDesc, 0, sizeof(VSURFACE_DESC));
-  VSurfaceDesc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  VSurfaceDesc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
   sprintf(VSurfaceDesc.ImageFile, "LOADSCREENS\\Notification.sti");
   if (!AddVideoSurface(&VSurfaceDesc, &uiLogoID)) {
     AssertMsg(0, String("Failed to load %s", VSurfaceDesc.ImageFile));
@@ -68,7 +68,7 @@ void InitJA2SplashScreen() {
 #else
   {
     memset(&VSurfaceDesc, 0, sizeof(VSURFACE_DESC));
-    VSurfaceDesc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+    VSurfaceDesc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
     GetMLGFilename(VSurfaceDesc.ImageFile, MLG_SPLASH);
     if (!AddVideoSurface(&VSurfaceDesc, &uiLogoID)) {
       AssertMsg(0, String("Failed to load %s", VSurfaceDesc.ImageFile));
