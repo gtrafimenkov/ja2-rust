@@ -178,17 +178,6 @@ BOOLEAN DeleteVideoSurfaceFromIndex(VSurfID uiIndex) {
 //
 // ********************************************************
 
-static BOOLEAN GetVSurfaceRegion(struct VSurface *hVSurface, UINT16 usIndex,
-                                 VSURFACE_REGION *aRegion) {
-  Assert(hVSurface != NULL);
-
-  if (!PeekList(hVSurface->RegionList, aRegion, usIndex)) {
-    return (FALSE);
-  }
-
-  return (TRUE);
-}
-
 static BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, struct Rect *pRect) {
   Assert(hVSurface != NULL);
   Assert(pRect != NULL);

@@ -1,8 +1,6 @@
 #ifndef __VSURFACE_INTERNAL_H
 #define __VSURFACE_INTERNAL_H
 
-#include "SGP/Container.h"
-#include "SGP/HImage.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
 
@@ -35,7 +33,6 @@ struct VSurface {
   UINT16 *p16BPPPalette;      // A 16BPP palette used for 8->16 blits
   COLORVAL TransparentColor;  // Defaults to 0,0,0
   PTR pClipper;               // A void pointer encapsolated as a clipper Surface
-  HLIST RegionList;           // A List of regions within the video Surface
 };
 
 #endif

@@ -2402,8 +2402,6 @@ BOOLEAN SetDirectDraw2Object(LPDIRECTDRAW2 pDirectDraw);
 BOOLEAN SetPrimarySurfaceInterface(LPDIRECTDRAWSURFACE2 pSurface);
 BOOLEAN SetBackbufferInterface(LPDIRECTDRAWSURFACE2 pSurface);
 
-#define DEFAULT_NUM_REGIONS 5
-
 static BOOLEAN UpdateBackupSurface(struct VSurface *hVSurface);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2582,7 +2580,6 @@ struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) {
   hVSurface->pPalette = NULL;
   hVSurface->p16BPPPalette = NULL;
   hVSurface->TransparentColor = FROMRGB(0, 0, 0);
-  hVSurface->RegionList = CreateList(DEFAULT_NUM_REGIONS, sizeof(VSURFACE_REGION));
   hVSurface->fFlags = 0;
   hVSurface->pClipper = NULL;
 
@@ -2894,9 +2891,6 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
                      (LPDIRECTDRAWSURFACE2 *)&hVSurface->pSavedSurfaceData);
   }
 
-  // Release region data
-  DeleteList(hVSurface->RegionList);
-
   // If there is a 16bpp palette, free it
   if (hVSurface->p16BPPPalette != NULL) {
     MemFree(hVSurface->p16BPPPalette);
@@ -2976,7 +2970,6 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   hVSurface->pSurfaceData = (PTR)lpDDSurface;
   hVSurface->pSurfaceData1 = NULL;
   hVSurface->pSavedSurfaceData = NULL;
-  hVSurface->RegionList = CreateList(DEFAULT_NUM_REGIONS, sizeof(VSURFACE_REGION));
   hVSurface->fFlags = 0;
 
   // Get and Set palette, if attached, allow to fail
