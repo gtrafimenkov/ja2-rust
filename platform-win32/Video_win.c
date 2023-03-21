@@ -420,7 +420,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   {
     struct BufferLockInfo lock = VSurfaceLock(vsFrameBuffer);
     memset(lock.dest, 0, 480 * lock.pitch);
-    UnlockFrameBuffer();
+    VSurfaceUnlock(vsFrameBuffer);
   }
 
   //
@@ -1505,39 +1505,6 @@ static LPDIRECTDRAW2 GetDirectDraw2Object(void) {
   return gpDirectDrawObject;
 }
 
-void UnlockBackBuffer(void) {
-  DDSURFACEDESC SurfaceDescription;
-  HRESULT ReturnCode;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  ReturnCode = IDirectDrawSurface2_Unlock(gpBackBuffer, &SurfaceDescription);
-  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-  }
-}
-
-void UnlockFrameBuffer(void) {
-  DDSURFACEDESC SurfaceDescription;
-  HRESULT ReturnCode;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  ReturnCode = IDirectDrawSurface2_Unlock(gpFrameBuffer, &SurfaceDescription);
-  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-  }
-}
-
-void UnlockMouseBuffer(void) {
-  DDSURFACEDESC SurfaceDescription;
-  HRESULT ReturnCode;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  ReturnCode = IDirectDrawSurface2_Unlock(gpMouseCursorOriginal, &SurfaceDescription);
-  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-  }
-}
-
 static BOOLEAN GetRGBDistribution(void) {
   DDSURFACEDESC SurfaceDescription;
   UINT16 usBit;
@@ -1590,11 +1557,10 @@ static BOOLEAN GetRGBDistribution(void) {
   return TRUE;
 }
 
-// TODO
 BOOLEAN EraseMouseCursor() {
   struct BufferLockInfo lock = VSurfaceLock(vsMouseCursorOriginal);
   memset(lock.dest, 0, MAX_CURSOR_HEIGHT * lock.pitch);
-  UnlockMouseBuffer();
+  VSurfaceUnlock(vsMouseCursorOriginal);
   return (TRUE);
 }
 
@@ -2228,6 +2194,12 @@ struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
     res = DDLockSurface((LPDIRECTDRAWSURFACE2)vs->pSurfaceData);
   }
   return res;
+}
+
+void VSurfaceUnlock(struct VSurface *vs) {
+  if (vs) {
+    IDirectDrawSurface2_Unlock((LPDIRECTDRAWSURFACE2)vs->pSurfaceData, NULL);
+  }
 }
 
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface) {

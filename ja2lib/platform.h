@@ -63,7 +63,6 @@ struct VSurface;
 struct BltOpts;
 
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
-void UnlockFrameBuffer(void);
 BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
 
 #define BUFFER_READY 0x00
@@ -82,8 +81,5 @@ extern BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *p
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                                   UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
                                   struct Rect *SrcRect);
-
-extern void UnlockBackBuffer();
-extern void UnlockMouseBuffer();
 
 #endif

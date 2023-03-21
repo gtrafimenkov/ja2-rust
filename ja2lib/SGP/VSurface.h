@@ -188,5 +188,6 @@ struct BufferLockInfo {
 };
 
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs);
+void VSurfaceUnlock(struct VSurface *vs);
 
 #endif

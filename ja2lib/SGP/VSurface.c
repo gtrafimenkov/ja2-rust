@@ -668,17 +668,17 @@ void UnLockVideoSurface(VSurfID uiVSurface) {
   VSURFACE_NODE *curr;
 
   if (uiVSurface == BACKBUFFER) {
-    UnlockBackBuffer();
+    VSurfaceUnlock(vsBackBuffer);
     return;
   }
 
   if (uiVSurface == FRAME_BUFFER) {
-    UnlockFrameBuffer();
+    VSurfaceUnlock(vsFrameBuffer);
     return;
   }
 
   if (uiVSurface == MOUSE_BUFFER) {
-    UnlockMouseBuffer();
+    VSurfaceUnlock(vsMouseCursorOriginal);
     return;
   }
 

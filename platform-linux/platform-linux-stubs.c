@@ -219,9 +219,7 @@ UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) { 
 BOOLEAN FillSurface(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
 BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
 
-void UnlockBackBuffer() {}
-void UnlockFrameBuffer() {}
-void UnlockMouseBuffer() {}
+void VSurfaceUnlock(struct VSurface *vs) {}
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
   return res;
