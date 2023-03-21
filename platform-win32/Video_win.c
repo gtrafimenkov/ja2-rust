@@ -28,7 +28,7 @@
 #include "platform_win.h"
 
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
-                             LPRECT pSrcRect, u32 uiTrans);
+                             LPRECT pSrcRect, u32 flags);
 
 #define MAX_CURSOR_WIDTH 64
 #define MAX_CURSOR_HEIGHT 64
@@ -2849,7 +2849,6 @@ static BOOLEAN ClipReleatedSrcAndDestRectangles(struct VSurface *hDestVSurface,
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                            UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect) {
-  UINT32 uiDDFlags;
   RECT DestRect;
 
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
@@ -2864,20 +2863,12 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
       return FALSE;
     }
 
-    // Default flags
-    uiDDFlags = 0;
-
-    // Convert flags into DD flags, ( for transparency use, etc )
-    if (fBltFlags & VS_BLT_USECOLORKEY) {
-      uiDDFlags |= DDBLTFAST_SRCCOLORKEY;
-    }
-
-    BltFastSurfaceWithFlags(hDestVSurface, iDestX, iDestY, hSrcVSurface, &srcRect, uiDDFlags);
+    BltFastSurfaceWithFlags(hDestVSurface, iDestX, iDestY, hSrcVSurface, &srcRect, fBltFlags);
   } else {
     // Normal, specialized blit for clipping, etc
 
     // Default flags
-    uiDDFlags = DDBLT_WAIT;
+    u32 uiDDFlags = DDBLT_WAIT;
 
     // Convert flags into DD flags, ( for transparency use, etc )
     if (fBltFlags & VS_BLT_USECOLORKEY) {
@@ -3495,14 +3486,16 @@ void DDRestoreSurface(LPDIRECTDRAWSURFACE2 pSurface) {
 }
 
 static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY,
-                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, UINT32 uiTrans) {
+                                      LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, u32 ddFlags) {
   HRESULT ReturnCode;
 
   Assert(dest != NULL);
   Assert(src != NULL);
 
+  // https://learn.microsoft.com/en-us/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-bltfast
+
   do {
-    ReturnCode = IDirectDrawSurface2_BltFast(dest, uiX, uiY, src, pSrcRect, uiTrans);
+    ReturnCode = IDirectDrawSurface2_BltFast(dest, uiX, uiY, src, pSrcRect, ddFlags);
     if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
       if (ReturnCode == DDERR_SURFACELOST) {
         return false;
@@ -3513,9 +3506,15 @@ static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UIN
 }
 
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
-                             LPRECT pSrcRect, u32 uiTrans) {
+                             LPRECT pSrcRect, u32 flags) {
+  u32 ddFlags = 0;
+
+  if (flags & VS_BLT_USECOLORKEY) {
+    ddFlags |= DDBLTFAST_SRCCOLORKEY;
+  }
+
   return DDBltFastSurfaceWithFlags((LPDIRECTDRAWSURFACE2)dest->pSurfaceData, x, y,
-                                   (LPDIRECTDRAWSURFACE2)src->pSurfaceData, pSrcRect, uiTrans);
+                                   (LPDIRECTDRAWSURFACE2)src->pSurfaceData, pSrcRect, ddFlags);
 }
 
 bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY, LPDIRECTDRAWSURFACE2 src,
@@ -3528,6 +3527,8 @@ void DDBltSurface(LPDIRECTDRAWSURFACE2 dest, LPRECT pDestRect, LPDIRECTDRAWSURFA
   HRESULT ReturnCode;
 
   Assert(dest != NULL);
+
+  // https://learn.microsoft.com/en-us/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-blt
 
   do {
     ReturnCode = IDirectDrawSurface2_Blt(dest, pDestRect, src, pSrcRect, uiFlags, pDDBltFx);
