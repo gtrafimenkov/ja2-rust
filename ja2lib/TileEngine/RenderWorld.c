@@ -2266,7 +2266,7 @@ void RenderWorld() {
     UINT32 cnt;
     CHAR16 zVal;
 
-    pDestBuf = (UINT16 *)LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
+    pDestBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
 
     for (cnt = 0; cnt < (640 * 480); cnt++) {
       // Get Z value
@@ -2274,7 +2274,7 @@ void RenderWorld() {
       pDestBuf[cnt] = zVal;
     }
 
-    UnLockVideoSurface(guiRENDERBUFFER);
+    UnLockVideoSurface(FRAME_BUFFER);
   }
 }
 

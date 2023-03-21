@@ -3831,32 +3831,32 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 u
     if (ubCount > 1) {
       sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, sWidth, sHeight);
+      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                         sWidth, sHeight);
     }
 
     // Save rectangle
     if (ubCount > 0) {
       sWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       sHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, sWidth, sHeight);
+      BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                         sWidth, sHeight);
     }
   } else {
     // Restore the old rect
     if (ubCount < NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS - 1) {
       sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, sWidth, sHeight);
+      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                         sWidth, sHeight);
     }
 
     // Save rectangle
     if (ubCount < NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS) {
       sWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       sHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, sWidth, sHeight);
+      BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                         sWidth, sHeight);
     }
   }
 

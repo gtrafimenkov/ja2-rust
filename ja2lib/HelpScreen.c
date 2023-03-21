@@ -712,7 +712,7 @@ void RenderHelpScreen() {
     gfHaveRenderedFirstFrameToSaveBuffer = TRUE;
 
     // blit everything to the save buffer ( cause the save buffer can bleed through )
-    BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, gHelpScreen.usScreenLocX,
+    BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, gHelpScreen.usScreenLocX,
                        gHelpScreen.usScreenLocY,
                        (UINT16)(gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth),
                        (UINT16)(gHelpScreen.usScreenLocY + gHelpScreen.usScreenHeight));
@@ -2007,7 +2007,7 @@ void RenderTextBufferToScreen() {
   struct VSurface *hDestVSurface, *hSrcVSurface;
   struct Rect SrcRect;
 
-  GetVideoSurface(&hDestVSurface, guiRENDERBUFFER);
+  GetVideoSurface(&hDestVSurface, FRAME_BUFFER);
   GetVideoSurface(&hSrcVSurface, guiHelpScreenTextBufferSurface);
 
   SrcRect.left = 0;

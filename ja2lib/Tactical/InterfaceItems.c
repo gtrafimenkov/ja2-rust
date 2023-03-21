@@ -1092,7 +1092,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
 
   if (fHatchItOut) {
     UINT32 uiWhichBuffer =
-        (guiCurrentItemDescriptionScreen == MAP_SCREEN) ? guiSAVEBUFFER : guiRENDERBUFFER;
+        (guiCurrentItemDescriptionScreen == MAP_SCREEN) ? guiSAVEBUFFER : FRAME_BUFFER;
     DrawHatchOnInventory(uiWhichBuffer, sX, sY, (UINT16)(gSMInvData[sPocket].sWidth - 1),
                          (UINT16)(gSMInvData[sPocket].sHeight - 1));
   }
@@ -3172,8 +3172,6 @@ void RenderItemDescriptionBox() {
         SetRegionHelpEndCallback(&(gItemDescAttachmentRegions[cnt]), HelpTextDoneCallback);
       }
       if (fHatchOutAttachments) {
-        // UINT32 uiWhichBuffer = ( guiCurrentItemDescriptionScreen == MAP_SCREEN ) ? guiSAVEBUFFER
-        // : guiRENDERBUFFER;
         DrawHatchOnInventory(
             guiSAVEBUFFER, (INT16)(gsInvDescX + gItemDescAttachmentsXY[cnt].sX),
             (INT16)(gsInvDescY + gItemDescAttachmentsXY[cnt].sY - 2),

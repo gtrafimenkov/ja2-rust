@@ -295,7 +295,7 @@ UINT32 SaveLoadScreenHandle() {
     PauseGame();
 
     // save the new rect
-    BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, 639, 439);
+    BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 639, 439);
   }
 
   RestoreBackgroundRects();
@@ -615,10 +615,10 @@ BOOLEAN EnterSaveLoadScreen() {
     memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
     VSurfaceUnlock(vsFB);
 
-    // CLEAR THE guiRENDERBUFFER
-    pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
+    // CLEAR THE FRAME_BUFFER
+    pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
     memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
-    UnLockVideoSurface(guiRENDERBUFFER);
+    UnLockVideoSurface(FRAME_BUFFER);
   }
 
   gfGettingNameFromSaveLoadScreen = FALSE;
@@ -1816,7 +1816,7 @@ void DisplayOnScreenNumber(BOOLEAN fErase) {
       continue;
     }
 
-    BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y),
+    BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y),
                        10, 10);
 
     if (bLoopNum != 10) {

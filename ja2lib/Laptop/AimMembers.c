@@ -3576,32 +3576,32 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (ubCount > 2) {
       usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, usWidth, usHeight);
+      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                         usWidth, usHeight);
     }
 
     // Save rectangle
     if (ubCount > 1) {
       usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, usWidth, usHeight);
+      BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                         usWidth, usHeight);
     }
   } else {
     // Restore the old rect
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 2) {
       usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, usWidth, usHeight);
+      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                         usWidth, usHeight);
     }
 
     // Save rectangle
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 1) {
       usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, usWidth, usHeight);
+      BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                         usWidth, usHeight);
     }
   }
 

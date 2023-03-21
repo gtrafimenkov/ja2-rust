@@ -12,7 +12,6 @@
 
 UINT32 guiBOTTOMPANEL = 0;
 UINT32 guiRIGHTPANEL = 0;
-UINT32 guiRENDERBUFFER = 0;
 UINT32 guiSAVEBUFFER = 0;
 UINT32 guiEXTRABUFFER = 0;
 
@@ -41,8 +40,6 @@ BOOLEAN InitializeGameVideoObjects() {
     return FALSE;
   }
   gfExtraBuffer = TRUE;
-
-  guiRENDERBUFFER = FRAME_BUFFER;
 
   return (TRUE);
 }
