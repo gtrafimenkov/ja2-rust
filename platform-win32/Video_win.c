@@ -34,7 +34,9 @@
 
 extern struct VSurface *vsPrimary;
 extern struct VSurface *vsBackBuffer;
-extern struct VSurface *vsMouseBuffer;
+extern struct VSurface *vsMouseCursor;
+extern struct VSurface *vsMouseCursor;
+extern struct VSurface *vsMouseCursorOriginal;
 
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
                              LPRECT pSrcRect, u32 flags);
@@ -416,9 +418,8 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // Blank out the frame buffer
   //
   {
-    UINT32 uiPitch;
-    PTR pTmpPointer = LockFrameBuffer(&uiPitch);
-    memset(pTmpPointer, 0, 480 * uiPitch);
+    struct BufferLockInfo lock = VSurfaceLock(vsFrameBuffer);
+    memset(lock.dest, 0, 480 * lock.pitch);
     UnlockFrameBuffer();
   }
 
@@ -540,9 +541,10 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // create video surfaces from DD surfaces
   vsPrimary = CreateVideoSurfaceFromDDSurface(gpPrimarySurface);
   vsBackBuffer = CreateVideoSurfaceFromDDSurface(gpBackBuffer);
-  vsMouseBuffer = CreateVideoSurfaceFromDDSurface(gpMouseCursor);
+  vsMouseCursor = CreateVideoSurfaceFromDDSurface(gpMouseCursor);
+  vsMouseCursorOriginal = CreateVideoSurfaceFromDDSurface(gpMouseCursorOriginal);
   vsFrameBuffer = CreateVideoSurfaceFromDDSurface(gpFrameBuffer);
-  if (!vsPrimary || !vsBackBuffer || !vsMouseBuffer || !vsFrameBuffer) {
+  if (!vsPrimary || !vsBackBuffer || !vsMouseCursor || !vsMouseCursorOriginal || !vsFrameBuffer) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, String("Could not create primary surfaces"));
     return FALSE;
   }
@@ -556,7 +558,8 @@ void ShutdownVideoManager(void) {
   DeleteVideoSurface(vsPrimary);
   DeleteVideoSurface(vsBackBuffer);
   DeleteVideoSurface(vsFrameBuffer);
-  DeleteVideoSurface(vsMouseBuffer);
+  DeleteVideoSurface(vsMouseCursor);
+  DeleteVideoSurface(vsMouseCursorOriginal);
 
   //
   // Toggle the state of the video manager to indicate to the refresh thread that it needs to shut
@@ -1502,26 +1505,6 @@ static LPDIRECTDRAW2 GetDirectDraw2Object(void) {
   return gpDirectDrawObject;
 }
 
-PTR LockBackBuffer(UINT32 *uiPitch) {
-  HRESULT ReturnCode;
-  DDSURFACEDESC SurfaceDescription;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-
-  do {
-    ReturnCode = IDirectDrawSurface2_Lock(gpBackBuffer, NULL, &SurfaceDescription, 0, NULL);
-    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to lock backbuffer");
-      return NULL;
-    }
-
-  } while (ReturnCode != DD_OK);
-
-  *uiPitch = SurfaceDescription.lPitch;
-  return SurfaceDescription.lpSurface;
-}
-
 void UnlockBackBuffer(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
@@ -1533,27 +1516,6 @@ void UnlockBackBuffer(void) {
   }
 }
 
-PTR LockFrameBuffer(UINT32 *uiPitch) {
-  HRESULT ReturnCode;
-  DDSURFACEDESC SurfaceDescription;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-
-  do {
-    ReturnCode = IDirectDrawSurface2_Lock(gpFrameBuffer, NULL, &SurfaceDescription, 0, NULL);
-    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to lock backbuffer");
-      return NULL;
-    }
-
-  } while (ReturnCode != DD_OK);
-
-  *uiPitch = SurfaceDescription.lPitch;
-
-  return SurfaceDescription.lpSurface;
-}
-
 void UnlockFrameBuffer(void) {
   DDSURFACEDESC SurfaceDescription;
   HRESULT ReturnCode;
@@ -1563,22 +1525,6 @@ void UnlockFrameBuffer(void) {
   ReturnCode = IDirectDrawSurface2_Unlock(gpFrameBuffer, &SurfaceDescription);
   if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
   }
-}
-
-PTR LockMouseBuffer(UINT32 *uiPitch) {
-  HRESULT ReturnCode;
-  DDSURFACEDESC SurfaceDescription;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  ReturnCode = IDirectDrawSurface2_Lock(gpMouseCursorOriginal, NULL, &SurfaceDescription, 0, NULL);
-  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    return NULL;
-  }
-
-  *uiPitch = SurfaceDescription.lPitch;
-
-  return SurfaceDescription.lpSurface;
 }
 
 void UnlockMouseBuffer(void) {
@@ -1644,19 +1590,11 @@ static BOOLEAN GetRGBDistribution(void) {
   return TRUE;
 }
 
+// TODO
 BOOLEAN EraseMouseCursor() {
-  PTR pTmpPointer;
-  UINT32 uiPitch;
-
-  //
-  // Erase cursor background
-  //
-
-  pTmpPointer = LockMouseBuffer(&uiPitch);
-  memset(pTmpPointer, 0, MAX_CURSOR_HEIGHT * uiPitch);
+  struct BufferLockInfo lock = VSurfaceLock(vsMouseCursorOriginal);
+  memset(lock.dest, 0, MAX_CURSOR_HEIGHT * lock.pitch);
   UnlockMouseBuffer();
-
-  // Don't set dirty
   return (TRUE);
 }
 
@@ -1673,8 +1611,6 @@ void DirtyCursor() { guiMouseBufferState = BUFFER_DIRTY; }
 
 BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
   BOOLEAN ReturnValue;
-  PTR pTmpPointer;
-  UINT32 uiPitch;
   ETRLEObject pETRLEPointer;
 
   //
@@ -1686,16 +1622,7 @@ BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 
     return FALSE;
   }
 
-  //
-  // Ok, then blit the mouse cursor to the MOUSE_BUFFER (which is really gpMouseBufferOriginal)
-  //
-  //
-  // Erase cursor background
-  //
-
-  pTmpPointer = LockMouseBuffer(&uiPitch);
-  memset(pTmpPointer, 0, MAX_CURSOR_HEIGHT * uiPitch);
-  UnlockMouseBuffer();
+  EraseMouseCursor();
 
   //
   // Get new cursor data

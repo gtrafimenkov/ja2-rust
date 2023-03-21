@@ -15,7 +15,8 @@
 struct VSurface *vsPrimary = NULL;
 struct VSurface *vsBackBuffer = NULL;
 struct VSurface *vsFrameBuffer = NULL;
-struct VSurface *vsMouseBuffer = NULL;
+struct VSurface *vsMouseCursor = NULL;
+struct VSurface *vsMouseCursorOriginal = NULL;
 
 //
 // Refresh thread based variables
@@ -622,24 +623,21 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *pVSurfaceDesc, VSurfID *puiIndex) {
 // TODO
 BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
   if (uiVSurface == BACKBUFFER) {
-    // return (BYTE *)LockBackBuffer(puiPitch);
     struct BufferLockInfo res = VSurfaceLock(vsBackBuffer);
     *puiPitch = res.pitch;
     return res.dest;
   }
 
   if (uiVSurface == FRAME_BUFFER) {
-    // return (BYTE *)LockFrameBuffer(puiPitch);
     struct BufferLockInfo res = VSurfaceLock(vsFrameBuffer);
     *puiPitch = res.pitch;
     return res.dest;
   }
 
   if (uiVSurface == MOUSE_BUFFER) {
-    return (BYTE *)LockMouseBuffer(puiPitch);
-    // struct BufferLockInfo res = VSurfaceLock(vsMouseBuffer);
-    // *puiPitch = res.pitch;
-    // return res.dest;
+    struct BufferLockInfo res = VSurfaceLock(vsMouseCursorOriginal);
+    *puiPitch = res.pitch;
+    return res.dest;
   }
 
   //
@@ -736,7 +734,7 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
   }
 
   if (uiIndex == MOUSE_BUFFER) {
-    *hVSurface = vsMouseBuffer;
+    *hVSurface = vsMouseCursor;
     return TRUE;
   }
 
@@ -948,3 +946,6 @@ UINT16 *GetVSurface16BPPPalette(struct VSurface *vs) { return vs->p16BPPPalette;
 void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette) { vs->p16BPPPalette = palette; }
 
 struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
+// void VSurfaceErase(struct VSurface *vs) {
+//   // TODO
+// }

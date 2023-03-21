@@ -216,9 +216,6 @@ BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) 
 void UnlockBackBuffer() {}
 void UnlockFrameBuffer() {}
 void UnlockMouseBuffer() {}
-PTR LockBackBuffer(UINT32 *uiPitch) { return NULL; }
-PTR LockFrameBuffer(UINT32 *uiPitch) { return NULL; }
-PTR LockMouseBuffer(UINT32 *uiPitch) { return NULL; }
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
   return res;

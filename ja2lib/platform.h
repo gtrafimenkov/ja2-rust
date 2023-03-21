@@ -63,7 +63,6 @@ struct VSurface;
 struct BltOpts;
 
 void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
-PTR LockFrameBuffer(UINT32 *uiPitch);
 void UnlockFrameBuffer(void);
 BOOLEAN RestoreVideoSurface(struct VSurface *hVSurface);
 
@@ -86,7 +85,5 @@ extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurfac
 
 extern void UnlockBackBuffer();
 extern void UnlockMouseBuffer();
-extern PTR LockMouseBuffer(UINT32 *uiPitch);
-extern PTR LockBackBuffer(UINT32 *uiPitch);
 
 #endif
