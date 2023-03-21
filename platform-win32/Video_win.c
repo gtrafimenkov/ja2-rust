@@ -1126,12 +1126,7 @@ void RefreshScreen() {
     Region.right = usScreenWidth;
     Region.bottom = usScreenHeight;
 
-    do {
-      ReturnCode = IDirectDrawSurface2_BltFast(pTmpBuffer, 0, 0, gpPrimarySurface, &Region,
-                                               DDBLTFAST_NOCOLORKEY);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      }
-    } while (ReturnCode != DD_OK);
+    DDBltFastSurface(pTmpBuffer, 0, 0, gpPrimarySurface, &Region, DDBLTFAST_NOCOLORKEY);
 
     //
     // Ok now that temp surface has contents of backbuffer, copy temp surface to disk
@@ -1224,12 +1219,8 @@ void RefreshScreen() {
     Region.right = gusMouseCursorWidth;
     Region.bottom = gusMouseCursorHeight;
 
-    do {
-      ReturnCode = IDirectDrawSurface2_BltFast(gpMouseCursor, 0, 0, gpMouseCursorOriginal,
-                                               (LPRECT)&Region, DDBLTFAST_NOCOLORKEY);
-      if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-      }
-    } while (ReturnCode != DD_OK);
+    DDBltFastSurface(gpMouseCursor, 0, 0, gpMouseCursorOriginal, (LPRECT)&Region,
+                     DDBLTFAST_NOCOLORKEY);
 
     guiMouseBufferState = BUFFER_READY;
   }
