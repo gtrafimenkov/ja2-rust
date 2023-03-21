@@ -12,10 +12,10 @@
 #include "TileEngine/RenderWorld.h"
 #include "platform.h"
 
-struct VSurface *ghPrimary = NULL;
-struct VSurface *ghBackBuffer = NULL;
-struct VSurface *ghFrameBuffer = NULL;
-struct VSurface *ghMouseBuffer = NULL;
+struct VSurface *vsPrimary = NULL;
+struct VSurface *vsBackBuffer = NULL;
+struct VSurface *vsFrameBuffer = NULL;
+struct VSurface *vsMouseBuffer = NULL;
 
 //
 // Refresh thread based variables
@@ -322,14 +322,6 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
   return (TRUE);
 }
-
-struct VSurface *GetPrimaryVideoSurface() { return (ghPrimary); }
-
-struct VSurface *GetBackBufferVideoSurface() { return (ghBackBuffer); }
-
-struct VSurface *GetFrameBufferVideoSurface() { return (ghFrameBuffer); }
-
-struct VSurface *GetMouseBufferVideoSurface() { return (ghMouseBuffer); }
 
 BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                SGPRect *area);
@@ -729,17 +721,17 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
   VSURFACE_NODE *curr;
 
   if (uiIndex == BACKBUFFER) {
-    *hVSurface = ghBackBuffer;
+    *hVSurface = vsBackBuffer;
     return TRUE;
   }
 
   if (uiIndex == FRAME_BUFFER) {
-    *hVSurface = ghFrameBuffer;
+    *hVSurface = vsFrameBuffer;
     return TRUE;
   }
 
   if (uiIndex == MOUSE_BUFFER) {
-    *hVSurface = ghMouseBuffer;
+    *hVSurface = vsMouseBuffer;
     return TRUE;
   }
 

@@ -156,9 +156,6 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
                                       INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
                                       struct BltOpts *pBltFx);
 
-struct VSurface *GetPrimaryVideoSurface();
-struct VSurface *GetBackBufferVideoSurface();
-
 BOOLEAN ShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
 BOOLEAN ShadowVideoSurfaceImage(VSurfID destSurface, struct VObject *hImageHandle, INT32 iPosX,
                                 INT32 iPosY);

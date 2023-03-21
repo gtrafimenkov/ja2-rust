@@ -32,9 +32,9 @@
 #include "Smack.h"
 #include "platform_win.h"
 
-extern struct VSurface *ghPrimary;
-extern struct VSurface *ghBackBuffer;
-extern struct VSurface *ghMouseBuffer;
+extern struct VSurface *vsPrimary;
+extern struct VSurface *vsBackBuffer;
+extern struct VSurface *vsMouseBuffer;
 
 bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurface *src,
                              LPRECT pSrcRect, u32 flags);
@@ -554,11 +554,11 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   GetRGBDistribution();
 
   // create video surfaces from DD surfaces
-  ghPrimary = CreateVideoSurfaceFromDDSurface(gpPrimarySurface);
-  ghBackBuffer = CreateVideoSurfaceFromDDSurface(gpBackBuffer);
-  ghMouseBuffer = CreateVideoSurfaceFromDDSurface(gpMouseCursor);
-  ghFrameBuffer = CreateVideoSurfaceFromDDSurface(gpFrameBuffer);
-  if (!ghPrimary || !ghBackBuffer || !ghMouseBuffer || !ghFrameBuffer) {
+  vsPrimary = CreateVideoSurfaceFromDDSurface(gpPrimarySurface);
+  vsBackBuffer = CreateVideoSurfaceFromDDSurface(gpBackBuffer);
+  vsMouseBuffer = CreateVideoSurfaceFromDDSurface(gpMouseCursor);
+  vsFrameBuffer = CreateVideoSurfaceFromDDSurface(gpFrameBuffer);
+  if (!vsPrimary || !vsBackBuffer || !vsMouseBuffer || !vsFrameBuffer) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, String("Could not create primary surfaces"));
     return FALSE;
   }
@@ -569,10 +569,10 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
 void ShutdownVideoManager(void) {
   DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Shutting down the video manager");
 
-  DeleteVideoSurface(ghPrimary);
-  DeleteVideoSurface(ghBackBuffer);
-  DeleteVideoSurface(ghFrameBuffer);
-  DeleteVideoSurface(ghMouseBuffer);
+  DeleteVideoSurface(vsPrimary);
+  DeleteVideoSurface(vsBackBuffer);
+  DeleteVideoSurface(vsFrameBuffer);
+  DeleteVideoSurface(vsMouseBuffer);
 
   //
   // Toggle the state of the video manager to indicate to the refresh thread that it needs to shut
