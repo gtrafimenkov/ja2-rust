@@ -62,8 +62,6 @@ void Plat_ClipCursor(const struct Rect *rect);
 struct VSurface;
 struct BltOpts;
 
-void UnLockVideoSurfaceBuffer(struct VSurface *hVSurface);
-
 #define BUFFER_READY 0x00
 #define BUFFER_BUSY 0x01
 #define BUFFER_DIRTY 0x02

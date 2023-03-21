@@ -125,12 +125,12 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
                          usY, &aRect)) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
              String("Error Occured Copying struct Image* to struct VSurface*"));
-    UnLockVideoSurfaceBuffer(hVSurface);
+    VSurfaceUnlock(hVSurface);
     return (FALSE);
   }
 
   // All is OK
-  UnLockVideoSurfaceBuffer(hVSurface);
+  VSurfaceUnlock(hVSurface);
 
   return (TRUE);
 }
@@ -301,15 +301,15 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
     struct BufferLockInfo destLock = VSurfaceLock(hDestVSurface);
     if (!destLock.dest) {
-      UnLockVideoSurfaceBuffer(hSrcVSurface);
+      VSurfaceUnlock(hSrcVSurface);
       DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP dest surface for blitting");
       return (FALSE);
     }
 
     Blt8BPPTo8BPP(destLock.dest, destLock.pitch, srcLock.dest, srcLock.pitch, iDestX, iDestY,
                   SrcRect.left, SrcRect.top, uiWidth, uiHeight);
-    UnLockVideoSurfaceBuffer(hSrcVSurface);
-    UnLockVideoSurfaceBuffer(hDestVSurface);
+    VSurfaceUnlock(hSrcVSurface);
+    VSurfaceUnlock(hDestVSurface);
     return (TRUE);
   } else {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
@@ -697,7 +697,7 @@ void UnLockVideoSurface(VSurfID uiVSurface) {
   // unlock buffer
   //
 
-  UnLockVideoSurfaceBuffer(curr->hVSurface);
+  VSurfaceUnlock(curr->hVSurface);
 }
 
 BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {

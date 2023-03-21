@@ -1736,12 +1736,6 @@ void VSurfaceUnlock(struct VSurface *vs) {
   }
 }
 
-void UnLockVideoSurfaceBuffer(struct VSurface *vs) {
-  if (vs) {
-    VSurfaceUnlock(vs);
-  }
-}
-
 // Palette setting is expensive, need to set both DDPalette and create 16BPP palette
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   Assert(hVSurface != NULL);
@@ -1845,12 +1839,6 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
     DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSurfaceData1, &lpDDSurface);
   }
 
-  // // Release backup surface
-  // if (hVSurface->pSavedSurfaceData != NULL) {
-  //   DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSavedSurfaceData1,
-  //                    (LPDIRECTDRAWSURFACE2 *)&hVSurface->pSavedSurfaceData);
-  // }
-
   // If there is a 16bpp palette, free it
   if (hVSurface->p16BPPPalette != NULL) {
     MemFree(hVSurface->p16BPPPalette);
@@ -1863,18 +1851,6 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
   MemFree(hVSurface);
 
   return (TRUE);
-}
-
-// *****************************************************************************
-//
-// Private DirectDraw manipulation functions
-//
-// *****************************************************************************
-
-LPDIRECTDRAWSURFACE2 GetVideoSurfaceDDSurface(struct VSurface *hVSurface) {
-  Assert(hVSurface != NULL);
-
-  return ((LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData);
 }
 
 static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface) {
@@ -1912,10 +1888,6 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   if (DDSurfaceDesc.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY) {
     hVSurface->fFlags |= VSURFACE_SYSTEM_MEM_USAGE;
   }
-
-  // if (DDSurfaceDesc.ddsCaps.dwCaps & DDSCAPS_VIDEOMEMORY) {
-  //   hVSurface->fFlags |= VSURFACE_VIDEO_MEM_USAGE;
-  // }
 
   return (hVSurface);
 }
@@ -2331,11 +2303,8 @@ void SmkSetupVideo(void) {
   UINT16 usRed, usGreen, usBlue;
   struct VSurface *hVSurface;
 
-  // DEF:
-  //	lpVideoPlayback2=CinematicModeOn();
-
   GetVideoSurface(&hVSurface, FRAME_BUFFER);
-  lpVideoPlayback2 = GetVideoSurfaceDDSurface(hVSurface);
+  lpVideoPlayback2 = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
@@ -2557,7 +2526,7 @@ void PrintWinFont(UINT32 uiDestBuf, INT32 iFont, INT32 x, INT32 y, STR16 pFontSt
   // Get surface...
   GetVideoSurface(&hVSurface, uiDestBuf);
 
-  pDDSurface = GetVideoSurfaceDDSurface(hVSurface);
+  pDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
 
   IDirectDrawSurface2_GetDC(pDDSurface, &hdc);
 

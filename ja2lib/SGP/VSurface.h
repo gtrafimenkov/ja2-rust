@@ -39,8 +39,6 @@ struct BltOpts {
 // Used to describe the memory usage of a video Surface
 //
 
-#define VSURFACE_VIDEO_MEM_USAGE \
-  0x00000002  // Will force surface into video memory and will fail if it can't
 #define VSURFACE_SYSTEM_MEM_USAGE \
   0x00000004  // Will force surface into system memory and will fail if it can't
 
