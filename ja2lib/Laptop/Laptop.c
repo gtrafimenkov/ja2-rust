@@ -2233,27 +2233,8 @@ BOOLEAN LeaveLapTopScreen(void) {
         SrcRect2.iRight = SrcRect2.iLeft + iWidth;
         SrcRect2.iTop = iY - iHeight / 2;
         SrcRect2.iBottom = SrcRect2.iTop + iHeight;
-        // SrcRect2.iLeft = 464 - 464 * iScalePercentage / 100;
-        // SrcRect2.iRight = 477 + 163 * iScalePercentage / 100;
-        // SrcRect2.iTop = 417 - 417 * iScalePercentage / 100;
-        // SrcRect2.iBottom = 425 + 55 * iScalePercentage / 100;
-
-        // BltStretchVideoSurface( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 0, &SrcRect1, &DstRect );
-
-        // SetFont( FONT10ARIAL );
-        // SetFontForeground( FONT_YELLOW );
-        // SetFontShadow( FONT_NEARBLACK );
-        // mprintf( 10, 10, L"%d -> %d", iRealPercentage, iPercentage );
-        // pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-        // SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
-        // RectangleDraw( TRUE, SrcRect1.iLeft, SrcRect1.iTop, SrcRect1.iRight, SrcRect1.iBottom,
-        // Get16BPPColor( FROMRGB( 255, 100, 0 ) ), pDestBuf ); RectangleDraw( TRUE, SrcRect2.iLeft,
-        // SrcRect2.iTop, SrcRect2.iRight, SrcRect2.iBottom, Get16BPPColor( FROMRGB( 100, 255, 0 )
-        // ), pDestBuf ); UnLockVideoSurface( FRAME_BUFFER );
-
         BltStretchVideoSurface(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 0, &DstRect, &SrcRect2);
         InvalidateScreen();
-        // gfPrintFrameBuffer = TRUE;
         RefreshScreen();
       }
     }
@@ -2262,37 +2243,16 @@ BOOLEAN LeaveLapTopScreen(void) {
 }
 
 BOOLEAN HandleExit(void) {
-  //	static BOOLEAN fSentImpWarningAlready = FALSE;
-
-  // remind player about IMP
-  if (LaptopSaveInfo.gfNewGameLaptop != 0) {
-    if (!AnyMercsHired()) {
-      // AddEmail(0,1, GAME_HELP, GetWorldTotalMin( ) );
-      // fExitingLaptopFlag = FALSE;
-      // return( FALSE );
-    }
-  }
-
   // new game, send email
   if (LaptopSaveInfo.gfNewGameLaptop != 0) {
     // Set an event to send this email ( day 2 8:00-12:00 )
     if ((LaptopSaveInfo.fIMPCompletedFlag == FALSE) &&
         (LaptopSaveInfo.fSentImpWarningAlready == FALSE)) {
       AddFutureDayStrategicEvent(EVENT_HAVENT_MADE_IMP_CHARACTER_EMAIL, (8 + Random(4)) * 60, 0, 1);
-
-      /*
-       Moved to an event that gets triggered the next day: HaventMadeImpMercEmailCallBack()
-
-                              LaptopSaveInfo.fSentImpWarningAlready = TRUE;
-                              AddEmail(IMP_EMAIL_AGAIN,IMP_EMAIL_AGAIN_LENGTH,1, GetWorldTotalMin( )
-       );
-      */
       fExitingLaptopFlag = TRUE;
-
       return (FALSE);
     }
   }
-
   return (TRUE);
 }
 

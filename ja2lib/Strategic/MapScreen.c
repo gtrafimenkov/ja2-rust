@@ -1004,70 +1004,7 @@ void DisplayDestinationOfCurrentDestMerc(void) {
   mprintf(sX, sY, sString);
 }
 
-void ContractBoxGlow(void) {
-  /* Why not?
-   static INT32 iColorNum=10;
-   static BOOLEAN fDelta=FALSE;
-   static BOOLEAN fOldContractGlow = FALSE;
-   UINT16 usColor;
-   UINT32 uiDestPitchBYTES;
-   UINT8	*pDestBuf;
-
-
-          // stopped glowing?
-          if( ( fGlowContractRegion == FALSE )&&( ( fOldContractGlow == TRUE )||(
-   fResetContractGlow== TRUE ) ) )
-          {
-                  // restore background
-                  // RestoreExternBackgroundRect( CONTRACT_X, CONTRACT_Y, CONTRACT_WIDTH+1,
-   CONTRACT_HEIGHT+1 );
-
-                  // reset old
-                  fOldContractGlow = FALSE;
-          }
-
-          // not glowing right now, leave
-          if( ( fGlowContractRegion == FALSE )||( fResetContractGlow == TRUE ) )
-          {
-                  // reset color rotation
-                  iColorNum =0;
-                  fDelta = TRUE;
-
-                  // reset
-                  fResetContractGlow = FALSE;
-                  return;
-          }
-
-          // if not ready to change glow phase yet, leave
-          if ( !gfGlowTimerExpired )
-                  return;
-
-
-          // change direction of glow?
-          if((iColorNum==0)||(iColorNum==10))
-          {
-           fDelta=!fDelta;
-          }
-
-          // increment color
-          if(!fDelta)
-                  iColorNum++;
-          else
-                  iColorNum--;
-
-          usColor=Get16BPPColor( FROMRGB( GlowColorsA[iColorNum].ubRed,
-   GlowColorsA[iColorNum].ubGreen, GlowColorsA[iColorNum].ubBlue ) ); pDestBuf = LockVideoSurface(
-   FRAME_BUFFER, &uiDestPitchBYTES ); SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640,
-   480); RectangleDraw( TRUE, CONTRACT_X, CONTRACT_Y, CONTRACT_X+CONTRACT_WIDTH,
-   CONTRACT_Y+CONTRACT_HEIGHT, usColor, pDestBuf ); InvalidateRegion(CONTRACT_X, CONTRACT_Y,
-   CONTRACT_X+CONTRACT_WIDTH+1, CONTRACT_Y+CONTRACT_HEIGHT+1); UnLockVideoSurface( FRAME_BUFFER );
-
-          // restore background
-          if((iColorNum==0)||(iColorNum==1))
-                  RestoreExternBackgroundRect( CONTRACT_X, CONTRACT_Y, CONTRACT_WIDTH+1,
-   CONTRACT_HEIGHT+1 );
-  */
-}
+void ContractBoxGlow(void) {}
 
 void ContractListRegionBoxGlow(UINT16 usCount) {
   static INT32 iColorNum = 10;

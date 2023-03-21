@@ -863,20 +863,6 @@ UINT32 MessageBoxScreenHandle() {
 
       gfStartedFromGameScreen = FALSE;
       gfStartedFromMapScreen = FALSE;
-      /*
-                              // Save what we have under here...
-                              pDestBuf = LockVideoSurface( gMsgBox.uiSaveBuffer, &uiDestPitchBYTES);
-                              pSrcBuf = LockVideoSurface( FRAME_BUFFER, &uiSrcPitchBYTES);
-
-                              Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                                      (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
-                                                      0 , 0,
-                                                      gMsgBox.sX , gMsgBox.sY,
-                                                      gMsgBox.usWidth, gMsgBox.usHeight );
-
-                              UnLockVideoSurface( gMsgBox.uiSaveBuffer );
-                              UnLockVideoSurface( FRAME_BUFFER );
-      */
     }
 
     gfNewMessageBox = FALSE;

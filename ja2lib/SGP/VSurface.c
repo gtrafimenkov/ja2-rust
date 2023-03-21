@@ -367,7 +367,6 @@ BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, 
 
   // Lock video surface
   pBuffer = (UINT16 *)LockVideoSurface(destSurface, &uiPitch);
-  // UnLockVideoSurface( destSurface );
 
   if (pBuffer == NULL) {
     return (FALSE);
