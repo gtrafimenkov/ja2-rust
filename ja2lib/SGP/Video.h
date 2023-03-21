@@ -40,8 +40,6 @@ void DirtyCursor();
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette);
 
-void VideoCaptureToggle(void);
-
 void RefreshScreen();
 
 void FatalError(STR8 pError, ...);

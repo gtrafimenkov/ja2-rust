@@ -117,7 +117,6 @@ typedef struct {
 
 #define MAX_NUM_FRAMES 25
 
-BOOLEAN gfVideoCapture = FALSE;
 UINT32 guiFramePeriod = (1000 / 15);
 UINT32 guiLastFrame;
 UINT16 *gpFrameData[MAX_NUM_FRAMES];
@@ -210,10 +209,6 @@ extern UINT16 gusBlueMask;
 extern INT16 gusRedShift;
 extern INT16 gusBlueShift;
 extern INT16 gusGreenShift;
-
-void SnapshotSmall(void);
-void VideoMovieCapture(BOOLEAN fEnable);
-void RefreshMovieCache();
 
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   UINT32 uiIndex;
@@ -964,7 +959,6 @@ void RefreshScreen() {
   HRESULT ReturnCode;
   static RECT Region;
   static BOOLEAN fFirstTime = TRUE;
-  UINT32 uiTime;
 
   usScreenWidth = usScreenHeight = 0;
 
@@ -1096,14 +1090,6 @@ void RefreshScreen() {
   //
   // Do we want to print the frame stuff ??
   //
-
-  if (gfVideoCapture) {
-    uiTime = Plat_GetTickCount();
-    if ((uiTime < guiLastFrame) || (uiTime > (guiLastFrame + guiFramePeriod))) {
-      SnapshotSmall();
-      guiLastFrame = uiTime;
-    }
-  }
 
   if (gfPrintFrameBuffer == TRUE) {
     LPDIRECTDRAWSURFACE _pTmpBuffer;
@@ -1682,16 +1668,6 @@ void FatalError(STR8 pError, ...) {
   MessageBox(ghWindow, gFatalErrorString, "JA2 Fatal Error", MB_OK | MB_TASKMODAL);
 }
 
-/*********************************************************************************
- * SnapshotSmall
- *
- *		Grabs a screen from the [rimary surface, and stuffs it into a 16-bit (RGB 5,5,5),
- * uncompressed Targa file. Each time the routine is called, it increments the
- * file number by one. The files are create in the current directory, usually the
- * EXE directory. This routine produces 1/4 sized images.
- *
- *********************************************************************************/
-
 #pragma pack(push, 1)
 
 typedef struct {
@@ -1711,124 +1687,6 @@ typedef struct {
 } TARGA_HEADER;
 
 #pragma pack(pop)
-
-void SnapshotSmall(void) {
-  INT32 iCountX, iCountY;
-  DDSURFACEDESC SurfaceDescription;
-  UINT16 *pVideo, *pDest;
-
-  HRESULT ReturnCode;
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  ReturnCode = IDirectDrawSurface2_Lock(gpPrimarySurface, NULL, &SurfaceDescription, 0, NULL);
-  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    return;
-  }
-
-  // Get the write pointer
-  pVideo = (UINT16 *)SurfaceDescription.lpSurface;
-
-  pDest = gpFrameData[giNumFrames];
-
-  for (iCountY = SCREEN_HEIGHT - 1; iCountY >= 0; iCountY -= 1) {
-    for (iCountX = 0; iCountX < SCREEN_WIDTH; iCountX += 1) {
-      *(pDest + (iCountY * 640) + (iCountX)) = *(pVideo + (iCountY * 640) + (iCountX));
-    }
-  }
-
-  giNumFrames++;
-
-  if (giNumFrames == MAX_NUM_FRAMES) {
-    RefreshMovieCache();
-  }
-
-  ZEROMEM(SurfaceDescription);
-  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-  ReturnCode = IDirectDrawSurface2_Unlock(gpPrimarySurface, &SurfaceDescription);
-  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-  }
-}
-
-void VideoCaptureToggle(void) {
-#ifdef JA2TESTVERSION
-  VideoMovieCapture((BOOLEAN)!gfVideoCapture);
-#endif
-}
-
-void VideoMovieCapture(BOOLEAN fEnable) {
-  INT32 cnt;
-
-  gfVideoCapture = fEnable;
-  if (fEnable) {
-    for (cnt = 0; cnt < MAX_NUM_FRAMES; cnt++) {
-      gpFrameData[cnt] = (UINT16 *)MemAlloc(640 * 480 * 2);
-    }
-
-    giNumFrames = 0;
-
-    guiLastFrame = Plat_GetTickCount();
-  } else {
-    RefreshMovieCache();
-
-    for (cnt = 0; cnt < MAX_NUM_FRAMES; cnt++) {
-      if (gpFrameData[cnt] != NULL) {
-        MemFree(gpFrameData[cnt]);
-      }
-    }
-    giNumFrames = 0;
-  }
-}
-
-void RefreshMovieCache() {
-  TARGA_HEADER Header;
-  INT32 iCountX, iCountY;
-  FILE *disk;
-  CHAR8 cFilename[_MAX_PATH];
-  static UINT32 uiPicNum = 0;
-  UINT16 *pDest;
-  INT32 cnt;
-  struct Str512 ExecDir;
-
-  PauseTime(TRUE);
-
-  if (!Plat_GetExecutableDirectory(&ExecDir)) {
-    return;
-  }
-  Plat_SetCurrentDirectory(ExecDir.buf);
-
-  for (cnt = 0; cnt < giNumFrames; cnt++) {
-    sprintf(cFilename, "JA%5.5d.TGA", uiPicNum++);
-
-    if ((disk = fopen(cFilename, "wb")) == NULL) return;
-
-    memset(&Header, 0, sizeof(TARGA_HEADER));
-
-    Header.ubTargaType = 2;  // Uncompressed 16/24/32 bit
-    Header.usImageWidth = 640;
-    Header.usImageHeight = 480;
-    Header.ubBitsPerPixel = 16;
-
-    fwrite(&Header, sizeof(TARGA_HEADER), 1, disk);
-
-    pDest = gpFrameData[cnt];
-
-    for (iCountY = 480 - 1; iCountY >= 0; iCountY -= 1) {
-      for (iCountX = 0; iCountX < 640; iCountX++) {
-        fwrite((pDest + (iCountY * 640) + iCountX), sizeof(UINT16), 1, disk);
-      }
-    }
-
-    fclose(disk);
-  }
-
-  PauseTime(FALSE);
-
-  giNumFrames = 0;
-
-  strcat(ExecDir.buf, "\\Data");
-  Plat_SetCurrentDirectory(ExecDir.buf);
-}
 
 //////////////////////////////////////////////////////////////////
 // VSurface
