@@ -6,6 +6,9 @@
 struct SGPPaletteEntry;
 struct VSurface;
 
+extern struct VSurface *vsBackBuffer;
+extern struct VSurface *vsFrameBuffer;
+
 #define VIDEO_NO_CURSOR 0xFFFF
 
 extern INT32 giNumFrames;

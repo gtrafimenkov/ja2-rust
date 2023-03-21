@@ -207,18 +207,27 @@ void VideoMovieCapture(BOOLEAN fEnable);
 void RefreshMovieCache();
 
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
-  UINT32 uiIndex, uiPitch;
+  UINT32 uiIndex;
   HRESULT ReturnCode;
   HWND hWindow;
   WNDCLASS WindowClass;
   CHAR8 ClassName[] = APPLICATION_NAME;
   DDSURFACEDESC SurfaceDescription;
   DDCOLORKEY ColorKey;
-  PTR pTmpPointer;
 
 #ifndef WINDOWED_MODE
   DDSCAPS SurfaceCaps;
 #endif
+
+  vsBackBuffer = VSurfaceNew();
+  if (!vsBackBuffer) {
+    return FALSE;
+  }
+
+  vsFrameBuffer = VSurfaceNew();
+  if (!vsFrameBuffer) {
+    return FALSE;
+  }
 
   //
   // Register debug topics
@@ -405,13 +414,18 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
     return FALSE;
   }
 
+  vsBackBuffer->pSurfaceData = gpBackBuffer;
+  vsFrameBuffer->pSurfaceData = gpFrameBuffer;
+
   //
   // Blank out the frame buffer
   //
-
-  pTmpPointer = LockFrameBuffer(&uiPitch);
-  memset(pTmpPointer, 0, 480 * uiPitch);
-  UnlockFrameBuffer();
+  {
+    UINT32 uiPitch;
+    PTR pTmpPointer = LockFrameBuffer(&uiPitch);
+    memset(pTmpPointer, 0, 480 * uiPitch);
+    UnlockFrameBuffer();
+  }
 
   //
   // Initialize the main mouse surfaces

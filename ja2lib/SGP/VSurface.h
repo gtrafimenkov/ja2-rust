@@ -182,4 +182,7 @@ typedef struct {
 
 void SetClippingRect(SGPRect *clip);
 
+// Allocate a new empty instance of VSurface
+struct VSurface *VSurfaceNew();
+
 #endif

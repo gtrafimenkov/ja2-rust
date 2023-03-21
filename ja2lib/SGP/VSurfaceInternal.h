@@ -1,6 +1,7 @@
 #ifndef __VSURFACE_INTERNAL_H
 #define __VSURFACE_INTERNAL_H
 
+#include "Memory.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
 
@@ -30,7 +31,7 @@ struct VSurface {
   PTR pPalette;
 
   UINT32 fFlags;              // Used to describe memory usage, etc
-  UINT16 *p16BPPPalette;      // A 16BPP palette used for 8->16 blits
+  UINT16* p16BPPPalette;      // A 16BPP palette used for 8->16 blits
   COLORVAL TransparentColor;  // Defaults to 0,0,0
   PTR pClipper;               // A void pointer encapsolated as a clipper Surface
 };
