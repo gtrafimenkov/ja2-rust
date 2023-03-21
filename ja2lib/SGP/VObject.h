@@ -5,6 +5,8 @@
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
 
+typedef uint32_t VSurfID;
+
 // ************************************************************************************
 //
 // Video Object SGP Module
@@ -80,10 +82,10 @@ UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType);
 BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex);
 
 // Blits a video object to another video object
-BOOLEAN BltVideoObject(UINT32 uiDestVSurface, struct VObject *hVSrcObject, UINT16 usRegionIndex,
+BOOLEAN BltVideoObject(VSurfID destSurface, struct VObject *hVSrcObject, UINT16 usRegionIndex,
                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx);
 
-BOOLEAN BltVideoObjectFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject, UINT16 usRegionIndex,
+BOOLEAN BltVideoObjectFromIndex(VSurfID destSurface, UINT32 uiSrcVObject, UINT16 usRegionIndex,
                                 INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx);
 
 // **********************************************************************************
@@ -127,12 +129,12 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, ETRLEObject
 BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIndex,
                                                UINT16 *pusWidth, UINT16 *pusHeight);
 
-BOOLEAN BltVideoObjectOutlineFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject, UINT16 usIndex,
+BOOLEAN BltVideoObjectOutlineFromIndex(VSurfID destSurface, UINT32 uiSrcVObject, UINT16 usIndex,
                                        INT32 iDestX, INT32 iDestY, INT16 s16BPPColor,
                                        BOOLEAN fDoOutline);
-BOOLEAN BltVideoObjectOutline(UINT32 uiDestVSurface, struct VObject *hSrcVObject, UINT16 usIndex,
+BOOLEAN BltVideoObjectOutline(VSurfID destSurface, struct VObject *hSrcVObject, UINT16 usIndex,
                               INT32 iDestX, INT32 iDestY, INT16 s16BPPColor, BOOLEAN fDoOutline);
-BOOLEAN BltVideoObjectOutlineShadowFromIndex(UINT32 uiDestVSurface, UINT32 uiSrcVObject,
+BOOLEAN BltVideoObjectOutlineShadowFromIndex(VSurfID destSurface, UINT32 uiSrcVObject,
                                              UINT16 usIndex, INT32 iDestX, INT32 iDestY);
 
 void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,

@@ -406,8 +406,8 @@ struct VSurface *GetMouseBufferVideoSurface() { return (ghMouseBuffer); }
 BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                SGPRect *area);
 
-BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2,
-                                       INT32 Y2, BOOLEAN fLowPercentShadeTable) {
+BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2,
+                                       BOOLEAN fLowPercentShadeTable) {
   UINT16 *pBuffer;
   UINT32 uiPitch;
   SGPRect area;
@@ -419,7 +419,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1
   //
   // Get Video Surface
   //
-  if (!(GetVideoSurface(&hVSurface, uiDestVSurface))) {
+  if (!(GetVideoSurface(&hVSurface, destSurface))) {
     return FALSE;
   }
 
@@ -449,8 +449,8 @@ BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1
   area.iRight = X2;
 
   // Lock video surface
-  pBuffer = (UINT16 *)LockVideoSurface(uiDestVSurface, &uiPitch);
-  // UnLockVideoSurface( uiDestVSurface );
+  pBuffer = (UINT16 *)LockVideoSurface(destSurface, &uiPitch);
+  // UnLockVideoSurface( destSurface );
 
   if (pBuffer == NULL) {
     return (FALSE);
@@ -471,36 +471,35 @@ BOOLEAN InternalShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1
   }
 
   // Mark as dirty if it's the backbuffer
-  // if ( uiDestVSurface == BACKBUFFER )
+  // if ( destSurface == BACKBUFFER )
   //{
   //	InvalidateBackbuffer( );
   //}
 
-  UnLockVideoSurface(uiDestVSurface);
+  UnLockVideoSurface(destSurface);
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceRect(UINT32 uiDestVSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2) {
-  return (InternalShadowVideoSurfaceRect(uiDestVSurface, X1, Y1, X2, Y2, FALSE));
+BOOLEAN ShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2) {
+  return (InternalShadowVideoSurfaceRect(destSurface, X1, Y1, X2, Y2, FALSE));
 }
 
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(UINT32 uiDestVSurface, INT32 X1, INT32 Y1,
+BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(VSurfID destSurface, INT32 X1, INT32 Y1,
                                                    INT32 X2, INT32 Y2) {
-  return (InternalShadowVideoSurfaceRect(uiDestVSurface, X1, Y1, X2, Y2, TRUE));
+  return (InternalShadowVideoSurfaceRect(destSurface, X1, Y1, X2, Y2, TRUE));
 }
 
 // This function will stretch the source image to the size of the dest rect.
 // If the 2 images are not 16 Bpp, it returns false.
-BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, SGPRect *SrcRect,
-                               SGPRect *DestRect) {
+BOOLEAN BltStretchVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
+                               UINT32 fBltFlags, SGPRect *SrcRect, SGPRect *DestRect) {
   struct VSurface *dest;
   struct VSurface *src;
 
-  if (!GetVideoSurface(&dest, uiDestVSurface)) {
+  if (!GetVideoSurface(&dest, destSurface)) {
     return FALSE;
   }
-  if (!GetVideoSurface(&src, uiSrcVSurface)) {
+  if (!GetVideoSurface(&src, srcSurface)) {
     return FALSE;
   }
 
@@ -516,23 +515,23 @@ BOOLEAN BltStretchVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, INT3
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceImage(UINT32 uiDestVSurface, struct VObject *hImageHandle, INT32 iPosX,
+BOOLEAN ShadowVideoSurfaceImage(VSurfID destSurface, struct VObject *hImageHandle, INT32 iPosX,
                                 INT32 iPosY) {
   // Horizontal shadow
-  ShadowVideoSurfaceRect(uiDestVSurface, iPosX + 3, iPosY + hImageHandle->pETRLEObject->usHeight,
+  ShadowVideoSurfaceRect(destSurface, iPosX + 3, iPosY + hImageHandle->pETRLEObject->usHeight,
                          iPosX + hImageHandle->pETRLEObject->usWidth,
                          iPosY + hImageHandle->pETRLEObject->usHeight + 3);
 
   // vertical shadow
-  ShadowVideoSurfaceRect(uiDestVSurface, iPosX + hImageHandle->pETRLEObject->usWidth, iPosY + 3,
+  ShadowVideoSurfaceRect(destSurface, iPosX + hImageHandle->pETRLEObject->usWidth, iPosY + 3,
                          iPosX + hImageHandle->pETRLEObject->usWidth + 3,
                          iPosY + hImageHandle->pETRLEObject->usHeight);
   return (TRUE);
 }
 
-BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
-                                  UINT16 Index, INT16 Ox, INT16 Oy) {
+BOOLEAN ImageFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDestY1, INT32 iDestX2,
+                                  INT32 iDestY2, struct VObject *BkgrndImg, UINT16 Index, INT16 Ox,
+                                  INT16 Oy) {
   INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
   ETRLEObject *pTrav;
   SGPRect NewClip, OldClip;
@@ -607,8 +606,7 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
   for (h = 0; h < hblits; h++) {
     xc = (INT16)iDestX1;
     for (w = 0; w < wblits; w++) {
-      BltVideoObject(uiDestVSurface, BkgrndImg, Index, xc + Ox, yc + Oy, VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject(destSurface, BkgrndImg, Index, xc + Ox, yc + Oy, VO_BLT_SRCTRANSPARENCY, NULL);
       xc += pw;
     }
     yc += ph;
@@ -618,13 +616,13 @@ BOOLEAN ImageFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iD
   return (TRUE);
 }
 
-BOOLEAN ColorFillVideoSurfaceArea(UINT32 uiDestVSurface, INT32 iDestX1, INT32 iDestY1,
-                                  INT32 iDestX2, INT32 iDestY2, UINT16 Color16BPP) {
+BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 iDestX1, INT32 iDestY1, INT32 iDestX2,
+                                  INT32 iDestY2, UINT16 Color16BPP) {
   struct BltOpts BltFx;
   struct VSurface *hDestVSurface;
   SGPRect Clip;
 
-  if (!GetVideoSurface(&hDestVSurface, uiDestVSurface)) {
+  if (!GetVideoSurface(&hDestVSurface, destSurface)) {
     return FALSE;
   }
 
@@ -857,15 +855,15 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, UINT32 uiIndex) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOLEAN BltVideoSurface(UINT32 uiDestVSurface, UINT32 uiSrcVSurface, UINT16 usRegionIndex,
-                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, struct BltOpts *pBltFx) {
+BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, UINT16 usRegionIndex, INT32 iDestX,
+                        INT32 iDestY, UINT32 fBltFlags, struct BltOpts *pBltFx) {
   struct VSurface *hDestVSurface;
   struct VSurface *hSrcVSurface;
 
-  if (!GetVideoSurface(&hDestVSurface, uiDestVSurface)) {
+  if (!GetVideoSurface(&hDestVSurface, destSurface)) {
     return FALSE;
   }
-  if (!GetVideoSurface(&hSrcVSurface, uiSrcVSurface)) {
+  if (!GetVideoSurface(&hSrcVSurface, srcSurface)) {
     return FALSE;
   }
   if (!BltVideoSurfaceToVideoSurface(
