@@ -1770,13 +1770,12 @@ void DisplaySelectedListBox() {
   // get and display the up and down arrows
   GetVideoObject(&hImageHandle, guiQdScrollArrowImage);
   // top arrow
-  BltVideoObject(FRAME_BUFFER, hImageHandle, 0, usPosX - 5, usPosY - 1, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
+  BltVideoObject2(vsFB, hImageHandle, 0, usPosX - 5, usPosY - 1, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Bottom arrow
-  BltVideoObject(FRAME_BUFFER, hImageHandle, 1, usPosX,
-                 usPosY + gpActiveListBox->usScrollHeight - gpActiveListBox->usScrollArrowHeight,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hImageHandle, 1, usPosX,
+                  usPosY + gpActiveListBox->usScrollHeight - gpActiveListBox->usScrollArrowHeight,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // display the scroll rectangle
   DrawQdsScrollRectangle();  // gpActiveListBox->sCurSelectedItem, usPosX, usPosY, (UINT16)(usPosY +

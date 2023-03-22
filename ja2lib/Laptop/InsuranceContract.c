@@ -349,8 +349,8 @@ void RenderInsuranceContract() {
 
   // Get and display the insurance bullet
   GetVideoObject(&hPixHandle, guiInsOrderBulletImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
-                 INS_CTRCT_FIRST_BULLET_TEXT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X, INS_CTRCT_FIRST_BULLET_TEXT_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Display the first instruction sentence
   GetInsuranceText(INS_MLTI_TO_PURCHASE_INSURANCE, sText);
@@ -361,8 +361,8 @@ void RenderInsuranceContract() {
 
   // Get and display the insurance bullet
   GetVideoObject(&hPixHandle, guiInsOrderBulletImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
-                 INS_CTRCT_SECOND_BULLET_TEXT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
+                  INS_CTRCT_SECOND_BULLET_TEXT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Display the second instruction sentence
   GetInsuranceText(INS_MLTI_ONCE_SATISFIED_CLICK_ACCEPT, sText);
@@ -509,8 +509,8 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
 
   // Get and display the insurance order grid #1
   GetVideoObject(&hPixHandle, guiInsOrderGridImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, usPosX, INS_CTRCT_ORDER_GRID1_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, usPosX, INS_CTRCT_ORDER_GRID1_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // load the mercs face graphic and add it
   sprintf(sTemp, "FACES\\%02d.sti", ubMercID);
@@ -534,9 +534,9 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   }
 
   // Get and display the mercs face
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, usPosX + INS_CTRCT_OG_FACE_OFFSET_X,
-                 INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_FACE_OFFSET_Y, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, usPosX + INS_CTRCT_OG_FACE_OFFSET_X,
+                  INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_FACE_OFFSET_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // the face images isn't needed anymore so delete it
   DeleteVideoObjectFromIndex(uiInsMercFaceImage);

@@ -3894,8 +3894,8 @@ void DisplaySoldierUpdateBox() {
   // the button container box
   if (fFourWideMode) {
     // def: 3/1/99 WAS SUBINDEX 6,
-    BltVideoObject(
-        guiSAVEBUFFER, hBackGroundHandle, 19, iX - 4 + TACT_UPDATE_MERC_FACE_X_WIDTH,
+    BltVideoObject2(
+        vsSaveBuffer, hBackGroundHandle, 19, iX - 4 + TACT_UPDATE_MERC_FACE_X_WIDTH,
         iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
         VO_BLT_SRCTRANSPARENCY, NULL);
 
@@ -3907,8 +3907,8 @@ void DisplaySoldierUpdateBox() {
                          gzLateLocalizedString[49], FONT_BLACK, 0, CENTER_JUSTIFIED);
   } else {
     // def: 3/1/99 WAS SUBINDEX 6,
-    BltVideoObject(
-        guiSAVEBUFFER, hBackGroundHandle, 19, iX - 4,
+    BltVideoObject2(
+        vsSaveBuffer, hBackGroundHandle, 19, iX - 4,
         iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
         VO_BLT_SRCTRANSPARENCY, NULL);
 
@@ -5160,7 +5160,7 @@ void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UIN
   RestoreExternBackgroundRect((INT16)(sScreenX + 1), (INT16)(sScreenY - 1), MAP_GRID_X, MAP_GRID_Y);
 
   // blit object to frame buffer
-  BltVideoObject(FRAME_BUFFER, hHandle, ubFrame, sScreenX, sScreenY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, ubFrame, sScreenX, sScreenY, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // invalidate region on frame buffer
   InvalidateRegion(sScreenX, sScreenY - 1, sScreenX + MAP_GRID_X, sScreenY + MAP_GRID_Y);

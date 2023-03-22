@@ -2446,12 +2446,11 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
       if ((!fZoomFlag) ||
           ((fZoomFlag) && (iX > MAP_VIEW_START_X) && (iY > MAP_VIEW_START_Y) &&
            (iX < 640 - MAP_GRID_X * 2) && (iY < MAP_VIEW_START_Y + MAP_VIEW_HEIGHT))) {
-        BltVideoObject(FRAME_BUFFER, hMapHandle, (UINT16)iDirection, iX, iY, VO_BLT_SRCTRANSPARENCY,
-                       NULL);
+        BltVideoObject2(vsFB, hMapHandle, (UINT16)iDirection, iX, iY, VO_BLT_SRCTRANSPARENCY, NULL);
 
         if (!fUTurnFlag) {
-          BltVideoObject(FRAME_BUFFER, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
 
@@ -3188,8 +3187,8 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
         // RestoreExternBackgroundRect(((INT16)iArrowX), ((INT16)iArrowY),DMAP_GRID_ZOOM_X,
         // DMAP_GRID_ZOOM_Y);
         if (pNode != pPath) {
-          BltVideoObject(FRAME_BUFFER, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
       }
@@ -3650,8 +3649,8 @@ void DisplayDistancesForHelicopter(void) {
 
   // blit in background
   GetVideoObject(&hHandle, guiMapBorderHeliSectors);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   //	sTotalCanTravel = ( INT16 )GetTotalDistanceHelicopterCanTravel( );
   sDistanceToGo = (INT16)DistanceOfIntendedHelicopterPath();
@@ -3880,7 +3879,7 @@ void DisplayPositionOfHelicopter(void) {
       ClipBlitsToMapViewRegion();
 
       GetVideoObject(&hHandle, guiHelicopterIcon);
-      BltVideoObject(FRAME_BUFFER, hHandle, HELI_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hHandle, HELI_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
 
       // now get number of people and blit that too
       iNumberOfPeopleInHelicopter = GetNumberOfPassengersInHelicopter();
@@ -3945,7 +3944,7 @@ void DisplayDestinationOfHelicopter(void) {
     ClipBlitsToMapViewRegion();
 
     GetVideoObject(&hHandle, guiHelicopterIcon);
-    BltVideoObject(FRAME_BUFFER, hHandle, HELI_SHADOW_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hHandle, HELI_SHADOW_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
     InvalidateRegion(x, y, x + HELI_SHADOW_ICON_WIDTH, y + HELI_SHADOW_ICON_HEIGHT);
 
     RestoreClipRegionToFullScreen();
@@ -4446,13 +4445,13 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
   // get the properties of the militia object
   GetVideoObject(&hVObject, guiMilitia);
 
-  BltVideoObject(FRAME_BUFFER, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   GetVideoObject(&hVObject, guiMilitiaMaps);
-  BltVideoObject(FRAME_BUFFER, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
-                 MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
-                 MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
+                  MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
+                  MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // set font color for labels and "total militia" counts
   SetFontForeground(FONT_WHITE);
@@ -4632,8 +4631,7 @@ void RenderIconsPerSectorForSelectedTown(void) {
         }
       }
 
-      BltVideoObject(FRAME_BUFFER, hVObject, (UINT16)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject2(vsFB, hVObject, (UINT16)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
     }
   }
 
@@ -4667,7 +4665,7 @@ void ShowHighLightedSectorOnMilitiaMap(void) {
     GetVideoObject(&hVObject, guiMilitiaSectorHighLight);
 
     // blt the object
-    BltVideoObject(FRAME_BUFFER, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (sSectorMilitiaMapSectorOutline != -1) {
@@ -4680,7 +4678,7 @@ void ShowHighLightedSectorOnMilitiaMap(void) {
     GetVideoObject(&hVObject, guiMilitiaSectorOutline);
 
     // blt the object
-    BltVideoObject(FRAME_BUFFER, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   return;
@@ -4914,8 +4912,7 @@ void DisplayUnallocatedMilitia(void) {
       iCurrentIcon = 10;
     }
 
-    BltVideoObject(FRAME_BUFFER, hVObject, (UINT16)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVideoObject2(vsFB, hVObject, (UINT16)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 }
 

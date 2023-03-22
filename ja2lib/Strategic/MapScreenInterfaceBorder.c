@@ -136,7 +136,7 @@ void RenderMapBorderEtaPopUp(void) {
 
   // get and blt ETA box
   GetVideoObject(&hHandle, guiMapBorderEtaPopUp);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, MAP_BORDER_X + 215, 291, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, MAP_BORDER_X + 215, 291, VO_BLT_SRCTRANSPARENCY, NULL);
 
   InvalidateRegion(MAP_BORDER_X + 215, 291, MAP_BORDER_X + 215 + 100, 310);
 

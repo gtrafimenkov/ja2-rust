@@ -630,8 +630,8 @@ void DisplayAutoBandageUpdatePanel(void) {
       sCurrentYPosition = sYPosition + (iCounterA * TACT_UPDATE_MERC_FACE_X_HEIGHT);
 
       // slap down background piece
-      BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 15, sCurrentXPosition, sCurrentYPosition,
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hBackGroundHandle, 15, sCurrentXPosition, sCurrentYPosition,
+                      VO_BLT_SRCTRANSPARENCY, NULL);
 
       iIndex = iCounterA * iNumberDoctorsWide + iCounterB;
 
@@ -665,22 +665,21 @@ void DisplayAutoBandageUpdatePanel(void) {
 
   for (iCounterB = 0; iCounterB < iNumberPatientsWide; iCounterB++) {
     // slap down background piece
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 16,
-                   sXPosition + (iCounterB * TACT_UPDATE_MERC_FACE_X_WIDTH),
-                   sCurrentYPosition + (TACT_UPDATE_MERC_FACE_X_HEIGHT), VO_BLT_SRCTRANSPARENCY,
-                   NULL);
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 16,
-                   sXPosition + (iCounterB * TACT_UPDATE_MERC_FACE_X_WIDTH), sYPosition - 9,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(
+        vsFB, hBackGroundHandle, 16, sXPosition + (iCounterB * TACT_UPDATE_MERC_FACE_X_WIDTH),
+        sCurrentYPosition + (TACT_UPDATE_MERC_FACE_X_HEIGHT), VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hBackGroundHandle, 16,
+                    sXPosition + (iCounterB * TACT_UPDATE_MERC_FACE_X_WIDTH), sYPosition - 9,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // bordering patient title
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 11, sXPosition - 4,
-                 sYPosition + ((iNumberDoctorsHigh)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
-                 VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 13, sXPosition + iTotalPixelsWide,
-                 sYPosition + ((iNumberDoctorsHigh)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 11, sXPosition - 4,
+                  sYPosition + ((iNumberDoctorsHigh)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
+                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 13, sXPosition + iTotalPixelsWide,
+                  sYPosition + ((iNumberDoctorsHigh)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   SetFont(TINYFONT1);
   SetFontForeground(FONT_WHITE);
@@ -708,8 +707,8 @@ void DisplayAutoBandageUpdatePanel(void) {
           sYPosition + ((iCounterA + iNumberDoctorsHigh) * TACT_UPDATE_MERC_FACE_X_HEIGHT);
 
       // slap down background piece
-      BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 15, sCurrentXPosition, sCurrentYPosition,
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hBackGroundHandle, 15, sCurrentXPosition, sCurrentYPosition,
+                      VO_BLT_SRCTRANSPARENCY, NULL);
 
       iIndex = iCounterA * iNumberPatientsWide + iCounterB;
 
@@ -741,12 +740,14 @@ void DisplayAutoBandageUpdatePanel(void) {
 
   // bordering patients squares
   for (iCounterA = 0; iCounterA < iNumberPatientsHigh; iCounterA++) {
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 3, sXPosition - 4,
-                   sYPosition + ((iCounterA + iNumberDoctorsHigh) * TACT_UPDATE_MERC_FACE_X_HEIGHT),
-                   VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 5, sXPosition + iTotalPixelsWide,
-                   sYPosition + ((iCounterA + iNumberDoctorsHigh) * TACT_UPDATE_MERC_FACE_X_HEIGHT),
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(
+        vsFB, hBackGroundHandle, 3, sXPosition - 4,
+        sYPosition + ((iCounterA + iNumberDoctorsHigh) * TACT_UPDATE_MERC_FACE_X_HEIGHT),
+        VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(
+        vsFB, hBackGroundHandle, 5, sXPosition + iTotalPixelsWide,
+        sYPosition + ((iCounterA + iNumberDoctorsHigh) * TACT_UPDATE_MERC_FACE_X_HEIGHT),
+        VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // back up 11 pixels
@@ -754,52 +755,51 @@ void DisplayAutoBandageUpdatePanel(void) {
 
   // pieces bordering doctor squares
   for (iCounterA = 0; iCounterA < iNumberDoctorsHigh; iCounterA++) {
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 3, sXPosition - 4,
-                   sYPosition + ((iCounterA)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
-                   VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 5, sXPosition + iTotalPixelsWide,
-                   sYPosition + ((iCounterA)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hBackGroundHandle, 3, sXPosition - 4,
+                    sYPosition + ((iCounterA)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
+                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hBackGroundHandle, 5, sXPosition + iTotalPixelsWide,
+                    sYPosition + ((iCounterA)*TACT_UPDATE_MERC_FACE_X_HEIGHT),
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // bordering doctor title
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 11, sXPosition - 4, sYPosition - 9,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 13, sXPosition + iTotalPixelsWide, sYPosition - 9,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 11, sXPosition - 4, sYPosition - 9,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 13, sXPosition + iTotalPixelsWide, sYPosition - 9,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // now the top pieces
   for (iCounterA = 0; iCounterA < iNumberPatientsWide; iCounterA++) {
     // the top bottom
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 1,
-                   sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounterA), sYPosition - 13,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hBackGroundHandle, 1,
+                    sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounterA), sYPosition - 13,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // the top corners
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 0, sXPosition - 4, sYPosition - 13,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 2, sXPosition + iTotalPixelsWide, sYPosition - 13,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 0, sXPosition - 4, sYPosition - 13,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 2, sXPosition + iTotalPixelsWide, sYPosition - 13,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   iTotalPixelsHigh += 9;
 
   // the bottom
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 17, sXPosition - 4, sYPosition + iTotalPixelsHigh,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 18,
-                 sXPosition + iTotalPixelsWide - TACT_UPDATE_MERC_FACE_X_WIDTH,
-                 sYPosition + iTotalPixelsHigh, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 17, sXPosition - 4, sYPosition + iTotalPixelsHigh,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hBackGroundHandle, 18,
+                  sXPosition + iTotalPixelsWide - TACT_UPDATE_MERC_FACE_X_WIDTH,
+                  sYPosition + iTotalPixelsHigh, VO_BLT_SRCTRANSPARENCY, NULL);
 
   if (iNumberPatientsWide == 2) {
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 6, sXPosition - 4,
-                   sYPosition + iTotalPixelsHigh, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hBackGroundHandle, 6, sXPosition - 4, sYPosition + iTotalPixelsHigh,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     CreateTerminateAutoBandageButton((INT16)(sXPosition),
                                      (INT16)(sYPosition + iTotalPixelsHigh + 3));
   } else {
-    BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 6,
-                   sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH - 4, sYPosition + iTotalPixelsHigh,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hBackGroundHandle, 6, sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH - 4,
+                    sYPosition + iTotalPixelsHigh, VO_BLT_SRCTRANSPARENCY, NULL);
     CreateTerminateAutoBandageButton((INT16)(sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH),
                                      (INT16)(sYPosition + iTotalPixelsHigh + 3));
   }
@@ -1011,8 +1011,8 @@ BOOLEAN RenderSoldierSmallFaceForAutoBandagePanel(INT32 iIndex, INT16 sCurrentXP
                           VO_BLT_SRCTRANSPARENCY, NULL);
 
   // grab the face
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, sCurrentXPosition + 2, sCurrentYPosition + 2,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, sCurrentXPosition + 2, sCurrentYPosition + 2,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     // find a free slot

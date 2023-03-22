@@ -924,8 +924,8 @@ void ShowCurrentDrawingMode(void) {
 
     SetObjectShade(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
                    DEFAULT_SHADE_LEVEL);
-    BltVideoObject(FRAME_BUFFER, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
-                   usUseIndex, (0 + iStartX), (400 + iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface, usUseIndex,
+                    (0 + iStartX), (400 + iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
 
     pETRLEObject->sOffsetX = sTempOffsetX;
     pETRLEObject->sOffsetY = sTempOffsetY;
@@ -2471,7 +2471,7 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
   pETRLEObject->sOffsetY = 0;
 
   SetObjectShade(hVObj, DEFAULT_SHADE_LEVEL);
-  BltVideoObject(FRAME_BUFFER, hVObj, 0, (iStartX), (iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObj, 0, (iStartX), (iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
 
   pETRLEObject->sOffsetX = sTempOffsetX;
   pETRLEObject->sOffsetY = sTempOffsetY;

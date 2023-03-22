@@ -423,12 +423,10 @@ void RenderStationaryGroups() {
       u8 allMilCount = CountMilitiaInSector(x + 1, y + 1);
 
       if (pSector->uiFlags & SF_MINING_SITE)
-        BltVideoObject(FRAME_BUFFER, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY,
-                       NULL);
+        BltVideoObject2(vsFB, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY, NULL);
 
       if (pSector->uiFlags & SF_SAM_SITE)
-        BltVideoObject(FRAME_BUFFER, hVObject, SAM_ICON, xp + 20, yp + 4, VO_BLT_SRCTRANSPARENCY,
-                       NULL);
+        BltVideoObject2(vsFB, hVObject, SAM_ICON, xp + 20, yp + 4, VO_BLT_SRCTRANSPARENCY, NULL);
 
       if (allMilCount > 0) {
         // show militia
@@ -510,10 +508,9 @@ void RenderMovingGroupsAndMercs() {
         // if the group was moving, then draw the anchor to visually indicate the sector of
         // influence for enemy patrol groups.
         if (pGroup->uiTraverseTime) {
-          BltVideoObject(FRAME_BUFFER, hVObject, GROUP_ANCHOR,
-                         VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1),
-                         VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1),
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(
+              vsFB, hVObject, GROUP_ANCHOR, VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1),
+              VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1), VO_BLT_SRCTRANSPARENCY, NULL);
         }
 
         ubNumAdmins = pGroup->pEnemyGroup->ubNumAdmins;  //+ pGroup->pEnemyGroup->ubAdminsInBattle;
@@ -1620,7 +1617,7 @@ void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
   Assert(ubIconColor < NUM_ICON_COLORS);
 
   ubObjectIndex = (ubIconType * NUM_ICON_COLORS) + ubIconColor;
-  BltVideoObject(FRAME_BUFFER, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,

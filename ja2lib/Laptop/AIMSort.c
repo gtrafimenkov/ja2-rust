@@ -361,23 +361,23 @@ void RenderAimSort() {
   DrawAimDefaults();
   // SortBy
   GetVideoObject(&hSortByHandle, guiSortByBox);
-  BltVideoObject(FRAME_BUFFER, hSortByHandle, 0, AIM_SORT_SORT_BY_X, AIM_SORT_SORT_BY_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hSortByHandle, 0, AIM_SORT_SORT_BY_X, AIM_SORT_SORT_BY_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // To MugShots
   GetVideoObject(&hToMugShotHandle, guiToMugShots);
-  BltVideoObject(FRAME_BUFFER, hToMugShotHandle, 0, AIM_SORT_TO_MUGSHOTS_X, AIM_SORT_TO_MUGSHOTS_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hToMugShotHandle, 0, AIM_SORT_TO_MUGSHOTS_X, AIM_SORT_TO_MUGSHOTS_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // To stats
   GetVideoObject(&hToStatsHandle, guiToStats);
-  BltVideoObject(FRAME_BUFFER, hToStatsHandle, 0, AIM_SORT_TO_STATS_X, AIM_SORT_TO_STATS_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hToStatsHandle, 0, AIM_SORT_TO_STATS_X, AIM_SORT_TO_STATS_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // To Alumni
   GetVideoObject(&hToAlumniHandle, guiToAlumni);
-  BltVideoObject(FRAME_BUFFER, hToAlumniHandle, 0, AIM_SORT_TO_ALUMNI_X, AIM_SORT_TO_ALUMNI_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hToAlumniHandle, 0, AIM_SORT_TO_ALUMNI_X, AIM_SORT_TO_ALUMNI_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Draw the aim slogan under the symbol
   DisplayAimSlogan();
@@ -577,8 +577,8 @@ void DrawSelectLight(UINT8 ubMode, UINT8 ubImage) {
   ubMode *= 2;
 
   GetVideoObject(&hSelectLightHandle, guiSelectLight);
-  BltVideoObject(FRAME_BUFFER, hSelectLightHandle, ubImage, (AimSortCheckBoxLoc[ubMode]),
-                 (AimSortCheckBoxLoc[ubMode + 1]), VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hSelectLightHandle, ubImage, (AimSortCheckBoxLoc[ubMode]),
+                  (AimSortCheckBoxLoc[ubMode + 1]), VO_BLT_SRCTRANSPARENCY, NULL);
 
   //  InvalidateRegion(LAPTOP_SCREEN_UL_X,LAPTOP_SCREEN_WEB_UL_Y,LAPTOP_SCREEN_LR_X,LAPTOP_SCREEN_WEB_LR_Y);
 

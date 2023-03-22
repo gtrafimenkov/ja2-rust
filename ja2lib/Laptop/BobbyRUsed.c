@@ -66,8 +66,8 @@ void RenderBobbyRUsed() {
 
   // GunForm
   GetVideoObject(&hPixHandle, guiUsedGrid);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   DisplayItemInfo(BOBBYR_USED_ITEMS);
 

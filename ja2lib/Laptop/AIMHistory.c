@@ -379,8 +379,8 @@ BOOLEAN InitTocMenu() {
       MSYS_SetRegionUserData(&gSelectedHistoryTocMenuRegion[i], 0, i + 1);
     }
 
-    BltVideoObject(FRAME_BUFFER, hContentButtonHandle, 0, AIM_HISTORY_TOC_X, usPosY,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hContentButtonHandle, 0, AIM_HISTORY_TOC_X, usPosY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     DrawTextToScreen(sText, AIM_HISTORY_TOC_X, (UINT16)(usPosY + AIM_HISTORY_TOC_Y),
                      AIM_CONTENTBUTTON_WIDTH, AIM_HISTORY_TOC_TEXT_FONT, AIM_HISTORY_TOC_TEXT_COLOR,
                      FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
