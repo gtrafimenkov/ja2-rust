@@ -4824,34 +4824,6 @@ void DrawMouseText() {
       SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
     }
   }
-
-  // if ( gpItemPointer != NULL )
-#if 0
-	{
-		if ( gpItemPointer->ubNumberOfObjects > 1 )
-		{
-			SetFontDestBuffer( MOUSE_BUFFER , 0, 0, 64, 64, FALSE );
-
-			swprintf( pStr, L"x%d", gpItemPointer->ubNumberOfObjects );
-
-			FindFontCenterCoordinates( 0, 0, gsCurMouseWidth, gsCurMouseHeight, pStr, TINYFONT1, &sX, &sY );
-
-			SetFont( TINYFONT1 );
-
-			SetFontBackground( FONT_MCOLOR_BLACK );
-			SetFontForeground( FONT_MCOLOR_WHITE );
-			SetFontShadow( DEFAULT_SHADOW );
-
-			if ( !( gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA  ) )
-			{
-				mprintf( sX + 10, sY - 10, L"x%d", gpItemPointer->ubNumberOfObjects );
-			}
-
-			// reset
-			SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
-		}
-	}
-#endif
 }
 
 void UpdateAnimatedCursorFrames(UINT32 uiCursorIndex) {

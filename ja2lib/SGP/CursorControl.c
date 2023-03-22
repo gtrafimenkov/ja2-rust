@@ -33,16 +33,6 @@ UINT32 guiDelayTimer = 0;
 
 MOUSEBLT_HOOK gMouseBltOverride = NULL;
 
-BOOLEAN BltToMouseCursorFromVObject(struct VObject *hVObject, UINT16 usVideoObjectSubIndex,
-                                    UINT16 usXPos, UINT16 usYPos) {
-  BOOLEAN ReturnValue;
-
-  ReturnValue = BltVideoObject(MOUSE_BUFFER, hVObject, usVideoObjectSubIndex, usXPos, usYPos,
-                               VO_BLT_SRCTRANSPARENCY, NULL);
-
-  return ReturnValue;
-}
-
 BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
                                                UINT16 usVideoObjectSubIndex, UINT16 usXPos,
                                                UINT16 usYPos) {
@@ -433,19 +423,14 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
                   gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject, usSubIndex,
                   pCurImage->usPosX, pCurImage->usPosY);
             } else {
-              ReturnValue =
-                  BltToMouseCursorFromVObject(gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject,
-                                              usSubIndex, pCurImage->usPosX, pCurImage->usPosY);
+              ReturnValue = BltVideoObject2(
+                  vsMouseCursorOriginal, gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject,
+                  usSubIndex, pCurImage->usPosX, pCurImage->usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
             }
             if (!ReturnValue) {
               return (FALSE);
             }
           }
-
-          // if ( pCurData->bFlags & CURSOR_TO_FLASH )
-          //{
-          //	break;
-          //}
         }
 
         // Hook into hook function
