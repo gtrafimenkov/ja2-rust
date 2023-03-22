@@ -617,7 +617,7 @@ BOOLEAN EnterSaveLoadScreen() {
     // CLEAR THE FRAME_BUFFER
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
     memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
-    UnLockVideoSurface(FRAME_BUFFER);
+    VSurfaceUnlock(vsFB);
   }
 
   gfGettingNameFromSaveLoadScreen = FALSE;

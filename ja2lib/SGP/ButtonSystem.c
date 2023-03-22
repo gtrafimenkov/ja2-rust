@@ -2608,7 +2608,7 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   Blt16BPPBufferHatchRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void DrawShadeOnButton(GUI_BUTTON *b) {
@@ -2621,7 +2621,7 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void DrawDefaultOnButton(GUI_BUTTON *b) {
@@ -2653,7 +2653,7 @@ void DrawDefaultOnButton(GUI_BUTTON *b) {
   if (b->bDefaultStatus == DEFAULT_STATUS_DOTTEDINTERIOR ||
       b->bDefaultStatus == DEFAULT_STATUS_WINDOWS95) {  // Draw an internal dotted rectangle.
   }
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void DrawCheckBoxButtonOn(INT32 iButtonID) {
@@ -3122,7 +3122,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   }
 
   // Unlock buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 //=======================================================================================================

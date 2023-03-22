@@ -926,7 +926,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
       Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
                       0, 0, 0, usWidth, usHeight);
 
-      UnLockVideoSurface(FRAME_BUFFER);
+      VSurfaceUnlock(vsFB);
       VSurfaceUnlock(vsSaveBuffer);
     }
   }

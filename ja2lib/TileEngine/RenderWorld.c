@@ -2272,7 +2272,7 @@ void RenderWorld() {
       pDestBuf[cnt] = zVal;
     }
 
-    UnLockVideoSurface(FRAME_BUFFER);
+    VSurfaceUnlock(vsFB);
   }
 }
 
