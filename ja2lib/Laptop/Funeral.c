@@ -278,8 +278,7 @@ void DisplayFuneralRipTombStone() {
 
   // rip tombstone
   GetVideoObject(&hPixHandle, guiClosedSign);
-  BltVideoObjectOutlineShadowFromIndex(
-      FRAME_BUFFER, guiClosedSign, 0, FUNERAL_CLOSED_RIP_SIGN_X + 5, FUNERAL_CLOSED_RIP_SIGN_Y + 5);
+  BltVideoObjectOutlineShadowFromIndex(vsFB,guiClosedSign, 0, FUNERAL_CLOSED_RIP_SIGN_X + 5, FUNERAL_CLOSED_RIP_SIGN_Y + 5);
   BltVideoObject2(vsFB, hPixHandle, 0, FUNERAL_CLOSED_RIP_SIGN_X, FUNERAL_CLOSED_RIP_SIGN_Y,
                   VO_BLT_SRCTRANSPARENCY, NULL);
 

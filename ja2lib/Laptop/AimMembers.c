@@ -1263,11 +1263,11 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
       sCenY = PosY + (abs((INT32)((INT32)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->sOffsetY;
 
       // blt the shadow of the item
-      BltVideoObjectOutlineShadowFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
+      BltVideoObjectOutlineShadowFromIndex(vsFB, GetInterfaceGraphicForItem(pItem),
                                            pItem->ubGraphicNum, sCenX - 2, sCenY + 2);
       // blt the item
-      BltVideoObjectOutlineFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
-                                     pItem->ubGraphicNum, sCenX, sCenY, 0, FALSE);
+      BltVideoObjectOutlineFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
+                                     sCenX, sCenY, 0, FALSE);
 
       // if there are more then 1 piece of equipment in the current slot, display how many there are
       if (gMercProfiles[ubMercID].bInvNumber[i] > 1) {

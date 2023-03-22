@@ -334,8 +334,8 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
       sOffset = hVObject->pETRLEObject[item->ubGraphicNum].sOffsetX;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
 
-      BltVideoObjectOutlineFromIndex(eInfo.uiBuffer, uiVideoObjectIndex, item->ubGraphicNum, sStart,
-                                     y + 2, 0, FALSE);
+      BltVideoObjectOutlineFromIndex(GetVSByID(eInfo.uiBuffer), uiVideoObjectIndex,
+                                     item->ubGraphicNum, sStart, y + 2, 0, FALSE);
       // cycle through the various slot positions (0,0), (0,40), (60,0), (60,40), (120,0)...
       if (y == 0) {
         y = 40;
@@ -449,8 +449,8 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
           sStart = x + (60 - sWidth - sOffset * 2) / 2;
 
           if (sWidth) {
-            BltVideoObjectOutlineFromIndex(eInfo.uiBuffer, uiVideoObjectIndex, item->ubGraphicNum,
-                                           sStart, y + 2, 0, FALSE);
+            BltVideoObjectOutlineFromIndex(GetVSByID(eInfo.uiBuffer), uiVideoObjectIndex,
+                                           item->ubGraphicNum, sStart, y + 2, 0, FALSE);
           }
           // cycle through the various slot positions (0,0), (0,40), (60,0), (60,40), (120,0)...
           if (y == 0) {
@@ -529,8 +529,8 @@ void RenderEditorItemsInfo() {
       sOffset = hVObject->pETRLEObject[item->ubGraphicNum].sOffsetX;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
       if (sWidth) {
-        BltVideoObjectOutlineFromIndex(FRAME_BUFFER, uiVideoObjectIndex, item->ubGraphicNum, sStart,
-                                       y + 2, Get16BPPColor(FROMRGB(250, 250, 0)), TRUE);
+        BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, item->ubGraphicNum, sStart, y + 2,
+                                       Get16BPPColor(FROMRGB(250, 250, 0)), TRUE);
       }
     }
   }
@@ -546,8 +546,8 @@ void RenderEditorItemsInfo() {
       sOffset = hVObject->pETRLEObject[item->ubGraphicNum].sOffsetX;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
       if (sWidth) {
-        BltVideoObjectOutlineFromIndex(FRAME_BUFFER, uiVideoObjectIndex, item->ubGraphicNum, sStart,
-                                       y + 2, Get16BPPColor(FROMRGB(250, 0, 0)), TRUE);
+        BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, item->ubGraphicNum, sStart, y + 2,
+                                       Get16BPPColor(FROMRGB(250, 0, 0)), TRUE);
       }
     }
   }

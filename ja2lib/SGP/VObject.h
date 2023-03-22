@@ -131,12 +131,12 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, ETRLEObject
 BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIndex,
                                                UINT16 *pusWidth, UINT16 *pusHeight);
 
-BOOLEAN BltVideoObjectOutlineFromIndex(VSurfID destSurface, UINT32 uiSrcVObject, UINT16 usIndex,
+BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, UINT32 uiSrcVObject, UINT16 usIndex,
                                        INT32 iDestX, INT32 iDestY, INT16 s16BPPColor,
                                        BOOLEAN fDoOutline);
 BOOLEAN BltVideoObjectOutline(struct VSurface *dest, struct VObject *hSrcVObject, UINT16 usIndex,
                               INT32 iDestX, INT32 iDestY, INT16 s16BPPColor, BOOLEAN fDoOutline);
-BOOLEAN BltVideoObjectOutlineShadowFromIndex(VSurfID destSurface, UINT32 uiSrcVObject,
+BOOLEAN BltVideoObjectOutlineShadowFromIndex(struct VSurface *dest, UINT32 uiSrcVObject,
                                              UINT16 usIndex, INT32 iDestX, INT32 iDestY);
 
 void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,

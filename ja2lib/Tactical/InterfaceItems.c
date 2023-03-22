@@ -1069,7 +1069,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
   }
 
   // Now render as normal
-  INVRenderItem(guiSAVEBUFFER, pSoldier, pObject, sX, sY, gSMInvData[sPocket].sWidth,
+  INVRenderItem(vsSaveBuffer, pSoldier, pObject, sX, sY, gSMInvData[sPocket].sWidth,
                 gSMInvData[sPocket].sHeight, fRenderDirtyLevel, NULL, 0, fOutline, sOutlineColor);
 
   if (gbInvalidPlacementSlot[sPocket]) {
@@ -1612,7 +1612,7 @@ void HandleNewlyAddedItems(struct SOLDIERTYPE *pSoldier, BOOLEAN *fDirtyLevel) {
         continue;
       }
 
-      INVRenderItem(guiSAVEBUFFER, pSoldier, pObject, sX, sY, gSMInvData[cnt].sWidth,
+      INVRenderItem(vsSaveBuffer, pSoldier, pObject, sX, sY, gSMInvData[cnt].sWidth,
                     gSMInvData[cnt].sHeight, DIRTYLEVEL2, NULL, 0, TRUE,
                     us16BPPItemCyclePlacedItemColors[pSoldier->bNewItemCycleCount[cnt]]);
     }
@@ -1681,7 +1681,7 @@ void InitItemInterface() {
   }
 }
 
-void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
+void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
                    INT16 sX, INT16 sY, INT16 sWidth, INT16 sHeight, UINT8 fDirtyLevel,
                    UINT8 *pubHighlightCounter, UINT8 ubStatusIndex, BOOLEAN fOutline,
                    INT16 sOutlineColor) {
@@ -1720,13 +1720,13 @@ void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTT
     sCenY = sY + (abs((INT16)(sHeight - usHeight)) / 2) - pTrav->sOffsetY;
 
     // Shadow area
-    BltVideoObjectOutlineShadowFromIndex(uiBuffer, GetInterfaceGraphicForItem(pItem),
+    BltVideoObjectOutlineShadowFromIndex(dest, GetInterfaceGraphicForItem(pItem),
                                          pItem->ubGraphicNum, sCenX - 2, sCenY + 2);
 
-    BltVideoObjectOutlineFromIndex(uiBuffer, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
+    BltVideoObjectOutlineFromIndex(dest, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
                                    sCenX, sCenY, sOutlineColor, fOutline);
 
-    if (uiBuffer == FRAME_BUFFER) {
+    if (dest == vsFB) {
       InvalidateRegion(sX, sY, (INT16)(sX + sWidth), (INT16)(sY + sHeight));
     } else {
       RestoreExternBackgroundRect(sX, sY, sWidth, sHeight);
@@ -1768,7 +1768,7 @@ void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTT
         }
 
         swprintf(pStr, ARR_SIZE(pStr), L"%d", pObject->ubGunShotsLeft);
-        if (uiBuffer == guiSAVEBUFFER) {
+        if (dest == vsSaveBuffer) {
           RestoreExternBackgroundRect(sNewX, sNewY, 20, 15);
         }
         mprintf(sNewX, sNewY, pStr);
@@ -1805,7 +1805,7 @@ void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTT
 
             sNewX = sX + sWidth - uiStringLength - 4;
 
-            if (uiBuffer == guiSAVEBUFFER) {
+            if (dest == vsSaveBuffer) {
               RestoreExternBackgroundRect(sNewX, sNewY, 15, 15);
             }
             mprintf(sNewX, sNewY, pStr);
@@ -1829,7 +1829,7 @@ void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTT
 
         sNewX = sX + sWidth - uiStringLength - 4;
 
-        if (uiBuffer == guiSAVEBUFFER) {
+        if (dest == vsSaveBuffer) {
           RestoreExternBackgroundRect(sNewX, sNewY, 15, 15);
         }
         mprintf(sNewX, sNewY, pStr);
@@ -1853,7 +1853,7 @@ void INVRenderItem(UINT32 uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTT
 
         sNewX = sX + sWidth - uiStringLength - 4;
 
-        if (uiBuffer == guiSAVEBUFFER) {
+        if (dest == vsSaveBuffer) {
           RestoreExternBackgroundRect(sNewX, sNewY, 15, 15);
         }
         mprintf(sNewX, sNewY, pStr);
@@ -2615,7 +2615,7 @@ void RenderItemDescriptionBox() {
     }
 
     // Display item
-    BltVideoObjectOutlineShadowFromIndex(guiSAVEBUFFER, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
+    BltVideoObjectOutlineShadowFromIndex(vsSaveBuffer, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
 
     BltVideoObjectFromIndex(guiSAVEBUFFER, guiItemGraphic, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY,
                             NULL);
@@ -2644,7 +2644,7 @@ void RenderItemDescriptionBox() {
           sCenX = (INT16)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX + 5);
           sCenY = (INT16)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY - 1);
 
-          INVRenderItem(guiSAVEBUFFER, NULL, gpItemDescObject, sCenX, sCenY,
+          INVRenderItem(vsSaveBuffer, NULL, gpItemDescObject, sCenX, sCenY,
                         gMapItemDescAttachmentsXY[cnt].sWidth,
                         gMapItemDescAttachmentsXY[cnt].sHeight, DIRTYLEVEL2, NULL,
                         (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
@@ -2659,7 +2659,7 @@ void RenderItemDescriptionBox() {
           sCenX = (INT16)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX + 5);
           sCenY = (INT16)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY - 1);
 
-          INVRenderItem(guiSAVEBUFFER, NULL, gpItemDescObject, sCenX, sCenY,
+          INVRenderItem(vsSaveBuffer, NULL, gpItemDescObject, sCenX, sCenY,
                         gMapItemDescAttachmentsXY[cnt].sWidth,
                         gMapItemDescAttachmentsXY[cnt].sHeight, DIRTYLEVEL2, NULL,
                         (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
@@ -3126,7 +3126,7 @@ void RenderItemDescriptionBox() {
     }
 
     // Display item
-    BltVideoObjectOutlineShadowFromIndex(guiSAVEBUFFER, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
+    BltVideoObjectOutlineShadowFromIndex(vsSaveBuffer, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
     BltVideoObjectFromIndex(guiSAVEBUFFER, guiItemGraphic, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY,
                             NULL);
 
@@ -3153,7 +3153,7 @@ void RenderItemDescriptionBox() {
         sCenX = (INT16)(gsInvDescX + gItemDescAttachmentsXY[cnt].sX + 5);
         sCenY = (INT16)(gsInvDescY + gItemDescAttachmentsXY[cnt].sY - 1);
 
-        INVRenderItem(guiSAVEBUFFER, NULL, gpItemDescObject, sCenX, sCenY,
+        INVRenderItem(vsSaveBuffer, NULL, gpItemDescObject, sCenX, sCenY,
                       gItemDescAttachmentsXY[cnt].sWidth, gItemDescAttachmentsXY[cnt].sHeight,
                       DIRTYLEVEL2, NULL, (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
 
@@ -4730,7 +4730,7 @@ void RenderItemStackPopup(BOOLEAN fFullRender) {
       sX = (INT16)(gsItemPopupX + (cnt * usWidth) + 11);
       sY = (INT16)(gsItemPopupY + 3);
 
-      INVRenderItem(FRAME_BUFFER, NULL, gpItemPopupObject, sX, sY, 29, 23, DIRTYLEVEL2, NULL,
+      INVRenderItem(vsFB, NULL, gpItemPopupObject, sX, sY, 29, 23, DIRTYLEVEL2, NULL,
                     (UINT8)RENDER_ITEM_NOSTATUS, FALSE, 0);
 
       // Do status bar here...
@@ -4938,15 +4938,11 @@ void RenderKeyRingPopup(BOOLEAN fFullRender) {
 
       // render the item
       INVRenderItem(
-          FRAME_BUFFER, NULL, &pObject,
+          vsFB, NULL, &pObject,
           (INT16)(gsKeyRingPopupInvX + sOffSetX + (cnt % sKeyRingItemWidth * usWidth) + 8),
           (INT16)(gsKeyRingPopupInvY + sOffSetY + (cnt / sKeyRingItemWidth * usHeight)),
           (UINT16)(usWidth - 8), (UINT16)(usHeight - 2), DIRTYLEVEL2, NULL, 0, 0, 0);
     }
-
-    // BltVideoObjectFromIndex( FRAME_BUFFER, guiItemPopupBoxes, 0, (INT16)(gsKeyRingPopupInvX + (
-    // cnt % KEY_RING_ROW_WIDTH * usWidth ) ), ( INT16 )( gsKeyRingPopupInvY + ( cnt /
-    // KEY_RING_ROW_WIDTH * usHeight ) ), VO_BLT_SRCTRANSPARENCY, NULL );
   }
 
   // RestoreExternBackgroundRect( gsItemPopupInvX, gsItemPopupInvY, gsItemPopupInvWidth,

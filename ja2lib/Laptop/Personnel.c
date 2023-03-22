@@ -2256,13 +2256,9 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
         sCenX = PosX + (abs((INT32)(57 - usWidth)) / 2) - pTrav->sOffsetX;
         sCenY = PosY + (abs((INT32)(22 - usHeight)) / 2) - pTrav->sOffsetY;
 
-        // shadow
-        // BltVideoObjectOutlineShadowFromIndex( FRAME_BUFFER, GetInterfaceGraphicForItem( pItem ),
-        // pItem->ubGraphicNum, sCenX-2, sCenY+2);
-
         // blt the item
-        BltVideoObjectOutlineFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
-                                       pItem->ubGraphicNum, sCenX, sCenY, 0, FALSE);
+        BltVideoObjectOutlineFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
+                                       sCenX, sCenY, 0, FALSE);
 
         SetFont(FONT10ARIAL);
         SetFontForeground(FONT_WHITE);

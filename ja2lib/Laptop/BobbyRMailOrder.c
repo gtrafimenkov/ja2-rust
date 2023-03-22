@@ -557,8 +557,8 @@ void HandleBobbyRMailOrder() {
 
     // Bobbyray title
     GetVideoObject(&hPixHandle, guiConfirmGraphic);
-    BltVideoObjectOutlineShadowFromIndex(FRAME_BUFFER, guiConfirmGraphic, 0,
-                                         BOBBYR_CONFIRM_ORDER_X + 3, BOBBYR_CONFIRM_ORDER_Y + 3);
+    BltVideoObjectOutlineShadowFromIndex(vsFB, guiConfirmGraphic, 0, BOBBYR_CONFIRM_ORDER_X + 3,
+                                         BOBBYR_CONFIRM_ORDER_Y + 3);
 
     BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_CONFIRM_ORDER_X, BOBBYR_CONFIRM_ORDER_Y,
                     VO_BLT_SRCTRANSPARENCY, NULL);

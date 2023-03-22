@@ -2726,7 +2726,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   item = &Item[gusMercsNewItemIndex];
   uiVideoObjectIndex = GetInterfaceGraphicForItem(item);
   GetVideoObject(&hVObject, uiVideoObjectIndex);
-  BltVideoObjectOutlineFromIndex(uiSrcID, uiVideoObjectIndex, item->ubGraphicNum, 0, 0, 0, FALSE);
+  BltVideoObjectOutlineFromIndex(GetVSByID(uiSrcID), uiVideoObjectIndex, item->ubGraphicNum, 0, 0,
+                                 0, FALSE);
 
   // crop the source image
   pObject = &hVObject->pETRLEObject[item->ubGraphicNum];

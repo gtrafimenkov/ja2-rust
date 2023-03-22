@@ -310,7 +310,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
 
         // ATE: Check for extern 2nd...
         if (uiCursorIndex == EXTERN2_CURSOR) {
-          BltVideoObjectOutlineFromIndex(MOUSE_BUFFER, guiExtern2Vo, gusExtern2VoSubIndex, 0, 0, 0,
+          BltVideoObjectOutlineFromIndex(vsMouseBuffer, guiExtern2Vo, gusExtern2VoSubIndex, 0, 0, 0,
                                          FALSE);
 
           // Get ETRLE values
@@ -320,11 +320,11 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
           sSubX = (pTrav->usWidth - pTravTemp->usWidth - pTravTemp->sOffsetX) / 2;
           sSubY = (pTrav->usHeight - pTravTemp->usHeight - pTravTemp->sOffsetY) / 2;
 
-          BltVideoObjectOutlineFromIndex(MOUSE_BUFFER, guiExternVo, gusExternVoSubIndex, sSubX,
+          BltVideoObjectOutlineFromIndex(vsMouseBuffer, guiExternVo, gusExternVoSubIndex, sSubX,
                                          sSubY, 0, FALSE);
 
         } else {
-          BltVideoObjectOutlineFromIndex(MOUSE_BUFFER, guiExternVo, gusExternVoSubIndex, 0, 0, 0,
+          BltVideoObjectOutlineFromIndex(vsMouseBuffer, guiExternVo, gusExternVoSubIndex, 0, 0, 0,
                                          FALSE);
         }
 

@@ -734,9 +734,8 @@ void RenderSelectedItemBlownUp() {
   sOffsetY = hVObject->pETRLEObject[Item[gpItem->usItem].ubGraphicNum].sOffsetY;
   yp = sScreenY + (20 - sHeight - sOffsetY * 2) / 2;
 
-  BltVideoObjectOutlineFromIndex(FRAME_BUFFER, uiVideoObjectIndex,
-                                 Item[gpItem->usItem].ubGraphicNum, xp, yp,
-                                 Get16BPPColor(FROMRGB(0, 140, 170)), TRUE);
+  BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, Item[gpItem->usItem].ubGraphicNum, xp,
+                                 yp, Get16BPPColor(FROMRGB(0, 140, 170)), TRUE);
 
   // Display the item name above it
   SetFont(FONT10ARIAL);
