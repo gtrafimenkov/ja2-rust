@@ -17,7 +17,7 @@ struct VSurface *vsPrimary = NULL;
 struct VSurface *vsBB = NULL;
 struct VSurface *vsFB = NULL;
 struct VSurface *vsMouseCursor = NULL;
-struct VSurface *vsMouseCursorOriginal = NULL;
+struct VSurface *vsMouseBuffer = NULL;
 
 //
 // Refresh thread based variables
@@ -671,7 +671,7 @@ struct VSurface *GetVSByID(VSurfID id) {
       return vsFB;
 
     case MOUSE_BUFFER:
-      return vsMouseCursorOriginal;
+      return vsMouseBuffer;
 
     default: {
       VSURFACE_NODE *curr;

@@ -13,7 +13,7 @@ typedef uint32_t VSurfID;
 extern struct VSurface *vsBB;
 extern struct VSurface *vsFB;
 extern struct VSurface *vsMouseCursor;
-extern struct VSurface *vsMouseCursorOriginal;
+extern struct VSurface *vsMouseBuffer;
 extern struct VSurface *vsPrimary;
 extern struct VSurface *vsExtraBuffer;
 extern struct VSurface *vsSaveBuffer;

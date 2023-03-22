@@ -54,8 +54,8 @@ BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
   sXPos += ((gsCurMouseWidth - pTrav->usWidth) / 2);
   sYPos += ((gsCurMouseHeight - pTrav->usHeight) / 2);
 
-  ReturnValue = BltVideoObjectOutline(vsMouseCursorOriginal, hVObject, usVideoObjectSubIndex, sXPos,
-                                      sYPos, Get16BPPColor(FROMRGB(0, 255, 0)), TRUE);
+  ReturnValue = BltVideoObjectOutline(vsMouseBuffer, hVObject, usVideoObjectSubIndex, sXPos, sYPos,
+                                      Get16BPPColor(FROMRGB(0, 255, 0)), TRUE);
 
   return ReturnValue;
 }
@@ -424,8 +424,8 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
                   pCurImage->usPosX, pCurImage->usPosY);
             } else {
               ReturnValue = BltVideoObject2(
-                  vsMouseCursorOriginal, gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject,
-                  usSubIndex, pCurImage->usPosX, pCurImage->usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+                  vsMouseBuffer, gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject, usSubIndex,
+                  pCurImage->usPosX, pCurImage->usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
             }
             if (!ReturnValue) {
               return (FALSE);

@@ -519,9 +519,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   vsPrimary = CreateVideoSurfaceFromDDSurface(gpPrimarySurface);
   vsBB = CreateVideoSurfaceFromDDSurface(gpBackBuffer);
   vsMouseCursor = CreateVideoSurfaceFromDDSurface(gpMouseCursor);
-  vsMouseCursorOriginal = CreateVideoSurfaceFromDDSurface(gpMouseCursorOriginal);
+  vsMouseBuffer = CreateVideoSurfaceFromDDSurface(gpMouseCursorOriginal);
   vsFB = CreateVideoSurfaceFromDDSurface(gpFrameBuffer);
-  if (!vsPrimary || !vsBB || !vsMouseCursor || !vsMouseCursorOriginal || !vsFB) {
+  if (!vsPrimary || !vsBB || !vsMouseCursor || !vsMouseBuffer || !vsFB) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_ERROR, String("Could not create primary surfaces"));
     return FALSE;
   }
@@ -536,7 +536,7 @@ void ShutdownVideoManager(void) {
   DeleteVideoSurface(vsBB);
   DeleteVideoSurface(vsFB);
   DeleteVideoSurface(vsMouseCursor);
-  DeleteVideoSurface(vsMouseCursorOriginal);
+  DeleteVideoSurface(vsMouseBuffer);
 
   IDirectDrawSurface2_Release(gpMouseCursorOriginal);
   IDirectDrawSurface2_Release(gpMouseCursor);
@@ -1464,9 +1464,9 @@ static BOOLEAN GetRGBDistribution(void) {
 }
 
 BOOLEAN EraseMouseCursor() {
-  struct BufferLockInfo lock = VSurfaceLock(vsMouseCursorOriginal);
+  struct BufferLockInfo lock = VSurfaceLock(vsMouseBuffer);
   memset(lock.dest, 0, MAX_CURSOR_HEIGHT * lock.pitch);
-  VSurfaceUnlock(vsMouseCursorOriginal);
+  VSurfaceUnlock(vsMouseBuffer);
   return (TRUE);
 }
 
@@ -1500,7 +1500,7 @@ BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 
   // Get new cursor data
   //
 
-  ReturnValue = BltVideoObject2(vsMouseCursorOriginal, gpCursorStore, usVideoObjectSubIndex, 0, 0,
+  ReturnValue = BltVideoObject2(vsMouseBuffer, gpCursorStore, usVideoObjectSubIndex, 0, 0,
                                 VO_BLT_SRCTRANSPARENCY, NULL);
   guiMouseBufferState = BUFFER_DIRTY;
 
