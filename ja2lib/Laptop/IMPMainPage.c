@@ -446,8 +446,8 @@ void ShadeUnSelectableButtons(void) {
   // should be shaded ( unselectable )
 
   for (iCounter = iCurrentProfileMode; iCounter < 5; iCounter++) {
-    ShadowVideoSurfaceRect(FRAME_BUFFER, 13 + (iCounter)*120 + 114, 245,
-                           13 + (iCounter + 1) * 120 + 90, 245 + 92);
+    ShadowVideoSurfaceRect(vsFB, 13 + (iCounter)*120 + 114, 245, 13 + (iCounter + 1) * 120 + 90,
+                           245 + 92);
     InvalidateRegion(13 + (iCounter)*120 + 114, 245, 13 + (iCounter)*120 + 114, 245 + 92);
   }
 
@@ -579,13 +579,13 @@ void IMPMainPageNotSelectableBtnCallback(struct MOUSE_REGION *pRegion, INT32 iRe
 
 BOOLEAN LoadCharacterPortraitForMainPage(void) {
   // this function will load the character's portrait, to be used on portrait button
-  VOBJECT_DESC VObjectDesc;
 
   if (iCurrentProfileMode >= 4) {
     // load it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP(pPlayerSelectedFaceFileNames[iPortraitNumber], VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiCHARACTERPORTRAITFORMAINPAGE));
+    if (!AddVObjectFromFile(pPlayerSelectedFaceFileNames[iPortraitNumber],
+                            &guiCHARACTERPORTRAITFORMAINPAGE)) {
+      return FALSE;
+    }
 
     // now specify
     SpecifyButtonIcon(giIMPMainPageButton[4], guiCHARACTERPORTRAITFORMAINPAGE, 0, 33, 23, FALSE);

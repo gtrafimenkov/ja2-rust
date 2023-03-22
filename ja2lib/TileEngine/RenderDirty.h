@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct VSurface;
 struct _VIDEO_OVERLAY;
 
 // DEFINES
@@ -128,7 +129,7 @@ INT32 RegisterVideoOverlay(UINT32 uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc);
 void ExecuteVideoOverlays();
 BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, UINT32 iBlitterIndex,
                            BOOLEAN fForceAll);
-void SaveVideoOverlaysArea(UINT32 uiSrcBuffer);
+void SaveVideoOverlaysArea(struct VSurface *src);
 void DeleteVideoOverlaysArea();
 void AllocateVideoOverlaysArea();
 void ExecuteVideoOverlaysToAlternateBuffer(UINT32 uiNewDestBuffer);
@@ -139,7 +140,6 @@ void EnableVideoOverlay(BOOLEAN fEnable, INT32 iOverlayIndex);
 
 void BlitMFont(VIDEO_OVERLAY *pBlitter);
 
-BOOLEAN BlitBufferToBuffer(UINT32 uiSrcBuffer, UINT32 uiDestBuffer, UINT16 usSrcX, UINT16 usSrcY,
-                           UINT16 usWidth, UINT16 usHeight);
-
+bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, u16 x, u16 y, u16 width,
+                          u16 height);
 #endif

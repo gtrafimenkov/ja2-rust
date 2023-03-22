@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "Globals.h"
 #include "JAScreens.h"
@@ -13,9 +14,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "SGP/WinFont.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/FontControl.h"
 
 #ifdef JA2BETAVERSION
@@ -239,8 +238,8 @@ BOOLEAN RestoreBackgroundRects(void) {
   UINT32 uiCount, uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
 
-  pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsSaveBuffer, &uiSrcPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
     if (gBackSaves[uiCount].fFilled && (!gBackSaves[uiCount].fDisabled)) {
@@ -273,8 +272,8 @@ BOOLEAN RestoreBackgroundRects(void) {
     }
   }
 
-  UnLockVideoSurface(guiRENDERBUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsFB);
+  VSurfaceUnlock(vsSaveBuffer);
 
   EmptyBackgroundRects();
 
@@ -335,7 +334,7 @@ BOOLEAN SaveBackgroundRects(void) {
   UINT32 uiCount, uiDestPitchBYTES;
   UINT8 *pSrcBuf;
 
-  pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumBackSaves; uiCount++) {
     if (gBackSaves[uiCount].fAllocated && (!gBackSaves[uiCount].fDisabled)) {
@@ -361,8 +360,8 @@ BOOLEAN SaveBackgroundRects(void) {
     }
   }
 
-  UnLockVideoSurface(guiRENDERBUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsFB);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return (TRUE);
 }
@@ -458,15 +457,15 @@ BOOLEAN UpdateSaveBuffer(void) {
   // Update saved buffer - do for the viewport size ony!
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
 
-  pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
-  pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
                   gsVIEWPORT_WINDOW_START_Y, 0, gsVIEWPORT_WINDOW_START_Y, usWidth,
                   (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y));
 
-  UnLockVideoSurface(guiRENDERBUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsFB);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return (TRUE);
 }
@@ -477,13 +476,13 @@ BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16
 
   Assert((sLeft >= 0) && (sTop >= 0) && (sLeft + sWidth <= 640) && (sTop + sHeight <= 480));
 
-  pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsSaveBuffer, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
                   sTop, sLeft, sTop, sWidth, sHeight);
-  UnLockVideoSurface(guiRENDERBUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsFB);
+  VSurfaceUnlock(vsSaveBuffer);
 
   // Add rect to frame buffer queue
   InvalidateRegionEx(sLeft, sTop, (sLeft + sWidth), (sTop + sHeight), 0);
@@ -507,13 +506,13 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
 
   Assert((sLeft >= 0) && (sTop >= 0) && (sLeft + sWidth <= 640) && (sTop + sHeight <= 480));
 
-  pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsSaveBuffer, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
                   sTop, sLeft, sTop, sWidth, sHeight);
-  UnLockVideoSurface(guiRENDERBUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsFB);
+  VSurfaceUnlock(vsSaveBuffer);
 
   // Add rect to frame buffer queue
   InvalidateRegionEx(sLeft, sTop, (sLeft + sWidth), (sTop + sHeight), 0);
@@ -527,13 +526,13 @@ BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
 
   Assert((sLeft >= 0) && (sTop >= 0) && (sLeft + sWidth <= 640) && (sTop + sHeight <= 480));
 
-  pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
                   sTop, sLeft, sTop, sWidth, sHeight);
-  UnLockVideoSurface(guiSAVEBUFFER);
-  UnLockVideoSurface(guiRENDERBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
+  VSurfaceUnlock(vsFB);
 
   return (TRUE);
 }
@@ -560,13 +559,8 @@ UINT16 gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
             argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
-  if (USE_WINFONTS()) {
-    uiStringLength = WinFontStringPixLength(string, GET_WINFONT());
-    uiStringHeight = GetWinFontHeight(string, GET_WINFONT());
-  } else {
-    uiStringLength = StringPixLength(string, FontDefault);
-    uiStringHeight = GetFontHeight(FontDefault);
-  }
+  uiStringLength = StringPixLength(string, FontDefault);
+  uiStringHeight = GetFontHeight(FontDefault);
 
   if (uiStringLength > 0) {
     iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, x, y, (INT16)(x + uiStringLength),
@@ -904,13 +898,13 @@ void AllocateVideoOverlayArea(UINT32 uiCount) {
   }
 }
 
-void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
+void SaveVideoOverlaysArea(struct VSurface *src) {
   UINT32 uiCount;
   UINT32 iBackIndex;
   UINT32 uiSrcPitchBYTES;
   UINT8 *pSrcBuf;
 
-  pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(src, &uiSrcPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -931,7 +925,7 @@ void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
     }
   }
 
-  UnLockVideoSurface(uiSrcBuffer);
+  VSurfaceUnlock(src);
 }
 
 void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
@@ -939,7 +933,7 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
   UINT32 uiSrcPitchBYTES;
   UINT8 *pSrcBuf;
 
-  pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(GetVSByID(uiSrcBuffer), &uiSrcPitchBYTES);
 
   if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
     // OK, if our saved area is null, allocate it here!
@@ -958,7 +952,7 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
     }
   }
 
-  UnLockVideoSurface(uiSrcBuffer);
+  VSurfaceUnlock(GetVSByID(uiSrcBuffer));
 }
 
 void DeleteVideoOverlaysArea() {
@@ -1001,7 +995,7 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
   ClipX2 = 640;
   ClipY2 = gsVIEWPORT_WINDOW_END_Y - 1;
 
-  pDestBuf = LockVideoSurface(BACKBUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsBB, &uiDestPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -1054,7 +1048,7 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
     }
   }
 
-  UnLockVideoSurface(BACKBUFFER);
+  VSurfaceUnlock(vsBB);
 
   return (TRUE);
 }
@@ -1078,7 +1072,7 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
 
-  pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
 
   SetFont(pBlitter->uiFontID);
   SetFontBackground(pBlitter->ubFontBack);
@@ -1087,25 +1081,21 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
   mprintf_buffer(pDestBuf, uiDestPitchBYTES, pBlitter->uiFontID, pBlitter->sX, pBlitter->sY,
                  pBlitter->zText);
 
-  UnLockVideoSurface(pBlitter->uiDestBuff);
+  VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
 }
 
-BOOLEAN BlitBufferToBuffer(UINT32 uiSrcBuffer, UINT32 uiDestBuffer, UINT16 usSrcX, UINT16 usSrcY,
-                           UINT16 usWidth, UINT16 usHeight) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
-  BOOLEAN fRetVal;
+bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, u16 x, u16 y, u16 width,
+                          u16 height) {
+  struct BufferLockInfo srcLock = VSurfaceLock(src);
+  struct BufferLockInfo destLock = VSurfaceLock(dest);
 
-  pDestBuf = LockVideoSurface(uiDestBuffer, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
+  bool res = Blt16BPPTo16BPP((UINT16 *)destLock.dest, destLock.pitch, (UINT16 *)srcLock.dest,
+                             srcLock.pitch, x, y, x, y, width, height);
 
-  fRetVal = Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf,
-                            uiSrcPitchBYTES, usSrcX, usSrcY, usSrcX, usSrcY, usWidth, usHeight);
+  VSurfaceUnlock(src);
+  VSurfaceUnlock(dest);
 
-  UnLockVideoSurface(uiDestBuffer);
-  UnLockVideoSurface(uiSrcBuffer);
-
-  return (fRetVal);
+  return (res);
 }
 
 void EnableVideoOverlay(BOOLEAN fEnable, INT32 iOverlayIndex) {

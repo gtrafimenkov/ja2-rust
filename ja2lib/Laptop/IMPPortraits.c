@@ -93,34 +93,34 @@ void HandleIMPPortraits(void) {
 
 BOOLEAN RenderPortrait(INT16 sX, INT16 sY) {
   // render the portrait of the current picture
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;
   UINT32 uiGraphicHandle;
 
   if (fCharacterIsMale) {
     // load it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP(pPlayerSelectedBigFaceFileNames[iCurrentPortrait], VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
+    if (!AddVObjectFromFile(pPlayerSelectedBigFaceFileNames[iCurrentPortrait], &uiGraphicHandle)) {
+      return FALSE;
+    }
 
     // show it
     GetVideoObject(&hHandle, uiGraphicHandle);
-    BltVideoObject(FRAME_BUFFER, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
 
     // and kick it's sorry ..umm never mind, outta here
     DeleteVideoObjectFromIndex(uiGraphicHandle);
 
   } else {
     // load it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP(pPlayerSelectedBigFaceFileNames[iCurrentPortrait + 8], VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &uiGraphicHandle));
+    if (!AddVObjectFromFile(pPlayerSelectedBigFaceFileNames[iCurrentPortrait + 8],
+                            &uiGraphicHandle)) {
+      return FALSE;
+    }
 
     // show it
     GetVideoObject(&hHandle, uiGraphicHandle);
-    BltVideoObject(FRAME_BUFFER, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
 
     // and kick it's sorry ..umm never mind, outta here
     DeleteVideoObjectFromIndex(uiGraphicHandle);

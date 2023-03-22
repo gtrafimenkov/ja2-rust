@@ -14,9 +14,11 @@
 #include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
+#include "SGP/Input.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -41,7 +43,6 @@
 #include "Tactical/SoldierControl.h"
 #include "Tactical/SoldierProfile.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/MercTextBox.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
@@ -584,70 +585,71 @@ void EnterInitAimMembers() {
 }
 
 BOOLEAN EnterAIMMembers() {
-  VOBJECT_DESC VObjectDesc;
   VSURFACE_DESC vs_desc;
 
   // Create a background video surface to blt the face onto
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = AIM_MEMBER_VIDEO_FACE_WIDTH;
   vs_desc.usHeight = AIM_MEMBER_VIDEO_FACE_HEIGHT;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &guiVideoFaceBackground));
+  if (!(AddVideoSurface(&vs_desc, &guiVideoFaceBackground))) {
+    return FALSE;
+  }
 
   // load the stats graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\stats.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiStats));
+  if (!AddVObjectFromFile("LAPTOP\\stats.sti", &guiStats)) {
+    return FALSE;
+  }
 
   // load the Price graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\price.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiPrice));
+  if (!AddVObjectFromFile("LAPTOP\\price.sti", &guiPrice)) {
+    return FALSE;
+  }
 
   // load the Portait graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\portrait.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiPortrait));
+  if (!AddVObjectFromFile("LAPTOP\\portrait.sti", &guiPortrait)) {
+    return FALSE;
+  }
 
   // load the WeaponBox graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\weaponbox.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiWeaponBox));
+  if (!AddVObjectFromFile("LAPTOP\\weaponbox.sti", &guiWeaponBox)) {
+    return FALSE;
+  }
 
   // load the videoconf Popup graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\VideoConfPopup.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiVideoConfPopup));
+  if (!AddVObjectFromFile("LAPTOP\\VideoConfPopup.sti", &guiVideoConfPopup)) {
+    return FALSE;
+  }
 
   // load the video conf terminal graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\VideoConfTerminal.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiVideoConfTerminal));
+  if (!AddVObjectFromFile("LAPTOP\\VideoConfTerminal.sti", &guiVideoConfTerminal)) {
+    return FALSE;
+  }
 
   // load the background snow for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BWSnow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBWSnow));
+  if (!AddVObjectFromFile("LAPTOP\\BWSnow.sti", &guiBWSnow)) {
+    return FALSE;
+  }
 
   // load the fuzzy line for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\FuzzLine.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiFuzzLine));
+  if (!AddVObjectFromFile("LAPTOP\\FuzzLine.sti", &guiFuzzLine)) {
+    return FALSE;
+  }
 
   // load the line distortion for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\LineInterference.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiStraightLine));
+  if (!AddVObjectFromFile("LAPTOP\\LineInterference.sti", &guiStraightLine)) {
+    return FALSE;
+  }
 
   // load the translucent snow for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\TransSnow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTransSnow));
+  if (!AddVObjectFromFile("LAPTOP\\TransSnow.sti", &guiTransSnow)) {
+    return FALSE;
+  }
 
   // load the translucent snow for the video conf terminal
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\VideoContractCharge.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiVideoContractCharge));
+  if (!AddVObjectFromFile("LAPTOP\\VideoContractCharge.sti", &guiVideoContractCharge)) {
+    return FALSE;
+  }
 
   //** Mouse Regions **
   MSYS_DefineRegion(&gSelectedFaceRegion, PORTRAIT_X, PORTRAIT_Y, PORTRAIT_X + PORTRAIT_WIDTH,
@@ -781,14 +783,6 @@ void HandleAIMMembers() {
   if (gfStopMercFromTalking) {
     StopMercTalking();
     gfStopMercFromTalking = FALSE;
-    /*
-                    //if we were waiting for the merc to stop talking
-                    if( gfWaitingForMercToStopTalkingOrUserToClick )
-                    {
-                            gubVideoConferencingMode = AIM_VIDEO_POPDOWN_MODE;
-                            gfWaitingForMercToStopTalkingOrUserToClick = FALSE;
-                    }
-    */
   }
 
   // If we have to change video conference modes, change to new mode
@@ -864,19 +858,18 @@ BOOLEAN RenderAIMMembers() {
 
   // Stats
   GetVideoObject(&hStatsHandle, guiStats);
-  BltVideoObject(FRAME_BUFFER, hStatsHandle, 0, STATS_X, STATS_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hStatsHandle, 0, STATS_X, STATS_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Price
   GetVideoObject(&hPriceHandle, guiPrice);
-  BltVideoObject(FRAME_BUFFER, hPriceHandle, 0, PRICE_X, PRICE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPriceHandle, 0, PRICE_X, PRICE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // WeaponBox
   GetVideoObject(&hWeaponBoxHandle, guiWeaponBox);
 
   uiPosX = WEAPONBOX_X;
   for (x = 0; x < WEAPONBOX_NUMBER; x++) {
-    BltVideoObject(FRAME_BUFFER, hWeaponBoxHandle, 0, uiPosX, WEAPONBOX_Y, VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVideoObject2(vsFB, hWeaponBoxHandle, 0, uiPosX, WEAPONBOX_Y, VO_BLT_SRCTRANSPARENCY, NULL);
     uiPosX += WEAPONBOX_SIZE_X;
   }
 
@@ -1270,11 +1263,11 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
       sCenY = PosY + (abs((INT32)((INT32)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->sOffsetY;
 
       // blt the shadow of the item
-      BltVideoObjectOutlineShadowFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
+      BltVideoObjectOutlineShadowFromIndex(vsFB, GetInterfaceGraphicForItem(pItem),
                                            pItem->ubGraphicNum, sCenX - 2, sCenY + 2);
       // blt the item
-      BltVideoObjectOutlineFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
-                                     pItem->ubGraphicNum, sCenX, sCenY, 0, FALSE);
+      BltVideoObjectOutlineFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
+                                     sCenX, sCenY, 0, FALSE);
 
       // if there are more then 1 piece of equipment in the current slot, display how many there are
       if (gMercProfiles[ubMercID].bInvNumber[i] > 1) {
@@ -1416,7 +1409,6 @@ BOOLEAN DisplayMercsFace() {
   struct VObject *hPortraitHandle;
   STR sFaceLoc = "FACES\\BIGFACES\\";
   char sTemp[100];
-  VOBJECT_DESC VObjectDesc;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // See if the merc is currently hired
@@ -1424,18 +1416,17 @@ BOOLEAN DisplayMercsFace() {
 
   // Portrait Frame
   GetVideoObject(&hPortraitHandle, guiPortrait);
-  BltVideoObject(FRAME_BUFFER, hPortraitHandle, 0, PORTRAIT_X, PORTRAIT_Y, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
+  BltVideoObject2(vsFB, hPortraitHandle, 0, PORTRAIT_X, PORTRAIT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, gbCurrentSoldier);
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP(sTemp, VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiFace));
+  if (!AddVObjectFromFile(sTemp, &guiFace)) {
+    return FALSE;
+  }
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiFace);
-  BltVideoObject(FRAME_BUFFER, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // if the merc is dead
   if (IsMercDead(gbCurrentSoldier)) {
@@ -1451,7 +1442,7 @@ BOOLEAN DisplayMercsFace() {
     SetObjectHandleShade(guiFace, 0);
 
     // Blt face to screen
-    BltVideoObject(FRAME_BUFFER, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
     // if the merc is dead, display it
     DrawTextToScreen(AimPopUpText[AIM_MEMBER_DEAD], FACE_X + 1, FACE_Y + 107, FACE_WIDTH,
@@ -1461,21 +1452,21 @@ BOOLEAN DisplayMercsFace() {
   // else if the merc is currently a POW or, the merc was fired as a pow
   else if (gMercProfiles[gbCurrentSoldier].bMercStatus == MERC_FIRED_AS_A_POW ||
            (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
-    ShadowVideoSurfaceRect(FRAME_BUFFER, FACE_X, FACE_Y, FACE_X + FACE_WIDTH, FACE_Y + FACE_HEIGHT);
+    ShadowVideoSurfaceRect(vsFB, FACE_X, FACE_Y, FACE_X + FACE_WIDTH, FACE_Y + FACE_HEIGHT);
     DrawTextToScreen(pPOWStrings[0], FACE_X + 1, FACE_Y + 107, FACE_WIDTH, FONT14ARIAL, 145,
                      FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
   // else if the merc has already been hired
   else if (FindSoldierByProfileID(gbCurrentSoldier, TRUE)) {
-    ShadowVideoSurfaceRect(FRAME_BUFFER, FACE_X, FACE_Y, FACE_X + FACE_WIDTH, FACE_Y + FACE_HEIGHT);
+    ShadowVideoSurfaceRect(vsFB, FACE_X, FACE_Y, FACE_X + FACE_WIDTH, FACE_Y + FACE_HEIGHT);
     DrawTextToScreen(MercInfo[MERC_FILES_ALREADY_HIRED], FACE_X + 1, FACE_Y + 107, FACE_WIDTH,
                      FONT14ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
 
   else if (!IsMercHireable(gbCurrentSoldier)) {
     // else if the merc has a text file and the merc is not away
-    ShadowVideoSurfaceRect(FRAME_BUFFER, FACE_X, FACE_Y, FACE_X + FACE_WIDTH, FACE_Y + FACE_HEIGHT);
+    ShadowVideoSurfaceRect(vsFB, FACE_X, FACE_Y, FACE_X + FACE_WIDTH, FACE_Y + FACE_HEIGHT);
     DrawTextToScreen(AimPopUpText[AIM_MEMBER_ON_ASSIGNMENT], FACE_X + 1, FACE_Y + 107, FACE_WIDTH,
                      FONT14ARIAL, 145, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
   }
@@ -1894,12 +1885,9 @@ BOOLEAN DisplayVideoConferencingDisplay() {
     UINT16 usActualHeight;
     UINT16 usPosX;
 
-    SET_USE_WINFONTS(TRUE);
-    SET_WINFONT(giSubTitleWinFont);
     iAimMembersBoxId =
         PrepareMercPopupBox(iAimMembersBoxId, BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER,
                             gsTalkingMercText, 300, 0, 0, 0, &usActualWidth, &usActualHeight);
-    SET_USE_WINFONTS(FALSE);
 
     usPosX = (LAPTOP_SCREEN_LR_X - usActualWidth) / 2;
 
@@ -1916,15 +1904,29 @@ BOOLEAN DisplayVideoConferencingDisplay() {
   return (TRUE);
 }
 
+static BOOLEAN ShadowVideoSurfaceImage(struct VSurface *dest, struct VObject *hImageHandle,
+                                       INT32 iPosX, INT32 iPosY) {
+  // Horizontal shadow
+  ShadowVideoSurfaceRect(dest, iPosX + 3, iPosY + hImageHandle->pETRLEObject->usHeight,
+                         iPosX + hImageHandle->pETRLEObject->usWidth,
+                         iPosY + hImageHandle->pETRLEObject->usHeight + 3);
+
+  // vertical shadow
+  ShadowVideoSurfaceRect(dest, iPosX + hImageHandle->pETRLEObject->usWidth, iPosY + 3,
+                         iPosX + hImageHandle->pETRLEObject->usWidth + 3,
+                         iPosY + hImageHandle->pETRLEObject->usHeight);
+  return (TRUE);
+}
+
 BOOLEAN DisplayMercsVideoFace() {
   struct VObject *hTerminalHandle;
 
   // Get and Blt Terminal Frame
   GetVideoObject(&hTerminalHandle, guiVideoConfTerminal);
-  ShadowVideoSurfaceImage(FRAME_BUFFER, hTerminalHandle, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
+  ShadowVideoSurfaceImage(vsFB, hTerminalHandle, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
                           AIM_MEMBER_VIDEO_CONF_TERMINAL_Y);
-  BltVideoObject(FRAME_BUFFER, hTerminalHandle, 0, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
-                 AIM_MEMBER_VIDEO_CONF_TERMINAL_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hTerminalHandle, 0, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
+                  AIM_MEMBER_VIDEO_CONF_TERMINAL_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Display the Select light on the merc
   if (gubVideoConferencingMode == AIM_VIDEO_HIRE_MERC_MODE) DisplaySelectLights(FALSE, FALSE);
@@ -1942,20 +1944,17 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
     if (gubContractLength == i) {
       if (fContractDown) {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_ON_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_ON_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
   }
@@ -1966,20 +1965,17 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
     if (gfBuyEquipment == i) {
       if (fBuyEquipDown) {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_ON_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_ON_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                  usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                  Get16BPPColor(FROMRGB(0, 255, 0)));
+        VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                                usPosY + AIM_SELECT_LIGHT_OFF_Y + 8,
-                                Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
+                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
   }
@@ -1996,8 +1992,8 @@ UINT32 DisplayMercChargeAmount() {
 
   // Display the 'black hole'for the contract charge  in the video conference terminal
   GetVideoObject(&hImageHandle, guiVideoContractCharge);
-  BltVideoObject(FRAME_BUFFER, hImageHandle, 0, AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_X,
-                 AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hImageHandle, 0, AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_X,
+                  AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   if (FindSoldierByProfileID(gbCurrentSoldier, TRUE) == NULL) {
     giContractAmount = 0;
@@ -2048,7 +2044,6 @@ UINT32 DisplayMercChargeAmount() {
 
 BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2, UINT16 usPosX,
                                     UINT16 usPosY, UINT8 ubData) {
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hPopupBoxHandle;
   static UINT16 usPopUpBoxPosX, usPopUpBoxPosY;
   static wchar_t sPopUpString1[400], sPopUpString2[400];
@@ -2076,13 +2071,12 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
       usPopUpBoxPosY = usPosY;
 
       // load the popup box graphic
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP("LAPTOP\\VideoConfPopUp.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &guiPopUpBox));
+      if (!AddVObjectFromFile("LAPTOP\\VideoConfPopUp.sti", &guiPopUpBox)) {
+        return FALSE;
+      }
 
       GetVideoObject(&hPopupBoxHandle, guiPopUpBox);
-      BltVideoObject(FRAME_BUFFER, hPopupBoxHandle, 0, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject2(vsFB, hPopupBoxHandle, 0, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
 
       // Create the popup boxes button
       guiPopUpImage = LoadButtonImage("LAPTOP\\VideoConfButtons.sti", -1, 2, -1, 3, -1);
@@ -2119,8 +2113,8 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
 
       // load and display the popup box graphic
       GetVideoObject(&hPopupBoxHandle, guiPopUpBox);
-      BltVideoObject(FRAME_BUFFER, hPopupBoxHandle, 0, usPopUpBoxPosX, usPopUpBoxPosY,
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hPopupBoxHandle, 0, usPopUpBoxPosX, usPopUpBoxPosY,
+                      VO_BLT_SRCTRANSPARENCY, NULL);
 
       SetFontShadow(AIM_M_VIDEO_NAME_SHADOWCOLOR);
 
@@ -2372,13 +2366,13 @@ BOOLEAN DisplayTalkingMercFaceForVideoPopUp(INT32 iFaceIndex) {
   //	if( !gfIsAnsweringMachineActive )
   {
     // Blt the face surface to the video background surface
-    if (!BltStretchVideoSurface(FRAME_BUFFER, guiVideoFaceBackground, 0, 0, VO_BLT_SRCTRANSPARENCY,
-                                &SrcRect, &DestRect))
+    if (!BltStretchVideoSurface(vsFB, GetVSByID(guiVideoFaceBackground), 0, 0,
+                                VO_BLT_SRCTRANSPARENCY, &SrcRect, &DestRect))
       return (FALSE);
 
     // if the merc is not at home and the players is leaving a message, shade the players face
     if (gfIsAnsweringMachineActive)
-      ShadowVideoSurfaceRect(FRAME_BUFFER, DestRect.iLeft, DestRect.iTop, DestRect.iRight - 1,
+      ShadowVideoSurfaceRect(vsFB, DestRect.iLeft, DestRect.iTop, DestRect.iRight - 1,
                              DestRect.iBottom - 1);
 
     // If the answering machine graphics is up, place a message on the screen
@@ -2611,8 +2605,8 @@ BOOLEAN DisplaySnowBackground() {
   }
   // Get the snow background, and blit it
   GetVideoObject(&hSnowHandle, guiBWSnow);
-  BltVideoObject(FRAME_BUFFER, hSnowHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X,
-                 AIM_MEMBER_VIDEO_FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hSnowHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                    AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
@@ -2638,10 +2632,10 @@ BOOLEAN DisplayBlackBackground(UINT8 ubMaxNumOfLoops) {
     guiLastHandleMercTime = uiCurrentTime;
   }
   // Blit color to screen
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
-                            AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
-                            AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT,
-                            Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
+                    AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
+                    AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT,
+                    Get16BPPColor(FROMRGB(0, 0, 0)));
   InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                    AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
                    AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT);
@@ -2797,8 +2791,8 @@ UINT8 DisplayTransparentSnow(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMax
 
   // Get the snow background, and blit it
   GetVideoObject(&hFuzzLineHandle, uiImageIdentifier);
-  BltVideoObject(FRAME_BUFFER, hFuzzLineHandle, bCount, AIM_MEMBER_VIDEO_FACE_X,
-                 AIM_MEMBER_VIDEO_FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hFuzzLineHandle, bCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   if (bForward) {
     if (bCount == ubMaxImages - 1) {
@@ -2836,8 +2830,8 @@ UINT8 DisplayDistortionLine(UINT8 ubMode, UINT32 uiImageIdentifier, UINT8 ubMaxI
 
   // Get the snow background, and blit it
   GetVideoObject(&hFuzzLineHandle, uiImageIdentifier);
-  BltVideoObject(FRAME_BUFFER, hFuzzLineHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X,
-                 AIM_MEMBER_VIDEO_FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hFuzzLineHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   if (ubCount == ubMaxImages - 1) {
     ubCount = 0;
@@ -2864,10 +2858,7 @@ UINT8 DisplayPixelatedImage(UINT8 ubMaxImages) {
     uiLastTime = uiCurrentTime;
   }
 
-  //	PixelateVideoObjectRect(  FRAME_BUFFER, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
-  // AIM_MEMBER_VIDEO_FACE_X+AIM_MEMBER_VIDEO_FACE_WIDTH-1,
-  // AIM_MEMBER_VIDEO_FACE_Y+AIM_MEMBER_VIDEO_FACE_HEIGHT-1);
-  ShadowVideoSurfaceRect(FRAME_BUFFER, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
+  ShadowVideoSurfaceRect(vsFB, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                          AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH - 1,
                          AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT - 1);
 
@@ -2961,7 +2952,6 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
   static BOOLEAN fXRegionActive = FALSE;
   UINT8 i;
   UINT16 usPosX, usPosY;
-  VOBJECT_DESC VObjectDesc;
   VSURFACE_DESC vs_desc;
 
   // remove the face help text
@@ -3038,16 +3028,18 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
       struct VObject *hImageHandle;
 
       // load the answering machine graphic and add it
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP("LAPTOP\\VideoTitleBar.sti", VObjectDesc.ImageFile);
-      CHECKF(AddVideoObject(&VObjectDesc, &uiVideoBackgroundGraphic));
+      if (!AddVObjectFromFile("LAPTOP\\VideoTitleBar.sti", &uiVideoBackgroundGraphic)) {
+        return FALSE;
+      }
 
       // Create a background video surface to blt the face onto
-      vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+      vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
       vs_desc.usWidth = AIM_MEMBER_VIDEO_TITLE_BAR_WIDTH;
       vs_desc.usHeight = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;
       vs_desc.ubBitDepth = 16;
-      CHECKF(AddVideoSurface(&vs_desc, &guiVideoTitleBar));
+      if (!(AddVideoSurface(&vs_desc, &guiVideoTitleBar))) {
+        return FALSE;
+      }
 
       gfAimMemberCanMercSayOpeningQuote = TRUE;
 
@@ -3223,8 +3215,9 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     //
     /*		// load the answering machine graphic and add it
                     VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-                    FilenameForBPP("LAPTOP\\explosion.sti", VObjectDesc.ImageFile);
-                    CHECKF(AddVideoObject(&VObjectDesc, &guiAnsweringMachineImage));
+                    if (!AddVObjectFromFile("LAPTOP\\explosion.sti", &guiAnsweringMachineImage)) {
+       return FALSE;
+       }
     */
     gubCurrentStaticMode = VC_NO_STATIC;
   }
@@ -3265,16 +3258,18 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     gfIsAnsweringMachineActive = FALSE;
 
     // load the Video conference background graphic and add it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("LAPTOP\\VideoTitleBar.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &uiVideoBackgroundGraphic));
+    if (!AddVObjectFromFile("LAPTOP\\VideoTitleBar.sti", &uiVideoBackgroundGraphic)) {
+      return FALSE;
+    }
 
     // Create a background video surface to blt the face onto
-    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
     vs_desc.usWidth = AIM_MEMBER_VIDEO_TITLE_BAR_WIDTH;
     vs_desc.usHeight = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;
     vs_desc.ubBitDepth = 16;
-    CHECKF(AddVideoSurface(&vs_desc, &guiVideoTitleBar));
+    if (!(AddVideoSurface(&vs_desc, &guiVideoTitleBar))) {
+      return FALSE;
+    }
 
     GetVideoObject(&hImageHandle, uiVideoBackgroundGraphic);
     BltVideoObject(guiVideoTitleBar, hImageHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
@@ -3477,9 +3472,6 @@ BOOLEAN HandleCurrentVideoConfMode() {
     }
   }
 
-  // Gets set in the InitDeleteVideoConferencePopUp() function
-  //	gfJustSwitchedVideoConferenceMode = FALSE;
-
   return (TRUE);
 }
 
@@ -3512,97 +3504,6 @@ BOOLEAN EnableDisableCurrentVideoConferenceButtons(BOOLEAN fEnable) {
   }
   return (TRUE);
 }
-
-/*
-BOOLEAN HandleAnsweringMachineMessage()
-{
-        static BOOLEAN fDone;
-
-        if( gfJustSwitchedVideoConferenceMode )
-                fDone = DisplayAnimatedAnsweringMachineMsg( TRUE,  12);
-        else if( !fDone )
-        {
-                fDone = DisplayAnimatedAnsweringMachineMsg( FALSE,  12);
-                if( fDone )
-                {
-                        fDone = FALSE;
-                }
-        }
-
-        return(TRUE);
-}
-*/
-/*
-BOOLEAN DisplayAnimatedAnsweringMachineMsg( BOOLEAN fInit, UINT8 ubNumSubImages)
-{
-//  struct VObject*	hImageHandle;
-        static UINT8	ubSubImage=0;
-        static UINT32 uiLastTime=0;
-        UINT32 uiCurTime = GetJA2Clock();
-        static UINT8		ubMode=0;
-
-        if( fInit )
-        {
-                ubSubImage = 0;
-                uiLastTime = 0;
-                ubMode = 0;
-        }
-
-        if( (uiCurTime - uiLastTime) > VC_ANSWER_IMAGE_DELAY )
-        {
-
-                if( ubMode == 0)
-                {
-                        if( ubSubImage >= ubNumSubImages)
-                                ubSubImage = 0;
-
-                        // Display the Answering machine graphic
-
-                        // For now just blit the guys face, and shade it
-//			GetVideoObject(&hImageHandle, guiAnsweringMachineImage);
-//			BltVideoObject(FRAME_BUFFER, hImageHandle, ubSubImage,
-AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
-                        InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X,AIM_MEMBER_VIDEO_FACE_Y,
-AIM_MEMBER_VIDEO_FACE_X+AIM_MEMBER_VIDEO_FACE_WIDTH,AIM_MEMBER_VIDEO_FACE_Y+AIM_MEMBER_VIDEO_FACE_HEIGHT);
-
-                        ubSubImage ++;
-                        if( ubSubImage == ubNumSubImages)
-                        {
-                                ubSubImage = 0;
-                                ubMode++;
-                                return(TRUE);
-                        }
-                }
-                else
-                {
-
-                        //display the black background with text over it.
-                        ColorFillVideoSurfaceArea( FRAME_BUFFER, AIM_MEMBER_VIDEO_FACE_X,
-AIM_MEMBER_VIDEO_FACE_Y, AIM_MEMBER_VIDEO_FACE_X+AIM_MEMBER_VIDEO_FACE_WIDTH,
-AIM_MEMBER_VIDEO_FACE_Y+AIM_MEMBER_VIDEO_FACE_HEIGHT, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
-                        DisplayWrappedString(AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y+20,
-AIM_MEMBER_VIDEO_FACE_WIDTH, 2, FONT14ARIAL, 145,  AimPopUpText[AIM_MEMBER_LEAVE_MSG],
-FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
-                        InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X,AIM_MEMBER_VIDEO_FACE_Y,
-AIM_MEMBER_VIDEO_FACE_X+AIM_MEMBER_VIDEO_FACE_WIDTH,AIM_MEMBER_VIDEO_FACE_Y+AIM_MEMBER_VIDEO_FACE_HEIGHT);
-
-                        ubSubImage ++;
-                        if( ubSubImage == ubNumSubImages * 2)
-                        {
-                                ubSubImage = 0;
-                                ubMode=0;
-                                return(TRUE);
-                        }
-                }
-
-
-                //reset clock
-                uiLastTime = GetJA2Clock();
-        }
-
-        return(FALSE);
-}
-*/
 
 void ResetMercAnnoyanceAtPlayer(UINT8 ubMercID) {
   // if merc is still annoyed, reset back to 0
@@ -3683,36 +3584,36 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (ubCount > 2) {
       usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                           usWidth, usHeight);
     }
 
     // Save rectangle
     if (ubCount > 1) {
       usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                           usWidth, usHeight);
     }
   } else {
     // Restore the old rect
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 2) {
       usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, guiRENDERBUFFER, (UINT16)LastRect.iLeft,
-                         (UINT16)LastRect.iTop, usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                           usWidth, usHeight);
     }
 
     // Save rectangle
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 1) {
       usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft,
-                         (UINT16)DestRect.iTop, usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                           usWidth, usHeight);
     }
   }
 
-  BltStretchVideoSurface(FRAME_BUFFER, guiVideoTitleBar, 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect,
+  BltStretchVideoSurface(vsFB, GetVSByID(guiVideoTitleBar), 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect,
                          &DestRect);
 
   InvalidateRegion(DestRect.iLeft, DestRect.iTop, DestRect.iRight, DestRect.iBottom);
@@ -3963,33 +3864,6 @@ void WaitForMercToFinishTalkingOrUserToClick() {
   gfHangUpMerc = TRUE;
   gfStopMercFromTalking = FALSE;
 }
-
-/*
-BOOLEAN DisplayShadedStretchedMercFace( UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY )
-{
-        SGPRect		SrcRect;
-        SGPRect		DestRect;
-
-
-        //Test
-        SrcRect.iLeft = 0;
-        SrcRect.iTop = 0;
-        SrcRect.iRight = 48;
-        SrcRect.iBottom = 43;
-
-        DestRect.iLeft = AIM_MEMBER_VIDEO_FACE_X;
-        DestRect.iTop = AIM_MEMBER_VIDEO_FACE_Y;
-        DestRect.iRight = DestRect.iLeft + AIM_MEMBER_VIDEO_FACE_WIDTH;
-        DestRect.iBottom = DestRect.iTop + AIM_MEMBER_VIDEO_FACE_HEIGHT;
-
-
-        if(	!BltStretchVideoSurface(FRAME_BUFFER, guiVideoFaceBackground, 0, 0,
-VO_BLT_SRCTRANSPARENCY, &SrcRect, &DestRect ) ) return(FALSE);
-
-
-        return( TRUE );
-}
-*/
 
 #if defined(JA2TESTVERSION)
 

@@ -10,6 +10,7 @@
 #include "SGP/Container.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
+#include "SGP/WCheck.h"
 #include "StrUtils.h"
 #include "platform.h"
 #include "platform_win.h"
@@ -110,23 +111,6 @@ BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) {
 
 #define FILENAME_LENGTH 600
 
-#define CHECKF(exp) \
-  if (!(exp)) {     \
-    return (FALSE); \
-  }
-#define CHECKV(exp) \
-  if (!(exp)) {     \
-    return;         \
-  }
-#define CHECKN(exp) \
-  if (!(exp)) {     \
-    return (NULL);  \
-  }
-#define CHECKBI(exp) \
-  if (!(exp)) {      \
-    return (-1);     \
-  }
-
 //**************************************************************************
 //
 //				Variables
@@ -161,8 +145,12 @@ BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {
   INT32 x, iWhich = 0;
   BOOLEAN fFound;
 
-  CHECKF(pSpec != NULL);
-  CHECKF(pGFStruct != NULL);
+  if (!(pSpec != NULL)) {
+    return FALSE;
+  }
+  if (!(pGFStruct != NULL)) {
+    return FALSE;
+  }
 
   fFound = FALSE;
   for (x = 0; x < 20 && !fFound; x++) {
@@ -187,7 +175,9 @@ BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {
 }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) {
-  CHECKF(pGFStruct != NULL);
+  if (!(pGFStruct != NULL)) {
+    return FALSE;
+  }
 
   if (FindNextFile(hFindInfoHandle[pGFStruct->iFindHandle],
                    &Win32FindInfo[pGFStruct->iFindHandle])) {

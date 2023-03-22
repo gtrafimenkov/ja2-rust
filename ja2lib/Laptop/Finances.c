@@ -471,7 +471,7 @@ void RenderFinances(void) {
 
   // display border
   GetVideoObject(&hHandle, guiLaptopBACKGROUND);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, 108, 23, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, 108, 23, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // title bar icon
   BlitTitleBarIcons();
@@ -480,33 +480,32 @@ void RenderFinances(void) {
 }
 
 BOOLEAN LoadFinances(void) {
-  VOBJECT_DESC VObjectDesc;
   // load Finance video objects into memory
 
   // title bar
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTITLE));
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &guiTITLE)) {
+    return FALSE;
+  }
 
   // top portion of the screen background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Financeswindow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTOP));
+  if (!AddVObjectFromFile("LAPTOP\\Financeswindow.sti", &guiTOP)) {
+    return FALSE;
+  }
 
   // black divider line - long ( 480 length)
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\divisionline480.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLONGLINE));
+  if (!AddVObjectFromFile("LAPTOP\\divisionline480.sti", &guiLONGLINE)) {
+    return FALSE;
+  }
 
   // the records columns
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\recordcolumns.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLISTCOLUMNS));
+  if (!AddVObjectFromFile("LAPTOP\\recordcolumns.sti", &guiLISTCOLUMNS)) {
+    return FALSE;
+  }
 
   // black divider line - long ( 480 length)
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\divisionline.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLINE));
+  if (!AddVObjectFromFile("LAPTOP\\divisionline.sti", &guiLINE)) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -528,11 +527,11 @@ void RenderBackGround(void) {
 
   // get title bar object
   GetVideoObject(&hHandle, guiTITLE);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X, TOP_Y - 2, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X, TOP_Y - 2, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // get and blt the top part of the screen, video object and blt to screen
   GetVideoObject(&hHandle, guiTOP);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X, TOP_Y + 22, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X, TOP_Y + 22, VO_BLT_SRCTRANSPARENCY, NULL);
   DrawFinanceTitleText();
   return;
 }
@@ -553,13 +552,12 @@ void DrawSummaryLines(void) {
   GetVideoObject(&hHandle, guiLINE);
 
   // blit summary LINE object to screen
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y + 2, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
-  // BltVideoObject(FRAME_BUFFER, hHandle, 0,DIVLINE_X, MID_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, DIVLINE_X, BOT_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, DIVLINE_X, MID_DIVLINE_Y2, VO_BLT_SRCTRANSPARENCY, NULL);
-  // BltVideoObject(FRAME_BUFFER, hHandle, 0,DIVLINE_X, BOT_DIVLINE_Y2,
+  BltVideoObject2(vsFB, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y + 2, VO_BLT_SRCTRANSPARENCY, NULL);
+  // BltVideoObject2(vsFB, hHandle, 0,DIVLINE_X, MID_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
+  BltVideoObject2(vsFB, hHandle, 0, DIVLINE_X, BOT_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, DIVLINE_X, MID_DIVLINE_Y2, VO_BLT_SRCTRANSPARENCY, NULL);
+  // BltVideoObject2(vsFB, hHandle, 0,DIVLINE_X, BOT_DIVLINE_Y2,
   // VO_BLT_SRCTRANSPARENCY,NULL);
 
   return;
@@ -593,20 +591,20 @@ void DrawRecordsBackGround(void) {
   for (int iCounter = 0; iCounter < 35; iCounter++) {
     // get and blt middle background to screen
     GetVideoObject(&hHandle, guiLISTCOLUMNS);
-    BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 10, TOP_Y + 18 + (iCounter * BLOCK_HEIGHT) + 1,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 18 + (iCounter * BLOCK_HEIGHT) + 1,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // the divisorLines
   GetVideoObject(&hHandle, guiLONGLINE);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 10, TOP_Y + 17 + (6 * (BLOCK_HEIGHT)),
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 17 + (6 * (BLOCK_HEIGHT)),
+                  VO_BLT_SRCTRANSPARENCY, NULL);
   GetVideoObject(&hHandle, guiLONGLINE);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 10, TOP_Y + 19 + (6 * (BLOCK_HEIGHT)),
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + (6 * (BLOCK_HEIGHT)),
+                  VO_BLT_SRCTRANSPARENCY, NULL);
   GetVideoObject(&hHandle, guiLONGLINE);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 10, TOP_Y + 19 + ((iCounter) * (BLOCK_HEIGHT)),
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + ((iCounter) * (BLOCK_HEIGHT)),
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // the header text
   DrawRecordsColumnHeadersText();

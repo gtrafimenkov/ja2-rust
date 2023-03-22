@@ -211,43 +211,45 @@ BOOLEAN EnterBobbyR() {
   InitBobbyRWoodBackground();
 
   // load the Bobbyname graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYNAME);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyName));
+  if (!AddVideoObject(&VObjectDesc, &guiBobbyName)) {
+    return FALSE;
+  }
 
   // load the plaque graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyPlaques.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiPlaque));
+  if (!AddVObjectFromFile("LAPTOP\\BobbyPlaques.sti", &guiPlaque)) {
+    return FALSE;
+  }
 
   // load the TopHinge graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyTopHinge.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTopHinge));
+  if (!AddVObjectFromFile("LAPTOP\\BobbyTopHinge.sti", &guiTopHinge)) {
+    return FALSE;
+  }
 
   // load the BottomHinge graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyBottomHinge.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBottomHinge));
+  if (!AddVObjectFromFile("LAPTOP\\BobbyBottomHinge.sti", &guiBottomHinge)) {
+    return FALSE;
+  }
 
   // load the Store Plaque graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_STOREPLAQUE);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiStorePlaque));
+  if (!AddVideoObject(&VObjectDesc, &guiStorePlaque)) {
+    return FALSE;
+  }
 
   // load the Handle graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyHandle.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiHandle));
+  if (!AddVObjectFromFile("LAPTOP\\BobbyHandle.sti", &guiHandle)) {
+    return FALSE;
+  }
 
   InitBobbiesMouseRegion(BOBBIES_NUMBER_SIGNS, usMouseRegionPosArray,
                          gSelectedBobbiesSignMenuRegion);
 
   if (!LaptopSaveInfo.fBobbyRSiteCanBeAccessed) {
     // load the Handle graphic and add it
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("LAPTOP\\UnderConstruction.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiUnderConstructionImage));
+    if (!AddVObjectFromFile("LAPTOP\\UnderConstruction.sti", &guiUnderConstructionImage)) {
+      return FALSE;
+    }
 
     for (i = 0; i < BOBBIES_NUMBER_SIGNS; i++) {
       MSYS_DisableRegion(&gSelectedBobbiesSignMenuRegion[i]);
@@ -294,41 +296,41 @@ void RenderBobbyR() {
 
   // Bobby's Name
   GetVideoObject(&hPixHandle, guiBobbyName);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBY_RAYS_NAME_X, BOBBY_RAYS_NAME_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBY_RAYS_NAME_X, BOBBY_RAYS_NAME_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // Plaque
   GetVideoObject(&hPixHandle, guiPlaque);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBYS_PLAQUES_X, BOBBYS_PLAQUES_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYS_PLAQUES_X, BOBBYS_PLAQUES_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // Top Hinge
   GetVideoObject(&hPixHandle, guiTopHinge);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBIES_TOPHINGE_X, BOBBIES_TOPHINGE_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBIES_TOPHINGE_X, BOBBIES_TOPHINGE_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Bottom Hinge
   GetVideoObject(&hPixHandle, guiBottomHinge);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBIES_BOTTOMHINGE_X, BOBBIES_BOTTOMHINGE_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBIES_BOTTOMHINGE_X, BOBBIES_BOTTOMHINGE_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // StorePlaque
   GetVideoObject(&hStorePlaqueHandle, guiStorePlaque);
-  BltVideoObject(FRAME_BUFFER, hStorePlaqueHandle, 0, BOBBIES_STORE_PLAQUE_X,
-                 BOBBIES_STORE_PLAQUE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hStorePlaqueHandle, 0, BOBBIES_STORE_PLAQUE_X, BOBBIES_STORE_PLAQUE_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Handle
   GetVideoObject(&hPixHandle, guiHandle);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBIES_HANDLE_X, BOBBIES_HANDLE_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBIES_HANDLE_X, BOBBIES_HANDLE_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   /*
           if( !LaptopSaveInfo.fBobbyRSiteCanBeAccessed )
           {
                   // The undercontsruction graphic
                   GetVideoObject(&hPixHandle, guiUnderConstructionImage );
-                  BltVideoObject(FRAME_BUFFER, hPixHandle, 0,BOBBIES_FIRST_SENTENCE_X,
-     BOBBIES_FIRST_SENTENCE_Y, VO_BLT_SRCTRANSPARENCY,NULL); BltVideoObject(FRAME_BUFFER,
+                  BltVideoObject2(vsFB, hPixHandle, 0,BOBBIES_FIRST_SENTENCE_X,
+     BOBBIES_FIRST_SENTENCE_Y, VO_BLT_SRCTRANSPARENCY,NULL); BltVideoObject2(vsFB,
      hPixHandle, 0,BOBBIES_3RD_SENTENCE_X, BOBBIES_3RD_SENTENCE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
           }
   */
@@ -389,8 +391,8 @@ void RenderBobbyR() {
 
   // if we cant go to any sub pages, darken the page out
   if (!LaptopSaveInfo.fBobbyRSiteCanBeAccessed) {
-    ShadowVideoSurfaceRect(FRAME_BUFFER, LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_WEB_UL_Y,
-                           LAPTOP_SCREEN_LR_X, LAPTOP_SCREEN_WEB_LR_Y);
+    ShadowVideoSurfaceRect(vsFB, LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_WEB_UL_Y, LAPTOP_SCREEN_LR_X,
+                           LAPTOP_SCREEN_WEB_LR_Y);
   }
 
   RenderWWWProgramTitleBar();
@@ -399,12 +401,10 @@ void RenderBobbyR() {
 }
 
 BOOLEAN InitBobbyRWoodBackground() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the Wood bacground graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyWood.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiWoodBackground));
+  if (!AddVObjectFromFile("LAPTOP\\BobbyWood.sti", &guiWoodBackground)) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -425,8 +425,7 @@ BOOLEAN DrawBobbyRWoodBackground() {
   for (y = 0; y < 4; y++) {
     uiPosX = BOBBY_WOOD_BACKGROUND_X;
     for (x = 0; x < 4; x++) {
-      BltVideoObject(FRAME_BUFFER, hWoodBackGroundHandle, 0, uiPosX, uiPosY, VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject2(vsFB, hWoodBackGroundHandle, 0, uiPosX, uiPosY, VO_BLT_SRCTRANSPARENCY, NULL);
       uiPosX += BOBBY_WOOD_BACKGROUND_WIDTH;
     }
     uiPosY += BOBBY_WOOD_BACKGROUND_HEIGHT;
@@ -489,7 +488,7 @@ uiBackground)
                 uiPosX = LAPTOP_SCREEN_UL_X;
                 for(x=0; x<ubNumX; x++)
                 {
-                  BltVideoObject(FRAME_BUFFER, hBackGroundHandle, 0,uiPosX, uiPosY,
+                  BltVideoObject2(vsFB, hBackGroundHandle, 0,uiPosX, uiPosY,
 VO_BLT_SRCTRANSPARENCY,NULL); uiPosX += usWidth;
                 }
                 uiPosY += usHeight;
@@ -515,11 +514,11 @@ void HandleBobbyRUnderConstructionAni(BOOLEAN fReset) {
   if (((uiCurTime - uiLastTime) > BOBBYR_UNDERCONSTRUCTION_ANI_DELAY) || (fReDrawScreenFlag)) {
     // The undercontsruction graphic
     GetVideoObject(&hPixHandle, guiUnderConstructionImage);
-    BltVideoObject(FRAME_BUFFER, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
-                   BOBBYR_UNDERCONSTRUCTION_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
+                    BOBBYR_UNDERCONSTRUCTION_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
-    BltVideoObject(FRAME_BUFFER, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
-                   BOBBYR_UNDERCONSTRUCTION1_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
+                    BOBBYR_UNDERCONSTRUCTION1_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
     DrawTextToScreen(BobbyRaysFrontText[BOBBYR_UNDER_CONSTRUCTION],
                      BOBBYR_UNDER_CONSTRUCTION_TEXT_X, BOBBYR_UNDER_CONSTRUCTION_TEXT_Y,

@@ -42,7 +42,7 @@
 #define FLOR_GALLERY_FLOWER_BUTTON_X LAPTOP_SCREEN_UL_X + 7
 #define FLOR_GALLERY_FLOWER_BUTTON_Y LAPTOP_SCREEN_WEB_UL_Y + 74
 
-//#define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
+// #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_X		250
 
 #define FLOR_GALLERY_FLOWER_BUTTON_OFFSET_Y 112
 
@@ -252,7 +252,6 @@ BOOLEAN InitFlowerButtons() {
   UINT16 i, j, count;
   UINT16 usPosY;
   char sTemp[40];
-  VOBJECT_DESC VObjectDesc;
 
   if ((FLOR_GALLERY_NUMBER_FLORAL_IMAGES - gubCurFlowerIndex) >= 3)
     gubCurNumberOfFlowers = 3;
@@ -266,9 +265,9 @@ BOOLEAN InitFlowerButtons() {
   for (i = 0; i < gubCurNumberOfFlowers; i++) {
     // load the handbullet graphic and add it
     sprintf(sTemp, "LAPTOP\\Flower_%d.sti", count);
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP(sTemp, VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &guiFlowerImages[i]));
+    if (!AddVObjectFromFile(sTemp, &guiFlowerImages[i])) {
+      return FALSE;
+    }
     count++;
   }
 

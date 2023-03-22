@@ -18,6 +18,7 @@
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -26,6 +27,8 @@
 #include "Strategic/StrategicMap.h"
 #include "Tactical/AnimationControl.h"
 #include "Tactical/AnimationData.h"
+#include "Tactical/HandleUI.h"
+#include "Tactical/Interface.h"
 #include "Tactical/InterfaceItems.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/InventoryChoosing.h"
@@ -43,7 +46,6 @@
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SimpleRenderUtils.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
@@ -739,45 +741,43 @@ void DisplayEditMercWindow(void) {
   iXPos = 0;
 
   // Main window
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos, iYPos, iXPos + iWidth, iYPos + iHeight,
-                            usFillColorLight);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 1, iYPos + 1, iXPos + iWidth, iYPos + iHeight,
-                            usFillColorDark);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 1, iYPos + 1, iXPos + iWidth - 1,
-                            iYPos + iHeight - 1, usFillColorBack);
+  VSurfaceColorFill(vsFB, iXPos, iYPos, iXPos + iWidth, iYPos + iHeight, usFillColorLight);
+  VSurfaceColorFill(vsFB, iXPos + 1, iYPos + 1, iXPos + iWidth, iYPos + iHeight, usFillColorDark);
+  VSurfaceColorFill(vsFB, iXPos + 1, iYPos + 1, iXPos + iWidth - 1, iYPos + iHeight - 1,
+                    usFillColorBack);
 
   SetFont(FONT12POINT1);
 
   // Name window
   gprintf(iXPos + 128, iYPos + 3, L"Merc Name:");
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 128, iYPos + 16, iXPos + 128 + 104,
-                            iYPos + 16 + 19, usFillColorDark);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 17, iXPos + 128 + 104,
-                            iYPos + 17 + 19, usFillColorLight);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 17, iXPos + 128 + 103,
-                            iYPos + 17 + 18, usFillColorTextBk);
+  VSurfaceColorFill(vsFB, iXPos + 128, iYPos + 16, iXPos + 128 + 104, iYPos + 16 + 19,
+                    usFillColorDark);
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 17, iXPos + 128 + 104, iYPos + 17 + 19,
+                    usFillColorLight);
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 17, iXPos + 128 + 103, iYPos + 17 + 18,
+                    usFillColorTextBk);
   iXOff = (105 - StringPixLength(pSoldier->name, FONT12POINT1)) / 2;
   gprintf(iXPos + 130 + iXOff, iYPos + 20, L"%s", pSoldier->name);
 
   // Orders window
   gprintf(iXPos + 128, iYPos + 38, L"Orders:");
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 128, iYPos + 51, iXPos + 128 + 104,
-                            iYPos + 51 + 19, usFillColorDark);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 52, iXPos + 128 + 104,
-                            iYPos + 52 + 19, usFillColorLight);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 52, iXPos + 128 + 103,
-                            iYPos + 52 + 18, usFillColorTextBk);
+  VSurfaceColorFill(vsFB, iXPos + 128, iYPos + 51, iXPos + 128 + 104, iYPos + 51 + 19,
+                    usFillColorDark);
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 52, iXPos + 128 + 104, iYPos + 52 + 19,
+                    usFillColorLight);
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 52, iXPos + 128 + 103, iYPos + 52 + 18,
+                    usFillColorTextBk);
   iXOff = (105 - StringPixLength(EditMercOrders[pSoldier->bOrders], FONT12POINT1)) / 2;
   gprintf(iXPos + 130 + iXOff, iYPos + 55, L"%s", EditMercOrders[pSoldier->bOrders]);
 
   // Combat window
   gprintf(iXPos + 128, iYPos + 73, L"Combat Attitude:");
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 128, iYPos + 86, iXPos + 128 + 104,
-                            iYPos + 86 + 19, usFillColorDark);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 87, iXPos + 128 + 104,
-                            iYPos + 87 + 19, usFillColorLight);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 87, iXPos + 128 + 103,
-                            iYPos + 87 + 18, usFillColorTextBk);
+  VSurfaceColorFill(vsFB, iXPos + 128, iYPos + 86, iXPos + 128 + 104, iYPos + 86 + 19,
+                    usFillColorDark);
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 87, iXPos + 128 + 104, iYPos + 87 + 19,
+                    usFillColorLight);
+  VSurfaceColorFill(vsFB, iXPos + 129, iYPos + 87, iXPos + 128 + 103, iYPos + 87 + 18,
+                    usFillColorTextBk);
   iXOff = (105 - StringPixLength(EditMercAttitudes[pSoldier->bAttitude], FONT12POINT1)) / 2;
   gprintf(iXPos + 130 + iXOff, iYPos + 90, L"%s", EditMercAttitudes[pSoldier->bAttitude]);
 
@@ -798,12 +798,12 @@ void DisplayEditMercWindow(void) {
   // Stat value windows
   for (x = 0; x < 12; x++) {
     gprintf(iXPos + 6, iYPos + 114 + (20 * x), L"%s", EditMercStat[x]);
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 116, iYPos + 110 + (20 * x), iXPos + 116 + 30,
-                              iYPos + 110 + (20 * x) + 19, usFillColorDark);
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 30,
-                              iYPos + 111 + (20 * x) + 19, usFillColorLight);
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 29,
-                              iYPos + 111 + (20 * x) + 18, usFillColorTextBk);
+    VSurfaceColorFill(vsFB, iXPos + 116, iYPos + 110 + (20 * x), iXPos + 116 + 30,
+                      iYPos + 110 + (20 * x) + 19, usFillColorDark);
+    VSurfaceColorFill(vsFB, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 30,
+                      iYPos + 111 + (20 * x) + 19, usFillColorLight);
+    VSurfaceColorFill(vsFB, iXPos + 117, iYPos + 111 + (20 * x), iXPos + 116 + 29,
+                      iYPos + 111 + (20 * x) + 18, usFillColorTextBk);
 
     swprintf(TempString, ARR_SIZE(TempString), L"%d", iEditStat[x]);
     iXOff = (30 - StringPixLength(TempString, FONT12POINT1)) / 2;
@@ -1128,8 +1128,8 @@ void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet) {
   usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
 
   // Draw color bar window area
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sLeft, sTop, sRight, sBottom, usFillColorDark);
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, sLeft + 1, sTop + 1, sRight, sBottom, usFillColorLight);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, usFillColorDark);
+  VSurfaceColorFill(vsFB, sLeft + 1, sTop + 1, sRight, sBottom, usFillColorLight);
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 
   sTop++;
@@ -1146,7 +1146,7 @@ void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet) {
       us16BPPColor =
           Get16BPPColor(FROMRGB(gpPalRep[ubPaletteRep].r[cnt1], gpPalRep[ubPaletteRep].g[cnt1],
                                 gpPalRep[ubPaletteRep].b[cnt1]));
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, sLeft, sTop, sRight, sBottom, us16BPPColor);
+    VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, us16BPPColor);
 
     sLeft += sUnitSize;
     sRight += sUnitSize;
@@ -2333,9 +2333,8 @@ void UpdateMercsInfo() {
       break;
     case MERC_BASICMODE:
     case MERC_GENERALMODE:
-      BltVideoObjectFromIndex(FRAME_BUFFER, guiExclamation, 0, 188, 362, VO_BLT_SRCTRANSPARENCY,
-                              NULL);
-      BltVideoObjectFromIndex(FRAME_BUFFER, guiKeyImage, 0, 186, 387, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(vsFB, guiExclamation, 0, 188, 362, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(vsFB, guiKeyImage, 0, 186, 387, VO_BLT_SRCTRANSPARENCY, NULL);
       SetFont(SMALLCOMPFONT);
       SetFontForeground(FONT_YELLOW);
       SetFontShadow(FONT_NEARBLACK);
@@ -2486,8 +2485,7 @@ void UpdateMercsInfo() {
       if (gubScheduleInstructions) {
         CHAR16 str[255];
         CHAR16 keyword[10] = L"";
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, 431, 388, 590, 450,
-                                  Get16BPPColor(FROMRGB(32, 45, 72)));
+        VSurfaceColorFill(vsFB, 431, 388, 590, 450, Get16BPPColor(FROMRGB(32, 45, 72)));
         switch (gCurrSchedule.ubAction[gubCurrentScheduleActionIndex]) {
           case SCHEDULE_ACTION_LOCKDOOR:
             swprintf(keyword, ARR_SIZE(keyword), L"lock");
@@ -2553,11 +2551,11 @@ BOOLEAN PointInRect(SGPRect *pRect, INT32 x, INT32 y) {
 void DrawRect(SGPRect *pRect, INT16 color) {
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, pRect->iLeft + MERCPANEL_X, pRect->iTop + MERCPANEL_Y,
                 pRect->iRight + MERCPANEL_X, pRect->iBottom + MERCPANEL_Y, color, pDestBuf);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
   // InvalidateRegion( pRect->iLeft+175, pRect->iTop+361, pRect->iRight+176, pRect->iBottom+362 );
 }
 
@@ -2573,12 +2571,12 @@ void RenderSelectedMercsInventory() {
     if (gpMercSlotItem[i]) {  // Render the current image.
       xp = mercRects[i].iLeft + 4 + MERCPANEL_X;
       yp = mercRects[i].iTop + MERCPANEL_Y;
-      pDst = LockVideoSurface(FRAME_BUFFER, &uiDstPitchBYTES);
-      pSrc = LockVideoSurface(guiMercInvPanelBuffers[i], &uiSrcPitchBYTES);
+      pDst = VSurfaceLockOld(vsFB, &uiDstPitchBYTES);
+      pSrc = VSurfaceLockOld(GetVSByID(guiMercInvPanelBuffers[i]), &uiSrcPitchBYTES);
       Blt16BPPTo16BPPTrans((UINT16 *)pDst, uiDstPitchBYTES, (UINT16 *)pSrc, uiSrcPitchBYTES, xp, yp,
                            0, 0, i < 3 ? 22 : 44, 15, 0);
-      UnLockVideoSurface(FRAME_BUFFER);
-      UnLockVideoSurface(guiMercInvPanelBuffers[i]);
+      VSurfaceUnlock(vsFB);
+      VSurfaceUnlock(GetVSByID(guiMercInvPanelBuffers[i]));
       LoadItemInfo(gpMercSlotItem[i]->usItem, pItemName, NULL);
       // Render the text
       switch (i) {
@@ -2631,7 +2629,6 @@ void DeleteSelectedMercsItem() {
 // NOTE:  Step one can be skipped (when selecting an existing merc).  By setting the
 void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   UINT32 uiVideoObjectIndex;
-  UINT32 uiSrcID, uiDstID;
   struct VObject *hVObject;
   ETRLEObject *pObject;
   INVTYPE *item;
@@ -2642,12 +2639,6 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   BOOLEAN fUnDroppable;
 
   if (fCreate) {
-    /*
-    if( gpMercSlotItem[ gbCurrSelect ] && gpMercSlotItem[ gbCurrSelect ]->usItem ==
-    gusMercsNewItemIndex ) { //User selected same item, so ignore. gusMercsNewItemIndex = 0xffff;
-            return;
-    }
-    */
     if (gusMercsNewItemIndex == 0xffff) {  // User selected no item, so ignore.
       return;
     }
@@ -2699,8 +2690,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   // the rendering happens.
 
   // assign the buffers
-  uiSrcID = guiMercTempBuffer;
-  uiDstID = guiMercInvPanelBuffers[gbCurrSelect];
+  struct VSurface *src = GetVSByID(guiMercTempBuffer);
+  struct VSurface *dest = GetVSByID(guiMercInvPanelBuffers[gbCurrSelect]);
 
   // build the rects
   iDstWidth = gbCurrSelect < 3 ? MERCINV_SMSLOT_WIDTH : MERCINV_LGSLOT_WIDTH;
@@ -2715,10 +2706,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   DstRect.iBottom = iDstHeight;
 
   // clear both buffers (fill with black to erase previous graphic)
-  ColorFillVideoSurfaceArea(uiSrcID, SrcRect.iLeft, SrcRect.iTop, SrcRect.iRight, SrcRect.iBottom,
-                            0);
-  ColorFillVideoSurfaceArea(uiDstID, DstRect.iLeft, DstRect.iTop, DstRect.iRight, DstRect.iBottom,
-                            0);
+  VSurfaceColorFill(src, SrcRect.iLeft, SrcRect.iTop, SrcRect.iRight, SrcRect.iBottom, 0);
+  VSurfaceColorFill(dest, DstRect.iLeft, DstRect.iTop, DstRect.iRight, DstRect.iBottom, 0);
 
   // if the index is 0, then there is no item.
   if (!gusMercsNewItemIndex) return;
@@ -2727,7 +2716,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   item = &Item[gusMercsNewItemIndex];
   uiVideoObjectIndex = GetInterfaceGraphicForItem(item);
   GetVideoObject(&hVObject, uiVideoObjectIndex);
-  BltVideoObjectOutlineFromIndex(uiSrcID, uiVideoObjectIndex, item->ubGraphicNum, 0, 0, 0, FALSE);
+  BltVideoObjectOutlineFromIndex(src, uiVideoObjectIndex, item->ubGraphicNum, 0, 0, 0, FALSE);
 
   // crop the source image
   pObject = &hVObject->pETRLEObject[item->ubGraphicNum];
@@ -2778,7 +2767,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   DstRect.iBottom = DstRect.iTop + iDstHeight;
 
   // scale the item down to the smaller buffer.
-  BltStretchVideoSurface(uiDstID, uiSrcID, 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect, &DstRect);
+  BltStretchVideoSurface(dest, src, 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect, &DstRect);
 
   // invalidate the mercs new item index
   gusMercsNewItemIndex = 0xffff;
@@ -2787,7 +2776,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
 void RenderMercInventoryPanel() {
   INT32 x;
   // Draw the graphical panel
-  BltVideoObjectFromIndex(FRAME_BUFFER, guiMercInventoryPanel, 0, MERCPANEL_X, MERCPANEL_Y,
+  BltVideoObjectFromIndex(vsFB, guiMercInventoryPanel, 0, MERCPANEL_X, MERCPANEL_Y,
                           VO_BLT_SRCTRANSPARENCY, NULL);
   // Mark the buttons dirty, so they don't disappear.
   for (x = FIRST_MERCS_INVENTORY_BUTTON; x <= LAST_MERCS_INVENTORY_BUTTON; x++) {

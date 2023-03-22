@@ -1400,12 +1400,8 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
       // make the destination look very attractive
       if (newLoc == iDestination)
         nextCost = 0;
-      else
-        // if (_KeyDown(CTRL_DOWN) && nextCost < TRAVELCOST_VEINEND)
-        if (gfPlotDirectPath && nextCost < NOPASS) nextCost = TRAVELCOST_FLAT;
-
-      // if (ISVEIN(prevCost))
-      //		prevCost=VEINCOST;
+      else if (gfPlotDirectPath && nextCost < NOPASS)
+        nextCost = TRAVELCOST_FLAT;
 
       // make water cost attractive for water to water paths
       if (iWaterToWater) {
@@ -1676,7 +1672,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
       // RenderCoverDebug( );
       InvalidateScreen();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
     }
   }
 #endif
@@ -1729,7 +1725,7 @@ INT32 FindBestPath(struct SOLDIERTYPE *s, INT16 sDestination, INT8 ubLevel, INT1
       // RenderCoverDebug( );
       InvalidateScreen();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
     }
 #endif
 

@@ -1,5 +1,7 @@
 #include "Credits.h"
 
+#include <string.h>
+
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
@@ -13,7 +15,6 @@
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/FontControl.h"
@@ -49,7 +50,7 @@ typedef struct _CRDT_NODE {
 
   UINT32 uiLastTime;  // The last time the node was udated
 
-  UINT32 uiVideoSurfaceImage;
+  VSurfID uiVideoSurfaceImage;
 
   struct _CRDT_NODE *pPrev;
   struct _CRDT_NODE *pNext;
@@ -104,20 +105,6 @@ enum {
 #define CRDT_NAME_FONT FONT12ARIAL
 
 #define CRDT_LINE_NODE_DISAPPEARS_AT 0  // 20
-
-/*
-//new codes:
-enum
-{
-        CRDT_ERROR,
-        CRDT_CODE_DELAY_BN_STRINGS,
-        CRDT_CODE_SCROLL_SPEED,
-        CRDT_CODE_FONT_JUSIFICATION,
-        CRDT_CODE_FONT_COLOR,
-
-        CRDT_NUM_CODES,
-};
-*/
 
 #define CRDT_WIDTH_OF_TEXT_AREA 210
 #define CRDT_TEXT_START_LOC 10
@@ -384,15 +371,14 @@ UINT32 CreditScreenShutdown(void) { return (1); }
 // eee
 BOOLEAN EnterCreditsScreen() {
   UINT32 uiCnt;
-  VOBJECT_DESC VObjectDesc;
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Credits.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCreditBackGroundImage));
+  if (!AddVObjectFromFile("INTERFACE\\Credits.sti", &guiCreditBackGroundImage)) {
+    return FALSE;
+  }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Credit Faces.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiCreditFaces));
+  if (!AddVObjectFromFile("INTERFACE\\Credit Faces.sti", &guiCreditFaces)) {
+    return FALSE;
+  }
 
   // Initialize the root credit node
   InitCreditNode();
@@ -444,10 +430,7 @@ BOOLEAN EnterCreditsScreen() {
 BOOLEAN ExitCreditScreen() {
   UINT32 uiCnt;
 
-  // Blit the background image
-  //	DeleteVideoSurfaceFromIndex( guiCreditBackGroundImage );
   DeleteVideoObjectFromIndex(guiCreditBackGroundImage);
-
   DeleteVideoObjectFromIndex(guiCreditFaces);
 
   // ShutDown Credit link list
@@ -456,12 +439,6 @@ BOOLEAN ExitCreditScreen() {
   for (uiCnt = 0; uiCnt < NUM_PEOPLE_IN_CREDITS; uiCnt++) {
     MSYS_RemoveRegion(&gCrdtMouseRegions[uiCnt]);
   }
-
-  /*
-          //close the text file
-          File_Close( ghFile );
-          ghFile = 0;
-  */
 
   return (TRUE);
 }
@@ -512,18 +489,12 @@ BOOLEAN RenderCreditScreen() {
   struct VObject *hPixHandle;
 
   GetVideoObject(&hPixHandle, guiCreditBackGroundImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
-  /*
-          struct VSurface* hVSurface;
-
-          GetVideoSurface( &hVSurface, guiCreditBackGroundImage );
-          BltVideoSurfaceToVideoSurface( ghFrameBuffer, hVSurface, 0, 0, 0, 0, NULL );
-  */
+  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
   if (!gfCrdtHaveRenderedFirstFrameToSaveBuffer) {
     gfCrdtHaveRenderedFirstFrameToSaveBuffer = TRUE;
 
     // blit everything to the save buffer ( cause the save buffer can bleed through )
-    BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
 
     UnmarkButtonsDirty();
   }
@@ -727,7 +698,7 @@ BOOLEAN AddCreditNode(UINT32 uiType, UINT32 uiFlags, STR16 pString) {
     VSURFACE_DESC vs_desc;
 
     // Create a background video surface to blt the face onto
-    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
     vs_desc.usWidth = CRDT_WIDTH_OF_TEXT_AREA;
     vs_desc.usHeight = pNodeToAdd->sHeightOfString;
     vs_desc.ubBitDepth = 16;
@@ -740,19 +711,19 @@ BOOLEAN AddCreditNode(UINT32 uiType, UINT32 uiFlags, STR16 pString) {
     SetVideoSurfaceTransparency(pNodeToAdd->uiVideoSurfaceImage, 0);
 
     // fill the surface with a transparent color
-    ColorFillVideoSurfaceArea(pNodeToAdd->uiVideoSurfaceImage, 0, 0, CRDT_WIDTH_OF_TEXT_AREA,
-                              pNodeToAdd->sHeightOfString, 0);
+    VSurfaceColorFill(GetVSByID(pNodeToAdd->uiVideoSurfaceImage), 0, 0, CRDT_WIDTH_OF_TEXT_AREA,
+                      pNodeToAdd->sHeightOfString, 0);
 
     // set the font dest buffer to be the surface
-    SetFontDestBuffer(pNodeToAdd->uiVideoSurfaceImage, 0, 0, CRDT_WIDTH_OF_TEXT_AREA,
-                      pNodeToAdd->sHeightOfString, FALSE);
+    SetFontDest(GetVSByID(pNodeToAdd->uiVideoSurfaceImage), 0, 0, CRDT_WIDTH_OF_TEXT_AREA,
+                pNodeToAdd->sHeightOfString, FALSE);
 
     // write the string onto the surface
     DisplayWrappedString(0, 1, CRDT_WIDTH_OF_TEXT_AREA, 2, uiFontToUse, uiColorToUse,
                          pNodeToAdd->pString, 0, FALSE, gubCrdtJustification);
 
     // reset the font dest buffer
-    SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   }
 
   //
@@ -902,8 +873,7 @@ BOOLEAN DisplayCreditNode(CRDT_NODE *pCurrent) {
 
   GetVideoSurface(&hVSurface, pCurrent->uiVideoSurfaceImage);
 
-  BltVideoSurfaceToVideoSurface(ghFrameBuffer, hVSurface, 0, pCurrent->sPosX, pCurrent->sPosY,
-                                VS_BLT_CLIPPED | VS_BLT_USECOLORKEY, NULL);
+  BltVideoSurface(vsFB, hVSurface, pCurrent->sPosX, pCurrent->sPosY, VS_BLT_USECOLORKEY, NULL);
 
   return (TRUE);
 }
@@ -1198,8 +1168,8 @@ void HandleCreditEyeBlinking() {
   for (ubCnt = 0; ubCnt < NUM_PEOPLE_IN_CREDITS; ubCnt++) {
     if ((GetJA2Clock() - gCreditFaces[ubCnt].uiLastBlinkTime) >
         (UINT32)gCreditFaces[ubCnt].sBlinkFreq) {
-      BltVideoObject(FRAME_BUFFER, hPixHandle, (UINT8)(ubCnt * 3), gCreditFaces[ubCnt].sEyeX,
-                     gCreditFaces[ubCnt].sEyeY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hPixHandle, (UINT8)(ubCnt * 3), gCreditFaces[ubCnt].sEyeX,
+                      gCreditFaces[ubCnt].sEyeY, VO_BLT_SRCTRANSPARENCY, NULL);
       InvalidateRegion(gCreditFaces[ubCnt].sEyeX, gCreditFaces[ubCnt].sEyeY,
                        gCreditFaces[ubCnt].sEyeX + CRDT_EYE_WIDTH,
                        gCreditFaces[ubCnt].sEyeY + CRDT_EYE_HEIGHT);

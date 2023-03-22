@@ -102,7 +102,6 @@ INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LP
         case TRUE:  // We are restarting DirectDraw
           if (fRestore == TRUE) {
             RestoreVideoManager();
-            RestoreVideoSurfaces();  // Restore any video surfaces
 
             // unpause the JA2 Global clock
             if (!gfPauseDueToPlayerGamePause) {
@@ -166,10 +165,6 @@ void ShutdownStandardGamingPlatform(void) {
   ShutdownFontManager();
 
   ShutdownClockManager();  // must shutdown before VideoManager, 'cause it uses ghWindow
-
-#ifdef SGP_VIDEO_DEBUGGING
-  PerformVideoInfoDumpIntoFile("SGPVideoShutdownDump.txt", FALSE);
-#endif
 
   ShutdownVideoSurfaceManager();
   ShutdownVideoObjectManager();

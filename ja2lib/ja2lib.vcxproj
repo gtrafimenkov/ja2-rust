@@ -114,6 +114,7 @@
     <ClCompile Include="MessageBoxScreen.c" />
     <ClCompile Include="Money.c" />
     <ClCompile Include="OptionsScreen.c" />
+    <ClCompile Include="platform_callbacks.c" />
     <ClCompile Include="SaveLoadGame.c" />
     <ClCompile Include="SaveLoadScreen.c" />
     <ClCompile Include="Screens.c" />
@@ -140,7 +141,7 @@
     <ClCompile Include="SGP\Video.c" />
     <ClCompile Include="SGP\VObject.c" />
     <ClCompile Include="SGP\VObjectBlitters.c" />
-    <ClCompile Include="SGP\WinFont.c" />
+    <ClCompile Include="SGP\VSurface.c" />
     <ClCompile Include="Soldier.c" />
     <ClCompile Include="Strategic\AIViewer.c" />
     <ClCompile Include="Strategic\Assignments.c" />
@@ -293,7 +294,6 @@
     <ClCompile Include="TileEngine\Smell.c" />
     <ClCompile Include="TileEngine\SmokeEffects.c" />
     <ClCompile Include="TileEngine\Structure.c" />
-    <ClCompile Include="TileEngine\SysUtil.c" />
     <ClCompile Include="TileEngine\TacticalPlacementGUI.c" />
     <ClCompile Include="TileEngine\TileAnimation.c" />
     <ClCompile Include="TileEngine\TileCache.c" />
@@ -319,7 +319,6 @@
     <ClCompile Include="Utils\ItalianText.c" />
     <ClCompile Include="Utils\JA25EnglishText.c" />
     <ClCompile Include="Utils\JA25GermanText.c" />
-    <ClCompile Include="Utils\MapUtility.c" />
     <ClCompile Include="Utils\MercTextBox.c" />
     <ClCompile Include="Utils\Message.c" />
     <ClCompile Include="Utils\MultiLanguageGraphicUtils.c" />
@@ -486,7 +485,6 @@
     <ClInclude Include="SGP\VObjectBlitters.h" />
     <ClInclude Include="SGP\VSurface.h" />
     <ClInclude Include="SGP\WCheck.h" />
-    <ClInclude Include="SGP\WinFont.h" />
     <ClInclude Include="Strategic\Assignments.h" />
     <ClInclude Include="Strategic\AutoResolve.h" />
     <ClInclude Include="Strategic\CampaignInit.h" />
@@ -655,7 +653,6 @@
     <ClInclude Include="Utils\FontControl.h" />
     <ClInclude Include="Utils\JA25EnglishText.h" />
     <ClInclude Include="Utils\JA25GermanText.h" />
-    <ClInclude Include="Utils\MapUtility.h" />
     <ClInclude Include="Utils\MercTextBox.h" />
     <ClInclude Include="Utils\Message.h" />
     <ClInclude Include="Utils\MultiLanguageGraphicUtils.h" />

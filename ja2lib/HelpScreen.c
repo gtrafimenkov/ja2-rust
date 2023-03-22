@@ -20,10 +20,10 @@
 #include "Strategic/GameClock.h"
 #include "Strategic/GameInit.h"
 #include "SysGlobals.h"
+#include "Tactical/Interface.h"
 #include "Tactical/Overhead.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
@@ -31,6 +31,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "platform.h"
 
 extern INT16 gsVIEWPORT_END_Y;
 extern void PrintDate(void);
@@ -42,10 +43,6 @@ extern BOOLEAN fTeamPanelDirty;
 extern BOOLEAN fMapScreenBottomDirty;
 extern BOOLEAN gfGamePaused;
 extern BOOLEAN fShowMapInventoryPool;
-
-extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
-                                  struct Rect *SrcRect);
 
 #define HELP_SCREEN_ACTIVE 0x00000001
 
@@ -561,10 +558,7 @@ void HelpScreenHandler() {
 }
 
 BOOLEAN EnterHelpScreen() {
-  VOBJECT_DESC VObjectDesc;
-  UINT16 usPosX, usPosY;  //, usWidth, usHeight;
-                          //	INT32	iStartLoc;
-                          //	CHAR16 zText[1024];
+  UINT16 usPosX, usPosY;
 
   // Clear out all the save background rects
   EmptyBackgroundRects();
@@ -632,9 +626,9 @@ BOOLEAN EnterHelpScreen() {
   }
 
   // load the help screen background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\HelpScreen.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiHelpScreenBackGround));
+  if (!AddVObjectFromFile("INTERFACE\\HelpScreen.sti", &guiHelpScreenBackGround)) {
+    return FALSE;
+  }
 
   // create the text buffer
   CreateHelpScreenTextBuffer();
@@ -718,10 +712,9 @@ void RenderHelpScreen() {
     gfHaveRenderedFirstFrameToSaveBuffer = TRUE;
 
     // blit everything to the save buffer ( cause the save buffer can bleed through )
-    BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, gHelpScreen.usScreenLocX,
-                       gHelpScreen.usScreenLocY,
-                       (UINT16)(gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth),
-                       (UINT16)(gHelpScreen.usScreenLocY + gHelpScreen.usScreenHeight));
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, gHelpScreen.usScreenLocX, gHelpScreen.usScreenLocY,
+                         (UINT16)(gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth),
+                         (UINT16)(gHelpScreen.usScreenLocY + gHelpScreen.usScreenHeight));
 
     UnmarkButtonsDirty();
   }
@@ -803,13 +796,13 @@ BOOLEAN DrawHelpScreenBackGround() {
 
   // if there are buttons, blit the button border
   if (gHelpScreen.bNumberOfButtons != 0) {
-    BltVideoObject(FRAME_BUFFER, hPixHandle, HLP_SCRN_BUTTON_BORDER, usPosX,
-                   gHelpScreen.usScreenLocY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hPixHandle, HLP_SCRN_BUTTON_BORDER, usPosX, gHelpScreen.usScreenLocY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     usPosX += HELP_SCREEN_BUTTON_BORDER_WIDTH;
   }
 
-  BltVideoObject(FRAME_BUFFER, hPixHandle, HLP_SCRN_DEFAULT_TYPE, usPosX, gHelpScreen.usScreenLocY,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, HLP_SCRN_DEFAULT_TYPE, usPosX, gHelpScreen.usScreenLocY,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   InvalidateRegion(gHelpScreen.usScreenLocX, gHelpScreen.usScreenLocY,
                    gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth,
@@ -1134,14 +1127,9 @@ void SpecialHandlerCode() {
 
 UINT16 RenderSpecificHelpScreen() {
   UINT16 usNumVerticalPixelsDisplayed = 0;
-  // new screen:
 
-  // set the buffer for the text to go to
-  //	SetFontDestBuffer( guiHelpScreenTextBufferSurface, gHelpScreen.usLeftMarginPosX,
-  // gHelpScreen.usScreenLocY + HELP_SCREEN_TEXT_OFFSET_Y,
-  // HLP_SCRN__WIDTH_OF_TEXT_BUFFER, HLP_SCRN__NUMBER_BYTES_IN_TEXT_BUFFER, FALSE );
-  SetFontDestBuffer(guiHelpScreenTextBufferSurface, 0, 0, HLP_SCRN__WIDTH_OF_TEXT_BUFFER,
-                    HLP_SCRN__HEIGHT_OF_TEXT_BUFFER, FALSE);
+  SetFontDest(GetVSByID(guiHelpScreenTextBufferSurface), 0, 0, HLP_SCRN__WIDTH_OF_TEXT_BUFFER,
+              HLP_SCRN__HEIGHT_OF_TEXT_BUFFER, FALSE);
 
   // switch on the current screen
   switch (gHelpScreen.bCurrentHelpScreen) {
@@ -1170,14 +1158,14 @@ UINT16 RenderSpecificHelpScreen() {
 
     default:
 #ifdef JA2BETAVERSION
-      SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+      SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
       AssertMsg(0, "Error in help screen:  RenderSpecificHelpScreen().  DF 0");
 #else
       break;
 #endif
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // add 1 line to the bottom of the buffer
   usNumVerticalPixelsDisplayed += 10;
@@ -1984,11 +1972,13 @@ BOOLEAN CreateHelpScreenTextBuffer() {
   VSURFACE_DESC vs_desc;
 
   // Create a background video surface to blt the face onto
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = HLP_SCRN__WIDTH_OF_TEXT_BUFFER;
   vs_desc.usHeight = HLP_SCRN__HEIGHT_OF_TEXT_BUFFER;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &guiHelpScreenTextBufferSurface));
+  if (!(AddVideoSurface(&vs_desc, &guiHelpScreenTextBufferSurface))) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -2011,7 +2001,7 @@ void RenderTextBufferToScreen() {
   struct VSurface *hDestVSurface, *hSrcVSurface;
   struct Rect SrcRect;
 
-  GetVideoSurface(&hDestVSurface, guiRENDERBUFFER);
+  GetVideoSurface(&hDestVSurface, FRAME_BUFFER);
   GetVideoSurface(&hSrcVSurface, guiHelpScreenTextBufferSurface);
 
   SrcRect.left = 0;
@@ -2047,9 +2037,9 @@ void ClearHelpScreenTextBuffer() {
   UINT8 *pDestBuf;
 
   // CLEAR THE FRAME BUFFER
-  pDestBuf = LockVideoSurface(guiHelpScreenTextBufferSurface, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(guiHelpScreenTextBufferSurface), &uiDestPitchBYTES);
   memset(pDestBuf, 0, HLP_SCRN__HEIGHT_OF_TEXT_BUFFER * uiDestPitchBYTES);
-  UnLockVideoSurface(guiHelpScreenTextBufferSurface);
+  VSurfaceUnlock(GetVSByID(guiHelpScreenTextBufferSurface));
   InvalidateScreen();
 }
 
@@ -2121,12 +2111,11 @@ void DisplayHelpScreenTextBufferScrollBox() {
   // if there ARE scroll bars, draw the
   if (!(gHelpScreen.usTotalNumberOfLinesInBuffer <=
         HLP_SCRN__MAX_NUMBER_DISPLAYED_LINES_IN_BUFFER)) {
-    ColorFillVideoSurfaceArea(
-        FRAME_BUFFER, usPosX, iTopPosScrollBox, usPosX + HLP_SCRN__WIDTH_OF_SCROLL_AREA,
-        iTopPosScrollBox + iSizeOfBox - 1, Get16BPPColor(FROMRGB(227, 198, 88)));
+    VSurfaceColorFill(vsFB, usPosX, iTopPosScrollBox, usPosX + HLP_SCRN__WIDTH_OF_SCROLL_AREA,
+                      iTopPosScrollBox + iSizeOfBox - 1, Get16BPPColor(FROMRGB(227, 198, 88)));
 
     // display the line
-    pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+    pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
     // draw the gold highlite line on the top and left
@@ -2144,7 +2133,7 @@ void DisplayHelpScreenTextBufferScrollBox() {
              Get16BPPColor(FROMRGB(65, 49, 6)), pDestBuf);
 
     // unlock frame buffer
-    UnLockVideoSurface(FRAME_BUFFER);
+    VSurfaceUnlock(vsFB);
   }
 }
 

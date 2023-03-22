@@ -4707,7 +4707,7 @@ void DrawMouseText() {
 
   if (gfUIBodyHitLocation) {
     // Set dest for gprintf to be different
-    SetFontDestBuffer(MOUSE_BUFFER, 0, 0, 64, 64, FALSE);
+    SetFontDest(vsMouseBuffer, 0, 0, 64, 64, FALSE);
 
     FindFontCenterCoordinates(0, 0, gsCurMouseWidth, gsCurMouseHeight, gzLocation, TINYFONT1, &sX,
                               &sY);
@@ -4718,12 +4718,12 @@ void DrawMouseText() {
 
     mprintf(sX, sY + 12, gzLocation);
     // reset
-    SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   }
 
   if (gfUIIntTileLocation) {
     // Set dest for gprintf to be different
-    SetFontDestBuffer(MOUSE_BUFFER, 0, 0, 64, 64, FALSE);
+    SetFontDest(vsMouseBuffer, 0, 0, 64, 64, FALSE);
 
     FindFontCenterCoordinates(0, 0, gsCurMouseWidth, gsCurMouseHeight, gzIntTileLocation, TINYFONT1,
                               &sX, &sY);
@@ -4734,12 +4734,12 @@ void DrawMouseText() {
 
     mprintf(sX, sY + 6, gzIntTileLocation);
     // reset
-    SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   }
 
   if (gfUIIntTileLocation2) {
     // Set dest for gprintf to be different
-    SetFontDestBuffer(MOUSE_BUFFER, 0, 0, 64, 64, FALSE);
+    SetFontDest(vsMouseBuffer, 0, 0, 64, 64, FALSE);
 
     FindFontCenterCoordinates(0, 0, gsCurMouseWidth, gsCurMouseHeight, gzIntTileLocation2,
                               TINYFONT1, &sX, &sY);
@@ -4750,7 +4750,7 @@ void DrawMouseText() {
 
     mprintf(sX, sY - 2, gzIntTileLocation2);
     // reset
-    SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   }
 
   // if ( ( ( gTacticalStatus.uiFlags & TURNBASED ) && ( gTacticalStatus.uiFlags & INCOMBAT ) ) )
@@ -4781,7 +4781,7 @@ void DrawMouseText() {
       }
 
       // Set dest for gprintf to be different
-      SetFontDestBuffer(MOUSE_BUFFER, 0, 0, 64, 64, FALSE);
+      SetFontDest(vsMouseBuffer, 0, 0, 64, 64, FALSE);
 
       swprintf(pStr, ARR_SIZE(pStr), L"%d", gsCurrentActionPoints);
 
@@ -4821,37 +4821,9 @@ void DrawMouseText() {
       SetFontShadow(DEFAULT_SHADOW);
 
       // reset
-      SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+      SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
     }
   }
-
-  // if ( gpItemPointer != NULL )
-#if 0
-	{
-		if ( gpItemPointer->ubNumberOfObjects > 1 )
-		{
-			SetFontDestBuffer( MOUSE_BUFFER , 0, 0, 64, 64, FALSE );
-
-			swprintf( pStr, L"x%d", gpItemPointer->ubNumberOfObjects );
-
-			FindFontCenterCoordinates( 0, 0, gsCurMouseWidth, gsCurMouseHeight, pStr, TINYFONT1, &sX, &sY );
-
-			SetFont( TINYFONT1 );
-
-			SetFontBackground( FONT_MCOLOR_BLACK );
-			SetFontForeground( FONT_MCOLOR_WHITE );
-			SetFontShadow( DEFAULT_SHADOW );
-
-			if ( !( gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA  ) )
-			{
-				mprintf( sX + 10, sY - 10, L"x%d", gpItemPointer->ubNumberOfObjects );
-			}
-
-			// reset
-			SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
-		}
-	}
-#endif
 }
 
 void UpdateAnimatedCursorFrames(UINT32 uiCursorIndex) {

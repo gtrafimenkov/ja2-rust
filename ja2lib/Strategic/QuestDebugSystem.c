@@ -37,7 +37,6 @@
 #include "Tactical/SoldierProfile.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -683,7 +682,7 @@ UINT32 QuestDebugScreenHandle() {
     RenderQuestDebugSystem();
 
     // At this point the background is pure, copy it to the save buffer
-    BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, 639, 479);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 639, 479);
   }
   RestoreBackgroundRects();
 
@@ -753,13 +752,8 @@ BOOLEAN EnterQuestDebugSystem() {
   UINT8 i;
   UINT16 usPosX, usPosY;
   wchar_t zName[128];
-  //	UINT16	usListBoxFontHeight = GetFontHeight( QUEST_DBS_FONT_LISTBOX_TEXT ) + 2;
-
-  //	CHAR16	zItemName[ SIZE_ITEM_NAME ];
-  //	CHAR16	zItemDesc[ SIZE_ITEM_INFO ];
 
   UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_DYNAMIC_TEXT) + 2;
-  VOBJECT_DESC VObjectDesc;
 
   if (gfExitQdsDueToMessageBox) {
     gfRedrawQuestDebugSystem = TRUE;
@@ -925,13 +919,13 @@ BOOLEAN EnterQuestDebugSystem() {
   }
 
   // load Scroll Horizontal Arrow graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Qd_ScrollArrows.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiQdScrollArrowImage));
+  if (!AddVObjectFromFile("INTERFACE\\Qd_ScrollArrows.sti", &guiQdScrollArrowImage)) {
+    return FALSE;
+  }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Bars.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBrownBackgroundForTeamPanel));
+  if (!AddVObjectFromFile("INTERFACE\\Bars.sti", &guiBrownBackgroundForTeamPanel)) {
+    return FALSE;
+  }
 
   gfRedrawQuestDebugSystem = TRUE;
 
@@ -1318,7 +1312,7 @@ void GetUserInput() {
 }
 
 void ColorFillQuestDebugScreenScreen(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusQuestDebugBlue);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, gusQuestDebugBlue);
 }
 
 void QuestDebug_ExitTactical() {}
@@ -1338,7 +1332,7 @@ void DisplaySectionLine() {
   usStartY = QUEST_DBS_FIRST_COL_NUMBER_Y;
   usEndY = 475;
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   // draw the line in b/n the first and second section
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
@@ -1358,7 +1352,7 @@ void DisplaySectionLine() {
            pDestBuf);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void DisplayQuestInformation() {
@@ -1758,9 +1752,8 @@ void DisplaySelectedListBox() {
   usPosY = gpActiveListBox->usScrollPosY + 2;
 
   // clear the background
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollWidth,
-      usPosY + gpActiveListBox->usScrollHeight, Get16BPPColor(FROMRGB(45, 59, 74)));
+  VSurfaceColorFill(vsFB, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollWidth,
+                    usPosY + gpActiveListBox->usScrollHeight, Get16BPPColor(FROMRGB(45, 59, 74)));
 
   // Display the selected list box's display function
   (*(gpActiveListBox->DisplayFunction))();
@@ -1770,20 +1763,19 @@ void DisplaySelectedListBox() {
   usPosX = gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth;
   usPosY = gpActiveListBox->usScrollPosY + 2;
 
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollBarWidth,
-      usPosY + gpActiveListBox->usScrollHeight, Get16BPPColor(FROMRGB(192, 192, 192)));
+  VSurfaceColorFill(vsFB, usPosX, usPosY - 1, usPosX + gpActiveListBox->usScrollBarWidth,
+                    usPosY + gpActiveListBox->usScrollHeight,
+                    Get16BPPColor(FROMRGB(192, 192, 192)));
 
   // get and display the up and down arrows
   GetVideoObject(&hImageHandle, guiQdScrollArrowImage);
   // top arrow
-  BltVideoObject(FRAME_BUFFER, hImageHandle, 0, usPosX - 5, usPosY - 1, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
+  BltVideoObject2(vsFB, hImageHandle, 0, usPosX - 5, usPosY - 1, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Bottom arrow
-  BltVideoObject(FRAME_BUFFER, hImageHandle, 1, usPosX,
-                 usPosY + gpActiveListBox->usScrollHeight - gpActiveListBox->usScrollArrowHeight,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hImageHandle, 1, usPosX,
+                  usPosY + gpActiveListBox->usScrollHeight - gpActiveListBox->usScrollArrowHeight,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // display the scroll rectangle
   DrawQdsScrollRectangle();  // gpActiveListBox->sCurSelectedItem, usPosX, usPosY, (UINT16)(usPosY +
@@ -1840,9 +1832,9 @@ void DisplaySelectedNPC() {
     if (usPosY > 424) usPosY = usPosY;
 
     // display the name in the list
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gpActiveListBox->usScrollPosX, usPosY - 1,
-                              gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
-                              usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
+    VSurfaceColorFill(vsFB, gpActiveListBox->usScrollPosX, usPosY - 1,
+                      gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
+                      usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
 
     SetFontShadow(NO_SHADOW);
 
@@ -1920,9 +1912,9 @@ void DisplaySelectedItem() {
              gpActiveListBox->usScrollPosY + 2;
 
     // display the name in the list
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, gpActiveListBox->usScrollPosX, usPosY - 1,
-                              gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
-                              usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
+    VSurfaceColorFill(vsFB, gpActiveListBox->usScrollPosX, usPosY - 1,
+                      gpActiveListBox->usScrollPosX + gpActiveListBox->usScrollWidth,
+                      usPosY + usFontHeight - 1, Get16BPPColor(FROMRGB(255, 255, 255)));
 
     SetFontShadow(NO_SHADOW);
 
@@ -2038,11 +2030,11 @@ void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, UINT16 usStartPosX, UINT
   gpActiveListBox->usScrollBoxY = usPosY;
   gpActiveListBox->usScrollBoxEndY = usPosY + usHeight;
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, usPosX, usPosY, usPosX + usWidth - 1, usPosY + usHeight,
-                            Get16BPPColor(FROMRGB(130, 132, 128)));
+  VSurfaceColorFill(vsFB, usPosX, usPosY, usPosX + usWidth - 1, usPosY + usHeight,
+                    Get16BPPColor(FROMRGB(130, 132, 128)));
 
   // display the line
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // draw the gold highlite line on the top and left
@@ -2058,7 +2050,7 @@ void DrawQdsScrollRectangle()  // INT16 sSelectedEntry, UINT16 usStartPosX, UINT
            Get16BPPColor(FROMRGB(112, 110, 112)), pDestBuf);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void ScrollArrowsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
@@ -2508,9 +2500,9 @@ BOOLEAN CreateDestroyDisplayTextEntryBox(UINT8 ubAction, STR16 pString,
 
     case QD_DROP_DOWN_DISPLAY: {
       // Display the text entry box frame
-      ColorFillVideoSurfaceArea(
-          FRAME_BUFFER, QUEST_DBS_TEB_X, QUEST_DBS_TEB_Y, QUEST_DBS_TEB_X + QUEST_DBS_TEB_WIDTH,
-          QUEST_DBS_TEB_Y + QUEST_DBS_TEB_HEIGHT, Get16BPPColor(FROMRGB(45, 59, 74)));
+      VSurfaceColorFill(vsFB, QUEST_DBS_TEB_X, QUEST_DBS_TEB_Y,
+                        QUEST_DBS_TEB_X + QUEST_DBS_TEB_WIDTH,
+                        QUEST_DBS_TEB_Y + QUEST_DBS_TEB_HEIGHT, Get16BPPColor(FROMRGB(45, 59, 74)));
 
       // Display the text box caption
       DisplayWrappedString(QUEST_DBS_TEB_X + 10, QUEST_DBS_TEB_Y + 10, QUEST_DBS_TEB_WIDTH - 20, 2,
@@ -2781,11 +2773,10 @@ void CreateDestroyDisplayNPCInventoryPopup(UINT8 ubAction) {
 
       if (pSoldier) {
         // color the background of the popup
-        ColorFillVideoSurfaceArea(FRAME_BUFFER, QUEST_DBS_NPC_INV_POPUP_X,
-                                  QUEST_DBS_NPC_INV_POPUP_Y,
-                                  QUEST_DBS_NPC_INV_POPUP_X + QUEST_DBS_NPC_INV_POPUP_WIDTH,
-                                  QUEST_DBS_NPC_INV_POPUP_Y + QUEST_DBS_NPC_INV_POPUP_HEIGHT,
-                                  Get16BPPColor(FROMRGB(45, 59, 74)));
+        VSurfaceColorFill(vsFB, QUEST_DBS_NPC_INV_POPUP_X, QUEST_DBS_NPC_INV_POPUP_Y,
+                          QUEST_DBS_NPC_INV_POPUP_X + QUEST_DBS_NPC_INV_POPUP_WIDTH,
+                          QUEST_DBS_NPC_INV_POPUP_Y + QUEST_DBS_NPC_INV_POPUP_HEIGHT,
+                          Get16BPPColor(FROMRGB(45, 59, 74)));
 
         // Dispaly the NPC inve title
         DrawTextToScreen(QuestDebugText[QUEST_DBS_NPC_INVENTORY], QUEST_DBS_NPC_INV_POPUP_X,
@@ -3431,10 +3422,10 @@ void DisplayQDSCurrentlyQuoteNum() {
   UINT16 usFontHeight = GetFontHeight(QUEST_DBS_FONT_TEXT_ENTRY) + 2;
 
   // Display the box frame
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, QDS_CURRENT_QUOTE_NUM_BOX_X, QDS_CURRENT_QUOTE_NUM_BOX_Y,
-                            QDS_CURRENT_QUOTE_NUM_BOX_X + QDS_CURRENT_QUOTE_NUM_BOX_WIDTH,
-                            QDS_CURRENT_QUOTE_NUM_BOX_Y + QDS_CURRENT_QUOTE_NUM_BOX_HEIGHT,
-                            Get16BPPColor(FROMRGB(32, 41, 53)));
+  VSurfaceColorFill(vsFB, QDS_CURRENT_QUOTE_NUM_BOX_X, QDS_CURRENT_QUOTE_NUM_BOX_Y,
+                    QDS_CURRENT_QUOTE_NUM_BOX_X + QDS_CURRENT_QUOTE_NUM_BOX_WIDTH,
+                    QDS_CURRENT_QUOTE_NUM_BOX_Y + QDS_CURRENT_QUOTE_NUM_BOX_HEIGHT,
+                    Get16BPPColor(FROMRGB(32, 41, 53)));
 
   swprintf(zTemp, ARR_SIZE(zTemp), L"'%s' is currently saying quote #%d",
            gMercProfiles[gTalkingMercSoldier->ubProfile].zNickname, giSelectedMercCurrentQuote - 1);

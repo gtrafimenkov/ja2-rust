@@ -5,6 +5,8 @@
 #include "Laptop/Files.h"
 #include "SGP/Types.h"
 
+typedef uint32_t VSurfID;
+
 // Flags for DrawTextToScreen()
 
 // Defines for coded text For use with IanDisplayWrappedString()
@@ -70,13 +72,8 @@ FileStringPtr GetFirstStringOnThisPage(FileStringPtr RecordList, UINT32 uiFont, 
                                        FileRecordWidthPtr iWidthArray);
 
 // Places a shadow the width an height of the string, to PosX, posY
-void ShadowText(UINT32 uiDestVSurface, STR16 pString, UINT32 uiFont, UINT16 usPosX, UINT16 usPosY);
+void ShadowText(VSurfID destSurface, STR16 pString, UINT32 uiFont, UINT16 usPosX, UINT16 usPosY);
 
 BOOLEAN ReduceStringLength(STR16 pString, size_t bufSize, UINT32 uiWidth, UINT32 uiFont);
-
-void UseSingleCharWordsForWordWrap(BOOLEAN fUseSingleCharWords);
-WRAPPED_STRING *LineWrapForSingleCharWords(UINT32 ulFont, UINT16 usLineWidthPixels,
-                                           UINT16 *pusLineWidthIfWordIsWiderThenWidth,
-                                           STR16 pString, ...);
 
 #endif

@@ -24,8 +24,8 @@
 #include "TileEngine/ExitGrids.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/SmokeEffects.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldDat.h"
+#include "TileEngine/WorldDef.h"
 #include "TileEngine/WorldMan.h"
 #include "UI.h"
 #include "Utils/Cursors.h"
@@ -258,7 +258,7 @@ UINT32 OptionsScreenHandle() {
     RenderOptionsScreen();
 
     // Blit the background to the save buffer
-    BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
     InvalidateRegion(0, 0, 640, 480);
   }
 
@@ -349,14 +349,15 @@ BOOLEAN EnterOptionsScreen() {
   gfExitOptionsDueToMessageBox = FALSE;
 
   // load the options screen background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\OptionScreenBase.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiOptionBackGroundImage));
+  if (!AddVObjectFromFile("INTERFACE\\OptionScreenBase.sti", &guiOptionBackGroundImage)) {
+    return FALSE;
+  }
 
   // load button, title graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_OPTIONHEADER);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiOptionsAddOnImages));
+  if (!AddVideoObject(&VObjectDesc, &guiOptionsAddOnImages)) {
+    return FALSE;
+  }
 
   // Save game button
   giOptionsButtonImages = LoadButtonImage("INTERFACE\\OptionScreenAddons.sti", -1, 2, -1, 3, -1);
@@ -651,12 +652,12 @@ void RenderOptionsScreen() {
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiOptionBackGroundImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Get and display the titla image
   GetVideoObject(&hPixHandle, guiOptionsAddOnImages);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 1, 0, 434, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 1, 0, 434, VO_BLT_SRCTRANSPARENCY, NULL);
 
   //
   // Text for the toggle boxes

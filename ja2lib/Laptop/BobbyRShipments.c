@@ -56,7 +56,7 @@
 #define BOBBYR_SHIPMENT_NUM_ITEMS_Y BOBBYR_SHIPMENT_SHIPMENT_ORDER_NUM_Y
 #define BOBBYR_SHIPMENT_NUM_ITEMS_WIDTH 116
 
-//#define		BOBBYR_SHIPMENT_
+// #define		BOBBYR_SHIPMENT_
 
 UINT32 guiBobbyRShipmentGrid;
 
@@ -96,14 +96,12 @@ INT32 CountNumberValidShipmentForTheShipmentsPage();
 void GameInitBobbyRShipments() {}
 
 BOOLEAN EnterBobbyRShipments() {
-  VOBJECT_DESC VObjectDesc;
-
   InitBobbyRWoodBackground();
 
   // load the Order Grid graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BobbyRay_OnOrder.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyRShipmentGrid));
+  if (!AddVObjectFromFile("LAPTOP\\BobbyRay_OnOrder.sti", &guiBobbyRShipmentGrid)) {
+    return FALSE;
+  }
 
   guiBobbyRShipmentBackImage = LoadButtonImage("LAPTOP\\CatalogueButton.sti", -1, 0, -1, 1, -1);
   guiBobbyRShipmetBack = CreateIconAndTextButton(
@@ -256,12 +254,12 @@ void DisplayShipmentGrid() {
   GetVideoObject(&hPixHandle, guiBobbyRShipmentGrid);
 
   // Shipment Order Grid
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBYR_SHIPMENT_DELIVERY_GRID_X,
-                 BOBBYR_SHIPMENT_DELIVERY_GRID_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_SHIPMENT_DELIVERY_GRID_X,
+                  BOBBYR_SHIPMENT_DELIVERY_GRID_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Order Grid
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 1, BOBBYR_SHIPMENT_ORDER_GRID_X,
-                 BOBBYR_SHIPMENT_ORDER_GRID_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 1, BOBBYR_SHIPMENT_ORDER_GRID_X, BOBBYR_SHIPMENT_ORDER_GRID_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void DisplayShipmentTitles() {

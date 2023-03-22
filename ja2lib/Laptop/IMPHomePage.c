@@ -190,7 +190,7 @@ void DisplayActivationStringCursor(void) {
     uiBaseTime = GetJA2Clock();
   }
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
   // draw line in current state
@@ -201,7 +201,7 @@ void DisplayActivationStringCursor(void) {
            pDestBuf);
 
   // unlock frame buffer
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 
   InvalidateRegion((UINT16)uiCursorPosition, CURSOR_Y, (UINT16)uiCursorPosition + 1,
                    CURSOR_Y + CURSOR_HEIGHT + 1);

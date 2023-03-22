@@ -1,5 +1,3 @@
-#include "SGP/VObjectBlitters.h"
-
 #include <stdio.h>
 #include <string.h>
 
@@ -7,7 +5,8 @@
 #include "SGP/HImage.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
-#include "SGP/VSurface.h"
+#include "SGP/VObjectInternal.h"
+#include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 
@@ -329,8 +328,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTranslucent(UINT16 *pBuffer, UINT32 uiDest
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -459,8 +462,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBTranslucent(UINT16 *pBuffer, UINT32 uiDe
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -1133,6 +1140,10 @@ BOOLEAN Blt16BPPTo16BPP(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, UINT32 
   Assert(pDest != NULL);
   Assert(pSrc != NULL);
 
+  if (!pSrc || !pDest) {
+    return FALSE;
+  }
+
   pSrcPtr = (UINT16 *)((UINT8 *)pSrc + (iSrcYPos * uiSrcPitch) + (iSrcXPos * 2));
   pDestPtr = (UINT16 *)((UINT8 *)pDest + (iDestYPos * uiDestPitch) + (iDestXPos * 2));
   uiLineSkipDest = uiDestPitch - (uiWidth * 2);
@@ -1235,105 +1246,6 @@ Blit3:
 
 	add		edi, uiLineSkipDest
 	add		esi, uiLineSkipSrc
-	dec		ebx
-	jnz		BlitNewLine
-
-  }
-#else
-  // Linux: NOT IMPLEMENTED
-#endif
-
-  return (TRUE);
-}
-
-/**********************************************************************************************
-        Blt16BPPTo16BPPMirror
-
-        Copies a rect of 16 bit data from a video buffer to a buffer position of the brush
-        in the data area, for later blitting. Used to copy background information for mercs
-        etc. to their unblit buffer, for later reblitting. Does NOT clip.
-
-**********************************************************************************************/
-BOOLEAN Blt16BPPTo16BPPMirror(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, UINT32 uiSrcPitch,
-                              INT32 iDestXPos, INT32 iDestYPos, INT32 iSrcXPos, INT32 iSrcYPos,
-                              UINT32 uiWidth, UINT32 uiHeight) {
-  UINT16 *pSrcPtr, *pDestPtr;
-  UINT32 uiLineSkipDest, uiLineSkipSrc;
-  INT32 RightSkip, LeftSkip, TopSkip, BottomSkip, BlitLength, BlitHeight;
-  INT32 iTempX, iTempY, ClipX1, ClipY1, ClipX2, ClipY2;
-  SGPRect *clipregion = NULL;
-
-  Assert(pDest != NULL);
-  Assert(pSrc != NULL);
-
-  // Add to start position of dest buffer
-  iTempX = iDestXPos;
-  iTempY = iDestYPos;
-
-  if (clipregion == NULL) {
-    ClipX1 = 0;    // ClippingRect.iLeft;
-    ClipY1 = 0;    // ClippingRect.iTop;
-    ClipX2 = 640;  // ClippingRect.iRight;
-    ClipY2 = 480;  // ClippingRect.iBottom;
-  } else {
-    ClipX1 = clipregion->iLeft;
-    ClipY1 = clipregion->iTop;
-    ClipX2 = clipregion->iRight;
-    ClipY2 = clipregion->iBottom;
-  }
-
-  // Calculate rows hanging off each side of the screen
-  LeftSkip = min(ClipX1 - min(ClipX1, iTempX), (INT32)uiWidth);
-  RightSkip = min(max(ClipX2, (iTempX + (INT32)uiWidth)) - ClipX2, (INT32)uiWidth);
-  TopSkip = min(ClipY1 - min(ClipY1, iTempY), (INT32)uiHeight);
-  BottomSkip = min(max(ClipY2, (iTempY + (INT32)uiHeight)) - ClipY2, (INT32)uiHeight);
-
-  iTempX = max(ClipX1, iDestXPos);
-  iTempY = max(ClipY1, iDestYPos);
-
-  // calculate the remaining rows and columns to blit
-  BlitLength = ((INT32)uiWidth - LeftSkip - RightSkip);
-  BlitHeight = ((INT32)uiHeight - TopSkip - BottomSkip);
-
-  // check if whole thing is clipped
-  if ((LeftSkip >= (INT32)uiWidth) || (RightSkip >= (INT32)uiWidth)) return (TRUE);
-
-  // check if whole thing is clipped
-  if ((TopSkip >= (INT32)uiHeight) || (BottomSkip >= (INT32)uiHeight)) return (TRUE);
-
-  pSrcPtr = (UINT16 *)((UINT8 *)pSrc + (TopSkip * uiSrcPitch) + (RightSkip * 2));
-  pDestPtr =
-      (UINT16 *)((UINT8 *)pDest + (iTempY * uiDestPitch) + (iTempX * 2) + ((BlitLength - 1) * 2));
-  uiLineSkipDest = uiDestPitch;  //+((BlitLength-1)*2);
-  uiLineSkipSrc = uiSrcPitch - (BlitLength * 2);
-
-#ifdef _WINDOWS
-  __asm {
-	mov		esi, pSrcPtr
-	mov		edi, pDestPtr
-	mov		ebx, BlitHeight
-
-BlitNewLine:
-
-	mov		ecx, BlitLength
-        // add   edi, ecx
-        // add   edi, ecx
-
-BlitNTL2:
-
-	mov		ax, [esi]
-	mov		[edi], ax
-	inc		esi
-	dec		edi
-	inc		esi
-	dec		edi
-	dec		ecx
-	jnz		BlitNTL2
-
-	add		edi, BlitLength
-	add		esi, uiLineSkipSrc
-	add		edi, BlitLength
-	add		edi, uiLineSkipDest
 	dec		ebx
 	jnz		BlitNewLine
 
@@ -1448,8 +1360,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelate(UINT16 *pBuffer, UINT32 uiDestPit
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -1583,8 +1499,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelateObscured(UINT16 *pBuffer, UINT32 u
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -1733,8 +1653,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBPixelate(UINT16 *pBuffer, UINT32 uiDestP
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -2134,8 +2058,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -2255,8 +2183,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -2374,8 +2306,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadow(UINT16 *pBuffer, UINT32 uiDestPitchB
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -2490,8 +2426,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZ(UINT16 *pBuffer, UINT32 uiDestPitch
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -2617,8 +2557,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNB(UINT16 *pBuffer, UINT32 uiDestPit
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -2747,8 +2691,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscured(UINT16 *pBuffer, UINT32 u
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -4216,8 +4164,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -4583,8 +4535,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -5440,8 +5396,12 @@ BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   iTempY = iY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   LeftSkip = pRect->iLeft;
   RightSkip = usWidth - pRect->iRight;
@@ -5530,8 +5490,12 @@ BOOLEAN Blt8BPPDataTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   iTempY = iY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)pSrcBuffer;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -5670,8 +5634,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferHalf(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   iTempY = iY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)pSrcBuffer;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -5763,12 +5731,24 @@ BOOLEAN Blt8BPPDataTo16BPPBufferHalfRect(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   iTempY = iY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
-  CHECKF(usWidth > 0);
-  CHECKF(usHeight > 0);
-  CHECKF(usHeight <= hSrcVSurface->usHeight);
-  CHECKF(usWidth <= hSrcVSurface->usWidth);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
+  if (!(usWidth > 0)) {
+    return FALSE;
+  }
+  if (!(usHeight > 0)) {
+    return FALSE;
+  }
+  if (!(usHeight <= hSrcVSurface->usHeight)) {
+    return FALSE;
+  }
+  if (!(usWidth <= hSrcVSurface->usWidth)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)pSrcBuffer + (uiSrcPitch * pRect->iTop) + (pRect->iLeft);
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -5867,8 +5847,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMask(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   MaskPtr = (UINT8 *)hMaskObject->pPixData + uiMOffset + (iMOY * usMWidth) + iMOX;
@@ -6038,8 +6022,12 @@ BOOLEAN Blt16BPPBufferPixelateRectWithColor(UINT16 *pBuffer, UINT32 uiDestPitchB
   height = iBottom - iTop + 1;
   LineSkip = (uiDestPitchBYTES - (width * 2));
 
-  CHECKF(width >= 1);
-  CHECKF(height >= 1);
+  if (!(width >= 1)) {
+    return FALSE;
+  }
+  if (!(height >= 1)) {
+    return FALSE;
+  }
 
 #ifdef _WINDOWS
   __asm {
@@ -6142,8 +6130,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -6289,8 +6281,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchB
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -7039,18 +7035,22 @@ BOOLEAN Blt16BPPBufferShadowRect(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, SGPRe
   if (area->iTop < ClippingRect.iTop) area->iTop = ClippingRect.iTop;
   if (area->iRight >= ClippingRect.iRight) area->iRight = ClippingRect.iRight - 1;
   if (area->iBottom >= ClippingRect.iBottom) area->iBottom = ClippingRect.iBottom - 1;
-  // CHECKF(area->iLeft >= ClippingRect.iLeft );
-  // CHECKF(area->iTop >= ClippingRect.iTop );
-  // CHECKF(area->iRight <= ClippingRect.iRight );
-  // CHECKF(area->iBottom <= ClippingRect.iBottom );
+  // if (!(area->iLeft >= ClippingRect.iLeft )) { return FALSE; }
+  // if (!(area->iTop >= ClippingRect.iTop )) { return FALSE; }
+  // if (!(area->iRight <= ClippingRect.iRight )) { return FALSE; }
+  // if (!(area->iBottom <= ClippingRect.iBottom )) { return FALSE; }
 
   DestPtr = (pBuffer + (area->iTop * (uiDestPitchBYTES / 2)) + area->iLeft);
   width = area->iRight - area->iLeft + 1;
   height = area->iBottom - area->iTop + 1;
   LineSkip = (uiDestPitchBYTES - (width * 2));
 
-  CHECKF(width >= 1);
-  CHECKF(height >= 1);
+  if (!(width >= 1)) {
+    return FALSE;
+  }
+  if (!(height >= 1)) {
+    return FALSE;
+  }
 
 #ifdef _WINDOWS
   __asm {
@@ -7106,18 +7106,22 @@ BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPit
   if (area->iTop < ClippingRect.iTop) area->iTop = ClippingRect.iTop;
   if (area->iRight >= ClippingRect.iRight) area->iRight = ClippingRect.iRight - 1;
   if (area->iBottom >= ClippingRect.iBottom) area->iBottom = ClippingRect.iBottom - 1;
-  // CHECKF(area->iLeft >= ClippingRect.iLeft );
-  // CHECKF(area->iTop >= ClippingRect.iTop );
-  // CHECKF(area->iRight <= ClippingRect.iRight );
-  // CHECKF(area->iBottom <= ClippingRect.iBottom );
+  // if (!(area->iLeft >= ClippingRect.iLeft )) { return FALSE; }
+  // if (!(area->iTop >= ClippingRect.iTop )) { return FALSE; }
+  // if (!(area->iRight <= ClippingRect.iRight )) { return FALSE; }
+  // if (!(area->iBottom <= ClippingRect.iBottom )) { return FALSE; }
 
   DestPtr = (pBuffer + (area->iTop * (uiDestPitchBYTES / 2)) + area->iLeft);
   width = area->iRight - area->iLeft + 1;
   height = area->iBottom - area->iTop + 1;
   LineSkip = (uiDestPitchBYTES - (width * 2));
 
-  CHECKF(width >= 1);
-  CHECKF(height >= 1);
+  if (!(width >= 1)) {
+    return FALSE;
+  }
+  if (!(height >= 1)) {
+    return FALSE;
+  }
 
 #ifdef _WINDOWS
   __asm {
@@ -7185,8 +7189,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadow(UINT16 *pBuffer, UINT32 uiDestPitchBY
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -7454,8 +7462,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutline(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -8359,8 +8371,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadow(UINT16 *pBuffer, UINT32 uiDestPitc
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -8737,8 +8753,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -8869,8 +8889,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(UINT16 *pBuffer, UINT32
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -9023,8 +9047,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(UINT16 *pBuffer, UINT32 uiDestPitchBY
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -9161,8 +9189,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZ(UINT16 *pBuffer, UINT32 uiDestPitchBY
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -9528,8 +9560,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZNB(UINT16 *pBuffer, UINT32 uiDestPitch
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
@@ -9918,8 +9954,12 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensity(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   iTempY = iY + pTrav->sOffsetY;
 
   // Validations
-  CHECKF(iTempX >= 0);
-  CHECKF(iTempY >= 0);
+  if (!(iTempX >= 0)) {
+    return FALSE;
+  }
+  if (!(iTempY >= 0)) {
+    return FALSE;
+  }
 
   SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);

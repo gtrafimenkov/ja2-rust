@@ -8,6 +8,7 @@
 #include "Laptop/Laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -62,16 +63,15 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 void GameInitAimFacialIndex() {}
 
 BOOLEAN EnterAimFacialIndex() {
-  VOBJECT_DESC VObjectDesc;
   UINT8 i;
   UINT16 usPosX, usPosY, x, y;
   STR sFaceLoc = "FACES\\";
   char sTemp[100];
 
   // load the Portait graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\MugShotBorder3.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMugShotBorder));
+  if (!AddVObjectFromFile("LAPTOP\\MugShotBorder3.sti", &guiMugShotBorder)) {
+    return FALSE;
+  }
 
   usPosX = AIM_FI_FIRST_MUGSHOT_X;
   usPosY = AIM_FI_FIRST_MUGSHOT_Y;
@@ -87,9 +87,7 @@ BOOLEAN EnterAimFacialIndex() {
       MSYS_SetRegionUserData(&gMercFaceMouseRegions[i], 0, i);
 
       sprintf(sTemp, "%s%02d.sti", sFaceLoc, AimMercArray[i]);
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP(sTemp, VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiAimFiFace[i])) return (FALSE);
+      if (!AddVObjectFromFile(sTemp, &guiAimFiFace[i])) return (FALSE);
 
       usPosX += AIM_FI_PORTRAIT_WIDTH + AIM_FI_MUGSHOT_GAP_X;
       i++;
@@ -253,13 +251,13 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 
   // Blt the portrait background
   GetVideoObject(&hMugShotBorderHandle, guiMugShotBorder);
-  BltVideoObject(FRAME_BUFFER, hMugShotBorderHandle, ubImage, usPosX, usPosY,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hMugShotBorderHandle, ubImage, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiAimFiFace[ubMercID]);
-  BltVideoObject(FRAME_BUFFER, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET,
-                 usPosY + AIM_FI_FACE_OFFSET, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   if (IsMercDead(AimMercArray[ubMercID])) {
     // get the face object
@@ -275,8 +273,8 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
     SetObjectHandleShade(guiAimFiFace[ubMercID], 0);
 
     // Blt face to screen
-    BltVideoObject(FRAME_BUFFER, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET,
-                   usPosY + AIM_FI_FACE_OFFSET, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
 
     DrawTextToScreen(AimFiText[AIM_FI_DEAD], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
                      (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
@@ -286,7 +284,7 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
   // else if the merc is currently a POW or, the merc was fired as a pow
   else if (gMercProfiles[AimMercArray[ubMercID]].bMercStatus == MERC_FIRED_AS_A_POW ||
            (pSoldier && GetSolAssignment(pSoldier) == ASSIGNMENT_POW)) {
-    ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
+    ShadowVideoSurfaceRect(vsFB, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
     DrawTextToScreen(pPOWStrings[0], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
                      (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
@@ -295,7 +293,7 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 
   // if the merc is on our team
   else if (pSoldier != NULL) {
-    ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
+    ShadowVideoSurfaceRect(vsFB, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
     DrawTextToScreen(MercInfo[MERC_FILES_ALREADY_HIRED],
                      (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
@@ -305,7 +303,7 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 
   // if the merc is away, shadow his/her face and blit 'away' over top
   else if (!IsMercHireable(AimMercArray[ubMercID])) {
-    ShadowVideoSurfaceRect(FRAME_BUFFER, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
+    ShadowVideoSurfaceRect(vsFB, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET,
                            usPosX + 48 + AIM_FI_FACE_OFFSET, usPosY + 43 + AIM_FI_FACE_OFFSET);
     DrawTextToScreen(AimFiText[AIM_FI_DEAD + 1], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
                      (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,

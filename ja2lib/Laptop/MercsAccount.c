@@ -90,14 +90,15 @@ BOOLEAN EnterMercsAccount() {
   InitMercBackGround();
 
   // load the Arrow graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_ORDERGRID);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMercOrderGrid));
+  if (!AddVideoObject(&VObjectDesc, &guiMercOrderGrid)) {
+    return FALSE;
+  }
 
   // load the Arrow graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\AccountNumber.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiAccountNumberGrid));
+  if (!AddVObjectFromFile("LAPTOP\\AccountNumber.sti", &guiAccountNumberGrid)) {
+    return FALSE;
+  }
 
   guiMercAuthorizeButtonImage = LoadButtonImage("LAPTOP\\BigButtons.sti", -1, 0, -1, 1, -1);
 
@@ -154,13 +155,13 @@ void RenderMercsAccount() {
 
   // Account Number Grid
   GetVideoObject(&hPixHandle, guiMercOrderGrid);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_AC_ORDER_GRID_X, MERC_AC_ORDER_GRID_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, MERC_AC_ORDER_GRID_X, MERC_AC_ORDER_GRID_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Merc Order Grid
   GetVideoObject(&hPixHandle, guiAccountNumberGrid);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_AC_ACCOUNT_NUMBER_X, MERC_AC_ACCOUNT_NUMBER_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, MERC_AC_ACCOUNT_NUMBER_X, MERC_AC_ACCOUNT_NUMBER_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Display Players account number
   swprintf(sText, ARR_SIZE(sText), L"%s %05d", MercAccountText[MERC_ACCOUNT_ACCOUNT],

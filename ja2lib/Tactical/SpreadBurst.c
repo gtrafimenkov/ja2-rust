@@ -176,7 +176,7 @@ void RenderAccumulatedBurstLocations() {
         SetBackgroundRectFilled(iBack);
       }
 
-      BltVideoObject(FRAME_BUFFER, hVObject, 1, sXPos, sYPos, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hVObject, 1, sXPos, sYPos, VO_BLT_SRCTRANSPARENCY, NULL);
     }
   }
 }

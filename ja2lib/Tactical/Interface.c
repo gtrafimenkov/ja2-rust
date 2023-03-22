@@ -49,7 +49,6 @@
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "UI.h"
@@ -191,24 +190,24 @@ enum {
 INT32 iActionIcons[NUM_ICONS];
 
 // GLOBAL INTERFACE SURFACES
-UINT32 guiINTEXT;
-UINT32 guiCLOSE;
-UINT32 guiDEAD;
-UINT32 guiHATCH;
-UINT32 guiGUNSM;
-UINT32 guiP1ITEMS;
-UINT32 guiP2ITEMS;
-UINT32 guiP3ITEMS;
-UINT32 guiBUTTONBORDER;
-UINT32 guiRADIO;
-UINT32 guiRADIO2;
-UINT32 guiCOMPANEL;
-UINT32 guiCOMPANELB;
-UINT32 guiAIMCUBES;
-UINT32 guiAIMBARS;
-UINT32 guiVEHINV;
-UINT32 guiBURSTACCUM;
-UINT32 guiITEMPOINTERHATCHES;
+VSurfID guiINTEXT;
+VSurfID guiCLOSE;
+VSurfID guiDEAD;
+VSurfID guiHATCH;
+VSurfID guiGUNSM;
+VSurfID guiP1ITEMS;
+VSurfID guiP2ITEMS;
+VSurfID guiP3ITEMS;
+VSurfID guiBUTTONBORDER;
+VSurfID guiRADIO;
+VSurfID guiRADIO2;
+VSurfID guiCOMPANEL;
+VSurfID guiCOMPANELB;
+VSurfID guiAIMCUBES;
+VSurfID guiAIMBARS;
+VSurfID guiVEHINV;
+VSurfID guiBURSTACCUM;
+VSurfID guiITEMPOINTERHATCHES;
 
 // UI Globals
 struct MOUSE_REGION gViewportRegion;
@@ -242,7 +241,6 @@ UINT32 CalcUIMessageDuration(STR16 wString);
 
 BOOLEAN InitializeTacticalInterface() {
   VSURFACE_DESC vs_desc;
-  VOBJECT_DESC VObjectDesc;
 
   // Load button Interfaces
   iIconImages[WALK_IMAGES] = LoadButtonImage("INTERFACE\\newicons3.sti", -1, 3, 4, 5, -1);
@@ -286,7 +284,7 @@ BOOLEAN InitializeTacticalInterface() {
       UseLoadedButtonImage(iIconImages[OPEN_DOOR_IMAGES], -1, 15, 16, 17, -1);
 
   // Load interface panels
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
 
   // failing the CHECKF after this will cause you to lose your mouse
 
@@ -296,105 +294,82 @@ BOOLEAN InitializeTacticalInterface() {
   SetVideoSurfaceTransparency(guiINTEXT, FROMRGB(255, 0, 0));
 
   // LOAD CLOSE ANIM
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\p_close.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCLOSE)) AssertMsg(0, "Missing INTERFACE\\p_close.sti");
+  if (!AddVObjectFromFile("INTERFACE\\p_close.sti", &guiCLOSE))
+    AssertMsg(0, "Missing INTERFACE\\p_close.sti");
 
   // LOAD DEAD ANIM
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\p_dead.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiDEAD)) AssertMsg(0, "Missing INTERFACE\\p_dead.sti");
+  if (!AddVObjectFromFile("INTERFACE\\p_dead.sti", &guiDEAD))
+    AssertMsg(0, "Missing INTERFACE\\p_dead.sti");
 
   // LOAD HATCH
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\hatch.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiHATCH)) AssertMsg(0, "Missing INTERFACE\\hatch.sti");
+  if (!AddVObjectFromFile("INTERFACE\\hatch.sti", &guiHATCH))
+    AssertMsg(0, "Missing INTERFACE\\hatch.sti");
 
   // LOAD INTERFACE GUN PICTURES
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\mdguns.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiGUNSM)) AssertMsg(0, "Missing INTERFACE\\mdguns.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdguns.sti", &guiGUNSM))
+    AssertMsg(0, "Missing INTERFACE\\mdguns.sti");
 
   // LOAD INTERFACE ITEM PICTURES
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\mdp1items.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiP1ITEMS)) AssertMsg(0, "Missing INTERFACE\\mdplitems.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdp1items.sti", &guiP1ITEMS))
+    AssertMsg(0, "Missing INTERFACE\\mdplitems.sti");
 
   // LOAD INTERFACE ITEM PICTURES
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\mdp2items.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiP2ITEMS)) AssertMsg(0, "Missing INTERFACE\\mdp2items.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdp2items.sti", &guiP2ITEMS))
+    AssertMsg(0, "Missing INTERFACE\\mdp2items.sti");
 
   // LOAD INTERFACE ITEM PICTURES
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\mdp3items.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiP3ITEMS)) AssertMsg(0, "Missing INTERFACE\\mdp3items.sti");
+  if (!AddVObjectFromFile("INTERFACE\\mdp3items.sti", &guiP3ITEMS))
+    AssertMsg(0, "Missing INTERFACE\\mdp3items.sti");
 
   // LOAD INTERFACE BUTTON BORDER
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\button_frame.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBUTTONBORDER))
+  if (!AddVObjectFromFile("INTERFACE\\button_frame.sti", &guiBUTTONBORDER))
     AssertMsg(0, "Missing INTERFACE\\button_frame.sti");
 
   // LOAD AIM CUBES
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\aimcubes.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAIMCUBES)) AssertMsg(0, "Missing INTERFACE\\aimcubes.sti");
+  if (!AddVObjectFromFile("INTERFACE\\aimcubes.sti", &guiAIMCUBES))
+    AssertMsg(0, "Missing INTERFACE\\aimcubes.sti");
 
   // LOAD AIM BARS
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\aimbars.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiAIMBARS)) AssertMsg(0, "Missing INTERFACE\\aimbars.sti");
+  if (!AddVObjectFromFile("INTERFACE\\aimbars.sti", &guiAIMBARS))
+    AssertMsg(0, "Missing INTERFACE\\aimbars.sti");
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\inventor.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiVEHINV)) AssertMsg(0, "Missing INTERFACE\\inventor.sti");
+  if (!AddVObjectFromFile("INTERFACE\\inventor.sti", &guiVEHINV))
+    AssertMsg(0, "Missing INTERFACE\\inventor.sti");
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\burst1.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBURSTACCUM)) AssertMsg(0, "Missing INTERFACE\\burst1.sti");
+  if (!AddVObjectFromFile("INTERFACE\\burst1.sti", &guiBURSTACCUM))
+    AssertMsg(0, "Missing INTERFACE\\burst1.sti");
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\portraiticons.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiPORTRAITICONS))
+  if (!AddVObjectFromFile("INTERFACE\\portraiticons.sti", &guiPORTRAITICONS))
     AssertMsg(0, "Missing INTERFACE\\portraiticons.sti");
 
   // LOAD RADIO
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\radio.sti", VObjectDesc.ImageFile);
-
-  if (!AddVideoObject(&VObjectDesc, &guiRADIO))
+  if (!AddVObjectFromFile("INTERFACE\\radio.sti", &guiRADIO))
     //	AssertMsg(0, "Missing INTERFACE\\bracket.sti" );
     AssertMsg(0, "Missing INTERFACE\\radio.sti");
 
   // LOAD RADIO2
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\radio2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiRADIO2)) AssertMsg(0, "Missing INTERFACE\\radio2.sti");
+  if (!AddVObjectFromFile("INTERFACE\\radio2.sti", &guiRADIO2))
+    AssertMsg(0, "Missing INTERFACE\\radio2.sti");
 
   // LOAD com panel 2
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\communicationpopup.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCOMPANEL))
+  if (!AddVObjectFromFile("INTERFACE\\communicationpopup.sti", &guiCOMPANEL))
     AssertMsg(0, "Missing INTERFACE\\communicationpopup.sti");
 
   // LOAD ITEM GRIDS....
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\itemgrid.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiITEMPOINTERHATCHES))
+  if (!AddVObjectFromFile("INTERFACE\\itemgrid.sti", &guiITEMPOINTERHATCHES))
     AssertMsg(0, "Missing INTERFACE\\itemgrid.sti");
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\communicationpopup_2.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiCOMPANELB))
+  if (!AddVObjectFromFile("INTERFACE\\communicationpopup_2.sti", &guiCOMPANELB))
     AssertMsg(0, "Missing INTERFACE\\communicationpopup_2.sti");
 
   // Alocate message surfaces
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = 640;
   vs_desc.usHeight = 20;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &(gTopMessage.uiSurface)));
+  if (!(AddVideoSurface(&vs_desc, &(gTopMessage.uiSurface)))) {
+    return FALSE;
+  }
 
   InitItemInterface();
 
@@ -403,7 +378,8 @@ BOOLEAN InitializeTacticalInterface() {
   InitTEAMSlots();
 
   // Init popup box images
-  //	CHECKF( LoadTextMercPopupImages( BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER ) );
+  //	if (!( LoadTextMercPopupImages( BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER ) )) {
+  // return FALSE; }
 
   return (TRUE);
 }
@@ -591,10 +567,6 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
   if (gusSelectedSoldier != NOBODY) {
     pSoldier = MercPtrs[gusSelectedSoldier];
   }
-
-  // Blit background!
-  // BltVideoObjectFromIndex( FRAME_BUFFER, guiBUTTONBORDER, 0, iMenuAnchorX, iMenuAnchorY,
-  // VO_BLT_SRCTRANSPARENCY, NULL );
 
   iMenuAnchorX = giMenuAnchorX + 9;
   iMenuAnchorY = giMenuAnchorY + 8;
@@ -849,7 +821,7 @@ void PopDownMovementMenu() {
 
 void RenderMovementMenu() {
   if (gfInMovementMenu) {
-    BltVideoObjectFromIndex(FRAME_BUFFER, guiBUTTONBORDER, 0, giMenuAnchorX, giMenuAnchorY,
+    BltVideoObjectFromIndex(vsFB, guiBUTTONBORDER, 0, giMenuAnchorX, giMenuAnchorY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Mark buttons dirty!
@@ -939,120 +911,120 @@ void RenderArrows() {
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_BESIDE) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_G) {
     TileElem = gTileDatabase[SECONDPOINTERS1];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_Y) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_YG) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     TileElem = gTileDatabase[SECONDPOINTERS1];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_GG) {
     TileElem = gTileDatabase[SECONDPOINTERS1];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_YY) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB) {
     TileElem = gTileDatabase[SECONDPOINTERS8];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB2) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
     TileElem = gTileDatabase[SECONDPOINTERS8];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB3) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     TileElem = gTileDatabase[SECONDPOINTERS8];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                   gsUpArrowY + 40, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
+                    gsUpArrowY + 40, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BESIDE) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_G) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_Y) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_CLIMB) {
     TileElem = gTileDatabase[SECONDPOINTERS7];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_YG) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_GG) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_YY) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 }
 
@@ -1338,14 +1310,11 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
         }
 
         if ((!pSoldier->bNeutral && (pSoldier->bSide != gbPlayerNum))) {
-          BltVideoObjectFromIndex(FRAME_BUFFER, guiRADIO2, pSoldier->sLocatorFrame, sXPos, sYPos,
+          BltVideoObjectFromIndex(vsFB, guiRADIO2, pSoldier->sLocatorFrame, sXPos, sYPos,
                                   VO_BLT_SRCTRANSPARENCY, NULL);
         } else {
-          BltVideoObjectFromIndex(FRAME_BUFFER, guiRADIO, pSoldier->sLocatorFrame, sXPos, sYPos,
+          BltVideoObjectFromIndex(vsFB, guiRADIO, pSoldier->sLocatorFrame, sXPos, sYPos,
                                   VO_BLT_SRCTRANSPARENCY, NULL);
-
-          // BltVideoObjectFromIndex(  FRAME_BUFFER, guiRADIO, 0, sXPos, sYPos,
-          // VO_BLT_SRCTRANSPARENCY, NULL );
         }
       }
     }
@@ -1478,8 +1447,8 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
         SetBackgroundRectFilled(iBack);
       }
       TileElem = gTileDatabase[usGraphicToUse];
-      BltVideoObject(FRAME_BUFFER, TileElem.hTileSurface, TileElem.usRegionIndex, sXPos, sYPos,
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, sXPos, sYPos,
+                      VO_BLT_SRCTRANSPARENCY, NULL);
 
       // Draw life, breath
       // Only do this when we are a vehicle but on our team
@@ -1611,7 +1580,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   // Draw breath points
 
   // Draw new size
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, gsVIEWPORT_WINDOW_START_Y, 640,
                                  (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y));
 
@@ -1653,7 +1622,7 @@ void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
   RectangleDraw(TRUE, sXPos + 3, sYPos + 4, (INT32)(sXPos + dWidth + 3), sYPos + 4, usLineColor,
                 pDestBuf);
 
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void EndDeadlockMsg() {
@@ -1731,10 +1700,11 @@ void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
 
-  BltVideoSurface(pBlitter->uiDestBuff, guiINTEXT, 0, pBlitter->pBackground->sLeft,
-                  pBlitter->pBackground->sTop, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
+  BltVideoSurface(GetVSByID(pBlitter->uiDestBuff), GetVSByID(guiINTEXT),
+                  pBlitter->pBackground->sLeft, pBlitter->pBackground->sTop,
+                  VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
 
-  pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
 
   SetFont(pBlitter->uiFontID);
   SetFontBackground(pBlitter->ubFontBack);
@@ -1743,7 +1713,7 @@ void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
   mprintf_buffer(pDestBuf, uiDestPitchBYTES, pBlitter->uiFontID, pBlitter->sX, pBlitter->sY,
                  pBlitter->zText);
 
-  UnLockVideoSurface(pBlitter->uiDestBuff);
+  VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
 }
 
 void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel) {
@@ -1832,8 +1802,6 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   iMenuAnchorY = gOpenDoorMenu.sY;
 
   // Blit background!
-  // BltVideoObjectFromIndex( FRAME_BUFFER, guiBUTTONBORDER, 0, iMenuAnchorX, iMenuAnchorY,
-  // VO_BLT_SRCTRANSPARENCY, NULL );
   iMenuAnchorX = gOpenDoorMenu.sX + 9;
   iMenuAnchorY = gOpenDoorMenu.sY + 8;
 
@@ -2099,7 +2067,7 @@ void PopDownOpenDoorMenu() {
 
 void RenderOpenDoorMenu() {
   if (gfInOpenDoorMenu) {
-    BltVideoObjectFromIndex(FRAME_BUFFER, guiBUTTONBORDER, 0, gOpenDoorMenu.sX, gOpenDoorMenu.sY,
+    BltVideoObjectFromIndex(vsFB, guiBUTTONBORDER, 0, gOpenDoorMenu.sX, gOpenDoorMenu.sY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Mark buttons dirty!
@@ -2271,7 +2239,7 @@ BOOLEAN HandleOpenDoorMenu() {
 
 void RenderUIMessage(VIDEO_OVERLAY *pBlitter) {
   // Shade area first...
-  ShadowVideoSurfaceRect(pBlitter->uiDestBuff, pBlitter->sX, pBlitter->sY,
+  ShadowVideoSurfaceRect(GetVSByID(pBlitter->uiDestBuff), pBlitter->sX, pBlitter->sY,
                          pBlitter->sX + gusUIMessageWidth - 2,
                          pBlitter->sY + gusUIMessageHeight - 2);
 
@@ -2481,25 +2449,21 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
   FLOAT dNumStepsPerEnemy, dLength, dCurSize;
 
   memset(&VObjectDesc, 0, sizeof(VObjectDesc));
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
 
-  FilenameForBPP("INTERFACE\\rect.sti", VObjectDesc.ImageFile);
-
-  if (!AddVideoObject(&VObjectDesc, &uiBAR)) AssertMsg(0, "Missing INTERFACE\\rect.sti");
+  if (!AddVObjectFromFile("INTERFACE\\rect.sti", &uiBAR))
+    AssertMsg(0, "Missing INTERFACE\\rect.sti");
 
   // if ( gGameOptions.fTurnTimeLimit )
   {
-    FilenameForBPP("INTERFACE\\timebargreen.sti", VObjectDesc.ImageFile);
-    if (!AddVideoObject(&VObjectDesc, &uiPLAYERBAR))
+    if (!AddVObjectFromFile("INTERFACE\\timebargreen.sti", &uiPLAYERBAR))
       AssertMsg(0, "Missing INTERFACE\\timebargreen.sti");
   }
 
-  FilenameForBPP("INTERFACE\\timebaryellow.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiINTBAR))
+  if (!AddVObjectFromFile("INTERFACE\\timebaryellow.sti", &uiINTBAR))
     AssertMsg(0, "Missing INTERFACE\\timebaryellow.sti");
 
   // Change dest buffer
-  SetFontDestBuffer(uiSurface, 0, 0, 640, 20, FALSE);
+  SetFontDest(GetVSByID(uiSurface), 0, 0, 640, 20, FALSE);
   SetFont(TINYFONT1);
 
   switch (ubType) {
@@ -2509,7 +2473,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     case AIR_RAID_TURN_MESSAGE:
 
       // Render rect into surface
-      BltVideoObjectFromIndex(uiSurface, uiBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_MCOLOR_WHITE);
       uiBarToUseInUpDate = uiBAR;
@@ -2519,7 +2483,8 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     case PLAYER_INTERRUPT_MESSAGE:
 
       // Render rect into surface
-      BltVideoObjectFromIndex(uiSurface, uiINTBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiINTBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY,
+                              NULL);
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_MCOLOR_BLACK);
       SetFontShadow(NO_SHADOW);
@@ -2527,73 +2492,14 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
       break;
 
     case PLAYER_TURN_MESSAGE:
-
-      // Render rect into surface
-      // if ( gGameOptions.fTurnTimeLimit )
-      { BltVideoObjectFromIndex(uiSurface, uiPLAYERBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL); }
-      // else
-      //{
-      //	BltVideoObjectFromIndex( uiSurface, uiPLAYERBAR, 13, 0, 0, VO_BLT_SRCTRANSPARENCY,
-      // NULL );
-      //}
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiPLAYERBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY,
+                              NULL);
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_MCOLOR_BLACK);
       SetFontShadow(NO_SHADOW);
       uiBarToUseInUpDate = uiPLAYERBAR;
       break;
   }
-
-    // Update progress bar!
-#if 0
-	if ( ubType == COMPUTER_TURN_MESSAGE )
-	{
-		INT32		cnt1, iLength;
-		INT16		usNumStepsPerEnemy;
-
-		if ( gfProgBarActive )
-		{
-			//usNumStepsPerEnemy = ( PROG_BAR_LENGTH / gubProgNumEnemies );
-
-			// Alrighty, do some fun stuff!
-
-			// Render end peice
-			sBarX = PROG_BAR_START_X;
-			BltVideoObjectFromIndex( uiSurface, uiBAR, 3, sBarX, PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL );
-
-			// Determine Length
-		//	iLength   = (gubProgCurEnemy ) * usNumStepsPerEnemy;
-
-			cnt1 = 0;
-			cnt2 = 0;
-
-			while( cnt1 < iLength )
-			{
-				sBarX++;
-
-				// Check sBarX, ( just as a precaution )
-				if ( sBarX > 640 )
-				{
-					break;
-				}
-
-				BltVideoObjectFromIndex( uiSurface, uiBAR, (INT16)( 4 + cnt2 ), sBarX, PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL );
-
-				cnt1++;
-				cnt2++;
-
-				if ( cnt2 == 10 )
-				{
-					cnt2 = 0;
-				}
-			}
-
-			//gubProgNumEnemies = ubNum;
-			//gubProgCurEnemy		= 0;
-
-
-		}
-	}
-#endif
 
   if (gGameOptions.fTurnTimeLimit) {
     if (ubType == PLAYER_TURN_MESSAGE || ubType == PLAYER_INTERRUPT_MESSAGE) {
@@ -2609,7 +2515,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
 
     // Render end peice
     sBarX = PROG_BAR_START_X;
-    BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, 1, sBarX, PROG_BAR_START_Y,
+    BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, 1, sBarX, PROG_BAR_START_Y,
                             VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Determine Length
@@ -2626,7 +2532,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
         break;
       }
 
-      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
                               PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
       dCurSize++;
@@ -2640,11 +2546,11 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     // Do end...
     if (gTacticalStatus.usTactialTurnLimitCounter == gTacticalStatus.usTactialTurnLimitMax) {
       sBarX++;
-      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
                               PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
       sBarX++;
-      BltVideoObjectFromIndex(uiSurface, uiBarToUseInUpDate, (INT16)(12), sBarX, PROG_BAR_START_Y,
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, (INT16)(12), sBarX,
+                              PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
     }
   }
 
@@ -2660,7 +2566,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
   mprintf(sX, sY, psString);
 
   // Change back...
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // Done!
   SetFontShadow(DEFAULT_SHADOW);
@@ -2697,7 +2603,7 @@ void CheckForAndHandleEndPlayerTimeLimit() {
 
 void HandleTopMessages() {
   // UINT32		uiTime;
-  blt_vs_fx BltFx;
+  struct BltOpts BltFx;
 
   // OK, is out current count > 0 ?
   if (gTacticalStatus.fInTopMessage) {
@@ -2807,7 +2713,7 @@ void HandleTopMessages() {
       BltFx.SrcRect.iRight = 640;
       BltFx.SrcRect.iBottom = 20;
 
-      BltVideoSurface(FRAME_BUFFER, gTopMessage.uiSurface, 0, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
+      BltVideoSurface(vsFB, GetVSByID(gTopMessage.uiSurface), 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
 
       // Save to save buffer....
       BltFx.SrcRect.iLeft = 0;
@@ -2815,7 +2721,7 @@ void HandleTopMessages() {
       BltFx.SrcRect.iRight = 640;
       BltFx.SrcRect.iBottom = 20;
 
-      BltVideoSurface(guiSAVEBUFFER, FRAME_BUFFER, 0, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
+      BltVideoSurface(vsSaveBuffer, vsFB, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
 
       InvalidateRegion(0, 0, 640, 20);
 
@@ -2829,46 +2735,12 @@ void HandleTopMessages() {
 }
 
 void EndTopMessage() {
-  //	blt_vs_fx BltFx;
-
   // OK, end the topmost message!
   if (gTacticalStatus.fInTopMessage) {
-    // Are we the last?
-    // if ( gTopMessage.bCurrentMessage == 1 )
-    {
-      // We are....
-      // Re-render our strip and then copy to the save buffer...
-      gsVIEWPORT_WINDOW_START_Y = 0;
-      gTacticalStatus.fInTopMessage = FALSE;
-
-      SetRenderFlags(RENDER_FLAG_FULL);
-      // RenderStaticWorldRect( 0, 0, 640, 20, TRUE );
-      // gsVIEWPORT_WINDOW_START_Y = 20;
-
-      // Copy into save buffer...
-      // BltFx.SrcRect.iLeft = 0;
-      // BltFx.SrcRect.iTop  = 0;
-      // BltFx.SrcRect.iRight = 640;
-      // BltFx.SrcRect.iBottom = 20;
-
-      // BltVideoSurface( guiSAVEBUFFER, FRAME_BUFFER, 0,
-      //															 0,
-      // 0,
-      // VS_BLT_SRCSUBRECT, &BltFx );
-    }
-    // else
-    //{
-    // Render to save buffer
-    //	CreateTopMessage( guiSAVEBUFFER, gTopMessageTypes[ 0 ], gzTopMessageStrings[ 0 ] );
-    //}
-
-    // Animate up...
-    // gTopMessage.bAnimate = 1;
-    // Set time of last update
-    // gTopMessage.uiTimeOfLastUpdate = GetJA2Clock( ) + 150;
-
-    // Handle first frame now...
-    // HandleTopMessages( );
+    // Re-render our strip and then copy to the save buffer...
+    gsVIEWPORT_WINDOW_START_Y = 0;
+    gTacticalStatus.fInTopMessage = FALSE;
+    SetRenderFlags(RENDER_FLAG_FULL);
   }
 }
 
@@ -3187,33 +3059,33 @@ void RenderAimCubeUI() {
       }
 
       // Do first level....
-      BltVideoObjectFromIndex(FRAME_BUFFER, guiAIMCUBES, bGraphicNum, sScreenX,
-                              (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
+                              VO_BLT_SRCTRANSPARENCY, NULL);
       sBarHeight -= 3;
-      BltVideoObjectFromIndex(FRAME_BUFFER, guiAIMCUBES, bGraphicNum, sScreenX,
-                              (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
+                              VO_BLT_SRCTRANSPARENCY, NULL);
 
       // Loop through height.....
       for (cnt = 1; cnt <= gCubeUIData.bHeight; cnt++) {
         sBarHeight -= 3;
-        BltVideoObjectFromIndex(FRAME_BUFFER, guiAIMCUBES, bGraphicNum, sScreenX,
-                                (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
+                                VO_BLT_SRCTRANSPARENCY, NULL);
         sBarHeight -= 3;
-        BltVideoObjectFromIndex(FRAME_BUFFER, guiAIMCUBES, bGraphicNum, sScreenX,
-                                (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
+                                VO_BLT_SRCTRANSPARENCY, NULL);
         sBarHeight -= 3;
-        BltVideoObjectFromIndex(FRAME_BUFFER, guiAIMCUBES, bGraphicNum, sScreenX,
-                                (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
+                                VO_BLT_SRCTRANSPARENCY, NULL);
         sBarHeight -= 3;
-        BltVideoObjectFromIndex(FRAME_BUFFER, guiAIMCUBES, bGraphicNum, sScreenX,
-                                (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
+                                VO_BLT_SRCTRANSPARENCY, NULL);
       }
     }
 
     if (gCubeUIData.fShowPower) {
       sBarHeight = -50;
 
-      BltVideoObjectFromIndex(FRAME_BUFFER, guiAIMBARS, gCubeUIData.ubPowerIndex, sScreenX,
+      BltVideoObjectFromIndex(vsFB, guiAIMBARS, gCubeUIData.ubPowerIndex, sScreenX,
                               (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
     }
   }
@@ -3378,6 +3250,6 @@ void RenderTopmostMultiPurposeLocator() {
     SetBackgroundRectFilled(iBack);
   }
 
-  BltVideoObjectFromIndex(FRAME_BUFFER, guiRADIO, gbMultiPurposeLocatorFrame, sXPos, sYPos,
+  BltVideoObjectFromIndex(vsFB, guiRADIO, gbMultiPurposeLocatorFrame, sXPos, sYPos,
                           VO_BLT_SRCTRANSPARENCY, NULL);
 }

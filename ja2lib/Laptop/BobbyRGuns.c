@@ -12,6 +12,7 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -253,30 +254,22 @@ void EnterInitBobbyRGuns() {
 }
 
 BOOLEAN EnterBobbyRGuns() {
-  VOBJECT_DESC VObjectDesc;
-
   gfBigImageMouseRegionCreated = FALSE;
 
   // load the background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\gunbackground.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiGunBackground));
+  if (!AddVObjectFromFile("LAPTOP\\gunbackground.sti", &guiGunBackground)) {
+    return FALSE;
+  }
 
   // load the gunsgrid graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\gunsgrid.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiGunsGrid));
+  if (!AddVObjectFromFile("LAPTOP\\gunsgrid.sti", &guiGunsGrid)) {
+    return FALSE;
+  }
 
   InitBobbyBrTitle();
 
   SetFirstLastPagesForNew(IC_BOBBY_GUN);
-  //	CalculateFirstAndLastIndexs();
-  /*
-          if(giCurrentSubPage == 0)
-                  gusCurWeaponIndex = gusFirstGunIndex;
-          else
-                  gusCurWeaponIndex = (UINT8)giCurrentSubPage;
-  */
+
   // Draw menu bar
   InitBobbyMenuBar();
 
@@ -312,8 +305,8 @@ void RenderBobbyRGuns() {
 
   // GunForm
   GetVideoObject(&hPixHandle, guiGunsGrid);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   //	DeleteMouseRegionForBigImage();
   DisplayItemInfo(IC_BOBBY_GUN);
@@ -328,8 +321,8 @@ BOOLEAN DisplayBobbyRBrTitle() {
 
   // BR title
   GetVideoObject(&hPixHandle, guiBrTitle);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBYR_BRTITLE_X, BOBBYR_BRTITLE_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_BRTITLE_X, BOBBYR_BRTITLE_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // To Order Text
   DrawTextToScreen(BobbyRText[BOBBYR_GUNS_TO_ORDER], BOBBYR_TO_ORDER_TITLE_X,
@@ -337,7 +330,7 @@ BOOLEAN DisplayBobbyRBrTitle() {
                    FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
   // First put a shadow behind the image
-  ShadowVideoSurfaceRect(FRAME_BUFFER, BOBBYR_TO_ORDER_TEXT_X - 2, BOBBYR_TO_ORDER_TEXT_Y - 2,
+  ShadowVideoSurfaceRect(vsFB, BOBBYR_TO_ORDER_TEXT_X - 2, BOBBYR_TO_ORDER_TEXT_Y - 2,
                          BOBBYR_TO_ORDER_TEXT_X + BOBBYR_TO_ORDER_TEXT_WIDTH,
                          BOBBYR_TO_ORDER_TEXT_Y + 31);
 
@@ -351,12 +344,10 @@ BOOLEAN DisplayBobbyRBrTitle() {
 }
 
 BOOLEAN InitBobbyBrTitle() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the br title graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\br.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBrTitle));
+  if (!AddVObjectFromFile("LAPTOP\\br.sti", &guiBrTitle)) {
+    return FALSE;
+  }
 
   // initialize the link to the homepage by clicking on the title
   MSYS_DefineRegion(&gSelectedTitleImageLinkRegion, BOBBYR_BRTITLE_X, BOBBYR_BRTITLE_Y,
@@ -821,10 +812,10 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   sCenY = PosY + 8;
 
   // blt the shadow of the item
-  BltVideoObjectOutlineShadowFromIndex(FRAME_BUFFER, uiImage, 0, sCenX - 2,
+  BltVideoObjectOutlineShadowFromIndex(vsFB, uiImage, 0, sCenX - 2,
                                        sCenY + 2);  // pItem->ubGraphicNum
 
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY, NULL);
   DeleteVideoObjectFromIndex(uiImage);
 
   return (TRUE);

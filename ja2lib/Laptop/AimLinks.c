@@ -62,19 +62,22 @@ BOOLEAN EnterAimLinks() {
   InitAimMenuBar();
 
   // load the Bobby link graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYRAYLINK);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyLink));
+  if (!AddVideoObject(&VObjectDesc, &guiBobbyLink)) {
+    return FALSE;
+  }
 
   // load the Funeral graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_MORTUARYLINK);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiFuneralLink));
+  if (!AddVideoObject(&VObjectDesc, &guiFuneralLink)) {
+    return FALSE;
+  }
 
   // load the Insurance graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCELINK);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsuranceLink));
+  if (!AddVideoObject(&VObjectDesc, &guiInsuranceLink)) {
+    return FALSE;
+  }
 
   usPosY = AIM_LINK_BOBBY_LINK_Y;
   for (i = 0; i < AIM_LINK_NUM_LINKS; i++) {
@@ -114,19 +117,19 @@ void RenderAimLinks() {
   DisableAimButton();
 
   GetVideoObject(&hPixHandle, guiBobbyLink);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, AIM_LINK_BOBBY_LINK_X, AIM_LINK_BOBBY_LINK_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, AIM_LINK_BOBBY_LINK_X, AIM_LINK_BOBBY_LINK_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   GetVideoObject(&hPixHandle, guiFuneralLink);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, AIM_LINK_FUNERAL_LINK_X, AIM_LINK_FUNERAL_LINK_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, AIM_LINK_FUNERAL_LINK_X, AIM_LINK_FUNERAL_LINK_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
   //	DrawTextToScreen(AimLinkText[AIM_LINK_FUNERAL], AIM_LINK_BOBBY_LINK_X,
   // AIM_LINK_LINK_TEXT_2_Y, AIM_LINK_LINK_WIDTH, AIM_LINK_FONT, AIM_LINK_COLOR, FONT_MCOLOR_BLACK,
   // FALSE, CENTER_JUSTIFIED);
 
   GetVideoObject(&hPixHandle, guiInsuranceLink);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, AIM_LINK_INSURANCE_LINK_X, AIM_LINK_INSURANCE_LINK_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, AIM_LINK_INSURANCE_LINK_X, AIM_LINK_INSURANCE_LINK_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
   //	DrawTextToScreen(AimLinkText[AIM_LINK_LISTENING], AIM_LINK_BOBBY_LINK_X,
   // AIM_LINK_LINK_TEXT_3_Y, AIM_LINK_LINK_WIDTH, AIM_LINK_FONT, AIM_LINK_COLOR, FONT_MCOLOR_BLACK,
   // FALSE, CENTER_JUSTIFIED);

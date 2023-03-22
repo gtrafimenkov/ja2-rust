@@ -45,6 +45,8 @@
 #include "Tactical/Faces.h"
 #include "Tactical/HandleDoors.h"
 #include "Tactical/HandleItems.h"
+#include "Tactical/HandleUI.h"
+#include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
 #include "Tactical/InterfaceDialogue.h"
 #include "Tactical/InterfacePanels.h"
@@ -69,7 +71,6 @@
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/Cursors.h"
@@ -346,7 +347,6 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   FACETYPE *pFace;
   UINT16 usWidth;
   UINT16 usHeight;
-  VOBJECT_DESC VObjectDesc;
   INT16 sCenterYVal, sCenterXVal;
   CHAR8 ubString[48];
 
@@ -363,10 +363,7 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   gTalkPanel.fOnName = FALSE;
 
   // Load Video Object!
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "INTERFACE\\talkbox1.sti");
-  // Load
-  if (AddVideoObject(&VObjectDesc, &(gTalkPanel.uiPanelVO)) == FALSE) {
+  if (AddVObjectFromFile("INTERFACE\\talkbox1.sti", &(gTalkPanel.uiPanelVO)) == FALSE) {
     return (0);
   }
 
@@ -419,7 +416,9 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   // Create face ( a big face! )....
   iFaceIndex = InitFace(ubCharacterNum, NOBODY, FACE_BIGFACE | FACE_POTENTIAL_KEYWAIT);
 
-  CHECKF(iFaceIndex != -1);
+  if (!(iFaceIndex != -1)) {
+    return FALSE;
+  }
 
   // Set face
   gTalkPanel.iFaceIndex = iFaceIndex;
@@ -471,11 +470,13 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   // Build save buffer
   // Create a buffer for him to go!
   // OK, ignore screen widths, height, only use BPP
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = pFace->usFaceWidth;
   vs_desc.usHeight = pFace->usFaceHeight;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &(gTalkPanel.uiSaveBuffer)));
+  if (!(AddVideoSurface(&vs_desc, &(gTalkPanel.uiSaveBuffer)))) {
+    return FALSE;
+  }
 
   // Set face to auto
   SetAutoFaceActive(gTalkPanel.uiSaveBuffer, FACE_AUTO_RESTORE_BUFFER, iFaceIndex, 0, 0);
@@ -644,7 +645,7 @@ void RenderTalkingMenu() {
     SetFont(MILITARYFONT1);
 
     // Render box!
-    BltVideoObjectFromIndex(FRAME_BUFFER, gTalkPanel.uiPanelVO, 0, gTalkPanel.sX, gTalkPanel.sY,
+    BltVideoObjectFromIndex(vsFB, gTalkPanel.uiPanelVO, 0, gTalkPanel.sX, gTalkPanel.sY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Render name
@@ -664,23 +665,23 @@ void RenderTalkingMenu() {
     // Set font settings back
     SetFontShadow(DEFAULT_SHADOW);
 
-    pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
-    pSrcBuf = LockVideoSurface(gTalkPanel.uiSaveBuffer, &uiSrcPitchBYTES);
+    pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
+    pSrcBuf = VSurfaceLockOld(GetVSByID(gTalkPanel.uiSaveBuffer), &uiSrcPitchBYTES);
 
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
                     (INT16)(gTalkPanel.sX + TALK_PANEL_FACE_X),
                     (INT16)(gTalkPanel.sY + TALK_PANEL_FACE_Y), 0, 0, pFace->usFaceWidth,
                     pFace->usFaceHeight);
 
-    UnLockVideoSurface(FRAME_BUFFER);
-    UnLockVideoSurface(gTalkPanel.uiSaveBuffer);
+    VSurfaceUnlock(vsFB);
+    VSurfaceUnlock(GetVSByID(gTalkPanel.uiSaveBuffer));
 
     MarkButtonsDirty();
 
     // If guy is talking.... shadow area
     if (pFace->fTalking || !DialogueQueueIsEmpty()) {
       ShadowVideoSurfaceRect(
-          FRAME_BUFFER, (INT16)(gTalkPanel.sX + TALK_PANEL_SHADOW_AREA_X),
+          vsFB, (INT16)(gTalkPanel.sX + TALK_PANEL_SHADOW_AREA_X),
           (INT16)(gTalkPanel.sY + TALK_PANEL_SHADOW_AREA_Y),
           (INT16)(gTalkPanel.sX + TALK_PANEL_SHADOW_AREA_X + TALK_PANEL_SHADOW_AREA_WIDTH),
           (INT16)(gTalkPanel.sY + TALK_PANEL_SHADOW_AREA_Y + TALK_PANEL_SHADOW_AREA_HEIGHT));
@@ -715,13 +716,10 @@ void RenderTalkingMenu() {
         iInterfaceDialogueBox = -1;
       }
 
-      SET_USE_WINFONTS(TRUE);
-      SET_WINFONT(giSubTitleWinFont);
       iInterfaceDialogueBox = PrepareMercPopupBox(
           iInterfaceDialogueBox, BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER,
           gTalkPanel.zQuoteStr, TALK_PANEL_DEFAULT_SUBTITLE_WIDTH, 0, 0, 0, &usTextBoxWidth,
           &usTextBoxHeight);
-      SET_USE_WINFONTS(FALSE);
 
       gTalkPanel.fSetupSubTitles = FALSE;
 

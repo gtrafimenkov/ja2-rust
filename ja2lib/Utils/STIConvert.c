@@ -6,6 +6,7 @@
 #include "SGP/ImgFmt.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 
@@ -98,7 +99,7 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
 
   STCIHeader Header;
   UINT32 uiLoop;
-  image_type Image;
+  struct Image Image;
 
   struct SGPPaletteEntry *pSGPPaletteEntry;
   STCIPaletteElement STCIPaletteEntry;
@@ -110,7 +111,7 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
   // UINT16							usLoop;
 
   memset(&Header, 0, STCI_HEADER_SIZE);
-  memset(&Image, 0, sizeof(image_type));
+  memset(&Image, 0, sizeof(struct Image));
 
   uiOriginalSize = sWidth * sHeight * (8 / 8);
 
@@ -243,7 +244,9 @@ BOOLEAN ConvertToETRLE(UINT8 **ppDest, UINT32 *puiDestLen, UINT8 **ppSubImageBuf
   // worst-case situation	estimate
   uiSpaceLeft = (UINT32)usWidth * (UINT32)usHeight * 3;
   *ppDest = (UINT8 *)MemAlloc(uiSpaceLeft);
-  CHECKF(*ppDest);
+  if (!(*ppDest)) {
+    return FALSE;
+  }
   *puiDestLen = uiSpaceLeft;
 
   pOutputNext = *ppDest;

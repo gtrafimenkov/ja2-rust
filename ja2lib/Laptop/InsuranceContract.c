@@ -15,6 +15,7 @@
 #include "SGP/English.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -194,7 +195,6 @@ void EnterLaptopInitInsuranceContract() {
 }
 
 BOOLEAN EnterInsuranceContract() {
-  VOBJECT_DESC VObjectDesc;
   UINT16 usPosX, i;
 
   // build the list of mercs that are can be displayed
@@ -207,14 +207,14 @@ BOOLEAN EnterInsuranceContract() {
   InitInsuranceDefaults();
 
   // load the Insurance title graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\InsOrderGrid.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsOrderGridImage));
+  if (!AddVObjectFromFile("LAPTOP\\InsOrderGrid.sti", &guiInsOrderGridImage)) {
+    return FALSE;
+  }
 
   // load the Insurance bullet graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\bullet.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsOrderBulletImage));
+  if (!AddVObjectFromFile("LAPTOP\\bullet.sti", &guiInsOrderBulletImage)) {
+    return FALSE;
+  }
 
   usPosX = INS_CTRCT_BOTTOM_LINK_RED_BAR_X;
   for (i = 0; i < 2; i++) {
@@ -349,8 +349,8 @@ void RenderInsuranceContract() {
 
   // Get and display the insurance bullet
   GetVideoObject(&hPixHandle, guiInsOrderBulletImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
-                 INS_CTRCT_FIRST_BULLET_TEXT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X, INS_CTRCT_FIRST_BULLET_TEXT_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Display the first instruction sentence
   GetInsuranceText(INS_MLTI_TO_PURCHASE_INSURANCE, sText);
@@ -361,8 +361,8 @@ void RenderInsuranceContract() {
 
   // Get and display the insurance bullet
   GetVideoObject(&hPixHandle, guiInsOrderBulletImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
-                 INS_CTRCT_SECOND_BULLET_TEXT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
+                  INS_CTRCT_SECOND_BULLET_TEXT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Display the second instruction sentence
   GetInsuranceText(INS_MLTI_ONCE_SATISFIED_CLICK_ACCEPT, sText);
@@ -468,7 +468,6 @@ void BtnInsContractNextButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 }
 
 BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hPixHandle;
   UINT16 usPosX, usPosY;
   UINT32 uiInsMercFaceImage;
@@ -510,14 +509,14 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
 
   // Get and display the insurance order grid #1
   GetVideoObject(&hPixHandle, guiInsOrderGridImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, usPosX, INS_CTRCT_ORDER_GRID1_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, usPosX, INS_CTRCT_ORDER_GRID1_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // load the mercs face graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   sprintf(sTemp, "FACES\\%02d.sti", ubMercID);
-  FilenameForBPP(sTemp, VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &uiInsMercFaceImage));
+  if (!AddVObjectFromFile(sTemp, &uiInsMercFaceImage)) {
+    return FALSE;
+  }
 
   // Get the merc's face
   GetVideoObject(&hPixHandle, uiInsMercFaceImage);
@@ -535,9 +534,9 @@ BOOLEAN DisplayOrderGrid(UINT8 ubGridNumber, UINT8 ubMercID) {
   }
 
   // Get and display the mercs face
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, usPosX + INS_CTRCT_OG_FACE_OFFSET_X,
-                 INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_FACE_OFFSET_Y, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, usPosX + INS_CTRCT_OG_FACE_OFFSET_X,
+                  INS_CTRCT_ORDER_GRID1_Y + INS_CTRCT_OG_FACE_OFFSET_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // the face images isn't needed anymore so delete it
   DeleteVideoObjectFromIndex(uiInsMercFaceImage);

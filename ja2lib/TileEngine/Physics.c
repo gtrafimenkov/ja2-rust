@@ -221,7 +221,9 @@ INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real x
 }
 
 BOOLEAN RemoveObjectSlot(INT32 iObject) {
-  CHECKF(iObject < NUM_OBJECT_SLOTS);
+  if (!(iObject < NUM_OBJECT_SLOTS)) {
+    return FALSE;
+  }
 
   ObjectSlots[iObject].fAllocated = FALSE;
 

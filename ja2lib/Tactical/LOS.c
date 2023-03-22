@@ -1385,10 +1385,16 @@ INT32 SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
 
   // TO ADD: if target is camouflaged and in cover, reduce sight distance by 30%
   // TO ADD: if in tear gas, reduce sight limit to 2 tiles
-  CHECKF(pStartSoldier);
-  CHECKF(pEndSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
+  if (!(pEndSoldier)) {
+    return FALSE;
+  }
   fOk = CalculateSoldierZPos(pStartSoldier, LOS_POS, &dStartZPos);
-  CHECKF(fOk);
+  if (!(fOk)) {
+    return FALSE;
+  }
 
   if (gWorldSectorX == 5 && gWorldSectorY == MAP_ROW_N) {
     // in the bloodcat arena sector, skip sight between army & bloodcats
@@ -1410,7 +1416,9 @@ INT32 SoldierToSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier,
     fSmell = TRUE;
   } else {
     fOk = CalculateSoldierZPos(pEndSoldier, LOS_POS, &dEndZPos);
-    CHECKF(fOk);
+    if (!(fOk)) {
+      return FALSE;
+    }
     fSmell = FALSE;
   }
 
@@ -1476,7 +1484,9 @@ INT16 SoldierToLocationWindowTest(struct SOLDIERTYPE *pStartSoldier, INT16 sEndG
   INT16 sXPos, sYPos, sWindowGridNo = NOWHERE;
   INT32 iRet;
 
-  CHECKF(pStartSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
   dStartZPos = FixedToFloat(((gqStandardWindowTopHeight + gqStandardWindowBottomHeight) / 2));
   if (pStartSoldier->bLevel > 0) {  // on a roof
     dStartZPos += WALL_HEIGHT_UNITS;
@@ -1533,10 +1543,14 @@ INT32 SoldierTo3DLocationLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT1
   struct SOLDIERTYPE *pTarget;
   BOOLEAN fOk;
 
-  CHECKF(pStartSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
 
   fOk = CalculateSoldierZPos(pStartSoldier, LOS_POS, &dStartZPos);
-  CHECKF(fOk);
+  if (!(fOk)) {
+    return FALSE;
+  }
 
   if (bCubeLevel > 0) {
     dEndZPos = ((FLOAT)(bCubeLevel + bLevel * PROFILE_Z_SIZE) - 0.5f) * HEIGHT_UNITS_PER_INDEX;
@@ -1581,10 +1595,14 @@ INT32 SoldierToBodyPartLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, INT16 
   }
   pEndSoldier = MercPtrs[ubTargetID];
 
-  CHECKF(pStartSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
 
   fOk = CalculateSoldierZPos(pStartSoldier, LOS_POS, &dStartZPos);
-  CHECKF(fOk);
+  if (!(fOk)) {
+    return FALSE;
+  }
 
   switch (ubAimLocation) {
     case AIM_SHOT_HEAD:
@@ -1623,10 +1641,14 @@ INT32 SoldierToVirtualSoldierLineOfSightTest(struct SOLDIERTYPE *pStartSoldier, 
   INT16 sXPos, sYPos;
   BOOLEAN fOk;
 
-  CHECKF(pStartSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
 
   fOk = CalculateSoldierZPos(pStartSoldier, LOS_POS, &dStartZPos);
-  CHECKF(fOk);
+  if (!(fOk)) {
+    return FALSE;
+  }
 
   // manually calculate destination Z position.
   switch (bStance) {
@@ -2708,8 +2730,12 @@ UINT8 SoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
   if (pStartSoldier == pEndSoldier) {
     return (0);
   }
-  CHECKF(pStartSoldier);
-  CHECKF(pEndSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
+  if (!(pEndSoldier)) {
+    return FALSE;
+  }
   fOk = CalculateSoldierZPos(pEndSoldier, TARGET_POS, &dEndZPos);
   if (!fOk) {
     return (FALSE);
@@ -2733,8 +2759,12 @@ UINT8 SoldierToSoldierBodyPartChanceToGetThrough(struct SOLDIERTYPE *pStartSoldi
   if (pStartSoldier == pEndSoldier) {
     return (0);
   }
-  CHECKF(pStartSoldier);
-  CHECKF(pEndSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
+  if (!(pEndSoldier)) {
+    return FALSE;
+  }
   switch (ubAimLocation) {
     case AIM_SHOT_HEAD:
       ubPosType = HEAD_TARGET_POS;
@@ -2773,7 +2803,9 @@ UINT8 SoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, INT
   if (pStartSoldier->sGridNo == sGridNo) {
     return (0);
   }
-  CHECKF(pStartSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
 
   pEndSoldier = SimpleFindSoldier(sGridNo, bLevel);
   if (pEndSoldier != NULL) {
@@ -2817,8 +2849,12 @@ UINT8 AISoldierToSoldierChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier,
   if (pStartSoldier == pEndSoldier) {
     return (0);
   }
-  CHECKF(pStartSoldier);
-  CHECKF(pEndSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
+  if (!(pEndSoldier)) {
+    return FALSE;
+  }
   fOk = CalculateSoldierZPos(pEndSoldier, TARGET_POS, &dEndZPos);
   if (!fOk) {
     return (FALSE);
@@ -2850,7 +2886,9 @@ UINT8 AISoldierToLocationChanceToGetThrough(struct SOLDIERTYPE *pStartSoldier, I
   if (pStartSoldier->sGridNo == sGridNo) {
     return (0);
   }
-  CHECKF(pStartSoldier);
+  if (!(pStartSoldier)) {
+    return FALSE;
+  }
 
   pEndSoldier = SimpleFindSoldier(sGridNo, bLevel);
   if (pEndSoldier != NULL) {

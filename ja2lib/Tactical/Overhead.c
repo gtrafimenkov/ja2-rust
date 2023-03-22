@@ -16,6 +16,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
+#include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "Soldier.h"
@@ -92,7 +93,6 @@
 #include "TileEngine/Smell.h"
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
@@ -331,7 +331,9 @@ INT32 AddMercSlot(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN RemoveMercSlot(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCount;
 
-  CHECKF(pSoldier != NULL);
+  if (!(pSoldier != NULL)) {
+    return FALSE;
+  }
 
   for (uiCount = 0; uiCount < guiNumMercSlots; uiCount++) {
     if (MercSlots[uiCount] == pSoldier) {
@@ -385,7 +387,9 @@ INT32 AddAwaySlot(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN RemoveAwaySlot(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCount;
 
-  CHECKF(pSoldier != NULL);
+  if (!(pSoldier != NULL)) {
+    return FALSE;
+  }
 
   for (uiCount = 0; uiCount < guiNumAwaySlots; uiCount++) {
     if (AwaySlots[uiCount] == pSoldier) {

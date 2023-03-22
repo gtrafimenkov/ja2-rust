@@ -9,6 +9,7 @@
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/Input.h"
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
@@ -19,9 +20,9 @@
 #include "Strategic/MapScreen.h"
 #include "Strategic/MapScreenInterface.h"
 #include "SysGlobals.h"
+#include "Tactical/Interface.h"
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
@@ -246,7 +247,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   SetPendingNewScreen(MSG_BOX_SCREEN);
 
   // Init save buffer
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = usTextBoxWidth;
   vs_desc.usHeight = usTextBoxHeight;
   vs_desc.ubBitDepth = 16;
@@ -256,14 +257,14 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   }
 
   // Save what we have under here...
-  pDestBuf = LockVideoSurface(gMsgBox.uiSaveBuffer, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(gMsgBox.uiSaveBuffer), &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
                   gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight);
 
-  UnLockVideoSurface(gMsgBox.uiSaveBuffer);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(GetVSByID(gMsgBox.uiSaveBuffer));
+  VSurfaceUnlock(vsFB);
 
   // Create top-level mouse region
   MSYS_DefineRegion(&(gMsgBox.BackRegion), 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST, usCursor,
@@ -786,14 +787,14 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
   if (((gMsgBox.uiExitScreen != GAME_SCREEN) || (fRestoreBackgroundForMessageBox == TRUE)) &&
       gfDontOverRideSaveBuffer) {
     // restore what we have under here...
-    pSrcBuf = LockVideoSurface(gMsgBox.uiSaveBuffer, &uiSrcPitchBYTES);
-    pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+    pSrcBuf = VSurfaceLockOld(GetVSByID(gMsgBox.uiSaveBuffer), &uiSrcPitchBYTES);
+    pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
                     gMsgBox.sX, gMsgBox.sY, 0, 0, gMsgBox.usWidth, gMsgBox.usHeight);
 
-    UnLockVideoSurface(gMsgBox.uiSaveBuffer);
-    UnLockVideoSurface(FRAME_BUFFER);
+    VSurfaceUnlock(GetVSByID(gMsgBox.uiSaveBuffer));
+    VSurfaceUnlock(vsFB);
 
     InvalidateRegion(gMsgBox.sX, gMsgBox.sY, (INT16)(gMsgBox.sX + gMsgBox.usWidth),
                      (INT16)(gMsgBox.sY + gMsgBox.usHeight));
@@ -863,20 +864,6 @@ UINT32 MessageBoxScreenHandle() {
 
       gfStartedFromGameScreen = FALSE;
       gfStartedFromMapScreen = FALSE;
-      /*
-                              // Save what we have under here...
-                              pDestBuf = LockVideoSurface( gMsgBox.uiSaveBuffer, &uiDestPitchBYTES);
-                              pSrcBuf = LockVideoSurface( FRAME_BUFFER, &uiSrcPitchBYTES);
-
-                              Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES,
-                                                      (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
-                                                      0 , 0,
-                                                      gMsgBox.sX , gMsgBox.sY,
-                                                      gMsgBox.usWidth, gMsgBox.usHeight );
-
-                              UnLockVideoSurface( gMsgBox.uiSaveBuffer );
-                              UnLockVideoSurface( FRAME_BUFFER );
-      */
     }
 
     gfNewMessageBox = FALSE;

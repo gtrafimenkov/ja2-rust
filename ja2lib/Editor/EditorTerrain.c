@@ -11,6 +11,7 @@
 #include "Editor/SelectWin.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
+#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
@@ -19,7 +20,7 @@
 #include "SGP/WCheck.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/WorldItems.h"
-#include "TileEngine/SysUtil.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
@@ -91,16 +92,16 @@ void RenderTerrainTileButtons() {
       usX2 = usX + 42;
 
       if (x == CurrentPaste && !fUseTerrainWeights) {
-        ColorFillVideoSurfaceArea(ButtonDestBuffer, usX, usY, usX2, usY2, usFillColorRed);
+        VSurfaceColorFill(vsFB, usX, usY, usX2, usY2, usFillColorRed);
       } else {
-        ColorFillVideoSurfaceArea(ButtonDestBuffer, usX, usY, usX2, usY2, usFillColorDark);
-        ColorFillVideoSurfaceArea(ButtonDestBuffer, usX + 1, usY + 1, usX2, usY2, usFillColorLight);
+        VSurfaceColorFill(vsFB, usX, usY, usX2, usY2, usFillColorDark);
+        VSurfaceColorFill(vsFB, usX + 1, usY + 1, usX2, usY2, usFillColorLight);
       }
-      ColorFillVideoSurfaceArea(ButtonDestBuffer, usX + 1, usY + 1, usX2 - 1, usY2 - 1, 0);
+      VSurfaceColorFill(vsFB, usX + 1, usY + 1, usX2 - 1, usY2 - 1, 0);
 
       SetObjectShade(gTileDatabase[gTileTypeStartIndex[x]].hTileSurface, DEFAULT_SHADE_LEVEL);
-      BltVideoObject(ButtonDestBuffer, gTileDatabase[gTileTypeStartIndex[x]].hTileSurface, 0,
-                     (usX + 1), (usY + 1), VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, gTileDatabase[gTileTypeStartIndex[x]].hTileSurface, 0, (usX + 1),
+                      (usY + 1), VO_BLT_SRCTRANSPARENCY, NULL);
 
       if (fUseTerrainWeights) {
         mprintf(usX + 2, usY + 2, L"%d", ubTerrainTileButtonWeight[x]);

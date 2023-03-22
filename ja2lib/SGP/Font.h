@@ -41,22 +41,16 @@ typedef struct {
 } FontTranslationTable;
 
 extern INT32 FontDefault;
-extern UINT32 FontDestBuffer;
+extern struct VSurface *FontDestSurface;
 extern UINT32 FontDestPitch;
 extern UINT32 FontDestBPP;
 extern SGPRect FontDestRegion;
 extern BOOLEAN FontDestWrap;
 
-#define SetFontDestObject(x)                                                           \
-  (SetFontDestBuffer(x, FontDestRegion.left, FontDestRegion.top, FontDestRegion.right, \
-                     FontDestRegion.bottom, FontDestWrap))
-
-#define SetFontDestClip(x1, y1, x2, y2) \
-  (SetFontDestBuffer(FontDestBuffer, x1, y1, x2, y2, FontDestWrap))
-#define SetFontDestWrap(x)                                                    \
-  (SetFontDestBuffer(FontDestBuffer, FontDestRegion.left, FontDestRegion.top, \
-                     FontDestRegion.right, FontDestRegion.bottom, x))
-// functions
+#define SetFontDestClip(x1, y1, x2, y2) (SetFontDest(FontDestSurface, x1, y1, x2, y2, FontDestWrap))
+#define SetFontDestWrap(x)                                                                     \
+  (SetFontDest(FontDestSurface, FontDestRegion.left, FontDestRegion.top, FontDestRegion.right, \
+               FontDestRegion.bottom, x))
 
 void SetFontColors(UINT16 usColors);
 void SetFontForeground(UINT8 ubForeground);
@@ -93,8 +87,7 @@ UINT32 mprintf_buffer_coded(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 Fon
                             INT32 y, STR16 pFontString, ...);
 UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...);
 
-extern BOOLEAN SetFontDestBuffer(UINT32 DestBuffer, INT32 x1, INT32 y1, INT32 x2, INT32 y2,
-                                 BOOLEAN wrap);
+BOOLEAN SetFontDest(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, BOOLEAN wrap);
 extern BOOLEAN SetFont(INT32 iFontIndex);
 
 extern INT32 LoadFontFile(STR8 pFileName);

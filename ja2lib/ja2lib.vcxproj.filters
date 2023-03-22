@@ -116,9 +116,6 @@
     <ClCompile Include="SGP\VObjectBlitters.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
-    <ClCompile Include="SGP\WinFont.c">
-      <Filter>Source Files\SGP</Filter>
-    </ClCompile>
     <ClCompile Include="Laptop\AIM.c">
       <Filter>Source Files\Laptop</Filter>
     </ClCompile>
@@ -527,9 +524,6 @@
     <ClCompile Include="Utils\JA25GermanText.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\MapUtility.c">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\MercTextBox.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
@@ -899,9 +893,6 @@
     <ClCompile Include="TileEngine\Structure.c">
       <Filter>Source Files\TileEngine</Filter>
     </ClCompile>
-    <ClCompile Include="TileEngine\SysUtil.c">
-      <Filter>Source Files\TileEngine</Filter>
-    </ClCompile>
     <ClCompile Include="TileEngine\TacticalPlacementGUI.c">
       <Filter>Source Files\TileEngine</Filter>
     </ClCompile>
@@ -1025,6 +1016,12 @@
     <ClCompile Include="Tactical.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SGP\VSurface.c">
+      <Filter>Source Files\SGP</Filter>
+    </ClCompile>
+    <ClCompile Include="platform_callbacks.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SGP\Bitmap.h">
@@ -1124,9 +1121,6 @@
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\WCheck.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
-    <ClInclude Include="SGP\WinFont.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="Laptop\AIM.h">
@@ -1532,9 +1526,6 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\JA25GermanText.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\MapUtility.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\MercTextBox.h">

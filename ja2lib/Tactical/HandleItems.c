@@ -2856,7 +2856,9 @@ INT32 AddFlashItemSlot(struct ITEM_POOL *pItemPool, ITEM_POOL_LOCATOR_HOOK Callb
 BOOLEAN RemoveFlashItemSlot(struct ITEM_POOL *pItemPool) {
   UINT32 uiCount;
 
-  CHECKF(pItemPool != NULL);
+  if (!(pItemPool != NULL)) {
+    return FALSE;
+  }
 
   for (uiCount = 0; uiCount < guiNumFlashItemSlots; uiCount++) {
     if (FlashItemSlots[uiCount].fAllocated) {
@@ -3016,7 +3018,7 @@ void RenderTopmostFlashingItems() {
             SetBackgroundRectFilled(iBack);
           }
 
-          BltVideoObjectFromIndex(FRAME_BUFFER, guiRADIO, pLocator->bRadioFrame, sXPos, sYPos,
+          BltVideoObjectFromIndex(vsFB, guiRADIO, pLocator->bRadioFrame, sXPos, sYPos,
                                   VO_BLT_SRCTRANSPARENCY, NULL);
 
           DrawItemPoolList(pItemPool, pItemPool->sGridNo, ITEMLIST_DISPLAY,

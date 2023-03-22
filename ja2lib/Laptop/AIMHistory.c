@@ -108,16 +108,14 @@ void GameInitAimHistory() {}
 void EnterInitAimHistory() { memset(&AimHistorySubPagesVisitedFlag, 0, NUM_AIM_HISTORY_PAGES); }
 
 BOOLEAN EnterAimHistory() {
-  VOBJECT_DESC VObjectDesc;
-
   gfExitingAimHistory = FALSE;
   InitAimDefaults();
   InitAimHistoryMenuBar();
 
   // load the Content Buttons graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\ContentButton.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiContentButton));
+  if (!AddVObjectFromFile("LAPTOP\\ContentButton.sti", &guiContentButton)) {
+    return FALSE;
+  }
 
   gubCurPageNum = (UINT8)giCurrentSubPage;
   RenderAimHistory();
@@ -218,17 +216,16 @@ void RenderAimHistory() {
 }
 
 BOOLEAN InitAimHistoryMenuBar(void) {
-  VOBJECT_DESC VObjectDesc;
   UINT16 i, usPosX;
 
   // load the Bottom Buttons graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BottomButton.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBottomButton));
+  if (!AddVObjectFromFile("LAPTOP\\BottomButton.sti", &guiBottomButton)) {
+    return FALSE;
+  }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\BottomButton2.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiBottomButton2));
+  if (!AddVObjectFromFile("LAPTOP\\BottomButton2.sti", &guiBottomButton2)) {
+    return FALSE;
+  }
 
   guiHistoryMenuButtonImage = LoadButtonImage("LAPTOP\\BottomButtons2.sti", -1, 0, -1, 1, -1);
   usPosX = AIM_HISTORY_MENU_X;
@@ -382,8 +379,8 @@ BOOLEAN InitTocMenu() {
       MSYS_SetRegionUserData(&gSelectedHistoryTocMenuRegion[i], 0, i + 1);
     }
 
-    BltVideoObject(FRAME_BUFFER, hContentButtonHandle, 0, AIM_HISTORY_TOC_X, usPosY,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hContentButtonHandle, 0, AIM_HISTORY_TOC_X, usPosY,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     DrawTextToScreen(sText, AIM_HISTORY_TOC_X, (UINT16)(usPosY + AIM_HISTORY_TOC_Y),
                      AIM_CONTENTBUTTON_WIDTH, AIM_HISTORY_TOC_TEXT_FONT, AIM_HISTORY_TOC_TEXT_COLOR,
                      FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);

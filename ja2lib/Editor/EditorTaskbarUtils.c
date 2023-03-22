@@ -22,6 +22,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "Tactical/InterfaceItems.h"
@@ -35,7 +36,6 @@
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/Pits.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
@@ -149,16 +149,11 @@ void InitEditorRegions() {
 }
 
 void LoadEditorImages() {
-  VOBJECT_DESC VObjectDesc;
-
   // Set up the merc inventory panel
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "EDITOR\\InvPanel.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiMercInventoryPanel))
+  if (!AddVObjectFromFile("EDITOR\\InvPanel.sti", &guiMercInventoryPanel))
     AssertMsg(0, "Failed to load data\\editor\\InvPanel.sti");
   // Set up small omerta map
-  sprintf(VObjectDesc.ImageFile, "EDITOR\\omerta.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiOmertaMap))
+  if (!AddVObjectFromFile("EDITOR\\omerta.sti", &guiOmertaMap))
     AssertMsg(0, "Failed to load data\\editor\\omerta.sti");
   // Set up the merc directional buttons.
   giEditMercDirectionIcons[0] = LoadGenericButtonIcon("EDITOR//arrowsoff.sti");
@@ -167,11 +162,9 @@ void LoadEditorImages() {
   giEditMercImage[0] = LoadButtonImage("EDITOR\\leftarrow.sti", 0, 1, 2, 3, 4);
   giEditMercImage[1] = LoadButtonImage("EDITOR\\rightarrow.sti", 0, 1, 2, 3, 4);
 
-  sprintf(VObjectDesc.ImageFile, "EDITOR\\Exclamation.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiExclamation))
+  if (!AddVObjectFromFile("EDITOR\\Exclamation.sti", &guiExclamation))
     AssertMsg(0, "Failed to load data\\editor\\Exclamation.sti");
-  sprintf(VObjectDesc.ImageFile, "EDITOR\\KeyImage.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiKeyImage))
+  if (!AddVObjectFromFile("EDITOR\\KeyImage.sti", &guiKeyImage))
     AssertMsg(0, "Failed to load data\\editor\\KeyImage.sti");
 }
 
@@ -197,7 +190,7 @@ void CreateEditorBuffers() {
   // selected item graphic in it's inventory size version.  This buffer is then scaled down
   // into the associated merc inventory panel slot buffer which is approximately 20% smaller.
   GetCurrentVideoSettings(&usUselessWidth, &usUselessHeight, &ubBitDepth);
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = 60;
   vs_desc.usHeight = 25;
   vs_desc.ubBitDepth = ubBitDepth;
@@ -450,20 +443,18 @@ void mprintfEditor(INT16 x, INT16 y, STR16 pFontString, ...) {
 }
 
 void ClearTaskbarRegion(INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom) {
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusEditorTaskbarColor);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, gusEditorTaskbarColor);
 
   if (!sLeft) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 0, sTop, 1, sBottom, gusEditorTaskbarHiColor);
+    VSurfaceColorFill(vsFB, 0, sTop, 1, sBottom, gusEditorTaskbarHiColor);
     sLeft++;
   }
   if (sTop == 360) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 360, sRight, 361, gusEditorTaskbarHiColor);
+    VSurfaceColorFill(vsFB, sLeft, 360, sRight, 361, gusEditorTaskbarHiColor);
     sTop++;
   }
-  if (sBottom == 480)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 479, sRight, 480, gusEditorTaskbarLoColor);
-  if (sRight == 640)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 639, sTop, 640, sBottom, gusEditorTaskbarLoColor);
+  if (sBottom == 480) VSurfaceColorFill(vsFB, sLeft, 479, sRight, 480, gusEditorTaskbarLoColor);
+  if (sRight == 640) VSurfaceColorFill(vsFB, 639, sTop, 640, sBottom, gusEditorTaskbarLoColor);
 
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 }
@@ -484,9 +475,9 @@ void DrawEditorInfoBox(STR16 str, UINT32 uiFont, UINT16 x, UINT16 y, UINT16 w, U
   usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
   usFillColorBack = Get16BPPColor(FROMRGB(250, 240, 188));
 
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, x, y, x2, y2, usFillColorDark);
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, x + 1, y + 1, x2, y2, usFillColorLight);
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, x + 1, y + 1, x2 - 1, y2 - 1, usFillColorBack);
+  VSurfaceColorFill(vsFB, x, y, x2, y2, usFillColorDark);
+  VSurfaceColorFill(vsFB, x + 1, y + 1, x2, y2, usFillColorLight);
+  VSurfaceColorFill(vsFB, x + 1, y + 1, x2 - 1, y2 - 1, usFillColorBack);
 
   usStrWidth = StringPixLength(str, uiFont);
   if (usStrWidth > w) {  // the string is too long, so use the wrapped method
@@ -743,9 +734,8 @@ void RenderSelectedItemBlownUp() {
   sOffsetY = hVObject->pETRLEObject[Item[gpItem->usItem].ubGraphicNum].sOffsetY;
   yp = sScreenY + (20 - sHeight - sOffsetY * 2) / 2;
 
-  BltVideoObjectOutlineFromIndex(FRAME_BUFFER, uiVideoObjectIndex,
-                                 Item[gpItem->usItem].ubGraphicNum, xp, yp,
-                                 Get16BPPColor(FROMRGB(0, 140, 170)), TRUE);
+  BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, Item[gpItem->usItem].ubGraphicNum, xp,
+                                 yp, Get16BPPColor(FROMRGB(0, 140, 170)), TRUE);
 
   // Display the item name above it
   SetFont(FONT10ARIAL);
@@ -898,7 +888,7 @@ void ProcessEditorRendering() {
       RenderDoorLockInfo();
   }
 
-  if (fSaveBuffer) BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 360, 640, 120);
+  if (fSaveBuffer) VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 360, 640, 120);
 
   // Make sure this is TRUE at all times.
   // It is set to false when before we save the buffer, so the buttons don't get
