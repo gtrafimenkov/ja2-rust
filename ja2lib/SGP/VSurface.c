@@ -628,84 +628,18 @@ BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch) {
   return res.dest;
 }
 
-// TODO
-BYTE *LockVideoSurface(VSurfID uiVSurface, u32 *pitch) {
-  if (uiVSurface == BACKBUFFER) {
-    struct BufferLockInfo res = VSurfaceLock(vsBB);
-    *pitch = res.pitch;
-    return res.dest;
-  }
-
-  if (uiVSurface == FRAME_BUFFER) {
-    struct BufferLockInfo res = VSurfaceLock(vsFB);
-    *pitch = res.pitch;
-    return res.dest;
-  }
-
-  if (uiVSurface == MOUSE_BUFFER) {
-    struct BufferLockInfo res = VSurfaceLock(vsMouseCursorOriginal);
-    *pitch = res.pitch;
-    return res.dest;
-  }
-
-  //
-  // Otherwise, use list
-  //
-
-  VSURFACE_NODE *curr = gpVSurfaceHead;
-  while (curr) {
-    if (curr->uiIndex == uiVSurface) {
-      break;
-    }
-    curr = curr->next;
-  }
-  if (!curr) {
-    return FALSE;
-  }
-
-  //
-  // Lock buffer
-  //
-
-  struct BufferLockInfo res = VSurfaceLock(curr->hVSurface);
+BYTE *LockVideoSurface(VSurfID id, u32 *pitch) {
+  struct VSurface *vs = GetVSByID(id);
+  struct BufferLockInfo res = VSurfaceLock(vs);
   *pitch = res.pitch;
   return res.dest;
 }
 
-void UnLockVideoSurface(VSurfID uiVSurface) {
-  VSURFACE_NODE *curr;
-
-  if (uiVSurface == BACKBUFFER) {
-    VSurfaceUnlock(vsBB);
-    return;
+void UnLockVideoSurface(VSurfID id) {
+  struct VSurface *vs = GetVSByID(id);
+  if (vs) {
+    VSurfaceUnlock(vs);
   }
-
-  if (uiVSurface == FRAME_BUFFER) {
-    VSurfaceUnlock(vsFB);
-    return;
-  }
-
-  if (uiVSurface == MOUSE_BUFFER) {
-    VSurfaceUnlock(vsMouseCursorOriginal);
-    return;
-  }
-
-  curr = gpVSurfaceHead;
-  while (curr) {
-    if (curr->uiIndex == uiVSurface) {
-      break;
-    }
-    curr = curr->next;
-  }
-  if (!curr) {
-    return;
-  }
-
-  //
-  // unlock buffer
-  //
-
-  VSurfaceUnlock(curr->hVSurface);
 }
 
 BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
@@ -728,33 +662,37 @@ BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   return (TRUE);
 }
 
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
-  VSURFACE_NODE *curr;
+struct VSurface *GetVSByID(VSurfID id) {
+  switch (id) {
+    case BACKBUFFER:
+      return vsBB;
 
-  if (uiIndex == BACKBUFFER) {
-    *hVSurface = vsBB;
-    return TRUE;
-  }
+    case FRAME_BUFFER:
+      return vsFB;
 
-  if (uiIndex == FRAME_BUFFER) {
-    *hVSurface = vsFB;
-    return TRUE;
-  }
+    case MOUSE_BUFFER:
+      return vsMouseCursorOriginal;
 
-  if (uiIndex == MOUSE_BUFFER) {
-    *hVSurface = vsMouseCursor;
-    return TRUE;
-  }
-
-  curr = gpVSurfaceHead;
-  while (curr) {
-    if (curr->uiIndex == uiIndex) {
-      *hVSurface = curr->hVSurface;
-      return TRUE;
+    default: {
+      VSURFACE_NODE *curr;
+      curr = gpVSurfaceHead;
+      while (curr) {
+        if (curr->uiIndex == id) {
+          return curr->hVSurface;
+        }
+        curr = curr->next;
+      }
     }
-    curr = curr->next;
   }
-  return FALSE;
+  return NULL;
+}
+
+BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
+  struct VSurface *vs = GetVSByID(uiIndex);
+  if (vs) {
+    *hVSurface = vs;
+  }
+  return vs != NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -851,8 +789,8 @@ void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
 
   } else {
     //
-    // The MAX_DIRTY_REGIONS limit has been exceeded. Therefore we arbitrarely invalidate the entire
-    // screen and force a full screen refresh
+    // The MAX_DIRTY_REGIONS limit has been exceeded. Therefore we arbitrarely invalidate the
+    // entire screen and force a full screen refresh
     //
     guiDirtyRegionExCount = 0;
     guiDirtyRegionCount = 0;
@@ -915,14 +853,6 @@ static void AddRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UI
 }
 
 void InvalidateScreen(void) {
-  //
-  // W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ---- W A R N I N G ----
-  //
-  // This function is intended to be called by a thread which has already locked the
-  // FRAME_BUFFER_MUTEX mutual exclusion section. Anything else will cause the application to
-  // yack
-  //
-
   guiDirtyRegionCount = 0;
   guiDirtyRegionExCount = 0;
   gfForceFullScreenRefresh = TRUE;
@@ -935,9 +865,6 @@ UINT16 *GetVSurface16BPPPalette(struct VSurface *vs) { return vs->p16BPPPalette;
 void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette) { vs->p16BPPPalette = palette; }
 
 struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
-// void VSurfaceErase(struct VSurface *vs) {
-//   // TODO
-// }
 
 struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
   struct Image *image = CreateImage(path, IMAGE_ALLIMAGEDATA);
