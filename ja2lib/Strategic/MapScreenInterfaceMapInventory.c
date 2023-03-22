@@ -27,8 +27,8 @@
 #include "Tactical/SoldierControl.h"
 #include "Tactical/TacticalSave.h"
 #include "Tactical/WorldItems.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RadarScreen.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
 #include "Utils/MultiLanguageGraphicUtils.h"
@@ -196,14 +196,9 @@ extern BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(uint8_t *p
 
 // load the background panel graphics for inventory
 BOOLEAN LoadInventoryPoolGraphic(void) {
-  VOBJECT_DESC VObjectDesc;
-
-  // load the file
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "INTERFACE\\sector_inventory.sti");
-
-  // add to V-object index
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMapInventoryPoolBackground));
+  if (!AddVObjectFromFile("INTERFACE\\sector_inventory.sti", &guiMapInventoryPoolBackground)) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -225,8 +220,8 @@ void BlitInventoryPoolGraphic(void) {
 
   // blit inventory pool graphic to the screen
   GetVideoObject(&hHandle, guiMapInventoryPoolBackground);
-  BltVideoObject(guiSAVEBUFFER, hHandle, 0, INVEN_POOL_X, INVEN_POOL_Y, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
+  BltVideoObject2(vsSaveBuffer, hHandle, 0, INVEN_POOL_X, INVEN_POOL_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // resize list
   CheckAndUnDateSlotAllocation();
@@ -300,12 +295,12 @@ BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
     fOutLine = FALSE;
   }
 
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
-  INVRenderItem(guiSAVEBUFFER, NULL, &(pInventoryPoolList[iCurrentSlot + iFirstSlotOnPage].o),
+  INVRenderItem(vsSaveBuffer, NULL, &(pInventoryPoolList[iCurrentSlot + iFirstSlotOnPage].o),
                 (int16_t)(sX + 7), sY, 60, 25, DIRTYLEVEL2, NULL, 0, fOutLine, sOutLine);  // 67
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // now draw bar for condition
   // Display ststus
@@ -344,7 +339,7 @@ BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
                 ((MAP_INVEN_SPACE_BTWN_SLOTS) * (iCurrentSlot / MAP_INV_SLOT_COLS))),
       0, MAP_INVEN_SLOT_WIDTH, 0, sString, MAP_IVEN_FONT, &sWidth, &sHeight);
 
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   SetFont(MAP_IVEN_FONT);
   SetFontForeground(FONT_WHITE);
@@ -376,7 +371,7 @@ BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
           }
   */
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   return (TRUE);
 }
@@ -1264,7 +1259,9 @@ BOOLEAN GetObjFromInventoryStashSlot(struct OBJECTTYPE *pInventorySlot,
 }
 
 BOOLEAN RemoveObjectFromStashSlot(struct OBJECTTYPE *pInventorySlot, struct OBJECTTYPE *pItemPtr) {
-  CHECKF(pInventorySlot);
+  if (!(pInventorySlot)) {
+    return FALSE;
+  }
 
   if (pInventorySlot->ubNumberOfObjects == 0) {
     return (FALSE);
@@ -1433,7 +1430,7 @@ void DisplayPagesForMapInventoryPool(void) {
   SetFontBackground(FONT_BLACK);
 
   // set the buffer
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   // grab current and last pages
   swprintf(sString, ARR_SIZE(sString), L"%d / %d", iCurrentInventoryPoolPage + 1,
@@ -1446,7 +1443,7 @@ void DisplayPagesForMapInventoryPool(void) {
 
   mprintf(sX, sY, sString);
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 }
 
 int32_t GetTotalNumberOfItemsInSectorStash(void) {
@@ -1491,7 +1488,7 @@ void DrawNumberOfIventoryPoolItems(void) {
   SetFontBackground(FONT_BLACK);
 
   // set the buffer
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   // grab centered coords
   FindFontCenterCoordinates(MAP_INVENTORY_POOL_NUMBER_X, MAP_INVENTORY_POOL_PAGE_Y,
@@ -1500,7 +1497,7 @@ void DrawNumberOfIventoryPoolItems(void) {
 
   mprintf(sX, sY, sString);
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   return;
 }
@@ -1538,7 +1535,7 @@ void DisplayCurrentSector(void) {
   SetFontBackground(FONT_BLACK);
 
   // set the buffer
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   // grab centered coords
   FindFontCenterCoordinates(MAP_INVENTORY_POOL_LOC_X, MAP_INVENTORY_POOL_PAGE_Y,
@@ -1547,7 +1544,7 @@ void DisplayCurrentSector(void) {
 
   mprintf(sX, sY, sString);
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 }
 
 void CheckAndUnDateSlotAllocation(void) {
@@ -1577,7 +1574,7 @@ void DrawTextOnMapInventoryBackground(void) {
   SetFontForeground(FONT_BEIGE);
 
   // set the buffer
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   // Calculate the height of the string, as it needs to be vertically centered.
   usStringHeight =
@@ -1595,7 +1592,7 @@ void DrawTextOnMapInventoryBackground(void) {
 
   DrawTextOnSectorInventory();
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   return;
 }
@@ -1635,7 +1632,7 @@ void DrawTextOnSectorInventory(void) {
   // parse the string
   swprintf(sString, ARR_SIZE(sString), zMarksMapScreenText[11]);
 
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   FindFontCenterCoordinates(MAP_INVENTORY_POOL_SLOT_START_X, MAP_INVENTORY_POOL_SLOT_START_Y - 20,
                             630 - MAP_INVENTORY_POOL_SLOT_START_X, GetFontHeight(FONT14ARIAL),
@@ -1647,7 +1644,7 @@ void DrawTextOnSectorInventory(void) {
 
   mprintf(sX, sY, sString);
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 }
 
 void HandleFlashForHighLightedItem(void) {

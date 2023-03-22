@@ -5,7 +5,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 
-// The HIMAGE module provides a common interface for managing image data. This module
+// The struct Image* module provides a common interface for managing image data. This module
 // includes:
 // - A set of data structures representing image data. Data can be 8 or 16 bpp and/or
 //   compressed
@@ -35,12 +35,7 @@
 #define IMAGE_ALLDATA 0x001C
 
 // Palette structure, mimics that of Win32
-struct SGPPaletteEntry {
-  uint8_t peRed;
-  uint8_t peGreen;
-  uint8_t peBlue;
-  uint8_t peFlags;
-};
+struct SGPPaletteEntry;
 
 #define AUX_FULL_TILE 0x01
 #define AUX_ANIMATED_TILE 0x02
@@ -84,7 +79,7 @@ typedef struct tagETRLEData {
 } ETRLEData;
 
 // Image header structure
-typedef struct {
+struct Image {
   uint16_t usWidth;
   uint16_t usHeight;
   uint8_t ubBitDepth;
@@ -117,8 +112,8 @@ typedef struct {
       uint16_t usNumberOfObjects;
     };
   };
-
-} image_type, *HIMAGE;
+};
+//  struct Image, *struct Image*;
 
 #define SGPGetRValue(rgb) ((uint8_t)(rgb))
 #define SGPGetBValue(rgb) ((uint8_t)((rgb) >> 16))
@@ -126,39 +121,40 @@ typedef struct {
 
 // This function will return NULL if it fails, and call SetLastError() to set
 // error information
-HIMAGE CreateImage(const char *ImageFile, uint16_t fContents);
+struct Image *CreateImage(const char *ImageFile, uint16_t fContents);
 
-// This function destroys the HIMAGE structure as well as its contents
-BOOLEAN DestroyImage(HIMAGE hImage);
+// This function destroys the struct Image* structure as well as its contents
+BOOLEAN DestroyImage(struct Image *hImage);
 
 // This function releases data allocated to various parts of the image based
 // on the contents flags passed as a parameter.  If a contents flag is given
 // and the image does not contain that data, no error is raised
-BOOLEAN ReleaseImageData(HIMAGE hImage, uint16_t fContents);
+BOOLEAN ReleaseImageData(struct Image *hImage, uint16_t fContents);
 
 // This function will attept to Load data from an existing image object's filename
 // In this way, dynamic loading of image data can be done
-BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents);
+BOOLEAN LoadImageData(struct Image *hImage, uint16_t fContents);
 
-// This function will run the appropriate copy function based on the type of HIMAGE object
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, uint8_t *pDestBuf,
+// This function will run the appropriate copy function based on the type of struct Image*
+// object
+BOOLEAN CopyImageToBuffer(struct Image *hImage, uint32_t fBufferType, BYTE *pDestBuf,
                           uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                           SGPRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   SGPRect *srcRect);
-BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                    SGPRect *srcRect);
-BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     SGPRect *srcRect);
 
 // This function will create a buffer in memory of ETRLE data, excluding palette
-BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer);
+BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer);
 
 // UTILITY FUNCTIONS
 

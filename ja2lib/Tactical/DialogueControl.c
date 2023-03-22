@@ -35,6 +35,8 @@
 #include "Tactical/EndGame.h"
 #include "Tactical/Faces.h"
 #include "Tactical/Gap.h"
+#include "Tactical/HandleUI.h"
+#include "Tactical/Interface.h"
 #include "Tactical/InterfaceDialogue.h"
 #include "Tactical/InterfaceUtils.h"
 #include "Tactical/LOS.h"
@@ -48,9 +50,9 @@
 #include "Tactical/SoldierProfile.h"
 #include "Tactical/Squads.h"
 #include "TacticalAI/AI.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldMan.h"
 #include "UI.h"
 #include "Utils/Cursors.h"
@@ -1386,7 +1388,9 @@ BOOLEAN ExecuteCharacterDialogue(uint8_t ubCharacterNum, uint16_t usQuoteNum, in
   }
 
   // Check face index
-  CHECKF(iFaceIndex != -1);
+  if (!(iFaceIndex != -1)) {
+    return FALSE;
+  }
 
   if (!GetDialogue(ubCharacterNum, usQuoteNum, DIALOGUESIZE, gzQuoteStr, ARR_SIZE(gzQuoteStr),
                    &uiSoundID, zSoundString)) {
@@ -1687,12 +1691,9 @@ void ExecuteTacticalTextBox(int16_t sLeftPosition, wchar_t *pString) {
   memset(&VideoOverlayDesc, 0, sizeof(VIDEO_OVERLAY_DESC));
 
   // Prepare text box
-  SET_USE_WINFONTS(TRUE);
-  SET_WINFONT(giSubTitleWinFont);
   iDialogueBox = PrepareMercPopupBox(
       iDialogueBox, BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER, pString,
       DIALOGUE_DEFAULT_SUBTITLE_WIDTH, 0, 0, 0, &gusSubtitleBoxWidth, &gusSubtitleBoxHeight);
-  SET_USE_WINFONTS(FALSE);
 
   VideoOverlayDesc.sLeft = sLeftPosition;
   VideoOverlayDesc.sTop = gsTopPosition;
@@ -1960,11 +1961,11 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
 
     // a living soldier?..or external NPC?..choose panel based on this
     if (pSoldier) {
-      BltVideoObjectFromIndex(pBlitter->uiDestBuff, guiCOMPANEL, 0, pBlitter->sX, pBlitter->sY,
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(pBlitter->uiDestBuff), guiCOMPANEL, 0, pBlitter->sX,
+                              pBlitter->sY, VO_BLT_SRCTRANSPARENCY, NULL);
     } else {
-      BltVideoObjectFromIndex(pBlitter->uiDestBuff, guiCOMPANELB, 0, pBlitter->sX, pBlitter->sY,
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(pBlitter->uiDestBuff), guiCOMPANELB, 0, pBlitter->sX,
+                              pBlitter->sY, VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
     // Display name, location ( if not current )
@@ -1974,7 +1975,7 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
 
     if (pSoldier) {
       // reset the font dest buffer
-      SetFontDestBuffer(pBlitter->uiDestBuff, 0, 0, 640, 480, FALSE);
+      SetFontDest(GetVSByID(pBlitter->uiDestBuff), 0, 0, 640, 480, FALSE);
 
       VarFindFontCenterCoordinates((int16_t)(pBlitter->sX + 12), (int16_t)(pBlitter->sY + 55), 73,
                                    9, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name);
@@ -1994,7 +1995,7 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
       }
 
       // reset the font dest buffer
-      SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+      SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
       // Display bars
       DrawLifeUIBarEx(pSoldier, (int16_t)(pBlitter->sX + 69), (int16_t)(pBlitter->sY + 47), 3, 42,
@@ -2015,15 +2016,16 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
     // BlinkAutoFace( gpCurrentTalkingFace->iID );
     // MouthAutoFace( gpCurrentTalkingFace->iID );
 
-    pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
-    pSrcBuf = LockVideoSurface(gpCurrentTalkingFace->uiAutoDisplayBuffer, &uiSrcPitchBYTES);
+    pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
+    pSrcBuf =
+        VSurfaceLockOld(GetVSByID(gpCurrentTalkingFace->uiAutoDisplayBuffer), &uiSrcPitchBYTES);
 
     Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
                     (int16_t)(pBlitter->sX + 14), (int16_t)(pBlitter->sY + 6), 0, 0,
                     gpCurrentTalkingFace->usFaceWidth, gpCurrentTalkingFace->usFaceHeight);
 
-    UnLockVideoSurface(pBlitter->uiDestBuff);
-    UnLockVideoSurface(gpCurrentTalkingFace->uiAutoDisplayBuffer);
+    VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
+    VSurfaceUnlock(GetVSByID(gpCurrentTalkingFace->uiAutoDisplayBuffer));
 
     InvalidateRegion(pBlitter->sX, pBlitter->sY, pBlitter->sX + 99, pBlitter->sY + 98);
   }

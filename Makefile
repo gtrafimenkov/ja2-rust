@@ -6,9 +6,6 @@ build: linux-bin unittester-bin
 
 clean:
 	rm -rf tmp
-	rm -rf Debug
-	rm -rf Release
-	rm -rf ReleaseWithDebug
 	rm -rf ja2lib/Debug
 	rm -rf ja2lib/Release
 	rm -rf ja2lib/ReleaseWithDebug

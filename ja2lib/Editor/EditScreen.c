@@ -29,11 +29,13 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/Shading.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "ScreenIDs.h"
@@ -738,7 +740,7 @@ void ShowCurrentDrawingMode(void) {
   SetClippingRect(&NewRect);
 
   // Clear it out
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 400, 100, 458, 0);
+  VSurfaceColorFill(vsFB, 0, 400, 100, 458, 0);
 
   iShowMode = iDrawMode;
   if (iDrawMode >= DRAW_MODE_ERASE) iShowMode -= DRAW_MODE_ERASE;
@@ -922,8 +924,8 @@ void ShowCurrentDrawingMode(void) {
 
     SetObjectShade(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
                    DEFAULT_SHADE_LEVEL);
-    BltVideoObject(FRAME_BUFFER, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
-                   usUseIndex, (0 + iStartX), (400 + iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface, usUseIndex,
+                    (0 + iStartX), (400 + iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
 
     pETRLEObject->sOffsetX = sTempOffsetX;
     pETRLEObject->sOffsetY = sTempOffsetY;
@@ -931,10 +933,10 @@ void ShowCurrentDrawingMode(void) {
 
   // Set the color for the window's border. Blueish color = Normal, Red = Fake lighting is turned on
   usFillColor = GenericButtonFillColors[0];
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   RectangleDraw(FALSE, 0, 400, 99, 458, usFillColor, pDestBuf);
 
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 
   InvalidateRegion(0, 400, 100, 458);
   SetClippingRect(&ClipRect);
@@ -2201,9 +2203,9 @@ uint32_t WaitForHelpScreenResponse(void) {
   InputAtom DummyEvent;
   BOOLEAN fLeaveScreen;
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 50, 50, 590, 310, Get16BPPColor(FROMRGB(136, 138, 135)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 51, 51, 590, 310, Get16BPPColor(FROMRGB(24, 61, 81)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 51, 51, 589, 309, GenericButtonFillColors[0]);
+  VSurfaceColorFill(vsFB, 50, 50, 590, 310, Get16BPPColor(FROMRGB(136, 138, 135)));
+  VSurfaceColorFill(vsFB, 51, 51, 590, 310, Get16BPPColor(FROMRGB(24, 61, 81)));
+  VSurfaceColorFill(vsFB, 51, 51, 589, 309, GenericButtonFillColors[0]);
 
   SetFont(gp12PointFont1);
 
@@ -2383,23 +2385,23 @@ void ShowCurrentSlotSurface(uint32_t vSurface, int32_t iWindow) {
   int32_t iPicHeight, iPicWidth;
   struct VSurface *hvSurface;
   int32_t iWinWidth, iWinHeight;
-  blt_vs_fx vSfx;
+  struct BltOpts vSfx;
 
   WinRect.iLeft = (iWindow == 0) ? (336) : (488);
   WinRect.iTop = 211;
   WinRect.iRight = (iWindow == 0) ? (485) : (637);
   WinRect.iBottom = 399;
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, WinRect.iLeft - 1, WinRect.iTop - 1, WinRect.iRight + 1,
-                            WinRect.iBottom + 1, Get16BPPColor(FROMRGB(128, 0, 0)));
+  VSurfaceColorFill(vsFB, WinRect.iLeft - 1, WinRect.iTop - 1, WinRect.iRight + 1,
+                    WinRect.iBottom + 1, Get16BPPColor(FROMRGB(128, 0, 0)));
 
   iWinWidth = WinRect.iRight - WinRect.iLeft;
   iWinHeight = WinRect.iBottom - WinRect.iTop;
 
   GetVideoSurface(&hvSurface, vSurface);
 
-  iPicWidth = (int32_t)hvSurface->usWidth;
-  iPicHeight = (int32_t)hvSurface->usHeight;
+  iPicWidth = (int32_t)GetVSurfaceWidth(hvSurface);
+  iPicHeight = (int32_t)GetVSurfaceHeight(hvSurface);
 
   if (iPicWidth > iWinWidth) {
     ClipRect.iLeft = (iPicWidth - iWinWidth) / 2;
@@ -2422,7 +2424,7 @@ void ShowCurrentSlotSurface(uint32_t vSurface, int32_t iWindow) {
   }
 
   vSfx.SrcRect = ClipRect;
-  BltVideoSurface(FRAME_BUFFER, vSurface, 0, iStartX, iStartY, VS_BLT_SRCSUBRECT, &vSfx);
+  BltVideoSurface(vsFB, GetVSByID(vSurface), iStartX, iStartY, VS_BLT_SRCSUBRECT, &vSfx);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -2469,7 +2471,7 @@ void ShowCurrentSlotImage(struct VObject *hVObj, int32_t iWindow) {
   pETRLEObject->sOffsetY = 0;
 
   SetObjectShade(hVObj, DEFAULT_SHADE_LEVEL);
-  BltVideoObject(FRAME_BUFFER, hVObj, 0, (iStartX), (iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObj, 0, (iStartX), (iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
 
   pETRLEObject->sOffsetX = sTempOffsetX;
   pETRLEObject->sOffsetY = sTempOffsetY;
@@ -3467,7 +3469,7 @@ uint32_t EditScreenHandle(void) {
   // Handle video overlays, for FPS and screen message stuff
   if (gfScrollPending) {
     AllocateVideoOverlaysArea();
-    SaveVideoOverlaysArea(FRAME_BUFFER);
+    SaveVideoOverlaysArea(vsFB);
   }
   ExecuteVideoOverlays();
 

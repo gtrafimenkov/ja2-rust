@@ -10,7 +10,7 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry* pPalette, SGPFILENAM
 BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
                           uint32_t uiDestSurface);
 
-void FilenameForBPP(char* pFilename, char* pDestination);
+void CopyFilename(char* pFilename, char* pDestination);
 
 BOOLEAN WrapString(wchar_t* pStr, wchar_t* pStr2, size_t buf2Size, uint16_t usWidth,
                    int32_t uiFont);

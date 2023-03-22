@@ -326,7 +326,6 @@ void GameInitMercs() {
 }
 
 BOOLEAN EnterMercs() {
-  VOBJECT_DESC VObjectDesc;
   VSURFACE_DESC vs_desc;
 
   SetBookMark(MERC_BOOKMARK);
@@ -337,34 +336,34 @@ BOOLEAN EnterMercs() {
   InitMercBackGround();
 
   // load the Account box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\AccountBox.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiAccountBox));
+  if (!AddVObjectFromFile("LAPTOP\\AccountBox.sti", &guiAccountBox)) {
+    return FALSE;
+  }
 
   // load the files Box graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\FilesBox.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiFilesBox));
+  if (!AddVObjectFromFile("LAPTOP\\FilesBox.sti", &guiFilesBox)) {
+    return FALSE;
+  }
 
   // load the MercSymbol graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\MERCSymbol.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMercSymbol));
+  if (!AddVObjectFromFile("LAPTOP\\MERCSymbol.sti", &guiMercSymbol)) {
+    return FALSE;
+  }
 
   // load the SpecPortrait graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\SpecPortrait.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSpecPortrait));
+  if (!AddVObjectFromFile("LAPTOP\\SpecPortrait.sti", &guiSpecPortrait)) {
+    return FALSE;
+  }
 
   // load the Arrow graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\Arrow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiArrow));
+  if (!AddVObjectFromFile("LAPTOP\\Arrow.sti", &guiArrow)) {
+    return FALSE;
+  }
 
   // load the Merc video conf background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\SpeckComWindow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMercVideoPopupBackground));
+  if (!AddVObjectFromFile("LAPTOP\\SpeckComWindow.sti", &guiMercVideoPopupBackground)) {
+    return FALSE;
+  }
 
   // Account Box button
   guiAccountBoxButtonImage = LoadButtonImage("LAPTOP\\SmallButtons.sti", -1, 0, -1, 1, -1);
@@ -391,11 +390,13 @@ BOOLEAN EnterMercs() {
   //
 
   // Create a background video surface to blt the face onto
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = MERC_VIDEO_FACE_WIDTH;
   vs_desc.usHeight = MERC_VIDEO_FACE_HEIGHT;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &guiMercVideoFaceBackground));
+  if (!(AddVideoSurface(&vs_desc, &guiMercVideoFaceBackground))) {
+    return FALSE;
+  }
 
   RenderMercs();
 
@@ -538,23 +539,22 @@ void RenderMercs() {
 
   // Title
   GetVideoObject(&hPixHandle, guiMercSymbol);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_TITLE_X, MERC_TITLE_Y, VO_BLT_SRCTRANSPARENCY,
-                 NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, MERC_TITLE_X, MERC_TITLE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Speck Portrait
   GetVideoObject(&hPixHandle, guiSpecPortrait);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_PORTRAIT_X, MERC_PORTRAIT_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, MERC_PORTRAIT_X, MERC_PORTRAIT_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // Account Box
   GetVideoObject(&hPixHandle, guiAccountBox);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_ACCOUNT_BOX_X, MERC_ACCOUNT_BOX_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, MERC_ACCOUNT_BOX_X, MERC_ACCOUNT_BOX_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Files Box
   GetVideoObject(&hPixHandle, guiFilesBox);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_FILE_BOX_X, MERC_FILE_BOX_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, MERC_FILE_BOX_X, MERC_FILE_BOX_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // Text on the Speck Portrait
   DisplayWrappedString(MERC_PORTRAIT_TEXT_X, MERC_PORTRAIT_TEXT_Y, MERC_PORTRAIT_TEXT_WIDTH, 2,
@@ -600,12 +600,10 @@ void RenderMercs() {
 }
 
 BOOLEAN InitMercBackGround() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the Merc background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\MERCBackGround.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMercBackGround));
+  if (!AddVObjectFromFile("LAPTOP\\MERCBackGround.sti", &guiMercBackGround)) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -1008,7 +1006,7 @@ BOOLEAN HandleSpeckTalking(BOOLEAN fReset) {
   HandleTalkingAutoFaces();
 
   // Blt the face surface to the video background surface
-  if (!BltStretchVideoSurface(FRAME_BUFFER, guiMercVideoFaceBackground, 0, 0,
+  if (!BltStretchVideoSurface(vsFB, GetVSByID(guiMercVideoFaceBackground), 0, 0,
                               VO_BLT_SRCTRANSPARENCY, &SrcRect, &DestRect))
     return (FALSE);
 
@@ -1102,7 +1100,7 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, uint16_t usPosX, uint16_t usPosY, ui
   BOOLEAN fReturnStatus = FALSE;
   i = 0;
 
-  pBuffer = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
+  pBuffer = (uint16_t *)VSurfaceLockOld(vsFB, &uiPitch);
   Assert(pBuffer);
 
   if (ubPixelationAmount == 255) {
@@ -1158,7 +1156,7 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, uint16_t usPosX, uint16_t usPosY, ui
     }
   }
 
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 
   return (fReturnStatus);
 }
@@ -1174,7 +1172,7 @@ BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth
   uint8_t uiReturnValue;
   uint16_t usEndOnLine = 0;
 
-  pBuffer = (uint16_t *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
+  pBuffer = (uint16_t *)VSurfaceLockOld(vsFB, &uiPitch);
   Assert(pBuffer);
 
   uiPitch /= 2;
@@ -1212,7 +1210,7 @@ BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth
       }
     }
   }
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 
   return (uiReturnValue);
 }
@@ -1283,9 +1281,9 @@ BOOLEAN DisplayMercVideoIntro(uint16_t usTimeTillFinish) {
   // init variable
   if (uiLastTime == 0) uiLastTime = uiCurTime;
 
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, MERC_VIDEO_FACE_X, MERC_VIDEO_FACE_Y, MERC_VIDEO_FACE_X + MERC_VIDEO_FACE_WIDTH,
-      MERC_VIDEO_FACE_Y + MERC_VIDEO_FACE_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, MERC_VIDEO_FACE_X, MERC_VIDEO_FACE_Y,
+                    MERC_VIDEO_FACE_X + MERC_VIDEO_FACE_WIDTH,
+                    MERC_VIDEO_FACE_Y + MERC_VIDEO_FACE_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)));
 
   // if the intro is done
   if ((uiCurTime - uiLastTime) > usTimeTillFinish) {
@@ -1425,12 +1423,9 @@ void DisplayTextForSpeckVideoPopUp(wchar_t *pString) {
   }
 
   // Create the popup box
-  SET_USE_WINFONTS(TRUE);
-  SET_WINFONT(giSubTitleWinFont);
   iMercPopUpBox = PrepareMercPopupBox(iMercPopUpBox, BASIC_MERC_POPUP_BACKGROUND,
                                       BASIC_MERC_POPUP_BORDER, gsSpeckDialogueTextPopUp, 300, 0, 0,
                                       0, &gusSpeckDialogueActualWidth, &usActualHeight);
-  SET_USE_WINFONTS(FALSE);
 
   gusSpeckDialogueX = (LAPTOP_SCREEN_LR_X - gusSpeckDialogueActualWidth - LAPTOP_SCREEN_UL_X) / 2 +
                       LAPTOP_SCREEN_UL_X;
@@ -2051,8 +2046,8 @@ void DrawMercVideoBackGround() {
   struct VObject *hPixHandle;
 
   GetVideoObject(&hPixHandle, guiMercVideoPopupBackground);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, MERC_VIDEO_BACKGROUND_X, MERC_VIDEO_BACKGROUND_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, MERC_VIDEO_BACKGROUND_X, MERC_VIDEO_BACKGROUND_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // put the title on the window
   DrawTextToScreen(MercHomePageText[MERC_SPECK_COM], MERC_X_VIDEO_TITLE_X, MERC_X_VIDEO_TITLE_Y, 0,

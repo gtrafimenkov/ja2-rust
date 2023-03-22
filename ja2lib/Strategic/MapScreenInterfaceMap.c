@@ -1,14 +1,16 @@
 #include "Strategic/MapScreenInterfaceMap.h"
 
 #include "Laptop/Finances.h"
+#include "Point.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
-// #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -40,7 +42,6 @@
 #include "Tactical/Vehicles.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "Town.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"
@@ -543,7 +544,7 @@ void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow) {
   int32_t iCount = 0;
   BOOLEAN fDrawCursors;
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   // SetFontColors(FONT_FCOLOR_GREEN)
   SetFont(MAP_FONT);
   SetFontForeground(MAP_INDEX_COLOR);
@@ -585,7 +586,7 @@ void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow) {
   InvalidateRegion(MAP_HORT_INDEX_X, MAP_HORT_INDEX_Y, MAP_HORT_INDEX_X + (iCount - 1) * MAP_GRID_X,
                    MAP_HORT_INDEX_Y + MAP_HORT_HEIGHT);
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 }
 
 void HandleShowingOfEnemiesWithMilitiaOn(void) {
@@ -617,10 +618,12 @@ uint32_t DrawMap(void) {
   int32_t iCounter = 0;
 
   if (!iCurrentMapSectorZ) {
-    pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+    pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
 
-    CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-    pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+    if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+      return FALSE;
+    }
+    pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
     // clip blits to mapscreen region
     // ClipBlitsToMapViewRegion( );
@@ -637,12 +640,12 @@ uint32_t DrawMap(void) {
       clip.iTop = iZoomY - 3;
       clip.iBottom = clip.iTop + MAP_VIEW_HEIGHT - 1;
 
-      if (clip.iBottom > hSrcVSurface->usHeight) {
-        clip.iBottom = hSrcVSurface->usHeight;
+      if (clip.iBottom > GetVSurfaceHeight(hSrcVSurface)) {
+        clip.iBottom = GetVSurfaceHeight(hSrcVSurface);
       }
 
-      if (clip.iRight > hSrcVSurface->usWidth) {
-        clip.iRight = hSrcVSurface->usWidth;
+      if (clip.iRight > GetVSurfaceWidth(hSrcVSurface)) {
+        clip.iRight = GetVSurfaceWidth(hSrcVSurface);
       }
 
       Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
@@ -653,8 +656,8 @@ uint32_t DrawMap(void) {
                                    uiSrcPitchBYTES, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
     }
 
-    UnLockVideoSurface(guiBIGMAP);
-    UnLockVideoSurface(guiSAVEBUFFER);
+    VSurfaceUnlock(GetVSByID(guiBIGMAP));
+    VSurfaceUnlock(vsSaveBuffer);
 
     // shade map sectors (must be done after Tixa/Orta/Mine icons have been blitted, but before
     // icons!)
@@ -854,8 +857,8 @@ void DrawTownLabels(wchar_t *pString, wchar_t *pStringA, uint16_t usFirstX, uint
     return;
   }
 
-  SetFontDestBuffer(guiSAVEBUFFER, MapScreenRect.iLeft + 2, MapScreenRect.iTop,
-                    MapScreenRect.iRight, MapScreenRect.iBottom, FALSE);
+  SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop, MapScreenRect.iRight,
+              MapScreenRect.iBottom, FALSE);
 
   // clip blits to mapscreen region
   ClipBlitsToMapViewRegion();
@@ -1021,8 +1024,8 @@ void ShowUncertainNumberEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY) {
     sYPosition -= 2;
 
     // small question mark
-    BltVideoObject(guiSAVEBUFFER, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
     InvalidateRegion(sXPosition, sYPosition, sXPosition + DMAP_GRID_X, sYPosition + DMAP_GRID_Y);
   }
   /*
@@ -1042,7 +1045,7 @@ void ShowUncertainNumberEnemiesInSector(uint8_t sSectorX, uint8_t sSectorY) {
                   ClipBlitsToMapViewRegion( );
 
                   // large question mark
-                  BltVideoObject(guiSAVEBUFFER, hIconHandle, BIG_QUESTION_MARK, sXPosition,
+                  BltVideoObject2(vsSaveBuffer, hIconHandle, BIG_QUESTION_MARK, sXPosition,
      sYPosition, VO_BLT_SRCTRANSPARENCY, NULL );
 
                   // restore clip blits
@@ -1101,14 +1104,16 @@ BOOLEAN ShadeMapElem(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
   uint16_t *pOriginalPallette;
 
   // get original video surface palette
-  CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
+  if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+    return FALSE;
+  }
   // get original video surface palette
-  // CHECKF( GetVideoSurface( &hSAMSurface, guiSAMICON ) );
+  // if (!( GetVideoSurface( &hSAMSurface, guiSAMICON ) )) { return FALSE; }
   // get original video surface palette
-  // CHECKF( GetVideoSurface( &hMineSurface, guiMINEICON ) );
+  // if (!( GetVideoSurface( &hMineSurface, guiMINEICON ) )) { return FALSE; }
   // get original video surface palette
 
-  pOriginalPallette = hSrcVSurface->p16BPPPalette;
+  pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
 
   if (fZoomFlag)
     ShadeMapElemZoomIn(sMapX, sMapY, iColor);
@@ -1146,22 +1151,26 @@ BOOLEAN ShadeMapElem(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
     switch (iColor) {
       case (MAP_SHADE_BLACK):
         // simply shade darker
-        ShadowVideoSurfaceRect(guiSAVEBUFFER, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 1,
+        ShadowVideoSurfaceRect(vsSaveBuffer, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 1,
                                sScreenY + MAP_GRID_Y - 1);
         break;
 
       case (MAP_SHADE_LT_GREEN):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
 
-        hSrcVSurface->p16BPPPalette = pMapLTGreenPalette;
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTGreenPalette);
         // hMineSurface->p16BPPPalette = pMapLTGreenPalette;
         // hSAMSurface->p16BPPPalette = pMapLTGreenPalette;
 
         // lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
@@ -1171,21 +1180,25 @@ BOOLEAN ShadeMapElem(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
         break;
 
       case (MAP_SHADE_DK_GREEN):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKGreenPalette;
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKGreenPalette);
         // hMineSurface->p16BPPPalette = pMapDKGreenPalette;
         // hSAMSurface->p16BPPPalette = pMapDKGreenPalette;
 
         /// lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
@@ -1195,21 +1208,25 @@ BOOLEAN ShadeMapElem(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
         break;
 
       case (MAP_SHADE_LT_RED):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapLTRedPalette;
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTRedPalette);
         // hMineSurface->p16BPPPalette = pMapLTRedPalette;
         // hSAMSurface->p16BPPPalette = pMapLTRedPalette;
 
         // lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
@@ -1219,21 +1236,25 @@ BOOLEAN ShadeMapElem(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
         break;
 
       case (MAP_SHADE_DK_RED):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKRedPalette;
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKRedPalette);
         // hMineSurface->p16BPPPalette = pMapDKRedPalette;
         // hSAMSurface->p16BPPPalette = pMapDKRedPalette;
 
         // lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
@@ -1243,14 +1264,16 @@ BOOLEAN ShadeMapElem(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
         break;
     }
 
     // restore original palette
-    CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-    hSrcVSurface->p16BPPPalette = pOriginalPallette;
+    if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+      return FALSE;
+    }
+    SetVSurface16BPPPalette(hSrcVSurface, pOriginalPallette);
     // hMineSurface->p16BPPPalette = pOriginalPallette;
     // hSAMSurface->p16BPPPalette = pOriginalPallette;
   }
@@ -1278,8 +1301,10 @@ BOOLEAN ShadeMapElemZoomIn(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
   iX = (int32_t)sScreenX - MAP_GRID_X;
 
   // get original video surface palette
-  CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-  pOriginalPallette = hSrcVSurface->p16BPPPalette;
+  if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+    return FALSE;
+  }
+  pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
 
   if ((iX > MapScreenRect.iLeft - MAP_GRID_X * 2) && (iX < MapScreenRect.iRight) &&
       (iY > MapScreenRect.iTop - MAP_GRID_Y * 2) && (iY < MapScreenRect.iBottom)) {
@@ -1329,96 +1354,114 @@ BOOLEAN ShadeMapElemZoomIn(uint8_t sMapX, uint8_t sMapY, int32_t iColor) {
       case (MAP_SHADE_BLACK):
         // simply shade darker
         if (iCurrentMapSectorZ > 0) {
-          ShadowVideoSurfaceRect(guiSAVEBUFFER, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
+          ShadowVideoSurfaceRect(vsSaveBuffer, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
         }
-        ShadowVideoSurfaceRect(guiSAVEBUFFER, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
+        ShadowVideoSurfaceRect(vsSaveBuffer, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
         break;
 
       case (MAP_SHADE_LT_GREEN):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapLTGreenPalette;
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTGreenPalette);
 
         // lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         // now blit
         Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
 
         break;
 
       case (MAP_SHADE_DK_GREEN):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKGreenPalette;
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKGreenPalette);
 
         /// lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         // now blit
         Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
 
         break;
 
       case (MAP_SHADE_LT_RED):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapLTRedPalette;
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        SetVSurface16BPPPalette(hSrcVSurface, pMapLTRedPalette);
 
         // lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         // now blit
         Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
 
         break;
 
       case (MAP_SHADE_DK_RED):
         // grab video surface and set palette
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        hSrcVSurface->p16BPPPalette = pMapDKRedPalette;
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        SetVSurface16BPPPalette(hSrcVSurface, pMapDKRedPalette);
 
         // lock source and dest buffers
-        pDestBuf = (uint16_t *)LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
-        CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-        pSrcBuf = LockVideoSurface(guiBIGMAP, &uiSrcPitchBYTES);
+        pDestBuf = (uint16_t *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+          return FALSE;
+        }
+        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
         // now blit
         Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
-        UnLockVideoSurface(guiSAVEBUFFER);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
+        VSurfaceUnlock(vsSaveBuffer);
 
         break;
     }
   }
 
   // restore original palette
-  CHECKF(GetVideoSurface(&hSrcVSurface, guiBIGMAP));
-  hSrcVSurface->p16BPPPalette = pOriginalPallette;
+  if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+    return FALSE;
+  }
+  SetVSurface16BPPPalette(hSrcVSurface, pOriginalPallette);
 
   return (TRUE);
 }
@@ -1431,12 +1474,16 @@ BOOLEAN InitializePalettesForMap(void) {
   uint32_t uiTempMap;
 
   // load image
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
   strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
-  CHECKF(AddVideoSurface(&vs_desc, &uiTempMap));
+  if (!(AddVideoSurface(&vs_desc, &uiTempMap))) {
+    return FALSE;
+  }
 
   // get video surface
-  CHECKF(GetVideoSurface(&hSrcVSurface, uiTempMap));
+  if (!(GetVideoSurface(&hSrcVSurface, uiTempMap))) {
+    return FALSE;
+  }
   GetVSurfacePaletteEntries(hSrcVSurface, pPalette);
 
   // set up various palettes
@@ -2403,12 +2450,12 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
       if ((!fZoomFlag) ||
           ((fZoomFlag) && (iX > MAP_VIEW_START_X) && (iY > MAP_VIEW_START_Y) &&
            (iX < 640 - MAP_GRID_X * 2) && (iY < MAP_VIEW_START_Y + MAP_VIEW_HEIGHT))) {
-        BltVideoObject(FRAME_BUFFER, hMapHandle, (uint16_t)iDirection, iX, iY,
-                       VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObject2(vsFB, hMapHandle, (uint16_t)iDirection, iX, iY, VO_BLT_SRCTRANSPARENCY,
+                        NULL);
 
         if (!fUTurnFlag) {
-          BltVideoObject(FRAME_BUFFER, hMapHandle, (uint16_t)iArrow, iArrowX, iArrowY,
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(vsFB, hMapHandle, (uint16_t)iArrow, iArrowX, iArrowY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
 
@@ -2433,7 +2480,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
 
 void AnimateRoute(struct path *pPath) {
   // set buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // the animated path
   if (TraceCharAnimatedRoute(pPath, FALSE, FALSE)) {
@@ -3145,8 +3192,8 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
         // DMAP_GRID_Y); else RestoreExternBackgroundRect(((int16_t)iArrowX),
         // ((int16_t)iArrowY),DMAP_GRID_ZOOM_X, DMAP_GRID_ZOOM_Y);
         if (pNode != pPath) {
-          BltVideoObject(FRAME_BUFFER, hMapHandle, (uint16_t)iArrow, iArrowX, iArrowY,
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(vsFB, hMapHandle, (uint16_t)iArrow, iArrowX, iArrowY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
       }
@@ -3515,8 +3562,8 @@ void ShowPeopleInMotion(uint8_t sX, uint8_t sY) {
           iX = MAP_VIEW_START_X + (iX * MAP_GRID_X) + sOffsetX;
           iY = MAP_Y_ICON_OFFSET + MAP_VIEW_START_Y + (iY * MAP_GRID_Y) + sOffsetY;
 
-          BltVideoObject(guiSAVEBUFFER, hIconHandle, (uint16_t)iCounter, (int16_t)iX, (int16_t)iY,
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(vsSaveBuffer, hIconHandle, (uint16_t)iCounter, (int16_t)iX, (int16_t)iY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
         } else {
           GetScreenXYFromMapXYStationary(((uint8_t)(iX)), ((uint8_t)(iY)), &sXPosition,
                                          &sYPosition);
@@ -3527,8 +3574,8 @@ void ShowPeopleInMotion(uint8_t sX, uint8_t sY) {
           // clip blits to mapscreen region
           ClipBlitsToMapViewRegion();
 
-          BltVideoObject(guiSAVEBUFFER, hIconHandle, (uint16_t)iCounter, iX, iY,
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(vsSaveBuffer, hIconHandle, (uint16_t)iCounter, iX, iY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
 
           // restore clip blits
           RestoreClipRegionToFullScreen();
@@ -3536,7 +3583,7 @@ void ShowPeopleInMotion(uint8_t sX, uint8_t sY) {
 
         FindFontCenterCoordinates((int16_t)(iX + sTextXOffset), 0, ICON_WIDTH, 0, sString, MAP_FONT,
                                   &usX, &usY);
-        SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+        SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
         mprintf(usX, iY + sTextYOffset, sString);
 
         switch (iCounter % 2) {
@@ -3573,7 +3620,7 @@ void ShowPeopleInMotion(uint8_t sX, uint8_t sY) {
   }
 
   // restore buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 }
 
 void DisplayDistancesForHelicopter(void) {
@@ -3608,8 +3655,8 @@ void DisplayDistancesForHelicopter(void) {
 
   // blit in background
   GetVideoObject(&hHandle, guiMapBorderHeliSectors);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   //	sTotalCanTravel = ( int16_t )GetTotalDistanceHelicopterCanTravel( );
   sDistanceToGo = (int16_t)DistanceOfIntendedHelicopterPath();
@@ -3838,7 +3885,7 @@ void DisplayPositionOfHelicopter(void) {
       ClipBlitsToMapViewRegion();
 
       GetVideoObject(&hHandle, guiHelicopterIcon);
-      BltVideoObject(FRAME_BUFFER, hHandle, HELI_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hHandle, HELI_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
 
       // now get number of people and blit that too
       iNumberOfPeopleInHelicopter = GetNumberOfPassengersInHelicopter();
@@ -3903,7 +3950,7 @@ void DisplayDestinationOfHelicopter(void) {
     ClipBlitsToMapViewRegion();
 
     GetVideoObject(&hHandle, guiHelicopterIcon);
-    BltVideoObject(FRAME_BUFFER, hHandle, HELI_SHADOW_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hHandle, HELI_SHADOW_ICON, x, y, VO_BLT_SRCTRANSPARENCY, NULL);
     InvalidateRegion(x, y, x + HELI_SHADOW_ICON_WIDTH, y + HELI_SHADOW_ICON_HEIGHT);
 
     RestoreClipRegionToFullScreen();
@@ -3979,22 +4026,22 @@ void BlitMineIcon(uint8_t sMapX, uint8_t sMapY) {
 
   GetVideoObject(&hHandle, guiMINEICON);
 
-  LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+  VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                  MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                  MAP_VIEW_HEIGHT - 9);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   if (fZoomFlag) {
     GetScreenXYFromMapXYStationary((int16_t)(sMapX), (int16_t)(sMapY), &sScreenX, &sScreenY);
     // when zoomed, the x,y returned is the CENTER of the map square in question
-    BltVideoObject(guiSAVEBUFFER, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4,
-                   sScreenY - MAP_GRID_ZOOM_Y / 4, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4,
+                    sScreenY - MAP_GRID_ZOOM_Y / 4, VO_BLT_SRCTRANSPARENCY, NULL);
   } else {
     GetScreenXYFromMapXY((int16_t)(sMapX), (int16_t)(sMapY), &sScreenX, &sScreenY);
     // when not zoomed, the x,y returned is the top left CORNER of the map square in question
-    BltVideoObject(guiSAVEBUFFER, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 }
 
@@ -4019,9 +4066,9 @@ void BlitMineText(uint8_t sMapX, uint8_t sMapY) {
 
   // show detailed mine info (name, production rate, daily production)
 
-  SetFontDestBuffer(guiSAVEBUFFER, MAP_VIEW_START_X, MAP_VIEW_START_Y,
-                    MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                    MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
+  SetFontDest(vsSaveBuffer, MAP_VIEW_START_X, MAP_VIEW_START_Y,
+              MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
+              MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
 
   SetFont(MAP_FONT);
   SetFontForeground(FONT_LTGREEN);
@@ -4090,9 +4137,9 @@ void BlitMineText(uint8_t sMapX, uint8_t sMapY) {
     ubLineCnt++;
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, MAP_VIEW_START_X, MAP_VIEW_START_Y,
-                    MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                    MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
+  SetFontDest(vsFB, MAP_VIEW_START_X, MAP_VIEW_START_Y,
+              MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
+              MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
 }
 
 void AdjustXForLeftMapEdge(wchar_t *wString, int16_t *psX) {
@@ -4119,7 +4166,7 @@ void BlitTownGridMarkers(void) {
   usColor = Get16BPPColor(FROMRGB(100, 100, 100));
 
   // blit in the highlighted sector
-  pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
 
   // clip to view region
   ClipBlitsToMapViewRegionForRectangleAndABit(uiDestPitchBYTES);
@@ -4177,7 +4224,7 @@ void BlitTownGridMarkers(void) {
   RestoreClipRegionToFullScreenForRectangle(uiDestPitchBYTES);
 
   // unlock surface
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return;
 }
@@ -4194,7 +4241,7 @@ void BlitMineGridMarkers(void) {
   usColor = Get16BPPColor(FROMRGB(100, 100, 100));
 
   // blit in the highlighted sector
-  pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
 
   // clip to view region
   ClipBlitsToMapViewRegionForRectangleAndABit(uiDestPitchBYTES);
@@ -4226,7 +4273,7 @@ void BlitMineGridMarkers(void) {
   RestoreClipRegionToFullScreenForRectangle(uiDestPitchBYTES);
 
   // unlock surface
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return;
 }
@@ -4243,9 +4290,9 @@ void DisplayLevelString(void) {
 
   // otherwise we will have to display the string with the level number
 
-  SetFontDestBuffer(guiSAVEBUFFER, MAP_VIEW_START_X, MAP_VIEW_START_Y,
-                    MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                    MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
+  SetFontDest(vsSaveBuffer, MAP_VIEW_START_X, MAP_VIEW_START_Y,
+              MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
+              MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
 
   SetFont(MAP_FONT);
   SetFontForeground(MAP_INDEX_COLOR);
@@ -4254,7 +4301,7 @@ void DisplayLevelString(void) {
 
   mprintf(MAP_LEVEL_STRING_X, MAP_LEVEL_STRING_Y, sString);
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   return;
 }
@@ -4350,24 +4397,22 @@ BOOLEAN DropAPersonInASector(uint8_t ubType, uint8_t sX, uint8_t sY) {
 }
 
 BOOLEAN LoadMilitiaPopUpBox(void) {
-  VOBJECT_DESC VObjectDesc;
-
   // load the militia pop up box
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Militia.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMilitia));
+  if (!AddVObjectFromFile("INTERFACE\\Militia.sti", &guiMilitia)) {
+    return FALSE;
+  }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\Militiamaps.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMilitiaMaps));
+  if (!AddVObjectFromFile("INTERFACE\\Militiamaps.sti", &guiMilitiaMaps)) {
+    return FALSE;
+  }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\MilitiamapsectorOutline2.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMilitiaSectorHighLight));
+  if (!AddVObjectFromFile("INTERFACE\\MilitiamapsectorOutline2.sti", &guiMilitiaSectorHighLight)) {
+    return FALSE;
+  }
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\MilitiamapsectorOutline.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMilitiaSectorOutline));
+  if (!AddVObjectFromFile("INTERFACE\\MilitiamapsectorOutline.sti", &guiMilitiaSectorOutline)) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -4406,13 +4451,13 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
   // get the properties of the militia object
   GetVideoObject(&hVObject, guiMilitia);
 
-  BltVideoObject(FRAME_BUFFER, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   GetVideoObject(&hVObject, guiMilitiaMaps);
-  BltVideoObject(FRAME_BUFFER, hVObject, (uint16_t)(sSelectedMilitiaTown - 1),
-                 MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
-                 MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObject, (uint16_t)(sSelectedMilitiaTown - 1),
+                  MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
+                  MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // set font color for labels and "total militia" counts
   SetFontForeground(FONT_WHITE);
@@ -4592,8 +4637,8 @@ void RenderIconsPerSectorForSelectedTown(void) {
         }
       }
 
-      BltVideoObject(FRAME_BUFFER, hVObject, (uint16_t)(iCurrentIcon), sX, sY,
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hVObject, (uint16_t)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY,
+                      NULL);
     }
   }
 
@@ -4627,7 +4672,7 @@ void ShowHighLightedSectorOnMilitiaMap(void) {
     GetVideoObject(&hVObject, guiMilitiaSectorHighLight);
 
     // blt the object
-    BltVideoObject(FRAME_BUFFER, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   if (sSectorMilitiaMapSectorOutline != -1) {
@@ -4640,7 +4685,7 @@ void ShowHighLightedSectorOnMilitiaMap(void) {
     GetVideoObject(&hVObject, guiMilitiaSectorOutline);
 
     // blt the object
-    BltVideoObject(FRAME_BUFFER, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hVObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   return;
@@ -4874,8 +4919,7 @@ void DisplayUnallocatedMilitia(void) {
       iCurrentIcon = 10;
     }
 
-    BltVideoObject(FRAME_BUFFER, hVObject, (uint16_t)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVideoObject2(vsFB, hVObject, (uint16_t)(iCurrentIcon), sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 }
 
@@ -5225,7 +5269,7 @@ void RenderShadingForUnControlledSectors(void) {
       sY = MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y +
            ((iCounter / MILITIA_BOX_ROWS) * MILITIA_BOX_BOX_HEIGHT);
 
-      ShadowVideoSurfaceRect(FRAME_BUFFER, sX, sY, sX + MILITIA_BOX_BOX_WIDTH - 1,
+      ShadowVideoSurfaceRect(vsFB, sX, sY, sX + MILITIA_BOX_BOX_WIDTH - 1,
                              sY + MILITIA_BOX_BOX_HEIGHT - 1);
     }
   }
@@ -5374,7 +5418,7 @@ BOOLEAN ShadeUndergroundMapElem(uint8_t sSectorX, uint8_t sSectorY) {
 
   sScreenX += 1;
 
-  ShadowVideoSurfaceRect(guiSAVEBUFFER, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 2,
+  ShadowVideoSurfaceRect(vsSaveBuffer, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 2,
                          sScreenY + MAP_GRID_Y - 2);
 
   return (TRUE);
@@ -5415,8 +5459,8 @@ void HandleLowerLevelMapBlit(void) {
   }
 
   // handle the blt of the sublevel
-  BltVideoObject(guiSAVEBUFFER, hHandle, 0, MAP_VIEW_START_X + 21, MAP_VIEW_START_Y + 17,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hHandle, 0, MAP_VIEW_START_X + 21, MAP_VIEW_START_Y + 17,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // handle shading of sublevels
   ShadeSubLevelsNotVisited();
@@ -5608,11 +5652,11 @@ void ShowSAMSitesOnStrategicMap(void) {
     uint8_t sSectorY = GetSamSiteY(iCounter);
 
     if (fZoomFlag) {
-      LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+      VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
       SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                      MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                      MAP_VIEW_HEIGHT - 9);
-      UnLockVideoSurface(guiSAVEBUFFER);
+      VSurfaceUnlock(vsSaveBuffer);
 
       GetScreenXYFromMapXYStationary(sSectorX, sSectorY, &sX, &sY);
       sX -= 8;
@@ -5627,7 +5671,7 @@ void ShowSAMSitesOnStrategicMap(void) {
 
     // draw SAM site icon
     GetVideoObject(&hHandle, guiSAMICON);
-    BltVideoObject(guiSAVEBUFFER, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
 
     if (fShowAircraftFlag) {
       // write "SAM Site" centered underneath
@@ -5651,8 +5695,8 @@ void ShowSAMSitesOnStrategicMap(void) {
         continue;
       }
 
-      SetFontDestBuffer(guiSAVEBUFFER, MapScreenRect.iLeft + 2, MapScreenRect.iTop,
-                        MapScreenRect.iRight, MapScreenRect.iBottom, FALSE);
+      SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop, MapScreenRect.iRight,
+                  MapScreenRect.iBottom, FALSE);
 
       // clip blits to mapscreen region
       ClipBlitsToMapViewRegion();
@@ -5685,7 +5729,7 @@ void BlitSAMGridMarkers(void) {
   // get 16 bpp color
   usColor = Get16BPPColor(FROMRGB(100, 100, 100));
 
-  pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
 
   // clip to view region
   ClipBlitsToMapViewRegionForRectangleAndABit(uiDestPitchBYTES);
@@ -5722,7 +5766,7 @@ void BlitSAMGridMarkers(void) {
   RestoreClipRegionToFullScreenForRectangle(uiDestPitchBYTES);
 
   // unlock surface
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return;
 }
@@ -5779,8 +5823,8 @@ void ShowItemsOnMap(void) {
   // clip blits to mapscreen region
   ClipBlitsToMapViewRegion();
 
-  SetFontDestBuffer(guiSAVEBUFFER, MapScreenRect.iLeft + 2, MapScreenRect.iTop,
-                    MapScreenRect.iRight, MapScreenRect.iBottom, FALSE);
+  SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop, MapScreenRect.iRight,
+              MapScreenRect.iBottom, FALSE);
 
   SetFont(MAP_FONT);
   SetFontForeground(FONT_MCOLOR_LTGREEN);
@@ -5836,7 +5880,7 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, uint16_t usVOIndex, uint8_t sMa
     iX = MAP_VIEW_START_X + (sMapX * MAP_GRID_X) + MAP_X_ICON_OFFSET + (3 * iColumnNumber);
     iY = MAP_VIEW_START_Y + (sMapY * MAP_GRID_Y) + MAP_Y_ICON_OFFSET + (3 * iRowNumber);
 
-    BltVideoObject(guiSAVEBUFFER, hIconHandle, usVOIndex, iX, iY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hIconHandle, usVOIndex, iX, iY, VO_BLT_SRCTRANSPARENCY, NULL);
     InvalidateRegion(iX, iY, iX + DMAP_GRID_X, iY + DMAP_GRID_Y);
   }
   /*
@@ -5851,7 +5895,7 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, uint16_t usVOIndex, uint8_t sMa
                   // clip blits to mapscreen region
                   ClipBlitsToMapViewRegion( );
 
-                  BltVideoObject(guiSAVEBUFFER,
+                  BltVideoObject2(vsSaveBuffer,
      hIconHandle,BIG_YELLOW_BOX,MAP_X_ICON_OFFSET+iX+6*iColumnNumber+2,MAP_Y_ICON_OFFSET+iY+6*iRowNumber,
      VO_BLT_SRCTRANSPARENCY, NULL );
 
@@ -5872,11 +5916,11 @@ void DrawOrta() {
   struct VObject *hHandle;
 
   if (fZoomFlag) {
-    LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+    VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                    MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                    MAP_VIEW_HEIGHT - 9);
-    UnLockVideoSurface(guiSAVEBUFFER);
+    VSurfaceUnlock(vsSaveBuffer);
 
     GetScreenXYFromMapXYStationary(ORTA_SECTOR_X, ORTA_SECTOR_Y, &sX, &sY);
     sX += -MAP_GRID_X + 2;
@@ -5891,7 +5935,7 @@ void DrawOrta() {
 
   // draw Orta in its sector
   GetVideoObject(&hHandle, guiORTAICON);
-  BltVideoObject(guiSAVEBUFFER, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void DrawTixa() {
@@ -5901,12 +5945,11 @@ void DrawTixa() {
   struct VObject *hHandle;
 
   if (fZoomFlag) {
-    LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+    VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
                                    MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
                                    MAP_VIEW_HEIGHT - 9);
-    UnLockVideoSurface(guiSAVEBUFFER);
-
+    VSurfaceUnlock(vsSaveBuffer);
     GetScreenXYFromMapXYStationary(TIXA_SECTOR_X, TIXA_SECTOR_Y, &sX, &sY);
     sX += -MAP_GRID_X + 3;
     sY += -MAP_GRID_Y + 6;
@@ -5919,7 +5962,7 @@ void DrawTixa() {
 
   // draw Tixa in its sector
   GetVideoObject(&hHandle, guiTIXAICON);
-  BltVideoObject(guiSAVEBUFFER, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void DrawBullseye() {
@@ -5931,7 +5974,7 @@ void DrawBullseye() {
 
   // draw the bullseye in that sector
   GetVideoObject(&hHandle, guiBULLSEYE);
-  BltVideoObject(guiSAVEBUFFER, hHandle, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hHandle, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void HideExistenceOfUndergroundMapSector(uint8_t ubSectorX, uint8_t ubSectorY) {
@@ -5941,8 +5984,8 @@ void HideExistenceOfUndergroundMapSector(uint8_t ubSectorX, uint8_t ubSectorY) {
   GetScreenXYFromMapXY(ubSectorX, ubSectorY, &sScreenX, &sScreenY);
 
   // fill it with near black
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, sScreenX + 1, sScreenY, sScreenX + MAP_GRID_X,
-                            sScreenY + MAP_GRID_Y - 1, gusUndergroundNearBlack);
+  VSurfaceColorFill(vsSaveBuffer, sScreenX + 1, sScreenY, sScreenX + MAP_GRID_X,
+                    sScreenY + MAP_GRID_Y - 1, gusUndergroundNearBlack);
 }
 
 void InitMapSecrets(void) {

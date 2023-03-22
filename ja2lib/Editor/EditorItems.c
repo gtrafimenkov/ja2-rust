@@ -10,10 +10,12 @@
 #include "Editor/SelectWin.h"
 #include "SGP/Debug.h"
 #include "SGP/Font.h"
+#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -24,9 +26,9 @@
 #include "Tactical/SoldierControl.h"
 #include "Tactical/Weapons.h"
 #include "Tactical/WorldItems.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/Pits.h"
 #include "TileEngine/SimpleRenderUtils.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
@@ -276,7 +278,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
   eInfo.sHeight = 80;
   // Create item buffer
   GetCurrentVideoSettings(&usUselessWidth, &usUselessHeight, &ubBitDepth);
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = eInfo.sWidth;
   vs_desc.usHeight = eInfo.sHeight;
   vs_desc.ubBitDepth = ubBitDepth;
@@ -288,8 +290,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
     return;
   }
 
-  pDestBuf = LockVideoSurface(eInfo.uiBuffer, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(eInfo.uiBuffer), &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   // copy a blank chunk of the editor interface to the new buffer.
   for (i = 0; i < eInfo.sWidth; i += 60) {
@@ -297,8 +299,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
                     0 + i, 0, 100, 360, 60, 80);
   }
 
-  UnLockVideoSurface(eInfo.uiBuffer);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(GetVSByID(eInfo.uiBuffer));
+  VSurfaceUnlock(vsFB);
 
   x = 0;
   y = 0;
@@ -321,7 +323,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
 
       SetFont(SMALLCOMPFONT);
       SetFontForeground(FONT_MCOLOR_WHITE);
-      SetFontDestBuffer(eInfo.uiBuffer, 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
+      SetFontDest(GetVSByID(eInfo.uiBuffer), 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
 
       swprintf(pStr, ARR_SIZE(pStr), L"%S", LockTable[i].ubEditorName);
       DisplayWrappedString(x, (uint16_t)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr,
@@ -332,8 +334,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
       sOffset = hVObject->pETRLEObject[item->ubGraphicNum].sOffsetX;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
 
-      BltVideoObjectOutlineFromIndex(eInfo.uiBuffer, uiVideoObjectIndex, item->ubGraphicNum, sStart,
-                                     y + 2, 0, FALSE);
+      BltVideoObjectOutlineFromIndex(GetVSByID(eInfo.uiBuffer), uiVideoObjectIndex,
+                                     item->ubGraphicNum, sStart, y + 2, 0, FALSE);
       // cycle through the various slot positions (0,0), (0,40), (60,0), (60,40), (120,0)...
       if (y == 0) {
         y = 40;
@@ -408,7 +410,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
 
           SetFont(SMALLCOMPFONT);
           SetFontForeground(FONT_MCOLOR_WHITE);
-          SetFontDestBuffer(eInfo.uiBuffer, 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
+          SetFontDest(GetVSByID(eInfo.uiBuffer), 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
 
           if (eInfo.uiItemType != TBAR_MODE_ITEM_TRIGGERS) {
             LoadItemInfo(usCounter, pItemName, NULL);
@@ -447,8 +449,8 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
           sStart = x + (60 - sWidth - sOffset * 2) / 2;
 
           if (sWidth) {
-            BltVideoObjectOutlineFromIndex(eInfo.uiBuffer, uiVideoObjectIndex, item->ubGraphicNum,
-                                           sStart, y + 2, 0, FALSE);
+            BltVideoObjectOutlineFromIndex(GetVSByID(eInfo.uiBuffer), uiVideoObjectIndex,
+                                           item->ubGraphicNum, sStart, y + 2, 0, FALSE);
           }
           // cycle through the various slot positions (0,0), (0,40), (60,0), (60,40), (120,0)...
           if (y == 0) {
@@ -461,7 +463,7 @@ void InitEditorItemsInfo(uint32_t uiItemType) {
         usCounter++;
       }
     }
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   SetClippingRect(&SaveRect);
   gfRenderTaskbar = TRUE;
 }
@@ -500,15 +502,15 @@ void RenderEditorItemsInfo() {
                              // highlighted.
     eInfo.sHilitedItemIndex = -1;
   }
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(eInfo.uiBuffer, &uiSrcPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(GetVSByID(eInfo.uiBuffer), &uiSrcPitchBYTES);
 
   // copy the items buffer to the editor bar
   Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 110,
                   360, 60 * eInfo.sScrollIndex, 0, 360, 80);
 
-  UnLockVideoSurface(eInfo.uiBuffer);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(GetVSByID(eInfo.uiBuffer));
+  VSurfaceUnlock(vsFB);
 
   // calculate the min and max index that is currently shown.  This determines
   // if the highlighted and/or selected items are drawn with the outlines.
@@ -527,8 +529,8 @@ void RenderEditorItemsInfo() {
       sOffset = hVObject->pETRLEObject[item->ubGraphicNum].sOffsetX;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
       if (sWidth) {
-        BltVideoObjectOutlineFromIndex(FRAME_BUFFER, uiVideoObjectIndex, item->ubGraphicNum, sStart,
-                                       y + 2, Get16BPPColor(FROMRGB(250, 250, 0)), TRUE);
+        BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, item->ubGraphicNum, sStart, y + 2,
+                                       Get16BPPColor(FROMRGB(250, 250, 0)), TRUE);
       }
     }
   }
@@ -544,8 +546,8 @@ void RenderEditorItemsInfo() {
       sOffset = hVObject->pETRLEObject[item->ubGraphicNum].sOffsetX;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
       if (sWidth) {
-        BltVideoObjectOutlineFromIndex(FRAME_BUFFER, uiVideoObjectIndex, item->ubGraphicNum, sStart,
-                                       y + 2, Get16BPPColor(FROMRGB(250, 0, 0)), TRUE);
+        BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, item->ubGraphicNum, sStart, y + 2,
+                                       Get16BPPColor(FROMRGB(250, 0, 0)), TRUE);
       }
     }
   }

@@ -7,6 +7,7 @@
 #include "SGP/Debug.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/STCI.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -37,8 +38,8 @@ typedef union {
   uint32_t uiValue;
 } SplitUINT32;
 
-HIMAGE CreateImage(const char *ImageFile, uint16_t fContents) {
-  HIMAGE hImage = NULL;
+struct Image *CreateImage(const char *ImageFile, uint16_t fContents) {
+  struct Image *hImage = NULL;
   SGPFILENAME Extension;
   char ExtensionSep[] = ".";
   char *StrPtr;
@@ -88,11 +89,11 @@ HIMAGE CreateImage(const char *ImageFile, uint16_t fContents) {
   }
 
   // Create memory for image structure
-  hImage = (HIMAGE)MemAlloc(sizeof(image_type));
+  hImage = (struct Image *)MemAlloc(sizeof(struct Image));
 
   AssertMsg(hImage, "Failed to allocate memory for hImage in CreateImage");
   // Initialize some values
-  memset(hImage, 0, sizeof(image_type));
+  memset(hImage, 0, sizeof(struct Image));
 
   // hImage->fFlags = 0;
   // Set data pointers to NULL
@@ -112,7 +113,7 @@ HIMAGE CreateImage(const char *ImageFile, uint16_t fContents) {
   return (hImage);
 }
 
-BOOLEAN DestroyImage(HIMAGE hImage) {
+BOOLEAN DestroyImage(struct Image *hImage) {
   Assert(hImage != NULL);
 
   // First delete contents
@@ -124,7 +125,7 @@ BOOLEAN DestroyImage(HIMAGE hImage) {
   return (TRUE);
 }
 
-BOOLEAN ReleaseImageData(HIMAGE hImage, uint16_t fContents) {
+BOOLEAN ReleaseImageData(struct Image *hImage, uint16_t fContents) {
   Assert(hImage != NULL);
 
   if ((fContents & IMAGE_PALETTE) && (hImage->fFlags & IMAGE_PALETTE)) {
@@ -166,7 +167,7 @@ BOOLEAN ReleaseImageData(HIMAGE hImage, uint16_t fContents) {
   return (TRUE);
 }
 
-BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents) {
+BOOLEAN LoadImageData(struct Image *hImage, uint16_t fContents) {
   BOOLEAN fReturnVal = FALSE;
 
   Assert(hImage != NULL);
@@ -199,7 +200,7 @@ BOOLEAN LoadImageData(HIMAGE hImage, uint16_t fContents) {
   return (fReturnVal);
 }
 
-BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, uint8_t *pDestBuf,
+BOOLEAN CopyImageToBuffer(struct Image *hImage, uint32_t fBufferType, BYTE *pDestBuf,
                           uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                           SGPRect *srcRect) {
   // Use blitter based on type of image
@@ -228,7 +229,7 @@ BOOLEAN CopyImageToBuffer(HIMAGE hImage, uint32_t fBufferType, uint8_t *pDestBuf
   return (FALSE);
 }
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -240,12 +241,24 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usD
   Assert(hImage->p16BPPData != NULL);
 
   // Validations
-  CHECKF(usX >= 0);
-  CHECKF(usX < usDestWidth);
-  CHECKF(usY >= 0);
-  CHECKF(usY < usDestHeight);
-  CHECKF(srcRect->iRight > srcRect->iLeft);
-  CHECKF(srcRect->iBottom > srcRect->iTop);
+  if (!(usX >= 0)) {
+    return FALSE;
+  }
+  if (!(usX < usDestWidth)) {
+    return FALSE;
+  }
+  if (!(usY >= 0)) {
+    return FALSE;
+  }
+  if (!(usY < usDestHeight)) {
+    return FALSE;
+  }
+  if (!(srcRect->iRight > srcRect->iLeft)) {
+    return FALSE;
+  }
+  if (!(srcRect->iBottom > srcRect->iTop)) {
+    return FALSE;
+  }
 
   // Determine memcopy coordinates
   uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
@@ -271,7 +284,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usD
   return (TRUE);
 }
 
-BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -282,12 +295,24 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t u
   Assert(hImage->p16BPPData != NULL);
 
   // Validations
-  CHECKF(usX >= 0);
-  CHECKF(usX < hImage->usWidth);
-  CHECKF(usY >= 0);
-  CHECKF(usY < hImage->usHeight);
-  CHECKF(srcRect->iRight > srcRect->iLeft);
-  CHECKF(srcRect->iBottom > srcRect->iTop);
+  if (!(usX >= 0)) {
+    return FALSE;
+  }
+  if (!(usX < hImage->usWidth)) {
+    return FALSE;
+  }
+  if (!(usY >= 0)) {
+    return FALSE;
+  }
+  if (!(usY < hImage->usHeight)) {
+    return FALSE;
+  }
+  if (!(srcRect->iRight > srcRect->iLeft)) {
+    return FALSE;
+  }
+  if (!(srcRect->iBottom > srcRect->iTop)) {
+    return FALSE;
+  }
 
   // Determine memcopy coordinates
   uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
@@ -295,8 +320,12 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t u
   uiNumLines = (srcRect->iBottom - srcRect->iTop) + 1;
   uiLineSize = (srcRect->iRight - srcRect->iLeft) + 1;
 
-  CHECKF(usDestWidth >= uiLineSize);
-  CHECKF(usDestHeight >= uiNumLines);
+  if (!(usDestWidth >= uiLineSize)) {
+    return FALSE;
+  }
+  if (!(usDestHeight >= uiNumLines)) {
+    return FALSE;
+  }
 
   // Copy line by line
   pDest = (uint16_t *)pDestBuf + uiDestStart;
@@ -313,11 +342,13 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t u
   return (TRUE);
 }
 
-BOOLEAN Extract8BPPCompressedImageToBuffer(HIMAGE hImage, uint8_t *pDestBuf) { return (FALSE); }
+BOOLEAN Extract8BPPCompressedImageToBuffer(struct Image *hImage, BYTE *pDestBuf) { return (FALSE); }
 
-BOOLEAN Extract16BPPCompressedImageToBuffer(HIMAGE hImage, uint8_t *pDestBuf) { return (FALSE); }
+BOOLEAN Extract16BPPCompressedImageToBuffer(struct Image *hImage, BYTE *pDestBuf) {
+  return (FALSE);
+}
 
-BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t usDestWidth,
+BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                    SGPRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
@@ -333,13 +364,27 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t us
   Assert(hImage != NULL);
 
   // Validations
-  CHECKF(hImage->p16BPPData != NULL);
-  CHECKF(usX >= 0);
-  CHECKF(usX < usDestWidth);
-  CHECKF(usY >= 0);
-  CHECKF(usY < usDestHeight);
-  CHECKF(srcRect->iRight > srcRect->iLeft);
-  CHECKF(srcRect->iBottom > srcRect->iTop);
+  if (!(hImage->p16BPPData != NULL)) {
+    return FALSE;
+  }
+  if (!(usX >= 0)) {
+    return FALSE;
+  }
+  if (!(usX < usDestWidth)) {
+    return FALSE;
+  }
+  if (!(usY >= 0)) {
+    return FALSE;
+  }
+  if (!(usY < usDestHeight)) {
+    return FALSE;
+  }
+  if (!(srcRect->iRight > srcRect->iLeft)) {
+    return FALSE;
+  }
+  if (!(srcRect->iBottom > srcRect->iTop)) {
+    return FALSE;
+  }
 
   // Determine memcopy coordinates
   uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
@@ -347,8 +392,12 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(HIMAGE hImage, uint8_t *pDestBuf, uint16_t us
   uiNumLines = (srcRect->iBottom - srcRect->iTop);
   uiLineSize = (srcRect->iRight - srcRect->iLeft);
 
-  CHECKF(usDestWidth >= uiLineSize);
-  CHECKF(usDestHeight >= uiNumLines);
+  if (!(usDestWidth >= uiLineSize)) {
+    return FALSE;
+  }
+  if (!(usDestHeight >= uiNumLines)) {
+    return FALSE;
+  }
 
   // Convert to Pixel specification
   pDest = (uint16_t *)pDestBuf + uiDestStart;
@@ -599,7 +648,7 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
   return pInitEntry;
 }
 
-BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer) {
+BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
   // Assertions
   Assert(hImage != NULL);
   Assert(pBuffer != NULL);
@@ -609,7 +658,9 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer) {
 
   // Create buffer for objects
   pBuffer->pETRLEObject = (ETRLEObject *)MemAlloc(sizeof(ETRLEObject) * pBuffer->usNumberOfObjects);
-  CHECKF(pBuffer->pETRLEObject != NULL);
+  if (!(pBuffer->pETRLEObject != NULL)) {
+    return FALSE;
+  }
 
   // Copy into buffer
   memcpy(pBuffer->pETRLEObject, hImage->pETRLEObject,
@@ -617,7 +668,9 @@ BOOLEAN GetETRLEImageData(HIMAGE hImage, ETRLEData *pBuffer) {
 
   // Allocate memory for pixel data
   pBuffer->pPixData = MemAlloc(hImage->uiSizePixData);
-  CHECKF(pBuffer->pPixData != NULL);
+  if (!(pBuffer->pPixData != NULL)) {
+    return FALSE;
+  }
 
   pBuffer->uiSizePixData = hImage->uiSizePixData;
 
@@ -716,4 +769,13 @@ void ConvertRGBDistribution565ToAny(uint16_t *p16BPPData, uint32_t uiNumberOfPix
     *pPixel = Get16BPPColor(uiTemp);
     pPixel++;
   }
+}
+
+BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitMask,
+                                       uint32_t *BlueBitMask) {
+  *RedBitMask = gusRedMask;
+  *GreenBitMask = gusGreenMask;
+  *BlueBitMask = gusBlueMask;
+
+  return TRUE;
 }

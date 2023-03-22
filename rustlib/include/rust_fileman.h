@@ -43,7 +43,9 @@ bool File_RegisterSlfLibraries(const char *dir_path);
 FileID File_OpenForReading(const char *path);
 
 /**
- * Open file for appending.  `path` must be utf-8 encoded string.
+ * Open file for appending.  If the file doesn't exist, it will be created
+ * and opened for writing.
+ * `path` must be utf-8 encoded string.
  * A recular file will be created in the process.
  * Writing to an slf library file is not supported.
  */

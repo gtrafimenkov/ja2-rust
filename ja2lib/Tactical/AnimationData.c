@@ -7,6 +7,7 @@
 #include "JAScreens.h"
 #include "SGP/HImage.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/WCheck.h"
 #include "SysGlobals.h"
 #include "Tactical/AnimationControl.h"
@@ -4168,7 +4169,9 @@ BOOLEAN InitAnimationSystem() {
   char sFilename[50];
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
-  CHECKF(LoadAnimationStateInstructions());
+  if (!(LoadAnimationStateInstructions())) {
+    return FALSE;
+  }
 
   InitAnimationSurfacesPerBodytype();
 
@@ -4264,7 +4267,9 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
   struct AuxObjectData *pAuxData;
 
   // Check for valid surface
-  CHECKF(usSurfaceIndex < NUMANIMATIONSURFACETYPES);
+  if (!(usSurfaceIndex < NUMANIMATIONSURFACETYPES)) {
+    return FALSE;
+  }
 
   // Check if surface is loaded
   if (gAnimSurfaceDatabase[usSurfaceIndex].hVideoObject != NULL) {
@@ -4273,10 +4278,9 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
 
   } else {
     // Load into memory
-    VOBJECT_DESC VObjectDesc;
     struct VObject *hVObject;
-    HIMAGE hImage;
-    char sFilename[48];
+    struct Image *hImage;
+    char *sFilename[48];
     struct STRUCTURE_FILE_REF *pStructureFileRef;
 
     AnimDebugMsg(String("Surface Database: Loading %d", usSurfaceIndex));
@@ -4284,18 +4288,14 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
     sprintf(gSystemDebugStr, "Cache Load");
 
     // Create video object
-    FilenameForBPP(gAnimSurfaceDatabase[usSurfaceIndex].Filename, sFilename);
-    hImage =
-        CreateImage(/*gAnimSurfaceDatabase[ usSurfaceIndex ].Filename*/ sFilename, IMAGE_ALLDATA);
+    CopyFilename(gAnimSurfaceDatabase[usSurfaceIndex].Filename, sFilename);
+    hImage = CreateImage(sFilename, IMAGE_ALLDATA);
 
     if (hImage == NULL) {
       return (SET_ERROR("Error: Could not load animation file %s", sFilename));
     }
 
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
-    VObjectDesc.hImage = hImage;
-
-    hVObject = CreateVideoObject(&VObjectDesc);
+    hVObject = CreateVObjectFromHImage(hImage);
 
     if (hVObject == NULL) {
       // Report error

@@ -1022,21 +1022,21 @@ void MouseClickedInTextRegionCallback(struct MOUSE_REGION *reg, int32_t reason) 
 void RenderBackgroundField(TEXTINPUTNODE *pNode) {
   uint16_t usColor;
   if (pColors->fBevelling) {
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, pNode->region.RegionTopLeftX,
-                              pNode->region.RegionTopLeftY, pNode->region.RegionBottomRightX,
-                              pNode->region.RegionBottomRightY, pColors->usDarkerColor);
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, pNode->region.RegionTopLeftX + 1,
-                              pNode->region.RegionTopLeftY + 1, pNode->region.RegionBottomRightX,
-                              pNode->region.RegionBottomRightY, pColors->usBrighterColor);
+    VSurfaceColorFill(vsFB, pNode->region.RegionTopLeftX, pNode->region.RegionTopLeftY,
+                      pNode->region.RegionBottomRightX, pNode->region.RegionBottomRightY,
+                      pColors->usDarkerColor);
+    VSurfaceColorFill(vsFB, pNode->region.RegionTopLeftX + 1, pNode->region.RegionTopLeftY + 1,
+                      pNode->region.RegionBottomRightX, pNode->region.RegionBottomRightY,
+                      pColors->usBrighterColor);
   }
   if (!pNode->fEnabled && !pColors->fUseDisabledAutoShade)
     usColor = pColors->usDisabledTextFieldColor;
   else
     usColor = pColors->usTextFieldColor;
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, pNode->region.RegionTopLeftX + 1,
-                            pNode->region.RegionTopLeftY + 1, pNode->region.RegionBottomRightX - 1,
-                            pNode->region.RegionBottomRightY - 1, usColor);
+  VSurfaceColorFill(vsFB, pNode->region.RegionTopLeftX + 1, pNode->region.RegionTopLeftY + 1,
+                    pNode->region.RegionBottomRightX - 1, pNode->region.RegionBottomRightY - 1,
+                    usColor);
 
   InvalidateRegion(pNode->region.RegionTopLeftX, pNode->region.RegionTopLeftY,
                    pNode->region.RegionBottomRightX, pNode->region.RegionBottomRightY);
@@ -1098,12 +1098,11 @@ void RenderActiveTextField() {
     DoublePercentileCharacterFromStringIntoString(gpActive->szString, str);
     uiCursorXPos = StringPixLengthArg(pColors->usFont, gubCursorPos, str) + 2;
     if (GetJA2Clock() % 1000 < 500) {  // draw the blinking ibeam cursor during the on blink period.
-      ColorFillVideoSurfaceArea(
-          FRAME_BUFFER, gpActive->region.RegionTopLeftX + uiCursorXPos,
-          gpActive->region.RegionTopLeftY + usOffset,
-          gpActive->region.RegionTopLeftX + uiCursorXPos + 1,
-          gpActive->region.RegionTopLeftY + usOffset + GetFontHeight(pColors->usFont),
-          pColors->usCursorColor);
+      VSurfaceColorFill(vsFB, gpActive->region.RegionTopLeftX + uiCursorXPos,
+                        gpActive->region.RegionTopLeftY + usOffset,
+                        gpActive->region.RegionTopLeftX + uiCursorXPos + 1,
+                        gpActive->region.RegionTopLeftY + usOffset + GetFontHeight(pColors->usFont),
+                        pColors->usCursorColor);
     }
   }
   RestoreFontSettings();
@@ -1166,9 +1165,9 @@ void RenderInactiveTextFieldNode(TEXTINPUTNODE *pNode) {
     ClipRect.iRight = pNode->region.RegionBottomRightX;
     ClipRect.iTop = pNode->region.RegionTopLeftY;
     ClipRect.iBottom = pNode->region.RegionBottomRightY;
-    pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+    pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
     Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-    UnLockVideoSurface(FRAME_BUFFER);
+    VSurfaceUnlock(vsFB);
   }
 }
 

@@ -1,5 +1,7 @@
 #include "MainMenuScreen.h"
 
+#include <string.h>
+
 #include "FadeScreen.h"
 #include "GameLoop.h"
 #include "GameScreen.h"
@@ -14,6 +16,7 @@
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/Input.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
@@ -28,7 +31,6 @@
 #include "SysGlobals.h"
 #include "Tactical/SoldierControl.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/FontControl.h"
@@ -113,9 +115,9 @@ uint32_t MainMenuScreenHandle() {
   }
   if (guiSplashFrameFade) {  // Fade the splash screen.
     if (guiSplashFrameFade > 2)
-      ShadowVideoSurfaceRectUsingLowPercentTable(FRAME_BUFFER, 0, 0, 640, 480);
+      ShadowVideoSurfaceRectUsingLowPercentTable(vsFB, 0, 0, 640, 480);
     else if (guiSplashFrameFade > 1)
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, 640, 480, 0);
+      VSurfaceColorFill(vsFB, 0, 0, 640, 480, 0);
     else {
       SetMusicMode(MUSIC_MAIN_MENU);
     }
@@ -224,10 +226,6 @@ void HandleMainMenuScreen() {
 }
 
 BOOLEAN InitMainMenu() {
-  VOBJECT_DESC VObjectDesc;
-
-  //	gfDoHelpScreen = 0;
-
   // Check to see whatr saved game files exist
   InitSaveGameArray();
 
@@ -237,33 +235,17 @@ BOOLEAN InitMainMenu() {
   CreateDestroyMainMenuButtons(TRUE);
 
   // load background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LOADSCREENS\\MainMenuBackGround.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMainMenuBackGroundImage));
+  if (!AddVObjectFromFile("LOADSCREENS\\MainMenuBackGround.sti", &guiMainMenuBackGroundImage)) {
+    return FALSE;
+  }
 
   // load ja2 logo graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  //	FilenameForBPP("INTERFACE\\Ja2_2.sti", VObjectDesc.ImageFile);
-  FilenameForBPP("LOADSCREENS\\Ja2Logo.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiJa2LogoImage));
-
-  /*
-          // Gray out some buttons based on status of game!
-          if( gGameSettings.bLastSavedGameSlot < 0 || gGameSettings.bLastSavedGameSlot >=
-     NUM_SAVE_GAMES )
-          {
-                  DisableButton( iMenuButtons[ LOAD_GAME ] );
-          }
-          //The ini file said we have a saved game, but there is no saved game
-          else if( gbSaveGameArray[ gGameSettings.bLastSavedGameSlot ] == FALSE )
-                  DisableButton( iMenuButtons[ LOAD_GAME ] );
-  */
+  if (!AddVObjectFromFile("LOADSCREENS\\Ja2Logo.sti", &guiJa2LogoImage)) {
+    return FALSE;
+  }
 
   // if there are no saved games, disable the button
   if (!IsThereAnySavedGameFiles()) DisableButton(iMenuButtons[LOAD_GAME]);
-
-  //	DisableButton( iMenuButtons[ CREDITS ] );
-  //	DisableButton( iMenuButtons[ TITLE ] );
 
   gbHandledMainMenu = 0;
   fInitialRender = TRUE;
@@ -291,13 +273,6 @@ void ExitMainMenu() {
   DeleteVideoObjectFromIndex(guiJa2LogoImage);
 
   gMsgBox.uiExitScreen = MAINMENU_SCREEN;
-  /*
-          // CLEAR THE FRAME BUFFER
-          pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-          memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES );
-          UnLockVideoSurface( FRAME_BUFFER );
-          InvalidateScreen( );
-  */
 }
 
 void MenuButtonCallback(GUI_BUTTON *btn, int32_t reason) {
@@ -406,30 +381,13 @@ void ClearMainMenu() {
   uint8_t *pDestBuf;
 
   // CLEAR THE FRAME BUFFER
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
   InvalidateScreen();
 }
 
-void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
-  if (iReason & MSYS_CALLBACK_REASON_INIT) {
-  } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    //		if( gfDoHelpScreen )
-    //		{
-    //			SetMainMenuExitScreen( INIT_SCREEN );
-    //			gfDoHelpScreen = FALSE;
-    //		}
-  } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
-    /*
-                    if( gfDoHelpScreen )
-                    {
-                            SetMainMenuExitScreen( INIT_SCREEN );
-                            gfDoHelpScreen = FALSE;
-                    }
-    */
-  }
-}
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {}
 
 void SetMainMenuExitScreen(uint32_t uiNewScreen) {
   guiMainMenuExitScreen = uiNewScreen;
@@ -559,12 +517,12 @@ void RenderMainMenu() {
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiMainMenuBackGroundImage);
-  BltVideoObject(guiSAVEBUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
 
   GetVideoObject(&hPixHandle, guiJa2LogoImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(guiSAVEBUFFER, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
 
 #ifdef TESTFOREIGNFONTS
   DrawTextToScreen(L"LARGEFONT1: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,

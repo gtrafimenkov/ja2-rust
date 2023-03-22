@@ -253,7 +253,7 @@ void BlitString(VIDEO_OVERLAY *pBlitter) {
     return;
   }
 
-  pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
   SetFont(pBlitter->uiFontID);
 
   SetFontBackground(pBlitter->ubFontBack);
@@ -261,7 +261,7 @@ void BlitString(VIDEO_OVERLAY *pBlitter) {
   SetFontShadow(DEFAULT_SHADOW);
   mprintf_buffer_coded(pDestBuf, uiDestPitchBYTES, pBlitter->uiFontID, pBlitter->sX, pBlitter->sY,
                        pBlitter->zText);
-  UnLockVideoSurface(pBlitter->uiDestBuff);
+  VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
 }
 
 void EnableStringVideoOverlay(ScrollStringStPtr pStringSt, BOOLEAN fEnable) {
@@ -879,7 +879,7 @@ void DisplayStringsInMapScreenMessageList(void) {
   int16_t sY;
   uint16_t usSpacing;
 
-  SetFontDestBuffer(FRAME_BUFFER, 17, 360 + 6, 407, 360 + 101, FALSE);
+  SetFontDest(vsFB, 17, 360 + 6, 407, 360 + 101, FALSE);
 
   SetFont(MAP_SCREEN_MESSAGE_FONT);  // no longer supports variable fonts
   SetFontBackground(FONT_BLACK);
@@ -913,7 +913,7 @@ void DisplayStringsInMapScreenMessageList(void) {
     ubCurrentStringIndex = (ubCurrentStringIndex + 1) % 256;
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 }
 
 void EnableDisableScrollStringVideoOverlay(BOOLEAN fEnable) {

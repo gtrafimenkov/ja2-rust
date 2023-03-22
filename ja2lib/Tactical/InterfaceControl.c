@@ -40,7 +40,6 @@
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "UI.h"
@@ -373,7 +372,7 @@ void RenderRubberBanding() {
   }
 
   // Draw rectangle.....
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, gsVIEWPORT_END_X, gsVIEWPORT_WINDOW_END_Y);
 
   usLineColor = Get16BPPColor(guiColors[iFlashColor]);
@@ -440,14 +439,13 @@ void RenderRubberBanding() {
     SetBackgroundRectFilled(iBack);
   }
 
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void RenderTopmostTacticalInterface() {
   struct SOLDIERTYPE *pSoldier;
   uint32_t cnt;
   static uint32_t uiBogTarget = 0;
-  VOBJECT_DESC VObjectDesc;
   int16_t sX, sY;
   int16_t sOffsetX, sOffsetY, sTempY_S, sTempX_S;
   int16_t usMapPos;
@@ -506,9 +504,7 @@ void RenderTopmostTacticalInterface() {
           // Blit bogus target
           if (uiBogTarget == 0) {
             // Loadup cursor!
-            VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-            FilenameForBPP("CURSORS\\targblak.sti", VObjectDesc.ImageFile);
-            AddVideoObject(&VObjectDesc, &uiBogTarget);
+            AddVObjectFromFile("CURSORS\\targblak.sti", &uiBogTarget);
           }
 
           if (GridNoOnScreen(
@@ -530,8 +526,7 @@ void RenderTopmostTacticalInterface() {
             sX -= 10;
             sY -= 10;
 
-            BltVideoObjectFromIndex(FRAME_BUFFER, uiBogTarget, 0, sX, sY, VO_BLT_SRCTRANSPARENCY,
-                                    NULL);
+            BltVideoObjectFromIndex(vsFB, uiBogTarget, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
             InvalidateRegion(sX, sY, sX + 20, sY + 20);
           }
         }
@@ -765,8 +760,7 @@ void StartViewportOverlays() {
   gDirtyClipRect.iBottom = gsVIEWPORT_WINDOW_END_Y;
 
   SaveFontSettings();
-  SetFontDestBuffer(FRAME_BUFFER, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
-                    FALSE);
+  SetFontDest(vsFB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y, FALSE);
 }
 
 void EndViewportOverlays() {

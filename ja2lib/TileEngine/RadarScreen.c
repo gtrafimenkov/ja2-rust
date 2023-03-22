@@ -11,6 +11,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -32,7 +33,6 @@
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/Text.h"
@@ -89,7 +89,7 @@ BOOLEAN InitRadarScreen() {
 
 BOOLEAN LoadRadarScreenBitmap(char *aFilename) {
   VOBJECT_DESC VObjectDesc;
-  char zFilename[90];
+  char *zFilename[80];
   int32_t cnt;
   struct VObject *hVObject;
 
@@ -102,11 +102,6 @@ BOOLEAN LoadRadarScreenBitmap(char *aFilename) {
     fImageLoaded = FALSE;
   }
 
-  /* ARM - Restriction removed Nov.29/98.  Must be able to view different radar maps from map screen
-     while underground!
-           // If we are in a cave or basement..... dont get a new one...
-           if( !gfBasement && !gfCaves )
-  */
   {
     // Remove extension
     for (cnt = strlen(zFilename) - 1; cnt >= 0; cnt--) {
@@ -116,19 +111,17 @@ BOOLEAN LoadRadarScreenBitmap(char *aFilename) {
     }
 
     // Grab the Map image
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
     sprintf(VObjectDesc.ImageFile, "RADARMAPS\\%s.STI", zFilename);
-
-    CHECKF(AddVideoObject(&VObjectDesc, &gusRadarImage));
+    if (!AddVideoObject(&VObjectDesc, &gusRadarImage)) {
+      return FALSE;
+    }
 
     fImageLoaded = TRUE;
 
     if (GetVideoObject(&hVObject, gusRadarImage)) {
       // ATE: Add a shade table!
-      hVObject->pShades[0] =
-          Create16BPPPaletteShaded(hVObject->pPaletteEntry, 255, 255, 255, FALSE);
-      hVObject->pShades[1] =
-          Create16BPPPaletteShaded(hVObject->pPaletteEntry, 100, 100, 100, FALSE);
+      VObjectUpdateShade(hVObject, 0, 255, 255, 255, FALSE);
+      VObjectUpdateShade(hVObject, 1, 100, 100, 100, FALSE);
     }
   }
 
@@ -269,7 +262,7 @@ void RenderRadarScreen() {
       }
     }
 
-    BltVideoObjectFromIndex(guiSAVEBUFFER, gusRadarImage, 0, RADAR_WINDOW_X, gsRadarY,
+    BltVideoObjectFromIndex(vsSaveBuffer, gusRadarImage, 0, RADAR_WINDOW_X, gsRadarY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
@@ -314,7 +307,7 @@ void RenderRadarScreen() {
   sRadarBRX = (int16_t)((sBottomRightWorldX * gdScaleX) - sRadarCX + sX + (sWidth / 2));
   sRadarBRY = (int16_t)((sBottomRightWorldY * gdScaleY) - sRadarCY + gsRadarY + (sHeight / 2));
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, RADAR_WINDOW_X, gsRadarY,
                                  (RADAR_WINDOW_X + RADAR_WINDOW_WIDTH - 1),
@@ -446,7 +439,7 @@ void RenderRadarScreen() {
       }
     }
   }
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 
   if ((IsMapScreen()) && (fShowMapInventoryPool == TRUE)) {
     InvalidateRegion(RADAR_WINDOW_X, gsRadarY, RADAR_WINDOW_X + RADAR_WINDOW_WIDTH,
@@ -516,20 +509,19 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
   // for
   static BOOLEAN fCreated = FALSE;
   int16_t sCounter = 0;
-  VOBJECT_DESC VObjectDesc;
   struct VObject *hHandle;
   uint32_t uiHandle;
 
   if ((fRenderRadarScreen == FALSE) && (fCreated == FALSE)) {
     // create regions
     // load graphics
-    VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    FilenameForBPP("INTERFACE\\squadpanel.sti", VObjectDesc.ImageFile);
-    CHECKF(AddVideoObject(&VObjectDesc, &uiHandle));
+    if (!AddVObjectFromFile("INTERFACE\\squadpanel.sti", &uiHandle)) {
+      return FALSE;
+    }
 
     GetVideoObject(&hHandle, uiHandle);
-    BltVideoObject(guiSAVEBUFFER, hHandle, 0, 538, 0 + gsVIEWPORT_END_Y, VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVideoObject2(vsSaveBuffer, hHandle, 0, 538, 0 + gsVIEWPORT_END_Y, VO_BLT_SRCTRANSPARENCY,
+                    NULL);
 
     RestoreExternBackgroundRect(538, gsVIEWPORT_END_Y, (640 - 538),
                                 (int16_t)(480 - gsVIEWPORT_END_Y));
@@ -611,9 +603,8 @@ void RenderSquadList(void) {
   RestoreExternBackgroundRect(RADAR_WINDOW_X, gsRadarY, RADAR_WINDOW_WIDTH, SQUAD_REGION_HEIGHT);
 
   // fill area
-  ColorFillVideoSurfaceArea(
-      FRAME_BUFFER, RADAR_WINDOW_X, RADAR_WINDOW_TM_Y, RADAR_WINDOW_X + RADAR_WINDOW_WIDTH,
-      RADAR_WINDOW_TM_Y + SQUAD_REGION_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, RADAR_WINDOW_X, RADAR_WINDOW_TM_Y, RADAR_WINDOW_X + RADAR_WINDOW_WIDTH,
+                    RADAR_WINDOW_TM_Y + SQUAD_REGION_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)));
 
   // set font
   SetFont(SQUAD_FONT);

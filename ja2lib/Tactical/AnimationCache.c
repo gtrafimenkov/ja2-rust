@@ -27,11 +27,15 @@ BOOLEAN InitAnimationCache(uint16_t usSoldierID, struct AnimationSurfaceCache *p
   // Allocate entries
   AnimDebugMsg(String("*** Initializing anim cache surface for soldier %d", usSoldierID));
   pAnimCache->usCachedSurfaces = (uint16_t *)MemAlloc(sizeof(uint16_t) * guiCacheSize);
-  CHECKF(pAnimCache->usCachedSurfaces != NULL);
+  if (!(pAnimCache->usCachedSurfaces != NULL)) {
+    return FALSE;
+  }
 
   AnimDebugMsg(String("*** Initializing anim cache hit counter for soldier %d", usSoldierID));
   pAnimCache->sCacheHits = (int16_t *)MemAlloc(sizeof(int16_t) * guiCacheSize);
-  CHECKF(pAnimCache->sCacheHits != NULL);
+  if (!(pAnimCache->sCacheHits != NULL)) {
+    return FALSE;
+  }
 
   // Zero entries
   for (cnt = 0; cnt < guiCacheSize; cnt++) {
@@ -120,7 +124,9 @@ BOOLEAN GetCachedAnimationSurface(uint16_t usSoldierID, struct AnimationSurfaceC
           String("Anim Cache: Loading Surface %d ( Soldier %d )", usSurfaceIndex, usSoldierID));
 
       // Insert here
-      CHECKF(LoadAnimationSurface(usSoldierID, usSurfaceIndex, usCurrentAnimation) != FALSE);
+      if (!(LoadAnimationSurface(usSoldierID, usSurfaceIndex, usCurrentAnimation) != FALSE)) {
+        return FALSE;
+      }
       pAnimCache->sCacheHits[cnt] = 0;
       pAnimCache->usCachedSurfaces[cnt] = usSurfaceIndex;
       pAnimCache->ubCacheSize++;

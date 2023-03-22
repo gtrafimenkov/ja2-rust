@@ -41,7 +41,6 @@
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/JA25EnglishText.h"
@@ -198,12 +197,9 @@ void MapScreenMessageScrollBarCallBack(struct MOUSE_REGION *pRegion, int32_t iRe
 
 void HandleLoadOfMapBottomGraphics(void) {
   // will load the graphics needed for the mapscreen interface bottom
-  VOBJECT_DESC VObjectDesc;
 
   // will create buttons for interface bottom
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\map_screen_bottom.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMAPBOTTOMPANEL)) return;
+  if (!AddVObjectFromFile("INTERFACE\\map_screen_bottom.sti", &guiMAPBOTTOMPANEL)) return;
 
   // load slider bar icon
   LoadMessageSliderBar();
@@ -251,8 +247,8 @@ void RenderMapScreenInterfaceBottom(void) {
   if (fMapScreenBottomDirty == TRUE) {
     // get and blt panel
     GetVideoObject(&hHandle, guiMAPBOTTOMPANEL);
-    BltVideoObject(guiSAVEBUFFER, hHandle, 0, MAP_BOTTOM_X, MAP_BOTTOM_Y, VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVideoObject2(vsSaveBuffer, hHandle, 0, MAP_BOTTOM_X, MAP_BOTTOM_Y, VO_BLT_SRCTRANSPARENCY,
+                    NULL);
 
     if (GetSectorFlagStatus(sSelMapX, sSelMapY, (uint8_t)iCurrentMapSectorZ, SF_ALREADY_VISITED) ==
         TRUE) {
@@ -505,7 +501,7 @@ void DrawNameOfLoadedSector(void) {
   wchar_t sString[128];
   int16_t sFontX, sFontY;
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   SetFont(COMPFONT);
   SetFontForeground(183);
@@ -766,7 +762,7 @@ void DisplayCompressMode(void) {
   }
 
   RestoreExternBackgroundRect(489, 456, 522 - 489, 467 - 454);
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   SetFont(COMPFONT);
 
   if (GetJA2Clock() - guiCompressionStringBaseTime >= PAUSE_GAME_TIMER) {
@@ -802,11 +798,8 @@ void RemoveCompressModePause(void) { MSYS_RemoveRegion(&gMapPauseRegion); }
 
 void LoadMessageSliderBar(void) {
   // this function will load the message slider bar
-  VOBJECT_DESC VObjectDesc;
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\map_screen_bottom_arrows.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSliderBar)) return;
+  if (!AddVObjectFromFile("INTERFACE\\map_screen_bottom_arrows.sti", &guiSliderBar)) return;
 }
 
 void DeleteMessageSliderBar(void) {
@@ -893,8 +886,8 @@ void DisplayScrollBarSlider() {
                      (ubNumMessages - MAX_MESSAGES_ON_MAP_BOTTOM);
 
     GetVideoObject(&hHandle, guiSliderBar);
-    BltVideoObject(FRAME_BUFFER, hHandle, 8, MESSAGE_SCROLL_AREA_START_X + 2,
-                   MESSAGE_SCROLL_AREA_START_Y + ubSliderOffset, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hHandle, 8, MESSAGE_SCROLL_AREA_START_X + 2,
+                    MESSAGE_SCROLL_AREA_START_Y + ubSliderOffset, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 }
 
@@ -1131,7 +1124,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
   int16_t sFontX, sFontY;
 
   // ste the font buffer
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   SetFont(COMPFONT);
   SetFontForeground(MAP_BOTTOM_FONT_COLOR);
@@ -1154,7 +1147,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
   mprintf(sFontX, sFontY, L"%s", sString);
 
   // ste the font buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   return;
 }
 
@@ -1164,7 +1157,7 @@ void DisplayCurrentBalanceForMapBottom(void) {
   int16_t sFontX, sFontY;
 
   // ste the font buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // set up the font
   SetFont(COMPFONT);
@@ -1252,7 +1245,7 @@ void DisplayProjectedDailyMineIncome(void) {
     }
   }
   // ste the font buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // set up the font
   SetFont(COMPFONT);
@@ -1434,12 +1427,10 @@ void HandleExitsFromMapScreen(void) {
         case MAP_EXIT_TO_LAPTOP:
           fLapTop = TRUE;
           SetPendingNewScreen(LAPTOP_SCREEN);
-
-          if (gfExtraBuffer) {  // Then initiate the transition animation from the mapscreen to
-                                // laptop...
-            BlitBufferToBuffer(FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480);
-            gfStartMapScreenToLaptopTransition = TRUE;
-          }
+          // Then initiate the transition animation from the mapscreen to
+          // laptop...
+          VSurfaceBlitBufToBuf(vsFB, vsExtraBuffer, 0, 0, 640, 480);
+          gfStartMapScreenToLaptopTransition = TRUE;
           break;
 
         case MAP_EXIT_TO_TACTICAL:

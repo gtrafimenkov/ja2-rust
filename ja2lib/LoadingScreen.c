@@ -179,7 +179,7 @@ void DisplayLoadScreenWithID(uint8_t ubLoadScreenID) {
   struct VSurface* hVSurface;
   uint32_t uiLoadScreen;
 
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
 
   switch (ubLoadScreenID) {
     case LOADINGSCREEN_NOTHING:
@@ -320,18 +320,18 @@ void DisplayLoadScreenWithID(uint8_t ubLoadScreenID) {
     SetFont(FONT10ARIAL);
     SetFontForeground(FONT_YELLOW);
     SetFontShadow(FONT_NEARBLACK);
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, 640, 480, 0);
+    VSurfaceColorFill(vsFB, 0, 0, 640, 480, 0);
     mprintf(5, 5, L"Error loading save, attempting to patch save to version 1.02...",
             vs_desc.ImageFile);
   } else if (AddVideoSurface(&vs_desc, &uiLoadScreen)) {  // Blit the background image
     GetVideoSurface(&hVSurface, uiLoadScreen);
-    BltVideoSurfaceToVideoSurface(ghFrameBuffer, hVSurface, 0, 0, 0, 0, NULL);
+    BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
     DeleteVideoSurfaceFromIndex(uiLoadScreen);
   } else {  // Failed to load the file, so use a black screen and print out message.
     SetFont(FONT10ARIAL);
     SetFontForeground(FONT_YELLOW);
     SetFontShadow(FONT_NEARBLACK);
-    ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, 640, 480, 0);
+    VSurfaceColorFill(vsFB, 0, 0, 640, 480, 0);
     mprintf(5, 5, L"%S loadscreen data file not found...", vs_desc.ImageFile);
   }
 
@@ -339,5 +339,5 @@ void DisplayLoadScreenWithID(uint8_t ubLoadScreenID) {
   InvalidateScreen();
   ExecuteBaseDirtyRectQueue();
   EndFrameBufferRender();
-  RefreshScreen(NULL);
+  RefreshScreen();
 }

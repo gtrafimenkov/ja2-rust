@@ -11,15 +11,6 @@
 // Files
 /////////////////////////////////////////////////////////////////////////////////
 
-#ifdef WIN32
-#define FS_SEPARATOR '\\'
-#else
-#define FS_SEPARATOR '/'
-#endif
-
-// Handler to underlying OS file handle.
-typedef void *SYS_FILE_HANDLE;
-
 // Gets the amount of free space on the hard drive that the main executeablt is runnning from
 uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
@@ -68,16 +59,18 @@ void Plat_ClipCursor(const struct Rect *rect);
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////////
+struct VSurface;
+struct BltOpts;
 
-/////////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////////
+#define MAX_DIRTY_REGIONS 128
 
-/////////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////////
+BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                              struct Rect *SrcRect, struct Rect *DestRect);
+
+extern BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx);
+extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
+                                  uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                                  struct Rect *SrcRect);
 
 #endif

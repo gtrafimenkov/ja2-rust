@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "SGP/HImage.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Types.h"
 #include "TileEngine/PhysMath.h"
 

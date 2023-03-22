@@ -41,22 +41,16 @@ typedef struct {
 } FontTranslationTable;
 
 extern int32_t FontDefault;
-extern uint32_t FontDestBuffer;
+extern struct VSurface *FontDestSurface;
 extern uint32_t FontDestPitch;
 extern uint32_t FontDestBPP;
 extern SGPRect FontDestRegion;
 extern BOOLEAN FontDestWrap;
 
-#define SetFontDestObject(x)                                                           \
-  (SetFontDestBuffer(x, FontDestRegion.left, FontDestRegion.top, FontDestRegion.right, \
-                     FontDestRegion.bottom, FontDestWrap))
-
-#define SetFontDestClip(x1, y1, x2, y2) \
-  (SetFontDestBuffer(FontDestBuffer, x1, y1, x2, y2, FontDestWrap))
-#define SetFontDestWrap(x)                                                    \
-  (SetFontDestBuffer(FontDestBuffer, FontDestRegion.left, FontDestRegion.top, \
-                     FontDestRegion.right, FontDestRegion.bottom, x))
-// functions
+#define SetFontDestClip(x1, y1, x2, y2) (SetFontDest(FontDestSurface, x1, y1, x2, y2, FontDestWrap))
+#define SetFontDestWrap(x)                                                                     \
+  (SetFontDest(FontDestSurface, FontDestRegion.left, FontDestRegion.top, FontDestRegion.right, \
+               FontDestRegion.bottom, x))
 
 void SetFontColors(uint16_t usColors);
 void SetFontForeground(uint8_t ubForeground);
@@ -93,8 +87,8 @@ uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint
                               int32_t x, int32_t y, wchar_t *pFontString, ...);
 uint32_t mprintf_coded(int32_t x, int32_t y, wchar_t *pFontString, ...);
 
-extern BOOLEAN SetFontDestBuffer(uint32_t DestBuffer, int32_t x1, int32_t y1, int32_t x2,
-                                 int32_t y2, BOOLEAN wrap);
+BOOLEAN SetFontDest(struct VSurface *dest, int32_t x1, int32_t y1, int32_t x2, int32_t y2,
+                    BOOLEAN wrap);
 extern BOOLEAN SetFont(int32_t iFontIndex);
 
 extern int32_t LoadFontFile(char *pFileName);

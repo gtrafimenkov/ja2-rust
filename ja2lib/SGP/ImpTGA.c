@@ -46,15 +46,15 @@
 //
 //**************************************************************************
 
-BOOLEAN ReadUncompColMapImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadUncompColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                               uint16_t fContents);
-BOOLEAN ReadUncompRGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                            uint16_t fContents);
-BOOLEAN ReadRLEColMapImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadRLEColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                            uint16_t fContents);
-BOOLEAN ReadRLERGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadRLERGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                         uint16_t fContents);
-// BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage );
+// BOOLEAN	ConvertTGAToSystemBPPFormat( struct Image* hImage );
 
 //**************************************************************************
 //
@@ -62,7 +62,7 @@ BOOLEAN ReadRLERGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t ui
 //
 //**************************************************************************
 
-BOOLEAN LoadTGAFileToImage(HIMAGE hImage, uint16_t fContents) {
+BOOLEAN LoadTGAFileToImage(struct Image* hImage, uint16_t fContents) {
   FileID hFile = FILE_ID_ERR;
   uint8_t uiImgID, uiColMap, uiType;
   uint32_t uiBytesRead;
@@ -70,10 +70,14 @@ BOOLEAN LoadTGAFileToImage(HIMAGE hImage, uint16_t fContents) {
 
   Assert(hImage != NULL);
 
-  CHECKF(File_Exists(hImage->ImageFile));
+  if (!(File_Exists(hImage->ImageFile))) {
+    return FALSE;
+  }
 
   hFile = File_OpenForReading(hImage->ImageFile);
-  CHECKF(hFile);
+  if (!(hFile)) {
+    return FALSE;
+  }
 
   if (!File_Read(hFile, &uiImgID, sizeof(uint8_t), &uiBytesRead)) goto end;
   if (!File_Read(hFile, &uiColMap, sizeof(uint8_t), &uiBytesRead)) goto end;
@@ -117,7 +121,7 @@ end:
 //
 //**************************************************************************
 
-BOOLEAN ReadUncompColMapImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadUncompColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                               uint16_t fContents) {
   return (FALSE);
 }
@@ -136,10 +140,10 @@ BOOLEAN ReadUncompColMapImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint
 //
 //**************************************************************************
 
-BOOLEAN ReadUncompRGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                            uint16_t fContents) {
-  uint8_t *pBMData;
-  uint8_t *pBMPtr;
+  uint8_t* pBMData;
+  uint8_t* pBMPtr;
 
   uint16_t uiColMapOrigin;
   uint16_t uiColMapLength;
@@ -178,7 +182,7 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t
     File_Seek(hFile, uiColMapLength * (uiImagePixelSize / 8), FILE_SEEK_CURRENT);
   }
 
-  // Set some HIMAGE data values
+  // Set some struct Image* data values
   hImage->usWidth = uiWidth;
   hImage->usHeight = uiHeight;
   hImage->ubBitDepth = uiImagePixelSize;
@@ -190,7 +194,7 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t
     if (uiImagePixelSize == 16) {
       iNumValues = uiWidth * uiHeight;
 
-      hImage->p16BPPData = (uint16_t *)MemAlloc(iNumValues * (uiImagePixelSize / 8));
+      hImage->p16BPPData = (uint16_t*)MemAlloc(iNumValues * (uiImagePixelSize / 8));
 
       if (hImage->p16BPPData == NULL) goto end;
 
@@ -200,7 +204,7 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t
       // Start at end
       pBMData += uiWidth * (uiHeight - 1) * (uiImagePixelSize / 8);
 
-      // Data is stored top-bottom - reverse for SGP HIMAGE format
+      // Data is stored top-bottom - reverse for SGP struct Image* format
       for (cnt = 0; cnt < uiHeight - 1; cnt++) {
         if (!File_Read(hFile, pBMData, uiWidth * 2, &uiBytesRead)) goto freeEnd;
 
@@ -216,12 +220,12 @@ BOOLEAN ReadUncompRGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t
     }
 
     if (uiImagePixelSize == 24) {
-      hImage->p8BPPData = (uint8_t *)MemAlloc(uiWidth * uiHeight * (uiImagePixelSize / 8));
+      hImage->p8BPPData = (uint8_t*)MemAlloc(uiWidth * uiHeight * (uiImagePixelSize / 8));
 
       if (hImage->p8BPPData == NULL) goto end;
 
       // Get data pointer
-      pBMData = (uint8_t *)hImage->p8BPPData;
+      pBMData = (uint8_t*)hImage->p8BPPData;
 
       // Start at end
       pBMPtr = pBMData + uiWidth * (uiHeight - 1) * 3;
@@ -291,7 +295,7 @@ freeEnd:
 //
 //**************************************************************************
 
-BOOLEAN ReadRLEColMapImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadRLEColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                            uint16_t fContents) {
   return (FALSE);
 }
@@ -310,13 +314,13 @@ BOOLEAN ReadRLEColMapImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t
 //
 //**************************************************************************
 
-BOOLEAN ReadRLERGBImage(HIMAGE hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
+BOOLEAN ReadRLERGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
                         uint16_t fContents) {
   return (FALSE);
 }
 
 /*
-BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage )
+BOOLEAN	ConvertTGAToSystemBPPFormat( struct Image* hImage )
 {
         uint16_t		usX, usY;
         uint16_t		Old16BPPValue;
@@ -336,7 +340,8 @@ BOOLEAN	ConvertTGAToSystemBPPFormat( HIMAGE hImage )
         // Basic algorithm for coonverting to different rgb distributions
 
         // Get current Pixel Format from DirectDraw
-        CHECKF( GetPrimaryRGBDistributionMasks( &uiRBitMask, &uiGBitMask, &uiBBitMask ) );
+        if (!( GetPrimaryRGBDistributionMasks( &uiRBitMask, &uiGBitMask, &uiBBitMask ) )) { return
+FALSE; }
 
         // Only convert if different
         if ( uiRBitMask == 0x7c00 && uiGBitMask == 0x3e0 && uiBBitMask == 0x1f )

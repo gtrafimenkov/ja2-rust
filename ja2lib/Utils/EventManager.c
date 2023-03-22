@@ -73,7 +73,9 @@ BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, void *pEventData, uint32_t 
   // Allocate new event
   pEvent = (EVENT *)MemAlloc(uiEventSize + uiDataSize);
 
-  CHECKF(pEvent != NULL);
+  if (!(pEvent != NULL)) {
+    return FALSE;
+  }
 
   // Set values
   pEvent->TimeStamp = GetJA2Clock();
@@ -108,7 +110,9 @@ BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID) {
 
   if (uiQueueSize > 0) {
     // Get
-    CHECKF(RemfromList(hQueue, ppEvent, uiIndex) != FALSE);
+    if (!(RemfromList(hQueue, ppEvent, uiIndex) != FALSE)) {
+      return FALSE;
+    }
   } else {
     return (FALSE);
   }
@@ -130,7 +134,9 @@ BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID) {
 
   if (uiQueueSize > 0) {
     // Get
-    CHECKF(PeekList(hQueue, ppEvent, uiIndex) != FALSE);
+    if (!(PeekList(hQueue, ppEvent, uiIndex) != FALSE)) {
+      return FALSE;
+    }
   } else {
     return (FALSE);
   }
@@ -139,7 +145,9 @@ BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID) {
 }
 
 BOOLEAN FreeEvent(EVENT *pEvent) {
-  CHECKF(pEvent != NULL);
+  if (!(pEvent != NULL)) {
+    return FALSE;
+  }
 
   // Delete event
   MemFree(pEvent);

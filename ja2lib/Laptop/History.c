@@ -303,35 +303,27 @@ void RenderHistory(void) {
 }
 
 BOOLEAN LoadHistory(void) {
-  VOBJECT_DESC VObjectDesc;
   // load History video objects into memory
 
   // title bar
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\programtitlebar.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTITLE));
+  if (!AddVObjectFromFile("LAPTOP\\programtitlebar.sti", &guiTITLE)) {
+    return FALSE;
+  }
 
   // top portion of the screen background
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\historywindow.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiTOP));
+  if (!AddVObjectFromFile("LAPTOP\\historywindow.sti", &guiTOP)) {
+    return FALSE;
+  }
 
   // shaded line
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\historylines.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiSHADELINE));
+  if (!AddVObjectFromFile("LAPTOP\\historylines.sti", &guiSHADELINE)) {
+    return FALSE;
+  }
 
-  /*
-  Not being used???  DF commented out
-    // vert  line
-    VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-          FilenameForBPP("LAPTOP\\historyvertline.sti", VObjectDesc.ImageFile);
-          CHECKF(AddVideoObject(&VObjectDesc, &guiVERTLINE));
-  */
   // black divider line - long ( 480 length)
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\divisionline480.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiLONGLINE));
+  if (!AddVObjectFromFile("LAPTOP\\divisionline480.sti", &guiLONGLINE)) {
+    return FALSE;
+  }
 
   return (TRUE);
 }
@@ -354,11 +346,11 @@ void RenderHistoryBackGround(void) {
   GetVideoObject(&hHandle, guiTITLE);
 
   // blt title bar to screen
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X, TOP_Y - 2, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X, TOP_Y - 2, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // get and blt the top part of the screen, video object and blt to screen
   GetVideoObject(&hHandle, guiTOP);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X, TOP_Y + 22, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X, TOP_Y + 22, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // display background for history list
   DisplayHistoryListBackground();
@@ -711,16 +703,15 @@ void DisplayHistoryListBackground(void) {
   GetVideoObject(&hHandle, guiSHADELINE);
   for (iCounter = 0; iCounter < 11; iCounter++) {
     // blt title bar to screen
-    BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 15,
-                   (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * iCounter), VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsFB, hHandle, 0, TOP_X + 15, (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * iCounter),
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // the long hortizontal line int he records list display region
   GetVideoObject(&hHandle, guiLONGLINE);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 9, (TOP_DIVLINE_Y), VO_BLT_SRCTRANSPARENCY,
-                 NULL);
-  BltVideoObject(FRAME_BUFFER, hHandle, 0, TOP_X + 9, (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * 11),
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 9, (TOP_DIVLINE_Y), VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 9, (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * 11),
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   return;
 }

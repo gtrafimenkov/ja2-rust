@@ -9,7 +9,6 @@ struct VObject;
 extern SGPRect ClippingRect;
 extern uint32_t guiTranslucentMask;
 
-extern void SetClippingRect(SGPRect *clip);
 void GetClippingRect(SGPRect *clip);
 
 BOOLEAN BltIsClipped(struct VObject *hSrcVObject, int32_t iX, int32_t iY, uint16_t usIndex,
@@ -156,10 +155,6 @@ BOOLEAN Blt16BPPTo16BPPTrans(uint16_t *pDest, uint32_t uiDestPitch, uint16_t *pS
                              uint32_t uiSrcPitch, int32_t iDestXPos, int32_t iDestYPos,
                              int32_t iSrcXPos, int32_t iSrcYPos, uint32_t uiWidth,
                              uint32_t uiHeight, uint16_t usTrans);
-BOOLEAN Blt16BPPTo16BPPMirror(uint16_t *pDest, uint32_t uiDestPitch, uint16_t *pSrc,
-                              uint32_t uiSrcPitch, int32_t iDestXPos, int32_t iDestYPos,
-                              int32_t iSrcXPos, int32_t iSrcYPos, uint32_t uiWidth,
-                              uint32_t uiHeight);
 
 BOOLEAN Blt16BPPBufferPixelateRectWithColor(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                             SGPRect *area, uint8_t Pattern[8][8], uint16_t usColor);
