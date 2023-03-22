@@ -717,7 +717,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   iAnchorPosX_S = iStartPointX_S;
   iAnchorPosY_S = iStartPointY_S;
 
-  if (!(uiFlags & TILES_DIRTY)) pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  if (!(uiFlags & TILES_DIRTY)) pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   if (uiFlags & TILES_DYNAMIC_CHECKFOR_INT_TILE) {
     if (ShouldCheckForMouseDetections()) {
@@ -1762,7 +1762,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                           }
 
                           if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                            pSaveBuf = LockVideoSurface(guiSAVEBUFFER, &uiSaveBufferPitchBYTES);
+                            pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
 
                             // BLIT HERE
                             Blt8BPPDataTo16BPPBufferTransShadowClip(
@@ -1828,7 +1828,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                         }
 
                         if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                          pSaveBuf = LockVideoSurface(guiSAVEBUFFER, &uiSaveBufferPitchBYTES);
+                          pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
 
                           // BLIT HERE
                           Blt8BPPDataTo16BPPBufferTransZClip(
@@ -1886,7 +1886,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                           }
 
                           if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                            pSaveBuf = LockVideoSurface(guiSAVEBUFFER, &uiSaveBufferPitchBYTES);
+                            pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
 
                             // BLIT HERE
                             Blt8BPPDataTo16BPPBufferTransShadow(
@@ -1954,7 +1954,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                                                            sYPos, usImageIndex);
 
                         if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                          pSaveBuf = LockVideoSurface(guiSAVEBUFFER, &uiSaveBufferPitchBYTES);
+                          pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
 
                           // BLIT HERE
                           Blt8BPPDataTo16BPPBufferTransZ((UINT16 *)pSaveBuf, uiSaveBufferPitchBYTES,
@@ -2022,8 +2022,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 VSurfaceColorFill(vsFB, iTempPosX_S, iTempPosY_S, (INT16)(iTempPosX_S + 40),
                                   (INT16)(min(iTempPosY_S + 20, 360)),
                                   Get16BPPColor(FROMRGB(0, 0, 0)));
-                if (!(uiFlags & TILES_DIRTY))
-                  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+                if (!(uiFlags & TILES_DIRTY)) pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
               }
             }
           }
@@ -2265,7 +2264,7 @@ void RenderWorld() {
     UINT32 cnt;
     CHAR16 zVal;
 
-    pDestBuf = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+    pDestBuf = (UINT16 *)VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
     for (cnt = 0; cnt < (640 * 480); cnt++) {
       // Get Z value
@@ -5509,7 +5508,7 @@ void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoin
   sAnchorPosX_S = sStartPointX_S;
   sAnchorPosY_S = sStartPointY_S;
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   do {
     fEndRenderRow = FALSE;
@@ -5607,7 +5606,7 @@ void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
   sAnchorPosX_S = sStartPointX_S;
   sAnchorPosY_S = sStartPointY_S;
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   do {
     fEndRenderRow = FALSE;
@@ -5698,7 +5697,7 @@ void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSta
   sAnchorPosX_S = sStartPointX_S;
   sAnchorPosY_S = sStartPointY_S;
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   do {
     fEndRenderRow = FALSE;
@@ -5783,7 +5782,7 @@ void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
   sAnchorPosX_S = sStartPointX_S;
   sAnchorPosY_S = sStartPointY_S;
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   do {
     fEndRenderRow = FALSE;
@@ -5876,7 +5875,7 @@ void ExamineZBufferForHiddenTiles(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
   sAnchorPosX_S = sStartPointX_S;
   sAnchorPosY_S = sStartPointY_S;
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   // Get VObject for firt land peice!
   TileElem = &(gTileDatabase[FIRSTTEXTURE1]);

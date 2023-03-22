@@ -1100,7 +1100,7 @@ BOOLEAN PixelateVideoMercImage(BOOLEAN fUp, UINT16 usPosX, UINT16 usPosY, UINT16
   BOOLEAN fReturnStatus = FALSE;
   i = 0;
 
-  pBuffer = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
+  pBuffer = (UINT16 *)VSurfaceLockOld(vsFB, &uiPitch);
   Assert(pBuffer);
 
   if (ubPixelationAmount == 255) {
@@ -1171,7 +1171,7 @@ BOOLEAN DistortVideoMercImage(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT
   UINT8 uiReturnValue;
   UINT16 usEndOnLine = 0;
 
-  pBuffer = (UINT16 *)LockVideoSurface(FRAME_BUFFER, &uiPitch);
+  pBuffer = (UINT16 *)VSurfaceLockOld(vsFB, &uiPitch);
   Assert(pBuffer);
 
   uiPitch /= 2;

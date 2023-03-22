@@ -372,7 +372,7 @@ void RenderRubberBanding() {
   }
 
   // Draw rectangle.....
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, gsVIEWPORT_END_X, gsVIEWPORT_WINDOW_END_Y);
 
   usLineColor = Get16BPPColor(guiColors[iFlashColor]);

@@ -619,7 +619,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
     sAnchorPosX_S = sStartPointX_S;
     sAnchorPosY_S = sStartPointY_S;
 
-    pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+    pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
     do {
       fEndRenderRow = FALSE;
@@ -920,8 +920,8 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
       // Update saved buffer - do for the viewport size ony!
       GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
 
-      pSrcBuf = LockVideoSurface(FRAME_BUFFER, &uiSrcPitchBYTES);
-      pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
+      pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
+      pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
 
       Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
                       0, 0, 0, usWidth, usHeight);
@@ -944,7 +944,7 @@ void RenderOverheadOverlays() {
   UINT8 *pDestBuf;
   UINT8 ubPassengers = 0;
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   GetVideoObject(&hVObject, uiPERSONS);
 
   // SOLDIER OVERLAY

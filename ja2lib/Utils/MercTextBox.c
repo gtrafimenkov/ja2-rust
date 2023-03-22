@@ -197,21 +197,9 @@ BOOLEAN RenderMercPopUpBoxFromIndex(INT32 iBoxId, INT16 sDestX, INT16 sDestY, UI
 }
 
 BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, UINT32 uiBuffer) {
-  //	UINT32  uiDestPitchBYTES;
-  //	UINT32  uiSrcPitchBYTES;
-  //  UINT16  *pDestBuf;
-  //	UINT16  *pSrcBuf;
-
   // will render/transfer the image from the buffer in the data structure to the buffer specified by
   // user
   BOOLEAN fReturnValue = TRUE;
-
-  // grab the destination buffer
-  //	pDestBuf = ( UINT16* )LockVideoSurface( uiBuffer, &uiDestPitchBYTES );
-
-  // now lock it
-  //	pSrcBuf = ( UINT16* )LockVideoSurface( gPopUpTextBox->uiSourceBufferIndex,
-  //&uiSrcPitchBYTES);
 
   // check to see if we are wanting to blit a transparent background
   if (gPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_TRANS_BACK)
@@ -220,10 +208,6 @@ BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, UINT32 uiBuffer) {
   else
     BltVideoSurface(uiBuffer, gPopUpTextBox->uiSourceBufferIndex, sDestX, sDestY, VS_BLT_FAST,
                     NULL);
-
-  // blt, and grab return value
-  //	fReturnValue = Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, sDestX,
-  // sDestY, 0, 0, gPopUpTextBox->sWidth, gPopUpTextBox->sHeight);
 
   // Invalidate!
   if (uiBuffer == FRAME_BUFFER) {

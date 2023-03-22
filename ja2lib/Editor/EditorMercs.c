@@ -2552,7 +2552,7 @@ BOOLEAN PointInRect(SGPRect *pRect, INT32 x, INT32 y) {
 void DrawRect(SGPRect *pRect, INT16 color) {
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, pRect->iLeft + MERCPANEL_X, pRect->iTop + MERCPANEL_Y,
                 pRect->iRight + MERCPANEL_X, pRect->iBottom + MERCPANEL_Y, color, pDestBuf);
@@ -2572,7 +2572,7 @@ void RenderSelectedMercsInventory() {
     if (gpMercSlotItem[i]) {  // Render the current image.
       xp = mercRects[i].iLeft + 4 + MERCPANEL_X;
       yp = mercRects[i].iTop + MERCPANEL_Y;
-      pDst = LockVideoSurface(FRAME_BUFFER, &uiDstPitchBYTES);
+      pDst = VSurfaceLockOld(vsFB, &uiDstPitchBYTES);
       pSrc = LockVideoSurface(guiMercInvPanelBuffers[i], &uiSrcPitchBYTES);
       Blt16BPPTo16BPPTrans((UINT16 *)pDst, uiDstPitchBYTES, (UINT16 *)pSrc, uiSrcPitchBYTES, xp, yp,
                            0, 0, i < 3 ? 22 : 44, 15, 0);

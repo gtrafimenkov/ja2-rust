@@ -2606,7 +2606,7 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   Blt16BPPBufferHatchRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
   UnLockVideoSurface(FRAME_BUFFER);
 }
@@ -2619,7 +2619,7 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
   UnLockVideoSurface(FRAME_BUFFER);
 }
@@ -2627,7 +2627,7 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
 void DrawDefaultOnButton(GUI_BUTTON *b) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   if (b->bDefaultStatus == DEFAULT_STATUS_DARKBORDER ||
       b->bDefaultStatus == DEFAULT_STATUS_WINDOWS95) {
@@ -3070,7 +3070,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   }
 
   // Lock the dest buffer
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   GetClippingRect(&ClipRect);
 

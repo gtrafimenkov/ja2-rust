@@ -799,7 +799,7 @@ void RenderViewer() {
             yp = VIEWER_TOP + y * VIEWER_CELLH + 2;
             mprintf(xp, yp, L"%d", pUnder->ubNumCreatures);
           } else {  // not found, so visually shade it darker.
-            pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+            pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
             ClipRect.iLeft = VIEWER_LEFT + x * VIEWER_CELLW;
             ClipRect.iRight = ClipRect.iLeft + VIEWER_CELLW - 1;
             Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
@@ -812,7 +812,7 @@ void RenderViewer() {
     RenderInfoInSector();
   }
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   // Render the grid for the sector if the mouse is over it (yellow).
   if (gsHiSectorX > 0) {

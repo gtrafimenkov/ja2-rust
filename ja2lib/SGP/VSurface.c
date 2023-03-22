@@ -621,23 +621,30 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   return TRUE;
 }
 
+// Old interface to locking VSurface
+BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch) {
+  struct BufferLockInfo res = VSurfaceLock(vs);
+  *pitch = res.pitch;
+  return res.dest;
+}
+
 // TODO
-BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
+BYTE *LockVideoSurface(VSurfID uiVSurface, u32 *pitch) {
   if (uiVSurface == BACKBUFFER) {
     struct BufferLockInfo res = VSurfaceLock(vsBB);
-    *puiPitch = res.pitch;
+    *pitch = res.pitch;
     return res.dest;
   }
 
   if (uiVSurface == FRAME_BUFFER) {
     struct BufferLockInfo res = VSurfaceLock(vsFB);
-    *puiPitch = res.pitch;
+    *pitch = res.pitch;
     return res.dest;
   }
 
   if (uiVSurface == MOUSE_BUFFER) {
     struct BufferLockInfo res = VSurfaceLock(vsMouseCursorOriginal);
-    *puiPitch = res.pitch;
+    *pitch = res.pitch;
     return res.dest;
   }
 
@@ -661,7 +668,7 @@ BYTE *LockVideoSurface(VSurfID uiVSurface, UINT32 *puiPitch) {
   //
 
   struct BufferLockInfo res = VSurfaceLock(curr->hVSurface);
-  *puiPitch = res.pitch;
+  *pitch = res.pitch;
   return res.dest;
 }
 
