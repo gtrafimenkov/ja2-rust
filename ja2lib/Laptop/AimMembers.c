@@ -2366,8 +2366,8 @@ BOOLEAN DisplayTalkingMercFaceForVideoPopUp(INT32 iFaceIndex) {
   //	if( !gfIsAnsweringMachineActive )
   {
     // Blt the face surface to the video background surface
-    if (!BltStretchVideoSurface(FRAME_BUFFER, guiVideoFaceBackground, 0, 0, VO_BLT_SRCTRANSPARENCY,
-                                &SrcRect, &DestRect))
+    if (!BltStretchVideoSurface(vsFB, GetVSByID(guiVideoFaceBackground), 0, 0,
+                                VO_BLT_SRCTRANSPARENCY, &SrcRect, &DestRect))
       return (FALSE);
 
     // if the merc is not at home and the players is leaving a message, shade the players face
@@ -3613,7 +3613,7 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     }
   }
 
-  BltStretchVideoSurface(FRAME_BUFFER, guiVideoTitleBar, 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect,
+  BltStretchVideoSurface(vsFB, GetVSByID(guiVideoTitleBar), 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect,
                          &DestRect);
 
   InvalidateRegion(DestRect.iLeft, DestRect.iTop, DestRect.iRight, DestRect.iBottom);

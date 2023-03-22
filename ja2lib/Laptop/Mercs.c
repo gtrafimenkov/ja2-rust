@@ -1005,7 +1005,7 @@ BOOLEAN HandleSpeckTalking(BOOLEAN fReset) {
   HandleTalkingAutoFaces();
 
   // Blt the face surface to the video background surface
-  if (!BltStretchVideoSurface(FRAME_BUFFER, guiMercVideoFaceBackground, 0, 0,
+  if (!BltStretchVideoSurface(vsFB, GetVSByID(guiMercVideoFaceBackground), 0, 0,
                               VO_BLT_SRCTRANSPARENCY, &SrcRect, &DestRect))
     return (FALSE);
 

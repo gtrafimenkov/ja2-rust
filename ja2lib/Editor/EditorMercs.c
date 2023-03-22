@@ -2640,12 +2640,6 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   BOOLEAN fUnDroppable;
 
   if (fCreate) {
-    /*
-    if( gpMercSlotItem[ gbCurrSelect ] && gpMercSlotItem[ gbCurrSelect ]->usItem ==
-    gusMercsNewItemIndex ) { //User selected same item, so ignore. gusMercsNewItemIndex = 0xffff;
-            return;
-    }
-    */
     if (gusMercsNewItemIndex == 0xffff) {  // User selected no item, so ignore.
       return;
     }
