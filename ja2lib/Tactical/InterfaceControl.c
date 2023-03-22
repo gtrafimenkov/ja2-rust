@@ -526,8 +526,7 @@ void RenderTopmostTacticalInterface() {
             sX -= 10;
             sY -= 10;
 
-            BltVideoObjectFromIndex(FRAME_BUFFER, uiBogTarget, 0, sX, sY, VO_BLT_SRCTRANSPARENCY,
-                                    NULL);
+            BltVideoObjectFromIndex(vsFB, uiBogTarget, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
             InvalidateRegion(sX, sY, sX + 20, sY + 20);
           }
         }
@@ -761,8 +760,7 @@ void StartViewportOverlays() {
   gDirtyClipRect.iBottom = gsVIEWPORT_WINDOW_END_Y;
 
   SaveFontSettings();
-  SetFontDest(vsFB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
-                    FALSE);
+  SetFontDest(vsFB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y, FALSE);
 }
 
 void EndViewportOverlays() {

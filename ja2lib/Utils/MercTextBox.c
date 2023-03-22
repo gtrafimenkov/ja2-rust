@@ -455,11 +455,11 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
 
   // Icon if ness....
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_STOPICON) {
-    BltVideoObjectFromIndex(pPopUpTextBox->uiSourceBufferIndex, guiBoxIcons, 0, 5, 4,
+    BltVideoObjectFromIndex(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), guiBoxIcons, 0, 5, 4,
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_SKULLICON) {
-    BltVideoObjectFromIndex(pPopUpTextBox->uiSourceBufferIndex, guiSkullIcons, 0, 9, 4,
+    BltVideoObjectFromIndex(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), guiSkullIcons, 0, 9, 4,
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
 

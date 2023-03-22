@@ -675,8 +675,9 @@ void BlinkAutoFace(INT32 iFaceIndex) {
 
         if (sFrame > 0) {
           // Blit Accordingly!
-          BltVideoObjectFromIndex(pFace->uiAutoDisplayBuffer, pFace->uiVideoObject, (INT16)(sFrame),
-                                  pFace->usEyesX, pFace->usEyesY, VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObjectFromIndex(GetVSByID(pFace->uiAutoDisplayBuffer), pFace->uiVideoObject,
+                                  (INT16)(sFrame), pFace->usEyesX, pFace->usEyesY,
+                                  VO_BLT_SRCTRANSPARENCY, NULL);
 
           if (pFace->uiAutoDisplayBuffer == FRAME_BUFFER) {
             InvalidateRegion(pFace->usEyesX, pFace->usEyesY, pFace->usEyesX + pFace->usEyesWidth,
@@ -843,7 +844,7 @@ void MouthAutoFace(INT32 iFaceIndex) {
 
               if (sFrame > 0) {
                 // Blit Accordingly!
-                BltVideoObjectFromIndex(pFace->uiAutoDisplayBuffer, pFace->uiVideoObject,
+                BltVideoObjectFromIndex(GetVSByID(pFace->uiAutoDisplayBuffer), pFace->uiVideoObject,
                                         (INT16)(sFrame + 4), pFace->usMouthX, pFace->usMouthY,
                                         VO_BLT_SRCTRANSPARENCY, NULL);
 
@@ -1009,7 +1010,7 @@ void DoRightIcon(UINT32 uiRenderBuffer, FACETYPE *pFace, INT16 sFaceX, INT16 sFa
 
   // Find X, y for placement
   GetXYForRightIconPlacement(pFace, sIconIndex, sFaceX, sFaceY, &sIconX, &sIconY, bNumIcons);
-  BltVideoObjectFromIndex(uiRenderBuffer, guiPORTRAITICONS, sIconIndex, sIconX, sIconY,
+  BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), guiPORTRAITICONS, sIconIndex, sIconX, sIconY,
                           VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
@@ -1057,17 +1058,17 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
     if ((MercPtrs[pFace->ubSoldierID]->bLife < CONSCIOUSNESS ||
          MercPtrs[pFace->ubSoldierID]->fDeadPanel)) {
       // Blit Closed eyes here!
-      BltVideoObjectFromIndex(uiRenderBuffer, pFace->uiVideoObject, 1, usEyesX, usEyesY,
+      BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), pFace->uiVideoObject, 1, usEyesX, usEyesY,
                               VO_BLT_SRCTRANSPARENCY, NULL);
 
       // Blit hatch!
-      BltVideoObjectFromIndex(uiRenderBuffer, guiHATCH, 0, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY,
-                              NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), guiHATCH, 0, sFaceX, sFaceY,
+                              VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
     if (MercPtrs[pFace->ubSoldierID]->fMercAsleep == TRUE) {
       // blit eyes closed
-      BltVideoObjectFromIndex(uiRenderBuffer, pFace->uiVideoObject, 1, usEyesX, usEyesY,
+      BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), pFace->uiVideoObject, 1, usEyesX, usEyesY,
                               VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
@@ -1076,12 +1077,12 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
       if (!pSoldier->fClosePanel && !pSoldier->fDeadPanel && !pSoldier->fUIdeadMerc &&
           !pSoldier->fUICloseMerc) {
         // Put close panel there
-        BltVideoObjectFromIndex(uiRenderBuffer, guiDEAD, 5, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY,
-                                NULL);
+        BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), guiDEAD, 5, sFaceX, sFaceY,
+                                VO_BLT_SRCTRANSPARENCY, NULL);
 
         // Blit hatch!
-        BltVideoObjectFromIndex(uiRenderBuffer, guiHATCH, 0, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY,
-                                NULL);
+        BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), guiHATCH, 0, sFaceX, sFaceY,
+                                VO_BLT_SRCTRANSPARENCY, NULL);
       }
     }
 
@@ -1136,8 +1137,8 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
           ((gfSMDisableForItems && !gfInItemPickupMenu) && gusSMCurrentMerc == pFace->ubSoldierID &&
            gsCurInterfacePanel == SM_PANEL)) {
         // Blit hatch!
-        BltVideoObjectFromIndex(uiRenderBuffer, guiHATCH, 0, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY,
-                                NULL);
+        BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), guiHATCH, 0, sFaceX, sFaceY,
+                                VO_BLT_SRCTRANSPARENCY, NULL);
       }
 
       if (!pFace->fDisabled && !pFace->fInvalidAnim) {
@@ -1301,8 +1302,8 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
     if (fDoIcon) {
       // Find X, y for placement
       GetXYForIconPlacement(pFace, sIconIndex, sFaceX, sFaceY, &sIconX, &sIconY);
-      BltVideoObjectFromIndex(uiRenderBuffer, guiPORTRAITICONS, sIconIndex, sIconX, sIconY,
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiRenderBuffer), guiPORTRAITICONS, sIconIndex, sIconX,
+                              sIconY, VO_BLT_SRCTRANSPARENCY, NULL);
 
       // ATE: Show numbers only in mapscreen
       if (fShowNumber) {
@@ -1362,10 +1363,10 @@ BOOLEAN RenderAutoFace(INT32 iFaceIndex) {
   // Blit face to save buffer!
   if (pFace->uiAutoRestoreBuffer != FACE_NO_RESTORE_BUFFER) {
     if (pFace->uiAutoRestoreBuffer == guiSAVEBUFFER) {
-      BltVideoObjectFromIndex(pFace->uiAutoRestoreBuffer, pFace->uiVideoObject, 0, pFace->usFaceX,
-                              pFace->usFaceY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(pFace->uiAutoRestoreBuffer), pFace->uiVideoObject, 0,
+                              pFace->usFaceX, pFace->usFaceY, VO_BLT_SRCTRANSPARENCY, NULL);
     } else {
-      BltVideoObjectFromIndex(pFace->uiAutoRestoreBuffer, pFace->uiVideoObject, 0, 0, 0,
+      BltVideoObjectFromIndex(GetVSByID(pFace->uiAutoRestoreBuffer), pFace->uiVideoObject, 0, 0, 0,
                               VO_BLT_SRCTRANSPARENCY, NULL);
     }
   }
@@ -1422,7 +1423,8 @@ BOOLEAN ExternRenderFace(UINT32 uiBuffer, INT32 iFaceIndex, INT16 sX, INT16 sY) 
   }
 
   // Blit face to save buffer!
-  BltVideoObjectFromIndex(uiBuffer, pFace->uiVideoObject, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObjectFromIndex(GetVSByID(uiBuffer), pFace->uiVideoObject, 0, sX, sY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
 
   GetFaceRelativeCoordinates(pFace, &usEyesX, &usEyesY, &usMouthX, &usMouthY);
 

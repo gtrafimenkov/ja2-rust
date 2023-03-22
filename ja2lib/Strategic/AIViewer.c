@@ -752,7 +752,7 @@ void RenderViewer() {
 
   if (gfRenderMap) {
     gfRenderMap = FALSE;
-    BltVideoObjectFromIndex(FRAME_BUFFER, guiMapGraphicID, 0, VIEWER_LEFT, VIEWER_TOP,
+    BltVideoObjectFromIndex(vsFB, guiMapGraphicID, 0, VIEWER_LEFT, VIEWER_TOP,
                             VO_BLT_SRCTRANSPARENCY, NULL);
     InvalidateRegion(VIEWER_LEFT, VIEWER_TOP, VIEWER_RIGHT, VIEWER_BOTTOM);
     // Draw the coordinates

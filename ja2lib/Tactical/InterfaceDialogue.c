@@ -645,7 +645,7 @@ void RenderTalkingMenu() {
     SetFont(MILITARYFONT1);
 
     // Render box!
-    BltVideoObjectFromIndex(FRAME_BUFFER, gTalkPanel.uiPanelVO, 0, gTalkPanel.sX, gTalkPanel.sY,
+    BltVideoObjectFromIndex(vsFB, gTalkPanel.uiPanelVO, 0, gTalkPanel.sX, gTalkPanel.sY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Render name

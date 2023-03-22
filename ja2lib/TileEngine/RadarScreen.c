@@ -262,7 +262,7 @@ void RenderRadarScreen() {
       }
     }
 
-    BltVideoObjectFromIndex(guiSAVEBUFFER, gusRadarImage, 0, RADAR_WINDOW_X, gsRadarY,
+    BltVideoObjectFromIndex(vsSaveBuffer, gusRadarImage, 0, RADAR_WINDOW_X, gsRadarY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
