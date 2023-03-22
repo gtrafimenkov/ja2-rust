@@ -300,9 +300,9 @@ void RenderSliderBox(SLIDER *pSlider) {
     // If it is not the first time to render the slider
     if (!(pSlider->LastRect.iLeft == 0 && pSlider->LastRect.iRight == 0)) {
       // Restore the old rect
-      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)pSlider->LastRect.iLeft,
-                         (UINT16)pSlider->LastRect.iTop, pSlider->ubSliderWidth,
-                         pSlider->ubSliderHeight);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)pSlider->LastRect.iLeft,
+                           (UINT16)pSlider->LastRect.iTop, pSlider->ubSliderWidth,
+                           pSlider->ubSliderHeight);
 
       // invalidate the old area
       InvalidateRegion(pSlider->LastRect.iLeft, pSlider->LastRect.iTop, pSlider->LastRect.iRight,
@@ -322,8 +322,8 @@ void RenderSliderBox(SLIDER *pSlider) {
     // If it is not the first time to render the slider
     if (!(pSlider->LastRect.iLeft == 0 && pSlider->LastRect.iRight == 0)) {
       // Restore the old rect
-      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)pSlider->LastRect.iLeft,
-                         (UINT16)pSlider->LastRect.iTop, 8, 15);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)pSlider->LastRect.iLeft,
+                           (UINT16)pSlider->LastRect.iTop, 8, 15);
     }
 
     // save the new rect

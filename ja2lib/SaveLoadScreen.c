@@ -1815,8 +1815,7 @@ void DisplayOnScreenNumber(BOOLEAN fErase) {
       continue;
     }
 
-    BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y),
-                       10, 10);
+    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y), 10, 10);
 
     if (bLoopNum != 10) {
       bNum = bLoopNum;

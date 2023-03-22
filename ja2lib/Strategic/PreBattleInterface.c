@@ -730,7 +730,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     gfEnterAutoResolveMode = TRUE;
   }
 
-  BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, 27, 54, 209, 32);
+  VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, 27, 54, 209, 32);
   RenderButtons();
   VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 27, 54, 209, 32);
   gfRenderPBInterface = TRUE;

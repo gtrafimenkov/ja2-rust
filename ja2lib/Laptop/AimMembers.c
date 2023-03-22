@@ -3576,8 +3576,8 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (ubCount > 2) {
       usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
-                         usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                           usWidth, usHeight);
     }
 
     // Save rectangle
@@ -3592,8 +3592,8 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 2) {
       usWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       usHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
-                         usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                           usWidth, usHeight);
     }
 
     // Save rectangle

@@ -3832,8 +3832,8 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 u
     if (ubCount > 1) {
       sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
-                         sWidth, sHeight);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                           sWidth, sHeight);
     }
 
     // Save rectangle
@@ -3848,8 +3848,8 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 u
     if (ubCount < NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS - 1) {
       sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
-                         sWidth, sHeight);
+      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
+                           sWidth, sHeight);
     }
 
     // Save rectangle

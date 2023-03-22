@@ -524,7 +524,6 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
                          (UINT16)(DstRect.iRight - DstRect.iLeft + 1),
                          (UINT16)(DstRect.iBottom - DstRect.iTop + 1));
   }
-  // BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
 }
 
 void EnterAutoResolveMode(UINT8 ubSectorX, UINT8 ubSectorY) {
@@ -1064,27 +1063,24 @@ void ExpandWindow() {
   } else {
     // Restore the previous area
     // left
-    BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)gpAR->ExRect.iLeft,
-                       (UINT16)gpAR->ExRect.iTop, 1,
-                       (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop,
+                         1, (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iLeft + 1,
                      gpAR->ExRect.iBottom + 1);
     // right
-    BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)gpAR->ExRect.iRight,
-                       (UINT16)gpAR->ExRect.iTop, 1,
-                       (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iRight, (UINT16)gpAR->ExRect.iTop,
+                         1, (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
     InvalidateRegion(gpAR->ExRect.iRight, gpAR->ExRect.iTop, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iBottom + 1);
     // top
-    BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)gpAR->ExRect.iLeft,
-                       (UINT16)gpAR->ExRect.iTop,
-                       (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
+    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop,
+                         (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iTop + 1);
     // bottom
-    BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, (UINT16)gpAR->ExRect.iLeft,
-                       (UINT16)gpAR->ExRect.iBottom,
-                       (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
+    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iLeft,
+                         (UINT16)gpAR->ExRect.iBottom,
+                         (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iBottom, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iBottom + 1);
 
@@ -1833,7 +1829,7 @@ void CreateAutoResolveInterface() {
   // Build the interface buffer, and blit the "shaded" background.  This info won't
   // change from now on, but will be used to restore text.
   BuildInterfaceBuffer();
-  BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, 0, 0, 640, 480);
 
   // If we are bumping up the interface, then also use that piece of info to
   // move the buttons up by the same amount.
