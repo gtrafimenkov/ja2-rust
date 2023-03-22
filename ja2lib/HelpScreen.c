@@ -1127,12 +1127,7 @@ void SpecialHandlerCode() {
 
 UINT16 RenderSpecificHelpScreen() {
   UINT16 usNumVerticalPixelsDisplayed = 0;
-  // new screen:
 
-  // set the buffer for the text to go to
-  //	SetFontDestBuffer( guiHelpScreenTextBufferSurface, gHelpScreen.usLeftMarginPosX,
-  // gHelpScreen.usScreenLocY + HELP_SCREEN_TEXT_OFFSET_Y,
-  // HLP_SCRN__WIDTH_OF_TEXT_BUFFER, HLP_SCRN__NUMBER_BYTES_IN_TEXT_BUFFER, FALSE );
   SetFontDestBuffer(guiHelpScreenTextBufferSurface, 0, 0, HLP_SCRN__WIDTH_OF_TEXT_BUFFER,
                     HLP_SCRN__HEIGHT_OF_TEXT_BUFFER, FALSE);
 
