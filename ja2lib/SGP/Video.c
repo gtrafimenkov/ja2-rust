@@ -37,3 +37,10 @@ void SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHei
   gusMouseCursorWidth = usCursorWidth;
   gusMouseCursorHeight = usCursorHeight;
 }
+
+BOOLEAN EraseMouseCursor() {
+  struct BufferLockInfo lock = VSurfaceLock(vsMouseBuffer);
+  memset(lock.dest, 0, MAX_CURSOR_HEIGHT * lock.pitch);
+  VSurfaceUnlock(vsMouseBuffer);
+  return (TRUE);
+}

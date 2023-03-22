@@ -150,8 +150,6 @@ INT32 giNumFrames = 0;
 
 void RefreshScreen() {}
 
-BOOLEAN EraseMouseCursor() { return FALSE; }
-
 BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
   return FALSE;
 }

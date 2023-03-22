@@ -39,8 +39,6 @@ bool BltFastSurfaceWithFlags(struct VSurface *dest, u32 x, u32 y, struct VSurfac
 static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UINT32 uiY,
                                       LPDIRECTDRAWSURFACE2 src, LPRECT pSrcRect, u32 ddFlags);
 
-#define MAX_CURSOR_WIDTH 64
-#define MAX_CURSOR_HEIGHT 64
 #define VIDEO_NO_CURSOR 0xFFFF
 
 static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface);
@@ -1441,13 +1439,6 @@ static BOOLEAN GetRGBDistribution(void) {
   }
 
   return TRUE;
-}
-
-BOOLEAN EraseMouseCursor() {
-  struct BufferLockInfo lock = VSurfaceLock(vsMouseBuffer);
-  memset(lock.dest, 0, MAX_CURSOR_HEIGHT * lock.pitch);
-  VSurfaceUnlock(vsMouseBuffer);
-  return (TRUE);
 }
 
 BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
