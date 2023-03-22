@@ -9,6 +9,7 @@
 #include "SGP/VObjectInternal.h"
 #include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
+#include "SGP/VideoInternal.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderWorld.h"
 #include "platform.h"
@@ -18,15 +19,6 @@ struct VSurface *vsBB = NULL;
 struct VSurface *vsFB = NULL;
 struct VSurface *vsMouseCursor = NULL;
 struct VSurface *vsMouseBuffer = NULL;
-
-//
-// Refresh thread based variables
-//
-
-UINT32 guiFrameBufferState;    // BUFFER_READY, BUFFER_DIRTY
-UINT32 guiMouseBufferState;    // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
-UINT32 guiVideoManagerState;   // VIDEO_ON, VIDEO_OFF, VIDEO_SUSPENDED, VIDEO_SHUTTING_DOWN
-UINT32 guiRefreshThreadState;  // THREAD_ON, THREAD_OFF, THREAD_SUSPENDED
 
 //
 // Dirty rectangle management variables

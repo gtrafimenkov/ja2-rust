@@ -152,20 +152,9 @@ void RefreshScreen() {}
 
 BOOLEAN EraseMouseCursor() { return FALSE; }
 
-BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                                 UINT16 usCursorWidth) {
-  return FALSE;
-}
-
-void DirtyCursor() {}
-
 BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
   return FALSE;
 }
-
-void StartFrameBufferRender(void) {}
-
-void EndFrameBufferRender(void) {}
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 

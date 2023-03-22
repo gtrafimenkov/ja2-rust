@@ -32,14 +32,15 @@ extern void EndFrameBufferRender(void);
 extern void PrintScreen(void);
 
 extern BOOLEAN EraseMouseCursor();
-extern BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                                        UINT16 usCursorWidth);
-void DirtyCursor();
+void SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
+                              UINT16 usCursorWidth);
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette);
 
 void RefreshScreen();
 
 void FatalError(STR8 pError, ...);
+
+void DirtyCursor();
 
 #endif

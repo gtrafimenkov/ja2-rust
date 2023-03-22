@@ -43,8 +43,6 @@ static bool DDBltFastSurfaceWithFlags(LPDIRECTDRAWSURFACE2 dest, UINT32 uiX, UIN
 #define MAX_CURSOR_HEIGHT 64
 #define VIDEO_NO_CURSOR 0xFFFF
 
-extern UINT32 guiMouseBufferState;  // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
-
 static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface);
 
 static BOOLEAN GetRGBDistribution(void);
@@ -140,15 +138,6 @@ extern RECT rcWindow;
 #endif
 static LPDIRECTDRAWSURFACE2 gpBackBuffer = NULL;
 
-//
-// Globals for mouse cursor
-//
-
-static UINT16 gusMouseCursorWidth;
-static UINT16 gusMouseCursorHeight;
-static INT16 gsMouseCursorXOffset;
-static INT16 gsMouseCursorYOffset;
-
 static LPDIRECTDRAWSURFACE _gpMouseCursor = NULL;
 static LPDIRECTDRAWSURFACE2 gpMouseCursor = NULL;
 
@@ -166,15 +155,6 @@ char gFatalErrorString[512];
 
 struct SGPPaletteEntry gSgpPalette[256];
 LPDIRECTDRAWPALETTE gpDirectDrawPalette;
-
-//
-// Refresh thread based variables
-//
-
-extern UINT32 guiFrameBufferState;    // BUFFER_READY, BUFFER_DIRTY
-extern UINT32 guiMouseBufferState;    // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
-extern UINT32 guiVideoManagerState;   // VIDEO_ON, VIDEO_OFF, VIDEO_SUSPENDED, VIDEO_SHUTTING_DOWN
-extern UINT32 guiRefreshThreadState;  // THREAD_ON, THREAD_OFF, THREAD_SUSPENDED
 
 //
 // Dirty rectangle management variables
@@ -1470,17 +1450,6 @@ BOOLEAN EraseMouseCursor() {
   return (TRUE);
 }
 
-BOOLEAN SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                                 UINT16 usCursorWidth) {
-  gsMouseCursorXOffset = sOffsetX;
-  gsMouseCursorYOffset = sOffsetY;
-  gusMouseCursorWidth = usCursorWidth;
-  gusMouseCursorHeight = usCursorHeight;
-  return (TRUE);
-}
-
-void DirtyCursor() { guiMouseBufferState = BUFFER_DIRTY; }
-
 BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
   BOOLEAN ReturnValue;
   ETRLEObject pETRLEPointer;
@@ -1521,10 +1490,6 @@ BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 
 
   return ReturnValue;
 }
-
-void StartFrameBufferRender(void) { return; }
-
-void EndFrameBufferRender(void) { guiFrameBufferState = BUFFER_DIRTY; }
 
 void PrintScreen(void) { gfPrintFrameBuffer = TRUE; }
 
