@@ -80,7 +80,7 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, UINT8 ubXPos, UINT8 ubYPos, UINT
         Get16BPPColor(FROMRGB(gpPalRep[ubPaletteRep].r[cnt1], gpPalRep[ubPaletteRep].g[cnt1],
                               gpPalRep[ubPaletteRep].b[cnt1]));
 
-    ColorFillVideoSurfaceArea(uiDestSurface, sTLX, sTLY, sBRX, sBRY, us16BPPColor);
+    VSurfaceColorFill(GetVSByID(uiDestSurface), sTLX, sTLY, sBRX, sBRY, us16BPPColor);
   }
 
   gprintf(ubXPos + (16 * 20), ubYPos, L"%S", gpPalRep[ubPaletteRep].ID);

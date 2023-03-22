@@ -2713,10 +2713,10 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   DstRect.iBottom = iDstHeight;
 
   // clear both buffers (fill with black to erase previous graphic)
-  ColorFillVideoSurfaceArea(uiSrcID, SrcRect.iLeft, SrcRect.iTop, SrcRect.iRight, SrcRect.iBottom,
-                            0);
-  ColorFillVideoSurfaceArea(uiDstID, DstRect.iLeft, DstRect.iTop, DstRect.iRight, DstRect.iBottom,
-                            0);
+  VSurfaceColorFill(GetVSByID(uiSrcID), SrcRect.iLeft, SrcRect.iTop, SrcRect.iRight,
+                    SrcRect.iBottom, 0);
+  VSurfaceColorFill(GetVSByID(uiDstID), DstRect.iLeft, DstRect.iTop, DstRect.iRight,
+                    DstRect.iBottom, 0);
 
   // if the index is 0, then there is no item.
   if (!gusMercsNewItemIndex) return;

@@ -549,15 +549,6 @@ BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2,
   return FillSurfaceRect(dest, &opts);
 }
 
-BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, i32 x1, i32 y1, i32 x2, i32 y2,
-                                  u16 Color16BPP) {
-  struct VSurface *dest;
-  if (!GetVideoSurface(&dest, destSurface)) {
-    return FALSE;
-  }
-  return VSurfaceColorFill(dest, x1, y1, x2, y2, Color16BPP);
-}
-
 static uint32_t addVSurfaceToList(struct VSurface *vs) {
   // Set into video object list
   if (gpVSurfaceHead) {

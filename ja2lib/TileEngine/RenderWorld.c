@@ -1552,7 +1552,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 
                   SetFont(TINYFONT1);
                   SetFontDest(vsSaveBuffer, 0, gsVIEWPORT_WINDOW_START_Y, 640,
-                                    gsVIEWPORT_WINDOW_END_Y, FALSE);
+                              gsVIEWPORT_WINDOW_END_Y, FALSE);
                   VarFindFontCenterCoordinates(sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d",
                                                pNode->uiAPCost);
                   mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
@@ -1980,7 +1980,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                     if (pSoldier != NULL && GetSolID(pSoldier) >= MAX_NUM_SOLDIERS) {
                       SetFont(TINYFONT1);
                       SetFontDest(vsSaveBuffer, 0, gsVIEWPORT_WINDOW_START_Y, 640,
-                                        gsVIEWPORT_WINDOW_END_Y, FALSE);
+                                  gsVIEWPORT_WINDOW_END_Y, FALSE);
                       VarFindFontCenterCoordinates(sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d",
                                                    pSoldier->ubPlannedUIAPCost);
                       mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
@@ -2007,7 +2007,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
               //  failures,
               //	and eventual crashes, so if it reaches this code, the buffer needs to be
               // unlocked first, as
-              //  it gets locked and unlocked internally within ColorFillVideoSurfaceArea().  I'm
+              //  it gets locked and unlocked internally within VSurfaceColorFill().  I'm
               //  surprised
               //	this problem didn't surface a long time ago.  Anyway, it seems that
               // scrolling to the bottom 	right hand corner of the map, would cause the end of

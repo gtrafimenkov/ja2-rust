@@ -84,16 +84,12 @@ BOOLEAN ShutdownVideoSurfaceManager();
 
 // Creates and adds a video Surface to list
 BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
-// BOOLEAN AddVideoSurfaceEx(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
 
 // Returns a HVSurface for the specified index
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
 struct VSurface *GetVSByID(VSurfID id);
 
 BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP);
-
-BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 x1, INT32 y1, INT32 x2, INT32 y2,
-                                  u16 Color16BPP);
 
 BOOLEAN ImageFillVideoSurfaceArea(VSurfID destSurface, INT32 x1, INT32 y1, INT32 x2, INT32 y2,
                                   struct VObject *BkgrndImg, UINT16 Index, INT16 Ox, INT16 Oy);

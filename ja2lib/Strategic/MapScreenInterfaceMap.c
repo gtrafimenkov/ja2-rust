@@ -856,8 +856,8 @@ void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFir
     return;
   }
 
-  SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop,
-                    MapScreenRect.iRight, MapScreenRect.iBottom, FALSE);
+  SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop, MapScreenRect.iRight,
+              MapScreenRect.iBottom, FALSE);
 
   // clip blits to mapscreen region
   ClipBlitsToMapViewRegion();
@@ -4061,8 +4061,8 @@ void BlitMineText(u8 sMapX, u8 sMapY) {
   // show detailed mine info (name, production rate, daily production)
 
   SetFontDest(vsSaveBuffer, MAP_VIEW_START_X, MAP_VIEW_START_Y,
-                    MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                    MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
+              MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
+              MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
 
   SetFont(MAP_FONT);
   SetFontForeground(FONT_LTGREEN);
@@ -4132,8 +4132,8 @@ void BlitMineText(u8 sMapX, u8 sMapY) {
   }
 
   SetFontDest(vsFB, MAP_VIEW_START_X, MAP_VIEW_START_Y,
-                    MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                    MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
+              MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
+              MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
 }
 
 void AdjustXForLeftMapEdge(STR16 wString, INT16 *psX) {
@@ -4285,8 +4285,8 @@ void DisplayLevelString(void) {
   // otherwise we will have to display the string with the level number
 
   SetFontDest(vsSaveBuffer, MAP_VIEW_START_X, MAP_VIEW_START_Y,
-                    MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                    MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
+              MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
+              MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + 7, FALSE);
 
   SetFont(MAP_FONT);
   SetFontForeground(MAP_INDEX_COLOR);
@@ -5688,8 +5688,8 @@ void ShowSAMSitesOnStrategicMap(void) {
         continue;
       }
 
-      SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop,
-                        MapScreenRect.iRight, MapScreenRect.iBottom, FALSE);
+      SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop, MapScreenRect.iRight,
+                  MapScreenRect.iBottom, FALSE);
 
       // clip blits to mapscreen region
       ClipBlitsToMapViewRegion();
@@ -5816,8 +5816,8 @@ void ShowItemsOnMap(void) {
   // clip blits to mapscreen region
   ClipBlitsToMapViewRegion();
 
-  SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop,
-                    MapScreenRect.iRight, MapScreenRect.iBottom, FALSE);
+  SetFontDest(vsSaveBuffer, MapScreenRect.iLeft + 2, MapScreenRect.iTop, MapScreenRect.iRight,
+              MapScreenRect.iBottom, FALSE);
 
   SetFont(MAP_FONT);
   SetFontForeground(FONT_MCOLOR_LTGREEN);
@@ -5976,8 +5976,8 @@ void HideExistenceOfUndergroundMapSector(UINT8 ubSectorX, UINT8 ubSectorY) {
   GetScreenXYFromMapXY(ubSectorX, ubSectorY, &sScreenX, &sScreenY);
 
   // fill it with near black
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, sScreenX + 1, sScreenY, sScreenX + MAP_GRID_X,
-                            sScreenY + MAP_GRID_Y - 1, gusUndergroundNearBlack);
+  VSurfaceColorFill(vsSaveBuffer, sScreenX + 1, sScreenY, sScreenX + MAP_GRID_X,
+                    sScreenY + MAP_GRID_Y - 1, gusUndergroundNearBlack);
 }
 
 void InitMapSecrets(void) {
