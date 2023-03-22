@@ -2879,8 +2879,7 @@ void DrawTextOnButton(GUI_BUTTON *b) {
     if ((NewClip.iRight <= NewClip.iLeft) || (NewClip.iBottom <= NewClip.iTop)) return;
 
     // Set the font printing settings to the buttons viewable area
-    SetFontDest(vsFB, NewClip.iLeft, NewClip.iTop, NewClip.iRight, NewClip.iBottom,
-                      FALSE);
+    SetFontDest(vsFB, NewClip.iLeft, NewClip.iTop, NewClip.iRight, NewClip.iBottom, FALSE);
 
     // Compute the coordinates to center the text
     if (b->bTextYOffset == -1)
@@ -2984,6 +2983,93 @@ void DrawTextOnButton(GUI_BUTTON *b) {
   }
 }
 
+static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, INT32 iDestX1, INT32 iDestY1,
+                                         INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
+                                         UINT16 Index, INT16 Ox, INT16 Oy) {
+  INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
+  ETRLEObject *pTrav;
+  SGPRect NewClip, OldClip;
+
+  pTrav = &(BkgrndImg->pETRLEObject[Index]);
+  ph = (INT16)(pTrav->usHeight + pTrav->sOffsetY);
+  pw = (INT16)(pTrav->usWidth + pTrav->sOffsetX);
+
+  ah = (INT16)(iDestY2 - iDestY1);
+  aw = (INT16)(iDestX2 - iDestX1);
+
+  Ox %= pw;
+  Oy %= ph;
+
+  if (Ox > 0) Ox -= pw;
+  xo = (-Ox) % pw;
+
+  if (Oy > 0) Oy -= ph;
+  yo = (-Oy) % ph;
+
+  if (Ox < 0)
+    xo = (-Ox) % pw;
+  else {
+    xo = pw - (Ox % pw);
+    Ox -= pw;
+  }
+
+  if (Oy < 0)
+    yo = (-Oy) % ph;
+  else {
+    yo = ph - (Oy % pw);
+    Oy -= ph;
+  }
+
+  hblits = ((ah + yo) / ph) + (((ah + yo) % ph) ? 1 : 0);
+  wblits = ((aw + xo) / pw) + (((aw + xo) % pw) ? 1 : 0);
+
+  if ((hblits == 0) || (wblits == 0)) return (FALSE);
+
+  //
+  // Clip fill region coords
+  //
+
+  GetClippingRect(&OldClip);
+
+  NewClip.iLeft = iDestX1;
+  NewClip.iTop = iDestY1;
+  NewClip.iRight = iDestX2;
+  NewClip.iBottom = iDestY2;
+
+  if (NewClip.iLeft < OldClip.iLeft) NewClip.iLeft = OldClip.iLeft;
+
+  if (NewClip.iLeft > OldClip.iRight) return (FALSE);
+
+  if (NewClip.iRight > OldClip.iRight) NewClip.iRight = OldClip.iRight;
+
+  if (NewClip.iRight < OldClip.iLeft) return (FALSE);
+
+  if (NewClip.iTop < OldClip.iTop) NewClip.iTop = OldClip.iTop;
+
+  if (NewClip.iTop > OldClip.iBottom) return (FALSE);
+
+  if (NewClip.iBottom > OldClip.iBottom) NewClip.iBottom = OldClip.iBottom;
+
+  if (NewClip.iBottom < OldClip.iTop) return (FALSE);
+
+  if ((NewClip.iRight <= NewClip.iLeft) || (NewClip.iBottom <= NewClip.iTop)) return (FALSE);
+
+  SetClippingRect(&NewClip);
+
+  yc = (INT16)iDestY1;
+  for (h = 0; h < hblits; h++) {
+    xc = (INT16)iDestX1;
+    for (w = 0; w < wblits; w++) {
+      BltVideoObject2(dest, BkgrndImg, Index, xc + Ox, yc + Oy, VO_BLT_SRCTRANSPARENCY, NULL);
+      xc += pw;
+    }
+    yc += ph;
+  }
+
+  SetClippingRect(&OldClip);
+  return (TRUE);
+}
+
 //=============================================================================
 //	DrawGenericButton
 //
@@ -3062,9 +3148,9 @@ void DrawGenericButton(GUI_BUTTON *b) {
     if (b->uiFlags & BUTTON_CLICKED_ON) ox = oy = 1;
 
     // Fill the area with the image, tilling it if need be.
-    ImageFillVideoSurfaceArea(FRAME_BUFFER, b->Area.RegionTopLeftX + ox,
-                              b->Area.RegionTopLeftY + oy, b->Area.RegionBottomRightX,
-                              b->Area.RegionBottomRightY, GenericButtonBackground[b->ImageNum],
+    ImageFillVideoSurfaceArea(vsFB, b->Area.RegionTopLeftX + ox, b->Area.RegionTopLeftY + oy,
+                              b->Area.RegionBottomRightX, b->Area.RegionBottomRightY,
+                              GenericButtonBackground[b->ImageNum],
                               GenericButtonBackgroundIndex[b->ImageNum],
                               GenericButtonOffsetX[b->ImageNum], GenericButtonOffsetY[b->ImageNum]);
   }
