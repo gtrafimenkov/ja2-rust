@@ -14,7 +14,6 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "SGP/WinFont.h"
 #include "TileEngine/RenderWorld.h"
 #include "Utils/FontControl.h"
 

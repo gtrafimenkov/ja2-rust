@@ -48,7 +48,6 @@ INT32 FontsLoaded = 0;
 
 // Destination printing parameters
 INT32 FontDefault = (-1);
-// UINT32 FontDestBuffer = BACKBUFFER;
 struct VSurface *FontDestSurface = NULL;
 UINT32 FontDestPitch = 640 * 2;
 UINT32 FontDestBPP = 16;
@@ -62,7 +61,6 @@ UINT8 FontBackground8 = 0;
 
 // Temp, for saving printing parameters
 INT32 SaveFontDefault = (-1);
-// UINT32 SaveFontDestBuffer = BACKBUFFER;
 struct VSurface *SaveFontDestSurface = NULL;
 UINT32 SaveFontDestPitch = 640 * 2;
 UINT32 SaveFontDestBPP = 16;

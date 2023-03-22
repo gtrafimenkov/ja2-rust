@@ -9,7 +9,6 @@
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
-#include "SGP/WinFont.h"
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
 

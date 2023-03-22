@@ -116,9 +116,6 @@
     <ClCompile Include="SGP\VObjectBlitters.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
-    <ClCompile Include="SGP\WinFont.c">
-      <Filter>Source Files\SGP</Filter>
-    </ClCompile>
     <ClCompile Include="Laptop\AIM.c">
       <Filter>Source Files\Laptop</Filter>
     </ClCompile>
@@ -1124,9 +1121,6 @@
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\WCheck.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
-    <ClInclude Include="SGP\WinFont.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="Laptop\AIM.h">

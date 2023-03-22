@@ -2241,7 +2241,6 @@ void SmkShutdownVideo(void) {
 //////////////////////////////////////////////////////////////////
 
 #include "SGP/Font.h"
-#include "SGP/WinFont.h"
 
 INT32 FindFreeWinFont(void);
 BOOLEAN gfEnumSucceed = FALSE;
@@ -2276,10 +2275,6 @@ void Convert16BitStringTo8BitChineseBig5String(UINT8 *dst, UINT16 *src) {
   }
 }
 
-void InitWinFonts() { memset(WinFonts, 0, sizeof(WinFonts)); }
-
-void ShutdownWinFonts() {}
-
 INT32 FindFreeWinFont(void) {
   INT32 iCount;
 
@@ -2306,82 +2301,6 @@ struct HWINFONT *GetWinFont(INT32 iFont) {
 
 CHAR16 gzFontName[32];
 
-void SetWinFontForeColor(INT32 iFont, COLORVAL *pColor) {
-  struct HWINFONT *pWinFont;
-
-  pWinFont = GetWinFont(iFont);
-
-  if (pWinFont != NULL) {
-    pWinFont->ForeColor = (*pColor);
-  }
-}
-
-INT16 WinFontStringPixLength(STR16 string2, INT32 iFont) {
-  struct HWINFONT *pWinFont;
-  HDC hdc;
-  SIZE RectSize;
-  char string[512];
-
-  pWinFont = GetWinFont(iFont);
-
-  if (pWinFont == NULL) {
-    return (0);
-  }
-
-#ifdef TAIWANESE
-  Convert16BitStringTo8BitChineseBig5String(string, string2);
-#else
-  sprintf(string, "%S", string2);
-#endif
-
-  hdc = GetDC(NULL);
-  SelectObject(hdc, pWinFont->hFont);
-  GetTextExtentPoint32(hdc, string, strlen(string), &RectSize);
-  ReleaseDC(NULL, hdc);
-
-  return ((INT16)RectSize.cx);
-}
-
-INT16 GetWinFontHeight(STR16 string2, INT32 iFont) {
-  struct HWINFONT *pWinFont;
-  HDC hdc;
-  SIZE RectSize;
-  char string[512];
-
-  pWinFont = GetWinFont(iFont);
-
-  if (pWinFont == NULL) {
-    return (0);
-  }
-
-#ifdef TAIWANESE
-  Convert16BitStringTo8BitChineseBig5String(string, string2);
-#else
-  sprintf(string, "%S", string2);
-#endif
-
-  hdc = GetDC(NULL);
-  SelectObject(hdc, pWinFont->hFont);
-  GetTextExtentPoint32(hdc, string, strlen(string), &RectSize);
-  ReleaseDC(NULL, hdc);
-
-  return ((INT16)RectSize.cy);
-}
-
-UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) {
-  va_list argptr;
-  wchar_t string[512];
-
-  va_start(argptr, pFontString);  // Set up variable argument pointer
-  vswprintf(string, ARR_SIZE(string), pFontString,
-            argptr);  // process gprintf string (get output str)
-  va_end(argptr);
-
-  PrintWinFont(FontDestBuffer, iFont, x, y, string);
-
-  return (1);
-}
-
 int CALLBACK EnumFontFamProc(CONST LOGFONT *lplf, CONST TEXTMETRIC *lptm, DWORD dwType,
                              LPARAM lpData) {
   gfEnumSucceed = TRUE;
@@ -2400,53 +2319,6 @@ int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, i
   }
 
   return TRUE;
-}
-
-void PrintWinFont(UINT32 uiDestBuf, INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) {
-  va_list argptr;
-  wchar_t string2[512];
-  char string[512];
-  struct VSurface *hVSurface;
-  LPDIRECTDRAWSURFACE2 pDDSurface;
-  HDC hdc;
-  RECT rc;
-  struct HWINFONT *pWinFont;
-  int len;
-  SIZE RectSize;
-
-  pWinFont = GetWinFont(iFont);
-
-  if (pWinFont == NULL) {
-    return;
-  }
-
-  va_start(argptr, pFontString);  // Set up variable argument pointer
-  len = vswprintf(string2, ARR_SIZE(string2), pFontString,
-                  argptr);  // process gprintf string (get output str)
-  va_end(argptr);
-
-#ifdef TAIWANESE
-  Convert16BitStringTo8BitChineseBig5String(string, string2);
-#else
-  snprintf(string, ARR_SIZE(string), "%S", string2);
-#endif
-
-  // Get surface...
-  GetVideoSurface(&hVSurface, uiDestBuf);
-
-  pDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
-
-  IDirectDrawSurface2_GetDC(pDDSurface, &hdc);
-
-  SelectObject(hdc, pWinFont->hFont);
-  SetTextColor(hdc, pWinFont->ForeColor);
-  SetBkColor(hdc, pWinFont->BackColor);
-  SetBkMode(hdc, TRANSPARENT);
-
-  GetTextExtentPoint32(hdc, string, len, &RectSize);
-  SetRect(&rc, x, y, x + RectSize.cx, y + RectSize.cy);
-  ExtTextOut(hdc, x, y, ETO_OPAQUE, &rc, string, len, NULL);
-  IDirectDrawSurface2_ReleaseDC(pDDSurface, hdc);
 }
 
 //////////////////////////////////////////////////////////////////

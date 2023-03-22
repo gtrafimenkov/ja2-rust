@@ -10,7 +10,6 @@
 #include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/WCheck.h"
-#include "SGP/WinFont.h"
 
 // Global variables for video objects
 INT32 gpLargeFontType1;

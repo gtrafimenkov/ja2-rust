@@ -204,14 +204,6 @@ struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLE
 
 void SmkCloseFlic(struct SmkFlic *pSmack) {}
 
-void SetWinFontForeColor(INT32 iFont, COLORVAL *pColor) {}
-
-INT16 WinFontStringPixLength(STR16 string2, INT32 iFont) { return 0; }
-
-INT16 GetWinFontHeight(STR16 string2, INT32 iFont) { return 0; }
-
-UINT32 WinFont_mprintf(INT32 iFont, INT32 x, INT32 y, STR16 pFontString, ...) { return 0; }
-
 /////////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////////
