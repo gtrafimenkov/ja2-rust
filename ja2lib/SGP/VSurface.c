@@ -8,6 +8,7 @@
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
 #include "SGP/VSurfaceInternal.h"
+#include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderWorld.h"
 #include "platform.h"
@@ -588,6 +589,18 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
   return gpVSurfaceTail->uiIndex;
 }
 
+struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiIndex) {
+  struct VSurface *vs = CreateVideoSurface(width, height, bitDepth);
+  if (vs) {
+    SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
+    if (puiIndex) {
+      *puiIndex = addVSurfaceToList(vs);
+    }
+    return vs;
+  }
+  return NULL;
+}
+
 BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(desc);
@@ -942,4 +955,34 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
   }
 
   return vs;
+}
+
+UINT32 guiBOTTOMPANEL = 0;
+UINT32 guiRIGHTPANEL = 0;
+UINT32 guiSAVEBUFFER = 0;
+UINT32 guiEXTRABUFFER = 0;
+
+struct VSurface *vsExtraBuffer = NULL;
+struct VSurface *vsSaveBuffer = NULL;
+
+BOOLEAN InitializeSystemVideoObjects() { return (TRUE); }
+
+BOOLEAN InitializeGameVideoObjects() {
+  UINT16 usWidth;
+  UINT16 usHeight;
+  UINT8 ubBitDepth;
+
+  GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
+
+  vsSaveBuffer = VSurfaceAdd(usWidth, usHeight, ubBitDepth, &guiSAVEBUFFER);
+  if (!vsSaveBuffer) {
+    return FALSE;
+  }
+
+  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, ubBitDepth, &guiEXTRABUFFER);
+  if (!vsExtraBuffer) {
+    return FALSE;
+  }
+
+  return (TRUE);
 }

@@ -15,7 +15,6 @@
 #include "SGP/WCheck.h"
 #include "SGP/WinFont.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/FontControl.h"
 
 #ifdef JA2BETAVERSION
@@ -274,7 +273,7 @@ BOOLEAN RestoreBackgroundRects(void) {
   }
 
   UnLockVideoSurface(FRAME_BUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   EmptyBackgroundRects();
 
@@ -362,7 +361,7 @@ BOOLEAN SaveBackgroundRects(void) {
   }
 
   UnLockVideoSurface(FRAME_BUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return (TRUE);
 }
@@ -466,7 +465,7 @@ BOOLEAN UpdateSaveBuffer(void) {
                   (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y));
 
   UnLockVideoSurface(FRAME_BUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return (TRUE);
 }
@@ -483,7 +482,7 @@ BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
                   sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(FRAME_BUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   // Add rect to frame buffer queue
   InvalidateRegionEx(sLeft, sTop, (sLeft + sWidth), (sTop + sHeight), 0);
@@ -513,7 +512,7 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
                   sTop, sLeft, sTop, sWidth, sHeight);
   UnLockVideoSurface(FRAME_BUFFER);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   // Add rect to frame buffer queue
   InvalidateRegionEx(sLeft, sTop, (sLeft + sWidth), (sTop + sHeight), 0);
@@ -532,7 +531,7 @@ BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
                   sTop, sLeft, sTop, sWidth, sHeight);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
   UnLockVideoSurface(FRAME_BUFFER);
 
   return (TRUE);

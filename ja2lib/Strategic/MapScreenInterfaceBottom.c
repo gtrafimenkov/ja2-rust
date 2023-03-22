@@ -41,7 +41,6 @@
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/JA25EnglishText.h"

@@ -4,15 +4,16 @@
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Input.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDat.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 
 extern BOOLEAN gfOverheadMapDirty;

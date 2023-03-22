@@ -11,7 +11,6 @@
 #include "ScreenIDs.h"
 #include "SysGlobals.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/MusicControl.h"
 #include "Utils/TimerControl.h"
 
@@ -258,7 +257,7 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
                   0, 640, 480);
 
   VSurfaceUnlock(vsFB);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   return (TRUE);
 }

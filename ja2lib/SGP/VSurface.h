@@ -15,6 +15,8 @@ extern struct VSurface *vsFB;
 extern struct VSurface *vsMouseCursor;
 extern struct VSurface *vsMouseCursorOriginal;
 extern struct VSurface *vsPrimary;
+extern struct VSurface *vsExtraBuffer;
+extern struct VSurface *vsSaveBuffer;
 
 //
 // Defines for special video object handles given to blit function
@@ -178,5 +180,15 @@ void UnLockVideoSurface(VSurfID uiVSurface);
 
 struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth);
 struct VSurface *CreateVideoSurfaceFromFile(const char *path);
+struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiIndex);
+
+// Global variables for video objects
+extern UINT32 guiBOTTOMPANEL;
+extern UINT32 guiRIGHTPANEL;
+extern UINT32 guiSAVEBUFFER;
+extern UINT32 guiEXTRABUFFER;
+
+BOOLEAN InitializeSystemVideoObjects();
+BOOLEAN InitializeGameVideoObjects();
 
 #endif

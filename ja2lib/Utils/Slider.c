@@ -2,6 +2,7 @@
 
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
+#include "SGP/Input.h"
 #include "SGP/Line.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -9,7 +10,6 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"

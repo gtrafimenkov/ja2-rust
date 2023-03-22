@@ -36,7 +36,6 @@
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/Pits.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"

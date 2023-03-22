@@ -295,7 +295,6 @@
     <ClCompile Include="TileEngine\Smell.c" />
     <ClCompile Include="TileEngine\SmokeEffects.c" />
     <ClCompile Include="TileEngine\Structure.c" />
-    <ClCompile Include="TileEngine\SysUtil.c" />
     <ClCompile Include="TileEngine\TacticalPlacementGUI.c" />
     <ClCompile Include="TileEngine\TileAnimation.c" />
     <ClCompile Include="TileEngine\TileCache.c" />

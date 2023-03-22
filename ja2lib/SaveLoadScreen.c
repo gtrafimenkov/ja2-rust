@@ -33,7 +33,6 @@
 #include "Tactical/Overhead.h"
 #include "Tactical/TacticalSave.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "UI.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"

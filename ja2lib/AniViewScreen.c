@@ -26,7 +26,6 @@
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/EventPump.h"
 #include "Utils/FontControl.h"
 #include "Utils/TimerControl.h"

@@ -1,12 +1,12 @@
 #include "Utils/PopUpBox.h"
 
 #include "SGP/Debug.h"
+#include "SGP/Font.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/SysUtil.h"
 
 #define BORDER_WIDTH 16
 #define BORDER_HEIGHT 8

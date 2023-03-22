@@ -13,7 +13,6 @@
 #include "SGP/WCheck.h"
 #include "ScreenIDs.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/EncryptedFile.h"
 #include "Utils/FontControl.h"

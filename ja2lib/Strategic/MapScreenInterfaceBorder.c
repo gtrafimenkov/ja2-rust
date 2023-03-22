@@ -18,7 +18,7 @@
 #include "Strategic/MapScreenInterfaceMapInventory.h"
 #include "Strategic/StrategicMap.h"
 #include "Strategic/TownMilitia.h"
-#include "TileEngine/SysUtil.h"
+#include "Tactical/Interface.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"

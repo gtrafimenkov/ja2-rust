@@ -37,7 +37,6 @@
 #include "Tactical/SoldierProfile.h"
 #include "TileEngine/Environment.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/Message.h"

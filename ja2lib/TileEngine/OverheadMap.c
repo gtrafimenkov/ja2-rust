@@ -36,7 +36,6 @@
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/TileSurface.h"
@@ -928,7 +927,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
                       0, 0, 0, usWidth, usHeight);
 
       UnLockVideoSurface(FRAME_BUFFER);
-      UnLockVideoSurface(guiSAVEBUFFER);
+      VSurfaceUnlock(vsSaveBuffer);
     }
   }
 }

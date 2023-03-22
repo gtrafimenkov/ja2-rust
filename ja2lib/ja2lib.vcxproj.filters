@@ -896,9 +896,6 @@
     <ClCompile Include="TileEngine\Structure.c">
       <Filter>Source Files\TileEngine</Filter>
     </ClCompile>
-    <ClCompile Include="TileEngine\SysUtil.c">
-      <Filter>Source Files\TileEngine</Filter>
-    </ClCompile>
     <ClCompile Include="TileEngine\TacticalPlacementGUI.c">
       <Filter>Source Files\TileEngine</Filter>
     </ClCompile>

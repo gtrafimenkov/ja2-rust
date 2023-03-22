@@ -94,7 +94,6 @@
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "Town.h"
 #include "UI.h"
 #include "Utils/AnimatedProgressBar.h"
@@ -2647,12 +2646,6 @@ UINT32 MapScreenHandle(void) {
 
     CreateDestroyInsuranceMouseRegionForMercs(TRUE);
 
-    // ATE: Init tactical interface interface ( always to team panel )
-    // SetCurrentInterfacePanel( TEAM_PANEL );
-    // Do some things to this now that it's initialized
-    // MSYS_DisableRegion( &gViewportRegion );
-    // MSYS_DisableRegion( &gRadarRegion );
-    // Disable all faces
     SetAllAutoFacesInactive();
 
     if (fPreLoadedMapGraphics == FALSE) {
@@ -5540,7 +5533,7 @@ void BltCharInvPanel() {
   GetVideoObject(&hCharListHandle, guiMAPINV);
   Blt8BPPDataTo16BPPBufferTransparent(pDestBuf, uiDestPitchBYTES, hCharListHandle, PLAYER_INFO_X,
                                       PLAYER_INFO_Y, 0);
-  UnLockVideoSurface(guiSAVEBUFFER);
+  VSurfaceUnlock(vsSaveBuffer);
 
   Assert(pSoldier);
   CreateDestroyMapInvButton();

@@ -45,7 +45,6 @@
 #include "TileEngine/InteractiveTiles.h"
 #include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/WorldMan.h"
 #include "Town.h"
 #include "Utils/EventPump.h"

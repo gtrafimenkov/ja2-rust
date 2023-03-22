@@ -43,7 +43,6 @@
 #include "TileEngine/RenderZ.c"
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileAnimation.h"
 #include "TileEngine/TileCache.h"
 #include "TileEngine/TileDef.h"
@@ -1770,7 +1769,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                                 (UINT16 *)pSaveBuf, uiSaveBufferPitchBYTES, hVObject, sXPos, sYPos,
                                 usImageIndex, &gClippingRect, pShadeTable);
 
-                            UnLockVideoSurface(guiSAVEBUFFER);
+                            VSurfaceUnlock(vsSaveBuffer);
 
                             // Turn it off!
                             pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);
@@ -1836,7 +1835,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                               (UINT16 *)pSaveBuf, uiSaveBufferPitchBYTES, gpZBuffer, sZLevel,
                               hVObject, sXPos, sYPos, usImageIndex, &gClippingRect);
 
-                          UnLockVideoSurface(guiSAVEBUFFER);
+                          VSurfaceUnlock(vsSaveBuffer);
 
                           // Turn it off!
                           pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);
@@ -1894,7 +1893,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                                 (UINT16 *)pSaveBuf, uiSaveBufferPitchBYTES, hVObject, sXPos, sYPos,
                                 usImageIndex, pShadeTable);
 
-                            UnLockVideoSurface(guiSAVEBUFFER);
+                            VSurfaceUnlock(vsSaveBuffer);
 
                             // Turn it off!
                             pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);
@@ -1962,7 +1961,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                                                          gpZBuffer, sZLevel, hVObject, sXPos, sYPos,
                                                          usImageIndex);
 
-                          UnLockVideoSurface(guiSAVEBUFFER);
+                          VSurfaceUnlock(vsSaveBuffer);
 
                           // Turn it off!
                           pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);

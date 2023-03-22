@@ -33,7 +33,6 @@
 #include "TileEngine/OverheadMap.h"
 #include "TileEngine/RenderDirty.h"
 #include "TileEngine/RenderWorld.h"
-#include "TileEngine/SysUtil.h"
 #include "UI.h"
 #include "Utils/FontControl.h"
 #include "Utils/Text.h"
