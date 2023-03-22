@@ -2,6 +2,7 @@
 #define _LIGHTING_H_
 
 #include "SGP/HImage.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/Types.h"
 
 struct SOLDIERTYPE;

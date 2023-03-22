@@ -1128,8 +1128,8 @@ void SpecialHandlerCode() {
 UINT16 RenderSpecificHelpScreen() {
   UINT16 usNumVerticalPixelsDisplayed = 0;
 
-  SetFontDestBuffer(guiHelpScreenTextBufferSurface, 0, 0, HLP_SCRN__WIDTH_OF_TEXT_BUFFER,
-                    HLP_SCRN__HEIGHT_OF_TEXT_BUFFER, FALSE);
+  SetFontDest(GetVSByID(guiHelpScreenTextBufferSurface), 0, 0, HLP_SCRN__WIDTH_OF_TEXT_BUFFER,
+              HLP_SCRN__HEIGHT_OF_TEXT_BUFFER, FALSE);
 
   // switch on the current screen
   switch (gHelpScreen.bCurrentHelpScreen) {
@@ -1158,14 +1158,14 @@ UINT16 RenderSpecificHelpScreen() {
 
     default:
 #ifdef JA2BETAVERSION
-      SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+      SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
       AssertMsg(0, "Error in help screen:  RenderSpecificHelpScreen().  DF 0");
 #else
       break;
 #endif
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // add 1 line to the bottom of the buffer
   usNumVerticalPixelsDisplayed += 10;

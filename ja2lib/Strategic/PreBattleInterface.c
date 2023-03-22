@@ -907,7 +907,7 @@ void RenderPreBattleInterface() {
 
   if (gfRenderPBInterface) {
     // set font destinanation buffer to the save buffer
-    SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
     if (gfPBButtonsHidden) {
       ShowButton(iPBButton[0]);
@@ -1129,7 +1129,7 @@ void RenderPreBattleInterface() {
     RestoreExternBackgroundRect(0, 0, 261, 359);
 
     // restore font destinanation buffer to the frame buffer
-    SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   } else if (gfBlinkHeader) {
     RenderPBHeader(&x, &width);  // the text is important enough to blink.
   }

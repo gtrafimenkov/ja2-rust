@@ -501,7 +501,7 @@ void DrawNameOfLoadedSector(void) {
   CHAR16 sString[128];
   INT16 sFontX, sFontY;
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   SetFont(COMPFONT);
   SetFontForeground(183);
@@ -762,7 +762,7 @@ void DisplayCompressMode(void) {
   }
 
   RestoreExternBackgroundRect(489, 456, 522 - 489, 467 - 454);
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   SetFont(COMPFONT);
 
   if (GetJA2Clock() - guiCompressionStringBaseTime >= PAUSE_GAME_TIMER) {
@@ -1124,7 +1124,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
   INT16 sFontX, sFontY;
 
   // ste the font buffer
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   SetFont(COMPFONT);
   SetFontForeground(MAP_BOTTOM_FONT_COLOR);
@@ -1147,7 +1147,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
   mprintf(sFontX, sFontY, L"%s", sString);
 
   // ste the font buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   return;
 }
 
@@ -1157,7 +1157,7 @@ void DisplayCurrentBalanceForMapBottom(void) {
   INT16 sFontX, sFontY;
 
   // ste the font buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // set up the font
   SetFont(COMPFONT);
@@ -1245,7 +1245,7 @@ void DisplayProjectedDailyMineIncome(void) {
     }
   }
   // ste the font buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // set up the font
   SetFont(COMPFONT);

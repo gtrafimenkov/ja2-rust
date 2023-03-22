@@ -1102,7 +1102,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
       if (pSoldier->bOppCnt > 0)
 #endif
       {
-        SetFontDestBuffer(uiRenderBuffer, 0, 0, 640, 480, FALSE);
+        SetFontDest(GetVSByID(uiRenderBuffer), 0, 0, 640, 480, FALSE);
 
         swprintf(sString, ARR_SIZE(sString), L"%d", pSoldier->bOppCnt);
 
@@ -1117,7 +1117,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
         sY2 = sY1 + GetFontHeight(TINYFONT1) - 1;
 
         mprintf((INT16)(sX1 + 1), (INT16)(sY1 - 1), sString);
-        SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+        SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
         // Draw box
         pDestBuf = VSurfaceLockOld(GetVSByID(uiRenderBuffer), &uiDestPitchBYTES);
@@ -1147,7 +1147,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
           SetFontBackground(FONT_MCOLOR_BLACK);
           SetFontForeground(FONT_MCOLOR_WHITE);
 
-          SetFontDestBuffer(uiRenderBuffer, 0, 0, 640, 480, FALSE);
+          SetFontDest(GetVSByID(uiRenderBuffer), 0, 0, 640, 480, FALSE);
 
           VarFindFontCenterCoordinates(sFaceX, sFaceY, pFace->usFaceWidth, pFace->usFaceHeight,
                                        TINYFONT1, &sFontX, &sFontY, pFace->zDisplayText);
@@ -1160,7 +1160,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
             pFace->fDisplayTextOver = FACE_NO_TEXT_OVER;
           }
 
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
         }
       }
     }
@@ -1306,7 +1306,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
 
       // ATE: Show numbers only in mapscreen
       if (fShowNumber) {
-        SetFontDestBuffer(uiRenderBuffer, 0, 0, 640, 480, FALSE);
+        SetFontDest(GetVSByID(uiRenderBuffer), 0, 0, 640, 480, FALSE);
 
         if (fShowMaximum) {
           swprintf(sString, ARR_SIZE(sString), L"%d/%d", sPtsAvailable, usMaximumPts);
@@ -1322,7 +1322,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
         SetFontBackground(FONT_BLACK);
 
         mprintf(sFaceX + pFace->usFaceWidth - usTextWidth, (INT16)(sFaceY + 3), sString);
-        SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+        SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
       }
     }
   } else {

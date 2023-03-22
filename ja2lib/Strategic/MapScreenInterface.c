@@ -3843,7 +3843,7 @@ void DisplaySoldierUpdateBox() {
                     iY + iUpdatePanelHeight - 3, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   iUpperLimit = fFourWideMode
                     ? (iNumberOfMercsOnUpdatePanel + NUMBER_OF_MERC_COLUMNS_FOR_FOUR_WIDE_MODE)
@@ -3953,7 +3953,7 @@ void DisplaySoldierUpdateBox() {
                          CENTER_JUSTIFIED);
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // restore extern background rect
   RestoreExternBackgroundRect((INT16)(iX - 5), (INT16)(iY - 5), (INT16)(iUpdatePanelWidth + 10),

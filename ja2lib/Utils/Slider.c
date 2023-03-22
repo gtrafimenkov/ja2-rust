@@ -1,5 +1,7 @@
 #include "Utils/Slider.h"
 
+#include <string.h>
+
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"

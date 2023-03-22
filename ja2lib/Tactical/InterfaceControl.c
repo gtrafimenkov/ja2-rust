@@ -761,7 +761,7 @@ void StartViewportOverlays() {
   gDirtyClipRect.iBottom = gsVIEWPORT_WINDOW_END_Y;
 
   SaveFontSettings();
-  SetFontDestBuffer(FRAME_BUFFER, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
+  SetFontDest(vsFB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
                     FALSE);
 }
 

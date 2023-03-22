@@ -2471,7 +2471,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     AssertMsg(0, "Missing INTERFACE\\timebaryellow.sti");
 
   // Change dest buffer
-  SetFontDestBuffer(uiSurface, 0, 0, 640, 20, FALSE);
+  SetFontDest(GetVSByID(uiSurface), 0, 0, 640, 20, FALSE);
   SetFont(TINYFONT1);
 
   switch (ubType) {
@@ -2632,7 +2632,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
   mprintf(sX, sY, psString);
 
   // Change back...
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // Done!
   SetFontShadow(DEFAULT_SHADOW);

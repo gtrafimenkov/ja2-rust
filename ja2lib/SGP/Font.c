@@ -48,7 +48,8 @@ INT32 FontsLoaded = 0;
 
 // Destination printing parameters
 INT32 FontDefault = (-1);
-UINT32 FontDestBuffer = BACKBUFFER;
+// UINT32 FontDestBuffer = BACKBUFFER;
+struct VSurface *FontDestSurface = NULL;
 UINT32 FontDestPitch = 640 * 2;
 UINT32 FontDestBPP = 16;
 SGPRect FontDestRegion = {0, 0, 640, 480};
@@ -61,7 +62,8 @@ UINT8 FontBackground8 = 0;
 
 // Temp, for saving printing parameters
 INT32 SaveFontDefault = (-1);
-UINT32 SaveFontDestBuffer = BACKBUFFER;
+// UINT32 SaveFontDestBuffer = BACKBUFFER;
+struct VSurface *SaveFontDestSurface = NULL;
 UINT32 SaveFontDestPitch = 640 * 2;
 UINT32 SaveFontDestBPP = 16;
 SGPRect SaveFontDestRegion = {0, 0, 640, 480};
@@ -487,7 +489,7 @@ INT16 StringPixLength(STR16 string, INT32 UseFont) {
 //*****************************************************************************
 void SaveFontSettings(void) {
   SaveFontDefault = FontDefault;
-  SaveFontDestBuffer = FontDestBuffer;
+  SaveFontDestSurface = FontDestSurface;
   SaveFontDestPitch = FontDestPitch;
   SaveFontDestBPP = FontDestBPP;
   SaveFontDestRegion = FontDestRegion;
@@ -508,7 +510,7 @@ void SaveFontSettings(void) {
 //*****************************************************************************
 void RestoreFontSettings(void) {
   FontDefault = SaveFontDefault;
-  FontDestBuffer = SaveFontDestBuffer;
+  FontDestSurface = SaveFontDestSurface;
   FontDestPitch = SaveFontDestPitch;
   FontDestBPP = SaveFontDestBPP;
   FontDestRegion = SaveFontDestRegion;
@@ -597,11 +599,11 @@ BOOLEAN SetFont(INT32 iFontIndex) {
   return (TRUE);
 }
 
-BOOLEAN SetFontDestBuffer(UINT32 DestBuffer, INT32 x1, INT32 y1, INT32 x2, INT32 y2, BOOLEAN wrap) {
+BOOLEAN SetFontDest(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, BOOLEAN wrap) {
   Assert(x2 > x1);
   Assert(y2 > y1);
 
-  FontDestBuffer = DestBuffer;
+  FontDestSurface = dest;
 
   FontDestRegion.iLeft = x1;
   FontDestRegion.iTop = y1;
@@ -642,7 +644,7 @@ UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   desty = y;
 
   // Lock the dest buffer
-  pDestBuf = VSurfaceLockOld(GetVSByID(FontDestBuffer), &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(FontDestSurface, &uiDestPitchBYTES);
 
   while ((*curletter) != 0) {
     transletter = GetIndex(*curletter++);
@@ -661,7 +663,7 @@ UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   }
 
   // Unlock buffer
-  VSurfaceUnlock(GetVSByID(FontDestBuffer));
+  VSurfaceUnlock(FontDestSurface);
 
   return (0);
 }
@@ -748,7 +750,7 @@ UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   desty = y;
 
   // Lock the dest buffer
-  pDestBuf = VSurfaceLockOld(GetVSByID(FontDestBuffer), &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(FontDestSurface, &uiDestPitchBYTES);
 
   while ((*curletter) != 0) {
     transletter = GetIndex(*curletter++);
@@ -767,7 +769,7 @@ UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   }
 
   // Unlock buffer
-  VSurfaceUnlock(GetVSByID(FontDestBuffer));
+  VSurfaceUnlock(FontDestSurface);
 
   return (0);
 }
@@ -794,7 +796,7 @@ UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
   desty = y;
 
   // Lock the dest buffer
-  pDestBuf = VSurfaceLockOld(GetVSByID(FontDestBuffer), &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(FontDestSurface, &uiDestPitchBYTES);
 
   while ((*curletter) != 0) {
     transletter = GetIndex(*curletter++);
@@ -813,7 +815,7 @@ UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
   }
 
   // Unlock buffer
-  VSurfaceUnlock(GetVSByID(FontDestBuffer));
+  VSurfaceUnlock(FontDestSurface);
 
   InvalidateRegion(x, y, x + StringPixLength(string, FontDefault), y + GetFontHeight(FontDefault));
 
@@ -982,7 +984,7 @@ UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
   usOldForeColor = FontForeground16;
 
   // Lock the dest buffer
-  pDestBuf = VSurfaceLockOld(GetVSByID(FontDestBuffer), &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(FontDestSurface, &uiDestPitchBYTES);
 
   while ((*curletter) != 0) {
     if ((*curletter) == 180) {
@@ -1010,17 +1012,11 @@ UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
   }
 
   // Unlock buffer
-  VSurfaceUnlock(GetVSByID(FontDestBuffer));
+  VSurfaceUnlock(FontDestSurface);
 
   return (0);
 }
 
-//*****************************************************************************
-// InitializeFontManager
-//
-//	Starts up the font manager system with the appropriate translation table.
-//
-//*****************************************************************************
 BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *pTransTable) {
   FontTranslationTable *pTransTab;
   int count;
@@ -1028,7 +1024,7 @@ BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *
   UINT8 uiPixelDepth;
 
   FontDefault = (-1);
-  FontDestBuffer = BACKBUFFER;
+  FontDestSurface = vsBB;
   FontDestPitch = 0;
 
   //	FontDestBPP=0;

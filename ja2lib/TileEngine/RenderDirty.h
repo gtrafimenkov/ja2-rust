@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct VSurface;
 struct _VIDEO_OVERLAY;
 
 // DEFINES

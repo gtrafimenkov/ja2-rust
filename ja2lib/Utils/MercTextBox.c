@@ -467,7 +467,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   GetMercPopupBoxFontColor(ubBackgroundIndex, &ubFontColor, &ubFontShadowColor);
 
   SetFontShadow(ubFontShadowColor);
-  SetFontDestBuffer(pPopUpTextBox->uiSourceBufferIndex, 0, 0, usWidth, usHeight, FALSE);
+  SetFontDest(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), 0, 0, usWidth, usHeight, FALSE);
 
   // Display the text
   sDispTextXPos = (INT16)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X + usMarginX));
@@ -502,7 +502,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   }
 #endif
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   SetFontShadow(DEFAULT_SHADOW);
 
   if (iBoxId == -1) {

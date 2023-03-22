@@ -1,5 +1,7 @@
 #include "MainMenuScreen.h"
 
+#include <string.h>
+
 #include "FadeScreen.h"
 #include "GameLoop.h"
 #include "GameScreen.h"
@@ -385,24 +387,7 @@ void ClearMainMenu() {
   InvalidateScreen();
 }
 
-void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  if (iReason & MSYS_CALLBACK_REASON_INIT) {
-  } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    //		if( gfDoHelpScreen )
-    //		{
-    //			SetMainMenuExitScreen( INIT_SCREEN );
-    //			gfDoHelpScreen = FALSE;
-    //		}
-  } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
-    /*
-                    if( gfDoHelpScreen )
-                    {
-                            SetMainMenuExitScreen( INIT_SCREEN );
-                            gfDoHelpScreen = FALSE;
-                    }
-    */
-  }
-}
+void SelectMainMenuBackGroundRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {}
 
 void SetMainMenuExitScreen(UINT32 uiNewScreen) {
   guiMainMenuExitScreen = uiNewScreen;

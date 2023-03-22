@@ -1809,26 +1809,6 @@ BOOLEAN LoadSavedMercProfiles(FileID hFile) {
   return (TRUE);
 }
 
-// Not saving any of these in the soldier struct
-
-//	struct LEVELNODE				*pLevelNode;
-//	struct LEVELNODE				*pExternShadowLevelNode;
-//	struct LEVELNODE				*pRoofUILevelNode;
-//	UINT16 *pBackGround; 	UINT16
-//*pZBackground; 	UINT16
-//*pForcedShade;
-//
-// 	UINT16
-// *pEffectShades[ NUM_SOLDIER_EFFECTSHADES ]; // Shading tables for effects
-//  THROW_PARAMS								*pThrowParams;
-//  UINT16
-//  *pCurrentShade;
-//	UINT16 *pGlowShades[ 20
-//];
-////
-//	UINT16 *pShades[ NUM_SOLDIER_SHADES ]; // Shading tables 	UINT16 *p16BPPPalette;
-// struct SGPPaletteEntry *p8BPPPalette 	struct OBJECTTYPE *pTempObject;
-
 BOOLEAN SaveSoldierStructure(FileID hFile) {
   UINT16 cnt;
   UINT32 uiNumBytesWritten = 0;

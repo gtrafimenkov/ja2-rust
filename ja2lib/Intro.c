@@ -1,5 +1,7 @@
 #include "Intro.h"
 
+#include <string.h>
+
 #include "GameScreen.h"
 #include "Intro.h"
 #include "Local.h"

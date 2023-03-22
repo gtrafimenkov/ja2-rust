@@ -256,7 +256,6 @@ UINT32 ErrorScreenShutdown(void) { return (TRUE); }
 UINT32 InitScreenInitialize(void) { return (TRUE); }
 
 UINT32 InitScreenHandle(void) {
-  VSURFACE_DESC vs_desc;
   static struct VSurface *hVSurface;
   static UINT8 ubCurrentScreen = 255;
 

@@ -2771,7 +2771,7 @@ void DisplayBookMarks(void) {
   //	mprintf(sX, sY,pBookmarkTitle[0] );
 
   // set buffer
-  SetFontDestBuffer(FRAME_BUFFER, BOOK_X, BOOK_TOP_Y, BOOK_X + BOOK_WIDTH - 10, 480, FALSE);
+  SetFontDest(vsFB, BOOK_X, BOOK_TOP_Y, BOOK_X + BOOK_WIDTH - 10, 480, FALSE);
 
   // blt in book mark background
   while (LaptopSaveInfo.iBookMarkList[iCounter - 1] != -1) {
@@ -2833,7 +2833,7 @@ void DisplayBookMarks(void) {
   mprintf(sX, sY, pBookMarkStrings[CANCEL_STRING]);
   iCounter++;
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // GetVideoObject(&hLapTopIconHandle, guiBOOKBOT);
   // BltVideoObject2(vsFB, hLapTopIconHandle, 0,BOOK_X, 6+BOOK_TOP_Y+(iCounter)*BOOK_HEIGHT,
@@ -2899,7 +2899,7 @@ void ScrollDisplayText(INT32 iY) {
   }
 
   // font stuff
-  SetFontDestBuffer(FRAME_BUFFER, BOOK_X, 0, BOOK_X + BOOK_WIDTH, 480, FALSE);
+  SetFontDest(vsFB, BOOK_X, 0, BOOK_X + BOOK_WIDTH, 480, FALSE);
   SetFontForeground(FONT_BLACK);
   SetFontBackground(FONT_BLACK);
 
@@ -2907,7 +2907,7 @@ void ScrollDisplayText(INT32 iY) {
   mprintf(sCurX, iY, pBookmarkTitle[1]);
 
   // reset buffer
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // invalidate region
   InvalidateRegion(BOOK_X, iY, BOOK_X + BOOK_WIDTH, iY + BOOK_HEIGHT);
@@ -3768,10 +3768,10 @@ BOOLEAN InitTitleBarMaximizeGraphics(UINT32 uiBackgroundGraphic, STR16 pTitle, U
                  LAPTOP_TITLE_BAR_ICON_OFFSET_X, LAPTOP_TITLE_BAR_ICON_OFFSET_Y,
                  VO_BLT_SRCTRANSPARENCY, NULL);
 
-  SetFontDestBuffer(guiTitleBarSurface, 0, 0, vs_desc.usWidth, vs_desc.usHeight, FALSE);
+  SetFontDest(GetVSByID(guiTitleBarSurface), 0, 0, vs_desc.usWidth, vs_desc.usHeight, FALSE);
   DrawTextToScreen(pTitle, LAPTOP_TITLE_BAR_TEXT_OFFSET_X, LAPTOP_TITLE_BAR_TEXT_OFFSET_Y, 0,
                    FONT14ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   return (TRUE);
 }

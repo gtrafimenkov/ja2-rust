@@ -5,6 +5,8 @@
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
 
+struct VSurface;
+struct VObject;
 typedef uint32_t VSurfID;
 
 // ************************************************************************************

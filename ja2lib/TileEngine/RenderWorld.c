@@ -1551,13 +1551,13 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                   }
 
                   SetFont(TINYFONT1);
-                  SetFontDestBuffer(guiSAVEBUFFER, 0, gsVIEWPORT_WINDOW_START_Y, 640,
+                  SetFontDest(vsSaveBuffer, 0, gsVIEWPORT_WINDOW_START_Y, 640,
                                     gsVIEWPORT_WINDOW_END_Y, FALSE);
                   VarFindFontCenterCoordinates(sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d",
                                                pNode->uiAPCost);
                   mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
                                  pNode->uiAPCost);
-                  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+                  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
                 } else if ((uiLevelNodeFlags & LEVELNODE_ERASEZ) && !(uiFlags & TILES_DIRTY)) {
                   Zero8BPPDataTo16BPPBufferTransparent((UINT16 *)pDestBuf, uiDestPitchBYTES,
                                                        hVObject, sXPos, sYPos, usImageIndex);
@@ -1979,13 +1979,13 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                   if (fMerc) {
                     if (pSoldier != NULL && GetSolID(pSoldier) >= MAX_NUM_SOLDIERS) {
                       SetFont(TINYFONT1);
-                      SetFontDestBuffer(guiSAVEBUFFER, 0, gsVIEWPORT_WINDOW_START_Y, 640,
+                      SetFontDest(vsSaveBuffer, 0, gsVIEWPORT_WINDOW_START_Y, 640,
                                         gsVIEWPORT_WINDOW_END_Y, FALSE);
                       VarFindFontCenterCoordinates(sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d",
                                                    pSoldier->ubPlannedUIAPCost);
                       mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
                                      pSoldier->ubPlannedUIAPCost);
-                      SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+                      SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
                     }
                   }
                 }
@@ -5533,7 +5533,7 @@ void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoin
 
         if (gubWorldRoomInfo[usTileIndex] != NO_ROOM) {
           SetFont(SMALLCOMPFONT);
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
           switch (gubWorldRoomInfo[usTileIndex] % 5) {
             case 0:
               SetFontForeground(FONT_GRAY3);
@@ -5553,7 +5553,7 @@ void RenderRoomInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoin
           }
           mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
                          gubWorldRoomInfo[usTileIndex]);
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
         }
       }
 
@@ -5630,11 +5630,11 @@ void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 
         if (gubFOVDebugInfoInfo[usTileIndex] != 0) {
           SetFont(SMALLCOMPFONT);
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
           SetFontForeground(FONT_GRAY3);
           mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
                          gubFOVDebugInfoInfo[usTileIndex]);
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
           Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
                                                   gTileDatabase[0].hTileSurface, sTempPosX_S,
@@ -5643,10 +5643,10 @@ void RenderFOVDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 
         if (gubGridNoMarkers[usTileIndex] == gubGridNoValue) {
           SetFont(SMALLCOMPFONT);
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
           SetFontForeground(FONT_FCOLOR_YELLOW);
           mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY + 4, L"x");
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
         }
       }
 
@@ -5721,7 +5721,7 @@ void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSta
 
         if (gsCoverValue[usTileIndex] != 0x7F7F) {
           SetFont(SMALLCOMPFONT);
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
           if (usTileIndex == gsBestCover) {
             SetFontForeground(FONT_MCOLOR_RED);
           } else if (gsCoverValue[usTileIndex] < 0) {
@@ -5731,7 +5731,7 @@ void RenderCoverDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSta
           }
           mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
                          gsCoverValue[usTileIndex]);
-          SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+          SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
         }
       }
 
@@ -5805,7 +5805,7 @@ void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
         sY += gsRenderHeight;
 
         SetFont(SMALLCOMPFONT);
-        SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
+        SetFontDest(vsFB, 0, 0, 640, gsVIEWPORT_END_Y, FALSE);
 
         if (!GridNoOnVisibleWorldTile(usTileIndex)) {
           SetFontForeground(FONT_MCOLOR_RED);
@@ -5813,7 +5813,7 @@ void RenderGridNoVisibleDebugInfo(INT16 sStartPointX_M, INT16 sStartPointY_M, IN
           SetFontForeground(FONT_GRAY3);
         }
         mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d", usTileIndex);
-        SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+        SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
       }
 
       sTempPosX_S += 40;

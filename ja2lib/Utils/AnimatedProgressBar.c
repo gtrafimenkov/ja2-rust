@@ -1,5 +1,7 @@
 #include "Utils/AnimatedProgressBar.h"
 
+#include <string.h>
+
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"

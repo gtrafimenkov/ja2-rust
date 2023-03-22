@@ -2879,7 +2879,7 @@ void DrawTextOnButton(GUI_BUTTON *b) {
     if ((NewClip.iRight <= NewClip.iLeft) || (NewClip.iBottom <= NewClip.iTop)) return;
 
     // Set the font printing settings to the buttons viewable area
-    SetFontDestBuffer(FRAME_BUFFER, NewClip.iLeft, NewClip.iTop, NewClip.iRight, NewClip.iBottom,
+    SetFontDest(vsFB, NewClip.iLeft, NewClip.iTop, NewClip.iRight, NewClip.iBottom,
                       FALSE);
 
     // Compute the coordinates to center the text

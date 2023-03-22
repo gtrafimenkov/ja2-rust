@@ -1,7 +1,6 @@
 #ifndef __VSURFACE_INTERNAL_H
 #define __VSURFACE_INTERNAL_H
 
-#include "Memory.h"
 #include "SGP/Types.h"
 #include "SGP/VSurface.h"
 

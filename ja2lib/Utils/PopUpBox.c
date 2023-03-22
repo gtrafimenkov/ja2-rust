@@ -1,5 +1,7 @@
 #include "Utils/PopUpBox.h"
 
+#include <string.h>
+
 #include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/VObject.h"
@@ -1148,15 +1150,14 @@ BOOLEAN DrawBoxText(UINT32 uiCounter) {
 
   // clip text?
   if (PopUpBoxList[uiCounter]->uiFlags & POPUP_BOX_FLAG_CLIP_TEXT) {
-    SetFontDestBuffer(
-        PopUpBoxList[uiCounter]->uiBuffer,
-        PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin - 1,
-        PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->uiTopMargin,
-        PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->Dimensions.iRight -
-            PopUpBoxList[uiCounter]->uiRightMargin,
-        PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->Dimensions.iBottom -
-            PopUpBoxList[uiCounter]->uiBottomMargin,
-        FALSE);
+    SetFontDest(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer),
+                PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin - 1,
+                PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->uiTopMargin,
+                PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->Dimensions.iRight -
+                    PopUpBoxList[uiCounter]->uiRightMargin,
+                PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->Dimensions.iBottom -
+                    PopUpBoxList[uiCounter]->uiBottomMargin,
+                FALSE);
   }
 
   for (uiCount = 0; uiCount < MAX_POPUP_BOX_STRING_COUNT; uiCount++) {
@@ -1281,7 +1282,7 @@ BOOLEAN DrawBoxText(UINT32 uiCounter) {
             PopUpBoxList[uiCounter]->uiBottomMargin);
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   return TRUE;
 }

@@ -5,6 +5,8 @@
 #include "Tactical/HandleItems.h"
 #include "Tactical/Items.h"
 
+struct VSurface;
+
 // DEFINES FOR ITEM SLOT SIZES IN PIXELS
 #define BIG_INV_SLOT_WIDTH 61
 #define BIG_INV_SLOT_HEIGHT 22

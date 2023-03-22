@@ -323,7 +323,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
 
       SetFont(SMALLCOMPFONT);
       SetFontForeground(FONT_MCOLOR_WHITE);
-      SetFontDestBuffer(eInfo.uiBuffer, 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
+      SetFontDest(GetVSByID(eInfo.uiBuffer), 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
 
       swprintf(pStr, ARR_SIZE(pStr), L"%S", LockTable[i].ubEditorName);
       DisplayWrappedString(x, (UINT16)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr, FONT_BLACK,
@@ -410,7 +410,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
 
           SetFont(SMALLCOMPFONT);
           SetFontForeground(FONT_MCOLOR_WHITE);
-          SetFontDestBuffer(eInfo.uiBuffer, 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
+          SetFontDest(GetVSByID(eInfo.uiBuffer), 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
 
           if (eInfo.uiItemType != TBAR_MODE_ITEM_TRIGGERS) {
             LoadItemInfo(usCounter, pItemName, NULL);
@@ -463,7 +463,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
         usCounter++;
       }
     }
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   SetClippingRect(&SaveRect);
   gfRenderTaskbar = TRUE;
 }

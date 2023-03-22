@@ -879,7 +879,7 @@ void DisplayStringsInMapScreenMessageList(void) {
   INT16 sY;
   UINT16 usSpacing;
 
-  SetFontDestBuffer(FRAME_BUFFER, 17, 360 + 6, 407, 360 + 101, FALSE);
+  SetFontDest(vsFB, 17, 360 + 6, 407, 360 + 101, FALSE);
 
   SetFont(MAP_SCREEN_MESSAGE_FONT);  // no longer supports variable fonts
   SetFontBackground(FONT_BLACK);
@@ -913,7 +913,7 @@ void DisplayStringsInMapScreenMessageList(void) {
     ubCurrentStringIndex = (ubCurrentStringIndex + 1) % 256;
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 }
 
 void EnableDisableScrollStringVideoOverlay(BOOLEAN fEnable) {

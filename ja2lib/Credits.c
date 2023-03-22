@@ -1,5 +1,7 @@
 #include "Credits.h"
 
+#include <string.h>
+
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
@@ -103,20 +105,6 @@ enum {
 #define CRDT_NAME_FONT FONT12ARIAL
 
 #define CRDT_LINE_NODE_DISAPPEARS_AT 0  // 20
-
-/*
-//new codes:
-enum
-{
-        CRDT_ERROR,
-        CRDT_CODE_DELAY_BN_STRINGS,
-        CRDT_CODE_SCROLL_SPEED,
-        CRDT_CODE_FONT_JUSIFICATION,
-        CRDT_CODE_FONT_COLOR,
-
-        CRDT_NUM_CODES,
-};
-*/
 
 #define CRDT_WIDTH_OF_TEXT_AREA 210
 #define CRDT_TEXT_START_LOC 10
@@ -727,15 +715,15 @@ BOOLEAN AddCreditNode(UINT32 uiType, UINT32 uiFlags, STR16 pString) {
                               pNodeToAdd->sHeightOfString, 0);
 
     // set the font dest buffer to be the surface
-    SetFontDestBuffer(pNodeToAdd->uiVideoSurfaceImage, 0, 0, CRDT_WIDTH_OF_TEXT_AREA,
-                      pNodeToAdd->sHeightOfString, FALSE);
+    SetFontDest(GetVSByID(pNodeToAdd->uiVideoSurfaceImage), 0, 0, CRDT_WIDTH_OF_TEXT_AREA,
+                pNodeToAdd->sHeightOfString, FALSE);
 
     // write the string onto the surface
     DisplayWrappedString(0, 1, CRDT_WIDTH_OF_TEXT_AREA, 2, uiFontToUse, uiColorToUse,
                          pNodeToAdd->pString, 0, FALSE, gubCrdtJustification);
 
     // reset the font dest buffer
-    SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   }
 
   //
