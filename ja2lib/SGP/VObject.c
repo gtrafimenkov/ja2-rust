@@ -318,32 +318,29 @@ BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject) {
   return FALSE;
 }
 
+bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
+                     UINT32 flags, blt_fx *pBltFx) {
+  bool res = false;
+  if (dest) {
+    struct BufferLockInfo lock = VSurfaceLock(dest);
+
+    if (lock.dest == NULL) {
+      return false;
+    }
+
+    res = BltVideoObjectToBuffer(lock.dest, lock.pitch, vobj, usRegionIndex, x, y, flags, pBltFx);
+    VSurfaceUnlock(dest);
+  }
+  return res;
+}
+
 // Given an index to the dest and src vobject contained in ghVideoObjects
 // Based on flags, blit accordingly
 // There are two types, a BltFast and a Blt. BltFast is 10% faster, uses no
 // clipping lists
-BOOLEAN BltVideoObject(VSurfID destSurface, struct VObject *hSrcVObject, UINT16 usRegionIndex,
-                       INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx) {
-  UINT16 *pBuffer;
-  UINT32 uiPitch;
-
-  // Lock video surface
-  pBuffer = (UINT16 *)LockVideoSurface(destSurface, &uiPitch);
-
-  if (pBuffer == NULL) {
-    return (FALSE);
-  }
-
-  // Now we have the video object and surface, call the VO blitter function
-  if (!BltVideoObjectToBuffer(pBuffer, uiPitch, hSrcVObject, usRegionIndex, iDestX, iDestY,
-                              fBltFlags, pBltFx)) {
-    UnLockVideoSurface(destSurface);
-    // VO Blitter will set debug messages for error conditions
-    return (FALSE);
-  }
-
-  UnLockVideoSurface(destSurface);
-  return (TRUE);
+BOOLEAN BltVideoObject(VSurfID destSurface, struct VObject *vobj, UINT16 usRegionIndex, INT32 x,
+                       INT32 y, UINT32 fBltFlags, blt_fx *pBltFx) {
+  return BltVideoObject2(GetVSByID(destSurface), vobj, usRegionIndex, x, y, fBltFlags, pBltFx);
 }
 
 // *******************************************************************************

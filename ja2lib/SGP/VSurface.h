@@ -185,7 +185,6 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path);
 struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiIndex);
 
 // Global variables for video objects
-extern UINT32 guiBOTTOMPANEL;
 extern UINT32 guiRIGHTPANEL;
 extern UINT32 guiSAVEBUFFER;
 

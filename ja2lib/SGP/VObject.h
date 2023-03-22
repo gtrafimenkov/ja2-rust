@@ -84,6 +84,8 @@ BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex);
 // Blits a video object to another video object
 BOOLEAN BltVideoObject(VSurfID destSurface, struct VObject *hVSrcObject, UINT16 usRegionIndex,
                        INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx);
+bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
+                     UINT32 flags, blt_fx *pBltFx);
 
 BOOLEAN BltVideoObjectFromIndex(VSurfID destSurface, UINT32 uiSrcVObject, UINT16 usRegionIndex,
                                 INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx);

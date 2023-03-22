@@ -891,7 +891,6 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
   return vs;
 }
 
-UINT32 guiBOTTOMPANEL = 0;
 UINT32 guiRIGHTPANEL = 0;
 UINT32 guiSAVEBUFFER = 0;
 
