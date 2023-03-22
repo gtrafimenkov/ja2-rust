@@ -2151,8 +2151,8 @@ void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
   RectangleDraw(TRUE, iX, iY, iX + iW - 2, iY + iH - 2, Get16BPPColor(FROMRGB(227, 198, 88)),
                 pDestBuf);
   VSurfaceUnlock(vsFB);
-  ShadowVideoSurfaceRect(FRAME_BUFFER, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
-  ShadowVideoSurfaceRect(FRAME_BUFFER, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
+  ShadowVideoSurfaceRect(vsFB, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
+  ShadowVideoSurfaceRect(vsFB, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
 
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BEIGE);

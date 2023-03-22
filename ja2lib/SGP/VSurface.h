@@ -129,16 +129,14 @@ BOOLEAN DeleteVideoSurfaceFromIndex(VSurfID uiIndex);
 BOOLEAN BltVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface, INT32 iDestX,
                         INT32 iDestY, INT32 fBltFlags, struct BltOpts *pBltFx);
 
-BOOLEAN ShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
-BOOLEAN ShadowVideoSurfaceImage(VSurfID destSurface, struct VObject *hImageHandle, INT32 iPosX,
-                                INT32 iPosY);
+BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
 
 // If the Dest Rect and the source rect are not the same size, the source surface will be either
 // enlraged or shunk.
 BOOLEAN BltStretchVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
                                UINT32 fBltFlags, SGPRect *SrcRect, SGPRect *DestRect);
 
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(VSurfID destSurface, INT32 X1, INT32 Y1,
+BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, INT32 X1, INT32 Y1,
                                                    INT32 X2, INT32 Y2);
 
 // The following structure is used to define a region of the video Surface

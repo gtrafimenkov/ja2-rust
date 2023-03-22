@@ -1148,7 +1148,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
     switch (iColor) {
       case (MAP_SHADE_BLACK):
         // simply shade darker
-        ShadowVideoSurfaceRect(guiSAVEBUFFER, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 1,
+        ShadowVideoSurfaceRect(vsSaveBuffer, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 1,
                                sScreenY + MAP_GRID_Y - 1);
         break;
 
@@ -1351,9 +1351,9 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
       case (MAP_SHADE_BLACK):
         // simply shade darker
         if (iCurrentMapSectorZ > 0) {
-          ShadowVideoSurfaceRect(guiSAVEBUFFER, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
+          ShadowVideoSurfaceRect(vsSaveBuffer, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
         }
-        ShadowVideoSurfaceRect(guiSAVEBUFFER, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
+        ShadowVideoSurfaceRect(vsSaveBuffer, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
         break;
 
       case (MAP_SHADE_LT_GREEN):
@@ -5262,7 +5262,7 @@ void RenderShadingForUnControlledSectors(void) {
       sY = MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y +
            ((iCounter / MILITIA_BOX_ROWS) * MILITIA_BOX_BOX_HEIGHT);
 
-      ShadowVideoSurfaceRect(FRAME_BUFFER, sX, sY, sX + MILITIA_BOX_BOX_WIDTH - 1,
+      ShadowVideoSurfaceRect(vsFB, sX, sY, sX + MILITIA_BOX_BOX_WIDTH - 1,
                              sY + MILITIA_BOX_BOX_HEIGHT - 1);
     }
   }
@@ -5411,7 +5411,7 @@ BOOLEAN ShadeUndergroundMapElem(u8 sSectorX, u8 sSectorY) {
 
   sScreenX += 1;
 
-  ShadowVideoSurfaceRect(guiSAVEBUFFER, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 2,
+  ShadowVideoSurfaceRect(vsSaveBuffer, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 2,
                          sScreenY + MAP_GRID_Y - 2);
 
   return (TRUE);

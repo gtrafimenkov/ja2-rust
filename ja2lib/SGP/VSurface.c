@@ -323,22 +323,15 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDest
 BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                SGPRect *area);
 
-BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2,
-                                       BOOLEAN fLowPercentShadeTable) {
+BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1, INT32 X2,
+                                       INT32 Y2, BOOLEAN fLowPercentShadeTable) {
+  if (!dest) {
+    return FALSE;
+  }
+
   UINT16 *pBuffer;
   UINT32 uiPitch;
   SGPRect area;
-  struct VSurface *hVSurface;
-
-  // CLIP IT!
-  // FIRST GET SURFACE
-
-  //
-  // Get Video Surface
-  //
-  if (!(GetVideoSurface(&hVSurface, destSurface))) {
-    return FALSE;
-  }
 
   if (X1 < 0) X1 = 0;
 
@@ -348,13 +341,13 @@ BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, 
 
   if (Y1 < 0) Y1 = 0;
 
-  if (X2 >= hVSurface->usWidth) X2 = hVSurface->usWidth - 1;
+  if (X2 >= dest->usWidth) X2 = dest->usWidth - 1;
 
-  if (Y2 >= hVSurface->usHeight) Y2 = hVSurface->usHeight - 1;
+  if (Y2 >= dest->usHeight) Y2 = dest->usHeight - 1;
 
-  if (X1 >= hVSurface->usWidth) return (FALSE);
+  if (X1 >= dest->usWidth) return (FALSE);
 
-  if (Y1 >= hVSurface->usHeight) return (FALSE);
+  if (Y1 >= dest->usHeight) return (FALSE);
 
   if ((X2 - X1) <= 0) return (FALSE);
 
@@ -366,7 +359,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, 
   area.iRight = X2;
 
   // Lock video surface
-  pBuffer = (UINT16 *)VSurfaceLockOld(GetVSByID(destSurface), &uiPitch);
+  pBuffer = (UINT16 *)VSurfaceLockOld(dest, &uiPitch);
 
   if (pBuffer == NULL) {
     return (FALSE);
@@ -386,17 +379,17 @@ BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, 
     }
   }
 
-  VSurfaceUnlock(GetVSByID(destSurface));
+  VSurfaceUnlock(dest);
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2) {
-  return (InternalShadowVideoSurfaceRect(destSurface, X1, Y1, X2, Y2, FALSE));
+BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2) {
+  return (InternalShadowVideoSurfaceRect(dest, X1, Y1, X2, Y2, FALSE));
 }
 
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(VSurfID destSurface, INT32 X1, INT32 Y1,
+BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, INT32 X1, INT32 Y1,
                                                    INT32 X2, INT32 Y2) {
-  return (InternalShadowVideoSurfaceRect(destSurface, X1, Y1, X2, Y2, TRUE));
+  return (InternalShadowVideoSurfaceRect(dest, X1, Y1, X2, Y2, TRUE));
 }
 
 // This function will stretch the source image to the size of the dest rect.
@@ -422,20 +415,6 @@ BOOLEAN BltStretchVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iD
     return (FALSE);
   }
 
-  return (TRUE);
-}
-
-BOOLEAN ShadowVideoSurfaceImage(VSurfID destSurface, struct VObject *hImageHandle, INT32 iPosX,
-                                INT32 iPosY) {
-  // Horizontal shadow
-  ShadowVideoSurfaceRect(destSurface, iPosX + 3, iPosY + hImageHandle->pETRLEObject->usHeight,
-                         iPosX + hImageHandle->pETRLEObject->usWidth,
-                         iPosY + hImageHandle->pETRLEObject->usHeight + 3);
-
-  // vertical shadow
-  ShadowVideoSurfaceRect(destSurface, iPosX + hImageHandle->pETRLEObject->usWidth, iPosY + 3,
-                         iPosX + hImageHandle->pETRLEObject->usWidth + 3,
-                         iPosY + hImageHandle->pETRLEObject->usHeight);
   return (TRUE);
 }
 

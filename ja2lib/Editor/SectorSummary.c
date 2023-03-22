@@ -1251,7 +1251,7 @@ void RenderSummaryWindow() {
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
     RectangleDraw(TRUE, 350, 15, 405, 28, 0, pDestBuf);
     VSurfaceUnlock(vsFB);
-    ShadowVideoSurfaceRectUsingLowPercentTable(FRAME_BUFFER, 351, 16, 404, 27);
+    ShadowVideoSurfaceRectUsingLowPercentTable(vsFB, 351, 16, 404, 27);
     if (gpCurrentSectorSummary) {
       SetFontForeground(FONT_YELLOW);
     } else {
@@ -1268,9 +1268,9 @@ void RenderSummaryWindow() {
             gpNEnemyItemsSummaryArray && gusNEnemyItemsSummaryArraySize )
             */
     {
-      ShadowVideoSurfaceRectUsingLowPercentTable(FRAME_BUFFER, 351, 31, 404, 42);
+      ShadowVideoSurfaceRectUsingLowPercentTable(vsFB, 351, 31, 404, 42);
     } else {
-      ShadowVideoSurfaceRect(FRAME_BUFFER, 351, 31, 404, 42);
+      ShadowVideoSurfaceRect(vsFB, 351, 31, 404, 42);
     }
     SetFontForeground(FONT_GRAY2);
   }

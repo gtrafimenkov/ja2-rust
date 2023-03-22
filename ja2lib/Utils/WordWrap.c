@@ -1422,8 +1422,7 @@ INT32 GetNewTotalYPositionOfThisString(INT32 iTotalYPosition, INT32 iPageSize, I
 void ShadowText(VSurfID destSurface, STR16 pString, UINT32 uiFont, UINT16 usPosX, UINT16 usPosY) {
   UINT32 uiLength = StringPixLength(pString, uiFont);
   UINT16 usFontHeight = WFGetFontHeight(uiFont);
-
-  ShadowVideoSurfaceRect(destSurface, usPosX, usPosY, usPosX + uiLength + 1,
+  ShadowVideoSurfaceRect(GetVSByID(destSurface), usPosX, usPosY, usPosX + uiLength + 1,
                          usPosY + usFontHeight + 1);
 }
 

@@ -502,7 +502,7 @@ BOOLEAN RenderGIOScreen() {
   BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Shade the background
-  ShadowVideoSurfaceRect(FRAME_BUFFER, 48, 55, 592, 378);  // 358
+  ShadowVideoSurfaceRect(vsFB, 48, 55, 592, 378);  // 358
 
   // Display the title
   DrawTextToScreen(gzGIOScreenText[GIO_INITIAL_GAME_SETTINGS], GIO_MAIN_TITLE_X, GIO_MAIN_TITLE_Y,

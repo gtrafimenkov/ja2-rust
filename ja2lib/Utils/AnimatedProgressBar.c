@@ -241,11 +241,6 @@ void RenderProgressBar(UINT8 ubID, UINT32 uiPercentage) {
       VSurfaceColorFill(vsFB, pCurr->usBarLeft, pCurr->usBarTop, end, pCurr->usBarBottom,
                         Get16BPPColor(FROMRGB(pCurr->ubColorFillRed, pCurr->ubColorFillGreen,
                                               pCurr->ubColorFillBlue)));
-      // if( pCurr->usBarRight > gusLeftmostShaded )
-      //{
-      //	ShadowVideoSurfaceRect( FRAME_BUFFER, gusLeftmostShaded+1, pCurr->usBarTop, end,
-      // pCurr->usBarBottom ); 	gusLeftmostShaded = (UINT16)end;
-      //}
     } else {
       // Border edge of the progress bar itself in gray
       VSurfaceColorFill(vsFB, pCurr->usBarLeft, pCurr->usBarTop, pCurr->usBarRight,

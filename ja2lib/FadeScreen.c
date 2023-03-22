@@ -40,8 +40,6 @@ void FadeFrameBufferRealFade();
 
 void FadeInFrameBufferRealFade();
 
-extern BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(VSurfID destSurface, INT32 X1, INT32 Y1,
-                                                          INT32 X2, INT32 Y2);
 BOOLEAN UpdateSaveBufferWithBackbuffer(void);
 
 BOOLEAN gfFadeIn = FALSE;
@@ -218,7 +216,7 @@ UINT32 FadeScreenShutdown() { return (FALSE); }
 
 void FadeFrameBufferRealFade() {
   if (gsFadeRealCount != gsFadeCount) {
-    ShadowVideoSurfaceRectUsingLowPercentTable(FRAME_BUFFER, 0, 0, 640, 480);
+    ShadowVideoSurfaceRectUsingLowPercentTable(vsFB, 0, 0, 640, 480);
     gsFadeRealCount = gsFadeCount;
   }
 }
@@ -228,7 +226,7 @@ void FadeInFrameBufferRealFade() {
 
   if (gsFadeRealCount != gsFadeCount) {
     for (cnt = 0; cnt < (gsFadeLimit - gsFadeCount); cnt++) {
-      ShadowVideoSurfaceRectUsingLowPercentTable(FRAME_BUFFER, 0, 0, 640, 480);
+      ShadowVideoSurfaceRectUsingLowPercentTable(vsFB, 0, 0, 640, 480);
     }
 
     // Refresh Screen
