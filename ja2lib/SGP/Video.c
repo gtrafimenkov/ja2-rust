@@ -46,3 +46,5 @@ BOOLEAN EraseMouseCursor() {
 }
 
 struct VObject *gpCursorStore;
+
+INT32 giNumFrames = 0;

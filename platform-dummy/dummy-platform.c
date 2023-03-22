@@ -144,8 +144,6 @@ void SoundRemoveSampleFlags(UINT32 uiSample, UINT32 uiFlags) {}
 // Video
 /////////////////////////////////////////////////////////////////////////////////
 
-INT32 giNumFrames = 0;
-
 void RefreshScreen() {}
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }

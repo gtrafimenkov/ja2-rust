@@ -111,7 +111,6 @@ typedef struct {
 UINT32 guiFramePeriod = (1000 / 15);
 UINT32 guiLastFrame;
 UINT16 *gpFrameData[MAX_NUM_FRAMES];
-INT32 giNumFrames = 0;
 
 //
 // Direct Draw objects for both the Primary and Backbuffer surfaces
