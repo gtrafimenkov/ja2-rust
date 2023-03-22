@@ -1429,7 +1429,7 @@ void HandleExitsFromMapScreen(void) {
           SetPendingNewScreen(LAPTOP_SCREEN);
           // Then initiate the transition animation from the mapscreen to
           // laptop...
-          BlitBufferToBuffer(FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480);
+          VSurfaceBlitBufToBuf(vsFB, vsExtraBuffer, 0, 0, 640, 480);
           gfStartMapScreenToLaptopTransition = TRUE;
           break;
 

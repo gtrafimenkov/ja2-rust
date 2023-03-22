@@ -479,19 +479,19 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
   sEndTop = SrcRect.iTop + gpAR->sHeight / 2;
 
   // save the prebattle/mapscreen interface background
-  BlitBufferToBuffer(FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsFB, vsExtraBuffer, 0, 0, 640, 480);
 
   // render the autoresolve panel
   RenderAutoResolve();
   RenderButtons();
   RenderButtonsFastHelp();
   // save it
-  BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
-                     (UINT16)SrcRect.iRight, (UINT16)SrcRect.iBottom);
+  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
+                       (UINT16)SrcRect.iRight, (UINT16)SrcRect.iBottom);
 
   // hide the autoresolve
-  BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
-                     (UINT16)SrcRect.iRight, (UINT16)SrcRect.iBottom);
+  VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
+                       (UINT16)SrcRect.iRight, (UINT16)SrcRect.iBottom);
 
   PlayJA2SampleFromFile("SOUNDS\\Laptop power up (8-11).wav", RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
   while (iPercentage < 100) {
@@ -520,9 +520,9 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
     RefreshScreen();
 
     // Restore the previous rect.
-    BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop,
-                       (UINT16)(DstRect.iRight - DstRect.iLeft + 1),
-                       (UINT16)(DstRect.iBottom - DstRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop,
+                         (UINT16)(DstRect.iRight - DstRect.iLeft + 1),
+                         (UINT16)(DstRect.iBottom - DstRect.iTop + 1));
   }
   // BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
 }
@@ -615,7 +615,7 @@ UINT32 AutoResolveScreenHandle() {
     pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
     Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
     VSurfaceUnlock(vsFB);
-    BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
     KillPreBattleInterface();
     CalculateAutoResolveInfo();
     CalculateSoldierCells(FALSE);

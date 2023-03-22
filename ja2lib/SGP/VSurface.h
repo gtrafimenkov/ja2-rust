@@ -186,7 +186,6 @@ struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiInd
 extern UINT32 guiBOTTOMPANEL;
 extern UINT32 guiRIGHTPANEL;
 extern UINT32 guiSAVEBUFFER;
-extern UINT32 guiEXTRABUFFER;
 
 BOOLEAN InitializeSystemVideoObjects();
 BOOLEAN InitializeGameVideoObjects();

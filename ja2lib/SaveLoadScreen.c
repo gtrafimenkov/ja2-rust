@@ -294,7 +294,7 @@ UINT32 SaveLoadScreenHandle() {
     PauseGame();
 
     // save the new rect
-    BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 639, 439);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 639, 439);
   }
 
   RestoreBackgroundRects();

@@ -960,7 +960,6 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
 UINT32 guiBOTTOMPANEL = 0;
 UINT32 guiRIGHTPANEL = 0;
 UINT32 guiSAVEBUFFER = 0;
-UINT32 guiEXTRABUFFER = 0;
 
 struct VSurface *vsExtraBuffer = NULL;
 struct VSurface *vsSaveBuffer = NULL;
@@ -979,7 +978,7 @@ BOOLEAN InitializeGameVideoObjects() {
     return FALSE;
   }
 
-  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, ubBitDepth, &guiEXTRABUFFER);
+  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, ubBitDepth, NULL);
   if (!vsExtraBuffer) {
     return FALSE;
   }

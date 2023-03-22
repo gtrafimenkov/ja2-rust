@@ -1089,20 +1089,34 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
   UnLockVideoSurface(pBlitter->uiDestBuff);
 }
 
-BOOLEAN BlitBufferToBuffer(UINT32 uiSrcBuffer, UINT32 uiDestBuffer, UINT16 usSrcX, UINT16 usSrcY,
-                           UINT16 usWidth, UINT16 usHeight) {
+bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, u16 x, u16 y, u16 width,
+                          u16 height) {
+  struct BufferLockInfo srcLock = VSurfaceLock(src);
+  struct BufferLockInfo destLock = VSurfaceLock(dest);
+
+  bool res = Blt16BPPTo16BPP((UINT16 *)destLock.dest, destLock.pitch, (UINT16 *)srcLock.dest,
+                             srcLock.pitch, x, y, x, y, width, height);
+
+  VSurfaceUnlock(src);
+  VSurfaceUnlock(dest);
+
+  return (res);
+}
+
+BOOLEAN BlitBufferToBuffer(UINT32 src, UINT32 dest, UINT16 usSrcX, UINT16 usSrcY, UINT16 usWidth,
+                           UINT16 usHeight) {
   UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
   BOOLEAN fRetVal;
 
-  pDestBuf = LockVideoSurface(uiDestBuffer, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
+  pDestBuf = LockVideoSurface(dest, &uiDestPitchBYTES);
+  pSrcBuf = LockVideoSurface(src, &uiSrcPitchBYTES);
 
   fRetVal = Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf,
                             uiSrcPitchBYTES, usSrcX, usSrcY, usSrcX, usSrcY, usWidth, usHeight);
 
-  UnLockVideoSurface(uiDestBuffer);
-  UnLockVideoSurface(uiSrcBuffer);
+  UnLockVideoSurface(dest);
+  UnLockVideoSurface(src);
 
   return (fRetVal);
 }

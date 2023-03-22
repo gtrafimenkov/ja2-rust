@@ -310,8 +310,8 @@ void RenderSliderBox(SLIDER *pSlider) {
     }
 
     // Blit the new rect
-    BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
-                       pSlider->ubSliderWidth, pSlider->ubSliderHeight);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                         pSlider->ubSliderWidth, pSlider->ubSliderHeight);
   } else {
     // fill out the settings for the current dest and source rects
     DestRect.iLeft = pSlider->usCurrentSliderBoxPosition;
@@ -327,8 +327,7 @@ void RenderSliderBox(SLIDER *pSlider) {
     }
 
     // save the new rect
-    BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
-                       8, 15);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop, 8, 15);
   }
 
   // Save the new rect location

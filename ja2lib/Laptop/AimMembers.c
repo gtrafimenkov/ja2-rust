@@ -3584,8 +3584,8 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (ubCount > 1) {
       usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
-                         usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                           usWidth, usHeight);
     }
   } else {
     // Restore the old rect
@@ -3600,8 +3600,8 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 1) {
       usWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       usHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
-                         usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
+                           usWidth, usHeight);
     }
   }
 

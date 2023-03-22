@@ -712,7 +712,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
   sEndTop = 180;
 
   // save the mapscreen buffer
-  BlitBufferToBuffer(FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsFB, vsExtraBuffer, 0, 0, 640, 480);
 
   if (gfEnterAutoResolveMode) {  // If we are intending on immediately entering autoresolve, change
                                  // the global flag so that it will actually
@@ -732,11 +732,11 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
 
   BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, 27, 54, 209, 32);
   RenderButtons();
-  BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 27, 54, 209, 32);
+  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 27, 54, 209, 32);
   gfRenderPBInterface = TRUE;
 
   // hide the prebattle interface
-  BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, 0, 0, 261, 359);
+  VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, 0, 0, 261, 359);
   PlayJA2SampleFromFile("SOUNDS\\Laptop power up (8-11).wav", RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
   InvalidateScreen();
   RefreshScreen();
@@ -771,11 +771,11 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     RefreshScreen();
 
     // Restore the previous rect.
-    BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop,
-                       (UINT16)(DstRect.iRight - DstRect.iLeft + 1),
-                       (UINT16)(DstRect.iBottom - DstRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop,
+                         (UINT16)(DstRect.iRight - DstRect.iLeft + 1),
+                         (UINT16)(DstRect.iBottom - DstRect.iTop + 1));
   }
-  BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
 }
 
 void KillPreBattleInterface() {
