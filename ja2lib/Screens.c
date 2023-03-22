@@ -16,7 +16,6 @@ Screens GameScreens[MAX_SCREENS] = {
     {MapScreenInit, MapScreenHandle, MapScreenShutdown},
     {LaptopScreenInit, LaptopScreenHandle, LaptopScreenShutdown},
     {LoadSaveScreenInit, LoadSaveScreenHandle, LoadSaveScreenShutdown},
-    {MapUtilScreenInit, MapUtilScreenHandle, MapUtilScreenShutdown},
     {FadeScreenInit, FadeScreenHandle, FadeScreenShutdown},
     {MessageBoxScreenInit, MessageBoxScreenHandle, MessageBoxScreenShutdown},
     {MainMenuScreenInit, MainMenuScreenHandle, MainMenuScreenShutdown},

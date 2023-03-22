@@ -444,7 +444,7 @@ void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEA
 
         InvalidateScreen();
         EndFrameBufferRender();
-        RefreshScreen(NULL);
+        RefreshScreen();
 
         do {
         } while ((GetJA2Clock() - cnt) < 250);

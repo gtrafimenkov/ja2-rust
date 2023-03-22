@@ -237,12 +237,9 @@ BOOLEAN CreateAIViewer() {
   DisableScrollMessages();
   giSaveTCMode = giTimeCompressMode;
 
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  sprintf(VObjectDesc.ImageFile, "DevTools\\arulco.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiMapGraphicID))
+  if (!AddVObjectFromFile("DevTools\\arulco.sti", &guiMapGraphicID))
     AssertMsg(0, "Failed to load data\\DevTools\\arulco.sti");
-  sprintf(VObjectDesc.ImageFile, "DevTools\\icons.sti");
-  if (!AddVideoObject(&VObjectDesc, &guiMapIconsID))
+  if (!AddVObjectFromFile("DevTools\\icons.sti", &guiMapIconsID))
     AssertMsg(0, "Failed to load data\\DevTools\\icons.sti");
 
   gfRenderViewer = TRUE;
@@ -389,21 +386,19 @@ void DestroyAIViewer() {
 }
 
 void ClearViewerRegion(int16_t sLeft, int16_t sTop, int16_t sRight, int16_t sBottom) {
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, sTop, sRight, sBottom, gusBlue);
+  VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, gusBlue);
   InvalidateRegion(sLeft, sTop, sRight, sBottom);
 
   if (!sLeft) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 0, sTop, 1, sBottom, gusLtBlue);
+    VSurfaceColorFill(vsFB, 0, sTop, 1, sBottom, gusLtBlue);
     sLeft++;
   }
   if (!sTop) {
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 0, sRight, 1, gusLtBlue);
+    VSurfaceColorFill(vsFB, sLeft, 0, sRight, 1, gusLtBlue);
     sTop++;
   }
-  if (sBottom == 480)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, sLeft, 479, sRight, 480, gusDkBlue);
-  if (sRight == 640)
-    ColorFillVideoSurfaceArea(ButtonDestBuffer, 639, sTop, 640, sBottom, gusDkBlue);
+  if (sBottom == 480) VSurfaceColorFill(vsFB, sLeft, 479, sRight, 480, gusDkBlue);
+  if (sRight == 640) VSurfaceColorFill(vsFB, 639, sTop, 640, sBottom, gusDkBlue);
 }
 
 void RenderStationaryGroups() {
@@ -428,12 +423,10 @@ void RenderStationaryGroups() {
       uint8_t allMilCount = CountMilitiaInSector(x + 1, y + 1);
 
       if (pSector->uiFlags & SF_MINING_SITE)
-        BltVideoObject(FRAME_BUFFER, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY,
-                       NULL);
+        BltVideoObject2(vsFB, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY, NULL);
 
       if (pSector->uiFlags & SF_SAM_SITE)
-        BltVideoObject(FRAME_BUFFER, hVObject, SAM_ICON, xp + 20, yp + 4, VO_BLT_SRCTRANSPARENCY,
-                       NULL);
+        BltVideoObject2(vsFB, hVObject, SAM_ICON, xp + 20, yp + 4, VO_BLT_SRCTRANSPARENCY, NULL);
 
       if (allMilCount > 0) {
         // show militia
@@ -515,10 +508,9 @@ void RenderMovingGroupsAndMercs() {
         // if the group was moving, then draw the anchor to visually indicate the sector of
         // influence for enemy patrol groups.
         if (pGroup->uiTraverseTime) {
-          BltVideoObject(FRAME_BUFFER, hVObject, GROUP_ANCHOR,
-                         VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1),
-                         VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1),
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(
+              vsFB, hVObject, GROUP_ANCHOR, VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1),
+              VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1), VO_BLT_SRCTRANSPARENCY, NULL);
         }
 
         ubNumAdmins = pGroup->pEnemyGroup->ubNumAdmins;  //+ pGroup->pEnemyGroup->ubAdminsInBattle;
@@ -760,7 +752,7 @@ void RenderViewer() {
 
   if (gfRenderMap) {
     gfRenderMap = FALSE;
-    BltVideoObjectFromIndex(FRAME_BUFFER, guiMapGraphicID, 0, VIEWER_LEFT, VIEWER_TOP,
+    BltVideoObjectFromIndex(vsFB, guiMapGraphicID, 0, VIEWER_LEFT, VIEWER_TOP,
                             VO_BLT_SRCTRANSPARENCY, NULL);
     InvalidateRegion(VIEWER_LEFT, VIEWER_TOP, VIEWER_RIGHT, VIEWER_BOTTOM);
     // Draw the coordinates
@@ -804,12 +796,12 @@ void RenderViewer() {
             yp = VIEWER_TOP + y * VIEWER_CELLH + 2;
             mprintf(xp, yp, L"%d", pUnder->ubNumCreatures);
           } else {  // not found, so visually shade it darker.
-            pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+            pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
             ClipRect.iLeft = VIEWER_LEFT + x * VIEWER_CELLW;
             ClipRect.iRight = ClipRect.iLeft + VIEWER_CELLW - 1;
             Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
             Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-            UnLockVideoSurface(FRAME_BUFFER);
+            VSurfaceUnlock(vsFB);
           }
         }
       }
@@ -817,7 +809,7 @@ void RenderViewer() {
     RenderInfoInSector();
   }
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   // Render the grid for the sector if the mouse is over it (yellow).
   if (gsHiSectorX > 0) {
@@ -831,7 +823,7 @@ void RenderViewer() {
     y = VIEWER_TOP + (gsSelSectorY - 1) * 22;
     RectangleDraw(TRUE, x, y, x + 26, y + 22, Get16BPPColor(FROMRGB(200, 50, 50)), pDestBuf);
   }
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 }
 
 void ViewerExitCallback(GUI_BUTTON *btn, int32_t reason) {
@@ -1626,7 +1618,7 @@ void BlitGroupIcon(uint8_t ubIconType, uint8_t ubIconColor, uint32_t uiX, uint32
   Assert(ubIconColor < NUM_ICON_COLORS);
 
   ubObjectIndex = (ubIconType * NUM_ICON_COLORS) + ubIconColor;
-  BltVideoObject(FRAME_BUFFER, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void PrintDetailedEnemiesInSectorInfo(int32_t iScreenX, int32_t iScreenY, uint8_t ubSectorX,

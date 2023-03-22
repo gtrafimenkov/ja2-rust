@@ -108,7 +108,6 @@ BOOLEAN ResetOverrideMercPopupBox() {
 
 BOOLEAN InitMercPopupBox() {
   int32_t iCounter = 0;
-  VOBJECT_DESC VObjectDesc;
 
   // init the pop up box list
   for (iCounter = 0; iCounter < MAX_NUMBER_OF_POPUP_BOXES; iCounter++) {
@@ -117,15 +116,11 @@ BOOLEAN InitMercPopupBox() {
   }
 
   // LOAD STOP ICON...
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\msgboxicons.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiBoxIcons))
+  if (!AddVObjectFromFile("INTERFACE\\msgboxicons.sti", &guiBoxIcons))
     AssertMsg(0, "Missing INTERFACE\\msgboxicons.sti");
 
   // LOAD SKULL ICON...
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\msgboxiconskull.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiSkullIcons))
+  if (!AddVObjectFromFile("INTERFACE\\msgboxiconskull.sti", &guiSkullIcons))
     AssertMsg(0, "Missing INTERFACE\\msgboxiconskull.sti");
 
   return (TRUE);
@@ -148,19 +143,21 @@ void GetMercPopupBoxFontColor(uint8_t ubBackgroundIndex, uint8_t *pubFontColor,
 // Tactical Popup
 BOOLEAN LoadTextMercPopupImages(uint8_t ubBackgroundIndex, uint8_t ubBorderIndex) {
   VSURFACE_DESC vs_desc;
-  VOBJECT_DESC VObjectDesc;
 
   // this function will load the graphics associated with the background and border index values
 
   // the background
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
   strcpy(vs_desc.ImageFile, zMercBackgroundPopupFilenames[ubBackgroundIndex]);
-  CHECKF(AddVideoSurface(&vs_desc, &gPopUpTextBox->uiMercTextPopUpBackground));
+  if (!(AddVideoSurface(&vs_desc, &gPopUpTextBox->uiMercTextPopUpBackground))) {
+    return FALSE;
+  }
 
   // border
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP(zMercBorderPopupFilenames[ubBorderIndex], VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &gPopUpTextBox->uiMercTextPopUpBorder));
+  if (!AddVObjectFromFile(zMercBorderPopupFilenames[ubBorderIndex],
+                          &gPopUpTextBox->uiMercTextPopUpBorder)) {
+    return FALSE;
+  }
 
   gPopUpTextBox->fMercTextPopupInitialized = TRUE;
 
@@ -201,33 +198,17 @@ BOOLEAN RenderMercPopUpBoxFromIndex(int32_t iBoxId, int16_t sDestX, int16_t sDes
 }
 
 BOOLEAN RenderMercPopupBox(int16_t sDestX, int16_t sDestY, uint32_t uiBuffer) {
-  //	uint32_t  uiDestPitchBYTES;
-  //	uint32_t  uiSrcPitchBYTES;
-  //  uint16_t  *pDestBuf;
-  //	uint16_t  *pSrcBuf;
-
   // will render/transfer the image from the buffer in the data structure to the buffer specified by
   // user
   BOOLEAN fReturnValue = TRUE;
 
-  // grab the destination buffer
-  //	pDestBuf = ( uint16_t* )LockVideoSurface( uiBuffer, &uiDestPitchBYTES );
-
-  // now lock it
-  //	pSrcBuf = ( uint16_t* )LockVideoSurface( gPopUpTextBox->uiSourceBufferIndex,
-  //&uiSrcPitchBYTES);
-
   // check to see if we are wanting to blit a transparent background
   if (gPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_TRANS_BACK)
-    BltVideoSurface(uiBuffer, gPopUpTextBox->uiSourceBufferIndex, 0, sDestX, sDestY,
-                    VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
+    BltVideoSurface(GetVSByID(uiBuffer), GetVSByID(gPopUpTextBox->uiSourceBufferIndex), sDestX,
+                    sDestY, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
   else
-    BltVideoSurface(uiBuffer, gPopUpTextBox->uiSourceBufferIndex, 0, sDestX, sDestY, VS_BLT_FAST,
-                    NULL);
-
-  // blt, and grab return value
-  //	fReturnValue = Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, sDestX,
-  // sDestY, 0, 0, gPopUpTextBox->sWidth, gPopUpTextBox->sHeight);
+    BltVideoSurface(GetVSByID(uiBuffer), GetVSByID(gPopUpTextBox->uiSourceBufferIndex), sDestX,
+                    sDestY, VS_BLT_FAST, NULL);
 
   // Invalidate!
   if (uiBuffer == FRAME_BUFFER) {
@@ -235,15 +216,6 @@ BOOLEAN RenderMercPopupBox(int16_t sDestX, int16_t sDestY, uint32_t uiBuffer) {
                      (int16_t)(sDestY + gPopUpTextBox->sHeight));
   }
 
-  // unlock the video surfaces
-
-  // source
-  //	UnLockVideoSurface( gPopUpTextBox->uiSourceBufferIndex );
-
-  // destination
-  //	UnLockVideoSurface( uiBuffer );
-
-  // return success or failure
   return fReturnValue;
 }
 
@@ -389,11 +361,13 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
   }
   // Create a background video surface to blt the face onto
   memset(&vs_desc, 0, sizeof(VSURFACE_DESC));
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = usWidth;
   vs_desc.usHeight = usHeight;
   vs_desc.ubBitDepth = 16;
-  CHECKF(AddVideoSurface(&vs_desc, &pPopUpTextBox->uiSourceBufferIndex));
+  if (!(AddVideoSurface(&vs_desc, &pPopUpTextBox->uiSourceBufferIndex))) {
+    return FALSE;
+  }
   pPopUpTextBox->fMercTextPopupSurfaceInitialized = TRUE;
 
   pPopUpTextBox->sWidth = usWidth;
@@ -412,7 +386,8 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
     // Set source transparcenty
     SetVideoSurfaceTransparency(pPopUpTextBox->uiSourceBufferIndex, FROMRGB(255, 255, 0));
 
-    pDestBuf = (uint16_t *)LockVideoSurface(pPopUpTextBox->uiSourceBufferIndex, &uiDestPitchBYTES);
+    pDestBuf = (uint16_t *)VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiSourceBufferIndex),
+                                           &uiDestPitchBYTES);
 
     usColorVal = Get16BPPColor(FROMRGB(255, 255, 0));
     usLoopEnd = (usWidth * usHeight);
@@ -421,7 +396,7 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
       pDestBuf[i] = usColorVal;
     }
 
-    UnLockVideoSurface(pPopUpTextBox->uiSourceBufferIndex);
+    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
 
   } else {
     if (!GetVideoSurface(&hSrcVSurface, pPopUpTextBox->uiMercTextPopUpBackground)) {
@@ -429,14 +404,16 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
                           pPopUpTextBox->uiMercTextPopUpBackground));
     }
 
-    pDestBuf = (uint16_t *)LockVideoSurface(pPopUpTextBox->uiSourceBufferIndex, &uiDestPitchBYTES);
-    pSrcBuf = LockVideoSurface(pPopUpTextBox->uiMercTextPopUpBackground, &uiSrcPitchBYTES);
+    pDestBuf = (uint16_t *)VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiSourceBufferIndex),
+                                           &uiDestPitchBYTES);
+    pSrcBuf =
+        VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground), &uiSrcPitchBYTES);
 
     Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
                                 0, 0, &DestRect);
 
-    UnLockVideoSurface(pPopUpTextBox->uiMercTextPopUpBackground);
-    UnLockVideoSurface(pPopUpTextBox->uiSourceBufferIndex);
+    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground));
+    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
   }
 
   GetVideoObject(&hImageHandle, pPopUpTextBox->uiMercTextPopUpBorder);
@@ -480,11 +457,11 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
 
   // Icon if ness....
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_STOPICON) {
-    BltVideoObjectFromIndex(pPopUpTextBox->uiSourceBufferIndex, guiBoxIcons, 0, 5, 4,
+    BltVideoObjectFromIndex(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), guiBoxIcons, 0, 5, 4,
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_SKULLICON) {
-    BltVideoObjectFromIndex(pPopUpTextBox->uiSourceBufferIndex, guiSkullIcons, 0, 9, 4,
+    BltVideoObjectFromIndex(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), guiSkullIcons, 0, 9, 4,
                             VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
@@ -492,7 +469,7 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
   GetMercPopupBoxFontColor(ubBackgroundIndex, &ubFontColor, &ubFontShadowColor);
 
   SetFontShadow(ubFontShadowColor);
-  SetFontDestBuffer(pPopUpTextBox->uiSourceBufferIndex, 0, 0, usWidth, usHeight, FALSE);
+  SetFontDest(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), 0, 0, usWidth, usHeight, FALSE);
 
   // Display the text
   sDispTextXPos = (int16_t)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_X + usMarginX));
@@ -502,34 +479,11 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
     sDispTextXPos += 30;
   }
 
-// if language represents words with a single char
-#ifdef SINGLE_CHAR_WORDS
-  {
-    // Enable the use of single word wordwrap
-    if (gfUseWinFonts) {
-      UseSingleCharWordsForWordWrap(TRUE);
-    }
+  DisplayWrappedString(
+      sDispTextXPos, (int16_t)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY)), usTextWidth,
+      2, MERC_TEXT_FONT, ubFontColor, pString, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
-    // Display the text
-    DisplayWrappedString(sDispTextXPos,
-                         (int16_t)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY)),
-                         usTextWidth, 2, MERC_TEXT_FONT, ubFontColor, pString, FONT_MCOLOR_BLACK,
-                         FALSE, LEFT_JUSTIFIED);
-
-    // Disable the use of single word wordwrap
-    UseSingleCharWordsForWordWrap(FALSE);
-  }
-#else
-  {
-    // Display the text
-    DisplayWrappedString(sDispTextXPos,
-                         (int16_t)((MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY)),
-                         usTextWidth, 2, MERC_TEXT_FONT, ubFontColor, pString, FONT_MCOLOR_BLACK,
-                         FALSE, LEFT_JUSTIFIED);
-  }
-#endif
-
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   SetFontShadow(DEFAULT_SHADOW);
 
   if (iBoxId == -1) {

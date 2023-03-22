@@ -4,14 +4,16 @@
 #include "Editor/EditorDefines.h"
 #include "Editor/EditorTaskbarUtils.h"
 #include "SGP/ButtonSystem.h"
+#include "SGP/Input.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldDat.h"
+#include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 
 extern BOOLEAN gfOverheadMapDirty;
@@ -810,7 +812,7 @@ void RenderSelectionWindow(void) {
 
   if (!fButtonsPresent) return;
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, 600, 400, GenericButtonFillColors[0]);
+  VSurfaceColorFill(vsFB, 0, 0, 600, 400, GenericButtonFillColors[0]);
   DrawSelections();
   MarkButtonsDirty();
   RenderButtons();
@@ -857,10 +859,10 @@ void RenderSelectionWindow(void) {
       else if (usFillGreen < 5)
         usDir = 5;
 
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, iSX, iSY, iEX, iSY + 1, usFillColor);
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, iSX, iEY, iEX, iEY + 1, usFillColor);
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, iSX, iSY, iSX + 1, iEY, usFillColor);
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, iEX, iSY, iEX + 1, iEY, usFillColor);
+      VSurfaceColorFill(vsFB, iSX, iSY, iEX, iSY + 1, usFillColor);
+      VSurfaceColorFill(vsFB, iSX, iEY, iEX, iEY + 1, usFillColor);
+      VSurfaceColorFill(vsFB, iSX, iSY, iSX + 1, iEY, usFillColor);
+      VSurfaceColorFill(vsFB, iEX, iSY, iEX + 1, iEY, usFillColor);
     }
   }
 }
@@ -1457,16 +1459,16 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, int16_t iTopCutOff, int16_t iBotto
       usFillColor = SelWinFillColor;
       if (pNode->fChosen) usFillColor = SelWinHilightFillColor;
 
-      ColorFillVideoSurfaceArea(FRAME_BUFFER, pNode->iX, iCurrY, pNode->iX + pNode->iWidth,
-                                iCurrY + pNode->iHeight, usFillColor);
+      VSurfaceColorFill(vsFB, pNode->iX, iCurrY, pNode->iX + pNode->iWidth, iCurrY + pNode->iHeight,
+                        usFillColor);
     }
 
     sCount = 0;
     if (pNode->fChosen) sCount = pSelList[FindInSelectionList(pNode)].sCount;
 
     SetObjectShade(pNode->hObj, DEFAULT_SHADE_LEVEL);
-    fReturnVal = BltVideoObject(FRAME_BUFFER, pNode->hObj, pNode->uiIndex, (uint16_t)pNode->iX,
-                                (uint16_t)iCurrY, VO_BLT_SRCTRANSPARENCY, NULL);
+    fReturnVal = BltVideoObject2(vsFB, pNode->hObj, pNode->uiIndex, (uint16_t)pNode->iX,
+                                 (uint16_t)iCurrY, VO_BLT_SRCTRANSPARENCY, NULL);
 
     if (sCount != 0) {
       gprintf(pNode->iX, iCurrY, L"%d", sCount);

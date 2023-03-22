@@ -19,17 +19,15 @@ uint32_t guiMiscGrid;
 void GameInitBobbyRMisc() {}
 
 BOOLEAN EnterBobbyRMisc() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the background graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\miscbackground.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMiscBackground));
+  if (!AddVObjectFromFile("LAPTOP\\miscbackground.sti", &guiMiscBackground)) {
+    return FALSE;
+  }
 
   // load the gunsgrid graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\miscgrid.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiMiscGrid));
+  if (!AddVObjectFromFile("LAPTOP\\miscgrid.sti", &guiMiscGrid)) {
+    return FALSE;
+  }
 
   InitBobbyBrTitle();
   // Draw menu bar
@@ -66,8 +64,8 @@ void RenderBobbyRMisc() {
 
   // GunForm
   GetVideoObject(&hPixHandle, guiMiscGrid);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   DisplayItemInfo(IC_BOBBY_MISC);
 

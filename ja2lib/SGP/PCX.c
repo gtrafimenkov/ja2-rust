@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "SGP/MemMan.h"
+#include "SGP/PaletteEntry.h"
 #include "rust_fileman.h"
 
 // Local typedefs
@@ -23,12 +24,12 @@
 #define PCX_INVALIDLEN 4
 #define PCX_OUTOFMEMORY 8
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, HIMAGE hImage);
+BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
 BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
                         uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp);
-PcxObject *LoadPcx(char *pFilename);
+PcxObject *LoadPcx(char **pFilename);
 
-BOOLEAN LoadPCXFileToImage(HIMAGE hImage, uint16_t fContents) {
+BOOLEAN LoadPCXFileToImage(struct Image *hImage, uint16_t fContents) {
   PcxObject *pPcxObject;
 
   // First Load a PCX Image
@@ -293,7 +294,7 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t
   return (TRUE);
 }
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, HIMAGE hImage) {
+BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
   uint16_t Index;
   uint8_t *pubPalette;
 

@@ -802,7 +802,6 @@ BOOLEAN RemoveGraphicFromTempFile(uint32_t uiMapIndex, uint16_t usIndex, uint8_t
     return (FALSE);
   }
 
-  // Open the file for writing, Create it if it doesnt exist
   hFile = File_OpenForReading(zMapName);
   if (hFile == 0) {
     // Error opening map modification file

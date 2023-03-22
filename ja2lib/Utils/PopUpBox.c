@@ -1,12 +1,14 @@
 #include "Utils/PopUpBox.h"
 
+#include <string.h>
+
 #include "SGP/Debug.h"
+#include "SGP/Font.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
-#include "TileEngine/SysUtil.h"
 
 #define BORDER_WIDTH 16
 #define BORDER_HEIGHT 8
@@ -1074,13 +1076,17 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
 
   // blit in texture first, then borders
   // blit in surface
-  pDestBuf = (uint16_t *)LockVideoSurface(PopUpBoxList[uiCounter]->uiBuffer, &uiDestPitchBYTES);
-  CHECKF(GetVideoSurface(&hSrcVSurface, PopUpBoxList[uiCounter]->iBackGroundSurface));
-  pSrcBuf = LockVideoSurface(PopUpBoxList[uiCounter]->iBackGroundSurface, &uiSrcPitchBYTES);
+  pDestBuf =
+      (uint16_t *)VSurfaceLockOld(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), &uiDestPitchBYTES);
+  if (!(GetVideoSurface(&hSrcVSurface, PopUpBoxList[uiCounter]->iBackGroundSurface))) {
+    return FALSE;
+  }
+  pSrcBuf =
+      VSurfaceLockOld(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface), &uiSrcPitchBYTES);
   Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
                               usTopX, usTopY, &clip);
-  UnLockVideoSurface(PopUpBoxList[uiCounter]->iBackGroundSurface);
-  UnLockVideoSurface(PopUpBoxList[uiCounter]->uiBuffer);
+  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface));
+  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer));
   GetVideoObject(&hBoxHandle, PopUpBoxList[uiCounter]->iBorderObjectIndex);
 
   // blit in 4 corners (they're 2x2 pixels)
@@ -1142,15 +1148,14 @@ BOOLEAN DrawBoxText(uint32_t uiCounter) {
 
   // clip text?
   if (PopUpBoxList[uiCounter]->uiFlags & POPUP_BOX_FLAG_CLIP_TEXT) {
-    SetFontDestBuffer(
-        PopUpBoxList[uiCounter]->uiBuffer,
-        PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin - 1,
-        PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->uiTopMargin,
-        PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->Dimensions.iRight -
-            PopUpBoxList[uiCounter]->uiRightMargin,
-        PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->Dimensions.iBottom -
-            PopUpBoxList[uiCounter]->uiBottomMargin,
-        FALSE);
+    SetFontDest(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer),
+                PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->uiLeftMargin - 1,
+                PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->uiTopMargin,
+                PopUpBoxList[uiCounter]->Position.iX + PopUpBoxList[uiCounter]->Dimensions.iRight -
+                    PopUpBoxList[uiCounter]->uiRightMargin,
+                PopUpBoxList[uiCounter]->Position.iY + PopUpBoxList[uiCounter]->Dimensions.iBottom -
+                    PopUpBoxList[uiCounter]->uiBottomMargin,
+                FALSE);
   }
 
   for (uiCount = 0; uiCount < MAX_POPUP_BOX_STRING_COUNT; uiCount++) {
@@ -1280,7 +1285,7 @@ BOOLEAN DrawBoxText(uint32_t uiCounter) {
             PopUpBoxList[uiCounter]->uiBottomMargin);
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   return TRUE;
 }

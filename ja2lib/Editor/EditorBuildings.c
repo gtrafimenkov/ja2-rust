@@ -14,9 +14,9 @@
 #include "SGP/Video.h"
 #include "Tactical/Keys.h"
 #include "TileEngine/Environment.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/SimpleRenderUtils.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"  //HideStructOfGivenType()
 #include "Utils/FontControl.h"

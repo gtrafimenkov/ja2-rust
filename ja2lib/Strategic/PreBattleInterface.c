@@ -10,6 +10,7 @@
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/Input.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
@@ -42,7 +43,6 @@
 #include "Tactical/SoldierMacros.h"
 #include "Tactical/Squads.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
 #include "Town.h"
 #include "UI.h"
@@ -397,7 +397,6 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
   MSYS_DefineRegion(&PBInterfaceBlanket, 0, 0, 261, 359, MSYS_PRIORITY_HIGHEST - 5, 0, 0, 0);
 
   // Create the panel
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_PREBATTLEPANEL);
   if (!AddVideoObject(&VObjectDesc, &uiInterfaceImages))
     AssertMsg(0, "Failed to load interface\\PreBattlePanel.sti");
@@ -693,8 +692,6 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
   int32_t iLeft, iTop, iWidth, iHeight;
   BOOLEAN fEnterAutoResolveMode = FALSE;
 
-  if (!gfExtraBuffer) return;
-
   PauseTime(FALSE);
 
   PBIRect.iLeft = 0;
@@ -715,7 +712,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
   sEndTop = 180;
 
   // save the mapscreen buffer
-  BlitBufferToBuffer(FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsFB, vsExtraBuffer, 0, 0, 640, 480);
 
   if (gfEnterAutoResolveMode) {  // If we are intending on immediately entering autoresolve, change
                                  // the global flag so that it will actually
@@ -733,16 +730,16 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     gfEnterAutoResolveMode = TRUE;
   }
 
-  BlitBufferToBuffer(guiSAVEBUFFER, FRAME_BUFFER, 27, 54, 209, 32);
+  VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, 27, 54, 209, 32);
   RenderButtons();
-  BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 27, 54, 209, 32);
+  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 27, 54, 209, 32);
   gfRenderPBInterface = TRUE;
 
   // hide the prebattle interface
-  BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, 0, 0, 261, 359);
+  VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, 0, 0, 261, 359);
   PlayJA2SampleFromFile("SOUNDS\\Laptop power up (8-11).wav", RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
   InvalidateScreen();
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   while (iPercentage < 100) {
     uiCurrTime = GetJA2Clock();
@@ -768,17 +765,17 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     DstRect.iTop = iTop - iHeight * iPercentage / 200;
     DstRect.iBottom = DstRect.iTop + max(iHeight * iPercentage / 100, 1);
 
-    BltStretchVideoSurface(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 0, &PBIRect, &DstRect);
+    BltStretchVideoSurface(vsFB, vsSaveBuffer, 0, 0, 0, &PBIRect, &DstRect);
 
     InvalidateScreen();
-    RefreshScreen(NULL);
+    RefreshScreen();
 
     // Restore the previous rect.
-    BlitBufferToBuffer(guiEXTRABUFFER, FRAME_BUFFER, (uint16_t)DstRect.iLeft,
-                       (uint16_t)DstRect.iTop, (uint16_t)(DstRect.iRight - DstRect.iLeft + 1),
-                       (uint16_t)(DstRect.iBottom - DstRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (uint16_t)DstRect.iLeft, (uint16_t)DstRect.iTop,
+                         (uint16_t)(DstRect.iRight - DstRect.iLeft + 1),
+                         (uint16_t)(DstRect.iBottom - DstRect.iTop + 1));
   }
-  BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
 }
 
 void KillPreBattleInterface() {
@@ -818,7 +815,7 @@ void KillPreBattleInterface() {
   // Enable the options button when the auto resolve  screen comes up
   EnableDisAbleMapScreenOptionsButton(TRUE);
 
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, 0, 0, 261, 359, 0);
+  VSurfaceColorFill(vsSaveBuffer, 0, 0, 261, 359, 0);
 
   EnableTeamInfoPanels();
   if (ButtonList[giMapContractButton]) {
@@ -910,7 +907,7 @@ void RenderPreBattleInterface() {
 
   if (gfRenderPBInterface) {
     // set font destinanation buffer to the save buffer
-    SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
     if (gfPBButtonsHidden) {
       ShowButton(iPBButton[0]);
@@ -926,20 +923,20 @@ void RenderPreBattleInterface() {
     gfRenderPBInterface = FALSE;
     GetVideoObject(&hVObject, uiInterfaceImages);
     // main panel
-    BltVideoObject(guiSAVEBUFFER, hVObject, MAINPANEL, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hVObject, MAINPANEL, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
     // main title
 
     RenderPBHeader(&x, &width);
     // now draw the title bars up to the text.
     for (i = x - 12; i > 20; i -= 10) {
-      BltVideoObject(guiSAVEBUFFER, hVObject, TITLE_BAR_PIECE, i, 6, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsSaveBuffer, hVObject, TITLE_BAR_PIECE, i, 6, VO_BLT_SRCTRANSPARENCY, NULL);
     }
     for (i = x + width + 2; i < 231; i += 10) {
-      BltVideoObject(guiSAVEBUFFER, hVObject, TITLE_BAR_PIECE, i, 6, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsSaveBuffer, hVObject, TITLE_BAR_PIECE, i, 6, VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
     y = BOTTOM_Y - ACTUAL_HEIGHT - ROW_HEIGHT * max(guiNumUninvolved, 1);
-    BltVideoObject(guiSAVEBUFFER, hVObject, UNINVOLVED_HEADER, 8, y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hVObject, UNINVOLVED_HEADER, 8, y, VO_BLT_SRCTRANSPARENCY, NULL);
 
     SetFont(BLOCKFONT);
     SetFontForeground(FONT_BEIGE);
@@ -988,12 +985,12 @@ void RenderPreBattleInterface() {
     // Draw the bottom columns
     for (i = 0; i < (int32_t)max(guiNumUninvolved, 1); i++) {
       y = BOTTOM_Y - ROW_HEIGHT * (i + 1) + 1;
-      BltVideoObject(guiSAVEBUFFER, hVObject, BOTTOM_COLUMN, 161, y, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsSaveBuffer, hVObject, BOTTOM_COLUMN, 161, y, VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
     for (i = 0; i < (int32_t)(21 - max(guiNumUninvolved, 1)); i++) {
       y = TOP_Y + ROW_HEIGHT * i;
-      BltVideoObject(guiSAVEBUFFER, hVObject, TOP_COLUMN, 186, y, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsSaveBuffer, hVObject, TOP_COLUMN, 186, y, VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
     // location
@@ -1132,7 +1129,7 @@ void RenderPreBattleInterface() {
     RestoreExternBackgroundRect(0, 0, 261, 359);
 
     // restore font destinanation buffer to the frame buffer
-    SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
   } else if (gfBlinkHeader) {
     RenderPBHeader(&x, &width);  // the text is important enough to blink.
   }
@@ -1169,7 +1166,7 @@ void AutoResolveBattleCallback(GUI_BUTTON *btn, int32_t reason) {
                          btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
         ExecuteBaseDirtyRectQueue();
         EndFrameBufferRender();
-        RefreshScreen(NULL);
+        RefreshScreen();
         KillPreBattleInterface();
         StopTimeCompression();
         SetMusicMode(MUSIC_TACTICAL_NOTHING);
@@ -1202,7 +1199,7 @@ void GoToSectorCallback(GUI_BUTTON *btn, int32_t reason) {
                          btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
         ExecuteBaseDirtyRectQueue();
         EndFrameBufferRender();
-        RefreshScreen(NULL);
+        RefreshScreen();
         KillPreBattleInterface();
         StopTimeCompression();
         SetMusicMode(MUSIC_TACTICAL_NOTHING);
@@ -1220,7 +1217,7 @@ void GoToSectorCallback(GUI_BUTTON *btn, int32_t reason) {
                        btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
       ExecuteBaseDirtyRectQueue();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
       if (gubPBSectorX == gWorldSectorX && gubPBSectorY == gWorldSectorY && !gbWorldSectorZ) {
         gfGotoSectorTransition = TRUE;
       }
@@ -1270,7 +1267,7 @@ void RetreatMercsCallback(GUI_BUTTON *btn, int32_t reason) {
                        btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
       ExecuteBaseDirtyRectQueue();
       EndFrameBufferRender();
-      RefreshScreen(NULL);
+      RefreshScreen();
       KillPreBattleInterface();
       StopTimeCompression();
       gpBattleGroup = NULL;

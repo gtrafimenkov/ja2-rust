@@ -42,16 +42,15 @@ BOOLEAN DisplayComment(uint8_t ubCommentorsName, uint8_t ubComment, uint16_t usP
 void GameInitInsuranceComments() {}
 
 BOOLEAN EnterInsuranceComments() {
-  VOBJECT_DESC VObjectDesc;
   uint8_t i;
   uint16_t usPosX;
 
   InitInsuranceDefaults();
 
   // load the Insurance bullet graphic and add it
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("LAPTOP\\bullet.sti", VObjectDesc.ImageFile);
-  CHECKF(AddVideoObject(&VObjectDesc, &guiInsCmntBulletImage));
+  if (!AddVObjectFromFile("LAPTOP\\bullet.sti", &guiInsCmntBulletImage)) {
+    return FALSE;
+  }
 
   usPosX = INS_CMNT_FIRST_BULLET_X - 6;
   for (i = 0; i < 3; i++) {
@@ -176,8 +175,8 @@ BOOLEAN DisplayComment(uint8_t ubCommentorsName, uint8_t ubComment, uint16_t usP
 
   // Get and display the insurance bullet
   GetVideoObject(&hPixHandle, guiInsCmntBulletImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, INS_CMNT_FIRST_BULLET_X, usPosY,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, INS_CMNT_FIRST_BULLET_X, usPosY, VO_BLT_SRCTRANSPARENCY,
+                  NULL);
 
   // Display the commenters comment
   GetInsuranceText(ubComment, sText);  //+INS_CMNT_COMMENT_OFFSET_Y

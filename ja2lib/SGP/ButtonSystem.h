@@ -87,7 +87,7 @@ struct _GUI_BUTTON;
 #define GUI_SND_DCLK BUTTON_SOUND_DISABLED_CLICK
 #define GUI_SND_DMOV BUTTON_SOUND_DISABLED_MOVED_ONTO
 
-extern uint32_t ButtonDestBuffer;
+extern uint32_t FRAME_BUFFER;
 
 // GUI_BUTTON callback function type
 typedef void (*GUI_CALLBACK)(struct _GUI_BUTTON *, int32_t);
@@ -163,9 +163,6 @@ typedef struct {
 
 extern BUTTON_PICS ButtonPictures[MAX_BUTTON_PICS];
 
-// Function protos for button system
-BOOLEAN InitializeButtonImageManager(int32_t DefaultBuffer, int32_t DefaultPitch,
-                                     int32_t DefaultBPP);
 void ShutdownButtonImageManager(void);
 BOOLEAN InitButtonSystem(void);
 void ShutdownButtonSystem(void);
@@ -201,8 +198,6 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
                                 char *OnNormName, char *OnHiliteName, char *BkGrndName,
                                 int16_t Index, int16_t OffsetX, int16_t OffsetY);
 BOOLEAN UnloadGenericButtonImage(int16_t GenImg);
-
-BOOLEAN SetButtonDestBuffer(uint32_t DestBuffer);
 
 BOOLEAN EnableButton(int32_t iButtonID);
 BOOLEAN DisableButton(int32_t iButtonID);

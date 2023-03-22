@@ -6,7 +6,7 @@
 #include "Tactical/SoldierProfileType.h"
 #include "Tactical/WorldItems.h"
 
-#define MAPS_DIR "Temp\\"
+#define MAPS_DIR "Temp"
 
 // Defines used for the bUseMercGridNoPlacement contained in the the merc profile struct
 enum {

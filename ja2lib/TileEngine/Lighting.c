@@ -1,20 +1,3 @@
-/****************************************************************************************
- * JA2 Lighting Module
- *
- *		Tile-based, ray-casted lighting system.
- *
- *		Lights are precalculated into linked lists containing offsets from 0,0, and a light
- * level to add at that tile. Lists are constructed by casting a ray from the origin of
- * the light, and each tile stopped at is stored as a node in the list. To draw the light
- * during runtime, you traverse the list, checking at each tile that it isn't of the type
- * that can obscure light. If it is, you keep traversing the list until you hit a node
- * with a marker LIGHT_NEW_RAY, which means you're back at the origin, and have skipped
- * the remainder of the last ray.
- *
- * Written by Derek Beland, April 14, 1997
- *
- ***************************************************************************************/
-
 #include "TileEngine/Lighting.h"
 
 #include <errno.h>
@@ -28,8 +11,10 @@
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -46,7 +31,6 @@
 #include "TileEngine/ShadeTableUtil.h"
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
@@ -958,7 +942,9 @@ BOOLEAN LightSetNaturalTile(int16_t iX, int16_t iY, uint8_t ubShade) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
   uint32_t uiIndex;
 
-  CHECKF(gpWorldLevelData != NULL);
+  if (!(gpWorldLevelData != NULL)) {
+    return FALSE;
+  }
 
   uiIndex = MAPROWCOLTOPOS(iY, iX);
 
@@ -1038,11 +1024,15 @@ BOOLEAN LightResetTile(int16_t iX, int16_t iY) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
   uint32_t uiTile;
 
-  CHECKF(gpWorldLevelData != NULL);
+  if (!(gpWorldLevelData != NULL)) {
+    return FALSE;
+  }
 
   uiTile = MAPROWCOLTOPOS(iY, iX);
 
-  CHECKF(uiTile != 0xffff);
+  if (!(uiTile != 0xffff)) {
+    return FALSE;
+  }
 
   pLand = gpWorldLevelData[uiTile].pLandHead;
 

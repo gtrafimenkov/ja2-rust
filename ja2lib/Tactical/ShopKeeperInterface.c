@@ -19,6 +19,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
@@ -50,9 +51,9 @@
 #include "Tactical/Squads.h"
 #include "Tactical/Weapons.h"
 #include "TacticalAI/NPC.h"
+#include "TileEngine/IsometricUtils.h"
 #include "TileEngine/RadarScreen.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
 #include "Utils/MercTextBox.h"
@@ -61,6 +62,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "platform.h"
 
 // temp
 struct skirgbcolor {
@@ -376,10 +378,6 @@ extern struct OBJECTTYPE *gpItemDescObject;
 extern void HandleShortCutExitState(void);
 extern uint8_t gubSelectSMPanelToMerc;
 extern int32_t giItemDescAmmoButton;
-
-extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
-                                  struct Rect *SrcRect);
 
 extern uint8_t gubLastSpecialItemAddedAtElement;
 
@@ -762,9 +760,8 @@ uint32_t ShopKeeperScreenShutdown() {
 //
 
 BOOLEAN EnterShopKeeperInterface() {
-  VOBJECT_DESC VObjectDesc;
   uint8_t ubCnt;
-  char zTemp[32];
+  char *zTemp[32];
   VSURFACE_DESC vs_desc;
   struct SOLDIERTYPE *pSoldier;
 
@@ -773,7 +770,7 @@ BOOLEAN EnterShopKeeperInterface() {
             "Selected merc can't interact with shopkeeper.  Send save AM-1");
 
   // Create a video surface to blt corner of the tactical screen that still shines through
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT | VSURFACE_SYSTEM_MEM_USAGE;
+  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = SKI_TACTICAL_BACKGROUND_START_WIDTH;
   vs_desc.usHeight = SKI_TACTICAL_BACKGROUND_START_HEIGHT;
   vs_desc.ubBitDepth = 16;
@@ -804,9 +801,7 @@ BOOLEAN EnterShopKeeperInterface() {
   SetSMPanelCurrentMerc((uint8_t)gusSelectedSoldier);
 
   // load the Main trade screen backgroiund image
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("InterFace\\TradeScreen.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiMainTradeScreenImage)) {
+  if (!AddVObjectFromFile("InterFace\\TradeScreen.sti", &guiMainTradeScreenImage)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load TradeScreen.sti");
 #endif
@@ -815,9 +810,7 @@ BOOLEAN EnterShopKeeperInterface() {
   }
 
   // load the Main trade screen background image
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("InterFace\\itemcrossout.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &guiItemCrossOut)) {
+  if (!AddVObjectFromFile("InterFace\\itemcrossout.sti", &guiItemCrossOut)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load itemcrossout.sti");
 #endif
@@ -828,8 +821,8 @@ BOOLEAN EnterShopKeeperInterface() {
   ATM:
           // load the Main trade screen backgroiund image
           VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-          FilenameForBPP("InterFace\\TradeScreenAtm.sti", VObjectDesc.ImageFile);
-          CHECKF(AddVideoObject(&VObjectDesc, &guiSkiAtmImage ));
+          if (!AddVObjectFromFile("InterFace\\TradeScreenAtm.sti", &guiSkiAtmImage )) { return
+  FALSE; }
   */
 
   // Create an array of all mercs (anywhere!) currently in the player's employ, and load their small
@@ -850,9 +843,7 @@ BOOLEAN EnterShopKeeperInterface() {
       sprintf(zTemp, "FACES\\33FACE\\%02d.sti", gMercProfiles[GetSolProfile(pSoldier)].ubFaceIndex);
 
       // While we are at it, add their small face
-      VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-      FilenameForBPP(zTemp, VObjectDesc.ImageFile);
-      if (!AddVideoObject(&VObjectDesc, &guiSmallSoldiersFace[gubNumberMercsInArray])) {
+      if (!AddVObjectFromFile(zTemp, &guiSmallSoldiersFace[gubNumberMercsInArray])) {
 #ifdef JA2BETAVERSION
         ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load %s", zTemp);
 #endif
@@ -1303,8 +1294,8 @@ BOOLEAN RenderShopKeeperInterface() {
 
   // Get the main background screen graphic and blt it
   GetVideoObject(&hPixHandle, guiMainTradeScreenImage);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // Display the Title
   DrawTextToScreen(SKI_Text[SKI_TEXT_MERCHADISE_IN_STOCK], SKI_MAIN_TITLE_X, SKI_MAIN_TITLE_Y,
@@ -1344,8 +1335,8 @@ BOOLEAN RenderShopKeeperInterface() {
                    SKI_PLAYERS_CURRENT_BALANCE_OFFSET_TO_VALUE, SKI_PLAYERS_CURRENT_BALANCE_WIDTH,
                    FONT10ARIAL, SKI_ITEM_PRICE_COLOR, FONT_MCOLOR_BLACK, TRUE, CENTER_JUSTIFIED);
 
-  BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SKI_TACTICAL_BACKGROUND_START_X,
-                     SKI_TACTICAL_BACKGROUND_START_HEIGHT);
+  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, SKI_TACTICAL_BACKGROUND_START_X,
+                       SKI_TACTICAL_BACKGROUND_START_HEIGHT);
 
   // At this point the background is pure, copy it to the save buffer
   if (gfRenderScreenOnNextLoop) {
@@ -1394,7 +1385,7 @@ void RestoreTacticalBackGround() {
   struct VSurface *hDestVSurface, *hSrcVSurface;
   struct Rect SrcRect;
 
-  GetVideoSurface(&hDestVSurface, guiRENDERBUFFER);
+  GetVideoSurface(&hDestVSurface, FRAME_BUFFER);
   GetVideoSurface(&hSrcVSurface, guiCornerWhereTacticalIsStillSeenImage);
 
   SrcRect.left = 0;
@@ -2384,18 +2375,17 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
   RestoreExternBackgroundRect(usPosX, usPosY, SKI_INV_SLOT_WIDTH, SKI_INV_HEIGHT);
 
   // blt the shadow of the item
-  BltVideoObjectOutlineShadowFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
-                                       pItem->ubGraphicNum, sCenX - 2, sCenY + 2);
+  BltVideoObjectOutlineShadowFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
+                                       sCenX - 2, sCenY + 2);
 
   // blt the item
-  BltVideoObjectOutlineFromIndex(FRAME_BUFFER, GetInterfaceGraphicForItem(pItem),
-                                 pItem->ubGraphicNum, sCenX, sCenY,
-                                 Get16BPPColor(FROMRGB(255, 255, 255)), fHighlighted);
+  BltVideoObjectOutlineFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
+                                 sCenX, sCenY, Get16BPPColor(FROMRGB(255, 255, 255)), fHighlighted);
 
   // Display the status of the item
   DrawItemUIBarEx(pItemObject, 0, (int16_t)(usPosX + 2), (int16_t)(usPosY + 2 + 20), 2, 20,
                   Get16BPPColor(FROMRGB(140, 136, 119)), Get16BPPColor(FROMRGB(140, 136, 119)),
-                  TRUE, guiRENDERBUFFER);  // guiSAVEBUFFER
+                  TRUE, FRAME_BUFFER);
 
   // Display the Items Cost
   if (ubItemArea == PLAYERS_OFFER_AREA) {
@@ -2498,8 +2488,8 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
     if (iFaceSlot != -1) {
       // Get and blit the face
       GetVideoObject(&hPixHandle, guiSmallSoldiersFace[iFaceSlot]);
-      BltVideoObject(FRAME_BUFFER, hPixHandle, 0, (uint16_t)(usPosX + SKI_SMALL_FACE_OFFSET_X),
-                     (uint16_t)(usPosY), VO_BLT_SRCTRANSPARENCY, NULL);  // SKI_SMALL_FACE_OFFSET_Y
+      BltVideoObject2(vsFB, hPixHandle, 0, (uint16_t)(usPosX + SKI_SMALL_FACE_OFFSET_X),
+                      (uint16_t)(usPosY), VO_BLT_SRCTRANSPARENCY, NULL);  // SKI_SMALL_FACE_OFFSET_Y
     }
   }
 
@@ -2794,9 +2784,9 @@ void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, 
   ClipRect.iTop = usPosY;
   ClipRect.iBottom = usPosY + usHeight;
 
-  pDestBuf = LockVideoSurface(uiSurface, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(uiSurface), &uiDestPitchBYTES);
   Blt16BPPBufferPixelateRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect, Pattern);
-  UnLockVideoSurface(uiSurface);
+  VSurfaceUnlock(GetVSByID(uiSurface));
 }
 
 uint32_t CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, uint16_t usItemID,
@@ -4270,14 +4260,10 @@ void InitShopKeeperSubTitledText(wchar_t *pString) {
     uint16_t usActualWidth = 0;
     uint16_t usActualHeight = 0;
 
-    SET_USE_WINFONTS(TRUE);
-    SET_WINFONT(giSubTitleWinFont);
     giPopUpBoxId =
         PrepareMercPopupBox(giPopUpBoxId, BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER,
                             gsShopKeeperTalkingText, 300, 0, 0, 0, &usActualWidth, &usActualHeight);
-    SET_USE_WINFONTS(FALSE);
 
-    //		gusPositionOfSubTitlesX = ( 640 - usActualWidth ) / 2 ;
     // position it to start under the guys face
     gusPositionOfSubTitlesX = 13;
 
@@ -4443,7 +4429,7 @@ void RenderSkiAtmPanel() {
 
   // Get the Atm background panel graphic and blt it
   //	GetVideoObject(&hPixHandle, guiSkiAtmImage );
-  //	BltVideoObject(FRAME_BUFFER, hPixHandle, 0,SKI_ATM_PANEL_X, SKI_ATM_PANEL_Y,
+  //	BltVideoObject2(vsFB, hPixHandle, 0,SKI_ATM_PANEL_X, SKI_ATM_PANEL_Y,
   // VO_BLT_SRCTRANSPARENCY,NULL);
 }
 
@@ -4707,10 +4693,10 @@ void DisplaySkiAtmTransferString() {
   uint32_t uiMoney;
 
   // Erase the background behind the string
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, SKI_TRANSFER_STRING_X, SKI_TRANSFER_STRING_Y,
-                            SKI_TRANSFER_STRING_X + SKI_TRANSFER_STRING_WIDTH,
-                            SKI_TRANSFER_STRING_Y + SKI_TRANSFER_STRING_HEIGHT,
-                            Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, SKI_TRANSFER_STRING_X, SKI_TRANSFER_STRING_Y,
+                    SKI_TRANSFER_STRING_X + SKI_TRANSFER_STRING_WIDTH,
+                    SKI_TRANSFER_STRING_Y + SKI_TRANSFER_STRING_HEIGHT,
+                    Get16BPPColor(FROMRGB(0, 0, 0)));
 
   wcscpy(zSkiAtmTransferString, gzSkiAtmTransferString);
   InsertCommasForDollarFigure(zSkiAtmTransferString);
@@ -5534,8 +5520,8 @@ void CrossOutUnwantedItems(void) {
           sBoxStartY =
               SKI_PLAYERS_TRADING_INV_Y + (bSlotId / SKI_NUM_TRADING_INV_COLS) * (SKI_INV_OFFSET_Y);
 
-          BltVideoObject(FRAME_BUFFER, hHandle, 0, (sBoxStartX + 22), (sBoxStartY),
-                         VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObject2(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY), VO_BLT_SRCTRANSPARENCY,
+                          NULL);
 
           // invalidate the region
           InvalidateRegion(sBoxStartX - 1, sBoxStartY - 1, sBoxStartX + sBoxWidth + 1,
@@ -5665,9 +5651,6 @@ void InitShopKeeperItemDescBox(struct OBJECTTYPE *pObject, uint8_t ubPocket,
 
 void StartSKIDescriptionBox(void) {
   int32_t iCnt;
-
-  // shadow the entire screen
-  //	ShadowVideoSurfaceRect( FRAME_BUFFER, 0, 0, 640, 480 );
 
   // if the current merc is too far away, dont shade the SM panel because it is already shaded
   if (gfSMDisableForItems)
@@ -6901,6 +6884,6 @@ void HatchOutInvSlot(uint16_t usPosX, uint16_t usPosY) {
   usSlotHeight = SKI_INV_SLOT_HEIGHT;
 
   // Hatch it out
-  DrawHatchOnInventory(guiRENDERBUFFER, usSlotX, usSlotY, usSlotWidth, usSlotHeight);
+  DrawHatchOnInventory(FRAME_BUFFER, usSlotX, usSlotY, usSlotWidth, usSlotHeight);
   InvalidateRegion(usSlotX, usSlotY, usSlotX + usSlotWidth, usSlotY + usSlotHeight);
 }

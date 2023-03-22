@@ -146,73 +146,19 @@ void SoundRemoveSampleFlags(uint32_t uiSample, uint32_t uiFlags) {}
 // Video
 /////////////////////////////////////////////////////////////////////////////////
 
-struct VSurface *ghFrameBuffer = NULL;
-int32_t giNumFrames = 0;
-
-void InvalidateRegion(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom) {}
-
-void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,
-                        uint32_t uiFlags) {}
-
-void InvalidateScreen(void) {}
-
-void RefreshScreen(void *DummyVariable) {}
-
-BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitMask,
-                                       uint32_t *BlueBitMask) {
-  return FALSE;
-}
-
-BOOLEAN EraseMouseCursor() { return FALSE; }
-
-BOOLEAN SetMouseCursorProperties(int16_t sOffsetX, int16_t sOffsetY, uint16_t usCursorHeight,
-                                 uint16_t usCursorWidth) {
-  return FALSE;
-}
-
-void DirtyCursor() {}
-
-BOOLEAN SetCurrentCursor(uint16_t usVideoObjectSubIndex, uint16_t usOffsetX, uint16_t usOffsetY) {
-  return FALSE;
-}
-
-void StartFrameBufferRender(void) {}
-
-void EndFrameBufferRender(void) {}
+void RefreshScreen() {}
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 
 void FatalError(char *pError, ...) {}
 
-uint32_t guiVSurfaceSize = 0;
-
-BOOLEAN AddStandardVideoSurface(VSURFACE_DESC *pVSurfaceDesc, uint32_t *puiIndex) { return FALSE; };
-
-uint8_t *LockVideoSurface(uint32_t uiVSurface, uint32_t *puiPitch) { return NULL; }
-
-void UnLockVideoSurface(uint32_t uiVSurface) {}
-
-BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor) { return FALSE; }
-
-BOOLEAN GetVideoSurface(struct VSurface **hVSurface, uint32_t uiIndex) { return FALSE; }
-
-BOOLEAN BltVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, uint16_t usRegionIndex,
-                        int32_t iDestX, int32_t iDestY, uint32_t fBltFlags, blt_vs_fx *pBltFx) {
+BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
   return FALSE;
 }
 
-BOOLEAN ColorFillVideoSurfaceArea(uint32_t uiDestVSurface, int32_t iDestX1, int32_t iDestY1,
-                                  int32_t iDestX2, int32_t iDestY2, uint16_t Color16BPP) {
-  return FALSE;
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height, uint8_t bitDepth) {
+  return NULL;
 }
-
-BOOLEAN ImageFillVideoSurfaceArea(uint32_t uiDestVSurface, int32_t iDestX1, int32_t iDestY1,
-                                  int32_t iDestX2, int32_t iDestY2, struct VObject *BkgrndImg,
-                                  uint16_t Index, int16_t Ox, int16_t Oy) {
-  return FALSE;
-}
-
-struct VSurface *CreateVideoSurface(VSURFACE_DESC *VSurfaceDesc) { return NULL; }
 
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   return FALSE;
@@ -222,47 +168,11 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
   return FALSE;
 }
 
-BOOLEAN DeleteVideoSurfaceFromIndex(uint32_t uiIndex) { return FALSE; }
-
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }
-
-BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      uint16_t usIndex, int32_t iDestX, int32_t iDestY,
-                                      int32_t fBltFlags, blt_vs_fx *pBltFx) {
-  return FALSE;
-}
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                            uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
                            struct Rect *SrcRect) {
-  return FALSE;
-}
-
-BOOLEAN ShadowVideoSurfaceRect(uint32_t uiDestVSurface, int32_t X1, int32_t Y1, int32_t X2,
-                               int32_t Y2) {
-  return FALSE;
-}
-
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(uint32_t uiDestVSurface, int32_t X1, int32_t Y1,
-                                                   int32_t X2, int32_t Y2) {
-  return FALSE;
-}
-
-BOOLEAN BltStretchVideoSurface(uint32_t uiDestVSurface, uint32_t uiSrcVSurface, int32_t iDestX,
-                               int32_t iDestY, uint32_t fBltFlags, SGPRect *SrcRect,
-                               SGPRect *DestRect) {
-  return FALSE;
-}
-
-BOOLEAN ShadowVideoSurfaceImage(uint32_t uiDestVSurface, struct VObject *hImageHandle,
-                                int32_t iPosX, int32_t iPosY) {
-  return FALSE;
-}
-
-void DumpVSurfaceInfoIntoFile(char *filename, BOOLEAN fAppend) {}
-
-BOOLEAN _AddAndRecordVSurface(VSURFACE_DESC *VSurfaceDesc, uint32_t *uiIndex, uint32_t uiLineNum,
-                              char *pSourceFile) {
   return FALSE;
 }
 
@@ -278,16 +188,19 @@ struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BO
 
 void SmkCloseFlic(struct SmkFlic *pSmack) {}
 
-void SetWinFontForeColor(int32_t iFont, COLORVAL *pColor) {}
-
-int16_t WinFontStringPixLength(wchar_t *string2, int32_t iFont) { return 0; }
-
-int16_t GetWinFontHeight(wchar_t *string2, int32_t iFont) { return 0; }
-
-uint32_t WinFont_mprintf(int32_t iFont, int32_t x, int32_t y, wchar_t *pFontString, ...) {
-  return 0;
-}
-
 /////////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////////
+
+BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx) { return FALSE; }
+
+void VSurfaceUnlock(struct VSurface *vs) {}
+struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
+  struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
+  return res;
+}
+BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                              struct Rect *SrcRect, struct Rect *DestRect) {
+  return FALSE;
+}

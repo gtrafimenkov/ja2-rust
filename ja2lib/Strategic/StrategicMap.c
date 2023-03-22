@@ -55,6 +55,7 @@
 #include "Tactical/EnemySoldierSave.h"
 #include "Tactical/Faces.h"
 #include "Tactical/HandleUI.h"
+#include "Tactical/Interface.h"
 #include "Tactical/InterfaceDialogue.h"
 #include "Tactical/InterfacePanels.h"
 #include "Tactical/Keys.h"
@@ -82,7 +83,6 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/SaveLoadMap.h"
 #include "TileEngine/ShadeTableUtil.h"
-#include "TileEngine/SysUtil.h"
 #include "TileEngine/TacticalPlacementGUI.h"
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldMan.h"
@@ -278,7 +278,7 @@ void BeginLoadScreen() {
     uiTimeRange = 2000;
     iPercentage = 0;
     uiStartTime = GetJA2Clock();
-    BlitBufferToBuffer(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
     PlayJA2SampleFromFile("SOUNDS\\Final Psionic Blast 01 (16-44).wav", RATE_11025, HIGHVOLUME, 1,
                           MIDDLEPAN);
     while (iPercentage < 100) {
@@ -294,33 +294,21 @@ void BeginLoadScreen() {
         iPercentage = (uint32_t)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
 
       if (iPercentage > 50) {
-        // iFactor = (iPercentage - 50) * 2;
-        // if( iFactor > iLastShadePercentage )
-        //	{
-        // Calculate the difference from last shade % to the new one.  Ex:  Going from
-        // 50% shade value to 60% shade value requires applying 20% to the 50% to achieve 60%.
-        // if( iLastShadePercentage )
-        //	iReqShadePercentage = 100 - (iFactor * 100 / iLastShadePercentage);
-        // else
-        //	iReqShadePercentage = iFactor;
-        // Record the new final shade percentage.
-        // iLastShadePercentage = iFactor;
-        ShadowVideoSurfaceRectUsingLowPercentTable(guiSAVEBUFFER, 0, 0, 640, 480);
-        //	}
+        ShadowVideoSurfaceRectUsingLowPercentTable(vsSaveBuffer, 0, 0, 640, 480);
       }
 
       SrcRect.iLeft = 536 * iPercentage / 100;
       SrcRect.iRight = 640 - iPercentage / 20;
       SrcRect.iTop = 367 * iPercentage / 100;
       SrcRect.iBottom = 480 - 39 * iPercentage / 100;
-      BltStretchVideoSurface(FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 0, &SrcRect, &DstRect);
+      BltStretchVideoSurface(vsFB, vsSaveBuffer, 0, 0, 0, &SrcRect, &DstRect);
       InvalidateScreen();
-      RefreshScreen(NULL);
+      RefreshScreen();
     }
   }
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
   InvalidateScreen();
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   // If we are loading a saved game, use the Loading screen we saved into the SavedGameHeader file
   // ( which gets reloaded into gubLastLoadingScreenID )
@@ -3802,7 +3790,7 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld() {
   // ATE: Change cursor to wait cursor for duration of frame.....
   // save old cursor ID....
   SetCurrentCursorFromDatabase(CURSOR_WAIT_NODELAY);
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   // JA2Gold: Leaving sector, so get rid of ambients!
   DeleteAllAmbients();

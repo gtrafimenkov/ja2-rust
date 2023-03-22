@@ -8,6 +8,7 @@
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/WCheck.h"
 #include "Strategic/StrategicMap.h"
 #include "SysGlobals.h"
@@ -206,7 +207,9 @@ void FreeAllStructureFiles(void) {  // Frees all of the structure database!
 }
 
 BOOLEAN FreeStructureFile(struct STRUCTURE_FILE_REF *pStructureFile) {
-  CHECKF(pStructureFile);
+  if (!(pStructureFile)) {
+    return FALSE;
+  }
 
   // unlink the file ref
   if (pStructureFile->pPrev != NULL) {
@@ -237,8 +240,12 @@ BOOLEAN LoadStructureData(char *szFileName, struct STRUCTURE_FILE_REF *pFileRef,
   uint32_t uiDataSize;
   BOOLEAN fOk;
 
-  CHECKF(szFileName);
-  CHECKF(pFileRef);
+  if (!(szFileName)) {
+    return FALSE;
+  }
+  if (!(pFileRef)) {
+    return FALSE;
+  }
   hInput = File_OpenForReading(szFileName);
   if (hInput == 0) {
     return (FALSE);
@@ -676,10 +683,18 @@ BOOLEAN InternalOkayToAddStructureToWorld(int16_t sBaseGridNo, int8_t bLevel,
   uint8_t ubLoop;
   int16_t sCubeOffset;
 
-  CHECKF(pDBStructureRef);
-  CHECKF(pDBStructureRef->pDBStructure);
-  CHECKF(pDBStructureRef->pDBStructure->ubNumberOfTiles > 0);
-  CHECKF(pDBStructureRef->ppTile);
+  if (!(pDBStructureRef)) {
+    return FALSE;
+  }
+  if (!(pDBStructureRef->pDBStructure)) {
+    return FALSE;
+  }
+  if (!(pDBStructureRef->pDBStructure->ubNumberOfTiles > 0)) {
+    return FALSE;
+  }
+  if (!(pDBStructureRef->ppTile)) {
+    return FALSE;
+  }
 
   /*
           if (gpWorldLevelData[sGridNo].sHeight != sBaseTileHeight)
@@ -719,8 +734,12 @@ BOOLEAN AddStructureToTile(
                                // of a structure to a location on the map)
   struct STRUCTURE *pStructureTail;
 
-  CHECKF(pMapElement);
-  CHECKF(pStructure);
+  if (!(pMapElement)) {
+    return FALSE;
+  }
+  if (!(pStructure)) {
+    return FALSE;
+  }
   pStructureTail = pMapElement->pStructureTail;
   if (pStructureTail == NULL) {  // set the head and tail to the new structure
     pMapElement->pStructureHead = pStructure;
@@ -750,16 +769,26 @@ struct STRUCTURE *InternalAddStructureToWorld(
   int16_t sBaseTileHeight = -1;
   uint16_t usStructureID;
 
-  CHECKF(pDBStructureRef);
-  CHECKF(pLevelNode);
+  if (!(pDBStructureRef)) {
+    return FALSE;
+  }
+  if (!(pLevelNode)) {
+    return FALSE;
+  }
 
   pDBStructure = pDBStructureRef->pDBStructure;
-  CHECKF(pDBStructure);
+  if (!(pDBStructure)) {
+    return FALSE;
+  }
 
   ppTile = pDBStructureRef->ppTile;
-  CHECKF(ppTile);
+  if (!(ppTile)) {
+    return FALSE;
+  }
 
-  CHECKF(pDBStructure->ubNumberOfTiles > 0);
+  if (!(pDBStructure->ubNumberOfTiles > 0)) {
+    return FALSE;
+  }
 
   // first check to see if the structure will be blocked
   if (!OkayToAddStructureToWorld(sBaseGridNo, bLevel, pDBStructureRef, INVALID_STRUCTURE_ID)) {
@@ -776,7 +805,9 @@ struct STRUCTURE *InternalAddStructureToWorld(
   // NB we add 1 because the 0th element is in fact the reference count!
   ppStructure =
       (struct STRUCTURE **)MemAlloc(pDBStructure->ubNumberOfTiles * sizeof(struct STRUCTURE *));
-  CHECKF(ppStructure);
+  if (!(ppStructure)) {
+    return FALSE;
+  }
   memset(ppStructure, 0, pDBStructure->ubNumberOfTiles * sizeof(struct STRUCTURE *));
 
   for (ubLoop = BASE_TILE; ubLoop < pDBStructure->ubNumberOfTiles;
@@ -942,10 +973,14 @@ BOOLEAN DeleteStructureFromWorld(
   BOOLEAN fRecompileExtraRadius;  // for doors... yuck
   int16_t sCheckGridNo;
 
-  CHECKF(pStructure);
+  if (!(pStructure)) {
+    return FALSE;
+  }
 
   pBaseStructure = FindBaseStructure(pStructure);
-  CHECKF(pBaseStructure);
+  if (!(pBaseStructure)) {
+    return FALSE;
+  }
 
   usStructureID = pBaseStructure->usStructureID;
   fRecompileMPs =
@@ -1005,7 +1040,9 @@ struct STRUCTURE *InternalSwapStructureForPartner(int16_t sGridNo, struct STRUCT
     return (NULL);
   }
   pBaseStructure = FindBaseStructure(pStructure);
-  CHECKF(pBaseStructure);
+  if (!(pBaseStructure)) {
+    return FALSE;
+  }
   if ((pBaseStructure->pDBStructureRef->pDBStructure)->bPartnerDelta == NO_PARTNER_STRUCTURE) {
     return (NULL);
   }
@@ -1097,7 +1134,9 @@ struct STRUCTURE *FindStructure(
 struct STRUCTURE *FindNextStructure(struct STRUCTURE *pStructure, uint32_t fFlags) {
   struct STRUCTURE *pCurrent;
 
-  CHECKF(pStructure);
+  if (!(pStructure)) {
+    return FALSE;
+  }
   pCurrent = pStructure->pNext;
   while (pCurrent != NULL) {
     if ((pCurrent->fFlags & fFlags) != 0) {
@@ -1125,7 +1164,9 @@ struct STRUCTURE *FindStructureByID(
 
 struct STRUCTURE *FindBaseStructure(
     struct STRUCTURE *pStructure) {  // finds the base structure for any structure
-  CHECKF(pStructure);
+  if (!(pStructure)) {
+    return FALSE;
+  }
   if (pStructure->fFlags & STRUCTURE_BASE_TILE) {
     return (pStructure);
   }
@@ -1134,7 +1175,9 @@ struct STRUCTURE *FindBaseStructure(
 
 struct STRUCTURE *FindNonBaseStructure(
     int16_t sGridNo, struct STRUCTURE *pStructure) {  // finds a non-base structure in a location
-  CHECKF(pStructure);
+  if (!(pStructure)) {
+    return FALSE;
+  }
   if (!(pStructure->fFlags & STRUCTURE_BASE_TILE)) {  // error!
     return (NULL);
   }
@@ -1294,11 +1337,21 @@ BOOLEAN StructureDensity(struct STRUCTURE *pStructure, uint8_t *pubLevel0, uint8
   uint8_t ubShapeValue;
   PROFILE *pShape;
 
-  CHECKF(pStructure);
-  CHECKF(pubLevel0);
-  CHECKF(pubLevel1);
-  CHECKF(pubLevel2);
-  CHECKF(pubLevel3);
+  if (!(pStructure)) {
+    return FALSE;
+  }
+  if (!(pubLevel0)) {
+    return FALSE;
+  }
+  if (!(pubLevel1)) {
+    return FALSE;
+  }
+  if (!(pubLevel2)) {
+    return FALSE;
+  }
+  if (!(pubLevel3)) {
+    return FALSE;
+  }
   *pubLevel0 = 0;
   *pubLevel1 = 0;
   *pubLevel2 = 0;
@@ -1340,7 +1393,9 @@ BOOLEAN DamageStructure(
   uint8_t ubArmour;
   // struct LEVELNODE			*pNode;
 
-  CHECKF(pStructure);
+  if (!(pStructure)) {
+    return FALSE;
+  }
   if (pStructure->fFlags & STRUCTURE_PERSON || pStructure->fFlags & STRUCTURE_CORPSE) {
     // don't hurt this structure, it's used for hit detection only!
     return (FALSE);
@@ -1417,7 +1472,9 @@ BOOLEAN DamageStructure(
 
   // find the base so we can reduce the hit points!
   pBase = FindBaseStructure(pStructure);
-  CHECKF(pBase);
+  if (!(pBase)) {
+    return FALSE;
+  }
   if (pBase->ubHitPoints <= ubDamage) {
     // boom! structure destroyed!
     return (TRUE);

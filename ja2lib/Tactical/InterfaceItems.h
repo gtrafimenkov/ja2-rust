@@ -5,6 +5,8 @@
 #include "Tactical/HandleItems.h"
 #include "Tactical/Items.h"
 
+struct VSurface;
+
 // DEFINES FOR ITEM SLOT SIZES IN PIXELS
 #define BIG_INV_SLOT_WIDTH 61
 #define BIG_INV_SLOT_HEIGHT 22
@@ -79,7 +81,7 @@ BOOLEAN HandleCompatibleAmmoUI(struct SOLDIERTYPE *pSoldier, int8_t bInvPos, BOO
 //== 1 will only dirty the name space and then set counter to 0
 //  Last parameter used mainly for when mouse is over item
 
-void INVRenderItem(uint32_t uiBuffer, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
+void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObject,
                    int16_t sX, int16_t sY, int16_t sWidth, int16_t sHeight, uint8_t fDirtyLevel,
                    uint8_t *pubHighlightCounter, uint8_t ubStatusIndex, BOOLEAN fOutline,
                    int16_t sOutlineColor);

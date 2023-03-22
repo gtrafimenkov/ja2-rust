@@ -469,7 +469,7 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize) {
 
   ExecuteBaseDirtyRectQueue();
   EndFrameBufferRender();
-  RefreshScreen(NULL);
+  RefreshScreen();
 
   if (RemoveMercPopupBoxFromIndex(iSaveLoadGameMessageBoxID)) {
     iSaveLoadGameMessageBoxID = -1;
@@ -1810,26 +1810,6 @@ BOOLEAN LoadSavedMercProfiles(FileID hFile) {
 
   return (TRUE);
 }
-
-// Not saving any of these in the soldier struct
-
-//	struct LEVELNODE				*pLevelNode;
-//	struct LEVELNODE				*pExternShadowLevelNode;
-//	struct LEVELNODE				*pRoofUILevelNode;
-//	uint16_t *pBackGround; 	uint16_t
-//*pZBackground; 	uint16_t
-//*pForcedShade;
-//
-// 	uint16_t
-// *pEffectShades[ NUM_SOLDIER_EFFECTSHADES ]; // Shading tables for effects
-//  THROW_PARAMS								*pThrowParams;
-//  uint16_t
-//  *pCurrentShade;
-//	uint16_t *pGlowShades[ 20
-//];
-////
-//	uint16_t *pShades[ NUM_SOLDIER_SHADES ]; // Shading tables 	uint16_t *p16BPPPalette;
-// struct SGPPaletteEntry *p8BPPPalette 	struct OBJECTTYPE *pTempObject;
 
 BOOLEAN SaveSoldierStructure(FileID hFile) {
   uint16_t cnt;

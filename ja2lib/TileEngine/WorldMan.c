@@ -52,7 +52,9 @@ uint32_t guiLevelNodes = 0;
 // LEVEL NODE MANIPLULATION FUNCTIONS
 BOOLEAN CreateLevelNode(struct LEVELNODE **ppNode) {
   *ppNode = (struct LEVELNODE *)MemAlloc(sizeof(struct LEVELNODE));
-  CHECKF(*ppNode != NULL);
+  if (!(*ppNode != NULL)) {
+    return FALSE;
+  }
 
   // Clear all values
   memset(*ppNode, 0, sizeof(struct LEVELNODE));
@@ -198,14 +200,18 @@ struct LEVELNODE *AddObjectToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
   // If we're at the head, set here
   if (pObject == NULL) {
-    CHECKF(CreateLevelNode(&pNextObject) != FALSE);
+    if (!(CreateLevelNode(&pNextObject) != FALSE)) {
+      return FALSE;
+    }
     pNextObject->usIndex = usIndex;
 
     gpWorldLevelData[iMapIndex].pObjectHead = pNextObject;
   } else {
     while (pObject != NULL) {
       if (pObject->pNext == NULL) {
-        CHECKF(CreateLevelNode(&pNextObject) != FALSE);
+        if (!(CreateLevelNode(&pNextObject) != FALSE)) {
+          return FALSE;
+        }
         pObject->pNext = pNextObject;
 
         pNextObject->pNext = NULL;
@@ -230,7 +236,9 @@ BOOLEAN AddObjectToHead(uint32_t iMapIndex, uint16_t usIndex) {
 
   pObject = gpWorldLevelData[iMapIndex].pObjectHead;
 
-  CHECKF(CreateLevelNode(&pNextObject) != FALSE);
+  if (!(CreateLevelNode(&pNextObject) != FALSE)) {
+    return FALSE;
+  }
 
   pNextObject->pNext = pObject;
   pNextObject->usIndex = usIndex;
@@ -383,7 +391,9 @@ struct LEVELNODE *AddLandToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
   // If we're at the head, set here
   if (pLand == NULL) {
-    CHECKF(CreateLevelNode(&pNextLand) != FALSE);
+    if (!(CreateLevelNode(&pNextLand) != FALSE)) {
+      return FALSE;
+    }
     pNextLand->usIndex = usIndex;
 
     gpWorldLevelData[iMapIndex].pLandHead = pNextLand;
@@ -391,7 +401,9 @@ struct LEVELNODE *AddLandToTail(uint32_t iMapIndex, uint16_t usIndex) {
   } else {
     while (pLand != NULL) {
       if (pLand->pNext == NULL) {
-        CHECKF(CreateLevelNode(&pNextLand) != FALSE);
+        if (!(CreateLevelNode(&pNextLand) != FALSE)) {
+          return FALSE;
+        }
         pLand->pNext = pNextLand;
 
         pNextLand->pNext = NULL;
@@ -417,7 +429,9 @@ BOOLEAN AddLandToHead(uint32_t iMapIndex, uint16_t usIndex) {
   pLand = gpWorldLevelData[iMapIndex].pLandHead;
 
   // Allocate head
-  CHECKF(CreateLevelNode(&pNextLand) != FALSE);
+  if (!(CreateLevelNode(&pNextLand) != FALSE)) {
+    return FALSE;
+  }
 
   pNextLand->pNext = pLand;
   pNextLand->pPrevNode = NULL;
@@ -740,7 +754,9 @@ BOOLEAN InsertLandIndexAtLevel(uint32_t iMapIndex, uint16_t usIndex, uint8_t ubL
   }
 
   // Allocate memory for new item
-  CHECKF(CreateLevelNode(&pNextLand) != FALSE);
+  if (!(CreateLevelNode(&pNextLand) != FALSE)) {
+    return FALSE;
+  }
   pNextLand->usIndex = usIndex;
 
   // Move to index before insertion
@@ -883,7 +899,9 @@ struct LEVELNODE *AddStructToTailCommon(uint32_t iMapIndex, uint16_t usIndex,
 
   // Do we have an empty list?
   if (pStruct == NULL) {
-    CHECKF(CreateLevelNode(&pNextStruct) != FALSE);
+    if (!(CreateLevelNode(&pNextStruct) != FALSE)) {
+      return FALSE;
+    }
 
     if (fAddStructDBInfo) {
       if (usIndex < NUMBEROFTILES) {
@@ -975,7 +993,9 @@ BOOLEAN AddStructToHead(uint32_t iMapIndex, uint16_t usIndex) {
 
   pStruct = gpWorldLevelData[iMapIndex].pStructHead;
 
-  CHECKF(CreateLevelNode(&pNextStruct) != FALSE);
+  if (!(CreateLevelNode(&pNextStruct) != FALSE)) {
+    return FALSE;
+  }
 
   if (usIndex < NUMBEROFTILES) {
     if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
@@ -1043,7 +1063,9 @@ BOOLEAN InsertStructIndex(uint32_t iMapIndex, uint16_t usIndex, uint8_t ubLevel)
   }
 
   // Allocate memory for new item
-  CHECKF(CreateLevelNode(&pNextStruct) != FALSE);
+  if (!(CreateLevelNode(&pNextStruct) != FALSE)) {
+    return FALSE;
+  }
 
   pNextStruct->usIndex = usIndex;
 
@@ -1504,7 +1526,9 @@ BOOLEAN AddShadowToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
   // If we're at the head, set here
   if (pShadow == NULL) {
-    CHECKF(CreateLevelNode(&pShadow) != FALSE);
+    if (!(CreateLevelNode(&pShadow) != FALSE)) {
+      return FALSE;
+    }
     pShadow->usIndex = usIndex;
 
     gpWorldLevelData[iMapIndex].pShadowHead = pShadow;
@@ -1512,7 +1536,9 @@ BOOLEAN AddShadowToTail(uint32_t iMapIndex, uint16_t usIndex) {
   } else {
     while (pShadow != NULL) {
       if (pShadow->pNext == NULL) {
-        CHECKF(CreateLevelNode(&pNextShadow) != FALSE);
+        if (!(CreateLevelNode(&pNextShadow) != FALSE)) {
+          return FALSE;
+        }
         pShadow->pNext = pNextShadow;
         pNextShadow->pNext = NULL;
         pNextShadow->usIndex = usIndex;
@@ -1549,7 +1575,9 @@ BOOLEAN AddShadowToHead(uint32_t iMapIndex, uint16_t usIndex) {
   pShadow = gpWorldLevelData[iMapIndex].pShadowHead;
 
   // Allocate head
-  CHECKF(CreateLevelNode(&pNextShadow) != FALSE);
+  if (!(CreateLevelNode(&pNextShadow) != FALSE)) {
+    return FALSE;
+  }
   pNextShadow->pNext = pShadow;
   pNextShadow->usIndex = usIndex;
 
@@ -1734,7 +1762,9 @@ BOOLEAN AddMercToHead(uint32_t iMapIndex, struct SOLDIERTYPE *pSoldier, BOOLEAN 
   pMerc = gpWorldLevelData[iMapIndex].pMercHead;
 
   // Allocate head
-  CHECKF(CreateLevelNode(&pNextMerc) != FALSE);
+  if (!(CreateLevelNode(&pNextMerc) != FALSE)) {
+    return FALSE;
+  }
   pNextMerc->pNext = pMerc;
   pNextMerc->pSoldier = pSoldier;
   pNextMerc->uiFlags |= LEVELNODE_SOLDIER;
@@ -1967,7 +1997,9 @@ struct LEVELNODE *AddRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
   // If we're at the head, set here
   if (pRoof == NULL) {
-    CHECKF(CreateLevelNode(&pRoof) != FALSE);
+    if (!(CreateLevelNode(&pRoof) != FALSE)) {
+      return FALSE;
+    }
 
     if (usIndex < NUMBEROFTILES) {
       if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
@@ -1987,7 +2019,9 @@ struct LEVELNODE *AddRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
   } else {
     while (pRoof != NULL) {
       if (pRoof->pNext == NULL) {
-        CHECKF(CreateLevelNode(&pNextRoof) != FALSE);
+        if (!(CreateLevelNode(&pNextRoof) != FALSE)) {
+          return FALSE;
+        }
 
         if (usIndex < NUMBEROFTILES) {
           if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
@@ -2022,7 +2056,9 @@ BOOLEAN AddRoofToHead(uint32_t iMapIndex, uint16_t usIndex) {
 
   pRoof = gpWorldLevelData[iMapIndex].pRoofHead;
 
-  CHECKF(CreateLevelNode(&pNextRoof) != FALSE);
+  if (!(CreateLevelNode(&pNextRoof) != FALSE)) {
+    return FALSE;
+  }
 
   if (usIndex < NUMBEROFTILES) {
     if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
@@ -2245,7 +2281,9 @@ struct LEVELNODE *AddOnRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
 
   // If we're at the head, set here
   if (pOnRoof == NULL) {
-    CHECKF(CreateLevelNode(&pOnRoof) != FALSE);
+    if (!(CreateLevelNode(&pOnRoof) != FALSE)) {
+      return FALSE;
+    }
 
     if (usIndex < NUMBEROFTILES) {
       if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
@@ -2267,7 +2305,9 @@ struct LEVELNODE *AddOnRoofToTail(uint32_t iMapIndex, uint16_t usIndex) {
   } else {
     while (pOnRoof != NULL) {
       if (pOnRoof->pNext == NULL) {
-        CHECKF(CreateLevelNode(&pNextOnRoof) != FALSE);
+        if (!(CreateLevelNode(&pNextOnRoof) != FALSE)) {
+          return FALSE;
+        }
 
         if (usIndex < NUMBEROFTILES) {
           if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
@@ -2301,7 +2341,9 @@ BOOLEAN AddOnRoofToHead(uint32_t iMapIndex, uint16_t usIndex) {
 
   pOnRoof = gpWorldLevelData[iMapIndex].pOnRoofHead;
 
-  CHECKF(CreateLevelNode(&pNextOnRoof) != FALSE);
+  if (!(CreateLevelNode(&pNextOnRoof) != FALSE)) {
+    return FALSE;
+  }
   if (usIndex < NUMBEROFTILES) {
     if (gTileDatabase[usIndex].pDBStructureRef != NULL) {
       if (AddStructureToWorld((int16_t)iMapIndex, 1, gTileDatabase[usIndex].pDBStructureRef,
@@ -2486,7 +2528,9 @@ BOOLEAN AddUIElem(uint32_t iMapIndex, uint16_t usIndex, int8_t sRelativeX, int8_
 
   pTopmost = AddTopmostToTail(iMapIndex, usIndex);
 
-  CHECKF(pTopmost != NULL);
+  if (!(pTopmost != NULL)) {
+    return FALSE;
+  }
 
   // Set flags
   pTopmost->uiFlags |= LEVELNODE_USERELPOS;
@@ -2510,7 +2554,9 @@ BOOLEAN AddTopmostToHead(uint32_t iMapIndex, uint16_t usIndex) {
   pTopmost = gpWorldLevelData[iMapIndex].pTopmostHead;
 
   // Allocate head
-  CHECKF(CreateLevelNode(&pNextTopmost) != FALSE);
+  if (!(CreateLevelNode(&pNextTopmost) != FALSE)) {
+    return FALSE;
+  }
   pNextTopmost->pNext = pTopmost;
   pNextTopmost->usIndex = usIndex;
 

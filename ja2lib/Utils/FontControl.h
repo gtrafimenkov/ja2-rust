@@ -7,19 +7,6 @@
 
 struct VObject;
 
-extern BOOLEAN gfUseWinFonts;
-extern int32_t giCurWinFont;
-
-#ifdef WINFONTS
-#define USE_WINFONTS() (gfUseWinFonts)
-#else
-#define USE_WINFONTS() (FALSE)
-#endif
-
-#define GET_WINFONT() (giCurWinFont)
-#define SET_USE_WINFONTS(fSet) (gfUseWinFonts = fSet);
-#define SET_WINFONT(fFont) (giCurWinFont = fFont);
-
 // ATE: A few winfont wrappers..
 uint16_t WFGetFontHeight(int32_t FontNum);
 int16_t WFStringPixLength(wchar_t* string, int32_t UseFont);

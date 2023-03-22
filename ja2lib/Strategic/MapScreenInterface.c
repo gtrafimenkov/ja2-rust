@@ -983,8 +983,8 @@ void HandleDisplayOfSelectedMercArrows(void) {
   }
 
   GetVideoObject(&hHandle, guiSelectedCharArrow);
-  BltVideoObject(guiSAVEBUFFER, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   // now run through the selected list of guys, an arrow for each
   for (ubCount = 0; ubCount < MAX_CHARACTER_COUNT; ubCount++) {
@@ -1003,8 +1003,8 @@ void HandleDisplayOfSelectedMercArrows(void) {
         }
 
         GetVideoObject(&hHandle, guiSelectedCharArrow);
-        BltVideoObject(guiSAVEBUFFER, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition,
-                       VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObject2(vsSaveBuffer, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition,
+                        VO_BLT_SRCTRANSPARENCY, NULL);
       }
     }
   }
@@ -2047,7 +2047,9 @@ BOOLEAN SetUpFastHelpListRegions(int32_t iXPosition[], int32_t iYPosition[], int
 
   for (iCounter = 0; iCounter < iSize; iCounter++) {
     // forgiving way of making sure we don't go too far
-    CHECKF(iCounter < MAX_MAPSCREEN_FAST_HELP);
+    if (!(iCounter < MAX_MAPSCREEN_FAST_HELP)) {
+      return FALSE;
+    }
 
     // now copy over info
     pFastHelpMapScreenList[iCounter].iX = iXPosition[iCounter];
@@ -2145,20 +2147,15 @@ void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
   // too far
   if ((iY + iH) >= SCREEN_HEIGHT) iY = (SCREEN_HEIGHT - iH - 15);
 
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, iX + 1, iY + 1, iX + iW - 1, iY + iH - 1, Get16BPPColor(FROMRGB(65, 57, 15)),
                 pDestBuf);
   RectangleDraw(TRUE, iX, iY, iX + iW - 2, iY + iH - 2, Get16BPPColor(FROMRGB(227, 198, 88)),
                 pDestBuf);
-  UnLockVideoSurface(FRAME_BUFFER);
-  ShadowVideoSurfaceRect(FRAME_BUFFER, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
-  ShadowVideoSurfaceRect(FRAME_BUFFER, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
-
-  // fillt he video surface areas
-  // ColorFillVideoSurfaceArea(FRAME_BUFFER, iX, iY, (iX + iW), (iY + iH), 0);
-  // ColorFillVideoSurfaceArea(FRAME_BUFFER, (iX + 1), (iY + 1), (iX + iW - 1), (iY + iH - 1),
-  // usFillColor);
+  VSurfaceUnlock(vsFB);
+  ShadowVideoSurfaceRect(vsFB, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
+  ShadowVideoSurfaceRect(vsFB, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
 
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BEIGE);
@@ -3690,7 +3687,6 @@ void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier) {
   VOBJECT_DESC VObjectDesc;
 
   // going to load face
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
 
   if (pSoldier->bLife == 0) {
     return;
@@ -3702,8 +3698,7 @@ void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier) {
 
   // if update
   if (pUpdateSoldierBox[iCounter] == NULL) {
-    sprintf(VObjectDesc.ImageFile, "Interface\\panels.sti");
-    if (!AddVideoObject(&VObjectDesc, &giMercPanelImage)) {
+    if (!AddVObjectFromFile("Interface\\panels.sti", &giMercPanelImage)) {
       AssertMsg(0, "Failed to load Interface\\panels.sti");
     }
   }
@@ -3837,25 +3832,25 @@ void DisplaySoldierUpdateBox() {
   GetVideoObject(&hBackGroundHandle, guiUpdatePanelTactical);
 
   // Display the 2 TOP corner pieces
-  BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 0, iX - 4, iY - 4, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY - 4,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 0, iX - 4, iY - 4, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY - 4,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 
   if (fFourWideMode) {
     // Display 2 vertical lines starting at the bottom
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 3, iX - 4, iY + iUpdatePanelHeight - 3 - 70,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 5, iX + iUpdatePanelWidth,
-                   iY + iUpdatePanelHeight - 3 - 70, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 3, iX - 4, iY + iUpdatePanelHeight - 3 - 70,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 5, iX + iUpdatePanelWidth,
+                    iY + iUpdatePanelHeight - 3 - 70, VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Display the 2 bottom corner pieces
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 0, iX - 4, iY + iUpdatePanelHeight - 3,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 2, iX + iUpdatePanelWidth,
-                   iY + iUpdatePanelHeight - 3, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 0, iX - 4, iY + iUpdatePanelHeight - 3,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 2, iX + iUpdatePanelWidth,
+                    iY + iUpdatePanelHeight - 3, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
-  SetFontDestBuffer(guiSAVEBUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
 
   iUpperLimit = fFourWideMode
                     ? (iNumberOfMercsOnUpdatePanel + NUMBER_OF_MERC_COLUMNS_FOR_FOUR_WIDE_MODE)
@@ -3869,8 +3864,8 @@ void DisplaySoldierUpdateBox() {
     iFaceX = iX + (iCounter % iNumberWide) * TACT_UPDATE_MERC_FACE_X_WIDTH;
     iFaceY = iY + (iCounter / iNumberWide) * TACT_UPDATE_MERC_FACE_X_HEIGHT;
 
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 20, iFaceX, iFaceY, VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 20, iFaceX, iFaceY, VO_BLT_SRCTRANSPARENCY,
+                    NULL);
   }
 
   // loop through the mercs to be displayed
@@ -3906,8 +3901,8 @@ void DisplaySoldierUpdateBox() {
   // the button container box
   if (fFourWideMode) {
     // def: 3/1/99 WAS SUBINDEX 6,
-    BltVideoObject(
-        guiSAVEBUFFER, hBackGroundHandle, 19, iX - 4 + TACT_UPDATE_MERC_FACE_X_WIDTH,
+    BltVideoObject2(
+        vsSaveBuffer, hBackGroundHandle, 19, iX - 4 + TACT_UPDATE_MERC_FACE_X_WIDTH,
         iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
         VO_BLT_SRCTRANSPARENCY, NULL);
 
@@ -3919,8 +3914,8 @@ void DisplaySoldierUpdateBox() {
                          gzLateLocalizedString[49], FONT_BLACK, 0, CENTER_JUSTIFIED);
   } else {
     // def: 3/1/99 WAS SUBINDEX 6,
-    BltVideoObject(
-        guiSAVEBUFFER, hBackGroundHandle, 19, iX - 4,
+    BltVideoObject2(
+        vsSaveBuffer, hBackGroundHandle, 19, iX - 4,
         iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
         VO_BLT_SRCTRANSPARENCY, NULL);
 
@@ -3937,21 +3932,21 @@ void DisplaySoldierUpdateBox() {
   // now wrap the border
   for (iCounter = 0; iCounter < iNumberHigh; iCounter++) {
     // the sides
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 3, iX - 4,
-                   iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 5, iX + iUpdatePanelWidth,
-                   iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 3, iX - 4,
+                    iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 5, iX + iUpdatePanelWidth,
+                    iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // big horizontal line
   for (iCounter = 0; iCounter < iNumberWide; iCounter++) {
     // the top bottom
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 1,
-                   iX + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounter), iY - 4, VO_BLT_SRCTRANSPARENCY,
-                   NULL);
-    BltVideoObject(guiSAVEBUFFER, hBackGroundHandle, 1,
-                   iX + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounter), iY + iUpdatePanelHeight - 3,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 1,
+                    iX + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounter), iY - 4, VO_BLT_SRCTRANSPARENCY,
+                    NULL);
+    BltVideoObject2(vsSaveBuffer, hBackGroundHandle, 1,
+                    iX + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounter), iY + iUpdatePanelHeight - 3,
+                    VO_BLT_SRCTRANSPARENCY, NULL);
   }
 
   // Display the reason for the update box
@@ -3965,7 +3960,7 @@ void DisplaySoldierUpdateBox() {
                          FONT_BLACK, 0, CENTER_JUSTIFIED);
   }
 
-  SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
   // restore extern background rect
   RestoreExternBackgroundRect((int16_t)(iX - 5), (int16_t)(iY - 5),
@@ -4110,13 +4105,13 @@ void RenderSoldierSmallFaceForUpdatePanel(int32_t iIndex, int32_t iX, int32_t iY
   struct SOLDIERTYPE *pSoldier = NULL;
 
   // fill the background for the info bars black
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 36, iY + 2, iX + 44, iY + 30, 0);
+  VSurfaceColorFill(vsSaveBuffer, iX + 36, iY + 2, iX + 44, iY + 30, 0);
 
   // put down the background
-  BltVideoObjectFromIndex(guiSAVEBUFFER, giMercPanelImage, 0, iX, iY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObjectFromIndex(vsSaveBuffer, giMercPanelImage, 0, iX, iY, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // grab the face
-  BltVideoObjectFromIndex(guiSAVEBUFFER, giUpdateSoldierFaces[iIndex], 0, iX + 2, iY + 2,
+  BltVideoObjectFromIndex(vsSaveBuffer, giUpdateSoldierFaces[iIndex], 0, iX + 2, iY + 2,
                           VO_BLT_SRCTRANSPARENCY, NULL);
 
   // HEALTH BAR
@@ -4127,38 +4122,38 @@ void RenderSoldierSmallFaceForUpdatePanel(int32_t iIndex, int32_t iX, int32_t iY
 
   // yellow one for bleeding
   iStartY = iY + 29 - 27 * pSoldier->bLifeMax / 100;
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 36, iStartY, iX + 37, iY + 29,
-                            Get16BPPColor(FROMRGB(107, 107, 57)));
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 37, iStartY, iX + 38, iY + 29,
-                            Get16BPPColor(FROMRGB(222, 181, 115)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 36, iStartY, iX + 37, iY + 29,
+                    Get16BPPColor(FROMRGB(107, 107, 57)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 37, iStartY, iX + 38, iY + 29,
+                    Get16BPPColor(FROMRGB(222, 181, 115)));
 
   // pink one for bandaged.
   iStartY += 27 * pSoldier->bBleeding / 100;
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 36, iStartY, iX + 37, iY + 29,
-                            Get16BPPColor(FROMRGB(156, 57, 57)));
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 37, iStartY, iX + 38, iY + 29,
-                            Get16BPPColor(FROMRGB(222, 132, 132)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 36, iStartY, iX + 37, iY + 29,
+                    Get16BPPColor(FROMRGB(156, 57, 57)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 37, iStartY, iX + 38, iY + 29,
+                    Get16BPPColor(FROMRGB(222, 132, 132)));
 
   // red one for actual health
   iStartY = iY + 29 - 27 * pSoldier->bLife / 100;
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 36, iStartY, iX + 37, iY + 29,
-                            Get16BPPColor(FROMRGB(107, 8, 8)));
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 37, iStartY, iX + 38, iY + 29,
-                            Get16BPPColor(FROMRGB(206, 0, 0)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 36, iStartY, iX + 37, iY + 29,
+                    Get16BPPColor(FROMRGB(107, 8, 8)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 37, iStartY, iX + 38, iY + 29,
+                    Get16BPPColor(FROMRGB(206, 0, 0)));
 
   // BREATH BAR
   iStartY = iY + 29 - 27 * pSoldier->bBreathMax / 100;
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 39, iStartY, iX + 40, iY + 29,
-                            Get16BPPColor(FROMRGB(8, 8, 132)));
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 40, iStartY, iX + 41, iY + 29,
-                            Get16BPPColor(FROMRGB(8, 8, 107)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 39, iStartY, iX + 40, iY + 29,
+                    Get16BPPColor(FROMRGB(8, 8, 132)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 40, iStartY, iX + 41, iY + 29,
+                    Get16BPPColor(FROMRGB(8, 8, 107)));
 
   // MORALE BAR
   iStartY = iY + 29 - 27 * pSoldier->bMorale / 100;
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 42, iStartY, iX + 43, iY + 29,
-                            Get16BPPColor(FROMRGB(8, 156, 8)));
-  ColorFillVideoSurfaceArea(guiSAVEBUFFER, iX + 43, iStartY, iX + 44, iY + 29,
-                            Get16BPPColor(FROMRGB(8, 107, 8)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 42, iStartY, iX + 43, iY + 29,
+                    Get16BPPColor(FROMRGB(8, 156, 8)));
+  VSurfaceColorFill(vsSaveBuffer, iX + 43, iStartY, iX + 44, iY + 29,
+                    Get16BPPColor(FROMRGB(8, 107, 8)));
 
   return;
 }
@@ -5174,7 +5169,7 @@ void HandleBlitOfSectorLocatorIcon(uint8_t sSectorX, uint8_t sSectorY, int16_t s
                               MAP_GRID_Y);
 
   // blit object to frame buffer
-  BltVideoObject(FRAME_BUFFER, hHandle, ubFrame, sScreenX, sScreenY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hHandle, ubFrame, sScreenX, sScreenY, VO_BLT_SRCTRANSPARENCY, NULL);
 
   // invalidate region on frame buffer
   InvalidateRegion(sScreenX, sScreenY - 1, sScreenX + MAP_GRID_X, sScreenY + MAP_GRID_Y);

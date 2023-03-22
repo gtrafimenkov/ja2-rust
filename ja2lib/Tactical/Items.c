@@ -2268,7 +2268,9 @@ BOOLEAN ReloadGun(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pGun, struct 
 BOOLEAN EmptyWeaponMagazine(struct OBJECTTYPE *pWeapon, struct OBJECTTYPE *pAmmo) {
   uint16_t usReloadSound;
 
-  CHECKF(pAmmo != NULL);
+  if (!(pAmmo != NULL)) {
+    return FALSE;
+  }
 
   if (pWeapon->ubGunShotsLeft > 0) {
     // start by erasing ammo item, just in case...
@@ -2408,7 +2410,9 @@ BOOLEAN AutoReload(struct SOLDIERTYPE *pSoldier) {
   int8_t bSlot, bAPCost;
   BOOLEAN fRet;
 
-  CHECKF(pSoldier);
+  if (!(pSoldier)) {
+    return FALSE;
+  }
   pObj = &(pSoldier->inv[HANDPOS]);
 
   if (Item[pObj->usItem].usItemClass == IC_GUN || Item[pObj->usItem].usItemClass == IC_LAUNCHER) {
@@ -3190,7 +3194,9 @@ BOOLEAN AutoPlaceObject(struct SOLDIERTYPE *pSoldier, struct OBJECTTYPE *pObj, B
 }
 
 BOOLEAN RemoveObjectFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bPos, struct OBJECTTYPE *pObj) {
-  CHECKF(pObj);
+  if (!(pObj)) {
+    return FALSE;
+  }
   if (pSoldier->inv[bPos].ubNumberOfObjects == 0) {
     return (FALSE);
   } else {
@@ -3204,7 +3210,9 @@ BOOLEAN RemoveKeyFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition,
                           struct OBJECTTYPE *pObj) {
   uint8_t ubItem = 0;
 
-  CHECKF(pObj);
+  if (!(pObj)) {
+    return FALSE;
+  }
 
   if ((pSoldier->pKeyRing[bKeyRingPosition].ubNumber == 0) ||
       (pSoldier->pKeyRing[bKeyRingPosition].ubKeyID == INVALID_KEY_NUMBER)) {
@@ -3232,7 +3240,9 @@ BOOLEAN RemoveKeysFromSlot(struct SOLDIERTYPE *pSoldier, int8_t bKeyRingPosition
                            uint8_t ubNumberOfKeys, struct OBJECTTYPE *pObj) {
   uint8_t ubItems = 0;
 
-  CHECKF(pObj);
+  if (!(pObj)) {
+    return FALSE;
+  }
 
   if ((pSoldier->pKeyRing[bKeyRingPosition].ubNumber == 0) ||
       (pSoldier->pKeyRing[bKeyRingPosition].ubKeyID == INVALID_KEY_NUMBER)) {
@@ -3916,7 +3926,9 @@ void RenumberAttachments(struct OBJECTTYPE *pObj) {
 BOOLEAN RemoveAttachment(struct OBJECTTYPE *pObj, int8_t bAttachPos, struct OBJECTTYPE *pNewObj) {
   int8_t bGrenade;
 
-  CHECKF(pObj);
+  if (!(pObj)) {
+    return FALSE;
+  }
 
   if (bAttachPos < 0 || bAttachPos >= MAX_ATTACHMENTS) {
     return (FALSE);

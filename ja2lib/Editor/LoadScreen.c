@@ -23,6 +23,7 @@
 #include "MessageBoxScreen.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -484,19 +485,16 @@ void RemoveFileDialog(void) {
 }
 
 void DrawFileDialog(void) {
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 179, 69, (179 + 281), 261,
-                            Get16BPPColor(FROMRGB(136, 138, 135)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 180, 70, (179 + 281), 261,
-                            Get16BPPColor(FROMRGB(24, 61, 81)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, 180, 70, (179 + 280), 260,
-                            Get16BPPColor(FROMRGB(65, 79, 94)));
+  VSurfaceColorFill(vsFB, 179, 69, (179 + 281), 261, Get16BPPColor(FROMRGB(136, 138, 135)));
+  VSurfaceColorFill(vsFB, 180, 70, (179 + 281), 261, Get16BPPColor(FROMRGB(24, 61, 81)));
+  VSurfaceColorFill(vsFB, 180, 70, (179 + 280), 260, Get16BPPColor(FROMRGB(65, 79, 94)));
 
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, (179 + 4), (69 + 3), (179 + 4 + 240), (69 + 123),
-                            Get16BPPColor(FROMRGB(24, 61, 81)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, (179 + 5), (69 + 4), (179 + 4 + 240), (69 + 123),
-                            Get16BPPColor(FROMRGB(136, 138, 135)));
-  ColorFillVideoSurfaceArea(FRAME_BUFFER, (179 + 5), (69 + 4), (179 + 3 + 240), (69 + 122),
-                            Get16BPPColor(FROMRGB(250, 240, 188)));
+  VSurfaceColorFill(vsFB, (179 + 4), (69 + 3), (179 + 4 + 240), (69 + 123),
+                    Get16BPPColor(FROMRGB(24, 61, 81)));
+  VSurfaceColorFill(vsFB, (179 + 5), (69 + 4), (179 + 4 + 240), (69 + 123),
+                    Get16BPPColor(FROMRGB(136, 138, 135)));
+  VSurfaceColorFill(vsFB, (179 + 5), (69 + 4), (179 + 3 + 240), (69 + 122),
+                    Get16BPPColor(FROMRGB(250, 240, 188)));
 
   MarkButtonsDirty();
   RenderButtons();
@@ -972,7 +970,7 @@ BOOLEAN ExternalLoadMap(wchar_t *szFilename) {
   ProcessFileIO();  // always returns loadsave_screen and changes iostatus to loading_map.
   ExecuteBaseDirtyRectQueue();
   EndFrameBufferRender();
-  RefreshScreen(NULL);
+  RefreshScreen();
   if (ProcessFileIO() == EDIT_SCREEN) return TRUE;
   return FALSE;
 }
@@ -986,7 +984,7 @@ BOOLEAN ExternalSaveMap(wchar_t *szFilename) {
   if (ProcessFileIO() == ERROR_SCREEN) return FALSE;
   ExecuteBaseDirtyRectQueue();
   EndFrameBufferRender();
-  RefreshScreen(NULL);
+  RefreshScreen();
   if (ProcessFileIO() == EDIT_SCREEN) return TRUE;
   return FALSE;
 }

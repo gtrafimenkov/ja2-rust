@@ -98,7 +98,9 @@ BOOLEAN GetCivQuoteText(uint8_t ubCivQuoteID, uint8_t ubEntryID, wchar_t *zQuote
     sprintf(zFileName, "NPCDATA\\CIV%02d.edt", ubCivQuoteID);
   }
 
-  CHECKF(File_Exists(zFileName));
+  if (!(File_Exists(zFileName))) {
+    return FALSE;
+  }
 
   // Get data...
   LoadEncryptedDataFromFile(zFileName, zQuote, ubEntryID * 320, 320);
@@ -295,12 +297,9 @@ void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEnt
   memset(&VideoOverlayDesc, 0, sizeof(VIDEO_OVERLAY_DESC));
 
   // Prepare text box
-  SET_USE_WINFONTS(TRUE);
-  SET_WINFONT(giSubTitleWinFont);
   gCivQuoteData.iDialogueBox = PrepareMercPopupBox(
       gCivQuoteData.iDialogueBox, BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER, gzCivQuote,
       DIALOGUE_DEFAULT_WIDTH, 0, 0, 0, &gusCivQuoteBoxWidth, &gusCivQuoteBoxHeight);
-  SET_USE_WINFONTS(FALSE);
 
   // OK, find center for box......
   sX = sX - (gusCivQuoteBoxWidth / 2);

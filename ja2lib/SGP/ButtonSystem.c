@@ -1,9 +1,3 @@
-/***********************************************************************************************
-        Button System.c
-
-        Rewritten mostly by Kris Morness
-***********************************************************************************************/
-
 #include "SGP/ButtonSystem.h"
 
 #include <memory.h>
@@ -22,6 +16,7 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
+#include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "TileEngine/RenderDirty.h"
@@ -105,7 +100,6 @@ BOOLEAN gfRenderHilights = TRUE;
 BUTTON_PICS ButtonPictures[MAX_BUTTON_PICS];
 int32_t ButtonPicsLoaded;
 
-uint32_t ButtonDestBuffer = BACKBUFFER;
 uint32_t ButtonDestPitch = 640 * 2;
 uint32_t ButtonDestBPP = 16;
 
@@ -167,7 +161,6 @@ int32_t FindFreeButtonSlot(void) {
 //
 int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
                         int32_t OnNormal, int32_t OnHilite) {
-  VOBJECT_DESC vo_desc;
   uint32_t UseSlot;
   ETRLEObject *pTrav;
   uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
@@ -191,10 +184,7 @@ int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32
   }
 
   // Load the image
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, filename);
-
-  if ((ButtonPictures[UseSlot].vobj = CreateVideoObject(&vo_desc)) == NULL) {
+  if ((ButtonPictures[UseSlot].vobj = CreateVObjectFromFile(filename)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, String("Couldn't create VOBJECT for %s", filename));
     return (-1);
   }
@@ -479,17 +469,6 @@ int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t O
   return (UseSlot);
 }
 
-//=============================================================================
-//	SetButtonDestBuffer
-//
-//	Sets the destination buffer for all button blits.
-//
-BOOLEAN SetButtonDestBuffer(uint32_t DestBuffer) {
-  if (DestBuffer != BUTTON_USE_DEFAULT) ButtonDestBuffer = DestBuffer;
-
-  return (TRUE);
-}
-
 // Removes a QuickButton image from the system.
 void UnloadButtonImage(int32_t Index) {
   int32_t x;
@@ -602,33 +581,9 @@ BOOLEAN DisableButton(int32_t iButtonID) {
   return ((OldState == BUTTON_ENABLED) ? TRUE : FALSE);
 }
 
-//=============================================================================
-//	InitializeButtonImageManager
-//
-//	Initializes the button image sub-system. This function is called by
-//	InitButtonSystem.
-//
-BOOLEAN InitializeButtonImageManager(int32_t DefaultBuffer, int32_t DefaultPitch,
-                                     int32_t DefaultBPP) {
-  VOBJECT_DESC vo_desc;
+static BOOLEAN InitializeButtonImageManager() {
   uint8_t Pix;
   int x;
-
-  // Set up the default settings
-  if (DefaultBuffer != BUTTON_USE_DEFAULT)
-    ButtonDestBuffer = (uint32_t)DefaultBuffer;
-  else
-    ButtonDestBuffer = FRAME_BUFFER;
-
-  if (DefaultPitch != BUTTON_USE_DEFAULT)
-    ButtonDestPitch = (uint32_t)DefaultPitch;
-  else
-    ButtonDestPitch = 640 * 2;
-
-  if (DefaultBPP != BUTTON_USE_DEFAULT)
-    ButtonDestBPP = (uint32_t)DefaultBPP;
-  else
-    ButtonDestBPP = 16;
 
   // Blank out all QuickButton images
   for (x = 0; x < MAX_BUTTON_PICS; x++) {
@@ -660,19 +615,13 @@ BOOLEAN InitializeButtonImageManager(int32_t DefaultBuffer, int32_t DefaultPitch
   for (x = 0; x < MAX_BUTTON_ICONS; x++) GenericButtonIcons[x] = NULL;
 
   // Load the default generic button images
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, DEFAULT_GENERIC_BUTTON_OFF);
-
-  if ((GenericButtonOffNormal[0] = CreateVideoObject(&vo_desc)) == NULL) {
+  if ((GenericButtonOffNormal[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_OFF)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_OFF);
     return (FALSE);
   }
 
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, DEFAULT_GENERIC_BUTTON_ON);
-
-  if ((GenericButtonOnNormal[0] = CreateVideoObject(&vo_desc)) == NULL) {
+  if ((GenericButtonOnNormal[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_ON)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              "Couldn't create VOBJECT for " DEFAULT_GENERIC_BUTTON_ON);
     return (FALSE);
@@ -681,13 +630,9 @@ BOOLEAN InitializeButtonImageManager(int32_t DefaultBuffer, int32_t DefaultPitch
   // Load up the off hilite and on hilite images. We won't check for errors because if the file
   // doesn't exists, the system simply ignores that file. These are only here as extra images, they
   // aren't required for operation (only OFF Normal and ON Normal are required).
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, DEFAULT_GENERIC_BUTTON_OFF_HI);
-  GenericButtonOffHilite[0] = CreateVideoObject(&vo_desc);
+  GenericButtonOffHilite[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_OFF_HI);
 
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, DEFAULT_GENERIC_BUTTON_ON_HI);
-  GenericButtonOnHilite[0] = CreateVideoObject(&vo_desc);
+  GenericButtonOnHilite[0] = CreateVObjectFromFile(DEFAULT_GENERIC_BUTTON_ON_HI);
 
   Pix = 0;
   if (!GetETRLEPixelValue(&Pix, GenericButtonOffNormal[0], 8, 0, 0)) {
@@ -740,7 +685,6 @@ int16_t FindFreeIconSlot(void) {
 //
 int16_t LoadGenericButtonIcon(char *filename) {
   int16_t ImgSlot;
-  VOBJECT_DESC vo_desc;
 
   AssertMsg(filename != BUTTON_NO_FILENAME,
             "Attempting to LoadGenericButtonIcon() with null filename.");
@@ -753,10 +697,7 @@ int16_t LoadGenericButtonIcon(char *filename) {
   }
 
   // Load the icon
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, filename);
-
-  if ((GenericButtonIcons[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
+  if ((GenericButtonIcons[ImgSlot] = CreateVObjectFromFile(filename)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              String("LoadGenericButtonIcon: Couldn't create VOBJECT for %s", filename));
     return (-1);
@@ -852,7 +793,6 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
                                 char *OnNormName, char *OnHiliteName, char *BkGrndName,
                                 int16_t Index, int16_t OffsetX, int16_t OffsetY) {
   int16_t ImgSlot;
-  VOBJECT_DESC vo_desc;
   uint8_t Pix;
 
   // if the images for Off-Normal and On-Normal don't exist, abort call
@@ -870,20 +810,14 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
   }
 
   // Load the image for the Off-Normal button state (required)
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, OffNormName);
-
-  if ((GenericButtonOffNormal[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
+  if ((GenericButtonOffNormal[ImgSlot] = CreateVObjectFromFile(OffNormName)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffNormName));
     return (-1);
   }
 
   // Load the image for the On-Normal button state (required)
-  vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(vo_desc.ImageFile, OnNormName);
-
-  if ((GenericButtonOnNormal[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
+  if ((GenericButtonOnNormal[ImgSlot] = CreateVObjectFromFile(OnNormName)) == NULL) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
              String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnNormName));
     return (-1);
@@ -893,10 +827,7 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
   // if so, load it.
 
   if (GrayName != BUTTON_NO_FILENAME) {
-    vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(vo_desc.ImageFile, GrayName);
-
-    if ((GenericButtonGrayed[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
+    if ((GenericButtonGrayed[ImgSlot] = CreateVObjectFromFile(GrayName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", GrayName));
       return (-1);
@@ -905,10 +836,7 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
     GenericButtonGrayed[ImgSlot] = NULL;
 
   if (OffHiliteName != BUTTON_NO_FILENAME) {
-    vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(vo_desc.ImageFile, OffHiliteName);
-
-    if ((GenericButtonOffHilite[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
+    if ((GenericButtonOffHilite[ImgSlot] = CreateVObjectFromFile(OffHiliteName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OffHiliteName));
       return (-1);
@@ -917,10 +845,7 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
     GenericButtonOffHilite[ImgSlot] = NULL;
 
   if (OnHiliteName != BUTTON_NO_FILENAME) {
-    vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(vo_desc.ImageFile, OnHiliteName);
-
-    if ((GenericButtonOnHilite[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
+    if ((GenericButtonOnHilite[ImgSlot] = CreateVObjectFromFile(OnHiliteName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", OnHiliteName));
       return (-1);
@@ -929,10 +854,7 @@ int16_t LoadGenericButtonImages(char *GrayName, char *OffNormName, char *OffHili
     GenericButtonOnHilite[ImgSlot] = NULL;
 
   if (BkGrndName != BUTTON_NO_FILENAME) {
-    vo_desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-    strcpy(vo_desc.ImageFile, BkGrndName);
-
-    if ((GenericButtonBackground[ImgSlot] = CreateVideoObject(&vo_desc)) == NULL) {
+    if ((GenericButtonBackground[ImgSlot] = CreateVObjectFromFile(BkGrndName)) == NULL) {
       DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR,
                String("LoadGenericButtonImages: Couldn't create VOBJECT for %s", BkGrndName));
       return (-1);
@@ -1041,7 +963,7 @@ BOOLEAN InitButtonSystem(void) {
   }
 
   // Initialize the button image manager sub-system
-  if (InitializeButtonImageManager(-1, -1, -1) == FALSE) {
+  if (InitializeButtonImageManager() == FALSE) {
     DebugMsg(TOPIC_BUTTON_HANDLER, DBG_ERROR, "Failed button image manager init\n");
     return (FALSE);
   }
@@ -2677,8 +2599,8 @@ void DrawQuickButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (uint16_t)UseImage, b->XLoc,
-                 b->YLoc, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, ButtonPictures[b->ImageNum].vobj, (uint16_t)UseImage, b->XLoc, b->YLoc,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void DrawHatchOnButton(GUI_BUTTON *b) {
@@ -2689,9 +2611,9 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   Blt16BPPBufferHatchRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-  UnLockVideoSurface(ButtonDestBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void DrawShadeOnButton(GUI_BUTTON *b) {
@@ -2702,15 +2624,15 @@ void DrawShadeOnButton(GUI_BUTTON *b) {
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
   ClipRect.iBottom = b->Area.RegionBottomRightY - 1;
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
-  UnLockVideoSurface(ButtonDestBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void DrawDefaultOnButton(GUI_BUTTON *b) {
   uint8_t *pDestBuf;
   uint32_t uiDestPitchBYTES;
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   if (b->bDefaultStatus == DEFAULT_STATUS_DARKBORDER ||
       b->bDefaultStatus == DEFAULT_STATUS_WINDOWS95) {
@@ -2736,7 +2658,7 @@ void DrawDefaultOnButton(GUI_BUTTON *b) {
   if (b->bDefaultStatus == DEFAULT_STATUS_DOTTEDINTERIOR ||
       b->bDefaultStatus == DEFAULT_STATUS_WINDOWS95) {  // Draw an internal dotted rectangle.
   }
-  UnLockVideoSurface(ButtonDestBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 void DrawCheckBoxButtonOn(int32_t iButtonID) {
@@ -2816,8 +2738,8 @@ void DrawCheckBoxButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject(ButtonDestBuffer, ButtonPictures[b->ImageNum].vobj, (uint16_t)UseImage, b->XLoc,
-                 b->YLoc, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, ButtonPictures[b->ImageNum].vobj, (uint16_t)UseImage, b->XLoc, b->YLoc,
+                  VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void DrawIconOnButton(GUI_BUTTON *b) {
@@ -2902,11 +2824,11 @@ void DrawIconOnButton(GUI_BUTTON *b) {
     SetClippingRect(&NewClip);
     // Blit the icon
     if (b->uiFlags & BUTTON_GENERIC)
-      BltVideoObject(ButtonDestBuffer, GenericButtonIcons[b->iIconID], b->usIconIndex, (int16_t)xp,
-                     (int16_t)yp, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, GenericButtonIcons[b->iIconID], b->usIconIndex, (int16_t)xp,
+                      (int16_t)yp, VO_BLT_SRCTRANSPARENCY, NULL);
     else
-      BltVideoObject(ButtonDestBuffer, hvObject, b->usIconIndex, (int16_t)xp, (int16_t)yp,
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObject2(vsFB, hvObject, b->usIconIndex, (int16_t)xp, (int16_t)yp,
+                      VO_BLT_SRCTRANSPARENCY, NULL);
     // Restore previous clip region
     SetClippingRect(&OldClip);
   }
@@ -2962,8 +2884,7 @@ void DrawTextOnButton(GUI_BUTTON *b) {
     if ((NewClip.iRight <= NewClip.iLeft) || (NewClip.iBottom <= NewClip.iTop)) return;
 
     // Set the font printing settings to the buttons viewable area
-    SetFontDestBuffer(ButtonDestBuffer, NewClip.iLeft, NewClip.iTop, NewClip.iRight,
-                      NewClip.iBottom, FALSE);
+    SetFontDest(vsFB, NewClip.iLeft, NewClip.iTop, NewClip.iRight, NewClip.iBottom, FALSE);
 
     // Compute the coordinates to center the text
     if (b->bTextYOffset == -1)
@@ -3067,6 +2988,94 @@ void DrawTextOnButton(GUI_BUTTON *b) {
   }
 }
 
+static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, int32_t iDestX1, int32_t iDestY1,
+                                         int32_t iDestX2, int32_t iDestY2,
+                                         struct VObject *BkgrndImg, uint16_t Index, int16_t Ox,
+                                         int16_t Oy) {
+  int16_t xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
+  ETRLEObject *pTrav;
+  SGPRect NewClip, OldClip;
+
+  pTrav = &(BkgrndImg->pETRLEObject[Index]);
+  ph = (int16_t)(pTrav->usHeight + pTrav->sOffsetY);
+  pw = (int16_t)(pTrav->usWidth + pTrav->sOffsetX);
+
+  ah = (int16_t)(iDestY2 - iDestY1);
+  aw = (int16_t)(iDestX2 - iDestX1);
+
+  Ox %= pw;
+  Oy %= ph;
+
+  if (Ox > 0) Ox -= pw;
+  xo = (-Ox) % pw;
+
+  if (Oy > 0) Oy -= ph;
+  yo = (-Oy) % ph;
+
+  if (Ox < 0)
+    xo = (-Ox) % pw;
+  else {
+    xo = pw - (Ox % pw);
+    Ox -= pw;
+  }
+
+  if (Oy < 0)
+    yo = (-Oy) % ph;
+  else {
+    yo = ph - (Oy % pw);
+    Oy -= ph;
+  }
+
+  hblits = ((ah + yo) / ph) + (((ah + yo) % ph) ? 1 : 0);
+  wblits = ((aw + xo) / pw) + (((aw + xo) % pw) ? 1 : 0);
+
+  if ((hblits == 0) || (wblits == 0)) return (FALSE);
+
+  //
+  // Clip fill region coords
+  //
+
+  GetClippingRect(&OldClip);
+
+  NewClip.iLeft = iDestX1;
+  NewClip.iTop = iDestY1;
+  NewClip.iRight = iDestX2;
+  NewClip.iBottom = iDestY2;
+
+  if (NewClip.iLeft < OldClip.iLeft) NewClip.iLeft = OldClip.iLeft;
+
+  if (NewClip.iLeft > OldClip.iRight) return (FALSE);
+
+  if (NewClip.iRight > OldClip.iRight) NewClip.iRight = OldClip.iRight;
+
+  if (NewClip.iRight < OldClip.iLeft) return (FALSE);
+
+  if (NewClip.iTop < OldClip.iTop) NewClip.iTop = OldClip.iTop;
+
+  if (NewClip.iTop > OldClip.iBottom) return (FALSE);
+
+  if (NewClip.iBottom > OldClip.iBottom) NewClip.iBottom = OldClip.iBottom;
+
+  if (NewClip.iBottom < OldClip.iTop) return (FALSE);
+
+  if ((NewClip.iRight <= NewClip.iLeft) || (NewClip.iBottom <= NewClip.iTop)) return (FALSE);
+
+  SetClippingRect(&NewClip);
+
+  yc = (int16_t)iDestY1;
+  for (h = 0; h < hblits; h++) {
+    xc = (int16_t)iDestX1;
+    for (w = 0; w < wblits; w++) {
+      BltVideoObject2(dest, BkgrndImg, Index, xc + Ox, yc + Oy, VO_BLT_SRCTRANSPARENCY, NULL);
+      xc += pw;
+    }
+    yc += ph;
+  }
+
+  SetClippingRect(&OldClip);
+  return (TRUE);
+}
+
 //=============================================================================
 //	DrawGenericButton
 //
@@ -3133,9 +3142,9 @@ void DrawGenericButton(GUI_BUTTON *b) {
   cy = (b->YLoc + ((NumChunksHigh - 1) * iBorderHeight) + hremain);
 
   // Fill the button's area with the button's background color
-  ColorFillVideoSurfaceArea(ButtonDestBuffer, b->Area.RegionTopLeftX, b->Area.RegionTopLeftY,
-                            b->Area.RegionBottomRightX, b->Area.RegionBottomRightY,
-                            GenericButtonFillColors[b->ImageNum]);
+  VSurfaceColorFill(vsFB, b->Area.RegionTopLeftX, b->Area.RegionTopLeftY,
+                    b->Area.RegionBottomRightX, b->Area.RegionBottomRightY,
+                    GenericButtonFillColors[b->ImageNum]);
 
   // If there is a background image, fill the button's area with it
   if (GenericButtonBackground[b->ImageNum] != NULL) {
@@ -3145,15 +3154,15 @@ void DrawGenericButton(GUI_BUTTON *b) {
     if (b->uiFlags & BUTTON_CLICKED_ON) ox = oy = 1;
 
     // Fill the area with the image, tilling it if need be.
-    ImageFillVideoSurfaceArea(ButtonDestBuffer, b->Area.RegionTopLeftX + ox,
-                              b->Area.RegionTopLeftY + oy, b->Area.RegionBottomRightX,
-                              b->Area.RegionBottomRightY, GenericButtonBackground[b->ImageNum],
+    ImageFillVideoSurfaceArea(vsFB, b->Area.RegionTopLeftX + ox, b->Area.RegionTopLeftY + oy,
+                              b->Area.RegionBottomRightX, b->Area.RegionBottomRightY,
+                              GenericButtonBackground[b->ImageNum],
                               GenericButtonBackgroundIndex[b->ImageNum],
                               GenericButtonOffsetX[b->ImageNum], GenericButtonOffsetY[b->ImageNum]);
   }
 
   // Lock the dest buffer
-  pDestBuf = LockVideoSurface(ButtonDestBuffer, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
   GetClippingRect(&ClipRect);
 
@@ -3205,7 +3214,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   }
 
   // Unlock buffer
-  UnLockVideoSurface(ButtonDestBuffer);
+  VSurfaceUnlock(vsFB);
 }
 
 //=======================================================================================================

@@ -1,5 +1,7 @@
 #include "Intro.h"
 
+#include <string.h>
+
 #include "GameScreen.h"
 #include "Intro.h"
 #include "Local.h"
@@ -8,6 +10,7 @@
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
+#include "SGP/Input.h"
 #include "SGP/Ja2Libs.h"
 #include "SGP/Line.h"
 #include "SGP/Types.h"
@@ -20,7 +23,6 @@
 #include "SysGlobals.h"
 #include "Tactical/SoldierProfile.h"
 #include "TileEngine/RenderDirty.h"
-#include "TileEngine/SysUtil.h"
 #include "Utils/Cinematics.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
@@ -406,24 +408,19 @@ void DisplaySirtechSplashScreen() {
   // return;
 
   // CLEAR THE FRAME BUFFER
-  pDestBuf = LockVideoSurface(FRAME_BUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES);
-  UnLockVideoSurface(FRAME_BUFFER);
+  VSurfaceUnlock(vsFB);
 
-  memset(&VObjectDesc, 0, sizeof(VOBJECT_DESC));
-  VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  FilenameForBPP("INTERFACE\\SirtechSplash.sti", VObjectDesc.ImageFile);
-
-  //	FilenameForBPP("INTERFACE\\TShold.sti", VObjectDesc.ImageFile);
-  if (!AddVideoObject(&VObjectDesc, &uiLogoID)) {
+  if (!AddVObjectFromFile("INTERFACE\\SirtechSplash.sti", &uiLogoID)) {
     AssertMsg(0, String("Failed to load %s", VObjectDesc.ImageFile));
     return;
   }
 
   GetVideoObject(&hPixHandle, uiLogoID);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
   DeleteVideoObjectFromIndex(uiLogoID);
 
   InvalidateScreen();
-  RefreshScreen(NULL);
+  RefreshScreen();
 }

@@ -1404,7 +1404,9 @@ int8_t GetAPsToAutoReload(struct SOLDIERTYPE *pSoldier) {
   int8_t bAPCost = 0, bAPCost2 = 0;
   ;
 
-  CHECKF(pSoldier);
+  if (!(pSoldier)) {
+    return FALSE;
+  }
   pObj = &(pSoldier->inv[HANDPOS]);
 
   if (Item[pObj->usItem].usItemClass == IC_GUN || Item[pObj->usItem].usItemClass == IC_LAUNCHER) {

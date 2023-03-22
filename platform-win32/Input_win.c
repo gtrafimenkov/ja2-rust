@@ -763,10 +763,7 @@ void KeyUp(uint32_t usParam, uint32_t uiParam) {  // Are we RELEASING one of SHI
         if (usParam == SNAPSHOT) {
           // DB this used to be keyed to SCRL_LOCK
           // which I believe Luis gave the wrong value
-          if (_KeyDown(CTRL))
-            VideoCaptureToggle();
-          else
-            PrintScreen();
+          PrintScreen();
         } else {
           // No special keys have been pressed
           // Call KeyChange() and pass FALSE to indicate key has been PRESSED and not RELEASED
