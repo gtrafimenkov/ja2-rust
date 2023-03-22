@@ -2629,7 +2629,6 @@ void DeleteSelectedMercsItem() {
 // NOTE:  Step one can be skipped (when selecting an existing merc).  By setting the
 void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   UINT32 uiVideoObjectIndex;
-  UINT32 uiSrcID, uiDstID;
   struct VObject *hVObject;
   ETRLEObject *pObject;
   INVTYPE *item;
@@ -2691,8 +2690,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   // the rendering happens.
 
   // assign the buffers
-  uiSrcID = guiMercTempBuffer;
-  uiDstID = guiMercInvPanelBuffers[gbCurrSelect];
+  struct VSurface *src = GetVSByID(guiMercTempBuffer);
+  struct VSurface *dest = GetVSByID(guiMercInvPanelBuffers[gbCurrSelect]);
 
   // build the rects
   iDstWidth = gbCurrSelect < 3 ? MERCINV_SMSLOT_WIDTH : MERCINV_LGSLOT_WIDTH;
@@ -2707,10 +2706,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   DstRect.iBottom = iDstHeight;
 
   // clear both buffers (fill with black to erase previous graphic)
-  VSurfaceColorFill(GetVSByID(uiSrcID), SrcRect.iLeft, SrcRect.iTop, SrcRect.iRight,
-                    SrcRect.iBottom, 0);
-  VSurfaceColorFill(GetVSByID(uiDstID), DstRect.iLeft, DstRect.iTop, DstRect.iRight,
-                    DstRect.iBottom, 0);
+  VSurfaceColorFill(src, SrcRect.iLeft, SrcRect.iTop, SrcRect.iRight, SrcRect.iBottom, 0);
+  VSurfaceColorFill(dest, DstRect.iLeft, DstRect.iTop, DstRect.iRight, DstRect.iBottom, 0);
 
   // if the index is 0, then there is no item.
   if (!gusMercsNewItemIndex) return;
@@ -2719,8 +2716,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   item = &Item[gusMercsNewItemIndex];
   uiVideoObjectIndex = GetInterfaceGraphicForItem(item);
   GetVideoObject(&hVObject, uiVideoObjectIndex);
-  BltVideoObjectOutlineFromIndex(GetVSByID(uiSrcID), uiVideoObjectIndex, item->ubGraphicNum, 0, 0,
-                                 0, FALSE);
+  BltVideoObjectOutlineFromIndex(src, uiVideoObjectIndex, item->ubGraphicNum, 0, 0, 0, FALSE);
 
   // crop the source image
   pObject = &hVObject->pETRLEObject[item->ubGraphicNum];
@@ -2771,7 +2767,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   DstRect.iBottom = DstRect.iTop + iDstHeight;
 
   // scale the item down to the smaller buffer.
-  BltStretchVideoSurface(uiDstID, uiSrcID, 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect, &DstRect);
+  BltStretchVideoSurface(dest, src, 0, 0, VO_BLT_SRCTRANSPARENCY, &SrcRect, &DstRect);
 
   // invalidate the mercs new item index
   gusMercsNewItemIndex = 0xffff;
