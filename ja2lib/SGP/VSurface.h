@@ -24,7 +24,6 @@ extern struct VSurface *vsSaveBuffer;
 
 #define BACKBUFFER 0xFFFFFFF1
 #define FRAME_BUFFER 0xFFFFFFF2
-#define MOUSE_BUFFER 0xFFFFFFF3
 
 //
 // Defines for blitting

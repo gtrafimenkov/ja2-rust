@@ -386,12 +386,6 @@ BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, 
     }
   }
 
-  // Mark as dirty if it's the backbuffer
-  // if ( destSurface == BACKBUFFER )
-  //{
-  //	InvalidateBackbuffer( );
-  //}
-
   VSurfaceUnlock(GetVSByID(destSurface));
   return (TRUE);
 }
@@ -656,9 +650,6 @@ struct VSurface *GetVSByID(VSurfID id) {
 
     case FRAME_BUFFER:
       return vsFB;
-
-    case MOUSE_BUFFER:
-      return vsMouseBuffer;
 
     default: {
       VSURFACE_NODE *curr;

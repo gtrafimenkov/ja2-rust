@@ -995,7 +995,7 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
   ClipX2 = 640;
   ClipY2 = gsVIEWPORT_WINDOW_END_Y - 1;
 
-  pDestBuf = VSurfaceLockOld(GetVSByID(BACKBUFFER), &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsBB, &uiDestPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
