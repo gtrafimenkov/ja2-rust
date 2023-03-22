@@ -12,9 +12,6 @@
 #include "SGP/WCheck.h"
 #include "SGP/WinFont.h"
 
-INT32 giCurWinFont = 0;
-BOOLEAN gfUseWinFonts = FALSE;
-
 // Global variables for video objects
 INT32 gpLargeFontType1;
 struct VObject* gvoLargeFontType1;
@@ -327,30 +324,9 @@ UINT16 CreateFontPaletteTables(struct VObject* pObj) {
   // Set current shade table to neutral color
   pObj->pShadeCurrent = pObj->pShades[4];
 
-  // check to make sure every table got a palette
-  // for(count=0; (count < HVOBJECT_SHADE_TABLES) && (pObj->pShades[count]!=NULL); count++);
-
-  // return the result of the check
-  // return(count==HVOBJECT_SHADE_TABLES);
   return (TRUE);
 }
 
-UINT16 WFGetFontHeight(INT32 FontNum) {
-  if (USE_WINFONTS()) {
-    // return how many Y pixels we used
-    return (GetWinFontHeight(L"a\0", GET_WINFONT()));
-  } else {
-    // return how many Y pixels we used
-    return (GetFontHeight(FontNum));
-  }
-}
+UINT16 WFGetFontHeight(INT32 FontNum) { return (GetFontHeight(FontNum)); }
 
-INT16 WFStringPixLength(STR16 string, INT32 UseFont) {
-  if (USE_WINFONTS()) {
-    // return how many Y pixels we used
-    return (WinFontStringPixLength(string, GET_WINFONT()));
-  } else {
-    // return how many Y pixels we used
-    return (StringPixLength(string, UseFont));
-  }
-}
+INT16 WFStringPixLength(STR16 string, INT32 UseFont) { return (StringPixLength(string, UseFont)); }

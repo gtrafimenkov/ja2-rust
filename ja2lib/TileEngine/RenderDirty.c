@@ -560,13 +560,8 @@ UINT16 gprintfdirty(INT16 x, INT16 y, STR16 pFontString, ...) {
             argptr);  // process gprintf string (get output str)
   va_end(argptr);
 
-  if (USE_WINFONTS()) {
-    uiStringLength = WinFontStringPixLength(string, GET_WINFONT());
-    uiStringHeight = GetWinFontHeight(string, GET_WINFONT());
-  } else {
-    uiStringLength = StringPixLength(string, FontDefault);
-    uiStringHeight = GetFontHeight(FontDefault);
-  }
+  uiStringLength = StringPixLength(string, FontDefault);
+  uiStringHeight = GetFontHeight(FontDefault);
 
   if (uiStringLength > 0) {
     iBack = RegisterBackgroundRect(BGND_FLAG_SINGLE, NULL, x, y, (INT16)(x + uiStringLength),

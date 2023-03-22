@@ -201,7 +201,6 @@ static BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, struct Rect *pRect) {
 BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
                                       INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
                                       struct BltOpts *pBltFx) {
-  VSURFACE_REGION aRegion;
   struct Rect SrcRect, DestRect;
   UINT32 uiWidth, uiHeight;
 

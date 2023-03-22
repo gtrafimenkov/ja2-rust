@@ -76,9 +76,4 @@ void ShadowText(VSurfID destSurface, STR16 pString, UINT32 uiFont, UINT16 usPosX
 
 BOOLEAN ReduceStringLength(STR16 pString, size_t bufSize, UINT32 uiWidth, UINT32 uiFont);
 
-void UseSingleCharWordsForWordWrap(BOOLEAN fUseSingleCharWords);
-WRAPPED_STRING *LineWrapForSingleCharWords(UINT32 ulFont, UINT16 usLineWidthPixels,
-                                           UINT16 *pusLineWidthIfWordIsWiderThenWidth,
-                                           STR16 pString, ...);
-
 #endif

@@ -13,120 +13,6 @@
 #include "TileEngine/RenderDirty.h"
 #include "Utils/FontControl.h"
 
-#define SINGLE_CHARACTER_WORD_FOR_WORDWRAP
-
-BOOLEAN gfUseSingleCharWordsForWordWrap = FALSE;
-
-void UseSingleCharWordsForWordWrap(BOOLEAN fUseSingleCharWords) {
-  gfUseSingleCharWordsForWordWrap = fUseSingleCharWords;
-}
-
-WRAPPED_STRING *LineWrapForSingleCharWords(UINT32 ulFont, UINT16 usLineWidthPixels,
-                                           UINT16 *pusLineWidthIfWordIsWiderThenWidth,
-                                           STR16 pString, ...) {
-  WRAPPED_STRING FirstWrappedString;
-  WRAPPED_STRING *pWrappedString = NULL;
-  wchar_t TempString[1024];
-  //	wchar_t         pNullString[2];
-  INT16 usCurIndex, usEndIndex, usDestIndex;
-  wchar_t DestString[1024];
-  va_list argptr;
-  BOOLEAN fDone = FALSE;
-  UINT16 usCurrentWidthPixels = 0;
-  //	UINT16					usCurrentLineWidthPixels=0;
-  wchar_t OneChar[2];
-  BOOLEAN fNewLine = FALSE;
-  //	BOOLEAN					fTheStringIsToLong=FALSE;
-  //	INT32 iCounter=0;
-  //	INT32 iErrorCount = 0;
-  //  pNullString[0]=L' ';
-  //	pNullString[1]=0;
-
-  memset(&FirstWrappedString, 0, sizeof(WRAPPED_STRING));
-
-  *pusLineWidthIfWordIsWiderThenWidth = usLineWidthPixels;
-
-  if (pString == NULL) return (FALSE);
-
-  va_start(argptr, pString);                                     // Set up variable argument pointer
-  vswprintf(TempString, ARR_SIZE(TempString), pString, argptr);  // process string (get output str)
-  va_end(argptr);
-
-  usCurIndex = usEndIndex = usDestIndex = 0;
-  OneChar[1] = L'\0';
-
-  while (!fDone) {
-    fNewLine = FALSE;
-
-    DestString[usDestIndex] = TempString[usCurIndex];
-
-    // If the new char is a newline character
-    if (DestString[usDestIndex] == NEWLINE_CHAR) {
-      DestString[usDestIndex] = TempString[usCurIndex] = 0;
-      fNewLine = TRUE;
-    }
-
-    // Get the next char
-    OneChar[0] = TempString[usCurIndex];
-
-    usCurrentWidthPixels += WFStringPixLength(OneChar, ulFont);
-
-    // If we are at the end of the string
-    if (TempString[usCurIndex] == 0) {
-      // get to next WrappedString structure
-      pWrappedString = &FirstWrappedString;
-      while (pWrappedString->pNextWrappedString != NULL)
-        pWrappedString = pWrappedString->pNextWrappedString;
-
-      // allocate memory for the string
-      pWrappedString->pNextWrappedString = (WRAPPED_STRING *)MemAlloc(sizeof(WRAPPED_STRING));
-      pWrappedString->pNextWrappedString->sString = (STR16)MemAlloc((wcslen(DestString) + 2) * 2);
-      if (pWrappedString->pNextWrappedString->sString == NULL) return (NULL);
-
-      wcscpy(pWrappedString->pNextWrappedString->sString, DestString);
-      pWrappedString->pNextWrappedString->pNextWrappedString = NULL;
-
-      return (FirstWrappedString.pNextWrappedString);
-    }
-
-    // if we are at the end of the line
-    if (usCurrentWidthPixels >= usLineWidthPixels) {
-      fNewLine = TRUE;
-    }
-
-    if (fNewLine) {
-      // End the current line
-      DestString[usDestIndex + 1] = '\0';
-
-      // get to next WrappedString structure
-      pWrappedString = &FirstWrappedString;
-      while (pWrappedString->pNextWrappedString != NULL)
-        pWrappedString = pWrappedString->pNextWrappedString;
-
-      // allocate memory for the string
-      pWrappedString->pNextWrappedString = (WRAPPED_STRING *)MemAlloc(sizeof(WRAPPED_STRING));
-      pWrappedString->pNextWrappedString->sString = (STR16)MemAlloc((wcslen(DestString) + 2) * 2);
-
-      // Copy the string into the new struct
-      wcscpy(pWrappedString->pNextWrappedString->sString, DestString);
-      pWrappedString->pNextWrappedString->pNextWrappedString = NULL;
-
-      fNewLine = FALSE;
-
-      usCurrentWidthPixels = 0;
-      usDestIndex = 0;
-      usCurIndex++;
-      usEndIndex = usCurIndex;
-      continue;
-    }
-
-    usCurIndex++;
-    usDestIndex++;
-  }
-
-  return (FirstWrappedString.pNextWrappedString);
-}
-
 WRAPPED_STRING *LineWrap(UINT32 ulFont, UINT16 usLineWidthPixels,
                          UINT16 *pusLineWidthIfWordIsWiderThenWidth, STR16 pString, ...) {
   WRAPPED_STRING FirstWrappedString;
@@ -329,12 +215,7 @@ UINT16 DisplayWrappedString(UINT16 usPosX, UINT16 usPosY, UINT16 usWidth, UINT8 
   usHeight = WFGetFontHeight(uiFont);
 
   // If we are to a Single char for a word ( like in Taiwan )
-  if (gfUseSingleCharWordsForWordWrap) {
-    pFirstWrappedString =
-        LineWrapForSingleCharWords(uiFont, usWidth, &usLineWidthIfWordIsWiderThenWidth, pString);
-  } else {
-    pFirstWrappedString = LineWrap(uiFont, usWidth, &usLineWidthIfWordIsWiderThenWidth, pString);
-  }
+  pFirstWrappedString = LineWrap(uiFont, usWidth, &usLineWidthIfWordIsWiderThenWidth, pString);
 
   // if an error occured and a word was bigger then the width passed in, reset the width
   if (usLineWidthIfWordIsWiderThenWidth != usWidth) usWidth = usLineWidthIfWordIsWiderThenWidth;
@@ -410,31 +291,17 @@ BOOLEAN DrawTextToScreen(STR16 pStr, UINT16 usLocX, UINT16 usLocY, UINT16 usWidt
 
   SetFont(ulFont);
 
-  if (USE_WINFONTS()) {
-    COLORVAL Color = FROMRGB(255, 255, 255);
-    SetWinFontForeColor(GET_WINFONT(), &Color);
-  } else {
-    SetFontForeground(ubColor);
-    SetFontBackground(ubBackGroundColor);
-  }
+  SetFontForeground(ubColor);
+  SetFontBackground(ubBackGroundColor);
 
   if (ulFlags & TEXT_SHADOWED)
     ShadowText(FRAME_BUFFER, pStr, ulFont, (UINT16)(usPosX - 1), (UINT16)(usPosY - 1));
 
-  if (USE_WINFONTS()) {
-    if (fDirty) {
-      gprintfdirty(usPosX, usPosY, pStr);
-      WinFont_mprintf(GET_WINFONT(), usPosX, usPosY, pStr);
-    } else {
-      WinFont_mprintf(GET_WINFONT(), usPosX, usPosY, pStr);
-    }
+  if (fDirty) {
+    gprintfdirty(usPosX, usPosY, pStr);
+    mprintf(usPosX, usPosY, pStr);
   } else {
-    if (fDirty) {
-      gprintfdirty(usPosX, usPosY, pStr);
-      mprintf(usPosX, usPosY, pStr);
-    } else {
-      mprintf(usPosX, usPosY, pStr);
-    }
+    mprintf(usPosX, usPosY, pStr);
   }
 
   if (IAN_WRAP_NO_SHADOW & ulFlags) {

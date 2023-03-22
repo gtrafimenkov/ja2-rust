@@ -297,12 +297,9 @@ void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID
   memset(&VideoOverlayDesc, 0, sizeof(VIDEO_OVERLAY_DESC));
 
   // Prepare text box
-  SET_USE_WINFONTS(TRUE);
-  SET_WINFONT(giSubTitleWinFont);
   gCivQuoteData.iDialogueBox = PrepareMercPopupBox(
       gCivQuoteData.iDialogueBox, BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER, gzCivQuote,
       DIALOGUE_DEFAULT_WIDTH, 0, 0, 0, &gusCivQuoteBoxWidth, &gusCivQuoteBoxHeight);
-  SET_USE_WINFONTS(FALSE);
 
   // OK, find center for box......
   sX = sX - (gusCivQuoteBoxWidth / 2);
