@@ -144,8 +144,6 @@ static LPDIRECTDRAWSURFACE2 gpMouseCursorOriginal = NULL;
 
 static MouseCursorBackground gMouseCursorBackground[2];
 
-static struct VObject *gpCursorStore;
-
 BOOLEAN gfFatalError = FALSE;
 char gFatalErrorString[512];
 
@@ -1439,47 +1437,6 @@ static BOOLEAN GetRGBDistribution(void) {
   }
 
   return TRUE;
-}
-
-BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
-  BOOLEAN ReturnValue;
-  ETRLEObject pETRLEPointer;
-
-  //
-  // Make sure we have a cursor store
-  //
-
-  if (gpCursorStore == NULL) {
-    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "ERROR : Cursor store is not loaded");
-    return FALSE;
-  }
-
-  EraseMouseCursor();
-
-  //
-  // Get new cursor data
-  //
-
-  ReturnValue = BltVideoObject2(vsMouseBuffer, gpCursorStore, usVideoObjectSubIndex, 0, 0,
-                                VO_BLT_SRCTRANSPARENCY, NULL);
-  guiMouseBufferState = BUFFER_DIRTY;
-
-  if (GetVideoObjectETRLEProperties(gpCursorStore, &pETRLEPointer, usVideoObjectSubIndex)) {
-    gsMouseCursorXOffset = usOffsetX;
-    gsMouseCursorYOffset = usOffsetY;
-    gusMouseCursorWidth = pETRLEPointer.usWidth + pETRLEPointer.sOffsetX;
-    gusMouseCursorHeight = pETRLEPointer.usHeight + pETRLEPointer.sOffsetY;
-
-    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "=================================================");
-    DebugMsg(TOPIC_VIDEO, DBG_ERROR,
-             String("Mouse Create with [ %d. %d ] [ %d, %d]", pETRLEPointer.sOffsetX,
-                    pETRLEPointer.sOffsetY, pETRLEPointer.usWidth, pETRLEPointer.usHeight));
-    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "=================================================");
-  } else {
-    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to get mouse info");
-  }
-
-  return ReturnValue;
 }
 
 void PrintScreen(void) { gfPrintFrameBuffer = TRUE; }

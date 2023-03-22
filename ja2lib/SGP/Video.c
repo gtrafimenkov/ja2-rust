@@ -44,3 +44,5 @@ BOOLEAN EraseMouseCursor() {
   VSurfaceUnlock(vsMouseBuffer);
   return (TRUE);
 }
+
+struct VObject *gpCursorStore;

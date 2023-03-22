@@ -1,10 +1,12 @@
 #include "SGP/CursorControl.h"
 
 #include "SGP/CursorFileData.h"
+#include "SGP/Debug.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "SGP/VideoInternal.h"
 #include "SGP/WCheck.h"
 #include "platform.h"
 
@@ -255,6 +257,47 @@ void CursorDatabaseClear(void) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
+  BOOLEAN ReturnValue;
+  ETRLEObject pETRLEPointer;
+
+  //
+  // Make sure we have a cursor store
+  //
+
+  if (gpCursorStore == NULL) {
+    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "ERROR : Cursor store is not loaded");
+    return FALSE;
+  }
+
+  EraseMouseCursor();
+
+  //
+  // Get new cursor data
+  //
+
+  ReturnValue = BltVideoObject2(vsMouseBuffer, gpCursorStore, usVideoObjectSubIndex, 0, 0,
+                                VO_BLT_SRCTRANSPARENCY, NULL);
+  guiMouseBufferState = BUFFER_DIRTY;
+
+  if (GetVideoObjectETRLEProperties(gpCursorStore, &pETRLEPointer, usVideoObjectSubIndex)) {
+    gsMouseCursorXOffset = usOffsetX;
+    gsMouseCursorYOffset = usOffsetY;
+    gusMouseCursorWidth = pETRLEPointer.usWidth + pETRLEPointer.sOffsetX;
+    gusMouseCursorHeight = pETRLEPointer.usHeight + pETRLEPointer.sOffsetY;
+
+    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "=================================================");
+    DebugMsg(TOPIC_VIDEO, DBG_ERROR,
+             String("Mouse Create with [ %d. %d ] [ %d, %d]", pETRLEPointer.sOffsetX,
+                    pETRLEPointer.sOffsetY, pETRLEPointer.usWidth, pETRLEPointer.usHeight));
+    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "=================================================");
+  } else {
+    DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to get mouse info");
+  }
+
+  return ReturnValue;
+}
 
 BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
   BOOLEAN ReturnValue = TRUE;

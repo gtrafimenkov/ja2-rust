@@ -20,3 +20,5 @@ extern INT16 gsMouseCursorYOffset;
 
 #define MAX_CURSOR_WIDTH 64
 #define MAX_CURSOR_HEIGHT 64
+
+extern struct VObject *gpCursorStore;

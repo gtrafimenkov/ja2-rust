@@ -26,7 +26,6 @@ extern void InvalidateScreen(void);
 
 extern BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
                                               UINT32 *BblueBitMask);
-extern BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY);
 extern void StartFrameBufferRender(void);
 extern void EndFrameBufferRender(void);
 extern void PrintScreen(void);

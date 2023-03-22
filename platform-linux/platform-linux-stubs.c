@@ -150,10 +150,6 @@ INT32 giNumFrames = 0;
 
 void RefreshScreen() {}
 
-BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
-  return FALSE;
-}
-
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 
 void FatalError(STR8 pError, ...) {}
