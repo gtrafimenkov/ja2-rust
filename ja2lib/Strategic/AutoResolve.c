@@ -2751,7 +2751,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   SetFont(SMALLCOMPFONT);
   // Restore the background before drawing text.
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(gpAR->iInterfaceBuffer, &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(GetVSByID(gpAR->iInterfaceBuffer), &uiSrcPitchBYTES);
   xp = pCell->xp + 2;
   yp = pCell->yp + 32;
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, xp, yp,

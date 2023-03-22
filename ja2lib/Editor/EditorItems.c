@@ -290,7 +290,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
     return;
   }
 
-  pDestBuf = LockVideoSurface(eInfo.uiBuffer, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(eInfo.uiBuffer), &uiDestPitchBYTES);
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   // copy a blank chunk of the editor interface to the new buffer.
@@ -503,7 +503,7 @@ void RenderEditorItemsInfo() {
     eInfo.sHilitedItemIndex = -1;
   }
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-  pSrcBuf = LockVideoSurface(eInfo.uiBuffer, &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(GetVSByID(eInfo.uiBuffer), &uiSrcPitchBYTES);
 
   // copy the items buffer to the editor bar
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 110,

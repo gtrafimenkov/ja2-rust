@@ -909,7 +909,7 @@ void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
   UINT32 uiSrcPitchBYTES;
   UINT8 *pSrcBuf;
 
-  pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(GetVSByID(uiSrcBuffer), &uiSrcPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -938,7 +938,7 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
   UINT32 uiSrcPitchBYTES;
   UINT8 *pSrcBuf;
 
-  pSrcBuf = LockVideoSurface(uiSrcBuffer, &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(GetVSByID(uiSrcBuffer), &uiSrcPitchBYTES);
 
   if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
     // OK, if our saved area is null, allocate it here!
@@ -1000,7 +1000,7 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
   ClipX2 = 640;
   ClipY2 = gsVIEWPORT_WINDOW_END_Y - 1;
 
-  pDestBuf = LockVideoSurface(BACKBUFFER, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(BACKBUFFER), &uiDestPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -1077,7 +1077,7 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
 
-  pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
 
   SetFont(pBlitter->uiFontID);
   SetFontBackground(pBlitter->ubFontBack);

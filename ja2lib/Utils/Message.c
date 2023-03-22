@@ -253,7 +253,7 @@ void BlitString(VIDEO_OVERLAY *pBlitter) {
     return;
   }
 
-  pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
   SetFont(pBlitter->uiFontID);
 
   SetFontBackground(pBlitter->ubFontBack);

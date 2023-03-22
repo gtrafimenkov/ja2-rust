@@ -4379,7 +4379,7 @@ BOOLEAN DrawDeskTopBackground(void) {
   if (!(GetVideoSurface(&hSrcVSurface, guiDESKTOP))) {
     return FALSE;
   }
-  pSrcBuf = LockVideoSurface(guiDESKTOP, &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(GetVSByID(guiDESKTOP), &uiSrcPitchBYTES);
 
   // blit .pcx for the background onto desktop
   Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,

@@ -365,7 +365,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, 
   area.iRight = X2;
 
   // Lock video surface
-  pBuffer = (UINT16 *)LockVideoSurface(destSurface, &uiPitch);
+  pBuffer = (UINT16 *)VSurfaceLockOld(GetVSByID(destSurface), &uiPitch);
 
   if (pBuffer == NULL) {
     return (FALSE);
@@ -623,13 +623,6 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
 
 // Old interface to locking VSurface
 BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch) {
-  struct BufferLockInfo res = VSurfaceLock(vs);
-  *pitch = res.pitch;
-  return res.dest;
-}
-
-BYTE *LockVideoSurface(VSurfID id, u32 *pitch) {
-  struct VSurface *vs = GetVSByID(id);
   struct BufferLockInfo res = VSurfaceLock(vs);
   *pitch = res.pitch;
   return res.dest;

@@ -2573,7 +2573,7 @@ void RenderSelectedMercsInventory() {
       xp = mercRects[i].iLeft + 4 + MERCPANEL_X;
       yp = mercRects[i].iTop + MERCPANEL_Y;
       pDst = VSurfaceLockOld(vsFB, &uiDstPitchBYTES);
-      pSrc = LockVideoSurface(guiMercInvPanelBuffers[i], &uiSrcPitchBYTES);
+      pSrc = VSurfaceLockOld(GetVSByID(guiMercInvPanelBuffers[i]), &uiSrcPitchBYTES);
       Blt16BPPTo16BPPTrans((UINT16 *)pDst, uiDstPitchBYTES, (UINT16 *)pSrc, uiSrcPitchBYTES, xp, yp,
                            0, 0, i < 3 ? 22 : 44, 15, 0);
       VSurfaceUnlock(vsFB);

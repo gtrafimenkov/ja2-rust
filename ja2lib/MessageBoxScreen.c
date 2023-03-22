@@ -257,7 +257,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   }
 
   // Save what we have under here...
-  pDestBuf = LockVideoSurface(gMsgBox.uiSaveBuffer, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(gMsgBox.uiSaveBuffer), &uiDestPitchBYTES);
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
@@ -787,7 +787,7 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
   if (((gMsgBox.uiExitScreen != GAME_SCREEN) || (fRestoreBackgroundForMessageBox == TRUE)) &&
       gfDontOverRideSaveBuffer) {
     // restore what we have under here...
-    pSrcBuf = LockVideoSurface(gMsgBox.uiSaveBuffer, &uiSrcPitchBYTES);
+    pSrcBuf = VSurfaceLockOld(GetVSByID(gMsgBox.uiSaveBuffer), &uiSrcPitchBYTES);
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,

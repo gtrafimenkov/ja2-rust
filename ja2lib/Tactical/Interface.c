@@ -1710,7 +1710,7 @@ void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
   BltVideoSurface(pBlitter->uiDestBuff, guiINTEXT, pBlitter->pBackground->sLeft,
                   pBlitter->pBackground->sTop, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
 
-  pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
 
   SetFont(pBlitter->uiFontID);
   SetFontBackground(pBlitter->ubFontBack);

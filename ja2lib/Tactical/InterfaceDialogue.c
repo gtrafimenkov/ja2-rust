@@ -666,7 +666,7 @@ void RenderTalkingMenu() {
     SetFontShadow(DEFAULT_SHADOW);
 
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-    pSrcBuf = LockVideoSurface(gTalkPanel.uiSaveBuffer, &uiSrcPitchBYTES);
+    pSrcBuf = VSurfaceLockOld(GetVSByID(gTalkPanel.uiSaveBuffer), &uiSrcPitchBYTES);
 
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
                     (INT16)(gTalkPanel.sX + TALK_PANEL_FACE_X),

@@ -253,7 +253,7 @@ BOOLEAN BltVideoObjectFromIndex(VSurfID destSurface, UINT32 uiSrcVObject, UINT16
   struct VObject *hSrcVObject;
 
   // Lock video surface
-  pBuffer = (UINT16 *)LockVideoSurface(destSurface, &uiPitch);
+  pBuffer = (UINT16 *)VSurfaceLockOld(GetVSByID(destSurface), &uiPitch);
 
   if (pBuffer == NULL) {
     return (FALSE);

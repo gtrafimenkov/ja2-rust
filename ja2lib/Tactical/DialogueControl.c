@@ -2011,8 +2011,9 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
     // BlinkAutoFace( gpCurrentTalkingFace->iID );
     // MouthAutoFace( gpCurrentTalkingFace->iID );
 
-    pDestBuf = LockVideoSurface(pBlitter->uiDestBuff, &uiDestPitchBYTES);
-    pSrcBuf = LockVideoSurface(gpCurrentTalkingFace->uiAutoDisplayBuffer, &uiSrcPitchBYTES);
+    pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
+    pSrcBuf =
+        VSurfaceLockOld(GetVSByID(gpCurrentTalkingFace->uiAutoDisplayBuffer), &uiSrcPitchBYTES);
 
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
                     (INT16)(pBlitter->sX + 14), (INT16)(pBlitter->sY + 6), 0, 0,
