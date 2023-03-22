@@ -1707,8 +1707,9 @@ void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
 
-  BltVideoSurface(pBlitter->uiDestBuff, guiINTEXT, pBlitter->pBackground->sLeft,
-                  pBlitter->pBackground->sTop, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
+  BltVideoSurface(GetVSByID(pBlitter->uiDestBuff), GetVSByID(guiINTEXT),
+                  pBlitter->pBackground->sLeft, pBlitter->pBackground->sTop,
+                  VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
 
   pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
 
@@ -2779,7 +2780,7 @@ void HandleTopMessages() {
       BltFx.SrcRect.iRight = 640;
       BltFx.SrcRect.iBottom = 20;
 
-      BltVideoSurface(FRAME_BUFFER, gTopMessage.uiSurface, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
+      BltVideoSurface(vsFB, GetVSByID(gTopMessage.uiSurface), 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
 
       // Save to save buffer....
       BltFx.SrcRect.iLeft = 0;
@@ -2787,7 +2788,7 @@ void HandleTopMessages() {
       BltFx.SrcRect.iRight = 640;
       BltFx.SrcRect.iBottom = 20;
 
-      BltVideoSurface(guiSAVEBUFFER, FRAME_BUFFER, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
+      BltVideoSurface(vsSaveBuffer, vsFB, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
 
       InvalidateRegion(0, 0, 640, 20);
 

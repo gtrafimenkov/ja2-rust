@@ -198,14 +198,16 @@ static BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, struct Rect *pRect) {
 // Blt  will use DD Blt or BltFast depending on flags.
 // Will drop down into user-defined blitter if 8->16 BPP blitting is being done
 
-BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
-                                      struct BltOpts *pBltFx) {
+BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDestX, INT32 iDestY,
+                        INT32 fBltFlags, struct BltOpts *pBltFx) {
+  if (!dest || !src) {
+    return FALSE;
+  }
   struct Rect SrcRect, DestRect;
   UINT32 uiWidth, uiHeight;
 
   // Assertions
-  Assert(hDestVSurface != NULL);
+  Assert(dest != NULL);
 
   // Check for source coordinate options - from region, specific rect or full src dimensions
   do {
@@ -229,29 +231,29 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
     // Here, use default, which is entire Video Surface
     // Check Sizes, SRC size MUST be <= DEST size
-    if (hDestVSurface->usHeight < hSrcVSurface->usHeight) {
+    if (dest->usHeight < src->usHeight) {
       DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-               String("Incompatible height size given in Video Surface blit"));
+               "Incompatible height size given in Video Surface blit");
       return (FALSE);
     }
-    if (hDestVSurface->usWidth < hSrcVSurface->usWidth) {
+    if (dest->usWidth < src->usWidth) {
       DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-               String("Incompatible height size given in Video Surface blit"));
+               "Incompatible height size given in Video Surface blit");
       return (FALSE);
     }
 
     SrcRect.top = (int)0;
     SrcRect.left = (int)0;
-    SrcRect.bottom = (int)hSrcVSurface->usHeight;
-    SrcRect.right = (int)hSrcVSurface->usWidth;
+    SrcRect.bottom = (int)src->usHeight;
+    SrcRect.right = (int)src->usWidth;
 
   } while (FALSE);
 
   // Once here, assert valid Src
-  Assert(hSrcVSurface != NULL);
+  Assert(src != NULL);
 
   // clipping -- added by DB
-  GetVSurfaceRect(hDestVSurface, &DestRect);
+  GetVSurfaceRect(dest, &DestRect);
   uiWidth = SrcRect.right - SrcRect.left;
   uiHeight = SrcRect.bottom - SrcRect.top;
 
@@ -284,30 +286,30 @@ BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSu
 
   // Send dest position, rectangle, etc to DD bltfast function
   // First check BPP values for compatibility
-  if (hDestVSurface->ubBitDepth == 16 && hSrcVSurface->ubBitDepth == 16) {
+  if (dest->ubBitDepth == 16 && src->ubBitDepth == 16) {
     struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
-    if (!(BltVSurfaceUsingDD(hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &srcRect))) {
+    if (!(BltVSurfaceUsingDD(dest, src, fBltFlags, iDestX, iDestY, &srcRect))) {
       return FALSE;
     }
 
-  } else if (hDestVSurface->ubBitDepth == 8 && hSrcVSurface->ubBitDepth == 8) {
-    struct BufferLockInfo srcLock = VSurfaceLock(hSrcVSurface);
+  } else if (dest->ubBitDepth == 8 && src->ubBitDepth == 8) {
+    struct BufferLockInfo srcLock = VSurfaceLock(src);
     if (!srcLock.dest) {
       DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP surface for blitting");
       return (FALSE);
     }
 
-    struct BufferLockInfo destLock = VSurfaceLock(hDestVSurface);
+    struct BufferLockInfo destLock = VSurfaceLock(dest);
     if (!destLock.dest) {
-      VSurfaceUnlock(hSrcVSurface);
+      VSurfaceUnlock(src);
       DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP dest surface for blitting");
       return (FALSE);
     }
 
     Blt8BPPTo8BPP(destLock.dest, destLock.pitch, srcLock.dest, srcLock.pitch, iDestX, iDestY,
                   SrcRect.left, SrcRect.top, uiWidth, uiHeight);
-    VSurfaceUnlock(hSrcVSurface);
-    VSurfaceUnlock(hDestVSurface);
+    VSurfaceUnlock(src);
+    VSurfaceUnlock(dest);
     return (TRUE);
   } else {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
@@ -678,34 +680,6 @@ BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex) {
     *hVSurface = vs;
   }
   return vs != NULL;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Given an index to the dest and src vobject contained in our private VSurface list
-// Based on flags, blit accordingly
-// There are two types, a BltFast and a Blt. BltFast is 10% faster, uses no
-// clipping lists
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
-                        UINT32 fBltFlags, struct BltOpts *pBltFx) {
-  struct VSurface *hDestVSurface;
-  struct VSurface *hSrcVSurface;
-
-  if (!GetVideoSurface(&hDestVSurface, destSurface)) {
-    return FALSE;
-  }
-  if (!GetVideoSurface(&hSrcVSurface, srcSurface)) {
-    return FALSE;
-  }
-  if (!BltVideoSurfaceToVideoSurface(hDestVSurface, hSrcVSurface, iDestX, iDestY, fBltFlags,
-                                     pBltFx)) {
-    // VO Blitter will set debug messages for error conditions
-    return FALSE;
-  }
-  return TRUE;
 }
 
 BOOLEAN ShutdownVideoSurfaceManager() {

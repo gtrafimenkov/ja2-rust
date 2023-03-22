@@ -203,11 +203,11 @@ BOOLEAN RenderMercPopupBox(INT16 sDestX, INT16 sDestY, UINT32 uiBuffer) {
 
   // check to see if we are wanting to blit a transparent background
   if (gPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_TRANS_BACK)
-    BltVideoSurface(uiBuffer, gPopUpTextBox->uiSourceBufferIndex, sDestX, sDestY,
-                    VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
+    BltVideoSurface(GetVSByID(uiBuffer), GetVSByID(gPopUpTextBox->uiSourceBufferIndex), sDestX,
+                    sDestY, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
   else
-    BltVideoSurface(uiBuffer, gPopUpTextBox->uiSourceBufferIndex, sDestX, sDestY, VS_BLT_FAST,
-                    NULL);
+    BltVideoSurface(GetVSByID(uiBuffer), GetVSByID(gPopUpTextBox->uiSourceBufferIndex), sDestX,
+                    sDestY, VS_BLT_FAST, NULL);
 
   // Invalidate!
   if (uiBuffer == FRAME_BUFFER) {

@@ -91,10 +91,6 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
 struct VSurface *GetVSByID(VSurfID id);
 
-// Blits a video Surface to another video Surface
-BOOLEAN BltVideoSurface(VSurfID destSurface, VSurfID srcSurface, INT32 iDestX, INT32 iDestY,
-                        UINT32 fBltFlags, struct BltOpts *pBltFx);
-
 BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP);
 
 BOOLEAN ColorFillVideoSurfaceArea(VSurfID destSurface, INT32 x1, INT32 y1, INT32 x2, INT32 y2,
@@ -138,9 +134,8 @@ BOOLEAN DeleteVideoSurfaceFromIndex(VSurfID uiIndex);
 // These blitting functions more-or less encapsolate all of the functionality of DirectDraw
 // Blitting, giving an API layer for portability.
 
-BOOLEAN BltVideoSurfaceToVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                      INT32 iDestX, INT32 iDestY, INT32 fBltFlags,
-                                      struct BltOpts *pBltFx);
+BOOLEAN BltVideoSurface(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface, INT32 iDestX,
+                        INT32 iDestY, INT32 fBltFlags, struct BltOpts *pBltFx);
 
 BOOLEAN ShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2);
 BOOLEAN ShadowVideoSurfaceImage(VSurfID destSurface, struct VObject *hImageHandle, INT32 iPosX,

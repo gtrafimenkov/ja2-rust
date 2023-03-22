@@ -5414,7 +5414,7 @@ void PopupText(CHAR16 *pFontString, ...) {
   FindFontCenterCoordinates(0, 0, SCREEN_WIDTH, INTERFACE_START_Y, PopupString, LARGEFONT1, &sX,
                             &sY);
 
-  BltVideoSurface(FRAME_BUFFER, guiINTEXT, 85, 160, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
+  BltVideoSurface(vsFB, GetVSByID(guiINTEXT), 85, 160, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
 
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
@@ -5428,51 +5428,6 @@ void PopupText(CHAR16 *pFontString, ...) {
 
   InvalidateScreen();
 }
-
-/*
-void BtnINVCallback(GUI_BUTTON *btn,INT32 reason)
-{
-        if (!(btn->uiFlags & BUTTON_ENABLED))
-                return;
-
-        if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
-        {
-                if(fMapInventoryItem)
-                        return;
-                if(!(btn->uiFlags & BUTTON_CLICKED_ON))
-                {
-                 fCharacterInfoPanelDirty = TRUE;
-                }
-    btn->uiFlags|=(BUTTON_CLICKED_ON);
-        }
-        else if(reason & MSYS_CALLBACK_REASON_LBUTTON_UP )
-        {
-                if(btn->uiFlags & BUTTON_CLICKED_ON)
-                {
-                 btn->uiFlags&= ~(BUTTON_CLICKED_ON);
-
-                 if(!fMapInventoryItem)
-                 {
-                   fShowInventoryFlag = FALSE;
-                 }
-
-                 // set help text for item glow region
-                 if( fShowInventoryFlag )
-                 {
-                         SetRegionFastHelpText( &gCharInfoHandRegion,
-pMiscMapScreenMouseRegionHelpText[ 2 ] );
-                 }
-                 else
-                 {
-                         SetRegionFastHelpText( &gCharInfoHandRegion,
-pMiscMapScreenMouseRegionHelpText[ 0 ] );
-                 }
-
-                 fTeamPanelDirty = TRUE;
-                }
-        }
-}
-*/
 
 void CreateDestroyMapInvButton() {
   static BOOLEAN fOldShowInventoryFlag = FALSE;

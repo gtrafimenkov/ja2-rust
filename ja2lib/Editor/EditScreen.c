@@ -2424,7 +2424,7 @@ void ShowCurrentSlotSurface(UINT32 vSurface, INT32 iWindow) {
   }
 
   vSfx.SrcRect = ClipRect;
-  BltVideoSurface(FRAME_BUFFER, vSurface, iStartX, iStartY, VS_BLT_SRCSUBRECT, &vSfx);
+  BltVideoSurface(vsFB, GetVSByID(vSurface), iStartX, iStartY, VS_BLT_SRCSUBRECT, &vSfx);
 }
 
 //----------------------------------------------------------------------------------------------

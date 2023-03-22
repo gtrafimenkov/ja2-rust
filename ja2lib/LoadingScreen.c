@@ -325,7 +325,7 @@ void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
             vs_desc.ImageFile);
   } else if (AddVideoSurface(&vs_desc, &uiLoadScreen)) {  // Blit the background image
     GetVideoSurface(&hVSurface, uiLoadScreen);
-    BltVideoSurfaceToVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
+    BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
     DeleteVideoSurfaceFromIndex(uiLoadScreen);
   } else {  // Failed to load the file, so use a black screen and print out message.
     SetFont(FONT10ARIAL);
