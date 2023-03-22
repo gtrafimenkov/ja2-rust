@@ -2577,7 +2577,7 @@ void RenderSelectedMercsInventory() {
       Blt16BPPTo16BPPTrans((UINT16 *)pDst, uiDstPitchBYTES, (UINT16 *)pSrc, uiSrcPitchBYTES, xp, yp,
                            0, 0, i < 3 ? 22 : 44, 15, 0);
       VSurfaceUnlock(vsFB);
-      UnLockVideoSurface(guiMercInvPanelBuffers[i]);
+      VSurfaceUnlock(GetVSByID(guiMercInvPanelBuffers[i]));
       LoadItemInfo(gpMercSlotItem[i]->usItem, pItemName, NULL);
       // Render the text
       switch (i) {

@@ -1083,8 +1083,8 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   pSrcBuf = LockVideoSurface(PopUpBoxList[uiCounter]->iBackGroundSurface, &uiSrcPitchBYTES);
   Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
                               usTopX, usTopY, &clip);
-  UnLockVideoSurface(PopUpBoxList[uiCounter]->iBackGroundSurface);
-  UnLockVideoSurface(PopUpBoxList[uiCounter]->uiBuffer);
+  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface));
+  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer));
   GetVideoObject(&hBoxHandle, PopUpBoxList[uiCounter]->iBorderObjectIndex);
 
   // blit in 4 corners (they're 2x2 pixels)

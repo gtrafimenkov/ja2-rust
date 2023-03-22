@@ -299,7 +299,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
                     0, 100, 360, 60, 80);
   }
 
-  UnLockVideoSurface(eInfo.uiBuffer);
+  VSurfaceUnlock(GetVSByID(eInfo.uiBuffer));
   VSurfaceUnlock(vsFB);
 
   x = 0;
@@ -509,7 +509,7 @@ void RenderEditorItemsInfo() {
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 110,
                   360, 60 * eInfo.sScrollIndex, 0, 360, 80);
 
-  UnLockVideoSurface(eInfo.uiBuffer);
+  VSurfaceUnlock(GetVSByID(eInfo.uiBuffer));
   VSurfaceUnlock(vsFB);
 
   // calculate the min and max index that is currently shown.  This determines

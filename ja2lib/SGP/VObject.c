@@ -261,19 +261,19 @@ BOOLEAN BltVideoObjectFromIndex(VSurfID destSurface, UINT32 uiSrcVObject, UINT16
 
   // Get video object
   if (!GetVideoObject(&hSrcVObject, uiSrcVObject)) {
-    UnLockVideoSurface(destSurface);
+    VSurfaceUnlock(GetVSByID(destSurface));
     return FALSE;
   }
 
   // Now we have the video object and surface, call the VO blitter function
   if (!BltVideoObjectToBuffer(pBuffer, uiPitch, hSrcVObject, usRegionIndex, iDestX, iDestY,
                               fBltFlags, pBltFx)) {
-    UnLockVideoSurface(destSurface);
+    VSurfaceUnlock(GetVSByID(destSurface));
     // VO Blitter will set debug messages for error conditions
     return FALSE;
   }
 
-  UnLockVideoSurface(destSurface);
+  VSurfaceUnlock(GetVSByID(destSurface));
   return (TRUE);
 }
 

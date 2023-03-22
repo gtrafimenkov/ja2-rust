@@ -930,7 +930,7 @@ void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
     }
   }
 
-  UnLockVideoSurface(uiSrcBuffer);
+  VSurfaceUnlock(GetVSByID(uiSrcBuffer));
 }
 
 void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
@@ -957,7 +957,7 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
     }
   }
 
-  UnLockVideoSurface(uiSrcBuffer);
+  VSurfaceUnlock(GetVSByID(uiSrcBuffer));
 }
 
 void DeleteVideoOverlaysArea() {
@@ -1086,7 +1086,7 @@ void BlitMFont(VIDEO_OVERLAY *pBlitter) {
   mprintf_buffer(pDestBuf, uiDestPitchBYTES, pBlitter->uiFontID, pBlitter->sX, pBlitter->sY,
                  pBlitter->zText);
 
-  UnLockVideoSurface(pBlitter->uiDestBuff);
+  VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
 }
 
 bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, u16 x, u16 y, u16 width,

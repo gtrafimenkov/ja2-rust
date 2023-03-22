@@ -393,7 +393,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
       pDestBuf[i] = usColorVal;
     }
 
-    UnLockVideoSurface(pPopUpTextBox->uiSourceBufferIndex);
+    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
 
   } else {
     if (!GetVideoSurface(&hSrcVSurface, pPopUpTextBox->uiMercTextPopUpBackground)) {
@@ -407,8 +407,8 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
     Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
                                 0, 0, &DestRect);
 
-    UnLockVideoSurface(pPopUpTextBox->uiMercTextPopUpBackground);
-    UnLockVideoSurface(pPopUpTextBox->uiSourceBufferIndex);
+    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground));
+    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
   }
 
   GetVideoObject(&hImageHandle, pPopUpTextBox->uiMercTextPopUpBorder);

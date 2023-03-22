@@ -674,7 +674,7 @@ void RenderTalkingMenu() {
                     pFace->usFaceHeight);
 
     VSurfaceUnlock(vsFB);
-    UnLockVideoSurface(gTalkPanel.uiSaveBuffer);
+    VSurfaceUnlock(GetVSByID(gTalkPanel.uiSaveBuffer));
 
     MarkButtonsDirty();
 

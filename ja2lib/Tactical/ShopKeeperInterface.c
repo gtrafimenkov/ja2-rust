@@ -2780,7 +2780,7 @@ void DrawHatchOnInventory(UINT32 uiSurface, UINT16 usPosX, UINT16 usPosY, UINT16
 
   pDestBuf = LockVideoSurface(uiSurface, &uiDestPitchBYTES);
   Blt16BPPBufferPixelateRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect, Pattern);
-  UnLockVideoSurface(uiSurface);
+  VSurfaceUnlock(GetVSByID(uiSurface));
 }
 
 UINT32 CalcShopKeeperItemPrice(BOOLEAN fDealerSelling, BOOLEAN fUnitPriceOnly, UINT16 usItemID,

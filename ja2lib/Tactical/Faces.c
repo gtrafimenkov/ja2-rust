@@ -729,7 +729,7 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
 
         SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
-        UnLockVideoSurface(uiBuffer);
+        VSurfaceUnlock(GetVSByID(uiBuffer));
       } else if ((pFace->uiFlags & FACE_SHOW_MOVING_HILIGHT)) {
         if (pFace->ubSoldierID != NOBODY) {
           if (MercPtrs[pFace->ubSoldierID]->bLife >= OKLIFE) {
@@ -749,7 +749,7 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
 
             SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
-            UnLockVideoSurface(uiBuffer);
+            VSurfaceUnlock(GetVSByID(uiBuffer));
           }
         }
       } else {
@@ -767,7 +767,7 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
 
         SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
-        UnLockVideoSurface(pFace->uiAutoDisplayBuffer);
+        VSurfaceUnlock(GetVSByID(pFace->uiAutoDisplayBuffer));
       }
     }
   }
@@ -785,7 +785,7 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
 
     SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
-    UnLockVideoSurface(uiBuffer);
+    VSurfaceUnlock(GetVSByID(uiBuffer));
   }
 }
 
@@ -1126,7 +1126,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
         usLineColor = Get16BPPColor(FROMRGB(105, 8, 9));
         RectangleDraw(TRUE, sX1, sY1, sX2, sY2, usLineColor, pDestBuf);
 
-        UnLockVideoSurface(uiRenderBuffer);
+        VSurfaceUnlock(GetVSByID(uiRenderBuffer));
       }
 
       if ((MercPtrs[pFace->ubSoldierID]->bInSector &&
@@ -1785,8 +1785,8 @@ BOOLEAN FaceRestoreSavedBackgroundRect(INT32 iFaceIndex, INT16 sDestLeft, INT16 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
                   sDestLeft, sDestTop, sSrcLeft, sSrcTop, sWidth, sHeight);
 
-  UnLockVideoSurface(pFace->uiAutoDisplayBuffer);
-  UnLockVideoSurface(pFace->uiAutoRestoreBuffer);
+  VSurfaceUnlock(GetVSByID(pFace->uiAutoDisplayBuffer));
+  VSurfaceUnlock(GetVSByID(pFace->uiAutoRestoreBuffer));
 
   // Add rect to frame buffer queue
   if (pFace->uiAutoDisplayBuffer == FRAME_BUFFER) {

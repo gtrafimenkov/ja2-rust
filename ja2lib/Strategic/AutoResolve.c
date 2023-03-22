@@ -2756,7 +2756,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   yp = pCell->yp + 32;
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, xp, yp,
                   xp - gpAR->Rect.iLeft, yp - gpAR->Rect.iTop, 46, 10);
-  UnLockVideoSurface(gpAR->iInterfaceBuffer);
+  VSurfaceUnlock(GetVSByID(gpAR->iInterfaceBuffer));
   VSurfaceUnlock(vsFB);
 
   if (pCell->pSoldier->bLife) {

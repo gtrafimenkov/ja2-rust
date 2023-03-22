@@ -655,7 +655,7 @@ UINT32 DrawMap(void) {
                                    uiSrcPitchBYTES, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
     }
 
-    UnLockVideoSurface(guiBIGMAP);
+    VSurfaceUnlock(GetVSByID(guiBIGMAP));
     VSurfaceUnlock(vsSaveBuffer);
 
     // shade map sectors (must be done after Tixa/Orta/Mine icons have been blitted, but before
@@ -1177,7 +1177,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
         break;
 
@@ -1205,7 +1205,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
         break;
 
@@ -1233,7 +1233,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
         break;
 
@@ -1261,7 +1261,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
         // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
         break;
     }
@@ -1375,7 +1375,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
 
         break;
@@ -1399,7 +1399,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
 
         break;
@@ -1423,7 +1423,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
 
         break;
@@ -1447,7 +1447,7 @@ BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
         // unlock source and dest buffers
-        UnLockVideoSurface(guiBIGMAP);
+        VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSaveBuffer);
 
         break;

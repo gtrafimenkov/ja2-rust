@@ -391,7 +391,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(VSurfID destSurface, INT32 X1, INT32 Y1, 
   //	InvalidateBackbuffer( );
   //}
 
-  UnLockVideoSurface(destSurface);
+  VSurfaceUnlock(GetVSByID(destSurface));
   return (TRUE);
 }
 
@@ -633,13 +633,6 @@ BYTE *LockVideoSurface(VSurfID id, u32 *pitch) {
   struct BufferLockInfo res = VSurfaceLock(vs);
   *pitch = res.pitch;
   return res.dest;
-}
-
-void UnLockVideoSurface(VSurfID id) {
-  struct VSurface *vs = GetVSByID(id);
-  if (vs) {
-    VSurfaceUnlock(vs);
-  }
 }
 
 BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {

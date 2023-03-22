@@ -178,7 +178,7 @@ void DrawLifeUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT
                   pDestBuf);
   }
 
-  UnLockVideoSurface(uiBuffer);
+  VSurfaceUnlock(GetVSByID(uiBuffer));
 }
 
 void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
@@ -280,7 +280,7 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   RectangleDraw(TRUE, sXPos + 2, (INT32)dStart, sXPos + 2, (INT32)(dStart - dEnd), usLineColor,
                 pDestBuf);
 
-  UnLockVideoSurface(uiBuffer);
+  VSurfaceUnlock(GetVSByID(uiBuffer));
 }
 
 void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
@@ -321,7 +321,7 @@ void DrawMoraleUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
   RectangleDraw(TRUE, sXPos + 2, (INT32)dStart, sXPos + 2, (INT32)(dStart - dEnd), usLineColor,
                 pDestBuf);
 
-  UnLockVideoSurface(uiBuffer);
+  VSurfaceUnlock(GetVSByID(uiBuffer));
 }
 
 void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, INT16 sYPos,
@@ -381,7 +381,7 @@ void DrawItemUIBarEx(struct OBJECTTYPE *pObject, UINT8 ubStatus, INT16 sXPos, IN
   RectangleDraw(TRUE, sXPos + 1, (INT32)dStart, sXPos + 1, (INT32)(dStart - dEnd), usLineColor,
                 pDestBuf);
 
-  UnLockVideoSurface(uiBuffer);
+  VSurfaceUnlock(GetVSByID(uiBuffer));
 
   if (uiBuffer == guiSAVEBUFFER) {
     RestoreExternBackgroundRect(sXPos, (INT16)(sYPos - sHeight), sWidth, (INT16)(sHeight + 1));
