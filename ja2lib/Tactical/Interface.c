@@ -568,10 +568,6 @@ void PopupMovementMenu(UI_EVENT *pUIEvent) {
     pSoldier = MercPtrs[gusSelectedSoldier];
   }
 
-  // Blit background!
-  // BltVideoObjectFromIndex( FRAME_BUFFER, guiBUTTONBORDER, 0, iMenuAnchorX, iMenuAnchorY,
-  // VO_BLT_SRCTRANSPARENCY, NULL );
-
   iMenuAnchorX = giMenuAnchorX + 9;
   iMenuAnchorY = giMenuAnchorY + 8;
 
@@ -1319,9 +1315,6 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
         } else {
           BltVideoObjectFromIndex(FRAME_BUFFER, guiRADIO, pSoldier->sLocatorFrame, sXPos, sYPos,
                                   VO_BLT_SRCTRANSPARENCY, NULL);
-
-          // BltVideoObjectFromIndex(  FRAME_BUFFER, guiRADIO, 0, sXPos, sYPos,
-          // VO_BLT_SRCTRANSPARENCY, NULL );
         }
       }
     }
@@ -1809,8 +1802,6 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
   iMenuAnchorY = gOpenDoorMenu.sY;
 
   // Blit background!
-  // BltVideoObjectFromIndex( FRAME_BUFFER, guiBUTTONBORDER, 0, iMenuAnchorX, iMenuAnchorY,
-  // VO_BLT_SRCTRANSPARENCY, NULL );
   iMenuAnchorX = gOpenDoorMenu.sX + 9;
   iMenuAnchorY = gOpenDoorMenu.sY + 8;
 
@@ -2500,73 +2491,13 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
       break;
 
     case PLAYER_TURN_MESSAGE:
-
-      // Render rect into surface
-      // if ( gGameOptions.fTurnTimeLimit )
-      { BltVideoObjectFromIndex(uiSurface, uiPLAYERBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL); }
-      // else
-      //{
-      //	BltVideoObjectFromIndex( uiSurface, uiPLAYERBAR, 13, 0, 0, VO_BLT_SRCTRANSPARENCY,
-      // NULL );
-      //}
+      BltVideoObjectFromIndex(uiSurface, uiPLAYERBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_MCOLOR_BLACK);
       SetFontShadow(NO_SHADOW);
       uiBarToUseInUpDate = uiPLAYERBAR;
       break;
   }
-
-    // Update progress bar!
-#if 0
-	if ( ubType == COMPUTER_TURN_MESSAGE )
-	{
-		INT32		cnt1, iLength;
-		INT16		usNumStepsPerEnemy;
-
-		if ( gfProgBarActive )
-		{
-			//usNumStepsPerEnemy = ( PROG_BAR_LENGTH / gubProgNumEnemies );
-
-			// Alrighty, do some fun stuff!
-
-			// Render end peice
-			sBarX = PROG_BAR_START_X;
-			BltVideoObjectFromIndex( uiSurface, uiBAR, 3, sBarX, PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL );
-
-			// Determine Length
-		//	iLength   = (gubProgCurEnemy ) * usNumStepsPerEnemy;
-
-			cnt1 = 0;
-			cnt2 = 0;
-
-			while( cnt1 < iLength )
-			{
-				sBarX++;
-
-				// Check sBarX, ( just as a precaution )
-				if ( sBarX > 640 )
-				{
-					break;
-				}
-
-				BltVideoObjectFromIndex( uiSurface, uiBAR, (INT16)( 4 + cnt2 ), sBarX, PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL );
-
-				cnt1++;
-				cnt2++;
-
-				if ( cnt2 == 10 )
-				{
-					cnt2 = 0;
-				}
-			}
-
-			//gubProgNumEnemies = ubNum;
-			//gubProgCurEnemy		= 0;
-
-
-		}
-	}
-#endif
 
   if (gGameOptions.fTurnTimeLimit) {
     if (ubType == PLAYER_TURN_MESSAGE || ubType == PLAYER_INTERRUPT_MESSAGE) {
