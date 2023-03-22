@@ -3467,7 +3467,7 @@ UINT32 EditScreenHandle(void) {
   // Handle video overlays, for FPS and screen message stuff
   if (gfScrollPending) {
     AllocateVideoOverlaysArea();
-    SaveVideoOverlaysArea(FRAME_BUFFER);
+    SaveVideoOverlaysArea(vsFB);
   }
   ExecuteVideoOverlays();
 

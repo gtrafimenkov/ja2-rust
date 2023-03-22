@@ -129,7 +129,7 @@ INT32 RegisterVideoOverlay(UINT32 uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc);
 void ExecuteVideoOverlays();
 BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, UINT32 iBlitterIndex,
                            BOOLEAN fForceAll);
-void SaveVideoOverlaysArea(UINT32 uiSrcBuffer);
+void SaveVideoOverlaysArea(struct VSurface *src);
 void DeleteVideoOverlaysArea();
 void AllocateVideoOverlaysArea();
 void ExecuteVideoOverlaysToAlternateBuffer(UINT32 uiNewDestBuffer);

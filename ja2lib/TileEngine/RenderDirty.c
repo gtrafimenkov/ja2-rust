@@ -898,13 +898,13 @@ void AllocateVideoOverlayArea(UINT32 uiCount) {
   }
 }
 
-void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
+void SaveVideoOverlaysArea(struct VSurface *src) {
   UINT32 uiCount;
   UINT32 iBackIndex;
   UINT32 uiSrcPitchBYTES;
   UINT8 *pSrcBuf;
 
-  pSrcBuf = VSurfaceLockOld(GetVSByID(uiSrcBuffer), &uiSrcPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(src, &uiSrcPitchBYTES);
 
   for (uiCount = 0; uiCount < guiNumVideoOverlays; uiCount++) {
     if (gVideoOverlays[uiCount].fAllocated && !gVideoOverlays[uiCount].fDisabled) {
@@ -925,7 +925,7 @@ void SaveVideoOverlaysArea(UINT32 uiSrcBuffer) {
     }
   }
 
-  VSurfaceUnlock(GetVSByID(uiSrcBuffer));
+  VSurfaceUnlock(src);
 }
 
 void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
