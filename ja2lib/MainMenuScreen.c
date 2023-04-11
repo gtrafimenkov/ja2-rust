@@ -232,6 +232,12 @@ BOOLEAN InitMainMenu() {
 
   CreateDestroyMainMenuButtons(TRUE);
 
+  // TODO: there is no reason to address loaded images as indexes
+  //   just load the image, save the pointer, use the pointer, then remove the pointer when done
+  //
+  // TODO: create LoadVObjectFromFile, which load the image, returns the pointer, doesn't add that
+  //   image to the internal list
+
   // load background graphic and add it
   if (!AddVObjectFromFile("LOADSCREENS\\MainMenuBackGround.sti", &guiMainMenuBackGroundImage)) {
     return FALSE;
