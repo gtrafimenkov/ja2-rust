@@ -1290,8 +1290,8 @@ BOOLEAN RenderShopKeeperInterface() {
 
   // Get the main background screen graphic and blt it
   GetVideoObject(&hPixHandle, guiMainTradeScreenImage);
-  BltVideoObject2(vsFB, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // Display the Title
   DrawTextToScreen(SKI_Text[SKI_TEXT_MERCHADISE_IN_STOCK], SKI_MAIN_TITLE_X, SKI_MAIN_TITLE_Y,
@@ -2483,8 +2483,8 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
     if (iFaceSlot != -1) {
       // Get and blit the face
       GetVideoObject(&hPixHandle, guiSmallSoldiersFace[iFaceSlot]);
-      BltVideoObject2(vsFB, hPixHandle, 0, (UINT16)(usPosX + SKI_SMALL_FACE_OFFSET_X),
-                      (UINT16)(usPosY), VO_BLT_SRCTRANSPARENCY);  // SKI_SMALL_FACE_OFFSET_Y
+      BltVideoObject(vsFB, hPixHandle, 0, (UINT16)(usPosX + SKI_SMALL_FACE_OFFSET_X),
+                     (UINT16)(usPosY), VO_BLT_SRCTRANSPARENCY);  // SKI_SMALL_FACE_OFFSET_Y
     }
   }
 
@@ -4420,7 +4420,7 @@ void RenderSkiAtmPanel() {
 
   // Get the Atm background panel graphic and blt it
   //	GetVideoObject(&hPixHandle, guiSkiAtmImage );
-  //	BltVideoObject2(vsFB, hPixHandle, 0,SKI_ATM_PANEL_X, SKI_ATM_PANEL_Y,
+  //	BltVideoObject(vsFB, hPixHandle, 0,SKI_ATM_PANEL_X, SKI_ATM_PANEL_Y,
   // VO_BLT_SRCTRANSPARENCY,NULL);
 }
 
@@ -5511,8 +5511,7 @@ void CrossOutUnwantedItems(void) {
           sBoxStartY =
               SKI_PLAYERS_TRADING_INV_Y + (bSlotId / SKI_NUM_TRADING_INV_COLS) * (SKI_INV_OFFSET_Y);
 
-          BltVideoObject2(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY),
-                          VO_BLT_SRCTRANSPARENCY);
+          BltVideoObject(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY), VO_BLT_SRCTRANSPARENCY);
 
           // invalidate the region
           InvalidateRegion(sBoxStartX - 1, sBoxStartY - 1, sBoxStartX + sBoxWidth + 1,

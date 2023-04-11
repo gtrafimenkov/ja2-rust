@@ -2594,8 +2594,8 @@ void DrawQuickButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject2(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc,
+                 VO_BLT_SRCTRANSPARENCY);
 }
 
 void DrawHatchOnButton(GUI_BUTTON *b) {
@@ -2733,8 +2733,8 @@ void DrawCheckBoxButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVideoObject2(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc,
+                 VO_BLT_SRCTRANSPARENCY);
 }
 
 void DrawIconOnButton(GUI_BUTTON *b) {
@@ -2819,10 +2819,10 @@ void DrawIconOnButton(GUI_BUTTON *b) {
     SetClippingRect(&NewClip);
     // Blit the icon
     if (b->uiFlags & BUTTON_GENERIC)
-      BltVideoObject2(vsFB, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp, (INT16)yp,
-                      VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp, (INT16)yp,
+                     VO_BLT_SRCTRANSPARENCY);
     else
-      BltVideoObject2(vsFB, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp, VO_BLT_SRCTRANSPARENCY);
     // Restore previous clip region
     SetClippingRect(&OldClip);
   }

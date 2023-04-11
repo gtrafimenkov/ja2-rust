@@ -214,15 +214,18 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
     if (gusSelectedSoldier == GetSolID(pSoldier) && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
         OK_INTERRUPT_MERC(pSoldier)) {
       // gold, the second entry in the .sti
-      BltVideoObject(uiBuffer, hHandle, 1, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(GetVSByID(uiBuffer), hHandle, 1, sXPos, (INT16)(sYPos - sHeight),
+                     VO_BLT_SRCTRANSPARENCY);
 
     } else {
       // brown, first entry
-      BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(GetVSByID(uiBuffer), hHandle, 0, sXPos, (INT16)(sYPos - sHeight),
+                     VO_BLT_SRCTRANSPARENCY);
     }
   } else {
     // brown, first entry
-    BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY);
+    BltVideoObject(GetVSByID(uiBuffer), hHandle, 0, sXPos, (INT16)(sYPos - sHeight),
+                   VO_BLT_SRCTRANSPARENCY);
   }
 
   pDestBuf = VSurfaceLockOld(GetVSByID(uiBuffer), &uiDestPitchBYTES);

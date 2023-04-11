@@ -481,8 +481,8 @@ void DisplayAlumniOldMercPopUp() {
                          AIM_POPUP_X + AIM_POPUP_WIDTH + AIM_POPUP_SHADOW_GAP,
                          usPosY + AIM_POPUP_SECTION_HEIGHT + AIM_POPUP_SHADOW_GAP - 1);
   BltVObjectSrcTrans(vsFB, hAlumniPopUpHandle, 2, AIM_POPUP_X, usPosY);
-  BltVideoObject2(vsFB, hDoneHandle, 0, AIM_ALUMNI_DONE_X, usPosY - AIM_ALUMNI_DONE_HEIGHT,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hDoneHandle, 0, AIM_ALUMNI_DONE_X, usPosY - AIM_ALUMNI_DONE_HEIGHT,
+                 VO_BLT_SRCTRANSPARENCY);
   DrawTextToScreen(AimAlumniText[AIM_ALUMNI_DONE], (UINT16)(AIM_ALUMNI_DONE_X + 1),
                    (UINT16)(usPosY - AIM_ALUMNI_DONE_HEIGHT + 3), AIM_ALUMNI_DONE_WIDTH,
                    AIM_ALUMNI_POPUP_NAME_FONT, AIM_ALUMNI_POPUP_NAME_COLOR, FONT_MCOLOR_BLACK,
@@ -491,10 +491,10 @@ void DisplayAlumniOldMercPopUp() {
   CreateDestroyDoneMouseRegion(usPosY);
 
   /// blt face panale and the mecs fce
-  BltVideoObject2(vsFB, hFacePaneHandle, 0, AIM_ALUMNI_FACE_PANEL_X, AIM_ALUMNI_FACE_PANEL_Y,
-                  VO_BLT_SRCTRANSPARENCY);
-  BltVideoObject2(vsFB, hFaceHandle, gubDrawOldMerc, AIM_ALUMNI_FACE_PANEL_X + 1,
-                  AIM_ALUMNI_FACE_PANEL_Y + 1, VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hFacePaneHandle, 0, AIM_ALUMNI_FACE_PANEL_X, AIM_ALUMNI_FACE_PANEL_Y,
+                 VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hFaceHandle, gubDrawOldMerc, AIM_ALUMNI_FACE_PANEL_X + 1,
+                 AIM_ALUMNI_FACE_PANEL_Y + 1, VO_BLT_SRCTRANSPARENCY);
 
   // Load and display the name
   //	uiStartLoc = AIM_ALUMNI_NAME_SIZE * gubDrawOldMerc;

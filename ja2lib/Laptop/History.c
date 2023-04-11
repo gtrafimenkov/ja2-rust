@@ -698,15 +698,15 @@ void DisplayHistoryListBackground(void) {
   GetVideoObject(&hHandle, guiSHADELINE);
   for (iCounter = 0; iCounter < 11; iCounter++) {
     // blt title bar to screen
-    BltVideoObject2(vsFB, hHandle, 0, TOP_X + 15, (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * iCounter),
-                    VO_BLT_SRCTRANSPARENCY);
+    BltVideoObject(vsFB, hHandle, 0, TOP_X + 15, (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * iCounter),
+                   VO_BLT_SRCTRANSPARENCY);
   }
 
   // the long hortizontal line int he records list display region
   GetVideoObject(&hHandle, guiLONGLINE);
   BltVObjectSrcTrans(vsFB, hHandle, 0, TOP_X + 9, (TOP_DIVLINE_Y));
-  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 9, (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * 11),
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hHandle, 0, TOP_X + 9, (TOP_DIVLINE_Y + BOX_HEIGHT * 2 * 11),
+                 VO_BLT_SRCTRANSPARENCY);
 
   return;
 }

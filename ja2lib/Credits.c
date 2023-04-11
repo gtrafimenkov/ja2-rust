@@ -1168,8 +1168,8 @@ void HandleCreditEyeBlinking() {
   for (ubCnt = 0; ubCnt < NUM_PEOPLE_IN_CREDITS; ubCnt++) {
     if ((GetJA2Clock() - gCreditFaces[ubCnt].uiLastBlinkTime) >
         (UINT32)gCreditFaces[ubCnt].sBlinkFreq) {
-      BltVideoObject2(vsFB, hPixHandle, (UINT8)(ubCnt * 3), gCreditFaces[ubCnt].sEyeX,
-                      gCreditFaces[ubCnt].sEyeY, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hPixHandle, (UINT8)(ubCnt * 3), gCreditFaces[ubCnt].sEyeX,
+                     gCreditFaces[ubCnt].sEyeY, VO_BLT_SRCTRANSPARENCY);
       InvalidateRegion(gCreditFaces[ubCnt].sEyeX, gCreditFaces[ubCnt].sEyeY,
                        gCreditFaces[ubCnt].sEyeX + CRDT_EYE_WIDTH,
                        gCreditFaces[ubCnt].sEyeY + CRDT_EYE_HEIGHT);

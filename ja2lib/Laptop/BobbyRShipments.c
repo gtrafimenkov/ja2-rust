@@ -254,12 +254,12 @@ void DisplayShipmentGrid() {
   GetVideoObject(&hPixHandle, guiBobbyRShipmentGrid);
 
   // Shipment Order Grid
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_SHIPMENT_DELIVERY_GRID_X,
-                  BOBBYR_SHIPMENT_DELIVERY_GRID_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_SHIPMENT_DELIVERY_GRID_X,
+                 BOBBYR_SHIPMENT_DELIVERY_GRID_Y, VO_BLT_SRCTRANSPARENCY);
 
   // Order Grid
-  BltVideoObject2(vsFB, hPixHandle, 1, BOBBYR_SHIPMENT_ORDER_GRID_X, BOBBYR_SHIPMENT_ORDER_GRID_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 1, BOBBYR_SHIPMENT_ORDER_GRID_X, BOBBYR_SHIPMENT_ORDER_GRID_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 }
 
 void DisplayShipmentTitles() {

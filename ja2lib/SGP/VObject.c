@@ -349,8 +349,8 @@ bool BltVObjectSrcTrans(struct VSurface *dest, struct VObject *vobj, u16 regionI
   return res;
 }
 
-bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
-                     UINT32 flags) {
+bool BltVideoObject(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
+                    UINT32 flags) {
   bool res = false;
   if (dest) {
     struct BufferLockInfo lock = VSurfaceLock(dest);
@@ -363,15 +363,6 @@ bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIn
     VSurfaceUnlock(dest);
   }
   return res;
-}
-
-// Given an index to the dest and src vobject contained in ghVideoObjects
-// Based on flags, blit accordingly
-// There are two types, a BltFast and a Blt. BltFast is 10% faster, uses no
-// clipping lists
-BOOLEAN BltVideoObject(VSurfID destSurface, struct VObject *vobj, UINT16 usRegionIndex, INT32 x,
-                       INT32 y, UINT32 fBltFlags) {
-  return BltVideoObject2(GetVSByID(destSurface), vobj, usRegionIndex, x, y, fBltFlags);
 }
 
 // *******************************************************************************

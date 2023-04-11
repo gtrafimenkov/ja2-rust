@@ -199,23 +199,23 @@ void RenderFuneral() {
 
   // LeftColumn
   GetVideoObject(&hPixHandle, guiLeftColumn);
-  BltVideoObject2(vsFB, hPixHandle, 0, FUNERAL_LEFT_COLUMN_X, FUNERAL_LEFT_COLUMN_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, FUNERAL_LEFT_COLUMN_X, FUNERAL_LEFT_COLUMN_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // Mcgillicuttys
   GetVideoObject(&hPixHandle, guiMcGillicuttys);
-  BltVideoObject2(vsFB, hPixHandle, 0, FUNERAL_MCGILICUTTYS_SIGN_X, FUNERAL_MCGILICUTTYS_SIGN_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, FUNERAL_MCGILICUTTYS_SIGN_X, FUNERAL_MCGILICUTTYS_SIGN_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // Mortuary
   GetVideoObject(&hPixHandle, guiMortuary);
-  BltVideoObject2(vsFB, hPixHandle, 0, FUNERAL_MORTUARY_SIGN_X, FUNERAL_MORTUARY_SIGN_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, FUNERAL_MORTUARY_SIGN_X, FUNERAL_MORTUARY_SIGN_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // right column
   GetVideoObject(&hPixHandle, guiRightColumn);
-  BltVideoObject2(vsFB, hPixHandle, 0, FUNERAL_RIGHT_COLUMN_X, FUNERAL_RIGHT_COLUMN_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, FUNERAL_RIGHT_COLUMN_X, FUNERAL_RIGHT_COLUMN_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // LinkCarving
   GetVideoObject(&hPixHandle, guiLinkCarving);
@@ -280,8 +280,8 @@ void DisplayFuneralRipTombStone() {
   GetVideoObject(&hPixHandle, guiClosedSign);
   BltVideoObjectOutlineShadowFromIndex(vsFB, guiClosedSign, 0, FUNERAL_CLOSED_RIP_SIGN_X + 5,
                                        FUNERAL_CLOSED_RIP_SIGN_Y + 5);
-  BltVideoObject2(vsFB, hPixHandle, 0, FUNERAL_CLOSED_RIP_SIGN_X, FUNERAL_CLOSED_RIP_SIGN_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, FUNERAL_CLOSED_RIP_SIGN_X, FUNERAL_CLOSED_RIP_SIGN_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   SetFontShadow(FUNERAL_RIP_SHADOW_COLOR);
 

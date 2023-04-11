@@ -554,10 +554,10 @@ void DrawSummaryLines(void) {
   // blit summary LINE object to screen
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y);
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y + 2);
-  // BltVideoObject2(vsFB, hHandle, 0,DIVLINE_X, MID_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
+  // BltVideoObject(vsFB, hHandle, 0,DIVLINE_X, MID_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, BOT_DIVLINE_Y);
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, MID_DIVLINE_Y2);
-  // BltVideoObject2(vsFB, hHandle, 0,DIVLINE_X, BOT_DIVLINE_Y2,
+  // BltVideoObject(vsFB, hHandle, 0,DIVLINE_X, BOT_DIVLINE_Y2,
   // VO_BLT_SRCTRANSPARENCY,NULL);
 
   return;
@@ -591,20 +591,20 @@ void DrawRecordsBackGround(void) {
   for (int iCounter = 0; iCounter < 35; iCounter++) {
     // get and blt middle background to screen
     GetVideoObject(&hHandle, guiLISTCOLUMNS);
-    BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 18 + (iCounter * BLOCK_HEIGHT) + 1,
-                    VO_BLT_SRCTRANSPARENCY);
+    BltVideoObject(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 18 + (iCounter * BLOCK_HEIGHT) + 1,
+                   VO_BLT_SRCTRANSPARENCY);
   }
 
   // the divisorLines
   GetVideoObject(&hHandle, guiLONGLINE);
-  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 17 + (6 * (BLOCK_HEIGHT)),
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 17 + (6 * (BLOCK_HEIGHT)),
+                 VO_BLT_SRCTRANSPARENCY);
   GetVideoObject(&hHandle, guiLONGLINE);
-  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + (6 * (BLOCK_HEIGHT)),
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + (6 * (BLOCK_HEIGHT)),
+                 VO_BLT_SRCTRANSPARENCY);
   GetVideoObject(&hHandle, guiLONGLINE);
-  BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + ((iCounter) * (BLOCK_HEIGHT)),
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + ((iCounter) * (BLOCK_HEIGHT)),
+                 VO_BLT_SRCTRANSPARENCY);
 
   // the header text
   DrawRecordsColumnHeadersText();

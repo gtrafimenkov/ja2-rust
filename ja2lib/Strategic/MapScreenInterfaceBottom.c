@@ -885,8 +885,8 @@ void DisplayScrollBarSlider() {
                      (ubNumMessages - MAX_MESSAGES_ON_MAP_BOTTOM);
 
     GetVideoObject(&hHandle, guiSliderBar);
-    BltVideoObject2(vsFB, hHandle, 8, MESSAGE_SCROLL_AREA_START_X + 2,
-                    MESSAGE_SCROLL_AREA_START_Y + ubSliderOffset, VO_BLT_SRCTRANSPARENCY);
+    BltVideoObject(vsFB, hHandle, 8, MESSAGE_SCROLL_AREA_START_X + 2,
+                   MESSAGE_SCROLL_AREA_START_Y + ubSliderOffset, VO_BLT_SRCTRANSPARENCY);
   }
 }
 

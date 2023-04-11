@@ -560,8 +560,8 @@ void HandleBobbyRMailOrder() {
     BltVideoObjectOutlineShadowFromIndex(vsFB, guiConfirmGraphic, 0, BOBBYR_CONFIRM_ORDER_X + 3,
                                          BOBBYR_CONFIRM_ORDER_Y + 3);
 
-    BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_CONFIRM_ORDER_X, BOBBYR_CONFIRM_ORDER_Y,
-                    VO_BLT_SRCTRANSPARENCY);
+    BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_CONFIRM_ORDER_X, BOBBYR_CONFIRM_ORDER_Y,
+                   VO_BLT_SRCTRANSPARENCY);
     InvalidateRegion(LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_WEB_UL_Y, LAPTOP_SCREEN_LR_X,
                      LAPTOP_SCREEN_WEB_LR_Y);
 
@@ -597,23 +597,23 @@ void RenderBobbyRMailOrder() {
 
   // Order Grid
   GetVideoObject(&hPixHandle, guiBobbyROrderGrid);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_ORDERGRID_X, BOBBYR_ORDERGRID_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_ORDERGRID_X, BOBBYR_ORDERGRID_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // Location graphic
   GetVideoObject(&hPixHandle, guiBobbyRLocationGraphic);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_LOCATION_BOX_X, BOBBYR_LOCATION_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_LOCATION_BOX_X, BOBBYR_LOCATION_BOX_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // DeliverySpeedGraphic
   GetVideoObject(&hPixHandle, guiDeliverySpeedGraphic);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_DELIVERYSPEED_X, BOBBYR_DELIVERYSPEED_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_DELIVERYSPEED_X, BOBBYR_DELIVERYSPEED_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   // Package Weight
   GetVideoObject(&hPixHandle, guiPackageWeightImage);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_PACKAXGE_WEIGHT_X, BOBBYR_PACKAXGE_WEIGHT_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_PACKAXGE_WEIGHT_X, BOBBYR_PACKAXGE_WEIGHT_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 
   //
   // Display the STATIC text
@@ -1033,8 +1033,8 @@ void DisplayShippingCosts(BOOLEAN fCalledFromOrderPage, INT32 iSubTotal, UINT16 
   // bli the total Saved area onto the grid
   if (fCalledFromOrderPage) {
     GetVideoObject(&hPixHandle, guiTotalSaveArea);
-    BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_TOTAL_SAVED_AREA_X, BOBBYR_TOTAL_SAVED_AREA_Y,
-                    VO_BLT_SRCTRANSPARENCY);
+    BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_TOTAL_SAVED_AREA_X, BOBBYR_TOTAL_SAVED_AREA_Y,
+                   VO_BLT_SRCTRANSPARENCY);
   }
 
   // if there is a shipment, display the s&h charge
@@ -1350,38 +1350,38 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
       // blit top & bottom row of images
       for (i = 10; i < BOBBYR_DROP_DOWN_WIDTH - 10; i += 10) {
         // TOP ROW
-        BltVideoObject2(vsFB, hImageHandle, 1, i + BOBBYR_CITY_START_LOCATION_X,
-                        usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hImageHandle, 1, i + BOBBYR_CITY_START_LOCATION_X,
+                       usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
         // BOTTOM ROW
-        BltVideoObject2(vsFB, hImageHandle, 6, i + BOBBYR_CITY_START_LOCATION_X,
-                        usHeight - 10 + 6 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hImageHandle, 6, i + BOBBYR_CITY_START_LOCATION_X,
+                       usHeight - 10 + 6 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
       }
 
       // blit the left and right row of images
       usPosX = 0;
       for (i = 10; i < usHeight - 10; i += 10) {
-        BltVideoObject2(vsFB, hImageHandle, 3, usPosX + BOBBYR_CITY_START_LOCATION_X,
-                        i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
-        BltVideoObject2(vsFB, hImageHandle, 4,
-                        usPosX + BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
-                        i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hImageHandle, 3, usPosX + BOBBYR_CITY_START_LOCATION_X,
+                       i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hImageHandle, 4,
+                       usPosX + BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
+                       i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
       }
 
       // blt the corner images for the row
       // top left
-      BltVideoObject2(vsFB, hImageHandle, 0, 0 + BOBBYR_CITY_START_LOCATION_X,
-                      usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hImageHandle, 0, 0 + BOBBYR_CITY_START_LOCATION_X,
+                     usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
       // top right
-      BltVideoObject2(vsFB, hImageHandle, 2,
-                      BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
-                      usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hImageHandle, 2,
+                     BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
+                     usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
       // bottom left
-      BltVideoObject2(vsFB, hImageHandle, 5, 0 + BOBBYR_CITY_START_LOCATION_X,
-                      usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hImageHandle, 5, 0 + BOBBYR_CITY_START_LOCATION_X,
+                     usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
       // bottom right
-      BltVideoObject2(vsFB, hImageHandle, 7,
-                      BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
-                      usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hImageHandle, 7,
+                     BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
+                     usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
 
       DrawSelectedCity(gbSelectedCity);
 
@@ -1394,43 +1394,42 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
       // blt right bar of scroll area
       usPosX = 0;
       for (i = 10; i < BOBBYR_SCROLL_AREA_HEIGHT - 10; i += 10) {
-        BltVideoObject2(vsFB, hImageHandle, 3, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 4,
-                        i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hImageHandle, 3, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 4,
+                       i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
       }
 
       // blit top row of images
       for (i = 0; i < BOBBYR_SCROLL_AREA_WIDTH; i += 10) {
         // TOP ROW
-        BltVideoObject2(vsFB, hImageHandle, 1, i + BOBBYR_SCROLL_AREA_X - 10, BOBBYR_SCROLL_AREA_Y,
-                        VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hImageHandle, 1, i + BOBBYR_SCROLL_AREA_X - 10, BOBBYR_SCROLL_AREA_Y,
+                       VO_BLT_SRCTRANSPARENCY);
         // BOTTOM ROW
-        BltVideoObject2(vsFB, hImageHandle, 6, i + BOBBYR_SCROLL_AREA_X - 10,
-                        BOBBYR_SCROLL_AREA_Y - 10 + 6 + BOBBYR_SCROLL_AREA_HEIGHT,
-                        VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hImageHandle, 6, i + BOBBYR_SCROLL_AREA_X - 10,
+                       BOBBYR_SCROLL_AREA_Y - 10 + 6 + BOBBYR_SCROLL_AREA_HEIGHT,
+                       VO_BLT_SRCTRANSPARENCY);
       }
 
       // top right
-      BltVideoObject2(vsFB, hImageHandle, 2, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
-                      BOBBYR_SCROLL_AREA_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hImageHandle, 2, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
+                     BOBBYR_SCROLL_AREA_Y, VO_BLT_SRCTRANSPARENCY);
       // bottom right
-      BltVideoObject2(vsFB, hImageHandle, 7, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
-                      BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT - 10,
-                      VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hImageHandle, 7, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
+                     BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT - 10, VO_BLT_SRCTRANSPARENCY);
 
       // fix
-      BltVideoObject2(vsFB, hImageHandle, 4,
-                      BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
-                      BOBBYR_CITY_START_LOCATION_Y + 2, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hImageHandle, 4,
+                     BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
+                     BOBBYR_CITY_START_LOCATION_Y + 2, VO_BLT_SRCTRANSPARENCY);
 
       // get and display the up and down arrows
       GetVideoObject(&hArrowHandle, guiGoldArrowImages);
       // top arrow
-      BltVideoObject2(vsFB, hArrowHandle, 1, BOBBYR_SCROLL_UP_ARROW_X, BOBBYR_SCROLL_UP_ARROW_Y,
-                      VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hArrowHandle, 1, BOBBYR_SCROLL_UP_ARROW_X, BOBBYR_SCROLL_UP_ARROW_Y,
+                     VO_BLT_SRCTRANSPARENCY);
 
       // top arrow
-      BltVideoObject2(vsFB, hArrowHandle, 0, BOBBYR_SCROLL_DOWN_ARROW_X, BOBBYR_SCROLL_DOWN_ARROW_Y,
-                      VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hArrowHandle, 0, BOBBYR_SCROLL_DOWN_ARROW_X, BOBBYR_SCROLL_DOWN_ARROW_Y,
+                     VO_BLT_SRCTRANSPARENCY);
 
       // display the scroll rectangle
       DrawGoldRectangle(gbSelectedCity);
@@ -2158,8 +2157,8 @@ void DrawBobbyROrderTitle() {
 
   // Bobbyray title
   GetVideoObject(&hPixHandle, guiBobbyRayTitle);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_BOBBY_RAY_TITLE_X, BOBBYR_BOBBY_RAY_TITLE_Y,
-                  VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_BOBBY_RAY_TITLE_X, BOBBYR_BOBBY_RAY_TITLE_Y,
+                 VO_BLT_SRCTRANSPARENCY);
 }
 
 BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, UINT8 ubDeliveryLoc,

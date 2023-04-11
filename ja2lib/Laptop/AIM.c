@@ -339,7 +339,7 @@ void RenderAIM() {
 
   // MemberCard
   GetVideoObject(&hMemberCardHandle, guiMemberCard);
-  BltVideoObject2(vsFB, hMemberCardHandle, 0, MEMBERCARD_X, MEMBERCARD_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hMemberCardHandle, 0, MEMBERCARD_X, MEMBERCARD_Y, VO_BLT_SRCTRANSPARENCY);
 
   // Policies
   GetVideoObject(&hPoliciesHandle, guiPolicies);
@@ -463,7 +463,7 @@ BOOLEAN DrawAimDefaults() {
 
   // Aim Symbol
   GetVideoObject(&hAimSymbolHandle, guiAimSymbol);
-  BltVideoObject2(vsFB, hAimSymbolHandle, 0, AIM_SYMBOL_X, AIM_SYMBOL_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVideoObject(vsFB, hAimSymbolHandle, 0, AIM_SYMBOL_X, AIM_SYMBOL_Y, VO_BLT_SRCTRANSPARENCY);
 
   return (TRUE);
 }
@@ -746,7 +746,7 @@ BOOLEAN DisplayFlowerAd(BOOLEAN fInit, BOOLEAN fRedraw) {
 
     } else {
       GetVideoObject(&hAdHandle, guiFlowerAdvertisement);
-      BltVideoObject2(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
 
       // redraw new mail warning, and create new mail button, if nessacary
       fReDrawNewMailFlag = TRUE;
@@ -859,7 +859,7 @@ BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, UINT16 usDelay, UINT16 usNumbe
       if (ubCount == 0 || fRedraw) {
         // Blit the ad
         GetVideoObject(&hAdHandle, uiAdImageIdentifier);
-        BltVideoObject2(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVideoObject(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
 
         // redraw new mail warning, and create new mail button, if nessacary
         fReDrawNewMailFlag = TRUE;
@@ -877,7 +877,7 @@ BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, UINT16 usDelay, UINT16 usNumbe
       }
     } else {
       GetVideoObject(&hAdHandle, uiAdImageIdentifier);
-      BltVideoObject2(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
 
       // redraw new mail warning, and create new mail button, if nessacary
       fReDrawNewMailFlag = TRUE;
@@ -973,7 +973,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
 
     // if we are still looping through the first 6 animations
     if (ubDuckCount < 2) {
-      BltVideoObject2(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
 
       ubSubImage++;
 
@@ -994,7 +994,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
 
     else {
       // Blit the ad
-      BltVideoObject2(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVideoObject(vsFB, hAdHandle, ubSubImage, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY);
 
       ubSubImage++;
 
@@ -1035,9 +1035,9 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
                   if( ubDuckImage < AIM_AD_BOBBYR_AD_NUM_DUCK_SUBIMAGES * 2 )
                   {
                           if( ubDuckImage >= AIM_AD_BOBBYR_AD_NUM_DUCK_SUBIMAGES )
-                                  BltVideoObject2(vsFB, hAdHandle,
+                                  BltVideoObject(vsFB, hAdHandle,
      (UINT16)(ubDuckImage-AIM_AD_BOBBYR_AD_NUM_DUCK_SUBIMAGES), WARNING_X, WARNING_Y,
-     VO_BLT_SRCTRANSPARENCY,NULL); else BltVideoObject2(vsFB, hAdHandle,
+     VO_BLT_SRCTRANSPARENCY,NULL); else BltVideoObject(vsFB, hAdHandle,
      ubDuckImage,WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 
                           ubDuckImage++;
@@ -1051,7 +1051,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
                           if(ubCount == 0 || fRedraw)
                           {
                                   //Blit the ad
-                                  BltVideoObject2(vsFB, hAdHandle, ubSubImage,WARNING_X,
+                                  BltVideoObject(vsFB, hAdHandle, ubSubImage,WARNING_X,
      WARNING_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 
                                   // redraw new mail warning, and create new mail button, if
@@ -1073,7 +1073,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
                           {
                                   //Blit the ad
                                   GetVideoObject(&hAdHandle, guiBobbyRAdImages);
-                                  BltVideoObject2(vsFB, hAdHandle, ubSubImage,WARNING_X,
+                                  BltVideoObject(vsFB, hAdHandle, ubSubImage,WARNING_X,
      WARNING_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 
                                   // redraw new mail warning, and create new mail button, if
@@ -1095,7 +1095,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
                   else
                   {
                           GetVideoObject(&hAdHandle, guiBobbyRAdImages);
-                          BltVideoObject2(vsFB, hAdHandle, ubSubImage,WARNING_X, WARNING_Y,
+                          BltVideoObject(vsFB, hAdHandle, ubSubImage,WARNING_X, WARNING_Y,
      VO_BLT_SRCTRANSPARENCY,NULL);
 
                           // redraw new mail warning, and create new mail button, if nessacary
