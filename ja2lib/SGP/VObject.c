@@ -71,7 +71,7 @@ UINT32 guiVObjectTotalAdded = 0;
 
 static BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                       struct VObject *hSrcVObject, UINT16 usIndex, INT32 iDestX,
-                                      INT32 iDestY, INT32 fBltFlags);
+                                      INT32 iDestY);
 
 // Sets struct VObject* palette, creates if nessessary. Also sets 16BPP palette
 static BOOLEAN SetVideoObjectPalette(struct VObject *hVObject, struct SGPPaletteEntry *pSrcPalette);
@@ -280,10 +280,8 @@ BOOLEAN BltVideoObjectFromIndex(struct VSurface *dest, UINT32 uiSrcVObject, UINT
   }
 
   // Now we have the video object and surface, call the VO blitter function
-  if (!BltVideoObjectToBuffer(pBuffer, uiPitch, hSrcVObject, usRegionIndex, iDestX, iDestY,
-                              VO_BLT_SRCTRANSPARENCY)) {
+  if (!BltVideoObjectToBuffer(pBuffer, uiPitch, hSrcVObject, usRegionIndex, iDestX, iDestY)) {
     VSurfaceUnlock(dest);
-    // VO Blitter will set debug messages for error conditions
     return FALSE;
   }
 
@@ -341,8 +339,7 @@ bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i3
       return false;
     }
 
-    res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, regionIndex, x, y,
-                                 VO_BLT_SRCTRANSPARENCY);
+    res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, regionIndex, x, y);
     VSurfaceUnlock(dest);
   }
   return res;
@@ -645,45 +642,21 @@ UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType) {
 // High level blit function encapsolates ALL effects and BPP
 static BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                       struct VObject *hSrcVObject, UINT16 usIndex, INT32 iDestX,
-                                      INT32 iDestY, INT32 fBltFlags) {
-  // Assertions
+                                      INT32 iDestY) {
   Assert(pBuffer != NULL);
-
   Assert(hSrcVObject != NULL);
 
-  // Check For Flags and bit depths
   switch (hSrcVObject->ubBitDepth) {
     case 16:
-
       break;
 
     case 8:
-
-      // Switch based on flags given
-      do {
-        if (fBltFlags & VO_BLT_SRCTRANSPARENCY) {
-          if (BltIsClipped(hSrcVObject, iDestX, iDestY, usIndex, &ClippingRect))
-            Blt8BPPDataTo16BPPBufferTransparentClip(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX,
-                                                    iDestY, usIndex, &ClippingRect);
-          else
-            Blt8BPPDataTo16BPPBufferTransparent(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX,
-                                                iDestY, usIndex);
-          break;
-        } else if (fBltFlags & VO_BLT_SHADOW) {
-          if (BltIsClipped(hSrcVObject, iDestX, iDestY, usIndex, &ClippingRect))
-            Blt8BPPDataTo16BPPBufferShadowClip(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX,
-                                               iDestY, usIndex, &ClippingRect);
-          else
-            Blt8BPPDataTo16BPPBufferShadow(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX, iDestY,
-                                           usIndex);
-          break;
-        }
-        // Use default blitter here
-        // Blt8BPPDataTo16BPPBuffer( hDestVObject, hSrcVObject, (UINT16)iDestX, (UINT16)iDestY,
-        // (SGPRect*)&SrcRect );
-
-      } while (FALSE);
-
+      if (BltIsClipped(hSrcVObject, iDestX, iDestY, usIndex, &ClippingRect))
+        Blt8BPPDataTo16BPPBufferTransparentClip(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX,
+                                                iDestY, usIndex, &ClippingRect);
+      else
+        Blt8BPPDataTo16BPPBufferTransparent(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX, iDestY,
+                                            usIndex);
       break;
   }
 
