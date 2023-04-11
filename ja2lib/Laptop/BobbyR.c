@@ -425,7 +425,7 @@ BOOLEAN DrawBobbyRWoodBackground() {
   for (y = 0; y < 4; y++) {
     uiPosX = BOBBY_WOOD_BACKGROUND_X;
     for (x = 0; x < 4; x++) {
-      BltVideoObject2(vsFB, hWoodBackGroundHandle, 0, uiPosX, uiPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectSrcTrans(vsFB, hWoodBackGroundHandle, 0, uiPosX, uiPosY);
       uiPosX += BOBBY_WOOD_BACKGROUND_WIDTH;
     }
     uiPosY += BOBBY_WOOD_BACKGROUND_HEIGHT;

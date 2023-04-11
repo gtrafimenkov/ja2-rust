@@ -222,7 +222,7 @@ void RenderFuneral() {
 
   usPosX = FUNERAL_LINK_1_X;
   for (i = 0; i < FUNERAL_NUMBER_OF_LINKS; i++) {
-    BltVideoObject2(vsFB, hPixHandle, 0, usPosX, FUNERAL_LINK_1_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, usPosX, FUNERAL_LINK_1_Y);
 
     // Calculate the height of the string, as it needs to be vertically centered.
     usStringHeight = IanWrappedStringHeight(0, 0, FUNERAL_LINK_TEXT_WIDTH, 2, FUNERAL_SENTENCE_FONT,
@@ -278,7 +278,8 @@ void DisplayFuneralRipTombStone() {
 
   // rip tombstone
   GetVideoObject(&hPixHandle, guiClosedSign);
-  BltVideoObjectOutlineShadowFromIndex(vsFB,guiClosedSign, 0, FUNERAL_CLOSED_RIP_SIGN_X + 5, FUNERAL_CLOSED_RIP_SIGN_Y + 5);
+  BltVideoObjectOutlineShadowFromIndex(vsFB, guiClosedSign, 0, FUNERAL_CLOSED_RIP_SIGN_X + 5,
+                                       FUNERAL_CLOSED_RIP_SIGN_Y + 5);
   BltVideoObject2(vsFB, hPixHandle, 0, FUNERAL_CLOSED_RIP_SIGN_X, FUNERAL_CLOSED_RIP_SIGN_Y,
                   VO_BLT_SRCTRANSPARENCY, NULL);
 

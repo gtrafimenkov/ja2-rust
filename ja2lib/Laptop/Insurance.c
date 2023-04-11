@@ -283,7 +283,7 @@ void DisplayInsuranceDefaults() {
 
   GetVideoObject(&hPixHandle, guiInsuranceRedBarImage);
   for (i = 0; i < 4; i++) {
-    BltVideoObject2(vsFB, hPixHandle, 0, INSURANCE_RED_BAR_X, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, INSURANCE_RED_BAR_X, usPosY);
     usPosY += INSURANCE_BACKGROUND_HEIGHT;
   }
 

@@ -686,7 +686,7 @@ void RenderSaveLoadScreen() {
   }
 
   GetVideoObject(&hPixHandle, guiSlgBackGroundImage);
-  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, 0, 0);
 
   if (gfSaveGame) {
     // If we are saving a game

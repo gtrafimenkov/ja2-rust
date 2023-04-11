@@ -815,7 +815,7 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   BltVideoObjectOutlineShadowFromIndex(vsFB, uiImage, 0, sCenX - 2,
                                        sCenY + 2);  // pItem->ubGraphicNum
 
-  BltVideoObject2(vsFB, hPixHandle, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, sCenX, sCenY);
   DeleteVideoObjectFromIndex(uiImage);
 
   return (TRUE);

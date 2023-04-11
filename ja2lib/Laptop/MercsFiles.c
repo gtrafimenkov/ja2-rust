@@ -415,7 +415,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiMercFace);
-  BltVideoObject2(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y);
 
   // if the merc is dead, shadow the face red and put text over top saying the merc is dead
   if (IsMercDead(ubMercID)) {
@@ -431,7 +431,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
     SetObjectHandleShade(guiMercFace, 0);
 
     // Blt face to screen
-    BltVideoObject2(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y);
 
     DisplayWrappedString(MERC_FACE_X, MERC_FACE_Y + MERC_PORTRAIT_TEXT_OFFSET_Y, MERC_FACE_WIDTH, 2,
                          FONT14ARIAL, 145, MercInfo[MERC_FILES_MERC_IS_DEAD], FONT_MCOLOR_BLACK,

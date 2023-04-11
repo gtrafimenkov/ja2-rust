@@ -858,18 +858,18 @@ BOOLEAN RenderAIMMembers() {
 
   // Stats
   GetVideoObject(&hStatsHandle, guiStats);
-  BltVideoObject2(vsFB, hStatsHandle, 0, STATS_X, STATS_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hStatsHandle, 0, STATS_X, STATS_Y);
 
   // Price
   GetVideoObject(&hPriceHandle, guiPrice);
-  BltVideoObject2(vsFB, hPriceHandle, 0, PRICE_X, PRICE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hPriceHandle, 0, PRICE_X, PRICE_Y);
 
   // WeaponBox
   GetVideoObject(&hWeaponBoxHandle, guiWeaponBox);
 
   uiPosX = WEAPONBOX_X;
   for (x = 0; x < WEAPONBOX_NUMBER; x++) {
-    BltVideoObject2(vsFB, hWeaponBoxHandle, 0, uiPosX, WEAPONBOX_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hWeaponBoxHandle, 0, uiPosX, WEAPONBOX_Y);
     uiPosX += WEAPONBOX_SIZE_X;
   }
 
@@ -1416,7 +1416,7 @@ BOOLEAN DisplayMercsFace() {
 
   // Portrait Frame
   GetVideoObject(&hPortraitHandle, guiPortrait);
-  BltVideoObject2(vsFB, hPortraitHandle, 0, PORTRAIT_X, PORTRAIT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hPortraitHandle, 0, PORTRAIT_X, PORTRAIT_Y);
 
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, gbCurrentSoldier);
@@ -1426,7 +1426,7 @@ BOOLEAN DisplayMercsFace() {
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiFace);
-  BltVideoObject2(vsFB, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hFaceHandle, 0, FACE_X, FACE_Y);
 
   // if the merc is dead
   if (IsMercDead(gbCurrentSoldier)) {
@@ -1442,7 +1442,7 @@ BOOLEAN DisplayMercsFace() {
     SetObjectHandleShade(guiFace, 0);
 
     // Blt face to screen
-    BltVideoObject2(vsFB, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hFaceHandle, 0, FACE_X, FACE_Y);
 
     // if the merc is dead, display it
     DrawTextToScreen(AimPopUpText[AIM_MEMBER_DEAD], FACE_X + 1, FACE_Y + 107, FACE_WIDTH,
@@ -2076,7 +2076,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(UINT8 ubFlag, STR16 sString1, STR16 sString2
       }
 
       GetVideoObject(&hPopupBoxHandle, guiPopUpBox);
-      BltVideoObject2(vsFB, hPopupBoxHandle, 0, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectSrcTrans(vsFB, hPopupBoxHandle, 0, usPosX, usPosY);
 
       // Create the popup boxes button
       guiPopUpImage = LoadButtonImage("LAPTOP\\VideoConfButtons.sti", -1, 2, -1, 3, -1);

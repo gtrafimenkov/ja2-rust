@@ -1861,7 +1861,7 @@ void RenderPersonnelScreenBackground(void) {
     GetVideoObject(&hHandle, guiDEPARTEDTEAM);
   }
 
-  BltVideoObject2(vsFB, hHandle, 0, DEPARTED_X, DEPARTED_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, DEPARTED_X, DEPARTED_Y);
 
   return;
 }
@@ -2215,7 +2215,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   INT32 iTotalAmmo = 0;
 
   GetVideoObject(&hHandle, guiPersonnelInventory);
-  BltVideoObject2(vsFB, hHandle, 0, (INT16)(397), (INT16)(200), VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, (INT16)(397), (INT16)(200));
 
   if (fCurrentTeamMode == FALSE) {
     return;

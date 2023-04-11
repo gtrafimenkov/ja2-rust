@@ -2471,7 +2471,7 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
   pETRLEObject->sOffsetY = 0;
 
   SetObjectShade(hVObj, DEFAULT_SHADE_LEVEL);
-  BltVideoObject2(vsFB, hVObj, 0, (iStartX), (iStartY), VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hVObj, 0, (iStartX), (iStartY));
 
   pETRLEObject->sOffsetX = sTempOffsetX;
   pETRLEObject->sOffsetY = sTempOffsetY;

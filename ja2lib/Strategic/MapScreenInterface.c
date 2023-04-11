@@ -3825,7 +3825,7 @@ void DisplaySoldierUpdateBox() {
   GetVideoObject(&hBackGroundHandle, guiUpdatePanelTactical);
 
   // Display the 2 TOP corner pieces
-  BltVideoObject2(vsSB, hBackGroundHandle, 0, iX - 4, iY - 4, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsSB, hBackGroundHandle, 0, iX - 4, iY - 4);
   BltVideoObject2(vsSB, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY - 4,
                   VO_BLT_SRCTRANSPARENCY, NULL);
 
@@ -3857,7 +3857,7 @@ void DisplaySoldierUpdateBox() {
     iFaceX = iX + (iCounter % iNumberWide) * TACT_UPDATE_MERC_FACE_X_WIDTH;
     iFaceY = iY + (iCounter / iNumberWide) * TACT_UPDATE_MERC_FACE_X_HEIGHT;
 
-    BltVideoObject2(vsSB, hBackGroundHandle, 20, iFaceX, iFaceY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsSB, hBackGroundHandle, 20, iFaceX, iFaceY);
   }
 
   // loop through the mercs to be displayed
@@ -5149,7 +5149,7 @@ void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UIN
   RestoreExternBackgroundRect((INT16)(sScreenX + 1), (INT16)(sScreenY - 1), MAP_GRID_X, MAP_GRID_Y);
 
   // blit object to frame buffer
-  BltVideoObject2(vsFB, hHandle, ubFrame, sScreenX, sScreenY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, ubFrame, sScreenX, sScreenY);
 
   // invalidate region on frame buffer
   InvalidateRegion(sScreenX, sScreenY - 1, sScreenX + MAP_GRID_X, sScreenY + MAP_GRID_Y);

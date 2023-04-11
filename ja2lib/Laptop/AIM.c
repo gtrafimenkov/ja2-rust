@@ -344,15 +344,15 @@ void RenderAIM() {
 
   // Policies
   GetVideoObject(&hPoliciesHandle, guiPolicies);
-  BltVideoObject2(vsFB, hPoliciesHandle, 0, POLICIES_X, POLICIES_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hPoliciesHandle, 0, POLICIES_X, POLICIES_Y);
 
   // Links
   GetVideoObject(&hLinksHandle, guiLinks);
-  BltVideoObject2(vsFB, hLinksHandle, 0, LINKS_X, LINKS_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hLinksHandle, 0, LINKS_X, LINKS_Y);
 
   // History
   GetVideoObject(&hHistoryHandle, guiHistory);
-  BltVideoObject2(vsFB, hHistoryHandle, 0, HISTORY_X, HISTORY_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHistoryHandle, 0, HISTORY_X, HISTORY_Y);
 
   // Draw the aim slogan under the symbol
   DisplayAimSlogan();
@@ -456,7 +456,7 @@ BOOLEAN DrawAimDefaults() {
   for (y = 0; y < 4; y++) {
     uiPosX = RUSTBACKGROUND_1_X;
     for (x = 0; x < 4; x++) {
-      BltVideoObject2(vsFB, hRustBackGroundHandle, 0, uiPosX, uiPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectSrcTrans(vsFB, hRustBackGroundHandle, 0, uiPosX, uiPosY);
       uiPosX += RUSTBACKGROUND_SIZE_X;
     }
     uiPosY += RUSTBACKGROUND_SIZE_Y;
@@ -717,7 +717,7 @@ BOOLEAN DisplayFlowerAd(BOOLEAN fInit, BOOLEAN fRedraw) {
       if (ubCount == 0 || fRedraw) {
         // Blit the blue sky frame with text on top
         GetVideoObject(&hAdHandle, guiFlowerAdvertisement);
-        BltVideoObject2(vsFB, hAdHandle, 0, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVObjectSrcTrans(vsFB, hAdHandle, 0, WARNING_X, WARNING_Y);
 
         // redraw new mail warning, and create new mail button, if nessacary
         fReDrawNewMailFlag = TRUE;
@@ -775,7 +775,7 @@ BOOLEAN DrawWarningBox(BOOLEAN fInit, BOOLEAN fRedraw) {
 
     // Warning
     GetVideoObject(&hWarningHandle, guiWarning);
-    BltVideoObject2(vsFB, hWarningHandle, 0, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hWarningHandle, 0, WARNING_X, WARNING_Y);
 
     uiStartLoc = AIM_HISTORY_LINE_SIZE * AIM_WARNING_1;
     LoadEncryptedDataFromFile(AIMHISTORYFILE, sText, uiStartLoc, AIM_HISTORY_LINE_SIZE);
@@ -838,7 +838,7 @@ BOOLEAN DisplayAd(BOOLEAN fInit, BOOLEAN fRedraw, UINT16 usDelay, UINT16 usNumbe
       if (ubCount == 0 || fRedraw) {
         // Blit the ad
         GetVideoObject(&hAdHandle, uiAdImageIdentifier);
-        BltVideoObject2(vsFB, hAdHandle, 0, WARNING_X, WARNING_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVObjectSrcTrans(vsFB, hAdHandle, 0, WARNING_X, WARNING_Y);
 
         // redraw new mail warning, and create new mail button, if nessacary
         fReDrawNewMailFlag = TRUE;

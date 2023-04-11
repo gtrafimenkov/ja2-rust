@@ -999,10 +999,10 @@ void RenderLapTopImage() {
   }
 
   GetVideoObject(&hLapTopHandle, guiLAPTOP);
-  BltVideoObject2(vsFB, hLapTopHandle, 0, LAPTOP_X, LAPTOP_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hLapTopHandle, 0, LAPTOP_X, LAPTOP_Y);
 
   GetVideoObject(&hLapTopHandle, guiLaptopBACKGROUND);
-  BltVideoObject2(vsFB, hLapTopHandle, 1, 25, 23, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hLapTopHandle, 1, 25, 23);
 
   MarkButtonsDirty();
 }
@@ -3247,7 +3247,7 @@ BOOLEAN DisplayLoadPending(void) {
 
   // display top middle and bottom of box
   GetVideoObject(&hLapTopIconHandle, guiDOWNLOADTOP);
-  BltVideoObject2(vsFB, hLapTopIconHandle, 0, DOWNLOAD_X, DOWNLOAD_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, DOWNLOAD_X, DOWNLOAD_Y);
   GetVideoObject(&hLapTopIconHandle, guiDOWNLOADMID);
   BltVideoObject2(vsFB, hLapTopIconHandle, 0, DOWNLOAD_X, DOWNLOAD_Y + DOWN_HEIGHT,
                   VO_BLT_SRCTRANSPARENCY, NULL);
@@ -3380,7 +3380,7 @@ void DisplayErrorBox(void) {
 
   // get and blt top portion
   GetVideoObject(&hLapTopIconHandle, guiBOOKTOP);
-  BltVideoObject2(vsFB, hLapTopIconHandle, 0, ERROR_X, ERROR_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, ERROR_X, ERROR_Y);
 
   // middle * 5
   GetVideoObject(&hLapTopIconHandle, guiBOOKMID);
@@ -3734,7 +3734,7 @@ BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16
   for (y = 0; y < ubNumY; y++) {
     uiPosX = LAPTOP_SCREEN_UL_X;
     for (x = 0; x < ubNumX; x++) {
-      BltVideoObject2(vsFB, hBackGroundHandle, 0, uiPosX, uiPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectSrcTrans(vsFB, hBackGroundHandle, 0, uiPosX, uiPosY);
       uiPosX += usWidth;
     }
     uiPosY += usHeight;
@@ -4035,18 +4035,18 @@ void ShowLights(void) {
 
   if (fPowerLightOn == TRUE) {
     GetVideoObject(&hHandle, guiLIGHTS);
-    BltVideoObject2(vsFB, hHandle, 0, 44, 466, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hHandle, 0, 44, 466);
   } else {
     GetVideoObject(&hHandle, guiLIGHTS);
-    BltVideoObject2(vsFB, hHandle, 1, 44, 466, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hHandle, 1, 44, 466);
   }
 
   if (fHardDriveLightOn == TRUE) {
     GetVideoObject(&hHandle, guiLIGHTS);
-    BltVideoObject2(vsFB, hHandle, 0, 88, 466, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hHandle, 0, 88, 466);
   } else {
     GetVideoObject(&hHandle, guiLIGHTS);
-    BltVideoObject2(vsFB, hHandle, 1, 88, 466, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hHandle, 1, 88, 466);
   }
 }
 
@@ -4855,12 +4855,12 @@ void DisplayProgramBoundingBox(BOOLEAN fMarkButtons) {
   struct VObject *hHandle;
 
   GetVideoObject(&hHandle, guiLaptopBACKGROUND);
-  BltVideoObject2(vsFB, hHandle, 1, 25, 23, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, 1, 25, 23);
 
   // no laptop mode, no border around the program
   if (guiCurrentLaptopMode != LAPTOP_MODE_NONE) {
     GetVideoObject(&hHandle, guiLaptopBACKGROUND);
-    BltVideoObject2(vsFB, hHandle, 0, 108, 23, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsFB, hHandle, 0, 108, 23);
   }
 
   if (fMarkButtons || fLoadPendingFlag) {

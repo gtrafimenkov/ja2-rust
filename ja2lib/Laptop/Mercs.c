@@ -538,7 +538,7 @@ void RenderMercs() {
 
   // Title
   GetVideoObject(&hPixHandle, guiMercSymbol);
-  BltVideoObject2(vsFB, hPixHandle, 0, MERC_TITLE_X, MERC_TITLE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, MERC_TITLE_X, MERC_TITLE_Y);
 
   // Speck Portrait
   GetVideoObject(&hPixHandle, guiSpecPortrait);

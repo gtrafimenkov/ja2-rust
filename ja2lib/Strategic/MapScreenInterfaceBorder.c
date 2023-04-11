@@ -112,7 +112,7 @@ void RenderMapBorder(void) {
 
   // get and blt border
   GetVideoObject(&hHandle, guiMapBorder);
-  BltVideoObject2(vsSB, hHandle, 0, MAP_BORDER_X, MAP_BORDER_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsSB, hHandle, 0, MAP_BORDER_X, MAP_BORDER_Y);
 
   // show the level marker
   DisplayCurrentLevelMarker();
@@ -135,7 +135,7 @@ void RenderMapBorderEtaPopUp(void) {
 
   // get and blt ETA box
   GetVideoObject(&hHandle, guiMapBorderEtaPopUp);
-  BltVideoObject2(vsFB, hHandle, 0, MAP_BORDER_X + 215, 291, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, MAP_BORDER_X + 215, 291);
 
   InvalidateRegion(MAP_BORDER_X + 215, 291, MAP_BORDER_X + 215 + 100, 310);
 

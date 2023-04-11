@@ -151,5 +151,6 @@ void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscal
 // ****************************************************************************
 
 struct VObject *LoadVObjectFromFile(const char *path);
+bool BltVObjectSrcTrans(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i32 x, i32 y);
 
 #endif

@@ -423,10 +423,10 @@ void RenderStationaryGroups() {
       u8 allMilCount = CountMilitiaInSector(x + 1, y + 1);
 
       if (pSector->uiFlags & SF_MINING_SITE)
-        BltVideoObject2(vsFB, hVObject, MINING_ICON, xp + 25, yp - 1, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVObjectSrcTrans(vsFB, hVObject, MINING_ICON, xp + 25, yp - 1);
 
       if (pSector->uiFlags & SF_SAM_SITE)
-        BltVideoObject2(vsFB, hVObject, SAM_ICON, xp + 20, yp + 4, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVObjectSrcTrans(vsFB, hVObject, SAM_ICON, xp + 20, yp + 4);
 
       if (allMilCount > 0) {
         // show militia
@@ -1617,7 +1617,7 @@ void BlitGroupIcon(UINT8 ubIconType, UINT8 ubIconColor, UINT32 uiX, UINT32 uiY,
   Assert(ubIconColor < NUM_ICON_COLORS);
 
   ubObjectIndex = (ubIconType * NUM_ICON_COLORS) + ubIconColor;
-  BltVideoObject2(vsFB, hVObject, ubObjectIndex, uiX, uiY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hVObject, ubObjectIndex, uiX, uiY);
 }
 
 void PrintDetailedEnemiesInSectorInfo(INT32 iScreenX, INT32 iScreenY, UINT8 ubSectorX,

@@ -7033,7 +7033,7 @@ void RenderTeamRegionBackground(void) {
   // show inventory or the team list?
   if (fShowInventoryFlag == FALSE) {
     GetVideoObject(&hHandle, guiCHARLIST);
-    BltVideoObject2(vsSB, hHandle, 0, PLAYER_INFO_X, PLAYER_INFO_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectSrcTrans(vsSB, hHandle, 0, PLAYER_INFO_X, PLAYER_INFO_Y);
   } else {
     BltCharInvPanel();
   }
@@ -7078,7 +7078,7 @@ void RenderCharacterInfoBackground(void) {
 
   // the upleft hand corner character info panel
   GetVideoObject(&hHandle, guiCHARINFO);
-  BltVideoObject2(vsSB, hHandle, 0, TOWN_INFO_X, TOWN_INFO_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsSB, hHandle, 0, TOWN_INFO_X, TOWN_INFO_Y);
 
   UpdateHelpTextForMapScreenMercIcons();
 

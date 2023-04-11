@@ -1770,7 +1770,7 @@ void DisplaySelectedListBox() {
   // get and display the up and down arrows
   GetVideoObject(&hImageHandle, guiQdScrollArrowImage);
   // top arrow
-  BltVideoObject2(vsFB, hImageHandle, 0, usPosX - 5, usPosY - 1, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hImageHandle, 0, usPosX - 5, usPosY - 1);
 
   // Bottom arrow
   BltVideoObject2(vsFB, hImageHandle, 1, usPosX,

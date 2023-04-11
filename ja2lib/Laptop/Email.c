@@ -587,7 +587,7 @@ void RenderEmail(void) {
 
   // display border
   GetVideoObject(&hHandle, guiLaptopBACKGROUND);
-  BltVideoObject2(vsFB, hHandle, 0, 108, 23, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, 108, 23);
 
   ReDisplayBoxes();
 
@@ -1166,8 +1166,8 @@ void DrawSubject(INT32 iCounter, STR16 pSubject, BOOLEAN fRead) {
 
   // lock buffer to prevent overwrite
   SetFontDest(vsFB, SUBJECT_X, ((UINT16)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)),
-                    SUBJECT_X + SUBJECT_WIDTH,
-                    ((UINT16)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)) + MIDDLE_WIDTH, FALSE);
+              SUBJECT_X + SUBJECT_WIDTH,
+              ((UINT16)(MIDDLE_Y + iCounter * MIDDLE_WIDTH)) + MIDDLE_WIDTH, FALSE);
   SetFontShadow(NO_SHADOW);
   SetFontForeground(FONT_BLACK);
   SetFontBackground(FONT_BLACK);
@@ -1841,7 +1841,7 @@ BOOLEAN DisplayNewMailBox(void) {
   //	return ( FALSE );
 
   GetVideoObject(&hHandle, guiEmailWarning);
-  BltVideoObject2(vsFB, hHandle, 0, EMAIL_WARNING_X, EMAIL_WARNING_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, EMAIL_WARNING_X, EMAIL_WARNING_Y);
 
   // the icon for the title of this box
   GetVideoObject(&hHandle, guiTITLEBARICONS);
@@ -2196,7 +2196,7 @@ BOOLEAN DisplayDeleteNotice(EmailPtr pMail) {
   // load graphics
 
   GetVideoObject(&hHandle, guiEmailWarning);
-  BltVideoObject2(vsFB, hHandle, 0, EMAIL_WARNING_X, EMAIL_WARNING_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, EMAIL_WARNING_X, EMAIL_WARNING_Y);
 
   // font stuff
   SetFont(EMAIL_HEADER_FONT);

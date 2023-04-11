@@ -332,6 +332,23 @@ BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject) {
   return FALSE;
 }
 
+bool BltVObjectSrcTrans(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i32 x,
+                        i32 y) {
+  bool res = false;
+  if (dest) {
+    struct BufferLockInfo lock = VSurfaceLock(dest);
+
+    if (lock.dest == NULL) {
+      return false;
+    }
+
+    res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, regionIndex, x, y,
+                                 VO_BLT_SRCTRANSPARENCY, NULL);
+    VSurfaceUnlock(dest);
+  }
+  return res;
+}
+
 bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
                      UINT32 flags, blt_fx *pBltFx) {
   bool res = false;
