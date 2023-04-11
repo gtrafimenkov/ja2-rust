@@ -349,22 +349,6 @@ bool BltVObjectSrcTrans(struct VSurface *dest, struct VObject *vobj, u16 regionI
   return res;
 }
 
-bool BltVideoObject(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
-                    UINT32 flags) {
-  bool res = false;
-  if (dest) {
-    struct BufferLockInfo lock = VSurfaceLock(dest);
-
-    if (lock.dest == NULL) {
-      return false;
-    }
-
-    res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, usRegionIndex, x, y, flags);
-    VSurfaceUnlock(dest);
-  }
-  return res;
-}
-
 // *******************************************************************************
 // Video Object Manipulation Functions
 // *******************************************************************************

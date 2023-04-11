@@ -83,10 +83,6 @@ UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType);
 // Returns a struct VObject* for the specified index
 BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex);
 
-// Blits a video object to another video object
-bool BltVideoObject(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
-                     UINT32 flags);
-
 BOOLEAN BltVideoObjectFromIndex(struct VSurface *dest, UINT32 uiSrcVObject, UINT16 usRegionIndex,
                                 INT32 iDestX, INT32 iDestY, UINT32 fBltFlags);
 

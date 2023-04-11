@@ -2832,15 +2832,8 @@ void DisplayBookMarks(void) {
 
   SetFontDest(vsFB, 0, 0, 640, 480, FALSE);
 
-  // GetVideoObject(&hLapTopIconHandle, guiBOOKBOT);
-  // BltVideoObject(vsFB, hLapTopIconHandle, 0,BOOK_X, 6+BOOK_TOP_Y+(iCounter)*BOOK_HEIGHT,
-  // VO_BLT_SRCTRANSPARENCY,NULL);
-
-  /*if(fNewWWWDisplay)
-ScrollDisplayText(BOOK_TOP_Y+2+((iCounter)*BOOK_HEIGHT)+6);
-  else
-*/ InvalidateRegion(BOOK_X, BOOK_TOP_Y + ((iCounter)*BOOK_HEIGHT) + 12, BOOK_X + BOOK_WIDTH,
-                    BOOK_TOP_Y + ((iCounter + 1) * BOOK_HEIGHT) + 16);
+  InvalidateRegion(BOOK_X, BOOK_TOP_Y + ((iCounter)*BOOK_HEIGHT) + 12, BOOK_X + BOOK_WIDTH,
+                   BOOK_TOP_Y + ((iCounter + 1) * BOOK_HEIGHT) + 16);
   SetFontShadow(DEFAULT_SHADOW);
 
   InvalidateRegion(BOOK_X, BOOK_TOP_Y, BOOK_X + BOOK_WIDTH,

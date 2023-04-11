@@ -627,22 +627,6 @@ void RenderPersonnel(void) {
   GetVideoObject(&hHandle, guiSCREEN);
   BltVObjectSrcTrans(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y + 22);
 
-  // render pictures of mercs on scnree
-  // RenderPersonnelPictures( );
-
-  // display header for screen
-  // DisplayHeader( );
-
-  // what page are we on?..display it
-  // DrawPageNumber( );
-
-  // display border
-  // GetVideoObject(&hHandle, guiLaptopBACKGROUND);
-  // BltVideoObject(vsFB, hHandle, 0,108, 23, VO_BLT_SRCTRANSPARENCY,NULL);
-
-  // invalidte the region we blitted to
-  // InvalidateRegion(LAPTOP_SCREEN_UL_X,LAPTOP_SCREEN_UL_Y,LAPTOP_SCREEN_LR_X,LAPTOP_SCREEN_LR_Y);
-
   // render personnel screen background
   RenderPersonnelScreenBackground();
 

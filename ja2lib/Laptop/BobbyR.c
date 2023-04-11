@@ -318,17 +318,6 @@ void RenderBobbyR() {
   GetVideoObject(&hPixHandle, guiHandle);
   BltVObjectSrcTrans(vsFB, hPixHandle, 0, BOBBIES_HANDLE_X, BOBBIES_HANDLE_Y);
 
-  /*
-          if( !LaptopSaveInfo.fBobbyRSiteCanBeAccessed )
-          {
-                  // The undercontsruction graphic
-                  GetVideoObject(&hPixHandle, guiUnderConstructionImage );
-                  BltVideoObject(vsFB, hPixHandle, 0,BOBBIES_FIRST_SENTENCE_X,
-     BOBBIES_FIRST_SENTENCE_Y, VO_BLT_SRCTRANSPARENCY,NULL); BltVideoObject(vsFB,
-     hPixHandle, 0,BOBBIES_3RD_SENTENCE_X, BOBBIES_3RD_SENTENCE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
-          }
-  */
-
   SetFontShadow(BOBBIES_SENTENCE_BACKGROUNDCOLOR);
 
   if (LaptopSaveInfo.fBobbyRSiteCanBeAccessed) {
@@ -465,31 +454,6 @@ void SelectBobbiesSignMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iRe
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
   }
 }
-
-/*
-BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight, UINT32
-uiBackground)
-{
-  struct VObject* hBackGroundHandle;
-        UINT16	x,y, uiPosX, uiPosY;
-
-        // Blt the Wood background
-        GetVideoObject(&hBackGroundHandle, uiBackground);
-
-        uiPosY = LAPTOP_SCREEN_WEB_UL_Y;
-        for(y=0; y<ubNumY; y++)
-        {
-                uiPosX = LAPTOP_SCREEN_UL_X;
-                for(x=0; x<ubNumX; x++)
-                {
-                  BltVideoObject(vsFB, hBackGroundHandle, 0,uiPosX, uiPosY,
-VO_BLT_SRCTRANSPARENCY,NULL); uiPosX += usWidth;
-                }
-                uiPosY += usHeight;
-        }
-        return(TRUE);
-}
-*/
 
 void HandleBobbyRUnderConstructionAni(BOOLEAN fReset) {
   struct VObject *hPixHandle;

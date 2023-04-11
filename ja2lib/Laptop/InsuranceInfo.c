@@ -425,19 +425,6 @@ void DisplayRenewingPremiumPage() {
                        INS_INFO_FIRST_PARAGRAPH_WIDTH, 2, INS_FONT_BIG, INS_INFO_FRAUD_TEXT_COLOR,
                        sText, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
   usNewLineOffset += INS_INFO_SPACE_BN_PARAGRAPHS + 2;
-
-  /*
-          //Get and display the insurance bullet
-          GetVideoObject(&hPixHandle, guiBulletImage );
-          BltVideoObject(vsFB, hPixHandle, 0, INS_INFO_FIRST_PARAGRAPH_X, usNewLineOffset,
-     VO_BLT_SRCTRANSPARENCY,NULL);
-
-          GetInsuranceText( INS_MLTI_IF_U_EXTEND_THE_CONTRACT, sText );
-          usNewLineOffset += DisplayWrappedString(
-     INS_INFO_FIRST_PARAGRAPH_X+INSURANCE_BULLET_TEXT_OFFSET_X, usNewLineOffset,
-     INS_INFO_FIRST_PARAGRAPH_WIDTH, 2, INS_FONT_MED, INS_FONT_COLOR,  sText, FONT_MCOLOR_BLACK,
-     FALSE, LEFT_JUSTIFIED); usNewLineOffset += INS_INFO_SPACE_BN_PARAGRAPHS;
-  */
 }
 
 void DisplayCancelationPagePage() {

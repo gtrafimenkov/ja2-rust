@@ -4414,14 +4414,7 @@ INT8 GetSlotNumberForMerc(UINT8 ubProfile) {
   return (-1);
 }
 
-void RenderSkiAtmPanel() {
-  //	struct VObject*	hPixHandle;
-
-  // Get the Atm background panel graphic and blt it
-  //	GetVideoObject(&hPixHandle, guiSkiAtmImage );
-  //	BltVideoObject(vsFB, hPixHandle, 0,SKI_ATM_PANEL_X, SKI_ATM_PANEL_Y,
-  // VO_BLT_SRCTRANSPARENCY,NULL);
-}
+void RenderSkiAtmPanel() {}
 
 void CreateSkiAtmButtons() {
   UINT16 usPosX, usPosY;

@@ -554,13 +554,8 @@ void DrawSummaryLines(void) {
   // blit summary LINE object to screen
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y);
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, TOP_DIVLINE_Y + 2);
-  // BltVideoObject(vsFB, hHandle, 0,DIVLINE_X, MID_DIVLINE_Y, VO_BLT_SRCTRANSPARENCY,NULL);
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, BOT_DIVLINE_Y);
   BltVObjectSrcTrans(vsFB, hHandle, 0, DIVLINE_X, MID_DIVLINE_Y2);
-  // BltVideoObject(vsFB, hHandle, 0,DIVLINE_X, BOT_DIVLINE_Y2,
-  // VO_BLT_SRCTRANSPARENCY,NULL);
-
-  return;
 }
 
 void DrawAPageOfRecords(void) {
