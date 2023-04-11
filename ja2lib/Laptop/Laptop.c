@@ -1635,7 +1635,7 @@ UINT32 LaptopScreenHandle() {
     uiTimeRange = 1000;
     iPercentage = iRealPercentage = 0;
     uiStartTime = GetJA2Clock();
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 640, 480);
     VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, 0, 0, 640, 480);
     PlayJA2SampleFromFile("SOUNDS\\Laptop power up (8-11).wav", RATE_11025, HIGHVOLUME, 1,
                           MIDDLEPAN);
@@ -1668,7 +1668,7 @@ UINT32 LaptopScreenHandle() {
       SrcRect2.iTop = iY - iHeight / 2;
       SrcRect2.iBottom = SrcRect2.iTop + iHeight;
 
-      BltStretchVideoSurface(vsFB, vsSaveBuffer, 0, 0, 0, &DstRect, &SrcRect2);
+      BltStretchVideoSurface(vsFB, vsSB, 0, 0, 0, &DstRect, &SrcRect2);
       InvalidateScreen();
       RefreshScreen();
     }
@@ -2196,7 +2196,7 @@ BOOLEAN LeaveLapTopScreen(void) {
       uiTimeRange = 1000;
       iPercentage = iRealPercentage = 100;
       uiStartTime = GetJA2Clock();
-      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
+      VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 640, 480);
       PlayJA2SampleFromFile("SOUNDS\\Laptop power down (8-11).wav", RATE_11025, HIGHVOLUME, 1,
                             MIDDLEPAN);
       while (iRealPercentage > 0) {
@@ -2230,7 +2230,7 @@ BOOLEAN LeaveLapTopScreen(void) {
         SrcRect2.iRight = SrcRect2.iLeft + iWidth;
         SrcRect2.iTop = iY - iHeight / 2;
         SrcRect2.iBottom = SrcRect2.iTop + iHeight;
-        BltStretchVideoSurface(vsFB, vsSaveBuffer, 0, 0, 0, &DstRect, &SrcRect2);
+        BltStretchVideoSurface(vsFB, vsSB, 0, 0, 0, &DstRect, &SrcRect2);
         InvalidateScreen();
         RefreshScreen();
       }
@@ -3831,32 +3831,32 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, UINT16 u
     if (ubCount > 1) {
       sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
-                           sWidth, sHeight);
+      VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop, sWidth,
+                           sHeight);
     }
 
     // Save rectangle
     if (ubCount > 0) {
       sWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       sHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
-                           sWidth, sHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSB, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop, sWidth,
+                           sHeight);
     }
   } else {
     // Restore the old rect
     if (ubCount < NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS - 1) {
       sWidth = (UINT16)(LastRect.iRight - LastRect.iLeft);
       sHeight = (UINT16)(LastRect.iBottom - LastRect.iTop);
-      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop,
-                           sWidth, sHeight);
+      VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)LastRect.iLeft, (UINT16)LastRect.iTop, sWidth,
+                           sHeight);
     }
 
     // Save rectangle
     if (ubCount < NUMBER_OF_LAPTOP_TITLEBAR_ITERATIONS) {
       sWidth = (UINT16)(DestRect.iRight - DestRect.iLeft);
       sHeight = (UINT16)(DestRect.iBottom - DestRect.iTop);
-      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop,
-                           sWidth, sHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSB, (UINT16)DestRect.iLeft, (UINT16)DestRect.iTop, sWidth,
+                           sHeight);
     }
   }
 

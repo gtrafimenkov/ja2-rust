@@ -16,7 +16,7 @@ extern struct VSurface *vsMouseCursor;
 extern struct VSurface *vsMouseBuffer;
 extern struct VSurface *vsPrimary;
 extern struct VSurface *vsExtraBuffer;
-extern struct VSurface *vsSaveBuffer;
+extern struct VSurface *vsSB;
 
 //
 // Defines for special video object handles given to blit function

@@ -435,7 +435,7 @@ void RenderTacticalPlacementGUI() {
             gpStrategicString[STR_TP_CHOOSEENTRYPOSITIONS]);
 
     // Shade out the part of the tactical map that isn't considered placable.
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 320, 640, 160);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 320, 640, 160);
   }
   if (gfValidLocationsChanged) {
     if (DayTime()) {     // 6AM to 9PM is black
@@ -444,7 +444,7 @@ void RenderTacticalPlacementGUI() {
       usHatchColor = Get16BPPColor(FROMRGB(63, 31, 31));
     }
     gfValidLocationsChanged--;
-    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, 4, 4, 636, 320);
+    VSurfaceBlitBufToBuf(vsSB, vsFB, 4, 4, 636, 320);
     InvalidateRegion(4, 4, 636, 320);
     if (gbCursorMercID == -1) {
       gTPClipRect.iLeft = gfWest ? 30 : 4;

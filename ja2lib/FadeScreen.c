@@ -249,13 +249,13 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
 
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
-  pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+  pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0, 0,
                   0, 640, 480);
 
   VSurfaceUnlock(vsFB);
-  VSurfaceUnlock(vsSaveBuffer);
+  VSurfaceUnlock(vsSB);
 
   return (TRUE);
 }

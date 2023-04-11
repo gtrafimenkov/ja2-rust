@@ -258,7 +258,7 @@ UINT32 OptionsScreenHandle() {
     RenderOptionsScreen();
 
     // Blit the background to the save buffer
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 640, 480);
     InvalidateRegion(0, 0, 640, 480);
   }
 

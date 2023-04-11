@@ -2721,7 +2721,7 @@ void HandleTopMessages() {
       BltFx.SrcRect.iRight = 640;
       BltFx.SrcRect.iBottom = 20;
 
-      BltVideoSurface(vsSaveBuffer, vsFB, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
+      BltVideoSurface(vsSB, vsFB, 0, 0, VS_BLT_SRCSUBRECT, &BltFx);
 
       InvalidateRegion(0, 0, 640, 20);
 

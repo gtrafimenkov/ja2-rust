@@ -486,7 +486,7 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
   RenderButtons();
   RenderButtonsFastHelp();
   // save it
-  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
+  VSurfaceBlitBufToBuf(vsFB, vsSB, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
                        (UINT16)SrcRect.iRight, (UINT16)SrcRect.iBottom);
 
   // hide the autoresolve
@@ -515,7 +515,7 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
     DstRect.iTop = iTop - iHeight * iPercentage / 200;
     DstRect.iBottom = DstRect.iTop + max(iHeight * iPercentage / 100, 1);
 
-    BltStretchVideoSurface(vsFB, vsSaveBuffer, 0, 0, 0, &SrcRect, &DstRect);
+    BltStretchVideoSurface(vsFB, vsSB, 0, 0, 0, &SrcRect, &DstRect);
     InvalidateScreen();
     RefreshScreen();
 
@@ -614,7 +614,7 @@ UINT32 AutoResolveScreenHandle() {
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
     Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
     VSurfaceUnlock(vsFB);
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 640, 480);
     KillPreBattleInterface();
     CalculateAutoResolveInfo();
     CalculateSoldierCells(FALSE);
@@ -1063,23 +1063,22 @@ void ExpandWindow() {
   } else {
     // Restore the previous area
     // left
-    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop,
-                         1, (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop, 1,
+                         (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iLeft + 1,
                      gpAR->ExRect.iBottom + 1);
     // right
-    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iRight, (UINT16)gpAR->ExRect.iTop,
-                         1, (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iRight, (UINT16)gpAR->ExRect.iTop, 1,
+                         (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
     InvalidateRegion(gpAR->ExRect.iRight, gpAR->ExRect.iTop, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iBottom + 1);
     // top
-    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop,
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop,
                          (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iTop + 1);
     // bottom
-    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (UINT16)gpAR->ExRect.iLeft,
-                         (UINT16)gpAR->ExRect.iBottom,
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iBottom,
                          (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iBottom, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iBottom + 1);
@@ -1828,7 +1827,7 @@ void CreateAutoResolveInterface() {
   // Build the interface buffer, and blit the "shaded" background.  This info won't
   // change from now on, but will be used to restore text.
   BuildInterfaceBuffer();
-  VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsSB, vsFB, 0, 0, 640, 480);
 
   // If we are bumping up the interface, then also use that piece of info to
   // move the buttons up by the same amount.

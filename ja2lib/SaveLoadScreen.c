@@ -294,7 +294,7 @@ UINT32 SaveLoadScreenHandle() {
     PauseGame();
 
     // save the new rect
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 639, 439);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 639, 439);
   }
 
   RestoreBackgroundRects();
@@ -1815,7 +1815,7 @@ void DisplayOnScreenNumber(BOOLEAN fErase) {
       continue;
     }
 
-    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y), 10, 10);
+    VSurfaceBlitBufToBuf(vsSB, vsFB, usPosX, (UINT16)(usPosY + SLG_DATE_OFFSET_Y), 10, 10);
 
     if (bLoopNum != 10) {
       bNum = bLoopNum;

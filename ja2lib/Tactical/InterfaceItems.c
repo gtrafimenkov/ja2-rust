@@ -986,8 +986,8 @@ void RenderInvBodyPanel(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY) {
   // Blit body inv, based on body type
   INT8 bSubImageIndex = gbCompatibleApplyItem;
 
-  BltVideoObjectFromIndex(vsSaveBuffer, guiBodyInvVO[pSoldier->ubBodyType][bSubImageIndex], 0, sX,
-                          sY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObjectFromIndex(vsSB, guiBodyInvVO[pSoldier->ubBodyType][bSubImageIndex], 0, sX, sY,
+                          VO_BLT_SRCTRANSPARENCY, NULL);
 }
 
 void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, UINT8 fDirtyLevel) {
@@ -1009,12 +1009,10 @@ void HandleRenderInvSlots(struct SOLDIERTYPE *pSoldier, UINT8 fDirtyLevel) {
     if (KeyExistsInKeyRing(pSoldier, ANYKEY, NULL)) {
       // blit gold key here?
       if (guiCurrentItemDescriptionScreen != MAP_SCREEN) {
-        BltVideoObjectFromIndex(vsSaveBuffer, guiGoldKeyVO, 0, 496, 446, VO_BLT_SRCTRANSPARENCY,
-                                NULL);
+        BltVideoObjectFromIndex(vsSB, guiGoldKeyVO, 0, 496, 446, VO_BLT_SRCTRANSPARENCY, NULL);
         RestoreExternBackgroundRect(496, 446, 29, 23);
       } else {
-        BltVideoObjectFromIndex(vsSaveBuffer, guiGoldKeyVO, 0, 217, 271, VO_BLT_SRCTRANSPARENCY,
-                                NULL);
+        BltVideoObjectFromIndex(vsSB, guiGoldKeyVO, 0, 217, 271, VO_BLT_SRCTRANSPARENCY, NULL);
         RestoreExternBackgroundRect(217, 271, 29, 23);
       }
     }
@@ -1048,11 +1046,11 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
     // position graphic
     if (sPocket == SECONDHANDPOS && Item[pSoldier->inv[HANDPOS].usItem].fFlags & ITEM_TWO_HANDED) {
       if (guiCurrentItemDescriptionScreen != MAP_SCREEN) {
-        BltVideoObjectFromIndex(vsSaveBuffer, guiSecItemHiddenVO, 0, 217, 448,
-                                VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObjectFromIndex(vsSB, guiSecItemHiddenVO, 0, 217, 448, VO_BLT_SRCTRANSPARENCY,
+                                NULL);
         RestoreExternBackgroundRect(217, 448, 72, 28);
       } else {
-        BltVideoObjectFromIndex(vsSaveBuffer, guiMapInvSecondHandBlockout, 0, 14, 218,
+        BltVideoObjectFromIndex(vsSB, guiMapInvSecondHandBlockout, 0, 14, 218,
                                 VO_BLT_SRCTRANSPARENCY, NULL);
         RestoreExternBackgroundRect(14, 218, 102, 24);
       }
@@ -1069,7 +1067,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fD
   }
 
   // Now render as normal
-  INVRenderItem(vsSaveBuffer, pSoldier, pObject, sX, sY, gSMInvData[sPocket].sWidth,
+  INVRenderItem(vsSB, pSoldier, pObject, sX, sY, gSMInvData[sPocket].sWidth,
                 gSMInvData[sPocket].sHeight, fRenderDirtyLevel, NULL, 0, fOutline, sOutlineColor);
 
   if (gbInvalidPlacementSlot[sPocket]) {
@@ -1612,7 +1610,7 @@ void HandleNewlyAddedItems(struct SOLDIERTYPE *pSoldier, BOOLEAN *fDirtyLevel) {
         continue;
       }
 
-      INVRenderItem(vsSaveBuffer, pSoldier, pObject, sX, sY, gSMInvData[cnt].sWidth,
+      INVRenderItem(vsSB, pSoldier, pObject, sX, sY, gSMInvData[cnt].sWidth,
                     gSMInvData[cnt].sHeight, DIRTYLEVEL2, NULL, 0, TRUE,
                     us16BPPItemCyclePlacedItemColors[pSoldier->bNewItemCycleCount[cnt]]);
     }
@@ -1768,7 +1766,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
         }
 
         swprintf(pStr, ARR_SIZE(pStr), L"%d", pObject->ubGunShotsLeft);
-        if (dest == vsSaveBuffer) {
+        if (dest == vsSB) {
           RestoreExternBackgroundRect(sNewX, sNewY, 20, 15);
         }
         mprintf(sNewX, sNewY, pStr);
@@ -1805,7 +1803,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
 
             sNewX = sX + sWidth - uiStringLength - 4;
 
-            if (dest == vsSaveBuffer) {
+            if (dest == vsSB) {
               RestoreExternBackgroundRect(sNewX, sNewY, 15, 15);
             }
             mprintf(sNewX, sNewY, pStr);
@@ -1829,7 +1827,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
 
         sNewX = sX + sWidth - uiStringLength - 4;
 
-        if (dest == vsSaveBuffer) {
+        if (dest == vsSB) {
           RestoreExternBackgroundRect(sNewX, sNewY, 15, 15);
         }
         mprintf(sNewX, sNewY, pStr);
@@ -1853,7 +1851,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
 
         sNewX = sX + sWidth - uiStringLength - 4;
 
-        if (dest == vsSaveBuffer) {
+        if (dest == vsSB) {
           RestoreExternBackgroundRect(sNewX, sNewY, 15, 15);
         }
         mprintf(sNewX, sNewY, pStr);
@@ -2602,23 +2600,22 @@ void RenderItemDescriptionBox() {
     sCenY =
         MAP_ITEMDESC_ITEM_Y + (abs((INT16)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->sOffsetY;
 
-    BltVideoObjectFromIndex(vsSaveBuffer, guiMapItemDescBox, 0, gsInvDescX, gsInvDescY,
+    BltVideoObjectFromIndex(vsSB, guiMapItemDescBox, 0, gsInvDescX, gsInvDescY,
                             VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Display the money 'seperating' border
     if (gpItemDescObject->usItem == MONEY) {
       // Render the money Boxes
-      BltVideoObjectFromIndex(vsSaveBuffer, guiMoneyGraphicsForDescBox, 0,
+      BltVideoObjectFromIndex(vsSB, guiMoneyGraphicsForDescBox, 0,
                               (UINT16)(gMapMoneyButtonLoc.x + gMoneyButtonOffsets[0].x),
                               (UINT16)(gMapMoneyButtonLoc.y + gMoneyButtonOffsets[0].y),
                               VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
     // Display item
-    BltVideoObjectOutlineShadowFromIndex(vsSaveBuffer, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
+    BltVideoObjectOutlineShadowFromIndex(vsSB, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
 
-    BltVideoObjectFromIndex(vsSaveBuffer, guiItemGraphic, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY,
-                            NULL);
+    BltVideoObjectFromIndex(vsSB, guiItemGraphic, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Display ststus
     DrawItemUIBarEx(gpItemDescObject, gubItemDescStatusIndex, (INT16)MAP_ITEMDESC_ITEM_STATUS_X,
@@ -2644,7 +2641,7 @@ void RenderItemDescriptionBox() {
           sCenX = (INT16)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX + 5);
           sCenY = (INT16)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY - 1);
 
-          INVRenderItem(vsSaveBuffer, NULL, gpItemDescObject, sCenX, sCenY,
+          INVRenderItem(vsSB, NULL, gpItemDescObject, sCenX, sCenY,
                         gMapItemDescAttachmentsXY[cnt].sWidth,
                         gMapItemDescAttachmentsXY[cnt].sHeight, DIRTYLEVEL2, NULL,
                         (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
@@ -2659,7 +2656,7 @@ void RenderItemDescriptionBox() {
           sCenX = (INT16)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX + 5);
           sCenY = (INT16)(gsInvDescY + gMapItemDescAttachmentsXY[cnt].sY - 1);
 
-          INVRenderItem(vsSaveBuffer, NULL, gpItemDescObject, sCenX, sCenY,
+          INVRenderItem(vsSB, NULL, gpItemDescObject, sCenX, sCenY,
                         gMapItemDescAttachmentsXY[cnt].sWidth,
                         gMapItemDescAttachmentsXY[cnt].sHeight, DIRTYLEVEL2, NULL,
                         (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
@@ -2683,14 +2680,13 @@ void RenderItemDescriptionBox() {
 
     if (Item[gpItemDescObject->usItem].usItemClass & IC_GUN) {
       // display bullets for ROF
-      BltVideoObjectFromIndex(vsSaveBuffer, guiBullet, 0, MAP_BULLET_SING_X, MAP_BULLET_SING_Y,
+      BltVideoObjectFromIndex(vsSB, guiBullet, 0, MAP_BULLET_SING_X, MAP_BULLET_SING_Y,
                               VO_BLT_SRCTRANSPARENCY, NULL);
 
       if (Weapon[gpItemDescObject->usItem].ubShotsPerBurst > 0) {
         for (cnt = 0; cnt < Weapon[gpItemDescObject->usItem].ubShotsPerBurst; cnt++) {
-          BltVideoObjectFromIndex(vsSaveBuffer, guiBullet, 0,
-                                  MAP_BULLET_BURST_X + cnt * (BULLET_WIDTH + 1), MAP_BULLET_BURST_Y,
-                                  VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObjectFromIndex(vsSB, guiBullet, 0, MAP_BULLET_BURST_X + cnt * (BULLET_WIDTH + 1),
+                                  MAP_BULLET_BURST_Y, VO_BLT_SRCTRANSPARENCY, NULL);
         }
       }
     }
@@ -3114,21 +3110,20 @@ void RenderItemDescriptionBox() {
     sCenX = ITEMDESC_ITEM_X + (abs((INT16)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
     sCenY = ITEMDESC_ITEM_Y + (abs((INT16)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->sOffsetY;
 
-    BltVideoObjectFromIndex(vsSaveBuffer, guiItemDescBox, 0, gsInvDescX, gsInvDescY,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObjectFromIndex(vsSB, guiItemDescBox, 0, gsInvDescX, gsInvDescY, VO_BLT_SRCTRANSPARENCY,
+                            NULL);
 
     if (gpItemDescObject->usItem == MONEY) {
       // Render the money Boxes
-      BltVideoObjectFromIndex(vsSaveBuffer, guiMoneyGraphicsForDescBox, 0,
+      BltVideoObjectFromIndex(vsSB, guiMoneyGraphicsForDescBox, 0,
                               (UINT16)(gsInvDescX + gItemDescAttachmentsXY[0].sX - 1),
                               (UINT16)(gsInvDescY + gItemDescAttachmentsXY[0].sY - 2),
                               VO_BLT_SRCTRANSPARENCY, NULL);
     }
 
     // Display item
-    BltVideoObjectOutlineShadowFromIndex(vsSaveBuffer, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
-    BltVideoObjectFromIndex(vsSaveBuffer, guiItemGraphic, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY,
-                            NULL);
+    BltVideoObjectOutlineShadowFromIndex(vsSB, guiItemGraphic, 0, sCenX - 2, sCenY + 2);
+    BltVideoObjectFromIndex(vsSB, guiItemGraphic, 0, sCenX, sCenY, VO_BLT_SRCTRANSPARENCY, NULL);
 
     // Display status
     DrawItemUIBarEx(gpItemDescObject, gubItemDescStatusIndex, (INT16)ITEMDESC_ITEM_STATUS_X,
@@ -3153,7 +3148,7 @@ void RenderItemDescriptionBox() {
         sCenX = (INT16)(gsInvDescX + gItemDescAttachmentsXY[cnt].sX + 5);
         sCenY = (INT16)(gsInvDescY + gItemDescAttachmentsXY[cnt].sY - 1);
 
-        INVRenderItem(vsSaveBuffer, NULL, gpItemDescObject, sCenX, sCenY,
+        INVRenderItem(vsSB, NULL, gpItemDescObject, sCenX, sCenY,
                       gItemDescAttachmentsXY[cnt].sWidth, gItemDescAttachmentsXY[cnt].sHeight,
                       DIRTYLEVEL2, NULL, (UINT8)(RENDER_ITEM_ATTACHMENT1 + cnt), FALSE, 0);
 
@@ -3181,14 +3176,13 @@ void RenderItemDescriptionBox() {
 
     if (Item[gpItemDescObject->usItem].usItemClass & IC_GUN) {
       // display bullets for ROF
-      BltVideoObjectFromIndex(vsSaveBuffer, guiBullet, 0, BULLET_SING_X, BULLET_SING_Y,
+      BltVideoObjectFromIndex(vsSB, guiBullet, 0, BULLET_SING_X, BULLET_SING_Y,
                               VO_BLT_SRCTRANSPARENCY, NULL);
 
       if (Weapon[gpItemDescObject->usItem].ubShotsPerBurst > 0) {
         for (cnt = 0; cnt < Weapon[gpItemDescObject->usItem].ubShotsPerBurst; cnt++) {
-          BltVideoObjectFromIndex(vsSaveBuffer, guiBullet, 0,
-                                  BULLET_BURST_X + cnt * (BULLET_WIDTH + 1), BULLET_BURST_Y,
-                                  VO_BLT_SRCTRANSPARENCY, NULL);
+          BltVideoObjectFromIndex(vsSB, guiBullet, 0, BULLET_BURST_X + cnt * (BULLET_WIDTH + 1),
+                                  BULLET_BURST_Y, VO_BLT_SRCTRANSPARENCY, NULL);
         }
       }
     }
