@@ -421,33 +421,33 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   for (i = TEXT_POPUP_GAP_BN_LINES; i < usWidth - TEXT_POPUP_GAP_BN_LINES;
        i += TEXT_POPUP_GAP_BN_LINES) {
     // TOP ROW
-    BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 1, i, usPosY);
+    BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 1, i, usPosY);
     // BOTTOM ROW
-    BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 6, i,
-                       usHeight - TEXT_POPUP_GAP_BN_LINES + 6);
+    BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 6, i,
+               usHeight - TEXT_POPUP_GAP_BN_LINES + 6);
   }
 
   // blit the left and right row of images
   usPosX = 0;
   for (i = TEXT_POPUP_GAP_BN_LINES; i < usHeight - TEXT_POPUP_GAP_BN_LINES;
        i += TEXT_POPUP_GAP_BN_LINES) {
-    BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 3, usPosX, i);
-    BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 4,
-                       usPosX + usWidth - 4, i);
+    BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 3, usPosX, i);
+    BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 4, usPosX + usWidth - 4,
+               i);
   }
 
   // blt the corner images for the row
   // top left
-  BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 0, 0, usPosY);
+  BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 0, 0, usPosY);
   // top right
-  BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 2,
-                     usWidth - TEXT_POPUP_GAP_BN_LINES, usPosY);
+  BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 2,
+             usWidth - TEXT_POPUP_GAP_BN_LINES, usPosY);
   // bottom left
-  BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 5, 0,
-                     usHeight - TEXT_POPUP_GAP_BN_LINES);
+  BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 5, 0,
+             usHeight - TEXT_POPUP_GAP_BN_LINES);
   // bottom right
-  BltVObjectSrcTrans(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 7,
-                     usWidth - TEXT_POPUP_GAP_BN_LINES, usHeight - TEXT_POPUP_GAP_BN_LINES);
+  BltVObject(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), hImageHandle, 7,
+             usWidth - TEXT_POPUP_GAP_BN_LINES, usHeight - TEXT_POPUP_GAP_BN_LINES);
 
   // Icon if ness....
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_STOPICON) {

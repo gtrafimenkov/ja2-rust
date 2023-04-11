@@ -1289,20 +1289,19 @@ void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber) {
   // if merc is an AIM merc
   if (Menptr[gCharactersList[bCharNumber].usSolID].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
     // finite contract length icon
-    BltVObjectSrcTrans(vsSB, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y);
+    BltVObject(vsSB, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y);
   }
 
   // if merc has life insurance
   if (Menptr[gCharactersList[bCharNumber].usSolID].usLifeInsurance > 0) {
     // draw life insurance icon
-    BltVObjectSrcTrans(vsSB, hHandle, 2, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + CHAR_ICON_SPACING);
+    BltVObject(vsSB, hHandle, 2, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + CHAR_ICON_SPACING);
   }
 
   // if merc has a medical deposit
   if (Menptr[gCharactersList[bCharNumber].usSolID].usMedicalDeposit > 0) {
     // draw medical deposit icon
-    BltVObjectSrcTrans(vsSB, hHandle, 1, CHAR_ICON_X,
-                       CHAR_ICON_CONTRACT_Y + (2 * CHAR_ICON_SPACING));
+    BltVObject(vsSB, hHandle, 1, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + (2 * CHAR_ICON_SPACING));
   }
 }
 
@@ -7031,7 +7030,7 @@ void RenderTeamRegionBackground(void) {
   // show inventory or the team list?
   if (fShowInventoryFlag == FALSE) {
     GetVideoObject(&hHandle, guiCHARLIST);
-    BltVObjectSrcTrans(vsSB, hHandle, 0, PLAYER_INFO_X, PLAYER_INFO_Y);
+    BltVObject(vsSB, hHandle, 0, PLAYER_INFO_X, PLAYER_INFO_Y);
   } else {
     BltCharInvPanel();
   }
@@ -7076,7 +7075,7 @@ void RenderCharacterInfoBackground(void) {
 
   // the upleft hand corner character info panel
   GetVideoObject(&hHandle, guiCHARINFO);
-  BltVObjectSrcTrans(vsSB, hHandle, 0, TOWN_INFO_X, TOWN_INFO_Y);
+  BltVObject(vsSB, hHandle, 0, TOWN_INFO_X, TOWN_INFO_Y);
 
   UpdateHelpTextForMapScreenMercIcons();
 
@@ -9071,7 +9070,7 @@ void DisplayIconsForMercsAsleep(void) {
       pSoldier = MercPtrs[gCharactersList[iCounter].usSolID];
       if (IsSolActive(pSoldier) && pSoldier->fMercAsleep &&
           CanChangeSleepStatusForSoldier(pSoldier)) {
-        BltVObjectSrcTrans(vsSB, hHandle, 0, 125, (INT16)(Y_START + (iCounter * (Y_SIZE + 2))));
+        BltVObject(vsSB, hHandle, 0, 125, (INT16)(Y_START + (iCounter * (Y_SIZE + 2))));
       }
     }
   }

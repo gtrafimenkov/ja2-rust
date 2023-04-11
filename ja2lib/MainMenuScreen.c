@@ -508,11 +508,11 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
 }
 
 void RenderMainMenu() {
-  BltVObjectSrcTrans(vsSB, gMainMenuBackGroundImage, 0, 0, 0);
-  BltVObjectSrcTrans(vsFB, gMainMenuBackGroundImage, 0, 0, 0);
+  BltVObject(vsSB, gMainMenuBackGroundImage, 0, 0, 0);
+  BltVObject(vsFB, gMainMenuBackGroundImage, 0, 0, 0);
 
-  BltVObjectSrcTrans(vsFB, giJa2LogoImage, 0, 188, 15);
-  BltVObjectSrcTrans(vsSB, giJa2LogoImage, 0, 188, 15);
+  BltVObject(vsFB, giJa2LogoImage, 0, 188, 15);
+  BltVObject(vsSB, giJa2LogoImage, 0, 188, 15);
 
   DrawTextToScreen(gzCopyrightText[0], 0, 465, 640, FONT10ARIAL, FONT_MCOLOR_WHITE,
                    FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);

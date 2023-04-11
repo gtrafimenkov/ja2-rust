@@ -1021,7 +1021,7 @@ void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY) {
     sYPosition -= 2;
 
     // small question mark
-    BltVObjectSrcTrans(vsSB, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition);
+    BltVObject(vsSB, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition);
     InvalidateRegion(sXPosition, sYPosition, sXPosition + DMAP_GRID_X, sYPosition + DMAP_GRID_Y);
   }
 }
@@ -2418,10 +2418,10 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
       if ((!fZoomFlag) ||
           ((fZoomFlag) && (iX > MAP_VIEW_START_X) && (iY > MAP_VIEW_START_Y) &&
            (iX < 640 - MAP_GRID_X * 2) && (iY < MAP_VIEW_START_Y + MAP_VIEW_HEIGHT))) {
-        BltVObjectSrcTrans(vsFB, hMapHandle, (UINT16)iDirection, iX, iY);
+        BltVObject(vsFB, hMapHandle, (UINT16)iDirection, iX, iY);
 
         if (!fUTurnFlag) {
-          BltVObjectSrcTrans(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
+          BltVObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
 
@@ -3158,7 +3158,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
         // RestoreExternBackgroundRect(((INT16)iArrowX), ((INT16)iArrowY),DMAP_GRID_ZOOM_X,
         // DMAP_GRID_ZOOM_Y);
         if (pNode != pPath) {
-          BltVObjectSrcTrans(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
+          BltVObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
       }
@@ -3527,7 +3527,7 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           iX = MAP_VIEW_START_X + (iX * MAP_GRID_X) + sOffsetX;
           iY = MAP_Y_ICON_OFFSET + MAP_VIEW_START_Y + (iY * MAP_GRID_Y) + sOffsetY;
 
-          BltVObjectSrcTrans(vsSB, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY);
+          BltVObject(vsSB, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY);
         } else {
           GetScreenXYFromMapXYStationary(((u8)(iX)), ((u8)(iY)), &sXPosition, &sYPosition);
 
@@ -3537,7 +3537,7 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           // clip blits to mapscreen region
           ClipBlitsToMapViewRegion();
 
-          BltVObjectSrcTrans(vsSB, hIconHandle, (UINT16)iCounter, iX, iY);
+          BltVObject(vsSB, hIconHandle, (UINT16)iCounter, iX, iY);
 
           // restore clip blits
           RestoreClipRegionToFullScreen();
@@ -3617,7 +3617,7 @@ void DisplayDistancesForHelicopter(void) {
 
   // blit in background
   GetVideoObject(&hHandle, guiMapBorderHeliSectors);
-  BltVObjectSrcTrans(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition);
+  BltVObject(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition);
 
   //	sTotalCanTravel = ( INT16 )GetTotalDistanceHelicopterCanTravel( );
   sDistanceToGo = (INT16)DistanceOfIntendedHelicopterPath();
@@ -3846,7 +3846,7 @@ void DisplayPositionOfHelicopter(void) {
       ClipBlitsToMapViewRegion();
 
       GetVideoObject(&hHandle, guiHelicopterIcon);
-      BltVObjectSrcTrans(vsFB, hHandle, HELI_ICON, x, y);
+      BltVObject(vsFB, hHandle, HELI_ICON, x, y);
 
       // now get number of people and blit that too
       iNumberOfPeopleInHelicopter = GetNumberOfPassengersInHelicopter();
@@ -3911,7 +3911,7 @@ void DisplayDestinationOfHelicopter(void) {
     ClipBlitsToMapViewRegion();
 
     GetVideoObject(&hHandle, guiHelicopterIcon);
-    BltVObjectSrcTrans(vsFB, hHandle, HELI_SHADOW_ICON, x, y);
+    BltVObject(vsFB, hHandle, HELI_SHADOW_ICON, x, y);
     InvalidateRegion(x, y, x + HELI_SHADOW_ICON_WIDTH, y + HELI_SHADOW_ICON_HEIGHT);
 
     RestoreClipRegionToFullScreen();
@@ -3996,12 +3996,11 @@ void BlitMineIcon(u8 sMapX, u8 sMapY) {
   if (fZoomFlag) {
     GetScreenXYFromMapXYStationary((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
     // when zoomed, the x,y returned is the CENTER of the map square in question
-    BltVObjectSrcTrans(vsSB, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4,
-                       sScreenY - MAP_GRID_ZOOM_Y / 4);
+    BltVObject(vsSB, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4, sScreenY - MAP_GRID_ZOOM_Y / 4);
   } else {
     GetScreenXYFromMapXY((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
     // when not zoomed, the x,y returned is the top left CORNER of the map square in question
-    BltVObjectSrcTrans(vsSB, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4);
+    BltVObject(vsSB, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4);
   }
 }
 
@@ -4411,12 +4410,11 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
   // get the properties of the militia object
   GetVideoObject(&hVObject, guiMilitia);
 
-  BltVObjectSrcTrans(vsFB, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y);
+  BltVObject(vsFB, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y);
 
   GetVideoObject(&hVObject, guiMilitiaMaps);
-  BltVObjectSrcTrans(vsFB, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
-                     MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
-                     MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y);
+  BltVObject(vsFB, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
+             MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X, MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y);
 
   // set font color for labels and "total militia" counts
   SetFontForeground(FONT_WHITE);
@@ -4596,7 +4594,7 @@ void RenderIconsPerSectorForSelectedTown(void) {
         }
       }
 
-      BltVObjectSrcTrans(vsFB, hVObject, (UINT16)(iCurrentIcon), sX, sY);
+      BltVObject(vsFB, hVObject, (UINT16)(iCurrentIcon), sX, sY);
     }
   }
 
@@ -4630,7 +4628,7 @@ void ShowHighLightedSectorOnMilitiaMap(void) {
     GetVideoObject(&hVObject, guiMilitiaSectorHighLight);
 
     // blt the object
-    BltVObjectSrcTrans(vsFB, hVObject, 0, sX, sY);
+    BltVObject(vsFB, hVObject, 0, sX, sY);
   }
 
   if (sSectorMilitiaMapSectorOutline != -1) {
@@ -4643,7 +4641,7 @@ void ShowHighLightedSectorOnMilitiaMap(void) {
     GetVideoObject(&hVObject, guiMilitiaSectorOutline);
 
     // blt the object
-    BltVObjectSrcTrans(vsFB, hVObject, 0, sX, sY);
+    BltVObject(vsFB, hVObject, 0, sX, sY);
   }
 
   return;
@@ -4877,7 +4875,7 @@ void DisplayUnallocatedMilitia(void) {
       iCurrentIcon = 10;
     }
 
-    BltVObjectSrcTrans(vsFB, hVObject, (UINT16)(iCurrentIcon), sX, sY);
+    BltVObject(vsFB, hVObject, (UINT16)(iCurrentIcon), sX, sY);
   }
 }
 
@@ -5417,7 +5415,7 @@ void HandleLowerLevelMapBlit(void) {
   }
 
   // handle the blt of the sublevel
-  BltVObjectSrcTrans(vsSB, hHandle, 0, MAP_VIEW_START_X + 21, MAP_VIEW_START_Y + 17);
+  BltVObject(vsSB, hHandle, 0, MAP_VIEW_START_X + 21, MAP_VIEW_START_Y + 17);
 
   // handle shading of sublevels
   ShadeSubLevelsNotVisited();
@@ -5628,7 +5626,7 @@ void ShowSAMSitesOnStrategicMap(void) {
 
     // draw SAM site icon
     GetVideoObject(&hHandle, guiSAMICON);
-    BltVObjectSrcTrans(vsSB, hHandle, ubVidObjIndex, sX, sY);
+    BltVObject(vsSB, hHandle, ubVidObjIndex, sX, sY);
 
     if (fShowAircraftFlag) {
       // write "SAM Site" centered underneath
@@ -5836,7 +5834,7 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, u8 sMapX, u8 
     iX = MAP_VIEW_START_X + (sMapX * MAP_GRID_X) + MAP_X_ICON_OFFSET + (3 * iColumnNumber);
     iY = MAP_VIEW_START_Y + (sMapY * MAP_GRID_Y) + MAP_Y_ICON_OFFSET + (3 * iRowNumber);
 
-    BltVObjectSrcTrans(vsSB, hIconHandle, usVOIndex, iX, iY);
+    BltVObject(vsSB, hIconHandle, usVOIndex, iX, iY);
     InvalidateRegion(iX, iY, iX + DMAP_GRID_X, iY + DMAP_GRID_Y);
   }
 }
@@ -5867,7 +5865,7 @@ void DrawOrta() {
 
   // draw Orta in its sector
   GetVideoObject(&hHandle, guiORTAICON);
-  BltVObjectSrcTrans(vsSB, hHandle, ubVidObjIndex, sX, sY);
+  BltVObject(vsSB, hHandle, ubVidObjIndex, sX, sY);
 }
 
 void DrawTixa() {
@@ -5894,7 +5892,7 @@ void DrawTixa() {
 
   // draw Tixa in its sector
   GetVideoObject(&hHandle, guiTIXAICON);
-  BltVObjectSrcTrans(vsSB, hHandle, ubVidObjIndex, sX, sY);
+  BltVObject(vsSB, hHandle, ubVidObjIndex, sX, sY);
 }
 
 void DrawBullseye() {
@@ -5906,7 +5904,7 @@ void DrawBullseye() {
 
   // draw the bullseye in that sector
   GetVideoObject(&hHandle, guiBULLSEYE);
-  BltVObjectSrcTrans(vsSB, hHandle, 0, sX, sY);
+  BltVObject(vsSB, hHandle, 0, sX, sY);
 }
 
 void HideExistenceOfUndergroundMapSector(UINT8 ubSectorX, UINT8 ubSectorY) {

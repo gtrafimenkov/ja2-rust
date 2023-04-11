@@ -332,8 +332,7 @@ BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject) {
   return FALSE;
 }
 
-bool BltVObjectSrcTrans(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i32 x,
-                        i32 y) {
+bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i32 x, i32 y) {
   bool res = false;
   if (dest) {
     struct BufferLockInfo lock = VSurfaceLock(dest);

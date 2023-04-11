@@ -157,7 +157,7 @@ void RenderFlorist() {
   usPosY = FLORIST_FIRST_BULLET_Y;
   ubTextCounter = FLORIST_ADVERTISEMENT_1;
   for (i = 0; i < FLORIST_NUMBER_OF_BULLETS; i++) {
-    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLORIST_FIRST_BULLET_X, usPosY);
+    BltVObject(vsFB, hPixHandle, 0, FLORIST_FIRST_BULLET_X, usPosY);
 
     DisplayWrappedString(FLORIST_FIRST_SENTENCE_COLUMN_TEXT_X, (UINT16)(usPosY + 20),
                          FLORIST_FIRST_SENTENCE_COLUMN_TEXT_WIDTH, 2, FLORIST_SENTENCE_FONT,
@@ -224,11 +224,11 @@ void DisplayFloristDefaults() {
   if (guiCurrentLaptopMode == LAPTOP_MODE_FLORIST) {
     gfHomePageActive = TRUE;
     GetVideoObject(&hPixHandle, guiLargeTitleSymbol);
-    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLORIST_BIG_TITLE_X, FLORIST_BIG_TITLE_Y);
+    BltVObject(vsFB, hPixHandle, 0, FLORIST_BIG_TITLE_X, FLORIST_BIG_TITLE_Y);
   } else {
     gfHomePageActive = FALSE;
     GetVideoObject(&hPixHandle, guiSmallTitleSymbol);
-    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLORIST_SMALL_TITLE_X, FLORIST_SMALL_TITLE_Y);
+    BltVObject(vsFB, hPixHandle, 0, FLORIST_SMALL_TITLE_X, FLORIST_SMALL_TITLE_Y);
   }
 }
 

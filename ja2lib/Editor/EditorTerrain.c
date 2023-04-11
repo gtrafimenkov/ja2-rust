@@ -100,8 +100,7 @@ void RenderTerrainTileButtons() {
       VSurfaceColorFill(vsFB, usX + 1, usY + 1, usX2 - 1, usY2 - 1, 0);
 
       SetObjectShade(gTileDatabase[gTileTypeStartIndex[x]].hTileSurface, DEFAULT_SHADE_LEVEL);
-      BltVObjectSrcTrans(vsFB, gTileDatabase[gTileTypeStartIndex[x]].hTileSurface, 0, (usX + 1),
-                         (usY + 1));
+      BltVObject(vsFB, gTileDatabase[gTileTypeStartIndex[x]].hTileSurface, 0, (usX + 1), (usY + 1));
 
       if (fUseTerrainWeights) {
         mprintf(usX + 2, usY + 2, L"%d", ubTerrainTileButtonWeight[x]);

@@ -652,12 +652,12 @@ void RenderOptionsScreen() {
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiOptionBackGroundImage);
-  BltVObjectSrcTrans(vsFB, hPixHandle, 0, 0, 0);
+  BltVObject(vsFB, hPixHandle, 0, 0, 0);
 
   // Get and display the titla image
   GetVideoObject(&hPixHandle, guiOptionsAddOnImages);
-  BltVObjectSrcTrans(vsFB, hPixHandle, 0, 0, 0);
-  BltVObjectSrcTrans(vsFB, hPixHandle, 1, 0, 434);
+  BltVObject(vsFB, hPixHandle, 0, 0, 0);
+  BltVObject(vsFB, hPixHandle, 1, 0, 434);
 
   //
   // Text for the toggle boxes

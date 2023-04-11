@@ -520,7 +520,7 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList(void) {
     }
 
     GetVideoObject(&hHandle, uiHandle);
-    BltVObjectSrcTrans(vsSB, hHandle, 0, 538, 0 + gsVIEWPORT_END_Y);
+    BltVObject(vsSB, hHandle, 0, 538, 0 + gsVIEWPORT_END_Y);
 
     RestoreExternBackgroundRect(538, gsVIEWPORT_END_Y, (640 - 538),
                                 (INT16)(480 - gsVIEWPORT_END_Y));

@@ -1290,7 +1290,7 @@ BOOLEAN RenderShopKeeperInterface() {
 
   // Get the main background screen graphic and blt it
   GetVideoObject(&hPixHandle, guiMainTradeScreenImage);
-  BltVObjectSrcTrans(vsFB, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y);
+  BltVObject(vsFB, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y);
 
   // Display the Title
   DrawTextToScreen(SKI_Text[SKI_TEXT_MERCHADISE_IN_STOCK], SKI_MAIN_TITLE_X, SKI_MAIN_TITLE_Y,
@@ -2482,8 +2482,8 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
     if (iFaceSlot != -1) {
       // Get and blit the face
       GetVideoObject(&hPixHandle, guiSmallSoldiersFace[iFaceSlot]);
-      BltVObjectSrcTrans(vsFB, hPixHandle, 0, (UINT16)(usPosX + SKI_SMALL_FACE_OFFSET_X),
-                         (UINT16)(usPosY));  // SKI_SMALL_FACE_OFFSET_Y
+      BltVObject(vsFB, hPixHandle, 0, (UINT16)(usPosX + SKI_SMALL_FACE_OFFSET_X),
+                 (UINT16)(usPosY));  // SKI_SMALL_FACE_OFFSET_Y
     }
   }
 
@@ -5503,7 +5503,7 @@ void CrossOutUnwantedItems(void) {
           sBoxStartY =
               SKI_PLAYERS_TRADING_INV_Y + (bSlotId / SKI_NUM_TRADING_INV_COLS) * (SKI_INV_OFFSET_Y);
 
-          BltVObjectSrcTrans(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY));
+          BltVObject(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY));
 
           // invalidate the region
           InvalidateRegion(sBoxStartX - 1, sBoxStartY - 1, sBoxStartX + sBoxWidth + 1,

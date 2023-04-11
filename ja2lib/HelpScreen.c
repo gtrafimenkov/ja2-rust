@@ -796,11 +796,11 @@ BOOLEAN DrawHelpScreenBackGround() {
 
   // if there are buttons, blit the button border
   if (gHelpScreen.bNumberOfButtons != 0) {
-    BltVObjectSrcTrans(vsFB, hPixHandle, HLP_SCRN_BUTTON_BORDER, usPosX, gHelpScreen.usScreenLocY);
+    BltVObject(vsFB, hPixHandle, HLP_SCRN_BUTTON_BORDER, usPosX, gHelpScreen.usScreenLocY);
     usPosX += HELP_SCREEN_BUTTON_BORDER_WIDTH;
   }
 
-  BltVObjectSrcTrans(vsFB, hPixHandle, HLP_SCRN_DEFAULT_TYPE, usPosX, gHelpScreen.usScreenLocY);
+  BltVObject(vsFB, hPixHandle, HLP_SCRN_DEFAULT_TYPE, usPosX, gHelpScreen.usScreenLocY);
 
   InvalidateRegion(gHelpScreen.usScreenLocX, gHelpScreen.usScreenLocY,
                    gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth,

@@ -911,111 +911,98 @@ void RenderArrows() {
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_BESIDE) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_G) {
     TileElem = gTileDatabase[SECONDPOINTERS1];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_Y) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_YG) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
     TileElem = gTileDatabase[SECONDPOINTERS1];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                       gsUpArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY + 20);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_GG) {
     TileElem = gTileDatabase[SECONDPOINTERS1];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                       gsUpArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY + 20);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_YY) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                       gsUpArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY + 20);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB) {
     TileElem = gTileDatabase[SECONDPOINTERS8];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB2) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                       gsUpArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY + 20);
     TileElem = gTileDatabase[SECONDPOINTERS8];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB3) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY);
     TileElem = gTileDatabase[SECONDPOINTERS8];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                       gsUpArrowY + 20);
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                       gsUpArrowY + 40);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY + 40);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BESIDE) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_G) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_Y) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_CLIMB) {
     TileElem = gTileDatabase[SECONDPOINTERS7];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_YG) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY);
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+               gsDownArrowY + 20);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_GG) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY);
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+               gsDownArrowY + 20);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_YY) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY);
-    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                       gsDownArrowY + 20);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY);
+    BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+               gsDownArrowY + 20);
   }
 }
 
@@ -1438,7 +1425,7 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
         SetBackgroundRectFilled(iBack);
       }
       TileElem = gTileDatabase[usGraphicToUse];
-      BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, sXPos, sYPos);
+      BltVObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, sXPos, sYPos);
 
       // Draw life, breath
       // Only do this when we are a vehicle but on our team

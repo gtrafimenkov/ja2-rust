@@ -277,7 +277,7 @@ BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 
   // Get new cursor data
   //
 
-  ReturnValue = BltVObjectSrcTrans(vsMouseBuffer, gpCursorStore, usVideoObjectSubIndex, 0, 0);
+  ReturnValue = BltVObject(vsMouseBuffer, gpCursorStore, usVideoObjectSubIndex, 0, 0);
   guiMouseBufferState = BUFFER_DIRTY;
 
   if (GetVideoObjectETRLEProperties(gpCursorStore, &pETRLEPointer, usVideoObjectSubIndex)) {
@@ -465,9 +465,9 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
                   gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject, usSubIndex,
                   pCurImage->usPosX, pCurImage->usPosY);
             } else {
-              ReturnValue = BltVObjectSrcTrans(
-                  vsMouseBuffer, gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject, usSubIndex,
-                  pCurImage->usPosX, pCurImage->usPosY);
+              ReturnValue =
+                  BltVObject(vsMouseBuffer, gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject,
+                             usSubIndex, pCurImage->usPosX, pCurImage->usPosY);
             }
             if (!ReturnValue) {
               return (FALSE);

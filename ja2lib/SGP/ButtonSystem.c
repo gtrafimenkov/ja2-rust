@@ -2594,7 +2594,7 @@ void DrawQuickButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVObjectSrcTrans(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc);
+  BltVObject(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc);
 }
 
 void DrawHatchOnButton(GUI_BUTTON *b) {
@@ -2732,7 +2732,7 @@ void DrawCheckBoxButton(GUI_BUTTON *b) {
   }
 
   // Display the button image
-  BltVObjectSrcTrans(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc);
+  BltVObject(vsFB, ButtonPictures[b->ImageNum].vobj, (UINT16)UseImage, b->XLoc, b->YLoc);
 }
 
 void DrawIconOnButton(GUI_BUTTON *b) {
@@ -2817,10 +2817,9 @@ void DrawIconOnButton(GUI_BUTTON *b) {
     SetClippingRect(&NewClip);
     // Blit the icon
     if (b->uiFlags & BUTTON_GENERIC)
-      BltVObjectSrcTrans(vsFB, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp,
-                         (INT16)yp);
+      BltVObject(vsFB, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp, (INT16)yp);
     else
-      BltVObjectSrcTrans(vsFB, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp);
+      BltVObject(vsFB, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp);
     // Restore previous clip region
     SetClippingRect(&OldClip);
   }
@@ -3057,7 +3056,7 @@ static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, INT32 iDestX1, I
   for (h = 0; h < hblits; h++) {
     xc = (INT16)iDestX1;
     for (w = 0; w < wblits; w++) {
-      BltVObjectSrcTrans(dest, BkgrndImg, Index, xc + Ox, yc + Oy);
+      BltVObject(dest, BkgrndImg, Index, xc + Ox, yc + Oy);
       xc += pw;
     }
     yc += ph;

@@ -251,12 +251,11 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 
   // Blt the portrait background
   GetVideoObject(&hMugShotBorderHandle, guiMugShotBorder);
-  BltVObjectSrcTrans(vsFB, hMugShotBorderHandle, ubImage, usPosX, usPosY);
+  BltVObject(vsFB, hMugShotBorderHandle, ubImage, usPosX, usPosY);
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiAimFiFace[ubMercID]);
-  BltVObjectSrcTrans(vsFB, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET,
-                     usPosY + AIM_FI_FACE_OFFSET);
+  BltVObject(vsFB, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET);
 
   if (IsMercDead(AimMercArray[ubMercID])) {
     // get the face object
@@ -272,8 +271,7 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
     SetObjectHandleShade(guiAimFiFace[ubMercID], 0);
 
     // Blt face to screen
-    BltVObjectSrcTrans(vsFB, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET,
-                       usPosY + AIM_FI_FACE_OFFSET);
+    BltVObject(vsFB, hFaceHandle, 0, usPosX + AIM_FI_FACE_OFFSET, usPosY + AIM_FI_FACE_OFFSET);
 
     DrawTextToScreen(AimFiText[AIM_FI_DEAD], (UINT16)(usPosX + AIM_FI_AWAY_TEXT_OFFSET_X),
                      (UINT16)(usPosY + AIM_FI_AWAY_TEXT_OFFSET_Y), AIM_FI_AWAY_TEXT_OFFSET_WIDTH,
