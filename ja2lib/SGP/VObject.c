@@ -651,12 +651,13 @@ static BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
       break;
 
     case 8:
-      if (BltIsClipped(hSrcVObject, iDestX, iDestY, usIndex, &ClippingRect))
+      if (BltIsClipped(hSrcVObject, iDestX, iDestY, usIndex, &ClippingRect)) {
         Blt8BPPDataTo16BPPBufferTransparentClip(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX,
                                                 iDestY, usIndex, &ClippingRect);
-      else
+      } else {
         Blt8BPPDataTo16BPPBufferTransparent(pBuffer, uiDestPitchBYTES, hSrcVObject, iDestX, iDestY,
                                             usIndex);
+      }
       break;
   }
 

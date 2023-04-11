@@ -66,8 +66,8 @@ INT32 iMenuButtons[NUM_MENU_ITEMS];
 
 UINT16 gusMainMenuButtonWidths[NUM_MENU_ITEMS];
 
-static struct VObject *gMainMenuBackGroundImage;
-static struct VObject *giJa2LogoImage;
+static struct VObject *mainMenuBackGroundImage;
+static struct VObject *ja2LogoImage;
 
 struct MOUSE_REGION gBackRegion;
 INT8 gbHandledMainMenu = 0;
@@ -238,16 +238,16 @@ BOOLEAN InitMainMenu() {
   // TODO: create LoadVObjectFromFile, which load the image, returns the pointer, doesn't add that
   //   image to the internal list
 
-  gMainMenuBackGroundImage = LoadVObjectFromFile("LOADSCREENS\\MainMenuBackGround.sti");
-  giJa2LogoImage = LoadVObjectFromFile("LOADSCREENS\\Ja2Logo.sti");
+  mainMenuBackGroundImage = LoadVObjectFromFile("LOADSCREENS\\MainMenuBackGround.sti");
+  ja2LogoImage = LoadVObjectFromFile("LOADSCREENS\\Ja2Logo.sti");
 
   // load background graphic and add it
-  if (!gMainMenuBackGroundImage) {
+  if (!mainMenuBackGroundImage) {
     return FALSE;
   }
 
   // load ja2 logo graphic and add it
-  if (!giJa2LogoImage) {
+  if (!ja2LogoImage) {
     return FALSE;
   }
 
@@ -271,8 +271,8 @@ void ExitMainMenu() {
   CreateDestroyBackGroundMouseMask(FALSE);
   CreateDestroyMainMenuButtons(FALSE);
 
-  DeleteVideoObject(gMainMenuBackGroundImage);
-  DeleteVideoObject(giJa2LogoImage);
+  DeleteVideoObject(mainMenuBackGroundImage);
+  DeleteVideoObject(ja2LogoImage);
 
   gMsgBox.uiExitScreen = MAINMENU_SCREEN;
 }
@@ -508,11 +508,11 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
 }
 
 void RenderMainMenu() {
-  BltVObject(vsSB, gMainMenuBackGroundImage, 0, 0, 0);
-  BltVObject(vsFB, gMainMenuBackGroundImage, 0, 0, 0);
+  BltVObject(vsSB, mainMenuBackGroundImage, 0, 0, 0);
+  BltVObject(vsFB, mainMenuBackGroundImage, 0, 0, 0);
 
-  BltVObject(vsFB, giJa2LogoImage, 0, 188, 15);
-  BltVObject(vsSB, giJa2LogoImage, 0, 188, 15);
+  BltVObject(vsFB, ja2LogoImage, 0, 188, 15);
+  BltVObject(vsSB, ja2LogoImage, 0, 188, 15);
 
   DrawTextToScreen(gzCopyrightText[0], 0, 465, 640, FONT10ARIAL, FONT_MCOLOR_WHITE,
                    FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
