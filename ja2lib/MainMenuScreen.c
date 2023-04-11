@@ -45,8 +45,6 @@
 #define MAINMENU_TEXT_FILE "LoadScreens\\MainMenu.edt"
 #define MAINMENU_RECORD_SIZE 80 * 2
 
-// #define TESTFOREIGNFONTS
-
 // MENU ITEMS
 enum {
   //	TITLE,
@@ -464,17 +462,10 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
           gusMainMenuButtonWidths[cnt] = GetWidthOfButtonPic((UINT16)iMenuImages[cnt], 15);
           break;
       }
-#ifdef TESTFOREIGNFONTS
-      iMenuButtons[cnt] =
-          QuickCreateButton(iMenuImages[cnt], (INT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                            (INT16)(0 + (cnt * 18)), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
-                            DEFAULT_MOVE_CALLBACK, MenuButtonCallback);
-#else
       iMenuButtons[cnt] =
           QuickCreateButton(iMenuImages[cnt], (INT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
                             (INT16)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE)), BUTTON_TOGGLE,
                             MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, MenuButtonCallback);
-#endif
       if (iMenuButtons[cnt] == -1) {
         return (FALSE);
       }
@@ -524,87 +515,10 @@ void RenderMainMenu() {
   BltVideoObject2(vsFB, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
   BltVideoObject2(vsSB, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
 
-#ifdef TESTFOREIGNFONTS
-  DrawTextToScreen(L"LARGEFONT1: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,
-                   0, 105, 640, LARGEFONT1, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE,
-                   LEFT_JUSTIFIED);
-  DrawTextToScreen(L"SMALLFONT1: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,
-                   0, 125, 640, SMALLFONT1, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE,
-                   LEFT_JUSTIFIED);
-  DrawTextToScreen(L"TINYFONT1: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,
-                   0, 145, 640, TINYFONT1, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE,
-                   LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT12POINT1: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 165,
-      640, FONT12POINT1, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(L"COMPFONT: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,
-                   0, 185, 640, COMPFONT, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE,
-                   LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"SMALLCOMPFONT: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 205,
-      640, SMALLCOMPFONT, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT10ROMAN: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 225,
-      640, FONT10ROMAN, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT12ROMAN: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 245,
-      640, FONT12ROMAN, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT14SANSERIF: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 255,
-      640, FONT14SANSERIF, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"MILITARYFONT: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 265,
-      640, MILITARYFONT1, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT10ARIAL: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 285,
-      640, FONT10ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT14ARIAL: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 305,
-      640, FONT14ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT12ARIAL: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 325,
-      640, FONT12ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT10ARIALBOLD: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 345,
-      640, FONT10ARIALBOLD, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(L"BLOCKFONT: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,
-                   0, 365, 640, BLOCKFONT, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE,
-                   LEFT_JUSTIFIED);
-  DrawTextToScreen(L"BLOCKFONT2: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,
-                   0, 385, 640, BLOCKFONT2, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE,
-                   LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT12ARIALFIXEDWIDTH: ����������������������������������������" /*gzCopyrightText[ 0 ]*/,
-      0, 405, 640, FONT12ARIALFIXEDWIDTH, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE,
-      LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT16ARIAL: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 425,
-      640, FONT16ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"BLOCKFONTNARROW: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 445,
-      640, BLOCKFONTNARROW, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-  DrawTextToScreen(
-      L"FONT14HUMANIST: ����������������������������������������" /*gzCopyrightText[ 0 ]*/, 0, 465,
-      640, FONT14HUMANIST, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
-#else
   DrawTextToScreen(gzCopyrightText[0], 0, 465, 640, FONT10ARIAL, FONT_MCOLOR_WHITE,
                    FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
-#endif
 
   InvalidateRegion(0, 0, 640, 480);
 }
 
-void RestoreButtonBackGrounds() {
-  UINT8 cnt;
-
-  //	RestoreExternBackgroundRect( (UINT16)(320 - gusMainMenuButtonWidths[TITLE]/2),
-  // MAINMENU_TITLE_Y, gusMainMenuButtonWidths[TITLE], 23 );
-
-#ifndef TESTFOREIGNFONTS
-  for (cnt = 0; cnt < NUM_MENU_ITEMS; cnt++) {
-    RestoreExternBackgroundRect((UINT16)(320 - gusMainMenuButtonWidths[cnt] / 2),
-                                (INT16)(MAINMENU_Y + (cnt * MAINMENU_Y_SPACE) - 1),
-                                (UINT16)(gusMainMenuButtonWidths[cnt] + 1), 23);
-  }
-#endif
-}
+void RestoreButtonBackGrounds() {}
