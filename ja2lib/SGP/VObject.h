@@ -144,4 +144,12 @@ BOOLEAN BltVideoObjectOutlineShadowFromIndex(struct VSurface *dest, UINT32 uiSrc
 void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,
                         BOOLEAN mono);
 
+// ****************************************************************************
+//
+//
+//
+// ****************************************************************************
+
+struct VObject *LoadVObjectFromFile(const char *path);
+
 #endif

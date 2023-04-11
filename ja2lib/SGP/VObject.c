@@ -150,6 +150,14 @@ BOOLEAN AddVideoObject(VOBJECT_DESC *desc, UINT32 *puiIndex) {
   return _AddVideoObject(&info, puiIndex);
 }
 
+struct VObject *LoadVObjectFromFile(const char *path) {
+  struct VObject *vo = CreateVObjectFromFile(path);
+  if (vo) {
+    SetVideoObjectTransparencyColor(vo, FROMRGB(0, 0, 0));
+  }
+  return vo;
+}
+
 BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
   VOBJECT_INFO desc;
   desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;

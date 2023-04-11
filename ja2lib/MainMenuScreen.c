@@ -66,8 +66,8 @@ INT32 iMenuButtons[NUM_MENU_ITEMS];
 
 UINT16 gusMainMenuButtonWidths[NUM_MENU_ITEMS];
 
-UINT32 guiMainMenuBackGroundImage;
-UINT32 guiJa2LogoImage;
+static struct VObject *gMainMenuBackGroundImage;
+static struct VObject *giJa2LogoImage;
 
 struct MOUSE_REGION gBackRegion;
 INT8 gbHandledMainMenu = 0;
@@ -238,13 +238,16 @@ BOOLEAN InitMainMenu() {
   // TODO: create LoadVObjectFromFile, which load the image, returns the pointer, doesn't add that
   //   image to the internal list
 
+  gMainMenuBackGroundImage = LoadVObjectFromFile("LOADSCREENS\\MainMenuBackGround.sti");
+  giJa2LogoImage = LoadVObjectFromFile("LOADSCREENS\\Ja2Logo.sti");
+
   // load background graphic and add it
-  if (!AddVObjectFromFile("LOADSCREENS\\MainMenuBackGround.sti", &guiMainMenuBackGroundImage)) {
+  if (!gMainMenuBackGroundImage) {
     return FALSE;
   }
 
   // load ja2 logo graphic and add it
-  if (!AddVObjectFromFile("LOADSCREENS\\Ja2Logo.sti", &guiJa2LogoImage)) {
+  if (!giJa2LogoImage) {
     return FALSE;
   }
 
@@ -265,16 +268,11 @@ BOOLEAN InitMainMenu() {
 }
 
 void ExitMainMenu() {
-  //	UINT32 uiDestPitchBYTES; 	UINT8
-  //*pDestBuf;
-
-  //	if( !gfDoHelpScreen )
-  { CreateDestroyBackGroundMouseMask(FALSE); }
-
+  CreateDestroyBackGroundMouseMask(FALSE);
   CreateDestroyMainMenuButtons(FALSE);
 
-  DeleteVideoObjectFromIndex(guiMainMenuBackGroundImage);
-  DeleteVideoObjectFromIndex(guiJa2LogoImage);
+  DeleteVideoObject(gMainMenuBackGroundImage);
+  DeleteVideoObject(giJa2LogoImage);
 
   gMsgBox.uiExitScreen = MAINMENU_SCREEN;
 }
@@ -478,7 +476,7 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
       ButtonList[iMenuButtons[cnt]]->UserData[0] = cnt;
 
 #ifndef _DEBUG
-      // load up some info from the 'mainmenu.edt' file.  This makes sure the file is present.  The
+      // load up some info from the 'mainmenu.edt' file.  This makes sure the file is present. The
       // file is
       // 'marked' with a code that identifies the testers
       iStartLoc = MAINMENU_RECORD_SIZE * cnt;
@@ -510,16 +508,11 @@ BOOLEAN CreateDestroyMainMenuButtons(BOOLEAN fCreate) {
 }
 
 void RenderMainMenu() {
-  struct VObject *hPixHandle;
+  BltVideoObject2(vsSB, gMainMenuBackGroundImage, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, gMainMenuBackGroundImage, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
 
-  // Get and display the background image
-  GetVideoObject(&hPixHandle, guiMainMenuBackGroundImage);
-  BltVideoObject2(vsSB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
-
-  GetVideoObject(&hPixHandle, guiJa2LogoImage);
-  BltVideoObject2(vsFB, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject2(vsSB, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsFB, giJa2LogoImage, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObject2(vsSB, giJa2LogoImage, 0, 188, 15, VO_BLT_SRCTRANSPARENCY, NULL);
 
   DrawTextToScreen(gzCopyrightText[0], 0, 465, 640, FONT10ARIAL, FONT_MCOLOR_WHITE,
                    FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
