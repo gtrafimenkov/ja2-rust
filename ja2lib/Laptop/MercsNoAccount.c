@@ -95,8 +95,7 @@ void RenderMercsNoAccount() {
 
   // Title
   GetVideoObject(&hPixHandle, guiNoAccountImage);
-  BltVideoObject(vsFB, hPixHandle, 0, MERC_NO_ACCOUNT_IMAGE_X, MERC_NO_ACCOUNT_IMAGE_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, MERC_NO_ACCOUNT_IMAGE_X, MERC_NO_ACCOUNT_IMAGE_Y);
 
   // Display the sentence
   DisplayWrappedString(MERC_NA_SENTENCE_X, MERC_NA_SENTENCE_Y, MERC_NA_SENTENCE_WIDTH, 2,

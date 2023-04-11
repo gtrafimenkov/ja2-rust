@@ -277,8 +277,7 @@ BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 
   // Get new cursor data
   //
 
-  ReturnValue = BltVideoObject(vsMouseBuffer, gpCursorStore, usVideoObjectSubIndex, 0, 0,
-                               VO_BLT_SRCTRANSPARENCY);
+  ReturnValue = BltVObjectSrcTrans(vsMouseBuffer, gpCursorStore, usVideoObjectSubIndex, 0, 0);
   guiMouseBufferState = BUFFER_DIRTY;
 
   if (GetVideoObjectETRLEProperties(gpCursorStore, &pETRLEPointer, usVideoObjectSubIndex)) {

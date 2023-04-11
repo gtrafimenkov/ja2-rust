@@ -466,9 +466,8 @@ void DisplayCurrentLevelMarker(void) {
 
   // it's actually a white rectangle, not a green arrow!
   GetVideoObject(&hHandle, guiLEVELMARKER);
-  BltVideoObject(vsSB, hHandle, 0, MAP_LEVEL_MARKER_X + 1,
-                 MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * (INT16)iCurrentMapSectorZ),
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsSB, hHandle, 0, MAP_LEVEL_MARKER_X + 1,
+                     MAP_LEVEL_MARKER_Y + (MAP_LEVEL_MARKER_DELTA * (INT16)iCurrentMapSectorZ));
 
   return;
 }

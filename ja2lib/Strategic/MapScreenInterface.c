@@ -3824,21 +3824,18 @@ void DisplaySoldierUpdateBox() {
 
   // Display the 2 TOP corner pieces
   BltVObjectSrcTrans(vsSB, hBackGroundHandle, 0, iX - 4, iY - 4);
-  BltVideoObject(vsSB, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY - 4,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsSB, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY - 4);
 
   if (fFourWideMode) {
     // Display 2 vertical lines starting at the bottom
-    BltVideoObject(vsSB, hBackGroundHandle, 3, iX - 4, iY + iUpdatePanelHeight - 3 - 70,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hBackGroundHandle, 3, iX - 4, iY + iUpdatePanelHeight - 3 - 70);
     BltVObjectSrcTrans(vsSB, hBackGroundHandle, 5, iX + iUpdatePanelWidth,
                        iY + iUpdatePanelHeight - 3 - 70);
 
     // Display the 2 bottom corner pieces
-    BltVideoObject(vsSB, hBackGroundHandle, 0, iX - 4, iY + iUpdatePanelHeight - 3,
-                   VO_BLT_SRCTRANSPARENCY);
-    BltVideoObject(vsSB, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY + iUpdatePanelHeight - 3,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hBackGroundHandle, 0, iX - 4, iY + iUpdatePanelHeight - 3);
+    BltVObjectSrcTrans(vsSB, hBackGroundHandle, 2, iX + iUpdatePanelWidth,
+                       iY + iUpdatePanelHeight - 3);
   }
 
   SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
@@ -3891,10 +3888,9 @@ void DisplaySoldierUpdateBox() {
   // the button container box
   if (fFourWideMode) {
     // def: 3/1/99 WAS SUBINDEX 6,
-    BltVideoObject(
+    BltVObjectSrcTrans(
         vsSB, hBackGroundHandle, 19, iX - 4 + TACT_UPDATE_MERC_FACE_X_WIDTH,
-        iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
-        VO_BLT_SRCTRANSPARENCY);
+        iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3);
 
     // ATE: Display string for time compression
     DisplayWrappedString((UINT16)(iX),
@@ -3904,10 +3900,9 @@ void DisplaySoldierUpdateBox() {
                          gzLateLocalizedString[49], FONT_BLACK, 0, CENTER_JUSTIFIED);
   } else {
     // def: 3/1/99 WAS SUBINDEX 6,
-    BltVideoObject(
+    BltVObjectSrcTrans(
         vsSB, hBackGroundHandle, 19, iX - 4,
-        iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
-        VO_BLT_SRCTRANSPARENCY);
+        iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3);
 
     // ATE: Display string for time compression
     DisplayWrappedString((UINT16)(iX),

@@ -510,23 +510,21 @@ void RenderFloristOrderForm() {
 
   // The flowe Flower Frame
   GetVideoObject(&hPixHandle, guiFlowerFrame);
-  BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_FLOWER_BOX_X, FLOWER_ORDER_FLOWER_BOX_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_FLOWER_BOX_X, FLOWER_ORDER_FLOWER_BOX_Y);
 
   // The currenltly selected flwoer
   GetVideoObject(&hPixHandle, guiCurrentlySelectedFlowerImage);
-  BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_FLOWER_BOX_X + 5, FLOWER_ORDER_FLOWER_BOX_Y + 5,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_FLOWER_BOX_X + 5,
+                     FLOWER_ORDER_FLOWER_BOX_Y + 5);
 
   // The flowe Name Box
   GetVideoObject(&hPixHandle, guiNameBox);
-  BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_NAME_BOX_X, FLOWER_ORDER_NAME_BOX_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_NAME_BOX_X, FLOWER_ORDER_NAME_BOX_Y);
 
   // The flowe Personel sentiments
   GetVideoObject(&hPixHandle, guiPersonalSentiments);
-  BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_SENTIMENT_BOX_X, FLOWER_ORDER_SENTIMENT_BOX_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_SENTIMENT_BOX_X,
+                     FLOWER_ORDER_SENTIMENT_BOX_Y);
 
   // Bouquet name, price and order number,text
   DrawTextToScreen(sOrderFormText[FLORIST_ORDER_NAME_BOUQUET], FLOWER_ORDER_FLOWER_NAME_X,
@@ -824,56 +822,44 @@ void DisplayFloristCheckBox() {
   // check box
   GetVideoObject(&hPixHandle, guiFlowerOrderCheckBoxButtonImage);
   if (gfFLoristCheckBox0Down)
-    BltVideoObject(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_0_X, FLOWER_ORDER_CHECK_BOX_0_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_0_X, FLOWER_ORDER_CHECK_BOX_0_Y);
   else
-    BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_0_X, FLOWER_ORDER_CHECK_BOX_0_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_0_X, FLOWER_ORDER_CHECK_BOX_0_Y);
 
   // first check box
   GetVideoObject(&hPixHandle, guiFlowerOrderCheckBoxButtonImage);
   if (gfFLoristCheckBox1Down)
-    BltVideoObject(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_1_X, FLOWER_ORDER_CHECK_BOX_1_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_1_X, FLOWER_ORDER_CHECK_BOX_1_Y);
   else
-    BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_1_X, FLOWER_ORDER_CHECK_BOX_1_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_1_X, FLOWER_ORDER_CHECK_BOX_1_Y);
 
   // second check box
   GetVideoObject(&hPixHandle, guiFlowerOrderCheckBoxButtonImage);
   if (gfFLoristCheckBox2Down)
-    BltVideoObject(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_2_X, FLOWER_ORDER_CHECK_BOX_2_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_2_X, FLOWER_ORDER_CHECK_BOX_2_Y);
   else
-    BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_2_X, FLOWER_ORDER_CHECK_BOX_2_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_2_X, FLOWER_ORDER_CHECK_BOX_2_Y);
 
   // third check box
   GetVideoObject(&hPixHandle, guiFlowerOrderCheckBoxButtonImage);
   if (gfFLoristCheckBox3Down)
-    BltVideoObject(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_3_X, FLOWER_ORDER_CHECK_BOX_3_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_3_X, FLOWER_ORDER_CHECK_BOX_3_Y);
   else
-    BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_3_X, FLOWER_ORDER_CHECK_BOX_3_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_3_X, FLOWER_ORDER_CHECK_BOX_3_Y);
 
   // Foiurth check box
   GetVideoObject(&hPixHandle, guiFlowerOrderCheckBoxButtonImage);
   if (gfFLoristCheckBox4Down)
-    BltVideoObject(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_4_X, FLOWER_ORDER_CHECK_BOX_4_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_4_X, FLOWER_ORDER_CHECK_BOX_4_Y);
   else
-    BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_4_X, FLOWER_ORDER_CHECK_BOX_4_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_4_X, FLOWER_ORDER_CHECK_BOX_4_Y);
 
   // fifth check box
   GetVideoObject(&hPixHandle, guiFlowerOrderCheckBoxButtonImage);
   if (gfFLoristCheckBox5Down)
-    BltVideoObject(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_5_X, FLOWER_ORDER_CHECK_BOX_5_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 1, FLOWER_ORDER_CHECK_BOX_5_X, FLOWER_ORDER_CHECK_BOX_5_Y);
   else
-    BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_5_X, FLOWER_ORDER_CHECK_BOX_5_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_CHECK_BOX_5_X, FLOWER_ORDER_CHECK_BOX_5_Y);
 
   InvalidateRegion(LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_WEB_UL_Y, LAPTOP_SCREEN_LR_X,
                    LAPTOP_SCREEN_WEB_LR_Y);
@@ -1123,9 +1109,8 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
                            usPosY + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
 
         // BOTTOM ROW
-        BltVideoObject(vsFB, hImageHandle, 6, i + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-                       usHeight - 10 + 6 + FLOWER_ORDER_DROP_DOWN_LOCATION_Y,
-                       VO_BLT_SRCTRANSPARENCY);
+        BltVObjectSrcTrans(vsFB, hImageHandle, 6, i + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
+                           usHeight - 10 + 6 + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
       }
 
       // blit the left and right row of images

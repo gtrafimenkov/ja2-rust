@@ -827,8 +827,7 @@ BOOLEAN DisplayFormattedText(void) {
       GetVideoObject(&hHandle, uiFirstTempPicture);
 
       // blt background to screen
-      BltVideoObject(vsFB, hHandle, 0, FILE_VIEWER_X + usFreeSpace, FILE_VIEWER_Y + 10,
-                     VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hHandle, 0, FILE_VIEWER_X + usFreeSpace, FILE_VIEWER_Y + 10);
 
       // get file background object
       GetVideoObject(&hHandle, uiSecondTempPicture);
@@ -838,8 +837,7 @@ BOOLEAN DisplayFormattedText(void) {
       usFreeSpace += usFirstWidth;
 
       // blt background to screen
-      BltVideoObject(vsFB, hHandle, 0, FILE_VIEWER_X + usFreeSpace, FILE_VIEWER_Y + 10,
-                     VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hHandle, 0, FILE_VIEWER_X + usFreeSpace, FILE_VIEWER_Y + 10);
 
       // delete video object
       DeleteVideoObjectFromIndex(uiFirstTempPicture);
@@ -1516,8 +1514,8 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       // def: 3/24/99
       //				BltVideoObject(vsFB, hHandle, 0,( INT16 ) (
       // FILE_VIEWER_X +  30 ), ( INT16 ) ( iYPositionOnPage + 5), VO_BLT_SRCTRANSPARENCY,NULL);
-      BltVideoObject(vsFB, hHandle, 0, (INT16)(FILE_VIEWER_X + 30), (INT16)(iYPositionOnPage + 21),
-                     VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hHandle, 0, (INT16)(FILE_VIEWER_X + 30),
+                         (INT16)(iYPositionOnPage + 21));
 
       DeleteVideoObjectFromIndex(uiPicture);
 
@@ -1528,8 +1526,8 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       // Blt face to screen to
       GetVideoObject(&hHandle, uiPicture);
 
-      BltVideoObject(vsFB, hHandle, 0, (INT16)(FILE_VIEWER_X + 25), (INT16)(iYPositionOnPage + 16),
-                     VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hHandle, 0, (INT16)(FILE_VIEWER_X + 25),
+                         (INT16)(iYPositionOnPage + 16));
 
       DeleteVideoObjectFromIndex(uiPicture);
     }

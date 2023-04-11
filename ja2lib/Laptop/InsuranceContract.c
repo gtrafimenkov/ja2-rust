@@ -349,8 +349,8 @@ void RenderInsuranceContract() {
 
   // Get and display the insurance bullet
   GetVideoObject(&hPixHandle, guiInsOrderBulletImage);
-  BltVideoObject(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X, INS_CTRCT_FIRST_BULLET_TEXT_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
+                     INS_CTRCT_FIRST_BULLET_TEXT_Y);
 
   // Display the first instruction sentence
   GetInsuranceText(INS_MLTI_TO_PURCHASE_INSURANCE, sText);
@@ -361,8 +361,8 @@ void RenderInsuranceContract() {
 
   // Get and display the insurance bullet
   GetVideoObject(&hPixHandle, guiInsOrderBulletImage);
-  BltVideoObject(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X, INS_CTRCT_SECOND_BULLET_TEXT_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, INS_CTRCT_FIRST_BULLET_TEXT_X,
+                     INS_CTRCT_SECOND_BULLET_TEXT_Y);
 
   // Display the second instruction sentence
   GetInsuranceText(INS_MLTI_ONCE_SATISFIED_CLICK_ACCEPT, sText);

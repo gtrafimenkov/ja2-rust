@@ -1295,15 +1295,14 @@ void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber) {
   // if merc has life insurance
   if (Menptr[gCharactersList[bCharNumber].usSolID].usLifeInsurance > 0) {
     // draw life insurance icon
-    BltVideoObject(vsSB, hHandle, 2, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + CHAR_ICON_SPACING,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hHandle, 2, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + CHAR_ICON_SPACING);
   }
 
   // if merc has a medical deposit
   if (Menptr[gCharactersList[bCharNumber].usSolID].usMedicalDeposit > 0) {
     // draw medical deposit icon
-    BltVideoObject(vsSB, hHandle, 1, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + (2 * CHAR_ICON_SPACING),
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hHandle, 1, CHAR_ICON_X,
+                       CHAR_ICON_CONTRACT_Y + (2 * CHAR_ICON_SPACING));
   }
 }
 
@@ -9072,8 +9071,7 @@ void DisplayIconsForMercsAsleep(void) {
       pSoldier = MercPtrs[gCharactersList[iCounter].usSolID];
       if (IsSolActive(pSoldier) && pSoldier->fMercAsleep &&
           CanChangeSleepStatusForSoldier(pSoldier)) {
-        BltVideoObject(vsSB, hHandle, 0, 125, (INT16)(Y_START + (iCounter * (Y_SIZE + 2))),
-                       VO_BLT_SRCTRANSPARENCY);
+        BltVObjectSrcTrans(vsSB, hHandle, 0, 125, (INT16)(Y_START + (iCounter * (Y_SIZE + 2))));
       }
     }
   }

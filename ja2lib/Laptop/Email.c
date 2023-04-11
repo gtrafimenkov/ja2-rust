@@ -559,13 +559,12 @@ void RenderEmail(void) {
 
   // get and blt the email list background
   GetVideoObject(&hHandle, guiEmailBackground);
-  BltVideoObject(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X, EMAIL_LIST_WINDOW_Y + LAPTOP_SCREEN_UL_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X,
+                     EMAIL_LIST_WINDOW_Y + LAPTOP_SCREEN_UL_Y);
 
   // get and blt the email title bar
   GetVideoObject(&hHandle, guiEmailTitle);
-  BltVideoObject(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y - 2,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y - 2);
 
   // show text on titlebar
   DisplayTextOnTitleBar();
@@ -1151,11 +1150,9 @@ void DrawLetterIcon(INT32 iCounter, BOOLEAN fRead) {
 
   // is it read or not?
   if (fRead)
-    BltVideoObject(vsFB, hHandle, 0, INDIC_X, (MIDDLE_Y + iCounter * MIDDLE_WIDTH + 2),
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 0, INDIC_X, (MIDDLE_Y + iCounter * MIDDLE_WIDTH + 2));
   else
-    BltVideoObject(vsFB, hHandle, 1, INDIC_X, (MIDDLE_Y + iCounter * MIDDLE_WIDTH + 2),
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 1, INDIC_X, (MIDDLE_Y + iCounter * MIDDLE_WIDTH + 2));
   return;
 }
 
@@ -1493,11 +1490,9 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
   GetVideoObject(&hHandle, guiEmailMessage);
 
   // place the graphic on the frame buffer
-  BltVideoObject(vsFB, hHandle, 1, VIEWER_X, VIEWER_MESSAGE_BODY_START_Y + iViewerPositionY,
-                 VO_BLT_SRCTRANSPARENCY);
-  BltVideoObject(vsFB, hHandle, 1, VIEWER_X,
-                 VIEWER_MESSAGE_BODY_START_Y + GetFontHeight(MESSAGE_FONT) + iViewerPositionY,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 1, VIEWER_X, VIEWER_MESSAGE_BODY_START_Y + iViewerPositionY);
+  BltVObjectSrcTrans(vsFB, hHandle, 1, VIEWER_X,
+                     VIEWER_MESSAGE_BODY_START_Y + GetFontHeight(MESSAGE_FONT) + iViewerPositionY);
 
   // set shadow
   SetFontShadow(NO_SHADOW);
@@ -1510,8 +1505,7 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
 
   // the icon for the title of this box
   GetVideoObject(&hHandle, guiTITLEBARICONS);
-  BltVideoObject(vsFB, hHandle, 0, VIEWER_X + 5, VIEWER_Y + iViewerPositionY + 2,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, VIEWER_X + 5, VIEWER_Y + iViewerPositionY + 2);
 
   // display header text
   DisplayEmailMessageSubjectDateFromLines(pMail, iViewerPositionY);
@@ -1526,10 +1520,9 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
     GetVideoObject(&hHandle, guiEmailMessage);
 
     // place the graphic on the frame buffer
-    BltVideoObject(vsFB, hHandle, 1, VIEWER_X,
-                   iViewerPositionY + VIEWER_MESSAGE_BODY_START_Y +
-                       ((GetFontHeight(MESSAGE_FONT)) * (iCounter)),
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 1, VIEWER_X,
+                       iViewerPositionY + VIEWER_MESSAGE_BODY_START_Y +
+                           ((GetFontHeight(MESSAGE_FONT)) * (iCounter)));
   }
 
   // now the bottom piece to the message viewer
@@ -1537,16 +1530,14 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
 
   if (giNumberOfPagesToCurrentEmail <= 2) {
     // place the graphic on the frame buffer
-    BltVideoObject(vsFB, hHandle, 2, VIEWER_X,
-                   iViewerPositionY + VIEWER_MESSAGE_BODY_START_Y +
-                       ((GetFontHeight(MESSAGE_FONT)) * (iCounter)),
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 2, VIEWER_X,
+                       iViewerPositionY + VIEWER_MESSAGE_BODY_START_Y +
+                           ((GetFontHeight(MESSAGE_FONT)) * (iCounter)));
   } else {
     // place the graphic on the frame buffer
-    BltVideoObject(vsFB, hHandle, 3, VIEWER_X,
-                   iViewerPositionY + VIEWER_MESSAGE_BODY_START_Y +
-                       ((GetFontHeight(MESSAGE_FONT)) * (iCounter)),
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 3, VIEWER_X,
+                       iViewerPositionY + VIEWER_MESSAGE_BODY_START_Y +
+                           ((GetFontHeight(MESSAGE_FONT)) * (iCounter)));
   }
 
   // reset iCounter and iHeight
@@ -1844,8 +1835,7 @@ BOOLEAN DisplayNewMailBox(void) {
 
   // the icon for the title of this box
   GetVideoObject(&hHandle, guiTITLEBARICONS);
-  BltVideoObject(vsFB, hHandle, 0, EMAIL_WARNING_X + 5, EMAIL_WARNING_Y + 2,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, EMAIL_WARNING_X + 5, EMAIL_WARNING_Y + 2);
 
   // font stuff
   SetFont(EMAIL_HEADER_FONT);
@@ -2205,8 +2195,7 @@ BOOLEAN DisplayDeleteNotice(EmailPtr pMail) {
 
   // the icon for the title of this box
   GetVideoObject(&hHandle, guiTITLEBARICONS);
-  BltVideoObject(vsFB, hHandle, 0, EMAIL_WARNING_X + 5, EMAIL_WARNING_Y + 2,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, EMAIL_WARNING_X + 5, EMAIL_WARNING_Y + 2);
 
   // title
   mprintf(EMAIL_WARNING_X + 30, EMAIL_WARNING_Y + 8, pEmailTitleText[0]);
@@ -2544,8 +2533,7 @@ void DrawLineDividers(void) {
 
   for (iCounter = 1; iCounter < 19; iCounter++) {
     GetVideoObject(&hHandle, guiMAILDIVIDER);
-    BltVideoObject(vsFB, hHandle, 0, INDIC_X - 10, (MIDDLE_Y + iCounter * MIDDLE_WIDTH - 1),
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 0, INDIC_X - 10, (MIDDLE_Y + iCounter * MIDDLE_WIDTH - 1));
   }
 
   return;

@@ -224,13 +224,11 @@ void DisplayFloristDefaults() {
   if (guiCurrentLaptopMode == LAPTOP_MODE_FLORIST) {
     gfHomePageActive = TRUE;
     GetVideoObject(&hPixHandle, guiLargeTitleSymbol);
-    BltVideoObject(vsFB, hPixHandle, 0, FLORIST_BIG_TITLE_X, FLORIST_BIG_TITLE_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLORIST_BIG_TITLE_X, FLORIST_BIG_TITLE_Y);
   } else {
     gfHomePageActive = FALSE;
     GetVideoObject(&hPixHandle, guiSmallTitleSymbol);
-    BltVideoObject(vsFB, hPixHandle, 0, FLORIST_SMALL_TITLE_X, FLORIST_SMALL_TITLE_Y,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLORIST_SMALL_TITLE_X, FLORIST_SMALL_TITLE_Y);
   }
 }
 

@@ -1021,8 +1021,7 @@ void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY) {
     sYPosition -= 2;
 
     // small question mark
-    BltVideoObject(vsSB, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition);
     InvalidateRegion(sXPosition, sYPosition, sXPosition + DMAP_GRID_X, sYPosition + DMAP_GRID_Y);
   }
   /*
@@ -2449,8 +2448,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
         BltVObjectSrcTrans(vsFB, hMapHandle, (UINT16)iDirection, iX, iY);
 
         if (!fUTurnFlag) {
-          BltVideoObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
-                         VO_BLT_SRCTRANSPARENCY);
+          BltVObjectSrcTrans(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
 
@@ -3187,8 +3185,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
         // RestoreExternBackgroundRect(((INT16)iArrowX), ((INT16)iArrowY),DMAP_GRID_ZOOM_X,
         // DMAP_GRID_ZOOM_Y);
         if (pNode != pPath) {
-          BltVideoObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
-                         VO_BLT_SRCTRANSPARENCY);
+          BltVObjectSrcTrans(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
       }
@@ -3557,8 +3554,7 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           iX = MAP_VIEW_START_X + (iX * MAP_GRID_X) + sOffsetX;
           iY = MAP_Y_ICON_OFFSET + MAP_VIEW_START_Y + (iY * MAP_GRID_Y) + sOffsetY;
 
-          BltVideoObject(vsSB, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY,
-                         VO_BLT_SRCTRANSPARENCY);
+          BltVObjectSrcTrans(vsSB, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY);
         } else {
           GetScreenXYFromMapXYStationary(((u8)(iX)), ((u8)(iY)), &sXPosition, &sYPosition);
 
@@ -4027,13 +4023,12 @@ void BlitMineIcon(u8 sMapX, u8 sMapY) {
   if (fZoomFlag) {
     GetScreenXYFromMapXYStationary((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
     // when zoomed, the x,y returned is the CENTER of the map square in question
-    BltVideoObject(vsSB, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4, sScreenY - MAP_GRID_ZOOM_Y / 4,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4,
+                       sScreenY - MAP_GRID_ZOOM_Y / 4);
   } else {
     GetScreenXYFromMapXY((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
     // when not zoomed, the x,y returned is the top left CORNER of the map square in question
-    BltVideoObject(vsSB, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4,
-                   VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4);
   }
 }
 
@@ -4443,8 +4438,7 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
   // get the properties of the militia object
   GetVideoObject(&hVObject, guiMilitia);
 
-  BltVideoObject(vsFB, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y);
 
   GetVideoObject(&hVObject, guiMilitiaMaps);
   BltVObjectSrcTrans(vsFB, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
@@ -5450,8 +5444,7 @@ void HandleLowerLevelMapBlit(void) {
   }
 
   // handle the blt of the sublevel
-  BltVideoObject(vsSB, hHandle, 0, MAP_VIEW_START_X + 21, MAP_VIEW_START_Y + 17,
-                 VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsSB, hHandle, 0, MAP_VIEW_START_X + 21, MAP_VIEW_START_Y + 17);
 
   // handle shading of sublevels
   ShadeSubLevelsNotVisited();
