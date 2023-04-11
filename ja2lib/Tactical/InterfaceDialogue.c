@@ -646,7 +646,7 @@ void RenderTalkingMenu() {
 
     // Render box!
     BltVideoObjectFromIndex(vsFB, gTalkPanel.uiPanelVO, 0, gTalkPanel.sX, gTalkPanel.sY,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
 
     // Render name
     if (gTalkPanel.fOnName) {

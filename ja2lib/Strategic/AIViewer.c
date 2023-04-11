@@ -510,7 +510,7 @@ void RenderMovingGroupsAndMercs() {
         if (pGroup->uiTraverseTime) {
           BltVideoObject2(
               vsFB, hVObject, GROUP_ANCHOR, VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1),
-              VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1), VO_BLT_SRCTRANSPARENCY, NULL);
+              VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1), VO_BLT_SRCTRANSPARENCY);
         }
 
         ubNumAdmins = pGroup->pEnemyGroup->ubNumAdmins;  //+ pGroup->pEnemyGroup->ubAdminsInBattle;
@@ -753,7 +753,7 @@ void RenderViewer() {
   if (gfRenderMap) {
     gfRenderMap = FALSE;
     BltVideoObjectFromIndex(vsFB, guiMapGraphicID, 0, VIEWER_LEFT, VIEWER_TOP,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
     InvalidateRegion(VIEWER_LEFT, VIEWER_TOP, VIEWER_RIGHT, VIEWER_BOTTOM);
     // Draw the coordinates
     ClearViewerRegion(0, 0, VIEWER_RIGHT, 14);

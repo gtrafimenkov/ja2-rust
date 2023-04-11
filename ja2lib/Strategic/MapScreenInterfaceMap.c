@@ -1022,7 +1022,7 @@ void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY) {
 
     // small question mark
     BltVideoObject2(vsSB, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     InvalidateRegion(sXPosition, sYPosition, sXPosition + DMAP_GRID_X, sYPosition + DMAP_GRID_Y);
   }
   /*
@@ -2450,7 +2450,7 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
 
         if (!fUTurnFlag) {
           BltVideoObject2(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
-                          VO_BLT_SRCTRANSPARENCY, NULL);
+                          VO_BLT_SRCTRANSPARENCY);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
 
@@ -3188,7 +3188,7 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
         // DMAP_GRID_ZOOM_Y);
         if (pNode != pPath) {
           BltVideoObject2(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY,
-                          VO_BLT_SRCTRANSPARENCY, NULL);
+                          VO_BLT_SRCTRANSPARENCY);
           InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
         }
       }
@@ -3558,7 +3558,7 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           iY = MAP_Y_ICON_OFFSET + MAP_VIEW_START_Y + (iY * MAP_GRID_Y) + sOffsetY;
 
           BltVideoObject2(vsSB, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY,
-                          VO_BLT_SRCTRANSPARENCY, NULL);
+                          VO_BLT_SRCTRANSPARENCY);
         } else {
           GetScreenXYFromMapXYStationary(((u8)(iX)), ((u8)(iY)), &sXPosition, &sYPosition);
 
@@ -3568,8 +3568,7 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           // clip blits to mapscreen region
           ClipBlitsToMapViewRegion();
 
-          BltVideoObject2(vsSB, hIconHandle, (UINT16)iCounter, iX, iY, VO_BLT_SRCTRANSPARENCY,
-                          NULL);
+          BltVideoObject2(vsSB, hIconHandle, (UINT16)iCounter, iX, iY, VO_BLT_SRCTRANSPARENCY);
 
           // restore clip blits
           RestoreClipRegionToFullScreen();
@@ -3649,8 +3648,7 @@ void DisplayDistancesForHelicopter(void) {
 
   // blit in background
   GetVideoObject(&hHandle, guiMapBorderHeliSectors);
-  BltVideoObject2(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVideoObject2(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition, VO_BLT_SRCTRANSPARENCY);
 
   //	sTotalCanTravel = ( INT16 )GetTotalDistanceHelicopterCanTravel( );
   sDistanceToGo = (INT16)DistanceOfIntendedHelicopterPath();
@@ -4030,12 +4028,12 @@ void BlitMineIcon(u8 sMapX, u8 sMapY) {
     GetScreenXYFromMapXYStationary((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
     // when zoomed, the x,y returned is the CENTER of the map square in question
     BltVideoObject2(vsSB, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4,
-                    sScreenY - MAP_GRID_ZOOM_Y / 4, VO_BLT_SRCTRANSPARENCY, NULL);
+                    sScreenY - MAP_GRID_ZOOM_Y / 4, VO_BLT_SRCTRANSPARENCY);
   } else {
     GetScreenXYFromMapXY((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
     // when not zoomed, the x,y returned is the top left CORNER of the map square in question
     BltVideoObject2(vsSB, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 }
 
@@ -4446,12 +4444,12 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
   GetVideoObject(&hVObject, guiMilitia);
 
   BltVideoObject2(vsFB, hVObject, 0, MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   GetVideoObject(&hVObject, guiMilitiaMaps);
   BltVideoObject2(vsFB, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
                   MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
-                  MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+                  MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY);
 
   // set font color for labels and "total militia" counts
   SetFontForeground(FONT_WHITE);
@@ -5453,7 +5451,7 @@ void HandleLowerLevelMapBlit(void) {
 
   // handle the blt of the sublevel
   BltVideoObject2(vsSB, hHandle, 0, MAP_VIEW_START_X + 21, MAP_VIEW_START_Y + 17,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // handle shading of sublevels
   ShadeSubLevelsNotVisited();

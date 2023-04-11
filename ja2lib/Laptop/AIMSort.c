@@ -362,22 +362,22 @@ void RenderAimSort() {
   // SortBy
   GetVideoObject(&hSortByHandle, guiSortByBox);
   BltVideoObject2(vsFB, hSortByHandle, 0, AIM_SORT_SORT_BY_X, AIM_SORT_SORT_BY_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // To MugShots
   GetVideoObject(&hToMugShotHandle, guiToMugShots);
   BltVideoObject2(vsFB, hToMugShotHandle, 0, AIM_SORT_TO_MUGSHOTS_X, AIM_SORT_TO_MUGSHOTS_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // To stats
   GetVideoObject(&hToStatsHandle, guiToStats);
   BltVideoObject2(vsFB, hToStatsHandle, 0, AIM_SORT_TO_STATS_X, AIM_SORT_TO_STATS_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // To Alumni
   GetVideoObject(&hToAlumniHandle, guiToAlumni);
   BltVideoObject2(vsFB, hToAlumniHandle, 0, AIM_SORT_TO_ALUMNI_X, AIM_SORT_TO_ALUMNI_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // Draw the aim slogan under the symbol
   DisplayAimSlogan();
@@ -578,7 +578,7 @@ void DrawSelectLight(UINT8 ubMode, UINT8 ubImage) {
 
   GetVideoObject(&hSelectLightHandle, guiSelectLight);
   BltVideoObject2(vsFB, hSelectLightHandle, ubImage, (AimSortCheckBoxLoc[ubMode]),
-                  (AimSortCheckBoxLoc[ubMode + 1]), VO_BLT_SRCTRANSPARENCY, NULL);
+                  (AimSortCheckBoxLoc[ubMode + 1]), VO_BLT_SRCTRANSPARENCY);
 
   //  InvalidateRegion(LAPTOP_SCREEN_UL_X,LAPTOP_SCREEN_WEB_UL_Y,LAPTOP_SCREEN_LR_X,LAPTOP_SCREEN_WEB_LR_Y);
 

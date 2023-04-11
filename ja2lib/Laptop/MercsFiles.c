@@ -232,17 +232,17 @@ void RenderMercsFiles() {
   // Portrait Box
   GetVideoObject(&hPixHandle, guiPortraitBox);
   BltVideoObject2(vsFB, hPixHandle, 0, MERC_FILES_PORTRAIT_BOX_X, MERC_FILES_PORTRAIT_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // Stats Box
   GetVideoObject(&hPixHandle, guiStatsBox);
   BltVideoObject2(vsFB, hPixHandle, 0, MERC_FILES_STATS_BOX_X, MERC_FILES_STATS_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // bio box
   GetVideoObject(&hPixHandle, guiBioBox);
   BltVideoObject2(vsFB, hPixHandle, 0, MERC_FILES_BIO_BOX_X + 1, MERC_FILES_BIO_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // Display the mercs face
   DisplayMercFace(GetMercIDFromMERCArray(gubCurMercIndex));
@@ -400,7 +400,7 @@ BOOLEAN DisplayMercFace(UINT8 ubMercID) {
   // Portrait Frame
   GetVideoObject(&hPortraitHandle, guiPortraitBox);
   BltVideoObject2(vsFB, hPortraitHandle, 0, MERC_FILES_PORTRAIT_BOX_X, MERC_FILES_PORTRAIT_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   pMerc = &gMercProfiles[ubMercID];
 

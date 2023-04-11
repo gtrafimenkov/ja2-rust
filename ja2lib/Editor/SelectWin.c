@@ -1468,7 +1468,7 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
 
     SetObjectShade(pNode->hObj, DEFAULT_SHADE_LEVEL);
     fReturnVal = BltVideoObject2(vsFB, pNode->hObj, pNode->uiIndex, (UINT16)pNode->iX,
-                                 (UINT16)iCurrY, VO_BLT_SRCTRANSPARENCY, NULL);
+                                 (UINT16)iCurrY, VO_BLT_SRCTRANSPARENCY);
 
     if (sCount != 0) {
       gprintf(pNode->iX, iCurrY, L"%d", sCount);

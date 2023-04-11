@@ -592,19 +592,19 @@ void DrawRecordsBackGround(void) {
     // get and blt middle background to screen
     GetVideoObject(&hHandle, guiLISTCOLUMNS);
     BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 18 + (iCounter * BLOCK_HEIGHT) + 1,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   // the divisorLines
   GetVideoObject(&hHandle, guiLONGLINE);
   BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 17 + (6 * (BLOCK_HEIGHT)),
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
   GetVideoObject(&hHandle, guiLONGLINE);
   BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + (6 * (BLOCK_HEIGHT)),
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
   GetVideoObject(&hHandle, guiLONGLINE);
   BltVideoObject2(vsFB, hHandle, 0, TOP_X + 10, TOP_Y + 19 + ((iCounter) * (BLOCK_HEIGHT)),
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // the header text
   DrawRecordsColumnHeadersText();

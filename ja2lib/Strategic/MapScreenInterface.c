@@ -983,8 +983,7 @@ void HandleDisplayOfSelectedMercArrows(void) {
   }
 
   GetVideoObject(&hHandle, guiSelectedCharArrow);
-  BltVideoObject2(vsSB, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVideoObject2(vsSB, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition, VO_BLT_SRCTRANSPARENCY);
 
   // now run through the selected list of guys, an arrow for each
   for (ubCount = 0; ubCount < MAX_CHARACTER_COUNT; ubCount++) {
@@ -1003,8 +1002,8 @@ void HandleDisplayOfSelectedMercArrows(void) {
         }
 
         GetVideoObject(&hHandle, guiSelectedCharArrow);
-        BltVideoObject2(vsSB, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition, VO_BLT_SRCTRANSPARENCY,
-                        NULL);
+        BltVideoObject2(vsSB, hHandle, 0, SELECTED_CHAR_ARROW_X, sYPosition,
+                        VO_BLT_SRCTRANSPARENCY);
       }
     }
   }
@@ -3827,20 +3826,20 @@ void DisplaySoldierUpdateBox() {
   // Display the 2 TOP corner pieces
   BltVObjectSrcTrans(vsSB, hBackGroundHandle, 0, iX - 4, iY - 4);
   BltVideoObject2(vsSB, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY - 4,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   if (fFourWideMode) {
     // Display 2 vertical lines starting at the bottom
     BltVideoObject2(vsSB, hBackGroundHandle, 3, iX - 4, iY + iUpdatePanelHeight - 3 - 70,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsSB, hBackGroundHandle, 5, iX + iUpdatePanelWidth,
-                    iY + iUpdatePanelHeight - 3 - 70, VO_BLT_SRCTRANSPARENCY, NULL);
+                    iY + iUpdatePanelHeight - 3 - 70, VO_BLT_SRCTRANSPARENCY);
 
     // Display the 2 bottom corner pieces
     BltVideoObject2(vsSB, hBackGroundHandle, 0, iX - 4, iY + iUpdatePanelHeight - 3,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsSB, hBackGroundHandle, 2, iX + iUpdatePanelWidth, iY + iUpdatePanelHeight - 3,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
@@ -3896,7 +3895,7 @@ void DisplaySoldierUpdateBox() {
     BltVideoObject2(
         vsSB, hBackGroundHandle, 19, iX - 4 + TACT_UPDATE_MERC_FACE_X_WIDTH,
         iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
-        VO_BLT_SRCTRANSPARENCY, NULL);
+        VO_BLT_SRCTRANSPARENCY);
 
     // ATE: Display string for time compression
     DisplayWrappedString((UINT16)(iX),
@@ -3909,7 +3908,7 @@ void DisplaySoldierUpdateBox() {
     BltVideoObject2(
         vsSB, hBackGroundHandle, 19, iX - 4,
         iY + iNumberHigh * TACT_UPDATE_MERC_FACE_X_HEIGHT + REASON_FOR_SOLDIER_UPDATE_OFFSET_Y + 3,
-        VO_BLT_SRCTRANSPARENCY, NULL);
+        VO_BLT_SRCTRANSPARENCY);
 
     // ATE: Display string for time compression
     DisplayWrappedString((UINT16)(iX),
@@ -3925,18 +3924,18 @@ void DisplaySoldierUpdateBox() {
   for (iCounter = 0; iCounter < iNumberHigh; iCounter++) {
     // the sides
     BltVideoObject2(vsSB, hBackGroundHandle, 3, iX - 4,
-                    iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
+                    iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsSB, hBackGroundHandle, 5, iX + iUpdatePanelWidth,
-                    iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
+                    iY + (iCounter)*TACT_UPDATE_MERC_FACE_X_HEIGHT, VO_BLT_SRCTRANSPARENCY);
   }
 
   // big horizontal line
   for (iCounter = 0; iCounter < iNumberWide; iCounter++) {
     // the top bottom
     BltVideoObject2(vsSB, hBackGroundHandle, 1, iX + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounter),
-                    iY - 4, VO_BLT_SRCTRANSPARENCY, NULL);
+                    iY - 4, VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsSB, hBackGroundHandle, 1, iX + TACT_UPDATE_MERC_FACE_X_WIDTH * (iCounter),
-                    iY + iUpdatePanelHeight - 3, VO_BLT_SRCTRANSPARENCY, NULL);
+                    iY + iUpdatePanelHeight - 3, VO_BLT_SRCTRANSPARENCY);
   }
 
   // Display the reason for the update box
@@ -4098,11 +4097,11 @@ void RenderSoldierSmallFaceForUpdatePanel(INT32 iIndex, INT32 iX, INT32 iY) {
   VSurfaceColorFill(vsSB, iX + 36, iY + 2, iX + 44, iY + 30, 0);
 
   // put down the background
-  BltVideoObjectFromIndex(vsSB, giMercPanelImage, 0, iX, iY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVideoObjectFromIndex(vsSB, giMercPanelImage, 0, iX, iY, VO_BLT_SRCTRANSPARENCY);
 
   // grab the face
   BltVideoObjectFromIndex(vsSB, giUpdateSoldierFaces[iIndex], 0, iX + 2, iY + 2,
-                          VO_BLT_SRCTRANSPARENCY, NULL);
+                          VO_BLT_SRCTRANSPARENCY);
 
   // HEALTH BAR
   pSoldier = pUpdateSoldierBox[iIndex];

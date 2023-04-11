@@ -255,11 +255,11 @@ void DisplayShipmentGrid() {
 
   // Shipment Order Grid
   BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_SHIPMENT_DELIVERY_GRID_X,
-                  BOBBYR_SHIPMENT_DELIVERY_GRID_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+                  BOBBYR_SHIPMENT_DELIVERY_GRID_Y, VO_BLT_SRCTRANSPARENCY);
 
   // Order Grid
   BltVideoObject2(vsFB, hPixHandle, 1, BOBBYR_SHIPMENT_ORDER_GRID_X, BOBBYR_SHIPMENT_ORDER_GRID_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 }
 
 void DisplayShipmentTitles() {

@@ -214,18 +214,15 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, I
     if (gusSelectedSoldier == GetSolID(pSoldier) && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
         OK_INTERRUPT_MERC(pSoldier)) {
       // gold, the second entry in the .sti
-      BltVideoObject(uiBuffer, hHandle, 1, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject(uiBuffer, hHandle, 1, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY);
 
     } else {
       // brown, first entry
-      BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
-                     NULL);
+      BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY);
     }
   } else {
     // brown, first entry
-    BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVideoObject(uiBuffer, hHandle, 0, sXPos, (INT16)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY);
   }
 
   pDestBuf = VSurfaceLockOld(GetVSByID(uiBuffer), &uiDestPitchBYTES);
@@ -402,7 +399,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
 
       // just draw the vehicle
       BltVideoObjectFromIndex(vsSB, giCarPortraits[ubVehicleType], 0, sFaceX, sFaceY,
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+                              VO_BLT_SRCTRANSPARENCY);
       RestoreExternBackgroundRect(sFaceX, sFaceY, FACE_WIDTH, FACE_HEIGHT);
 
       return;
@@ -431,7 +428,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, INT16 sFaceX, INT16 sFaceY,
       }
     }
   } else {
-    BltVideoObjectFromIndex(vsSB, guiCLOSE, 5, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObjectFromIndex(vsSB, guiCLOSE, 5, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY);
     RestoreExternBackgroundRect(sFaceX, sFaceY, FACE_WIDTH, FACE_HEIGHT);
   }
 }

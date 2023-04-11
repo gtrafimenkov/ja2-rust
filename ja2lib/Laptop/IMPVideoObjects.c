@@ -91,16 +91,16 @@ void RenderProfileBackGround(void) {
     // blt background to screen from left to right
     BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + 0 * CHAR_PROFILE_BACKGROUND_TILE_WIDTH,
                     LAPTOP_SCREEN_WEB_UL_Y + iCounter * CHAR_PROFILE_BACKGROUND_TILE_HEIGHT,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + 1 * CHAR_PROFILE_BACKGROUND_TILE_WIDTH,
                     LAPTOP_SCREEN_WEB_UL_Y + iCounter * CHAR_PROFILE_BACKGROUND_TILE_HEIGHT,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + 2 * CHAR_PROFILE_BACKGROUND_TILE_WIDTH,
                     LAPTOP_SCREEN_WEB_UL_Y + iCounter * CHAR_PROFILE_BACKGROUND_TILE_HEIGHT,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + 3 * CHAR_PROFILE_BACKGROUND_TILE_WIDTH,
                     LAPTOP_SCREEN_WEB_UL_Y + iCounter * CHAR_PROFILE_BACKGROUND_TILE_HEIGHT,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   // dirty buttons
@@ -138,7 +138,7 @@ void RenderIMPSymbol(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -169,7 +169,7 @@ void RenderBeginIndent(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -199,7 +199,7 @@ void RenderActivationIndent(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -229,7 +229,7 @@ void RenderFrontPageIndent(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -259,7 +259,7 @@ void RenderAnalyse(INT16 sX, INT16 sY, INT8 bImageNumber) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, bImageNumber, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -289,7 +289,7 @@ void RenderAttributeGraph(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -319,7 +319,7 @@ void RenderAttributeBarGraph(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -349,7 +349,7 @@ void RenderFullNameIndent(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -379,7 +379,7 @@ void RenderNickNameIndent(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -409,7 +409,7 @@ void RenderNameIndent(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -439,7 +439,7 @@ void RenderGenderIndent(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -469,7 +469,7 @@ void RenderSmallFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -499,7 +499,7 @@ void RenderSmallSilhouette(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -529,7 +529,7 @@ void RenderLargeSilhouette(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -559,23 +559,23 @@ void RenderAttributeFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   sCurrentY += 10;
   for (iCounter = 0; iCounter < 10; iCounter++) {
     // blt to sX, sY relative to upper left corner
     BltVideoObject2(vsFB, hHandle, 2, LAPTOP_SCREEN_UL_X + sX + 134,
-                    LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY, NULL);
+                    LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, hHandle, 1, LAPTOP_SCREEN_UL_X + sX,
-                    LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY, NULL);
+                    LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, hHandle, 3, LAPTOP_SCREEN_UL_X + sX + 368,
-                    LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY, NULL);
+                    LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
 
     sCurrentY += 20;
   }
 
   BltVideoObject2(vsFB, hHandle, 4, LAPTOP_SCREEN_UL_X + sX,
-                  LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY, NULL);
+                  LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -596,7 +596,7 @@ void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 2, LAPTOP_SCREEN_UL_X + sX + 134,
-                  LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY, NULL);
+                  LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
 
   RenderAttrib2IndentFrame(350, 42);
 
@@ -635,7 +635,7 @@ void RenderSliderBar(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -665,7 +665,7 @@ void RenderButton2Image(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -695,7 +695,7 @@ void RenderButton4Image(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -723,7 +723,7 @@ void RenderButton1Image(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -753,7 +753,7 @@ void RenderPortraitFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -781,7 +781,7 @@ void RenderMainIndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -811,7 +811,7 @@ void RenderQtnLongIndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -839,7 +839,7 @@ void RenderQtnShortIndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -867,7 +867,7 @@ void RenderQtnLongIndentHighFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -895,7 +895,7 @@ void RenderQtnShortIndentHighFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -923,7 +923,7 @@ void RenderQtnIndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -951,7 +951,7 @@ void RenderAttrib1IndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -979,7 +979,7 @@ void RenderAttrib2IndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -1007,7 +1007,7 @@ void RenderAvgMercIndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -1035,7 +1035,7 @@ void RenderAboutUsIndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -1065,7 +1065,7 @@ void RenderQtnShort2IndentFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }
@@ -1093,7 +1093,7 @@ void RenderQtnShort2IndentHighFrame(INT16 sX, INT16 sY) {
 
   // blt to sX, sY relative to upper left corner
   BltVideoObject2(vsFB, hHandle, 0, LAPTOP_SCREEN_UL_X + sX, LAPTOP_SCREEN_WEB_UL_Y + sY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   return;
 }

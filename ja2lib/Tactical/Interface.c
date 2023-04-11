@@ -822,7 +822,7 @@ void PopDownMovementMenu() {
 void RenderMovementMenu() {
   if (gfInMovementMenu) {
     BltVideoObjectFromIndex(vsFB, guiBUTTONBORDER, 0, giMenuAnchorX, giMenuAnchorY,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
 
     // Mark buttons dirty!
     MarkAButtonDirty(iActionIcons[WALK_ICON]);
@@ -912,119 +912,119 @@ void RenderArrows() {
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_BESIDE) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_G) {
     TileElem = gTileDatabase[SECONDPOINTERS1];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_Y) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_YG) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     TileElem = gTileDatabase[SECONDPOINTERS1];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_GG) {
     TileElem = gTileDatabase[SECONDPOINTERS1];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_YY) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB) {
     TileElem = gTileDatabase[SECONDPOINTERS8];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB2) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY);
     TileElem = gTileDatabase[SECONDPOINTERS8];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_UP_ABOVE_CLIMB3) {
     TileElem = gTileDatabase[SECONDPOINTERS3];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX, gsUpArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     TileElem = gTileDatabase[SECONDPOINTERS8];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsUpArrowY + 20, VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsUpArrowX,
-                    gsUpArrowY + 40, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsUpArrowY + 40, VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BESIDE) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_G) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_Y) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_CLIMB) {
     TileElem = gTileDatabase[SECONDPOINTERS7];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_YG) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     TileElem = gTileDatabase[SECONDPOINTERS4];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_GG) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_YY) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
     BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY, NULL);
+                    gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY);
   }
 }
 
@@ -1311,10 +1311,10 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
 
         if ((!pSoldier->bNeutral && (pSoldier->bSide != gbPlayerNum))) {
           BltVideoObjectFromIndex(vsFB, guiRADIO2, pSoldier->sLocatorFrame, sXPos, sYPos,
-                                  VO_BLT_SRCTRANSPARENCY, NULL);
+                                  VO_BLT_SRCTRANSPARENCY);
         } else {
           BltVideoObjectFromIndex(vsFB, guiRADIO, pSoldier->sLocatorFrame, sXPos, sYPos,
-                                  VO_BLT_SRCTRANSPARENCY, NULL);
+                                  VO_BLT_SRCTRANSPARENCY);
         }
       }
     }
@@ -1448,7 +1448,7 @@ void DrawSelectedUIAboveGuy(UINT16 usSoldierID) {
       }
       TileElem = gTileDatabase[usGraphicToUse];
       BltVideoObject2(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, sXPos, sYPos,
-                      VO_BLT_SRCTRANSPARENCY, NULL);
+                      VO_BLT_SRCTRANSPARENCY);
 
       // Draw life, breath
       // Only do this when we are a vehicle but on our team
@@ -2068,7 +2068,7 @@ void PopDownOpenDoorMenu() {
 void RenderOpenDoorMenu() {
   if (gfInOpenDoorMenu) {
     BltVideoObjectFromIndex(vsFB, guiBUTTONBORDER, 0, gOpenDoorMenu.sX, gOpenDoorMenu.sY,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
 
     // Mark buttons dirty!
     MarkAButtonDirty(iActionIcons[USE_KEYRING_ICON]);
@@ -2473,7 +2473,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     case AIR_RAID_TURN_MESSAGE:
 
       // Render rect into surface
-      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY);
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_MCOLOR_WHITE);
       uiBarToUseInUpDate = uiBAR;
@@ -2483,8 +2483,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     case PLAYER_INTERRUPT_MESSAGE:
 
       // Render rect into surface
-      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiINTBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY,
-                              NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiINTBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY);
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_MCOLOR_BLACK);
       SetFontShadow(NO_SHADOW);
@@ -2492,8 +2491,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
       break;
 
     case PLAYER_TURN_MESSAGE:
-      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiPLAYERBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY,
-                              NULL);
+      BltVideoObjectFromIndex(GetVSByID(uiSurface), uiPLAYERBAR, 0, 0, 0, VO_BLT_SRCTRANSPARENCY);
       SetFontBackground(FONT_MCOLOR_BLACK);
       SetFontForeground(FONT_MCOLOR_BLACK);
       SetFontShadow(NO_SHADOW);
@@ -2516,7 +2514,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     // Render end peice
     sBarX = PROG_BAR_START_X;
     BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, 1, sBarX, PROG_BAR_START_Y,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
 
     // Determine Length
     dLength = (gTacticalStatus.usTactialTurnLimitCounter) * dNumStepsPerEnemy;
@@ -2533,7 +2531,7 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
       }
 
       BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
-                              PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+                              PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY);
 
       dCurSize++;
       cnt2++;
@@ -2547,10 +2545,10 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
     if (gTacticalStatus.usTactialTurnLimitCounter == gTacticalStatus.usTactialTurnLimitMax) {
       sBarX++;
       BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, (INT16)(2 + cnt2), sBarX,
-                              PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+                              PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY);
       sBarX++;
       BltVideoObjectFromIndex(GetVSByID(uiSurface), uiBarToUseInUpDate, (INT16)(12), sBarX,
-                              PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+                              PROG_BAR_START_Y, VO_BLT_SRCTRANSPARENCY);
     }
   }
 
@@ -3060,25 +3058,25 @@ void RenderAimCubeUI() {
 
       // Do first level....
       BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+                              VO_BLT_SRCTRANSPARENCY);
       sBarHeight -= 3;
       BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+                              VO_BLT_SRCTRANSPARENCY);
 
       // Loop through height.....
       for (cnt = 1; cnt <= gCubeUIData.bHeight; cnt++) {
         sBarHeight -= 3;
         BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
-                                VO_BLT_SRCTRANSPARENCY, NULL);
+                                VO_BLT_SRCTRANSPARENCY);
         sBarHeight -= 3;
         BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
-                                VO_BLT_SRCTRANSPARENCY, NULL);
+                                VO_BLT_SRCTRANSPARENCY);
         sBarHeight -= 3;
         BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
-                                VO_BLT_SRCTRANSPARENCY, NULL);
+                                VO_BLT_SRCTRANSPARENCY);
         sBarHeight -= 3;
         BltVideoObjectFromIndex(vsFB, guiAIMCUBES, bGraphicNum, sScreenX, (sScreenY + sBarHeight),
-                                VO_BLT_SRCTRANSPARENCY, NULL);
+                                VO_BLT_SRCTRANSPARENCY);
       }
     }
 
@@ -3086,7 +3084,7 @@ void RenderAimCubeUI() {
       sBarHeight = -50;
 
       BltVideoObjectFromIndex(vsFB, guiAIMBARS, gCubeUIData.ubPowerIndex, sScreenX,
-                              (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY, NULL);
+                              (sScreenY + sBarHeight), VO_BLT_SRCTRANSPARENCY);
     }
   }
 }
@@ -3251,5 +3249,5 @@ void RenderTopmostMultiPurposeLocator() {
   }
 
   BltVideoObjectFromIndex(vsFB, guiRADIO, gbMultiPurposeLocatorFrame, sXPos, sYPos,
-                          VO_BLT_SRCTRANSPARENCY, NULL);
+                          VO_BLT_SRCTRANSPARENCY);
 }

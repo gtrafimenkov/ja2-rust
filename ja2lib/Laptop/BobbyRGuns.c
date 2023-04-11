@@ -305,8 +305,7 @@ void RenderBobbyRGuns() {
 
   // GunForm
   GetVideoObject(&hPixHandle, guiGunsGrid);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y, VO_BLT_SRCTRANSPARENCY);
 
   //	DeleteMouseRegionForBigImage();
   DisplayItemInfo(IC_BOBBY_GUN);
@@ -321,8 +320,7 @@ BOOLEAN DisplayBobbyRBrTitle() {
 
   // BR title
   GetVideoObject(&hPixHandle, guiBrTitle);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_BRTITLE_X, BOBBYR_BRTITLE_Y, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_BRTITLE_X, BOBBYR_BRTITLE_Y, VO_BLT_SRCTRANSPARENCY);
 
   // To Order Text
   DrawTextToScreen(BobbyRText[BOBBYR_GUNS_TO_ORDER], BOBBYR_TO_ORDER_TITLE_X,

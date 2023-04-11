@@ -422,10 +422,10 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
        i += TEXT_POPUP_GAP_BN_LINES) {
     // TOP ROW
     BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 1, i, usPosY,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+                   VO_BLT_SRCTRANSPARENCY);
     // BOTTOM ROW
     BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 6, i,
-                   usHeight - TEXT_POPUP_GAP_BN_LINES + 6, VO_BLT_SRCTRANSPARENCY, NULL);
+                   usHeight - TEXT_POPUP_GAP_BN_LINES + 6, VO_BLT_SRCTRANSPARENCY);
   }
 
   // blit the left and right row of images
@@ -433,34 +433,34 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   for (i = TEXT_POPUP_GAP_BN_LINES; i < usHeight - TEXT_POPUP_GAP_BN_LINES;
        i += TEXT_POPUP_GAP_BN_LINES) {
     BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 3, usPosX, i,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+                   VO_BLT_SRCTRANSPARENCY);
     BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 4, usPosX + usWidth - 4, i,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+                   VO_BLT_SRCTRANSPARENCY);
   }
 
   // blt the corner images for the row
   // top left
   BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 0, 0, usPosY,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+                 VO_BLT_SRCTRANSPARENCY);
   // top right
   BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 2,
-                 usWidth - TEXT_POPUP_GAP_BN_LINES, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+                 usWidth - TEXT_POPUP_GAP_BN_LINES, usPosY, VO_BLT_SRCTRANSPARENCY);
   // bottom left
   BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 5, 0,
-                 usHeight - TEXT_POPUP_GAP_BN_LINES, VO_BLT_SRCTRANSPARENCY, NULL);
+                 usHeight - TEXT_POPUP_GAP_BN_LINES, VO_BLT_SRCTRANSPARENCY);
   // bottom right
   BltVideoObject(pPopUpTextBox->uiSourceBufferIndex, hImageHandle, 7,
                  usWidth - TEXT_POPUP_GAP_BN_LINES, usHeight - TEXT_POPUP_GAP_BN_LINES,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
+                 VO_BLT_SRCTRANSPARENCY);
 
   // Icon if ness....
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_STOPICON) {
     BltVideoObjectFromIndex(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), guiBoxIcons, 0, 5, 4,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
   }
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_SKULLICON) {
     BltVideoObjectFromIndex(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), guiSkullIcons, 0, 9, 4,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
   }
 
   // Get the font and shadow colors

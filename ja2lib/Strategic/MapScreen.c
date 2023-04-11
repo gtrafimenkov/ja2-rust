@@ -1289,22 +1289,21 @@ void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber) {
   // if merc is an AIM merc
   if (Menptr[gCharactersList[bCharNumber].usSolID].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
     // finite contract length icon
-    BltVideoObject2(vsSB, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y, VO_BLT_SRCTRANSPARENCY,
-                    NULL);
+    BltVideoObject2(vsSB, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y, VO_BLT_SRCTRANSPARENCY);
   }
 
   // if merc has life insurance
   if (Menptr[gCharactersList[bCharNumber].usSolID].usLifeInsurance > 0) {
     // draw life insurance icon
     BltVideoObject2(vsSB, hHandle, 2, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + CHAR_ICON_SPACING,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 
   // if merc has a medical deposit
   if (Menptr[gCharactersList[bCharNumber].usSolID].usMedicalDeposit > 0) {
     // draw medical deposit icon
     BltVideoObject2(vsSB, hHandle, 1, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + (2 * CHAR_ICON_SPACING),
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+                    VO_BLT_SRCTRANSPARENCY);
   }
 }
 
@@ -5127,7 +5126,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
                           MIDDLEPAN);
     if (!AddVObjectFromFile("INTERFACE\\LaptopOn.sti", &uiLaptopOn))
       AssertMsg(0, "Failed to load data\\Interface\\LaptopOn.sti");
-    BltVideoObjectFromIndex(vsFB, uiLaptopOn, 0, 465, 417, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObjectFromIndex(vsFB, uiLaptopOn, 0, 465, 417, VO_BLT_SRCTRANSPARENCY);
     InvalidateRegion(465, 417, 480, 427);
     ExecuteBaseDirtyRectQueue();
     EndFrameBufferRender();
@@ -9074,7 +9073,7 @@ void DisplayIconsForMercsAsleep(void) {
       if (IsSolActive(pSoldier) && pSoldier->fMercAsleep &&
           CanChangeSleepStatusForSoldier(pSoldier)) {
         BltVideoObject2(vsSB, hHandle, 0, 125, (INT16)(Y_START + (iCounter * (Y_SIZE + 2))),
-                        VO_BLT_SRCTRANSPARENCY, NULL);
+                        VO_BLT_SRCTRANSPARENCY);
       }
     }
   }
@@ -9088,10 +9087,10 @@ void CheckForAndRenderNewMailOverlay() {
     if (GetJA2Clock() % 1000 < 667) {
       if (ButtonList[guiMapBottomExitButtons[MAP_EXIT_TO_LAPTOP]]->uiFlags &
           BUTTON_CLICKED_ON) {  // button is down, so offset the icon
-        BltVideoObjectFromIndex(vsFB, guiNewMailIcons, 1, 465, 418, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObjectFromIndex(vsFB, guiNewMailIcons, 1, 465, 418, VO_BLT_SRCTRANSPARENCY);
         InvalidateRegion(465, 418, 480, 428);
       } else {  // button is up, so draw the icon normally
-        BltVideoObjectFromIndex(vsFB, guiNewMailIcons, 0, 464, 417, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVideoObjectFromIndex(vsFB, guiNewMailIcons, 0, 464, 417, VO_BLT_SRCTRANSPARENCY);
         if (!(ButtonList[guiMapBottomExitButtons[MAP_EXIT_TO_LAPTOP]]->uiFlags & BUTTON_ENABLED)) {
           UINT32 uiDestPitchBYTES;
           UINT8 *pDestBuf;

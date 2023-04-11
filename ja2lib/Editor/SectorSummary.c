@@ -1280,7 +1280,7 @@ void RenderSummaryWindow() {
   if (gfRenderMap) {
     gfRenderMap = FALSE;
     BltVideoObjectFromIndex(vsFB, guiOmertaMap, 0, MAP_LEFT - 2, MAP_TOP - 2,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
     InvalidateRegion(MAP_LEFT - 1, MAP_TOP - 1, MAP_RIGHT + 1, MAP_BOTTOM + 1);
     // Draw the coordinates
     SetFont(SMALLCOMPFONT);

@@ -261,7 +261,7 @@ BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex) {
 }
 
 BOOLEAN BltVideoObjectFromIndex(struct VSurface *dest, UINT32 uiSrcVObject, UINT16 usRegionIndex,
-                                INT32 iDestX, INT32 iDestY, UINT32 fBltFlags, blt_fx *pBltFx) {
+                                INT32 iDestX, INT32 iDestY, UINT32 fBltFlags) {
   UINT16 *pBuffer;
   UINT32 uiPitch;
   struct VObject *hSrcVObject;
@@ -350,7 +350,7 @@ bool BltVObjectSrcTrans(struct VSurface *dest, struct VObject *vobj, u16 regionI
 }
 
 bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIndex, i32 x, i32 y,
-                     UINT32 flags, blt_fx *pBltFx) {
+                     UINT32 flags) {
   bool res = false;
   if (dest) {
     struct BufferLockInfo lock = VSurfaceLock(dest);
@@ -370,8 +370,8 @@ bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIn
 // There are two types, a BltFast and a Blt. BltFast is 10% faster, uses no
 // clipping lists
 BOOLEAN BltVideoObject(VSurfID destSurface, struct VObject *vobj, UINT16 usRegionIndex, INT32 x,
-                       INT32 y, UINT32 fBltFlags, blt_fx *pBltFx) {
-  return BltVideoObject2(GetVSByID(destSurface), vobj, usRegionIndex, x, y, fBltFlags, pBltFx);
+                       INT32 y, UINT32 fBltFlags) {
+  return BltVideoObject2(GetVSByID(destSurface), vobj, usRegionIndex, x, y, fBltFlags);
 }
 
 // *******************************************************************************

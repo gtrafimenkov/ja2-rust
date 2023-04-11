@@ -585,8 +585,7 @@ void DisplayFilesList(void) {
       // render highlight
       GetVideoObject(&hHandle, guiHIGHLIGHT);
       BltVideoObject2(vsFB, hHandle, 0, FILES_SENDER_TEXT_X - 5,
-                      ((iCounter + 9) * BLOCK_HEIGHT) + (iCounter * 2) - 4, VO_BLT_SRCTRANSPARENCY,
-                      NULL);
+                      ((iCounter + 9) * BLOCK_HEIGHT) + (iCounter * 2) - 4, VO_BLT_SRCTRANSPARENCY);
     }
     mprintf(FILES_SENDER_TEXT_X, ((iCounter + 9) * BLOCK_HEIGHT) + (iCounter * 2) - 2,
             pFilesSenderList[pFilesList->ubCode]);
@@ -778,7 +777,7 @@ BOOLEAN DisplayFormattedText(void) {
 
       // blt background to screen
       BltVideoObject2(vsFB, hHandle, 0, FILE_VIEWER_X + 4 + (FILE_VIEWER_WIDTH - usFirstWidth) / 2,
-                      FILE_VIEWER_Y + 10, VO_BLT_SRCTRANSPARENCY, NULL);
+                      FILE_VIEWER_Y + 10, VO_BLT_SRCTRANSPARENCY);
 
       iHeight = usFirstHeight + 20;
 
@@ -828,7 +827,7 @@ BOOLEAN DisplayFormattedText(void) {
 
       // blt background to screen
       BltVideoObject2(vsFB, hHandle, 0, FILE_VIEWER_X + usFreeSpace, FILE_VIEWER_Y + 10,
-                      VO_BLT_SRCTRANSPARENCY, NULL);
+                      VO_BLT_SRCTRANSPARENCY);
 
       // get file background object
       GetVideoObject(&hHandle, uiSecondTempPicture);
@@ -839,7 +838,7 @@ BOOLEAN DisplayFormattedText(void) {
 
       // blt background to screen
       BltVideoObject2(vsFB, hHandle, 0, FILE_VIEWER_X + usFreeSpace, FILE_VIEWER_Y + 10,
-                      VO_BLT_SRCTRANSPARENCY, NULL);
+                      VO_BLT_SRCTRANSPARENCY);
 
       // delete video object
       DeleteVideoObjectFromIndex(uiFirstTempPicture);
@@ -1517,7 +1516,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       //				BltVideoObject2(vsFB, hHandle, 0,( INT16 ) (
       // FILE_VIEWER_X +  30 ), ( INT16 ) ( iYPositionOnPage + 5), VO_BLT_SRCTRANSPARENCY,NULL);
       BltVideoObject2(vsFB, hHandle, 0, (INT16)(FILE_VIEWER_X + 30), (INT16)(iYPositionOnPage + 21),
-                      VO_BLT_SRCTRANSPARENCY, NULL);
+                      VO_BLT_SRCTRANSPARENCY);
 
       DeleteVideoObjectFromIndex(uiPicture);
 
@@ -1529,7 +1528,7 @@ BOOLEAN HandleSpecialTerroristFile(INT32 iFileNumber, STR sPictureName) {
       GetVideoObject(&hHandle, uiPicture);
 
       BltVideoObject2(vsFB, hHandle, 0, (INT16)(FILE_VIEWER_X + 25), (INT16)(iYPositionOnPage + 16),
-                      VO_BLT_SRCTRANSPARENCY, NULL);
+                      VO_BLT_SRCTRANSPARENCY);
 
       DeleteVideoObjectFromIndex(uiPicture);
     }

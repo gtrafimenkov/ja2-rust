@@ -296,33 +296,31 @@ void RenderBobbyR() {
 
   // Bobby's Name
   GetVideoObject(&hPixHandle, guiBobbyName);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBY_RAYS_NAME_X, BOBBY_RAYS_NAME_Y, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBY_RAYS_NAME_X, BOBBY_RAYS_NAME_Y,
+                  VO_BLT_SRCTRANSPARENCY);
 
   // Plaque
   GetVideoObject(&hPixHandle, guiPlaque);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYS_PLAQUES_X, BOBBYS_PLAQUES_Y, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYS_PLAQUES_X, BOBBYS_PLAQUES_Y, VO_BLT_SRCTRANSPARENCY);
 
   // Top Hinge
   GetVideoObject(&hPixHandle, guiTopHinge);
   BltVideoObject2(vsFB, hPixHandle, 0, BOBBIES_TOPHINGE_X, BOBBIES_TOPHINGE_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // Bottom Hinge
   GetVideoObject(&hPixHandle, guiBottomHinge);
   BltVideoObject2(vsFB, hPixHandle, 0, BOBBIES_BOTTOMHINGE_X, BOBBIES_BOTTOMHINGE_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // StorePlaque
   GetVideoObject(&hStorePlaqueHandle, guiStorePlaque);
   BltVideoObject2(vsFB, hStorePlaqueHandle, 0, BOBBIES_STORE_PLAQUE_X, BOBBIES_STORE_PLAQUE_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+                  VO_BLT_SRCTRANSPARENCY);
 
   // Handle
   GetVideoObject(&hPixHandle, guiHandle);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBIES_HANDLE_X, BOBBIES_HANDLE_Y, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVideoObject2(vsFB, hPixHandle, 0, BOBBIES_HANDLE_X, BOBBIES_HANDLE_Y, VO_BLT_SRCTRANSPARENCY);
 
   /*
           if( !LaptopSaveInfo.fBobbyRSiteCanBeAccessed )
@@ -515,10 +513,10 @@ void HandleBobbyRUnderConstructionAni(BOOLEAN fReset) {
     // The undercontsruction graphic
     GetVideoObject(&hPixHandle, guiUnderConstructionImage);
     BltVideoObject2(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
-                    BOBBYR_UNDERCONSTRUCTION_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+                    BOBBYR_UNDERCONSTRUCTION_Y, VO_BLT_SRCTRANSPARENCY);
 
     BltVideoObject2(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
-                    BOBBYR_UNDERCONSTRUCTION1_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+                    BOBBYR_UNDERCONSTRUCTION1_Y, VO_BLT_SRCTRANSPARENCY);
 
     DrawTextToScreen(BobbyRaysFrontText[BOBBYR_UNDER_CONSTRUCTION],
                      BOBBYR_UNDER_CONSTRUCTION_TEXT_X, BOBBYR_UNDER_CONSTRUCTION_TEXT_Y,

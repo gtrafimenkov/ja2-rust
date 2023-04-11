@@ -903,7 +903,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
     }
 
     // Render border!
-    BltVideoObjectFromIndex(vsFB, uiOVERMAP, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObjectFromIndex(vsFB, uiOVERMAP, 0, 0, 0, VO_BLT_SRCTRANSPARENCY);
 
     // Update the save buffer
     {

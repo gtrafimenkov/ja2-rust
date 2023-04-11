@@ -263,7 +263,7 @@ void RenderRadarScreen() {
     }
 
     BltVideoObjectFromIndex(vsSB, gusRadarImage, 0, RADAR_WINDOW_X, gsRadarY,
-                            VO_BLT_SRCTRANSPARENCY, NULL);
+                            VO_BLT_SRCTRANSPARENCY);
   }
 
   // FIRST DELETE WHAT'S THERE

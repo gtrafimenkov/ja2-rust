@@ -700,10 +700,9 @@ UINT32 SexScreenHandle(void) {
   sY = (INT16)((480 - pTrav->usHeight) / 2);
 
   if (bCurFrame < 24) {
-    BltVideoObjectFromIndex(vsFB, guiSMILY, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVideoObjectFromIndex(vsFB, guiSMILY, 0, sX, sY, VO_BLT_SRCTRANSPARENCY);
   } else {
-    BltVideoObjectFromIndex(vsFB, guiSMILY, (INT8)(bCurFrame % 8), sX, sY, VO_BLT_SRCTRANSPARENCY,
-                            NULL);
+    BltVideoObjectFromIndex(vsFB, guiSMILY, (INT8)(bCurFrame % 8), sX, sY, VO_BLT_SRCTRANSPARENCY);
   }
 
   InvalidateRegion(sX, sY, (INT16)(sX + pTrav->usWidth), (INT16)(sY + pTrav->usHeight));
