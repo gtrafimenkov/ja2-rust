@@ -6261,7 +6261,6 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchB
   UINT16 *p16BPPPalette;
   UINT32 uiOffset;
   UINT32 usHeight, usWidth;
-  UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
   ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
@@ -6288,10 +6287,56 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchB
     return FALSE;
   }
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
-  DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
+  UINT8* SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  UINT16* DestPtr = (UINT16*)((UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2));
   p16BPPPalette = hSrcVObject->pShadeCurrent;
-  LineSkip = (uiDestPitchBYTES - (usWidth * 2));
+  LineSkip = (uiDestPitchBYTES - (usWidth * 2)) / 2;
+
+  while (usHeight != 0) {
+    u8 val = *SrcPtr++;
+    if (val & 0x7f) {
+      // BlitTransparent
+      u8 transparentPixels = val & 0x7f;
+      DestPtr += transparentPixels;
+      continue;
+    }
+
+    if (val == 0) {
+      // BlitDoneLine
+      usHeight--;
+      DestPtr += LineSkip;
+      continue;
+    }
+
+    if (val & 0b00000001 == 1) {
+    {
+      u8 bl = *SrcPtr++;
+      u32 ax = p16BPPPalette[bl];
+      *DestPtr = ax;
+      DestPtr++;
+    }
+
+    if (val & 0x01 == 0) {
+      // BlitNTL2
+
+		// clc
+		// rcr		cl, 1
+		// jnc		BlitNTL3
+
+		// mov		bl, [esi]
+		// mov		ax, [edx+ebx*2]
+		// mov		[edi], ax
+
+		// mov		bl, [esi+1]
+		// mov		ax, [edx+ebx*2]
+		// mov		[edi+2], ax
+
+		// add		esi, 2
+		// add		edi, 4
+
+    }
+
+  }
 
 #ifdef _WINDOWS
   __asm {
