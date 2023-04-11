@@ -577,8 +577,8 @@ void DrawSelectLight(UINT8 ubMode, UINT8 ubImage) {
   ubMode *= 2;
 
   GetVideoObject(&hSelectLightHandle, guiSelectLight);
-  BltVideoObject(vsFB, hSelectLightHandle, ubImage, (AimSortCheckBoxLoc[ubMode]),
-                 (AimSortCheckBoxLoc[ubMode + 1]), VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hSelectLightHandle, ubImage, (AimSortCheckBoxLoc[ubMode]),
+                     (AimSortCheckBoxLoc[ubMode + 1]));
 
   //  InvalidateRegion(LAPTOP_SCREEN_UL_X,LAPTOP_SCREEN_WEB_UL_Y,LAPTOP_SCREEN_LR_X,LAPTOP_SCREEN_WEB_LR_Y);
 

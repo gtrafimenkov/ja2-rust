@@ -251,7 +251,7 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 
   // Blt the portrait background
   GetVideoObject(&hMugShotBorderHandle, guiMugShotBorder);
-  BltVideoObject(vsFB, hMugShotBorderHandle, ubImage, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hMugShotBorderHandle, ubImage, usPosX, usPosY);
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiAimFiFace[ubMercID]);

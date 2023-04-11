@@ -2562,8 +2562,8 @@ void EmailRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
                    VO_BLT_SRCTRANSPARENCY);
     if (fUnReadMailFlag) {
       GetVideoObject(&hLapTopIconHandle, guiUNREAD);
-      BltVideoObject(vsFB, hLapTopIconHandle, 0, LAPTOP_ICONS_X + CHECK_X,
-                     LAPTOP_ICONS_MAIL_Y + CHECK_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, LAPTOP_ICONS_X + CHECK_X,
+                         LAPTOP_ICONS_MAIL_Y + CHECK_Y);
     }
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
@@ -2577,8 +2577,8 @@ void FinancialRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiFINANCIALICON);
-    BltVideoObject(vsFB, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X - 4,
-                   LAPTOP_ICONS_FINANCIAL_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X - 4,
+                       LAPTOP_ICONS_FINANCIAL_Y);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
     InvalidateRegion(0, 0, 640, 480);
@@ -2606,8 +2606,8 @@ void FilesRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     iFrame = 0;
     GetVideoObject(&hLapTopIconHandle, guiFILESICON);
-    BltVideoObject(vsFB, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
-                   LAPTOP_ICONS_FILES_Y + 7, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
+                       LAPTOP_ICONS_FILES_Y + 7);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
     InvalidateRegion(0, 0, 640, 480);
@@ -2621,8 +2621,8 @@ void PersonnelRegionMvtCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
     iFrame = 0;
 
     GetVideoObject(&hLapTopIconHandle, guiPERSICON);
-    BltVideoObject(vsFB, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
-                   LAPTOP_ICONS_PERSONNEL_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hLapTopIconHandle, (UINT16)iFrame, LAPTOP_ICONS_X,
+                       LAPTOP_ICONS_PERSONNEL_Y);
     DrawLapTopText();
     HighLightRegion(giCurrentRegion);
     InvalidateRegion(0, 0, 640, 480);
@@ -2777,12 +2777,12 @@ void DisplayBookMarks(void) {
   while (LaptopSaveInfo.iBookMarkList[iCounter - 1] != -1) {
     if (iHighLightBookLine == iCounter - 1) {
       GetVideoObject(&hLapTopIconHandle, guiBOOKHIGH);
-      BltVideoObject(vsFB, hLapTopIconHandle, 0, BOOK_X,
-                     BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, BOOK_X,
+                         BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6);
     } else {
       GetVideoObject(&hLapTopIconHandle, guiBOOKMARK);
-      BltVideoObject(vsFB, hLapTopIconHandle, 0, BOOK_X,
-                     BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, BOOK_X,
+                         BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6);
     }
 
     if (iHighLightBookLine == iCounter - 1) {
@@ -2808,12 +2808,12 @@ void DisplayBookMarks(void) {
 
   if (iHighLightBookLine == iCounter - 1) {
     GetVideoObject(&hLapTopIconHandle, guiBOOKHIGH);
-    BltVideoObject(vsFB, hLapTopIconHandle, 0, BOOK_X,
-                   BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, BOOK_X,
+                       BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6);
   } else {
     GetVideoObject(&hLapTopIconHandle, guiBOOKMARK);
-    BltVideoObject(vsFB, hLapTopIconHandle, 0, BOOK_X,
-                   BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, BOOK_X,
+                       BOOK_TOP_Y + (iCounter * (BOOK_HEIGHT + 6)) + 6);
   }
 
   if (iHighLightBookLine == iCounter - 1) {
@@ -3758,7 +3758,7 @@ BOOLEAN InitTitleBarMaximizeGraphics(UINT32 uiBackgroundGraphic, STR16 pTitle, U
 
   // blit the toolbar grapgucs onto the surface
   GetVideoObject(&hImageHandle, uiBackgroundGraphic);
-  BltVideoObject(GetVSByID(guiTitleBarSurface), hImageHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(GetVSByID(guiTitleBarSurface), hImageHandle, 0, 0, 0);
 
   // blit th icon onto the tool bar
   GetVideoObject(&hImageHandle, uiIconGraphic);
@@ -5082,7 +5082,7 @@ void DisplayWebBookMarkNotify(void) {
 
     // show background objects
     GetVideoObject(&hLapTopIconHandle, guiDOWNLOADTOP);
-    BltVideoObject(vsFB, hLapTopIconHandle, 0, DOWNLOAD_X, DOWNLOAD_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hLapTopIconHandle, 0, DOWNLOAD_X, DOWNLOAD_Y);
     GetVideoObject(&hLapTopIconHandle, guiDOWNLOADMID);
     BltVideoObject(vsFB, hLapTopIconHandle, 0, DOWNLOAD_X, DOWNLOAD_Y + DOWN_HEIGHT,
                    VO_BLT_SRCTRANSPARENCY);

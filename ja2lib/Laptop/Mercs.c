@@ -542,7 +542,7 @@ void RenderMercs() {
 
   // Speck Portrait
   GetVideoObject(&hPixHandle, guiSpecPortrait);
-  BltVideoObject(vsFB, hPixHandle, 0, MERC_PORTRAIT_X, MERC_PORTRAIT_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, MERC_PORTRAIT_X, MERC_PORTRAIT_Y);
 
   // Account Box
   GetVideoObject(&hPixHandle, guiAccountBox);
@@ -551,7 +551,7 @@ void RenderMercs() {
 
   // Files Box
   GetVideoObject(&hPixHandle, guiFilesBox);
-  BltVideoObject(vsFB, hPixHandle, 0, MERC_FILE_BOX_X, MERC_FILE_BOX_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, MERC_FILE_BOX_X, MERC_FILE_BOX_Y);
 
   // Text on the Speck Portrait
   DisplayWrappedString(MERC_PORTRAIT_TEXT_X, MERC_PORTRAIT_TEXT_Y, MERC_PORTRAIT_TEXT_WIDTH, 2,

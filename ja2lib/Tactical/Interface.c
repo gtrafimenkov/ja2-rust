@@ -1007,24 +1007,24 @@ void RenderArrows() {
     BltVideoObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
                    VO_BLT_SRCTRANSPARENCY);
     TileElem = gTileDatabase[SECONDPOINTERS4];
-    BltVideoObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+                       gsDownArrowY + 20);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_GG) {
     TileElem = gTileDatabase[SECONDPOINTERS2];
     BltVideoObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
                    VO_BLT_SRCTRANSPARENCY);
-    BltVideoObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+                       gsDownArrowY + 20);
   }
 
   if (guiShowUPDownArrows & ARROWS_SHOW_DOWN_BELOW_YY) {
     TileElem = gTileDatabase[SECONDPOINTERS4];
     BltVideoObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX, gsDownArrowY,
                    VO_BLT_SRCTRANSPARENCY);
-    BltVideoObject(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
-                   gsDownArrowY + 20, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, TileElem.hTileSurface, TileElem.usRegionIndex, gsDownArrowX,
+                       gsDownArrowY + 20);
   }
 }
 

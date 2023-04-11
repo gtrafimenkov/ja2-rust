@@ -1925,8 +1925,8 @@ BOOLEAN DisplayMercsVideoFace() {
   GetVideoObject(&hTerminalHandle, guiVideoConfTerminal);
   ShadowVideoSurfaceImage(vsFB, hTerminalHandle, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
                           AIM_MEMBER_VIDEO_CONF_TERMINAL_Y);
-  BltVideoObject(vsFB, hTerminalHandle, 0, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
-                 AIM_MEMBER_VIDEO_CONF_TERMINAL_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hTerminalHandle, 0, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
+                     AIM_MEMBER_VIDEO_CONF_TERMINAL_Y);
 
   // Display the Select light on the merc
   if (gubVideoConferencingMode == AIM_VIDEO_HIRE_MERC_MODE) DisplaySelectLights(FALSE, FALSE);
@@ -1992,8 +1992,8 @@ UINT32 DisplayMercChargeAmount() {
 
   // Display the 'black hole'for the contract charge  in the video conference terminal
   GetVideoObject(&hImageHandle, guiVideoContractCharge);
-  BltVideoObject(vsFB, hImageHandle, 0, AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_X,
-                 AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hImageHandle, 0, AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_X,
+                     AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_Y);
 
   if (FindSoldierByProfileID(gbCurrentSoldier, TRUE) == NULL) {
     giContractAmount = 0;
@@ -3044,7 +3044,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
       gfAimMemberCanMercSayOpeningQuote = TRUE;
 
       GetVideoObject(&hImageHandle, uiVideoBackgroundGraphic);
-      BltVideoObject(GetVSByID(guiVideoTitleBar), hImageHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(GetVSByID(guiVideoTitleBar), hImageHandle, 0, 0, 0);
 
       DeleteVideoObjectFromIndex(uiVideoBackgroundGraphic);
     }
@@ -3272,7 +3272,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     }
 
     GetVideoObject(&hImageHandle, uiVideoBackgroundGraphic);
-    BltVideoObject(GetVSByID(guiVideoTitleBar), hImageHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(GetVSByID(guiVideoTitleBar), hImageHandle, 0, 0, 0);
 
     DeleteVideoObjectFromIndex(uiVideoBackgroundGraphic);
   }

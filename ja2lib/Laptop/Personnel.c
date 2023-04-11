@@ -4933,7 +4933,7 @@ BOOLEAN RenderAtmPanel(void) {
 
     // blit it
     GetVideoObject(&hHandle, uiBox);
-    BltVideoObject(vsFB, hHandle, 0, (INT16)(ATM_UL_X), (INT16)(ATM_UL_Y), VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 0, (INT16)(ATM_UL_X), (INT16)(ATM_UL_Y));
 
     DeleteVideoObjectFromIndex(uiBox);
 
@@ -4960,7 +4960,7 @@ BOOLEAN RenderAtmPanel(void) {
     }
 
     GetVideoObject(&hHandle, uiBox);
-    BltVideoObject(vsFB, hHandle, 0, (INT16)(ATM_UL_X), (INT16)(ATM_UL_Y), VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 0, (INT16)(ATM_UL_X), (INT16)(ATM_UL_Y));
 
     // blit it
     GetVideoObject(&hHandle, uiBox);
@@ -5145,8 +5145,8 @@ void RenderSliderBarForPersonnelInventory(void) {
 
   // render slider bar for personnel
   GetVideoObject(&hHandle, guiPersonnelInventory);
-  BltVideoObject(vsFB, hHandle, 5, (INT16)(X_OF_PERSONNEL_SCROLL_REGION),
-                 (INT16)(guiSliderPosition + Y_OF_PERSONNEL_SCROLL_REGION), VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 5, (INT16)(X_OF_PERSONNEL_SCROLL_REGION),
+                     (INT16)(guiSliderPosition + Y_OF_PERSONNEL_SCROLL_REGION));
 }
 
 void ATMStartButtonCallback(GUI_BUTTON *btn, INT32 reason) {

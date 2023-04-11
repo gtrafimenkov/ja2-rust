@@ -1350,38 +1350,38 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
       // blit top & bottom row of images
       for (i = 10; i < BOBBYR_DROP_DOWN_WIDTH - 10; i += 10) {
         // TOP ROW
-        BltVideoObject(vsFB, hImageHandle, 1, i + BOBBYR_CITY_START_LOCATION_X,
-                       usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVObjectSrcTrans(vsFB, hImageHandle, 1, i + BOBBYR_CITY_START_LOCATION_X,
+                           usPosY + BOBBYR_CITY_START_LOCATION_Y);
         // BOTTOM ROW
-        BltVideoObject(vsFB, hImageHandle, 6, i + BOBBYR_CITY_START_LOCATION_X,
-                       usHeight - 10 + 6 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVObjectSrcTrans(vsFB, hImageHandle, 6, i + BOBBYR_CITY_START_LOCATION_X,
+                           usHeight - 10 + 6 + BOBBYR_CITY_START_LOCATION_Y);
       }
 
       // blit the left and right row of images
       usPosX = 0;
       for (i = 10; i < usHeight - 10; i += 10) {
-        BltVideoObject(vsFB, hImageHandle, 3, usPosX + BOBBYR_CITY_START_LOCATION_X,
-                       i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
-        BltVideoObject(vsFB, hImageHandle, 4,
-                       usPosX + BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
-                       i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVObjectSrcTrans(vsFB, hImageHandle, 3, usPosX + BOBBYR_CITY_START_LOCATION_X,
+                           i + BOBBYR_CITY_START_LOCATION_Y);
+        BltVObjectSrcTrans(vsFB, hImageHandle, 4,
+                           usPosX + BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
+                           i + BOBBYR_CITY_START_LOCATION_Y);
       }
 
       // blt the corner images for the row
       // top left
-      BltVideoObject(vsFB, hImageHandle, 0, 0 + BOBBYR_CITY_START_LOCATION_X,
-                     usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 0, 0 + BOBBYR_CITY_START_LOCATION_X,
+                         usPosY + BOBBYR_CITY_START_LOCATION_Y);
       // top right
-      BltVideoObject(vsFB, hImageHandle, 2,
-                     BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
-                     usPosY + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 2,
+                         BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
+                         usPosY + BOBBYR_CITY_START_LOCATION_Y);
       // bottom left
-      BltVideoObject(vsFB, hImageHandle, 5, 0 + BOBBYR_CITY_START_LOCATION_X,
-                     usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 5, 0 + BOBBYR_CITY_START_LOCATION_X,
+                         usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y);
       // bottom right
-      BltVideoObject(vsFB, hImageHandle, 7,
-                     BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
-                     usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 7,
+                         BOBBYR_DROP_DOWN_WIDTH - 10 + BOBBYR_CITY_START_LOCATION_X,
+                         usHeight - 10 + BOBBYR_CITY_START_LOCATION_Y);
 
       DrawSelectedCity(gbSelectedCity);
 
@@ -1394,8 +1394,9 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
       // blt right bar of scroll area
       usPosX = 0;
       for (i = 10; i < BOBBYR_SCROLL_AREA_HEIGHT - 10; i += 10) {
-        BltVideoObject(vsFB, hImageHandle, 3, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 4,
-                       i + BOBBYR_CITY_START_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVObjectSrcTrans(vsFB, hImageHandle, 3,
+                           BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 4,
+                           i + BOBBYR_CITY_START_LOCATION_Y);
       }
 
       // blit top row of images
@@ -1410,16 +1411,18 @@ BOOLEAN CreateDestroyBobbyRDropDown(UINT8 ubDropDownAction) {
       }
 
       // top right
-      BltVideoObject(vsFB, hImageHandle, 2, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
-                     BOBBYR_SCROLL_AREA_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 2,
+                         BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
+                         BOBBYR_SCROLL_AREA_Y);
       // bottom right
-      BltVideoObject(vsFB, hImageHandle, 7, BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
-                     BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT - 10, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 7,
+                         BOBBYR_SCROLL_AREA_X + BOBBYR_SCROLL_AREA_WIDTH - 10,
+                         BOBBYR_SCROLL_AREA_Y + BOBBYR_SCROLL_AREA_HEIGHT - 10);
 
       // fix
-      BltVideoObject(vsFB, hImageHandle, 4,
-                     BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
-                     BOBBYR_CITY_START_LOCATION_Y + 2, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 4,
+                         BOBBYR_DROP_DOWN_WIDTH - 4 + BOBBYR_CITY_START_LOCATION_X,
+                         BOBBYR_CITY_START_LOCATION_Y + 2);
 
       // get and display the up and down arrows
       GetVideoObject(&hArrowHandle, guiGoldArrowImages);

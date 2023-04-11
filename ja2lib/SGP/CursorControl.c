@@ -466,9 +466,9 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
                   gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject, usSubIndex,
                   pCurImage->usPosX, pCurImage->usPosY);
             } else {
-              ReturnValue = BltVideoObject(
+              ReturnValue = BltVObjectSrcTrans(
                   vsMouseBuffer, gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject, usSubIndex,
-                  pCurImage->usPosX, pCurImage->usPosY, VO_BLT_SRCTRANSPARENCY);
+                  pCurImage->usPosX, pCurImage->usPosY);
             }
             if (!ReturnValue) {
               return (FALSE);

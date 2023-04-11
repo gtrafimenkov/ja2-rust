@@ -924,8 +924,8 @@ void ShowCurrentDrawingMode(void) {
 
     SetObjectShade(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
                    DEFAULT_SHADE_LEVEL);
-    BltVideoObject(vsFB, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface, usUseIndex,
-                   (0 + iStartX), (400 + iStartY), VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
+                       usUseIndex, (0 + iStartX), (400 + iStartY));
 
     pETRLEObject->sOffsetX = sTempOffsetX;
     pETRLEObject->sOffsetY = sTempOffsetY;

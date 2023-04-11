@@ -665,9 +665,9 @@ void DisplayAutoBandageUpdatePanel(void) {
 
   for (iCounterB = 0; iCounterB < iNumberPatientsWide; iCounterB++) {
     // slap down background piece
-    BltVideoObject(vsFB, hBackGroundHandle, 16,
-                   sXPosition + (iCounterB * TACT_UPDATE_MERC_FACE_X_WIDTH),
-                   sCurrentYPosition + (TACT_UPDATE_MERC_FACE_X_HEIGHT), VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hBackGroundHandle, 16,
+                       sXPosition + (iCounterB * TACT_UPDATE_MERC_FACE_X_WIDTH),
+                       sCurrentYPosition + (TACT_UPDATE_MERC_FACE_X_HEIGHT));
     BltVideoObject(vsFB, hBackGroundHandle, 16,
                    sXPosition + (iCounterB * TACT_UPDATE_MERC_FACE_X_WIDTH), sYPosition - 9,
                    VO_BLT_SRCTRANSPARENCY);
@@ -786,9 +786,9 @@ void DisplayAutoBandageUpdatePanel(void) {
   // the bottom
   BltVideoObject(vsFB, hBackGroundHandle, 17, sXPosition - 4, sYPosition + iTotalPixelsHigh,
                  VO_BLT_SRCTRANSPARENCY);
-  BltVideoObject(vsFB, hBackGroundHandle, 18,
-                 sXPosition + iTotalPixelsWide - TACT_UPDATE_MERC_FACE_X_WIDTH,
-                 sYPosition + iTotalPixelsHigh, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hBackGroundHandle, 18,
+                     sXPosition + iTotalPixelsWide - TACT_UPDATE_MERC_FACE_X_WIDTH,
+                     sYPosition + iTotalPixelsHigh);
 
   if (iNumberPatientsWide == 2) {
     BltVideoObject(vsFB, hBackGroundHandle, 6, sXPosition - 4, sYPosition + iTotalPixelsHigh,
@@ -796,8 +796,8 @@ void DisplayAutoBandageUpdatePanel(void) {
     CreateTerminateAutoBandageButton((INT16)(sXPosition),
                                      (INT16)(sYPosition + iTotalPixelsHigh + 3));
   } else {
-    BltVideoObject(vsFB, hBackGroundHandle, 6, sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH - 4,
-                   sYPosition + iTotalPixelsHigh, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hBackGroundHandle, 6, sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH - 4,
+                       sYPosition + iTotalPixelsHigh);
     CreateTerminateAutoBandageButton((INT16)(sXPosition + TACT_UPDATE_MERC_FACE_X_WIDTH),
                                      (INT16)(sYPosition + iTotalPixelsHigh + 3));
   }

@@ -508,9 +508,9 @@ void RenderMovingGroupsAndMercs() {
         // if the group was moving, then draw the anchor to visually indicate the sector of
         // influence for enemy patrol groups.
         if (pGroup->uiTraverseTime) {
-          BltVideoObject(
-              vsFB, hVObject, GROUP_ANCHOR, VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1),
-              VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1), VO_BLT_SRCTRANSPARENCY);
+          BltVObjectSrcTrans(vsFB, hVObject, GROUP_ANCHOR,
+                             VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1),
+                             VIEWER_TOP + VIEWER_CELLH * (pGroup->ubSectorY - 1));
         }
 
         ubNumAdmins = pGroup->pEnemyGroup->ubNumAdmins;  //+ pGroup->pEnemyGroup->ubAdminsInBattle;

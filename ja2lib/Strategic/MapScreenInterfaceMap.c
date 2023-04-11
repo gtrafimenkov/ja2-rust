@@ -3568,7 +3568,7 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           // clip blits to mapscreen region
           ClipBlitsToMapViewRegion();
 
-          BltVideoObject(vsSB, hIconHandle, (UINT16)iCounter, iX, iY, VO_BLT_SRCTRANSPARENCY);
+          BltVObjectSrcTrans(vsSB, hIconHandle, (UINT16)iCounter, iX, iY);
 
           // restore clip blits
           RestoreClipRegionToFullScreen();
@@ -3648,7 +3648,7 @@ void DisplayDistancesForHelicopter(void) {
 
   // blit in background
   GetVideoObject(&hHandle, guiMapBorderHeliSectors);
-  BltVideoObject(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, MAP_HELICOPTER_ETA_POPUP_X, sYPosition);
 
   //	sTotalCanTravel = ( INT16 )GetTotalDistanceHelicopterCanTravel( );
   sDistanceToGo = (INT16)DistanceOfIntendedHelicopterPath();
@@ -4447,9 +4447,9 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
                  VO_BLT_SRCTRANSPARENCY);
 
   GetVideoObject(&hVObject, guiMilitiaMaps);
-  BltVideoObject(vsFB, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
-                 MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
-                 MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hVObject, (UINT16)(sSelectedMilitiaTown - 1),
+                     MAP_MILITIA_BOX_POS_X + MAP_MILITIA_MAP_X,
+                     MAP_MILITIA_BOX_POS_Y + MAP_MILITIA_MAP_Y);
 
   // set font color for labels and "total militia" counts
   SetFontForeground(FONT_WHITE);

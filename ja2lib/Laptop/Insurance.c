@@ -294,7 +294,7 @@ void DisplayInsuranceDefaults() {
 
       // display the top red bar
       GetVideoObject(&hPixHandle, guiInsuranceBigRedLineImage);
-      BltVideoObject(vsFB, hPixHandle, 0, INSURANCE_TOP_RED_BAR_X, usPosY, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hPixHandle, 0, INSURANCE_TOP_RED_BAR_X, usPosY);
 
       break;
 

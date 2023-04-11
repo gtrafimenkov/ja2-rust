@@ -505,8 +505,8 @@ void RenderFloristOrderForm() {
 
   // The flowe Delivery location
   GetVideoObject(&hPixHandle, guiDeliveryLocation);
-  BltVideoObject(vsFB, hPixHandle, 0, FLOWER_ORDER_DELIVERY_LOCATION_X,
-                 FLOWER_ORDER_DELIVERY_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, FLOWER_ORDER_DELIVERY_LOCATION_X,
+                     FLOWER_ORDER_DELIVERY_LOCATION_Y);
 
   // The flowe Flower Frame
   GetVideoObject(&hPixHandle, guiFlowerFrame);
@@ -1119,8 +1119,8 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
       // blit top row of images
       for (i = 10; i < FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 10; i += 10) {
         // TOP ROW
-        BltVideoObject(vsFB, hImageHandle, 1, i + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-                       usPosY + FLOWER_ORDER_DROP_DOWN_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+        BltVObjectSrcTrans(vsFB, hImageHandle, 1, i + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
+                           usPosY + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
 
         // BOTTOM ROW
         BltVideoObject(vsFB, hImageHandle, 6, i + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
@@ -1131,29 +1131,31 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
       // blit the left and right row of images
       usPosX = 0;
       for (i = 10; i < usHeight - 10; i += 10) {
-        BltVideoObject(vsFB, hImageHandle, 3, usPosX + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-                       i + FLOWER_ORDER_DROP_DOWN_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
-        BltVideoObject(
+        BltVObjectSrcTrans(vsFB, hImageHandle, 3, usPosX + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
+                           i + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
+        BltVObjectSrcTrans(
             vsFB, hImageHandle, 4,
             usPosX + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 4 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-            i + FLOWER_ORDER_DROP_DOWN_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+            i + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
       }
 
       // blt the corner images for the row
       // top left
-      BltVideoObject(vsFB, hImageHandle, 0, 0 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-                     usPosY + FLOWER_ORDER_DROP_DOWN_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 0, 0 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
+                         usPosY + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
       // top right
-      BltVideoObject(vsFB, hImageHandle, 2,
-                     FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-                     usPosY + FLOWER_ORDER_DROP_DOWN_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(
+          vsFB, hImageHandle, 2,
+          FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
+          usPosY + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
       // bottom left
-      BltVideoObject(vsFB, hImageHandle, 5, 0 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-                     usHeight - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hImageHandle, 5, 0 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
+                         usHeight - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
       // bottom right
-      BltVideoObject(vsFB, hImageHandle, 7,
-                     FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
-                     usHeight - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_Y, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(
+          vsFB, hImageHandle, 7,
+          FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_X,
+          usHeight - 10 + FLOWER_ORDER_DROP_DOWN_LOCATION_Y);
 
       // Display the list of cities
       usPosY = FLOWER_ORDER_DROP_DOWN_CITY_START_Y + 3;

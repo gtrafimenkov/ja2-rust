@@ -1092,29 +1092,29 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   GetVideoObject(&hBoxHandle, PopUpBoxList[uiCounter]->iBorderObjectIndex);
 
   // blit in 4 corners (they're 2x2 pixels)
-  BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_LEFT_CORNER, usTopX,
-                 usTopY, VO_BLT_SRCTRANSPARENCY);
-  BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_RIGHT_CORNER,
-                 usTopX + usWidth - 2, usTopY, VO_BLT_SRCTRANSPARENCY);
-  BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_RIGHT_CORNER,
-                 usTopX + usWidth - 2, usTopY + usHeight - 2, VO_BLT_SRCTRANSPARENCY);
-  BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_LEFT_CORNER,
-                 usTopX, usTopY + usHeight - 2, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_LEFT_CORNER,
+                     usTopX, usTopY);
+  BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_RIGHT_CORNER,
+                     usTopX + usWidth - 2, usTopY);
+  BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_RIGHT_CORNER,
+                     usTopX + usWidth - 2, usTopY + usHeight - 2);
+  BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_LEFT_CORNER,
+                     usTopX, usTopY + usHeight - 2);
 
   // blit in edges
   if (uiNumTilesWide > 0) {
     // full pieces
     for (uiCount = 0; uiCount < uiNumTilesWide; uiCount++) {
-      BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_EDGE,
-                     usTopX + 2 + (uiCount * BORDER_WIDTH), usTopY, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_EDGE,
+                         usTopX + 2 + (uiCount * BORDER_WIDTH), usTopY);
       BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_EDGE,
                      usTopX + 2 + (uiCount * BORDER_WIDTH), usTopY + usHeight - 2,
                      VO_BLT_SRCTRANSPARENCY);
     }
 
     // partial pieces
-    BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_EDGE,
-                   usTopX + usWidth - 2 - BORDER_WIDTH, usTopY, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_EDGE,
+                       usTopX + usWidth - 2 - BORDER_WIDTH, usTopY);
     BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_EDGE,
                    usTopX + usWidth - 2 - BORDER_WIDTH, usTopY + usHeight - 2,
                    VO_BLT_SRCTRANSPARENCY);
@@ -1122,16 +1122,16 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   if (uiNumTilesHigh > 0) {
     // full pieces
     for (uiCount = 0; uiCount < uiNumTilesHigh; uiCount++) {
-      BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE, usTopX,
-                     usTopY + 2 + (uiCount * BORDER_HEIGHT), VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE,
+                         usTopX, usTopY + 2 + (uiCount * BORDER_HEIGHT));
       BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE,
                      usTopX + usWidth - 2, usTopY + 2 + (uiCount * BORDER_HEIGHT),
                      VO_BLT_SRCTRANSPARENCY);
     }
 
     // partial pieces
-    BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE, usTopX,
-                   usTopY + usHeight - 2 - BORDER_HEIGHT, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE, usTopX,
+                       usTopY + usHeight - 2 - BORDER_HEIGHT);
     BltVideoObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE,
                    usTopX + usWidth - 2, usTopY + usHeight - 2 - BORDER_HEIGHT,
                    VO_BLT_SRCTRANSPARENCY);

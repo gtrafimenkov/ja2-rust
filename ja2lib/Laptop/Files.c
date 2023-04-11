@@ -584,8 +584,8 @@ void DisplayFilesList(void) {
     if (iCounter == iHighLightFileLine) {
       // render highlight
       GetVideoObject(&hHandle, guiHIGHLIGHT);
-      BltVideoObject(vsFB, hHandle, 0, FILES_SENDER_TEXT_X - 5,
-                     ((iCounter + 9) * BLOCK_HEIGHT) + (iCounter * 2) - 4, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hHandle, 0, FILES_SENDER_TEXT_X - 5,
+                         ((iCounter + 9) * BLOCK_HEIGHT) + (iCounter * 2) - 4);
     }
     mprintf(FILES_SENDER_TEXT_X, ((iCounter + 9) * BLOCK_HEIGHT) + (iCounter * 2) - 2,
             pFilesSenderList[pFilesList->ubCode]);
@@ -776,8 +776,9 @@ BOOLEAN DisplayFormattedText(void) {
       GetVideoObject(&hHandle, uiFirstTempPicture);
 
       // blt background to screen
-      BltVideoObject(vsFB, hHandle, 0, FILE_VIEWER_X + 4 + (FILE_VIEWER_WIDTH - usFirstWidth) / 2,
-                     FILE_VIEWER_Y + 10, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hHandle, 0,
+                         FILE_VIEWER_X + 4 + (FILE_VIEWER_WIDTH - usFirstWidth) / 2,
+                         FILE_VIEWER_Y + 10);
 
       iHeight = usFirstHeight + 20;
 

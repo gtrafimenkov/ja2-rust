@@ -347,8 +347,8 @@ void RenderSliderBox(SLIDER *pSlider) {
   } else {
     // display the slider box
     GetVideoObject(&hPixHandle, guiSliderBoxImage);
-    BltVideoObject(vsFB, hPixHandle, 0, pSlider->usCurrentSliderBoxPosition,
-                   pSlider->usPosY - DEFUALT_SLIDER_SIZE, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, pSlider->usCurrentSliderBoxPosition,
+                       pSlider->usPosY - DEFUALT_SLIDER_SIZE);
 
     // invalidate the area
     InvalidateRegion(pSlider->usCurrentSliderBoxPosition, pSlider->usPosY - DEFUALT_SLIDER_SIZE,

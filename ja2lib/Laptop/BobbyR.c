@@ -296,11 +296,11 @@ void RenderBobbyR() {
 
   // Bobby's Name
   GetVideoObject(&hPixHandle, guiBobbyName);
-  BltVideoObject(vsFB, hPixHandle, 0, BOBBY_RAYS_NAME_X, BOBBY_RAYS_NAME_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, BOBBY_RAYS_NAME_X, BOBBY_RAYS_NAME_Y);
 
   // Plaque
   GetVideoObject(&hPixHandle, guiPlaque);
-  BltVideoObject(vsFB, hPixHandle, 0, BOBBYS_PLAQUES_X, BOBBYS_PLAQUES_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, BOBBYS_PLAQUES_X, BOBBYS_PLAQUES_Y);
 
   // Top Hinge
   GetVideoObject(&hPixHandle, guiTopHinge);
@@ -319,7 +319,7 @@ void RenderBobbyR() {
 
   // Handle
   GetVideoObject(&hPixHandle, guiHandle);
-  BltVideoObject(vsFB, hPixHandle, 0, BOBBIES_HANDLE_X, BOBBIES_HANDLE_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, BOBBIES_HANDLE_X, BOBBIES_HANDLE_Y);
 
   /*
           if( !LaptopSaveInfo.fBobbyRSiteCanBeAccessed )
@@ -511,11 +511,11 @@ void HandleBobbyRUnderConstructionAni(BOOLEAN fReset) {
   if (((uiCurTime - uiLastTime) > BOBBYR_UNDERCONSTRUCTION_ANI_DELAY) || (fReDrawScreenFlag)) {
     // The undercontsruction graphic
     GetVideoObject(&hPixHandle, guiUnderConstructionImage);
-    BltVideoObject(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
-                   BOBBYR_UNDERCONSTRUCTION_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
+                       BOBBYR_UNDERCONSTRUCTION_Y);
 
-    BltVideoObject(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
-                   BOBBYR_UNDERCONSTRUCTION1_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, usCount, BOBBYR_UNDERCONSTRUCTION_X,
+                       BOBBYR_UNDERCONSTRUCTION1_Y);
 
     DrawTextToScreen(BobbyRaysFrontText[BOBBYR_UNDER_CONSTRUCTION],
                      BOBBYR_UNDER_CONSTRUCTION_TEXT_X, BOBBYR_UNDER_CONSTRUCTION_TEXT_Y,

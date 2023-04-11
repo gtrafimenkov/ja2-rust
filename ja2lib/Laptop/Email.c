@@ -1506,7 +1506,7 @@ INT32 DisplayEmailMessage(EmailPtr pMail) {
   GetVideoObject(&hHandle, guiEmailMessage);
 
   // place the graphic on the frame buffer
-  BltVideoObject(vsFB, hHandle, 0, VIEWER_X, VIEWER_Y + iViewerPositionY, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 0, VIEWER_X, VIEWER_Y + iViewerPositionY);
 
   // the icon for the title of this box
   GetVideoObject(&hHandle, guiTITLEBARICONS);

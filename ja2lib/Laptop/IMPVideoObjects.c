@@ -564,12 +564,12 @@ void RenderAttributeFrame(INT16 sX, INT16 sY) {
   sCurrentY += 10;
   for (iCounter = 0; iCounter < 10; iCounter++) {
     // blt to sX, sY relative to upper left corner
-    BltVideoObject(vsFB, hHandle, 2, LAPTOP_SCREEN_UL_X + sX + 134,
-                   LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
-    BltVideoObject(vsFB, hHandle, 1, LAPTOP_SCREEN_UL_X + sX,
-                   LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
-    BltVideoObject(vsFB, hHandle, 3, LAPTOP_SCREEN_UL_X + sX + 368,
-                   LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hHandle, 2, LAPTOP_SCREEN_UL_X + sX + 134,
+                       LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY);
+    BltVObjectSrcTrans(vsFB, hHandle, 1, LAPTOP_SCREEN_UL_X + sX,
+                       LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY);
+    BltVObjectSrcTrans(vsFB, hHandle, 3, LAPTOP_SCREEN_UL_X + sX + 368,
+                       LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY);
 
     sCurrentY += 20;
   }
@@ -595,8 +595,8 @@ void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex) {
   GetVideoObject(&hHandle, guiATTRIBUTEFRAME);
 
   // blt to sX, sY relative to upper left corner
-  BltVideoObject(vsFB, hHandle, 2, LAPTOP_SCREEN_UL_X + sX + 134,
-                 LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hHandle, 2, LAPTOP_SCREEN_UL_X + sX + 134,
+                     LAPTOP_SCREEN_WEB_UL_Y + sY + sCurrentY);
 
   RenderAttrib2IndentFrame(350, 42);
 

@@ -695,13 +695,13 @@ void RenderSaveLoadScreen() {
     //		DrawTextToScreen( zSaveLoadText[SLG_SAVE_GAME], 0, 10, 639, SAVE_LOAD_TITLE_FONT,
     // SAVE_LOAD_TITLE_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);
     GetVideoObject(&hPixHandle, guiBackGroundAddOns);
-    BltVideoObject(vsFB, hPixHandle, 1, SLG_TITLE_POS_X, SLG_TITLE_POS_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 1, SLG_TITLE_POS_X, SLG_TITLE_POS_Y);
   } else {
     // If we are Loading a game
 
     // Display the Title
     GetVideoObject(&hPixHandle, guiBackGroundAddOns);
-    BltVideoObject(vsFB, hPixHandle, 0, SLG_TITLE_POS_X, SLG_TITLE_POS_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hPixHandle, 0, SLG_TITLE_POS_X, SLG_TITLE_POS_Y);
   }
 
   DisplaySaveGameList();

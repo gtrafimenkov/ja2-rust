@@ -1289,7 +1289,7 @@ void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber) {
   // if merc is an AIM merc
   if (Menptr[gCharactersList[bCharNumber].usSolID].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
     // finite contract length icon
-    BltVideoObject(vsSB, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsSB, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y);
   }
 
   // if merc has life insurance

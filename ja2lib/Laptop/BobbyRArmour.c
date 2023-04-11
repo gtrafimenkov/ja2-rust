@@ -66,7 +66,7 @@ void RenderBobbyRArmour() {
 
   // GunForm
   GetVideoObject(&hPixHandle, guiArmourGrid);
-  BltVideoObject(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y);
 
   DisplayItemInfo(IC_ARMOUR);
 

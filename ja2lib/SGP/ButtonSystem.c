@@ -2822,7 +2822,7 @@ void DrawIconOnButton(GUI_BUTTON *b) {
       BltVideoObject(vsFB, GenericButtonIcons[b->iIconID], b->usIconIndex, (INT16)xp, (INT16)yp,
                      VO_BLT_SRCTRANSPARENCY);
     else
-      BltVideoObject(vsFB, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp, VO_BLT_SRCTRANSPARENCY);
+      BltVObjectSrcTrans(vsFB, hvObject, b->usIconIndex, (INT16)xp, (INT16)yp);
     // Restore previous clip region
     SetClippingRect(&OldClip);
   }

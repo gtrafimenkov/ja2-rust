@@ -493,8 +493,8 @@ void DisplayAlumniOldMercPopUp() {
   /// blt face panale and the mecs fce
   BltVideoObject(vsFB, hFacePaneHandle, 0, AIM_ALUMNI_FACE_PANEL_X, AIM_ALUMNI_FACE_PANEL_Y,
                  VO_BLT_SRCTRANSPARENCY);
-  BltVideoObject(vsFB, hFaceHandle, gubDrawOldMerc, AIM_ALUMNI_FACE_PANEL_X + 1,
-                 AIM_ALUMNI_FACE_PANEL_Y + 1, VO_BLT_SRCTRANSPARENCY);
+  BltVObjectSrcTrans(vsFB, hFaceHandle, gubDrawOldMerc, AIM_ALUMNI_FACE_PANEL_X + 1,
+                     AIM_ALUMNI_FACE_PANEL_Y + 1);
 
   // Load and display the name
   //	uiStartLoc = AIM_ALUMNI_NAME_SIZE * gubDrawOldMerc;

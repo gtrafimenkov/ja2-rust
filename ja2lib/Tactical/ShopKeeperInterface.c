@@ -2483,8 +2483,8 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
     if (iFaceSlot != -1) {
       // Get and blit the face
       GetVideoObject(&hPixHandle, guiSmallSoldiersFace[iFaceSlot]);
-      BltVideoObject(vsFB, hPixHandle, 0, (UINT16)(usPosX + SKI_SMALL_FACE_OFFSET_X),
-                     (UINT16)(usPosY), VO_BLT_SRCTRANSPARENCY);  // SKI_SMALL_FACE_OFFSET_Y
+      BltVObjectSrcTrans(vsFB, hPixHandle, 0, (UINT16)(usPosX + SKI_SMALL_FACE_OFFSET_X),
+                         (UINT16)(usPosY));  // SKI_SMALL_FACE_OFFSET_Y
     }
   }
 
@@ -5511,7 +5511,7 @@ void CrossOutUnwantedItems(void) {
           sBoxStartY =
               SKI_PLAYERS_TRADING_INV_Y + (bSlotId / SKI_NUM_TRADING_INV_COLS) * (SKI_INV_OFFSET_Y);
 
-          BltVideoObject(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY), VO_BLT_SRCTRANSPARENCY);
+          BltVObjectSrcTrans(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY));
 
           // invalidate the region
           InvalidateRegion(sBoxStartX - 1, sBoxStartY - 1, sBoxStartX + sBoxWidth + 1,

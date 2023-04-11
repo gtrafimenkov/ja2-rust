@@ -465,7 +465,7 @@ BOOLEAN DrawAimPolicyMenu() {
 
   usPosY = AIM_POLICY_TOC_Y;
   for (i = 0; i < NUM_AIM_POLICY_TOC_BUTTONS; i++) {
-    BltVideoObject(vsFB, hContentButtonHandle, 0, AIM_POLICY_TOC_X, usPosY, VO_BLT_SRCTRANSPARENCY);
+    BltVObjectSrcTrans(vsFB, hContentButtonHandle, 0, AIM_POLICY_TOC_X, usPosY);
 
     uiStartLoc = AIM_POLICY_LINE_SIZE * ubLocInFile[i];
     LoadEncryptedDataFromFile(AIMPOLICYFILE, sText, uiStartLoc, AIM_HISTORY_LINE_SIZE);
