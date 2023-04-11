@@ -262,7 +262,7 @@ void RenderRadarScreen() {
       }
     }
 
-    BltVideoObjectFromIndex(vsSB, gusRadarImage, 0, RADAR_WINDOW_X, gsRadarY);
+    BltVObjectFromIndex(vsSB, gusRadarImage, 0, RADAR_WINDOW_X, gsRadarY);
   }
 
   // FIRST DELETE WHAT'S THERE
