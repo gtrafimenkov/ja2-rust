@@ -71,7 +71,7 @@ UINT32 guiVObjectTotalAdded = 0;
 
 static BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                       struct VObject *hSrcVObject, UINT16 usIndex, INT32 iDestX,
-                                      INT32 iDestY, INT32 fBltFlags, blt_fx *pBltFx);
+                                      INT32 iDestY, INT32 fBltFlags);
 
 // Sets struct VObject* palette, creates if nessessary. Also sets 16BPP palette
 static BOOLEAN SetVideoObjectPalette(struct VObject *hVObject, struct SGPPaletteEntry *pSrcPalette);
@@ -281,7 +281,7 @@ BOOLEAN BltVideoObjectFromIndex(struct VSurface *dest, UINT32 uiSrcVObject, UINT
 
   // Now we have the video object and surface, call the VO blitter function
   if (!BltVideoObjectToBuffer(pBuffer, uiPitch, hSrcVObject, usRegionIndex, iDestX, iDestY,
-                              fBltFlags, pBltFx)) {
+                              fBltFlags)) {
     VSurfaceUnlock(dest);
     // VO Blitter will set debug messages for error conditions
     return FALSE;
@@ -343,7 +343,7 @@ bool BltVObjectSrcTrans(struct VSurface *dest, struct VObject *vobj, u16 regionI
     }
 
     res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, regionIndex, x, y,
-                                 VO_BLT_SRCTRANSPARENCY, NULL);
+                                 VO_BLT_SRCTRANSPARENCY);
     VSurfaceUnlock(dest);
   }
   return res;
@@ -359,8 +359,7 @@ bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, u16 usRegionIn
       return false;
     }
 
-    res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, usRegionIndex, x, y, flags,
-                                 pBltFx);
+    res = BltVideoObjectToBuffer((u16 *)lock.dest, lock.pitch, vobj, usRegionIndex, x, y, flags);
     VSurfaceUnlock(dest);
   }
   return res;
@@ -672,7 +671,7 @@ UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType) {
 // High level blit function encapsolates ALL effects and BPP
 static BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                       struct VObject *hSrcVObject, UINT16 usIndex, INT32 iDestX,
-                                      INT32 iDestY, INT32 fBltFlags, blt_fx *pBltFx) {
+                                      INT32 iDestY, INT32 fBltFlags) {
   // Assertions
   Assert(pBuffer != NULL);
 
