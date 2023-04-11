@@ -62,6 +62,7 @@ typedef struct VOBJECT_NODE {
   struct VOBJECT_NODE *next, *prev;
 } VOBJECT_NODE;
 
+// TODO: rust
 VOBJECT_NODE *gpVObjectHead = NULL;
 VOBJECT_NODE *gpVObjectTail = NULL;
 UINT32 guiVObjectIndex = 1;
@@ -111,6 +112,7 @@ BOOLEAN ShutdownVideoObjectManager() {
   return TRUE;
 }
 
+// TODO: rust
 UINT32 CountVideoObjectNodes() {
   VOBJECT_NODE *curr;
   UINT32 i = 0;
@@ -162,6 +164,9 @@ BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex) {
   return _AddVideoObject(&desc, puiIndex);
 }
 
+// TODO: rust
+// TODO: debug print how many video objects are there
+// TODO: probably replace the list with array of fixed size
 BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
   struct VObject *hVObject;
 
@@ -232,6 +237,7 @@ BOOLEAN SetVideoObjectTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   return (TRUE);
 }
 
+// TODO: rust
 BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex) {
   VOBJECT_NODE *curr;
 
@@ -287,12 +293,12 @@ BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject) {
       // Deallocate the memory for the video object
       DeleteVideoObject(curr->hVObject);
 
-      if (curr ==
-          gpVObjectHead) {  // Advance the head, because we are going to remove the head node.
+      if (curr == gpVObjectHead) {
+        // Advance the head, because we are going to remove the head node.
         gpVObjectHead = gpVObjectHead->next;
       }
-      if (curr ==
-          gpVObjectTail) {  // Back up the tail, because we are going to remove the tail node.
+      if (curr == gpVObjectTail) {
+        // Back up the tail, because we are going to remove the tail node.
         gpVObjectTail = gpVObjectTail->prev;
       }
       // Detach the node from the vobject list
