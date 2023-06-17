@@ -303,7 +303,7 @@ void RenderSliderBox(SLIDER *pSlider) {
     // If it is not the first time to render the slider
     if (!(pSlider->LastRect.iLeft == 0 && pSlider->LastRect.iRight == 0)) {
       // Restore the old rect
-      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (uint16_t)pSlider->LastRect.iLeft,
+      VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)pSlider->LastRect.iLeft,
                            (uint16_t)pSlider->LastRect.iTop, pSlider->ubSliderWidth,
                            pSlider->ubSliderHeight);
 
@@ -313,7 +313,7 @@ void RenderSliderBox(SLIDER *pSlider) {
     }
 
     // Blit the new rect
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop,
+    VSurfaceBlitBufToBuf(vsFB, vsSB, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop,
                          pSlider->ubSliderWidth, pSlider->ubSliderHeight);
   } else {
     // fill out the settings for the current dest and source rects
@@ -325,13 +325,12 @@ void RenderSliderBox(SLIDER *pSlider) {
     // If it is not the first time to render the slider
     if (!(pSlider->LastRect.iLeft == 0 && pSlider->LastRect.iRight == 0)) {
       // Restore the old rect
-      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (uint16_t)pSlider->LastRect.iLeft,
+      VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)pSlider->LastRect.iLeft,
                            (uint16_t)pSlider->LastRect.iTop, 8, 15);
     }
 
     // save the new rect
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop, 8,
-                         15);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop, 8, 15);
   }
 
   // Save the new rect location
@@ -340,8 +339,7 @@ void RenderSliderBox(SLIDER *pSlider) {
   if (pSlider->uiFlags & SLIDER_VERTICAL) {
     // display the slider box
     GetVideoObject(&hPixHandle, guiSliderBoxImage);
-    BltVideoObject2(vsFB, hPixHandle, 0, pSlider->LastRect.iLeft, pSlider->LastRect.iTop,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hPixHandle, 0, pSlider->LastRect.iLeft, pSlider->LastRect.iTop);
 
     // invalidate the area
     InvalidateRegion(pSlider->LastRect.iLeft, pSlider->LastRect.iTop, pSlider->LastRect.iRight,
@@ -349,8 +347,8 @@ void RenderSliderBox(SLIDER *pSlider) {
   } else {
     // display the slider box
     GetVideoObject(&hPixHandle, guiSliderBoxImage);
-    BltVideoObject2(vsFB, hPixHandle, 0, pSlider->usCurrentSliderBoxPosition,
-                    pSlider->usPosY - DEFUALT_SLIDER_SIZE, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hPixHandle, 0, pSlider->usCurrentSliderBoxPosition,
+               pSlider->usPosY - DEFUALT_SLIDER_SIZE);
 
     // invalidate the area
     InvalidateRegion(pSlider->usCurrentSliderBoxPosition, pSlider->usPosY - DEFUALT_SLIDER_SIZE,

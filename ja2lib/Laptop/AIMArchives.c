@@ -304,10 +304,10 @@ void RenderAimArchives() {
   for (y = 0; y < ubNumRows; y++) {
     for (x = 0; x < AIM_ALUMNI_NUM_FACE_COLS; x++) {
       // Blt face to screen
-      BltVideoObject2(vsFB, hFaceHandle, i, usPosX + 4, usPosY + 4, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsFB, hFaceHandle, i, usPosX + 4, usPosY + 4);
 
       // Blt the alumni frame background
-      BltVideoObject2(vsFB, hFrameHandle, 0, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsFB, hFrameHandle, 0, usPosX, usPosY);
 
       // Display the merc's name
       uiStartLoc = AIM_ALUMNI_NAME_LINESIZE * i;
@@ -327,10 +327,10 @@ void RenderAimArchives() {
   // the 3rd page now has an additional row with 1 merc on it, so add a new row
   if (gubPageNum == 2) {
     // Blt face to screen
-    BltVideoObject2(vsFB, hFaceHandle, i, usPosX + 4, usPosY + 4, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hFaceHandle, i, usPosX + 4, usPosY + 4);
 
     // Blt the alumni frame background
-    BltVideoObject2(vsFB, hFrameHandle, 0, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hFrameHandle, 0, usPosX, usPosY);
 
     // Display the merc's name
     uiStartLoc = AIM_ALUMNI_NAME_LINESIZE * i;
@@ -466,23 +466,22 @@ void DisplayAlumniOldMercPopUp() {
   ShadowVideoSurfaceRect(vsFB, AIM_POPUP_X + AIM_POPUP_SHADOW_GAP, usPosY + AIM_POPUP_SHADOW_GAP,
                          AIM_POPUP_X + AIM_POPUP_WIDTH + AIM_POPUP_SHADOW_GAP,
                          usPosY + AIM_POPUP_SECTION_HEIGHT + AIM_POPUP_SHADOW_GAP - 1);
-  BltVideoObject2(vsFB, hAlumniPopUpHandle, 0, AIM_POPUP_X, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hAlumniPopUpHandle, 0, AIM_POPUP_X, usPosY);
   // draw mid section of the popup background
   usPosY += AIM_POPUP_SECTION_HEIGHT;
   for (i = 0; i < ubNumLines; i++) {
     ShadowVideoSurfaceRect(vsFB, AIM_POPUP_X + AIM_POPUP_SHADOW_GAP, usPosY + AIM_POPUP_SHADOW_GAP,
                            AIM_POPUP_X + AIM_POPUP_WIDTH + AIM_POPUP_SHADOW_GAP,
                            usPosY + AIM_POPUP_SECTION_HEIGHT + AIM_POPUP_SHADOW_GAP - 1);
-    BltVideoObject2(vsFB, hAlumniPopUpHandle, 1, AIM_POPUP_X, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hAlumniPopUpHandle, 1, AIM_POPUP_X, usPosY);
     usPosY += AIM_POPUP_SECTION_HEIGHT;
   }
   // draw the bottom line and done button
   ShadowVideoSurfaceRect(vsFB, AIM_POPUP_X + AIM_POPUP_SHADOW_GAP, usPosY + AIM_POPUP_SHADOW_GAP,
                          AIM_POPUP_X + AIM_POPUP_WIDTH + AIM_POPUP_SHADOW_GAP,
                          usPosY + AIM_POPUP_SECTION_HEIGHT + AIM_POPUP_SHADOW_GAP - 1);
-  BltVideoObject2(vsFB, hAlumniPopUpHandle, 2, AIM_POPUP_X, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject2(vsFB, hDoneHandle, 0, AIM_ALUMNI_DONE_X, usPosY - AIM_ALUMNI_DONE_HEIGHT,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hAlumniPopUpHandle, 2, AIM_POPUP_X, usPosY);
+  BltVObject(vsFB, hDoneHandle, 0, AIM_ALUMNI_DONE_X, usPosY - AIM_ALUMNI_DONE_HEIGHT);
   DrawTextToScreen(AimAlumniText[AIM_ALUMNI_DONE], (uint16_t)(AIM_ALUMNI_DONE_X + 1),
                    (uint16_t)(usPosY - AIM_ALUMNI_DONE_HEIGHT + 3), AIM_ALUMNI_DONE_WIDTH,
                    AIM_ALUMNI_POPUP_NAME_FONT, AIM_ALUMNI_POPUP_NAME_COLOR, FONT_MCOLOR_BLACK,
@@ -491,10 +490,9 @@ void DisplayAlumniOldMercPopUp() {
   CreateDestroyDoneMouseRegion(usPosY);
 
   /// blt face panale and the mecs fce
-  BltVideoObject2(vsFB, hFacePaneHandle, 0, AIM_ALUMNI_FACE_PANEL_X, AIM_ALUMNI_FACE_PANEL_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject2(vsFB, hFaceHandle, gubDrawOldMerc, AIM_ALUMNI_FACE_PANEL_X + 1,
-                  AIM_ALUMNI_FACE_PANEL_Y + 1, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hFacePaneHandle, 0, AIM_ALUMNI_FACE_PANEL_X, AIM_ALUMNI_FACE_PANEL_Y);
+  BltVObject(vsFB, hFaceHandle, gubDrawOldMerc, AIM_ALUMNI_FACE_PANEL_X + 1,
+             AIM_ALUMNI_FACE_PANEL_Y + 1);
 
   // Load and display the name
   //	uiStartLoc = AIM_ALUMNI_NAME_SIZE * gubDrawOldMerc;

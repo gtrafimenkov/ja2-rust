@@ -83,16 +83,6 @@ uint16_t CreateObjectPaletteTables(struct VObject *pObj, uint32_t uiType);
 // Returns a struct VObject* for the specified index
 BOOLEAN GetVideoObject(struct VObject **hVObject, uint32_t uiIndex);
 
-// Blits a video object to another video object
-BOOLEAN BltVideoObject(VSurfID destSurface, struct VObject *hVSrcObject, uint16_t usRegionIndex,
-                       int32_t iDestX, int32_t iDestY, uint32_t fBltFlags, blt_fx *pBltFx);
-bool BltVideoObject2(struct VSurface *dest, struct VObject *vobj, uint16_t usRegionIndex, int32_t x,
-                     int32_t y, uint32_t flags, blt_fx *pBltFx);
-
-BOOLEAN BltVideoObjectFromIndex(struct VSurface *dest, uint32_t uiSrcVObject,
-                                uint16_t usRegionIndex, int32_t iDestX, int32_t iDestY,
-                                uint32_t fBltFlags, blt_fx *pBltFx);
-
 // **********************************************************************************
 //
 // Video Object manipulation functions
@@ -145,5 +135,17 @@ BOOLEAN BltVideoObjectOutlineShadowFromIndex(struct VSurface *dest, uint32_t uiS
 
 void VObjectUpdateShade(struct VObject *obj, uint8_t shade_num, uint32_t rscale, uint32_t gscale,
                         uint32_t bscale, BOOLEAN mono);
+
+// ****************************************************************************
+//
+//
+//
+// ****************************************************************************
+
+struct VObject *LoadVObjectFromFile(const char *path);
+bool BltVObject(struct VSurface *dest, struct VObject *vobj, uint16_t regionIndex, int32_t x,
+                int32_t y);
+bool BltVObjectFromIndex(struct VSurface *dest, uint32_t uiSrcVObject, uint16_t usRegionIndex,
+                         int32_t iDestX, int32_t iDestY);
 
 #endif

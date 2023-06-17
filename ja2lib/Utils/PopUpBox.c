@@ -1090,47 +1090,45 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
   GetVideoObject(&hBoxHandle, PopUpBoxList[uiCounter]->iBorderObjectIndex);
 
   // blit in 4 corners (they're 2x2 pixels)
-  BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, TOP_LEFT_CORNER, usTopX, usTopY,
-                 VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, TOP_RIGHT_CORNER,
-                 usTopX + usWidth - 2, usTopY, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, BOTTOM_RIGHT_CORNER,
-                 usTopX + usWidth - 2, usTopY + usHeight - 2, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, BOTTOM_LEFT_CORNER, usTopX,
-                 usTopY + usHeight - 2, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_LEFT_CORNER, usTopX,
+             usTopY);
+  BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_RIGHT_CORNER,
+             usTopX + usWidth - 2, usTopY);
+  BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_RIGHT_CORNER,
+             usTopX + usWidth - 2, usTopY + usHeight - 2);
+  BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_LEFT_CORNER, usTopX,
+             usTopY + usHeight - 2);
 
   // blit in edges
   if (uiNumTilesWide > 0) {
     // full pieces
     for (uiCount = 0; uiCount < uiNumTilesWide; uiCount++) {
-      BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, TOP_EDGE,
-                     usTopX + 2 + (uiCount * BORDER_WIDTH), usTopY, VO_BLT_SRCTRANSPARENCY, NULL);
-      BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, BOTTOM_EDGE,
-                     usTopX + 2 + (uiCount * BORDER_WIDTH), usTopY + usHeight - 2,
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_EDGE,
+                 usTopX + 2 + (uiCount * BORDER_WIDTH), usTopY);
+      BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_EDGE,
+                 usTopX + 2 + (uiCount * BORDER_WIDTH), usTopY + usHeight - 2);
     }
 
     // partial pieces
-    BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, TOP_EDGE,
-                   usTopX + usWidth - 2 - BORDER_WIDTH, usTopY, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, BOTTOM_EDGE,
-                   usTopX + usWidth - 2 - BORDER_WIDTH, usTopY + usHeight - 2,
-                   VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, TOP_EDGE,
+               usTopX + usWidth - 2 - BORDER_WIDTH, usTopY);
+    BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, BOTTOM_EDGE,
+               usTopX + usWidth - 2 - BORDER_WIDTH, usTopY + usHeight - 2);
   }
   if (uiNumTilesHigh > 0) {
     // full pieces
     for (uiCount = 0; uiCount < uiNumTilesHigh; uiCount++) {
-      BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, SIDE_EDGE, usTopX,
-                     usTopY + 2 + (uiCount * BORDER_HEIGHT), VO_BLT_SRCTRANSPARENCY, NULL);
-      BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, SIDE_EDGE, usTopX + usWidth - 2,
-                     usTopY + 2 + (uiCount * BORDER_HEIGHT), VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE, usTopX,
+                 usTopY + 2 + (uiCount * BORDER_HEIGHT));
+      BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE,
+                 usTopX + usWidth - 2, usTopY + 2 + (uiCount * BORDER_HEIGHT));
     }
 
     // partial pieces
-    BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, SIDE_EDGE, usTopX,
-                   usTopY + usHeight - 2 - BORDER_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
-    BltVideoObject(PopUpBoxList[uiCounter]->uiBuffer, hBoxHandle, SIDE_EDGE, usTopX + usWidth - 2,
-                   usTopY + usHeight - 2 - BORDER_HEIGHT, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE, usTopX,
+               usTopY + usHeight - 2 - BORDER_HEIGHT);
+    BltVObject(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), hBoxHandle, SIDE_EDGE,
+               usTopX + usWidth - 2, usTopY + usHeight - 2 - BORDER_HEIGHT);
   }
 
   InvalidateRegion(usTopX, usTopY, usTopX + usWidth, usTopY + usHeight);

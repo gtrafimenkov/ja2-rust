@@ -377,7 +377,7 @@ void RenderTacticalPlacementGUI() {
   }
   // If the display is dirty render the entire panel.
   if (gfTacticalPlacementGUIDirty) {
-    BltVideoObjectFromIndex(vsFB, giOverheadPanelImage, 0, 0, 320, VO_BLT_SRCTRANSPARENCY, 0);
+    BltVObjectFromIndex(vsFB, giOverheadPanelImage, 0, 0, 320);
     InvalidateRegion(0, 0, 320, 480);
     gfTacticalPlacementGUIDirty = FALSE;
     MarkButtonsDirty();
@@ -389,9 +389,8 @@ void RenderTacticalPlacementGUI() {
       xp = 95 + (i / 2) * 54;
       yp = (i % 2) ? 422 : 371;
       VSurfaceColorFill(vsFB, xp + 36, yp + 2, xp + 44, yp + 30, 0);
-      BltVideoObjectFromIndex(vsFB, giMercPanelImage, 0, xp, yp, VO_BLT_SRCTRANSPARENCY, NULL);
-      BltVideoObjectFromIndex(vsFB, gMercPlacement[i].uiVObjectID, 0, xp + 2, yp + 2,
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectFromIndex(vsFB, giMercPanelImage, 0, xp, yp);
+      BltVObjectFromIndex(vsFB, gMercPlacement[i].uiVObjectID, 0, xp + 2, yp + 2);
       // HEALTH BAR
       if (!pSoldier->bLife) continue;
       // yellow one for bleeding
@@ -435,7 +434,7 @@ void RenderTacticalPlacementGUI() {
             gpStrategicString[STR_TP_CHOOSEENTRYPOSITIONS]);
 
     // Shade out the part of the tactical map that isn't considered placable.
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 320, 640, 160);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 320, 640, 160);
   }
   if (gfValidLocationsChanged) {
     if (DayTime()) {     // 6AM to 9PM is black
@@ -444,7 +443,7 @@ void RenderTacticalPlacementGUI() {
       usHatchColor = Get16BPPColor(FROMRGB(63, 31, 31));
     }
     gfValidLocationsChanged--;
-    VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, 4, 4, 636, 320);
+    VSurfaceBlitBufToBuf(vsSB, vsFB, 4, 4, 636, 320);
     InvalidateRegion(4, 4, 636, 320);
     if (gbCursorMercID == -1) {
       gTPClipRect.iLeft = gfWest ? 30 : 4;

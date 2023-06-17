@@ -418,7 +418,7 @@ void DisplaySirtechSplashScreen() {
   }
 
   GetVideoObject(&hPixHandle, uiLogoID);
-  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, 0, 0);
   DeleteVideoObjectFromIndex(uiLogoID);
 
   InvalidateScreen();

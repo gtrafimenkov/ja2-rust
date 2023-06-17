@@ -217,18 +217,15 @@ void DrawBreathUIBarEx(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPo
     if (gusSelectedSoldier == GetSolID(pSoldier) && gTacticalStatus.ubCurrentTeam == OUR_TEAM &&
         OK_INTERRUPT_MERC(pSoldier)) {
       // gold, the second entry in the .sti
-      BltVideoObject(uiBuffer, hHandle, 1, sXPos, (int16_t)(sYPos - sHeight),
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(GetVSByID(uiBuffer), hHandle, 1, sXPos, (int16_t)(sYPos - sHeight));
 
     } else {
       // brown, first entry
-      BltVideoObject(uiBuffer, hHandle, 0, sXPos, (int16_t)(sYPos - sHeight),
-                     VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(GetVSByID(uiBuffer), hHandle, 0, sXPos, (int16_t)(sYPos - sHeight));
     }
   } else {
     // brown, first entry
-    BltVideoObject(uiBuffer, hHandle, 0, sXPos, (int16_t)(sYPos - sHeight), VO_BLT_SRCTRANSPARENCY,
-                   NULL);
+    BltVObject(GetVSByID(uiBuffer), hHandle, 0, sXPos, (int16_t)(sYPos - sHeight));
   }
 
   pDestBuf = VSurfaceLockOld(GetVSByID(uiBuffer), &uiDestPitchBYTES);
@@ -410,8 +407,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, int16_t sFaceX, int16_t sFa
       ubVehicleType = pVehicleList[pSoldier->bVehicleID].ubVehicleType;
 
       // just draw the vehicle
-      BltVideoObjectFromIndex(vsSaveBuffer, giCarPortraits[ubVehicleType], 0, sFaceX, sFaceY,
-                              VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectFromIndex(vsSB, giCarPortraits[ubVehicleType], 0, sFaceX, sFaceY);
       RestoreExternBackgroundRect(sFaceX, sFaceY, FACE_WIDTH, FACE_HEIGHT);
 
       return;
@@ -440,8 +436,7 @@ void RenderSoldierFace(struct SOLDIERTYPE *pSoldier, int16_t sFaceX, int16_t sFa
       }
     }
   } else {
-    BltVideoObjectFromIndex(vsSaveBuffer, guiCLOSE, 5, sFaceX, sFaceY, VO_BLT_SRCTRANSPARENCY,
-                            NULL);
+    BltVObjectFromIndex(vsSB, guiCLOSE, 5, sFaceX, sFaceY);
     RestoreExternBackgroundRect(sFaceX, sFaceY, FACE_WIDTH, FACE_HEIGHT);
   }
 }

@@ -1553,8 +1553,8 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
                   }
 
                   SetFont(TINYFONT1);
-                  SetFontDest(vsSaveBuffer, 0, gsVIEWPORT_WINDOW_START_Y, 640,
-                              gsVIEWPORT_WINDOW_END_Y, FALSE);
+                  SetFontDest(vsSB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
+                              FALSE);
                   VarFindFontCenterCoordinates(sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d",
                                                pNode->uiAPCost);
                   mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",
@@ -1764,14 +1764,14 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
                           }
 
                           if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                            pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
+                            pSaveBuf = VSurfaceLockOld(vsSB, &uiSaveBufferPitchBYTES);
 
                             // BLIT HERE
                             Blt8BPPDataTo16BPPBufferTransShadowClip(
                                 (uint16_t *)pSaveBuf, uiSaveBufferPitchBYTES, hVObject, sXPos,
                                 sYPos, usImageIndex, &gClippingRect, pShadeTable);
 
-                            VSurfaceUnlock(vsSaveBuffer);
+                            VSurfaceUnlock(vsSB);
 
                             // Turn it off!
                             pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);
@@ -1830,14 +1830,14 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
                         }
 
                         if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                          pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
+                          pSaveBuf = VSurfaceLockOld(vsSB, &uiSaveBufferPitchBYTES);
 
                           // BLIT HERE
                           Blt8BPPDataTo16BPPBufferTransZClip(
                               (uint16_t *)pSaveBuf, uiSaveBufferPitchBYTES, gpZBuffer, sZLevel,
                               hVObject, sXPos, sYPos, usImageIndex, &gClippingRect);
 
-                          VSurfaceUnlock(vsSaveBuffer);
+                          VSurfaceUnlock(vsSB);
 
                           // Turn it off!
                           pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);
@@ -1888,14 +1888,14 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
                           }
 
                           if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                            pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
+                            pSaveBuf = VSurfaceLockOld(vsSB, &uiSaveBufferPitchBYTES);
 
                             // BLIT HERE
                             Blt8BPPDataTo16BPPBufferTransShadow(
                                 (uint16_t *)pSaveBuf, uiSaveBufferPitchBYTES, hVObject, sXPos,
                                 sYPos, usImageIndex, pShadeTable);
 
-                            VSurfaceUnlock(vsSaveBuffer);
+                            VSurfaceUnlock(vsSB);
 
                             // Turn it off!
                             pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);
@@ -1956,14 +1956,14 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
                                                            sYPos, usImageIndex);
 
                         if ((uiLevelNodeFlags & LEVELNODE_UPDATESAVEBUFFERONCE)) {
-                          pSaveBuf = VSurfaceLockOld(vsSaveBuffer, &uiSaveBufferPitchBYTES);
+                          pSaveBuf = VSurfaceLockOld(vsSB, &uiSaveBufferPitchBYTES);
 
                           // BLIT HERE
                           Blt8BPPDataTo16BPPBufferTransZ((uint16_t *)pSaveBuf,
                                                          uiSaveBufferPitchBYTES, gpZBuffer, sZLevel,
                                                          hVObject, sXPos, sYPos, usImageIndex);
 
-                          VSurfaceUnlock(vsSaveBuffer);
+                          VSurfaceUnlock(vsSB);
 
                           // Turn it off!
                           pNode->uiFlags &= (~LEVELNODE_UPDATESAVEBUFFERONCE);
@@ -1981,8 +1981,8 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
                   if (fMerc) {
                     if (pSoldier != NULL && GetSolID(pSoldier) >= MAX_NUM_SOLDIERS) {
                       SetFont(TINYFONT1);
-                      SetFontDest(vsSaveBuffer, 0, gsVIEWPORT_WINDOW_START_Y, 640,
-                                  gsVIEWPORT_WINDOW_END_Y, FALSE);
+                      SetFontDest(vsSB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
+                                  FALSE);
                       VarFindFontCenterCoordinates(sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d",
                                                    pSoldier->ubPlannedUIAPCost);
                       mprintf_buffer(pDestBuf, uiDestPitchBYTES, TINYFONT1, sX, sY, L"%d",

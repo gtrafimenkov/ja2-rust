@@ -903,7 +903,7 @@ void RenderOverheadMap(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t s
     }
 
     // Render border!
-    BltVideoObjectFromIndex(vsFB, uiOVERMAP, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectFromIndex(vsFB, uiOVERMAP, 0, 0, 0);
 
     // Update the save buffer
     {
@@ -916,13 +916,13 @@ void RenderOverheadMap(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t s
       GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
 
       pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
-      pDestBuf = VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+      pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 
       Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
                       0, 0, 0, 0, usWidth, usHeight);
 
       VSurfaceUnlock(vsFB);
-      VSurfaceUnlock(vsSaveBuffer);
+      VSurfaceUnlock(vsSB);
     }
   }
 }

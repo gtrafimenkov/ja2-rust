@@ -682,7 +682,7 @@ uint32_t QuestDebugScreenHandle() {
     RenderQuestDebugSystem();
 
     // At this point the background is pure, copy it to the save buffer
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 639, 479);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 639, 479);
   }
   RestoreBackgroundRects();
 
@@ -1771,12 +1771,11 @@ void DisplaySelectedListBox() {
   // get and display the up and down arrows
   GetVideoObject(&hImageHandle, guiQdScrollArrowImage);
   // top arrow
-  BltVideoObject2(vsFB, hImageHandle, 0, usPosX - 5, usPosY - 1, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hImageHandle, 0, usPosX - 5, usPosY - 1);
 
   // Bottom arrow
-  BltVideoObject2(vsFB, hImageHandle, 1, usPosX,
-                  usPosY + gpActiveListBox->usScrollHeight - gpActiveListBox->usScrollArrowHeight,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hImageHandle, 1, usPosX,
+             usPosY + gpActiveListBox->usScrollHeight - gpActiveListBox->usScrollArrowHeight);
 
   // display the scroll rectangle
   DrawQdsScrollRectangle();  // gpActiveListBox->sCurSelectedItem, usPosX, usPosY, (uint16_t)(usPosY

@@ -1294,8 +1294,7 @@ BOOLEAN RenderShopKeeperInterface() {
 
   // Get the main background screen graphic and blt it
   GetVideoObject(&hPixHandle, guiMainTradeScreenImage);
-  BltVideoObject2(vsFB, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, SKI_MAIN_BACKGROUND_X, SKI_MAIN_BACKGROUND_Y);
 
   // Display the Title
   DrawTextToScreen(SKI_Text[SKI_TEXT_MERCHADISE_IN_STOCK], SKI_MAIN_TITLE_X, SKI_MAIN_TITLE_Y,
@@ -1335,7 +1334,7 @@ BOOLEAN RenderShopKeeperInterface() {
                    SKI_PLAYERS_CURRENT_BALANCE_OFFSET_TO_VALUE, SKI_PLAYERS_CURRENT_BALANCE_WIDTH,
                    FONT10ARIAL, SKI_ITEM_PRICE_COLOR, FONT_MCOLOR_BLACK, TRUE, CENTER_JUSTIFIED);
 
-  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, SKI_TACTICAL_BACKGROUND_START_X,
+  VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, SKI_TACTICAL_BACKGROUND_START_X,
                        SKI_TACTICAL_BACKGROUND_START_HEIGHT);
 
   // At this point the background is pure, copy it to the save buffer
@@ -2488,8 +2487,8 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
     if (iFaceSlot != -1) {
       // Get and blit the face
       GetVideoObject(&hPixHandle, guiSmallSoldiersFace[iFaceSlot]);
-      BltVideoObject2(vsFB, hPixHandle, 0, (uint16_t)(usPosX + SKI_SMALL_FACE_OFFSET_X),
-                      (uint16_t)(usPosY), VO_BLT_SRCTRANSPARENCY, NULL);  // SKI_SMALL_FACE_OFFSET_Y
+      BltVObject(vsFB, hPixHandle, 0, (uint16_t)(usPosX + SKI_SMALL_FACE_OFFSET_X),
+                 (uint16_t)(usPosY));  // SKI_SMALL_FACE_OFFSET_Y
     }
   }
 
@@ -4424,14 +4423,7 @@ int8_t GetSlotNumberForMerc(uint8_t ubProfile) {
   return (-1);
 }
 
-void RenderSkiAtmPanel() {
-  //	struct VObject*	hPixHandle;
-
-  // Get the Atm background panel graphic and blt it
-  //	GetVideoObject(&hPixHandle, guiSkiAtmImage );
-  //	BltVideoObject2(vsFB, hPixHandle, 0,SKI_ATM_PANEL_X, SKI_ATM_PANEL_Y,
-  // VO_BLT_SRCTRANSPARENCY,NULL);
-}
+void RenderSkiAtmPanel() {}
 
 void CreateSkiAtmButtons() {
   uint16_t usPosX, usPosY;
@@ -5520,8 +5512,7 @@ void CrossOutUnwantedItems(void) {
           sBoxStartY =
               SKI_PLAYERS_TRADING_INV_Y + (bSlotId / SKI_NUM_TRADING_INV_COLS) * (SKI_INV_OFFSET_Y);
 
-          BltVideoObject2(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY), VO_BLT_SRCTRANSPARENCY,
-                          NULL);
+          BltVObject(vsFB, hHandle, 0, (sBoxStartX + 22), (sBoxStartY));
 
           // invalidate the region
           InvalidateRegion(sBoxStartX - 1, sBoxStartY - 1, sBoxStartX + sBoxWidth + 1,

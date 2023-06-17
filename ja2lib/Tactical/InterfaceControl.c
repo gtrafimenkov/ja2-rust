@@ -526,7 +526,7 @@ void RenderTopmostTacticalInterface() {
             sX -= 10;
             sY -= 10;
 
-            BltVideoObjectFromIndex(vsFB, uiBogTarget, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL);
+            BltVObjectFromIndex(vsFB, uiBogTarget, 0, sX, sY);
             InvalidateRegion(sX, sY, sX + 20, sY + 20);
           }
         }

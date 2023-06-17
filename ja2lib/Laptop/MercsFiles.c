@@ -231,18 +231,15 @@ void RenderMercsFiles() {
 
   // Portrait Box
   GetVideoObject(&hPixHandle, guiPortraitBox);
-  BltVideoObject2(vsFB, hPixHandle, 0, MERC_FILES_PORTRAIT_BOX_X, MERC_FILES_PORTRAIT_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, MERC_FILES_PORTRAIT_BOX_X, MERC_FILES_PORTRAIT_BOX_Y);
 
   // Stats Box
   GetVideoObject(&hPixHandle, guiStatsBox);
-  BltVideoObject2(vsFB, hPixHandle, 0, MERC_FILES_STATS_BOX_X, MERC_FILES_STATS_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, MERC_FILES_STATS_BOX_X, MERC_FILES_STATS_BOX_Y);
 
   // bio box
   GetVideoObject(&hPixHandle, guiBioBox);
-  BltVideoObject2(vsFB, hPixHandle, 0, MERC_FILES_BIO_BOX_X + 1, MERC_FILES_BIO_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, MERC_FILES_BIO_BOX_X + 1, MERC_FILES_BIO_BOX_Y);
 
   // Display the mercs face
   DisplayMercFace(GetMercIDFromMERCArray(gubCurMercIndex));
@@ -399,8 +396,7 @@ BOOLEAN DisplayMercFace(uint8_t ubMercID) {
 
   // Portrait Frame
   GetVideoObject(&hPortraitHandle, guiPortraitBox);
-  BltVideoObject2(vsFB, hPortraitHandle, 0, MERC_FILES_PORTRAIT_BOX_X, MERC_FILES_PORTRAIT_BOX_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPortraitHandle, 0, MERC_FILES_PORTRAIT_BOX_X, MERC_FILES_PORTRAIT_BOX_Y);
 
   pMerc = &gMercProfiles[ubMercID];
 
@@ -415,7 +411,7 @@ BOOLEAN DisplayMercFace(uint8_t ubMercID) {
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiMercFace);
-  BltVideoObject2(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y);
 
   // if the merc is dead, shadow the face red and put text over top saying the merc is dead
   if (IsMercDead(ubMercID)) {
@@ -431,7 +427,7 @@ BOOLEAN DisplayMercFace(uint8_t ubMercID) {
     SetObjectHandleShade(guiMercFace, 0);
 
     // Blt face to screen
-    BltVideoObject2(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hFaceHandle, 0, MERC_FACE_X, MERC_FACE_Y);
 
     DisplayWrappedString(MERC_FACE_X, MERC_FACE_Y + MERC_PORTRAIT_TEXT_OFFSET_Y, MERC_FACE_WIDTH, 2,
                          FONT14ARIAL, 145, MercInfo[MERC_FILES_MERC_IS_DEAD], FONT_MCOLOR_BLACK,
