@@ -712,7 +712,7 @@ void RenderHelpScreen() {
     gfHaveRenderedFirstFrameToSaveBuffer = TRUE;
 
     // blit everything to the save buffer ( cause the save buffer can bleed through )
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, gHelpScreen.usScreenLocX, gHelpScreen.usScreenLocY,
+    VSurfaceBlitBufToBuf(vsFB, vsSB, gHelpScreen.usScreenLocX, gHelpScreen.usScreenLocY,
                          (UINT16)(gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth),
                          (UINT16)(gHelpScreen.usScreenLocY + gHelpScreen.usScreenHeight));
 
@@ -796,13 +796,11 @@ BOOLEAN DrawHelpScreenBackGround() {
 
   // if there are buttons, blit the button border
   if (gHelpScreen.bNumberOfButtons != 0) {
-    BltVideoObject2(vsFB, hPixHandle, HLP_SCRN_BUTTON_BORDER, usPosX, gHelpScreen.usScreenLocY,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hPixHandle, HLP_SCRN_BUTTON_BORDER, usPosX, gHelpScreen.usScreenLocY);
     usPosX += HELP_SCREEN_BUTTON_BORDER_WIDTH;
   }
 
-  BltVideoObject2(vsFB, hPixHandle, HLP_SCRN_DEFAULT_TYPE, usPosX, gHelpScreen.usScreenLocY,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, HLP_SCRN_DEFAULT_TYPE, usPosX, gHelpScreen.usScreenLocY);
 
   InvalidateRegion(gHelpScreen.usScreenLocX, gHelpScreen.usScreenLocY,
                    gHelpScreen.usScreenLocX + gHelpScreen.usScreenWidth,

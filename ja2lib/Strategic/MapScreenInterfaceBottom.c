@@ -247,8 +247,7 @@ void RenderMapScreenInterfaceBottom(void) {
   if (fMapScreenBottomDirty == TRUE) {
     // get and blt panel
     GetVideoObject(&hHandle, guiMAPBOTTOMPANEL);
-    BltVideoObject2(vsSaveBuffer, hHandle, 0, MAP_BOTTOM_X, MAP_BOTTOM_Y, VO_BLT_SRCTRANSPARENCY,
-                    NULL);
+    BltVObject(vsSB, hHandle, 0, MAP_BOTTOM_X, MAP_BOTTOM_Y);
 
     if (GetSectorFlagStatus(sSelMapX, sSelMapY, (UINT8)iCurrentMapSectorZ, SF_ALREADY_VISITED) ==
         TRUE) {
@@ -886,8 +885,8 @@ void DisplayScrollBarSlider() {
                      (ubNumMessages - MAX_MESSAGES_ON_MAP_BOTTOM);
 
     GetVideoObject(&hHandle, guiSliderBar);
-    BltVideoObject2(vsFB, hHandle, 8, MESSAGE_SCROLL_AREA_START_X + 2,
-                    MESSAGE_SCROLL_AREA_START_Y + ubSliderOffset, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hHandle, 8, MESSAGE_SCROLL_AREA_START_X + 2,
+               MESSAGE_SCROLL_AREA_START_Y + ubSliderOffset);
   }
 }
 
@@ -1124,7 +1123,7 @@ void DisplayCurrentBalanceTitleForMapBottom(void) {
   INT16 sFontX, sFontY;
 
   // ste the font buffer
-  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
 
   SetFont(COMPFONT);
   SetFontForeground(MAP_BOTTOM_FONT_COLOR);

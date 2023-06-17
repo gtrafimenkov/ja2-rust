@@ -1953,11 +1953,11 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
 
     // a living soldier?..or external NPC?..choose panel based on this
     if (pSoldier) {
-      BltVideoObjectFromIndex(GetVSByID(pBlitter->uiDestBuff), guiCOMPANEL, 0, pBlitter->sX,
-                              pBlitter->sY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectFromIndex(GetVSByID(pBlitter->uiDestBuff), guiCOMPANEL, 0, pBlitter->sX,
+                          pBlitter->sY);
     } else {
-      BltVideoObjectFromIndex(GetVSByID(pBlitter->uiDestBuff), guiCOMPANELB, 0, pBlitter->sX,
-                              pBlitter->sY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObjectFromIndex(GetVSByID(pBlitter->uiDestBuff), guiCOMPANELB, 0, pBlitter->sX,
+                          pBlitter->sY);
     }
 
     // Display name, location ( if not current )

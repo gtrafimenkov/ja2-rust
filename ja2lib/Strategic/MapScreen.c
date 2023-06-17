@@ -1277,8 +1277,8 @@ void RenderHandPosItem(void) {
   SetFontForeground(CHAR_INFO_PANEL_BLOCK_COLOR);
   SetFontBackground(FONT_BLACK);
 
-  INVRenderItem(vsSaveBuffer, pSoldier, &(pSoldier->inv[HANDPOS]), SOLDIER_HAND_X, SOLDIER_HAND_Y,
-                58, 23, DIRTYLEVEL2, NULL, 0, FALSE, 0);
+  INVRenderItem(vsSB, pSoldier, &(pSoldier->inv[HANDPOS]), SOLDIER_HAND_X, SOLDIER_HAND_Y, 58, 23,
+                DIRTYLEVEL2, NULL, 0, FALSE, 0);
 }
 
 void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber) {
@@ -1289,22 +1289,19 @@ void RenderIconsForUpperLeftCornerPiece(INT8 bCharNumber) {
   // if merc is an AIM merc
   if (Menptr[gCharactersList[bCharNumber].usSolID].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
     // finite contract length icon
-    BltVideoObject2(vsSaveBuffer, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsSB, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y);
   }
 
   // if merc has life insurance
   if (Menptr[gCharactersList[bCharNumber].usSolID].usLifeInsurance > 0) {
     // draw life insurance icon
-    BltVideoObject2(vsSaveBuffer, hHandle, 2, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + CHAR_ICON_SPACING,
-                    VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsSB, hHandle, 2, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + CHAR_ICON_SPACING);
   }
 
   // if merc has a medical deposit
   if (Menptr[gCharactersList[bCharNumber].usSolID].usMedicalDeposit > 0) {
     // draw medical deposit icon
-    BltVideoObject2(vsSaveBuffer, hHandle, 1, CHAR_ICON_X,
-                    CHAR_ICON_CONTRACT_Y + (2 * CHAR_ICON_SPACING), VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsSB, hHandle, 1, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + (2 * CHAR_ICON_SPACING));
   }
 }
 
@@ -1973,7 +1970,7 @@ void DisplayCharacterInfo(void) {
   Assert(gCharactersList[bSelectedInfoChar].fValid);
 
   // set font buffer
-  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
 
   // draw character info and face
   DrawCharacterInfo(bSelectedInfoChar);
@@ -2474,7 +2471,7 @@ void DisplayCharacterList() {
   }
 
   // set dest buffer
-  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
   SetFont(MAP_SCREEN_FONT);
   SetFontBackground(FONT_BLACK);
 
@@ -2932,7 +2929,7 @@ UINT32 MapScreenHandle(void) {
     // TestMessageSystem( );
 
     // fill in
-    VSurfaceColorFill(vsSaveBuffer, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
+    VSurfaceColorFill(vsSB, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
     VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
 
     if ((fFirstTimeInMapScreen == TRUE) && (AnyMercsHired() == FALSE)) {
@@ -5127,7 +5124,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
                           MIDDLEPAN);
     if (!AddVObjectFromFile("INTERFACE\\LaptopOn.sti", &uiLaptopOn))
       AssertMsg(0, "Failed to load data\\Interface\\LaptopOn.sti");
-    BltVideoObjectFromIndex(vsFB, uiLaptopOn, 0, 465, 417, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObjectFromIndex(vsFB, uiLaptopOn, 0, 465, 417);
     InvalidateRegion(465, 417, 480, 427);
     ExecuteBaseDirtyRectQueue();
     EndFrameBufferRender();
@@ -5484,11 +5481,11 @@ void BltCharInvPanel() {
 
   GetSoldier(&pSoldier, gCharactersList[bSelectedInfoChar].usSolID);
 
-  pDestBuf = (UINT16 *)VSurfaceLockOld(vsSaveBuffer, &uiDestPitchBYTES);
+  pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
   GetVideoObject(&hCharListHandle, guiMAPINV);
   Blt8BPPDataTo16BPPBufferTransparent(pDestBuf, uiDestPitchBYTES, hCharListHandle, PLAYER_INFO_X,
                                       PLAYER_INFO_Y, 0);
-  VSurfaceUnlock(vsSaveBuffer);
+  VSurfaceUnlock(vsSB);
 
   Assert(pSoldier);
   CreateDestroyMapInvButton();
@@ -5513,7 +5510,7 @@ void BltCharInvPanel() {
   RenderInvBodyPanel(pSoldier, INV_BODY_X, INV_BODY_Y);
 
   // reset font destination buffer to the save buffer
-  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
 
   // render items in each of chars slots
   HandleRenderInvSlots(pSoldier, DIRTYLEVEL2);
@@ -5525,7 +5522,7 @@ void BltCharInvPanel() {
 
   // Render Values for stats!
   // Set font drawing to saved buffer
-  SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
+  SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
 
   SetFontBackground(FONT_MCOLOR_BLACK);
   SetFontForeground(MAP_INV_STATS_TITLE_FONT_COLOR);
@@ -5560,7 +5557,7 @@ void BltCharInvPanel() {
 
   if (InKeyRingPopup()) {
     // shade the background
-    ShadowVideoSurfaceRect(vsSaveBuffer, PLAYER_INFO_X, PLAYER_INFO_Y, PLAYER_INFO_X + 261,
+    ShadowVideoSurfaceRect(vsSB, PLAYER_INFO_X, PLAYER_INFO_Y, PLAYER_INFO_X + 261,
                            PLAYER_INFO_Y + (359 - 107));
   } else {
     // blit gold key on top of key ring if key ring is not empty
@@ -7033,8 +7030,7 @@ void RenderTeamRegionBackground(void) {
   // show inventory or the team list?
   if (fShowInventoryFlag == FALSE) {
     GetVideoObject(&hHandle, guiCHARLIST);
-    BltVideoObject2(vsSaveBuffer, hHandle, 0, PLAYER_INFO_X, PLAYER_INFO_Y, VO_BLT_SRCTRANSPARENCY,
-                    NULL);
+    BltVObject(vsSB, hHandle, 0, PLAYER_INFO_X, PLAYER_INFO_Y);
   } else {
     BltCharInvPanel();
   }
@@ -7079,7 +7075,7 @@ void RenderCharacterInfoBackground(void) {
 
   // the upleft hand corner character info panel
   GetVideoObject(&hHandle, guiCHARINFO);
-  BltVideoObject2(vsSaveBuffer, hHandle, 0, TOWN_INFO_X, TOWN_INFO_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsSB, hHandle, 0, TOWN_INFO_X, TOWN_INFO_Y);
 
   UpdateHelpTextForMapScreenMercIcons();
 
@@ -9074,8 +9070,7 @@ void DisplayIconsForMercsAsleep(void) {
       pSoldier = MercPtrs[gCharactersList[iCounter].usSolID];
       if (IsSolActive(pSoldier) && pSoldier->fMercAsleep &&
           CanChangeSleepStatusForSoldier(pSoldier)) {
-        BltVideoObject2(vsSaveBuffer, hHandle, 0, 125, (INT16)(Y_START + (iCounter * (Y_SIZE + 2))),
-                        VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVObject(vsSB, hHandle, 0, 125, (INT16)(Y_START + (iCounter * (Y_SIZE + 2))));
       }
     }
   }
@@ -9089,10 +9084,10 @@ void CheckForAndRenderNewMailOverlay() {
     if (GetJA2Clock() % 1000 < 667) {
       if (ButtonList[guiMapBottomExitButtons[MAP_EXIT_TO_LAPTOP]]->uiFlags &
           BUTTON_CLICKED_ON) {  // button is down, so offset the icon
-        BltVideoObjectFromIndex(vsFB, guiNewMailIcons, 1, 465, 418, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVObjectFromIndex(vsFB, guiNewMailIcons, 1, 465, 418);
         InvalidateRegion(465, 418, 480, 428);
       } else {  // button is up, so draw the icon normally
-        BltVideoObjectFromIndex(vsFB, guiNewMailIcons, 0, 464, 417, VO_BLT_SRCTRANSPARENCY, NULL);
+        BltVObjectFromIndex(vsFB, guiNewMailIcons, 0, 464, 417);
         if (!(ButtonList[guiMapBottomExitButtons[MAP_EXIT_TO_LAPTOP]]->uiFlags & BUTTON_ENABLED)) {
           UINT32 uiDestPitchBYTES;
           UINT8 *pDestBuf;
