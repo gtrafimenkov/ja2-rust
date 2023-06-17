@@ -296,7 +296,7 @@ void SetProgressBarTextDisplayFlag(uint8_t ubID, BOOLEAN fDisplayText, BOOLEAN f
     uint16_t usFontHeight = GetFontHeight(pCurr->usMsgFont) + 3;
 
     // blit everything to the save buffer ( cause the save buffer can bleed through )
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, pCurr->usBarLeft, pCurr->usBarBottom,
+    VSurfaceBlitBufToBuf(vsFB, vsSB, pCurr->usBarLeft, pCurr->usBarBottom,
                          (uint16_t)(pCurr->usBarRight - pCurr->usBarLeft), usFontHeight);
   }
 }

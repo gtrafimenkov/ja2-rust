@@ -71,8 +71,7 @@ void RenderBobbyRAmmo() {
 
   // GunForm
   GetVideoObject(&hPixHandle, guiAmmoGrid);
-  BltVideoObject2(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y, VO_BLT_SRCTRANSPARENCY,
-                  NULL);
+  BltVObject(vsFB, hPixHandle, 0, BOBBYR_GRIDLOC_X, BOBBYR_GRIDLOC_Y);
 
   DisplayItemInfo(IC_AMMO);
 

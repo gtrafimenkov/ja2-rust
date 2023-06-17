@@ -258,7 +258,7 @@ uint32_t OptionsScreenHandle() {
     RenderOptionsScreen();
 
     // Blit the background to the save buffer
-    VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
+    VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 640, 480);
     InvalidateRegion(0, 0, 640, 480);
   }
 
@@ -652,12 +652,12 @@ void RenderOptionsScreen() {
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiOptionBackGroundImage);
-  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, 0, 0);
 
   // Get and display the titla image
   GetVideoObject(&hPixHandle, guiOptionsAddOnImages);
-  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
-  BltVideoObject2(vsFB, hPixHandle, 1, 0, 434, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, 0, 0);
+  BltVObject(vsFB, hPixHandle, 1, 0, 434);
 
   //
   // Text for the toggle boxes

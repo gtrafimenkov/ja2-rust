@@ -858,18 +858,18 @@ BOOLEAN RenderAIMMembers() {
 
   // Stats
   GetVideoObject(&hStatsHandle, guiStats);
-  BltVideoObject2(vsFB, hStatsHandle, 0, STATS_X, STATS_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hStatsHandle, 0, STATS_X, STATS_Y);
 
   // Price
   GetVideoObject(&hPriceHandle, guiPrice);
-  BltVideoObject2(vsFB, hPriceHandle, 0, PRICE_X, PRICE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPriceHandle, 0, PRICE_X, PRICE_Y);
 
   // WeaponBox
   GetVideoObject(&hWeaponBoxHandle, guiWeaponBox);
 
   uiPosX = WEAPONBOX_X;
   for (x = 0; x < WEAPONBOX_NUMBER; x++) {
-    BltVideoObject2(vsFB, hWeaponBoxHandle, 0, uiPosX, WEAPONBOX_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hWeaponBoxHandle, 0, uiPosX, WEAPONBOX_Y);
     uiPosX += WEAPONBOX_SIZE_X;
   }
 
@@ -1417,7 +1417,7 @@ BOOLEAN DisplayMercsFace() {
 
   // Portrait Frame
   GetVideoObject(&hPortraitHandle, guiPortrait);
-  BltVideoObject2(vsFB, hPortraitHandle, 0, PORTRAIT_X, PORTRAIT_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPortraitHandle, 0, PORTRAIT_X, PORTRAIT_Y);
 
   // load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, gbCurrentSoldier);
@@ -1427,7 +1427,7 @@ BOOLEAN DisplayMercsFace() {
 
   // Blt face to screen
   GetVideoObject(&hFaceHandle, guiFace);
-  BltVideoObject2(vsFB, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hFaceHandle, 0, FACE_X, FACE_Y);
 
   // if the merc is dead
   if (IsMercDead(gbCurrentSoldier)) {
@@ -1443,7 +1443,7 @@ BOOLEAN DisplayMercsFace() {
     SetObjectHandleShade(guiFace, 0);
 
     // Blt face to screen
-    BltVideoObject2(vsFB, hFaceHandle, 0, FACE_X, FACE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsFB, hFaceHandle, 0, FACE_X, FACE_Y);
 
     // if the merc is dead, display it
     DrawTextToScreen(AimPopUpText[AIM_MEMBER_DEAD], FACE_X + 1, FACE_Y + 107, FACE_WIDTH,
@@ -1926,8 +1926,8 @@ BOOLEAN DisplayMercsVideoFace() {
   GetVideoObject(&hTerminalHandle, guiVideoConfTerminal);
   ShadowVideoSurfaceImage(vsFB, hTerminalHandle, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
                           AIM_MEMBER_VIDEO_CONF_TERMINAL_Y);
-  BltVideoObject2(vsFB, hTerminalHandle, 0, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
-                  AIM_MEMBER_VIDEO_CONF_TERMINAL_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hTerminalHandle, 0, AIM_MEMBER_VIDEO_CONF_TERMINAL_X,
+             AIM_MEMBER_VIDEO_CONF_TERMINAL_Y);
 
   // Display the Select light on the merc
   if (gubVideoConferencingMode == AIM_VIDEO_HIRE_MERC_MODE) DisplaySelectLights(FALSE, FALSE);
@@ -1993,8 +1993,8 @@ uint32_t DisplayMercChargeAmount() {
 
   // Display the 'black hole'for the contract charge  in the video conference terminal
   GetVideoObject(&hImageHandle, guiVideoContractCharge);
-  BltVideoObject2(vsFB, hImageHandle, 0, AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_X,
-                  AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_Y, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hImageHandle, 0, AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_X,
+             AIM_MEMBER_VIDEO_CONF_CONTRACT_IMAGE_Y);
 
   if (FindSoldierByProfileID(gbCurrentSoldier, TRUE) == NULL) {
     giContractAmount = 0;
@@ -2077,7 +2077,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t *sString1, wchar_t *
       }
 
       GetVideoObject(&hPopupBoxHandle, guiPopUpBox);
-      BltVideoObject2(vsFB, hPopupBoxHandle, 0, usPosX, usPosY, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsFB, hPopupBoxHandle, 0, usPosX, usPosY);
 
       // Create the popup boxes button
       guiPopUpImage = LoadButtonImage("LAPTOP\\VideoConfButtons.sti", -1, 2, -1, 3, -1);
@@ -2114,8 +2114,7 @@ BOOLEAN InitCreateDeleteAimPopUpBox(uint8_t ubFlag, wchar_t *sString1, wchar_t *
 
       // load and display the popup box graphic
       GetVideoObject(&hPopupBoxHandle, guiPopUpBox);
-      BltVideoObject2(vsFB, hPopupBoxHandle, 0, usPopUpBoxPosX, usPopUpBoxPosY,
-                      VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsFB, hPopupBoxHandle, 0, usPopUpBoxPosX, usPopUpBoxPosY);
 
       SetFontShadow(AIM_M_VIDEO_NAME_SHADOWCOLOR);
 
@@ -2606,8 +2605,7 @@ BOOLEAN DisplaySnowBackground() {
   }
   // Get the snow background, and blit it
   GetVideoObject(&hSnowHandle, guiBWSnow);
-  BltVideoObject2(vsFB, hSnowHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hSnowHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y);
 
   InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                    AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
@@ -2792,8 +2790,7 @@ uint8_t DisplayTransparentSnow(uint8_t ubMode, uint32_t uiImageIdentifier, uint8
 
   // Get the snow background, and blit it
   GetVideoObject(&hFuzzLineHandle, uiImageIdentifier);
-  BltVideoObject2(vsFB, hFuzzLineHandle, bCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hFuzzLineHandle, bCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y);
 
   if (bForward) {
     if (bCount == ubMaxImages - 1) {
@@ -2831,8 +2828,7 @@ uint8_t DisplayDistortionLine(uint8_t ubMode, uint32_t uiImageIdentifier, uint8_
 
   // Get the snow background, and blit it
   GetVideoObject(&hFuzzLineHandle, uiImageIdentifier);
-  BltVideoObject2(vsFB, hFuzzLineHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
-                  VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hFuzzLineHandle, ubCount, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y);
 
   if (ubCount == ubMaxImages - 1) {
     ubCount = 0;
@@ -3045,7 +3041,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
       gfAimMemberCanMercSayOpeningQuote = TRUE;
 
       GetVideoObject(&hImageHandle, uiVideoBackgroundGraphic);
-      BltVideoObject(guiVideoTitleBar, hImageHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(GetVSByID(guiVideoTitleBar), hImageHandle, 0, 0, 0);
 
       DeleteVideoObjectFromIndex(uiVideoBackgroundGraphic);
     }
@@ -3273,7 +3269,7 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     }
 
     GetVideoObject(&hImageHandle, uiVideoBackgroundGraphic);
-    BltVideoObject(guiVideoTitleBar, hImageHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(GetVSByID(guiVideoTitleBar), hImageHandle, 0, 0, 0);
 
     DeleteVideoObjectFromIndex(uiVideoBackgroundGraphic);
   }
@@ -3585,32 +3581,32 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
     if (ubCount > 2) {
       usWidth = (uint16_t)(LastRect.iRight - LastRect.iLeft);
       usHeight = (uint16_t)(LastRect.iBottom - LastRect.iTop);
-      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (uint16_t)LastRect.iLeft, (uint16_t)LastRect.iTop,
-                           usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)LastRect.iLeft, (uint16_t)LastRect.iTop, usWidth,
+                           usHeight);
     }
 
     // Save rectangle
     if (ubCount > 1) {
       usWidth = (uint16_t)(DestRect.iRight - DestRect.iLeft);
       usHeight = (uint16_t)(DestRect.iBottom - DestRect.iTop);
-      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop,
-                           usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSB, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop, usWidth,
+                           usHeight);
     }
   } else {
     // Restore the old rect
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 2) {
       usWidth = (uint16_t)(LastRect.iRight - LastRect.iLeft);
       usHeight = (uint16_t)(LastRect.iBottom - LastRect.iTop);
-      VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, (uint16_t)LastRect.iLeft, (uint16_t)LastRect.iTop,
-                           usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)LastRect.iLeft, (uint16_t)LastRect.iTop, usWidth,
+                           usHeight);
     }
 
     // Save rectangle
     if (ubCount < AIM_MEMBER_VIDEO_TITLE_ITERATIONS - 1) {
       usWidth = (uint16_t)(DestRect.iRight - DestRect.iLeft);
       usHeight = (uint16_t)(DestRect.iBottom - DestRect.iTop);
-      VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop,
-                           usWidth, usHeight);
+      VSurfaceBlitBufToBuf(vsFB, vsSB, (uint16_t)DestRect.iLeft, (uint16_t)DestRect.iTop, usWidth,
+                           usHeight);
     }
   }
 

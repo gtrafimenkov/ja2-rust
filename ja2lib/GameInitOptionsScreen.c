@@ -406,7 +406,7 @@ BOOLEAN EnterGIOScreen() {
   // REnder the screen once so we can blt ot to ths save buffer
   RenderGIOScreen();
 
-  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 639, 439);
+  VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 639, 439);
 
   gfGIOButtonsAllocated = TRUE;
 
@@ -499,7 +499,7 @@ BOOLEAN RenderGIOScreen() {
 
   // Get the main background screen graphic and blt it
   GetVideoObject(&hPixHandle, guiGIOMainBackGroundImage);
-  BltVideoObject2(vsFB, hPixHandle, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+  BltVObject(vsFB, hPixHandle, 0, 0, 0);
 
   // Shade the background
   ShadowVideoSurfaceRect(vsFB, 48, 55, 592, 378);  // 358

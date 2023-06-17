@@ -730,9 +730,9 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     gfEnterAutoResolveMode = TRUE;
   }
 
-  VSurfaceBlitBufToBuf(vsSaveBuffer, vsFB, 27, 54, 209, 32);
+  VSurfaceBlitBufToBuf(vsSB, vsFB, 27, 54, 209, 32);
   RenderButtons();
-  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 27, 54, 209, 32);
+  VSurfaceBlitBufToBuf(vsFB, vsSB, 27, 54, 209, 32);
   gfRenderPBInterface = TRUE;
 
   // hide the prebattle interface
@@ -765,7 +765,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
     DstRect.iTop = iTop - iHeight * iPercentage / 200;
     DstRect.iBottom = DstRect.iTop + max(iHeight * iPercentage / 100, 1);
 
-    BltStretchVideoSurface(vsFB, vsSaveBuffer, 0, 0, 0, &PBIRect, &DstRect);
+    BltStretchVideoSurface(vsFB, vsSB, 0, 0, 0, &PBIRect, &DstRect);
 
     InvalidateScreen();
     RefreshScreen();
@@ -775,7 +775,7 @@ void DoTransitionFromMapscreenToPreBattleInterface() {
                          (uint16_t)(DstRect.iRight - DstRect.iLeft + 1),
                          (uint16_t)(DstRect.iBottom - DstRect.iTop + 1));
   }
-  VSurfaceBlitBufToBuf(vsFB, vsSaveBuffer, 0, 0, 640, 480);
+  VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 640, 480);
 }
 
 void KillPreBattleInterface() {
@@ -815,7 +815,7 @@ void KillPreBattleInterface() {
   // Enable the options button when the auto resolve  screen comes up
   EnableDisAbleMapScreenOptionsButton(TRUE);
 
-  VSurfaceColorFill(vsSaveBuffer, 0, 0, 261, 359, 0);
+  VSurfaceColorFill(vsSB, 0, 0, 261, 359, 0);
 
   EnableTeamInfoPanels();
   if (ButtonList[giMapContractButton]) {
@@ -907,7 +907,7 @@ void RenderPreBattleInterface() {
 
   if (gfRenderPBInterface) {
     // set font destinanation buffer to the save buffer
-    SetFontDest(vsSaveBuffer, 0, 0, 640, 480, FALSE);
+    SetFontDest(vsSB, 0, 0, 640, 480, FALSE);
 
     if (gfPBButtonsHidden) {
       ShowButton(iPBButton[0]);
@@ -923,20 +923,20 @@ void RenderPreBattleInterface() {
     gfRenderPBInterface = FALSE;
     GetVideoObject(&hVObject, uiInterfaceImages);
     // main panel
-    BltVideoObject2(vsSaveBuffer, hVObject, MAINPANEL, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsSB, hVObject, MAINPANEL, 0, 0);
     // main title
 
     RenderPBHeader(&x, &width);
     // now draw the title bars up to the text.
     for (i = x - 12; i > 20; i -= 10) {
-      BltVideoObject2(vsSaveBuffer, hVObject, TITLE_BAR_PIECE, i, 6, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsSB, hVObject, TITLE_BAR_PIECE, i, 6);
     }
     for (i = x + width + 2; i < 231; i += 10) {
-      BltVideoObject2(vsSaveBuffer, hVObject, TITLE_BAR_PIECE, i, 6, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsSB, hVObject, TITLE_BAR_PIECE, i, 6);
     }
 
     y = BOTTOM_Y - ACTUAL_HEIGHT - ROW_HEIGHT * max(guiNumUninvolved, 1);
-    BltVideoObject2(vsSaveBuffer, hVObject, UNINVOLVED_HEADER, 8, y, VO_BLT_SRCTRANSPARENCY, NULL);
+    BltVObject(vsSB, hVObject, UNINVOLVED_HEADER, 8, y);
 
     SetFont(BLOCKFONT);
     SetFontForeground(FONT_BEIGE);
@@ -985,12 +985,12 @@ void RenderPreBattleInterface() {
     // Draw the bottom columns
     for (i = 0; i < (int32_t)max(guiNumUninvolved, 1); i++) {
       y = BOTTOM_Y - ROW_HEIGHT * (i + 1) + 1;
-      BltVideoObject2(vsSaveBuffer, hVObject, BOTTOM_COLUMN, 161, y, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsSB, hVObject, BOTTOM_COLUMN, 161, y);
     }
 
     for (i = 0; i < (int32_t)(21 - max(guiNumUninvolved, 1)); i++) {
       y = TOP_Y + ROW_HEIGHT * i;
-      BltVideoObject2(vsSaveBuffer, hVObject, TOP_COLUMN, 186, y, VO_BLT_SRCTRANSPARENCY, NULL);
+      BltVObject(vsSB, hVObject, TOP_COLUMN, 186, y);
     }
 
     // location

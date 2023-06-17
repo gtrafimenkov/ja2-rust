@@ -721,7 +721,7 @@ uint32_t guiRIGHTPANEL = 0;
 uint32_t guiSAVEBUFFER = 0;
 
 struct VSurface *vsExtraBuffer = NULL;
-struct VSurface *vsSaveBuffer = NULL;
+struct VSurface *vsSB = NULL;
 
 BOOLEAN InitializeSystemVideoObjects() { return (TRUE); }
 
@@ -732,8 +732,8 @@ BOOLEAN InitializeGameVideoObjects() {
 
   GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
 
-  vsSaveBuffer = VSurfaceAdd(usWidth, usHeight, ubBitDepth, &guiSAVEBUFFER);
-  if (!vsSaveBuffer) {
+  vsSB = VSurfaceAdd(usWidth, usHeight, ubBitDepth, &guiSAVEBUFFER);
+  if (!vsSB) {
     return FALSE;
   }
 
