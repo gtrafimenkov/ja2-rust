@@ -6,7 +6,6 @@
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
-#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
@@ -30,6 +29,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 typedef struct {
   uint16_t usOverNightExpress;
@@ -769,7 +769,7 @@ void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, int32_t reason) {
 
     if (guiSubTotal && gfCanAcceptOrder) {
       // if the player doesnt have enough money
-      if (MoneyGetBalance() < giGrandTotal) {
+      if (LaptopMoneyGetBalance() < giGrandTotal) {
         DoLapTopMessageBox(MSG_BOX_LAPTOP_DEFAULT, BobbyROrderFormText[BOBBYR_CANT_AFFORD_PURCHASE],
                            LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
       } else {

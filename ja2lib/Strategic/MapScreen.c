@@ -20,7 +20,6 @@
 #include "Laptop/Finances.h"
 #include "Laptop/Personnel.h"
 #include "Local.h"
-#include "Money.h"
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
@@ -108,6 +107,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
+#include "rust_laptop.h"
 #include "rust_sam_sites.h"
 
 // DEFINES
@@ -4336,7 +4336,7 @@ void GetMapKeyboardInput(uint32_t *puiNewEvent) {
 #ifdef JA2TESTVERSION
           if (fAlt) {
             // reduce balance to $500
-            AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -(MoneyGetBalance() - 500));
+            AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -(LaptopMoneyGetBalance() - 500));
           }
 #endif
           break;
@@ -7271,21 +7271,21 @@ void HandleShadingOfLinesForContractMenu(void) {
     pProfile = &(gMercProfiles[GetSolProfile(pSoldier)]);
 
     // one day
-    if (pProfile->sSalary > MoneyGetBalance()) {
+    if (pProfile->sSalary > LaptopMoneyGetBalance()) {
       ShadeStringInBox(ghContractBox, CONTRACT_MENU_DAY);
     } else {
       UnShadeStringInBox(ghContractBox, CONTRACT_MENU_DAY);
     }
 
     // one week
-    if ((int32_t)(pProfile->uiWeeklySalary) > MoneyGetBalance()) {
+    if ((int32_t)(pProfile->uiWeeklySalary) > LaptopMoneyGetBalance()) {
       ShadeStringInBox(ghContractBox, CONTRACT_MENU_WEEK);
     } else {
       UnShadeStringInBox(ghContractBox, CONTRACT_MENU_WEEK);
     }
 
     // two weeks
-    if ((int32_t)(pProfile->uiBiWeeklySalary) > MoneyGetBalance()) {
+    if ((int32_t)(pProfile->uiBiWeeklySalary) > LaptopMoneyGetBalance()) {
       ShadeStringInBox(ghContractBox, CONTRACT_MENU_TWO_WEEKS);
     } else {
       UnShadeStringInBox(ghContractBox, CONTRACT_MENU_TWO_WEEKS);

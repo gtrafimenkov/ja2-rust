@@ -7108,7 +7108,7 @@ void CreateContractBox(struct SOLDIERTYPE *pCharacter) {
           /*
                                           // add current balance after title string
                                            swprintf( sDollarString, L"%d",
-             MoneyGetBalance()); InsertCommasForDollarFigure( sDollarString );
+             LaptopMoneyGetBalance()); InsertCommasForDollarFigure( sDollarString );
                                            InsertDollarSignInToString( sDollarString );
                                            swprintf( sString, L"%s %s",
              pContractStrings[uiCounter], sDollarString ); AddMonoString(&hStringHandle, sString);

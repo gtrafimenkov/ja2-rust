@@ -8,7 +8,6 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Personnel.h"
 #include "MessageBoxScreen.h"
-#include "Money.h"
 #include "Rect.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
@@ -63,6 +62,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "platform.h"
+#include "rust_laptop.h"
 
 // temp
 struct skirgbcolor {
@@ -1326,7 +1326,7 @@ BOOLEAN RenderShopKeeperInterface() {
                        CENTER_JUSTIFIED);
 
   // Display the players current balance value
-  swprintf(zMoney, ARR_SIZE(zMoney), L"%d", MoneyGetBalance());
+  swprintf(zMoney, ARR_SIZE(zMoney), L"%d", LaptopMoneyGetBalance());
 
   InsertCommasForDollarFigure(zMoney);
   InsertDollarSignInToString(zMoney);
@@ -3410,7 +3410,7 @@ void PerformTransaction(uint32_t uiMoneyFromPlayersAccount) {
     // if the player doesn't have enough money to pay for what he's buying
     if (uiArmsDealersItemsCost > uiPlayersTotalMoneyValue) {
       // if the player doesn't have enough money in his account to pay the rest
-      if (uiArmsDealersItemsCost > uiPlayersTotalMoneyValue + LaptopSaveInfo.iCurrentBalance) {
+      if (uiArmsDealersItemsCost > uiPlayersTotalMoneyValue + LaptopMoneyGetBalance()) {
         // tell player he can't possibly afford this
         SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_SHOPKEEPER, 6, 0, 0,
                                       giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
@@ -3418,8 +3418,8 @@ void PerformTransaction(uint32_t uiMoneyFromPlayersAccount) {
                                       giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
         SpecialCharacterDialogueEvent(
             DIALOGUE_SPECIAL_EVENT_SHOPKEEPER, 0,
-            (uiArmsDealersItemsCost - (LaptopSaveInfo.iCurrentBalance + uiPlayersTotalMoneyValue)),
-            0, giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
+            (uiArmsDealersItemsCost - (LaptopMoneyGetBalance() + uiPlayersTotalMoneyValue)), 0,
+            giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
       } else {
         // player doesn't have enough on the table, but can pay for it from his balance
         /// ask player if wants to subtract the shortfall directly from his balance
@@ -4619,13 +4619,13 @@ void HandleAtmOK() {
 
   } else if (gubCurrentSkiAtmMode == SKI_ATM_GIVE_MODE) {
     // are we tring to take more then we have?
-    if (iAmountToTransfer > MoneyGetBalance()) {
-      if (LaptopSaveInfo.iCurrentBalance == 0)
+    if (iAmountToTransfer > LaptopMoneyGetBalance()) {
+      if (LaptopMoneyGetBalance() == 0)
         memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
       else {
         // Set the amount to transfer
         swprintf(gzSkiAtmTransferString, ARR_SIZE(gzSkiAtmTransferString), L"%d",
-                 MoneyGetBalance());
+                 LaptopMoneyGetBalance());
       }
 
       gubCurrentSkiAtmMode = SKI_ATM_ERR_GIVE_MODE;
@@ -4833,7 +4833,7 @@ void HandleCurrentModeText(uint8_t ubMode) {
       break;
 
     case SKI_ATM_DISPLAY_PLAYERS_BALANCE:
-      swprintf(zMoney, ARR_SIZE(zMoney), L"%d", MoneyGetBalance());
+      swprintf(zMoney, ARR_SIZE(zMoney), L"%d", LaptopMoneyGetBalance());
       InsertCommasForDollarFigure(zMoney);
       InsertDollarSignInToString(zMoney);
 
@@ -4964,7 +4964,7 @@ void EnableDisableEvaluateAndTransactionButtons() {
     DisableButton(guiSKI_TransactionButton);
   }
 
-  if (uiArmsDealerTotalCost > uiPlayersOfferAreaTotalCost + LaptopSaveInfo.iCurrentBalance) {
+  if (uiArmsDealerTotalCost > uiPlayersOfferAreaTotalCost + LaptopMoneyGetBalance()) {
     DisableButton(guiSKI_TransactionButton);
   }
   /* Allow transaction attempt when dealer can't afford to buy that much - he'll reject it with a
