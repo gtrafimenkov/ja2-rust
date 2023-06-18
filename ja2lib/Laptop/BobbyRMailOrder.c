@@ -6,7 +6,7 @@
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
-#include "Money.h"
+#include "rust_laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
@@ -769,7 +769,7 @@ void BtnBobbyRAcceptOrderCallback(GUI_BUTTON *btn, INT32 reason) {
 
     if (guiSubTotal && gfCanAcceptOrder) {
       // if the player doesnt have enough money
-      if (MoneyGetBalance() < giGrandTotal) {
+      if (LaptopMoneyGetBalance() < giGrandTotal) {
         DoLapTopMessageBox(MSG_BOX_LAPTOP_DEFAULT, BobbyROrderFormText[BOBBYR_CANT_AFFORD_PURCHASE],
                            LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
       } else {

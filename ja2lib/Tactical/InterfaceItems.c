@@ -11,7 +11,7 @@
 #include "LanguageDefines.h"
 #include "Laptop/Finances.h"
 #include "MessageBoxScreen.h"
-#include "Money.h"
+#include "rust_laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
@@ -2937,7 +2937,7 @@ void RenderItemDescriptionBox() {
 
       // if the player is taking money from their account
       if (gfAddingMoneyToMercFromPlayersAccount)
-        swprintf(pStr, ARR_SIZE(pStr), L"%ld", MoneyGetBalance());
+        swprintf(pStr, ARR_SIZE(pStr), L"%ld", LaptopMoneyGetBalance());
       else
         swprintf(pStr, ARR_SIZE(pStr), L"%ld", gRemoveMoney.uiTotalAmount);
 

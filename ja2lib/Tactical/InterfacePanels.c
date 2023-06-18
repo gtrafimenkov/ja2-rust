@@ -74,6 +74,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_laptop.h"
 
 // DEFINES FOR VARIOUS PANELS
 #define CLOCK_X 554
@@ -4558,10 +4559,10 @@ void SMInvMoneyButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       gfAddingMoneyToMercFromPlayersAccount = TRUE;
 
       // create the temp object from the players account balance
-      //			if( MoneyGetBalance() > MAX_MONEY_PER_SLOT )
+      //			if( LaptopMoneyGetBalance() > MAX_MONEY_PER_SLOT )
       //				CreateMoney( MAX_MONEY_PER_SLOT, &gItemPointer );
       //			else
-      CreateMoney(MoneyGetBalance(), &gItemPointer);
+      CreateMoney(LaptopMoneyGetBalance(), &gItemPointer);
 
       InternalInitItemDescriptionBox(&gItemPointer, SM_ITEMDESC_START_X, SM_ITEMDESC_START_Y, 0,
                                      gpSMCurrentMerc);
