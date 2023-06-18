@@ -998,9 +998,6 @@
     <ClCompile Include="UI.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Money.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Soldier.c">
       <Filter>Source Files</Filter>
     </ClCompile>

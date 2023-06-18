@@ -1798,7 +1798,7 @@ void HandlePlayerHiringMerc(uint8_t ubHiredMercID) {
 
   // if the players is in good finacial standing
   // DEF: 3/19/99: Dont know why this was done
-  //	if( MoneyGetBalance() >= 2000 )
+  //	if( LaptopMoneyGetBalance() >= 2000 )
   {
     // determine which quote to say based on the merc that was hired
     switch (ubHiredMercID) {

@@ -20,7 +20,6 @@
 #include "Laptop/Laptop.h"
 #include "Laptop/Mercs.h"
 #include "LoadingScreen.h"
-#include "Money.h"
 #include "OptionsScreen.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
@@ -100,6 +99,7 @@
 #include "rust_civ_groups.h"
 #include "rust_debug.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 #include "rust_sam_sites.h"
 
 BOOLEAN fFirstTimeInMapScreen = TRUE;
@@ -582,7 +582,7 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize) {
   }
 
   SaveGameHeader.ubNumOfMercsOnPlayersTeam = NumberOfMercsOnPlayerTeam();
-  SaveGameHeader.iCurrentBalance = MoneyGetBalance();
+  SaveGameHeader.iCurrentBalance = LaptopMoneyGetBalance();
 
   SaveGameHeader.uiCurrentScreen = guiPreviousOptionScreen;
 

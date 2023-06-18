@@ -2,7 +2,6 @@
 
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/VObject.h"
@@ -21,6 +20,7 @@
 #include "Utils/WordWrap.h"
 #include "platform.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 // the global defines
 
@@ -94,9 +94,6 @@ enum {
 
 // the financial record list
 FinanceUnitPtr pFinanceListHead = NULL;
-
-// current players balance
-// int32_t iCurrentBalance=0;
 
 // current page displayed
 int32_t iCurrentPage = 0;
@@ -199,10 +196,10 @@ uint32_t AddTransactionToPlayersBook(uint8_t ubCode, uint8_t ubSecondCode, int32
   pFinance = pFinanceListHead;
 
   // update balance
-  LaptopSaveInfo.iCurrentBalance += iAmount;
+  LaptopMoneyAddToBalance(iAmount);
 
   uiId = ProcessAndEnterAFinacialRecord(ubCode, GetWorldTotalMin(), iAmount, ubSecondCode,
-                                        MoneyGetBalance());
+                                        LaptopMoneyGetBalance());
 
   // write balance to disk
   WriteBalanceToDisk();
@@ -339,7 +336,7 @@ int32_t GetYesterdaysIncome(void) {
 
 int32_t GetCurrentBalance(void) {
   // get balance to this minute
-  return (MoneyGetBalance());
+  return (LaptopMoneyGetBalance());
 
   // return(GetTotalDebits((GetWorldTotalMin()))+GetTotalCredits((GetWorldTotalMin())));
 }
@@ -994,7 +991,9 @@ void OpenAndReadFinancesFile(void) {
 
   // read in balance
   // write balance to disk first
-  File_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(int32_t), &iBytesRead);
+  int32_t currentBalance = 0;
+  File_Read(hFileHandle, &currentBalance, sizeof(int32_t), &iBytesRead);
+  LaptopMoneySetBalance(currentBalance);
   uiByteCount += sizeof(int32_t);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
@@ -1419,7 +1418,8 @@ BOOLEAN WriteBalanceToDisk(void) {
   hFileHandle = File_OpenForWriting(FINANCES_DATA_FILE);
 
   // write balance to disk
-  File_Write(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(int32_t), NULL);
+  int32_t currentBalance = LaptopMoneyGetBalance();
+  File_Write(hFileHandle, &currentBalance, sizeof(int32_t), NULL);
 
   // close file
   File_Close(hFileHandle);
@@ -1439,7 +1439,7 @@ void GetBalanceFromDisk(void) {
 
   // failed to get file, return
   if (!hFileHandle) {
-    LaptopSaveInfo.iCurrentBalance = 0;
+    LaptopMoneySetBalance(0);
     // close file
     File_Close(hFileHandle);
     return;
@@ -1449,7 +1449,9 @@ void GetBalanceFromDisk(void) {
   File_Seek(hFileHandle, 0, FILE_SEEK_START);
 
   // get balance from disk first
-  File_Read(hFileHandle, &(LaptopSaveInfo.iCurrentBalance), sizeof(int32_t), &iBytesRead);
+  int32_t currentBalance = 0;
+  File_Read(hFileHandle, &currentBalance, sizeof(int32_t), &iBytesRead);
+  LaptopMoneySetBalance(currentBalance);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
 
@@ -1546,7 +1548,7 @@ void SetLastPageInRecords(void) {
 
   // failed to get file, return
   if (!hFileHandle) {
-    LaptopSaveInfo.iCurrentBalance = 0;
+    LaptopMoneySetBalance(0);
 
     return;
   }
@@ -2369,7 +2371,7 @@ void LoadCurrentBalance(void) {
   // error checking
   // no file, return
   if (!(File_Exists(FINANCES_DATA_FILE))) {
-    LaptopSaveInfo.iCurrentBalance = 0;
+    LaptopMoneySetBalance(0);
     return;
   }
 
@@ -2378,7 +2380,7 @@ void LoadCurrentBalance(void) {
 
   // failed to get file, return
   if (!hFileHandle) {
-    LaptopSaveInfo.iCurrentBalance = 0;
+    LaptopMoneySetBalance(0);
 
     // close file
     File_Close(hFileHandle);
@@ -2387,7 +2389,9 @@ void LoadCurrentBalance(void) {
   }
 
   File_Seek(hFileHandle, 0, FILE_SEEK_START);
-  File_Read(hFileHandle, &LaptopSaveInfo.iCurrentBalance, sizeof(int32_t), &iBytesRead);
+  int32_t currentBalance = 0;
+  File_Read(hFileHandle, &currentBalance, sizeof(int32_t), &iBytesRead);
+  LaptopMoneySetBalance(currentBalance);
 
   AssertMsg(iBytesRead, "Failed To Read Data Entry");
   // close file
