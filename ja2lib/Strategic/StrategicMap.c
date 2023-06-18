@@ -206,11 +206,6 @@ extern wchar_t *pBullseyeStrings[];
 
 extern void HandleRPCDescription();
 
-#ifdef CRIPPLED_VERSION
-void CrippledVersionFailureToLoadMapCallBack(uint8_t bExitValue);
-void CrippledVersionFailureToLoadMapCheck();
-#endif
-
 // temp timer stuff -- to measure the time it takes to load a map.
 #ifdef JA2TESTVERSION
 extern int16_t gsAINumAdmins;
@@ -639,13 +634,6 @@ void HandleRPCDescriptionOfSector(uint8_t sSectorX, uint8_t sSectorY, int8_t sSe
 
 BOOLEAN SetCurrentWorldSector(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ) {
   BOOLEAN fChangeMusic = TRUE;
-
-#ifdef CRIPPLED_VERSION
-  if (sMapY >= 5 && sMapY != 16) {
-    CrippledVersionFailureToLoadMapCheck();
-    return FALSE;
-  }
-#endif
 
   // ATE: Zero out accounting functions
   memset(gbMercIsNewInThisSector, 0, sizeof(gbMercIsNewInThisSector));
@@ -3937,26 +3925,3 @@ void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup) {
     }
   }
 }
-
-#ifdef CRIPPLED_VERSION
-void CrippledVersionFailureToLoadMapCheck() {
-  wchar_t zString[512];
-
-  swprintf(zString,
-           L"Error! Sorry, you must stay between sectors A and E in this limited press version.");
-
-  DoScreenIndependantMessageBox(zString, MSG_BOX_FLAG_OK, CrippledVersionFailureToLoadMapCallBack);
-}
-
-void CrippledVersionFailureToLoadMapCallBack(uint8_t bExitValue) {
-  // clean up the code
-  ReStartingGame();
-
-  // go to the main menu
-  if (IsMapScreen_2()) {
-    SetPendingNewScreen(MAINMENU_SCREEN);
-  } else {
-    InternalLeaveTacticalScreen(MAINMENU_SCREEN);
-  }
-}
-#endif

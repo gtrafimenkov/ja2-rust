@@ -24,10 +24,6 @@ typedef struct {
 
   uint32_t uiFlags;
 
-#ifdef CRIPPLED_VERSION
-  uint8_t ubCrippleFiller[20];
-#endif
-
   // The following will be used to quickly access info to display in the save/load screen
   uint32_t uiDay;
   uint8_t ubHour;

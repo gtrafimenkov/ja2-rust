@@ -97,10 +97,6 @@ typedef struct {
   BOOLEAN fSpeckSaidFloMarriedCousinQuote;
   BOOLEAN fHasAMercDiedAtMercSite;
 
-#ifdef CRIPPLED_VERSION
-  uint8_t ubCrippleFiller[20];
-#endif
-
   int8_t gbNumDaysTillFirstMercArrives;
   int8_t gbNumDaysTillSecondMercArrives;
   int8_t gbNumDaysTillThirdMercArrives;
