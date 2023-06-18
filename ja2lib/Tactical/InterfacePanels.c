@@ -4561,7 +4561,7 @@ void SMInvMoneyButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
       //			if( MoneyGetBalance() > MAX_MONEY_PER_SLOT )
       //				CreateMoney( MAX_MONEY_PER_SLOT, &gItemPointer );
       //			else
-      CreateMoney(LaptopSaveInfo.iCurrentBalance, &gItemPointer);
+      CreateMoney(MoneyGetBalance(), &gItemPointer);
 
       InternalInitItemDescriptionBox(&gItemPointer, SM_ITEMDESC_START_X, SM_ITEMDESC_START_Y, 0,
                                      gpSMCurrentMerc);

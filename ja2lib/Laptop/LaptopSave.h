@@ -54,7 +54,7 @@ typedef struct {
   BOOLEAN fVisitedBookmarkAlready[20];  // have we visitied this site already?
   INT32 iBookMarkList[MAX_BOOKMARKS];
 
-  INT32 iCurrentBalance;  // current players balance
+  INT32 _iCurrentBalance;  // current players balance
 
   // IMP Information
   BOOLEAN fIMPCompletedFlag;       // Has the player Completed the IMP process

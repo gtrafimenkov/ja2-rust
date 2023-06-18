@@ -3402,7 +3402,7 @@ void PerformTransaction(UINT32 uiMoneyFromPlayersAccount) {
     // if the player doesn't have enough money to pay for what he's buying
     if (uiArmsDealersItemsCost > uiPlayersTotalMoneyValue) {
       // if the player doesn't have enough money in his account to pay the rest
-      if (uiArmsDealersItemsCost > uiPlayersTotalMoneyValue + LaptopSaveInfo.iCurrentBalance) {
+      if (uiArmsDealersItemsCost > uiPlayersTotalMoneyValue + MoneyGetBalance()) {
         // tell player he can't possibly afford this
         SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_SHOPKEEPER, 6, 0, 0,
                                       giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
@@ -3410,8 +3410,8 @@ void PerformTransaction(UINT32 uiMoneyFromPlayersAccount) {
                                       giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
         SpecialCharacterDialogueEvent(
             DIALOGUE_SPECIAL_EVENT_SHOPKEEPER, 0,
-            (uiArmsDealersItemsCost - (LaptopSaveInfo.iCurrentBalance + uiPlayersTotalMoneyValue)),
-            0, giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
+            (uiArmsDealersItemsCost - (MoneyGetBalance() + uiPlayersTotalMoneyValue)), 0,
+            giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI);
       } else {
         // player doesn't have enough on the table, but can pay for it from his balance
         /// ask player if wants to subtract the shortfall directly from his balance
@@ -4611,7 +4611,7 @@ void HandleAtmOK() {
   } else if (gubCurrentSkiAtmMode == SKI_ATM_GIVE_MODE) {
     // are we tring to take more then we have?
     if (iAmountToTransfer > MoneyGetBalance()) {
-      if (LaptopSaveInfo.iCurrentBalance == 0)
+      if (MoneyGetBalance() == 0)
         memset(gzSkiAtmTransferString, 0, sizeof(gzSkiAtmTransferString));
       else {
         // Set the amount to transfer
@@ -4955,7 +4955,7 @@ void EnableDisableEvaluateAndTransactionButtons() {
     DisableButton(guiSKI_TransactionButton);
   }
 
-  if (uiArmsDealerTotalCost > uiPlayersOfferAreaTotalCost + LaptopSaveInfo.iCurrentBalance) {
+  if (uiArmsDealerTotalCost > uiPlayersOfferAreaTotalCost + MoneyGetBalance()) {
     DisableButton(guiSKI_TransactionButton);
   }
   /* Allow transaction attempt when dealer can't afford to buy that much - he'll reject it with a
