@@ -291,10 +291,6 @@ void DecideActiveTerrorists(void) {
   BOOLEAN fFoundSpot;
   int16_t sTerroristPlacement[MAX_ADDITIONAL_TERRORISTS][2] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
 
-#ifdef CRIPPLED_VERSION
-  return;
-#endif
-
   // one terrorist will always be Elgin
   // determine how many more terrorists - 2 to 4 more
 
@@ -462,10 +458,6 @@ void DecideOnAssassin(void) {
   uint8_t ubAssassinsPossible = 0;
   uint8_t ubLoop, ubLoop2;
   uint8_t ubTown;
-
-#ifdef CRIPPLED_VERSION
-  return;
-#endif
 
   ubTown = GetTownIdForSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
 

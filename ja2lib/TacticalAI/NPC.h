@@ -36,7 +36,7 @@ struct OBJECTTYPE;
 #define ANY_RIFLE 1001
 
 typedef struct {
-#if defined(CRIPPLED_VERSION) || defined(RUSSIAN)
+#if defined(RUSSIAN)
   uint8_t ubIdentifier[4];
 #endif
 
@@ -70,7 +70,7 @@ typedef struct {
   uint16_t usGoToGridno;
   int16_t sActionData;  // special action value
 
-#if !defined(CRIPPLED_VERSION) && !defined(RUSSIAN)
+#if !defined(RUSSIAN)
   uint8_t ubUnused[4];
 #endif
 
