@@ -10,7 +10,6 @@
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "Local.h"
-#include "Money.h"
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
@@ -44,6 +43,7 @@
 #include "Utils/WordWrap.h"
 #include "platform.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 BOOLEAN gfSchedulesHosed = FALSE;
 extern UINT32 guiBrokenSaveGameVersion;
@@ -1111,7 +1111,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
       //			SaveGameHeader.sSectorY = gWorldSectorY;
       //			SaveGameHeader.bSectorZ = gbWorldSectorZ;
       SaveGameHeader.ubNumOfMercsOnPlayersTeam = NumberOfMercsOnPlayerTeam();
-      SaveGameHeader.iCurrentBalance = MoneyGetBalance();
+      SaveGameHeader.iCurrentBalance = LaptopMoneyGetBalance();
       wcscpy(SaveGameHeader.sSavedGameDesc, gzGameDescTextField);
 
       // copy over the initial game options

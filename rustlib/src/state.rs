@@ -1,4 +1,5 @@
 use crate::civ_groups;
+use crate::laptop;
 use crate::militia;
 use crate::sam_sites;
 use crate::sector;
@@ -16,6 +17,7 @@ pub struct State {
     pub militia: militia::State,
     pub ui: ui::State,
     pub civ_groups: civ_groups::State,
+    pub laptop: laptop::State,
 }
 
 impl Default for State {
@@ -34,6 +36,7 @@ impl State {
             militia: Default::default(),
             ui: Default::default(),
             civ_groups: Default::default(),
+            laptop: Default::default(),
         };
         for y in 1..17 {
             for x in 1..17 {
@@ -132,6 +135,7 @@ mod tests {
         assert_eq!(0, state.get_militia_force(1, 1).green);
         assert_eq!(0, state.get_militia_force(1, 1).regular);
         assert_eq!(0, state.get_militia_force(1, 1).elite);
+        assert_eq!(0, state.laptop.current_balance);
     }
 
     #[test]

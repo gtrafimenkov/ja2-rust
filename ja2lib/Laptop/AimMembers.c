@@ -11,7 +11,6 @@
 #include "Laptop/History.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/English.h"
 #include "SGP/Input.h"
@@ -49,6 +48,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 //
 //******  Defines  ******
@@ -1761,7 +1761,7 @@ INT8 AimMemberHireMerc() {
   INT16 sSoldierID = 0;
   INT8 bTypeOfContract = 0;
 
-  if (MoneyGetBalance() < giContractAmount) {
+  if (LaptopMoneyGetBalance() < giContractAmount) {
     // wasnt hired because of lack of funds
     InitCreateDeleteAimPopUpBox(AIM_POPUP_CREATE, AimPopUpText[AIM_MEMBER_FUNDS_TRANSFER_FAILED],
                                 AimPopUpText[AIM_MEMBER_NOT_ENOUGH_FUNDS], AIM_POPUP_BOX_X,

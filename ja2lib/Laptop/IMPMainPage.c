@@ -9,7 +9,6 @@
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"
 #include "Laptop/Laptop.h"
-#include "Money.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/VObject.h"
@@ -22,6 +21,7 @@
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_laptop.h"
 
 #define MAIN_PAGE_BUTTON_TEXT_WIDTH 95
 
@@ -316,7 +316,7 @@ void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn, INT32 reason) {
                            MSG_BOX_FLAG_YESNO, BeginMessageBoxCallBack);
 
       } else {
-        if (MoneyGetBalance() < COST_OF_PROFILE) {
+        if (LaptopMoneyGetBalance() < COST_OF_PROFILE) {
           DoLapTopMessageBox(MSG_BOX_IMP_STYLE, pImpPopUpStrings[3], LAPTOP_SCREEN, MSG_BOX_FLAG_OK,
                              BeginMessageBoxCallBack);
 

@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "Laptop/Finances.h"
-#include "Money.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
@@ -37,6 +36,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_laptop.h"
 #include "rust_sam_sites.h"
 
 // the amounts of time to wait for hover stuff
@@ -1648,18 +1648,18 @@ void PaySkyriderBill(void) {
   // if we owe anything for the trip
   if (iTotalAccumulatedCostByPlayer > 0) {
     // if player can afford to pay the Skyrider bill
-    if (MoneyGetBalance() >= iTotalAccumulatedCostByPlayer) {
+    if (LaptopMoneyGetBalance() >= iTotalAccumulatedCostByPlayer) {
       // no problem, pay the man
       // add the transaction
       AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -iTotalAccumulatedCostByPlayer);
       ScreenMsg(FONT_MCOLOR_DKRED, MSG_INTERFACE, pSkyriderText[0], iTotalAccumulatedCostByPlayer);
     } else {
       // money owed
-      if (MoneyGetBalance() > 0) {
-        ScreenMsg(FONT_MCOLOR_DKRED, MSG_INTERFACE, pSkyriderText[0], MoneyGetBalance());
-        gMercProfiles[SKYRIDER].iBalance = MoneyGetBalance() - iTotalAccumulatedCostByPlayer;
+      if (LaptopMoneyGetBalance() > 0) {
+        ScreenMsg(FONT_MCOLOR_DKRED, MSG_INTERFACE, pSkyriderText[0], LaptopMoneyGetBalance());
+        gMercProfiles[SKYRIDER].iBalance = LaptopMoneyGetBalance() - iTotalAccumulatedCostByPlayer;
         // add the transaction
-        AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -MoneyGetBalance());
+        AddTransactionToPlayersBook(PAYMENT_TO_NPC, SKYRIDER, -LaptopMoneyGetBalance());
       } else {
         gMercProfiles[SKYRIDER].iBalance = -iTotalAccumulatedCostByPlayer;
       }
@@ -1685,8 +1685,8 @@ void PayOffSkyriderDebtIfAny() {
   iAmountOwed = -gMercProfiles[SKYRIDER].iBalance;
 
   // if we owe him anything, and have any money
-  if ((iAmountOwed > 0) && (MoneyGetBalance() > 0)) {
-    iPayAmount = min(iAmountOwed, MoneyGetBalance());
+  if ((iAmountOwed > 0) && (LaptopMoneyGetBalance() > 0)) {
+    iPayAmount = min(iAmountOwed, LaptopMoneyGetBalance());
 
     // pay the man what we can
     gMercProfiles[SKYRIDER].iBalance += iPayAmount;
