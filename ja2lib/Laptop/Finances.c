@@ -92,13 +92,13 @@ enum {
 #define RECORD_SIZE (sizeof(UINT32) + sizeof(INT32) + sizeof(INT32) + sizeof(UINT8) + sizeof(UINT8))
 
 // the financial record list
-FinanceUnitPtr pFinanceListHead = NULL;
+struct finance *pFinanceListHead = NULL;
 
 // current page displayed
 INT32 iCurrentPage = 0;
 
 // current financial record (the one at the top of the current page)
-FinanceUnitPtr pCurrentFinance = NULL;
+struct finance *pCurrentFinance = NULL;
 
 // video object id's
 UINT32 guiGREYFRAME;
@@ -145,11 +145,11 @@ void BtnFinanceDisplayPrevPageCallBack(GUI_BUTTON *btn, INT32 reason);
 void CreateFinanceButtons(void);
 void DestroyFinanceButtons(void);
 void IncrementCurrentPageFinancialDisplay(void);
-void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFinance);
+void ProcessTransactionString(STR16 pString, size_t bufSize, struct finance *pFinance);
 void DisplayFinancePageNumberAndDateRange(void);
 void GetBalanceFromDisk(void);
 BOOLEAN WriteBalanceToDisk(void);
-BOOLEAN AppendFinanceToEndOfFile(FinanceUnitPtr pFinance);
+BOOLEAN AppendFinanceToEndOfFile(struct finance *pFinance);
 UINT32 ReadInLastElementOfFinanceListAndReturnIdNumber(void);
 void SetLastPageInRecords(void);
 BOOLEAN LoadInRecords(UINT32 uiPage);
@@ -173,7 +173,7 @@ UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmou
   // ever need
 
   UINT32 uiId = 0;
-  FinanceUnitPtr pFinance = pFinanceListHead;
+  struct finance *pFinance = pFinanceListHead;
 
   // read in balance from file
 
@@ -224,8 +224,8 @@ UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmou
   return uiId;
 }
 
-FinanceUnitPtr GetFinance(UINT32 uiId) {
-  FinanceUnitPtr pFinance = pFinanceListHead;
+struct finance *GetFinance(UINT32 uiId) {
+  struct finance *pFinance = pFinanceListHead;
 
   // get a finance object and return a pointer to it, the obtaining of the
   // finance object is via a unique ID the programmer must store
@@ -248,7 +248,7 @@ FinanceUnitPtr GetFinance(UINT32 uiId) {
 UINT32 GetTotalDebits() {
   // returns the total of the debits
   UINT32 uiDebits = 0;
-  FinanceUnitPtr pFinance = pFinanceListHead;
+  struct finance *pFinance = pFinanceListHead;
 
   // run to end of list
   while (pFinance) {
@@ -265,7 +265,7 @@ UINT32 GetTotalDebits() {
 UINT32 GetTotalCredits() {
   // returns the total of the credits
   UINT32 uiCredits = 0;
-  FinanceUnitPtr pFinance = pFinanceListHead;
+  struct finance *pFinance = pFinanceListHead;
 
   // run to end of list
   while (pFinance) {
@@ -282,7 +282,7 @@ UINT32 GetTotalCredits() {
 UINT32 GetDayCredits(UINT32 usDayNumber) {
   // returns the total of the credits for day( note resolution of usDayNumber is days)
   UINT32 uiCredits = 0;
-  FinanceUnitPtr pFinance = pFinanceListHead;
+  struct finance *pFinance = pFinanceListHead;
 
   while (pFinance) {
     // if a credit and it occurs on day passed
@@ -299,7 +299,7 @@ UINT32 GetDayCredits(UINT32 usDayNumber) {
 UINT32 GetDayDebits(UINT32 usDayNumber) {
   // returns the total of the debits
   UINT32 uiDebits = 0;
-  FinanceUnitPtr pFinance = pFinanceListHead;
+  struct finance *pFinance = pFinanceListHead;
 
   while (pFinance) {
     if ((pFinance->iAmount > 0) && ((pFinance->uiDate / (60 * 24)) == usDayNumber))
@@ -315,7 +315,7 @@ UINT32 GetDayDebits(UINT32 usDayNumber) {
 INT32 GetTotalToDay(INT32 sTimeInMins) {
   // gets the total amount to this day
   UINT32 uiTotal = 0;
-  FinanceUnitPtr pFinance = pFinanceListHead;
+  struct finance *pFinance = pFinanceListHead;
 
   while (pFinance) {
     if (((INT32)(pFinance->uiDate / (60 * 24)) <= sTimeInMins / (24 * 60)))
@@ -641,8 +641,8 @@ void DrawRecordsColumnHeadersText(void) {
 
 void DrawRecordsText(void) {
   // draws the text of the records
-  FinanceUnitPtr pCurFinance = pCurrentFinance;
-  FinanceUnitPtr pTempFinance = pFinanceListHead;
+  struct finance *pCurFinance = pCurrentFinance;
+  struct finance *pTempFinance = pFinanceListHead;
   wchar_t sString[512];
   INT16 usX, usY;
   INT32 iBalance = 0;
@@ -1023,8 +1023,8 @@ void OpenAndReadFinancesFile(void) {
 
 void ClearFinanceList(void) {
   // remove each element from list of transactions
-  FinanceUnitPtr pFinanceList = pFinanceListHead;
-  FinanceUnitPtr pFinanceNode = pFinanceList;
+  struct finance *pFinanceList = pFinanceListHead;
+  struct finance *pFinanceNode = pFinanceList;
 
   // while there are elements in the list left, delete them
   while (pFinanceList) {
@@ -1045,7 +1045,7 @@ void ClearFinanceList(void) {
 UINT32 ProcessAndEnterAFinacialRecord(UINT8 ubCode, UINT32 uiDate, INT32 iAmount,
                                       UINT8 ubSecondCode, INT32 iBalanceToDate) {
   UINT32 uiId = 0;
-  FinanceUnitPtr pFinance = pFinanceListHead;
+  struct finance *pFinance = pFinanceListHead;
 
   // add to finance list
   if (pFinance) {
@@ -1053,7 +1053,7 @@ UINT32 ProcessAndEnterAFinacialRecord(UINT8 ubCode, UINT32 uiDate, INT32 iAmount
     while (pFinance->Next) pFinance = pFinance->Next;
 
     // alloc space
-    pFinance->Next = (FinanceUnit *)MemAlloc(sizeof(FinanceUnit));
+    pFinance->Next = (struct finance *)MemAlloc(sizeof(struct finance));
 
     // increment id number
     uiId = pFinance->uiIdNumber + 1;
@@ -1071,7 +1071,7 @@ UINT32 ProcessAndEnterAFinacialRecord(UINT8 ubCode, UINT32 uiDate, INT32 iAmount
   } else {
     // alloc space
     uiId = ReadInLastElementOfFinanceListAndReturnIdNumber();
-    pFinance = (FinanceUnit *)MemAlloc(sizeof(FinanceUnit));
+    pFinance = (struct finance *)MemAlloc(sizeof(struct finance));
 
     // setup info passed
     pFinance->Next = NULL;
@@ -1196,7 +1196,7 @@ void BtnFinanceFirstLastPageCallBack(GUI_BUTTON *btn, INT32 reason) {
 
 void IncrementCurrentPageFinancialDisplay(void) {
   // run through list, from pCurrentFinance, to NUM_RECORDS_PER_PAGE +1 FinancialUnits
-  FinanceUnitPtr pTempFinance = pCurrentFinance;
+  struct finance *pTempFinance = pCurrentFinance;
   BOOLEAN fOkToIncrementPage = FALSE;
   INT32 iCounter = 0;
 
@@ -1235,7 +1235,7 @@ void IncrementCurrentPageFinancialDisplay(void) {
   return;
 }
 
-void ProcessTransactionString(STR16 pString, size_t bufSize, FinanceUnitPtr pFinance) {
+void ProcessTransactionString(STR16 pString, size_t bufSize, struct finance *pFinance) {
   switch (pFinance->ubCode) {
     case ACCRUED_INTEREST:
       swprintf(pString, bufSize, L"%s", pTransactionText[ACCRUED_INTEREST]);
@@ -1373,7 +1373,7 @@ void DisplayFinancePageNumberAndDateRange(void) {
   // this function will go through the list of 'histories' starting at current until end or
   // MAX_PER_PAGE...it will get the date range and the page number
   INT32 iCounter = 0;
-  FinanceUnitPtr pTempFinance = pFinanceListHead;
+  struct finance *pTempFinance = pFinanceListHead;
   wchar_t sString[50];
 
   // setup the font stuff
@@ -1459,10 +1459,10 @@ void GetBalanceFromDisk(void) {
   return;
 }
 
-BOOLEAN AppendFinanceToEndOfFile(FinanceUnitPtr pFinance) {
+BOOLEAN AppendFinanceToEndOfFile(struct finance *pFinance) {
   // will write the current finance to disk
   FileID hFileHandle = FILE_ID_ERR;
-  FinanceUnitPtr pFinanceList = pFinanceListHead;
+  struct finance *pFinanceList = pFinanceListHead;
 
   // open file
   hFileHandle = File_OpenForAppending(FINANCES_DATA_FILE);

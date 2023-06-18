@@ -54,10 +54,7 @@ enum {
 
 };
 
-typedef struct finance FinanceUnit;
-typedef struct finance *FinanceUnitPtr;
-
-extern FinanceUnitPtr pFinanceListHead;
+extern struct finance *pFinanceListHead;
 UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmount);
 void InsertDollarSignInToString(STR16 pString);
 void InsertCommasForDollarFigure(STR16 pString);
