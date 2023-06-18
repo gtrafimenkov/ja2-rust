@@ -20,7 +20,6 @@
 #include "Laptop/Finances.h"
 #include "Laptop/Personnel.h"
 #include "Local.h"
-#include "rust_laptop.h"
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
@@ -108,6 +107,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
+#include "rust_laptop.h"
 #include "rust_sam_sites.h"
 
 // DEFINES

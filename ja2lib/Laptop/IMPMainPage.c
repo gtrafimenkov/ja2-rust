@@ -9,7 +9,6 @@
 #include "Laptop/IMPTextSystem.h"
 #include "Laptop/IMPVideoObjects.h"
 #include "Laptop/Laptop.h"
-#include "rust_laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/MouseSystem.h"
 #include "SGP/VObject.h"
@@ -22,6 +21,7 @@
 #include "Utils/EncryptedFile.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_laptop.h"
 
 #define MAIN_PAGE_BUTTON_TEXT_WIDTH 95
 

@@ -11,7 +11,6 @@
 #include "LanguageDefines.h"
 #include "Laptop/Finances.h"
 #include "MessageBoxScreen.h"
-#include "rust_laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
@@ -76,6 +75,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 #define ITEMDESC_FONT BLOCKFONT2
 #define ITEMDESC_FONTSHADOW1 MILITARY_SHADOW

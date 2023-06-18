@@ -6,7 +6,6 @@
 #include "Laptop/BobbyRGuns.h"
 #include "Laptop/Finances.h"
 #include "Laptop/Laptop.h"
-#include "rust_laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
@@ -30,6 +29,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 typedef struct {
   UINT16 usOverNightExpress;

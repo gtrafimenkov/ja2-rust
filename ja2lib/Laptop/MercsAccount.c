@@ -7,7 +7,6 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/SpeckQuotes.h"
-#include "rust_laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
@@ -23,6 +22,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_laptop.h"
 
 #define MERC_ACCOUNT_TEXT_FONT FONT14ARIAL
 #define MERC_ACCOUNT_TEXT_COLOR FONT_MCOLOR_WHITE

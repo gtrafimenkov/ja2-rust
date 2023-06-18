@@ -9,7 +9,6 @@
 #include "Laptop/InsuranceContract.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/Personnel.h"
-#include "rust_laptop.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
@@ -38,6 +37,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier);
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,

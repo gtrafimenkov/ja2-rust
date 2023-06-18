@@ -13,7 +13,6 @@
 #include "Laptop/IMPVoices.h"
 #include "Laptop/Laptop.h"
 #include "Laptop/LaptopSave.h"
-#include "rust_laptop.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/Random.h"
 #include "SGP/WCheck.h"
@@ -29,6 +28,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
+#include "rust_laptop.h"
 
 #define IMP_MERC_FILE "IMP.dat"
 

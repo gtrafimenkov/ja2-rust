@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "Laptop/Finances.h"
-#include "rust_laptop.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
@@ -37,6 +36,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_laptop.h"
 #include "rust_sam_sites.h"
 
 // the amounts of time to wait for hover stuff

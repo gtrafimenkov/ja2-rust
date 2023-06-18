@@ -5,7 +5,6 @@
 #include "JAScreens.h"
 #include "Laptop/Finances.h"
 #include "MapScreenInterfaceMapInventory.h"
-#include "rust_laptop.h"
 #include "OptionsScreen.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
@@ -49,6 +48,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_laptop.h"
 
 #define MAP_BOTTOM_X 0
 #define MAP_BOTTOM_Y 359

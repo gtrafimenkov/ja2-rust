@@ -10,7 +10,6 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Mercs.h"
 #include "Laptop/Personnel.h"
-#include "rust_laptop.h"
 #include "SGP/Random.h"
 #include "SGP/Types.h"
 #include "ScreenIDs.h"
@@ -40,6 +39,7 @@
 #include "Tactical/Weapons.h"
 #include "Utils/Message.h"
 #include "Utils/Text.h"
+#include "rust_laptop.h"
 
 #define NUM_DAYS_TILL_UNPAID_RPC_QUITS 3
 

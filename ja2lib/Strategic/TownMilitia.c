@@ -4,7 +4,6 @@
 
 #include "CharList.h"
 #include "Laptop/Finances.h"
-#include "rust_laptop.h"
 #include "SGP/Debug.h"
 #include "SGP/Random.h"
 #include "ScreenIDs.h"
@@ -17,6 +16,7 @@
 #include "Town.h"
 #include "UI.h"
 #include "Utils/Text.h"
+#include "rust_laptop.h"
 
 // how many new green militia civilians are trained at a time
 #define MILITIA_TRAINING_SQUAD_SIZE 10  // was 6
