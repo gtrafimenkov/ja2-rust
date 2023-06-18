@@ -204,14 +204,6 @@ BOOLEAN EnsureQuoteFileLoaded(UINT8 ubNPC) {
   if (fLoadFile) {
     gpNPCQuoteInfoArray[ubNPC] = LoadQuoteFile(ubNPC);
     if (gpNPCQuoteInfoArray[ubNPC] == NULL) {
-#ifdef CRIPPLED_VERSION
-      // make sure we're not trying to load NOPROFILE for some stupid reason
-      if (ubNPC != NO_PROFILE) {
-        struct SOLDIERTYPE *pNull = NULL;
-        pNull->bLife = 0;  // crash!
-      }
-#else
-
 #ifdef JA2TESTVERSION
       if (!gfTriedToLoadQuoteInfoArray[ubNPC])  // don't report the error a second time
       {
@@ -219,21 +211,9 @@ BOOLEAN EnsureQuoteFileLoaded(UINT8 ubNPC) {
         gfTriedToLoadQuoteInfoArray[ubNPC] = TRUE;
       }
 #endif
-#endif
       // error message at this point!
       return (FALSE);
     }
-#ifdef CRIPPLED_VERSION
-    // check a random record to make sure the bytes are set right in the header
-    if (gpNPCQuoteInfoArray[ubNPC][0].ubIdentifier[0] != '9') {
-      if (gpNPCQuoteInfoArray[ubNPC][0].ubIdentifier[2] != '5') {
-        // crash!
-        struct SOLDIERTYPE *pNull = NULL;
-        pNull->bLife = 0;
-      }
-    }
-
-#endif
   }
 
   return (TRUE);

@@ -241,18 +241,6 @@ void RenderClock(INT16 sX, INT16 sY) {
   SetFont(CLOCK_FONT);
   SetFontBackground(FONT_MCOLOR_BLACK);
 
-#ifdef CRIPPLED_VERSION
-  if (guiDay >= 8) {
-    SetFontForeground(FONT_FCOLOR_NICERED);
-    // Erase first!
-    RestoreExternBackgroundRect(sX, sY, CLOCK_STRING_WIDTH, CLOCK_STRING_HEIGHT);
-    swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"GAME OVER");
-    mprintf(sX + (CLOCK_STRING_WIDTH - StringPixLength(WORLDTIMESTR, CLOCK_FONT)) / 2, sY,
-            WORLDTIMESTR);
-    return;
-  }
-#endif
-
   // Are we in combat?
   if (gTacticalStatus.uiFlags & INCOMBAT) {
     SetFontForeground(FONT_FCOLOR_NICERED);
