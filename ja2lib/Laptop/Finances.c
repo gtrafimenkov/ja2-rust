@@ -2014,8 +2014,7 @@ INT32 GetTodaysDaysIncome(void) {
   FileID hFileHandle = FILE_ID_ERR;
   UINT32 iBytesRead = 0;
   UINT32 iDateInMinutes = 0;
-  BOOLEAN fOkToContinue = FALSE;
-  BOOLEAN fOkToIncrement = FALSE;
+  BOOLEAN stopIteration = FALSE;
   UINT32 iByteCount = 0;
   INT32 iCounter = 1;
   UINT8 ubCode;
@@ -2023,7 +2022,6 @@ INT32 GetTodaysDaysIncome(void) {
   UINT32 uiDate;
   INT32 iAmount;
   INT32 iBalanceToDate;
-  BOOLEAN fGoneTooFar = FALSE;
   INT32 iTotalIncome = 0;
 
   // what day is it?
@@ -2050,7 +2048,7 @@ INT32 GetTodaysDaysIncome(void) {
 
   // loop, make sure we don't pass beginning of file, if so, we have an error, and check for
   // condifition above
-  while ((iByteCount < File_GetSize(hFileHandle)) && (!fOkToContinue) && (!fGoneTooFar)) {
+  while ((iByteCount < File_GetSize(hFileHandle)) && (!stopIteration)) {
     File_Seek(hFileHandle, RECORD_SIZE * iCounter, FILE_SEEK_END);
 
     // incrment byte count
@@ -2065,33 +2063,17 @@ INT32 GetTodaysDaysIncome(void) {
     AssertMsg(iBytesRead, "Failed To Read Data Entry");
     // check to see if we are far enough
     if ((uiDate / (24 * 60)) == (iDateInMinutes / (24 * 60)) - 1) {
-      fOkToContinue = TRUE;
+      stopIteration = TRUE;
     }
 
-    if ((uiDate / (24 * 60)) > (iDateInMinutes / (24 * 60)) - 1) {
-      // now ok to increment amount
-      fOkToIncrement = TRUE;
-    }
-
-    if ((fOkToIncrement) &&
+    if (((uiDate / (24 * 60)) > (iDateInMinutes / (24 * 60)) - 1) &&
         ((ubCode == DEPOSIT_FROM_GOLD_MINE) || (ubCode == DEPOSIT_FROM_SILVER_MINE))) {
-      // increment total
       iTotalIncome += iAmount;
-      fOkToIncrement = FALSE;
     }
 
     iCounter++;
   }
 
-  // no entries, return nothing - no income for the day
-  if (fGoneTooFar == TRUE) {
-    File_Close(hFileHandle);
-    return 0;
-  }
-
-  // now run back one more day and add up the total of deposits
-
-  // close file
   File_Close(hFileHandle);
 
   return (iTotalIncome);
