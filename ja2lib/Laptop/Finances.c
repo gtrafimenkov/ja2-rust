@@ -147,7 +147,6 @@ void DestroyFinanceButtons(void);
 void IncrementCurrentPageFinancialDisplay(void);
 void ProcessTransactionString(STR16 pString, size_t bufSize, struct finance *pFinance);
 void DisplayFinancePageNumberAndDateRange(void);
-void GetBalanceFromDisk(void);
 BOOLEAN WriteBalanceToDisk(void);
 BOOLEAN AppendFinanceToEndOfFile(struct finance *pFinance);
 UINT32 ReadInLastElementOfFinanceListAndReturnIdNumber(void);
@@ -177,7 +176,7 @@ UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmou
 
   // read in balance from file
 
-  GetBalanceFromDisk();
+  LaptopLoadBalanceFromDisk();
   // process the actual data
 
   //
@@ -382,7 +381,7 @@ void GameInitFinances() {
     Plat_RemoveReadOnlyAttribute(FINANCES_DATA_FILE);
     Plat_DeleteFile(FINANCES_DATA_FILE);
   }
-  GetBalanceFromDisk();
+  LaptopLoadBalanceFromDisk();
 }
 
 void EnterFinances() {
@@ -397,7 +396,7 @@ void EnterFinances() {
   iCurrentPage = LaptopSaveInfo.iCurrentFinancesPage;
 
   // get the balance
-  GetBalanceFromDisk();
+  LaptopLoadBalanceFromDisk();
 
   // clear the list
   ClearFinanceList();
@@ -1423,40 +1422,6 @@ BOOLEAN WriteBalanceToDisk(void) {
   File_Close(hFileHandle);
 
   return (TRUE);
-}
-
-void GetBalanceFromDisk(void) {
-  // will grab the current blanace from disk
-  // assuming file already openned
-  // this procedure will open and read in data to the finance list
-  FileID hFileHandle = FILE_ID_ERR;
-  UINT32 iBytesRead = 0;
-
-  // open file
-  hFileHandle = File_OpenForReading(FINANCES_DATA_FILE);
-
-  // failed to get file, return
-  if (!hFileHandle) {
-    LaptopMoneySetBalance(0);
-    // close file
-    File_Close(hFileHandle);
-    return;
-  }
-
-  // start at beginning
-  File_Seek(hFileHandle, 0, FILE_SEEK_START);
-
-  // get balance from disk first
-  i32 currentBalance = 0;
-  File_Read(hFileHandle, &currentBalance, sizeof(INT32), &iBytesRead);
-  LaptopMoneySetBalance(currentBalance);
-
-  AssertMsg(iBytesRead, "Failed To Read Data Entry");
-
-  // close file
-  File_Close(hFileHandle);
-
-  return;
 }
 
 BOOLEAN AppendFinanceToEndOfFile(struct finance *pFinance) {

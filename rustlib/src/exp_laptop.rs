@@ -1,3 +1,4 @@
+use super::exp_debug;
 use super::state::STATE;
 
 /// Get money balance (what is shown on the laptop screen).
@@ -19,5 +20,17 @@ pub extern "C" fn LaptopMoneySetBalance(value: i32) {
 pub extern "C" fn LaptopMoneyAddToBalance(amount: i32) {
     unsafe {
         STATE.laptop.current_balance += amount;
+    }
+}
+
+/// Load the current balance from the disk
+#[no_mangle]
+pub extern "C" fn LaptopLoadBalanceFromDisk() {
+    unsafe {
+        STATE.laptop.get_balance_from_disk();
+        exp_debug::debug_log_write(&format!(
+            "balance from disk: {}",
+            STATE.laptop.current_balance
+        ));
     }
 }
