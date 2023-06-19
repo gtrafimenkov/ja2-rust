@@ -381,7 +381,7 @@ void GameInitFinances() {
     Plat_RemoveReadOnlyAttribute(FINANCES_DATA_FILE);
     Plat_DeleteFile(FINANCES_DATA_FILE);
   }
-  LaptopLoadBalanceFromDisk();
+  LaptopMoneySetBalance(0);
 }
 
 void EnterFinances() {
