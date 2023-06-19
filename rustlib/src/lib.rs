@@ -9,6 +9,7 @@ pub mod exp_sam_sites;
 pub mod exp_sector;
 pub mod exp_towns;
 pub mod exp_ui;
+pub mod finances;
 pub mod laptop;
 pub mod militia;
 pub mod platform;

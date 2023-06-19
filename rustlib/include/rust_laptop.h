@@ -26,6 +26,11 @@ void LaptopMoneySetBalance(int32_t value);
  */
 void LaptopMoneyAddToBalance(int32_t amount);
 
+/**
+ * Load the current balance from the disk
+ */
+void LaptopLoadBalanceFromDisk(void);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
