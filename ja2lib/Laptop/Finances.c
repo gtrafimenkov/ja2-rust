@@ -132,7 +132,6 @@ void DrawFinanceTitleText(void);
 void InvalidateLapTopScreen(void);
 void RemoveFinances(void);
 void DrawSummaryText(void);
-INT32 GetCurrentBalance(void);
 void ClearFinanceList(void);
 void OpenAndReadFinancesFile(void);
 void DrawAPageOfRecords(void);
@@ -332,16 +331,9 @@ INT32 GetYesterdaysIncome(void) {
           GetDayCredits(((UINT32)(GetWorldTotalMin() - (24 * 60)) / (24 * 60))));
 }
 
-INT32 GetCurrentBalance(void) {
-  // get balance to this minute
-  return (LaptopMoneyGetBalance());
-
-  // return(GetTotalDebits((GetWorldTotalMin()))+GetTotalCredits((GetWorldTotalMin())));
-}
-
 INT32 GetTodaysIncome(void) {
   // get income
-  return (GetCurrentBalance() - GetTotalToDay(GetWorldTotalMin() - (24 * 60)));
+  return (LaptopMoneyGetBalance() - GetTotalToDay(GetWorldTotalMin() - (24 * 60)));
 }
 
 INT32 GetProjectedTotalDailyIncome(void) {
@@ -366,7 +358,7 @@ if (GetWorldMinutesInDay() <= 0)
 
 INT32 GetProjectedBalance(void) {
   // return the projected balance for tommorow - total for today plus the total income, projected.
-  return (GetProjectedTotalDailyIncome() + GetCurrentBalance());
+  return (GetProjectedTotalDailyIncome() + LaptopMoneyGetBalance());
 }
 
 INT32 GetConfidenceValue() {
@@ -903,7 +895,7 @@ void DrawSummaryText(void) {
   SetFontForeground(FONT_BLACK);
 
   // todays current balance
-  iBalance = GetCurrentBalance();
+  iBalance = LaptopMoneyGetBalance();
   if (iBalance < 0) {
     iBalance *= -1;
     SetFontForeground(FONT_RED);
@@ -932,7 +924,7 @@ void DrawSummaryText(void) {
   SetFontForeground(FONT_BLACK);
 
   // todays forcast balance
-  iBalance = GetCurrentBalance() + GetProjectedTotalDailyIncome();
+  iBalance = LaptopMoneyGetBalance() + GetProjectedTotalDailyIncome();
   if (iBalance < 0) {
     iBalance *= -1;
     SetFontForeground(FONT_RED);
@@ -2313,7 +2305,7 @@ INT32 GetTodaysDebits(void) {
 
   // currentbalance - todays balance - Todays income - other deposits
 
-  return (GetCurrentBalance() - GetTodaysBalance() - GetTodaysDaysIncome() -
+  return (LaptopMoneyGetBalance() - GetTodaysBalance() - GetTodaysDaysIncome() -
           GetTodaysOtherDeposits());
 }
 

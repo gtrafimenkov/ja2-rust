@@ -22,7 +22,6 @@
 void HourlyQuestUpdate(void);
 void HourlyLarryUpdate(void);
 
-extern INT32 GetCurrentBalance(void);
 extern void PayOffSkyriderDebtIfAny();
 void HourlyCheckIfSlayAloneSoHeCanLeave();
 
@@ -182,7 +181,7 @@ void HourlyLarryUpdate(void) {
 
     // check to see if we're in a bar sector, if we are, we have access to alcohol
     // which may be better than anything we've got...
-    if (usTemptation < BAR_TEMPTATION && GetCurrentBalance() >= Item[ALCOHOL].usPrice) {
+    if (usTemptation < BAR_TEMPTATION && LaptopMoneyGetBalance() >= Item[ALCOHOL].usPrice) {
       if (GetSolSectorZ(pSoldier) == 0 &&
           ((GetSolSectorX(pSoldier) == 13 && GetSolSectorY(pSoldier) == MAP_ROW_B) ||
            (GetSolSectorX(pSoldier) == 13 && GetSolSectorY(pSoldier) == MAP_ROW_C) ||
