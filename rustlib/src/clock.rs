@@ -58,7 +58,7 @@ mod tests {
     #[test]
     fn default() {
         let clock = State::default();
-        assert_eq!(1 * 60 * 60, clock.game_clock_sec);
+        assert_eq!(90000, clock.game_clock_sec);
         assert_eq!(true, clock.game_paused);
         assert_eq!(false, clock.locked_pause);
     }
@@ -66,31 +66,31 @@ mod tests {
     #[test]
     fn start_time() {
         let clock = State::default();
-        assert_eq!(1 * 60 * 60, clock.game_clock_sec);
-        assert_eq!(60, clock.get_time_in_min());
+        assert_eq!(90000, clock.game_clock_sec);
+        assert_eq!(1500, clock.get_time_in_min());
     }
 
     #[test]
     fn move_time_forward() {
         let mut clock = State::default();
-        assert_eq!(1 * 60 * 60, clock.game_clock_sec);
-        assert_eq!(60, clock.get_time_in_min());
-        assert_eq!(0, clock.get_time_in_days());
+        assert_eq!(90000, clock.game_clock_sec);
+        assert_eq!(1500, clock.get_time_in_min());
+        assert_eq!(1, clock.get_time_in_days());
         assert_eq!(1, clock.get_clock_hour());
 
         clock.move_time_forward(1);
-        assert_eq!(3601, clock.game_clock_sec);
-        assert_eq!(60, clock.get_time_in_min());
+        assert_eq!(90001, clock.game_clock_sec);
+        assert_eq!(1500, clock.get_time_in_min());
 
         clock.move_time_forward(59);
-        assert_eq!(3660, clock.game_clock_sec);
-        assert_eq!(61, clock.get_time_in_min());
+        assert_eq!(90060, clock.game_clock_sec);
+        assert_eq!(1501, clock.get_time_in_min());
         assert_eq!(1, clock.get_clock_hour());
 
         // move to 02:00
         clock.move_time_forward(59 * 60); // 59 minutes
-        assert_eq!(7200, clock.game_clock_sec);
-        assert_eq!(120, clock.get_time_in_min());
+        assert_eq!(93600, clock.game_clock_sec);
+        assert_eq!(1560, clock.get_time_in_min());
         assert_eq!(2, clock.get_clock_hour());
         assert_eq!(false, clock.is_day_time());
         assert_eq!(true, clock.is_night_time());
