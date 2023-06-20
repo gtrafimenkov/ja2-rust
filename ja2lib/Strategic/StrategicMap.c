@@ -201,8 +201,6 @@ void HandlePotentialMoraleHitForSkimmingSectors(struct GROUP *pGroup);
 
 extern void InitializeTacticalStatusAtBattleStart();
 
-extern BOOLEAN gfOverrideSector;
-
 extern STR16 pBullseyeStrings[];
 
 extern void HandleRPCDescription();
@@ -639,39 +637,33 @@ BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ) {
 
   SyncStrategicTurnTimes();
 
-#ifdef JA2BETAVERSION
-  if (gfOverrideSector) {
-    // skip the cancel, and force load the sector.  This is used by the AIViewer to "reset" a level
-    // with different numbers of various types of enemies.
-  } else
-#endif
-    // is the sector already loaded?
-    if ((gWorldSectorX == sMapX) && (sMapY == gWorldSectorY) && (bMapZ == gbWorldSectorZ)) {
-      // Inserts the enemies into the newly loaded map based on the strategic information.
-      // Note, the flag will return TRUE only if enemies were added.  The game may wish to
-      // do something else in a case where no enemies are present.
+  // is the sector already loaded?
+  if ((gWorldSectorX == sMapX) && (sMapY == gWorldSectorY) && (bMapZ == gbWorldSectorZ)) {
+    // Inserts the enemies into the newly loaded map based on the strategic information.
+    // Note, the flag will return TRUE only if enemies were added.  The game may wish to
+    // do something else in a case where no enemies are present.
 
-      SetPendingNewScreen(GAME_SCREEN);
-      if (!NumEnemyInSector()) {
-        PrepareEnemyForSectorBattle();
-      }
-      if (gubNumCreaturesAttackingTown && !gbWorldSectorZ &&
-          gubSectorIDOfCreatureAttack == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
-        PrepareCreaturesForBattle();
-      }
-      if (gfGotoSectorTransition) {
-        BeginLoadScreen();
-        gfGotoSectorTransition = FALSE;
-      }
-
-      // Check for helicopter being on the ground in this sector...
-      HandleHelicopterOnGroundGraphic();
-
-      ReinitMilitiaTactical();
-
-      AllTeamsLookForAll(TRUE);
-      return (TRUE);
+    SetPendingNewScreen(GAME_SCREEN);
+    if (!NumEnemyInSector()) {
+      PrepareEnemyForSectorBattle();
     }
+    if (gubNumCreaturesAttackingTown && !gbWorldSectorZ &&
+        gubSectorIDOfCreatureAttack == GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)) {
+      PrepareCreaturesForBattle();
+    }
+    if (gfGotoSectorTransition) {
+      BeginLoadScreen();
+      gfGotoSectorTransition = FALSE;
+    }
+
+    // Check for helicopter being on the ground in this sector...
+    HandleHelicopterOnGroundGraphic();
+
+    ReinitMilitiaTactical();
+
+    AllTeamsLookForAll(TRUE);
+    return (TRUE);
+  }
 
   if (gWorldSectorX && gWorldSectorY && gbWorldSectorZ != -1) {
     HandleDefiniteUnloadingOfWorld(ABOUT_TO_LOAD_NEW_MAP);
@@ -908,27 +900,6 @@ void PrepareLoadedSector() {
     AddSoldierInitListBloodcats();
     // Creatures are only added if there are actually some of them.  It has to go through some
     // additional checking.
-
-#ifdef JA2TESTVERSION
-    // Override the sector with the populations specified in the AIViewer
-    if (gfOverrideSector) {
-      if (gbWorldSectorZ > 0) {
-        UNDERGROUND_SECTORINFO *pSector;
-        pSector = FindUnderGroundSector((u8)gWorldSectorX, (u8)gWorldSectorY, gbWorldSectorZ);
-        pSector->ubNumAdmins = (UINT8)(gsAINumAdmins > 0 ? gsAINumAdmins : 0);
-        pSector->ubNumTroops = (UINT8)(gsAINumTroops > 0 ? gsAINumTroops : 0);
-        pSector->ubNumElites = (UINT8)(gsAINumElites > 0 ? gsAINumElites : 0);
-        pSector->ubNumCreatures = (UINT8)(gsAINumCreatures > 0 ? gsAINumCreatures : 0);
-      } else if (!gbWorldSectorZ) {
-        SECTORINFO *pSector;
-        pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
-        pSector->ubNumAdmins = (UINT8)(gsAINumAdmins > 0 ? gsAINumAdmins : 0);
-        pSector->ubNumTroops = (UINT8)(gsAINumTroops > 0 ? gsAINumTroops : 0);
-        pSector->ubNumElites = (UINT8)(gsAINumElites > 0 ? gsAINumElites : 0);
-        pSector->ubNumCreatures = (UINT8)(gsAINumCreatures > 0 ? gsAINumCreatures : 0);
-      }
-    }
-#endif
 
     PrepareCreaturesForBattle();
 

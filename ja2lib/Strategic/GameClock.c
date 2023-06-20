@@ -120,13 +120,6 @@ void WarpGameTime(UINT32 uiAdjustment, UINT8 ubWarpCode) {
 }
 
 void AdvanceClock(UINT8 ubWarpCode) {
-  // Set value, to different things if we are in combat...
-  if ((gTacticalStatus.uiFlags & INCOMBAT)) {
-    if ((gTacticalStatus.uiFlags & TURNBASED)) {
-    } else {
-    }
-  }
-
   if (ubWarpCode != WARPTIME_NO_PROCESSING_OF_EVENTS) {
     guiTimeOfLastEventQuery = GetGameTimeInSec();
     // First of all, events are posted for movements, pending attacks, equipment arrivals, etc. This

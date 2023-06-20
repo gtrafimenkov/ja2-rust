@@ -58,10 +58,6 @@ extern void InitializeTacticalStatusAtBattleStart();
 extern BOOLEAN gfDelayAutoResolveStart;
 extern BOOLEAN gfTransitionMapscreenToAutoResolve;
 
-#ifdef JA2BETAVERSION
-extern BOOLEAN gfExitViewer;
-#endif
-
 // zoom flag
 extern BOOLEAN fZoomFlag;
 
@@ -289,19 +285,6 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
         SetFactTrue(FACT_FIRST_BATTLE_BEING_FOUGHT);
       }
     }
-
-// If we are currently in the AI Viewer development utility, then remove it first.  It automatically
-// returns to the mapscreen upon removal, which is where we want to go.
-#ifdef JA2BETAVERSION
-    if (guiCurrentScreen == AIVIEWER_SCREEN) {
-      gfExitViewer = TRUE;
-      gpBattleGroup = pBattleGroup;
-      gfEnteringMapScreen = TRUE;
-      gfEnteringMapScreenToEnterPreBattleInterface = TRUE;
-      gfUsePersistantPBI = TRUE;
-      return;
-    }
-#endif
 
     // ATE: Added check for fPersistantPBI = TRUE if pBattleGroup == NULL
     // Searched code and saw that this condition only happens for creatures

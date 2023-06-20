@@ -59,10 +59,6 @@ extern void EndCreatureQuest();
 extern GARRISON_GROUP *gGarrisonGroup;
 extern INT32 giGarrisonArraySize;
 
-#ifdef JA2TESTVERSION
-extern BOOLEAN gfOverrideSector;
-#endif
-
 INT16 gsInterrogationGridNo[3] = {7756, 7757, 7758};
 
 void ValidateEnemiesHaveWeapons() {
@@ -457,16 +453,6 @@ BOOLEAN PrepareEnemyForSectorBattle() {
   pSector->ubAdminsInBattle += ubTotalAdmins;
   pSector->ubTroopsInBattle += ubTotalTroops;
   pSector->ubElitesInBattle += ubTotalElites;
-
-#ifdef JA2TESTVERSION
-  if (gfOverrideSector) {
-    // if there are no troops in the current groups, then we're done.
-    if (!ubTotalAdmins && !ubTotalTroops && !ubTotalElites) return FALSE;
-    AddSoldierInitListEnemyDefenceSoldiers(ubTotalAdmins, ubTotalTroops, ubTotalElites);
-    ValidateEnemiesHaveWeapons();
-    return TRUE;
-  }
-#endif
 
   // Search for movement groups that happen to be in the sector.
   sNumSlots = NumFreeEnemySlots();
@@ -1014,8 +1000,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
 
             // a monster has died.  Post an event to immediately check whether a mine has been
             // cleared.
-            AddStrategicEventUsingSeconds(EVENT_CHECK_IF_MINE_CLEARED, GetGameTimeInSec() + 15,
-                                          0);
+            AddStrategicEventUsingSeconds(EVENT_CHECK_IF_MINE_CLEARED, GetGameTimeInSec() + 15, 0);
 
             if (pSoldier->ubBodyType == QUEENMONSTER) {
               // Need to call this, as the queen is really big, and killing her leaves a bunch
