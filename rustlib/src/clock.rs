@@ -7,7 +7,7 @@ pub struct State {
 pub const NUM_SEC_IN_MIN: u32 = 60;
 pub const NUM_SEC_IN_HOUR: u32 = 60 * NUM_SEC_IN_MIN;
 pub const NUM_SEC_IN_DAY: u32 = 24 * NUM_SEC_IN_HOUR;
-pub const STARTING_TIME: u32 = NUM_SEC_IN_HOUR; // 1am
+pub const STARTING_TIME: u32 = NUM_SEC_IN_DAY + NUM_SEC_IN_HOUR; // Day 1, 01:00
 
 impl Default for State {
     fn default() -> Self {
