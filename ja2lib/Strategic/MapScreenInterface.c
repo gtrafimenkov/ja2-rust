@@ -3758,7 +3758,6 @@ void DisplaySoldierUpdateBox() {
   giContractHighLine = -1;
   giAssignHighLine = -1;
 
-  // InterruptTime();
   PauseGame();
   LockPause();
 
@@ -4030,7 +4029,6 @@ void CreateDestroyTheUpdateBox(void) {
 
     fCreated = TRUE;
 
-    // InterruptTime();
     // create screen mask
     CreateScreenMaskForMoveBox();
 

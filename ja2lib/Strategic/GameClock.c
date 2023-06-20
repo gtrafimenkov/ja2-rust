@@ -203,33 +203,6 @@ void RenderClock(INT16 sX, INT16 sY) {
   }
 }
 
-void ToggleSuperCompression() {
-  static UINT32 uiOldTimeCompressMode = 0;
-
-  // Display message
-  if (gTacticalStatus.uiFlags & INCOMBAT) {
-    // ScreenMsg( MSG_FONT_YELLOW, MSG_INTERFACE, L"Cannot toggle compression in Combat Mode."  );
-    return;
-  }
-
-  fSuperCompression = (BOOLEAN)(!fSuperCompression);
-
-  if (fSuperCompression) {
-    uiOldTimeCompressMode = giTimeCompressMode;
-    giTimeCompressMode = TIME_SUPER_COMPRESS;
-    guiGameSecondsPerRealSecond =
-        giTimeCompressSpeeds[giTimeCompressMode] * SECONDS_PER_COMPRESSION;
-
-    // ScreenMsg( MSG_FONT_YELLOW, MSG_INTERFACE, L"Time compression ON."  );
-  } else {
-    giTimeCompressMode = uiOldTimeCompressMode;
-    guiGameSecondsPerRealSecond =
-        giTimeCompressSpeeds[giTimeCompressMode] * SECONDS_PER_COMPRESSION;
-
-    // ScreenMsg( MSG_FONT_YELLOW, MSG_INTERFACE, L"Time compression OFF."  );
-  }
-}
-
 BOOLEAN DidGameJustStart() {
   if (gTacticalStatus.fDidGameJustStart)
     return (TRUE);
@@ -388,33 +361,6 @@ void SetClockResolutionToCompressMode(INT32 iCompressMode) {
   SetMapScreenBottomDirty(true);
 }
 
-void SetGameHoursPerSecond(UINT32 uiGameHoursPerSecond) {
-  giTimeCompressMode = NOT_USING_TIME_COMPRESSION;
-  guiGameSecondsPerRealSecond = uiGameHoursPerSecond * 3600;
-  if (uiGameHoursPerSecond == 1) {
-    SetClockResolutionPerSecond(60);
-  } else {
-    SetClockResolutionPerSecond(59);
-  }
-}
-
-void SetGameMinutesPerSecond(UINT32 uiGameMinutesPerSecond) {
-  giTimeCompressMode = NOT_USING_TIME_COMPRESSION;
-  guiGameSecondsPerRealSecond = uiGameMinutesPerSecond * 60;
-  SetClockResolutionPerSecond((UINT8)uiGameMinutesPerSecond);
-}
-
-void SetGameSecondsPerSecond(UINT32 uiGameSecondsPerSecond) {
-  giTimeCompressMode = NOT_USING_TIME_COMPRESSION;
-  guiGameSecondsPerRealSecond = uiGameSecondsPerSecond;
-  //	SetClockResolutionPerSecond( (UINT8)(guiGameSecondsPerRealSecond / 60) );
-  if (guiGameSecondsPerRealSecond == 0) {
-    SetClockResolutionPerSecond(0);
-  } else {
-    SetClockResolutionPerSecond((UINT8)max(1, (UINT8)(guiGameSecondsPerRealSecond / 60)));
-  }
-}
-
 // ONLY APPLICABLE INSIDE EVENT CALLBACKS!
 void InterruptTime() { gfTimeInterrupt = TRUE; }
 
@@ -452,14 +398,6 @@ void UpdateClock() {
   static UINT8 ubLastResolution = 1;
   static UINT32 uiLastSecondTime = 0;
   static UINT32 uiLastTimeProcessed = 0;
-#ifdef DEBUG_GAME_CLOCK
-  UINT32 uiOrigNewTime;
-  UINT32 uiOrigLastSecondTime;
-  UINT32 uiOrigThousandthsOfThisSecondProcessed;
-  UINT8 ubOrigClockResolution;
-  UINT32 uiOrigTimesThisSecondProcessed;
-  UINT8 ubOrigLastResolution;
-#endif
   // check game state for pause screen masks
   CreateDestroyScreenMaskForPauseGame();
 
@@ -486,15 +424,6 @@ void UpdateClock() {
     return;  // time is currently stopped!
 
   uiNewTime = GetJA2Clock();
-
-#ifdef DEBUG_GAME_CLOCK
-  uiOrigNewTime = uiNewTime;
-  uiOrigLastSecondTime = uiLastSecondTime;
-  uiOrigThousandthsOfThisSecondProcessed = uiThousandthsOfThisSecondProcessed;
-  ubOrigClockResolution = gubClockResolution;
-  uiOrigTimesThisSecondProcessed = guiTimesThisSecondProcessed;
-  ubOrigLastResolution = ubLastResolution;
-#endif
 
   // Because we debug so much, breakpoints tend to break the game, and cause unnecessary headaches.
   // This line ensures that no more than 1 real-second passes between frames.  This otherwise has
@@ -525,13 +454,6 @@ void UpdateClock() {
           guiGameSecondsPerRealSecond * guiTimesThisSecondProcessed / gubClockResolution;
 
       uiNewTimeProcessed = max(uiNewTimeProcessed, uiLastTimeProcessed);
-
-#ifdef DEBUG_GAME_CLOCK
-      if (uiAmountToAdvanceTime > 0x80000000 ||
-          GetGameTimeInSec() + uiAmountToAdvanceTime < guiPreviousGameClock) {
-        uiNewTimeProcessed = uiNewTimeProcessed;
-      }
-#endif
 
       WarpGameTime(uiNewTimeProcessed - uiLastTimeProcessed, WARPTIME_PROCESS_EVENTS_NORMALLY);
       if (uiNewTimeProcessed < guiGameSecondsPerRealSecond) {  // Processed the same real second

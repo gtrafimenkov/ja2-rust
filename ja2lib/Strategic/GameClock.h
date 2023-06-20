@@ -32,11 +32,6 @@
 // function when entering such a mode, and UnPauseGame() when finished.  Everything will be restored
 // just the way you left it.  This is much simpler to handle in the overall scheme of things.
 
-// USING HIGH RESOLUTION TIME RATE MANIPULATION/ACCESS
-// Allows external code to change the time rate.
-void SetGameHoursPerSecond(UINT32 uiGameHoursPerSecond);
-void SetGameMinutesPerSecond(UINT32 uiGameMinutesPerSecond);
-void SetGameSecondsPerSecond(UINT32 uiGameSecondsPerSecond);
 // Allows access to the current time rate.
 UINT32 GetGameSecondsPerFrame();
 void RenderPausedGameBox(void);
@@ -126,8 +121,6 @@ void InitNewGameClock();
 void GotoNextTimeOfDay(UINT32 uiTOD);
 
 void RenderClock(INT16 sX, INT16 sY);
-
-void ToggleSuperCompression();
 
 // IMPORTANT FUNCTION:  Used whenever an event or situation is deemed important enough to cancel the
 // further processing of time in this current time slice!  This can only be used inside of event
