@@ -56,13 +56,13 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
+#include "rust_game_state.h"
 
 // Temp function
 void QuickSetupOfMercProfileItems(UINT32 uiCount, UINT8 ubProfileIndex);
 BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier);
 extern UINT32 guiExitScreen;
 extern UINT32 uiMeanWhileFlags;
-extern BOOLEAN gfGamePaused;
 
 extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, UINT8 bMapZ);
 extern void InitVehicles();
@@ -374,12 +374,12 @@ BOOLEAN InitNewGame(BOOLEAN fReset) {
     ResetHeliSeats();
 
     // Setup two new messages!
-    AddPreReadEmail(OLD_ENRICO_1, OLD_ENRICO_1_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-    AddPreReadEmail(OLD_ENRICO_2, OLD_ENRICO_2_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-    AddPreReadEmail(RIS_REPORT, RIS_REPORT_LENGTH, RIS_EMAIL, GetWorldTotalMin());
-    AddPreReadEmail(OLD_ENRICO_3, OLD_ENRICO_3_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-    AddEmail(IMP_EMAIL_INTRO, IMP_EMAIL_INTRO_LENGTH, CHAR_PROFILE_SITE, GetWorldTotalMin());
-    // AddEmail(ENRICO_CONGRATS,ENRICO_CONGRATS_LENGTH,MAIL_ENRICO, GetWorldTotalMin() );
+    AddPreReadEmail(OLD_ENRICO_1, OLD_ENRICO_1_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+    AddPreReadEmail(OLD_ENRICO_2, OLD_ENRICO_2_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+    AddPreReadEmail(RIS_REPORT, RIS_REPORT_LENGTH, RIS_EMAIL, GetGameTimeInMin());
+    AddPreReadEmail(OLD_ENRICO_3, OLD_ENRICO_3_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+    AddEmail(IMP_EMAIL_INTRO, IMP_EMAIL_INTRO_LENGTH, CHAR_PROFILE_SITE, GetGameTimeInMin());
+    // AddEmail(ENRICO_CONGRATS,ENRICO_CONGRATS_LENGTH,MAIL_ENRICO, GetGameTimeInMin() );
 
     // ATE: Set starting cash....
     switch (gGameOptions.ubDifficultyLevel) {
@@ -620,7 +620,7 @@ BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier) {
   }
 
   // add an entry in the history page for the hiring of the merc
-  AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetWorldTotalMin(), -1, -1);
+  AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetGameTimeInMin(), -1, -1);
 
   return (TRUE);
 }
@@ -630,8 +630,7 @@ BOOLEAN QuickGameMemberHireMerc(UINT8 ubCurrentSoldier) {
 void ReStartingGame() {
   UINT16 cnt;
 
-  // Pause the game
-  gfGamePaused = TRUE;
+  PrepareGameRestart();
 
   // Reset the sectors
   gWorldSectorX = gWorldSectorY = 0;

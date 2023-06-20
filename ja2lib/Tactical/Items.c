@@ -2851,7 +2851,7 @@ BOOLEAN PlaceObject(struct SOLDIERTYPE *pSoldier, INT8 bPos, struct OBJECTTYPE *
 
   if (Item[pObj->usItem].usItemClass == IC_KEY && pSoldier->uiStatusFlags & SOLDIER_PC) {
     if (KeyTable[pObj->ubKeyID].usDateFound == 0) {
-      KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetWorldDay();
+      KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetGameTimeInDays();
       KeyTable[pObj->ubKeyID].usSectorFound = GetSolSectorID8(pSoldier);
     }
   }
@@ -3269,7 +3269,7 @@ UINT8 AddKeysToSlot(struct SOLDIERTYPE *pSoldier, INT8 bKeyRingPosition, struct 
   if (pSoldier->uiStatusFlags & SOLDIER_PC)  // redundant but what the hey
   {
     if (KeyTable[pObj->ubKeyID].usDateFound == 0) {
-      KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetWorldDay();
+      KeyTable[pObj->ubKeyID].usDateFound = (UINT16)GetGameTimeInDays();
       KeyTable[pObj->ubKeyID].usSectorFound = GetSolSectorID8(pSoldier);
     }
   }
@@ -3497,7 +3497,7 @@ void DoChrisTest(struct SOLDIERTYPE *pSoldier) {
       case HISTORY_SLAUGHTEREDBLOODCATS:
       case HISTORY_GAVE_CARMEN_HEAD:
       case HISTORY_SLAY_MYSTERIOUSLY_LEFT:
-        AddHistoryToPlayersLog((UINT8)uiLoop, 0, GetWorldTotalMin(), (u8)gWorldSectorX,
+        AddHistoryToPlayersLog((UINT8)uiLoop, 0, GetGameTimeInMin(), (u8)gWorldSectorX,
                                (u8)gWorldSectorY);
         break;
       default:
@@ -4610,7 +4610,7 @@ void ActivateXRayDevice(struct SOLDIERTYPE *pSoldier) {
       }
     }
   }
-  pSoldier->uiXRayActivatedTime = GetWorldTotalSeconds();
+  pSoldier->uiXRayActivatedTime = GetGameTimeInSec();
 }
 
 void TurnOffXRayEffects(struct SOLDIERTYPE *pSoldier) {

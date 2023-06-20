@@ -428,7 +428,7 @@ void DailyCheckOnItemQuantities() {
                 }
 
                 // Determine when the inventory should arrive
-                uiArrivalDay = GetWorldDay() + ubReorderDays;  // consider changing this to minutes
+                uiArrivalDay = GetGameTimeInDays() + ubReorderDays;  // consider changing this to minutes
 
                 // post new order
                 gArmsDealersInventory[ubArmsDealer][usItemIndex].ubQtyOnOrder = ubNumItems;
@@ -440,7 +440,7 @@ void DailyCheckOnItemQuantities() {
         {
           // and today is the day the items come in
           if (gArmsDealersInventory[ubArmsDealer][usItemIndex].uiOrderArrivalTime >=
-              GetWorldDay()) {
+              GetGameTimeInDays()) {
             ArmsDealerGetsFreshStock(ubArmsDealer, usItemIndex,
                                      gArmsDealersInventory[ubArmsDealer][usItemIndex].ubQtyOnOrder);
 
@@ -962,7 +962,7 @@ BOOLEAN RepairmanIsFixingItemsButNoneAreDoneYet(UINT8 ubProfileID) {
             // if the item has been repaired
             if (gArmsDealersInventory[bArmsDealer][usItemIndex]
                     .SpecialItem[ubElement]
-                    .uiRepairDoneTime <= GetWorldTotalMin()) {
+                    .uiRepairDoneTime <= GetGameTimeInMin()) {
               // A repair item is ready, therefore, return false
               return (FALSE);
             } else {
@@ -991,12 +991,12 @@ UINT32 GetTimeToFixItemBeingRepaired(UINT8 ubArmsDealer, UINT16 usItemIndex, UIN
 
   // if the item has already been repaired
   if (gArmsDealersInventory[ubArmsDealer][usItemIndex].SpecialItem[ubElement].uiRepairDoneTime <=
-      GetWorldTotalMin())
+      GetGameTimeInMin())
     return (0);
 
   // Return how many more minutes it will take to fix the item
   return (gArmsDealersInventory[ubArmsDealer][usItemIndex].SpecialItem[ubElement].uiRepairDoneTime -
-          GetWorldTotalMin());
+          GetGameTimeInMin());
 }
 
 BOOLEAN CanDealerTransactItem(UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN fPurchaseFromPlayer) {
@@ -1919,7 +1919,7 @@ UINT32 WhenWillRepairmanBeAllDoneRepairing(UINT8 ubArmsDealer) {
   Assert(DoesDealerDoRepairs(ubArmsDealer));
 
   // if nothing is in for repairs, he'll be free RIGHT NOW!
-  uiWhenFree = GetWorldTotalMin();
+  uiWhenFree = GetGameTimeInMin();
 
   // loop through the dealers inventory
   for (usItemIndex = 1; usItemIndex < MAXITEMS; usItemIndex++) {

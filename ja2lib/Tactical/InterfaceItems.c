@@ -337,7 +337,6 @@ INT16 gsKeyRingPopupInvWidth;
 INT16 gsKeyRingPopupInvHeight;
 
 struct SOLDIERTYPE *gpItemPopupSoldier;
-extern BOOLEAN fMapScreenBottomDirty;
 
 // inventory description done button for mapscreen
 INT32 giMapInvDescButtonImage;
@@ -3681,7 +3680,7 @@ void DeleteItemDescriptionBox() {
     fCharacterInfoPanelDirty = TRUE;
     SetMapPanelDirty(true);
     fTeamPanelDirty = TRUE;
-    fMapScreenBottomDirty = TRUE;
+    SetMapScreenBottomDirty(true);
   }
 
   if (InKeyRingPopup() == TRUE) {
@@ -5322,7 +5321,7 @@ BOOLEAN InitializeItemPickupMenu(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
 
   InterruptTime();
   PauseGame();
-  LockPauseState(18);
+  LockPause();
   // Pause timers as well....
   PauseTime(TRUE);
 
@@ -5836,7 +5835,7 @@ void RemoveItemPickupMenu() {
 
     HandleAnyMercInSquadHasCompatibleStuff((INT8)CurrentSquad(), NULL, TRUE);
 
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
     // UnPause timers as well....
     PauseTime(FALSE);

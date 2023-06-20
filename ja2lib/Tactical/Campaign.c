@@ -644,9 +644,9 @@ void ChangeStat(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier, UINT8
             //						ubEmailOffset = MERC_UP_LEVEL_BIFF +
             // MERC_UP_LEVEL_LENGTH_BIFF
             //* ( ubMercMercIdValue ); 						AddEmail(
-            // ubEmailOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetWorldTotalMin() );
+            // ubEmailOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetGameTimeInMin() );
             AddStrategicEvent(EVENT_MERC_MERC_WENT_UP_LEVEL_EMAIL_DELAY,
-                              GetWorldTotalMin() + 60 + Random(60), ubMercMercIdValue);
+                              GetGameTimeInMin() + 60 + Random(60), ubMercMercIdValue);
 
             fChangeSalary = TRUE;
             break;
@@ -1061,7 +1061,7 @@ void HandleUnhiredMercDeaths(INT32 iProfileID) {
     if (iProfileID < BIFF) {
       // send an email to the player telling the player that a merc died
       AddEmailWithSpecialData(MERC_DIED_ON_OTHER_ASSIGNMENT, MERC_DIED_ON_OTHER_ASSIGNMENT_LENGTH,
-                              AIM_SITE, GetWorldTotalMin(), 0, iProfileID);
+                              AIM_SITE, GetGameTimeInMin(), 0, iProfileID);
     }
   }
 }
@@ -1359,5 +1359,5 @@ void MERCMercWentUpALevelSendEmail(UINT8 ubMercMercIdValue) {
   UINT8 ubEmailOffset = 0;
 
   ubEmailOffset = MERC_UP_LEVEL_BIFF + MERC_UP_LEVEL_LENGTH_BIFF * (ubMercMercIdValue);
-  AddEmail(ubEmailOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetWorldTotalMin());
+  AddEmail(ubEmailOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetGameTimeInMin());
 }

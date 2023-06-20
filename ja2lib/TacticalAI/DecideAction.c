@@ -2785,7 +2785,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
       pSoldier->bLife >= pSoldier->bLifeMax / 2) {
     if (gTacticalStatus.Team[MILITIA_TEAM].bMenInSector == 0 && NumPCsInSector() < 4 &&
         gTacticalStatus.Team[ENEMY_TEAM].bMenInSector >= NumPCsInSector() * 3) {
-      // if( GetWorldDay() > STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !( gStrategicStatus.uiFlags
+      // if( GetGameTimeInDays() > STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !( gStrategicStatus.uiFlags
       // & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) )
       {
         if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTNOTSTARTED ||

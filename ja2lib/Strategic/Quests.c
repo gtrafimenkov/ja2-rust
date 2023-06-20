@@ -819,7 +819,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
         // the latest monologue to avoid a hot/cold attitude
         if ((ubProfileID == SKYRIDER) &&
             ((guiHelicopterSkyriderTalkState == 0) ||
-             ((GetWorldTotalMin() - guiTimeOfLastSkyriderMonologue) < (24 * 60)))) {
+             ((GetGameTimeInMin() - guiTimeOfLastSkyriderMonologue) < (24 * 60)))) {
           gubFact[usFact] = FALSE;
         } else {
           gubFact[usFact] = (GetTownLoyaltyRating(bTown) < LOYALTY_LOW_THRESHOLD);
@@ -888,7 +888,7 @@ case FACT_SKYRIDER_CLOSE_TO_CHOPPER:
 
     case FACT_BLOODCAT_QUEST_STARTED_TWO_DAYS_AGO:
       gubFact[usFact] = ((gubQuest[QUEST_BLOODCATS] != QUESTNOTSTARTED) &&
-                         (GetWorldTotalMin() - GetTimeQuestWasStarted(QUEST_BLOODCATS) >
+                         (GetGameTimeInMin() - GetTimeQuestWasStarted(QUEST_BLOODCATS) >
                           2 * NUM_SEC_IN_DAY / NUM_SEC_IN_MIN));
       break;
 
@@ -1133,7 +1133,7 @@ void InternalStartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdate
     gubQuest[ubQuest] = QUESTINPROGRESS;
 
     if (fUpdateHistory) {
-      SetHistoryFact(HISTORY_QUEST_STARTED, ubQuest, GetWorldTotalMin(), sSectorX, sSectorY);
+      SetHistoryFact(HISTORY_QUEST_STARTED, ubQuest, GetGameTimeInMin(), sSectorX, sSectorY);
     }
   } else {
     gubQuest[ubQuest] = QUESTINPROGRESS;

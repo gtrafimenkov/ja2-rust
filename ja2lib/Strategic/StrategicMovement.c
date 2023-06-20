@@ -60,8 +60,6 @@ struct GROUP *gpGroupList;
 
 struct GROUP *gpPendingSimultaneousGroup = NULL;
 
-// is the bottom of the map panel dirty?
-extern BOOLEAN fMapScreenBottomDirty;
 extern BOOLEAN gfUsePersistantPBI;
 
 #ifdef JA2BETAVERSION
@@ -403,15 +401,15 @@ BOOLEAN GroupReversingDirectionsBetweenSectors(struct GROUP *pGroup, UINT8 ubSec
   // The time it takes to arrive there will be exactly the amount of time we have been moving away
   // from it.
   SetGroupArrivalTime(pGroup,
-                      pGroup->uiTraverseTime - pGroup->uiArrivalTime + GetWorldTotalMin() * 2);
+                      pGroup->uiTraverseTime - pGroup->uiArrivalTime + GetGameTimeInMin() * 2);
 
   // if they're not already there
-  if (pGroup->uiArrivalTime > GetWorldTotalMin()) {
+  if (pGroup->uiArrivalTime > GetGameTimeInMin()) {
     // Post the replacement event to move back to the previous sector!
     AddStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->uiArrivalTime, pGroup->ubGroupID);
 
     if (pGroup->fPlayer) {
-      if ((pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY) > GetWorldTotalMin()) {
+      if ((pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY) > GetGameTimeInMin()) {
         // Post the about to arrive event
         AddStrategicEvent(EVENT_GROUP_ABOUT_TO_ARRIVE,
                           pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY, pGroup->ubGroupID);
@@ -860,7 +858,7 @@ void PrepareForPreBattleInterface(struct GROUP *pPlayerDialogGroup,
 
       InterruptTime();
       PauseGame();
-      LockPauseState(11);
+      LockPause();
 
       if (!gfTacticalTraversal) fDisableMapInterfaceDueToBattle = TRUE;
     }
@@ -880,7 +878,7 @@ void PrepareForPreBattleInterface(struct GROUP *pPlayerDialogGroup,
     HandleImportantPBIQuote(pSoldier, pInitiatingBattleGroup);
     InterruptTime();
     PauseGame();
-    LockPauseState(12);
+    LockPause();
 
     // disable exit from mapscreen and what not until face done talking
     fDisableMapInterfaceDueToBattle = TRUE;
@@ -1230,7 +1228,7 @@ void AddCorpsesToBloodcatLair(u8 sSectorX, u8 sSectorY) {
 
   // Set time of death
   // Make sure they will be rotting!
-  Corpse.uiTimeOfDeath = GetWorldTotalMin() - (2 * NUM_SEC_IN_DAY / 60);
+  Corpse.uiTimeOfDeath = GetGameTimeInMin() - (2 * NUM_SEC_IN_DAY / 60);
   // Set type
   Corpse.ubType = (UINT8)SMERC_JFK;
   Corpse.usFlags = ROTTING_CORPSE_FIND_SWEETSPOT_FROM_GRIDNO;
@@ -1356,7 +1354,7 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
       AssertMsg(0, "Failed to add movement event.");
 
     if (pGroup->fPlayer) {
-      if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetWorldTotalMin()) {
+      if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetGameTimeInMin()) {
         AddStrategicEvent(EVENT_GROUP_ABOUT_TO_ARRIVE,
                           pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY, pGroup->ubGroupID);
       }
@@ -1407,7 +1405,7 @@ void GroupArrivedAtSector(UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNev
   pGroup->fBetweenSectors = FALSE;
 
   SetMapPanelDirty(true);
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 
   // if a player group
   if (pGroup->fPlayer) {
@@ -1701,7 +1699,7 @@ void HandleOtherGroupsArrivingSimultaneously(UINT8 ubSectorX, UINT8 ubSectorY, U
   STRATEGICEVENT *pEvent;
   UINT32 uiCurrTimeStamp;
   struct GROUP *pGroup;
-  uiCurrTimeStamp = GetWorldTotalSeconds();
+  uiCurrTimeStamp = GetGameTimeInSec();
   pEvent = gpEventList;
   gubNumGroupsArrivedSimultaneously = 0;
   while (pEvent && pEvent->uiTimeStamp <= uiCurrTimeStamp) {
@@ -1751,14 +1749,14 @@ void PrepareGroupsForSimultaneousArrival() {
     if (pGroup->uiFlags & GROUPFLAG_MARKER) {
       DeleteStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->ubGroupID);
 
-      // NOTE: This can cause the arrival time to be > GetWorldTotalMin() + TraverseTime, so keep
+      // NOTE: This can cause the arrival time to be > GetGameTimeInMin() + TraverseTime, so keep
       // that in mind if you have any code that uses these 3 values to figure out how far along
       // its route a group is!
       SetGroupArrivalTime(pGroup, uiLatestArrivalTime);
       AddStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->uiArrivalTime, pGroup->ubGroupID);
 
       if (pGroup->fPlayer) {
-        if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetWorldTotalMin()) {
+        if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetGameTimeInMin()) {
           AddStrategicEvent(EVENT_GROUP_ABOUT_TO_ARRIVE,
                             pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY, pGroup->ubGroupID);
         }
@@ -1797,7 +1795,7 @@ void PrepareGroupsForSimultaneousArrival() {
   AddStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->uiArrivalTime, pGroup->ubGroupID);
 
   if (pGroup->fPlayer) {
-    if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetWorldTotalMin()) {
+    if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetGameTimeInMin()) {
       AddStrategicEvent(EVENT_GROUP_ABOUT_TO_ARRIVE, pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY,
                         pGroup->ubGroupID);
     }
@@ -1843,7 +1841,7 @@ BOOLEAN PossibleToCoordinateSimultaneousGroupArrivals(struct GROUP *pFirstGroup)
     CHAR16 *pStr, *pEnemyType;
     InterruptTime();
     PauseGame();
-    LockPauseState(13);
+    LockPause();
     gpPendingSimultaneousGroup = pFirstGroup;
     // Build the string
     if (ubNumNearbyGroups == 1) {
@@ -1885,7 +1883,7 @@ void PlanSimultaneousGroupArrivalCallback(UINT8 bMessageValue) {
   } else {
     PrepareForPreBattleInterface(gpPendingSimultaneousGroup, gpPendingSimultaneousGroup);
   }
-  UnLockPauseState();
+  UnlockPause();
   UnPauseGame();
 }
 
@@ -1907,7 +1905,7 @@ void DelayEnemyGroupsIfPathsCross(struct GROUP *pPlayerGroup) {
           // and repost it in the future (like a minute or so after the player arrives)
           DeleteStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->ubGroupID);
 
-          // NOTE: This can cause the arrival time to be > GetWorldTotalMin() + TraverseTime, so
+          // NOTE: This can cause the arrival time to be > GetGameTimeInMin() + TraverseTime, so
           // keep that in mind if you have any code that uses these 3 values to figure out how far
           // along its route a group is!
           SetGroupArrivalTime(pGroup, pPlayerGroup->uiArrivalTime + 1 + Random(10));
@@ -1977,8 +1975,8 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup) {
     if (!pGroup->fPlayer) {  // Determine if the enemy group is "sleeping".  If so, then simply
                              // delay their arrival time by the amount of time
       // they are going to be sleeping for.
-      if (GetWorldHour() >= 21 || GetWorldHour() <= 4) {  // It is definitely night time.
-        if (Chance(67)) {                                 // 2 in 3 chance of going to sleep.
+      if (GetGameClockHour() >= 21 || GetGameClockHour() <= 4) {  // It is definitely night time.
+        if (Chance(67)) {  // 2 in 3 chance of going to sleep.
           pGroup->uiTraverseTime = GetSectorMvtTimeForGroup(ubSector, ubDirection, pGroup);
           uiSleepMinutes = 360 + Random(121);  // 6-8 hours sleep
           fCalcRegularTime = FALSE;
@@ -2016,7 +2014,7 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup) {
     // put group between sectors
     pGroup->fBetweenSectors = TRUE;
     // and set it's arrival time
-    SetGroupArrivalTime(pGroup, GetWorldTotalMin() + pGroup->uiTraverseTime);
+    SetGroupArrivalTime(pGroup, GetGameTimeInMin() + pGroup->uiTraverseTime);
   }
   // NOTE: if the group is already between sectors, DON'T MESS WITH ITS ARRIVAL TIME!  THAT'S NOT
   // OUR JOB HERE!!!
@@ -2026,7 +2024,7 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup) {
                                    // groups to have extremely quick and varying
     // arrival times so that their initial positions aren't easily determined.
     pGroup->uiTraverseTime = 1 + Random(pGroup->uiTraverseTime - 1);
-    SetGroupArrivalTime(pGroup, GetWorldTotalMin() + pGroup->uiTraverseTime);
+    SetGroupArrivalTime(pGroup, GetGameTimeInMin() + pGroup->uiTraverseTime);
   }
 
   if (pGroup->fVehicle == TRUE) {
@@ -2052,7 +2050,7 @@ void InitiateGroupMovementToNextSector(struct GROUP *pGroup) {
   if (pGroup->fPlayer) {
     PLAYERGROUP *curr;
 
-    if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetWorldTotalMin()) {
+    if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetGameTimeInMin()) {
       AddStrategicEvent(EVENT_GROUP_ABOUT_TO_ARRIVE, pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY,
                         pGroup->ubGroupID);
     }
@@ -2319,8 +2317,8 @@ INT32 CalculateTravelTimeOfGroup(struct GROUP *pGroup) {
   if (pGroup->fBetweenSectors) {
     // to get travel time to the first sector, use the arrival time, this way it accounts for
     // delays due to simul. arrival
-    if (pGroup->uiArrivalTime >= GetWorldTotalMin()) {
-      uiEtaTime += (pGroup->uiArrivalTime - GetWorldTotalMin());
+    if (pGroup->uiArrivalTime >= GetGameTimeInMin()) {
+      uiEtaTime += (pGroup->uiArrivalTime - GetGameTimeInMin());
     }
 
     // first waypoint is NEXT sector
@@ -2821,7 +2819,7 @@ BOOLEAN PlayersBetweenTheseSectors(INT16 sSource, INT16 sDest, INT32 *iCountEnte
 
             *iCountEnter += ubMercsInGroup;
 
-            if ((curr->uiArrivalTime - GetWorldTotalMin() <= ABOUT_TO_ARRIVE_DELAY) ||
+            if ((curr->uiArrivalTime - GetGameTimeInMin() <= ABOUT_TO_ARRIVE_DELAY) ||
                 (fMayRetreatFromBattle == TRUE)) {
               *fAboutToArriveEnter = TRUE;
             }
@@ -3478,7 +3476,7 @@ void RetreatGroupToPreviousSector(struct GROUP *pGroup) {
     pGroup->uiTraverseTime = 5;
   }
 
-  SetGroupArrivalTime(pGroup, GetWorldTotalMin() + pGroup->uiTraverseTime);
+  SetGroupArrivalTime(pGroup, GetGameTimeInMin() + pGroup->uiTraverseTime);
   pGroup->fBetweenSectors = TRUE;
   pGroup->uiFlags |= GROUPFLAG_JUST_RETREATED_FROM_BATTLE;
 
@@ -3498,7 +3496,7 @@ void RetreatGroupToPreviousSector(struct GROUP *pGroup) {
     PLAYERGROUP *curr;
     curr = pGroup->pPlayerList;
 
-    if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetWorldTotalMin()) {
+    if (pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY > GetGameTimeInMin()) {
       AddStrategicEvent(EVENT_GROUP_ABOUT_TO_ARRIVE, pGroup->uiArrivalTime - ABOUT_TO_ARRIVE_DELAY,
                         pGroup->ubGroupID);
     }
@@ -3622,7 +3620,7 @@ void ResetMovementForEnemyGroup(struct GROUP *pGroup) {
     // arbitrarily.  Doesn't really matter if this isn't accurate.
     pGroup->uiTraverseTime = 90;
   }
-  SetGroupArrivalTime(pGroup, GetWorldTotalMin() + pGroup->uiTraverseTime);
+  SetGroupArrivalTime(pGroup, GetGameTimeInMin() + pGroup->uiTraverseTime);
 
   // Add a new event
   AddStrategicEvent(EVENT_GROUP_ARRIVAL, pGroup->uiArrivalTime, pGroup->ubGroupID);
@@ -3976,7 +3974,7 @@ BOOLEAN TestForBloodcatAmbush(struct GROUP *pGroup) {
 
   ubChance = 5 * gGameOptions.ubDifficultyLevel;
 
-  iHoursElapsed = (GetWorldTotalMin() - pSector->uiTimeCurrentSectorWasLastLoaded) / 60;
+  iHoursElapsed = (GetGameTimeInMin() - pSector->uiTimeCurrentSectorWasLastLoaded) / 60;
   if (ubSectorID == SEC_N5 ||
       ubSectorID == SEC_I16) {  // These are special maps -- we use all placements.
     if (pSector->bBloodCats == -1) {
@@ -4093,14 +4091,14 @@ void SetGroupArrivalTime(struct GROUP *pGroup, UINT32 uiArrivalTime) {
 
   if (IsGroupTheHelicopterGroup(pGroup)) {
     // make sure it's valid (NOTE: the correct traverse time must be set first!)
-    if (uiArrivalTime > (GetWorldTotalMin() + pGroup->uiTraverseTime)) {
+    if (uiArrivalTime > (GetGameTimeInMin() + pGroup->uiTraverseTime)) {
       AssertMsg(FALSE, String("SetGroupArrivalTime: Setting invalid arrival time %d for group %d, "
                               "WorldTime = %d, TraverseTime = %d",
-                              uiArrivalTime, pGroup->ubGroupID, GetWorldTotalMin(),
+                              uiArrivalTime, pGroup->ubGroupID, GetGameTimeInMin(),
                               pGroup->uiTraverseTime));
 
       // fix it if assertions are disabled
-      uiArrivalTime = GetWorldTotalMin() + pGroup->uiTraverseTime;
+      uiArrivalTime = GetGameTimeInMin() + pGroup->uiTraverseTime;
     }
   }
 
@@ -4314,7 +4312,7 @@ void HandlePlayerGroupEnteringSectorToCheckForNPCsOfNoteCallback(UINT8 ubExitVal
   gpGroupPrompting = NULL;
 
   SetMapPanelDirty(true);
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 
   return;
 }

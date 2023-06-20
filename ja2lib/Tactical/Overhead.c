@@ -2672,9 +2672,9 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
       }
       if (pKiller && pKiller->bTeam == OUR_TEAM) {
         AddHistoryToPlayersLog(HISTORY_MERC_KILLED_CHARACTER, pSoldierOld->ubProfile,
-                               GetWorldTotalMin(), (u8)gWorldSectorX, (u8)gWorldSectorY);
+                               GetGameTimeInMin(), (u8)gWorldSectorX, (u8)gWorldSectorY);
       } else {
-        AddHistoryToPlayersLog(HISTORY_NPC_KILLED, pSoldierOld->ubProfile, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_NPC_KILLED, pSoldierOld->ubProfile, GetGameTimeInMin(),
                                (u8)gWorldSectorX, (u8)gWorldSectorY);
       }
     }
@@ -2745,7 +2745,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
            LOYALTY_PENALTY_ELDIN_KILLED, FALSE );
                                         // post the event, 30 minute delay
                                         AddStrategicEvent( EVENT_TOWN_LOYALTY_UPDATE,
-           GetWorldTotalMin() + 30, uiLoyaltyValue );
+           GetGameTimeInMin() + 30, uiLoyaltyValue );
         */
         DecrementTownLoyalty(BALIME, LOYALTY_PENALTY_ELDIN_KILLED);
         break;
@@ -2764,7 +2764,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
              LOYALTY_PENALTY_MARTHA_HEART_ATTACK, FALSE );
                                                   // post the event, 30 minute delay
                                                   AddStrategicEvent( EVENT_TOWN_LOYALTY_UPDATE,
-             GetWorldTotalMin() + 30, uiLoyaltyValue );
+             GetGameTimeInMin() + 30, uiLoyaltyValue );
           */
           DecrementTownLoyalty(CAMBRIA, LOYALTY_PENALTY_MARTHA_HEART_ATTACK);
         } else  // Martha doesn't see it.  She lives, but Joey is found a day or so later anyways
@@ -2775,7 +2775,7 @@ void HandleNPCTeamMemberDeath(struct SOLDIERTYPE *pSoldierOld) {
              LOYALTY_PENALTY_JOEY_KILLED, FALSE );
                                                   // post the event, 30 minute delay
                                                   AddStrategicEvent( EVENT_TOWN_LOYALTY_UPDATE,
-             GetWorldTotalMin() + ( ( 12 + Random(13)) * 60 ), uiLoyaltyValue );
+             GetGameTimeInMin() + ( ( 12 + Random(13)) * 60 ), uiLoyaltyValue );
           */
           DecrementTownLoyalty(CAMBRIA, LOYALTY_PENALTY_JOEY_KILLED);
         }
@@ -3171,7 +3171,7 @@ struct SOLDIERTYPE *CivilianGroupMemberChangesSides(struct SOLDIERTYPE *pAttacke
     }
 
     AddStrategicEvent(EVENT_MAKE_CIV_GROUP_HOSTILE_ON_NEXT_SECTOR_ENTRANCE,
-                      GetWorldTotalMin() + 300, pNewAttacked->ubCivilianGroup);
+                      GetGameTimeInMin() + 300, pNewAttacked->ubCivilianGroup);
     SetCivGroupHostility(pNewAttacked->ubCivilianGroup, CIV_GROUP_WILL_EVENTUALLY_BECOME_HOSTILE);
   }
 
@@ -4694,8 +4694,8 @@ void ExitCombatMode() {
   // Make sure next opplist decay DOES happen right after we go to RT
   // since this would be the same as what would happen at the end of the turn
   gTacticalStatus.uiTimeSinceLastOpplistDecay =
-      max(0, GetWorldTotalSeconds() - TIME_BETWEEN_RT_OPPLIST_DECAYS);
-  NonCombatDecayPublicOpplist(GetWorldTotalSeconds());
+      max(0, GetGameTimeInSec() - TIME_BETWEEN_RT_OPPLIST_DECAYS);
+  NonCombatDecayPublicOpplist(GetGameTimeInSec());
 }
 
 void SetEnemyPresence() {
@@ -5601,7 +5601,7 @@ BOOLEAN CheckForLosingEndOfBattle() {
       if (bNumNotOKRealMercs < 4 && bNumNotOKRealMercs > 1) {
         // Check if any enemies exist....
         if (gTacticalStatus.Team[ENEMY_TEAM].bMenInSector > 0) {
-          // if( GetWorldDay() > STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !(
+          // if( GetGameTimeInDays() > STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !(
           // gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ))
           {
             if (gubQuest[QUEST_HELD_IN_ALMA] == QUESTNOTSTARTED ||

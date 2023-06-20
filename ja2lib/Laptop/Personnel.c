@@ -5865,11 +5865,6 @@ void DisplayEmploymentinformation(INT32 iId, INT32 iSlot) {
           }
 
         } else if (Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
-          //					swprintf(sString, ARR_SIZE(sString), L"%d%s /
-          //%d%s",Menptr[iId].iTotalContractLength, gpStrategicString[ STR_PB_DAYS_ABBREVIATION ], (
-          // GetWorldTotalMin( ) -Menptr[iId].iStartContractTime ) / ( 24 * 60 ), gpStrategicString[
-          // STR_PB_DAYS_ABBREVIATION ] );
-
           wcscpy(sString, gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
           mprintf((INT16)(pPersonnelScreenPoints[iCounter].x + (iSlot * TEXT_BOX_WIDTH)),
                   pPersonnelScreenPoints[iCounter].y,
@@ -6097,7 +6092,7 @@ INT32 CalcTimeLeftOnMercContract(struct SOLDIERTYPE *pSoldier) {
   INT32 iTimeLeftOnContract = -1;
 
   if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
-    iTimeLeftOnContract = pSoldier->iEndofContractTime - GetWorldTotalMin();
+    iTimeLeftOnContract = pSoldier->iEndofContractTime - GetGameTimeInMin();
 
     if (iTimeLeftOnContract < 0) iTimeLeftOnContract = 0;
   } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {

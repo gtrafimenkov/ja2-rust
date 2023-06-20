@@ -63,8 +63,6 @@ struct MOUSE_REGION gClockMouseRegion;
 struct MOUSE_REGION gClockScreenMaskMouseRegion;
 void AdvanceClock(UINT8 ubWarpCode);
 
-extern BOOLEAN fMapScreenBottomDirty;
-
 #define SECONDS_PER_COMPRESSION 1  // 1/2 minute passes every 1 second of real time
 #define SECONDS_PER_COMPRESSION_IN_RTCOMBAT 10
 #define SECONDS_PER_COMPRESSION_IN_TBCOMBAT 10
@@ -76,28 +74,22 @@ extern BOOLEAN fMapScreenBottomDirty;
 // All of these get saved and loaded.
 INT32 giTimeCompressMode = TIME_COMPRESS_X0;
 UINT8 gubClockResolution = 1;
-BOOLEAN gfGamePaused = TRUE;
 BOOLEAN gfTimeInterrupt = FALSE;
 BOOLEAN gfTimeInterruptPause = FALSE;
 BOOLEAN fSuperCompression = FALSE;
-UINT32 guiGameClock = STARTING_TIME;
 UINT32 guiPreviousGameClock = 0;  // used only for error-checking purposes
 UINT32 guiGameSecondsPerRealSecond;
 UINT32 guiTimesThisSecondProcessed = 0;
 INT32 iPausedPopUpBox = -1;
-UINT32 guiDay;
-UINT32 guiHour;
-UINT32 guiMin;
 CHAR16 gswzWorldTimeStr[20];
 INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS] = {0, 1, 5 * 60, 30 * 60, 60 * 60};
 UINT16 usPausedActualWidth;
 UINT16 usPausedActualHeight;
 UINT32 guiTimeOfLastEventQuery = 0;
-BOOLEAN gfLockPauseState = FALSE;
 BOOLEAN gfPauseDueToPlayerGamePause = FALSE;
 BOOLEAN gfResetAllPlayerKnowsEnemiesFlags = FALSE;
 BOOLEAN gfTimeCompressionOn = FALSE;
-UINT32 guiLockPauseStateLastReasonId = 0;
+
 //***When adding new saved time variables, make sure you remove the appropriate amount from the
 // paddingbytes and
 //   more IMPORTANTLY, add appropriate code in Save/LoadGameClock()!
@@ -108,40 +100,14 @@ extern UINT32 guiEnvTime;
 extern UINT32 guiEnvDay;
 
 void InitNewGameClock() {
-  guiGameClock = STARTING_TIME;
-  guiPreviousGameClock = STARTING_TIME;
-  guiDay = (guiGameClock / NUM_SEC_IN_DAY);
-  guiHour = (guiGameClock - (guiDay * NUM_SEC_IN_DAY)) / NUM_SEC_IN_HOUR;
-  guiMin =
-      (guiGameClock - ((guiDay * NUM_SEC_IN_DAY) + (guiHour * NUM_SEC_IN_HOUR))) / NUM_SEC_IN_MIN;
-  swprintf(WORLDTIMESTR, ARR_SIZE(WORLDTIMESTR), L"%s %d, %02d:%02d", pDayStrings[0], guiDay,
-           guiHour, guiMin);
+  SetGameTimeSec(GetGameStartingTime());
+  guiPreviousGameClock = GetGameStartingTime();
+  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
+           GetGameTimeInDays(), GetGameClockHour(), GetGameClockMinutes());
   guiTimeCurrentSectorWasLastLoaded = 0;
   guiGameSecondsPerRealSecond = 0;
   gubClockResolution = 1;
   memset(gubUnusedTimePadding, 0, TIME_PADDINGBYTES);
-}
-
-UINT32 GetWorldTotalMin() { return (guiGameClock / NUM_SEC_IN_MIN); }
-
-UINT32 GetWorldTotalSeconds() { return (guiGameClock); }
-
-UINT32 GetWorldHour() { return (guiHour); }
-
-UINT32 GetWorldMinutesInDay() { return ((guiHour * 60) + guiMin); }
-
-UINT32 GetWorldDay() { return (guiDay); }
-
-UINT32 GetWorldDayInSeconds() { return (guiDay * NUM_SEC_IN_DAY); }
-
-UINT32 GetWorldDayInMinutes() { return ((guiDay * NUM_SEC_IN_DAY) / NUM_SEC_IN_MIN); }
-
-UINT32 GetFutureDayInMinutes(UINT32 uiDay) { return ((uiDay * NUM_SEC_IN_DAY) / NUM_SEC_IN_MIN); }
-
-// this function returns the amount of minutes there has been from start of game to midnight of the
-// uiDay.
-UINT32 GetMidnightOfFutureDayInMinutes(UINT32 uiDay) {
-  return (GetWorldTotalMin() + (uiDay * 1440) - GetWorldMinutesInDay());
 }
 
 // Not to be used too often by things other than internally
@@ -162,7 +128,7 @@ void AdvanceClock(UINT8 ubWarpCode) {
   }
 
   if (ubWarpCode != WARPTIME_NO_PROCESSING_OF_EVENTS) {
-    guiTimeOfLastEventQuery = guiGameClock;
+    guiTimeOfLastEventQuery = GetGameTimeInSec();
     // First of all, events are posted for movements, pending attacks, equipment arrivals, etc. This
     // time adjustment using time compression can possibly pass one or more events in a single pass.
     // So, this list is looked at and processed in sequential order, until the uiAdjustment is fully
@@ -175,49 +141,33 @@ void AdvanceClock(UINT8 ubWarpCode) {
       ProcessPendingGameEvents(guiGameSecondsPerRealSecond, ubWarpCode);
     } else {
       // Adjust the game clock now.
-      guiGameClock += guiGameSecondsPerRealSecond;
+      MoveGameTimeForward(guiGameSecondsPerRealSecond);
     }
   } else {
-    guiGameClock += guiGameSecondsPerRealSecond;
+    MoveGameTimeForward(guiGameSecondsPerRealSecond);
   }
 
-  if (guiGameClock < guiPreviousGameClock) {
+  if (GetGameTimeInSec() < guiPreviousGameClock) {
     AssertMsg(FALSE,
               String("AdvanceClock: TIME FLOWING BACKWARDS!!! guiPreviousGameClock %d, now %d",
-                     guiPreviousGameClock, guiGameClock));
+                     guiPreviousGameClock, GetGameTimeInSec()));
 
     // fix it if assertions are disabled
-    guiGameClock = guiPreviousGameClock;
+    SetGameTimeSec(guiPreviousGameClock);
   }
 
   // store previous game clock value (for error-checking purposes only)
-  guiPreviousGameClock = guiGameClock;
+  guiPreviousGameClock = GetGameTimeInSec();
 
-  // Calculate the day, hour, and minutes.
-  guiDay = (guiGameClock / NUM_SEC_IN_DAY);
-  guiHour = (guiGameClock - (guiDay * NUM_SEC_IN_DAY)) / NUM_SEC_IN_HOUR;
-  guiMin =
-      (guiGameClock - ((guiDay * NUM_SEC_IN_DAY) + (guiHour * NUM_SEC_IN_HOUR))) / NUM_SEC_IN_MIN;
-
-  swprintf(WORLDTIMESTR, ARR_SIZE(WORLDTIMESTR), L"%s %d, %02d:%02d",
-           gpGameClockString[STR_GAMECLOCK_DAY_NAME], guiDay, guiHour, guiMin);
+  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d",
+           gpGameClockString[STR_GAMECLOCK_DAY_NAME], GetGameTimeInDays(), GetGameClockHour(),
+           GetGameClockMinutes());
 
   if (gfResetAllPlayerKnowsEnemiesFlags && !gTacticalStatus.fEnemyInSector) {
     ClearAnySectorsFlashingNumberOfEnemies();
 
     gfResetAllPlayerKnowsEnemiesFlags = FALSE;
   }
-
-  ForecastDayEvents();
-}
-
-void AdvanceToNextDay() {
-  INT32 uiDiff;
-  UINT32 uiTomorrowTimeInSec;
-
-  uiTomorrowTimeInSec = (guiDay + 1) * NUM_SEC_IN_DAY + 8 * NUM_SEC_IN_HOUR + 15 * NUM_SEC_IN_MIN;
-  uiDiff = uiTomorrowTimeInSec - guiGameClock;
-  WarpGameTime(uiDiff, WARPTIME_PROCESS_EVENTS_NORMALLY);
 
   ForecastDayEvents();
 }
@@ -252,8 +202,8 @@ void RenderClock(INT16 sX, INT16 sY) {
   RestoreExternBackgroundRect(sX, sY, CLOCK_STRING_WIDTH, CLOCK_STRING_HEIGHT);
 
   if ((gfPauseDueToPlayerGamePause == FALSE)) {
-    mprintf(sX + (CLOCK_STRING_WIDTH - StringPixLength(WORLDTIMESTR, CLOCK_FONT)) / 2, sY,
-            WORLDTIMESTR);
+    mprintf(sX + (CLOCK_STRING_WIDTH - StringPixLength(gswzWorldTimeStr, CLOCK_FONT)) / 2, sY,
+            gswzWorldTimeStr);
   } else {
     mprintf(sX + (CLOCK_STRING_WIDTH - StringPixLength(pPausedGameText[0], CLOCK_FONT)) / 2, sY,
             pPausedGameText[0]);
@@ -304,12 +254,12 @@ void StopTimeCompression(void) {
 
 void StartTimeCompression(void) {
   if (!gfTimeCompressionOn) {
-    if (GamePaused()) {
+    if (IsGamePaused()) {
       // first have to be allowed to unpause the game
       UnPauseGame();
 
       // if we couldn't, ignore this request
-      if (GamePaused()) {
+      if (IsGamePaused()) {
         return;
       }
     }
@@ -341,7 +291,7 @@ void StartTimeCompression(void) {
 
 // returns FALSE if time isn't currently being compressed for ANY reason (various pauses, etc.)
 BOOLEAN IsTimeBeingCompressed(void) {
-  if (!gfTimeCompressionOn || (giTimeCompressMode == TIME_COMPRESS_X0) || gfGamePaused)
+  if (!gfTimeCompressionOn || (giTimeCompressMode == TIME_COMPRESS_X0) || IsGamePaused())
     return (FALSE);
   else
     return (TRUE);
@@ -442,7 +392,7 @@ void SetClockResolutionToCompressMode(INT32 iCompressMode) {
     HandleTimeCompressWithTeamJackedInAndGearedToGo();
   }
 
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 }
 
 void SetGameHoursPerSecond(UINT32 uiGameHoursPerSecond) {
@@ -471,56 +421,6 @@ void SetGameSecondsPerSecond(UINT32 uiGameSecondsPerSecond) {
     SetClockResolutionPerSecond((UINT8)max(1, (UINT8)(guiGameSecondsPerRealSecond / 60)));
   }
 }
-
-// call this to prevent player from changing the time compression state via the interface
-
-void LockPauseState(UINT32 uiUniqueReasonId) {
-  gfLockPauseState = TRUE;
-
-  // if adding a new call, please choose a new uiUniqueReasonId, this helps track down the cause
-  // when it's left locked Highest # used was 21 on Feb 15 '99.
-  guiLockPauseStateLastReasonId = uiUniqueReasonId;
-}
-
-// call this to allow player to change the time compression state via the interface once again
-void UnLockPauseState() { gfLockPauseState = FALSE; }
-
-// tells you whether the player is currently locked out from messing with the time compression state
-BOOLEAN PauseStateLocked() { return gfLockPauseState; }
-
-void PauseGame() {
-  // always allow pausing, even if "locked".  Locking applies only to trying to compress time, not
-  // to pausing it
-  if (!gfGamePaused) {
-    gfGamePaused = TRUE;
-    fMapScreenBottomDirty = TRUE;
-  }
-}
-
-void UnPauseGame() {
-  // if we're paused
-  if (gfGamePaused) {
-    // ignore request if locked
-    if (gfLockPauseState) {
-      ScreenMsg(FONT_ORANGE, MSG_TESTVERSION,
-                L"Call to UnPauseGame() while Pause State is LOCKED! AM-4");
-      return;
-    }
-
-    gfGamePaused = FALSE;
-    fMapScreenBottomDirty = TRUE;
-  }
-}
-
-void TogglePause() {
-  if (gfGamePaused) {
-    UnPauseGame();
-  } else {
-    PauseGame();
-  }
-}
-
-BOOLEAN GamePaused() { return gfGamePaused; }
 
 // ONLY APPLICABLE INSIDE EVENT CALLBACKS!
 void InterruptTime() { gfTimeInterrupt = TRUE; }
@@ -582,7 +482,7 @@ void UpdateClock() {
     return;
   }
 
-  if (gfGamePaused || gfTimeInterruptPause || (gubClockResolution == 0) ||
+  if (IsGamePaused() || gfTimeInterruptPause || (gubClockResolution == 0) ||
       !guiGameSecondsPerRealSecond || ARE_IN_FADE_IN() || gfFadeOut) {
     uiLastSecondTime = GetJA2Clock();
     gfTimeInterruptPause = FALSE;
@@ -635,7 +535,7 @@ void UpdateClock() {
 
 #ifdef DEBUG_GAME_CLOCK
       if (uiAmountToAdvanceTime > 0x80000000 ||
-          guiGameClock + uiAmountToAdvanceTime < guiPreviousGameClock) {
+          GetGameTimeInSec() + uiAmountToAdvanceTime < guiPreviousGameClock) {
         uiNewTimeProcessed = uiNewTimeProcessed;
       }
 #endif
@@ -675,8 +575,11 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   File_Write(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  File_Write(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  {
+    i32 gameClock = GetGameTimeInSec();
+    File_Write(hFile, &gameClock, sizeof(UINT32), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  }
 
   File_Write(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
@@ -711,8 +614,11 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   File_Write(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
 
-  File_Write(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  {
+    UINT32 guiLockPauseStateLastReasonId = 0;
+    File_Write(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
+  }
 
   File_Write(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesWritten);
   if (uiNumBytesWritten != TIME_PADDINGBYTES) return (FALSE);
@@ -728,8 +634,14 @@ BOOLEAN LoadGameClock(FileID hFile) {
   File_Read(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
 
-  File_Read(hFile, &gfGamePaused, sizeof(BOOLEAN), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+  {
+    BOOLEAN gamePaused = FALSE;
+    File_Read(hFile, &gamePaused, sizeof(BOOLEAN), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+    if (gamePaused) {
+      PauseGame();
+    }
+  }
 
   File_Read(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
@@ -737,8 +649,12 @@ BOOLEAN LoadGameClock(FileID hFile) {
   File_Read(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  File_Read(hFile, &guiGameClock, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  {
+    u32 gameClock = 0;
+    File_Read(hFile, &gameClock, sizeof(UINT32), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+    SetGameTimeSec(gameClock);
+  }
 
   File_Read(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
@@ -758,8 +674,14 @@ BOOLEAN LoadGameClock(FileID hFile) {
   File_Read(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  File_Read(hFile, &gfLockPauseState, sizeof(BOOLEAN), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+  {
+    BOOLEAN lockedPause = FALSE;
+    File_Read(hFile, &lockedPause, sizeof(BOOLEAN), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+    if (lockedPause) {
+      LockPause();
+    }
+  }
 
   File_Read(hFile, &gfPauseDueToPlayerGamePause, sizeof(BOOLEAN), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
@@ -773,20 +695,17 @@ BOOLEAN LoadGameClock(FileID hFile) {
   File_Read(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
 
-  File_Read(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  {
+    UINT32 guiLockPauseStateLastReasonId = 0;
+    File_Read(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesRead);
+    if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  }
 
   File_Read(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesRead);
   if (uiNumBytesRead != TIME_PADDINGBYTES) return (FALSE);
 
-  // Update the game clock
-  guiDay = (guiGameClock / NUM_SEC_IN_DAY);
-  guiHour = (guiGameClock - (guiDay * NUM_SEC_IN_DAY)) / NUM_SEC_IN_HOUR;
-  guiMin =
-      (guiGameClock - ((guiDay * NUM_SEC_IN_DAY) + (guiHour * NUM_SEC_IN_HOUR))) / NUM_SEC_IN_MIN;
-
-  swprintf(WORLDTIMESTR, ARR_SIZE(WORLDTIMESTR), L"%s %d, %02d:%02d", pDayStrings[0], guiDay,
-           guiHour, guiMin);
+  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
+           GetGameTimeInDays(), GetGameClockHour(), GetGameClockMinutes());
 
   if (!gfBasement && !gfCaves) gfDoLighting = TRUE;
 
@@ -803,7 +722,7 @@ void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY) {
 
     fClockMouseRegionCreated = TRUE;
 
-    if (gfGamePaused == FALSE) {
+    if (!IsGamePaused()) {
       SetRegionFastHelpText(&gClockMouseRegion, pPausedGameText[2]);
     } else {
       SetRegionFastHelpText(&gClockMouseRegion, pPausedGameText[1]);
@@ -831,7 +750,7 @@ void HandlePlayerPauseUnPauseOfGame(void) {
   }
 
   // check if the game is paused BY THE PLAYER or not and reverse
-  if (gfGamePaused && gfPauseDueToPlayerGamePause) {
+  if (IsGamePaused() && gfPauseDueToPlayerGamePause) {
     // If in game screen...
     if (IsTacticalMode()) {
       if (giTimeCompressMode == TIME_COMPRESS_X0) {
@@ -861,7 +780,7 @@ void CreateDestroyScreenMaskForPauseGame(void) {
   static BOOLEAN fCreated = FALSE;
   INT16 sX = 0, sY = 0;
 
-  if (((fClockMouseRegionCreated == FALSE) || (gfGamePaused == FALSE) ||
+  if (((fClockMouseRegionCreated == FALSE) || (!IsGamePaused()) ||
        (gfPauseDueToPlayerGamePause == FALSE)) &&
       (fCreated == TRUE)) {
     fCreated = FALSE;
@@ -871,7 +790,7 @@ void CreateDestroyScreenMaskForPauseGame(void) {
     SetRenderFlags(RENDER_FLAG_FULL);
     fTeamPanelDirty = TRUE;
     SetMapPanelDirty(true);
-    fMapScreenBottomDirty = TRUE;
+    SetMapScreenBottomDirty(true);
     gfJustFinishedAPause = TRUE;
     MarkButtonsDirty();
     SetRenderFlags(RENDER_FLAG_FULL);
@@ -891,7 +810,7 @@ void CreateDestroyScreenMaskForPauseGame(void) {
 
     SetRegionFastHelpText(&gClockMouseRegion, pPausedGameText[1]);
 
-    fMapScreenBottomDirty = TRUE;
+    SetMapScreenBottomDirty(true);
 
     // UnMarkButtonsDirty( );
 
@@ -910,7 +829,7 @@ void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReas
 }
 
 void RenderPausedGameBox(void) {
-  if ((gfPauseDueToPlayerGamePause == TRUE) && (gfGamePaused == TRUE) && (iPausedPopUpBox != -1)) {
+  if ((gfPauseDueToPlayerGamePause == TRUE) && IsGamePaused() && (iPausedPopUpBox != -1)) {
     RenderMercPopUpBoxFromIndex(iPausedPopUpBox, (INT16)(320 - usPausedActualWidth / 2),
                                 (INT16)(200 - usPausedActualHeight / 2), FRAME_BUFFER);
     InvalidateRegion((INT16)(320 - usPausedActualWidth / 2),
@@ -921,14 +840,6 @@ void RenderPausedGameBox(void) {
 
   // reset we've just finished a pause by the player
   gfJustFinishedAPause = FALSE;
-}
-
-BOOLEAN DayTime() {  // between 7AM and 9PM
-  return (guiHour >= 7 && guiHour < 21);
-}
-
-BOOLEAN NightTime() {  // before 7AM or after 9PM
-  return (guiHour < 7 || guiHour >= 21);
 }
 
 void ClearTacticalStuffDueToTimeCompression(void) {

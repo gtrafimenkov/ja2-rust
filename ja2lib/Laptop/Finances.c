@@ -109,7 +109,6 @@ UINT32 guiLISTCOLUMNS;
 
 // are in the financial system right now?
 BOOLEAN fInFinancialMode = FALSE;
-extern BOOLEAN fMapScreenBottomDirty;
 
 // the last page loaded
 UINT32 guiLastPageLoaded = 0;
@@ -196,7 +195,7 @@ UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmou
   // update balance
   LaptopMoneyAddToBalance(iAmount);
 
-  uiId = ProcessAndEnterAFinacialRecord(ubCode, GetWorldTotalMin(), iAmount, ubSecondCode,
+  uiId = ProcessAndEnterAFinacialRecord(ubCode, GetGameTimeInMin(), iAmount, ubSecondCode,
                                         LaptopMoneyGetBalance());
 
   // write balance to disk
@@ -217,7 +216,7 @@ UINT32 AddTransactionToPlayersBook(UINT8 ubCode, UINT8 ubSecondCode, INT32 iAmou
     fPausedReDrawScreenFlag = TRUE;
   }
 
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 
   // return unique id of this transaction
   return uiId;
@@ -328,41 +327,21 @@ INT32 GetTotalToDay(INT32 sTimeInMins) {
 }
 INT32 GetYesterdaysIncome(void) {
   // get income for yesterday
-  return (GetDayDebits(((GetWorldTotalMin() - (24 * 60)) / (24 * 60))) +
-          GetDayCredits(((UINT32)(GetWorldTotalMin() - (24 * 60)) / (24 * 60))));
+  return (GetDayDebits(((GetGameTimeInMin() - (24 * 60)) / (24 * 60))) +
+          GetDayCredits(((UINT32)(GetGameTimeInMin() - (24 * 60)) / (24 * 60))));
 }
 
 INT32 GetCurrentBalance(void) {
   // get balance to this minute
   return (LaptopMoneyGetBalance());
-
-  // return(GetTotalDebits((GetWorldTotalMin()))+GetTotalCredits((GetWorldTotalMin())));
 }
 
 INT32 GetTodaysIncome(void) {
   // get income
-  return (GetCurrentBalance() - GetTotalToDay(GetWorldTotalMin() - (24 * 60)));
+  return (GetCurrentBalance() - GetTotalToDay(GetGameTimeInMin() - (24 * 60)));
 }
 
-INT32 GetProjectedTotalDailyIncome(void) {
-  // return total  projected income, including what is earned today already
-
-  // CJC: I DON'T THINK SO!
-  // The point is:  PredictIncomeFromPlayerMines isn't dependant on the time of day
-  // (anymore) and this would report income of 0 at midnight!
-  /*
-if (GetWorldMinutesInDay() <= 0)
-  {
-          return ( 0 );
-  }
-  */
-  // look at we earned today
-
-  // then there is how many deposits have been made, now look at how many mines we have, thier rate,
-  // amount of ore left and predict if we still had these mines how much more would we get?
-
-  return (PredictIncomeFromPlayerMines());
-}
+INT32 GetProjectedTotalDailyIncome(void) { return (PredictIncomeFromPlayerMines()); }
 
 INT32 GetProjectedBalance(void) {
   // return the projected balance for tommorow - total for today plus the total income, projected.
@@ -371,7 +350,7 @@ INT32 GetProjectedBalance(void) {
 
 INT32 GetConfidenceValue() {
   // return confidence that the projected income is infact correct
-  return (((GetWorldMinutesInDay() * 100) / (60 * 24)));
+  return (((GetMinutesSinceDayStart() * 100) / (60 * 24)));
 }
 
 void GameInitFinances() {
@@ -1795,7 +1774,7 @@ INT32 GetPreviousDaysBalance(void) {
   BOOLEAN fGoneTooFar = FALSE;
 
   // what day is it?
-  iDateInMinutes = GetWorldTotalMin() - (60 * 24);
+  iDateInMinutes = GetGameTimeInMin() - (60 * 24);
 
   // error checking
   // no file, return
@@ -1874,7 +1853,7 @@ INT32 GetTodaysBalance(void) {
   BOOLEAN fGoneTooFar = FALSE;
 
   // what day is it?
-  iDateInMinutes = GetWorldTotalMin();
+  iDateInMinutes = GetGameTimeInMin();
 
   // error checking
   // no file, return
@@ -1948,7 +1927,7 @@ INT32 GetPreviousDaysIncome(void) {
   INT32 iTotalPreviousIncome = 0;
 
   // what day is it?
-  iDateInMinutes = GetWorldTotalMin();
+  iDateInMinutes = GetGameTimeInMin();
 
   // error checking
   // no file, return
@@ -2035,7 +2014,7 @@ INT32 GetTodaysDaysIncome(void) {
   INT32 iTotalIncome = 0;
 
   // what day is it?
-  iDateInMinutes = GetWorldTotalMin();
+  iDateInMinutes = GetGameTimeInMin();
 
   // error checking
   // no file, return
@@ -2151,7 +2130,7 @@ INT32 GetTodaysOtherDeposits(void) {
   INT32 iTotalIncome = 0;
 
   // what day is it?
-  iDateInMinutes = GetWorldTotalMin();
+  iDateInMinutes = GetGameTimeInMin();
 
   // error checking
   // no file, return
@@ -2240,7 +2219,7 @@ INT32 GetYesterdaysOtherDeposits(void) {
   INT32 iTotalPreviousIncome = 0;
 
   // what day is it?
-  iDateInMinutes = GetWorldTotalMin();
+  iDateInMinutes = GetGameTimeInMin();
 
   // error checking
   // no file, return

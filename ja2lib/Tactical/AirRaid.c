@@ -153,7 +153,7 @@ void ScheduleAirRaid(AIR_RAID_DEFINITION *pAirRaidDef) {
   memcpy(&gAirRaidDef, pAirRaidDef, sizeof(AIR_RAID_DEFINITION));
 
   AddSameDayStrategicEvent(EVENT_BEGIN_AIR_RAID,
-                           (GetWorldMinutesInDay() + pAirRaidDef->ubNumMinsFromCurrentTime), 0);
+                           (GetMinutesSinceDayStart() + pAirRaidDef->ubNumMinsFromCurrentTime), 0);
 
   gfAirRaidScheduled = TRUE;
 }
@@ -1202,7 +1202,7 @@ void EndAirRaid() {
                                   // arrival event.  The information is already set up though.
                                   // DeleteStrategicEvent( EVENT_GROUP_ARRIVAL, pGroup->ubGroupID );
                                   // Simply reinsert the event, but the time is now.
-                                  // AddStrategicEvent( EVENT_GROUP_ARRIVAL, GetWorldTotalMin(),
+                                  // AddStrategicEvent( EVENT_GROUP_ARRIVAL, GetGameTimeInMin(),
                                   // pGroup->ubGroupID );
   }
 

@@ -170,19 +170,19 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
 
   if (DidGameJustStart()) {
     // Set time of initial merc arrival in minutes
-    pHireMerc->uiTimeTillMercArrives = (STARTING_TIME + FIRST_ARRIVAL_DELAY) / NUM_SEC_IN_MIN;
+    pHireMerc->uiTimeTillMercArrives =
+        (GetGameStartingTime() + FIRST_ARRIVAL_DELAY) / NUM_SEC_IN_MIN;
 
     // Set insertion for first time in chopper
     pHireMerc->ubInsertionCode = INSERTION_CODE_CHOPPER;
 
     // set when the merc's contract is finished
-    pSoldier->iEndofContractTime = GetMidnightOfFutureDayInMinutes(pSoldier->iTotalContractLength) +
+    pSoldier->iEndofContractTime = GetFutureMidnightInMinutes(pSoldier->iTotalContractLength) +
                                    (GetHourWhenContractDone(pSoldier) * 60);
   } else {
     // set when the merc's contract is finished ( + 1 cause it takes a day for the merc to arrive )
-    pSoldier->iEndofContractTime =
-        GetMidnightOfFutureDayInMinutes(1 + pSoldier->iTotalContractLength) +
-        (GetHourWhenContractDone(pSoldier) * 60);
+    pSoldier->iEndofContractTime = GetFutureMidnightInMinutes(1 + pSoldier->iTotalContractLength) +
+                                   (GetHourWhenContractDone(pSoldier) * 60);
   }
 
   // Set the time and ID of the last hired merc will arrive
@@ -205,11 +205,11 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
     if (pHireMerc->iTotalContractLength == 1) {
       // pSoldier->iTotalContractCharge = gMercProfiles[ GetSolProfile(pSoldier) ].sSalary;
       pSoldier->bTypeOfLastContract = CONTRACT_EXTEND_1_DAY;
-      pSoldier->iTimeCanSignElsewhere = GetWorldTotalMin();
+      pSoldier->iTimeCanSignElsewhere = GetGameTimeInMin();
     } else if (pHireMerc->iTotalContractLength == 7) {
       // pSoldier->iTotalContractCharge = gMercProfiles[ GetSolProfile(pSoldier) ].uiWeeklySalary;
       pSoldier->bTypeOfLastContract = CONTRACT_EXTEND_1_WEEK;
-      pSoldier->iTimeCanSignElsewhere = GetWorldTotalMin();
+      pSoldier->iTimeCanSignElsewhere = GetGameTimeInMin();
     } else if (pHireMerc->iTotalContractLength == 14) {
       // pSoldier->iTotalContractCharge = gMercProfiles[ GetSolProfile(pSoldier) ].uiBiWeeklySalary;
       pSoldier->bTypeOfLastContract = CONTRACT_EXTEND_2_WEEK;
@@ -228,9 +228,9 @@ INT8 HireMerc(MERC_HIRE_STRUCT *pHireMerc) {
     gMercProfiles[GetSolProfile(pSoldier)].iMercMercContractLength = 1;
 
     // Set starting conditions for the merc
-    pSoldier->iStartContractTime = GetWorldDay();
+    pSoldier->iStartContractTime = GetGameTimeInDays();
 
-    AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_MERC, ubCurrentSoldier, GetWorldTotalMin(), -1,
+    AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_MERC, ubCurrentSoldier, GetGameTimeInMin(), -1,
                            -1);
   }
   // If the merc is from IMP, (ie a player character)
@@ -340,10 +340,10 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
   pMerc->bMercStatus = (UINT8)pSoldier->iTotalContractLength;
 
   // remember when excatly he ARRIVED in Arulco, in case he gets fired early
-  pSoldier->uiTimeOfLastContractUpdate = GetWorldTotalMin();
+  pSoldier->uiTimeOfLastContractUpdate = GetGameTimeInMin();
 
   // set when the merc's contract is finished
-  pSoldier->iEndofContractTime = GetMidnightOfFutureDayInMinutes(pSoldier->iTotalContractLength) +
+  pSoldier->iEndofContractTime = GetFutureMidnightInMinutes(pSoldier->iTotalContractLength) +
                                  (GetHourWhenContractDone(pSoldier) * 60);
 
   // Do initial check for bad items
@@ -353,7 +353,7 @@ void MercArrivesCallback(UINT8 ubSoldierID) {
       // Randomly anytime between 9:00, and 10:00
       uiTimeOfPost = 540 + Random(660);
 
-      if (GetWorldMinutesInDay() < uiTimeOfPost) {
+      if (GetMinutesSinceDayStart() < uiTimeOfPost) {
         AddSameDayStrategicEvent(EVENT_MERC_COMPLAIN_EQUIPMENT, uiTimeOfPost,
                                  GetSolProfile(pSoldier));
       }
@@ -473,7 +473,7 @@ UINT32 GetMercArrivalTimeOfDay() {
   // Pick a time...
 
   // First get the current time of day.....
-  uiCurrHour = GetWorldHour();
+  uiCurrHour = GetGameClockHour();
 
   // Subtract the min time for any arrival....
   uiMinHour = uiCurrHour + MIN_FLIGHT_PREP_TIME;
@@ -483,17 +483,17 @@ UINT32 GetMercArrivalTimeOfDay() {
   if ((uiCurrHour) > 13)  // ( > 1:00 pm - too bad )
   {
     // 7:30 flight....
-    return (GetMidnightOfFutureDayInMinutes(1) + MERC_ARRIVE_TIME_SLOT_1);
+    return (GetFutureMidnightInMinutes(1) + MERC_ARRIVE_TIME_SLOT_1);
   }
 
   // Well, now we can handle flights all in one day....
   // Find next possible flight
   if (uiMinHour <= 7) {
-    return (GetWorldDayInMinutes() + MERC_ARRIVE_TIME_SLOT_1);  // 7:30 am
+    return (GetGameTimeInDays() * 24 * 60 + MERC_ARRIVE_TIME_SLOT_1);  // 7:30 am
   } else if (uiMinHour <= 13) {
-    return (GetWorldDayInMinutes() + MERC_ARRIVE_TIME_SLOT_2);  // 1:30 pm
+    return (GetGameTimeInDays() * 24 * 60 + MERC_ARRIVE_TIME_SLOT_2);  // 1:30 pm
   } else {
-    return (GetWorldDayInMinutes() + MERC_ARRIVE_TIME_SLOT_3);  // 7:30 pm
+    return (GetGameTimeInDays() * 24 * 60 + MERC_ARRIVE_TIME_SLOT_3);  // 7:30 pm
   }
 }
 

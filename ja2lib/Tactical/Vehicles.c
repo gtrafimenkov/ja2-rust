@@ -1779,8 +1779,8 @@ void TeleportVehicleToItsClosestSector(INT32 iVehicleId, UINT8 ubGroupID) {
   Assert(pGroup->uiTraverseTime != -1);
   Assert((pGroup->uiTraverseTime > 0) && (pGroup->uiTraverseTime != 0xffffffff));
 
-  Assert(pGroup->uiArrivalTime >= GetWorldTotalMin());
-  uiTimeToNextSector = pGroup->uiArrivalTime - GetWorldTotalMin();
+  Assert(pGroup->uiArrivalTime >= GetGameTimeInMin());
+  uiTimeToNextSector = pGroup->uiArrivalTime - GetGameTimeInMin();
 
   Assert(pGroup->uiTraverseTime >= uiTimeToNextSector);
   uiTimeToLastSector = pGroup->uiTraverseTime - uiTimeToNextSector;
@@ -1802,7 +1802,7 @@ void TeleportVehicleToItsClosestSector(INT32 iVehicleId, UINT8 ubGroupID) {
   }
 
   // make it arrive immediately, not eventually (it's driverless)
-  SetGroupArrivalTime(pGroup, GetWorldTotalMin());
+  SetGroupArrivalTime(pGroup, GetGameTimeInMin());
 
   // change where it is and where it's going, then make it arrive there.  Don't check for battle
   PlaceGroupInSector(ubGroupID, sPrevX, sPrevY, sNextX, sNextY, 0, FALSE);

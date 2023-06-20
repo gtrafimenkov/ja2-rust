@@ -50,7 +50,7 @@ void PostEventsForSpreadOfTownOpinion(void) {
           // called every day at 3am to set up daily events to handle spreading of town opinion
      about mercs for( iCounter = 0; iCounter < TOWN_OPINION_NUMBER_OF_PERIODS; iCounter++ )
           {
-                  AddStrategicEvent( EVENT_HANDLE_TOWN_OPINION, GetWorldDayInMinutes() +
+                  AddStrategicEvent( EVENT_HANDLE_TOWN_OPINION, GetGameTimeInDays()*24*60 +
      TOWN_OPINION_START_TIME + iCounter * TOWN_OPINION_PERIOD, 0 );
           }
   */
@@ -111,7 +111,7 @@ void HandleSpreadOfAllTownsOpinion(void) {
   UINT8 ubProfileId;
 
   // debug message
-  ScreenMsg(MSG_FONT_RED, MSG_DEBUG, L"%s - Spreading town opinions about mercs", WORLDTIMESTR);
+  ScreenMsg(MSG_FONT_RED, MSG_DEBUG, L"%s - Spreading town opinions about mercs", gswzWorldTimeStr);
 
   // run though all player-recruitable profiles and update towns opinion of mercs
   for (ubProfileId = 0; ubProfileId < FIRST_NPC; ubProfileId++) {

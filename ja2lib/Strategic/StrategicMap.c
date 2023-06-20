@@ -96,6 +96,7 @@
 #include "Utils/MusicControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_clock.h"
 #include "rust_fileman.h"
 #include "rust_militia.h"
 #include "rust_sam_sites.h"
@@ -734,7 +735,7 @@ BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ) {
   // ATE: Do this stuff earlier!
   if (!(gTacticalStatus.uiFlags & LOADING_SAVED_GAME)) {
     // Update the last time we were in tactical...
-    gTacticalStatus.uiTimeSinceLastInTactical = GetWorldTotalMin();
+    gTacticalStatus.uiTimeSinceLastInTactical = GetGameTimeInMin();
 
     // init some AI stuff
     InitializeTacticalStatusAtBattleStart();
@@ -989,7 +990,7 @@ void PrepareLoadedSector() {
     CalculateNonPersistantPBIInfo();
   }
 
-  ScreenMsg(FONT_YELLOW, MSG_DEBUG, L"Current Time is: %d", GetWorldTotalMin());
+  ScreenMsg(FONT_YELLOW, MSG_DEBUG, L"Current Time is: %d", GetGameTimeInMin());
 
   AllTeamsLookForAll(TRUE);
 }
@@ -2309,11 +2310,11 @@ void AllMercsHaveWalkedOffSector() {
       // Case 2:  Immediatly loading the next sector
       if (!gbAdjacentSectorZ) {
         UINT32 uiWarpTime;
-        uiWarpTime = (GetWorldTotalMin() + 5) * 60 - GetWorldTotalSeconds();
+        uiWarpTime = (GetGameTimeInMin() + 5) * 60 - GetGameTimeInSec();
         WarpGameTime(uiWarpTime, WARPTIME_PROCESS_TARGET_TIME_FIRST);
       } else if (gbAdjacentSectorZ > 0) {
         UINT32 uiWarpTime;
-        uiWarpTime = (GetWorldTotalMin() + 1) * 60 - GetWorldTotalSeconds();
+        uiWarpTime = (GetGameTimeInMin() + 1) * 60 - GetGameTimeInSec();
         WarpGameTime(uiWarpTime, WARPTIME_PROCESS_TARGET_TIME_FIRST);
       }
 
@@ -3567,7 +3568,7 @@ void HandleSlayDailyEvent(void) {
   // ATE: This function is used to check for the ultimate last day SLAY can stay for
   // he may decide to leave randomly while asleep...
   // if the user hasnt renewed yet, and is still leaving today
-  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {
+  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetGameTimeInDays()) {
     pSoldier->ubLeaveHistoryCode = HISTORY_SLAY_MYSTERIOUSLY_LEFT;
     TacticalCharacterDialogueWithSpecialEvent(
         pSoldier, 0, DIALOGUE_SPECIAL_EVENT_CONTRACT_ENDING_NO_ASK_EQUIP, 0, 0);

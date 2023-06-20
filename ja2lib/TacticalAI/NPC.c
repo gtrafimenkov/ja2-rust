@@ -1031,7 +1031,7 @@ UINT8 NPCConsiderQuote(UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuot
   }
 
   // How much do we want to talk with this merc?
-  uiDay = GetWorldDay();
+  uiDay = GetGameTimeInDays();
 
   pNPCQuoteInfo = &(pNPCQuoteInfoArray[ubQuoteNum]);
 
@@ -1344,7 +1344,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
       NPCDoAction(ubNPC, NPC_ACTION_TURN_TO_FACE_NEAREST_MERC, 1);
 
       if (pProfile->ubLastDateSpokenTo > 0) {
-        uiDay = GetWorldDay();
+        uiDay = GetGameTimeInDays();
         if (uiDay > pProfile->ubLastDateSpokenTo) {
           NPCConsiderTalking(ubNPC, ubMerc, APPROACH_SPECIAL_INITIAL_QUOTE, 0, pNPCQuoteInfoArray,
                              &pQuotePtr, &ubRecordNum);
@@ -1423,7 +1423,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
         case APPROACH_GIVINGITEM:
           // first start by triggering any introduction quote if there is one...
           if (pProfile->ubLastDateSpokenTo > 0) {
-            uiDay = GetWorldDay();
+            uiDay = GetGameTimeInDays();
             if (uiDay > pProfile->ubLastDateSpokenTo) {
               NPCConsiderTalking(ubNPC, ubMerc, APPROACH_SPECIAL_INITIAL_QUOTE, 0,
                                  pNPCQuoteInfoArray, &pQuotePtr, &ubRecordNum);
@@ -1784,7 +1784,7 @@ void Converse(UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, uintptr_t uiApproachDat
     case APPROACH_DECLARATION_OF_HOSTILITY:
     case APPROACH_INITIAL_QUOTE:
     case APPROACH_GIVINGITEM:
-      pProfile->ubLastDateSpokenTo = (UINT8)GetWorldDay();
+      pProfile->ubLastDateSpokenTo = (UINT8)GetGameTimeInDays();
       break;
     default:
       break;

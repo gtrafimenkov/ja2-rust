@@ -1074,7 +1074,7 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile() {
 void SetLastTimePlayerWasInSector() {
   if (!gbWorldSectorZ)
     SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
-        .uiTimeCurrentSectorWasLastLoaded = GetWorldTotalMin();
+        .uiTimeCurrentSectorWasLastLoaded = GetGameTimeInMin();
   else if (gbWorldSectorZ > 0) {
     UNDERGROUND_SECTORINFO *pTempNode = gpUndergroundSectorInfoHead;
 
@@ -1085,7 +1085,7 @@ void SetLastTimePlayerWasInSector() {
       if ((pTempNode->ubSectorX == gWorldSectorX) && (pTempNode->ubSectorY == gWorldSectorY) &&
           (pTempNode->ubSectorZ == gbWorldSectorZ)) {
         // set the flag indicating that ther is a temp item file exists for the sector
-        pTempNode->uiTimeCurrentSectorWasLastLoaded = GetWorldTotalMin();
+        pTempNode->uiTimeCurrentSectorWasLastLoaded = GetGameTimeInMin();
         return;  // break out
       }
       pTempNode = pTempNode->next;
@@ -1425,7 +1425,7 @@ BOOLEAN LoadRottingCorpsesFromTempCorpseFile(u8 sMapX, u8 sMapY, i8 bMapZ) {
           // Are we indoors?
           if (FloorAtGridNo(def.sGridNo)) {
             // OK, finally, check TOC vs game time to see if at least some time has passed
-            if ((GetWorldTotalMin() - def.uiTimeOfDeath) >= 30) {
+            if ((GetGameTimeInMin() - def.uiTimeOfDeath) >= 30) {
               fDontAddCorpse = TRUE;
             }
           }
@@ -2078,7 +2078,7 @@ BOOLEAN SetSectorFlag(u8 sMapX, u8 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet) {
       gStrategicStatus.ubNumNewSectorsVisitedToday++;
       if (gStrategicStatus.ubNumNewSectorsVisitedToday == NEW_SECTORS_EQUAL_TO_ACTIVITY) {
         // visited enough to count as an active day
-        UpdateLastDayOfPlayerActivity((UINT16)GetWorldDay());
+        UpdateLastDayOfPlayerActivity((UINT16)GetGameTimeInDays());
       }
     }
   }
@@ -2226,7 +2226,7 @@ BOOLEAN AddDeadSoldierToUnLoadedSector(u8 sMapX, u8 sMapY, UINT8 bMapZ,
   Corpse.bDirection = pSoldier->bDirection;
 
   // Set time of death
-  Corpse.uiTimeOfDeath = GetWorldTotalMin();
+  Corpse.uiTimeOfDeath = GetGameTimeInMin();
 
   // if the dead body shot be the result of a Jfk headshot, set it
   if (uiFlags & ADD_DEAD_SOLDIER__USE_JFK_HEADSHOT_CORPSE) uiDeathAnim = JFK_HITDEATH;

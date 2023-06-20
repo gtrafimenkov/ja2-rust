@@ -112,7 +112,6 @@ void ValidateGameEvents();
 
 STRATEGICEVENT *gpEventList = NULL;
 
-extern UINT32 guiGameClock;
 extern BOOLEAN gfTimeInterruptPause;
 BOOLEAN gfPreventDeletionOfAnyEvent = FALSE;
 BOOLEAN gfEventDeletionPending = FALSE;
@@ -124,7 +123,7 @@ UINT32 guiTimeStampOfCurrentlyExecutingEvent = 0;
 // and the beginning of the next global time.
 BOOLEAN GameEventsPending(UINT32 uiAdjustment) {
   if (!gpEventList) return FALSE;
-  if (gpEventList->uiTimeStamp <= GetWorldTotalSeconds() + uiAdjustment) return TRUE;
+  if (gpEventList->uiTimeStamp <= GetGameTimeInSec() + uiAdjustment) return TRUE;
   return FALSE;
 }
 
@@ -167,18 +166,13 @@ BOOLEAN DeleteEventsWithDeletionPending() {
 void AdjustClockToEventStamp(STRATEGICEVENT *pEvent, UINT32 *puiAdjustment) {
   UINT32 uiDiff;
 
-  uiDiff = pEvent->uiTimeStamp - guiGameClock;
-  guiGameClock += uiDiff;
+  uiDiff = pEvent->uiTimeStamp - GetGameTimeInSec();
+  MoveGameTimeForward(uiDiff);
   *puiAdjustment -= uiDiff;
 
-  // Calculate the day, hour, and minutes.
-  guiDay = (guiGameClock / NUM_SEC_IN_DAY);
-  guiHour = (guiGameClock - (guiDay * NUM_SEC_IN_DAY)) / NUM_SEC_IN_HOUR;
-  guiMin =
-      (guiGameClock - ((guiDay * NUM_SEC_IN_DAY) + (guiHour * NUM_SEC_IN_HOUR))) / NUM_SEC_IN_MIN;
-
-  swprintf(WORLDTIMESTR, ARR_SIZE(WORLDTIMESTR), L"%s %d, %02d:%02d",
-           gpGameClockString[STR_GAMECLOCK_DAY_NAME], guiDay, guiHour, guiMin);
+  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d",
+           gpGameClockString[STR_GAMECLOCK_DAY_NAME], GetGameTimeInDays(), GetGameClockHour(),
+           GetGameClockMinutes());
 }
 
 // If there are any events pending, they are processed, until the time limit is reached, or
@@ -193,40 +187,44 @@ void ProcessPendingGameEvents(UINT32 uiAdjustment, UINT8 ubWarpCode) {
   // While we have events inside the time range to be updated, process them...
   curr = gpEventList;
   prev = NULL;  // prev only used when warping time to target time.
-  while (!gfTimeInterrupt && curr && curr->uiTimeStamp <= guiGameClock + uiAdjustment) {
+  while (!gfTimeInterrupt && curr && curr->uiTimeStamp <= GetGameTimeInSec() + uiAdjustment) {
     fDeleteEvent = FALSE;
     // Update the time by the difference, but ONLY if the event comes after the current time.
     // In the beginning of the game, series of events are created that are placed in the list
     // BEFORE the start time.  Those events will be processed without influencing the actual time.
-    if (curr->uiTimeStamp > guiGameClock && ubWarpCode != WARPTIME_PROCESS_TARGET_TIME_FIRST) {
+    if (curr->uiTimeStamp > GetGameTimeInSec() &&
+        ubWarpCode != WARPTIME_PROCESS_TARGET_TIME_FIRST) {
       AdjustClockToEventStamp(curr, &uiAdjustment);
     }
     // Process the event
     if (ubWarpCode != WARPTIME_PROCESS_TARGET_TIME_FIRST) {
       fDeleteEvent = ExecuteStrategicEvent(curr);
-    } else if (curr->uiTimeStamp ==
-               guiGameClock + uiAdjustment) {  // if we are warping to the target time to process
-                                               // that event first,
-      if (!curr->next || curr->next->uiTimeStamp >
-                             guiGameClock + uiAdjustment) {  // make sure that we are processing the
-                                                             // last event for that second
+    } else if (curr->uiTimeStamp == GetGameTimeInSec() + uiAdjustment) {
+      // if we are warping to the target time to
+      // process that event first,
+      if (!curr->next || curr->next->uiTimeStamp > GetGameTimeInSec() + uiAdjustment) {
+        // make sure that we are processing
+        // the last event for that second
         AdjustClockToEventStamp(curr, &uiAdjustment);
 
         fDeleteEvent = ExecuteStrategicEvent(curr);
 
-        if (curr && prev && fDeleteQueuedEvent) {  // The only case where we are deleting a node in
-                                                   // the middle of the list
+        if (curr && prev && fDeleteQueuedEvent) {
+          // The only case where we are deleting a node in
+          // the middle of the list
           prev->next = curr->next;
         }
-      } else {  // We are at the current target warp time however, there are still other events
-                // following in this time cycle.
+      } else {
+        // We are at the current target warp time however, there are still other events
+        // following in this time cycle.
         // We will only target the final event in this time.  NOTE:  Events are posted using a FIFO
         // method
         prev = curr;
         curr = curr->next;
         continue;
       }
-    } else {  // We are warping time to the target time.  We haven't found the event yet,
+    } else {
+      // We are warping time to the target time.  We haven't found the event yet,
       // so continuing will keep processing the list until we find it.  NOTE:  Events are posted
       // using a FIFO method
       prev = curr;
@@ -275,34 +273,33 @@ void ProcessPendingGameEvents(UINT32 uiAdjustment, UINT8 ubWarpCode) {
     DeleteEventsWithDeletionPending();
   }
 
-  if (uiAdjustment && !gfTimeInterrupt) guiGameClock += uiAdjustment;
+  if (uiAdjustment && !gfTimeInterrupt) MoveGameTimeForward(uiAdjustment);
 }
 
 BOOLEAN AddSameDayStrategicEvent(UINT8 ubCallbackID, UINT32 uiMinStamp, UINT32 uiParam) {
-  return (AddStrategicEvent(ubCallbackID, uiMinStamp + GetWorldDayInMinutes(), uiParam));
+  return (AddStrategicEvent(ubCallbackID, uiMinStamp + GetGameTimeInDays() * 24 * 60, uiParam));
 }
 
 BOOLEAN AddSameDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiSecondStamp,
                                              UINT32 uiParam) {
-  return (
-      AddStrategicEventUsingSeconds(ubCallbackID, uiSecondStamp + GetWorldDayInSeconds(), uiParam));
+  return (AddStrategicEventUsingSeconds(
+      ubCallbackID, uiSecondStamp + GetGameTimeInDays() * NUM_SEC_IN_DAY, uiParam));
 }
 
 BOOLEAN AddFutureDayStrategicEvent(UINT8 ubCallbackID, UINT32 uiMinStamp, UINT32 uiParam,
                                    UINT32 uiNumDaysFromPresent) {
   UINT32 uiDay;
-  uiDay = GetWorldDay();
-  return (AddStrategicEvent(
-      ubCallbackID, uiMinStamp + GetFutureDayInMinutes(uiDay + uiNumDaysFromPresent), uiParam));
+  uiDay = GetGameTimeInDays();
+  return (AddStrategicEvent(ubCallbackID, uiMinStamp + 24 * 60 * (uiDay + uiNumDaysFromPresent),
+                            uiParam));
 }
 
 BOOLEAN AddFutureDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiSecondStamp,
                                                UINT32 uiParam, UINT32 uiNumDaysFromPresent) {
   UINT32 uiDay;
-  uiDay = GetWorldDay();
+  uiDay = GetGameTimeInDays();
   return (AddStrategicEventUsingSeconds(
-      ubCallbackID, uiSecondStamp + GetFutureDayInMinutes(uiDay + uiNumDaysFromPresent) * 60,
-      uiParam));
+      ubCallbackID, uiSecondStamp + 24 * 60 * (uiDay + uiNumDaysFromPresent) * 60, uiParam));
 }
 
 STRATEGICEVENT *AddAdvancedStrategicEvent(UINT8 ubEventType, UINT8 ubCallbackID, UINT32 uiTimeStamp,
@@ -400,14 +397,14 @@ BOOLEAN AddRangedStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 ui
 
 BOOLEAN AddSameDayRangedStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 uiLengthMin,
                                        UINT32 uiParam) {
-  return AddRangedStrategicEvent(ubCallbackID, uiStartMin + GetWorldDayInMinutes(), uiLengthMin,
-                                 uiParam);
+  return AddRangedStrategicEvent(ubCallbackID, uiStartMin + GetGameTimeInDays() * 24 * 60,
+                                 uiLengthMin, uiParam);
 }
 
 BOOLEAN AddFutureDayRangedStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 uiLengthMin,
                                          UINT32 uiParam, UINT32 uiNumDaysFromPresent) {
   return AddRangedStrategicEvent(
-      ubCallbackID, uiStartMin + GetFutureDayInMinutes(GetWorldDay() + uiNumDaysFromPresent),
+      ubCallbackID, uiStartMin + 24 * 60 * (GetGameTimeInDays() + uiNumDaysFromPresent),
       uiLengthMin, uiParam);
 }
 
@@ -424,7 +421,8 @@ BOOLEAN AddRangedStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSe
 
 BOOLEAN AddSameDayRangedStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSeconds,
                                                    UINT32 uiLengthSeconds, UINT32 uiParam) {
-  return AddRangedStrategicEventUsingSeconds(ubCallbackID, uiStartSeconds + GetWorldDayInSeconds(),
+  return AddRangedStrategicEventUsingSeconds(ubCallbackID,
+                                             uiStartSeconds + GetGameTimeInDays() * NUM_SEC_IN_DAY,
                                              uiLengthSeconds, uiParam);
 }
 
@@ -432,14 +430,13 @@ BOOLEAN AddFutureDayRangedStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 
                                                      UINT32 uiLengthSeconds, UINT32 uiParam,
                                                      UINT32 uiNumDaysFromPresent) {
   return AddRangedStrategicEventUsingSeconds(
-      ubCallbackID,
-      uiStartSeconds + GetFutureDayInMinutes(GetWorldDay() + uiNumDaysFromPresent) * 60,
+      ubCallbackID, uiStartSeconds + 24 * 60 * (GetGameTimeInDays() + uiNumDaysFromPresent) * 60,
       uiLengthSeconds, uiParam);
 }
 
 BOOLEAN AddEveryDayStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 uiParam) {
   if (AddAdvancedStrategicEvent(EVERYDAY_EVENT, ubCallbackID,
-                                GetWorldDayInSeconds() + uiStartMin * 60, uiParam))
+                                GetGameTimeInDays() * NUM_SEC_IN_DAY + uiStartMin * 60, uiParam))
     return TRUE;
   return FALSE;
 }
@@ -447,7 +444,7 @@ BOOLEAN AddEveryDayStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 
 BOOLEAN AddEveryDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSeconds,
                                               UINT32 uiParam) {
   if (AddAdvancedStrategicEvent(EVERYDAY_EVENT, ubCallbackID,
-                                GetWorldDayInSeconds() + uiStartSeconds, uiParam))
+                                GetGameTimeInDays() * NUM_SEC_IN_DAY + uiStartSeconds, uiParam))
     return TRUE;
   return FALSE;
 }
@@ -456,8 +453,9 @@ BOOLEAN AddEveryDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStart
 // Event will get processed automatically once every X minutes.
 BOOLEAN AddPeriodStrategicEvent(UINT8 ubCallbackID, UINT32 uiOnceEveryXMinutes, UINT32 uiParam) {
   STRATEGICEVENT *pEvent;
-  pEvent = AddAdvancedStrategicEvent(PERIODIC_EVENT, ubCallbackID,
-                                     GetWorldDayInSeconds() + uiOnceEveryXMinutes * 60, uiParam);
+  pEvent = AddAdvancedStrategicEvent(
+      PERIODIC_EVENT, ubCallbackID, GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOnceEveryXMinutes * 60,
+      uiParam);
   if (pEvent) {
     pEvent->uiTimeOffset = uiOnceEveryXMinutes * 60;
     return TRUE;
@@ -469,7 +467,8 @@ BOOLEAN AddPeriodStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiOnceEve
                                             UINT32 uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(PERIODIC_EVENT, ubCallbackID,
-                                     GetWorldDayInSeconds() + uiOnceEveryXSeconds, uiParam);
+                                     GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOnceEveryXSeconds,
+                                     uiParam);
   if (pEvent) {
     pEvent->uiTimeOffset = uiOnceEveryXSeconds;
     return TRUE;
@@ -480,8 +479,9 @@ BOOLEAN AddPeriodStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiOnceEve
 BOOLEAN AddPeriodStrategicEventWithOffset(UINT8 ubCallbackID, UINT32 uiOnceEveryXMinutes,
                                           UINT32 uiOffsetFromCurrent, UINT32 uiParam) {
   STRATEGICEVENT *pEvent;
-  pEvent = AddAdvancedStrategicEvent(PERIODIC_EVENT, ubCallbackID,
-                                     GetWorldDayInSeconds() + uiOffsetFromCurrent * 60, uiParam);
+  pEvent = AddAdvancedStrategicEvent(
+      PERIODIC_EVENT, ubCallbackID, GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOffsetFromCurrent * 60,
+      uiParam);
   if (pEvent) {
     pEvent->uiTimeOffset = uiOnceEveryXMinutes * 60;
     return TRUE;
@@ -494,7 +494,8 @@ BOOLEAN AddPeriodStrategicEventUsingSecondsWithOffset(UINT8 ubCallbackID,
                                                       UINT32 uiOffsetFromCurrent, UINT32 uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(PERIODIC_EVENT, ubCallbackID,
-                                     GetWorldDayInSeconds() + uiOffsetFromCurrent, uiParam);
+                                     GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOffsetFromCurrent,
+                                     uiParam);
   if (pEvent) {
     pEvent->uiTimeOffset = uiOnceEveryXSeconds;
     return TRUE;

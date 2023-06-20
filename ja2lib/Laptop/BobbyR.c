@@ -625,7 +625,7 @@ void DailyUpdateOfBobbyRaysNewInventory() {
 
 #ifdef BR_INVENTORY_TURNOVER_DEBUG
             if (usItemIndex == ROCKET_LAUNCHER)
-              MapScreenMessage(0, MSG_DEBUG, L"%s: BR Ordered %d, Has %d", WORLDTIMESTR,
+              MapScreenMessage(0, MSG_DEBUG, L"%s: BR Ordered %d, Has %d", gswzWorldTimeStr,
                                LaptopSaveInfo.BobbyRayInventory[i].ubQtyOnOrder,
                                LaptopSaveInfo.BobbyRayInventory[i].ubQtyOnHand);
 #endif
@@ -713,7 +713,7 @@ void OrderBobbyRItem(UINT16 usItemIndex) {
 
   // add the new item to the queue.  The new item will arrive in 'uiArrivalTime' minutes.
   uiArrivalTime = BOBBY_R_NEW_PURCHASE_ARRIVAL_TIME + Random(BOBBY_R_NEW_PURCHASE_ARRIVAL_TIME / 2);
-  uiArrivalTime += GetWorldTotalMin();
+  uiArrivalTime += GetGameTimeInMin();
   AddStrategicEvent(EVENT_UPDATE_BOBBY_RAY_INVENTORY, uiArrivalTime, usItemIndex);
 }
 
@@ -746,7 +746,7 @@ void AddFreshBobbyRayInventory(UINT16 usItemIndex) {
 
 #ifdef BR_INVENTORY_TURNOVER_DEBUG
   if (usItemIndex == ROCKET_LAUNCHER && !fUsed)
-    MapScreenMessage(0, MSG_DEBUG, L"%s: BR Bought %d, Has %d", WORLDTIMESTR,
+    MapScreenMessage(0, MSG_DEBUG, L"%s: BR Bought %d, Has %d", gswzWorldTimeStr,
                      pInventoryArray[sInventorySlot].ubQtyOnOrder,
                      pInventoryArray[sInventorySlot].ubQtyOnHand);
 #endif
@@ -784,7 +784,7 @@ void SimulateBobbyRayCustomer(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed) {
 #ifdef BR_INVENTORY_TURNOVER_DEBUG
       if (ubItemsSold > 0) {
         if (i == ROCKET_LAUNCHER && !fUsed)
-          MapScreenMessage(0, MSG_DEBUG, L"%s: BR Sold %d, Has %d", WORLDTIMESTR, ubItemsSold,
+          MapScreenMessage(0, MSG_DEBUG, L"%s: BR Sold %d, Has %d", gswzWorldTimeStr, ubItemsSold,
                            pInventoryArray[i].ubQtyOnHand);
       }
 #endif

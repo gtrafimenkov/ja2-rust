@@ -2138,7 +2138,7 @@ void SetSoldierGridNo(struct SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fF
       // JA2Gold:
       // if the player wants the merc to cast the fake light AND it is night
       if (pSoldier->bTeam != OUR_TEAM ||
-          (gGameSettings.fOptions[TOPTION_MERC_CASTS_LIGHT] && NightTime())) {
+          (gGameSettings.fOptions[TOPTION_MERC_CASTS_LIGHT] && IsNightTime())) {
         if (pSoldier->bLevel > 0 && gpWorldLevelData[pSoldier->sGridNo].pRoofHead != NULL) {
           gpWorldLevelData[pSoldier->sGridNo].pMercHead->ubShadeLevel =
               gpWorldLevelData[pSoldier->sGridNo].pRoofHead->ubShadeLevel;
@@ -5345,12 +5345,12 @@ UINT8 SoldierTakeDamage(struct SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeD
           SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)]
                   .ubTraversability[THROUGH_STRATEGIC_MOVE] != TOWN) {
         // update current day of activity!
-        UpdateLastDayOfPlayerActivity((UINT16)GetWorldDay());
+        UpdateLastDayOfPlayerActivity((UINT16)GetGameTimeInDays());
       }
       break;
     case CREATURE_TEAM:
       // always a sign of activity?
-      UpdateLastDayOfPlayerActivity((UINT16)GetWorldDay());
+      UpdateLastDayOfPlayerActivity((UINT16)GetGameTimeInDays());
       break;
     case CIV_TEAM:
       if (pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP &&

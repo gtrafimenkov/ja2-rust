@@ -154,7 +154,7 @@ void BeginContractRenewalSequence() {
       ubCurrentContractRenewalInProgress = 0;
 
       PauseGame();
-      LockPauseState(7);
+      LockPause();
       InterruptTime();
 
       // Go into mapscreen if not already...
@@ -400,7 +400,7 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
 
   // ARM: Do not reset because of renewal!  The quote is for early dismissal from *initial* time of
   // hiring
-  //	pSoldier->uiTimeOfLastContractUpdate = GetWorldTotalMin();
+  //	pSoldier->uiTimeOfLastContractUpdate = GetGameTimeInMin();
 
   // ARM: Do not reset because of renewal!  The deposit in the profile goes up when merc levels, but
   // the one in the soldier structure must always reflect the deposit actually paid (which does NOT
@@ -411,7 +411,7 @@ BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction
   AddTransactionToPlayersBook(ubFinancesContractType, GetSolProfile(pSoldier), -iContractCharge);
 
   // add an entry in the history page for the extending of the merc contract
-  AddHistoryToPlayersLog(ubHistoryContractType, GetSolProfile(pSoldier), GetWorldTotalMin(),
+  AddHistoryToPlayersLog(ubHistoryContractType, GetSolProfile(pSoldier), GetGameTimeInMin(),
                          GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
 
   return (TRUE);
@@ -652,7 +652,7 @@ player if( pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC ) return( FALSE 
 
         // type of contract the merc had
         bTypeOfCurrentContract = pSoldier -> bTypeOfLastContract;
-        iLeftTimeOnContract = pSoldier->iEndofContractTime - GetWorldTotalMin();
+        iLeftTimeOnContract = pSoldier->iEndofContractTime - GetGameTimeInMin();
 
         // grab tolerance
         switch( bTypeOfCurrentContract )
@@ -692,7 +692,7 @@ void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC) return;
 
   // ATE: check time we have and see if we can accept new contracts....
-  if (GetWorldTotalMin() <= (UINT32)pSoldier->iTimeCanSignElsewhere) {
+  if (GetGameTimeInMin() <= (UINT32)pSoldier->iTimeCanSignElsewhere) {
     return;
   }
 
@@ -700,7 +700,7 @@ void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier) {
   if (!pSoldier->fSignedAnotherContract) {
     // chance depends on how much time he has left in his contract, and his experience level
     // (determines demand)
-    uiFullDaysRemaining = (pSoldier->iEndofContractTime - GetWorldTotalMin()) / (24 * 60);
+    uiFullDaysRemaining = (pSoldier->iEndofContractTime - GetGameTimeInMin()) / (24 * 60);
 
     if (uiFullDaysRemaining == 0) {
       // less than a full day left on contract
@@ -732,7 +732,7 @@ void CheckIfMercGetsAnotherContract(struct SOLDIERTYPE *pSoldier) {
 BOOLEAN BeginStrategicRemoveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton) {
   InterruptTime();
   PauseGame();
-  LockPauseState(8);
+  LockPause();
 
   // if the soldier may have some special action when he/she leaves the party, handle it
   HandleUniqueEventWhenPlayerLeavesTeam(pSoldier);
@@ -814,7 +814,7 @@ BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier) {
   // add an entry in the history page for the firing/quiting of the merc
   // ATE: Don't do this if they are already dead!
   if (!(pSoldier->uiStatusFlags & SOLDIER_DEAD)) {
-    AddHistoryToPlayersLog(ubHistoryCode, GetSolProfile(pSoldier), GetWorldTotalMin(),
+    AddHistoryToPlayersLog(ubHistoryCode, GetSolProfile(pSoldier), GetGameTimeInMin(),
                            GetSolSectorX(pSoldier), GetSolSectorY(pSoldier));
   }
 
@@ -867,14 +867,14 @@ void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
 
     // add an email
     AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_REFUND, AIM_MEDICAL_DEPOSIT_REFUND_LENGTH, AIM_SITE,
-                            GetWorldTotalMin(), pSoldier->usMedicalDeposit,
+                            GetGameTimeInMin(), pSoldier->usMedicalDeposit,
                             GetSolProfile(pSoldier));
   }
   // else if the merc is a dead, refund NOTHING!!
   else if (pSoldier->bLife <= 0) {
     // add an email
     AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_NO_REFUND, AIM_MEDICAL_DEPOSIT_NO_REFUND_LENGTH,
-                            AIM_SITE, GetWorldTotalMin(), pSoldier->usMedicalDeposit,
+                            AIM_SITE, GetGameTimeInMin(), pSoldier->usMedicalDeposit,
                             GetSolProfile(pSoldier));
 
   }
@@ -889,7 +889,7 @@ void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier) {
 
     // add an email
     AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND,
-                            AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND_LENGTH, AIM_SITE, GetWorldTotalMin(),
+                            AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND_LENGTH, AIM_SITE, GetGameTimeInMin(),
                             iRefundAmount, GetSolProfile(pSoldier));
   }
 }
@@ -1091,7 +1091,7 @@ BOOLEAN HandleFiredDeadMerc(struct SOLDIERTYPE *pSoldier) {
 		Corpse.bDirection	= pSoldier->bDirection;
 
 		// Set time of death
-		Corpse.uiTimeOfDeath = GetWorldTotalMin( );
+		Corpse.uiTimeOfDeath = GetGameTimeInMin( );
 
 		// Set type
 		Corpse.ubType	= (UINT8)gubAnimSurfaceCorpseID[ pSoldier->ubBodyType][ pSoldier->usAnimState ];
@@ -1290,11 +1290,11 @@ BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCheckHour;
 
   // First at least make sure same day....
-  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {
+  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetGameTimeInDays()) {
     uiCheckHour = GetHourWhenContractDone(pSoldier);
 
     // See if the hour we are on is the same....
-    if (GetWorldHour() == uiCheckHour) {
+    if (GetGameClockHour() == uiCheckHour) {
       // All's good for go!
       return (TRUE);
     }
@@ -1308,11 +1308,11 @@ BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier) {
   UINT32 uiCheckHour;
 
   // First at least make sure same day....
-  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetWorldDay()) {
+  if ((pSoldier->iEndofContractTime / 1440) <= (INT32)GetGameTimeInDays()) {
     uiCheckHour = GetHourWhenContractDone(pSoldier);
 
     // If we are <= 2 hours from expiry.
-    if (GetWorldHour() >= (uiCheckHour - 2)) {
+    if (GetGameClockHour() >= (uiCheckHour - 2)) {
       // All's good for go!
       return (TRUE);
     }
