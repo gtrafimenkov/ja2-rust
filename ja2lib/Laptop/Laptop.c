@@ -2256,7 +2256,7 @@ void HaventMadeImpMercEmailCallBack() {
   if ((LaptopSaveInfo.fIMPCompletedFlag == FALSE) &&
       (LaptopSaveInfo.fSentImpWarningAlready == FALSE)) {
     LaptopSaveInfo.fSentImpWarningAlready = TRUE;
-    AddEmail(IMP_EMAIL_AGAIN, IMP_EMAIL_AGAIN_LENGTH, 1, GetWorldTotalMin());
+    AddEmail(IMP_EMAIL_AGAIN, IMP_EMAIL_AGAIN_LENGTH, 1, GetGameTimeInMin());
   }
 }
 
@@ -4446,7 +4446,7 @@ void PrintDate(void) {
 
   SetFontShadow(NO_SHADOW);
 
-  mprintf(30 + (70 - StringPixLength(WORLDTIMESTR, FONT10ARIAL)) / 2, 433, WORLDTIMESTR);
+  mprintf(30 + (70 - StringPixLength(gswzWorldTimeStr, FONT10ARIAL)) / 2, 433, gswzWorldTimeStr);
 
   SetFontShadow(DEFAULT_SHADOW);
 
@@ -4465,7 +4465,8 @@ void PrintDate(void) {
 
           SetFontShadow( NO_SHADOW );
 
-          swprintf(pString, ARR_SIZE(pString), L"%s %d", pMessageStrings[ MSG_DAY ], GetWorldDay( )
+          swprintf(pString, ARR_SIZE(pString), L"%s %d", pMessageStrings[ MSG_DAY ],
+  GetGameTimeInDays( )
   );
 
   //	gprintfdirty(35, 413 + 19,pString);
@@ -4600,80 +4601,6 @@ void HandleKeyBoardShortCutsForLapTop(uint16_t usEvent, uint32_t usParam, uint16
       MarkButtonsDirty();
     }
   }
-#ifdef JA2TESTVERSION
-  else if ((usEvent == KEY_DOWN) && (usParam == 'd')) {
-    if (gfTemporaryDisablingOfLoadPendingFlag)
-      gfTemporaryDisablingOfLoadPendingFlag = FALSE;
-    else
-      gfTemporaryDisablingOfLoadPendingFlag = TRUE;
-  } else if ((usEvent == KEY_DOWN) && (usParam == '+')) {
-    if (usKeyState & ALT_DOWN) {
-      gStrategicStatus.ubHighestProgress += 10;
-      if (gStrategicStatus.ubHighestProgress > 100) gStrategicStatus.ubHighestProgress = 100;
-
-      InitAllArmsDealers();
-      InitBobbyRayInventory();
-    }
-  } else if ((usEvent == KEY_DOWN) && (usParam == '-')) {
-    if (usKeyState & ALT_DOWN) {
-      if (gStrategicStatus.ubHighestProgress >= 10)
-        gStrategicStatus.ubHighestProgress -= 10;
-      else
-        gStrategicStatus.ubHighestProgress = 0;
-
-      InitAllArmsDealers();
-      InitBobbyRayInventory();
-    }
-  } else if ((usEvent == KEY_DOWN) && (usParam == '*')) {
-    if (usKeyState & ALT_DOWN) {
-      DeleteAllStrategicEventsOfType(EVENT_EVALUATE_QUEEN_SITUATION);
-      AdvanceToNextDay();
-    }
-  } else if (usEvent == KEY_DOWN && usParam == 'v' && usKeyState & CTRL_DOWN) {
-  } else {
-    if ((usEvent == KEY_DOWN) && (usParam == '1')) {
-      TempHiringOfMercs(1, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '2')) {
-      TempHiringOfMercs(2, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '3')) {
-      TempHiringOfMercs(3, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '4')) {
-      TempHiringOfMercs(4, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '5')) {
-      TempHiringOfMercs(5, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '6')) {
-      TempHiringOfMercs(6, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '7')) {
-      TempHiringOfMercs(7, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '8')) {
-      TempHiringOfMercs(8, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '9')) {
-      TempHiringOfMercs(9, FALSE);
-    }
-
-    if ((usEvent == KEY_DOWN) && (usParam == '0')) {
-      TempHiringOfMercs(10, FALSE);
-    }
-  }
-#endif
-
-  return;
 }
 
 BOOLEAN RenderWWWProgramTitleBar(void) {

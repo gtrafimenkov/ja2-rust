@@ -368,7 +368,7 @@ void SettleMercAccounts() {
   AddTransactionToPlayersBook(PAY_SPECK_FOR_MERC, GetMercIDFromMERCArray(gubCurMercIndex),
                               -iPartialPayment);
   AddHistoryToPlayersLog(HISTORY_SETTLED_ACCOUNTS_AT_MERC, GetMercIDFromMERCArray(gubCurMercIndex),
-                         GetWorldTotalMin(), -1, -1);
+                         GetGameTimeInMin(), -1, -1);
 
   // Increment the amount of money paid to speck
   LaptopSaveInfo.uiTotalMoneyPaidToSpeck += iPartialPayment;

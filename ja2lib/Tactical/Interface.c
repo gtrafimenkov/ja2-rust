@@ -1727,7 +1727,7 @@ BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStruct
 
   InterruptTime();
   PauseGame();
-  LockPauseState(19);
+  LockPause();
   // Pause timers as well....
   PauseTime(TRUE);
 
@@ -2014,7 +2014,7 @@ void PopupDoorOpenMenu(BOOLEAN fClosingDoor) {
 
 void PopDownOpenDoorMenu() {
   if (gfInOpenDoorMenu) {
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
     // UnPause timers as well....
     PauseTime(FALSE);

@@ -30,7 +30,7 @@ void StrategicTurnsNewGame() {
 }
 
 void SyncStrategicTurnTimes() {
-  guiLastStrategicTime = GetWorldTotalSeconds();
+  guiLastStrategicTime = GetGameTimeInSec();
   guiLastTacticalRealTime = GetJA2Clock();
 }
 
@@ -43,7 +43,7 @@ void HandleStrategicTurn() {
     RESETCOUNTER(STRATEGIC_OVERHEAD);
 
     // if the game is paused, or we're in mapscreen and time is not being compressed
-    if ((GamePaused() == TRUE) || ((IsMapScreen_2()) && !IsTimeBeingCompressed())) {
+    if ((IsGamePaused() == TRUE) || ((IsMapScreen_2()) && !IsTimeBeingCompressed())) {
       // don't do any of this
       return;
     }

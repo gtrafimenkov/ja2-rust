@@ -2003,13 +2003,13 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         }
         break;
       case NPC_ACTION_SET_DELAYED_PACKAGE_TIMER:
-        AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay(),
+        AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
                                    FACT_SHIPMENT_DELAYED_24_HOURS, 1);
         break;
 
       case NPC_ACTION_SET_RANDOM_PACKAGE_DAMAGE_TIMER:
         AddFutureDayStrategicEvent(
-            EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay(),
+            EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
             NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_SET_RANDOM_PACKAGE_DAMAGE_TIMER, 1);
         break;
 
@@ -2017,14 +2017,14 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         // add event in a
         iRandom = Random(24);
         AddFutureDayStrategicEvent(
-            EVENT_SET_BY_NPC_SYSTEM, (GetWorldMinutesInDay() + ((24 + iRandom) * 60)),
+            EVENT_SET_BY_NPC_SYSTEM, (GetMinutesSinceDayStart() + ((24 + iRandom) * 60)),
             NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_ENABLE_CAMBRIA_DOCTOR_BONUS, 1);
         break;
       case NPC_ACTION_TRIGGER_END_OF_FOOD_QUEST:
-        AddHistoryToPlayersLog(HISTORY_TALKED_TO_FATHER_WALKER, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_TALKED_TO_FATHER_WALKER, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         AddFutureDayStrategicEvent(
-            EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay(),
+            EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
             NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_TRIGGER_END_OF_FOOD_QUEST, 1);
         break;
 
@@ -2070,7 +2070,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         // now
         DeleteTalkingMenu();
         AddSameDayStrategicEvent(
-            EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay() + 360,
+            EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart() + 360,
             NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_DELAYED_MAKE_BRENDA_LEAVE);
         break;
 
@@ -2139,13 +2139,13 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         gMercProfiles[JOEY].sSectorY = MAP_ROW_D;
         gMercProfiles[JOEY].bSectorZ = 1;
         AddFutureDayStrategicEvent(
-            EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay(),
+            EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
             NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_ADD_JOEY_TO_WORLD, 3);
         break;
 
       case NPC_ACTION_MARK_KINGPIN_QUOTE_0_USED:
         // set Kingpin's quote 0 as used so he doesn't introduce himself
-        gMercProfiles[86].ubLastDateSpokenTo = (uint8_t)GetWorldDay();
+        gMercProfiles[86].ubLastDateSpokenTo = (uint8_t)GetGameTimeInDays();
         break;
 
       case NPC_ACTION_TRIGGER_LAYLA_13_14_OR_15:
@@ -2339,7 +2339,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         gMercProfiles[GetSolProfile(pSoldier)].ubMiscFlags2 |= PROFILE_MISC_FLAG2_MARRIED_TO_HICKS;
 
         AddHistoryToPlayersLog(HISTORY_MERC_MARRIED_OFF, GetSolProfile(pSoldier),
-                               GetWorldTotalMin(), (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
+                               GetGameTimeInMin(), (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
 
         // if Flo is going off with Daryl, then set that fact true
         if (GetSolProfile(pSoldier) == 44) {
@@ -2439,7 +2439,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
 
       case NPC_ACTION_SET_DELAY_TILL_GIRLS_AVAILABLE:
         AddSameDayStrategicEvent(
-            EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay() + 1 + Random(2),
+            EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart() + 1 + Random(2),
             NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_SET_DELAY_TILL_GIRLS_AVAILABLE);
         break;
 
@@ -2536,7 +2536,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
           TriggerNPCRecord(78, 21);
         }
         // CJC Nov 28 2002 - fixed history record which didn't have location specified
-        AddHistoryToPlayersLog(HISTORY_GAVE_CARMEN_HEAD, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_GAVE_CARMEN_HEAD, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
 
@@ -2814,12 +2814,12 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         break;
       case NPC_ACTION_SHOW_TIXA:
         SetTixaAsFound();
-        AddHistoryToPlayersLog(HISTORY_DISCOVERED_TIXA, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_DISCOVERED_TIXA, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_SHOW_ORTA:
         SetOrtaAsFound();
-        AddHistoryToPlayersLog(HISTORY_DISCOVERED_ORTA, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_DISCOVERED_ORTA, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_SLAP:
@@ -2999,7 +2999,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         break;
       case NPC_ACTION_START_TIMER_ON_KEITH_GOING_OUT_OF_BUSINESS:
         // start timer to place keith out of business
-        AddStrategicEvent(EVENT_KEITH_GOING_OUT_OF_BUSINESS, GetWorldTotalMin() + (6 * 24 * 60), 0);
+        AddStrategicEvent(EVENT_KEITH_GOING_OUT_OF_BUSINESS, GetGameTimeInMin() + (6 * 24 * 60), 0);
         break;
 
       case NPC_ACTION_KEITH_GOING_BACK_IN_BUSINESS:
@@ -3525,12 +3525,12 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         break;
 
       case NPC_ACTION_24_HOURS_SINCE_JOEY_RESCUED:
-        AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay(),
+        AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
                                    FACT_24_HOURS_SINCE_JOEY_RESCUED, 1);
         break;
 
       case NPC_ACTION_24_HOURS_SINCE_DOCTORS_TALKED_TO:
-        AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay(),
+        AddFutureDayStrategicEvent(EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
                                    FACT_24_HOURS_SINCE_DOCTOR_TALKED_TO, 1);
         break;
 
@@ -3549,7 +3549,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
 
       case NPC_ACTION_TIMER_FOR_VEHICLE:
         AddFutureDayStrategicEvent(
-            EVENT_SET_BY_NPC_SYSTEM, GetWorldMinutesInDay(),
+            EVENT_SET_BY_NPC_SYSTEM, GetMinutesSinceDayStart(),
             NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_TIMER_FOR_VEHICLE, 1);
         break;
 
@@ -3576,111 +3576,111 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         break;
 
       case NPC_ACTION_HISTORY_GOT_ROCKET_RIFLES:
-        AddHistoryToPlayersLog(HISTORY_GOT_ROCKET_RIFLES, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_GOT_ROCKET_RIFLES, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_DEIDRANNA_DEAD_BODIES:
-        AddHistoryToPlayersLog(HISTORY_DEIDRANNA_DEAD_BODIES, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_DEIDRANNA_DEAD_BODIES, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_BOXING_MATCHES:
-        AddHistoryToPlayersLog(HISTORY_BOXING_MATCHES, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_BOXING_MATCHES, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_SOMETHING_IN_MINES:
-        AddHistoryToPlayersLog(HISTORY_SOMETHING_IN_MINES, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_SOMETHING_IN_MINES, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_DEVIN:
-        AddHistoryToPlayersLog(HISTORY_DEVIN, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_DEVIN, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_MIKE:
-        AddHistoryToPlayersLog(HISTORY_MIKE, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_MIKE, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_TONY:
-        AddHistoryToPlayersLog(HISTORY_TONY, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_TONY, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_KROTT:
-        AddHistoryToPlayersLog(HISTORY_KROTT, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_KROTT, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_KYLE:
-        AddHistoryToPlayersLog(HISTORY_KYLE, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_KYLE, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_MADLAB:
-        AddHistoryToPlayersLog(HISTORY_MADLAB, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_MADLAB, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_GABBY:
-        AddHistoryToPlayersLog(HISTORY_GABBY, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_GABBY, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_KEITH_OUT_OF_BUSINESS:
-        AddHistoryToPlayersLog(HISTORY_KEITH_OUT_OF_BUSINESS, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_KEITH_OUT_OF_BUSINESS, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_HOWARD_CYANIDE:
-        AddHistoryToPlayersLog(HISTORY_HOWARD_CYANIDE, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_HOWARD_CYANIDE, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_KEITH:
-        AddHistoryToPlayersLog(HISTORY_KEITH, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_KEITH, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_HOWARD:
-        AddHistoryToPlayersLog(HISTORY_HOWARD, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_HOWARD, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_PERKO:
-        AddHistoryToPlayersLog(HISTORY_PERKO, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_PERKO, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_SAM:
-        AddHistoryToPlayersLog(HISTORY_SAM, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_SAM, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_FRANZ:
-        AddHistoryToPlayersLog(HISTORY_FRANZ, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_FRANZ, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_ARNOLD:
-        AddHistoryToPlayersLog(HISTORY_ARNOLD, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_ARNOLD, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_FREDO:
-        AddHistoryToPlayersLog(HISTORY_FREDO, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_FREDO, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_RICHGUY_BALIME:
-        AddHistoryToPlayersLog(HISTORY_RICHGUY_BALIME, 0, GetWorldTotalMin(),
+        AddHistoryToPlayersLog(HISTORY_RICHGUY_BALIME, 0, GetGameTimeInMin(),
                                (uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_JAKE:
-        AddHistoryToPlayersLog(HISTORY_JAKE, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_JAKE, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_BUM_KEYCARD:
-        AddHistoryToPlayersLog(HISTORY_BUM_KEYCARD, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_BUM_KEYCARD, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_WALTER:
-        AddHistoryToPlayersLog(HISTORY_WALTER, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_WALTER, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_DAVE:
-        AddHistoryToPlayersLog(HISTORY_DAVE, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_DAVE, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_PABLO:
-        AddHistoryToPlayersLog(HISTORY_PABLO, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_PABLO, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_HISTORY_KINGPIN_MONEY:
-        AddHistoryToPlayersLog(HISTORY_KINGPIN_MONEY, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_KINGPIN_MONEY, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_SEND_TROOPS_TO_SAM:
@@ -3691,7 +3691,7 @@ void HandleNPCDoAction(uint8_t ubTargetNPC, uint16_t usActionCode, uint8_t ubQuo
         gMercProfiles[PACOS].bSectorZ = 0;
         break;
       case NPC_ACTION_HISTORY_ASSASSIN:
-        AddHistoryToPlayersLog(HISTORY_ASSASSIN, 0, GetWorldTotalMin(), (uint8_t)gWorldSectorX,
+        AddHistoryToPlayersLog(HISTORY_ASSASSIN, 0, GetGameTimeInMin(), (uint8_t)gWorldSectorX,
                                (uint8_t)gWorldSectorY);
         break;
       case NPC_ACTION_TRIGGER_HANS_BY_ROOM: {

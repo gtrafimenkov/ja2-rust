@@ -1842,7 +1842,7 @@ int8_t AimMemberHireMerc() {
   }
 
   // add an entry in the history page for the hiring of the merc
-  AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetWorldTotalMin(), -1, -1);
+  AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetGameTimeInMin(), -1, -1);
   return (TRUE);
 }
 
@@ -2900,7 +2900,7 @@ void HandleMercAttitude() {
 
       // add an event so we can reset the 'annoyance factor'
       uiResetTime = (Random(600));
-      uiResetTime += GetWorldTotalMin() + MERC_ANNOYED_WONT_CONTACT_TIME_MINUTES;
+      uiResetTime += GetGameTimeInMin() + MERC_ANNOYED_WONT_CONTACT_TIME_MINUTES;
       AddStrategicEvent(EVENT_AIM_RESET_MERC_ANNOYANCE, uiResetTime, gbCurrentSoldier);
 
       gfHangUpMerc = TRUE;
@@ -3699,7 +3699,7 @@ void TempHiringOfMercs(uint8_t ubNumberOfMercs, BOOLEAN fReset) {
     }
 
     // add an entry in the history page for the hiring of the merc
-    AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, MercID[i], GetWorldTotalMin(), -1, -1);
+    AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, MercID[i], GetGameTimeInMin(), -1, -1);
   }
 }
 
@@ -3808,7 +3808,7 @@ BOOLEAN QuickHireMerc() {
   }
 
   // add an entry in the history page for the hiring of the merc
-  AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetWorldTotalMin(), -1, -1);
+  AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetGameTimeInMin(), -1, -1);
 
   gfRedrawScreen = TRUE;
 
@@ -3818,22 +3818,9 @@ BOOLEAN QuickHireMerc() {
 void TempHandleAimMemberKeyBoardInput() {
   InputAtom InputEvent;
 
-  while (DequeueEvent(&InputEvent) == TRUE) {  //! HandleTextInput( &InputEvent ) &&
+  while (DequeueEvent(&InputEvent) == TRUE) {
     if (InputEvent.usEvent == KEY_DOWN) {
       switch (InputEvent.usParam) {
-#ifdef JA2TESTVERSION
-        case SPACE:
-          QuickHireMerc();
-          break;
-
-        case '~':
-          // to test going on other assignments, unhired merc improvements & deaths
-          if (guiDay == 1) guiDay++;
-          MercDailyUpdate();
-          gfRedrawScreen = TRUE;
-          break;
-#endif
-
         default:
           HandleKeyBoardShortCutsForLapTop(InputEvent.usEvent, InputEvent.usParam,
                                            InputEvent.usKeyState);
@@ -3916,7 +3903,7 @@ void DemoHiringOfMercs() {
     }
 
     // add an entry in the history page for the hiring of the merc
-    AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, MercID[i], GetWorldTotalMin(), -1, -1);
+    AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, MercID[i], GetGameTimeInMin(), -1, -1);
   }
 }
 

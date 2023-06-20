@@ -131,8 +131,6 @@ extern int16_t sDeadMercs[NUMBER_OF_SQUADS][NUMBER_OF_SOLDIERS_PER_SQUAD];
 extern int32_t giRTAILastUpdateTime;
 extern BOOLEAN gfRedrawSaveLoadScreen;
 extern uint8_t gubScreenCount;
-extern BOOLEAN gfGamePaused;
-extern BOOLEAN gfLockPauseState;
 extern BOOLEAN gfLoadedGame;
 extern HELP_SCREEN_STRUCT gHelpScreen;
 extern uint8_t gubDesertTemperature;
@@ -437,8 +435,8 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize) {
   SAVED_GAME_HEADER SaveGameHeader;
   char zSaveGameName[512];
   char saveDir[100];
-  BOOLEAN fPausedStateBeforeSaving = gfGamePaused;
-  BOOLEAN fLockPauseStateBeforeSaving = gfLockPauseState;
+  BOOLEAN fPausedStateBeforeSaving = IsGamePaused();
+  BOOLEAN fLockPauseStateBeforeSaving = IsPauseLocked();
   int32_t iSaveLoadGameMessageBoxID = -1;
   uint16_t usPosX, usActualWidth, usActualHeight;
   BOOLEAN fWePausedIt = FALSE;
@@ -452,7 +450,7 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize) {
   // clear out the save game header
   memset(&SaveGameHeader, 0, sizeof(SAVED_GAME_HEADER));
 
-  if (!GamePaused()) {
+  if (!IsGamePaused()) {
     PauseBeforeSaveGame();
     fWePausedIt = TRUE;
   }
@@ -566,9 +564,9 @@ BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t *pGameDesc, size_t bufSize) {
   strcpy(SaveGameHeader.zGameVersionNumber, czVersionNumber);
 
   // The following will be used to quickly access info to display in the save/load screen
-  SaveGameHeader.uiDay = GetWorldDay();
-  SaveGameHeader.ubHour = (uint8_t)GetWorldHour();
-  SaveGameHeader.ubMin = (uint8_t)guiMin;
+  SaveGameHeader.uiDay = GetGameTimeInDays();
+  SaveGameHeader.ubHour = (uint8_t)GetGameClockHour();
+  SaveGameHeader.ubMin = (uint8_t)GetGameClockMinutes();
 
   // copy over the initial game options
   memcpy(&SaveGameHeader.sInitialGameOptions, &gGameOptions, sizeof(GAME_OPTIONS));
@@ -3569,7 +3567,7 @@ void HandleOldBobbyRMailOrders() {
         gpNewBobbyrShipments[iNewListCnt].ubNumberPurchases =
             LaptopSaveInfo.BobbyRayOrdersOnDeliveryArray[iCnt].ubNumberPurchases;
         gpNewBobbyrShipments[iNewListCnt].uiPackageWeight = 1;
-        gpNewBobbyrShipments[iNewListCnt].uiOrderedOnDayNum = GetWorldDay();
+        gpNewBobbyrShipments[iNewListCnt].uiOrderedOnDayNum = GetGameTimeInDays();
         gpNewBobbyrShipments[iNewListCnt].fDisplayedInShipmentPage = TRUE;
 
         iNewListCnt++;

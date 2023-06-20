@@ -1897,7 +1897,7 @@ PopMessage(tempstr);
             int16_t sX, sY;
 
             // if before 6:05 or after 22:00, make hostile and enter combat
-            uiTime = GetWorldMinutesInDay();
+            uiTime = GetMinutesSinceDayStart();
             if (uiTime < 365 || uiTime > 1320) {
               // get off our farm!
               MakeCivHostile(pSoldier, 2);

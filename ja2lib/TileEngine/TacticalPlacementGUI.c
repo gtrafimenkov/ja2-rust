@@ -437,7 +437,7 @@ void RenderTacticalPlacementGUI() {
     VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 320, 640, 160);
   }
   if (gfValidLocationsChanged) {
-    if (DayTime()) {     // 6AM to 9PM is black
+    if (IsDayTime()) {     // 6AM to 9PM is black
       usHatchColor = 0;  // Black
     } else {             // 9PM to 6AM is gray (black is too dark to distinguish)
       usHatchColor = Get16BPPColor(FROMRGB(63, 31, 31));

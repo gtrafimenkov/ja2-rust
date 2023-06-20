@@ -584,7 +584,6 @@ struct path *gpHelicopterPreviousMercPath = NULL;
 extern BOOLEAN fHoveringHelicopter;
 extern BOOLEAN fDeletedNode;
 extern BOOLEAN gfRenderPBInterface;
-extern BOOLEAN fMapScreenBottomDirty;
 extern BOOLEAN fResetTimerForFirstEntryIntoMapScreen;
 extern BOOLEAN gfStartedFromMapScreen;
 
@@ -1766,7 +1765,7 @@ void DrawCharacterInfo(int16_t sCharNumber) {
   // traveling ?
   else if (PlayerIDGroupInMotion(GetSoldierGroupId(pSoldier))) {
     // show ETA
-    uiArrivalTime = GetWorldTotalMin() + CalculateTravelTimeOfGroupId(GetSoldierGroupId(pSoldier));
+    uiArrivalTime = GetGameTimeInMin() + CalculateTravelTimeOfGroupId(GetSoldierGroupId(pSoldier));
     ConvertMinTimeToETADayHourMinString(uiArrivalTime, sString, ARR_SIZE(sString));
   } else {
     // show location
@@ -1804,7 +1803,7 @@ void DrawCharacterInfo(int16_t sCharNumber) {
     float dTimeLeft = 0.0;
 
     // amount of time left on contract
-    iTimeRemaining = pSoldier->iEndofContractTime - GetWorldTotalMin();
+    iTimeRemaining = pSoldier->iEndofContractTime - GetGameTimeInMin();
 
     // if the merc is in transit
     if (GetSolAssignment(pSoldier) == IN_TRANSIT) {
@@ -1850,7 +1849,7 @@ void DrawCharacterInfo(int16_t sCharNumber) {
                gpStrategicString[STR_PB_DAYS_ABBREVIATION]);
     }
   } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
-    int32_t iBeenHiredFor = (GetWorldTotalMin() / NUM_MIN_IN_DAY) - pSoldier->iStartContractTime;
+    int32_t iBeenHiredFor = (GetGameTimeInMin() / NUM_MIN_IN_DAY) - pSoldier->iStartContractTime;
 
     swprintf(sString, ARR_SIZE(sString), L"%d%s/%d%s",
              gMercProfiles[GetSolProfile(pSoldier)].iMercMercContractLength,
@@ -2050,10 +2049,10 @@ int32_t GetPathTravelTimeDuringPlotting(struct path *pPath) {
   // if between sectors
   if (pGroup->fBetweenSectors) {
     // arrival time should always be legal!
-    Assert(pGroup->uiArrivalTime >= GetWorldTotalMin());
+    Assert(pGroup->uiArrivalTime >= GetGameTimeInMin());
 
     // start with time to finish arriving in any traversal already in progress
-    iTravelTime = pGroup->uiArrivalTime - GetWorldTotalMin();
+    iTravelTime = pGroup->uiArrivalTime - GetGameTimeInMin();
     fSkipFirstNode = TRUE;
   } else {
     iTravelTime = 0;
@@ -2822,7 +2821,7 @@ uint32_t MapScreenHandle(void) {
     fCharacterInfoPanelDirty = TRUE;
 
     // direty map bottom region
-    fMapScreenBottomDirty = TRUE;
+    SetMapScreenBottomDirty(true);
 
     // tactical scroll of messages not allowed to beep until new message is added in tactical
     fOkToBeepNewMessage = FALSE;
@@ -5115,7 +5114,7 @@ void EndMapScreen(BOOLEAN fDuringFade) {
   }
 
   // update paused states, we are exiting...need to reset for any pathing or menus displayed
-  UnLockPauseState();
+  UnlockPause();
   UpdatePausedStatesDueToTimeCompression();
 
   if (!gfDontStartTransitionFromLaptop) {
@@ -5385,7 +5384,7 @@ void PollRightButtonInMapView(uint32_t *puiNewEvent) {
               }
             }
 
-            //						fMapScreenBottomDirty = TRUE;
+            //						SetMapScreenBottomDirty(true);
 
             CreateDestroyScreenMaskForAssignmentAndContractMenus();
             if (fShowTownInfo == FALSE) {
@@ -6341,7 +6340,7 @@ void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason
       // dirty team and map regions
       fTeamPanelDirty = TRUE;
       SetMapPanelDirty(true);
-      // fMapScreenBottomDirty = TRUE;
+      // SetMapScreenBottomDirty(true);
       gfRenderPBInterface = TRUE;
     } else {
       // reset selected characters
@@ -6388,7 +6387,7 @@ void TeamListInfoRegionBtnCallBack(struct MOUSE_REGION *pRegion, int32_t iReason
       // dirty team and map regions
       fTeamPanelDirty = TRUE;
       SetMapPanelDirty(true);
-      //			fMapScreenBottomDirty = TRUE;
+      //			SetMapScreenBottomDirty(true);
       gfRenderPBInterface = TRUE;
     }
   }
@@ -8292,7 +8291,7 @@ void HandleContractTimeFlashForMercThatIsAboutLeave(void) {
 
 BOOLEAN AnyMercsLeavingRealSoon() {
   uint32_t uiCounter = 0;
-  uint32_t uiTimeInMin = GetWorldTotalMin();
+  uint32_t uiTimeInMin = GetGameTimeInMin();
   BOOLEAN fFoundOne = FALSE;
 
   for (uiCounter = 0; uiCounter < MAX_CHARACTER_COUNT; uiCounter++) {
@@ -8636,15 +8635,7 @@ void CreateDestroyMapCharacterScrollButtons(void) {
 
 void TellPlayerWhyHeCantCompressTime(void) {
   // if we're locked into paused time compression by some event that enforces that
-  if (PauseStateLocked()) {
-#ifdef JA2BETAVERSION
-    ScreenMsg(FONT_MCOLOR_RED, MSG_BETAVERSION,
-              L"(BETA) Can't compress time, pause state locked (reason %d). OK unless permanent.",
-              guiLockPauseStateLastReasonId);
-    ScreenMsg(FONT_MCOLOR_RED, MSG_BETAVERSION,
-              L"(BETA) If permanent, take screenshot now, send with *previous* save & describe "
-              L"what happened since.");
-#endif
+  if (IsPauseLocked()) {
   } else if (gfAtLeastOneMercWasHired == FALSE) {
     // no mercs hired, ever
     DoMapMessageBox(MSG_BOX_BASIC_STYLE, pMapScreenJustStartedHelpText[0], MAP_SCREEN,
@@ -9219,7 +9210,7 @@ void ChangeSelectedMapSector(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ) {
   }
 
   SetMapPanelDirty(true);
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 
   // also need this, to update the text coloring of mercs in this sector
   fTeamPanelDirty = TRUE;
@@ -10144,7 +10135,7 @@ void GetMapscreenMercDepartureString(struct SOLDIERTYPE *pSoldier, wchar_t sStri
       pSoldier->bLife == 0) {
     swprintf(sString, sStringSize, L"%s", gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
   } else {
-    iMinsRemaining = pSoldier->iEndofContractTime - GetWorldTotalMin();
+    iMinsRemaining = pSoldier->iEndofContractTime - GetGameTimeInMin();
 
     // if the merc is in transit
     if (GetSolAssignment(pSoldier) == IN_TRANSIT) {

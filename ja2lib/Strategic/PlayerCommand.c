@@ -23,8 +23,6 @@
 #include "Utils/Text.h"
 #include "rust_sam_sites.h"
 
-extern BOOLEAN fMapScreenBottomDirty;
-
 void GetSectorFacilitiesFlags(uint8_t sMapX, uint8_t sMapY, wchar_t *sFacilitiesString,
                               size_t bufSize) {
   // will build a string stating current facilities present in sector
@@ -110,7 +108,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMa
               BOBBYR_BEEN_TO_SITE_ONCE &&
           LaptopSaveInfo.ubHaveBeenToBobbyRaysAtLeastOnceWhileUnderConstruction !=
               BOBBYR_ALREADY_SENT_EMAIL) {
-        AddEmail(BOBBYR_NOW_OPEN, BOBBYR_NOW_OPEN_LENGTH, BOBBY_R, GetWorldTotalMin());
+        AddEmail(BOBBYR_NOW_OPEN, BOBBYR_NOW_OPEN_LENGTH, BOBBY_R, GetGameTimeInMin());
         LaptopSaveInfo.ubHaveBeenToBobbyRaysAtLeastOnceWhileUnderConstruction =
             BOBBYR_ALREADY_SENT_EMAIL;
       }
@@ -133,7 +131,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMa
       // and it's a town
       if ((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS)) {
         // don't do these for takeovers of Omerta sectors at the beginning of the game
-        if ((bTownId != OMERTA) || (GetWorldDay() != 1)) {
+        if ((bTownId != OMERTA) || (GetGameTimeInDays() != 1)) {
           SectorID8 ubSectorID = GetSectorID8(sMapX, sMapY);
           if (!bMapZ && ubSectorID != SEC_J9 && ubSectorID != SEC_K4) {
             HandleMoraleEvent(NULL, MORALE_TOWN_LIBERATED, sMapX, sMapY, bMapZ);
@@ -172,9 +170,9 @@ BOOLEAN SetThisSectorAsPlayerControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMa
         if (!SectorInfo[GetSectorID8(sMapX, sMapY)].fSurfaceWasEverPlayerControlled) {
           // grant grace period
           if (gGameOptions.ubDifficultyLevel >= DIF_LEVEL_HARD) {
-            UpdateLastDayOfPlayerActivity((uint16_t)(GetWorldDay() + 2));
+            UpdateLastDayOfPlayerActivity((uint16_t)(GetGameTimeInDays() + 2));
           } else {
-            UpdateLastDayOfPlayerActivity((uint16_t)(GetWorldDay() + 1));
+            UpdateLastDayOfPlayerActivity((uint16_t)(GetGameTimeInDays() + 1));
           }
         }
       }
@@ -216,7 +214,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMa
 
   // redraw map/income if in mapscreen
   SetMapPanelDirty(true);
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 
   return fWasEnemyControlled;
 }
@@ -323,7 +321,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(uint8_t sMapX, uint8_t sMapY, int8_t bMap
 
   // redraw map/income if in mapscreen
   SetMapPanelDirty(true);
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 
   return fWasPlayerControlled;
 }

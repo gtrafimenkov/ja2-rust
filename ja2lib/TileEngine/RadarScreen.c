@@ -256,7 +256,7 @@ void RenderRadarScreen() {
     SetObjectHandleShade(gusRadarImage, 0);
 
     // If night time and on surface, darken the radarmap.
-    if (NightTime()) {
+    if (IsNightTime()) {
       if ((IsMapScreen_2() && !iCurrentMapSectorZ) || (IsTacticalMode() && !gbWorldSectorZ)) {
         SetObjectHandleShade(gusRadarImage, 1);
       }

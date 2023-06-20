@@ -2199,7 +2199,7 @@ BOOLEAN AddNewBobbyRShipment(BobbyRayPurchaseStruct *pPurchaseStruct, uint8_t ub
     gpNewBobbyrShipments[iFoundSpot].uiPackageWeight = uiPackageWeight;
   }
 
-  gpNewBobbyrShipments[iFoundSpot].uiOrderedOnDayNum = GetWorldDay();
+  gpNewBobbyrShipments[iFoundSpot].uiOrderedOnDayNum = GetGameTimeInDays();
 
   // count the number of purchases
   ubItemCount = 0;

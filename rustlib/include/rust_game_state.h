@@ -11,13 +11,10 @@
 extern "C" {
 #endif // __cplusplus
 
-bool GetMapPanelDirty(void);
-
-void SetMapPanelDirty(bool value);
-
-bool GetMapScreenBottomDirty(void);
-
-void SetMapScreenBottomDirty(bool value);
+/**
+ * Handle game restart.
+ */
+void PrepareGameRestart(void);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -480,7 +480,7 @@ void DecideOnAssassin(void) {
     ubLoop = ubAssassinPossibility[Random(ubAssassinsPossible)];
     gMercProfiles[ubLoop].sSectorX = gWorldSectorX;
     gMercProfiles[ubLoop].sSectorY = gWorldSectorY;
-    AddStrategicEvent(EVENT_REMOVE_ASSASSIN, GetWorldTotalMin() + 60 * (3 + Random(3)), ubLoop);
+    AddStrategicEvent(EVENT_REMOVE_ASSASSIN, GetGameTimeInMin() + 60 * (3 + Random(3)), ubLoop);
   }
 }
 
@@ -787,7 +787,7 @@ BOOLEAN RecruitRPC(uint8_t ubCharNum) {
   // handle set up any RPC's that will leave us in time
   if (ubCharNum == SLAY) {
     // slay will leave in a week
-    pNewSoldier->iEndofContractTime = GetWorldTotalMin() + (7 * 24 * 60);
+    pNewSoldier->iEndofContractTime = GetGameTimeInMin() + (7 * 24 * 60);
 
     KickOutWheelchair(pNewSoldier);
   } else if (ubCharNum == DYNAMO && gubQuest[QUEST_FREE_DYNAMO] == QUESTINPROGRESS) {
@@ -835,7 +835,7 @@ BOOLEAN RecruitRPC(uint8_t ubCharNum) {
   //
   // ( pass in pNewSoldier->sSectorX cause if its invalid, -1, n/a will appear as the sector in the
   // history log )
-  AddHistoryToPlayersLog(HISTORY_RPC_JOINED_TEAM, pNewSoldier->ubProfile, GetWorldTotalMin(),
+  AddHistoryToPlayersLog(HISTORY_RPC_JOINED_TEAM, pNewSoldier->ubProfile, GetGameTimeInMin(),
                          (uint8_t)pNewSoldier->sSectorX, (uint8_t)pNewSoldier->sSectorY);
 
   // remove the merc from the Personnel screens departed list ( if they have never been hired
@@ -1063,8 +1063,8 @@ BOOLEAN DoesMercHaveABuddyOnTheTeam(uint8_t ubMercID) {
 BOOLEAN MercIsHot(struct SOLDIERTYPE *pSoldier) {
   if (GetSolProfile(pSoldier) != NO_PROFILE &&
       gMercProfiles[GetSolProfile(pSoldier)].bPersonalityTrait == HEAT_INTOLERANT) {
-    if (SectorTemperature(GetWorldMinutesInDay(), GetSolSectorX(pSoldier), GetSolSectorY(pSoldier),
-                          GetSolSectorZ(pSoldier)) > 0) {
+    if (SectorTemperature(GetMinutesSinceDayStart(), GetSolSectorX(pSoldier),
+                          GetSolSectorY(pSoldier), GetSolSectorZ(pSoldier)) > 0) {
       return (TRUE);
     }
   }
