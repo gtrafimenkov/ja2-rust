@@ -111,7 +111,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       if (!gfBasement && !gfCaves) gfDoLighting = TRUE;
       break;
     case EVENT_CHECKFORQUESTS:
-      CheckForQuests(GetWorldDay());
+      CheckForQuests(GetGameTimeInDays());
       break;
     case EVENT_AMBIENT:
       if (pEvent->ubEventType == ENDRANGED_EVENT) {
@@ -144,14 +144,14 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
     // contract.
     // Also if the player hasn't paid for a while Specks will start sending e-mails to the player
     case EVENT_DAILY_UPDATE_OF_MERC_SITE:
-      DailyUpdateOfMercSite((uint16_t)GetWorldDay());
+      DailyUpdateOfMercSite((uint16_t)GetGameTimeInDays());
       break;
     case EVENT_DAY3_ADD_EMAIL_FROM_SPECK:
-      AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+      AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
       break;
     case EVENT_DAY2_ADD_EMAIL_FROM_IMP:
       AddEmail(IMP_EMAIL_PROFILE_RESULTS, IMP_EMAIL_PROFILE_RESULTS_LENGTH, IMP_PROFILE_RESULTS,
-               GetWorldTotalMin());
+               GetGameTimeInMin());
       break;
     // If a merc gets hired and they dont show up immediately, the merc gets added to the queue and
     // shows up
@@ -211,7 +211,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       break;
     case EVENT_HANDLE_MINE_INCOME:
       HandleIncomeFromMines();
-      // ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Income From Mines at %d", GetWorldTotalMin(
+      // ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Income From Mines at %d", GetGameTimeInMin(
       // ) );
       break;
     case EVENT_SETUP_MINE_INCOME:

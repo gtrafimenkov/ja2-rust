@@ -387,9 +387,6 @@ BOOLEAN EnterEmail() {
     return FALSE;
   }
 
-  // AddEmail(IMP_EMAIL_PROFILE_RESULTS, IMP_EMAIL_PROFILE_RESULTS_LENGTH, IMP_PROFILE_RESULTS,
-  // GetWorldTotalMin( ) );
-  // initialize mouse regions
   InitializeMouseRegions();
 
   // just started email
@@ -410,7 +407,7 @@ BOOLEAN EnterEmail() {
   // render email background and text
   RenderEmail();
 
-  // AddEmail( MERC_REPLY_GRIZZLY, MERC_REPLY_LENGTH_GRIZZLY, GRIZZLY_MAIL, GetWorldTotalMin() );
+  // AddEmail( MERC_REPLY_GRIZZLY, MERC_REPLY_LENGTH_GRIZZLY, GRIZZLY_MAIL, GetGameTimeInMin() );
   // RenderButtons( );
 
   return (TRUE);
@@ -4528,82 +4525,78 @@ void AddAllEmails() {
   uint32_t uiCnt;
   uint32_t uiOffset;
 
-  AddEmail(IMP_EMAIL_INTRO, IMP_EMAIL_INTRO_LENGTH, CHAR_PROFILE_SITE, GetWorldTotalMin());
-  AddEmail(ENRICO_CONGRATS, ENRICO_CONGRATS_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(IMP_EMAIL_AGAIN, IMP_EMAIL_AGAIN_LENGTH, 1, GetWorldTotalMin());
-  AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+  AddEmail(IMP_EMAIL_INTRO, IMP_EMAIL_INTRO_LENGTH, CHAR_PROFILE_SITE, GetGameTimeInMin());
+  AddEmail(ENRICO_CONGRATS, ENRICO_CONGRATS_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(IMP_EMAIL_AGAIN, IMP_EMAIL_AGAIN_LENGTH, 1, GetGameTimeInMin());
+  AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
   AddEmail(MERC_NEW_SITE_ADDRESS, MERC_NEW_SITE_ADDRESS_LENGTH, SPECK_FROM_MERC,
-           GetWorldTotalMin());
+           GetGameTimeInMin());
 
   AddEmail(IMP_EMAIL_PROFILE_RESULTS, IMP_EMAIL_PROFILE_RESULTS_LENGTH, IMP_PROFILE_RESULTS,
-           GetWorldTotalMin());
+           GetGameTimeInMin());
 
-  AddEmail(MERC_WARNING, MERC_WARNING_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
-  AddEmail(MERC_INVALID, MERC_INVALID_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
-  AddEmail(NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
-  AddEmail(MERC_FIRST_WARNING, MERC_FIRST_WARNING_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+  AddEmail(MERC_WARNING, MERC_WARNING_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
+  AddEmail(MERC_INVALID, MERC_INVALID_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
+  AddEmail(NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
+  AddEmail(MERC_FIRST_WARNING, MERC_FIRST_WARNING_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
 
   uiOffset = MERC_UP_LEVEL_BIFF;
   for (uiCnt = 0; uiCnt < 10; uiCnt++) {
-    AddEmail(uiOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetWorldTotalMin());
+    AddEmail(uiOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetGameTimeInMin());
     uiOffset += MERC_UP_LEVEL_LENGTH_BIFF;
   }
-
-  //	AddEmail( ( uint8_t )( AIM_REPLY_BARRY + ( AIM_REPLY_LENGTH_BARRY ) ),
-  // AIM_REPLY_LENGTH_BARRY,
-  // AIM_REPLY_BARRY, GetWorldTotalMin() );
 
   uiOffset = AIM_REPLY_BARRY;
   for (uiCnt = 0; uiCnt < 40; uiCnt++) {
     AddEmail((uint8_t)(uiOffset + (uiCnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
-             (uint8_t)(6 + uiCnt), GetWorldTotalMin());
+             (uint8_t)(6 + uiCnt), GetGameTimeInMin());
   }
 
-  AddEmail(OLD_ENRICO_1, OLD_ENRICO_1_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(OLD_ENRICO_2, OLD_ENRICO_2_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(OLD_ENRICO_3, OLD_ENRICO_3_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(RIS_REPORT, RIS_REPORT_LENGTH, RIS_EMAIL, GetWorldTotalMin());
+  AddEmail(OLD_ENRICO_1, OLD_ENRICO_1_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(OLD_ENRICO_2, OLD_ENRICO_2_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(OLD_ENRICO_3, OLD_ENRICO_3_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(RIS_REPORT, RIS_REPORT_LENGTH, RIS_EMAIL, GetGameTimeInMin());
 
-  AddEmail(ENRICO_MIGUEL, ENRICO_MIGUEL_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(ENRICO_PROG_20, ENRICO_PROG_20_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(ENRICO_PROG_55, ENRICO_PROG_55_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(ENRICO_PROG_80, ENRICO_PROG_80_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(ENRICO_SETBACK, ENRICO_SETBACK_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(ENRICO_SETBACK_2, ENRICO_SETBACK_2_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(LACK_PLAYER_PROGRESS_1, LACK_PLAYER_PROGRESS_1_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(LACK_PLAYER_PROGRESS_2, LACK_PLAYER_PROGRESS_2_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(LACK_PLAYER_PROGRESS_3, LACK_PLAYER_PROGRESS_3_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
-  AddEmail(ENRICO_CREATURES, ENRICO_CREATURES_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
+  AddEmail(ENRICO_MIGUEL, ENRICO_MIGUEL_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(ENRICO_PROG_20, ENRICO_PROG_20_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(ENRICO_PROG_55, ENRICO_PROG_55_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(ENRICO_PROG_80, ENRICO_PROG_80_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(ENRICO_SETBACK, ENRICO_SETBACK_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(ENRICO_SETBACK_2, ENRICO_SETBACK_2_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(LACK_PLAYER_PROGRESS_1, LACK_PLAYER_PROGRESS_1_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(LACK_PLAYER_PROGRESS_2, LACK_PLAYER_PROGRESS_2_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(LACK_PLAYER_PROGRESS_3, LACK_PLAYER_PROGRESS_3_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
+  AddEmail(ENRICO_CREATURES, ENRICO_CREATURES_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
 
   // Add an email telling the user that he received an insurance payment
   AddEmailWithSpecialData(INSUR_PAYMENT, INSUR_PAYMENT_LENGTH, INSURANCE_COMPANY,
-                          GetWorldTotalMin(), 20, 0);
-  AddEmailWithSpecialData(INSUR_SUSPIC, INSUR_SUSPIC_LENGTH, INSURANCE_COMPANY, GetWorldTotalMin(),
+                          GetGameTimeInMin(), 20, 0);
+  AddEmailWithSpecialData(INSUR_SUSPIC, INSUR_SUSPIC_LENGTH, INSURANCE_COMPANY, GetGameTimeInMin(),
                           20, 0);
   AddEmailWithSpecialData(INSUR_SUSPIC_2, INSUR_SUSPIC_2_LENGTH, INSURANCE_COMPANY,
-                          GetWorldTotalMin(), 20, 0);
-  AddEmail(BOBBYR_NOW_OPEN, BOBBYR_NOW_OPEN_LENGTH, BOBBY_R, GetWorldTotalMin());
-  AddEmail(KING_PIN_LETTER, KING_PIN_LETTER_LENGTH, KING_PIN, GetWorldTotalMin());
-  AddEmail(BOBBYR_SHIPMENT_ARRIVED, BOBBYR_SHIPMENT_ARRIVED_LENGTH, BOBBY_R, GetWorldTotalMin());
+                          GetGameTimeInMin(), 20, 0);
+  AddEmail(BOBBYR_NOW_OPEN, BOBBYR_NOW_OPEN_LENGTH, BOBBY_R, GetGameTimeInMin());
+  AddEmail(KING_PIN_LETTER, KING_PIN_LETTER_LENGTH, KING_PIN, GetGameTimeInMin());
+  AddEmail(BOBBYR_SHIPMENT_ARRIVED, BOBBYR_SHIPMENT_ARRIVED_LENGTH, BOBBY_R, GetGameTimeInMin());
 
   AddEmail(JOHN_KULBA_GIFT_IN_DRASSEN, JOHN_KULBA_GIFT_IN_DRASSEN_LENGTH, JOHN_KULBA,
-           GetWorldTotalMin());
+           GetGameTimeInMin());
 
   AddEmailWithSpecialData(MERC_DIED_ON_OTHER_ASSIGNMENT, MERC_DIED_ON_OTHER_ASSIGNMENT_LENGTH,
-                          AIM_SITE, GetWorldTotalMin(), 0, 0);
+                          AIM_SITE, GetGameTimeInMin(), 0, 0);
 
   AddEmailWithSpecialData(INSUR_1HOUR_FRAUD, INSUR_1HOUR_FRAUD_LENGTH, INSURANCE_COMPANY,
-                          GetWorldTotalMin(), 20, 0);
+                          GetGameTimeInMin(), 20, 0);
 
   // add an email
   AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_REFUND, AIM_MEDICAL_DEPOSIT_REFUND_LENGTH, AIM_SITE,
-                          GetWorldTotalMin(), 20, 0);
+                          GetGameTimeInMin(), 20, 0);
 
   AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND,
-                          AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND_LENGTH, AIM_SITE, GetWorldTotalMin(),
+                          AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND_LENGTH, AIM_SITE, GetGameTimeInMin(),
                           20, 0);
 
   AddEmailWithSpecialData(AIM_MEDICAL_DEPOSIT_NO_REFUND, AIM_MEDICAL_DEPOSIT_NO_REFUND_LENGTH,
-                          AIM_SITE, GetWorldTotalMin(), 20, 0);
+                          AIM_SITE, GetGameTimeInMin(), 20, 0);
 }
 #endif

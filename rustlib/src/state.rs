@@ -1,4 +1,5 @@
 use crate::civ_groups;
+use crate::clock;
 use crate::laptop;
 use crate::militia;
 use crate::sam_sites;
@@ -18,6 +19,7 @@ pub struct State {
     pub ui: ui::State,
     pub civ_groups: civ_groups::State,
     pub laptop: laptop::State,
+    pub clock: clock::State,
 }
 
 impl Default for State {
@@ -37,6 +39,7 @@ impl State {
             ui: Default::default(),
             civ_groups: Default::default(),
             laptop: Default::default(),
+            clock: Default::default(),
         };
         for y in 1..17 {
             for x in 1..17 {

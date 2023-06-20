@@ -791,7 +791,7 @@ void CreatureAttackTown(
 
   if (gfWorldLoaded &&
       gTacticalStatus.fEnemyInSector) {  // Battle currently in progress, repost the event
-    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetWorldTotalMin() + Random(10), ubSectorID);
+    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + Random(10), ubSectorID);
     return;
   }
 
@@ -844,13 +844,13 @@ void CreatureAttackTown(
   } else if (!IsSectorEnemyControlled(ubSectorX, ubSectorY)) {
     // player controlled sector -- eat some civilians
     AdjustLoyaltyForCivsEatenByMonsters(ubSectorX, ubSectorY, gubNumCreaturesAttackingTown);
-    SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (uint8_t)GetWorldDay();
+    SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (uint8_t)GetGameTimeInDays();
     return;
   } else {  // enemy controlled sectors don't get attacked.
     return;
   }
 
-  SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (uint8_t)GetWorldDay();
+  SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (uint8_t)GetGameTimeInDays();
   switch (gubCreatureBattleCode) {
     case CREATURE_BATTLE_CODE_PREBATTLEINTERFACE:
       InitPreBattleInterface(NULL, TRUE);
@@ -865,7 +865,7 @@ void CreatureAttackTown(
   }
   InterruptTime();
   PauseGame();
-  LockPauseState(2);
+  LockPause();
 }
 
 // Called by campaign init.
@@ -1248,25 +1248,25 @@ void CreatureNightPlanning() {  // Check the populations of the mine exits, and 
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
           (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
-    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetWorldTotalMin() + 1 + PreRandom(429), SEC_H3);
+    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_H3);
   }
   ubNumCreatures = CreaturesInUndergroundSector(SEC_D13, 1);
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
           (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
-    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetWorldTotalMin() + 1 + PreRandom(429), SEC_D13);
+    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_D13);
   }
   ubNumCreatures = CreaturesInUndergroundSector(SEC_I14, 1);
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
           (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
-    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetWorldTotalMin() + 1 + PreRandom(429), SEC_I14);
+    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_I14);
   }
   ubNumCreatures = CreaturesInUndergroundSector(SEC_H8, 1);
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
           (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
-    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetWorldTotalMin() + 1 + PreRandom(429), SEC_H8);
+    AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_H8);
   }
 }
 
@@ -1392,7 +1392,7 @@ BOOLEAN LoadCreatureDirectives(FileID hFile, uint32_t uiSavedGameVersion) {
 }
 
 void ForceCreaturesToAvoidMineTemporarily(uint8_t ubMineIndex) {
-  gMineStatus[MINE_GRUMM].usValidDayCreaturesCanInfest = (uint16_t)(GetWorldDay() + 2);
+  gMineStatus[MINE_GRUMM].usValidDayCreaturesCanInfest = (uint16_t)(GetGameTimeInDays() + 2);
 }
 
 BOOLEAN PlayerGroupIsInACreatureInfestedMine() {

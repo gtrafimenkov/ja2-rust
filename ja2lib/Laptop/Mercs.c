@@ -711,12 +711,12 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
   if (iNumDays > MERC_NUM_DAYS_TILL_ACCOUNT_INVALID) {
     if (LaptopSaveInfo.gubPlayersMercAccountStatus != MERC_ACCOUNT_INVALID) {
       LaptopSaveInfo.gubPlayersMercAccountStatus = MERC_ACCOUNT_INVALID;
-      AddEmail(MERC_INVALID, MERC_INVALID_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+      AddEmail(MERC_INVALID, MERC_INVALID_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
     }
   } else if (iNumDays > MERC_NUM_DAYS_TILL_ACCOUNT_SUSPENDED) {
     if (LaptopSaveInfo.gubPlayersMercAccountStatus != MERC_ACCOUNT_SUSPENDED) {
       LaptopSaveInfo.gubPlayersMercAccountStatus = MERC_ACCOUNT_SUSPENDED;
-      AddEmail(MERC_WARNING, MERC_WARNING_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+      AddEmail(MERC_WARNING, MERC_WARNING_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
 
       // Have speck complain next time player come to site
       LaptopSaveInfo.uiSpeckQuoteFlags |= SPECK_QUOTE__SENT_EMAIL_ABOUT_LACK_OF_PAYMENT;
@@ -724,7 +724,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
   } else if (iNumDays > MERC_NUM_DAYS_TILL_FIRST_WARNING) {
     if (LaptopSaveInfo.gubPlayersMercAccountStatus != MERC_ACCOUNT_VALID_FIRST_WARNING) {
       LaptopSaveInfo.gubPlayersMercAccountStatus = MERC_ACCOUNT_VALID_FIRST_WARNING;
-      AddEmail(MERC_FIRST_WARNING, MERC_FIRST_WARNING_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+      AddEmail(MERC_FIRST_WARNING, MERC_FIRST_WARNING_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
 
       // Have speck complain next time player come to site
       LaptopSaveInfo.uiSpeckQuoteFlags |= SPECK_QUOTE__SENT_EMAIL_ABOUT_LACK_OF_PAYMENT;
@@ -769,7 +769,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
                                   if( !fAlreadySentEmailToPlayerThisTurn )
                                   {
                                           AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH,
-  SPECK_FROM_MERC, GetWorldTotalMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
+  SPECK_FROM_MERC, GetGameTimeInMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
                                   }
                                   LaptopSaveInfo.gbNumDaysTillFirstMercArrives = -1;
                           }
@@ -798,7 +798,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
                                   if( !fAlreadySentEmailToPlayerThisTurn )
                                   {
                                           AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH,
-  SPECK_FROM_MERC, GetWorldTotalMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
+  SPECK_FROM_MERC, GetGameTimeInMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
                                   }
                                   LaptopSaveInfo.gbNumDaysTillSecondMercArrives = -1;
                           }
@@ -826,7 +826,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
                                   if( !fAlreadySentEmailToPlayerThisTurn )
                                   {
                                           AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH,
-  SPECK_FROM_MERC, GetWorldTotalMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
+  SPECK_FROM_MERC, GetGameTimeInMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
                                   }
                                   LaptopSaveInfo.gbNumDaysTillThirdMercArrives = -1;
                           }
@@ -854,7 +854,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
                                   if( !fAlreadySentEmailToPlayerThisTurn )
                                   {
                                           AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH,
-  SPECK_FROM_MERC, GetWorldTotalMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
+  SPECK_FROM_MERC, GetGameTimeInMin()); fAlreadySentEmailToPlayerThisTurn = TRUE;
                                   }
                                   LaptopSaveInfo.gbNumDaysTillFourthMercArrives = -1;
                           }
@@ -876,7 +876,7 @@ void DailyUpdateOfMercSite(uint16_t usDate) {
     //		RemoveBookMark( MERC_BOOKMARK );
 
     // Get the site up the next day at 6:00 pm
-    uiTimeInMinutes = GetMidnightOfFutureDayInMinutes(1) + 18 * 60;
+    uiTimeInMinutes = GetFutureMidnightInMinutes(1) + 18 * 60;
 
     // Add an event that will get the site back up and running
     AddStrategicEvent(EVENT_MERC_SITE_BACK_ONLINE, uiTimeInMinutes, 0);
@@ -2010,7 +2010,7 @@ void EnterInitMercSite() {
 }
 
 BOOLEAN ShouldTheMercSiteServerGoDown() {
-  uint32_t uiDay = GetWorldDay();
+  uint32_t uiDay = GetGameTimeInDays();
 
   // If the merc site has never gone down, the first new merc has shown ( which shows the player is
   // using the site ), and the players account status is ok ( cant have the merc site going down
@@ -2032,7 +2032,7 @@ BOOLEAN ShouldTheMercSiteServerGoDown() {
 void GetMercSiteBackOnline() {
   // Add an email telling the user the site is back up
   AddEmail(MERC_NEW_SITE_ADDRESS, MERC_NEW_SITE_ADDRESS_LENGTH, SPECK_FROM_MERC,
-           GetWorldTotalMin());
+           GetGameTimeInMin());
 
   // Set a flag indicating that the server just went up ( so speck can make a comment when the
   // player next visits the site )
@@ -2176,7 +2176,7 @@ void ShouldAnyNewMercMercBecomeAvailable() {
   if (fNewMercAreAvailable) {
     // Set up an event to add the merc in x days
     AddStrategicEvent(EVENT_MERC_SITE_NEW_MERC_AVAILABLE,
-                      GetMidnightOfFutureDayInMinutes(1) + 420 + Random(3 * 60), 0);
+                      GetFutureMidnightInMinutes(1) + 420 + Random(3 * 60), 0);
   }
 }
 
@@ -2195,7 +2195,7 @@ BOOLEAN CanMercBeAvailableYet(uint8_t ubMercToCheck) {
   // day
   if (gConditionsForMercAvailability[ubMercToCheck].usMoneyPaid <=
           LaptopSaveInfo.uiTotalMoneyPaidToSpeck &&
-      gConditionsForMercAvailability[ubMercToCheck].usDay <= GetWorldDay()) {
+      gConditionsForMercAvailability[ubMercToCheck].usDay <= GetGameTimeInDays()) {
     return (TRUE);
   }
 
@@ -2245,7 +2245,7 @@ void NewMercsAvailableAtMercSiteCallBack() {
   }
 
   if (fSendEmail)
-    AddEmail(NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+    AddEmail(NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
 
   // new mercs are available
   LaptopSaveInfo.fNewMercsAvailableAtMercSite = TRUE;

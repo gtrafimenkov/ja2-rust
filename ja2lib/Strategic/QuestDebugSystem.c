@@ -339,7 +339,6 @@ wchar_t *PocketText[] = {
 //
 //*******************************
 
-extern uint32_t guiGameClock;
 extern uint32_t guiBrownBackgroundForTeamPanel;
 
 typedef void (*LISTBOX_DISPLAY_FNCTN)();       // Define Display Callback function
@@ -2261,7 +2260,7 @@ void BtnQuestDebugChangeDayButtonCallback(GUI_BUTTON *btn, int32_t reason) {
     btn->uiFlags &= (~BUTTON_CLICKED_ON);
 
     swprintf(zTemp, ARR_SIZE(zTemp), L"%s   Current Day is %d",
-             QuestDebugText[QUEST_DBS_PLEASE_ENTER_DAY], GetWorldDay());
+             QuestDebugText[QUEST_DBS_PLEASE_ENTER_DAY], GetGameTimeInDays());
 
     // get the day to change the game day to
     TextEntryBox(zTemp, ChangeDayNumber);
@@ -2688,9 +2687,9 @@ void ChangeDayNumber(int32_t iDayToChangeTo) {
   uint32_t uiNewDayTimeInSec;
 
   if (iDayToChangeTo) {
-    uiNewDayTimeInSec =
-        (guiDay + iDayToChangeTo) * NUM_SEC_IN_DAY + 8 * NUM_SEC_IN_HOUR + 15 * NUM_SEC_IN_MIN;
-    uiDiff = uiNewDayTimeInSec - guiGameClock;
+    uiNewDayTimeInSec = (GetGameTimeInDays() + iDayToChangeTo) * NUM_SEC_IN_DAY +
+                        8 * NUM_SEC_IN_HOUR + 15 * NUM_SEC_IN_MIN;
+    uiDiff = uiNewDayTimeInSec - GetGameTimeInSec();
     WarpGameTime(uiDiff, WARPTIME_PROCESS_EVENTS_NORMALLY);
 
     ForecastDayEvents();

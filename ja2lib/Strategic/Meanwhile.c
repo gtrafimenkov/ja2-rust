@@ -308,8 +308,7 @@ BOOLEAN BeginMeanwhile(uint8_t ubMeanwhileID) {
 
   gfMeanwhileTryingToStart = TRUE;
   PauseGame();
-  // prevent anyone from messing with the pause!
-  LockPauseState(6);
+  LockPause();
 
   // Set NO_PROFILE info....
   for (cnt = 0; cnt < MAX_MEANWHILE_PROFILES; cnt++) {
@@ -565,7 +564,7 @@ void BeginMeanwhileCallBack(uint8_t bExitValue) {
   } else {
     // skipped scene!
     ProcessImplicationsOfMeanwhile();
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
   }
 }
@@ -588,7 +587,7 @@ BOOLEAN AreInMeanwhile() {
   // second.
   curr = gpEventList;
   while (curr) {
-    if (curr->uiTimeStamp == GetWorldTotalSeconds()) {
+    if (curr->uiTimeStamp == GetGameTimeInSec()) {
       if (curr->ubCallbackID == EVENT_MEANWHILE) {
         return TRUE;
       }
@@ -681,7 +680,7 @@ void EndMeanwhile() {
 
   gTacticalStatus.uiFlags &= (~ENGAGED_IN_CONV);
 
-  UnLockPauseState();
+  UnlockPause();
   UnPauseGame();
 
   // ATE: Make sure!
@@ -811,7 +810,7 @@ void HandleCreatureRelease(void) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   MeanwhileDef.ubMeanwhileID = CREATURES;
 
@@ -832,7 +831,7 @@ void HandleMeanWhileEventPostingForTownLiberation(uint8_t bTownId) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   // which town iberated?
   switch (bTownId) {
@@ -884,7 +883,7 @@ void HandleMeanWhileEventPostingForTownLoss(uint8_t bTownId) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   MeanwhileDef.ubMeanwhileID = LOST_TOWN;
 
@@ -911,7 +910,7 @@ void HandleMeanWhileEventPostingForSAMLiberation(int8_t bSamId) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   // which SAM iberated?
   switch (bSamId) {
@@ -957,10 +956,10 @@ void HandleFlowersMeanwhileScene(int8_t bTimeCode) {
   // time delay should be based on time code, 0 next day, 1 seeral days (random)
   if (bTimeCode == 0) {
     // 20-24 hours later
-    uiTime = GetWorldTotalMin() + 60 * (20 + Random(5));
+    uiTime = GetGameTimeInMin() + 60 * (20 + Random(5));
   } else {
     // 2-4 days later
-    uiTime = GetWorldTotalMin() + 60 * (24 + Random(48));
+    uiTime = GetGameTimeInMin() + 60 * (24 + Random(48));
   }
 
   MeanwhileDef.ubMeanwhileID = FLOWERS;
@@ -983,7 +982,7 @@ void HandleOutskirtsOfMedunaMeanwhileScene(void) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   MeanwhileDef.ubMeanwhileID = OUTSKIRTS_MEDUNA;
 
@@ -1005,7 +1004,7 @@ void HandleKillChopperMeanwhileScene(void) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 55 + Random(10);
+  uiTime = GetGameTimeInMin() + 55 + Random(10);
 
   MeanwhileDef.ubMeanwhileID = KILL_CHOPPER;
 
@@ -1027,7 +1026,7 @@ void HandleScientistAWOLMeanwhileScene(void) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   MeanwhileDef.ubMeanwhileID = AWOL_SCIENTIST;
 
@@ -1049,7 +1048,7 @@ void HandleInterrogationMeanwhileScene(void) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 60;
+  uiTime = GetGameTimeInMin() + 60;
 
   MeanwhileDef.ubMeanwhileID = INTERROGATION;
 
@@ -1071,7 +1070,7 @@ void HandleFirstBattleVictory(void) {
   MeanwhileDef.ubNPCNumber = QUEEN;
   MeanwhileDef.usTriggerEvent = 0;
 
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   ubId = END_OF_PLAYERS_FIRST_BATTLE;
 
@@ -1099,9 +1098,9 @@ void HandleDelayedFirstBattleVictory(void) {
   //It is theoretically impossible to liberate a town within 60 minutes of the first battle (which
   is supposed to
   //occur outside of a town in this scenario).  The delay is attributed to the info taking longer to
-  reach the queen. uiTime = GetWorldTotalMin() + 60;
+  reach the queen. uiTime = GetGameTimeInMin() + 60;
   */
-  uiTime = GetWorldTotalMin() + 5;
+  uiTime = GetGameTimeInMin() + 5;
 
   ubId = END_OF_PLAYERS_FIRST_BATTLE;
 

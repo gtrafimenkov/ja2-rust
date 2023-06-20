@@ -250,8 +250,8 @@ BOOLEAN CreateAIViewer() {
       BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, ViewerExitCallback);
 
   iViewerButton[VIEWER_TIMEPANEL] = CreateTextButton(
-      WORLDTIMESTR, FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT, VIEWER_RIGHT + 3, 0,
-      88, 20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK);
+      gswzWorldTimeStr, FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT, VIEWER_RIGHT + 3,
+      0, 88, 20, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK);
   DisableButton(iViewerButton[VIEWER_TIMEPANEL]);
   SpecifyDisabledButtonStyle(iViewerButton[VIEWER_TIMEPANEL], DISABLED_STYLE_NONE);
   iViewerButton[COMPRESSION0] = CreateTextButton(
@@ -362,7 +362,7 @@ BOOLEAN CreateAIViewer() {
   ButtonList[iViewerButton[RESET_EASY + gGameOptions.ubDifficultyLevel - DIF_LEVEL_EASY]]
       ->uiFlags |= BUTTON_CLICKED_ON;
   ButtonList[iViewerButton[COMPRESSION0]]->uiFlags |= BUTTON_CLICKED_ON;
-  if (!GamePaused()) SetGameMinutesPerSecond(0);
+  if (!IsGamePaused()) SetGameMinutesPerSecond(0);
   ClearViewerRegion(0, 0, 640, 480);
 
   return TRUE;
@@ -486,7 +486,7 @@ void RenderMovingGroupsAndMercs() {
     if (pGroup->ubGroupSize && !pGroup->fVehicle) {
       if (pGroup->uiTraverseTime) {
         // display how far along to the next sector they are
-        ratio = (pGroup->uiTraverseTime - pGroup->uiArrivalTime + GetWorldTotalMin()) /
+        ratio = (pGroup->uiTraverseTime - pGroup->uiArrivalTime + GetGameTimeInMin()) /
                 (float)pGroup->uiTraverseTime;
         minX = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubSectorX - 1);
         maxX = VIEWER_LEFT + VIEWER_CELLW * (pGroup->ubNextX - 1);
@@ -1006,10 +1006,10 @@ uint32_t AIViewerScreenHandle() {
     }
   }
 
-  if (GetWorldTotalSeconds() != guiLastTime) {
-    guiLastTime = GetWorldTotalSeconds();
+  if (GetGameTimeInSec() != guiLastTime) {
+    guiLastTime = GetGameTimeInSec();
     gfRenderViewer = TRUE;
-    SpecifyButtonText(iViewerButton[VIEWER_TIMEPANEL], WORLDTIMESTR);
+    SpecifyButtonText(iViewerButton[VIEWER_TIMEPANEL], gswzWorldTimeStr);
   }
 
   HandleViewerInput();
@@ -1102,7 +1102,7 @@ void TestIncoming4SidesCallback(GUI_BUTTON *btn, int32_t reason) {
     if ((gsSelSectorX == 0) || (gsSelSectorY == 0)) gsSelSectorX = 9, gsSelSectorY = 1;
 
     ubSector = GetSectorID8((uint8_t)gsSelSectorX, (uint8_t)gsSelSectorY);
-    uiWorldMin = GetWorldTotalMin();
+    uiWorldMin = GetGameTimeInMin();
     gfRenderViewer = TRUE;
     if (gsSelSectorY > 1) {
       pGroup = CreateNewEnemyGroupDepartingFromSector(ubSector - 16, 0, 11, 5);
@@ -1178,7 +1178,7 @@ void CreatureAttackCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if ((gsSelSectorX != 0) && (gsSelSectorX != 0)) {
       if (_KeyDown(ALT)) {
-        AddStrategicEventUsingSeconds(EVENT_CREATURE_ATTACK, GetWorldTotalSeconds() + 4,
+        AddStrategicEventUsingSeconds(EVENT_CREATURE_ATTACK, GetGameTimeInSec() + 4,
                                       GetSectorID8((uint8_t)gsSelSectorX, (uint8_t)gsSelSectorY));
       } else {
         CreatureAttackTown((uint8_t)GetSectorID8((uint8_t)gsSelSectorX, (uint8_t)gsSelSectorY),

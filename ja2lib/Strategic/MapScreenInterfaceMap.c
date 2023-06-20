@@ -341,8 +341,6 @@ uint32_t guiSubLevel1, guiSubLevel2, guiSubLevel3;
 uint32_t guiCHARBETWEENSECTORICONS;
 uint32_t guiCHARBETWEENSECTORICONSCLOSE;
 
-extern BOOLEAN fMapScreenBottomDirty;
-
 // tixa found
 BOOLEAN fFoundTixa = FALSE;
 
@@ -3764,14 +3762,14 @@ void DisplayPositionOfHelicopter(void) {
       Assert(pGroup->uiTraverseTime != -1);
 
       if ((pGroup->uiTraverseTime > 0) && (pGroup->uiTraverseTime != 0xffffffff)) {
-        flRatio = ((pGroup->uiTraverseTime + GetWorldTotalMin()) - pGroup->uiArrivalTime) /
+        flRatio = ((pGroup->uiTraverseTime + GetGameTimeInMin()) - pGroup->uiArrivalTime) /
                   (float)pGroup->uiTraverseTime;
       }
 
       /*
                               AssertMsg( ( flRatio >= 0 ) && ( flRatio <= 100 ), String(
-         "DisplayPositionOfHelicopter: Invalid flRatio = %6.2f, trav %d, arr %d, time %d",
-         flRatio, pGroup->uiTraverseTime, pGroup->uiArrivalTime, GetWorldTotalMin() ) );
+         "DisplayPositionOfHelicopter: Invalid flRatio = %6.2f, trav %d, arr %d, time %d", flRatio,
+         pGroup->uiTraverseTime, pGroup->uiArrivalTime, GetGameTimeInMin() ) );
       */
 
       if (flRatio < 0) {
@@ -3956,7 +3954,7 @@ BOOLEAN CheckForClickOverHelicopterIcon(uint8_t sClickedSectorX, uint8_t sClicke
     Assert(pGroup->uiTraverseTime != -1);
 
     if ((pGroup->uiTraverseTime > 0) && (pGroup->uiTraverseTime != 0xffffffff)) {
-      flRatio = (pGroup->uiTraverseTime - pGroup->uiArrivalTime + GetWorldTotalMin()) /
+      flRatio = (pGroup->uiTraverseTime - pGroup->uiArrivalTime + GetGameTimeInMin()) /
                 (float)pGroup->uiTraverseTime;
     }
 

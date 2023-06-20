@@ -2,6 +2,7 @@
 #define __WORLD_CLOCK
 
 #include "SGP/Types.h"
+#include "rust_clock.h"
 
 // where the time string itself is rendered
 #define CLOCK_X 554
@@ -30,16 +31,6 @@
 // pass, and isn't currently handled.  The best thing to do in these cases is call the PauseGame()
 // function when entering such a mode, and UnPauseGame() when finished.  Everything will be restored
 // just the way you left it.  This is much simpler to handle in the overall scheme of things.
-
-// PAUSE FEATURES
-// Pauses and unpauses the game.  It sets and clears a flag which preserves the time rate.
-extern void PauseGame();
-extern void UnPauseGame();
-extern void TogglePause();
-extern BOOLEAN GamePaused();
-extern void LockPauseState(uint32_t uiUniqueReasonId);
-extern void UnLockPauseState();
-extern BOOLEAN PauseStateLocked();
 
 // USING HIGH RESOLUTION TIME RATE MANIPULATION/ACCESS
 // Allows external code to change the time rate.
@@ -93,10 +84,7 @@ enum {
 // dereferenced with the above enumerations to provide the actual time compression rate.
 extern int32_t giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
 
-#define STARTING_TIME ((1 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN) + NUM_SEC_IN_DAY)  // 1am
 #define FIRST_ARRIVAL_DELAY ((6 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN))  // 7am ( 6hours later)
-
-#define WORLDTIMESTR gswzWorldTimeStr
 
 // compress mode now in use
 extern int32_t giTimeCompressMode;
@@ -108,17 +96,11 @@ enum {
 };
 void WarpGameTime(uint32_t uiAdjustment, uint8_t ubWarpCode);
 
-void AdvanceToNextDay();
-
 // This function is called once per cycle in the game loop.  This determine how often the clock
 // should be as well as how much to update the clock by.
 void UpdateClock();
 
 extern wchar_t gswzWorldTimeStr[20];  // Day 99, 23:55
-
-extern uint32_t guiDay;
-extern uint32_t guiHour;
-extern uint32_t guiMin;
 
 // Advanced function used by certain event callbacks.  In the case where time is warped, certain
 // event need to know how much time was warped since the last query to the event list. This function
@@ -138,21 +120,6 @@ extern BOOLEAN gfPauseDueToPlayerGamePause;
 extern BOOLEAN gfJustFinishedAPause;
 
 extern BOOLEAN gfResetAllPlayerKnowsEnemiesFlags;
-
-extern uint32_t guiLockPauseStateLastReasonId;
-
-uint32_t GetWorldTotalMin();
-uint32_t GetWorldTotalSeconds();
-uint32_t GetWorldHour();
-uint32_t GetWorldDay();
-uint32_t GetWorldMinutesInDay();
-uint32_t GetWorldDayInSeconds();
-uint32_t GetWorldDayInMinutes();
-uint32_t GetFutureDayInMinutes(uint32_t uiDay);
-uint32_t GetMidnightOfFutureDayInMinutes(uint32_t uiDay);
-
-BOOLEAN DayTime();
-BOOLEAN NightTime();
 
 void InitNewGameClock();
 

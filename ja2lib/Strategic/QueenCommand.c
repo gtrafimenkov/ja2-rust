@@ -1014,7 +1014,7 @@ void ProcessQueenCmdImplicationsOfDeath(struct SOLDIERTYPE *pSoldier) {
 
             // a monster has died.  Post an event to immediately check whether a mine has been
             // cleared.
-            AddStrategicEventUsingSeconds(EVENT_CHECK_IF_MINE_CLEARED, GetWorldTotalSeconds() + 15,
+            AddStrategicEventUsingSeconds(EVENT_CHECK_IF_MINE_CLEARED, GetGameTimeInSec() + 15,
                                           0);
 
             if (pSoldier->ubBodyType == QUEENMONSTER) {

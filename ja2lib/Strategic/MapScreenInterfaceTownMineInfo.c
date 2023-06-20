@@ -55,8 +55,6 @@ uint16_t sTotalButtonWidth = 0;
 
 extern MINE_LOCATION_TYPE gMineLocation[];
 extern MINE_STATUS_TYPE gMineStatus[];
-extern BOOLEAN fMapScreenBottomDirty;
-// extern uint8_t gubMonsterMineInfestation[];
 
 // create the town/mine info box
 void CreateTownInfoBox(void);
@@ -772,7 +770,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
       // done
       fShowMapInventoryPool = TRUE;
       SetMapPanelDirty(true);
-      fMapScreenBottomDirty = TRUE;
+      SetMapScreenBottomDirty(true);
       fShowTownInfo = FALSE;
 
       // since we are bring up the sector inventory, check to see if the help screen should come up
@@ -794,7 +792,7 @@ void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
 
       // done
       SetMapPanelDirty(true);
-      fMapScreenBottomDirty = TRUE;
+      SetMapScreenBottomDirty(true);
       fShowTownInfo = FALSE;
     }
   }

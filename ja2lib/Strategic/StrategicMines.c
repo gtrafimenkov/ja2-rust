@@ -366,7 +366,7 @@ uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
     StrategicHandleMineThatRanOut((uint8_t)GetSectorID8(sSectorX, sSectorY));
 
     AddHistoryToPlayersLog(HISTORY_MINE_RAN_OUT, gMineLocation[bMineIndex].bAssociatedTown,
-                           GetWorldTotalMin(), gMineLocation[bMineIndex].sSectorX,
+                           GetGameTimeInMin(), gMineLocation[bMineIndex].sSectorX,
                            gMineLocation[bMineIndex].sSectorY);
   } else  // still some left after this extraction
   {
@@ -395,7 +395,7 @@ uint32_t ExtractOreFromMine(int8_t bMineIndex, uint32_t uiAmount) {
           IssueHeadMinerQuote(bMineIndex, HEAD_MINER_STRATEGIC_QUOTE_RUNNING_OUT);
           gMineStatus[bMineIndex].fWarnedOfRunningOut = TRUE;
           AddHistoryToPlayersLog(HISTORY_MINE_RUNNING_OUT,
-                                 gMineLocation[bMineIndex].bAssociatedTown, GetWorldTotalMin(),
+                                 gMineLocation[bMineIndex].bAssociatedTown, GetGameTimeInMin(),
                                  gMineLocation[bMineIndex].sSectorX,
                                  gMineLocation[bMineIndex].sSectorY);
         }
@@ -523,14 +523,14 @@ int32_t MineAMine(int8_t bMineIndex) {
     if (iAmtExtracted > 0) {
       // debug message
       //			ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s - Mine income from %s =
-      //$%d", WORLDTIMESTR, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], iAmtExtracted );
+      //$%d", gswzWorldTimeStr, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], iAmtExtracted );
 
       // if this is the first time this mine has produced income for the player in the game
       if (!gMineStatus[bMineIndex].fMineHasProducedForPlayer) {
         // remember that we've earned income from this mine during the game
         gMineStatus[bMineIndex].fMineHasProducedForPlayer = TRUE;
         // and when we started to do so...
-        gMineStatus[bMineIndex].uiTimePlayerProductionStarted = GetWorldTotalMin();
+        gMineStatus[bMineIndex].uiTimePlayerProductionStarted = GetGameTimeInMin();
       }
     }
   } else  // queen controlled
@@ -553,7 +553,7 @@ void PostEventsForMineProduction(void) {
   for (ubShift = 0; ubShift < MINE_PRODUCTION_NUMBER_OF_PERIODS; ubShift++) {
     AddStrategicEvent(
         EVENT_HANDLE_MINE_INCOME,
-        GetWorldDayInMinutes() + MINE_PRODUCTION_START_TIME + (ubShift * MINE_PRODUCTION_PERIOD),
+        GetGameTimeInDays()*24*60 + MINE_PRODUCTION_START_TIME + (ubShift * MINE_PRODUCTION_PERIOD),
         0);
   }
 }
@@ -733,7 +733,7 @@ void ShutOffMineProduction(int8_t bMineIndex) {
   if (!gMineStatus[bMineIndex].fShutDown) {
     gMineStatus[bMineIndex].fShutDown = TRUE;
     AddHistoryToPlayersLog(HISTORY_MINE_SHUTDOWN, gMineLocation[bMineIndex].bAssociatedTown,
-                           GetWorldTotalMin(), gMineLocation[bMineIndex].sSectorX,
+                           GetGameTimeInMin(), gMineLocation[bMineIndex].sSectorX,
                            gMineLocation[bMineIndex].sSectorY);
   }
 }
@@ -745,7 +745,7 @@ void RestartMineProduction(int8_t bMineIndex) {
     if (gMineStatus[bMineIndex].fShutDown) {
       gMineStatus[bMineIndex].fShutDown = FALSE;
       AddHistoryToPlayersLog(HISTORY_MINE_REOPENED, gMineLocation[bMineIndex].bAssociatedTown,
-                             GetWorldTotalMin(), gMineLocation[bMineIndex].sSectorX,
+                             GetGameTimeInMin(), gMineLocation[bMineIndex].sSectorX,
                              gMineLocation[bMineIndex].sSectorY);
     }
   }
@@ -880,7 +880,7 @@ void PlayerSpokeToHeadMiner(uint8_t ubMinerProfileId) {
   // if this is our first time set a history fact
   if (gMineStatus[ubMineIndex].fSpokeToHeadMiner == FALSE) {
     AddHistoryToPlayersLog(HISTORY_TALKED_TO_MINER, gMineLocation[ubMineIndex].bAssociatedTown,
-                           GetWorldTotalMin(), gMineLocation[ubMineIndex].sSectorX,
+                           GetGameTimeInMin(), gMineLocation[ubMineIndex].sSectorX,
                            gMineLocation[ubMineIndex].sSectorY);
     gMineStatus[ubMineIndex].fSpokeToHeadMiner = TRUE;
   }
@@ -1006,7 +1006,7 @@ BOOLEAN HasHisMineBeenProducingForPlayerForSomeTime(uint8_t ubMinerProfileId) {
   ubMineIndex = GetHeadMinersMineIndex(ubMinerProfileId);
 
   if (gMineStatus[ubMineIndex].fMineHasProducedForPlayer &&
-      ((GetWorldTotalMin() - gMineStatus[ubMineIndex].uiTimePlayerProductionStarted) >=
+      ((GetGameTimeInMin() - gMineStatus[ubMineIndex].uiTimePlayerProductionStarted) >=
        (24 * 60))) {
     return (TRUE);
   }
