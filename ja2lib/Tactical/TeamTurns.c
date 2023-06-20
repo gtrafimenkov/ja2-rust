@@ -314,8 +314,8 @@ void EndTurnEvents(void) {
   // decay bomb timers and maybe set some off!
   DecayBombTimers();
 
-  DecaySmokeEffects(GetWorldTotalSeconds());
-  DecayLightEffects(GetWorldTotalSeconds());
+  DecaySmokeEffects(GetGameTimeInSec());
+  DecayLightEffects(GetGameTimeInSec());
 
   // decay AI warning values from corpses
   DecayRottingCorpseAIWarnings();

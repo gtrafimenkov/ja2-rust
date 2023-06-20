@@ -146,7 +146,7 @@ void EnvironmentController(BOOLEAN fCheckForLights) {
   }
 
   if (fTimeOfDayControls) {
-    uiOldWorldHour = GetWorldHour();
+    uiOldWorldHour = GetGameClockHour();
 
     // If hour is different
     if (uiOldWorldHour != guiEnvTime) {
@@ -155,7 +155,7 @@ void EnvironmentController(BOOLEAN fCheckForLights) {
       guiEnvTime = uiOldWorldHour;
     }
 
-    // ExecuteStrategicEventsUntilTimeStamp( (UINT16)GetWorldTotalMin( ) );
+    // ExecuteStrategicEventsUntilTimeStamp( (UINT16)GetGameTimeInMin( ) );
 
     // Polled weather stuff...
     // ONly do indooors
@@ -314,7 +314,7 @@ void ForecastDayEvents() {
   UINT32 uiOldDay;
 
   // Get current day and see if different
-  if ((uiOldDay = GetWorldDay()) != guiEnvDay) {
+  if ((uiOldDay = GetGameTimeInDays()) != guiEnvDay) {
     // It's a new day, forecast weather
     guiEnvDay = uiOldDay;
 
@@ -373,7 +373,7 @@ void EnvDoLightning(void) {
 }
 
 UINT8 GetTimeOfDayAmbientLightLevel() {
-  if (SectorTemperature(GetWorldMinutesInDay(), (u8)gWorldSectorX, (u8)gWorldSectorY,
+  if (SectorTemperature(GetMinutesSinceDayStart(), (u8)gWorldSectorX, (u8)gWorldSectorY,
                         gbWorldSectorZ) ==
       HOT) {
     return (HOT_DAY_LIGHTLEVEL);

@@ -320,7 +320,7 @@ void InternalLeaveTacticalScreen(UINT32 uiNewScreen) {
   CheckForDisabledRegionRemove();
 
   // ATE: Record last time we were in tactical....
-  gTacticalStatus.uiTimeSinceLastInTactical = GetWorldTotalMin();
+  gTacticalStatus.uiTimeSinceLastInTactical = GetGameTimeInMin();
 
   FinishAnySkullPanelAnimations();
 }
@@ -601,7 +601,7 @@ UINT32 MainGameScreenHandle(void) {
 
 #ifdef JA2BETAVERSION
 
-  if (GamePaused() == TRUE) {
+  if (IsGamePaused() == TRUE) {
     SetFont(MILITARYFONT1);
     SetFontBackground(FONT_MCOLOR_BLACK);
     SetFontForeground(FONT_MCOLOR_LTGREEN);

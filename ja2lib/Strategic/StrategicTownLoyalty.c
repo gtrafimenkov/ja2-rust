@@ -883,7 +883,7 @@ void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY)
       HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_LIBERATE_WHOLE_TOWN, sSectorX, sSectorY, 0);
 
       // set fact is has been lib'ed and set history event
-      AddHistoryToPlayersLog(HISTORY_LIBERATED_TOWN, bTownId, GetWorldTotalMin(), sSectorX,
+      AddHistoryToPlayersLog(HISTORY_LIBERATED_TOWN, bTownId, GetGameTimeInMin(), sSectorX,
                              sSectorY);
 
       HandleMeanWhileEventPostingForTownLiberation(bTownId);
@@ -892,9 +892,9 @@ void CheckIfEntireTownHasBeenLiberated(TownID bTownId, u8 sSectorX, u8 sSectorY)
     // even taking over non-trainable "towns" like Orta/Tixa for the first time should count as
     // "player activity"
     if (gGameOptions.ubDifficultyLevel >= DIF_LEVEL_HARD) {
-      UpdateLastDayOfPlayerActivity((UINT16)(GetWorldDay() + 4));
+      UpdateLastDayOfPlayerActivity((UINT16)(GetGameTimeInDays() + 4));
     } else {
-      UpdateLastDayOfPlayerActivity((UINT16)(GetWorldDay() + 2));
+      UpdateLastDayOfPlayerActivity((UINT16)(GetGameTimeInDays() + 2));
     }
 
     // set flag even for towns where you can't train militia, useful for knowing Orta/Tixa were

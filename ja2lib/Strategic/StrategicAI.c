@@ -2325,7 +2325,7 @@ BOOLEAN OkayForEnemyToMoveThroughSector(UINT8 ubSectorID) {
   SECTORINFO *pSector;
   pSector = &SectorInfo[ubSectorID];
   if (pSector->uiTimeLastPlayerLiberated &&
-      pSector->uiTimeLastPlayerLiberated + (gubHoursGracePeriod * 3600) > GetWorldTotalSeconds()) {
+      pSector->uiTimeLastPlayerLiberated + (gubHoursGracePeriod * 3600) > GetGameTimeInSec()) {
     return FALSE;
   }
   return TRUE;
@@ -2365,13 +2365,13 @@ BOOLEAN EnemyPermittedToAttackSector(struct GROUP **pGroup, UINT8 ubSectorID) {
     case SEC_A9:
     case SEC_A10:
       // Omerta -- not until Day 2 at 7:45AM.
-      if (GetWorldTotalMin() < 3345) return FALSE;
+      if (GetGameTimeInMin() < 3345) return FALSE;
       break;
     case SEC_B13:
     case SEC_C13:
     case SEC_D13:
       // Drassen -- not until Day 3 at 6:30AM.
-      if (GetWorldTotalMin() < 4710) return FALSE;
+      if (GetGameTimeInMin() < 4710) return FALSE;
       break;
     case SEC_C5:
     case SEC_C6:
@@ -2529,7 +2529,7 @@ BOOLEAN AttemptToNoticeEmptySectorSucceeds() {
                         // checks will automatically succeed.
     return TRUE;
   }
-  if (DayTime()) {  // Day time chances are normal
+  if (IsDayTime()) {  // Day time chances are normal
     if (Chance(giArmyAlertness)) {
       giArmyAlertness -= giArmyAlertnessDecay;
       // Minimum alertness should always be at least 0.
@@ -2562,7 +2562,7 @@ BOOLEAN AttemptToNoticeAdjacentGroupSucceeds() {
                         // checks will automatically succeed.
     return TRUE;
   }
-  if (DayTime()) {  // Day time chances are normal
+  if (IsDayTime()) {  // Day time chances are normal
     if (Chance(giArmyAlertness)) {
       giArmyAlertness -= giArmyAlertnessDecay;
       // Minimum alertness should always be at least 0.
@@ -3740,12 +3740,12 @@ void EvaluateQueenSituation() {
                                // training new troops
     uiOffset *= 10;
     giReinforcementPool += 30;
-    AddStrategicEvent(EVENT_EVALUATE_QUEEN_SITUATION, GetWorldTotalMin() + uiOffset, 0);
+    AddStrategicEvent(EVENT_EVALUATE_QUEEN_SITUATION, GetGameTimeInMin() + uiOffset, 0);
     return;
   }
 
   // Re-post the event
-  AddStrategicEvent(EVENT_EVALUATE_QUEEN_SITUATION, GetWorldTotalMin() + uiOffset, 0);
+  AddStrategicEvent(EVENT_EVALUATE_QUEEN_SITUATION, GetGameTimeInMin() + uiOffset, 0);
 
   // if the queen hasn't been alerted to player's presence yet
   if (!gfQueenAIAwake) {  // no decisions can be made yet.
@@ -4056,8 +4056,8 @@ BOOLEAN LoadStrategicAI(FileID hFile) {
 #ifdef JA2BETAVERSION
   LogStrategicMsg("");
   LogStrategicMsg("-------------------------------------------------");
-  LogStrategicMsg("Restoring saved game at Day %02d, %02d:%02d ", GetWorldDay(), GetWorldHour(),
-                  GetWorldMinutesInDay() % 60);
+  LogStrategicMsg("Restoring saved game at Day %02d, %02d:%02d ", GetGameTimeInDays(),
+                  GetGameClockHour(), GetMinutesSinceDayStart() % 60);
   LogStrategicMsg("-------------------------------------------------");
   LogStrategicMsg("");
 #endif
@@ -4429,7 +4429,7 @@ void LogStrategicEvent(CHAR8 *str, ...) {
   vsprintf(string, str, argptr);
   va_end(argptr);
 
-  fprintf(fp, "\n%S:\n", WORLDTIMESTR);
+  fprintf(fp, "\n%S:\n", gswzWorldTimeStr);
   fprintf(fp, "%s\n", string);
 
   if (gfDisplayStrategicAILogs) {
@@ -4487,11 +4487,10 @@ void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, i8 sSec
     // reassigned, so the player doesn't get pestered.  This is a feature that *dumbs* down the AI,
     // and is done for the sake of gameplay.  We don't want the game to be tedious.
     if (!pSector->uiTimeLastPlayerLiberated) {
-      pSector->uiTimeLastPlayerLiberated = GetWorldTotalSeconds();
+      pSector->uiTimeLastPlayerLiberated = GetGameTimeInSec();
     } else {  // convert hours to seconds and subtract up to half of it randomly "seconds -
               // (hours*3600 / 2)"
-      pSector->uiTimeLastPlayerLiberated =
-          GetWorldTotalSeconds() - Random(gubHoursGracePeriod * 1800);
+      pSector->uiTimeLastPlayerLiberated = GetGameTimeInSec() - Random(gubHoursGracePeriod * 1800);
     }
     if (gGarrisonGroup[pSector->ubGarrisonID].ubPendingGroupID) {
       struct GROUP *pGroup;
@@ -4593,7 +4592,7 @@ void StrategicHandleQueenLosingControlOfSector(u8 sSectorX, u8 sSectorY, i8 sSec
     return;
   }
   //@@@ disabled
-  // AddStrategicEventUsingSeconds( EVENT_INVESTIGATE_SECTOR, GetWorldTotalSeconds() + 45 *
+  // AddStrategicEventUsingSeconds( EVENT_INVESTIGATE_SECTOR, GetGameTimeInSec() + 45 *
   // pSector->ubInvestigativeState + Random( 60 ), GetSectorID8( sSectorX, sSectorY ) );
 }
 
@@ -5222,15 +5221,15 @@ void TagSAIGroupWithGracePeriod(struct GROUP *pGroup) {
       switch (gGameOptions.ubDifficultyLevel) {
         case DIF_LEVEL_EASY:
           gPatrolGroup[iPatrolID].bFillPermittedAfterDayMod100 =
-              (UINT8)((GetWorldDay() + EASY_PATROL_GRACE_PERIOD_IN_DAYS) % 100);
+              (UINT8)((GetGameTimeInDays() + EASY_PATROL_GRACE_PERIOD_IN_DAYS) % 100);
           break;
         case DIF_LEVEL_MEDIUM:
           gPatrolGroup[iPatrolID].bFillPermittedAfterDayMod100 =
-              (UINT8)((GetWorldDay() + NORMAL_PATROL_GRACE_PERIOD_IN_DAYS) % 100);
+              (UINT8)((GetGameTimeInDays() + NORMAL_PATROL_GRACE_PERIOD_IN_DAYS) % 100);
           break;
         case DIF_LEVEL_HARD:
           gPatrolGroup[iPatrolID].bFillPermittedAfterDayMod100 =
-              (UINT8)((GetWorldDay() + HARD_PATROL_GRACE_PERIOD_IN_DAYS) % 100);
+              (UINT8)((GetGameTimeInDays() + HARD_PATROL_GRACE_PERIOD_IN_DAYS) % 100);
           break;
       }
     }
@@ -5240,7 +5239,7 @@ void TagSAIGroupWithGracePeriod(struct GROUP *pGroup) {
 BOOLEAN PermittedToFillPatrolGroup(INT32 iPatrolID) {
   INT32 iDay;
   INT32 iDayAllowed;
-  iDay = GetWorldDay();
+  iDay = GetGameTimeInDays();
   iDayAllowed = gPatrolGroup[iPatrolID].bFillPermittedAfterDayMod100 + (iDay / 100) * 100;
   return iDay >= iDayAllowed;
 }

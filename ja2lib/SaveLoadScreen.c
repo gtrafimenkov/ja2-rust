@@ -663,7 +663,7 @@ void ExitSaveLoadScreen() {
   gfSaveLoadScreenExit = FALSE;
 
   if (!gfLoadedGame) {
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
   }
 
@@ -1095,9 +1095,9 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
     // if we are saving AND it is the currently selected slot
     if (gfSaveGame && gbSelectedSaveLocation == bEntryID) {
       // the user has selected a spot to save.  Fill out all the required information
-      SaveGameHeader.uiDay = GetWorldDay();
-      SaveGameHeader.ubHour = (UINT8)GetWorldHour();
-      SaveGameHeader.ubMin = (UINT8)guiMin;
+      SaveGameHeader.uiDay = GetGameTimeInDays();
+      SaveGameHeader.ubHour = (UINT8)GetGameClockHour();
+      SaveGameHeader.ubMin = (UINT8)GetGameClockMinutes();
 
       // Get the sector value to save.
       {
@@ -1171,7 +1171,7 @@ BOOLEAN DisplaySaveGameEntry(INT8 bEntryID)  //, UINT16 usPosY )
       if ((SaveGameHeader.sSectorX == -1 && SaveGameHeader.sSectorY == -1) ||
           SaveGameHeader.bSectorZ < 0) {
         if ((SaveGameHeader.uiDay * NUM_SEC_IN_DAY + SaveGameHeader.ubHour * NUM_SEC_IN_HOUR +
-             SaveGameHeader.ubMin * NUM_SEC_IN_MIN) <= STARTING_TIME)
+             SaveGameHeader.ubMin * NUM_SEC_IN_MIN) <= GetGameStartingTime())
           swprintf(zLocationString, ARR_SIZE(zLocationString),
                    gpStrategicString[STR_PB_NOTAPPLICABLE_ABBREVIATION]);
         else
@@ -1903,20 +1903,20 @@ void DoneFadeInForSaveLoadScreen(void) {
 
   if (guiScreenToGotoAfterLoadingSavedGame == MAP_SCREEN) {
     if (!gfPauseDueToPlayerGamePause) {
-      UnLockPauseState();
+      UnlockPause();
       UnPauseGame();
     }
   }
 
   else {
     // if the game is currently paused
-    if (GamePaused()) {
+    if (IsGamePaused()) {
       // need to call it twice
       HandlePlayerPauseUnPauseOfGame();
       HandlePlayerPauseUnPauseOfGame();
     }
 
-    //		UnLockPauseState( );
+    //		UnlockPause( );
     //		UnPauseGame( );
   }
 }
@@ -1997,35 +1997,6 @@ void FailedLoadingGameCallBack(UINT8 bExitValue) {
 
 BOOLEAN DoQuickSave() {
   gzGameDescTextField[0] = '\0';
-
-  /*
-          // Make sure the user has enough hard drive space
-          if( !DoesUserHaveEnoughHardDriveSpace() )
-          {
-                  CHAR16	zText[512];
-                  CHAR16	zSpaceOnDrive[512];
-                  UINT32	uiSpaceOnDrive;
-                  CHAR16	zSizeNeeded[512];
-
-                  swprintf( zSizeNeeded, L"%d", REQUIRED_FREE_SPACE / BYTESINMEGABYTE );
-                  InsertCommasForDollarFigure( zSizeNeeded );
-
-                  uiSpaceOnDrive = Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom( );
-
-                  swprintf( zSpaceOnDrive, L"%.2f", uiSpaceOnDrive / (FLOAT)BYTESINMEGABYTE );
-
-                  swprintf( zText, pMessageStrings[ MSG_LOWDISKSPACE_WARNING ], zSpaceOnDrive,
-     zSizeNeeded );
-
-                  if( guiPreviousOptionScreen == MAP_SCREEN )
-                          DoMapMessageBox( MSG_BOX_BASIC_STYLE, zText, MAP_SCREEN, MSG_BOX_FLAG_OK,
-     NotEnoughHardDriveSpaceForQuickSaveMessageBoxCallBack ); else DoMessageBox(
-     MSG_BOX_BASIC_STYLE, zText, GAME_SCREEN, MSG_BOX_FLAG_OK,
-     NotEnoughHardDriveSpaceForQuickSaveMessageBoxCallBack, NULL );
-
-                  return( FALSE );
-          }
-  */
 
   if (!SaveGame(0, gzGameDescTextField, ARR_SIZE(gzGameDescTextField))) {
     // Unset the fact that we are saving a game

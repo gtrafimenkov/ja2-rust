@@ -468,7 +468,7 @@ void AddCoverObjectToWorld(INT16 sGridNo, UINT16 usGraphic, BOOLEAN fRoof) {
 
   pNode->uiFlags |= LEVELNODE_REVEAL;
 
-  if (NightTime()) {
+  if (IsNightTime()) {
     pNode->ubShadeLevel = DEFAULT_SHADE_LEVEL;
     pNode->ubNaturalShadeLevel = DEFAULT_SHADE_LEVEL;
   }

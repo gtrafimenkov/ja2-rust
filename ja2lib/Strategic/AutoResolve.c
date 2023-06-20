@@ -1905,7 +1905,7 @@ void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
     for (i = 0; i < gpAR->ubMercs; i++) {
       if (gpMercs[i].pSoldier->bBleeding && gpMercs[i].pSoldier->bLife) {
         // ARM: only one event is needed regardless of how many are bleeding
-        AddStrategicEvent(EVENT_BANDAGE_BLEEDING_MERCS, GetWorldTotalMin() + 1, 0);
+        AddStrategicEvent(EVENT_BANDAGE_BLEEDING_MERCS, GetGameTimeInMin() + 1, 0);
         break;
       }
     }
@@ -3667,7 +3667,7 @@ BOOLEAN AttemptPlayerCapture() {
 #ifndef TESTSURRENDER
 
   // Only attempt capture if day is less than four.
-  if (GetWorldDay() < STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !gpAR->fAllowCapture) {
+  if (GetGameTimeInDays() < STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !gpAR->fAllowCapture) {
     return FALSE;
   }
   if (gpAR->fPlayerRejectedSurrenderOffer) {

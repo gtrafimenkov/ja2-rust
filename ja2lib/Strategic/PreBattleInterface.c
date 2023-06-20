@@ -64,7 +64,6 @@ extern BOOLEAN gfExitViewer;
 
 // zoom flag
 extern BOOLEAN fZoomFlag;
-extern BOOLEAN fMapScreenBottomDirty;
 
 BOOLEAN gfTacticalTraversal = FALSE;
 struct GROUP *gpTacticalTraversalGroup = NULL;
@@ -380,7 +379,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
     }
   }
 
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
   ChangeSelectedMapSector(gubPBSectorX, gubPBSectorY, gubPBSectorZ);
   RenderMapScreenInterfaceBottom();
 
@@ -808,7 +807,7 @@ void KillPreBattleInterface() {
   // re draw affected regions
   SetMapPanelDirty(true);
   fTeamPanelDirty = TRUE;
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
   fCharacterInfoPanelDirty = TRUE;
   gfDisplayPotentialRetreatPaths = FALSE;
 
@@ -1757,51 +1756,51 @@ void LogBattleResults(UINT8 ubVictoryCode) {
   if (ubVictoryCode == LOG_VICTORY) {
     switch (gubEnemyEncounterCode) {
       case ENEMY_INVASION_CODE:
-        AddHistoryToPlayersLog(HISTORY_DEFENDEDTOWNSECTOR, 0, GetWorldTotalMin(), sSectorX,
+        AddHistoryToPlayersLog(HISTORY_DEFENDEDTOWNSECTOR, 0, GetGameTimeInMin(), sSectorX,
                                sSectorY);
         break;
       case ENEMY_ENCOUNTER_CODE:
-        AddHistoryToPlayersLog(HISTORY_WONBATTLE, 0, GetWorldTotalMin(), sSectorX, sSectorY);
+        AddHistoryToPlayersLog(HISTORY_WONBATTLE, 0, GetGameTimeInMin(), sSectorX, sSectorY);
         break;
       case ENEMY_AMBUSH_CODE:
-        AddHistoryToPlayersLog(HISTORY_WIPEDOUTENEMYAMBUSH, 0, GetWorldTotalMin(), sSectorX,
+        AddHistoryToPlayersLog(HISTORY_WIPEDOUTENEMYAMBUSH, 0, GetGameTimeInMin(), sSectorX,
                                sSectorY);
         break;
       case ENTERING_ENEMY_SECTOR_CODE:
-        AddHistoryToPlayersLog(HISTORY_SUCCESSFULATTACK, 0, GetWorldTotalMin(), sSectorX, sSectorY);
+        AddHistoryToPlayersLog(HISTORY_SUCCESSFULATTACK, 0, GetGameTimeInMin(), sSectorX, sSectorY);
         break;
       case CREATURE_ATTACK_CODE:
-        AddHistoryToPlayersLog(HISTORY_CREATURESATTACKED, 0, GetWorldTotalMin(), sSectorX,
+        AddHistoryToPlayersLog(HISTORY_CREATURESATTACKED, 0, GetGameTimeInMin(), sSectorX,
                                sSectorY);
         break;
       case BLOODCAT_AMBUSH_CODE:
       case ENTERING_BLOODCAT_LAIR_CODE:
-        AddHistoryToPlayersLog(HISTORY_SLAUGHTEREDBLOODCATS, 0, GetWorldTotalMin(), sSectorX,
+        AddHistoryToPlayersLog(HISTORY_SLAUGHTEREDBLOODCATS, 0, GetGameTimeInMin(), sSectorX,
                                sSectorY);
         break;
     }
   } else {
     switch (gubEnemyEncounterCode) {
       case ENEMY_INVASION_CODE:
-        AddHistoryToPlayersLog(HISTORY_LOSTTOWNSECTOR, 0, GetWorldTotalMin(), sSectorX, sSectorY);
+        AddHistoryToPlayersLog(HISTORY_LOSTTOWNSECTOR, 0, GetGameTimeInMin(), sSectorX, sSectorY);
         break;
       case ENEMY_ENCOUNTER_CODE:
-        AddHistoryToPlayersLog(HISTORY_LOSTBATTLE, 0, GetWorldTotalMin(), sSectorX, sSectorY);
+        AddHistoryToPlayersLog(HISTORY_LOSTBATTLE, 0, GetGameTimeInMin(), sSectorX, sSectorY);
         break;
       case ENEMY_AMBUSH_CODE:
-        AddHistoryToPlayersLog(HISTORY_FATALAMBUSH, 0, GetWorldTotalMin(), sSectorX, sSectorY);
+        AddHistoryToPlayersLog(HISTORY_FATALAMBUSH, 0, GetGameTimeInMin(), sSectorX, sSectorY);
         break;
       case ENTERING_ENEMY_SECTOR_CODE:
-        AddHistoryToPlayersLog(HISTORY_UNSUCCESSFULATTACK, 0, GetWorldTotalMin(), sSectorX,
+        AddHistoryToPlayersLog(HISTORY_UNSUCCESSFULATTACK, 0, GetGameTimeInMin(), sSectorX,
                                sSectorY);
         break;
       case CREATURE_ATTACK_CODE:
-        AddHistoryToPlayersLog(HISTORY_CREATURESATTACKED, 0, GetWorldTotalMin(), sSectorX,
+        AddHistoryToPlayersLog(HISTORY_CREATURESATTACKED, 0, GetGameTimeInMin(), sSectorX,
                                sSectorY);
         break;
       case BLOODCAT_AMBUSH_CODE:
       case ENTERING_BLOODCAT_LAIR_CODE:
-        AddHistoryToPlayersLog(HISTORY_KILLEDBYBLOODCATS, 0, GetWorldTotalMin(), sSectorX,
+        AddHistoryToPlayersLog(HISTORY_KILLEDBYBLOODCATS, 0, GetGameTimeInMin(), sSectorX,
                                sSectorY);
         break;
     }

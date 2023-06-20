@@ -211,7 +211,7 @@ void GameInitHistory() {
     Plat_DeleteFile(HISTORY_DATA_FILE);
   }
 
-  AddHistoryToPlayersLog(HISTORY_ACCEPTED_ASSIGNMENT_FROM_ENRICO, 0, GetWorldTotalMin(), -1, -1);
+  AddHistoryToPlayersLog(HISTORY_ACCEPTED_ASSIGNMENT_FROM_ENRICO, 0, GetGameTimeInMin(), -1, -1);
 }
 
 void EnterHistory() {
@@ -1433,7 +1433,7 @@ void ResetHistoryFact(UINT8 ubCode, u8 sSectorX, u8 sSectorY) {
     LoadNextHistoryPage();
   }
 
-  SetHistoryFact(HISTORY_QUEST_FINISHED, ubCode, GetWorldTotalMin(), sSectorX, sSectorY);
+  SetHistoryFact(HISTORY_QUEST_FINISHED, ubCode, GetGameTimeInMin(), sSectorX, sSectorY);
   return;
 }
 

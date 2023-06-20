@@ -96,7 +96,7 @@ INT32 NewLightEffect(INT16 sGridNo, INT8 bType) {
   pLight->sGridNo = sGridNo;
   pLight->bType = bType;
   pLight->iLight = -1;
-  pLight->uiTimeOfLastUpdate = GetWorldTotalSeconds();
+  pLight->uiTimeOfLastUpdate = GetGameTimeInSec();
 
   switch (bType) {
     case LIGHT_FLARE_MARK_1:

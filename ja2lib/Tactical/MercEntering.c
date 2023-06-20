@@ -395,7 +395,7 @@ void StartHelicopterRun(INT16 sGridNoSweetSpot) {
 
   InterruptTime();
   PauseGame();
-  LockPauseState(20);
+  LockPause();
 
   ConvertGridNoToCenterCellXY(sGridNoSweetSpot, &sX, &sY);
 
@@ -463,7 +463,7 @@ void HandleHeliDrop() {
       gfHandleHeli = FALSE;
       gfIgnoreScrolling = FALSE;
       gbNumHeliSeatsOccupied = 0;
-      UnLockPauseState();
+      UnlockPause();
       UnPauseGame();
 
       // Select our first guy
@@ -509,7 +509,7 @@ void HandleHeliDrop() {
             gfIgnoreScrolling = FALSE;
             gbNumHeliSeatsOccupied = 0;
             guiPendingOverrideEvent = LU_ENDUILOCK;
-            UnLockPauseState();
+            UnlockPause();
             UnPauseGame();
 
             RebuildCurrentSquad();
@@ -522,7 +522,7 @@ void HandleHeliDrop() {
           gfIgnoreScrolling = FALSE;
           gbNumHeliSeatsOccupied = 0;
           guiPendingOverrideEvent = LU_ENDUILOCK;
-          UnLockPauseState();
+          UnlockPause();
           UnPauseGame();
 
           RebuildCurrentSquad();

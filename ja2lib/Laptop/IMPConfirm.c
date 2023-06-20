@@ -227,7 +227,7 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
       AddTransactionToPlayersBook(IMP_PROFILE,
                                   (UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
                                   -(COST_OF_PROFILE));
-      AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetWorldTotalMin(), -1, -1);
+      AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetGameTimeInMin(), -1, -1);
       AddCharacterToPlayersTeam();
 
       // write the created imp merc
@@ -237,10 +237,7 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
       iCurrentImpPage = IMP_HOME_PAGE;
 
       // send email notice
-      // AddEmail(IMP_EMAIL_PROFILE_RESULTS, IMP_EMAIL_PROFILE_RESULTS_LENGTH, IMP_PROFILE_RESULTS,
-      // GetWorldTotalMin( ) );
       AddFutureDayStrategicEvent(EVENT_DAY2_ADD_EMAIL_FROM_IMP, 60 * 7, 0, 2);
-      // RenderCharProfile( );
 
       ResetCharacterStats();
 
@@ -521,7 +518,7 @@ void LoadInCurrentImpCharacter(void) {
   fCharacterIsMale = (gMercProfiles[iProfileId].bSex == MALE);
   fLoadingCharacterForPreviousImpProfile = TRUE;
   AddTransactionToPlayersBook(IMP_PROFILE, 0, -(COST_OF_PROFILE));
-  AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetWorldTotalMin(), -1, -1);
+  AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetGameTimeInMin(), -1, -1);
   LaptopSaveInfo.iVoiceId = iProfileId - PLAYER_GENERATED_CHARACTER_ID;
   AddCharacterToPlayersTeam();
   AddFutureDayStrategicEvent(EVENT_DAY2_ADD_EMAIL_FROM_IMP, 60 * 7, 0, 2);

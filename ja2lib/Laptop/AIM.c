@@ -600,56 +600,7 @@ void HandleAdAndWarningArea(BOOLEAN fInit, BOOLEAN fRedraw) {
   else {
     if (ubPreviousAdvertisment == AIM_AD_DONE) {
       gubCurrentAdvertisment = GetNextAimAd(gubCurrentAdvertisment);
-
       fInit = TRUE;
-
-      /*
-                              UINT32	uiDay = GetWorldDay();
-                              BOOLEAN	fSkip=FALSE;
-                              gubCurrentAdvertisment++;
-
-                              //if the add should be for Bobby rays
-                              if( gubCurrentAdvertisment == AIM_AD_BOBBY_RAY_AD )
-                              {
-                                      //if the player has NOT ever been to drassen
-                                      if( !LaptopSaveInfo.fBobbyRSiteCanBeAccessed )
-                                      {
-                                              //advance to the next add
-                                              gubCurrentAdvertisment++;
-                                      }
-                                      else
-                                      {
-                                              fSkip = TRUE;
-                                              fInit = TRUE;
-                                      }
-                              }
-                              else
-                                      fSkip = FALSE;
-
-
-                              if( !fSkip )
-                              {
-                                      //if the current ad is not supposed to be available, loop back
-         to the first ad switch( gubCurrentAdvertisment )
-                                      {
-                                              case AIM_AD_FUNERAL_ADS:
-                                                      if( uiDay < AIM_AD_DAY_FUNERAL_AD_STARTS )
-                                                              gubCurrentAdvertisment =
-         AIM_AD_WARNING_BOX; break;
-
-                                              case AIM_AD_FLOWER_SHOP:
-                                                      if( uiDay < AIM_AD_DAY_FLOWER_AD_STARTS )
-                                                              gubCurrentAdvertisment =
-         AIM_AD_WARNING_BOX; break;
-
-                                              case AIM_AD_INSURANCE_AD:
-                                                      if( uiDay < AIM_AD_DAY_INSURANCE_AD_STARTS )
-                                                              gubCurrentAdvertisment =
-         AIM_AD_WARNING_BOX; break;
-                                      }
-                                      fInit = TRUE;
-                              }
-      */
     }
 
     if (gubCurrentAdvertisment >= AIM_AD_LAST_AD) {
@@ -1028,7 +979,7 @@ BOOLEAN DisplayBobbyRAd(BOOLEAN fInit, BOOLEAN fRedraw) {
 
 UINT8 GetNextAimAd(UINT8 ubCurrentAd) {
   UINT8 ubNextAd;
-  UINT32 uiDay = GetWorldDay();
+  UINT32 uiDay = GetGameTimeInDays();
 
   if (ubCurrentAd == AIM_AD_WARNING_BOX) {
     if (uiDay < AIM_AD_BOBBYR_AD_STARTS) {

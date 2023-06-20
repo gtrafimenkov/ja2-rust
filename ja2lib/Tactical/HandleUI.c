@@ -4030,7 +4030,7 @@ UINT32 UIHandleLUIBeginLock(UI_EVENT *pUIEvent) {
 
     // UnPause time!
     PauseGame();
-    LockPauseState(16);
+    LockPause();
   }
 
   return (GAME_SCREEN);
@@ -4059,7 +4059,7 @@ UINT32 UIHandleLUIEndLock(UI_EVENT *pUIEvent) {
     // ATE: Only if NOT in conversation!
     if (!(gTacticalStatus.uiFlags & ENGAGED_IN_CONV)) {
       // UnPause time!
-      UnLockPauseState();
+      UnlockPause();
       UnPauseGame();
     }
   }
@@ -4074,7 +4074,7 @@ void CheckForDisabledRegionRemove() {
     // Remove region
     MSYS_RemoveRegion(&gDisableRegion);
 
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
   }
 
@@ -4086,7 +4086,7 @@ void CheckForDisabledRegionRemove() {
     // Remove region
     MSYS_RemoveRegion(&gUserTurnRegion);
 
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
   }
 }
@@ -4472,7 +4472,7 @@ UINT32 UIHandleLABeginLockOurTurn(UI_EVENT *pUIEvent) {
 
     // Pause time!
     PauseGame();
-    LockPauseState(17);
+    LockPause();
   }
 
   return (GAME_SCREEN);
@@ -4503,7 +4503,7 @@ UINT32 UIHandleLAEndLockOurTurn(UI_EVENT *pUIEvent) {
     TurnOffTeamsMuzzleFlashes(gbPlayerNum);
 
     // UnPause time!
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
   }
 

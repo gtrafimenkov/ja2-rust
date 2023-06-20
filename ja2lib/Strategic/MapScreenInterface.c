@@ -193,7 +193,6 @@ extern UINT32 guiSAVEBUFFER;
 extern BOOLEAN fShowInventoryFlag;
 extern FACETYPE *gpCurrentTalkingFace;
 extern UINT8 gubCurrentTalkingID;
-extern BOOLEAN fMapScreenBottomDirty;
 extern struct MOUSE_REGION gMPanelRegion;
 
 // has the inventory pool been selected to be on or off?
@@ -918,7 +917,7 @@ void CheckAndUpdateBasedOnContractTimes(void) {
       if (Menptr[gCharactersList[iCounter].usSolID].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC) {
         // amount of time left on contract
         iTimeRemaining =
-            Menptr[gCharactersList[iCounter].usSolID].iEndofContractTime - GetWorldTotalMin();
+            Menptr[gCharactersList[iCounter].usSolID].iEndofContractTime - GetGameTimeInMin();
         if (iTimeRemaining > 60 * 24) {
           // more than a day, display in green
           iTimeRemaining /= (60 * 24);
@@ -1153,7 +1152,7 @@ void HandleMercLeavingEquipmentInOmerta(UINT32 uiMercId) {
   // stash the items into a linked list hanging of a free "leave item list" slot
   if ((iSlotIndex = SetUpDropItemListForMerc(uiMercId)) != -1) {
     // post event to drop it there 6 hours later
-    AddStrategicEvent(EVENT_MERC_LEAVE_EQUIP_IN_OMERTA, GetWorldTotalMin() + (6 * 60), iSlotIndex);
+    AddStrategicEvent(EVENT_MERC_LEAVE_EQUIP_IN_OMERTA, GetGameTimeInMin() + (6 * 60), iSlotIndex);
   } else {
     // otherwise there's no free slots left (shouldn't ever happen)
     AssertMsg(FALSE, "HandleMercLeavingEquipmentInOmerta: No more free slots, equipment lost");
@@ -1166,7 +1165,7 @@ void HandleMercLeavingEquipmentInDrassen(UINT32 uiMercId) {
   // stash the items into a linked list hanging of a free "leave item list" slot
   if ((iSlotIndex = SetUpDropItemListForMerc(uiMercId)) != -1) {
     // post event to drop it there 6 hours later
-    AddStrategicEvent(EVENT_MERC_LEAVE_EQUIP_IN_DRASSEN, GetWorldTotalMin() + (6 * 60), iSlotIndex);
+    AddStrategicEvent(EVENT_MERC_LEAVE_EQUIP_IN_DRASSEN, GetGameTimeInMin() + (6 * 60), iSlotIndex);
   } else {
     // otherwise there's no free slots left (shouldn't ever happen)
     AssertMsg(FALSE, "HandleMercLeavingEquipmentInDrassen: No more free slots, equipment lost");
@@ -2217,7 +2216,7 @@ void StopMapScreenHelpText(void) {
   fTeamPanelDirty = TRUE;
   SetMapPanelDirty(true);
   fCharacterInfoPanelDirty = TRUE;
-  fMapScreenBottomDirty = TRUE;
+  SetMapScreenBottomDirty(true);
 
   SetUpShutDownMapScreenHelpTextScreenMask();
   return;
@@ -2668,7 +2667,7 @@ void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
     ghMoveBox = -1;
     RemoveScreenMaskForMoveBox();
     SetMapPanelDirty(true);
-    fMapScreenBottomDirty = TRUE;  // really long move boxes can overlap bottom panel
+    SetMapScreenBottomDirty(true);  // really long move boxes can overlap bottom panel
   }
 }
 
@@ -3761,7 +3760,7 @@ void DisplaySoldierUpdateBox() {
 
   // InterruptTime();
   PauseGame();
-  LockPauseState(4);
+  LockPause();
 
   PauseDialogueQueue();
 
@@ -4037,7 +4036,7 @@ void CreateDestroyTheUpdateBox(void) {
 
     // lock it paused
     PauseGame();
-    LockPauseState(5);
+    LockPause();
 
     // display the box
     DisplaySoldierUpdateBox();
@@ -4047,7 +4046,7 @@ void CreateDestroyTheUpdateBox(void) {
   } else if ((fCreated == TRUE) && (fShowUpdateBox == FALSE)) {
     fCreated = FALSE;
 
-    UnLockPauseState();
+    UnlockPause();
     UnPauseGame();
 
     // dirty screen
@@ -4344,7 +4343,7 @@ BOOLEAN HandleTimeCompressWithTeamJackedInAndGearedToGo(void) {
   SetUpShutDownMapScreenHelpTextScreenMask();
 
   // Add e-mail message
-  AddEmail(ENRICO_CONGRATS, ENRICO_CONGRATS_LENGTH, MAIL_ENRICO, GetWorldTotalMin());
+  AddEmail(ENRICO_CONGRATS, ENRICO_CONGRATS_LENGTH, MAIL_ENRICO, GetGameTimeInMin());
 
   return (TRUE);
 }

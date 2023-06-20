@@ -425,7 +425,7 @@ struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT1
     pNode->uiSectorId = iStartSectorNum;
     pNode->pNext = NULL;
     pNode->pPrev = NULL;
-    pNode->uiEta = GetWorldTotalMin();
+    pNode->uiEta = GetGameTimeInMin();
     pHeadOfPathList = pNode;
   }
 
@@ -513,7 +513,7 @@ BOOLEAN AddSectorToPathList(struct path* pPath, UINT16 uiSectorNum) {
     // Implement EtaCost Array as base EtaCosts of sectors
     // pNode->uiEtaCost=EtaCost[uiSectorNum];
     pNode->uiSectorId = uiSectorNum;
-    pNode->uiEta = GetWorldTotalMin();
+    pNode->uiEta = GetGameTimeInMin();
     pNode->pNext = NULL;
     pNode->pPrev = NULL;
     /*
@@ -1083,7 +1083,7 @@ void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, INT16 sMvtGroup) {
 
   // see if we've already reached the first sector in the path (we never actually left the sector
   // and reversed back to it)
-  if (pGroup->uiArrivalTime == GetWorldTotalMin()) {
+  if (pGroup->uiArrivalTime == GetGameTimeInMin()) {
     // never really left.  Must set check for battle TRUE in order for HandleNonCombatGroupArrival()
     // to run!
     GroupArrivedAtSector(pGroup->ubGroupID, TRUE, TRUE);
@@ -1449,7 +1449,7 @@ void AddSectorToFrontOfMercPath(struct path** ppMercPath, UINT8 ubSectorX, UINT8
   pNode->uiSectorId = GetSectorID16(ubSectorX, ubSectorY);
   pNode->pNext = *ppMercPath;
   pNode->pPrev = NULL;
-  pNode->uiEta = GetWorldTotalMin();
+  pNode->uiEta = GetGameTimeInMin();
   pNode->fSpeed = NORMAL_MVT;
 
   // if path wasn't null

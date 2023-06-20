@@ -133,7 +133,7 @@ INT32 NewSmokeEffect(INT16 sGridNo, UINT16 usItem, INT8 bLevel, UINT8 ubOwner) {
   // Set some values...
   pSmoke->sGridNo = sGridNo;
   pSmoke->usItem = usItem;
-  pSmoke->uiTimeOfLastUpdate = GetWorldTotalSeconds();
+  pSmoke->uiTimeOfLastUpdate = GetGameTimeInSec();
 
   // Are we indoors?
   if (GetTerrainType(sGridNo) == FLAT_FLOOR) {

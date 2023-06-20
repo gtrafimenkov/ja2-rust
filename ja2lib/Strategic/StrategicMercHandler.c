@@ -76,9 +76,9 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
 
     if (pKiller && pKiller->bTeam == OUR_TEAM) {
       AddHistoryToPlayersLog(HISTORY_MERC_KILLED_CHARACTER, GetSolProfile(pSoldier),
-                             GetWorldTotalMin(), sSectorX, sSectorY);
+                             GetGameTimeInMin(), sSectorX, sSectorY);
     } else {
-      AddHistoryToPlayersLog(HISTORY_MERC_KILLED, GetSolProfile(pSoldier), GetWorldTotalMin(),
+      AddHistoryToPlayersLog(HISTORY_MERC_KILLED, GetSolProfile(pSoldier), GetGameTimeInMin(),
                              sSectorX, sSectorY);
     }
   }
@@ -109,8 +109,8 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
     if (guiCurrentScreen != AUTORESOLVE_SCREEN) {
       // check whether this was obviously a suspicious death
       // if killed within an hour of being insured
-      if (pSoldier->uiStartTimeOfInsuranceContract <= GetWorldTotalMin() &&
-          GetWorldTotalMin() - pSoldier->uiStartTimeOfInsuranceContract < 60) {
+      if (pSoldier->uiStartTimeOfInsuranceContract <= GetGameTimeInMin() &&
+          GetGameTimeInMin() - pSoldier->uiStartTimeOfInsuranceContract < 60) {
         gMercProfiles[GetSolProfile(pSoldier)].ubSuspiciousDeath = VERY_SUSPICIOUS_DEATH;
       }
       // if killed by someone on our team, or while there weren't any opponents around
@@ -134,7 +134,7 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
 
   // if its a MERC merc, record the time of his death
   if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC) {
-    pSoldier->iEndofContractTime = GetWorldTotalMin();
+    pSoldier->iEndofContractTime = GetGameTimeInMin();
 
     // set is so Speck can say that a merc is dead
     LaptopSaveInfo.ubSpeckCanSayPlayersLostQuote = 1;
@@ -163,10 +163,10 @@ void MercDailyUpdate() {
   INT32 iOffset = 0;
 
   // if its the first day, leave
-  if (GetWorldDay() == 1) return;
+  if (GetGameTimeInDays() == 1) return;
 
   // debug message
-  ScreenMsg(MSG_FONT_RED, MSG_DEBUG, L"%s - Doing MercDailyUpdate", WORLDTIMESTR);
+  ScreenMsg(MSG_FONT_RED, MSG_DEBUG, L"%s - Doing MercDailyUpdate", gswzWorldTimeStr);
 
   // if the death rate is very low (this is independent of mercs' personal deathrate tolerances)
   if (CalcDeathRate() < 5) {
@@ -391,7 +391,7 @@ void MercDailyUpdate() {
 
             // TO DO: send E-mail to player telling him the merc has returned from an assignment
             AddEmail((UINT8)(iOffset + (cnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
-                     (UINT8)(6 + cnt), GetWorldTotalMin());
+                     (UINT8)(6 + cnt), GetGameTimeInMin());
           }
         }
       }
@@ -412,7 +412,7 @@ void MercDailyUpdate() {
           uiChance = 1 * pProfile->bExpLevel;
 
           // player doesn't have a chance to hire any M.E.R.C's until after Speck's E-mail is sent
-          if (GetWorldDay() > DAYS_TIL_M_E_R_C_AVAIL) {
+          if (GetGameTimeInDays() > DAYS_TIL_M_E_R_C_AVAIL) {
             // player has now had a chance to hire him, so he'll eligible to get killed off on
             // another job
             pProfile->ubMiscFlags3 |= PROFILE_MISC_FLAG3_PLAYER_HAD_CHANCE_TO_HIRE;
@@ -466,7 +466,7 @@ void MercsContractIsFinished(UINT8 ubID) {
 
       InterruptTime();
       PauseGame();
-      LockPauseState(9);
+      LockPause();
 
       // Say quote for wishing to leave
       TacticalCharacterDialogue(pSoldier, QUOTE_NOT_GETTING_PAID);
@@ -479,7 +479,7 @@ void MercsContractIsFinished(UINT8 ubID) {
   } else if (pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__NPC) {
     InterruptTime();
     PauseGame();
-    LockPauseState(10);
+    LockPause();
 
     TacticalCharacterDialogue(pSoldier, QUOTE_AIM_SEEN_MIKE);
 

@@ -1705,7 +1705,7 @@ void ExamineDoorsOnEnteringSector() {
   }
 
   // Check time...
-  if ((GetWorldTotalMin() - gTacticalStatus.uiTimeSinceLastInTactical) < 30) {
+  if ((GetGameTimeInMin() - gTacticalStatus.uiTimeSinceLastInTactical) < 30) {
     return;
   }
 
@@ -1759,7 +1759,7 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   cnt = gTacticalStatus.Team[ENEMY_TEAM].bFirstID;
 
   // Check time...
-  if ((GetWorldTotalMin() - gTacticalStatus.uiTimeSinceLastInTactical) < 30) {
+  if ((GetGameTimeInMin() - gTacticalStatus.uiTimeSinceLastInTactical) < 30) {
     return;
   }
 

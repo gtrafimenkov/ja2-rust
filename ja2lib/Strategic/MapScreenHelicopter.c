@@ -544,10 +544,10 @@ void StartHoverTime(void) {
 
   // post event for x mins in future, save start time, if event time - delay = start time, then
   // hover has gone on too long
-  uiStartHoverTime = GetWorldTotalMin();
+  uiStartHoverTime = GetGameTimeInMin();
 
   // post event..to call handle hover
-  AddStrategicEvent(EVENT_HELICOPTER_HOVER_TOO_LONG, GetWorldTotalMin() + TIME_DELAY_FOR_HOVER_WAIT,
+  AddStrategicEvent(EVENT_HELICOPTER_HOVER_TOO_LONG, GetGameTimeInMin() + TIME_DELAY_FOR_HOVER_WAIT,
                     0);
 
   return;
@@ -875,7 +875,7 @@ void HandleSkyRiderMonologueEvent(UINT32 uiEventCode, UINT32 uiSpecialCode) {
   }
 
   // update time
-  guiTimeOfLastSkyriderMonologue = GetWorldTotalMin();
+  guiTimeOfLastSkyriderMonologue = GetGameTimeInMin();
 }
 
 void HandleSkyRiderMonologueAboutEstoniRefuel(UINT32 uiSpecialCode) {
@@ -1028,7 +1028,7 @@ void HandleSkyRiderMonologueAboutOtherSAMSites(UINT32 uiSpecialCode) {
 
 void CheckAndHandleSkyriderMonologues(void) {
   // wait at least this many days between Skyrider monologues
-  if ((GetWorldTotalMin() - guiTimeOfLastSkyriderMonologue) >=
+  if ((GetGameTimeInMin() - guiTimeOfLastSkyriderMonologue) >=
       (MIN_DAYS_BETWEEN_SKYRIDER_MONOLOGUES * 24 * 60)) {
     if (guiHelicopterSkyriderTalkState == 0) {
       HandleSkyRiderMonologueEvent(SKYRIDER_MONOLOGUE_EVENT_DRASSEN_SAM_SITE, 0);

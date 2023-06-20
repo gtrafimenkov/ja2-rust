@@ -585,7 +585,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
 
   InterruptTime();
   PauseGame();
-  LockPauseState(1);
+  LockPause();
   // Pause timers as well....
   PauseTime(TRUE);
 
@@ -767,7 +767,7 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
   UnloadButtonImage(gMsgBox.iButtonImages);
 
   // Unpause game....
-  UnLockPauseState();
+  UnlockPause();
   UnPauseGame();
   // UnPause timers as well....
   PauseTime(FALSE);

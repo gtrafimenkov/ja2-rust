@@ -167,7 +167,7 @@ BOOLEAN LoadEnemySoldiersFromTempFile() {
     goto FAIL_LOAD;
   }
 
-  if (GetWorldTotalMin() >
+  if (GetGameTimeInMin() >
       uiTimeStamp + 300) {  // the file has aged.  Use the regular method for adding soldiers.
     File_Close(hfile);
     RemoveEnemySoldierTempFile((u8)sSectorX, (u8)sSectorY, bSectorZ);
@@ -587,7 +587,7 @@ BOOLEAN SaveEnemySoldiersToTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ, UIN
       goto FAIL_SAVE;
     }
 
-    uiTimeStamp = GetWorldTotalMin();
+    uiTimeStamp = GetGameTimeInMin();
     File_Write(hfile, &uiTimeStamp, 4, &uiNumBytesWritten);
     if (uiNumBytesWritten != 4) {
       goto FAIL_SAVE;
@@ -810,7 +810,7 @@ BOOLEAN NewWayOfLoadingEnemySoldiersFromTempFile() {
     goto FAIL_LOAD;
   }
 
-  if (GetWorldTotalMin() >
+  if (GetGameTimeInMin() >
       uiTimeStamp + 300) {  // the file has aged.  Use the regular method for adding soldiers.
     File_Close(hfile);
     RemoveEnemySoldierTempFile((u8)sSectorX, (u8)sSectorY, bSectorZ);
@@ -1122,7 +1122,7 @@ BOOLEAN NewWayOfLoadingCiviliansFromTempFile() {
     goto FAIL_LOAD;
   }
 
-  uiTimeSinceLastLoaded = GetWorldTotalMin() - uiTimeStamp;
+  uiTimeSinceLastLoaded = GetGameTimeInMin() - uiTimeStamp;
 
   File_Read(hfile, &bSectorZ, 1, &uiNumBytesRead);
   if (uiNumBytesRead != 1) {
@@ -1503,7 +1503,7 @@ BOOLEAN NewWayOfSavingEnemyAndCivliansToTempFile(u8 sSectorX, u8 sSectorY, INT8 
     goto FAIL_SAVE;
   }
 
-  uiTimeStamp = GetWorldTotalMin();
+  uiTimeStamp = GetGameTimeInMin();
   File_Write(hfile, &uiTimeStamp, 4, &uiNumBytesWritten);
   if (uiNumBytesWritten != 4) {
     goto FAIL_SAVE;

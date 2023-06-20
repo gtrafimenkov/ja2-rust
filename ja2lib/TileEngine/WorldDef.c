@@ -3497,7 +3497,7 @@ void LoadMapLights(INT8 **hBuffer) {
 
   // Determine which lights are valid for the current time.
   if (!gfEditMode) {
-    uiHour = GetWorldHour();
+    uiHour = GetGameClockHour();
     if (uiHour >= NIGHT_TIME_LIGHT_START_HOUR || uiHour < NIGHT_TIME_LIGHT_END_HOUR) {
       fNightTime = TRUE;
     }

@@ -1830,7 +1830,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
               gubCheatLevel++;
               // ATE; We're done.... start cheat mode....
               ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[MSG_CHEAT_LEVEL_TWO]);
-              SetHistoryFact(HISTORY_CHEAT_ENABLED, 0, GetWorldTotalMin(), -1, -1);
+              SetHistoryFact(HISTORY_CHEAT_ENABLED, 0, GetGameTimeInMin(), -1, -1);
             } else {
               RESET_CHEAT_LEVEL();
             }
@@ -1959,10 +1959,6 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
               }
             }
           }
-#ifdef JA2TESTVERSION
-          else if (fCtrl)
-            AdvanceToNextDay();
-#endif
           break;
 
         case 'e':
@@ -2097,7 +2093,7 @@ void GetKeyboardInput(UINT32 *puiNewEvent) {
               fGoodCheatLevelKey = TRUE;
               // ATE; We're done.... start cheat mode....
               ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[MSG_CHEAT_LEVEL_TWO]);
-              SetHistoryFact(HISTORY_CHEAT_ENABLED, 0, GetWorldTotalMin(), -1, -1);
+              SetHistoryFact(HISTORY_CHEAT_ENABLED, 0, GetGameTimeInMin(), -1, -1);
             } else {
               RESET_CHEAT_LEVEL();
             }

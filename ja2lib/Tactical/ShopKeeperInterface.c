@@ -2137,7 +2137,7 @@ void EnterShopKeeperInterfaceScreen(UINT8 ubArmsDealer) {
 
 void InitializeShopKeeper(BOOLEAN fResetPage) {
   // update time player last dealt with him
-  gArmsDealerStatus[gbSelectedArmsDealerID].uiTimePlayerLastInSKI = GetWorldTotalMin();
+  gArmsDealerStatus[gbSelectedArmsDealerID].uiTimePlayerLastInSKI = GetGameTimeInMin();
 
   // Get the number of distinct items in the inventory
   gSelectArmsDealerInfo.uiNumDistinctInventoryItems =
@@ -2575,7 +2575,7 @@ BOOLEAN DetermineArmsDealersSellingInventory() {
           // if the item is in for repairs
           if (pSpecialItem->Info.bItemCondition < 0) {
             // if the repairs are done
-            if (pSpecialItem->uiRepairDoneTime <= GetWorldTotalMin()) {
+            if (pSpecialItem->uiRepairDoneTime <= GetGameTimeInMin()) {
               if (RepairIsDone(usItemIndex, ubElement)) {
                 // don't add it here, it was put in the player's area
                 fAddSpecialItem = FALSE;
@@ -6458,7 +6458,7 @@ void HandlePossibleRepairDelays() {
       // a) reduces delays being much more likely if player checks time remaining very frequently,
       // AND b) gives time for the events described in the text of the dealers' excuses to happen
       // (e.g. scouting trip)
-      if ((GetWorldTotalMin() - gArmsDealerStatus[gbSelectedArmsDealerID].uiTimePlayerLastInSKI) >=
+      if ((GetGameTimeInMin() - gArmsDealerStatus[gbSelectedArmsDealerID].uiTimePlayerLastInSKI) >=
           (3 * 60)) {
         // if he should have been finished, but it's only been a few hours since then (not days!)
         if (RepairmanFixingAnyItemsThatShouldBeDoneNow(
@@ -6510,13 +6510,13 @@ BOOLEAN RepairmanFixingAnyItemsThatShouldBeDoneNow(UINT32 *puiHoursSinceOldestIt
           // if the items status is below 0, the item is being repaired
           if (pSpecialItem->Info.bItemCondition < 0) {
             // if the repairs are done
-            if (pSpecialItem->uiRepairDoneTime <= GetWorldTotalMin()) {
+            if (pSpecialItem->uiRepairDoneTime <= GetGameTimeInMin()) {
               // at least one item is supposed to be done by now
               fFoundOne = TRUE;
 
-              uiMinutesSinceItWasDone = GetWorldTotalMin() - pSpecialItem->uiRepairDoneTime;
+              uiMinutesSinceItWasDone = GetGameTimeInMin() - pSpecialItem->uiRepairDoneTime;
               uiMinutesShopClosedSinceItWasDone = CalculateMinutesClosedBetween(
-                  gbSelectedArmsDealerID, pSpecialItem->uiRepairDoneTime, GetWorldTotalMin());
+                  gbSelectedArmsDealerID, pSpecialItem->uiRepairDoneTime, GetGameTimeInMin());
 
               // calculate how many WORKING hours since this item's been repaired
               uiWorkingHoursSinceThisItemRepaired =
@@ -6745,7 +6745,7 @@ void BuildDoneWhenTimeString(wchar_t *sString, size_t bufSize, UINT8 ubArmsDeale
 
   // if the item has already been repaired
   if (gArmsDealersInventory[ubArmsDealer][usItemIndex].SpecialItem[ubElement].uiRepairDoneTime <=
-      GetWorldTotalMin()) {
+      GetGameTimeInMin()) {
     wcscpy(sString, L"");
     return;
   }
@@ -6764,7 +6764,7 @@ void BuildDoneWhenTimeString(wchar_t *sString, size_t bufSize, UINT8 ubArmsDeale
   uiMin = uiDoneTime - ((uiDay * NUM_MIN_IN_DAY) + (uiHour * NUM_MIN_IN_HOUR));
 
   // only show day if it's gonna take overnight
-  if (GetWorldDay() != uiDay) {
+  if (GetGameTimeInDays() != uiDay) {
     swprintf(sString, bufSize, L"%s %d %02d:%02d", pDayStrings[0], uiDay, uiHour, uiMin);
   } else {
     swprintf(sString, bufSize, L"%02d:%02d", uiHour, uiMin);
