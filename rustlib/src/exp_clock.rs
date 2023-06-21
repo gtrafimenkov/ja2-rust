@@ -1,6 +1,58 @@
 use super::clock;
+use super::exp_fileman::FileID;
+use super::exp_fileman::FILE_DB;
 use super::exp_ui;
 use super::state::STATE;
+
+#[repr(C)]
+#[allow(non_snake_case)]
+pub struct SavedClockState {
+    TimeCompressMode: i32,
+    ClockResolution: u8,
+    gamePaused: bool,
+    TimeInterrupt: bool,
+    SuperCompression: bool,
+    gameClock: u32,
+    GameSecondsPerRealSecond: u32,
+    AmbientLightLevel: u8,
+    EnvTime: u32,
+    EnvDay: u32,
+    EnvLightValue: u8,
+    TimeOfLastEventQuery: u32,
+    lockedPause: bool,
+    PauseDueToPlayerGamePause: bool,
+    ResetAllPlayerKnowsEnemiesFlags: bool,
+    TimeCompressionOn: bool,
+    PreviousGameClock: u32,
+    LockPauseStateLastReasonId: u32,
+    UnusedTimePadding: u8,
+}
+
+#[no_mangle]
+pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockState) -> bool {
+    unsafe {
+        data.TimeCompressMode = FILE_DB.read_file_i32(file_id)?;
+        // ClockResolution: u8,
+        // gamePaused: bool,
+        // TimeInterrupt: bool,
+        // SuperCompression: bool,
+        // gameClock: u32,
+        // GameSecondsPerRealSecond: u32,
+        // AmbientLightLevel: u8,
+        // EnvTime: u32,
+        // EnvDay: u32,
+        // EnvLightValue: u8,
+        // TimeOfLastEventQuery: u32,
+        // lockedPause: bool,
+        // PauseDueToPlayerGamePause: bool,
+        // ResetAllPlayerKnowsEnemiesFlags: bool,
+        // TimeCompressionOn: bool,
+        // PreviousGameClock: u32,
+        // LockPauseStateLastReasonId: u32,
+        // UnusedTimePadding: u8,
+    }
+    false
+}
 
 /// Get game starting time in seconds.
 #[no_mangle]
