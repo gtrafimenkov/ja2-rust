@@ -525,6 +525,26 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
 BOOLEAN LoadGameClock(FileID hFile) {
   UINT32 uiNumBytesRead;
 
+  // INT32 giTimeCompressMode = TIME_COMPRESS_X0;
+  // UINT8 gubClockResolution = 1;
+  // BOOLEAN gamePaused = FALSE;
+  // BOOLEAN gfTimeInterrupt = FALSE;
+  // BOOLEAN fSuperCompression = FALSE;
+  // u32 gameClock = 0;
+  // UINT32 guiGameSecondsPerRealSecond;
+  // UINT8 ubAmbientLightLevel = DEFAULT_SHADE_LEVEL;
+  // UINT32 guiEnvTime = 0;
+  // UINT32 guiEnvDay = 0;
+  // UINT8 gubEnvLightValue = 0;
+  // UINT32 guiTimeOfLastEventQuery = 0;
+  // BOOLEAN lockedPause = FALSE;
+  // BOOLEAN gfPauseDueToPlayerGamePause = FALSE;
+  // BOOLEAN gfResetAllPlayerKnowsEnemiesFlags = FALSE;
+  // BOOLEAN gfTimeCompressionOn = FALSE;
+  // UINT32 guiPreviousGameClock = 0;  // used only for error-checking purposes
+  // UINT32 guiLockPauseStateLastReasonId = 0;
+  // UINT8 gubUnusedTimePadding[20];
+
   File_Read(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesRead);
   if (uiNumBytesRead != sizeof(INT32)) return (FALSE);
 
