@@ -4280,15 +4280,8 @@ void HandlePlayerGroupEnteringSectorToCheckForNPCsOfNoteCallback(UINT8 ubExitVal
     // clear their strategic movement (mercpaths and waypoints)
     ClearMercPathsAndWaypointsForAllInGroup(gpGroupPrompting);
 
-    //		// if currently selected sector has nobody in it
-    //		if ( PlayerMercsInSector( ( UINT8 ) sSelMapX, ( UINT8 ) sSelMapY, ( UINT8 )
-    // iCurrentMapSectorZ ) == 0 )
-    // New: ALWAYS make this sector strategically selected, even if there were mercs in the
-    // previously selected one
-    {
-      ChangeSelectedMapSector(gpGroupPrompting->ubSectorX, gpGroupPrompting->ubSectorY,
-                              gpGroupPrompting->ubSectorZ);
-    }
+    ChangeSelectedMapSector(gpGroupPrompting->ubSectorX, gpGroupPrompting->ubSectorY,
+                            gpGroupPrompting->ubSectorZ);
 
     StopTimeCompression();
   }
