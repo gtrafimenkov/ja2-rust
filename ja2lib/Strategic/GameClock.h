@@ -136,7 +136,6 @@ BOOLEAN LoadGameClock(FileID hFile);
 // time compress flag stuff
 BOOLEAN HasTimeCompressOccured(void);
 void ResetTimeCompressHasOccured(void);
-void SetFactTimeCompressHasOccured(void);
 
 // create mouse region to pause game
 void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY);

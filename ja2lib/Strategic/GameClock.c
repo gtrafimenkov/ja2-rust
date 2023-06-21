@@ -165,12 +165,6 @@ void AdvanceClock(UINT8 ubWarpCode) {
   ForecastDayEvents();
 }
 
-// set the flag that time compress has occured
-void SetFactTimeCompressHasOccured(void) {
-  fTimeCompressHasOccured = TRUE;
-  return;
-}
-
 // reset fact the time compress has occured
 void ResetTimeCompressHasOccured(void) {
   fTimeCompressHasOccured = FALSE;
@@ -248,8 +242,7 @@ void StartTimeCompression(void) {
     // if it's the first time we're doing this since entering map screen (which reset the flag)
     if (!HasTimeCompressOccured()) {
       // set fact that we have compressed time during this map screen session
-      SetFactTimeCompressHasOccured();
-
+      fTimeCompressHasOccured = TRUE;
       ClearTacticalStuffDueToTimeCompression();
     }
   }
