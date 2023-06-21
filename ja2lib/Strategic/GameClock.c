@@ -379,9 +379,6 @@ void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond) {
   gubClockResolution = ubNumTimesPerSecond;
 }
 
-// Function for accessing the current rate
-UINT8 ClockResolution() { return gubClockResolution; }
-
 // There are two factors that influence the flow of time in the game.
 //-Speed:  The speed is the amount of game time passes per real second of time.  The higher this
 //         value, the faster the game time flows.
@@ -439,8 +436,6 @@ void UpdateClock() {
     AdvanceClock(WARPTIME_PROCESS_EVENTS_NORMALLY);
   } else if (gubClockResolution > 1) {
     if (gubClockResolution != ubLastResolution) {
-      // guiTimesThisSecondProcessed = guiTimesThisSecondProcessed * ubLastResolution /
-      // gubClockResolution % gubClockResolution;
       guiTimesThisSecondProcessed =
           guiTimesThisSecondProcessed * gubClockResolution / ubLastResolution;
       uiLastTimeProcessed = uiLastTimeProcessed * gubClockResolution / ubLastResolution;

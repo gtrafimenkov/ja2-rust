@@ -61,8 +61,6 @@ void IncreaseGameTimeCompressionRate();
 void SetClockResolutionToDefault();  // 1 time per second
 // Valid range is 1 - 60 times per second.
 void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond);
-// Function for accessing the current rate
-UINT8 ClockResolution();
 
 // time compression defines
 enum {

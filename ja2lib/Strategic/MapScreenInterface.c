@@ -4824,17 +4824,7 @@ void RequestDecreaseInTimeCompression(void) {
     if (!AllowedToTimeCompress()) {
       // not allowed to compress time
       TellPlayerWhyHeCantCompressTime();
-      return;
     }
-
-    // ARM Change: do nothing
-    /*
-                    // if compression mode is set, just restart time so player can see it
-                    if ( giTimeCompressMode > TIME_COMPRESS_X1 )
-                    {
-                            StartTimeCompression();
-                    }
-    */
   }
 }
 
