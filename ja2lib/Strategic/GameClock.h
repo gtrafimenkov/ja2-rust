@@ -64,7 +64,6 @@ void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond);
 
 // time compression defines
 enum {
-  NOT_USING_TIME_COMPRESSION = -1,
   TIME_COMPRESS_X0,
   TIME_COMPRESS_X1,
   TIME_COMPRESS_5MINS,
