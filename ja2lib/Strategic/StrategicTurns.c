@@ -48,11 +48,6 @@ void HandleStrategicTurn() {
       return;
     }
 
-    // Kris -- What to do?
-    if (giTimeCompressMode == NOT_USING_TIME_COMPRESSION) {
-      SetGameTimeCompressionLevel(TIME_COMPRESS_X1);
-    }
-
     uiTime = GetJA2Clock();
 
     // Do not handle turns update if in turnbased combat

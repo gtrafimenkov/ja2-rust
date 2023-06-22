@@ -62,11 +62,6 @@ struct GROUP *gpPendingSimultaneousGroup = NULL;
 
 extern BOOLEAN gfUsePersistantPBI;
 
-#ifdef JA2BETAVERSION
-extern BOOLEAN gfExitViewer;
-void ValidateGroups(struct GROUP *pGroup);
-#endif
-
 extern BOOLEAN gubNumAwareBattles;
 extern int8_t SquadMovementGroups[];
 extern int8_t gubVehicleMovementGroups[];
@@ -913,11 +908,6 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
         PlayerMercsInSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY, gbWorldSectorZ) &&
         pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY &&
         curr) {  // Reinforcements have arrived!
-#ifdef JA2BETAVERSION
-      if (guiCurrentScreen == AIVIEWER_SCREEN) {
-        gfExitViewer = TRUE;
-      }
-#endif
       if (gTacticalStatus.fEnemyInSector) {
         HandleArrivalOfReinforcements(pGroup);
         return (TRUE);
@@ -1010,18 +1000,16 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
     return FALSE;
   }
 
-  if (fBattlePending) {  // A battle is pending, but the player's could be all unconcious or dead.
-// Go through every group until we find at least one concious merc.  The looping will determine
-// if there are any live mercs and/or concious ones.  If there are no concious mercs, but alive
-// ones, then we will go straight to autoresolve, where the enemy will likely annihilate them or
-// capture them. If there are no alive mercs, then there is nothing anybody can do.  The enemy will
-// completely ignore this, and continue on.
-#ifdef JA2BETAVERSION
-    ValidateGroups(pGroup);
-#endif
-
-    if (gubNumGroupsArrivedSimultaneously) {  // Because this is a battle case, clear all the group
-                                              // flags
+  if (fBattlePending) {
+    // A battle is pending, but the player's could be all unconcious or dead.
+    // Go through every group until we find at least one concious merc.  The looping will determine
+    // if there are any live mercs and/or concious ones.  If there are no concious mercs, but alive
+    // ones, then we will go straight to autoresolve, where the enemy will likely annihilate them or
+    // capture them. If there are no alive mercs, then there is nothing anybody can do.  The enemy
+    // will completely ignore this, and continue on.
+    if (gubNumGroupsArrivedSimultaneously) {
+      // Because this is a battle case, clear all the group
+      // flags
       curr = gpGroupList;
       while (curr && gubNumGroupsArrivedSimultaneously) {
         if (curr->uiFlags & GROUPFLAG_GROUP_ARRIVED_SIMULTANEOUSLY) {
@@ -1056,10 +1044,6 @@ BOOLEAN CheckConditionsForBattle(struct GROUP *pGroup) {
         DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, TriggerPrebattleInterface);
       }
     }
-
-#ifdef JA2BETAVERSION
-    if (guiCurrentScreen == AIVIEWER_SCREEN) gfExitViewer = TRUE;
-#endif
 
     if (pPlayerDialogGroup) {
       PrepareForPreBattleInterface(pPlayerDialogGroup, pGroup);
@@ -4304,15 +4288,8 @@ void HandlePlayerGroupEnteringSectorToCheckForNPCsOfNoteCallback(uint8_t ubExitV
     // clear their strategic movement (mercpaths and waypoints)
     ClearMercPathsAndWaypointsForAllInGroup(gpGroupPrompting);
 
-    //		// if currently selected sector has nobody in it
-    //		if ( PlayerMercsInSector( ( uint8_t ) sSelMapX, ( uint8_t ) sSelMapY, ( uint8_t )
-    // iCurrentMapSectorZ ) == 0 )
-    // New: ALWAYS make this sector strategically selected, even if there were mercs in the
-    // previously selected one
-    {
-      ChangeSelectedMapSector(gpGroupPrompting->ubSectorX, gpGroupPrompting->ubSectorY,
-                              gpGroupPrompting->ubSectorZ);
-    }
+    ChangeSelectedMapSector(gpGroupPrompting->ubSectorX, gpGroupPrompting->ubSectorY,
+                            gpGroupPrompting->ubSectorZ);
 
     StopTimeCompression();
   }
@@ -4381,35 +4358,3 @@ uint8_t NumberMercsInVehicleGroup(struct GROUP *pGroup) {
   }
   return 0;
 }
-
-#ifdef JA2BETAVERSION
-void ValidateGroups(struct GROUP *pGroup) {
-  // Do error checking, and report group
-  ValidatePlayersAreInOneGroupOnly();
-  if (!pGroup->fPlayer && !pGroup->ubGroupSize) {
-    // report error
-    wchar_t str[512];
-    if (pGroup->ubSectorIDOfLastReassignment == 255) {
-      swprintf(str, ARR_SIZE(str),
-               L"Enemy group found with 0 troops in it.  This is illegal and group will be deleted."
-               L"  Group %d in sector %c%d originated from sector %c%d.",
-               pGroup->ubGroupID, pGroup->ubSectorY + 'A' - 1, pGroup->ubSectorX,
-               SectorID8_Y(pGroup->ubCreatedSectorID) + 'A' - 1,
-               SectorID8_X(pGroup->ubCreatedSectorID));
-    } else {
-      swprintf(str, ARR_SIZE(str),
-               L"Enemy group found with 0 troops in it.  This is illegal and group will be deleted."
-               L"  Group %d in sector %c%d originated from sector %c%d and last reassignment "
-               L"location was %c%d.",
-               pGroup->ubGroupID, pGroup->ubSectorY + 'A' - 1, pGroup->ubSectorX,
-               SectorID8_Y(pGroup->ubCreatedSectorID) + 'A' - 1,
-               SectorID8_X(pGroup->ubCreatedSectorID),
-               SectorID8_Y(pGroup->ubSectorIDOfLastReassignment) + 'A' - 1,
-               SectorID8_X(pGroup->ubSectorIDOfLastReassignment));
-    }
-    // correct error
-
-    DoScreenIndependantMessageBox(str, MSG_BOX_FLAG_OK, NULL);
-  }
-}
-#endif

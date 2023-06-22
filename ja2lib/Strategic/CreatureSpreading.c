@@ -246,10 +246,6 @@ void InitLairGrumm() {
   curr->next = NewDirective(SEC_H3, 1, MINE_EXIT);
 }
 
-#ifdef JA2BETAVERSION
-extern BOOLEAN gfExitViewer;
-#endif
-
 void InitCreatureQuest() {
   UNDERGROUND_SECTORINFO *curr;
   BOOLEAN fPlayMeanwhile = FALSE;
