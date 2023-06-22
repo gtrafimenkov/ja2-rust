@@ -523,7 +523,7 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
 }
 
 BOOLEAN LoadGameClock(FileID hFile) {
-  struct SavedClockState state;
+  struct SavedClockStateC state;
   bool res = LoadSavedClockState(hFile, &state);
   if (!res) {
     return false;
