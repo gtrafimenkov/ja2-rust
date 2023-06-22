@@ -26,7 +26,7 @@ struct SavedClockState {
   bool TimeCompressionOn;
   uint32_t PreviousGameClock;
   uint32_t LockPauseStateLastReasonId;
-  uint8_t UnusedTimePadding;
+  uint8_t UnusedTimePadding[20];
 };
 
 #ifdef __cplusplus

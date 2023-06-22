@@ -523,7 +523,7 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
 }
 
 BOOLEAN LoadGameClock(FileID hFile) {
-  UINT32 uiNumBytesRead;
+  // UINT32 uiNumBytesRead;
 
   // INT32 giTimeCompressMode = TIME_COMPRESS_X0;
   // UINT8 gubClockResolution = 1;
@@ -545,81 +545,116 @@ BOOLEAN LoadGameClock(FileID hFile) {
   // UINT32 guiLockPauseStateLastReasonId = 0;
   // UINT8 gubUnusedTimePadding[20];
 
-  File_Read(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT32)) return (FALSE);
-
-  File_Read(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
-
-  {
-    BOOLEAN gamePaused = FALSE;
-    File_Read(hFile, &gamePaused, sizeof(BOOLEAN), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
-    if (gamePaused) {
-      PauseGame();
-    }
+  struct SavedClockState state;
+  bool res = LoadSavedClockState(hFile, &state);
+  if (!res) {
+    return false;
   }
 
-  File_Read(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
-
-  File_Read(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
-
-  {
-    u32 gameClock = 0;
-    File_Read(hFile, &gameClock, sizeof(UINT32), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
-    SetGameTimeSec(gameClock);
+  giTimeCompressMode = state.TimeCompressMode;
+  gubClockResolution = state.ClockResolution;
+  // gamePaused = state.gamePaused;
+  if (state.gamePaused) {
+    PauseGame();
   }
-
-  File_Read(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
-
-  File_Read(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
-
-  File_Read(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
-
-  File_Read(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
-
-  File_Read(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
-
-  File_Read(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
-
-  {
-    BOOLEAN lockedPause = FALSE;
-    File_Read(hFile, &lockedPause, sizeof(BOOLEAN), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
-    if (lockedPause) {
-      LockPause();
-    }
+  gfTimeInterrupt = state.TimeInterrupt;
+  fSuperCompression = state.SuperCompression;
+  // gameClock = state.gameClock;
+  SetGameTimeSec(state.gameClock);
+  guiGameSecondsPerRealSecond = state.GameSecondsPerRealSecond;
+  ubAmbientLightLevel = state.AmbientLightLevel;
+  guiEnvTime = state.EnvTime;
+  guiEnvDay = state.EnvDay;
+  gubEnvLightValue = state.EnvLightValue;
+  guiTimeOfLastEventQuery = state.TimeOfLastEventQuery;
+  // lockedPause = state.lockedPause;
+  if (state.lockedPause) {
+    LockPause();
   }
+  gfPauseDueToPlayerGamePause = state.PauseDueToPlayerGamePause;
+  gfResetAllPlayerKnowsEnemiesFlags = state.ResetAllPlayerKnowsEnemiesFlags;
+  gfTimeCompressionOn = state.TimeCompressionOn;
+  guiPreviousGameClock = state.PreviousGameClock;
+  // guiLockPauseStateLastReasonId = state.LockPauseStateLastReasonId;
+  // gubUnusedTimePadding = state.UnusedTimePadding;
 
-  File_Read(hFile, &gfPauseDueToPlayerGamePause, sizeof(BOOLEAN), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+  ////////////////////////////////////////////////////////////////////////////
 
-  File_Read(hFile, &gfResetAllPlayerKnowsEnemiesFlags, sizeof(BOOLEAN), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+  // File_Read(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(INT32)) return (FALSE);
 
-  File_Read(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+  // File_Read(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
 
-  File_Read(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  // {
+  //   BOOLEAN gamePaused = FALSE;
+  //   File_Read(hFile, &gamePaused, sizeof(BOOLEAN), &uiNumBytesRead);
+  //   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+  //   if (gamePaused) {
+  //     PauseGame();
+  //   }
+  // }
 
-  {
-    UINT32 guiLockPauseStateLastReasonId = 0;
-    File_Read(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
-  }
+  // File_Read(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
 
-  File_Read(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesRead);
-  if (uiNumBytesRead != TIME_PADDINGBYTES) return (FALSE);
+  // File_Read(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+
+  // {
+  //   u32 gameClock = 0;
+  //   File_Read(hFile, &gameClock, sizeof(UINT32), &uiNumBytesRead);
+  //   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  //   SetGameTimeSec(gameClock);
+  // }
+
+  // File_Read(hFile, &guiGameSecondsPerRealSecond, sizeof(UINT32), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+
+  // File_Read(hFile, &ubAmbientLightLevel, sizeof(UINT8), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
+
+  // File_Read(hFile, &guiEnvTime, sizeof(UINT32), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+
+  // File_Read(hFile, &guiEnvDay, sizeof(UINT32), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+
+  // File_Read(hFile, &gubEnvLightValue, sizeof(UINT8), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT8)) return (FALSE);
+
+  // File_Read(hFile, &guiTimeOfLastEventQuery, sizeof(UINT32), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+
+  // {
+  //   BOOLEAN lockedPause = FALSE;
+  //   File_Read(hFile, &lockedPause, sizeof(BOOLEAN), &uiNumBytesRead);
+  //   if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+  //   if (lockedPause) {
+  //     LockPause();
+  //   }
+  // }
+
+  // File_Read(hFile, &gfPauseDueToPlayerGamePause, sizeof(BOOLEAN), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+
+  // File_Read(hFile, &gfResetAllPlayerKnowsEnemiesFlags, sizeof(BOOLEAN), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+
+  // File_Read(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(BOOLEAN)) return (FALSE);
+
+  // File_Read(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesRead);
+  // if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+
+  // {
+  //   UINT32 guiLockPauseStateLastReasonId = 0;
+  //   File_Read(hFile, &guiLockPauseStateLastReasonId, sizeof(UINT32), &uiNumBytesRead);
+  //   if (uiNumBytesRead != sizeof(UINT32)) return (FALSE);
+  // }
+
+  // File_Read(hFile, gubUnusedTimePadding, TIME_PADDINGBYTES, &uiNumBytesRead);
+  // if (uiNumBytesRead != TIME_PADDINGBYTES) return (FALSE);
 
   swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
            GetGameTimeInDays(), GetGameClockHour(), GetGameClockMinutes());

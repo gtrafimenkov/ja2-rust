@@ -3,9 +3,11 @@ use super::exp_fileman::FileID;
 use super::exp_fileman::FILE_DB;
 use super::exp_ui;
 use super::state::STATE;
+use std::io;
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Default)]
 pub struct SavedClockState {
     TimeCompressMode: i32,
     ClockResolution: u8,
@@ -25,34 +27,83 @@ pub struct SavedClockState {
     TimeCompressionOn: bool,
     PreviousGameClock: u32,
     LockPauseStateLastReasonId: u32,
-    UnusedTimePadding: u8,
+    UnusedTimePadding: [u8; 20],
 }
 
 #[no_mangle]
 pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockState) -> bool {
-    unsafe {
-        data.TimeCompressMode = FILE_DB.read_file_i32(file_id)?;
-        // ClockResolution: u8,
-        // gamePaused: bool,
-        // TimeInterrupt: bool,
-        // SuperCompression: bool,
-        // gameClock: u32,
-        // GameSecondsPerRealSecond: u32,
-        // AmbientLightLevel: u8,
-        // EnvTime: u32,
-        // EnvDay: u32,
-        // EnvLightValue: u8,
-        // TimeOfLastEventQuery: u32,
-        // lockedPause: bool,
-        // PauseDueToPlayerGamePause: bool,
-        // ResetAllPlayerKnowsEnemiesFlags: bool,
-        // TimeCompressionOn: bool,
-        // PreviousGameClock: u32,
-        // LockPauseStateLastReasonId: u32,
-        // UnusedTimePadding: u8,
+    fn read(file_id: FileID) -> io::Result<SavedClockState> {
+        let mut data = SavedClockState::default();
+        unsafe {
+            data.TimeCompressMode = FILE_DB.read_file_i32(file_id)?;
+            data.ClockResolution = FILE_DB.read_file_u8(file_id)?;
+            data.gamePaused = FILE_DB.read_file_bool(file_id)?;
+            data.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;
+            data.SuperCompression = FILE_DB.read_file_bool(file_id)?;
+            data.gameClock = FILE_DB.read_file_u32(file_id)?;
+            data.GameSecondsPerRealSecond = FILE_DB.read_file_u32(file_id)?;
+            data.AmbientLightLevel = FILE_DB.read_file_u8(file_id)?;
+            data.EnvTime = FILE_DB.read_file_u32(file_id)?;
+            data.EnvDay = FILE_DB.read_file_u32(file_id)?;
+            data.EnvLightValue = FILE_DB.read_file_u8(file_id)?;
+            data.TimeOfLastEventQuery = FILE_DB.read_file_u32(file_id)?;
+            data.lockedPause = FILE_DB.read_file_bool(file_id)?;
+            data.PauseDueToPlayerGamePause = FILE_DB.read_file_bool(file_id)?;
+            data.ResetAllPlayerKnowsEnemiesFlags = FILE_DB.read_file_bool(file_id)?;
+            data.TimeCompressionOn = FILE_DB.read_file_bool(file_id)?;
+            data.PreviousGameClock = FILE_DB.read_file_u32(file_id)?;
+            data.LockPauseStateLastReasonId = FILE_DB.read_file_u32(file_id)?;
+            FILE_DB.read_file_exact(file_id, &mut data.UnusedTimePadding)?;
+        }
+        Ok(data)
     }
-    false
+    match read(file_id) {
+        Ok(res) => {
+            *data = res;
+            true
+        }
+        Err(_) => false,
+    }
 }
+
+// #[repr(C)]
+// pub enum SavedClockStateOrError {
+//     Data(SavedClockState),
+//     Error,
+// }
+
+// #[no_mangle]
+// pub extern "C" fn LoadSavedClockState2(file_id: FileID) -> SavedClockStateOrError {
+//     fn read(file_id: FileID) -> io::Result<SavedClockState> {
+//         let mut data = SavedClockState::default();
+//         unsafe {
+//             data.TimeCompressMode = FILE_DB.read_file_i32(file_id)?;
+//             data.ClockResolution = FILE_DB.read_file_u8(file_id)?;
+//             data.gamePaused = FILE_DB.read_file_bool(file_id)?;
+//             data.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;
+//             data.SuperCompression = FILE_DB.read_file_bool(file_id)?;
+//             data.gameClock = FILE_DB.read_file_u32(file_id)?;
+//             data.GameSecondsPerRealSecond = FILE_DB.read_file_u32(file_id)?;
+//             data.AmbientLightLevel = FILE_DB.read_file_u8(file_id)?;
+//             data.EnvTime = FILE_DB.read_file_u32(file_id)?;
+//             data.EnvDay = FILE_DB.read_file_u32(file_id)?;
+//             data.EnvLightValue = FILE_DB.read_file_u8(file_id)?;
+//             data.TimeOfLastEventQuery = FILE_DB.read_file_u32(file_id)?;
+//             data.lockedPause = FILE_DB.read_file_bool(file_id)?;
+//             data.PauseDueToPlayerGamePause = FILE_DB.read_file_bool(file_id)?;
+//             data.ResetAllPlayerKnowsEnemiesFlags = FILE_DB.read_file_bool(file_id)?;
+//             data.TimeCompressionOn = FILE_DB.read_file_bool(file_id)?;
+//             data.PreviousGameClock = FILE_DB.read_file_u32(file_id)?;
+//             data.LockPauseStateLastReasonId = FILE_DB.read_file_u32(file_id)?;
+//             data.UnusedTimePadding = FILE_DB.read_file_u8(file_id)?;
+//         }
+//         Ok(data)
+//     }
+//     match read(file_id) {
+//         Ok(res) => SavedClockStateOrError::Data(res),
+//         Err(_) => SavedClockStateOrError::Error,
+//     }
+// }
 
 /// Get game starting time in seconds.
 #[no_mangle]
