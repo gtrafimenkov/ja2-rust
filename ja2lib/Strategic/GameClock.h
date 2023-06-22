@@ -32,11 +32,6 @@
 // function when entering such a mode, and UnPauseGame() when finished.  Everything will be restored
 // just the way you left it.  This is much simpler to handle in the overall scheme of things.
 
-// USING HIGH RESOLUTION TIME RATE MANIPULATION/ACCESS
-// Allows external code to change the time rate.
-void SetGameHoursPerSecond(UINT32 uiGameHoursPerSecond);
-void SetGameMinutesPerSecond(UINT32 uiGameMinutesPerSecond);
-void SetGameSecondsPerSecond(UINT32 uiGameSecondsPerSecond);
 // Allows access to the current time rate.
 UINT32 GetGameSecondsPerFrame();
 void RenderPausedGameBox(void);
@@ -66,12 +61,9 @@ void IncreaseGameTimeCompressionRate();
 void SetClockResolutionToDefault();  // 1 time per second
 // Valid range is 1 - 60 times per second.
 void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond);
-// Function for accessing the current rate
-UINT8 ClockResolution();
 
 // time compression defines
 enum {
-  NOT_USING_TIME_COMPRESSION = -1,
   TIME_COMPRESS_X0,
   TIME_COMPRESS_X1,
   TIME_COMPRESS_5MINS,
@@ -127,8 +119,6 @@ void GotoNextTimeOfDay(UINT32 uiTOD);
 
 void RenderClock(INT16 sX, INT16 sY);
 
-void ToggleSuperCompression();
-
 // IMPORTANT FUNCTION:  Used whenever an event or situation is deemed important enough to cancel the
 // further processing of time in this current time slice!  This can only be used inside of event
 // callback functions -- otherwise, it'll be ignored and automatically reset.  An example of this
@@ -146,7 +136,6 @@ BOOLEAN LoadGameClock(FileID hFile);
 // time compress flag stuff
 BOOLEAN HasTimeCompressOccured(void);
 void ResetTimeCompressHasOccured(void);
-void SetFactTimeCompressHasOccured(void);
 
 // create mouse region to pause game
 void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY);

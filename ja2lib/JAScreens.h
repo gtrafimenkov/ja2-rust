@@ -31,12 +31,6 @@ extern UINT32 MainGameScreenInit(void);
 extern UINT32 MainGameScreenHandle(void);
 extern UINT32 MainGameScreenShutdown(void);
 
-#ifdef JA2BETAVERSION
-extern UINT32 AIViewerScreenInit(void);
-extern UINT32 AIViewerScreenHandle(void);
-extern UINT32 AIViewerScreenShutdown(void);
-#endif
-
 extern UINT32 QuestDebugScreenInit(void);
 extern UINT32 QuestDebugScreenHandle(void);
 extern UINT32 QuestDebugScreenShutdown(void);

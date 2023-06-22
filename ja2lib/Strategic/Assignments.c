@@ -9626,36 +9626,6 @@ void ResumeOldAssignment(struct SOLDIERTYPE *pSoldier) {
   // later, anyway? so I'd rather just settle for putting him into any squad:
   fOldAssignmentInvalid = TRUE;
 
-  /*
-          if ( pSoldier->bOldAssignment == pSoldier->bAssigment )
-          {
-                  // no good: we rely on this to make sure guys training militia STOP training
-     militia! fOldAssignmentInvalid = TRUE;
-          }
-          else if( pSoldier->bOldAssignment == VEHICLE )
-          {
-                  SetSoldierAssignment( pSoldier, ( INT8 )( pSoldier->bOldAssignment ), (
-     pSoldier->iVehicleId ), 0, 0 );
-
-                  // it might not work - check
-                  if ( pSoldier->bAssignment != VEHICLE )
-                  {
-                          fOldAssignmentInvalid = TRUE;
-                  }
-          }
-          else if( pSoldier->bOldAssignment < ON_DUTY )
-          {
-                  if( AddCharacterToSquad( pSoldier, pSoldier->bOldAssignment ) == FALSE )
-                  {
-                          fOldAssignmentInvalid = TRUE;
-                  }
-          }
-          else
-          {
-                  fOldAssignmentInvalid = TRUE;
-          }
-  */
-
   if (fOldAssignmentInvalid) {
     AddCharacterToAnySquad(pSoldier);
   }
