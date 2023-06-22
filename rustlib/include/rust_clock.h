@@ -7,9 +7,32 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * C part of the saved gameclock state
+ */
+struct SavedClockStateC {
+  int32_t TimeCompressMode;
+  uint8_t ClockResolution;
+  bool TimeInterrupt;
+  bool SuperCompression;
+  uint32_t GameSecondsPerRealSecond;
+  uint8_t AmbientLightLevel;
+  uint32_t EnvTime;
+  uint32_t EnvDay;
+  uint8_t EnvLightValue;
+  uint32_t TimeOfLastEventQuery;
+  bool PauseDueToPlayerGamePause;
+  bool ResetAllPlayerKnowsEnemiesFlags;
+  bool TimeCompressionOn;
+  uint32_t PreviousGameClock;
+  uint32_t LockPauseStateLastReasonId;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+bool LoadSavedClockState(FileID file_id, struct SavedClockStateC *data);
 
 /**
  * Get game starting time in seconds.

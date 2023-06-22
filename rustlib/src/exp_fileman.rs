@@ -23,7 +23,7 @@ pub enum FileSeekMode {
     FILE_SEEK_CURRENT = 0x04,
 }
 
-static mut FILE_DB: Lazy<DB> = Lazy::new(DB::new);
+pub static mut FILE_DB: Lazy<DB> = Lazy::new(DB::new);
 
 /// Converts utf-8 encoded null-terminated C string into String.
 /// If cstr is null, return None.
@@ -243,7 +243,7 @@ enum OpenedFile {
     Regular(fs::File),
     LibFile(slfdb::OpenedLibFile),
 }
-struct DB {
+pub struct DB {
     next_id: FileID,
     file_map: HashMap<FileID, OpenedFile>,
     slfdb: slfdb::DB,
@@ -325,12 +325,50 @@ impl DB {
         }
     }
 
+    /// Read i32 number from a file
+    pub fn read_file_i32(&mut self, file_id: FileID) -> io::Result<i32> {
+        let mut buffer = [0u8; 4];
+        self.read_file_exact(file_id, &mut buffer)?;
+        Ok(i32::from_le_bytes(buffer))
+    }
+
+    /// Read u32 number from a file
+    pub fn read_file_u32(&mut self, file_id: FileID) -> io::Result<u32> {
+        let mut buffer = [0u8; 4];
+        self.read_file_exact(file_id, &mut buffer)?;
+        Ok(u32::from_le_bytes(buffer))
+    }
+
+    /// Read u8 number from a file
+    pub fn read_file_u8(&mut self, file_id: FileID) -> io::Result<u8> {
+        let mut buffer = [0u8; 1];
+        self.read_file_exact(file_id, &mut buffer)?;
+        Ok(u8::from_le_bytes(buffer))
+    }
+
+    /// Read bool from a file
+    pub fn read_file_bool(&mut self, file_id: FileID) -> io::Result<bool> {
+        match self.read_file_u8(file_id) {
+            Ok(val) => Ok(val != 0),
+            Err(e) => Err(e),
+        }
+    }
+
     /// Read opened earlier file
     pub fn read_file(&mut self, file_id: FileID, buf: &mut [u8]) -> io::Result<usize> {
         match self.file_map.get_mut(&file_id) {
             None => Err(io::Error::from(io::ErrorKind::NotFound)),
             Some(OpenedFile::LibFile(path)) => self.slfdb.read_libfile(path, buf),
             Some(OpenedFile::Regular(f)) => f.read(buf),
+        }
+    }
+
+    /// Read opened earlier file, exactly the buffer size
+    pub fn read_file_exact(&mut self, file_id: FileID, buf: &mut [u8]) -> io::Result<()> {
+        match self.file_map.get_mut(&file_id) {
+            None => Err(io::Error::from(io::ErrorKind::NotFound)),
+            Some(OpenedFile::LibFile(path)) => self.slfdb.read_libfile_exact(path, buf),
+            Some(OpenedFile::Regular(f)) => f.read_exact(buf),
         }
     }
 

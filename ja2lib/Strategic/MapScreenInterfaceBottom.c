@@ -750,12 +750,10 @@ void DisplayCompressMode(void) {
   static uint8_t usColor = FONT_LTGREEN;
 
   // get compress speed
-  if (giTimeCompressMode != NOT_USING_TIME_COMPRESSION) {
-    if (IsTimeBeingCompressed()) {
-      swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[giTimeCompressMode]);
-    } else {
-      swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[0]);
-    }
+  if (IsTimeBeingCompressed()) {
+    swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[giTimeCompressMode]);
+  } else {
+    swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[0]);
   }
 
   RestoreExternBackgroundRect(489, 456, 522 - 489, 467 - 454);
