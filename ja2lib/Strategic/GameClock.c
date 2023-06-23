@@ -73,7 +73,6 @@ void AdvanceClock(UINT8 ubWarpCode);
 // These contain all of the information about the game time, rate of time, etc.
 // All of these get saved and loaded.
 INT32 giTimeCompressMode = TIME_COMPRESS_X0;
-UINT8 gubClockResolution = 1;
 BOOLEAN gfTimeInterrupt = FALSE;
 BOOLEAN gfTimeInterruptPause = FALSE;
 BOOLEAN fSuperCompression = FALSE;
@@ -100,13 +99,12 @@ extern UINT32 guiEnvTime;
 extern UINT32 guiEnvDay;
 
 void InitNewGameClock() {
-  SetGameTimeSec(GetGameStartingTime());
+  InitNewGameClockRust();
   guiPreviousGameClock = GetGameStartingTime();
   swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
            GetGameTimeInDays(), GetGameClockHour(), GetGameClockMinutes());
   guiTimeCurrentSectorWasLastLoaded = 0;
   guiGameSecondsPerRealSecond = 0;
-  gubClockResolution = 1;
   memset(gubUnusedTimePadding, 0, TIME_PADDINGBYTES);
 }
 
@@ -359,19 +357,6 @@ void InterruptTime() { gfTimeInterrupt = TRUE; }
 
 void PauseTimeForInterupt() { gfTimeInterruptPause = TRUE; }
 
-// USING CLOCK RESOLUTION
-// Note, that changing the clock resolution doesn't effect the amount of game time that passes per
-// real second, but how many times per second the clock is updated.  This rate will break up the
-// actual time slices per second into smaller chunks.  This is useful for animating strategic
-// movement under fast time compression, so objects don't warp around.
-void SetClockResolutionToDefault() { gubClockResolution = 1; }
-
-// Valid range is 0 - 60 times per second.
-void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond) {
-  ubNumTimesPerSecond = (UINT8)(max(0, min(60, ubNumTimesPerSecond)));
-  gubClockResolution = ubNumTimesPerSecond;
-}
-
 // There are two factors that influence the flow of time in the game.
 //-Speed:  The speed is the amount of game time passes per real second of time.  The higher this
 //         value, the faster the game time flows.
@@ -397,7 +382,7 @@ void UpdateClock() {
     return;
   }
 
-  if (IsGamePaused() || gfTimeInterruptPause || (gubClockResolution == 0) ||
+  if (IsGamePaused() || gfTimeInterruptPause || (GetClockResolution() == 0) ||
       !guiGameSecondsPerRealSecond || ARE_IN_FADE_IN() || gfFadeOut) {
     uiLastSecondTime = GetJA2Clock();
     gfTimeInterruptPause = FALSE;
@@ -417,23 +402,23 @@ void UpdateClock() {
   // 1000's of a second difference since last second.
   uiThousandthsOfThisSecondProcessed = uiNewTime - uiLastSecondTime;
 
-  if (uiThousandthsOfThisSecondProcessed >= 1000 && gubClockResolution == 1) {
+  if (uiThousandthsOfThisSecondProcessed >= 1000 && GetClockResolution() == 1) {
     uiLastSecondTime = uiNewTime;
     guiTimesThisSecondProcessed = uiLastTimeProcessed = 0;
     AdvanceClock(WARPTIME_PROCESS_EVENTS_NORMALLY);
-  } else if (gubClockResolution > 1) {
-    if (gubClockResolution != ubLastResolution) {
+  } else if (GetClockResolution() > 1) {
+    if (GetClockResolution() != ubLastResolution) {
       guiTimesThisSecondProcessed =
-          guiTimesThisSecondProcessed * gubClockResolution / ubLastResolution;
-      uiLastTimeProcessed = uiLastTimeProcessed * gubClockResolution / ubLastResolution;
-      ubLastResolution = gubClockResolution;
+          guiTimesThisSecondProcessed * GetClockResolution() / ubLastResolution;
+      uiLastTimeProcessed = uiLastTimeProcessed * GetClockResolution() / ubLastResolution;
+      ubLastResolution = GetClockResolution();
     }
-    uiTimeSlice = 1000000 / gubClockResolution;
+    uiTimeSlice = 1000000 / GetClockResolution();
     if (uiThousandthsOfThisSecondProcessed >=
         uiTimeSlice * (guiTimesThisSecondProcessed + 1) / 1000) {
       guiTimesThisSecondProcessed = uiThousandthsOfThisSecondProcessed * 1000 / uiTimeSlice;
       uiNewTimeProcessed =
-          guiGameSecondsPerRealSecond * guiTimesThisSecondProcessed / gubClockResolution;
+          guiGameSecondsPerRealSecond * guiTimesThisSecondProcessed / GetClockResolution();
 
       uiNewTimeProcessed = max(uiNewTimeProcessed, uiLastTimeProcessed);
 
@@ -442,8 +427,8 @@ void UpdateClock() {
         uiLastTimeProcessed = uiNewTimeProcessed;
       } else {  // We have moved into a new real second.
         uiLastTimeProcessed = uiNewTimeProcessed % guiGameSecondsPerRealSecond;
-        if (gubClockResolution > 0) {
-          guiTimesThisSecondProcessed %= gubClockResolution;
+        if (GetClockResolution() > 0) {
+          guiTimesThisSecondProcessed %= GetClockResolution();
         } else {
           // this branch occurs whenever an event during WarpGameTime stops time compression!
           guiTimesThisSecondProcessed = 0;
@@ -460,8 +445,11 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   File_Write(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(INT32)) return (FALSE);
 
-  File_Write(hFile, &gubClockResolution, sizeof(UINT8), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT8)) return (FALSE);
+  {
+    u8 clock_resolution = GetClockResolution();
+    File_Write(hFile, &clock_resolution, sizeof(UINT8), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(UINT8)) return (FALSE);
+  }
 
   File_Write(hFile, &fGamePaused, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
@@ -530,7 +518,6 @@ BOOLEAN LoadGameClock(FileID hFile) {
   }
 
   giTimeCompressMode = state.TimeCompressMode;
-  gubClockResolution = state.ClockResolution;
   gfTimeInterrupt = state.TimeInterrupt;
   fSuperCompression = state.SuperCompression;
   guiGameSecondsPerRealSecond = state.GameSecondsPerRealSecond;

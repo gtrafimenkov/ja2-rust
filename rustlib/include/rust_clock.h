@@ -12,7 +12,6 @@
  */
 struct SavedClockStateC {
   int32_t TimeCompressMode;
-  uint8_t ClockResolution;
   bool TimeInterrupt;
   bool SuperCompression;
   uint32_t GameSecondsPerRealSecond;
@@ -33,6 +32,15 @@ extern "C" {
 #endif // __cplusplus
 
 bool LoadSavedClockState(FileID file_id, struct SavedClockStateC *data);
+
+void InitNewGameClockRust(void);
+
+void SetClockResolutionPerSecond(uint8_t timer_per_second);
+
+/**
+ * Returns number of clock updates per second
+ */
+uint8_t GetClockResolution(void);
 
 /**
  * Get game starting time in seconds.

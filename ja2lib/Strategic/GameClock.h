@@ -53,15 +53,6 @@ void SetGameTimeCompressionLevel(UINT32 uiCompressionRate);
 void DecreaseGameTimeCompressionRate();
 void IncreaseGameTimeCompressionRate();
 
-// USING CLOCK RESOLUTION
-// Note, that changing the clock resolution doesn't effect the amount of game time that passes per
-// real second, but how many times per second the clock is updated.  This rate will break up the
-// actual time slices per second into smaller chunks.  This is useful for animating strategic
-// movement under fast time compression, so objects don't warp around.
-void SetClockResolutionToDefault();  // 1 time per second
-// Valid range is 1 - 60 times per second.
-void SetClockResolutionPerSecond(UINT8 ubNumTimesPerSecond);
-
 // time compression defines
 enum {
   TIME_COMPRESS_X0,

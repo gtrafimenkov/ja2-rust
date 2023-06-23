@@ -11,7 +11,6 @@ use std::io;
 /// C part of the saved gameclock state
 pub struct SavedClockStateC {
     TimeCompressMode: i32,
-    ClockResolution: u8,
     TimeInterrupt: bool,
     SuperCompression: bool,
     GameSecondsPerRealSecond: u32,
@@ -30,6 +29,7 @@ pub struct SavedClockStateC {
 #[derive(Default)]
 struct SavedClockState {
     cpart: SavedClockStateC,
+    clock_resolution: u8,
     game_paused: bool,
     game_clock: u32,
     locked_pause: bool,
@@ -47,6 +47,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
             if state.locked_pause {
                 LockPause();
             }
+            SetClockResolutionPerSecond(state.clock_resolution);
             *data = state.cpart;
             true
         }
@@ -58,7 +59,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
     let mut data = SavedClockState::default();
     unsafe {
         data.cpart.TimeCompressMode = FILE_DB.read_file_i32(file_id)?;
-        data.cpart.ClockResolution = FILE_DB.read_file_u8(file_id)?;
+        data.clock_resolution = FILE_DB.read_file_u8(file_id)?;
         data.game_paused = FILE_DB.read_file_bool(file_id)?;
         data.cpart.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;
         data.cpart.SuperCompression = FILE_DB.read_file_bool(file_id)?;
@@ -78,6 +79,28 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
         FILE_DB.read_file_exact(file_id, &mut data.padding)?;
     }
     Ok(data)
+}
+
+#[no_mangle]
+pub extern "C" fn InitNewGameClockRust() {
+    SetGameTimeSec(GetGameStartingTime());
+    unsafe {
+        STATE.clock.clock_resolution = 1;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn SetClockResolutionPerSecond(timer_per_second: u8) {
+    let timer_per_second = std::cmp::max(0, std::cmp::min(60, timer_per_second));
+    unsafe {
+        STATE.clock.clock_resolution = timer_per_second;
+    }
+}
+
+/// Returns number of clock updates per second
+#[no_mangle]
+pub extern "C" fn GetClockResolution() -> u8 {
+    unsafe { STATE.clock.clock_resolution }
 }
 
 /// Get game starting time in seconds.
