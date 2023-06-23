@@ -107,33 +107,27 @@ void InitNewGameClock() {
 }
 
 // Not to be used too often by things other than internally
-void WarpGameTime(UINT32 uiAdjustment, UINT8 ubWarpCode) {
-  UINT32 uiSaveTimeRate;
-  uiSaveTimeRate = guiGameSecondsPerRealSecond;
-  guiGameSecondsPerRealSecond = uiAdjustment;
-  AdvanceClock(ubWarpCode);
-  guiGameSecondsPerRealSecond = uiSaveTimeRate;
-}
+void WarpGameTime(UINT32 uiAdjustment, UINT8 ubWarpCode) { AdvanceClock(ubWarpCode, uiAdjustment); }
 
-void AdvanceClock(UINT8 ubWarpCode) {
+void AdvanceClock(UINT8 ubWarpCode, u32 game_seconds) {
   if (ubWarpCode != WARPTIME_NO_PROCESSING_OF_EVENTS) {
     guiTimeOfLastEventQuery = GetGameTimeInSec();
     // First of all, events are posted for movements, pending attacks, equipment arrivals, etc. This
     // time adjustment using time compression can possibly pass one or more events in a single pass.
     // So, this list is looked at and processed in sequential order, until the uiAdjustment is fully
     // applied.
-    if (GameEventsPending(guiGameSecondsPerRealSecond)) {
+    if (GameEventsPending(game_seconds)) {
       // If a special event, justifying the cancellation of time compression is reached, the
       // adjustment will be shortened to the time of that event, and will stop processing events,
       // otherwise, all of the events in the time slice will be processed.  The time is adjusted
       // internally as events are processed.
-      ProcessPendingGameEvents(guiGameSecondsPerRealSecond, ubWarpCode);
+      ProcessPendingGameEvents(game_seconds, ubWarpCode);
     } else {
       // Adjust the game clock now.
-      MoveGameTimeForward(guiGameSecondsPerRealSecond);
+      MoveGameTimeForward(game_seconds);
     }
   } else {
-    MoveGameTimeForward(guiGameSecondsPerRealSecond);
+    MoveGameTimeForward(game_seconds);
   }
 
   if (GetGameTimeInSec() < guiPreviousGameClock) {
@@ -332,7 +326,7 @@ void UpdateClockResolution() {
 
   // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
   // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second
-  if (guiGameSecondsPerRealSecond == 0) {
+  if (giTimeCompressMode == TIME_COMPRESS_X0) {
     SetClockResolutionPerSecond(0);
   } else {
     SetClockResolutionPerSecond((UINT8)max(1, (UINT8)(guiGameSecondsPerRealSecond / 60)));
@@ -404,7 +398,7 @@ void UpdateClock() {
   if (uiThousandthsOfThisSecondProcessed >= 1000 && GetClockResolution() == 1) {
     uiLastSecondTime = uiNewTime;
     guiTimesThisSecondProcessed = uiLastTimeProcessed = 0;
-    AdvanceClock(WARPTIME_PROCESS_EVENTS_NORMALLY);
+    AdvanceClock(WARPTIME_PROCESS_EVENTS_NORMALLY, guiGameSecondsPerRealSecond);
   } else if (GetClockResolution() > 1) {
     if (GetClockResolution() != ubLastResolution) {
       guiTimesThisSecondProcessed =
