@@ -129,6 +129,8 @@ bool GetTimeCompressionOn(void);
 
 void SetTimeCompressionOn(bool value);
 
+void StopTimeCompression(void);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

@@ -191,17 +191,6 @@ BOOLEAN DidGameJustStart() {
     return (FALSE);
 }
 
-void StopTimeCompression(void) {
-  if (GetTimeCompressionOn()) {
-    // change the clock resolution to no time passage, but don't actually change the compress mode
-    // (remember it)
-    SetGameSecondsPerRealSecond(0);
-    SetClockResolutionPerSecond(0);
-    SetTimeCompressionOn(false);
-    SetMapScreenBottomDirty(true);
-  }
-}
-
 void StartTimeCompression(void) {
   if (!GetTimeCompressionOn()) {
     if (IsGamePaused()) {

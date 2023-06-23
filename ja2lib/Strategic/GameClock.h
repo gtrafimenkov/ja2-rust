@@ -36,7 +36,6 @@
 UINT32 GetGameSecondsPerFrame();
 void RenderPausedGameBox(void);
 
-void StopTimeCompression(void);
 void StartTimeCompression(void);
 BOOLEAN IsTimeBeingCompressed(void);  // returns FALSE if time isn't currently being compressed for
                                       // ANY reason (various pauses, etc.)

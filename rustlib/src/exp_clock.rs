@@ -279,3 +279,15 @@ pub extern "C" fn SetTimeCompressionOn(value: bool) {
         STATE.clock.time_compression_on = value;
     }
 }
+
+#[no_mangle]
+pub extern "C" fn StopTimeCompression() {
+    if GetTimeCompressionOn() {
+        // change the clock resolution to no time passage, but don't actually change the compress mode
+        // (remember it)
+        SetGameSecondsPerRealSecond(0);
+        SetClockResolutionPerSecond(0);
+        SetTimeCompressionOn(false);
+        exp_ui::SetMapScreenBottomDirty(true);
+    }
+}
