@@ -40,8 +40,6 @@ void StopTimeCompression(void);
 void StartTimeCompression(void);
 BOOLEAN IsTimeBeingCompressed(void);  // returns FALSE if time isn't currently being compressed for
                                       // ANY reason (various pauses, etc.)
-BOOLEAN IsTimeCompressionOn(
-    void);  // returns TRUE if the player currently wants time to be compressing
 
 void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE uiCompressionRate);
 void DecreaseGameTimeCompressionRate();

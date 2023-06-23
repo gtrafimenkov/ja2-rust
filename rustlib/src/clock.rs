@@ -4,6 +4,7 @@ pub struct State {
     pub locked_pause: bool,
     pub clock_resolution: u8, // how many clock updates per second
     pub game_seconds_per_real_second: u32,
+    pub time_compression_on: bool,
 }
 
 pub const NUM_SEC_IN_MIN: u32 = 60;
@@ -25,6 +26,7 @@ impl State {
             locked_pause: false,
             clock_resolution: 1,
             game_seconds_per_real_second: 0,
+            time_compression_on: false,
         }
     }
 

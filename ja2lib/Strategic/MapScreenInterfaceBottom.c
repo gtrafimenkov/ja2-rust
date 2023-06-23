@@ -993,7 +993,7 @@ void EnableDisableTimeCompressButtons(void) {
     DisableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_LESS]);
   } else {
     // disable LESS if time compression is at minimum or OFF
-    if (!IsTimeCompressionOn() || giTimeCompressMode == TIME_COMPRESS_X0) {
+    if (!GetTimeCompressionOn() || giTimeCompressMode == TIME_COMPRESS_X0) {
       DisableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_LESS]);
     } else {
       EnableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_LESS]);
@@ -1001,7 +1001,7 @@ void EnableDisableTimeCompressButtons(void) {
 
     // disable MORE if we're not paused and time compression is at maximum
     // only disable MORE if we're not paused and time compression is at maximum
-    if (IsTimeCompressionOn() && (giTimeCompressMode == TIME_COMPRESS_60MINS)) {
+    if (GetTimeCompressionOn() && (giTimeCompressMode == TIME_COMPRESS_60MINS)) {
       DisableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_MORE]);
     } else {
       EnableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_MORE]);

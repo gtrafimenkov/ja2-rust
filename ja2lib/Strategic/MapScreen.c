@@ -7495,7 +7495,7 @@ void UpdatePausedStatesDueToTimeCompression(void) {
   } else  // time is NOT being compressed
   {
     // but the player would like it to be compressing
-    if (IsTimeCompressionOn() && !gfPauseDueToPlayerGamePause) {
+    if (GetTimeCompressionOn() && !gfPauseDueToPlayerGamePause) {
       // so check if it's legal to start time compressing again
       if (AllowedToTimeCompress()) {
         // unpause game to restart time compresssion

@@ -42,7 +42,6 @@ pub struct SavedClockStateC {
     TimeOfLastEventQuery: u32,
     PauseDueToPlayerGamePause: bool,
     ResetAllPlayerKnowsEnemiesFlags: bool,
-    TimeCompressionOn: bool,
     PreviousGameClock: u32,
     LockPauseStateLastReasonId: u32,
 }
@@ -50,6 +49,7 @@ pub struct SavedClockStateC {
 #[derive(Default)]
 struct SavedClockState {
     cpart: SavedClockStateC,
+    time_compression_on: bool,
     game_seconds_per_real_second: u32,
     clock_resolution: u8,
     game_paused: bool,
@@ -71,6 +71,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
             }
             SetClockResolutionPerSecond(state.clock_resolution);
             SetGameSecondsPerRealSecond(state.game_seconds_per_real_second);
+            SetTimeCompressionOn(state.time_compression_on);
             *data = state.cpart;
             true
         }
@@ -96,7 +97,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
         data.locked_pause = FILE_DB.read_file_bool(file_id)?;
         data.cpart.PauseDueToPlayerGamePause = FILE_DB.read_file_bool(file_id)?;
         data.cpart.ResetAllPlayerKnowsEnemiesFlags = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.TimeCompressionOn = FILE_DB.read_file_bool(file_id)?;
+        data.time_compression_on = FILE_DB.read_file_bool(file_id)?;
         data.cpart.PreviousGameClock = FILE_DB.read_file_u32(file_id)?;
         data.cpart.LockPauseStateLastReasonId = FILE_DB.read_file_u32(file_id)?;
         FILE_DB.read_file_exact(file_id, &mut data.padding)?;
@@ -108,6 +109,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
 pub extern "C" fn InitNewGameClockRust() {
     SetGameTimeSec(GetGameStartingTime());
     SetGameSecondsPerRealSecond(0);
+    SetTimeCompressionOn(false);
     unsafe {
         STATE.clock.clock_resolution = 1;
     }
@@ -263,5 +265,17 @@ pub extern "C" fn GetGameSecondsPerRealSecond() -> u32 {
 pub extern "C" fn SetGameSecondsPerRealSecond(value: u32) {
     unsafe {
         STATE.clock.game_seconds_per_real_second = value;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn GetTimeCompressionOn() -> bool {
+    unsafe { STATE.clock.time_compression_on }
+}
+
+#[no_mangle]
+pub extern "C" fn SetTimeCompressionOn(value: bool) {
+    unsafe {
+        STATE.clock.time_compression_on = value;
     }
 }

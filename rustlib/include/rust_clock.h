@@ -29,7 +29,6 @@ struct SavedClockStateC {
   uint32_t TimeOfLastEventQuery;
   bool PauseDueToPlayerGamePause;
   bool ResetAllPlayerKnowsEnemiesFlags;
-  bool TimeCompressionOn;
   uint32_t PreviousGameClock;
   uint32_t LockPauseStateLastReasonId;
 };
@@ -125,6 +124,10 @@ bool IsPauseLocked(void);
 uint32_t GetGameSecondsPerRealSecond(void);
 
 void SetGameSecondsPerRealSecond(uint32_t value);
+
+bool GetTimeCompressionOn(void);
+
+void SetTimeCompressionOn(bool value);
 
 #ifdef __cplusplus
 } // extern "C"

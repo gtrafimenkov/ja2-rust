@@ -84,7 +84,6 @@ UINT16 usPausedActualHeight;
 UINT32 guiTimeOfLastEventQuery = 0;
 BOOLEAN gfPauseDueToPlayerGamePause = FALSE;
 BOOLEAN gfResetAllPlayerKnowsEnemiesFlags = FALSE;
-BOOLEAN gfTimeCompressionOn = FALSE;
 
 //***When adding new saved time variables, make sure you remove the appropriate amount from the
 // paddingbytes and
@@ -193,18 +192,18 @@ BOOLEAN DidGameJustStart() {
 }
 
 void StopTimeCompression(void) {
-  if (IsTimeCompressionOn()) {
+  if (GetTimeCompressionOn()) {
     // change the clock resolution to no time passage, but don't actually change the compress mode
     // (remember it)
     SetGameSecondsPerRealSecond(0);
     SetClockResolutionPerSecond(0);
-    gfTimeCompressionOn = FALSE;
+    SetTimeCompressionOn(false);
     SetMapScreenBottomDirty(true);
   }
 }
 
 void StartTimeCompression(void) {
-  if (!IsTimeCompressionOn()) {
+  if (!GetTimeCompressionOn()) {
     if (IsGamePaused()) {
       // first have to be allowed to unpause the game
       UnPauseGame();
@@ -241,14 +240,11 @@ void StartTimeCompression(void) {
 
 // returns FALSE if time isn't currently being compressed for ANY reason (various pauses, etc.)
 BOOLEAN IsTimeBeingCompressed(void) {
-  if (!IsTimeCompressionOn() || (giTimeCompressMode == TIME_COMPRESS_X0) || IsGamePaused())
+  if (!GetTimeCompressionOn() || (giTimeCompressMode == TIME_COMPRESS_X0) || IsGamePaused())
     return (FALSE);
   else
     return (TRUE);
 }
-
-// returns TRUE if the player currently doesn't want time to be compressing
-BOOLEAN IsTimeCompressionOn(void) { return (gfTimeCompressionOn); }
 
 void IncreaseGameTimeCompressionRate() {
   // if not already at maximum time compression rate
@@ -332,9 +328,9 @@ void UpdateClockResolution() {
 
   // if the compress mode is X0 or X1
   if (giTimeCompressMode <= TIME_COMPRESS_X1) {
-    gfTimeCompressionOn = FALSE;
+    SetTimeCompressionOn(false);
   } else {
-    gfTimeCompressionOn = TRUE;
+    SetTimeCompressionOn(true);
 
     // handle the player just starting a game
     HandleTimeCompressWithTeamJackedInAndGearedToGo();
@@ -491,7 +487,7 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
   {
-    BOOLEAN time_compression_on = IsTimeCompressionOn();
+    BOOLEAN time_compression_on = GetTimeCompressionOn();
     File_Write(hFile, &time_compression_on, sizeof(BOOLEAN), &uiNumBytesWritten);
     if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
   }
@@ -526,7 +522,6 @@ BOOLEAN LoadGameClock(FileID hFile) {
   gubEnvLightValue = state.EnvLightValue;
   guiTimeOfLastEventQuery = state.TimeOfLastEventQuery;
   gfResetAllPlayerKnowsEnemiesFlags = state.ResetAllPlayerKnowsEnemiesFlags;
-  gfTimeCompressionOn = state.TimeCompressionOn;
   guiPreviousGameClock = state.PreviousGameClock;
 
   swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
