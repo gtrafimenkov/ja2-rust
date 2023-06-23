@@ -22,7 +22,6 @@ struct SavedClockStateC {
   int32_t TimeCompressMode;
   bool TimeInterrupt;
   bool SuperCompression;
-  uint32_t GameSecondsPerRealSecond;
   uint8_t AmbientLightLevel;
   uint32_t EnvTime;
   uint32_t EnvDay;
@@ -122,6 +121,10 @@ void LockPause(void);
 void UnlockPause(void);
 
 bool IsPauseLocked(void);
+
+uint32_t GetGameSecondsPerRealSecond(void);
+
+void SetGameSecondsPerRealSecond(uint32_t value);
 
 #ifdef __cplusplus
 } // extern "C"

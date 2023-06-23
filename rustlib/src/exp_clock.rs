@@ -35,7 +35,6 @@ pub struct SavedClockStateC {
     TimeCompressMode: i32,
     TimeInterrupt: bool,
     SuperCompression: bool,
-    GameSecondsPerRealSecond: u32,
     AmbientLightLevel: u8,
     EnvTime: u32,
     EnvDay: u32,
@@ -51,6 +50,7 @@ pub struct SavedClockStateC {
 #[derive(Default)]
 struct SavedClockState {
     cpart: SavedClockStateC,
+    game_seconds_per_real_second: u32,
     clock_resolution: u8,
     game_paused: bool,
     game_clock: u32,
@@ -70,6 +70,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
                 LockPause();
             }
             SetClockResolutionPerSecond(state.clock_resolution);
+            SetGameSecondsPerRealSecond(state.game_seconds_per_real_second);
             *data = state.cpart;
             true
         }
@@ -86,7 +87,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
         data.cpart.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;
         data.cpart.SuperCompression = FILE_DB.read_file_bool(file_id)?;
         data.game_clock = FILE_DB.read_file_u32(file_id)?;
-        data.cpart.GameSecondsPerRealSecond = FILE_DB.read_file_u32(file_id)?;
+        data.game_seconds_per_real_second = FILE_DB.read_file_u32(file_id)?;
         data.cpart.AmbientLightLevel = FILE_DB.read_file_u8(file_id)?;
         data.cpart.EnvTime = FILE_DB.read_file_u32(file_id)?;
         data.cpart.EnvDay = FILE_DB.read_file_u32(file_id)?;
@@ -106,6 +107,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
 #[no_mangle]
 pub extern "C" fn InitNewGameClockRust() {
     SetGameTimeSec(GetGameStartingTime());
+    SetGameSecondsPerRealSecond(0);
     unsafe {
         STATE.clock.clock_resolution = 1;
     }
@@ -250,4 +252,16 @@ pub extern "C" fn UnlockPause() {
 #[no_mangle]
 pub extern "C" fn IsPauseLocked() -> bool {
     unsafe { STATE.clock.locked_pause }
+}
+
+#[no_mangle]
+pub extern "C" fn GetGameSecondsPerRealSecond() -> u32 {
+    unsafe { STATE.clock.game_seconds_per_real_second }
+}
+
+#[no_mangle]
+pub extern "C" fn SetGameSecondsPerRealSecond(value: u32) {
+    unsafe {
+        STATE.clock.game_seconds_per_real_second = value;
+    }
 }

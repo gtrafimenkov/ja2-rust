@@ -1,8 +1,9 @@
 pub struct State {
     pub game_clock_sec: u32, // current game time in seconds
     pub game_paused: bool,
-    pub locked_pause: bool,   // gfLockPauseState
+    pub locked_pause: bool,
     pub clock_resolution: u8, // how many clock updates per second
+    pub game_seconds_per_real_second: u32,
 }
 
 pub const NUM_SEC_IN_MIN: u32 = 60;
@@ -23,6 +24,7 @@ impl State {
             game_paused: true,
             locked_pause: false,
             clock_resolution: 1,
+            game_seconds_per_real_second: 0,
         }
     }
 
