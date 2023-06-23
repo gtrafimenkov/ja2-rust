@@ -43,7 +43,7 @@ void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReas
 
 void CreateDestroyScreenMaskForPauseGame(void);
 
-void SetClockResolutionToCompressMode(INT32 iCompressMode);
+void SetClockResolutionToCompressMode(enum TIME_COMPRESS_MODE iCompressMode);
 
 // is the clock pause region created currently?
 BOOLEAN fClockMouseRegionCreated = FALSE;
@@ -63,7 +63,6 @@ struct MOUSE_REGION gClockMouseRegion;
 struct MOUSE_REGION gClockScreenMaskMouseRegion;
 void AdvanceClock(UINT8 ubWarpCode);
 
-#define SECONDS_PER_COMPRESSION 1  // 1/2 minute passes every 1 second of real time
 #define SECONDS_PER_COMPRESSION_IN_RTCOMBAT 10
 #define SECONDS_PER_COMPRESSION_IN_TBCOMBAT 10
 #define CLOCK_STRING_HEIGHT 13
@@ -325,8 +324,8 @@ void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE uiCompressionRate) {
   SetClockResolutionToCompressMode(giTimeCompressMode);
 }
 
-void SetClockResolutionToCompressMode(INT32 iCompressMode) {
-  guiGameSecondsPerRealSecond = GetTimeCompressSpeed(iCompressMode) * SECONDS_PER_COMPRESSION;
+void SetClockResolutionToCompressMode(enum TIME_COMPRESS_MODE iCompressMode) {
+  guiGameSecondsPerRealSecond = GetTimeCompressSpeed(iCompressMode);
 
   // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
   // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second

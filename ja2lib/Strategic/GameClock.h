@@ -43,7 +43,7 @@ BOOLEAN IsTimeBeingCompressed(void);  // returns FALSE if time isn't currently b
 BOOLEAN IsTimeCompressionOn(
     void);  // returns TRUE if the player currently wants time to be compressing
 
-void SetGameTimeCompressionLevel(UINT32 uiCompressionRate);
+void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE uiCompressionRate);
 void DecreaseGameTimeCompressionRate();
 void IncreaseGameTimeCompressionRate();
 

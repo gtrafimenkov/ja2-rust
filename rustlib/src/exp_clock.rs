@@ -8,11 +8,11 @@ use std::io;
 #[repr(C)]
 #[allow(non_camel_case_types)]
 pub enum TIME_COMPRESS_MODE {
-    TIME_COMPRESS_X0 = 0, // pause?
-    TIME_COMPRESS_X1,     // ??? what is that: the UI modes are 5 min, 30 min, 60 min
-    TIME_COMPRESS_5MINS,
-    TIME_COMPRESS_30MINS,
-    TIME_COMPRESS_60MINS,
+    TIME_COMPRESS_X0 = 0, // time pause
+    TIME_COMPRESS_X1,     // ? tactical mode
+    TIME_COMPRESS_5MINS,  // ? strategic mode 5 min compression
+    TIME_COMPRESS_30MINS, // ? strategic mode 30 min compression
+    TIME_COMPRESS_60MINS, // ? strategic mode 60 min compression
 }
 
 /// Returns some modifier to the game speed.
@@ -21,7 +21,7 @@ pub extern "C" fn GetTimeCompressSpeed(mode: TIME_COMPRESS_MODE) -> i32 {
     match mode {
         TIME_COMPRESS_MODE::TIME_COMPRESS_X0 => 0,
         TIME_COMPRESS_MODE::TIME_COMPRESS_X1 => 1,
-        TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS => 5 * 50,
+        TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS => 5 * 60,
         TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS => 30 * 60,
         TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS => 60 * 60,
     }
