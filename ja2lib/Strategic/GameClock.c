@@ -81,7 +81,6 @@ UINT32 guiGameSecondsPerRealSecond;
 UINT32 guiTimesThisSecondProcessed = 0;
 INT32 iPausedPopUpBox = -1;
 CHAR16 gswzWorldTimeStr[20];
-INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS] = {0, 1, 5 * 60, 30 * 60, 60 * 60};
 UINT16 usPausedActualWidth;
 UINT16 usPausedActualHeight;
 UINT32 guiTimeOfLastEventQuery = 0;
@@ -299,9 +298,7 @@ void DecreaseGameTimeCompressionRate() {
   }
 }
 
-void SetGameTimeCompressionLevel(UINT32 uiCompressionRate) {
-  Assert(uiCompressionRate < NUM_TIME_COMPRESS_SPEEDS);
-
+void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE uiCompressionRate) {
   if (IsTacticalMode()) {
     if (uiCompressionRate != TIME_COMPRESS_X1) {
       uiCompressionRate = TIME_COMPRESS_X1;
@@ -329,7 +326,7 @@ void SetGameTimeCompressionLevel(UINT32 uiCompressionRate) {
 }
 
 void SetClockResolutionToCompressMode(INT32 iCompressMode) {
-  guiGameSecondsPerRealSecond = giTimeCompressSpeeds[iCompressMode] * SECONDS_PER_COMPRESSION;
+  guiGameSecondsPerRealSecond = GetTimeCompressSpeed(iCompressMode) * SECONDS_PER_COMPRESSION;
 
   // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
   // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second

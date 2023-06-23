@@ -7,6 +7,14 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+enum TIME_COMPRESS_MODE {
+  TIME_COMPRESS_X0 = 0,
+  TIME_COMPRESS_X1,
+  TIME_COMPRESS_5MINS,
+  TIME_COMPRESS_30MINS,
+  TIME_COMPRESS_60MINS,
+};
+
 /**
  * C part of the saved gameclock state
  */
@@ -30,6 +38,11 @@ struct SavedClockStateC {
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+/**
+ * Returns some modifier to the game speed.
+ */
+int32_t GetTimeCompressSpeed(enum TIME_COMPRESS_MODE mode);
 
 bool LoadSavedClockState(FileID file_id, struct SavedClockStateC *data);
 

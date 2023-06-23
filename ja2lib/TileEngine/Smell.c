@@ -215,7 +215,6 @@ void DecayBloodAndSmells(UINT32 uiTime) {
       uiCheckTime = 5 * 1800;
       break;
     case TIME_COMPRESS_60MINS:  // rate of 3600 seconds per real second
-    case TIME_SUPER_COMPRESS:   // should not be used but just in frigging case...
       uiCheckTime = 5 * 3600;
       break;
     default:  // not compressing

@@ -43,29 +43,9 @@ BOOLEAN IsTimeBeingCompressed(void);  // returns FALSE if time isn't currently b
 BOOLEAN IsTimeCompressionOn(
     void);  // returns TRUE if the player currently wants time to be compressing
 
-// USING TIME COMPRESSION
-// Allows the setting/changing/access of time rate via predefined compression values.
-// These functions change the index in giTimeCompressSpeeds which aren't in any
-// particular mathematical pattern.  The higher the index, the faster the time is processed
-// per frame.  These functions have their limits, so game time will also be between
-// TIME_COMPRESS_X1 to TIME_COMPRESS_X8 based in the laptop time compression.
 void SetGameTimeCompressionLevel(UINT32 uiCompressionRate);
 void DecreaseGameTimeCompressionRate();
 void IncreaseGameTimeCompressionRate();
-
-// time compression defines
-enum {
-  TIME_COMPRESS_X0,
-  TIME_COMPRESS_X1,
-  TIME_COMPRESS_5MINS,
-  TIME_COMPRESS_30MINS,
-  TIME_COMPRESS_60MINS,
-  TIME_SUPER_COMPRESS,
-  NUM_TIME_COMPRESS_SPEEDS
-};
-
-// dereferenced with the above enumerations to provide the actual time compression rate.
-extern INT32 giTimeCompressSpeeds[NUM_TIME_COMPRESS_SPEEDS];
 
 #define FIRST_ARRIVAL_DELAY ((6 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN))  // 7am ( 6hours later)
 
