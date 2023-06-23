@@ -204,7 +204,10 @@ void StopTimeCompression(void) {
   if (gfTimeCompressionOn) {
     // change the clock resolution to no time passage, but don't actually change the compress mode
     // (remember it)
-    SetClockResolutionToCompressMode(TIME_COMPRESS_X0);
+    guiGameSecondsPerRealSecond = 0;
+    SetClockResolutionPerSecond(0);
+    gfTimeCompressionOn = FALSE;
+    SetMapScreenBottomDirty(true);
   }
 }
 
