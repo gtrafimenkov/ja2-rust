@@ -43,7 +43,7 @@ void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReas
 
 void CreateDestroyScreenMaskForPauseGame(void);
 
-void SetClockResolutionToCompressMode(enum TIME_COMPRESS_MODE iCompressMode);
+void UpdateClockResolution();
 
 // is the clock pause region created currently?
 BOOLEAN fClockMouseRegionCreated = FALSE;
@@ -201,7 +201,7 @@ BOOLEAN DidGameJustStart() {
 }
 
 void StopTimeCompression(void) {
-  if (gfTimeCompressionOn) {
+  if (IsTimeCompressionOn()) {
     // change the clock resolution to no time passage, but don't actually change the compress mode
     // (remember it)
     guiGameSecondsPerRealSecond = 0;
@@ -212,7 +212,7 @@ void StopTimeCompression(void) {
 }
 
 void StartTimeCompression(void) {
-  if (!gfTimeCompressionOn) {
+  if (!IsTimeCompressionOn()) {
     if (IsGamePaused()) {
       // first have to be allowed to unpause the game
       UnPauseGame();
@@ -236,7 +236,7 @@ void StartTimeCompression(void) {
     }
 
     // change clock resolution to the current compression mode
-    SetClockResolutionToCompressMode(giTimeCompressMode);
+    UpdateClockResolution();
 
     // if it's the first time we're doing this since entering map screen (which reset the flag)
     if (!HasTimeCompressOccured()) {
@@ -249,7 +249,7 @@ void StartTimeCompression(void) {
 
 // returns FALSE if time isn't currently being compressed for ANY reason (various pauses, etc.)
 BOOLEAN IsTimeBeingCompressed(void) {
-  if (!gfTimeCompressionOn || (giTimeCompressMode == TIME_COMPRESS_X0) || IsGamePaused())
+  if (!IsTimeCompressionOn() || (giTimeCompressMode == TIME_COMPRESS_X0) || IsGamePaused())
     return (FALSE);
   else
     return (TRUE);
@@ -275,7 +275,7 @@ void IncreaseGameTimeCompressionRate() {
       giTimeCompressMode++;
     }
 
-    SetClockResolutionToCompressMode(giTimeCompressMode);
+    UpdateClockResolution();
   }
 }
 
@@ -296,7 +296,7 @@ void DecreaseGameTimeCompressionRate() {
       giTimeCompressMode--;
     }
 
-    SetClockResolutionToCompressMode(giTimeCompressMode);
+    UpdateClockResolution();
   }
 }
 
@@ -324,11 +324,11 @@ void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE uiCompressionRate) {
   }
 
   giTimeCompressMode = uiCompressionRate;
-  SetClockResolutionToCompressMode(giTimeCompressMode);
+  UpdateClockResolution();
 }
 
-void SetClockResolutionToCompressMode(enum TIME_COMPRESS_MODE iCompressMode) {
-  guiGameSecondsPerRealSecond = GetTimeCompressSpeed(iCompressMode);
+void UpdateClockResolution() {
+  guiGameSecondsPerRealSecond = GetTimeCompressSpeed(giTimeCompressMode);
 
   // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
   // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second
@@ -339,7 +339,7 @@ void SetClockResolutionToCompressMode(enum TIME_COMPRESS_MODE iCompressMode) {
   }
 
   // if the compress mode is X0 or X1
-  if (iCompressMode <= TIME_COMPRESS_X1) {
+  if (giTimeCompressMode <= TIME_COMPRESS_X1) {
     gfTimeCompressionOn = FALSE;
   } else {
     gfTimeCompressionOn = TRUE;
@@ -492,8 +492,11 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   File_Write(hFile, &gfResetAllPlayerKnowsEnemiesFlags, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  File_Write(hFile, &gfTimeCompressionOn, sizeof(BOOLEAN), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
+  {
+    BOOLEAN time_compression_on = IsTimeCompressionOn();
+    File_Write(hFile, &time_compression_on, sizeof(BOOLEAN), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
+  }
 
   File_Write(hFile, &guiPreviousGameClock, sizeof(UINT32), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(UINT32)) return (FALSE);
