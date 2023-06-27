@@ -751,7 +751,7 @@ void DisplayCompressMode(void) {
 
   // get compress speed
   if (IsTimeBeingCompressed()) {
-    swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[giTimeCompressMode]);
+    swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[GetTimeCompressMode()]);
   } else {
     swprintf(sString, ARR_SIZE(sString), L"%s", sTimeStrings[0]);
   }
@@ -770,7 +770,7 @@ void DisplayCompressMode(void) {
     guiCompressionStringBaseTime = GetJA2Clock();
   }
 
-  if ((giTimeCompressMode != 0) && (IsGamePaused() == FALSE)) {
+  if ((GetTimeCompressMode() != TIME_COMPRESS_X0) && (IsGamePaused() == FALSE)) {
     usColor = FONT_LTGREEN;
   }
 
@@ -993,7 +993,7 @@ void EnableDisableTimeCompressButtons(void) {
     DisableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_LESS]);
   } else {
     // disable LESS if time compression is at minimum or OFF
-    if (!GetTimeCompressionOn() || giTimeCompressMode == TIME_COMPRESS_X0) {
+    if (!GetTimeCompressionOn() || GetTimeCompressMode() == TIME_COMPRESS_X0) {
       DisableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_LESS]);
     } else {
       EnableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_LESS]);
@@ -1001,7 +1001,7 @@ void EnableDisableTimeCompressButtons(void) {
 
     // disable MORE if we're not paused and time compression is at maximum
     // only disable MORE if we're not paused and time compression is at maximum
-    if (GetTimeCompressionOn() && (giTimeCompressMode == TIME_COMPRESS_60MINS)) {
+    if (GetTimeCompressionOn() && (GetTimeCompressMode() == TIME_COMPRESS_60MINS)) {
       DisableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_MORE]);
     } else {
       EnableButton(guiMapBottomTimeButtons[MAP_TIME_COMPRESS_MORE]);

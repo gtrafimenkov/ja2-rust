@@ -206,7 +206,7 @@ void DecayBloodAndSmells(UINT32 uiTime) {
   }
 
   // period between checks, in game seconds
-  switch (giTimeCompressMode) {
+  switch (GetTimeCompressMode()) {
     // in time compression, let this happen every 5 REAL seconds
     case TIME_COMPRESS_5MINS:  // rate of 300 seconds per real second
       uiCheckTime = 5 * 300;

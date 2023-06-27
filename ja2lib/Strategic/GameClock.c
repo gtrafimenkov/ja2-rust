@@ -71,7 +71,6 @@ void AdvanceClock(UINT8 ubWarpCode);
 
 // These contain all of the information about the game time, rate of time, etc.
 // All of these get saved and loaded.
-INT32 giTimeCompressMode = TIME_COMPRESS_X0;
 BOOLEAN gfTimeInterrupt = FALSE;
 BOOLEAN gfTimeInterruptPause = FALSE;
 BOOLEAN fSuperCompression = FALSE;
@@ -211,7 +210,7 @@ void StartTimeCompression(void) {
     }
 
     // if no compression mode is set, increase it first
-    if (giTimeCompressMode <= TIME_COMPRESS_X1) {
+    if (GetTimeCompressMode() <= TIME_COMPRESS_X1) {
       IncreaseGameTimeCompressionRate();
     }
 
@@ -229,7 +228,7 @@ void StartTimeCompression(void) {
 
 // returns FALSE if time isn't currently being compressed for ANY reason (various pauses, etc.)
 BOOLEAN IsTimeBeingCompressed(void) {
-  if (!GetTimeCompressionOn() || (giTimeCompressMode == TIME_COMPRESS_X0) || IsGamePaused())
+  if (!GetTimeCompressionOn() || (GetTimeCompressMode() == TIME_COMPRESS_X0) || IsGamePaused())
     return (FALSE);
   else
     return (TRUE);
@@ -237,7 +236,7 @@ BOOLEAN IsTimeBeingCompressed(void) {
 
 void IncreaseGameTimeCompressionRate() {
   // if not already at maximum time compression rate
-  if (giTimeCompressMode < TIME_COMPRESS_60MINS) {
+  if (GetTimeCompressMode() < TIME_COMPRESS_60MINS) {
     // check that we can
     if (!AllowedToTimeCompress()) {
       // not allowed to compress time
@@ -248,7 +247,7 @@ void IncreaseGameTimeCompressionRate() {
     giTimeCompressMode++;
 
     // in map screen, we wanna have to skip over x1 compression and go straight to 5x
-    if ((IsMapScreen_2()) && (giTimeCompressMode == TIME_COMPRESS_X1)) {
+    if ((IsMapScreen_2()) && (GetTimeCompressMode() == TIME_COMPRESS_X1)) {
       giTimeCompressMode++;
     }
 
@@ -258,7 +257,7 @@ void IncreaseGameTimeCompressionRate() {
 
 void DecreaseGameTimeCompressionRate() {
   // if not already at minimum time compression rate
-  if (giTimeCompressMode > TIME_COMPRESS_X0) {
+  if (GetTimeCompressMode() > TIME_COMPRESS_X0) {
     // check that we can
     if (!AllowedToTimeCompress()) {
       // not allowed to compress time
@@ -269,7 +268,7 @@ void DecreaseGameTimeCompressionRate() {
     giTimeCompressMode--;
 
     // in map screen, we wanna have to skip over x1 compression and go straight to 5x
-    if ((IsMapScreen_2()) && (giTimeCompressMode == TIME_COMPRESS_X1)) {
+    if ((IsMapScreen_2()) && (GetTimeCompressMode() == TIME_COMPRESS_X1)) {
       giTimeCompressMode--;
     }
 
@@ -277,21 +276,21 @@ void DecreaseGameTimeCompressionRate() {
   }
 }
 
-void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE uiCompressionRate) {
+void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE compress_mode) {
   if (IsTacticalMode()) {
-    if (uiCompressionRate != TIME_COMPRESS_X1) {
-      uiCompressionRate = TIME_COMPRESS_X1;
+    if (compress_mode != TIME_COMPRESS_X1) {
+      compress_mode = TIME_COMPRESS_X1;
     }
   }
 
   if (IsMapScreen_2()) {
-    if (uiCompressionRate == TIME_COMPRESS_X1) {
-      uiCompressionRate = TIME_COMPRESS_X0;
+    if (compress_mode == TIME_COMPRESS_X1) {
+      compress_mode = TIME_COMPRESS_X0;
     }
   }
 
   // if we're attempting time compression
-  if (uiCompressionRate >= TIME_COMPRESS_5MINS) {
+  if (compress_mode >= TIME_COMPRESS_5MINS) {
     // check that we can
     if (!AllowedToTimeCompress()) {
       // not allowed to compress time
@@ -300,23 +299,23 @@ void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE uiCompressionRate) {
     }
   }
 
-  giTimeCompressMode = uiCompressionRate;
+  SetTimeCompressMode(compress_mode);
   UpdateClockResolution();
 }
 
 void UpdateClockResolution() {
-  SetGameSecondsPerRealSecond(GetTimeCompressSpeed(giTimeCompressMode));
+  SetGameSecondsPerRealSecond(GetTimeCompressSpeed());
 
   // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
   // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second
-  if (giTimeCompressMode == TIME_COMPRESS_X0) {
+  if (GetTimeCompressMode() == TIME_COMPRESS_X0) {
     SetClockResolutionPerSecond(0);
   } else {
     SetClockResolutionPerSecond((UINT8)max(1, (UINT8)(GetGameSecondsPerRealSecond() / 60)));
   }
 
   // if the compress mode is X0 or X1
-  if (giTimeCompressMode <= TIME_COMPRESS_X1) {
+  if (GetTimeCompressMode() <= TIME_COMPRESS_X1) {
     SetTimeCompressionOn(false);
   } else {
     SetTimeCompressionOn(true);
@@ -421,8 +420,11 @@ void UpdateClock() {
 BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState) {
   UINT32 uiNumBytesWritten = 0;
 
-  File_Write(hFile, &giTimeCompressMode, sizeof(INT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT32)) return (FALSE);
+  {
+    i32 time_compress_mode = GetTimeCompressMode();
+    File_Write(hFile, &time_compress_mode, sizeof(INT32), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(INT32)) return (FALSE);
+  }
 
   {
     u8 clock_resolution = GetClockResolution();
@@ -502,7 +504,6 @@ BOOLEAN LoadGameClock(FileID hFile) {
     return false;
   }
 
-  giTimeCompressMode = state.TimeCompressMode;
   gfTimeInterrupt = state.TimeInterrupt;
   fSuperCompression = state.SuperCompression;
   ubAmbientLightLevel = state.AmbientLightLevel;
@@ -562,7 +563,7 @@ void HandlePlayerPauseUnPauseOfGame(void) {
   if (IsGamePaused() && gfPauseDueToPlayerGamePause) {
     // If in game screen...
     if (IsTacticalMode()) {
-      if (giTimeCompressMode == TIME_COMPRESS_X0) {
+      if (GetTimeCompressMode() == TIME_COMPRESS_X0) {
         giTimeCompressMode++;
       }
 

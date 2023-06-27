@@ -1,3 +1,12 @@
+#[derive(Copy, Clone)]
+pub enum TimeCompressMode {
+    TimeCompressX0 = 0, // time pause
+    TimeCompressX1,     // ? tactical mode
+    TimeCompress5mins,  // ? strategic mode 5 min compression
+    TimeCompress30mins, // ? strategic mode 30 min compression
+    TimeCompress60mins, // ? strategic mode 60 min compression
+}
+
 pub struct State {
     pub game_clock_sec: u32, // current game time in seconds
     pub game_paused: bool,
@@ -5,6 +14,7 @@ pub struct State {
     pub clock_resolution: u8, // how many clock updates per second
     pub game_seconds_per_real_second: u32,
     pub time_compression_on: bool,
+    pub time_compress_mode: TimeCompressMode,
 }
 
 pub const NUM_SEC_IN_MIN: u32 = 60;
@@ -27,6 +37,7 @@ impl State {
             clock_resolution: 1,
             game_seconds_per_real_second: 0,
             time_compression_on: false,
+            time_compress_mode: TimeCompressMode::TimeCompressX0,
         }
     }
 

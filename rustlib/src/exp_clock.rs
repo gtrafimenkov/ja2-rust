@@ -15,10 +15,51 @@ pub enum TIME_COMPRESS_MODE {
     TIME_COMPRESS_60MINS, // ? strategic mode 60 min compression
 }
 
-/// Returns some modifier to the game speed.
+impl TIME_COMPRESS_MODE {
+    fn from_internal(value: clock::TimeCompressMode) -> Self {
+        match value {
+            clock::TimeCompressMode::TimeCompressX0 => TIME_COMPRESS_MODE::TIME_COMPRESS_X0,
+            clock::TimeCompressMode::TimeCompressX1 => TIME_COMPRESS_MODE::TIME_COMPRESS_X1,
+            clock::TimeCompressMode::TimeCompress5mins => TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS,
+            clock::TimeCompressMode::TimeCompress30mins => TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS,
+            clock::TimeCompressMode::TimeCompress60mins => TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS,
+        }
+    }
+    fn from_i32(value: i32) -> Self {
+        match value {
+            0 => TIME_COMPRESS_MODE::TIME_COMPRESS_X0,
+            1 => TIME_COMPRESS_MODE::TIME_COMPRESS_X1,
+            2 => TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS,
+            3 => TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS,
+            4 => TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS,
+            _ => panic!("invalid value {value} for TIME_COMPRESS_MODE enum"),
+        }
+    }
+    fn to_internal(&self) -> clock::TimeCompressMode {
+        match self {
+            TIME_COMPRESS_MODE::TIME_COMPRESS_X0 => clock::TimeCompressMode::TimeCompressX0,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_X1 => clock::TimeCompressMode::TimeCompressX1,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS => clock::TimeCompressMode::TimeCompress5mins,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS => clock::TimeCompressMode::TimeCompress30mins,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS => clock::TimeCompressMode::TimeCompress60mins,
+        }
+    }
+}
+
 #[no_mangle]
-pub extern "C" fn GetTimeCompressSpeed(mode: TIME_COMPRESS_MODE) -> i32 {
-    match mode {
+pub extern "C" fn GetTimeCompressMode() -> TIME_COMPRESS_MODE {
+    unsafe { TIME_COMPRESS_MODE::from_internal(STATE.clock.time_compress_mode) }
+}
+
+#[no_mangle]
+pub extern "C" fn SetTimeCompressMode(mode: TIME_COMPRESS_MODE) {
+    unsafe { STATE.clock.time_compress_mode = mode.to_internal() }
+}
+
+/// Returns some modifier of the game speed.
+#[no_mangle]
+pub extern "C" fn GetTimeCompressSpeed() -> i32 {
+    match GetTimeCompressMode() {
         TIME_COMPRESS_MODE::TIME_COMPRESS_X0 => 0,
         TIME_COMPRESS_MODE::TIME_COMPRESS_X1 => 1,
         TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS => 5 * 60,
@@ -32,7 +73,6 @@ pub extern "C" fn GetTimeCompressSpeed(mode: TIME_COMPRESS_MODE) -> i32 {
 #[derive(Default)]
 /// C part of the saved gameclock state
 pub struct SavedClockStateC {
-    TimeCompressMode: i32,
     TimeInterrupt: bool,
     SuperCompression: bool,
     AmbientLightLevel: u8,
@@ -50,6 +90,7 @@ pub struct SavedClockStateC {
 struct SavedClockState {
     cpart: SavedClockStateC,
     time_compression_on: bool,
+    time_compress_mode: i32,
     game_seconds_per_real_second: u32,
     clock_resolution: u8,
     game_paused: bool,
@@ -72,6 +113,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
             SetClockResolutionPerSecond(state.clock_resolution);
             SetGameSecondsPerRealSecond(state.game_seconds_per_real_second);
             SetTimeCompressionOn(state.time_compression_on);
+            SetTimeCompressMode(TIME_COMPRESS_MODE::from_i32(state.time_compress_mode));
             *data = state.cpart;
             true
         }
@@ -82,7 +124,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
 fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
     let mut data = SavedClockState::default();
     unsafe {
-        data.cpart.TimeCompressMode = FILE_DB.read_file_i32(file_id)?;
+        data.time_compress_mode = FILE_DB.read_file_i32(file_id)?;
         data.clock_resolution = FILE_DB.read_file_u8(file_id)?;
         data.game_paused = FILE_DB.read_file_bool(file_id)?;
         data.cpart.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;

@@ -46,9 +46,6 @@ void IncreaseGameTimeCompressionRate();
 
 #define FIRST_ARRIVAL_DELAY ((6 * NUM_SEC_IN_HOUR) + (0 * NUM_SEC_IN_MIN))  // 7am ( 6hours later)
 
-// compress mode now in use
-extern INT32 giTimeCompressMode;
-
 enum {
   WARPTIME_NO_PROCESSING_OF_EVENTS,
   WARPTIME_PROCESS_EVENTS_NORMALLY,

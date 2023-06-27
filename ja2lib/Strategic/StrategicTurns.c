@@ -54,11 +54,11 @@ void HandleStrategicTurn() {
     if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT)) {
       guiLastTacticalRealTime = uiTime;
     } else {
-      if (giTimeCompressMode <= TIME_COMPRESS_X1) {
+      if (GetTimeCompressMode() <= TIME_COMPRESS_X1) {
         uiCheckTime = NUM_REAL_SEC_PER_TACTICAL_TURN;
       } else {
         // OK, if we have compressed time...., adjust our check value to be faster....
-        uiCheckTime = NUM_REAL_SEC_PER_TACTICAL_TURN / (GetTimeCompressSpeed(giTimeCompressMode) *
+        uiCheckTime = NUM_REAL_SEC_PER_TACTICAL_TURN / (GetTimeCompressSpeed() *
                                                         RT_COMPRESSION_TACTICAL_TURN_MODIFIER);
       }
 

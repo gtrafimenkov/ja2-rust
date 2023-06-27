@@ -19,7 +19,6 @@ enum TIME_COMPRESS_MODE {
  * C part of the saved gameclock state
  */
 struct SavedClockStateC {
-  int32_t TimeCompressMode;
   bool TimeInterrupt;
   bool SuperCompression;
   uint8_t AmbientLightLevel;
@@ -37,10 +36,14 @@ struct SavedClockStateC {
 extern "C" {
 #endif // __cplusplus
 
+enum TIME_COMPRESS_MODE GetTimeCompressMode(void);
+
+void SetTimeCompressMode(enum TIME_COMPRESS_MODE mode);
+
 /**
- * Returns some modifier to the game speed.
+ * Returns some modifier of the game speed.
  */
-int32_t GetTimeCompressSpeed(enum TIME_COMPRESS_MODE mode);
+int32_t GetTimeCompressSpeed(void);
 
 bool LoadSavedClockState(FileID file_id, struct SavedClockStateC *data);
 
