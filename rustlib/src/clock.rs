@@ -7,6 +7,29 @@ pub enum TimeCompressMode {
     TimeCompress60mins, // ? strategic mode 60 min compression
 }
 
+impl TimeCompressMode {
+    pub fn get_next(&self) -> Self {
+        match self {
+            TimeCompressMode::TimeCompressX0 => TimeCompressMode::TimeCompressX1,
+            TimeCompressMode::TimeCompressX1 => TimeCompressMode::TimeCompress5mins,
+            TimeCompressMode::TimeCompress5mins => TimeCompressMode::TimeCompress30mins,
+            TimeCompressMode::TimeCompress30mins => TimeCompressMode::TimeCompress60mins,
+            TimeCompressMode::TimeCompress60mins => {
+                panic!("no time compression mode after 60 min")
+            }
+        }
+    }
+    pub fn get_prev(&self) -> Self {
+        match self {
+            TimeCompressMode::TimeCompressX0 => panic!("no time compression mode before X0"),
+            TimeCompressMode::TimeCompressX1 => TimeCompressMode::TimeCompressX0,
+            TimeCompressMode::TimeCompress5mins => TimeCompressMode::TimeCompressX1,
+            TimeCompressMode::TimeCompress30mins => TimeCompressMode::TimeCompress5mins,
+            TimeCompressMode::TimeCompress60mins => TimeCompressMode::TimeCompress30mins,
+        }
+    }
+}
+
 pub struct State {
     pub game_clock_sec: u32, // current game time in seconds
     pub game_paused: bool,
@@ -64,6 +87,14 @@ impl State {
 
     pub fn is_night_time(&self) -> bool {
         !self.is_day_time()
+    }
+
+    pub fn inc_time_compress_mode(&mut self) {
+        self.time_compress_mode = self.time_compress_mode.get_next();
+    }
+
+    pub fn dec_time_compress_mode(&mut self) {
+        self.time_compress_mode = self.time_compress_mode.get_prev();
     }
 }
 

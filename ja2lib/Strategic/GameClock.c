@@ -61,7 +61,7 @@ BOOLEAN gfJustFinishedAPause = FALSE;
 // clock mouse region
 struct MOUSE_REGION gClockMouseRegion;
 struct MOUSE_REGION gClockScreenMaskMouseRegion;
-void AdvanceClock(UINT8 ubWarpCode);
+void AdvanceClock(UINT8 ubWarpCode, u32 game_seconds);
 
 #define SECONDS_PER_COMPRESSION_IN_RTCOMBAT 10
 #define SECONDS_PER_COMPRESSION_IN_TBCOMBAT 10
@@ -244,11 +244,11 @@ void IncreaseGameTimeCompressionRate() {
       return;
     }
 
-    giTimeCompressMode++;
+    IncTimeCompressMode();
 
     // in map screen, we wanna have to skip over x1 compression and go straight to 5x
     if ((IsMapScreen_2()) && (GetTimeCompressMode() == TIME_COMPRESS_X1)) {
-      giTimeCompressMode++;
+      IncTimeCompressMode();
     }
 
     UpdateClockResolution();
@@ -265,11 +265,11 @@ void DecreaseGameTimeCompressionRate() {
       return;
     }
 
-    giTimeCompressMode--;
+    DecTimeCompressMode();
 
     // in map screen, we wanna have to skip over x1 compression and go straight to 5x
     if ((IsMapScreen_2()) && (GetTimeCompressMode() == TIME_COMPRESS_X1)) {
-      giTimeCompressMode--;
+      DecTimeCompressMode();
     }
 
     UpdateClockResolution();
@@ -564,7 +564,7 @@ void HandlePlayerPauseUnPauseOfGame(void) {
     // If in game screen...
     if (IsTacticalMode()) {
       if (GetTimeCompressMode() == TIME_COMPRESS_X0) {
-        giTimeCompressMode++;
+        IncTimeCompressMode();
       }
 
       // ATE: re-render

@@ -56,6 +56,16 @@ pub extern "C" fn SetTimeCompressMode(mode: TIME_COMPRESS_MODE) {
     unsafe { STATE.clock.time_compress_mode = mode.to_internal() }
 }
 
+#[no_mangle]
+pub extern "C" fn IncTimeCompressMode() {
+    unsafe { STATE.clock.inc_time_compress_mode() }
+}
+
+#[no_mangle]
+pub extern "C" fn DecTimeCompressMode() {
+    unsafe { STATE.clock.dec_time_compress_mode() }
+}
+
 /// Returns some modifier of the game speed.
 #[no_mangle]
 pub extern "C" fn GetTimeCompressSpeed() -> i32 {

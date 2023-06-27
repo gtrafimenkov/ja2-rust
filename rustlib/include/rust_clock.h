@@ -40,6 +40,10 @@ enum TIME_COMPRESS_MODE GetTimeCompressMode(void);
 
 void SetTimeCompressMode(enum TIME_COMPRESS_MODE mode);
 
+void IncTimeCompressMode(void);
+
+void DecTimeCompressMode(void);
+
 /**
  * Returns some modifier of the game speed.
  */
