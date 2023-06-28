@@ -47,13 +47,11 @@ void DecTimeCompressMode(void);
 /**
  * Returns some modifier of the game speed.
  */
-int32_t GetTimeCompressSpeed(void);
+uint32_t GetTimeCompressSpeed(void);
 
 bool LoadSavedClockState(FileID file_id, struct SavedClockStateC *data);
 
 void InitNewGameClockRust(void);
-
-void SetClockResolutionPerSecond(uint8_t timer_per_second);
 
 /**
  * Returns number of clock updates per second
@@ -137,6 +135,8 @@ bool GetTimeCompressionOn(void);
 void SetTimeCompressionOn(bool value);
 
 void StopTimeCompression(void);
+
+void UpdateClockResolutionRust(void);
 
 #ifdef __cplusplus
 } // extern "C"

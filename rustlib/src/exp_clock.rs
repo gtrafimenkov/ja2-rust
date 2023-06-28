@@ -7,6 +7,7 @@ use std::io;
 
 #[repr(C)]
 #[allow(non_camel_case_types)]
+#[derive(PartialEq, PartialOrd)]
 pub enum TIME_COMPRESS_MODE {
     TIME_COMPRESS_X0 = 0, // time pause
     TIME_COMPRESS_X1,     // ? tactical mode
@@ -68,7 +69,7 @@ pub extern "C" fn DecTimeCompressMode() {
 
 /// Returns some modifier of the game speed.
 #[no_mangle]
-pub extern "C" fn GetTimeCompressSpeed() -> i32 {
+pub extern "C" fn GetTimeCompressSpeed() -> u32 {
     match GetTimeCompressMode() {
         TIME_COMPRESS_MODE::TIME_COMPRESS_X0 => 0,
         TIME_COMPRESS_MODE::TIME_COMPRESS_X1 => 1,
@@ -120,7 +121,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
             if state.locked_pause {
                 LockPause();
             }
-            SetClockResolutionPerSecond(state.clock_resolution);
+            set_clock_resolution_per_second(state.clock_resolution);
             SetGameSecondsPerRealSecond(state.game_seconds_per_real_second);
             SetTimeCompressionOn(state.time_compression_on);
             SetTimeCompressMode(TIME_COMPRESS_MODE::from_i32(state.time_compress_mode));
@@ -167,8 +168,7 @@ pub extern "C" fn InitNewGameClockRust() {
     }
 }
 
-#[no_mangle]
-pub extern "C" fn SetClockResolutionPerSecond(timer_per_second: u8) {
+fn set_clock_resolution_per_second(timer_per_second: u8) {
     let timer_per_second = std::cmp::max(0, std::cmp::min(60, timer_per_second));
     unsafe {
         STATE.clock.clock_resolution = timer_per_second;
@@ -338,8 +338,32 @@ pub extern "C" fn StopTimeCompression() {
         // change the clock resolution to no time passage, but don't actually change the compress mode
         // (remember it)
         SetGameSecondsPerRealSecond(0);
-        SetClockResolutionPerSecond(0);
+        set_clock_resolution_per_second(0);
         SetTimeCompressionOn(false);
         exp_ui::SetMapScreenBottomDirty(true);
     }
+}
+
+#[no_mangle]
+pub extern "C" fn UpdateClockResolutionRust() {
+    SetGameSecondsPerRealSecond(GetTimeCompressSpeed());
+
+    // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
+    // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second
+    if GetTimeCompressMode() == TIME_COMPRESS_MODE::TIME_COMPRESS_X0 {
+        set_clock_resolution_per_second(0);
+    } else {
+        let value = GetGameSecondsPerRealSecond() / 60;
+        let value = std::cmp::max(1, value);
+        set_clock_resolution_per_second(value.try_into().unwrap());
+    }
+
+    // if the compress mode is X0 or X1
+    if GetTimeCompressMode() <= TIME_COMPRESS_MODE::TIME_COMPRESS_X1 {
+        SetTimeCompressionOn(false);
+    } else {
+        SetTimeCompressionOn(true);
+    }
+
+    exp_ui::SetMapScreenBottomDirty(true);
 }

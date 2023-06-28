@@ -304,27 +304,10 @@ void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE compress_mode) {
 }
 
 void UpdateClockResolution() {
-  SetGameSecondsPerRealSecond(GetTimeCompressSpeed());
-
-  // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
-  // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second
-  if (GetTimeCompressMode() == TIME_COMPRESS_X0) {
-    SetClockResolutionPerSecond(0);
-  } else {
-    SetClockResolutionPerSecond((UINT8)max(1, (UINT8)(GetGameSecondsPerRealSecond() / 60)));
-  }
-
-  // if the compress mode is X0 or X1
-  if (GetTimeCompressMode() <= TIME_COMPRESS_X1) {
-    SetTimeCompressionOn(false);
-  } else {
-    SetTimeCompressionOn(true);
-
-    // handle the player just starting a game
+  UpdateClockResolutionRust();
+  if (GetTimeCompressionOn()) {
     HandleTimeCompressWithTeamJackedInAndGearedToGo();
   }
-
-  SetMapScreenBottomDirty(true);
 }
 
 // ONLY APPLICABLE INSIDE EVENT CALLBACKS!
