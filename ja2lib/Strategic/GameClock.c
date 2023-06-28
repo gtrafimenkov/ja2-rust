@@ -43,7 +43,12 @@ void ScreenMaskForGamePauseBtnCallBack(struct MOUSE_REGION* pRegion, INT32 iReas
 
 void CreateDestroyScreenMaskForPauseGame(void);
 
-void UpdateClockResolution();
+static void UpdateClockResolution() {
+  UpdateClockResolutionRust();
+  if (GetTimeCompressionOn()) {
+    HandleTimeCompressWithTeamJackedInAndGearedToGo();
+  }
+}
 
 // is the clock pause region created currently?
 BOOLEAN fClockMouseRegionCreated = FALSE;
@@ -226,14 +231,6 @@ void StartTimeCompression(void) {
   }
 }
 
-// returns FALSE if time isn't currently being compressed for ANY reason (various pauses, etc.)
-BOOLEAN IsTimeBeingCompressed(void) {
-  if (!GetTimeCompressionOn() || (GetTimeCompressMode() == TIME_COMPRESS_X0) || IsGamePaused())
-    return (FALSE);
-  else
-    return (TRUE);
-}
-
 void IncreaseGameTimeCompressionRate() {
   // if not already at maximum time compression rate
   if (GetTimeCompressMode() < TIME_COMPRESS_60MINS) {
@@ -301,13 +298,6 @@ void SetGameTimeCompressionLevel(enum TIME_COMPRESS_MODE compress_mode) {
 
   SetTimeCompressMode(compress_mode);
   UpdateClockResolution();
-}
-
-void UpdateClockResolution() {
-  UpdateClockResolutionRust();
-  if (GetTimeCompressionOn()) {
-    HandleTimeCompressWithTeamJackedInAndGearedToGo();
-  }
 }
 
 // ONLY APPLICABLE INSIDE EVENT CALLBACKS!

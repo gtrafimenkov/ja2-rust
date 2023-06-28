@@ -134,6 +134,8 @@ void StopTimeCompression(void);
 
 void UpdateClockResolutionRust(void);
 
+bool IsTimeBeingCompressed(void);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

@@ -365,3 +365,10 @@ pub extern "C" fn UpdateClockResolutionRust() {
 
     exp_ui::SetMapScreenBottomDirty(true);
 }
+
+#[no_mangle]
+pub extern "C" fn IsTimeBeingCompressed() -> bool {
+    GetTimeCompressionOn()
+        && (GetTimeCompressMode() != TIME_COMPRESS_MODE::TIME_COMPRESS_X0)
+        && !IsGamePaused()
+}
