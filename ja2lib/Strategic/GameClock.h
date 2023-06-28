@@ -111,4 +111,6 @@ void HandlePlayerPauseUnPauseOfGame(void);
 
 void ClearTacticalStuffDueToTimeCompression(void);
 
+void UpdateGameClockString2();
+
 #endif

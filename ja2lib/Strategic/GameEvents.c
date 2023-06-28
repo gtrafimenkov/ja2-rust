@@ -163,16 +163,12 @@ BOOLEAN DeleteEventsWithDeletionPending() {
   return fEventDeleted;
 }
 
-void AdjustClockToEventStamp(STRATEGICEVENT *pEvent, UINT32 *puiAdjustment) {
-  UINT32 uiDiff;
-
-  uiDiff = pEvent->uiTimeStamp - GetGameTimeInSec();
+static void AdjustClockToEventStamp(STRATEGICEVENT *pEvent, UINT32 *puiAdjustment) {
+  UINT32 uiDiff = pEvent->uiTimeStamp - GetGameTimeInSec();
   MoveGameTimeForward(uiDiff);
   *puiAdjustment -= uiDiff;
 
-  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d",
-           gpGameClockString[STR_GAMECLOCK_DAY_NAME], GetGameTimeInDays(), GetGameClockHour(),
-           GetGameClockMinutes());
+  UpdateGameClockString2();
 }
 
 // If there are any events pending, they are processed, until the time limit is reached, or

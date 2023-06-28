@@ -97,11 +97,21 @@ UINT8 gubUnusedTimePadding[TIME_PADDINGBYTES];
 extern UINT32 guiEnvTime;
 extern UINT32 guiEnvDay;
 
+static void UpdateGameClockString() {
+  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
+           GetGameTimeInDays(), GetGameClockHour(), GetGameClockMinutes());
+}
+
+void UpdateGameClockString2() {
+  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d",
+           gpGameClockString[STR_GAMECLOCK_DAY_NAME], GetGameTimeInDays(), GetGameClockHour(),
+           GetGameClockMinutes());
+}
+
 void InitNewGameClock() {
   InitNewGameClockRust();
   guiPreviousGameClock = GetGameStartingTime();
-  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
-           GetGameTimeInDays(), GetGameClockHour(), GetGameClockMinutes());
+  UpdateGameClockString();
   guiTimeCurrentSectorWasLastLoaded = 0;
   memset(gubUnusedTimePadding, 0, TIME_PADDINGBYTES);
 }
@@ -142,9 +152,7 @@ void AdvanceClock(UINT8 ubWarpCode, u32 game_seconds) {
   // store previous game clock value (for error-checking purposes only)
   guiPreviousGameClock = GetGameTimeInSec();
 
-  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d",
-           gpGameClockString[STR_GAMECLOCK_DAY_NAME], GetGameTimeInDays(), GetGameClockHour(),
-           GetGameClockMinutes());
+  UpdateGameClockString2();
 
   if (gfResetAllPlayerKnowsEnemiesFlags && !gTacticalStatus.fEnemyInSector) {
     ClearAnySectorsFlashingNumberOfEnemies();
@@ -488,8 +496,7 @@ BOOLEAN LoadGameClock(FileID hFile) {
   gfResetAllPlayerKnowsEnemiesFlags = state.ResetAllPlayerKnowsEnemiesFlags;
   guiPreviousGameClock = state.PreviousGameClock;
 
-  swprintf(gswzWorldTimeStr, ARR_SIZE(gswzWorldTimeStr), L"%s %d, %02d:%02d", pDayStrings[0],
-           GetGameTimeInDays(), GetGameClockHour(), GetGameClockMinutes());
+  UpdateGameClockString();
 
   if (!gfBasement && !gfCaves) gfDoLighting = TRUE;
 
