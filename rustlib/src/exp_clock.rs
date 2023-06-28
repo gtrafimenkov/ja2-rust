@@ -122,7 +122,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
                 LockPause();
             }
             set_clock_resolution_per_second(state.clock_resolution);
-            SetGameSecondsPerRealSecond(state.game_seconds_per_real_second);
+            set_game_seconds_per_real_second(state.game_seconds_per_real_second);
             SetTimeCompressionOn(state.time_compression_on);
             SetTimeCompressMode(TIME_COMPRESS_MODE::from_i32(state.time_compress_mode));
             *data = state.cpart;
@@ -161,7 +161,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
 #[no_mangle]
 pub extern "C" fn InitNewGameClockRust() {
     SetGameTimeSec(GetGameStartingTime());
-    SetGameSecondsPerRealSecond(0);
+    set_game_seconds_per_real_second(0);
     SetTimeCompressionOn(false);
     unsafe {
         STATE.clock.clock_resolution = 1;
@@ -313,8 +313,7 @@ pub extern "C" fn GetGameSecondsPerRealSecond() -> u32 {
     unsafe { STATE.clock.game_seconds_per_real_second }
 }
 
-#[no_mangle]
-pub extern "C" fn SetGameSecondsPerRealSecond(value: u32) {
+fn set_game_seconds_per_real_second(value: u32) {
     unsafe {
         STATE.clock.game_seconds_per_real_second = value;
     }
@@ -337,7 +336,7 @@ pub extern "C" fn StopTimeCompression() {
     if GetTimeCompressionOn() {
         // change the clock resolution to no time passage, but don't actually change the compress mode
         // (remember it)
-        SetGameSecondsPerRealSecond(0);
+        set_game_seconds_per_real_second(0);
         set_clock_resolution_per_second(0);
         SetTimeCompressionOn(false);
         exp_ui::SetMapScreenBottomDirty(true);
@@ -346,7 +345,7 @@ pub extern "C" fn StopTimeCompression() {
 
 #[no_mangle]
 pub extern "C" fn UpdateClockResolutionRust() {
-    SetGameSecondsPerRealSecond(GetTimeCompressSpeed());
+    set_game_seconds_per_real_second(GetTimeCompressSpeed());
 
     // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
     // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second
