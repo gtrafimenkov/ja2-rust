@@ -123,7 +123,7 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
             }
             set_clock_resolution_per_second(state.clock_resolution);
             set_game_seconds_per_real_second(state.game_seconds_per_real_second);
-            SetTimeCompressionOn(state.time_compression_on);
+            set_time_compression_on(state.time_compression_on);
             SetTimeCompressMode(TIME_COMPRESS_MODE::from_i32(state.time_compress_mode));
             *data = state.cpart;
             true
@@ -162,7 +162,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
 pub extern "C" fn InitNewGameClockRust() {
     SetGameTimeSec(GetGameStartingTime());
     set_game_seconds_per_real_second(0);
-    SetTimeCompressionOn(false);
+    set_time_compression_on(false);
     unsafe {
         STATE.clock.clock_resolution = 1;
     }
@@ -324,8 +324,7 @@ pub extern "C" fn GetTimeCompressionOn() -> bool {
     unsafe { STATE.clock.time_compression_on }
 }
 
-#[no_mangle]
-pub extern "C" fn SetTimeCompressionOn(value: bool) {
+fn set_time_compression_on(value: bool) {
     unsafe {
         STATE.clock.time_compression_on = value;
     }
@@ -338,7 +337,7 @@ pub extern "C" fn StopTimeCompression() {
         // (remember it)
         set_game_seconds_per_real_second(0);
         set_clock_resolution_per_second(0);
-        SetTimeCompressionOn(false);
+        set_time_compression_on(false);
         exp_ui::SetMapScreenBottomDirty(true);
     }
 }
@@ -359,9 +358,9 @@ pub extern "C" fn UpdateClockResolutionRust() {
 
     // if the compress mode is X0 or X1
     if GetTimeCompressMode() <= TIME_COMPRESS_MODE::TIME_COMPRESS_X1 {
-        SetTimeCompressionOn(false);
+        set_time_compression_on(false);
     } else {
-        SetTimeCompressionOn(true);
+        set_time_compression_on(true);
     }
 
     exp_ui::SetMapScreenBottomDirty(true);

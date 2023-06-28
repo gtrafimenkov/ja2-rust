@@ -130,8 +130,6 @@ uint32_t GetGameSecondsPerRealSecond(void);
 
 bool GetTimeCompressionOn(void);
 
-void SetTimeCompressionOn(bool value);
-
 void StopTimeCompression(void);
 
 void UpdateClockResolutionRust(void);
