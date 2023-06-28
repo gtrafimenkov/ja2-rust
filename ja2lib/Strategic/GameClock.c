@@ -78,7 +78,6 @@ void AdvanceClock(UINT8 ubWarpCode, u32 game_seconds);
 // All of these get saved and loaded.
 BOOLEAN gfTimeInterrupt = FALSE;
 BOOLEAN gfTimeInterruptPause = FALSE;
-BOOLEAN fSuperCompression = FALSE;
 UINT32 guiPreviousGameClock = 0;  // used only for error-checking purposes
 UINT32 guiTimesThisSecondProcessed = 0;
 INT32 iPausedPopUpBox = -1;
@@ -411,8 +410,11 @@ BOOLEAN SaveGameClock(FileID hFile, BOOLEAN fGamePaused, BOOLEAN fLockPauseState
   File_Write(hFile, &gfTimeInterrupt, sizeof(BOOLEAN), &uiNumBytesWritten);
   if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
 
-  File_Write(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
+  {
+    BOOLEAN fSuperCompression = FALSE;
+    File_Write(hFile, &fSuperCompression, sizeof(BOOLEAN), &uiNumBytesWritten);
+    if (uiNumBytesWritten != sizeof(BOOLEAN)) return (FALSE);
+  }
 
   {
     i32 gameClock = GetGameTimeInSec();
@@ -478,7 +480,6 @@ BOOLEAN LoadGameClock(FileID hFile) {
   }
 
   gfTimeInterrupt = state.TimeInterrupt;
-  fSuperCompression = state.SuperCompression;
   ubAmbientLightLevel = state.AmbientLightLevel;
   guiEnvTime = state.EnvTime;
   guiEnvDay = state.EnvDay;

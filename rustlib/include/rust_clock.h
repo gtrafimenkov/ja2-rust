@@ -20,7 +20,6 @@ enum TIME_COMPRESS_MODE {
  */
 struct SavedClockStateC {
   bool TimeInterrupt;
-  bool SuperCompression;
   uint8_t AmbientLightLevel;
   uint32_t EnvTime;
   uint32_t EnvDay;

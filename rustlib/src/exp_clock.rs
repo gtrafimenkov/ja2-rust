@@ -85,7 +85,6 @@ pub extern "C" fn GetTimeCompressSpeed() -> u32 {
 /// C part of the saved gameclock state
 pub struct SavedClockStateC {
     TimeInterrupt: bool,
-    SuperCompression: bool,
     AmbientLightLevel: u8,
     EnvTime: u32,
     EnvDay: u32,
@@ -139,7 +138,7 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
         data.clock_resolution = FILE_DB.read_file_u8(file_id)?;
         data.game_paused = FILE_DB.read_file_bool(file_id)?;
         data.cpart.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.SuperCompression = FILE_DB.read_file_bool(file_id)?;
+        _ = FILE_DB.read_file_bool(file_id)?;
         data.game_clock = FILE_DB.read_file_u32(file_id)?;
         data.game_seconds_per_real_second = FILE_DB.read_file_u32(file_id)?;
         data.cpart.AmbientLightLevel = FILE_DB.read_file_u8(file_id)?;
