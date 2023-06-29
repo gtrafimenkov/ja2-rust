@@ -582,7 +582,7 @@ void TacticalScreenMsg(uint16_t usColor, uint8_t ubPriority, wchar_t *pStringA, 
   BOOLEAN fNewString = FALSE;
   uint16_t usLineWidthIfWordIsWiderThenWidth = 0;
 
-  if (giTimeCompressMode > TIME_COMPRESS_X1) {
+  if (GetTimeCompressMode() > TIME_COMPRESS_X1) {
     return;
   }
 

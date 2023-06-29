@@ -7,15 +7,19 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+enum TIME_COMPRESS_MODE {
+  TIME_COMPRESS_X0 = 0,
+  TIME_COMPRESS_X1,
+  TIME_COMPRESS_5MINS,
+  TIME_COMPRESS_30MINS,
+  TIME_COMPRESS_60MINS,
+};
+
 /**
  * C part of the saved gameclock state
  */
 struct SavedClockStateC {
-  int32_t TimeCompressMode;
-  uint8_t ClockResolution;
   bool TimeInterrupt;
-  bool SuperCompression;
-  uint32_t GameSecondsPerRealSecond;
   uint8_t AmbientLightLevel;
   uint32_t EnvTime;
   uint32_t EnvDay;
@@ -23,7 +27,6 @@ struct SavedClockStateC {
   uint32_t TimeOfLastEventQuery;
   bool PauseDueToPlayerGamePause;
   bool ResetAllPlayerKnowsEnemiesFlags;
-  bool TimeCompressionOn;
   uint32_t PreviousGameClock;
   uint32_t LockPauseStateLastReasonId;
 };
@@ -32,7 +35,27 @@ struct SavedClockStateC {
 extern "C" {
 #endif // __cplusplus
 
+enum TIME_COMPRESS_MODE GetTimeCompressMode(void);
+
+void SetTimeCompressMode(enum TIME_COMPRESS_MODE mode);
+
+void IncTimeCompressMode(void);
+
+void DecTimeCompressMode(void);
+
+/**
+ * Returns some modifier of the game speed.
+ */
+uint32_t GetTimeCompressSpeed(void);
+
 bool LoadSavedClockState(FileID file_id, struct SavedClockStateC *data);
+
+void InitNewGameClockRust(void);
+
+/**
+ * Returns number of clock updates per second
+ */
+uint8_t GetClockResolution(void);
 
 /**
  * Get game starting time in seconds.
@@ -101,6 +124,16 @@ void LockPause(void);
 void UnlockPause(void);
 
 bool IsPauseLocked(void);
+
+uint32_t GetGameSecondsPerRealSecond(void);
+
+bool GetTimeCompressionOn(void);
+
+void StopTimeCompression(void);
+
+void UpdateClockResolutionRust(void);
+
+bool IsTimeBeingCompressed(void);
 
 #ifdef __cplusplus
 } // extern "C"

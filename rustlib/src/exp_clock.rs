@@ -6,15 +6,85 @@ use super::state::STATE;
 use std::io;
 
 #[repr(C)]
+#[allow(non_camel_case_types)]
+#[derive(PartialEq, PartialOrd)]
+pub enum TIME_COMPRESS_MODE {
+    TIME_COMPRESS_X0 = 0, // time pause
+    TIME_COMPRESS_X1,     // ? tactical mode
+    TIME_COMPRESS_5MINS,  // ? strategic mode 5 min compression
+    TIME_COMPRESS_30MINS, // ? strategic mode 30 min compression
+    TIME_COMPRESS_60MINS, // ? strategic mode 60 min compression
+}
+
+impl TIME_COMPRESS_MODE {
+    fn from_internal(value: clock::TimeCompressMode) -> Self {
+        match value {
+            clock::TimeCompressMode::TimeCompressX0 => TIME_COMPRESS_MODE::TIME_COMPRESS_X0,
+            clock::TimeCompressMode::TimeCompressX1 => TIME_COMPRESS_MODE::TIME_COMPRESS_X1,
+            clock::TimeCompressMode::TimeCompress5mins => TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS,
+            clock::TimeCompressMode::TimeCompress30mins => TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS,
+            clock::TimeCompressMode::TimeCompress60mins => TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS,
+        }
+    }
+    fn from_i32(value: i32) -> Self {
+        match value {
+            0 => TIME_COMPRESS_MODE::TIME_COMPRESS_X0,
+            1 => TIME_COMPRESS_MODE::TIME_COMPRESS_X1,
+            2 => TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS,
+            3 => TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS,
+            4 => TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS,
+            _ => panic!("invalid value {value} for TIME_COMPRESS_MODE enum"),
+        }
+    }
+    fn to_internal(&self) -> clock::TimeCompressMode {
+        match self {
+            TIME_COMPRESS_MODE::TIME_COMPRESS_X0 => clock::TimeCompressMode::TimeCompressX0,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_X1 => clock::TimeCompressMode::TimeCompressX1,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS => clock::TimeCompressMode::TimeCompress5mins,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS => clock::TimeCompressMode::TimeCompress30mins,
+            TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS => clock::TimeCompressMode::TimeCompress60mins,
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn GetTimeCompressMode() -> TIME_COMPRESS_MODE {
+    unsafe { TIME_COMPRESS_MODE::from_internal(STATE.clock.time_compress_mode) }
+}
+
+#[no_mangle]
+pub extern "C" fn SetTimeCompressMode(mode: TIME_COMPRESS_MODE) {
+    unsafe { STATE.clock.time_compress_mode = mode.to_internal() }
+}
+
+#[no_mangle]
+pub extern "C" fn IncTimeCompressMode() {
+    unsafe { STATE.clock.inc_time_compress_mode() }
+}
+
+#[no_mangle]
+pub extern "C" fn DecTimeCompressMode() {
+    unsafe { STATE.clock.dec_time_compress_mode() }
+}
+
+/// Returns some modifier of the game speed.
+#[no_mangle]
+pub extern "C" fn GetTimeCompressSpeed() -> u32 {
+    match GetTimeCompressMode() {
+        TIME_COMPRESS_MODE::TIME_COMPRESS_X0 => 0,
+        TIME_COMPRESS_MODE::TIME_COMPRESS_X1 => 1,
+        TIME_COMPRESS_MODE::TIME_COMPRESS_5MINS => 5 * 60,
+        TIME_COMPRESS_MODE::TIME_COMPRESS_30MINS => 30 * 60,
+        TIME_COMPRESS_MODE::TIME_COMPRESS_60MINS => 60 * 60,
+    }
+}
+
+#[repr(C)]
 #[allow(non_snake_case)]
 #[derive(Default)]
 /// C part of the saved gameclock state
 pub struct SavedClockStateC {
-    TimeCompressMode: i32,
-    ClockResolution: u8,
     TimeInterrupt: bool,
-    SuperCompression: bool,
-    GameSecondsPerRealSecond: u32,
     AmbientLightLevel: u8,
     EnvTime: u32,
     EnvDay: u32,
@@ -22,7 +92,6 @@ pub struct SavedClockStateC {
     TimeOfLastEventQuery: u32,
     PauseDueToPlayerGamePause: bool,
     ResetAllPlayerKnowsEnemiesFlags: bool,
-    TimeCompressionOn: bool,
     PreviousGameClock: u32,
     LockPauseStateLastReasonId: u32,
 }
@@ -30,6 +99,10 @@ pub struct SavedClockStateC {
 #[derive(Default)]
 struct SavedClockState {
     cpart: SavedClockStateC,
+    time_compression_on: bool,
+    time_compress_mode: i32,
+    game_seconds_per_real_second: u32,
+    clock_resolution: u8,
     game_paused: bool,
     game_clock: u32,
     locked_pause: bool,
@@ -47,6 +120,10 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
             if state.locked_pause {
                 LockPause();
             }
+            set_clock_resolution_per_second(state.clock_resolution);
+            set_game_seconds_per_real_second(state.game_seconds_per_real_second);
+            set_time_compression_on(state.time_compression_on);
+            SetTimeCompressMode(TIME_COMPRESS_MODE::from_i32(state.time_compress_mode));
             *data = state.cpart;
             true
         }
@@ -57,13 +134,13 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
 fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
     let mut data = SavedClockState::default();
     unsafe {
-        data.cpart.TimeCompressMode = FILE_DB.read_file_i32(file_id)?;
-        data.cpart.ClockResolution = FILE_DB.read_file_u8(file_id)?;
+        data.time_compress_mode = FILE_DB.read_file_i32(file_id)?;
+        data.clock_resolution = FILE_DB.read_file_u8(file_id)?;
         data.game_paused = FILE_DB.read_file_bool(file_id)?;
         data.cpart.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.SuperCompression = FILE_DB.read_file_bool(file_id)?;
+        _ = FILE_DB.read_file_bool(file_id)?;
         data.game_clock = FILE_DB.read_file_u32(file_id)?;
-        data.cpart.GameSecondsPerRealSecond = FILE_DB.read_file_u32(file_id)?;
+        data.game_seconds_per_real_second = FILE_DB.read_file_u32(file_id)?;
         data.cpart.AmbientLightLevel = FILE_DB.read_file_u8(file_id)?;
         data.cpart.EnvTime = FILE_DB.read_file_u32(file_id)?;
         data.cpart.EnvDay = FILE_DB.read_file_u32(file_id)?;
@@ -72,12 +149,35 @@ fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
         data.locked_pause = FILE_DB.read_file_bool(file_id)?;
         data.cpart.PauseDueToPlayerGamePause = FILE_DB.read_file_bool(file_id)?;
         data.cpart.ResetAllPlayerKnowsEnemiesFlags = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.TimeCompressionOn = FILE_DB.read_file_bool(file_id)?;
+        data.time_compression_on = FILE_DB.read_file_bool(file_id)?;
         data.cpart.PreviousGameClock = FILE_DB.read_file_u32(file_id)?;
         data.cpart.LockPauseStateLastReasonId = FILE_DB.read_file_u32(file_id)?;
         FILE_DB.read_file_exact(file_id, &mut data.padding)?;
     }
     Ok(data)
+}
+
+#[no_mangle]
+pub extern "C" fn InitNewGameClockRust() {
+    SetGameTimeSec(GetGameStartingTime());
+    set_game_seconds_per_real_second(0);
+    set_time_compression_on(false);
+    unsafe {
+        STATE.clock.clock_resolution = 1;
+    }
+}
+
+fn set_clock_resolution_per_second(timer_per_second: u8) {
+    let timer_per_second = std::cmp::max(0, std::cmp::min(60, timer_per_second));
+    unsafe {
+        STATE.clock.clock_resolution = timer_per_second;
+    }
+}
+
+/// Returns number of clock updates per second
+#[no_mangle]
+pub extern "C" fn GetClockResolution() -> u8 {
+    unsafe { STATE.clock.clock_resolution }
 }
 
 /// Get game starting time in seconds.
@@ -205,4 +305,69 @@ pub extern "C" fn UnlockPause() {
 #[no_mangle]
 pub extern "C" fn IsPauseLocked() -> bool {
     unsafe { STATE.clock.locked_pause }
+}
+
+#[no_mangle]
+pub extern "C" fn GetGameSecondsPerRealSecond() -> u32 {
+    unsafe { STATE.clock.game_seconds_per_real_second }
+}
+
+fn set_game_seconds_per_real_second(value: u32) {
+    unsafe {
+        STATE.clock.game_seconds_per_real_second = value;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn GetTimeCompressionOn() -> bool {
+    unsafe { STATE.clock.time_compression_on }
+}
+
+fn set_time_compression_on(value: bool) {
+    unsafe {
+        STATE.clock.time_compression_on = value;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn StopTimeCompression() {
+    if GetTimeCompressionOn() {
+        // change the clock resolution to no time passage, but don't actually change the compress mode
+        // (remember it)
+        set_game_seconds_per_real_second(0);
+        set_clock_resolution_per_second(0);
+        set_time_compression_on(false);
+        exp_ui::SetMapScreenBottomDirty(true);
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn UpdateClockResolutionRust() {
+    set_game_seconds_per_real_second(GetTimeCompressSpeed());
+
+    // ok this is a bit confusing, but for time compression (e.g. 30x60) we want updates
+    // 30x per second, but for standard unpaused time, like in tactical, we want 1x per second
+    if GetTimeCompressMode() == TIME_COMPRESS_MODE::TIME_COMPRESS_X0 {
+        set_clock_resolution_per_second(0);
+    } else {
+        let value = GetGameSecondsPerRealSecond() / 60;
+        let value = std::cmp::max(1, value);
+        set_clock_resolution_per_second(value.try_into().unwrap());
+    }
+
+    // if the compress mode is X0 or X1
+    if GetTimeCompressMode() <= TIME_COMPRESS_MODE::TIME_COMPRESS_X1 {
+        set_time_compression_on(false);
+    } else {
+        set_time_compression_on(true);
+    }
+
+    exp_ui::SetMapScreenBottomDirty(true);
+}
+
+#[no_mangle]
+pub extern "C" fn IsTimeBeingCompressed() -> bool {
+    GetTimeCompressionOn()
+        && (GetTimeCompressMode() != TIME_COMPRESS_MODE::TIME_COMPRESS_X0)
+        && !IsGamePaused()
 }
