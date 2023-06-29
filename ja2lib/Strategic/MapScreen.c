@@ -2628,8 +2628,8 @@ UINT32 MapScreenHandle(void) {
     MoveToEndOfMapScreenMessageList();
 
     // if the current time compression mode is something legal in mapscreen, keep it
-    if ((giTimeCompressMode >= TIME_COMPRESS_5MINS) &&
-        (giTimeCompressMode <= TIME_COMPRESS_60MINS)) {
+    if ((GetTimeCompressMode() >= TIME_COMPRESS_5MINS) &&
+        (GetTimeCompressMode() <= TIME_COMPRESS_60MINS)) {
       // leave the current time compression mode set, but DO stop it
       StopTimeCompression();
     } else {
@@ -7495,7 +7495,7 @@ void UpdatePausedStatesDueToTimeCompression(void) {
   } else  // time is NOT being compressed
   {
     // but the player would like it to be compressing
-    if (IsTimeCompressionOn() && !gfPauseDueToPlayerGamePause) {
+    if (GetTimeCompressionOn() && !gfPauseDueToPlayerGamePause) {
       // so check if it's legal to start time compressing again
       if (AllowedToTimeCompress()) {
         // unpause game to restart time compresssion

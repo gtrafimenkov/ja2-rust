@@ -356,8 +356,6 @@ void AutoBandage(BOOLEAN fStart) {
     HandleTacticalUI();
 
     PauseGame();
-    // Compress time...
-    // SetGameTimeCompressionLevel( TIME_COMPRESS_5MINS );
 
     cnt = gTacticalStatus.Team[OUR_TEAM].bFirstID;
     for (pSoldier = MercPtrs[cnt]; cnt <= gTacticalStatus.Team[OUR_TEAM].bLastID;
@@ -430,8 +428,6 @@ void AutoBandage(BOOLEAN fStart) {
     HandleTacticalUI();
 
     UnPauseGame();
-    // Bring time back...
-    // SetGameTimeCompressionLevel( TIME_COMPRESS_X1 );
 
     // Warp game time by the amount of time it took to autobandage.
     WarpGameTime(guiAutoBandageSeconds, WARPTIME_NO_PROCESSING_OF_EVENTS);
