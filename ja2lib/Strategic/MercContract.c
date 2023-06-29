@@ -1115,7 +1115,7 @@ void HandleExtendMercsContract(struct SOLDIERTYPE *pSoldier) {
   } else {
     FindAndSetThisContractSoldier(pSoldier);
     pContractReHireSoldier = pSoldier;
-    uiContractTimeMode = giTimeCompressMode;
+    uiContractTimeMode = GetTimeCompressMode();
   }
 
   fTeamPanelDirty = TRUE;
