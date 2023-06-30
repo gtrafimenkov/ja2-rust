@@ -1,7 +1,6 @@
 #ifndef __IMAGE_H
 #define __IMAGE_H
 
-#include "SGP/ImgFmt.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 
