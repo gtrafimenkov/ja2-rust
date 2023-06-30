@@ -591,7 +591,6 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
                          BOOLEAN fRenderStrip, UINT32 uiCurrentMouseBackbuffer) {
   UINT16 usWidth, usHeight;
-  UINT8 ubBitDepth;
   static RECT Region;
   static UINT16 usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;

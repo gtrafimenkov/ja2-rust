@@ -452,7 +452,6 @@ BOOLEAN UpdateSaveBuffer(void) {
   UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
   UINT16 usWidth, usHeight;
-  UINT8 ubBitDepth;
 
   // Update saved buffer - do for the viewport size ony!
   GetCurrentVideoSettings(&usWidth, &usHeight);

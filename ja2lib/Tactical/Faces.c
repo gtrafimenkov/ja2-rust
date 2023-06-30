@@ -454,7 +454,6 @@ void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, I
   VSURFACE_DESC vs_desc;
   UINT16 usWidth;
   UINT16 usHeight;
-  UINT8 ubBitDepth;
 
   // Check face index
   CHECKV(iFaceIndex != -1);
@@ -480,7 +479,7 @@ void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, I
     vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
     vs_desc.usWidth = pFace->usFaceWidth;
     vs_desc.usHeight = pFace->usFaceHeight;
-    vs_desc.ubBitDepth = ubBitDepth;
+    vs_desc.ubBitDepth = 16;
 
     pFace->fAutoRestoreBuffer = TRUE;
 
@@ -497,7 +496,7 @@ void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, I
     vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
     vs_desc.usWidth = pFace->usFaceWidth;
     vs_desc.usHeight = pFace->usFaceHeight;
-    vs_desc.ubBitDepth = ubBitDepth;
+    vs_desc.ubBitDepth = 16;
 
     pFace->fAutoDisplayBuffer = TRUE;
 

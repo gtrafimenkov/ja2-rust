@@ -194,7 +194,6 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
   UINT16 usCounter;
   CHAR16 pStr[100];  //, pStr2[ 100 ];
   CHAR16 pItemName[SIZE_ITEM_NAME];
-  UINT8 ubBitDepth;
   BOOLEAN fTypeMatch;
   INT32 iEquipCount = 0;
 
