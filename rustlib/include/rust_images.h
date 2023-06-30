@@ -51,9 +51,21 @@ struct STCIHeaderMiddleIndexed {
 /**
  * Middle part of STCI image header
  */
-union STCIHeaderMiddle {
-  struct STCIHeaderMiddleRGB rgb;
-  struct STCIHeaderMiddleIndexed indexed;
+enum STCIHeaderMiddle_Tag {
+  RGB,
+  Indexed,
+};
+
+struct STCIHeaderMiddle {
+  enum STCIHeaderMiddle_Tag tag;
+  union {
+    struct {
+      struct STCIHeaderMiddleRGB rgb;
+    };
+    struct {
+      struct STCIHeaderMiddleIndexed indexed;
+    };
+  };
 };
 
 /**
@@ -70,7 +82,7 @@ struct STCIHeaderEnd {
  */
 struct STCIHeaderTmp {
   struct STCIHeaderHead head;
-  union STCIHeaderMiddle middle;
+  struct STCIHeaderMiddle middle;
   struct STCIHeaderEnd end;
 };
 
