@@ -465,16 +465,26 @@ struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
   return NULL;
 }
 
+BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
+  Assert(puiIndex);
+  Assert(fileName);
+
+  struct VSurface *vs = CreateVideoSurfaceFromFile(fileName);
+
+  if (!vs) {
+    return FALSE;
+  }
+
+  SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
+  *puiIndex = addVSurfaceToList(vs);
+  return TRUE;
+}
+
 BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(desc);
 
-  struct VSurface *vs = NULL;
-  if (desc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
-    vs = CreateVideoSurfaceFromFile(desc->ImageFile);
-  } else {
-    vs = CreateVideoSurface(desc->usWidth, desc->usHeight, desc->ubBitDepth);
-  }
+  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight, desc->ubBitDepth);
 
   if (!vs) {
     return FALSE;
@@ -724,12 +734,12 @@ BOOLEAN InitializeGameVideoObjects() {
 
   GetCurrentVideoSettings(&usWidth, &usHeight);
 
-  vsSB = VSurfaceAdd(usWidth, usHeight, 16, &guiSAVEBUFFER);
+  vsSB = VSurfaceAdd(usWidth, usHeight, &guiSAVEBUFFER);
   if (!vsSB) {
     return FALSE;
   }
 
-  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, 16, NULL);
+  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, NULL);
   if (!vsExtraBuffer) {
     return FALSE;
   }

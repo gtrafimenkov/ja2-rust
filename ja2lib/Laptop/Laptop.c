@@ -4360,12 +4360,11 @@ BOOLEAN DrawDeskTopBackground(void) {
 }
 
 BOOLEAN LoadDesktopBackground(void) {
-  // load desktop background
+  SGPFILENAME ImageFile;
   VSURFACE_DESC vs_desc;
 
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
-  GetMLGFilename(vs_desc.ImageFile, MLG_DESKTOP);
-  if (!(AddVideoSurface(&vs_desc, &guiDESKTOP))) {
+  GetMLGFilename(ImageFile, MLG_DESKTOP);
+  if (!(AddVideoSurfaceFromFile(ImageFile, &guiDESKTOP))) {
     return FALSE;
   }
 

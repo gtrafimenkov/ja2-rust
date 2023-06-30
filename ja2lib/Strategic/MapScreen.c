@@ -2567,7 +2567,6 @@ UINT32 MapScreenShutdown(void) {
 
 UINT32 MapScreenHandle(void) {
   UINT32 uiNewScreen;
-  VSURFACE_DESC vs_desc;
   INT32 iCounter = 0;
 
   // DO NOT MOVE THIS FUNCTION CALL!!!
@@ -2648,18 +2647,11 @@ UINT32 MapScreenHandle(void) {
       // load border graphics
       LoadMapBorderGraphics();
 
-      // fInterfacePanelDirty=DIRTYLEVEL2;
-      // RenderTacticalInterface();
-      vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
-      // Grab the Map image
-
-      strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
-      if (!(AddVideoSurface(&vs_desc, &guiBIGMAP))) {
+      if (!(AddVideoSurfaceFromFile("INTERFACE\\b_map.pcx", &guiBIGMAP))) {
         return FALSE;
       }
 
-      strcpy(vs_desc.ImageFile, "INTERFACE\\popupbackground.pcx");
-      if (!(AddVideoSurface(&vs_desc, &guiPOPUPTEX))) {
+      if (!(AddVideoSurfaceFromFile("INTERFACE\\popupbackground.pcx", &guiPOPUPTEX))) {
         return FALSE;
       }
 
@@ -8303,13 +8295,11 @@ BOOLEAN AnyMercsLeavingRealSoon() {
 
 BOOLEAN HandlePreloadOfMapGraphics(void) {
   // check amt of memory, if above required amt...use it
-  VSURFACE_DESC vs_desc;
+  VSURFACE_DESC;
 
   fPreLoadedMapGraphics = TRUE;
 
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
-  strcpy(vs_desc.ImageFile, "INTERFACE\\b_map.pcx");
-  if (!(AddVideoSurface(&vs_desc, &guiBIGMAP))) {
+  if (!(AddVideoSurfaceFromFile("INTERFACE\\b_map.pcx", &guiBIGMAP))) {
     return FALSE;
   }
 

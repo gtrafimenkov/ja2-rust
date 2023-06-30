@@ -50,8 +50,6 @@ struct BltOpts {
 
 #define VSURFACE_CREATE_DEFAULT \
   0x00000020  // Creates and empty Surface of given width, height and BPP
-#define VSURFACE_CREATE_FROMFILE \
-  0x00000040  // Creates a video Surface from a file ( using struct Image* )
 
 UINT16 GetVSurfaceHeight(const struct VSurface *vs);
 UINT16 GetVSurfaceWidth(const struct VSurface *vs);
@@ -84,6 +82,7 @@ BOOLEAN ShutdownVideoSurfaceManager();
 
 // Creates and adds a video Surface to list
 BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
+BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex);
 
 // Returns a HVSurface for the specified index
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
