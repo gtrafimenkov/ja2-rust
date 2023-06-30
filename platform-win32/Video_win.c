@@ -600,7 +600,7 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
   INT16 sShiftX, sShiftY;
   INT32 uiCountY;
 
-  GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
+  GetCurrentVideoSettings(&usWidth, &usHeight);
   usHeight = (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y);
 
   StripRegions[0].left = gsVIEWPORT_START_X;

@@ -721,16 +721,15 @@ BOOLEAN InitializeSystemVideoObjects() { return (TRUE); }
 BOOLEAN InitializeGameVideoObjects() {
   UINT16 usWidth;
   UINT16 usHeight;
-  UINT8 ubBitDepth;
 
-  GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
+  GetCurrentVideoSettings(&usWidth, &usHeight);
 
-  vsSB = VSurfaceAdd(usWidth, usHeight, ubBitDepth, &guiSAVEBUFFER);
+  vsSB = VSurfaceAdd(usWidth, usHeight, 16, &guiSAVEBUFFER);
   if (!vsSB) {
     return FALSE;
   }
 
-  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, ubBitDepth, NULL);
+  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, 16, NULL);
   if (!vsExtraBuffer) {
     return FALSE;
   }

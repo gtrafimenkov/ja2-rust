@@ -277,11 +277,11 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
   eInfo.sWidth = (eInfo.sNumItems > 12) ? ((eInfo.sNumItems + 1) / 2) * 60 : 360;
   eInfo.sHeight = 80;
   // Create item buffer
-  GetCurrentVideoSettings(&usUselessWidth, &usUselessHeight, &ubBitDepth);
+  GetCurrentVideoSettings(&usUselessWidth, &usUselessHeight);
   vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = eInfo.sWidth;
   vs_desc.usHeight = eInfo.sHeight;
-  vs_desc.ubBitDepth = ubBitDepth;
+  vs_desc.ubBitDepth = 16;
 
   //!!!Memory check.  Create the item buffer
   if (!AddVideoSurface(&vs_desc, &eInfo.uiBuffer)) {

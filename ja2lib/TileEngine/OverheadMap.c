@@ -913,7 +913,7 @@ void RenderOverheadMap(INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartP
       UINT8 ubBitDepth;
 
       // Update saved buffer - do for the viewport size ony!
-      GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
+      GetCurrentVideoSettings(&usWidth, &usHeight);
 
       pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
       pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
