@@ -36,6 +36,7 @@ typedef struct {
   UINT32 fFlags;
   UINT16 usHeight;
   UINT16 usWidth;
+  // 24 bytes
   union {
     struct {
       UINT32 uiRedMask;
@@ -46,6 +47,7 @@ typedef struct {
       UINT8 ubGreenDepth;
       UINT8 ubBlueDepth;
       UINT8 ubAlphaDepth;
+      // 20
     } RGB;
     struct {  // For indexed files, the palette will contain 3 separate bytes for red, green, and
               // blue
@@ -55,11 +57,16 @@ typedef struct {
       UINT8 ubGreenDepth;
       UINT8 ubBlueDepth;
       UINT8 cIndexedUnused[11];
+      // 20
     } Indexed;
   };
+  // 44
   UINT8 ubDepth;  // size in bits of one pixel as stored in the file
+  // 48
   UINT32 uiAppDataSize;
-  UINT8 cUnused[15];
+  // 52
+  UINT8 cUnused[12];
+  // 64
 } STCIHeader;
 
 #define STCI_HEADER_SIZE 64
