@@ -955,7 +955,6 @@ void RenderSoldierCellBars(SOLDIERCELL *pCell) {
 }
 
 void BuildInterfaceBuffer() {
-  VSURFACE_DESC vs_desc;
   UINT16 usUselessWidth, usUselessHeight;
   SGPRect ClipRect;
   SGPRect DestRect;
@@ -977,10 +976,9 @@ void BuildInterfaceBuffer() {
   // selected item graphic in it's inventory size version.  This buffer is then scaled down
   // into the associated merc inventory panel slot buffer which is approximately 20% smaller.
   GetCurrentVideoSettings(&usUselessWidth, &usUselessHeight);
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  VSURFACE_DESC vs_desc;
   vs_desc.usWidth = gpAR->sWidth;
   vs_desc.usHeight = gpAR->sHeight;
-  vs_desc.ubBitDepth = 16;
   if (!AddVideoSurface(&vs_desc, &gpAR->iInterfaceBuffer))
     AssertMsg(0, "Failed to allocate memory for autoresolve interface buffer.");
 

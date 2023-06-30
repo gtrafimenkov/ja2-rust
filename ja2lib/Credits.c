@@ -320,9 +320,6 @@ void HandleCreditEyeBlinking();
 void InitCreditEyeBlinking();
 // ppp
 
-//	VSURFACE_DESC		vs_desc;
-//	struct VSurface* hVSurface;
-
 UINT32 CreditScreenInit(void) {
   gfCreditsScreenEntry = TRUE;
   return (1);
@@ -695,14 +692,10 @@ BOOLEAN AddCreditNode(UINT32 uiType, UINT32 uiFlags, STR16 pString) {
 
   // if the node can have something to display, Create a surface for it
   if (pNodeToAdd->uiType == CRDT_NODE_DEFAULT) {
-    VSURFACE_DESC vs_desc;
-
     // Create a background video surface to blt the face onto
-    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+    VSURFACE_DESC vs_desc;
     vs_desc.usWidth = CRDT_WIDTH_OF_TEXT_AREA;
     vs_desc.usHeight = pNodeToAdd->sHeightOfString;
-    vs_desc.ubBitDepth = 16;
-
     if (AddVideoSurface(&vs_desc, &pNodeToAdd->uiVideoSurfaceImage) == 0) {
       return (FALSE);
     }

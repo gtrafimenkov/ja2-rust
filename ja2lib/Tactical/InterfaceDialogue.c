@@ -343,7 +343,6 @@ BOOLEAN InitTalkingMenu(UINT8 ubCharacterNum, INT16 sGridNo) {
 
 BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   INT32 iFaceIndex, cnt;
-  VSURFACE_DESC vs_desc;
   FACETYPE *pFace;
   UINT16 usWidth;
   UINT16 usHeight;
@@ -470,10 +469,9 @@ BOOLEAN InternalInitTalkingMenu(UINT8 ubCharacterNum, INT16 sX, INT16 sY) {
   // Build save buffer
   // Create a buffer for him to go!
   // OK, ignore screen widths, height, only use BPP
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  VSURFACE_DESC vs_desc;
   vs_desc.usWidth = pFace->usFaceWidth;
   vs_desc.usHeight = pFace->usFaceHeight;
-  vs_desc.ubBitDepth = 16;
   if (!(AddVideoSurface(&vs_desc, &(gTalkPanel.uiSaveBuffer)))) {
     return FALSE;
   }

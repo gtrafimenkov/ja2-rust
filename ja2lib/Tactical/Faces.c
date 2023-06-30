@@ -451,7 +451,6 @@ void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, I
                                UINT16 usFaceX, UINT16 usFaceY, UINT16 usEyesX, UINT16 usEyesY,
                                UINT16 usMouthX, UINT16 usMouthY) {
   FACETYPE *pFace;
-  VSURFACE_DESC vs_desc;
   UINT16 usWidth;
   UINT16 usHeight;
 
@@ -476,10 +475,9 @@ void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, I
     // BUILD A BUFFER
     GetCurrentVideoSettings(&usWidth, &usHeight);
     // OK, ignore screen widths, height, only use BPP
-    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+    VSURFACE_DESC vs_desc;
     vs_desc.usWidth = pFace->usFaceWidth;
     vs_desc.usHeight = pFace->usFaceHeight;
-    vs_desc.ubBitDepth = 16;
 
     pFace->fAutoRestoreBuffer = TRUE;
 
@@ -493,10 +491,9 @@ void InternalSetAutoFaceActive(UINT32 uiDisplayBuffer, UINT32 uiRestoreBuffer, I
     // BUILD A BUFFER
     GetCurrentVideoSettings(&usWidth, &usHeight);
     // OK, ignore screen widths, height, only use BPP
-    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+    VSURFACE_DESC vs_desc;
     vs_desc.usWidth = pFace->usFaceWidth;
     vs_desc.usHeight = pFace->usFaceHeight;
-    vs_desc.ubBitDepth = 16;
 
     pFace->fAutoDisplayBuffer = TRUE;
 

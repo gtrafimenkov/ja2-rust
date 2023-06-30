@@ -484,7 +484,7 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(desc);
 
-  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight, desc->ubBitDepth);
+  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight, 16);
 
   if (!vs) {
     return FALSE;

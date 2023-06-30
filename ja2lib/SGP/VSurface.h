@@ -43,14 +43,6 @@ struct BltOpts {
   SGPRect FillRect;    // Given SRC subrect instead of srcregion
 };
 
-//
-// Video Surface creation flags
-// Used in the VSurface_DESC structure to describe creation flags
-//
-
-#define VSURFACE_CREATE_DEFAULT \
-  0x00000020  // Creates and empty Surface of given width, height and BPP
-
 UINT16 GetVSurfaceHeight(const struct VSurface *vs);
 UINT16 GetVSurfaceWidth(const struct VSurface *vs);
 UINT16 *GetVSurface16BPPPalette(struct VSurface *vs);
@@ -61,11 +53,8 @@ void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette);
 //
 
 typedef struct {
-  UINT32 fCreateFlags;    // Specifies creation flags like from file or not
-  SGPFILENAME ImageFile;  // Filename of image data to use
-  UINT16 usWidth;         // Width, ignored if given from file
-  UINT16 usHeight;        // Height, ignored if given from file
-  UINT8 ubBitDepth;       // BPP, ignored if given from file
+  UINT16 usWidth;
+  UINT16 usHeight;
 } VSURFACE_DESC;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

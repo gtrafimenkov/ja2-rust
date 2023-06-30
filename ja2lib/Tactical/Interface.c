@@ -358,10 +358,8 @@ BOOLEAN InitializeTacticalInterface() {
 
   // Alocate message surfaces
   VSURFACE_DESC vs_desc;
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = 640;
   vs_desc.usHeight = 20;
-  vs_desc.ubBitDepth = 16;
   if (!(AddVideoSurface(&vs_desc, &(gTopMessage.uiSurface)))) {
     return FALSE;
   }
