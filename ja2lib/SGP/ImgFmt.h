@@ -56,13 +56,7 @@ typedef struct {
       // 20
     } Indexed;
   };
-  // 44
-  UINT8 ubDepth;  // size in bits of one pixel as stored in the file
-  // 48
-  UINT32 uiAppDataSize;
-  // 52
-  UINT8 cUnused[12];
-  // 64
+  struct STCIHeaderEnd end;
 } STCIHeader;
 
 #define STCI_HEADER_SIZE 64

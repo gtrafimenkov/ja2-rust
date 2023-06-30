@@ -120,13 +120,13 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
   Header.head.TransparentValue = 0;
   Header.head.Height = sHeight;
   Header.head.Width = sWidth;
-  Header.ubDepth = 8;
+  Header.end.Depth = 8;
   Header.head.OriginalSize = uiOriginalSize;
   Header.head.StoredSize = uiOriginalSize;
-  Header.uiAppDataSize = uiAppDataSize;
+  Header.end.AppDataSize = uiAppDataSize;
 
   Header.head.Flags |= STCI_INDEXED;
-  if (Header.ubDepth == 8) {
+  if (Header.end.Depth == 8) {
     // assume 8-bit pixels indexing into 256 colour palette with 24 bit values in
     // the palette
     Header.Indexed.uiNumberOfColours = 256;
@@ -182,13 +182,13 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
 
   // write app-specific data (blanked to 0)
   if (Image.pAppData == NULL) {
-    if (Header.uiAppDataSize > 0) {
-      for (uiLoop = 0; uiLoop < Header.uiAppDataSize; uiLoop++) {
+    if (Header.end.AppDataSize > 0) {
+      for (uiLoop = 0; uiLoop < Header.end.AppDataSize; uiLoop++) {
         fputc(0, pOutput);
       }
     }
   } else {
-    fwrite(Image.pAppData, Header.uiAppDataSize, 1, pOutput);
+    fwrite(Image.pAppData, Header.end.AppDataSize, 1, pOutput);
   }
 
   fclose(pOutput);

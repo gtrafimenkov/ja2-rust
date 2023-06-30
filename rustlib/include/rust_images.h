@@ -22,11 +22,28 @@ struct STCIHeaderHead {
   uint16_t Width;
 };
 
+/**
+ * Last part of STCI image header
+ */
+struct STCIHeaderEnd {
+  uint8_t Depth;
+  uint32_t AppDataSize;
+  uint8_t Unused[12];
+};
+
+/**
+ * Last part of STCI image header
+ */
+struct STCIHeaderTmp {
+  struct STCIHeaderHead head;
+  struct STCIHeaderEnd end;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-bool ReadSTCIHeader(FileID file_id, struct STCIHeaderHead *data);
+bool ReadSTCIHeader(FileID file_id, struct STCIHeaderTmp *data);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -71,7 +71,7 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
   }
   TempImage.usWidth = Header.head.Width;
   TempImage.usHeight = Header.head.Height;
-  TempImage.ubBitDepth = Header.ubDepth;
+  TempImage.ubBitDepth = Header.end.Depth;
   *hImage = TempImage;
 
   return (TRUE);
@@ -98,7 +98,7 @@ BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHe
 
     hImage->fFlags |= IMAGE_BITMAPDATA;
 
-    if (pHeader->ubDepth == 16) {
+    if (pHeader->end.Depth == 16) {
       // ASSUMPTION: file data is 565 R,G,B
 
       if (gusRedMask != (UINT16)pHeader->RGB.uiRedMask ||
@@ -248,9 +248,9 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
     }
   }
 
-  if (fContents & IMAGE_APPDATA && pHeader->uiAppDataSize > 0) {
+  if (fContents & IMAGE_APPDATA && pHeader->end.AppDataSize > 0) {
     // load application-specific data
-    hImage->pAppData = (UINT8 *)MemAlloc(pHeader->uiAppDataSize);
+    hImage->pAppData = (UINT8 *)MemAlloc(pHeader->end.AppDataSize);
     if (hImage->pAppData == NULL) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
@@ -266,8 +266,8 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
       }
       return (FALSE);
     }
-    if (!File_Read(hFile, hImage->pAppData, pHeader->uiAppDataSize, &uiBytesRead) ||
-        uiBytesRead != pHeader->uiAppDataSize) {
+    if (!File_Read(hFile, hImage->pAppData, pHeader->end.AppDataSize, &uiBytesRead) ||
+        uiBytesRead != pHeader->end.AppDataSize) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading application-specific data!");
       File_Close(hFile);
       MemFree(hImage->pAppData);
@@ -282,7 +282,7 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
       }
       return (FALSE);
     }
-    hImage->uiAppDataSize = pHeader->uiAppDataSize;
+    hImage->uiAppDataSize = pHeader->end.AppDataSize;
     ;
     hImage->fFlags |= IMAGE_APPDATA;
   } else {
