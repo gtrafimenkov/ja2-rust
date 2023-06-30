@@ -95,12 +95,6 @@ struct Image *CreateImage(const char *ImageFile, UINT16 fContents) {
   // Initialize some values
   memset(hImage, 0, sizeof(struct Image));
 
-  // hImage->fFlags = 0;
-  // Set data pointers to NULL
-  // hImage->pImageData = NULL;
-  // hImage->pPalette   = NULL;
-  // hImage->pui16BPPPalette = NULL;
-
   // Set filename and loader
   strcpy(hImage->ImageFile, imageFileCopy);
   hImage->iFileLoader = iFileLoader;

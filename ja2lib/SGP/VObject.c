@@ -347,19 +347,15 @@ bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i3
 // *******************************************************************************
 
 struct VObject *CreateVObjectFromFile(const char *path) {
-  struct VObject *hVObject;
-  struct Image *hImage;
-  ETRLEData TempETRLEData;
-
   // Allocate memory for video object data and initialize
-  hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
+  struct VObject *hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
   if (!(hVObject != NULL)) {
     return FALSE;
   }
   memset(hVObject, 0, sizeof(struct VObject));
 
   // Create himage object from file
-  hImage = CreateImage(path, IMAGE_ALLIMAGEDATA);
+  struct Image *hImage = CreateImage(path, IMAGE_ALLIMAGEDATA);
 
   if (hImage == NULL) {
     MemFree(hVObject);
@@ -379,6 +375,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
+  ETRLEData TempETRLEData;
   if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
