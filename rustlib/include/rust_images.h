@@ -23,6 +23,40 @@ struct STCIHeaderHead {
 };
 
 /**
+ * Middle part of STCI image header describing RGB image
+ */
+struct STCIHeaderMiddleRGB {
+  uint32_t uiRedMask;
+  uint32_t uiGreenMask;
+  uint32_t uiBlueMask;
+  uint32_t uiAlphaMask;
+  uint8_t ubRedDepth;
+  uint8_t ubGreenDepth;
+  uint8_t ubBlueDepth;
+  uint8_t ubAlphaDepth;
+};
+
+/**
+ * Middle part of STCI image header describing RGB image
+ */
+struct STCIHeaderMiddleIndexed {
+  uint32_t uiNumberOfColours;
+  uint16_t usNumberOfSubImages;
+  uint8_t ubRedDepth;
+  uint8_t ubGreenDepth;
+  uint8_t ubBlueDepth;
+  uint8_t cIndexedUnused[11];
+};
+
+/**
+ * Middle part of STCI image header
+ */
+union STCIHeaderMiddle {
+  struct STCIHeaderMiddleRGB rgb;
+  struct STCIHeaderMiddleIndexed indexed;
+};
+
+/**
  * Last part of STCI image header
  */
 struct STCIHeaderEnd {
@@ -36,6 +70,7 @@ struct STCIHeaderEnd {
  */
 struct STCIHeaderTmp {
   struct STCIHeaderHead head;
+  union STCIHeaderMiddle middle;
   struct STCIHeaderEnd end;
 };
 

@@ -34,27 +34,8 @@ typedef struct {
   struct STCIHeaderHead head;
   // 24 bytes
   union {
-    struct {
-      UINT32 uiRedMask;
-      UINT32 uiGreenMask;
-      UINT32 uiBlueMask;
-      UINT32 uiAlphaMask;
-      UINT8 ubRedDepth;
-      UINT8 ubGreenDepth;
-      UINT8 ubBlueDepth;
-      UINT8 ubAlphaDepth;
-      // 20
-    } RGB;
-    struct {  // For indexed files, the palette will contain 3 separate bytes for red, green, and
-              // blue
-      UINT32 uiNumberOfColours;
-      UINT16 usNumberOfSubImages;
-      UINT8 ubRedDepth;
-      UINT8 ubGreenDepth;
-      UINT8 ubBlueDepth;
-      UINT8 cIndexedUnused[11];
-      // 20
-    } Indexed;
+    struct STCIHeaderMiddleRGB RGB;
+    struct STCIHeaderMiddleIndexed Indexed;
   };
   struct STCIHeaderEnd end;
 } STCIHeader;

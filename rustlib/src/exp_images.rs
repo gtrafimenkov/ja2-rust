@@ -4,11 +4,11 @@ pub const STCI_ID_LEN: usize = 4;
 
 #[repr(C)]
 #[allow(non_snake_case)]
-#[derive(Default)]
+// #[derive(Default)]
 /// Last part of STCI image header
 pub struct STCIHeaderTmp {
     head: STCIHeaderHead,
-    // TODO
+    middle: STCIHeaderMiddle,
     end: STCIHeaderEnd,
 }
 
@@ -24,6 +24,44 @@ pub struct STCIHeaderHead {
     Flags: u32,
     Height: u16,
     Width: u16,
+}
+
+#[repr(C)]
+// #[derive(Default)]
+/// Middle part of STCI image header
+union STCIHeaderMiddle {
+    rgb: STCIHeaderMiddleRGB,
+    indexed: STCIHeaderMiddleIndexed,
+}
+
+#[repr(C)]
+#[allow(non_snake_case)]
+#[derive(Default, Copy, Clone)]
+/// Middle part of STCI image header describing RGB image
+pub struct STCIHeaderMiddleRGB {
+    uiRedMask: u32,
+    uiGreenMask: u32,
+    uiBlueMask: u32,
+    uiAlphaMask: u32,
+    ubRedDepth: u8,
+    ubGreenDepth: u8,
+    ubBlueDepth: u8,
+    ubAlphaDepth: u8,
+}
+
+#[repr(C)]
+#[allow(non_snake_case)]
+#[derive(Default, Copy, Clone)]
+/// Middle part of STCI image header describing RGB image
+pub struct STCIHeaderMiddleIndexed {
+    // For indexed files, the palette will contain 3 separate bytes for red, green, and
+    // blue
+    uiNumberOfColours: u32,
+    usNumberOfSubImages: u16,
+    ubRedDepth: u8,
+    ubGreenDepth: u8,
+    ubBlueDepth: u8,
+    cIndexedUnused: [u8; 11],
 }
 
 #[repr(C)]
