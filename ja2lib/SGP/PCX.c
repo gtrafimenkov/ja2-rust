@@ -27,13 +27,13 @@
 BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
 BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usBufferWidth,
                         UINT16 usBufferHeight, UINT16 usX, UINT16 usY, BOOLEAN fTransp);
-PcxObject *LoadPcx(CHAR8 *pFilename);
+PcxObject *LoadPcx(const char *pFilename);
 
-BOOLEAN LoadPCXFileToImage(struct Image *hImage, UINT16 fContents) {
+BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
   PcxObject *pPcxObject;
 
   // First Load a PCX Image
-  pPcxObject = LoadPcx(hImage->ImageFile);
+  pPcxObject = LoadPcx(filePath);
 
   if (pPcxObject == NULL) {
     return (FALSE);
@@ -71,7 +71,7 @@ BOOLEAN LoadPCXFileToImage(struct Image *hImage, UINT16 fContents) {
   return (TRUE);
 }
 
-PcxObject *LoadPcx(STR8 pFilename) {
+PcxObject *LoadPcx(const char *pFilename) {
   PcxHeader Header;
   PcxObject *pCurrentPcxObject;
   FileID hFileHandle = FILE_ID_ERR;

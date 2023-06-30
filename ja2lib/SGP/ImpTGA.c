@@ -62,7 +62,7 @@ BOOLEAN ReadRLERGBImage(struct Image* hImage, FileID hFile, UINT8 uiImgID, UINT8
 //
 //**************************************************************************
 
-BOOLEAN LoadTGAFileToImage(struct Image* hImage, UINT16 fContents) {
+BOOLEAN LoadTGAFileToImage(const char* filePath, struct Image* hImage, UINT16 fContents) {
   FileID hFile = FILE_ID_ERR;
   UINT8 uiImgID, uiColMap, uiType;
   UINT32 uiBytesRead;
@@ -70,11 +70,11 @@ BOOLEAN LoadTGAFileToImage(struct Image* hImage, UINT16 fContents) {
 
   Assert(hImage != NULL);
 
-  if (!(File_Exists(hImage->ImageFile))) {
+  if (!(File_Exists(filePath))) {
     return FALSE;
   }
 
-  hFile = File_OpenForReading(hImage->ImageFile);
+  hFile = File_OpenForReading(filePath);
   if (!(hFile)) {
     return FALSE;
   }

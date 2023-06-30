@@ -4,6 +4,6 @@
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
 
-BOOLEAN LoadTGAFileToImage(struct Image* hImage, UINT16 fContents);
+BOOLEAN LoadTGAFileToImage(const char* filePath, struct Image* hImage, UINT16 fContents);
 
 #endif

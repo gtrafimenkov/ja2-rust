@@ -84,7 +84,6 @@ struct Image {
   UINT16 usHeight;
   UINT8 ubBitDepth;
   UINT16 fFlags;
-  SGPFILENAME ImageFile;
   UINT32 iFileLoader;
   struct SGPPaletteEntry *pPalette;
   UINT16 *pui16BPPPalette;
@@ -130,10 +129,6 @@ BOOLEAN DestroyImage(struct Image *hImage);
 // on the contents flags passed as a parameter.  If a contents flag is given
 // and the image does not contain that data, no error is raised
 BOOLEAN ReleaseImageData(struct Image *hImage, UINT16 fContents);
-
-// This function will attept to Load data from an existing image object's filename
-// In this way, dynamic loading of image data can be done
-BOOLEAN LoadImageData(struct Image *hImage, UINT16 fContents);
 
 // This function will run the appropriate copy function based on the type of struct Image*
 // object

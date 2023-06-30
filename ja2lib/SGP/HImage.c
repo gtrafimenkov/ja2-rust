@@ -38,6 +38,10 @@ typedef union {
   UINT32 uiValue;
 } SplitUINT32;
 
+// This function will attept to Load data from an existing image object's filename
+// In this way, dynamic loading of image data can be done
+static BOOLEAN LoadImageData(const char *filePath, struct Image *hImage, UINT16 fContents);
+
 struct Image *CreateImage(const char *ImageFile, UINT16 fContents) {
   struct Image *hImage = NULL;
   SGPFILENAME Extension;
@@ -96,10 +100,9 @@ struct Image *CreateImage(const char *ImageFile, UINT16 fContents) {
   memset(hImage, 0, sizeof(struct Image));
 
   // Set filename and loader
-  strcpy(hImage->ImageFile, imageFileCopy);
   hImage->iFileLoader = iFileLoader;
 
-  if (!LoadImageData(hImage, fContents)) {
+  if (!LoadImageData(imageFileCopy, hImage, fContents)) {
     return (NULL);
   }
 
@@ -161,7 +164,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage, UINT16 fContents) {
   return (TRUE);
 }
 
-BOOLEAN LoadImageData(struct Image *hImage, UINT16 fContents) {
+static BOOLEAN LoadImageData(const char *filePath, struct Image *hImage, UINT16 fContents) {
   BOOLEAN fReturnVal = FALSE;
 
   Assert(hImage != NULL);
@@ -169,17 +172,15 @@ BOOLEAN LoadImageData(struct Image *hImage, UINT16 fContents) {
   // Switch on file loader
   switch (hImage->iFileLoader) {
     case TGA_FILE_READER:
-
-      fReturnVal = LoadTGAFileToImage(hImage, fContents);
+      fReturnVal = LoadTGAFileToImage(filePath, hImage, fContents);
       break;
 
     case PCX_FILE_READER:
-
-      fReturnVal = LoadPCXFileToImage(hImage, fContents);
+      fReturnVal = LoadPCXFileToImage(filePath, hImage, fContents);
       break;
 
     case STCI_FILE_READER:
-      fReturnVal = LoadSTCIFileToImage(hImage, fContents);
+      fReturnVal = LoadSTCIFileToImage(filePath, hImage, fContents);
       break;
 
     default:
