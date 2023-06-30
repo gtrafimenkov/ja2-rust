@@ -36,20 +36,20 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
   }
 
   if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
-      uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
+      uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
     File_Close(hFile);
     return (FALSE);
   }
 
   // Determine from the header the data stored in the file. and run the appropriate loader
-  if (Header.fFlags & STCI_RGB) {
+  if (Header.head.Flags & STCI_RGB) {
     if (!STCILoadRGB(&TempImage, fContents, hFile, &Header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading RGB image.");
       File_Close(hFile);
       return (FALSE);
     }
-  } else if (Header.fFlags & STCI_INDEXED) {
+  } else if (Header.head.Flags & STCI_INDEXED) {
     if (!STCILoadIndexed(&TempImage, fContents, hFile, &Header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
       File_Close(hFile);
@@ -66,11 +66,11 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
 
   // Set some more flags in the temporary image structure, copy it so that hImage points
   // to it, and return.
-  if (Header.fFlags & STCI_ZLIB_COMPRESSED) {
+  if (Header.head.Flags & STCI_ZLIB_COMPRESSED) {
     TempImage.fFlags |= IMAGE_COMPRESSED;
   }
-  TempImage.usWidth = Header.usWidth;
-  TempImage.usHeight = Header.usHeight;
+  TempImage.usWidth = Header.head.Width;
+  TempImage.usHeight = Header.head.Height;
   TempImage.ubBitDepth = Header.ubDepth;
   *hImage = TempImage;
 
@@ -87,11 +87,11 @@ BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHe
 
   if (fContents & IMAGE_BITMAPDATA) {
     // Allocate memory for the image data and read it in
-    hImage->pImageData = MemAlloc(pHeader->uiStoredSize);
+    hImage->pImageData = MemAlloc(pHeader->head.StoredSize);
     if (hImage->pImageData == NULL) {
       return (FALSE);
-    } else if (!File_Read(hFile, hImage->pImageData, pHeader->uiStoredSize, &uiBytesRead) ||
-               uiBytesRead != pHeader->uiStoredSize) {
+    } else if (!File_Read(hFile, hImage->pImageData, pHeader->head.StoredSize, &uiBytesRead) ||
+               uiBytesRead != pHeader->head.StoredSize) {
       MemFree(hImage->pImageData);
       return (FALSE);
     }
@@ -112,25 +112,26 @@ BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHe
           if (gusRedMask == 0x7C00 && gusGreenMask == 0x03E0 &&
               gusBlueMask == 0x001F) {  // hardware is 555
             ConvertRGBDistribution565To555(hImage->p16BPPData,
-                                           pHeader->usWidth * pHeader->usHeight);
+                                           pHeader->head.Width * pHeader->head.Height);
             return (TRUE);
           } else if (gusRedMask == 0xFC00 && gusGreenMask == 0x03E0 && gusBlueMask == 0x001F) {
             ConvertRGBDistribution565To655(hImage->p16BPPData,
-                                           pHeader->usWidth * pHeader->usHeight);
+                                           pHeader->head.Width * pHeader->head.Height);
             return (TRUE);
           } else if (gusRedMask == 0xF800 && gusGreenMask == 0x07C0 && gusBlueMask == 0x003F) {
             ConvertRGBDistribution565To556(hImage->p16BPPData,
-                                           pHeader->usWidth * pHeader->usHeight);
+                                           pHeader->head.Width * pHeader->head.Height);
             return (TRUE);
           } else {
             // take the long route
             ConvertRGBDistribution565ToAny(hImage->p16BPPData,
-                                           pHeader->usWidth * pHeader->usHeight);
+                                           pHeader->head.Width * pHeader->head.Height);
             return (TRUE);
           }
         } else {
           // hardware distribution is not R-G-B so we have to take the long route!
-          ConvertRGBDistribution565ToAny(hImage->p16BPPData, pHeader->usWidth * pHeader->usHeight);
+          ConvertRGBDistribution565ToAny(hImage->p16BPPData,
+                                         pHeader->head.Width * pHeader->head.Height);
           return (TRUE);
         }
       }
@@ -185,7 +186,7 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
     }
   }
   if (fContents & IMAGE_BITMAPDATA) {
-    if (pHeader->fFlags & STCI_ETRLE_COMPRESSED) {
+    if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
       // load data for the subimage (object) structures
       Assert(sizeof(ETRLEObject) == STCI_SUBIMAGE_SIZE);
       hImage->usNumberOfObjects = pHeader->Indexed.usNumberOfSubImages;
@@ -209,11 +210,11 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
         MemFree(hImage->pETRLEObject);
         return (FALSE);
       }
-      hImage->uiSizePixData = pHeader->uiStoredSize;
+      hImage->uiSizePixData = pHeader->head.StoredSize;
       hImage->fFlags |= IMAGE_TRLECOMPRESSED;
     }
     // allocate memory for and read in the image data
-    hImage->pImageData = MemAlloc(pHeader->uiStoredSize);
+    hImage->pImageData = MemAlloc(pHeader->head.StoredSize);
     if (hImage->pImageData == NULL) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
@@ -224,8 +225,8 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
         MemFree(hImage->pETRLEObject);
       }
       return (FALSE);
-    } else if (!File_Read(hFile, hImage->pImageData, pHeader->uiStoredSize, &uiBytesRead) ||
-               uiBytesRead != pHeader->uiStoredSize) {  // Problem reading in the image data!
+    } else if (!File_Read(hFile, hImage->pImageData, pHeader->head.StoredSize, &uiBytesRead) ||
+               uiBytesRead != pHeader->head.StoredSize) {  // Problem reading in the image data!
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading image data!");
       File_Close(hFile);
       MemFree(hImage->pImageData);
@@ -240,7 +241,7 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
     hImage->fFlags |= IMAGE_BITMAPDATA;
   } else if (fContents & IMAGE_APPDATA)  // then there's a point in seeking ahead
   {
-    if (File_Seek(hFile, pHeader->uiStoredSize, FILE_SEEK_CURRENT) == FALSE) {
+    if (File_Seek(hFile, pHeader->head.StoredSize, FILE_SEEK_CURRENT) == FALSE) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem seeking past image data!");
       File_Close(hFile);
       return (FALSE);
@@ -332,13 +333,13 @@ BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
   }
 
   if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
-      uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.cID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
+      uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
     File_Close(hFile);
     return (FALSE);
   }
   File_Close(hFile);
-  if (Header.fFlags & STCI_ETRLE_COMPRESSED) {
+  if (Header.head.Flags & STCI_ETRLE_COMPRESSED) {
     return (TRUE);
   } else {
     return (FALSE);

@@ -2,16 +2,18 @@
 
 #define STCI_H
 
-// Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed of:
-// 1		ImageFileHeader, uncompressed
-// *		Palette (STCI_INDEXED, size = uiNumberOfColours * PALETTE_ELEMENT_SIZE),
-// uncompressed *		SubRectInfo's (usNumberOfRects > 0, size = usNumberOfSubRects *
-// sizeof(SubRectInfo) ), uncompressed *		Bytes of image data, possibly compressed
+/*
+Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed of:
+- ImageFileHeader, uncompressed
+- Palette (STCI_INDEXED, size = uiNumberOfColours * PALETTE_ELEMENT_SIZE), uncompressed
+- SubRectInfo's (usNumberOfRects > 0, size = usNumberOfSubRects * sizeof(SubRectInfo)), uncompressed
+- Bytes of image data, possibly compressed
+*/
 
 #include "SGP/Types.h"
+#include "rust_images.h"
 
 #define STCI_ID_STRING "STCI"
-#define STCI_ID_LEN 4
 
 #define STCI_ETRLE_COMPRESSED 0x0020
 #define STCI_ZLIB_COMPRESSED 0x0010
@@ -29,13 +31,7 @@
 // - make sure that everything in this header is nicely aligned
 // - don't exceed the 64-byte maximum
 typedef struct {
-  UINT8 cID[STCI_ID_LEN];
-  UINT32 uiOriginalSize;
-  UINT32 uiStoredSize;  // equal to uiOriginalSize if data uncompressed
-  UINT32 uiTransparentValue;
-  UINT32 fFlags;
-  UINT16 usHeight;
-  UINT16 usWidth;
+  struct STCIHeaderHead head;
   // 24 bytes
   union {
     struct {

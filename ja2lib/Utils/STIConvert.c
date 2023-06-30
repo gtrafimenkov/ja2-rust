@@ -116,16 +116,16 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
   uiOriginalSize = sWidth * sHeight * (8 / 8);
 
   // set up STCI header for output
-  memcpy(Header.cID, STCI_ID_STRING, STCI_ID_LEN);
-  Header.uiTransparentValue = 0;
-  Header.usHeight = sHeight;
-  Header.usWidth = sWidth;
+  memcpy(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN);
+  Header.head.TransparentValue = 0;
+  Header.head.Height = sHeight;
+  Header.head.Width = sWidth;
   Header.ubDepth = 8;
-  Header.uiOriginalSize = uiOriginalSize;
-  Header.uiStoredSize = uiOriginalSize;
+  Header.head.OriginalSize = uiOriginalSize;
+  Header.head.StoredSize = uiOriginalSize;
   Header.uiAppDataSize = uiAppDataSize;
 
-  Header.fFlags |= STCI_INDEXED;
+  Header.head.Flags |= STCI_INDEXED;
   if (Header.ubDepth == 8) {
     // assume 8-bit pixels indexing into 256 colour palette with 24 bit values in
     // the palette
@@ -135,15 +135,15 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
     Header.Indexed.ubBlueDepth = 8;
   }
 
-  if ((Header.fFlags & STCI_INDEXED) && (fFlags & CONVERT_ETRLE_COMPRESS)) {
+  if ((Header.head.Flags & STCI_INDEXED) && (fFlags & CONVERT_ETRLE_COMPRESS)) {
     if (!ConvertToETRLE(&pOutputBuffer, &uiCompressedSize, (UINT8 **)&pSubImageBuffer,
                         &usNumberOfSubImages, pData, sWidth, sHeight, fFlags)) {
     }
     uiSubImageBufferSize = (UINT32)usNumberOfSubImages * STCI_SUBIMAGE_SIZE;
 
     Header.Indexed.usNumberOfSubImages = usNumberOfSubImages;
-    Header.uiStoredSize = uiCompressedSize;
-    Header.fFlags |= STCI_ETRLE_COMPRESSED;
+    Header.head.StoredSize = uiCompressedSize;
+    Header.head.Flags |= STCI_ETRLE_COMPRESSED;
   }
 
   //
@@ -157,7 +157,7 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
   // write header
   fwrite(&Header, STCI_HEADER_SIZE, 1, pOutput);
   // write palette and subimage structs, if any
-  if (Header.fFlags & STCI_INDEXED) {
+  if (Header.head.Flags & STCI_INDEXED) {
     if (pPalette != NULL) {
       // have to convert palette to STCI format!
       pSGPPaletteEntry = pPalette;
@@ -168,16 +168,16 @@ void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, 
         fwrite(&STCIPaletteEntry, STCI_PALETTE_ELEMENT_SIZE, 1, pOutput);
       }
     }
-    if (Header.fFlags & STCI_ETRLE_COMPRESSED) {
+    if (Header.head.Flags & STCI_ETRLE_COMPRESSED) {
       fwrite(pSubImageBuffer, uiSubImageBufferSize, 1, pOutput);
     }
   }
 
   // write file data
-  if (Header.fFlags & STCI_ZLIB_COMPRESSED || Header.fFlags & STCI_ETRLE_COMPRESSED) {
-    fwrite(pOutputBuffer, Header.uiStoredSize, 1, pOutput);
+  if (Header.head.Flags & STCI_ZLIB_COMPRESSED || Header.head.Flags & STCI_ETRLE_COMPRESSED) {
+    fwrite(pOutputBuffer, Header.head.StoredSize, 1, pOutput);
   } else {
-    fwrite(Image.pImageData, Header.uiStoredSize, 1, pOutput);
+    fwrite(Image.pImageData, Header.head.StoredSize, 1, pOutput);
   }
 
   // write app-specific data (blanked to 0)
