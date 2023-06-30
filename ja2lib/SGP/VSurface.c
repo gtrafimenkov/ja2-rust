@@ -453,8 +453,8 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
   return gpVSurfaceTail->uiIndex;
 }
 
-struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiIndex) {
-  struct VSurface *vs = CreateVideoSurface(width, height, bitDepth);
+struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
+  struct VSurface *vs = CreateVideoSurface(width, height, 16);
   if (vs) {
     SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
     if (puiIndex) {
