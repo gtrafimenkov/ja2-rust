@@ -84,7 +84,6 @@ struct Image {
   UINT16 usHeight;
   UINT8 ubBitDepth;
   UINT16 fFlags;
-  UINT32 iFileLoader;
   struct SGPPaletteEntry *pPalette;
   UINT16 *pui16BPPPalette;
   UINT8 *pAppData;

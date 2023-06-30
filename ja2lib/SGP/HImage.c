@@ -40,7 +40,8 @@ typedef union {
 
 // This function will attept to Load data from an existing image object's filename
 // In this way, dynamic loading of image data can be done
-static BOOLEAN LoadImageData(const char *filePath, struct Image *hImage, UINT16 fContents);
+static BOOLEAN LoadImageData(const char *filePath, u32 fileLoader, struct Image *hImage,
+                             UINT16 fContents);
 
 struct Image *CreateImage(const char *ImageFile, UINT16 fContents) {
   struct Image *hImage = NULL;
@@ -99,10 +100,7 @@ struct Image *CreateImage(const char *ImageFile, UINT16 fContents) {
   // Initialize some values
   memset(hImage, 0, sizeof(struct Image));
 
-  // Set filename and loader
-  hImage->iFileLoader = iFileLoader;
-
-  if (!LoadImageData(imageFileCopy, hImage, fContents)) {
+  if (!LoadImageData(imageFileCopy, iFileLoader, hImage, fContents)) {
     return (NULL);
   }
 
@@ -164,13 +162,14 @@ BOOLEAN ReleaseImageData(struct Image *hImage, UINT16 fContents) {
   return (TRUE);
 }
 
-static BOOLEAN LoadImageData(const char *filePath, struct Image *hImage, UINT16 fContents) {
+static BOOLEAN LoadImageData(const char *filePath, u32 fileLoader, struct Image *hImage,
+                             UINT16 fContents) {
   BOOLEAN fReturnVal = FALSE;
 
   Assert(hImage != NULL);
 
   // Switch on file loader
-  switch (hImage->iFileLoader) {
+  switch (fileLoader) {
     case TGA_FILE_READER:
       fReturnVal = LoadTGAFileToImage(filePath, hImage, fContents);
       break;
