@@ -59,16 +59,6 @@ struct RelTileLoc {
   INT8 bTileOffsetY;
 };
 
-// TRLE subimage structure, mirroring that of ST(C)I
-struct ETRLEObject {
-  UINT32 uiDataOffset;
-  UINT32 uiDataLength;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
-  UINT16 usHeight;
-  UINT16 usWidth;
-};
-
 typedef struct tagETRLEData {
   PTR pPixData;
   UINT32 uiSizePixData;

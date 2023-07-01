@@ -32,6 +32,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "rust_sam_sites.h"
+#include "rust_images.h"
 
 #define BOX_BUTTON_WIDTH 100
 #define BOX_BUTTON_HEIGHT 20

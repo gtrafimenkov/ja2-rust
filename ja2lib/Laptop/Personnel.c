@@ -38,6 +38,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_laptop.h"
+#include "rust_images.h"
 
 // struct POINT;
 

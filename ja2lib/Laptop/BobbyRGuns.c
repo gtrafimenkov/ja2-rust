@@ -28,6 +28,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 #define BOBBYR_DEFAULT_MENU_COLOR 255
 

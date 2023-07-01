@@ -9,6 +9,7 @@
 #include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "rust_images.h"
 
 #ifdef __GCC
 // since some of the code is not complied on Linux

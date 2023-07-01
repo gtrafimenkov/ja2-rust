@@ -15,6 +15,7 @@
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
+#include "rust_images.h"
 
 extern BOOLEAN gfOverheadMapDirty;
 

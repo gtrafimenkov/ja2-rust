@@ -14,8 +14,20 @@ pub struct SGPPaletteEntry {
     _unused: u8,
 }
 
+#[repr(C)]
+#[allow(non_snake_case)]
+/// Structure that describes one image from an indexed STCI file
+pub struct ETRLEObject {
+    uiDataOffset: u32,
+    uiDataLength: u32,
+    sOffsetX: i16,
+    sOffsetY: i16,
+    usHeight: u16,
+    usWidth: u16,
+}
+
 #[no_mangle]
-pub extern "C" fn TmpPaletterEntryUsage(_pe: SGPPaletteEntry) {}
+pub extern "C" fn TmpImageFunc(_pe: ETRLEObject) {}
 
 /*
 Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed of:

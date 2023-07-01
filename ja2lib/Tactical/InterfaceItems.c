@@ -76,6 +76,7 @@
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
 #include "rust_laptop.h"
+#include "rust_images.h"
 
 #define ITEMDESC_FONT BLOCKFONT2
 #define ITEMDESC_FONTSHADOW1 MILITARY_SHADOW

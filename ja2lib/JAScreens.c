@@ -54,6 +54,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 #define _UNICODE
 

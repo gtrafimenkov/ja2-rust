@@ -88,6 +88,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
   hImage->paletteAllocatedInRust = true;
   hImage->fFlags |= IMAGE_PALETTE;
 
+  // subimages
   {
     UINT32 uiBytesRead;
     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
@@ -113,6 +114,10 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       hImage->uiSizePixData = pHeader->head.StoredSize;
       hImage->fFlags |= IMAGE_TRLECOMPRESSED;
     }
+  }
+
+  {
+    UINT32 uiBytesRead;
     // allocate memory for and read in the image data
     hImage->pImageData = MemAlloc(pHeader->head.StoredSize);
     if (hImage->pImageData == NULL) {

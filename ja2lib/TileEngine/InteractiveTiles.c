@@ -43,6 +43,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
+#include "rust_images.h"
 
 #ifdef __GCC
 // since some of the code is not complied on Linux

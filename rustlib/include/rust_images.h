@@ -10,13 +10,15 @@
 #define STCI_ID_LEN 4
 
 /**
- * Palette structure, mimics that of Win32
+ * Structure that describes one image from an indexed STCI file
  */
-struct SGPPaletteEntry {
-  uint8_t peRed;
-  uint8_t peGreen;
-  uint8_t peBlue;
-  uint8_t _unused;
+struct ETRLEObject {
+  uint32_t uiDataOffset;
+  uint32_t uiDataLength;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
+  uint16_t usHeight;
+  uint16_t usWidth;
 };
 
 /**
@@ -99,11 +101,21 @@ struct STCIHeader {
   struct STCIHeaderEnd end;
 };
 
+/**
+ * Palette structure, mimics that of Win32
+ */
+struct SGPPaletteEntry {
+  uint8_t peRed;
+  uint8_t peGreen;
+  uint8_t peBlue;
+  uint8_t _unused;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-void TmpPaletterEntryUsage(struct SGPPaletteEntry _pe);
+void TmpImageFunc(struct ETRLEObject _pe);
 
 bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
 

@@ -23,6 +23,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 // ATE: Added to let Wiz default creating mouse regions with no cursor, JA2 default to a cursor (
 // first one )

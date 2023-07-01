@@ -49,6 +49,7 @@
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
 #include "rust_laptop.h"
+#include "rust_images.h"
 
 //
 //******  Defines  ******
