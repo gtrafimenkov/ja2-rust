@@ -11,11 +11,11 @@
 #include "rust_fileman.h"
 #include "rust_images.h"
 
-BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
-                    struct STCIHeaderTmp *pHeader);
-BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
-                        struct STCIHeaderTmp *pHeader);
-BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
+static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
+                           struct STCIHeaderTmp *pHeader);
+static BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
+                               struct STCIHeaderTmp *pHeader);
+static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
   FileID hFile = FILE_ID_ERR;
@@ -79,8 +79,8 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
   return (TRUE);
 }
 
-BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
-                    struct STCIHeaderTmp *pHeader) {
+static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
+                           struct STCIHeaderTmp *pHeader) {
   UINT32 uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
@@ -143,8 +143,8 @@ BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
   return (TRUE);
 }
 
-BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
-                        struct STCIHeaderTmp *pHeader) {
+static BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
+                               struct STCIHeaderTmp *pHeader) {
   UINT32 uiFileSectionSize;
   UINT32 uiBytesRead;
   PTR pSTCIPalette;
@@ -296,7 +296,7 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
   return (TRUE);
 }
 
-BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage) {
+static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage) {
   UINT16 usIndex;
   STCIPaletteElement *pubPalette;
 
