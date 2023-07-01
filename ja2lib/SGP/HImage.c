@@ -22,9 +22,6 @@
 #define BLACK_SUBSTITUTE 0x0001
 
 UINT16 gusAlphaMask = 0;
-UINT16 gusRedMask = 0;
-UINT16 gusGreenMask = 0;
-UINT16 gusBlueMask = 0;
 
 // this funky union is used for fast 16-bit pixel format conversions
 typedef union {
@@ -429,7 +426,7 @@ UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
     g16 = ((UINT16)g << 3);
     b16 = ((UINT16)b >> 3);
 
-    usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+    usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
       if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
@@ -498,7 +495,7 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
     b16 = ((UINT16)b >> 3);
 
     // Prevent creation of pure black color
-    usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+    usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
       if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
@@ -523,7 +520,7 @@ UINT16 Get16BPPColor(UINT32 RGBValue) {
   g16 = ((UINT16)g << 3);
   b16 = ((UINT16)b >> 3);
 
-  usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+  usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
   // if our color worked out to absolute black, and the original wasn't
   // absolute black, convert it to a VERY dark grey to avoid transparency
@@ -542,9 +539,9 @@ UINT32 GetRGBColor(UINT16 Value16BPP) {
   UINT16 r16, g16, b16;
   UINT32 r, g, b, val;
 
-  r16 = Value16BPP & gusRedMask;
-  g16 = Value16BPP & gusGreenMask;
-  b16 = Value16BPP & gusBlueMask;
+  r16 = Value16BPP & 0xf800;
+  g16 = Value16BPP & 0x07e0;
+  b16 = Value16BPP & 0x001f;
 
   r = ((UINT32)r16 >> 8);
 
@@ -647,13 +644,4 @@ void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
     }
     pPixel++;
   }
-}
-
-BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
-                                       UINT32 *BlueBitMask) {
-  *RedBitMask = gusRedMask;
-  *GreenBitMask = gusGreenMask;
-  *BlueBitMask = gusBlueMask;
-
-  return TRUE;
 }

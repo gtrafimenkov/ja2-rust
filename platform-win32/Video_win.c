@@ -170,10 +170,6 @@ extern UINT32 guiDirtyRegionExCount;
 BOOLEAN gfPrintFrameBuffer;
 UINT32 guiPrintFrameBufferIndex;
 
-extern UINT16 gusRedMask;
-extern UINT16 gusGreenMask;
-extern UINT16 gusBlueMask;
-
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   UINT32 uiIndex;
   HRESULT ReturnCode;
@@ -1391,20 +1387,15 @@ static BOOLEAN GetRGBDistribution(void) {
   // Ok we now have the surface description, we now can get the information that we need
   //
 
-  gusRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  gusGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  gusBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  u16 usRedMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  u16 usGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  u16 usBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
-  {
+  if ((usRedMask != 0xf800) || (usGreenMask != 0x07e0) || (usBlueMask != 0x001f)) {
     char buf[200];
-    snprintf(buf, ARR_SIZE(buf), "XXX RGB distribution: (0x%04x, 0x%04x, 0x%04x)", gusRedMask,
-             gusGreenMask, gusBlueMask);
+    snprintf(buf, ARR_SIZE(buf), "XXX RGB distribution: (0x%04x, 0x%04x, 0x%04x)", usRedMask,
+             usGreenMask, usBlueMask);
     DebugLogWrite(buf);
-    // XXX RGB distribution: (0xf800, 0x07e0, 0x001f)
-    // 5, 6, 5
-  }
-
-  if ((gusRedMask != 0xf800) || (gusGreenMask != 0x07e0) || (gusBlueMask != 0x001f)) {
     DebugLogWrite("XXX RGB distribution other than 565 is not supported");
     // It may not work some hardware, but 16 bit mode is outdated anyway.
     // We should switch to 32bit mode.
@@ -1495,17 +1486,11 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth) {
       break;
 
     case 16: {
-      UINT32 uiRBitMask;
-      UINT32 uiGBitMask;
-      UINT32 uiBBitMask;
       PixelFormat.dwFlags = DDPF_RGB;
       PixelFormat.dwRGBBitCount = 16;
-      if (!(GetPrimaryRGBDistributionMasks(&uiRBitMask, &uiGBitMask, &uiBBitMask))) {
-        return FALSE;
-      }
-      PixelFormat.dwRBitMask = uiRBitMask;
-      PixelFormat.dwGBitMask = uiGBitMask;
-      PixelFormat.dwBBitMask = uiBBitMask;
+      PixelFormat.dwRBitMask = 0xf800;
+      PixelFormat.dwGBitMask = 0x07e0;
+      PixelFormat.dwBBitMask = 0x001f;
     } break;
 
     default:
