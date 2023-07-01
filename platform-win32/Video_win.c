@@ -171,13 +171,6 @@ extern uint32_t guiDirtyRegionExCount;
 BOOLEAN gfPrintFrameBuffer;
 uint32_t guiPrintFrameBufferIndex;
 
-extern uint16_t gusRedMask;
-extern uint16_t gusGreenMask;
-extern uint16_t gusBlueMask;
-extern int16_t gusRedShift;
-extern int16_t gusBlueShift;
-extern int16_t gusGreenShift;
-
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   uint32_t uiIndex;
   HRESULT ReturnCode;
@@ -489,7 +482,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // This function must be called to setup RGB information
   //
 
-  GetRGBDistribution();
+  if (!GetRGBDistribution()) {
+    return FALSE;
+  }
 
   // create video surfaces from DD surfaces
   vsPrimary = CreateVideoSurfaceFromDDSurface(gpPrimarySurface);
@@ -963,33 +958,22 @@ void printFramebuffer() {
     //
 
     // 5/6/5.. create buffer...
-    if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-      p16BPPData = (uint16_t *)MemAlloc(640 * 2);
-    }
+    p16BPPData = (uint16_t *)MemAlloc(640 * 2);
 
     for (int32_t iIndex = 479; iIndex >= 0; iIndex--) {
       // ATE: OK, fix this such that it converts pixel format to 5/5/5
       // if current settings are 5/6/5....
-      if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-        // Read into a buffer...
-        memcpy(p16BPPData, (((uint8_t *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)),
-               640 * 2);
+      // Read into a buffer...
+      memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2);
 
-        // Convert....
-        ConvertRGBDistribution565To555(p16BPPData, 640);
+      // Convert....
+      ConvertRGBDistribution565To555(p16BPPData, 640);
 
-        // Write
-        fwrite(p16BPPData, 640 * 2, 1, OutputFile);
-      } else {
-        fwrite((void *)(((uint8_t *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2, 1,
-               OutputFile);
-      }
+      // Write
+      fwrite(p16BPPData, 640 * 2, 1, OutputFile);
     }
 
-    // 5/6/5.. Delete buffer...
-    if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-      MemFree(p16BPPData);
-    }
+    MemFree(p16BPPData);
 
     fclose(OutputFile);
 
@@ -1405,37 +1389,26 @@ static BOOLEAN GetRGBDistribution(void) {
   // Ok we now have the surface description, we now can get the information that we need
   //
 
-  gusRedMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
-  gusGreenMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
-  gusBlueMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
+  uint16_t usRedMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwRBitMask;
+  uint16_t usGreenMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
+  uint16_t usBlueMask = (uint16_t)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
-  // RGB 5,5,5
-  if ((gusRedMask == 0x7c00) && (gusGreenMask == 0x03e0) && (gusBlueMask == 0x1f))
-    guiTranslucentMask = 0x3def;
-  // RGB 5,6,5
-  else  // if((gusRedMask==0xf800) && (gusGreenMask==0x03e0) && (gusBlueMask==0x1f))
-    guiTranslucentMask = 0x7bef;
-
-  usBit = 0x8000;
-  gusRedShift = 8;
-  while (!(gusRedMask & usBit)) {
-    usBit >>= 1;
-    gusRedShift--;
+  if ((usRedMask != 0xf800) || (usGreenMask != 0x07e0) || (usBlueMask != 0x001f)) {
+    char buf[200];
+    snprintf(buf, ARR_SIZE(buf), "XXX RGB distribution: (0x%04x, 0x%04x, 0x%04x)", usRedMask,
+             usGreenMask, usBlueMask);
+    DebugLogWrite(buf);
+    DebugLogWrite("XXX RGB distribution other than 565 is not supported");
+    // It may not work some hardware, but 16 bit mode is outdated anyway.
+    // We should switch to 32bit mode.
+    //
+    // Maybe useful:
+    //   - https://www.gamedev.net/forums/topic/54104-555-or-565/
+    //   - https://learn.microsoft.com/en-us/windows/win32/directshow/working-with-16-bit-rgb
+    return FALSE;
   }
 
-  usBit = 0x8000;
-  gusGreenShift = 8;
-  while (!(gusGreenMask & usBit)) {
-    usBit >>= 1;
-    gusGreenShift--;
-  }
-
-  usBit = 0x8000;
-  gusBlueShift = 8;
-  while (!(gusBlueMask & usBit)) {
-    usBit >>= 1;
-    gusBlueShift--;
-  }
+  guiTranslucentMask = 0x7bef;
 
   return TRUE;
 }
@@ -1515,17 +1488,11 @@ struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height, uint8_t bit
       break;
 
     case 16: {
-      uint32_t uiRBitMask;
-      uint32_t uiGBitMask;
-      uint32_t uiBBitMask;
       PixelFormat.dwFlags = DDPF_RGB;
       PixelFormat.dwRGBBitCount = 16;
-      if (!(GetPrimaryRGBDistributionMasks(&uiRBitMask, &uiGBitMask, &uiBBitMask))) {
-        return FALSE;
-      }
-      PixelFormat.dwRBitMask = uiRBitMask;
-      PixelFormat.dwGBitMask = uiGBitMask;
-      PixelFormat.dwBBitMask = uiBBitMask;
+      PixelFormat.dwRBitMask = 0xf800;
+      PixelFormat.dwGBitMask = 0x07e0;
+      PixelFormat.dwBBitMask = 0x001f;
     } break;
 
     default:
