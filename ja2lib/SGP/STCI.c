@@ -103,41 +103,6 @@ static BOOLEAN STCILoadRGB(struct Image *hImage, bool loadAppData, FileID hFile,
 
     if (pHeader->end.Depth == 16) {
       // ASSUMPTION: file data is 565 R,G,B
-
-      if (gusRedMask != (UINT16)pHeader->middle.rgb.uiRedMask ||
-          gusGreenMask != (UINT16)pHeader->middle.rgb.uiGreenMask ||
-          gusBlueMask != (UINT16)pHeader->middle.rgb.uiBlueMask) {
-        // colour distribution of the file is different from hardware!  We have to change it!
-        DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Converting to current RGB distribution!");
-        // Convert the image to the current hardware's specifications
-        if (gusRedMask > gusGreenMask && gusGreenMask > gusBlueMask) {
-          // hardware wants RGB!
-          if (gusRedMask == 0x7C00 && gusGreenMask == 0x03E0 &&
-              gusBlueMask == 0x001F) {  // hardware is 555
-            ConvertRGBDistribution565To555(hImage->p16BPPData,
-                                           pHeader->head.Width * pHeader->head.Height);
-            return (TRUE);
-          } else if (gusRedMask == 0xFC00 && gusGreenMask == 0x03E0 && gusBlueMask == 0x001F) {
-            ConvertRGBDistribution565To655(hImage->p16BPPData,
-                                           pHeader->head.Width * pHeader->head.Height);
-            return (TRUE);
-          } else if (gusRedMask == 0xF800 && gusGreenMask == 0x07C0 && gusBlueMask == 0x003F) {
-            ConvertRGBDistribution565To556(hImage->p16BPPData,
-                                           pHeader->head.Width * pHeader->head.Height);
-            return (TRUE);
-          } else {
-            // take the long route
-            ConvertRGBDistribution565ToAny(hImage->p16BPPData,
-                                           pHeader->head.Width * pHeader->head.Height);
-            return (TRUE);
-          }
-        } else {
-          // hardware distribution is not R-G-B so we have to take the long route!
-          ConvertRGBDistribution565ToAny(hImage->p16BPPData,
-                                         pHeader->head.Width * pHeader->head.Height);
-          return (TRUE);
-        }
-      }
     }
   }
   return (TRUE);

@@ -960,32 +960,22 @@ void printFramebuffer() {
     //
 
     // 5/6/5.. create buffer...
-    if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-      p16BPPData = (UINT16 *)MemAlloc(640 * 2);
-    }
+    p16BPPData = (UINT16 *)MemAlloc(640 * 2);
 
     for (INT32 iIndex = 479; iIndex >= 0; iIndex--) {
       // ATE: OK, fix this such that it converts pixel format to 5/5/5
       // if current settings are 5/6/5....
-      if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-        // Read into a buffer...
-        memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2);
+      // Read into a buffer...
+      memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2);
 
-        // Convert....
-        ConvertRGBDistribution565To555(p16BPPData, 640);
+      // Convert....
+      ConvertRGBDistribution565To555(p16BPPData, 640);
 
-        // Write
-        fwrite(p16BPPData, 640 * 2, 1, OutputFile);
-      } else {
-        fwrite((void *)(((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2, 1,
-               OutputFile);
-      }
+      // Write
+      fwrite(p16BPPData, 640 * 2, 1, OutputFile);
     }
 
-    // 5/6/5.. Delete buffer...
-    if (gusRedMask == 0xF800 && gusGreenMask == 0x07E0 && gusBlueMask == 0x001F) {
-      MemFree(p16BPPData);
-    }
+    MemFree(p16BPPData);
 
     fclose(OutputFile);
 
