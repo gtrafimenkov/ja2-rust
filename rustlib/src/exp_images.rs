@@ -155,3 +155,18 @@ pub extern "C" fn ReadSTCIHeader(file_id: FileID, data: &mut STCIHeaderTmp) -> b
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::mem;
+
+    use super::*;
+
+    #[test]
+    fn stci_structure_sizes() {
+        assert_eq!(24, mem::size_of::<STCIHeaderHead>());
+        assert_eq!(20, mem::size_of::<STCIHeaderMiddleRGB>());
+        assert_eq!(20, mem::size_of::<STCIHeaderMiddleIndexed>());
+        assert_eq!(20, mem::size_of::<STCIHeaderEnd>());
+    }
+}

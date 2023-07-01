@@ -10,4 +10,5 @@ extern "C" {
 }
 #endif
 
-TEST(ImageStructures, STCIHeader) { EXPECT_EQ(sizeof(STCIHeader), 64); }
+// This test was moved to exp_images.rs
+// TEST(ImageStructures, STCIHeader) { EXPECT_EQ(sizeof(STCIHeader), 64); }
