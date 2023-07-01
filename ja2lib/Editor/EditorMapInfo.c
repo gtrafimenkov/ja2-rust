@@ -14,7 +14,6 @@
 #include "SGP/Font.h"
 #include "SGP/Line.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
@@ -45,6 +44,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 INT8 gbDefaultLightType = PRIMETIME_LIGHT;
 

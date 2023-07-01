@@ -7,7 +7,6 @@
 #include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
@@ -23,6 +22,7 @@
 #include "platform_callbacks.h"
 #include "platform_strings.h"
 #include "rust_debug.h"
+#include "rust_images.h"
 
 #define INITGUID
 #include <ddraw.h>
@@ -1686,9 +1686,9 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
     hVSurface->pPalette = pDDPalette;
 
     // Create 16-BPP Palette
-    struct SGPPaletteEntry SGPPalette[256];
-    DDGetPaletteEntries(pDDPalette, 0, 0, 256, (LPPALETTEENTRY)SGPPalette);
-    hVSurface->p16BPPPalette = Create16BPPPalette(SGPPalette);
+    struct SGPPaletteEntry palette[256];
+    DDGetPaletteEntries(pDDPalette, 0, 0, 256, (LPPALETTEENTRY)palette);
+    hVSurface->p16BPPPalette = Create16BPPPalette(palette);
   } else {
     hVSurface->pPalette = NULL;
     hVSurface->p16BPPPalette = NULL;

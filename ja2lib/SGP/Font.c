@@ -11,7 +11,6 @@
 #include "SGP/HImage.h"
 #include "SGP/MemMan.h"
 #include "SGP/PCX.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
@@ -19,6 +18,7 @@
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 //*******************************************************
 //

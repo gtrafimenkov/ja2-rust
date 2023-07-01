@@ -4,6 +4,19 @@ use super::exp_fileman::FileID;
 use super::exp_fileman::FILE_DB;
 use std::io;
 
+#[repr(C)]
+#[allow(non_snake_case)]
+/// Palette structure, mimics that of Win32
+pub struct SGPPaletteEntry {
+    peRed: u8,
+    peGreen: u8,
+    peBlue: u8,
+    _unused: u8,
+}
+
+#[no_mangle]
+pub extern "C" fn TmpPaletterEntryUsage(_pe: SGPPaletteEntry) {}
+
 /*
 Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed of:
 - ImageFileHeader, uncompressed

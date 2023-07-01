@@ -1,7 +1,6 @@
 #ifndef _SHADING_H_
 #define _SHADING_H_
 
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 
 struct VSurface;

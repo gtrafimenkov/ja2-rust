@@ -6,7 +6,6 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectInternal.h"
@@ -45,6 +44,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
+#include "rust_images.h"
 
 #define CORPSE_WARNING_MAX 5
 #define CORPSE_WARNING_DIST 5

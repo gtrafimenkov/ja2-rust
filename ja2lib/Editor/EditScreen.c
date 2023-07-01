@@ -29,7 +29,6 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Line.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/Shading.h"
 #include "SGP/Types.h"
@@ -73,6 +72,7 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 #include "Utils/TextInput.h"
+#include "rust_images.h"
 
 extern void CopyMercPlacement(INT32 iMapIndex);
 extern void PasteMercPlacement(INT32 iMapIndex);

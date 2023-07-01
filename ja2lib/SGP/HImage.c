@@ -7,7 +7,6 @@
 #include "SGP/Debug.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/STCI.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
@@ -16,6 +15,7 @@
 #include "platform_strings.h"
 #include "rust_alloc.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 // This is the color substituted to keep a 24bpp -> 16bpp color
 // from going transparent (0x0000) -- DB

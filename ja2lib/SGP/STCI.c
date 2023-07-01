@@ -4,7 +4,6 @@
 #include "SGP/HImage.h"
 #include "SGP/ImgFmt.h"
 #include "SGP/MemMan.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Types.h"
 #include "SGP/WCheck.h"
 #include "rust_debug.h"

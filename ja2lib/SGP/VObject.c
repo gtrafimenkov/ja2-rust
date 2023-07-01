@@ -6,7 +6,6 @@
 #include "Globals.h"
 #include "SGP/Debug.h"
 #include "SGP/HImage.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Shading.h"
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
@@ -15,6 +14,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "platform_strings.h"
+#include "rust_images.h"
 
 // ******************************************************************************
 //

@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 #include "SGP/MemMan.h"
-#include "SGP/PaletteEntry.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 // Local typedefs
 
