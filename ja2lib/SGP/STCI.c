@@ -88,12 +88,8 @@ static BOOLEAN STCILoadRGB(struct Image *hImage, bool loadAppData, FileID hFile,
     fContents |= IMAGE_APPDATA;
   }
 
-  if (fContents & IMAGE_PALETTE &&
-      !(fContents & IMAGE_ALLIMAGEDATA)) {  // RGB doesn't have a palette!
-    return (FALSE);
-  }
-
-  if (fContents & IMAGE_BITMAPDATA) {
+  // XXX: read head.StoredSize bytes to hImage->pImageData
+  {
     // Allocate memory for the image data and read it in
     hImage->pImageData = MemAlloc(pHeader->head.StoredSize);
     if (hImage->pImageData == NULL) {
