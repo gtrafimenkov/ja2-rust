@@ -43,16 +43,6 @@ struct BltOpts {
   SGPRect FillRect;    // Given SRC subrect instead of srcregion
 };
 
-//
-// Video Surface creation flags
-// Used in the VSurface_DESC structure to describe creation flags
-//
-
-#define VSURFACE_CREATE_DEFAULT \
-  0x00000020  // Creates and empty Surface of given width, height and BPP
-#define VSURFACE_CREATE_FROMFILE \
-  0x00000040  // Creates a video Surface from a file ( using struct Image* )
-
 uint16_t GetVSurfaceHeight(const struct VSurface *vs);
 uint16_t GetVSurfaceWidth(const struct VSurface *vs);
 uint16_t *GetVSurface16BPPPalette(struct VSurface *vs);
@@ -63,11 +53,8 @@ void SetVSurface16BPPPalette(struct VSurface *vs, uint16_t *palette);
 //
 
 typedef struct {
-  uint32_t fCreateFlags;  // Specifies creation flags like from file or not
-  SGPFILENAME ImageFile;  // Filename of image data to use
-  uint16_t usWidth;       // Width, ignored if given from file
-  uint16_t usHeight;      // Height, ignored if given from file
-  uint8_t ubBitDepth;     // BPP, ignored if given from file
+  uint16_t usWidth;
+  uint16_t usHeight;
 } VSURFACE_DESC;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +71,7 @@ BOOLEAN ShutdownVideoSurfaceManager();
 
 // Creates and adds a video Surface to list
 BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
+BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex);
 
 // Returns a HVSurface for the specified index
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
@@ -167,7 +155,7 @@ BYTE *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch);
 
 struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height, uint8_t bitDepth);
 struct VSurface *CreateVideoSurfaceFromFile(const char *path);
-struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, uint8_t bitDepth, VSurfID *puiIndex);
+struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, VSurfID *puiIndex);
 
 // Global variables for video objects
 extern uint32_t guiRIGHTPANEL;

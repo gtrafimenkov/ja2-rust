@@ -761,8 +761,7 @@ uint32_t ShopKeeperScreenShutdown() {
 
 BOOLEAN EnterShopKeeperInterface() {
   uint8_t ubCnt;
-  char *zTemp[32];
-  VSURFACE_DESC vs_desc;
+  char zTemp[32];
   struct SOLDIERTYPE *pSoldier;
 
   // make sure current merc is close enough and eligible to talk to the shopkeeper.
@@ -770,10 +769,9 @@ BOOLEAN EnterShopKeeperInterface() {
             "Selected merc can't interact with shopkeeper.  Send save AM-1");
 
   // Create a video surface to blt corner of the tactical screen that still shines through
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  VSURFACE_DESC vs_desc;
   vs_desc.usWidth = SKI_TACTICAL_BACKGROUND_START_WIDTH;
   vs_desc.usHeight = SKI_TACTICAL_BACKGROUND_START_HEIGHT;
-  vs_desc.ubBitDepth = 16;
   if (!AddVideoSurface(&vs_desc, &guiCornerWhereTacticalIsStillSeenImage)) {
 #ifdef JA2BETAVERSION
     ScreenMsg(FONT_MCOLOR_WHITE, MSG_BETAVERSION,

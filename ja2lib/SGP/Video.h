@@ -17,7 +17,7 @@ extern void ShutdownVideoManager(void);
 extern void SuspendVideoManager(void);
 extern BOOLEAN RestoreVideoManager(void);
 
-extern void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight, uint8_t *ubBitDepth);
+extern void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight);
 
 extern void InvalidateRegion(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom);
 extern void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom,

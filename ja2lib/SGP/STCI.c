@@ -15,7 +15,7 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, uint16_t fContents, FileID hFile,
                         STCIHeader *pHeader);
 BOOLEAN STCISetPalette(void *pSTCIPalette, struct Image *hImage);
 
-BOOLEAN LoadSTCIFileToImage(struct Image *hImage, uint16_t fContents) {
+BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, uint16_t fContents) {
   FileID hFile = FILE_ID_ERR;
   STCIHeader Header;
   uint32_t uiBytesRead;
@@ -26,12 +26,12 @@ BOOLEAN LoadSTCIFileToImage(struct Image *hImage, uint16_t fContents) {
 
   TempImage = *hImage;
 
-  if (!(File_Exists(TempImage.ImageFile))) {
+  if (!(File_Exists(filePath))) {
     return FALSE;
   }
 
   // Open the file and read the header
-  hFile = File_OpenForReading(TempImage.ImageFile);
+  hFile = File_OpenForReading(filePath);
   if (!(hFile)) {
     return FALSE;
   }

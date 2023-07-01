@@ -592,7 +592,6 @@ void ScrollJA2Background(uint32_t uiDirection, int16_t sScrollXIncrement, int16_
                          LPDIRECTDRAWSURFACE2 pSource, LPDIRECTDRAWSURFACE2 pDest,
                          BOOLEAN fRenderStrip, uint32_t uiCurrentMouseBackbuffer) {
   uint16_t usWidth, usHeight;
-  uint8_t ubBitDepth;
   static RECT Region;
   static uint16_t usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;
@@ -601,7 +600,7 @@ void ScrollJA2Background(uint32_t uiDirection, int16_t sScrollXIncrement, int16_
   int16_t sShiftX, sShiftY;
   int32_t uiCountY;
 
-  GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
+  GetCurrentVideoSettings(&usWidth, &usHeight);
   usHeight = (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y);
 
   StripRegions[0].left = gsVIEWPORT_START_X;
