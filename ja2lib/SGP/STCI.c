@@ -85,6 +85,8 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
   UINT32 uiBytesRead;
   PTR pSTCIPalette;
 
+  // TODO: Read Indexed Color Palette
+
   {
     // Allocate memory for reading in the palette
     if (pHeader->middle.indexed.uiNumberOfColours != 256) {
@@ -119,6 +121,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
     // Free the temporary buffer
     MemFree(pSTCIPalette);
   }
+
   {
     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
       // load data for the subimage (object) structures
@@ -129,14 +132,14 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       if (hImage->pETRLEObject == NULL) {
         DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
         File_Close(hFile);
-        MemFree(hImage->pPalette);
+        FreeImagePalette(hImage);
         return (FALSE);
       }
       if (!File_Read(hFile, hImage->pETRLEObject, uiFileSectionSize, &uiBytesRead) ||
           uiBytesRead != uiFileSectionSize) {
         DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading subimage structures!");
         File_Close(hFile);
-        MemFree(hImage->pPalette);
+        FreeImagePalette(hImage);
         MemFree(hImage->pETRLEObject);
         return (FALSE);
       }
@@ -148,7 +151,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
     if (hImage->pImageData == NULL) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
-      MemFree(hImage->pPalette);
+      FreeImagePalette(hImage);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
       }
@@ -158,7 +161,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading image data!");
       File_Close(hFile);
       FreeImageData(hImage);
-      MemFree(hImage->pPalette);
+      FreeImagePalette(hImage);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
       }
@@ -174,7 +177,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
       MemFree(hImage->pAppData);
-      MemFree(hImage->pPalette);
+      FreeImagePalette(hImage);
       FreeImageData(hImage);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
@@ -186,7 +189,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading application-specific data!");
       File_Close(hFile);
       MemFree(hImage->pAppData);
-      MemFree(hImage->pPalette);
+      FreeImagePalette(hImage);
       FreeImageData(hImage);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
@@ -221,7 +224,7 @@ static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage) {
     hImage->pPalette[usIndex].peRed = pubPalette->ubRed;
     hImage->pPalette[usIndex].peGreen = pubPalette->ubGreen;
     hImage->pPalette[usIndex].peBlue = pubPalette->ubBlue;
-    hImage->pPalette[usIndex].peFlags = 0;
+    hImage->pPalette[usIndex]._unused = 0;
     pubPalette++;
   }
   return TRUE;

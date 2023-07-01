@@ -312,7 +312,7 @@ BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
     hImage->pPalette[Index].peRed = *(pubPalette + (Index * 3));
     hImage->pPalette[Index].peGreen = *(pubPalette + (Index * 3) + 1);
     hImage->pPalette[Index].peBlue = *(pubPalette + (Index * 3) + 2);
-    hImage->pPalette[Index].peFlags = 0;
+    hImage->pPalette[Index]._unused = 0;
   }
 
   return TRUE;

@@ -109,6 +109,7 @@ struct Image {
     };
   };
   bool imageDataAllocatedInRust;
+  bool imagePaletteAllocatedInRust;
 };
 //  struct Image, *struct Image*;
 
@@ -159,5 +160,6 @@ extern UINT16 gusAlphaMask;
 void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
 
 void FreeImageData(struct Image *image);
+void FreeImagePalette(struct Image *image);
 
 #endif

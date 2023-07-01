@@ -117,10 +117,20 @@ BOOLEAN DestroyImage(struct Image *hImage) {
 
 void FreeImageData(struct Image *image) {
   if (image->imageDataAllocatedInRust) {
-    RustDealloc(image->pImageData);
+    RustDealloc((uint8_t *)image->pImageData);
   } else {
     MemFree(image->pImageData);
   }
+  image->pImageData = NULL;
+}
+
+void FreeImagePalette(struct Image *image) {
+  if (image->imagePaletteAllocatedInRust) {
+    RustDealloc((uint8_t *)image->pPalette);
+  } else {
+    MemFree(image->pPalette);
+  }
+  image->pPalette = NULL;
 }
 
 BOOLEAN ReleaseImageData(struct Image *hImage) {
@@ -129,8 +139,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage) {
   if (hImage->fFlags & IMAGE_PALETTE) {
     // Destroy palette
     if (hImage->pPalette != NULL) {
-      MemFree(hImage->pPalette);
-      hImage->pPalette = NULL;
+      FreeImagePalette(hImage);
     }
 
     if (hImage->pui16BPPPalette != NULL) {
@@ -592,7 +601,7 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UIN
     pPalEntry->peRed = *(pOldPalette + (Index * 3));
     pPalEntry->peGreen = *(pOldPalette + (Index * 3) + 1);
     pPalEntry->peBlue = *(pOldPalette + (Index * 3) + 2);
-    pPalEntry->peFlags = 0;
+    pPalEntry->_unused = 0;
     pPalEntry++;
   }
   return pInitEntry;

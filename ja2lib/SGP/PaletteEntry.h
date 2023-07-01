@@ -8,7 +8,7 @@ struct SGPPaletteEntry {
   UINT8 peRed;
   UINT8 peGreen;
   UINT8 peBlue;
-  UINT8 peFlags;
+  UINT8 _unused;
 };
 
 #endif
