@@ -3,11 +3,20 @@ use super::exp_fileman::FileID;
 use super::exp_fileman::FILE_DB;
 use std::io;
 
-pub const STCI_ID_LEN: usize = 4;
+/*
+Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed of:
+- ImageFileHeader, uncompressed
+- Palette (STCI_INDEXED, size = uiNumberOfColours * PALETTE_ELEMENT_SIZE), uncompressed
+- SubRectInfo's (usNumberOfRects > 0, size = usNumberOfSubRects * sizeof(SubRectInfo)), uncompressed
+- Bytes of image data, possibly compressed
+*/
+
+const STCI_ID_LEN: usize = 4;
+
+const STCI_ID_STRING: [u8; 4] = [b'S', b'T', b'C', b'I'];
 
 #[repr(C)]
 #[allow(non_snake_case)]
-// #[derive(Default)]
 /// Last part of STCI image header
 pub struct STCIHeaderTmp {
     head: STCIHeaderHead,
@@ -97,6 +106,9 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
             Width: FILE_DB.read_file_u16(file_id)?,
         };
         exp_debug::debug_log_write(&format!("STCI header head: {head:?}"));
+        if head.ID != STCI_ID_STRING {
+            return Err(io::Error::new(io::ErrorKind::Other, "not STCI file"));
+        }
         let middle: STCIHeaderMiddle;
         if head.Flags & STCI_INDEXED != 0 {
             let mut indexed = STCIHeaderMiddleIndexed {

@@ -7,8 +7,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define STCI_ID_LEN 4
-
 /**
  * First part of STCI image header
  */
