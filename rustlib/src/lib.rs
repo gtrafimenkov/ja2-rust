@@ -1,5 +1,6 @@
 pub mod civ_groups;
 pub mod clock;
+pub mod exp_alloc;
 pub mod exp_civ_groups;
 pub mod exp_clock;
 pub mod exp_debug;
