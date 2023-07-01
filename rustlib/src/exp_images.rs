@@ -106,18 +106,28 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
             FILE_DB.read_file_exact(file_id, &mut indexed.cIndexedUnused)?;
             middle = STCIHeaderMiddle::Indexed(indexed);
         } else if head.Flags & STCI_RGB != 0 {
-            //
+            middle = STCIHeaderMiddle::RGB(STCIHeaderMiddleRGB {
+                uiRedMask: FILE_DB.read_file_u32(file_id)?,
+                uiGreenMask: FILE_DB.read_file_u32(file_id)?,
+                uiBlueMask: FILE_DB.read_file_u32(file_id)?,
+                uiAlphaMask: FILE_DB.read_file_u32(file_id)?,
+                ubRedDepth: FILE_DB.read_file_u8(file_id)?,
+                ubGreenDepth: FILE_DB.read_file_u8(file_id)?,
+                ubBlueDepth: FILE_DB.read_file_u8(file_id)?,
+                ubAlphaDepth: FILE_DB.read_file_u8(file_id)?,
+            });
+        } else {
+            return Err(io::Error::new(io::ErrorKind::Other, "unknown image format"));
         }
 
-        let mut header: STCIHeaderTmp = STCIHeaderTmp {
-            head: head,
-            middle: todo!(),
-            end: todo!(),
-            // Default::default
+        let mut end = STCIHeaderEnd {
+            Depth: FILE_DB.read_file_u8(file_id)?,
+            AppDataSize: FILE_DB.read_file_u32(file_id)?,
+            ..Default::default()
         };
-        // // header.head = head;
-        // Ok(header)
-        Ok(header)
+        FILE_DB.read_file_exact(file_id, &mut end.Unused)?;
+
+        Ok(STCIHeaderTmp { head, middle, end })
     }
 }
 
