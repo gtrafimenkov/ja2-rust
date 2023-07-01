@@ -36,7 +36,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   struct STRUCTURE_FILE_REF *pStructureFileRef;
   BOOLEAN fOk;
 
-  hImage = CreateImage(cFilename, IMAGE_ALLDATA);
+  hImage = CreateImage(cFilename, true);
   if (hImage == NULL) {
     // Report error
     SET_ERROR("Could not load tile file: %s", cFilename);

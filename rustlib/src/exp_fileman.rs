@@ -339,6 +339,13 @@ impl DB {
         Ok(u32::from_le_bytes(buffer))
     }
 
+    /// Read u16 number from a file
+    pub fn read_file_u16(&mut self, file_id: FileID) -> io::Result<u16> {
+        let mut buffer = [0u8; 2];
+        self.read_file_exact(file_id, &mut buffer)?;
+        Ok(u16::from_le_bytes(buffer))
+    }
+
     /// Read u8 number from a file
     pub fn read_file_u8(&mut self, file_id: FileID) -> io::Result<u8> {
         let mut buffer = [0u8; 1];

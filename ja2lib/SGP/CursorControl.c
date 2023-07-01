@@ -109,8 +109,7 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
         }
 
       } else {
-        hImage =
-            CreateImage(gpCursorFileDatabase[pCurImage->uiFileIndex].ubFilename, IMAGE_ALLDATA);
+        hImage = CreateImage(gpCursorFileDatabase[pCurImage->uiFileIndex].ubFilename, true);
         if (hImage == NULL) {
           return (FALSE);
         }

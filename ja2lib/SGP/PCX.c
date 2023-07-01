@@ -29,7 +29,7 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usB
                         UINT16 usBufferHeight, UINT16 usX, UINT16 usY, BOOLEAN fTransp);
 PcxObject *LoadPcx(const char *pFilename);
 
-BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
+BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
   PcxObject *pPcxObject;
 
   // First Load a PCX Image
@@ -43,10 +43,10 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage, UINT16 fC
   hImage->usWidth = pPcxObject->usWidth;
   hImage->usHeight = pPcxObject->usHeight;
   hImage->ubBitDepth = 8;
-  hImage->fFlags = hImage->fFlags | fContents;
+  hImage->fFlags = hImage->fFlags | IMAGE_ALLIMAGEDATA;
 
   // Read and allocate bitmap block if requested
-  if (fContents & IMAGE_BITMAPDATA) {
+  {
     // Allocate memory for buffer
     hImage->p8BPPData = (UINT8 *)MemAlloc(hImage->usWidth * hImage->usHeight);
 
@@ -57,7 +57,7 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage, UINT16 fC
     }
   }
 
-  if (fContents & IMAGE_PALETTE) {
+  {
     SetPcxPalette(pPcxObject, hImage);
 
     // Create 16 BPP palette if flags and BPP justify
