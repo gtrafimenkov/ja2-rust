@@ -119,22 +119,9 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
 
   if (loadAppData && pHeader->end.AppDataSize > 0) {
     // load application-specific data
-    hImage->pAppData = (UINT8 *)MemAlloc(pHeader->end.AppDataSize);
-    if (hImage->pAppData == NULL) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
+    hImage->pAppData = ReadSTCIAppData(hFile, pHeader);
+    if (!hImage->pAppData) {
       File_Close(hFile);
-      MemFree(hImage->pAppData);
-      FreeImagePalette(hImage);
-      FreeImageData(hImage);
-      FreeImageSubimages(hImage);
-      return (FALSE);
-    }
-    UINT32 uiBytesRead;
-    if (!File_Read(hFile, hImage->pAppData, pHeader->end.AppDataSize, &uiBytesRead) ||
-        uiBytesRead != pHeader->end.AppDataSize) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading application-specific data!");
-      File_Close(hFile);
-      MemFree(hImage->pAppData);
       FreeImagePalette(hImage);
       FreeImageData(hImage);
       FreeImageSubimages(hImage);

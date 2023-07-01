@@ -154,5 +154,6 @@ void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
 void FreeImageData(struct Image *image);
 void FreeImagePalette(struct Image *image);
 void FreeImageSubimages(struct Image *image);
+void FreeImageAppData(struct Image *image);
 
 #endif

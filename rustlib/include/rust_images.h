@@ -136,6 +136,8 @@ struct SGPPaletteEntry *ReadSTCIPalette(FileID file_id);
 struct ETRLEObject *ReadSTCISubimages(FileID file_id,
                                       uintptr_t num_subimages);
 
+uint8_t *ReadSTCIAppData(FileID file_id, const struct STCIHeader *header);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
