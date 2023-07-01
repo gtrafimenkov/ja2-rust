@@ -85,12 +85,8 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
   UINT32 uiBytesRead;
   PTR pSTCIPalette;
 
-  UINT16 fContents = IMAGE_ALLIMAGEDATA;
-  if (loadAppData) {
-    fContents |= IMAGE_APPDATA;
-  }
-
-  if (fContents & IMAGE_PALETTE) {  // Allocate memory for reading in the palette
+  {
+    // Allocate memory for reading in the palette
     if (pHeader->middle.indexed.uiNumberOfColours != 256) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Palettized image has bad palette size.");
       return (FALSE);
@@ -122,15 +118,8 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
     hImage->fFlags |= IMAGE_PALETTE;
     // Free the temporary buffer
     MemFree(pSTCIPalette);
-  } else if (fContents & (IMAGE_BITMAPDATA | IMAGE_APPDATA)) {  // seek past the palette
-    uiFileSectionSize = pHeader->middle.indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
-    if (File_Seek(hFile, uiFileSectionSize, FILE_SEEK_CURRENT) == FALSE) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem seeking past palette!");
-      File_Close(hFile);
-      return (FALSE);
-    }
   }
-  if (fContents & IMAGE_BITMAPDATA) {
+  {
     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
       // load data for the subimage (object) structures
       Assert(sizeof(ETRLEObject) == STCI_SUBIMAGE_SIZE);
@@ -140,18 +129,14 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       if (hImage->pETRLEObject == NULL) {
         DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
         File_Close(hFile);
-        if (fContents & IMAGE_PALETTE) {
-          MemFree(hImage->pPalette);
-        }
+        MemFree(hImage->pPalette);
         return (FALSE);
       }
       if (!File_Read(hFile, hImage->pETRLEObject, uiFileSectionSize, &uiBytesRead) ||
           uiBytesRead != uiFileSectionSize) {
         DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading subimage structures!");
         File_Close(hFile);
-        if (fContents & IMAGE_PALETTE) {
-          MemFree(hImage->pPalette);
-        }
+        MemFree(hImage->pPalette);
         MemFree(hImage->pETRLEObject);
         return (FALSE);
       }
@@ -163,9 +148,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
     if (hImage->pImageData == NULL) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
-      if (fContents & IMAGE_PALETTE) {
-        MemFree(hImage->pPalette);
-      }
+      MemFree(hImage->pPalette);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
       }
@@ -175,37 +158,24 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading image data!");
       File_Close(hFile);
       FreeImageData(hImage);
-      if (fContents & IMAGE_PALETTE) {
-        MemFree(hImage->pPalette);
-      }
+      MemFree(hImage->pPalette);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
       }
       return (FALSE);
     }
     hImage->fFlags |= IMAGE_BITMAPDATA;
-  } else if (fContents & IMAGE_APPDATA)  // then there's a point in seeking ahead
-  {
-    if (File_Seek(hFile, pHeader->head.StoredSize, FILE_SEEK_CURRENT) == FALSE) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem seeking past image data!");
-      File_Close(hFile);
-      return (FALSE);
-    }
   }
 
-  if (fContents & IMAGE_APPDATA && pHeader->end.AppDataSize > 0) {
+  if (loadAppData && pHeader->end.AppDataSize > 0) {
     // load application-specific data
     hImage->pAppData = (UINT8 *)MemAlloc(pHeader->end.AppDataSize);
     if (hImage->pAppData == NULL) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
       MemFree(hImage->pAppData);
-      if (fContents & IMAGE_PALETTE) {
-        MemFree(hImage->pPalette);
-      }
-      if (fContents & IMAGE_BITMAPDATA) {
-        FreeImageData(hImage);
-      }
+      MemFree(hImage->pPalette);
+      FreeImageData(hImage);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
       }
@@ -216,19 +186,14 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading application-specific data!");
       File_Close(hFile);
       MemFree(hImage->pAppData);
-      if (fContents & IMAGE_PALETTE) {
-        MemFree(hImage->pPalette);
-      }
-      if (fContents & IMAGE_BITMAPDATA) {
-        FreeImageData(hImage);
-      }
+      MemFree(hImage->pPalette);
+      FreeImageData(hImage);
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
       }
       return (FALSE);
     }
     hImage->uiAppDataSize = pHeader->end.AppDataSize;
-    ;
     hImage->fFlags |= IMAGE_APPDATA;
   } else {
     hImage->pAppData = NULL;
