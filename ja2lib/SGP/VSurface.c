@@ -703,7 +703,7 @@ void SetVSurface16BPPPalette(struct VSurface *vs, uint16_t *palette) {
 struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
 
 struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
-  struct Image *image = CreateImage(path, IMAGE_ALLIMAGEDATA);
+  struct Image *image = CreateImage(path, false);
   if (image == NULL) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
     return (NULL);

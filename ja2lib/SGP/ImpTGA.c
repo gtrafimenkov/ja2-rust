@@ -46,15 +46,7 @@
 //
 //**************************************************************************
 
-BOOLEAN ReadUncompColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                              uint16_t fContents);
-BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                           uint16_t fContents);
-BOOLEAN ReadRLEColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                           uint16_t fContents);
-BOOLEAN ReadRLERGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                        uint16_t fContents);
-// BOOLEAN	ConvertTGAToSystemBPPFormat( struct Image* hImage );
+BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap);
 
 //**************************************************************************
 //
@@ -62,7 +54,7 @@ BOOLEAN ReadRLERGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uin
 //
 //**************************************************************************
 
-BOOLEAN LoadTGAFileToImage(const char* filePath, struct Image* hImage, uint16_t fContents) {
+BOOLEAN LoadTGAFileToImage(const char* filePath, struct Image* hImage) {
   FileID hFile = FILE_ID_ERR;
   uint8_t uiImgID, uiColMap, uiType;
   uint32_t uiBytesRead;
@@ -85,16 +77,16 @@ BOOLEAN LoadTGAFileToImage(const char* filePath, struct Image* hImage, uint16_t 
 
   switch (uiType) {
     case 1:
-      fReturnVal = ReadUncompColMapImage(hImage, hFile, uiImgID, uiColMap, fContents);
+      fReturnVal = FALSE;
       break;
     case 2:
-      fReturnVal = ReadUncompRGBImage(hImage, hFile, uiImgID, uiColMap, fContents);
+      fReturnVal = ReadUncompRGBImage(hImage, hFile, uiImgID, uiColMap);
       break;
     case 9:
-      fReturnVal = ReadRLEColMapImage(hImage, hFile, uiImgID, uiColMap, fContents);
+      fReturnVal = FALSE;
       break;
     case 10:
-      fReturnVal = ReadRLERGBImage(hImage, hFile, uiImgID, uiColMap, fContents);
+      fReturnVal = FALSE;
       break;
     default:
       break;
@@ -107,41 +99,7 @@ end:
   return (fReturnVal);
 }
 
-//**************************************************************************
-//
-// ReadUncompColMapImage
-//
-//
-//
-// Parameter List :
-// Return Value :
-// Modification history :
-//
-//		20nov96:HJH		-> creation
-//
-//**************************************************************************
-
-BOOLEAN ReadUncompColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                              uint16_t fContents) {
-  return (FALSE);
-}
-
-//**************************************************************************
-//
-// ReadUncompRGBImage
-//
-//
-//
-// Parameter List :
-// Return Value :
-// Modification history :
-//
-//		20nov96:HJH		-> creation
-//
-//**************************************************************************
-
-BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                           uint16_t fContents) {
+BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap) {
   uint8_t* pBMData;
   uint8_t* pBMPtr;
 
@@ -189,8 +147,7 @@ BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, 
 
   // Allocate memory based on bpp, height, width
 
-  // Only do if contents flag is appropriate
-  if (fContents & IMAGE_BITMAPDATA) {
+  {
     if (uiImagePixelSize == 16) {
       iNumValues = uiWidth * uiHeight;
 
@@ -280,154 +237,3 @@ freeEnd:
   MemFree(pBMData);
   return (FALSE);
 }
-
-//**************************************************************************
-//
-// ReadRLEColMapImage
-//
-//
-//
-// Parameter List :
-// Return Value :
-// Modification history :
-//
-//		20nov96:HJH		-> creation
-//
-//**************************************************************************
-
-BOOLEAN ReadRLEColMapImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                           uint16_t fContents) {
-  return (FALSE);
-}
-
-//**************************************************************************
-//
-// ReadRLERGBImage
-//
-//
-//
-// Parameter List :
-// Return Value :
-// Modification history :
-//
-//		20nov96:HJH		-> creation
-//
-//**************************************************************************
-
-BOOLEAN ReadRLERGBImage(struct Image* hImage, FileID hFile, uint8_t uiImgID, uint8_t uiColMap,
-                        uint16_t fContents) {
-  return (FALSE);
-}
-
-/*
-BOOLEAN	ConvertTGAToSystemBPPFormat( struct Image* hImage )
-{
-        uint16_t		usX, usY;
-        uint16_t		Old16BPPValue;
-        uint16_t		*pData;
-        uint16_t		usR, usG, usB;
-        float			scale_val;
-        uint32_t		uiRBitMask;
-        uint32_t		uiGBitMask;
-        uint32_t		uiBBitMask;
-        uint8_t			ubRNewShift;
-        uint8_t			ubGNewShift;
-        uint8_t			ubBNewShift;
-        uint8_t			ubScaleR;
-        uint8_t			ubScaleB;
-        uint8_t			ubScaleG;
-
-        // Basic algorithm for coonverting to different rgb distributions
-
-        // Get current Pixel Format from DirectDraw
-        if (!( GetPrimaryRGBDistributionMasks( &uiRBitMask, &uiGBitMask, &uiBBitMask ) )) { return
-FALSE; }
-
-        // Only convert if different
-        if ( uiRBitMask == 0x7c00 && uiGBitMask == 0x3e0 && uiBBitMask == 0x1f )
-        {
-                return( TRUE );
-        }
-
-        // Default values
-        ubScaleR			= 0;
-        ubScaleG			= 0;
-        ubScaleB			= 0;
-        ubRNewShift   = 10;
-        ubGNewShift   = 5;
-        ubBNewShift   = 0;
-
-        // Determine values
-  switch( uiBBitMask )
-  {
-                case 0x3f: // 0000000000111111 pixel mask for blue
-
-                        // 5-5-6
-                        ubRNewShift = 11;
-                        ubGNewShift = 6;
-                        ubScaleB		= 1;
-                        break;
-
-    case 0x1f: // 0000000000011111 pixel mask for blue
-                        switch( uiGBitMask )
-      {
-                                case 0x7e0: // 0000011111100000 pixel mask for green
-
-                // 5-6-5
-                                        ubRNewShift = 11;
-                                        ubScaleG    = 1;
-                                        break;
-
-        case 0x3e0: // 0000001111100000 pixel mask for green
-
-                                        switch( uiRBitMask )
-          {
-                                                case 0xfc00: // 1111110000000000 pixel mask for red
-
-                                                        // 6-5-5
-                                                        ubScaleR	= 1;
-                                                        break;
-          }
-          break;
-      }
-      break;
-  }
-
-        pData = hImage->pui16BPPPalette;
-        usX = 0;
-        do
-        {
-
-                usY = 0;
-
-                do
-                {
-
-                        // Get Old 5,5,5 value
-                        Old16BPPValue = hImage->p16BPPData[ usX * hImage->usWidth + usY ];
-
-                        // Get component r,g,b values AT 5 5 5
-                        usR = ( Old16BPPValue & 0x7c00 ) >> 10;
-                        usG = ( Old16BPPValue & 0x3e0 ) >> 5;
-                        usB = Old16BPPValue & 0x1f;
-
-                        // Scale accordingly
-                        usR = usR << ubScaleR;
-                        usG = usG << ubScaleG;
-                        usB = usB << ubScaleB;
-
-                        hImage->p16BPPData[ usX * hImage->usWidth + usY ] = ((uint16_t) ( ( usR <<
-ubRNewShift | usG << ubGNewShift ) | usB  ) );
-
-                        usY++;
-
-                } while( usY < hImage->usWidth );
-
-                usX++;
-
-        } while( usX < hImage->usHeight );
-
-        return( TRUE );
-
-}
-*/

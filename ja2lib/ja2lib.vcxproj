@@ -328,7 +328,6 @@
     <ClCompile Include="Utils\RussianText.c" />
     <ClCompile Include="Utils\Slider.c" />
     <ClCompile Include="Utils\SoundControl.c" />
-    <ClCompile Include="Utils\STIConvert.c" />
     <ClCompile Include="Utils\TaiwaneseText.c" />
     <ClCompile Include="Utils\TextInput.c" />
     <ClCompile Include="Utils\TextUtils.c" />
@@ -661,7 +660,6 @@
     <ClInclude Include="Utils\Resource.h" />
     <ClInclude Include="Utils\Slider.h" />
     <ClInclude Include="Utils\SoundControl.h" />
-    <ClInclude Include="Utils\STIConvert.h" />
     <ClInclude Include="Utils\Text.h" />
     <ClInclude Include="Utils\TextInput.h" />
     <ClInclude Include="Utils\TimerControl.h" />

@@ -355,7 +355,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   memset(hVObject, 0, sizeof(struct VObject));
 
   // Create himage object from file
-  struct Image *hImage = CreateImage(path, IMAGE_ALLIMAGEDATA);
+  struct Image *hImage = CreateImage(path, false);
 
   if (hImage == NULL) {
     MemFree(hVObject);
