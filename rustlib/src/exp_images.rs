@@ -218,6 +218,9 @@ pub extern "C" fn ReadSTCIPalette(file_id: FileID) -> *mut u8 {
         // let slice: &mut [u8] = std::slice::from_raw_parts_mut(pointer, size);
         match FILE_DB.read_file_exact(file_id, &mut data) {
             Ok(_) => {
+                let size = 256 * std::mem::size_of::<SGPPaletteEntry>();
+                let pointer = exp_alloc::RustAlloc(size);
+                let slice: &mut [SGPPaletteEntry] = std::slice::from_raw_parts_mut(pointer, size);
                 let mut palette: [SGPPaletteEntry; 256];
                 for i in 0..256 {
                     palette[i].peRed = data[i * 3 + 0];
