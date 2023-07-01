@@ -4289,7 +4289,7 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
 
     // Create video object
     CopyFilename(gAnimSurfaceDatabase[usSurfaceIndex].Filename, sFilename);
-    hImage = CreateImage(sFilename, IMAGE_ALLDATA);
+    hImage = CreateImage(sFilename, true);
 
     if (hImage == NULL) {
       return (SET_ERROR("Error: Could not load animation file %s", sFilename));

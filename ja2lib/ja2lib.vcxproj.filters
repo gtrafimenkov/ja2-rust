@@ -554,9 +554,6 @@
     <ClCompile Include="Utils\SoundControl.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\STIConvert.c">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\TaiwaneseText.c">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
@@ -1550,9 +1547,6 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\SoundControl.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\STIConvert.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Text.h">

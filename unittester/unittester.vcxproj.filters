@@ -5,6 +5,7 @@
     <ClCompile Include="bugfixes.cpp" />
     <ClCompile Include="savegame-structures.cpp" />
     <ClCompile Include="rustlib-export.cpp" />
+    <ClCompile Include="image-structures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

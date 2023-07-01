@@ -41,9 +41,9 @@ typedef union {
 // This function will attept to Load data from an existing image object's filename
 // In this way, dynamic loading of image data can be done
 static BOOLEAN LoadImageData(const char *filePath, uint32_t fileLoader, struct Image *hImage,
-                             uint16_t fContents);
+                             bool loadAppData);
 
-struct Image *CreateImage(const char *ImageFile, uint16_t fContents) {
+struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
   struct Image *hImage = NULL;
   SGPFILENAME Extension;
   char ExtensionSep[] = ".";
@@ -100,7 +100,7 @@ struct Image *CreateImage(const char *ImageFile, uint16_t fContents) {
   // Initialize some values
   memset(hImage, 0, sizeof(struct Image));
 
-  if (!LoadImageData(imageFileCopy, iFileLoader, hImage, fContents)) {
+  if (!LoadImageData(imageFileCopy, iFileLoader, hImage, loadAppData)) {
     return (NULL);
   }
 
@@ -112,7 +112,7 @@ BOOLEAN DestroyImage(struct Image *hImage) {
   Assert(hImage != NULL);
 
   // First delete contents
-  ReleaseImageData(hImage, IMAGE_ALLDATA);  // hImage->fFlags );
+  ReleaseImageData(hImage);
 
   // Now free structure
   MemFree(hImage);
@@ -120,10 +120,10 @@ BOOLEAN DestroyImage(struct Image *hImage) {
   return (TRUE);
 }
 
-BOOLEAN ReleaseImageData(struct Image *hImage, uint16_t fContents) {
+BOOLEAN ReleaseImageData(struct Image *hImage) {
   Assert(hImage != NULL);
 
-  if ((fContents & IMAGE_PALETTE) && (hImage->fFlags & IMAGE_PALETTE)) {
+  if (hImage->fFlags & IMAGE_PALETTE) {
     // Destroy palette
     if (hImage->pPalette != NULL) {
       MemFree(hImage->pPalette);
@@ -139,7 +139,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage, uint16_t fContents) {
     hImage->fFlags = hImage->fFlags ^ IMAGE_PALETTE;
   }
 
-  if ((fContents & IMAGE_BITMAPDATA) && (hImage->fFlags & IMAGE_BITMAPDATA)) {
+  if (hImage->fFlags & IMAGE_BITMAPDATA) {
     // Destroy image data
     Assert(hImage->pImageData != NULL);
     MemFree(hImage->pImageData);
@@ -151,7 +151,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage, uint16_t fContents) {
     hImage->fFlags = hImage->fFlags ^ IMAGE_BITMAPDATA;
   }
 
-  if ((fContents & IMAGE_APPDATA) && (hImage->fFlags & IMAGE_APPDATA)) {
+  if (hImage->fFlags & IMAGE_APPDATA) {
     // get rid of the APP DATA
     if (hImage->pAppData != NULL) {
       MemFree(hImage->pAppData);
@@ -163,7 +163,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage, uint16_t fContents) {
 }
 
 static BOOLEAN LoadImageData(const char *filePath, uint32_t fileLoader, struct Image *hImage,
-                             uint16_t fContents) {
+                             bool loadAppData) {
   BOOLEAN fReturnVal = FALSE;
 
   Assert(hImage != NULL);
@@ -171,19 +171,18 @@ static BOOLEAN LoadImageData(const char *filePath, uint32_t fileLoader, struct I
   // Switch on file loader
   switch (fileLoader) {
     case TGA_FILE_READER:
-      fReturnVal = LoadTGAFileToImage(filePath, hImage, fContents);
+      fReturnVal = LoadTGAFileToImage(filePath, hImage);
       break;
 
     case PCX_FILE_READER:
-      fReturnVal = LoadPCXFileToImage(filePath, hImage, fContents);
+      fReturnVal = LoadPCXFileToImage(filePath, hImage);
       break;
 
     case STCI_FILE_READER:
-      fReturnVal = LoadSTCIFileToImage(filePath, hImage, fContents);
+      fReturnVal = LoadSTCIFileToImage(filePath, hImage, loadAppData);
       break;
 
     default:
-
       DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Unknown image loader was specified.");
   }
 
