@@ -4,6 +4,8 @@
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 
+struct ETRLEObject;
+
 // The struct Image* module provides a common interface for managing image data. This module
 // includes:
 // - A set of data structures representing image data. Data can be 8 or 16 bpp and/or
