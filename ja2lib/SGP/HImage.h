@@ -109,7 +109,7 @@ struct Image {
     };
   };
   bool imageDataAllocatedInRust;
-  bool imagePaletteAllocatedInRust;
+  bool paletteAllocatedInRust;
 };
 //  struct Image, *struct Image*;
 

@@ -80,53 +80,21 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
 
 static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
                                struct STCIHeader *pHeader) {
-  UINT32 uiFileSectionSize;
-  UINT32 uiBytesRead;
-  PTR pSTCIPalette;
-
-  // TODO: Read Indexed Color Palette
-
-  {
-    // Allocate memory for reading in the palette
-    if (pHeader->middle.indexed.uiNumberOfColours != 256) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Palettized image has bad palette size.");
-      return (FALSE);
-    }
-    uiFileSectionSize = pHeader->middle.indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
-    pSTCIPalette = MemAlloc(uiFileSectionSize);
-    if (pSTCIPalette == NULL) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
-      File_Close(hFile);
-      return (FALSE);
-    }
-
-    // ATE: Memset: Jan 16/99
-    memset(pSTCIPalette, 0, uiFileSectionSize);
-
-    // Read in the palette
-    if (!File_Read(hFile, pSTCIPalette, uiFileSectionSize, &uiBytesRead) ||
-        uiBytesRead != uiFileSectionSize) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palette!");
-      File_Close(hFile);
-      MemFree(pSTCIPalette);
-      return (FALSE);
-    } else if (!STCISetPalette(pSTCIPalette, hImage)) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem setting hImage-format palette!");
-      File_Close(hFile);
-      MemFree(pSTCIPalette);
-      return (FALSE);
-    }
-    hImage->fFlags |= IMAGE_PALETTE;
-    // Free the temporary buffer
-    MemFree(pSTCIPalette);
+  hImage->pPalette = ReadSTCIPalette(hFile);
+  if (!hImage->pPalette) {
+    File_Close(hFile);
+    return (FALSE);
   }
+  hImage->paletteAllocatedInRust = true;
+  hImage->fFlags |= IMAGE_PALETTE;
 
   {
+    UINT32 uiBytesRead;
     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
       // load data for the subimage (object) structures
       Assert(sizeof(ETRLEObject) == STCI_SUBIMAGE_SIZE);
       hImage->usNumberOfObjects = pHeader->middle.indexed.usNumberOfSubImages;
-      uiFileSectionSize = hImage->usNumberOfObjects * STCI_SUBIMAGE_SIZE;
+      UINT32 uiFileSectionSize = hImage->usNumberOfObjects * STCI_SUBIMAGE_SIZE;
       hImage->pETRLEObject = (ETRLEObject *)MemAlloc(uiFileSectionSize);
       if (hImage->pETRLEObject == NULL) {
         DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
@@ -183,6 +151,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       }
       return (FALSE);
     }
+    UINT32 uiBytesRead;
     if (!File_Read(hFile, hImage->pAppData, pHeader->end.AppDataSize, &uiBytesRead) ||
         uiBytesRead != pHeader->end.AppDataSize) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading application-specific data!");

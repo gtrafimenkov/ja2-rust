@@ -211,29 +211,33 @@ pub extern "C" fn ReadSTCIRgbData(file_id: FileID, header: &STCIHeader) -> *mut 
 }
 
 #[no_mangle]
-pub extern "C" fn ReadSTCIPalette(file_id: FileID) -> *mut u8 {
+/// Read STCI indexed image palette from file and return it as SGPPaletteEntry[256] array.
+/// If NULL is returned, there was an error reading data from file.
+/// Memory must be freed afterwards using RustDealloc function.
+pub extern "C" fn ReadSTCIPalette(file_id: FileID) -> *mut SGPPaletteEntry {
     // palette is 256 rgb u8 values
-    let mut data: [u8; 256 * 3];
+    let mut data: [u8; 256 * 3] = [0; 256 * 3];
     unsafe {
         // let slice: &mut [u8] = std::slice::from_raw_parts_mut(pointer, size);
         match FILE_DB.read_file_exact(file_id, &mut data) {
             Ok(_) => {
                 let size = 256 * std::mem::size_of::<SGPPaletteEntry>();
-                let pointer = exp_alloc::RustAlloc(size);
-                let slice: &mut [SGPPaletteEntry] = std::slice::from_raw_parts_mut(pointer, size);
-                let mut palette: [SGPPaletteEntry; 256];
-                for i in 0..256 {
-                    palette[i].peRed = data[i * 3 + 0];
-                    palette[i].peGreen = data[i * 3 + 1];
-                    palette[i].peBlue = data[i * 3 + 2];
-                    palette[i]._unused = 0;
-                    // TODO
+                // let pointer = exp_alloc::RustAlloc(size);
+                let pointer2: *mut SGPPaletteEntry =
+                    std::mem::transmute(exp_alloc::RustAlloc(size));
+                let palette: &mut [SGPPaletteEntry] = std::slice::from_raw_parts_mut(pointer2, 256);
+                for (i, item) in palette.iter_mut().enumerate().take(256) {
+                    let start = i * 3;
+                    item.peRed = data[start];
+                    item.peGreen = data[start + 1];
+                    item.peBlue = data[start + 2];
+                    item._unused = 0;
                 }
+                pointer2
             }
             Err(err) => {
                 exp_debug::debug_log_write(&format!("failed to read STCI palette: {err:?}"));
-                let pointer: *mut u8 = std::ptr::null_mut();
-                pointer
+                std::ptr::null_mut()
             }
         }
     }

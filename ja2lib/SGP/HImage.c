@@ -125,7 +125,7 @@ void FreeImageData(struct Image *image) {
 }
 
 void FreeImagePalette(struct Image *image) {
-  if (image->imagePaletteAllocatedInRust) {
+  if (image->paletteAllocatedInRust) {
     RustDealloc((uint8_t *)image->pPalette);
   } else {
     MemFree(image->pPalette);

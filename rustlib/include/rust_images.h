@@ -109,7 +109,12 @@ bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
 
 uint8_t *ReadSTCIRgbData(FileID file_id, const struct STCIHeader *header);
 
-uint8_t *ReadSTCIPalette(FileID file_id);
+/**
+ * Read STCI indexed image palette from file and return it as SGPPaletteEntry[256] array.
+ * If NULL is returned, there was an error reading data from file.
+ * Memory must be freed afterwards using RustDealloc function.
+ */
+struct SGPPaletteEntry *ReadSTCIPalette(FileID file_id);
 
 #ifdef __cplusplus
 } // extern "C"

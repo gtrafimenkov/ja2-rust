@@ -1372,13 +1372,11 @@ ENDOFLOOP:
 
 static BOOLEAN GetRGBDistribution(void) {
   DDSURFACEDESC SurfaceDescription;
-  UINT16 usBit;
-  HRESULT ReturnCode;
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   SurfaceDescription.dwFlags = DDSD_PIXELFORMAT;
-  ReturnCode = IDirectDrawSurface2_GetSurfaceDesc(gpPrimarySurface, &SurfaceDescription);
+  HRESULT ReturnCode = IDirectDrawSurface2_GetSurfaceDesc(gpPrimarySurface, &SurfaceDescription);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
