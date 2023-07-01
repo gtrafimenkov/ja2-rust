@@ -616,14 +616,14 @@ BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
   pBuffer->usNumberOfObjects = hImage->usNumberOfObjects;
 
   // Create buffer for objects
-  pBuffer->pETRLEObject = (ETRLEObject *)MemAlloc(sizeof(ETRLEObject) * pBuffer->usNumberOfObjects);
+  pBuffer->pETRLEObject = (struct ETRLEObject *)MemAlloc(sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
   if (!(pBuffer->pETRLEObject != NULL)) {
     return FALSE;
   }
 
   // Copy into buffer
   memcpy(pBuffer->pETRLEObject, hImage->pETRLEObject,
-         sizeof(ETRLEObject) * pBuffer->usNumberOfObjects);
+         sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
 
   // Allocate memory for pixel data
   pBuffer->pPixData = MemAlloc(hImage->uiSizePixData);

@@ -92,10 +92,10 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
     UINT32 uiBytesRead;
     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
       // load data for the subimage (object) structures
-      Assert(sizeof(ETRLEObject) == STCI_SUBIMAGE_SIZE);
+      Assert(sizeof(struct ETRLEObject) == STCI_SUBIMAGE_SIZE);
       hImage->usNumberOfObjects = pHeader->middle.indexed.usNumberOfSubImages;
       UINT32 uiFileSectionSize = hImage->usNumberOfObjects * STCI_SUBIMAGE_SIZE;
-      hImage->pETRLEObject = (ETRLEObject *)MemAlloc(uiFileSectionSize);
+      hImage->pETRLEObject = (struct ETRLEObject *)MemAlloc(uiFileSectionSize);
       if (hImage->pETRLEObject == NULL) {
         DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
         File_Close(hFile);

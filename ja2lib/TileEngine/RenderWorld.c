@@ -631,7 +631,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   struct LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
   struct SOLDIERTYPE *pSoldier, *pSelSoldier;
   struct VObject *hVObject;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   TILE_ELEMENT *TileElem = NULL;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf = NULL;
@@ -3475,7 +3475,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -3862,7 +3862,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -4254,7 +4254,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -4659,7 +4659,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -5109,7 +5109,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -6087,7 +6087,7 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -6215,7 +6215,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -6329,7 +6329,7 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   BOOLEAN fHidden = TRUE;
 

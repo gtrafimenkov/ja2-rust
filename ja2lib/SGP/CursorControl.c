@@ -39,7 +39,7 @@ BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
                                                UINT16 usVideoObjectSubIndex, UINT16 usXPos,
                                                UINT16 usYPos) {
   BOOLEAN ReturnValue;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT16 sXPos, sYPos;
 
   // Adjust for offsets
@@ -86,7 +86,7 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
   UINT32 cnt;
   INT16 sMaxHeight = -1;
   INT16 sMaxWidth = -1;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   pCurData = &(gpCursorDatabase[uiCursorIndex]);
 
@@ -259,7 +259,7 @@ void CursorDatabaseClear(void) {
 
 BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 usOffsetY) {
   BOOLEAN ReturnValue;
-  ETRLEObject pETRLEPointer;
+  struct ETRLEObject pETRLEPointer;
 
   //
   // Make sure we have a cursor store
@@ -305,7 +305,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
   UINT32 cnt;
   INT16 sCenterValX, sCenterValY;
   struct VObject *hVObject;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT16 usEffHeight, usEffWidth;
 
   if (gfCursorDatabaseInit) {
@@ -326,7 +326,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
       if (uiCursorIndex == EXTERN_CURSOR || uiCursorIndex == EXTERN2_CURSOR) {
         INT16 sSubX, sSubY;
         struct VObject *hVObjectTemp;
-        ETRLEObject *pTravTemp;
+        struct ETRLEObject *pTravTemp;
 
         // Erase old cursor
         EraseMouseCursor();

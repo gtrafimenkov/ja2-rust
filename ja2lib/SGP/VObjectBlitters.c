@@ -50,7 +50,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(UINT16 *pBuffer, UINT32 
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -311,7 +311,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTranslucent(UINT16 *pBuffer, UINT32 uiDest
   UINT16 *p16BPPPalette;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 uiLineFlag;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -445,7 +445,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBTranslucent(UINT16 *pBuffer, UINT32 uiDe
   UINT16 *p16BPPPalette;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 uiLineFlag;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -570,7 +570,7 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitch
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip, LineSkipZ;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT8 *pPal8BPP;
@@ -872,7 +872,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadowClip(UINT16 *pBuffer, UINT32 uiDestPit
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -1343,7 +1343,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelate(UINT16 *pBuffer, UINT32 uiDestPit
   UINT16 *p16BPPPalette;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 uiLineFlag;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -1482,7 +1482,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelateObscured(UINT16 *pBuffer, UINT32 u
   UINT16 *p16BPPPalette;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 uiLineFlag;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -1636,7 +1636,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBPixelate(UINT16 *pBuffer, UINT32 uiDestP
   UINT16 *p16BPPPalette;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 uiLineFlag;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -1775,7 +1775,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipPixelate(UINT16 *pBuffer, UINT32 uiD
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -2040,7 +2040,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -2165,7 +2165,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -2288,7 +2288,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadow(UINT16 *pBuffer, UINT32 uiDestPitchB
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -2408,7 +2408,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZ(UINT16 *pBuffer, UINT32 uiDestPitch
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -2539,7 +2539,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNB(UINT16 *pBuffer, UINT32 uiDestPit
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -2672,7 +2672,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscured(UINT16 *pBuffer, UINT32 u
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   UINT32 uiLineFlag;
 
@@ -2832,7 +2832,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZClip(UINT16 *pBuffer, UINT32 uiDestP
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -3092,7 +3092,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowClip(UINT16 *pBuffer, UINT32 uiDestPi
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -3340,7 +3340,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBClip(UINT16 *pBuffer, UINT32 uiDes
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -3603,7 +3603,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(UINT16 *pBuffer, UINT
   UINT32 usHeight, usWidth, Unblitted, uiLineFlag;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -3888,7 +3888,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowBelowOrEqualZNBClip(
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -4146,7 +4146,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -4267,7 +4267,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -4517,7 +4517,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -4636,7 +4636,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNBClip(UINT16 *pBuffer, UINT32 uiDestPitc
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -4885,7 +4885,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -5137,7 +5137,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClip(UINT16 *pBuffer, UINT32 uiDestPitch
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -5472,7 +5472,7 @@ BOOLEAN Blt8BPPDataTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  //	ETRLEObject *pTrav;
+  //	struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   UINT32 rows;
 
@@ -5823,7 +5823,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMask(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   UINT32 usMHeight, usMWidth;
   UINT8 *SrcPtr, *DestPtr, *MaskPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -6112,7 +6112,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -6263,7 +6263,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchB
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -6413,7 +6413,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparentClip(UINT16 *pBuffer, UINT32 uiDestPi
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -6693,7 +6693,7 @@ BlitDone:
 BOOLEAN BltIsClipped(struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
                      SGPRect *clipregion) {
   UINT32 usHeight, usWidth;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -6749,7 +6749,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -7171,7 +7171,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadow(UINT16 *pBuffer, UINT32 uiDestPitchBY
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -7380,7 +7380,7 @@ FillLineEnd:
 CHAR8 BltIsClippedOrOffScreen(struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex,
                               SGPRect *clipregion) {
   UINT32 usHeight, usWidth;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -7443,7 +7443,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutline(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   UINT16 *p16BPPPalette;
 
@@ -7560,7 +7560,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 *p16BPPPalette;
@@ -7804,7 +7804,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(UINT16 *pBuffer, UINT32 uiDestPitch
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 *p16BPPPalette;
@@ -8065,7 +8065,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 *p16BPPPalette;
@@ -8352,7 +8352,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadow(UINT16 *pBuffer, UINT32 uiDestPitc
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   UINT16 *p16BPPPalette;
 
@@ -8457,7 +8457,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(UINT16 *pBuffer, UINT32 uiDest
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -8735,7 +8735,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -8870,7 +8870,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(UINT16 *pBuffer, UINT32
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
   UINT32 uiLineFlag;
 
@@ -9029,7 +9029,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(UINT16 *pBuffer, UINT32 uiDestPitchBY
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -9171,7 +9171,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZ(UINT16 *pBuffer, UINT32 uiDestPitchBY
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -9292,7 +9292,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZClip(UINT16 *pBuffer, UINT32 uiDestPit
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -9542,7 +9542,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZNB(UINT16 *pBuffer, UINT32 uiDestPitch
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -9658,7 +9658,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityClip(UINT16 *pBuffer, UINT32 uiDestPitc
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 
@@ -9936,7 +9936,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensity(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -10093,7 +10093,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(UINT16 *pBuffer, UINT
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
 

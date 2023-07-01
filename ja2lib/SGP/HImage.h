@@ -60,19 +60,19 @@ struct RelTileLoc {
 };
 
 // TRLE subimage structure, mirroring that of ST(C)I
-typedef struct tagETRLEObject {
+struct ETRLEObject {
   UINT32 uiDataOffset;
   UINT32 uiDataLength;
   INT16 sOffsetX;
   INT16 sOffsetY;
   UINT16 usHeight;
   UINT16 usWidth;
-} ETRLEObject;
+};
 
 typedef struct tagETRLEData {
   PTR pPixData;
   UINT32 uiSizePixData;
-  ETRLEObject *pETRLEObject;
+  struct ETRLEObject *pETRLEObject;
   UINT16 usNumberOfObjects;
 } ETRLEData;
 
@@ -104,7 +104,7 @@ struct Image {
     struct {
       UINT8 *pPixData8;
       UINT32 uiSizePixData;
-      ETRLEObject *pETRLEObject;
+      struct ETRLEObject *pETRLEObject;
       UINT16 usNumberOfObjects;
     };
   };

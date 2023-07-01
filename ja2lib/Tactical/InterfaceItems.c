@@ -1681,7 +1681,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
                    INT16 sOutlineColor) {
   UINT16 uiStringLength;
   INVTYPE *pItem;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT32 usHeight, usWidth;
   INT16 sCenX, sCenY, sNewY, sNewX;
   struct VObject *hVObject;
@@ -2566,7 +2566,7 @@ void ItemDescAttachmentsCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
 }
 
 void RenderItemDescriptionBox() {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT32 usHeight, usWidth;
   INT16 sCenX, sCenY, sStrX;
   struct VObject *hVObject;
@@ -4560,7 +4560,7 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16
   INT16 sX, sY, sCenX, sCenY;
   SGPRect aRect;
   UINT8 ubLimit;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hVObject;
   INT32 cnt;
   UINT16 usPopupWidth;
@@ -4684,7 +4684,7 @@ void EndItemStackPopupWithItemInHand() {
 }
 
 void RenderItemStackPopup(BOOLEAN fFullRender) {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT32 usWidth;
   struct VObject *hVObject;
   UINT32 cnt;
@@ -4761,7 +4761,7 @@ void DeleteItemStackPopup() {
 BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY, INT16 sInvWidth,
                          INT16 sInvHeight) {
   SGPRect aRect;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hVObject;
   INT32 cnt;
   UINT16 usPopupWidth, usPopupHeight;
@@ -4851,7 +4851,7 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
 }
 
 void RenderKeyRingPopup(BOOLEAN fFullRender) {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT32 usHeight, usWidth;
   struct VObject *hVObject;
   UINT32 cnt;

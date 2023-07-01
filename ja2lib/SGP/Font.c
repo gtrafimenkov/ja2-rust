@@ -331,7 +331,7 @@ void UnloadFont(UINT32 FontIndex) {
 //
 //*****************************************************************************
 UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   // Assertions
   Assert(hSrcVObject != NULL);
@@ -527,7 +527,7 @@ void RestoreFontSettings(void) {
 //
 //*****************************************************************************
 UINT32 GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   // Assertions
   Assert(hSrcVObject != NULL);

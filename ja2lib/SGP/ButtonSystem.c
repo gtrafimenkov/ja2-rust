@@ -162,7 +162,7 @@ INT32 FindFreeButtonSlot(void) {
 INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHilite, INT32 OnNormal,
                       INT32 OnHilite) {
   UINT32 UseSlot;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   AssertMsg(filename != BUTTON_NO_FILENAME, "Attempting to LoadButtonImage() with null filename.");
@@ -262,7 +262,7 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
                            INT32 OnNormal, INT32 OnHilite) {
   UINT32 UseSlot;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   // Is button image index given valid?
@@ -378,7 +378,7 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
                            INT32 OnNormal, INT32 OnHilite) {
   UINT32 UseSlot;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   UINT32 MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   // Is button image index given valid?
@@ -2739,7 +2739,7 @@ void DrawIconOnButton(GUI_BUTTON *b) {
   INT32 xp, yp, width, height, IconX, IconY;
   INT32 IconW, IconH;
   SGPRect NewClip, OldClip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hvObject;
 
   // If there's an actual icon on this button, try to show it.
@@ -2983,7 +2983,7 @@ static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, INT32 iDestX1, I
                                          INT32 iDestX2, INT32 iDestY2, struct VObject *BkgrndImg,
                                          UINT16 Index, INT16 Ox, INT16 Oy) {
   INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   SGPRect NewClip, OldClip;
 
   pTrav = &(BkgrndImg->pETRLEObject[Index]);

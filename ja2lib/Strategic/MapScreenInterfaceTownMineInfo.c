@@ -693,7 +693,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
   SGPRect pDimensions;
   SGPPoint pPosition;
   UINT32 uiObject;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INT16 sWidthA = 0, sTotalBoxWidth = 0;
   struct VObject *hHandle;
 
@@ -803,7 +803,7 @@ void MinWidthOfTownMineInfoBox(void) {
   struct VObject *hHandle;
   INT16 sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
   UINT32 uiObject;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   AddVObjectFromFile("INTERFACE\\mapinvbtns.sti", &uiObject);
 

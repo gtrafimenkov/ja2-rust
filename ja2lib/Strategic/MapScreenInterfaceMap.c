@@ -4383,7 +4383,7 @@ void RemoveMilitiaPopUpBox(void) {
 
 BOOLEAN DrawMilitiaPopUpBox(void) {
   struct VObject *hVObject;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   if (!fShowMilitia) {
     sSelectedMilitiaTown = 0;
