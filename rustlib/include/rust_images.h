@@ -119,7 +119,7 @@ void TmpImageFunc(struct ETRLEObject _pe);
 
 bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
 
-uint8_t *ReadSTCIRgbData(FileID file_id, const struct STCIHeader *header);
+uint8_t *ReadSTCIImageData(FileID file_id, const struct STCIHeader *header);
 
 /**
  * Read STCI indexed image palette from file and return it as SGPPaletteEntry[256] array.

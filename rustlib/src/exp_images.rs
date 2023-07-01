@@ -203,20 +203,20 @@ pub extern "C" fn ReadSTCIHeader(file_id: FileID, data: &mut STCIHeader) -> bool
 }
 
 #[no_mangle]
-// Read rgb data of STCI image.
+// Read image data of STCI image.
 // This function should be called immediately after the header was read.
 // Returns pointer to the read data or null in case of an error.
 // The memory should be free afterwards using RustDealloc function.
-pub extern "C" fn ReadSTCIRgbData(file_id: FileID, header: &STCIHeader) -> *mut u8 {
+pub extern "C" fn ReadSTCIImageData(file_id: FileID, header: &STCIHeader) -> *mut u8 {
     let size = header.head.StoredSize as usize;
-    exp_debug::debug_log_write(&format!("reading STCI rgb data, {size} bytes"));
+    exp_debug::debug_log_write(&format!("reading STCI image data, {size} bytes"));
     let pointer = exp_alloc::RustAlloc(size);
     unsafe {
         let slice: &mut [u8] = std::slice::from_raw_parts_mut(pointer, size);
         match FILE_DB.read_file_exact(file_id, slice) {
             Ok(_) => pointer,
             Err(err) => {
-                exp_debug::debug_log_write(&format!("failed to read STCI rgb data: {err:?}"));
+                exp_debug::debug_log_write(&format!("failed to read STCI image data: {err:?}"));
                 let pointer: *mut u8 = std::ptr::null_mut();
                 pointer
             }

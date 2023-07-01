@@ -42,12 +42,11 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
 
   // Determine from the header the data stored in the file. and run the appropriate loader
   if (header.middle.tag == Rgb) {
-    uint8_t *data = ReadSTCIRgbData(hFile, &header);
-    if (!data) {
+    TempImage.pImageData = ReadSTCIImageData(hFile, &header);
+    if (!TempImage.pImageData) {
       File_Close(hFile);
       return (FALSE);
     }
-    TempImage.pImageData = data;
     TempImage.imageDataAllocatedInRust = true;
     TempImage.fFlags |= IMAGE_BITMAPDATA;
   } else if (header.middle.tag == Indexed) {
@@ -103,25 +102,18 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
     }
   }
 
+  // image data
   {
     UINT32 uiBytesRead;
     // allocate memory for and read in the image data
-    hImage->pImageData = MemAlloc(pHeader->head.StoredSize);
-    if (hImage->pImageData == NULL) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
+    hImage->pImageData = ReadSTCIImageData(hFile, pHeader);
+    if (!hImage->pImageData) {
       File_Close(hFile);
-      FreeImagePalette(hImage);
-      FreeImageSubimages(hImage);
-      return (FALSE);
-    } else if (!File_Read(hFile, hImage->pImageData, pHeader->head.StoredSize, &uiBytesRead) ||
-               uiBytesRead != pHeader->head.StoredSize) {  // Problem reading in the image data!
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading image data!");
-      File_Close(hFile);
-      FreeImageData(hImage);
       FreeImagePalette(hImage);
       FreeImageSubimages(hImage);
       return (FALSE);
     }
+    hImage->imageDataAllocatedInRust = true;
     hImage->fFlags |= IMAGE_BITMAPDATA;
   }
 
