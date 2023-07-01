@@ -22,12 +22,6 @@
 #define BLACK_SUBSTITUTE 0x0001
 
 uint16_t gusAlphaMask = 0;
-uint16_t gusRedMask = 0;
-uint16_t gusGreenMask = 0;
-uint16_t gusBlueMask = 0;
-int16_t gusRedShift = 0;
-int16_t gusBlueShift = 0;
-int16_t gusGreenShift = 0;
 
 // this funky union is used for fast 16-bit pixel format conversions
 typedef union {
@@ -431,22 +425,11 @@ uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
     g = pPalette[cnt].peGreen;
     b = pPalette[cnt].peBlue;
 
-    if (gusRedShift < 0)
-      r16 = ((uint16_t)r >> abs(gusRedShift));
-    else
-      r16 = ((uint16_t)r << gusRedShift);
+    r16 = ((uint16_t)r << 8);
+    g16 = ((uint16_t)g << 3);
+    b16 = ((uint16_t)b >> 3);
 
-    if (gusGreenShift < 0)
-      g16 = ((uint16_t)g >> abs(gusGreenShift));
-    else
-      g16 = ((uint16_t)g << gusGreenShift);
-
-    if (gusBlueShift < 0)
-      b16 = ((uint16_t)b >> abs(gusBlueShift));
-    else
-      b16 = ((uint16_t)b << gusBlueShift);
-
-    usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+    usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
       if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
@@ -510,23 +493,12 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
     g = (uint8_t)min(gmod, 255);
     b = (uint8_t)min(bmod, 255);
 
-    if (gusRedShift < 0)
-      r16 = ((uint16_t)r >> (-gusRedShift));
-    else
-      r16 = ((uint16_t)r << gusRedShift);
-
-    if (gusGreenShift < 0)
-      g16 = ((uint16_t)g >> (-gusGreenShift));
-    else
-      g16 = ((uint16_t)g << gusGreenShift);
-
-    if (gusBlueShift < 0)
-      b16 = ((uint16_t)b >> (-gusBlueShift));
-    else
-      b16 = ((uint16_t)b << gusBlueShift);
+    r16 = ((uint16_t)r << 8);
+    g16 = ((uint16_t)g << 3);
+    b16 = ((uint16_t)b >> 3);
 
     // Prevent creation of pure black color
-    usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+    usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
       if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
@@ -547,22 +519,11 @@ uint16_t Get16BPPColor(uint32_t RGBValue) {
   g = SGPGetGValue(RGBValue);
   b = SGPGetBValue(RGBValue);
 
-  if (gusRedShift < 0)
-    r16 = ((uint16_t)r >> abs(gusRedShift));
-  else
-    r16 = ((uint16_t)r << gusRedShift);
+  r16 = ((uint16_t)r << 8);
+  g16 = ((uint16_t)g << 3);
+  b16 = ((uint16_t)b >> 3);
 
-  if (gusGreenShift < 0)
-    g16 = ((uint16_t)g >> abs(gusGreenShift));
-  else
-    g16 = ((uint16_t)g << gusGreenShift);
-
-  if (gusBlueShift < 0)
-    b16 = ((uint16_t)b >> abs(gusBlueShift));
-  else
-    b16 = ((uint16_t)b << gusBlueShift);
-
-  usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+  usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
   // if our color worked out to absolute black, and the original wasn't
   // absolute black, convert it to a VERY dark grey to avoid transparency
@@ -581,24 +542,15 @@ uint32_t GetRGBColor(uint16_t Value16BPP) {
   uint16_t r16, g16, b16;
   uint32_t r, g, b, val;
 
-  r16 = Value16BPP & gusRedMask;
-  g16 = Value16BPP & gusGreenMask;
-  b16 = Value16BPP & gusBlueMask;
+  r16 = Value16BPP & 0xf800;
+  g16 = Value16BPP & 0x07e0;
+  b16 = Value16BPP & 0x001f;
 
-  if (gusRedShift < 0)
-    r = ((uint32_t)r16 << abs(gusRedShift));
-  else
-    r = ((uint32_t)r16 >> gusRedShift);
+  r = ((uint32_t)r16 >> 8);
 
-  if (gusGreenShift < 0)
-    g = ((uint32_t)g16 << abs(gusGreenShift));
-  else
-    g = ((uint32_t)g16 >> gusGreenShift);
+  g = ((uint32_t)g16 >> 3);
 
-  if (gusBlueShift < 0)
-    b = ((uint32_t)b16 << abs(gusBlueShift));
-  else
-    b = ((uint32_t)b16 >> gusBlueShift);
+  b = ((uint32_t)b16 << 3);
 
   r &= 0x000000ff;
   g &= 0x000000ff;
@@ -696,79 +648,4 @@ void ConvertRGBDistribution565To555(uint16_t *p16BPPData, uint32_t uiNumberOfPix
     }
     pPixel++;
   }
-}
-
-void ConvertRGBDistribution565To655(uint16_t *p16BPPData, uint32_t uiNumberOfPixels) {
-  uint16_t *pPixel;
-  uint32_t uiLoop;
-
-  SplitUINT32 Pixel;
-
-  pPixel = p16BPPData;
-  for (uiLoop = 0; uiLoop < uiNumberOfPixels; uiLoop++) {
-    // we put the 16 pixel bits in the UPPER word of uiPixel, so that we can
-    // right shift the blue value (at the bottom) into the LOWER word to protect it
-    Pixel.usHigher = *pPixel;
-    Pixel.uiValue >>= 5;
-    // get rid of the least significant bit of green
-    Pixel.usHigher >>= 1;
-    // shift to the right some more...
-    Pixel.uiValue >>= 5;
-    // so we can left-shift the red value alone to give it an extra bit
-    Pixel.usHigher <<= 1;
-    // now shift back and copy
-    Pixel.uiValue <<= 10;
-    *pPixel = Pixel.usHigher;
-    pPixel++;
-  }
-}
-
-void ConvertRGBDistribution565To556(uint16_t *p16BPPData, uint32_t uiNumberOfPixels) {
-  uint16_t *pPixel;
-  uint32_t uiLoop;
-
-  SplitUINT32 Pixel;
-
-  pPixel = p16BPPData;
-  for (uiLoop = 0; uiLoop < uiNumberOfPixels; uiLoop++) {
-    // we put the 16 pixel bits in the UPPER word of uiPixel, so that we can
-    // right shift the blue value (at the bottom) into the LOWER word to protect it
-    Pixel.usHigher = *pPixel;
-    Pixel.uiValue >>= 5;
-    // get rid of the least significant bit of green
-    Pixel.usHigher >>= 1;
-    // shift back into the upper word
-    Pixel.uiValue <<= 5;
-    // give blue an extra bit (blank in the least significant spot)
-    Pixel.usHigher <<= 1;
-    // copy back
-    *pPixel = Pixel.usHigher;
-    pPixel++;
-  }
-}
-
-void ConvertRGBDistribution565ToAny(uint16_t *p16BPPData, uint32_t uiNumberOfPixels) {
-  uint16_t *pPixel;
-  uint32_t uiRed, uiGreen, uiBlue, uiTemp, uiLoop;
-
-  pPixel = p16BPPData;
-  for (uiLoop = 0; uiLoop < uiNumberOfPixels; uiLoop++) {
-    // put the 565 RGB 16-bit value into a 32-bit RGB value
-    uiRed = (*pPixel) >> 11;
-    uiGreen = (*pPixel & 0x07E0) >> 5;
-    uiBlue = (*pPixel & 0x001F);
-    uiTemp = FROMRGB(uiRed, uiGreen, uiBlue);
-    // then convert the 32-bit RGB value to whatever 16 bit format is used
-    *pPixel = Get16BPPColor(uiTemp);
-    pPixel++;
-  }
-}
-
-BOOLEAN GetPrimaryRGBDistributionMasks(uint32_t *RedBitMask, uint32_t *GreenBitMask,
-                                       uint32_t *BlueBitMask) {
-  *RedBitMask = gusRedMask;
-  *GreenBitMask = gusGreenMask;
-  *BlueBitMask = gusBlueMask;
-
-  return TRUE;
 }

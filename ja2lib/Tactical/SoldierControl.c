@@ -7722,23 +7722,12 @@ uint16_t *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint32_t
     g = (uint8_t)min(gmod, 255);
     b = (uint8_t)min(bmod, 255);
 
-    if (gusRedShift < 0)
-      r16 = ((uint16_t)r >> (-gusRedShift));
-    else
-      r16 = ((uint16_t)r << gusRedShift);
-
-    if (gusGreenShift < 0)
-      g16 = ((uint16_t)g >> (-gusGreenShift));
-    else
-      g16 = ((uint16_t)g << gusGreenShift);
-
-    if (gusBlueShift < 0)
-      b16 = ((uint16_t)b >> (-gusBlueShift));
-    else
-      b16 = ((uint16_t)b << gusBlueShift);
+    r16 = ((uint16_t)r << 8);
+    g16 = ((uint16_t)g << 3);
+    b16 = ((uint16_t)b >> 3);
 
     // Prevent creation of pure black color
-    usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+    usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if ((usColor == 0) && ((r + g + b) != 0)) usColor = 0x0001;
 
@@ -7775,23 +7764,12 @@ uint16_t *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, uint
     g = (uint8_t)min(gmod, 255);
     b = (uint8_t)min(bmod, 255);
 
-    if (gusRedShift < 0)
-      r16 = ((uint16_t)r >> (-gusRedShift));
-    else
-      r16 = ((uint16_t)r << gusRedShift);
-
-    if (gusGreenShift < 0)
-      g16 = ((uint16_t)g >> (-gusGreenShift));
-    else
-      g16 = ((uint16_t)g << gusGreenShift);
-
-    if (gusBlueShift < 0)
-      b16 = ((uint16_t)b >> (-gusBlueShift));
-    else
-      b16 = ((uint16_t)b << gusBlueShift);
+    r16 = ((uint16_t)r << 8);
+    g16 = ((uint16_t)g << 3);
+    b16 = ((uint16_t)b >> 3);
 
     // Prevent creation of pure black color
-    usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
+    usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if ((usColor == 0) && ((r + g + b) != 0)) usColor = 0x0001;
 
