@@ -39,6 +39,7 @@
         "fontcontrol.h": "c",
         "winfont.h": "c",
         "rust_laptop.h": "c",
-        "imgfmt.h": "c"
+        "imgfmt.h": "c",
+        "cstdlib": "c"
     }
 }

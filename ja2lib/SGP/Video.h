@@ -24,8 +24,6 @@ extern void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBot
                                UINT32 uiFlags);
 extern void InvalidateScreen(void);
 
-extern BOOLEAN GetPrimaryRGBDistributionMasks(UINT32 *RedBitMask, UINT32 *GreenBitMask,
-                                              UINT32 *BblueBitMask);
 extern void StartFrameBufferRender(void);
 extern void EndFrameBufferRender(void);
 extern void PrintScreen(void);
