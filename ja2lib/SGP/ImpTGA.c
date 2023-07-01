@@ -54,7 +54,7 @@ BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, UINT8 uiImgID, UI
 //
 //**************************************************************************
 
-BOOLEAN LoadTGAFileToImage(const char* filePath, struct Image* hImage, bool loadAppData) {
+BOOLEAN LoadTGAFileToImage(const char* filePath, struct Image* hImage) {
   FileID hFile = FILE_ID_ERR;
   UINT8 uiImgID, uiColMap, uiType;
   UINT32 uiBytesRead;

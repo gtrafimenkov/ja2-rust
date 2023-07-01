@@ -171,7 +171,7 @@ static BOOLEAN LoadImageData(const char *filePath, u32 fileLoader, struct Image 
   // Switch on file loader
   switch (fileLoader) {
     case TGA_FILE_READER:
-      fReturnVal = LoadTGAFileToImage(filePath, hImage, loadAppData);
+      fReturnVal = LoadTGAFileToImage(filePath, hImage);
       break;
 
     case PCX_FILE_READER:
@@ -183,7 +183,6 @@ static BOOLEAN LoadImageData(const char *filePath, u32 fileLoader, struct Image 
       break;
 
     default:
-
       DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Unknown image loader was specified.");
   }
 
