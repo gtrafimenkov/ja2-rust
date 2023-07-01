@@ -133,6 +133,12 @@ void FreeImagePalette(struct Image *image) {
   image->pPalette = NULL;
 }
 
+void FreeImageSubimages(struct Image *image) {
+  if (image->usNumberOfObjects > 0) {
+    RustDealloc(image->pETRLEObject);
+  }
+}
+
 BOOLEAN ReleaseImageData(struct Image *hImage) {
   Assert(hImage != NULL);
 
@@ -156,9 +162,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage) {
     Assert(hImage->pImageData != NULL);
     FreeImageData(hImage);
     hImage->pImageData = NULL;
-    if (hImage->usNumberOfObjects > 0) {
-      MemFree(hImage->pETRLEObject);
-    }
+    FreeImageSubimages(hImage);
     // Remove contents flag
     hImage->fFlags = hImage->fFlags ^ IMAGE_BITMAPDATA;
   }
@@ -616,7 +620,8 @@ BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
   pBuffer->usNumberOfObjects = hImage->usNumberOfObjects;
 
   // Create buffer for objects
-  pBuffer->pETRLEObject = (struct ETRLEObject *)MemAlloc(sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
+  pBuffer->pETRLEObject =
+      (struct ETRLEObject *)MemAlloc(sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
   if (!(pBuffer->pETRLEObject != NULL)) {
     return FALSE;
   }

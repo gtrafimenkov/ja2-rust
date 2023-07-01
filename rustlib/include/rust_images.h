@@ -128,6 +128,14 @@ uint8_t *ReadSTCIRgbData(FileID file_id, const struct STCIHeader *header);
  */
 struct SGPPaletteEntry *ReadSTCIPalette(FileID file_id);
 
+/**
+ * Read STCI indexed image subimages info from the file and return it as ETRLEObject[num_subimages] array.
+ * If NULL is returned, there was an error reading data from file.
+ * Memory must be freed afterwards using RustDealloc function.
+ */
+struct ETRLEObject *ReadSTCISubimages(FileID file_id,
+                                      uintptr_t num_subimages);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus

@@ -2,6 +2,7 @@ use super::exp_alloc;
 use super::exp_debug;
 use super::exp_fileman::FileID;
 use super::exp_fileman::FILE_DB;
+use byteorder::{LittleEndian, ReadBytesExt};
 use std::io;
 
 #[repr(C)]
@@ -16,6 +17,7 @@ pub struct SGPPaletteEntry {
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Debug)]
 /// Structure that describes one image from an indexed STCI file
 pub struct ETRLEObject {
     uiDataOffset: u32,
@@ -234,10 +236,8 @@ pub extern "C" fn ReadSTCIPalette(file_id: FileID) -> *mut SGPPaletteEntry {
         match FILE_DB.read_file_exact(file_id, &mut data) {
             Ok(_) => {
                 let size = 256 * std::mem::size_of::<SGPPaletteEntry>();
-                // let pointer = exp_alloc::RustAlloc(size);
-                let pointer2: *mut SGPPaletteEntry =
-                    std::mem::transmute(exp_alloc::RustAlloc(size));
-                let palette: &mut [SGPPaletteEntry] = std::slice::from_raw_parts_mut(pointer2, 256);
+                let pointer: *mut SGPPaletteEntry = std::mem::transmute(exp_alloc::RustAlloc(size));
+                let palette: &mut [SGPPaletteEntry] = std::slice::from_raw_parts_mut(pointer, 256);
                 for (i, item) in palette.iter_mut().enumerate().take(256) {
                     let start = i * 3;
                     item.peRed = data[start];
@@ -245,10 +245,46 @@ pub extern "C" fn ReadSTCIPalette(file_id: FileID) -> *mut SGPPaletteEntry {
                     item.peBlue = data[start + 2];
                     item._unused = 0;
                 }
-                pointer2
+                pointer
             }
             Err(err) => {
                 exp_debug::debug_log_write(&format!("failed to read STCI palette: {err:?}"));
+                std::ptr::null_mut()
+            }
+        }
+    }
+}
+
+#[no_mangle]
+/// Read STCI indexed image subimages info from the file and return it as ETRLEObject[num_subimages] array.
+/// If NULL is returned, there was an error reading data from file.
+/// Memory must be freed afterwards using RustDealloc function.
+pub extern "C" fn ReadSTCISubimages(file_id: FileID, num_subimages: usize) -> *mut ETRLEObject {
+    exp_debug::debug_log_write(&format!("going to read {num_subimages} subimages of STCI"));
+    let size = std::mem::size_of::<ETRLEObject>() * num_subimages;
+    let mut buffer = vec![0; size];
+    unsafe {
+        match FILE_DB.read_file_exact(file_id, &mut buffer) {
+            Ok(_) => {
+                // we can just copy the read data, but going to read them explicitly to fields to respect
+                // endianess
+                let mut reader = io::Cursor::new(buffer);
+                let p: *mut ETRLEObject = std::mem::transmute(exp_alloc::RustAlloc(size));
+                let objects: &mut [ETRLEObject] = std::slice::from_raw_parts_mut(p, num_subimages);
+                for obj in objects.iter_mut().take(num_subimages) {
+                    // can safely do unwrap here because the data is already in memory
+                    obj.uiDataOffset = reader.read_u32::<LittleEndian>().unwrap();
+                    obj.uiDataLength = reader.read_u32::<LittleEndian>().unwrap();
+                    obj.sOffsetX = reader.read_i16::<LittleEndian>().unwrap();
+                    obj.sOffsetY = reader.read_i16::<LittleEndian>().unwrap();
+                    obj.usHeight = reader.read_u16::<LittleEndian>().unwrap();
+                    obj.usWidth = reader.read_u16::<LittleEndian>().unwrap();
+                    exp_debug::debug_log_write(&format!("subimage: {obj:?}"));
+                }
+                p
+            }
+            Err(err) => {
+                exp_debug::debug_log_write(&format!("failed to read STCI subimages: {err:?}"));
                 std::ptr::null_mut()
             }
         }

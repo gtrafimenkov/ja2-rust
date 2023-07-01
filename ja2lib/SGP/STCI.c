@@ -90,27 +90,14 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
 
   // subimages
   {
-    UINT32 uiBytesRead;
     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
-      // load data for the subimage (object) structures
-      Assert(sizeof(struct ETRLEObject) == STCI_SUBIMAGE_SIZE);
+      hImage->pETRLEObject = ReadSTCISubimages(hFile, pHeader->middle.indexed.usNumberOfSubImages);
+      if (!hImage->pETRLEObject) {
+        File_Close(hFile);
+        FreeImagePalette(hImage);
+        return (FALSE);
+      }
       hImage->usNumberOfObjects = pHeader->middle.indexed.usNumberOfSubImages;
-      UINT32 uiFileSectionSize = hImage->usNumberOfObjects * STCI_SUBIMAGE_SIZE;
-      hImage->pETRLEObject = (struct ETRLEObject *)MemAlloc(uiFileSectionSize);
-      if (hImage->pETRLEObject == NULL) {
-        DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
-        File_Close(hFile);
-        FreeImagePalette(hImage);
-        return (FALSE);
-      }
-      if (!File_Read(hFile, hImage->pETRLEObject, uiFileSectionSize, &uiBytesRead) ||
-          uiBytesRead != uiFileSectionSize) {
-        DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading subimage structures!");
-        File_Close(hFile);
-        FreeImagePalette(hImage);
-        MemFree(hImage->pETRLEObject);
-        return (FALSE);
-      }
       hImage->uiSizePixData = pHeader->head.StoredSize;
       hImage->fFlags |= IMAGE_TRLECOMPRESSED;
     }
@@ -124,9 +111,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
       File_Close(hFile);
       FreeImagePalette(hImage);
-      if (hImage->usNumberOfObjects > 0) {
-        MemFree(hImage->pETRLEObject);
-      }
+      FreeImageSubimages(hImage);
       return (FALSE);
     } else if (!File_Read(hFile, hImage->pImageData, pHeader->head.StoredSize, &uiBytesRead) ||
                uiBytesRead != pHeader->head.StoredSize) {  // Problem reading in the image data!
@@ -134,9 +119,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       File_Close(hFile);
       FreeImageData(hImage);
       FreeImagePalette(hImage);
-      if (hImage->usNumberOfObjects > 0) {
-        MemFree(hImage->pETRLEObject);
-      }
+      FreeImageSubimages(hImage);
       return (FALSE);
     }
     hImage->fFlags |= IMAGE_BITMAPDATA;
@@ -151,9 +134,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       MemFree(hImage->pAppData);
       FreeImagePalette(hImage);
       FreeImageData(hImage);
-      if (hImage->usNumberOfObjects > 0) {
-        MemFree(hImage->pETRLEObject);
-      }
+      FreeImageSubimages(hImage);
       return (FALSE);
     }
     UINT32 uiBytesRead;
@@ -164,9 +145,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
       MemFree(hImage->pAppData);
       FreeImagePalette(hImage);
       FreeImageData(hImage);
-      if (hImage->usNumberOfObjects > 0) {
-        MemFree(hImage->pETRLEObject);
-      }
+      FreeImageSubimages(hImage);
       return (FALSE);
     }
     hImage->uiAppDataSize = pHeader->end.AppDataSize;
