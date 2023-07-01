@@ -588,10 +588,8 @@ BOOLEAN EnterAIMMembers() {
   VSURFACE_DESC vs_desc;
 
   // Create a background video surface to blt the face onto
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = AIM_MEMBER_VIDEO_FACE_WIDTH;
   vs_desc.usHeight = AIM_MEMBER_VIDEO_FACE_HEIGHT;
-  vs_desc.ubBitDepth = 16;
   if (!(AddVideoSurface(&vs_desc, &guiVideoFaceBackground))) {
     return FALSE;
   }
@@ -2949,7 +2947,6 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
   static BOOLEAN fXRegionActive = FALSE;
   uint8_t i;
   uint16_t usPosX, usPosY;
-  VSURFACE_DESC vs_desc;
 
   // remove the face help text
   gfAimMemberDisplayFaceHelpText = FALSE;
@@ -3030,10 +3027,9 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
       }
 
       // Create a background video surface to blt the face onto
-      vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+      VSURFACE_DESC vs_desc;
       vs_desc.usWidth = AIM_MEMBER_VIDEO_TITLE_BAR_WIDTH;
       vs_desc.usHeight = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;
-      vs_desc.ubBitDepth = 16;
       if (!(AddVideoSurface(&vs_desc, &guiVideoTitleBar))) {
         return FALSE;
       }
@@ -3260,10 +3256,9 @@ BOOLEAN InitDeleteVideoConferencePopUp() {
     }
 
     // Create a background video surface to blt the face onto
-    vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+    VSURFACE_DESC vs_desc;
     vs_desc.usWidth = AIM_MEMBER_VIDEO_TITLE_BAR_WIDTH;
     vs_desc.usHeight = AIM_MEMBER_VIDEO_TITLE_BAR_HEIGHT;
-    vs_desc.ubBitDepth = 16;
     if (!(AddVideoSurface(&vs_desc, &guiVideoTitleBar))) {
       return FALSE;
     }

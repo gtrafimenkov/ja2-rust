@@ -3715,16 +3715,14 @@ BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, 
 
 BOOLEAN InitTitleBarMaximizeGraphics(uint32_t uiBackgroundGraphic, wchar_t *pTitle,
                                      uint32_t uiIconGraphic, uint16_t usIconGraphicIndex) {
-  VSURFACE_DESC vs_desc;
   struct VObject *hImageHandle;
 
   Assert(uiBackgroundGraphic);
 
   // Create a background video surface to blt the title bar onto
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  VSURFACE_DESC vs_desc;
   vs_desc.usWidth = LAPTOP_TITLE_BAR_WIDTH;
   vs_desc.usHeight = LAPTOP_TITLE_BAR_HEIGHT;
-  vs_desc.ubBitDepth = 16;
   if (!(AddVideoSurface(&vs_desc, &guiTitleBarSurface))) {
     return FALSE;
   }
@@ -4357,12 +4355,10 @@ BOOLEAN DrawDeskTopBackground(void) {
 }
 
 BOOLEAN LoadDesktopBackground(void) {
-  // load desktop background
-  VSURFACE_DESC vs_desc;
+  SGPFILENAME ImageFile;
 
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
-  GetMLGFilename(vs_desc.ImageFile, MLG_DESKTOP);
-  if (!(AddVideoSurface(&vs_desc, &guiDESKTOP))) {
+  GetMLGFilename(ImageFile, MLG_DESKTOP);
+  if (!(AddVideoSurfaceFromFile(ImageFile, &guiDESKTOP))) {
     return FALSE;
   }
 

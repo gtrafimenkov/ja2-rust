@@ -8,10 +8,9 @@
 uint16_t gusScreenWidth;
 uint16_t gusScreenHeight;
 
-void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight, uint8_t *ubBitDepth) {
+void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight) {
   *usWidth = (uint16_t)gusScreenWidth;
   *usHeight = (uint16_t)gusScreenHeight;
-  *ubBitDepth = 16;
 }
 
 uint32_t guiFrameBufferState;    // BUFFER_READY, BUFFER_DIRTY

@@ -142,14 +142,11 @@ void GetMercPopupBoxFontColor(uint8_t ubBackgroundIndex, uint8_t *pubFontColor,
 
 // Tactical Popup
 BOOLEAN LoadTextMercPopupImages(uint8_t ubBackgroundIndex, uint8_t ubBorderIndex) {
-  VSURFACE_DESC vs_desc;
-
   // this function will load the graphics associated with the background and border index values
 
   // the background
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
-  strcpy(vs_desc.ImageFile, zMercBackgroundPopupFilenames[ubBackgroundIndex]);
-  if (!(AddVideoSurface(&vs_desc, &gPopUpTextBox->uiMercTextPopUpBackground))) {
+  if (!(AddVideoSurfaceFromFile(zMercBackgroundPopupFilenames[ubBackgroundIndex],
+                                &gPopUpTextBox->uiMercTextPopUpBackground))) {
     return FALSE;
   }
 
@@ -257,7 +254,6 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
   uint16_t i;
   struct VObject *hImageHandle;
   uint16_t usPosY, usPosX;
-  VSURFACE_DESC vs_desc;
   uint16_t usStringPixLength;
   SGPRect DestRect;
   struct VSurface *hSrcVSurface;
@@ -360,11 +356,9 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
     return (-1);
   }
   // Create a background video surface to blt the face onto
-  memset(&vs_desc, 0, sizeof(VSURFACE_DESC));
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  VSURFACE_DESC vs_desc;
   vs_desc.usWidth = usWidth;
   vs_desc.usHeight = usHeight;
-  vs_desc.ubBitDepth = 16;
   if (!(AddVideoSurface(&vs_desc, &pPopUpTextBox->uiSourceBufferIndex))) {
     return FALSE;
   }

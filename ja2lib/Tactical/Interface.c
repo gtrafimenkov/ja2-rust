@@ -240,8 +240,6 @@ void DoorMenuBackregionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 uint32_t CalcUIMessageDuration(wchar_t *wString);
 
 BOOLEAN InitializeTacticalInterface() {
-  VSURFACE_DESC vs_desc;
-
   // Load button Interfaces
   iIconImages[WALK_IMAGES] = LoadButtonImage("INTERFACE\\newicons3.sti", -1, 3, 4, 5, -1);
   iIconImages[SNEAK_IMAGES] = UseLoadedButtonImage(iIconImages[WALK_IMAGES], -1, 6, 7, 8, -1);
@@ -283,14 +281,10 @@ BOOLEAN InitializeTacticalInterface() {
   iIconImages[EXPLOSIVE_DOOR_IMAGES] =
       UseLoadedButtonImage(iIconImages[OPEN_DOOR_IMAGES], -1, 15, 16, 17, -1);
 
-  // Load interface panels
-  vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE;
-
   // failing the CHECKF after this will cause you to lose your mouse
 
-  strcpy(vs_desc.ImageFile, "INTERFACE\\IN_TEXT.STI");
-
-  if (!AddVideoSurface(&vs_desc, &guiINTEXT)) AssertMsg(0, "Missing INTERFACE\\In_text.sti");
+  if (!AddVideoSurfaceFromFile("INTERFACE\\IN_TEXT.STI", &guiINTEXT))
+    AssertMsg(0, "Missing INTERFACE\\In_text.sti");
   SetVideoSurfaceTransparency(guiINTEXT, FROMRGB(255, 0, 0));
 
   // LOAD CLOSE ANIM
@@ -363,10 +357,9 @@ BOOLEAN InitializeTacticalInterface() {
     AssertMsg(0, "Missing INTERFACE\\communicationpopup_2.sti");
 
   // Alocate message surfaces
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  VSURFACE_DESC vs_desc;
   vs_desc.usWidth = 640;
   vs_desc.usHeight = 20;
-  vs_desc.ubBitDepth = 16;
   if (!(AddVideoSurface(&vs_desc, &(gTopMessage.uiSurface)))) {
     return FALSE;
   }
