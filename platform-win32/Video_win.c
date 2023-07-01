@@ -173,9 +173,6 @@ UINT32 guiPrintFrameBufferIndex;
 extern UINT16 gusRedMask;
 extern UINT16 gusGreenMask;
 extern UINT16 gusBlueMask;
-extern INT16 gusRedShift;
-extern INT16 gusBlueShift;
-extern INT16 gusGreenShift;
 
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   UINT32 uiIndex;
@@ -488,7 +485,9 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   // This function must be called to setup RGB information
   //
 
-  GetRGBDistribution();
+  if (!GetRGBDistribution()) {
+    return FALSE;
+  }
 
   // create video surfaces from DD surfaces
   vsPrimary = CreateVideoSurfaceFromDDSurface(gpPrimarySurface);
@@ -1406,33 +1405,27 @@ static BOOLEAN GetRGBDistribution(void) {
   gusGreenMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwGBitMask;
   gusBlueMask = (UINT16)SurfaceDescription.ddpfPixelFormat.dwBBitMask;
 
-  // RGB 5,5,5
-  if ((gusRedMask == 0x7c00) && (gusGreenMask == 0x03e0) && (gusBlueMask == 0x1f))
-    guiTranslucentMask = 0x3def;
-  // RGB 5,6,5
-  else  // if((gusRedMask==0xf800) && (gusGreenMask==0x03e0) && (gusBlueMask==0x1f))
-    guiTranslucentMask = 0x7bef;
-
-  usBit = 0x8000;
-  gusRedShift = 8;
-  while (!(gusRedMask & usBit)) {
-    usBit >>= 1;
-    gusRedShift--;
+  {
+    char buf[200];
+    snprintf(buf, ARR_SIZE(buf), "XXX RGB distribution: (0x%04x, 0x%04x, 0x%04x)", gusRedMask,
+             gusGreenMask, gusBlueMask);
+    DebugLogWrite(buf);
+    // XXX RGB distribution: (0xf800, 0x07e0, 0x001f)
+    // 5, 6, 5
   }
 
-  usBit = 0x8000;
-  gusGreenShift = 8;
-  while (!(gusGreenMask & usBit)) {
-    usBit >>= 1;
-    gusGreenShift--;
+  if ((gusRedMask != 0xf800) || (gusGreenMask != 0x07e0) || (gusBlueMask != 0x001f)) {
+    DebugLogWrite("XXX RGB distribution other than 565 is not supported");
+    // It may not work some hardware, but 16 bit mode is outdated anyway.
+    // We should switch to 32bit mode.
+    //
+    // Maybe useful:
+    //   - https://www.gamedev.net/forums/topic/54104-555-or-565/
+    //   - https://learn.microsoft.com/en-us/windows/win32/directshow/working-with-16-bit-rgb
+    return FALSE;
   }
 
-  usBit = 0x8000;
-  gusBlueShift = 8;
-  while (!(gusBlueMask & usBit)) {
-    usBit >>= 1;
-    gusBlueShift--;
-  }
+  guiTranslucentMask = 0x7bef;
 
   return TRUE;
 }

@@ -25,9 +25,6 @@ UINT16 gusAlphaMask = 0;
 UINT16 gusRedMask = 0;
 UINT16 gusGreenMask = 0;
 UINT16 gusBlueMask = 0;
-INT16 gusRedShift = 0;
-INT16 gusBlueShift = 0;
-INT16 gusGreenShift = 0;
 
 // this funky union is used for fast 16-bit pixel format conversions
 typedef union {
@@ -428,20 +425,9 @@ UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
     g = pPalette[cnt].peGreen;
     b = pPalette[cnt].peBlue;
 
-    if (gusRedShift < 0)
-      r16 = ((UINT16)r >> abs(gusRedShift));
-    else
-      r16 = ((UINT16)r << gusRedShift);
-
-    if (gusGreenShift < 0)
-      g16 = ((UINT16)g >> abs(gusGreenShift));
-    else
-      g16 = ((UINT16)g << gusGreenShift);
-
-    if (gusBlueShift < 0)
-      b16 = ((UINT16)b >> abs(gusBlueShift));
-    else
-      b16 = ((UINT16)b << gusBlueShift);
+    r16 = ((UINT16)r << 8);
+    g16 = ((UINT16)g << 3);
+    b16 = ((UINT16)b >> 3);
 
     usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
 
@@ -507,20 +493,9 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
     g = (UINT8)min(gmod, 255);
     b = (UINT8)min(bmod, 255);
 
-    if (gusRedShift < 0)
-      r16 = ((UINT16)r >> (-gusRedShift));
-    else
-      r16 = ((UINT16)r << gusRedShift);
-
-    if (gusGreenShift < 0)
-      g16 = ((UINT16)g >> (-gusGreenShift));
-    else
-      g16 = ((UINT16)g << gusGreenShift);
-
-    if (gusBlueShift < 0)
-      b16 = ((UINT16)b >> (-gusBlueShift));
-    else
-      b16 = ((UINT16)b << gusBlueShift);
+    r16 = ((UINT16)r << 8);
+    g16 = ((UINT16)g << 3);
+    b16 = ((UINT16)b >> 3);
 
     // Prevent creation of pure black color
     usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
@@ -544,20 +519,9 @@ UINT16 Get16BPPColor(UINT32 RGBValue) {
   g = SGPGetGValue(RGBValue);
   b = SGPGetBValue(RGBValue);
 
-  if (gusRedShift < 0)
-    r16 = ((UINT16)r >> abs(gusRedShift));
-  else
-    r16 = ((UINT16)r << gusRedShift);
-
-  if (gusGreenShift < 0)
-    g16 = ((UINT16)g >> abs(gusGreenShift));
-  else
-    g16 = ((UINT16)g << gusGreenShift);
-
-  if (gusBlueShift < 0)
-    b16 = ((UINT16)b >> abs(gusBlueShift));
-  else
-    b16 = ((UINT16)b << gusBlueShift);
+  r16 = ((UINT16)r << 8);
+  g16 = ((UINT16)g << 3);
+  b16 = ((UINT16)b >> 3);
 
   usColor = (r16 & gusRedMask) | (g16 & gusGreenMask) | (b16 & gusBlueMask);
 
@@ -582,20 +546,11 @@ UINT32 GetRGBColor(UINT16 Value16BPP) {
   g16 = Value16BPP & gusGreenMask;
   b16 = Value16BPP & gusBlueMask;
 
-  if (gusRedShift < 0)
-    r = ((UINT32)r16 << abs(gusRedShift));
-  else
-    r = ((UINT32)r16 >> gusRedShift);
+  r = ((UINT32)r16 >> 8);
 
-  if (gusGreenShift < 0)
-    g = ((UINT32)g16 << abs(gusGreenShift));
-  else
-    g = ((UINT32)g16 >> gusGreenShift);
+  g = ((UINT32)g16 >> 3);
 
-  if (gusBlueShift < 0)
-    b = ((UINT32)b16 << abs(gusBlueShift));
-  else
-    b = ((UINT32)b16 >> gusBlueShift);
+  b = ((UINT32)b16 << 3);
 
   r &= 0x000000ff;
   g &= 0x000000ff;
