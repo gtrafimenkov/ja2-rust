@@ -43,16 +43,6 @@ struct BltOpts {
   SGPRect FillRect;    // Given SRC subrect instead of srcregion
 };
 
-//
-// Video Surface creation flags
-// Used in the VSurface_DESC structure to describe creation flags
-//
-
-#define VSURFACE_CREATE_DEFAULT \
-  0x00000020  // Creates and empty Surface of given width, height and BPP
-#define VSURFACE_CREATE_FROMFILE \
-  0x00000040  // Creates a video Surface from a file ( using struct Image* )
-
 UINT16 GetVSurfaceHeight(const struct VSurface *vs);
 UINT16 GetVSurfaceWidth(const struct VSurface *vs);
 UINT16 *GetVSurface16BPPPalette(struct VSurface *vs);
@@ -63,11 +53,8 @@ void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette);
 //
 
 typedef struct {
-  UINT32 fCreateFlags;    // Specifies creation flags like from file or not
-  SGPFILENAME ImageFile;  // Filename of image data to use
-  UINT16 usWidth;         // Width, ignored if given from file
-  UINT16 usHeight;        // Height, ignored if given from file
-  UINT8 ubBitDepth;       // BPP, ignored if given from file
+  UINT16 usWidth;
+  UINT16 usHeight;
 } VSURFACE_DESC;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +71,7 @@ BOOLEAN ShutdownVideoSurfaceManager();
 
 // Creates and adds a video Surface to list
 BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
+BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex);
 
 // Returns a HVSurface for the specified index
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
@@ -164,7 +152,7 @@ BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch);
 
 struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth);
 struct VSurface *CreateVideoSurfaceFromFile(const char *path);
-struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiIndex);
+struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex);
 
 // Global variables for video objects
 extern UINT32 guiRIGHTPANEL;

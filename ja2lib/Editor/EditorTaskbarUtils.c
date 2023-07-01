@@ -183,17 +183,8 @@ void DeleteEditorImages() {
 void CreateEditorBuffers() {
   INT32 i;
   VSURFACE_DESC vs_desc;
-  UINT16 usUselessWidth, usUselessHeight;
-  UINT8 ubBitDepth;
-
-  // create buffer for the transition slot for merc items.  This slot contains the newly
-  // selected item graphic in it's inventory size version.  This buffer is then scaled down
-  // into the associated merc inventory panel slot buffer which is approximately 20% smaller.
-  GetCurrentVideoSettings(&usUselessWidth, &usUselessHeight, &ubBitDepth);
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
   vs_desc.usWidth = 60;
   vs_desc.usHeight = 25;
-  vs_desc.ubBitDepth = ubBitDepth;
   if (!AddVideoSurface(&vs_desc, &guiMercTempBuffer))
     AssertMsg(0, "Failed to allocate memory for merc tempitem buffer.");
 

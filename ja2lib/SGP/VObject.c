@@ -76,9 +76,6 @@ static BOOLEAN BltVideoObjectToBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
 // Sets struct VObject* palette, creates if nessessary. Also sets 16BPP palette
 static BOOLEAN SetVideoObjectPalette(struct VObject *hVObject, struct SGPPaletteEntry *pSrcPalette);
 
-// Sets Transparency color into struct VObject*
-static BOOLEAN SetVideoObjectTransparencyColor(struct VObject *hVObject, COLORVAL TransColor);
-
 // **************************************************************
 //
 // Video Object Manager functions
@@ -153,7 +150,7 @@ BOOLEAN AddVideoObject(VOBJECT_DESC *desc, UINT32 *puiIndex) {
 struct VObject *LoadVObjectFromFile(const char *path) {
   struct VObject *vo = CreateVObjectFromFile(path);
   if (vo) {
-    SetVideoObjectTransparencyColor(vo, FROMRGB(0, 0, 0));
+    vo->TransparentColor = FROMRGB(0, 0, 0);
   }
   return vo;
 }
@@ -198,7 +195,7 @@ BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
   }
 
   // Set transparency to default
-  SetVideoObjectTransparencyColor(hVObject, FROMRGB(0, 0, 0));
+  hVObject->TransparentColor = FROMRGB(0, 0, 0);
 
   // Set into video object list
   if (gpVObjectHead) {  // Add node after tail
@@ -240,7 +237,7 @@ BOOLEAN SetVideoObjectTransparency(UINT32 uiIndex, COLORVAL TransColor) {
   }
 
   // Set transparency
-  SetVideoObjectTransparencyColor(hVObject, TransColor);
+  hVObject->TransparentColor = TransColor;
 
   return (TRUE);
 }
@@ -350,19 +347,15 @@ bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i3
 // *******************************************************************************
 
 struct VObject *CreateVObjectFromFile(const char *path) {
-  struct VObject *hVObject;
-  struct Image *hImage;
-  ETRLEData TempETRLEData;
-
   // Allocate memory for video object data and initialize
-  hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
+  struct VObject *hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
   if (!(hVObject != NULL)) {
     return FALSE;
   }
   memset(hVObject, 0, sizeof(struct VObject));
 
   // Create himage object from file
-  hImage = CreateImage(path, IMAGE_ALLIMAGEDATA);
+  struct Image *hImage = CreateImage(path, IMAGE_ALLIMAGEDATA);
 
   if (hImage == NULL) {
     MemFree(hVObject);
@@ -382,6 +375,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
+  ETRLEData TempETRLEData;
   if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
@@ -489,18 +483,6 @@ static BOOLEAN SetVideoObjectPalette(struct VObject *hVObject,
 
   //  DebugMsg(TOPIC_VIDEOOBJECT, DBG_INFO, String("Video Object Palette change successfull"
   //  ));
-  return (TRUE);
-}
-
-// Transparency needs to take RGB value and find best fit and place it into DD Surface
-// colorkey value.
-static BOOLEAN SetVideoObjectTransparencyColor(struct VObject *hVObject, COLORVAL TransColor) {
-  // Assertions
-  Assert(hVObject != NULL);
-
-  // Set trans color into video object
-  hVObject->TransparentColor = TransColor;
-
   return (TRUE);
 }
 

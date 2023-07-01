@@ -14,7 +14,7 @@ BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHe
 BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader);
 BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
-BOOLEAN LoadSTCIFileToImage(struct Image *hImage, UINT16 fContents) {
+BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
   FileID hFile = FILE_ID_ERR;
   STCIHeader Header;
   UINT32 uiBytesRead;
@@ -25,12 +25,12 @@ BOOLEAN LoadSTCIFileToImage(struct Image *hImage, UINT16 fContents) {
 
   TempImage = *hImage;
 
-  if (!(File_Exists(TempImage.ImageFile))) {
+  if (!(File_Exists(filePath))) {
     return FALSE;
   }
 
   // Open the file and read the header
-  hFile = File_OpenForReading(TempImage.ImageFile);
+  hFile = File_OpenForReading(filePath);
   if (!(hFile)) {
     return FALSE;
   }

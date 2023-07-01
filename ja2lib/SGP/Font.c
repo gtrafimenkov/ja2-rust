@@ -1019,7 +1019,6 @@ BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *
   FontTranslationTable *pTransTab;
   int count;
   UINT16 uiRight, uiBottom;
-  UINT8 uiPixelDepth;
 
   FontDefault = (-1);
   FontDestSurface = vsBB;
@@ -1027,12 +1026,12 @@ BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *
 
   //	FontDestBPP=0;
 
-  GetCurrentVideoSettings(&uiRight, &uiBottom, &uiPixelDepth);
+  GetCurrentVideoSettings(&uiRight, &uiBottom);
   FontDestRegion.iLeft = 0;
   FontDestRegion.iTop = 0;
   FontDestRegion.iRight = (INT32)uiRight;
   FontDestRegion.iBottom = (INT32)uiBottom;
-  FontDestBPP = (UINT32)uiPixelDepth;
+  FontDestBPP = 16;
 
   FontDestWrap = FALSE;
 

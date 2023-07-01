@@ -80,7 +80,6 @@ CHAR16 gzUserDefinedButton2[128];
 
 INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
                    MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
-  VSURFACE_DESC vs_desc;
   UINT16 usTextBoxWidth;
   UINT16 usTextBoxHeight;
   SGPRect aRect;
@@ -247,11 +246,9 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   SetPendingNewScreen(MSG_BOX_SCREEN);
 
   // Init save buffer
-  vs_desc.fCreateFlags = VSURFACE_CREATE_DEFAULT;
+  VSURFACE_DESC vs_desc;
   vs_desc.usWidth = usTextBoxWidth;
   vs_desc.usHeight = usTextBoxHeight;
-  vs_desc.ubBitDepth = 16;
-
   if (AddVideoSurface(&vs_desc, &gMsgBox.uiSaveBuffer) == FALSE) {
     return (-1);
   }

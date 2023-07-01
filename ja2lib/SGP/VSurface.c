@@ -453,8 +453,8 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
   return gpVSurfaceTail->uiIndex;
 }
 
-struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiIndex) {
-  struct VSurface *vs = CreateVideoSurface(width, height, bitDepth);
+struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
+  struct VSurface *vs = CreateVideoSurface(width, height, 16);
   if (vs) {
     SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
     if (puiIndex) {
@@ -465,16 +465,26 @@ struct VSurface *VSurfaceAdd(u16 width, u16 height, u8 bitDepth, VSurfID *puiInd
   return NULL;
 }
 
+BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
+  Assert(puiIndex);
+  Assert(fileName);
+
+  struct VSurface *vs = CreateVideoSurfaceFromFile(fileName);
+
+  if (!vs) {
+    return FALSE;
+  }
+
+  SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
+  *puiIndex = addVSurfaceToList(vs);
+  return TRUE;
+}
+
 BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(desc);
 
-  struct VSurface *vs = NULL;
-  if (desc->fCreateFlags & VSURFACE_CREATE_FROMFILE) {
-    vs = CreateVideoSurfaceFromFile(desc->ImageFile);
-  } else {
-    vs = CreateVideoSurface(desc->usWidth, desc->usHeight, desc->ubBitDepth);
-  }
+  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight, 16);
 
   if (!vs) {
     return FALSE;
@@ -721,16 +731,15 @@ BOOLEAN InitializeSystemVideoObjects() { return (TRUE); }
 BOOLEAN InitializeGameVideoObjects() {
   UINT16 usWidth;
   UINT16 usHeight;
-  UINT8 ubBitDepth;
 
-  GetCurrentVideoSettings(&usWidth, &usHeight, &ubBitDepth);
+  GetCurrentVideoSettings(&usWidth, &usHeight);
 
-  vsSB = VSurfaceAdd(usWidth, usHeight, ubBitDepth, &guiSAVEBUFFER);
+  vsSB = VSurfaceAdd(usWidth, usHeight, &guiSAVEBUFFER);
   if (!vsSB) {
     return FALSE;
   }
 
-  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, ubBitDepth, NULL);
+  vsExtraBuffer = VSurfaceAdd(usWidth, usHeight, NULL);
   if (!vsExtraBuffer) {
     return FALSE;
   }
