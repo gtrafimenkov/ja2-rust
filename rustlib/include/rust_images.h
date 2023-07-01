@@ -111,6 +111,23 @@ struct SGPPaletteEntry {
   uint8_t _unused;
 };
 
+/**
+ * Results of loading STI image.
+ */
+struct STIImageLoaded {
+  bool success;
+  uint32_t StoredSize;
+  uint16_t Height;
+  uint16_t Width;
+  uint16_t usNumberOfSubImages;
+  uint32_t AppDataSize;
+  uint8_t *image_data;
+  bool indexed;
+  struct SGPPaletteEntry *palette;
+  struct ETRLEObject *subimages;
+  uint8_t *app_data;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -118,6 +135,8 @@ extern "C" {
 void TmpImageFunc(struct ETRLEObject _pe);
 
 bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
+
+struct STIImageLoaded LoadSTIImage(FileID file_id);
 
 uint8_t *ReadSTCIImageData(FileID file_id, const struct STCIHeader *header);
 

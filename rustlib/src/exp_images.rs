@@ -202,6 +202,111 @@ pub extern "C" fn ReadSTCIHeader(file_id: FileID, data: &mut STCIHeader) -> bool
     }
 }
 
+#[repr(C)]
+#[allow(non_snake_case)]
+/// Results of loading STI image.
+pub struct STIImageLoaded {
+    success: bool,
+    //     ID: [u8; STCI_ID_LEN],
+    //     OriginalSize: u32,
+    StoredSize: u32, // equal to uiOriginalSize if data uncompressed
+    //     TransparentValue: u32,
+    //     Flags: u32,
+    Height: u16,
+    Width: u16,
+    // }
+
+    // #[repr(C)]
+    // // #[derive(Default)]
+    // /// Middle part of STCI image header
+    // enum STCIHeaderMiddle {
+    //     Rgb(STCIHeaderMiddleRGB),
+    //     Indexed(STCIHeaderMiddleIndexed),
+    // }
+
+    // #[repr(C)]
+    // #[allow(non_snake_case)]
+    // #[derive(Default, Debug, Copy, Clone)]
+    // /// Middle part of STCI image header describing RGB image
+    // pub struct STCIHeaderMiddleRGB {
+    //     uiRedMask: u32,
+    //     uiGreenMask: u32,
+    //     uiBlueMask: u32,
+    //     uiAlphaMask: u32,
+    //     ubRedDepth: u8,
+    //     ubGreenDepth: u8,
+    //     ubBlueDepth: u8,
+    //     ubAlphaDepth: u8,
+    // }
+
+    // #[repr(C)]
+    // #[allow(non_snake_case)]
+    // #[derive(Default, Debug, Copy, Clone)]
+    // /// Middle part of STCI image header describing RGB image
+    // pub struct STCIHeaderMiddleIndexed {
+    //     // For indexed files, the palette will contain 3 separate bytes for red, green, and
+    //     // blue
+    //     uiNumberOfColours: u32,
+    usNumberOfSubImages: u16,
+    //     ubRedDepth: u8,
+    //     ubGreenDepth: u8,
+    //     ubBlueDepth: u8,
+    //     cIndexedUnused: [u8; 11],
+    // }
+
+    // #[repr(C)]
+    // #[allow(non_snake_case)]
+    // #[derive(Default, Debug)]
+    // /// Last part of STCI image header
+    // pub struct STCIHeaderEnd {
+    //     Depth: u8,   // size in bits of one pixel as stored in the file
+    //     unused1: u8, // added to adjust for memory alignment
+    //     unused2: u8, // added to adjust for memory alignment
+    //     unused3: u8, // added to adjust for memory alignment
+    AppDataSize: u32,
+    //     Unused: [u8; 12],
+    image_data: *mut u8,
+    indexed: bool,                 // indexed (true) or rgb (false)
+    palette: *mut SGPPaletteEntry, // only for indexed images
+    subimages: *mut ETRLEObject,
+    app_data: *mut u8,
+}
+
+impl Default for STIImageLoaded {
+    fn default() -> Self {
+        Self {
+            palette: std::ptr::null_mut(),
+            subimages: std::ptr::null_mut(),
+            app_data: std::ptr::null_mut(),
+            ..Default::default()
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn LoadSTIImage(file_id: FileID) -> STIImageLoaded {
+    let mut results = STIImageLoaded::default();
+    match read_stci_header(file_id) {
+        Ok(header) => {
+            return results;
+        }
+        Err(err) => {
+            exp_debug::debug_log_write(&format!("failed to read STCI header: {err}"));
+            return results;
+        }
+    }
+
+    // let mut header: STCIHeader = STCIHeader {
+    //     head: todo!(),
+    //     middle: todo!(),
+    //     end: todo!(),
+    // };
+    // if !ReadSTCIHeader(file_id, &mut header) {
+    //     return results;
+    // }
+    // results
+}
+
 #[no_mangle]
 // Read image data of STCI image.
 // Returns pointer to the read data or null in case of an error.
