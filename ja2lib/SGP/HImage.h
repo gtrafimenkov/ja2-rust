@@ -31,7 +31,6 @@
 #define IMAGE_BITMAPDATA 0x0008
 #define IMAGE_APPDATA 0x0010
 #define IMAGE_ALLIMAGEDATA 0x000C
-#define IMAGE_ALLDATA 0x001C
 
 // Palette structure, mimics that of Win32
 struct SGPPaletteEntry;

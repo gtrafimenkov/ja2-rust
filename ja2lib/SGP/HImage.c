@@ -112,7 +112,7 @@ BOOLEAN DestroyImage(struct Image *hImage) {
   Assert(hImage != NULL);
 
   // First delete contents
-  ReleaseImageData(hImage, IMAGE_ALLDATA);  // hImage->fFlags );
+  ReleaseImageData(hImage, IMAGE_APPDATA | IMAGE_ALLIMAGEDATA);
 
   // Now free structure
   MemFree(hImage);
