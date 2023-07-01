@@ -41,7 +41,7 @@ typedef union {
 // This function will attept to Load data from an existing image object's filename
 // In this way, dynamic loading of image data can be done
 static BOOLEAN LoadImageData(const char *filePath, u32 fileLoader, struct Image *hImage,
-                             UINT16 fContents);
+                             bool loadAppData);
 
 struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
   struct Image *hImage = NULL;
