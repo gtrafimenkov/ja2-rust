@@ -136,6 +136,12 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeader> {
             FILE_DB.read_file_exact(file_id, &mut indexed.cIndexedUnused)?;
             middle = STCIHeaderMiddle::Indexed(indexed);
             exp_debug::debug_log_write(&format!("STCI header middle indexed: {indexed:?}"));
+            if indexed.uiNumberOfColours != 256 {
+                return Err(io::Error::new(
+                    io::ErrorKind::Other,
+                    "indexed STCI image must have 256 colors",
+                ));
+            }
         } else if head.Flags & STCI_RGB != 0 {
             let rgb = STCIHeaderMiddleRGB {
                 uiRedMask: FILE_DB.read_file_u32(file_id)?,
@@ -197,6 +203,32 @@ pub extern "C" fn ReadSTCIRgbData(file_id: FileID, header: &STCIHeader) -> *mut 
             Ok(_) => pointer,
             Err(err) => {
                 exp_debug::debug_log_write(&format!("failed to read STCI rgb data: {err:?}"));
+                let pointer: *mut u8 = std::ptr::null_mut();
+                pointer
+            }
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn ReadSTCIPalette(file_id: FileID) -> *mut u8 {
+    // palette is 256 rgb u8 values
+    let mut data: [u8; 256 * 3];
+    unsafe {
+        // let slice: &mut [u8] = std::slice::from_raw_parts_mut(pointer, size);
+        match FILE_DB.read_file_exact(file_id, &mut data) {
+            Ok(_) => {
+                let mut palette: [SGPPaletteEntry; 256];
+                for i in 0..256 {
+                    palette[i].peRed = data[i * 3 + 0];
+                    palette[i].peGreen = data[i * 3 + 1];
+                    palette[i].peBlue = data[i * 3 + 2];
+                    palette[i]._unused = 0;
+                    // TODO
+                }
+            }
+            Err(err) => {
+                exp_debug::debug_log_write(&format!("failed to read STCI palette: {err:?}"));
                 let pointer: *mut u8 = std::ptr::null_mut();
                 pointer
             }

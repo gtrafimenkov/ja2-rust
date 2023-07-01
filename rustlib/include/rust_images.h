@@ -109,6 +109,8 @@ bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
 
 uint8_t *ReadSTCIRgbData(FileID file_id, const struct STCIHeader *header);
 
+uint8_t *ReadSTCIPalette(FileID file_id);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
