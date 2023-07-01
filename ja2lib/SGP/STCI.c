@@ -19,7 +19,6 @@ static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loadAppData) {
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiBytesRead;
   struct Image TempImage;
 
   // Check that hImage is valid, and that the file in question exists
