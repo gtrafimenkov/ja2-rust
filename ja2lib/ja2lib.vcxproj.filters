@@ -1552,9 +1552,6 @@
     <ClInclude Include="Utils\SoundControl.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\STIConvert.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Text.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>

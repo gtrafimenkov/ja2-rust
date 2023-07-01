@@ -19,7 +19,6 @@ BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
   FileID hFile = FILE_ID_ERR;
-  // STCIHeader Header;
   UINT32 uiBytesRead;
   struct Image TempImage;
 
@@ -44,14 +43,6 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
     File_Close(hFile);
     return (FALSE);
   }
-
-  // if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
-  //     uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN) !=
-  //     0) {
-  //   DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
-  //   File_Close(hFile);
-  //   return (FALSE);
-  // }
 
   // Determine from the header the data stored in the file. and run the appropriate loader
   if (header.middle.tag == Rgb) {
@@ -328,33 +319,4 @@ BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage) {
     pubPalette++;
   }
   return TRUE;
-}
-
-BOOLEAN IsSTCIETRLEFile(CHAR8 *ImageFile) {
-  FileID hFile = FILE_ID_ERR;
-  STCIHeader Header;
-  UINT32 uiBytesRead;
-
-  if (!(File_Exists(ImageFile))) {
-    return FALSE;
-  }
-
-  // Open the file and read the header
-  hFile = File_OpenForReading(ImageFile);
-  if (!(hFile)) {
-    return FALSE;
-  }
-
-  if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
-      uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
-    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
-    File_Close(hFile);
-    return (FALSE);
-  }
-  File_Close(hFile);
-  if (Header.head.Flags & STCI_ETRLE_COMPRESSED) {
-    return (TRUE);
-  } else {
-    return (FALSE);
-  }
 }

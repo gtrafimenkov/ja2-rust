@@ -18,14 +18,12 @@ BOOLEAN ConvertToETRLE(UINT8 **ppDest, UINT32 *puiDestLen, UINT8 **ppSubImageBuf
 #define CONVERT_ADD_APPDATA 0x0001
 #define CONVERT_ADD_JA2DATA 0x0003
 #define CONVERT_ZLIB_COMPRESS 0x0010
-#define CONVERT_ETRLE_COMPRESS 0x0020
 #define CONVERT_ETRLE_COMPRESS_SINGLE 0x0040
 #define CONVERT_ETRLE_NO_SUBIMAGE_SHRINKING 0x0080
 #define CONVERT_ETRLE_DONT_SKIP_BLANKS 0x0100
 #define CONVERT_ETRLE_FLIC 0x0200
 #define CONVERT_ETRLE_FLIC_TRIM 0x0400
 #define CONVERT_ETRLE_FLIC_NAME 0x0800
-#define CONVERT_TO_8_BIT 0x1000
 #define CONVERT_TO_16_BIT 0x2000
 // NB 18-bit is actually 24 bit but with only 6 bits used in each byte.  I implemented
 // it to see how well such images would compress with ZLIB.
@@ -86,115 +84,6 @@ void ConvertRGBDistribution555To565(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
     // and copy back
     *pPixel = Pixel.usHigher;
     pPixel++;
-  }
-}
-
-void WriteSTIFile(UINT8 *pData, struct SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,
-                  STR cOutputName, UINT32 fFlags, UINT32 uiAppDataSize) {
-  FILE *pOutput;
-
-  UINT32 uiOriginalSize;
-  UINT8 *pOutputBuffer = NULL;
-  UINT32 uiCompressedSize;
-
-  STCIHeader Header;
-  UINT32 uiLoop;
-  struct Image Image;
-
-  struct SGPPaletteEntry *pSGPPaletteEntry;
-  STCIPaletteElement STCIPaletteEntry;
-
-  STCISubImage *pSubImageBuffer;
-  UINT16 usNumberOfSubImages;
-  UINT32 uiSubImageBufferSize = 0;
-
-  // UINT16							usLoop;
-
-  memset(&Header, 0, STCI_HEADER_SIZE);
-  memset(&Image, 0, sizeof(struct Image));
-
-  uiOriginalSize = sWidth * sHeight * (8 / 8);
-
-  // set up STCI header for output
-  memcpy(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN);
-  Header.head.TransparentValue = 0;
-  Header.head.Height = sHeight;
-  Header.head.Width = sWidth;
-  Header.end.Depth = 8;
-  Header.head.OriginalSize = uiOriginalSize;
-  Header.head.StoredSize = uiOriginalSize;
-  Header.end.AppDataSize = uiAppDataSize;
-
-  Header.head.Flags |= STCI_INDEXED;
-  if (Header.end.Depth == 8) {
-    // assume 8-bit pixels indexing into 256 colour palette with 24 bit values in
-    // the palette
-    Header.Indexed.uiNumberOfColours = 256;
-    Header.Indexed.ubRedDepth = 8;
-    Header.Indexed.ubGreenDepth = 8;
-    Header.Indexed.ubBlueDepth = 8;
-  }
-
-  if ((Header.head.Flags & STCI_INDEXED) && (fFlags & CONVERT_ETRLE_COMPRESS)) {
-    if (!ConvertToETRLE(&pOutputBuffer, &uiCompressedSize, (UINT8 **)&pSubImageBuffer,
-                        &usNumberOfSubImages, pData, sWidth, sHeight, fFlags)) {
-    }
-    uiSubImageBufferSize = (UINT32)usNumberOfSubImages * STCI_SUBIMAGE_SIZE;
-
-    Header.Indexed.usNumberOfSubImages = usNumberOfSubImages;
-    Header.head.StoredSize = uiCompressedSize;
-    Header.head.Flags |= STCI_ETRLE_COMPRESSED;
-  }
-
-  //
-  // save file
-  //
-
-  pOutput = fopen(cOutputName, "wb");
-  if (pOutput == NULL) {
-    return;
-  }
-  // write header
-  fwrite(&Header, STCI_HEADER_SIZE, 1, pOutput);
-  // write palette and subimage structs, if any
-  if (Header.head.Flags & STCI_INDEXED) {
-    if (pPalette != NULL) {
-      // have to convert palette to STCI format!
-      pSGPPaletteEntry = pPalette;
-      for (uiLoop = 0; uiLoop < 256; uiLoop++) {
-        STCIPaletteEntry.ubRed = pSGPPaletteEntry[uiLoop].peRed;
-        STCIPaletteEntry.ubGreen = pSGPPaletteEntry[uiLoop].peGreen;
-        STCIPaletteEntry.ubBlue = pSGPPaletteEntry[uiLoop].peBlue;
-        fwrite(&STCIPaletteEntry, STCI_PALETTE_ELEMENT_SIZE, 1, pOutput);
-      }
-    }
-    if (Header.head.Flags & STCI_ETRLE_COMPRESSED) {
-      fwrite(pSubImageBuffer, uiSubImageBufferSize, 1, pOutput);
-    }
-  }
-
-  // write file data
-  if (Header.head.Flags & STCI_ZLIB_COMPRESSED || Header.head.Flags & STCI_ETRLE_COMPRESSED) {
-    fwrite(pOutputBuffer, Header.head.StoredSize, 1, pOutput);
-  } else {
-    fwrite(Image.pImageData, Header.head.StoredSize, 1, pOutput);
-  }
-
-  // write app-specific data (blanked to 0)
-  if (Image.pAppData == NULL) {
-    if (Header.end.AppDataSize > 0) {
-      for (uiLoop = 0; uiLoop < Header.end.AppDataSize; uiLoop++) {
-        fputc(0, pOutput);
-      }
-    }
-  } else {
-    fwrite(Image.pAppData, Header.end.AppDataSize, 1, pOutput);
-  }
-
-  fclose(pOutput);
-
-  if (pOutputBuffer != NULL) {
-    MemFree(pOutputBuffer);
   }
 }
 

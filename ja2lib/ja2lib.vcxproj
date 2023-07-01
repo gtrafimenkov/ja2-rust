@@ -661,7 +661,6 @@
     <ClInclude Include="Utils\Resource.h" />
     <ClInclude Include="Utils\Slider.h" />
     <ClInclude Include="Utils\SoundControl.h" />
-    <ClInclude Include="Utils\STIConvert.h" />
     <ClInclude Include="Utils\Text.h" />
     <ClInclude Include="Utils\TextInput.h" />
     <ClInclude Include="Utils\TimerControl.h" />
