@@ -328,7 +328,6 @@
     <ClCompile Include="Utils\RussianText.c" />
     <ClCompile Include="Utils\Slider.c" />
     <ClCompile Include="Utils\SoundControl.c" />
-    <ClCompile Include="Utils\STIConvert.c" />
     <ClCompile Include="Utils\TaiwaneseText.c" />
     <ClCompile Include="Utils\TextInput.c" />
     <ClCompile Include="Utils\TextUtils.c" />
