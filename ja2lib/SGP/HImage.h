@@ -108,6 +108,7 @@ struct Image {
       UINT16 usNumberOfObjects;
     };
   };
+  bool imageDataAllocatedInRust;
 };
 //  struct Image, *struct Image*;
 
@@ -156,5 +157,7 @@ extern UINT16 gusAlphaMask;
 
 // used to convert 565 RGB data into different bit-formats
 void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
+
+void FreeImageData(struct Image *image);
 
 #endif

@@ -14,6 +14,7 @@
 #include "SGP/WCheck.h"
 #include "StrUtils.h"
 #include "platform_strings.h"
+#include "rust_alloc.h"
 #include "rust_fileman.h"
 
 // This is the color substituted to keep a 24bpp -> 16bpp color
@@ -114,6 +115,14 @@ BOOLEAN DestroyImage(struct Image *hImage) {
   return (TRUE);
 }
 
+void FreeImageData(struct Image *image) {
+  if (image->imageDataAllocatedInRust) {
+    RustDealloc(image->pImageData);
+  } else {
+    MemFree(image->pImageData);
+  }
+}
+
 BOOLEAN ReleaseImageData(struct Image *hImage) {
   Assert(hImage != NULL);
 
@@ -136,7 +145,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage) {
   if (hImage->fFlags & IMAGE_BITMAPDATA) {
     // Destroy image data
     Assert(hImage->pImageData != NULL);
-    MemFree(hImage->pImageData);
+    FreeImageData(hImage);
     hImage->pImageData = NULL;
     if (hImage->usNumberOfObjects > 0) {
       MemFree(hImage->pETRLEObject);

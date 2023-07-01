@@ -95,7 +95,7 @@ static BOOLEAN STCILoadRGB(struct Image *hImage, bool loadAppData, FileID hFile,
       return (FALSE);
     } else if (!File_Read(hFile, hImage->pImageData, pHeader->head.StoredSize, &uiBytesRead) ||
                uiBytesRead != pHeader->head.StoredSize) {
-      MemFree(hImage->pImageData);
+      FreeImageData(hImage);
       return (FALSE);
     }
 
@@ -203,7 +203,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
                uiBytesRead != pHeader->head.StoredSize) {  // Problem reading in the image data!
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Error loading image data!");
       File_Close(hFile);
-      MemFree(hImage->pImageData);
+      FreeImageData(hImage);
       if (fContents & IMAGE_PALETTE) {
         MemFree(hImage->pPalette);
       }
@@ -233,7 +233,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
         MemFree(hImage->pPalette);
       }
       if (fContents & IMAGE_BITMAPDATA) {
-        MemFree(hImage->pImageData);
+        FreeImageData(hImage);
       }
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
@@ -249,7 +249,7 @@ static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hF
         MemFree(hImage->pPalette);
       }
       if (fContents & IMAGE_BITMAPDATA) {
-        MemFree(hImage->pImageData);
+        FreeImageData(hImage);
       }
       if (hImage->usNumberOfObjects > 0) {
         MemFree(hImage->pETRLEObject);
