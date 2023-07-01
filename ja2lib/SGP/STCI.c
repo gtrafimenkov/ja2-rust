@@ -9,9 +9,12 @@
 #include "SGP/WCheck.h"
 #include "rust_debug.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
-BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader);
-BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader);
+BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
+                    struct STCIHeaderTmp *pHeader);
+BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
+                        struct STCIHeaderTmp *pHeader);
 BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
@@ -52,13 +55,13 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
 
   // Determine from the header the data stored in the file. and run the appropriate loader
   if (header.middle.tag == Rgb) {
-    if (!STCILoadRGB(&TempImage, fContents, hFile, &Header)) {
+    if (!STCILoadRGB(&TempImage, fContents, hFile, &header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading RGB image.");
       File_Close(hFile);
       return (FALSE);
     }
   } else if (header.middle.tag == Indexed) {
-    if (!STCILoadIndexed(&TempImage, fContents, hFile, &Header)) {
+    if (!STCILoadIndexed(&TempImage, fContents, hFile, &header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
       File_Close(hFile);
       return (FALSE);
@@ -85,7 +88,8 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
   return (TRUE);
 }
 
-BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
+                    struct STCIHeaderTmp *pHeader) {
   UINT32 uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
@@ -109,9 +113,9 @@ BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHe
     if (pHeader->end.Depth == 16) {
       // ASSUMPTION: file data is 565 R,G,B
 
-      if (gusRedMask != (UINT16)pHeader->RGB.uiRedMask ||
-          gusGreenMask != (UINT16)pHeader->RGB.uiGreenMask ||
-          gusBlueMask != (UINT16)pHeader->RGB.uiBlueMask) {
+      if (gusRedMask != (UINT16)pHeader->middle.rgb.uiRedMask ||
+          gusGreenMask != (UINT16)pHeader->middle.rgb.uiGreenMask ||
+          gusBlueMask != (UINT16)pHeader->middle.rgb.uiBlueMask) {
         // colour distribution of the file is different from hardware!  We have to change it!
         DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Converting to current RGB distribution!");
         // Convert the image to the current hardware's specifications
@@ -148,17 +152,18 @@ BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHe
   return (TRUE);
 }
 
-BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, STCIHeader *pHeader) {
+BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
+                        struct STCIHeaderTmp *pHeader) {
   UINT32 uiFileSectionSize;
   UINT32 uiBytesRead;
   PTR pSTCIPalette;
 
   if (fContents & IMAGE_PALETTE) {  // Allocate memory for reading in the palette
-    if (pHeader->Indexed.uiNumberOfColours != 256) {
+    if (pHeader->middle.indexed.uiNumberOfColours != 256) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Palettized image has bad palette size.");
       return (FALSE);
     }
-    uiFileSectionSize = pHeader->Indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
+    uiFileSectionSize = pHeader->middle.indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
     pSTCIPalette = MemAlloc(uiFileSectionSize);
     if (pSTCIPalette == NULL) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Out of memory!");
@@ -186,7 +191,7 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
     // Free the temporary buffer
     MemFree(pSTCIPalette);
   } else if (fContents & (IMAGE_BITMAPDATA | IMAGE_APPDATA)) {  // seek past the palette
-    uiFileSectionSize = pHeader->Indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
+    uiFileSectionSize = pHeader->middle.indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
     if (File_Seek(hFile, uiFileSectionSize, FILE_SEEK_CURRENT) == FALSE) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem seeking past palette!");
       File_Close(hFile);
@@ -197,7 +202,7 @@ BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile, ST
     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
       // load data for the subimage (object) structures
       Assert(sizeof(ETRLEObject) == STCI_SUBIMAGE_SIZE);
-      hImage->usNumberOfObjects = pHeader->Indexed.usNumberOfSubImages;
+      hImage->usNumberOfObjects = pHeader->middle.indexed.usNumberOfSubImages;
       uiFileSectionSize = hImage->usNumberOfObjects * STCI_SUBIMAGE_SIZE;
       hImage->pETRLEObject = (ETRLEObject *)MemAlloc(uiFileSectionSize);
       if (hImage->pETRLEObject == NULL) {

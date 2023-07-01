@@ -20,7 +20,7 @@ const STCI_RGB: u32 = 0x0004;
 
 #[repr(C)]
 #[allow(non_snake_case)]
-#[derive(Default)]
+#[derive(Default, Debug)]
 /// First part of STCI image header
 pub struct STCIHeaderHead {
     ID: [u8; STCI_ID_LEN],
@@ -42,7 +42,7 @@ enum STCIHeaderMiddle {
 
 #[repr(C)]
 #[allow(non_snake_case)]
-#[derive(Default, Copy, Clone)]
+#[derive(Default, Debug, Copy, Clone)]
 /// Middle part of STCI image header describing RGB image
 pub struct STCIHeaderMiddleRGB {
     uiRedMask: u32,
@@ -57,7 +57,7 @@ pub struct STCIHeaderMiddleRGB {
 
 #[repr(C)]
 #[allow(non_snake_case)]
-#[derive(Default, Copy, Clone)]
+#[derive(Default, Debug, Copy, Clone)]
 /// Middle part of STCI image header describing RGB image
 pub struct STCIHeaderMiddleIndexed {
     // For indexed files, the palette will contain 3 separate bytes for red, green, and
@@ -72,10 +72,13 @@ pub struct STCIHeaderMiddleIndexed {
 
 #[repr(C)]
 #[allow(non_snake_case)]
-#[derive(Default)]
+#[derive(Default, Debug)]
 /// Last part of STCI image header
 pub struct STCIHeaderEnd {
-    Depth: u8, // size in bits of one pixel as stored in the file
+    Depth: u8,   // size in bits of one pixel as stored in the file
+    unused1: u8, // added to adjust for memory alignment
+    unused2: u8, // added to adjust for memory alignment
+    unused3: u8, // added to adjust for memory alignment
     AppDataSize: u32,
     Unused: [u8; 12],
 }
@@ -93,6 +96,7 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
             Height: FILE_DB.read_file_u16(file_id)?,
             Width: FILE_DB.read_file_u16(file_id)?,
         };
+        exp_debug::debug_log_write(&format!("STCI header head: {head:?}"));
         let middle: STCIHeaderMiddle;
         if head.Flags & STCI_INDEXED != 0 {
             let mut indexed = STCIHeaderMiddleIndexed {
@@ -105,8 +109,9 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
             };
             FILE_DB.read_file_exact(file_id, &mut indexed.cIndexedUnused)?;
             middle = STCIHeaderMiddle::Indexed(indexed);
+            exp_debug::debug_log_write(&format!("STCI header middle indexed: {indexed:?}"));
         } else if head.Flags & STCI_RGB != 0 {
-            middle = STCIHeaderMiddle::Rgb(STCIHeaderMiddleRGB {
+            let rgb = STCIHeaderMiddleRGB {
                 uiRedMask: FILE_DB.read_file_u32(file_id)?,
                 uiGreenMask: FILE_DB.read_file_u32(file_id)?,
                 uiBlueMask: FILE_DB.read_file_u32(file_id)?,
@@ -115,17 +120,23 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
                 ubGreenDepth: FILE_DB.read_file_u8(file_id)?,
                 ubBlueDepth: FILE_DB.read_file_u8(file_id)?,
                 ubAlphaDepth: FILE_DB.read_file_u8(file_id)?,
-            });
+            };
+            middle = STCIHeaderMiddle::Rgb(rgb);
+            exp_debug::debug_log_write(&format!("STCI header middle rgb: {rgb:?}"));
         } else {
             return Err(io::Error::new(io::ErrorKind::Other, "unknown image format"));
         }
 
         let mut end = STCIHeaderEnd {
             Depth: FILE_DB.read_file_u8(file_id)?,
+            unused1: FILE_DB.read_file_u8(file_id)?,
+            unused2: FILE_DB.read_file_u8(file_id)?,
+            unused3: FILE_DB.read_file_u8(file_id)?,
             AppDataSize: FILE_DB.read_file_u32(file_id)?,
             ..Default::default()
         };
         FILE_DB.read_file_exact(file_id, &mut end.Unused)?;
+        exp_debug::debug_log_write(&format!("STCI header end: {end:?}"));
 
         Ok(STCIHeaderTmp { head, middle, end })
     }

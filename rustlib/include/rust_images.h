@@ -73,6 +73,9 @@ struct STCIHeaderMiddle {
  */
 struct STCIHeaderEnd {
   uint8_t Depth;
+  uint8_t unused1;
+  uint8_t unused2;
+  uint8_t unused3;
   uint32_t AppDataSize;
   uint8_t Unused[12];
 };
