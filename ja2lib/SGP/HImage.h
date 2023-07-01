@@ -117,15 +117,12 @@ struct Image {
 
 // This function will return NULL if it fails, and call SetLastError() to set
 // error information
-struct Image *CreateImage(const char *ImageFile, UINT16 fContents);
+struct Image *CreateImage(const char *ImageFile, bool loadAppData);
 
 // This function destroys the struct Image* structure as well as its contents
 BOOLEAN DestroyImage(struct Image *hImage);
 
-// This function releases data allocated to various parts of the image based
-// on the contents flags passed as a parameter.  If a contents flag is given
-// and the image does not contain that data, no error is raised
-BOOLEAN ReleaseImageData(struct Image *hImage, UINT16 fContents);
+BOOLEAN ReleaseImageData(struct Image *hImage);
 
 // This function will run the appropriate copy function based on the type of struct Image*
 // object

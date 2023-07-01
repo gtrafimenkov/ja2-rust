@@ -11,13 +11,13 @@
 #include "rust_fileman.h"
 #include "rust_images.h"
 
-static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
+static BOOLEAN STCILoadRGB(struct Image *hImage, bool loadAppData, FileID hFile,
                            struct STCIHeader *pHeader);
-static BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
+static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
                                struct STCIHeader *pHeader);
 static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
-BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
+BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loadAppData) {
   FileID hFile = FILE_ID_ERR;
   UINT32 uiBytesRead;
   struct Image TempImage;
@@ -46,13 +46,13 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
 
   // Determine from the header the data stored in the file. and run the appropriate loader
   if (header.middle.tag == Rgb) {
-    if (!STCILoadRGB(&TempImage, fContents, hFile, &header)) {
+    if (!STCILoadRGB(&TempImage, loadAppData, hFile, &header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading RGB image.");
       File_Close(hFile);
       return (FALSE);
     }
   } else if (header.middle.tag == Indexed) {
-    if (!STCILoadIndexed(&TempImage, fContents, hFile, &header)) {
+    if (!STCILoadIndexed(&TempImage, loadAppData, hFile, &header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
       File_Close(hFile);
       return (FALSE);
@@ -79,9 +79,14 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
   return (TRUE);
 }
 
-static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
+static BOOLEAN STCILoadRGB(struct Image *hImage, bool loadAppData, FileID hFile,
                            struct STCIHeader *pHeader) {
   UINT32 uiBytesRead;
+
+  UINT16 fContents = IMAGE_ALLIMAGEDATA;
+  if (loadAppData) {
+    fContents |= IMAGE_APPDATA;
+  }
 
   if (fContents & IMAGE_PALETTE &&
       !(fContents & IMAGE_ALLIMAGEDATA)) {  // RGB doesn't have a palette!
@@ -143,11 +148,16 @@ static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
   return (TRUE);
 }
 
-static BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
+static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
                                struct STCIHeader *pHeader) {
   UINT32 uiFileSectionSize;
   UINT32 uiBytesRead;
   PTR pSTCIPalette;
+
+  UINT16 fContents = IMAGE_ALLIMAGEDATA;
+  if (loadAppData) {
+    fContents |= IMAGE_APPDATA;
+  }
 
   if (fContents & IMAGE_PALETTE) {  // Allocate memory for reading in the palette
     if (pHeader->middle.indexed.uiNumberOfColours != 256) {
