@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#define STCI_ID_LEN 4
+
 /**
  * First part of STCI image header
  */
@@ -81,7 +83,7 @@ struct STCIHeaderEnd {
 /**
  * Last part of STCI image header
  */
-struct STCIHeaderTmp {
+struct STCIHeader {
   struct STCIHeaderHead head;
   struct STCIHeaderMiddle middle;
   struct STCIHeaderEnd end;
@@ -91,7 +93,7 @@ struct STCIHeaderTmp {
 extern "C" {
 #endif // __cplusplus
 
-bool ReadSTCIHeader(FileID file_id, struct STCIHeaderTmp *data);
+bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
 
 #ifdef __cplusplus
 } // extern "C"

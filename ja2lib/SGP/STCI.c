@@ -12,9 +12,9 @@
 #include "rust_images.h"
 
 static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
-                           struct STCIHeaderTmp *pHeader);
+                           struct STCIHeader *pHeader);
 static BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
-                               struct STCIHeaderTmp *pHeader);
+                               struct STCIHeader *pHeader);
 static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
@@ -37,7 +37,7 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
     return FALSE;
   }
 
-  struct STCIHeaderTmp header;
+  struct STCIHeader header;
   if (!ReadSTCIHeader(hFile, &header)) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
     File_Close(hFile);
@@ -80,7 +80,7 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
 }
 
 static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
-                           struct STCIHeaderTmp *pHeader) {
+                           struct STCIHeader *pHeader) {
   UINT32 uiBytesRead;
 
   if (fContents & IMAGE_PALETTE &&
@@ -144,7 +144,7 @@ static BOOLEAN STCILoadRGB(struct Image *hImage, UINT16 fContents, FileID hFile,
 }
 
 static BOOLEAN STCILoadIndexed(struct Image *hImage, UINT16 fContents, FileID hFile,
-                               struct STCIHeaderTmp *pHeader) {
+                               struct STCIHeader *pHeader) {
   UINT32 uiFileSectionSize;
   UINT32 uiBytesRead;
   PTR pSTCIPalette;

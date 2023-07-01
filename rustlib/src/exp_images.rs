@@ -11,14 +11,14 @@ Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed
 - Bytes of image data, possibly compressed
 */
 
-const STCI_ID_LEN: usize = 4;
+pub const STCI_ID_LEN: usize = 4;
 
 const STCI_ID_STRING: [u8; 4] = [b'S', b'T', b'C', b'I'];
 
 #[repr(C)]
 #[allow(non_snake_case)]
 /// Last part of STCI image header
-pub struct STCIHeaderTmp {
+pub struct STCIHeader {
     head: STCIHeaderHead,
     middle: STCIHeaderMiddle,
     end: STCIHeaderEnd,
@@ -92,7 +92,7 @@ pub struct STCIHeaderEnd {
     Unused: [u8; 12],
 }
 
-fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
+fn read_stci_header(file_id: FileID) -> io::Result<STCIHeader> {
     unsafe {
         let mut id: [u8; STCI_ID_LEN] = [0; STCI_ID_LEN];
         FILE_DB.read_file_exact(file_id, &mut id)?;
@@ -150,12 +150,12 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
         FILE_DB.read_file_exact(file_id, &mut end.Unused)?;
         exp_debug::debug_log_write(&format!("STCI header end: {end:?}"));
 
-        Ok(STCIHeaderTmp { head, middle, end })
+        Ok(STCIHeader { head, middle, end })
     }
 }
 
 #[no_mangle]
-pub extern "C" fn ReadSTCIHeader(file_id: FileID, data: &mut STCIHeaderTmp) -> bool {
+pub extern "C" fn ReadSTCIHeader(file_id: FileID, data: &mut STCIHeader) -> bool {
     match read_stci_header(file_id) {
         Ok(header) => {
             *data = header;
