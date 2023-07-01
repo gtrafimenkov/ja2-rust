@@ -8295,7 +8295,6 @@ BOOLEAN AnyMercsLeavingRealSoon() {
 
 BOOLEAN HandlePreloadOfMapGraphics(void) {
   // check amt of memory, if above required amt...use it
-  VSURFACE_DESC;
 
   fPreLoadedMapGraphics = TRUE;
 
