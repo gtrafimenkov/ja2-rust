@@ -11,8 +11,6 @@
 #include "rust_fileman.h"
 #include "rust_images.h"
 
-static BOOLEAN STCILoadRGB(struct Image *hImage, bool loadAppData, FileID hFile,
-                           struct STCIHeader *pHeader);
 static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
                                struct STCIHeader *pHeader);
 static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
@@ -45,11 +43,14 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
 
   // Determine from the header the data stored in the file. and run the appropriate loader
   if (header.middle.tag == Rgb) {
-    if (!STCILoadRGB(&TempImage, loadAppData, hFile, &header)) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading RGB image.");
+    uint8_t *data = ReadSTCIRgbData(hFile, &header);
+    if (!data) {
       File_Close(hFile);
       return (FALSE);
     }
+    TempImage.pImageData = data;
+    TempImage.imageDataAllocatedInRust = true;
+    TempImage.fFlags |= IMAGE_BITMAPDATA;
   } else if (header.middle.tag == Indexed) {
     if (!STCILoadIndexed(&TempImage, loadAppData, hFile, &header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
@@ -75,36 +76,6 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
   TempImage.ubBitDepth = header.end.Depth;
   *hImage = TempImage;
 
-  return (TRUE);
-}
-
-static BOOLEAN STCILoadRGB(struct Image *hImage, bool loadAppData, FileID hFile,
-                           struct STCIHeader *pHeader) {
-  UINT32 uiBytesRead;
-
-  UINT16 fContents = IMAGE_ALLIMAGEDATA;
-  if (loadAppData) {
-    fContents |= IMAGE_APPDATA;
-  }
-
-  // XXX: read head.StoredSize bytes to hImage->pImageData
-  {
-    // Allocate memory for the image data and read it in
-    hImage->pImageData = MemAlloc(pHeader->head.StoredSize);
-    if (hImage->pImageData == NULL) {
-      return (FALSE);
-    } else if (!File_Read(hFile, hImage->pImageData, pHeader->head.StoredSize, &uiBytesRead) ||
-               uiBytesRead != pHeader->head.StoredSize) {
-      FreeImageData(hImage);
-      return (FALSE);
-    }
-
-    hImage->fFlags |= IMAGE_BITMAPDATA;
-
-    if (pHeader->end.Depth == 16) {
-      // ASSUMPTION: file data is 565 R,G,B
-    }
-  }
   return (TRUE);
 }
 

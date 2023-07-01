@@ -95,6 +95,8 @@ extern "C" {
 
 bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
 
+uint8_t *ReadSTCIRgbData(FileID file_id, const struct STCIHeader *header);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
