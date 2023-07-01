@@ -52,7 +52,7 @@ struct STCIHeaderMiddleIndexed {
  * Middle part of STCI image header
  */
 enum STCIHeaderMiddle_Tag {
-  RGB,
+  Rgb,
   Indexed,
 };
 

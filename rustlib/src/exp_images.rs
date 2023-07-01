@@ -36,7 +36,7 @@ pub struct STCIHeaderHead {
 // #[derive(Default)]
 /// Middle part of STCI image header
 enum STCIHeaderMiddle {
-    RGB(STCIHeaderMiddleRGB),
+    Rgb(STCIHeaderMiddleRGB),
     Indexed(STCIHeaderMiddleIndexed),
 }
 
@@ -106,7 +106,7 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeaderTmp> {
             FILE_DB.read_file_exact(file_id, &mut indexed.cIndexedUnused)?;
             middle = STCIHeaderMiddle::Indexed(indexed);
         } else if head.Flags & STCI_RGB != 0 {
-            middle = STCIHeaderMiddle::RGB(STCIHeaderMiddleRGB {
+            middle = STCIHeaderMiddle::Rgb(STCIHeaderMiddleRGB {
                 uiRedMask: FILE_DB.read_file_u32(file_id)?,
                 uiGreenMask: FILE_DB.read_file_u32(file_id)?,
                 uiBlueMask: FILE_DB.read_file_u32(file_id)?,

@@ -16,7 +16,7 @@ BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 fContents) {
   FileID hFile = FILE_ID_ERR;
-  STCIHeader Header;
+  // STCIHeader Header;
   UINT32 uiBytesRead;
   struct Image TempImage;
 
@@ -35,21 +35,29 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
     return FALSE;
   }
 
-  if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
-      uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN) != 0) {
+  struct STCIHeaderTmp header;
+  if (!ReadSTCIHeader(hFile, &header)) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
     File_Close(hFile);
     return (FALSE);
   }
 
+  // if (!File_Read(hFile, &Header, STCI_HEADER_SIZE, &uiBytesRead) ||
+  //     uiBytesRead != STCI_HEADER_SIZE || memcmp(Header.head.ID, STCI_ID_STRING, STCI_ID_LEN) !=
+  //     0) {
+  //   DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
+  //   File_Close(hFile);
+  //   return (FALSE);
+  // }
+
   // Determine from the header the data stored in the file. and run the appropriate loader
-  if (Header.head.Flags & STCI_RGB) {
+  if (header.middle.tag == Rgb) {
     if (!STCILoadRGB(&TempImage, fContents, hFile, &Header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading RGB image.");
       File_Close(hFile);
       return (FALSE);
     }
-  } else if (Header.head.Flags & STCI_INDEXED) {
+  } else if (header.middle.tag == Indexed) {
     if (!STCILoadIndexed(&TempImage, fContents, hFile, &Header)) {
       DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
       File_Close(hFile);
@@ -66,12 +74,12 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, UINT16 f
 
   // Set some more flags in the temporary image structure, copy it so that hImage points
   // to it, and return.
-  if (Header.head.Flags & STCI_ZLIB_COMPRESSED) {
+  if (header.head.Flags & STCI_ZLIB_COMPRESSED) {
     TempImage.fFlags |= IMAGE_COMPRESSED;
   }
-  TempImage.usWidth = Header.head.Width;
-  TempImage.usHeight = Header.head.Height;
-  TempImage.ubBitDepth = Header.end.Depth;
+  TempImage.usWidth = header.head.Width;
+  TempImage.usHeight = header.head.Height;
+  TempImage.ubBitDepth = header.end.Depth;
   *hImage = TempImage;
 
   return (TRUE);
