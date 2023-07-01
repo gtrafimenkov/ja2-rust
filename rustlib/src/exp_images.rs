@@ -1,3 +1,5 @@
+use crate::exp_alloc::RustDealloc;
+
 use super::exp_alloc;
 use super::exp_debug;
 use super::exp_fileman::FileID;
@@ -54,6 +56,7 @@ pub struct STCIHeader {
 
 const STCI_INDEXED: u32 = 0x0008;
 const STCI_RGB: u32 = 0x0004;
+const STCI_ETRLE_COMPRESSED: u32 = 0x0020;
 
 #[repr(C)]
 #[allow(non_snake_case)]
@@ -275,10 +278,17 @@ pub struct STIImageLoaded {
 impl Default for STIImageLoaded {
     fn default() -> Self {
         Self {
+            success: false,
+            StoredSize: 0,
+            Height: 0,
+            Width: 0,
+            usNumberOfSubImages: 0,
+            AppDataSize: 0,
+            indexed: false,
             palette: std::ptr::null_mut(),
             subimages: std::ptr::null_mut(),
             app_data: std::ptr::null_mut(),
-            ..Default::default()
+            image_data: std::ptr::null_mut(),
         }
     }
 }
@@ -288,23 +298,57 @@ pub extern "C" fn LoadSTIImage(file_id: FileID) -> STIImageLoaded {
     let mut results = STIImageLoaded::default();
     match read_stci_header(file_id) {
         Ok(header) => {
+            //  if head.Flags & (STCI_INDEXED|STCI_RGB) == 0 {
+            //     return Err(io::Error::new(io::ErrorKind::Other, "unknown image format"));
+            //  }
+            results.StoredSize = header.head.StoredSize;
+            results.Height = header.head.Height;
+            results.Width = header.head.Width;
+            results.indexed = header.head.Flags & STCI_INDEXED != 0;
+            if results.indexed {
+                results.palette = ReadSTCIPalette(file_id);
+                if header.head.Flags & STCI_ETRLE_COMPRESSED != 0 {
+                    if let STCIHeaderMiddle::Indexed(indexed) = header.middle {
+                        results.subimages =
+                            ReadSTCISubimages(file_id, indexed.usNumberOfSubImages as usize);
+                        if results.subimages.is_null() {
+                            unsafe {
+                                RustDealloc(std::mem::transmute(results.palette));
+                                return STIImageLoaded::default();
+                            }
+                        }
+                    }
+                }
+                results.image_data = ReadSTCIImageData(file_id, &header);
+                if results.image_data.is_null() {
+                    unsafe {
+                        RustDealloc(std::mem::transmute(results.subimages));
+                        RustDealloc(std::mem::transmute(results.palette));
+                        return STIImageLoaded::default();
+                    }
+                }
+
+                if header.end.AppDataSize > 0 {
+                    results.app_data = ReadSTCIAppData(file_id, &header);
+                    if results.app_data.is_null() {
+                        unsafe {
+                            RustDealloc(results.image_data);
+                            RustDealloc(std::mem::transmute(results.subimages));
+                            RustDealloc(std::mem::transmute(results.palette));
+                            return STIImageLoaded::default();
+                        }
+                    }
+                }
+            } else {
+                results.image_data = ReadSTCIImageData(file_id, &header);
+            }
             return results;
         }
         Err(err) => {
             exp_debug::debug_log_write(&format!("failed to read STCI header: {err}"));
-            return results;
+            return STIImageLoaded::default();
         }
     }
-
-    // let mut header: STCIHeader = STCIHeader {
-    //     head: todo!(),
-    //     middle: todo!(),
-    //     end: todo!(),
-    // };
-    // if !ReadSTCIHeader(file_id, &mut header) {
-    //     return results;
-    // }
-    // results
 }
 
 #[no_mangle]
