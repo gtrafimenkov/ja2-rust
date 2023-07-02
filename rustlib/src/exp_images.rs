@@ -316,6 +316,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                             ReadSTCISubimages(file_id, indexed.usNumberOfSubImages as usize);
                         if results.subimages.is_null() {
                             unsafe {
+                                exp_debug::debug_log_write("failed to read the palette");
                                 RustDealloc(std::mem::transmute(results.palette));
                                 return STIImageLoaded::default();
                             }
@@ -325,6 +326,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                 results.image_data = ReadSTCIImageData(file_id, &header);
                 if results.image_data.is_null() {
                     unsafe {
+                        exp_debug::debug_log_write("failed to read image data");
                         RustDealloc(std::mem::transmute(results.subimages));
                         RustDealloc(std::mem::transmute(results.palette));
                         return STIImageLoaded::default();
@@ -335,6 +337,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                     results.app_data = ReadSTCIAppData(file_id, &header);
                     if results.app_data.is_null() {
                         unsafe {
+                            exp_debug::debug_log_write("failed to read app data");
                             RustDealloc(results.image_data);
                             RustDealloc(std::mem::transmute(results.subimages));
                             RustDealloc(std::mem::transmute(results.palette));
@@ -344,7 +347,12 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                 }
             } else {
                 results.image_data = ReadSTCIImageData(file_id, &header);
+                if results.image_data.is_null() {
+                    exp_debug::debug_log_write("failed to read image data");
+                    return STIImageLoaded::default();
+                }
             }
+            results.success = true;
             results
         }
         Err(err) => {

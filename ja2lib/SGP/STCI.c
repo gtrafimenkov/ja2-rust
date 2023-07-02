@@ -10,11 +10,12 @@
 #include "rust_fileman.h"
 #include "rust_images.h"
 
-static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
-                               struct STCIHeader *pHeader);
-static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
+// static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
+//                                struct STCIHeader *pHeader);
+// static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage);
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loadAppData) {
+  DebugLogWrite(filePath);
   FileID hFile = FILE_ID_ERR;
   struct Image TempImage;
 
@@ -55,8 +56,8 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
     if (TempImage.pETRLEObject) {
       TempImage.usNumberOfObjects = sti.usNumberOfSubImages;
       TempImage.fFlags |= IMAGE_TRLECOMPRESSED;
+      TempImage.uiSizePixData = sti.StoredSize;
     }
-    TempImage.uiSizePixData = sti.StoredSize;
 
     TempImage.pAppData = sti.app_data;
     if (TempImage.pAppData) {
@@ -72,7 +73,7 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
     }
     TempImage.usWidth = sti.Width;
     TempImage.usHeight = sti.Height;
-    TempImage.ubBitDepth = header.end.Depth;
+    TempImage.ubBitDepth = sti.Depth;
   }
 
   // struct STCIHeader header;
@@ -119,86 +120,86 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
   return (TRUE);
 }
 
-static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
-                               struct STCIHeader *pHeader) {
-  hImage->pPalette = ReadSTCIPalette(hFile);
-  if (!hImage->pPalette) {
-    File_Close(hFile);
-    return (FALSE);
-  }
-  hImage->paletteAllocatedInRust = true;
-  hImage->fFlags |= IMAGE_PALETTE;
+// static BOOLEAN STCILoadIndexed(struct Image *hImage, bool loadAppData, FileID hFile,
+//                                struct STCIHeader *pHeader) {
+//   hImage->pPalette = ReadSTCIPalette(hFile);
+//   if (!hImage->pPalette) {
+//     File_Close(hFile);
+//     return (FALSE);
+//   }
+//   hImage->paletteAllocatedInRust = true;
+//   hImage->fFlags |= IMAGE_PALETTE;
 
-  // subimages
-  {
-    if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
-      hImage->pETRLEObject = ReadSTCISubimages(hFile, pHeader->middle.indexed.usNumberOfSubImages);
-      if (!hImage->pETRLEObject) {
-        File_Close(hFile);
-        FreeImagePalette(hImage);
-        return (FALSE);
-      }
-      hImage->usNumberOfObjects = pHeader->middle.indexed.usNumberOfSubImages;
-      hImage->uiSizePixData = pHeader->head.StoredSize;
-      hImage->fFlags |= IMAGE_TRLECOMPRESSED;
-    }
-  }
+//   // subimages
+//   {
+//     if (pHeader->head.Flags & STCI_ETRLE_COMPRESSED) {
+//       hImage->pETRLEObject = ReadSTCISubimages(hFile,
+//       pHeader->middle.indexed.usNumberOfSubImages); if (!hImage->pETRLEObject) {
+//         File_Close(hFile);
+//         FreeImagePalette(hImage);
+//         return (FALSE);
+//       }
+//       hImage->usNumberOfObjects = pHeader->middle.indexed.usNumberOfSubImages;
+//       hImage->uiSizePixData = pHeader->head.StoredSize;
+//       hImage->fFlags |= IMAGE_TRLECOMPRESSED;
+//     }
+//   }
 
-  // image data
-  {
-    UINT32 uiBytesRead;
-    // allocate memory for and read in the image data
-    hImage->pImageData = ReadSTCIImageData(hFile, pHeader);
-    if (!hImage->pImageData) {
-      File_Close(hFile);
-      FreeImagePalette(hImage);
-      FreeImageSubimages(hImage);
-      return (FALSE);
-    }
-    hImage->imageDataAllocatedInRust = true;
-    hImage->fFlags |= IMAGE_BITMAPDATA;
-  }
+//   // image data
+//   {
+//     UINT32 uiBytesRead;
+//     // allocate memory for and read in the image data
+//     hImage->pImageData = ReadSTCIImageData(hFile, pHeader);
+//     if (!hImage->pImageData) {
+//       File_Close(hFile);
+//       FreeImagePalette(hImage);
+//       FreeImageSubimages(hImage);
+//       return (FALSE);
+//     }
+//     hImage->imageDataAllocatedInRust = true;
+//     hImage->fFlags |= IMAGE_BITMAPDATA;
+//   }
 
-  if (loadAppData && pHeader->end.AppDataSize > 0) {
-    // load application-specific data
-    hImage->pAppData = ReadSTCIAppData(hFile, pHeader);
-    if (!hImage->pAppData) {
-      File_Close(hFile);
-      FreeImagePalette(hImage);
-      FreeImageData(hImage);
-      FreeImageSubimages(hImage);
-      return (FALSE);
-    }
-    hImage->uiAppDataSize = pHeader->end.AppDataSize;
-    hImage->fFlags |= IMAGE_APPDATA;
-  } else {
-    hImage->pAppData = NULL;
-    hImage->uiAppDataSize = 0;
-  }
-  return (TRUE);
-}
+//   if (loadAppData && pHeader->end.AppDataSize > 0) {
+//     // load application-specific data
+//     hImage->pAppData = ReadSTCIAppData(hFile, pHeader);
+//     if (!hImage->pAppData) {
+//       File_Close(hFile);
+//       FreeImagePalette(hImage);
+//       FreeImageData(hImage);
+//       FreeImageSubimages(hImage);
+//       return (FALSE);
+//     }
+//     hImage->uiAppDataSize = pHeader->end.AppDataSize;
+//     hImage->fFlags |= IMAGE_APPDATA;
+//   } else {
+//     hImage->pAppData = NULL;
+//     hImage->uiAppDataSize = 0;
+//   }
+//   return (TRUE);
+// }
 
-static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage) {
-  UINT16 usIndex;
-  STCIPaletteElement *pubPalette;
+// static BOOLEAN STCISetPalette(PTR pSTCIPalette, struct Image *hImage) {
+//   UINT16 usIndex;
+//   STCIPaletteElement *pubPalette;
 
-  pubPalette = (STCIPaletteElement *)pSTCIPalette;
+//   pubPalette = (STCIPaletteElement *)pSTCIPalette;
 
-  // Allocate memory for palette
-  hImage->pPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
-  memset(hImage->pPalette, 0, (sizeof(struct SGPPaletteEntry) * 256));
+//   // Allocate memory for palette
+//   hImage->pPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
+//   memset(hImage->pPalette, 0, (sizeof(struct SGPPaletteEntry) * 256));
 
-  if (hImage->pPalette == NULL) {
-    return (FALSE);
-  }
+//   if (hImage->pPalette == NULL) {
+//     return (FALSE);
+//   }
 
-  // Initialize the proper palette entries
-  for (usIndex = 0; usIndex < 256; usIndex++) {
-    hImage->pPalette[usIndex].peRed = pubPalette->ubRed;
-    hImage->pPalette[usIndex].peGreen = pubPalette->ubGreen;
-    hImage->pPalette[usIndex].peBlue = pubPalette->ubBlue;
-    hImage->pPalette[usIndex]._unused = 0;
-    pubPalette++;
-  }
-  return TRUE;
-}
+//   // Initialize the proper palette entries
+//   for (usIndex = 0; usIndex < 256; usIndex++) {
+//     hImage->pPalette[usIndex].peRed = pubPalette->ubRed;
+//     hImage->pPalette[usIndex].peGreen = pubPalette->ubGreen;
+//     hImage->pPalette[usIndex].peBlue = pubPalette->ubBlue;
+//     hImage->pPalette[usIndex]._unused = 0;
+//     pubPalette++;
+//   }
+//   return TRUE;
+// }

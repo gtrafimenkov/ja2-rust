@@ -135,7 +135,7 @@ void FreeImagePalette(struct Image *image) {
 
 void FreeImageSubimages(struct Image *image) {
   if (image->usNumberOfObjects > 0) {
-    RustDealloc(image->pETRLEObject);
+    RustDealloc((uint8_t *)image->pETRLEObject);
   }
 }
 
