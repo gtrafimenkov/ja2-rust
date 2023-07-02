@@ -59,6 +59,14 @@ extern "C" {
 #endif // __cplusplus
 
 /**
+ * Load STI image from file or library.
+ * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
+ * Memory must be freed with RustDealloc.
+ */
+struct STIImageLoaded LoadSTIImageFromFile(const char *path,
+                                           bool load_app_data);
+
+/**
  * Load STI image.
  * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
  * Memory must be freed with RustDealloc.

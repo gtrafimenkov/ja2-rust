@@ -10,18 +10,8 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
   Assert(hImage != NULL);
   DebugLogWrite(filePath);
 
-  if (!(File_Exists(filePath))) {
-    return FALSE;
-  }
-
-  FileID hFile = File_OpenForReading(filePath);
-  if (!(hFile)) {
-    return FALSE;
-  }
-
-  struct STIImageLoaded sti = LoadSTIImage(hFile, loadAppData);
+  struct STIImageLoaded sti = LoadSTIImageFromFile(filePath, loadAppData);
   if (!sti.success) {
-    File_Close(hFile);
     return FALSE;
   }
 
@@ -57,6 +47,5 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
   hImage->usHeight = sti.Height;
   hImage->ubBitDepth = sti.pixel_depth;
 
-  File_Close(hFile);
   return (TRUE);
 }

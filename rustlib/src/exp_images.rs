@@ -1,8 +1,11 @@
+use crate::exp_fileman;
+
 use super::exp_alloc;
-use super::exp_debug;
+use super::exp_debug::debug_log_write;
 use super::exp_fileman::FileID;
 use super::exp_fileman::FILE_DB;
 use byteorder::{LittleEndian, ReadBytesExt};
+use std::ffi::{c_char, CStr};
 use std::io;
 
 #[repr(C)]
@@ -65,30 +68,68 @@ pub struct STIImageLoaded {
     zlib_compressed: bool,
 }
 
+impl Default for STIImageLoaded {
+    fn default() -> Self {
+        Self {
+            success: false,
+            image_data_size: 0,
+            Height: 0,
+            Width: 0,
+            number_of_subimages: 0,
+            pixel_depth: 0,
+            app_data_size: 0,
+            indexed: false,
+            palette: std::ptr::null_mut(),
+            subimages: std::ptr::null_mut(),
+            app_data: std::ptr::null_mut(),
+            image_data: std::ptr::null_mut(),
+            zlib_compressed: false,
+        }
+    }
+}
+
+/// Converts utf-8 encoded null-terminated C string into String.
+/// If cstr is null, return None.
+fn cstr_utf8_to_string(cstr: *const c_char) -> Option<String> {
+    if cstr.is_null() {
+        return None;
+    }
+    let str = unsafe { CStr::from_ptr(cstr) };
+    Some(String::from_utf8_lossy(str.to_bytes()).to_string())
+}
+
+#[no_mangle]
+/// Load STI image from file or library.
+/// If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
+/// Memory must be freed with RustDealloc.
+pub extern "C" fn LoadSTIImageFromFile(path: *const c_char, load_app_data: bool) -> STIImageLoaded {
+    let failure = STIImageLoaded::default();
+    match cstr_utf8_to_string(path) {
+        None => failure,
+        Some(path) => match unsafe { FILE_DB.open_for_reading(&path) } {
+            Err(err) => {
+                debug_log_write(&format!("failed to open file {path} for reading: {err}"));
+                failure
+            }
+            Ok(file_id) => {
+                let res = LoadSTIImage(file_id, load_app_data);
+                exp_fileman::File_Close(file_id);
+                res
+            }
+        },
+    }
+}
+
 #[no_mangle]
 /// Load STI image.
 /// If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
 /// Memory must be freed with RustDealloc.
 pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImageLoaded {
-    let failure = STIImageLoaded {
-        success: false,
-        image_data_size: 0,
-        Height: 0,
-        Width: 0,
-        number_of_subimages: 0,
-        pixel_depth: 0,
-        app_data_size: 0,
-        indexed: false,
-        palette: std::ptr::null_mut(),
-        subimages: std::ptr::null_mut(),
-        app_data: std::ptr::null_mut(),
-        image_data: std::ptr::null_mut(),
-        zlib_compressed: false,
-    };
+    let failure = STIImageLoaded::default();
     let img = read_stci(file_id, load_app_data);
 
     if let Err(err) = img {
-        exp_debug::debug_log_write(&format!("failed to read stci image: {err}"));
+        debug_log_write(&format!("failed to read stci image: {err}"));
         return failure;
     }
 
@@ -259,7 +300,7 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                         usHeight: reader.read_u16::<LittleEndian>()?,
                         usWidth: reader.read_u16::<LittleEndian>()?,
                     };
-                    exp_debug::debug_log_write(&format!("subimage: {subimage:?}"));
+                    debug_log_write(&format!("subimage: {subimage:?}"));
                     collector.push(subimage);
                 }
                 subimages = Some(collector);
