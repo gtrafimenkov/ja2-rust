@@ -58,6 +58,8 @@ struct STIImageLoaded {
 extern "C" {
 #endif // __cplusplus
 
+struct STIImageLoaded LoadSTIImage2(FileID file_id, bool load_app_data);
+
 struct STIImageLoaded LoadSTIImage(FileID file_id, bool load_app_data);
 
 #ifdef __cplusplus

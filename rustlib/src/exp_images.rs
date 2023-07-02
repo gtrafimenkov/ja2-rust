@@ -230,6 +230,55 @@ impl Default for STIImageLoaded {
 }
 
 #[no_mangle]
+pub extern "C" fn LoadSTIImage2(file_id: FileID, load_app_data: bool) -> STIImageLoaded {
+    let failure = STIImageLoaded {
+        success: false,
+        image_data_size: 0,
+        Height: 0,
+        Width: 0,
+        number_of_subimages: 0,
+        pixel_depth: 0,
+        app_data_size: 0,
+        indexed: false,
+        palette: std::ptr::null_mut(),
+        subimages: std::ptr::null_mut(),
+        app_data: std::ptr::null_mut(),
+        image_data: std::ptr::null_mut(),
+        zlib_compressed: false,
+    };
+    let img = read_stci(file_id, true);
+
+    if let Err(err) = img {
+        exp_debug::debug_log_write(&format!("failed to read stci image: {err}"));
+        return failure;
+    }
+
+    let img = img.unwrap();
+
+    let mut number_of_subimages = 0;
+    if let Some(subimages) = img.subimages {
+        number_of_subimages = subimages.len();
+        // TODO: allocate and copy memory
+    }
+
+    return STIImageLoaded {
+        success: true,
+        Height: img.height,
+        Width: img.width,
+        indexed: img.indexed,
+        pixel_depth: img.pixel_depth,
+        image_data_size: todo!(),
+        image_data: todo!(),
+        palette: todo!(),
+        number_of_subimages,
+        subimages: todo!(),
+        app_data_size: todo!(),
+        app_data: todo!(),
+        zlib_compressed: todo!(),
+    };
+}
+
+#[no_mangle]
 pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImageLoaded {
     let mut results = STIImageLoaded::default();
     match read_stci_header(file_id) {
