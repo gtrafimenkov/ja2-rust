@@ -7,12 +7,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define STCI_ID_LEN 4
-
-#define STCI_ZLIB_COMPRESSED 16
-
-#define STCI_ETRLE_COMPRESSED 32
-
 /**
  * Palette structure, mimics that of Win32
  */

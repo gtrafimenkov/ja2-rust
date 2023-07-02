@@ -450,6 +450,23 @@ impl DB {
     }
 }
 
+/// Reader allows reading from an opened file (regular file or slf archive).
+pub struct Reader {
+    file_id: FileID,
+}
+
+impl Reader {
+    pub fn new(file_id: FileID) -> Reader {
+        Reader { file_id }
+    }
+}
+
+impl Read for Reader {
+    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        unsafe { FILE_DB.read_file(self.file_id, buf) }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

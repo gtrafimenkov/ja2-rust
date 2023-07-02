@@ -2,9 +2,8 @@ use crate::exp_fileman;
 
 use super::exp_alloc;
 use super::exp_debug::debug_log_write;
-use super::exp_fileman::FileID;
-use super::exp_fileman::FILE_DB;
-use byteorder::{LittleEndian, ReadBytesExt};
+use super::exp_fileman::{FileID, FILE_DB};
+use super::images;
 use std::ffi::{c_char, CStr};
 use std::io;
 
@@ -18,8 +17,18 @@ pub struct SGPPaletteEntry {
     _unused: u8,
 }
 
+impl SGPPaletteEntry {
+    pub const fn from_internal(entry: &images::SGPPaletteEntry) -> Self {
+        Self {
+            red: entry.red,
+            green: entry.green,
+            blue: entry.blue,
+            _unused: 0,
+        }
+    }
+}
+
 #[repr(C)]
-#[allow(non_snake_case)]
 #[derive(Debug)]
 /// Structure that describes one image from an indexed STCI file
 pub struct Subimage {
@@ -31,6 +40,19 @@ pub struct Subimage {
     width: u16,
 }
 
+impl Subimage {
+    pub const fn from_internal(val: &images::Subimage) -> Self {
+        Self {
+            data_offset: val.data_offset,
+            data_length: val.data_length,
+            x_offset: val.x_offset,
+            y_offset: val.y_offset,
+            height: val.height,
+            width: val.width,
+        }
+    }
+}
+
 /*
 Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed of:
 - ImageFileHeader, uncompressed
@@ -38,15 +60,6 @@ Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed
 - SubRectInfo's (usNumberOfRects > 0, size = usNumberOfSubRects * sizeof(SubRectInfo)), uncompressed
 - Bytes of image data, possibly compressed
 */
-
-pub const STCI_ID_LEN: usize = 4;
-
-const STCI_ID_STRING: [u8; 4] = [b'S', b'T', b'C', b'I'];
-
-const STCI_RGB: u32 = 0x0004;
-const STCI_INDEXED: u32 = 0x0008;
-pub const STCI_ZLIB_COMPRESSED: u32 = 0x0010;
-pub const STCI_ETRLE_COMPRESSED: u32 = 0x0020;
 
 #[repr(C)]
 #[allow(non_snake_case)]
@@ -137,10 +150,13 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     // allocate memory and copy palette array
     let mut palette_data_copy: *mut SGPPaletteEntry = std::ptr::null_mut();
     if let Some(palette) = img.palette {
-        let palette_data_size = palette.len() * std::mem::size_of::<Subimage>();
+        let palette_data_size = palette.len() * std::mem::size_of::<SGPPaletteEntry>();
         unsafe {
             palette_data_copy = std::mem::transmute(exp_alloc::RustAlloc(palette_data_size));
-            std::ptr::copy(palette.as_ptr(), palette_data_copy, palette.len());
+            let palette_copy = std::slice::from_raw_parts_mut(palette_data_copy, palette.len());
+            for i in 0..256 {
+                palette_copy[i] = SGPPaletteEntry::from_internal(&palette[i]);
+            }
         }
     }
 
@@ -159,7 +175,11 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
         let data_size = number_of_subimages * std::mem::size_of::<Subimage>();
         unsafe {
             subimages_ptr = std::mem::transmute(exp_alloc::RustAlloc(data_size));
-            std::ptr::copy(subimages.as_ptr(), subimages_ptr, number_of_subimages);
+            let subimages_copy = std::slice::from_raw_parts_mut(subimages_ptr, number_of_subimages);
+            for i in 0..number_of_subimages {
+                subimages_copy[i] = Subimage::from_internal(&subimages[i]);
+            }
+            // std::ptr::copy(subimages.as_ptr(), subimages_ptr, number_of_subimages);
         }
     }
 
@@ -191,143 +211,23 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     }
 }
 
-/// Sir-Tech's Crazy Image
-pub struct STImage {
-    height: u16,
-    width: u16,
-    pixel_depth: u8,
-    image_data: Vec<u8>,
-    indexed: bool,                           // indexed (true) or rgb (false)
-    palette: Option<[SGPPaletteEntry; 256]>, // only for indexed images
-    subimages: Option<Vec<Subimage>>,
-    app_data: Option<Vec<u8>>,
-    zlib_compressed: bool,
-}
+// /// Sir-Tech's Crazy Image
+// pub struct STImage {
+//     height: u16,
+//     width: u16,
+//     pixel_depth: u8,
+//     image_data: Vec<u8>,
+//     indexed: bool,                           // indexed (true) or rgb (false)
+//     palette: Option<[SGPPaletteEntry; 256]>, // only for indexed images
+//     subimages: Option<Vec<Subimage>>,
+//     app_data: Option<Vec<u8>>,
+//     zlib_compressed: bool,
+// }
 
 /// Read STCI image from an opened file.
-fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
-    unsafe {
-        let mut id: [u8; STCI_ID_LEN] = [0; STCI_ID_LEN];
-        FILE_DB.read_file_exact(file_id, &mut id)?;
-        if id != STCI_ID_STRING {
-            return Err(io::Error::new(
-                io::ErrorKind::Other,
-                format!("not STCI file ({id:?})"),
-            ));
-        }
-        let _original_size = FILE_DB.read_file_u32(file_id)?;
-        let stored_size = FILE_DB.read_file_u32(file_id)? as usize;
-        let _transparent_value = FILE_DB.read_file_u32(file_id)?;
-        let flags = FILE_DB.read_file_u32(file_id)?;
-        let height = FILE_DB.read_file_u16(file_id)?;
-        let width = FILE_DB.read_file_u16(file_id)?;
-        if flags & STCI_INDEXED == 0 && flags & STCI_RGB == 0 {
-            return Err(io::Error::new(io::ErrorKind::Other, "unknown image format"));
-        }
-        let indexed = flags & STCI_INDEXED != 0;
-        let mut num_subimages = 0;
-        if indexed {
-            // index
-            let number_of_colours = FILE_DB.read_file_u32(file_id)?;
-            if number_of_colours != 256 {
-                return Err(io::Error::new(
-                    io::ErrorKind::Other,
-                    "indexed STCI image must have 256 colors",
-                ));
-            }
-            num_subimages = FILE_DB.read_file_u16(file_id)? as usize;
-            let _red_depth = FILE_DB.read_file_u8(file_id)?;
-            let _green_depth = FILE_DB.read_file_u8(file_id)?;
-            let _blue_depth = FILE_DB.read_file_u8(file_id)?;
-            let mut unused: [u8; 11] = [0; 11];
-            FILE_DB.read_file_exact(file_id, &mut unused)?;
-        } else {
-            // RGB
-            let _red_mask = FILE_DB.read_file_u32(file_id)?;
-            let _green_mask = FILE_DB.read_file_u32(file_id)?;
-            let _blue_mask = FILE_DB.read_file_u32(file_id)?;
-            let _alpha_mask = FILE_DB.read_file_u32(file_id)?;
-            let _red_depth = FILE_DB.read_file_u8(file_id)?;
-            let _green_depth = FILE_DB.read_file_u8(file_id)?;
-            let _blue_depth = FILE_DB.read_file_u8(file_id)?;
-            let _alpha_depth = FILE_DB.read_file_u8(file_id)?;
-        }
-
-        let pixel_depth = FILE_DB.read_file_u8(file_id)?;
-        let _unused1 = FILE_DB.read_file_u8(file_id)?;
-        let _unused2 = FILE_DB.read_file_u8(file_id)?;
-        let _unused3 = FILE_DB.read_file_u8(file_id)?;
-        let app_data_size = FILE_DB.read_file_u32(file_id)? as usize;
-        let mut unused: [u8; 12] = [0; 12];
-        FILE_DB.read_file_exact(file_id, &mut unused)?;
-
-        let zlib_compressed = flags & STCI_ZLIB_COMPRESSED != 0;
-        let mut image_data = vec![0; stored_size];
-        let mut palette: Option<[SGPPaletteEntry; 256]> = None;
-        let mut subimages: Option<Vec<Subimage>> = None;
-        let mut app_data: Option<Vec<u8>> = None;
-
-        if indexed {
-            // palette
-            palette = Some([Default::default(); 256]);
-            {
-                // palette is 256 rgb u8 values
-                let mut data: [u8; 256 * 3] = [0; 256 * 3];
-                FILE_DB.read_file_exact(file_id, &mut data)?;
-                for (i, item) in palette.as_mut().unwrap().iter_mut().enumerate() {
-                    let start = i * 3;
-                    item.red = data[start];
-                    item.green = data[start + 1];
-                    item.blue = data[start + 2];
-                    item._unused = 0;
-                }
-            }
-
-            // subimages
-            if num_subimages > 0 {
-                let mut collector = Vec::with_capacity(num_subimages);
-                let size = 16 * num_subimages;
-                let mut buffer = vec![0; size];
-                FILE_DB.read_file_exact(file_id, &mut buffer)?;
-                let mut reader = io::Cursor::new(buffer);
-                for _i in 0..num_subimages {
-                    let subimage = Subimage {
-                        data_offset: reader.read_u32::<LittleEndian>()?,
-                        data_length: reader.read_u32::<LittleEndian>()?,
-                        x_offset: reader.read_i16::<LittleEndian>()?,
-                        y_offset: reader.read_i16::<LittleEndian>()?,
-                        height: reader.read_u16::<LittleEndian>()?,
-                        width: reader.read_u16::<LittleEndian>()?,
-                    };
-                    debug_log_write(&format!("subimage: {subimage:?}"));
-                    collector.push(subimage);
-                }
-                subimages = Some(collector);
-            }
-
-            FILE_DB.read_file_exact(file_id, &mut image_data)?;
-
-            if app_data_size > 0 {
-                app_data = Some(vec![0; app_data_size]);
-                if app_data_size > 0 && load_app_data {
-                    FILE_DB.read_file_exact(file_id, app_data.as_mut().unwrap())?;
-                }
-            }
-        } else {
-            FILE_DB.read_file_exact(file_id, &mut image_data)?;
-        }
-        Ok(STImage {
-            height,
-            width,
-            pixel_depth,
-            image_data,
-            indexed,
-            palette,
-            subimages,
-            app_data,
-            zlib_compressed,
-        })
-    }
+fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<images::STImage> {
+    let mut reader = exp_fileman::Reader::new(file_id);
+    images::read_stci(&mut reader, load_app_data)
 }
 
 #[cfg(test)]
@@ -365,5 +265,17 @@ mod tests {
             assert_eq!(3840, subimage4.data_offset);
             assert_eq!(960, subimage4.data_length);
         }
+    }
+
+    #[test]
+    fn structure_sizes() {
+        assert_eq!(
+            std::mem::size_of::<SGPPaletteEntry>(),
+            std::mem::size_of::<images::SGPPaletteEntry>()
+        );
+        assert_eq!(
+            std::mem::size_of::<Subimage>(),
+            std::mem::size_of::<images::Subimage>()
+        );
     }
 }
