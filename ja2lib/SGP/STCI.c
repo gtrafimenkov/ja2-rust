@@ -36,9 +36,6 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
 
   hImage->pAppData = sti.app_data;
   hImage->uiAppDataSize = sti.app_data_size;
-  if (hImage->pAppData) {
-    hImage->fFlags |= IMAGE_APPDATA;
-  }
 
   if (sti.zlib_compressed) {
     hImage->fFlags |= IMAGE_COMPRESSED;

@@ -110,15 +110,6 @@ void FreeImageSubimages(struct Image *image) {
   }
 }
 
-void FreeImageAppData(struct Image *image) {
-  if (image->fFlags & IMAGE_APPDATA) {
-    if (image->pAppData != NULL) {
-      RustDealloc(image->pAppData);
-      image->fFlags &= (~IMAGE_APPDATA);
-    }
-  }
-}
-
 BOOLEAN ReleaseImageData(struct Image *hImage) {
   Assert(hImage != NULL);
 
@@ -147,9 +138,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage) {
     hImage->fFlags = hImage->fFlags ^ IMAGE_BITMAPDATA;
   }
 
-  if (hImage->fFlags & IMAGE_APPDATA) {
-    FreeImageAppData(hImage);
-  }
+  RustDealloc(hImage->pAppData);
 
   return (TRUE);
 }

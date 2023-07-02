@@ -30,7 +30,6 @@ struct Subimage;
 #define IMAGE_COMPRESSED 0x0001
 #define IMAGE_PALETTE 0x0004
 #define IMAGE_BITMAPDATA 0x0008
-#define IMAGE_APPDATA 0x0010
 #define IMAGE_ALLIMAGEDATA 0x000C
 
 // Palette structure, mimics that of Win32
@@ -135,6 +134,5 @@ void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
 void FreeImageData(struct Image *image);
 void FreeImagePalette(struct Image *image);
 void FreeImageSubimages(struct Image *image);
-void FreeImageAppData(struct Image *image);
 
 #endif
