@@ -60,11 +60,11 @@ void SetupTextInputForMapInfo() {
   AddUserInputField(NULL);  // just so we can use short cut keys while not typing.
 
   // light rgb fields
-  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.peRed);
+  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.red);
   AddTextInputField(10, 394, 25, 18, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.peGreen);
+  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.green);
   AddTextInputField(10, 414, 25, 18, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
-  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.peBlue);
+  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.blue);
   AddTextInputField(10, 434, 25, 18, MSYS_PRIORITY_NORMAL, str, 3, INPUTTYPE_NUMERICSTRICT);
 
   swprintf(str, ARR_SIZE(str), L"%d", gsLightRadius);
@@ -134,11 +134,11 @@ void UpdateMapInfoFields() {
   CHAR16 str[10];
   // Update the text fields to reflect the validated values.
   // light rgb fields
-  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.peRed);
+  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.red);
   SetInputFieldStringWith16BitString(1, str);
-  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.peGreen);
+  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.green);
   SetInputFieldStringWith16BitString(2, str);
-  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.peBlue);
+  swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.blue);
   SetInputFieldStringWith16BitString(3, str);
 
   swprintf(str, ARR_SIZE(str), L"%d", gsLightRadius);
@@ -161,19 +161,19 @@ void ExtractAndUpdateMapInfo() {
   BOOLEAN fUpdateLight1 = FALSE;
   // extract light1 colors
   temp = min(GetNumericStrictValueFromField(1), 255);
-  if (temp != -1 && temp != gEditorLightColor.peRed) {
+  if (temp != -1 && temp != gEditorLightColor.red) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.peRed = (UINT8)temp;
+    gEditorLightColor.red = (UINT8)temp;
   }
   temp = min(GetNumericStrictValueFromField(2), 255);
-  if (temp != -1 && temp != gEditorLightColor.peGreen) {
+  if (temp != -1 && temp != gEditorLightColor.green) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.peGreen = (UINT8)temp;
+    gEditorLightColor.green = (UINT8)temp;
   }
   temp = min(GetNumericStrictValueFromField(3), 255);
-  if (temp != -1 && temp != gEditorLightColor.peBlue) {
+  if (temp != -1 && temp != gEditorLightColor.blue) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.peBlue = (UINT8)temp;
+    gEditorLightColor.blue = (UINT8)temp;
   }
   if (fUpdateLight1) {
     gfEditorForceShadeTableRebuild = TRUE;

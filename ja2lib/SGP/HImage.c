@@ -445,9 +445,9 @@ UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
   p16BPPPalette = (UINT16 *)MemAlloc(sizeof(UINT16) * 256);
 
   for (cnt = 0; cnt < 256; cnt++) {
-    r = pPalette[cnt].peRed;
-    g = pPalette[cnt].peGreen;
-    b = pPalette[cnt].peBlue;
+    r = pPalette[cnt].red;
+    g = pPalette[cnt].green;
+    b = pPalette[cnt].blue;
 
     r16 = ((UINT16)r << 8);
     g16 = ((UINT16)g << 3);
@@ -502,15 +502,15 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
 
   for (cnt = 0; cnt < 256; cnt++) {
     if (mono) {
-      lumin = (pPalette[cnt].peRed * 299 / 1000) + (pPalette[cnt].peGreen * 587 / 1000) +
-              (pPalette[cnt].peBlue * 114 / 1000);
+      lumin = (pPalette[cnt].red * 299 / 1000) + (pPalette[cnt].green * 587 / 1000) +
+              (pPalette[cnt].blue * 114 / 1000);
       rmod = (rscale * lumin) / 256;
       gmod = (gscale * lumin) / 256;
       bmod = (bscale * lumin) / 256;
     } else {
-      rmod = (rscale * pPalette[cnt].peRed / 256);
-      gmod = (gscale * pPalette[cnt].peGreen / 256);
-      bmod = (bscale * pPalette[cnt].peBlue / 256);
+      rmod = (rscale * pPalette[cnt].red / 256);
+      gmod = (gscale * pPalette[cnt].green / 256);
+      bmod = (bscale * pPalette[cnt].blue / 256);
     }
 
     r = (UINT8)min(rmod, 255);
@@ -607,9 +607,9 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UIN
   pInitEntry = pPalEntry;
   DebugMsg(TOPIC_HIMAGE, DBG_ERROR, "Converting RGB palette to struct SGPPaletteEntry");
   for (Index = 0; Index <= (sbEnd - sbStart); Index++) {
-    pPalEntry->peRed = *(pOldPalette + (Index * 3));
-    pPalEntry->peGreen = *(pOldPalette + (Index * 3) + 1);
-    pPalEntry->peBlue = *(pOldPalette + (Index * 3) + 2);
+    pPalEntry->red = *(pOldPalette + (Index * 3));
+    pPalEntry->green = *(pOldPalette + (Index * 3) + 1);
+    pPalEntry->blue = *(pOldPalette + (Index * 3) + 2);
     pPalEntry->_unused = 0;
     pPalEntry++;
   }

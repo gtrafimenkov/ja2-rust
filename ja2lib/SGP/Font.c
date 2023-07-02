@@ -108,9 +108,9 @@ void SetFontForeground(UINT8 ubForeground) {
 
   FontForeground8 = ubForeground;
 
-  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].peRed;
-  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].peGreen;
-  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].peBlue;
+  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].red;
+  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].green;
+  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].blue;
 
   FontForeground16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
 }
@@ -122,9 +122,9 @@ void SetFontShadow(UINT8 ubShadow) {
 
   // FontForeground8=ubForeground;
 
-  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].peRed;
-  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].peGreen;
-  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].peBlue;
+  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].red;
+  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].green;
+  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].blue;
 
   FontShadow16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
 
@@ -154,9 +154,9 @@ void SetFontBackground(UINT8 ubBackground) {
 
   FontBackground8 = ubBackground;
 
-  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].peRed;
-  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].peGreen;
-  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].peBlue;
+  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].red;
+  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].green;
+  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].blue;
 
   FontBackground16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
 }

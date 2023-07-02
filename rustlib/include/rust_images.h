@@ -17,9 +17,9 @@
  * Palette structure, mimics that of Win32
  */
 struct SGPPaletteEntry {
-  uint8_t peRed;
-  uint8_t peGreen;
-  uint8_t peBlue;
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
   uint8_t _unused;
 };
 

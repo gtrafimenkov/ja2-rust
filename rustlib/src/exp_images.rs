@@ -9,13 +9,12 @@ use std::ffi::{c_char, CStr};
 use std::io;
 
 #[repr(C)]
-#[allow(non_snake_case)]
 #[derive(Default, Copy, Clone)]
 /// Palette structure, mimics that of Win32
 pub struct SGPPaletteEntry {
-    peRed: u8,
-    peGreen: u8,
-    peBlue: u8,
+    red: u8,
+    green: u8,
+    blue: u8,
     _unused: u8,
 }
 
@@ -277,9 +276,9 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                 FILE_DB.read_file_exact(file_id, &mut data)?;
                 for (i, item) in palette.as_mut().unwrap().iter_mut().enumerate() {
                     let start = i * 3;
-                    item.peRed = data[start];
-                    item.peGreen = data[start + 1];
-                    item.peBlue = data[start + 2];
+                    item.red = data[start];
+                    item.green = data[start + 1];
+                    item.blue = data[start + 2];
                     item._unused = 0;
                 }
             }

@@ -420,12 +420,12 @@ void BuildTileShadeTables() {
     gfForceBuildShadeTables = FALSE;
   }
   // now, determine if we are using specialized colors.
-  if (gpLightColors[0].peRed || gpLightColors[0].peGreen ||
-      gpLightColors[0].peBlue) {  // we are, which basically means we force build the shadetables.
+  if (gpLightColors[0].red || gpLightColors[0].green ||
+      gpLightColors[0].blue) {  // we are, which basically means we force build the shadetables.
                                   // However, the one
     // exception is if we are loading another map and the colors are the same.
-    if (gpLightColors[0].peRed != ubLastRed || gpLightColors[0].peGreen != ubLastGreen ||
-        gpLightColors[0].peBlue != ubLastBlue) {  // Same tileset, but colors are different, so set
+    if (gpLightColors[0].red != ubLastRed || gpLightColors[0].green != ubLastGreen ||
+        gpLightColors[0].blue != ubLastBlue) {  // Same tileset, but colors are different, so set
                                                   // things up to regenerate the shadetables.
       gfForceBuildShadeTables = TRUE;
     } else {  // same colors, same tileset, so don't rebuild shadetables -- much faster!
@@ -468,9 +468,9 @@ void BuildTileShadeTables() {
   // Restore the data directory once we are finished.
   Plat_SetCurrentDirectory(DataDir.buf);
 
-  ubLastRed = gpLightColors[0].peRed;
-  ubLastGreen = gpLightColors[0].peGreen;
-  ubLastBlue = gpLightColors[0].peBlue;
+  ubLastRed = gpLightColors[0].red;
+  ubLastGreen = gpLightColors[0].green;
+  ubLastBlue = gpLightColors[0].blue;
 
 #ifdef JA2TESTVERSION
   uiBuildShadeTableTime = GetJA2Clock() - uiStartTime;
@@ -3490,9 +3490,9 @@ void LoadMapLights(INT8 **hBuffer) {
   ubNumColors = 1;
 
   // ATE: OK, only regenrate if colors are different.....
-  // if ( LColors[0].peRed != gpLightColors[0].peRed ||
-  //		 LColors[0].peGreen != gpLightColors[0].peGreen ||
-  //		 LColors[0].peBlue != gpLightColors[0].peBlue )
+  // if ( LColors[0].red != gpLightColors[0].red ||
+  //		 LColors[0].green != gpLightColors[0].green ||
+  //		 LColors[0].blue != gpLightColors[0].blue )
   { LightSetColors(LColors, ubNumColors); }
 
   // Determine which lights are valid for the current time.

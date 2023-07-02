@@ -43,9 +43,9 @@ BOOLEAN CreateSGPPaletteFromCOLFile(struct SGPPaletteEntry *pPalette, SGPFILENAM
 
   // Read in a palette entry at a time
   for (cnt = 0; cnt < 256; cnt++) {
-    File_Read(hFileHandle, &pPalette[cnt].peRed, sizeof(UINT8), NULL);
-    File_Read(hFileHandle, &pPalette[cnt].peGreen, sizeof(UINT8), NULL);
-    File_Read(hFileHandle, &pPalette[cnt].peBlue, sizeof(UINT8), NULL);
+    File_Read(hFileHandle, &pPalette[cnt].red, sizeof(UINT8), NULL);
+    File_Read(hFileHandle, &pPalette[cnt].green, sizeof(UINT8), NULL);
+    File_Read(hFileHandle, &pPalette[cnt].blue, sizeof(UINT8), NULL);
   }
 
   // Close file
