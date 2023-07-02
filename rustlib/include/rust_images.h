@@ -120,12 +120,12 @@ struct SGPPaletteEntry {
  */
 struct STIImageLoaded {
   bool success;
-  uint32_t StoredSize;
+  uint32_t image_data_size;
   uint16_t Height;
   uint16_t Width;
-  uint16_t usNumberOfSubImages;
-  uint8_t Depth;
-  uint32_t AppDataSize;
+  uint16_t number_of_subimages;
+  uint8_t pixel_depth;
+  uint32_t app_data_size;
   uint8_t *image_data;
   bool indexed;
   struct SGPPaletteEntry *palette;

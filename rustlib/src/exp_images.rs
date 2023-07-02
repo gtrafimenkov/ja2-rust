@@ -211,64 +211,12 @@ pub extern "C" fn ReadSTCIHeader(file_id: FileID, data: &mut STCIHeader) -> bool
 /// Results of loading STI image.
 pub struct STIImageLoaded {
     success: bool,
-    //     ID: [u8; STCI_ID_LEN],
-    //     OriginalSize: u32,
-    StoredSize: u32, // equal to uiOriginalSize if data uncompressed
-    //     TransparentValue: u32,
-    //     Flags: u32,
+    image_data_size: u32, // equal to uiOriginalSize if data uncompressed
     Height: u16,
     Width: u16,
-    // }
-
-    // #[repr(C)]
-    // // #[derive(Default)]
-    // /// Middle part of STCI image header
-    // enum STCIHeaderMiddle {
-    //     Rgb(STCIHeaderMiddleRGB),
-    //     Indexed(STCIHeaderMiddleIndexed),
-    // }
-
-    // #[repr(C)]
-    // #[allow(non_snake_case)]
-    // #[derive(Default, Debug, Copy, Clone)]
-    // /// Middle part of STCI image header describing RGB image
-    // pub struct STCIHeaderMiddleRGB {
-    //     uiRedMask: u32,
-    //     uiGreenMask: u32,
-    //     uiBlueMask: u32,
-    //     uiAlphaMask: u32,
-    //     ubRedDepth: u8,
-    //     ubGreenDepth: u8,
-    //     ubBlueDepth: u8,
-    //     ubAlphaDepth: u8,
-    // }
-
-    // #[repr(C)]
-    // #[allow(non_snake_case)]
-    // #[derive(Default, Debug, Copy, Clone)]
-    // /// Middle part of STCI image header describing RGB image
-    // pub struct STCIHeaderMiddleIndexed {
-    //     // For indexed files, the palette will contain 3 separate bytes for red, green, and
-    //     // blue
-    //     uiNumberOfColours: u32,
-    usNumberOfSubImages: u16,
-    //     ubRedDepth: u8,
-    //     ubGreenDepth: u8,
-    //     ubBlueDepth: u8,
-    //     cIndexedUnused: [u8; 11],
-    // }
-
-    // #[repr(C)]
-    // #[allow(non_snake_case)]
-    // #[derive(Default, Debug)]
-    // /// Last part of STCI image header
-    // pub struct STCIHeaderEnd {
-    Depth: u8, // size in bits of one pixel as stored in the file
-    //     unused1: u8, // added to adjust for memory alignment
-    //     unused2: u8, // added to adjust for memory alignment
-    //     unused3: u8, // added to adjust for memory alignment
-    AppDataSize: u32,
-    //     Unused: [u8; 12],
+    number_of_subimages: u16,
+    pixel_depth: u8,
+    app_data_size: u32,
     image_data: *mut u8,
     indexed: bool,                 // indexed (true) or rgb (false)
     palette: *mut SGPPaletteEntry, // only for indexed images
@@ -281,12 +229,12 @@ impl Default for STIImageLoaded {
     fn default() -> Self {
         Self {
             success: false,
-            StoredSize: 0,
+            image_data_size: 0,
             Height: 0,
             Width: 0,
-            usNumberOfSubImages: 0,
-            Depth: 0,
-            AppDataSize: 0,
+            number_of_subimages: 0,
+            pixel_depth: 0,
+            app_data_size: 0,
             indexed: false,
             palette: std::ptr::null_mut(),
             subimages: std::ptr::null_mut(),
@@ -303,10 +251,10 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     match read_stci_header(file_id) {
         Ok(header) => {
             results.compressed = header.head.Flags & STCI_ZLIB_COMPRESSED != 0;
-            results.StoredSize = header.head.StoredSize;
+            results.image_data_size = header.head.StoredSize;
             results.Height = header.head.Height;
             results.Width = header.head.Width;
-            results.Depth = header.end.Depth;
+            results.pixel_depth = header.end.Depth;
             results.indexed = header.head.Flags & STCI_INDEXED != 0;
             if results.indexed {
                 results.palette = ReadSTCIPalette(file_id);
@@ -326,7 +274,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                                 return STIImageLoaded::default();
                             }
                         }
-                        results.usNumberOfSubImages = indexed.usNumberOfSubImages;
+                        results.number_of_subimages = indexed.usNumberOfSubImages;
                     } else {
                         exp_debug::debug_log_write("it must have been indexed image");
                         return STIImageLoaded::default();
@@ -353,7 +301,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                             return STIImageLoaded::default();
                         }
                     }
-                    results.AppDataSize = header.end.AppDataSize;
+                    results.app_data_size = header.end.AppDataSize;
                 }
             } else {
                 results.image_data = ReadSTCIImageData(file_id, &header);

@@ -7,65 +7,56 @@
 #include "rust_images.h"
 
 BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loadAppData) {
-  DebugLogWrite(filePath);
-  FileID hFile = FILE_ID_ERR;
-  struct Image TempImage;
-
-  // Check that hImage is valid, and that the file in question exists
   Assert(hImage != NULL);
-
-  TempImage = *hImage;
+  DebugLogWrite(filePath);
 
   if (!(File_Exists(filePath))) {
     return FALSE;
   }
 
-  // Open the file and read the header
-  hFile = File_OpenForReading(filePath);
+  FileID hFile = File_OpenForReading(filePath);
   if (!(hFile)) {
     return FALSE;
   }
 
-  {
-    struct STIImageLoaded sti = LoadSTIImage(hFile, loadAppData);
-    if (!sti.success) {
-      File_Close(hFile);
-      return FALSE;
-    }
-    TempImage.pImageData = sti.image_data;
-    if (TempImage.pImageData) {
-      TempImage.imageDataAllocatedInRust = true;
-      TempImage.fFlags |= IMAGE_BITMAPDATA;
-    }
-
-    TempImage.pPalette = sti.palette;
-    if (TempImage.pPalette) {
-      TempImage.paletteAllocatedInRust = true;
-      TempImage.fFlags |= IMAGE_PALETTE;
-    }
-
-    TempImage.pETRLEObject = sti.subimages;
-    if (TempImage.pETRLEObject) {
-      TempImage.usNumberOfObjects = sti.usNumberOfSubImages;
-      TempImage.fFlags |= IMAGE_TRLECOMPRESSED;
-      TempImage.uiSizePixData = sti.StoredSize;
-    }
-
-    TempImage.pAppData = sti.app_data;
-    TempImage.uiAppDataSize = sti.AppDataSize;
-    if (TempImage.pAppData) {
-      TempImage.fFlags |= IMAGE_APPDATA;
-    }
-
-    if (sti.compressed) {
-      TempImage.fFlags |= IMAGE_COMPRESSED;
-    }
-    TempImage.usWidth = sti.Width;
-    TempImage.usHeight = sti.Height;
-    TempImage.ubBitDepth = sti.Depth;
+  struct STIImageLoaded sti = LoadSTIImage(hFile, loadAppData);
+  if (!sti.success) {
+    File_Close(hFile);
+    return FALSE;
   }
 
+  hImage->pImageData = sti.image_data;
+  if (hImage->pImageData) {
+    hImage->imageDataAllocatedInRust = true;
+    hImage->fFlags |= IMAGE_BITMAPDATA;
+  }
+
+  hImage->pPalette = sti.palette;
+  if (hImage->pPalette) {
+    hImage->paletteAllocatedInRust = true;
+    hImage->fFlags |= IMAGE_PALETTE;
+  }
+
+  hImage->pETRLEObject = sti.subimages;
+  if (hImage->pETRLEObject) {
+    hImage->usNumberOfObjects = sti.number_of_subimages;
+    hImage->fFlags |= IMAGE_TRLECOMPRESSED;
+    hImage->uiSizePixData = sti.image_data_size;
+  }
+
+  hImage->pAppData = sti.app_data;
+  hImage->uiAppDataSize = sti.app_data_size;
+  if (hImage->pAppData) {
+    hImage->fFlags |= IMAGE_APPDATA;
+  }
+
+  if (sti.compressed) {
+    hImage->fFlags |= IMAGE_COMPRESSED;
+  }
+  hImage->usWidth = sti.Width;
+  hImage->usHeight = sti.Height;
+  hImage->ubBitDepth = sti.pixel_depth;
+
   File_Close(hFile);
-  *hImage = TempImage;
   return (TRUE);
 }
