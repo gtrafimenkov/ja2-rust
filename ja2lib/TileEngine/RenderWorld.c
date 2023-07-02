@@ -1534,7 +1534,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 // RENDER
                 if (fTileInvisible) {
                 } else if (uiLevelNodeFlags & LEVELNODE_DISPLAY_AP && !(uiFlags & TILES_DIRTY)) {
-                  pTrav = &(hVObject->pETRLEObject[usImageIndex]);
+                  pTrav = &(hVObject->subimages[usImageIndex]);
                   sXPos += pTrav->sOffsetX;
                   sYPos += pTrav->sOffsetY;
 
@@ -1670,7 +1670,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                   }
                 } else if (uiFlags & TILES_DIRTY) {
                   if (!(uiLevelNodeFlags & LEVELNODE_LASTDYNAMIC)) {
-                    pTrav = &(hVObject->pETRLEObject[usImageIndex]);
+                    pTrav = &(hVObject->subimages[usImageIndex]);
                     uiBrushHeight = (UINT32)pTrav->usHeight;
                     uiBrushWidth = (UINT32)pTrav->usWidth;
                     sXPos += pTrav->sOffsetX;
@@ -3488,7 +3488,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
@@ -3875,7 +3875,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
@@ -4267,7 +4267,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
@@ -4672,7 +4672,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
@@ -5122,7 +5122,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
@@ -6096,7 +6096,7 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
@@ -6224,7 +6224,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;
@@ -6338,7 +6338,7 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
   Assert(hSrcVObject != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;

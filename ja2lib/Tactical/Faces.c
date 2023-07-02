@@ -967,7 +967,7 @@ void GetXYForIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 
 
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
-  pTrav = &(hVObject->pETRLEObject[ubIndex]);
+  pTrav = &(hVObject->subimages[ubIndex]);
   usHeight = pTrav->usHeight;
   usWidth = pTrav->usWidth;
 
@@ -987,7 +987,7 @@ void GetXYForRightIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, I
 
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
-  pTrav = &(hVObject->pETRLEObject[ubIndex]);
+  pTrav = &(hVObject->subimages[ubIndex]);
   usHeight = pTrav->usHeight;
   usWidth = pTrav->usWidth;
 

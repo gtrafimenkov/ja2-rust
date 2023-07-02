@@ -135,7 +135,7 @@ void FreeImagePalette(struct Image *image) {
 
 void FreeImageSubimages(struct Image *image) {
   if (image->usNumberOfObjects > 0) {
-    RustDealloc((uint8_t *)image->pETRLEObject);
+    RustDealloc((uint8_t *)image->subimages);
   }
 }
 
@@ -625,14 +625,14 @@ BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
   pBuffer->usNumberOfObjects = hImage->usNumberOfObjects;
 
   // Create buffer for objects
-  pBuffer->pETRLEObject =
+  pBuffer->subimages =
       (struct ETRLEObject *)MemAlloc(sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
-  if (!(pBuffer->pETRLEObject != NULL)) {
+  if (!(pBuffer->subimages != NULL)) {
     return FALSE;
   }
 
   // Copy into buffer
-  memcpy(pBuffer->pETRLEObject, hImage->pETRLEObject,
+  memcpy(pBuffer->subimages, hImage->subimages,
          sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
 
   // Allocate memory for pixel data

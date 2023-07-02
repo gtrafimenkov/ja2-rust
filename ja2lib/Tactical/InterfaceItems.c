@@ -1705,7 +1705,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
   if (fDirtyLevel == DIRTYLEVEL2) {
     // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
     GetVideoObject(&hVObject, GetInterfaceGraphicForItem(pItem));
-    pTrav = &(hVObject->pETRLEObject[pItem->ubGraphicNum]);
+    pTrav = &(hVObject->subimages[pItem->ubGraphicNum]);
     usHeight = (UINT32)pTrav->usHeight;
     usWidth = (UINT32)pTrav->usWidth;
 
@@ -2586,7 +2586,7 @@ void RenderItemDescriptionBox() {
   if ((guiCurrentItemDescriptionScreen == MAP_SCREEN) && (gfInItemDescBox)) {
     // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
     GetVideoObject(&hVObject, guiItemGraphic);
-    pTrav = &(hVObject->pETRLEObject[0]);
+    pTrav = &(hVObject->subimages[0]);
     usHeight = (UINT32)pTrav->usHeight;
     usWidth = (UINT32)pTrav->usWidth;
 
@@ -3096,7 +3096,7 @@ void RenderItemDescriptionBox() {
   } else if (gfInItemDescBox) {
     // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
     GetVideoObject(&hVObject, guiItemGraphic);
-    pTrav = &(hVObject->pETRLEObject[0]);
+    pTrav = &(hVObject->subimages[0]);
     usHeight = (UINT32)pTrav->usHeight;
     usWidth = (UINT32)pTrav->usWidth;
 
@@ -4597,7 +4597,7 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPosition, INT16
 
   // Get size
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
   usPopupWidth = pTrav->usWidth;
 
   // Determine position, height and width of mouse region, area
@@ -4704,7 +4704,7 @@ void RenderItemStackPopup(BOOLEAN fFullRender) {
   }
   // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
   usWidth = (UINT32)pTrav->usWidth;
 
   for (cnt = 0; cnt < gubNumItemPopups; cnt++) {
@@ -4794,7 +4794,7 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, INT16 sInvX, INT16 sInvY,
 
   // Get size
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
   usPopupWidth = pTrav->usWidth;
   usPopupHeight = pTrav->usHeight;
 
@@ -4886,7 +4886,7 @@ void RenderKeyRingPopup(BOOLEAN fFullRender) {
 
   // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
 

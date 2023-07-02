@@ -4430,7 +4430,7 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
   ShowHighLightedSectorOnMilitiaMap();
 
   GetVideoObject(&hVObject, guiMilitia);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
 
   InvalidateRegion(MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
                    MAP_MILITIA_BOX_POS_X + pTrav->usWidth, MAP_MILITIA_BOX_POS_Y + pTrav->usHeight);

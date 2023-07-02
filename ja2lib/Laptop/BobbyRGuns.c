@@ -801,7 +801,7 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   LoadTileGraphicForItem(pItem, &uiImage);
 
   GetVideoObject(&hPixHandle, uiImage);
-  pTrav = &(hPixHandle->pETRLEObject[0]);
+  pTrav = &(hPixHandle->subimages[0]);
 
   // center picture in frame
   usWidth = (UINT32)pTrav->usWidth;

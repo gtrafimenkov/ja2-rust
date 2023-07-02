@@ -64,7 +64,7 @@ struct RelTileLoc {
 typedef struct tagETRLEData {
   PTR pPixData;
   UINT32 uiSizePixData;
-  struct ETRLEObject *pETRLEObject;
+  struct ETRLEObject *subimages;
   UINT16 usNumberOfObjects;
 } ETRLEData;
 
@@ -96,7 +96,7 @@ struct Image {
     struct {
       UINT8 *pPixData8;
       UINT32 uiSizePixData;
-      struct ETRLEObject *pETRLEObject;
+      struct ETRLEObject *subimages;
       UINT16 usNumberOfObjects;
     };
   };

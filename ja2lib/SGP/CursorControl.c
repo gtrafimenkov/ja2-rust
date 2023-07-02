@@ -44,7 +44,7 @@ BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
   INT16 sXPos, sYPos;
 
   // Adjust for offsets
-  pTrav = &(hVObject->pETRLEObject[usVideoObjectSubIndex]);
+  pTrav = &(hVObject->subimages[usVideoObjectSubIndex]);
 
   sXPos = 0;
   sYPos = 0;
@@ -144,8 +144,8 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
     }
 
     // Get ETRLE Data for this video object
-    pTrav = &(
-        gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject->pETRLEObject[pCurImage->uiSubIndex]);
+    pTrav =
+        &(gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject->subimages[pCurImage->uiSubIndex]);
 
     if (!pTrav) {
       return FALSE;
@@ -193,8 +193,8 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
     pCurImage = &(pCurData->Composites[cnt]);
 
     // Get ETRLE Data for this video object
-    pTrav = &(
-        gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject->pETRLEObject[pCurImage->uiSubIndex]);
+    pTrav =
+        &(gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject->subimages[pCurImage->uiSubIndex]);
 
     if (!pTrav) {
       return FALSE;
@@ -335,11 +335,11 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
         if (uiCursorIndex == EXTERN2_CURSOR) {
           // Get ETRLE values
           GetVideoObject(&hVObject, guiExtern2Vo);
-          pTrav = &(hVObject->pETRLEObject[gusExtern2VoSubIndex]);
+          pTrav = &(hVObject->subimages[gusExtern2VoSubIndex]);
         } else {
           // Get ETRLE values
           GetVideoObject(&hVObject, guiExternVo);
-          pTrav = &(hVObject->pETRLEObject[gusExternVoSubIndex]);
+          pTrav = &(hVObject->subimages[gusExternVoSubIndex]);
         }
 
         // Determine center
@@ -357,7 +357,7 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
 
           // Get ETRLE values
           GetVideoObject(&hVObjectTemp, guiExternVo);
-          pTravTemp = &(hVObjectTemp->pETRLEObject[gusExternVoSubIndex]);
+          pTravTemp = &(hVObjectTemp->subimages[gusExternVoSubIndex]);
 
           sSubX = (pTrav->usWidth - pTravTemp->usWidth - pTravTemp->sOffsetX) / 2;
           sSubY = (pTrav->usHeight - pTravTemp->usHeight - pTravTemp->sOffsetY) / 2;

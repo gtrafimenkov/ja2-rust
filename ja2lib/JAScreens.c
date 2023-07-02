@@ -695,7 +695,7 @@ UINT32 SexScreenHandle(void) {
 
   // Calculate smily face positions...
   GetVideoObject(&hVObject, guiSMILY);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
 
   sX = (INT16)((640 - pTrav->usWidth) / 2);
   sY = (INT16)((480 - pTrav->usHeight) / 2);

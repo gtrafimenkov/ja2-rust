@@ -2720,7 +2720,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   BltVideoObjectOutlineFromIndex(src, uiVideoObjectIndex, item->ubGraphicNum, 0, 0, 0, FALSE);
 
   // crop the source image
-  pObject = &hVObject->pETRLEObject[item->ubGraphicNum];
+  pObject = &hVObject->subimages[item->ubGraphicNum];
   iSrcWidth = pObject->usWidth;
   iSrcHeight = pObject->usHeight;
   SrcRect.iLeft += pObject->sOffsetX;

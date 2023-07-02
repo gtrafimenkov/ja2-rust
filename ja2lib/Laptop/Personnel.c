@@ -2229,7 +2229,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
         pItem = &Item[sIndex];
 
         GetVideoObject(&hHandle, GetInterfaceGraphicForItem(pItem));
-        pTrav = &(hHandle->pETRLEObject[pItem->ubGraphicNum]);
+        pTrav = &(hHandle->subimages[pItem->ubGraphicNum]);
 
         usHeight = (UINT32)pTrav->usHeight;
         usWidth = (UINT32)pTrav->usWidth;

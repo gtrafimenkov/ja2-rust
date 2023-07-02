@@ -383,7 +383,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
 
   if (pNode->uiFlags & LEVELNODE_CACHEDANITILE) {
     pTrav = &(gpTileCache[pNode->pAniTile->sCachedTileID]
-                  .pImagery->vo->pETRLEObject[pNode->pAniTile->sCurrentFrame]);
+                  .pImagery->vo->subimages[pNode->pAniTile->sCurrentFrame]);
   } else {
     TileElem = &(gTileDatabase[pNode->usIndex]);
 
@@ -398,7 +398,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
       }
     }
 
-    pTrav = &(TileElem->hTileSurface->pETRLEObject[TileElem->usRegionIndex]);
+    pTrav = &(TileElem->hTileSurface->subimages[TileElem->usRegionIndex]);
   }
 
   sScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)sTempX_S;
@@ -787,7 +787,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
   Assert(hSrcVObject != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
+  pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
   uiOffset = pTrav->uiDataOffset;

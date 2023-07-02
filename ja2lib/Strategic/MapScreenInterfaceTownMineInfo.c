@@ -703,11 +703,11 @@ void AddInventoryButtonForMapPopUpBox(void) {
 
   // Calculate smily face positions...
   GetVideoObject(&hHandle, uiObject);
-  pTrav = &(hHandle->pETRLEObject[0]);
+  pTrav = &(hHandle->subimages[0]);
 
   sWidthA = pTrav->usWidth;
 
-  pTrav = &(hHandle->pETRLEObject[1]);
+  pTrav = &(hHandle->subimages[1]);
 
   sTotalBoxWidth = sTotalButtonWidth;
 
@@ -810,11 +810,11 @@ void MinWidthOfTownMineInfoBox(void) {
 
   // Calculate smily face positions...
   GetVideoObject(&hHandle, uiObject);
-  pTrav = &(hHandle->pETRLEObject[0]);
+  pTrav = &(hHandle->subimages[0]);
 
   sWidthA = pTrav->usWidth;
 
-  pTrav = &(hHandle->pETRLEObject[1]);
+  pTrav = &(hHandle->subimages[1]);
   sWidthB = pTrav->usWidth;
 
   sTotalBoxWidth = sWidthA + sWidthB;

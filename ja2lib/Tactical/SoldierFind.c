@@ -505,7 +505,7 @@ void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
     return;
   }
 
-  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->pETRLEObject[
+  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->subimages[
   // pSoldier->usAniFrame ] ); usHeight				= (UINT32)pTrav->usHeight; usWidth
   // = (UINT32)pTrav->usWidth;
 
@@ -572,7 +572,7 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
 
   FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->pETRLEObject[
+  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->subimages[
   // pSoldier->usAniFrame ] );
 
   sMercScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
