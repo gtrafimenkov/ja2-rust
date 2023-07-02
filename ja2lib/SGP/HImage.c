@@ -233,12 +233,6 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
   return (TRUE);
 }
 
-BOOLEAN Extract8BPPCompressedImageToBuffer(struct Image *hImage, BYTE *pDestBuf) { return (FALSE); }
-
-BOOLEAN Extract16BPPCompressedImageToBuffer(struct Image *hImage, BYTE *pDestBuf) {
-  return (FALSE);
-}
-
 BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
   UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
