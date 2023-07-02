@@ -38,6 +38,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_laptop.h"
+#include "rust_images.h"
 
 // struct POINT;
 
@@ -2187,7 +2188,7 @@ void RenderInventoryForCharacter(int32_t iId, int32_t iSlot) {
   struct SOLDIERTYPE *pSoldier;
   int16_t sIndex;
   struct VObject *hHandle;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INVTYPE *pItem;
   int16_t PosX, PosY, sCenX, sCenY;
   uint32_t usHeight, usWidth;

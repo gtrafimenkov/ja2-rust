@@ -5,11 +5,11 @@
 
 #include "SGP/Debug.h"
 #include "SGP/HImage.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "rust_images.h"
 
 // since some of the code is not complied on Linux
 #ifdef __GCC

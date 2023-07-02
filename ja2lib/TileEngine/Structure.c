@@ -25,6 +25,7 @@
 #include "TileEngine/WorldMan.h"
 #include "Utils/FontControl.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 // Kris:
 #ifdef JA2EDITOR

@@ -7,14 +7,15 @@
 #include "SGP/Debug.h"
 #include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/STCI.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/WCheck.h"
 #include "StrUtils.h"
 #include "platform_strings.h"
+#include "rust_alloc.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 // This is the color substituted to keep a 24bpp -> 16bpp color
 // from going transparent (0x0000) -- DB
@@ -114,14 +115,46 @@ BOOLEAN DestroyImage(struct Image *hImage) {
   return (TRUE);
 }
 
+void FreeImageData(struct Image *image) {
+  if (image->imageDataAllocatedInRust) {
+    RustDealloc((uint8_t *)image->pImageData);
+  } else {
+    MemFree(image->pImageData);
+  }
+  image->pImageData = NULL;
+}
+
+void FreeImagePalette(struct Image *image) {
+  if (image->paletteAllocatedInRust) {
+    RustDealloc((uint8_t *)image->pPalette);
+  } else {
+    MemFree(image->pPalette);
+  }
+  image->pPalette = NULL;
+}
+
+void FreeImageSubimages(struct Image *image) {
+  if (image->usNumberOfObjects > 0) {
+    RustDealloc((uint8_t *)image->pETRLEObject);
+  }
+}
+
+void FreeImageAppData(struct Image *image) {
+  if (image->fFlags & IMAGE_APPDATA) {
+    if (image->pAppData != NULL) {
+      RustDealloc(image->pAppData);
+      image->fFlags &= (~IMAGE_APPDATA);
+    }
+  }
+}
+
 BOOLEAN ReleaseImageData(struct Image *hImage) {
   Assert(hImage != NULL);
 
   if (hImage->fFlags & IMAGE_PALETTE) {
     // Destroy palette
     if (hImage->pPalette != NULL) {
-      MemFree(hImage->pPalette);
-      hImage->pPalette = NULL;
+      FreeImagePalette(hImage);
     }
 
     if (hImage->pui16BPPPalette != NULL) {
@@ -136,21 +169,15 @@ BOOLEAN ReleaseImageData(struct Image *hImage) {
   if (hImage->fFlags & IMAGE_BITMAPDATA) {
     // Destroy image data
     Assert(hImage->pImageData != NULL);
-    MemFree(hImage->pImageData);
+    FreeImageData(hImage);
     hImage->pImageData = NULL;
-    if (hImage->usNumberOfObjects > 0) {
-      MemFree(hImage->pETRLEObject);
-    }
+    FreeImageSubimages(hImage);
     // Remove contents flag
     hImage->fFlags = hImage->fFlags ^ IMAGE_BITMAPDATA;
   }
 
   if (hImage->fFlags & IMAGE_APPDATA) {
-    // get rid of the APP DATA
-    if (hImage->pAppData != NULL) {
-      MemFree(hImage->pAppData);
-      hImage->fFlags &= (~IMAGE_APPDATA);
-    }
+    FreeImageAppData(hImage);
   }
 
   return (TRUE);
@@ -587,7 +614,7 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
     pPalEntry->peRed = *(pOldPalette + (Index * 3));
     pPalEntry->peGreen = *(pOldPalette + (Index * 3) + 1);
     pPalEntry->peBlue = *(pOldPalette + (Index * 3) + 2);
-    pPalEntry->peFlags = 0;
+    pPalEntry->_unused = 0;
     pPalEntry++;
   }
   return pInitEntry;
@@ -602,14 +629,15 @@ BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
   pBuffer->usNumberOfObjects = hImage->usNumberOfObjects;
 
   // Create buffer for objects
-  pBuffer->pETRLEObject = (ETRLEObject *)MemAlloc(sizeof(ETRLEObject) * pBuffer->usNumberOfObjects);
+  pBuffer->pETRLEObject =
+      (struct ETRLEObject *)MemAlloc(sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
   if (!(pBuffer->pETRLEObject != NULL)) {
     return FALSE;
   }
 
   // Copy into buffer
   memcpy(pBuffer->pETRLEObject, hImage->pETRLEObject,
-         sizeof(ETRLEObject) * pBuffer->usNumberOfObjects);
+         sizeof(struct ETRLEObject) * pBuffer->usNumberOfObjects);
 
   // Allocate memory for pixel data
   pBuffer->pPixData = MemAlloc(hImage->uiSizePixData);

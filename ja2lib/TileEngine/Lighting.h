@@ -2,8 +2,8 @@
 #define _LIGHTING_H_
 
 #include "SGP/HImage.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Types.h"
+#include "rust_images.h"
 
 struct SOLDIERTYPE;
 struct VObject;

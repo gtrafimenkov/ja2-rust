@@ -7,7 +7,6 @@
 #include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
@@ -23,6 +22,7 @@
 #include "platform_callbacks.h"
 #include "platform_strings.h"
 #include "rust_debug.h"
+#include "rust_images.h"
 
 #define INITGUID
 #include <ddraw.h>
@@ -964,7 +964,7 @@ void printFramebuffer() {
       // ATE: OK, fix this such that it converts pixel format to 5/5/5
       // if current settings are 5/6/5....
       // Read into a buffer...
-      memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2);
+      memcpy(p16BPPData, (((uint8_t *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2);
 
       // Convert....
       ConvertRGBDistribution565To555(p16BPPData, 640);
@@ -1374,13 +1374,11 @@ ENDOFLOOP:
 
 static BOOLEAN GetRGBDistribution(void) {
   DDSURFACEDESC SurfaceDescription;
-  uint16_t usBit;
-  HRESULT ReturnCode;
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
   SurfaceDescription.dwFlags = DDSD_PIXELFORMAT;
-  ReturnCode = IDirectDrawSurface2_GetSurfaceDesc(gpPrimarySurface, &SurfaceDescription);
+  HRESULT ReturnCode = IDirectDrawSurface2_GetSurfaceDesc(gpPrimarySurface, &SurfaceDescription);
   if (ReturnCode != DD_OK) {
     return FALSE;
   }
@@ -1688,9 +1686,9 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
     hVSurface->pPalette = pDDPalette;
 
     // Create 16-BPP Palette
-    struct SGPPaletteEntry SGPPalette[256];
-    DDGetPaletteEntries(pDDPalette, 0, 0, 256, (LPPALETTEENTRY)SGPPalette);
-    hVSurface->p16BPPPalette = Create16BPPPalette(SGPPalette);
+    struct SGPPaletteEntry palette[256];
+    DDGetPaletteEntries(pDDPalette, 0, 0, 256, (LPPALETTEENTRY)palette);
+    hVSurface->p16BPPPalette = Create16BPPPalette(palette);
   } else {
     hVSurface->pPalette = NULL;
     hVSurface->p16BPPPalette = NULL;

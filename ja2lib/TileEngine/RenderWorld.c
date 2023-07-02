@@ -50,6 +50,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
+#include "rust_images.h"
 
 #ifdef __GCC
 // since some of the code is not complied on Linux
@@ -633,7 +634,7 @@ void RenderTiles(uint32_t uiFlags, int32_t iStartPointX_M, int32_t iStartPointY_
   struct LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
   struct SOLDIERTYPE *pSoldier, *pSelSoldier;
   struct VObject *hVObject;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   TILE_ELEMENT *TileElem = NULL;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf = NULL;
@@ -3482,7 +3483,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(uint16_t *pBuffer, uint32_t uiDest
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -3871,7 +3872,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -4265,7 +4266,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(uint16_t *pBuffer, uint32_t
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -4672,7 +4673,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -5122,7 +5123,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(
   uint32_t usHeight, usWidth, Unblitted;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   int32_t ClipX1, ClipY1, ClipX2, ClipY2;
   uint16_t usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -6104,7 +6105,7 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(uint16_t *pBuffer, uint32_t uiDestP
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr, *DestPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY;
 
   // Assertions
@@ -6232,7 +6233,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(uint16_t *pBuffer, uint32_t uiDestPitc
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr, *DestPtr, *ZPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY;
 
   // Assertions
@@ -6346,7 +6347,7 @@ BOOLEAN IsTileRedundent(uint16_t *pZBuffer, uint16_t usZValue, struct VObject *h
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr, *ZPtr;
   uint32_t LineSkip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   int32_t iTempX, iTempY;
   BOOLEAN fHidden = TRUE;
 

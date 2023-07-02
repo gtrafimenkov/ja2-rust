@@ -23,6 +23,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 // ATE: Added to let Wiz default creating mouse regions with no cursor, JA2 default to a cursor (
 // first one )
@@ -162,7 +163,7 @@ int32_t FindFreeButtonSlot(void) {
 int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
                         int32_t OnNormal, int32_t OnHilite) {
   uint32_t UseSlot;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   AssertMsg(filename != BUTTON_NO_FILENAME, "Attempting to LoadButtonImage() with null filename.");
@@ -262,7 +263,7 @@ int32_t LoadButtonImage(char *filename, int32_t Grayed, int32_t OffNormal, int32
 int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNormal,
                              int32_t OffHilite, int32_t OnNormal, int32_t OnHilite) {
   uint32_t UseSlot;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   // Is button image index given valid?
@@ -378,7 +379,7 @@ int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNorma
 int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t OffNormal,
                              int32_t OffHilite, int32_t OnNormal, int32_t OnHilite) {
   uint32_t UseSlot;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   uint32_t MaxHeight, MaxWidth, ThisHeight, ThisWidth;
 
   // Is button image index given valid?
@@ -2744,7 +2745,7 @@ void DrawIconOnButton(GUI_BUTTON *b) {
   int32_t xp, yp, width, height, IconX, IconY;
   int32_t IconW, IconH;
   SGPRect NewClip, OldClip;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hvObject;
 
   // If there's an actual icon on this button, try to show it.
@@ -2989,7 +2990,7 @@ static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, int32_t iDestX1,
                                          struct VObject *BkgrndImg, uint16_t Index, int16_t Ox,
                                          int16_t Oy) {
   int16_t xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   SGPRect NewClip, OldClip;
 
   pTrav = &(BkgrndImg->pETRLEObject[Index]);
