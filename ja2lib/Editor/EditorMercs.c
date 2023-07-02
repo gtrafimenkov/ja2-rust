@@ -2723,9 +2723,9 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   pObject = &hVObject->subimages[item->ubGraphicNum];
   iSrcWidth = pObject->usWidth;
   iSrcHeight = pObject->usHeight;
-  SrcRect.iLeft += pObject->sOffsetX;
+  SrcRect.iLeft += pObject->x_offset;
   SrcRect.iRight = SrcRect.iLeft + iSrcWidth;
-  SrcRect.iTop += pObject->sOffsetY;
+  SrcRect.iTop += pObject->y_offset;
   SrcRect.iBottom = SrcRect.iTop + iSrcHeight;
 
   // if the source image width is less than 30 (small slot), then modify the DstRect.

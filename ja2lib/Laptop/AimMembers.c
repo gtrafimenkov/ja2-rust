@@ -1258,8 +1258,8 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
       usHeight = (UINT32)pTrav->usHeight;
       usWidth = (UINT32)pTrav->usWidth;
 
-      sCenX = PosX + (abs((INT32)((INT32)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->sOffsetX;
-      sCenY = PosY + (abs((INT32)((INT32)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->sOffsetY;
+      sCenX = PosX + (abs((INT32)((INT32)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->x_offset;
+      sCenY = PosY + (abs((INT32)((INT32)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->y_offset;
 
       // blt the shadow of the item
       BltVideoObjectOutlineShadowFromIndex(vsFB, GetInterfaceGraphicForItem(pItem),

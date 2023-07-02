@@ -421,8 +421,8 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
   usWidth = (UINT32)pTrav->usWidth;
 
   // Add to start position of dest buffer
-  sScreenX += (pTrav->sOffsetX - (WORLD_TILE_X / 2));
-  sScreenY += (pTrav->sOffsetY - (WORLD_TILE_Y / 2));
+  sScreenX += (pTrav->x_offset - (WORLD_TILE_X / 2));
+  sScreenY += (pTrav->y_offset - (WORLD_TILE_Y / 2));
 
   // Adjust y offset!
   sScreenY += (WORLD_TILE_Y / 2);

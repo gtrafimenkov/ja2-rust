@@ -29,8 +29,8 @@ struct SGPPaletteEntry {
 struct Subimage {
   uint32_t data_offset;
   uint32_t data_length;
-  int16_t sOffsetX;
-  int16_t sOffsetY;
+  int16_t x_offset;
+  int16_t y_offset;
   uint16_t usHeight;
   uint16_t usWidth;
 };

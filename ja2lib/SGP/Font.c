@@ -338,7 +338,7 @@ UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[ssIndex]);
-  return ((UINT32)(pTrav->usWidth + pTrav->sOffsetX));
+  return ((UINT32)(pTrav->usWidth + pTrav->x_offset));
 }
 
 //*****************************************************************************
@@ -534,7 +534,7 @@ UINT32 GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[ssIndex]);
-  return ((UINT32)(pTrav->usHeight + pTrav->sOffsetY));
+  return ((UINT32)(pTrav->usHeight + pTrav->y_offset));
 }
 
 //*****************************************************************************

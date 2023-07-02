@@ -26,8 +26,8 @@ pub struct SGPPaletteEntry {
 pub struct Subimage {
     data_offset: u32,
     data_length: u32,
-    sOffsetX: i16,
-    sOffsetY: i16,
+    x_offset: i16,
+    y_offset: i16,
     usHeight: u16,
     usWidth: u16,
 }
@@ -295,8 +295,8 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                     let subimage = Subimage {
                         data_offset: reader.read_u32::<LittleEndian>()?,
                         data_length: reader.read_u32::<LittleEndian>()?,
-                        sOffsetX: reader.read_i16::<LittleEndian>()?,
-                        sOffsetY: reader.read_i16::<LittleEndian>()?,
+                        x_offset: reader.read_i16::<LittleEndian>()?,
+                        y_offset: reader.read_i16::<LittleEndian>()?,
                         usHeight: reader.read_u16::<LittleEndian>()?,
                         usWidth: reader.read_u16::<LittleEndian>()?,
                     };
@@ -353,14 +353,14 @@ mod tests {
             let subimage0 = &img.subimages.as_ref().unwrap()[0];
             let subimage4 = &img.subimages.as_ref().unwrap()[4];
             assert_eq!(5, img.subimages.as_ref().unwrap().len());
-            assert_eq!(0, subimage0.sOffsetX);
-            assert_eq!(0, subimage0.sOffsetY);
+            assert_eq!(0, subimage0.x_offset);
+            assert_eq!(0, subimage0.y_offset);
             assert_eq!(30, subimage0.usHeight);
             assert_eq!(30, subimage0.usWidth);
             assert_eq!(0, subimage0.data_offset);
             assert_eq!(960, subimage0.data_length);
-            assert_eq!(0, subimage4.sOffsetX);
-            assert_eq!(0, subimage4.sOffsetY);
+            assert_eq!(0, subimage4.x_offset);
+            assert_eq!(0, subimage4.y_offset);
             assert_eq!(30, subimage4.usHeight);
             assert_eq!(30, subimage4.usWidth);
             assert_eq!(3840, subimage4.data_offset);

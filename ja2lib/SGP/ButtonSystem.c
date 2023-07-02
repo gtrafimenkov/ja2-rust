@@ -202,8 +202,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
   MaxWidth = MaxHeight = 0;
   if (Grayed != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[Grayed]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -211,8 +211,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OffNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OffNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -220,8 +220,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OffHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OffHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -229,8 +229,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OnNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OnNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -238,8 +238,8 @@ INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHil
 
   if (OnHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OnHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -313,8 +313,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
   MaxWidth = MaxHeight = 0;
   if (Grayed != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[Grayed]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -322,8 +322,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OffNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OffNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -331,8 +331,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OffHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OffHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -340,8 +340,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OnNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OnNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -349,8 +349,8 @@ INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32
 
   if (OnHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OnHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -418,8 +418,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
   MaxWidth = MaxHeight = 0;
   if (Grayed != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[Grayed]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -427,8 +427,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OffNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OffNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -436,8 +436,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OffHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OffHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -445,8 +445,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OnNormal != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OnNormal]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -454,8 +454,8 @@ INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNorm
 
   if (OnHilite != BUTTON_NO_IMAGE) {
     pTrav = &(ButtonPictures[UseSlot].vobj->subimages[OnHilite]);
-    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    ThisHeight = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    ThisWidth = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     if (MaxWidth < ThisWidth) MaxWidth = ThisWidth;
     if (MaxHeight < ThisHeight) MaxHeight = ThisHeight;
@@ -2793,8 +2793,8 @@ void DrawIconOnButton(GUI_BUTTON *b) {
       GetVideoObject(&hvObject, b->iIconID);
       pTrav = &(hvObject->subimages[b->usIconIndex]);
     }
-    IconH = (UINT32)(pTrav->usHeight + pTrav->sOffsetY);
-    IconW = (UINT32)(pTrav->usWidth + pTrav->sOffsetX);
+    IconH = (UINT32)(pTrav->usHeight + pTrav->y_offset);
+    IconW = (UINT32)(pTrav->usWidth + pTrav->x_offset);
 
     // Compute coordinates for centering the icon on the button or
     // use the offset system.
@@ -2988,8 +2988,8 @@ static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, INT32 iDestX1, I
   SGPRect NewClip, OldClip;
 
   pTrav = &(BkgrndImg->subimages[Index]);
-  ph = (INT16)(pTrav->usHeight + pTrav->sOffsetY);
-  pw = (INT16)(pTrav->usWidth + pTrav->sOffsetX);
+  ph = (INT16)(pTrav->usHeight + pTrav->y_offset);
+  pw = (INT16)(pTrav->usWidth + pTrav->x_offset);
 
   ah = (INT16)(iDestY2 - iDestY1);
   aw = (INT16)(iDestX2 - iDestX1);

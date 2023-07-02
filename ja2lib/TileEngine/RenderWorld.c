@@ -1535,8 +1535,8 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 if (fTileInvisible) {
                 } else if (uiLevelNodeFlags & LEVELNODE_DISPLAY_AP && !(uiFlags & TILES_DIRTY)) {
                   pTrav = &(hVObject->subimages[usImageIndex]);
-                  sXPos += pTrav->sOffsetX;
-                  sYPos += pTrav->sOffsetY;
+                  sXPos += pTrav->x_offset;
+                  sYPos += pTrav->y_offset;
 
                   if (gfUIDisplayActionPointsInvalid) {
                     SetFontBackground(FONT_MCOLOR_BLACK);
@@ -1673,8 +1673,8 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                     pTrav = &(hVObject->subimages[usImageIndex]);
                     uiBrushHeight = (UINT32)pTrav->usHeight;
                     uiBrushWidth = (UINT32)pTrav->usWidth;
-                    sXPos += pTrav->sOffsetX;
-                    sYPos += pTrav->sOffsetY;
+                    sXPos += pTrav->x_offset;
+                    sYPos += pTrav->y_offset;
 
                     RegisterBackgroundRect(
                         uiDirtyFlags, NULL, sXPos, sYPos, (INT16)(sXPos + uiBrushWidth),
@@ -3494,8 +3494,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -3881,8 +3881,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -4273,8 +4273,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -4678,8 +4678,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -5128,8 +5128,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -6102,8 +6102,8 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -6230,8 +6230,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -6344,8 +6344,8 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {

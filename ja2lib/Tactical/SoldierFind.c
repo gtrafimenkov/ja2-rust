@@ -587,8 +587,8 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
   sMercScreenY += gsRenderHeight;
 
   // Add to start position of dest buffer
-  // sMercScreenX += pTrav->sOffsetX;
-  // sMercScreenY += pTrav->sOffsetY;
+  // sMercScreenX += pTrav->x_offset;
+  // sMercScreenY += pTrav->y_offset;
   sMercScreenX += pSoldier->sBoundingBoxOffsetX;
   sMercScreenY += pSoldier->sBoundingBoxOffsetY;
 

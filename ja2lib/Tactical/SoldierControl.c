@@ -8029,8 +8029,8 @@ void GetActualSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, INT16 *sOffsetX, 
 
   pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->subimages[pSoldier->usAniFrame]);
 
-  *sOffsetX = (INT16)pTrav->sOffsetX;
-  *sOffsetY = (INT16)pTrav->sOffsetY;
+  *sOffsetX = (INT16)pTrav->x_offset;
+  *sOffsetY = (INT16)pTrav->y_offset;
 }
 
 void SetSoldierLocatorOffsets(struct SOLDIERTYPE *pSoldier) {

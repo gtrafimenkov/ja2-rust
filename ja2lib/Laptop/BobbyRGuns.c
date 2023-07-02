@@ -807,7 +807,7 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   usWidth = (UINT32)pTrav->usWidth;
   //	sCenX = PosX + ( abs( BOBBYR_GRID_PIC_WIDTH - usWidth ) / 2 );
   //	sCenY = PosY + 8;
-  sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
+  sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->x_offset;
   sCenY = PosY + 8;
 
   // blt the shadow of the item

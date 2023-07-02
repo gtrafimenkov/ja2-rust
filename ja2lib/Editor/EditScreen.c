@@ -917,20 +917,20 @@ void ShowCurrentDrawingMode(void) {
     iStartY = (60 - iPicHeight) / 2;
 
     // We have to store the offset data in temp variables before zeroing them and blitting
-    sTempOffsetX = subimages->sOffsetX;
-    sTempOffsetY = subimages->sOffsetY;
+    sTempOffsetX = subimages->x_offset;
+    sTempOffsetY = subimages->y_offset;
 
     // Set the offsets used for blitting to 0
-    subimages->sOffsetX = 0;
-    subimages->sOffsetY = 0;
+    subimages->x_offset = 0;
+    subimages->y_offset = 0;
 
     SetObjectShade(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
                    DEFAULT_SHADE_LEVEL);
     BltVObject(vsFB, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface, usUseIndex,
                (0 + iStartX), (400 + iStartY));
 
-    subimages->sOffsetX = sTempOffsetX;
-    subimages->sOffsetY = sTempOffsetY;
+    subimages->x_offset = sTempOffsetX;
+    subimages->y_offset = sTempOffsetY;
   }
 
   // Set the color for the window's border. Blueish color = Normal, Red = Fake lighting is turned on
@@ -2465,18 +2465,18 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
   iStartY = ((iWinHeight - iPicHeight) / 2) + NewRect.iTop;
 
   // We have to store the offset data in temp variables before zeroing them and blitting
-  sTempOffsetX = subimages->sOffsetX;
-  sTempOffsetY = subimages->sOffsetY;
+  sTempOffsetX = subimages->x_offset;
+  sTempOffsetY = subimages->y_offset;
 
   // Set the offsets used for blitting to 0
-  subimages->sOffsetX = 0;
-  subimages->sOffsetY = 0;
+  subimages->x_offset = 0;
+  subimages->y_offset = 0;
 
   SetObjectShade(hVObj, DEFAULT_SHADE_LEVEL);
   BltVObject(vsFB, hVObj, 0, (iStartX), (iStartY));
 
-  subimages->sOffsetX = sTempOffsetX;
-  subimages->sOffsetY = sTempOffsetY;
+  subimages->x_offset = sTempOffsetX;
+  subimages->y_offset = sTempOffsetY;
 
   SetClippingRect(&ClipRect);
 }

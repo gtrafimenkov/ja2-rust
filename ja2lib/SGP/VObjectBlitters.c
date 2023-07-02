@@ -66,8 +66,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipTranslucent(UINT16 *pBuffer, UINT32 
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -325,8 +325,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTranslucent(UINT16 *pBuffer, UINT32 uiDest
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -459,8 +459,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBTranslucent(UINT16 *pBuffer, UINT32 uiDe
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -588,8 +588,8 @@ BOOLEAN Blt8BPPDataTo8BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitch
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -888,8 +888,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadowClip(UINT16 *pBuffer, UINT32 uiDestPit
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -1357,8 +1357,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelate(UINT16 *pBuffer, UINT32 uiDestPit
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -1496,8 +1496,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelateObscured(UINT16 *pBuffer, UINT32 u
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -1650,8 +1650,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBPixelate(UINT16 *pBuffer, UINT32 uiDestP
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -1791,8 +1791,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClipPixelate(UINT16 *pBuffer, UINT32 uiD
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -2055,8 +2055,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -2180,8 +2180,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -2303,8 +2303,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadow(UINT16 *pBuffer, UINT32 uiDestPitchB
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -2423,8 +2423,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZ(UINT16 *pBuffer, UINT32 uiDestPitch
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -2554,8 +2554,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNB(UINT16 *pBuffer, UINT32 uiDestPit
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -2688,8 +2688,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscured(UINT16 *pBuffer, UINT32 u
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -2848,8 +2848,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZClip(UINT16 *pBuffer, UINT32 uiDestP
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -3108,8 +3108,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowClip(UINT16 *pBuffer, UINT32 uiDestPi
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -3356,8 +3356,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBClip(UINT16 *pBuffer, UINT32 uiDes
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -3619,8 +3619,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowZNBObscuredClip(UINT16 *pBuffer, UINT
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -3904,8 +3904,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransShadowBelowOrEqualZNBClip(
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -4161,8 +4161,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -4283,8 +4283,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -4532,8 +4532,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNB(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -4652,8 +4652,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowZNBClip(UINT16 *pBuffer, UINT32 uiDestPitc
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -4901,8 +4901,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -5153,8 +5153,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZNBClip(UINT16 *pBuffer, UINT32 uiDestPitch
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -5844,8 +5844,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMask(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   uiMOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -6127,8 +6127,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -6278,8 +6278,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitchB
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -6429,8 +6429,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransparentClip(UINT16 *pBuffer, UINT32 uiDestPi
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -6707,8 +6707,8 @@ BOOLEAN BltIsClipped(struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usI
   usWidth = (UINT32)pTrav->usWidth;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -6765,8 +6765,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadowClip(UINT16 *pBuffer, UINT32 uiDestPitchBY
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -7186,8 +7186,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferMonoShadow(UINT16 *pBuffer, UINT32 uiDestPitchBY
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -7394,8 +7394,8 @@ CHAR8 BltIsClippedOrOffScreen(struct VObject *hSrcVObject, INT32 iX, INT32 iY, U
   usWidth = (UINT32)pTrav->usWidth;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -7459,8 +7459,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutline(UINT16 *pBuffer, UINT32 uiDestPitchBYTES
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -7577,8 +7577,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineClip(UINT16 *pBuffer, UINT32 uiDestPitchB
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -7821,8 +7821,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZClip(UINT16 *pBuffer, UINT32 uiDestPitch
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -8083,8 +8083,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscuredClip(
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -8368,8 +8368,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadow(UINT16 *pBuffer, UINT32 uiDestPitc
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -8473,8 +8473,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineShadowClip(UINT16 *pBuffer, UINT32 uiDest
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -8750,8 +8750,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZ(UINT16 *pBuffer, UINT32 uiDestPitchBYTE
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -8886,8 +8886,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZPixelateObscured(UINT16 *pBuffer, UINT32
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -9044,8 +9044,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferOutlineZNB(UINT16 *pBuffer, UINT32 uiDestPitchBY
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -9186,8 +9186,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZ(UINT16 *pBuffer, UINT32 uiDestPitchBY
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -9308,8 +9308,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZClip(UINT16 *pBuffer, UINT32 uiDestPit
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -9557,8 +9557,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityZNB(UINT16 *pBuffer, UINT32 uiDestPitch
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -9674,8 +9674,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensityClip(UINT16 *pBuffer, UINT32 uiDestPitc
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -9951,8 +9951,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferIntensity(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -10109,8 +10109,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZClipPixelateObscured(UINT16 *pBuffer, UINT
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;

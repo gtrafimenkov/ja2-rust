@@ -1711,8 +1711,8 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
 
     // CENTER IN SLOT!
     // CANCEL OFFSETS!
-    sCenX = sX + (abs((INT16)(sWidth - usWidth)) / 2) - pTrav->sOffsetX;
-    sCenY = sY + (abs((INT16)(sHeight - usHeight)) / 2) - pTrav->sOffsetY;
+    sCenX = sX + (abs((INT16)(sWidth - usWidth)) / 2) - pTrav->x_offset;
+    sCenY = sY + (abs((INT16)(sHeight - usHeight)) / 2) - pTrav->y_offset;
 
     // Shadow area
     BltVideoObjectOutlineShadowFromIndex(dest, GetInterfaceGraphicForItem(pItem),
@@ -2593,9 +2593,9 @@ void RenderItemDescriptionBox() {
     // CENTER IN SLOT!
     // REMOVE OFFSETS!
     sCenX =
-        MAP_ITEMDESC_ITEM_X + (abs((INT16)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
+        MAP_ITEMDESC_ITEM_X + (abs((INT16)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->x_offset;
     sCenY =
-        MAP_ITEMDESC_ITEM_Y + (abs((INT16)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->sOffsetY;
+        MAP_ITEMDESC_ITEM_Y + (abs((INT16)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->y_offset;
 
     BltVObjectFromIndex(vsSB, guiMapItemDescBox, 0, gsInvDescX, gsInvDescY);
 
@@ -3101,8 +3101,8 @@ void RenderItemDescriptionBox() {
     usWidth = (UINT32)pTrav->usWidth;
 
     // CENTER IN SLOT!
-    sCenX = ITEMDESC_ITEM_X + (abs((INT16)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
-    sCenY = ITEMDESC_ITEM_Y + (abs((INT16)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->sOffsetY;
+    sCenX = ITEMDESC_ITEM_X + (abs((INT16)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->x_offset;
+    sCenY = ITEMDESC_ITEM_Y + (abs((INT16)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->y_offset;
 
     BltVObjectFromIndex(vsSB, guiItemDescBox, 0, gsInvDescX, gsInvDescY);
 

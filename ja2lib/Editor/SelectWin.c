@@ -1449,12 +1449,12 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
     subimages = &(pNode->hObj->subimages[pNode->uiIndex]);
 
     // We have to store the offset data in temp variables before zeroing them and blitting
-    sTempOffsetX = subimages->sOffsetX;
-    sTempOffsetY = subimages->sOffsetY;
+    sTempOffsetX = subimages->x_offset;
+    sTempOffsetY = subimages->y_offset;
 
     // Set the offsets used for blitting to 0
-    subimages->sOffsetX = 0;
-    subimages->sOffsetY = 0;
+    subimages->x_offset = 0;
+    subimages->y_offset = 0;
 
     if (fFlags & CLEAR_BACKGROUND) {
       usFillColor = SelWinFillColor;
@@ -1474,8 +1474,8 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
       gprintf(pNode->iX, iCurrY, L"%d", sCount);
     }
 
-    subimages->sOffsetX = sTempOffsetX;
-    subimages->sOffsetY = sTempOffsetY;
+    subimages->x_offset = sTempOffsetX;
+    subimages->y_offset = sTempOffsetY;
   }
 
   return (fReturnVal);

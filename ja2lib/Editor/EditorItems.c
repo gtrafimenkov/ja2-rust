@@ -329,7 +329,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
 
       // Calculate the center position of the graphic in a 60 pixel wide area.
       sWidth = hVObject->subimages[item->ubGraphicNum].usWidth;
-      sOffset = hVObject->subimages[item->ubGraphicNum].sOffsetX;
+      sOffset = hVObject->subimages[item->ubGraphicNum].x_offset;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
 
       BltVideoObjectOutlineFromIndex(GetVSByID(eInfo.uiBuffer), uiVideoObjectIndex,
@@ -443,7 +443,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
 
           // Calculate the center position of the graphic in a 60 pixel wide area.
           sWidth = hVObject->subimages[item->ubGraphicNum].usWidth;
-          sOffset = hVObject->subimages[item->ubGraphicNum].sOffsetX;
+          sOffset = hVObject->subimages[item->ubGraphicNum].x_offset;
           sStart = x + (60 - sWidth - sOffset * 2) / 2;
 
           if (sWidth) {
@@ -524,7 +524,7 @@ void RenderEditorItemsInfo() {
       x = (eInfo.sHilitedItemIndex / 2 - eInfo.sScrollIndex) * 60 + 110;
       y = 360 + (eInfo.sHilitedItemIndex % 2) * 40;
       sWidth = hVObject->subimages[item->ubGraphicNum].usWidth;
-      sOffset = hVObject->subimages[item->ubGraphicNum].sOffsetX;
+      sOffset = hVObject->subimages[item->ubGraphicNum].x_offset;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
       if (sWidth) {
         BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, item->ubGraphicNum, sStart, y + 2,
@@ -541,7 +541,7 @@ void RenderEditorItemsInfo() {
       x = (eInfo.sSelItemIndex / 2 - eInfo.sScrollIndex) * 60 + 110;
       y = 360 + (eInfo.sSelItemIndex % 2) * 40;
       sWidth = hVObject->subimages[item->ubGraphicNum].usWidth;
-      sOffset = hVObject->subimages[item->ubGraphicNum].sOffsetX;
+      sOffset = hVObject->subimages[item->ubGraphicNum].x_offset;
       sStart = x + (60 - sWidth - sOffset * 2) / 2;
       if (sWidth) {
         BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, item->ubGraphicNum, sStart, y + 2,
