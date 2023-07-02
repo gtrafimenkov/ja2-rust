@@ -43,7 +43,6 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
   hImage->usWidth = pPcxObject->usWidth;
   hImage->usHeight = pPcxObject->usHeight;
   hImage->ubBitDepth = 8;
-  hImage->fFlags = hImage->fFlags | IMAGE_ALLIMAGEDATA;
 
   // Read and allocate bitmap block if requested
   {

@@ -74,16 +74,30 @@ struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
   }
 }
 
-BOOLEAN DestroyImage(struct Image *hImage) {
-  Assert(hImage != NULL);
+void DestroyImage(struct Image *image) {
+  if (!image) {
+    return;
+  }
 
-  // First delete contents
-  ReleaseImageData(hImage);
+  if (image->pPalette != NULL) {
+    if (image->paletteAllocatedInRust) {
+      RustDealloc((uint8_t *)image->pPalette);
+    } else {
+      MemFree(image->pPalette);
+    }
+    image->pPalette = NULL;
+  }
 
-  // Now free structure
-  MemFree(hImage);
+  if (image->pui16BPPPalette != NULL) {
+    MemFree(image->pui16BPPPalette);
+    image->pui16BPPPalette = NULL;
+  }
 
-  return (TRUE);
+  FreeImageData(image);
+  FreeImageSubimages(image);
+  RustDealloc(image->pAppData);
+
+  MemFree(image);
 }
 
 void FreeImageData(struct Image *image) {
@@ -95,39 +109,10 @@ void FreeImageData(struct Image *image) {
   image->pImageData = NULL;
 }
 
-void FreeImagePalette(struct Image *image) {
-  if (image->paletteAllocatedInRust) {
-    RustDealloc((uint8_t *)image->pPalette);
-  } else {
-    MemFree(image->pPalette);
-  }
-  image->pPalette = NULL;
-}
-
 void FreeImageSubimages(struct Image *image) {
   if (image->usNumberOfObjects > 0) {
     RustDealloc((uint8_t *)image->subimages);
   }
-}
-
-BOOLEAN ReleaseImageData(struct Image *hImage) {
-  Assert(hImage != NULL);
-
-  if (hImage->pPalette != NULL) {
-    FreeImagePalette(hImage);
-  }
-
-  if (hImage->pui16BPPPalette != NULL) {
-    MemFree(hImage->pui16BPPPalette);
-    hImage->pui16BPPPalette = NULL;
-  }
-
-  FreeImageData(hImage);
-  FreeImageSubimages(hImage);
-
-  RustDealloc(hImage->pAppData);
-
-  return (TRUE);
 }
 
 BOOLEAN CopyImageToBuffer(struct Image *hImage, UINT32 fBufferType, BYTE *pDestBuf,

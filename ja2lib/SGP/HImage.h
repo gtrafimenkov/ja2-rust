@@ -26,9 +26,6 @@ struct Subimage;
 #define BUFFER_8BPP 0x1
 #define BUFFER_16BPP 0x2
 
-// Defines for image charactoristics
-#define IMAGE_ALLIMAGEDATA 0x000C
-
 // Palette structure, mimics that of Win32
 struct SGPPaletteEntry;
 
@@ -91,7 +88,7 @@ struct Image {
 struct Image *CreateImage(const char *ImageFile, bool loadAppData);
 
 // This function destroys the struct Image* structure as well as its contents
-BOOLEAN DestroyImage(struct Image *hImage);
+void DestroyImage(struct Image *hImage);
 
 BOOLEAN ReleaseImageData(struct Image *hImage);
 
@@ -129,7 +126,6 @@ extern UINT16 gusAlphaMask;
 void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
 
 void FreeImageData(struct Image *image);
-void FreeImagePalette(struct Image *image);
 void FreeImageSubimages(struct Image *image);
 
 #endif
