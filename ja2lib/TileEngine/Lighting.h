@@ -3,6 +3,7 @@
 
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
+#include "rust_images.h"
 
 struct SOLDIERTYPE;
 struct VObject;
@@ -191,7 +192,6 @@ extern UINT8 ubAmbientLightLevel;
 extern UINT8 gubNumLightColors;
 
 // Lighting colors
-struct SGPPaletteEntry;
 extern UINT8 gubNumLightColors;
 extern struct SGPPaletteEntry gpLightColors[3];
 
