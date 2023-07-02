@@ -31,11 +31,8 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
   }
 
   hImage->subimages = sti.subimages;
-  if (hImage->subimages) {
-    hImage->usNumberOfObjects = sti.number_of_subimages;
-    hImage->fFlags |= IMAGE_TRLECOMPRESSED;
-    hImage->image_data_size = sti.image_data_size;
-  }
+  hImage->usNumberOfObjects = sti.number_of_subimages;
+  hImage->image_data_size = sti.image_data_size;
 
   hImage->pAppData = sti.app_data;
   hImage->uiAppDataSize = sti.app_data_size;

@@ -364,7 +364,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   }
 
   // Check if returned himage is TRLE compressed - return error if not
-  if (!(hImage->fFlags & IMAGE_TRLECOMPRESSED)) {
+  if (!hImage->subimages) {
     MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
     DestroyImage(hImage);
@@ -417,7 +417,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   }
 
   // Check if returned himage is TRLE compressed - return error if not
-  if (!(hImage->fFlags & IMAGE_TRLECOMPRESSED)) {
+  if (!hImage->subimages) {
     MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
     DestroyImage(hImage);
