@@ -289,7 +289,7 @@ void CreateTileDatabase() {
       // Build start index list
       gTileTypeStartIndex[cnt1] = (uint16_t)gTileDatabaseSize;
 
-      NumRegions = TileSurf->vo->usNumberOfObjects;
+      NumRegions = TileSurf->vo->number_of_subimages;
 
       // Check for overflow
       if (NumRegions > gNumTilesPerType[cnt1]) {
@@ -315,7 +315,7 @@ void CreateTileDatabase() {
         // Check for multi-z stuff
         if (TileSurf->vo->ppZStripInfo != NULL) {
           // Only do this if we are within the # of video objects
-          if (cnt2 < TileSurf->vo->usNumberOfObjects) {
+          if (cnt2 < TileSurf->vo->number_of_subimages) {
             if (TileSurf->vo->ppZStripInfo[cnt2] != NULL) {
               TileElement.uiFlags |= MULTI_Z_TILE;
             }

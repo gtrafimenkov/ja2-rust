@@ -1689,20 +1689,20 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
     return (TRUE);
   }
   hVObject->ppZStripInfo =
-      (ZStripInfo **)MemAlloc(sizeof(ZStripInfo *) * hVObject->usNumberOfObjects);
+      (ZStripInfo **)MemAlloc(sizeof(ZStripInfo *) * hVObject->number_of_subimages);
   if (hVObject->ppZStripInfo == NULL) {
     return (FALSE);
   }
-  memset(hVObject->ppZStripInfo, 0, sizeof(ZStripInfo *) * hVObject->usNumberOfObjects);
+  memset(hVObject->ppZStripInfo, 0, sizeof(ZStripInfo *) * hVObject->number_of_subimages);
 
   if (fFromAnimation) {
     // Determine step index for STI
     if (sSTIStartIndex == -1) {
       // one-direction only for this anim structure
-      sSTIStep = hVObject->usNumberOfObjects;
+      sSTIStep = hVObject->number_of_subimages;
       sSTIStartIndex = 0;
     } else {
-      sSTIStep = (hVObject->usNumberOfObjects / pStructureFileRef->usNumberOfStructures);
+      sSTIStep = (hVObject->number_of_subimages / pStructureFileRef->usNumberOfStructures);
     }
   } else {
     sSTIStep = 1;
@@ -1712,7 +1712,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
   sNext = sSTIStartIndex + sSTIStep;
   fFirstTime = TRUE;
 
-  for (uiLoop = (uint8_t)sSTIStartIndex; uiLoop < hVObject->usNumberOfObjects; uiLoop++) {
+  for (uiLoop = (uint8_t)sSTIStartIndex; uiLoop < hVObject->number_of_subimages; uiLoop++) {
     // Defualt to true
     fCopyIntoVo = TRUE;
 

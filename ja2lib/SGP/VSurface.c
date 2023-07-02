@@ -48,7 +48,6 @@ uint32_t guiVSurfaceTotalAdded = 0;
 // BPP
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage,
                                       uint16_t usX, uint16_t usY, SGPRect *pSrcRect) {
-  uint32_t fBufferBPP = 0;
   uint16_t usEffectiveWidth;
   SGPRect aRect;
 
@@ -63,29 +62,6 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   if (!(hImage->usHeight >= hVSurface->usHeight)) {
     return FALSE;
   }
-
-  // Check BPP and see if they are the same
-  if (hImage->ubBitDepth != hVSurface->ubBitDepth) {
-    // They are not the same, but we can go from 8->16 without much cost
-    if (hImage->ubBitDepth == 8 && hVSurface->ubBitDepth == 16) {
-      fBufferBPP = BUFFER_16BPP;
-    }
-  } else {
-    // Set buffer BPP
-    switch (hImage->ubBitDepth) {
-      case 8:
-
-        fBufferBPP = BUFFER_8BPP;
-        break;
-
-      case 16:
-
-        fBufferBPP = BUFFER_16BPP;
-        break;
-    }
-  }
-
-  Assert(fBufferBPP != 0);
 
   // Get surface buffer data
   struct BufferLockInfo lock = VSurfaceLock(hVSurface);
@@ -112,8 +88,8 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   }
 
   // This struct Image* function will transparently copy buffer
-  if (!CopyImageToBuffer(hImage, fBufferBPP, lock.dest, usEffectiveWidth, hVSurface->usHeight, usX,
-                         usY, &aRect)) {
+  if (!CopyImageToBuffer(hImage, hVSurface->ubBitDepth, lock.dest, usEffectiveWidth,
+                         hVSurface->usHeight, usX, usY, &aRect)) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
              String("Error Occured Copying struct Image* to struct VSurface*"));
     VSurfaceUnlock(hVSurface);
@@ -719,7 +695,7 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     tempRect.iBottom = image->usHeight - 1;
     SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
     if (image->ubBitDepth == 8) {
-      SetVideoSurfacePalette(vs, image->pPalette);
+      SetVideoSurfacePalette(vs, image->palette);
     }
     DestroyImage(image);
   }

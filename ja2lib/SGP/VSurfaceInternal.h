@@ -7,7 +7,9 @@
 struct VSurface {
   uint16_t usHeight;   // Height of Video Surface
   uint16_t usWidth;    // Width of Video Surface
-  uint8_t ubBitDepth;  // BPP ALWAYS 16!
+  uint8_t ubBitDepth;  // can only be 8 or 16
+  // when VSurface is created from an image, it will have the bit depth of this image
+  // when an empty VSurface is created, it will have bit depth of 16
 
   // A void pointer, but for this implementation, is really a
   // lpDirectDrawSurface;

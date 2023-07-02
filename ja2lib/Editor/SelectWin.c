@@ -353,7 +353,7 @@ void InitJA2SelectionWindow(void) {
   // Trees & bushes (The tree button in the "terrain" toolbar)
   for (iCount3 = 0, iCount = 0; iCount < (LASTOSTRUCT - FIRSTFULLSTRUCT + 1); iCount++) {
     hVObject = gTileDatabase[gTileTypeStartIndex[FIRSTFULLSTRUCT + iCount]].hTileSurface;
-    usETRLEObjects = hVObject->usNumberOfObjects;
+    usETRLEObjects = hVObject->number_of_subimages;
 
     for (iCount2 = 0; iCount2 < usETRLEObjects; iCount2 += 3, iCount3++) {
       OStructs[iCount3].ubType = DISPLAY_GRAPHIC;
@@ -1370,11 +1370,11 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, uint16_t usNumSpecs,
 
       if (usETRLEStart == DISPLAY_ALL_OBJECTS) {
         usETRLEStart = 0;
-        usETRLEEnd = pDisplaySpec->hVObject->usNumberOfObjects - 1;
+        usETRLEEnd = pDisplaySpec->hVObject->number_of_subimages - 1;
       }
 
       if (usETRLEStart > usETRLEEnd) return FALSE;
-      if (usETRLEEnd >= pDisplaySpec->hVObject->usNumberOfObjects) return FALSE;
+      if (usETRLEEnd >= pDisplaySpec->hVObject->number_of_subimages) return FALSE;
 
       for (usETRLELoop = usETRLEStart; usETRLELoop <= usETRLEEnd; usETRLELoop++) {
         subimages = &(pDisplaySpec->hVObject->subimages[usETRLELoop]);

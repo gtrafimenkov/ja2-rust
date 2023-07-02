@@ -4306,9 +4306,9 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
     }
 
     // Get aux data
-    if (hImage->uiAppDataSize == hVObject->usNumberOfObjects * sizeof(struct AuxObjectData)) {
+    if (hImage->app_data_size == hVObject->number_of_subimages * sizeof(struct AuxObjectData)) {
       // Valid auxiliary data, so get # od frames from data
-      pAuxData = (struct AuxObjectData *)hImage->pAppData;
+      pAuxData = (struct AuxObjectData *)hImage->app_data;
 
       gAnimSurfaceDatabase[usSurfaceIndex].uiNumFramesPerDir = pAuxData->ubNumberOfFrames;
 
@@ -4349,7 +4349,7 @@ BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint
     // Determine if we have a problem with #frames + directions ( ie mismatch )
     if ((gAnimSurfaceDatabase[usSurfaceIndex].uiNumDirections *
          gAnimSurfaceDatabase[usSurfaceIndex].uiNumFramesPerDir) !=
-        gAnimSurfaceDatabase[usSurfaceIndex].hVideoObject->usNumberOfObjects) {
+        gAnimSurfaceDatabase[usSurfaceIndex].hVideoObject->number_of_subimages) {
       AnimDebugMsg(
           String("Surface Database: WARNING!!! Surface %d has #frames mismatch.", usSurfaceIndex));
     }

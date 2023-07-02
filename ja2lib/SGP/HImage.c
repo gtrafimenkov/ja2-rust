@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
 #include "SGP/STCI.h"
 #include "SGP/Types.h"
@@ -22,8 +21,6 @@
 
 #define BLACK_SUBSTITUTE 0x0001
 
-uint16_t gusAlphaMask = 0;
-
 // this funky union is used for fast 16-bit pixel format conversions
 typedef union {
   struct {
@@ -33,17 +30,10 @@ typedef union {
   uint32_t uiValue;
 } SplitUINT32;
 
-// This function will attept to Load data from an existing image object's filename
-// In this way, dynamic loading of image data can be done
-static BOOLEAN LoadImageData(const char *filePath, uint32_t fileLoader, struct Image *hImage,
-                             bool loadAppData);
-
 struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
-  struct Image *hImage = NULL;
   SGPFILENAME Extension;
   char ExtensionSep[] = ".";
   char *StrPtr;
-  uint32_t iFileLoader;
   SGPFILENAME imageFileCopy;
 
   strcopy(imageFileCopy, ARR_SIZE(imageFileCopy), ImageFile);
@@ -61,180 +51,69 @@ struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
     strcpy(Extension, StrPtr + 1);
   }
 
-  // Determine type from Extension
-  do {
-    iFileLoader = UNKNOWN_FILE_READER;
-
-    if (strcasecmp(Extension, "PCX") == 0) {
-      iFileLoader = PCX_FILE_READER;
-      break;
-    }
-
-    if (strcasecmp(Extension, "TGA") == 0) {
-      iFileLoader = TGA_FILE_READER;
-      break;
-    }
-
-    if (strcasecmp(Extension, "STI") == 0) {
-      iFileLoader = STCI_FILE_READER;
-      break;
-    }
-
-  } while (FALSE);
-
   // Determine if resource exists before creating image structure
   if (!File_Exists(imageFileCopy)) {
     DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, String("Resource file %s does not exist.", imageFileCopy));
     return (NULL);
   }
 
-  // Create memory for image structure
-  hImage = (struct Image *)MemAlloc(sizeof(struct Image));
-
-  AssertMsg(hImage, "Failed to allocate memory for hImage in CreateImage");
-  // Initialize some values
-  memset(hImage, 0, sizeof(struct Image));
-
-  if (!LoadImageData(imageFileCopy, iFileLoader, hImage, loadAppData)) {
-    return (NULL);
-  }
-
-  // All is fine, image is loaded and allocated, return pointer
-  return (hImage);
-}
-
-BOOLEAN DestroyImage(struct Image *hImage) {
-  Assert(hImage != NULL);
-
-  // First delete contents
-  ReleaseImageData(hImage);
-
-  // Now free structure
-  MemFree(hImage);
-
-  return (TRUE);
-}
-
-void FreeImageData(struct Image *image) {
-  if (image->imageDataAllocatedInRust) {
-    RustDealloc((uint8_t *)image->pImageData);
+  if (strcasecmp(Extension, "PCX") == 0) {
+    struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
+    memset(hImage, 0, sizeof(struct Image));
+    if (!LoadPCXFileToImage(imageFileCopy, hImage)) {
+      return NULL;
+    }
+    return (hImage);
+  } else if (strcasecmp(Extension, "STI") == 0) {
+    return LoadSTCIFileToImage(imageFileCopy, loadAppData);
   } else {
-    MemFree(image->pImageData);
+    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Unknown image loader was specified.");
+    return NULL;
   }
-  image->pImageData = NULL;
 }
 
-void FreeImagePalette(struct Image *image) {
+void DestroyImage(struct Image *image) {
+  if (!image) {
+    return;
+  }
+
   if (image->paletteAllocatedInRust) {
-    RustDealloc((uint8_t *)image->pPalette);
+    RustDealloc((uint8_t *)image->palette);
   } else {
-    MemFree(image->pPalette);
+    MemFree(image->palette);
   }
-  image->pPalette = NULL;
+
+  if (image->imageDataAllocatedInRust) {
+    RustDealloc((uint8_t *)image->image_data);
+  } else {
+    MemFree(image->image_data);
+  }
+  RustDealloc((uint8_t *)image->subimages);
+  RustDealloc(image->app_data);
+
+  MemFree(image);
 }
 
-void FreeImageSubimages(struct Image *image) {
-  if (image->usNumberOfObjects > 0) {
-    RustDealloc((uint8_t *)image->subimages);
-  }
-}
-
-void FreeImageAppData(struct Image *image) {
-  if (image->fFlags & IMAGE_APPDATA) {
-    if (image->pAppData != NULL) {
-      RustDealloc(image->pAppData);
-      image->fFlags &= (~IMAGE_APPDATA);
-    }
-  }
-}
-
-BOOLEAN ReleaseImageData(struct Image *hImage) {
-  Assert(hImage != NULL);
-
-  if (hImage->fFlags & IMAGE_PALETTE) {
-    // Destroy palette
-    if (hImage->pPalette != NULL) {
-      FreeImagePalette(hImage);
-    }
-
-    if (hImage->pui16BPPPalette != NULL) {
-      MemFree(hImage->pui16BPPPalette);
-      hImage->pui16BPPPalette = NULL;
-    }
-
-    // Remove contents flag
-    hImage->fFlags = hImage->fFlags ^ IMAGE_PALETTE;
-  }
-
-  if (hImage->fFlags & IMAGE_BITMAPDATA) {
-    // Destroy image data
-    Assert(hImage->pImageData != NULL);
-    FreeImageData(hImage);
-    hImage->pImageData = NULL;
-    FreeImageSubimages(hImage);
-    // Remove contents flag
-    hImage->fFlags = hImage->fFlags ^ IMAGE_BITMAPDATA;
-  }
-
-  if (hImage->fFlags & IMAGE_APPDATA) {
-    FreeImageAppData(hImage);
-  }
-
-  return (TRUE);
-}
-
-static BOOLEAN LoadImageData(const char *filePath, uint32_t fileLoader, struct Image *hImage,
-                             bool loadAppData) {
-  BOOLEAN fReturnVal = FALSE;
-
-  Assert(hImage != NULL);
-
-  // Switch on file loader
-  switch (fileLoader) {
-    case TGA_FILE_READER:
-      fReturnVal = LoadTGAFileToImage(filePath, hImage);
-      break;
-
-    case PCX_FILE_READER:
-      fReturnVal = LoadPCXFileToImage(filePath, hImage);
-      break;
-
-    case STCI_FILE_READER:
-      fReturnVal = LoadSTCIFileToImage(filePath, hImage, loadAppData);
-      break;
-
-    default:
-      DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Unknown image loader was specified.");
-  }
-
-  if (!fReturnVal) {
-    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Error occured while reading image data.");
-  }
-
-  return (fReturnVal);
-}
-
-BOOLEAN CopyImageToBuffer(struct Image *hImage, uint32_t fBufferType, BYTE *pDestBuf,
+BOOLEAN CopyImageToBuffer(struct Image *hImage, uint8_t bufferBitDepth, BYTE *pDestBuf,
                           uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                           SGPRect *srcRect) {
-  // Use blitter based on type of image
   Assert(hImage != NULL);
 
-  if (hImage->ubBitDepth == 8 && fBufferType == BUFFER_8BPP) {
-    // Default do here
+  if (hImage->ubBitDepth == 8 && bufferBitDepth == 8) {
     DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Copying 8 BPP Imagery.");
     return (
         Copy8BPPImageTo8BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
-  if (hImage->ubBitDepth == 8 && fBufferType == BUFFER_16BPP) {
-    // Default do here
-    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Copying 8 BPP Imagery to 16BPP Buffer.");
-    return (
-        Copy8BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
+  if (hImage->ubBitDepth == 8 && bufferBitDepth == 16) {
+    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "NOT SUPPORTED: Copying 8 BPP Imagery to 16BPP Buffer.");
+    // Although we have 8 and 16 bit images and 8 and 16 bit VSurfaces,
+    // there is no situation when 8 bit image -> 16 bit VSurface is required.
+    // There are sutiations when 8 bit VObject -> 16 bit VSurface, but it is handled by other code.
+    return (FALSE);
   }
 
-  if (hImage->ubBitDepth == 16 && fBufferType == BUFFER_16BPP) {
+  if (hImage->ubBitDepth == 16 && bufferBitDepth == 16) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Automatically Copying 16 BPP Imagery.");
     return (Copy16BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY,
                                         srcRect));
@@ -252,7 +131,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t
 
   // Assertions
   Assert(hImage != NULL);
-  Assert(hImage->p16BPPData != NULL);
+  Assert(hImage->image_data != NULL);
 
   // Validations
   if (!(usX >= 0)) {
@@ -285,7 +164,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t
 
   // Copy line by line
   pDest = (uint8_t *)pDestBuf + uiDestStart;
-  pSrc = hImage->p8BPPData + uiSrcStart;
+  pSrc = (uint8_t *)hImage->image_data + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize);
@@ -306,7 +185,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16
   uint16_t *pDest, *pSrc;
 
   Assert(hImage != NULL);
-  Assert(hImage->p16BPPData != NULL);
+  Assert(hImage->image_data != NULL);
 
   // Validations
   if (!(usX >= 0)) {
@@ -343,7 +222,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16
 
   // Copy line by line
   pDest = (uint16_t *)pDestBuf + uiDestStart;
-  pSrc = hImage->p16BPPData + uiSrcStart;
+  pSrc = (uint16_t *)hImage->image_data + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize * 2);
@@ -352,88 +231,6 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16
   }
   // Do last line
   memcpy(pDest, pSrc, uiLineSize * 2);
-
-  return (TRUE);
-}
-
-BOOLEAN Extract8BPPCompressedImageToBuffer(struct Image *hImage, BYTE *pDestBuf) { return (FALSE); }
-
-BOOLEAN Extract16BPPCompressedImageToBuffer(struct Image *hImage, BYTE *pDestBuf) {
-  return (FALSE);
-}
-
-BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
-                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
-                                   SGPRect *srcRect) {
-  uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-  uint32_t rows, cols;
-  uint8_t *pSrc, *pSrcTemp;
-  uint16_t *pDest, *pDestTemp;
-  uint16_t *p16BPPPalette;
-
-  p16BPPPalette = hImage->pui16BPPPalette;
-
-  // Assertions
-  Assert(p16BPPPalette != NULL);
-  Assert(hImage != NULL);
-
-  // Validations
-  if (!(hImage->p16BPPData != NULL)) {
-    return FALSE;
-  }
-  if (!(usX >= 0)) {
-    return FALSE;
-  }
-  if (!(usX < usDestWidth)) {
-    return FALSE;
-  }
-  if (!(usY >= 0)) {
-    return FALSE;
-  }
-  if (!(usY < usDestHeight)) {
-    return FALSE;
-  }
-  if (!(srcRect->iRight > srcRect->iLeft)) {
-    return FALSE;
-  }
-  if (!(srcRect->iBottom > srcRect->iTop)) {
-    return FALSE;
-  }
-
-  // Determine memcopy coordinates
-  uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
-  uiDestStart = usY * usDestWidth + usX;
-  uiNumLines = (srcRect->iBottom - srcRect->iTop);
-  uiLineSize = (srcRect->iRight - srcRect->iLeft);
-
-  if (!(usDestWidth >= uiLineSize)) {
-    return FALSE;
-  }
-  if (!(usDestHeight >= uiNumLines)) {
-    return FALSE;
-  }
-
-  // Convert to Pixel specification
-  pDest = (uint16_t *)pDestBuf + uiDestStart;
-  pSrc = hImage->p8BPPData + uiSrcStart;
-  DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("Start Copying at %p", pDest));
-
-  // For every entry, look up into 16BPP palette
-  for (rows = 0; rows < uiNumLines - 1; rows++) {
-    pDestTemp = pDest;
-    pSrcTemp = pSrc;
-
-    for (cols = 0; cols < uiLineSize; cols++) {
-      *pDestTemp = p16BPPPalette[*pSrcTemp];
-      pDestTemp++;
-      pSrcTemp++;
-    }
-
-    pDest += usDestWidth;
-    pSrc += hImage->usWidth;
-  }
-  // Do last line
-  DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("End Copying at %p", pDest));
 
   return (TRUE);
 }
@@ -459,9 +256,8 @@ uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
     usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
-      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
-    } else
-      usColor |= gusAlphaMask;
+      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE;
+    }
 
     p16BPPPalette[cnt] = usColor;
   }
@@ -528,9 +324,8 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
     usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
-      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
-    } else
-      usColor |= gusAlphaMask;
+      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE;
+    }
 
     p16BPPPalette[cnt] = usColor;
   }
@@ -557,10 +352,8 @@ uint16_t Get16BPPColor(uint32_t RGBValue) {
   // problems
 
   if (usColor == 0) {
-    if (RGBValue != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
-  } else
-    usColor |= gusAlphaMask;
-
+    if (RGBValue != 0) usColor = BLACK_SUBSTITUTE;
+  }
   return (usColor);
 }
 
@@ -620,35 +413,34 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd,
   return pInitEntry;
 }
 
-BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
-  // Assertions
+BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer) {
   Assert(hImage != NULL);
   Assert(pBuffer != NULL);
 
   // Create memory for data
-  pBuffer->usNumberOfObjects = hImage->usNumberOfObjects;
+  pBuffer->number_of_subimages = hImage->number_of_subimages;
 
   // Create buffer for objects
   pBuffer->subimages =
-      (struct Subimage *)MemAlloc(sizeof(struct Subimage) * pBuffer->usNumberOfObjects);
+      (struct Subimage *)MemAlloc(sizeof(struct Subimage) * pBuffer->number_of_subimages);
   if (!(pBuffer->subimages != NULL)) {
     return FALSE;
   }
 
   // Copy into buffer
   memcpy(pBuffer->subimages, hImage->subimages,
-         sizeof(struct Subimage) * pBuffer->usNumberOfObjects);
+         sizeof(struct Subimage) * pBuffer->number_of_subimages);
 
   // Allocate memory for pixel data
-  pBuffer->pPixData = MemAlloc(hImage->uiSizePixData);
-  if (!(pBuffer->pPixData != NULL)) {
+  pBuffer->image_data = MemAlloc(hImage->image_data_size);
+  if (!(pBuffer->image_data != NULL)) {
     return FALSE;
   }
 
-  pBuffer->uiSizePixData = hImage->uiSizePixData;
+  pBuffer->image_data_size = hImage->image_data_size;
 
   // Copy into buffer
-  memcpy(pBuffer->pPixData, hImage->pPixData8, pBuffer->uiSizePixData);
+  memcpy(pBuffer->image_data, hImage->image_data, pBuffer->image_data_size);
 
   return (TRUE);
 }
@@ -672,7 +464,7 @@ void ConvertRGBDistribution565To555(uint16_t *p16BPPData, uint32_t uiNumberOfPix
       // now shift back into the upper word
       Pixel.uiValue <<= 5;
       // and copy back
-      *pPixel = Pixel.usHigher | gusAlphaMask;
+      *pPixel = Pixel.usHigher;
     }
     pPixel++;
   }
