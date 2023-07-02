@@ -107,7 +107,6 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBu
         Copy8BPPImageTo8BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
-  // XXX: is this used?
   if (hImage->ubBitDepth == 8 && bufferBitDepth == 16) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Copying 8 BPP Imagery to 16BPP Buffer.");
     return (
