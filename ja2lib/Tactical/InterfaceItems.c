@@ -75,6 +75,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 #include "rust_laptop.h"
 
 #define ITEMDESC_FONT BLOCKFONT2
@@ -1681,7 +1682,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
                    int16_t sOutlineColor) {
   uint16_t uiStringLength;
   INVTYPE *pItem;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   uint32_t usHeight, usWidth;
   int16_t sCenX, sCenY, sNewY, sNewX;
   struct VObject *hVObject;
@@ -2569,7 +2570,7 @@ void ItemDescAttachmentsCallback(struct MOUSE_REGION *pRegion, int32_t iReason) 
 }
 
 void RenderItemDescriptionBox() {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   uint32_t usHeight, usWidth;
   int16_t sCenX, sCenY, sStrX;
   struct VObject *hVObject;
@@ -4574,7 +4575,7 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int
   int16_t sX, sY, sCenX, sCenY;
   SGPRect aRect;
   uint8_t ubLimit;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hVObject;
   int32_t cnt;
   uint16_t usPopupWidth;
@@ -4698,7 +4699,7 @@ void EndItemStackPopupWithItemInHand() {
 }
 
 void RenderItemStackPopup(BOOLEAN fFullRender) {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   uint32_t usWidth;
   struct VObject *hVObject;
   uint32_t cnt;
@@ -4775,7 +4776,7 @@ void DeleteItemStackPopup() {
 BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY,
                          int16_t sInvWidth, int16_t sInvHeight) {
   SGPRect aRect;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hVObject;
   int32_t cnt;
   uint16_t usPopupWidth, usPopupHeight;
@@ -4865,7 +4866,7 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sI
 }
 
 void RenderKeyRingPopup(BOOLEAN fFullRender) {
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   uint32_t usHeight, usWidth;
   struct VObject *hVObject;
   uint32_t cnt;

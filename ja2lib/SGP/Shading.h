@@ -1,7 +1,6 @@
 #ifndef _SHADING_H_
 #define _SHADING_H_
 
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 
 struct VSurface;
@@ -15,7 +14,6 @@ void SetShadeTablePercent(float uiShadePercent);
 void Init8BitTables(void);
 BOOLEAN Set8BitModePalette(struct SGPPaletteEntry *pPal);
 
-extern struct SGPPaletteEntry Shaded8BPPPalettes[HVOBJECT_SHADE_TABLES + 3][256];
 extern uint8_t ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
 
 extern uint16_t IntensityTable[65536];

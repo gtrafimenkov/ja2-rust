@@ -28,6 +28,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 #define BOBBYR_DEFAULT_MENU_COLOR 255
 
@@ -794,7 +795,7 @@ BOOLEAN DisplayAmmoInfo(uint16_t usIndex, uint16_t usTextPosY, BOOLEAN fUsed,
 BOOLEAN DisplayBigItemImage(uint16_t usIndex, uint16_t PosY) {
   int16_t PosX, sCenX, sCenY;
   uint32_t usWidth;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   INVTYPE *pItem;
   uint32_t uiImage;
   struct VObject *hPixHandle;

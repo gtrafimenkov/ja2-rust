@@ -6,7 +6,6 @@
 #include "Globals.h"
 #include "SGP/Debug.h"
 #include "SGP/HImage.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Shading.h"
 #include "SGP/Types.h"
 #include "SGP/VObjectBlitters.h"
@@ -15,6 +14,7 @@
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "platform_strings.h"
+#include "rust_images.h"
 
 // ******************************************************************************
 //
@@ -721,7 +721,7 @@ BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t us
   uint16_t usLoopX = 0;
   uint16_t usLoopY = 0;
   uint16_t ubRunLength;
-  ETRLEObject *pETRLEObject;
+  struct ETRLEObject *pETRLEObject;
 
   // Do a bunch of checks
   if (!(hVObject != NULL)) {
@@ -782,7 +782,7 @@ BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t us
   return (FALSE);
 }
 
-BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, ETRLEObject *pETRLEObject,
+BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObject *pETRLEObject,
                                       uint16_t usIndex) {
   if (!(usIndex >= 0)) {
     return FALSE;
@@ -791,7 +791,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, ETRLEObject *pET
     return FALSE;
   }
 
-  memcpy(pETRLEObject, &(hVObject->pETRLEObject[usIndex]), sizeof(ETRLEObject));
+  memcpy(pETRLEObject, &(hVObject->pETRLEObject[usIndex]), sizeof(struct ETRLEObject));
 
   return (TRUE);
 }
@@ -799,7 +799,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, ETRLEObject *pET
 BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, uint16_t usIndex,
                                                uint16_t *pusWidth, uint16_t *pusHeight) {
   struct VObject *hVObject;
-  ETRLEObject ETRLEObject;
+  struct ETRLEObject ETRLEObject;
 
   // Get video object
   if (!(GetVideoObject(&hVObject, uiVideoObject))) {
@@ -816,8 +816,8 @@ BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, uint16_t 
   return (TRUE);
 }
 
-BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject, ETRLEObject *pETRLEObject,
-                                               uint16_t usIndex) {
+BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject,
+                                               struct ETRLEObject *pETRLEObject, uint16_t usIndex) {
   struct VObject *hVObject;
 
   // Get video object

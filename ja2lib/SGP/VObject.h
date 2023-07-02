@@ -117,10 +117,10 @@ BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t us
 struct VObject *GetPrimaryVideoObject();
 struct VObject *GetBackBufferVideoObject();
 
-BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, ETRLEObject *pETRLEObject,
+BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObject *pETRLEObject,
                                       uint16_t usIndex);
-BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject, ETRLEObject *pETRLEObject,
-                                               uint16_t usIndex);
+BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject,
+                                               struct ETRLEObject *pETRLEObject, uint16_t usIndex);
 BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, uint16_t usIndex,
                                                uint16_t *pusWidth, uint16_t *pusHeight);
 

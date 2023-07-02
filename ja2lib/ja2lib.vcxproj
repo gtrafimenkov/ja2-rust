@@ -460,7 +460,6 @@
     <ClInclude Include="SGP\English.h" />
     <ClInclude Include="SGP\Font.h" />
     <ClInclude Include="SGP\HImage.h" />
-    <ClInclude Include="SGP\ImgFmt.h" />
     <ClInclude Include="SGP\ImpTGA.h" />
     <ClInclude Include="SGP\Input.h" />
     <ClInclude Include="SGP\Ja2Libs.h" />

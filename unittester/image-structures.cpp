@@ -4,8 +4,6 @@
 extern "C" {
 #endif
 
-#include "SGP/ImgFmt.h"
-
 #ifdef __cplusplus
 }
 #endif

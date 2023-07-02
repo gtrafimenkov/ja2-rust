@@ -12,7 +12,6 @@
 #include "JAScreens.h"
 #include "SGP/Debug.h"
 #include "SGP/MouseSystem.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Shading.h"
 #include "SGP/VObject.h"
 #include "SGP/Video.h"
@@ -67,6 +66,7 @@
 #include "Utils/Utilities.h"
 #include "platform.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 #define SET_MOVEMENTCOST(a, b, c, d) \
   ((gubWorldMovementCosts[a][b][c] < d) ? (gubWorldMovementCosts[a][b][c] = d) : 0);

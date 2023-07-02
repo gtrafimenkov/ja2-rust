@@ -43,6 +43,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/TimerControl.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 void RenderEditorInfo();
 

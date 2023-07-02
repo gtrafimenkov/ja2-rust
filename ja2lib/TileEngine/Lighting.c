@@ -11,7 +11,6 @@
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
 #include "SGP/Line.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
@@ -37,6 +36,7 @@
 #include "Utils/TimerControl.h"
 #include "platform_strings.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 #define LVL1_L1_PER (50)
 #define LVL1_L2_PER (50)
