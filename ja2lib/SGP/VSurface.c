@@ -686,6 +686,11 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     tempRect.iTop = 0;
     tempRect.iRight = image->usWidth - 1;
     tempRect.iBottom = image->usHeight - 1;
+    if (image->ubBitDepth == 8) {
+      if (!image->pui16BPPPalette) {
+        image->pui16BPPPalette = Create16BPPPalette(image->palette);
+      }
+    }
     SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
     if (image->ubBitDepth == 8) {
       SetVideoSurfacePalette(vs, image->palette);

@@ -1551,15 +1551,16 @@ void VSurfaceUnlock(struct VSurface *vs) {
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   Assert(hVSurface != NULL);
 
-  // Create palette object if not already done so
-  if (hVSurface->pPalette == NULL) {
-    DDCreatePalette(dd2Object, (DDPCAPS_8BIT | DDPCAPS_ALLOW256), (LPPALETTEENTRY)(&pSrcPalette[0]),
-                    (LPDIRECTDRAWPALETTE *)&hVSurface->pPalette, NULL);
-  } else {
-    // Just Change entries
-    DDSetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
-                        (PALETTEENTRY *)pSrcPalette);
-  }
+  // // Create palette object if not already done so
+  // if (hVSurface->pPalette == NULL) {
+  //   DDCreatePalette(dd2Object, (DDPCAPS_8BIT | DDPCAPS_ALLOW256),
+  //   (LPPALETTEENTRY)(&pSrcPalette[0]),
+  //                   (LPDIRECTDRAWPALETTE *)&hVSurface->pPalette, NULL);
+  // } else {
+  //   // Just Change entries
+  //   DDSetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
+  //                       (PALETTEENTRY *)pSrcPalette);
+  // }
 
   // Delete 16BPP Palette if one exists
   if (hVSurface->p16BPPPalette != NULL) {
