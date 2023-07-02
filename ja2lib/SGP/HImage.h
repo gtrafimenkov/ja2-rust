@@ -27,8 +27,6 @@ struct Subimage;
 #define BUFFER_16BPP 0x2
 
 // Defines for image charactoristics
-#define IMAGE_COMPRESSED 0x0001
-#define IMAGE_PALETTE 0x0004
 #define IMAGE_ALLIMAGEDATA 0x000C
 
 // Palette structure, mimics that of Win32

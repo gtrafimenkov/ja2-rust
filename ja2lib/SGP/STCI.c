@@ -22,10 +22,7 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
   hImage->imageDataAllocatedInRust = true;
 
   hImage->pPalette = sti.palette;
-  if (hImage->pPalette) {
-    hImage->paletteAllocatedInRust = true;
-    hImage->fFlags |= IMAGE_PALETTE;
-  }
+  hImage->paletteAllocatedInRust = true;
 
   hImage->subimages = sti.subimages;
   hImage->usNumberOfObjects = sti.number_of_subimages;
@@ -34,9 +31,6 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
   hImage->pAppData = sti.app_data;
   hImage->uiAppDataSize = sti.app_data_size;
 
-  if (sti.zlib_compressed) {
-    hImage->fFlags |= IMAGE_COMPRESSED;
-  }
   hImage->usWidth = sti.Width;
   hImage->usHeight = sti.Height;
   hImage->ubBitDepth = sti.pixel_depth;

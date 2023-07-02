@@ -113,19 +113,13 @@ void FreeImageSubimages(struct Image *image) {
 BOOLEAN ReleaseImageData(struct Image *hImage) {
   Assert(hImage != NULL);
 
-  if (hImage->fFlags & IMAGE_PALETTE) {
-    // Destroy palette
-    if (hImage->pPalette != NULL) {
-      FreeImagePalette(hImage);
-    }
+  if (hImage->pPalette != NULL) {
+    FreeImagePalette(hImage);
+  }
 
-    if (hImage->pui16BPPPalette != NULL) {
-      MemFree(hImage->pui16BPPPalette);
-      hImage->pui16BPPPalette = NULL;
-    }
-
-    // Remove contents flag
-    hImage->fFlags = hImage->fFlags ^ IMAGE_PALETTE;
+  if (hImage->pui16BPPPalette != NULL) {
+    MemFree(hImage->pui16BPPPalette);
+    hImage->pui16BPPPalette = NULL;
   }
 
   FreeImageData(hImage);
