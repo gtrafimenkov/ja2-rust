@@ -15,6 +15,7 @@ pub mod exp_sector;
 pub mod exp_towns;
 pub mod exp_ui;
 pub mod finances;
+pub mod images;
 pub mod laptop;
 pub mod militia;
 pub mod platform;
