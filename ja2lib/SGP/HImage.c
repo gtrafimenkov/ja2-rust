@@ -524,10 +524,10 @@ BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer) {
     return FALSE;
   }
 
-  pBuffer->uiSizePixData = hImage->image_data_size;
+  pBuffer->image_data_size = hImage->image_data_size;
 
   // Copy into buffer
-  memcpy(pBuffer->image_data, hImage->image_data, pBuffer->uiSizePixData);
+  memcpy(pBuffer->image_data, hImage->image_data, pBuffer->image_data_size);
 
   return (TRUE);
 }

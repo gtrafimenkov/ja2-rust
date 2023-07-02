@@ -384,7 +384,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
   hVObject->subimages = TempETRLEData.subimages;
   hVObject->image_data = TempETRLEData.image_data;
-  hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
+  hVObject->image_data_size = TempETRLEData.image_data_size;
 
   // Set palette from himage
   if (hImage->ubBitDepth == 8) {
@@ -436,7 +436,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
   hVObject->subimages = TempETRLEData.subimages;
   hVObject->image_data = TempETRLEData.image_data;
-  hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
+  hVObject->image_data_size = TempETRLEData.image_data_size;
 
   // Set palette from himage
   if (hImage->ubBitDepth == 8) {

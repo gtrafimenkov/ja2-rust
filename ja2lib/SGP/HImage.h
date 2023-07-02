@@ -48,7 +48,7 @@ struct RelTileLoc {
 
 struct ImageData {
   void *image_data;
-  UINT32 uiSizePixData;
+  UINT32 image_data_size;
   struct Subimage *subimages;
   UINT16 usNumberOfObjects;
 };

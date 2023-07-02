@@ -18,7 +18,7 @@ typedef struct {
 // The video object contains different data based on it's type, compressed or not
 struct VObject {
   UINT32 fFlags;                          // Special flags
-  UINT32 uiSizePixData;                   // ETRLE data size
+  UINT32 image_data_size;                 // ETRLE data size
   struct SGPPaletteEntry *pPaletteEntry;  // 8BPP Palette
   COLORVAL TransparentColor;              // Defaults to 0,0,0
   UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
