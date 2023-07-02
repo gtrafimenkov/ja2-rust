@@ -46,12 +46,12 @@ struct RelTileLoc {
   INT8 bTileOffsetY;
 };
 
-typedef struct tagETRLEData {
+struct ImageData {
   PTR pPixData;
   UINT32 uiSizePixData;
   struct Subimage *subimages;
   UINT16 usNumberOfObjects;
-} ETRLEData;
+};
 
 // Image header structure
 struct Image {
@@ -100,7 +100,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
                                     UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
 
 // This function will create a buffer in memory of ETRLE data, excluding palette
-BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer);
+BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer);
 
 // UTILITY FUNCTIONS
 

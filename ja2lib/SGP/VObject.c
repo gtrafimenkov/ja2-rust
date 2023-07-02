@@ -375,8 +375,8 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
-  ETRLEData TempETRLEData;
-  if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
+  struct ImageData TempETRLEData;
+  if (!(CopyImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
 
@@ -401,7 +401,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
 
 struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   struct VObject *hVObject;
-  ETRLEData TempETRLEData;
+  struct ImageData TempETRLEData;
 
   // Allocate memory for video object data and initialize
   hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
@@ -428,7 +428,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
-  if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
+  if (!(CopyImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
 

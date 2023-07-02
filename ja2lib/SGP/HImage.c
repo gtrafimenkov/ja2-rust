@@ -500,8 +500,7 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UIN
   return pInitEntry;
 }
 
-BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
-  // Assertions
+BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer) {
   Assert(hImage != NULL);
   Assert(pBuffer != NULL);
 
