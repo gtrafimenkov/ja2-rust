@@ -631,7 +631,7 @@ uint32_t SexScreenHandle(void) {
   static uint32_t guiSMILY;
   static int8_t bCurFrame = 0;
   static uint32_t uiTimeOfLastUpdate = 0, uiTime;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   struct VObject *hVObject;
   int16_t sX, sY;
 
@@ -695,10 +695,10 @@ uint32_t SexScreenHandle(void) {
 
   // Calculate smily face positions...
   GetVideoObject(&hVObject, guiSMILY);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
 
-  sX = (int16_t)((640 - pTrav->usWidth) / 2);
-  sY = (int16_t)((480 - pTrav->usHeight) / 2);
+  sX = (int16_t)((640 - pTrav->width) / 2);
+  sY = (int16_t)((480 - pTrav->height) / 2);
 
   if (bCurFrame < 24) {
     BltVObjectFromIndex(vsFB, guiSMILY, 0, sX, sY);
@@ -706,7 +706,7 @@ uint32_t SexScreenHandle(void) {
     BltVObjectFromIndex(vsFB, guiSMILY, (int8_t)(bCurFrame % 8), sX, sY);
   }
 
-  InvalidateRegion(sX, sY, (int16_t)(sX + pTrav->usWidth), (int16_t)(sY + pTrav->usHeight));
+  InvalidateRegion(sX, sY, (int16_t)(sX + pTrav->width), (int16_t)(sY + pTrav->height));
 
   return (SEX_SCREEN);
 }

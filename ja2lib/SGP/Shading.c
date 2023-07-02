@@ -90,20 +90,20 @@ BOOLEAN ShadesCalculatePalette(struct SGPPaletteEntry *pSrcPalette,
 
   for (cnt = 0; cnt < 256; cnt++) {
     if (fMono) {
-      lumin = (pSrcPalette[cnt].peRed * 299 / 1000) + (pSrcPalette[cnt].peGreen * 587 / 1000) +
-              (pSrcPalette[cnt].peBlue * 114 / 1000);
+      lumin = (pSrcPalette[cnt].red * 299 / 1000) + (pSrcPalette[cnt].green * 587 / 1000) +
+              (pSrcPalette[cnt].blue * 114 / 1000);
       rmod = usRed * lumin / 255;
       gmod = usGreen * lumin / 255;
       bmod = usBlue * lumin / 255;
     } else {
-      rmod = (usRed * pSrcPalette[cnt].peRed / 255);
-      gmod = (usGreen * pSrcPalette[cnt].peGreen / 255);
-      bmod = (usBlue * pSrcPalette[cnt].peBlue / 255);
+      rmod = (usRed * pSrcPalette[cnt].red / 255);
+      gmod = (usGreen * pSrcPalette[cnt].green / 255);
+      bmod = (usBlue * pSrcPalette[cnt].blue / 255);
     }
 
-    pDestPalette[cnt].peRed = (uint8_t)min(rmod, 255);
-    pDestPalette[cnt].peGreen = (uint8_t)min(gmod, 255);
-    pDestPalette[cnt].peBlue = (uint8_t)min(bmod, 255);
+    pDestPalette[cnt].red = (uint8_t)min(rmod, 255);
+    pDestPalette[cnt].green = (uint8_t)min(gmod, 255);
+    pDestPalette[cnt].blue = (uint8_t)min(bmod, 255);
   }
 
   return (TRUE);
@@ -282,14 +282,14 @@ void Init8BitTables(void) {
 
   // calculate a grey-scale table for the default palette
   for (uiCount = 0; uiCount < 256; uiCount++) {
-    Pal[uiCount].peRed = (uint8_t)(uiCount % 128) + 128;
-    Pal[uiCount].peGreen = (uint8_t)(uiCount % 128) + 128;
-    Pal[uiCount].peBlue = (uint8_t)(uiCount % 128) + 128;
+    Pal[uiCount].red = (uint8_t)(uiCount % 128) + 128;
+    Pal[uiCount].green = (uint8_t)(uiCount % 128) + 128;
+    Pal[uiCount].blue = (uint8_t)(uiCount % 128) + 128;
   }
 
-  Pal[0].peRed = 0;
-  Pal[0].peGreen = 0;
-  Pal[0].peBlue = 0;
+  Pal[0].red = 0;
+  Pal[0].green = 0;
+  Pal[0].blue = 0;
 
   Set8BPPPalette(Shaded8BPPPalettes[4]);
 }

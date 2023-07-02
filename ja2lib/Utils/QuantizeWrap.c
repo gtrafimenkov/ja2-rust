@@ -254,9 +254,9 @@ void MapPalette(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight, 
         vSrcVal.y = pRGBData[(cY * sWidth) + cX].g;
         vSrcVal.z = pRGBData[(cY * sWidth) + cX].b;
 
-        vTableVal.x = pTable[cnt].peRed;
-        vTableVal.y = pTable[cnt].peGreen;
-        vTableVal.z = pTable[cnt].peBlue;
+        vTableVal.x = pTable[cnt].red;
+        vTableVal.y = pTable[cnt].green;
+        vTableVal.z = pTable[cnt].blue;
 
         // Get Dist
         vDiffVal = VSubtract(&vSrcVal, &vTableVal);

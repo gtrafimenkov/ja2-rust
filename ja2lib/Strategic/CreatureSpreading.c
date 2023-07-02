@@ -1095,7 +1095,7 @@ BOOLEAN PrepareCreaturesForBattle() {
     // By default, we only play creature music in the cave levels (the creature levels all
     // consistently have blue lights while human occupied mines have red lights.  We always play
     // creature music when creatures are in the level.
-    if (LColors->peBlue)
+    if (LColors->blue)
       gfUseCreatureMusic = TRUE;
     else
       gfUseCreatureMusic = FALSE;

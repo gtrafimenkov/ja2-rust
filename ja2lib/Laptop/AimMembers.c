@@ -1232,7 +1232,7 @@ BOOLEAN DisplayMercsInventory(uint8_t ubMercID) {
   INVTYPE *pItem;
   struct VObject *hVObject;
   uint32_t usHeight, usWidth;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   wchar_t gzItemName[SIZE_ITEM_NAME];
   uint8_t ubItemCount = 0;
   //	wchar_t			gzTempItemName[ SIZE_ITEM_INFO ];
@@ -1253,14 +1253,14 @@ BOOLEAN DisplayMercsInventory(uint8_t ubMercID) {
 
       pItem = &Item[usItem];
       GetVideoObject(&hVObject, GetInterfaceGraphicForItem(pItem));
-      pTrav = &(hVObject->pETRLEObject[pItem->ubGraphicNum]);
+      pTrav = &(hVObject->subimages[pItem->ubGraphicNum]);
 
-      usHeight = (uint32_t)pTrav->usHeight;
-      usWidth = (uint32_t)pTrav->usWidth;
+      usHeight = (uint32_t)pTrav->height;
+      usWidth = (uint32_t)pTrav->width;
 
       sCenX =
-          PosX + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->sOffsetX;
-      sCenY = PosY + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->sOffsetY;
+          PosX + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->x_offset;
+      sCenY = PosY + (abs((int32_t)((int32_t)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->y_offset;
 
       // blt the shadow of the item
       BltVideoObjectOutlineShadowFromIndex(vsFB, GetInterfaceGraphicForItem(pItem),
@@ -1907,14 +1907,14 @@ BOOLEAN DisplayVideoConferencingDisplay() {
 static BOOLEAN ShadowVideoSurfaceImage(struct VSurface *dest, struct VObject *hImageHandle,
                                        int32_t iPosX, int32_t iPosY) {
   // Horizontal shadow
-  ShadowVideoSurfaceRect(dest, iPosX + 3, iPosY + hImageHandle->pETRLEObject->usHeight,
-                         iPosX + hImageHandle->pETRLEObject->usWidth,
-                         iPosY + hImageHandle->pETRLEObject->usHeight + 3);
+  ShadowVideoSurfaceRect(dest, iPosX + 3, iPosY + hImageHandle->subimages->height,
+                         iPosX + hImageHandle->subimages->width,
+                         iPosY + hImageHandle->subimages->height + 3);
 
   // vertical shadow
-  ShadowVideoSurfaceRect(dest, iPosX + hImageHandle->pETRLEObject->usWidth, iPosY + 3,
-                         iPosX + hImageHandle->pETRLEObject->usWidth + 3,
-                         iPosY + hImageHandle->pETRLEObject->usHeight);
+  ShadowVideoSurfaceRect(dest, iPosX + hImageHandle->subimages->width, iPosY + 3,
+                         iPosX + hImageHandle->subimages->width + 3,
+                         iPosY + hImageHandle->subimages->height);
   return (TRUE);
 }
 

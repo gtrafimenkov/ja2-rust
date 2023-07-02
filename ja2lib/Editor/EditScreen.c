@@ -726,7 +726,7 @@ void ShowCurrentDrawingMode(void) {
   int32_t iPicHeight, iPicWidth;
   int16_t sTempOffsetX;
   int16_t sTempOffsetY;
-  struct ETRLEObject *pETRLEObject;
+  struct Subimage *subimages;
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   uint16_t usFillColor;
@@ -906,31 +906,31 @@ void ShowCurrentDrawingMode(void) {
 
   // If we actually have something to draw, draw it
   if ((usUseIndex != 0xffff) && (usObjIndex != 0xffff)) {
-    pETRLEObject =
-        &(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface->pETRLEObject[usUseIndex]);
+    subimages =
+        &(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface->subimages[usUseIndex]);
 
-    iPicWidth = (int32_t)pETRLEObject->usWidth;
-    iPicHeight = (int32_t)pETRLEObject->usHeight;
+    iPicWidth = (int32_t)subimages->width;
+    iPicHeight = (int32_t)subimages->height;
 
     // Center the picture in the display window.
     iStartX = (100 - iPicWidth) / 2;
     iStartY = (60 - iPicHeight) / 2;
 
     // We have to store the offset data in temp variables before zeroing them and blitting
-    sTempOffsetX = pETRLEObject->sOffsetX;
-    sTempOffsetY = pETRLEObject->sOffsetY;
+    sTempOffsetX = subimages->x_offset;
+    sTempOffsetY = subimages->y_offset;
 
     // Set the offsets used for blitting to 0
-    pETRLEObject->sOffsetX = 0;
-    pETRLEObject->sOffsetY = 0;
+    subimages->x_offset = 0;
+    subimages->y_offset = 0;
 
     SetObjectShade(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface,
                    DEFAULT_SHADE_LEVEL);
     BltVObject(vsFB, gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface, usUseIndex,
                (0 + iStartX), (400 + iStartY));
 
-    pETRLEObject->sOffsetX = sTempOffsetX;
-    pETRLEObject->sOffsetY = sTempOffsetY;
+    subimages->x_offset = sTempOffsetX;
+    subimages->y_offset = sTempOffsetY;
   }
 
   // Set the color for the window's border. Blueish color = Normal, Red = Fake lighting is turned on
@@ -2442,7 +2442,7 @@ void ShowCurrentSlotImage(struct VObject *hVObj, int32_t iWindow) {
   int32_t iPicHeight, iPicWidth;
   int16_t sTempOffsetX;
   int16_t sTempOffsetY;
-  struct ETRLEObject *pETRLEObject;
+  struct Subimage *subimages;
   int32_t iWinWidth, iWinHeight;
 
   NewRect.iLeft = (iWindow == 0) ? (336) : (488);
@@ -2456,27 +2456,27 @@ void ShowCurrentSlotImage(struct VObject *hVObj, int32_t iWindow) {
   GetClippingRect(&ClipRect);
   SetClippingRect(&NewRect);
 
-  pETRLEObject = &(hVObj->pETRLEObject[0]);
+  subimages = &(hVObj->subimages[0]);
 
-  iPicWidth = (int32_t)pETRLEObject->usWidth;
-  iPicHeight = (int32_t)pETRLEObject->usHeight;
+  iPicWidth = (int32_t)subimages->width;
+  iPicHeight = (int32_t)subimages->height;
 
   iStartX = ((iWinWidth - iPicWidth) / 2) + NewRect.iLeft;
   iStartY = ((iWinHeight - iPicHeight) / 2) + NewRect.iTop;
 
   // We have to store the offset data in temp variables before zeroing them and blitting
-  sTempOffsetX = pETRLEObject->sOffsetX;
-  sTempOffsetY = pETRLEObject->sOffsetY;
+  sTempOffsetX = subimages->x_offset;
+  sTempOffsetY = subimages->y_offset;
 
   // Set the offsets used for blitting to 0
-  pETRLEObject->sOffsetX = 0;
-  pETRLEObject->sOffsetY = 0;
+  subimages->x_offset = 0;
+  subimages->y_offset = 0;
 
   SetObjectShade(hVObj, DEFAULT_SHADE_LEVEL);
   BltVObject(vsFB, hVObj, 0, (iStartX), (iStartY));
 
-  pETRLEObject->sOffsetX = sTempOffsetX;
-  pETRLEObject->sOffsetY = sTempOffsetY;
+  subimages->x_offset = sTempOffsetX;
+  subimages->y_offset = sTempOffsetY;
 
   SetClippingRect(&ClipRect);
 }

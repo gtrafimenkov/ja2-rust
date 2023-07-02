@@ -1106,14 +1106,14 @@ BOOLEAN PhysicsMoveObject(REAL_OBJECT *pObject) {
       if (pObject->pNode != NULL) {
         // Add new object / update position
         // Update position data
-        pObject->pNode->sRelativeX = (int16_t)pObject->Position.x;  // + pTrav->sOffsetX;
-        pObject->pNode->sRelativeY = (int16_t)pObject->Position.y;  // + pTrav->sOffsetY;
+        pObject->pNode->sRelativeX = (int16_t)pObject->Position.x;  // + pTrav->x_offset;
+        pObject->pNode->sRelativeY = (int16_t)pObject->Position.y;  // + pTrav->y_offset;
         pObject->pNode->sRelativeZ =
             (int16_t)CONVERT_HEIGHTUNITS_TO_PIXELS((int16_t)pObject->Position.z);
 
         // Update position data
-        pObject->pShadow->sRelativeX = (int16_t)pObject->Position.x;  // + pTrav->sOffsetX;
-        pObject->pShadow->sRelativeY = (int16_t)pObject->Position.y;  // + pTrav->sOffsetY;
+        pObject->pShadow->sRelativeX = (int16_t)pObject->Position.x;  // + pTrav->x_offset;
+        pObject->pShadow->sRelativeY = (int16_t)pObject->Position.y;  // + pTrav->y_offset;
         pObject->pShadow->sRelativeZ = (int16_t)gpWorldLevelData[pObject->sGridNo].sHeight;
       }
     }
