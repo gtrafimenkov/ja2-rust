@@ -211,19 +211,6 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     }
 }
 
-// /// Sir-Tech's Crazy Image
-// pub struct STImage {
-//     height: u16,
-//     width: u16,
-//     pixel_depth: u8,
-//     image_data: Vec<u8>,
-//     indexed: bool,                           // indexed (true) or rgb (false)
-//     palette: Option<[SGPPaletteEntry; 256]>, // only for indexed images
-//     subimages: Option<Vec<Subimage>>,
-//     app_data: Option<Vec<u8>>,
-//     zlib_compressed: bool,
-// }
-
 /// Read STCI image from an opened file.
 fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<images::STImage> {
     let mut reader = exp_fileman::Reader::new(file_id);
@@ -265,17 +252,5 @@ mod tests {
             assert_eq!(3840, subimage4.data_offset);
             assert_eq!(960, subimage4.data_length);
         }
-    }
-
-    #[test]
-    fn structure_sizes() {
-        assert_eq!(
-            std::mem::size_of::<SGPPaletteEntry>(),
-            std::mem::size_of::<images::SGPPaletteEntry>()
-        );
-        assert_eq!(
-            std::mem::size_of::<Subimage>(),
-            std::mem::size_of::<images::Subimage>()
-        );
     }
 }

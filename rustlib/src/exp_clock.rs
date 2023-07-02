@@ -1,9 +1,11 @@
 use super::clock;
+use super::exp_fileman;
 use super::exp_fileman::FileID;
-use super::exp_fileman::FILE_DB;
 use super::exp_ui;
 use super::state::STATE;
+use byteorder::{LittleEndian, ReadBytesExt};
 use std::io;
+use std::io::Read;
 
 #[repr(C)]
 #[allow(non_camel_case_types)]
@@ -132,28 +134,29 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
 }
 
 fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
-    let mut data = SavedClockState::default();
-    unsafe {
-        data.time_compress_mode = FILE_DB.read_file_i32(file_id)?;
-        data.clock_resolution = FILE_DB.read_file_u8(file_id)?;
-        data.game_paused = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.TimeInterrupt = FILE_DB.read_file_bool(file_id)?;
-        _ = FILE_DB.read_file_bool(file_id)?;
-        data.game_clock = FILE_DB.read_file_u32(file_id)?;
-        data.game_seconds_per_real_second = FILE_DB.read_file_u32(file_id)?;
-        data.cpart.AmbientLightLevel = FILE_DB.read_file_u8(file_id)?;
-        data.cpart.EnvTime = FILE_DB.read_file_u32(file_id)?;
-        data.cpart.EnvDay = FILE_DB.read_file_u32(file_id)?;
-        data.cpart.EnvLightValue = FILE_DB.read_file_u8(file_id)?;
-        data.cpart.TimeOfLastEventQuery = FILE_DB.read_file_u32(file_id)?;
-        data.locked_pause = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.PauseDueToPlayerGamePause = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.ResetAllPlayerKnowsEnemiesFlags = FILE_DB.read_file_bool(file_id)?;
-        data.time_compression_on = FILE_DB.read_file_bool(file_id)?;
-        data.cpart.PreviousGameClock = FILE_DB.read_file_u32(file_id)?;
-        data.cpart.LockPauseStateLastReasonId = FILE_DB.read_file_u32(file_id)?;
-        FILE_DB.read_file_exact(file_id, &mut data.padding)?;
-    }
+    let mut reader = exp_fileman::Reader::new(file_id);
+    let mut data = SavedClockState {
+        time_compress_mode: reader.read_i32::<LittleEndian>()?,
+        clock_resolution: reader.read_u8()?,
+        game_paused: reader.read_u8()? != 0,
+        ..Default::default()
+    };
+    data.cpart.TimeInterrupt = reader.read_u8()? != 0;
+    _ = reader.read_u8()?;
+    data.game_clock = reader.read_u32::<LittleEndian>()?;
+    data.game_seconds_per_real_second = reader.read_u32::<LittleEndian>()?;
+    data.cpart.AmbientLightLevel = reader.read_u8()?;
+    data.cpart.EnvTime = reader.read_u32::<LittleEndian>()?;
+    data.cpart.EnvDay = reader.read_u32::<LittleEndian>()?;
+    data.cpart.EnvLightValue = reader.read_u8()?;
+    data.cpart.TimeOfLastEventQuery = reader.read_u32::<LittleEndian>()?;
+    data.locked_pause = reader.read_u8()? != 0;
+    data.cpart.PauseDueToPlayerGamePause = reader.read_u8()? != 0;
+    data.cpart.ResetAllPlayerKnowsEnemiesFlags = reader.read_u8()? != 0;
+    data.time_compression_on = reader.read_u8()? != 0;
+    data.cpart.PreviousGameClock = reader.read_u32::<LittleEndian>()?;
+    data.cpart.LockPauseStateLastReasonId = reader.read_u32::<LittleEndian>()?;
+    reader.read_exact(&mut data.padding)?;
     Ok(data)
 }
 
