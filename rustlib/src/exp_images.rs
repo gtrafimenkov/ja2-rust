@@ -54,8 +54,9 @@ pub struct STCIHeader {
     end: STCIHeaderEnd,
 }
 
-const STCI_INDEXED: u32 = 0x0008;
 const STCI_RGB: u32 = 0x0004;
+const STCI_INDEXED: u32 = 0x0008;
+const STCI_ZLIB_COMPRESSED: u32 = 0x0010;
 const STCI_ETRLE_COMPRESSED: u32 = 0x0020;
 
 #[repr(C)]
@@ -262,7 +263,7 @@ pub struct STIImageLoaded {
     // #[derive(Default, Debug)]
     // /// Last part of STCI image header
     // pub struct STCIHeaderEnd {
-    //     Depth: u8,   // size in bits of one pixel as stored in the file
+    Depth: u8, // size in bits of one pixel as stored in the file
     //     unused1: u8, // added to adjust for memory alignment
     //     unused2: u8, // added to adjust for memory alignment
     //     unused3: u8, // added to adjust for memory alignment
@@ -273,6 +274,7 @@ pub struct STIImageLoaded {
     palette: *mut SGPPaletteEntry, // only for indexed images
     subimages: *mut ETRLEObject,
     app_data: *mut u8,
+    compressed: bool,
 }
 
 impl Default for STIImageLoaded {
@@ -283,27 +285,28 @@ impl Default for STIImageLoaded {
             Height: 0,
             Width: 0,
             usNumberOfSubImages: 0,
+            Depth: 0,
             AppDataSize: 0,
             indexed: false,
             palette: std::ptr::null_mut(),
             subimages: std::ptr::null_mut(),
             app_data: std::ptr::null_mut(),
             image_data: std::ptr::null_mut(),
+            compressed: false,
         }
     }
 }
 
 #[no_mangle]
-pub extern "C" fn LoadSTIImage(file_id: FileID) -> STIImageLoaded {
+pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImageLoaded {
     let mut results = STIImageLoaded::default();
     match read_stci_header(file_id) {
         Ok(header) => {
-            //  if head.Flags & (STCI_INDEXED|STCI_RGB) == 0 {
-            //     return Err(io::Error::new(io::ErrorKind::Other, "unknown image format"));
-            //  }
+            results.compressed = header.head.Flags & STCI_ZLIB_COMPRESSED != 0;
             results.StoredSize = header.head.StoredSize;
             results.Height = header.head.Height;
             results.Width = header.head.Width;
+            results.Depth = header.end.Depth;
             results.indexed = header.head.Flags & STCI_INDEXED != 0;
             if results.indexed {
                 results.palette = ReadSTCIPalette(file_id);
@@ -328,7 +331,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID) -> STIImageLoaded {
                     }
                 }
 
-                if header.end.AppDataSize > 0 {
+                if header.end.AppDataSize > 0 && load_app_data {
                     results.app_data = ReadSTCIAppData(file_id, &header);
                     if results.app_data.is_null() {
                         unsafe {
@@ -342,11 +345,11 @@ pub extern "C" fn LoadSTIImage(file_id: FileID) -> STIImageLoaded {
             } else {
                 results.image_data = ReadSTCIImageData(file_id, &header);
             }
-            return results;
+            results
         }
         Err(err) => {
             exp_debug::debug_log_write(&format!("failed to read STCI header: {err}"));
-            return STIImageLoaded::default();
+            STIImageLoaded::default()
         }
     }
 }

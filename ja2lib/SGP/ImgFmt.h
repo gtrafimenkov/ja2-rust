@@ -5,8 +5,8 @@
 #include "SGP/Types.h"
 #include "rust_images.h"
 
-#define STCI_ETRLE_COMPRESSED 0x0020
-#define STCI_ZLIB_COMPRESSED 0x0010
+// #define STCI_ETRLE_COMPRESSED 0x0020
+// #define STCI_ZLIB_COMPRESSED 0x0010
 
 // ETRLE defines
 #define COMPRESS_TRANSPARENT 0x80

@@ -33,45 +33,87 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
     return FALSE;
   }
 
-  struct STCIHeader header;
-  if (!ReadSTCIHeader(hFile, &header)) {
-    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
-    File_Close(hFile);
-    return (FALSE);
+  {
+    struct STIImageLoaded sti = LoadSTIImage(hFile, loadAppData);
+    if (!sti.success) {
+      File_Close(hFile);
+      return FALSE;
+    }
+    TempImage.pImageData = sti.image_data;
+    if (TempImage.pImageData) {
+      TempImage.imageDataAllocatedInRust = true;
+      TempImage.fFlags |= IMAGE_BITMAPDATA;
+    }
+
+    TempImage.pPalette = sti.palette;
+    if (TempImage.pPalette) {
+      TempImage.paletteAllocatedInRust = true;
+      TempImage.fFlags |= IMAGE_PALETTE;
+    }
+
+    TempImage.pETRLEObject = sti.subimages;
+    if (TempImage.pETRLEObject) {
+      TempImage.usNumberOfObjects = sti.usNumberOfSubImages;
+      TempImage.fFlags |= IMAGE_TRLECOMPRESSED;
+    }
+    TempImage.uiSizePixData = sti.StoredSize;
+
+    TempImage.pAppData = sti.app_data;
+    if (TempImage.pAppData) {
+      TempImage.uiAppDataSize = sti.AppDataSize;
+      TempImage.fFlags |= IMAGE_APPDATA;
+    } else {
+      TempImage.pAppData = NULL;
+      TempImage.uiAppDataSize = 0;
+    }
+
+    if (sti.compressed) {
+      TempImage.fFlags |= IMAGE_COMPRESSED;
+    }
+    TempImage.usWidth = sti.Width;
+    TempImage.usHeight = sti.Height;
+    TempImage.ubBitDepth = header.end.Depth;
   }
 
-  // Determine from the header the data stored in the file. and run the appropriate loader
-  if (header.middle.tag == Rgb) {
-    TempImage.pImageData = ReadSTCIImageData(hFile, &header);
-    if (!TempImage.pImageData) {
-      File_Close(hFile);
-      return (FALSE);
-    }
-    TempImage.imageDataAllocatedInRust = true;
-    TempImage.fFlags |= IMAGE_BITMAPDATA;
-  } else if (header.middle.tag == Indexed) {
-    if (!STCILoadIndexed(&TempImage, loadAppData, hFile, &header)) {
-      DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
-      File_Close(hFile);
-      return (FALSE);
-    }
-  } else {  // unsupported type of data, or the right flags weren't set!
-    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Unknown data organization in STCI file.");
-    File_Close(hFile);
-    return (FALSE);
-  }
+  // struct STCIHeader header;
+  // if (!ReadSTCIHeader(hFile, &header)) {
+  //   DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem reading STCI header.");
+  //   File_Close(hFile);
+  //   return (FALSE);
+  // }
+
+  // // Determine from the header the data stored in the file. and run the appropriate loader
+  // if (header.middle.tag == Rgb) {
+  //   TempImage.pImageData = ReadSTCIImageData(hFile, &header);
+  //   if (!TempImage.pImageData) {
+  //     File_Close(hFile);
+  //     return (FALSE);
+  //   }
+  //   TempImage.imageDataAllocatedInRust = true;
+  //   TempImage.fFlags |= IMAGE_BITMAPDATA;
+  // } else if (header.middle.tag == Indexed) {
+  //   if (!STCILoadIndexed(&TempImage, loadAppData, hFile, &header)) {
+  //     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Problem loading palettized image.");
+  //     File_Close(hFile);
+  //     return (FALSE);
+  //   }
+  // } else {  // unsupported type of data, or the right flags weren't set!
+  //   DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Unknown data organization in STCI file.");
+  //   File_Close(hFile);
+  //   return (FALSE);
+  // }
 
   // Requested data loaded successfully.
   File_Close(hFile);
 
   // Set some more flags in the temporary image structure, copy it so that hImage points
   // to it, and return.
-  if (header.head.Flags & STCI_ZLIB_COMPRESSED) {
-    TempImage.fFlags |= IMAGE_COMPRESSED;
-  }
-  TempImage.usWidth = header.head.Width;
-  TempImage.usHeight = header.head.Height;
-  TempImage.ubBitDepth = header.end.Depth;
+  // if (header.head.Flags & STCI_ZLIB_COMPRESSED) {
+  //   TempImage.fFlags |= IMAGE_COMPRESSED;
+  // }
+  // TempImage.usWidth = header.head.Width;
+  // TempImage.usHeight = header.head.Height;
+  // TempImage.ubBitDepth = header.end.Depth;
   *hImage = TempImage;
 
   return (TRUE);
