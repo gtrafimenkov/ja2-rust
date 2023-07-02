@@ -121,9 +121,9 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
         }
 
         // Check for animated tile
-        if (hImage->uiAppDataSize > 0) {
+        if (hImage->app_data_size > 0) {
           // Valid auxiliary data, so get # od frames from data
-          pAuxData = (struct AuxObjectData *)hImage->pAppData;
+          pAuxData = (struct AuxObjectData *)hImage->app_data;
 
           if (pAuxData->fFlags & AUX_ANIMATED_TILE) {
             gpCursorFileDatabase[pCurImage->uiFileIndex].ubFlags |= ANIMATED_CURSOR;

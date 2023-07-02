@@ -15,25 +15,6 @@ struct Subimage;
 // - A comprehensive automatic blitter which blits the appropriate type based on the
 //   image header.
 
-// Defines for type of file readers
-#define PCX_FILE_READER 0x1
-#define TGA_FILE_READER 0x2
-#define STCI_FILE_READER 0x4
-#define TRLE_FILE_READER 0x8
-#define UNKNOWN_FILE_READER 0x200
-
-// Defines for buffer bit depth
-#define BUFFER_8BPP 0x1
-#define BUFFER_16BPP 0x2
-
-// Defines for image charactoristics
-#define IMAGE_COMPRESSED 0x0001
-#define IMAGE_TRLECOMPRESSED 0x0002
-#define IMAGE_PALETTE 0x0004
-#define IMAGE_BITMAPDATA 0x0008
-#define IMAGE_APPDATA 0x0010
-#define IMAGE_ALLIMAGEDATA 0x000C
-
 // Palette structure, mimics that of Win32
 struct SGPPaletteEntry;
 
@@ -61,49 +42,28 @@ struct RelTileLoc {
   INT8 bTileOffsetY;
 };
 
-typedef struct tagETRLEData {
-  PTR pPixData;
-  UINT32 uiSizePixData;
+struct ImageData {
+  void *image_data;
+  UINT32 image_data_size;
   struct Subimage *subimages;
-  UINT16 usNumberOfObjects;
-} ETRLEData;
+  UINT16 number_of_subimages;
+};
 
 // Image header structure
 struct Image {
   UINT16 usWidth;
   UINT16 usHeight;
   UINT8 ubBitDepth;
-  UINT16 fFlags;
-  struct SGPPaletteEntry *pPalette;
-  UINT16 *pui16BPPPalette;
-  UINT8 *pAppData;
-  UINT32 uiAppDataSize;
-  // This union is used to describe each data type and is flexible to include the
-  // data strucutre of the compresssed format, once developed.
-  union {
-    struct {
-      PTR pImageData;
-    };
-    struct {
-      PTR pCompressedImageData;
-    };
-    struct {
-      UINT8 *p8BPPData;
-    };
-    struct {
-      UINT16 *p16BPPData;
-    };
-    struct {
-      UINT8 *pPixData8;
-      UINT32 uiSizePixData;
-      struct Subimage *subimages;
-      UINT16 usNumberOfObjects;
-    };
-  };
+  struct SGPPaletteEntry *palette;
+  UINT8 *app_data;
+  UINT32 app_data_size;
+  void *image_data;
+  UINT32 image_data_size;
+  struct Subimage *subimages;
+  UINT16 number_of_subimages;
   bool imageDataAllocatedInRust;
   bool paletteAllocatedInRust;
 };
-//  struct Image, *struct Image*;
 
 #define SGPGetRValue(rgb) ((BYTE)(rgb))
 #define SGPGetBValue(rgb) ((BYTE)((rgb) >> 16))
@@ -114,13 +74,13 @@ struct Image {
 struct Image *CreateImage(const char *ImageFile, bool loadAppData);
 
 // This function destroys the struct Image* structure as well as its contents
-BOOLEAN DestroyImage(struct Image *hImage);
+void DestroyImage(struct Image *hImage);
 
 BOOLEAN ReleaseImageData(struct Image *hImage);
 
 // This function will run the appropriate copy function based on the type of struct Image*
 // object
-BOOLEAN CopyImageToBuffer(struct Image *hImage, UINT32 fBufferType, BYTE *pDestBuf,
+BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
                           UINT16 usDestWidth, UINT16 usDestHeight, UINT16 usX, UINT16 usY,
                           SGPRect *srcRect);
 
@@ -128,13 +88,11 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, UINT32 fBufferType, BYTE *pDestB
 
 BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
-BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
 BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
                                     UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
 
 // This function will create a buffer in memory of ETRLE data, excluding palette
-BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer);
+BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer);
 
 // UTILITY FUNCTIONS
 
@@ -146,14 +104,7 @@ UINT16 Get16BPPColor(UINT32 RGBValue);
 UINT32 GetRGBColor(UINT16 Value16BPP);
 struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
 
-extern UINT16 gusAlphaMask;
-
 // used to convert 565 RGB data into different bit-formats
 void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-
-void FreeImageData(struct Image *image);
-void FreeImagePalette(struct Image *image);
-void FreeImageSubimages(struct Image *image);
-void FreeImageAppData(struct Image *image);
 
 #endif

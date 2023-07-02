@@ -169,9 +169,6 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                        struct VObject *hSrcVObject, INT32 iX, INT32 iY,
                                        UINT16 usIndex);
 
-BOOLEAN Blt8BPPDataTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                 struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer, INT32 iX,
-                                 INT32 iY);
 BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                     struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
                                     UINT32 uiSrcPitch, INT32 iX, INT32 iY, SGPRect *pRect);
@@ -245,8 +242,5 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZPixelateObscured(UINT16 *pBuffer, UINT32 u
                                                        UINT16 *pZBuffer, UINT16 usZValue,
                                                        struct VObject *hSrcVObject, INT32 iX,
                                                        INT32 iY, UINT16 usIndex);
-
-BOOLEAN FillRect16BPP(UINT16 *pBuffer, UINT32 uiDestPitchBYTES, INT32 x1, INT32 y1, INT32 x2,
-                      INT32 y2, UINT16 color);
 
 #endif

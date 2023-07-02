@@ -3525,7 +3525,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   // check if whole thing is clipped
   if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
@@ -3912,7 +3912,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   // check if whole thing is clipped
   if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
@@ -4306,7 +4306,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   // check if whole thing is clipped
   if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
@@ -4711,7 +4711,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   // check if whole thing is clipped
   if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -5159,7 +5159,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   // check if whole thing is clipped
   if ((TopSkip >= (INT32)usHeight) || (BottomSkip >= (INT32)usHeight)) return (TRUE);
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * (iTempY + TopSkip)) + ((iTempX + LeftSkip) * 2);
   LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
@@ -6113,7 +6113,7 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
     return FALSE;
   }
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
   LineSkip = (uiDestPitchBYTES - (usWidth * 2));
 
@@ -6241,7 +6241,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
     return FALSE;
   }
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
   ZPtr = (UINT8 *)pZBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
@@ -6355,7 +6355,7 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
     return FALSE;
   }
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
   ZPtr = (UINT8 *)pZBuffer + (1280 * iTempY) + (iTempX * 2);
   p16BPPPalette = hSrcVObject->pShadeCurrent;
   LineSkip = (1280 - (usWidth * 2));

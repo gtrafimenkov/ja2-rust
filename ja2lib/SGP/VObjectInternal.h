@@ -18,12 +18,12 @@ typedef struct {
 // The video object contains different data based on it's type, compressed or not
 struct VObject {
   UINT32 fFlags;                          // Special flags
-  UINT32 uiSizePixData;                   // ETRLE data size
+  UINT32 image_data_size;                 // ETRLE data size
   struct SGPPaletteEntry *pPaletteEntry;  // 8BPP Palette
   COLORVAL TransparentColor;              // Defaults to 0,0,0
   UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
 
-  PTR pPixData;               // ETRLE pixel data
+  PTR image_data;              // ETRLE pixel data
   struct Subimage *subimages;  // Object offset data etc
   SixteenBPPObjectInfo *p16BPPObject;
   UINT16 *pShades[HVOBJECT_SHADE_TABLES];  // Shading tables
@@ -34,8 +34,8 @@ struct VObject {
   ZStripInfo **ppZStripInfo;  // Z-value strip info arrays
 
   UINT16 usNumberOf16BPPObjects;
-  UINT16 usNumberOfObjects;  // Total number of objects
-  UINT8 ubBitDepth;          // BPP
+  UINT16 number_of_subimages;  // Total number of objects
+  UINT8 ubBitDepth;            // BPP
 
   // Reserved for added room and 32-byte boundaries
   BYTE bReserved[1];

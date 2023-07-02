@@ -364,7 +364,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   }
 
   // Check if returned himage is TRLE compressed - return error if not
-  if (!(hImage->fFlags & IMAGE_TRLECOMPRESSED)) {
+  if (!hImage->subimages) {
     MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
     DestroyImage(hImage);
@@ -375,22 +375,22 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
-  ETRLEData TempETRLEData;
-  if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
+  struct ImageData TempETRLEData;
+  if (!(CopyImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
 
   // Set values
-  hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
+  hVObject->number_of_subimages = TempETRLEData.number_of_subimages;
   hVObject->subimages = TempETRLEData.subimages;
-  hVObject->pPixData = TempETRLEData.pPixData;
-  hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
+  hVObject->image_data = TempETRLEData.image_data;
+  hVObject->image_data_size = TempETRLEData.image_data_size;
 
   // Set palette from himage
   if (hImage->ubBitDepth == 8) {
     hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
     hVObject->pGlow8 = ubColorTables[0];
-    SetVideoObjectPalette(hVObject, hImage->pPalette);
+    SetVideoObjectPalette(hVObject, hImage->palette);
   }
 
   // Delete himage object
@@ -401,7 +401,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
 
 struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   struct VObject *hVObject;
-  ETRLEData TempETRLEData;
+  struct ImageData TempETRLEData;
 
   // Allocate memory for video object data and initialize
   hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
@@ -417,7 +417,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   }
 
   // Check if returned himage is TRLE compressed - return error if not
-  if (!(hImage->fFlags & IMAGE_TRLECOMPRESSED)) {
+  if (!hImage->subimages) {
     MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
     DestroyImage(hImage);
@@ -428,21 +428,21 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
-  if (!(GetETRLEImageData(hImage, &TempETRLEData))) {
+  if (!(CopyImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
 
   // Set values
-  hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
+  hVObject->number_of_subimages = TempETRLEData.number_of_subimages;
   hVObject->subimages = TempETRLEData.subimages;
-  hVObject->pPixData = TempETRLEData.pPixData;
-  hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
+  hVObject->image_data = TempETRLEData.image_data;
+  hVObject->image_data_size = TempETRLEData.image_data_size;
 
   // Set palette from himage
   if (hImage->ubBitDepth == 8) {
     hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
     hVObject->pGlow8 = ubColorTables[0];
-    SetVideoObjectPalette(hVObject, hImage->pPalette);
+    SetVideoObjectPalette(hVObject, hImage->palette);
   }
 
   return (hVObject);
@@ -503,9 +503,9 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
     //		hVObject->pPaletteEntry = NULL;
   }
 
-  if (hVObject->pPixData != NULL) {
-    MemFree(hVObject->pPixData);
-    //		hVObject->pPixData = NULL;
+  if (hVObject->image_data != NULL) {
+    MemFree(hVObject->image_data);
+    //		hVObject->image_data = NULL;
   }
 
   if (hVObject->subimages != NULL) {
@@ -514,7 +514,7 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
   }
 
   if (hVObject->ppZStripInfo != NULL) {
-    for (usLoop = 0; usLoop < hVObject->usNumberOfObjects; usLoop++) {
+    for (usLoop = 0; usLoop < hVObject->number_of_subimages; usLoop++) {
       if (hVObject->ppZStripInfo[usLoop] != NULL) {
         MemFree(hVObject->ppZStripInfo[usLoop]->pbZChange);
         MemFree(hVObject->ppZStripInfo[usLoop]);
@@ -728,7 +728,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   if (!(hVObject != NULL)) {
     return FALSE;
   }
-  if (!(usETRLEIndex < hVObject->usNumberOfObjects)) {
+  if (!(usETRLEIndex < hVObject->number_of_subimages)) {
     return FALSE;
   }
 
@@ -742,7 +742,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   }
 
   // Assuming everything's okay, go ahead and look...
-  pCurrent = &((UINT8 *)hVObject->pPixData)[subimages->data_offset];
+  pCurrent = &((UINT8 *)hVObject->image_data)[subimages->data_offset];
 
   // Skip past all uninteresting scanlines
   while (usLoopY < usY) {
@@ -788,7 +788,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct Subimage 
   if (!(usIndex >= 0)) {
     return FALSE;
   }
-  if (!(usIndex < hVObject->usNumberOfObjects)) {
+  if (!(usIndex < hVObject->number_of_subimages)) {
     return FALSE;
   }
 

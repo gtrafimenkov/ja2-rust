@@ -798,7 +798,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
   iStartPos = 0;
   LineSkip = usWidth;
 
-  SrcPtr = (UINT8 *)hSrcVObject->pPixData + uiOffset;
+  SrcPtr = (UINT8 *)hSrcVObject->image_data + uiOffset;
 
 #ifdef _WINDOWS
   __asm {

@@ -80,9 +80,6 @@
     <ClCompile Include="SGP\HImage.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
-    <ClCompile Include="SGP\ImpTGA.c">
-      <Filter>Source Files\SGP</Filter>
-    </ClCompile>
     <ClCompile Include="SGP\Input.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
@@ -1048,9 +1045,6 @@
     <ClInclude Include="SGP\HImage.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
-    <ClInclude Include="SGP\ImpTGA.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
     <ClInclude Include="SGP\Input.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
@@ -1088,9 +1082,6 @@
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\Timer.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
-    <ClInclude Include="SGP\TRLE.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\Types.h">
