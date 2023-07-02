@@ -63,10 +63,8 @@ extern "C" {
  * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
  * Memory must be freed with RustDealloc.
  */
-struct STIImageLoaded LoadSTIImage2(FileID file_id,
-                                    bool load_app_data);
-
-struct STIImageLoaded LoadSTIImage(FileID file_id, bool load_app_data);
+struct STIImageLoaded LoadSTIImage(FileID file_id,
+                                   bool load_app_data);
 
 #ifdef __cplusplus
 } // extern "C"
