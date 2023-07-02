@@ -85,7 +85,7 @@ struct Image {
       PTR pImageData;
     };
     struct {
-      UINT8 *p8BPPData;  // is used by TGA and PCX
+      UINT8 *p8BPPData;  // is used by PCX image
     };
     struct {
       UINT16 *p16BPPData;  // is used by TGA images

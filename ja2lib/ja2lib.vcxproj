@@ -126,7 +126,6 @@
     <ClCompile Include="SGP\English.c" />
     <ClCompile Include="SGP\Font.c" />
     <ClCompile Include="SGP\HImage.c" />
-    <ClCompile Include="SGP\ImpTGA.c" />
     <ClCompile Include="SGP\Input.c" />
     <ClCompile Include="SGP\Ja2Libs.c" />
     <ClCompile Include="SGP\Line.c" />
@@ -460,7 +459,6 @@
     <ClInclude Include="SGP\English.h" />
     <ClInclude Include="SGP\Font.h" />
     <ClInclude Include="SGP\HImage.h" />
-    <ClInclude Include="SGP\ImpTGA.h" />
     <ClInclude Include="SGP\Input.h" />
     <ClInclude Include="SGP\Ja2Libs.h" />
     <ClInclude Include="SGP\Line.h" />

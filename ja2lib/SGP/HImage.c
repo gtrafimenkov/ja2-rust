@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "SGP/Debug.h"
-#include "SGP/ImpTGA.h"
 #include "SGP/PCX.h"
 #include "SGP/STCI.h"
 #include "SGP/Types.h"
@@ -64,13 +63,6 @@ struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
     struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
     memset(hImage, 0, sizeof(struct Image));
     if (!LoadPCXFileToImage(imageFileCopy, hImage)) {
-      return NULL;
-    }
-    return (hImage);
-  } else if (strcasecmp(Extension, "TGA") == 0) {
-    struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
-    memset(hImage, 0, sizeof(struct Image));
-    if (!LoadTGAFileToImage(imageFileCopy, hImage)) {
       return NULL;
     }
     return (hImage);
