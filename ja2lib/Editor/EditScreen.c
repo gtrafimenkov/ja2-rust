@@ -74,6 +74,8 @@
 #include "Utils/TextInput.h"
 #include "rust_images.h"
 
+extern struct SGPPaletteEntry gEditorLightColor;
+
 extern void CopyMercPlacement(INT32 iMapIndex);
 extern void PasteMercPlacement(INT32 iMapIndex);
 

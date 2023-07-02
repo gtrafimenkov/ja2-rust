@@ -33,6 +33,7 @@
 #include "Tactical/WorldItems.h"
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/IsometricUtils.h"
+#include "TileEngine/Lighting.h"
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/Smell.h"
@@ -58,7 +59,6 @@
 #define MAX_NUM_CROWS 6
 
 // From lighting
-extern struct SGPPaletteEntry gpLightColors[3];
 extern UINT16 gusShadeLevels[16][3];
 
 void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse);

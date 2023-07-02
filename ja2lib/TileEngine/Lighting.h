@@ -191,6 +191,7 @@ extern UINT8 ubAmbientLightLevel;
 extern UINT8 gubNumLightColors;
 
 // Lighting colors
+struct SGPPaletteEntry;
 extern UINT8 gubNumLightColors;
 extern struct SGPPaletteEntry gpLightColors[3];
 

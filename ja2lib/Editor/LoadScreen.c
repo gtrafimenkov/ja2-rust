@@ -50,6 +50,8 @@
 
 struct FileDialogList;
 
+extern struct SGPPaletteEntry gEditorLightColor;
+
 //===========================================================================
 
 BOOLEAN gfErrorCatch = FALSE;
