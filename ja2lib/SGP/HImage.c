@@ -191,7 +191,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 u
 
   // Assertions
   Assert(hImage != NULL);
-  Assert(hImage->p16BPPData != NULL);
+  Assert(hImage->pImageData != NULL);
 
   // Validations
   if (!(usX >= 0)) {
@@ -224,7 +224,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 u
 
   // Copy line by line
   pDest = (UINT8 *)pDestBuf + uiDestStart;
-  pSrc = hImage->p8BPPData + uiSrcStart;
+  pSrc = (UINT8 *)hImage->pImageData + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize);
@@ -244,7 +244,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
   UINT16 *pDest, *pSrc;
 
   Assert(hImage != NULL);
-  Assert(hImage->p16BPPData != NULL);
+  Assert(hImage->pImageData != NULL);
 
   // Validations
   if (!(usX >= 0)) {
@@ -281,7 +281,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
 
   // Copy line by line
   pDest = (UINT16 *)pDestBuf + uiDestStart;
-  pSrc = hImage->p16BPPData + uiSrcStart;
+  pSrc = (UINT16 *)hImage->pImageData + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize * 2);
@@ -315,7 +315,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   Assert(hImage != NULL);
 
   // Validations
-  if (!(hImage->p16BPPData != NULL)) {
+  if (!(hImage->pImageData != NULL)) {
     return FALSE;
   }
   if (!(usX >= 0)) {
@@ -352,7 +352,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
 
   // Convert to Pixel specification
   pDest = (UINT16 *)pDestBuf + uiDestStart;
-  pSrc = hImage->p8BPPData + uiSrcStart;
+  pSrc = (UINT8 *)hImage->pImageData + uiSrcStart;
   DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("Start Copying at %p", pDest));
 
   // For every entry, look up into 16BPP palette

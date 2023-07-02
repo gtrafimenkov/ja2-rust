@@ -48,11 +48,11 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
   // Read and allocate bitmap block if requested
   {
     // Allocate memory for buffer
-    hImage->p8BPPData = (UINT8 *)MemAlloc(hImage->usWidth * hImage->usHeight);
+    hImage->pImageData = (UINT8 *)MemAlloc(hImage->usWidth * hImage->usHeight);
 
-    if (!BlitPcxToBuffer(pPcxObject, hImage->p8BPPData, hImage->usWidth, hImage->usHeight, 0, 0,
-                         FALSE)) {
-      MemFree(hImage->p8BPPData);
+    if (!BlitPcxToBuffer(pPcxObject, (UINT8 *)hImage->pImageData, hImage->usWidth, hImage->usHeight,
+                         0, 0, FALSE)) {
+      MemFree(hImage->pImageData);
       return (FALSE);
     }
   }
