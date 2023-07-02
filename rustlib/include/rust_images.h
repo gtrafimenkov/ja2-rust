@@ -9,6 +9,10 @@
 
 #define STCI_ID_LEN 4
 
+#define STCI_ZLIB_COMPRESSED 16
+
+#define STCI_ETRLE_COMPRESSED 32
+
 /**
  * Structure that describes one image from an indexed STCI file
  */

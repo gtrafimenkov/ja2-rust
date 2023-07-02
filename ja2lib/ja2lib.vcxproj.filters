@@ -1048,9 +1048,6 @@
     <ClInclude Include="SGP\HImage.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
-    <ClInclude Include="SGP\ImgFmt.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
     <ClInclude Include="SGP\ImpTGA.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>

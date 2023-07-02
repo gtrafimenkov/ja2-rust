@@ -56,8 +56,8 @@ pub struct STCIHeader {
 
 const STCI_RGB: u32 = 0x0004;
 const STCI_INDEXED: u32 = 0x0008;
-const STCI_ZLIB_COMPRESSED: u32 = 0x0010;
-const STCI_ETRLE_COMPRESSED: u32 = 0x0020;
+pub const STCI_ZLIB_COMPRESSED: u32 = 0x0010;
+pub const STCI_ETRLE_COMPRESSED: u32 = 0x0020;
 
 #[repr(C)]
 #[allow(non_snake_case)]
@@ -310,6 +310,11 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
             results.indexed = header.head.Flags & STCI_INDEXED != 0;
             if results.indexed {
                 results.palette = ReadSTCIPalette(file_id);
+                if results.palette.is_null() {
+                    exp_debug::debug_log_write("failed to read palette data");
+                    return STIImageLoaded::default();
+                }
+
                 if header.head.Flags & STCI_ETRLE_COMPRESSED != 0 {
                     if let STCIHeaderMiddle::Indexed(indexed) = header.middle {
                         results.subimages =
@@ -321,6 +326,10 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                                 return STIImageLoaded::default();
                             }
                         }
+                        results.usNumberOfSubImages = indexed.usNumberOfSubImages;
+                    } else {
+                        exp_debug::debug_log_write("it must have been indexed image");
+                        return STIImageLoaded::default();
                     }
                 }
                 results.image_data = ReadSTCIImageData(file_id, &header);
@@ -344,6 +353,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                             return STIImageLoaded::default();
                         }
                     }
+                    results.AppDataSize = header.end.AppDataSize;
                 }
             } else {
                 results.image_data = ReadSTCIImageData(file_id, &header);
