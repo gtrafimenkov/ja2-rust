@@ -30,9 +30,6 @@ pub struct ETRLEObject {
     usWidth: u16,
 }
 
-#[no_mangle]
-pub extern "C" fn TmpImageFunc(_pe: ETRLEObject) {}
-
 /*
 Sir-Tech's Crazy Image (STCI) file format specifications.  Each file is composed of:
 - ImageFileHeader, uncompressed
@@ -192,20 +189,6 @@ fn read_stci_header(file_id: FileID) -> io::Result<STCIHeader> {
     }
 }
 
-#[no_mangle]
-pub extern "C" fn ReadSTCIHeader(file_id: FileID, data: &mut STCIHeader) -> bool {
-    match read_stci_header(file_id) {
-        Ok(header) => {
-            *data = header;
-            true
-        }
-        Err(err) => {
-            exp_debug::debug_log_write(&format!("failed to read STCI header: {err}"));
-            false
-        }
-    }
-}
-
 #[repr(C)]
 #[allow(non_snake_case)]
 /// Results of loading STI image.
@@ -257,7 +240,35 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
             results.pixel_depth = header.end.Depth;
             results.indexed = header.head.Flags & STCI_INDEXED != 0;
             if results.indexed {
-                results.palette = ReadSTCIPalette(file_id);
+                results.palette = {
+                    // palette is 256 rgb u8 values
+                    let mut data: [u8; 256 * 3] = [0; 256 * 3];
+                    unsafe {
+                        match FILE_DB.read_file_exact(file_id, &mut data) {
+                            Ok(_) => {
+                                let size = 256 * std::mem::size_of::<SGPPaletteEntry>();
+                                let pointer: *mut SGPPaletteEntry =
+                                    std::mem::transmute(exp_alloc::RustAlloc(size));
+                                let palette: &mut [SGPPaletteEntry] =
+                                    std::slice::from_raw_parts_mut(pointer, 256);
+                                for (i, item) in palette.iter_mut().enumerate().take(256) {
+                                    let start = i * 3;
+                                    item.peRed = data[start];
+                                    item.peGreen = data[start + 1];
+                                    item.peBlue = data[start + 2];
+                                    item._unused = 0;
+                                }
+                                pointer
+                            }
+                            Err(err) => {
+                                exp_debug::debug_log_write(&format!(
+                                    "failed to read STCI palette: {err:?}"
+                                ));
+                                std::ptr::null_mut()
+                            }
+                        }
+                    }
+                };
                 if results.palette.is_null() {
                     exp_debug::debug_log_write("failed to read palette data");
                     return STIImageLoaded::default();
@@ -266,7 +277,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                 if header.head.Flags & STCI_ETRLE_COMPRESSED != 0 {
                     if let STCIHeaderMiddle::Indexed(indexed) = header.middle {
                         results.subimages =
-                            ReadSTCISubimages(file_id, indexed.usNumberOfSubImages as usize);
+                            read_stci_subimages(file_id, indexed.usNumberOfSubImages as usize);
                         if results.subimages.is_null() {
                             unsafe {
                                 exp_debug::debug_log_write("failed to read the palette");
@@ -280,7 +291,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                         return STIImageLoaded::default();
                     }
                 }
-                results.image_data = ReadSTCIImageData(file_id, &header);
+                results.image_data = read_stci_image_data(file_id, &header);
                 if results.image_data.is_null() {
                     unsafe {
                         exp_debug::debug_log_write("failed to read image data");
@@ -291,7 +302,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                 }
 
                 if header.end.AppDataSize > 0 && load_app_data {
-                    results.app_data = ReadSTCIAppData(file_id, &header);
+                    results.app_data = read_stci_app_data(file_id, &header);
                     if results.app_data.is_null() {
                         unsafe {
                             exp_debug::debug_log_write("failed to read app data");
@@ -304,7 +315,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
                     results.app_data_size = header.end.AppDataSize;
                 }
             } else {
-                results.image_data = ReadSTCIImageData(file_id, &header);
+                results.image_data = read_stci_image_data(file_id, &header);
                 if results.image_data.is_null() {
                     exp_debug::debug_log_write("failed to read image data");
                     return STIImageLoaded::default();
@@ -320,11 +331,10 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     }
 }
 
-#[no_mangle]
 // Read image data of STCI image.
 // Returns pointer to the read data or null in case of an error.
 // The memory should be free afterwards using RustDealloc function.
-pub extern "C" fn ReadSTCIImageData(file_id: FileID, header: &STCIHeader) -> *mut u8 {
+fn read_stci_image_data(file_id: FileID, header: &STCIHeader) -> *mut u8 {
     let size = header.head.StoredSize as usize;
     exp_debug::debug_log_write(&format!("reading STCI image data, {size} bytes"));
     let pointer = exp_alloc::RustAlloc(size);
@@ -341,42 +351,10 @@ pub extern "C" fn ReadSTCIImageData(file_id: FileID, header: &STCIHeader) -> *mu
     }
 }
 
-#[no_mangle]
-/// Read STCI indexed image palette from file and return it as SGPPaletteEntry[256] array.
-/// If NULL is returned, there was an error reading data from file.
-/// Memory must be freed afterwards using RustDealloc function.
-pub extern "C" fn ReadSTCIPalette(file_id: FileID) -> *mut SGPPaletteEntry {
-    // palette is 256 rgb u8 values
-    let mut data: [u8; 256 * 3] = [0; 256 * 3];
-    unsafe {
-        // let slice: &mut [u8] = std::slice::from_raw_parts_mut(pointer, size);
-        match FILE_DB.read_file_exact(file_id, &mut data) {
-            Ok(_) => {
-                let size = 256 * std::mem::size_of::<SGPPaletteEntry>();
-                let pointer: *mut SGPPaletteEntry = std::mem::transmute(exp_alloc::RustAlloc(size));
-                let palette: &mut [SGPPaletteEntry] = std::slice::from_raw_parts_mut(pointer, 256);
-                for (i, item) in palette.iter_mut().enumerate().take(256) {
-                    let start = i * 3;
-                    item.peRed = data[start];
-                    item.peGreen = data[start + 1];
-                    item.peBlue = data[start + 2];
-                    item._unused = 0;
-                }
-                pointer
-            }
-            Err(err) => {
-                exp_debug::debug_log_write(&format!("failed to read STCI palette: {err:?}"));
-                std::ptr::null_mut()
-            }
-        }
-    }
-}
-
-#[no_mangle]
 /// Read STCI indexed image subimages info from the file and return it as ETRLEObject[num_subimages] array.
 /// If NULL is returned, there was an error reading data from file.
 /// Memory must be freed afterwards using RustDealloc function.
-pub extern "C" fn ReadSTCISubimages(file_id: FileID, num_subimages: usize) -> *mut ETRLEObject {
+fn read_stci_subimages(file_id: FileID, num_subimages: usize) -> *mut ETRLEObject {
     exp_debug::debug_log_write(&format!("going to read {num_subimages} subimages of STCI"));
     let size = std::mem::size_of::<ETRLEObject>() * num_subimages;
     let mut buffer = vec![0; size];
@@ -408,11 +386,10 @@ pub extern "C" fn ReadSTCISubimages(file_id: FileID, num_subimages: usize) -> *m
     }
 }
 
-#[no_mangle]
 // Read application data of STCI image.
 // Returns pointer to the read data or null in case of an error.
 // The memory should be free afterwards using RustDealloc function.
-pub extern "C" fn ReadSTCIAppData(file_id: FileID, header: &STCIHeader) -> *mut u8 {
+fn read_stci_app_data(file_id: FileID, header: &STCIHeader) -> *mut u8 {
     let size = header.end.AppDataSize as usize;
     exp_debug::debug_log_write(&format!("reading STCI app data, {size} bytes"));
     let pointer = exp_alloc::RustAlloc(size);
