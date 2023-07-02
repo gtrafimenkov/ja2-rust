@@ -678,7 +678,7 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     return (NULL);
   }
 
-  struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, image->ubBitDepth);
+  struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, 16);
 
   if (vs) {
     SGPRect tempRect;
