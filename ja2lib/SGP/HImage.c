@@ -576,15 +576,15 @@ BOOLEAN GetETRLEImageData(struct Image *hImage, ETRLEData *pBuffer) {
          sizeof(struct Subimage) * pBuffer->usNumberOfObjects);
 
   // Allocate memory for pixel data
-  pBuffer->pPixData = MemAlloc(hImage->uiSizePixData);
+  pBuffer->pPixData = MemAlloc(hImage->image_data_size);
   if (!(pBuffer->pPixData != NULL)) {
     return FALSE;
   }
 
-  pBuffer->uiSizePixData = hImage->uiSizePixData;
+  pBuffer->uiSizePixData = hImage->image_data_size;
 
   // Copy into buffer
-  memcpy(pBuffer->pPixData, hImage->pPixData8, pBuffer->uiSizePixData);
+  memcpy(pBuffer->pPixData, hImage->pImageData, pBuffer->uiSizePixData);
 
   return (TRUE);
 }

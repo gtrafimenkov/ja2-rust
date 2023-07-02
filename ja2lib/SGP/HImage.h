@@ -78,19 +78,10 @@ struct Image {
   UINT16 *pui16BPPPalette;
   UINT8 *pAppData;
   UINT32 uiAppDataSize;
-  // This union is used to describe each data type and is flexible to include the
-  // data strucutre of the compresssed format, once developed.
-  union {
-    struct {
-      void *pImageData;
-    };
-    struct {
-      UINT8 *pPixData8;
-      UINT32 uiSizePixData;
-      struct Subimage *subimages;
-      UINT16 usNumberOfObjects;
-    };
-  };
+  void *pImageData;
+  UINT32 image_data_size;
+  struct Subimage *subimages;
+  UINT16 usNumberOfObjects;
   bool imageDataAllocatedInRust;
   bool paletteAllocatedInRust;
 };
