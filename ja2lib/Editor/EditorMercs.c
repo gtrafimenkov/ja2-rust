@@ -2631,7 +2631,7 @@ void DeleteSelectedMercsItem() {
 void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   UINT32 uiVideoObjectIndex;
   struct VObject *hVObject;
-  struct ETRLEObject *pObject;
+  struct Subimage *pObject;
   INVTYPE *item;
   SGPRect SrcRect, DstRect;
   INT32 iSrcWidth, iSrcHeight;

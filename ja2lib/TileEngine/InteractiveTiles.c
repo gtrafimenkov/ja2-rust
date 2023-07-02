@@ -371,7 +371,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
   INT16 sScreenX, sScreenY;
   INT16 sOffsetX, sOffsetY;
   INT16 sTempX_S, sTempY_S;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   UINT32 usHeight, usWidth;
   TILE_ELEMENT *TileElem;
 
@@ -779,7 +779,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   BOOLEAN fDataFound = FALSE;
   INT32 iTestPos, iStartPos;
 

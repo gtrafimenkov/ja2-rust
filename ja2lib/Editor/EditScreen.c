@@ -726,7 +726,7 @@ void ShowCurrentDrawingMode(void) {
   INT32 iPicHeight, iPicWidth;
   INT16 sTempOffsetX;
   INT16 sTempOffsetY;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
   UINT16 usFillColor;
@@ -2442,7 +2442,7 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
   INT32 iPicHeight, iPicWidth;
   INT16 sTempOffsetX;
   INT16 sTempOffsetY;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
   INT32 iWinWidth, iWinHeight;
 
   NewRect.iLeft = (iWindow == 0) ? (336) : (488);

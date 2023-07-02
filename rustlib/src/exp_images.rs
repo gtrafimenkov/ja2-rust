@@ -23,7 +23,7 @@ pub struct SGPPaletteEntry {
 #[allow(non_snake_case)]
 #[derive(Debug)]
 /// Structure that describes one image from an indexed STCI file
-pub struct ETRLEObject {
+pub struct Subimage {
     uiDataOffset: u32,
     uiDataLength: u32,
     sOffsetX: i16,
@@ -63,7 +63,7 @@ pub struct STIImageLoaded {
     image_data: *mut u8,
     indexed: bool,                 // indexed (true) or rgb (false)
     palette: *mut SGPPaletteEntry, // only for indexed images
-    subimages: *mut ETRLEObject,
+    subimages: *mut Subimage,
     app_data: *mut u8,
     zlib_compressed: bool,
 }
@@ -138,7 +138,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     // allocate memory and copy palette array
     let mut palette_data_copy: *mut SGPPaletteEntry = std::ptr::null_mut();
     if let Some(palette) = img.palette {
-        let palette_data_size = palette.len() * std::mem::size_of::<ETRLEObject>();
+        let palette_data_size = palette.len() * std::mem::size_of::<Subimage>();
         unsafe {
             palette_data_copy = std::mem::transmute(exp_alloc::RustAlloc(palette_data_size));
             std::ptr::copy(palette.as_ptr(), palette_data_copy, palette.len());
@@ -154,10 +154,10 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
 
     // allocate memory for subimages array and copy data
     let mut number_of_subimages = 0;
-    let mut subimages_ptr: *mut ETRLEObject = std::ptr::null_mut();
+    let mut subimages_ptr: *mut Subimage = std::ptr::null_mut();
     if let Some(subimages) = img.subimages {
         number_of_subimages = subimages.len();
-        let data_size = number_of_subimages * std::mem::size_of::<ETRLEObject>();
+        let data_size = number_of_subimages * std::mem::size_of::<Subimage>();
         unsafe {
             subimages_ptr = std::mem::transmute(exp_alloc::RustAlloc(data_size));
             std::ptr::copy(subimages.as_ptr(), subimages_ptr, number_of_subimages);
@@ -200,7 +200,7 @@ pub struct STImage {
     image_data: Vec<u8>,
     indexed: bool,                           // indexed (true) or rgb (false)
     palette: Option<[SGPPaletteEntry; 256]>, // only for indexed images
-    subimages: Option<Vec<ETRLEObject>>,
+    subimages: Option<Vec<Subimage>>,
     app_data: Option<Vec<u8>>,
     zlib_compressed: bool,
 }
@@ -265,7 +265,7 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
         let zlib_compressed = flags & STCI_ZLIB_COMPRESSED != 0;
         let mut image_data = vec![0; stored_size];
         let mut palette: Option<[SGPPaletteEntry; 256]> = None;
-        let mut subimages: Option<Vec<ETRLEObject>> = None;
+        let mut subimages: Option<Vec<Subimage>> = None;
         let mut app_data: Option<Vec<u8>> = None;
 
         if indexed {
@@ -292,7 +292,7 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                 FILE_DB.read_file_exact(file_id, &mut buffer)?;
                 let mut reader = io::Cursor::new(buffer);
                 for _i in 0..num_subimages {
-                    let subimage = ETRLEObject {
+                    let subimage = Subimage {
                         uiDataOffset: reader.read_u32::<LittleEndian>()?,
                         uiDataLength: reader.read_u32::<LittleEndian>()?,
                         sOffsetX: reader.read_i16::<LittleEndian>()?,

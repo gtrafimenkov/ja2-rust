@@ -2336,7 +2336,7 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
   struct VObject *hVObject;
   struct VObject *hPixHandle;
   INVTYPE *pItem;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   UINT32 usHeight, usWidth;
   INT16 sCenX, sCenY;
   BOOLEAN fHighlighted = IsGunOrAmmoOfSameTypeSelected(pItemObject);

@@ -4,7 +4,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 
-struct ETRLEObject;
+struct Subimage;
 
 // The struct Image* module provides a common interface for managing image data. This module
 // includes:
@@ -64,7 +64,7 @@ struct RelTileLoc {
 typedef struct tagETRLEData {
   PTR pPixData;
   UINT32 uiSizePixData;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
   UINT16 usNumberOfObjects;
 } ETRLEData;
 
@@ -96,7 +96,7 @@ struct Image {
     struct {
       UINT8 *pPixData8;
       UINT32 uiSizePixData;
-      struct ETRLEObject *subimages;
+      struct Subimage *subimages;
       UINT16 usNumberOfObjects;
     };
   };

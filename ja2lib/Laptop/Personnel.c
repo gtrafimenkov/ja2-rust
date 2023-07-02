@@ -2184,7 +2184,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sIndex;
   struct VObject *hHandle;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INVTYPE *pItem;
   INT16 PosX, PosY, sCenX, sCenY;
   UINT32 usHeight, usWidth;

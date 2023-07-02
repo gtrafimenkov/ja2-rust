@@ -722,7 +722,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   UINT16 usLoopX = 0;
   UINT16 usLoopY = 0;
   UINT16 ubRunLength;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
 
   // Do a bunch of checks
   if (!(hVObject != NULL)) {
@@ -783,7 +783,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   return (FALSE);
 }
 
-BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObject *subimages,
+BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct Subimage *subimages,
                                       UINT16 usIndex) {
   if (!(usIndex >= 0)) {
     return FALSE;
@@ -792,7 +792,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObje
     return FALSE;
   }
 
-  memcpy(subimages, &(hVObject->subimages[usIndex]), sizeof(struct ETRLEObject));
+  memcpy(subimages, &(hVObject->subimages[usIndex]), sizeof(struct Subimage));
 
   return (TRUE);
 }
@@ -800,7 +800,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObje
 BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIndex,
                                                UINT16 *pusWidth, UINT16 *pusHeight) {
   struct VObject *hVObject;
-  struct ETRLEObject ETRLEObject;
+  struct Subimage ETRLEObject;
 
   // Get video object
   if (!(GetVideoObject(&hVObject, uiVideoObject))) {
@@ -817,7 +817,7 @@ BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIn
   return (TRUE);
 }
 
-BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, struct ETRLEObject *subimages,
+BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, struct Subimage *subimages,
                                                UINT16 usIndex) {
   struct VObject *hVObject;
 

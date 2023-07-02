@@ -790,7 +790,7 @@ BOOLEAN DisplayAmmoInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16
 BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   INT16 PosX, sCenX, sCenY;
   UINT32 usWidth;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INVTYPE *pItem;
   UINT32 uiImage;
   struct VObject *hPixHandle;

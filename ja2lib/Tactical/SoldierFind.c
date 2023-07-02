@@ -490,7 +490,7 @@ BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect) {
 void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
   INT16 sMercScreenX, sMercScreenY;
   UINT16 usAnimSurface;
-  //		struct ETRLEObject *pTrav;
+  //		struct Subimage *pTrav;
   //		UINT32 usHeight, usWidth;
 
   GetSoldierScreenPos(pSoldier, &sMercScreenX, &sMercScreenY);
@@ -556,7 +556,7 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
   UINT16 usAnimSurface;
-  //		struct ETRLEObject *pTrav;
+  //		struct Subimage *pTrav;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 

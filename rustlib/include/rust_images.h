@@ -26,7 +26,7 @@ struct SGPPaletteEntry {
 /**
  * Structure that describes one image from an indexed STCI file
  */
-struct ETRLEObject {
+struct Subimage {
   uint32_t uiDataOffset;
   uint32_t uiDataLength;
   int16_t sOffsetX;
@@ -49,7 +49,7 @@ struct STIImageLoaded {
   uint8_t *image_data;
   bool indexed;
   struct SGPPaletteEntry *palette;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
   uint8_t *app_data;
   bool zlib_compressed;
 };

@@ -1356,7 +1356,7 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
   UINT16 usETRLEStart;
   UINT16 usETRLEEnd;
   DisplaySpec *pDisplaySpec;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
   DisplayList *pCurNode;
 
   SaveSelectionList();
@@ -1432,7 +1432,7 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
   INT16 sTempOffsetX;
   INT16 sTempOffsetY;
   BOOLEAN fReturnVal;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
   UINT16 usFillColor;
   INT16 sCount;
 
