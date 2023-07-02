@@ -2340,7 +2340,7 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
   struct VObject *hVObject;
   struct VObject *hPixHandle;
   INVTYPE *pItem;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   uint32_t usHeight, usWidth;
   int16_t sCenX, sCenY;
   BOOLEAN fHighlighted = IsGunOrAmmoOfSameTypeSelected(pItemObject);
@@ -2359,15 +2359,15 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
   // Display the item graphic, and price
   pItem = &Item[usItemIndex];
   GetVideoObject(&hVObject, GetInterfaceGraphicForItem(pItem));
-  pTrav = &(hVObject->pETRLEObject[pItem->ubGraphicNum]);
+  pTrav = &(hVObject->subimages[pItem->ubGraphicNum]);
 
-  usHeight = (uint32_t)pTrav->usHeight;
-  usWidth = (uint32_t)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->height;
+  usWidth = (uint32_t)pTrav->width;
 
   sCenX = usPosX + 7 + (int16_t)(abs((int32_t)SKI_INV_WIDTH - 3 - (int32_t)usWidth) / 2) -
-          pTrav->sOffsetX;
+          pTrav->x_offset;
   sCenY =
-      usPosY + (int16_t)(abs((int32_t)SKI_INV_HEIGHT - (int32_t)usHeight) / 2) - pTrav->sOffsetY;
+      usPosY + (int16_t)(abs((int32_t)SKI_INV_HEIGHT - (int32_t)usHeight) / 2) - pTrav->y_offset;
 
   // Restore the background region
   RestoreExternBackgroundRect(usPosX, usPosY, SKI_INV_SLOT_WIDTH, SKI_INV_HEIGHT);

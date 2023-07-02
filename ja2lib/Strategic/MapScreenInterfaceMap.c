@@ -46,9 +46,9 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
+#include "rust_images.h"
 #include "rust_sam_sites.h"
 #include "rust_towns.h"
-#include "rust_images.h"
 
 // zoom x and y coords for map scrolling
 int32_t iZoomX = 0;
@@ -4388,7 +4388,7 @@ void RemoveMilitiaPopUpBox(void) {
 
 BOOLEAN DrawMilitiaPopUpBox(void) {
   struct VObject *hVObject;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
 
   if (!fShowMilitia) {
     sSelectedMilitiaTown = 0;
@@ -4435,10 +4435,10 @@ BOOLEAN DrawMilitiaPopUpBox(void) {
   ShowHighLightedSectorOnMilitiaMap();
 
   GetVideoObject(&hVObject, guiMilitia);
-  pTrav = &(hVObject->pETRLEObject[0]);
+  pTrav = &(hVObject->subimages[0]);
 
   InvalidateRegion(MAP_MILITIA_BOX_POS_X, MAP_MILITIA_BOX_POS_Y,
-                   MAP_MILITIA_BOX_POS_X + pTrav->usWidth, MAP_MILITIA_BOX_POS_Y + pTrav->usHeight);
+                   MAP_MILITIA_BOX_POS_X + pTrav->width, MAP_MILITIA_BOX_POS_Y + pTrav->height);
 
   // set the text for the militia map sector info buttons
   SetMilitiaMapButtonsText();
@@ -4733,8 +4733,8 @@ void CreateDestroyMilitiaSectorButtons(void) {
 
     // mark here the militia box left click region
     // MSYS_DefineRegion( &gMapScreenMilitiaRegion, ( int16_t ) ( MAP_MILITIA_BOX_POS_X ), ( int16_t
-    // )( MAP_MILITIA_BOX_POS_Y  ), ( int16_t )( MAP_MILITIA_BOX_POS_X + pTrav->usWidth ), ( int16_t
-    // )( MAP_MILITIA_BOX_POS_Y + pTrav->usHeight ), MSYS_PRIORITY_HIGHEST - 2, MSYS_NO_CURSOR,
+    // )( MAP_MILITIA_BOX_POS_Y  ), ( int16_t )( MAP_MILITIA_BOX_POS_X + pTrav->width ), ( int16_t
+    // )( MAP_MILITIA_BOX_POS_Y + pTrav->height ), MSYS_PRIORITY_HIGHEST - 2, MSYS_NO_CURSOR,
     // MilitiaRegionMoveCallback, MilitiaBoxMaskBtnCallback );
 
     CreateScreenMaskForMoveBox();

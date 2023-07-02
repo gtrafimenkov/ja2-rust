@@ -17,22 +17,22 @@
  * Palette structure, mimics that of Win32
  */
 struct SGPPaletteEntry {
-  uint8_t peRed;
-  uint8_t peGreen;
-  uint8_t peBlue;
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
   uint8_t _unused;
 };
 
 /**
  * Structure that describes one image from an indexed STCI file
  */
-struct ETRLEObject {
-  uint32_t uiDataOffset;
-  uint32_t uiDataLength;
-  int16_t sOffsetX;
-  int16_t sOffsetY;
-  uint16_t usHeight;
-  uint16_t usWidth;
+struct Subimage {
+  uint32_t data_offset;
+  uint32_t data_length;
+  int16_t x_offset;
+  int16_t y_offset;
+  uint16_t height;
+  uint16_t width;
 };
 
 /**
@@ -49,7 +49,7 @@ struct STIImageLoaded {
   uint8_t *image_data;
   bool indexed;
   struct SGPPaletteEntry *palette;
-  struct ETRLEObject *subimages;
+  struct Subimage *subimages;
   uint8_t *app_data;
   bool zlib_compressed;
 };

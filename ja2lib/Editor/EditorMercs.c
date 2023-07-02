@@ -2645,7 +2645,7 @@ void DeleteSelectedMercsItem() {
 void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   uint32_t uiVideoObjectIndex;
   struct VObject *hVObject;
-  struct ETRLEObject *pObject;
+  struct Subimage *pObject;
   INVTYPE *item;
   SGPRect SrcRect, DstRect;
   int32_t iSrcWidth, iSrcHeight;
@@ -2734,12 +2734,12 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   BltVideoObjectOutlineFromIndex(src, uiVideoObjectIndex, item->ubGraphicNum, 0, 0, 0, FALSE);
 
   // crop the source image
-  pObject = &hVObject->pETRLEObject[item->ubGraphicNum];
-  iSrcWidth = pObject->usWidth;
-  iSrcHeight = pObject->usHeight;
-  SrcRect.iLeft += pObject->sOffsetX;
+  pObject = &hVObject->subimages[item->ubGraphicNum];
+  iSrcWidth = pObject->width;
+  iSrcHeight = pObject->height;
+  SrcRect.iLeft += pObject->x_offset;
   SrcRect.iRight = SrcRect.iLeft + iSrcWidth;
-  SrcRect.iTop += pObject->sOffsetY;
+  SrcRect.iTop += pObject->y_offset;
   SrcRect.iBottom = SrcRect.iTop + iSrcHeight;
 
   // if the source image width is less than 30 (small slot), then modify the DstRect.

@@ -37,8 +37,8 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
-#include "rust_laptop.h"
 #include "rust_images.h"
+#include "rust_laptop.h"
 
 // struct POINT;
 
@@ -2188,7 +2188,7 @@ void RenderInventoryForCharacter(int32_t iId, int32_t iSlot) {
   struct SOLDIERTYPE *pSoldier;
   int16_t sIndex;
   struct VObject *hHandle;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INVTYPE *pItem;
   int16_t PosX, PosY, sCenX, sCenY;
   uint32_t usHeight, usWidth;
@@ -2233,13 +2233,13 @@ void RenderInventoryForCharacter(int32_t iId, int32_t iSlot) {
         pItem = &Item[sIndex];
 
         GetVideoObject(&hHandle, GetInterfaceGraphicForItem(pItem));
-        pTrav = &(hHandle->pETRLEObject[pItem->ubGraphicNum]);
+        pTrav = &(hHandle->subimages[pItem->ubGraphicNum]);
 
-        usHeight = (uint32_t)pTrav->usHeight;
-        usWidth = (uint32_t)pTrav->usWidth;
+        usHeight = (uint32_t)pTrav->height;
+        usWidth = (uint32_t)pTrav->width;
 
-        sCenX = PosX + (abs((int32_t)(57 - usWidth)) / 2) - pTrav->sOffsetX;
-        sCenY = PosY + (abs((int32_t)(22 - usHeight)) / 2) - pTrav->sOffsetY;
+        sCenX = PosX + (abs((int32_t)(57 - usWidth)) / 2) - pTrav->x_offset;
+        sCenY = PosY + (abs((int32_t)(22 - usHeight)) / 2) - pTrav->y_offset;
 
         // blt the item
         BltVideoObjectOutlineFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,

@@ -1682,7 +1682,7 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
                    int16_t sOutlineColor) {
   uint16_t uiStringLength;
   INVTYPE *pItem;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   uint32_t usHeight, usWidth;
   int16_t sCenX, sCenY, sNewY, sNewX;
   struct VObject *hVObject;
@@ -1705,14 +1705,14 @@ void INVRenderItem(struct VSurface *dest, struct SOLDIERTYPE *pSoldier, struct O
   if (fDirtyLevel == DIRTYLEVEL2) {
     // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
     GetVideoObject(&hVObject, GetInterfaceGraphicForItem(pItem));
-    pTrav = &(hVObject->pETRLEObject[pItem->ubGraphicNum]);
-    usHeight = (uint32_t)pTrav->usHeight;
-    usWidth = (uint32_t)pTrav->usWidth;
+    pTrav = &(hVObject->subimages[pItem->ubGraphicNum]);
+    usHeight = (uint32_t)pTrav->height;
+    usWidth = (uint32_t)pTrav->width;
 
     // CENTER IN SLOT!
     // CANCEL OFFSETS!
-    sCenX = sX + (abs((int16_t)(sWidth - usWidth)) / 2) - pTrav->sOffsetX;
-    sCenY = sY + (abs((int16_t)(sHeight - usHeight)) / 2) - pTrav->sOffsetY;
+    sCenX = sX + (abs((int16_t)(sWidth - usWidth)) / 2) - pTrav->x_offset;
+    sCenY = sY + (abs((int16_t)(sHeight - usHeight)) / 2) - pTrav->y_offset;
 
     // Shadow area
     BltVideoObjectOutlineShadowFromIndex(dest, GetInterfaceGraphicForItem(pItem),
@@ -2570,7 +2570,7 @@ void ItemDescAttachmentsCallback(struct MOUSE_REGION *pRegion, int32_t iReason) 
 }
 
 void RenderItemDescriptionBox() {
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   uint32_t usHeight, usWidth;
   int16_t sCenX, sCenY, sStrX;
   struct VObject *hVObject;
@@ -2589,16 +2589,16 @@ void RenderItemDescriptionBox() {
   if ((guiCurrentItemDescriptionScreen == MAP_SCREEN) && (gfInItemDescBox)) {
     // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
     GetVideoObject(&hVObject, guiItemGraphic);
-    pTrav = &(hVObject->pETRLEObject[0]);
-    usHeight = (uint32_t)pTrav->usHeight;
-    usWidth = (uint32_t)pTrav->usWidth;
+    pTrav = &(hVObject->subimages[0]);
+    usHeight = (uint32_t)pTrav->height;
+    usWidth = (uint32_t)pTrav->width;
 
     // CENTER IN SLOT!
     // REMOVE OFFSETS!
     sCenX =
-        MAP_ITEMDESC_ITEM_X + (abs((int16_t)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
+        MAP_ITEMDESC_ITEM_X + (abs((int16_t)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->x_offset;
     sCenY = MAP_ITEMDESC_ITEM_Y + (abs((int16_t)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) -
-            pTrav->sOffsetY;
+            pTrav->y_offset;
 
     BltVObjectFromIndex(vsSB, guiMapItemDescBox, 0, gsInvDescX, gsInvDescY);
 
@@ -3101,14 +3101,14 @@ void RenderItemDescriptionBox() {
   } else if (gfInItemDescBox) {
     // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
     GetVideoObject(&hVObject, guiItemGraphic);
-    pTrav = &(hVObject->pETRLEObject[0]);
-    usHeight = (uint32_t)pTrav->usHeight;
-    usWidth = (uint32_t)pTrav->usWidth;
+    pTrav = &(hVObject->subimages[0]);
+    usHeight = (uint32_t)pTrav->height;
+    usWidth = (uint32_t)pTrav->width;
 
     // CENTER IN SLOT!
-    sCenX = ITEMDESC_ITEM_X + (abs((int16_t)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
+    sCenX = ITEMDESC_ITEM_X + (abs((int16_t)(ITEMDESC_ITEM_WIDTH - usWidth)) / 2) - pTrav->x_offset;
     sCenY =
-        ITEMDESC_ITEM_Y + (abs((int16_t)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->sOffsetY;
+        ITEMDESC_ITEM_Y + (abs((int16_t)(ITEMDESC_ITEM_HEIGHT - usHeight)) / 2) - pTrav->y_offset;
 
     BltVObjectFromIndex(vsSB, guiItemDescBox, 0, gsInvDescX, gsInvDescY);
 
@@ -4575,7 +4575,7 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int
   int16_t sX, sY, sCenX, sCenY;
   SGPRect aRect;
   uint8_t ubLimit;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   struct VObject *hVObject;
   int32_t cnt;
   uint16_t usPopupWidth;
@@ -4611,8 +4611,8 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int
 
   // Get size
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
-  usPopupWidth = pTrav->usWidth;
+  pTrav = &(hVObject->subimages[0]);
+  usPopupWidth = pTrav->width;
 
   // Determine position, height and width of mouse region, area
   GetSlotInvXY(ubPosition, &sX, &sY);
@@ -4620,7 +4620,7 @@ BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int
 
   // Get Width, Height
   gsItemPopupWidth = ubLimit * usPopupWidth;
-  gsItemPopupHeight = pTrav->usHeight;
+  gsItemPopupHeight = pTrav->height;
   gubNumItemPopups = ubLimit;
 
   // Calculate X,Y, first center
@@ -4699,7 +4699,7 @@ void EndItemStackPopupWithItemInHand() {
 }
 
 void RenderItemStackPopup(BOOLEAN fFullRender) {
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   uint32_t usWidth;
   struct VObject *hVObject;
   uint32_t cnt;
@@ -4718,8 +4718,8 @@ void RenderItemStackPopup(BOOLEAN fFullRender) {
   }
   // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
-  usWidth = (uint32_t)pTrav->usWidth;
+  pTrav = &(hVObject->subimages[0]);
+  usWidth = (uint32_t)pTrav->width;
 
   for (cnt = 0; cnt < gubNumItemPopups; cnt++) {
     BltVObjectFromIndex(vsFB, guiItemPopupBoxes, 0, gsItemPopupX + (cnt * usWidth), gsItemPopupY);
@@ -4776,7 +4776,7 @@ void DeleteItemStackPopup() {
 BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY,
                          int16_t sInvWidth, int16_t sInvHeight) {
   SGPRect aRect;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   struct VObject *hVObject;
   int32_t cnt;
   uint16_t usPopupWidth, usPopupHeight;
@@ -4808,9 +4808,9 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sI
 
   // Get size
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
-  usPopupWidth = pTrav->usWidth;
-  usPopupHeight = pTrav->usHeight;
+  pTrav = &(hVObject->subimages[0]);
+  usPopupWidth = pTrav->width;
+  usPopupHeight = pTrav->height;
 
   // Determine position, height and width of mouse region, area
   // GetSlotInvHeightWidth( ubSlotSimilarToKeySlot, &sItemSlotWidth, &sItemSlotHeight );
@@ -4866,7 +4866,7 @@ BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sI
 }
 
 void RenderKeyRingPopup(BOOLEAN fFullRender) {
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   uint32_t usHeight, usWidth;
   struct VObject *hVObject;
   uint32_t cnt;
@@ -4900,9 +4900,9 @@ void RenderKeyRingPopup(BOOLEAN fFullRender) {
 
   // TAKE A LOOK AT THE VIDEO OBJECT SIZE ( ONE OF TWO SIZES ) AND CENTER!
   GetVideoObject(&hVObject, guiItemPopupBoxes);
-  pTrav = &(hVObject->pETRLEObject[0]);
-  usHeight = (uint32_t)pTrav->usHeight;
-  usWidth = (uint32_t)pTrav->usWidth;
+  pTrav = &(hVObject->subimages[0]);
+  usHeight = (uint32_t)pTrav->height;
+  usWidth = (uint32_t)pTrav->width;
 
   if (IsMapScreen_2()) {
     sKeyRingItemWidth = MAP_KEY_RING_ROW_WIDTH;

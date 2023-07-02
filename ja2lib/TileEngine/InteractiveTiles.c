@@ -371,7 +371,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, int16_t sXP
   int16_t sScreenX, sScreenY;
   int16_t sOffsetX, sOffsetY;
   int16_t sTempX_S, sTempY_S;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   uint32_t usHeight, usWidth;
   TILE_ELEMENT *TileElem;
 
@@ -383,7 +383,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, int16_t sXP
 
   if (pNode->uiFlags & LEVELNODE_CACHEDANITILE) {
     pTrav = &(gpTileCache[pNode->pAniTile->sCachedTileID]
-                  .pImagery->vo->pETRLEObject[pNode->pAniTile->sCurrentFrame]);
+                  .pImagery->vo->subimages[pNode->pAniTile->sCurrentFrame]);
   } else {
     TileElem = &(gTileDatabase[pNode->usIndex]);
 
@@ -398,7 +398,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, int16_t sXP
       }
     }
 
-    pTrav = &(TileElem->hTileSurface->pETRLEObject[TileElem->usRegionIndex]);
+    pTrav = &(TileElem->hTileSurface->subimages[TileElem->usRegionIndex]);
   }
 
   sScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (int16_t)sTempX_S;
@@ -417,12 +417,12 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, int16_t sXP
   // Adjust for render height
   sScreenY += gsRenderHeight;
 
-  usHeight = (uint32_t)pTrav->usHeight;
-  usWidth = (uint32_t)pTrav->usWidth;
+  usHeight = (uint32_t)pTrav->height;
+  usWidth = (uint32_t)pTrav->width;
 
   // Add to start position of dest buffer
-  sScreenX += (pTrav->sOffsetX - (WORLD_TILE_X / 2));
-  sScreenY += (pTrav->sOffsetY - (WORLD_TILE_Y / 2));
+  sScreenX += (pTrav->x_offset - (WORLD_TILE_X / 2));
+  sScreenY += (pTrav->y_offset - (WORLD_TILE_Y / 2));
 
   // Adjust y offset!
   sScreenY += (WORLD_TILE_Y / 2);
@@ -777,7 +777,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint
   uint32_t usHeight, usWidth;
   uint8_t *SrcPtr;
   uint32_t LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   BOOLEAN fDataFound = FALSE;
   int32_t iTestPos, iStartPos;
 
@@ -785,10 +785,10 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, uint
   Assert(hSrcVObject != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (uint32_t)pTrav->usHeight;
-  usWidth = (uint32_t)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (uint32_t)pTrav->height;
+  usWidth = (uint32_t)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Calculate test position we are looking for!
   // Calculate from 0, 0 at top left!

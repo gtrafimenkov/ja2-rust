@@ -27,8 +27,8 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
     hImage->fFlags |= IMAGE_PALETTE;
   }
 
-  hImage->pETRLEObject = sti.subimages;
-  if (hImage->pETRLEObject) {
+  hImage->subimages = sti.subimages;
+  if (hImage->subimages) {
     hImage->usNumberOfObjects = sti.number_of_subimages;
     hImage->fFlags |= IMAGE_TRLECOMPRESSED;
     hImage->uiSizePixData = sti.image_data_size;

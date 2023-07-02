@@ -694,7 +694,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
   SGPRect pDimensions;
   SGPPoint pPosition;
   uint32_t uiObject;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   int16_t sWidthA = 0, sTotalBoxWidth = 0;
   struct VObject *hHandle;
 
@@ -703,11 +703,11 @@ void AddInventoryButtonForMapPopUpBox(void) {
 
   // Calculate smily face positions...
   GetVideoObject(&hHandle, uiObject);
-  pTrav = &(hHandle->pETRLEObject[0]);
+  pTrav = &(hHandle->subimages[0]);
 
-  sWidthA = pTrav->usWidth;
+  sWidthA = pTrav->width;
 
-  pTrav = &(hHandle->pETRLEObject[1]);
+  pTrav = &(hHandle->subimages[1]);
 
   sTotalBoxWidth = sTotalButtonWidth;
 
@@ -804,18 +804,18 @@ void MinWidthOfTownMineInfoBox(void) {
   struct VObject *hHandle;
   int16_t sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
   uint32_t uiObject;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
 
   AddVObjectFromFile("INTERFACE\\mapinvbtns.sti", &uiObject);
 
   // Calculate smily face positions...
   GetVideoObject(&hHandle, uiObject);
-  pTrav = &(hHandle->pETRLEObject[0]);
+  pTrav = &(hHandle->subimages[0]);
 
-  sWidthA = pTrav->usWidth;
+  sWidthA = pTrav->width;
 
-  pTrav = &(hHandle->pETRLEObject[1]);
-  sWidthB = pTrav->usWidth;
+  pTrav = &(hHandle->subimages[1]);
+  sWidthB = pTrav->width;
 
   sTotalBoxWidth = sWidthA + sWidthB;
   sTotalButtonWidth = sTotalBoxWidth;

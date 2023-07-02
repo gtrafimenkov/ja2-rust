@@ -382,7 +382,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
 
   // Set values
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
-  hVObject->pETRLEObject = TempETRLEData.pETRLEObject;
+  hVObject->subimages = TempETRLEData.subimages;
   hVObject->pPixData = TempETRLEData.pPixData;
   hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
 
@@ -434,7 +434,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
 
   // Set values
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
-  hVObject->pETRLEObject = TempETRLEData.pETRLEObject;
+  hVObject->subimages = TempETRLEData.subimages;
   hVObject->pPixData = TempETRLEData.pPixData;
   hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
 
@@ -508,9 +508,9 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
     //		hVObject->pPixData = NULL;
   }
 
-  if (hVObject->pETRLEObject != NULL) {
-    MemFree(hVObject->pETRLEObject);
-    //		hVObject->pETRLEObject = NULL;
+  if (hVObject->subimages != NULL) {
+    MemFree(hVObject->subimages);
+    //		hVObject->subimages = NULL;
   }
 
   if (hVObject->ppZStripInfo != NULL) {
@@ -721,7 +721,7 @@ BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t us
   uint16_t usLoopX = 0;
   uint16_t usLoopY = 0;
   uint16_t ubRunLength;
-  struct ETRLEObject *pETRLEObject;
+  struct Subimage *subimages;
 
   // Do a bunch of checks
   if (!(hVObject != NULL)) {
@@ -731,17 +731,17 @@ BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t us
     return FALSE;
   }
 
-  pETRLEObject = &(hVObject->pETRLEObject[usETRLEIndex]);
+  subimages = &(hVObject->subimages[usETRLEIndex]);
 
-  if (!(usX < pETRLEObject->usWidth)) {
+  if (!(usX < subimages->width)) {
     return FALSE;
   }
-  if (!(usY < pETRLEObject->usHeight)) {
+  if (!(usY < subimages->height)) {
     return FALSE;
   }
 
   // Assuming everything's okay, go ahead and look...
-  pCurrent = &((uint8_t *)hVObject->pPixData)[pETRLEObject->uiDataOffset];
+  pCurrent = &((uint8_t *)hVObject->pPixData)[subimages->data_offset];
 
   // Skip past all uninteresting scanlines
   while (usLoopY < usY) {
@@ -782,7 +782,7 @@ BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t us
   return (FALSE);
 }
 
-BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObject *pETRLEObject,
+BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct Subimage *subimages,
                                       uint16_t usIndex) {
   if (!(usIndex >= 0)) {
     return FALSE;
@@ -791,7 +791,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObje
     return FALSE;
   }
 
-  memcpy(pETRLEObject, &(hVObject->pETRLEObject[usIndex]), sizeof(struct ETRLEObject));
+  memcpy(subimages, &(hVObject->subimages[usIndex]), sizeof(struct Subimage));
 
   return (TRUE);
 }
@@ -799,7 +799,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct ETRLEObje
 BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, uint16_t usIndex,
                                                uint16_t *pusWidth, uint16_t *pusHeight) {
   struct VObject *hVObject;
-  struct ETRLEObject ETRLEObject;
+  struct Subimage ETRLEObject;
 
   // Get video object
   if (!(GetVideoObject(&hVObject, uiVideoObject))) {
@@ -810,14 +810,14 @@ BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, uint16_t 
     return FALSE;
   }
 
-  *pusWidth = ETRLEObject.usWidth;
-  *pusHeight = ETRLEObject.usHeight;
+  *pusWidth = ETRLEObject.width;
+  *pusHeight = ETRLEObject.height;
 
   return (TRUE);
 }
 
-BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject,
-                                               struct ETRLEObject *pETRLEObject, uint16_t usIndex) {
+BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject, struct Subimage *subimages,
+                                               uint16_t usIndex) {
   struct VObject *hVObject;
 
   // Get video object
@@ -825,7 +825,7 @@ BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject,
     return FALSE;
   }
 
-  if (!(GetVideoObjectETRLEProperties(hVObject, pETRLEObject, usIndex))) {
+  if (!(GetVideoObjectETRLEProperties(hVObject, subimages, usIndex))) {
     return FALSE;
   }
 

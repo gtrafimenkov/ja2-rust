@@ -9,13 +9,12 @@ use std::ffi::{c_char, CStr};
 use std::io;
 
 #[repr(C)]
-#[allow(non_snake_case)]
 #[derive(Default, Copy, Clone)]
 /// Palette structure, mimics that of Win32
 pub struct SGPPaletteEntry {
-    peRed: u8,
-    peGreen: u8,
-    peBlue: u8,
+    red: u8,
+    green: u8,
+    blue: u8,
     _unused: u8,
 }
 
@@ -23,13 +22,13 @@ pub struct SGPPaletteEntry {
 #[allow(non_snake_case)]
 #[derive(Debug)]
 /// Structure that describes one image from an indexed STCI file
-pub struct ETRLEObject {
-    uiDataOffset: u32,
-    uiDataLength: u32,
-    sOffsetX: i16,
-    sOffsetY: i16,
-    usHeight: u16,
-    usWidth: u16,
+pub struct Subimage {
+    data_offset: u32,
+    data_length: u32,
+    x_offset: i16,
+    y_offset: i16,
+    height: u16,
+    width: u16,
 }
 
 /*
@@ -63,7 +62,7 @@ pub struct STIImageLoaded {
     image_data: *mut u8,
     indexed: bool,                 // indexed (true) or rgb (false)
     palette: *mut SGPPaletteEntry, // only for indexed images
-    subimages: *mut ETRLEObject,
+    subimages: *mut Subimage,
     app_data: *mut u8,
     zlib_compressed: bool,
 }
@@ -138,7 +137,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     // allocate memory and copy palette array
     let mut palette_data_copy: *mut SGPPaletteEntry = std::ptr::null_mut();
     if let Some(palette) = img.palette {
-        let palette_data_size = palette.len() * std::mem::size_of::<ETRLEObject>();
+        let palette_data_size = palette.len() * std::mem::size_of::<Subimage>();
         unsafe {
             palette_data_copy = std::mem::transmute(exp_alloc::RustAlloc(palette_data_size));
             std::ptr::copy(palette.as_ptr(), palette_data_copy, palette.len());
@@ -154,10 +153,10 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
 
     // allocate memory for subimages array and copy data
     let mut number_of_subimages = 0;
-    let mut subimages_ptr: *mut ETRLEObject = std::ptr::null_mut();
+    let mut subimages_ptr: *mut Subimage = std::ptr::null_mut();
     if let Some(subimages) = img.subimages {
         number_of_subimages = subimages.len();
-        let data_size = number_of_subimages * std::mem::size_of::<ETRLEObject>();
+        let data_size = number_of_subimages * std::mem::size_of::<Subimage>();
         unsafe {
             subimages_ptr = std::mem::transmute(exp_alloc::RustAlloc(data_size));
             std::ptr::copy(subimages.as_ptr(), subimages_ptr, number_of_subimages);
@@ -200,7 +199,7 @@ pub struct STImage {
     image_data: Vec<u8>,
     indexed: bool,                           // indexed (true) or rgb (false)
     palette: Option<[SGPPaletteEntry; 256]>, // only for indexed images
-    subimages: Option<Vec<ETRLEObject>>,
+    subimages: Option<Vec<Subimage>>,
     app_data: Option<Vec<u8>>,
     zlib_compressed: bool,
 }
@@ -265,7 +264,7 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
         let zlib_compressed = flags & STCI_ZLIB_COMPRESSED != 0;
         let mut image_data = vec![0; stored_size];
         let mut palette: Option<[SGPPaletteEntry; 256]> = None;
-        let mut subimages: Option<Vec<ETRLEObject>> = None;
+        let mut subimages: Option<Vec<Subimage>> = None;
         let mut app_data: Option<Vec<u8>> = None;
 
         if indexed {
@@ -277,9 +276,9 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                 FILE_DB.read_file_exact(file_id, &mut data)?;
                 for (i, item) in palette.as_mut().unwrap().iter_mut().enumerate() {
                     let start = i * 3;
-                    item.peRed = data[start];
-                    item.peGreen = data[start + 1];
-                    item.peBlue = data[start + 2];
+                    item.red = data[start];
+                    item.green = data[start + 1];
+                    item.blue = data[start + 2];
                     item._unused = 0;
                 }
             }
@@ -292,13 +291,13 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                 FILE_DB.read_file_exact(file_id, &mut buffer)?;
                 let mut reader = io::Cursor::new(buffer);
                 for _i in 0..num_subimages {
-                    let subimage = ETRLEObject {
-                        uiDataOffset: reader.read_u32::<LittleEndian>()?,
-                        uiDataLength: reader.read_u32::<LittleEndian>()?,
-                        sOffsetX: reader.read_i16::<LittleEndian>()?,
-                        sOffsetY: reader.read_i16::<LittleEndian>()?,
-                        usHeight: reader.read_u16::<LittleEndian>()?,
-                        usWidth: reader.read_u16::<LittleEndian>()?,
+                    let subimage = Subimage {
+                        data_offset: reader.read_u32::<LittleEndian>()?,
+                        data_length: reader.read_u32::<LittleEndian>()?,
+                        x_offset: reader.read_i16::<LittleEndian>()?,
+                        y_offset: reader.read_i16::<LittleEndian>()?,
+                        height: reader.read_u16::<LittleEndian>()?,
+                        width: reader.read_u16::<LittleEndian>()?,
                     };
                     debug_log_write(&format!("subimage: {subimage:?}"));
                     collector.push(subimage);
@@ -353,18 +352,18 @@ mod tests {
             let subimage0 = &img.subimages.as_ref().unwrap()[0];
             let subimage4 = &img.subimages.as_ref().unwrap()[4];
             assert_eq!(5, img.subimages.as_ref().unwrap().len());
-            assert_eq!(0, subimage0.sOffsetX);
-            assert_eq!(0, subimage0.sOffsetY);
-            assert_eq!(30, subimage0.usHeight);
-            assert_eq!(30, subimage0.usWidth);
-            assert_eq!(0, subimage0.uiDataOffset);
-            assert_eq!(960, subimage0.uiDataLength);
-            assert_eq!(0, subimage4.sOffsetX);
-            assert_eq!(0, subimage4.sOffsetY);
-            assert_eq!(30, subimage4.usHeight);
-            assert_eq!(30, subimage4.usWidth);
-            assert_eq!(3840, subimage4.uiDataOffset);
-            assert_eq!(960, subimage4.uiDataLength);
+            assert_eq!(0, subimage0.x_offset);
+            assert_eq!(0, subimage0.y_offset);
+            assert_eq!(30, subimage0.height);
+            assert_eq!(30, subimage0.width);
+            assert_eq!(0, subimage0.data_offset);
+            assert_eq!(960, subimage0.data_length);
+            assert_eq!(0, subimage4.x_offset);
+            assert_eq!(0, subimage4.y_offset);
+            assert_eq!(30, subimage4.height);
+            assert_eq!(30, subimage4.width);
+            assert_eq!(3840, subimage4.data_offset);
+            assert_eq!(960, subimage4.data_length);
         }
     }
 }
