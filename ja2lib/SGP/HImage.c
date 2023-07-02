@@ -96,27 +96,25 @@ void DestroyImage(struct Image *image) {
   MemFree(image);
 }
 
-BOOLEAN CopyImageToBuffer(struct Image *hImage, UINT32 fBufferType, BYTE *pDestBuf,
+BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
                           UINT16 usDestWidth, UINT16 usDestHeight, UINT16 usX, UINT16 usY,
                           SGPRect *srcRect) {
-  // Use blitter based on type of image
   Assert(hImage != NULL);
 
-  if (hImage->ubBitDepth == 8 && fBufferType == BUFFER_8BPP) {
-    // Default do here
+  if (hImage->ubBitDepth == 8 && bufferBitDepth == 8) {
     DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Copying 8 BPP Imagery.");
     return (
         Copy8BPPImageTo8BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
-  if (hImage->ubBitDepth == 8 && fBufferType == BUFFER_16BPP) {
-    // Default do here
+  // XXX: is this used?
+  if (hImage->ubBitDepth == 8 && bufferBitDepth == 16) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Copying 8 BPP Imagery to 16BPP Buffer.");
     return (
         Copy8BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
-  if (hImage->ubBitDepth == 16 && fBufferType == BUFFER_16BPP) {
+  if (hImage->ubBitDepth == 16 && bufferBitDepth == 16) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Automatically Copying 16 BPP Imagery.");
     return (Copy16BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY,
                                         srcRect));

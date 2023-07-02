@@ -15,10 +15,6 @@ struct Subimage;
 // - A comprehensive automatic blitter which blits the appropriate type based on the
 //   image header.
 
-// Defines for buffer bit depth
-#define BUFFER_8BPP 0x1
-#define BUFFER_16BPP 0x2
-
 // Palette structure, mimics that of Win32
 struct SGPPaletteEntry;
 
@@ -85,7 +81,7 @@ BOOLEAN ReleaseImageData(struct Image *hImage);
 
 // This function will run the appropriate copy function based on the type of struct Image*
 // object
-BOOLEAN CopyImageToBuffer(struct Image *hImage, UINT32 fBufferType, BYTE *pDestBuf,
+BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
                           UINT16 usDestWidth, UINT16 usDestHeight, UINT16 usX, UINT16 usY,
                           SGPRect *srcRect);
 
