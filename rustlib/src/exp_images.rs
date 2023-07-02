@@ -9,6 +9,7 @@ use std::io;
 
 #[repr(C)]
 #[allow(non_snake_case)]
+#[derive(Default, Copy, Clone)]
 /// Palette structure, mimics that of Win32
 pub struct SGPPaletteEntry {
     peRed: u8,
@@ -205,7 +206,7 @@ pub struct STIImageLoaded {
     palette: *mut SGPPaletteEntry, // only for indexed images
     subimages: *mut ETRLEObject,
     app_data: *mut u8,
-    compressed: bool,
+    zlib_compressed: bool,
 }
 
 impl Default for STIImageLoaded {
@@ -223,7 +224,7 @@ impl Default for STIImageLoaded {
             subimages: std::ptr::null_mut(),
             app_data: std::ptr::null_mut(),
             image_data: std::ptr::null_mut(),
-            compressed: false,
+            zlib_compressed: false,
         }
     }
 }
@@ -233,7 +234,7 @@ pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImage
     let mut results = STIImageLoaded::default();
     match read_stci_header(file_id) {
         Ok(header) => {
-            results.compressed = header.head.Flags & STCI_ZLIB_COMPRESSED != 0;
+            results.zlib_compressed = header.head.Flags & STCI_ZLIB_COMPRESSED != 0;
             results.image_data_size = header.head.StoredSize;
             results.Height = header.head.Height;
             results.Width = header.head.Width;
@@ -406,8 +407,148 @@ fn read_stci_app_data(file_id: FileID, header: &STCIHeader) -> *mut u8 {
     }
 }
 
+/// Sir-Tech's Crazy Image
+pub struct STImage {
+    height: u16,
+    width: u16,
+    pixel_depth: u8,
+    image_data: Vec<u8>,
+    indexed: bool,                           // indexed (true) or rgb (false)
+    palette: Option<[SGPPaletteEntry; 256]>, // only for indexed images
+    subimages: Option<Vec<ETRLEObject>>,
+    app_data: Option<Vec<u8>>,
+    zlib_compressed: bool,
+}
+
+// fn read_stci_header(file_id: FileID) -> io::Result<STCIHeader> {
+fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
+    unsafe {
+        let mut id: [u8; STCI_ID_LEN] = [0; STCI_ID_LEN];
+        FILE_DB.read_file_exact(file_id, &mut id)?;
+        if id != STCI_ID_STRING {
+            return Err(io::Error::new(
+                io::ErrorKind::Other,
+                format!("not STCI file ({id:?})"),
+            ));
+        }
+        let _original_size = FILE_DB.read_file_u32(file_id)?;
+        let stored_size = FILE_DB.read_file_u32(file_id)? as usize;
+        let _transparent_value = FILE_DB.read_file_u32(file_id)?;
+        let flags = FILE_DB.read_file_u32(file_id)?;
+        let height = FILE_DB.read_file_u16(file_id)?;
+        let width = FILE_DB.read_file_u16(file_id)?;
+        if flags & STCI_INDEXED == 0 && flags & STCI_RGB == 0 {
+            return Err(io::Error::new(io::ErrorKind::Other, "unknown image format"));
+        }
+        let indexed = flags & STCI_INDEXED != 0;
+        let mut num_subimages = 0;
+        if indexed {
+            // index
+            let number_of_colours = FILE_DB.read_file_u32(file_id)?;
+            if number_of_colours != 256 {
+                return Err(io::Error::new(
+                    io::ErrorKind::Other,
+                    "indexed STCI image must have 256 colors",
+                ));
+            }
+            num_subimages = FILE_DB.read_file_u16(file_id)? as usize;
+            let _red_depth = FILE_DB.read_file_u8(file_id)?;
+            let _green_depth = FILE_DB.read_file_u8(file_id)?;
+            let _blue_depth = FILE_DB.read_file_u8(file_id)?;
+            let mut unused: [u8; 11] = [0; 11];
+            FILE_DB.read_file_exact(file_id, &mut unused)?;
+        } else {
+            // RGB
+            let _red_mask = FILE_DB.read_file_u32(file_id)?;
+            let _green_mask = FILE_DB.read_file_u32(file_id)?;
+            let _blue_mask = FILE_DB.read_file_u32(file_id)?;
+            let _alpha_mask = FILE_DB.read_file_u32(file_id)?;
+            let _red_depth = FILE_DB.read_file_u8(file_id)?;
+            let _green_depth = FILE_DB.read_file_u8(file_id)?;
+            let _blue_depth = FILE_DB.read_file_u8(file_id)?;
+            let _alpha_depth = FILE_DB.read_file_u8(file_id)?;
+        }
+
+        let pixel_depth = FILE_DB.read_file_u8(file_id)?;
+        let _unused1 = FILE_DB.read_file_u8(file_id)?;
+        let _unused2 = FILE_DB.read_file_u8(file_id)?;
+        let _unused3 = FILE_DB.read_file_u8(file_id)?;
+        let app_data_size = FILE_DB.read_file_u32(file_id)? as usize;
+        let mut unused: [u8; 12] = [0; 12];
+        FILE_DB.read_file_exact(file_id, &mut unused)?;
+
+        let zlib_compressed = flags & STCI_ZLIB_COMPRESSED != 0;
+        let mut image_data = vec![0; stored_size];
+        let mut palette: Option<[SGPPaletteEntry; 256]> = None;
+        let mut subimages: Option<Vec<ETRLEObject>> = None;
+        let mut app_data: Option<Vec<u8>> = None;
+
+        if indexed {
+            // palette
+            palette = Some([Default::default(); 256]);
+            {
+                // palette is 256 rgb u8 values
+                let mut data: [u8; 256 * 3] = [0; 256 * 3];
+                FILE_DB.read_file_exact(file_id, &mut data)?;
+                for (i, item) in palette.as_mut().unwrap().iter_mut().enumerate() {
+                    let start = i * 3;
+                    item.peRed = data[start];
+                    item.peGreen = data[start + 1];
+                    item.peBlue = data[start + 2];
+                    item._unused = 0;
+                }
+            }
+
+            // subimages
+            if num_subimages > 0 {
+                let mut collector = Vec::with_capacity(num_subimages);
+                let size = 16 * num_subimages;
+                let mut buffer = vec![0; size];
+                FILE_DB.read_file_exact(file_id, &mut buffer)?;
+                let mut reader = io::Cursor::new(buffer);
+                for _i in 0..num_subimages {
+                    let subimage = ETRLEObject {
+                        uiDataOffset: reader.read_u32::<LittleEndian>()?,
+                        uiDataLength: reader.read_u32::<LittleEndian>()?,
+                        sOffsetX: reader.read_i16::<LittleEndian>()?,
+                        sOffsetY: reader.read_i16::<LittleEndian>()?,
+                        usHeight: reader.read_u16::<LittleEndian>()?,
+                        usWidth: reader.read_u16::<LittleEndian>()?,
+                    };
+                    exp_debug::debug_log_write(&format!("subimage: {subimage:?}"));
+                    collector.push(subimage);
+                }
+                subimages = Some(collector);
+            }
+
+            FILE_DB.read_file_exact(file_id, &mut image_data)?;
+
+            if app_data_size > 0 {
+                app_data = Some(vec![0; app_data_size]);
+                if app_data_size > 0 && load_app_data {
+                    FILE_DB.read_file_exact(file_id, app_data.as_mut().unwrap())?;
+                }
+            }
+        } else {
+            FILE_DB.read_file_exact(file_id, &mut image_data)?;
+        }
+        return Ok(STImage {
+            height,
+            width,
+            pixel_depth,
+            image_data,
+            indexed,
+            palette,
+            subimages,
+            app_data,
+            zlib_compressed,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
+    use super::super::exp_fileman::FILE_DB;
     use std::mem;
 
     use super::*;
@@ -418,5 +559,51 @@ mod tests {
         assert_eq!(20, mem::size_of::<STCIHeaderMiddleRGB>());
         assert_eq!(20, mem::size_of::<STCIHeaderMiddleIndexed>());
         assert_eq!(20, mem::size_of::<STCIHeaderEnd>());
+    }
+
+    #[test]
+    fn load_stci() {
+        unsafe {
+            FILE_DB.load_slf_from_dir("../tools/editor").unwrap();
+            let file_id = FILE_DB.open_for_reading("Editor\\CANCEL.STI").unwrap();
+            // LoadSTIImage(file_id, true);
+            let img = read_stci(file_id, true).unwrap();
+            assert_eq!(640, img.width);
+            assert_eq!(480, img.height);
+            assert_eq!(true, img.indexed);
+            assert_eq!(false, img.zlib_compressed);
+            assert_eq!(8, img.pixel_depth);
+            assert_eq!(4800, img.image_data.len());
+            assert_eq!(true, img.app_data.is_none());
+            let subimage0 = &img.subimages.as_ref().unwrap()[0];
+            let subimage4 = &img.subimages.as_ref().unwrap()[4];
+            assert_eq!(5, img.subimages.as_ref().unwrap().len());
+            assert_eq!(0, subimage0.sOffsetX);
+            assert_eq!(0, subimage0.sOffsetY);
+            assert_eq!(30, subimage0.usHeight);
+            assert_eq!(30, subimage0.usWidth);
+            assert_eq!(0, subimage0.uiDataOffset);
+            assert_eq!(960, subimage0.uiDataLength);
+            assert_eq!(0, subimage4.sOffsetX);
+            assert_eq!(0, subimage4.sOffsetY);
+            assert_eq!(30, subimage4.usHeight);
+            assert_eq!(30, subimage4.usWidth);
+            assert_eq!(3840, subimage4.uiDataOffset);
+            assert_eq!(960, subimage4.uiDataLength);
+
+            // STCI header head: STCIHeaderHead { ID: [83, 84, 67, 73], OriginalSize: 307200, StoredSize: 4800, TransparentValue: 0, Flags: 40, Height: 480, Width: 640 }
+            // STCI header middle indexed: STCIHeaderMiddleIndexed { uiNumberOfColours: 256, usNumberOfSubImages: 5, ubRedDepth: 8, ubGreenDepth: 8, ubBlueDepth: 8, cIndexedUnused: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
+            // STCI header end: STCIHeaderEnd { Depth: 8, unused1: 0, unused2: 0, unused3: 0, AppDataSize: 0, Unused: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
+            // rust_alloc: allocated 1024 bytes at 0x166c7a9f8b0
+            // going to read 5 subimages of STCI
+            // rust_alloc: allocated 80 bytes at 0x166c7a9bd40
+            // subimage: ETRLEObject { uiDataOffset: 0, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
+            // subimage: ETRLEObject { uiDataOffset: 960, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
+            // subimage: ETRLEObject { uiDataOffset: 1920, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
+            // subimage: ETRLEObject { uiDataOffset: 2880, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
+            // subimage: ETRLEObject { uiDataOffset: 3840, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
+            // reading STCI image data, 4800 bytes
+            // rust_alloc: allocated 4800 bytes at 0x166c7aa6eb0
+        }
     }
 }

@@ -51,7 +51,7 @@ struct STIImageLoaded {
   struct SGPPaletteEntry *palette;
   struct ETRLEObject *subimages;
   uint8_t *app_data;
-  bool compressed;
+  bool zlib_compressed;
 };
 
 #ifdef __cplusplus
