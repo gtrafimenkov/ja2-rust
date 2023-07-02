@@ -33,17 +33,10 @@ typedef union {
   UINT32 uiValue;
 } SplitUINT32;
 
-// This function will attept to Load data from an existing image object's filename
-// In this way, dynamic loading of image data can be done
-static BOOLEAN LoadImageData(const char *filePath, u32 fileLoader, struct Image *hImage,
-                             bool loadAppData);
-
 struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
-  struct Image *hImage = NULL;
   SGPFILENAME Extension;
   CHAR8 ExtensionSep[] = ".";
   STR StrPtr;
-  UINT32 iFileLoader;
   SGPFILENAME imageFileCopy;
 
   strcopy(imageFileCopy, ARR_SIZE(imageFileCopy), ImageFile);
@@ -61,46 +54,32 @@ struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
     strcpy(Extension, StrPtr + 1);
   }
 
-  // Determine type from Extension
-  do {
-    iFileLoader = UNKNOWN_FILE_READER;
-
-    if (strcasecmp(Extension, "PCX") == 0) {
-      iFileLoader = PCX_FILE_READER;
-      break;
-    }
-
-    if (strcasecmp(Extension, "TGA") == 0) {
-      iFileLoader = TGA_FILE_READER;
-      break;
-    }
-
-    if (strcasecmp(Extension, "STI") == 0) {
-      iFileLoader = STCI_FILE_READER;
-      break;
-    }
-
-  } while (FALSE);
-
   // Determine if resource exists before creating image structure
   if (!File_Exists(imageFileCopy)) {
     DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, String("Resource file %s does not exist.", imageFileCopy));
     return (NULL);
   }
 
-  // Create memory for image structure
-  hImage = (struct Image *)MemAlloc(sizeof(struct Image));
-
-  AssertMsg(hImage, "Failed to allocate memory for hImage in CreateImage");
-  // Initialize some values
-  memset(hImage, 0, sizeof(struct Image));
-
-  if (!LoadImageData(imageFileCopy, iFileLoader, hImage, loadAppData)) {
-    return (NULL);
+  if (strcasecmp(Extension, "PCX") == 0) {
+    struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
+    memset(hImage, 0, sizeof(struct Image));
+    if (!LoadPCXFileToImage(imageFileCopy, hImage)) {
+      return NULL;
+    }
+    return (hImage);
+  } else if (strcasecmp(Extension, "TGA") == 0) {
+    struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
+    memset(hImage, 0, sizeof(struct Image));
+    if (!LoadTGAFileToImage(imageFileCopy, hImage)) {
+      return NULL;
+    }
+    return (hImage);
+  } else if (strcasecmp(Extension, "STI") == 0) {
+    return LoadSTCIFileToImage(imageFileCopy, loadAppData);
+  } else {
+    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Unknown image loader was specified.");
+    return NULL;
   }
-
-  // All is fine, image is loaded and allocated, return pointer
-  return (hImage);
 }
 
 BOOLEAN DestroyImage(struct Image *hImage) {
@@ -181,37 +160,6 @@ BOOLEAN ReleaseImageData(struct Image *hImage) {
   }
 
   return (TRUE);
-}
-
-static BOOLEAN LoadImageData(const char *filePath, u32 fileLoader, struct Image *hImage,
-                             bool loadAppData) {
-  BOOLEAN fReturnVal = FALSE;
-
-  Assert(hImage != NULL);
-
-  // Switch on file loader
-  switch (fileLoader) {
-    case TGA_FILE_READER:
-      fReturnVal = LoadTGAFileToImage(filePath, hImage);
-      break;
-
-    case PCX_FILE_READER:
-      fReturnVal = LoadPCXFileToImage(filePath, hImage);
-      break;
-
-    case STCI_FILE_READER:
-      fReturnVal = LoadSTCIFileToImage(filePath, hImage, loadAppData);
-      break;
-
-    default:
-      DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Unknown image loader was specified.");
-  }
-
-  if (!fReturnVal) {
-    DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Error occured while reading image data.");
-  }
-
-  return (fReturnVal);
 }
 
 BOOLEAN CopyImageToBuffer(struct Image *hImage, UINT32 fBufferType, BYTE *pDestBuf,

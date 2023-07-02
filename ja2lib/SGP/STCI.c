@@ -6,9 +6,12 @@
 #include "rust_fileman.h"
 #include "rust_images.h"
 
-BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loadAppData) {
-  Assert(hImage != NULL);
-  DebugLogWrite(filePath);
+struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
+  struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
+  if (!hImage) {
+    return NULL;
+  }
+  memset(hImage, 0, sizeof(struct Image));
 
   struct STIImageLoaded sti = LoadSTIImageFromFile(filePath, loadAppData);
   if (!sti.success) {
@@ -47,5 +50,5 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
   hImage->usHeight = sti.Height;
   hImage->ubBitDepth = sti.pixel_depth;
 
-  return (TRUE);
+  return hImage;
 }
