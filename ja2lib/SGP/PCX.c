@@ -24,7 +24,7 @@
 #define PCX_INVALIDLEN 4
 #define PCX_OUTOFMEMORY 8
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
+static BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
 BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usBufferWidth,
                         UINT16 usBufferHeight, UINT16 usX, UINT16 usY, BOOLEAN fTransp);
 PcxObject *LoadPcx(const char *pFilename);
@@ -56,12 +56,10 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
     }
   }
 
-  {
-    SetPcxPalette(pPcxObject, hImage);
+  SetPcxPalette(pPcxObject, hImage);
 
-    // Create 16 BPP palette if flags and BPP justify
-    hImage->pui16BPPPalette = Create16BPPPalette(hImage->palette);
-  }
+  // Create 16 BPP palette if flags and BPP justify
+  hImage->pui16BPPPalette = Create16BPPPalette(hImage->palette);
 
   // Free and remove pcx object
   MemFree(pPcxObject->pPcxBuffer);
@@ -293,7 +291,7 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usB
   return (TRUE);
 }
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
+static BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
   UINT16 Index;
   UINT8 *pubPalette;
 

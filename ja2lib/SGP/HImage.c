@@ -21,8 +21,6 @@
 
 #define BLACK_SUBSTITUTE 0x0001
 
-UINT16 gusAlphaMask = 0;
-
 // this funky union is used for fast 16-bit pixel format conversions
 typedef union {
   struct {
@@ -340,9 +338,8 @@ UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
     usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
-      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
-    } else
-      usColor |= gusAlphaMask;
+      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE;
+    }
 
     p16BPPPalette[cnt] = usColor;
   }
@@ -409,9 +406,8 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
     usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
     if (usColor == 0) {
-      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
-    } else
-      usColor |= gusAlphaMask;
+      if ((r + g + b) != 0) usColor = BLACK_SUBSTITUTE;
+    }
 
     p16BPPPalette[cnt] = usColor;
   }
@@ -438,10 +434,8 @@ UINT16 Get16BPPColor(UINT32 RGBValue) {
   // problems
 
   if (usColor == 0) {
-    if (RGBValue != 0) usColor = BLACK_SUBSTITUTE | gusAlphaMask;
-  } else
-    usColor |= gusAlphaMask;
-
+    if (RGBValue != 0) usColor = BLACK_SUBSTITUTE;
+  }
   return (usColor);
 }
 
@@ -551,7 +545,7 @@ void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
       // now shift back into the upper word
       Pixel.uiValue <<= 5;
       // and copy back
-      *pPixel = Pixel.usHigher | gusAlphaMask;
+      *pPixel = Pixel.usHigher;
     }
     pPixel++;
   }

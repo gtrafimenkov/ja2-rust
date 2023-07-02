@@ -111,8 +111,6 @@ UINT16 Get16BPPColor(UINT32 RGBValue);
 UINT32 GetRGBColor(UINT16 Value16BPP);
 struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
 
-extern UINT16 gusAlphaMask;
-
 // used to convert 565 RGB data into different bit-formats
 void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
 
