@@ -79,40 +79,23 @@ void DestroyImage(struct Image *image) {
     return;
   }
 
-  if (image->pPalette != NULL) {
-    if (image->paletteAllocatedInRust) {
-      RustDealloc((uint8_t *)image->pPalette);
-    } else {
-      MemFree(image->pPalette);
-    }
-    image->pPalette = NULL;
+  if (image->paletteAllocatedInRust) {
+    RustDealloc((uint8_t *)image->pPalette);
+  } else {
+    MemFree(image->pPalette);
   }
 
-  if (image->pui16BPPPalette != NULL) {
-    MemFree(image->pui16BPPPalette);
-    image->pui16BPPPalette = NULL;
-  }
+  MemFree(image->pui16BPPPalette);
 
-  FreeImageData(image);
-  FreeImageSubimages(image);
-  RustDealloc(image->pAppData);
-
-  MemFree(image);
-}
-
-void FreeImageData(struct Image *image) {
   if (image->imageDataAllocatedInRust) {
     RustDealloc((uint8_t *)image->pImageData);
   } else {
     MemFree(image->pImageData);
   }
-  image->pImageData = NULL;
-}
+  RustDealloc((uint8_t *)image->subimages);
+  RustDealloc(image->pAppData);
 
-void FreeImageSubimages(struct Image *image) {
-  if (image->usNumberOfObjects > 0) {
-    RustDealloc((uint8_t *)image->subimages);
-  }
+  MemFree(image);
 }
 
 BOOLEAN CopyImageToBuffer(struct Image *hImage, UINT32 fBufferType, BYTE *pDestBuf,
