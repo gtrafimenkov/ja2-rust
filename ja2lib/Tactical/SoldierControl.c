@@ -4658,9 +4658,9 @@ BOOLEAN CreateSoldierPalettes(struct SOLDIERTYPE *pSoldier) {
   // Build a grayscale palette for testing grayout of mercs
   // for(uiCount=0; uiCount < 256; uiCount++)
   //{
-  //	Pal[uiCount].peRed=(UINT8)(uiCount%128)+128;
-  //	Pal[uiCount].peGreen=(UINT8)(uiCount%128)+128;
-  //	Pal[uiCount].peBlue=(UINT8)(uiCount%128)+128;
+  //	Pal[uiCount].red=(UINT8)(uiCount%128)+128;
+  //	Pal[uiCount].green=(UINT8)(uiCount%128)+128;
+  //	Pal[uiCount].blue=(UINT8)(uiCount%128)+128;
   //}
   pSoldier->pEffectShades[0] =
       Create16BPPPaletteShaded(pSoldier->p8BPPPalette, 100, 100, 100, TRUE);
@@ -4982,9 +4982,9 @@ BOOLEAN SetPaletteReplacement(struct SGPPaletteEntry *p8BPPPalette, PaletteRepID
 
   for (cnt2 = gpPaletteSubRanges[ubType].ubStart; cnt2 <= gpPaletteSubRanges[ubType].ubEnd;
        cnt2++) {
-    p8BPPPalette[cnt2].peRed = gpPalRep[ubPalIndex].r[cnt2 - gpPaletteSubRanges[ubType].ubStart];
-    p8BPPPalette[cnt2].peGreen = gpPalRep[ubPalIndex].g[cnt2 - gpPaletteSubRanges[ubType].ubStart];
-    p8BPPPalette[cnt2].peBlue = gpPalRep[ubPalIndex].b[cnt2 - gpPaletteSubRanges[ubType].ubStart];
+    p8BPPPalette[cnt2].red = gpPalRep[ubPalIndex].r[cnt2 - gpPaletteSubRanges[ubType].ubStart];
+    p8BPPPalette[cnt2].green = gpPalRep[ubPalIndex].g[cnt2 - gpPaletteSubRanges[ubType].ubStart];
+    p8BPPPalette[cnt2].blue = gpPalRep[ubPalIndex].b[cnt2 - gpPaletteSubRanges[ubType].ubStart];
   }
 
   return (TRUE);
@@ -7704,13 +7704,13 @@ UINT16 *CreateEnemyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32 rsc
   p16BPPPalette = (UINT16 *)MemAlloc(sizeof(UINT16) * 256);
 
   for (cnt = 0; cnt < 256; cnt++) {
-    gmod = (pPalette[cnt].peGreen);
-    bmod = (pPalette[cnt].peBlue);
+    gmod = (pPalette[cnt].green);
+    bmod = (pPalette[cnt].blue);
 
-    rmod = max(rscale, (pPalette[cnt].peRed));
+    rmod = max(rscale, (pPalette[cnt].red));
 
     if (fAdjustGreen) {
-      gmod = max(gscale, (pPalette[cnt].peGreen));
+      gmod = max(gscale, (pPalette[cnt].green));
     }
 
     r = (UINT8)min(rmod, 255);
@@ -7743,8 +7743,8 @@ UINT16 *CreateEnemyGreyGlow16BPPPalette(struct SGPPaletteEntry *pPalette, UINT32
   p16BPPPalette = (UINT16 *)MemAlloc(sizeof(UINT16) * 256);
 
   for (cnt = 0; cnt < 256; cnt++) {
-    lumin = (pPalette[cnt].peRed * 299 / 1000) + (pPalette[cnt].peGreen * 587 / 1000) +
-            (pPalette[cnt].peBlue * 114 / 1000);
+    lumin = (pPalette[cnt].red * 299 / 1000) + (pPalette[cnt].green * 587 / 1000) +
+            (pPalette[cnt].blue * 114 / 1000);
     rmod = (100 * lumin) / 256;
     gmod = (100 * lumin) / 256;
     bmod = (100 * lumin) / 256;
@@ -7978,7 +7978,7 @@ void SelectMoveAnimationFromStance(struct SOLDIERTYPE *pSoldier) {
 
 void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *psWidth) {
   UINT16 usAnimSurface;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
@@ -8002,15 +8002,15 @@ void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT
   if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->usNumberOfObjects) {
   }
 
-  pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->pETRLEObject[pSoldier->usAniFrame]);
+  pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->subimages[pSoldier->usAniFrame]);
 
-  *psHeight = (INT16)pTrav->usHeight;
-  *psWidth = (INT16)pTrav->usWidth;
+  *psHeight = (INT16)pTrav->height;
+  *psWidth = (INT16)pTrav->width;
 }
 
 void GetActualSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, INT16 *sOffsetX, INT16 *sOffsetY) {
   UINT16 usAnimSurface;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
@@ -8027,10 +8027,10 @@ void GetActualSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, INT16 *sOffsetX, 
     return;
   }
 
-  pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->pETRLEObject[pSoldier->usAniFrame]);
+  pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->subimages[pSoldier->usAniFrame]);
 
-  *sOffsetX = (INT16)pTrav->sOffsetX;
-  *sOffsetY = (INT16)pTrav->sOffsetY;
+  *sOffsetX = (INT16)pTrav->x_offset;
+  *sOffsetY = (INT16)pTrav->y_offset;
 }
 
 void SetSoldierLocatorOffsets(struct SOLDIERTYPE *pSoldier) {

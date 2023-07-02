@@ -193,7 +193,7 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   VOBJECT_DESC VObjectDesc;
   UINT32 uiVideoObject;
   INT32 iFaceIndex;
-  struct ETRLEObject ETRLEObject;
+  struct Subimage ETRLEObject;
   struct VObject *hVObject;
   UINT32 uiCount;
   struct SGPPaletteEntry Pal[256];
@@ -281,9 +281,9 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   if (GetVideoObject(&hVObject, uiVideoObject)) {
     // Build a grayscale palette! ( for testing different looks )
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      Pal[uiCount].peRed = 255;
-      Pal[uiCount].peGreen = 255;
-      Pal[uiCount].peBlue = 255;
+      Pal[uiCount].red = 255;
+      Pal[uiCount].green = 255;
+      Pal[uiCount].blue = 255;
     }
 
     VObjectUpdateShade(hVObject, FLASH_PORTRAIT_NOSHADE, 255, 255, 255, FALSE);
@@ -294,9 +294,9 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
     VObjectUpdateShade(hVObject, FLASH_PORTRAIT_LITESHADE, 100, 100, 100, FALSE);
 
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      Pal[uiCount].peRed = (UINT8)(uiCount % 128) + 128;
-      Pal[uiCount].peGreen = (UINT8)(uiCount % 128) + 128;
-      Pal[uiCount].peBlue = (UINT8)(uiCount % 128) + 128;
+      Pal[uiCount].red = (UINT8)(uiCount % 128) + 128;
+      Pal[uiCount].green = (UINT8)(uiCount % 128) + 128;
+      Pal[uiCount].blue = (UINT8)(uiCount % 128) + 128;
     }
     hVObject->pShades[FLASH_PORTRAIT_GRAYSHADE] =
         Create16BPPPaletteShaded(Pal, 255, 255, 255, FALSE);
@@ -306,8 +306,8 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   if (GetVideoObjectETRLEPropertiesFromIndex(uiVideoObject, &ETRLEObject, 0) == FALSE) {
     return (-1);
   }
-  pFace->usFaceWidth = ETRLEObject.usWidth;
-  pFace->usFaceHeight = ETRLEObject.usHeight;
+  pFace->usFaceWidth = ETRLEObject.width;
+  pFace->usFaceHeight = ETRLEObject.height;
 
   // OK, check # of items
   if (hVObject->usNumberOfObjects == 8) {
@@ -317,15 +317,15 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
     if (GetVideoObjectETRLEPropertiesFromIndex(uiVideoObject, &ETRLEObject, 1) == FALSE) {
       return (-1);
     }
-    pFace->usEyesWidth = ETRLEObject.usWidth;
-    pFace->usEyesHeight = ETRLEObject.usHeight;
+    pFace->usEyesWidth = ETRLEObject.width;
+    pFace->usEyesHeight = ETRLEObject.height;
 
     // Get Mouth height, width
     if (GetVideoObjectETRLEPropertiesFromIndex(uiVideoObject, &ETRLEObject, 5) == FALSE) {
       return (-1);
     }
-    pFace->usMouthWidth = ETRLEObject.usWidth;
-    pFace->usMouthHeight = ETRLEObject.usHeight;
+    pFace->usMouthWidth = ETRLEObject.width;
+    pFace->usMouthHeight = ETRLEObject.height;
   } else {
     pFace->fInvalidAnim = TRUE;
   }
@@ -962,14 +962,14 @@ void GetXYForIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 
                            INT16 *psY) {
   INT16 sX, sY;
   UINT16 usWidth, usHeight;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   struct VObject *hVObject;
 
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
-  pTrav = &(hVObject->pETRLEObject[ubIndex]);
-  usHeight = pTrav->usHeight;
-  usWidth = pTrav->usWidth;
+  pTrav = &(hVObject->subimages[ubIndex]);
+  usHeight = pTrav->height;
+  usWidth = pTrav->width;
 
   sX = sFaceX + pFace->usFaceWidth - usWidth - 1;
   sY = sFaceY + pFace->usFaceHeight - usHeight - 1;
@@ -982,14 +982,14 @@ void GetXYForRightIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, I
                                 INT16 *psX, INT16 *psY, INT8 bNumIcons) {
   INT16 sX, sY;
   UINT16 usWidth, usHeight;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   struct VObject *hVObject;
 
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
-  pTrav = &(hVObject->pETRLEObject[ubIndex]);
-  usHeight = pTrav->usHeight;
-  usWidth = pTrav->usWidth;
+  pTrav = &(hVObject->subimages[ubIndex]);
+  usHeight = pTrav->height;
+  usWidth = pTrav->width;
 
   sX = sFaceX + (usWidth * bNumIcons) + 1;
   sY = sFaceY + pFace->usFaceHeight - usHeight - 1;

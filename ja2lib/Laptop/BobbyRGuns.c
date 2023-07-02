@@ -790,7 +790,7 @@ BOOLEAN DisplayAmmoInfo(UINT16 usIndex, UINT16 usTextPosY, BOOLEAN fUsed, UINT16
 BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   INT16 PosX, sCenX, sCenY;
   UINT32 usWidth;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INVTYPE *pItem;
   UINT32 uiImage;
   struct VObject *hPixHandle;
@@ -801,13 +801,13 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   LoadTileGraphicForItem(pItem, &uiImage);
 
   GetVideoObject(&hPixHandle, uiImage);
-  pTrav = &(hPixHandle->pETRLEObject[0]);
+  pTrav = &(hPixHandle->subimages[0]);
 
   // center picture in frame
-  usWidth = (UINT32)pTrav->usWidth;
+  usWidth = (UINT32)pTrav->width;
   //	sCenX = PosX + ( abs( BOBBYR_GRID_PIC_WIDTH - usWidth ) / 2 );
   //	sCenY = PosY + 8;
-  sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->sOffsetX;
+  sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->x_offset;
   sCenY = PosY + 8;
 
   // blt the shadow of the item

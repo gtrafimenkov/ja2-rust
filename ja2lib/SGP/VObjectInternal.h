@@ -24,7 +24,7 @@ struct VObject {
   UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
 
   PTR pPixData;               // ETRLE pixel data
-  struct ETRLEObject *pETRLEObject;  // Object offset data etc
+  struct Subimage *subimages;  // Object offset data etc
   SixteenBPPObjectInfo *p16BPPObject;
   UINT16 *pShades[HVOBJECT_SHADE_TABLES];  // Shading tables
   UINT16 *pShadeCurrent;

@@ -632,7 +632,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
   struct LEVELNODE *pNode;  //, *pLand, *pStruct; //*pObject, *pTopmost, *pMerc;
   struct SOLDIERTYPE *pSoldier, *pSelSoldier;
   struct VObject *hVObject;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   TILE_ELEMENT *TileElem = NULL;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf = NULL;
@@ -1534,9 +1534,9 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 // RENDER
                 if (fTileInvisible) {
                 } else if (uiLevelNodeFlags & LEVELNODE_DISPLAY_AP && !(uiFlags & TILES_DIRTY)) {
-                  pTrav = &(hVObject->pETRLEObject[usImageIndex]);
-                  sXPos += pTrav->sOffsetX;
-                  sYPos += pTrav->sOffsetY;
+                  pTrav = &(hVObject->subimages[usImageIndex]);
+                  sXPos += pTrav->x_offset;
+                  sYPos += pTrav->y_offset;
 
                   if (gfUIDisplayActionPointsInvalid) {
                     SetFontBackground(FONT_MCOLOR_BLACK);
@@ -1670,11 +1670,11 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                   }
                 } else if (uiFlags & TILES_DIRTY) {
                   if (!(uiLevelNodeFlags & LEVELNODE_LASTDYNAMIC)) {
-                    pTrav = &(hVObject->pETRLEObject[usImageIndex]);
-                    uiBrushHeight = (UINT32)pTrav->usHeight;
-                    uiBrushWidth = (UINT32)pTrav->usWidth;
-                    sXPos += pTrav->sOffsetX;
-                    sYPos += pTrav->sOffsetY;
+                    pTrav = &(hVObject->subimages[usImageIndex]);
+                    uiBrushHeight = (UINT32)pTrav->height;
+                    uiBrushWidth = (UINT32)pTrav->width;
+                    sXPos += pTrav->x_offset;
+                    sYPos += pTrav->y_offset;
 
                     RegisterBackgroundRect(
                         uiDirtyFlags, NULL, sXPos, sYPos, (INT16)(sXPos + uiBrushWidth),
@@ -3476,7 +3476,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -3488,14 +3488,14 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -3863,7 +3863,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -3875,14 +3875,14 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -4255,7 +4255,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -4267,14 +4267,14 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -4660,7 +4660,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -4672,14 +4672,14 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -5110,7 +5110,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   UINT32 usHeight, usWidth, Unblitted;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY, LeftSkip, RightSkip, TopSkip, BottomSkip, BlitLength, BlitHeight, LSCount;
   INT32 ClipX1, ClipY1, ClipX2, ClipY2;
   UINT16 usZLevel, usZStartLevel, usZColsToGo, usZStartIndex, usCount, usZIndex, usZStartCols;
@@ -5122,14 +5122,14 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   if (clipregion == NULL) {
     ClipX1 = ClippingRect.iLeft;
@@ -6088,7 +6088,7 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -6096,14 +6096,14 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -6216,7 +6216,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr, *ZPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY;
 
   // Assertions
@@ -6224,14 +6224,14 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {
@@ -6330,7 +6330,7 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *ZPtr;
   UINT32 LineSkip;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INT32 iTempX, iTempY;
   BOOLEAN fHidden = TRUE;
 
@@ -6338,14 +6338,14 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
   Assert(hSrcVObject != NULL);
 
   // Get Offsets from Index into structure
-  pTrav = &(hSrcVObject->pETRLEObject[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  pTrav = &(hSrcVObject->subimages[usIndex]);
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
-  iTempX = iX + pTrav->sOffsetX;
-  iTempY = iY + pTrav->sOffsetY;
+  iTempX = iX + pTrav->x_offset;
+  iTempY = iY + pTrav->y_offset;
 
   // Validations
   if (!(iTempX >= 0)) {

@@ -490,7 +490,7 @@ BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect) {
 void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
   INT16 sMercScreenX, sMercScreenY;
   UINT16 usAnimSurface;
-  //		struct ETRLEObject *pTrav;
+  //		struct Subimage *pTrav;
   //		UINT32 usHeight, usWidth;
 
   GetSoldierScreenPos(pSoldier, &sMercScreenX, &sMercScreenY);
@@ -505,9 +505,9 @@ void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
     return;
   }
 
-  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->pETRLEObject[
-  // pSoldier->usAniFrame ] ); usHeight				= (UINT32)pTrav->usHeight; usWidth
-  // = (UINT32)pTrav->usWidth;
+  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->subimages[
+  // pSoldier->usAniFrame ] ); usHeight				= (UINT32)pTrav->height; usWidth
+  // = (UINT32)pTrav->width;
 
   pRect->iLeft = sMercScreenX;
   pRect->iTop = sMercScreenY;
@@ -556,7 +556,7 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
   FLOAT dOffsetX, dOffsetY;
   FLOAT dTempX_S, dTempY_S;
   UINT16 usAnimSurface;
-  //		struct ETRLEObject *pTrav;
+  //		struct Subimage *pTrav;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
@@ -572,7 +572,7 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
 
   FloatFromCellToScreenCoordinates(dOffsetX, dOffsetY, &dTempX_S, &dTempY_S);
 
-  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->pETRLEObject[
+  // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->subimages[
   // pSoldier->usAniFrame ] );
 
   sMercScreenX = ((gsVIEWPORT_END_X - gsVIEWPORT_START_X) / 2) + (INT16)dTempX_S;
@@ -587,8 +587,8 @@ void GetSoldierScreenPos(struct SOLDIERTYPE *pSoldier, INT16 *psScreenX, INT16 *
   sMercScreenY += gsRenderHeight;
 
   // Add to start position of dest buffer
-  // sMercScreenX += pTrav->sOffsetX;
-  // sMercScreenY += pTrav->sOffsetY;
+  // sMercScreenX += pTrav->x_offset;
+  // sMercScreenY += pTrav->y_offset;
   sMercScreenX += pSoldier->sBoundingBoxOffsetX;
   sMercScreenY += pSoldier->sBoundingBoxOffsetY;
 

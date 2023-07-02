@@ -1356,7 +1356,7 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
   UINT16 usETRLEStart;
   UINT16 usETRLEEnd;
   DisplaySpec *pDisplaySpec;
-  struct ETRLEObject *pETRLEObject;
+  struct Subimage *subimages;
   DisplayList *pCurNode;
 
   SaveSelectionList();
@@ -1377,9 +1377,9 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
       if (usETRLEEnd >= pDisplaySpec->hVObject->usNumberOfObjects) return FALSE;
 
       for (usETRLELoop = usETRLEStart; usETRLELoop <= usETRLEEnd; usETRLELoop++) {
-        pETRLEObject = &(pDisplaySpec->hVObject->pETRLEObject[usETRLELoop]);
+        subimages = &(pDisplaySpec->hVObject->subimages[usETRLELoop]);
 
-        if ((iCurrX + pETRLEObject->usWidth > pBottomRight->iX) || (fFlags & ONE_COLUMN)) {
+        if ((iCurrX + subimages->width > pBottomRight->iX) || (fFlags & ONE_COLUMN)) {
           if (fFlags & ONE_ROW) {
             break;
           }
@@ -1393,8 +1393,8 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
           pCurNode->uiIndex = usETRLELoop;
           pCurNode->iX = (INT16)iCurrX;
           pCurNode->iY = (INT16)iCurrY;
-          pCurNode->iWidth = pETRLEObject->usWidth;
-          pCurNode->iHeight = pETRLEObject->usHeight;
+          pCurNode->iWidth = subimages->width;
+          pCurNode->iHeight = subimages->height;
           pCurNode->pNext = *pDisplayList;
           pCurNode->uiObjIndx = pDisplaySpec->uiObjIndx;
 
@@ -1407,11 +1407,11 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
         } else
           return (FALSE);
 
-        if (pETRLEObject->usHeight > usGreatestHeightInRow) {
-          usGreatestHeightInRow = pETRLEObject->usHeight;
+        if (subimages->height > usGreatestHeightInRow) {
+          usGreatestHeightInRow = subimages->height;
         }
 
-        iCurrX += pETRLEObject->usWidth + pSpacing->iX;
+        iCurrX += subimages->width + pSpacing->iX;
       }
     }
   }
@@ -1432,7 +1432,7 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
   INT16 sTempOffsetX;
   INT16 sTempOffsetY;
   BOOLEAN fReturnVal;
-  struct ETRLEObject *pETRLEObject;
+  struct Subimage *subimages;
   UINT16 usFillColor;
   INT16 sCount;
 
@@ -1446,15 +1446,15 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
 
     if (iCurrY > iBottomCutOff) return (TRUE);
 
-    pETRLEObject = &(pNode->hObj->pETRLEObject[pNode->uiIndex]);
+    subimages = &(pNode->hObj->subimages[pNode->uiIndex]);
 
     // We have to store the offset data in temp variables before zeroing them and blitting
-    sTempOffsetX = pETRLEObject->sOffsetX;
-    sTempOffsetY = pETRLEObject->sOffsetY;
+    sTempOffsetX = subimages->x_offset;
+    sTempOffsetY = subimages->y_offset;
 
     // Set the offsets used for blitting to 0
-    pETRLEObject->sOffsetX = 0;
-    pETRLEObject->sOffsetY = 0;
+    subimages->x_offset = 0;
+    subimages->y_offset = 0;
 
     if (fFlags & CLEAR_BACKGROUND) {
       usFillColor = SelWinFillColor;
@@ -1474,8 +1474,8 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
       gprintf(pNode->iX, iCurrY, L"%d", sCount);
     }
 
-    pETRLEObject->sOffsetX = sTempOffsetX;
-    pETRLEObject->sOffsetY = sTempOffsetY;
+    subimages->x_offset = sTempOffsetX;
+    subimages->y_offset = sTempOffsetY;
   }
 
   return (fReturnVal);

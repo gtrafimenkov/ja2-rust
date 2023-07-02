@@ -2184,7 +2184,7 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
   struct SOLDIERTYPE *pSoldier;
   INT16 sIndex;
   struct VObject *hHandle;
-  struct ETRLEObject *pTrav;
+  struct Subimage *pTrav;
   INVTYPE *pItem;
   INT16 PosX, PosY, sCenX, sCenY;
   UINT32 usHeight, usWidth;
@@ -2229,13 +2229,13 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
         pItem = &Item[sIndex];
 
         GetVideoObject(&hHandle, GetInterfaceGraphicForItem(pItem));
-        pTrav = &(hHandle->pETRLEObject[pItem->ubGraphicNum]);
+        pTrav = &(hHandle->subimages[pItem->ubGraphicNum]);
 
-        usHeight = (UINT32)pTrav->usHeight;
-        usWidth = (UINT32)pTrav->usWidth;
+        usHeight = (UINT32)pTrav->height;
+        usWidth = (UINT32)pTrav->width;
 
-        sCenX = PosX + (abs((INT32)(57 - usWidth)) / 2) - pTrav->sOffsetX;
-        sCenY = PosY + (abs((INT32)(22 - usHeight)) / 2) - pTrav->sOffsetY;
+        sCenX = PosX + (abs((INT32)(57 - usWidth)) / 2) - pTrav->x_offset;
+        sCenY = PosY + (abs((INT32)(22 - usHeight)) / 2) - pTrav->y_offset;
 
         // blt the item
         BltVideoObjectOutlineFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
