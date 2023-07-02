@@ -55,6 +55,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 extern void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY,
                                         BOOLEAN fRadio);
@@ -2630,7 +2631,7 @@ void DeleteSelectedMercsItem() {
 void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   UINT32 uiVideoObjectIndex;
   struct VObject *hVObject;
-  ETRLEObject *pObject;
+  struct ETRLEObject *pObject;
   INVTYPE *item;
   SGPRect SrcRect, DstRect;
   INT32 iSrcWidth, iSrcHeight;

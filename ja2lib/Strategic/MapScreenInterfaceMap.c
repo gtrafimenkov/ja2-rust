@@ -7,7 +7,6 @@
 #include "SGP/English.h"
 #include "SGP/Font.h"
 #include "SGP/Line.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
@@ -49,6 +48,7 @@
 #include "Utils/Utilities.h"
 #include "rust_sam_sites.h"
 #include "rust_towns.h"
+#include "rust_images.h"
 
 // zoom x and y coords for map scrolling
 INT32 iZoomX = 0;
@@ -4383,7 +4383,7 @@ void RemoveMilitiaPopUpBox(void) {
 
 BOOLEAN DrawMilitiaPopUpBox(void) {
   struct VObject *hVObject;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   if (!fShowMilitia) {
     sSelectedMilitiaTown = 0;

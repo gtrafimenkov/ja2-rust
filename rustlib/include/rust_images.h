@@ -9,91 +9,70 @@
 
 #define STCI_ID_LEN 4
 
+#define STCI_ZLIB_COMPRESSED 16
+
+#define STCI_ETRLE_COMPRESSED 32
+
 /**
- * First part of STCI image header
+ * Palette structure, mimics that of Win32
  */
-struct STCIHeaderHead {
-  uint8_t ID[STCI_ID_LEN];
-  uint32_t OriginalSize;
-  uint32_t StoredSize;
-  uint32_t TransparentValue;
-  uint32_t Flags;
+struct SGPPaletteEntry {
+  uint8_t peRed;
+  uint8_t peGreen;
+  uint8_t peBlue;
+  uint8_t _unused;
+};
+
+/**
+ * Structure that describes one image from an indexed STCI file
+ */
+struct ETRLEObject {
+  uint32_t uiDataOffset;
+  uint32_t uiDataLength;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
+  uint16_t usHeight;
+  uint16_t usWidth;
+};
+
+/**
+ * Results of loading STI image.
+ */
+struct STIImageLoaded {
+  bool success;
+  uint32_t image_data_size;
   uint16_t Height;
   uint16_t Width;
-};
-
-/**
- * Middle part of STCI image header describing RGB image
- */
-struct STCIHeaderMiddleRGB {
-  uint32_t uiRedMask;
-  uint32_t uiGreenMask;
-  uint32_t uiBlueMask;
-  uint32_t uiAlphaMask;
-  uint8_t ubRedDepth;
-  uint8_t ubGreenDepth;
-  uint8_t ubBlueDepth;
-  uint8_t ubAlphaDepth;
-};
-
-/**
- * Middle part of STCI image header describing RGB image
- */
-struct STCIHeaderMiddleIndexed {
-  uint32_t uiNumberOfColours;
-  uint16_t usNumberOfSubImages;
-  uint8_t ubRedDepth;
-  uint8_t ubGreenDepth;
-  uint8_t ubBlueDepth;
-  uint8_t cIndexedUnused[11];
-};
-
-/**
- * Middle part of STCI image header
- */
-enum STCIHeaderMiddle_Tag {
-  Rgb,
-  Indexed,
-};
-
-struct STCIHeaderMiddle {
-  enum STCIHeaderMiddle_Tag tag;
-  union {
-    struct {
-      struct STCIHeaderMiddleRGB rgb;
-    };
-    struct {
-      struct STCIHeaderMiddleIndexed indexed;
-    };
-  };
-};
-
-/**
- * Last part of STCI image header
- */
-struct STCIHeaderEnd {
-  uint8_t Depth;
-  uint8_t unused1;
-  uint8_t unused2;
-  uint8_t unused3;
-  uint32_t AppDataSize;
-  uint8_t Unused[12];
-};
-
-/**
- * Last part of STCI image header
- */
-struct STCIHeader {
-  struct STCIHeaderHead head;
-  struct STCIHeaderMiddle middle;
-  struct STCIHeaderEnd end;
+  uint16_t number_of_subimages;
+  uint8_t pixel_depth;
+  uint32_t app_data_size;
+  uint8_t *image_data;
+  bool indexed;
+  struct SGPPaletteEntry *palette;
+  struct ETRLEObject *subimages;
+  uint8_t *app_data;
+  bool zlib_compressed;
 };
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-bool ReadSTCIHeader(FileID file_id, struct STCIHeader *data);
+/**
+ * Load STI image from file or library.
+ * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
+ * Memory must be freed with RustDealloc.
+ */
+struct STIImageLoaded LoadSTIImageFromFile(const char *path,
+                                           bool load_app_data);
+
+/**
+ * Load STI image.
+ * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
+ * Memory must be freed with RustDealloc.
+ */
+struct STIImageLoaded LoadSTIImage(FileID file_id,
+                                   bool load_app_data);
 
 #ifdef __cplusplus
 } // extern "C"

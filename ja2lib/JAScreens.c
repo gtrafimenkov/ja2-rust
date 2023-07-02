@@ -54,6 +54,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_images.h"
 
 #define _UNICODE
 
@@ -630,7 +631,7 @@ UINT32 SexScreenHandle(void) {
   static UINT32 guiSMILY;
   static INT8 bCurFrame = 0;
   static UINT32 uiTimeOfLastUpdate = 0, uiTime;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hVObject;
   INT16 sX, sY;
 

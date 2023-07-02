@@ -6,7 +6,6 @@
 
 #include "GameSettings.h"
 #include "SGP/Debug.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/VObject.h"
 #include "SGP/VObjectInternal.h"
@@ -34,6 +33,7 @@
 #include "Tactical/WorldItems.h"
 #include "TileEngine/ExplosionControl.h"
 #include "TileEngine/IsometricUtils.h"
+#include "TileEngine/Lighting.h"
 #include "TileEngine/RenderFun.h"
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/Smell.h"
@@ -45,6 +45,7 @@
 #include "Utils/Message.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
+#include "rust_images.h"
 
 #define CORPSE_WARNING_MAX 5
 #define CORPSE_WARNING_DIST 5
@@ -58,7 +59,6 @@
 #define MAX_NUM_CROWS 6
 
 // From lighting
-extern struct SGPPaletteEntry gpLightColors[3];
 extern UINT16 gusShadeLevels[16][3];
 
 void MakeCorpseVisible(struct SOLDIERTYPE *pSoldier, ROTTING_CORPSE *pCorpse);

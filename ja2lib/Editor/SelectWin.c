@@ -15,6 +15,7 @@
 #include "TileEngine/WorldDat.h"
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
+#include "rust_images.h"
 
 extern BOOLEAN gfOverheadMapDirty;
 
@@ -1355,7 +1356,7 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
   UINT16 usETRLEStart;
   UINT16 usETRLEEnd;
   DisplaySpec *pDisplaySpec;
-  ETRLEObject *pETRLEObject;
+  struct ETRLEObject *pETRLEObject;
   DisplayList *pCurNode;
 
   SaveSelectionList();
@@ -1431,7 +1432,7 @@ BOOLEAN DisplayWindowFunc(DisplayList *pNode, INT16 iTopCutOff, INT16 iBottomCut
   INT16 sTempOffsetX;
   INT16 sTempOffsetY;
   BOOLEAN fReturnVal;
-  ETRLEObject *pETRLEObject;
+  struct ETRLEObject *pETRLEObject;
   UINT16 usFillColor;
   INT16 sCount;
 

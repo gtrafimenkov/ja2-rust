@@ -7,7 +7,6 @@
 #include "SGP/Debug.h"
 #include "SGP/Font.h"
 #include "SGP/HImage.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/VObject.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
@@ -16,6 +15,7 @@
 #include "Tactical/SoldierControl.h"
 #include "Utils/FontControl.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 void CopyFilename(STR pFilename, STR pDestination) { strcpy(pDestination, pFilename); }
 

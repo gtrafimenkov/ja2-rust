@@ -8,7 +8,6 @@
 #include "JAScreens.h"
 #include "SGP/Container.h"
 #include "SGP/Line.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"
@@ -43,6 +42,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
+#include "rust_images.h"
 
 // Defines
 #define NUM_FACE_SLOTS 50
@@ -193,7 +193,7 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   VOBJECT_DESC VObjectDesc;
   UINT32 uiVideoObject;
   INT32 iFaceIndex;
-  ETRLEObject ETRLEObject;
+  struct ETRLEObject ETRLEObject;
   struct VObject *hVObject;
   UINT32 uiCount;
   struct SGPPaletteEntry Pal[256];
@@ -962,7 +962,7 @@ void GetXYForIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 
                            INT16 *psY) {
   INT16 sX, sY;
   UINT16 usWidth, usHeight;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hVObject;
 
   // Get height, width of icon...
@@ -982,7 +982,7 @@ void GetXYForRightIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, I
                                 INT16 *psX, INT16 *psY, INT8 bNumIcons) {
   INT16 sX, sY;
   UINT16 usWidth, usHeight;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
   struct VObject *hVObject;
 
   // Get height, width of icon...

@@ -13,7 +13,6 @@
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/MemMan.h"
-#include "SGP/PaletteEntry.h"
 #include "SGP/Random.h"
 #include "SGP/SoundMan.h"
 #include "SGP/VObject.h"
@@ -96,6 +95,7 @@
 #include "Utils/Utilities.h"
 #include "rust_civ_groups.h"
 #include "rust_fileman.h"
+#include "rust_images.h"
 
 extern INT16 DirIncrementer[8];
 
@@ -7978,7 +7978,7 @@ void SelectMoveAnimationFromStance(struct SOLDIERTYPE *pSoldier) {
 
 void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *psWidth) {
   UINT16 usAnimSurface;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
@@ -8010,7 +8010,7 @@ void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT
 
 void GetActualSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, INT16 *sOffsetX, INT16 *sOffsetY) {
   UINT16 usAnimSurface;
-  ETRLEObject *pTrav;
+  struct ETRLEObject *pTrav;
 
   usAnimSurface = GetSoldierAnimationSurface(pSoldier, pSoldier->usAnimState);
 
