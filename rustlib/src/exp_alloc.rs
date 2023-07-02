@@ -60,10 +60,12 @@ pub extern "C" fn RustAlloc(size: usize) -> *mut u8 {
 /// Pass only the pointer returned earlier by RustAlloc.
 /// Don't deallocate memory more that once.
 pub unsafe extern "C" fn RustDealloc(pointer: *mut u8) {
-    exp_debug::debug_log_write(&format!("rust_alloc: deallocating {pointer:?}"));
-    unsafe {
-        let layout = ALLOC_DB.pull(pointer);
-        std::alloc::dealloc(pointer, layout);
+    if !pointer.is_null() {
+        exp_debug::debug_log_write(&format!("rust_alloc: deallocating {pointer:?}"));
+        unsafe {
+            let layout = ALLOC_DB.pull(pointer);
+            std::alloc::dealloc(pointer, layout);
+        }
     }
 }
 

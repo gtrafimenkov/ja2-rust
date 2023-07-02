@@ -12,22 +12,38 @@
 #define PCX_NORMAL 1
 #define PCX_RLE 2
 #define PCX_256COLOR 4
-#define PCX_TRANSPARENT 8
-#define PCX_CLIPPED 16
-#define PCX_REALIZEPALETTE 32
 #define PCX_X_CLIPPING 64
 #define PCX_Y_CLIPPING 128
-#define PCX_NOTLOADED 256
 
-#define PCX_ERROROPENING 1
-#define PCX_INVALIDFORMAT 2
-#define PCX_INVALIDLEN 4
-#define PCX_OUTOFMEMORY 8
+typedef struct {
+  uint8_t ubManufacturer;
+  uint8_t ubVersion;
+  uint8_t ubEncoding;
+  uint8_t ubBitsPerPixel;
+  uint16_t usLeft, usTop;
+  uint16_t usRight, usBottom;
+  uint16_t usHorRez, usVerRez;
+  uint8_t ubEgaPalette[48];
+  uint8_t ubReserved;
+  uint8_t ubColorPlanes;
+  uint16_t usBytesPerLine;
+  uint16_t usPaletteType;
+  uint8_t ubFiller[58];
+} PcxHeader;
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
-BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
-                        uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp);
-PcxObject *LoadPcx(const char *pFilename);
+typedef struct {
+  uint8_t *pPcxBuffer;
+  uint8_t ubPalette[768];
+  uint16_t usWidth, usHeight;
+  uint32_t uiBufferSize;
+  uint16_t usPcxFlags;
+} PcxObject;
+
+static BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
+static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer,
+                               uint16_t usBufferWidth, uint16_t usBufferHeight, uint16_t usX,
+                               uint16_t usY, BOOLEAN fTransp);
+static PcxObject *LoadPcx(const char *pFilename);
 
 BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
   PcxObject *pPcxObject;
@@ -43,28 +59,17 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
   hImage->usWidth = pPcxObject->usWidth;
   hImage->usHeight = pPcxObject->usHeight;
   hImage->ubBitDepth = 8;
-  hImage->fFlags = hImage->fFlags | IMAGE_ALLIMAGEDATA;
 
-  // Read and allocate bitmap block if requested
-  {
-    // Allocate memory for buffer
-    hImage->p8BPPData = (uint8_t *)MemAlloc(hImage->usWidth * hImage->usHeight);
+  hImage->image_data = MemAlloc(hImage->usWidth * hImage->usHeight);
 
-    if (!BlitPcxToBuffer(pPcxObject, hImage->p8BPPData, hImage->usWidth, hImage->usHeight, 0, 0,
-                         FALSE)) {
-      MemFree(hImage->p8BPPData);
-      return (FALSE);
-    }
+  if (!BlitPcxToBuffer(pPcxObject, (uint8_t *)hImage->image_data, hImage->usWidth, hImage->usHeight,
+                       0, 0, FALSE)) {
+    MemFree(hImage->image_data);
+    return (FALSE);
   }
 
-  {
-    SetPcxPalette(pPcxObject, hImage);
+  SetPcxPalette(pPcxObject, hImage);
 
-    // Create 16 BPP palette if flags and BPP justify
-    hImage->pui16BPPPalette = Create16BPPPalette(hImage->pPalette);
-  }
-
-  // Free and remove pcx object
   MemFree(pPcxObject->pPcxBuffer);
   MemFree(pPcxObject);
 
@@ -134,8 +139,9 @@ PcxObject *LoadPcx(const char *pFilename) {
   return pCurrentPcxObject;
 }
 
-BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
-                        uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp) {
+static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer,
+                               uint16_t usBufferWidth, uint16_t usBufferHeight, uint16_t usX,
+                               uint16_t usY, BOOLEAN fTransp) {
   uint8_t *pPcxBuffer;
   uint8_t ubRepCount;
   uint16_t usMaxX, usMaxY;
@@ -268,13 +274,14 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t
           }
         }
 
-        if (usCurrentX <
-            usMaxX) {  // We are within the visible bounds so we write the byte to buffer
+        if (usCurrentX < usMaxX) {
+          // We are within the visible bounds so we write the byte to buffer
           *(pBuffer + uiCurrentOffset) = ubCurrentByte;
           uiCurrentOffset++;
           usCurrentX++;
         } else {
-          if ((uiCurrentOffset + 1) < uiNextLineOffset) {  // Increment the uiCurrentOffset
+          if ((uiCurrentOffset + 1) < uiNextLineOffset) {
+            // Increment the uiCurrentOffset
             uiCurrentOffset++;
           } else {  // Go to next line
             usCurrentX = usX;
@@ -294,25 +301,25 @@ BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t
   return (TRUE);
 }
 
-BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
+static BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
   uint16_t Index;
   uint8_t *pubPalette;
 
   pubPalette = &(pCurrentPcxObject->ubPalette[0]);
 
   // Allocate memory for palette
-  hImage->pPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
+  hImage->palette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
 
-  if (hImage->pPalette == NULL) {
+  if (hImage->palette == NULL) {
     return (FALSE);
   }
 
   // Initialize the proper palette entries
   for (Index = 0; Index < 256; Index++) {
-    hImage->pPalette[Index].red = *(pubPalette + (Index * 3));
-    hImage->pPalette[Index].green = *(pubPalette + (Index * 3) + 1);
-    hImage->pPalette[Index].blue = *(pubPalette + (Index * 3) + 2);
-    hImage->pPalette[Index]._unused = 0;
+    hImage->palette[Index].red = *(pubPalette + (Index * 3));
+    hImage->palette[Index].green = *(pubPalette + (Index * 3) + 1);
+    hImage->palette[Index].blue = *(pubPalette + (Index * 3) + 2);
+    hImage->palette[Index]._unused = 0;
   }
 
   return TRUE;

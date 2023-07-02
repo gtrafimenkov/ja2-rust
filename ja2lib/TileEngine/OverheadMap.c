@@ -150,7 +150,7 @@ void InitNewOverheadDB(uint8_t ubTilesetID) {
     // Get number of regions
     s = gSmTileSurf[cnt1];
 
-    NumRegions = s.vo->usNumberOfObjects;
+    NumRegions = s.vo->number_of_subimages;
 
     // Check for overflow
     if (NumRegions > gNumTilesPerType[cnt1]) {
