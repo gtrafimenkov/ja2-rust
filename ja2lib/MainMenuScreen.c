@@ -325,13 +325,12 @@ void HandleMainMenuInput() {
   while (DequeueEvent(&InputEvent) == TRUE) {
     if (InputEvent.usEvent == KEY_UP) {
       switch (InputEvent.usParam) {
-        /*
-                                        case ESC:
-                                                gbHandledMainMenu = QUIT;
-                                                break;
-        */
+          /*
+                                          case ESC:
+                                                  gbHandledMainMenu = QUIT;
+                                                  break;
+          */
 
-#ifdef JA2TESTVERSION
         case 'q':
           gbHandledMainMenu = NEW_GAME;
           gfMainMenuScreenExit = TRUE;
@@ -340,6 +339,7 @@ void HandleMainMenuInput() {
           //						gfDoHelpScreen = 1;
           break;
 
+#ifdef JA2TESTVERSION
         case 'i':
           SetPendingNewScreen(INTRO_SCREEN);
           gfMainMenuScreenExit = TRUE;
