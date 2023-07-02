@@ -230,6 +230,9 @@ impl Default for STIImageLoaded {
 }
 
 #[no_mangle]
+/// Load STI image.
+/// If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
+/// Memory must be freed with RustDealloc.
 pub extern "C" fn LoadSTIImage2(file_id: FileID, load_app_data: bool) -> STIImageLoaded {
     let failure = STIImageLoaded {
         success: false,
@@ -246,7 +249,7 @@ pub extern "C" fn LoadSTIImage2(file_id: FileID, load_app_data: bool) -> STIImag
         image_data: std::ptr::null_mut(),
         zlib_compressed: false,
     };
-    let img = read_stci(file_id, true);
+    let img = read_stci(file_id, load_app_data);
 
     if let Err(err) = img {
         exp_debug::debug_log_write(&format!("failed to read stci image: {err}"));
@@ -255,27 +258,61 @@ pub extern "C" fn LoadSTIImage2(file_id: FileID, load_app_data: bool) -> STIImag
 
     let img = img.unwrap();
 
-    let mut number_of_subimages = 0;
-    if let Some(subimages) = img.subimages {
-        number_of_subimages = subimages.len();
-        // TODO: allocate and copy memory
+    // allocate memory and copy palette array
+    let mut palette_data_copy: *mut SGPPaletteEntry = std::ptr::null_mut();
+    if let Some(palette) = img.palette {
+        let palette_data_size = palette.len() * std::mem::size_of::<ETRLEObject>();
+        unsafe {
+            palette_data_copy = std::mem::transmute(exp_alloc::RustAlloc(palette_data_size));
+            std::ptr::copy(palette.as_ptr(), palette_data_copy, palette.len());
+        }
     }
 
-    return STIImageLoaded {
+    // allocate memory and copy image data
+    let image_data_size = img.image_data.len();
+    let image_data_copy = exp_alloc::RustAlloc(image_data_size);
+    unsafe {
+        std::ptr::copy(img.image_data.as_ptr(), image_data_copy, image_data_size);
+    }
+
+    // allocate memory for subimages array and copy data
+    let mut number_of_subimages = 0;
+    let mut subimages_ptr: *mut ETRLEObject = std::ptr::null_mut();
+    if let Some(subimages) = img.subimages {
+        number_of_subimages = subimages.len();
+        let data_size = number_of_subimages * std::mem::size_of::<ETRLEObject>();
+        unsafe {
+            subimages_ptr = std::mem::transmute(exp_alloc::RustAlloc(data_size));
+            std::ptr::copy(subimages.as_ptr(), subimages_ptr, number_of_subimages);
+        }
+    }
+
+    // allocate memory and copy application data
+    let mut app_data_size = 0;
+    let mut app_data_copy: *mut u8 = std::ptr::null_mut();
+    if let Some(app_data) = img.app_data {
+        app_data_size = app_data.len();
+        unsafe {
+            app_data_copy = exp_alloc::RustAlloc(app_data_size);
+            std::ptr::copy(app_data.as_ptr(), app_data_copy, app_data.len());
+        }
+    }
+
+    STIImageLoaded {
         success: true,
         Height: img.height,
         Width: img.width,
         indexed: img.indexed,
         pixel_depth: img.pixel_depth,
-        image_data_size: todo!(),
-        image_data: todo!(),
-        palette: todo!(),
-        number_of_subimages,
-        subimages: todo!(),
-        app_data_size: todo!(),
-        app_data: todo!(),
-        zlib_compressed: todo!(),
-    };
+        image_data_size: image_data_size as u32,
+        image_data: image_data_copy,
+        palette: palette_data_copy,
+        number_of_subimages: number_of_subimages as u16,
+        subimages: subimages_ptr,
+        app_data_size: app_data_size as u32,
+        app_data: app_data_copy,
+        zlib_compressed: img.zlib_compressed,
+    }
 }
 
 #[no_mangle]
@@ -581,7 +618,7 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
         } else {
             FILE_DB.read_file_exact(file_id, &mut image_data)?;
         }
-        return Ok(STImage {
+        Ok(STImage {
             height,
             width,
             pixel_depth,
@@ -591,7 +628,7 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
             subimages,
             app_data,
             zlib_compressed,
-        });
+        })
     }
 }
 
@@ -639,20 +676,6 @@ mod tests {
             assert_eq!(30, subimage4.usWidth);
             assert_eq!(3840, subimage4.uiDataOffset);
             assert_eq!(960, subimage4.uiDataLength);
-
-            // STCI header head: STCIHeaderHead { ID: [83, 84, 67, 73], OriginalSize: 307200, StoredSize: 4800, TransparentValue: 0, Flags: 40, Height: 480, Width: 640 }
-            // STCI header middle indexed: STCIHeaderMiddleIndexed { uiNumberOfColours: 256, usNumberOfSubImages: 5, ubRedDepth: 8, ubGreenDepth: 8, ubBlueDepth: 8, cIndexedUnused: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
-            // STCI header end: STCIHeaderEnd { Depth: 8, unused1: 0, unused2: 0, unused3: 0, AppDataSize: 0, Unused: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
-            // rust_alloc: allocated 1024 bytes at 0x166c7a9f8b0
-            // going to read 5 subimages of STCI
-            // rust_alloc: allocated 80 bytes at 0x166c7a9bd40
-            // subimage: ETRLEObject { uiDataOffset: 0, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
-            // subimage: ETRLEObject { uiDataOffset: 960, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
-            // subimage: ETRLEObject { uiDataOffset: 1920, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
-            // subimage: ETRLEObject { uiDataOffset: 2880, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
-            // subimage: ETRLEObject { uiDataOffset: 3840, uiDataLength: 960, sOffsetX: 0, sOffsetY: 0, usHeight: 30, usWidth: 30 }
-            // reading STCI image data, 4800 bytes
-            // rust_alloc: allocated 4800 bytes at 0x166c7aa6eb0
         }
     }
 }

@@ -19,7 +19,7 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
     return FALSE;
   }
 
-  struct STIImageLoaded sti = LoadSTIImage(hFile, loadAppData);
+  struct STIImageLoaded sti = LoadSTIImage2(hFile, loadAppData);
   if (!sti.success) {
     File_Close(hFile);
     return FALSE;
@@ -50,7 +50,7 @@ BOOLEAN LoadSTCIFileToImage(const char *filePath, struct Image *hImage, bool loa
     hImage->fFlags |= IMAGE_APPDATA;
   }
 
-  if (sti.compressed) {
+  if (sti.zlib_compressed) {
     hImage->fFlags |= IMAGE_COMPRESSED;
   }
   hImage->usWidth = sti.Width;
