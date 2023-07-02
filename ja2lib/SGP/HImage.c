@@ -128,15 +128,8 @@ BOOLEAN ReleaseImageData(struct Image *hImage) {
     hImage->fFlags = hImage->fFlags ^ IMAGE_PALETTE;
   }
 
-  if (hImage->fFlags & IMAGE_BITMAPDATA) {
-    // Destroy image data
-    Assert(hImage->pImageData != NULL);
-    FreeImageData(hImage);
-    hImage->pImageData = NULL;
-    FreeImageSubimages(hImage);
-    // Remove contents flag
-    hImage->fFlags = hImage->fFlags ^ IMAGE_BITMAPDATA;
-  }
+  FreeImageData(hImage);
+  FreeImageSubimages(hImage);
 
   RustDealloc(hImage->pAppData);
 

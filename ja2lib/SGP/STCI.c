@@ -19,10 +19,7 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
   }
 
   hImage->pImageData = sti.image_data;
-  if (hImage->pImageData) {
-    hImage->imageDataAllocatedInRust = true;
-    hImage->fFlags |= IMAGE_BITMAPDATA;
-  }
+  hImage->imageDataAllocatedInRust = true;
 
   hImage->pPalette = sti.palette;
   if (hImage->pPalette) {
