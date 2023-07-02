@@ -27,8 +27,8 @@ struct SGPPaletteEntry {
  * Structure that describes one image from an indexed STCI file
  */
 struct Subimage {
-  uint32_t uiDataOffset;
-  uint32_t uiDataLength;
+  uint32_t data_offset;
+  uint32_t data_length;
   int16_t sOffsetX;
   int16_t sOffsetY;
   uint16_t usHeight;

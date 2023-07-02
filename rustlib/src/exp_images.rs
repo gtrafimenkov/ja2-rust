@@ -24,8 +24,8 @@ pub struct SGPPaletteEntry {
 #[derive(Debug)]
 /// Structure that describes one image from an indexed STCI file
 pub struct Subimage {
-    uiDataOffset: u32,
-    uiDataLength: u32,
+    data_offset: u32,
+    data_length: u32,
     sOffsetX: i16,
     sOffsetY: i16,
     usHeight: u16,
@@ -293,8 +293,8 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                 let mut reader = io::Cursor::new(buffer);
                 for _i in 0..num_subimages {
                     let subimage = Subimage {
-                        uiDataOffset: reader.read_u32::<LittleEndian>()?,
-                        uiDataLength: reader.read_u32::<LittleEndian>()?,
+                        data_offset: reader.read_u32::<LittleEndian>()?,
+                        data_length: reader.read_u32::<LittleEndian>()?,
                         sOffsetX: reader.read_i16::<LittleEndian>()?,
                         sOffsetY: reader.read_i16::<LittleEndian>()?,
                         usHeight: reader.read_u16::<LittleEndian>()?,
@@ -357,14 +357,14 @@ mod tests {
             assert_eq!(0, subimage0.sOffsetY);
             assert_eq!(30, subimage0.usHeight);
             assert_eq!(30, subimage0.usWidth);
-            assert_eq!(0, subimage0.uiDataOffset);
-            assert_eq!(960, subimage0.uiDataLength);
+            assert_eq!(0, subimage0.data_offset);
+            assert_eq!(960, subimage0.data_length);
             assert_eq!(0, subimage4.sOffsetX);
             assert_eq!(0, subimage4.sOffsetY);
             assert_eq!(30, subimage4.usHeight);
             assert_eq!(30, subimage4.usWidth);
-            assert_eq!(3840, subimage4.uiDataOffset);
-            assert_eq!(960, subimage4.uiDataLength);
+            assert_eq!(3840, subimage4.data_offset);
+            assert_eq!(960, subimage4.data_length);
         }
     }
 }

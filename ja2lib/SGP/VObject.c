@@ -742,7 +742,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   }
 
   // Assuming everything's okay, go ahead and look...
-  pCurrent = &((UINT8 *)hVObject->pPixData)[subimages->uiDataOffset];
+  pCurrent = &((UINT8 *)hVObject->pPixData)[subimages->data_offset];
 
   // Skip past all uninteresting scanlines
   while (usLoopY < usY) {

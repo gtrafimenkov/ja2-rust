@@ -3491,7 +3491,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;
@@ -3878,7 +3878,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;
@@ -4270,7 +4270,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;
@@ -4675,7 +4675,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;
@@ -5125,7 +5125,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;
@@ -6099,7 +6099,7 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;
@@ -6227,7 +6227,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;
@@ -6341,7 +6341,7 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
   iTempX = iX + pTrav->sOffsetX;

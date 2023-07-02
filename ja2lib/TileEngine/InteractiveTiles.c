@@ -790,7 +790,7 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
   pTrav = &(hSrcVObject->subimages[usIndex]);
   usHeight = (UINT32)pTrav->usHeight;
   usWidth = (UINT32)pTrav->usWidth;
-  uiOffset = pTrav->uiDataOffset;
+  uiOffset = pTrav->data_offset;
 
   // Calculate test position we are looking for!
   // Calculate from 0, 0 at top left!
