@@ -203,30 +203,6 @@ BOOLEAN ReadUncompRGBImage(struct Image* hImage, FileID hFile, UINT8 uiImgID, UI
       }
       hImage->fFlags |= IMAGE_BITMAPDATA;
     }
-
-#if 0
-		// 32 bit not yet allowed in SGP
-		else if ( uiImagePixelSize == 32 )
-		{
-			iNumValues = uiWidth * uiHeight;
-
-			for ( i=0 ; i<iNumValues; i++ )
-			{
-				if ( !File_Read( hFile, &b, sizeof(UINT8), &uiBytesRead ) )
-					goto freeEnd;
-				if ( !File_Read( hFile, &g, sizeof(UINT8), &uiBytesRead ) )
-					goto freeEnd;
-				if ( !File_Read( hFile, &r, sizeof(UINT8), &uiBytesRead ) )
-					goto freeEnd;
-				if ( !File_Read( hFile, &a, sizeof(UINT8), &uiBytesRead ) )
-					goto freeEnd;
-
-				pBMData[ i*3   ] = r;
-				pBMData[ i*3+1 ] = g;
-				pBMData[ i*3+2 ] = b;
-			}
-		}
-#endif
   }
   return (TRUE);
 
