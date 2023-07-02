@@ -310,7 +310,7 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   pFace->usFaceHeight = ETRLEObject.height;
 
   // OK, check # of items
-  if (hVObject->usNumberOfObjects == 8) {
+  if (hVObject->number_of_subimages == 8) {
     pFace->fInvalidAnim = FALSE;
 
     // Get EYE height, width

@@ -505,18 +505,18 @@ BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer) {
   Assert(pBuffer != NULL);
 
   // Create memory for data
-  pBuffer->usNumberOfObjects = hImage->usNumberOfObjects;
+  pBuffer->number_of_subimages = hImage->number_of_subimages;
 
   // Create buffer for objects
   pBuffer->subimages =
-      (struct Subimage *)MemAlloc(sizeof(struct Subimage) * pBuffer->usNumberOfObjects);
+      (struct Subimage *)MemAlloc(sizeof(struct Subimage) * pBuffer->number_of_subimages);
   if (!(pBuffer->subimages != NULL)) {
     return FALSE;
   }
 
   // Copy into buffer
   memcpy(pBuffer->subimages, hImage->subimages,
-         sizeof(struct Subimage) * pBuffer->usNumberOfObjects);
+         sizeof(struct Subimage) * pBuffer->number_of_subimages);
 
   // Allocate memory for pixel data
   pBuffer->image_data = MemAlloc(hImage->image_data_size);

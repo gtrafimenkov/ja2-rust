@@ -4209,11 +4209,11 @@ BOOLEAN ConvertAniCodeToAniFrame(struct SOLDIERTYPE *pSoldier, UINT16 usAniFrame
     return (TRUE);
   }
 
-  if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->usNumberOfObjects) {
+  if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->number_of_subimages) {
     // Debug msg here....
     //		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Soldier Animation: Wrong Number
     // of frames per number of objects: %d vs %d, %S",  gAnimSurfaceDatabase[ usAnimSurface
-    //].uiNumFramesPerDir, gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->usNumberOfObjects,
+    //].uiNumFramesPerDir, gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->number_of_subimages,
     // gAnimControl[ pSoldier->usAnimState ].zAnimStr );
 
     pSoldier->usAniFrame = 0;
@@ -7999,7 +7999,7 @@ void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT
   // depending on the frame and the value returned here will vary thusly. However, for the
   // uses of this function, we should be able to use just the first frame...
 
-  if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->usNumberOfObjects) {
+  if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->number_of_subimages) {
   }
 
   pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->subimages[pSoldier->usAniFrame]);

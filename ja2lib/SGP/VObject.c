@@ -381,7 +381,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   }
 
   // Set values
-  hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
+  hVObject->number_of_subimages = TempETRLEData.number_of_subimages;
   hVObject->subimages = TempETRLEData.subimages;
   hVObject->image_data = TempETRLEData.image_data;
   hVObject->image_data_size = TempETRLEData.image_data_size;
@@ -433,7 +433,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   }
 
   // Set values
-  hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
+  hVObject->number_of_subimages = TempETRLEData.number_of_subimages;
   hVObject->subimages = TempETRLEData.subimages;
   hVObject->image_data = TempETRLEData.image_data;
   hVObject->image_data_size = TempETRLEData.image_data_size;
@@ -514,7 +514,7 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
   }
 
   if (hVObject->ppZStripInfo != NULL) {
-    for (usLoop = 0; usLoop < hVObject->usNumberOfObjects; usLoop++) {
+    for (usLoop = 0; usLoop < hVObject->number_of_subimages; usLoop++) {
       if (hVObject->ppZStripInfo[usLoop] != NULL) {
         MemFree(hVObject->ppZStripInfo[usLoop]->pbZChange);
         MemFree(hVObject->ppZStripInfo[usLoop]);
@@ -728,7 +728,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   if (!(hVObject != NULL)) {
     return FALSE;
   }
-  if (!(usETRLEIndex < hVObject->usNumberOfObjects)) {
+  if (!(usETRLEIndex < hVObject->number_of_subimages)) {
     return FALSE;
   }
 
@@ -788,7 +788,7 @@ BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct Subimage 
   if (!(usIndex >= 0)) {
     return FALSE;
   }
-  if (!(usIndex < hVObject->usNumberOfObjects)) {
+  if (!(usIndex < hVObject->number_of_subimages)) {
     return FALSE;
   }
 

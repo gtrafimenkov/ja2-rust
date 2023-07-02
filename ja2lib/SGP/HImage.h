@@ -50,7 +50,7 @@ struct ImageData {
   void *image_data;
   UINT32 image_data_size;
   struct Subimage *subimages;
-  UINT16 usNumberOfObjects;
+  UINT16 number_of_subimages;
 };
 
 // Image header structure
@@ -65,7 +65,7 @@ struct Image {
   void *image_data;
   UINT32 image_data_size;
   struct Subimage *subimages;
-  UINT16 usNumberOfObjects;
+  UINT16 number_of_subimages;
   bool imageDataAllocatedInRust;
   bool paletteAllocatedInRust;
 };

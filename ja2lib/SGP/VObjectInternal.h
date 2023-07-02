@@ -34,8 +34,8 @@ struct VObject {
   ZStripInfo **ppZStripInfo;  // Z-value strip info arrays
 
   UINT16 usNumberOf16BPPObjects;
-  UINT16 usNumberOfObjects;  // Total number of objects
-  UINT8 ubBitDepth;          // BPP
+  UINT16 number_of_subimages;  // Total number of objects
+  UINT8 ubBitDepth;            // BPP
 
   // Reserved for added room and 32-byte boundaries
   BYTE bReserved[1];
