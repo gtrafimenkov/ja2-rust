@@ -69,6 +69,8 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
 
   SetPcxPalette(pPcxObject, hImage);
 
+  // hImage->pui16BPPPalette = Create16BPPPalette(hImage->palette);
+
   MemFree(pPcxObject->pPcxBuffer);
   MemFree(pPcxObject);
 
@@ -272,14 +274,13 @@ static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UIN
           }
         }
 
-        if (usCurrentX < usMaxX) {
-          // We are within the visible bounds so we write the byte to buffer
+        if (usCurrentX <
+            usMaxX) {  // We are within the visible bounds so we write the byte to buffer
           *(pBuffer + uiCurrentOffset) = ubCurrentByte;
           uiCurrentOffset++;
           usCurrentX++;
         } else {
-          if ((uiCurrentOffset + 1) < uiNextLineOffset) {
-            // Increment the uiCurrentOffset
+          if ((uiCurrentOffset + 1) < uiNextLineOffset) {  // Increment the uiCurrentOffset
             uiCurrentOffset++;
           } else {  // Go to next line
             usCurrentX = usX;
