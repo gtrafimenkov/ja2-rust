@@ -248,12 +248,8 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   UINT32 rows, cols;
   UINT8 *pSrc, *pSrcTemp;
   UINT16 *pDest, *pDestTemp;
-  UINT16 *p16BPPPalette;
 
-  p16BPPPalette = hImage->pui16BPPPalette;
-
-  // Assertions
-  Assert(p16BPPPalette != NULL);
+  Assert(hImage->pui16BPPPalette != NULL);
   Assert(hImage != NULL);
 
   // Validations
@@ -303,7 +299,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
     pSrcTemp = pSrc;
 
     for (cols = 0; cols < uiLineSize; cols++) {
-      *pDestTemp = p16BPPPalette[*pSrcTemp];
+      *pDestTemp = hImage->pui16BPPPalette[*pSrcTemp];
       pDestTemp++;
       pSrcTemp++;
     }
