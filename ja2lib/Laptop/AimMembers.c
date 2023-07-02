@@ -1255,8 +1255,8 @@ BOOLEAN DisplayMercsInventory(UINT8 ubMercID) {
       GetVideoObject(&hVObject, GetInterfaceGraphicForItem(pItem));
       pTrav = &(hVObject->subimages[pItem->ubGraphicNum]);
 
-      usHeight = (UINT32)pTrav->usHeight;
-      usWidth = (UINT32)pTrav->usWidth;
+      usHeight = (UINT32)pTrav->height;
+      usWidth = (UINT32)pTrav->width;
 
       sCenX = PosX + (abs((INT32)((INT32)WEAPONBOX_SIZE_X - 3 - usWidth)) / 2) - pTrav->x_offset;
       sCenY = PosY + (abs((INT32)((INT32)WEAPONBOX_SIZE_Y - usHeight)) / 2) - pTrav->y_offset;
@@ -1906,14 +1906,14 @@ BOOLEAN DisplayVideoConferencingDisplay() {
 static BOOLEAN ShadowVideoSurfaceImage(struct VSurface *dest, struct VObject *hImageHandle,
                                        INT32 iPosX, INT32 iPosY) {
   // Horizontal shadow
-  ShadowVideoSurfaceRect(dest, iPosX + 3, iPosY + hImageHandle->subimages->usHeight,
-                         iPosX + hImageHandle->subimages->usWidth,
-                         iPosY + hImageHandle->subimages->usHeight + 3);
+  ShadowVideoSurfaceRect(dest, iPosX + 3, iPosY + hImageHandle->subimages->height,
+                         iPosX + hImageHandle->subimages->width,
+                         iPosY + hImageHandle->subimages->height + 3);
 
   // vertical shadow
-  ShadowVideoSurfaceRect(dest, iPosX + hImageHandle->subimages->usWidth, iPosY + 3,
-                         iPosX + hImageHandle->subimages->usWidth + 3,
-                         iPosY + hImageHandle->subimages->usHeight);
+  ShadowVideoSurfaceRect(dest, iPosX + hImageHandle->subimages->width, iPosY + 3,
+                         iPosX + hImageHandle->subimages->width + 3,
+                         iPosY + hImageHandle->subimages->height);
   return (TRUE);
 }
 

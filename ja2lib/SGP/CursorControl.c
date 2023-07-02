@@ -54,8 +54,8 @@ BOOLEAN BltToMouseCursorFromVObjectWithOutline(struct VObject *hVObject,
   sYPos -= pTrav->y_offset;
 
   // Center!
-  sXPos += ((gsCurMouseWidth - pTrav->usWidth) / 2);
-  sYPos += ((gsCurMouseHeight - pTrav->usHeight) / 2);
+  sXPos += ((gsCurMouseWidth - pTrav->width) / 2);
+  sYPos += ((gsCurMouseHeight - pTrav->height) / 2);
 
   ReturnValue = BltVideoObjectOutline(vsMouseBuffer, hVObject, usVideoObjectSubIndex, sXPos, sYPos,
                                       Get16BPPColor(FROMRGB(0, 255, 0)), TRUE);
@@ -151,12 +151,12 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
       return FALSE;
     }
 
-    if (pTrav->usHeight > sMaxHeight) {
-      sMaxHeight = pTrav->usHeight;
+    if (pTrav->height > sMaxHeight) {
+      sMaxHeight = pTrav->height;
     }
 
-    if (pTrav->usWidth > sMaxWidth) {
-      sMaxWidth = pTrav->usWidth;
+    if (pTrav->width > sMaxWidth) {
+      sMaxWidth = pTrav->width;
     }
   }
 
@@ -201,11 +201,11 @@ BOOLEAN LoadCursorData(UINT32 uiCursorIndex) {
     }
 
     if (pCurImage->usPosX == CENTER_SUBCURSOR) {
-      pCurImage->usPosX = pCurData->sOffsetX - (pTrav->usWidth / 2);
+      pCurImage->usPosX = pCurData->sOffsetX - (pTrav->width / 2);
     }
 
     if (pCurImage->usPosY == CENTER_SUBCURSOR) {
-      pCurImage->usPosY = pCurData->sOffsetY - (pTrav->usHeight / 2);
+      pCurImage->usPosY = pCurData->sOffsetY - (pTrav->height / 2);
     }
   }
 
@@ -283,13 +283,13 @@ BOOLEAN SetCurrentCursor(UINT16 usVideoObjectSubIndex, UINT16 usOffsetX, UINT16 
   if (GetVideoObjectETRLEProperties(gpCursorStore, &pETRLEPointer, usVideoObjectSubIndex)) {
     gsMouseCursorXOffset = usOffsetX;
     gsMouseCursorYOffset = usOffsetY;
-    gusMouseCursorWidth = pETRLEPointer.usWidth + pETRLEPointer.x_offset;
-    gusMouseCursorHeight = pETRLEPointer.usHeight + pETRLEPointer.y_offset;
+    gusMouseCursorWidth = pETRLEPointer.width + pETRLEPointer.x_offset;
+    gusMouseCursorHeight = pETRLEPointer.height + pETRLEPointer.y_offset;
 
     DebugMsg(TOPIC_VIDEO, DBG_ERROR, "=================================================");
     DebugMsg(TOPIC_VIDEO, DBG_ERROR,
              String("Mouse Create with [ %d. %d ] [ %d, %d]", pETRLEPointer.x_offset,
-                    pETRLEPointer.y_offset, pETRLEPointer.usWidth, pETRLEPointer.usHeight));
+                    pETRLEPointer.y_offset, pETRLEPointer.width, pETRLEPointer.height));
     DebugMsg(TOPIC_VIDEO, DBG_ERROR, "=================================================");
   } else {
     DebugMsg(TOPIC_VIDEO, DBG_ERROR, "Failed to get mouse info");
@@ -347,8 +347,8 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
         sCenterValY = 0;
 
         // Effective height
-        usEffHeight = pTrav->usHeight + pTrav->y_offset;
-        usEffWidth = pTrav->usWidth + pTrav->x_offset;
+        usEffHeight = pTrav->height + pTrav->y_offset;
+        usEffWidth = pTrav->width + pTrav->x_offset;
 
         // ATE: Check for extern 2nd...
         if (uiCursorIndex == EXTERN2_CURSOR) {
@@ -359,8 +359,8 @@ BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex) {
           GetVideoObject(&hVObjectTemp, guiExternVo);
           pTravTemp = &(hVObjectTemp->subimages[gusExternVoSubIndex]);
 
-          sSubX = (pTrav->usWidth - pTravTemp->usWidth - pTravTemp->x_offset) / 2;
-          sSubY = (pTrav->usHeight - pTravTemp->usHeight - pTravTemp->y_offset) / 2;
+          sSubX = (pTrav->width - pTravTemp->width - pTravTemp->x_offset) / 2;
+          sSubY = (pTrav->height - pTravTemp->height - pTravTemp->y_offset) / 2;
 
           BltVideoObjectOutlineFromIndex(vsMouseBuffer, guiExternVo, gusExternVoSubIndex, sSubX,
                                          sSubY, 0, FALSE);

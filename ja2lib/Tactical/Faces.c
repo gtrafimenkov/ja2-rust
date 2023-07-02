@@ -306,8 +306,8 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
   if (GetVideoObjectETRLEPropertiesFromIndex(uiVideoObject, &ETRLEObject, 0) == FALSE) {
     return (-1);
   }
-  pFace->usFaceWidth = ETRLEObject.usWidth;
-  pFace->usFaceHeight = ETRLEObject.usHeight;
+  pFace->usFaceWidth = ETRLEObject.width;
+  pFace->usFaceHeight = ETRLEObject.height;
 
   // OK, check # of items
   if (hVObject->usNumberOfObjects == 8) {
@@ -317,15 +317,15 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
     if (GetVideoObjectETRLEPropertiesFromIndex(uiVideoObject, &ETRLEObject, 1) == FALSE) {
       return (-1);
     }
-    pFace->usEyesWidth = ETRLEObject.usWidth;
-    pFace->usEyesHeight = ETRLEObject.usHeight;
+    pFace->usEyesWidth = ETRLEObject.width;
+    pFace->usEyesHeight = ETRLEObject.height;
 
     // Get Mouth height, width
     if (GetVideoObjectETRLEPropertiesFromIndex(uiVideoObject, &ETRLEObject, 5) == FALSE) {
       return (-1);
     }
-    pFace->usMouthWidth = ETRLEObject.usWidth;
-    pFace->usMouthHeight = ETRLEObject.usHeight;
+    pFace->usMouthWidth = ETRLEObject.width;
+    pFace->usMouthHeight = ETRLEObject.height;
   } else {
     pFace->fInvalidAnim = TRUE;
   }
@@ -968,8 +968,8 @@ void GetXYForIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, INT16 
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
   pTrav = &(hVObject->subimages[ubIndex]);
-  usHeight = pTrav->usHeight;
-  usWidth = pTrav->usWidth;
+  usHeight = pTrav->height;
+  usWidth = pTrav->width;
 
   sX = sFaceX + pFace->usFaceWidth - usWidth - 1;
   sY = sFaceY + pFace->usFaceHeight - usHeight - 1;
@@ -988,8 +988,8 @@ void GetXYForRightIconPlacement(FACETYPE *pFace, UINT16 ubIndex, INT16 sFaceX, I
   // Get height, width of icon...
   GetVideoObject(&hVObject, guiPORTRAITICONS);
   pTrav = &(hVObject->subimages[ubIndex]);
-  usHeight = pTrav->usHeight;
-  usWidth = pTrav->usWidth;
+  usHeight = pTrav->height;
+  usWidth = pTrav->width;
 
   sX = sFaceX + (usWidth * bNumIcons) + 1;
   sY = sFaceY + pFace->usFaceHeight - usHeight - 1;

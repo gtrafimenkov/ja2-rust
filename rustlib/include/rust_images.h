@@ -31,8 +31,8 @@ struct Subimage {
   uint32_t data_length;
   int16_t x_offset;
   int16_t y_offset;
-  uint16_t usHeight;
-  uint16_t usWidth;
+  uint16_t height;
+  uint16_t width;
 };
 
 /**

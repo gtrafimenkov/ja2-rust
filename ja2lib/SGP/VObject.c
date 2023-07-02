@@ -734,10 +734,10 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
 
   subimages = &(hVObject->subimages[usETRLEIndex]);
 
-  if (!(usX < subimages->usWidth)) {
+  if (!(usX < subimages->width)) {
     return FALSE;
   }
-  if (!(usY < subimages->usHeight)) {
+  if (!(usY < subimages->height)) {
     return FALSE;
   }
 
@@ -811,8 +811,8 @@ BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIn
     return FALSE;
   }
 
-  *pusWidth = ETRLEObject.usWidth;
-  *pusHeight = ETRLEObject.usHeight;
+  *pusWidth = ETRLEObject.width;
+  *pusHeight = ETRLEObject.height;
 
   return (TRUE);
 }

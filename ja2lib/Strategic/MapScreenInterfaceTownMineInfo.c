@@ -705,7 +705,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
   GetVideoObject(&hHandle, uiObject);
   pTrav = &(hHandle->subimages[0]);
 
-  sWidthA = pTrav->usWidth;
+  sWidthA = pTrav->width;
 
   pTrav = &(hHandle->subimages[1]);
 
@@ -812,10 +812,10 @@ void MinWidthOfTownMineInfoBox(void) {
   GetVideoObject(&hHandle, uiObject);
   pTrav = &(hHandle->subimages[0]);
 
-  sWidthA = pTrav->usWidth;
+  sWidthA = pTrav->width;
 
   pTrav = &(hHandle->subimages[1]);
-  sWidthB = pTrav->usWidth;
+  sWidthB = pTrav->width;
 
   sTotalBoxWidth = sWidthA + sWidthB;
   sTotalButtonWidth = sTotalBoxWidth;

@@ -8004,8 +8004,8 @@ void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT
 
   pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->subimages[pSoldier->usAniFrame]);
 
-  *psHeight = (INT16)pTrav->usHeight;
-  *psWidth = (INT16)pTrav->usWidth;
+  *psHeight = (INT16)pTrav->height;
+  *psWidth = (INT16)pTrav->width;
 }
 
 void GetActualSoldierAnimOffsets(struct SOLDIERTYPE *pSoldier, INT16 *sOffsetX, INT16 *sOffsetY) {

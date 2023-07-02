@@ -417,8 +417,8 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos
   // Adjust for render height
   sScreenY += gsRenderHeight;
 
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
 
   // Add to start position of dest buffer
   sScreenX += (pTrav->x_offset - (WORLD_TILE_X / 2));
@@ -788,8 +788,8 @@ BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObject, UINT
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Calculate test position we are looking for!

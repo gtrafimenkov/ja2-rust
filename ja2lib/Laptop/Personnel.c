@@ -2231,8 +2231,8 @@ void RenderInventoryForCharacter(INT32 iId, INT32 iSlot) {
         GetVideoObject(&hHandle, GetInterfaceGraphicForItem(pItem));
         pTrav = &(hHandle->subimages[pItem->ubGraphicNum]);
 
-        usHeight = (UINT32)pTrav->usHeight;
-        usWidth = (UINT32)pTrav->usWidth;
+        usHeight = (UINT32)pTrav->height;
+        usWidth = (UINT32)pTrav->width;
 
         sCenX = PosX + (abs((INT32)(57 - usWidth)) / 2) - pTrav->x_offset;
         sCenY = PosY + (abs((INT32)(22 - usHeight)) / 2) - pTrav->y_offset;

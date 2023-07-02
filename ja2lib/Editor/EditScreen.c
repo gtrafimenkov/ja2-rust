@@ -909,8 +909,8 @@ void ShowCurrentDrawingMode(void) {
     subimages =
         &(gTileDatabase[gTileTypeStartIndex[usObjIndex]].hTileSurface->subimages[usUseIndex]);
 
-    iPicWidth = (INT32)subimages->usWidth;
-    iPicHeight = (INT32)subimages->usHeight;
+    iPicWidth = (INT32)subimages->width;
+    iPicHeight = (INT32)subimages->height;
 
     // Center the picture in the display window.
     iStartX = (100 - iPicWidth) / 2;
@@ -2458,8 +2458,8 @@ void ShowCurrentSlotImage(struct VObject *hVObj, INT32 iWindow) {
 
   subimages = &(hVObj->subimages[0]);
 
-  iPicWidth = (INT32)subimages->usWidth;
-  iPicHeight = (INT32)subimages->usHeight;
+  iPicWidth = (INT32)subimages->width;
+  iPicHeight = (INT32)subimages->height;
 
   iStartX = ((iWinWidth - iPicWidth) / 2) + NewRect.iLeft;
   iStartY = ((iWinHeight - iPicHeight) / 2) + NewRect.iTop;

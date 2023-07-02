@@ -2357,8 +2357,8 @@ UINT32 DisplayInvSlot(UINT8 ubSlotNum, UINT16 usItemIndex, UINT16 usPosX, UINT16
   GetVideoObject(&hVObject, GetInterfaceGraphicForItem(pItem));
   pTrav = &(hVObject->subimages[pItem->ubGraphicNum]);
 
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
 
   sCenX =
       usPosX + 7 + (INT16)(abs((INT32)SKI_INV_WIDTH - 3 - (INT32)usWidth) / 2) - pTrav->x_offset;

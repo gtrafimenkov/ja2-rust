@@ -1671,8 +1671,8 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 } else if (uiFlags & TILES_DIRTY) {
                   if (!(uiLevelNodeFlags & LEVELNODE_LASTDYNAMIC)) {
                     pTrav = &(hVObject->subimages[usImageIndex]);
-                    uiBrushHeight = (UINT32)pTrav->usHeight;
-                    uiBrushWidth = (UINT32)pTrav->usWidth;
+                    uiBrushHeight = (UINT32)pTrav->height;
+                    uiBrushWidth = (UINT32)pTrav->width;
                     sXPos += pTrav->x_offset;
                     sYPos += pTrav->y_offset;
 
@@ -3489,8 +3489,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitc
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
@@ -3876,8 +3876,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough(
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
@@ -4268,8 +4268,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiD
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
@@ -4673,8 +4673,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
@@ -5123,8 +5123,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
@@ -6097,8 +6097,8 @@ BOOLEAN Zero8BPPDataTo16BPPBufferTransparent(UINT16 *pBuffer, UINT32 uiDestPitch
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
@@ -6225,8 +6225,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ(UINT16 *pBuffer, UINT32 uiDestPitchBYT
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer
@@ -6339,8 +6339,8 @@ BOOLEAN IsTileRedundent(UINT16 *pZBuffer, UINT16 usZValue, struct VObject *hSrcV
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[usIndex]);
-  usHeight = (UINT32)pTrav->usHeight;
-  usWidth = (UINT32)pTrav->usWidth;
+  usHeight = (UINT32)pTrav->height;
+  usWidth = (UINT32)pTrav->width;
   uiOffset = pTrav->data_offset;
 
   // Add to start position of dest buffer

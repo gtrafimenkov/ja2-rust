@@ -1763,7 +1763,7 @@ BOOLEAN AddZStripInfoToVObject(struct VObject *hVObject,
             // time to do our calculations!
             sOffsetX = hVObject->subimages[uiLoop].x_offset;
             sOffsetY = hVObject->subimages[uiLoop].y_offset;
-            usWidth = hVObject->subimages[uiLoop].usWidth;
+            usWidth = hVObject->subimages[uiLoop].width;
             if (pDBStructure->fFlags & (STRUCTURE_MOBILE | STRUCTURE_CORPSE)) {
               // adjust for the difference between the animation and structure base tile
 

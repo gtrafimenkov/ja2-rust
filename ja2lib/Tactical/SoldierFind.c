@@ -506,8 +506,8 @@ void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
   }
 
   // pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->subimages[
-  // pSoldier->usAniFrame ] ); usHeight				= (UINT32)pTrav->usHeight; usWidth
-  // = (UINT32)pTrav->usWidth;
+  // pSoldier->usAniFrame ] ); usHeight				= (UINT32)pTrav->height; usWidth
+  // = (UINT32)pTrav->width;
 
   pRect->iLeft = sMercScreenX;
   pRect->iTop = sMercScreenY;

@@ -28,8 +28,8 @@ pub struct Subimage {
     data_length: u32,
     x_offset: i16,
     y_offset: i16,
-    usHeight: u16,
-    usWidth: u16,
+    height: u16,
+    width: u16,
 }
 
 /*
@@ -297,8 +297,8 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<STImage> {
                         data_length: reader.read_u32::<LittleEndian>()?,
                         x_offset: reader.read_i16::<LittleEndian>()?,
                         y_offset: reader.read_i16::<LittleEndian>()?,
-                        usHeight: reader.read_u16::<LittleEndian>()?,
-                        usWidth: reader.read_u16::<LittleEndian>()?,
+                        height: reader.read_u16::<LittleEndian>()?,
+                        width: reader.read_u16::<LittleEndian>()?,
                     };
                     debug_log_write(&format!("subimage: {subimage:?}"));
                     collector.push(subimage);
@@ -355,14 +355,14 @@ mod tests {
             assert_eq!(5, img.subimages.as_ref().unwrap().len());
             assert_eq!(0, subimage0.x_offset);
             assert_eq!(0, subimage0.y_offset);
-            assert_eq!(30, subimage0.usHeight);
-            assert_eq!(30, subimage0.usWidth);
+            assert_eq!(30, subimage0.height);
+            assert_eq!(30, subimage0.width);
             assert_eq!(0, subimage0.data_offset);
             assert_eq!(960, subimage0.data_length);
             assert_eq!(0, subimage4.x_offset);
             assert_eq!(0, subimage4.y_offset);
-            assert_eq!(30, subimage4.usHeight);
-            assert_eq!(30, subimage4.usWidth);
+            assert_eq!(30, subimage4.height);
+            assert_eq!(30, subimage4.width);
             assert_eq!(3840, subimage4.data_offset);
             assert_eq!(960, subimage4.data_length);
         }

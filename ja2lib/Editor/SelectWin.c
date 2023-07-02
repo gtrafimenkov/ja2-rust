@@ -1379,7 +1379,7 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
       for (usETRLELoop = usETRLEStart; usETRLELoop <= usETRLEEnd; usETRLELoop++) {
         subimages = &(pDisplaySpec->hVObject->subimages[usETRLELoop]);
 
-        if ((iCurrX + subimages->usWidth > pBottomRight->iX) || (fFlags & ONE_COLUMN)) {
+        if ((iCurrX + subimages->width > pBottomRight->iX) || (fFlags & ONE_COLUMN)) {
           if (fFlags & ONE_ROW) {
             break;
           }
@@ -1393,8 +1393,8 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
           pCurNode->uiIndex = usETRLELoop;
           pCurNode->iX = (INT16)iCurrX;
           pCurNode->iY = (INT16)iCurrY;
-          pCurNode->iWidth = subimages->usWidth;
-          pCurNode->iHeight = subimages->usHeight;
+          pCurNode->iWidth = subimages->width;
+          pCurNode->iHeight = subimages->height;
           pCurNode->pNext = *pDisplayList;
           pCurNode->uiObjIndx = pDisplaySpec->uiObjIndx;
 
@@ -1407,11 +1407,11 @@ BOOLEAN BuildDisplayWindow(DisplaySpec *pDisplaySpecs, UINT16 usNumSpecs,
         } else
           return (FALSE);
 
-        if (subimages->usHeight > usGreatestHeightInRow) {
-          usGreatestHeightInRow = subimages->usHeight;
+        if (subimages->height > usGreatestHeightInRow) {
+          usGreatestHeightInRow = subimages->height;
         }
 
-        iCurrX += subimages->usWidth + pSpacing->iX;
+        iCurrX += subimages->width + pSpacing->iX;
       }
     }
   }

@@ -2721,8 +2721,8 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
 
   // crop the source image
   pObject = &hVObject->subimages[item->ubGraphicNum];
-  iSrcWidth = pObject->usWidth;
-  iSrcHeight = pObject->usHeight;
+  iSrcWidth = pObject->width;
+  iSrcHeight = pObject->height;
   SrcRect.iLeft += pObject->x_offset;
   SrcRect.iRight = SrcRect.iLeft + iSrcWidth;
   SrcRect.iTop += pObject->y_offset;

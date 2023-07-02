@@ -804,7 +804,7 @@ BOOLEAN DisplayBigItemImage(UINT16 usIndex, UINT16 PosY) {
   pTrav = &(hPixHandle->subimages[0]);
 
   // center picture in frame
-  usWidth = (UINT32)pTrav->usWidth;
+  usWidth = (UINT32)pTrav->width;
   //	sCenX = PosX + ( abs( BOBBYR_GRID_PIC_WIDTH - usWidth ) / 2 );
   //	sCenY = PosY + 8;
   sCenX = PosX + (abs((INT32)((INT32)BOBBYR_GRID_PIC_WIDTH - usWidth)) / 2) - pTrav->x_offset;
