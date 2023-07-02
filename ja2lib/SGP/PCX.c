@@ -60,7 +60,7 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
     SetPcxPalette(pPcxObject, hImage);
 
     // Create 16 BPP palette if flags and BPP justify
-    hImage->pui16BPPPalette = Create16BPPPalette(hImage->pPalette);
+    hImage->pui16BPPPalette = Create16BPPPalette(hImage->palette);
   }
 
   // Free and remove pcx object
@@ -300,18 +300,18 @@ BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
   pubPalette = &(pCurrentPcxObject->ubPalette[0]);
 
   // Allocate memory for palette
-  hImage->pPalette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
+  hImage->palette = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
 
-  if (hImage->pPalette == NULL) {
+  if (hImage->palette == NULL) {
     return (FALSE);
   }
 
   // Initialize the proper palette entries
   for (Index = 0; Index < 256; Index++) {
-    hImage->pPalette[Index].red = *(pubPalette + (Index * 3));
-    hImage->pPalette[Index].green = *(pubPalette + (Index * 3) + 1);
-    hImage->pPalette[Index].blue = *(pubPalette + (Index * 3) + 2);
-    hImage->pPalette[Index]._unused = 0;
+    hImage->palette[Index].red = *(pubPalette + (Index * 3));
+    hImage->palette[Index].green = *(pubPalette + (Index * 3) + 1);
+    hImage->palette[Index].blue = *(pubPalette + (Index * 3) + 2);
+    hImage->palette[Index]._unused = 0;
   }
 
   return TRUE;

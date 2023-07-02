@@ -712,7 +712,7 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     tempRect.iBottom = image->usHeight - 1;
     SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
     if (image->ubBitDepth == 8) {
-      SetVideoSurfacePalette(vs, image->pPalette);
+      SetVideoSurfacePalette(vs, image->palette);
     }
     DestroyImage(image);
   }

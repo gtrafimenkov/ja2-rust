@@ -80,9 +80,9 @@ void DestroyImage(struct Image *image) {
   }
 
   if (image->paletteAllocatedInRust) {
-    RustDealloc((uint8_t *)image->pPalette);
+    RustDealloc((uint8_t *)image->palette);
   } else {
-    MemFree(image->pPalette);
+    MemFree(image->palette);
   }
 
   MemFree(image->pui16BPPPalette);

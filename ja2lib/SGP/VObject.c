@@ -390,7 +390,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   if (hImage->ubBitDepth == 8) {
     hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
     hVObject->pGlow8 = ubColorTables[0];
-    SetVideoObjectPalette(hVObject, hImage->pPalette);
+    SetVideoObjectPalette(hVObject, hImage->palette);
   }
 
   // Delete himage object
@@ -442,7 +442,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   if (hImage->ubBitDepth == 8) {
     hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
     hVObject->pGlow8 = ubColorTables[0];
-    SetVideoObjectPalette(hVObject, hImage->pPalette);
+    SetVideoObjectPalette(hVObject, hImage->palette);
   }
 
   return (hVObject);
