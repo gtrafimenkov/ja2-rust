@@ -14,7 +14,6 @@ void SetShadeTablePercent(FLOAT uiShadePercent);
 void Init8BitTables(void);
 BOOLEAN Set8BitModePalette(struct SGPPaletteEntry *pPal);
 
-extern struct SGPPaletteEntry Shaded8BPPPalettes[HVOBJECT_SHADE_TABLES + 3][256];
 extern UINT8 ubColorTables[HVOBJECT_SHADE_TABLES + 3][256];
 
 extern UINT16 IntensityTable[65536];
