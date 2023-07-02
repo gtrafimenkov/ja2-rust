@@ -28,8 +28,8 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
   hImage->number_of_subimages = sti.number_of_subimages;
   hImage->image_data_size = sti.image_data_size;
 
-  hImage->pAppData = sti.app_data;
-  hImage->uiAppDataSize = sti.app_data_size;
+  hImage->app_data = sti.app_data;
+  hImage->app_data_size = sti.app_data_size;
 
   hImage->usWidth = sti.Width;
   hImage->usHeight = sti.Height;

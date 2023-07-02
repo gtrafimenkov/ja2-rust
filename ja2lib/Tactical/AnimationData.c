@@ -4306,9 +4306,9 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
     }
 
     // Get aux data
-    if (hImage->uiAppDataSize == hVObject->number_of_subimages * sizeof(struct AuxObjectData)) {
+    if (hImage->app_data_size == hVObject->number_of_subimages * sizeof(struct AuxObjectData)) {
       // Valid auxiliary data, so get # od frames from data
-      pAuxData = (struct AuxObjectData *)hImage->pAppData;
+      pAuxData = (struct AuxObjectData *)hImage->app_data;
 
       gAnimSurfaceDatabase[usSurfaceIndex].uiNumFramesPerDir = pAuxData->ubNumberOfFrames;
 

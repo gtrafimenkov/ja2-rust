@@ -99,16 +99,16 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   if (pStructureFileRef && pStructureFileRef->pAuxData != NULL) {
     pTileSurf->pAuxData = pStructureFileRef->pAuxData;
     pTileSurf->pTileLocData = pStructureFileRef->pTileLocData;
-  } else if (hImage->uiAppDataSize ==
+  } else if (hImage->app_data_size ==
              hVObject->number_of_subimages * sizeof(struct AuxObjectData)) {
     // Valid auxiliary data, so make a copy of it for TileSurf
-    pTileSurf->pAuxData = (struct AuxObjectData *)MemAlloc(hImage->uiAppDataSize);
+    pTileSurf->pAuxData = (struct AuxObjectData *)MemAlloc(hImage->app_data_size);
     if (pTileSurf->pAuxData == NULL) {
       DestroyImage(hImage);
       DeleteVideoObject(hVObject);
       return (NULL);
     }
-    memcpy(pTileSurf->pAuxData, hImage->pAppData, hImage->uiAppDataSize);
+    memcpy(pTileSurf->pAuxData, hImage->app_data, hImage->app_data_size);
   } else {
     pTileSurf->pAuxData = NULL;
   }

@@ -93,7 +93,7 @@ void DestroyImage(struct Image *image) {
     MemFree(image->image_data);
   }
   RustDealloc((uint8_t *)image->subimages);
-  RustDealloc(image->pAppData);
+  RustDealloc(image->app_data);
 
   MemFree(image);
 }

@@ -60,8 +60,8 @@ struct Image {
   UINT8 ubBitDepth;
   struct SGPPaletteEntry *pPalette;
   UINT16 *pui16BPPPalette;
-  UINT8 *pAppData;
-  UINT32 uiAppDataSize;
+  UINT8 *app_data;
+  UINT32 app_data_size;
   void *image_data;
   UINT32 image_data_size;
   struct Subimage *subimages;
