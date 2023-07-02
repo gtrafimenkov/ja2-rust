@@ -15,13 +15,6 @@ struct Subimage;
 // - A comprehensive automatic blitter which blits the appropriate type based on the
 //   image header.
 
-// Defines for type of file readers
-#define PCX_FILE_READER 0x1
-#define TGA_FILE_READER 0x2
-#define STCI_FILE_READER 0x4
-#define TRLE_FILE_READER 0x8
-#define UNKNOWN_FILE_READER 0x200
-
 // Defines for buffer bit depth
 #define BUFFER_8BPP 0x1
 #define BUFFER_16BPP 0x2
@@ -65,7 +58,7 @@ struct Image {
   UINT16 usWidth;
   UINT16 usHeight;
   UINT8 ubBitDepth;
-  UINT16 fFlags;
+  // UINT16 fFlags;
   struct SGPPaletteEntry *pPalette;
   UINT16 *pui16BPPPalette;
   UINT8 *pAppData;
@@ -77,7 +70,6 @@ struct Image {
   bool imageDataAllocatedInRust;
   bool paletteAllocatedInRust;
 };
-//  struct Image, *struct Image*;
 
 #define SGPGetRValue(rgb) ((BYTE)(rgb))
 #define SGPGetBValue(rgb) ((BYTE)((rgb) >> 16))
