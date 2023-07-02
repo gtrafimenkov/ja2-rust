@@ -88,9 +88,9 @@ void DestroyImage(struct Image *image) {
   MemFree(image->pui16BPPPalette);
 
   if (image->imageDataAllocatedInRust) {
-    RustDealloc((uint8_t *)image->pImageData);
+    RustDealloc((uint8_t *)image->image_data);
   } else {
-    MemFree(image->pImageData);
+    MemFree(image->image_data);
   }
   RustDealloc((uint8_t *)image->subimages);
   RustDealloc(image->pAppData);
@@ -135,7 +135,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 u
 
   // Assertions
   Assert(hImage != NULL);
-  Assert(hImage->pImageData != NULL);
+  Assert(hImage->image_data != NULL);
 
   // Validations
   if (!(usX >= 0)) {
@@ -168,7 +168,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 u
 
   // Copy line by line
   pDest = (UINT8 *)pDestBuf + uiDestStart;
-  pSrc = (UINT8 *)hImage->pImageData + uiSrcStart;
+  pSrc = (UINT8 *)hImage->image_data + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize);
@@ -188,7 +188,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
   UINT16 *pDest, *pSrc;
 
   Assert(hImage != NULL);
-  Assert(hImage->pImageData != NULL);
+  Assert(hImage->image_data != NULL);
 
   // Validations
   if (!(usX >= 0)) {
@@ -225,7 +225,7 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
 
   // Copy line by line
   pDest = (UINT16 *)pDestBuf + uiDestStart;
-  pSrc = (UINT16 *)hImage->pImageData + uiSrcStart;
+  pSrc = (UINT16 *)hImage->image_data + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize * 2);
@@ -259,7 +259,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   Assert(hImage != NULL);
 
   // Validations
-  if (!(hImage->pImageData != NULL)) {
+  if (!(hImage->image_data != NULL)) {
     return FALSE;
   }
   if (!(usX >= 0)) {
@@ -296,7 +296,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
 
   // Convert to Pixel specification
   pDest = (UINT16 *)pDestBuf + uiDestStart;
-  pSrc = (UINT8 *)hImage->pImageData + uiSrcStart;
+  pSrc = (UINT8 *)hImage->image_data + uiSrcStart;
   DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("Start Copying at %p", pDest));
 
   // For every entry, look up into 16BPP palette
@@ -519,15 +519,15 @@ BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer) {
          sizeof(struct Subimage) * pBuffer->usNumberOfObjects);
 
   // Allocate memory for pixel data
-  pBuffer->pPixData = MemAlloc(hImage->image_data_size);
-  if (!(pBuffer->pPixData != NULL)) {
+  pBuffer->image_data = MemAlloc(hImage->image_data_size);
+  if (!(pBuffer->image_data != NULL)) {
     return FALSE;
   }
 
   pBuffer->uiSizePixData = hImage->image_data_size;
 
   // Copy into buffer
-  memcpy(pBuffer->pPixData, hImage->pImageData, pBuffer->uiSizePixData);
+  memcpy(pBuffer->image_data, hImage->image_data, pBuffer->uiSizePixData);
 
   return (TRUE);
 }

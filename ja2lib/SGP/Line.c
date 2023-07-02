@@ -9,9 +9,9 @@
 //	SEND THE PITCH IN BYTES
 //	SetClippingRegionAndImageWidth( uiPitch, 15, 15, 30, 30 );
 //
-//	LineDraw( TRUE, 10, 10, 200, 200, colour, pImageData);
+//	LineDraw( TRUE, 10, 10, 200, 200, colour, image_data);
 //    OR
-//	RectangleDraw( TRUE, 10, 10, 200, 200, colour, pImageData);
+//	RectangleDraw( TRUE, 10, 10, 200, 200, colour, image_data);
 
 //**************************************************************************
 //

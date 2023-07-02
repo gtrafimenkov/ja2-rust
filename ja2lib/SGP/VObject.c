@@ -383,7 +383,7 @@ struct VObject *CreateVObjectFromFile(const char *path) {
   // Set values
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
   hVObject->subimages = TempETRLEData.subimages;
-  hVObject->pPixData = TempETRLEData.pPixData;
+  hVObject->image_data = TempETRLEData.image_data;
   hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
 
   // Set palette from himage
@@ -435,7 +435,7 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
   // Set values
   hVObject->usNumberOfObjects = TempETRLEData.usNumberOfObjects;
   hVObject->subimages = TempETRLEData.subimages;
-  hVObject->pPixData = TempETRLEData.pPixData;
+  hVObject->image_data = TempETRLEData.image_data;
   hVObject->uiSizePixData = TempETRLEData.uiSizePixData;
 
   // Set palette from himage
@@ -503,9 +503,9 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
     //		hVObject->pPaletteEntry = NULL;
   }
 
-  if (hVObject->pPixData != NULL) {
-    MemFree(hVObject->pPixData);
-    //		hVObject->pPixData = NULL;
+  if (hVObject->image_data != NULL) {
+    MemFree(hVObject->image_data);
+    //		hVObject->image_data = NULL;
   }
 
   if (hVObject->subimages != NULL) {
@@ -742,7 +742,7 @@ BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETRL
   }
 
   // Assuming everything's okay, go ahead and look...
-  pCurrent = &((UINT8 *)hVObject->pPixData)[subimages->data_offset];
+  pCurrent = &((UINT8 *)hVObject->image_data)[subimages->data_offset];
 
   // Skip past all uninteresting scanlines
   while (usLoopY < usY) {

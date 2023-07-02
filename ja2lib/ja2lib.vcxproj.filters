@@ -1084,9 +1084,6 @@
     <ClInclude Include="SGP\Timer.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
-    <ClInclude Include="SGP\TRLE.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
     <ClInclude Include="SGP\Types.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>

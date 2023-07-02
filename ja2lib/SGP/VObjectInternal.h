@@ -23,7 +23,7 @@ struct VObject {
   COLORVAL TransparentColor;              // Defaults to 0,0,0
   UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
 
-  PTR pPixData;               // ETRLE pixel data
+  PTR image_data;              // ETRLE pixel data
   struct Subimage *subimages;  // Object offset data etc
   SixteenBPPObjectInfo *p16BPPObject;
   UINT16 *pShades[HVOBJECT_SHADE_TABLES];  // Shading tables

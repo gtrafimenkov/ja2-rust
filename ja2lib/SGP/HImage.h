@@ -47,7 +47,7 @@ struct RelTileLoc {
 };
 
 struct ImageData {
-  PTR pPixData;
+  void *image_data;
   UINT32 uiSizePixData;
   struct Subimage *subimages;
   UINT16 usNumberOfObjects;
@@ -58,12 +58,11 @@ struct Image {
   UINT16 usWidth;
   UINT16 usHeight;
   UINT8 ubBitDepth;
-  // UINT16 fFlags;
   struct SGPPaletteEntry *pPalette;
   UINT16 *pui16BPPPalette;
   UINT8 *pAppData;
   UINT32 uiAppDataSize;
-  void *pImageData;
+  void *image_data;
   UINT32 image_data_size;
   struct Subimage *subimages;
   UINT16 usNumberOfObjects;
