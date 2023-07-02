@@ -69,7 +69,7 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
 
   SetPcxPalette(pPcxObject, hImage);
 
-  hImage->pui16BPPPalette = Create16BPPPalette(hImage->palette);
+  // hImage->pui16BPPPalette = Create16BPPPalette(hImage->palette);
 
   MemFree(pPcxObject->pPcxBuffer);
   MemFree(pPcxObject);
