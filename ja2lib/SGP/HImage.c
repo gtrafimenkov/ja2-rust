@@ -61,8 +61,10 @@ struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
     struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
     memset(hImage, 0, sizeof(struct Image));
     if (!LoadPCXFileToImage(imageFileCopy, hImage)) {
+      DebugLogWrite("failed to load PCX image");
       return NULL;
     }
+    DebugLogWrite("PCX image loaded");
     return (hImage);
   } else if (strcasecmp(Extension, "STI") == 0) {
     return LoadSTCIFileToImage(imageFileCopy, loadAppData);

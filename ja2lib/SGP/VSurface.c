@@ -444,6 +444,7 @@ struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
 BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(fileName);
+  DebugLogWrite("b000");
 
   struct VSurface *vs = CreateVideoSurfaceFromFile(fileName);
 
@@ -453,6 +454,7 @@ BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
 
   SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
   *puiIndex = addVSurfaceToList(vs);
+  DebugLogWrite("b010");
   return TRUE;
 }
 
@@ -678,6 +680,14 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     return (NULL);
   }
 
+  {
+    char buf[256];
+    snprintf(buf, ARR_SIZE(buf),
+             "XXX CreateVideoSurfaceFromFile, %s, bitdepth=%d, palette=%p, pui16BPPPalette=%p",
+             path, image->ubBitDepth, image->palette, image->pui16BPPPalette);
+    DebugLogWrite(buf);
+  }
+
   struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, image->ubBitDepth);
 
   if (vs) {
@@ -686,11 +696,15 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     tempRect.iTop = 0;
     tempRect.iRight = image->usWidth - 1;
     tempRect.iBottom = image->usHeight - 1;
+    DebugLogWrite("a000");
     SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
+    DebugLogWrite("a001");
     if (image->ubBitDepth == 8) {
       SetVideoSurfacePalette(vs, image->palette);
     }
+    DebugLogWrite("a002");
     DestroyImage(image);
+    DebugLogWrite("a003");
   }
 
   return vs;
