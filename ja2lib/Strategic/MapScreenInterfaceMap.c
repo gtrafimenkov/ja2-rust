@@ -46,9 +46,9 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
+#include "rust_images.h"
 #include "rust_sam_sites.h"
 #include "rust_towns.h"
-#include "rust_images.h"
 
 // zoom x and y coords for map scrolling
 INT32 iZoomX = 0;
@@ -615,17 +615,17 @@ UINT32 DrawMap(void) {
   INT32 iCounter = 0;
 
   if (!iCurrentMapSectorZ) {
-    pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-
-    if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-      return FALSE;
-    }
-    pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
-
     // clip blits to mapscreen region
     // ClipBlitsToMapViewRegion( );
 
     if (fZoomFlag) {
+      pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
+
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
+      }
+      pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
+
       // set up bounds
       if (iZoomX < WEST_ZOOM_BOUND) iZoomX = WEST_ZOOM_BOUND;
       if (iZoomX > EAST_ZOOM_BOUND) iZoomX = EAST_ZOOM_BOUND;
@@ -648,13 +648,12 @@ UINT32 DrawMap(void) {
       Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                   uiSrcPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X,
                                   MAP_VIEW_START_Y + MAP_GRID_Y - 2, &clip);
+      VSurfaceUnlock(GetVSByID(guiBIGMAP));
+      VSurfaceUnlock(vsSB);
     } else {
-      Blt8BPPDataTo16BPPBufferHalf(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                   uiSrcPitchBYTES, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
+      BlitSurfaceToSurfaceScaleDown2x(GetVSByID(guiBIGMAP), vsSB, MAP_VIEW_START_X + 1,
+                                      MAP_VIEW_START_Y);
     }
-
-    VSurfaceUnlock(GetVSByID(guiBIGMAP));
-    VSurfaceUnlock(vsSB);
 
     // shade map sectors (must be done after Tixa/Orta/Mine icons have been blitted, but before
     // icons!)
