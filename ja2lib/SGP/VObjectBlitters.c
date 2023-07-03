@@ -9,6 +9,7 @@
 #include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "rust_debug.h"
 #include "rust_images.h"
 
 #ifdef __GCC
@@ -4931,93 +4932,56 @@ BlitLoop:
   return (TRUE);
 }
 
-/**********************************************************************************************
- Blt8BPPDataTo16BPPBufferHalf
-
-        Blits from a flat surface to a 16-bit buffer, dividing the source image into
-exactly half the size.
-
-**********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferHalf(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                     struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
-                                     UINT32 uiSrcPitch, INT32 iX, INT32 iY) {
-  UINT16 *p16BPPPalette;
-  UINT32 usHeight, usWidth;
-  UINT8 *SrcPtr, *DestPtr;
-  UINT32 LineSkip;
-  INT32 iTempX, iTempY;
-  UINT32 uiSrcSkip;
-
-  // Assertions
+// Blits from 8bpp to 16bpp and scale down the source image 2x.
+// This function is only used for drawing strategic map.
+BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+                                      struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
+                                      UINT32 uiSrcPitch, INT32 iX, INT32 iY) {
   Assert(hSrcVSurface != NULL);
   Assert(pSrcBuffer != NULL);
   Assert(pBuffer != NULL);
 
   // Get Offsets from Index into structure
-  usHeight = (UINT32)hSrcVSurface->usHeight;
-  usWidth = (UINT32)hSrcVSurface->usWidth;
+  u32 usHeight = (UINT32)hSrcVSurface->usHeight;
+  u32 usWidth = (UINT32)hSrcVSurface->usWidth;
 
-  // Add to start position of dest buffer
-  iTempX = iX;
-  iTempY = iY;
-
-  // Validations
-  if (!(iTempX >= 0)) {
+  if (iX < 0) {
     return FALSE;
   }
-  if (!(iTempY >= 0)) {
+  if (iY < 0) {
     return FALSE;
   }
 
-  SrcPtr = (UINT8 *)pSrcBuffer;
-  DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2);
-  p16BPPPalette = hSrcVSurface->p16BPPPalette;
-  LineSkip = (uiDestPitchBYTES - (usWidth & 0xfffffffe));
-  uiSrcSkip = (uiSrcPitch * 2) - (usWidth & 0xfffffffe);
+  u8 *SrcPtr = (UINT8 *)pSrcBuffer;
+  u16 *DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iY) + (iX * 2);
+  UINT16 *p16BPPPalette = hSrcVSurface->p16BPPPalette;
 
-#ifdef _WINDOWS
-  __asm {
+  // destSkip - how much bytes to skip to go to the next line in dest
+  // srcSkip - how much bytes to skip to go to the next line + skip another line
+  // Foo & 0xfffffffe is equal to Foo / 2 * 2, divide by 2 is needed because
+  // the image is scaled down, * 2 is needed because 2 bytes per pixel in dest and
+  // skipping one line in src.
+  u32 destSkip = (uiDestPitchBYTES - (usWidth & 0xfffffffe)) / 2;
+  u32 srcSkip = (uiSrcPitch * 2) - (usWidth & 0xfffffffe);
 
-		mov		esi, SrcPtr  // pointer to current line start address in source
-		mov		edi, DestPtr  // pointer to current line start address in destination
-		mov		ebx, usHeight  // line counter (goes top to bottom)
-		shr		ebx, 1  // half the rows
-		mov		edx, p16BPPPalette
+  u32 line_counter = usHeight / 2;  // line counter (goes top to bottom), half the rows
+  while (line_counter > 0) {
+    u32 col_counter = usWidth / 2;
+    while (col_counter > 0) {
+      u8 index = *SrcPtr++;
+      u16 color = p16BPPPalette[index];
+      *DestPtr++ = color;
 
-		xor		eax, eax
+      SrcPtr++;  // skip one source byte
 
-BlitSetup:
-		mov		ecx, usWidth
-		shr		ecx, 1  // divide the width by 2
+      col_counter--;
+    }
 
-ReadMask:
-		mov		al, [esi]
-		xor		ah, ah
-		inc		esi  // skip one source byte
-		inc		esi
+    SrcPtr += srcSkip;  // move source pointer down one line
+    DestPtr += destSkip;
 
-		shl		eax, 1  // make it into a word index
-		mov		ax, [edx+eax]  // get 16-bit version of 8-bit pixel
-		mov		[edi], ax  // store it in destination buffer
-		inc		edi  // next pixel
-		inc		edi
-
-		dec		ecx
-		jnz		ReadMask
-
-                    // DoneRow:
-
-		add		esi, uiSrcSkip  // move source pointer down one line
-		add		edi, LineSkip
-
-		dec		ebx  // check line counter
-		jnz		BlitSetup  // done blitting, exit
-
-    // DoneBlit: // finished blit
+    line_counter--;
   }
-#else
-  // Linux: NOT IMPLEMENTED
-#endif
 
   return (TRUE);
 }

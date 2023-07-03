@@ -161,4 +161,6 @@ extern UINT32 guiSAVEBUFFER;
 BOOLEAN InitializeSystemVideoObjects();
 BOOLEAN InitializeGameVideoObjects();
 
+void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *dest, i32 x, i32 y);
+
 #endif

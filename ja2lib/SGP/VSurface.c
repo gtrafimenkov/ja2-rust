@@ -722,3 +722,17 @@ BOOLEAN InitializeGameVideoObjects() {
 
   return (TRUE);
 }
+
+void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *dest, i32 x, i32 y) {
+  UINT32 destPitch;
+  UINT32 srcPitch;
+  void *destBuf = VSurfaceLockOld(vsSB, &destPitch);
+  void *srcBuf = VSurfaceLockOld(source, &srcPitch);
+  if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
+    Blt8BPPDataTo16BPPScaleDown2x((u16 *)destBuf, destPitch, source, (u8 *)srcBuf, srcPitch, x, y);
+  } else {
+    DebugLogWrite("BlitSurfaceToSurfaceScaleDown2x: unsupported bit depth combination");
+  }
+  VSurfaceUnlock(source);
+  VSurfaceUnlock(vsSB);
+}
