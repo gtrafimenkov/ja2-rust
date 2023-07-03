@@ -1085,6 +1085,7 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   }
   pSrcBuf =
       VSurfaceLockOld(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface), &uiSrcPitchBYTES);
+  // XXX: crash
   Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
                               usTopX, usTopY, &clip);
   VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface));
