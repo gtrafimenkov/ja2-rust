@@ -4985,6 +4985,54 @@ BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(UINT16 *destBuffer, UINT32 destPitch,
   return (TRUE);
 }
 
+// Blits from 16bpp to 16bpp and scale down the source image 2x.
+// This function is only used for drawing strategic map.
+BOOLEAN Blt16BPPDataTo16BPPScaleDown2x(UINT16 *destBuffer, UINT32 destPitch,
+                                       struct VSurface *srcSurface, UINT16 *srcBuffer,
+                                       UINT32 srcPitch, INT32 x, INT32 y) {
+  Assert(srcSurface != NULL);
+  Assert(srcBuffer != NULL);
+  Assert(destBuffer != NULL);
+
+  u16 usHeight = srcSurface->usHeight;
+  u16 usWidth = srcSurface->usWidth;
+
+  if (x < 0) {
+    return FALSE;
+  }
+  if (y < 0) {
+    return FALSE;
+  }
+
+  u16 *SrcPtr = srcBuffer;
+  u16 *DestPtr = destBuffer + (destPitch / 2 * y) + x;
+
+  // destSkip - how much bytes to skip to go to the next line in dest
+  // srcSkip - how much bytes to skip to go to the next line + skip another line
+  // Foo & 0xfffffffe is equal to Foo / 2 * 2, divide by 2 is needed because
+  // the image is scaled down, * 2 is needed because 2 bytes per pixel in dest and
+  // skipping one line in src.
+  u32 destSkip = (destPitch - (usWidth & 0xfffffffe)) / 2;
+  u32 srcSkip = (srcPitch / 2 - usWidth) + srcPitch / 2;
+
+  u32 line_counter = usHeight / 2;  // line counter (goes top to bottom), half the rows
+  while (line_counter > 0) {
+    u32 col_counter = usWidth / 2;
+    while (col_counter > 0) {
+      *DestPtr++ = *SrcPtr++;
+      SrcPtr++;  // skip one source byte
+      col_counter--;
+    }
+
+    SrcPtr += srcSkip;  // move source pointer down one line
+    DestPtr += destSkip;
+
+    line_counter--;
+  }
+
+  return (TRUE);
+}
+
 /**********************************************************************************************
  Blt8BPPDataTo16BPPBufferHalfRect
 
