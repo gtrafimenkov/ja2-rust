@@ -174,9 +174,9 @@ BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                     UINT32 uiSrcPitch, INT32 iX, INT32 iY, SGPRect *pRect);
 
 // Blits from flat 8bpp source, to 16bpp dest, divides in half
-BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                     struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
-                                     UINT32 uiSrcPitch, INT32 iX, INT32 iY);
+BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(UINT16 *destBuffer, UINT32 destPitch,
+                                      struct VSurface *srcSurface, UINT8 *srcBuffer,
+                                      UINT32 srcPitch, INT32 x, INT32 y);
 BOOLEAN Blt8BPPDataTo16BPPBufferHalfRect(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                          struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
                                          UINT32 uiSrcPitch, INT32 iX, INT32 iY, SGPRect *pRect);

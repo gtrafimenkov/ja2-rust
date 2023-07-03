@@ -4934,35 +4934,34 @@ BlitLoop:
 
 // Blits from 8bpp to 16bpp and scale down the source image 2x.
 // This function is only used for drawing strategic map.
-BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                      struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
-                                      UINT32 uiSrcPitch, INT32 iX, INT32 iY) {
-  Assert(hSrcVSurface != NULL);
-  Assert(pSrcBuffer != NULL);
-  Assert(pBuffer != NULL);
+BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(UINT16 *destBuffer, UINT32 destPitch,
+                                      struct VSurface *srcSurface, UINT8 *srcBuffer,
+                                      UINT32 srcPitch, INT32 x, INT32 y) {
+  Assert(srcSurface != NULL);
+  Assert(srcBuffer != NULL);
+  Assert(destBuffer != NULL);
 
-  // Get Offsets from Index into structure
-  u32 usHeight = (UINT32)hSrcVSurface->usHeight;
-  u32 usWidth = (UINT32)hSrcVSurface->usWidth;
+  u16 usHeight = srcSurface->usHeight;
+  u16 usWidth = srcSurface->usWidth;
 
-  if (iX < 0) {
+  if (x < 0) {
     return FALSE;
   }
-  if (iY < 0) {
+  if (y < 0) {
     return FALSE;
   }
 
-  u8 *SrcPtr = (UINT8 *)pSrcBuffer;
-  u16 *DestPtr = (UINT8 *)pBuffer + (uiDestPitchBYTES * iY) + (iX * 2);
-  UINT16 *p16BPPPalette = hSrcVSurface->p16BPPPalette;
+  u8 *SrcPtr = (UINT8 *)srcBuffer;
+  u16 *DestPtr = destBuffer + (destPitch / 2 * y) + x;
+  UINT16 *p16BPPPalette = srcSurface->p16BPPPalette;
 
   // destSkip - how much bytes to skip to go to the next line in dest
   // srcSkip - how much bytes to skip to go to the next line + skip another line
   // Foo & 0xfffffffe is equal to Foo / 2 * 2, divide by 2 is needed because
   // the image is scaled down, * 2 is needed because 2 bytes per pixel in dest and
   // skipping one line in src.
-  u32 destSkip = (uiDestPitchBYTES - (usWidth & 0xfffffffe)) / 2;
-  u32 srcSkip = (uiSrcPitch * 2) - (usWidth & 0xfffffffe);
+  u32 destSkip = (destPitch - (usWidth & 0xfffffffe)) / 2;
+  u32 srcSkip = (srcPitch * 2) - (usWidth & 0xfffffffe);
 
   u32 line_counter = usHeight / 2;  // line counter (goes top to bottom), half the rows
   while (line_counter > 0) {
