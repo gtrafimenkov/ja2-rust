@@ -730,6 +730,9 @@ void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *d
   void *srcBuf = VSurfaceLockOld(source, &srcPitch);
   if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
     Blt8BPPDataTo16BPPScaleDown2x((u16 *)destBuf, destPitch, source, (u8 *)srcBuf, srcPitch, x, y);
+  } else if (source->ubBitDepth == 16 && dest->ubBitDepth == 16) {
+    Blt16BPPDataTo16BPPScaleDown2x((u16 *)destBuf, destPitch, source, (u16 *)srcBuf, srcPitch, x,
+                                   y);
   } else {
     DebugLogWrite("BlitSurfaceToSurfaceScaleDown2x: unsupported bit depth combination");
   }
