@@ -1141,10 +1141,6 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
-        // now blit
-        // Blt8BPPDataSubTo16BPPBuffer( pDestBuf, uiDestPitchBYTES, hSrcVSurface,
-        // pSrcBuf,uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
         // unlock source and dest buffers
         VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSB);
@@ -1168,10 +1164,6 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
 
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // now blit
-        // Blt8BPPDataSubTo16BPPBuffer( pDestBuf, uiDestPitchBYTES, hSrcVSurface,
-        // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
         VSurfaceUnlock(GetVSByID(guiBIGMAP));
@@ -1197,10 +1189,6 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
-        // now blit
-        // Blt8BPPDataSubTo16BPPBuffer( pDestBuf, uiDestPitchBYTES, hSrcVSurface,
-        // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
-
         // unlock source and dest buffers
         VSurfaceUnlock(GetVSByID(guiBIGMAP));
         VSurfaceUnlock(vsSB);
@@ -1224,10 +1212,6 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
 
         Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
                                          uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // now blit
-        // Blt8BPPDataSubTo16BPPBuffer( pDestBuf, uiDestPitchBYTES, hSrcVSurface,
-        // pSrcBuf,uiSrcPitchBYTES, sScreenX , sScreenY , &clip);
 
         // unlock source and dest buffers
         VSurfaceUnlock(GetVSByID(guiBIGMAP));

@@ -6,6 +6,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
+#include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Utils/FontControl.h"
@@ -401,9 +402,21 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
     pSrcBuf =
         VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground), &uiSrcPitchBYTES);
 
-    Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
-                                0, 0, &DestRect);
-
+    {
+      char buf[256];
+      snprintf(buf, ARR_SIZE(buf), "PrepareMercPopupBox, srcvsurface bit depth = %d",
+               hSrcVSurface->ubBitDepth);
+      DebugLogWrite(buf);
+    }
+    // XXX: it is not the only place
+    if (hSrcVSurface->ubBitDepth == 8) {
+      Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
+                                  uiSrcPitchBYTES, 0, 0, &DestRect);
+    } else if (hSrcVSurface->ubBitDepth == 16) {
+      Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, 0, 0, DestRect.iLeft,
+                      DestRect.iTop, DestRect.iRight - DestRect.iLeft,
+                      DestRect.iBottom - DestRect.iTop);
+    }
     VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground));
     VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
   }
@@ -473,7 +486,8 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   SetFontShadow(DEFAULT_SHADOW);
 
   if (iBoxId == -1) {
-    // now return attemp to add to pop up box list, if successful will return index
+    // now return attemp to add to pop up box list, if successful will
+    // return index
     return (AddPopUpBoxToList(pPopUpTextBox));
   } else {
     // set as current box

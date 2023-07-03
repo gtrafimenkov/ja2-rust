@@ -71,36 +71,36 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
 
   hImage->pui16BPPPalette = Create16BPPPalette(hImage->palette);
 
-  // // convert image to 16 bit
-  // {
-  //   u32 pixels_count = (u32)hImage->usWidth * (u32)hImage->usHeight;
-  //   UINT16 *new_image_data = (UINT16 *)MemAlloc(2 * pixels_count);
-  //   if (!new_image_data) {
-  //     MemFree(hImage->image_data);
-  //     MemFree(hImage->palette);
-  //     MemFree(hImage->pui16BPPPalette);
-  //     hImage->image_data = NULL;
-  //     hImage->palette = NULL;
-  //     hImage->pui16BPPPalette = NULL;
-  //     return (FALSE);
-  //   }
+  // convert image to 16 bit
+  {
+    u32 pixels_count = (u32)hImage->usWidth * (u32)hImage->usHeight;
+    UINT16 *new_image_data = (UINT16 *)MemAlloc(2 * pixels_count);
+    if (!new_image_data) {
+      MemFree(hImage->image_data);
+      MemFree(hImage->palette);
+      MemFree(hImage->pui16BPPPalette);
+      hImage->image_data = NULL;
+      hImage->palette = NULL;
+      hImage->pui16BPPPalette = NULL;
+      return (FALSE);
+    }
 
-  //   UINT8 *old_image_data = (UINT8 *)hImage->image_data;
-  //   for (u32 i = 0; i < pixels_count; i++) {
-  //     new_image_data[i] = 0x4444;
-  //     // new_image_data[i] = hImage->pui16BPPPalette[old_image_data[i]];
-  //   }
+    UINT8 *old_image_data = (UINT8 *)hImage->image_data;
+    for (u32 i = 0; i < pixels_count; i++) {
+      // new_image_data[i] = 0x4444;
+      new_image_data[i] = hImage->pui16BPPPalette[old_image_data[i]];
+    }
 
-  //   MemFree(hImage->image_data);
-  //   hImage->image_data = new_image_data;
-  //   hImage->ubBitDepth = 16;
+    MemFree(hImage->image_data);
+    hImage->image_data = new_image_data;
+    hImage->ubBitDepth = 16;
 
-  //   // don't need palette anymore
-  //   MemFree(hImage->palette);
-  //   MemFree(hImage->pui16BPPPalette);
-  //   hImage->palette = NULL;
-  //   hImage->pui16BPPPalette = NULL;
-  // }
+    // don't need palette anymore
+    MemFree(hImage->palette);
+    MemFree(hImage->pui16BPPPalette);
+    hImage->palette = NULL;
+    hImage->pui16BPPPalette = NULL;
+  }
 
   MemFree(pPcxObject->pPcxBuffer);
   MemFree(pPcxObject);
