@@ -240,6 +240,16 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   UINT8 *pSrc, *pSrcTemp;
   UINT16 *pDest, *pDestTemp;
 
+  {
+    char buf[256];
+    snprintf(buf, ARR_SIZE(buf),
+             "Copy8BPPImageTo16BPPBuffer(usDestWidth=%d, usDestHeight=%d, x=%d, y=%d, "
+             "srcRect=(%d,%d,%d,%d))",
+             usDestWidth, usDestHeight, usX, usY, srcRect->iLeft, srcRect->iTop, srcRect->iRight,
+             srcRect->iBottom);
+    DebugLogWrite(buf);
+  }
+
   Assert(hImage->pui16BPPPalette != NULL);
   Assert(hImage != NULL);
 
