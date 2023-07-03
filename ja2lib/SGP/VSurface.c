@@ -678,6 +678,14 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     return (NULL);
   }
 
+  {
+    char buf[256];
+    snprintf(buf, ARR_SIZE(buf),
+             "XXX CreateVideoSurfaceFromFile, %s, bitdepth=%d, palette=%p, pui16BPPPalette=%p",
+             path, image->ubBitDepth, image->palette, image->pui16BPPPalette);
+    DebugLogWrite(buf);
+  }
+
   struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, 16);
 
   if (vs) {
@@ -687,14 +695,15 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     tempRect.iRight = image->usWidth - 1;
     tempRect.iBottom = image->usHeight - 1;
     if (image->ubBitDepth == 8) {
-      if (!image->pui16BPPPalette) {
-        image->pui16BPPPalette = Create16BPPPalette(image->palette);
-      }
+      vs->p16BPPPalette = Create16BPPPalette(image->palette);
+      // if (!image->pui16BPPPalette) {
+      //   image->pui16BPPPalette = Create16BPPPalette(image->palette);
+      // }
     }
     SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
-    if (image->ubBitDepth == 8) {
-      SetVideoSurfacePalette(vs, image->palette);
-    }
+    // if (image->ubBitDepth == 8) {
+    //   SetVideoSurfacePalette(vs, image->palette);
+    // }
     DestroyImage(image);
   }
 

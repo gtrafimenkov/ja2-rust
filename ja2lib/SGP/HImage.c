@@ -280,8 +280,8 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   }
 
   // Convert to Pixel specification
-  pDest = (UINT16 *)pDestBuf + uiDestStart;
-  pSrc = (UINT8 *)hImage->image_data + uiSrcStart;
+  pDest = ((UINT16 *)pDestBuf) + uiDestStart;
+  pSrc = ((UINT8 *)hImage->image_data) + uiSrcStart;
   DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("Start Copying at %p", pDest));
 
   // For every entry, look up into 16BPP palette
