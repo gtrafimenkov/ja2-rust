@@ -1,5 +1,7 @@
 #include "VSurface.h"
 
+#include <stdio.h>
+
 #include "Local.h"
 #include "Rect.h"
 #include "SGP/Debug.h"
@@ -749,4 +751,32 @@ void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *d
   }
   VSurfaceUnlock(source);
   VSurfaceUnlock(vsSB);
+}
+
+void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, SGPRect sourceRect) {
+  UINT32 uiDestPitchBYTES;
+  UINT32 uiSrcPitchBYTES;
+  UINT16 *pDestBuf;
+  void *pSrcBuf;
+  pDestBuf = (UINT16 *)VSurfaceLockOld(dest, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(source, &uiSrcPitchBYTES);
+
+  // {
+  //   char buf[256];
+  //   snprintf(buf, ARR_SIZE(buf), "PrepareMercPopupBox, srcvsurface bit depth = %d",
+  //            hSrcVSurface->ubBitDepth);
+  //   DebugLogWrite(buf);
+  // }
+
+  // XXX: it is not the only place
+  if (source->ubBitDepth == 8) {
+    Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, source, (UINT8 *)pSrcBuf,
+                                uiSrcPitchBYTES, 0, 0, &sourceRect);
+  } else if (source->ubBitDepth == 16) {
+    Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
+                    sourceRect.iLeft, sourceRect.iTop, sourceRect.iRight - sourceRect.iLeft,
+                    sourceRect.iBottom - sourceRect.iTop);
+  }
+  VSurfaceUnlock(dest);
+  VSurfaceUnlock(source);
 }

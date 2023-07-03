@@ -4327,32 +4327,34 @@ void BlitTitleBarIcons(void) {
 }
 
 BOOLEAN DrawDeskTopBackground(void) {
-  struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
-  UINT8 *pSrcBuf;
-  SGPRect clip;
+  // struct VSurface *hSrcVSurface;
+  // UINT32 uiDestPitchBYTES;
+  // UINT32 uiSrcPitchBYTES;
+  // UINT16 *pDestBuf;
+  // UINT8 *pSrcBuf;
 
-  // set clipping region
+  SGPRect clip;
   clip.iLeft = 0;
   clip.iRight = 506;
   clip.iTop = 0;
   clip.iBottom = 408 + 19;
-  // get surfaces
-  pDestBuf = (UINT16 *)VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-  if (!(GetVideoSurface(&hSrcVSurface, guiDESKTOP))) {
-    return FALSE;
-  }
-  pSrcBuf = VSurfaceLockOld(GetVSByID(guiDESKTOP), &uiSrcPitchBYTES);
 
-  // blit .pcx for the background onto desktop
-  Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
-                              LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3, &clip);
+  BlitSurfaceToSurface(GetVSByID(guiDESKTOP), vsFB, clip);
 
-  // release surfaces
-  VSurfaceUnlock(GetVSByID(guiDESKTOP));
-  VSurfaceUnlock(vsFB);
+  // // get surfaces
+  // pDestBuf = (UINT16 *)VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
+  // if (!(GetVideoSurface(&hSrcVSurface, guiDESKTOP))) {
+  //   return FALSE;
+  // }
+  // pSrcBuf = VSurfaceLockOld(GetVSByID(guiDESKTOP), &uiSrcPitchBYTES);
+
+  // // blit .pcx for the background onto desktop
+  // Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
+  //                             LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3, &clip);
+
+  // // release surfaces
+  // VSurfaceUnlock(GetVSByID(guiDESKTOP));
+  // VSurfaceUnlock(vsFB);
 
   return (TRUE);
 }

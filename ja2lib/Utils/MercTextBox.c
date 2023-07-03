@@ -255,7 +255,6 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   UINT16 usPosY, usPosX;
   UINT16 usStringPixLength;
   SGPRect DestRect;
-  struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
@@ -392,33 +391,10 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
     VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
 
   } else {
-    if (!GetVideoSurface(&hSrcVSurface, pPopUpTextBox->uiMercTextPopUpBackground)) {
-      AssertMsg(0, String("Failed to GetVideoSurface for PrepareMercPopupBox.  VSurfaceID:  %d",
-                          pPopUpTextBox->uiMercTextPopUpBackground));
-    }
-
-    pDestBuf =
-        (UINT16 *)VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), &uiDestPitchBYTES);
-    pSrcBuf =
-        VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground), &uiSrcPitchBYTES);
-
-    {
-      char buf[256];
-      snprintf(buf, ARR_SIZE(buf), "PrepareMercPopupBox, srcvsurface bit depth = %d",
-               hSrcVSurface->ubBitDepth);
-      DebugLogWrite(buf);
-    }
+    // Blt8BPPDataSubTo16BPPBuffer
     // XXX: it is not the only place
-    if (hSrcVSurface->ubBitDepth == 8) {
-      Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                  uiSrcPitchBYTES, 0, 0, &DestRect);
-    } else if (hSrcVSurface->ubBitDepth == 16) {
-      Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, pSrcBuf, uiSrcPitchBYTES, 0, 0, DestRect.iLeft,
-                      DestRect.iTop, DestRect.iRight - DestRect.iLeft,
-                      DestRect.iBottom - DestRect.iTop);
-    }
-    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground));
-    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
+    BlitSurfaceToSurface(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground),
+                         GetVSByID(pPopUpTextBox->uiSourceBufferIndex), DestRect);
   }
 
   GetVideoObject(&hImageHandle, pPopUpTextBox->uiMercTextPopUpBorder);
