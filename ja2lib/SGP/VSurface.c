@@ -753,7 +753,8 @@ void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *d
   VSurfaceUnlock(vsSB);
 }
 
-void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, SGPRect sourceRect) {
+void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
+                          SGPRect sourceRect) {
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
@@ -771,9 +772,9 @@ void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, SGPRec
   // XXX: it is not the only place
   if (source->ubBitDepth == 8) {
     Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, source, (UINT8 *)pSrcBuf,
-                                uiSrcPitchBYTES, 0, 0, &sourceRect);
+                                uiSrcPitchBYTES, x, y, &sourceRect);
   } else if (source->ubBitDepth == 16) {
-    Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
+    Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, x, y,
                     sourceRect.iLeft, sourceRect.iTop, sourceRect.iRight - sourceRect.iLeft,
                     sourceRect.iBottom - sourceRect.iTop);
   }

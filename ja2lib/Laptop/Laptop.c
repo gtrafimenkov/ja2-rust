@@ -4339,7 +4339,9 @@ BOOLEAN DrawDeskTopBackground(void) {
   clip.iTop = 0;
   clip.iBottom = 408 + 19;
 
-  BlitSurfaceToSurface(GetVSByID(guiDESKTOP), vsFB, clip);
+  // blit .pcx for the background onto desktop
+  BlitSurfaceToSurface(GetVSByID(guiDESKTOP), vsFB, LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3,
+                       clip);
 
   // // get surfaces
   // pDestBuf = (UINT16 *)VSurfaceLockOld(vsFB, &uiDestPitchBYTES);

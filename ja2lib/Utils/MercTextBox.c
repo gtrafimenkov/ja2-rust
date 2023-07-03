@@ -394,7 +394,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
     // Blt8BPPDataSubTo16BPPBuffer
     // XXX: it is not the only place
     BlitSurfaceToSurface(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground),
-                         GetVSByID(pPopUpTextBox->uiSourceBufferIndex), DestRect);
+                         GetVSByID(pPopUpTextBox->uiSourceBufferIndex), 0, 0, DestRect);
   }
 
   GetVideoObject(&hImageHandle, pPopUpTextBox->uiMercTextPopUpBorder);
