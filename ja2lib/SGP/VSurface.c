@@ -1,5 +1,7 @@
 #include "VSurface.h"
 
+#include <stdio.h>
+
 #include "Local.h"
 #include "Rect.h"
 #include "SGP/Debug.h"
@@ -444,6 +446,7 @@ struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
 BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(fileName);
+  DebugLogWrite("b000");
 
   struct VSurface *vs = CreateVideoSurfaceFromFile(fileName);
 
@@ -453,6 +456,7 @@ BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
 
   SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
   *puiIndex = addVSurfaceToList(vs);
+  DebugLogWrite("b010");
   return TRUE;
 }
 
@@ -678,6 +682,14 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     return (NULL);
   }
 
+  {
+    char buf[256];
+    snprintf(buf, ARR_SIZE(buf),
+             "XXX CreateVideoSurfaceFromFile, %s, bitdepth=%d, palette=%p, pui16BPPPalette=%p",
+             path, image->ubBitDepth, image->palette, image->pui16BPPPalette);
+    DebugLogWrite(buf);
+  }
+
   struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, image->ubBitDepth);
 
   if (vs) {
@@ -686,11 +698,15 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
     tempRect.iTop = 0;
     tempRect.iRight = image->usWidth - 1;
     tempRect.iBottom = image->usHeight - 1;
+    DebugLogWrite("a000");
     SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
+    DebugLogWrite("a001");
     if (image->ubBitDepth == 8) {
       SetVideoSurfacePalette(vs, image->palette);
     }
+    DebugLogWrite("a002");
     DestroyImage(image);
+    DebugLogWrite("a003");
   }
 
   return vs;
@@ -738,4 +754,33 @@ void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *d
   }
   VSurfaceUnlock(source);
   VSurfaceUnlock(vsSB);
+}
+
+void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
+                          SGPRect sourceRect) {
+  UINT32 uiDestPitchBYTES;
+  UINT32 uiSrcPitchBYTES;
+  UINT16 *pDestBuf;
+  void *pSrcBuf;
+  pDestBuf = (UINT16 *)VSurfaceLockOld(dest, &uiDestPitchBYTES);
+  pSrcBuf = VSurfaceLockOld(source, &uiSrcPitchBYTES);
+
+  // {
+  //   char buf[256];
+  //   snprintf(buf, ARR_SIZE(buf), "PrepareMercPopupBox, srcvsurface bit depth = %d",
+  //            hSrcVSurface->ubBitDepth);
+  //   DebugLogWrite(buf);
+  // }
+
+  // XXX: it is not the only place
+  if (source->ubBitDepth == 8) {
+    Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, source, (UINT8 *)pSrcBuf,
+                                uiSrcPitchBYTES, x, y, &sourceRect);
+  } else if (source->ubBitDepth == 16) {
+    Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, x, y,
+                    sourceRect.iLeft, sourceRect.iTop, sourceRect.iRight - sourceRect.iLeft,
+                    sourceRect.iBottom - sourceRect.iTop);
+  }
+  VSurfaceUnlock(dest);
+  VSurfaceUnlock(source);
 }

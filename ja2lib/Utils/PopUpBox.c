@@ -1025,12 +1025,11 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   UINT32 uiNumTilesHigh;
   UINT32 uiCount = 0;
   struct VObject *hBoxHandle;
-  struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
-  UINT8 *pSrcBuf;
-  SGPRect clip;
+  // struct VSurface *hSrcVSurface;
+  // UINT32 uiDestPitchBYTES;
+  // UINT32 uiSrcPitchBYTES;
+  // UINT16 *pDestBuf;
+  // UINT8 *pSrcBuf;
   UINT16 usTopX, usTopY;
   UINT16 usWidth, usHeight;
 
@@ -1071,24 +1070,17 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   uiNumTilesWide = ((usWidth - 4) / BORDER_WIDTH);
   uiNumTilesHigh = ((usHeight - 4) / BORDER_HEIGHT);
 
+  SGPRect clip;
   clip.iLeft = 0;
   clip.iRight = clip.iLeft + usWidth;
   clip.iTop = 0;
   clip.iBottom = clip.iTop + usHeight;
 
   // blit in texture first, then borders
-  // blit in surface
-  pDestBuf =
-      (UINT16 *)VSurfaceLockOld(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), &uiDestPitchBYTES);
-  if (!(GetVideoSurface(&hSrcVSurface, PopUpBoxList[uiCounter]->iBackGroundSurface))) {
-    return FALSE;
-  }
-  pSrcBuf =
-      VSurfaceLockOld(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface), &uiSrcPitchBYTES);
-  Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
-                              usTopX, usTopY, &clip);
-  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface));
-  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer));
+
+  BlitSurfaceToSurface(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface),
+                       GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), usTopX, usTopY, clip);
+
   GetVideoObject(&hBoxHandle, PopUpBoxList[uiCounter]->iBorderObjectIndex);
 
   // blit in 4 corners (they're 2x2 pixels)

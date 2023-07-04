@@ -6,6 +6,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
+#include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Utils/FontControl.h"
@@ -254,7 +255,6 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   UINT16 usPosY, usPosX;
   UINT16 usStringPixLength;
   SGPRect DestRect;
-  struct VSurface *hSrcVSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
@@ -391,21 +391,8 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
     VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
 
   } else {
-    if (!GetVideoSurface(&hSrcVSurface, pPopUpTextBox->uiMercTextPopUpBackground)) {
-      AssertMsg(0, String("Failed to GetVideoSurface for PrepareMercPopupBox.  VSurfaceID:  %d",
-                          pPopUpTextBox->uiMercTextPopUpBackground));
-    }
-
-    pDestBuf =
-        (UINT16 *)VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), &uiDestPitchBYTES);
-    pSrcBuf =
-        VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground), &uiSrcPitchBYTES);
-
-    Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
-                                0, 0, &DestRect);
-
-    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground));
-    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
+    BlitSurfaceToSurface(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground),
+                         GetVSByID(pPopUpTextBox->uiSourceBufferIndex), 0, 0, DestRect);
   }
 
   GetVideoObject(&hImageHandle, pPopUpTextBox->uiMercTextPopUpBorder);
@@ -473,7 +460,8 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   SetFontShadow(DEFAULT_SHADOW);
 
   if (iBoxId == -1) {
-    // now return attemp to add to pop up box list, if successful will return index
+    // now return attemp to add to pop up box list, if successful will
+    // return index
     return (AddPopUpBoxToList(pPopUpTextBox));
   } else {
     // set as current box
