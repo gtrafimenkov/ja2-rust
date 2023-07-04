@@ -51,8 +51,6 @@ BOOLEAN fShowMilitia = FALSE;
 BOOLEAN fShowAircraftFlag = FALSE;
 BOOLEAN fShowItemsFlag = FALSE;
 
-BOOLEAN fZoomFlag = FALSE;
-
 // buttons & button images
 INT32 giMapBorderButtons[6] = {-1, -1, -1, -1, -1, -1};
 INT32 giMapBorderButtonsImage[6] = {-1, -1, -1, -1, -1, -1};

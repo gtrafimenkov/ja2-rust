@@ -5178,12 +5178,11 @@ static void RenderMapHighlight(u8 sMapX, u8 sMapY, UINT16 usLineColor, BOOLEAN f
   Assert((sMapY >= 1) && (sMapY <= 16));
 
   // if we are not allowed to highlight, leave
-  if ((IsTheCursorAllowedToHighLightThisSector(sMapX, sMapY) == FALSE) && (fZoomFlag == FALSE)) {
+  if ((IsTheCursorAllowedToHighLightThisSector(sMapX, sMapY) == FALSE)) {
     return;
   }
 
-  //	if((!fStationary)||(!fZoomFlag))
-  { GetScreenXYFromMapXY(sMapX, sMapY, &sScreenX, &sScreenY); }
+  GetScreenXYFromMapXY(sMapX, sMapY, &sScreenX, &sScreenY);
 
   // blit in the highlighted sector
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
@@ -6922,17 +6921,6 @@ void PlotTemporaryPaths(void) {
     } else
       // dest char has been selected,
       if (bSelectedDestChar != -1) {
-        /*
-                                if( fZoomFlag )
-                                {
-                                        sMapX =  ( INT16 )( ( ( iZoomX ) / ( MAP_GRID_X ) ) + sMapX
-           ); sMapX /= 2;
-
-                                        sMapY =  ( INT16 )( ( ( iZoomY ) / ( MAP_GRID_Y ) ) + sMapY
-           ); sMapY /= 2;
-                                }
-        */
-
         PlotATemporaryPathForCharacter(GetSoldierByID(gCharactersList[bSelectedDestChar].usSolID),
                                        sMapX, sMapY);
 
@@ -10338,11 +10326,6 @@ void RestoreMapSectorCursor(u8 sMapX, u8 sMapY) {
 
   sScreenY -= 1;
 
-  /*
-          if(fZoomFlag)
-                  RestoreExternBackgroundRect( ((INT16)( sScreenX - MAP_GRID_X )), ((INT16)(
-     sScreenY - MAP_GRID_Y )), DMAP_GRID_ZOOM_X, DMAP_GRID_ZOOM_Y); else
-  */
   RestoreExternBackgroundRect(sScreenX, sScreenY, DMAP_GRID_X, DMAP_GRID_Y);
 }
 

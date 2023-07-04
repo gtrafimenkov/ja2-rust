@@ -2107,20 +2107,16 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
       }
     }
     if ((iDirection != -1)) {
-      if ((!fZoomFlag) ||
-          ((fZoomFlag) && (iX > MAP_VIEW_START_X) && (iY > MAP_VIEW_START_Y) &&
-           (iX < 640 - MAP_GRID_X * 2) && (iY < MAP_VIEW_START_Y + MAP_VIEW_HEIGHT))) {
-        BltVObject(vsFB, hMapHandle, (UINT16)iDirection, iX, iY);
+      BltVObject(vsFB, hMapHandle, (UINT16)iDirection, iX, iY);
 
-        if (!fUTurnFlag) {
-          BltVObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
-          InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
-        }
-
-        InvalidateRegion(iX, iY, iX + 2 * MAP_GRID_X, iY + 2 * MAP_GRID_Y);
-
-        fUTurnFlag = FALSE;
+      if (!fUTurnFlag) {
+        BltVObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
+        InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
       }
+
+      InvalidateRegion(iX, iY, iX + 2 * MAP_GRID_X, iY + 2 * MAP_GRID_Y);
+
+      fUTurnFlag = FALSE;
     }
     // check to see if there is a turn
 
@@ -2641,18 +2637,9 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
   }
   if ((iDirection != -1) && (iArrow != -1)) {
     if (!fUTurnFlag) {
-      if ((!fZoomFlag) ||
-          ((fZoomFlag) && (iX > MAP_VIEW_START_X) && (iY > MAP_VIEW_START_Y) &&
-           (iX < 640 - MAP_GRID_X * 2) && (iY < MAP_VIEW_START_Y + MAP_VIEW_HEIGHT))) {
-        // if(!fZoomFlag)
-        // RestoreExternBackgroundRect(((INT16)iArrowX),((INT16)iArrowY),DMAP_GRID_X, DMAP_GRID_Y);
-        // else
-        // RestoreExternBackgroundRect(((INT16)iArrowX), ((INT16)iArrowY),DMAP_GRID_ZOOM_X,
-        // DMAP_GRID_ZOOM_Y);
-        if (pNode != pPath) {
-          BltVObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
-          InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
-        }
+      if (pNode != pPath) {
+        BltVObject(vsFB, hMapHandle, (UINT16)iArrow, iArrowX, iArrowY);
+        InvalidateRegion(iArrowX, iArrowY, iArrowX + 2 * MAP_GRID_X, iArrowY + 2 * MAP_GRID_Y);
       }
       if (ubCounter == 1)
         ubCounter = 0;
@@ -3256,36 +3243,11 @@ void DisplayPositionOfHelicopter(void) {
         flRatio = 100;
       }
 
-      //			if( !fZoomFlag )
-      {
-        // grab min and max locations to interpolate sub sector position
-        minX = MAP_VIEW_START_X + MAP_GRID_X * (pGroup->ubSectorX);
-        maxX = MAP_VIEW_START_X + MAP_GRID_X * (pGroup->ubNextX);
-        minY = MAP_VIEW_START_Y + MAP_GRID_Y * (pGroup->ubSectorY);
-        maxY = MAP_VIEW_START_Y + MAP_GRID_Y * (pGroup->ubNextY);
-      }
-      /*
-                              else
-                              {
-
-                                      // grab coords for nextx,y and current x,y
-
-                                      // zoomed in, takes a little more work
-                                      GetScreenXYFromMapXYStationary(
-         ((UINT16)(pGroup->ubSectorX)),((UINT16)(pGroup->ubSectorY)) , &sX, &sY ); sY=sY-MAP_GRID_Y;
-                                      sX=sX-MAP_GRID_X;
-
-                                      minX = ( sX );
-                                      minY = ( sY );
-
-                                      GetScreenXYFromMapXYStationary(
-         ((UINT16)(pGroup->ubNextX)),((UINT16)(pGroup->ubNextY)) , &sX, &sY ); sY=sY-MAP_GRID_Y;
-                                      sX=sX-MAP_GRID_X;
-
-                                      maxX = ( sX );
-                                      maxY = ( sY );
-                              }
-      */
+      // grab min and max locations to interpolate sub sector position
+      minX = MAP_VIEW_START_X + MAP_GRID_X * (pGroup->ubSectorX);
+      maxX = MAP_VIEW_START_X + MAP_GRID_X * (pGroup->ubNextX);
+      minY = MAP_VIEW_START_Y + MAP_GRID_Y * (pGroup->ubSectorY);
+      maxY = MAP_VIEW_START_Y + MAP_GRID_Y * (pGroup->ubNextY);
 
       AssertMsg((minX >= 0) && (minX < 640),
                 String("DisplayPositionOfHelicopter: Invalid minX = %d", minX));
@@ -3300,18 +3262,8 @@ void DisplayPositionOfHelicopter(void) {
       x = (UINT32)(minX + flRatio * ((INT16)maxX - (INT16)minX));
       y = (UINT32)(minY + flRatio * ((INT16)maxY - (INT16)minY));
 
-      /*
-                              if( fZoomFlag )
-                              {
-                                      x += 13;
-                                      y += 8;
-                              }
-                              else
-      */
-      {
-        x += 1;
-        y += 3;
-      }
+      x += 1;
+      y += 3;
 
       AssertMsg((x >= 0) && (x < 640), String("DisplayPositionOfHelicopter: Invalid x = %d.  At "
                                               "%d,%d.  Next %d,%d.  Min/Max X = %d/%d",

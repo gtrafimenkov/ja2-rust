@@ -58,9 +58,6 @@ extern void InitializeTacticalStatusAtBattleStart();
 extern BOOLEAN gfDelayAutoResolveStart;
 extern BOOLEAN gfTransitionMapscreenToAutoResolve;
 
-// zoom flag
-extern BOOLEAN fZoomFlag;
-
 BOOLEAN gfTacticalTraversal = FALSE;
 struct GROUP *gpTacticalTraversalGroup = NULL;
 struct SOLDIERTYPE *gpTacticalTraversalChosenSoldier = NULL;
