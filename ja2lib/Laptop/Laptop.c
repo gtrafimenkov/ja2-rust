@@ -354,7 +354,7 @@ UINT32 guiDOWNLOADBOT;
 UINT32 guiTITLEBARLAPTOP;
 UINT32 guiLIGHTS;
 UINT32 guiTITLEBARICONS;
-UINT32 guiDESKTOP;
+static struct Image *desktopBackground;
 
 // email notification
 UINT32 guiUNREAD;
@@ -541,7 +541,6 @@ void UpdateListToReflectNewProgramOpened(INT32 iOpenedProgram);
 INT32 FindLastProgramStillOpen(void);
 void SetCurrentToLastProgramOpened(void);
 BOOLEAN HandleExit(void);
-void DeleteDesktopBackground(void);
 BOOLEAN LoadDesktopBackground(void);
 static void DrawDeskTopBackground();
 void PrintDate(void);
@@ -948,8 +947,7 @@ void ExitLaptop() {
   // destroy region for new mail icon
   CreateDestroyMouseRegionForNewMailIcon();
 
-  // get rid of desktop
-  DeleteDesktopBackground();
+  DestroyImage(desktopBackground);
 
   if (fErrorFlag) {
     fErrorFlag = FALSE;
@@ -4327,38 +4325,18 @@ void BlitTitleBarIcons(void) {
 }
 
 static void DrawDeskTopBackground() {
-  SGPRect clip;
-  clip.iLeft = 0;
-  clip.iRight = 506;
-  clip.iTop = 0;
-  clip.iBottom = 408 + 19;
-
-  // blit .pcx for the background onto desktop
-  BlitSurfaceToSurface(GetVSByID(guiDESKTOP), vsFB, LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3,
-                       clip);
+  BlitImageToSurface(desktopBackground, vsFB, LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3);
 }
 
 BOOLEAN LoadDesktopBackground(void) {
   SGPFILENAME ImageFile;
-
   GetMLGFilename(ImageFile, MLG_DESKTOP);
-  if (!(AddVideoSurfaceFromFile(ImageFile, &guiDESKTOP))) {
-    return FALSE;
-  }
-
-  return (TRUE);
-}
-
-void DeleteDesktopBackground(void) {
-  // delete desktop
-
-  DeleteVideoSurfaceFromIndex(guiDESKTOP);
-  return;
+  desktopBackground = CreateImage(ImageFile, false);
+  return desktopBackground != NULL;
 }
 
 void PrintBalance(void) {
   CHAR16 pString[32];
-  //	UINT16 usX, usY;
 
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BLACK);

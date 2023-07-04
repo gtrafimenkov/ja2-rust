@@ -741,7 +741,17 @@ BOOLEAN InitializeGameVideoObjects() {
 
 void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y) {
   UINT32 destPitch;
-  void *destBuf = VSurfaceLockOld(vsSB, &destPitch);
+  void *destBuf = VSurfaceLockOld(dest, &destPitch);
+
+  // {
+  //   char buf[256];
+  //   snprintf(buf, ARR_SIZE(buf), "BlitImageToSurface: %d, %d, %d, %p, %p", source->ubBitDepth,
+  //            source->usWidth, source->usHeight, source->palette, source->palette16bpp);
+  //   DebugLogWrite(buf);
+  //   snprintf(buf, ARR_SIZE(buf), " dest surf: %d, %d, %d, %d", dest->ubBitDepth, dest->usWidth,
+  //            dest->usHeight, destPitch);
+  //   DebugLogWrite(buf);
+  // }
 
   if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
     if (!source->palette16bpp) {
@@ -762,7 +772,7 @@ void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 
   } else {
     DebugLogWrite("BlitImageToSurface: unsupported bit depth combination");
   }
-  VSurfaceUnlock(vsSB);
+  VSurfaceUnlock(dest);
 }
 
 void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
