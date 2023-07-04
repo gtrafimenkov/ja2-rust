@@ -164,6 +164,5 @@ BOOLEAN InitializeGameVideoObjects();
 void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
                           SGPRect sourceRect);
 void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y);
-void BlitImageToSurfaceScaleDown2x(struct Image *source, struct VSurface *dest, i32 x, i32 y);
 
 #endif

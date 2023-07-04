@@ -619,7 +619,6 @@ UINT32 DrawMap(void) {
     // clip blits to mapscreen region
     // ClipBlitsToMapViewRegion( );
 
-    // BlitImageToSurfaceScaleDown2x(imageBigMap, vsSB, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
     BlitImageToSurface(imageSmallMap, vsSB, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
 
     // shade map sectors (must be done after Tixa/Orta/Mine icons have been blitted, but before
