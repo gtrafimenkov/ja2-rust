@@ -5139,14 +5139,6 @@ BOOLEAN GetMouseMapXY(u8 *psMapWorldX, u8 *psMapWorldY) {
 
   struct Point MousePos = GetMousePoint();
 
-  if (fZoomFlag) {
-    if (MousePos.x > MAP_GRID_X + MAP_VIEW_START_X) MousePos.x -= MAP_GRID_X;
-    if (MousePos.x > MAP_VIEW_START_X + MAP_VIEW_WIDTH) MousePos.x = -1;
-    if (MousePos.y > MAP_GRID_Y + MAP_VIEW_START_Y) MousePos.y -= MAP_GRID_Y;
-    if (MousePos.y > MAP_VIEW_START_Y + MAP_VIEW_HEIGHT - 11) MousePos.y = -11;
-    if (MousePos.y < MAP_VIEW_START_Y) MousePos.y = -1;
-  }
-
   return (GetMapXY((INT16)MousePos.x, (INT16)MousePos.y, psMapWorldX, psMapWorldY));
 }
 
@@ -7694,14 +7686,6 @@ void UpdateCursorIfInLastSector(void) {
   // he path, if so, change the cursor
   if ((bSelectedDestChar != -1) || (fPlotForHelicopter == TRUE)) {
     GetMouseMapXY(&sMapX, &sMapY);
-
-    // translate screen values to map grid values for zoomed in
-    if (fZoomFlag) {
-      sMapX = (UINT16)iZoomX / MAP_GRID_X + sMapX;
-      sMapX = sMapX / 2;
-      sMapY = (UINT16)iZoomY / MAP_GRID_Y + sMapY;
-      sMapY = sMapY / 2;
-    }
 
     if (fShowAircraftFlag == FALSE) {
       if (bSelectedDestChar != -1) {
