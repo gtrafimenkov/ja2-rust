@@ -4932,6 +4932,41 @@ BlitLoop:
   return (TRUE);
 }
 
+// Blits from 8bpp to 16bpp.
+// This function is only used for drawing strategic map.
+bool Blt8BPPDataTo16BPP(struct ImageDataParams *source, UINT16 *destBuffer, UINT32 destPitch,
+                        INT32 x, INT32 y) {
+  if (x < 0 || y < 0) {
+    return false;
+  }
+
+  u16 height = source->height;
+  u16 width = source->width;
+
+  if (destPitch / 2 < width) {
+    return false;
+  }
+
+  u8 *srcPtr = (UINT8 *)source->data;
+  u16 *destPtr = destBuffer + (destPitch / 2 * y) + x;
+  UINT16 *p16BPPPalette = source->palette16bpp;
+
+  u32 destSkip = destPitch / 2 - width;
+  u32 srcSkip = source->pitch - width;
+
+  for (u16 y = 0; y < height; y++) {
+    for (u16 x = 0; x < width; x++) {
+      u8 index = *srcPtr++;
+      u16 color = p16BPPPalette[index];
+      *destPtr++ = color;
+    }
+    srcPtr += srcSkip;
+    destPtr += destSkip;
+  }
+
+  return true;
+}
+
 // Blits from 8bpp to 16bpp and scale down the source image 2x.
 // This function is only used for drawing strategic map.
 BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(struct ImageDataParams *source, UINT16 *destBuffer,
