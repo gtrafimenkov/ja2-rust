@@ -733,14 +733,6 @@ void GetScreenXYFromMapXY(u8 sMapX, u8 sMapY, INT16 *psX, INT16 *psY) {
   *psY = (sMapY * MAP_GRID_Y) + MAP_VIEW_START_Y;
 }
 
-void GetScreenXYFromMapXYStationary(u8 sMapX, u8 sMapY, INT16 *psX, INT16 *psY) {
-  INT16 sXTempOff = 1;
-  INT16 sYTempOff = 1;
-  //(MAP_VIEW_START_X+((iCount+1)*MAP_GRID_X)*2-iZoomX));
-  *psX = ((sMapX + sXTempOff) * MAP_GRID_X) * 2 - ((INT16)iZoomX) + MAP_VIEW_START_X;
-  *psY = ((sMapY + sYTempOff) * MAP_GRID_Y) * 2 - ((INT16)iZoomY) + MAP_VIEW_START_Y;
-}
-
 void ShowTownText(void) {
   CHAR16 sString[32];
   CHAR16 sStringA[32];
