@@ -745,7 +745,14 @@ void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *d
   void *destBuf = VSurfaceLockOld(vsSB, &destPitch);
   void *srcBuf = VSurfaceLockOld(source, &srcPitch);
   if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
-    Blt8BPPDataTo16BPPScaleDown2x((u16 *)destBuf, destPitch, source, (u8 *)srcBuf, srcPitch, x, y);
+    struct ImageDataParams src = {
+        .width = source->usWidth,
+        .height = source->usHeight,
+        .palette16bpp = source->p16BPPPalette,
+        .pitch = srcPitch,
+        .data = srcBuf,
+    };
+    Blt8BPPDataTo16BPPScaleDown2x(&src, (u16 *)destBuf, destPitch, x, y);
   } else if (source->ubBitDepth == 16 && dest->ubBitDepth == 16) {
     Blt16BPPDataTo16BPPScaleDown2x((u16 *)destBuf, destPitch, source, (u16 *)srcBuf, srcPitch, x,
                                    y);

@@ -4336,8 +4336,6 @@ static void DrawDeskTopBackground() {
   // blit .pcx for the background onto desktop
   BlitSurfaceToSurface(GetVSByID(guiDESKTOP), vsFB, LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3,
                        clip);
-
-  return (TRUE);
 }
 
 BOOLEAN LoadDesktopBackground(void) {

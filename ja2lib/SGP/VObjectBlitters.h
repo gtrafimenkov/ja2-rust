@@ -175,9 +175,8 @@ BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
 
 // Blits from flat 8bpp source, to 16bpp dest, divides in half
 // This function is only used for drawing strategic map.
-BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(UINT16 *destBuffer, UINT32 destPitch,
-                                      struct VSurface *srcSurface, UINT8 *srcBuffer,
-                                      UINT32 srcPitch, INT32 x, INT32 y);
+BOOLEAN Blt8BPPDataTo16BPPScaleDown2x(struct ImageDataParams *source, UINT16 *destBuffer,
+                                      UINT32 destPitch, INT32 x, INT32 y);
 // Blits from 16bpp to 16bpp and scale down the source image 2x.
 // This function is only used for drawing strategic map.
 BOOLEAN Blt16BPPDataTo16BPPScaleDown2x(UINT16 *destBuffer, UINT32 destPitch,

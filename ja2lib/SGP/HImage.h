@@ -66,6 +66,14 @@ struct Image {
   bool paletteAllocatedInRust;
 };
 
+struct ImageDataParams {
+  u16 width;
+  u16 height;
+  u16 *palette16bpp;
+  void *data;
+  u32 pitch;  // amount of bytes per line; it is at least widht * bytes_per_pixel, but can be more
+};
+
 #define SGPGetRValue(rgb) ((BYTE)(rgb))
 #define SGPGetBValue(rgb) ((BYTE)((rgb) >> 16))
 #define SGPGetGValue(rgb) ((BYTE)(((UINT16)(rgb)) >> 8))
