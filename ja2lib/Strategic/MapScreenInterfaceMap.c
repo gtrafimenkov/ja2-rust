@@ -1040,9 +1040,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
 
   pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
 
-  if (fZoomFlag)
-    ShadeMapElemZoomIn(sMapX, sMapY, iColor);
-  else {
+  {
     GetScreenXYFromMapXY(sMapX, sMapY, &sScreenX, &sScreenY);
 
     // compensate for original BIG_MAP blit being done at MAP_VIEW_START_X + 1
@@ -1056,18 +1054,6 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
 
     if (iColor != MAP_SHADE_BLACK) {
       // airspace
-      /*
-                              if( sMapX == 1 )
-                              {
-                                      clip.iLeft -= 4;
-                                      clip.iRight += 4;
-                                      sScreenX -= 2;
-                              }
-                              else
-                              {
-                                      sScreenX += 1;
-                              }
-      */
     } else {
       // non-airspace
       sScreenY -= 1;
@@ -2816,10 +2802,7 @@ void ClipBlitsToMapViewRegion(void) {
                                      MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + MAP_GRID_Y - 10};
   SGPRect *pRectToUse;
 
-  if (fZoomFlag)
-    pRectToUse = &ZoomedMapScreenClipRect;
-  else
-    pRectToUse = &MapScreenRect;
+  pRectToUse = &MapScreenRect;
 
   SetClippingRect(pRectToUse);
   memcpy(&gOldClipRect, &gDirtyClipRect, sizeof(gOldClipRect));
@@ -2835,17 +2818,9 @@ void ClipBlitsToMapViewRegionForRectangleAndABit(UINT32 uiDestPitchBYTES) {
   // clip blits to map view region
   // because MC's map coordinates system is so screwy, these had to be hand-tuned to work right...
   // ARM
-  if (fZoomFlag)
-    SetClippingRegionAndImageWidth(uiDestPitchBYTES, MapScreenRect.iLeft + 2, MapScreenRect.iTop,
-                                   MapScreenRect.iRight - MapScreenRect.iLeft,
-                                   MapScreenRect.iBottom - MapScreenRect.iTop);
-  else
-    SetClippingRegionAndImageWidth(uiDestPitchBYTES, MapScreenRect.iLeft - 1,
-                                   MapScreenRect.iTop - 1,
-                                   MapScreenRect.iRight - MapScreenRect.iLeft + 3,
-                                   MapScreenRect.iBottom - MapScreenRect.iTop + 2);
-
-  return;
+  SetClippingRegionAndImageWidth(uiDestPitchBYTES, MapScreenRect.iLeft - 1, MapScreenRect.iTop - 1,
+                                 MapScreenRect.iRight - MapScreenRect.iLeft + 3,
+                                 MapScreenRect.iBottom - MapScreenRect.iTop + 2);
 }
 
 void RestoreClipRegionToFullScreenForRectangle(UINT32 uiDestPitchBYTES) {
@@ -3596,10 +3571,6 @@ void BlitMineText(u8 sMapX, u8 sMapY) {
 
 void AdjustXForLeftMapEdge(STR16 wString, INT16 *psX) {
   INT16 sStartingX, sPastEdge;
-
-  if (fZoomFlag)
-    // it's ok to cut strings off in zoomed mode
-    return;
 
   sStartingX = *psX - (StringPixLengthArg(MAP_FONT, wcslen(wString), wString) / 2);
   sPastEdge = (MAP_VIEW_START_X + 23) - sStartingX;
