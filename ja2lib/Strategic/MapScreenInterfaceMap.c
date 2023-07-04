@@ -3499,15 +3499,9 @@ void BlitMineIcon(u8 sMapX, u8 sMapY) {
                                  MAP_VIEW_HEIGHT - 9);
   VSurfaceUnlock(vsSB);
 
-  if (fZoomFlag) {
-    GetScreenXYFromMapXYStationary((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
-    // when zoomed, the x,y returned is the CENTER of the map square in question
-    BltVObject(vsSB, hHandle, 0, sScreenX - MAP_GRID_ZOOM_X / 4, sScreenY - MAP_GRID_ZOOM_Y / 4);
-  } else {
-    GetScreenXYFromMapXY((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
-    // when not zoomed, the x,y returned is the top left CORNER of the map square in question
-    BltVObject(vsSB, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4);
-  }
+  GetScreenXYFromMapXY((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
+  // when not zoomed, the x,y returned is the top left CORNER of the map square in question
+  BltVObject(vsSB, hHandle, 1, sScreenX + MAP_GRID_X / 4, sScreenY + MAP_GRID_Y / 4);
 }
 
 void BlitMineText(u8 sMapX, u8 sMapY) {
@@ -3516,18 +3510,11 @@ void BlitMineText(u8 sMapX, u8 sMapY) {
   UINT8 ubMineIndex;
   UINT8 ubLineCnt = 0;
 
-  if (fZoomFlag) {
-    GetScreenXYFromMapXYStationary((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
+  GetScreenXYFromMapXY((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
 
-    // set coordinates for start of mine text
-    sScreenY += MAP_GRID_ZOOM_Y / 2 + 1;  // slightly below
-  } else {
-    GetScreenXYFromMapXY((INT16)(sMapX), (INT16)(sMapY), &sScreenX, &sScreenY);
-
-    // set coordinates for start of mine text
-    sScreenX += MAP_GRID_X / 2;  // centered around middle of mine square
-    sScreenY += MAP_GRID_Y + 1;  // slightly below
-  }
+  // set coordinates for start of mine text
+  sScreenX += MAP_GRID_X / 2;  // centered around middle of mine square
+  sScreenY += MAP_GRID_Y + 1;  // slightly below
 
   // show detailed mine info (name, production rate, daily production)
 
@@ -3647,21 +3634,12 @@ void BlitTownGridMarkers(void) {
     // skip Orta/Tixa until found
     if (((fFoundOrta != FALSE) || (townID != ORTA)) &&
         ((townID != TIXA) || (fFoundTixa != FALSE))) {
-      if (fZoomFlag) {
-        GetScreenXYFromMapXYStationary(sX, sY, &sScreenX, &sScreenY);
-        sScreenX -= MAP_GRID_X - 1;
-        sScreenY -= MAP_GRID_Y;
+      // get location on screen
+      GetScreenXYFromMapXY(sX, sY, &sScreenX, &sScreenY);
+      sWidth = MAP_GRID_X - 1;
+      sHeight = MAP_GRID_Y;
 
-        sWidth = 2 * MAP_GRID_X;
-        sHeight = 2 * MAP_GRID_Y;
-      } else {
-        // get location on screen
-        GetScreenXYFromMapXY(sX, sY, &sScreenX, &sScreenY);
-        sWidth = MAP_GRID_X - 1;
-        sHeight = MAP_GRID_Y;
-
-        sScreenX += 2;
-      }
+      sScreenX += 2;
 
       if (GetTownIdForSector(sX, sY - 1) == BLANK_SECTOR) {
         LineDraw(TRUE, sScreenX - 1, sScreenY - 1, sScreenX + sWidth - 1, sScreenY - 1, usColor,
@@ -3712,22 +3690,11 @@ void BlitMineGridMarkers(void) {
   ClipBlitsToMapViewRegionForRectangleAndABit(uiDestPitchBYTES);
 
   for (iCounter = 0; iCounter < MAX_NUMBER_OF_MINES; iCounter++) {
-    if (fZoomFlag) {
-      GetScreenXYFromMapXYStationary((INT16)(gMineLocation[iCounter].sSectorX),
-                                     (INT16)(gMineLocation[iCounter].sSectorY), &sScreenX,
-                                     &sScreenY);
-      sScreenX -= MAP_GRID_X;
-      sScreenY -= MAP_GRID_Y;
-
-      sWidth = 2 * MAP_GRID_X;
-      sHeight = 2 * MAP_GRID_Y;
-    } else {
-      // get location on screen
-      GetScreenXYFromMapXY((INT16)(gMineLocation[iCounter].sSectorX),
-                           (INT16)(gMineLocation[iCounter].sSectorY), &sScreenX, &sScreenY);
-      sWidth = MAP_GRID_X;
-      sHeight = MAP_GRID_Y;
-    }
+    // get location on screen
+    GetScreenXYFromMapXY((INT16)(gMineLocation[iCounter].sSectorX),
+                         (INT16)(gMineLocation[iCounter].sSectorY), &sScreenX, &sScreenY);
+    sWidth = MAP_GRID_X;
+    sHeight = MAP_GRID_Y;
 
     // draw rectangle
     RectangleDraw(TRUE, sScreenX, sScreenY - 1, sScreenX + sWidth, sScreenY + sHeight - 1, usColor,
@@ -4762,13 +4729,8 @@ void DrawTownMilitiaForcesOnMap(void) {
       iTotalNumberOfTroops = milCount.green + milCount.regular + milCount.elite;
 
       for (iCounterB = 0; iCounterB < iTotalNumberOfTroops; iCounterB++) {
-        if (fZoomFlag) {
-          // LARGE icon offset in the .sti
-          iIconValue = 11;
-        } else {
-          // SMALL icon offset in the .sti
-          iIconValue = 5;
-        }
+        // SMALL icon offset in the .sti
+        iIconValue = 5;
 
         // get the offset further into the .sti
         if (iCounterB < milCount.green) {
@@ -4795,13 +4757,8 @@ void DrawTownMilitiaForcesOnMap(void) {
       iTotalNumberOfTroops = milCount.green + milCount.regular + milCount.elite;
 
       for (iCounterB = 0; iCounterB < iTotalNumberOfTroops; iCounterB++) {
-        if (fZoomFlag) {
-          // LARGE icon offset in the .sti
-          iIconValue = 11;
-        } else {
-          // SMALL icon offset in the .sti
-          iIconValue = 5;
-        }
+        // SMALL icon offset in the .sti
+        iIconValue = 5;
 
         // get the offset further into the .sti
         if (iCounterB < milCount.green) {
@@ -5112,23 +5069,10 @@ void ShowSAMSitesOnStrategicMap(void) {
     u8 sSectorX = GetSamSiteX(iCounter);
     u8 sSectorY = GetSamSiteY(iCounter);
 
-    if (fZoomFlag) {
-      VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-      SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
-                                     MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
-                                     MAP_VIEW_HEIGHT - 9);
-      VSurfaceUnlock(vsSB);
-
-      GetScreenXYFromMapXYStationary(sSectorX, sSectorY, &sX, &sY);
-      sX -= 8;
-      sY -= 10;
-      ubVidObjIndex = 0;
-    } else {
-      GetScreenXYFromMapXY(sSectorX, sSectorY, &sX, &sY);
-      sX += 5;
-      sY += 3;
-      ubVidObjIndex = 1;
-    }
+    GetScreenXYFromMapXY(sSectorX, sSectorY, &sX, &sY);
+    sX += 5;
+    sY += 3;
+    ubVidObjIndex = 1;
 
     // draw SAM site icon
     GetVideoObject(&hHandle, guiSAMICON);
@@ -5137,13 +5081,8 @@ void ShowSAMSitesOnStrategicMap(void) {
     if (fShowAircraftFlag) {
       // write "SAM Site" centered underneath
 
-      if (fZoomFlag) {
-        sX += 9;
-        sY += 19;
-      } else {
-        sX += 6;
-        sY += 16;
-      }
+      sX += 6;
+      sY += 16;
 
       wcscpy(wString, pLandTypeStrings[SAM_SITE]);
 
@@ -5204,19 +5143,10 @@ void BlitSAMGridMarkers(void) {
     u8 sX = GetSamSiteX(iCounter);
     u8 sY = GetSamSiteY(iCounter);
 
-    if (fZoomFlag) {
-      GetScreenXYFromMapXYStationary(sX, sY, &sScreenX, &sScreenY);
-      sScreenX -= MAP_GRID_X;
-      sScreenY -= MAP_GRID_Y;
-
-      sWidth = 2 * MAP_GRID_X;
-      sHeight = 2 * MAP_GRID_Y;
-    } else {
-      // get location on screen
-      GetScreenXYFromMapXY(sX, sY, &sScreenX, &sScreenY);
-      sWidth = MAP_GRID_X;
-      sHeight = MAP_GRID_Y;
-    }
+    // get location on screen
+    GetScreenXYFromMapXY(sX, sY, &sScreenX, &sScreenY);
+    sWidth = MAP_GRID_X;
+    sHeight = MAP_GRID_Y;
 
     // draw rectangle
     RectangleDraw(TRUE, sScreenX, sScreenY - 1, sScreenX + sWidth, sScreenY + sHeight - 1, usColor,
@@ -5351,23 +5281,10 @@ void DrawOrta() {
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;
 
-  if (fZoomFlag) {
-    VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-    SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
-                                   MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
-                                   MAP_VIEW_HEIGHT - 9);
-    VSurfaceUnlock(vsSB);
-
-    GetScreenXYFromMapXYStationary(ORTA_SECTOR_X, ORTA_SECTOR_Y, &sX, &sY);
-    sX += -MAP_GRID_X + 2;
-    sY += -MAP_GRID_Y - 6;
-    ubVidObjIndex = 0;
-  } else {
-    GetScreenXYFromMapXY(ORTA_SECTOR_X, ORTA_SECTOR_Y, &sX, &sY);
-    sX += +2;
-    sY += -3;
-    ubVidObjIndex = 1;
-  }
+  GetScreenXYFromMapXY(ORTA_SECTOR_X, ORTA_SECTOR_Y, &sX, &sY);
+  sX += +2;
+  sY += -3;
+  ubVidObjIndex = 1;
 
   // draw Orta in its sector
   GetVideoObject(&hHandle, guiORTAICON);
@@ -5380,21 +5297,9 @@ void DrawTixa() {
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;
 
-  if (fZoomFlag) {
-    VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-    SetClippingRegionAndImageWidth(uiDestPitchBYTES, MAP_VIEW_START_X + MAP_GRID_X - 1,
-                                   MAP_VIEW_START_Y + MAP_GRID_Y - 1, MAP_VIEW_WIDTH + 1,
-                                   MAP_VIEW_HEIGHT - 9);
-    VSurfaceUnlock(vsSB);
-    GetScreenXYFromMapXYStationary(TIXA_SECTOR_X, TIXA_SECTOR_Y, &sX, &sY);
-    sX += -MAP_GRID_X + 3;
-    sY += -MAP_GRID_Y + 6;
-    ubVidObjIndex = 0;
-  } else {
-    GetScreenXYFromMapXY(TIXA_SECTOR_X, TIXA_SECTOR_Y, &sX, &sY);
-    sY += +2;
-    ubVidObjIndex = 1;
-  }
+  GetScreenXYFromMapXY(TIXA_SECTOR_X, TIXA_SECTOR_Y, &sX, &sY);
+  sY += +2;
+  ubVidObjIndex = 1;
 
   // draw Tixa in its sector
   GetVideoObject(&hHandle, guiTIXAICON);
