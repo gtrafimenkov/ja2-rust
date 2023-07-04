@@ -775,20 +775,9 @@ void ShowTownText(void) {
         wcscpy(sStringA, L"");
       }
 
-      if (!fZoomFlag) {
-        usX = (UINT16)(MAP_VIEW_START_X + MAP_GRID_X + (pTownPoints[bTown].x * MAP_GRID_X) / 10);
-        usY = (UINT16)(MAP_VIEW_START_Y + MAP_GRID_Y + ((pTownPoints[bTown].y * MAP_GRID_Y) / 10) +
-                       1);
-      } else {
-        usX = (UINT16)(MAP_VIEW_START_X + MAP_GRID_X + MAP_GRID_ZOOM_X - iZoomX +
-                       (pTownPoints[bTown].x * MAP_GRID_ZOOM_X) / 10);
-        usY = (UINT16)(MAP_VIEW_START_Y + MAP_GRID_Y + MAP_GRID_ZOOM_Y - iZoomY +
-                       ((pTownPoints[bTown].y * MAP_GRID_ZOOM_Y) / 10) + 1);
-        //			usX = 2 * pTownPoints[ bTown  ].x - iZoomX - MAP_VIEW_START_X +
-        // MAP_GRID_X; 			usY = 2 * pTownPoints[ bTown  ].y - iZoomY -
-        // MAP_VIEW_START_Y
-        // + MAP_GRID_Y;
-      }
+      usX = (UINT16)(MAP_VIEW_START_X + MAP_GRID_X + (pTownPoints[bTown].x * MAP_GRID_X) / 10);
+      usY =
+          (UINT16)(MAP_VIEW_START_Y + MAP_GRID_Y + ((pTownPoints[bTown].y * MAP_GRID_Y) / 10) + 1);
 
       // red for low loyalty, green otherwise
       SetFontForeground(
@@ -831,11 +820,9 @@ void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFir
                                &sSecondY, pStringA);
 
   // make sure we don't go past left edge (Grumm)
-  if (!fZoomFlag) {
-    sPastEdge = (MAP_VIEW_START_X + 23) - sSecondX;
+  sPastEdge = (MAP_VIEW_START_X + 23) - sSecondX;
 
-    if (sPastEdge > 0) sSecondX += sPastEdge;
-  }
+  if (sPastEdge > 0) sSecondX += sPastEdge;
 
   // print second string beneath first
   sSecondY = (INT16)(usFirstY + GetFontHeight(MAP_FONT));
@@ -970,16 +957,13 @@ void ShowUncertainNumberEnemiesInSector(u8 sSectorX, u8 sSectorY) {
   // get the video object
   GetVideoObject(&hIconHandle, guiCHARICONS);
 
-  // check if we are zoomed in...need to offset in case for scrolling purposes
-  if (!fZoomFlag) {
-    sXPosition = (INT16)(MAP_X_ICON_OFFSET + (MAP_VIEW_START_X + (sSectorX * MAP_GRID_X + 1)) - 1);
-    sYPosition = (INT16)(((MAP_VIEW_START_Y + (sSectorY * MAP_GRID_Y) + 1)));
-    sYPosition -= 2;
+  sXPosition = (INT16)(MAP_X_ICON_OFFSET + (MAP_VIEW_START_X + (sSectorX * MAP_GRID_X + 1)) - 1);
+  sYPosition = (INT16)(((MAP_VIEW_START_Y + (sSectorY * MAP_GRID_Y) + 1)));
+  sYPosition -= 2;
 
-    // small question mark
-    BltVObject(vsSB, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition);
-    InvalidateRegion(sXPosition, sYPosition, sXPosition + DMAP_GRID_X, sYPosition + DMAP_GRID_Y);
-  }
+  // small question mark
+  BltVObject(vsSB, hIconHandle, SMALL_QUESTION_MARK, sXPosition, sYPosition);
+  InvalidateRegion(sXPosition, sYPosition, sXPosition + DMAP_GRID_X, sYPosition + DMAP_GRID_Y);
 }
 
 void ShowTeamAndVehicles(INT32 fShowFlags) {
@@ -1853,18 +1837,12 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
         fSpeedFlag = FALSE;
       else
         fSpeedFlag = TRUE;
-      if (!fZoomFlag) {
-        iX = (SectorID16_X(pNode->uiSectorId));
-        iY = (SectorID16_Y(pNode->uiSectorId));
-        iX = (iX * MAP_GRID_X) + MAP_VIEW_START_X;
-        iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
 
-      } else {
-        GetScreenXYFromMapXYStationary(((UINT16)(SectorID16_X(pNode->uiSectorId))),
-                                       ((UINT16)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
-        iY = sY - MAP_GRID_Y;
-        iX = sX - MAP_GRID_X;
-      }
+      iX = (SectorID16_X(pNode->uiSectorId));
+      iY = (SectorID16_Y(pNode->uiSectorId));
+      iX = (iX * MAP_GRID_X) + MAP_VIEW_START_X;
+      iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
+
       iArrowX = iX;
       iArrowY = iY;
       if ((pPastNode->pPrev) && (pNextNode->pNext)) {
@@ -2031,18 +2009,10 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
         }
       }
     } else {
-      if (!fZoomFlag) {
-        iX = (SectorID16_X(pNode->uiSectorId));
-        iY = (SectorID16_Y(pNode->uiSectorId));
-        iX = (iX * MAP_GRID_X) + MAP_VIEW_START_X;
-        iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
-
-      } else {
-        GetScreenXYFromMapXYStationary(((UINT16)(SectorID16_X(pNode->uiSectorId))),
-                                       ((UINT16)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
-        iY = sY - MAP_GRID_Y;
-        iX = sX - MAP_GRID_X;
-      }
+      iX = (SectorID16_X(pNode->uiSectorId));
+      iY = (SectorID16_Y(pNode->uiSectorId));
+      iX = (iX * MAP_GRID_X) + MAP_VIEW_START_X;
+      iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
       iArrowX = iX;
       iArrowY = iY;
       if ((pNode->fSpeed))
@@ -2323,17 +2293,10 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
     else
       fSpeedFlag = FALSE;
     if (iDeltaA == 0) return FALSE;
-    if (!fZoomFlag) {
-      iX = (SectorID16_X(pNode->uiSectorId));
-      iY = (SectorID16_Y(pNode->uiSectorId));
-      iX = (iX * MAP_GRID_X) + MAP_VIEW_START_X;
-      iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
-    } else {
-      GetScreenXYFromMapXYStationary(((UINT16)(SectorID16_X(pNode->uiSectorId))),
-                                     ((UINT16)(SectorID16_Y(pNode->uiSectorId))), &sX, &sY);
-      iY = sY - MAP_GRID_Y;
-      iX = sX - MAP_GRID_X;
-    }
+    iX = (SectorID16_X(pNode->uiSectorId));
+    iY = (SectorID16_Y(pNode->uiSectorId));
+    iX = (iX * MAP_GRID_X) + MAP_VIEW_START_X;
+    iY = (iY * MAP_GRID_Y) + MAP_VIEW_START_Y;
     iArrowX = iX;
     iArrowY = iY;
     if ((pPastNode->pPrev) && (pNextNode->pNext)) {
@@ -2757,28 +2720,12 @@ void SetUpBadSectorsList(void) {
 void RestoreBackgroundForMapGrid(u8 sMapX, u8 sMapY) {
   INT16 sX, sY;
 
-  if (!fZoomFlag) {
-    // screen values
-    sX = (sMapX * MAP_GRID_X) + MAP_VIEW_START_X;
-    sY = (sMapY * MAP_GRID_Y) + MAP_VIEW_START_Y;
+  // screen values
+  sX = (sMapX * MAP_GRID_X) + MAP_VIEW_START_X;
+  sY = (sMapY * MAP_GRID_Y) + MAP_VIEW_START_Y;
 
-    // restore background
-    RestoreExternBackgroundRect(sX, sY, DMAP_GRID_X, DMAP_GRID_Y);
-  } else {
-    // get screen coords from map values
-    GetScreenXYFromMapXYStationary(sMapX, sMapY, &sX, &sY);
-
-    // is this on the screen?
-    if ((sX > MapScreenRect.iLeft) && (sX < MapScreenRect.iRight) && (sY > MapScreenRect.iTop) &&
-        (sY < MapScreenRect.iBottom)) {
-      // offset
-      sY = sY - MAP_GRID_Y;
-      sX = sX - MAP_GRID_X;
-
-      // restore
-      RestoreExternBackgroundRect(sX, sY, DMAP_GRID_ZOOM_X, DMAP_GRID_ZOOM_Y);
-    }
-  }
+  // restore background
+  RestoreExternBackgroundRect(sX, sY, DMAP_GRID_X, DMAP_GRID_Y);
 }
 
 void ClipBlitsToMapViewRegion(void) {
@@ -2990,26 +2937,10 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           GetVideoObject(&hIconHandle, guiCHARBETWEENSECTORICONSCLOSE);
         }
 
-        // zoomed in or not?
-        if (!fZoomFlag) {
-          iX = MAP_VIEW_START_X + (iX * MAP_GRID_X) + sOffsetX;
-          iY = MAP_Y_ICON_OFFSET + MAP_VIEW_START_Y + (iY * MAP_GRID_Y) + sOffsetY;
+        iX = MAP_VIEW_START_X + (iX * MAP_GRID_X) + sOffsetX;
+        iY = MAP_Y_ICON_OFFSET + MAP_VIEW_START_Y + (iY * MAP_GRID_Y) + sOffsetY;
 
-          BltVObject(vsSB, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY);
-        } else {
-          GetScreenXYFromMapXYStationary(((u8)(iX)), ((u8)(iY)), &sXPosition, &sYPosition);
-
-          iY = sYPosition - MAP_GRID_Y + sOffsetY;
-          iX = sXPosition - MAP_GRID_X + sOffsetX;
-
-          // clip blits to mapscreen region
-          ClipBlitsToMapViewRegion();
-
-          BltVObject(vsSB, hIconHandle, (UINT16)iCounter, iX, iY);
-
-          // restore clip blits
-          RestoreClipRegionToFullScreen();
-        }
+        BltVObject(vsSB, hIconHandle, (UINT16)iCounter, (INT16)iX, (INT16)iY);
 
         FindFontCenterCoordinates((INT16)(iX + sTextXOffset), 0, ICON_WIDTH, 0, sString, MAP_FONT,
                                   &usX, &usY);
@@ -5189,13 +5120,11 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, u8 sMapX, u8 
   iColumnNumber = ubIconPosition % MERC_ICONS_PER_LINE;
   iRowNumber = ubIconPosition / MERC_ICONS_PER_LINE;
 
-  if (!fZoomFlag) {
-    iX = MAP_VIEW_START_X + (sMapX * MAP_GRID_X) + MAP_X_ICON_OFFSET + (3 * iColumnNumber);
-    iY = MAP_VIEW_START_Y + (sMapY * MAP_GRID_Y) + MAP_Y_ICON_OFFSET + (3 * iRowNumber);
+  iX = MAP_VIEW_START_X + (sMapX * MAP_GRID_X) + MAP_X_ICON_OFFSET + (3 * iColumnNumber);
+  iY = MAP_VIEW_START_Y + (sMapY * MAP_GRID_Y) + MAP_Y_ICON_OFFSET + (3 * iRowNumber);
 
-    BltVObject(vsSB, hIconHandle, usVOIndex, iX, iY);
-    InvalidateRegion(iX, iY, iX + DMAP_GRID_X, iY + DMAP_GRID_Y);
-  }
+  BltVObject(vsSB, hIconHandle, usVOIndex, iX, iY);
+  InvalidateRegion(iX, iY, iX + DMAP_GRID_X, iY + DMAP_GRID_Y);
 }
 
 void DrawOrta() {

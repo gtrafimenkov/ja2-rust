@@ -5147,10 +5147,8 @@ static BOOLEAN GetMapXY(INT16 sX, INT16 sY, u8 *psMapWorldX, u8 *psMapWorldY) {
   i16 x = sX - MAP_VIEW_START_X;
   i16 y = sY - MAP_VIEW_START_Y;
 
-  if (!fZoomFlag) {
-    if (x < MAP_GRID_X || y < MAP_GRID_Y) {
-      return (FALSE);
-    }
+  if (x < MAP_GRID_X || y < MAP_GRID_Y) {
+    return (FALSE);
   }
   if (x < 0 || y < 0) {
     return (FALSE);
