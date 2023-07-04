@@ -2862,36 +2862,34 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
           // guys going north or south
           if (sEntering > 0) {
             // more than one coming in, offset from middle
-            sOffsetX = (!iCounter ? (!fZoomFlag ? NORTH_X_MVT_OFFSET : NORTH_X_MVT_OFFSET_ZOOM)
-                                  : (!fZoomFlag ? SOUTH_X_MVT_OFFSET : SOUTH_X_MVT_OFFSET_ZOOM));
+            sOffsetX = (!iCounter ? NORTH_X_MVT_OFFSET : SOUTH_X_MVT_OFFSET);
           } else {
-            sOffsetX = (!fZoomFlag ? NORTH_SOUTH_CENTER_OFFSET : NORTH_SOUTH_CENTER_OFFSET_ZOOM);
+            sOffsetX = NORTH_SOUTH_CENTER_OFFSET;
           }
 
           if (!iCounter) {
             // going north
-            sOffsetY = (!fZoomFlag ? NORTH_Y_MVT_OFFSET : NORTH_Y_MVT_OFFSET_ZOOM);
+            sOffsetY = NORTH_Y_MVT_OFFSET;
           } else {
             // going south
-            sOffsetY = (!fZoomFlag ? SOUTH_Y_MVT_OFFSET : SOUTH_Y_MVT_OFFSET_ZOOM);
+            sOffsetY = SOUTH_Y_MVT_OFFSET;
           }
         } else {
           // going east/west
 
           if (sEntering > 0) {
             // people also entering, offset from middle
-            sOffsetY = (iCounter == 1 ? (!fZoomFlag ? EAST_Y_MVT_OFFSET : EAST_Y_MVT_OFFSET_ZOOM)
-                                      : (!fZoomFlag ? WEST_Y_MVT_OFFSET : WEST_Y_MVT_OFFSET_ZOOM));
+            sOffsetY = (iCounter == 1 ? EAST_Y_MVT_OFFSET : WEST_Y_MVT_OFFSET);
           } else {
-            sOffsetY = (!fZoomFlag ? EAST_WEST_CENTER_OFFSET : EAST_WEST_CENTER_OFFSET_ZOOM);
+            sOffsetY = EAST_WEST_CENTER_OFFSET;
           }
 
           if (iCounter == 1) {
             // going east
-            sOffsetX = (!fZoomFlag ? EAST_X_MVT_OFFSET : EAST_X_MVT_OFFSET_ZOOM);
+            sOffsetX = EAST_X_MVT_OFFSET;
           } else {
             // going west
-            sOffsetX = (!fZoomFlag ? WEST_X_MVT_OFFSET : WEST_X_MVT_OFFSET_ZOOM);
+            sOffsetX = WEST_X_MVT_OFFSET;
           }
         }
 
@@ -3000,7 +2998,7 @@ void DisplayDistancesForHelicopter(void) {
   INT16 sNumUnSafeSectors;
   UINT32 uiTripCost;
 
-  if (GetMouseMapXY(&sMapX, &sMapY) && !fZoomFlag && (sMapY >= 13)) {
+  if (GetMouseMapXY(&sMapX, &sMapY) && (sMapY >= 13)) {
     sYPosition = MAP_HELICOPTER_UPPER_ETA_POPUP_Y;
   } else {
     sYPosition = MAP_HELICOPTER_ETA_POPUP_Y;
