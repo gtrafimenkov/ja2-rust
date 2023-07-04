@@ -83,6 +83,8 @@ void DestroyImage(struct Image *image) {
     MemFree(image->palette);
   }
 
+  MemFree(image->pui16BPPPalette);
+
   if (image->imageDataAllocatedInRust) {
     RustDealloc((uint8_t *)image->image_data);
   } else {
@@ -106,11 +108,9 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBu
   }
 
   if (hImage->ubBitDepth == 8 && bufferBitDepth == 16) {
-    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "NOT SUPPORTED: Copying 8 BPP Imagery to 16BPP Buffer.");
-    // Although we have 8 and 16 bit images and 8 and 16 bit VSurfaces,
-    // there is no situation when 8 bit image -> 16 bit VSurface is required.
-    // There are sutiations when 8 bit VObject -> 16 bit VSurface, but it is handled by other code.
-    return (FALSE);
+    DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Copying 8 BPP Imagery to 16BPP Buffer.");
+    return (
+        Copy8BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
   if (hImage->ubBitDepth == 16 && bufferBitDepth == 16) {
@@ -229,6 +229,77 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
   }
   // Do last line
   memcpy(pDest, pSrc, uiLineSize * 2);
+
+  return (TRUE);
+}
+
+BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
+                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
+  UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
+  UINT32 rows, cols;
+  UINT8 *pSrc, *pSrcTemp;
+  UINT16 *pDest, *pDestTemp;
+
+  Assert(hImage->pui16BPPPalette != NULL);
+  Assert(hImage != NULL);
+
+  // Validations
+  if (!(hImage->image_data != NULL)) {
+    return FALSE;
+  }
+  if (!(usX >= 0)) {
+    return FALSE;
+  }
+  if (!(usX < usDestWidth)) {
+    return FALSE;
+  }
+  if (!(usY >= 0)) {
+    return FALSE;
+  }
+  if (!(usY < usDestHeight)) {
+    return FALSE;
+  }
+  if (!(srcRect->iRight > srcRect->iLeft)) {
+    return FALSE;
+  }
+  if (!(srcRect->iBottom > srcRect->iTop)) {
+    return FALSE;
+  }
+
+  // Determine memcopy coordinates
+  uiSrcStart = srcRect->iTop * hImage->usWidth + srcRect->iLeft;
+  uiDestStart = usY * usDestWidth + usX;
+  uiNumLines = (srcRect->iBottom - srcRect->iTop);
+  uiLineSize = (srcRect->iRight - srcRect->iLeft);
+
+  if (!(usDestWidth >= uiLineSize)) {
+    return FALSE;
+  }
+  if (!(usDestHeight >= uiNumLines)) {
+    return FALSE;
+  }
+
+  // Convert to Pixel specification
+  pDest = (UINT16 *)pDestBuf + uiDestStart;
+  pSrc = (UINT8 *)hImage->image_data + uiSrcStart;
+  DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("Start Copying at %p", pDest));
+
+  // For every entry, look up into 16BPP palette
+  for (rows = 0; rows < uiNumLines - 1; rows++) {
+    pDestTemp = pDest;
+    pSrcTemp = pSrc;
+
+    for (cols = 0; cols < uiLineSize; cols++) {
+      *pDestTemp = hImage->pui16BPPPalette[*pSrcTemp];
+      pDestTemp++;
+      pSrcTemp++;
+    }
+
+    pDest += usDestWidth;
+    pSrc += hImage->usWidth;
+  }
+  // Do last line
+  DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("End Copying at %p", pDest));
 
   return (TRUE);
 }
