@@ -1136,32 +1136,18 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
 }
 
 BOOLEAN InitializePalettesForMap(void) {
-  // init palettes
-  struct VSurface *hSrcVSurface;
-  struct SGPPaletteEntry pPalette[256];
-  UINT32 uiTempMap;
-
-  // load image
-  if (!(AddVideoSurfaceFromFile("INTERFACE\\b_map.pcx", &uiTempMap))) {
-    return FALSE;
+  struct Image *image = CreateImage("INTERFACE\\b_map.pcx", false);
+  if (!image) {
+    return false;
   }
 
-  // get video surface
-  if (!(GetVideoSurface(&hSrcVSurface, uiTempMap))) {
-    return FALSE;
-  }
-  GetVSurfacePaletteEntries(hSrcVSurface, pPalette);
+  pMapLTRedPalette = Create16BPPPaletteShaded(image->palette, 400, 0, 0, TRUE);
+  pMapDKRedPalette = Create16BPPPaletteShaded(image->palette, 200, 0, 0, TRUE);
+  pMapLTGreenPalette = Create16BPPPaletteShaded(image->palette, 0, 400, 0, TRUE);
+  pMapDKGreenPalette = Create16BPPPaletteShaded(image->palette, 0, 200, 0, TRUE);
 
-  // set up various palettes
-  pMapLTRedPalette = Create16BPPPaletteShaded(pPalette, 400, 0, 0, TRUE);
-  pMapDKRedPalette = Create16BPPPaletteShaded(pPalette, 200, 0, 0, TRUE);
-  pMapLTGreenPalette = Create16BPPPaletteShaded(pPalette, 0, 400, 0, TRUE);
-  pMapDKGreenPalette = Create16BPPPaletteShaded(pPalette, 0, 200, 0, TRUE);
-
-  // delete image
-  DeleteVideoSurfaceFromIndex(uiTempMap);
-
-  return (TRUE);
+  DestroyImage(image);
+  return true;
 }
 
 void ShutDownPalettesForMap(void) {
