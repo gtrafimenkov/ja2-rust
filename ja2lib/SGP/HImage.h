@@ -55,7 +55,7 @@ struct Image {
   UINT16 usHeight;
   UINT8 ubBitDepth;
   struct SGPPaletteEntry *palette;
-  UINT16 *pui16BPPPalette;
+  UINT16 *palette16bpp;
   UINT8 *app_data;
   UINT32 app_data_size;
   void *image_data;

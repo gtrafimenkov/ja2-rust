@@ -85,7 +85,7 @@ void DestroyImage(struct Image *image) {
     MemFree(image->palette);
   }
 
-  MemFree(image->pui16BPPPalette);
+  MemFree(image->palette16bpp);
 
   if (image->imageDataAllocatedInRust) {
     RustDealloc((uint8_t *)image->image_data);
@@ -242,7 +242,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   UINT8 *pSrc, *pSrcTemp;
   UINT16 *pDest, *pDestTemp;
 
-  Assert(hImage->pui16BPPPalette != NULL);
+  Assert(hImage->palette16bpp != NULL);
   Assert(hImage != NULL);
 
   // Validations
@@ -292,7 +292,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
     pSrcTemp = pSrc;
 
     for (cols = 0; cols < uiLineSize; cols++) {
-      *pDestTemp = hImage->pui16BPPPalette[*pSrcTemp];
+      *pDestTemp = hImage->palette16bpp[*pSrcTemp];
       pDestTemp++;
       pSrcTemp++;
     }

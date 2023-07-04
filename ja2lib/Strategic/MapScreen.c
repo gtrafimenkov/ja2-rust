@@ -8091,7 +8091,7 @@ struct Image *imageBigmap;
 BOOLEAN PreloadMapScreenGraphics(void) {
   // bigmap as image
   // it will be used instead of VSurface
-  struct Image *imageBigmap = CreateImage("INTERFACE\\b_map.pcx", false);
+  imageBigmap = CreateImage("INTERFACE\\b_map.pcx", false);
   if (!imageBigmap) {
     return false;
   }

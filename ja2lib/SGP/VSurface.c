@@ -685,8 +685,8 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
   {
     char buf[256];
     snprintf(buf, ARR_SIZE(buf),
-             "XXX CreateVideoSurfaceFromFile, %s, bitdepth=%d, palette=%p, pui16BPPPalette=%p",
-             path, image->ubBitDepth, image->palette, image->pui16BPPPalette);
+             "XXX CreateVideoSurfaceFromFile, %s, bitdepth=%d, palette=%p, palette16bpp=%p", path,
+             image->ubBitDepth, image->palette, image->palette16bpp);
     DebugLogWrite(buf);
   }
 
@@ -760,6 +760,45 @@ void BlitSurfaceToSurfaceScaleDown2x(struct VSurface *source, struct VSurface *d
     DebugLogWrite("BlitSurfaceToSurfaceScaleDown2x: unsupported bit depth combination");
   }
   VSurfaceUnlock(source);
+  VSurfaceUnlock(vsSB);
+}
+
+void BlitImageToSurfaceScaleDown2x(struct Image *source, struct VSurface *dest, i32 x, i32 y) {
+  {
+    char buf[256];
+    snprintf(buf, ARR_SIZE(buf), "BlitImageToSurfaceScaleDown2x(%p, %p, %d, %d)", source, dest, x,
+             y);
+    DebugLogWrite(buf);
+  }
+
+  UINT32 destPitch;
+  void *destBuf = VSurfaceLockOld(vsSB, &destPitch);
+
+  if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
+    if (!source->palette16bpp) {
+      source->palette16bpp = Create16BPPPalette(source->palette);
+      if (!source->palette16bpp) {
+        DebugLogWrite("BlitImageToSurfaceScaleDown2x: failed to create 16bpp palette");
+        return;
+      }
+    }
+    struct ImageDataParams src = {
+        .width = source->usWidth,
+        .height = source->usHeight,
+        .palette16bpp = source->palette16bpp,
+        .pitch = source->usWidth * 1,
+        .data = source->image_data,
+    };
+    {
+      char buf[256];
+      snprintf(buf, ARR_SIZE(buf), "BlitImageToSurfaceScaleDown2x: %d, %d, %p, %d, %p", src.width,
+               src.height, src.palette16bpp, src.pitch, src.data);
+      DebugLogWrite(buf);
+    }
+    Blt8BPPDataTo16BPPScaleDown2x(&src, (u16 *)destBuf, destPitch, x, y);
+  } else {
+    DebugLogWrite("BlitImageToSurfaceScaleDown2x: unsupported bit depth combination");
+  }
   VSurfaceUnlock(vsSB);
 }
 
