@@ -186,9 +186,6 @@ extern INT16 sElitesOnCursor;
 extern u8 gsHighlightSectorX;
 extern u8 gsHighlightSectorY;
 
-// the big map
-extern UINT32 guiBIGMAP;
-
 // the orta icon
 extern UINT32 guiORTAICON;
 

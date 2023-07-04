@@ -8084,7 +8084,18 @@ BOOLEAN AnyMercsLeavingRealSoon() {
   return (fFoundOne);
 }
 
+// the big map
+extern UINT32 guiBIGMAP;
+struct Image *imageBigmap;
+
 BOOLEAN PreloadMapScreenGraphics(void) {
+  // bigmap as image
+  // it will be used instead of VSurface
+  struct Image *imageBigmap = CreateImage("INTERFACE\\b_map.pcx", false);
+  if (!imageBigmap) {
+    return false;
+  }
+
   if (!(AddVideoSurfaceFromFile("INTERFACE\\b_map.pcx", &guiBIGMAP))) {
     return FALSE;
   }
@@ -8212,6 +8223,9 @@ BOOLEAN PreloadMapScreenGraphics(void) {
 }
 
 void UnloadMapScreenGraphics(void) {
+  DestroyImage(imageBigmap);
+  DeleteVideoSurfaceFromIndex(guiBIGMAP);
+
   DeleteMapBottomGraphics();
   DeleteVideoObjectFromIndex(guiMAPCURSORS);
   DeleteVideoObjectFromIndex(guiSleepIcon);
@@ -8219,7 +8233,6 @@ void UnloadMapScreenGraphics(void) {
   DeleteVideoObjectFromIndex(guiCHARINFO);
   DeleteVideoObjectFromIndex(guiCHARICONS);
   DeleteVideoObjectFromIndex(guiCROSS);
-  DeleteVideoSurfaceFromIndex(guiBIGMAP);
   DeleteVideoObjectFromIndex(guiSubLevel1);
   DeleteVideoObjectFromIndex(guiSubLevel2);
   DeleteVideoObjectFromIndex(guiSubLevel3);
@@ -8239,7 +8252,6 @@ void UnloadMapScreenGraphics(void) {
   DeleteVideoObjectFromIndex(guiHelicopterIcon);
   DeleteVideoObjectFromIndex(guiMINEICON);
   DeleteVideoObjectFromIndex(guiSectorLocatorGraphicID);
-
   DeleteVideoObjectFromIndex(guiNewMailIcons);
   DeleteVideoObjectFromIndex(guiBULLSEYE);
   RemoveMilitiaPopUpBox();

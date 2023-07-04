@@ -268,6 +268,7 @@ enum {
 };
 // the big map .pcx
 UINT32 guiBIGMAP;
+struct Image *imageBigmap;
 
 // orta .sti icon
 UINT32 guiORTAICON;
