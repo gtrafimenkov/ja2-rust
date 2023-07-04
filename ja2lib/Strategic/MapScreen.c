@@ -454,9 +454,6 @@ BOOLEAN fShowInventoryFlag = FALSE;
 BOOLEAN fMapInventoryItem = FALSE;
 BOOLEAN fShowDescriptionFlag = FALSE;
 
-// are the graphics for mapscreen preloaded?
-BOOLEAN fPreLoadedMapGraphics = FALSE;
-
 BOOLEAN gfHotKeyEnterSector = FALSE;
 BOOLEAN fOneFrame = FALSE;
 BOOLEAN fShowFaceHightLight = FALSE;
@@ -2642,136 +2639,6 @@ UINT32 MapScreenHandle(void) {
     CreateDestroyInsuranceMouseRegionForMercs(TRUE);
 
     SetAllAutoFacesInactive();
-
-    if (fPreLoadedMapGraphics == FALSE) {
-      // load border graphics
-      LoadMapBorderGraphics();
-
-      if (!(AddVideoSurfaceFromFile("INTERFACE\\b_map.pcx", &guiBIGMAP))) {
-        return FALSE;
-      }
-
-      if (!(AddVideoSurfaceFromFile("INTERFACE\\popupbackground.pcx", &guiPOPUPTEX))) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\SAM.sti", &guiSAMICON)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\mapcursr.sti", &guiMAPCURSORS)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\Mine_1.sti", &guiSubLevel1)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\Mine_2.sti", &guiSubLevel2)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\Mine_3.sti", &guiSubLevel3)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\sleepicon.sti", &guiSleepIcon)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\charinfo.sti", &guiCHARINFO)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\newgoldpiece3.sti", &guiCHARLIST)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\boxes.sti", &guiCHARICONS)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\incross.sti", &guiCROSS)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\mapinv.sti", &guiMAPINV)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\map_inv_2nd_gun_cover.sti",
-                              &guiMapInvSecondHandBlockout)) {
-        return FALSE;
-      }
-
-      // the upper left corner piece icons
-      if (!AddVObjectFromFile("INTERFACE\\top_left_corner_icons.sti", &guiULICONS)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\map_item.sti", &guiORTAICON)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\prison.sti", &guiTIXAICON)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\merc_between_sector_icons.sti",
-                              &guiCHARBETWEENSECTORICONS)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\merc_mvt_green_arrows.sti",
-                              &guiCHARBETWEENSECTORICONSCLOSE)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\GreenArr.sti", &guiLEVELMARKER)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\Helicop.sti", &guiHelicopterIcon)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\eta_pop_up.sti", &guiMapBorderEtaPopUp)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\pos2.sti", &guiMapBorderHeliSectors)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\secondary_gun_hidden.sti", &guiSecItemHiddenVO)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\selectedchararrow.sti", &guiSelectedCharArrow)) {
-        return FALSE;
-      }
-
-      if (!AddVObjectFromFile("INTERFACE\\mine.sti", &guiMINEICON)) {
-        return FALSE;
-      }
-
-      AddVObjectFromFile("INTERFACE\\hilite.sti", &guiSectorLocatorGraphicID);
-
-      if (!AddVObjectFromFile("INTERFACE\\BullsEye.sti", &guiBULLSEYE)) {
-        return FALSE;
-      }
-
-      HandleLoadOfMapBottomGraphics();
-
-      // load the militia pop up box
-      LoadMilitiaPopUpBox();
-
-      // graphic for pool inventory
-      LoadInventoryPoolGraphic();
-
-      // Kris:  Added this because I need to blink the icons button.
-      AddVObjectFromFile("INTERFACE\\newemail.sti", &guiNewMailIcons);
-    }
 
     // create buttons
     CreateButtonsForMapBorder();
@@ -5009,52 +4876,6 @@ void EndMapScreen(BOOLEAN fDuringFade) {
 
   if (!fDuringFade) {
     MSYS_SetCurrentCursor(SCREEN_CURSOR);
-  }
-
-  if (fPreLoadedMapGraphics == FALSE) {
-    DeleteMapBottomGraphics();
-
-    DeleteVideoObjectFromIndex(guiSubLevel1);
-    DeleteVideoObjectFromIndex(guiSubLevel2);
-    DeleteVideoObjectFromIndex(guiSubLevel3);
-    DeleteVideoObjectFromIndex(guiSleepIcon);
-    DeleteVideoObjectFromIndex(guiMAPCURSORS);
-    DeleteVideoObjectFromIndex(guiCHARLIST);
-    DeleteVideoObjectFromIndex(guiCHARINFO);
-    DeleteVideoObjectFromIndex(guiCHARICONS);
-    DeleteVideoObjectFromIndex(guiCROSS);
-    DeleteVideoSurfaceFromIndex(guiBIGMAP);
-    DeleteVideoObjectFromIndex(guiSAMICON);
-    DeleteVideoObjectFromIndex(guiMAPINV);
-    DeleteVideoObjectFromIndex(guiMapInvSecondHandBlockout);
-    DeleteVideoObjectFromIndex(guiULICONS);
-    DeleteVideoObjectFromIndex(guiORTAICON);
-    DeleteVideoObjectFromIndex(guiTIXAICON);
-    DeleteVideoObjectFromIndex(guiCHARBETWEENSECTORICONS);
-    DeleteVideoObjectFromIndex(guiCHARBETWEENSECTORICONSCLOSE);
-    DeleteVideoObjectFromIndex(guiLEVELMARKER);
-    DeleteVideoObjectFromIndex(guiMapBorderEtaPopUp);
-
-    DeleteVideoObjectFromIndex(guiSecItemHiddenVO);
-    DeleteVideoObjectFromIndex(guiSelectedCharArrow);
-    DeleteVideoObjectFromIndex(guiMapBorderHeliSectors);
-    DeleteVideoObjectFromIndex(guiHelicopterIcon);
-    DeleteVideoObjectFromIndex(guiMINEICON);
-    DeleteVideoObjectFromIndex(guiSectorLocatorGraphicID);
-
-    DeleteVideoObjectFromIndex(guiBULLSEYE);
-
-    // remove the militia pop up box
-    RemoveMilitiaPopUpBox();
-
-    // remove inventory pool graphic
-    RemoveInventoryPoolGraphic();
-
-    // get rid of border stuff
-    DeleteMapBorderGraphics();
-
-    // Kris:  Remove the email icons.
-    DeleteVideoObjectFromIndex(guiNewMailIcons);
   }
 
   DeleteVideoObjectFromIndex(guiBrownBackgroundForTeamPanel);
@@ -8263,11 +8084,7 @@ BOOLEAN AnyMercsLeavingRealSoon() {
   return (fFoundOne);
 }
 
-BOOLEAN HandlePreloadOfMapGraphics(void) {
-  // check amt of memory, if above required amt...use it
-
-  fPreLoadedMapGraphics = TRUE;
-
+BOOLEAN PreloadMapScreenGraphics(void) {
   if (!(AddVideoSurfaceFromFile("INTERFACE\\b_map.pcx", &guiBIGMAP))) {
     return FALSE;
   }
@@ -8296,7 +8113,6 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
     return FALSE;
   }
 
-  // the sublevels
   if (!AddVObjectFromFile("INTERFACE\\Mine_1.sti", &guiSubLevel1)) {
     return FALSE;
   }
@@ -8325,7 +8141,6 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
     return FALSE;
   }
 
-  // the upper left corner piece icons
   if (!AddVObjectFromFile("INTERFACE\\top_left_corner_icons.sti", &guiULICONS)) {
     return FALSE;
   }
@@ -8383,71 +8198,53 @@ BOOLEAN HandlePreloadOfMapGraphics(void) {
 
   AddVObjectFromFile("INTERFACE\\hilite.sti", &guiSectorLocatorGraphicID);
 
-  // Kris:  Added this because I need to blink the icons button.
   AddVObjectFromFile("INTERFACE\\newemail.sti", &guiNewMailIcons);
 
   if (!AddVObjectFromFile("INTERFACE\\BullsEye.sti", &guiBULLSEYE)) {
     return FALSE;
   }
 
-  // graphic for pool inventory
   LoadInventoryPoolGraphic();
-
-  // load border graphics
   LoadMapBorderGraphics();
-
-  // load the pop up for the militia pop up box
   LoadMilitiaPopUpBox();
 
   return (TRUE);
 }
 
-void HandleRemovalOfPreLoadedMapGraphics(void) {
-  if (fPreLoadedMapGraphics == TRUE) {
-    DeleteMapBottomGraphics();
-    DeleteVideoObjectFromIndex(guiMAPCURSORS);
-    DeleteVideoObjectFromIndex(guiSleepIcon);
-    DeleteVideoObjectFromIndex(guiCHARLIST);
-    DeleteVideoObjectFromIndex(guiCHARINFO);
-    DeleteVideoObjectFromIndex(guiCHARICONS);
-    DeleteVideoObjectFromIndex(guiCROSS);
-    DeleteVideoSurfaceFromIndex(guiBIGMAP);
-    DeleteVideoObjectFromIndex(guiSubLevel1);
-    DeleteVideoObjectFromIndex(guiSubLevel2);
-    DeleteVideoObjectFromIndex(guiSubLevel3);
-    DeleteVideoObjectFromIndex(guiSAMICON);
-    DeleteVideoObjectFromIndex(guiMAPINV);
-    DeleteVideoObjectFromIndex(guiMapInvSecondHandBlockout);
-    DeleteVideoObjectFromIndex(guiULICONS);
-    DeleteVideoObjectFromIndex(guiORTAICON);
-    DeleteVideoObjectFromIndex(guiTIXAICON);
-    DeleteVideoObjectFromIndex(guiCHARBETWEENSECTORICONS);
-    DeleteVideoObjectFromIndex(guiCHARBETWEENSECTORICONSCLOSE);
-    DeleteVideoObjectFromIndex(guiLEVELMARKER);
-    DeleteVideoObjectFromIndex(guiMapBorderEtaPopUp);
-    DeleteVideoObjectFromIndex(guiSecItemHiddenVO);
-    DeleteVideoObjectFromIndex(guiSelectedCharArrow);
-    DeleteVideoObjectFromIndex(guiMapBorderHeliSectors);
-    DeleteVideoObjectFromIndex(guiHelicopterIcon);
-    DeleteVideoObjectFromIndex(guiMINEICON);
-    DeleteVideoObjectFromIndex(guiSectorLocatorGraphicID);
+void UnloadMapScreenGraphics(void) {
+  DeleteMapBottomGraphics();
+  DeleteVideoObjectFromIndex(guiMAPCURSORS);
+  DeleteVideoObjectFromIndex(guiSleepIcon);
+  DeleteVideoObjectFromIndex(guiCHARLIST);
+  DeleteVideoObjectFromIndex(guiCHARINFO);
+  DeleteVideoObjectFromIndex(guiCHARICONS);
+  DeleteVideoObjectFromIndex(guiCROSS);
+  DeleteVideoSurfaceFromIndex(guiBIGMAP);
+  DeleteVideoObjectFromIndex(guiSubLevel1);
+  DeleteVideoObjectFromIndex(guiSubLevel2);
+  DeleteVideoObjectFromIndex(guiSubLevel3);
+  DeleteVideoObjectFromIndex(guiSAMICON);
+  DeleteVideoObjectFromIndex(guiMAPINV);
+  DeleteVideoObjectFromIndex(guiMapInvSecondHandBlockout);
+  DeleteVideoObjectFromIndex(guiULICONS);
+  DeleteVideoObjectFromIndex(guiORTAICON);
+  DeleteVideoObjectFromIndex(guiTIXAICON);
+  DeleteVideoObjectFromIndex(guiCHARBETWEENSECTORICONS);
+  DeleteVideoObjectFromIndex(guiCHARBETWEENSECTORICONSCLOSE);
+  DeleteVideoObjectFromIndex(guiLEVELMARKER);
+  DeleteVideoObjectFromIndex(guiMapBorderEtaPopUp);
+  DeleteVideoObjectFromIndex(guiSecItemHiddenVO);
+  DeleteVideoObjectFromIndex(guiSelectedCharArrow);
+  DeleteVideoObjectFromIndex(guiMapBorderHeliSectors);
+  DeleteVideoObjectFromIndex(guiHelicopterIcon);
+  DeleteVideoObjectFromIndex(guiMINEICON);
+  DeleteVideoObjectFromIndex(guiSectorLocatorGraphicID);
 
-    // Kris:  Remove the email icons.
-    DeleteVideoObjectFromIndex(guiNewMailIcons);
-
-    DeleteVideoObjectFromIndex(guiBULLSEYE);
-
-    // remove the graphic for the militia pop up box
-    RemoveMilitiaPopUpBox();
-
-    // remove inventory pool graphic
-    RemoveInventoryPoolGraphic();
-
-    // get rid of border stuff
-    DeleteMapBorderGraphics();
-  }
-
-  return;
+  DeleteVideoObjectFromIndex(guiNewMailIcons);
+  DeleteVideoObjectFromIndex(guiBULLSEYE);
+  RemoveMilitiaPopUpBox();
+  RemoveInventoryPoolGraphic();
+  DeleteMapBorderGraphics();
 }
 
 BOOLEAN CharacterIsInLoadedSectorAndWantsToMoveInventoryButIsNotAllowed(INT8 bCharId) {
