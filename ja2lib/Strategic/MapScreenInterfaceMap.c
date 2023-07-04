@@ -268,7 +268,8 @@ enum {
 };
 // the big map .pcx
 UINT32 guiBIGMAP;
-struct Image *imageBigmap;
+struct Image *imageBigMap = NULL;
+struct Image *imageSmallMap = NULL;
 
 // orta .sti icon
 UINT32 guiORTAICON;
@@ -618,7 +619,8 @@ UINT32 DrawMap(void) {
     // clip blits to mapscreen region
     // ClipBlitsToMapViewRegion( );
 
-    BlitImageToSurfaceScaleDown2x(imageBigmap, vsSB, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
+    // BlitImageToSurfaceScaleDown2x(imageBigMap, vsSB, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
+    BlitImageToSurfaceScaleDown2x(imageSmallMap, vsSB, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
 
     // shade map sectors (must be done after Tixa/Orta/Mine icons have been blitted, but before
     // icons!)

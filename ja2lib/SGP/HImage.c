@@ -539,3 +539,46 @@ void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
     pPixel++;
   }
 }
+
+// Create a scaled down copy of an image.
+struct Image *ScaleImageDown2x(struct Image *image) {
+  // not all image types are supported
+  bool supported =
+      image->ubBitDepth == 8 && image->app_data_size == 0 && image->number_of_subimages == 0;
+  if (!supported) {
+    return NULL;
+  }
+  struct Image *res = zmalloc(sizeof(struct Image));
+  if (!res) {
+    return NULL;
+  }
+
+  res->usWidth = image->usWidth / 2;
+  res->usHeight = image->usHeight / 2;
+  res->ubBitDepth = image->ubBitDepth;
+
+  u32 palette_size = sizeof(struct SGPPaletteEntry) * 256;
+  res->palette = zmalloc(palette_size);
+  if (!res->palette) {
+    free(res);
+    return NULL;
+  }
+  memcpy(res->palette, image->palette, palette_size);
+
+  res->image_data_size = res->usWidth * res->usHeight;
+  res->image_data = zmalloc(res->image_data_size);
+  if (!res->image_data) {
+    free(res->palette);
+    free(res);
+    return NULL;
+  }
+
+  u8 *data = res->image_data;
+  for (u16 y = 0; y < image->usHeight; y += 2) {
+    for (u16 x = 0; x < image->usWidth; x += 2) {
+      *data++ = ((u8 *)image->image_data)[y * image->usWidth + x];
+    }
+  }
+
+  return res;
+}

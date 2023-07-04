@@ -118,4 +118,7 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UIN
 // used to convert 565 RGB data into different bit-formats
 void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
 
+// Create a scaled down copy of an image.
+struct Image *ScaleImageDown2x(struct Image *image);
+
 #endif

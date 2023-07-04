@@ -8086,13 +8086,18 @@ BOOLEAN AnyMercsLeavingRealSoon() {
 
 // the big map
 extern UINT32 guiBIGMAP;
-struct Image *imageBigmap;
+extern struct Image *imageBigMap;
+extern struct Image *imageSmallMap;
 
 BOOLEAN PreloadMapScreenGraphics(void) {
   // bigmap as image
   // it will be used instead of VSurface
-  imageBigmap = CreateImage("INTERFACE\\b_map.pcx", false);
-  if (!imageBigmap) {
+  imageBigMap = CreateImage("INTERFACE\\b_map.pcx", false);
+  if (!imageBigMap) {
+    return false;
+  }
+  imageSmallMap = ScaleImageDown2x(imageBigMap);
+  if (!imageSmallMap) {
     return false;
   }
 
@@ -8223,7 +8228,8 @@ BOOLEAN PreloadMapScreenGraphics(void) {
 }
 
 void UnloadMapScreenGraphics(void) {
-  DestroyImage(imageBigmap);
+  DestroyImage(imageBigMap);
+  DestroyImage(imageSmallMap);
   DeleteVideoSurfaceFromIndex(guiBIGMAP);
 
   DeleteMapBottomGraphics();

@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "SGP/MemMan.h"
+#include "rust_debug.h"
 #include "rust_fileman.h"
 #include "rust_images.h"
 
@@ -73,6 +74,13 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
 
   MemFree(pPcxObject->pPcxBuffer);
   MemFree(pPcxObject);
+
+  // {
+  //   char buf[256];
+  //   snprintf(buf, ARR_SIZE(buf), "pcx %p, %d, %d", hImage->app_data, hImage->app_data_size,
+  //            hImage->number_of_subimages);
+  //   DebugLogWrite(buf);
+  // }
 
   return (TRUE);
 }
