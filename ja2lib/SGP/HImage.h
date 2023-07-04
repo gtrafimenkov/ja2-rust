@@ -55,6 +55,7 @@ struct Image {
   uint16_t usHeight;
   uint8_t ubBitDepth;
   struct SGPPaletteEntry *palette;
+  uint16_t *pui16BPPPalette;
   uint8_t *app_data;
   uint32_t app_data_size;
   void *image_data;
@@ -89,6 +90,9 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, uint8_t bufferBitDepth, BYTE *pD
 BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   SGPRect *srcRect);
+BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
+                                   SGPRect *srcRect);
 BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     SGPRect *srcRect);
