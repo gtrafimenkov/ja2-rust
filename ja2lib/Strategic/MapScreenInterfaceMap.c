@@ -473,7 +473,6 @@ void ShowTownText(void);
 void DrawTownLabels(STR16 pString, STR16 pStringA, UINT16 usFirstX, UINT16 usFirstY);
 void ShowTeamAndVehicles(INT32 fShowFlags);
 BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor);
-BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor);
 void AdjustXForLeftMapEdge(STR16 wString, INT16 *psX);
 static void BlitTownGridMarkers(void);
 void BlitMineGridMarkers(void);
@@ -1003,8 +1002,6 @@ void ShowTeamAndVehicles(INT32 fShowFlags) {
 BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   INT16 sScreenX, sScreenY;
   struct VSurface *hSrcVSurface;
-  // struct VSurface* hSAMSurface;
-  // struct VSurface* hMineSurface;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
@@ -1016,324 +1013,124 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
     return FALSE;
   }
-  // get original video surface palette
-  // if (!( GetVideoSurface( &hSAMSurface, guiSAMICON ) )) { return FALSE; }
-  // get original video surface palette
-  // if (!( GetVideoSurface( &hMineSurface, guiMINEICON ) )) { return FALSE; }
-  // get original video surface palette
 
   pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
 
-  {
-    GetScreenXYFromMapXY(sMapX, sMapY, &sScreenX, &sScreenY);
+  GetScreenXYFromMapXY(sMapX, sMapY, &sScreenX, &sScreenY);
 
-    // compensate for original BIG_MAP blit being done at MAP_VIEW_START_X + 1
-    sScreenX += 1;
+  // compensate for original BIG_MAP blit being done at MAP_VIEW_START_X + 1
+  sScreenX += 1;
 
-    // compensate for original BIG_MAP blit being done at MAP_VIEW_START_X + 1
-    clip.iLeft = 2 * (sScreenX - (MAP_VIEW_START_X + 1));
-    clip.iTop = 2 * (sScreenY - MAP_VIEW_START_Y);
-    clip.iRight = clip.iLeft + (2 * MAP_GRID_X);
-    clip.iBottom = clip.iTop + (2 * MAP_GRID_Y);
+  // compensate for original BIG_MAP blit being done at MAP_VIEW_START_X + 1
+  clip.iLeft = 2 * (sScreenX - (MAP_VIEW_START_X + 1));
+  clip.iTop = 2 * (sScreenY - MAP_VIEW_START_Y);
+  clip.iRight = clip.iLeft + (2 * MAP_GRID_X);
+  clip.iBottom = clip.iTop + (2 * MAP_GRID_Y);
 
-    if (iColor != MAP_SHADE_BLACK) {
-      // airspace
-    } else {
-      // non-airspace
-      sScreenY -= 1;
-    }
-
-    switch (iColor) {
-      case (MAP_SHADE_BLACK):
-        // simply shade darker
-        ShadowVideoSurfaceRect(vsSB, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 1,
-                               sScreenY + MAP_GRID_Y - 1);
-        break;
-
-      case (MAP_SHADE_LT_GREEN):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-
-        SetVSurface16BPPPalette(hSrcVSurface, pMapLTGreenPalette);
-        // hMineSurface->p16BPPPalette = pMapLTGreenPalette;
-        // hSAMSurface->p16BPPPalette = pMapLTGreenPalette;
-
-        // lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
-
-        Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                         uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
-        break;
-
-      case (MAP_SHADE_DK_GREEN):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        SetVSurface16BPPPalette(hSrcVSurface, pMapDKGreenPalette);
-        // hMineSurface->p16BPPPalette = pMapDKGreenPalette;
-        // hSAMSurface->p16BPPPalette = pMapDKGreenPalette;
-
-        /// lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
-
-        Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                         uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
-        break;
-
-      case (MAP_SHADE_LT_RED):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        SetVSurface16BPPPalette(hSrcVSurface, pMapLTRedPalette);
-        // hMineSurface->p16BPPPalette = pMapLTRedPalette;
-        // hSAMSurface->p16BPPPalette = pMapLTRedPalette;
-
-        // lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
-
-        Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                         uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
-        break;
-
-      case (MAP_SHADE_DK_RED):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        SetVSurface16BPPPalette(hSrcVSurface, pMapDKRedPalette);
-        // hMineSurface->p16BPPPalette = pMapDKRedPalette;
-        // hSAMSurface->p16BPPPalette = pMapDKRedPalette;
-
-        // lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
-
-        Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                         uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
-        break;
-    }
-
-    // restore original palette
-    if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-      return FALSE;
-    }
-    SetVSurface16BPPPalette(hSrcVSurface, pOriginalPallette);
-    // hMineSurface->p16BPPPalette = pOriginalPallette;
-    // hSAMSurface->p16BPPPalette = pOriginalPallette;
+  if (iColor != MAP_SHADE_BLACK) {
+    // airspace
+  } else {
+    // non-airspace
+    sScreenY -= 1;
   }
 
-  return (TRUE);
-}
+  switch (iColor) {
+    case (MAP_SHADE_BLACK):
+      // simply shade darker
+      ShadowVideoSurfaceRect(vsSB, sScreenX, sScreenY, sScreenX + MAP_GRID_X - 1,
+                             sScreenY + MAP_GRID_Y - 1);
+      break;
 
-BOOLEAN ShadeMapElemZoomIn(u8 sMapX, u8 sMapY, INT32 iColor) {
-  INT16 sScreenX, sScreenY;
-  INT32 iX, iY;
-  struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
-  // UINT8 *pDestBuf2;
-  UINT8 *pSrcBuf;
-  SGPRect clip;
-  UINT16 *pOriginalPallette;
-
-  // trabslate to screen co-ords for zoomed
-  GetScreenXYFromMapXYStationary(sMapX, sMapY, &sScreenX, &sScreenY);
-
-  // shift left by one sector
-  iY = (INT32)sScreenY - MAP_GRID_Y;
-  iX = (INT32)sScreenX - MAP_GRID_X;
-
-  // get original video surface palette
-  if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-    return FALSE;
-  }
-  pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
-
-  if ((iX > MapScreenRect.iLeft - MAP_GRID_X * 2) && (iX < MapScreenRect.iRight) &&
-      (iY > MapScreenRect.iTop - MAP_GRID_Y * 2) && (iY < MapScreenRect.iBottom)) {
-    sScreenX = (INT16)iX;
-    sScreenY = (INT16)iY;
-
-    if (iColor == MAP_SHADE_BLACK) {
-      clip.iLeft = sScreenX + 1;
-      clip.iRight = sScreenX + MAP_GRID_X * 2 - 1;
-      clip.iTop = sScreenY;
-      clip.iBottom = sScreenY + MAP_GRID_Y * 2 - 1;
-    } else {
-      clip.iLeft = iZoomX + sScreenX - MAP_VIEW_START_X - MAP_GRID_X;
-      clip.iRight = clip.iLeft + MAP_GRID_X * 2;
-      clip.iTop = iZoomY + sScreenY - MAP_VIEW_START_Y - MAP_GRID_Y;
-      clip.iBottom = clip.iTop + MAP_GRID_Y * 2;
-
-      if (sScreenY <= MapScreenRect.iTop + 10) {
-        clip.iTop -= 5;
-        sScreenY -= 5;
+    case (MAP_SHADE_LT_GREEN):
+      // grab video surface and set palette
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
       }
 
-      if (sMapX == 1) {
-        clip.iLeft -= 5;
-        sScreenX -= 4;
-      } else {
-        sScreenX += 1;
+      SetVSurface16BPPPalette(hSrcVSurface, pMapLTGreenPalette);
+      // hMineSurface->p16BPPPalette = pMapLTGreenPalette;
+      // hSAMSurface->p16BPPPalette = pMapLTGreenPalette;
+
+      // lock source and dest buffers
+      pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
       }
-    }
+      pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
-    if (sScreenX >= MapScreenRect.iRight - 2 * MAP_GRID_X) {
-      clip.iRight++;
-    }
+      Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
+                                       uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
-    if (sScreenY >= MapScreenRect.iBottom - 2 * MAP_GRID_X) {
-      clip.iBottom++;
-    }
+      // unlock source and dest buffers
+      VSurfaceUnlock(GetVSByID(guiBIGMAP));
+      VSurfaceUnlock(vsSB);
+      break;
 
-    sScreenX += 1;
-    sScreenY += 1;
+    case (MAP_SHADE_DK_GREEN):
+      // grab video surface and set palette
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
+      }
+      SetVSurface16BPPPalette(hSrcVSurface, pMapDKGreenPalette);
 
-    if ((sScreenX > MapScreenRect.iRight) || (sScreenY > MapScreenRect.iBottom)) {
-      return (FALSE);
-    }
+      /// lock source and dest buffers
+      pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
+      }
+      pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
-    switch (iColor) {
-      case (MAP_SHADE_BLACK):
-        // simply shade darker
-        if (iCurrentMapSectorZ > 0) {
-          ShadowVideoSurfaceRect(vsSB, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
-        }
-        ShadowVideoSurfaceRect(vsSB, clip.iLeft, clip.iTop, clip.iRight, clip.iBottom);
-        break;
+      Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
+                                       uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
-      case (MAP_SHADE_LT_GREEN):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        SetVSurface16BPPPalette(hSrcVSurface, pMapLTGreenPalette);
+      // unlock source and dest buffers
+      VSurfaceUnlock(GetVSByID(guiBIGMAP));
+      VSurfaceUnlock(vsSB);
+      break;
 
-        // lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
+    case (MAP_SHADE_LT_RED):
+      // grab video surface and set palette
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
+      }
+      SetVSurface16BPPPalette(hSrcVSurface, pMapLTRedPalette);
 
-        // now blit
-        Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                    uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
+      // lock source and dest buffers
+      pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
+      }
+      pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
+      Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
+                                       uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
-        break;
+      // unlock source and dest buffers
+      VSurfaceUnlock(GetVSByID(guiBIGMAP));
+      VSurfaceUnlock(vsSB);
+      break;
 
-      case (MAP_SHADE_DK_GREEN):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        SetVSurface16BPPPalette(hSrcVSurface, pMapDKGreenPalette);
+    case (MAP_SHADE_DK_RED):
+      // grab video surface and set palette
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
+      }
+      SetVSurface16BPPPalette(hSrcVSurface, pMapDKRedPalette);
 
-        /// lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
+      // lock source and dest buffers
+      pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
+      if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
+        return FALSE;
+      }
+      pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
 
-        // now blit
-        Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                    uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
+      Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
+                                       uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
 
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
-
-        break;
-
-      case (MAP_SHADE_LT_RED):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        SetVSurface16BPPPalette(hSrcVSurface, pMapLTRedPalette);
-
-        // lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
-
-        // now blit
-        Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                    uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
-
-        break;
-
-      case (MAP_SHADE_DK_RED):
-        // grab video surface and set palette
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        SetVSurface16BPPPalette(hSrcVSurface, pMapDKRedPalette);
-
-        // lock source and dest buffers
-        pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-        if (!(GetVideoSurface(&hSrcVSurface, guiBIGMAP))) {
-          return FALSE;
-        }
-        pSrcBuf = VSurfaceLockOld(GetVSByID(guiBIGMAP), &uiSrcPitchBYTES);
-
-        // now blit
-        Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                    uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-        // unlock source and dest buffers
-        VSurfaceUnlock(GetVSByID(guiBIGMAP));
-        VSurfaceUnlock(vsSB);
-
-        break;
-    }
+      // unlock source and dest buffers
+      VSurfaceUnlock(GetVSByID(guiBIGMAP));
+      VSurfaceUnlock(vsSB);
+      break;
   }
 
   // restore original palette
