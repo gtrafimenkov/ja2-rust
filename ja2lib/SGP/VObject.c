@@ -109,18 +109,6 @@ BOOLEAN ShutdownVideoObjectManager() {
   return TRUE;
 }
 
-// TODO: rust
-UINT32 CountVideoObjectNodes() {
-  VOBJECT_NODE *curr;
-  UINT32 i = 0;
-  curr = gpVObjectHead;
-  while (curr) {
-    i++;
-    curr = curr->next;
-  }
-  return i;
-}
-
 // This structure describes the creation parameters for a Video Object
 typedef struct {
   UINT32 fCreateFlags;  // Specifies creation flags like from file or not
@@ -208,12 +196,6 @@ BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
   guiVObjectSize++;
   guiVObjectTotalAdded++;
 
-#ifdef JA2TESTVERSION
-  if (CountVideoObjectNodes() != guiVObjectSize) {
-    guiVObjectSize = guiVObjectSize;
-  }
-#endif
-
   return TRUE;
 }
 
@@ -290,11 +272,6 @@ BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject) {
       MemFree(curr);
       curr = NULL;
       guiVObjectSize--;
-#ifdef JA2TESTVERSION
-      if (CountVideoObjectNodes() != guiVObjectSize) {
-        guiVObjectSize = guiVObjectSize;
-      }
-#endif
       return TRUE;
     }
     curr = curr->next;
