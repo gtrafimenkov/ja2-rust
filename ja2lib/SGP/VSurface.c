@@ -443,23 +443,6 @@ struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
   return NULL;
 }
 
-BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
-  Assert(puiIndex);
-  Assert(fileName);
-  DebugLogWrite("b000");
-
-  struct VSurface *vs = CreateVideoSurfaceFromFile(fileName);
-
-  if (!vs) {
-    return FALSE;
-  }
-
-  SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
-  *puiIndex = addVSurfaceToList(vs);
-  DebugLogWrite("b010");
-  return TRUE;
-}
-
 BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(desc);
