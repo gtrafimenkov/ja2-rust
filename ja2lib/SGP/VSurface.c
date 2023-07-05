@@ -740,7 +740,7 @@ BOOLEAN InitializeGameVideoObjects() {
 }
 
 void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y) {
-  UINT32 destPitch;
+  u32 destPitch;
   void *destBuf = VSurfaceLockOld(dest, &destPitch);
 
   // {
@@ -768,7 +768,7 @@ void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 
         .pitch = source->usWidth * 1,
         .data = source->image_data,
     };
-    Blt8BPPDataTo16BPP(&src, (u16 *)destBuf, destPitch, x, y);
+    Blt8bppTo16bp(&src, (u16 *)destBuf, destPitch, x, y);
   } else {
     DebugLogWrite("BlitImageToSurface: unsupported bit depth combination");
   }
@@ -793,8 +793,15 @@ void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x,
 
   // XXX: it is not the only place
   if (source->ubBitDepth == 8) {
-    Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, source, (UINT8 *)pSrcBuf,
-                                uiSrcPitchBYTES, x, y, &sourceRect);
+    struct ImageDataParams src = {
+        .width = source->usWidth,
+        .height = source->usHeight,
+        .palette16bpp = source->p16BPPPalette,
+        .pitch = uiSrcPitchBYTES,
+        .data = pSrcBuf,
+    };
+    DebugLogWrite("xxxx 01");
+    Blt8bppTo16bppRect(&src, pDestBuf, uiDestPitchBYTES, x, y, &sourceRect);
   } else if (source->ubBitDepth == 16) {
     Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, x, y,
                     sourceRect.iLeft, sourceRect.iTop, sourceRect.iRight - sourceRect.iLeft,

@@ -4841,15 +4841,10 @@ BlitDone:
   return (TRUE);
 }
 
-/**********************************************************************************************
- Blt8BPPDataSubTo16BPPBuffer
-
-        Blits a subrect from a flat 8 bit surface to a 16-bit buffer.
-
-**********************************************************************************************/
-BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                    struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
-                                    UINT32 uiSrcPitch, INT32 iX, INT32 iY, SGPRect *pRect) {
+// Blits a subrect from a flat 8 bit surface to a 16-bit buffer.
+// This is the same as Blt8bppTo16bp with support of source rect.
+bool Blt8bppTo16bppRect(const struct ImageDataParams *source, UINT16 *dest, u32 destPitch, INT32 iX,
+                        INT32 iY, SGPRect *sourceRect) {
   UINT16 *p16BPPPalette;
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
@@ -4857,13 +4852,12 @@ BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
   INT32 iTempX, iTempY;
 
   // Assertions
-  Assert(hSrcVSurface != NULL);
-  Assert(pSrcBuffer != NULL);
-  Assert(pBuffer != NULL);
+  Assert(source != NULL);
+  Assert(dest != NULL);
 
   // Get Offsets from Index into structure
-  usHeight = (UINT32)hSrcVSurface->usHeight;
-  usWidth = (UINT32)hSrcVSurface->usWidth;
+  usHeight = (UINT32)source->height;
+  usWidth = (UINT32)source->width;
 
   // Add to start position of dest buffer
   iTempX = iX;
@@ -4877,17 +4871,17 @@ BOOLEAN Blt8BPPDataSubTo16BPPBuffer(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
     return FALSE;
   }
 
-  LeftSkip = pRect->iLeft;
-  RightSkip = usWidth - pRect->iRight;
-  TopSkip = pRect->iTop * uiSrcPitch;
-  BlitLength = pRect->iRight - pRect->iLeft;
-  BlitHeight = pRect->iBottom - pRect->iTop;
-  SrcSkip = uiSrcPitch - BlitLength;
+  LeftSkip = sourceRect->iLeft;
+  RightSkip = usWidth - sourceRect->iRight;
+  TopSkip = sourceRect->iTop * source->pitch;
+  BlitLength = sourceRect->iRight - sourceRect->iLeft;
+  BlitHeight = sourceRect->iBottom - sourceRect->iTop;
+  SrcSkip = source->pitch - BlitLength;
 
-  SrcPtr = (UINT8 *)(pSrcBuffer + TopSkip + LeftSkip);
-  DestPtr = ((UINT8 *)pBuffer + (uiDestPitchBYTES * iTempY) + (iTempX * 2));
-  p16BPPPalette = hSrcVSurface->p16BPPPalette;
-  LineSkip = (uiDestPitchBYTES - (BlitLength * 2));
+  SrcPtr = (UINT8 *)source->data + TopSkip + LeftSkip;
+  DestPtr = ((UINT8 *)dest + (destPitch * iTempY) + (iTempX * 2));
+  p16BPPPalette = source->palette16bpp;
+  LineSkip = (destPitch - (BlitLength * 2));
 
 #ifdef _WINDOWS
   __asm {
@@ -4934,8 +4928,8 @@ BlitLoop:
 
 // Blits from 8bpp to 16bpp.
 // This function is only used for drawing strategic map.
-bool Blt8BPPDataTo16BPP(struct ImageDataParams *source, UINT16 *destBuffer, UINT32 destPitch,
-                        INT32 x, INT32 y) {
+bool Blt8bppTo16bp(struct ImageDataParams *source, u16 *destBuffer, u32 destPitch, INT32 x,
+                   INT32 y) {
   if (x < 0 || y < 0) {
     return false;
   }
