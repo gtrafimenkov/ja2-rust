@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct GRect;
 struct LEVELNODE;
 struct SOLDIERTYPE;
 struct STRUCTURE;
