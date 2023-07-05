@@ -149,7 +149,7 @@ struct BufferLockInfo VSurfaceLock(struct VSurface *vs);
 void VSurfaceUnlock(struct VSurface *vs);
 BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch);
 
-struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth);
+struct VSurface *CreateVideoSurface(u16 width, u16 height);
 struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex);
 
 // Global variables for video objects

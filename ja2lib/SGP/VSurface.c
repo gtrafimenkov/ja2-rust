@@ -432,7 +432,7 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
 }
 
 struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
-  struct VSurface *vs = CreateVideoSurface(width, height, 16);
+  struct VSurface *vs = CreateVideoSurface(width, height);
   if (vs) {
     SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
     if (puiIndex) {
@@ -447,7 +447,7 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(desc);
 
-  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight, 16);
+  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight);
 
   if (!vs) {
     return FALSE;

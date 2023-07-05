@@ -156,7 +156,7 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth) { return NULL; }
+struct VSurface *CreateVideoSurface(u16 width, u16 height) { return NULL; }
 
 BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
   return FALSE;

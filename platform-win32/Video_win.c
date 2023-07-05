@@ -1469,32 +1469,18 @@ void FatalError(STR8 pError, ...) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth) {
+struct VSurface *CreateVideoSurface(u16 width, u16 height) {
   Assert(height > 0);
   Assert(width > 0);
 
   DDPIXELFORMAT PixelFormat;
   memset(&PixelFormat, 0, sizeof(PixelFormat));
   PixelFormat.dwSize = sizeof(DDPIXELFORMAT);
-
-  switch (bitDepth) {
-    case 8:
-      PixelFormat.dwFlags = DDPF_RGB | DDPF_PALETTEINDEXED8;
-      PixelFormat.dwRGBBitCount = 8;
-      break;
-
-    case 16: {
-      PixelFormat.dwFlags = DDPF_RGB;
-      PixelFormat.dwRGBBitCount = 16;
-      PixelFormat.dwRBitMask = 0xf800;
-      PixelFormat.dwGBitMask = 0x07e0;
-      PixelFormat.dwBBitMask = 0x001f;
-    } break;
-
-    default:
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid BPP value, can only be 8 or 16.");
-      return (FALSE);
-  }
+  PixelFormat.dwFlags = DDPF_RGB;
+  PixelFormat.dwRGBBitCount = 16;
+  PixelFormat.dwRBitMask = 0xf800;
+  PixelFormat.dwGBitMask = 0x07e0;
+  PixelFormat.dwBBitMask = 0x001f;
 
   DDSURFACEDESC SurfaceDescription;
   memset(&SurfaceDescription, 0, sizeof(DDSURFACEDESC));
@@ -1515,7 +1501,7 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth) {
 
   vs->usHeight = height;
   vs->usWidth = width;
-  vs->ubBitDepth = bitDepth;
+  vs->ubBitDepth = 16;
   vs->pSurfaceData1 = (PTR)lpDDS;
   vs->pSurfaceData = (PTR)lpDDS2;
   vs->pPalette = NULL;
