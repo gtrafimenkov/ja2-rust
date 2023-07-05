@@ -146,8 +146,9 @@ BOOLEAN LoadTextMercPopupImages(UINT8 ubBackgroundIndex, UINT8 ubBorderIndex) {
   // this function will load the graphics associated with the background and border index values
 
   // the background
-  if (!(AddVideoSurfaceFromFile(zMercBackgroundPopupFilenames[ubBackgroundIndex],
-                                &gPopUpTextBox->uiMercTextPopUpBackground))) {
+  gPopUpTextBox->backgroundImage =
+      CreateImage(zMercBackgroundPopupFilenames[ubBackgroundIndex], false);
+  if (!gPopUpTextBox->backgroundImage) {
     return FALSE;
   }
 
@@ -170,12 +171,8 @@ void RemoveTextMercPopupImages() {
   // this procedure will remove the background and border video surface/object from the indecies
   if (gPopUpTextBox) {
     if (gPopUpTextBox->fMercTextPopupInitialized) {
-      // the background
-      DeleteVideoSurfaceFromIndex(gPopUpTextBox->uiMercTextPopUpBackground);
-
-      // the border
+      DestroyImage(gPopUpTextBox->backgroundImage);
       DeleteVideoObjectFromIndex(gPopUpTextBox->uiMercTextPopUpBorder);
-
       gPopUpTextBox->fMercTextPopupInitialized = FALSE;
     }
   }
@@ -391,8 +388,8 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
     VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
 
   } else {
-    BlitSurfaceToSurface(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground),
-                         GetVSByID(pPopUpTextBox->uiSourceBufferIndex), 0, 0, DestRect);
+    BlitImageToSurfaceRect(pPopUpTextBox->backgroundImage,
+                           GetVSByID(pPopUpTextBox->uiSourceBufferIndex), 0, 0, DestRect);
   }
 
   GetVideoObject(&hImageHandle, pPopUpTextBox->uiMercTextPopUpBorder);

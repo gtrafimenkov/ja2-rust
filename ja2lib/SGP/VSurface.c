@@ -826,14 +826,6 @@ void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x,
   pDestBuf = (UINT16 *)VSurfaceLockOld(dest, &uiDestPitchBYTES);
   pSrcBuf = VSurfaceLockOld(source, &uiSrcPitchBYTES);
 
-  // {
-  //   char buf[256];
-  //   snprintf(buf, ARR_SIZE(buf), "PrepareMercPopupBox, srcvsurface bit depth = %d",
-  //            hSrcVSurface->ubBitDepth);
-  //   DebugLogWrite(buf);
-  // }
-
-  // XXX: it is not the only place
   if (source->ubBitDepth == 8) {
     struct ImageDataParams src = {
         .width = source->usWidth,
