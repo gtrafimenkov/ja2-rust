@@ -13,8 +13,6 @@ struct VSurface {
 
   // Direct Draw One Interface
   PTR pSurfaceData1;
-
-  COLORVAL TransparentColor;  // Defaults to 0,0,0
 };
 
 #endif
