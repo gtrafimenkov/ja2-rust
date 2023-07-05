@@ -1507,12 +1507,6 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height) {
   return (vs);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Called when surface is lost, for the most part called by utility functions
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
   if (vs) {
@@ -1534,12 +1528,10 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
     return FALSE;
   }
 
-  // Get surface pointer
-  LPDIRECTDRAWSURFACE2 lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->_platformData2;
-
   // Release surface
   if (hVSurface->_platformData1 != NULL) {
-    DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->_platformData1, &lpDDSurface);
+    DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->_platformData1,
+                     (LPDIRECTDRAWSURFACE2 *)&hVSurface->_platformData2);
   }
 
   MemFree(hVSurface);
