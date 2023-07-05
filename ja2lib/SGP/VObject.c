@@ -363,8 +363,6 @@ struct VObject *LoadVObjectFromFile(const char *path) {
 
   // Set palette from himage
   if (hImage->ubBitDepth == 8) {
-    hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
-    hVObject->pGlow8 = ubColorTables[0];
     SetVideoObjectPalette(hVObject, hImage->palette);
   }
 
@@ -415,8 +413,6 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
 
   // Set palette from himage
   if (hImage->ubBitDepth == 8) {
-    hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
-    hVObject->pGlow8 = ubColorTables[0];
     SetVideoObjectPalette(hVObject, hImage->palette);
   }
 
@@ -625,7 +621,7 @@ BOOLEAN DestroyObjectPaletteTables(struct VObject *hVObject) {
   BOOLEAN f16BitPal;
 
   for (x = 0; x < HVOBJECT_SHADE_TABLES; x++) {
-    if (!(hVObject->fFlags & VOBJECT_FLAG_SHADETABLE_SHARED)) {
+    if (!(hVObject->shared_shadetable)) {
       if (hVObject->pShades[x] != NULL) {
         if (hVObject->pShades[x] == hVObject->p16BPPPalette)
           f16BitPal = TRUE;

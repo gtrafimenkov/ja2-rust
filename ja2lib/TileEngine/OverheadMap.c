@@ -1239,7 +1239,7 @@ void CopyOverheadDBShadetablesFromTileset() {
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     pTileSurf = (gTileSurfaceArray[uiLoop]);
 
-    gSmTileSurf[uiLoop].vo->fFlags |= VOBJECT_FLAG_SHADETABLE_SHARED;
+    gSmTileSurf[uiLoop].vo->shared_shadetable = true;
 
     for (uiLoop2 = 0; uiLoop2 < HVOBJECT_SHADE_TABLES; uiLoop2++) {
       gSmTileSurf[uiLoop].vo->pShades[uiLoop2] = pTileSurf->vo->pShades[uiLoop2];
