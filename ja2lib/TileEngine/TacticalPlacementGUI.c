@@ -317,7 +317,7 @@ void InitTacticalPlacementGUI() {
         sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%03d.sti", ubFaceIndex);
     }
 
-    if (!AddVideoObject(&VObjectDesc, &gMercPlacement[i].uiVObjectID)) {
+    if (!AddVObjectFromFile(VObjectDesc.ImageFile, &gMercPlacement[i].uiVObjectID)) {
       if (!AddVObjectFromFile("Faces\\65Face\\speck.sti", &gMercPlacement[i].uiVObjectID)) {
         AssertMsg(0,
                   String("Failed to load %Faces\\65Face\\%03d.sti or it's placeholder, speck.sti",

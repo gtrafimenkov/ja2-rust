@@ -67,9 +67,6 @@ BOOLEAN ShutdownVideoObjectManager();
 BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex);
 BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex);
 
-// Creates and adds a video object to list
-BOOLEAN AddVideoObject(VOBJECT_DESC *VObjectDesc, UINT32 *uiIndex);
-
 // Removes a video object
 BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject);
 

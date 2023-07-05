@@ -377,7 +377,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
 
   // Create the panel
   GetMLGFilename(VObjectDesc.ImageFile, MLG_PREBATTLEPANEL);
-  if (!AddVideoObject(&VObjectDesc, &uiInterfaceImages))
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &uiInterfaceImages))
     AssertMsg(0, "Failed to load interface\\PreBattlePanel.sti");
 
   // Create the 3 buttons

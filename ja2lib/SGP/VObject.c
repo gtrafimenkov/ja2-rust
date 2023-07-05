@@ -128,13 +128,6 @@ typedef struct {
 
 BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex);
 
-BOOLEAN AddVideoObject(VOBJECT_DESC *desc, UINT32 *puiIndex) {
-  VOBJECT_INFO info;
-  info.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(info.ImageFile, desc->ImageFile);
-  return _AddVideoObject(&info, puiIndex);
-}
-
 BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
   VOBJECT_INFO desc;
   desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;

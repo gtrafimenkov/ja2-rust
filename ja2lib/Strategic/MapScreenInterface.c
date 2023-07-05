@@ -3711,7 +3711,7 @@ void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier) {
       }
 
       // load the face
-      AddVideoObject(&VObjectDesc, &giUpdateSoldierFaces[iCounter]);
+      AddVObjectFromFile(VObjectDesc.ImageFile, &giUpdateSoldierFaces[iCounter]);
 
       return;
     }

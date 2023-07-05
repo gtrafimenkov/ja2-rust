@@ -112,7 +112,7 @@ BOOLEAN LoadIMPSymbol(void) {
   // this procedure will load the IMP main symbol into memory
   VOBJECT_DESC VObjectDesc;
   GetMLGFilename(VObjectDesc.ImageFile, MLG_IMPSYMBOL);
-  if (!AddVideoObject(&VObjectDesc, &guiIMPSYMBOL)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiIMPSYMBOL)) {
     return FALSE;
   }
 

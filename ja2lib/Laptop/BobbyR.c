@@ -212,7 +212,7 @@ BOOLEAN EnterBobbyR() {
 
   // load the Bobbyname graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYNAME);
-  if (!AddVideoObject(&VObjectDesc, &guiBobbyName)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiBobbyName)) {
     return FALSE;
   }
 
@@ -233,7 +233,7 @@ BOOLEAN EnterBobbyR() {
 
   // load the Store Plaque graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_STOREPLAQUE);
-  if (!AddVideoObject(&VObjectDesc, &guiStorePlaque)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiStorePlaque)) {
     return FALSE;
   }
 

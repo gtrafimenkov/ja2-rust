@@ -150,7 +150,7 @@ BOOLEAN EnterMercsFiles() {
 
   // load the stats box graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_STATSBOX);
-  if (!AddVideoObject(&VObjectDesc, &guiStatsBox)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiStatsBox)) {
     return FALSE;
   }
 

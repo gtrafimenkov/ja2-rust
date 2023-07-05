@@ -192,13 +192,13 @@ BOOLEAN InitFloristDefaults() {
   if (guiCurrentLaptopMode == LAPTOP_MODE_FLORIST) {
     // load the small title graphic and add it
     GetMLGFilename(VObjectDesc.ImageFile, MLG_LARGEFLORISTSYMBOL);
-    if (!AddVideoObject(&VObjectDesc, &guiLargeTitleSymbol)) {
+    if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiLargeTitleSymbol)) {
       return FALSE;
     }
   } else {
     // load the leaf back graphic and add it
     GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLFLORISTSYMBOL);
-    if (!AddVideoObject(&VObjectDesc, &guiSmallTitleSymbol)) {
+    if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiSmallTitleSymbol)) {
       return FALSE;
     }
 

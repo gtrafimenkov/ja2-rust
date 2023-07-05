@@ -91,7 +91,7 @@ BOOLEAN EnterMercsAccount() {
 
   // load the Arrow graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_ORDERGRID);
-  if (!AddVideoObject(&VObjectDesc, &guiMercOrderGrid)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiMercOrderGrid)) {
     return FALSE;
   }
 

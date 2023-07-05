@@ -914,7 +914,7 @@ BOOLEAN AddFacesToAutoBandageBox(void) {
       }
 
       // load the face
-      AddVideoObject(&VObjectDesc, &giAutoBandagesSoldierFaces[iCounter]);
+      AddVObjectFromFile(VObjectDesc.ImageFile, &giAutoBandagesSoldierFaces[iCounter]);
       iNumberOfDoctors++;
     }
   }
@@ -933,7 +933,7 @@ BOOLEAN AddFacesToAutoBandageBox(void) {
       }
 
       // load the face
-      AddVideoObject(&VObjectDesc, &giAutoBandagesSoldierFaces[iCounter + iNumberOfDoctors]);
+      AddVObjectFromFile(VObjectDesc.ImageFile, &giAutoBandagesSoldierFaces[iCounter + iNumberOfDoctors]);
     }
   }
 

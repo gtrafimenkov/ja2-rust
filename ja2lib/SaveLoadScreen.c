@@ -434,7 +434,7 @@ BOOLEAN EnterSaveLoadScreen() {
 
   // load Load Screen Add ons graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_LOADSAVEHEADER);
-  if (!AddVideoObject(&VObjectDesc, &guiBackGroundAddOns)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiBackGroundAddOns)) {
     return FALSE;
   }
 

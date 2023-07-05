@@ -355,7 +355,7 @@ BOOLEAN EnterOptionsScreen() {
 
   // load button, title graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_OPTIONHEADER);
-  if (!AddVideoObject(&VObjectDesc, &guiOptionsAddOnImages)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiOptionsAddOnImages)) {
     return FALSE;
   }
 

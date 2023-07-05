@@ -1667,7 +1667,7 @@ void CreateAutoResolveInterface() {
     // Load the face
     sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%02d.sti",
             gMercProfiles[GetSolProfile(gpMercs[i].pSoldier)].ubFaceIndex);
-    if (!AddVideoObject(&VObjectDesc, &gpMercs[i].uiVObjectID)) {
+    if (!AddVObjectFromFile(VObjectDesc.ImageFile, &gpMercs[i].uiVObjectID)) {
       if (!AddVObjectFromFile("Faces\\65Face\\speck.sti", &gpMercs[i].uiVObjectID)) {
         AssertMsg(0,
                   String("Failed to load %Faces\\65Face\\%02d.sti or it's placeholder, speck.sti",

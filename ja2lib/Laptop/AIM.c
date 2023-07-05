@@ -217,13 +217,13 @@ BOOLEAN EnterAIM() {
 
   // load the History graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_HISTORY);
-  if (!AddVideoObject(&VObjectDesc, &guiHistory)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiHistory)) {
     return FALSE;
   }
 
   // load the Wanring graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_WARNING);
-  if (!AddVideoObject(&VObjectDesc, &guiWarning)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiWarning)) {
     return FALSE;
   }
 
@@ -234,25 +234,25 @@ BOOLEAN EnterAIM() {
 
   // load the your ad advertisment and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_YOURAD13);
-  if (!AddVideoObject(&VObjectDesc, &guiAdForAdsImages)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiAdForAdsImages)) {
     return FALSE;
   }
 
   // load the insurance advertisment and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCEAD10);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceAdImages)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiInsuranceAdImages)) {
     return FALSE;
   }
 
   // load the funeral advertisment and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_FUNERALAD9);
-  if (!AddVideoObject(&VObjectDesc, &guiFuneralAdImages)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiFuneralAdImages)) {
     return FALSE;
   }
 
   // load the funeral advertisment and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYRAYAD21);
-  if (!AddVideoObject(&VObjectDesc, &guiBobbyRAdImages)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiBobbyRAdImages)) {
     return FALSE;
   }
 
@@ -422,7 +422,7 @@ BOOLEAN InitAimDefaults() {
 
   // load the Aim Symbol graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_AIMSYMBOL);
-  if (!AddVideoObject(&VObjectDesc, &guiAimSymbol)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiAimSymbol)) {
     return FALSE;
   }
 

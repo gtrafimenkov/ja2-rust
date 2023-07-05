@@ -364,7 +364,7 @@ BOOLEAN EnterBobbyRMailOrder() {
 
   // load the delivery speed graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_CONFIRMORDER);
-  if (!AddVideoObject(&VObjectDesc, &guiConfirmGraphic)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiConfirmGraphic)) {
     return FALSE;
   }
 

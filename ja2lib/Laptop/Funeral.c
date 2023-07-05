@@ -108,7 +108,7 @@ BOOLEAN EnterFuneral() {
 
   // load the Closed graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_CLOSED);
-  if (!AddVideoObject(&VObjectDesc, &guiClosedSign)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiClosedSign)) {
     return FALSE;
   }
 
@@ -129,13 +129,13 @@ BOOLEAN EnterFuneral() {
 
   // load the McGillicuttys sign graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_MCGILLICUTTYS);
-  if (!AddVideoObject(&VObjectDesc, &guiMcGillicuttys)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiMcGillicuttys)) {
     return FALSE;
   }
 
   // load the Mortuary  graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_MORTUARY);
-  if (!AddVideoObject(&VObjectDesc, &guiMortuary)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiMortuary)) {
     return FALSE;
   }
 

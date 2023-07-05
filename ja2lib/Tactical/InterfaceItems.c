@@ -5032,7 +5032,7 @@ BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, UINT32 *puiVo) {
 
   // Load item
   sprintf(VObjectDesc.ImageFile, "BIGITEMS\\%s", zName);
-  if (!AddVideoObject(&VObjectDesc, &uiVo)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &uiVo)) {
     return FALSE;
   }
 

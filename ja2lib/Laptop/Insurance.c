@@ -95,7 +95,7 @@ BOOLEAN EnterInsurance() {
 
   // load the Insurance title graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCETITLE);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceTitleImage)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiInsuranceTitleImage)) {
     return FALSE;
   }
 
@@ -251,7 +251,7 @@ BOOLEAN InitInsuranceDefaults() {
   if (guiCurrentLaptopMode != LAPTOP_MODE_INSURANCE) {
     // load the small title for the every page other then the first page
     GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLTITLE);
-    if (!AddVideoObject(&VObjectDesc, &guiInsuranceSmallTitleImage)) {
+    if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiInsuranceSmallTitleImage)) {
       return FALSE;
     }
 

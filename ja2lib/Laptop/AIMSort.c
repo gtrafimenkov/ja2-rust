@@ -178,19 +178,19 @@ BOOLEAN EnterAimSort() {
 
   // load the ToAlumni graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_TOALUMNI);
-  if (!AddVideoObject(&VObjectDesc, &guiToAlumni)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiToAlumni)) {
     return FALSE;
   }
 
   // load the ToMugShots graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_TOMUGSHOTS);
-  if (!AddVideoObject(&VObjectDesc, &guiToMugShots)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiToMugShots)) {
     return FALSE;
   }
 
   // load the ToStats graphic and add it
   GetMLGFilename(VObjectDesc.ImageFile, MLG_TOSTATS);
-  if (!AddVideoObject(&VObjectDesc, &guiToStats)) {
+  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiToStats)) {
     return FALSE;
   }
 
