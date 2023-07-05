@@ -3,8 +3,9 @@
 
 #include "SGP/Types.h"
 
-struct VSurface;
+struct ImageDataParams;
 struct VObject;
+struct VSurface;
 
 extern struct GRect ClippingRect;
 extern UINT32 guiTranslucentMask;
