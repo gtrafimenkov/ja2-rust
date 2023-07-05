@@ -61,10 +61,10 @@ extern void GetMousePos(SGPPoint *Point);
 extern BOOLEAN DequeueSpecificEvent(InputAtom *Event, UINT32 uiMaskFlags);
 
 extern void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2);
-extern void RestrictMouseCursor(SGPRect *pRectangle);
+extern void RestrictMouseCursor(struct GRect *pRectangle);
 extern void FreeMouseCursor(void);
 extern BOOLEAN IsCursorRestricted(void);
-extern void GetRestrictedClipCursor(SGPRect *pRectangle);
+extern void GetRestrictedClipCursor(struct GRect *pRectangle);
 extern void ReapplyCursorClipRect(void);
 
 void SimulateMouseMovement(UINT32 uiNewXPos, UINT32 uiNewYPos);

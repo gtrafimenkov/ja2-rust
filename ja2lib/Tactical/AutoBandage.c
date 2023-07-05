@@ -337,7 +337,7 @@ void SetAutoBandageComplete(void) {
 }
 
 void AutoBandage(BOOLEAN fStart) {
-  SGPRect aRect;
+  struct GRect aRect;
   UINT8 ubLoop;
   INT32 cnt;
   struct SOLDIERTYPE *pSoldier;

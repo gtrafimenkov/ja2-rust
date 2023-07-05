@@ -155,11 +155,11 @@ LPDIRECTDRAWPALETTE gpDirectDrawPalette;
 // Dirty rectangle management variables
 //
 
-extern SGPRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
+extern struct GRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
 extern UINT32 guiDirtyRegionCount;
 extern BOOLEAN gfForceFullScreenRefresh;
 
-extern SGPRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
+extern struct GRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
 extern UINT32 gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
 extern UINT32 guiDirtyRegionExCount;
 

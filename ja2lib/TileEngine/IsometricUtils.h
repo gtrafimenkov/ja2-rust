@@ -86,8 +86,8 @@ BOOLEAN CellXYToScreenXY(INT16 sCellX, INT16 sCellY, INT16 *sScreenX, INT16 *sSc
 INT32 GetRangeFromGridNoDiff(INT16 sGridNo1, INT16 sGridNo2);
 INT32 GetRangeInCellCoordsFromGridNoDiff(INT16 sGridNo1, INT16 sGridNo2);
 
-BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, SGPRect *pRect);
-BOOLEAN IsPointInScreenRectWithRelative(INT16 sXPos, INT16 sYPos, SGPRect *pRect, INT16 *sXRel,
+BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, struct GRect *pRect);
+BOOLEAN IsPointInScreenRectWithRelative(INT16 sXPos, INT16 sYPos, struct GRect *pRect, INT16 *sXRel,
                                         INT16 *sRelY);
 
 INT16 PythSpacesAway(INT16 sOrigin, INT16 sDest);

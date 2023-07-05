@@ -43,7 +43,7 @@ typedef void (*MSGBOX_CALLBACK)(UINT8 bExitValue);
 
 // old mouse x and y positions
 SGPPoint pOldMousePosition;
-SGPRect MessageBoxRestrictedCursorRegion;
+struct GRect MessageBoxRestrictedCursorRegion;
 
 // if the cursor was locked to a region
 BOOLEAN fCursorLockedToArea = FALSE;
@@ -63,7 +63,7 @@ void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
 UINT32 ExitMsgBox(INT8 ubExitCode);
 UINT16 GetMSgBoxButtonWidth(INT32 iButtonImage);
 
-SGPRect gOldCursorLimitRectangle;
+struct GRect gOldCursorLimitRectangle;
 
 MESSAGE_BOX_STRUCT gMsgBox;
 BOOLEAN gfNewMessageBox = FALSE;
@@ -79,10 +79,10 @@ CHAR16 gzUserDefinedButton1[128];
 CHAR16 gzUserDefinedButton2[128];
 
 INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
-                   MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
+                   MSGBOX_CALLBACK ReturnCallback, const struct GRect *pCenteringRect) {
   UINT16 usTextBoxWidth;
   UINT16 usTextBoxHeight;
-  SGPRect aRect;
+  struct GRect aRect;
   UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
   UINT8 *pDestBuf, *pSrcBuf;
   INT16 sButtonX, sButtonY, sBlankSpace;
@@ -1022,20 +1022,20 @@ void DoScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
 // a basic box that don't care what screen we came from
 void DoUpperScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y / 2};
+  struct GRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y / 2};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
 // a basic box that don't care what screen we came from
 void DoLowerScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, INV_INTERFACE_START_Y / 2, 640, INV_INTERFACE_START_Y};
+  struct GRect CenteringRect = {0, INV_INTERFACE_START_Y / 2, 640, INV_INTERFACE_START_Y};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
 void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
                                            MSGBOX_CALLBACK ReturnCallback,
-                                           const SGPRect *pCenteringRect) {
+                                           const struct GRect *pCenteringRect) {
   /// which screen are we in?
 
   // Map Screen (excluding AI Viewer)

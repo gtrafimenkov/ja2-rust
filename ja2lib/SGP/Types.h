@@ -67,8 +67,6 @@ typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
 #define NULL 0
 #endif
 
-typedef struct GRect SGPRect;
-
 typedef struct {
   INT32 iX;
   INT32 iY;

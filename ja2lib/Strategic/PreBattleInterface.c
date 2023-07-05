@@ -663,7 +663,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
 }
 
 void DoTransitionFromMapscreenToPreBattleInterface() {
-  SGPRect DstRect, PBIRect;
+  struct GRect DstRect, PBIRect;
   UINT32 uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
   UINT32 uiTimeRange;

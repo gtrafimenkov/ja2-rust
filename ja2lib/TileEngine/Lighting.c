@@ -2490,7 +2490,7 @@ updating a light.
 
 ***************************************************************************************/
 BOOLEAN LightCalcRect(INT32 iLight) {
-  SGPRect MaxRect;
+  struct GRect MaxRect;
   INT16 sXValue, sYValue, sDummy;
   UINT32 uiCount;
   LIGHT_NODE *pLight;

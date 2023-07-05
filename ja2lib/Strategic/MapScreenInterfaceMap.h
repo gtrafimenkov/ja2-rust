@@ -202,7 +202,7 @@ extern UINT32 guiCHARBETWEENSECTORICONS;
 extern UINT32 guiCHARBETWEENSECTORICONSCLOSE;
 
 // the viewable map bound region
-extern SGPRect MapScreenRect;
+extern struct GRect MapScreenRect;
 
 // draw temp path
 extern BOOLEAN fDrawTempHeliPath;
@@ -226,7 +226,7 @@ extern UINT32 guiMAPCURSORS;
 extern BOOLEAN fTempPathAlreadyDrawn;
 
 // map view region clipping rect
-extern SGPRect MapScreenRect;
+extern struct GRect MapScreenRect;
 
 // the map border eta pop up
 extern UINT32 guiMapBorderEtaPopUp;

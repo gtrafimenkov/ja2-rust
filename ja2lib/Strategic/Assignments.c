@@ -3913,7 +3913,7 @@ void CreateDestroyMouseRegionsForAssignmentMenu(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   static BOOLEAN fShowRemoveMenu = FALSE;
 
   // will create/destroy mouse regions for the map screen assignment main menu
@@ -4032,7 +4032,7 @@ void CreateDestroyMouseRegionForVehicleMenu(void) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition, pPoint;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if (fShowVehicleMenu) {
@@ -4401,7 +4401,7 @@ void CreateDestroyMouseRegionForRepairMenu(void) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   struct SOLDIERTYPE *pSoldier = NULL;
   INT32 iVehicleIndex = 0;
 
@@ -5167,7 +5167,7 @@ void CreateDestroyMouseRegions(void) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
 
   // will create/destroy mouse regions for the map screen assignment main menu
 
@@ -5248,7 +5248,7 @@ void CreateDestroyMouseRegionsForContractMenu(void) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   static BOOLEAN fShowRemoveMenu = FALSE;
 
   // will create/destroy mouse regions for the map screen Contract main menu
@@ -5369,7 +5369,7 @@ void CreateDestroyMouseRegionsForTrainingMenu(void) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
 
   // will create/destroy mouse regions for the map screen assignment main menu
 
@@ -5462,7 +5462,7 @@ void CreateDestroyMouseRegionsForAttributeMenu(void) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
 
   // will create/destroy mouse regions for the map screen attribute  menu
 
@@ -5557,7 +5557,7 @@ void CreateDestroyMouseRegionsForRemoveMenu(void) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
 
   // will create/destroy mouse regions for the map screen attribute  menu
   if (((fShowAssignmentMenu == TRUE) || (fShowContractMenu == TRUE)) && (fCreated == FALSE)) {
@@ -5659,7 +5659,7 @@ void CreateDestroyMouseRegionsForSquadMenu(BOOLEAN fPositionBox) {
   INT32 iBoxYPosition = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
 
   // will create/destroy mouse regions for the map screen attribute  menu
 
@@ -6818,7 +6818,7 @@ void RestorePopUpBoxes(void) {
 void CreateSquadBox(void) {
   // will create a pop up box for squad selection
   SGPPoint pPoint;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   UINT32 hStringHandle;
   UINT32 uiCounter;
   CHAR16 sString[64];
@@ -6898,7 +6898,7 @@ void CreateSquadBox(void) {
 void CreateEPCBox(void) {
   // will create a pop up box for squad selection
   SGPPoint pPoint;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   UINT32 hStringHandle;
   INT32 iCount;
 
@@ -7492,7 +7492,7 @@ void DetermineBoxPositions(void) {
   // depending on how many boxes there are, reposition as needed
   SGPPoint pPoint;
   SGPPoint pNewPoint;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   if ((fShowAssignmentMenu == FALSE) || (ghAssignmentBox == -1)) {
@@ -7618,7 +7618,7 @@ void RepositionMouseRegions(void) {
 }
 
 void CheckAndUpdateTacticalAssignmentPopUpPositions(void) {
-  SGPRect pDimensions, pDimensions2, pDimensions3;
+  struct GRect pDimensions, pDimensions2, pDimensions3;
   SGPPoint pPoint;
   INT16 sLongest;
   struct SOLDIERTYPE *pSoldier = NULL;
@@ -7768,7 +7768,7 @@ void CheckAndUpdateTacticalAssignmentPopUpPositions(void) {
 void PositionCursorForTacticalAssignmentBox(void) {
   // position cursor over y of on duty in tactical assignments
   SGPPoint pPosition;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   INT32 iFontHeight;
 
   // get x.y position of box

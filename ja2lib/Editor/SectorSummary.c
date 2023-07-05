@@ -910,7 +910,7 @@ void RenderItemDetails() {
 void RenderSummaryWindow() {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
-  SGPRect ClipRect;
+  struct GRect ClipRect;
   INT32 i, x, y;
   if ((GetActiveFieldID() == 1) != gfTempFile) {
     gfTempFile ^= 1;

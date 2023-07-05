@@ -81,7 +81,7 @@ extern INT16 gsRenderHeight;
 #define REVEAL_WALLS_RADIUS 3
 
 // GLOBAL VARIABLES
-extern SGPRect gOldClipRect;
+extern struct GRect gOldClipRect;
 extern INT16 SCROLL_X_STEP;
 extern INT16 SCROLL_Y_STEP;
 
@@ -103,7 +103,7 @@ extern INT16 gsTopRightWorldX, gsTopRightWorldY;
 extern INT16 gsBottomLeftWorldX, gsBottomLeftWorldY;
 extern INT16 gsBottomRightWorldX, gsBottomRightWorldY;
 
-extern SGPRect gSelectRegion;
+extern struct GRect gSelectRegion;
 extern SGPPoint gSelectAnchor;
 extern UINT32 fSelectMode;
 
@@ -161,7 +161,7 @@ BOOLEAN ApplyScrolling(INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOLE
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                               UINT16 *pZBuffer, UINT16 usZValue,
                                               struct VObject *hSrcVObject, INT32 iX, INT32 iY,
-                                              UINT16 usIndex, SGPRect *clipregion);
+                                              UINT16 usIndex, struct GRect *clipregion);
 
 void RenderStaticWorldRect(INT16, INT16, INT16, INT16, BOOLEAN);
 void RenderMarkedWorld(void);

@@ -220,21 +220,21 @@ extern UINT32 guiUpdatePanel;
 extern UINT32 guiUpdatePanelTactical;
 extern BOOLEAN fShowUpdateBox;
 
-extern SGPRect ContractDimensions;
+extern struct GRect ContractDimensions;
 extern SGPPoint ContractPosition;
-extern SGPRect AttributeDimensions;
+extern struct GRect AttributeDimensions;
 extern SGPPoint AttributePosition;
-extern SGPRect TrainDimensions;
+extern struct GRect TrainDimensions;
 extern SGPPoint TrainPosition;
-extern SGPRect VehicleDimensions;
+extern struct GRect VehicleDimensions;
 extern SGPPoint VehiclePosition;
-extern SGPRect AssignmentDimensions;
+extern struct GRect AssignmentDimensions;
 extern SGPPoint AssignmentPosition;
 extern SGPPoint SquadPosition;
-extern SGPRect SquadDimensions;
+extern struct GRect SquadDimensions;
 
 extern SGPPoint RepairPosition;
-extern SGPRect RepairDimensions;
+extern struct GRect RepairDimensions;
 
 extern SGPPoint OrigContractPosition;
 extern SGPPoint OrigAttributePosition;

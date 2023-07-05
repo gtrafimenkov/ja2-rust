@@ -948,7 +948,7 @@ void SaveLoadGameNumber(INT8 bSaveGameID) {
 
 BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                      UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                     const SGPRect *pCenteringRect) {
+                                     const struct GRect *pCenteringRect) {
   // do message box and return
   giSaveLoadMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
                                       (UINT8)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
@@ -960,7 +960,7 @@ BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiEx
 
 BOOLEAN DoSaveLoadMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
                              MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 639, 479};
+  struct GRect CenteringRect = {0, 0, 639, 479};
 
   // do message box and return
   giSaveLoadMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,

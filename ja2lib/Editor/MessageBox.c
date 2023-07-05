@@ -14,7 +14,7 @@
 INT32 iMsgBoxNum;
 INT32 iMsgBoxOkImg, iMsgBoxCancelImg;
 INT32 iMsgBoxBgrnd, iMsgBoxOk, iMsgBoxCancel;
-SGPRect MsgBoxRect;
+struct GRect MsgBoxRect;
 
 BOOLEAN gfMessageBoxResult = FALSE;
 UINT8 gubMessageBoxStatus = MESSAGEBOX_NONE;

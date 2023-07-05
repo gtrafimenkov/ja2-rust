@@ -44,7 +44,7 @@ extern INT32 FontDefault;
 extern struct VSurface *FontDestSurface;
 extern UINT32 FontDestPitch;
 extern UINT32 FontDestBPP;
-extern SGPRect FontDestRegion;
+extern struct GRect FontDestRegion;
 extern BOOLEAN FontDestWrap;
 
 #define SetFontDestClip(x1, y1, x2, y2) (SetFontDest(FontDestSurface, x1, y1, x2, y2, FontDestWrap))

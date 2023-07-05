@@ -8856,7 +8856,7 @@ void CheckForAndRenderNewMailOverlay() {
         if (!(ButtonList[guiMapBottomExitButtons[MAP_EXIT_TO_LAPTOP]]->uiFlags & BUTTON_ENABLED)) {
           UINT32 uiDestPitchBYTES;
           UINT8 *pDestBuf;
-          SGPRect area = {463, 417, 477, 425};
+          struct GRect area = {463, 417, 477, 425};
 
           pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
           Blt16BPPBufferHatchRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &area);

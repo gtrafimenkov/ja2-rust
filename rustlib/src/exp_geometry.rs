@@ -17,7 +17,7 @@ pub struct GRect {
 // }
 
 #[no_mangle]
-/// Create new SGPRect structure
+/// Create new GRect structure
 pub extern "C" fn NewRect(left: i32, top: i32, width: i32, height: i32) -> GRect {
     GRect {
         iLeft: left,

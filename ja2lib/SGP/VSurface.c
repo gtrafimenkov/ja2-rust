@@ -27,11 +27,11 @@ struct VSurface *vsMouseBuffer = NULL;
 // Dirty rectangle management variables
 //
 
-SGPRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
+struct GRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
 UINT32 guiDirtyRegionCount;
 BOOLEAN gfForceFullScreenRefresh;
 
-SGPRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
+struct GRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
 UINT32 gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
 UINT32 guiDirtyRegionExCount;
 
@@ -50,9 +50,9 @@ UINT32 guiVSurfaceTotalAdded = 0;
 // Given an struct Image* object, blit imagery into existing Video Surface. Can be from 8->16
 // BPP
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
-                                      UINT16 usY, SGPRect *pSrcRect) {
+                                      UINT16 usY, struct GRect *pSrcRect) {
   UINT16 usEffectiveWidth;
-  SGPRect aRect;
+  struct GRect aRect;
 
   // Assertions
   Assert(hVSurface != NULL);
@@ -184,7 +184,7 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDest
   do {
     // Use SUBRECT if specified
     if (fBltFlags & VS_BLT_SRCSUBRECT) {
-      SGPRect aSubRect;
+      struct GRect aSubRect;
 
       if (!(pBltFx != NULL)) {
         return FALSE;
@@ -292,7 +292,7 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDest
 }
 
 BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                               SGPRect *area);
+                                               struct GRect *area);
 
 BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1, INT32 X2,
                                        INT32 Y2, BOOLEAN fLowPercentShadeTable) {
@@ -302,7 +302,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1
 
   UINT16 *pBuffer;
   UINT32 uiPitch;
-  SGPRect area;
+  struct GRect area;
 
   if (X1 < 0) X1 = 0;
 
@@ -366,8 +366,8 @@ BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, INT32 
 // This function will stretch the source image to the size of the dest rect.
 // If the 2 images are not 16 Bpp, it returns false.
 BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, SGPRect *SrcRect,
-                               SGPRect *DestRect) {
+                               INT32 iDestY, UINT32 fBltFlags, struct GRect *SrcRect,
+                               struct GRect *DestRect) {
   if (!dest || !src) {
     return FALSE;
   }
@@ -384,7 +384,7 @@ BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, INT3
 }
 
 BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP) {
-  SGPRect Clip;
+  struct GRect Clip;
   GetClippingRect(&Clip);
   if (x1 < Clip.iLeft) x1 = Clip.iLeft;
   if (x1 > Clip.iRight) return (FALSE);
@@ -694,7 +694,7 @@ struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
   struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, image->ubBitDepth);
 
   if (vs) {
-    SGPRect tempRect;
+    struct GRect tempRect;
     tempRect.iLeft = 0;
     tempRect.iTop = 0;
     tempRect.iRight = image->usWidth - 1;
@@ -777,7 +777,7 @@ void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 
 }
 
 void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
-                          SGPRect sourceRect) {
+                          struct GRect sourceRect) {
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;

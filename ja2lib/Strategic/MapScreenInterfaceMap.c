@@ -408,12 +408,13 @@ struct Point pTownPoints[] = {
 };
 
 // map region
-SGPRect MapScreenRect = {(MAP_VIEW_START_X + MAP_GRID_X - 2), (MAP_VIEW_START_Y + MAP_GRID_Y - 1),
-                         MAP_VIEW_START_X + MAP_VIEW_WIDTH - 1 + MAP_GRID_X,
-                         MAP_VIEW_START_Y + MAP_VIEW_HEIGHT - 10 + MAP_GRID_Y};
+struct GRect MapScreenRect = {(MAP_VIEW_START_X + MAP_GRID_X - 2),
+                              (MAP_VIEW_START_Y + MAP_GRID_Y - 1),
+                              MAP_VIEW_START_X + MAP_VIEW_WIDTH - 1 + MAP_GRID_X,
+                              MAP_VIEW_START_Y + MAP_VIEW_HEIGHT - 10 + MAP_GRID_Y};
 
 // screen region
-SGPRect FullScreenRect = {0, 0, 640, 480};
+struct GRect FullScreenRect = {0, 0, 640, 480};
 
 // temp helicopter path
 struct path *pTempHelicopterPath = NULL;
@@ -611,7 +612,7 @@ UINT32 DrawMap(void) {
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
   UINT8 *pSrcBuf;
-  SGPRect clip;
+  struct GRect clip;
   u8 cnt, cnt2;
   INT32 iCounter = 0;
 
@@ -999,7 +1000,7 @@ BOOLEAN ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
   UINT8 *pSrcBuf;
-  SGPRect clip;
+  struct GRect clip;
   UINT16 *pOriginalPallette;
 
   // get original video surface palette
@@ -2506,11 +2507,11 @@ void RestoreBackgroundForMapGrid(u8 sMapX, u8 sMapY) {
 
 void ClipBlitsToMapViewRegion(void) {
   // the standard mapscreen rectangle doesn't work for clipping while zoomed...
-  SGPRect ZoomedMapScreenClipRect = {MAP_VIEW_START_X + MAP_GRID_X,
-                                     MAP_VIEW_START_Y + MAP_GRID_Y - 1,
-                                     MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                                     MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + MAP_GRID_Y - 10};
-  SGPRect *pRectToUse;
+  struct GRect ZoomedMapScreenClipRect = {MAP_VIEW_START_X + MAP_GRID_X,
+                                          MAP_VIEW_START_Y + MAP_GRID_Y - 1,
+                                          MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
+                                          MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + MAP_GRID_Y - 10};
+  struct GRect *pRectToUse;
 
   pRectToUse = &MapScreenRect;
 

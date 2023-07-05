@@ -523,7 +523,7 @@ INT32 GetRangeInCellCoordsFromGridNoDiff(INT16 sGridNo1, INT16 sGridNo2) {
                   CELL_X_SIZE));
 }
 
-BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, SGPRect *pRect) {
+BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, struct GRect *pRect) {
   if ((sXPos >= pRect->iLeft) && (sXPos <= pRect->iRight) && (sYPos >= pRect->iTop) &&
       (sYPos <= pRect->iBottom)) {
     return (TRUE);
@@ -532,7 +532,7 @@ BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, SGPRect *pRect) {
   }
 }
 
-BOOLEAN IsPointInScreenRectWithRelative(INT16 sXPos, INT16 sYPos, SGPRect *pRect, INT16 *sXRel,
+BOOLEAN IsPointInScreenRectWithRelative(INT16 sXPos, INT16 sYPos, struct GRect *pRect, INT16 *sXRel,
                                         INT16 *sYRel) {
   if ((sXPos >= pRect->iLeft) && (sXPos <= pRect->iRight) && (sYPos >= pRect->iTop) &&
       (sYPos <= pRect->iBottom)) {

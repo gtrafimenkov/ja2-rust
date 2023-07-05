@@ -31,7 +31,7 @@ typedef uint32_t VSurfID;
 // Effects structure for specialized blitting
 typedef struct {
   UINT32 uiShadowLevel;
-  SGPRect ClipRect;
+  struct GRect ClipRect;
 } blt_fx;
 
 // Z-buffer info structure for properly assigning Z values

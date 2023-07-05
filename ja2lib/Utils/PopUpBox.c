@@ -74,7 +74,8 @@ void SpecifyBoxMinWidth(INT32 hBoxHandle, INT32 iMinWidth) {
   return;
 }
 
-BOOLEAN CreatePopUpBox(INT32 *phBoxHandle, SGPRect Dimensions, SGPPoint Position, UINT32 uiFlags) {
+BOOLEAN CreatePopUpBox(INT32 *phBoxHandle, struct GRect Dimensions, SGPPoint Position,
+                       UINT32 uiFlags) {
   INT32 iCounter = 0;
   INT32 iCount = 0;
   PopUpBoxPt pBox = NULL;
@@ -263,7 +264,7 @@ void GetBoxPosition(INT32 hBoxHandle, SGPPoint *Position) {
   return;
 }
 
-void SetBoxSize(INT32 hBoxHandle, SGPRect Dimensions) {
+void SetBoxSize(INT32 hBoxHandle, struct GRect Dimensions) {
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[hBoxHandle]);
@@ -278,7 +279,7 @@ void SetBoxSize(INT32 hBoxHandle, SGPRect Dimensions) {
   return;
 }
 
-void GetBoxSize(INT32 hBoxHandle, SGPRect *Dimensions) {
+void GetBoxSize(INT32 hBoxHandle, struct GRect *Dimensions) {
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[hBoxHandle]);
@@ -1070,7 +1071,7 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
   uiNumTilesWide = ((usWidth - 4) / BORDER_WIDTH);
   uiNumTilesHigh = ((usHeight - 4) / BORDER_HEIGHT);
 
-  SGPRect clip;
+  struct GRect clip;
   clip.iLeft = 0;
   clip.iRight = clip.iLeft + usWidth;
   clip.iTop = 0;

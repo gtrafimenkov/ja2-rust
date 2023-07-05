@@ -37,7 +37,7 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount);
 // BACKGROUND_SAVE	gTopmostSaves[BACKGROUND_BUFFERS];
 // UINT32 guiNumTopmostSaves=0;
 
-SGPRect gDirtyClipRect = {0, 0, 640, 480};
+struct GRect gDirtyClipRect = {0, 0, 640, 480};
 
 BOOLEAN gfViewportDirty = FALSE;
 
@@ -46,7 +46,7 @@ BOOLEAN InitializeBaseDirtyRectQueue() { return (TRUE); }
 void ShutdownBaseDirtyRectQueue() {}
 
 void AddBaseDirtyRect(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
-  SGPRect aRect;
+  struct GRect aRect;
 
   if (iLeft < 0) {
     iLeft = 0;

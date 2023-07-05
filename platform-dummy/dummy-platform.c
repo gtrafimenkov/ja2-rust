@@ -70,11 +70,11 @@ void GetMousePos(SGPPoint *Point) {}
 
 void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {}
 
-void RestrictMouseCursor(SGPRect *pRectangle) {}
+void RestrictMouseCursor(struct GRect *pRectangle) {}
 
 void FreeMouseCursor(void) {}
 
-void GetRestrictedClipCursor(SGPRect *pRectangle) {}
+void GetRestrictedClipCursor(struct GRect *pRectangle) {}
 
 BOOLEAN IsCursorRestricted(void) { return FALSE; }
 

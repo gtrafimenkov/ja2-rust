@@ -994,7 +994,7 @@ void RestoreString(StringInput *pStringDescriptor) {
 //
 
 void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {
-  SGPRect TempRect;
+  struct GRect TempRect;
 
   TempRect.iLeft = usX1;
   TempRect.iTop = usY1;
@@ -1004,7 +1004,7 @@ void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {
   RestrictMouseCursor(&TempRect);
 }
 
-void RestrictMouseCursor(SGPRect *pRectangle) {
+void RestrictMouseCursor(struct GRect *pRectangle) {
   // Make a copy of our rect....
   gCursorClipRect.left = pRectangle->iLeft;
   gCursorClipRect.right = pRectangle->iRight;
@@ -1025,7 +1025,7 @@ void ReapplyCursorClipRect(void) {
   }
 }
 
-void GetRestrictedClipCursor(SGPRect *pRectangle) { GetClipCursor((RECT *)pRectangle); }
+void GetRestrictedClipCursor(struct GRect *pRectangle) { GetClipCursor((RECT *)pRectangle); }
 
 BOOLEAN IsCursorRestricted(void) { return (fCursorWasClipped); }
 

@@ -996,7 +996,7 @@ void MusicSliderChangeCallBack(INT32 iNewValue) { MusicSetVolume(iNewValue); }
 
 BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                     UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                    const SGPRect *pCenteringRect) {
+                                    const struct GRect *pCenteringRect) {
   // reset exit mode
   gfExitOptionsDueToMessageBox = TRUE;
 
@@ -1011,7 +1011,7 @@ BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExi
 
 BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
                             MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 639, 479};
+  struct GRect CenteringRect = {0, 0, 639, 479};
 
   // reset exit mode
   gfExitOptionsDueToMessageBox = TRUE;

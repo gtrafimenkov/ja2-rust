@@ -42,7 +42,7 @@ BOOLEAN fShowTownInfo = FALSE;
 
 INT32 ghTownMineBox = -1;
 SGPPoint TownMinePosition = {300, 150};
-SGPRect TownMineDimensions = {0, 0, 240, 60};
+struct GRect TownMineDimensions = {0, 0, 240, 60};
 
 INT8 bCurrentTownMineSectorX = 0;
 INT8 bCurrentTownMineSectorY = 0;
@@ -108,7 +108,7 @@ void DisplayTownInfo(u8 sMapX, u8 sMapY, i8 bMapZ) {
 void CreateDestroyTownInfoBox(void) {
   // create destroy pop up box for town/mine info
   static BOOLEAN fCreated = FALSE;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   SGPPoint pPosition;
   TownID bTownId = 0;
 
@@ -640,7 +640,7 @@ void AddItemsInSectorToBox(void) {
 
 void PositionTownMineInfoBox(void) {
   // position town mine info box
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   SGPPoint pPosition;
   INT16 sX = 0, sY = 0;
 
@@ -691,7 +691,7 @@ void PositionTownMineInfoBox(void) {
 
 void AddInventoryButtonForMapPopUpBox(void) {
   INT16 sX, sY;
-  SGPRect pDimensions;
+  struct GRect pDimensions;
   SGPPoint pPosition;
   UINT32 uiObject;
   struct Subimage *pTrav;

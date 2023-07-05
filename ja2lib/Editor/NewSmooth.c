@@ -947,7 +947,7 @@ UINT8 CalcNewCavePerimeterValue( INT32 iMapIndex );
 void AddCave( INT32 iMapIndex, UINT16 usIndex );
 */
 
-void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion) {
+void RemoveCaveSectionFromWorld(struct GRect *pSelectRegion) {
   UINT32 top, left, right, bottom, x, y;
   UINT32 iMapIndex;
   UINT16 usIndex;
@@ -980,7 +980,7 @@ void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion) {
     }
 }
 
-void AddCaveSectionToWorld(SGPRect *pSelectRegion) {
+void AddCaveSectionToWorld(struct GRect *pSelectRegion) {
   INT32 top, left, right, bottom, x, y;
   UINT32 uiMapIndex;
   UINT16 usIndex;
@@ -1029,7 +1029,7 @@ void AddCaveSectionToWorld(SGPRect *pSelectRegion) {
 // When the user removes a section from a building, it will not only erase the
 // entire highlighted area, it'll repair the building itself so there are no
 // outside walls missing from the new building.
-void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion) {
+void RemoveBuildingSectionFromWorld(struct GRect *pSelectRegion) {
   UINT32 top, left, right, bottom, x, y;
   UINT32 iMapIndex;
   UINT16 usTileIndex;
@@ -1099,7 +1099,7 @@ void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion) {
     }
 }
 
-void AddBuildingSectionToWorld(SGPRect *pSelectRegion) {
+void AddBuildingSectionToWorld(struct GRect *pSelectRegion) {
   INT32 top, left, right, bottom, x, y;
   UINT32 iMapIndex;
   UINT16 usFloorType, usWallType, usRoofType;

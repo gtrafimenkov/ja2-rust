@@ -91,16 +91,19 @@ BOOLEAN ReleaseImageData(struct Image *hImage);
 // object
 BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
                           UINT16 usDestWidth, UINT16 usDestHeight, UINT16 usX, UINT16 usY,
-                          SGPRect *srcRect);
+                          struct GRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
 
 BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                  struct GRect *srcRect);
 BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                   struct GRect *srcRect);
 BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                    struct GRect *srcRect);
 
 // This function will create a buffer in memory of ETRLE data, excluding palette
 BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer);

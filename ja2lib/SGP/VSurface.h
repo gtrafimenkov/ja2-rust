@@ -39,9 +39,9 @@ extern struct VSurface *vsSB;
 //
 
 struct BltOpts {
-  COLORVAL ColorFill;  // Used for fill effect
-  SGPRect SrcRect;     // Given SRC subrect instead of srcregion
-  SGPRect FillRect;    // Given SRC subrect instead of srcregion
+  COLORVAL ColorFill;     // Used for fill effect
+  struct GRect SrcRect;   // Given SRC subrect instead of srcregion
+  struct GRect FillRect;  // Given SRC subrect instead of srcregion
 };
 
 UINT16 GetVSurfaceHeight(const struct VSurface *vs);
@@ -94,7 +94,7 @@ BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteE
 
 // Set data from struct Image*.
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
-                                      UINT16 usY, SGPRect *pSrcRect);
+                                      UINT16 usY, struct GRect *pSrcRect);
 
 // Sets Transparency color into HVSurface and the underlying DD surface
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor);
@@ -123,7 +123,8 @@ BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1, INT32 
 // If the Dest Rect and the source rect are not the same size, the source surface will be either
 // enlraged or shunk.
 BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, SGPRect *SrcRect, SGPRect *DestRect);
+                               INT32 iDestY, UINT32 fBltFlags, struct GRect *SrcRect,
+                               struct GRect *DestRect);
 
 BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, INT32 X1, INT32 Y1,
                                                    INT32 X2, INT32 Y2);
@@ -131,12 +132,12 @@ BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, INT32 
 // The following structure is used to define a region of the video Surface
 // These regions are stored via a HLIST
 typedef struct {
-  SGPRect RegionCoords;  // Rectangle describing coordinates of region
-  SGPPoint Origin;       // Origin used for hot spots, etc
-  UINT8 ubHitMask;       // Byte flags for hit detection
+  struct GRect RegionCoords;  // Rectangle describing coordinates of region
+  SGPPoint Origin;            // Origin used for hot spots, etc
+  UINT8 ubHitMask;            // Byte flags for hit detection
 } VSURFACE_REGION;
 
-void SetClippingRect(SGPRect *clip);
+void SetClippingRect(struct GRect *clip);
 
 // Allocate a new empty instance of VSurface
 struct VSurface *VSurfaceNew();
@@ -163,7 +164,7 @@ BOOLEAN InitializeSystemVideoObjects();
 BOOLEAN InitializeGameVideoObjects();
 
 void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
-                          SGPRect sourceRect);
+                          struct GRect sourceRect);
 void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y);
 
 #endif

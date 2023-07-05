@@ -53,19 +53,19 @@ void DoUpperScreenIndependantMessageBox(CHAR16 *zString, UINT16 usFlags,
                                         MSGBOX_CALLBACK ReturnCallback);
 void DoScreenIndependantMessageBoxWithRect(CHAR16 *zString, UINT16 usFlags,
                                            MSGBOX_CALLBACK ReturnCallback,
-                                           const SGPRect *pCenteringRect);
+                                           const struct GRect *pCenteringRect);
 
 // wrappers for other screens
 BOOLEAN DoLapTopSystemMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                          UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                         const SGPRect *pCenteringRect);
+                                         const struct GRect *pCenteringRect);
 INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
-                              MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect);
+                              MSGBOX_CALLBACK ReturnCallback, const struct GRect *pCenteringRect);
 BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                     UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                    const SGPRect *pCenteringRect);
+                                    const struct GRect *pCenteringRect);
 BOOLEAN DoSaveLoadMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
                                      UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                     const SGPRect *pCenteringRect);
+                                     const struct GRect *pCenteringRect);
 
 #endif

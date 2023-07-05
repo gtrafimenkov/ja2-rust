@@ -3147,7 +3147,7 @@ void EnableQDSButtons() {
 
 BOOLEAN DoQDSMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT8 ubFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect pCenteringRect = {0, 0, 639, 479};
+  struct GRect pCenteringRect = {0, 0, 639, 479};
 
   // reset exit mode
   gfExitQdsDueToMessageBox = TRUE;

@@ -185,7 +185,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
   UINT8 *pDestBuf, *pSrcBuf;
   UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
-  SGPRect SaveRect, NewRect;
+  struct GRect SaveRect, NewRect;
   struct VObject *hVObject;
   UINT32 uiVideoObjectIndex;
   UINT16 usUselessWidth, usUselessHeight;

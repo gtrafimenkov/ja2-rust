@@ -100,7 +100,7 @@ void DestroyImage(struct Image *image) {
 
 BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
                           UINT16 usDestWidth, UINT16 usDestHeight, UINT16 usX, UINT16 usY,
-                          SGPRect *srcRect) {
+                          struct GRect *srcRect) {
   Assert(hImage != NULL);
 
   if (hImage->ubBitDepth == 8 && bufferBitDepth == 8) {
@@ -125,7 +125,8 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBu
 }
 
 BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
+                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                  struct GRect *srcRect) {
   UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   UINT32 cnt;
   UINT8 *pDest, *pSrc;
@@ -179,7 +180,8 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 u
 }
 
 BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
+                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                    struct GRect *srcRect) {
   UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   UINT32 cnt;
   UINT16 *pDest, *pSrc;
@@ -236,7 +238,8 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
 }
 
 BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect) {
+                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                   struct GRect *srcRect) {
   UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   UINT32 rows, cols;
   UINT8 *pSrc, *pSrcTemp;

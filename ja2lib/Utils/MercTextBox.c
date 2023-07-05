@@ -254,7 +254,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   struct VObject *hImageHandle;
   UINT16 usPosY, usPosX;
   UINT16 usStringPixLength;
-  SGPRect DestRect;
+  struct GRect DestRect;
   UINT32 uiDestPitchBYTES;
   UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
