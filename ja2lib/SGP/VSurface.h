@@ -46,8 +46,6 @@ struct BltOpts {
 
 UINT16 GetVSurfaceHeight(const struct VSurface *vs);
 UINT16 GetVSurfaceWidth(const struct VSurface *vs);
-UINT16 *GetVSurface16BPPPalette(struct VSurface *vs);
-void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette);
 
 //
 // This structure describes the creation parameters for a Video Surface

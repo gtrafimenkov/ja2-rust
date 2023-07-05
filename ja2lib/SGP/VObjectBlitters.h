@@ -179,11 +179,6 @@ bool Blt8bppTo16bp(struct ImageDataParams *source, u16 *dest, u32 destPitch, INT
 bool Blt8bppTo16bppRect(const struct ImageDataParams *source, u16 *dest, u32 destPitch, INT32 iX,
                         INT32 iY, struct GRect sourceRect);
 
-BOOLEAN Blt8BPPDataTo16BPPBufferHalfRect(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
-                                         struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
-                                         UINT32 uiSrcPitch, INT32 iX, INT32 iY,
-                                         struct GRect *pRect);
-
 // New 16/16 blitters
 
 // ATE: New blitters for showing an outline at color 254

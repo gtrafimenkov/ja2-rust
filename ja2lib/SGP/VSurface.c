@@ -670,8 +670,6 @@ void InvalidateScreen(void) {
 
 UINT16 GetVSurfaceHeight(const struct VSurface *vs) { return vs->usHeight; }
 UINT16 GetVSurfaceWidth(const struct VSurface *vs) { return vs->usWidth; }
-UINT16 *GetVSurface16BPPPalette(struct VSurface *vs) { return vs->p16BPPPalette; }
-void SetVSurface16BPPPalette(struct VSurface *vs, UINT16 *palette) { vs->p16BPPPalette = palette; }
 
 struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
 
