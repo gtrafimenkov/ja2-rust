@@ -4,6 +4,8 @@
 #include "Point.h"
 #include "SGP/Types.h"
 
+struct GRect;
+
 #define KEY_DOWN 0x0001
 #define KEY_UP 0x0002
 #define KEY_REPEAT 0x0004
