@@ -8,7 +8,7 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Personnel.h"
 #include "MessageBoxScreen.h"
-#include "Rect.h"
+#include "rust_geometry.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"

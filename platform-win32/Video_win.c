@@ -4,7 +4,6 @@
 
 #include "Globals.h"
 #include "Local.h"
-#include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
 #include "SGP/VObject.h"
@@ -22,6 +21,7 @@
 #include "platform_callbacks.h"
 #include "platform_strings.h"
 #include "rust_debug.h"
+#include "rust_geometry.h"
 #include "rust_images.h"
 
 #define INITGUID

@@ -17,6 +17,16 @@ struct GRect {
   int32_t iBottom;
 };
 
+/**
+ * Copy of Rect from the C codebase.
+ */
+struct Rect {
+  int32_t left;
+  int32_t top;
+  int32_t right;
+  int32_t bottom;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -24,7 +34,12 @@ extern "C" {
 /**
  * Create new GRect structure
  */
-struct GRect NewRect(int32_t left, int32_t top, int32_t width, int32_t height);
+struct GRect NewGRect(int32_t left, int32_t top, int32_t width, int32_t height);
+
+/**
+ * Create new Rect structure
+ */
+struct Rect NewRect(int32_t left, int32_t top, int32_t width, int32_t height);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -3,7 +3,7 @@
 #ifndef __PLATFORM_H
 #define __PLATFORM_H
 
-#include "Rect.h"
+#include "rust_geometry.h"
 #include "SGP/Types.h"
 #include "rust_platform.h"
 

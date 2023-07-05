@@ -3,7 +3,6 @@
 #include <stdio.h>
 
 #include "Local.h"
-#include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
