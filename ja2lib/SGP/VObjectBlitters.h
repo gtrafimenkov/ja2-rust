@@ -174,6 +174,9 @@ BOOLEAN Blt8BPPDataTo16BPPBufferShadow(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
 // This function is only used for drawing strategic map.
 bool Blt8bppTo16bp(struct ImageDataParams *source, u16 *dest, u32 destPitch, INT32 x, INT32 y);
 
+void Blt16bppTo16bppRect(const struct ImageDataParams *source, u16 *dest, u32 destPitch, i32 x,
+                         i32 y, struct GRect sourceRect);
+
 // Blits a subrect from a flat 8 bit surface to a 16-bit buffer.
 // This is the same as Blt8bppTo16bp with support of source rect.
 bool Blt8bppTo16bppRect(const struct ImageDataParams *source, u16 *dest, u32 destPitch, INT32 iX,

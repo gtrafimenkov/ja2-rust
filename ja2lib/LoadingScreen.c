@@ -174,8 +174,6 @@ UINT8 GetLoadScreenID(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
 // and refreshing the screen with it.
 void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
   SGPFILENAME ImageFile;
-  struct VSurface* hVSurface;
-  UINT32 uiLoadScreen;
 
   switch (ubLoadScreenID) {
     case LOADINGSCREEN_NOTHING:
@@ -312,11 +310,10 @@ void DisplayLoadScreenWithID(UINT8 ubLoadScreenID) {
       break;
   }
 
-  if (AddVideoSurfaceFromFile(ImageFile, &uiLoadScreen)) {
-    // Blit the background image
-    GetVideoSurface(&hVSurface, uiLoadScreen);
-    BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
-    DeleteVideoSurfaceFromIndex(uiLoadScreen);
+  struct Image* image = CreateImage(ImageFile, false);
+  if (image) {
+    BlitImageToSurface(image, vsFB, 0, 0);
+    DestroyImage(image);
   } else {
     // Failed to load the file, so use a black screen and print out message.
     SetFont(FONT10ARIAL);

@@ -741,40 +741,6 @@ void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 
   struct GRect sourceRect = {
       .iLeft = 0, .iTop = 0, .iRight = source->usWidth, .iBottom = source->usHeight};
   BlitImageToSurfaceRect(source, dest, x, y, sourceRect);
-  // u32 destPitch;
-  // void *destBuf = VSurfaceLockOld(dest, &destPitch);
-
-  // // {
-  // //   char buf[256];
-  // //   snprintf(buf, ARR_SIZE(buf), "BlitImageToSurface: %d, %d, %d, %p, %p", source->ubBitDepth,
-  // //            source->usWidth, source->usHeight, source->palette, source->palette16bpp);
-  // //   DebugLogWrite(buf);
-  // //   snprintf(buf, ARR_SIZE(buf), " dest surf: %d, %d, %d, %d", dest->ubBitDepth,
-  // dest->usWidth,
-  // //            dest->usHeight, destPitch);
-  // //   DebugLogWrite(buf);
-  // // }
-
-  // if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
-  //   if (!source->palette16bpp) {
-  //     source->palette16bpp = Create16BPPPalette(source->palette);
-  //     if (!source->palette16bpp) {
-  //       DebugLogWrite("BlitImageToSurface: failed to create 16bpp palette");
-  //       return;
-  //     }
-  //   }
-  //   struct ImageDataParams src = {
-  //       .width = source->usWidth,
-  //       .height = source->usHeight,
-  //       .palette16bpp = source->palette16bpp,
-  //       .pitch = source->usWidth * 1,
-  //       .data = source->image_data,
-  //   };
-  //   Blt8bppTo16bp(&src, (u16 *)destBuf, destPitch, x, y);
-  // } else {
-  //   DebugLogWrite("BlitImageToSurface: unsupported bit depth combination");
-  // }
-  // VSurfaceUnlock(dest);
 }
 
 void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, i32 y,
@@ -782,16 +748,16 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
   u32 destPitch;
   void *destBuf = VSurfaceLockOld(dest, &destPitch);
 
-  // {
-  //   char buf[256];
-  //   snprintf(buf, ARR_SIZE(buf), "BlitImageToSurfaceRect: %d, %d, %d, %p, %p",
-  //   source->ubBitDepth,
-  //            source->usWidth, source->usHeight, source->palette, source->palette16bpp);
-  //   DebugLogWrite(buf);
-  //   snprintf(buf, ARR_SIZE(buf), " dest surf: %d, %d, %d, %d", dest->ubBitDepth, dest->usWidth,
-  //            dest->usHeight, destPitch);
-  //   DebugLogWrite(buf);
-  // }
+  {
+    DebugLogWrite("BlitImageToSurfaceRect:");
+    char buf[256];
+    snprintf(buf, ARR_SIZE(buf), " source: %d, %d, %d, %p, %p", source->ubBitDepth, source->usWidth,
+             source->usHeight, source->palette, source->palette16bpp);
+    DebugLogWrite(buf);
+    snprintf(buf, ARR_SIZE(buf), " dest:   %d, %d, %d, %d", dest->ubBitDepth, dest->usWidth,
+             dest->usHeight, destPitch);
+    DebugLogWrite(buf);
+  }
 
   if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
     if (!source->palette16bpp) {
@@ -809,6 +775,15 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
         .data = source->image_data,
     };
     Blt8bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
+  } else if (source->ubBitDepth == 16 && dest->ubBitDepth == 16) {
+    struct ImageDataParams src = {
+        .width = source->usWidth,
+        .height = source->usHeight,
+        .palette16bpp = NULL,
+        .pitch = source->usWidth * 2,
+        .data = source->image_data,
+    };
+    Blt16bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
   } else {
     DebugLogWrite("BlitImageToSurfaceRect: unsupported bit depth combination");
   }
