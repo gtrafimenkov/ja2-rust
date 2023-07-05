@@ -14,7 +14,6 @@ struct VSurface {
   // Direct Draw One Interface
   PTR pSurfaceData1;
 
-  UINT32 fFlags;              // Used to describe memory usage, etc
   COLORVAL TransparentColor;  // Defaults to 0,0,0
   PTR pClipper;               // A void pointer encapsolated as a clipper Surface
 };

@@ -1504,7 +1504,6 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height) {
   vs->pSurfaceData1 = (PTR)lpDDS;
   vs->pSurfaceData = (PTR)lpDDS2;
   vs->TransparentColor = FROMRGB(0, 0, 0);
-  vs->fFlags = 0;
   vs->pClipper = NULL;
 
   return (vs);
