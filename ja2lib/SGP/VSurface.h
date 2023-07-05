@@ -163,8 +163,6 @@ extern UINT32 guiSAVEBUFFER;
 BOOLEAN InitializeSystemVideoObjects();
 BOOLEAN InitializeGameVideoObjects();
 
-void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
-                          struct GRect sourceRect);
 void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y);
 void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, i32 y,
                             struct GRect sourceRect);

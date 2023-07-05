@@ -816,30 +816,3 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
   }
   VSurfaceUnlock(dest);
 }
-
-void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x, i32 y,
-                          struct GRect sourceRect) {
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
-  void *pSrcBuf;
-  pDestBuf = (UINT16 *)VSurfaceLockOld(dest, &uiDestPitchBYTES);
-  pSrcBuf = VSurfaceLockOld(source, &uiSrcPitchBYTES);
-
-  if (source->ubBitDepth == 8) {
-    struct ImageDataParams src = {
-        .width = source->usWidth,
-        .height = source->usHeight,
-        .palette16bpp = source->p16BPPPalette,
-        .pitch = uiSrcPitchBYTES,
-        .data = pSrcBuf,
-    };
-    DebugLogWrite("xxxx 01");
-    Blt8bppTo16bppRect(&src, pDestBuf, uiDestPitchBYTES, x, y, sourceRect);
-  } else if (source->ubBitDepth == 16) {
-    Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, x, y,
-                    sourceRect);
-  }
-  VSurfaceUnlock(dest);
-  VSurfaceUnlock(source);
-}
