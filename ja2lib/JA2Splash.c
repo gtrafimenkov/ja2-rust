@@ -35,30 +35,6 @@ void InitJA2SplashScreen() {
 
   File_RegisterSlfLibraries(".");
 
-#if !defined(ENGLISH) && defined(JA2TESTVERSION)
-  UINT32 uiLogoID = 0;
-  struct VSurface* hVSurface;
-  if (!AddVideoSurfaceFromFile("LOADSCREENS\\Notification.sti", &uiLogoID)) {
-    AssertMsg(0, String("Failed to load %s", VSurfaceDesc.ImageFile));
-    return;
-  }
-  GetVideoSurface(&hVSurface, uiLogoID);
-  BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
-  DeleteVideoSurfaceFromIndex(uiLogoID);
-
-  InvalidateScreen();
-  RefreshScreen();
-
-  guiSplashStartTime = GetJA2Clock();
-  while (i < 60 * 15)  // guiSplashStartTime + 15000 > GetJA2Clock() )
-  {
-    // Allow the user to pick his bum.
-    InvalidateScreen();
-    RefreshScreen();
-    i++;
-  }
-#endif
-
 #ifdef ENGLISH
   ClearMainMenu();
 #else
