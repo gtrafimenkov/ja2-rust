@@ -1503,8 +1503,6 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height) {
   vs->usWidth = width;
   vs->pSurfaceData1 = (PTR)lpDDS;
   vs->pSurfaceData = (PTR)lpDDS2;
-  vs->pPalette = NULL;
-  vs->p16BPPPalette = NULL;
   vs->TransparentColor = FROMRGB(0, 0, 0);
   vs->fFlags = 0;
   vs->pClipper = NULL;
@@ -1530,33 +1528,6 @@ void VSurfaceUnlock(struct VSurface *vs) {
   if (vs) {
     IDirectDrawSurface2_Unlock((LPDIRECTDRAWSURFACE2)vs->pSurfaceData, NULL);
   }
-}
-
-// Palette setting is expensive, need to set both DDPalette and create 16BPP palette
-BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
-  Assert(hVSurface != NULL);
-
-  // Create palette object if not already done so
-  if (hVSurface->pPalette == NULL) {
-    DDCreatePalette(dd2Object, (DDPCAPS_8BIT | DDPCAPS_ALLOW256), (LPPALETTEENTRY)(&pSrcPalette[0]),
-                    (LPDIRECTDRAWPALETTE *)&hVSurface->pPalette, NULL);
-  } else {
-    // Just Change entries
-    DDSetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
-                        (PALETTEENTRY *)pSrcPalette);
-  }
-
-  // Delete 16BPP Palette if one exists
-  if (hVSurface->p16BPPPalette != NULL) {
-    MemFree(hVSurface->p16BPPPalette);
-    hVSurface->p16BPPPalette = NULL;
-  }
-
-  // Create 16BPP Palette
-  hVSurface->p16BPPPalette = Create16BPPPalette(pSrcPalette);
-
-  DebugMsg(TOPIC_VIDEOSURFACE, DBG_INFO, String("Video Surface Palette change successfull"));
-  return (TRUE);
 }
 
 // Transparency needs to take RGB value and find best fit and place it into DD Surface
@@ -1585,28 +1556,11 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
   return (TRUE);
 }
 
-BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteEntry *pPalette) {
-  if (!(hVSurface->pPalette != NULL)) {
-    return FALSE;
-  }
-
-  DDGetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
-                      (PALETTEENTRY *)pPalette);
-
-  return (TRUE);
-}
-
 // Deletes all palettes, surfaces and region data
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
   // Assertions
   if (!(hVSurface != NULL)) {
     return FALSE;
-  }
-
-  // Release palette
-  if (hVSurface->pPalette != NULL) {
-    DDReleasePalette((LPDIRECTDRAWPALETTE)hVSurface->pPalette);
-    hVSurface->pPalette = NULL;
   }
 
   // Get surface pointer
@@ -1615,12 +1569,6 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
   // Release surface
   if (hVSurface->pSurfaceData1 != NULL) {
     DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSurfaceData1, &lpDDSurface);
-  }
-
-  // If there is a 16bpp palette, free it
-  if (hVSurface->p16BPPPalette != NULL) {
-    MemFree(hVSurface->p16BPPPalette);
-    hVSurface->p16BPPPalette = NULL;
   }
 
   MemFree(hVSurface);
@@ -1645,19 +1593,6 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   // Get and Set palette, if attached, allow to fail
   LPDIRECTDRAWPALETTE pDDPalette;
   HRESULT ReturnCode = IDirectDrawSurface2_GetPalette(lpDDSurface, &pDDPalette);
-
-  if (ReturnCode == DD_OK) {
-    // Set 8-bit Palette and 16 BPP palette
-    hVSurface->pPalette = pDDPalette;
-
-    // Create 16-BPP Palette
-    struct SGPPaletteEntry palette[256];
-    DDGetPaletteEntries(pDDPalette, 0, 0, 256, (LPPALETTEENTRY)palette);
-    hVSurface->p16BPPPalette = Create16BPPPalette(palette);
-  } else {
-    hVSurface->pPalette = NULL;
-    hVSurface->p16BPPPalette = NULL;
-  }
 
   return (hVSurface);
 }

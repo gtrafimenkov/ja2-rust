@@ -467,7 +467,8 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip(UINT16 *pBuffer, UINT32
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                                      UINT16 *pZBuffer, UINT16 usZValue,
                                                      struct VObject *hSrcVObject, INT32 iX,
-                                                     INT32 iY, UINT16 usIndex, struct GRect *clipregion);
+                                                     INT32 iY, UINT16 usIndex,
+                                                     struct GRect *clipregion);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip(
     UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue,
     struct VObject *hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, struct GRect *clipregion,
@@ -996,8 +997,6 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                       pCorpse = &(gRottingCorpse[pNode->pAniTile->uiUserData]);
 
                       pShadeTable = pCorpse->pShades[pNode->ubShadeLevel];
-
-                      // pShadeTable = pCorpse->p16BPPPalette;
 
                       dOffsetX = pCorpse->def.dXPos - gsRenderCenterX;
                       dOffsetY = pCorpse->def.dYPos - gsRenderCenterY;
