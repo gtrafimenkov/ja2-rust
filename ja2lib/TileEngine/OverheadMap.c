@@ -124,7 +124,7 @@ void InitNewOverheadDB(UINT8 ubTilesetID) {
     // Adjust for tileset position
     sprintf(cAdjustedFile, "TILESETS\\%d\\T\\%s", ubTilesetID, cFileBPP);
 
-    hVObject = CreateVObjectFromFile(cAdjustedFile);
+    hVObject = LoadVObjectFromFile(cAdjustedFile);
 
     if (hVObject == NULL) {
       // TRY loading from default directory
@@ -133,11 +133,11 @@ void InitNewOverheadDB(UINT8 ubTilesetID) {
       sprintf(cAdjustedFile, "TILESETS\\0\\T\\%s", cFileBPP);
 
       // LOAD ONE WE KNOW ABOUT!
-      hVObject = CreateVObjectFromFile(cAdjustedFile);
+      hVObject = LoadVObjectFromFile(cAdjustedFile);
 
       if (hVObject == NULL) {
         // LOAD ONE WE KNOW ABOUT!
-        hVObject = CreateVObjectFromFile("TILESETS\\0\\T\\grass.sti");
+        hVObject = LoadVObjectFromFile("TILESETS\\0\\T\\grass.sti");
       }
     }
 

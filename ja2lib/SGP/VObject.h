@@ -90,7 +90,6 @@ BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex);
 //
 // **********************************************************************************
 
-struct VObject *CreateVObjectFromFile(const char *path);
 struct VObject *CreateVObjectFromHImage(struct Image *hImage);
 
 // Deletes all data

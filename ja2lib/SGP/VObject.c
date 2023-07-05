@@ -147,14 +147,6 @@ BOOLEAN AddVideoObject(VOBJECT_DESC *desc, UINT32 *puiIndex) {
   return _AddVideoObject(&info, puiIndex);
 }
 
-struct VObject *LoadVObjectFromFile(const char *path) {
-  struct VObject *vo = CreateVObjectFromFile(path);
-  if (vo) {
-    vo->TransparentColor = FROMRGB(0, 0, 0);
-  }
-  return vo;
-}
-
 BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
   VOBJECT_INFO desc;
   desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -181,7 +173,7 @@ BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
 
   // Create video object
   if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMFILE) {
-    hVObject = CreateVObjectFromFile(pVObjectDesc->ImageFile);
+    hVObject = LoadVObjectFromFile(pVObjectDesc->ImageFile);
   } else if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMHIMAGE) {
     hVObject = CreateVObjectFromHImage(pVObjectDesc->hImage);
   } else {
@@ -193,9 +185,6 @@ BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
     // Video Object will set error condition.
     return FALSE;
   }
-
-  // Set transparency to default
-  hVObject->TransparentColor = FROMRGB(0, 0, 0);
 
   // Set into video object list
   if (gpVObjectHead) {  // Add node after tail
@@ -226,20 +215,6 @@ BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
 #endif
 
   return TRUE;
-}
-
-BOOLEAN SetVideoObjectTransparency(UINT32 uiIndex, COLORVAL TransColor) {
-  struct VObject *hVObject;
-
-  // Get video object
-  if (!(GetVideoObject(&hVObject, uiIndex))) {
-    return FALSE;
-  }
-
-  // Set transparency
-  hVObject->TransparentColor = TransColor;
-
-  return (TRUE);
 }
 
 // TODO: rust
@@ -346,7 +321,7 @@ bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i3
 // Video Object Manipulation Functions
 // *******************************************************************************
 
-struct VObject *CreateVObjectFromFile(const char *path) {
+struct VObject *LoadVObjectFromFile(const char *path) {
   // Allocate memory for video object data and initialize
   struct VObject *hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
   if (!(hVObject != NULL)) {
