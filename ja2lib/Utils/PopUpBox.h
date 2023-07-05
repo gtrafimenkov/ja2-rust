@@ -42,7 +42,7 @@ struct popupbox {
   UINT32 uiTopMargin;
   UINT32 uiLineSpace;
   INT32 iBorderObjectIndex;
-  INT32 iBackGroundSurface;
+  struct Image *backgroundImage;
   UINT32 uiFlags;
   UINT32 uiBuffer;
   UINT32 uiSecondColumnMinimunOffset;
@@ -75,7 +75,7 @@ void SetBoxSize(INT32 hBoxHandle, struct GRect Dimensions);
 void GetBoxSize(INT32 hBoxHandle, struct GRect *Dimensions);
 void SetBoxFlags(INT32 hBoxHandle, UINT32 uiFlags);
 void SetBorderType(INT32 hBoxHandle, INT32 BorderObjectIndex);
-void SetBackGroundSurface(INT32 hBoxHandle, INT32 BackGroundSurfaceIndex);
+void SetBackGroundSurface(INT32 hBoxHandle, struct Image *image);
 void AddMonoString(UINT32 *hStringHandle, STR16 pString);
 void AddColorString(INT32 *hStringHandle, STR16 pString);
 void SetPopUpStringFont(INT32 hStringHandle, UINT32 uiFont);

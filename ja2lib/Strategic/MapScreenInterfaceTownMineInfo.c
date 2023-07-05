@@ -237,7 +237,7 @@ void CreateTownInfoBox(void) {
   SetBorderType(ghTownMineBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghTownMineBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghTownMineBox, popupTextures);
 
   // margin sizes
   SetMargins(ghTownMineBox, 6, 6, 8, 6);

@@ -6835,7 +6835,7 @@ void CreateSquadBox(void) {
   SetBorderType(ghSquadBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghSquadBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghSquadBox, popupTextures);
 
   // margin sizes
   SetMargins(ghSquadBox, 6, 6, 4, 4);
@@ -6913,7 +6913,7 @@ void CreateEPCBox(void) {
   SetBorderType(ghEpcBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghEpcBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghEpcBox, popupTextures);
 
   // margin sizes
   SetMargins(ghEpcBox, 6, 6, 4, 4);
@@ -7052,7 +7052,7 @@ void CreateVehicleBox() {
                  (POPUP_BOX_FLAG_CLIP_TEXT | POPUP_BOX_FLAG_CENTER_TEXT | POPUP_BOX_FLAG_RESIZE));
   SetBoxBuffer(ghVehicleBox, FRAME_BUFFER);
   SetBorderType(ghVehicleBox, guiPOPUPBORDERS);
-  SetBackGroundSurface(ghVehicleBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghVehicleBox, popupTextures);
   SetMargins(ghVehicleBox, 6, 6, 4, 4);
   SetLineSpace(ghVehicleBox, 2);
 }
@@ -7062,7 +7062,7 @@ void CreateRepairBox(void) {
                  (POPUP_BOX_FLAG_CLIP_TEXT | POPUP_BOX_FLAG_CENTER_TEXT | POPUP_BOX_FLAG_RESIZE));
   SetBoxBuffer(ghRepairBox, FRAME_BUFFER);
   SetBorderType(ghRepairBox, guiPOPUPBORDERS);
-  SetBackGroundSurface(ghRepairBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghRepairBox, popupTextures);
   SetMargins(ghRepairBox, 6, 6, 4, 4);
   SetLineSpace(ghRepairBox, 2);
 }
@@ -7083,7 +7083,7 @@ void CreateContractBox(struct SOLDIERTYPE *pCharacter) {
                  (POPUP_BOX_FLAG_CLIP_TEXT | POPUP_BOX_FLAG_RESIZE));
   SetBoxBuffer(ghContractBox, FRAME_BUFFER);
   SetBorderType(ghContractBox, guiPOPUPBORDERS);
-  SetBackGroundSurface(ghContractBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghContractBox, popupTextures);
   SetMargins(ghContractBox, 6, 6, 4, 4);
   SetLineSpace(ghContractBox, 2);
 
@@ -7200,7 +7200,7 @@ void CreateAttributeBox(void) {
   SetBorderType(ghAttributeBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghAttributeBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghAttributeBox, popupTextures);
 
   // margin sizes
   SetMargins(ghAttributeBox, 6, 6, 4, 4);
@@ -7261,7 +7261,7 @@ void CreateTrainingBox(void) {
   SetBorderType(ghTrainingBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghTrainingBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghTrainingBox, popupTextures);
 
   // margin sizes
   SetMargins(ghTrainingBox, 6, 6, 4, 4);
@@ -7330,7 +7330,7 @@ void CreateAssignmentsBox(void) {
   SetBorderType(ghAssignmentBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghAssignmentBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghAssignmentBox, popupTextures);
 
   // margin sizes
   SetMargins(ghAssignmentBox, 6, 6, 4, 4);
@@ -7397,7 +7397,7 @@ void CreateMercRemoveAssignBox(void) {
   SetBorderType(ghRemoveMercAssignBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghRemoveMercAssignBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghRemoveMercAssignBox, popupTextures);
 
   // margin sizes
   SetMargins(ghRemoveMercAssignBox, 6, 6, 4, 4);
@@ -7443,7 +7443,8 @@ BOOLEAN CreateDestroyAssignmentPopUpBoxes(void) {
       return FALSE;
     }
 
-    if (!(AddVideoSurfaceFromFile("INTERFACE\\popupbackground.pcx", &guiPOPUPTEX))) {
+    popupTextures = CreateImage("INTERFACE\\popupbackground.pcx", false);
+    if (!popupTextures) {
       return FALSE;
     }
 
@@ -7460,7 +7461,7 @@ BOOLEAN CreateDestroyAssignmentPopUpBoxes(void) {
     fCreated = TRUE;
   } else if ((fShowAssignmentMenu == FALSE) && (fCreated == TRUE)) {
     DeleteVideoObjectFromIndex(guiPOPUPBORDERS);
-    DeleteVideoSurfaceFromIndex(guiPOPUPTEX);
+    DestroyImage(popupTextures);
 
     RemoveBox(ghAttributeBox);
     ghAttributeBox = -1;

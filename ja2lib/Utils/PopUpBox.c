@@ -300,11 +300,11 @@ void SetBorderType(INT32 hBoxHandle, INT32 iBorderObjectIndex) {
   return;
 }
 
-void SetBackGroundSurface(INT32 hBoxHandle, INT32 iBackGroundSurfaceIndex) {
+void SetBackGroundSurface(INT32 hBoxHandle, struct Image *image) {
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[hBoxHandle]);
-  PopUpBoxList[hBoxHandle]->iBackGroundSurface = iBackGroundSurfaceIndex;
+  PopUpBoxList[hBoxHandle]->backgroundImage = image;
   return;
 }
 
@@ -1079,8 +1079,8 @@ BOOLEAN DrawBox(UINT32 uiCounter) {
 
   // blit in texture first, then borders
 
-  BlitSurfaceToSurface(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface),
-                       GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), usTopX, usTopY, clip);
+  BlitImageToSurfaceRect(PopUpBoxList[uiCounter]->backgroundImage,
+                         GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), usTopX, usTopY, clip);
 
   GetVideoObject(&hBoxHandle, PopUpBoxList[uiCounter]->iBorderObjectIndex);
 
