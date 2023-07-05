@@ -656,43 +656,6 @@ UINT16 GetVSurfaceWidth(const struct VSurface *vs) { return vs->usWidth; }
 
 struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
 
-struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
-  struct Image *image = CreateImage(path, false);
-  if (image == NULL) {
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
-    return (NULL);
-  }
-
-  {
-    char buf[256];
-    snprintf(buf, ARR_SIZE(buf),
-             "XXX CreateVideoSurfaceFromFile, %s, bitdepth=%d, palette=%p, palette16bpp=%p", path,
-             image->ubBitDepth, image->palette, image->palette16bpp);
-    DebugLogWrite(buf);
-  }
-
-  struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, image->ubBitDepth);
-
-  if (vs) {
-    struct GRect tempRect;
-    tempRect.iLeft = 0;
-    tempRect.iTop = 0;
-    tempRect.iRight = image->usWidth - 1;
-    tempRect.iBottom = image->usHeight - 1;
-    DebugLogWrite("a000");
-    SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
-    DebugLogWrite("a001");
-    if (image->ubBitDepth == 8) {
-      SetVideoSurfacePalette(vs, image->palette);
-    }
-    DebugLogWrite("a002");
-    DestroyImage(image);
-    DebugLogWrite("a003");
-  }
-
-  return vs;
-}
-
 UINT32 guiRIGHTPANEL = 0;
 UINT32 guiSAVEBUFFER = 0;
 

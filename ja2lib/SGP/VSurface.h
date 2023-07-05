@@ -150,7 +150,6 @@ void VSurfaceUnlock(struct VSurface *vs);
 BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch);
 
 struct VSurface *CreateVideoSurface(u16 width, u16 height, u8 bitDepth);
-struct VSurface *CreateVideoSurfaceFromFile(const char *path);
 struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex);
 
 // Global variables for video objects
