@@ -4846,7 +4846,7 @@ BlitDone:
 // Blits a subrect from a flat 8 bit surface to a 16-bit buffer.
 // This is the same as Blt8bppTo16bp with support of source rect.
 bool Blt8bppTo16bppRect(const struct ImageDataParams *source, UINT16 *dest, u32 destPitch, INT32 iX,
-                        INT32 iY, struct GRect *sourceRect) {
+                        INT32 iY, struct GRect sourceRect) {
   UINT16 *p16BPPPalette;
   UINT32 usHeight, usWidth;
   UINT8 *SrcPtr, *DestPtr;
@@ -4873,11 +4873,11 @@ bool Blt8bppTo16bppRect(const struct ImageDataParams *source, UINT16 *dest, u32 
     return FALSE;
   }
 
-  LeftSkip = sourceRect->iLeft;
-  RightSkip = usWidth - sourceRect->iRight;
-  TopSkip = sourceRect->iTop * source->pitch;
-  BlitLength = sourceRect->iRight - sourceRect->iLeft;
-  BlitHeight = sourceRect->iBottom - sourceRect->iTop;
+  LeftSkip = sourceRect.iLeft;
+  RightSkip = usWidth - sourceRect.iRight;
+  TopSkip = sourceRect.iTop * source->pitch;
+  BlitLength = sourceRect.iRight - sourceRect.iLeft;
+  BlitHeight = sourceRect.iBottom - sourceRect.iTop;
   SrcSkip = source->pitch - BlitLength;
 
   SrcPtr = (UINT8 *)source->data + TopSkip + LeftSkip;

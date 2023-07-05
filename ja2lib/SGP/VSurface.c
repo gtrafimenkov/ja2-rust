@@ -801,7 +801,7 @@ void BlitSurfaceToSurface(struct VSurface *source, struct VSurface *dest, i32 x,
         .data = pSrcBuf,
     };
     DebugLogWrite("xxxx 01");
-    Blt8bppTo16bppRect(&src, pDestBuf, uiDestPitchBYTES, x, y, &sourceRect);
+    Blt8bppTo16bppRect(&src, pDestBuf, uiDestPitchBYTES, x, y, sourceRect);
   } else if (source->ubBitDepth == 16) {
     Blt16BPPTo16BPP(pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, x, y,
                     sourceRect);

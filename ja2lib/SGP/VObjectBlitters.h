@@ -177,7 +177,7 @@ bool Blt8bppTo16bp(struct ImageDataParams *source, u16 *dest, u32 destPitch, INT
 // Blits a subrect from a flat 8 bit surface to a 16-bit buffer.
 // This is the same as Blt8bppTo16bp with support of source rect.
 bool Blt8bppTo16bppRect(const struct ImageDataParams *source, u16 *dest, u32 destPitch, INT32 iX,
-                        INT32 iY, struct GRect *sourceRect);
+                        INT32 iY, struct GRect sourceRect);
 
 BOOLEAN Blt8BPPDataTo16BPPBufferHalfRect(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
                                          struct VSurface *hSrcVSurface, UINT8 *pSrcBuffer,
