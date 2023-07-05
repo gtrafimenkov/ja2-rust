@@ -258,7 +258,7 @@ INT32 DoMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 u
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
-                  gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight);
+                  NewGRect(gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight));
 
   VSurfaceUnlock(GetVSByID(gMsgBox.uiSaveBuffer));
   VSurfaceUnlock(vsFB);
@@ -788,7 +788,7 @@ UINT32 ExitMsgBox(INT8 ubExitCode) {
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
-                    gMsgBox.sX, gMsgBox.sY, 0, 0, gMsgBox.usWidth, gMsgBox.usHeight);
+                    gMsgBox.sX, gMsgBox.sY, NewGRect(0, 0, gMsgBox.usWidth, gMsgBox.usHeight));
 
     VSurfaceUnlock(GetVSByID(gMsgBox.uiSaveBuffer));
     VSurfaceUnlock(vsFB);

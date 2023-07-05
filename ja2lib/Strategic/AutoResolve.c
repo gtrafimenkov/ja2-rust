@@ -2738,7 +2738,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   xp = pCell->xp + 2;
   yp = pCell->yp + 32;
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, xp, yp,
-                  xp - gpAR->Rect.iLeft, yp - gpAR->Rect.iTop, 46, 10);
+                  NewGRect(xp - gpAR->Rect.iLeft, yp - gpAR->Rect.iTop, 46, 10));
   VSurfaceUnlock(GetVSByID(gpAR->iInterfaceBuffer));
   VSurfaceUnlock(vsFB);
 

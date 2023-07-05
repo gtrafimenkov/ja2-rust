@@ -250,8 +250,8 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0, 0,
-                  0, 640, 480);
+  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
+                  NewGRect(0, 0, 640, 480));
 
   VSurfaceUnlock(vsFB);
   VSurfaceUnlock(vsSB);

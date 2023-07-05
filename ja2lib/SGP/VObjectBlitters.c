@@ -867,8 +867,7 @@ BlitDone:
 
 **********************************************************************************************/
 BOOLEAN Blt16BPPTo16BPP(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, UINT32 uiSrcPitch,
-                        INT32 iDestXPos, INT32 iDestYPos, INT32 iSrcXPos, INT32 iSrcYPos,
-                        UINT32 uiWidth, UINT32 uiHeight) {
+                        INT32 iDestXPos, INT32 iDestYPos, struct GRect sourceRect) {
   UINT16 *pSrcPtr, *pDestPtr;
   UINT32 uiLineSkipDest, uiLineSkipSrc;
 
@@ -879,7 +878,10 @@ BOOLEAN Blt16BPPTo16BPP(UINT16 *pDest, UINT32 uiDestPitch, UINT16 *pSrc, UINT32 
     return FALSE;
   }
 
-  pSrcPtr = (UINT16 *)((UINT8 *)pSrc + (iSrcYPos * uiSrcPitch) + (iSrcXPos * 2));
+  i32 uiWidth = sourceRect.iRight - sourceRect.iLeft;
+  i32 uiHeight = sourceRect.iBottom - sourceRect.iTop;
+
+  pSrcPtr = (UINT16 *)((UINT8 *)pSrc + (sourceRect.iTop * uiSrcPitch) + (sourceRect.iLeft * 2));
   pDestPtr = (UINT16 *)((UINT8 *)pDest + (iDestYPos * uiDestPitch) + (iDestXPos * 2));
   uiLineSkipDest = uiDestPitch - (uiWidth * 2);
   uiLineSkipSrc = uiSrcPitch - (uiWidth * 2);

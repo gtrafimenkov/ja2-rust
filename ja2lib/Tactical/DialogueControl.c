@@ -2011,9 +2011,10 @@ void RenderFaceOverlay(VIDEO_OVERLAY *pBlitter) {
     pSrcBuf =
         VSurfaceLockOld(GetVSByID(gpCurrentTalkingFace->uiAutoDisplayBuffer), &uiSrcPitchBYTES);
 
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
-                    (INT16)(pBlitter->sX + 14), (INT16)(pBlitter->sY + 6), 0, 0,
-                    gpCurrentTalkingFace->usFaceWidth, gpCurrentTalkingFace->usFaceHeight);
+    Blt16BPPTo16BPP(
+        (UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
+        (INT16)(pBlitter->sX + 14), (INT16)(pBlitter->sY + 6),
+        NewGRect(0, 0, gpCurrentTalkingFace->usFaceWidth, gpCurrentTalkingFace->usFaceHeight));
 
     VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
     VSurfaceUnlock(GetVSByID(gpCurrentTalkingFace->uiAutoDisplayBuffer));
