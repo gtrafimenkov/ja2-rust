@@ -4,6 +4,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 
+struct GRect;
 struct Subimage;
 
 // The struct Image* module provides a common interface for managing image data. This module
