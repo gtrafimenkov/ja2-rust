@@ -15,7 +15,6 @@ struct VSurface {
   PTR pSurfaceData1;
 
   COLORVAL TransparentColor;  // Defaults to 0,0,0
-  PTR pClipper;               // A void pointer encapsolated as a clipper Surface
 };
 
 #endif
