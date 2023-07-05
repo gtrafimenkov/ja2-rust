@@ -267,8 +267,8 @@ enum {
   MAP_SHADE_LT_RED,
   MAP_SHADE_DK_RED,
 };
+
 // the big map .pcx
-UINT32 guiBIGMAP;
 struct Image *imageBigMap = NULL;
 struct Image *imageSmallMap = NULL;
 

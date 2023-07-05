@@ -8084,8 +8084,6 @@ BOOLEAN AnyMercsLeavingRealSoon() {
   return (fFoundOne);
 }
 
-// the big map
-extern UINT32 guiBIGMAP;
 extern struct Image *imageBigMap;
 extern struct Image *imageSmallMap;
 
@@ -8099,10 +8097,6 @@ BOOLEAN PreloadMapScreenGraphics(void) {
   imageSmallMap = ScaleImageDown2x(imageBigMap);
   if (!imageSmallMap) {
     return false;
-  }
-
-  if (!(AddVideoSurfaceFromFile("INTERFACE\\b_map.pcx", &guiBIGMAP))) {
-    return FALSE;
   }
 
   if (!AddVObjectFromFile("INTERFACE\\mapcursr.sti", &guiMAPCURSORS)) {
@@ -8230,7 +8224,6 @@ BOOLEAN PreloadMapScreenGraphics(void) {
 void UnloadMapScreenGraphics(void) {
   DestroyImage(imageBigMap);
   DestroyImage(imageSmallMap);
-  DeleteVideoSurfaceFromIndex(guiBIGMAP);
 
   DeleteMapBottomGraphics();
   DeleteVideoObjectFromIndex(guiMAPCURSORS);
