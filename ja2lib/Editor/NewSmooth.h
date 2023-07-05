@@ -4,6 +4,8 @@
 #include "BuildDefines.h"
 #include "SGP/Types.h"
 
+struct GRect;
+
 void AddBuildingSectionToWorld(struct GRect *pSelectRegion);
 void RemoveBuildingSectionFromWorld(struct GRect *pSelectRegion);
 
