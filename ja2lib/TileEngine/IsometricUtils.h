@@ -5,6 +5,7 @@
 #include "Tactical/OverheadTypes.h"
 #include "TileEngine/WorldDef.h"
 
+struct GRect;
 struct SOLDIERTYPE;
 
 // DEFINES
@@ -91,8 +92,8 @@ BOOLEAN CellXYToScreenXY(int16_t sCellX, int16_t sCellY, int16_t *sScreenX, int1
 int32_t GetRangeFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
 int32_t GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2);
 
-BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, SGPRect *pRect);
-BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, SGPRect *pRect,
+BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, struct GRect *pRect);
+BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, struct GRect *pRect,
                                         int16_t *sXRel, int16_t *sRelY);
 
 int16_t PythSpacesAway(int16_t sOrigin, int16_t sDest);

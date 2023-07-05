@@ -88,7 +88,7 @@ typedef struct {
 } VIDEO_OVERLAY_DESC;
 
 // GLOBAL VARIABLES
-extern SGPRect gDirtyClipRect;
+extern struct GRect gDirtyClipRect;
 
 // FUNCTIONS
 ////////////

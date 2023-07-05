@@ -37,12 +37,11 @@ typedef struct {
   uint16_t sHeight;
   uint8_t ubBackgroundIndex;
   uint8_t ubBorderIndex;
-  uint32_t uiMercTextPopUpBackground;
+  struct Image *backgroundImage;
   uint32_t uiMercTextPopUpBorder;
   BOOLEAN fMercTextPopupInitialized;
   BOOLEAN fMercTextPopupSurfaceInitialized;
   uint32_t uiFlags;
-
 } MercPopUpBox;
 
 BOOLEAN OverrideMercPopupBox(MercPopUpBox *pMercBox);

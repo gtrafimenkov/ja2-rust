@@ -117,7 +117,7 @@ BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, int16_t sAdditionalData)
   uint32_t uiTraverseTimeInMinutes;
   struct SOLDIERTYPE *pSoldier;
   int32_t i;
-  SGPRect aRect;
+  struct GRect aRect;
   uint16_t usTextBoxWidth, usTextBoxHeight;
   uint16_t usMapPos = 0;
   int8_t bExitCode = -1;

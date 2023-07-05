@@ -70,11 +70,11 @@ void GetMousePos(SGPPoint *Point) {}
 
 void RestrictMouseToXYXY(uint16_t usX1, uint16_t usY1, uint16_t usX2, uint16_t usY2) {}
 
-void RestrictMouseCursor(SGPRect *pRectangle) {}
+void RestrictMouseCursor(struct GRect *pRectangle) {}
 
 void FreeMouseCursor(void) {}
 
-void GetRestrictedClipCursor(SGPRect *pRectangle) {}
+void GetRestrictedClipCursor(struct GRect *pRectangle) {}
 
 BOOLEAN IsCursorRestricted(void) { return FALSE; }
 
@@ -154,17 +154,7 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
   return FALSE;
 }
 
-struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height, uint8_t bitDepth) {
-  return NULL;
-}
-
-BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
-  return FALSE;
-}
-
-BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteEntry *pPalette) {
-  return FALSE;
-}
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) { return NULL; }
 
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }
 

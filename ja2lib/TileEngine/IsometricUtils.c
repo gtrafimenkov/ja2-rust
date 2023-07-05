@@ -16,6 +16,7 @@
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/WorldMan.h"
+#include "rust_geometry.h"
 
 uint32_t guiForceRefreshMousePositionCalculation = 0;
 
@@ -527,7 +528,7 @@ int32_t GetRangeInCellCoordsFromGridNoDiff(int16_t sGridNo1, int16_t sGridNo2) {
                     CELL_X_SIZE));
 }
 
-BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, SGPRect *pRect) {
+BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, struct GRect *pRect) {
   if ((sXPos >= pRect->iLeft) && (sXPos <= pRect->iRight) && (sYPos >= pRect->iTop) &&
       (sYPos <= pRect->iBottom)) {
     return (TRUE);
@@ -536,7 +537,7 @@ BOOLEAN IsPointInScreenRect(int16_t sXPos, int16_t sYPos, SGPRect *pRect) {
   }
 }
 
-BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, SGPRect *pRect,
+BOOLEAN IsPointInScreenRectWithRelative(int16_t sXPos, int16_t sYPos, struct GRect *pRect,
                                         int16_t *sXRel, int16_t *sYRel) {
   if ((sXPos >= pRect->iLeft) && (sXPos <= pRect->iRight) && (sYPos >= pRect->iTop) &&
       (sYPos <= pRect->iBottom)) {

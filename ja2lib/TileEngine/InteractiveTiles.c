@@ -366,8 +366,8 @@ void SetActionModeDoorCursorText() {
   }
 }
 
-void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, int16_t sXPos, int16_t sYPos,
-                            int16_t sGridNo) {
+void GetLevelNodeScreenRect(struct LEVELNODE *pNode, struct GRect *pRect, int16_t sXPos,
+                            int16_t sYPos, int16_t sGridNo) {
   int16_t sScreenX, sScreenY;
   int16_t sOffsetX, sOffsetY;
   int16_t sTempX_S, sTempY_S;
@@ -436,7 +436,7 @@ void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, int16_t sXP
 void CompileInteractiveTiles() {}
 
 void LogMouseOverInteractiveTile(int16_t sGridNo) {
-  SGPRect aRect;
+  struct GRect aRect;
   int16_t sXMapPos, sYMapPos, sScreenX, sScreenY;
   struct LEVELNODE *pNode;
 

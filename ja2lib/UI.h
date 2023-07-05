@@ -13,7 +13,7 @@ bool IsMapScreen();
 // It is not clear how it is different from IsMapScreen().
 bool IsMapScreen_2();
 
-const SGPRect* GetMapCenteringRect();
+const struct GRect* GetMapCenteringRect();
 
 // Get Merc associated with the context menu on tactical screen.
 struct SOLDIERTYPE* GetTacticalContextMenuMerc();
@@ -72,7 +72,7 @@ void DoScreenIndependantMessageBox(wchar_t* zString, uint16_t usFlags,
 void DoLowerScreenIndependantMessageBox(wchar_t* zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback);
 int32_t DoMessageBox(uint8_t ubStyle, wchar_t* zString, uint32_t uiExitScreen, uint16_t usFlags,
-                     MSGBOX_CALLBACK ReturnCallback, const SGPRect* pCenteringRect);
+                     MSGBOX_CALLBACK ReturnCallback, const struct GRect* pCenteringRect);
 
 ///////////////////////////////////////////////////////////////////
 //

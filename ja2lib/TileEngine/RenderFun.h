@@ -5,6 +5,7 @@
 
 #include "SGP/Types.h"
 #include "TileEngine/WorldDef.h"
+#include "rust_geometry.h"
 
 #define NO_ROOM 0
 #define MAX_ROOMS 250
@@ -16,7 +17,7 @@ BOOLEAN InitRoomDatabase();
 void ShutdownRoomDatabase();
 
 void SetTileRoomNum(int16_t sGridNo, uint8_t ubRoomNum);
-void SetTileRangeRoomNum(SGPRect *pSelectRegion, uint8_t ubRoomNum);
+void SetTileRangeRoomNum(struct GRect *pSelectRegion, uint8_t ubRoomNum);
 
 void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSoldier);
 BOOLEAN InARoom(uint16_t sGridNo, uint8_t *pubRoomNo);

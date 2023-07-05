@@ -170,14 +170,10 @@ uint8_t GetLoadScreenID(uint8_t sSectorX, uint8_t sSectorY, int8_t bSectorZ) {
   }
 }
 
-extern BOOLEAN gfSchedulesHosed;
-
 // sets up the loadscreen with specified ID, and draws it to the FRAME_BUFFER,
 // and refreshing the screen with it.
 void DisplayLoadScreenWithID(uint8_t ubLoadScreenID) {
   SGPFILENAME ImageFile;
-  struct VSurface* hVSurface;
-  uint32_t uiLoadScreen;
 
   switch (ubLoadScreenID) {
     case LOADINGSCREEN_NOTHING:
@@ -314,17 +310,12 @@ void DisplayLoadScreenWithID(uint8_t ubLoadScreenID) {
       break;
   }
 
-  if (gfSchedulesHosed) {
-    SetFont(FONT10ARIAL);
-    SetFontForeground(FONT_YELLOW);
-    SetFontShadow(FONT_NEARBLACK);
-    VSurfaceColorFill(vsFB, 0, 0, 640, 480, 0);
-    mprintf(5, 5, L"Error loading save, attempting to patch save to version 1.02...", ImageFile);
-  } else if (AddVideoSurfaceFromFile(ImageFile, &uiLoadScreen)) {  // Blit the background image
-    GetVideoSurface(&hVSurface, uiLoadScreen);
-    BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
-    DeleteVideoSurfaceFromIndex(uiLoadScreen);
-  } else {  // Failed to load the file, so use a black screen and print out message.
+  struct Image* image = CreateImage(ImageFile, false);
+  if (image) {
+    BlitImageToSurface(image, vsFB, 0, 0);
+    DestroyImage(image);
+  } else {
+    // Failed to load the file, so use a black screen and print out message.
     SetFont(FONT10ARIAL);
     SetFontForeground(FONT_YELLOW);
     SetFontShadow(FONT_NEARBLACK);

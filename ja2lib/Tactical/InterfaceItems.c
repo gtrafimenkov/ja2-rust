@@ -439,12 +439,12 @@ INV_ATTACHXY gMapItemDescAttachmentsXY[] = {
     {173, 36, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY},
     {211, 36, SM_INV_SLOT_HEIGHT, 26, INV_BAR_DX + 2, INV_BAR_DY}};
 
-SGPRect gItemDescProsConsRects[] =
+struct GRect gItemDescProsConsRects[] =
     {  // NB the left value is calculated based on the width of the 'pros' and 'cons' labels
         {0, 111, 313, 118},
         {0, 119, 313, 126}};
 
-SGPRect gMapItemDescProsConsRects[] = {
+struct GRect gMapItemDescProsConsRects[] = {
     {0, 231, 313, 238},
     {0, 239, 313, 246},
 };
@@ -4573,7 +4573,7 @@ BOOLEAN InKeyRingPopup() { return (gfInKeyRingPopup); }
 BOOLEAN InitItemStackPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPosition, int16_t sInvX,
                            int16_t sInvY, int16_t sInvWidth, int16_t sInvHeight) {
   int16_t sX, sY, sCenX, sCenY;
-  SGPRect aRect;
+  struct GRect aRect;
   uint8_t ubLimit;
   struct Subimage *pTrav;
   struct VObject *hVObject;
@@ -4775,7 +4775,7 @@ void DeleteItemStackPopup() {
 
 BOOLEAN InitKeyRingPopup(struct SOLDIERTYPE *pSoldier, int16_t sInvX, int16_t sInvY,
                          int16_t sInvWidth, int16_t sInvHeight) {
-  SGPRect aRect;
+  struct GRect aRect;
   struct Subimage *pTrav;
   struct VObject *hVObject;
   int32_t cnt;

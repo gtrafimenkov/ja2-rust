@@ -14,7 +14,7 @@
 int32_t iMsgBoxNum;
 int32_t iMsgBoxOkImg, iMsgBoxCancelImg;
 int32_t iMsgBoxBgrnd, iMsgBoxOk, iMsgBoxCancel;
-SGPRect MsgBoxRect;
+struct GRect MsgBoxRect;
 
 BOOLEAN gfMessageBoxResult = FALSE;
 uint8_t gubMessageBoxStatus = MESSAGEBOX_NONE;

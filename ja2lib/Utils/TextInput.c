@@ -1160,7 +1160,7 @@ void RenderInactiveTextFieldNode(TEXTINPUTNODE *pNode) {
   if (!pNode->fEnabled && pColors->fUseDisabledAutoShade) {
     uint8_t *pDestBuf;
     uint32_t uiDestPitchBYTES;
-    SGPRect ClipRect;
+    struct GRect ClipRect;
     ClipRect.iLeft = pNode->region.RegionTopLeftX;
     ClipRect.iRight = pNode->region.RegionBottomRightX;
     ClipRect.iTop = pNode->region.RegionTopLeftY;

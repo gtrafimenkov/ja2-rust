@@ -2,6 +2,7 @@
 #define __POPUP_BOX
 
 #include "SGP/Types.h"
+#include "rust_geometry.h"
 
 #define MAX_POPUP_BOX_COUNT 20
 #define MAX_POPUP_BOX_STRING_COUNT \
@@ -33,7 +34,7 @@ typedef struct popupstring POPUPSTRING;
 typedef POPUPSTRING *POPUPSTRINGPTR;
 
 struct popupbox {
-  SGPRect Dimensions;
+  struct GRect Dimensions;
   SGPPoint Position;
   uint32_t uiLeftMargin;
   uint32_t uiRightMargin;
@@ -41,7 +42,7 @@ struct popupbox {
   uint32_t uiTopMargin;
   uint32_t uiLineSpace;
   int32_t iBorderObjectIndex;
-  int32_t iBackGroundSurface;
+  struct Image *backgroundImage;
   uint32_t uiFlags;
   uint32_t uiBuffer;
   uint32_t uiSecondColumnMinimunOffset;
@@ -59,7 +60,7 @@ typedef PopUpBo *PopUpBoxPt;
 
 // functions
 void InitPopUpBoxList();
-BOOLEAN CreatePopUpBox(int32_t *hBoxHandle, SGPRect Dimensions, SGPPoint Position,
+BOOLEAN CreatePopUpBox(int32_t *hBoxHandle, struct GRect Dimensions, SGPPoint Position,
                        uint32_t uiFlags);
 
 void SetMargins(int32_t hBoxHandle, uint32_t uiLeft, uint32_t uiTop, uint32_t uiBottom,
@@ -71,11 +72,11 @@ void SetBoxBuffer(int32_t hBoxHandle, uint32_t uiBuffer);
 void SetBoxPosition(int32_t hBoxHandle, SGPPoint Position);
 void GetBoxPosition(int32_t hBoxHandle, SGPPoint *Position);
 uint32_t GetNumberOfLinesOfTextInBox(int32_t hBoxHandle);
-void SetBoxSize(int32_t hBoxHandle, SGPRect Dimensions);
-void GetBoxSize(int32_t hBoxHandle, SGPRect *Dimensions);
+void SetBoxSize(int32_t hBoxHandle, struct GRect Dimensions);
+void GetBoxSize(int32_t hBoxHandle, struct GRect *Dimensions);
 void SetBoxFlags(int32_t hBoxHandle, uint32_t uiFlags);
 void SetBorderType(int32_t hBoxHandle, int32_t BorderObjectIndex);
-void SetBackGroundSurface(int32_t hBoxHandle, int32_t BackGroundSurfaceIndex);
+void SetBackGroundSurface(int32_t hBoxHandle, struct Image *image);
 void AddMonoString(uint32_t *hStringHandle, wchar_t *pString);
 void AddColorString(int32_t *hStringHandle, wchar_t *pString);
 void SetPopUpStringFont(int32_t hStringHandle, uint32_t uiFont);

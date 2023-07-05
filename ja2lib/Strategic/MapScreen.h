@@ -19,8 +19,8 @@ BOOLEAN SetInfoChar(uint8_t ubSolId);
 void EndMapScreen(BOOLEAN fDuringFade);
 void ReBuildCharactersList(void);
 
-BOOLEAN HandlePreloadOfMapGraphics(void);
-void HandleRemovalOfPreLoadedMapGraphics(void);
+BOOLEAN PreloadMapScreenGraphics(void);
+void UnloadMapScreenGraphics(void);
 
 void ChangeSelectedMapSector(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ);
 

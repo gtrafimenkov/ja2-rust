@@ -43,7 +43,7 @@ typedef void (*MSGBOX_CALLBACK)(uint8_t bExitValue);
 
 // old mouse x and y positions
 SGPPoint pOldMousePosition;
-SGPRect MessageBoxRestrictedCursorRegion;
+struct GRect MessageBoxRestrictedCursorRegion;
 
 // if the cursor was locked to a region
 BOOLEAN fCursorLockedToArea = FALSE;
@@ -63,7 +63,7 @@ void MsgBoxClickCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 uint32_t ExitMsgBox(int8_t ubExitCode);
 uint16_t GetMSgBoxButtonWidth(int32_t iButtonImage);
 
-SGPRect gOldCursorLimitRectangle;
+struct GRect gOldCursorLimitRectangle;
 
 MESSAGE_BOX_STRUCT gMsgBox;
 BOOLEAN gfNewMessageBox = FALSE;
@@ -79,10 +79,10 @@ wchar_t gzUserDefinedButton1[128];
 wchar_t gzUserDefinedButton2[128];
 
 int32_t DoMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint16_t usFlags,
-                     MSGBOX_CALLBACK ReturnCallback, const SGPRect *pCenteringRect) {
+                     MSGBOX_CALLBACK ReturnCallback, const struct GRect *pCenteringRect) {
   uint16_t usTextBoxWidth;
   uint16_t usTextBoxHeight;
-  SGPRect aRect;
+  struct GRect aRect;
   uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
   uint8_t *pDestBuf, *pSrcBuf;
   int16_t sButtonX, sButtonY, sBlankSpace;
@@ -258,7 +258,7 @@ int32_t DoMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, u
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0,
-                  0, gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight);
+                  0, NewGRect(gMsgBox.sX, gMsgBox.sY, usTextBoxWidth, usTextBoxHeight));
 
   VSurfaceUnlock(GetVSByID(gMsgBox.uiSaveBuffer));
   VSurfaceUnlock(vsFB);
@@ -788,7 +788,7 @@ uint32_t ExitMsgBox(int8_t ubExitCode) {
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
 
     Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
-                    gMsgBox.sX, gMsgBox.sY, 0, 0, gMsgBox.usWidth, gMsgBox.usHeight);
+                    gMsgBox.sX, gMsgBox.sY, NewGRect(0, 0, gMsgBox.usWidth, gMsgBox.usHeight));
 
     VSurfaceUnlock(GetVSByID(gMsgBox.uiSaveBuffer));
     VSurfaceUnlock(vsFB);
@@ -1022,20 +1022,20 @@ void DoScreenIndependantMessageBox(wchar_t *zString, uint16_t usFlags,
 // a basic box that don't care what screen we came from
 void DoUpperScreenIndependantMessageBox(wchar_t *zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y / 2};
+  struct GRect CenteringRect = {0, 0, 640, INV_INTERFACE_START_Y / 2};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
 // a basic box that don't care what screen we came from
 void DoLowerScreenIndependantMessageBox(wchar_t *zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, INV_INTERFACE_START_Y / 2, 640, INV_INTERFACE_START_Y};
+  struct GRect CenteringRect = {0, INV_INTERFACE_START_Y / 2, 640, INV_INTERFACE_START_Y};
   DoScreenIndependantMessageBoxWithRect(zString, usFlags, ReturnCallback, &CenteringRect);
 }
 
 void DoScreenIndependantMessageBoxWithRect(wchar_t *zString, uint16_t usFlags,
                                            MSGBOX_CALLBACK ReturnCallback,
-                                           const SGPRect *pCenteringRect) {
+                                           const struct GRect *pCenteringRect) {
   /// which screen are we in?
 
   // Map Screen (excluding AI Viewer)

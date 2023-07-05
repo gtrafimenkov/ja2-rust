@@ -2547,7 +2547,7 @@ void UpdateMercsInfo() {
 // is called by the region callback functions to handle these cases.  The event types are defined
 // in Editor Taskbar Utils.h.  Here are the internal functions...
 
-SGPRect mercRects[9] = {
+struct GRect mercRects[9] = {
     {75, 0, 104, 19},    // head
     {75, 22, 104, 41},   // body
     {76, 73, 105, 92},   // legs
@@ -2559,11 +2559,11 @@ SGPRect mercRects[9] = {
     {180, 75, 232, 94}   // pack 4
 };
 
-BOOLEAN PointInRect(SGPRect *pRect, int32_t x, int32_t y) {
+BOOLEAN PointInRect(struct GRect *pRect, int32_t x, int32_t y) {
   return (x >= pRect->iLeft && x <= pRect->iRight && y >= pRect->iTop && y <= pRect->iBottom);
 }
 
-void DrawRect(SGPRect *pRect, int16_t color) {
+void DrawRect(struct GRect *pRect, int16_t color) {
   uint32_t uiDestPitchBYTES;
   uint8_t *pDestBuf;
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
@@ -2647,7 +2647,7 @@ void AddNewItemToSelectedMercsInventory(BOOLEAN fCreate) {
   struct VObject *hVObject;
   struct Subimage *pObject;
   INVTYPE *item;
-  SGPRect SrcRect, DstRect;
+  struct GRect SrcRect, DstRect;
   int32_t iSrcWidth, iSrcHeight;
   int32_t iDstWidth, iDstHeight;
   float rScalar, rWidthScalar, rHeightScalar;

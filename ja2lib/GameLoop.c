@@ -118,7 +118,7 @@ BOOLEAN InitializeGame(void) {
   InitGameOptions();
 
   // preload mapscreen graphics
-  HandlePreloadOfMapGraphics();
+  PreloadMapScreenGraphics();
 
   guiCurrentScreen = INIT_SCREEN;
 
@@ -129,8 +129,7 @@ BOOLEAN InitializeGame(void) {
 // It will also be responsible to making sure that all Gaming Engine tasks exit properly
 
 void ShutdownGame(void) {
-  // handle shutdown of game with respect to preloaded mapscreen graphics
-  HandleRemovalOfPreLoadedMapGraphics();
+  UnloadMapScreenGraphics();
 
   ShutdownJA2();
 

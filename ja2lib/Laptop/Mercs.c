@@ -977,8 +977,8 @@ BOOLEAN StartSpeckTalking(uint16_t usQuoteNum) {
 BOOLEAN HandleSpeckTalking(BOOLEAN fReset) {
   static BOOLEAN fWasTheMercTalking = FALSE;
   BOOLEAN fIsTheMercTalking;
-  SGPRect SrcRect;
-  SGPRect DestRect;
+  struct GRect SrcRect;
+  struct GRect DestRect;
 
   if (fReset) {
     fWasTheMercTalking = FALSE;
