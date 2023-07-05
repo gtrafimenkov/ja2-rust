@@ -49,9 +49,9 @@
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
 
-BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect);
-BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, SGPRect *pRect);
-void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect);
+BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, struct GRect *pRect);
+BOOLEAN IsPointInScreenRect(INT16 sXPos, INT16 sYPos, struct GRect *pRect);
+void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, struct GRect *pRect);
 
 // This value is used to keep a small static array of uBID's which are stacked
 #define MAX_STACKED_MERCS 10
@@ -165,7 +165,7 @@ extern BOOLEAN CheckVideoObjectScreenCoordinateInData(struct VObject *hSrcVObjec
 BOOLEAN FindSoldier(INT16 sGridNo, UINT16 *pusSoldierIndex, UINT32 *pMercFlags, UINT32 uiFlags) {
   UINT32 cnt;
   struct SOLDIERTYPE *pSoldier;
-  SGPRect aRect;
+  struct GRect aRect;
   BOOLEAN fSoldierFound = FALSE;
   INT16 sXMapPos, sYMapPos, sScreenX, sScreenY;
   INT16 sMaxScreenMercY, sHeighestMercScreenY = -32000;
@@ -459,7 +459,7 @@ BOOLEAN IsValidTargetMerc(UINT8 ubSoldierID) {
   return (TRUE);
 }
 
-BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect) {
+BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, struct GRect *pRect) {
   INT32 iXTrav, iYTrav;
   INT16 sMapPos;
 
@@ -487,7 +487,7 @@ BOOLEAN IsGridNoInScreenRect(INT16 sGridNo, SGPRect *pRect) {
   return (FALSE);
 }
 
-void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, SGPRect *pRect) {
+void GetSoldierScreenRect(struct SOLDIERTYPE *pSoldier, struct GRect *pRect) {
   INT16 sMercScreenX, sMercScreenY;
   UINT16 usAnimSurface;
   //		struct Subimage *pTrav;
@@ -740,7 +740,7 @@ BOOLEAN SoldierLocationRelativeToScreen(INT16 sGridNo, UINT16 usReasonID, INT8 *
 }
 
 BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, INT16 sX, INT16 sY) {
-  SGPRect aRect;
+  struct GRect aRect;
 
   // Get Rect contained in the soldier
   GetSoldierScreenRect(pSoldier, &aRect);
@@ -754,7 +754,7 @@ BOOLEAN IsPointInSoldierBoundingBox(struct SOLDIERTYPE *pSoldier, INT16 sX, INT1
 
 BOOLEAN FindRelativeSoldierPosition(struct SOLDIERTYPE *pSoldier, UINT16 *usFlags, INT16 sX,
                                     INT16 sY) {
-  SGPRect aRect;
+  struct GRect aRect;
   INT16 sRelX, sRelY;
   FLOAT dRelPer;
 

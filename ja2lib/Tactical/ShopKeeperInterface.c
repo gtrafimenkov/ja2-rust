@@ -8,7 +8,7 @@
 #include "Laptop/LaptopSave.h"
 #include "Laptop/Personnel.h"
 #include "MessageBoxScreen.h"
-#include "Rect.h"
+#include "rust_geometry.h"
 #include "SGP/ButtonSystem.h"
 #include "SGP/CursorControl.h"
 #include "SGP/Debug.h"
@@ -2765,7 +2765,7 @@ void DrawHatchOnInventory(UINT32 uiSurface, UINT16 usPosX, UINT16 usPosY, UINT16
                           UINT16 usHeight) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
-  SGPRect ClipRect;
+  struct GRect ClipRect;
   static UINT8 Pattern[8][8] = {
       {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0},
       {0, 1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 0, 1},
@@ -3652,7 +3652,7 @@ void MovePlayerOfferedItemsOfValueToArmsDealersInventory() {
 }
 
 void BeginSkiItemPointer(UINT8 ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFirst) {
-  SGPRect Rect;
+  struct GRect Rect;
   struct OBJECTTYPE TempObject;
 
   /*
@@ -3827,7 +3827,7 @@ void BeginSkiItemPointer(UINT8 ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFi
 }
 
 void RestrictSkiMouseCursor() {
-  SGPRect Rect;
+  struct GRect Rect;
 
   Rect.iLeft = 0;  // SKI_ITEM_MOVEMENT_AREA_X;
   Rect.iTop = SKI_ITEM_MOVEMENT_AREA_Y;
@@ -5371,7 +5371,7 @@ void EvaluateItemAddedToPlayersOfferArea(INT8 bSlotID, BOOLEAN fFirstOne) {
 
 BOOLEAN DoSkiMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT8 ubFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect pCenteringRect = {0, 0, 639, 339};
+  struct GRect pCenteringRect = {0, 0, 639, 339};
 
   // reset exit mode
   gfExitSKIDueToMessageBox = TRUE;

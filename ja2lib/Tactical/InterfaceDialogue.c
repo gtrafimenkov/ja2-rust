@@ -667,8 +667,8 @@ void RenderTalkingMenu() {
 
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
                     (INT16)(gTalkPanel.sX + TALK_PANEL_FACE_X),
-                    (INT16)(gTalkPanel.sY + TALK_PANEL_FACE_Y), 0, 0, pFace->usFaceWidth,
-                    pFace->usFaceHeight);
+                    (INT16)(gTalkPanel.sY + TALK_PANEL_FACE_Y),
+                    NewGRect(0, 0, pFace->usFaceWidth, pFace->usFaceHeight));
 
     VSurfaceUnlock(vsFB);
     VSurfaceUnlock(GetVSByID(gTalkPanel.uiSaveBuffer));

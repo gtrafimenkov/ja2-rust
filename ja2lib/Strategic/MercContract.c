@@ -38,6 +38,7 @@
 #include "Utils/Text.h"
 #include "rust_fileman.h"
 #include "rust_laptop.h"
+#include "rust_geometry.h"
 
 void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier);
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,
@@ -903,7 +904,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *
   CHAR16 zShortTownIDString[50];
 
   // use YES/NO Pop up box, settup for particular screen
-  SGPRect pCenteringRect = {0, 0, 640, 480};
+  struct GRect pCenteringRect = {0, 0, 640, 480};
 
   GetShortSectorString(GetSolSectorX(pSoldier), GetSolSectorY(pSoldier), zShortTownIDString,
                        ARR_SIZE(zShortTownIDString));

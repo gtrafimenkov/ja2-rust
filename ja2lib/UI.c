@@ -10,12 +10,13 @@
 #include "Strategic/PreBattleInterface.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
+#include "rust_geometry.h"
 
 bool IsTacticalMode() { return guiCurrentScreen == GAME_SCREEN; }
 
-static SGPRect mapCenteringRect = {0, 0, 640, INV_INTERFACE_START_Y};
+static struct GRect mapCenteringRect = {0, 0, 640, INV_INTERFACE_START_Y};
 
-const SGPRect* GetMapCenteringRect() { return &mapCenteringRect; }
+const struct GRect* GetMapCenteringRect() { return &mapCenteringRect; }
 
 bool IsMapScreen() { return guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN; }
 bool IsMapScreen_2() { return guiCurrentScreen == MAP_SCREEN; }

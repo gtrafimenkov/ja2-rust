@@ -4,6 +4,7 @@
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
 
+struct GRect;
 struct Subimage;
 
 // The struct Image* module provides a common interface for managing image data. This module
@@ -55,7 +56,7 @@ struct Image {
   UINT16 usHeight;
   UINT8 ubBitDepth;
   struct SGPPaletteEntry *palette;
-  UINT16 *pui16BPPPalette;
+  UINT16 *palette16bpp;
   UINT8 *app_data;
   UINT32 app_data_size;
   void *image_data;
@@ -64,6 +65,14 @@ struct Image {
   UINT16 number_of_subimages;
   bool imageDataAllocatedInRust;
   bool paletteAllocatedInRust;
+};
+
+struct ImageDataParams {
+  u16 width;
+  u16 height;
+  u16 *palette16bpp;
+  void *data;
+  u32 pitch;  // amount of bytes per line; it is at least widht * bytes_per_pixel, but can be more
 };
 
 #define SGPGetRValue(rgb) ((BYTE)(rgb))
@@ -83,16 +92,19 @@ BOOLEAN ReleaseImageData(struct Image *hImage);
 // object
 BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
                           UINT16 usDestWidth, UINT16 usDestHeight, UINT16 usX, UINT16 usY,
-                          SGPRect *srcRect);
+                          struct GRect *srcRect);
 
 // The following blitters are used by the function above as well as clients
 
 BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                  struct GRect *srcRect);
 BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                   struct GRect *srcRect);
 BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY, SGPRect *srcRect);
+                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                                    struct GRect *srcRect);
 
 // This function will create a buffer in memory of ETRLE data, excluding palette
 BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer);
@@ -109,5 +121,8 @@ struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UIN
 
 // used to convert 565 RGB data into different bit-formats
 void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
+
+// Create a scaled down copy of an image.
+struct Image *ScaleImageDown2x(struct Image *image);
 
 #endif

@@ -82,6 +82,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "rust_fileman.h"
+#include "rust_geometry.h"
 
 #define MAX_ON_DUTY_SOLDIERS 6
 
@@ -530,7 +531,7 @@ BOOLEAN gUITargetShotWaiting = FALSE;
 UINT16 gsUITargetShotGridNo = NOWHERE;
 BOOLEAN gUIUseReverse = FALSE;
 
-SGPRect gRubberBandRect = {0, 0, 0, 0};
+struct GRect gRubberBandRect = {0, 0, 0, 0};
 BOOLEAN gRubberBandActive = FALSE;
 BOOLEAN gfIgnoreOnSelectedGuy = FALSE;
 BOOLEAN gfViewPortAdjustedForSouth = FALSE;
@@ -4303,7 +4304,7 @@ UINT32 UIHandleRubberBandOnTerrain(UI_EVENT *pUIEvent) {
   INT32 cnt;
   INT16 sScreenX, sScreenY;
   INT32 iTemp;
-  SGPRect aRect;
+  struct GRect aRect;
   BOOLEAN fAtLeastOne = FALSE;
 
   guiNewUICursor = NO_UICURSOR;

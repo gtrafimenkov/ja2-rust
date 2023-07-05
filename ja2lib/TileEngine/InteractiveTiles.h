@@ -3,6 +3,7 @@
 
 #include "SGP/Types.h"
 
+struct GRect;
 struct LEVELNODE;
 struct SOLDIERTYPE;
 struct STRUCTURE;
@@ -16,7 +17,7 @@ struct STRUCTURE;
 
 extern BOOLEAN gfOverIntTile;
 
-void GetLevelNodeScreenRect(struct LEVELNODE *pNode, SGPRect *pRect, INT16 sXPos, INT16 sYPos,
+void GetLevelNodeScreenRect(struct LEVELNODE *pNode, struct GRect *pRect, INT16 sXPos, INT16 sYPos,
                             INT16 sGridNo);
 BOOLEAN InitInteractiveTileManagement();
 void ShutdownInteractiveTileManagement();

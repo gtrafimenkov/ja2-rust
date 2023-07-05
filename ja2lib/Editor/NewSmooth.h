@@ -4,11 +4,13 @@
 #include "BuildDefines.h"
 #include "SGP/Types.h"
 
-void AddBuildingSectionToWorld(SGPRect *pSelectRegion);
-void RemoveBuildingSectionFromWorld(SGPRect *pSelectRegion);
+struct GRect;
 
-void AddCaveSectionToWorld(SGPRect *pSelectRegion);
-void RemoveCaveSectionFromWorld(SGPRect *pSelectRegion);
+void AddBuildingSectionToWorld(struct GRect *pSelectRegion);
+void RemoveBuildingSectionFromWorld(struct GRect *pSelectRegion);
+
+void AddCaveSectionToWorld(struct GRect *pSelectRegion);
+void RemoveCaveSectionFromWorld(struct GRect *pSelectRegion);
 
 void EraseBuilding(UINT32 iMapIndex);
 void RebuildRoof(UINT32 iMapIndex, UINT16 usRoofType);

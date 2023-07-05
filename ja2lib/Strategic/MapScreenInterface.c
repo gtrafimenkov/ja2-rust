@@ -246,7 +246,7 @@ INT32 giContractHighLine = -1;
 INT32 giSleepHighLine = -1;
 
 // pop up box textures
-UINT32 guiPOPUPTEX;
+struct Image *popupTextures = NULL;
 UINT32 guiPOPUPBORDERS;
 
 // the currently selected character arrow
@@ -285,22 +285,22 @@ BOOLEAN fShowRemoveMenu = FALSE;
 BOOLEAN fRebuildMoveBox = FALSE;
 
 // positions for all the pop up boxes
-SGPRect ContractDimensions = {0, 0, 140, 60};
+struct GRect ContractDimensions = {0, 0, 140, 60};
 SGPPoint ContractPosition = {120, 50};
-SGPRect AttributeDimensions = {0, 0, 100, 95};
+struct GRect AttributeDimensions = {0, 0, 100, 95};
 SGPPoint AttributePosition = {220, 150};
-SGPRect TrainDimensions = {0, 0, 100, 95};
+struct GRect TrainDimensions = {0, 0, 100, 95};
 SGPPoint TrainPosition = {160, 150};
-SGPRect VehicleDimensions = {0, 0, 80, 60};
+struct GRect VehicleDimensions = {0, 0, 80, 60};
 SGPPoint VehiclePosition = {160, 150};
 
 SGPPoint RepairPosition = {160, 150};
-SGPRect RepairDimensions = {0, 0, 80, 80};
+struct GRect RepairDimensions = {0, 0, 80, 80};
 
-SGPRect AssignmentDimensions = {0, 0, 100, 95};
+struct GRect AssignmentDimensions = {0, 0, 100, 95};
 SGPPoint AssignmentPosition = {120, 150};
 SGPPoint SquadPosition = {160, 150};
-SGPRect SquadDimensions = {0, 0, 140, 60};
+struct GRect SquadDimensions = {0, 0, 140, 60};
 
 SGPPoint OrigContractPosition = {120, 50};
 SGPPoint OrigAttributePosition = {220, 150};
@@ -854,7 +854,7 @@ void EnableTeamInfoPanels(void) {
 
 INT32 DoMapMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
                               MSGBOX_CALLBACK ReturnCallback,
-                              const SGPRect *pCenteringRect) {  // reset the highlighted line
+                              const struct GRect *pCenteringRect) {  // reset the highlighted line
   giHighLine = -1;
   return DoMessageBox(ubStyle, zString, uiExitScreen,
                       (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT), ReturnCallback,
@@ -2723,7 +2723,7 @@ void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ) {
 
 void CreatePopUpBoxForMovementBox(void) {
   SGPPoint Position;
-  SGPRect Dimensions;
+  struct GRect Dimensions;
 
   // create the pop up box and mouse regions for movement list
 
@@ -2738,7 +2738,7 @@ void CreatePopUpBoxForMovementBox(void) {
   SetBorderType(ghMoveBox, guiPOPUPBORDERS);
 
   // background texture
-  SetBackGroundSurface(ghMoveBox, guiPOPUPTEX);
+  SetBackGroundSurface(ghMoveBox, popupTextures);
 
   // margin sizes
   SetMargins(ghMoveBox, 6, 6, 4, 4);
@@ -2920,7 +2920,7 @@ void BuildMouseRegionsForMoveBox(void) {
   INT32 iCounter = 0, iTotalNumberOfLines = 0, iCount = 0, iCountB = 0;
   SGPPoint pPosition;
   INT32 iBoxWidth = 0;
-  SGPRect Dimensions;
+  struct GRect Dimensions;
   INT32 iFontHeight = 0;
   INT32 iBoxXPosition = 0;
   INT32 iBoxYPosition = 0;

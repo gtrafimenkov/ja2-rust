@@ -1769,7 +1769,7 @@ BOOLEAN FaceRestoreSavedBackgroundRect(INT32 iFaceIndex, INT16 sDestLeft, INT16 
   pSrcBuf = VSurfaceLockOld(GetVSByID(pFace->uiAutoRestoreBuffer), &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
-                  sDestLeft, sDestTop, sSrcLeft, sSrcTop, sWidth, sHeight);
+                  sDestLeft, sDestTop, NewGRect(sSrcLeft, sSrcTop, sWidth, sHeight));
 
   VSurfaceUnlock(GetVSByID(pFace->uiAutoDisplayBuffer));
   VSurfaceUnlock(GetVSByID(pFace->uiAutoRestoreBuffer));

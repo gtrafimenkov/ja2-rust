@@ -58,9 +58,6 @@ extern void InitializeTacticalStatusAtBattleStart();
 extern BOOLEAN gfDelayAutoResolveStart;
 extern BOOLEAN gfTransitionMapscreenToAutoResolve;
 
-// zoom flag
-extern BOOLEAN fZoomFlag;
-
 BOOLEAN gfTacticalTraversal = FALSE;
 struct GROUP *gpTacticalTraversalGroup = NULL;
 struct SOLDIERTYPE *gpTacticalTraversalChosenSoldier = NULL;
@@ -666,7 +663,7 @@ void InitPreBattleInterface(struct GROUP *pBattleGroup, BOOLEAN fPersistantPBI) 
 }
 
 void DoTransitionFromMapscreenToPreBattleInterface() {
-  SGPRect DstRect, PBIRect;
+  struct GRect DstRect, PBIRect;
   UINT32 uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
   UINT32 uiTimeRange;

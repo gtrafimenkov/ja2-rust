@@ -11,6 +11,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 
+struct GRect;
 struct VObject;
 struct _GUI_BUTTON;
 
@@ -332,7 +333,7 @@ void ForceButtonUnDirty(
     INT32 iButtonIndex);  // forces button undirty no matter the reason, only lasts one frame
 
 // DB 98-05-05
-BOOLEAN GetButtonArea(INT32 iButtonID, SGPRect *pRect);
+BOOLEAN GetButtonArea(INT32 iButtonID, struct GRect *pRect);
 // DB 99-01-13
 INT32 GetButtonWidth(INT32 iButtonID);
 INT32 GetButtonHeight(INT32 iButtonID);

@@ -40,6 +40,7 @@
         "winfont.h": "c",
         "rust_laptop.h": "c",
         "imgfmt.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "rect.h": "c"
     }
 }

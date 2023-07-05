@@ -1003,7 +1003,7 @@ void DoneFadeInForExitGameInitOptionScreen(void) { SetCurrentCursorFromDatabase(
 
 BOOLEAN DoGioMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
                         MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect CenteringRect = {0, 0, 639, 479};
+  struct GRect CenteringRect = {0, 0, 639, 479};
 
   // reset exit mode
   //	gfExitGioDueToMessageBox = TRUE;

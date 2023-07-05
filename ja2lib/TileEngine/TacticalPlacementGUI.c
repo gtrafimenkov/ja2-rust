@@ -64,7 +64,7 @@ UINT32 giMercPanelImage = 0;
 INT32 giPlacements = 0;
 BOOLEAN gfTacticalPlacementGUIDirty = FALSE;
 BOOLEAN gfValidLocationsChanged = FALSE;
-SGPRect gTPClipRect = {0, 0, 0, 0};
+struct GRect gTPClipRect = {0, 0, 0, 0};
 BOOLEAN gfValidCursor = FALSE;
 BOOLEAN gfEveryonePlaced = FALSE;
 
@@ -899,7 +899,7 @@ void HandleTacticalPlacementClicksInOverheadMap(struct MOUSE_REGION *reg, INT32 
           EndMapEdgepointSearch();
 
           if (fInvalidArea) {  // Report error due to invalid placement.
-            SGPRect CenterRect = {220, 120, 420, 200};
+            struct GRect CenterRect = {220, 120, 420, 200};
             DoMessageBox(MSG_BOX_BASIC_STYLE, gpStrategicString[STR_TP_INACCESSIBLE_MESSAGE],
                          guiCurrentScreen, MSG_BOX_FLAG_OK | MSG_BOX_FLAG_USE_CENTERING_RECT,
                          DialogRemoved, &CenterRect);
@@ -910,7 +910,7 @@ void HandleTacticalPlacementClicksInOverheadMap(struct MOUSE_REGION *reg, INT32 
       }
     } else {  // not a valid cursor location...
       if (gbCursorMercID != -1) {
-        SGPRect CenterRect = {220, 120, 420, 200};
+        struct GRect CenterRect = {220, 120, 420, 200};
         DoMessageBox(MSG_BOX_BASIC_STYLE, gpStrategicString[STR_TP_INVALID_MESSAGE],
                      guiCurrentScreen, MSG_BOX_FLAG_OK | MSG_BOX_FLAG_USE_CENTERING_RECT,
                      DialogRemoved, &CenterRect);

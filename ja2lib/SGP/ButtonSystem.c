@@ -2601,7 +2601,7 @@ void DrawQuickButton(GUI_BUTTON *b) {
 void DrawHatchOnButton(GUI_BUTTON *b) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
-  SGPRect ClipRect;
+  struct GRect ClipRect;
   ClipRect.iLeft = b->Area.RegionTopLeftX;
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
@@ -2614,7 +2614,7 @@ void DrawHatchOnButton(GUI_BUTTON *b) {
 void DrawShadeOnButton(GUI_BUTTON *b) {
   UINT8 *pDestBuf;
   UINT32 uiDestPitchBYTES;
-  SGPRect ClipRect;
+  struct GRect ClipRect;
   ClipRect.iLeft = b->Area.RegionTopLeftX;
   ClipRect.iRight = b->Area.RegionBottomRightX - 1;
   ClipRect.iTop = b->Area.RegionTopLeftY;
@@ -2739,7 +2739,7 @@ void DrawCheckBoxButton(GUI_BUTTON *b) {
 void DrawIconOnButton(GUI_BUTTON *b) {
   INT32 xp, yp, width, height, IconX, IconY;
   INT32 IconW, IconH;
-  SGPRect NewClip, OldClip;
+  struct GRect NewClip, OldClip;
   struct Subimage *pTrav;
   struct VObject *hvObject;
 
@@ -2829,7 +2829,7 @@ void DrawIconOnButton(GUI_BUTTON *b) {
 // If a button has text attached to it, then it'll draw it last.
 void DrawTextOnButton(GUI_BUTTON *b) {
   INT32 xp, yp, width, height, TextX, TextY;
-  SGPRect NewClip, OldClip;
+  struct GRect NewClip, OldClip;
   INT16 sForeColor;
 
   // If this button actually has a string to print
@@ -2985,7 +2985,7 @@ static BOOLEAN ImageFillVideoSurfaceArea(struct VSurface *dest, INT32 iDestX1, I
                                          UINT16 Index, INT16 Ox, INT16 Oy) {
   INT16 xc, yc, hblits, wblits, aw, pw, ah, ph, w, h, xo, yo;
   struct Subimage *pTrav;
-  SGPRect NewClip, OldClip;
+  struct GRect NewClip, OldClip;
 
   pTrav = &(BkgrndImg->subimages[Index]);
   ph = (INT16)(pTrav->height + pTrav->y_offset);
@@ -3080,7 +3080,7 @@ void DrawGenericButton(GUI_BUTTON *b) {
   struct VObject *BPic;
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-  SGPRect ClipRect;
+  struct GRect ClipRect;
 
   // Select the graphics to use depending on the current state of the button
   if (b->uiFlags & BUTTON_ENABLED) {
@@ -3485,7 +3485,7 @@ void RemoveButtonDefaultStatus(INT32 iButtonID) {
   }
 }
 
-BOOLEAN GetButtonArea(INT32 iButtonID, SGPRect *pRect) {
+BOOLEAN GetButtonArea(INT32 iButtonID, struct GRect *pRect) {
   GUI_BUTTON *b;
 
   Assert(iButtonID >= 0);

@@ -4,7 +4,6 @@
 
 #include "Local.h"
 #include "Point.h"
-#include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/English.h"
 #include "SGP/Input.h"
@@ -13,6 +12,7 @@
 #include "SGP/Video.h"
 #include "platform.h"
 #include "platform_win.h"
+#include "rust_geometry.h"
 
 #define SCAN_CODE_MASK 0xff0000
 #define EXT_CODE_MASK 0x01000000
@@ -993,7 +993,7 @@ void RestoreString(StringInput *pStringDescriptor) {
 //
 
 void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {
-  SGPRect TempRect;
+  struct GRect TempRect;
 
   TempRect.iLeft = usX1;
   TempRect.iTop = usY1;
@@ -1003,7 +1003,7 @@ void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {
   RestrictMouseCursor(&TempRect);
 }
 
-void RestrictMouseCursor(SGPRect *pRectangle) {
+void RestrictMouseCursor(struct GRect *pRectangle) {
   // Make a copy of our rect....
   gCursorClipRect.left = pRectangle->iLeft;
   gCursorClipRect.right = pRectangle->iRight;
@@ -1024,7 +1024,7 @@ void ReapplyCursorClipRect(void) {
   }
 }
 
-void GetRestrictedClipCursor(SGPRect *pRectangle) { GetClipCursor((RECT *)pRectangle); }
+void GetRestrictedClipCursor(struct GRect *pRectangle) { GetClipCursor((RECT *)pRectangle); }
 
 BOOLEAN IsCursorRestricted(void) { return (fCursorWasClipped); }
 

@@ -125,7 +125,7 @@ typedef struct AUTORESOLVE_STRUCT {
   UINT32 uiEndExpanding;
   UINT32 uiPreRandomIndex;
 
-  SGPRect Rect, ExRect;
+  struct GRect Rect, ExRect;
 
   UINT16 usPlayerAttack;
   UINT16 usPlayerDefence;
@@ -450,7 +450,7 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
 #define ORIG_BOTTOM 84
 
 void DoTransitionFromPreBattleInterfaceToAutoResolve() {
-  SGPRect SrcRect, DstRect;
+  struct GRect SrcRect, DstRect;
   UINT32 uiStartTime, uiCurrTime;
   INT32 iPercentage, iFactor;
   UINT32 uiTimeRange;
@@ -604,7 +604,7 @@ UINT32 AutoResolveScreenHandle() {
   if (gpAR->fEnteringAutoResolve) {
     UINT8 *pDestBuf;
     UINT32 uiDestPitchBYTES;
-    SGPRect ClipRect;
+    struct GRect ClipRect;
     gpAR->fEnteringAutoResolve = FALSE;
     // Take the framebuffer, shade it, and save it to the SAVEBUFFER.
     ClipRect.iLeft = 0;
@@ -886,7 +886,7 @@ void RenderSoldierCell(SOLDIERCELL *pCell) {
          CELL_CREATURE))) {  // Merc is unconcious (and not taking damage), so darken his portrait.
     UINT8 *pDestBuf;
     UINT32 uiDestPitchBYTES;
-    SGPRect ClipRect;
+    struct GRect ClipRect;
     ClipRect.iLeft = pCell->xp + 3 + x;
     ClipRect.iTop = pCell->yp + 3;
     ClipRect.iRight = pCell->xp + 33 + x;
@@ -956,8 +956,8 @@ void RenderSoldierCellBars(SOLDIERCELL *pCell) {
 
 void BuildInterfaceBuffer() {
   UINT16 usUselessWidth, usUselessHeight;
-  SGPRect ClipRect;
-  SGPRect DestRect;
+  struct GRect ClipRect;
+  struct GRect DestRect;
   INT32 x, y;
 
   // Setup the blitting clip regions, so we don't draw outside of the region (for excess panelling)
@@ -1031,7 +1031,7 @@ void BuildInterfaceBuffer() {
 }
 
 void ExpandWindow() {
-  SGPRect OldRect;
+  struct GRect OldRect;
   UINT32 uiDestPitchBYTES;
   UINT32 uiCurrentTime, uiTimeRange, uiPercent;
   UINT8 *pDestBuf;
@@ -2738,7 +2738,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   xp = pCell->xp + 2;
   yp = pCell->yp + 32;
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, xp, yp,
-                  xp - gpAR->Rect.iLeft, yp - gpAR->Rect.iTop, 46, 10);
+                  NewGRect(xp - gpAR->Rect.iLeft, yp - gpAR->Rect.iTop, 46, 10));
   VSurfaceUnlock(GetVSByID(gpAR->iInterfaceBuffer));
   VSurfaceUnlock(vsFB);
 

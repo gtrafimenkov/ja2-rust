@@ -47,7 +47,7 @@ typedef struct TAG_SLIDER {
   UINT32 uiSliderBoxImage;
   UINT16 usCurrentSliderBoxPosition;
 
-  SGPRect LastRect;
+  struct GRect LastRect;
 
   UINT32 uiFlags;
 
@@ -290,7 +290,7 @@ void RenderSelectedSliderBar(SLIDER *pSlider) {
 
 void RenderSliderBox(SLIDER *pSlider) {
   struct VObject *hPixHandle;
-  SGPRect DestRect;
+  struct GRect DestRect;
 
   if (pSlider->uiFlags & SLIDER_VERTICAL) {
     // fill out the settings for the current dest and source rects

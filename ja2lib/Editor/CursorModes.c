@@ -16,6 +16,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "TileEngine/TileDef.h"
 #include "TileEngine/WorldMan.h"
+#include "rust_geometry.h"
 
 BOOLEAN fValidCursor = FALSE;
 BOOLEAN fAnchored = FALSE;

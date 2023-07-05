@@ -41,6 +41,7 @@
 #include "UI.h"
 #include "Utils/Message.h"
 #include "rust_fileman.h"
+#include "rust_geometry.h"
 
 #ifdef JA2BETAVERSION
 extern BOOLEAN gfClearCreatureQuest;
@@ -63,7 +64,7 @@ INT16 gsInterrogationGridNo[3] = {7756, 7757, 7758};
 
 void ValidateEnemiesHaveWeapons() {
 #ifdef JA2BETAVERSION
-  SGPRect CenteringRect = {0, 0, 639, 479};
+  struct GRect CenteringRect = {0, 0, 639, 479};
   INT32 i, iErrorDialog;
   struct SOLDIERTYPE *pSoldier;
   INT32 iNumInvalid = 0;

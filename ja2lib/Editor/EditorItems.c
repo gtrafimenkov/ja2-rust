@@ -185,7 +185,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
   UINT8 *pDestBuf, *pSrcBuf;
   UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
-  SGPRect SaveRect, NewRect;
+  struct GRect SaveRect, NewRect;
   struct VObject *hVObject;
   UINT32 uiVideoObjectIndex;
   UINT16 usUselessWidth, usUselessHeight;
@@ -294,7 +294,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
   // copy a blank chunk of the editor interface to the new buffer.
   for (i = 0; i < eInfo.sWidth; i += 60) {
     Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0 + i,
-                    0, 100, 360, 60, 80);
+                    0, NewGRect(100, 360, 60, 80));
   }
 
   VSurfaceUnlock(GetVSByID(eInfo.uiBuffer));
@@ -505,7 +505,7 @@ void RenderEditorItemsInfo() {
 
   // copy the items buffer to the editor bar
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 110,
-                  360, 60 * eInfo.sScrollIndex, 0, 360, 80);
+                  360, NewGRect(60 * eInfo.sScrollIndex, 0, 360, 80));
 
   VSurfaceUnlock(GetVSByID(eInfo.uiBuffer));
   VSurfaceUnlock(vsFB);

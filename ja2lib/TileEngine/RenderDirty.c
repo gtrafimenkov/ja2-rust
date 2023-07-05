@@ -37,7 +37,7 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount);
 // BACKGROUND_SAVE	gTopmostSaves[BACKGROUND_BUFFERS];
 // UINT32 guiNumTopmostSaves=0;
 
-SGPRect gDirtyClipRect = {0, 0, 640, 480};
+struct GRect gDirtyClipRect = {0, 0, 640, 480};
 
 BOOLEAN gfViewportDirty = FALSE;
 
@@ -46,7 +46,7 @@ BOOLEAN InitializeBaseDirtyRectQueue() { return (TRUE); }
 void ShutdownBaseDirtyRectQueue() {}
 
 void AddBaseDirtyRect(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
-  SGPRect aRect;
+  struct GRect aRect;
 
   if (iLeft < 0) {
     iLeft = 0;
@@ -247,8 +247,8 @@ BOOLEAN RestoreBackgroundRects(void) {
         if (gBackSaves[uiCount].pSaveArea != NULL) {
           Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES,
                           (UINT16 *)gBackSaves[uiCount].pSaveArea, gBackSaves[uiCount].sWidth * 2,
-                          gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop, 0, 0,
-                          gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight);
+                          gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+                          NewGRect(0, 0, gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
 
           AddBaseDirtyRect(gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
                            gBackSaves[uiCount].sRight, gBackSaves[uiCount].sBottom);
@@ -257,14 +257,14 @@ BOOLEAN RestoreBackgroundRects(void) {
         if (gBackSaves[uiCount].fZBuffer) {
           Blt16BPPTo16BPP((UINT16 *)gpZBuffer, uiDestPitchBYTES,
                           (UINT16 *)gBackSaves[uiCount].pZSaveArea, gBackSaves[uiCount].sWidth * 2,
-                          gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop, 0, 0,
-                          gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight);
+                          gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+                          NewGRect(0, 0, gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
         }
       } else {
         Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES,
                         gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
-                        gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
-                        gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight);
+                        NewGRect(gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+                                 gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
 
         AddBaseDirtyRect(gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
                          gBackSaves[uiCount].sRight, gBackSaves[uiCount].sBottom);
@@ -341,16 +341,16 @@ BOOLEAN SaveBackgroundRects(void) {
       if (gBackSaves[uiCount].uiFlags & BGND_FLAG_SAVERECT) {
         if (gBackSaves[uiCount].pSaveArea != NULL) {
           Blt16BPPTo16BPP((UINT16 *)gBackSaves[uiCount].pSaveArea, gBackSaves[uiCount].sWidth * 2,
-                          (UINT16 *)pSrcBuf, uiDestPitchBYTES, 0, 0, gBackSaves[uiCount].sLeft,
-                          gBackSaves[uiCount].sTop, gBackSaves[uiCount].sWidth,
-                          gBackSaves[uiCount].sHeight);
+                          (UINT16 *)pSrcBuf, uiDestPitchBYTES, 0, 0,
+                          NewGRect(gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+                                   gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
         }
 
       } else if (gBackSaves[uiCount].fZBuffer) {
         Blt16BPPTo16BPP(gBackSaves[uiCount].pZSaveArea, gBackSaves[uiCount].sWidth * 2,
-                        (UINT16 *)gpZBuffer, uiDestPitchBYTES, 0, 0, gBackSaves[uiCount].sLeft,
-                        gBackSaves[uiCount].sTop, gBackSaves[uiCount].sWidth,
-                        gBackSaves[uiCount].sHeight);
+                        (UINT16 *)gpZBuffer, uiDestPitchBYTES, 0, 0,
+                        NewGRect(gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
+                                 gBackSaves[uiCount].sWidth, gBackSaves[uiCount].sHeight));
       } else {
         AddBaseDirtyRect(gBackSaves[uiCount].sLeft, gBackSaves[uiCount].sTop,
                          gBackSaves[uiCount].sRight, gBackSaves[uiCount].sBottom);
@@ -460,8 +460,9 @@ BOOLEAN UpdateSaveBuffer(void) {
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0,
-                  gsVIEWPORT_WINDOW_START_Y, 0, gsVIEWPORT_WINDOW_START_Y, usWidth,
-                  (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y));
+                  gsVIEWPORT_WINDOW_START_Y,
+                  NewGRect(0, gsVIEWPORT_WINDOW_START_Y, usWidth,
+                           (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y)));
 
   VSurfaceUnlock(vsFB);
   VSurfaceUnlock(vsSB);
@@ -479,7 +480,7 @@ BOOLEAN RestoreExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16
   pSrcBuf = VSurfaceLockOld(vsSB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, sLeft, sTop, sWidth, sHeight);
+                  sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
   VSurfaceUnlock(vsFB);
   VSurfaceUnlock(vsSB);
 
@@ -509,7 +510,7 @@ BOOLEAN RestoreExternBackgroundRectGivenID(INT32 iBack) {
   pSrcBuf = VSurfaceLockOld(vsSB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, sLeft, sTop, sWidth, sHeight);
+                  sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
   VSurfaceUnlock(vsFB);
   VSurfaceUnlock(vsSB);
 
@@ -529,7 +530,7 @@ BOOLEAN CopyExternBackgroundRect(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
 
   Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, sLeft,
-                  sTop, sLeft, sTop, sWidth, sHeight);
+                  sTop, NewGRect(sLeft, sTop, sWidth, sHeight));
   VSurfaceUnlock(vsSB);
   VSurfaceUnlock(vsFB);
 
@@ -918,8 +919,8 @@ void SaveVideoOverlaysArea(struct VSurface *src) {
         // Save data from frame buffer!
         Blt16BPPTo16BPP((UINT16 *)gVideoOverlays[uiCount].pSaveArea,
                         gBackSaves[iBackIndex].sWidth * 2, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
-                        gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
-                        gBackSaves[iBackIndex].sWidth, gBackSaves[iBackIndex].sHeight);
+                        NewGRect(gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
+                                 gBackSaves[iBackIndex].sWidth, gBackSaves[iBackIndex].sHeight));
       }
     }
   }
@@ -946,8 +947,8 @@ void SaveVideoOverlayArea(UINT32 uiSrcBuffer, UINT32 uiCount) {
       // Save data from frame buffer!
       Blt16BPPTo16BPP((UINT16 *)gVideoOverlays[uiCount].pSaveArea,
                       gBackSaves[iBackIndex].sWidth * 2, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
-                      gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
-                      gBackSaves[iBackIndex].sWidth, gBackSaves[iBackIndex].sHeight);
+                      NewGRect(gBackSaves[iBackIndex].sLeft, gBackSaves[iBackIndex].sTop,
+                               gBackSaves[iBackIndex].sWidth, gBackSaves[iBackIndex].sHeight));
     }
   }
 
@@ -1036,8 +1037,8 @@ BOOLEAN RestoreShiftedVideoOverlays(INT16 sShiftX, INT16 sShiftY) {
 
         Blt16BPPTo16BPP((UINT16 *)(UINT16 *)pDestBuf, uiDestPitchBYTES,
                         (UINT16 *)gVideoOverlays[uiCount].pSaveArea,
-                        gBackSaves[iBackIndex].sWidth * 2, sLeft, sTop, uiLeftSkip, uiTopSkip,
-                        usWidth, usHeight);
+                        gBackSaves[iBackIndex].sWidth * 2, sLeft, sTop,
+                        NewGRect(uiLeftSkip, uiTopSkip, usWidth, usHeight));
 
         // Once done, check for pending deletion
         if (gVideoOverlays[uiCount].fDeletionPending) {
@@ -1089,7 +1090,7 @@ bool VSurfaceBlitBufToBuf(struct VSurface *src, struct VSurface *dest, u16 x, u1
   struct BufferLockInfo destLock = VSurfaceLock(dest);
 
   bool res = Blt16BPPTo16BPP((UINT16 *)destLock.dest, destLock.pitch, (UINT16 *)srcLock.dest,
-                             srcLock.pitch, x, y, x, y, width, height);
+                             srcLock.pitch, x, y, NewGRect(x, y, width, height));
 
   VSurfaceUnlock(src);
   VSurfaceUnlock(dest);
