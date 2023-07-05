@@ -257,7 +257,6 @@ UINT32 ErrorScreenShutdown(void) { return (TRUE); }
 UINT32 InitScreenInitialize(void) { return (TRUE); }
 
 UINT32 InitScreenHandle(void) {
-  static struct VSurface *hVSurface;
   static UINT8 ubCurrentScreen = 255;
 
   if (ubCurrentScreen == 255) {
@@ -274,33 +273,15 @@ UINT32 InitScreenHandle(void) {
   }
 
   if (ubCurrentScreen == 0) {
-    // Load init screen and blit!
-    hVSurface = CreateVideoSurfaceFromFile("ja2_logo.STI");
-    if (!hVSurface) AssertMsg(0, "Failed to load ja2_logo.sti!");
-
     ubCurrentScreen = 1;
-
-    // Init screen
 
     // Set Font
     SetFont(TINYFONT1);
     SetFontBackground(FONT_MCOLOR_BLACK);
     SetFontForeground(FONT_MCOLOR_WHITE);
-
     mprintf(10, 430, L"%s", zBuildInfo);
-
-#ifdef _DEBUG
-    mprintf(10, 440, L"struct SOLDIERTYPE: %d bytes", sizeof(struct SOLDIERTYPE));
-#endif
-
     InvalidateScreen();
-
-    // Delete video Surface
-    DeleteVideoSurface(hVSurface);
-    // ATE: Set to true to reset before going into main screen!
-
     SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);
-
     return (INIT_SCREEN);
   }
 
