@@ -11,6 +11,7 @@
 #include "SGP/MouseSystem.h"
 #include "SGP/Types.h"
 
+struct GRect;
 struct VObject;
 struct _GUI_BUTTON;
 
