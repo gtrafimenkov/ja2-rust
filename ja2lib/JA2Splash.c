@@ -4,6 +4,7 @@
 #include "SGP/Debug.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
 #include "rust_debug.h"
@@ -41,14 +42,14 @@ void InitJA2SplashScreen() {
   {
     SGPFILENAME ImageFile;
     GetMLGFilename(ImageFile, MLG_SPLASH);
-    if (!AddVideoSurfaceFromFile(ImageFile, &uiLogoID)) {
+    struct Image *image = CreateImage(ImageFile, false);
+    if (!image) {
       AssertMsg(0, String("Failed to load %s", ImageFile));
       return;
     }
 
-    GetVideoSurface(&hVSurface, uiLogoID);
-    BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
-    DeleteVideoSurfaceFromIndex(uiLogoID);
+    BlitImageToSurface(image, vsFB, 0, 0);
+    DestroyImage(image);
   }
 #endif
 
