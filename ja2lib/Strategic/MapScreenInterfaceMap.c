@@ -11,6 +11,7 @@
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
+#include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Soldier.h"
@@ -995,10 +996,6 @@ void ShowTeamAndVehicles(INT32 fShowFlags) {
 
 void ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   INT16 sScreenX, sScreenY;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
-  UINT8 *pSrcBuf;
 
   GetScreenXYFromMapXY(sMapX, sMapY, &sScreenX, &sScreenY);
 
@@ -1006,16 +1003,11 @@ void ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   sScreenX += 1;
 
   // compensate for original BIG_MAP blit being done at MAP_VIEW_START_X + 1
-  struct GRect clip;
-  clip.iLeft = 2 * (sScreenX - (MAP_VIEW_START_X + 1));
-  clip.iTop = 2 * (sScreenY - MAP_VIEW_START_Y);
-  clip.iRight = clip.iLeft + (2 * MAP_GRID_X);
-  clip.iBottom = clip.iTop + (2 * MAP_GRID_Y);
   struct GRect clipSmall;
-  clipSmall.iLeft = 2 * (sScreenX - (MAP_VIEW_START_X + 1));
-  clipSmall.iTop = 2 * (sScreenY - MAP_VIEW_START_Y);
-  clipSmall.iRight = clipSmall.iLeft + (2 * MAP_GRID_X);
-  clipSmall.iBottom = clipSmall.iTop + (2 * MAP_GRID_Y);
+  clipSmall.iLeft = sScreenX - (MAP_VIEW_START_X + 1);
+  clipSmall.iTop = sScreenY - MAP_VIEW_START_Y;
+  clipSmall.iRight = clipSmall.iLeft + MAP_GRID_X;
+  clipSmall.iBottom = clipSmall.iTop + MAP_GRID_Y;
 
   if (iColor != MAP_SHADE_BLACK) {
     // airspace
@@ -1051,22 +1043,20 @@ void ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
   }
 
   if (newPalette) {
-    struct VSurface *hSrcVSurface = GetVSByID(guiBIGMAP);
-    UINT16 *pOriginalPallette = GetVSurface16BPPPalette(hSrcVSurface);
-    SetVSurface16BPPPalette(hSrcVSurface, newPalette);
+    UINT32 destPitch;
+    UINT16 *destBuf;
 
-    // lock source and dest buffers
-    pDestBuf = (UINT16 *)VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
-    pSrcBuf = VSurfaceLockOld(hSrcVSurface, &uiSrcPitchBYTES);
+    destBuf = (UINT16 *)VSurfaceLockOld(vsSB, &destPitch);
 
-    Blt8BPPDataTo16BPPBufferHalfRect(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf,
-                                     uiSrcPitchBYTES, sScreenX, sScreenY, &clip);
-
-    // unlock source and dest buffers
-    VSurfaceUnlock(hSrcVSurface);
+    struct ImageDataParams src = {
+        .width = imageSmallMap->usWidth,
+        .height = imageSmallMap->usHeight,
+        .palette16bpp = newPalette,
+        .pitch = imageSmallMap->usWidth * (imageSmallMap->ubBitDepth / 8),
+        .data = imageSmallMap->image_data,
+    };
+    Blt8bppTo16bppRect(&src, (u16 *)destBuf, destPitch, sScreenX, sScreenY, clipSmall);
     VSurfaceUnlock(vsSB);
-
-    SetVSurface16BPPPalette(hSrcVSurface, pOriginalPallette);
   }
 }
 
