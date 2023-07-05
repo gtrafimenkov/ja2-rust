@@ -2,6 +2,7 @@
 #define __POPUP_BOX
 
 #include "SGP/Types.h"
+#include "rust_geometry.h"
 
 #define MAX_POPUP_BOX_COUNT 20
 #define MAX_POPUP_BOX_STRING_COUNT \

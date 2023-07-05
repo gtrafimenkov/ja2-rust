@@ -67,23 +67,16 @@ typedef CHAR8 SGPFILENAME[SGPFILENAME_LEN];
 #define NULL 0
 #endif
 
-typedef struct {
-  INT32 iLeft;
-  INT32 iTop;
-  INT32 iRight;
-  INT32 iBottom;
-} SGPRect;
+typedef struct GRect SGPRect;
 
 typedef struct {
   INT32 iX;
   INT32 iY;
-
 } SGPPoint;
 
 typedef struct {
   INT32 Min;
   INT32 Max;
-
 } SGPRange;
 
 typedef FLOAT VECTOR2[2];  // 2d vector (2x1 matrix)

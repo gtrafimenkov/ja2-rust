@@ -5,6 +5,7 @@
 
 #include "SGP/Types.h"
 #include "TileEngine/WorldDef.h"
+#include "rust_geometry.h"
 
 #define NO_ROOM 0
 #define MAX_ROOMS 250

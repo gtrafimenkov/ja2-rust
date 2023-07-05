@@ -47,6 +47,7 @@
 #include "Utils/Text.h"
 #include "platform.h"
 #include "rust_fileman.h"
+#include "rust_geometry.h"
 
 BOOLEAN gfWasInMeanwhile = FALSE;
 

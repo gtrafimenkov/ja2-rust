@@ -16,6 +16,7 @@
 #include "TileEngine/Structure.h"
 #include "TileEngine/StructureInternals.h"
 #include "TileEngine/WorldMan.h"
+#include "rust_geometry.h"
 
 UINT32 guiForceRefreshMousePositionCalculation = 0;
 

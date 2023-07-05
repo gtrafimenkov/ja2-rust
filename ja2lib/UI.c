@@ -10,6 +10,7 @@
 #include "Strategic/PreBattleInterface.h"
 #include "Tactical/Interface.h"
 #include "Tactical/InterfaceControl.h"
+#include "rust_geometry.h"
 
 bool IsTacticalMode() { return guiCurrentScreen == GAME_SCREEN; }
 

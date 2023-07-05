@@ -4,6 +4,7 @@
 #include "SGP/Container.h"
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
+#include "rust_geometry.h"
 
 struct VSurface;
 struct VObject;

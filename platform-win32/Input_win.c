@@ -13,6 +13,7 @@
 #include "SGP/Video.h"
 #include "platform.h"
 #include "platform_win.h"
+#include "rust_geometry.h"
 
 #define SCAN_CODE_MASK 0xff0000
 #define EXT_CODE_MASK 0x01000000

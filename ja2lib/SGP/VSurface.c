@@ -15,6 +15,7 @@
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderWorld.h"
 #include "platform.h"
+#include "rust_geometry.h"
 
 struct VSurface *vsPrimary = NULL;
 struct VSurface *vsBB = NULL;

@@ -82,6 +82,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "rust_fileman.h"
+#include "rust_geometry.h"
 
 #define MAX_ON_DUTY_SOLDIERS 6
 
