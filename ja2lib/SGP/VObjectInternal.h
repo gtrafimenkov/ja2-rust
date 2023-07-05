@@ -4,16 +4,6 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 
-typedef struct {
-  UINT16 *p16BPPData;
-  UINT16 usRegionIndex;
-  UINT8 ubShadeLevel;
-  UINT16 usWidth;
-  UINT16 usHeight;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
-} SixteenBPPObjectInfo;
-
 // This structure is a video object.
 // The video object contains different data based on it's type, compressed or not
 struct VObject {
@@ -23,9 +13,8 @@ struct VObject {
   COLORVAL TransparentColor;              // Defaults to 0,0,0
   UINT16 *p16BPPPalette;                  // A 16BPP palette used for 8->16 blits
 
-  PTR image_data;              // ETRLE pixel data
-  struct Subimage *subimages;  // Object offset data etc
-  SixteenBPPObjectInfo *p16BPPObject;
+  PTR image_data;                          // ETRLE pixel data
+  struct Subimage *subimages;              // Object offset data etc
   UINT16 *pShades[HVOBJECT_SHADE_TABLES];  // Shading tables
   UINT16 *pShadeCurrent;
   UINT16 *pGlow;              // glow highlight table
@@ -33,7 +22,6 @@ struct VObject {
   UINT8 *pGlow8;              // 8-bit glow table
   ZStripInfo **ppZStripInfo;  // Z-value strip info arrays
 
-  UINT16 usNumberOf16BPPObjects;
   UINT16 number_of_subimages;  // Total number of objects
   UINT8 ubBitDepth;            // BPP
 

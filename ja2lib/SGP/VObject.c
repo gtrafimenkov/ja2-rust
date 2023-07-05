@@ -521,17 +521,8 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
       }
     }
     MemFree(hVObject->ppZStripInfo);
-    //		hVObject->ppZStripInfo = NULL;
   }
 
-  if (hVObject->usNumberOf16BPPObjects > 0) {
-    for (usLoop = 0; usLoop < hVObject->usNumberOf16BPPObjects; usLoop++) {
-      MemFree(hVObject->p16BPPObject[usLoop].p16BPPData);
-    }
-    MemFree(hVObject->p16BPPObject);
-  }
-
-  // Release object
   MemFree(hVObject);
 
   return (TRUE);
