@@ -896,8 +896,6 @@ FAILED_TO_SAVE:
   return (FALSE);
 }
 
-UINT32 guiBrokenSaveGameVersion = 0;
-
 BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   FileID hFile = FILE_ID_ERR;
   SAVED_GAME_HEADER SaveGameHeader;
@@ -975,8 +973,6 @@ BOOLEAN LoadSavedGame(UINT8 ubSavedGameID) {
   }
 
   guiJA2EncryptionSet = CalcJA2EncryptionSet(&SaveGameHeader);
-
-  guiBrokenSaveGameVersion = SaveGameHeader.uiSavedGameVersion;
 
   // Store the loading screenID that was saved
   gubLastLoadingScreenID = SaveGameHeader.ubLoadScreenID;

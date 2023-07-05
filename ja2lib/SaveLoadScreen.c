@@ -45,9 +45,6 @@
 #include "rust_fileman.h"
 #include "rust_laptop.h"
 
-BOOLEAN gfSchedulesHosed = FALSE;
-extern UINT32 guiBrokenSaveGameVersion;
-
 //////////////////////////////////////////////////////
 //
 //  Defines
@@ -1843,55 +1840,22 @@ void DoneFadeOutForSaveLoadScreen(void) {
   gfHadToMakeBasementLevels = FALSE;
 
   if (!LoadSavedGame(gbSelectedSaveLocation)) {
-    if (guiBrokenSaveGameVersion < 95 &&
-        !gfSchedulesHosed) {  // Hack problem with schedules getting misaligned.
-      gfSchedulesHosed = TRUE;
-      if (!LoadSavedGame(gbSelectedSaveLocation)) {
-        DoSaveLoadMessageBox(MSG_BOX_BASIC_STYLE, zSaveLoadText[SLG_LOAD_GAME_ERROR],
-                             SAVE_LOAD_SCREEN, MSG_BOX_FLAG_OK, FailedLoadingGameCallBack);
-        NextLoopCheckForEnoughFreeHardDriveSpace();
-      } else {
-        gfSchedulesHosed = FALSE;
-        goto SUCCESSFULLY_CORRECTED_SAVE;
-      }
-      gfSchedulesHosed = FALSE;
-    } else {
-      DoSaveLoadMessageBox(MSG_BOX_BASIC_STYLE, zSaveLoadText[SLG_LOAD_GAME_ERROR],
-                           SAVE_LOAD_SCREEN, MSG_BOX_FLAG_OK, FailedLoadingGameCallBack);
-      NextLoopCheckForEnoughFreeHardDriveSpace();
-    }
+    DoSaveLoadMessageBox(MSG_BOX_BASIC_STYLE, zSaveLoadText[SLG_LOAD_GAME_ERROR], SAVE_LOAD_SCREEN,
+                         MSG_BOX_FLAG_OK, FailedLoadingGameCallBack);
+    NextLoopCheckForEnoughFreeHardDriveSpace();
   } else {
-  SUCCESSFULLY_CORRECTED_SAVE:
-#ifdef JA2BETAVERSION
-    //		if( ValidateSoldierInitLinks( 1 ) )
-    ValidateSoldierInitLinks(1);
-    {
-#endif
-      // If we are to go to map screen after loading the game
-      if (guiScreenToGotoAfterLoadingSavedGame == MAP_SCREEN) {
-        gFadeInDoneCallback = DoneFadeInForSaveLoadScreen;
-
-        SetSaveLoadExitScreen(guiScreenToGotoAfterLoadingSavedGame);
-
-        //			LeaveTacticalScreen( MAP_SCREEN );
-
-        FadeInNextFrame();
-      }
-
-      else {
-        // if we are to go to the Tactical screen after loading
-        gFadeInDoneCallback = DoneFadeInForSaveLoadScreen;
-
-        SetSaveLoadExitScreen(guiScreenToGotoAfterLoadingSavedGame);
-
-        PauseTime(FALSE);
-
-        //			EnterTacticalScreen( );
-        FadeInGameScreen();
-      }
-#ifdef JA2BETAVERSION
+    // If we are to go to map screen after loading the game
+    if (guiScreenToGotoAfterLoadingSavedGame == MAP_SCREEN) {
+      gFadeInDoneCallback = DoneFadeInForSaveLoadScreen;
+      SetSaveLoadExitScreen(guiScreenToGotoAfterLoadingSavedGame);
+      FadeInNextFrame();
+    } else {
+      // if we are to go to the Tactical screen after loading
+      gFadeInDoneCallback = DoneFadeInForSaveLoadScreen;
+      SetSaveLoadExitScreen(guiScreenToGotoAfterLoadingSavedGame);
+      PauseTime(FALSE);
+      FadeInGameScreen();
     }
-#endif
   }
   gfStartedFadingOut = FALSE;
 }
