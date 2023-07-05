@@ -126,41 +126,12 @@ typedef struct {
   0x00000040  // Creates a video object from a file ( using struct Image* )
 #define VOBJECT_CREATE_FROMHIMAGE 0x00000080  // Creates a video object from a pre-loaded hImage
 
-BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex);
-
-BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
-  VOBJECT_INFO desc;
-  desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(desc.ImageFile, path);
-  return _AddVideoObject(&desc, puiIndex);
-}
-
-BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex) {
-  VOBJECT_INFO desc;
-  desc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
-  desc.hImage = hImage;
-  return _AddVideoObject(&desc, puiIndex);
-}
-
 // TODO: rust
 // TODO: debug print how many video objects are there
 // TODO: probably replace the list with array of fixed size
-BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
-  struct VObject *hVObject;
-
-  // Assertions
+static BOOLEAN _AddVideoObject(struct VObject *hVObject, UINT32 *puiIndex) {
   Assert(puiIndex);
-  Assert(pVObjectDesc);
-
-  // Create video object
-  if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMFILE) {
-    hVObject = LoadVObjectFromFile(pVObjectDesc->ImageFile);
-  } else if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMHIMAGE) {
-    hVObject = CreateVObjectFromHImage(pVObjectDesc->hImage);
-  } else {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid VObject creation flags given.");
-    return FALSE;
-  }
+  Assert(hVObject);
 
   if (!hVObject) {
     // Video Object will set error condition.
@@ -190,6 +161,14 @@ BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, UINT32 *puiIndex) {
   guiVObjectTotalAdded++;
 
   return TRUE;
+}
+
+BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
+  return _AddVideoObject(LoadVObjectFromFile(path), puiIndex);
+}
+
+BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex) {
+  return _AddVideoObject(CreateVObjectFromHImage(hImage), puiIndex);
 }
 
 // TODO: rust
