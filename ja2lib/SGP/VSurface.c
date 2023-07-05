@@ -705,13 +705,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
     DebugLogWrite(buf);
   }
 
-  if (source->usWidth > dest->usWidth || source->usHeight > dest->usHeight) {
-    DebugLogWrite("Error: BlitImageToSurfaceRect: source is too big");
-    VSurfaceUnlock(dest);
-    return;
-  }
-
-  if ((source->usWidth + x) > dest->usWidth || (source->usHeight + y) > dest->usHeight) {
+  if ((sourceRect.iRight + x) > dest->usWidth || (sourceRect.iBottom + y) > dest->usHeight) {
     DebugLogWrite("Error: BlitImageToSurfaceRect: source image is out of dest bounds");
     VSurfaceUnlock(dest);
     return;
