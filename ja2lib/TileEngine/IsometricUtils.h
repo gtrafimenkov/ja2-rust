@@ -5,6 +5,7 @@
 #include "Tactical/OverheadTypes.h"
 #include "TileEngine/WorldDef.h"
 
+struct GRect;
 struct SOLDIERTYPE;
 
 // DEFINES
