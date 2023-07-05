@@ -1505,7 +1505,6 @@ struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) {
   vs->usWidth = width;
   vs->pSurfaceData1 = (void *)lpDDS;
   vs->pSurfaceData = (void *)lpDDS2;
-  vs->TransparentColor = FROMRGB(0, 0, 0);
 
   return (vs);
 }
@@ -1528,32 +1527,6 @@ void VSurfaceUnlock(struct VSurface *vs) {
   if (vs) {
     IDirectDrawSurface2_Unlock((LPDIRECTDRAWSURFACE2)vs->pSurfaceData, NULL);
   }
-}
-
-// Transparency needs to take RGB value and find best fit and place it into DD Surface
-// colorkey value.
-BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
-  DDCOLORKEY ColorKey;
-  LPDIRECTDRAWSURFACE2 lpDDSurface;
-
-  // Assertions
-  Assert(hVSurface != NULL);
-
-  // Set trans color into Video Surface
-  hVSurface->TransparentColor = TransColor;
-
-  // Get surface pointer
-  lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
-  if (!(lpDDSurface != NULL)) {
-    return FALSE;
-  }
-
-  ColorKey.dwColorSpaceLowValue = Get16BPPColor(TransColor);
-  ColorKey.dwColorSpaceHighValue = ColorKey.dwColorSpaceLowValue;
-
-  DDSetSurfaceColorKey(lpDDSurface, DDCKEY_SRCBLT, &ColorKey);
-
-  return (TRUE);
 }
 
 // Deletes all palettes, surfaces and region data

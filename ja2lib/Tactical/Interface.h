@@ -126,9 +126,6 @@ void CancelOpenDoorMenu();
 
 void HandleInterfaceBackgrounds();
 
-void BeginOverlayMessage(uint32_t uiFont, wchar_t *pFontString, ...);
-void EndOverlayMessage();
-
 void DrawSelectedUIAboveGuy(uint16_t usSoldierID);
 
 void CreateCurrentTacticalPanelButtons();
