@@ -5,14 +5,11 @@
 #include "SGP/VSurface.h"
 
 struct VSurface {
-  UINT16 usHeight;  // Height of Video Surface
-  UINT16 usWidth;   // Width of Video Surface
+  UINT16 usHeight;
+  UINT16 usWidth;
 
-  // A void pointer, but for this implementation, is really a lpDirectDrawSurface
-  PTR pSurfaceData;
-
-  // Direct Draw One Interface
-  PTR pSurfaceData1;
+  void* _platformData1;  // platform-specific data
+  void* _platformData2;  // platform-specific data
 };
 
 #endif
