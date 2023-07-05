@@ -1479,53 +1479,6 @@ void RenderOverlayMessage(VIDEO_OVERLAY *pBlitter) {
                    pBlitter->sY + gusOverlayPopupBoxHeight);
 }
 
-void BeginOverlayMessage(UINT32 uiFont, CHAR16 *pFontString, ...) {
-  va_list argptr;
-  VIDEO_OVERLAY_DESC VideoOverlayDesc;
-  wchar_t SlideString[512];
-
-  va_start(argptr, pFontString);  // Set up variable argument pointer
-  vswprintf(SlideString, ARR_SIZE(SlideString), pFontString,
-            argptr);  // process gprintf string (get output str)
-  va_end(argptr);
-
-  // Override it!
-  OverrideMercPopupBox(&gpOverrideMercBox);
-
-  SetPrepareMercPopupFlags(MERC_POPUP_PREPARE_FLAGS_TRANS_BACK | MERC_POPUP_PREPARE_FLAGS_MARGINS);
-
-  // Prepare text box
-  iOverlayMessageBox = PrepareMercPopupBox(iOverlayMessageBox, BASIC_MERC_POPUP_BACKGROUND,
-                                           RED_MERC_POPUP_BORDER, SlideString, 200, 50, 0, 0,
-                                           &gusOverlayPopupBoxWidth, &gusOverlayPopupBoxHeight);
-
-  // Set it back!
-  ResetOverrideMercPopupBox();
-
-  if (giPopupSlideMessageOverlay == -1) {
-    // Set Overlay
-    VideoOverlayDesc.sLeft = (640 - gusOverlayPopupBoxWidth) / 2;
-    VideoOverlayDesc.sTop = 100;
-    VideoOverlayDesc.sRight = VideoOverlayDesc.sLeft + gusOverlayPopupBoxWidth;
-    VideoOverlayDesc.sBottom = VideoOverlayDesc.sTop + gusOverlayPopupBoxHeight;
-    VideoOverlayDesc.sX = VideoOverlayDesc.sLeft;
-    VideoOverlayDesc.sY = VideoOverlayDesc.sTop;
-    VideoOverlayDesc.BltCallback = RenderOverlayMessage;
-
-    giPopupSlideMessageOverlay = RegisterVideoOverlay(0, &VideoOverlayDesc);
-  }
-}
-
-void EndOverlayMessage() {
-  if (giPopupSlideMessageOverlay != -1) {
-    //		DebugMsg( TOPIC_JA2, DBG_ERROR, String( "Removing Overlay message") );
-
-    RemoveVideoOverlay(giPopupSlideMessageOverlay);
-
-    giPopupSlideMessageOverlay = -1;
-  }
-}
-
 void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, INT16 sXPos, INT16 sYPos, INT16 sWidth,
                      INT16 sHeight) {
   FLOAT dWidth, dPercentage;
@@ -2202,9 +2155,6 @@ void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...) {
 
   // Override it!
   OverrideMercPopupBox(&gpUIMessageOverrideMercBox);
-
-  // SetPrepareMercPopupFlags( MERC_POPUP_PREPARE_FLAGS_TRANS_BACK |
-  // MERC_POPUP_PREPARE_FLAGS_MARGINS );
 
   if (fUseSkullIcon) {
     SetPrepareMercPopupFlags(MERC_POPUP_PREPARE_FLAGS_MARGINS | MERC_POPUP_PREPARE_FLAGS_SKULLICON);
