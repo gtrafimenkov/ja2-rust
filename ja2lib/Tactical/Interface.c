@@ -119,9 +119,6 @@ INT32 iUIMessageBox = -1;
 UINT32 guiUIMessageTimeDelay = 0;
 BOOLEAN gfUseSkullIconMessage = FALSE;
 
-// Overlay callback
-void BlitPopupText(VIDEO_OVERLAY *pBlitter);
-
 BOOLEAN gfPanelAllocated = FALSE;
 
 extern struct MOUSE_REGION gDisableRegion;
@@ -190,7 +187,6 @@ enum {
 INT32 iActionIcons[NUM_ICONS];
 
 // GLOBAL INTERFACE SURFACES
-VSurfID guiINTEXT;
 VSurfID guiCLOSE;
 VSurfID guiDEAD;
 VSurfID guiHATCH;
@@ -282,10 +278,6 @@ BOOLEAN InitializeTacticalInterface() {
       UseLoadedButtonImage(iIconImages[OPEN_DOOR_IMAGES], -1, 15, 16, 17, -1);
 
   // failing the CHECKF after this will cause you to lose your mouse
-
-  if (!AddVideoSurfaceFromFile("INTERFACE\\IN_TEXT.STI", &guiINTEXT))
-    AssertMsg(0, "Missing INTERFACE\\In_text.sti");
-  SetVideoSurfaceTransparency(guiINTEXT, FROMRGB(255, 0, 0));
 
   // LOAD CLOSE ANIM
   if (!AddVObjectFromFile("INTERFACE\\p_close.sti", &guiCLOSE))
@@ -1661,26 +1653,6 @@ void RestoreInterface() {
   // SHow lock UI cursors...
   MSYS_ChangeRegionCursor(&gDisableRegion, CURSOR_WAIT);
   MSYS_ChangeRegionCursor(&gUserTurnRegion, CURSOR_WAIT);
-}
-
-void BlitPopupText(VIDEO_OVERLAY *pBlitter) {
-  UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
-
-  BltVideoSurface(GetVSByID(pBlitter->uiDestBuff), GetVSByID(guiINTEXT),
-                  pBlitter->pBackground->sLeft, pBlitter->pBackground->sTop,
-                  VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
-
-  pDestBuf = VSurfaceLockOld(GetVSByID(pBlitter->uiDestBuff), &uiDestPitchBYTES);
-
-  SetFont(pBlitter->uiFontID);
-  SetFontBackground(pBlitter->ubFontBack);
-  SetFontForeground(pBlitter->ubFontFore);
-
-  mprintf_buffer(pDestBuf, uiDestPitchBYTES, pBlitter->uiFontID, pBlitter->sX, pBlitter->sY,
-                 pBlitter->zText);
-
-  VSurfaceUnlock(GetVSByID(pBlitter->uiDestBuff));
 }
 
 void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel) {

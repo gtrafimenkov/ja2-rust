@@ -670,7 +670,6 @@ void MonitorMapUIMessage(void);
 
 static void RenderMapHighlight(u8 sMapX, u8 sMapY, UINT16 usLineColor, BOOLEAN fStationary);
 void ShadeMapElem(u8 sMapX, u8 sMapY);
-void PopupText(CHAR16 *pFontString, ...);
 void DrawString(STR16 pString, UINT16 uiX, UINT16 uiY, UINT32 uiFont);
 
 // Clock
@@ -5195,36 +5194,6 @@ void PollRightButtonInMapView(UINT32 *puiNewEvent) {
       }
     }
   }
-}
-
-void PopupText(CHAR16 *pFontString, ...) {
-  UINT8 *pDestBuf;
-  UINT32 uiDestPitchBYTES;
-  va_list argptr;
-  INT16 sX, sY;
-  wchar_t PopupString[512];
-
-  va_start(argptr, pFontString);  // Set up variable argument pointer
-  vswprintf(PopupString, ARR_SIZE(PopupString), pFontString,
-            argptr);  // process gprintf string (get output str)
-  va_end(argptr);
-
-  FindFontCenterCoordinates(0, 0, SCREEN_WIDTH, INTERFACE_START_Y, PopupString, LARGEFONT1, &sX,
-                            &sY);
-
-  BltVideoSurface(vsFB, GetVSByID(guiINTEXT), 85, 160, VS_BLT_FAST | VS_BLT_USECOLORKEY, NULL);
-
-  pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-
-  SetFont(LARGEFONT1);
-  SetFontBackground(FONT_MCOLOR_BLACK);
-  SetFontForeground(FONT_MCOLOR_DKGRAY);
-
-  mprintf_buffer(pDestBuf, uiDestPitchBYTES, LARGEFONT1, sX, sY, PopupString);
-
-  VSurfaceUnlock(vsFB);
-
-  InvalidateScreen();
 }
 
 void CreateDestroyMapInvButton() {

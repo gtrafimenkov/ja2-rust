@@ -67,7 +67,6 @@ extern INT16 gsCurInterfacePanel;
 extern UINT32 guiCLOSE;
 extern UINT32 guiDEAD;
 extern UINT32 guiHATCH;
-extern UINT32 guiINTEXT;
 extern UINT32 guiGUNSM;
 extern UINT32 guiP1ITEMS;
 extern UINT32 guiP2ITEMS;
