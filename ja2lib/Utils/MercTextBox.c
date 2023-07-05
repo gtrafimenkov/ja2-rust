@@ -253,9 +253,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   UINT16 usStringPixLength;
   struct GRect DestRect;
   UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
   UINT16 *pDestBuf;
-  UINT8 *pSrcBuf;
   UINT8 ubFontColor, ubFontShadowColor;
   UINT16 usColorVal;
   UINT16 usLoopEnd;
