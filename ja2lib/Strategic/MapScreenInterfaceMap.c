@@ -608,19 +608,10 @@ void HandleShowingOfEnemiesWithMilitiaOn(void) {
 }
 
 UINT32 DrawMap(void) {
-  struct VSurface *hSrcVSurface;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiSrcPitchBYTES;
-  UINT16 *pDestBuf;
-  UINT8 *pSrcBuf;
-  struct GRect clip;
   u8 cnt, cnt2;
   INT32 iCounter = 0;
 
   if (!iCurrentMapSectorZ) {
-    // clip blits to mapscreen region
-    // ClipBlitsToMapViewRegion( );
-
     BlitImageToSurface(imageSmallMap, vsSB, MAP_VIEW_START_X + 1, MAP_VIEW_START_Y);
 
     // shade map sectors (must be done after Tixa/Orta/Mine icons have been blitted, but before
@@ -1496,7 +1487,6 @@ BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pP
   BOOLEAN fSpeedFlag = FALSE;
   INT32 iArrow = -1;
   INT32 iX, iY;
-  INT16 sX, sY;
   INT32 iArrowX, iArrowY;
   INT32 iDeltaA, iDeltaB, iDeltaB1;
   INT32 iDirection = 0;
@@ -1878,7 +1868,6 @@ BOOLEAN TraceCharAnimatedRoute(struct path *pPath, BOOLEAN fCheckFlag, BOOLEAN f
   INT32 iArrow = -1;
   INT32 iX = 0, iY = 0;
   INT32 iPastX, iPastY;
-  INT16 sX = 0, sY = 0;
   INT32 iArrowX, iArrowY;
   INT32 iDeltaA, iDeltaB, iDeltaB1;
   INT32 iDirection = -1;
@@ -2431,14 +2420,8 @@ void RestoreBackgroundForMapGrid(u8 sMapX, u8 sMapY) {
 
 void ClipBlitsToMapViewRegion(void) {
   // the standard mapscreen rectangle doesn't work for clipping while zoomed...
-  struct GRect ZoomedMapScreenClipRect = {MAP_VIEW_START_X + MAP_GRID_X,
-                                          MAP_VIEW_START_Y + MAP_GRID_Y - 1,
-                                          MAP_VIEW_START_X + MAP_VIEW_WIDTH + MAP_GRID_X,
-                                          MAP_VIEW_START_Y + MAP_VIEW_HEIGHT + MAP_GRID_Y - 10};
   struct GRect *pRectToUse;
-
   pRectToUse = &MapScreenRect;
-
   SetClippingRect(pRectToUse);
   memcpy(&gOldClipRect, &gDirtyClipRect, sizeof(gOldClipRect));
   memcpy(&gDirtyClipRect, pRectToUse, sizeof(gDirtyClipRect));
@@ -2509,7 +2492,6 @@ void ShowPeopleInMotion(u8 sX, u8 sY) {
   INT16 sSource = 0;
   INT16 sOffsetX = 0, sOffsetY = 0;
   INT16 iX = sX, iY = sY;
-  INT16 sXPosition = 0, sYPosition = 0;
   INT32 iCounter = 0;
   struct VObject *hIconHandle;
   BOOLEAN fAboutToEnter = FALSE;
@@ -4605,7 +4587,6 @@ void ShowSAMSitesOnStrategicMap(void) {
   INT16 sX = 0, sY = 0;
   struct VObject *hHandle;
   INT8 ubVidObjIndex = 0;
-  UINT32 uiDestPitchBYTES;
   CHAR16 wString[40];
 
   if (fShowAircraftFlag) {
@@ -4827,7 +4808,6 @@ void DrawMapBoxIcon(struct VObject *hIconHandle, UINT16 usVOIndex, u8 sMapX, u8 
 }
 
 void DrawOrta() {
-  UINT32 uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;
@@ -4843,7 +4823,6 @@ void DrawOrta() {
 }
 
 void DrawTixa() {
-  UINT32 uiDestPitchBYTES;
   INT16 sX, sY;
   UINT8 ubVidObjIndex;
   struct VObject *hHandle;
