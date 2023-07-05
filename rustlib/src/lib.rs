@@ -6,6 +6,7 @@ pub mod exp_clock;
 pub mod exp_debug;
 pub mod exp_fileman;
 pub mod exp_game_state;
+pub mod exp_geometry;
 pub mod exp_images;
 pub mod exp_laptop;
 pub mod exp_militia;

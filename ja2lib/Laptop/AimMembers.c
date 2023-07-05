@@ -2338,8 +2338,8 @@ BOOLEAN InitVideoFaceTalking(uint8_t ubMercID, uint16_t usQuoteNum) {
 BOOLEAN DisplayTalkingMercFaceForVideoPopUp(int32_t iFaceIndex) {
   static BOOLEAN fWasTheMercTalking = FALSE;
   BOOLEAN fIsTheMercTalking;
-  SGPRect SrcRect;
-  SGPRect DestRect;
+  struct GRect SrcRect;
+  struct GRect DestRect;
 
   // Test
   SrcRect.iLeft = 0;
@@ -3529,9 +3529,9 @@ BOOLEAN DisableNewMailMessage() {
 BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit) {
   static uint8_t ubCount;
   uint16_t usPosX, usPosY, usPosRightX, usPosBottomY, usWidth, usHeight;
-  SGPRect SrcRect;
-  SGPRect DestRect;
-  static SGPRect LastRect;
+  struct GRect SrcRect;
+  struct GRect DestRect;
+  static struct GRect LastRect;
   float usTemp;
 
   if (fForward) {

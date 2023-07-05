@@ -251,7 +251,7 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 
   Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0,
-                  0, 0, 0, 640, 480);
+                  0, NewGRect(0, 0, 640, 480));
 
   VSurfaceUnlock(vsFB);
   VSurfaceUnlock(vsSB);

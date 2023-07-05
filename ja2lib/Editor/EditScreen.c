@@ -717,7 +717,7 @@ BOOLEAN DrawTempMouseCursorObject(void) {
 
 // Displays the current drawing object in the small, lower left window of the editor's toolbar.
 void ShowCurrentDrawingMode(void) {
-  SGPRect ClipRect, NewRect;
+  struct GRect ClipRect, NewRect;
   int32_t iShowMode;
   uint16_t usUseIndex;
   uint16_t usObjIndex;
@@ -2381,7 +2381,7 @@ void GetMasterList(void) {}
 //	(usually a 16 bit image)
 //
 void ShowCurrentSlotSurface(uint32_t vSurface, int32_t iWindow) {
-  SGPRect ClipRect, WinRect;
+  struct GRect ClipRect, WinRect;
   int32_t iStartX;
   int32_t iStartY;
   int32_t iPicHeight, iPicWidth;
@@ -2436,7 +2436,7 @@ void ShowCurrentSlotSurface(uint32_t vSurface, int32_t iWindow) {
 //	8 bit image (.STI) files
 //
 void ShowCurrentSlotImage(struct VObject *hVObj, int32_t iWindow) {
-  SGPRect ClipRect, NewRect;
+  struct GRect ClipRect, NewRect;
   int32_t iStartX;
   int32_t iStartY;
   int32_t iPicHeight, iPicWidth;

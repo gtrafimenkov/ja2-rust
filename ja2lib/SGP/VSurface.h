@@ -4,6 +4,7 @@
 #include "SGP/Container.h"
 #include "SGP/HImage.h"
 #include "SGP/Types.h"
+#include "rust_geometry.h"
 
 struct VObject;
 struct VSurface;
@@ -38,15 +39,13 @@ extern struct VSurface *vsSB;
 //
 
 struct BltOpts {
-  COLORVAL ColorFill;  // Used for fill effect
-  SGPRect SrcRect;     // Given SRC subrect instead of srcregion
-  SGPRect FillRect;    // Given SRC subrect instead of srcregion
+  COLORVAL ColorFill;     // Used for fill effect
+  struct GRect SrcRect;   // Given SRC subrect instead of srcregion
+  struct GRect FillRect;  // Given SRC subrect instead of srcregion
 };
 
 uint16_t GetVSurfaceHeight(const struct VSurface *vs);
 uint16_t GetVSurfaceWidth(const struct VSurface *vs);
-uint16_t *GetVSurface16BPPPalette(struct VSurface *vs);
-void SetVSurface16BPPPalette(struct VSurface *vs, uint16_t *palette);
 
 //
 // This structure describes the creation parameters for a Video Surface
@@ -71,7 +70,6 @@ BOOLEAN ShutdownVideoSurfaceManager();
 
 // Creates and adds a video Surface to list
 BOOLEAN AddVideoSurface(VSURFACE_DESC *VSurfaceDesc, VSurfID *uiIndex);
-BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex);
 
 // Returns a HVSurface for the specified index
 BOOLEAN GetVideoSurface(struct VSurface **hVSurface, VSurfID uiIndex);
@@ -89,18 +87,12 @@ BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor);
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Gets the RGB palette entry values
-BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteEntry *pPalette);
-
 // Set data from struct Image*.
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage,
-                                      uint16_t usX, uint16_t usY, SGPRect *pSrcRect);
+                                      uint16_t usX, uint16_t usY, struct GRect *pSrcRect);
 
 // Sets Transparency color into HVSurface and the underlying DD surface
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor);
-
-// Sets HVSurface palette, creates if nessessary. Also sets 16BPP palette
-BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette);
 
 // Deletes all data, including palettes, regions, DD Surfaces
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface);
@@ -124,8 +116,8 @@ BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, in
 // If the Dest Rect and the source rect are not the same size, the source surface will be either
 // enlraged or shunk.
 BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, int32_t iDestX,
-                               int32_t iDestY, uint32_t fBltFlags, SGPRect *SrcRect,
-                               SGPRect *DestRect);
+                               int32_t iDestY, uint32_t fBltFlags, struct GRect *SrcRect,
+                               struct GRect *DestRect);
 
 BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, int32_t X1, int32_t Y1,
                                                    int32_t X2, int32_t Y2);
@@ -133,12 +125,12 @@ BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, int32_
 // The following structure is used to define a region of the video Surface
 // These regions are stored via a HLIST
 typedef struct {
-  SGPRect RegionCoords;  // Rectangle describing coordinates of region
-  SGPPoint Origin;       // Origin used for hot spots, etc
-  uint8_t ubHitMask;     // Byte flags for hit detection
+  struct GRect RegionCoords;  // Rectangle describing coordinates of region
+  SGPPoint Origin;            // Origin used for hot spots, etc
+  uint8_t ubHitMask;          // Byte flags for hit detection
 } VSURFACE_REGION;
 
-void SetClippingRect(SGPRect *clip);
+void SetClippingRect(struct GRect *clip);
 
 // Allocate a new empty instance of VSurface
 struct VSurface *VSurfaceNew();
@@ -153,8 +145,7 @@ struct BufferLockInfo VSurfaceLock(struct VSurface *vs);
 void VSurfaceUnlock(struct VSurface *vs);
 BYTE *VSurfaceLockOld(struct VSurface *vs, uint32_t *pitch);
 
-struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height, uint8_t bitDepth);
-struct VSurface *CreateVideoSurfaceFromFile(const char *path);
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height);
 struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, VSurfID *puiIndex);
 
 // Global variables for video objects
@@ -163,5 +154,9 @@ extern uint32_t guiSAVEBUFFER;
 
 BOOLEAN InitializeSystemVideoObjects();
 BOOLEAN InitializeGameVideoObjects();
+
+void BlitImageToSurface(struct Image *source, struct VSurface *dest, int32_t x, int32_t y);
+void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, int32_t x, int32_t y,
+                            struct GRect sourceRect);
 
 #endif

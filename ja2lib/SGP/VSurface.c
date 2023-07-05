@@ -1,7 +1,8 @@
 #include "VSurface.h"
 
+#include <stdio.h>
+
 #include "Local.h"
-#include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
@@ -13,6 +14,7 @@
 #include "SGP/WCheck.h"
 #include "TileEngine/RenderWorld.h"
 #include "platform.h"
+#include "rust_geometry.h"
 
 struct VSurface *vsPrimary = NULL;
 struct VSurface *vsBB = NULL;
@@ -24,11 +26,11 @@ struct VSurface *vsMouseBuffer = NULL;
 // Dirty rectangle management variables
 //
 
-SGPRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
+struct GRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
 uint32_t guiDirtyRegionCount;
 BOOLEAN gfForceFullScreenRefresh;
 
-SGPRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
+struct GRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
 uint32_t gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
 uint32_t guiDirtyRegionExCount;
 
@@ -47,9 +49,9 @@ uint32_t guiVSurfaceTotalAdded = 0;
 // Given an struct Image* object, blit imagery into existing Video Surface. Can be from 8->16
 // BPP
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage,
-                                      uint16_t usX, uint16_t usY, SGPRect *pSrcRect) {
+                                      uint16_t usX, uint16_t usY, struct GRect *pSrcRect) {
   uint16_t usEffectiveWidth;
-  SGPRect aRect;
+  struct GRect aRect;
 
   // Assertions
   Assert(hVSurface != NULL);
@@ -67,7 +69,7 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   struct BufferLockInfo lock = VSurfaceLock(hVSurface);
 
   // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-  usEffectiveWidth = (uint16_t)(lock.pitch / (hVSurface->ubBitDepth / 8));
+  usEffectiveWidth = lock.pitch / 2;
 
   if (!lock.dest) {
     return FALSE;
@@ -88,8 +90,8 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   }
 
   // This struct Image* function will transparently copy buffer
-  if (!CopyImageToBuffer(hImage, hVSurface->ubBitDepth, lock.dest, usEffectiveWidth,
-                         hVSurface->usHeight, usX, usY, &aRect)) {
+  if (!CopyImageToBuffer(hImage, 16, lock.dest, usEffectiveWidth, hVSurface->usHeight, usX, usY,
+                         &aRect)) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
              String("Error Occured Copying struct Image* to struct VSurface*"));
     VSurfaceUnlock(hVSurface);
@@ -181,7 +183,7 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, int32_t iDe
   do {
     // Use SUBRECT if specified
     if (fBltFlags & VS_BLT_SRCSUBRECT) {
-      SGPRect aSubRect;
+      struct GRect aSubRect;
 
       if (!(pBltFx != NULL)) {
         return FALSE;
@@ -252,44 +254,16 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, int32_t iDe
     }
   }
 
-  // Send dest position, rectangle, etc to DD bltfast function
-  // First check BPP values for compatibility
-  if (dest->ubBitDepth == 16 && src->ubBitDepth == 16) {
-    struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
-    if (!(BltVSurfaceUsingDD(dest, src, fBltFlags, iDestX, iDestY, &srcRect))) {
-      return FALSE;
-    }
-
-  } else if (dest->ubBitDepth == 8 && src->ubBitDepth == 8) {
-    struct BufferLockInfo srcLock = VSurfaceLock(src);
-    if (!srcLock.dest) {
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP surface for blitting");
-      return (FALSE);
-    }
-
-    struct BufferLockInfo destLock = VSurfaceLock(dest);
-    if (!destLock.dest) {
-      VSurfaceUnlock(src);
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP dest surface for blitting");
-      return (FALSE);
-    }
-
-    Blt8BPPTo8BPP(destLock.dest, destLock.pitch, srcLock.dest, srcLock.pitch, iDestX, iDestY,
-                  SrcRect.left, SrcRect.top, uiWidth, uiHeight);
-    VSurfaceUnlock(src);
-    VSurfaceUnlock(dest);
-    return (TRUE);
-  } else {
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-             String("Incompatible BPP values with src and dest Video Surfaces for blitting"));
-    return (FALSE);
+  struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
+  if (!(BltVSurfaceUsingDD(dest, src, fBltFlags, iDestX, iDestY, &srcRect))) {
+    return FALSE;
   }
 
   return (TRUE);
 }
 
 BOOLEAN Blt16BPPBufferShadowRectAlternateTable(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
-                                               SGPRect *area);
+                                               struct GRect *area);
 
 BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, int32_t X2,
                                        int32_t Y2, BOOLEAN fLowPercentShadeTable) {
@@ -299,7 +273,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_
 
   uint16_t *pBuffer;
   uint32_t uiPitch;
-  SGPRect area;
+  struct GRect area;
 
   if (X1 < 0) X1 = 0;
 
@@ -364,13 +338,11 @@ BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, int32_
 // This function will stretch the source image to the size of the dest rect.
 // If the 2 images are not 16 Bpp, it returns false.
 BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, int32_t iDestX,
-                               int32_t iDestY, uint32_t fBltFlags, SGPRect *SrcRect,
-                               SGPRect *DestRect) {
+                               int32_t iDestY, uint32_t fBltFlags, struct GRect *SrcRect,
+                               struct GRect *DestRect) {
   if (!dest || !src) {
     return FALSE;
   }
-  // if the 2 images are not both 16bpp, return FALSE
-  if ((dest->ubBitDepth != 16) && (src->ubBitDepth != 16)) return (FALSE);
 
   struct Rect srcRect = {SrcRect->iLeft, SrcRect->iTop, SrcRect->iRight, SrcRect->iBottom};
   struct Rect destRect = {DestRect->iLeft, DestRect->iTop, DestRect->iRight, DestRect->iBottom};
@@ -383,7 +355,7 @@ BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, int3
 
 BOOLEAN VSurfaceColorFill(struct VSurface *dest, int32_t x1, int32_t y1, int32_t x2, int32_t y2,
                           uint16_t Color16BPP) {
-  SGPRect Clip;
+  struct GRect Clip;
   GetClippingRect(&Clip);
   if (x1 < Clip.iLeft) x1 = Clip.iLeft;
   if (x1 > Clip.iRight) return (FALSE);
@@ -432,7 +404,7 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
 }
 
 struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, VSurfID *puiIndex) {
-  struct VSurface *vs = CreateVideoSurface(width, height, 16);
+  struct VSurface *vs = CreateVideoSurface(width, height);
   if (vs) {
     SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
     if (puiIndex) {
@@ -443,26 +415,11 @@ struct VSurface *VSurfaceAdd(uint16_t width, uint16_t height, VSurfID *puiIndex)
   return NULL;
 }
 
-BOOLEAN AddVideoSurfaceFromFile(const char *fileName, VSurfID *puiIndex) {
-  Assert(puiIndex);
-  Assert(fileName);
-
-  struct VSurface *vs = CreateVideoSurfaceFromFile(fileName);
-
-  if (!vs) {
-    return FALSE;
-  }
-
-  SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
-  *puiIndex = addVSurfaceToList(vs);
-  return TRUE;
-}
-
 BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
   Assert(puiIndex);
   Assert(desc);
 
-  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight, 16);
+  struct VSurface *vs = CreateVideoSurface(desc->usWidth, desc->usHeight);
 
   if (!vs) {
     return FALSE;
@@ -671,37 +628,8 @@ void InvalidateScreen(void) {
 
 uint16_t GetVSurfaceHeight(const struct VSurface *vs) { return vs->usHeight; }
 uint16_t GetVSurfaceWidth(const struct VSurface *vs) { return vs->usWidth; }
-uint16_t *GetVSurface16BPPPalette(struct VSurface *vs) { return vs->p16BPPPalette; }
-void SetVSurface16BPPPalette(struct VSurface *vs, uint16_t *palette) {
-  vs->p16BPPPalette = palette;
-}
 
 struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
-
-struct VSurface *CreateVideoSurfaceFromFile(const char *path) {
-  struct Image *image = CreateImage(path, false);
-  if (image == NULL) {
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid Image Filename given");
-    return (NULL);
-  }
-
-  struct VSurface *vs = CreateVideoSurface(image->usWidth, image->usHeight, image->ubBitDepth);
-
-  if (vs) {
-    SGPRect tempRect;
-    tempRect.iLeft = 0;
-    tempRect.iTop = 0;
-    tempRect.iRight = image->usWidth - 1;
-    tempRect.iBottom = image->usHeight - 1;
-    SetVideoSurfaceDataFromHImage(vs, image, 0, 0, &tempRect);
-    if (image->ubBitDepth == 8) {
-      SetVideoSurfacePalette(vs, image->palette);
-    }
-    DestroyImage(image);
-  }
-
-  return vs;
-}
 
 uint32_t guiRIGHTPANEL = 0;
 uint32_t guiSAVEBUFFER = 0;
@@ -728,4 +656,62 @@ BOOLEAN InitializeGameVideoObjects() {
   }
 
   return (TRUE);
+}
+
+void BlitImageToSurface(struct Image *source, struct VSurface *dest, int32_t x, int32_t y) {
+  struct GRect sourceRect = {
+      .iLeft = 0, .iTop = 0, .iRight = source->usWidth, .iBottom = source->usHeight};
+  BlitImageToSurfaceRect(source, dest, x, y, sourceRect);
+}
+
+void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, int32_t x, int32_t y,
+                            struct GRect sourceRect) {
+  uint32_t destPitch;
+  void *destBuf = VSurfaceLockOld(dest, &destPitch);
+
+  {
+    DebugLogWrite("BlitImageToSurfaceRect:");
+    char buf[256];
+    snprintf(buf, ARR_SIZE(buf), " source: %d, %d, %d, %p, %p", source->ubBitDepth, source->usWidth,
+             source->usHeight, source->palette, source->palette16bpp);
+    DebugLogWrite(buf);
+    snprintf(buf, ARR_SIZE(buf), " dest:   %d, %d, %d", dest->usWidth, dest->usHeight, destPitch);
+    DebugLogWrite(buf);
+  }
+
+  if ((sourceRect.iRight + x) > dest->usWidth || (sourceRect.iBottom + y) > dest->usHeight) {
+    DebugLogWrite("Error: BlitImageToSurfaceRect: source image is out of dest bounds");
+    VSurfaceUnlock(dest);
+    return;
+  }
+
+  if (source->ubBitDepth == 8) {
+    if (!source->palette16bpp) {
+      source->palette16bpp = Create16BPPPalette(source->palette);
+      if (!source->palette16bpp) {
+        DebugLogWrite("BlitImageToSurfaceRect: failed to create 16bpp palette");
+        return;
+      }
+    }
+    struct ImageDataParams src = {
+        .width = source->usWidth,
+        .height = source->usHeight,
+        .palette16bpp = source->palette16bpp,
+        .pitch = source->usWidth * 1,
+        .data = source->image_data,
+    };
+    Blt8bppTo16bppRect(&src, (uint16_t *)destBuf, destPitch, x, y, sourceRect);
+  } else if (source->ubBitDepth == 16) {
+    struct ImageDataParams src = {
+        .width = source->usWidth,
+        .height = source->usHeight,
+        .palette16bpp = NULL,
+        .pitch = source->usWidth * 2,
+        .data = source->image_data,
+    };
+    Blt16bppTo16bppRect(&src, (uint16_t *)destBuf, destPitch, x, y, sourceRect);
+  } else {
+    DebugLogWrite("BlitImageToSurfaceRect: unsupported bit depth combination");
+  }
+  VSurfaceUnlock(dest);
 }

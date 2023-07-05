@@ -256,7 +256,7 @@ uint32_t UndergroundTacticalTraversalTime(
 }
 
 void BeginLoadScreen() {
-  SGPRect SrcRect, DstRect;
+  struct GRect SrcRect, DstRect;
   uint32_t uiStartTime, uiCurrTime;
   int32_t iPercentage, iFactor;
   uint32_t uiTimeRange;

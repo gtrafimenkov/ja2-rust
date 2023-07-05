@@ -242,7 +242,7 @@ uint32_t UIHandleEndTurn(UI_EVENT *pUIEvent);
 
 extern BOOLEAN gfUIShowCurIntTile;
 
-extern SGPRect gRubberBandRect;
+extern struct GRect gRubberBandRect;
 extern BOOLEAN gRubberBandActive;
 
 void EndMenuEvent(uint32_t uiEvent);

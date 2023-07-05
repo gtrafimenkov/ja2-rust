@@ -1763,7 +1763,7 @@ void RenderSMPanel(BOOLEAN *pfDirty) {
   if (gfSMDisableForItems && (*pfDirty) != DIRTYLEVEL0) {
     uint8_t *pDestBuf;
     uint32_t uiDestPitchBYTES;
-    SGPRect ClipRect;
+    struct GRect ClipRect;
 
     ClipRect.iLeft = 87;
     ClipRect.iRight = 536;

@@ -354,7 +354,7 @@ uint32_t guiDOWNLOADBOT;
 uint32_t guiTITLEBARLAPTOP;
 uint32_t guiLIGHTS;
 uint32_t guiTITLEBARICONS;
-uint32_t guiDESKTOP;
+static struct Image *desktopBackground;
 
 // email notification
 uint32_t guiUNREAD;
@@ -422,8 +422,8 @@ BOOLEAN fHardDriveLightOn = FALSE;
 BOOLEAN fFlickerHD = FALSE;
 
 // the screens limiting rect
-SGPRect LaptopScreenRect = {LAPTOP_UL_X, LAPTOP_UL_Y - 5, LAPTOP_SCREEN_LR_X + 2,
-                            LAPTOP_SCREEN_LR_Y + 5 + 19};
+struct GRect LaptopScreenRect = {LAPTOP_UL_X, LAPTOP_UL_Y - 5, LAPTOP_SCREEN_LR_X + 2,
+                                 LAPTOP_SCREEN_LR_Y + 5 + 19};
 
 // the sub pages vistsed or not status within the web browser
 BOOLEAN gfWWWaitSubSitesVisitedFlags[LAPTOP_MODE_SIRTECH - LAPTOP_MODE_WWW];
@@ -541,9 +541,8 @@ void UpdateListToReflectNewProgramOpened(int32_t iOpenedProgram);
 int32_t FindLastProgramStillOpen(void);
 void SetCurrentToLastProgramOpened(void);
 BOOLEAN HandleExit(void);
-void DeleteDesktopBackground(void);
 BOOLEAN LoadDesktopBackground(void);
-BOOLEAN DrawDeskTopBackground(void);
+static void DrawDeskTopBackground();
 void PrintDate(void);
 void DisplayTaskBarIcons();
 void PrintNumberOnTeam(void);
@@ -946,8 +945,7 @@ void ExitLaptop() {
   // destroy region for new mail icon
   CreateDestroyMouseRegionForNewMailIcon();
 
-  // get rid of desktop
-  DeleteDesktopBackground();
+  DestroyImage(desktopBackground);
 
   if (fErrorFlag) {
     fErrorFlag = FALSE;
@@ -1605,7 +1603,7 @@ uint32_t LaptopScreenHandle() {
 
   if (gfStartMapScreenToLaptopTransition) {  // Everything is set up to start the transition
                                              // animation.
-    SGPRect SrcRect2, DstRect;
+    struct GRect SrcRect2, DstRect;
     int32_t iPercentage, iScalePercentage, iFactor;
     uint32_t uiStartTime, uiTimeRange, uiCurrTime;
     int32_t iX, iY, iWidth, iHeight;
@@ -2166,7 +2164,7 @@ BOOLEAN LeaveLapTopScreen(void) {
     SetPendingNewScreen(guiExitScreen);
 
     if (!gfDontStartTransitionFromLaptop) {
-      SGPRect SrcRect2, DstRect;
+      struct GRect SrcRect2, DstRect;
       int32_t iPercentage, iScalePercentage, iFactor;
       uint32_t uiStartTime, uiTimeRange, uiCurrTime;
       int32_t iX, iY, iWidth, iHeight;
@@ -3648,8 +3646,8 @@ void LapTopScreenCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
 
 BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                            uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback) {
-  SGPRect pCenteringRect = {LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y, LAPTOP_SCREEN_LR_X,
-                            LAPTOP_SCREEN_LR_Y};
+  struct GRect pCenteringRect = {LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_UL_Y, LAPTOP_SCREEN_LR_X,
+                                 LAPTOP_SCREEN_LR_Y};
 
   // reset exit mode
   fExitDueToMessageBox = TRUE;
@@ -3665,7 +3663,7 @@ BOOLEAN DoLapTopMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScr
 
 BOOLEAN DoLapTopSystemMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
                                          uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
-                                         const SGPRect *pCenteringRect) {
+                                         const struct GRect *pCenteringRect) {
   // reset exit mode
   fExitDueToMessageBox = TRUE;
 
@@ -3748,9 +3746,9 @@ BOOLEAN DisplayTitleBarMaximizeGraphic(BOOLEAN fForward, BOOLEAN fInit, uint16_t
                                        uint16_t usTopLeftY, uint16_t usTopRightX) {
   static int8_t ubCount;
   int16_t sPosX, sPosY, sPosRightX, sPosBottomY, sWidth, sHeight;
-  SGPRect SrcRect;
-  SGPRect DestRect;
-  static SGPRect LastRect;
+  struct GRect SrcRect;
+  struct GRect DestRect;
+  static struct GRect LastRect;
   float dTemp;
 
   if (fInit) {
@@ -4323,58 +4321,19 @@ void BlitTitleBarIcons(void) {
   }
 }
 
-BOOLEAN DrawDeskTopBackground(void) {
-  struct VSurface *hSrcVSurface;
-  uint32_t uiDestPitchBYTES;
-  uint32_t uiSrcPitchBYTES;
-  uint16_t *pDestBuf;
-  uint8_t *pSrcBuf;
-  SGPRect clip;
-
-  // set clipping region
-  clip.iLeft = 0;
-  clip.iRight = 506;
-  clip.iTop = 0;
-  clip.iBottom = 408 + 19;
-  // get surfaces
-  pDestBuf = (uint16_t *)VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-  if (!(GetVideoSurface(&hSrcVSurface, guiDESKTOP))) {
-    return FALSE;
-  }
-  pSrcBuf = VSurfaceLockOld(GetVSByID(guiDESKTOP), &uiSrcPitchBYTES);
-
-  // blit .pcx for the background onto desktop
-  Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
-                              LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3, &clip);
-
-  // release surfaces
-  VSurfaceUnlock(GetVSByID(guiDESKTOP));
-  VSurfaceUnlock(vsFB);
-
-  return (TRUE);
+static void DrawDeskTopBackground() {
+  BlitImageToSurface(desktopBackground, vsFB, LAPTOP_SCREEN_UL_X - 2, LAPTOP_SCREEN_UL_Y - 3);
 }
 
 BOOLEAN LoadDesktopBackground(void) {
   SGPFILENAME ImageFile;
-
   GetMLGFilename(ImageFile, MLG_DESKTOP);
-  if (!(AddVideoSurfaceFromFile(ImageFile, &guiDESKTOP))) {
-    return FALSE;
-  }
-
-  return (TRUE);
-}
-
-void DeleteDesktopBackground(void) {
-  // delete desktop
-
-  DeleteVideoSurfaceFromIndex(guiDESKTOP);
-  return;
+  desktopBackground = CreateImage(ImageFile, false);
+  return desktopBackground != NULL;
 }
 
 void PrintBalance(void) {
   wchar_t pString[32];
-  //	uint16_t usX, usY;
 
   SetFont(FONT10ARIAL);
   SetFontForeground(FONT_BLACK);

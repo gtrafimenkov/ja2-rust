@@ -4,7 +4,6 @@
 
 #include "Globals.h"
 #include "Local.h"
-#include "Rect.h"
 #include "SGP/Debug.h"
 #include "SGP/Input.h"
 #include "SGP/VObject.h"
@@ -22,6 +21,7 @@
 #include "platform_callbacks.h"
 #include "platform_strings.h"
 #include "rust_debug.h"
+#include "rust_geometry.h"
 #include "rust_images.h"
 
 #define INITGUID
@@ -156,11 +156,11 @@ LPDIRECTDRAWPALETTE gpDirectDrawPalette;
 // Dirty rectangle management variables
 //
 
-extern SGPRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
+extern struct GRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
 extern uint32_t guiDirtyRegionCount;
 extern BOOLEAN gfForceFullScreenRefresh;
 
-extern SGPRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
+extern struct GRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
 extern uint32_t gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
 extern uint32_t guiDirtyRegionExCount;
 
@@ -1471,32 +1471,18 @@ void FatalError(char *pError, ...) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height, uint8_t bitDepth) {
+struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) {
   Assert(height > 0);
   Assert(width > 0);
 
   DDPIXELFORMAT PixelFormat;
   memset(&PixelFormat, 0, sizeof(PixelFormat));
   PixelFormat.dwSize = sizeof(DDPIXELFORMAT);
-
-  switch (bitDepth) {
-    case 8:
-      PixelFormat.dwFlags = DDPF_RGB | DDPF_PALETTEINDEXED8;
-      PixelFormat.dwRGBBitCount = 8;
-      break;
-
-    case 16: {
-      PixelFormat.dwFlags = DDPF_RGB;
-      PixelFormat.dwRGBBitCount = 16;
-      PixelFormat.dwRBitMask = 0xf800;
-      PixelFormat.dwGBitMask = 0x07e0;
-      PixelFormat.dwBBitMask = 0x001f;
-    } break;
-
-    default:
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Invalid BPP value, can only be 8 or 16.");
-      return (FALSE);
-  }
+  PixelFormat.dwFlags = DDPF_RGB;
+  PixelFormat.dwRGBBitCount = 16;
+  PixelFormat.dwRBitMask = 0xf800;
+  PixelFormat.dwGBitMask = 0x07e0;
+  PixelFormat.dwBBitMask = 0x001f;
 
   DDSURFACEDESC SurfaceDescription;
   memset(&SurfaceDescription, 0, sizeof(DDSURFACEDESC));
@@ -1517,14 +1503,9 @@ struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height, uint8_t bit
 
   vs->usHeight = height;
   vs->usWidth = width;
-  vs->ubBitDepth = bitDepth;
   vs->pSurfaceData1 = (void *)lpDDS;
   vs->pSurfaceData = (void *)lpDDS2;
-  vs->pPalette = NULL;
-  vs->p16BPPPalette = NULL;
   vs->TransparentColor = FROMRGB(0, 0, 0);
-  vs->fFlags = 0;
-  vs->pClipper = NULL;
 
   return (vs);
 }
@@ -1549,38 +1530,10 @@ void VSurfaceUnlock(struct VSurface *vs) {
   }
 }
 
-// Palette setting is expensive, need to set both DDPalette and create 16BPP palette
-BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntry *pSrcPalette) {
-  Assert(hVSurface != NULL);
-
-  // Create palette object if not already done so
-  if (hVSurface->pPalette == NULL) {
-    DDCreatePalette(dd2Object, (DDPCAPS_8BIT | DDPCAPS_ALLOW256), (LPPALETTEENTRY)(&pSrcPalette[0]),
-                    (LPDIRECTDRAWPALETTE *)&hVSurface->pPalette, NULL);
-  } else {
-    // Just Change entries
-    DDSetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
-                        (PALETTEENTRY *)pSrcPalette);
-  }
-
-  // Delete 16BPP Palette if one exists
-  if (hVSurface->p16BPPPalette != NULL) {
-    MemFree(hVSurface->p16BPPPalette);
-    hVSurface->p16BPPPalette = NULL;
-  }
-
-  // Create 16BPP Palette
-  hVSurface->p16BPPPalette = Create16BPPPalette(pSrcPalette);
-
-  DebugMsg(TOPIC_VIDEOSURFACE, DBG_INFO, String("Video Surface Palette change successfull"));
-  return (TRUE);
-}
-
 // Transparency needs to take RGB value and find best fit and place it into DD Surface
 // colorkey value.
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
   DDCOLORKEY ColorKey;
-  DWORD fFlags = CLR_INVALID;
   LPDIRECTDRAWSURFACE2 lpDDSurface;
 
   // Assertions
@@ -1595,38 +1548,10 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
     return FALSE;
   }
 
-  // Get right pixel format, based on bit depth
-
-  switch (hVSurface->ubBitDepth) {
-    case 8:
-
-      // Use color directly
-      ColorKey.dwColorSpaceLowValue = TransColor;
-      ColorKey.dwColorSpaceHighValue = TransColor;
-      break;
-
-    case 16:
-
-      fFlags = Get16BPPColor(TransColor);
-
-      // fFlags now contains our closest match
-      ColorKey.dwColorSpaceLowValue = fFlags;
-      ColorKey.dwColorSpaceHighValue = ColorKey.dwColorSpaceLowValue;
-      break;
-  }
+  ColorKey.dwColorSpaceLowValue = Get16BPPColor(TransColor);
+  ColorKey.dwColorSpaceHighValue = ColorKey.dwColorSpaceLowValue;
 
   DDSetSurfaceColorKey(lpDDSurface, DDCKEY_SRCBLT, &ColorKey);
-
-  return (TRUE);
-}
-
-BOOLEAN GetVSurfacePaletteEntries(struct VSurface *hVSurface, struct SGPPaletteEntry *pPalette) {
-  if (!(hVSurface->pPalette != NULL)) {
-    return FALSE;
-  }
-
-  DDGetPaletteEntries((LPDIRECTDRAWPALETTE)hVSurface->pPalette, 0, 0, 256,
-                      (PALETTEENTRY *)pPalette);
 
   return (TRUE);
 }
@@ -1638,12 +1563,6 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
     return FALSE;
   }
 
-  // Release palette
-  if (hVSurface->pPalette != NULL) {
-    DDReleasePalette((LPDIRECTDRAWPALETTE)hVSurface->pPalette);
-    hVSurface->pPalette = NULL;
-  }
-
   // Get surface pointer
   LPDIRECTDRAWSURFACE2 lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
 
@@ -1652,47 +1571,28 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
     DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSurfaceData1, &lpDDSurface);
   }
 
-  // If there is a 16bpp palette, free it
-  if (hVSurface->p16BPPPalette != NULL) {
-    MemFree(hVSurface->p16BPPPalette);
-    hVSurface->p16BPPPalette = NULL;
-  }
-
   MemFree(hVSurface);
 
   return (TRUE);
 }
 
 static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface) {
-  // Create Video Surface
-
-  // Set values based on DD Surface given
   DDSURFACEDESC DDSurfaceDesc;
   DDGetSurfaceDescription(lpDDSurface, &DDSurfaceDesc);
-  DDPIXELFORMAT PixelFormat = DDSurfaceDesc.ddpfPixelFormat;
+
+  if (DDSurfaceDesc.ddpfPixelFormat.dwRGBBitCount != 16) {
+    DebugLogWrite("Error: CreateVideoSurfaceFromDDSurface: unsupported bit depth");
+    return NULL;
+  }
 
   struct VSurface *hVSurface = VSurfaceNew();
   hVSurface->usHeight = (uint16_t)DDSurfaceDesc.dwHeight;
   hVSurface->usWidth = (uint16_t)DDSurfaceDesc.dwWidth;
-  hVSurface->ubBitDepth = (uint8_t)PixelFormat.dwRGBBitCount;
   hVSurface->pSurfaceData = (void *)lpDDSurface;
 
   // Get and Set palette, if attached, allow to fail
   LPDIRECTDRAWPALETTE pDDPalette;
   HRESULT ReturnCode = IDirectDrawSurface2_GetPalette(lpDDSurface, &pDDPalette);
-
-  if (ReturnCode == DD_OK) {
-    // Set 8-bit Palette and 16 BPP palette
-    hVSurface->pPalette = pDDPalette;
-
-    // Create 16-BPP Palette
-    struct SGPPaletteEntry palette[256];
-    DDGetPaletteEntries(pDDPalette, 0, 0, 256, (LPPALETTEENTRY)palette);
-    hVSurface->p16BPPPalette = Create16BPPPalette(palette);
-  } else {
-    hVSurface->pPalette = NULL;
-    hVSurface->p16BPPPalette = NULL;
-  }
 
   return (hVSurface);
 }

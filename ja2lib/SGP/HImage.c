@@ -61,8 +61,10 @@ struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
     struct Image *hImage = (struct Image *)MemAlloc(sizeof(struct Image));
     memset(hImage, 0, sizeof(struct Image));
     if (!LoadPCXFileToImage(imageFileCopy, hImage)) {
+      DebugLogWrite("failed to load PCX image");
       return NULL;
     }
+    DebugLogWrite("PCX image loaded");
     return (hImage);
   } else if (strcasecmp(Extension, "STI") == 0) {
     return LoadSTCIFileToImage(imageFileCopy, loadAppData);
@@ -83,7 +85,7 @@ void DestroyImage(struct Image *image) {
     MemFree(image->palette);
   }
 
-  MemFree(image->pui16BPPPalette);
+  MemFree(image->palette16bpp);
 
   if (image->imageDataAllocatedInRust) {
     RustDealloc((uint8_t *)image->image_data);
@@ -98,7 +100,7 @@ void DestroyImage(struct Image *image) {
 
 BOOLEAN CopyImageToBuffer(struct Image *hImage, uint8_t bufferBitDepth, BYTE *pDestBuf,
                           uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
-                          SGPRect *srcRect) {
+                          struct GRect *srcRect) {
   Assert(hImage != NULL);
 
   if (hImage->ubBitDepth == 8 && bufferBitDepth == 8) {
@@ -124,7 +126,7 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, uint8_t bufferBitDepth, BYTE *pD
 
 BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
-                                  SGPRect *srcRect) {
+                                  struct GRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   uint32_t cnt;
   uint8_t *pDest, *pSrc;
@@ -179,7 +181,7 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t
 
 BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                     uint16_t usDestHeight, uint16_t usX, uint16_t usY,
-                                    SGPRect *srcRect) {
+                                    struct GRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   uint32_t cnt;
   uint16_t *pDest, *pSrc;
@@ -237,13 +239,13 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16
 
 BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
-                                   SGPRect *srcRect) {
+                                   struct GRect *srcRect) {
   uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
   uint32_t rows, cols;
   uint8_t *pSrc, *pSrcTemp;
   uint16_t *pDest, *pDestTemp;
 
-  Assert(hImage->pui16BPPPalette != NULL);
+  Assert(hImage->palette16bpp != NULL);
   Assert(hImage != NULL);
 
   // Validations
@@ -293,7 +295,7 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_
     pSrcTemp = pSrc;
 
     for (cols = 0; cols < uiLineSize; cols++) {
-      *pDestTemp = hImage->pui16BPPPalette[*pSrcTemp];
+      *pDestTemp = hImage->palette16bpp[*pSrcTemp];
       pDestTemp++;
       pSrcTemp++;
     }
@@ -540,4 +542,47 @@ void ConvertRGBDistribution565To555(uint16_t *p16BPPData, uint32_t uiNumberOfPix
     }
     pPixel++;
   }
+}
+
+// Create a scaled down copy of an image.
+struct Image *ScaleImageDown2x(struct Image *image) {
+  // not all image types are supported
+  bool supported =
+      image->ubBitDepth == 8 && image->app_data_size == 0 && image->number_of_subimages == 0;
+  if (!supported) {
+    return NULL;
+  }
+  struct Image *res = zmalloc(sizeof(struct Image));
+  if (!res) {
+    return NULL;
+  }
+
+  res->usWidth = image->usWidth / 2;
+  res->usHeight = image->usHeight / 2;
+  res->ubBitDepth = image->ubBitDepth;
+
+  uint32_t palette_size = sizeof(struct SGPPaletteEntry) * 256;
+  res->palette = zmalloc(palette_size);
+  if (!res->palette) {
+    free(res);
+    return NULL;
+  }
+  memcpy(res->palette, image->palette, palette_size);
+
+  res->image_data_size = res->usWidth * res->usHeight;
+  res->image_data = zmalloc(res->image_data_size);
+  if (!res->image_data) {
+    free(res->palette);
+    free(res);
+    return NULL;
+  }
+
+  uint8_t *data = res->image_data;
+  for (uint16_t y = 0; y < image->usHeight; y += 2) {
+    for (uint16_t x = 0; x < image->usWidth; x += 2) {
+      *data++ = ((uint8_t *)image->image_data)[y * image->usWidth + x];
+    }
+  }
+
+  return res;
 }

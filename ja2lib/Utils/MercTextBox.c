@@ -6,6 +6,7 @@
 #include "SGP/VObject.h"
 #include "SGP/VObjectBlitters.h"
 #include "SGP/VSurface.h"
+#include "SGP/VSurfaceInternal.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
 #include "Utils/FontControl.h"
@@ -145,8 +146,9 @@ BOOLEAN LoadTextMercPopupImages(uint8_t ubBackgroundIndex, uint8_t ubBorderIndex
   // this function will load the graphics associated with the background and border index values
 
   // the background
-  if (!(AddVideoSurfaceFromFile(zMercBackgroundPopupFilenames[ubBackgroundIndex],
-                                &gPopUpTextBox->uiMercTextPopUpBackground))) {
+  gPopUpTextBox->backgroundImage =
+      CreateImage(zMercBackgroundPopupFilenames[ubBackgroundIndex], false);
+  if (!gPopUpTextBox->backgroundImage) {
     return FALSE;
   }
 
@@ -169,12 +171,8 @@ void RemoveTextMercPopupImages() {
   // this procedure will remove the background and border video surface/object from the indecies
   if (gPopUpTextBox) {
     if (gPopUpTextBox->fMercTextPopupInitialized) {
-      // the background
-      DeleteVideoSurfaceFromIndex(gPopUpTextBox->uiMercTextPopUpBackground);
-
-      // the border
+      DestroyImage(gPopUpTextBox->backgroundImage);
       DeleteVideoObjectFromIndex(gPopUpTextBox->uiMercTextPopUpBorder);
-
       gPopUpTextBox->fMercTextPopupInitialized = FALSE;
     }
   }
@@ -255,12 +253,9 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
   struct VObject *hImageHandle;
   uint16_t usPosY, usPosX;
   uint16_t usStringPixLength;
-  SGPRect DestRect;
-  struct VSurface *hSrcVSurface;
+  struct GRect DestRect;
   uint32_t uiDestPitchBYTES;
-  uint32_t uiSrcPitchBYTES;
   uint16_t *pDestBuf;
-  uint8_t *pSrcBuf;
   uint8_t ubFontColor, ubFontShadowColor;
   uint16_t usColorVal;
   uint16_t usLoopEnd;
@@ -393,21 +388,8 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
     VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
 
   } else {
-    if (!GetVideoSurface(&hSrcVSurface, pPopUpTextBox->uiMercTextPopUpBackground)) {
-      AssertMsg(0, String("Failed to GetVideoSurface for PrepareMercPopupBox.  VSurfaceID:  %d",
-                          pPopUpTextBox->uiMercTextPopUpBackground));
-    }
-
-    pDestBuf = (uint16_t *)VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiSourceBufferIndex),
-                                           &uiDestPitchBYTES);
-    pSrcBuf =
-        VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground), &uiSrcPitchBYTES);
-
-    Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
-                                0, 0, &DestRect);
-
-    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiMercTextPopUpBackground));
-    VSurfaceUnlock(GetVSByID(pPopUpTextBox->uiSourceBufferIndex));
+    BlitImageToSurfaceRect(pPopUpTextBox->backgroundImage,
+                           GetVSByID(pPopUpTextBox->uiSourceBufferIndex), 0, 0, DestRect);
   }
 
   GetVideoObject(&hImageHandle, pPopUpTextBox->uiMercTextPopUpBorder);
@@ -475,7 +457,8 @@ int32_t PrepareMercPopupBox(int32_t iBoxId, uint8_t ubBackgroundIndex, uint8_t u
   SetFontShadow(DEFAULT_SHADOW);
 
   if (iBoxId == -1) {
-    // now return attemp to add to pop up box list, if successful will return index
+    // now return attemp to add to pop up box list, if successful will
+    // return index
     return (AddPopUpBoxToList(pPopUpTextBox));
   } else {
     // set as current box

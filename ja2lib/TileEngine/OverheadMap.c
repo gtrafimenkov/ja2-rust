@@ -918,7 +918,7 @@ void RenderOverheadMap(int16_t sStartPointX_M, int16_t sStartPointY_M, int16_t s
       pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 
       Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES,
-                      0, 0, 0, 0, usWidth, usHeight);
+                      0, 0, NewGRect(0, 0, usWidth, usHeight));
 
       VSurfaceUnlock(vsFB);
       VSurfaceUnlock(vsSB);

@@ -354,7 +354,6 @@ void LoadSchedules(int8_t **hBuffer) {
   // Schedules are posted when the soldier is added...
 }
 
-extern BOOLEAN gfSchedulesHosed;
 BOOLEAN LoadSchedulesFromSave(FileID hFile) {
   SCHEDULENODE *pSchedule = NULL;
   SCHEDULENODE temp;
@@ -371,8 +370,7 @@ BOOLEAN LoadSchedulesFromSave(FileID hFile) {
     return (FALSE);
   }
 
-  // Hack problem with schedules getting misaligned.
-  ubRealNum = gfSchedulesHosed ? ubNum + 256 : ubNum;
+  ubRealNum = ubNum;
 
   gubScheduleID = 1;
   while (ubRealNum) {

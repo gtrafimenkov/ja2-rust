@@ -47,6 +47,7 @@
 #include "Utils/Text.h"
 #include "platform.h"
 #include "rust_fileman.h"
+#include "rust_geometry.h"
 
 BOOLEAN gfWasInMeanwhile = FALSE;
 
@@ -2285,7 +2286,7 @@ void TempFileLoadErrorMessageReturnCallback(uint8_t ubRetVal) { gfProgramIsRunni
 // think it succeeded the load.  This sets up the dialog for the game exit, after the hacker
 // message appears.
 void InitExitGameDialogBecauseFileHackDetected() {
-  SGPRect CenteringRect = {0, 0, 639, 479};
+  struct GRect CenteringRect = {0, 0, 639, 479};
 
   // do message box and return
   giErrorMessageBox =

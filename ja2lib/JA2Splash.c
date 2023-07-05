@@ -4,6 +4,7 @@
 #include "SGP/Debug.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "Utils/MultiLanguageGraphicUtils.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
 #include "rust_debug.h"
@@ -35,44 +36,20 @@ void InitJA2SplashScreen() {
 
   File_RegisterSlfLibraries(".");
 
-#if !defined(ENGLISH) && defined(JA2TESTVERSION)
-  uint32_t uiLogoID = 0;
-  struct VSurface* hVSurface;
-  if (!AddVideoSurfaceFromFile("LOADSCREENS\\Notification.sti", &uiLogoID)) {
-    AssertMsg(0, String("Failed to load %s", VSurfaceDesc.ImageFile));
-    return;
-  }
-  GetVideoSurface(&hVSurface, uiLogoID);
-  BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
-  DeleteVideoSurfaceFromIndex(uiLogoID);
-
-  InvalidateScreen();
-  RefreshScreen();
-
-  guiSplashStartTime = GetJA2Clock();
-  while (i < 60 * 15)  // guiSplashStartTime + 15000 > GetJA2Clock() )
-  {
-    // Allow the user to pick his bum.
-    InvalidateScreen();
-    RefreshScreen();
-    i++;
-  }
-#endif
-
 #ifdef ENGLISH
   ClearMainMenu();
 #else
   {
     SGPFILENAME ImageFile;
     GetMLGFilename(ImageFile, MLG_SPLASH);
-    if (!AddVideoSurfaceFromFile(ImageFile, &uiLogoID)) {
+    struct Image *image = CreateImage(ImageFile, false);
+    if (!image) {
       AssertMsg(0, String("Failed to load %s", ImageFile));
       return;
     }
 
-    GetVideoSurface(&hVSurface, uiLogoID);
-    BltVideoSurface(vsFB, hVSurface, 0, 0, 0, NULL);
-    DeleteVideoSurfaceFromIndex(uiLogoID);
+    BlitImageToSurface(image, vsFB, 0, 0);
+    DestroyImage(image);
   }
 #endif
 

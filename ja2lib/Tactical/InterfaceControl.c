@@ -51,7 +51,7 @@
 
 #define CLOCK_X 554
 #define CLOCK_Y 459
-SGPRect gOldClippingRect, gOldDirtyClippingRect;
+struct GRect gOldClippingRect, gOldDirtyClippingRect;
 
 uint32_t guiTacticalInterfaceFlags;
 

@@ -74,7 +74,7 @@ void SpecifyBoxMinWidth(int32_t hBoxHandle, int32_t iMinWidth) {
   return;
 }
 
-BOOLEAN CreatePopUpBox(int32_t *phBoxHandle, SGPRect Dimensions, SGPPoint Position,
+BOOLEAN CreatePopUpBox(int32_t *phBoxHandle, struct GRect Dimensions, SGPPoint Position,
                        uint32_t uiFlags) {
   int32_t iCounter = 0;
   int32_t iCount = 0;
@@ -264,7 +264,7 @@ void GetBoxPosition(int32_t hBoxHandle, SGPPoint *Position) {
   return;
 }
 
-void SetBoxSize(int32_t hBoxHandle, SGPRect Dimensions) {
+void SetBoxSize(int32_t hBoxHandle, struct GRect Dimensions) {
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[hBoxHandle]);
@@ -279,7 +279,7 @@ void SetBoxSize(int32_t hBoxHandle, SGPRect Dimensions) {
   return;
 }
 
-void GetBoxSize(int32_t hBoxHandle, SGPRect *Dimensions) {
+void GetBoxSize(int32_t hBoxHandle, struct GRect *Dimensions) {
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[hBoxHandle]);
@@ -300,11 +300,11 @@ void SetBorderType(int32_t hBoxHandle, int32_t iBorderObjectIndex) {
   return;
 }
 
-void SetBackGroundSurface(int32_t hBoxHandle, int32_t iBackGroundSurfaceIndex) {
+void SetBackGroundSurface(int32_t hBoxHandle, struct Image *image) {
   if ((hBoxHandle < 0) || (hBoxHandle >= MAX_POPUP_BOX_COUNT)) return;
 
   Assert(PopUpBoxList[hBoxHandle]);
-  PopUpBoxList[hBoxHandle]->iBackGroundSurface = iBackGroundSurfaceIndex;
+  PopUpBoxList[hBoxHandle]->backgroundImage = image;
   return;
 }
 
@@ -1023,12 +1023,11 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
   uint32_t uiNumTilesHigh;
   uint32_t uiCount = 0;
   struct VObject *hBoxHandle;
-  struct VSurface *hSrcVSurface;
-  uint32_t uiDestPitchBYTES;
-  uint32_t uiSrcPitchBYTES;
-  uint16_t *pDestBuf;
-  uint8_t *pSrcBuf;
-  SGPRect clip;
+  // struct VSurface *hSrcVSurface;
+  // uint32_t uiDestPitchBYTES;
+  // uint32_t uiSrcPitchBYTES;
+  // uint16_t *pDestBuf;
+  // uint8_t *pSrcBuf;
   uint16_t usTopX, usTopY;
   uint16_t usWidth, usHeight;
 
@@ -1069,24 +1068,17 @@ BOOLEAN DrawBox(uint32_t uiCounter) {
   uiNumTilesWide = ((usWidth - 4) / BORDER_WIDTH);
   uiNumTilesHigh = ((usHeight - 4) / BORDER_HEIGHT);
 
+  struct GRect clip;
   clip.iLeft = 0;
   clip.iRight = clip.iLeft + usWidth;
   clip.iTop = 0;
   clip.iBottom = clip.iTop + usHeight;
 
   // blit in texture first, then borders
-  // blit in surface
-  pDestBuf =
-      (uint16_t *)VSurfaceLockOld(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), &uiDestPitchBYTES);
-  if (!(GetVideoSurface(&hSrcVSurface, PopUpBoxList[uiCounter]->iBackGroundSurface))) {
-    return FALSE;
-  }
-  pSrcBuf =
-      VSurfaceLockOld(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface), &uiSrcPitchBYTES);
-  Blt8BPPDataSubTo16BPPBuffer(pDestBuf, uiDestPitchBYTES, hSrcVSurface, pSrcBuf, uiSrcPitchBYTES,
-                              usTopX, usTopY, &clip);
-  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->iBackGroundSurface));
-  VSurfaceUnlock(GetVSByID(PopUpBoxList[uiCounter]->uiBuffer));
+
+  BlitImageToSurfaceRect(PopUpBoxList[uiCounter]->backgroundImage,
+                         GetVSByID(PopUpBoxList[uiCounter]->uiBuffer), usTopX, usTopY, clip);
+
   GetVideoObject(&hBoxHandle, PopUpBoxList[uiCounter]->iBorderObjectIndex);
 
   // blit in 4 corners (they're 2x2 pixels)
