@@ -1501,7 +1501,6 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height) {
 
   vs->usHeight = height;
   vs->usWidth = width;
-  vs->ubBitDepth = 16;
   vs->pSurfaceData1 = (PTR)lpDDS;
   vs->pSurfaceData = (PTR)lpDDS2;
   vs->pPalette = NULL;
@@ -1564,7 +1563,6 @@ BOOLEAN SetVideoSurfacePalette(struct VSurface *hVSurface, struct SGPPaletteEntr
 // colorkey value.
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
   DDCOLORKEY ColorKey;
-  DWORD fFlags = CLR_INVALID;
   LPDIRECTDRAWSURFACE2 lpDDSurface;
 
   // Assertions
@@ -1579,25 +1577,8 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
     return FALSE;
   }
 
-  // Get right pixel format, based on bit depth
-
-  switch (hVSurface->ubBitDepth) {
-    case 8:
-
-      // Use color directly
-      ColorKey.dwColorSpaceLowValue = TransColor;
-      ColorKey.dwColorSpaceHighValue = TransColor;
-      break;
-
-    case 16:
-
-      fFlags = Get16BPPColor(TransColor);
-
-      // fFlags now contains our closest match
-      ColorKey.dwColorSpaceLowValue = fFlags;
-      ColorKey.dwColorSpaceHighValue = ColorKey.dwColorSpaceLowValue;
-      break;
-  }
+  ColorKey.dwColorSpaceLowValue = Get16BPPColor(TransColor);
+  ColorKey.dwColorSpaceHighValue = ColorKey.dwColorSpaceLowValue;
 
   DDSetSurfaceColorKey(lpDDSurface, DDCKEY_SRCBLT, &ColorKey);
 
@@ -1648,17 +1629,17 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
 }
 
 static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpDDSurface) {
-  // Create Video Surface
-
-  // Set values based on DD Surface given
   DDSURFACEDESC DDSurfaceDesc;
   DDGetSurfaceDescription(lpDDSurface, &DDSurfaceDesc);
-  DDPIXELFORMAT PixelFormat = DDSurfaceDesc.ddpfPixelFormat;
+
+  if (DDSurfaceDesc.ddpfPixelFormat.dwRGBBitCount != 16) {
+    DebugLogWrite("Error: CreateVideoSurfaceFromDDSurface: unsupported bit depth");
+    return NULL;
+  }
 
   struct VSurface *hVSurface = VSurfaceNew();
   hVSurface->usHeight = (UINT16)DDSurfaceDesc.dwHeight;
   hVSurface->usWidth = (UINT16)DDSurfaceDesc.dwWidth;
-  hVSurface->ubBitDepth = (UINT8)PixelFormat.dwRGBBitCount;
   hVSurface->pSurfaceData = (PTR)lpDDSurface;
 
   // Get and Set palette, if attached, allow to fail

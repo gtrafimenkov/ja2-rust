@@ -69,7 +69,7 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   struct BufferLockInfo lock = VSurfaceLock(hVSurface);
 
   // Effective width ( in PIXELS ) is Pitch ( in bytes ) converted to pitch ( IN PIXELS )
-  usEffectiveWidth = (UINT16)(lock.pitch / (hVSurface->ubBitDepth / 8));
+  usEffectiveWidth = lock.pitch / 2;
 
   if (!lock.dest) {
     return FALSE;
@@ -90,8 +90,8 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   }
 
   // This struct Image* function will transparently copy buffer
-  if (!CopyImageToBuffer(hImage, hVSurface->ubBitDepth, lock.dest, usEffectiveWidth,
-                         hVSurface->usHeight, usX, usY, &aRect)) {
+  if (!CopyImageToBuffer(hImage, 16, lock.dest, usEffectiveWidth, hVSurface->usHeight, usX, usY,
+                         &aRect)) {
     DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
              String("Error Occured Copying struct Image* to struct VSurface*"));
     VSurfaceUnlock(hVSurface);
@@ -254,37 +254,9 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDest
     }
   }
 
-  // Send dest position, rectangle, etc to DD bltfast function
-  // First check BPP values for compatibility
-  if (dest->ubBitDepth == 16 && src->ubBitDepth == 16) {
-    struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
-    if (!(BltVSurfaceUsingDD(dest, src, fBltFlags, iDestX, iDestY, &srcRect))) {
-      return FALSE;
-    }
-
-  } else if (dest->ubBitDepth == 8 && src->ubBitDepth == 8) {
-    struct BufferLockInfo srcLock = VSurfaceLock(src);
-    if (!srcLock.dest) {
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP surface for blitting");
-      return (FALSE);
-    }
-
-    struct BufferLockInfo destLock = VSurfaceLock(dest);
-    if (!destLock.dest) {
-      VSurfaceUnlock(src);
-      DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL, "Failed on lock of 8BPP dest surface for blitting");
-      return (FALSE);
-    }
-
-    Blt8BPPTo8BPP(destLock.dest, destLock.pitch, srcLock.dest, srcLock.pitch, iDestX, iDestY,
-                  SrcRect.left, SrcRect.top, uiWidth, uiHeight);
-    VSurfaceUnlock(src);
-    VSurfaceUnlock(dest);
-    return (TRUE);
-  } else {
-    DebugMsg(TOPIC_VIDEOSURFACE, DBG_NORMAL,
-             String("Incompatible BPP values with src and dest Video Surfaces for blitting"));
-    return (FALSE);
+  struct Rect srcRect = {SrcRect.left, SrcRect.top, SrcRect.right, SrcRect.bottom};
+  if (!(BltVSurfaceUsingDD(dest, src, fBltFlags, iDestX, iDestY, &srcRect))) {
+    return FALSE;
   }
 
   return (TRUE);
@@ -370,8 +342,6 @@ BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, INT3
   if (!dest || !src) {
     return FALSE;
   }
-  // if the 2 images are not both 16bpp, return FALSE
-  if ((dest->ubBitDepth != 16) && (src->ubBitDepth != 16)) return (FALSE);
 
   struct Rect srcRect = {SrcRect->iLeft, SrcRect->iTop, SrcRect->iRight, SrcRect->iBottom};
   struct Rect destRect = {DestRect->iLeft, DestRect->iTop, DestRect->iRight, DestRect->iBottom};
@@ -700,8 +670,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
     snprintf(buf, ARR_SIZE(buf), " source: %d, %d, %d, %p, %p", source->ubBitDepth, source->usWidth,
              source->usHeight, source->palette, source->palette16bpp);
     DebugLogWrite(buf);
-    snprintf(buf, ARR_SIZE(buf), " dest:   %d, %d, %d, %d", dest->ubBitDepth, dest->usWidth,
-             dest->usHeight, destPitch);
+    snprintf(buf, ARR_SIZE(buf), " dest:   %d, %d, %d", dest->usWidth, dest->usHeight, destPitch);
     DebugLogWrite(buf);
   }
 
@@ -711,7 +680,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
     return;
   }
 
-  if (source->ubBitDepth == 8 && dest->ubBitDepth == 16) {
+  if (source->ubBitDepth == 8) {
     if (!source->palette16bpp) {
       source->palette16bpp = Create16BPPPalette(source->palette);
       if (!source->palette16bpp) {
@@ -727,7 +696,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
         .data = source->image_data,
     };
     Blt8bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
-  } else if (source->ubBitDepth == 16 && dest->ubBitDepth == 16) {
+  } else if (source->ubBitDepth == 16) {
     struct ImageDataParams src = {
         .width = source->usWidth,
         .height = source->usHeight,
