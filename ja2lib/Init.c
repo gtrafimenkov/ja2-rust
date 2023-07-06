@@ -60,8 +60,6 @@ extern BOOLEAN gfUseConsecutiveQuickSaveSlots;
 UINT32 InitializeJA2(void) {
   gfWorldLoaded = FALSE;
 
-  struct ParsedCommandLine cmdline = ParseCommandLine();
-
   // Load external text
   LoadAllExternalText();
 
@@ -134,6 +132,8 @@ UINT32 InitializeJA2(void) {
 #endif
 
 #ifdef JA2BETAVERSION
+  struct ParsedCommandLine cmdline = ParseCommandLine();
+
   // This allows the QuickSave Slots to be autoincremented, ie everytime the user saves, there will
   // be a new quick save file
   if (cmdline.quick_save) {
