@@ -135,7 +135,6 @@
     <ClCompile Include="SGP\Random.c" />
     <ClCompile Include="SGP\SGP.c" />
     <ClCompile Include="SGP\Shading.c" />
-    <ClCompile Include="SGP\STCI.c" />
     <ClCompile Include="SGP\Video.c" />
     <ClCompile Include="SGP\VObject.c" />
     <ClCompile Include="SGP\VObjectBlitters.c" />
@@ -470,7 +469,6 @@
     <ClInclude Include="SGP\SGP.h" />
     <ClInclude Include="SGP\Shading.h" />
     <ClInclude Include="SGP\SoundMan.h" />
-    <ClInclude Include="SGP\STCI.h" />
     <ClInclude Include="SGP\Timer.h" />
     <ClInclude Include="SGP\Types.h" />
     <ClInclude Include="SGP\Video.h" />

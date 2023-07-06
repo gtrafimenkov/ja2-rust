@@ -58,10 +58,10 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   Assert(hImage != NULL);
 
   // Get Size of hImage and determine if it can fit
-  if (!(hImage->usWidth >= hVSurface->usWidth)) {
+  if (!(hImage->width >= hVSurface->usWidth)) {
     return FALSE;
   }
-  if (!(hImage->usHeight >= hVSurface->usHeight)) {
+  if (!(hImage->height >= hVSurface->usHeight)) {
     return FALSE;
   }
 
@@ -80,8 +80,8 @@ BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *
   if (pSrcRect == NULL) {
     aRect.iLeft = 0;
     aRect.iTop = 0;
-    aRect.iRight = hImage->usWidth;
-    aRect.iBottom = hImage->usHeight;
+    aRect.iRight = hImage->width;
+    aRect.iBottom = hImage->height;
   } else {
     aRect.iLeft = pSrcRect->iLeft;
     aRect.iTop = pSrcRect->iTop;
@@ -633,7 +633,7 @@ BOOLEAN InitializeGameVideoObjects() {
 
 void BlitImageToSurface(struct Image *source, struct VSurface *dest, i32 x, i32 y) {
   struct GRect sourceRect = {
-      .iLeft = 0, .iTop = 0, .iRight = source->usWidth, .iBottom = source->usHeight};
+      .iLeft = 0, .iTop = 0, .iRight = source->width, .iBottom = source->height};
   BlitImageToSurfaceRect(source, dest, x, y, sourceRect);
 }
 
@@ -645,8 +645,8 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
   {
     DebugLogWrite("BlitImageToSurfaceRect:");
     char buf[256];
-    snprintf(buf, ARR_SIZE(buf), " source: %d, %d, %d, %p, %p", source->ubBitDepth, source->usWidth,
-             source->usHeight, source->palette, source->palette16bpp);
+    snprintf(buf, ARR_SIZE(buf), " source: %d, %d, %d, %p, %p", source->bit_depth, source->width,
+             source->height, source->palette, source->palette16bpp);
     DebugLogWrite(buf);
     snprintf(buf, ARR_SIZE(buf), " dest:   %d, %d, %d", dest->usWidth, dest->usHeight, destPitch);
     DebugLogWrite(buf);
@@ -658,7 +658,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
     return;
   }
 
-  if (source->ubBitDepth == 8) {
+  if (source->bit_depth == 8) {
     if (!source->palette16bpp) {
       source->palette16bpp = Create16BPPPalette(source->palette);
       if (!source->palette16bpp) {
@@ -667,19 +667,19 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
       }
     }
     struct ImageDataParams src = {
-        .width = source->usWidth,
-        .height = source->usHeight,
+        .width = source->width,
+        .height = source->height,
         .palette16bpp = source->palette16bpp,
-        .pitch = source->usWidth * 1,
+        .pitch = source->width * 1,
         .data = source->image_data,
     };
     Blt8bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
-  } else if (source->ubBitDepth == 16) {
+  } else if (source->bit_depth == 16) {
     struct ImageDataParams src = {
-        .width = source->usWidth,
-        .height = source->usHeight,
+        .width = source->width,
+        .height = source->height,
         .palette16bpp = NULL,
-        .pitch = source->usWidth * 2,
+        .pitch = source->width * 2,
         .data = source->image_data,
     };
     Blt16bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
