@@ -8,6 +8,117 @@ use std::ffi::{c_char, CStr};
 use std::io;
 
 #[repr(C)]
+/// Image header structure
+pub struct Image {
+    width: u16,
+    height: u16,
+    bit_depth: u8,
+    palette: *mut SGPPaletteEntry,
+    palette16bpp: *mut u16,
+    app_data: *mut u8,
+    app_data_size: u32,
+    image_data: *mut u8,
+    image_data_size: u32,
+    subimages: *mut Subimage,
+    number_of_subimages: u16,
+}
+
+#[no_mangle]
+/// Load STI image.
+/// If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
+pub extern "C" fn LoadSTCIFileToImage(path: *const c_char, load_app_data: bool) -> *mut Image {
+    match cstr_utf8_to_string(path) {
+        None => std::ptr::null_mut(),
+        Some(path) => match unsafe { FILE_DB.open_for_reading(&path) } {
+            Err(err) => {
+                debug_log_write(&format!("failed to open file {path} for reading: {err}"));
+                std::ptr::null_mut()
+            }
+            Ok(file_id) => {
+                let img = read_stci(file_id, load_app_data);
+
+                if let Err(err) = img {
+                    debug_log_write(&format!("failed to read stci image: {err}"));
+                    return std::ptr::null_mut();
+                }
+
+                let img = img.unwrap();
+
+                // allocate memory and copy palette array
+                let mut palette_data_copy: *mut SGPPaletteEntry = std::ptr::null_mut();
+                if let Some(palette) = img.palette {
+                    let palette_data_size = palette.len() * std::mem::size_of::<SGPPaletteEntry>();
+                    unsafe {
+                        palette_data_copy =
+                            std::mem::transmute(exp_alloc::RustAlloc(palette_data_size));
+                        let palette_copy =
+                            std::slice::from_raw_parts_mut(palette_data_copy, palette.len());
+                        for i in 0..256 {
+                            palette_copy[i] = SGPPaletteEntry::from_internal(&palette[i]);
+                        }
+                    }
+                }
+
+                // allocate memory and copy image data
+                let image_data_size = img.image_data.len();
+                let image_data_copy = exp_alloc::RustAlloc(image_data_size);
+                unsafe {
+                    std::ptr::copy(img.image_data.as_ptr(), image_data_copy, image_data_size);
+                }
+
+                // allocate memory for subimages array and copy data
+                let mut number_of_subimages = 0;
+                let mut subimages_ptr: *mut Subimage = std::ptr::null_mut();
+                if let Some(subimages) = img.subimages {
+                    number_of_subimages = subimages.len();
+                    let data_size = number_of_subimages * std::mem::size_of::<Subimage>();
+                    unsafe {
+                        subimages_ptr = std::mem::transmute(exp_alloc::RustAlloc(data_size));
+                        let subimages_copy =
+                            std::slice::from_raw_parts_mut(subimages_ptr, number_of_subimages);
+                        for i in 0..number_of_subimages {
+                            subimages_copy[i] = Subimage::from_internal(&subimages[i]);
+                        }
+                    }
+                }
+
+                // allocate memory and copy application data
+                let mut app_data_size = 0;
+                let mut app_data_copy: *mut u8 = std::ptr::null_mut();
+                if let Some(app_data) = img.app_data {
+                    app_data_size = app_data.len();
+                    unsafe {
+                        app_data_copy = exp_alloc::RustAlloc(app_data_size);
+                        std::ptr::copy(app_data.as_ptr(), app_data_copy, app_data.len());
+                    }
+                }
+
+                exp_fileman::File_Close(file_id);
+
+                unsafe {
+                    let res: *mut Image =
+                        std::mem::transmute(exp_alloc::RustAlloc(std::mem::size_of::<Image>()));
+                    *res = Image {
+                        height: img.height,
+                        width: img.width,
+                        bit_depth: img.pixel_depth,
+                        image_data_size: image_data_size as u32,
+                        image_data: image_data_copy,
+                        palette: palette_data_copy,
+                        palette16bpp: std::ptr::null_mut(),
+                        number_of_subimages: number_of_subimages as u16,
+                        subimages: subimages_ptr,
+                        app_data_size: app_data_size as u32,
+                        app_data: app_data_copy,
+                    };
+                    res
+                }
+            }
+        },
+    }
+}
+
+#[repr(C)]
 #[derive(Default, Copy, Clone)]
 /// Palette structure, mimics that of Win32
 pub struct SGPPaletteEntry {
@@ -113,7 +224,6 @@ fn cstr_utf8_to_string(cstr: *const c_char) -> Option<String> {
 #[no_mangle]
 /// Load STI image from file or library.
 /// If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
-/// Memory must be freed with RustDealloc.
 pub extern "C" fn LoadSTIImageFromFile(path: *const c_char, load_app_data: bool) -> STIImageLoaded {
     let failure = STIImageLoaded::default();
     match cstr_utf8_to_string(path) {
@@ -135,7 +245,6 @@ pub extern "C" fn LoadSTIImageFromFile(path: *const c_char, load_app_data: bool)
 #[no_mangle]
 /// Load STI image.
 /// If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
-/// Memory must be freed with RustDealloc.
 pub extern "C" fn LoadSTIImage(file_id: FileID, load_app_data: bool) -> STIImageLoaded {
     let failure = STIImageLoaded::default();
     let img = read_stci(file_id, load_app_data);
