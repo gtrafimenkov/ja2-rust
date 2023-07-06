@@ -109,18 +109,6 @@ BOOLEAN ShutdownVideoObjectManager() {
   return TRUE;
 }
 
-// TODO: rust
-uint32_t CountVideoObjectNodes() {
-  VOBJECT_NODE *curr;
-  uint32_t i = 0;
-  curr = gpVObjectHead;
-  while (curr) {
-    i++;
-    curr = curr->next;
-  }
-  return i;
-}
-
 // This structure describes the creation parameters for a Video Object
 typedef struct {
   uint32_t fCreateFlags;  // Specifies creation flags like from file or not
@@ -137,64 +125,17 @@ typedef struct {
   0x00000040  // Creates a video object from a file ( using struct Image* )
 #define VOBJECT_CREATE_FROMHIMAGE 0x00000080  // Creates a video object from a pre-loaded hImage
 
-BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, uint32_t *puiIndex);
-
-BOOLEAN AddVideoObject(VOBJECT_DESC *desc, uint32_t *puiIndex) {
-  VOBJECT_INFO info;
-  info.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(info.ImageFile, desc->ImageFile);
-  return _AddVideoObject(&info, puiIndex);
-}
-
-struct VObject *LoadVObjectFromFile(const char *path) {
-  struct VObject *vo = CreateVObjectFromFile(path);
-  if (vo) {
-    vo->TransparentColor = FROMRGB(0, 0, 0);
-  }
-  return vo;
-}
-
-BOOLEAN AddVObjectFromFile(const char *path, uint32_t *puiIndex) {
-  VOBJECT_INFO desc;
-  desc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-  strcpy(desc.ImageFile, path);
-  return _AddVideoObject(&desc, puiIndex);
-}
-
-BOOLEAN AddVObjectFromHImage(struct Image *hImage, uint32_t *puiIndex) {
-  VOBJECT_INFO desc;
-  desc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
-  desc.hImage = hImage;
-  return _AddVideoObject(&desc, puiIndex);
-}
-
 // TODO: rust
 // TODO: debug print how many video objects are there
 // TODO: probably replace the list with array of fixed size
-BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, uint32_t *puiIndex) {
-  struct VObject *hVObject;
-
-  // Assertions
+static BOOLEAN _AddVideoObject(struct VObject *hVObject, uint32_t *puiIndex) {
   Assert(puiIndex);
-  Assert(pVObjectDesc);
-
-  // Create video object
-  if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMFILE) {
-    hVObject = CreateVObjectFromFile(pVObjectDesc->ImageFile);
-  } else if (pVObjectDesc->fCreateFlags & VOBJECT_CREATE_FROMHIMAGE) {
-    hVObject = CreateVObjectFromHImage(pVObjectDesc->hImage);
-  } else {
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid VObject creation flags given.");
-    return FALSE;
-  }
+  Assert(hVObject);
 
   if (!hVObject) {
     // Video Object will set error condition.
     return FALSE;
   }
-
-  // Set transparency to default
-  hVObject->TransparentColor = FROMRGB(0, 0, 0);
 
   // Set into video object list
   if (gpVObjectHead) {  // Add node after tail
@@ -218,27 +159,11 @@ BOOLEAN _AddVideoObject(VOBJECT_INFO *pVObjectDesc, uint32_t *puiIndex) {
   guiVObjectSize++;
   guiVObjectTotalAdded++;
 
-#ifdef JA2TESTVERSION
-  if (CountVideoObjectNodes() != guiVObjectSize) {
-    guiVObjectSize = guiVObjectSize;
-  }
-#endif
-
   return TRUE;
 }
 
-BOOLEAN SetVideoObjectTransparency(uint32_t uiIndex, COLORVAL TransColor) {
-  struct VObject *hVObject;
-
-  // Get video object
-  if (!(GetVideoObject(&hVObject, uiIndex))) {
-    return FALSE;
-  }
-
-  // Set transparency
-  hVObject->TransparentColor = TransColor;
-
-  return (TRUE);
+BOOLEAN AddVObjectFromFile(const char *path, uint32_t *puiIndex) {
+  return _AddVideoObject(LoadVObjectFromFile(path), puiIndex);
 }
 
 // TODO: rust
@@ -314,11 +239,6 @@ BOOLEAN DeleteVideoObjectFromIndex(uint32_t uiVObject) {
       MemFree(curr);
       curr = NULL;
       guiVObjectSize--;
-#ifdef JA2TESTVERSION
-      if (CountVideoObjectNodes() != guiVObjectSize) {
-        guiVObjectSize = guiVObjectSize;
-      }
-#endif
       return TRUE;
     }
     curr = curr->next;
@@ -346,88 +266,35 @@ bool BltVObject(struct VSurface *dest, struct VObject *vobj, uint16_t regionInde
 // Video Object Manipulation Functions
 // *******************************************************************************
 
-struct VObject *CreateVObjectFromFile(const char *path) {
-  // Allocate memory for video object data and initialize
-  struct VObject *hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
-  if (!(hVObject != NULL)) {
-    return FALSE;
-  }
-  memset(hVObject, 0, sizeof(struct VObject));
-
-  // Create himage object from file
-  struct Image *hImage = CreateImage(path, false);
-
-  if (hImage == NULL) {
-    MemFree(hVObject);
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image Filename given");
-    return (NULL);
-  }
-
-  // Check if returned himage is TRLE compressed - return error if not
-  if (!hImage->subimages) {
-    MemFree(hVObject);
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
-    DestroyImage(hImage);
-    return (NULL);
-  }
-
-  // Set values from himage
-  hVObject->ubBitDepth = hImage->ubBitDepth;
-
-  // Get TRLE data
-  struct ImageData TempETRLEData;
-  if (!(CopyImageData(hImage, &TempETRLEData))) {
-    return FALSE;
-  }
-
-  // Set values
-  hVObject->number_of_subimages = TempETRLEData.number_of_subimages;
-  hVObject->subimages = TempETRLEData.subimages;
-  hVObject->image_data = TempETRLEData.image_data;
-  hVObject->image_data_size = TempETRLEData.image_data_size;
-
-  // Set palette from himage
-  if (hImage->ubBitDepth == 8) {
-    hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
-    hVObject->pGlow8 = ubColorTables[0];
-    SetVideoObjectPalette(hVObject, hImage->palette);
-  }
-
-  // Delete himage object
-  DestroyImage(hImage);
-
-  return (hVObject);
+struct VObject *LoadVObjectFromFile(const char *path) {
+  struct Image *image = CreateImage(path, false);
+  struct VObject *vobject = CreateVObjectFromImage(image);
+  DestroyImage(image);
+  return vobject;
 }
 
-struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
-  struct VObject *hVObject;
-  struct ImageData TempETRLEData;
-
-  // Allocate memory for video object data and initialize
-  hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
-  if (!(hVObject != NULL)) {
-    return FALSE;
-  }
-  memset(hVObject, 0, sizeof(struct VObject));
-
+struct VObject *CreateVObjectFromImage(struct Image *hImage) {
   if (hImage == NULL) {
-    MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid hImage pointer given");
     return (NULL);
   }
 
   // Check if returned himage is TRLE compressed - return error if not
   if (!hImage->subimages) {
-    MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
-    DestroyImage(hImage);
     return (NULL);
+  }
+
+  struct VObject *hVObject = (struct VObject *)zmalloc(sizeof(struct VObject));
+  if (!(hVObject != NULL)) {
+    return FALSE;
   }
 
   // Set values from himage
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
+  struct ImageData TempETRLEData;
   if (!(CopyImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
@@ -440,8 +307,6 @@ struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
 
   // Set palette from himage
   if (hImage->ubBitDepth == 8) {
-    hVObject->pShade8 = ubColorTables[DEFAULT_SHADE_LEVEL];
-    hVObject->pGlow8 = ubColorTables[0];
     SetVideoObjectPalette(hVObject, hImage->palette);
   }
 
@@ -481,8 +346,6 @@ static BOOLEAN SetVideoObjectPalette(struct VObject *hVObject,
   hVObject->p16BPPPalette = Create16BPPPalette(pSrcPalette);
   hVObject->pShadeCurrent = hVObject->p16BPPPalette;
 
-  //  DebugMsg(TOPIC_VIDEOOBJECT, DBG_INFO, String("Video Object Palette change successfull"
-  //  ));
   return (TRUE);
 }
 
@@ -521,17 +384,8 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject) {
       }
     }
     MemFree(hVObject->ppZStripInfo);
-    //		hVObject->ppZStripInfo = NULL;
   }
 
-  if (hVObject->usNumberOf16BPPObjects > 0) {
-    for (usLoop = 0; usLoop < hVObject->usNumberOf16BPPObjects; usLoop++) {
-      MemFree(hVObject->p16BPPObject[usLoop].p16BPPData);
-    }
-    MemFree(hVObject->p16BPPObject);
-  }
-
-  // Release object
   MemFree(hVObject);
 
   return (TRUE);
@@ -658,7 +512,7 @@ BOOLEAN DestroyObjectPaletteTables(struct VObject *hVObject) {
   BOOLEAN f16BitPal;
 
   for (x = 0; x < HVOBJECT_SHADE_TABLES; x++) {
-    if (!(hVObject->fFlags & VOBJECT_FLAG_SHADETABLE_SHARED)) {
+    if (!(hVObject->shared_shadetable)) {
       if (hVObject->pShades[x] != NULL) {
         if (hVObject->pShades[x] == hVObject->p16BPPPalette)
           f16BitPal = TRUE;

@@ -5007,9 +5007,8 @@ uint16_t GetTileGraphicForItem(INVTYPE *pItem) {
 }
 
 BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, uint32_t *puiVo) {
-  char *zName[80];
+  char zName[80];
   uint32_t uiVo;
-  VOBJECT_DESC VObjectDesc;
   uint8_t ubGraphic;
 
   // CHECK SUBCLASS
@@ -5045,8 +5044,9 @@ BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, uint32_t *puiVo) {
   }
 
   // Load item
-  sprintf(VObjectDesc.ImageFile, "BIGITEMS\\%s", zName);
-  if (!AddVideoObject(&VObjectDesc, &uiVo)) {
+  SGPFILENAME ImageFile;
+  sprintf(ImageFile, "BIGITEMS\\%s", zName);
+  if (!AddVObjectFromFile(ImageFile, &uiVo)) {
     return FALSE;
   }
 

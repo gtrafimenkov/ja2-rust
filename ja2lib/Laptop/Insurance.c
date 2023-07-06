@@ -86,7 +86,6 @@ void SelectInsuranceTitleLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_
 void GameInitInsurance() {}
 
 BOOLEAN EnterInsurance() {
-  VOBJECT_DESC VObjectDesc;
   uint16_t usPosX, i;
 
   SetBookMark(INSURANCE_BOOKMARK);
@@ -94,8 +93,9 @@ BOOLEAN EnterInsurance() {
   InitInsuranceDefaults();
 
   // load the Insurance title graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCETITLE);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceTitleImage)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_INSURANCETITLE);
+  if (!AddVObjectFromFile(ImageFile, &guiInsuranceTitleImage)) {
     return FALSE;
   }
 
@@ -231,8 +231,6 @@ void RenderInsurance() {
 }
 
 BOOLEAN InitInsuranceDefaults() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the Flower Account Box graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\BackGroundTile.sti", &guiInsuranceBackGround)) {
     return FALSE;
@@ -251,8 +249,9 @@ BOOLEAN InitInsuranceDefaults() {
   // if it is not the first page, display the small title
   if (guiCurrentLaptopMode != LAPTOP_MODE_INSURANCE) {
     // load the small title for the every page other then the first page
-    GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLTITLE);
-    if (!AddVideoObject(&VObjectDesc, &guiInsuranceSmallTitleImage)) {
+    SGPFILENAME ImageFile;
+    GetMLGFilename(ImageFile, MLG_SMALLTITLE);
+    if (!AddVObjectFromFile(ImageFile, &guiInsuranceSmallTitleImage)) {
       return FALSE;
     }
 

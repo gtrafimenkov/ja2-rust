@@ -103,12 +103,12 @@ void DisplayFuneralRipTombStone();
 void GameInitFuneral() {}
 
 BOOLEAN EnterFuneral() {
-  VOBJECT_DESC VObjectDesc;
   uint16_t usPosX, i;
 
   // load the Closed graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_CLOSED);
-  if (!AddVideoObject(&VObjectDesc, &guiClosedSign)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_CLOSED);
+  if (!AddVObjectFromFile(ImageFile, &guiClosedSign)) {
     return FALSE;
   }
 
@@ -128,14 +128,14 @@ BOOLEAN EnterFuneral() {
   }
 
   // load the McGillicuttys sign graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_MCGILLICUTTYS);
-  if (!AddVideoObject(&VObjectDesc, &guiMcGillicuttys)) {
+  GetMLGFilename(ImageFile, MLG_MCGILLICUTTYS);
+  if (!AddVObjectFromFile(ImageFile, &guiMcGillicuttys)) {
     return FALSE;
   }
 
   // load the Mortuary  graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_MORTUARY);
-  if (!AddVideoObject(&VObjectDesc, &guiMortuary)) {
+  GetMLGFilename(ImageFile, MLG_MORTUARY);
+  if (!AddVObjectFromFile(ImageFile, &guiMortuary)) {
     return FALSE;
   }
 

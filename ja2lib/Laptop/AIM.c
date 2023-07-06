@@ -192,8 +192,6 @@ BOOLEAN fFirstTimeIn = TRUE;
 void GameInitAIM() { LaptopInitAim(); }
 
 BOOLEAN EnterAIM() {
-  VOBJECT_DESC VObjectDesc;
-
   gubWarningTimer = 0;
   gubCurrentAdvertisment = AIM_AD_WARNING_BOX;
   LaptopInitAim();
@@ -216,14 +214,15 @@ BOOLEAN EnterAIM() {
   }
 
   // load the History graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_HISTORY);
-  if (!AddVideoObject(&VObjectDesc, &guiHistory)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_HISTORY);
+  if (!AddVObjectFromFile(ImageFile, &guiHistory)) {
     return FALSE;
   }
 
   // load the Wanring graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_WARNING);
-  if (!AddVideoObject(&VObjectDesc, &guiWarning)) {
+  GetMLGFilename(ImageFile, MLG_WARNING);
+  if (!AddVObjectFromFile(ImageFile, &guiWarning)) {
     return FALSE;
   }
 
@@ -233,26 +232,26 @@ BOOLEAN EnterAIM() {
   }
 
   // load the your ad advertisment and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_YOURAD13);
-  if (!AddVideoObject(&VObjectDesc, &guiAdForAdsImages)) {
+  GetMLGFilename(ImageFile, MLG_YOURAD13);
+  if (!AddVObjectFromFile(ImageFile, &guiAdForAdsImages)) {
     return FALSE;
   }
 
   // load the insurance advertisment and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCEAD10);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceAdImages)) {
+  GetMLGFilename(ImageFile, MLG_INSURANCEAD10);
+  if (!AddVObjectFromFile(ImageFile, &guiInsuranceAdImages)) {
     return FALSE;
   }
 
   // load the funeral advertisment and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_FUNERALAD9);
-  if (!AddVideoObject(&VObjectDesc, &guiFuneralAdImages)) {
+  GetMLGFilename(ImageFile, MLG_FUNERALAD9);
+  if (!AddVObjectFromFile(ImageFile, &guiFuneralAdImages)) {
     return FALSE;
   }
 
   // load the funeral advertisment and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYRAYAD21);
-  if (!AddVideoObject(&VObjectDesc, &guiBobbyRAdImages)) {
+  GetMLGFilename(ImageFile, MLG_BOBBYRAYAD21);
+  if (!AddVObjectFromFile(ImageFile, &guiBobbyRAdImages)) {
     return FALSE;
   }
 
@@ -413,16 +412,15 @@ void SelectLinksRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
 }
 
 BOOLEAN InitAimDefaults() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the Rust bacground graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\rustbackground.sti", &guiRustBackGround)) {
     return FALSE;
   }
 
   // load the Aim Symbol graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_AIMSYMBOL);
-  if (!AddVideoObject(&VObjectDesc, &guiAimSymbol)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_AIMSYMBOL);
+  if (!AddVObjectFromFile(ImageFile, &guiAimSymbol)) {
     return FALSE;
   }
 

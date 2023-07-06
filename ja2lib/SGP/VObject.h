@@ -47,17 +47,6 @@ typedef struct {
 #define FROMRGB(r, g, b) \
   ((uint32_t)(((uint8_t)(r) | ((uint16_t)(g) << 8)) | (((uint32_t)(uint8_t)(b)) << 16)))
 
-// Video object creation flags
-// Used in the VOBJECT_DESC structure to describe creation flags
-
-// VOBJECT FLAGS
-#define VOBJECT_FLAG_SHADETABLE_SHARED 0x00000100
-
-// This structure describes the creation parameters for a Video Object
-typedef struct {
-  SGPFILENAME ImageFile;  // Filename of image data to use
-} VOBJECT_DESC;
-
 // **********************************************************************************
 //
 // Video Object Manager Functions
@@ -71,10 +60,6 @@ BOOLEAN InitializeVideoObjectManager();
 BOOLEAN ShutdownVideoObjectManager();
 
 BOOLEAN AddVObjectFromFile(const char *path, uint32_t *puiIndex);
-BOOLEAN AddVObjectFromHImage(struct Image *hImage, uint32_t *puiIndex);
-
-// Creates and adds a video object to list
-BOOLEAN AddVideoObject(VOBJECT_DESC *VObjectDesc, uint32_t *uiIndex);
 
 // Removes a video object
 BOOLEAN DeleteVideoObjectFromIndex(uint32_t uiVObject);
@@ -90,8 +75,7 @@ BOOLEAN GetVideoObject(struct VObject **hVObject, uint32_t uiIndex);
 //
 // **********************************************************************************
 
-struct VObject *CreateVObjectFromFile(const char *path);
-struct VObject *CreateVObjectFromHImage(struct Image *hImage);
+struct VObject *CreateVObjectFromImage(struct Image *hImage);
 
 // Deletes all data
 BOOLEAN DeleteVideoObject(struct VObject *hVObject);
