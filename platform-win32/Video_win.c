@@ -1503,29 +1503,23 @@ struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) {
 
   vs->usHeight = height;
   vs->usWidth = width;
-  vs->pSurfaceData1 = (void *)lpDDS;
-  vs->pSurfaceData = (void *)lpDDS2;
+  vs->_platformData1 = (void *)lpDDS;
+  vs->_platformData2 = (void *)lpDDS2;
 
   return (vs);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Called when surface is lost, for the most part called by utility functions
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   struct BufferLockInfo res = {.dest = NULL, .pitch = 0};
   if (vs) {
-    res = DDLockSurface((LPDIRECTDRAWSURFACE2)vs->pSurfaceData);
+    res = DDLockSurface((LPDIRECTDRAWSURFACE2)vs->_platformData2);
   }
   return res;
 }
 
 void VSurfaceUnlock(struct VSurface *vs) {
   if (vs) {
-    IDirectDrawSurface2_Unlock((LPDIRECTDRAWSURFACE2)vs->pSurfaceData, NULL);
+    IDirectDrawSurface2_Unlock((LPDIRECTDRAWSURFACE2)vs->_platformData2, NULL);
   }
 }
 
@@ -1536,12 +1530,10 @@ BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) {
     return FALSE;
   }
 
-  // Get surface pointer
-  LPDIRECTDRAWSURFACE2 lpDDSurface = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
-
   // Release surface
-  if (hVSurface->pSurfaceData1 != NULL) {
-    DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->pSurfaceData1, &lpDDSurface);
+  if (hVSurface->_platformData1 != NULL) {
+    DDReleaseSurface((LPDIRECTDRAWSURFACE *)&hVSurface->_platformData1,
+                     (LPDIRECTDRAWSURFACE2 *)&hVSurface->_platformData2);
   }
 
   MemFree(hVSurface);
@@ -1561,7 +1553,7 @@ static struct VSurface *CreateVideoSurfaceFromDDSurface(LPDIRECTDRAWSURFACE2 lpD
   struct VSurface *hVSurface = VSurfaceNew();
   hVSurface->usHeight = (uint16_t)DDSurfaceDesc.dwHeight;
   hVSurface->usWidth = (uint16_t)DDSurfaceDesc.dwWidth;
-  hVSurface->pSurfaceData = (void *)lpDDSurface;
+  hVSurface->_platformData2 = (void *)lpDDSurface;
 
   // Get and Set palette, if attached, allow to fail
   LPDIRECTDRAWPALETTE pDDPalette;
@@ -1580,8 +1572,8 @@ BOOLEAN FillSurfaceRect(struct VSurface *dest, struct BltOpts *pBltFx) {
   BlitterFX.dwSize = sizeof(DDBLTFX);
   BlitterFX.dwFillColor = pBltFx->ColorFill;
 
-  DDBltSurface((LPDIRECTDRAWSURFACE2)dest->pSurfaceData, (LPRECT) & (pBltFx->FillRect), NULL, NULL,
-               DDBLT_COLORFILL, &BlitterFX);
+  DDBltSurface((LPDIRECTDRAWSURFACE2)dest->_platformData2, (LPRECT) & (pBltFx->FillRect), NULL,
+               NULL, DDBLT_COLORFILL, &BlitterFX);
 
   return (TRUE);
 }
@@ -1702,8 +1694,8 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
 
     // Check for -ve values
 
-    DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->pSurfaceData, &DestRect,
-                 (LPDIRECTDRAWSURFACE2)hSrcVSurface->pSurfaceData, &srcRect, uiDDFlags, NULL);
+    DDBltSurface((LPDIRECTDRAWSURFACE2)hDestVSurface->_platformData2, &DestRect,
+                 (LPDIRECTDRAWSURFACE2)hSrcVSurface->_platformData2, &srcRect, uiDDFlags, NULL);
   }
 
   return (TRUE);
@@ -1730,8 +1722,8 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *dest, struct VSurface *src, uint3
         .top = DestRect->top,
         .bottom = DestRect->bottom,
     };
-    DDBltSurface((LPDIRECTDRAWSURFACE2)dest->pSurfaceData, &destRect,
-                 (LPDIRECTDRAWSURFACE2)src->pSurfaceData, &srcRect, uiDDFlags, NULL);
+    DDBltSurface((LPDIRECTDRAWSURFACE2)dest->_platformData2, &destRect,
+                 (LPDIRECTDRAWSURFACE2)src->_platformData2, &srcRect, uiDDFlags, NULL);
   }
 
   return (TRUE);
@@ -1965,7 +1957,7 @@ void SmkSetupVideo(void) {
   struct VSurface *hVSurface;
 
   GetVideoSurface(&hVSurface, FRAME_BUFFER);
-  lpVideoPlayback2 = (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData;
+  lpVideoPlayback2 = (LPDIRECTDRAWSURFACE2)hVSurface->_platformData2;
 
   ZEROMEM(SurfaceDescription);
   SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
@@ -2175,8 +2167,8 @@ bool BltFastSurfaceWithFlags(struct VSurface *dest, uint32_t x, uint32_t y, stru
     ddFlags |= DDBLTFAST_SRCCOLORKEY;
   }
 
-  return DDBltFastSurfaceWithFlags((LPDIRECTDRAWSURFACE2)dest->pSurfaceData, x, y,
-                                   (LPDIRECTDRAWSURFACE2)src->pSurfaceData, pSrcRect, ddFlags);
+  return DDBltFastSurfaceWithFlags((LPDIRECTDRAWSURFACE2)dest->_platformData2, x, y,
+                                   (LPDIRECTDRAWSURFACE2)src->_platformData2, pSrcRect, ddFlags);
 }
 
 bool DDBltFastSurface(LPDIRECTDRAWSURFACE2 dest, uint32_t uiX, uint32_t uiY,

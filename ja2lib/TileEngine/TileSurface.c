@@ -43,7 +43,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
     return (NULL);
   }
 
-  hVObject = CreateVObjectFromHImage(hImage);
+  hVObject = CreateVObjectFromImage(hImage);
 
   if (hVObject == NULL) {
     // Report error

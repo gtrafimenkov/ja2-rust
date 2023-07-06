@@ -141,28 +141,6 @@ uint32_t guiHandle;
 uint32_t guiWoodBackground;
 uint32_t guiUnderConstructionImage;
 
-/*
-uint16_t	gusFirstGunIndex;
-uint16_t	gusLastGunIndex;
-uint8_t		gubNumGunPages;
-
-uint16_t	gusFirstAmmoIndex;
-uint16_t	gusLastAmmoIndex;
-uint8_t		gubNumAmmoPages;
-
-uint16_t	gusFirstMiscIndex;
-uint16_t	gusLastMiscIndex;
-uint8_t		gubNumMiscPages;
-
-uint16_t  gusFirstArmourIndex;
-uint16_t  gusLastArmourIndex;
-uint8_t		gubNumArmourPages;
-
-uint16_t  gusFirstUsedIndex;
-uint16_t  gusLastUsedIndex;
-uint8_t		gubNumUsedPages;
-*/
-
 uint32_t guiLastBobbyRayPage;
 
 uint8_t gubBobbyRPages[] = {LAPTOP_MODE_BOBBY_R_USED, LAPTOP_MODE_BOBBY_R_MISC,
@@ -183,7 +161,6 @@ void SimulateBobbyRayCustomer(STORE_INVENTORY *pInventoryArray, BOOLEAN fUsed);
 void GameInitBobbyR() {}
 
 BOOLEAN EnterBobbyR() {
-  VOBJECT_DESC VObjectDesc;
   uint8_t i;
 
   // an array of mouse regions for the bobbies signs.  Top Left corner, bottom right corner
@@ -211,8 +188,9 @@ BOOLEAN EnterBobbyR() {
   InitBobbyRWoodBackground();
 
   // load the Bobbyname graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYNAME);
-  if (!AddVideoObject(&VObjectDesc, &guiBobbyName)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_BOBBYNAME);
+  if (!AddVObjectFromFile(ImageFile, &guiBobbyName)) {
     return FALSE;
   }
 
@@ -232,8 +210,8 @@ BOOLEAN EnterBobbyR() {
   }
 
   // load the Store Plaque graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_STOREPLAQUE);
-  if (!AddVideoObject(&VObjectDesc, &guiStorePlaque)) {
+  GetMLGFilename(ImageFile, MLG_STOREPLAQUE);
+  if (!AddVObjectFromFile(ImageFile, &guiStorePlaque)) {
     return FALSE;
   }
 

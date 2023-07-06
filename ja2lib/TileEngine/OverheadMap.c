@@ -124,7 +124,7 @@ void InitNewOverheadDB(uint8_t ubTilesetID) {
     // Adjust for tileset position
     sprintf(cAdjustedFile, "TILESETS\\%d\\T\\%s", ubTilesetID, cFileBPP);
 
-    hVObject = CreateVObjectFromFile(cAdjustedFile);
+    hVObject = LoadVObjectFromFile(cAdjustedFile);
 
     if (hVObject == NULL) {
       // TRY loading from default directory
@@ -133,11 +133,11 @@ void InitNewOverheadDB(uint8_t ubTilesetID) {
       sprintf(cAdjustedFile, "TILESETS\\0\\T\\%s", cFileBPP);
 
       // LOAD ONE WE KNOW ABOUT!
-      hVObject = CreateVObjectFromFile(cAdjustedFile);
+      hVObject = LoadVObjectFromFile(cAdjustedFile);
 
       if (hVObject == NULL) {
         // LOAD ONE WE KNOW ABOUT!
-        hVObject = CreateVObjectFromFile("TILESETS\\0\\T\\grass.sti");
+        hVObject = LoadVObjectFromFile("TILESETS\\0\\T\\grass.sti");
       }
     }
 
@@ -1239,7 +1239,7 @@ void CopyOverheadDBShadetablesFromTileset() {
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++) {
     pTileSurf = (gTileSurfaceArray[uiLoop]);
 
-    gSmTileSurf[uiLoop].vo->fFlags |= VOBJECT_FLAG_SHADETABLE_SHARED;
+    gSmTileSurf[uiLoop].vo->shared_shadetable = true;
 
     for (uiLoop2 = 0; uiLoop2 < HVOBJECT_SHADE_TABLES; uiLoop2++) {
       gSmTileSurf[uiLoop].vo->pShades[uiLoop2] = pTileSurf->vo->pShades[uiLoop2];

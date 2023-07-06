@@ -115,8 +115,8 @@ BOOLEAN LoadCursorData(uint32_t uiCursorIndex) {
           return (FALSE);
         }
 
-        if (!AddVObjectFromHImage(hImage,
-                                  &(gpCursorFileDatabase[pCurImage->uiFileIndex].uiIndex))) {
+        gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject = CreateVObjectFromImage(hImage);
+        if (!gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject) {
           return (FALSE);
         }
 
@@ -134,10 +134,6 @@ BOOLEAN LoadCursorData(uint32_t uiCursorIndex) {
 
         // the hImage is no longer needed
         DestroyImage(hImage);
-
-        // Save hVObject....
-        GetVideoObject(&(gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject),
-                       gpCursorFileDatabase[pCurImage->uiFileIndex].uiIndex);
       }
 
       gpCursorFileDatabase[pCurImage->uiFileIndex].fLoaded = TRUE;
@@ -231,8 +227,8 @@ void UnLoadCursorData(uint32_t uiCursorIndex) {
 
     if (gpCursorFileDatabase[pCurImage->uiFileIndex].fLoaded) {
       if (!(gpCursorFileDatabase[pCurImage->uiFileIndex].ubFlags & USE_EXTERN_VO_CURSOR)) {
-        DeleteVideoObjectFromIndex(gpCursorFileDatabase[pCurImage->uiFileIndex].uiIndex);
-        gpCursorFileDatabase[pCurImage->uiFileIndex].uiIndex = 0;
+        DeleteVideoObject(gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject);
+        gpCursorFileDatabase[pCurImage->uiFileIndex].hVObject = NULL;
       }
       gpCursorFileDatabase[pCurImage->uiFileIndex].fLoaded = FALSE;
     }
@@ -247,8 +243,8 @@ void CursorDatabaseClear(void) {
   for (uiIndex = 0; uiIndex < gusNumDataFiles; uiIndex++) {
     if (gpCursorFileDatabase[uiIndex].fLoaded == TRUE) {
       if (!(gpCursorFileDatabase[uiIndex].ubFlags & USE_EXTERN_VO_CURSOR)) {
-        DeleteVideoObjectFromIndex(gpCursorFileDatabase[uiIndex].uiIndex);
-        gpCursorFileDatabase[uiIndex].uiIndex = 0;
+        DeleteVideoObject(gpCursorFileDatabase[uiIndex].hVObject);
+        gpCursorFileDatabase[uiIndex].hVObject = NULL;
       }
 
       gpCursorFileDatabase[uiIndex].fLoaded = FALSE;

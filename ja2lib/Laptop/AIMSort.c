@@ -159,7 +159,6 @@ void GameInitAimSort() {
 }
 
 BOOLEAN EnterAimSort() {
-  VOBJECT_DESC VObjectDesc;
   uint8_t ubCurNumber = 0;
   uint16_t ubWidth;
   uint8_t i;
@@ -177,20 +176,21 @@ BOOLEAN EnterAimSort() {
   }
 
   // load the ToAlumni graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_TOALUMNI);
-  if (!AddVideoObject(&VObjectDesc, &guiToAlumni)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_TOALUMNI);
+  if (!AddVObjectFromFile(ImageFile, &guiToAlumni)) {
     return FALSE;
   }
 
   // load the ToMugShots graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_TOMUGSHOTS);
-  if (!AddVideoObject(&VObjectDesc, &guiToMugShots)) {
+  GetMLGFilename(ImageFile, MLG_TOMUGSHOTS);
+  if (!AddVObjectFromFile(ImageFile, &guiToMugShots)) {
     return FALSE;
   }
 
   // load the ToStats graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_TOSTATS);
-  if (!AddVideoObject(&VObjectDesc, &guiToStats)) {
+  GetMLGFilename(ImageFile, MLG_TOSTATS);
+  if (!AddVObjectFromFile(ImageFile, &guiToStats)) {
     return FALSE;
   }
 

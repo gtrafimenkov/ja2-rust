@@ -303,7 +303,6 @@ uint32_t OptionsScreenHandle() {
 uint32_t OptionsScreenShutdown() { return (TRUE); }
 
 BOOLEAN EnterOptionsScreen() {
-  VOBJECT_DESC VObjectDesc;
   uint16_t usPosY;
   uint8_t cnt;
   uint16_t usTextWidth, usTextHeight;
@@ -354,8 +353,9 @@ BOOLEAN EnterOptionsScreen() {
   }
 
   // load button, title graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_OPTIONHEADER);
-  if (!AddVideoObject(&VObjectDesc, &guiOptionsAddOnImages)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_OPTIONHEADER);
+  if (!AddVObjectFromFile(ImageFile, &guiOptionsAddOnImages)) {
     return FALSE;
   }
 
