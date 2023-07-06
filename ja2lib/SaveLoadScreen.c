@@ -391,7 +391,6 @@ void SetSaveLoadExitScreen(UINT32 uiScreen) {
 
 BOOLEAN EnterSaveLoadScreen() {
   INT8 i;
-  VOBJECT_DESC VObjectDesc;
   UINT16 usPosX = SLG_FIRST_SAVED_SPOT_X;
   UINT16 usPosY = SLG_FIRST_SAVED_SPOT_Y;
 
@@ -433,8 +432,9 @@ BOOLEAN EnterSaveLoadScreen() {
   }
 
   // load Load Screen Add ons graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_LOADSAVEHEADER);
-  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiBackGroundAddOns)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_LOADSAVEHEADER);
+  if (!AddVObjectFromFile(ImageFile, &guiBackGroundAddOns)) {
     return FALSE;
   }
 

@@ -88,7 +88,6 @@ BOOLEAN InitRadarScreen() {
 }
 
 BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
-  VOBJECT_DESC VObjectDesc;
   CHAR8 zFilename[80];
   INT32 cnt;
   struct VObject *hVObject;
@@ -111,8 +110,9 @@ BOOLEAN LoadRadarScreenBitmap(CHAR8 *aFilename) {
     }
 
     // Grab the Map image
-    sprintf(VObjectDesc.ImageFile, "RADARMAPS\\%s.STI", zFilename);
-    if (!AddVObjectFromFile(VObjectDesc.ImageFile, &gusRadarImage)) {
+    SGPFILENAME ImageFile;
+    sprintf(ImageFile, "RADARMAPS\\%s.STI", zFilename);
+    if (!AddVObjectFromFile(ImageFile, &gusRadarImage)) {
       return FALSE;
     }
 

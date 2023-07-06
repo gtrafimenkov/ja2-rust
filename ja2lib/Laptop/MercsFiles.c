@@ -144,13 +144,12 @@ void EnableDisableMercFilesNextPreviousButton();
 void GameInitMercsFiles() {}
 
 BOOLEAN EnterMercsFiles() {
-  VOBJECT_DESC VObjectDesc;
-
   InitMercBackGround();
 
   // load the stats box graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_STATSBOX);
-  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiStatsBox)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_STATSBOX);
+  if (!AddVObjectFromFile(ImageFile, &guiStatsBox)) {
     return FALSE;
   }
 

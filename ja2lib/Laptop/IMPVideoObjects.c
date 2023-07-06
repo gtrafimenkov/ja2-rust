@@ -110,9 +110,9 @@ void RenderProfileBackGround(void) {
 
 BOOLEAN LoadIMPSymbol(void) {
   // this procedure will load the IMP main symbol into memory
-  VOBJECT_DESC VObjectDesc;
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_IMPSYMBOL);
-  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiIMPSYMBOL)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_IMPSYMBOL);
+  if (!AddVObjectFromFile(ImageFile, &guiIMPSYMBOL)) {
     return FALSE;
   }
 

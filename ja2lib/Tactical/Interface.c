@@ -2327,7 +2327,6 @@ BOOLEAN AddTopMessage(UINT8 ubType, CHAR16 *pzString) {
 
 void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
   UINT32 uiBAR, uiPLAYERBAR, uiINTBAR;
-  VOBJECT_DESC VObjectDesc;
   INT16 sX, sY;
   INT32 cnt2;
   INT16 sBarX = 0;
@@ -2335,8 +2334,6 @@ void CreateTopMessage(UINT32 uiSurface, UINT8 ubType, CHAR16 *psString) {
   BOOLEAN fDoLimitBar = FALSE;
 
   FLOAT dNumStepsPerEnemy, dLength, dCurSize;
-
-  memset(&VObjectDesc, 0, sizeof(VObjectDesc));
 
   if (!AddVObjectFromFile("INTERFACE\\rect.sti", &uiBAR))
     AssertMsg(0, "Missing INTERFACE\\rect.sti");

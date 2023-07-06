@@ -85,13 +85,12 @@ void MercAuthorizePaymentMessageBoxCallBack(UINT8 bExitValue);
 void GameInitMercsAccount() {}
 
 BOOLEAN EnterMercsAccount() {
-  VOBJECT_DESC VObjectDesc;
-
   InitMercBackGround();
 
   // load the Arrow graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_ORDERGRID);
-  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &guiMercOrderGrid)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_ORDERGRID);
+  if (!AddVObjectFromFile(ImageFile, &guiMercOrderGrid)) {
     return FALSE;
   }
 

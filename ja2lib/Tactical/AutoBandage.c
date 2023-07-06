@@ -895,7 +895,6 @@ void DestroyTerminateAutoBandageButton(void) {
 BOOLEAN AddFacesToAutoBandageBox(void) {
   INT32 iCounter = 0;
   INT32 iNumberOfDoctors = 0;
-  VOBJECT_DESC VObjectDesc;
 
   // reset
   memset(&giAutoBandagesSoldierFaces, -1, sizeof(giAutoBandagesSoldierFaces));
@@ -903,18 +902,19 @@ BOOLEAN AddFacesToAutoBandageBox(void) {
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     // find a free slot
     if (iDoctorList[iCounter] != -1) {
+      SGPFILENAME ImageFile;
       if (gMercProfiles[(Menptr[iDoctorList[iCounter]]).ubProfile].ubFaceIndex < 100) {
         // grab filename of face
-        sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%02d.sti",
+        sprintf(ImageFile, "Faces\\65Face\\%02d.sti",
                 gMercProfiles[(Menptr[iDoctorList[iCounter]]).ubProfile].ubFaceIndex);
       } else {
         // grab filename of face
-        sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%03d.sti",
+        sprintf(ImageFile, "Faces\\65Face\\%03d.sti",
                 gMercProfiles[(Menptr[iDoctorList[iCounter]]).ubProfile].ubFaceIndex);
       }
 
       // load the face
-      AddVObjectFromFile(VObjectDesc.ImageFile, &giAutoBandagesSoldierFaces[iCounter]);
+      AddVObjectFromFile(ImageFile, &giAutoBandagesSoldierFaces[iCounter]);
       iNumberOfDoctors++;
     }
   }
@@ -922,18 +922,19 @@ BOOLEAN AddFacesToAutoBandageBox(void) {
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
     // find a free slot
     if (iPatientList[iCounter] != -1) {
+      SGPFILENAME ImageFile;
       if (gMercProfiles[(Menptr[iPatientList[iCounter]]).ubProfile].ubFaceIndex < 100) {
         // grab filename of face
-        sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%02d.sti",
+        sprintf(ImageFile, "Faces\\65Face\\%02d.sti",
                 gMercProfiles[(Menptr[iPatientList[iCounter]]).ubProfile].ubFaceIndex);
       } else {
         // grab filename of face
-        sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%03d.sti",
+        sprintf(ImageFile, "Faces\\65Face\\%03d.sti",
                 gMercProfiles[(Menptr[iPatientList[iCounter]]).ubProfile].ubFaceIndex);
       }
 
       // load the face
-      AddVObjectFromFile(VObjectDesc.ImageFile, &giAutoBandagesSoldierFaces[iCounter + iNumberOfDoctors]);
+      AddVObjectFromFile(ImageFile, &giAutoBandagesSoldierFaces[iCounter + iNumberOfDoctors]);
     }
   }
 

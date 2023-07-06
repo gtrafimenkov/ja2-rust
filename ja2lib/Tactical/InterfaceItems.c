@@ -75,8 +75,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "rust_fileman.h"
-#include "rust_laptop.h"
 #include "rust_images.h"
+#include "rust_laptop.h"
 
 #define ITEMDESC_FONT BLOCKFONT2
 #define ITEMDESC_FONTSHADOW1 MILITARY_SHADOW
@@ -4995,7 +4995,6 @@ UINT16 GetTileGraphicForItem(INVTYPE *pItem) {
 BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, UINT32 *puiVo) {
   CHAR8 zName[80];
   UINT32 uiVo;
-  VOBJECT_DESC VObjectDesc;
   UINT8 ubGraphic;
 
   // CHECK SUBCLASS
@@ -5031,8 +5030,9 @@ BOOLEAN LoadTileGraphicForItem(INVTYPE *pItem, UINT32 *puiVo) {
   }
 
   // Load item
-  sprintf(VObjectDesc.ImageFile, "BIGITEMS\\%s", zName);
-  if (!AddVObjectFromFile(VObjectDesc.ImageFile, &uiVo)) {
+  SGPFILENAME ImageFile;
+  sprintf(ImageFile, "BIGITEMS\\%s", zName);
+  if (!AddVObjectFromFile(ImageFile, &uiVo)) {
     return FALSE;
   }
 
