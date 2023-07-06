@@ -1736,7 +1736,6 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *dest, struct VSurface *src, uint3
 #include <crtdbg.h>
 #include <fcntl.h>
 #include <io.h>
-#include <malloc.h>
 #include <share.h>
 #include <stdio.h>
 #include <stdlib.h>
