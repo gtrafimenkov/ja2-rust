@@ -1046,7 +1046,6 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 
                     if (!(uiFlags & TILES_DIRTY)) {
                       hVObject->pShadeCurrent = hVObject->pShades[pNode->ubShadeLevel];
-                      hVObject->pShade8 = ubColorTables[pNode->ubShadeLevel];
                     }
                   }
 

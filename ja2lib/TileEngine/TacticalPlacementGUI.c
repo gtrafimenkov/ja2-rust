@@ -174,7 +174,6 @@ void CheckForValidMapEdge(UINT8 *pubStrategicInsertionCode) {
 #endif
 
 void InitTacticalPlacementGUI() {
-  VOBJECT_DESC VObjectDesc;
   INT32 i, xp, yp;
   UINT8 ubFaceIndex;
   gfTacticalPlacementGUIActive = TRUE;
@@ -308,16 +307,17 @@ void InitTacticalPlacementGUI() {
   }
   // add all the faces now
   for (i = 0; i < giPlacements; i++) {
+    SGPFILENAME ImageFile;
     // Load the faces
     {
       ubFaceIndex = gMercProfiles[GetSolProfile(gMercPlacement[i].pSoldier)].ubFaceIndex;
       if (ubFaceIndex < 100)
-        sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%02d.sti", ubFaceIndex);
+        sprintf(ImageFile, "Faces\\65Face\\%02d.sti", ubFaceIndex);
       else
-        sprintf(VObjectDesc.ImageFile, "Faces\\65Face\\%03d.sti", ubFaceIndex);
+        sprintf(ImageFile, "Faces\\65Face\\%03d.sti", ubFaceIndex);
     }
 
-    if (!AddVideoObject(&VObjectDesc, &gMercPlacement[i].uiVObjectID)) {
+    if (!AddVObjectFromFile(ImageFile, &gMercPlacement[i].uiVObjectID)) {
       if (!AddVObjectFromFile("Faces\\65Face\\speck.sti", &gMercPlacement[i].uiVObjectID)) {
         AssertMsg(0,
                   String("Failed to load %Faces\\65Face\\%03d.sti or it's placeholder, speck.sti",
@@ -437,7 +437,7 @@ void RenderTacticalPlacementGUI() {
     VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 320, 640, 160);
   }
   if (gfValidLocationsChanged) {
-    if (IsDayTime()) {     // 6AM to 9PM is black
+    if (IsDayTime()) {   // 6AM to 9PM is black
       usHatchColor = 0;  // Black
     } else {             // 9PM to 6AM is gray (black is too dark to distinguish)
       usHatchColor = Get16BPPColor(FROMRGB(63, 31, 31));

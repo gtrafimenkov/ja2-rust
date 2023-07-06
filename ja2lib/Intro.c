@@ -398,14 +398,10 @@ void SetIntroType(INT8 bIntroType) {
 
 void DisplaySirtechSplashScreen() {
   struct VObject *hPixHandle;
-  VOBJECT_DESC VObjectDesc;
   UINT32 uiLogoID;
 
   UINT32 uiDestPitchBYTES;
   UINT8 *pDestBuf;
-
-  // JA3Gold: do nothing until we have a graphic to replace Talonsoft's
-  // return;
 
   // CLEAR THE FRAME BUFFER
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
@@ -413,7 +409,7 @@ void DisplaySirtechSplashScreen() {
   VSurfaceUnlock(vsFB);
 
   if (!AddVObjectFromFile("INTERFACE\\SirtechSplash.sti", &uiLogoID)) {
-    AssertMsg(0, String("Failed to load %s", VObjectDesc.ImageFile));
+    AssertMsg(0, "Failed to load SirtechSplash.sti");
     return;
   }
 

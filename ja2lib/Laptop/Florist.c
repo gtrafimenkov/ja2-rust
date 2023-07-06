@@ -181,24 +181,23 @@ void RenderFlorist() {
 }
 
 BOOLEAN InitFloristDefaults() {
-  VOBJECT_DESC VObjectDesc;
-
   // load the Florist background graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\leafback.sti", &guiFloristBackground)) {
     return FALSE;
   }
 
   // if its the first page
+  SGPFILENAME ImageFile;
   if (guiCurrentLaptopMode == LAPTOP_MODE_FLORIST) {
     // load the small title graphic and add it
-    GetMLGFilename(VObjectDesc.ImageFile, MLG_LARGEFLORISTSYMBOL);
-    if (!AddVideoObject(&VObjectDesc, &guiLargeTitleSymbol)) {
+    GetMLGFilename(ImageFile, MLG_LARGEFLORISTSYMBOL);
+    if (!AddVObjectFromFile(ImageFile, &guiLargeTitleSymbol)) {
       return FALSE;
     }
   } else {
     // load the leaf back graphic and add it
-    GetMLGFilename(VObjectDesc.ImageFile, MLG_SMALLFLORISTSYMBOL);
-    if (!AddVideoObject(&VObjectDesc, &guiSmallTitleSymbol)) {
+    GetMLGFilename(ImageFile, MLG_SMALLFLORISTSYMBOL);
+    if (!AddVObjectFromFile(ImageFile, &guiSmallTitleSymbol)) {
       return FALSE;
     }
 

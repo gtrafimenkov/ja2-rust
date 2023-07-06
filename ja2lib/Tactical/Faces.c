@@ -190,7 +190,6 @@ INT32 InitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFlags) {
 INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFlags,
                        INT32 iFaceFileID, UINT32 uiBlinkFrequency, UINT32 uiExpressionFrequency) {
   FACETYPE *pFace;
-  VOBJECT_DESC VObjectDesc;
   UINT32 uiVideoObject;
   INT32 iFaceIndex;
   struct Subimage ETRLEObject;
@@ -207,40 +206,41 @@ INT32 InternalInitFace(UINT8 usMercProfileID, UINT8 ubSoldierID, UINT32 uiInitFl
     iFaceFileID = 151;
   }
 
+  SGPFILENAME ImageFile;
   // Check if we are a big-face....
   if (uiInitFlags & FACE_BIGFACE) {
     // The filename is the profile ID!
     if (iFaceFileID < 100) {
-      sprintf(VObjectDesc.ImageFile, "FACES\\b%02d.sti", iFaceFileID);
+      sprintf(ImageFile, "FACES\\b%02d.sti", iFaceFileID);
     } else {
-      sprintf(VObjectDesc.ImageFile, "FACES\\b%03d.sti", iFaceFileID);
+      sprintf(ImageFile, "FACES\\b%03d.sti", iFaceFileID);
     }
 
     // ATE: Check for profile - if elliot , use special face :)
     if (usMercProfileID == ELLIOT) {
       if (gMercProfiles[ELLIOT].bNPCData > 3 && gMercProfiles[ELLIOT].bNPCData < 7) {
-        sprintf(VObjectDesc.ImageFile, "FACES\\b%02da.sti", iFaceFileID);
+        sprintf(ImageFile, "FACES\\b%02da.sti", iFaceFileID);
       } else if (gMercProfiles[ELLIOT].bNPCData > 6 && gMercProfiles[ELLIOT].bNPCData < 10) {
-        sprintf(VObjectDesc.ImageFile, "FACES\\b%02db.sti", iFaceFileID);
+        sprintf(ImageFile, "FACES\\b%02db.sti", iFaceFileID);
       } else if (gMercProfiles[ELLIOT].bNPCData > 9 && gMercProfiles[ELLIOT].bNPCData < 13) {
-        sprintf(VObjectDesc.ImageFile, "FACES\\b%02dc.sti", iFaceFileID);
+        sprintf(ImageFile, "FACES\\b%02dc.sti", iFaceFileID);
       } else if (gMercProfiles[ELLIOT].bNPCData > 12 && gMercProfiles[ELLIOT].bNPCData < 16) {
-        sprintf(VObjectDesc.ImageFile, "FACES\\b%02dd.sti", iFaceFileID);
+        sprintf(ImageFile, "FACES\\b%02dd.sti", iFaceFileID);
       } else if (gMercProfiles[ELLIOT].bNPCData == 17) {
-        sprintf(VObjectDesc.ImageFile, "FACES\\b%02de.sti", iFaceFileID);
+        sprintf(ImageFile, "FACES\\b%02de.sti", iFaceFileID);
       }
     }
   } else {
     if (iFaceFileID < 100) {
       // The filename is the profile ID!
-      sprintf(VObjectDesc.ImageFile, "FACES\\%02d.sti", iFaceFileID);
+      sprintf(ImageFile, "FACES\\%02d.sti", iFaceFileID);
     } else {
-      sprintf(VObjectDesc.ImageFile, "FACES\\%03d.sti", iFaceFileID);
+      sprintf(ImageFile, "FACES\\%03d.sti", iFaceFileID);
     }
   }
 
   // Load
-  if (AddVideoObject(&VObjectDesc, &uiVideoObject) == FALSE) {
+  if (AddVObjectFromFile(ImageFile, &uiVideoObject) == FALSE) {
     // If we are a big face, use placeholder...
     if (uiInitFlags & FACE_BIGFACE) {
       if (AddVObjectFromFile("FACES\\placeholder.sti", &uiVideoObject) == FALSE) {

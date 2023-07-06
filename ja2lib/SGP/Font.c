@@ -297,7 +297,7 @@ INT32 LoadFontFile(STR8 filename) {
     return (-1);
   }
 
-  if ((FontObjs[LoadIndex] = CreateVObjectFromFile(filename)) == NULL) {
+  if ((FontObjs[LoadIndex] = LoadVObjectFromFile(filename)) == NULL) {
     DebugMsg(TOPIC_FONT_HANDLER, DBG_ERROR, String("Error creating VOBJECT (%s)", filename));
     FatalError("Cannot init FONT file %s", filename);
     return (-1);

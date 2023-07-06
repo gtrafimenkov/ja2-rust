@@ -4295,7 +4295,7 @@ BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 u
       return (SET_ERROR("Error: Could not load animation file %s", sFilename));
     }
 
-    hVObject = CreateVObjectFromHImage(hImage);
+    hVObject = CreateVObjectFromImage(hImage);
 
     if (hVObject == NULL) {
       // Report error

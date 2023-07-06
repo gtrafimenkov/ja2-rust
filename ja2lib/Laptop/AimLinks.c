@@ -54,7 +54,6 @@ void SelectLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
 void GameInitAimLinks() {}
 
 BOOLEAN EnterAimLinks() {
-  VOBJECT_DESC VObjectDesc;
   UINT16 usPosY;
   INT16 i;
 
@@ -62,20 +61,21 @@ BOOLEAN EnterAimLinks() {
   InitAimMenuBar();
 
   // load the Bobby link graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_BOBBYRAYLINK);
-  if (!AddVideoObject(&VObjectDesc, &guiBobbyLink)) {
+  SGPFILENAME ImageFile;
+  GetMLGFilename(ImageFile, MLG_BOBBYRAYLINK);
+  if (!AddVObjectFromFile(ImageFile, &guiBobbyLink)) {
     return FALSE;
   }
 
   // load the Funeral graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_MORTUARYLINK);
-  if (!AddVideoObject(&VObjectDesc, &guiFuneralLink)) {
+  GetMLGFilename(ImageFile, MLG_MORTUARYLINK);
+  if (!AddVObjectFromFile(ImageFile, &guiFuneralLink)) {
     return FALSE;
   }
 
   // load the Insurance graphic and add it
-  GetMLGFilename(VObjectDesc.ImageFile, MLG_INSURANCELINK);
-  if (!AddVideoObject(&VObjectDesc, &guiInsuranceLink)) {
+  GetMLGFilename(ImageFile, MLG_INSURANCELINK);
+  if (!AddVObjectFromFile(ImageFile, &guiInsuranceLink)) {
     return FALSE;
   }
 

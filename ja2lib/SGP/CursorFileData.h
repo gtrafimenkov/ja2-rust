@@ -6,7 +6,6 @@
 struct CursorFileData {
   CHAR8 ubFilename[48];
   BOOLEAN fLoaded;
-  UINT32 uiIndex;
   UINT8 ubFlags;
   UINT8 ubNumberOfFrames;
   struct VObject* hVObject;
