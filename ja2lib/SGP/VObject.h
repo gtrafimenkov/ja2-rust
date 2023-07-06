@@ -60,7 +60,6 @@ BOOLEAN InitializeVideoObjectManager();
 BOOLEAN ShutdownVideoObjectManager();
 
 BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex);
-BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex);
 
 // Removes a video object
 BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject);

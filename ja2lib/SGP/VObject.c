@@ -167,10 +167,6 @@ BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
   return _AddVideoObject(LoadVObjectFromFile(path), puiIndex);
 }
 
-BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex) {
-  return _AddVideoObject(CreateVObjectFromImage(hImage), puiIndex);
-}
-
 // TODO: rust
 BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex) {
   VOBJECT_NODE *curr;
