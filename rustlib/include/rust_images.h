@@ -29,9 +29,6 @@ struct Subimage {
   uint16_t width;
 };
 
-/**
- * Image header structure
- */
 struct Image {
   uint16_t width;
   uint16_t height;
@@ -46,25 +43,6 @@ struct Image {
   uint16_t number_of_subimages;
 };
 
-/**
- * Results of loading STI image.
- */
-struct STIImageLoaded {
-  bool success;
-  uint32_t image_data_size;
-  uint16_t Height;
-  uint16_t Width;
-  uint16_t number_of_subimages;
-  uint8_t pixel_depth;
-  uint32_t app_data_size;
-  uint8_t *image_data;
-  bool indexed;
-  struct SGPPaletteEntry *palette;
-  struct Subimage *subimages;
-  uint8_t *app_data;
-  bool zlib_compressed;
-};
-
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -75,20 +53,6 @@ extern "C" {
  */
 struct Image *LoadSTCIFileToImage(const char *path,
                                   bool load_app_data);
-
-/**
- * Load STI image from file or library.
- * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
- */
-struct STIImageLoaded LoadSTIImageFromFile(const char *path,
-                                           bool load_app_data);
-
-/**
- * Load STI image.
- * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
- */
-struct STIImageLoaded LoadSTIImage(FileID file_id,
-                                   bool load_app_data);
 
 #ifdef __cplusplus
 } // extern "C"

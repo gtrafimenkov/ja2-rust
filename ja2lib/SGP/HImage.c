@@ -6,7 +6,6 @@
 
 #include "SGP/Debug.h"
 #include "SGP/PCX.h"
-#include "SGP/STCI.h"
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 #include "SGP/WCheck.h"
