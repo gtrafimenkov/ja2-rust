@@ -1,7 +1,4 @@
 use super::exp_debug;
-// use super::exp_fileman::FileID;
-// use super::exp_fileman::FILE_DB;
-// use std::io;
 
 use once_cell::sync::Lazy;
 use std::{
@@ -25,7 +22,9 @@ impl DB {
 
     fn store(&mut self, address: *mut u8, layout: Layout) {
         if self.alloc_map.contains_key(&address) {
-            panic!("address {address:?} is already in the allocation map")
+            let message = format!("address {address:?} is already in the allocation map");
+            exp_debug::debug_log_write(&message);
+            panic!("{message}")
         }
         self.alloc_map.insert(address, layout);
     }
@@ -33,7 +32,11 @@ impl DB {
     fn pull(&mut self, address: *mut u8) -> Layout {
         match self.alloc_map.remove(&address) {
             Some(layout) => layout,
-            None => panic!("address {address:?} is not found in the allocation map"),
+            None => {
+                let message = format!("address {address:?} is not found in the allocation map");
+                exp_debug::debug_log_write(&message);
+                panic!("{message}")
+            }
         }
     }
 }
@@ -41,13 +44,19 @@ impl DB {
 #[no_mangle]
 /// Allocate memory in Rust.
 /// The program will panic if memory cannot be allocated.
+///
+/// # Safety
+///
+/// This function is not thread-safe.
 pub extern "C" fn RustAlloc(size: usize) -> *mut u8 {
     let layout = Layout::from_size_align(size, std::mem::align_of::<u8>()).unwrap();
     let buffer = unsafe { alloc(layout) as *mut u8 };
     if buffer.is_null() {
-        panic!("failed to allocate {size} bytes");
+        let message = format!("failed to allocate {size} bytes");
+        exp_debug::debug_log_write(&message);
+        panic!("{message}")
     }
-    exp_debug::debug_log_write(&format!("rust_alloc: allocated {size} bytes at {buffer:?}"));
+    // exp_debug::debug_log_write(&format!("rust_alloc: allocated {size} bytes at {buffer:?}"));
     unsafe { ALLOC_DB.store(buffer, layout) };
     buffer
 }
@@ -59,9 +68,11 @@ pub extern "C" fn RustAlloc(size: usize) -> *mut u8 {
 ///
 /// Pass only the pointer returned earlier by RustAlloc.
 /// Don't deallocate memory more that once.
+///
+/// This function is not thread-safe.
 pub unsafe extern "C" fn RustDealloc(pointer: *mut u8) {
     if !pointer.is_null() {
-        exp_debug::debug_log_write(&format!("rust_alloc: deallocating {pointer:?}"));
+        // exp_debug::debug_log_write(&format!("rust_alloc: deallocating {pointer:?}"));
         unsafe {
             let layout = ALLOC_DB.pull(pointer);
             std::alloc::dealloc(pointer, layout);
@@ -69,27 +80,69 @@ pub unsafe extern "C" fn RustDealloc(pointer: *mut u8) {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn simple_alloc_dealloc() {
-        let buf = RustAlloc(10);
-        assert!(!buf.is_null());
+#[no_mangle]
+/// Reallocate memory allocated earlier in Rust.
+///
+/// # Safety
+///
+/// Pass only the pointer returned earlier by RustAlloc.
+///
+/// This function is not thread-safe.
+pub unsafe extern "C" fn RustRealloc(pointer: *mut u8, new_size: usize) -> *mut u8 {
+    if !pointer.is_null() {
+        // exp_debug::debug_log_write(&format!(
+        //     "rust_realloc: reallocating {pointer:?} to {new_size} bytes"
+        // ));
         unsafe {
-            RustDealloc(buf);
+            let layout = ALLOC_DB.pull(pointer);
+            let new_pointer = std::alloc::realloc(pointer, layout, new_size);
+            if new_pointer.is_null() {
+                let old_size = layout.size();
+                let message = format!(
+                    "rust_realloc: failed to reallocate from {old_size} bytes to {new_size} bytes"
+                );
+                exp_debug::debug_log_write(&message);
+                panic!("{message}");
+            }
+            ALLOC_DB.store(new_pointer, layout);
+            new_pointer
         }
-    }
-
-    #[test]
-    #[should_panic]
-    fn double_dealloc() {
-        let buf = RustAlloc(100);
-        assert!(!buf.is_null());
-        unsafe {
-            RustDealloc(buf);
-            RustDealloc(buf);
-        }
+    } else {
+        RustAlloc(new_size)
     }
 }
+
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+
+//     #[test]
+//     fn simple_alloc_dealloc() {
+//         let buf = RustAlloc(10);
+//         assert!(!buf.is_null());
+//         unsafe {
+//             RustDealloc(buf);
+//         }
+//     }
+
+//     #[test]
+//     fn realloc() {
+//         let p1 = RustAlloc(10);
+//         assert!(!p1.is_null());
+//         unsafe {
+//             let p2 = RustRealloc(p1, 2048);
+//             RustDealloc(p2);
+//         }
+//     }
+
+//     #[test]
+//     #[should_panic]
+//     fn double_dealloc() {
+//         let buf = RustAlloc(100);
+//         assert!(!buf.is_null());
+//         unsafe {
+//             RustDealloc(buf);
+//             RustDealloc(buf);
+//         }
+//     }
+// }

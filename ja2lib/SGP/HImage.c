@@ -79,22 +79,11 @@ void DestroyImage(struct Image *image) {
     return;
   }
 
-  if (image->paletteAllocatedInRust) {
-    RustDealloc((uint8_t *)image->palette);
-  } else {
-    MemFree(image->palette);
-  }
-
+  MemFree(image->palette);
   MemFree(image->palette16bpp);
-
-  if (image->imageDataAllocatedInRust) {
-    RustDealloc((uint8_t *)image->image_data);
-  } else {
-    MemFree(image->image_data);
-  }
-  RustDealloc((uint8_t *)image->subimages);
-  RustDealloc(image->app_data);
-
+  MemFree(image->image_data);
+  MemFree(image->subimages);
+  MemFree(image->app_data);
   MemFree(image);
 }
 
@@ -563,7 +552,7 @@ struct Image *ScaleImageDown2x(struct Image *image) {
   u32 palette_size = sizeof(struct SGPPaletteEntry) * 256;
   res->palette = zmalloc(palette_size);
   if (!res->palette) {
-    free(res);
+    MemFree(res);
     return NULL;
   }
   memcpy(res->palette, image->palette, palette_size);
@@ -571,8 +560,8 @@ struct Image *ScaleImageDown2x(struct Image *image) {
   res->image_data_size = res->usWidth * res->usHeight;
   res->image_data = zmalloc(res->image_data_size);
   if (!res->image_data) {
-    free(res->palette);
-    free(res);
+    MemFree(res->palette);
+    MemFree(res);
     return NULL;
   }
 

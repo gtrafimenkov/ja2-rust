@@ -63,8 +63,6 @@ struct Image {
   UINT32 image_data_size;
   struct Subimage *subimages;
   UINT16 number_of_subimages;
-  bool imageDataAllocatedInRust;
-  bool paletteAllocatedInRust;
 };
 
 struct ImageDataParams {
