@@ -443,37 +443,6 @@ UINT32 GetRGBColor(UINT16 Value16BPP) {
   return (val);
 }
 
-//*****************************************************************************
-//
-// ConvertToPaletteEntry
-//
-// Parameter List : Converts from RGB to struct SGPPaletteEntry
-//
-// Return Value  pointer to the struct SGPPaletteEntry
-//
-// Modification History :
-// Dec 15th 1996 -> modified for use by Wizardry
-//
-//*****************************************************************************
-
-struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette) {
-  UINT16 Index;
-  struct SGPPaletteEntry *pPalEntry;
-  struct SGPPaletteEntry *pInitEntry;
-
-  pPalEntry = (struct SGPPaletteEntry *)MemAlloc(sizeof(struct SGPPaletteEntry) * 256);
-  pInitEntry = pPalEntry;
-  DebugMsg(TOPIC_HIMAGE, DBG_ERROR, "Converting RGB palette to struct SGPPaletteEntry");
-  for (Index = 0; Index <= (sbEnd - sbStart); Index++) {
-    pPalEntry->red = *(pOldPalette + (Index * 3));
-    pPalEntry->green = *(pOldPalette + (Index * 3) + 1);
-    pPalEntry->blue = *(pOldPalette + (Index * 3) + 2);
-    pPalEntry->_unused = 0;
-    pPalEntry++;
-  }
-  return pInitEntry;
-}
-
 BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer) {
   Assert(hImage != NULL);
   Assert(pBuffer != NULL);
