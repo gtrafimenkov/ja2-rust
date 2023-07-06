@@ -29,8 +29,8 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
   hImage->app_data = sti.app_data;
   hImage->app_data_size = sti.app_data_size;
 
-  hImage->usWidth = sti.Width;
-  hImage->usHeight = sti.Height;
+  hImage->width = sti.Width;
+  hImage->height = sti.Height;
   hImage->bit_depth = sti.pixel_depth;
 
   return hImage;

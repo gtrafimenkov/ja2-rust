@@ -52,8 +52,8 @@ struct ImageData {
 
 // Image header structure
 struct Image {
-  UINT16 usWidth;
-  UINT16 usHeight;
+  UINT16 width;
+  UINT16 height;
   UINT8 bit_depth;
   struct SGPPaletteEntry *palette;
   UINT16 *palette16bpp;

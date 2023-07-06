@@ -1040,10 +1040,10 @@ void ShadeMapElem(u8 sMapX, u8 sMapY, INT32 iColor) {
     destBuf = (UINT16 *)VSurfaceLockOld(vsSB, &destPitch);
 
     struct ImageDataParams src = {
-        .width = imageSmallMap->usWidth,
-        .height = imageSmallMap->usHeight,
+        .width = imageSmallMap->width,
+        .height = imageSmallMap->height,
         .palette16bpp = newPalette,
-        .pitch = imageSmallMap->usWidth * (imageSmallMap->bit_depth / 8),
+        .pitch = imageSmallMap->width * (imageSmallMap->bit_depth / 8),
         .data = imageSmallMap->image_data,
     };
     Blt8bppTo16bppRect(&src, (u16 *)destBuf, destPitch, sScreenX, sScreenY, clipSmall);
