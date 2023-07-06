@@ -168,7 +168,7 @@ BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex) {
 }
 
 BOOLEAN AddVObjectFromHImage(struct Image *hImage, UINT32 *puiIndex) {
-  return _AddVideoObject(CreateVObjectFromHImage(hImage), puiIndex);
+  return _AddVideoObject(CreateVObjectFromImage(hImage), puiIndex);
 }
 
 // TODO: rust
@@ -271,57 +271,13 @@ bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i3
 // *******************************************************************************
 
 struct VObject *LoadVObjectFromFile(const char *path) {
-  // Allocate memory for video object data and initialize
-  struct VObject *hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
-  if (!(hVObject != NULL)) {
-    return FALSE;
-  }
-  memset(hVObject, 0, sizeof(struct VObject));
-
-  // Create himage object from file
-  struct Image *hImage = CreateImage(path, false);
-
-  if (hImage == NULL) {
-    MemFree(hVObject);
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image Filename given");
-    return (NULL);
-  }
-
-  // Check if returned himage is TRLE compressed - return error if not
-  if (!hImage->subimages) {
-    MemFree(hVObject);
-    DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
-    DestroyImage(hImage);
-    return (NULL);
-  }
-
-  // Set values from himage
-  hVObject->ubBitDepth = hImage->ubBitDepth;
-
-  // Get TRLE data
-  struct ImageData TempETRLEData;
-  if (!(CopyImageData(hImage, &TempETRLEData))) {
-    return FALSE;
-  }
-
-  // Set values
-  hVObject->number_of_subimages = TempETRLEData.number_of_subimages;
-  hVObject->subimages = TempETRLEData.subimages;
-  hVObject->image_data = TempETRLEData.image_data;
-  hVObject->image_data_size = TempETRLEData.image_data_size;
-
-  // Set palette from himage
-  if (hImage->ubBitDepth == 8) {
-    SetVideoObjectPalette(hVObject, hImage->palette);
-  }
-
-  // Delete himage object
-  DestroyImage(hImage);
-
-  return (hVObject);
+  struct Image *image = CreateImage(path, false);
+  struct VObject *vobject = CreateVObjectFromImage(image);
+  DestroyImage(image);
+  return vobject;
 }
 
-struct VObject *CreateVObjectFromHImage(struct Image *hImage) {
+struct VObject *CreateVObjectFromImage(struct Image *hImage) {
   struct VObject *hVObject;
   struct ImageData TempETRLEData;
 
