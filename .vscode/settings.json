@@ -41,6 +41,8 @@
         "rust_laptop.h": "c",
         "imgfmt.h": "c",
         "cstdlib": "c",
-        "rect.h": "c"
+        "rect.h": "c",
+        "memman.h": "c",
+        "string.h": "c"
     }
 }

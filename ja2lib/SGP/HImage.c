@@ -563,7 +563,7 @@ struct Image *ScaleImageDown2x(struct Image *image) {
   u32 palette_size = sizeof(struct SGPPaletteEntry) * 256;
   res->palette = zmalloc(palette_size);
   if (!res->palette) {
-    free(res);
+    MemFree(res);
     return NULL;
   }
   memcpy(res->palette, image->palette, palette_size);
@@ -571,8 +571,8 @@ struct Image *ScaleImageDown2x(struct Image *image) {
   res->image_data_size = res->usWidth * res->usHeight;
   res->image_data = zmalloc(res->image_data_size);
   if (!res->image_data) {
-    free(res->palette);
-    free(res);
+    MemFree(res->palette);
+    MemFree(res);
     return NULL;
   }
 
