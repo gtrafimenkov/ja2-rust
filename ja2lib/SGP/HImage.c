@@ -92,19 +92,19 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBu
                           struct GRect *srcRect) {
   Assert(hImage != NULL);
 
-  if (hImage->ubBitDepth == 8 && bufferBitDepth == 8) {
+  if (hImage->bit_depth == 8 && bufferBitDepth == 8) {
     DebugMsg(TOPIC_HIMAGE, DBG_NORMAL, "Copying 8 BPP Imagery.");
     return (
         Copy8BPPImageTo8BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
-  if (hImage->ubBitDepth == 8 && bufferBitDepth == 16) {
+  if (hImage->bit_depth == 8 && bufferBitDepth == 16) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Copying 8 BPP Imagery to 16BPP Buffer.");
     return (
         Copy8BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY, srcRect));
   }
 
-  if (hImage->ubBitDepth == 16 && bufferBitDepth == 16) {
+  if (hImage->bit_depth == 16 && bufferBitDepth == 16) {
     DebugMsg(TOPIC_HIMAGE, DBG_INFO, "Automatically Copying 16 BPP Imagery.");
     return (Copy16BPPImageTo16BPPBuffer(hImage, pDestBuf, usDestWidth, usDestHeight, usX, usY,
                                         srcRect));
@@ -536,7 +536,7 @@ void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels)
 struct Image *ScaleImageDown2x(struct Image *image) {
   // not all image types are supported
   bool supported =
-      image->ubBitDepth == 8 && image->app_data_size == 0 && image->number_of_subimages == 0;
+      image->bit_depth == 8 && image->app_data_size == 0 && image->number_of_subimages == 0;
   if (!supported) {
     return NULL;
   }
@@ -547,7 +547,7 @@ struct Image *ScaleImageDown2x(struct Image *image) {
 
   res->usWidth = image->usWidth / 2;
   res->usHeight = image->usHeight / 2;
-  res->ubBitDepth = image->ubBitDepth;
+  res->bit_depth = image->bit_depth;
 
   u32 palette_size = sizeof(struct SGPPaletteEntry) * 256;
   res->palette = zmalloc(palette_size);

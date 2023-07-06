@@ -645,7 +645,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
   {
     DebugLogWrite("BlitImageToSurfaceRect:");
     char buf[256];
-    snprintf(buf, ARR_SIZE(buf), " source: %d, %d, %d, %p, %p", source->ubBitDepth, source->usWidth,
+    snprintf(buf, ARR_SIZE(buf), " source: %d, %d, %d, %p, %p", source->bit_depth, source->usWidth,
              source->usHeight, source->palette, source->palette16bpp);
     DebugLogWrite(buf);
     snprintf(buf, ARR_SIZE(buf), " dest:   %d, %d, %d", dest->usWidth, dest->usHeight, destPitch);
@@ -658,7 +658,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
     return;
   }
 
-  if (source->ubBitDepth == 8) {
+  if (source->bit_depth == 8) {
     if (!source->palette16bpp) {
       source->palette16bpp = Create16BPPPalette(source->palette);
       if (!source->palette16bpp) {
@@ -674,7 +674,7 @@ void BlitImageToSurfaceRect(struct Image *source, struct VSurface *dest, i32 x, 
         .data = source->image_data,
     };
     Blt8bppTo16bppRect(&src, (u16 *)destBuf, destPitch, x, y, sourceRect);
-  } else if (source->ubBitDepth == 16) {
+  } else if (source->bit_depth == 16) {
     struct ImageDataParams src = {
         .width = source->usWidth,
         .height = source->usHeight,

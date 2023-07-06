@@ -58,7 +58,7 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
   // Set some header information
   hImage->usWidth = pPcxObject->usWidth;
   hImage->usHeight = pPcxObject->usHeight;
-  hImage->ubBitDepth = 8;
+  hImage->bit_depth = 8;
 
   hImage->image_data = MemAlloc(hImage->usWidth * hImage->usHeight);
 

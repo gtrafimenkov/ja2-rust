@@ -31,7 +31,7 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
 
   hImage->usWidth = sti.Width;
   hImage->usHeight = sti.Height;
-  hImage->ubBitDepth = sti.pixel_depth;
+  hImage->bit_depth = sti.pixel_depth;
 
   return hImage;
 }
