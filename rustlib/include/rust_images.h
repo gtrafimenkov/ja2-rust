@@ -29,23 +29,18 @@ struct Subimage {
   uint16_t width;
 };
 
-/**
- * Results of loading STI image.
- */
-struct STIImageLoaded {
-  bool success;
-  uint32_t image_data_size;
-  uint16_t Height;
-  uint16_t Width;
-  uint16_t number_of_subimages;
-  uint8_t pixel_depth;
+struct Image {
+  uint16_t width;
+  uint16_t height;
+  uint8_t bit_depth;
+  struct SGPPaletteEntry *palette;
+  uint16_t *palette16bpp;
+  uint8_t *app_data;
   uint32_t app_data_size;
   uint8_t *image_data;
-  bool indexed;
-  struct SGPPaletteEntry *palette;
+  uint32_t image_data_size;
   struct Subimage *subimages;
-  uint8_t *app_data;
-  bool zlib_compressed;
+  uint16_t number_of_subimages;
 };
 
 #ifdef __cplusplus
@@ -53,20 +48,11 @@ extern "C" {
 #endif // __cplusplus
 
 /**
- * Load STI image from file or library.
- * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
- * Memory must be freed with RustDealloc.
- */
-struct STIImageLoaded LoadSTIImageFromFile(const char *path,
-                                           bool load_app_data);
-
-/**
  * Load STI image.
  * If the function was successful, don't forget to free memory allocated for palette, subimages, app_data, image_data.
- * Memory must be freed with RustDealloc.
  */
-struct STIImageLoaded LoadSTIImage(FileID file_id,
-                                   bool load_app_data);
+struct Image *LoadSTCIFileToImage(const char *path,
+                                  bool load_app_data);
 
 #ifdef __cplusplus
 } // extern "C"

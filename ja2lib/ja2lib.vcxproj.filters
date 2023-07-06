@@ -920,9 +920,6 @@
     <ClCompile Include="SGP\Font.c">
       <Filter>Source Files\SGP</Filter>
     </ClCompile>
-    <ClCompile Include="SGP\STCI.c">
-      <Filter>Source Files\SGP</Filter>
-    </ClCompile>
     <ClCompile Include="AniViewScreen.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1076,9 +1073,6 @@
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\SoundMan.h">
-      <Filter>Header Files\SGP</Filter>
-    </ClInclude>
-    <ClInclude Include="SGP\STCI.h">
       <Filter>Header Files\SGP</Filter>
     </ClInclude>
     <ClInclude Include="SGP\Timer.h">
