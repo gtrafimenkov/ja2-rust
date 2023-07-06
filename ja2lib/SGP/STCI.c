@@ -19,10 +19,8 @@ struct Image *LoadSTCIFileToImage(const char *filePath, bool loadAppData) {
   }
 
   hImage->image_data = sti.image_data;
-  hImage->imageDataAllocatedInRust = true;
 
   hImage->palette = sti.palette;
-  hImage->paletteAllocatedInRust = true;
 
   hImage->subimages = sti.subimages;
   hImage->number_of_subimages = sti.number_of_subimages;
