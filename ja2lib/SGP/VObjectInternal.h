@@ -4,7 +4,8 @@
 #include "SGP/Types.h"
 #include "SGP/VObject.h"
 
-// VObject is similar to Image, but has some additions: shades, glow, zstrip.
+// VObject is similar to Image, but has following additions: shades, glow, zstrip.
+// VObject is always created from an HImage, that HImage must have subimages.
 struct VObject {
   UINT8 ubBitDepth;
   void *image_data;
@@ -14,7 +15,7 @@ struct VObject {
   struct Subimage *subimages;              // Object offset data etc
   UINT16 number_of_subimages;              // Total number of objects
   UINT16 *pShades[HVOBJECT_SHADE_TABLES];  // Shading tables
-  UINT16 *pShadeCurrent;
+  UINT16 *pShadeCurrent;                   // this is 16bit palette
   bool shared_shadetable;
   UINT16 *pGlow;              // glow highlight table
   ZStripInfo **ppZStripInfo;  // Z-value strip info arrays

@@ -274,34 +274,27 @@ struct VObject *LoadVObjectFromFile(const char *path) {
 }
 
 struct VObject *CreateVObjectFromImage(struct Image *hImage) {
-  struct VObject *hVObject;
-  struct ImageData TempETRLEData;
-
-  // Allocate memory for video object data and initialize
-  hVObject = (struct VObject *)MemAlloc(sizeof(struct VObject));
-  if (!(hVObject != NULL)) {
-    return FALSE;
-  }
-  memset(hVObject, 0, sizeof(struct VObject));
-
   if (hImage == NULL) {
-    MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid hImage pointer given");
     return (NULL);
   }
 
   // Check if returned himage is TRLE compressed - return error if not
   if (!hImage->subimages) {
-    MemFree(hVObject);
     DebugMsg(TOPIC_VIDEOOBJECT, DBG_NORMAL, "Invalid Image format given.");
-    DestroyImage(hImage);
     return (NULL);
+  }
+
+  struct VObject *hVObject = (struct VObject *)zmalloc(sizeof(struct VObject));
+  if (!(hVObject != NULL)) {
+    return FALSE;
   }
 
   // Set values from himage
   hVObject->ubBitDepth = hImage->ubBitDepth;
 
   // Get TRLE data
+  struct ImageData TempETRLEData;
   if (!(CopyImageData(hImage, &TempETRLEData))) {
     return FALSE;
   }
@@ -353,8 +346,6 @@ static BOOLEAN SetVideoObjectPalette(struct VObject *hVObject,
   hVObject->p16BPPPalette = Create16BPPPalette(pSrcPalette);
   hVObject->pShadeCurrent = hVObject->p16BPPPalette;
 
-  //  DebugMsg(TOPIC_VIDEOOBJECT, DBG_INFO, String("Video Object Palette change successfull"
-  //  ));
   return (TRUE);
 }
 
