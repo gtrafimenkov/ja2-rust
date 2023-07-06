@@ -47,11 +47,6 @@ typedef struct {
 #define FROMRGB(r, g, b) \
   ((UINT32)(((UINT8)(r) | ((UINT16)(g) << 8)) | (((UINT32)(UINT8)(b)) << 16)))
 
-// This structure describes the creation parameters for a Video Object
-typedef struct {
-  SGPFILENAME ImageFile;  // Filename of image data to use
-} VOBJECT_DESC;
-
 // **********************************************************************************
 //
 // Video Object Manager Functions
