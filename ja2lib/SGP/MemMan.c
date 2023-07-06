@@ -11,12 +11,12 @@ BOOLEAN InitializeMemoryManager(void) { return (TRUE); }
 
 void ShutdownMemoryManager(void) {}
 
-void* MemAlloc(size_t size) { return malloc(size); }
-void MemFree(void* ptr) { free(ptr); };
-void* MemRealloc(void* ptr, size_t size) { return realloc(ptr, size); }
+void* MemAlloc(size_t size) { return RustAlloc(size); }
+void MemFree(void* ptr) { RustDealloc(ptr); };
+void* MemRealloc(void* ptr, size_t size) { return RustRealloc(ptr, size); }
 
 void* zmalloc(size_t size) {
-  void* p = malloc(size);
+  void* p = MemAlloc(size);
   if (p) {
     memset(p, 0, size);
   }

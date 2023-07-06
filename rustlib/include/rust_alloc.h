@@ -14,6 +14,10 @@ extern "C" {
 /**
  * Allocate memory in Rust.
  * The program will panic if memory cannot be allocated.
+ *
+ * # Safety
+ *
+ * This function is not thread-safe.
  */
 uint8_t *RustAlloc(uintptr_t size);
 
@@ -24,8 +28,21 @@ uint8_t *RustAlloc(uintptr_t size);
  *
  * Pass only the pointer returned earlier by RustAlloc.
  * Don't deallocate memory more that once.
+ *
+ * This function is not thread-safe.
  */
 void RustDealloc(uint8_t *pointer);
+
+/**
+ * Reallocate memory allocated earlier in Rust.
+ *
+ * # Safety
+ *
+ * Pass only the pointer returned earlier by RustAlloc.
+ *
+ * This function is not thread-safe.
+ */
+uint8_t *RustRealloc(uint8_t *pointer, uintptr_t new_size);
 
 #ifdef __cplusplus
 } // extern "C"
