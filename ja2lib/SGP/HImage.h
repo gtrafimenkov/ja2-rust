@@ -3,6 +3,7 @@
 
 #include "SGP/MemMan.h"
 #include "SGP/Types.h"
+#include "rust_images.h"
 
 struct GRect;
 struct Subimage;
@@ -15,9 +16,6 @@ struct Subimage;
 // - A set of blitters which blt the data to memory
 // - A comprehensive automatic blitter which blits the appropriate type based on the
 //   image header.
-
-// Palette structure, mimics that of Win32
-struct SGPPaletteEntry;
 
 #define AUX_FULL_TILE 0x01
 #define AUX_ANIMATED_TILE 0x02
@@ -48,23 +46,6 @@ struct ImageData {
   uint32_t image_data_size;
   struct Subimage *subimages;
   uint16_t number_of_subimages;
-};
-
-// Image header structure
-struct Image {
-  uint16_t usWidth;
-  uint16_t usHeight;
-  uint8_t ubBitDepth;
-  struct SGPPaletteEntry *palette;
-  uint16_t *palette16bpp;
-  uint8_t *app_data;
-  uint32_t app_data_size;
-  void *image_data;
-  uint32_t image_data_size;
-  struct Subimage *subimages;
-  uint16_t number_of_subimages;
-  bool imageDataAllocatedInRust;
-  bool paletteAllocatedInRust;
 };
 
 struct ImageDataParams {
