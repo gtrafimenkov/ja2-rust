@@ -48,6 +48,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "platform_strings.h"
+#include "rust_cmdline.h"
 
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
@@ -131,9 +132,11 @@ UINT32 InitializeJA2(void) {
 #endif
 
 #ifdef JA2BETAVERSION
+  struct ParsedCommandLine cmdline = ParseCommandLine();
+
   // This allows the QuickSave Slots to be autoincremented, ie everytime the user saves, there will
   // be a new quick save file
-  if (strcasecmp(gzCommandLine, "-quicksave") == 0) {
+  if (cmdline.quick_save) {
     gfUseConsecutiveQuickSaveSlots = TRUE;
   }
 #endif
@@ -141,7 +144,7 @@ UINT32 InitializeJA2(void) {
 #ifdef JA2BETAVERSION
 #ifdef JA2EDITOR
   // CHECK COMMANDLINE FOR SPECIAL UTILITY
-  if (!strcmp(gzCommandLine, "-EDITORAUTO")) {
+  if (cmdline.editor_auto) {
     PrintToDebuggerConsole("Beginning JA2 using -EDITORAUTO commandline argument...\n");
     // For editor purposes, need to know the default map file.
     sprintf(gubFilename, "none");
@@ -153,7 +156,7 @@ UINT32 InitializeJA2(void) {
     gGameOptions.fGunNut = TRUE;
     return (GAME_SCREEN);
   }
-  if (strcmp(gzCommandLine, "-EDITOR") == 0) {
+  if (cmdline.editor) {
     PrintToDebuggerConsole("Beginning JA2 using -EDITOR commandline argument...\n");
     // For editor purposes, need to know the default map file.
     sprintf(gubFilename, "none");

@@ -3,6 +3,7 @@ pub mod clock;
 pub mod exp_alloc;
 pub mod exp_civ_groups;
 pub mod exp_clock;
+pub mod exp_cmdline;
 pub mod exp_debug;
 pub mod exp_fileman;
 pub mod exp_game_state;
