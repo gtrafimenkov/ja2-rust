@@ -51,3 +51,9 @@ pub fn debug_log_write(message: &str) -> bool {
     }
     false
 }
+
+/// Write message to the debug log and panic.
+pub fn debug_log_write_and_panic(message: &str) -> bool {
+    debug_log_write(message);
+    panic!("{message}");
+}
