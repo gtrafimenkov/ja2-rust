@@ -6,9 +6,16 @@ use crate::sam_sites;
 use crate::sector;
 use crate::towns;
 use crate::ui;
-use once_cell::sync::Lazy;
+use std::sync::OnceLock;
 
-pub static mut STATE: Lazy<State> = Lazy::new(State::new);
+// pub static mut STATE: Lazy<State> = Lazy::new(State::new);
+pub fn get() -> &'static mut State {
+    static mut ALLOC_DB: OnceLock<State> = OnceLock::new();
+    unsafe {
+        ALLOC_DB.get_or_init(State::new);
+        return ALLOC_DB.get_mut().unwrap();
+    }
+}
 
 pub struct State {
     pub sam_sites: sam_sites::State,

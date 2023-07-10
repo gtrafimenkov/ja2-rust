@@ -3,9 +3,9 @@
 
 use crate::exp_debug::debug_log_write;
 use crate::slfdb;
-use once_cell::sync::Lazy;
 use std::ffi::{c_char, c_void, CStr};
 use std::io::{Read, Seek, Write};
+use std::sync::OnceLock;
 use std::{collections::HashMap, fs, io};
 
 #[cfg(windows)]
@@ -23,7 +23,13 @@ pub enum FileSeekMode {
     FILE_SEEK_CURRENT = 0x04,
 }
 
-pub static mut FILE_DB: Lazy<DB> = Lazy::new(DB::new);
+pub fn get_db() -> &'static mut DB {
+    static mut FILE_DB: OnceLock<DB> = OnceLock::new();
+    unsafe {
+        FILE_DB.get_or_init(DB::new);
+        return FILE_DB.get_mut().unwrap();
+    }
+}
 
 /// Converts utf-8 encoded null-terminated C string into String.
 /// If cstr is null, return None.
@@ -42,7 +48,7 @@ fn cstr_utf8_to_string(cstr: *const c_char) -> Option<String> {
 pub extern "C" fn File_RegisterSlfLibraries(dir_path: *const c_char) -> bool {
     match cstr_utf8_to_string(dir_path) {
         None => false,
-        Some(dir_path) => unsafe { FILE_DB.load_slf_from_dir(&dir_path).is_ok() },
+        Some(dir_path) => get_db().load_slf_from_dir(&dir_path).is_ok(),
     }
 }
 
@@ -53,7 +59,7 @@ pub extern "C" fn File_RegisterSlfLibraries(dir_path: *const c_char) -> bool {
 pub extern "C" fn File_OpenForReading(path: *const c_char) -> FileID {
     match cstr_utf8_to_string(path) {
         None => FILE_ID_ERR,
-        Some(path) => match unsafe { FILE_DB.open_for_reading(&path) } {
+        Some(path) => match get_db().open_for_reading(&path) {
             Err(err) => {
                 debug_log_write(&format!("failed to open file {path} for reading: {err}"));
                 FILE_ID_ERR
@@ -72,7 +78,7 @@ pub extern "C" fn File_OpenForReading(path: *const c_char) -> FileID {
 pub extern "C" fn File_OpenForAppending(path: *const c_char) -> FileID {
     match cstr_utf8_to_string(path) {
         None => FILE_ID_ERR,
-        Some(path_str) => match unsafe { FILE_DB.open_for_appending(&path_str) } {
+        Some(path_str) => match get_db().open_for_appending(&path_str) {
             Err(err) => {
                 debug_log_write(&format!("failed to open file {path_str} for appending: {err}; trying opening for writing"));
                 // probably file doesn't exist
@@ -90,7 +96,7 @@ pub extern "C" fn File_OpenForAppending(path: *const c_char) -> FileID {
 pub extern "C" fn File_OpenForWriting(path: *const c_char) -> FileID {
     match cstr_utf8_to_string(path) {
         None => FILE_ID_ERR,
-        Some(path) => match unsafe { FILE_DB.open_for_writing(&path) } {
+        Some(path) => match get_db().open_for_writing(&path) {
             Err(err) => {
                 debug_log_write(&format!("failed to open file {path} for writing: {err}"));
                 FILE_ID_ERR
@@ -110,7 +116,7 @@ pub extern "C" fn File_OpenForWriting(path: *const c_char) -> FileID {
 ///
 /// On Linux 0 is returned.  In case of an error, 0 is returned.
 pub extern "C" fn File_GetWinHandleToReadFile(file_id: FileID) -> u64 {
-    unsafe { FILE_DB.get_win_handle_to_read_file(file_id) }
+    get_db().get_win_handle_to_read_file(file_id)
 }
 
 #[no_mangle]
@@ -129,7 +135,7 @@ pub unsafe extern "C" fn File_Read(
     let buf = buf.cast::<u8>();
     let buf = std::ptr::slice_from_raw_parts_mut(buf, bytes_to_read as usize);
     unsafe {
-        match FILE_DB.read_file(file_id, &mut *buf) {
+        match get_db().read_file(file_id, &mut *buf) {
             Ok(n) => {
                 let n = n as u32;
                 if !bytes_read.is_null() {
@@ -162,7 +168,7 @@ pub unsafe extern "C" fn File_Write(
     let buf = buf.cast::<u8>();
     let buf = std::ptr::slice_from_raw_parts(buf, bytes_to_write as usize);
     unsafe {
-        match FILE_DB.write_file(file_id, &*buf) {
+        match get_db().write_file(file_id, &*buf) {
             Ok(n) => {
                 let n = n as u32;
                 if !bytes_written.is_null() {
@@ -191,11 +197,9 @@ pub extern "C" fn File_Exists(path: *const c_char) -> bool {
 #[no_mangle]
 /// Get size of a file.  In case of an error, return 0.
 pub extern "C" fn File_GetSize(file_id: FileID) -> u32 {
-    unsafe {
-        match FILE_DB.get_size(file_id) {
-            Ok(size) => size as u32,
-            Err(_) => 0,
-        }
+    match get_db().get_size(file_id) {
+        Ok(size) => size as u32,
+        Err(_) => 0,
     }
 }
 
@@ -216,22 +220,20 @@ pub extern "C" fn File_Seek(file_id: FileID, distance: u32, how: FileSeekMode) -
         FileSeekMode::FILE_SEEK_END => io::SeekFrom::End(-(distance as i64)),
         FileSeekMode::FILE_SEEK_CURRENT => io::SeekFrom::Current(distance as i64),
     };
-    unsafe {
-        let res = FILE_DB.seek(file_id, pos);
-        res.is_ok()
-    }
+    let res = get_db().seek(file_id, pos);
+    res.is_ok()
 }
 
 #[no_mangle]
 /// Close earlie opened file.
 pub extern "C" fn File_Close(file_id: FileID) -> bool {
-    unsafe { FILE_DB.close_file(file_id).is_ok() }
+    get_db().close_file(file_id).is_ok()
 }
 
 #[no_mangle]
 /// Return true if the file is inside slf archive.
 pub extern "C" fn File_IsInsideArchive(file_id: FileID) -> bool {
-    unsafe { FILE_DB.is_inside_archive(file_id) }
+    get_db().is_inside_archive(file_id)
 }
 
 /// Special FileID value meaning an error.
@@ -418,7 +420,7 @@ impl Reader {
 
 impl Read for Reader {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
-        unsafe { FILE_DB.read_file(self.file_id, buf) }
+        get_db().read_file(self.file_id, buf)
     }
 }
 

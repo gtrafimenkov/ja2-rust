@@ -1,10 +1,16 @@
 use chrono::prelude::*;
-use once_cell::sync::Lazy;
 use std::ffi::{c_char, CStr};
 use std::fs;
 use std::io::Write;
+use std::sync::OnceLock;
 
-static mut DEBUG_FILE: Lazy<Option<fs::File>> = Lazy::new(create_debug_file);
+fn get_file() -> &'static mut Option<fs::File> {
+    static mut DEBUG_FILE: OnceLock<Option<fs::File>> = OnceLock::new();
+    unsafe {
+        DEBUG_FILE.get_or_init(create_debug_file);
+        return DEBUG_FILE.get_mut().unwrap();
+    }
+}
 
 fn create_debug_file() -> Option<fs::File> {
     if let Ok(path) = std::env::current_exe() {
@@ -40,13 +46,11 @@ pub extern "C" fn DebugLogWrite(message: *const c_char) -> bool {
 
 /// Write message to the debug log
 pub fn debug_log_write(message: &str) -> bool {
-    unsafe {
-        let ts = Local::now().format("%Y-%m-%d %H:%M:%S");
-        if let Some(f) = DEBUG_FILE.as_mut() {
-            let message = message.trim_end();
-            if f.write_fmt(format_args!("{ts}: {message}\n")).is_ok() {
-                return f.flush().is_ok();
-            }
+    let ts = Local::now().format("%Y-%m-%d %H:%M:%S");
+    if let Some(f) = get_file() {
+        let message = message.trim_end();
+        if f.write_fmt(format_args!("{ts}: {message}\n")).is_ok() {
+            return f.flush().is_ok();
         }
     }
     false

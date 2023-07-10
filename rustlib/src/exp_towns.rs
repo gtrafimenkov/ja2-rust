@@ -1,4 +1,4 @@
-use crate::{sector, state::STATE, towns};
+use crate::{sector, state, towns};
 
 #[repr(C)]
 #[allow(non_camel_case_types)]
@@ -111,7 +111,7 @@ pub extern "C" fn GetTownIdForSector(x: u8, y: u8) -> TownID {
     if !sector::valid_coords(x, y) {
         return TownID::BLANK_SECTOR;
     }
-    let town = unsafe { STATE.town_map.get(x, y) };
+    let town = state::get().town_map.get(x, y);
     match town {
         None => TownID::BLANK_SECTOR,
         Some(town) => TownID::from_internal(town),
@@ -142,7 +142,7 @@ pub extern "C" fn GetRawTownLoyalty(town: TownID) -> SAVE_LOAD_TOWN_LOYALTY {
             unused2: [0; 19],
         },
         _ => {
-            let internal = unsafe { STATE.towns.get_loyalty(town.to_internal()) };
+            let internal = state::get().towns.get_loyalty(town.to_internal());
             SAVE_LOAD_TOWN_LOYALTY {
                 rating: internal.rating,
                 change: internal.change,
@@ -160,7 +160,7 @@ pub extern "C" fn SetRawTownLoyalty(town: TownID, data: &SAVE_LOAD_TOWN_LOYALTY)
     match town {
         TownID::BLANK_SECTOR => {}
         _ => {
-            let internal = unsafe { STATE.towns.get_mut_loyalty(town.to_internal()) };
+            let internal = state::get().towns.get_mut_loyalty(town.to_internal());
             internal.change = data.change;
             internal.rating = data.rating;
             internal.started = data.started != 0;
@@ -171,42 +171,47 @@ pub extern "C" fn SetRawTownLoyalty(town: TownID, data: &SAVE_LOAD_TOWN_LOYALTY)
 
 #[no_mangle]
 pub extern "C" fn GetTownLoyaltyRating(town: TownID) -> u8 {
-    unsafe { STATE.towns.get_loyalty(town.to_internal()).rating }
+    state::get().towns.get_loyalty(town.to_internal()).rating
 }
 
 #[no_mangle]
 pub extern "C" fn IsTownLoyaltyStarted(town: TownID) -> bool {
-    unsafe { STATE.towns.get_loyalty(town.to_internal()).started }
+    state::get().towns.get_loyalty(town.to_internal()).started
 }
 
 #[no_mangle]
 pub extern "C" fn IsTownLiberated(town: TownID) -> bool {
-    unsafe { STATE.towns.get_loyalty(town.to_internal()).liberated }
+    state::get().towns.get_loyalty(town.to_internal()).liberated
 }
 
 #[no_mangle]
 pub extern "C" fn SetTownAsLiberated(town: TownID) {
-    unsafe { STATE.towns.get_mut_loyalty(town.to_internal()).liberated = true }
+    state::get()
+        .towns
+        .get_mut_loyalty(town.to_internal())
+        .liberated = true
 }
 
 #[no_mangle]
 pub extern "C" fn InitTownLoyalty() {
-    unsafe { STATE.towns.init_loyalty() }
+    state::get().towns.init_loyalty()
 }
 
 #[no_mangle]
 pub extern "C" fn SetTownLoyalty(town: TownID, rating: u8) {
-    unsafe { STATE.towns.set_town_loyalty(town.to_internal(), rating) }
+    state::get()
+        .towns
+        .set_town_loyalty(town.to_internal(), rating)
 }
 
 #[no_mangle]
 pub extern "C" fn IncrementTownLoyalty(town: TownID, increase: u32) {
-    unsafe { STATE.inc_town_loyalty(town.to_internal(), increase) }
+    state::get().inc_town_loyalty(town.to_internal(), increase)
 }
 
 #[no_mangle]
 pub extern "C" fn DecrementTownLoyalty(town: TownID, decrease: u32) {
-    unsafe { STATE.dec_town_loyalty(town.to_internal(), decrease) }
+    state::get().dec_town_loyalty(town.to_internal(), decrease)
 }
 
 #[no_mangle]
@@ -215,13 +220,11 @@ pub extern "C" fn StartTownLoyaltyFirstTime(
     fact_miguel_read_letter: bool,
     fact_rebels_hate_player: bool,
 ) {
-    unsafe {
-        STATE.start_town_loyalty_first_time(
-            town.to_internal(),
-            fact_miguel_read_letter,
-            fact_rebels_hate_player,
-        )
-    }
+    state::get().start_town_loyalty_first_time(
+        town.to_internal(),
+        fact_miguel_read_letter,
+        fact_rebels_hate_player,
+    )
 }
 
 #[cfg(test)]
