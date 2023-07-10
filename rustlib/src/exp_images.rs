@@ -1,8 +1,7 @@
-use crate::exp_fileman;
-
 use super::exp_alloc;
 use super::exp_debug::debug_log_write;
-use super::exp_fileman::{FileID, FILE_DB};
+use super::exp_fileman;
+use super::exp_fileman::FileID;
 use super::images;
 use std::ffi::{c_char, CStr};
 use std::io;
@@ -28,7 +27,7 @@ pub struct Image {
 pub extern "C" fn LoadSTCIFileToImage(path: *const c_char, load_app_data: bool) -> *mut Image {
     match cstr_utf8_to_string(path) {
         None => std::ptr::null_mut(),
-        Some(path) => match unsafe { FILE_DB.open_for_reading(&path) } {
+        Some(path) => match exp_fileman::get_db().open_for_reading(&path) {
             Err(err) => {
                 debug_log_write(&format!("failed to open file {path} for reading: {err}"));
                 std::ptr::null_mut()
@@ -189,38 +188,40 @@ fn read_stci(file_id: FileID, load_app_data: bool) -> io::Result<images::STImage
 
 #[cfg(test)]
 mod tests {
-    use super::super::exp_fileman::FILE_DB;
+    use super::super::exp_fileman;
 
     use super::*;
 
     #[test]
     fn load_stci() {
-        unsafe {
-            FILE_DB.load_slf_from_dir("../tools/editor").unwrap();
-            let file_id = FILE_DB.open_for_reading("Editor\\CANCEL.STI").unwrap();
-            let img = read_stci(file_id, true).unwrap();
-            assert_eq!(640, img.width);
-            assert_eq!(480, img.height);
-            assert_eq!(true, img.indexed);
-            assert_eq!(false, img.zlib_compressed);
-            assert_eq!(8, img.pixel_depth);
-            assert_eq!(4800, img.image_data.len());
-            assert_eq!(true, img.app_data.is_none());
-            let subimage0 = &img.subimages.as_ref().unwrap()[0];
-            let subimage4 = &img.subimages.as_ref().unwrap()[4];
-            assert_eq!(5, img.subimages.as_ref().unwrap().len());
-            assert_eq!(0, subimage0.x_offset);
-            assert_eq!(0, subimage0.y_offset);
-            assert_eq!(30, subimage0.height);
-            assert_eq!(30, subimage0.width);
-            assert_eq!(0, subimage0.data_offset);
-            assert_eq!(960, subimage0.data_length);
-            assert_eq!(0, subimage4.x_offset);
-            assert_eq!(0, subimage4.y_offset);
-            assert_eq!(30, subimage4.height);
-            assert_eq!(30, subimage4.width);
-            assert_eq!(3840, subimage4.data_offset);
-            assert_eq!(960, subimage4.data_length);
-        }
+        exp_fileman::get_db()
+            .load_slf_from_dir("../tools/editor")
+            .unwrap();
+        let file_id = exp_fileman::get_db()
+            .open_for_reading("Editor\\CANCEL.STI")
+            .unwrap();
+        let img = read_stci(file_id, true).unwrap();
+        assert_eq!(640, img.width);
+        assert_eq!(480, img.height);
+        assert_eq!(true, img.indexed);
+        assert_eq!(false, img.zlib_compressed);
+        assert_eq!(8, img.pixel_depth);
+        assert_eq!(4800, img.image_data.len());
+        assert_eq!(true, img.app_data.is_none());
+        let subimage0 = &img.subimages.as_ref().unwrap()[0];
+        let subimage4 = &img.subimages.as_ref().unwrap()[4];
+        assert_eq!(5, img.subimages.as_ref().unwrap().len());
+        assert_eq!(0, subimage0.x_offset);
+        assert_eq!(0, subimage0.y_offset);
+        assert_eq!(30, subimage0.height);
+        assert_eq!(30, subimage0.width);
+        assert_eq!(0, subimage0.data_offset);
+        assert_eq!(960, subimage0.data_length);
+        assert_eq!(0, subimage4.x_offset);
+        assert_eq!(0, subimage4.y_offset);
+        assert_eq!(30, subimage4.height);
+        assert_eq!(30, subimage4.width);
+        assert_eq!(3840, subimage4.data_offset);
+        assert_eq!(960, subimage4.data_length);
     }
 }
