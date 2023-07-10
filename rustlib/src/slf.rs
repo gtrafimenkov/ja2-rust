@@ -2,6 +2,9 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use std;
 use std::io;
 
+use crate::binreader::ByteOrderReader;
+use crate::binreader::LittleEndianReader;
+
 #[derive(Debug)]
 pub struct Header {
     pub lib_name: String,
@@ -39,11 +42,12 @@ pub fn read_header(reader: &mut dyn io::Read) -> io::Result<Header> {
 
     // parse individual fields
     let mut reader = io::Cursor::new(buffer);
+    let mut le_reader = LittleEndianReader::new(&mut reader);
     Ok(Header {
-        lib_name: decode_str(&mut reader, 256)?,
-        lib_path: decode_str(&mut reader, 256)?,
-        num_entries: reader.read_u32::<LittleEndian>()?,
-        used_entries: reader.read_u32::<LittleEndian>()?,
+        lib_name: decode_str(&mut le_reader.reader, 256)?,
+        lib_path: decode_str(&mut le_reader.reader, 256)?,
+        num_entries: le_reader.read_u32()?,
+        used_entries: le_reader.read_u32()?,
     })
 }
 
