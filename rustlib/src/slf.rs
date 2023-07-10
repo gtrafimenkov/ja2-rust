@@ -1,8 +1,7 @@
 use std;
 use std::io;
 
-use crate::binreader::ByteOrderReader;
-use crate::binreader::LittleEndianReader;
+use crate::binreader::{ByteOrderReader, LittleEndianReader};
 
 #[derive(Debug)]
 pub struct Header {
