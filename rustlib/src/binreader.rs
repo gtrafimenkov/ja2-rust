@@ -21,29 +21,29 @@ pub struct LittleEndian {}
 
 #[allow(dead_code)]
 impl LittleEndian {
-    fn read_i16(reader: &mut dyn Read) -> io::Result<i16> {
+    pub fn read_i16(reader: &mut dyn Read) -> io::Result<i16> {
         let val = Self::read_u16(reader)?;
         Ok(val as i16)
     }
 
-    fn read_i32(reader: &mut dyn Read) -> io::Result<i32> {
+    pub fn read_i32(reader: &mut dyn Read) -> io::Result<i32> {
         let val = Self::read_u32(reader)?;
         Ok(val as i32)
     }
 
-    fn read_u8(reader: &mut dyn Read) -> io::Result<u8> {
+    pub fn read_u8(reader: &mut dyn Read) -> io::Result<u8> {
         let mut buf = [0; 1];
         reader.read_exact(&mut buf)?;
         Ok(buf[0])
     }
 
-    fn read_u16(reader: &mut dyn Read) -> io::Result<u16> {
+    pub fn read_u16(reader: &mut dyn Read) -> io::Result<u16> {
         let mut buf = [0; 2];
         reader.read_exact(&mut buf)?;
         Ok((buf[0] as u16) | (buf[1] as u16) << 8)
     }
 
-    fn read_u32(reader: &mut dyn Read) -> io::Result<u32> {
+    pub fn read_u32(reader: &mut dyn Read) -> io::Result<u32> {
         let mut buf = [0; 4];
         reader.read_exact(&mut buf)?;
         Ok((buf[0] as u32) | (buf[1] as u32) << 8 | (buf[2] as u32) << 16 | (buf[3] as u32) << 24)

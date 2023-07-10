@@ -1,7 +1,7 @@
 use std;
 use std::io;
 
-use crate::binreader::{ByteOrderReader, LittleEndianReader};
+use crate::binreader::LittleEndian;
 
 #[derive(Debug)]
 pub struct Header {
@@ -40,12 +40,12 @@ pub fn read_header(reader: &mut dyn io::Read) -> io::Result<Header> {
 
     // parse individual fields
     let mut reader = io::Cursor::new(buffer);
-    let mut le_reader = LittleEndianReader::new(&mut reader);
+    let reader = &mut reader;
     Ok(Header {
-        lib_name: decode_str(&mut le_reader.reader, 256)?,
-        lib_path: decode_str(&mut le_reader.reader, 256)?,
-        num_entries: le_reader.read_u32()?,
-        used_entries: le_reader.read_u32()?,
+        lib_name: decode_str(reader, 256)?,
+        lib_path: decode_str(reader, 256)?,
+        num_entries: LittleEndian::read_u32(reader)?,
+        used_entries: LittleEndian::read_u32(reader)?,
     })
 }
 
@@ -78,12 +78,12 @@ pub fn read_entry(reader: &mut dyn io::Read) -> io::Result<Entry> {
 
     // parse individual fields
     let mut reader = io::Cursor::new(buffer);
-    let mut le_reader = LittleEndianReader::new(&mut reader);
+    let reader = &mut reader;
     Ok(Entry {
-        file_name: decode_str(le_reader.reader, 256)?,
-        offset: le_reader.read_u32()?,
-        size: le_reader.read_u32()?,
-        state: le_reader.read_u8()?,
+        file_name: decode_str(reader, 256)?,
+        offset: LittleEndian::read_u32(reader)?,
+        size: LittleEndian::read_u32(reader)?,
+        state: LittleEndian::read_u8(reader)?,
     })
 }
 
