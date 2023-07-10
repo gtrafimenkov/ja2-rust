@@ -1,12 +1,18 @@
 use super::exp_debug;
 
-use once_cell::sync::Lazy;
+use std::sync::OnceLock;
 use std::{
     alloc::{alloc, Layout},
     collections::HashMap,
 };
 
-static mut ALLOC_DB: Lazy<DB> = Lazy::new(DB::new);
+fn get_db() -> &'static mut DB {
+    static mut ALLOC_DB: OnceLock<DB> = OnceLock::new();
+    unsafe {
+        ALLOC_DB.get_or_init(DB::new);
+        return ALLOC_DB.get_mut().unwrap();
+    }
+}
 
 pub struct DB {
     // mapping of allocated addresses to layout objects used for allocating these addresses
@@ -57,7 +63,7 @@ pub extern "C" fn RustAlloc(size: usize) -> *mut u8 {
         panic!("{message}")
     }
     // exp_debug::debug_log_write(&format!("rust_alloc: allocated {size} bytes at {buffer:?}"));
-    unsafe { ALLOC_DB.store(buffer, layout) };
+    get_db().store(buffer, layout);
     buffer
 }
 
@@ -74,7 +80,7 @@ pub unsafe extern "C" fn RustDealloc(pointer: *mut u8) {
     if !pointer.is_null() {
         // exp_debug::debug_log_write(&format!("rust_alloc: deallocating {pointer:?}"));
         unsafe {
-            let layout = ALLOC_DB.pull(pointer);
+            let layout = get_db().pull(pointer);
             std::alloc::dealloc(pointer, layout);
         }
     }
@@ -94,7 +100,7 @@ pub unsafe extern "C" fn RustRealloc(pointer: *mut u8, new_size: usize) -> *mut 
         //     "rust_realloc: reallocating {pointer:?} to {new_size} bytes"
         // ));
         unsafe {
-            let layout = ALLOC_DB.pull(pointer);
+            let layout = get_db().pull(pointer);
             let new_pointer = std::alloc::realloc(pointer, layout, new_size);
             if new_pointer.is_null() {
                 let old_size = layout.size();
@@ -104,7 +110,7 @@ pub unsafe extern "C" fn RustRealloc(pointer: *mut u8, new_size: usize) -> *mut 
                 exp_debug::debug_log_write(&message);
                 panic!("{message}");
             }
-            ALLOC_DB.store(new_pointer, layout);
+            get_db().store(new_pointer, layout);
             new_pointer
         }
     } else {
