@@ -62,6 +62,7 @@ pub struct BigEndianReader<'a> {
     pub reader: &'a mut dyn Read,
 }
 
+#[allow(dead_code)]
 impl<'a> LittleEndianReader<'a> {
     pub fn new(reader: &'a mut dyn Read) -> Self {
         Self { reader }
