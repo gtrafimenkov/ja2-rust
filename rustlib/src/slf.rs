@@ -1,4 +1,3 @@
-use byteorder::{LittleEndian, ReadBytesExt};
 use std;
 use std::io;
 
@@ -80,11 +79,12 @@ pub fn read_entry(reader: &mut dyn io::Read) -> io::Result<Entry> {
 
     // parse individual fields
     let mut reader = io::Cursor::new(buffer);
+    let mut le_reader = LittleEndianReader::new(&mut reader);
     Ok(Entry {
-        file_name: decode_str(&mut reader, 256)?,
-        offset: reader.read_u32::<LittleEndian>()?,
-        size: reader.read_u32::<LittleEndian>()?,
-        state: reader.read_u8()?,
+        file_name: decode_str(le_reader.reader, 256)?,
+        offset: le_reader.read_u32()?,
+        size: le_reader.read_u32()?,
+        state: le_reader.read_u8()?,
     })
 }
 
