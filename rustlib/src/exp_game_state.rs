@@ -1,7 +1,7 @@
-use super::state::STATE;
+use super::state;
 
 /// Handle game restart.
 #[no_mangle]
 pub extern "C" fn PrepareGameRestart() {
-    unsafe { STATE.clock.game_paused = true }
+    state::get().clock.game_paused = true
 }

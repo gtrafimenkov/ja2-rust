@@ -2,7 +2,7 @@ use super::clock;
 use super::exp_fileman;
 use super::exp_fileman::FileID;
 use super::exp_ui;
-use super::state::STATE;
+use super::state;
 use crate::binreader::LittleEndian;
 use std::io;
 use std::io::Read;
@@ -51,22 +51,22 @@ impl TIME_COMPRESS_MODE {
 
 #[no_mangle]
 pub extern "C" fn GetTimeCompressMode() -> TIME_COMPRESS_MODE {
-    unsafe { TIME_COMPRESS_MODE::from_internal(STATE.clock.time_compress_mode) }
+    TIME_COMPRESS_MODE::from_internal(state::get().clock.time_compress_mode)
 }
 
 #[no_mangle]
 pub extern "C" fn SetTimeCompressMode(mode: TIME_COMPRESS_MODE) {
-    unsafe { STATE.clock.time_compress_mode = mode.to_internal() }
+    state::get().clock.time_compress_mode = mode.to_internal()
 }
 
 #[no_mangle]
 pub extern "C" fn IncTimeCompressMode() {
-    unsafe { STATE.clock.inc_time_compress_mode() }
+    state::get().clock.inc_time_compress_mode()
 }
 
 #[no_mangle]
 pub extern "C" fn DecTimeCompressMode() {
-    unsafe { STATE.clock.dec_time_compress_mode() }
+    state::get().clock.dec_time_compress_mode()
 }
 
 /// Returns some modifier of the game speed.
@@ -166,22 +166,18 @@ pub extern "C" fn InitNewGameClockRust() {
     SetGameTimeSec(GetGameStartingTime());
     set_game_seconds_per_real_second(0);
     set_time_compression_on(false);
-    unsafe {
-        STATE.clock.clock_resolution = 1;
-    }
+    state::get().clock.clock_resolution = 1;
 }
 
 fn set_clock_resolution_per_second(timer_per_second: u8) {
     let timer_per_second = std::cmp::max(0, std::cmp::min(60, timer_per_second));
-    unsafe {
-        STATE.clock.clock_resolution = timer_per_second;
-    }
+    state::get().clock.clock_resolution = timer_per_second;
 }
 
 /// Returns number of clock updates per second
 #[no_mangle]
 pub extern "C" fn GetClockResolution() -> u8 {
-    unsafe { STATE.clock.clock_resolution }
+    state::get().clock.clock_resolution
 }
 
 /// Get game starting time in seconds.
@@ -193,41 +189,37 @@ pub extern "C" fn GetGameStartingTime() -> u32 {
 /// Get game time in seconds
 #[no_mangle]
 pub extern "C" fn GetGameTimeInSec() -> u32 {
-    unsafe { STATE.clock.game_clock_sec }
+    state::get().clock.game_clock_sec
 }
 
 /// Set game time in seconds
 #[no_mangle]
 pub extern "C" fn SetGameTimeSec(value: u32) {
-    unsafe {
-        STATE.clock.game_clock_sec = value;
-    }
+    state::get().clock.game_clock_sec = value;
 }
 
 /// Adjust game time forward by given number of seconds.
 #[no_mangle]
 pub extern "C" fn MoveGameTimeForward(seconds: u32) {
-    unsafe {
-        STATE.clock.move_time_forward(seconds);
-    }
+    state::get().clock.move_time_forward(seconds);
 }
 
 /// Get game time in minutes
 #[no_mangle]
 pub extern "C" fn GetGameTimeInMin() -> u32 {
-    unsafe { STATE.clock.get_time_in_min() }
+    state::get().clock.get_time_in_min()
 }
 
 /// Get game time in days
 #[no_mangle]
 pub extern "C" fn GetGameTimeInDays() -> u32 {
-    unsafe { STATE.clock.get_time_in_days() }
+    state::get().clock.get_time_in_days()
 }
 
 /// Get game clock hour - returns hour shown on the game clock (0 - 23)
 #[no_mangle]
 pub extern "C" fn GetGameClockHour() -> u32 {
-    unsafe { STATE.clock.get_clock_hour() }
+    state::get().clock.get_clock_hour()
 }
 
 /// Get game clock minutes - returns minutes shown on the game clock (0 - 59)
@@ -250,20 +242,18 @@ pub extern "C" fn GetFutureMidnightInMinutes(days: u32) -> u32 {
 
 #[no_mangle]
 pub extern "C" fn IsDayTime() -> bool {
-    unsafe { STATE.clock.is_day_time() }
+    state::get().clock.is_day_time()
 }
 
 #[no_mangle]
 pub extern "C" fn IsNightTime() -> bool {
-    unsafe { STATE.clock.is_night_time() }
+    state::get().clock.is_night_time()
 }
 
 #[no_mangle]
 pub extern "C" fn PauseGame() {
     if !IsGamePaused() {
-        unsafe {
-            STATE.clock.game_paused = true;
-        }
+        state::get().clock.game_paused = true;
         exp_ui::SetMapScreenBottomDirty(true);
     }
 }
@@ -271,9 +261,7 @@ pub extern "C" fn PauseGame() {
 #[no_mangle]
 pub extern "C" fn UnPauseGame() {
     if IsGamePaused() && !IsPauseLocked() {
-        unsafe {
-            STATE.clock.game_paused = false;
-        }
+        state::get().clock.game_paused = false;
         exp_ui::SetMapScreenBottomDirty(true);
     }
 }
@@ -289,48 +277,40 @@ pub extern "C" fn TogglePause() {
 
 #[no_mangle]
 pub extern "C" fn IsGamePaused() -> bool {
-    unsafe { STATE.clock.game_paused }
+    state::get().clock.game_paused
 }
 
 #[no_mangle]
 pub extern "C" fn LockPause() {
-    unsafe {
-        STATE.clock.locked_pause = true;
-    }
+    state::get().clock.locked_pause = true;
 }
 
 #[no_mangle]
 pub extern "C" fn UnlockPause() {
-    unsafe {
-        STATE.clock.locked_pause = false;
-    }
+    state::get().clock.locked_pause = false;
 }
 
 #[no_mangle]
 pub extern "C" fn IsPauseLocked() -> bool {
-    unsafe { STATE.clock.locked_pause }
+    state::get().clock.locked_pause
 }
 
 #[no_mangle]
 pub extern "C" fn GetGameSecondsPerRealSecond() -> u32 {
-    unsafe { STATE.clock.game_seconds_per_real_second }
+    state::get().clock.game_seconds_per_real_second
 }
 
 fn set_game_seconds_per_real_second(value: u32) {
-    unsafe {
-        STATE.clock.game_seconds_per_real_second = value;
-    }
+    state::get().clock.game_seconds_per_real_second = value;
 }
 
 #[no_mangle]
 pub extern "C" fn GetTimeCompressionOn() -> bool {
-    unsafe { STATE.clock.time_compression_on }
+    state::get().clock.time_compression_on
 }
 
 fn set_time_compression_on(value: bool) {
-    unsafe {
-        STATE.clock.time_compression_on = value;
-    }
+    state::get().clock.time_compression_on = value;
 }
 
 #[no_mangle]

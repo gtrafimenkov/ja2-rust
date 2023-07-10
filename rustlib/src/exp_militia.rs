@@ -1,4 +1,4 @@
-use super::state::STATE;
+use super::state;
 use crate::exp_ui;
 use crate::militia;
 
@@ -52,13 +52,13 @@ impl MilitiaCount {
 #[no_mangle]
 /// Return militia force in a sector.
 pub extern "C" fn GetMilitiaInSector(x: u8, y: u8) -> MilitiaCount {
-    MilitiaCount::from_internal(unsafe { STATE.get_militia_force(x, y) })
+    MilitiaCount::from_internal(state::get().get_militia_force(x, y))
 }
 
 #[no_mangle]
 /// Set militia force in a sector.
 pub extern "C" fn SetMilitiaInSector(x: u8, y: u8, value: MilitiaCount) {
-    let force = unsafe { STATE.get_mut_militia_force(x, y) };
+    let force = state::get().get_mut_militia_force(x, y);
     force.green = value.green;
     force.regular = value.regular;
     force.elite = value.elite;
@@ -66,64 +66,60 @@ pub extern "C" fn SetMilitiaInSector(x: u8, y: u8, value: MilitiaCount) {
 
 #[no_mangle]
 pub extern "C" fn GetMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank) -> u8 {
-    unsafe { STATE.militia.get_force_of_rank(x, y, rank.to_internal()) }
+    state::get()
+        .militia
+        .get_force_of_rank(x, y, rank.to_internal())
 }
 
 #[no_mangle]
 pub extern "C" fn CountMilitiaInSector(x: u8, y: u8) -> u8 {
-    unsafe { STATE.get_militia_force(x, y).count() }
+    state::get().get_militia_force(x, y).count()
 }
 
 #[no_mangle]
 pub extern "C" fn CountMilitiaInSector3D(x: u8, y: u8, z: i8) -> u8 {
     match z {
-        0 => unsafe { STATE.get_militia_force(x, y).count() },
+        0 => state::get().get_militia_force(x, y).count(),
         _ => 0,
     }
 }
 
 #[no_mangle]
 pub extern "C" fn SetMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank, value: u8) {
-    unsafe {
-        STATE
-            .militia
-            .set_force_of_rank(x, y, rank.to_internal(), value)
-    }
+    state::get()
+        .militia
+        .set_force_of_rank(x, y, rank.to_internal(), value)
 }
 
 #[no_mangle]
 pub extern "C" fn IncMilitiaOfRankInSector(x: u8, y: u8, rank: MilitiaRank, increase: u8) {
-    unsafe {
-        STATE
-            .militia
-            .inc_force_of_rank(x, y, rank.to_internal(), increase)
-    }
+    state::get()
+        .militia
+        .inc_force_of_rank(x, y, rank.to_internal(), increase)
 }
 
 #[no_mangle]
 pub extern "C" fn IsMilitiaTrainingPayedForSector(x: u8, y: u8) -> bool {
-    unsafe { STATE.militia.training_paid[y as usize][x as usize] }
+    state::get().militia.training_paid[y as usize][x as usize]
 }
 
 #[no_mangle]
 pub extern "C" fn SetMilitiaTrainingPayedForSector(x: u8, y: u8, value: bool) {
-    unsafe { STATE.militia.training_paid[y as usize][x as usize] = value }
+    state::get().militia.training_paid[y as usize][x as usize] = value
 }
 
 #[no_mangle]
 pub extern "C" fn RemoveMilitiaFromSector(x: u8, y: u8, rank: MilitiaRank, how_many: u8) {
-    unsafe {
-        STATE
-            .militia
-            .remove_from_sector(x, y, rank.to_internal(), how_many);
-    }
+    state::get()
+        .militia
+        .remove_from_sector(x, y, rank.to_internal(), how_many);
     exp_ui::SetMapPanelDirty(true);
 }
 
 #[no_mangle]
 pub extern "C" fn PromoteMilitia(x: u8, y: u8, rank: MilitiaRank, how_many: u8) {
-    unsafe {
-        STATE.militia.promote(x, y, rank.to_internal(), how_many);
-    }
+    state::get()
+        .militia
+        .promote(x, y, rank.to_internal(), how_many);
     exp_ui::SetMapPanelDirty(true);
 }
