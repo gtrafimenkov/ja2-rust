@@ -3,7 +3,7 @@ use super::exp_fileman;
 use super::exp_fileman::FileID;
 use super::exp_ui;
 use super::state::STATE;
-use byteorder::{LittleEndian, ReadBytesExt};
+use crate::binreader::LittleEndian;
 use std::io;
 use std::io::Read;
 
@@ -135,27 +135,28 @@ pub extern "C" fn LoadSavedClockState(file_id: FileID, data: &mut SavedClockStat
 
 fn read_saved_clock_state(file_id: FileID) -> io::Result<SavedClockState> {
     let mut reader = exp_fileman::Reader::new(file_id);
+    let reader = &mut reader;
     let mut data = SavedClockState {
-        time_compress_mode: reader.read_i32::<LittleEndian>()?,
-        clock_resolution: reader.read_u8()?,
-        game_paused: reader.read_u8()? != 0,
+        time_compress_mode: LittleEndian::read_i32(reader)?,
+        clock_resolution: LittleEndian::read_u8(reader)?,
+        game_paused: LittleEndian::read_u8(reader)? != 0,
         ..Default::default()
     };
-    data.cpart.TimeInterrupt = reader.read_u8()? != 0;
-    _ = reader.read_u8()?;
-    data.game_clock = reader.read_u32::<LittleEndian>()?;
-    data.game_seconds_per_real_second = reader.read_u32::<LittleEndian>()?;
-    data.cpart.AmbientLightLevel = reader.read_u8()?;
-    data.cpart.EnvTime = reader.read_u32::<LittleEndian>()?;
-    data.cpart.EnvDay = reader.read_u32::<LittleEndian>()?;
-    data.cpart.EnvLightValue = reader.read_u8()?;
-    data.cpart.TimeOfLastEventQuery = reader.read_u32::<LittleEndian>()?;
-    data.locked_pause = reader.read_u8()? != 0;
-    data.cpart.PauseDueToPlayerGamePause = reader.read_u8()? != 0;
-    data.cpart.ResetAllPlayerKnowsEnemiesFlags = reader.read_u8()? != 0;
-    data.time_compression_on = reader.read_u8()? != 0;
-    data.cpart.PreviousGameClock = reader.read_u32::<LittleEndian>()?;
-    data.cpart.LockPauseStateLastReasonId = reader.read_u32::<LittleEndian>()?;
+    data.cpart.TimeInterrupt = LittleEndian::read_u8(reader)? != 0;
+    _ = LittleEndian::read_u8(reader)?;
+    data.game_clock = LittleEndian::read_u32(reader)?;
+    data.game_seconds_per_real_second = LittleEndian::read_u32(reader)?;
+    data.cpart.AmbientLightLevel = LittleEndian::read_u8(reader)?;
+    data.cpart.EnvTime = LittleEndian::read_u32(reader)?;
+    data.cpart.EnvDay = LittleEndian::read_u32(reader)?;
+    data.cpart.EnvLightValue = LittleEndian::read_u8(reader)?;
+    data.cpart.TimeOfLastEventQuery = LittleEndian::read_u32(reader)?;
+    data.locked_pause = LittleEndian::read_u8(reader)? != 0;
+    data.cpart.PauseDueToPlayerGamePause = LittleEndian::read_u8(reader)? != 0;
+    data.cpart.ResetAllPlayerKnowsEnemiesFlags = LittleEndian::read_u8(reader)? != 0;
+    data.time_compression_on = LittleEndian::read_u8(reader)? != 0;
+    data.cpart.PreviousGameClock = LittleEndian::read_u32(reader)?;
+    data.cpart.LockPauseStateLastReasonId = LittleEndian::read_u32(reader)?;
     reader.read_exact(&mut data.padding)?;
     Ok(data)
 }
