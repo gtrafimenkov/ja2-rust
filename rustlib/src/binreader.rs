@@ -7,6 +7,7 @@ use std::io::Read;
 
 pub trait ByteOrderReader {
     fn read_i16(&mut self) -> io::Result<i16>;
+    fn read_i32(&mut self) -> io::Result<i32>;
     fn read_u8(&mut self) -> io::Result<u8>;
     fn read_u16(&mut self) -> io::Result<u16>;
     fn read_u32(&mut self) -> io::Result<u32>;
@@ -34,6 +35,11 @@ impl ByteOrderReader for LittleEndianReader<'_> {
     fn read_i16(&mut self) -> io::Result<i16> {
         let val = self.read_u16()?;
         Ok(val as i16)
+    }
+
+    fn read_i32(&mut self) -> io::Result<i32> {
+        let val = self.read_u32()?;
+        Ok(val as i32)
     }
 
     fn read_u8(&mut self) -> io::Result<u8> {
@@ -68,6 +74,11 @@ impl ByteOrderReader for BigEndianReader<'_> {
         Ok(val as i16)
     }
 
+    fn read_i32(&mut self) -> io::Result<i32> {
+        let val = self.read_u32()?;
+        Ok(val as i32)
+    }
+
     fn read_u8(&mut self) -> io::Result<u8> {
         let mut buf = [0; 1];
         self.reader.read_exact(&mut buf)?;
@@ -98,6 +109,7 @@ mod tests {
             0x05, // testing u8
             0x06, 0x07, // testing u16
             0xf0, 0xd8, // testing i16
+            0xfe, 0xff, 0xff, 0xff, // testing i32
         ];
 
         {
@@ -107,6 +119,7 @@ mod tests {
             assert_eq!(0x05, reader.read_u8().unwrap());
             assert_eq!(0x0706, reader.read_u16().unwrap());
             assert_eq!(-10000, reader.read_i16().unwrap());
+            assert_eq!(-2, reader.read_i32().unwrap());
         }
 
         {
@@ -116,6 +129,7 @@ mod tests {
             assert_eq!(0x05, reader.read_u8().unwrap());
             assert_eq!(0x0607, reader.read_u16().unwrap());
             assert_eq!(-3880, reader.read_i16().unwrap());
+            assert_eq!(-16777217, reader.read_i32().unwrap());
         }
     }
 }
