@@ -24,10 +24,10 @@ pub enum FileSeekMode {
 }
 
 pub fn get_db() -> &'static mut DB {
-    static mut ALLOC_DB: OnceLock<DB> = OnceLock::new();
+    static mut FILE_DB: OnceLock<DB> = OnceLock::new();
     unsafe {
-        ALLOC_DB.get_or_init(DB::new);
-        return ALLOC_DB.get_mut().unwrap();
+        FILE_DB.get_or_init(DB::new);
+        return FILE_DB.get_mut().unwrap();
     }
 }
 

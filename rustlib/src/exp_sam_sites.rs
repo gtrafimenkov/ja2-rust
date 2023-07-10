@@ -1,5 +1,5 @@
 use super::sam_sites;
-use super::state::STATE;
+use super::state;
 
 /// Min condition for sam site to be functional
 pub const MIN_CONDITION_FOR_SAM_SITE_TO_WORK: u8 = 80;
@@ -60,13 +60,13 @@ pub extern "C" fn GetSamSiteY(site: SamSite) -> u8 {
 #[no_mangle]
 /// Check if the SAM site was found.
 pub extern "C" fn IsSamSiteFound(site: SamSite) -> bool {
-    unsafe { STATE.sam_sites.is_found(site.to_internal()) }
+    state::get().sam_sites.is_found(site.to_internal())
 }
 
 #[no_mangle]
 /// Set if the SAM site was found.
 pub extern "C" fn SetSamSiteFound(site: SamSite, value: bool) {
-    unsafe { STATE.sam_sites.set_found(site.to_internal(), value) }
+    state::get().sam_sites.set_found(site.to_internal(), value)
 }
 
 #[no_mangle]
@@ -109,14 +109,12 @@ pub extern "C" fn DoesSAMExistHere(sector_x: u8, sector_y: u8, sector_z: i8, gri
 
 #[no_mangle]
 pub extern "C" fn GetSamCondition(site: SamSite) -> u8 {
-    unsafe { STATE.sam_sites.sites[site as usize].get_condition() }
+    state::get().sam_sites.sites[site as usize].get_condition()
 }
 
 #[no_mangle]
 pub extern "C" fn SetSamCondition(site: SamSite, value: u8) {
-    unsafe {
-        STATE.sam_sites.sites[site as usize].set_condition(value);
-    }
+    state::get().sam_sites.sites[site as usize].set_condition(value);
 }
 
 #[repr(C)]
@@ -145,35 +143,31 @@ pub extern "C" fn GetSamControllingSector(x: u8, y: u8) -> OptionalSamSite {
 
 #[no_mangle]
 pub extern "C" fn IsThereAFunctionalSamInSector(x: u8, y: u8, z: i8) -> bool {
-    unsafe {
-        match sam_sites::get_sam_at_sector(x, y, z) {
-            None => false,
-            Some(site) => {
-                STATE.sam_sites.sites[site as usize].get_condition()
-                    >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK
-            }
+    match sam_sites::get_sam_at_sector(x, y, z) {
+        None => false,
+        Some(site) => {
+            state::get().sam_sites.sites[site as usize].get_condition()
+                >= MIN_CONDITION_FOR_SAM_SITE_TO_WORK
         }
     }
 }
 
 #[no_mangle]
 pub extern "C" fn GetNumberOfSAMSitesUnderPlayerControl() -> u8 {
-    unsafe { STATE.get_number_of_sam_under_player_control() }
+    state::get().get_number_of_sam_under_player_control()
 }
 
 #[no_mangle]
 pub extern "C" fn IsSamUnderPlayerControl(site: SamSite) -> bool {
-    unsafe {
-        !STATE
-            .get_sector(GetSamSiteX(site), GetSamSiteY(site))
-            .enemy_controlled
-    }
+    !state::get()
+        .get_sector(GetSamSiteX(site), GetSamSiteY(site))
+        .enemy_controlled
 }
 
 #[no_mangle]
 /// Update airspace control map based on which SAM sectors are controlled by the enemy.
 pub extern "C" fn UpdateAirspaceControlMap() {
-    unsafe { STATE.update_airspace_control_map() }
+    state::get().update_airspace_control_map()
 }
 
 #[cfg(test)]

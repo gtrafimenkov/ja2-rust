@@ -1,5 +1,5 @@
 use super::sam_sites;
-use super::state::STATE;
+use super::state;
 
 pub const MAP_WORLD_X: i16 = 18;
 pub const MAP_WORLD_Y: i16 = 18;
@@ -69,26 +69,22 @@ pub extern "C" fn IsThisSectorASAMSector(x: u8, y: u8, z: i8) -> bool {
 
 #[no_mangle]
 pub extern "C" fn IsSectorEnemyControlled(x: u8, y: u8) -> bool {
-    unsafe { STATE.get_sector(x, y).enemy_controlled }
+    state::get().get_sector(x, y).enemy_controlled
 }
 
 #[no_mangle]
 pub extern "C" fn SetSectorEnemyControlled(x: u8, y: u8, value: bool) {
-    unsafe {
-        STATE.get_mut_sector(x, y).enemy_controlled = value;
-    }
+    state::get().get_mut_sector(x, y).enemy_controlled = value;
 }
 
 #[no_mangle]
 pub extern "C" fn IsSectorEnemyAirControlled(x: u8, y: u8) -> bool {
-    unsafe { STATE.get_sector(x, y).enemy_air_controlled }
+    state::get().get_sector(x, y).enemy_air_controlled
 }
 
 #[no_mangle]
 pub extern "C" fn SetSectorEnemyAirControlled(x: u8, y: u8, value: bool) {
-    unsafe {
-        STATE.get_mut_sector(x, y).enemy_air_controlled = value;
-    }
+    state::get().get_mut_sector(x, y).enemy_air_controlled = value;
 }
 
 // #[no_mangle]
