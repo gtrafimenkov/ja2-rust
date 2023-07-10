@@ -1,4 +1,4 @@
-use super::state::STATE;
+use super::state;
 use crate::civ_groups;
 
 #[repr(C)]
@@ -97,15 +97,13 @@ impl CivGroup {
 #[no_mangle]
 #[allow(unused_variables)]
 pub extern "C" fn GetCivGroupHostility(group: CivGroup) -> CivGroupHostility {
-    unsafe { CivGroupHostility::from_internal(STATE.civ_groups.get_hostility(group.to_internal())) }
+    CivGroupHostility::from_internal(state::get().civ_groups.get_hostility(group.to_internal()))
 }
 
 #[no_mangle]
 #[allow(unused_variables)]
 pub extern "C" fn SetCivGroupHostility(group: CivGroup, hostility: CivGroupHostility) {
-    unsafe {
-        STATE
-            .civ_groups
-            .set_hostility(group.to_internal(), hostility.to_internal())
-    }
+    state::get()
+        .civ_groups
+        .set_hostility(group.to_internal(), hostility.to_internal())
 }
