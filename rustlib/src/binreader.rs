@@ -5,12 +5,49 @@
 use std::io;
 use std::io::Read;
 
+/// ByteOrderReader trait defines methods implemented by LittleEndianReader
+/// and BigEndianReader.
 pub trait ByteOrderReader {
     fn read_i16(&mut self) -> io::Result<i16>;
     fn read_i32(&mut self) -> io::Result<i32>;
     fn read_u8(&mut self) -> io::Result<u8>;
     fn read_u16(&mut self) -> io::Result<u16>;
     fn read_u32(&mut self) -> io::Result<u32>;
+}
+
+/// LittleEndian structure contains static methods for reading
+/// data in little-endian.
+pub struct LittleEndian {}
+
+#[allow(dead_code)]
+impl LittleEndian {
+    fn read_i16(reader: &mut dyn Read) -> io::Result<i16> {
+        let val = Self::read_u16(reader)?;
+        Ok(val as i16)
+    }
+
+    fn read_i32(reader: &mut dyn Read) -> io::Result<i32> {
+        let val = Self::read_u32(reader)?;
+        Ok(val as i32)
+    }
+
+    fn read_u8(reader: &mut dyn Read) -> io::Result<u8> {
+        let mut buf = [0; 1];
+        reader.read_exact(&mut buf)?;
+        Ok(buf[0])
+    }
+
+    fn read_u16(reader: &mut dyn Read) -> io::Result<u16> {
+        let mut buf = [0; 2];
+        reader.read_exact(&mut buf)?;
+        Ok((buf[0] as u16) | (buf[1] as u16) << 8)
+    }
+
+    fn read_u32(reader: &mut dyn Read) -> io::Result<u32> {
+        let mut buf = [0; 4];
+        reader.read_exact(&mut buf)?;
+        Ok((buf[0] as u32) | (buf[1] as u32) << 8 | (buf[2] as u32) << 16 | (buf[3] as u32) << 24)
+    }
 }
 
 /// LittleEndianReader is a thin wrapper around io::Read that allows reading
@@ -33,31 +70,23 @@ impl<'a> LittleEndianReader<'a> {
 
 impl ByteOrderReader for LittleEndianReader<'_> {
     fn read_i16(&mut self) -> io::Result<i16> {
-        let val = self.read_u16()?;
-        Ok(val as i16)
+        LittleEndian::read_i16(self.reader)
     }
 
     fn read_i32(&mut self) -> io::Result<i32> {
-        let val = self.read_u32()?;
-        Ok(val as i32)
+        LittleEndian::read_i32(self.reader)
     }
 
     fn read_u8(&mut self) -> io::Result<u8> {
-        let mut buf = [0; 1];
-        self.reader.read_exact(&mut buf)?;
-        Ok(buf[0])
+        LittleEndian::read_u8(self.reader)
     }
 
     fn read_u16(&mut self) -> io::Result<u16> {
-        let mut buf = [0; 2];
-        self.reader.read_exact(&mut buf)?;
-        Ok((buf[0] as u16) | (buf[1] as u16) << 8)
+        LittleEndian::read_u16(self.reader)
     }
 
     fn read_u32(&mut self) -> io::Result<u32> {
-        let mut buf = [0; 4];
-        self.reader.read_exact(&mut buf)?;
-        Ok((buf[0] as u32) | (buf[1] as u32) << 8 | (buf[2] as u32) << 16 | (buf[3] as u32) << 24)
+        LittleEndian::read_u32(self.reader)
     }
 }
 
@@ -111,6 +140,15 @@ mod tests {
             0xf0, 0xd8, // testing i16
             0xfe, 0xff, 0xff, 0xff, // testing i32
         ];
+
+        {
+            let mut cursor = io::Cursor::new(buffer);
+            assert_eq!(0x04030201, LittleEndian::read_u32(&mut cursor).unwrap());
+            assert_eq!(0x05, LittleEndian::read_u8(&mut cursor).unwrap());
+            assert_eq!(0x0706, LittleEndian::read_u16(&mut cursor).unwrap());
+            assert_eq!(-10000, LittleEndian::read_i16(&mut cursor).unwrap());
+            assert_eq!(-2, LittleEndian::read_i32(&mut cursor).unwrap());
+        }
 
         {
             let mut cursor = io::Cursor::new(buffer);
