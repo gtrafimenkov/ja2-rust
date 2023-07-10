@@ -1,5 +1,6 @@
-use byteorder::{LittleEndian, ReadBytesExt};
 use std::io;
+
+use crate::binreader::LittleEndian;
 
 #[repr(C)]
 #[derive(Default, Copy, Clone)]
@@ -54,12 +55,12 @@ pub fn read_stci(reader: &mut dyn io::Read, load_app_data: bool) -> io::Result<S
             format!("not STCI file ({id:?})"),
         ));
     }
-    let _original_size = reader.read_u32::<LittleEndian>()?;
-    let stored_size = reader.read_u32::<LittleEndian>()? as usize;
-    let _transparent_value = reader.read_u32::<LittleEndian>()?;
-    let flags = reader.read_u32::<LittleEndian>()?;
-    let height = reader.read_u16::<LittleEndian>()?;
-    let width = reader.read_u16::<LittleEndian>()?;
+    let _original_size = LittleEndian::read_u32(reader)?;
+    let stored_size = LittleEndian::read_u32(reader)? as usize;
+    let _transparent_value = LittleEndian::read_u32(reader)?;
+    let flags = LittleEndian::read_u32(reader)?;
+    let height = LittleEndian::read_u16(reader)?;
+    let width = LittleEndian::read_u16(reader)?;
     if flags & STCI_INDEXED == 0 && flags & STCI_RGB == 0 {
         return Err(io::Error::new(io::ErrorKind::Other, "unknown image format"));
     }
@@ -67,36 +68,36 @@ pub fn read_stci(reader: &mut dyn io::Read, load_app_data: bool) -> io::Result<S
     let mut num_subimages = 0;
     if indexed {
         // index
-        let number_of_colours = reader.read_u32::<LittleEndian>()?;
+        let number_of_colours = LittleEndian::read_u32(reader)?;
         if number_of_colours != 256 {
             return Err(io::Error::new(
                 io::ErrorKind::Other,
                 "indexed STCI image must have 256 colors",
             ));
         }
-        num_subimages = reader.read_u16::<LittleEndian>()? as usize;
-        let _red_depth = reader.read_u8()?;
-        let _green_depth = reader.read_u8()?;
-        let _blue_depth = reader.read_u8()?;
+        num_subimages = LittleEndian::read_u16(reader)? as usize;
+        let _red_depth = LittleEndian::read_u8(reader)?;
+        let _green_depth = LittleEndian::read_u8(reader)?;
+        let _blue_depth = LittleEndian::read_u8(reader)?;
         let mut unused: [u8; 11] = [0; 11];
         reader.read_exact(&mut unused)?;
     } else {
         // RGB
-        let _red_mask = reader.read_u32::<LittleEndian>()?;
-        let _green_mask = reader.read_u32::<LittleEndian>()?;
-        let _blue_mask = reader.read_u32::<LittleEndian>()?;
-        let _alpha_mask = reader.read_u32::<LittleEndian>()?;
-        let _red_depth = reader.read_u8()?;
-        let _green_depth = reader.read_u8()?;
-        let _blue_depth = reader.read_u8()?;
-        let _alpha_depth = reader.read_u8()?;
+        let _red_mask = LittleEndian::read_u32(reader)?;
+        let _green_mask = LittleEndian::read_u32(reader)?;
+        let _blue_mask = LittleEndian::read_u32(reader)?;
+        let _alpha_mask = LittleEndian::read_u32(reader)?;
+        let _red_depth = LittleEndian::read_u8(reader)?;
+        let _green_depth = LittleEndian::read_u8(reader)?;
+        let _blue_depth = LittleEndian::read_u8(reader)?;
+        let _alpha_depth = LittleEndian::read_u8(reader)?;
     }
 
-    let pixel_depth = reader.read_u8()?;
-    let _unused1 = reader.read_u8()?;
-    let _unused2 = reader.read_u8()?;
-    let _unused3 = reader.read_u8()?;
-    let app_data_size = reader.read_u32::<LittleEndian>()? as usize;
+    let pixel_depth = LittleEndian::read_u8(reader)?;
+    let _unused1 = LittleEndian::read_u8(reader)?;
+    let _unused2 = LittleEndian::read_u8(reader)?;
+    let _unused3 = LittleEndian::read_u8(reader)?;
+    let app_data_size = LittleEndian::read_u32(reader)? as usize;
     let mut unused: [u8; 12] = [0; 12];
     reader.read_exact(&mut unused)?;
 
@@ -129,14 +130,15 @@ pub fn read_stci(reader: &mut dyn io::Read, load_app_data: bool) -> io::Result<S
             let mut buffer = vec![0; size];
             reader.read_exact(&mut buffer)?;
             let mut reader = io::Cursor::new(buffer);
+            let reader = &mut reader;
             for _i in 0..num_subimages {
                 let subimage = Subimage {
-                    data_offset: reader.read_u32::<LittleEndian>()?,
-                    data_length: reader.read_u32::<LittleEndian>()?,
-                    x_offset: reader.read_i16::<LittleEndian>()?,
-                    y_offset: reader.read_i16::<LittleEndian>()?,
-                    height: reader.read_u16::<LittleEndian>()?,
-                    width: reader.read_u16::<LittleEndian>()?,
+                    data_offset: LittleEndian::read_u32(reader)?,
+                    data_length: LittleEndian::read_u32(reader)?,
+                    x_offset: LittleEndian::read_i16(reader)?,
+                    y_offset: LittleEndian::read_i16(reader)?,
+                    height: LittleEndian::read_u16(reader)?,
+                    width: LittleEndian::read_u16(reader)?,
                 };
                 collector.push(subimage);
             }
