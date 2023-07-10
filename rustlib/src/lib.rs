@@ -1,3 +1,4 @@
+mod binreader;
 pub mod civ_groups;
 pub mod clock;
 pub mod exp_alloc;
