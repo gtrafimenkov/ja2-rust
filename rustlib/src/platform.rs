@@ -16,6 +16,7 @@ pub fn remove_files_in_directory(path: &PathBuf) -> std::io::Result<()> {
 
 // Remove read-only attribute from a file.
 #[cfg(target_os = "windows")]
+#[allow(clippy::permissions_set_readonly_false)]
 pub fn remove_readonly_attribute(path: &PathBuf) -> std::io::Result<()> {
     let mut perms = std::fs::metadata(path)?.permissions();
     perms.set_readonly(false);
