@@ -256,8 +256,8 @@ fn canonize_libfile_path(path: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crypto::digest::Digest;
-    use crypto::sha2::Sha256;
+    use ggstd::crypto::sha256;
+    use ggstd::encoding::hex;
 
     #[test]
     fn loading_slfs() {
@@ -280,21 +280,21 @@ mod tests {
         let mut fdb = DB::new();
         fdb.load_slf_from_dir("../tools/editor").unwrap();
 
-        let path = "Editor\\EXITGRIDBUT.STI";
-        let hash = "b7099f0fefcc7cff52081c12d304b84d712fb36c4212407afe921cb4208b7adc";
+        let test_path = "Editor\\EXITGRIDBUT.STI";
+        let test_hash = "b7099f0fefcc7cff52081c12d304b84d712fb36c4212407afe921cb4208b7adc";
 
-        assert_eq!(5712, fdb.get_libfile_size(path).unwrap());
+        assert_eq!(5712, fdb.get_libfile_size(test_path).unwrap());
 
-        let f = &mut fdb.open_for_reading(path).unwrap();
+        let f = &mut fdb.open_for_reading(test_path).unwrap();
 
         // reading the file and testing the content
         {
             let mut buffer = [0; 5712];
             fdb.read_libfile_exact(f, &mut buffer).unwrap();
 
-            let mut hasher = Sha256::new();
-            hasher.input(&buffer);
-            assert_eq!(hash, hasher.result_str());
+            let hash = sha256::sum256(&buffer);
+            let hash_str = hex::encode_to_string(&hash);
+            assert_eq!(test_hash, hash_str);
         }
 
         // reading again
@@ -304,9 +304,9 @@ mod tests {
             let mut buffer = [0; 5712];
             fdb.read_libfile_exact(f, &mut buffer).unwrap();
 
-            let mut hasher = Sha256::new();
-            hasher.input(&buffer);
-            assert_eq!(hash, hasher.result_str());
+            let hash = sha256::sum256(&buffer);
+            let hash_str = hex::encode_to_string(&hash);
+            assert_eq!(test_hash, hash_str);
         }
 
         // reading again with read_libfile function
@@ -317,9 +317,9 @@ mod tests {
             let bytes_read = fdb.read_libfile(f, &mut buffer).unwrap();
             assert_eq!(5712, bytes_read);
 
-            let mut hasher = Sha256::new();
-            hasher.input(&buffer[0..5712]);
-            assert_eq!(hash, hasher.result_str());
+            let hash = sha256::sum256(&buffer[0..bytes_read]);
+            let hash_str = hex::encode_to_string(&hash);
+            assert_eq!(test_hash, hash_str);
         }
 
         // reading again with many read_libfile reads
@@ -331,9 +331,9 @@ mod tests {
             assert_eq!(2000, fdb.read_libfile(f, &mut buffer[2000..4000]).unwrap());
             assert_eq!(1712, fdb.read_libfile(f, &mut buffer[4000..5712]).unwrap());
 
-            let mut hasher = Sha256::new();
-            hasher.input(&buffer[0..5712]);
-            assert_eq!(hash, hasher.result_str());
+            let hash = sha256::sum256(&buffer[0..5712]);
+            let hash_str = hex::encode_to_string(&hash);
+            assert_eq!(test_hash, hash_str);
         }
 
         // reading again with many read_libfile reads and seek operations
@@ -350,9 +350,9 @@ mod tests {
             fdb.seek_libfile(f, io::SeekFrom::Current(2000)).unwrap();
             assert_eq!(2000, fdb.read_libfile(f, &mut buffer[2000..4000]).unwrap());
 
-            let mut hasher = Sha256::new();
-            hasher.input(&buffer[0..5712]);
-            assert_eq!(hash, hasher.result_str());
+            let hash = sha256::sum256(&buffer[0..5712]);
+            let hash_str = hex::encode_to_string(&hash);
+            assert_eq!(test_hash, hash_str);
 
             assert_eq!('S', buffer[0] as char);
             assert_eq!('T', buffer[1] as char);
