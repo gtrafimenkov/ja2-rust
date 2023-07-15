@@ -1,4 +1,4 @@
-use chrono::prelude::*;
+use ggstd::time;
 use std::ffi::{c_char, CStr};
 use std::fs;
 use std::io::Write;
@@ -12,10 +12,35 @@ fn get_file() -> &'static mut Option<fs::File> {
     }
 }
 
+fn get_current_time(short: bool) -> String {
+    let t = time::now();
+    if short {
+        format!(
+            "{:04}{:02}{:02}-{:02}{:02}{:02}",
+            t.year(),
+            t.month(),
+            t.day(),
+            t.hour(),
+            t.minute(),
+            t.second()
+        )
+    } else {
+        format!(
+            "{:04}-{:02}-{:02} {:02}:{:02}:{:02}",
+            t.year(),
+            t.month(),
+            t.day(),
+            t.hour(),
+            t.minute(),
+            t.second()
+        )
+    }
+}
+
 fn create_debug_file() -> Option<fs::File> {
     if let Ok(path) = std::env::current_exe() {
         if let Some(path) = path.parent() {
-            let name = format!("debug-{}.txt", Local::now().format("%Y%m%d-%H%M%S"));
+            let name = format!("debug-{}.txt", get_current_time(true));
             let mut path = path.to_path_buf();
             path.push(name);
             return fs::File::create(path).ok();
@@ -46,7 +71,7 @@ pub extern "C" fn DebugLogWrite(message: *const c_char) -> bool {
 
 /// Write message to the debug log
 pub fn debug_log_write(message: &str) -> bool {
-    let ts = Local::now().format("%Y-%m-%d %H:%M:%S");
+    let ts = get_current_time(false);
     if let Some(f) = get_file() {
         let message = message.trim_end();
         if f.write_fmt(format_args!("{ts}: {message}\n")).is_ok() {
