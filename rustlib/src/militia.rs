@@ -52,7 +52,7 @@ impl State {
     }
 
     pub fn set_force_of_rank(&mut self, x: u8, y: u8, rank: Rank, value: u8) {
-        let mut mil = self.get_mut_force(x, y);
+        let mil = self.get_mut_force(x, y);
         match rank {
             Rank::Green => mil.green = value,
             Rank::Regular => mil.regular = value,
@@ -61,7 +61,7 @@ impl State {
     }
 
     pub fn inc_force_of_rank(&mut self, x: u8, y: u8, rank: Rank, increase: u8) {
-        let mut mil = self.get_mut_force(x, y);
+        let mil = self.get_mut_force(x, y);
         match rank {
             Rank::Green => mil.green += increase,
             Rank::Regular => mil.regular += increase,
