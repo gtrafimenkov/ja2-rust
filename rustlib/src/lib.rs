@@ -16,6 +16,7 @@ pub mod exp_laptop;
 pub mod exp_militia;
 pub mod exp_platform;
 pub mod exp_sam_sites;
+pub mod exp_screenshot;
 pub mod exp_sector;
 pub mod exp_towns;
 pub mod exp_ui;
