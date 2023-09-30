@@ -30,6 +30,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 
 #define MERC_TEXT_FONT FONT12ARIAL
 #define MERC_TEXT_COLOR FONT_MCOLOR_WHITE
@@ -1192,13 +1193,13 @@ BOOLEAN DistortVideoMercImage(uint16_t usPosX, uint16_t usPosY, uint16_t usWidth
       for (i = usPosX; i < usPosX + usWidth; i++) {
         DestColor = pBuffer[(j * uiPitch) + i];
 
-        uiColor = GetRGBColor(DestColor);
+        uiColor = rgb565_to_rgb32(DestColor);
 
         red = (uint8_t)uiColor;
         green = (uint8_t)(uiColor >> 8);
         blue = (uint8_t)(uiColor >> 16);
 
-        DestColor = Get16BPPColor(FROMRGB(255 - red, 250 - green, 250 - blue));
+        DestColor = rgb32_to_rgb565(FROMRGB(255 - red, 250 - green, 250 - blue));
 
         pBuffer[(j * uiPitch) + i] = DestColor;
       }
@@ -1277,7 +1278,7 @@ BOOLEAN DisplayMercVideoIntro(uint16_t usTimeTillFinish) {
 
   VSurfaceColorFill(vsFB, MERC_VIDEO_FACE_X, MERC_VIDEO_FACE_Y,
                     MERC_VIDEO_FACE_X + MERC_VIDEO_FACE_WIDTH,
-                    MERC_VIDEO_FACE_Y + MERC_VIDEO_FACE_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)));
+                    MERC_VIDEO_FACE_Y + MERC_VIDEO_FACE_HEIGHT, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
 
   // if the intro is done
   if ((uiCurTime - uiLastTime) > usTimeTillFinish) {

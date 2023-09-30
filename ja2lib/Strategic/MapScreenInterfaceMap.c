@@ -47,6 +47,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 #include "rust_sam_sites.h"
 #include "rust_towns.h"
@@ -3154,7 +3155,7 @@ void BlitTownGridMarkers(void) {
   int16_t sWidth = 0, sHeight = 0;
 
   // get 16 bpp color
-  usColor = Get16BPPColor(FROMRGB(100, 100, 100));
+  usColor = rgb32_to_rgb565(FROMRGB(100, 100, 100));
 
   // blit in the highlighted sector
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
@@ -3220,7 +3221,7 @@ void BlitMineGridMarkers(void) {
   int16_t sWidth = 0, sHeight = 0;
 
   // get 16 bpp color
-  usColor = Get16BPPColor(FROMRGB(100, 100, 100));
+  usColor = rgb32_to_rgb565(FROMRGB(100, 100, 100));
 
   // blit in the highlighted sector
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
@@ -4386,7 +4387,7 @@ void ShadeSubLevelsNotVisited(void) {
   UNDERGROUND_SECTORINFO *pNode = gpUndergroundSectorInfoHead;
 
   // obtain the 16-bit version of the same color used in the mine STIs
-  gusUndergroundNearBlack = Get16BPPColor(FROMRGB(2, 2, 0));
+  gusUndergroundNearBlack = rgb32_to_rgb565(FROMRGB(2, 2, 0));
 
   // run through all (real & possible) underground sectors
   while (pNode) {
@@ -4665,7 +4666,7 @@ void BlitSAMGridMarkers(void) {
   int16_t sWidth = 0, sHeight = 0;
 
   // get 16 bpp color
-  usColor = Get16BPPColor(FROMRGB(100, 100, 100));
+  usColor = rgb32_to_rgb565(FROMRGB(100, 100, 100));
 
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 

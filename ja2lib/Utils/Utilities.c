@@ -14,6 +14,7 @@
 #include "Tactical/OverheadTypes.h"
 #include "Tactical/SoldierControl.h"
 #include "Utils/FontControl.h"
+#include "rust_colors.h"
 #include "rust_fileman.h"
 #include "rust_images.h"
 
@@ -78,8 +79,8 @@ BOOLEAN DisplayPaletteRep(PaletteRepID aPalRep, uint8_t ubXPos, uint8_t ubYPos,
     sBRY = sTLY + 20;
 
     us16BPPColor =
-        Get16BPPColor(FROMRGB(gpPalRep[ubPaletteRep].r[cnt1], gpPalRep[ubPaletteRep].g[cnt1],
-                              gpPalRep[ubPaletteRep].b[cnt1]));
+        rgb32_to_rgb565(FROMRGB(gpPalRep[ubPaletteRep].r[cnt1], gpPalRep[ubPaletteRep].g[cnt1],
+                                gpPalRep[ubPaletteRep].b[cnt1]));
 
     VSurfaceColorFill(GetVSByID(uiDestSurface), sTLX, sTLY, sBRX, sBRY, us16BPPColor);
   }

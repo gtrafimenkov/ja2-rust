@@ -13,6 +13,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "Utils/MusicControl.h"
 #include "Utils/TimerControl.h"
+#include "rust_colors.h"
 
 #define SQUARE_STEP 8
 
@@ -140,7 +141,7 @@ void BeginFade(uint32_t uiExitScreen, int8_t bFadeValue, int8_t bType, uint32_t 
       UpdateSaveBufferWithBackbuffer();
 
       // Clear framebuffer
-      VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+      VSurfaceColorFill(vsFB, 0, 0, 640, 480, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
       break;
 
     case FADE_OUT_REALFADE:
@@ -197,7 +198,7 @@ uint32_t FadeScreenHandle() {
         case FADE_OUT_REALFADE:
 
           // Clear framebuffer
-          VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+          VSurfaceColorFill(vsFB, 0, 0, 640, 480, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
           break;
       }
 

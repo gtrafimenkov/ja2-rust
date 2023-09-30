@@ -394,55 +394,6 @@ uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rs
   return (p16BPPPalette);
 }
 
-// Convert from RGB to 16 bit value
-uint16_t Get16BPPColor(uint32_t RGBValue) {
-  uint16_t r16, g16, b16, usColor;
-  uint8_t r, g, b;
-
-  r = SGPGetRValue(RGBValue);
-  g = SGPGetGValue(RGBValue);
-  b = SGPGetBValue(RGBValue);
-
-  r16 = ((uint16_t)r << 8);
-  g16 = ((uint16_t)g << 3);
-  b16 = ((uint16_t)b >> 3);
-
-  usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
-
-  // if our color worked out to absolute black, and the original wasn't
-  // absolute black, convert it to a VERY dark grey to avoid transparency
-  // problems
-
-  if (usColor == 0) {
-    if (RGBValue != 0) usColor = BLACK_SUBSTITUTE;
-  }
-  return (usColor);
-}
-
-// Convert from 16 BPP to RGBvalue
-uint32_t GetRGBColor(uint16_t Value16BPP) {
-  uint16_t r16, g16, b16;
-  uint32_t r, g, b, val;
-
-  r16 = Value16BPP & 0xf800;
-  g16 = Value16BPP & 0x07e0;
-  b16 = Value16BPP & 0x001f;
-
-  r = ((uint32_t)r16 >> 8);
-
-  g = ((uint32_t)g16 >> 3);
-
-  b = ((uint32_t)b16 << 3);
-
-  r &= 0x000000ff;
-  g &= 0x000000ff;
-  b &= 0x000000ff;
-
-  val = FROMRGB(r, g, b);
-
-  return (val);
-}
-
 //*****************************************************************************
 //
 // ConvertToPaletteEntry

@@ -12,6 +12,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/MusicControl.h"
 #include "Utils/TimerControl.h"
+#include "rust_colors.h"
 
 double rStart, rEnd;
 double rActual;
@@ -87,13 +88,13 @@ void DefineProgressBarPanel(uint32_t ubID, uint8_t r, uint8_t g, uint8_t b, uint
   pCurr->usPanelTop = usTop;
   pCurr->usPanelRight = usRight;
   pCurr->usPanelBottom = usBottom;
-  pCurr->usColor = Get16BPPColor(FROMRGB(r, g, b));
+  pCurr->usColor = rgb32_to_rgb565(FROMRGB(r, g, b));
   // Calculate the slightly lighter and darker versions of the same rgb color
-  pCurr->usLtColor = Get16BPPColor(FROMRGB((uint8_t)min(255, (uint16_t)(r * 1.33)),
-                                           (uint8_t)min(255, (uint16_t)(g * 1.33)),
-                                           (uint8_t)min(255, (uint16_t)(b * 1.33))));
+  pCurr->usLtColor = rgb32_to_rgb565(FROMRGB((uint8_t)min(255, (uint16_t)(r * 1.33)),
+                                             (uint8_t)min(255, (uint16_t)(g * 1.33)),
+                                             (uint8_t)min(255, (uint16_t)(b * 1.33))));
   pCurr->usDkColor =
-      Get16BPPColor(FROMRGB((uint8_t)(r * 0.75), (uint8_t)(g * 0.75), (uint8_t)(b * 0.75)));
+      rgb32_to_rgb565(FROMRGB((uint8_t)(r * 0.75), (uint8_t)(g * 0.75), (uint8_t)(b * 0.75)));
 }
 
 // Assigning a title for the panel will automatically position the text horizontally centered on the
@@ -239,17 +240,17 @@ void RenderProgressBar(uint8_t ubID, uint32_t uiPercentage) {
     }
     if (gfUseLoadScreenProgressBar) {
       VSurfaceColorFill(vsFB, pCurr->usBarLeft, pCurr->usBarTop, end, pCurr->usBarBottom,
-                        Get16BPPColor(FROMRGB(pCurr->ubColorFillRed, pCurr->ubColorFillGreen,
-                                              pCurr->ubColorFillBlue)));
+                        rgb32_to_rgb565(FROMRGB(pCurr->ubColorFillRed, pCurr->ubColorFillGreen,
+                                                pCurr->ubColorFillBlue)));
     } else {
       // Border edge of the progress bar itself in gray
       VSurfaceColorFill(vsFB, pCurr->usBarLeft, pCurr->usBarTop, pCurr->usBarRight,
-                        pCurr->usBarBottom, Get16BPPColor(FROMRGB(160, 160, 160)));
+                        pCurr->usBarBottom, rgb32_to_rgb565(FROMRGB(160, 160, 160)));
       // Interior of progress bar in black
       VSurfaceColorFill(vsFB, pCurr->usBarLeft + 2, pCurr->usBarTop + 2, pCurr->usBarRight - 2,
-                        pCurr->usBarBottom - 2, Get16BPPColor(FROMRGB(0, 0, 0)));
+                        pCurr->usBarBottom - 2, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
       VSurfaceColorFill(vsFB, pCurr->usBarLeft + 2, pCurr->usBarTop + 2, end,
-                        pCurr->usBarBottom - 2, Get16BPPColor(FROMRGB(72, 155, 24)));
+                        pCurr->usBarBottom - 2, rgb32_to_rgb565(FROMRGB(72, 155, 24)));
     }
     InvalidateRegion(pCurr->usBarLeft, pCurr->usBarTop, pCurr->usBarRight, pCurr->usBarBottom);
     ExecuteBaseDirtyRectQueue();

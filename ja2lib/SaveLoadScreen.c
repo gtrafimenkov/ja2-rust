@@ -42,6 +42,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "platform.h"
+#include "rust_colors.h"
 #include "rust_fileman.h"
 #include "rust_laptop.h"
 
@@ -1589,11 +1590,11 @@ void InitSaveLoadScreenTextInputBoxes() {
 
   SetTextInputCursor(CUROSR_IBEAM_WHITE);
   SetTextInputFont((uint16_t)FONT12ARIALFIXEDWIDTH);  // FONT12ARIAL //FONT12ARIALFIXEDWIDTH
-  Set16BPPTextFieldColor(Get16BPPColor(FROMRGB(0, 0, 0)));
-  SetBevelColors(Get16BPPColor(FROMRGB(136, 138, 135)), Get16BPPColor(FROMRGB(24, 61, 81)));
+  Set16BPPTextFieldColor(rgb32_to_rgb565(FROMRGB(0, 0, 0)));
+  SetBevelColors(rgb32_to_rgb565(FROMRGB(136, 138, 135)), rgb32_to_rgb565(FROMRGB(24, 61, 81)));
   SetTextInputRegularColors(FONT_WHITE, 2);
   SetTextInputHilitedColors(2, FONT_WHITE, FONT_WHITE);
-  SetCursorColor(Get16BPPColor(FROMRGB(255, 255, 255)));
+  SetCursorColor(rgb32_to_rgb565(FROMRGB(255, 255, 255)));
 
   AddUserInputField(NULL);
 

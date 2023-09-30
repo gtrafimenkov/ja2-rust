@@ -9,6 +9,7 @@
 #include "SGP/VObjectBlitters.h"
 #include "SGP/Video.h"
 #include "SGP/WCheck.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 
 // since some of the code is not complied on Linux
@@ -214,8 +215,8 @@ void BuildShadeTable(void) {
   for (red = 0; red < 256; red += 4)
     for (green = 0; green < 256; green += 4)
       for (blue = 0; blue < 256; blue += 4) {
-        index = Get16BPPColor(FROMRGB(red, green, blue));
-        ShadeTable[index] = Get16BPPColor(
+        index = rgb32_to_rgb565(FROMRGB(red, green, blue));
+        ShadeTable[index] = rgb32_to_rgb565(
             FROMRGB(red * guiShadePercent, green * guiShadePercent, blue * guiShadePercent));
       }
 
@@ -247,7 +248,7 @@ void BuildIntensityTable(void) {
 		for(green=0; green < 256; green+=4)
 			for(blue=0; blue < 256; blue+=4)
 			{
-				index=Get16BPPColor(FROMRGB(red, green, blue));
+				index=rgb32_to_rgb565(FROMRGB(red, green, blue));
 
 				lumin=( red*299/1000)+ ( green*587/1000 ) + ( blue*114/1000 );
 
@@ -258,15 +259,15 @@ void BuildIntensityTable(void) {
 
 				//rmod = __m( 255, rmod );
 
-				IntensityTable[index]=Get16BPPColor( FROMRGB( rmod, gmod , bmod ) );
+				IntensityTable[index]=rgb32_to_rgb565( FROMRGB( rmod, gmod , bmod ) );
 			}
 #endif
 
   for (red = 0; red < 256; red += 4)
     for (green = 0; green < 256; green += 4)
       for (blue = 0; blue < 256; blue += 4) {
-        index = Get16BPPColor(FROMRGB(red, green, blue));
-        IntensityTable[index] = Get16BPPColor(
+        index = rgb32_to_rgb565(FROMRGB(red, green, blue));
+        IntensityTable[index] = rgb32_to_rgb565(
             FROMRGB(red * dShadedPercent, green * dShadedPercent, blue * dShadedPercent));
       }
 }
