@@ -148,6 +148,10 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 
 void FatalError(char *pError, ...) {}
 
+BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
+  return FALSE;
+}
+
 struct VSurface *CreateVideoSurface(uint16_t width, uint16_t height) { return NULL; }
 
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }

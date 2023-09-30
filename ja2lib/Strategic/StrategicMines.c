@@ -523,7 +523,8 @@ int32_t MineAMine(int8_t bMineIndex) {
     if (iAmtExtracted > 0) {
       // debug message
       //			ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s - Mine income from %s =
-      //$%d", gswzWorldTimeStr, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], iAmtExtracted );
+      //$%d", gswzWorldTimeStr, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], iAmtExtracted
+      //);
 
       // if this is the first time this mine has produced income for the player in the game
       if (!gMineStatus[bMineIndex].fMineHasProducedForPlayer) {
@@ -551,10 +552,10 @@ void PostEventsForMineProduction(void) {
   uint8_t ubShift;
 
   for (ubShift = 0; ubShift < MINE_PRODUCTION_NUMBER_OF_PERIODS; ubShift++) {
-    AddStrategicEvent(
-        EVENT_HANDLE_MINE_INCOME,
-        GetGameTimeInDays()*24*60 + MINE_PRODUCTION_START_TIME + (ubShift * MINE_PRODUCTION_PERIOD),
-        0);
+    AddStrategicEvent(EVENT_HANDLE_MINE_INCOME,
+                      GetGameTimeInDays() * 24 * 60 + MINE_PRODUCTION_START_TIME +
+                          (ubShift * MINE_PRODUCTION_PERIOD),
+                      0);
   }
 }
 

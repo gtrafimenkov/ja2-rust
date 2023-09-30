@@ -1483,6 +1483,16 @@ void RenderOverlayMessage(VIDEO_OVERLAY *pBlitter) {
                    pBlitter->sY + gusOverlayPopupBoxHeight);
 }
 
+void EndOverlayMessage() {
+  if (giPopupSlideMessageOverlay != -1) {
+    //		DebugMsg( TOPIC_JA2, DBG_ERROR, String( "Removing Overlay message") );
+
+    RemoveVideoOverlay(giPopupSlideMessageOverlay);
+
+    giPopupSlideMessageOverlay = -1;
+  }
+}
+
 void DrawBarsInUIBox(struct SOLDIERTYPE *pSoldier, int16_t sXPos, int16_t sYPos, int16_t sWidth,
                      int16_t sHeight) {
   float dWidth, dPercentage;
@@ -2160,6 +2170,9 @@ void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, wchar_t *pFontString, ...) {
 
   // Override it!
   OverrideMercPopupBox(&gpUIMessageOverrideMercBox);
+
+  // SetPrepareMercPopupFlags( MERC_POPUP_PREPARE_FLAGS_TRANS_BACK |
+  // MERC_POPUP_PREPARE_FLAGS_MARGINS );
 
   if (fUseSkullIcon) {
     SetPrepareMercPopupFlags(MERC_POPUP_PREPARE_FLAGS_MARGINS | MERC_POPUP_PREPARE_FLAGS_SKULLICON);
