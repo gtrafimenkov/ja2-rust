@@ -98,9 +98,6 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
 UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
 struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
 
-// used to convert 565 RGB data into different bit-formats
-void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels);
-
 // Create a scaled down copy of an image.
 struct Image *ScaleImageDown2x(struct Image *image);
 

@@ -457,31 +457,6 @@ BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer) {
   return (TRUE);
 }
 
-void ConvertRGBDistribution565To555(UINT16 *p16BPPData, UINT32 uiNumberOfPixels) {
-  UINT16 *pPixel;
-  UINT32 uiLoop;
-
-  SplitUINT32 Pixel;
-
-  pPixel = p16BPPData;
-  for (uiLoop = 0; uiLoop < uiNumberOfPixels; uiLoop++) {
-    // If the pixel is completely black, don't bother converting it -- DB
-    if (*pPixel != 0) {
-      // we put the 16 pixel bits in the UPPER word of uiPixel, so that we can
-      // right shift the blue value (at the bottom) into the LOWER word to protect it
-      Pixel.usHigher = *pPixel;
-      Pixel.uiValue >>= 5;
-      // get rid of the least significant bit of green
-      Pixel.usHigher >>= 1;
-      // now shift back into the upper word
-      Pixel.uiValue <<= 5;
-      // and copy back
-      *pPixel = Pixel.usHigher;
-    }
-    pPixel++;
-  }
-}
-
 // Create a scaled down copy of an image.
 struct Image *ScaleImageDown2x(struct Image *image) {
   // not all image types are supported

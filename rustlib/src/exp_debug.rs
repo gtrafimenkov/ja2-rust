@@ -12,7 +12,7 @@ fn get_file() -> &'static mut Option<fs::File> {
     }
 }
 
-fn get_current_time(short: bool) -> String {
+pub fn get_current_time(short: bool) -> String {
     let t = time::now();
     if short {
         format!(

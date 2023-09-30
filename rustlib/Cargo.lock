@@ -112,9 +112,9 @@ dependencies = [
 
 [[package]]
 name = "ggstd"
-version = "0.0.2"
+version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad0ccf3c311f628244da2fa07b1607edae7c507a68d731368fe2f1a22eae903f"
+checksum = "5bf692ad6014ede42e1c8e191a4b147329ab7b0e54476d538d405e2172570757"
 
 [[package]]
 name = "hashbrown"

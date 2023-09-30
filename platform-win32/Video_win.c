@@ -24,6 +24,7 @@
 #include "rust_debug.h"
 #include "rust_geometry.h"
 #include "rust_images.h"
+#include "rust_screenshot.h"
 
 #define INITGUID
 #include <ddraw.h>
@@ -169,7 +170,6 @@ extern UINT32 guiDirtyRegionExCount;
 //
 
 BOOLEAN gfPrintFrameBuffer;
-UINT32 guiPrintFrameBufferIndex;
 
 BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   UINT32 uiIndex;
@@ -476,7 +476,6 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   gfForceFullScreenRefresh = TRUE;
   gpCursorStore = NULL;
   gfPrintFrameBuffer = FALSE;
-  guiPrintFrameBufferIndex = 0;
 
   //
   // This function must be called to setup RGB information
@@ -894,15 +893,6 @@ void printFramebuffer() {
   LPDIRECTDRAWSURFACE _pTmpBuffer;
   LPDIRECTDRAWSURFACE2 pTmpBuffer;
   DDSURFACEDESC SurfaceDescription;
-  FILE *OutputFile;
-  CHAR8 FileName[64];
-  struct Str512 ExecDir;
-  UINT16 *p16BPPData;
-
-  if (!Plat_GetExecutableDirectory(&ExecDir)) {
-    return;
-  }
-  Plat_SetCurrentDirectory(ExecDir.buf);
 
   //
   // Create temporary system memory surface. This is used to correct problems with the
@@ -933,58 +923,18 @@ void printFramebuffer() {
   Region.bottom = gusScreenHeight;
   DDBltFastSurface(pTmpBuffer, 0, 0, gpPrimarySurface, &Region);
 
-  //
-  // Ok now that temp surface has contents of backbuffer, copy temp surface to disk
-  //
+  ZEROMEM(SurfaceDescription);
+  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
+  ReturnCode = IDirectDrawSurface2_Lock(pTmpBuffer, NULL, &SurfaceDescription, 0, NULL);
+  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
+  }
 
-  sprintf(FileName, "SCREEN%03d.TGA", guiPrintFrameBufferIndex++);
-  if ((OutputFile = fopen(FileName, "wb")) != NULL) {
-    fprintf(OutputFile, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0x80, 0x02, 0xe0, 0x01, 0x10, 0);
+  StoreScreenshot((uint16_t *)SurfaceDescription.lpSurface);
 
-    //
-    // Lock temp surface
-    //
-
-    ZEROMEM(SurfaceDescription);
-    SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-    ReturnCode = IDirectDrawSurface2_Lock(pTmpBuffer, NULL, &SurfaceDescription, 0, NULL);
-    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    }
-
-    //
-    // Copy 16 bit buffer to file
-    //
-
-    // 5/6/5.. create buffer...
-    p16BPPData = (UINT16 *)MemAlloc(640 * 2);
-
-    for (INT32 iIndex = 479; iIndex >= 0; iIndex--) {
-      // ATE: OK, fix this such that it converts pixel format to 5/5/5
-      // if current settings are 5/6/5....
-      // Read into a buffer...
-      memcpy(p16BPPData, (((UINT8 *)SurfaceDescription.lpSurface) + (iIndex * 640 * 2)), 640 * 2);
-
-      // Convert....
-      ConvertRGBDistribution565To555(p16BPPData, 640);
-
-      // Write
-      fwrite(p16BPPData, 640 * 2, 1, OutputFile);
-    }
-
-    MemFree(p16BPPData);
-
-    fclose(OutputFile);
-
-    //
-    // Unlock temp surface
-    //
-
-    ZEROMEM(SurfaceDescription);
-    SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
-    ReturnCode = IDirectDrawSurface2_Unlock(pTmpBuffer, &SurfaceDescription);
-    if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
-    }
+  ZEROMEM(SurfaceDescription);
+  SurfaceDescription.dwSize = sizeof(DDSURFACEDESC);
+  ReturnCode = IDirectDrawSurface2_Unlock(pTmpBuffer, &SurfaceDescription);
+  if ((ReturnCode != DD_OK) && (ReturnCode != DDERR_WASSTILLDRAWING)) {
   }
 
   //
@@ -993,9 +943,6 @@ void printFramebuffer() {
 
   gfPrintFrameBuffer = FALSE;
   IDirectDrawSurface2_Release(pTmpBuffer);
-
-  strcat(ExecDir.buf, "\\Data");
-  Plat_SetCurrentDirectory(ExecDir.buf);
 }
 
 void RefreshScreen() {
