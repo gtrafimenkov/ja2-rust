@@ -77,6 +77,9 @@ struct VSurface *GetVSByID(VSurfID id);
 
 BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, u16 Color16BPP);
 
+// Sets transparency
+BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Video Surface manipulation functions
@@ -86,6 +89,9 @@ BOOLEAN VSurfaceColorFill(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2,
 // Set data from struct Image*.
 BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
                                       UINT16 usY, struct GRect *pSrcRect);
+
+// Sets Transparency color into HVSurface and the underlying DD surface
+BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor);
 
 // Deletes all data, including palettes, regions, DD Surfaces
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface);

@@ -404,6 +404,7 @@ static uint32_t addVSurfaceToList(struct VSurface *vs) {
 struct VSurface *VSurfaceAdd(u16 width, u16 height, VSurfID *puiIndex) {
   struct VSurface *vs = CreateVideoSurface(width, height);
   if (vs) {
+    SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
     if (puiIndex) {
       *puiIndex = addVSurfaceToList(vs);
     }
@@ -422,6 +423,7 @@ BOOLEAN AddVideoSurface(VSURFACE_DESC *desc, VSurfID *puiIndex) {
     return FALSE;
   }
 
+  SetVideoSurfaceTransparencyColor(vs, FROMRGB(0, 0, 0));
   *puiIndex = addVSurfaceToList(vs);
   return TRUE;
 }
@@ -431,6 +433,26 @@ BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch) {
   struct BufferLockInfo res = VSurfaceLock(vs);
   *pitch = res.pitch;
   return res.dest;
+}
+
+BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
+  struct VSurface *hVSurface;
+
+  //
+  // Get Video Surface
+  //
+
+  if (!(GetVideoSurface(&hVSurface, uiIndex))) {
+    return FALSE;
+  }
+
+  //
+  // Set transparency
+  //
+
+  SetVideoSurfaceTransparencyColor(hVSurface, TransColor);
+
+  return (TRUE);
 }
 
 struct VSurface *GetVSByID(VSurfID id) {

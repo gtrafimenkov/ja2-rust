@@ -369,6 +369,10 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
   DestRect.iBottom = DestRect.iTop + usHeight;
 
   if (pPopUpTextBox->uiFlags & MERC_POPUP_PREPARE_FLAGS_TRANS_BACK) {
+    // Zero with yellow,
+    // Set source transparcenty
+    SetVideoSurfaceTransparency(pPopUpTextBox->uiSourceBufferIndex, FROMRGB(255, 255, 0));
+
     pDestBuf =
         (UINT16 *)VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), &uiDestPitchBYTES);
 
