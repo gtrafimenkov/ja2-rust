@@ -21,6 +21,7 @@
 #include "TileEngine/RenderDirty.h"
 #include "UI.h"
 #include "Utils/FontControl.h"
+#include "rust_colors.h"
 
 #define BASE_REGION_FLAGS (MSYS_REGION_ENABLED | MSYS_SET_CURSOR)
 
@@ -1081,8 +1082,8 @@ void DisplayFastHelp(struct MOUSE_REGION *region) {
       pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
       SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
       RectangleDraw(TRUE, iX + 1, iY + 1, iX + iW - 1, iY + iH - 1,
-                    Get16BPPColor(FROMRGB(65, 57, 15)), pDestBuf);
-      RectangleDraw(TRUE, iX, iY, iX + iW - 2, iY + iH - 2, Get16BPPColor(FROMRGB(227, 198, 88)),
+                    rgb32_to_rgb565(FROMRGB(65, 57, 15)), pDestBuf);
+      RectangleDraw(TRUE, iX, iY, iX + iW - 2, iY + iH - 2, rgb32_to_rgb565(FROMRGB(227, 198, 88)),
                     pDestBuf);
       VSurfaceUnlock(vsFB);
       ShadowVideoSurfaceRect(vsFB, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);

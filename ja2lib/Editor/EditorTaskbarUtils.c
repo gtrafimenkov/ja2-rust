@@ -43,6 +43,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/TimerControl.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 
 void RenderEditorInfo();
@@ -464,9 +465,9 @@ void DrawEditorInfoBox(wchar_t *str, uint32_t uiFont, uint16_t x, uint16_t y, ui
   x2 = x + w;
   y2 = y + h;
 
-  usFillColorDark = Get16BPPColor(FROMRGB(24, 61, 81));
-  usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
-  usFillColorBack = Get16BPPColor(FROMRGB(250, 240, 188));
+  usFillColorDark = rgb32_to_rgb565(FROMRGB(24, 61, 81));
+  usFillColorLight = rgb32_to_rgb565(FROMRGB(136, 138, 135));
+  usFillColorBack = rgb32_to_rgb565(FROMRGB(250, 240, 188));
 
   VSurfaceColorFill(vsFB, x, y, x2, y2, usFillColorDark);
   VSurfaceColorFill(vsFB, x + 1, y + 1, x2, y2, usFillColorLight);
@@ -728,7 +729,7 @@ void RenderSelectedItemBlownUp() {
   yp = sScreenY + (20 - sHeight - sOffsetY * 2) / 2;
 
   BltVideoObjectOutlineFromIndex(vsFB, uiVideoObjectIndex, Item[gpItem->usItem].ubGraphicNum, xp,
-                                 yp, Get16BPPColor(FROMRGB(0, 140, 170)), TRUE);
+                                 yp, rgb32_to_rgb565(FROMRGB(0, 140, 170)), TRUE);
 
   // Display the item name above it
   SetFont(FONT10ARIAL);

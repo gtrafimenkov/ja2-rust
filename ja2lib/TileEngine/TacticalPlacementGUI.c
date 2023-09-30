@@ -36,6 +36,7 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 
 typedef struct MERCPLACEMENT {
   struct SOLDIERTYPE *pSoldier;
@@ -396,33 +397,33 @@ void RenderTacticalPlacementGUI() {
       // yellow one for bleeding
       iStartY = yp + 29 - 27 * pSoldier->bLifeMax / 100;
       VSurfaceColorFill(vsFB, xp + 36, iStartY, xp + 37, yp + 29,
-                        Get16BPPColor(FROMRGB(107, 107, 57)));
+                        rgb32_to_rgb565(FROMRGB(107, 107, 57)));
       VSurfaceColorFill(vsFB, xp + 37, iStartY, xp + 38, yp + 29,
-                        Get16BPPColor(FROMRGB(222, 181, 115)));
+                        rgb32_to_rgb565(FROMRGB(222, 181, 115)));
       // pink one for bandaged.
       iStartY += 27 * pSoldier->bBleeding / 100;
       VSurfaceColorFill(vsFB, xp + 36, iStartY, xp + 37, yp + 29,
-                        Get16BPPColor(FROMRGB(156, 57, 57)));
+                        rgb32_to_rgb565(FROMRGB(156, 57, 57)));
       VSurfaceColorFill(vsFB, xp + 37, iStartY, xp + 38, yp + 29,
-                        Get16BPPColor(FROMRGB(222, 132, 132)));
+                        rgb32_to_rgb565(FROMRGB(222, 132, 132)));
       // red one for actual health
       iStartY = yp + 29 - 27 * pSoldier->bLife / 100;
       VSurfaceColorFill(vsFB, xp + 36, iStartY, xp + 37, yp + 29,
-                        Get16BPPColor(FROMRGB(107, 8, 8)));
+                        rgb32_to_rgb565(FROMRGB(107, 8, 8)));
       VSurfaceColorFill(vsFB, xp + 37, iStartY, xp + 38, yp + 29,
-                        Get16BPPColor(FROMRGB(206, 0, 0)));
+                        rgb32_to_rgb565(FROMRGB(206, 0, 0)));
       // BREATH BAR
       iStartY = yp + 29 - 27 * pSoldier->bBreathMax / 100;
       VSurfaceColorFill(vsFB, xp + 39, iStartY, xp + 40, yp + 29,
-                        Get16BPPColor(FROMRGB(8, 8, 132)));
+                        rgb32_to_rgb565(FROMRGB(8, 8, 132)));
       VSurfaceColorFill(vsFB, xp + 40, iStartY, xp + 41, yp + 29,
-                        Get16BPPColor(FROMRGB(8, 8, 107)));
+                        rgb32_to_rgb565(FROMRGB(8, 8, 107)));
       // MORALE BAR
       iStartY = yp + 29 - 27 * pSoldier->bMorale / 100;
       VSurfaceColorFill(vsFB, xp + 42, iStartY, xp + 43, yp + 29,
-                        Get16BPPColor(FROMRGB(8, 156, 8)));
+                        rgb32_to_rgb565(FROMRGB(8, 156, 8)));
       VSurfaceColorFill(vsFB, xp + 43, iStartY, xp + 44, yp + 29,
-                        Get16BPPColor(FROMRGB(8, 107, 8)));
+                        rgb32_to_rgb565(FROMRGB(8, 107, 8)));
     }
     SetFont(BLOCKFONT);
     SetFontForeground(FONT_BEIGE);
@@ -440,7 +441,7 @@ void RenderTacticalPlacementGUI() {
     if (IsDayTime()) {   // 6AM to 9PM is black
       usHatchColor = 0;  // Black
     } else {             // 9PM to 6AM is gray (black is too dark to distinguish)
-      usHatchColor = Get16BPPColor(FROMRGB(63, 31, 31));
+      usHatchColor = rgb32_to_rgb565(FROMRGB(63, 31, 31));
     }
     gfValidLocationsChanged--;
     VSurfaceBlitBufToBuf(vsSB, vsFB, 4, 4, 636, 320);

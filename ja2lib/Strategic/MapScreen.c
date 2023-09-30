@@ -107,6 +107,7 @@
 #include "Utils/Text.h"
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
+#include "rust_colors.h"
 #include "rust_laptop.h"
 #include "rust_sam_sites.h"
 
@@ -1041,8 +1042,8 @@ void ContractListRegionBoxGlow(uint16_t usCount) {
   usY = (Y_OFFSET * usCount - 1) + (Y_START + (usCount * Y_SIZE) + sYAdd);
 
   // glow contract box
-  usColor = Get16BPPColor(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
-                                  GlowColorsA[iColorNum].ubBlue));
+  usColor = rgb32_to_rgb565(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
+                                    GlowColorsA[iColorNum].ubBlue));
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, TIME_REMAINING_X, usY, TIME_REMAINING_X + TIME_REMAINING_WIDTH,
@@ -1097,8 +1098,8 @@ void GlowFace(void) {
     iColorNum--;
 
   // glow contract box
-  usColor = Get16BPPColor(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
-                                  GlowColorsA[iColorNum].ubBlue));
+  usColor = rgb32_to_rgb565(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
+                                    GlowColorsA[iColorNum].ubBlue));
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, 9, 18, 60, 63, usColor, pDestBuf);
@@ -1154,8 +1155,8 @@ void GlowItem(void) {
   }
 
   // glow contract box
-  usColor = Get16BPPColor(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
-                                  GlowColorsA[iColorNum].ubBlue));
+  usColor = rgb32_to_rgb565(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
+                                    GlowColorsA[iColorNum].ubBlue));
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, 3, 80, 64, 104, usColor, pDestBuf);
@@ -1193,8 +1194,8 @@ void GlowTrashCan(void) {
   fOldTrashCanGlow = TRUE;
 
   // glow contract box
-  usColor = Get16BPPColor(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
-                                  GlowColorsA[iColorNum].ubBlue));
+  usColor = rgb32_to_rgb565(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
+                                    GlowColorsA[iColorNum].ubBlue));
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, TRASH_CAN_X, TRASH_CAN_Y, TRASH_CAN_X + TRASH_CAN_WIDTH,
@@ -2165,8 +2166,9 @@ void HighLightAssignLine() {
         usY += 6;
       }
 
-      usColor = Get16BPPColor(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
-                                      GlowColorsA[iColorNum].ubBlue));
+      usColor =
+          rgb32_to_rgb565(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
+                                  GlowColorsA[iColorNum].ubBlue));
 
       LineDraw(TRUE, usX, usY, usX, usY + GetFontHeight(MAP_SCREEN_FONT) + 2, usColor, pDestBuf);
       LineDraw(TRUE, usX + ASSIGN_WIDTH, usY, usX + ASSIGN_WIDTH,
@@ -2240,8 +2242,9 @@ void HighLightDestLine() {
         usY += 6;
       }
 
-      usColor = Get16BPPColor(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
-                                      GlowColorsA[iColorNum].ubBlue));
+      usColor =
+          rgb32_to_rgb565(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
+                                  GlowColorsA[iColorNum].ubBlue));
 
       if ((usCount == 0) ||
           (usCount != 0 ? !(CharacterIsGettingPathPlotted((uint16_t)(usCount - 1))) : 0) ||
@@ -2321,8 +2324,9 @@ void HighLightSleepLine() {
         usY += 6;
       }
 
-      usColor = Get16BPPColor(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
-                                      GlowColorsA[iColorNum].ubBlue));
+      usColor =
+          rgb32_to_rgb565(FROMRGB(GlowColorsA[iColorNum].ubRed, GlowColorsA[iColorNum].ubGreen,
+                                  GlowColorsA[iColorNum].ubBlue));
 
       if ((usCount == 0) ||
           (usCount != 0 ? !(IsCharacterSelectedForSleep((uint16_t)(usCount - 1))) : 0) ||
@@ -2787,8 +2791,8 @@ uint32_t MapScreenHandle(void) {
     // TestMessageSystem( );
 
     // fill in
-    VSurfaceColorFill(vsSB, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
-    VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(RGB_NEAR_BLACK));
+    VSurfaceColorFill(vsSB, 0, 0, 640, 480, rgb32_to_rgb565(RGB_NEAR_BLACK));
+    VSurfaceColorFill(vsFB, 0, 0, 640, 480, rgb32_to_rgb565(RGB_NEAR_BLACK));
 
     if ((fFirstTimeInMapScreen == TRUE) && (AnyMercsHired() == FALSE)) {
       // render both panels for the restore
@@ -3604,7 +3608,7 @@ void RenderMapCursorsIndexesAnims() {
       }
 
       // draw WHITE highlight rectangle
-      RenderMapHighlight(gsHighlightSectorX, gsHighlightSectorY, Get16BPPColor(RGB_WHITE), FALSE);
+      RenderMapHighlight(gsHighlightSectorX, gsHighlightSectorY, rgb32_to_rgb565(RGB_WHITE), FALSE);
 
       sPrevHighlightedMapX = gsHighlightSectorX;
       sPrevHighlightedMapY = gsHighlightSectorY;
@@ -3644,10 +3648,10 @@ void RenderMapCursorsIndexesAnims() {
 
     if (!fSelectedSectorHighlighted || fFlashCursorIsYellow) {
       // draw YELLOW highlight rectangle
-      usCursorColor = Get16BPPColor(RGB_YELLOW);
+      usCursorColor = rgb32_to_rgb565(RGB_YELLOW);
     } else {
       // draw WHITE highlight rectangle
-      usCursorColor = Get16BPPColor(RGB_WHITE);
+      usCursorColor = rgb32_to_rgb565(RGB_WHITE);
 
       // index letters will also be white instead of yellow so that they flash in synch with the
       // cursor

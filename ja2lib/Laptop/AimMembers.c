@@ -47,6 +47,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 #include "rust_fileman.h"
 #include "rust_images.h"
 #include "rust_laptop.h"
@@ -1945,16 +1946,16 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
       if (fContractDown) {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_ON_X;
         VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
-                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
+                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, rgb32_to_rgb565(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
         VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
+                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, rgb32_to_rgb565(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_CONTRACT_LENGTH_X + AIM_SELECT_LIGHT_OFF_X;
       VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
+                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
   }
@@ -1966,16 +1967,16 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown) {
       if (fBuyEquipDown) {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_ON_X;
         VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_ON_Y, usPosX + 8,
-                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
+                          usPosY + AIM_SELECT_LIGHT_ON_Y + 8, rgb32_to_rgb565(FROMRGB(0, 255, 0)));
       } else {
         usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
         VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 255, 0)));
+                          usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, rgb32_to_rgb565(FROMRGB(0, 255, 0)));
       }
     } else {
       usPosX = AIM_MEMBER_BUY_EQUIPMENT_X + AIM_SELECT_LIGHT_OFF_X;
       VSurfaceColorFill(vsFB, usPosX, usPosY + AIM_SELECT_LIGHT_OFF_Y, usPosX + 8,
-                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, Get16BPPColor(FROMRGB(0, 0, 0)));
+                        usPosY + AIM_SELECT_LIGHT_OFF_Y + 8, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
     }
     usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
   }
@@ -2633,7 +2634,7 @@ BOOLEAN DisplayBlackBackground(uint8_t ubMaxNumOfLoops) {
   VSurfaceColorFill(vsFB, AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                     AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
                     AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT,
-                    Get16BPPColor(FROMRGB(0, 0, 0)));
+                    rgb32_to_rgb565(FROMRGB(0, 0, 0)));
   InvalidateRegion(AIM_MEMBER_VIDEO_FACE_X, AIM_MEMBER_VIDEO_FACE_Y,
                    AIM_MEMBER_VIDEO_FACE_X + AIM_MEMBER_VIDEO_FACE_WIDTH,
                    AIM_MEMBER_VIDEO_FACE_Y + AIM_MEMBER_VIDEO_FACE_HEIGHT);

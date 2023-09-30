@@ -37,6 +37,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 #include "rust_laptop.h"
 
@@ -5758,7 +5759,7 @@ void RenderRectangleForPersonnelTransactionAmount(void) {
   RestoreClipRegionToFullScreenForRectangle(uiDestPitchBYTES);
   RectangleDraw(TRUE, (ATM_DISPLAY_X + ATM_DISPLAY_WIDTH) - iLength - 2, ATM_DISPLAY_Y + 35,
                 ATM_DISPLAY_X + ATM_DISPLAY_WIDTH + 1, ATM_DISPLAY_Y + iHeight + 36,
-                Get16BPPColor(FROMRGB(255, 255, 255)), pDestBuf);
+                rgb32_to_rgb565(FROMRGB(255, 255, 255)), pDestBuf);
   VSurfaceUnlock(vsFB);
 }
 

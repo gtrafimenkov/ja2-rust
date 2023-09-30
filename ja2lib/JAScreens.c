@@ -54,6 +54,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 
 #define _UNICODE
@@ -617,7 +618,7 @@ uint32_t SexScreenHandle(void) {
   int16_t sX, sY;
 
   // OK, Clear screen and show smily face....
-  VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, 0, 0, 640, 480, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
   InvalidateScreen();
   // Remove cursor....
   SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);

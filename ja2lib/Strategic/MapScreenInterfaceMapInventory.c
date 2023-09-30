@@ -35,6 +35,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 
 extern BOOLEAN SaveWorldItemsToTempItemFile(uint8_t sMapX, uint8_t sMapY, int8_t bMapZ,
                                             uint32_t uiNumberOfItems, WORLDITEM *pData);
@@ -286,7 +287,7 @@ BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
                  ((MAP_INVEN_SLOT_HEIGHT) * (iCurrentSlot % (MAP_INV_SLOT_COLS))));
 
   if (fMapInventoryItemCompatable[iCurrentSlot]) {
-    sOutLine = Get16BPPColor(FROMRGB(255, 255, 255));
+    sOutLine = rgb32_to_rgb565(FROMRGB(255, 255, 255));
     fOutLine = TRUE;
   } else {
     sOutLine = us16BPPItemCyclePlacedItemColors[0];
@@ -309,7 +310,8 @@ BOOLEAN RenderItemInPoolSlot(int32_t iCurrentSlot, int32_t iFirstSlotOnPage) {
       (int16_t)(ITEMDESC_ITEM_STATUS_INV_POOL_OFFSET_Y + MAP_INVENTORY_POOL_SLOT_START_Y +
                 ((MAP_INVEN_SLOT_HEIGHT) * (iCurrentSlot % (MAP_INV_SLOT_COLS)))),
       ITEMDESC_ITEM_STATUS_WIDTH_INV_POOL, ITEMDESC_ITEM_STATUS_HEIGHT_INV_POOL,
-      Get16BPPColor(DESC_STATUS_BAR), Get16BPPColor(DESC_STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
+      rgb32_to_rgb565(DESC_STATUS_BAR), rgb32_to_rgb565(DESC_STATUS_BAR_SHADOW), TRUE,
+      guiSAVEBUFFER);
 
   //
   // if the item is not reachable, or if the selected merc is not in the current sector

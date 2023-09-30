@@ -61,6 +61,7 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 #include "platform.h"
+#include "rust_colors.h"
 #include "rust_geometry.h"
 #include "rust_images.h"
 #include "rust_laptop.h"
@@ -2378,11 +2379,12 @@ uint32_t DisplayInvSlot(uint8_t ubSlotNum, uint16_t usItemIndex, uint16_t usPosX
 
   // blt the item
   BltVideoObjectOutlineFromIndex(vsFB, GetInterfaceGraphicForItem(pItem), pItem->ubGraphicNum,
-                                 sCenX, sCenY, Get16BPPColor(FROMRGB(255, 255, 255)), fHighlighted);
+                                 sCenX, sCenY, rgb32_to_rgb565(FROMRGB(255, 255, 255)),
+                                 fHighlighted);
 
   // Display the status of the item
   DrawItemUIBarEx(pItemObject, 0, (int16_t)(usPosX + 2), (int16_t)(usPosY + 2 + 20), 2, 20,
-                  Get16BPPColor(FROMRGB(140, 136, 119)), Get16BPPColor(FROMRGB(140, 136, 119)),
+                  rgb32_to_rgb565(FROMRGB(140, 136, 119)), rgb32_to_rgb565(FROMRGB(140, 136, 119)),
                   TRUE, FRAME_BUFFER);
 
   // Display the Items Cost
@@ -4687,7 +4689,7 @@ void DisplaySkiAtmTransferString() {
   VSurfaceColorFill(vsFB, SKI_TRANSFER_STRING_X, SKI_TRANSFER_STRING_Y,
                     SKI_TRANSFER_STRING_X + SKI_TRANSFER_STRING_WIDTH,
                     SKI_TRANSFER_STRING_Y + SKI_TRANSFER_STRING_HEIGHT,
-                    Get16BPPColor(FROMRGB(0, 0, 0)));
+                    rgb32_to_rgb565(FROMRGB(0, 0, 0)));
 
   wcscpy(zSkiAtmTransferString, gzSkiAtmTransferString);
   InsertCommasForDollarFigure(zSkiAtmTransferString);

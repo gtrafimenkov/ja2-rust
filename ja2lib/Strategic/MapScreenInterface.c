@@ -63,6 +63,7 @@
 #include "Utils/SoundControl.h"
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 #include "rust_fileman.h"
 
 // inventory pool position on screen
@@ -2146,9 +2147,9 @@ void DisplayUserDefineHelpTextRegions(FASTHELPREGION *pRegion) {
 
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
-  RectangleDraw(TRUE, iX + 1, iY + 1, iX + iW - 1, iY + iH - 1, Get16BPPColor(FROMRGB(65, 57, 15)),
-                pDestBuf);
-  RectangleDraw(TRUE, iX, iY, iX + iW - 2, iY + iH - 2, Get16BPPColor(FROMRGB(227, 198, 88)),
+  RectangleDraw(TRUE, iX + 1, iY + 1, iX + iW - 1, iY + iH - 1,
+                rgb32_to_rgb565(FROMRGB(65, 57, 15)), pDestBuf);
+  RectangleDraw(TRUE, iX, iY, iX + iW - 2, iY + iH - 2, rgb32_to_rgb565(FROMRGB(227, 198, 88)),
                 pDestBuf);
   VSurfaceUnlock(vsFB);
   ShadowVideoSurfaceRect(vsFB, iX + 2, iY + 2, iX + iW - 3, iY + iH - 3);
@@ -4105,30 +4106,32 @@ void RenderSoldierSmallFaceForUpdatePanel(int32_t iIndex, int32_t iX, int32_t iY
 
   // yellow one for bleeding
   iStartY = iY + 29 - 27 * pSoldier->bLifeMax / 100;
-  VSurfaceColorFill(vsSB, iX + 36, iStartY, iX + 37, iY + 29, Get16BPPColor(FROMRGB(107, 107, 57)));
+  VSurfaceColorFill(vsSB, iX + 36, iStartY, iX + 37, iY + 29,
+                    rgb32_to_rgb565(FROMRGB(107, 107, 57)));
   VSurfaceColorFill(vsSB, iX + 37, iStartY, iX + 38, iY + 29,
-                    Get16BPPColor(FROMRGB(222, 181, 115)));
+                    rgb32_to_rgb565(FROMRGB(222, 181, 115)));
 
   // pink one for bandaged.
   iStartY += 27 * pSoldier->bBleeding / 100;
-  VSurfaceColorFill(vsSB, iX + 36, iStartY, iX + 37, iY + 29, Get16BPPColor(FROMRGB(156, 57, 57)));
+  VSurfaceColorFill(vsSB, iX + 36, iStartY, iX + 37, iY + 29,
+                    rgb32_to_rgb565(FROMRGB(156, 57, 57)));
   VSurfaceColorFill(vsSB, iX + 37, iStartY, iX + 38, iY + 29,
-                    Get16BPPColor(FROMRGB(222, 132, 132)));
+                    rgb32_to_rgb565(FROMRGB(222, 132, 132)));
 
   // red one for actual health
   iStartY = iY + 29 - 27 * pSoldier->bLife / 100;
-  VSurfaceColorFill(vsSB, iX + 36, iStartY, iX + 37, iY + 29, Get16BPPColor(FROMRGB(107, 8, 8)));
-  VSurfaceColorFill(vsSB, iX + 37, iStartY, iX + 38, iY + 29, Get16BPPColor(FROMRGB(206, 0, 0)));
+  VSurfaceColorFill(vsSB, iX + 36, iStartY, iX + 37, iY + 29, rgb32_to_rgb565(FROMRGB(107, 8, 8)));
+  VSurfaceColorFill(vsSB, iX + 37, iStartY, iX + 38, iY + 29, rgb32_to_rgb565(FROMRGB(206, 0, 0)));
 
   // BREATH BAR
   iStartY = iY + 29 - 27 * pSoldier->bBreathMax / 100;
-  VSurfaceColorFill(vsSB, iX + 39, iStartY, iX + 40, iY + 29, Get16BPPColor(FROMRGB(8, 8, 132)));
-  VSurfaceColorFill(vsSB, iX + 40, iStartY, iX + 41, iY + 29, Get16BPPColor(FROMRGB(8, 8, 107)));
+  VSurfaceColorFill(vsSB, iX + 39, iStartY, iX + 40, iY + 29, rgb32_to_rgb565(FROMRGB(8, 8, 132)));
+  VSurfaceColorFill(vsSB, iX + 40, iStartY, iX + 41, iY + 29, rgb32_to_rgb565(FROMRGB(8, 8, 107)));
 
   // MORALE BAR
   iStartY = iY + 29 - 27 * pSoldier->bMorale / 100;
-  VSurfaceColorFill(vsSB, iX + 42, iStartY, iX + 43, iY + 29, Get16BPPColor(FROMRGB(8, 156, 8)));
-  VSurfaceColorFill(vsSB, iX + 43, iStartY, iX + 44, iY + 29, Get16BPPColor(FROMRGB(8, 107, 8)));
+  VSurfaceColorFill(vsSB, iX + 42, iStartY, iX + 43, iY + 29, rgb32_to_rgb565(FROMRGB(8, 156, 8)));
+  VSurfaceColorFill(vsSB, iX + 43, iStartY, iX + 44, iY + 29, rgb32_to_rgb565(FROMRGB(8, 107, 8)));
 
   return;
 }

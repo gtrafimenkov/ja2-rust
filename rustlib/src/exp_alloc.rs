@@ -56,7 +56,7 @@ impl DB {
 /// This function is not thread-safe.
 pub extern "C" fn RustAlloc(size: usize) -> *mut u8 {
     let layout = Layout::from_size_align(size, std::mem::align_of::<u8>()).unwrap();
-    let buffer = unsafe { alloc(layout) as *mut u8 };
+    let buffer = unsafe { alloc(layout) };
     if buffer.is_null() {
         let message = format!("failed to allocate {size} bytes");
         exp_debug::debug_log_write(&message);

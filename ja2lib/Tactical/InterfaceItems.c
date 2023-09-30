@@ -74,6 +74,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 #include "rust_fileman.h"
 #include "rust_images.h"
 #include "rust_laptop.h"
@@ -1038,7 +1039,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, int16_t sPocket, uint8_
   if (fDirtyLevel == DIRTYLEVEL2) {
     if (gbCompatibleAmmo[sPocket]) {
       fOutline = TRUE;
-      sOutlineColor = Get16BPPColor(FROMRGB(255, 255, 255));
+      sOutlineColor = rgb32_to_rgb565(FROMRGB(255, 255, 255));
     }
 
     // IF it's the second hand and this hand cannot contain anything, remove the second hand
@@ -1097,7 +1098,7 @@ void INVRenderINVPanelItem(struct SOLDIERTYPE *pSoldier, int16_t sPocket, uint8_
     sBarX = sX - gSMInvData[sPocket].sBarDx;
     sBarY = sY + gSMInvData[sPocket].sBarDy;
     DrawItemUIBarEx(pObject, 0, sBarX, sBarY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT,
-                    Get16BPPColor(STATUS_BAR), Get16BPPColor(STATUS_BAR_SHADOW), TRUE,
+                    rgb32_to_rgb565(STATUS_BAR), rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE,
                     guiSAVEBUFFER);
   }
 }
@@ -1670,7 +1671,7 @@ void InitItemInterface() {
   uint32_t cnt, cnt2;
 
   for (cnt = 0, cnt2 = 0; cnt2 < 20; cnt += 3, cnt2++) {
-    us16BPPItemCyclePlacedItemColors[cnt2] = Get16BPPColor(
+    us16BPPItemCyclePlacedItemColors[cnt2] = rgb32_to_rgb565(
         FROMRGB(ubRGBItemCyclePlacedItemColors[cnt], ubRGBItemCyclePlacedItemColors[cnt + 1],
                 ubRGBItemCyclePlacedItemColors[cnt + 2]));
   }
@@ -2618,8 +2619,8 @@ void RenderItemDescriptionBox() {
     // Display ststus
     DrawItemUIBarEx(gpItemDescObject, gubItemDescStatusIndex, (int16_t)MAP_ITEMDESC_ITEM_STATUS_X,
                     (int16_t)MAP_ITEMDESC_ITEM_STATUS_Y, ITEMDESC_ITEM_STATUS_WIDTH,
-                    ITEMDESC_ITEM_STATUS_HEIGHT_MAP, Get16BPPColor(DESC_STATUS_BAR),
-                    Get16BPPColor(DESC_STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
+                    ITEMDESC_ITEM_STATUS_HEIGHT_MAP, rgb32_to_rgb565(DESC_STATUS_BAR),
+                    rgb32_to_rgb565(DESC_STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
 
     if (gpItemPointer) {
       if ((Item[gpItemPointer->usItem].fFlags & ITEM_HIDDEN_ADDON) ||
@@ -2647,8 +2648,8 @@ void RenderItemDescriptionBox() {
           sCenX = sCenX - gMapItemDescAttachmentsXY[cnt].sBarDx;
           sCenY = sCenY + gMapItemDescAttachmentsXY[cnt].sBarDy;
           DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
-                          sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
-                          Get16BPPColor(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
+                          sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
+                          rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
 
         } else {
           sCenX = (int16_t)(gsInvDescX + gMapItemDescAttachmentsXY[cnt].sX + 5);
@@ -2662,8 +2663,8 @@ void RenderItemDescriptionBox() {
           sCenX = sCenX - gItemDescAttachmentsXY[cnt].sBarDx;
           sCenY = sCenY + gItemDescAttachmentsXY[cnt].sBarDy;
           DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
-                          sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
-                          Get16BPPColor(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
+                          sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
+                          rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
         }
       }
 
@@ -3126,8 +3127,8 @@ void RenderItemDescriptionBox() {
     // Display status
     DrawItemUIBarEx(gpItemDescObject, gubItemDescStatusIndex, (int16_t)ITEMDESC_ITEM_STATUS_X,
                     (int16_t)ITEMDESC_ITEM_STATUS_Y, ITEMDESC_ITEM_STATUS_WIDTH,
-                    ITEMDESC_ITEM_STATUS_HEIGHT, Get16BPPColor(DESC_STATUS_BAR),
-                    Get16BPPColor(DESC_STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
+                    ITEMDESC_ITEM_STATUS_HEIGHT, rgb32_to_rgb565(DESC_STATUS_BAR),
+                    rgb32_to_rgb565(DESC_STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
 
     if (gpItemPointer) {
       if ((Item[gpItemPointer->usItem].fFlags & ITEM_HIDDEN_ADDON) ||
@@ -3153,8 +3154,8 @@ void RenderItemDescriptionBox() {
         sCenX = sCenX - gItemDescAttachmentsXY[cnt].sBarDx;
         sCenY = sCenY + gItemDescAttachmentsXY[cnt].sBarDy;
         DrawItemUIBarEx(gpItemDescObject, (uint8_t)(DRAW_ITEM_STATUS_ATTACHMENT1 + cnt), sCenX,
-                        sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
-                        Get16BPPColor(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
+                        sCenY, ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
+                        rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE, guiSAVEBUFFER);
 
         SetRegionFastHelpText(&(gItemDescAttachmentRegions[cnt]),
                               ItemNames[gpItemDescObject->usAttachItem[cnt]]);
@@ -4735,8 +4736,8 @@ void RenderItemStackPopup(BOOLEAN fFullRender) {
       sNewX = (int16_t)(gsItemPopupX + (cnt * usWidth) + 7);
       sNewY = gsItemPopupY + INV_BAR_DY + 3;
       DrawItemUIBarEx(gpItemPopupObject, (uint8_t)cnt, sNewX, sNewY, ITEM_BAR_WIDTH,
-                      ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR), Get16BPPColor(STATUS_BAR_SHADOW),
-                      TRUE, FRAME_BUFFER);
+                      ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
+                      rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE, FRAME_BUFFER);
     }
   }
 
@@ -4927,8 +4928,8 @@ void RenderKeyRingPopup(BOOLEAN fFullRender) {
           &pObject, 0,
           (int16_t)(gsKeyRingPopupInvX + sOffSetX + (cnt % sKeyRingItemWidth * usWidth) + 7),
           (int16_t)(gsKeyRingPopupInvY + sOffSetY + (cnt / sKeyRingItemWidth * usHeight) + 24),
-          ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, Get16BPPColor(STATUS_BAR),
-          Get16BPPColor(STATUS_BAR_SHADOW), TRUE, FRAME_BUFFER);
+          ITEM_BAR_WIDTH, ITEM_BAR_HEIGHT, rgb32_to_rgb565(STATUS_BAR),
+          rgb32_to_rgb565(STATUS_BAR_SHADOW), TRUE, FRAME_BUFFER);
 
       // set item type
       pObject.usItem = FIRST_KEY + LockTable[gpItemPopupSoldier->pKeyRing[cnt].ubKeyID].usKeyItem;
@@ -5742,7 +5743,7 @@ void RenderItemPickupMenu() {
             Blt8BPPDataTo16BPPBufferOutline((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             gTileDatabase[usItemTileIndex].hTileSurface, sCenX,
                                             sCenY, gTileDatabase[usItemTileIndex].usRegionIndex,
-                                            Get16BPPColor(FROMRGB(255, 255, 0)), TRUE);
+                                            rgb32_to_rgb565(FROMRGB(255, 255, 0)), TRUE);
           } else {
             // SetFontForeground( FONT_BLACK );
             // SetFontShadow( ITEMDESC_FONTSHADOW2 );
@@ -5799,10 +5800,10 @@ void RenderItemPickupMenu() {
           //}
           // Blt8BPPDataTo16BPPBufferOutline( (uint16_t*)pDestBuf, uiDestPitchBYTES, gTileDatabase[
           // usItemTileIndex ].hTileSurface, sCenX, sCenY, gTileDatabase[ usItemTileIndex
-          // ].usRegionIndex, Get16BPPColor( FROMRGB( 255, 0, 0 ) ), TRUE );
+          // ].usRegionIndex, rgb32_to_rgb565( FROMRGB( 255, 0, 0 ) ), TRUE );
           // Blt8BPPDataTo16BPPBufferOutline( (uint16_t*)pDestBuf, uiDestPitchBYTES, gTileDatabase[
           // usItemTileIndex ].hTileSurface, sCenX, sCenY, gTileDatabase[ usItemTileIndex
-          // ].usRegionIndex, Get16BPPColor( FROMRGB( 255, 0, 0 ) ), TRUE );
+          // ].usRegionIndex, rgb32_to_rgb565( FROMRGB( 255, 0, 0 ) ), TRUE );
         } else {
           SetFontForeground(FONT_BLACK);
           SetFontShadow(ITEMDESC_FONTSHADOW2);
