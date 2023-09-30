@@ -32,6 +32,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/TimerControl.h"
 #include "platform.h"
+#include "rust_colors.h"
 #include "rust_fileman.h"
 
 extern BOOLEAN gfOverheadMapDirty;
@@ -1375,21 +1376,21 @@ void RenderSummaryWindow() {
     if (gfWorldLoaded && !gfTempFile && gsSectorX) {
       x = MAP_LEFT + (gsSectorX - 1) * 13 + 1;
       y = MAP_TOP + (gsSectorY - 1) * 13 + 1;
-      RectangleDraw(TRUE, x, y, x + 11, y + 11, Get16BPPColor(FROMRGB(50, 50, 200)), pDestBuf);
+      RectangleDraw(TRUE, x, y, x + 11, y + 11, rgb32_to_rgb565(FROMRGB(50, 50, 200)), pDestBuf);
     }
 
     // Render the grid for the sector currently in focus (red).
     if (gsSelSectorX > 0 && !gfTempFile) {
       x = MAP_LEFT + (gsSelSectorX - 1) * 13;
       y = MAP_TOP + (gsSelSectorY - 1) * 13;
-      RectangleDraw(TRUE, x, y, x + 13, y + 13, Get16BPPColor(FROMRGB(200, 50, 50)), pDestBuf);
+      RectangleDraw(TRUE, x, y, x + 13, y + 13, rgb32_to_rgb565(FROMRGB(200, 50, 50)), pDestBuf);
     }
 
     // Render the grid for the sector if the mouse is over it (yellow).
     if (gsHiSectorX > 0) {
       x = MAP_LEFT + (gsHiSectorX - 1) * 13 - 1;
       y = MAP_TOP + (gsHiSectorY - 1) * 13 - 1;
-      RectangleDraw(TRUE, x, y, x + 15, y + 15, Get16BPPColor(FROMRGB(200, 200, 50)), pDestBuf);
+      RectangleDraw(TRUE, x, y, x + 15, y + 15, rgb32_to_rgb565(FROMRGB(200, 200, 50)), pDestBuf);
     }
     VSurfaceUnlock(vsFB);
   }

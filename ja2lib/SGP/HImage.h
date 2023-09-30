@@ -96,8 +96,6 @@ BOOLEAN CopyImageData(struct Image *hImage, struct ImageData *pBuffer);
 UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
                                  UINT32 bscale, BOOLEAN mono);
 UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette);
-UINT16 Get16BPPColor(UINT32 RGBValue);
-UINT32 GetRGBColor(UINT16 Value16BPP);
 struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette);
 
 // used to convert 565 RGB data into different bit-formats

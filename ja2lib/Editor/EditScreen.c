@@ -72,6 +72,7 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 #include "Utils/TextInput.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 
 extern struct SGPPaletteEntry gEditorLightColor;
@@ -232,13 +233,13 @@ UINT32 EditScreenInit(void) {
 
   // Set the editor colors.
   // gusEditorTaskbarColor = 9581;
-  // gusEditorTaskbarColor =		Get16BPPColor( FROMRGB(  72,  88, 104 ) );
-  // gusEditorTaskbarHiColor = Get16BPPColor( FROMRGB( 136, 138, 135 ) );
-  // gusEditorTaskbarLoColor = Get16BPPColor( FROMRGB(  24,  61,  81 ) );
+  // gusEditorTaskbarColor =		rgb32_to_rgb565( FROMRGB(  72,  88, 104 ) );
+  // gusEditorTaskbarHiColor = rgb32_to_rgb565( FROMRGB( 136, 138, 135 ) );
+  // gusEditorTaskbarLoColor = rgb32_to_rgb565( FROMRGB(  24,  61,  81 ) );
 
-  gusEditorTaskbarColor = Get16BPPColor(FROMRGB(65, 79, 94));
-  gusEditorTaskbarHiColor = Get16BPPColor(FROMRGB(122, 124, 121));
-  gusEditorTaskbarLoColor = Get16BPPColor(FROMRGB(22, 55, 73));
+  gusEditorTaskbarColor = rgb32_to_rgb565(FROMRGB(65, 79, 94));
+  gusEditorTaskbarHiColor = rgb32_to_rgb565(FROMRGB(122, 124, 121));
+  gusEditorTaskbarLoColor = rgb32_to_rgb565(FROMRGB(22, 55, 73));
 
   InitClipboard();
 
@@ -2205,8 +2206,8 @@ UINT32 WaitForHelpScreenResponse(void) {
   InputAtom DummyEvent;
   BOOLEAN fLeaveScreen;
 
-  VSurfaceColorFill(vsFB, 50, 50, 590, 310, Get16BPPColor(FROMRGB(136, 138, 135)));
-  VSurfaceColorFill(vsFB, 51, 51, 590, 310, Get16BPPColor(FROMRGB(24, 61, 81)));
+  VSurfaceColorFill(vsFB, 50, 50, 590, 310, rgb32_to_rgb565(FROMRGB(136, 138, 135)));
+  VSurfaceColorFill(vsFB, 51, 51, 590, 310, rgb32_to_rgb565(FROMRGB(24, 61, 81)));
   VSurfaceColorFill(vsFB, 51, 51, 589, 309, GenericButtonFillColors[0]);
 
   SetFont(gp12PointFont1);
@@ -2395,7 +2396,7 @@ void ShowCurrentSlotSurface(UINT32 vSurface, INT32 iWindow) {
   WinRect.iBottom = 399;
 
   VSurfaceColorFill(vsFB, WinRect.iLeft - 1, WinRect.iTop - 1, WinRect.iRight + 1,
-                    WinRect.iBottom + 1, Get16BPPColor(FROMRGB(128, 0, 0)));
+                    WinRect.iBottom + 1, rgb32_to_rgb565(FROMRGB(128, 0, 0)));
 
   iWinWidth = WinRect.iRight - WinRect.iLeft;
   iWinHeight = WinRect.iBottom - WinRect.iTop;

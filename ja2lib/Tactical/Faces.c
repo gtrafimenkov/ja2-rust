@@ -42,6 +42,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/Utilities.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 
 // Defines
@@ -719,7 +720,7 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
                                        sFaceX + pFace->usFaceWidth + 4,
                                        sFaceY + pFace->usFaceHeight + 4);
 
-        usLineColor = Get16BPPColor(FROMRGB(255, 255, 255));
+        usLineColor = rgb32_to_rgb565(FROMRGB(255, 255, 255));
         RectangleDraw(TRUE, (sFaceX - 2), (sFaceY - 1), sFaceX + pFace->usFaceWidth + 1,
                       sFaceY + pFace->usFaceHeight, usLineColor, pDestBuf);
 
@@ -736,9 +737,9 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
                                            sFaceY + pFace->usFaceHeight + 4);
 
             if (MercPtrs[pFace->ubSoldierID]->bStealthMode) {
-              usLineColor = Get16BPPColor(FROMRGB(158, 158, 12));
+              usLineColor = rgb32_to_rgb565(FROMRGB(158, 158, 12));
             } else {
-              usLineColor = Get16BPPColor(FROMRGB(8, 12, 118));
+              usLineColor = rgb32_to_rgb565(FROMRGB(8, 12, 118));
             }
             RectangleDraw(TRUE, (sFaceX - 2), (sFaceY - 1), sFaceX + pFace->usFaceWidth + 1,
                           sFaceY + pFace->usFaceHeight, usLineColor, pDestBuf);
@@ -756,7 +757,7 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
                                        pFace->usFaceX + pFace->usFaceWidth + 4,
                                        pFace->usFaceY + pFace->usFaceHeight + 4);
 
-        usLineColor = Get16BPPColor(FROMRGB(0, 0, 0));
+        usLineColor = rgb32_to_rgb565(FROMRGB(0, 0, 0));
         RectangleDraw(TRUE, (pFace->usFaceX - 2), (pFace->usFaceY - 1),
                       pFace->usFaceX + pFace->usFaceWidth + 1, pFace->usFaceY + pFace->usFaceHeight,
                       usLineColor, pDestBuf);
@@ -775,7 +776,7 @@ void HandleFaceHilights(FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 sF
                                    sFaceX + pFace->usFaceWidth + 4,
                                    sFaceY + pFace->usFaceHeight + 4);
 
-    usLineColor = Get16BPPColor(FROMRGB(255, 0, 0));
+    usLineColor = rgb32_to_rgb565(FROMRGB(255, 0, 0));
     RectangleDraw(TRUE, (sFaceX - 2), (sFaceY - 1), sFaceX + pFace->usFaceWidth + 1,
                   sFaceY + pFace->usFaceHeight, usLineColor, pDestBuf);
 
@@ -1112,7 +1113,7 @@ void HandleRenderFaceAdjustments(FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLEA
         pDestBuf = VSurfaceLockOld(GetVSByID(uiRenderBuffer), &uiDestPitchBYTES);
         SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
 
-        usLineColor = Get16BPPColor(FROMRGB(105, 8, 9));
+        usLineColor = rgb32_to_rgb565(FROMRGB(105, 8, 9));
         RectangleDraw(TRUE, sX1, sY1, sX2, sY2, usLineColor, pDestBuf);
 
         VSurfaceUnlock(GetVSByID(uiRenderBuffer));

@@ -31,6 +31,7 @@
 #include "TileEngine/WorldDef.h"
 #include "Utils/Cursors.h"
 #include "Utils/FontControl.h"
+#include "rust_colors.h"
 
 CurrentPopupMenuInformation gPopup;
 
@@ -231,10 +232,10 @@ void RenderPopupMenu() {
 
   // Draw the menu
   VSurfaceColorFill(vsFB, gPopup.usLeft, gPopup.usTop, gPopup.usRight, gPopup.usBottom,
-                    Get16BPPColor(FROMRGB(128, 128, 128)));
+                    rgb32_to_rgb565(FROMRGB(128, 128, 128)));
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
-  usLineColor = Get16BPPColor(FROMRGB(64, 64, 64));
+  usLineColor = rgb32_to_rgb565(FROMRGB(64, 64, 64));
   RectangleDraw(TRUE, gPopup.usLeft, gPopup.usTop, gPopup.usRight, gPopup.usBottom, usLineColor,
                 pDestBuf);
   if (gPopup.ubColumns > 1) {  // draw a vertical line between each column

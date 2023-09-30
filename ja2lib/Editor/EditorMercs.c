@@ -55,6 +55,7 @@
 #include "Utils/TimerControl.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 
 extern void GetSoldierAboveGuyPositions(struct SOLDIERTYPE *pSoldier, INT16 *psX, INT16 *psY,
@@ -732,9 +733,9 @@ void DisplayEditMercWindow(void) {
   GetSoldier(&pSoldier, (INT16)gsSelectedMercID);
 
   //	usFillColorBack = GenericButtonFillColors[0];
-  usFillColorDark = Get16BPPColor(FROMRGB(24, 61, 81));
-  usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
-  usFillColorTextBk = Get16BPPColor(FROMRGB(250, 240, 188));
+  usFillColorDark = rgb32_to_rgb565(FROMRGB(24, 61, 81));
+  usFillColorLight = rgb32_to_rgb565(FROMRGB(136, 138, 135));
+  usFillColorTextBk = rgb32_to_rgb565(FROMRGB(250, 240, 188));
 
   iWidth = 266;
   iHeight = 360;
@@ -1125,8 +1126,8 @@ void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet) {
   sLeft = 230;
   sRight = 359;
 
-  usFillColorDark = Get16BPPColor(FROMRGB(24, 61, 81));
-  usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
+  usFillColorDark = rgb32_to_rgb565(FROMRGB(24, 61, 81));
+  usFillColorLight = rgb32_to_rgb565(FROMRGB(136, 138, 135));
 
   // Draw color bar window area
   VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, usFillColorDark);
@@ -1142,11 +1143,11 @@ void ShowEditMercColorSet(UINT8 ubPaletteRep, INT16 sSet) {
   for (cnt1 = 0; cnt1 < ubSize; cnt1++) {
     if (cnt1 == (ubSize - 1)) sRight = 358;
     if (ubPaletteRep == 0xff)
-      us16BPPColor = Get16BPPColor(FROMRGB((16 - cnt1) * 10, (16 - cnt1) * 10, (16 - cnt1) * 10));
+      us16BPPColor = rgb32_to_rgb565(FROMRGB((16 - cnt1) * 10, (16 - cnt1) * 10, (16 - cnt1) * 10));
     else
       us16BPPColor =
-          Get16BPPColor(FROMRGB(gpPalRep[ubPaletteRep].r[cnt1], gpPalRep[ubPaletteRep].g[cnt1],
-                                gpPalRep[ubPaletteRep].b[cnt1]));
+          rgb32_to_rgb565(FROMRGB(gpPalRep[ubPaletteRep].r[cnt1], gpPalRep[ubPaletteRep].g[cnt1],
+                                  gpPalRep[ubPaletteRep].b[cnt1]));
     VSurfaceColorFill(vsFB, sLeft, sTop, sRight, sBottom, us16BPPColor);
 
     sLeft += sUnitSize;
@@ -2486,7 +2487,7 @@ void UpdateMercsInfo() {
       if (gubScheduleInstructions) {
         CHAR16 str[255];
         CHAR16 keyword[10] = L"";
-        VSurfaceColorFill(vsFB, 431, 388, 590, 450, Get16BPPColor(FROMRGB(32, 45, 72)));
+        VSurfaceColorFill(vsFB, 431, 388, 590, 450, rgb32_to_rgb565(FROMRGB(32, 45, 72)));
         switch (gCurrSchedule.ubAction[gubCurrentScheduleActionIndex]) {
           case SCHEDULE_ACTION_LOCKDOOR:
             swprintf(keyword, ARR_SIZE(keyword), L"lock");
@@ -2783,8 +2784,8 @@ void RenderMercInventoryPanel() {
     MarkAButtonDirty(iEditorButton[x]);
   }
   RenderButtons();
-  if (gbCurrHilite != -1) DrawRect(&mercRects[gbCurrHilite], Get16BPPColor(FROMRGB(200, 200, 0)));
-  if (gbCurrSelect != -1) DrawRect(&mercRects[gbCurrSelect], Get16BPPColor(FROMRGB(200, 0, 0)));
+  if (gbCurrHilite != -1) DrawRect(&mercRects[gbCurrHilite], rgb32_to_rgb565(FROMRGB(200, 200, 0)));
+  if (gbCurrSelect != -1) DrawRect(&mercRects[gbCurrSelect], rgb32_to_rgb565(FROMRGB(200, 0, 0)));
   RenderSelectedMercsInventory();
   InvalidateRegion(MERCPANEL_X, MERCPANEL_Y, 475, 460);
   UpdateItemStatsPanel();

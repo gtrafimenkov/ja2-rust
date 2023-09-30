@@ -20,6 +20,7 @@
 #include "platform.h"
 #include "platform_callbacks.h"
 #include "platform_strings.h"
+#include "rust_colors.h"
 #include "rust_debug.h"
 #include "rust_geometry.h"
 #include "rust_images.h"
@@ -1540,7 +1541,7 @@ BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL Tr
     return FALSE;
   }
 
-  ColorKey.dwColorSpaceLowValue = Get16BPPColor(TransColor);
+  ColorKey.dwColorSpaceLowValue = rgb32_to_rgb565(TransColor);
   ColorKey.dwColorSpaceHighValue = ColorKey.dwColorSpaceLowValue;
 
   DDSetSurfaceColorKey(lpDDSurface, DDCKEY_SRCBLT, &ColorKey);

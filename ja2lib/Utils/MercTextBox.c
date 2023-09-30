@@ -13,6 +13,7 @@
 #include "Utils/Message.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 
 #define TEXT_POPUP_WINDOW_TEXT_OFFSET_X 8
 #define TEXT_POPUP_WINDOW_TEXT_OFFSET_Y 8
@@ -376,7 +377,7 @@ INT32 PrepareMercPopupBox(INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorderI
     pDestBuf =
         (UINT16 *)VSurfaceLockOld(GetVSByID(pPopUpTextBox->uiSourceBufferIndex), &uiDestPitchBYTES);
 
-    usColorVal = Get16BPPColor(FROMRGB(255, 255, 0));
+    usColorVal = rgb32_to_rgb565(FROMRGB(255, 255, 0));
     usLoopEnd = (usWidth * usHeight);
 
     for (i = 0; i < usLoopEnd; i++) {

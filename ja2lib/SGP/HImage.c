@@ -394,55 +394,6 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
   return (p16BPPPalette);
 }
 
-// Convert from RGB to 16 bit value
-UINT16 Get16BPPColor(UINT32 RGBValue) {
-  UINT16 r16, g16, b16, usColor;
-  UINT8 r, g, b;
-
-  r = SGPGetRValue(RGBValue);
-  g = SGPGetGValue(RGBValue);
-  b = SGPGetBValue(RGBValue);
-
-  r16 = ((UINT16)r << 8);
-  g16 = ((UINT16)g << 3);
-  b16 = ((UINT16)b >> 3);
-
-  usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
-
-  // if our color worked out to absolute black, and the original wasn't
-  // absolute black, convert it to a VERY dark grey to avoid transparency
-  // problems
-
-  if (usColor == 0) {
-    if (RGBValue != 0) usColor = BLACK_SUBSTITUTE;
-  }
-  return (usColor);
-}
-
-// Convert from 16 BPP to RGBvalue
-UINT32 GetRGBColor(UINT16 Value16BPP) {
-  UINT16 r16, g16, b16;
-  UINT32 r, g, b, val;
-
-  r16 = Value16BPP & 0xf800;
-  g16 = Value16BPP & 0x07e0;
-  b16 = Value16BPP & 0x001f;
-
-  r = ((UINT32)r16 >> 8);
-
-  g = ((UINT32)g16 >> 3);
-
-  b = ((UINT32)b16 << 3);
-
-  r &= 0x000000ff;
-  g &= 0x000000ff;
-  b &= 0x000000ff;
-
-  val = FROMRGB(r, g, b);
-
-  return (val);
-}
-
 //*****************************************************************************
 //
 // ConvertToPaletteEntry

@@ -35,6 +35,7 @@
 #include "Utils/Text.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 
 extern BOOLEAN SaveWorldItemsToTempItemFile(u8 sMapX, u8 sMapY, i8 bMapZ, UINT32 uiNumberOfItems,
                                             WORLDITEM *pData);
@@ -285,7 +286,7 @@ BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
                ((MAP_INVEN_SLOT_HEIGHT) * (iCurrentSlot % (MAP_INV_SLOT_COLS))));
 
   if (fMapInventoryItemCompatable[iCurrentSlot]) {
-    sOutLine = Get16BPPColor(FROMRGB(255, 255, 255));
+    sOutLine = rgb32_to_rgb565(FROMRGB(255, 255, 255));
     fOutLine = TRUE;
   } else {
     sOutLine = us16BPPItemCyclePlacedItemColors[0];
@@ -307,7 +308,7 @@ BOOLEAN RenderItemInPoolSlot(INT32 iCurrentSlot, INT32 iFirstSlotOnPage) {
                   (INT16)(ITEMDESC_ITEM_STATUS_INV_POOL_OFFSET_Y + MAP_INVENTORY_POOL_SLOT_START_Y +
                           ((MAP_INVEN_SLOT_HEIGHT) * (iCurrentSlot % (MAP_INV_SLOT_COLS)))),
                   ITEMDESC_ITEM_STATUS_WIDTH_INV_POOL, ITEMDESC_ITEM_STATUS_HEIGHT_INV_POOL,
-                  Get16BPPColor(DESC_STATUS_BAR), Get16BPPColor(DESC_STATUS_BAR_SHADOW), TRUE,
+                  rgb32_to_rgb565(DESC_STATUS_BAR), rgb32_to_rgb565(DESC_STATUS_BAR_SHADOW), TRUE,
                   guiSAVEBUFFER);
 
   //

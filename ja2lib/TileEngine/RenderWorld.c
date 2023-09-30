@@ -50,6 +50,7 @@
 #include "Utils/FontControl.h"
 #include "Utils/SoundControl.h"
 #include "Utils/TimerControl.h"
+#include "rust_colors.h"
 #include "rust_images.h"
 
 #ifdef __GCC
@@ -2020,7 +2021,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
                 if (!(uiFlags & TILES_DIRTY)) VSurfaceUnlock(vsFB);
                 VSurfaceColorFill(vsFB, iTempPosX_S, iTempPosY_S, (INT16)(iTempPosX_S + 40),
                                   (INT16)(min(iTempPosY_S + 20, 360)),
-                                  Get16BPPColor(FROMRGB(0, 0, 0)));
+                                  rgb32_to_rgb565(FROMRGB(0, 0, 0)));
                 if (!(uiFlags & TILES_DIRTY)) pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
               }
             }
@@ -2134,7 +2135,7 @@ void RenderWorld() {
   // If we are testing renderer, set background to pink!
   if (gTacticalStatus.uiFlags & DEBUGCLIFFS) {
     VSurfaceColorFill(vsFB, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y,
-                      Get16BPPColor(FROMRGB(0, 255, 0)));
+                      rgb32_to_rgb565(FROMRGB(0, 255, 0)));
     SetRenderFlags(RENDER_FLAG_FULL);
   }
 
@@ -3152,22 +3153,22 @@ void InitRenderParams(UINT8 ubRestrictionID) {
 
   for (cnt = 0, cnt2 = 0; cnt2 < NUM_ITEM_CYCLE_COLORS; cnt += 3, cnt2++) {
     us16BPPItemCycleWhiteColors[cnt2] =
-        Get16BPPColor(FROMRGB(ubRGBItemCycleWhiteColors[cnt], ubRGBItemCycleWhiteColors[cnt + 1],
-                              ubRGBItemCycleWhiteColors[cnt + 2]));
+        rgb32_to_rgb565(FROMRGB(ubRGBItemCycleWhiteColors[cnt], ubRGBItemCycleWhiteColors[cnt + 1],
+                                ubRGBItemCycleWhiteColors[cnt + 2]));
     us16BPPItemCycleRedColors[cnt2] =
-        Get16BPPColor(FROMRGB(ubRGBItemCycleRedColors[cnt], ubRGBItemCycleRedColors[cnt + 1],
-                              ubRGBItemCycleRedColors[cnt + 2]));
-    us16BPPItemCycleYellowColors[cnt2] =
-        Get16BPPColor(FROMRGB(ubRGBItemCycleYellowColors[cnt], ubRGBItemCycleYellowColors[cnt + 1],
-                              ubRGBItemCycleYellowColors[cnt + 2]));
+        rgb32_to_rgb565(FROMRGB(ubRGBItemCycleRedColors[cnt], ubRGBItemCycleRedColors[cnt + 1],
+                                ubRGBItemCycleRedColors[cnt + 2]));
+    us16BPPItemCycleYellowColors[cnt2] = rgb32_to_rgb565(
+        FROMRGB(ubRGBItemCycleYellowColors[cnt], ubRGBItemCycleYellowColors[cnt + 1],
+                ubRGBItemCycleYellowColors[cnt + 2]));
   }
 
-  gsLobOutline = Get16BPPColor(FROMRGB(10, 200, 10));
-  gsThrowOutline = Get16BPPColor(FROMRGB(253, 212, 10));
-  gsGiveOutline = Get16BPPColor(FROMRGB(253, 0, 0));
+  gsLobOutline = rgb32_to_rgb565(FROMRGB(10, 200, 10));
+  gsThrowOutline = rgb32_to_rgb565(FROMRGB(253, 212, 10));
+  gsGiveOutline = rgb32_to_rgb565(FROMRGB(253, 0, 0));
 
-  gusNormalItemOutlineColor = Get16BPPColor(FROMRGB(255, 255, 255));
-  gusYellowItemOutlineColor = Get16BPPColor(FROMRGB(255, 255, 0));
+  gusNormalItemOutlineColor = rgb32_to_rgb565(FROMRGB(255, 255, 255));
+  gusYellowItemOutlineColor = rgb32_to_rgb565(FROMRGB(255, 255, 0));
 
   // NOW GET DISTANCE SPANNING WORLD LIMITS IN WORLD COORDS
   // FromScreenToCellCoordinates( ( gTopRightWorldLimitX - gTopLeftWorldLimitX ), (

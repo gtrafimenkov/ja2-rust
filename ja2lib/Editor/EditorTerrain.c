@@ -25,6 +25,7 @@
 #include "TileEngine/WorldDef.h"
 #include "Utils/FontControl.h"
 #include "Utils/Utilities.h"
+#include "rust_colors.h"
 
 BOOLEAN gfShowTerrainTileButtons;
 UINT8 ubTerrainTileButtonWeight[NUM_TERRAIN_TILE_REGIONS];
@@ -77,9 +78,9 @@ void RenderTerrainTileButtons() {
     UINT16 usFillColorDark, usFillColorLight, usFillColorRed;
     UINT16 x, usX, usX2, usY, usY2;
 
-    usFillColorDark = Get16BPPColor(FROMRGB(24, 61, 81));
-    usFillColorLight = Get16BPPColor(FROMRGB(136, 138, 135));
-    usFillColorRed = Get16BPPColor(FROMRGB(255, 0, 0));
+    usFillColorDark = rgb32_to_rgb565(FROMRGB(24, 61, 81));
+    usFillColorLight = rgb32_to_rgb565(FROMRGB(136, 138, 135));
+    usFillColorRed = rgb32_to_rgb565(FROMRGB(255, 0, 0));
 
     usY = 369;
     usY2 = 391;

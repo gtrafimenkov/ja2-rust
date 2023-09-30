@@ -23,6 +23,7 @@
 #include "Utils/TextInput.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 
 #define FLOWER_ORDEER_TINY_FONT FONT10ARIAL
 #define FLOWER_ORDEER_SMALL_FONT FONT12ARIAL
@@ -1064,7 +1065,7 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
           vsFB, FLOWER_ORDER_DROP_DOWN_LOCATION_X + 3, FLOWER_ORDER_DELIVERY_LOCATION_Y + 3,
           FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
           FLOWER_ORDER_DELIVERY_LOCATION_Y + FLOWER_ORDER_DELIVERY_LOCATION_HEIGHT - 2,
-          Get16BPPColor(FROMRGB(0, 0, 0)));
+          rgb32_to_rgb565(FROMRGB(0, 0, 0)));
       DrawTextToScreen(pDeliveryLocationStrings[gubCurrentlySelectedFlowerLocation],
                        FLOWER_ORDER_DROP_DOWN_CITY_START_X + 6,
                        FLOWER_ORDER_DROP_DOWN_CITY_START_Y + 3, 0, FLOWER_ORDEER_DROP_DOWN_FONT,
@@ -1091,7 +1092,7 @@ BOOLEAN CreateDestroyFlowerOrderDestDropDown(UINT8 ubDropDownMode) {
       VSurfaceColorFill(vsFB, FLOWER_ORDER_DROP_DOWN_LOCATION_X, FLOWER_ORDER_DROP_DOWN_LOCATION_Y,
                         FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
                         FLOWER_ORDER_DROP_DOWN_LOCATION_Y + usHeight,
-                        Get16BPPColor(FROMRGB(0, 0, 0)));
+                        rgb32_to_rgb565(FROMRGB(0, 0, 0)));
 
       //
       // Place the border around the background
@@ -1165,7 +1166,7 @@ void FlowerOrderDrawSelectedCity(UINT8 ubNumber) {
   // display the name in the list
   VSurfaceColorFill(vsFB, FLOWER_ORDER_DROP_DOWN_CITY_START_X, usPosY + 2,
                     FLOWER_ORDER_DROP_DOWN_CITY_START_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH - 9,
-                    usPosY + usFontHeight + 4, Get16BPPColor(FROMRGB(255, 255, 255)));
+                    usPosY + usFontHeight + 4, rgb32_to_rgb565(FROMRGB(255, 255, 255)));
 
   SetFontShadow(NO_SHADOW);
   DrawTextToScreen(pDeliveryLocationStrings[ubNumber], FLOWER_ORDER_DROP_DOWN_CITY_START_X + 6,
@@ -1183,7 +1184,7 @@ void FlowerOrderDisplayShippingLocationCity() {
                     FLOWER_ORDER_DELIVERY_LOCATION_Y + 3,
                     FLOWER_ORDER_DROP_DOWN_LOCATION_X + FLOWER_ORDER_DROP_DOWN_LOCATION_WIDTH,
                     FLOWER_ORDER_DELIVERY_LOCATION_Y + FLOWER_ORDER_DELIVERY_LOCATION_HEIGHT - 2,
-                    Get16BPPColor(FROMRGB(0, 0, 0)));
+                    rgb32_to_rgb565(FROMRGB(0, 0, 0)));
   DrawTextToScreen(pDeliveryLocationStrings[gubCurrentlySelectedFlowerLocation],
                    FLOWER_ORDER_DELIVERY_LOCATION_X + 5, FLOWER_ORDER_DELIVERY_LOCATION_Y + 5, 0,
                    FLOWER_ORDEER_SMALL_FONT, FLOWER_ORDEER_SMALL_COLOR, FONT_MCOLOR_BLACK, FALSE,
@@ -1197,11 +1198,11 @@ void InitFlowerOrderTextInputBoxes() {
 
   InitTextInputMode();
   SetTextInputFont((UINT16)FONT12ARIAL);
-  Set16BPPTextFieldColor(Get16BPPColor(FROMRGB(255, 255, 255)));
-  SetBevelColors(Get16BPPColor(FROMRGB(136, 138, 135)), Get16BPPColor(FROMRGB(24, 61, 81)));
+  Set16BPPTextFieldColor(rgb32_to_rgb565(FROMRGB(255, 255, 255)));
+  SetBevelColors(rgb32_to_rgb565(FROMRGB(136, 138, 135)), rgb32_to_rgb565(FROMRGB(24, 61, 81)));
   SetTextInputRegularColors(2, FONT_WHITE);
   SetTextInputHilitedColors(FONT_WHITE, 2, 141);
-  SetCursorColor(Get16BPPColor(FROMRGB(0, 0, 0)));
+  SetCursorColor(rgb32_to_rgb565(FROMRGB(0, 0, 0)));
 
   AddUserInputField(FlowerOrderUserTextFieldCallBack);
 

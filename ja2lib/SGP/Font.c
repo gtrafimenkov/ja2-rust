@@ -16,6 +16,7 @@
 #include "SGP/VObjectInternal.h"
 #include "SGP/VSurface.h"
 #include "SGP/Video.h"
+#include "rust_colors.h"
 #include "rust_fileman.h"
 #include "rust_images.h"
 
@@ -111,7 +112,7 @@ void SetFontForeground(UINT8 ubForeground) {
   uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].green;
   uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].blue;
 
-  FontForeground16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
+  FontForeground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
 void SetFontShadow(UINT8 ubShadow) {
@@ -125,7 +126,7 @@ void SetFontShadow(UINT8 ubShadow) {
   uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].green;
   uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].blue;
 
-  FontShadow16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
+  FontShadow16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 
   if (ubShadow != 0) {
     if (FontShadow16 == 0) {
@@ -157,24 +158,24 @@ void SetFontBackground(UINT8 ubBackground) {
   uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].green;
   uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].blue;
 
-  FontBackground16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
+  FontBackground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
 // Kris:  These are new counterparts to the above functions.  They won't
 //			 effect an 8BPP font, only 16.
 void SetRGBFontForeground(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
-  FontForeground16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
+  FontForeground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
 void SetRGBFontBackground(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
-  FontBackground16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
+  FontBackground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
 void SetRGBFontShadow(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
-  FontShadow16 = Get16BPPColor(FROMRGB(uiRed, uiGreen, uiBlue));
+  FontShadow16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 // end Kris
 

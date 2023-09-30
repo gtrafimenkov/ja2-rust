@@ -15,6 +15,7 @@
 #include "Utils/Cursors.h"
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
+#include "rust_colors.h"
 
 ///////////////////////////////////////////////////
 //
@@ -162,7 +163,7 @@ INT32 AddSlider(UINT8 ubStyle, UINT16 usCursor, UINT16 usPosX, UINT16 usPosY, UI
   pNewSlider->usNumberOfIncrements = usNumberOfIncrements;
   pNewSlider->SliderChangeCallback = SliderChangeCallback;
   pNewSlider->usCurrentIncrement = 0;
-  pNewSlider->usBackGroundColor = Get16BPPColor(FROMRGB(255, 255, 255));
+  pNewSlider->usBackGroundColor = rgb32_to_rgb565(FROMRGB(255, 255, 255));
   pNewSlider->uiFlags = uiFlags;
 
   // Get a new Identifier for the slider

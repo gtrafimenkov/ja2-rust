@@ -64,6 +64,7 @@
 #include "Utils/Text.h"
 #include "Utils/WordWrap.h"
 #include "platform_strings.h"
+#include "rust_colors.h"
 
 // #define INVULNERABILITY
 
@@ -925,33 +926,33 @@ void RenderSoldierCellBars(SOLDIERCELL *pCell) {
   // yellow one for bleeding
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bLifeMax / 100;
   VSurfaceColorFill(vsFB, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(107, 107, 57)));
+                    rgb32_to_rgb565(FROMRGB(107, 107, 57)));
   VSurfaceColorFill(vsFB, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(222, 181, 115)));
+                    rgb32_to_rgb565(FROMRGB(222, 181, 115)));
   // pink one for bandaged.
   iStartY += 25 * pCell->pSoldier->bBleeding / 100;
   VSurfaceColorFill(vsFB, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(156, 57, 57)));
+                    rgb32_to_rgb565(FROMRGB(156, 57, 57)));
   VSurfaceColorFill(vsFB, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(222, 132, 132)));
+                    rgb32_to_rgb565(FROMRGB(222, 132, 132)));
   // red one for actual health
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bLife / 100;
   VSurfaceColorFill(vsFB, pCell->xp + 37, iStartY, pCell->xp + 38, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(107, 8, 8)));
+                    rgb32_to_rgb565(FROMRGB(107, 8, 8)));
   VSurfaceColorFill(vsFB, pCell->xp + 38, iStartY, pCell->xp + 39, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(206, 0, 0)));
+                    rgb32_to_rgb565(FROMRGB(206, 0, 0)));
   // BREATH BAR
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bBreathMax / 100;
   VSurfaceColorFill(vsFB, pCell->xp + 41, iStartY, pCell->xp + 42, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(8, 8, 132)));
+                    rgb32_to_rgb565(FROMRGB(8, 8, 132)));
   VSurfaceColorFill(vsFB, pCell->xp + 42, iStartY, pCell->xp + 43, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(8, 8, 107)));
+                    rgb32_to_rgb565(FROMRGB(8, 8, 107)));
   // MORALE BAR
   iStartY = pCell->yp + 29 - 25 * pCell->pSoldier->bMorale / 100;
   VSurfaceColorFill(vsFB, pCell->xp + 45, iStartY, pCell->xp + 46, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(8, 156, 8)));
+                    rgb32_to_rgb565(FROMRGB(8, 156, 8)));
   VSurfaceColorFill(vsFB, pCell->xp + 46, iStartY, pCell->xp + 47, pCell->yp + 29,
-                    Get16BPPColor(FROMRGB(8, 107, 8)));
+                    rgb32_to_rgb565(FROMRGB(8, 107, 8)));
 }
 
 void BuildInterfaceBuffer() {
@@ -1118,7 +1119,7 @@ void ExpandWindow() {
   pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
   SetClippingRegionAndImageWidth(uiDestPitchBYTES, 0, 0, 640, 480);
   RectangleDraw(TRUE, gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iRight,
-                gpAR->ExRect.iBottom, Get16BPPColor(FROMRGB(200, 200, 100)), pDestBuf);
+                gpAR->ExRect.iBottom, rgb32_to_rgb565(FROMRGB(200, 200, 100)), pDestBuf);
   VSurfaceUnlock(vsFB);
   // left
   InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iLeft + 1,

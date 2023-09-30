@@ -49,6 +49,7 @@
 #include "Utils/Utilities.h"
 #include "platform_strings.h"
 #include "rust_cmdline.h"
+#include "rust_colors.h"
 
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
@@ -178,7 +179,7 @@ void ShutdownJA2(void) {
   UINT32 uiIndex;
 
   // Clear screen....
-  VSurfaceColorFill(vsFB, 0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)));
+  VSurfaceColorFill(vsFB, 0, 0, 640, 480, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
   InvalidateScreen();
   // Remove cursor....
   SetCurrentCursorFromDatabase(VIDEO_NO_CURSOR);
