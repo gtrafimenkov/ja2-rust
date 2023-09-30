@@ -37,8 +37,8 @@
 #include "Utils/Message.h"
 #include "Utils/Text.h"
 #include "rust_fileman.h"
-#include "rust_laptop.h"
 #include "rust_geometry.h"
+#include "rust_laptop.h"
 
 void CalculateMedicalDepositRefund(struct SOLDIERTYPE *pSoldier);
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement(struct SOLDIERTYPE *pSoldier,

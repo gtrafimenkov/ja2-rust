@@ -700,6 +700,9 @@ BOOLEAN AddCreditNode(uint32_t uiType, uint32_t uiFlags, wchar_t *pString) {
       return (FALSE);
     }
 
+    // Set transparency
+    SetVideoSurfaceTransparency(pNodeToAdd->uiVideoSurfaceImage, 0);
+
     // fill the surface with a transparent color
     VSurfaceColorFill(GetVSByID(pNodeToAdd->uiVideoSurfaceImage), 0, 0, CRDT_WIDTH_OF_TEXT_AREA,
                       pNodeToAdd->sHeightOfString, 0);
