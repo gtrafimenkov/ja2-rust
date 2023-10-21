@@ -98,9 +98,9 @@ checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
 
 [[package]]
 name = "ggstd"
-version = "0.0.3"
+version = "0.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5bf692ad6014ede42e1c8e191a4b147329ab7b0e54476d538d405e2172570757"
+checksum = "7c899339b23e56015212475a015fa74dea39e2d53f734b077ee95bb9afcfadbc"
 
 [[package]]
 name = "hashbrown"
