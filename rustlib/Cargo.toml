@@ -13,4 +13,4 @@ crate-type = ["cdylib"]      # Creates dynamic lib
 cbindgen = "0.24.3"
 
 [dependencies]
-ggstd = "0.0.3"
+ggstd = "0.0"
