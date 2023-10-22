@@ -1796,7 +1796,7 @@ int32_t LightCreateOmni(uint8_t ubIntensity, int16_t iRadius) {
 ***************************************************************************************/
 int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2) {
   int32_t iLight;
-  char usName[14];
+  char usName[30];
 
   iLight = LightGetFree();
   if (iLight != (-1)) {
@@ -1819,7 +1819,7 @@ int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius
 ***************************************************************************************/
 int32_t LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2) {
   int32_t iLight;
-  char usName[14];
+  char usName[30];
 
   iLight = LightGetFree();
   if (iLight != (-1))

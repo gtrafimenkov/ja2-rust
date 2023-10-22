@@ -649,10 +649,6 @@ int32_t RegisterVideoOverlay(uint32_t uiFlags, VIDEO_OVERLAY_DESC *pTopmostDesc)
 
   if (uiFlags & VOVERLAY_DIRTYBYTEXT) {
     // Get dims by supplied text
-    if (pTopmostDesc->pzText == NULL) {
-      return (-1);
-    }
-
     uiStringLength = StringPixLength(pTopmostDesc->pzText, pTopmostDesc->uiFontID);
     uiStringHeight = GetFontHeight(pTopmostDesc->uiFontID);
 
@@ -757,14 +753,10 @@ BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, uint32_t iBlitterIn
       gVideoOverlays[iBlitterIndex].ubFontBack = pTopmostDesc->ubFontBack;
       gVideoOverlays[iBlitterIndex].ubFontFore = pTopmostDesc->ubFontFore;
 
-      if (pTopmostDesc->pzText != NULL) {
-        wcscpy(gVideoOverlays[iBlitterIndex].zText, pTopmostDesc->pzText);
-      }
+      wcscpy(gVideoOverlays[iBlitterIndex].zText, pTopmostDesc->pzText);
     } else {
       if (uiFlags & VOVERLAY_DESC_TEXT) {
-        if (pTopmostDesc->pzText != NULL) {
-          wcscpy(gVideoOverlays[iBlitterIndex].zText, pTopmostDesc->pzText);
-        }
+        wcscpy(gVideoOverlays[iBlitterIndex].zText, pTopmostDesc->pzText);
       }
 
       if (uiFlags & VOVERLAY_DESC_DISABLED) {
@@ -776,10 +768,6 @@ BOOLEAN UpdateVideoOverlay(VIDEO_OVERLAY_DESC *pTopmostDesc, uint32_t iBlitterIn
       if ((uiFlags & VOVERLAY_DESC_POSITION)) {
         if (gVideoOverlays[iBlitterIndex].uiFlags & VOVERLAY_DIRTYBYTEXT) {
           // Get dims by supplied text
-          if (pTopmostDesc->pzText == NULL) {
-            return (FALSE);
-          }
-
           uiStringLength = StringPixLength(gVideoOverlays[iBlitterIndex].zText,
                                            gVideoOverlays[iBlitterIndex].uiFontID);
           uiStringHeight = GetFontHeight(gVideoOverlays[iBlitterIndex].uiFontID);
