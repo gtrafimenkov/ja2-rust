@@ -28,7 +28,7 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 [[package]]
 name = "cbindgen"
 version = "0.26.0"
-source = "git+https://github.com/gtrafimenkov/cbindgen.git?branch=dev#1701b1c2ffc986015e629e33eeae2260267e5f6c"
+source = "git+https://github.com/gtrafimenkov/cbindgen.git?branch=dev#efd5cc4378b21dedd95d3ba2edd0904254eb4e3f"
 dependencies = [
  "clap",
  "ggstd 0.0.6 (git+https://github.com/gtrafimenkov/rust-ggstd.git?branch=dev)",
