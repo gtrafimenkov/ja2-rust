@@ -10,7 +10,7 @@ name = "rustlib"
 crate-type = ["cdylib"]      # Creates dynamic lib
 
 [build-dependencies]
-cbindgen = "0.24.3"
+cbindgen = { git = "https://github.com/gtrafimenkov/cbindgen-ggstd.git", branch="main" }
 
 [dependencies]
 ggstd = "0.0"
