@@ -335,7 +335,7 @@ BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], uint8_t ubTilesetID)
   return (TRUE);
 }
 
-BOOLEAN AddTileSurface(char *cFilename, uint32_t ubType, uint8_t ubTilesetID,
+BOOLEAN AddTileSurface(SGPFILENAME cFilename, uint32_t ubType, uint8_t ubTilesetID,
                        BOOLEAN fGetFromRoot) {
   // Add tile surface
   struct TILE_IMAGERY *TileSurf;
