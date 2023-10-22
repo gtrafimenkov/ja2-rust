@@ -4209,7 +4209,8 @@ BOOLEAN ConvertAniCodeToAniFrame(struct SOLDIERTYPE *pSoldier, UINT16 usAniFrame
     return (TRUE);
   }
 
-  if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->number_of_subimages) {
+  if (pSoldier->usAniFrame >=
+      gAnimSurfaceDatabase[usAnimSurface].hVideoObject->number_of_subimages) {
     // Debug msg here....
     //		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Soldier Animation: Wrong Number
     // of frames per number of objects: %d vs %d, %S",  gAnimSurfaceDatabase[ usAnimSurface
@@ -7999,7 +8000,8 @@ void GetActualSoldierAnimDims(struct SOLDIERTYPE *pSoldier, INT16 *psHeight, INT
   // depending on the frame and the value returned here will vary thusly. However, for the
   // uses of this function, we should be able to use just the first frame...
 
-  if (pSoldier->usAniFrame >= gAnimSurfaceDatabase[usAnimSurface].hVideoObject->number_of_subimages) {
+  if (pSoldier->usAniFrame >=
+      gAnimSurfaceDatabase[usAnimSurface].hVideoObject->number_of_subimages) {
   }
 
   pTrav = &(gAnimSurfaceDatabase[usAnimSurface].hVideoObject->subimages[pSoldier->usAniFrame]);
@@ -8249,12 +8251,17 @@ void SoldierCollapse(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (pSoldier->uiStatusFlags & SOLDIER_ENEMY) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Waddress"
+    // It seems the condition is always false because gTacticalStatus.bPanicTriggerIsAlarm
+    // is always true.
     if (!(gTacticalStatus.bPanicTriggerIsAlarm) &&
         (gTacticalStatus.ubTheChosenOne == GetSolID(pSoldier))) {
       // replace this guy as the chosen one!
       gTacticalStatus.ubTheChosenOne = NOBODY;
       MakeClosestEnemyChosenOne();
     }
+#pragma GCC diagnostic pop
 
     if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) &&
         (pSoldier->uiStatusFlags & SOLDIER_UNDERAICONTROL)) {

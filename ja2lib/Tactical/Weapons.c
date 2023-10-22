@@ -885,7 +885,7 @@ BOOLEAN UseGun(struct SOLDIERTYPE *pSoldier, INT16 sTargetGridNo) {
   BOOLEAN fBuckshot;
   UINT8 ubVolume;
   INT8 bSilencerPos;
-  CHAR8 zBurstString[50];
+  CHAR8 zBurstString[60];
   UINT8 ubDirection;
   INT16 sNewGridNo;
   UINT8 ubMerc;

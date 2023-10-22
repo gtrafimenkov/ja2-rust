@@ -3800,18 +3800,16 @@ void AddFuelToVehicle(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVehicle
   if (pVehicle->sBreathRed == 10000) {  // Message for vehicle full?
     return;
   }
-  if (pItem->bStatus) {  // Fill 'er up.
-    sFuelNeeded = 10000 - pVehicle->sBreathRed;
-    sFuelAvailable = pItem->bStatus[0] * 50;
-    sFuelAdded = min(sFuelNeeded, sFuelAvailable);
-    // Add to vehicle
-    pVehicle->sBreathRed += sFuelAdded;
-    pVehicle->bBreath = (INT8)(pVehicle->sBreathRed / 100);
-    // Subtract from item
-    pItem->bStatus[0] = (INT8)(pItem->bStatus[0] - sFuelAdded / 50);
-    if (!pItem->bStatus[0]) {  // Gas can is empty, so toast the item.
-      DeleteObj(pItem);
-    }
+  sFuelNeeded = 10000 - pVehicle->sBreathRed;
+  sFuelAvailable = pItem->bStatus[0] * 50;
+  sFuelAdded = min(sFuelNeeded, sFuelAvailable);
+  // Add to vehicle
+  pVehicle->sBreathRed += sFuelAdded;
+  pVehicle->bBreath = (INT8)(pVehicle->sBreathRed / 100);
+  // Subtract from item
+  pItem->bStatus[0] = (INT8)(pItem->bStatus[0] - sFuelAdded / 50);
+  if (!pItem->bStatus[0]) {  // Gas can is empty, so toast the item.
+    DeleteObj(pItem);
   }
 }
 

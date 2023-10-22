@@ -1795,7 +1795,7 @@ INT32 LightCreateOmni(UINT8 ubIntensity, INT16 iRadius) {
 ***************************************************************************************/
 INT32 LightCreateSquare(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2) {
   INT32 iLight;
-  CHAR8 usName[14];
+  CHAR8 usName[30];
 
   iLight = LightGetFree();
   if (iLight != (-1)) {
@@ -1818,7 +1818,7 @@ INT32 LightCreateSquare(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2) {
 ***************************************************************************************/
 INT32 LightCreateElliptical(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2) {
   INT32 iLight;
-  CHAR8 usName[14];
+  CHAR8 usName[30];
 
   iLight = LightGetFree();
   if (iLight != (-1))
@@ -2667,7 +2667,7 @@ BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors) {
 
   if (pPal[0].red != gpLightColors[0].red || pPal[0].green != gpLightColors[0].green ||
       pPal[0].blue != gpLightColors[0].blue) {  // Set the entire tileset database so that it
-                                                    // reloads everything.  It has to because the
+                                                // reloads everything.  It has to because the
     // colors have changed.
     SetAllNewTileSurfacesLoaded(TRUE);
   }
@@ -2684,28 +2684,26 @@ BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors) {
   // if there are two colors, calculate a third palette that is a mix of the two
   if (ubNumColors == 2) {
     sRed = min(
-        (((INT16)pPal[0].red) * LVL1_L1_PER / 100 + ((INT16)pPal[1].red) * LVL1_L2_PER / 100),
+        (((INT16)pPal[0].red) * LVL1_L1_PER / 100 + ((INT16)pPal[1].red) * LVL1_L2_PER / 100), 255);
+    sGreen = min(
+        (((INT16)pPal[0].green) * LVL1_L1_PER / 100 + ((INT16)pPal[1].green) * LVL1_L2_PER / 100),
         255);
-    sGreen = min((((INT16)pPal[0].green) * LVL1_L1_PER / 100 +
-                  ((INT16)pPal[1].green) * LVL1_L2_PER / 100),
-                 255);
-    sBlue = min(
-        (((INT16)pPal[0].blue) * LVL1_L1_PER / 100 + ((INT16)pPal[1].blue) * LVL1_L2_PER / 100),
-        255);
+    sBlue =
+        min((((INT16)pPal[0].blue) * LVL1_L1_PER / 100 + ((INT16)pPal[1].blue) * LVL1_L2_PER / 100),
+            255);
 
     gpLightColors[1].red = (UINT8)(sRed);
     gpLightColors[1].green = (UINT8)(sGreen);
     gpLightColors[1].blue = (UINT8)(sBlue);
 
     sRed = min(
-        (((INT16)pPal[0].red) * LVL2_L1_PER / 100 + ((INT16)pPal[1].red) * LVL2_L2_PER / 100),
+        (((INT16)pPal[0].red) * LVL2_L1_PER / 100 + ((INT16)pPal[1].red) * LVL2_L2_PER / 100), 255);
+    sGreen = min(
+        (((INT16)pPal[0].green) * LVL2_L1_PER / 100 + ((INT16)pPal[1].green) * LVL2_L2_PER / 100),
         255);
-    sGreen = min((((INT16)pPal[0].green) * LVL2_L1_PER / 100 +
-                  ((INT16)pPal[1].green) * LVL2_L2_PER / 100),
-                 255);
-    sBlue = min(
-        (((INT16)pPal[0].blue) * LVL2_L1_PER / 100 + ((INT16)pPal[1].blue) * LVL2_L2_PER / 100),
-        255);
+    sBlue =
+        min((((INT16)pPal[0].blue) * LVL2_L1_PER / 100 + ((INT16)pPal[1].blue) * LVL2_L2_PER / 100),
+            255);
 
     gpLightColors[2].red = (UINT8)(sRed);
     gpLightColors[2].green = (UINT8)(sGreen);

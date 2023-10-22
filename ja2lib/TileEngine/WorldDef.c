@@ -335,7 +335,8 @@ BOOLEAN LoadTileSurfaces(char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID) {
   return (TRUE);
 }
 
-BOOLEAN AddTileSurface(char *cFilename, UINT32 ubType, UINT8 ubTilesetID, BOOLEAN fGetFromRoot) {
+BOOLEAN AddTileSurface(SGPFILENAME cFilename, UINT32 ubType, UINT8 ubTilesetID,
+                       BOOLEAN fGetFromRoot) {
   // Add tile surface
   struct TILE_IMAGERY *TileSurf;
   CHAR8 cFileBPP[128];
@@ -422,11 +423,11 @@ void BuildTileShadeTables() {
   // now, determine if we are using specialized colors.
   if (gpLightColors[0].red || gpLightColors[0].green ||
       gpLightColors[0].blue) {  // we are, which basically means we force build the shadetables.
-                                  // However, the one
+                                // However, the one
     // exception is if we are loading another map and the colors are the same.
     if (gpLightColors[0].red != ubLastRed || gpLightColors[0].green != ubLastGreen ||
         gpLightColors[0].blue != ubLastBlue) {  // Same tileset, but colors are different, so set
-                                                  // things up to regenerate the shadetables.
+                                                // things up to regenerate the shadetables.
       gfForceBuildShadeTables = TRUE;
     } else {  // same colors, same tileset, so don't rebuild shadetables -- much faster!
       gfForceBuildShadeTables = FALSE;
