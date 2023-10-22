@@ -8257,8 +8257,10 @@ void SoldierCollapse(struct SOLDIERTYPE *pSoldier) {
   }
 
   if (pSoldier->uiStatusFlags & SOLDIER_ENEMY) {
+#ifdef __GCC
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Waddress"
+#endif
     // It seems the condition is always false because gTacticalStatus.bPanicTriggerIsAlarm
     // is always true.
     if (!(gTacticalStatus.bPanicTriggerIsAlarm) &&
@@ -8267,8 +8269,9 @@ void SoldierCollapse(struct SOLDIERTYPE *pSoldier) {
       gTacticalStatus.ubTheChosenOne = NOBODY;
       MakeClosestEnemyChosenOne();
     }
+#ifdef __GCC
 #pragma GCC diagnostic pop
-
+#endif
     if ((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) &&
         (pSoldier->uiStatusFlags & SOLDIER_UNDERAICONTROL)) {
 #ifdef TESTAICONTROL

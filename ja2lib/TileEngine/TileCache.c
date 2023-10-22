@@ -62,11 +62,14 @@ BOOLEAN InitTileCache() {
     // Loop through and set filenames
     if (Plat_GetFileFirst("TILECACHE\\*.jsd", &FileInfo)) {
       while (Plat_GetFileNext(&FileInfo)) {
+#ifdef __GCC
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat-overflow"
+#endif
         sprintf(gpTileCacheStructInfo[cnt].Filename, "TILECACHE\\%s", FileInfo.zFileName);
+#ifdef __GCC
 #pragma GCC diagnostic pop
-
+#endif
         // Get root name
         GetRootName(gpTileCacheStructInfo[cnt].zRootName, gpTileCacheStructInfo[cnt].Filename);
 
