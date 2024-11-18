@@ -7,20 +7,20 @@ struct SOLDIERTYPE;
 
 void ContinueMercMovement(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN IsValidStance(struct SOLDIERTYPE *pSoldier, INT8 bNewStance);
+BOOLEAN IsValidStance(struct SOLDIERTYPE *pSoldier, int8_t bNewStance);
 void SelectMoveAnimationFromStance(struct SOLDIERTYPE *pSoldier);
-BOOLEAN IsValidMovementMode(struct SOLDIERTYPE *pSoldier, INT16 usMovementMode);
-FLOAT CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier);
-FLOAT CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier);
+BOOLEAN IsValidMovementMode(struct SOLDIERTYPE *pSoldier, int16_t usMovementMode);
+float CalcSoldierNextBleed(struct SOLDIERTYPE *pSoldier);
+float CalcSoldierNextUnmovingBleed(struct SOLDIERTYPE *pSoldier);
 void SoldierCollapse(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+BOOLEAN ReevaluateEnemyStance(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
-void HandlePlacingRoofMarker(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fSet,
+void HandlePlacingRoofMarker(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fSet,
                              BOOLEAN fForce);
 
-void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGridNo,
-                         INT8 bZLevel);
+void PickPickupAnimation(struct SOLDIERTYPE *pSoldier, int32_t iItemIndex, int16_t sGridNo,
+                         int8_t bZLevel);
 
 void MercStealFromMerc(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pTarget);
 

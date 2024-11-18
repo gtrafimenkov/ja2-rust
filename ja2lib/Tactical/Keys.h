@@ -7,10 +7,10 @@ struct OBJECTTYPE;
 struct SOLDIERTYPE;
 
 typedef struct {
-  UINT16 usItem;         // index in item table for key
-  UINT8 fFlags;          // flags...
-  UINT16 usSectorFound;  // where and
-  UINT16 usDateFound;    // when the key was found
+  uint16_t usItem;         // index in item table for key
+  uint8_t fFlags;          // flags...
+  uint16_t usSectorFound;  // where and
+  uint16_t usDateFound;    // when the key was found
 } KEY;
 
 #define KEY_USED 0x01
@@ -29,22 +29,22 @@ typedef struct {
 /*
 typedef struct
 {
-        UINT8		ubKeyID[MAX_KEYS_PER_LOCK];
-        UINT8		ubLockType;							// numeric
+        uint8_t		ubKeyID[MAX_KEYS_PER_LOCK];
+        uint8_t		ubLockType;							// numeric
 lock type value... easier to use than flags!
-        INT8		bPickSkillAdjustment;		// difficulty to pick a lock which takes
-this key INT8		bSmashSkillAdjustment;	// the strength of the lock (resistance to smashing)
+        int8_t		bPickSkillAdjustment;		// difficulty to pick a lock which takes
+this key int8_t		bSmashSkillAdjustment;	// the strength of the lock (resistance to smashing)
 } LOCK;
 */
 
 #define MAXLOCKDESCLENGTH 40
 typedef struct {
-  UINT8 ubEditorName[MAXLOCKDESCLENGTH];  // name to display in editor
-  UINT16 usKeyItem;                       // key for this door uses which graphic (item #)?
-  UINT8 ubLockType;                       // regular, padlock, electronic, etc
-  UINT8 ubPickDifficulty;                 // difficulty to pick such a lock
-  UINT8 ubSmashDifficulty;                // difficulty to smash such a lock
-  UINT8 ubFiller;
+  uint8_t ubEditorName[MAXLOCKDESCLENGTH];  // name to display in editor
+  uint16_t usKeyItem;                       // key for this door uses which graphic (item #)?
+  uint8_t ubLockType;                       // regular, padlock, electronic, etc
+  uint8_t ubPickDifficulty;                 // difficulty to pick such a lock
+  uint8_t ubSmashDifficulty;                // difficulty to smash such a lock
+  uint8_t ubFiller;
 } LOCK;
 
 // Defines below for the perceived value of the door
@@ -57,17 +57,17 @@ typedef struct {
 #define DOOR_PERCEIVED_UNTRAPPED 2
 
 typedef struct {
-  INT16 sGridNo;
+  int16_t sGridNo;
   BOOLEAN fLocked;         // is the door locked
-  UINT8 ubTrapLevel;       // difficulty of finding the trap, 0-10
-  UINT8 ubTrapID;          // the trap type (0 is no trap)
-  UINT8 ubLockID;          // the lock (0 is no lock)
-  INT8 bPerceivedLocked;   // The perceived lock value can be different than the fLocked.
+  uint8_t ubTrapLevel;       // difficulty of finding the trap, 0-10
+  uint8_t ubTrapID;          // the trap type (0 is no trap)
+  uint8_t ubLockID;          // the lock (0 is no lock)
+  int8_t bPerceivedLocked;   // The perceived lock value can be different than the fLocked.
                            // Values for this include the fact that we don't know the status of
                            // the door, etc
-  INT8 bPerceivedTrapped;  // See above, but with respect to traps rather than locked status
-  INT8 bLockDamage;        // Damage to the lock
-  INT8 bPadding[4];        // extra bytes
+  int8_t bPerceivedTrapped;  // See above, but with respect to traps rather than locked status
+  int8_t bLockDamage;        // Damage to the lock
+  int8_t bPadding[4];        // extra bytes
 } DOOR;
 
 typedef enum {
@@ -86,7 +86,7 @@ typedef enum {
 #define DOOR_TRAP_SILENT 0x04
 
 typedef struct {
-  UINT8 fFlags;  // stops action?  recurring trap?
+  uint8_t fFlags;  // stops action?  recurring trap?
 } DOORTRAP;
 
 // The status of the door, either open or closed
@@ -99,8 +99,8 @@ typedef struct {
 #define DONTSETDOORSTATUS 2
 
 typedef struct {
-  INT16 sGridNo;
-  UINT8 ubFlags;
+  int16_t sGridNo;
+  uint8_t ubFlags;
 
 } DOOR_STATUS;
 
@@ -119,16 +119,16 @@ extern KEY KeyTable[NUM_KEYS];
 extern LOCK LockTable[NUM_LOCKS];
 extern DOORTRAP DoorTrapTable[NUM_DOOR_TRAPS];
 
-extern BOOLEAN AddKeysToKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 ubNumber);
-extern BOOLEAN RemoveKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubPos,
+extern BOOLEAN AddKeysToKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID, uint8_t ubNumber);
+extern BOOLEAN RemoveKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubPos,
                                     struct OBJECTTYPE *pObj);
-extern BOOLEAN RemoveAllOfKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubPos,
+extern BOOLEAN RemoveAllOfKeyFromKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubPos,
                                          struct OBJECTTYPE *pObj);
-extern BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID);
-extern BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 *pubPos);
-extern BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID);
+extern BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID);
+extern BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID, uint8_t *pubPos);
+extern BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID);
 
-extern STR16 sKeyDescriptionStrings[];
+extern wchar_t* sKeyDescriptionStrings[];
 /**********************************
  * Door utils add by Kris Morness *
  **********************************/
@@ -140,16 +140,16 @@ extern STR16 sKeyDescriptionStrings[];
 extern DOOR *DoorTable;
 
 // Current number of doors in world.
-extern UINT8 gubNumDoors;
+extern uint8_t gubNumDoors;
 // Current max number of doors.  This is only used by the editor.  When adding doors to the
 // world, we may run out of space in the DoorTable, so we will allocate a new array with extra
 // slots, then copy everything over again.  gubMaxDoors holds the arrays actual number of slots,
 // even though the current number (gubNumDoors) will be <= to it.
-extern UINT8 gubMaxDoors;
+extern uint8_t gubMaxDoors;
 // File I/O for loading the door information from the map.  This automatically allocates
 // the exact number of slots when loading.
 
-extern void LoadDoorTableFromMap(INT8 **hBuffer);
+extern void LoadDoorTableFromMap(int8_t **hBuffer);
 // Saves the existing door information to the map.  Before it actually saves, it'll verify that the
 // door still exists.  Otherwise, it'll ignore it.  It is possible in the editor to delete doors in
 // many different ways, so I opted to put it in the saving routine.
@@ -160,9 +160,9 @@ extern void AddDoorInfoToTable(DOOR *pDoor);
 // When the editor removes a door from the world, this function looks for and removes accompanying
 // door information.  If the entry is not the last entry, the last entry is move to it's current
 // slot, to keep everything contiguous.
-extern void RemoveDoorInfoFromTable(INT32 iMapIndex);
+extern void RemoveDoorInfoFromTable(int32_t iMapIndex);
 // This is the link to see if a door exists at a gridno.
-DOOR *FindDoorInfoAtGridNo(INT32 iMapIndex);
+DOOR *FindDoorInfoAtGridNo(int32_t iMapIndex);
 // Upon world deallocation, the door table needs to be deallocated.
 extern void TrashDoorTable();
 
@@ -180,7 +180,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor);
 void UpdateDoorPerceivedValue(DOOR *pDoor);
 
 // Saves the Door Table array to the temp file
-BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // Load the door table from the temp file
 BOOLEAN LoadDoorTableFromDoorTableTempFile();
@@ -189,28 +189,28 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile();
 //  if the door already exists, nothing happens
 // fOpen is True if the door is to be initially open, false if it is closed
 // fInitiallyPercieveOpen is true if the door is to be initially open, else false
-BOOLEAN ModifyDoorStatus(INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen);
+BOOLEAN ModifyDoorStatus(int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen);
 
 // Deletes the door status array
 void TrashDoorStatusArray();
 
 // Returns true if the door is open, otherwise false
-BOOLEAN IsDoorOpen(INT16 sGridNo);
+BOOLEAN IsDoorOpen(int16_t sGridNo);
 
 // Returns true if the door is perceioved as open
-BOOLEAN IsDoorPerceivedOpen(INT16 sGridNo);
+BOOLEAN IsDoorPerceivedOpen(int16_t sGridNo);
 
 // Saves the Door Status array to the MapTempfile
-BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // Load the door status from the door status temp file
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile();
 
 // Modify the Doors open status
-BOOLEAN SetDoorOpenStatus(INT16 sGridNo, BOOLEAN fOpen);
+BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen);
 
 // Modify the doors perceived open status
-BOOLEAN SetDoorPerceivedOpenStatus(INT16 sGridNo, BOOLEAN fPerceivedOpen);
+BOOLEAN SetDoorPerceivedOpenStatus(int16_t sGridNo, BOOLEAN fPerceivedOpen);
 
 // Save the key table to the saved game file
 BOOLEAN SaveKeyTableToSaveGameFile(FileID hFile);
@@ -219,11 +219,11 @@ BOOLEAN SaveKeyTableToSaveGameFile(FileID hFile);
 BOOLEAN LoadKeyTableFromSaveedGameFile(FileID hFile);
 
 // Returns a doors status value, NULL if not found
-DOOR_STATUS *GetDoorStatus(INT16 sGridNo);
+DOOR_STATUS *GetDoorStatus(int16_t sGridNo);
 
-BOOLEAN UpdateDoorStatusPerceivedValue(INT16 sGridNo);
+BOOLEAN UpdateDoorStatusPerceivedValue(int16_t sGridNo);
 
-BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue);
+BOOLEAN AllMercsLookForDoor(int16_t sGridNo, BOOLEAN fUpdateValue);
 
 BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue);
 
@@ -237,9 +237,9 @@ void ExamineDoorsOnEnteringSector();
 
 void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded();
 
-void AttachStringToDoor(INT16 sGridNo);
+void AttachStringToDoor(int16_t sGridNo);
 
-void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 bVisible,
-                       BOOLEAN fAddToDropList, INT32 iDropListSlot, BOOLEAN fUseUnLoaded);
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel, int8_t bVisible,
+                       BOOLEAN fAddToDropList, int32_t iDropListSlot, BOOLEAN fUseUnLoaded);
 
 #endif

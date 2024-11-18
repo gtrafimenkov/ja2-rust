@@ -8,8 +8,8 @@
 //
 
 extern const wchar_t* zBuildInfo;
-extern CHAR8 czVersionNumber[16];
-extern CHAR16 zTrackingNumber[16];
+extern char czVersionNumber[16];
+extern wchar_t zTrackingNumber[16];
 
 //#define RUSSIANGOLD
 
@@ -18,6 +18,6 @@ extern CHAR16 zTrackingNumber[16];
 //	you will invalidate the saved game file
 //
 
-const extern UINT32 guiSavedGameVersion;
+const extern uint32_t guiSavedGameVersion;
 
 #endif

@@ -189,21 +189,21 @@ typedef enum {
 } UICursorDefines;
 
 typedef struct {
-  UINT32 uiCursorID;
-  UINT32 uiFlags;
-  UINT16 usFreeCursorName;
-  UINT16 usAdditionalData;
+  uint32_t uiCursorID;
+  uint32_t uiFlags;
+  uint16_t usFreeCursorName;
+  uint16_t usAdditionalData;
 
 } UICursor;
 
 extern UICursor gUICursors[NUM_UI_CURSORS];
 
-BOOLEAN SetUICursor(UINT32 uiNewCursor);
+BOOLEAN SetUICursor(uint32_t uiNewCursor);
 BOOLEAN DrawUICursor();
 BOOLEAN HideUICursor();
 
-extern UINT16 gusCurMousePos;
+extern uint16_t gusCurMousePos;
 
-UINT16 GetSnapCursorIndex(UINT16 usAdditionalData);
+uint16_t GetSnapCursorIndex(uint16_t usAdditionalData);
 
 #endif

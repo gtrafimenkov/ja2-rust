@@ -12,7 +12,7 @@ char gubAssertString[128];
 
 #define MAX_MSG_LENGTH2 512
 char gbTmpDebugString[8][MAX_MSG_LENGTH2];
-UINT8 gubStringIndex = 0;
+uint8_t gubStringIndex = 0;
 
 BOOLEAN InitializeDebugManager(void) { return (TRUE); }
 
@@ -24,13 +24,13 @@ void DebugMsg(enum DebugTopic topic, enum DebugLevel level, const char *message)
   DebugLogWrite(buf);
 }
 
-void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+void _DebugMessage(char* pString, uint32_t uiLineNum, char* pSourceFile) {
   char buf[300];
   snprintf(buf, ARR_SIZE(buf), "%s [Line %d in %s]\n", pString, uiLineNum, pSourceFile);
   DebugLogWrite(buf);
 }
 
-void _AssertFailedMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
+void _AssertFailedMessage(char* pString, uint32_t uiLineNum, char* pSourceFile) {
   char buf[300];
   snprintf(buf, ARR_SIZE(buf), "Assertion Failure [Line %d in %s]\n", uiLineNum, pSourceFile);
   DebugLogWrite(buf);
@@ -40,7 +40,7 @@ void _AssertFailedMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile) {
 // release mode builds. -- DB
 char *String(const char *string, ...) {
   va_list ArgPtr;
-  UINT8 usIndex;
+  uint8_t usIndex;
 
   // Record string index. This index is used since we live in a multitasking environment.
   // It is still not bulletproof, but it's better than a single string

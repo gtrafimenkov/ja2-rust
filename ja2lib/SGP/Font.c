@@ -38,39 +38,39 @@
 //*******************************************************
 
 typedef struct {
-  UINT16 usDefaultPixelDepth;
+  uint16_t usDefaultPixelDepth;
   FontTranslationTable *pTranslationTable;
 } FontManager;
 
 FontManager *pFManager;
 struct VObject *FontObjs[MAX_FONTS];
-INT32 FontsLoaded = 0;
+int32_t FontsLoaded = 0;
 
 // Destination printing parameters
-INT32 FontDefault = (-1);
+int32_t FontDefault = (-1);
 struct VSurface *FontDestSurface = NULL;
-UINT32 FontDestPitch = 640 * 2;
-UINT32 FontDestBPP = 16;
+uint32_t FontDestPitch = 640 * 2;
+uint32_t FontDestBPP = 16;
 struct GRect FontDestRegion = {0, 0, 640, 480};
 BOOLEAN FontDestWrap = FALSE;
-UINT16 FontForeground16 = 0;
-UINT16 FontBackground16 = 0;
-UINT16 FontShadow16 = DEFAULT_SHADOW;
-UINT8 FontForeground8 = 0;
-UINT8 FontBackground8 = 0;
+uint16_t FontForeground16 = 0;
+uint16_t FontBackground16 = 0;
+uint16_t FontShadow16 = DEFAULT_SHADOW;
+uint8_t FontForeground8 = 0;
+uint8_t FontBackground8 = 0;
 
 // Temp, for saving printing parameters
-INT32 SaveFontDefault = (-1);
+int32_t SaveFontDefault = (-1);
 struct VSurface *SaveFontDestSurface = NULL;
-UINT32 SaveFontDestPitch = 640 * 2;
-UINT32 SaveFontDestBPP = 16;
+uint32_t SaveFontDestPitch = 640 * 2;
+uint32_t SaveFontDestBPP = 16;
 struct GRect SaveFontDestRegion = {0, 0, 640, 480};
 BOOLEAN SaveFontDestWrap = FALSE;
-UINT16 SaveFontForeground16 = 0;
-UINT16 SaveFontShadow16 = 0;
-UINT16 SaveFontBackground16 = 0;
-UINT8 SaveFontForeground8 = 0;
-UINT8 SaveFontBackground8 = 0;
+uint16_t SaveFontForeground16 = 0;
+uint16_t SaveFontShadow16 = 0;
+uint16_t SaveFontBackground16 = 0;
+uint8_t SaveFontForeground8 = 0;
+uint8_t SaveFontBackground8 = 0;
 
 //*****************************************************************************
 // SetFontColors
@@ -80,11 +80,11 @@ UINT8 SaveFontBackground8 = 0;
 // is the foreground.
 //
 //*****************************************************************************
-void SetFontColors(UINT16 usColors) {
-  UINT8 ubForeground, ubBackground;
+void SetFontColors(uint16_t usColors) {
+  uint8_t ubForeground, ubBackground;
 
-  ubForeground = (UINT8)(usColors & 0xff);
-  ubBackground = (UINT8)((usColors & 0xff00) >> 8);
+  ubForeground = (uint8_t)(usColors & 0xff);
+  ubBackground = (uint8_t)((usColors & 0xff00) >> 8);
 
   SetFontForeground(ubForeground);
   SetFontBackground(ubBackground);
@@ -101,30 +101,30 @@ void SetFontColors(UINT16 usColors) {
 // stay at what they are currently set to.
 //
 //*****************************************************************************
-void SetFontForeground(UINT8 ubForeground) {
-  UINT32 uiRed, uiGreen, uiBlue;
+void SetFontForeground(uint8_t ubForeground) {
+  uint32_t uiRed, uiGreen, uiBlue;
 
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
 
   FontForeground8 = ubForeground;
 
-  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].red;
-  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].green;
-  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubForeground].blue;
+  uiRed = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubForeground].red;
+  uiGreen = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubForeground].green;
+  uiBlue = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubForeground].blue;
 
   FontForeground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
-void SetFontShadow(UINT8 ubShadow) {
-  UINT32 uiRed, uiGreen, uiBlue;
+void SetFontShadow(uint8_t ubShadow) {
+  uint32_t uiRed, uiGreen, uiBlue;
 
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
 
   // FontForeground8=ubForeground;
 
-  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].red;
-  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].green;
-  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubShadow].blue;
+  uiRed = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubShadow].red;
+  uiGreen = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubShadow].green;
+  uiBlue = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubShadow].blue;
 
   FontShadow16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 
@@ -147,33 +147,33 @@ void SetFontShadow(UINT8 ubShadow) {
 // stay at what they are currently set to.
 //
 //*****************************************************************************
-void SetFontBackground(UINT8 ubBackground) {
-  UINT32 uiRed, uiGreen, uiBlue;
+void SetFontBackground(uint8_t ubBackground) {
+  uint32_t uiRed, uiGreen, uiBlue;
 
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
 
   FontBackground8 = ubBackground;
 
-  uiRed = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].red;
-  uiGreen = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].green;
-  uiBlue = (UINT32)FontObjs[FontDefault]->pPaletteEntry[ubBackground].blue;
+  uiRed = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubBackground].red;
+  uiGreen = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubBackground].green;
+  uiBlue = (uint32_t)FontObjs[FontDefault]->pPaletteEntry[ubBackground].blue;
 
   FontBackground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
 // Kris:  These are new counterparts to the above functions.  They won't
 //			 effect an 8BPP font, only 16.
-void SetRGBFontForeground(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
+void SetRGBFontForeground(uint32_t uiRed, uint32_t uiGreen, uint32_t uiBlue) {
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
   FontForeground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
-void SetRGBFontBackground(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
+void SetRGBFontBackground(uint32_t uiRed, uint32_t uiGreen, uint32_t uiBlue) {
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
   FontBackground16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
 
-void SetRGBFontShadow(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
+void SetRGBFontShadow(uint32_t uiRed, uint32_t uiGreen, uint32_t uiBlue) {
   if ((FontDefault < 0) || (FontDefault > MAX_FONTS)) return;
   FontShadow16 = rgb32_to_rgb565(FROMRGB(uiRed, uiGreen, uiBlue));
 }
@@ -186,7 +186,7 @@ void SetRGBFontShadow(UINT32 uiRed, UINT32 uiGreen, UINT32 uiBlue) {
 // the appropriate 16-bit palette, and assigned to the struct VObject*).
 //
 //*****************************************************************************
-BOOLEAN ResetFontObjectPalette(INT32 iFont) {
+BOOLEAN ResetFontObjectPalette(int32_t iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -203,8 +203,8 @@ BOOLEAN ResetFontObjectPalette(INT32 iFont) {
 // the appropriate 16-bit palette, and assigned to the struct VObject*).
 //
 //*****************************************************************************
-UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
-  UINT16 *pPal16;
+uint16_t *SetFontObjectPalette8BPP(int32_t iFont, struct SGPPaletteEntry *pPal8) {
+  uint16_t *pPal16;
 
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
@@ -224,7 +224,7 @@ UINT16 *SetFontObjectPalette8BPP(INT32 iFont, struct SGPPaletteEntry *pPal8) {
 //	Sets the palette of a font, using a 16 bit palette.
 //
 //*****************************************************************************
-UINT16 *SetFontObjectPalette16BPP(INT32 iFont, UINT16 *pPal16) {
+uint16_t *SetFontObjectPalette16BPP(int32_t iFont, uint16_t *pPal16) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -241,7 +241,7 @@ UINT16 *SetFontObjectPalette16BPP(INT32 iFont, UINT16 *pPal16) {
 //	Sets the palette of a font, using a 16 bit palette.
 //
 //*****************************************************************************
-UINT16 *GetFontObjectPalette16BPP(INT32 iFont) {
+uint16_t *GetFontObjectPalette16BPP(int32_t iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -255,7 +255,7 @@ UINT16 *GetFontObjectPalette16BPP(INT32 iFont) {
 //	Returns the VOBJECT pointer of a font.
 //
 //*****************************************************************************
-struct VObject *GetFontObject(INT32 iFont) {
+struct VObject *GetFontObject(int32_t iFont) {
   Assert(iFont >= 0);
   Assert(iFont <= MAX_FONTS);
   Assert(FontObjs[iFont] != NULL);
@@ -269,7 +269,7 @@ struct VObject *GetFontObject(INT32 iFont) {
 //	Locates an empty slot in the font table.
 //
 //*****************************************************************************
-INT32 FindFreeFont(void) {
+int32_t FindFreeFont(void) {
   int count;
 
   for (count = 0; count < MAX_FONTS; count++)
@@ -285,8 +285,8 @@ INT32 FindFreeFont(void) {
 //  This function returns (-1) if it fails, and debug msgs for a reason.
 //  Otherwise the font number is returned.
 //*****************************************************************************
-INT32 LoadFontFile(STR8 filename) {
-  UINT32 LoadIndex;
+int32_t LoadFontFile(char* filename) {
+  uint32_t LoadIndex;
 
   Assert(filename != NULL);
   Assert(strlen(filename));
@@ -315,7 +315,7 @@ INT32 LoadFontFile(STR8 filename) {
 // resources allocated for it.
 //
 //*****************************************************************************
-void UnloadFont(UINT32 FontIndex) {
+void UnloadFont(uint32_t FontIndex) {
   Assert(FontIndex >= 0);
   Assert(FontIndex <= MAX_FONTS);
   Assert(FontObjs[FontIndex] != NULL);
@@ -330,7 +330,7 @@ void UnloadFont(UINT32 FontIndex) {
 //	Returns the width of a given character in the font.
 //
 //*****************************************************************************
-UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
+uint32_t GetWidth(struct VObject *hSrcVObject, int16_t ssIndex) {
   struct Subimage *pTrav;
 
   // Assertions
@@ -338,7 +338,7 @@ UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[ssIndex]);
-  return ((UINT32)(pTrav->width + pTrav->x_offset));
+  return ((uint32_t)(pTrav->width + pTrav->x_offset));
 }
 
 //*****************************************************************************
@@ -349,7 +349,7 @@ UINT32 GetWidth(struct VObject *hSrcVObject, INT16 ssIndex) {
 // evaluate to is 512.
 //    'uiCharCount' specifies how many characters of the string are counted.
 //*****************************************************************************
-INT16 StringPixLengthArg(INT32 usUseFont, UINT32 uiCharCount, STR16 pFontString, ...) {
+int16_t StringPixLengthArg(int32_t usUseFont, uint32_t uiCharCount, wchar_t* pFontString, ...) {
   va_list argptr;
   wchar_t string[512];
 
@@ -383,12 +383,12 @@ INT16 StringPixLengthArg(INT32 usUseFont, UINT32 uiCharCount, STR16 pFontString,
 // 'uiCharCount' specifies how many characters of the string are counted.
 // YOU HAVE TO PREBUILD THE FAST HELP STRING!
 //*****************************************************************************
-INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, UINT32 uiCharCount,
-                                 STR16 pFontString) {
+int16_t StringPixLengthArgFastHelp(int32_t usUseFont, int32_t usBoldFont, uint32_t uiCharCount,
+                                 wchar_t* pFontString) {
   wchar_t string[512];
-  UINT32 i, index;
-  INT16 sBoldDiff = 0;
-  CHAR16 str[2];
+  uint32_t i, index;
+  int16_t sBoldDiff = 0;
+  wchar_t str[2];
 
   Assert(pFontString != NULL);
 
@@ -429,16 +429,16 @@ INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, UINT32 uiCha
 //  Return the length of the of the string or count characters in the
 //  string, which ever comes first.
 //
-//  Returns INT16
+//  Returns int16_t
 //
 //  Created by:     Gilles Beauparlant
 //  Created on:     12/1/99
 //
 //*****************************************************************************************
-INT16 StringNPixLength(STR16 string, UINT32 uiMaxCount, INT32 UseFont) {
-  UINT32 Cur, uiCharCount;
-  STR16 curletter;
-  INT16 transletter;
+int16_t StringNPixLength(wchar_t* string, uint32_t uiMaxCount, int32_t UseFont) {
+  uint32_t Cur, uiCharCount;
+  wchar_t* curletter;
+  int16_t transletter;
 
   Cur = 0;
   uiCharCount = 0;
@@ -449,7 +449,7 @@ INT16 StringNPixLength(STR16 string, UINT32 uiMaxCount, INT32 UseFont) {
     Cur += GetWidth(FontObjs[UseFont], transletter);
     uiCharCount++;
   }
-  return ((INT16)Cur);
+  return ((int16_t)Cur);
 }
 
 //*****************************************************************************
@@ -459,10 +459,10 @@ INT16 StringNPixLength(STR16 string, UINT32 uiMaxCount, INT32 UseFont) {
 //	Returns the length of a string in pixels, depending on the font given.
 //
 //*****************************************************************************
-INT16 StringPixLength(STR16 string, INT32 UseFont) {
-  UINT32 Cur;
-  STR16 curletter;
-  INT16 transletter;
+int16_t StringPixLength(wchar_t* string, int32_t UseFont) {
+  uint32_t Cur;
+  wchar_t* curletter;
+  int16_t transletter;
 
   if (string == NULL) {
     return (0);
@@ -475,7 +475,7 @@ INT16 StringPixLength(STR16 string, INT32 UseFont) {
     transletter = GetIndex(*curletter++);
     Cur += GetWidth(FontObjs[UseFont], transletter);
   }
-  return ((INT16)Cur);
+  return ((int16_t)Cur);
 }
 
 //*****************************************************************************
@@ -526,7 +526,7 @@ void RestoreFontSettings(void) {
 //	Returns the height of a given character in the font.
 //
 //*****************************************************************************
-UINT32 GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
+uint32_t GetHeight(struct VObject *hSrcVObject, int16_t ssIndex) {
   struct Subimage *pTrav;
 
   // Assertions
@@ -534,7 +534,7 @@ UINT32 GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
 
   // Get Offsets from Index into structure
   pTrav = &(hSrcVObject->subimages[ssIndex]);
-  return ((UINT32)(pTrav->height + pTrav->y_offset));
+  return ((uint32_t)(pTrav->height + pTrav->y_offset));
 }
 
 //*****************************************************************************
@@ -544,12 +544,12 @@ UINT32 GetHeight(struct VObject *hSrcVObject, INT16 ssIndex) {
 //	Returns the height of the first character in a font.
 //
 //*****************************************************************************
-UINT16 GetFontHeight(INT32 FontNum) {
+uint16_t GetFontHeight(int32_t FontNum) {
   Assert(FontNum >= 0);
   Assert(FontNum <= MAX_FONTS);
   Assert(FontObjs[FontNum] != NULL);
 
-  return ((UINT16)GetHeight(FontObjs[FontNum], 0));
+  return ((uint16_t)GetHeight(FontObjs[FontNum], 0));
 }
 
 //*****************************************************************************
@@ -560,10 +560,10 @@ UINT16 GetFontHeight(INT32 FontNum) {
 //	CreateEnglishTransTable()
 //
 //*****************************************************************************
-INT16 GetIndex(UINT16 siChar) {
-  UINT16 *pTrav;
-  UINT16 ssCount = 0;
-  UINT16 usNumberOfSymbols = pFManager->pTranslationTable->usNumberOfSymbols;
+int16_t GetIndex(uint16_t siChar) {
+  uint16_t *pTrav;
+  uint16_t ssCount = 0;
+  uint16_t usNumberOfSymbols = pFManager->pTranslationTable->usNumberOfSymbols;
 
   // search the Translation Table and return the index for the font
   pTrav = pFManager->pTranslationTable->DynamicArrayOf16BitValues;
@@ -588,7 +588,7 @@ INT16 GetIndex(UINT16 siChar) {
 //	Sets the current font number.
 //
 //*****************************************************************************
-BOOLEAN SetFont(INT32 iFontIndex) {
+BOOLEAN SetFont(int32_t iFontIndex) {
   Assert(iFontIndex >= 0);
   Assert(iFontIndex <= MAX_FONTS);
   Assert(FontObjs[iFontIndex] != NULL);
@@ -620,14 +620,14 @@ BOOLEAN SetFontDest(struct VSurface *dest, i32 x1, i32 y1, i32 x2, i32 y2, BOOLE
 // the parameters are identical to printf. The resulting string may be no longer
 // than 512 word-characters. Uses monochrome font color settings
 //*****************************************************************************
-UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
-  STR16 curletter;
-  INT16 transletter;
+uint32_t mprintf(int32_t x, int32_t y, wchar_t* pFontString, ...) {
+  int32_t destx, desty;
+  wchar_t* curletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
-  UINT32 uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint32_t uiDestPitchBYTES;
+  uint8_t *pDestBuf;
 
   Assert(pFontString != NULL);
 
@@ -655,7 +655,7 @@ UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -666,8 +666,8 @@ UINT32 mprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   return (0);
 }
 
-void VarFindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight,
-                                 INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY, STR16 pFontString,
+void VarFindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                                 int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY, wchar_t* pFontString,
                                  ...) {
   wchar_t string[512];
   va_list argptr;
@@ -680,8 +680,8 @@ void VarFindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sH
   FindFontRightCoordinates(sLeft, sTop, sWidth, sHeight, string, iFontIndex, psNewX, psNewY);
 }
 
-void VarFindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight,
-                                  INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY, STR16 pFontString,
+void VarFindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight,
+                                  int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY, wchar_t* pFontString,
                                   ...) {
   wchar_t string[512];
   va_list argptr;
@@ -694,9 +694,9 @@ void VarFindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 s
   FindFontCenterCoordinates(sLeft, sTop, sWidth, sHeight, string, iFontIndex, psNewX, psNewY);
 }
 
-void FindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, STR16 pStr,
-                              INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY) {
-  INT16 xp, yp;
+void FindFontRightCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight, wchar_t* pStr,
+                              int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY) {
+  int16_t xp, yp;
 
   // Compute the coordinates to right justify the text
   xp = ((sWidth - StringPixLength(pStr, iFontIndex))) + sLeft;
@@ -706,9 +706,9 @@ void FindFontRightCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeig
   *psNewY = yp;
 }
 
-void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, STR16 pStr,
-                               INT32 iFontIndex, INT16 *psNewX, INT16 *psNewY) {
-  INT16 xp, yp;
+void FindFontCenterCoordinates(int16_t sLeft, int16_t sTop, int16_t sWidth, int16_t sHeight, wchar_t* pStr,
+                               int32_t iFontIndex, int16_t *psNewX, int16_t *psNewY) {
+  int16_t xp, yp;
 
   // Compute the coordinates to center the text
   xp = ((sWidth - StringPixLength(pStr, iFontIndex) + 1) / 2) + sLeft;
@@ -726,14 +726,14 @@ void FindFontCenterCoordinates(INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHei
 // the parameters are identical to printf. The resulting string may be no longer
 // than 512 word-characters.
 //*****************************************************************************
-UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
-  STR16 curletter;
-  INT16 transletter;
+uint32_t gprintf(int32_t x, int32_t y, wchar_t* pFontString, ...) {
+  int32_t destx, desty;
+  wchar_t* curletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
-  UINT32 uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint32_t uiDestPitchBYTES;
+  uint8_t *pDestBuf;
 
   Assert(pFontString != NULL);
 
@@ -760,7 +760,7 @@ UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             FontObjs[FontDefault], destx, desty, transletter,
                                             &FontDestRegion);
     destx += GetWidth(FontObjs[FontDefault], transletter);
@@ -772,14 +772,14 @@ UINT32 gprintf(INT32 x, INT32 y, STR16 pFontString, ...) {
   return (0);
 }
 
-UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
-  STR16 curletter;
-  INT16 transletter;
+uint32_t gprintfDirty(int32_t x, int32_t y, wchar_t* pFontString, ...) {
+  int32_t destx, desty;
+  wchar_t* curletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
-  UINT32 uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint32_t uiDestPitchBYTES;
+  uint8_t *pDestBuf;
 
   Assert(pFontString != NULL);
 
@@ -806,7 +806,7 @@ UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
     }
 
     // Blit directly
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             FontObjs[FontDefault], destx, desty, transletter,
                                             &FontDestRegion);
     destx += GetWidth(FontObjs[FontDefault], transletter);
@@ -827,11 +827,11 @@ UINT32 gprintfDirty(INT32 x, INT32 y, STR16 pFontString, ...) {
 // the parameters are identical to printf. The resulting string may be no longer
 // than 512 word-characters.
 //*****************************************************************************
-UINT32 gprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType, INT32 x, INT32 y,
-                      STR16 pFontString, ...) {
-  INT32 destx, desty;
-  STR16 curletter;
-  INT16 transletter;
+uint32_t gprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType, int32_t x, int32_t y,
+                      wchar_t* pFontString, ...) {
+  int32_t destx, desty;
+  wchar_t* curletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
 
@@ -857,7 +857,7 @@ UINT32 gprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
     }
 
     // Blit directly
-    Blt8BPPDataTo16BPPBufferTransparentClip((UINT16 *)pDestBuf, uiDestPitchBYTES,
+    Blt8BPPDataTo16BPPBufferTransparentClip((uint16_t *)pDestBuf, uiDestPitchBYTES,
                                             FontObjs[FontDefault], destx, desty, transletter,
                                             &FontDestRegion);
 
@@ -867,11 +867,11 @@ UINT32 gprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
   return (0);
 }
 
-UINT32 mprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType, INT32 x, INT32 y,
-                      STR16 pFontString, ...) {
-  INT32 destx, desty;
-  STR16 curletter;
-  INT16 transletter;
+uint32_t mprintf_buffer(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType, int32_t x, int32_t y,
+                      wchar_t* pFontString, ...) {
+  int32_t destx, desty;
+  wchar_t* curletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
 
@@ -898,7 +898,7 @@ UINT32 mprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -906,14 +906,14 @@ UINT32 mprintf_buffer(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType,
   return (0);
 }
 
-UINT32 mprintf_buffer_coded(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 FontType, INT32 x,
-                            INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
-  STR16 curletter;
-  INT16 transletter;
+uint32_t mprintf_buffer_coded(uint8_t *pDestBuf, uint32_t uiDestPitchBYTES, uint32_t FontType, int32_t x,
+                            int32_t y, wchar_t* pFontString, ...) {
+  int32_t destx, desty;
+  wchar_t* curletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
-  UINT16 usOldForeColor;
+  uint16_t usOldForeColor;
 
   Assert(pFontString != NULL);
 
@@ -932,7 +932,7 @@ UINT32 mprintf_buffer_coded(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 Fon
   while ((*curletter) != 0) {
     if ((*curletter) == 180) {
       curletter++;
-      SetFontForeground((UINT8)(*curletter));
+      SetFontForeground((uint8_t)(*curletter));
       curletter++;
     } else if ((*curletter) == 181) {
       FontForeground16 = usOldForeColor;
@@ -949,7 +949,7 @@ UINT32 mprintf_buffer_coded(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 Fon
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -957,15 +957,15 @@ UINT32 mprintf_buffer_coded(UINT8 *pDestBuf, UINT32 uiDestPitchBYTES, UINT32 Fon
   return (0);
 }
 
-UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
-  INT32 destx, desty;
-  STR16 curletter;
-  INT16 transletter;
+uint32_t mprintf_coded(int32_t x, int32_t y, wchar_t* pFontString, ...) {
+  int32_t destx, desty;
+  wchar_t* curletter;
+  int16_t transletter;
   va_list argptr;
   wchar_t string[512];
-  UINT16 usOldForeColor;
-  UINT32 uiDestPitchBYTES;
-  UINT8 *pDestBuf;
+  uint16_t usOldForeColor;
+  uint32_t uiDestPitchBYTES;
+  uint8_t *pDestBuf;
 
   Assert(pFontString != NULL);
 
@@ -987,7 +987,7 @@ UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
   while ((*curletter) != 0) {
     if ((*curletter) == 180) {
       curletter++;
-      SetFontForeground((UINT8)(*curletter));
+      SetFontForeground((uint8_t)(*curletter));
       curletter++;
     } else if ((*curletter) == 181) {
       FontForeground16 = usOldForeColor;
@@ -1004,7 +1004,7 @@ UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
 
     // Blit directly
     Blt8BPPDataTo16BPPBufferMonoShadowClip(
-        (UINT16 *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
+        (uint16_t *)pDestBuf, uiDestPitchBYTES, FontObjs[FontDefault], destx, desty, transletter,
         &FontDestRegion, FontForeground16, FontBackground16, FontShadow16);
     destx += GetWidth(FontObjs[FontDefault], transletter);
   }
@@ -1015,10 +1015,10 @@ UINT32 mprintf_coded(INT32 x, INT32 y, STR16 pFontString, ...) {
   return (0);
 }
 
-BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *pTransTable) {
+BOOLEAN InitializeFontManager(uint16_t usDefaultPixelDepth, FontTranslationTable *pTransTable) {
   FontTranslationTable *pTransTab;
   int count;
-  UINT16 uiRight, uiBottom;
+  uint16_t uiRight, uiBottom;
 
   FontDefault = (-1);
   FontDestSurface = vsBB;
@@ -1029,8 +1029,8 @@ BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *
   GetCurrentVideoSettings(&uiRight, &uiBottom);
   FontDestRegion.iLeft = 0;
   FontDestRegion.iTop = 0;
-  FontDestRegion.iRight = (INT32)uiRight;
-  FontDestRegion.iBottom = (INT32)uiBottom;
+  FontDestRegion.iRight = (int32_t)uiRight;
+  FontDestRegion.iBottom = (int32_t)uiBottom;
   FontDestBPP = 16;
 
   FontDestWrap = FALSE;
@@ -1065,7 +1065,7 @@ BOOLEAN InitializeFontManager(UINT16 usDefaultPixelDepth, FontTranslationTable *
 //	Shuts down, and deallocates all fonts.
 //*****************************************************************************
 void ShutdownFontManager(void) {
-  INT32 count;
+  int32_t count;
 
   if (pFManager) MemFree(pFManager);
 
@@ -1100,11 +1100,11 @@ void DestroyEnglishTransTable(void) {
 //*****************************************************************************
 FontTranslationTable *CreateEnglishTransTable() {
   FontTranslationTable *pTable = NULL;
-  UINT16 *temp;
+  uint16_t *temp;
 
   pTable = (FontTranslationTable *)MemAlloc(sizeof(FontTranslationTable));
   pTable->usNumberOfSymbols = 172;
-  pTable->DynamicArrayOf16BitValues = (UINT16 *)MemAlloc(pTable->usNumberOfSymbols * 2);
+  pTable->DynamicArrayOf16BitValues = (uint16_t *)MemAlloc(pTable->usNumberOfSymbols * 2);
   temp = pTable->DynamicArrayOf16BitValues;
 
   *temp = 'A';

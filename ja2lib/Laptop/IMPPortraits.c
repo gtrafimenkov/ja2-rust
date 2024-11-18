@@ -19,18 +19,18 @@
 #include "Utils/WordWrap.h"
 
 // current and last pages
-INT32 iCurrentPortrait = 0;
-INT32 iLastPicture = 7;
+int32_t iCurrentPortrait = 0;
+int32_t iLastPicture = 7;
 
 // buttons needed for the IMP portrait screen
-INT32 giIMPPortraitButton[3];
-INT32 giIMPPortraitButtonImage[3];
+int32_t giIMPPortraitButton[3];
+int32_t giIMPPortraitButtonImage[3];
 
 // redraw protrait screen
 BOOLEAN fReDrawPortraitScreenFlag = FALSE;
 
 // face index
-INT32 iPortraitNumber = 0;
+int32_t iPortraitNumber = 0;
 
 // function definitions
 
@@ -40,9 +40,9 @@ void CreateIMPPortraitButtons(void);
 void DestroyIMPPortraitButtons(void);
 
 // callbacks
-void BtnIMPPortraitNextCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPPortraitPreviousCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPPortraitDoneCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPPortraitNextCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPPortraitPreviousCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPPortraitDoneCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPPortraits(void) {
   // create buttons
@@ -91,10 +91,10 @@ void HandleIMPPortraits(void) {
   return;
 }
 
-BOOLEAN RenderPortrait(INT16 sX, INT16 sY) {
+BOOLEAN RenderPortrait(int16_t sX, int16_t sY) {
   // render the portrait of the current picture
   struct VObject *hHandle;
-  UINT32 uiGraphicHandle;
+  uint32_t uiGraphicHandle;
 
   if (fCharacterIsMale) {
     // load it
@@ -218,7 +218,7 @@ void DestroyIMPPortraitButtons(void) {
   return;
 }
 
-void BtnIMPPortraitNextCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPortraitNextCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -236,7 +236,7 @@ void BtnIMPPortraitNextCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPPortraitPreviousCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPortraitPreviousCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -254,7 +254,7 @@ void BtnIMPPortraitPreviousCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPPortraitDoneCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPortraitDoneCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

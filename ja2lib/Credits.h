@@ -3,8 +3,8 @@
 
 #include "SGP/Types.h"
 
-UINT32 CreditScreenInit(void);
-UINT32 CreditScreenHandle(void);
-UINT32 CreditScreenShutdown(void);
+uint32_t CreditScreenInit(void);
+uint32_t CreditScreenHandle(void);
+uint32_t CreditScreenShutdown(void);
 
 #endif

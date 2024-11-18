@@ -11,9 +11,9 @@ struct VObject;
 void DrawMapIndexBigMap(BOOLEAN fSelectedCursorIsYellow);
 // void DrawMapIndexSmallMap( BOOLEAN fSelectedCursorIsYellow );
 
-UINT32 DrawMap(void);
+uint32_t DrawMap(void);
 
-void GetScreenXYFromMapXY(u8 sMapX, u8 sMapY, INT16 *psX, INT16 *psY);
+void GetScreenXYFromMapXY(u8 sMapX, u8 sMapY, int16_t *psX, int16_t *psY);
 
 BOOLEAN InitializePalettesForMap(void);
 void ShutDownPalettesForMap(void);
@@ -28,10 +28,10 @@ void PlotATemporaryPathForHelicopter(u8 sX, u8 sY);
 BOOLEAN TracePathRoute(BOOLEAN fCheckFlag, BOOLEAN fForceUpDate, struct path *pPath);
 
 // show arrows for this char
-void DisplayPathArrows(UINT16 usCharNum, struct VObject *hMapHandle);
+void DisplayPathArrows(uint16_t usCharNum, struct VObject *hMapHandle);
 
 // restore backgrounds for arrows
-void RestoreArrowBackgroundsForTrace(INT32 iArrow, INT32 iArrowX, INT32 iArrowY, BOOLEAN fZoom);
+void RestoreArrowBackgroundsForTrace(int32_t iArrow, int32_t iArrowX, int32_t iArrowY, BOOLEAN fZoom);
 
 // build path for character
 void PlotPathForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY, BOOLEAN fTacticalTraversal);
@@ -46,7 +46,7 @@ void DisplayHelicopterPath(void);
 void DisplayHelicopterTempPath(void);
 
 // clear path after this sector
-UINT32 ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY);
+uint32_t ClearPathAfterThisSectorForCharacter(struct SOLDIERTYPE *pCharacter, u8 sX, u8 sY);
 
 // cancel path : clear the path completely and gives player feedback message that the route was
 // canceled
@@ -58,7 +58,7 @@ void CancelPathForGroup(struct GROUP *pGroup);
 void DisplayThePotentialPathForHelicopter(u8 sMapX, u8 sMapY);
 
 // clear out helicopter list after this sector
-UINT32 ClearPathAfterThisSectorForHelicopter(u8 sX, u8 sY);
+uint32_t ClearPathAfterThisSectorForHelicopter(u8 sX, u8 sY);
 
 // check to see if sector is highlightable
 BOOLEAN IsTheCursorAllowedToHighLightThisSector(u8 sSectorX, u8 sSectorY);
@@ -71,17 +71,17 @@ void RestoreBackgroundForMapGrid(u8 sMapX, u8 sMapY);
 
 // clip blits to map view region
 void ClipBlitsToMapViewRegion(void);
-void ClipBlitsToMapViewRegionForRectangleAndABit(UINT32 uiDestPitchBYTES);
+void ClipBlitsToMapViewRegionForRectangleAndABit(uint32_t uiDestPitchBYTES);
 
 // clip blits to full screen....restore after use of ClipBlitsToMapViewRegion( )
 void RestoreClipRegionToFullScreen(void);
-void RestoreClipRegionToFullScreenForRectangle(UINT32 uiDestPitchBYTES);
+void RestoreClipRegionToFullScreenForRectangle(uint32_t uiDestPitchBYTES);
 
 // show the icons for people in motion
 void ShowPeopleInMotion(u8 sX, u8 sY);
 
 // last sector in helicopter's path
-INT16 GetLastSectorOfHelicoptersPath(void);
+int16_t GetLastSectorOfHelicoptersPath(void);
 
 // display info about helicopter path
 void DisplayDistancesForHelicopter(void);
@@ -97,7 +97,7 @@ BOOLEAN LoadMilitiaPopUpBox(void);
 void RemoveMilitiaPopUpBox(void);
 
 // check if anyone left behind, if not, move selected cursor along with movement group
-// void CheckIfAnyoneLeftInSector( INT16 sX, INT16 sY, INT16 sNewX, INT16 sNewY, INT8 bZ );
+// void CheckIfAnyoneLeftInSector( int16_t sX, int16_t sY, int16_t sNewX, int16_t sNewY, int8_t bZ );
 
 // create destroy
 void CreateDestroyMilitiaPopUPRegions(void);
@@ -107,7 +107,7 @@ BOOLEAN DrawMilitiaPopUpBox(void);
 
 // Returns true if the player knows how many enemies are in the sector if that number is greater
 // than 0. Returns false for all other cases.
-UINT32 WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY);
+uint32_t WhatPlayerKnowsAboutEnemiesInSector(u8 sSectorX, u8 sSectorY);
 
 // There is a special case flag used when players encounter enemies in a sector, then retreat.  The
 // number of enemies will display on mapscreen until time is compressed.  When time is compressed,
@@ -174,32 +174,32 @@ enum {
 #define MIN_WAIT_TIME_FOR_TEMP_PATH 200
 
 // zoom UL coords
-extern INT32 iZoomX;
-extern INT32 iZoomY;
+extern int32_t iZoomX;
+extern int32_t iZoomY;
 
 // the number of militia on the cursor
-extern INT16 sGreensOnCursor;
-extern INT16 sRegularsOnCursor;
-extern INT16 sElitesOnCursor;
+extern int16_t sGreensOnCursor;
+extern int16_t sRegularsOnCursor;
+extern int16_t sElitesOnCursor;
 
 // highlighted sectors
 extern u8 gsHighlightSectorX;
 extern u8 gsHighlightSectorY;
 
 // the orta icon
-extern UINT32 guiORTAICON;
+extern uint32_t guiORTAICON;
 
-extern UINT32 guiTIXAICON;
+extern uint32_t guiTIXAICON;
 
 // the character icons
-extern UINT32 guiCHARICONS;
+extern uint32_t guiCHARICONS;
 
 // the merc arrival sector landing zone icon
-extern UINT32 guiBULLSEYE;
+extern uint32_t guiBULLSEYE;
 
 // character between sector icons
-extern UINT32 guiCHARBETWEENSECTORICONS;
-extern UINT32 guiCHARBETWEENSECTORICONSCLOSE;
+extern uint32_t guiCHARBETWEENSECTORICONS;
+extern uint32_t guiCHARBETWEENSECTORICONSCLOSE;
 
 // the viewable map bound region
 extern struct GRect MapScreenRect;
@@ -208,19 +208,19 @@ extern struct GRect MapScreenRect;
 extern BOOLEAN fDrawTempHeliPath;
 
 // selected destination char
-extern INT8 bSelectedDestChar;
+extern int8_t bSelectedDestChar;
 
 // current assignment character
-extern INT8 bSelectedAssignChar;
+extern int8_t bSelectedAssignChar;
 
 // the info character
-extern INT8 bSelectedInfoChar;
+extern int8_t bSelectedInfoChar;
 
 // the contract char
-extern INT8 bSelectedContractChar;
+extern int8_t bSelectedContractChar;
 
 // map arrows graphical index value
-extern UINT32 guiMAPCURSORS;
+extern uint32_t guiMAPCURSORS;
 
 // has temp path for character path or helicopter been already drawn
 extern BOOLEAN fTempPathAlreadyDrawn;
@@ -229,13 +229,13 @@ extern BOOLEAN fTempPathAlreadyDrawn;
 extern struct GRect MapScreenRect;
 
 // the map border eta pop up
-extern UINT32 guiMapBorderEtaPopUp;
+extern uint32_t guiMapBorderEtaPopUp;
 
 // heli pop up
-extern UINT32 guiMapBorderHeliSectors;
+extern uint32_t guiMapBorderHeliSectors;
 
 // the currently selected town militia
-extern INT16 sSelectedMilitiaTown;
+extern int16_t sSelectedMilitiaTown;
 
 // the selected sectors
 extern u8 sSelMapX;
@@ -243,6 +243,6 @@ extern u8 sSelMapY;
 
 extern BOOLEAN fFoundTixa;
 
-extern UINT32 guiSubLevel1, guiSubLevel2, guiSubLevel3;
+extern uint32_t guiSubLevel1, guiSubLevel2, guiSubLevel3;
 
 #endif

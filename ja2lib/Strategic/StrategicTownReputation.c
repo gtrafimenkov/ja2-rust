@@ -33,7 +33,7 @@
 #define TOWN_OPINION_PERIOD (3 * 60)
 
 void InitializeProfilesForTownReputation(void) {
-  UINT32 uiProfileId = 0;
+  uint32_t uiProfileId = 0;
 
   // initialize the town opinion values in each recruitable merc's profile structure
   for (uiProfileId = 0; uiProfileId < FIRST_NPC; uiProfileId++) {
@@ -46,7 +46,7 @@ void PostEventsForSpreadOfTownOpinion(void) {
   /* ARM - Do nothing, this system has been scrapped because it is so marginal and it's too late to
      bother with it now
 
-          INT32 iCounter = 0;
+          int32_t iCounter = 0;
           // called every day at 3am to set up daily events to handle spreading of town opinion
      about mercs for( iCounter = 0; iCounter < TOWN_OPINION_NUMBER_OF_PERIODS; iCounter++ )
           {
@@ -56,7 +56,7 @@ void PostEventsForSpreadOfTownOpinion(void) {
   */
 }
 
-UINT8 GetTownOpinionOfMerc(UINT8 ubProfileId, UINT8 ubTownId) {
+uint8_t GetTownOpinionOfMerc(uint8_t ubProfileId, uint8_t ubTownId) {
   Assert(ubProfileId < FIRST_NPC);
   Assert(ubTownId < NUM_TOWNS);
 
@@ -64,7 +64,7 @@ UINT8 GetTownOpinionOfMerc(UINT8 ubProfileId, UINT8 ubTownId) {
   return (gMercProfiles[ubProfileId].bMercTownReputation[ubTownId]);
 }
 
-UINT8 GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId) {
+uint8_t GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId) {
   // error check
   if (pSoldier == NULL) {
     return (0);
@@ -76,7 +76,7 @@ UINT8 GetTownOpinionOfMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownI
   return (GetTownOpinionOfMerc(GetSolProfile(pSoldier), ubTownId));
 }
 
-void UpdateTownOpinionOfThisMerc(UINT8 ubProfileId, UINT8 ubTownId, INT8 bAmount) {
+void UpdateTownOpinionOfThisMerc(uint8_t ubProfileId, uint8_t ubTownId, int8_t bAmount) {
   Assert(ubProfileId < FIRST_NPC);
   Assert(ubTownId < NUM_TOWNS);
 
@@ -94,8 +94,8 @@ void UpdateTownOpinionOfThisMerc(UINT8 ubProfileId, UINT8 ubTownId, INT8 bAmount
   }
 }
 
-void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 ubTownId,
-                                           INT8 bAmount) {
+void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, uint8_t ubTownId,
+                                           int8_t bAmount) {
   // error check
   if (pSoldier == NULL) {
     return;
@@ -108,7 +108,7 @@ void UpdateTownOpinionOfThisMercForSoldier(struct SOLDIERTYPE *pSoldier, UINT8 u
 }
 
 void HandleSpreadOfAllTownsOpinion(void) {
-  UINT8 ubProfileId;
+  uint8_t ubProfileId;
 
   // debug message
   ScreenMsg(MSG_FONT_RED, MSG_DEBUG, L"%s - Spreading town opinions about mercs", gswzWorldTimeStr);
@@ -119,11 +119,11 @@ void HandleSpreadOfAllTownsOpinion(void) {
   }
 }
 
-void HandleSpreadOfTownOpinionForMerc(UINT8 ubProfileId) {
+void HandleSpreadOfTownOpinionForMerc(uint8_t ubProfileId) {
   // handle opinion spread for this grunt
-  INT32 iDistanceBetweenTowns;
-  INT8 iCounterA, iCounterB;
-  INT8 bOpinionOfTownA, bOpinionOfTownB;
+  int32_t iDistanceBetweenTowns;
+  int8_t iCounterA, iCounterB;
+  int8_t bOpinionOfTownA, bOpinionOfTownB;
 
   Assert(ubProfileId < FIRST_NPC);
 
@@ -143,8 +143,8 @@ void HandleSpreadOfTownOpinionForMerc(UINT8 ubProfileId) {
   }
 }
 
-void HandleOpinionOfTownsAboutSoldier(INT8 bTownA, INT8 bTownB, INT32 iDistanceBetweenThem,
-                                      UINT8 ubProfile) {
+void HandleOpinionOfTownsAboutSoldier(int8_t bTownA, int8_t bTownB, int32_t iDistanceBetweenThem,
+                                      uint8_t ubProfile) {
   // ARM: System has been scrapped
 }
 
@@ -164,7 +164,7 @@ void HandleSpreadOfTownOpinionForMercForSoldier( struct SOLDIERTYPE *pSoldier )
 
 void HandleSpreadOfTownsOpinionForCurrentMercs( void )
 {
-        INT32 iCounter = 0, iNumberOnPlayersTeam = 0;
+        int32_t iCounter = 0, iNumberOnPlayersTeam = 0;
 
         // get the number on players team
         iNumberOnPlayersTeam = gTacticalStatus.Team[ OUR_TEAM ].bLastID;

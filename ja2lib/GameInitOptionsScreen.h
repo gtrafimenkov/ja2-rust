@@ -3,8 +3,8 @@
 
 #include "SGP/Types.h"
 
-UINT32 GameInitOptionsScreenInit(void);
-UINT32 GameInitOptionsScreenHandle(void);
-UINT32 GameInitOptionsScreenShutdown(void);
+uint32_t GameInitOptionsScreenInit(void);
+uint32_t GameInitOptionsScreenHandle(void);
+uint32_t GameInitOptionsScreenShutdown(void);
 
 #endif

@@ -12,81 +12,81 @@
 #include "SGP/WCheck.h"
 
 // Global variables for video objects
-INT32 gpLargeFontType1;
+int32_t gpLargeFontType1;
 struct VObject* gvoLargeFontType1;
 
-INT32 gpSmallFontType1;
+int32_t gpSmallFontType1;
 struct VObject* gvoSmallFontType1;
 
-INT32 gpTinyFontType1;
+int32_t gpTinyFontType1;
 struct VObject* gvoTinyFontType1;
 
-INT32 gp12PointFont1;
+int32_t gp12PointFont1;
 struct VObject* gvo12PointFont1;
 
-INT32 gpClockFont;
+int32_t gpClockFont;
 struct VObject* gvoClockFont;
 
-INT32 gpCompFont;
+int32_t gpCompFont;
 struct VObject* gvoCompFont;
 
-INT32 gpSmallCompFont;
+int32_t gpSmallCompFont;
 struct VObject* gvoSmallCompFont;
 
-INT32 gp10PointRoman;
+int32_t gp10PointRoman;
 struct VObject* gvo10PointRoman;
 
-INT32 gp12PointRoman;
+int32_t gp12PointRoman;
 struct VObject* gvo12PointRoman;
 
-INT32 gp14PointSansSerif;
+int32_t gp14PointSansSerif;
 struct VObject* gvo14PointSansSerif;
 
-// INT32						gpMilitaryFont1;
+// int32_t						gpMilitaryFont1;
 // struct VObject*				gvoMilitaryFont1;
 
-INT32 gp10PointArial;
+int32_t gp10PointArial;
 struct VObject* gvo10PointArial;
 
-INT32 gp10PointArialBold;
+int32_t gp10PointArialBold;
 struct VObject* gvo10PointArialBold;
 
-INT32 gp14PointArial;
+int32_t gp14PointArial;
 struct VObject* gvo14PointArial;
 
-INT32 gp12PointArial;
+int32_t gp12PointArial;
 struct VObject* gvo12PointArial;
 
-INT32 gpBlockyFont;
+int32_t gpBlockyFont;
 struct VObject* gvoBlockyFont;
 
-INT32 gpBlockyFont2;
+int32_t gpBlockyFont2;
 struct VObject* gvoBlockyFont2;
 
-INT32 gp12PointArialFixedFont;
+int32_t gp12PointArialFixedFont;
 struct VObject* gvo12PointArialFixedFont;
 
-INT32 gp16PointArial;
+int32_t gp16PointArial;
 struct VObject* gvo16PointArial;
 
-INT32 gpBlockFontNarrow;
+int32_t gpBlockFontNarrow;
 struct VObject* gvoBlockFontNarrow;
 
-INT32 gp14PointHumanist;
+int32_t gp14PointHumanist;
 struct VObject* gvo14PointHumanist;
 
 #if defined(JA2EDITOR) && defined(ENGLISH)
-INT32 gpHugeFont;
+int32_t gpHugeFont;
 struct VObject* gvoHugeFont;
 #endif
 
-INT32 giSubTitleWinFont;
+int32_t giSubTitleWinFont;
 
 BOOLEAN gfFontsInit = FALSE;
 
-UINT16 CreateFontPaletteTables(struct VObject* pObj);
+uint16_t CreateFontPaletteTables(struct VObject* pObj);
 
-extern CHAR16 gzFontName[32];
+extern wchar_t gzFontName[32];
 
 BOOLEAN InitializeFonts() {
   // Initialize fonts
@@ -271,7 +271,7 @@ void ShutdownFonts() {
 }
 
 // Set shades for fonts
-BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
+BOOLEAN SetFontShade(uint32_t uiFontID, int8_t bColorID) {
   struct VObject* pFont;
 
   if (!(bColorID > 0)) {
@@ -288,8 +288,8 @@ BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID) {
   return (TRUE);
 }
 
-UINT16 CreateFontPaletteTables(struct VObject* pObj) {
-  UINT32 count;
+uint16_t CreateFontPaletteTables(struct VObject* pObj) {
+  uint32_t count;
 
   for (count = 0; count < 16; count++) {
     if ((count == 4) && (pObj->p16BPPPalette == pObj->pShades[count]))
@@ -326,6 +326,6 @@ UINT16 CreateFontPaletteTables(struct VObject* pObj) {
   return (TRUE);
 }
 
-UINT16 WFGetFontHeight(INT32 FontNum) { return (GetFontHeight(FontNum)); }
+uint16_t WFGetFontHeight(int32_t FontNum) { return (GetFontHeight(FontNum)); }
 
-INT16 WFStringPixLength(STR16 string, INT32 UseFont) { return (StringPixLength(string, UseFont)); }
+int16_t WFStringPixLength(wchar_t* string, int32_t UseFont) { return (StringPixLength(string, UseFont)); }

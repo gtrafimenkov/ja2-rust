@@ -14,13 +14,13 @@
 #include "Utils/WordWrap.h"
 
 // IMP personality entrance buttons
-INT32 giIMPPersonalityEntranceButton[1];
-INT32 giIMPPersonalityEntranceButtonImage[1];
+int32_t giIMPPersonalityEntranceButton[1];
+int32_t giIMPPersonalityEntranceButtonImage[1];
 
 // function definitions
 void CreateIMPPersonalityEntranceButtons(void);
 void DestroyIMPPersonalityEntranceButtons(void);
-void BtnIMPPersonalityEntranceDoneCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPPersonalityEntranceDoneCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPPersonalityEntrance(void) {
   // create buttons needed
@@ -82,7 +82,7 @@ void DestroyIMPPersonalityEntranceButtons(void) {
   return;
 }
 
-void BtnIMPPersonalityEntranceDoneCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPPersonalityEntranceDoneCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Begin Screen done button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

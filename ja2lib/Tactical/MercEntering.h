@@ -4,9 +4,9 @@
 #include "SGP/Types.h"
 
 void ResetHeliSeats();
-void AddMercToHeli(UINT8 ubID);
+void AddMercToHeli(uint8_t ubID);
 
-void StartHelicopterRun(INT16 sGridNoSweetSpot);
+void StartHelicopterRun(int16_t sGridNoSweetSpot);
 
 void HandleHeliDrop();
 

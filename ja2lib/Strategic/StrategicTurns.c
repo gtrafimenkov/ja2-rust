@@ -21,8 +21,8 @@
 
 #define NUM_SEC_PER_STRATEGIC_TURN (NUM_SEC_IN_MIN * 15)  // Every fifteen minutes
 
-UINT32 guiLastStrategicTime = 0;
-UINT32 guiLastTacticalRealTime = 0;
+uint32_t guiLastStrategicTime = 0;
+uint32_t guiLastTacticalRealTime = 0;
 
 void StrategicTurnsNewGame() {
   // Sync game start time
@@ -35,8 +35,8 @@ void SyncStrategicTurnTimes() {
 }
 
 void HandleStrategicTurn() {
-  UINT32 uiTime;
-  UINT32 uiCheckTime;
+  uint32_t uiTime;
+  uint32_t uiCheckTime;
 
   // OK, DO THIS CHECK EVERY ONCE AND A WHILE...
   if (COUNTERDONE(STRATEGIC_OVERHEAD)) {

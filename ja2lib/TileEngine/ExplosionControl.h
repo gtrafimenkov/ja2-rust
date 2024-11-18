@@ -10,30 +10,30 @@
 
 // Explosion Data
 typedef struct {
-  UINT32 uiFlags;
+  uint32_t uiFlags;
 
-  UINT8 ubOwner;
-  UINT8 ubTypeID;
+  uint8_t ubOwner;
+  uint8_t ubTypeID;
 
-  UINT16 usItem;
+  uint16_t usItem;
 
-  INT16 sX;       // World X ( optional )
-  INT16 sY;       // World Y ( optional )
-  INT16 sZ;       // World Z ( optional )
-  INT16 sGridNo;  // World GridNo
+  int16_t sX;       // World X ( optional )
+  int16_t sY;       // World Y ( optional )
+  int16_t sZ;       // World Z ( optional )
+  int16_t sGridNo;  // World GridNo
   BOOLEAN fLocate;
-  INT8 bLevel;  // World level
-  UINT8 ubUnsed[1];
+  int8_t bLevel;  // World level
+  uint8_t ubUnsed[1];
 
 } EXPLOSION_PARAMS;
 
 typedef struct {
   EXPLOSION_PARAMS Params;
   BOOLEAN fAllocated;
-  INT16 sCurrentFrame;
-  INT32 iID;
-  INT32 iLightID;
-  UINT8 ubUnsed[2];
+  int16_t sCurrentFrame;
+  int32_t iID;
+  int32_t iLightID;
+  uint8_t ubUnsed[2];
 
 } EXPLOSIONTYPE;
 
@@ -53,9 +53,9 @@ typedef enum {
 } EXPLOSION_TYPES;
 
 typedef struct {
-  UINT32 uiWorldBombIndex;
-  UINT32 uiTimeStamp;
-  UINT8 fExists;
+  uint32_t uiWorldBombIndex;
+  uint32_t uiTimeStamp;
+  uint8_t fExists;
 } ExplosionQueueElement;
 
 #define ERASE_SPREAD_EFFECT 2
@@ -65,46 +65,46 @@ typedef struct {
 #define NUM_EXPLOSION_SLOTS 100
 extern EXPLOSIONTYPE gExplosionData[NUM_EXPLOSION_SLOTS];
 
-extern UINT8 gubElementsOnExplosionQueue;
+extern uint8_t gubElementsOnExplosionQueue;
 extern BOOLEAN gfExplosionQueueActive;
 
-void IgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo, UINT16 usItem,
-                     INT8 bLevel);
-void InternalIgniteExplosion(UINT8 ubOwner, INT16 sX, INT16 sY, INT16 sZ, INT16 sGridNo,
-                             UINT16 usItem, BOOLEAN fLocate, INT8 bLevel);
+void IgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ, int16_t sGridNo, uint16_t usItem,
+                     int8_t bLevel);
+void InternalIgniteExplosion(uint8_t ubOwner, int16_t sX, int16_t sY, int16_t sZ, int16_t sGridNo,
+                             uint16_t usItem, BOOLEAN fLocate, int8_t bLevel);
 
 void GenerateExplosion(EXPLOSION_PARAMS *pExpParams);
 
-void SpreadEffect(INT16 sGridNo, UINT8 ubRadius, UINT16 usItem, UINT8 ubOwner, BOOLEAN fSubsequent,
-                  INT8 bLevel, INT32 iSmokeEffectNum);
+void SpreadEffect(int16_t sGridNo, uint8_t ubRadius, uint16_t usItem, uint8_t ubOwner, BOOLEAN fSubsequent,
+                  int8_t bLevel, int32_t iSmokeEffectNum);
 
-void AddBombToQueue(UINT32 uiWorldBombIndex, UINT32 uiTimeStamp);
+void AddBombToQueue(uint32_t uiWorldBombIndex, uint32_t uiTimeStamp);
 
 void DecayBombTimers(void);
-void SetOffBombsByFrequency(UINT8 ubID, INT8 bFrequency);
-BOOLEAN SetOffBombsInGridNo(UINT8 ubID, INT16 sGridNo, BOOLEAN fAllBombs, INT8 bLevel);
-void ActivateSwitchInGridNo(UINT8 ubID, INT16 sGridNo);
-void SetOffPanicBombs(UINT8 ubID, INT8 bPanicTrigger);
+void SetOffBombsByFrequency(uint8_t ubID, int8_t bFrequency);
+BOOLEAN SetOffBombsInGridNo(uint8_t ubID, int16_t sGridNo, BOOLEAN fAllBombs, int8_t bLevel);
+void ActivateSwitchInGridNo(uint8_t ubID, int16_t sGridNo);
+void SetOffPanicBombs(uint8_t ubID, int8_t bPanicTrigger);
 
-void UpdateExplosionFrame(INT32 iIndex, INT16 sCurrentFrame);
-void RemoveExplosionData(INT32 iIndex);
+void UpdateExplosionFrame(int32_t iIndex, int16_t sCurrentFrame);
+void RemoveExplosionData(int32_t iIndex);
 
-void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, i8 sSectorZ, INT16 sGridNo,
-                               UINT8 ubDamage);
+void UpdateAndDamageSAMIfFound(u8 sSectorX, u8 sSectorY, i8 sSectorZ, int16_t sGridNo,
+                               uint8_t ubDamage);
 void UpdateSAMDoneRepair(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 
 BOOLEAN SaveExplosionTableToSaveGameFile(FileID hFile);
 
 BOOLEAN LoadExplosionTableFromSavedGameFile(FileID hFile);
 
-INT32 FindActiveTimedBomb(void);
+int32_t FindActiveTimedBomb(void);
 BOOLEAN ActiveTimedBombExists(void);
 void RemoveAllActiveTimedBombs(void);
 
 #define GASMASK_MIN_STATUS 70
 
-BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive, INT16 sSubsequent,
-                         BOOLEAN fRecompileMovementCosts, INT16 sWoundAmt, INT16 sBreathAmt,
-                         UINT8 ubOwner);
+BOOLEAN DishOutGasDamage(struct SOLDIERTYPE *pSoldier, EXPLOSIVETYPE *pExplosive, int16_t sSubsequent,
+                         BOOLEAN fRecompileMovementCosts, int16_t sWoundAmt, int16_t sBreathAmt,
+                         uint8_t ubOwner);
 
 #endif

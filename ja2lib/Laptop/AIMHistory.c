@@ -53,9 +53,9 @@
 
 #define AIM_HISTORY_SPACE_BETWEEN_PARAGRAPHS 8
 
-UINT8 gubCurPageNum;
+uint8_t gubCurPageNum;
 BOOLEAN gfInToc = FALSE;
-UINT8 gubAimHistoryMenuButtonDown = 255;
+uint8_t gubAimHistoryMenuButtonDown = 255;
 BOOLEAN gfExitingAimHistory;
 BOOLEAN AimHistorySubPagesVisitedFlag[NUM_AIM_HISTORY_PAGES];
 
@@ -63,20 +63,20 @@ void ResetAimHistoryButtons();
 void DisableAimHistoryButton();
 
 struct MOUSE_REGION gSelectedHistoryTocMenuRegion[NUM_AIM_HISTORY_PAGES];
-void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Bottom Menu Buttons
-void BtnHistoryMenuButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiHistoryMenuButton[AIM_HISTORY_MENU_BUTTON_AMOUNT];
-INT32 guiHistoryMenuButtonImage;
+void BtnHistoryMenuButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiHistoryMenuButton[AIM_HISTORY_MENU_BUTTON_AMOUNT];
+int32_t guiHistoryMenuButtonImage;
 
 BOOLEAN DrawAimHistoryMenuBar(void);
 BOOLEAN ExitAimHistoryMenuBar(void);
 BOOLEAN InitAimHistoryMenuBar(void);
-BOOLEAN DisplayAimHistoryParagraph(UINT8 ubPageNum, UINT8 ubNumParagraphs);
+BOOLEAN DisplayAimHistoryParagraph(uint8_t ubPageNum, uint8_t ubNumParagraphs);
 BOOLEAN InitTocMenu();
 BOOLEAN ExitTocMenu();
-void ChangingAimHistorySubPage(UINT8 ubSubPageNumber);
+void ChangingAimHistorySubPage(uint8_t ubSubPageNumber);
 
 // These enums represent which paragraph they are located in the AimHist.edt file
 enum {
@@ -117,7 +117,7 @@ BOOLEAN EnterAimHistory() {
     return FALSE;
   }
 
-  gubCurPageNum = (UINT8)giCurrentSubPage;
+  gubCurPageNum = (uint8_t)giCurrentSubPage;
   RenderAimHistory();
 
   DisableAimHistoryButton();
@@ -141,7 +141,7 @@ void HandleAimHistory() {}
 
 void RenderAimHistory() {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
+  uint32_t uiStartLoc = 0;
 
   DrawAimDefaults();
   //	DrawAimHistoryMenuBar();
@@ -216,7 +216,7 @@ void RenderAimHistory() {
 }
 
 BOOLEAN InitAimHistoryMenuBar(void) {
-  UINT16 i, usPosX;
+  uint16_t i, usPosX;
 
   // load the Bottom Buttons graphic and add it
   if (!AddVObjectFromFile("LAPTOP\\BottomButton.sti", &guiBottomButton)) {
@@ -261,14 +261,14 @@ BOOLEAN ExitAimHistoryMenuBar(void) {
   return (TRUE);
 }
 
-void SelectHistoryMenuButtonsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT8 rValue;
+void SelectHistoryMenuButtonsRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  uint8_t rValue;
   static BOOLEAN fOnPage = TRUE;
 
   if (fOnPage) {
     if (iReason & MSYS_CALLBACK_REASON_INIT) {
     } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-      rValue = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+      rValue = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
       // Previous Page
       if (rValue == 1) {
         if (gubCurPageNum > 0) {
@@ -305,11 +305,11 @@ void SelectHistoryMenuButtonsRegionCallBack(struct MOUSE_REGION *pRegion, INT32 
   }
 }
 
-BOOLEAN DisplayAimHistoryParagraph(UINT8 ubPageNum, UINT8 ubNumParagraphs) {
+BOOLEAN DisplayAimHistoryParagraph(uint8_t ubPageNum, uint8_t ubNumParagraphs) {
   wchar_t sText[400];
-  UINT32 uiStartLoc = 0;
-  UINT16 usPosY = 0;
-  UINT16 usNumPixels = 0;
+  uint32_t uiStartLoc = 0;
+  uint16_t usPosY = 0;
+  uint16_t usNumPixels = 0;
 
   // title
   uiStartLoc = AIM_HISTORY_LINE_SIZE * ubPageNum;
@@ -353,10 +353,10 @@ BOOLEAN DisplayAimHistoryParagraph(UINT8 ubPageNum, UINT8 ubNumParagraphs) {
 }
 
 BOOLEAN InitTocMenu() {
-  UINT16 i, usPosY;
-  UINT32 uiStartLoc = 0;
+  uint16_t i, usPosY;
+  uint32_t uiStartLoc = 0;
   wchar_t sText[400];
-  UINT8 ubLocInFile[] = {IN_THE_BEGINNING, THE_ISLAND_METAVIRA, GUS_TARBALLS, WORD_FROM_FOUNDER,
+  uint8_t ubLocInFile[] = {IN_THE_BEGINNING, THE_ISLAND_METAVIRA, GUS_TARBALLS, WORD_FROM_FOUNDER,
                          INCORPORATION};
 
   struct VObject *hContentButtonHandle;
@@ -372,15 +372,15 @@ BOOLEAN InitTocMenu() {
     if (!gfInToc) {
       // Mouse region for the history toc buttons
       MSYS_DefineRegion(&gSelectedHistoryTocMenuRegion[i], AIM_HISTORY_TOC_X, usPosY,
-                        (UINT16)(AIM_HISTORY_TOC_X + AIM_CONTENTBUTTON_WIDTH),
-                        (UINT16)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                        (uint16_t)(AIM_HISTORY_TOC_X + AIM_CONTENTBUTTON_WIDTH),
+                        (uint16_t)(usPosY + AIM_CONTENTBUTTON_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                         MSYS_NO_CALLBACK, SelectHistoryTocMenuRegionCallBack);
       MSYS_AddRegion(&gSelectedHistoryTocMenuRegion[i]);
       MSYS_SetRegionUserData(&gSelectedHistoryTocMenuRegion[i], 0, i + 1);
     }
 
     BltVObject(vsFB, hContentButtonHandle, 0, AIM_HISTORY_TOC_X, usPosY);
-    DrawTextToScreen(sText, AIM_HISTORY_TOC_X, (UINT16)(usPosY + AIM_HISTORY_TOC_Y),
+    DrawTextToScreen(sText, AIM_HISTORY_TOC_X, (uint16_t)(usPosY + AIM_HISTORY_TOC_Y),
                      AIM_CONTENTBUTTON_WIDTH, AIM_HISTORY_TOC_TEXT_FONT, AIM_HISTORY_TOC_TEXT_COLOR,
                      FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
@@ -391,7 +391,7 @@ BOOLEAN InitTocMenu() {
 }
 
 BOOLEAN ExitTocMenu() {
-  UINT16 i;
+  uint16_t i;
 
   if (gfInToc) {
     gfInToc = FALSE;
@@ -402,11 +402,11 @@ BOOLEAN ExitTocMenu() {
   return (TRUE);
 }
 
-void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (gfInToc) {
     if (iReason & MSYS_CALLBACK_REASON_INIT) {
     } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-      gubCurPageNum = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+      gubCurPageNum = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
       ChangingAimHistorySubPage(gubCurPageNum);
 
       ExitTocMenu();
@@ -418,8 +418,8 @@ void SelectHistoryTocMenuRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iRea
   }
 }
 
-void BtnHistoryMenuButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT8 ubRetValue = (UINT8)MSYS_GetBtnUserData(btn, 0);
+void BtnHistoryMenuButtonCallback(GUI_BUTTON *btn, int32_t reason) {
+  uint8_t ubRetValue = (uint8_t)MSYS_GetBtnUserData(btn, 0);
   gubAimHistoryMenuButtonDown = 255;
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
@@ -503,7 +503,7 @@ void DisableAimHistoryButton() {
   }
 }
 
-void ChangingAimHistorySubPage(UINT8 ubSubPageNumber) {
+void ChangingAimHistorySubPage(uint8_t ubSubPageNumber) {
   fLoadPendingFlag = TRUE;
 
   if (AimHistorySubPagesVisitedFlag[ubSubPageNumber] == FALSE) {

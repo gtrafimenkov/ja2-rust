@@ -56,10 +56,10 @@
 #define FLORIST_COMPANY_INFO_LINE_3_Y LAPTOP_SCREEN_WEB_UL_Y + 107
 #define FLORIST_COMPANY_INFO_LINE_4_Y LAPTOP_SCREEN_WEB_UL_Y + 119
 
-UINT32 guiFloristBackground;
-UINT32 guiHandBullet;
-UINT32 guiLargeTitleSymbol;
-UINT32 guiSmallTitleSymbol;
+uint32_t guiFloristBackground;
+uint32_t guiHandBullet;
+uint32_t guiLargeTitleSymbol;
+uint32_t guiSmallTitleSymbol;
 
 BOOLEAN gfHomePageActive =
     FALSE;  // Specifies whether or not the home page or the sub pages are active
@@ -67,13 +67,13 @@ BOOLEAN gfHomePageActive =
 // Buttons
 
 // Graphic for button
-INT32 guiGalleryButtonImage;
-void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiGalleryButton;
+int32_t guiGalleryButtonImage;
+void BtnGalleryButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiGalleryButton;
 
 // link to the flower home page by clicking on the flower title
 struct MOUSE_REGION gSelectedFloristTitleHomeLinkRegion;
-void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void GameInitFlorist() {}
 
@@ -129,8 +129,8 @@ void HandleFlorist() {}
 
 void RenderFlorist() {
   struct VObject *hPixHandle;
-  UINT16 i, usPosY;
-  UINT8 ubTextCounter;
+  uint16_t i, usPosY;
+  uint8_t ubTextCounter;
 
   GetVideoObject(&hPixHandle, guiHandBullet);
 
@@ -159,13 +159,13 @@ void RenderFlorist() {
   for (i = 0; i < FLORIST_NUMBER_OF_BULLETS; i++) {
     BltVObject(vsFB, hPixHandle, 0, FLORIST_FIRST_BULLET_X, usPosY);
 
-    DisplayWrappedString(FLORIST_FIRST_SENTENCE_COLUMN_TEXT_X, (UINT16)(usPosY + 20),
+    DisplayWrappedString(FLORIST_FIRST_SENTENCE_COLUMN_TEXT_X, (uint16_t)(usPosY + 20),
                          FLORIST_FIRST_SENTENCE_COLUMN_TEXT_WIDTH, 2, FLORIST_SENTENCE_FONT,
                          FLORIST_SENTENCE_COLOR, sFloristText[ubTextCounter], FONT_MCOLOR_BLACK,
                          FALSE, LEFT_JUSTIFIED);
     ubTextCounter++;
 
-    DisplayWrappedString(FLORIST_SECOND_SENTENCE_COLUMN_TEXT_X, (UINT16)(usPosY + 15),
+    DisplayWrappedString(FLORIST_SECOND_SENTENCE_COLUMN_TEXT_X, (uint16_t)(usPosY + 15),
                          FLORIST_SECOND_SENTENCE_COLUMN_TEXT_WIDTH, 2, FLORIST_SENTENCE_FONT,
                          FLORIST_SENTENCE_COLOR, sFloristText[ubTextCounter], FONT_MCOLOR_BLACK,
                          FALSE, LEFT_JUSTIFIED);
@@ -204,8 +204,8 @@ BOOLEAN InitFloristDefaults() {
     // flower title homepage link
     MSYS_DefineRegion(
         &gSelectedFloristTitleHomeLinkRegion, FLORIST_SMALL_TITLE_X, FLORIST_SMALL_TITLE_Y,
-        (UINT16)(FLORIST_SMALL_TITLE_X + FLORIST_SMALL_TITLE_WIDTH),
-        (UINT16)(FLORIST_SMALL_TITLE_Y + FLORIST_SMALL_TITLE_HEIGHT), MSYS_PRIORITY_HIGH,
+        (uint16_t)(FLORIST_SMALL_TITLE_X + FLORIST_SMALL_TITLE_WIDTH),
+        (uint16_t)(FLORIST_SMALL_TITLE_Y + FLORIST_SMALL_TITLE_HEIGHT), MSYS_PRIORITY_HIGH,
         CURSOR_WWW, MSYS_NO_CALLBACK, SelectFloristTitleHomeLinkRegionCallBack);
     MSYS_AddRegion(&gSelectedFloristTitleHomeLinkRegion);
   }
@@ -246,7 +246,7 @@ void RemoveFloristDefaults() {
   }
 }
 
-void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnGalleryButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -269,7 +269,7 @@ void BtnGalleryButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectFloristTitleHomeLinkRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     guiCurrentLaptopMode = LAPTOP_MODE_FLORIST;

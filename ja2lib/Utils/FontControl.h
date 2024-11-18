@@ -8,79 +8,79 @@
 struct VObject;
 
 // ATE: A few winfont wrappers..
-UINT16 WFGetFontHeight(INT32 FontNum);
-INT16 WFStringPixLength(STR16 string, INT32 UseFont);
+uint16_t WFGetFontHeight(int32_t FontNum);
+int16_t WFStringPixLength(wchar_t* string, int32_t UseFont);
 
 // Global variables for video objects
-extern INT32 gpLargeFontType1;
+extern int32_t gpLargeFontType1;
 extern struct VObject* gvoLargeFontType1;
 
-extern INT32 gpSmallFontType1;
+extern int32_t gpSmallFontType1;
 extern struct VObject* gvoSmallFontType1;
 
-extern INT32 gpTinyFontType1;
+extern int32_t gpTinyFontType1;
 extern struct VObject* gvoTinyFontType1;
 
-extern INT32 gp12PointFont1;
+extern int32_t gp12PointFont1;
 extern struct VObject* gvo12PointFont1;
 
-extern INT32 gpClockFont;
+extern int32_t gpClockFont;
 extern struct VObject* gvoClockFont;
 
-extern INT32 gpCompFont;
+extern int32_t gpCompFont;
 extern struct VObject* gvoCompFont;
 
-extern INT32 gpSmallCompFont;
+extern int32_t gpSmallCompFont;
 extern struct VObject* gvoSmallCompFont;
 
-extern INT32 gp10PointRoman;
+extern int32_t gp10PointRoman;
 extern struct VObject* gvo10PointRoman;
 
-extern INT32 gp12PointRoman;
+extern int32_t gp12PointRoman;
 extern struct VObject* gvo12PointRoman;
 
-extern INT32 gp14PointSansSerif;
+extern int32_t gp14PointSansSerif;
 extern struct VObject* gvo14PointSansSerif;
 
-// extern INT32						gpMilitaryFont1;
+// extern int32_t						gpMilitaryFont1;
 // extern struct VObject*				gvoMilitaryFont1;
 
-extern INT32 gp10PointArial;
+extern int32_t gp10PointArial;
 extern struct VObject* gvo10PointArial;
 
-extern INT32 gp14PointArial;
+extern int32_t gp14PointArial;
 extern struct VObject* gvo14PointArial;
 
-extern INT32 gp12PointArial;
+extern int32_t gp12PointArial;
 extern struct VObject* gvo12PointArial;
 
-extern INT32 gpBlockyFont;
+extern int32_t gpBlockyFont;
 extern struct VObject* gvoBlockyFont;
 
-extern INT32 gpBlockyFont2;
+extern int32_t gpBlockyFont2;
 extern struct VObject* gvoBlockyFont2;
 
-extern INT32 gp10PointArialBold;
+extern int32_t gp10PointArialBold;
 extern struct VObject* gvo10PointArialBold;
 
-extern INT32 gp12PointArialFixedFont;
+extern int32_t gp12PointArialFixedFont;
 extern struct VObject* gvo12PointArialFixedFont;
 
-extern INT32 gp16PointArial;
+extern int32_t gp16PointArial;
 extern struct VObject* gvo16PointArial;
 
-extern INT32 gpBlockFontNarrow;
+extern int32_t gpBlockFontNarrow;
 extern struct VObject* gvoBlockFontNarrow;
 
-extern INT32 gp14PointHumanist;
+extern int32_t gp14PointHumanist;
 extern struct VObject* gvo14PointHumanist;
 
 #ifdef JA2EDITOR
-extern INT32 gpHugeFont;
+extern int32_t gpHugeFont;
 extern struct VObject* gvoHugeFont;
 #endif
 
-extern INT32 giSubTitleWinFont;
+extern int32_t giSubTitleWinFont;
 
 extern BOOLEAN gfFontsInit;
 
@@ -170,6 +170,6 @@ extern BOOLEAN gfFontsInit;
 BOOLEAN InitializeFonts();
 void ShutdownFonts();
 
-BOOLEAN SetFontShade(UINT32 uiFontID, INT8 bColorID);
+BOOLEAN SetFontShade(uint32_t uiFontID, int8_t bColorID);
 
 #endif

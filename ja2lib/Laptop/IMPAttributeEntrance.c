@@ -14,15 +14,15 @@
 #include "Utils/WordWrap.h"
 
 // the buttons
-UINT32 giIMPAttributeEntranceButtonImage[1];
-UINT32 giIMPAttributeEntranceButton[1];
+uint32_t giIMPAttributeEntranceButtonImage[1];
+uint32_t giIMPAttributeEntranceButton[1];
 
 // function definitions
 void DestroyIMPAttributeEntranceButtons(void);
 void CreateIMPAttributeEntranceButtons(void);
 
 // callbacks
-void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPAttributeEntrance(void) {
   CreateIMPAttributeEntranceButtons();
@@ -78,7 +78,7 @@ void DestroyIMPAttributeEntranceButtons(void) {
   return;
 }
 
-void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPAttributeBeginCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

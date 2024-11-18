@@ -48,59 +48,59 @@
 
 // Local-use only prototypes
 
-BOOLEAN LightTileBlocked(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY);
-BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite);
-BOOLEAN LightDelete(INT32 iLight);
-INT32 LightGetFree(void);
-INT32 LinearDistance(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2);
-DOUBLE LinearDistanceDouble(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2);
-BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                     UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls);
-BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                          UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls);
-BOOLEAN LightResetTile(INT16 iX, INT16 iY);
-BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, UINT32 uiLightType);
-BOOLEAN LightSetNaturalTile(INT16 iX, INT16 iY, UINT8 ubShade);
-UINT16 LightGetLastNode(INT32 iLight);
-BOOLEAN LightAddNode(INT32 iLight, INT16 iHotSpotX, INT16 iHotSpotY, INT16 iX, INT16 iY,
-                     UINT8 ubIntensity, UINT16 uiFlags);
-BOOLEAN LightInsertNode(INT32 iLight, UINT16 usLightIns, INT16 iHotSpotX, INT16 iHotSpotY, INT16 iX,
-                        INT16 iY, UINT8 ubIntensity, UINT16 uiFlags);
-UINT16 LightFindNextRay(INT32 iLight, UINT16 usIndex);
-BOOLEAN LightCastRay(INT32 iLight, INT16 iStartX, INT16 iStartY, INT16 iEndPointX, INT16 iEndPointY,
-                     UINT8 ubStartIntens, UINT8 ubEndIntens);
-BOOLEAN LightGenerateElliptical(INT32 iLight, UINT8 iIntensity, INT16 iA, INT16 iB);
-BOOLEAN LightGenerateBeam(INT32 iLight, UINT8 iIntensity, INT16 iLength, INT16 iRadius,
-                          INT16 iDirection);
-BOOLEAN LightCalcRect(INT32 iLight);
-BOOLEAN LightIlluminateWall(INT16 iSourceX, INT16 iSourceY, INT16 iTileX, INT16 iTileY,
+BOOLEAN LightTileBlocked(int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY);
+BOOLEAN LightDraw(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
+BOOLEAN LightDelete(int32_t iLight);
+int32_t LightGetFree(void);
+int32_t LinearDistance(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2);
+double LinearDistanceDouble(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2);
+BOOLEAN LightAddTile(uint32_t uiLightType, int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY,
+                     uint8_t ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls);
+BOOLEAN LightSubtractTile(uint32_t uiLightType, int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY,
+                          uint8_t ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls);
+BOOLEAN LightResetTile(int16_t iX, int16_t iY);
+BOOLEAN LightSetTile(int16_t iX, int16_t iY, uint8_t ubShade, uint32_t uiLightType);
+BOOLEAN LightSetNaturalTile(int16_t iX, int16_t iY, uint8_t ubShade);
+uint16_t LightGetLastNode(int32_t iLight);
+BOOLEAN LightAddNode(int32_t iLight, int16_t iHotSpotX, int16_t iHotSpotY, int16_t iX, int16_t iY,
+                     uint8_t ubIntensity, uint16_t uiFlags);
+BOOLEAN LightInsertNode(int32_t iLight, uint16_t usLightIns, int16_t iHotSpotX, int16_t iHotSpotY, int16_t iX,
+                        int16_t iY, uint8_t ubIntensity, uint16_t uiFlags);
+uint16_t LightFindNextRay(int32_t iLight, uint16_t usIndex);
+BOOLEAN LightCastRay(int32_t iLight, int16_t iStartX, int16_t iStartY, int16_t iEndPointX, int16_t iEndPointY,
+                     uint8_t ubStartIntens, uint8_t ubEndIntens);
+BOOLEAN LightGenerateElliptical(int32_t iLight, uint8_t iIntensity, int16_t iA, int16_t iB);
+BOOLEAN LightGenerateBeam(int32_t iLight, uint8_t iIntensity, int16_t iLength, int16_t iRadius,
+                          int16_t iDirection);
+BOOLEAN LightCalcRect(int32_t iLight);
+BOOLEAN LightIlluminateWall(int16_t iSourceX, int16_t iSourceY, int16_t iTileX, int16_t iTileY,
                             struct LEVELNODE *pStruct);
-BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY);
+BOOLEAN LightTileHasWall(int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY);
 
-INT32 LightSpriteGetFree(void);
-BOOLEAN LightSpriteDirty(INT32 iLight);
+int32_t LightSpriteGetFree(void);
+BOOLEAN LightSpriteDirty(int32_t iLight);
 
 // Top node of linked lists, NULL = FREE
 LIGHT_NODE *pLightList[MAX_LIGHT_TEMPLATES];
-UINT16 usTemplateSize[MAX_LIGHT_TEMPLATES];
-UINT16 *pLightRayList[MAX_LIGHT_TEMPLATES];
-UINT16 usRaySize[MAX_LIGHT_TEMPLATES];
-INT16 LightHeight[MAX_LIGHT_TEMPLATES];
-INT16 LightWidth[MAX_LIGHT_TEMPLATES];
-INT16 LightXOffset[MAX_LIGHT_TEMPLATES];
-INT16 LightYOffset[MAX_LIGHT_TEMPLATES];
-INT16 LightMapLeft[MAX_LIGHT_TEMPLATES];
-INT16 LightMapTop[MAX_LIGHT_TEMPLATES];
-INT16 LightMapRight[MAX_LIGHT_TEMPLATES];
-INT16 LightMapBottom[MAX_LIGHT_TEMPLATES];
-STR pLightNames[MAX_LIGHT_TEMPLATES];
+uint16_t usTemplateSize[MAX_LIGHT_TEMPLATES];
+uint16_t *pLightRayList[MAX_LIGHT_TEMPLATES];
+uint16_t usRaySize[MAX_LIGHT_TEMPLATES];
+int16_t LightHeight[MAX_LIGHT_TEMPLATES];
+int16_t LightWidth[MAX_LIGHT_TEMPLATES];
+int16_t LightXOffset[MAX_LIGHT_TEMPLATES];
+int16_t LightYOffset[MAX_LIGHT_TEMPLATES];
+int16_t LightMapLeft[MAX_LIGHT_TEMPLATES];
+int16_t LightMapTop[MAX_LIGHT_TEMPLATES];
+int16_t LightMapRight[MAX_LIGHT_TEMPLATES];
+int16_t LightMapBottom[MAX_LIGHT_TEMPLATES];
+char* pLightNames[MAX_LIGHT_TEMPLATES];
 
 // Sprite data
 LIGHT_SPRITE LightSprites[MAX_LIGHT_SPRITES];
 
 // Lighting system general data
-UINT8 ubAmbientLightLevel = DEFAULT_SHADE_LEVEL;
-UINT8 gubNumLightColors = 1;
+uint8_t ubAmbientLightLevel = DEFAULT_SHADE_LEVEL;
+uint8_t gubNumLightColors = 1;
 
 // Externed in Rotting Corpses.c
 struct SGPPaletteEntry gpLightColors[3] = {{0, 0, 0, 0}, {0, 0, 255, 0}, {0, 0, 0, 0}};
@@ -108,7 +108,7 @@ struct SGPPaletteEntry gpLightColors[3] = {{0, 0, 0, 0}, {0, 0, 255, 0}, {0, 0, 
 struct SGPPaletteEntry gpOrigLights[2] = {{0, 0, 0, 0}, {0, 0, 255, 0}};
 
 /*
-UINT16 gusShadeLevels[16][3]={{500, 500, 500},				// green table
+uint16_t gusShadeLevels[16][3]={{500, 500, 500},				// green table
                                                                                                                         {450, 450, 450},		// bright
                                                                                                                         {350, 350, 350},
                                                                                                                         {300, 300, 300},
@@ -128,7 +128,7 @@ UINT16 gusShadeLevels[16][3]={{500, 500, 500},				// green table
 // Externed in Rotting Corpses.c
 // Kris' attempt at blue night lights
 /*
-UINT16 gusShadeLevels[16][3]={{500, 500, 500},				// green table
+uint16_t gusShadeLevels[16][3]={{500, 500, 500},				// green table
                                                                                                                         {450, 450, 450},		// bright
                                                                                                                         {350, 350, 350},
                                                                                                                         {300, 300, 300},
@@ -149,7 +149,7 @@ UINT16 gusShadeLevels[16][3]={{500, 500, 500},				// green table
 /*
 //Linda's final version
 
-UINT16 gusShadeLevels[16][3] =
+uint16_t gusShadeLevels[16][3] =
 {
         500, 500, 500,
         450, 450, 450,	//bright
@@ -171,7 +171,7 @@ UINT16 gusShadeLevels[16][3] =
 */
 
 // JA2 Gold:
-UINT16 gusShadeLevels[16][3] = {
+uint16_t gusShadeLevels[16][3] = {
     {500, 500, 500}, {450, 450, 450},                                    // bright
     {350, 350, 350}, {300, 300, 300}, {255, 255, 255},                   // normal
     {231, 199, 199}, {209, 185, 185}, {187, 171, 171}, {165, 157, 157},  // darkening
@@ -184,9 +184,9 @@ BOOLEAN gfLoadShadeTablesFromTextFile = FALSE;
 
 void LoadShadeTablesFromTextFile() {
   FILE *fp;
-  INT32 i, j;
-  INT32 num;
-  CHAR8 str[10];
+  int32_t i, j;
+  int32_t num;
+  char str[10];
 
   if (gfLoadShadeTablesFromTextFile) {
     fp = fopen("ShadeTables.txt", "r");
@@ -196,7 +196,7 @@ void LoadShadeTablesFromTextFile() {
         for (j = 0; j < 3; j++) {
           fscanf(fp, "%s", str);
           sscanf(str, "%d", &num);
-          gusShadeLevels[i][j] = (UINT16)num;
+          gusShadeLevels[i][j] = (uint16_t)num;
         }
       }
       fclose(fp);
@@ -205,7 +205,7 @@ void LoadShadeTablesFromTextFile() {
 }
 
 // Debug variable
-UINT32 gNodesAdded = 0;
+uint32_t gNodesAdded = 0;
 
 /****************************************************************************************
  InitLightingSystem
@@ -214,7 +214,7 @@ UINT32 gNodesAdded = 0;
 
 ***************************************************************************************/
 BOOLEAN InitLightingSystem(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   LoadShadeTablesFromTextFile();
 
@@ -263,7 +263,7 @@ BOOLEAN SetDefaultWorldLightingColors(void) {
 
 ***************************************************************************************/
 BOOLEAN ShutdownLightingSystem(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // free up all allocated light nodes
   for (uiCount = 0; uiCount < MAX_LIGHT_TEMPLATES; uiCount++)
@@ -279,7 +279,7 @@ BOOLEAN ShutdownLightingSystem(void) {
 
 ***************************************************************************************/
 BOOLEAN LightReset(void) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // reset all light lists
   for (uiCount = 0; uiCount < MAX_LIGHT_TEMPLATES; uiCount++)
@@ -309,8 +309,8 @@ BOOLEAN LightReset(void) {
         returned.
 
 ***************************************************************************************/
-UINT16 LightCreateTemplateNode(INT32 iLight, INT16 iX, INT16 iY, UINT8 ubLight) {
-  UINT16 usNumNodes;
+uint16_t LightCreateTemplateNode(int32_t iLight, int16_t iX, int16_t iY, uint8_t ubLight) {
+  uint16_t usNumNodes;
 
   // create a new list
   if (pLightList[iLight] == NULL) {
@@ -343,8 +343,8 @@ UINT16 LightCreateTemplateNode(INT32 iLight, INT16 iX, INT16 iY, UINT8 ubLight) 
         Returns the index into the list.
 
 ***************************************************************************************/
-UINT16 LightAddTemplateNode(INT32 iLight, INT16 iX, INT16 iY, UINT8 ubLight) {
-  UINT16 usCount;
+uint16_t LightAddTemplateNode(int32_t iLight, int16_t iX, int16_t iY, uint8_t ubLight) {
+  uint16_t usCount;
 
   for (usCount = 0; usCount < usTemplateSize[iLight]; usCount++) {
     if (((pLightList[iLight] + usCount)->iDX == iX) &&
@@ -362,12 +362,12 @@ UINT16 LightAddTemplateNode(INT32 iLight, INT16 iX, INT16 iY, UINT8 ubLight) {
         Adds a node to the ray casting list.
 
 ***************************************************************************************/
-UINT16 LightAddRayNode(INT32 iLight, INT16 iX, INT16 iY, UINT8 ubLight, UINT16 usFlags) {
-  UINT16 usNumNodes;
+uint16_t LightAddRayNode(int32_t iLight, int16_t iX, int16_t iY, uint8_t ubLight, uint16_t usFlags) {
+  uint16_t usNumNodes;
 
   // create a new list
   if (pLightRayList[iLight] == NULL) {
-    if ((pLightRayList[iLight] = (UINT16 *)MemAlloc(sizeof(UINT16))) == NULL) return (65535);
+    if ((pLightRayList[iLight] = (uint16_t *)MemAlloc(sizeof(uint16_t))) == NULL) return (65535);
 
     *pLightRayList[iLight] = (LightAddTemplateNode(iLight, iX, iY, ubLight) | usFlags);
 
@@ -376,7 +376,7 @@ UINT16 LightAddRayNode(INT32 iLight, INT16 iX, INT16 iY, UINT8 ubLight, UINT16 u
   } else {
     usNumNodes = usRaySize[iLight];
     pLightRayList[iLight] =
-        (UINT16 *)MemRealloc(pLightRayList[iLight], (usNumNodes + 1) * sizeof(UINT16));
+        (uint16_t *)MemRealloc(pLightRayList[iLight], (usNumNodes + 1) * sizeof(uint16_t));
     *(pLightRayList[iLight] + usNumNodes) =
         (LightAddTemplateNode(iLight, iX, iY, ubLight) | usFlags);
     usRaySize[iLight] = usNumNodes + 1;
@@ -390,13 +390,13 @@ UINT16 LightAddRayNode(INT32 iLight, INT16 iX, INT16 iY, UINT8 ubLight, UINT16 u
         Adds a node to the ray casting list.
 
 ***************************************************************************************/
-UINT16 LightInsertRayNode(INT32 iLight, UINT16 usIndex, INT16 iX, INT16 iY, UINT8 ubLight,
-                          UINT16 usFlags) {
-  UINT16 usNumNodes;
+uint16_t LightInsertRayNode(int32_t iLight, uint16_t usIndex, int16_t iX, int16_t iY, uint8_t ubLight,
+                          uint16_t usFlags) {
+  uint16_t usNumNodes;
 
   // create a new list
   if (pLightRayList[iLight] == NULL) {
-    if ((pLightRayList[iLight] = (UINT16 *)MemAlloc(sizeof(UINT16))) == NULL) return (65535);
+    if ((pLightRayList[iLight] = (uint16_t *)MemAlloc(sizeof(uint16_t))) == NULL) return (65535);
 
     *pLightRayList[iLight] = (LightAddTemplateNode(iLight, iX, iY, ubLight) | usFlags);
 
@@ -405,11 +405,11 @@ UINT16 LightInsertRayNode(INT32 iLight, UINT16 usIndex, INT16 iX, INT16 iY, UINT
   } else {
     usNumNodes = usRaySize[iLight];
     pLightRayList[iLight] =
-        (UINT16 *)MemRealloc(pLightRayList[iLight], (usNumNodes + 1) * sizeof(UINT16));
+        (uint16_t *)MemRealloc(pLightRayList[iLight], (usNumNodes + 1) * sizeof(uint16_t));
 
     if (usIndex < usRaySize[iLight]) {
       memmove(pLightRayList[iLight] + usIndex + 1, pLightRayList[iLight] + usIndex,
-              (usRaySize[iLight] - usIndex) * sizeof(UINT16));
+              (usRaySize[iLight] - usIndex) * sizeof(uint16_t));
     }
 
     *(pLightRayList[iLight] + usIndex) = (LightAddTemplateNode(iLight, iX, iY, ubLight) | usFlags);
@@ -424,8 +424,8 @@ UINT16 LightInsertRayNode(INT32 iLight, UINT16 usIndex, INT16 iX, INT16 iY, UINT
         Returns TRUE/FALSE if the tile at the specified tile number can block light.
 
 ***************************************************************************************/
-BOOLEAN LightTileBlocked(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
-  UINT16 usTileNo, usSrcTileNo;
+BOOLEAN LightTileBlocked(int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY) {
+  uint16_t usTileNo, usSrcTileNo;
 
   Assert(gpWorldLevelData != NULL);
 
@@ -442,7 +442,7 @@ BOOLEAN LightTileBlocked(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
 
   if (gpWorldLevelData[usTileNo].sHeight > gpWorldLevelData[usSrcTileNo].sHeight) return (TRUE);
   {
-    UINT16 usTileNo;
+    uint16_t usTileNo;
     struct LEVELNODE *pStruct;
 
     usTileNo = MAPROWCOLTOPOS(iY, iX);
@@ -465,15 +465,15 @@ BOOLEAN LightTileBlocked(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
         Returns TRUE/FALSE if the tile at the specified coordinates contains a wall.
 
 ***************************************************************************************/
-BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
+BOOLEAN LightTileHasWall(int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY) {
   // struct LEVELNODE *pStruct;
-  // UINT32 uiType;
-  UINT16 usTileNo;
-  UINT16 usSrcTileNo;
-  INT8 bDirection;
-  UINT8 ubTravelCost;
-  // INT8		bWallCount = 0;
-  // UINT16	usWallOrientation;
+  // uint32_t uiType;
+  uint16_t usTileNo;
+  uint16_t usSrcTileNo;
+  int8_t bDirection;
+  uint8_t ubTravelCost;
+  // int8_t		bWallCount = 0;
+  // uint16_t	usWallOrientation;
 
   Assert(gpWorldLevelData != NULL);
 
@@ -524,7 +524,7 @@ BOOLEAN LightTileHasWall(INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY) {
         Removes a light template from the list, and frees up the associated node memory.
 
 ***************************************************************************************/
-BOOLEAN LightDelete(INT32 iLight) {
+BOOLEAN LightDelete(int32_t iLight) {
   if (pLightList[iLight] != NULL) {
     if (pLightList[iLight] != NULL) {
       MemFree(pLightList[iLight]);
@@ -556,8 +556,8 @@ BOOLEAN LightDelete(INT32 iLight) {
         returned.
 
 ***************************************************************************************/
-INT32 LightGetFree(void) {
-  UINT32 uiCount;
+int32_t LightGetFree(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < MAX_LIGHT_TEMPLATES; uiCount++)
     if (pLightList[uiCount] == NULL) return (uiCount);
@@ -571,33 +571,33 @@ INT32 LightGetFree(void) {
         Calculates the 2D linear distance between two points.
 
 ***************************************************************************************/
-INT32 LinearDistance(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2) {
-  INT32 iDx, iDy;
+int32_t LinearDistance(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2) {
+  int32_t iDx, iDy;
 
   iDx = abs(iX1 - iX2);
   iDx *= iDx;
   iDy = abs(iY1 - iY2);
   iDy *= iDy;
 
-  return ((INT32)sqrt((DOUBLE)(iDx + iDy)));
+  return ((int32_t)sqrt((double)(iDx + iDy)));
 }
 
 /****************************************************************************************
         LinearDistanceDouble
 
-                Calculates the 2D linear distance between two points. Returns the result in a DOUBLE
+                Calculates the 2D linear distance between two points. Returns the result in a double
         for greater accuracy.
 
 ***************************************************************************************/
-DOUBLE LinearDistanceDouble(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2) {
-  INT32 iDx, iDy;
+double LinearDistanceDouble(int16_t iX1, int16_t iY1, int16_t iX2, int16_t iY2) {
+  int32_t iDx, iDy;
 
   iDx = abs(iX1 - iX2);
   iDx *= iDx;
   iDy = abs(iY1 - iY2);
   iDy *= iDy;
 
-  return (sqrt((DOUBLE)(iDx + iDy)));
+  return (sqrt((double)(iDx + iDy)));
 }
 
 /****************************************************************************************
@@ -606,9 +606,9 @@ DOUBLE LinearDistanceDouble(INT16 iX1, INT16 iY1, INT16 iX2, INT16 iY2) {
                 Returns the light level at a particular level without fake lights
 
 ***************************************************************************************/
-UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel) {
+uint8_t LightTrueLevel(int16_t sGridNo, int8_t bLevel) {
   struct LEVELNODE *pNode;
-  INT32 iSum;
+  int32_t iSum;
 
   if (bLevel == 0) {
     pNode = gpWorldLevelData[sGridNo].pLandHead;
@@ -623,7 +623,7 @@ UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel) {
 
     iSum = min(SHADE_MIN, iSum);
     iSum = max(SHADE_MAX, iSum);
-    return ((UINT8)iSum);
+    return ((uint8_t)iSum);
   }
 }
 
@@ -633,9 +633,9 @@ UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel) {
                 Does the addition of light values to individual LEVELNODEs in the world tile list.
 
 ***************************************************************************************/
-void LightAddTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShadeAdd,
+void LightAddTileNode(struct LEVELNODE *pNode, uint32_t uiLightType, uint8_t ubShadeAdd,
                       BOOLEAN fFake) {
-  INT16 sSum;
+  int16_t sSum;
 
   pNode->ubSumLights += ubShadeAdd;
   if (fFake) {
@@ -650,7 +650,7 @@ void LightAddTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShade
   sSum = min(SHADE_MIN, sSum);
   sSum = max(SHADE_MAX, sSum);
 
-  pNode->ubShadeLevel = (UINT8)sSum;
+  pNode->ubShadeLevel = (uint8_t)sSum;
 }
 
 /****************************************************************************************
@@ -660,9 +660,9 @@ void LightAddTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShade
 list.
 
 ***************************************************************************************/
-void LightSubtractTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ubShadeSubtract,
+void LightSubtractTileNode(struct LEVELNODE *pNode, uint32_t uiLightType, uint8_t ubShadeSubtract,
                            BOOLEAN fFake) {
-  INT16 sSum;
+  int16_t sSum;
 
   if (ubShadeSubtract > pNode->ubSumLights) {
     pNode->ubSumLights = 0;
@@ -685,7 +685,7 @@ void LightSubtractTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ub
   sSum = min(SHADE_MIN, sSum);
   sSum = max(SHADE_MAX, sSum);
 
-  pNode->ubShadeLevel = (UINT8)sSum;
+  pNode->ubShadeLevel = (uint8_t)sSum;
 }
 
 /****************************************************************************************
@@ -694,11 +694,11 @@ void LightSubtractTileNode(struct LEVELNODE *pNode, UINT32 uiLightType, UINT8 ub
                 Adds a specified amount of light to all objects on a given tile.
 
 ***************************************************************************************/
-BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                     UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls) {
+BOOLEAN LightAddTile(uint32_t uiLightType, int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY,
+                     uint8_t ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pMerc, *pRoof, *pOnRoof;
-  UINT8 ubShadeAdd;
-  UINT32 uiTile;
+  uint8_t ubShadeAdd;
+  uint32_t uiTile;
   BOOLEAN fLitWall = FALSE;
   BOOLEAN fFake;
 
@@ -736,7 +736,7 @@ BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT
 
             // ATE: Limit shade for walls if in caves
             if (fLitWall && gfCaves) {
-              LightAddTileNode(pStruct, uiLightType, (UINT8)min(ubShadeAdd, (SHADE_MAX + 5)),
+              LightAddTileNode(pStruct, uiLightType, (uint8_t)min(ubShadeAdd, (SHADE_MAX + 5)),
                                FALSE);
             } else if (fLitWall) {
               LightAddTileNode(pStruct, uiLightType, ubShadeAdd, FALSE);
@@ -771,7 +771,7 @@ BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT
         pObject = pObject->pNext;
       }
 
-      if (uiFlags & LIGHT_BACKLIGHT) ubShadeAdd = (INT16)ubShade * 7 / 10;
+      if (uiFlags & LIGHT_BACKLIGHT) ubShadeAdd = (int16_t)ubShade * 7 / 10;
 
       pMerc = gpWorldLevelData[uiTile].pMercHead;
       while (pMerc != NULL) {
@@ -806,11 +806,11 @@ BOOLEAN LightAddTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT
                 Subtracts a specified amount of light to a given tile.
 
 ***************************************************************************************/
-BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX, INT16 iY,
-                          UINT8 ubShade, UINT32 uiFlags, BOOLEAN fOnlyWalls) {
+BOOLEAN LightSubtractTile(uint32_t uiLightType, int16_t iSrcX, int16_t iSrcY, int16_t iX, int16_t iY,
+                          uint8_t ubShade, uint32_t uiFlags, BOOLEAN fOnlyWalls) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pMerc, *pRoof, *pOnRoof;
-  UINT8 ubShadeSubtract;
-  UINT32 uiTile;
+  uint8_t ubShadeSubtract;
+  uint32_t uiTile;
   BOOLEAN fLitWall = FALSE;
   BOOLEAN fFake;  // only passed in to land and roof layers; others get fed FALSE
 
@@ -848,7 +848,7 @@ BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX
 
             // ATE: Limit shade for walls if in caves
             if (fLitWall && gfCaves) {
-              LightSubtractTileNode(pStruct, uiLightType, (UINT8)max((ubShadeSubtract - 5), 0),
+              LightSubtractTileNode(pStruct, uiLightType, (uint8_t)max((ubShadeSubtract - 5), 0),
                                     FALSE);
             } else if (fLitWall) {
               LightSubtractTileNode(pStruct, uiLightType, ubShadeSubtract, FALSE);
@@ -883,7 +883,7 @@ BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX
         pObject = pObject->pNext;
       }
 
-      if (uiFlags & LIGHT_BACKLIGHT) ubShadeSubtract = (INT16)ubShade * 7 / 10;
+      if (uiFlags & LIGHT_BACKLIGHT) ubShadeSubtract = (int16_t)ubShade * 7 / 10;
 
       pMerc = gpWorldLevelData[uiTile].pMercHead;
       while (pMerc != NULL) {
@@ -920,14 +920,14 @@ BOOLEAN LightSubtractTile(UINT32 uiLightType, INT16 iSrcX, INT16 iSrcY, INT16 iX
                 Sets the natural light level (as well as the current) on individual LEVELNODEs.
 
 ***************************************************************************************/
-void LightSetNaturalTileNode(struct LEVELNODE *pNode, UINT8 ubShade) {
+void LightSetNaturalTileNode(struct LEVELNODE *pNode, uint8_t ubShade) {
   Assert(pNode != NULL);
 
   pNode->ubSumLights = 0;
   pNode->ubMaxLights = 0;
   pNode->ubNaturalShadeLevel = ubShade;
   pNode->ubShadeLevel = ubShade;
-  // LightAddTileNode(pNode, 0, (INT16)(SHADE_MIN-ubShade));
+  // LightAddTileNode(pNode, 0, (int16_t)(SHADE_MIN-ubShade));
 }
 
 /****************************************************************************************
@@ -937,9 +937,9 @@ void LightSetNaturalTileNode(struct LEVELNODE *pNode, UINT8 ubShade) {
         This is the light value a tile has with no artificial lighting affecting it.
 
 ***************************************************************************************/
-BOOLEAN LightSetNaturalTile(INT16 iX, INT16 iY, UINT8 ubShade) {
+BOOLEAN LightSetNaturalTile(int16_t iX, int16_t iY, uint8_t ubShade) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
-  UINT32 uiIndex;
+  uint32_t uiIndex;
 
   if (!(gpWorldLevelData != NULL)) {
     return FALSE;
@@ -1019,9 +1019,9 @@ void LightResetTileNode(struct LEVELNODE *pNode) {
         for that tile.
 
 ***************************************************************************************/
-BOOLEAN LightResetTile(INT16 iX, INT16 iY) {
+BOOLEAN LightResetTile(int16_t iX, int16_t iY) {
   struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pMerc;
-  UINT32 uiTile;
+  uint32_t uiTile;
 
   if (!(gpWorldLevelData != NULL)) {
     return FALSE;
@@ -1087,7 +1087,7 @@ BOOLEAN LightResetTile(INT16 iX, INT16 iY) {
 
 ***************************************************************************************/
 BOOLEAN LightResetAllTiles(void) {
-  INT16 iCountY, iCountX;
+  int16_t iCountY, iCountX;
 
   for (iCountY = 0; iCountY < WORLD_ROWS; iCountY++)
     for (iCountX = 0; iCountX < WORLD_COLS; iCountX++) LightResetTile(iCountX, iCountY);
@@ -1101,9 +1101,9 @@ BOOLEAN LightResetAllTiles(void) {
                 Sets the current light value of all objects on a given tile to the specified value.
 
 ***************************************************************************************/
-BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, UINT32 uiLightType) {
+BOOLEAN LightSetTile(int16_t iX, int16_t iY, uint8_t ubShade, uint32_t uiLightType) {
   /*struct LEVELNODE *pLand, *pStruct, *pObject, *pRoof, *pOnRoof, *pTopmost, *pFog;
-  UINT32 uiIndex;
+  uint32_t uiIndex;
 
           ubShade=max(SHADE_MAX, ubShade);
           ubShade=min(SHADE_MIN, ubShade);
@@ -1176,7 +1176,7 @@ BOOLEAN LightSetTile(INT16 iX, INT16 iY, UINT8 ubShade, UINT32 uiLightType) {
         returned.
 
 ***************************************************************************************/
-UINT16 LightGetLastNode(INT32 iLight) { return (usRaySize[iLight]); }
+uint16_t LightGetLastNode(int32_t iLight) { return (usRaySize[iLight]); }
 
 /****************************************************************************************
         LightAddNode
@@ -1184,21 +1184,21 @@ UINT16 LightGetLastNode(INT32 iLight) { return (usRaySize[iLight]); }
                 Creates a new node, and adds it to the end of a light list.
 
 ***************************************************************************************/
-BOOLEAN LightAddNode(INT32 iLight, INT16 iHotSpotX, INT16 iHotSpotY, INT16 iX, INT16 iY,
-                     UINT8 ubIntensity, UINT16 uiFlags) {
-  DOUBLE dDistance;
-  UINT8 ubShade;
-  INT32 iLightDecay;
+BOOLEAN LightAddNode(int32_t iLight, int16_t iHotSpotX, int16_t iHotSpotY, int16_t iX, int16_t iY,
+                     uint8_t ubIntensity, uint16_t uiFlags) {
+  double dDistance;
+  uint8_t ubShade;
+  int32_t iLightDecay;
 
   dDistance = LinearDistanceDouble(iX, iY, iHotSpotX, iHotSpotY);
   dDistance /= DISTANCE_SCALE;
 
-  iLightDecay = (INT32)(dDistance * LIGHT_DECAY);
+  iLightDecay = (int32_t)(dDistance * LIGHT_DECAY);
 
-  if ((iLightDecay >= (INT32)ubIntensity))
+  if ((iLightDecay >= (int32_t)ubIntensity))
     ubShade = 0;
   else
-    ubShade = ubIntensity - (UINT8)iLightDecay;
+    ubShade = ubIntensity - (uint8_t)iLightDecay;
 
   iX /= DISTANCE_SCALE;
   iY /= DISTANCE_SCALE;
@@ -1213,21 +1213,21 @@ BOOLEAN LightAddNode(INT32 iLight, INT16 iHotSpotX, INT16 iHotSpotY, INT16 iX, I
                 Creates a new node, and inserts it after the specified node.
 
 ***************************************************************************************/
-BOOLEAN LightInsertNode(INT32 iLight, UINT16 usLightIns, INT16 iHotSpotX, INT16 iHotSpotY, INT16 iX,
-                        INT16 iY, UINT8 ubIntensity, UINT16 uiFlags) {
-  DOUBLE dDistance;
-  UINT8 ubShade;
-  INT32 iLightDecay;
+BOOLEAN LightInsertNode(int32_t iLight, uint16_t usLightIns, int16_t iHotSpotX, int16_t iHotSpotY, int16_t iX,
+                        int16_t iY, uint8_t ubIntensity, uint16_t uiFlags) {
+  double dDistance;
+  uint8_t ubShade;
+  int32_t iLightDecay;
 
   dDistance = LinearDistanceDouble(iX, iY, iHotSpotX, iHotSpotY);
   dDistance /= DISTANCE_SCALE;
 
-  iLightDecay = (INT32)(dDistance * LIGHT_DECAY);
+  iLightDecay = (int32_t)(dDistance * LIGHT_DECAY);
 
-  if ((iLightDecay >= (INT32)ubIntensity))
+  if ((iLightDecay >= (int32_t)ubIntensity))
     ubShade = 0;
   else
-    ubShade = ubIntensity - (UINT8)iLightDecay;
+    ubShade = ubIntensity - (uint8_t)iLightDecay;
 
   iX /= DISTANCE_SCALE;
   iY /= DISTANCE_SCALE;
@@ -1244,8 +1244,8 @@ BOOLEAN LightInsertNode(INT32 iLight, UINT16 usLightIns, INT16 iHotSpotX, INT16 
         the pointer. If the end of list is reached, NULL is returned.
 
 ***************************************************************************************/
-UINT16 LightFindNextRay(INT32 iLight, UINT16 usIndex) {
-  UINT16 usNodeIndex;
+uint16_t LightFindNextRay(int32_t iLight, uint16_t usIndex) {
+  uint16_t usNodeIndex;
 
   usNodeIndex = usIndex;
   while ((usNodeIndex < usRaySize[iLight]) &&
@@ -1262,12 +1262,12 @@ UINT16 LightFindNextRay(INT32 iLight, UINT16 usIndex) {
         light list.
 
 ***************************************************************************************/
-BOOLEAN LightCastRay(INT32 iLight, INT16 iStartX, INT16 iStartY, INT16 iEndPointX, INT16 iEndPointY,
-                     UINT8 ubStartIntens, UINT8 ubEndIntens) {
-  INT16 AdjUp, AdjDown, ErrorTerm, XAdvance, XDelta, YDelta;
-  INT32 WholeStep, InitialPixelCount, FinalPixelCount, i, j, RunLength;
-  INT16 iXPos, iYPos, iEndY, iEndX;
-  UINT16 usCurNode = 0, usFlags = 0;
+BOOLEAN LightCastRay(int32_t iLight, int16_t iStartX, int16_t iStartY, int16_t iEndPointX, int16_t iEndPointY,
+                     uint8_t ubStartIntens, uint8_t ubEndIntens) {
+  int16_t AdjUp, AdjDown, ErrorTerm, XAdvance, XDelta, YDelta;
+  int32_t WholeStep, InitialPixelCount, FinalPixelCount, i, j, RunLength;
+  int16_t iXPos, iYPos, iEndY, iEndX;
+  uint16_t usCurNode = 0, usFlags = 0;
   BOOLEAN fInsertNodes = FALSE;
 
   if ((iEndPointX > 0) && (iEndPointY > 0)) usFlags = LIGHT_BACKLIGHT;
@@ -1549,23 +1549,23 @@ and to avoid nasty boundary conditions and division by 0 */
                 Creates an elliptical light, taking two radii.
 
 ***************************************************************************************/
-BOOLEAN LightGenerateElliptical(INT32 iLight, UINT8 iIntensity, INT16 iA, INT16 iB) {
-  INT16 iX, iY;
-  INT32 WorkingX, WorkingY;
-  DOUBLE ASquared;
-  DOUBLE BSquared;
-  DOUBLE Temp;
+BOOLEAN LightGenerateElliptical(int32_t iLight, uint8_t iIntensity, int16_t iA, int16_t iB) {
+  int16_t iX, iY;
+  int32_t WorkingX, WorkingY;
+  double ASquared;
+  double BSquared;
+  double Temp;
 
   iX = 0;
   iY = 0;
-  ASquared = (DOUBLE)iA * iA;
-  BSquared = (DOUBLE)iB * iB;
+  ASquared = (double)iA * iA;
+  BSquared = (double)iB * iB;
 
   /* Draw the four symmetric arcs for which X advances faster (that is,
      for which X is the major axis) */
   /* Draw the initial top & bottom points */
-  LightCastRay(iLight, iX, iY, (INT16)iX, (INT16)(iY + iB), iIntensity, 1);
-  LightCastRay(iLight, iX, iY, (INT16)iX, (INT16)(iY - iB), iIntensity, 1);
+  LightCastRay(iLight, iX, iY, (int16_t)iX, (int16_t)(iY + iB), iIntensity, 1);
+  LightCastRay(iLight, iX, iY, (int16_t)iX, (int16_t)(iY - iB), iIntensity, 1);
 
   /* Draw the four arcs */
   for (WorkingX = 0;;) {
@@ -1578,26 +1578,26 @@ BOOLEAN LightGenerateElliptical(INT32 iLight, UINT8 iIntensity, INT16 iA, INT16 
     Temp = BSquared - (BSquared * WorkingX * WorkingX / ASquared);
 
     if (Temp >= 0)
-      WorkingY = (INT32)(sqrt(Temp) + 0.5);
+      WorkingY = (int32_t)(sqrt(Temp) + 0.5);
     else
       WorkingY = 0;
 
     /* Stop if X is no longer the major axis (the arc has passed the
        45-degree point) */
-    if (((DOUBLE)WorkingY / BSquared) <= ((DOUBLE)WorkingX / ASquared)) break;
+    if (((double)WorkingY / BSquared) <= ((double)WorkingX / ASquared)) break;
 
     /* Draw the 4 symmetries of the current point */
-    LightCastRay(iLight, iX, iY, (INT16)(iX + WorkingX), (INT16)(iY - WorkingY), iIntensity, 1);
-    LightCastRay(iLight, iX, iY, (INT16)(iX - WorkingX), (INT16)(iY - WorkingY), iIntensity, 1);
-    LightCastRay(iLight, iX, iY, (INT16)(iX + WorkingX), (INT16)(iY + WorkingY), iIntensity, 1);
-    LightCastRay(iLight, iX, iY, (INT16)(iX - WorkingX), (INT16)(iY + WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX + WorkingX), (int16_t)(iY - WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX - WorkingX), (int16_t)(iY - WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX + WorkingX), (int16_t)(iY + WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX - WorkingX), (int16_t)(iY + WorkingY), iIntensity, 1);
   }
 
   /* Draw the four symmetric arcs for which Y advances faster (that is,
      for which Y is the major axis) */
   /* Draw the initial left & right points */
-  LightCastRay(iLight, iX, iY, (INT16)(iX + iA), iY, iIntensity, 1);
-  LightCastRay(iLight, iX, iY, (INT16)(iX - iA), iY, iIntensity, 1);
+  LightCastRay(iLight, iX, iY, (int16_t)(iX + iA), iY, iIntensity, 1);
+  LightCastRay(iLight, iX, iY, (int16_t)(iX - iA), iY, iIntensity, 1);
 
   /* Draw the four arcs */
   for (WorkingY = 0;;) {
@@ -1610,19 +1610,19 @@ BOOLEAN LightGenerateElliptical(INT32 iLight, UINT8 iIntensity, INT16 iA, INT16 
     Temp = ASquared - (ASquared * WorkingY * WorkingY / BSquared);
 
     if (Temp >= 0)
-      WorkingX = (INT32)(sqrt(Temp) + 0.5);
+      WorkingX = (int32_t)(sqrt(Temp) + 0.5);
     else
       WorkingX = 0;
 
     /* Stop if Y is no longer the major axis (the arc has passed the
        45-degree point) */
-    if (((DOUBLE)WorkingX / ASquared) < ((DOUBLE)WorkingY / BSquared)) break;
+    if (((double)WorkingX / ASquared) < ((double)WorkingY / BSquared)) break;
 
     /* Draw the 4 symmetries of the current point */
-    LightCastRay(iLight, iX, iY, (INT16)(iX + WorkingX), (INT16)(iY - WorkingY), iIntensity, 1);
-    LightCastRay(iLight, iX, iY, (INT16)(iX - WorkingX), (INT16)(iY - WorkingY), iIntensity, 1);
-    LightCastRay(iLight, iX, iY, (INT16)(iX + WorkingX), (INT16)(iY + WorkingY), iIntensity, 1);
-    LightCastRay(iLight, iX, iY, (INT16)(iX - WorkingX), (INT16)(iY + WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX + WorkingX), (int16_t)(iY - WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX - WorkingX), (int16_t)(iY - WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX + WorkingX), (int16_t)(iY + WorkingY), iIntensity, 1);
+    LightCastRay(iLight, iX, iY, (int16_t)(iX - WorkingX), (int16_t)(iY + WorkingY), iIntensity, 1);
   }
 
   return (TRUE);
@@ -1634,32 +1634,32 @@ BOOLEAN LightGenerateElliptical(INT32 iLight, UINT8 iIntensity, INT16 iA, INT16 
                 Creates an square light, taking two radii.
 
 ***************************************************************************************/
-BOOLEAN LightGenerateSquare(INT32 iLight, UINT8 iIntensity, INT16 iA, INT16 iB) {
-  INT16 iX, iY;
+BOOLEAN LightGenerateSquare(int32_t iLight, uint8_t iIntensity, int16_t iA, int16_t iB) {
+  int16_t iX, iY;
 
   for (iX = 0 - iA; iX <= 0 + iA; iX++)
-    LightCastRay(iLight, 0, 0, iX, (INT16)(0 - iB), iIntensity, 1);
+    LightCastRay(iLight, 0, 0, iX, (int16_t)(0 - iB), iIntensity, 1);
 
   for (iX = 0 - iA; iX <= 0 + iA; iX++)
-    LightCastRay(iLight, 0, 0, iX, (INT16)(0 + iB), iIntensity, 1);
+    LightCastRay(iLight, 0, 0, iX, (int16_t)(0 + iB), iIntensity, 1);
 
   for (iY = 0 - iB; iY <= 0 + iB; iY++)
-    LightCastRay(iLight, 0, 0, (INT16)(0 - iA), iY, iIntensity, 1);
+    LightCastRay(iLight, 0, 0, (int16_t)(0 - iA), iY, iIntensity, 1);
 
   for (iY = 0 - iB; iY <= 0 + iB; iY++)
-    LightCastRay(iLight, 0, 0, (INT16)(0 + iA), iY, iIntensity, 1);
+    LightCastRay(iLight, 0, 0, (int16_t)(0 + iA), iY, iIntensity, 1);
 
   /*for(iY=0-iB; iY <= 0+iB; iY++)
-          LightCastRay(iLight, 0, iY, (INT16)(0+iA), iY, iIntensity, 1);
+          LightCastRay(iLight, 0, iY, (int16_t)(0+iA), iY, iIntensity, 1);
 
   for(iY=0+iB; iY >= 0-iB; iY--)
-          LightCastRay(iLight, 0, iY, (INT16)(0-iA), iY, iIntensity, 1);
+          LightCastRay(iLight, 0, iY, (int16_t)(0-iA), iY, iIntensity, 1);
 
   for(iX=0-iA; iX <= 0+iA; iX++)
-          LightCastRay(iLight, iX, 0, iX, (INT16)(0+iB), iIntensity, 1);
+          LightCastRay(iLight, iX, 0, iX, (int16_t)(0+iB), iIntensity, 1);
 
   for(iX=0+iA; iX >= 0-iA; iX--)
-          LightCastRay(iLight, iX, 0, iX, (INT16)(0-iB), iIntensity, 1); */
+          LightCastRay(iLight, iX, 0, iX, (int16_t)(0-iB), iIntensity, 1); */
 
   return (TRUE);
 }
@@ -1670,8 +1670,8 @@ BOOLEAN LightGenerateSquare(INT32 iLight, UINT8 iIntensity, INT16 iA, INT16 iB) 
                 Creates a directional light.
 
 ***************************************************************************************/
-BOOLEAN LightGenerateBeam(INT32 iLight, UINT8 iIntensity, INT16 iLength, INT16 iRadius,
-                          INT16 iDirection) {
+BOOLEAN LightGenerateBeam(int32_t iLight, uint8_t iIntensity, int16_t iLength, int16_t iRadius,
+                          int16_t iDirection) {
   return (FALSE);
 }
 
@@ -1681,9 +1681,9 @@ BOOLEAN LightGenerateBeam(INT32 iLight, UINT8 iIntensity, INT16 iLength, INT16 i
                 Sets the current and natural light settings for all tiles in the world.
 
 ***************************************************************************************/
-BOOLEAN LightSetBaseLevel(UINT8 iIntensity) {
-  INT16 iCountY, iCountX;
-  UINT32 cnt;
+BOOLEAN LightSetBaseLevel(uint8_t iIntensity) {
+  int16_t iCountY, iCountX;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   ubAmbientLightLevel = iIntensity;
@@ -1722,8 +1722,8 @@ BOOLEAN LightSetBaseLevel(UINT8 iIntensity) {
                 Adds a light value to all the tiles in the world
 
 ***************************************************************************************/
-BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
-  INT16 iCountY, iCountX;
+BOOLEAN LightAddBaseLevel(uint32_t uiLightType, uint8_t iIntensity) {
+  int16_t iCountY, iCountX;
 
   ubAmbientLightLevel = max(SHADE_MAX, ubAmbientLightLevel - iIntensity);
 
@@ -1746,8 +1746,8 @@ BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
                 Sets the current and natural light settings for all tiles in the world.
 
 ***************************************************************************************/
-BOOLEAN LightSubtractBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
-  INT16 iCountY, iCountX;
+BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, uint8_t iIntensity) {
+  int16_t iCountY, iCountX;
 
   ubAmbientLightLevel = min(SHADE_MIN, ubAmbientLightLevel + iIntensity);
 
@@ -1770,18 +1770,18 @@ BOOLEAN LightSubtractBaseLevel(UINT32 uiLightType, UINT8 iIntensity) {
                 Creates a circular light.
 
 ***************************************************************************************/
-INT32 LightCreateOmni(UINT8 ubIntensity, INT16 iRadius) {
-  INT32 iLight;
-  CHAR8 usName[14];
+int32_t LightCreateOmni(uint8_t ubIntensity, int16_t iRadius) {
+  int32_t iLight;
+  char usName[14];
 
   iLight = LightGetFree();
   if (iLight != (-1)) {
-    LightGenerateElliptical(iLight, ubIntensity, (INT16)(iRadius * DISTANCE_SCALE),
-                            (INT16)(iRadius * DISTANCE_SCALE));
+    LightGenerateElliptical(iLight, ubIntensity, (int16_t)(iRadius * DISTANCE_SCALE),
+                            (int16_t)(iRadius * DISTANCE_SCALE));
   }
 
   sprintf(usName, "LTO%d.LHT", iRadius);
-  pLightNames[iLight] = (STR)MemAlloc(strlen(usName) + 1);
+  pLightNames[iLight] = (char*)MemAlloc(strlen(usName) + 1);
   strcpy(pLightNames[iLight], usName);
 
   return (iLight);
@@ -1793,18 +1793,18 @@ INT32 LightCreateOmni(UINT8 ubIntensity, INT16 iRadius) {
                 Creates a square light.
 
 ***************************************************************************************/
-INT32 LightCreateSquare(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2) {
-  INT32 iLight;
-  CHAR8 usName[30];
+int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2) {
+  int32_t iLight;
+  char usName[30];
 
   iLight = LightGetFree();
   if (iLight != (-1)) {
-    LightGenerateSquare(iLight, ubIntensity, (INT16)(iRadius1 * DISTANCE_SCALE),
-                        (INT16)(iRadius2 * DISTANCE_SCALE));
+    LightGenerateSquare(iLight, ubIntensity, (int16_t)(iRadius1 * DISTANCE_SCALE),
+                        (int16_t)(iRadius2 * DISTANCE_SCALE));
   }
 
   sprintf(usName, "LTS%d-%d.LHT", iRadius1, iRadius2);
-  pLightNames[iLight] = (STR)MemAlloc(strlen(usName) + 1);
+  pLightNames[iLight] = (char*)MemAlloc(strlen(usName) + 1);
   strcpy(pLightNames[iLight], usName);
 
   return (iLight);
@@ -1816,17 +1816,17 @@ INT32 LightCreateSquare(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2) {
                 Creates an elliptical light.
 
 ***************************************************************************************/
-INT32 LightCreateElliptical(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2) {
-  INT32 iLight;
-  CHAR8 usName[30];
+int32_t LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2) {
+  int32_t iLight;
+  char usName[30];
 
   iLight = LightGetFree();
   if (iLight != (-1))
-    LightGenerateElliptical(iLight, ubIntensity, (INT16)(iRadius1 * DISTANCE_SCALE),
-                            (INT16)(iRadius2 * DISTANCE_SCALE));
+    LightGenerateElliptical(iLight, ubIntensity, (int16_t)(iRadius1 * DISTANCE_SCALE),
+                            (int16_t)(iRadius2 * DISTANCE_SCALE));
 
   sprintf(usName, "LTE%d-%d.LHT", iRadius1, iRadius2);
-  pLightNames[iLight] = (STR)MemAlloc(strlen(usName) + 1);
+  pLightNames[iLight] = (char*)MemAlloc(strlen(usName) + 1);
   strcpy(pLightNames[iLight], usName);
 
   return (iLight);
@@ -1838,12 +1838,12 @@ INT32 LightCreateElliptical(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2) {
                 Renders a light template at the specified X,Y coordinates.
 
 ***************************************************************************************/
-BOOLEAN LightIlluminateWall(INT16 iSourceX, INT16 iSourceY, INT16 iTileX, INT16 iTileY,
+BOOLEAN LightIlluminateWall(int16_t iSourceX, int16_t iSourceY, int16_t iTileX, int16_t iTileY,
                             struct LEVELNODE *pStruct) {
   //	return( LightTileHasWall( iSourceX, iSourceY, iTileX, iTileY ) );
 
 #if 0
-UINT16 usWallOrientation;
+uint16_t usWallOrientation;
 
 	GetWallOrientation(pStruct->usIndex, &usWallOrientation);
 
@@ -1874,12 +1874,12 @@ UINT16 usWallOrientation;
                 Renders a light template at the specified X,Y coordinates.
 
 ***************************************************************************************/
-BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite) {
+BOOLEAN LightDraw(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite) {
   LIGHT_NODE *pLight;
-  UINT16 uiCount;
-  UINT16 usNodeIndex;
-  UINT32 uiFlags;
-  INT32 iOldX, iOldY;
+  uint16_t uiCount;
+  uint16_t usNodeIndex;
+  uint32_t uiFlags;
+  int32_t iOldX, iOldY;
   BOOLEAN fBlocked = FALSE;
   BOOLEAN fOnlyWalls;
 
@@ -1911,7 +1911,7 @@ BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 u
                           sSum=min(SHADE_MIN, sSum);
                           sSum=max(SHADE_MAX, sSum);
 
-                          gpWorldLevelData[ ].ubRealShadeLevel = (UINT8) sSum;
+                          gpWorldLevelData[ ].ubRealShadeLevel = (uint8_t) sSum;
 
                   }
 
@@ -1931,8 +1931,8 @@ BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 u
       pLight = pLightList[iLight] + (usNodeIndex & (~LIGHT_BACKLIGHT));
 
       if (!(LightSprites[uiSprite].uiFlags & LIGHT_SPR_ONROOF)) {
-        if (LightTileBlocked((INT16)iOldX, (INT16)iOldY, (INT16)(iX + pLight->iDX),
-                             (INT16)(iY + pLight->iDY))) {
+        if (LightTileBlocked((int16_t)iOldX, (int16_t)iOldY, (int16_t)(iX + pLight->iDX),
+                             (int16_t)(iY + pLight->iDY))) {
           uiCount = LightFindNextRay(iLight, uiCount);
 
           fOnlyWalls = TRUE;
@@ -1941,12 +1941,12 @@ BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 u
       }
 
       if (!(pLight->uiFlags & LIGHT_NODE_DRAWN) && (pLight->ubLight)) {
-        uiFlags = (UINT32)(usNodeIndex & LIGHT_BACKLIGHT);
+        uiFlags = (uint32_t)(usNodeIndex & LIGHT_BACKLIGHT);
         if (LightSprites[uiSprite].uiFlags & MERC_LIGHT) uiFlags |= LIGHT_FAKE;
         if (LightSprites[uiSprite].uiFlags & LIGHT_SPR_ONROOF) uiFlags |= LIGHT_ROOF_ONLY;
 
-        LightAddTile(uiLightType, (INT16)iOldX, (INT16)iOldY, (INT16)(iX + pLight->iDX),
-                     (INT16)(iY + pLight->iDY), pLight->ubLight, uiFlags, fOnlyWalls);
+        LightAddTile(uiLightType, (int16_t)iOldX, (int16_t)iOldY, (int16_t)(iX + pLight->iDX),
+                     (int16_t)(iY + pLight->iDY), pLight->ubLight, uiFlags, fOnlyWalls);
 
         pLight->uiFlags |= LIGHT_NODE_DRAWN;
       }
@@ -1968,9 +1968,9 @@ BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 u
   return (TRUE);
 }
 
-BOOLEAN LightRevealWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
+BOOLEAN LightRevealWall(int16_t sX, int16_t sY, int16_t sSrcX, int16_t sSrcY) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fRerender = FALSE, fHitWall = FALSE, fDoRightWalls = TRUE, fDoLeftWalls = TRUE;
   TILE_ELEMENT *TileElem;
 
@@ -1983,7 +1983,7 @@ BOOLEAN LightRevealWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
   if (sY < sSrcY) fDoLeftWalls = FALSE;
 
   // IF A FENCE, RETURN FALSE
-  if (IsFencePresentAtGridno((INT16)uiTile)) {
+  if (IsFencePresentAtGridno((int16_t)uiTile)) {
     return (FALSE);
   }
 
@@ -2037,9 +2037,9 @@ BOOLEAN LightRevealWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
   return (fHitWall);
 }
 
-BOOLEAN LightHideWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
+BOOLEAN LightHideWall(int16_t sX, int16_t sY, int16_t sSrcX, int16_t sSrcY) {
   struct LEVELNODE *pStruct;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fRerender = FALSE, fHitWall = FALSE, fDoRightWalls = TRUE, fDoLeftWalls = TRUE;
   TILE_ELEMENT *TileElem;
 
@@ -2107,10 +2107,10 @@ BOOLEAN LightHideWall(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
                 Tags walls as being translucent using a light template.
 
 ***************************************************************************************/
-BOOLEAN CalcTranslucentWalls(INT16 iX, INT16 iY) {
+BOOLEAN CalcTranslucentWalls(int16_t iX, int16_t iY) {
   LIGHT_NODE *pLight;
-  UINT16 uiCount;
-  UINT16 usNodeIndex;
+  uint16_t uiCount;
+  uint16_t usNodeIndex;
   if (pLightList[0] == NULL) return (FALSE);
   for (uiCount = 0; uiCount < usRaySize[0]; uiCount++) {
     usNodeIndex = *(pLightRayList[0] + uiCount);
@@ -2119,10 +2119,10 @@ BOOLEAN CalcTranslucentWalls(INT16 iX, INT16 iY) {
       pLight = pLightList[0] + (usNodeIndex & (~LIGHT_BACKLIGHT));
 
       // Kris:  added map boundary checking!!!
-      if (LightRevealWall((INT16)min(max((iX + pLight->iDX), 0), WORLD_COLS - 1),
-                          (INT16)min(max((iY + pLight->iDY), 0), WORLD_ROWS - 1),
-                          (INT16)min(max(iX, 0), WORLD_COLS - 1),
-                          (INT16)min(max(iY, 0), WORLD_ROWS - 1))) {
+      if (LightRevealWall((int16_t)min(max((iX + pLight->iDX), 0), WORLD_COLS - 1),
+                          (int16_t)min(max((iY + pLight->iDY), 0), WORLD_ROWS - 1),
+                          (int16_t)min(max(iX, 0), WORLD_COLS - 1),
+                          (int16_t)min(max(iY, 0), WORLD_ROWS - 1))) {
         uiCount = LightFindNextRay(0, uiCount);
         SetRenderFlags(RENDER_FLAG_FULL);
       }
@@ -2132,9 +2132,9 @@ BOOLEAN CalcTranslucentWalls(INT16 iX, INT16 iY) {
   return (TRUE);
 }
 
-BOOLEAN LightGreenTile(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
+BOOLEAN LightGreenTile(int16_t sX, int16_t sY, int16_t sSrcX, int16_t sSrcY) {
   struct LEVELNODE *pStruct, *pLand;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fHitWall = FALSE;
   TILE_ELEMENT *TileElem;
 
@@ -2187,10 +2187,10 @@ BOOLEAN LightGreenTile(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
 each tile drawn to facilitate animating the drawing process for debugging.
 
 ***************************************************************************************/
-BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset) {
+BOOLEAN LightShowRays(int16_t iX, int16_t iY, BOOLEAN fReset) {
   LIGHT_NODE *pLight;
-  static UINT16 uiCount = 0;
-  UINT16 usNodeIndex;
+  static uint16_t uiCount = 0;
+  uint16_t usNodeIndex;
 
   if (fReset) uiCount = 0;
 
@@ -2202,7 +2202,7 @@ BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset) {
     if (!(usNodeIndex & LIGHT_NEW_RAY)) {
       pLight = pLightList[0] + (usNodeIndex & (~LIGHT_BACKLIGHT));
 
-      if (LightGreenTile((INT16)(iX + pLight->iDX), (INT16)(iY + pLight->iDY), iX, iY)) {
+      if (LightGreenTile((int16_t)(iX + pLight->iDX), (int16_t)(iY + pLight->iDY), iX, iY)) {
         uiCount = LightFindNextRay(0, uiCount);
         SetRenderFlags(RENDER_FLAG_MARKED);
       }
@@ -2220,9 +2220,9 @@ BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset) {
         Removes the green from the tiles that was drawn to show the path of the rays.
 
 ***************************************************************************************/
-BOOLEAN LightHideGreen(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
+BOOLEAN LightHideGreen(int16_t sX, int16_t sY, int16_t sSrcX, int16_t sSrcY) {
   struct LEVELNODE *pStruct, *pLand;
-  UINT32 uiTile;
+  uint32_t uiTile;
   BOOLEAN fHitWall = FALSE;
   TILE_ELEMENT *TileElem;
 
@@ -2274,10 +2274,10 @@ BOOLEAN LightHideGreen(INT16 sX, INT16 sY, INT16 sSrcX, INT16 sSrcY) {
                 Hides walls that were revealed by CalcTranslucentWalls.
 
 ***************************************************************************************/
-BOOLEAN LightHideRays(INT16 iX, INT16 iY) {
+BOOLEAN LightHideRays(int16_t iX, int16_t iY) {
   LIGHT_NODE *pLight;
-  UINT16 uiCount;
-  UINT16 usNodeIndex;
+  uint16_t uiCount;
+  uint16_t usNodeIndex;
 
   if (pLightList[0] == NULL) return (FALSE);
 
@@ -2287,7 +2287,7 @@ BOOLEAN LightHideRays(INT16 iX, INT16 iY) {
     if (!(usNodeIndex & LIGHT_NEW_RAY)) {
       pLight = pLightList[0] + (usNodeIndex & (~LIGHT_BACKLIGHT));
 
-      if (LightHideWall((INT16)(iX + pLight->iDX), (INT16)(iY + pLight->iDY), iX, iY)) {
+      if (LightHideWall((int16_t)(iX + pLight->iDX), (int16_t)(iY + pLight->iDY), iX, iY)) {
         uiCount = LightFindNextRay(0, uiCount);
         SetRenderFlags(RENDER_FLAG_MARKED);
       }
@@ -2303,10 +2303,10 @@ BOOLEAN LightHideRays(INT16 iX, INT16 iY) {
                 Hides walls that were revealed by CalcTranslucentWalls.
 
 ***************************************************************************************/
-BOOLEAN ApplyTranslucencyToWalls(INT16 iX, INT16 iY) {
+BOOLEAN ApplyTranslucencyToWalls(int16_t iX, int16_t iY) {
   LIGHT_NODE *pLight;
-  UINT16 uiCount;
-  UINT16 usNodeIndex;
+  uint16_t uiCount;
+  uint16_t usNodeIndex;
 
   if (pLightList[0] == NULL) return (FALSE);
 
@@ -2316,10 +2316,10 @@ BOOLEAN ApplyTranslucencyToWalls(INT16 iX, INT16 iY) {
     if (!(usNodeIndex & LIGHT_NEW_RAY)) {
       pLight = pLightList[0] + (usNodeIndex & (~LIGHT_BACKLIGHT));
       // Kris:  added map boundary checking!!!
-      if (LightHideWall((INT16)min(max((iX + pLight->iDX), 0), WORLD_COLS - 1),
-                        (INT16)min(max((iY + pLight->iDY), 0), WORLD_ROWS - 1),
-                        (INT16)min(max(iX, 0), WORLD_COLS - 1),
-                        (INT16)min(max(iY, 0), WORLD_ROWS - 1))) {
+      if (LightHideWall((int16_t)min(max((iX + pLight->iDX), 0), WORLD_COLS - 1),
+                        (int16_t)min(max((iY + pLight->iDY), 0), WORLD_ROWS - 1),
+                        (int16_t)min(max(iX, 0), WORLD_COLS - 1),
+                        (int16_t)min(max(iY, 0), WORLD_ROWS - 1))) {
         uiCount = LightFindNextRay(0, uiCount);
         SetRenderFlags(RENDER_FLAG_FULL);
       }
@@ -2334,15 +2334,15 @@ BOOLEAN ApplyTranslucencyToWalls(INT16 iX, INT16 iY) {
 
                 Makes all the near-side trees around a given coordinate translucent.
 ***************************************************************************************/
-BOOLEAN LightTranslucentTrees(INT16 iX, INT16 iY) {
-  INT32 iCountX, iCountY;
-  UINT32 uiTile;
+BOOLEAN LightTranslucentTrees(int16_t iX, int16_t iY) {
+  int32_t iCountX, iCountY;
+  uint32_t uiTile;
   struct LEVELNODE *pNode;
   BOOLEAN fRerender = FALSE;
-  UINT32 fTileFlags;
+  uint32_t fTileFlags;
 
-  for (iCountY = iY; iCountY < (INT16)(iY + LIGHT_TREE_REVEAL); iCountY++)
-    for (iCountX = iX; iCountX < (INT16)(iX + LIGHT_TREE_REVEAL); iCountX++) {
+  for (iCountY = iY; iCountY < (int16_t)(iY + LIGHT_TREE_REVEAL); iCountY++)
+    for (iCountX = iX; iCountX < (int16_t)(iX + LIGHT_TREE_REVEAL); iCountX++) {
       uiTile = MAPROWCOLTOPOS(iCountY, iCountX);
       pNode = gpWorldLevelData[uiTile].pStructHead;
       while (pNode != NULL) {
@@ -2374,18 +2374,18 @@ BOOLEAN LightTranslucentTrees(INT16 iX, INT16 iY) {
 
                 Removes the translucency from any trees in the area.
 ***************************************************************************************/
-BOOLEAN LightHideTrees(INT16 iX, INT16 iY) {
-  INT32 iCountX, iCountY;
-  UINT32 uiTile;
+BOOLEAN LightHideTrees(int16_t iX, int16_t iY) {
+  int32_t iCountX, iCountY;
+  uint32_t uiTile;
   struct LEVELNODE *pNode;
   BOOLEAN fRerender = FALSE;
-  UINT32 fTileFlags;
+  uint32_t fTileFlags;
 
   // Kris:  added map boundary checking!!!
-  for (iCountY = (INT16)max(iY - LIGHT_TREE_REVEAL, 0);
-       iCountY < (INT16)min(iY + LIGHT_TREE_REVEAL, WORLD_ROWS - 1); iCountY++)
-    for (iCountX = (INT16)max(iX - LIGHT_TREE_REVEAL, 0);
-         iCountX < (INT16)min(iX + LIGHT_TREE_REVEAL, WORLD_COLS - 1); iCountX++) {
+  for (iCountY = (int16_t)max(iY - LIGHT_TREE_REVEAL, 0);
+       iCountY < (int16_t)min(iY + LIGHT_TREE_REVEAL, WORLD_ROWS - 1); iCountY++)
+    for (iCountX = (int16_t)max(iX - LIGHT_TREE_REVEAL, 0);
+         iCountX < (int16_t)min(iX + LIGHT_TREE_REVEAL, WORLD_COLS - 1); iCountX++) {
       uiTile = MAPROWCOLTOPOS(iCountY, iCountX);
       pNode = gpWorldLevelData[uiTile].pStructHead;
       while (pNode != NULL) {
@@ -2418,12 +2418,12 @@ BOOLEAN LightHideTrees(INT16 iX, INT16 iY) {
                 Reverts all tiles a given light affects to their natural light levels.
 
 ***************************************************************************************/
-BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite) {
+BOOLEAN LightErase(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite) {
   LIGHT_NODE *pLight;
-  UINT16 uiCount;
-  UINT16 usNodeIndex;
-  UINT32 uiFlags;
-  INT32 iOldX, iOldY;
+  uint16_t uiCount;
+  uint16_t usNodeIndex;
+  uint32_t uiFlags;
+  int32_t iOldX, iOldY;
   BOOLEAN fBlocked = FALSE;
   BOOLEAN fOnlyWalls;
 
@@ -2447,8 +2447,8 @@ BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 
       pLight = pLightList[iLight] + (usNodeIndex & (~LIGHT_BACKLIGHT));
 
       if (!(LightSprites[uiSprite].uiFlags & LIGHT_SPR_ONROOF)) {
-        if (LightTileBlocked((INT16)iOldX, (INT16)iOldY, (INT16)(iX + pLight->iDX),
-                             (INT16)(iY + pLight->iDY))) {
+        if (LightTileBlocked((int16_t)iOldX, (int16_t)iOldY, (int16_t)(iX + pLight->iDX),
+                             (int16_t)(iY + pLight->iDY))) {
           uiCount = LightFindNextRay(iLight, uiCount);
 
           fOnlyWalls = TRUE;
@@ -2457,12 +2457,12 @@ BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 
       }
 
       if (!(pLight->uiFlags & LIGHT_NODE_DRAWN) && (pLight->ubLight)) {
-        uiFlags = (UINT32)(usNodeIndex & LIGHT_BACKLIGHT);
+        uiFlags = (uint32_t)(usNodeIndex & LIGHT_BACKLIGHT);
         if (LightSprites[uiSprite].uiFlags & MERC_LIGHT) uiFlags |= LIGHT_FAKE;
         if (LightSprites[uiSprite].uiFlags & LIGHT_SPR_ONROOF) uiFlags |= LIGHT_ROOF_ONLY;
 
-        LightSubtractTile(uiLightType, (INT16)iOldX, (INT16)iOldY, (INT16)(iX + pLight->iDX),
-                          (INT16)(iY + pLight->iDY), pLight->ubLight, uiFlags, fOnlyWalls);
+        LightSubtractTile(uiLightType, (int16_t)iOldX, (int16_t)iOldY, (int16_t)(iX + pLight->iDX),
+                          (int16_t)(iY + pLight->iDY), pLight->ubLight, uiFlags, fOnlyWalls);
         pLight->uiFlags |= LIGHT_NODE_DRAWN;
       }
 
@@ -2489,10 +2489,10 @@ BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 
 updating a light.
 
 ***************************************************************************************/
-BOOLEAN LightCalcRect(INT32 iLight) {
+BOOLEAN LightCalcRect(int32_t iLight) {
   struct GRect MaxRect;
-  INT16 sXValue, sYValue, sDummy;
-  UINT32 uiCount;
+  int16_t sXValue, sYValue, sDummy;
+  uint32_t uiCount;
   LIGHT_NODE *pLight;
 
   if (pLightList[iLight] == NULL) return (FALSE);
@@ -2514,28 +2514,28 @@ BOOLEAN LightCalcRect(INT32 iLight) {
     }
   }
 
-  FromCellToScreenCoordinates((INT16)(MaxRect.iLeft * CELL_X_SIZE),
-                              (INT16)(MaxRect.iTop * CELL_Y_SIZE), &sDummy, &sYValue);
+  FromCellToScreenCoordinates((int16_t)(MaxRect.iLeft * CELL_X_SIZE),
+                              (int16_t)(MaxRect.iTop * CELL_Y_SIZE), &sDummy, &sYValue);
 
-  LightMapLeft[iLight] = (INT16)MaxRect.iLeft;
-  LightMapTop[iLight] = (INT16)MaxRect.iTop;
-  LightMapRight[iLight] = (INT16)MaxRect.iRight;
-  LightMapBottom[iLight] = (INT16)MaxRect.iBottom;
+  LightMapLeft[iLight] = (int16_t)MaxRect.iLeft;
+  LightMapTop[iLight] = (int16_t)MaxRect.iTop;
+  LightMapRight[iLight] = (int16_t)MaxRect.iRight;
+  LightMapBottom[iLight] = (int16_t)MaxRect.iBottom;
 
   LightHeight[iLight] = -sYValue;
   LightYOffset[iLight] = sYValue;
 
-  FromCellToScreenCoordinates((INT16)(MaxRect.iRight * CELL_X_SIZE),
-                              (INT16)(MaxRect.iBottom * CELL_Y_SIZE), &sDummy, &sYValue);
+  FromCellToScreenCoordinates((int16_t)(MaxRect.iRight * CELL_X_SIZE),
+                              (int16_t)(MaxRect.iBottom * CELL_Y_SIZE), &sDummy, &sYValue);
   LightHeight[iLight] += sYValue;
 
-  FromCellToScreenCoordinates((INT16)(MaxRect.iLeft * CELL_X_SIZE),
-                              (INT16)(MaxRect.iBottom * CELL_Y_SIZE), &sXValue, &sDummy);
+  FromCellToScreenCoordinates((int16_t)(MaxRect.iLeft * CELL_X_SIZE),
+                              (int16_t)(MaxRect.iBottom * CELL_Y_SIZE), &sXValue, &sDummy);
   LightWidth[iLight] = -sXValue;
   LightXOffset[iLight] = sXValue;
 
-  FromCellToScreenCoordinates((INT16)(MaxRect.iRight * CELL_X_SIZE),
-                              (INT16)(MaxRect.iTop * CELL_Y_SIZE), &sXValue, &sDummy);
+  FromCellToScreenCoordinates((int16_t)(MaxRect.iRight * CELL_X_SIZE),
+                              (int16_t)(MaxRect.iTop * CELL_Y_SIZE), &sXValue, &sDummy);
   LightWidth[iLight] += sXValue;
 
   LightHeight[iLight] += WORLD_TILE_X * 2;
@@ -2553,9 +2553,9 @@ BOOLEAN LightCalcRect(INT32 iLight) {
         filename forces the system to save the light with the internal filename (recommended).
 
 ***************************************************************************************/
-BOOLEAN LightSave(INT32 iLight, STR pFilename) {
+BOOLEAN LightSave(int32_t iLight, char* pFilename) {
   FileID hFile = FILE_ID_ERR;
-  STR pName;
+  char* pName;
 
   if (pLightList[iLight] == NULL)
     return (FALSE);
@@ -2566,10 +2566,10 @@ BOOLEAN LightSave(INT32 iLight, STR pFilename) {
       pName = pFilename;
 
     if ((hFile = File_OpenForWriting(pName)) != 0) {
-      File_Write(hFile, &usTemplateSize[iLight], sizeof(UINT16), NULL);
+      File_Write(hFile, &usTemplateSize[iLight], sizeof(uint16_t), NULL);
       File_Write(hFile, pLightList[iLight], sizeof(LIGHT_NODE) * usTemplateSize[iLight], NULL);
-      File_Write(hFile, &usRaySize[iLight], sizeof(UINT16), NULL);
-      File_Write(hFile, pLightRayList[iLight], sizeof(UINT16) * usRaySize[iLight], NULL);
+      File_Write(hFile, &usRaySize[iLight], sizeof(uint16_t), NULL);
+      File_Write(hFile, pLightRayList[iLight], sizeof(uint16_t) * usRaySize[iLight], NULL);
 
       File_Close(hFile);
     } else
@@ -2585,15 +2585,15 @@ BOOLEAN LightSave(INT32 iLight, STR pFilename) {
         if the file wasn't loaded.
 
 ***************************************************************************************/
-INT32 LightLoad(STR pFilename) {
+int32_t LightLoad(char* pFilename) {
   FileID hFile = FILE_ID_ERR;
-  INT32 iLight;
+  int32_t iLight;
 
   if ((iLight = LightGetFree()) == (-1))
     return (-1);
   else {
     if ((hFile = File_OpenForReading(pFilename)) != 0) {
-      File_Read(hFile, &usTemplateSize[iLight], sizeof(UINT16), NULL);
+      File_Read(hFile, &usTemplateSize[iLight], sizeof(uint16_t), NULL);
       if ((pLightList[iLight] =
                (LIGHT_NODE *)MemAlloc(usTemplateSize[iLight] * sizeof(LIGHT_NODE))) == NULL) {
         usTemplateSize[iLight] = 0;
@@ -2601,19 +2601,19 @@ INT32 LightLoad(STR pFilename) {
       }
       File_Read(hFile, pLightList[iLight], sizeof(LIGHT_NODE) * usTemplateSize[iLight], NULL);
 
-      File_Read(hFile, &usRaySize[iLight], sizeof(UINT16), NULL);
-      if ((pLightRayList[iLight] = (UINT16 *)MemAlloc(usRaySize[iLight] * sizeof(UINT16))) ==
+      File_Read(hFile, &usRaySize[iLight], sizeof(uint16_t), NULL);
+      if ((pLightRayList[iLight] = (uint16_t *)MemAlloc(usRaySize[iLight] * sizeof(uint16_t))) ==
           NULL) {
         usTemplateSize[iLight] = 0;
         usRaySize[iLight] = 0;
         MemFree(pLightList[iLight]);
         return (-1);
       }
-      File_Read(hFile, pLightRayList[iLight], sizeof(UINT16) * usRaySize[iLight], NULL);
+      File_Read(hFile, pLightRayList[iLight], sizeof(uint16_t) * usRaySize[iLight], NULL);
 
       File_Close(hFile);
 
-      pLightNames[iLight] = (STR)MemAlloc(strlen(pFilename) + 1);
+      pLightNames[iLight] = (char*)MemAlloc(strlen(pFilename) + 1);
       strcpy(pLightNames[iLight], pFilename);
     } else
       return (-1);
@@ -2629,8 +2629,8 @@ INT32 LightLoad(STR pFilename) {
 from disk. Returns the index of the template, or (-1) if it couldn't be loaded.
 
 ***************************************************************************************/
-INT32 LightLoadCachedTemplate(STR pFilename) {
-  INT32 iCount;
+int32_t LightLoadCachedTemplate(char* pFilename) {
+  int32_t iCount;
 
   for (iCount = 0; iCount < MAX_LIGHT_TEMPLATES; iCount++) {
     if ((pLightNames[iCount] != NULL) && !(strcasecmp(pFilename, pLightNames[iCount])))
@@ -2640,7 +2640,7 @@ INT32 LightLoadCachedTemplate(STR pFilename) {
   return (LightLoad(pFilename));
 }
 
-UINT8 LightGetColors(struct SGPPaletteEntry *pPal) {
+uint8_t LightGetColors(struct SGPPaletteEntry *pPal) {
   if (pPal != NULL)
     memcpy(pPal, &gpOrigLights[0], sizeof(struct SGPPaletteEntry) * gubNumLightColors);
 
@@ -2659,8 +2659,8 @@ BOOLEAN gfEditorForceRebuildAllColors = FALSE;
 
 extern void SetAllNewTileSurfacesLoaded(BOOLEAN fNew);
 
-BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors) {
-  INT16 sRed, sGreen, sBlue;
+BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, uint8_t ubNumColors) {
+  int16_t sRed, sGreen, sBlue;
 
   Assert(ubNumColors >= 1 && ubNumColors <= 2);
   Assert(pPal);
@@ -2684,30 +2684,30 @@ BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors) {
   // if there are two colors, calculate a third palette that is a mix of the two
   if (ubNumColors == 2) {
     sRed = min(
-        (((INT16)pPal[0].red) * LVL1_L1_PER / 100 + ((INT16)pPal[1].red) * LVL1_L2_PER / 100), 255);
+        (((int16_t)pPal[0].red) * LVL1_L1_PER / 100 + ((int16_t)pPal[1].red) * LVL1_L2_PER / 100), 255);
     sGreen = min(
-        (((INT16)pPal[0].green) * LVL1_L1_PER / 100 + ((INT16)pPal[1].green) * LVL1_L2_PER / 100),
+        (((int16_t)pPal[0].green) * LVL1_L1_PER / 100 + ((int16_t)pPal[1].green) * LVL1_L2_PER / 100),
         255);
     sBlue =
-        min((((INT16)pPal[0].blue) * LVL1_L1_PER / 100 + ((INT16)pPal[1].blue) * LVL1_L2_PER / 100),
+        min((((int16_t)pPal[0].blue) * LVL1_L1_PER / 100 + ((int16_t)pPal[1].blue) * LVL1_L2_PER / 100),
             255);
 
-    gpLightColors[1].red = (UINT8)(sRed);
-    gpLightColors[1].green = (UINT8)(sGreen);
-    gpLightColors[1].blue = (UINT8)(sBlue);
+    gpLightColors[1].red = (uint8_t)(sRed);
+    gpLightColors[1].green = (uint8_t)(sGreen);
+    gpLightColors[1].blue = (uint8_t)(sBlue);
 
     sRed = min(
-        (((INT16)pPal[0].red) * LVL2_L1_PER / 100 + ((INT16)pPal[1].red) * LVL2_L2_PER / 100), 255);
+        (((int16_t)pPal[0].red) * LVL2_L1_PER / 100 + ((int16_t)pPal[1].red) * LVL2_L2_PER / 100), 255);
     sGreen = min(
-        (((INT16)pPal[0].green) * LVL2_L1_PER / 100 + ((INT16)pPal[1].green) * LVL2_L2_PER / 100),
+        (((int16_t)pPal[0].green) * LVL2_L1_PER / 100 + ((int16_t)pPal[1].green) * LVL2_L2_PER / 100),
         255);
     sBlue =
-        min((((INT16)pPal[0].blue) * LVL2_L1_PER / 100 + ((INT16)pPal[1].blue) * LVL2_L2_PER / 100),
+        min((((int16_t)pPal[0].blue) * LVL2_L1_PER / 100 + ((int16_t)pPal[1].blue) * LVL2_L2_PER / 100),
             255);
 
-    gpLightColors[2].red = (UINT8)(sRed);
-    gpLightColors[2].green = (UINT8)(sGreen);
-    gpLightColors[2].blue = (UINT8)(sBlue);
+    gpLightColors[2].red = (uint8_t)(sRed);
+    gpLightColors[2].green = (uint8_t)(sGreen);
+    gpLightColors[2].blue = (uint8_t)(sBlue);
   }
 
   BuildTileShadeTables();
@@ -2733,8 +2733,8 @@ BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors) {
  *		Returns the index of the next available sprite.
  *
  ********************************************************************************/
-INT32 LightSpriteGetFree(void) {
-  INT32 iCount;
+int32_t LightSpriteGetFree(void) {
+  int32_t iCount;
 
   for (iCount = 0; iCount < MAX_LIGHT_SPRITES; iCount++) {
     if (!(LightSprites[iCount].uiFlags & LIGHT_SPR_ACTIVE)) return (iCount);
@@ -2750,8 +2750,8 @@ INT32 LightSpriteGetFree(void) {
  * If this function fails (out of sprites, or bad template name) it returns (-1).
  *
  ********************************************************************************/
-INT32 LightSpriteCreate(STR pName, UINT32 uiLightType) {
-  INT32 iSprite;
+int32_t LightSpriteCreate(char* pName, uint32_t uiLightType) {
+  int32_t iSprite;
 
   if ((iSprite = LightSpriteGetFree()) != (-1)) {
     memset(&LightSprites[iSprite], 0, sizeof(LIGHT_SPRITE));
@@ -2775,7 +2775,7 @@ INT32 LightSpriteCreate(STR pName, UINT32 uiLightType) {
  *		Sets the flag of a light sprite to "fake" (in game for merc navig purposes)
  *
  ********************************************************************************/
-BOOLEAN LightSpriteFake(INT32 iSprite) {
+BOOLEAN LightSpriteFake(int32_t iSprite) {
   if (LightSprites[iSprite].uiFlags & LIGHT_SPR_ACTIVE) {
     LightSprites[iSprite].uiFlags |= MERC_LIGHT;
     return (TRUE);
@@ -2790,7 +2790,7 @@ BOOLEAN LightSpriteFake(INT32 iSprite) {
  *		Removes an instance of a light. If it was on, it is erased from the scene.
  *
  ********************************************************************************/
-BOOLEAN LightSpriteDestroy(INT32 iSprite) {
+BOOLEAN LightSpriteDestroy(int32_t iSprite) {
   if (LightSprites[iSprite].uiFlags & LIGHT_SPR_ACTIVE) {
     if (LightSprites[iSprite].uiFlags & LIGHT_SPR_ERASE) {
       if ((LightSprites[iSprite].iX < WORLD_COLS) && (LightSprites[iSprite].iY < WORLD_ROWS)) {
@@ -2815,7 +2815,7 @@ BOOLEAN LightSpriteDestroy(INT32 iSprite) {
  *
  ********************************************************************************/
 BOOLEAN LightSpriteRender(void) {
-  // INT32 iCount;
+  // int32_t iCount;
   // BOOLEAN fRenderLights=FALSE;
 
   return (FALSE);
@@ -2868,7 +2868,7 @@ BOOLEAN LightSpriteRender(void) {
  *
  ********************************************************************************/
 BOOLEAN LightSpriteRenderAll(void) {
-  INT32 iCount;
+  int32_t iCount;
 
   LightResetAllTiles();
   for (iCount = 0; iCount < MAX_LIGHT_SPRITES; iCount++) {
@@ -2895,7 +2895,7 @@ BOOLEAN LightSpriteRenderAll(void) {
  *		Sets the X,Y position (IN TILES) of a light instance.
  *
  ********************************************************************************/
-BOOLEAN LightSpritePosition(INT32 iSprite, INT16 iX, INT16 iY) {
+BOOLEAN LightSpritePosition(int32_t iSprite, int16_t iX, int16_t iY) {
   if (LightSprites[iSprite].uiFlags & LIGHT_SPR_ACTIVE) {
     if ((LightSprites[iSprite].iX == iX) && (LightSprites[iSprite].iY == iY)) return (TRUE);
 
@@ -2933,7 +2933,7 @@ BOOLEAN LightSpritePosition(INT32 iSprite, INT16 iX, INT16 iY) {
  *		Determines whether a light is on a roof or not.
  *
  ********************************************************************************/
-BOOLEAN LightSpriteRoofStatus(INT32 iSprite, BOOLEAN fOnRoof) {
+BOOLEAN LightSpriteRoofStatus(int32_t iSprite, BOOLEAN fOnRoof) {
   if (fOnRoof && (LightSprites[iSprite].uiFlags & LIGHT_SPR_ONROOF)) return (FALSE);
 
   if (!fOnRoof && !(LightSprites[iSprite].uiFlags & LIGHT_SPR_ONROOF)) return (FALSE);
@@ -2972,7 +2972,7 @@ BOOLEAN LightSpriteRoofStatus(INT32 iSprite, BOOLEAN fOnRoof) {
  *		Turns on or off a light, based on the BOOLEAN.
  *
  ********************************************************************************/
-BOOLEAN LightSpritePower(INT32 iSprite, BOOLEAN fOn) {
+BOOLEAN LightSpritePower(int32_t iSprite, BOOLEAN fOn) {
   if (fOn) {
     LightSprites[iSprite].uiFlags |= (LIGHT_SPR_ON | LIGHT_SPR_REDRAW);
     LightSprites[iSprite].iOldX = WORLD_COLS;
@@ -2988,12 +2988,12 @@ BOOLEAN LightSpritePower(INT32 iSprite, BOOLEAN fOn) {
  *		Sets the flag for the renderer to draw all marked tiles.
  *
  ********************************************************************************/
-BOOLEAN LightSpriteDirty(INT32 iSprite) {
-  // INT16 iLeft_s, iTop_s;
-  // INT16 iMapLeft, iMapTop, iMapRight, iMapBottom;
+BOOLEAN LightSpriteDirty(int32_t iSprite) {
+  // int16_t iLeft_s, iTop_s;
+  // int16_t iMapLeft, iMapTop, iMapRight, iMapBottom;
 
-  // CellXYToScreenXY((INT16)(LightSprites[iSprite].iX*CELL_X_SIZE),
-  //								(INT16)(LightSprites[iSprite].iY*CELL_Y_SIZE),
+  // CellXYToScreenXY((int16_t)(LightSprites[iSprite].iX*CELL_X_SIZE),
+  //								(int16_t)(LightSprites[iSprite].iY*CELL_Y_SIZE),
   //&iLeft_s, &iTop_s);
 
   // iLeft_s+=LightXOffset[LightSprites[iSprite].iTemplate];
@@ -3008,17 +3008,17 @@ BOOLEAN LightSpriteDirty(INT32 iSprite) {
   // UpdateSaveBuffer();
   // AddBaseDirtyRect(gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X, gsVIEWPORT_END_Y );
   // AddBaseDirtyRect(iLeft_s, iTop_s,
-  //								(INT16)(iLeft_s+LightWidth[LightSprites[iSprite].iTemplate]),
-  //								(INT16)(iTop_s+LightHeight[LightSprites[iSprite].iTemplate]));
+  //								(int16_t)(iLeft_s+LightWidth[LightSprites[iSprite].iTemplate]),
+  //								(int16_t)(iTop_s+LightHeight[LightSprites[iSprite].iTemplate]));
 
   SetRenderFlags(RENDER_FLAG_MARKED);
 
   return (TRUE);
 }
 
-BOOLEAN CreateObjectPalette(struct VObject *pObj, UINT32 uiBase,
+BOOLEAN CreateObjectPalette(struct VObject *pObj, uint32_t uiBase,
                             struct SGPPaletteEntry *pShadePal) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   pObj->pShades[uiBase] = Create16BPPPaletteShaded(
       pShadePal, gusShadeLevels[0][0], gusShadeLevels[0][1], gusShadeLevels[0][2], TRUE);
@@ -3032,9 +3032,9 @@ BOOLEAN CreateObjectPalette(struct VObject *pObj, UINT32 uiBase,
   return (TRUE);
 }
 
-BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, UINT32 uiBase,
+BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase,
                                    struct SGPPaletteEntry *pShadePal) {
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   pSoldier->pShades[uiBase] = Create16BPPPaletteShaded(
       pShadePal, gusShadeLevels[0][0], gusShadeLevels[0][1], gusShadeLevels[0][2], TRUE);
@@ -3058,11 +3058,11 @@ HVOBJECT_SHADE_TABLES symbol, remember to add/delete entries here, it won't adju
 
 **********************************************************************************************/
 #ifdef JA2TESTVERSION
-extern UINT32 uiNumTablesSaved;
+extern uint32_t uiNumTablesSaved;
 #endif
 
-UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiTileIndex, BOOLEAN fForce) {
-  UINT32 uiCount;
+uint16_t CreateTilePaletteTables(struct VObject *pObj, uint32_t uiTileIndex, BOOLEAN fForce) {
+  uint32_t uiCount;
   struct SGPPaletteEntry LightPal[256];
   BOOLEAN fLoaded = FALSE;
 
@@ -3080,12 +3080,12 @@ UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiTileIndex, BOOLEAN
   if (!fLoaded) {  // This is expensive as hell to call!
     for (uiCount = 0; uiCount < 256; uiCount++) {
       // combine the rgb of the light color with the object's palette
-      LightPal[uiCount].red = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].red + (UINT16)gpLightColors[0].red, 255));
-      LightPal[uiCount].green = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].green + (UINT16)gpLightColors[0].green, 255));
-      LightPal[uiCount].blue = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].blue + (UINT16)gpLightColors[0].blue, 255));
+      LightPal[uiCount].red = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].red + (uint16_t)gpLightColors[0].red, 255));
+      LightPal[uiCount].green = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].green + (uint16_t)gpLightColors[0].green, 255));
+      LightPal[uiCount].blue = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].blue + (uint16_t)gpLightColors[0].blue, 255));
     }
     // build the shade tables
     CreateObjectPalette(pObj, 0, LightPal);
@@ -3106,23 +3106,23 @@ UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiTileIndex, BOOLEAN
   if (gubNumLightColors == 2) {
     // build the second light's palette and table
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].red = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].red + (UINT16)gpLightColors[1].red, 255));
-      LightPal[uiCount].green = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].green + (UINT16)gpLightColors[1].green, 255));
-      LightPal[uiCount].blue = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].blue + (UINT16)gpLightColors[1].blue, 255));
+      LightPal[uiCount].red = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].red + (uint16_t)gpLightColors[1].red, 255));
+      LightPal[uiCount].green = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].green + (uint16_t)gpLightColors[1].green, 255));
+      LightPal[uiCount].blue = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].blue + (uint16_t)gpLightColors[1].blue, 255));
     }
     CreateObjectPalette(pObj, 16, LightPal);
 
     // build a table that is a mix of the first two
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].red = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].red + (UINT16)gpLightColors[2].red, 255));
-      LightPal[uiCount].green = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].green + (UINT16)gpLightColors[2].green, 255));
-      LightPal[uiCount].blue = (UINT8)(min(
-          (UINT16)pObj->pPaletteEntry[uiCount].blue + (UINT16)gpLightColors[2].blue, 255));
+      LightPal[uiCount].red = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].red + (uint16_t)gpLightColors[2].red, 255));
+      LightPal[uiCount].green = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].green + (uint16_t)gpLightColors[2].green, 255));
+      LightPal[uiCount].blue = (uint8_t)(min(
+          (uint16_t)pObj->pPaletteEntry[uiCount].blue + (uint16_t)gpLightColors[2].blue, 255));
     }
     CreateObjectPalette(pObj, 32, LightPal);
   }
@@ -3135,19 +3135,19 @@ UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiTileIndex, BOOLEAN
   return (TRUE);
 }
 
-UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, UINT32 uiType) {
+uint16_t CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType) {
   struct SGPPaletteEntry LightPal[256];
-  UINT32 uiCount;
+  uint32_t uiCount;
 
   // create the basic shade table
   for (uiCount = 0; uiCount < 256; uiCount++) {
     // combine the rgb of the light color with the object's palette
-    LightPal[uiCount].red = (UINT8)(min(
-        (UINT16)pSoldier->p8BPPPalette[uiCount].red + (UINT16)gpLightColors[0].red, 255));
-    LightPal[uiCount].green = (UINT8)(min(
-        (UINT16)pSoldier->p8BPPPalette[uiCount].green + (UINT16)gpLightColors[0].green, 255));
-    LightPal[uiCount].blue = (UINT8)(min(
-        (UINT16)pSoldier->p8BPPPalette[uiCount].blue + (UINT16)gpLightColors[0].blue, 255));
+    LightPal[uiCount].red = (uint8_t)(min(
+        (uint16_t)pSoldier->p8BPPPalette[uiCount].red + (uint16_t)gpLightColors[0].red, 255));
+    LightPal[uiCount].green = (uint8_t)(min(
+        (uint16_t)pSoldier->p8BPPPalette[uiCount].green + (uint16_t)gpLightColors[0].green, 255));
+    LightPal[uiCount].blue = (uint8_t)(min(
+        (uint16_t)pSoldier->p8BPPPalette[uiCount].blue + (uint16_t)gpLightColors[0].blue, 255));
   }
   // build the shade tables
   CreateSoldierShadedPalette(pSoldier, 0, LightPal);
@@ -3156,23 +3156,23 @@ UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, UINT32 uiType) {
   if (gubNumLightColors == 2) {
     // build the second light's palette and table
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].red = (UINT8)(min(
-          (UINT16)pSoldier->p8BPPPalette[uiCount].red + (UINT16)gpLightColors[1].red, 255));
-      LightPal[uiCount].green = (UINT8)(min(
-          (UINT16)pSoldier->p8BPPPalette[uiCount].green + (UINT16)gpLightColors[1].green, 255));
-      LightPal[uiCount].blue = (UINT8)(min(
-          (UINT16)pSoldier->p8BPPPalette[uiCount].blue + (UINT16)gpLightColors[1].blue, 255));
+      LightPal[uiCount].red = (uint8_t)(min(
+          (uint16_t)pSoldier->p8BPPPalette[uiCount].red + (uint16_t)gpLightColors[1].red, 255));
+      LightPal[uiCount].green = (uint8_t)(min(
+          (uint16_t)pSoldier->p8BPPPalette[uiCount].green + (uint16_t)gpLightColors[1].green, 255));
+      LightPal[uiCount].blue = (uint8_t)(min(
+          (uint16_t)pSoldier->p8BPPPalette[uiCount].blue + (uint16_t)gpLightColors[1].blue, 255));
     }
     CreateSoldierShadedPalette(pSoldier, 16, LightPal);
 
     // build a table that is a mix of the first two
     for (uiCount = 0; uiCount < 256; uiCount++) {
-      LightPal[uiCount].red = (UINT8)(min(
-          (UINT16)pSoldier->p8BPPPalette[uiCount].red + (UINT16)gpLightColors[2].red, 255));
-      LightPal[uiCount].green = (UINT8)(min(
-          (UINT16)pSoldier->p8BPPPalette[uiCount].green + (UINT16)gpLightColors[2].green, 255));
-      LightPal[uiCount].blue = (UINT8)(min(
-          (UINT16)pSoldier->p8BPPPalette[uiCount].blue + (UINT16)gpLightColors[2].blue, 255));
+      LightPal[uiCount].red = (uint8_t)(min(
+          (uint16_t)pSoldier->p8BPPPalette[uiCount].red + (uint16_t)gpLightColors[2].red, 255));
+      LightPal[uiCount].green = (uint8_t)(min(
+          (uint16_t)pSoldier->p8BPPPalette[uiCount].green + (uint16_t)gpLightColors[2].green, 255));
+      LightPal[uiCount].blue = (uint8_t)(min(
+          (uint16_t)pSoldier->p8BPPPalette[uiCount].blue + (uint16_t)gpLightColors[2].blue, 255));
     }
     CreateSoldierShadedPalette(pSoldier, 32, LightPal);
   }

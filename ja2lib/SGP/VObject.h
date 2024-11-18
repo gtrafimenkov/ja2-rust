@@ -30,22 +30,22 @@ typedef uint32_t VSurfID;
 
 // Effects structure for specialized blitting
 typedef struct {
-  UINT32 uiShadowLevel;
+  uint32_t uiShadowLevel;
   struct GRect ClipRect;
 } blt_fx;
 
 // Z-buffer info structure for properly assigning Z values
 typedef struct {
-  INT8 bInitialZChange;      // difference in Z value between the leftmost and base strips
-  UINT8 ubFirstZStripWidth;  // # of pixels in the leftmost strip
-  UINT8 ubNumberOfZChanges;  // number of strips (after the first)
-  INT8 *pbZChange;           // change to the Z value in each strip (after the first)
+  int8_t bInitialZChange;      // difference in Z value between the leftmost and base strips
+  uint8_t ubFirstZStripWidth;  // # of pixels in the leftmost strip
+  uint8_t ubNumberOfZChanges;  // number of strips (after the first)
+  int8_t *pbZChange;           // change to the Z value in each strip (after the first)
 } ZStripInfo;
 
 // This definition mimics what is found in WINDOWS.H ( for Direct Draw compatiblity )
 // From RGB to COLORVAL
 #define FROMRGB(r, g, b) \
-  ((UINT32)(((UINT8)(r) | ((UINT16)(g) << 8)) | (((UINT32)(UINT8)(b)) << 16)))
+  ((uint32_t)(((uint8_t)(r) | ((uint16_t)(g) << 8)) | (((uint32_t)(uint8_t)(b)) << 16)))
 
 // **********************************************************************************
 //
@@ -59,15 +59,15 @@ BOOLEAN InitializeVideoObjectManager();
 // Deletes any video object placed into list
 BOOLEAN ShutdownVideoObjectManager();
 
-BOOLEAN AddVObjectFromFile(const char *path, UINT32 *puiIndex);
+BOOLEAN AddVObjectFromFile(const char *path, uint32_t *puiIndex);
 
 // Removes a video object
-BOOLEAN DeleteVideoObjectFromIndex(UINT32 uiVObject);
+BOOLEAN DeleteVideoObjectFromIndex(uint32_t uiVObject);
 
-UINT16 CreateObjectPaletteTables(struct VObject *pObj, UINT32 uiType);
+uint16_t CreateObjectPaletteTables(struct VObject *pObj, uint32_t uiType);
 
 // Returns a struct VObject* for the specified index
-BOOLEAN GetVideoObject(struct VObject **hVObject, UINT32 uiIndex);
+BOOLEAN GetVideoObject(struct VObject **hVObject, uint32_t uiIndex);
 
 // **********************************************************************************
 //
@@ -84,14 +84,14 @@ BOOLEAN DeleteVideoObject(struct VObject *hVObject);
 BOOLEAN DestroyObjectPaletteTables(struct VObject *hVObject);
 
 // Sets the current object shade table
-UINT16 SetObjectShade(struct VObject *pObj, UINT32 uiShade);
+uint16_t SetObjectShade(struct VObject *pObj, uint32_t uiShade);
 
 // Sets the current object shade table using a vobject handle
-UINT16 SetObjectHandleShade(UINT32 uiHandle, UINT32 uiShade);
+uint16_t SetObjectHandleShade(uint32_t uiHandle, uint32_t uiShade);
 
 // Retrieves an struct VObject* pixel value
-BOOLEAN GetETRLEPixelValue(UINT8 *pDest, struct VObject *hVObject, UINT16 usETLREIndex, UINT16 usX,
-                           UINT16 usY);
+BOOLEAN GetETRLEPixelValue(uint8_t *pDest, struct VObject *hVObject, uint16_t usETLREIndex, uint16_t usX,
+                           uint16_t usY);
 
 // ****************************************************************************
 //
@@ -103,19 +103,19 @@ struct VObject *GetPrimaryVideoObject();
 struct VObject *GetBackBufferVideoObject();
 
 BOOLEAN GetVideoObjectETRLEProperties(struct VObject *hVObject, struct Subimage *subimages,
-                                      UINT16 usIndex);
-BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(UINT32 uiVideoObject, struct Subimage *subimages,
-                                               UINT16 usIndex);
-BOOLEAN GetVideoObjectETRLESubregionProperties(UINT32 uiVideoObject, UINT16 usIndex,
-                                               UINT16 *pusWidth, UINT16 *pusHeight);
+                                      uint16_t usIndex);
+BOOLEAN GetVideoObjectETRLEPropertiesFromIndex(uint32_t uiVideoObject, struct Subimage *subimages,
+                                               uint16_t usIndex);
+BOOLEAN GetVideoObjectETRLESubregionProperties(uint32_t uiVideoObject, uint16_t usIndex,
+                                               uint16_t *pusWidth, uint16_t *pusHeight);
 
-BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, UINT32 uiSrcVObject, UINT16 usIndex,
-                                       INT32 iDestX, INT32 iDestY, INT16 s16BPPColor,
+BOOLEAN BltVideoObjectOutlineFromIndex(struct VSurface *dest, uint32_t uiSrcVObject, uint16_t usIndex,
+                                       int32_t iDestX, int32_t iDestY, int16_t s16BPPColor,
                                        BOOLEAN fDoOutline);
-BOOLEAN BltVideoObjectOutline(struct VSurface *dest, struct VObject *hSrcVObject, UINT16 usIndex,
-                              INT32 iDestX, INT32 iDestY, INT16 s16BPPColor, BOOLEAN fDoOutline);
-BOOLEAN BltVideoObjectOutlineShadowFromIndex(struct VSurface *dest, UINT32 uiSrcVObject,
-                                             UINT16 usIndex, INT32 iDestX, INT32 iDestY);
+BOOLEAN BltVideoObjectOutline(struct VSurface *dest, struct VObject *hSrcVObject, uint16_t usIndex,
+                              int32_t iDestX, int32_t iDestY, int16_t s16BPPColor, BOOLEAN fDoOutline);
+BOOLEAN BltVideoObjectOutlineShadowFromIndex(struct VSurface *dest, uint32_t uiSrcVObject,
+                                             uint16_t usIndex, int32_t iDestX, int32_t iDestY);
 
 void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscale, u32 bscale,
                         BOOLEAN mono);
@@ -128,7 +128,7 @@ void VObjectUpdateShade(struct VObject *obj, u8 shade_num, u32 rscale, u32 gscal
 
 struct VObject *LoadVObjectFromFile(const char *path);
 bool BltVObject(struct VSurface *dest, struct VObject *vobj, u16 regionIndex, i32 x, i32 y);
-bool BltVObjectFromIndex(struct VSurface *dest, UINT32 uiSrcVObject, UINT16 usRegionIndex,
-                         INT32 iDestX, INT32 iDestY);
+bool BltVObjectFromIndex(struct VSurface *dest, uint32_t uiSrcVObject, uint16_t usRegionIndex,
+                         int32_t iDestX, int32_t iDestY);
 
 #endif

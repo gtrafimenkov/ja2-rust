@@ -31,16 +31,16 @@
 #define MERC_NA_SENTENCE_Y MERC_NO_ACCOUNT_IMAGE_Y + 75
 #define MERC_NA_SENTENCE_WIDTH 460 - 20
 
-UINT32 guiNoAccountImage;
+uint32_t guiNoAccountImage;
 
 // The Open Account Box button
-void BtnOpenAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiOpenAccountBoxButton;
-INT32 guiOpenAccountBoxButtonImage;
+void BtnOpenAccountBoxButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiOpenAccountBoxButton;
+int32_t guiOpenAccountBoxButtonImage;
 
 // The Cancel Account Box button
-void BtnCancelBoxButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiCancelBoxButton;
+void BtnCancelBoxButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiCancelBoxButton;
 
 void GameInitMercsNoAccount() {}
 
@@ -109,7 +109,7 @@ void RenderMercsNoAccount() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void BtnOpenAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnOpenAccountBoxButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -142,7 +142,7 @@ void BtnOpenAccountBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnCancelBoxButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnCancelBoxButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,

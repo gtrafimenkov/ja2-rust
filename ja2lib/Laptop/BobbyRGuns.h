@@ -19,9 +19,9 @@
 
 #define BOBBYR_NO_ITEMS 65535
 
-extern UINT16 gusCurWeaponIndex;
-extern UINT8 gubLastGunIndex;
-extern INT32 giBobbyRHomeImage;
+extern uint16_t gusCurWeaponIndex;
+extern uint8_t gubLastGunIndex;
+extern int32_t giBobbyRHomeImage;
 
 void GameInitBobbyRGuns();
 BOOLEAN EnterBobbyRGuns();
@@ -36,14 +36,14 @@ BOOLEAN InitBobbyMenuBar();
 BOOLEAN DeleteBobbyMenuBar();
 
 // BOOLEAN DisplayWeaponInfo();
-BOOLEAN DisplayItemInfo(UINT32 uiItemClass);
+BOOLEAN DisplayItemInfo(uint32_t uiItemClass);
 void DeleteMouseRegionForBigImage();
-void UpdateButtonText(UINT32 uiCurPage);
+void UpdateButtonText(uint32_t uiCurPage);
 void EnterInitBobbyRGuns();
 void DailyUpdateOfBobbyRaysUsedInventory();
-UINT16 CalcBobbyRayCost(UINT16 usIndex, UINT16 usBobbyIndex, BOOLEAN fUsed);
+uint16_t CalcBobbyRayCost(uint16_t usIndex, uint16_t usBobbyIndex, BOOLEAN fUsed);
 // void CalculateFirstAndLastIndexs();
 void SetFirstLastPagesForUsed();
-void SetFirstLastPagesForNew(UINT32 uiClass);
+void SetFirstLastPagesForNew(uint32_t uiClass);
 
 #endif

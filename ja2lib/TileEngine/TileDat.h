@@ -3509,9 +3509,9 @@ enum TileTypeDefines {
 #define WALL_AFRAME3 33
 #define WALL_AFRAME4 34
 
-extern INT16 gOpenDoorList[20];
-extern INT16 gOpenDoorShadowList[20];
-extern INT16 gClosedDoorList[20];
-extern INT16 gClosedDoorShadowList[20];
+extern int16_t gOpenDoorList[20];
+extern int16_t gOpenDoorShadowList[20];
+extern int16_t gClosedDoorList[20];
+extern int16_t gClosedDoorShadowList[20];
 
 #endif

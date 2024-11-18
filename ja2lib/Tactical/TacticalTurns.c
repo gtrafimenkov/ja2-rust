@@ -30,17 +30,17 @@
 #include "Utils/Message.h"
 #include "Utils/TimerControl.h"
 
-extern void DecayPublicOpplist(INT8 bTeam);
+extern void DecayPublicOpplist(int8_t bTeam);
 
 // not in overhead.h!
-extern UINT8 NumEnemyInSector();
+extern uint8_t NumEnemyInSector();
 
 void HandleRPCDescription() {
-  UINT8 ubMercsInSector[20] = {0};
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+  uint8_t ubMercsInSector[20] = {0};
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt2;
+  int32_t cnt2;
   BOOLEAN fSAMSite = FALSE;
 
   if (!gTacticalStatus.fCountingDownForGuideDescription) {
@@ -96,7 +96,7 @@ void HandleRPCDescription() {
             pTeamSoldier->bSectorZ == gbWorldSectorZ && !pTeamSoldier->fBetweenSectors) {
           if (pTeamSoldier->ubProfile == IRA || pTeamSoldier->ubProfile == MIGUEL ||
               pTeamSoldier->ubProfile == CARLOS || pTeamSoldier->ubProfile == DIMITRI) {
-            ubMercsInSector[ubNumMercs] = (UINT8)cnt2;
+            ubMercsInSector[ubNumMercs] = (uint8_t)cnt2;
             ubNumMercs++;
           }
         }
@@ -105,7 +105,7 @@ void HandleRPCDescription() {
 
     // If we are > 0
     if (ubNumMercs > 0) {
-      ubChosenMerc = (UINT8)Random(ubNumMercs);
+      ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
       TacticalCharacterDialogueWithSpecialEvent(MercPtrs[ubMercsInSector[ubChosenMerc]],
                                                 gTacticalStatus.ubGuideDescriptionToUse,
@@ -115,10 +115,10 @@ void HandleRPCDescription() {
 }
 
 void HandleTacticalEndTurn() {
-  UINT32 cnt;
+  uint32_t cnt;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiTime;
-  static UINT32 uiTimeSinceLastStrategicUpdate = 0;
+  uint32_t uiTime;
+  static uint32_t uiTimeSinceLastStrategicUpdate = 0;
 
   // OK, Do a number of things here....
   // Every few turns......
@@ -161,7 +161,7 @@ void HandleTacticalEndTurn() {
           if ( gTacticalStatus.Team[ cnt ].bMenInSector > 0 )
           {
                   // decay team's public opplist
-                  DecayPublicOpplist( (INT8)cnt );
+                  DecayPublicOpplist( (int8_t)cnt );
           }
   }
 */

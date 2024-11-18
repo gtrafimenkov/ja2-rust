@@ -30,11 +30,11 @@
 #include "rust_fileman.h"
 
 #ifdef JA2EDITOR
-extern CHAR16 gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
+extern wchar_t gszScheduleActions[NUM_SCHEDULE_ACTIONS][20];
 #endif
 
-BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, UINT32 *puiTime);
-INT8 GetEmptyScheduleEntry(SCHEDULENODE *pSchedule);
+BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTime);
+int8_t GetEmptyScheduleEntry(SCHEDULENODE *pSchedule);
 BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule);
 
 #define FOURPM 960
@@ -45,11 +45,11 @@ BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule);
 // #define DISABLESCHEDULES
 
 SCHEDULENODE *gpScheduleList = NULL;
-UINT8 gubScheduleID = 0;
+uint8_t gubScheduleID = 0;
 void ReverseSchedules();
 
-void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, UINT32 uiStartTime,
-                                      UINT32 uiEndTime);
+void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, uint32_t uiStartTime,
+                                      uint32_t uiEndTime);
 
 // IMPORTANT:
 // This function adds a NEWLY allocated schedule to the list.  The pointer passed is totally
@@ -75,7 +75,7 @@ void CopyScheduleToList(SCHEDULENODE *pSchedule, SOLDIERINITNODE *pNode) {
   }
 }
 
-SCHEDULENODE *GetSchedule(UINT8 ubScheduleID) {
+SCHEDULENODE *GetSchedule(uint8_t ubScheduleID) {
   SCHEDULENODE *curr;
   curr = gpScheduleList;
   while (curr) {
@@ -114,7 +114,7 @@ void DestroyAllSchedulesWithoutDestroyingEvents() {
   gubScheduleID = 0;
 }
 
-void DeleteSchedule(UINT8 ubScheduleID) {
+void DeleteSchedule(uint8_t ubScheduleID) {
   SCHEDULENODE *curr, *temp = NULL;
 
   if (!gpScheduleList) {
@@ -143,10 +143,10 @@ void DeleteSchedule(UINT8 ubScheduleID) {
   }
 }
 
-void ProcessTacticalSchedule(UINT8 ubScheduleID) {
+void ProcessTacticalSchedule(uint8_t ubScheduleID) {
   SCHEDULENODE *pSchedule;
   struct SOLDIERTYPE *pSoldier;
-  INT32 iScheduleIndex = 0;
+  int32_t iScheduleIndex = 0;
   BOOLEAN fAutoProcess;
 
   // Attempt to locate the schedule.
@@ -208,7 +208,7 @@ void ProcessTacticalSchedule(UINT8 ubScheduleID) {
     }
   }
   if (fAutoProcess) {
-    UINT32 uiStartTime, uiEndTime;
+    uint32_t uiStartTime, uiEndTime;
     // Grab the last time the eventlist was queued.  This will tell us how much time has passed
     // since that moment, and how long we need to auto process this schedule.
     uiStartTime = (guiTimeOfLastEventQuery / 60) % NUM_MIN_IN_DAY;
@@ -245,7 +245,7 @@ void ProcessTacticalSchedule(UINT8 ubScheduleID) {
 void OptimizeSchedules() {
   SCHEDULENODE *pSchedule;
   SOLDIERINITNODE *pNode;
-  UINT8 ubOldScheduleID;
+  uint8_t ubOldScheduleID;
   gubScheduleID = 0;
   pSchedule = gpScheduleList;
   while (pSchedule) {
@@ -305,7 +305,7 @@ void PrepareSchedulesForEditorEntry() {
       gubScheduleID--;
     } else {
       if (curr->usFlags & SCHEDULE_FLAGS_SLEEP_CONVERTED) {  // uncovert it!
-        INT32 i;
+        int32_t i;
         for (i = 0; i < MAX_SCHEDULE_ACTIONS; i++) {
           // if( i
         }
@@ -319,17 +319,17 @@ void PrepareSchedulesForEditorEntry() {
 // Called when leaving the editor to enter the game.  This posts all of the events that apply.
 void PrepareSchedulesForEditorExit() { PostSchedules(); }
 
-void LoadSchedules(INT8 **hBuffer) {
+void LoadSchedules(int8_t **hBuffer) {
   SCHEDULENODE *pSchedule = NULL;
   SCHEDULENODE temp;
-  UINT8 ubNum;
+  uint8_t ubNum;
 
   // delete all the schedules we might have loaded (though we shouldn't have any loaded!!)
   if (gpScheduleList) {
     DestroyAllSchedules();
   }
 
-  LOADDATA(&ubNum, *hBuffer, sizeof(UINT8));
+  LOADDATA(&ubNum, *hBuffer, sizeof(uint8_t));
   gubScheduleID = 1;
   while (ubNum) {
     LOADDATA(&temp, *hBuffer, sizeof(SCHEDULENODE));
@@ -357,13 +357,13 @@ void LoadSchedules(INT8 **hBuffer) {
 BOOLEAN LoadSchedulesFromSave(FileID hFile) {
   SCHEDULENODE *pSchedule = NULL;
   SCHEDULENODE temp;
-  UINT8 ubNum;
-  UINT32 ubRealNum;
+  uint8_t ubNum;
+  uint32_t ubRealNum;
 
-  UINT32 uiNumBytesRead, uiNumBytesToRead;
+  uint32_t uiNumBytesRead, uiNumBytesToRead;
 
-  // LOADDATA( &ubNum, *hBuffer, sizeof( UINT8 ) );
-  uiNumBytesToRead = sizeof(UINT8);
+  // LOADDATA( &ubNum, *hBuffer, sizeof( uint8_t ) );
+  uiNumBytesToRead = sizeof(uint8_t);
   File_Read(hFile, &ubNum, uiNumBytesToRead, &uiNumBytesRead);
   if (uiNumBytesRead != uiNumBytesToRead) {
     File_Close(hFile);
@@ -412,7 +412,7 @@ BOOLEAN LoadSchedulesFromSave(FileID hFile) {
 // some maps were effected, this feature was required.
 void ReverseSchedules() {
   SCHEDULENODE *pReverseHead, *pPrevReverseHead, *pPrevScheduleHead;
-  UINT8 ubOppositeID = gubScheduleID;
+  uint8_t ubOppositeID = gubScheduleID;
   // First, remove any gaps which would mess up the reverse ID assignment by optimizing
   // the schedules.
   OptimizeSchedules();
@@ -453,9 +453,9 @@ void ClearAllSchedules() {
 
 BOOLEAN SaveSchedules(FileID hFile) {
   SCHEDULENODE *curr;
-  UINT32 uiBytesWritten;
-  UINT8 ubNum, ubNumFucker;
-  INT32 iNum;
+  uint32_t uiBytesWritten;
+  uint8_t ubNum, ubNumFucker;
+  int32_t iNum;
   // Now, count the number of schedules in the list
   iNum = 0;
   curr = gpScheduleList;
@@ -466,10 +466,10 @@ BOOLEAN SaveSchedules(FileID hFile) {
     }
     curr = curr->next;
   }
-  ubNum = (UINT8)((iNum >= 32) ? 32 : iNum);
+  ubNum = (uint8_t)((iNum >= 32) ? 32 : iNum);
 
-  File_Write(hFile, &ubNum, sizeof(UINT8), &uiBytesWritten);
-  if (uiBytesWritten != sizeof(UINT8)) {
+  File_Write(hFile, &ubNum, sizeof(uint8_t), &uiBytesWritten);
+  if (uiBytesWritten != sizeof(uint8_t)) {
     return (FALSE);
   }
   // Now, save each schedule
@@ -495,11 +495,11 @@ BOOLEAN SaveSchedules(FileID hFile) {
 // Each schedule has upto four parts to it, so sort them chronologically.
 // Happily, the fields with no times actually are the highest.
 BOOLEAN SortSchedule(SCHEDULENODE *pSchedule) {
-  INT32 index, i, iBestIndex;
-  UINT16 usTime;
-  UINT16 usData1;
-  UINT16 usData2;
-  UINT8 ubAction;
+  int32_t index, i, iBestIndex;
+  uint16_t usTime;
+  uint16_t usData1;
+  uint16_t usData2;
+  uint8_t ubAction;
   BOOLEAN fSorted = FALSE;
 
   // Use a bubblesort method (max:  3 switches).
@@ -533,12 +533,12 @@ BOOLEAN SortSchedule(SCHEDULENODE *pSchedule) {
   return fSorted;
 }
 
-BOOLEAN BumpAnyExistingMerc(INT16 sGridNo) {
-  UINT8 ubID;
+BOOLEAN BumpAnyExistingMerc(int16_t sGridNo) {
+  uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;  // NB this is the person already in the location,
-  INT16 sNewGridNo;
-  UINT8 ubDir;
-  INT16 sCellX, sCellY;
+  int16_t sNewGridNo;
+  uint8_t ubDir;
+  int16_t sCellX, sCellY;
 
   // this is for autoprocessing schedules...
   // there could be someone in the destination location, in which case
@@ -566,14 +566,14 @@ BOOLEAN BumpAnyExistingMerc(INT16 sGridNo) {
   }
 
   ConvertGridNoToCellXY(sNewGridNo, &sCellX, &sCellY);
-  EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+  EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
 
   return (TRUE);
 }
 
-void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
-  INT16 sCellX, sCellY, sGridNo;
-  INT8 bDirection;
+void AutoProcessSchedule(SCHEDULENODE *pSchedule, int32_t index) {
+  int16_t sCellX, sCellY, sGridNo;
+  int8_t bDirection;
   struct SOLDIERTYPE *pSoldier;
 
   if (gTacticalStatus.uiFlags & LOADING_SAVED_GAME) {
@@ -616,7 +616,7 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
       BumpAnyExistingMerc(pSchedule->usData2[index]);
       ConvertGridNoToCellXY(pSchedule->usData2[index], &sCellX, &sCellY);
 
-      EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+      EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
       if (GridNoOnEdgeOfMap(pSchedule->usData2[index], &bDirection)) {
         // civ should go off map; this tells us where the civ will return
         pSoldier->sOffWorldGridNo = pSchedule->usData2[index];
@@ -630,7 +630,7 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
     case SCHEDULE_ACTION_GRIDNO:
       BumpAnyExistingMerc(pSchedule->usData1[index]);
       ConvertGridNoToCellXY(pSchedule->usData1[index], &sCellX, &sCellY);
-      EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+      EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
       // let this person patrol from here from now on
       pSoldier->usPatrolGrid[0] = pSchedule->usData1[index];
       break;
@@ -643,7 +643,7 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
       }
       BumpAnyExistingMerc(pSchedule->usData1[index]);
       ConvertGridNoToCellXY(pSchedule->usData1[index], &sCellX, &sCellY);
-      EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+      EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
       MoveSoldierFromAwayToMercSlot(pSoldier);
       pSoldier->bInSector = TRUE;
       // let this person patrol from here from now on
@@ -652,7 +652,7 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
     case SCHEDULE_ACTION_WAKE:
       BumpAnyExistingMerc(pSoldier->sInitialGridNo);
       ConvertGridNoToCellXY(pSoldier->sInitialGridNo, &sCellX, &sCellY);
-      EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+      EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
       // let this person patrol from here from now on
       pSoldier->usPatrolGrid[0] = pSoldier->sInitialGridNo;
       break;
@@ -661,19 +661,19 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
       // check for someone else in the location
       BumpAnyExistingMerc(pSchedule->usData1[index]);
       ConvertGridNoToCellXY(pSchedule->usData1[index], &sCellX, &sCellY);
-      EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+      EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
       pSoldier->usPatrolGrid[0] = pSchedule->usData1[index];
       break;
     case SCHEDULE_ACTION_LEAVESECTOR:
       sGridNo = FindNearestEdgePoint(pSoldier->sGridNo);
       BumpAnyExistingMerc(sGridNo);
       ConvertGridNoToCellXY(sGridNo, &sCellX, &sCellY);
-      EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+      EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
 
       sGridNo = FindNearbyPointOnEdgeOfMap(pSoldier, &bDirection);
       BumpAnyExistingMerc(sGridNo);
       ConvertGridNoToCellXY(sGridNo, &sCellX, &sCellY);
-      EVENT_SetSoldierPositionForceDelete(pSoldier, (FLOAT)sCellX, (FLOAT)sCellY);
+      EVENT_SetSoldierPositionForceDelete(pSoldier, (float)sCellX, (float)sCellY);
 
       // ok, that tells us where the civ will return
       pSoldier->sOffWorldGridNo = sGridNo;
@@ -684,12 +684,12 @@ void AutoProcessSchedule(SCHEDULENODE *pSchedule, INT32 index) {
 }
 
 void PostSchedule(struct SOLDIERTYPE *pSoldier) {
-  UINT32 uiStartTime, uiEndTime;
-  INT32 i;
-  INT8 bEmpty;
+  uint32_t uiStartTime, uiEndTime;
+  int32_t i;
+  int8_t bEmpty;
   SCHEDULENODE *pSchedule;
-  UINT8 ubTempAction;
-  UINT16 usTemp;
+  uint8_t ubTempAction;
+  uint16_t usTemp;
 
   if ((pSoldier->ubCivilianGroup == KINGPIN_CIV_GROUP) &&
       (GetCivGroupHostility(KINGPIN_CIV_GROUP) ||
@@ -718,7 +718,7 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
       SecureSleepSpot(pSoldier, pSchedule->usData1[i]);
 
       if (pSchedule->usTime[i] == 0xffff) {
-        pSchedule->usTime[i] = (UINT16)((21 * 60) + Random((3 * 60)));  // 9PM - 11:59PM
+        pSchedule->usTime[i] = (uint16_t)((21 * 60) + Random((3 * 60)));  // 9PM - 11:59PM
 
         if (ScheduleHasMorningNonSleepEntries(pSchedule)) {
           // this guy will sleep until the next non-sleep event
@@ -788,9 +788,9 @@ void PostSchedule(struct SOLDIERTYPE *pSoldier) {
   PrepareScheduleForAutoProcessing(pSchedule, uiStartTime, uiEndTime);
 }
 
-void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, UINT32 uiStartTime,
-                                      UINT32 uiEndTime) {
-  INT32 i;
+void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, uint32_t uiStartTime,
+                                      uint32_t uiEndTime) {
+  int32_t i;
   BOOLEAN fPostedNextEvent = FALSE;
 
   if (uiStartTime > uiEndTime) {  // The start time is later in the day than the end time, which
@@ -847,7 +847,7 @@ void PrepareScheduleForAutoProcessing(SCHEDULENODE *pSchedule, UINT32 uiStartTim
 // Leave at night, come back in the morning.  The time variances are a couple hours, so
 // the town doesn't turn into a ghost town in 5 minutes.
 void PostDefaultSchedule(struct SOLDIERTYPE *pSoldier) {
-  INT32 i;
+  int32_t i;
   SCHEDULENODE *curr;
 
   if (gbWorldSectorZ) {  // People in underground sectors don't get schedules.
@@ -873,11 +873,11 @@ void PostDefaultSchedule(struct SOLDIERTYPE *pSoldier) {
   }
   // Have the default schedule enter between 7AM and 8AM
   gpScheduleList->ubAction[0] = SCHEDULE_ACTION_ENTERSECTOR;
-  gpScheduleList->usTime[0] = (UINT16)(420 + Random(61));
+  gpScheduleList->usTime[0] = (uint16_t)(420 + Random(61));
   gpScheduleList->usData1[0] = pSoldier->sInitialGridNo;
   // Have the default schedule leave between 6PM and 8PM
   gpScheduleList->ubAction[1] = SCHEDULE_ACTION_LEAVESECTOR;
-  gpScheduleList->usTime[1] = (UINT16)(1080 + Random(121));
+  gpScheduleList->usTime[1] = (uint16_t)(1080 + Random(121));
   gpScheduleList->usFlags |= SCHEDULE_FLAGS_TEMPORARY;
 
   if (gubScheduleID == 255) {  // Too much fragmentation, clean it up...
@@ -922,11 +922,11 @@ void PostSchedules() {
   }
 }
 
-void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, UINT16 usGridNo) {
-  INT16 sDoorGridNo;
+void PerformActionOnDoorAdjacentToGridNo(uint8_t ubScheduleAction, uint16_t usGridNo) {
+  int16_t sDoorGridNo;
   DOOR *pDoor;
 
-  sDoorGridNo = FindDoorAtGridNoOrAdjacent((INT16)usGridNo);
+  sDoorGridNo = FindDoorAtGridNoOrAdjacent((int16_t)usGridNo);
   if (sDoorGridNo != NOWHERE) {
     switch (ubScheduleAction) {
       case SCHEDULE_ACTION_LOCKDOOR:
@@ -957,13 +957,13 @@ void PerformActionOnDoorAdjacentToGridNo(UINT8 ubScheduleAction, UINT16 usGridNo
 // the schedule, and looks for the next schedule action that would get processed and posts it.
 void PostNextSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
-  INT32 i, iBestIndex;
-  UINT16 usTime, usBestTime;
+  int32_t i, iBestIndex;
+  uint16_t usTime, usBestTime;
   pSchedule = GetSchedule(pSoldier->ubScheduleID);
   if (!pSchedule) {  // post default?
     return;
   }
-  usTime = (UINT16)GetMinutesSinceDayStart();
+  usTime = (uint16_t)GetMinutesSinceDayStart();
   usBestTime = 0xffff;
   iBestIndex = -1;
   for (i = 0; i < MAX_SCHEDULE_ACTIONS; i++) {
@@ -986,9 +986,9 @@ void PostNextSchedule(struct SOLDIERTYPE *pSoldier) {
                     pSchedule->ubScheduleID);
 }
 
-BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, UINT32 *puiEntryTime,
-                                        UINT32 *puiExitTime) {
-  INT32 iLoop;
+BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiEntryTime,
+                                        uint32_t *puiExitTime) {
+  int32_t iLoop;
   BOOLEAN fFoundEntryTime = FALSE, fFoundExitTime = FALSE;
   SCHEDULENODE *pSchedule;
 
@@ -1021,9 +1021,9 @@ BOOLEAN ExtractScheduleEntryAndExitInfo(struct SOLDIERTYPE *pSoldier, UINT32 *pu
 }
 
 // This is for determining shopkeeper's opening/closing hours
-BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, UINT32 *puiOpeningTime,
-                                             UINT32 *puiClosingTime) {
-  INT32 iLoop;
+BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, uint32_t *puiOpeningTime,
+                                             uint32_t *puiClosingTime) {
+  int32_t iLoop;
   BOOLEAN fFoundOpeningTime = FALSE, fFoundClosingTime = FALSE;
   SCHEDULENODE *pSchedule;
 
@@ -1055,8 +1055,8 @@ BOOLEAN ExtractScheduleDoorLockAndUnlockInfo(struct SOLDIERTYPE *pSoldier, UINT3
   }
 }
 
-BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, UINT32 *puiTime) {
-  INT32 iLoop;
+BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, uint32_t *puiTime) {
+  int32_t iLoop;
 
   *puiTime = 100000;
 
@@ -1074,7 +1074,7 @@ BOOLEAN GetEarliestMorningScheduleEvent(SCHEDULENODE *pSchedule, UINT32 *puiTime
 }
 
 BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule) {
-  INT8 bLoop;
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] != SCHEDULE_ACTION_NONE &&
@@ -1087,8 +1087,8 @@ BOOLEAN ScheduleHasMorningNonSleepEntries(SCHEDULENODE *pSchedule) {
   return (FALSE);
 }
 
-INT8 GetEmptyScheduleEntry(SCHEDULENODE *pSchedule) {
-  INT8 bLoop;
+int8_t GetEmptyScheduleEntry(SCHEDULENODE *pSchedule) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] == SCHEDULE_ACTION_NONE) {
@@ -1102,7 +1102,7 @@ INT8 GetEmptyScheduleEntry(SCHEDULENODE *pSchedule) {
 /*
 void ReconnectSchedules( void )
 {
-        UINT32						uiLoop;
+        uint32_t						uiLoop;
         struct SOLDIERTYPE *			pSoldier;
         SCHEDULENODE *		pSchedule;
 
@@ -1128,8 +1128,8 @@ CIV_TEAM ].bLastID; uiLoop++ )
 }
 */
 
-UINT16 FindSleepSpot(SCHEDULENODE *pSchedule) {
-  INT8 bLoop;
+uint16_t FindSleepSpot(SCHEDULENODE *pSchedule) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] == SCHEDULE_ACTION_SLEEP) {
@@ -1139,8 +1139,8 @@ UINT16 FindSleepSpot(SCHEDULENODE *pSchedule) {
   return (NOWHERE);
 }
 
-void ReplaceSleepSpot(SCHEDULENODE *pSchedule, UINT16 usNewSpot) {
-  INT8 bLoop;
+void ReplaceSleepSpot(SCHEDULENODE *pSchedule, uint16_t usNewSpot) {
+  int8_t bLoop;
 
   for (bLoop = 0; bLoop < MAX_SCHEDULE_ACTIONS; bLoop++) {
     if (pSchedule->ubAction[bLoop] == SCHEDULE_ACTION_SLEEP) {
@@ -1150,12 +1150,12 @@ void ReplaceSleepSpot(SCHEDULENODE *pSchedule, UINT16 usNewSpot) {
   }
 }
 
-void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, UINT16 usSleepSpot) {
+void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, uint16_t usSleepSpot) {
   struct SOLDIERTYPE *pSoldier2;
-  UINT16 usSleepSpot2, usNewSleepSpot;
-  UINT32 uiLoop;
+  uint16_t usSleepSpot2, usNewSleepSpot;
+  uint32_t uiLoop;
   SCHEDULENODE *pSchedule;
-  UINT8 ubDirection;
+  uint8_t ubDirection;
 
   // start after this soldier's ID so we don't duplicate work done in previous passes
   for (uiLoop = GetSolID(pSoldier) + 1; uiLoop <= gTacticalStatus.Team[CIV_TEAM].bLastID;
@@ -1167,7 +1167,7 @@ void SecureSleepSpot(struct SOLDIERTYPE *pSoldier, UINT16 usSleepSpot) {
         usSleepSpot2 = FindSleepSpot(pSchedule);
         if (usSleepSpot2 == usSleepSpot) {
           // conflict!
-          // usNewSleepSpot = (INT16) FindGridNoFromSweetSpotWithStructData( pSoldier2,
+          // usNewSleepSpot = (int16_t) FindGridNoFromSweetSpotWithStructData( pSoldier2,
           // pSoldier2->usAnimState, usSleepSpot2, 3, &ubDirection, FALSE );
           usNewSleepSpot =
               FindGridNoFromSweetSpotExcludingSweetSpot(pSoldier2, usSleepSpot2, 3, &ubDirection);
@@ -1185,10 +1185,10 @@ void SecureSleepSpots( void )
 {
         // make sure no one else has the same sleep dest as another merc, and if they do
         // move extras away!
-        UINT32						uiLoop;
+        uint32_t						uiLoop;
         struct SOLDIERTYPE *			pSoldier;
         SCHEDULENODE *		pSchedule;
-        UINT16						usSleepSpot;
+        uint16_t						usSleepSpot;
 
         for ( uiLoop = gTacticalStatus.Team[ CIV_TEAM ].bFirstID; uiLoop <= gTacticalStatus.Team[
 CIV_TEAM ].bLastID; uiLoop++ )

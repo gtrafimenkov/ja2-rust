@@ -199,15 +199,15 @@ static void CQuantizer_GetColorTable(struct CQuantizer* cq, RGBQUAD* prgb) {
 ///////////////////////////////////////////////////////////////////////////////////
 
 typedef struct {
-  UINT8 r;
-  UINT8 g;
-  UINT8 b;
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
 
 } RGBValues;
 
-BOOLEAN QuantizeImage(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight,
+BOOLEAN QuantizeImage(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight,
                       struct SGPPaletteEntry* pPalette) {
-  INT16 sNumColors;
+  int16_t sNumColors;
 
   // FIRST CREATE PALETTE
   struct CQuantizer q;
@@ -228,13 +228,13 @@ BOOLEAN QuantizeImage(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight,
   return (TRUE);
 }
 
-void MapPalette(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight, INT16 sNumColors,
+void MapPalette(uint8_t* pDest, uint8_t* pSrc, int16_t sWidth, int16_t sHeight, int16_t sNumColors,
                 struct SGPPaletteEntry* pTable) {
-  INT32 cX, cY, cnt, bBest;
+  int32_t cX, cY, cnt, bBest;
   real dLowestDist;
   real dCubeDist;
   vector_3 vTableVal, vSrcVal, vDiffVal;
-  UINT8* pData;
+  uint8_t* pData;
   RGBValues* pRGBData;
 
   pRGBData = (RGBValues*)pSrc;
@@ -272,7 +272,7 @@ void MapPalette(UINT8* pDest, UINT8* pSrc, INT16 sWidth, INT16 sHeight, INT16 sN
       pData = &(pDest[(cY * sWidth) + cX]);
 
       // Set!
-      *pData = (UINT8)bBest;
+      *pData = (uint8_t)bBest;
     }
   }
 }

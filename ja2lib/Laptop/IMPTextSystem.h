@@ -3,18 +3,18 @@
 
 #include "SGP/Types.h"
 
-void LoadAndDisplayIMPText(INT16 sStartX, INT16 sStartY, INT16 sLineLength,
-                           INT16 sIMPTextRecordNumber, UINT32 uiFont, UINT8 ubColor,
-                           BOOLEAN fShadow, UINT32 uiFlags);
+void LoadAndDisplayIMPText(int16_t sStartX, int16_t sStartY, int16_t sLineLength,
+                           int16_t sIMPTextRecordNumber, uint32_t uiFont, uint8_t ubColor,
+                           BOOLEAN fShadow, uint32_t uiFlags);
 void InitializeImpRecordLengthList(void);
 void PrintImpText(void);
 void PrintIMPPersonalityQuizQuestionAndAnsers(void);
 
 // buttons text
-extern STR16 pImpButtonText[];
+extern wchar_t* pImpButtonText[];
 
 // extra strings not found in IMP Text Document
-extern STR16 pExtraIMPStrings[];
+extern wchar_t* pExtraIMPStrings[];
 
 enum {
   IMP_HOME_1,

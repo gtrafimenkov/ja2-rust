@@ -46,14 +46,14 @@
 #include "Utils/WordWrap.h"
 #include "rust_images.h"
 
-INT8 gbDefaultLightType = PRIMETIME_LIGHT;
+int8_t gbDefaultLightType = PRIMETIME_LIGHT;
 
 struct SGPPaletteEntry gEditorLightColor;
 
 BOOLEAN gfEditorForceShadeTableRebuild = FALSE;
 
 void SetupTextInputForMapInfo() {
-  CHAR16 str[10];
+  wchar_t str[10];
 
   InitTextInputModeWithScheme(DEFAULT_SCHEME);
 
@@ -131,7 +131,7 @@ void UpdateMapInfo() {
 }
 
 void UpdateMapInfoFields() {
-  CHAR16 str[10];
+  wchar_t str[10];
   // Update the text fields to reflect the validated values.
   // light rgb fields
   swprintf(str, ARR_SIZE(str), L"%d", gEditorLightColor.red);
@@ -156,24 +156,24 @@ void UpdateMapInfoFields() {
 }
 
 void ExtractAndUpdateMapInfo() {
-  CHAR16 str[10];
-  INT32 temp;
+  wchar_t str[10];
+  int32_t temp;
   BOOLEAN fUpdateLight1 = FALSE;
   // extract light1 colors
   temp = min(GetNumericStrictValueFromField(1), 255);
   if (temp != -1 && temp != gEditorLightColor.red) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.red = (UINT8)temp;
+    gEditorLightColor.red = (uint8_t)temp;
   }
   temp = min(GetNumericStrictValueFromField(2), 255);
   if (temp != -1 && temp != gEditorLightColor.green) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.green = (UINT8)temp;
+    gEditorLightColor.green = (uint8_t)temp;
   }
   temp = min(GetNumericStrictValueFromField(3), 255);
   if (temp != -1 && temp != gEditorLightColor.blue) {
     fUpdateLight1 = TRUE;
-    gEditorLightColor.blue = (UINT8)temp;
+    gEditorLightColor.blue = (uint8_t)temp;
   }
   if (fUpdateLight1) {
     gfEditorForceShadeTableRebuild = TRUE;
@@ -183,42 +183,42 @@ void ExtractAndUpdateMapInfo() {
 
   // extract radius
   temp = max(min(GetNumericStrictValueFromField(4), 8), 1);
-  if (temp != -1) gsLightRadius = (INT16)temp;
+  if (temp != -1) gsLightRadius = (int16_t)temp;
   temp = max(min(GetNumericStrictValueFromField(5), 15), 1);
   if (temp != -1 && temp != gusLightLevel) {
-    gusLightLevel = (UINT16)temp;
+    gusLightLevel = (uint16_t)temp;
     gfRenderWorld = TRUE;
-    ubAmbientLightLevel = (UINT8)(EDITOR_LIGHT_MAX - gusLightLevel);
+    ubAmbientLightLevel = (uint8_t)(EDITOR_LIGHT_MAX - gusLightLevel);
     LightSetBaseLevel(ubAmbientLightLevel);
     LightSpriteRenderAll();
   }
 
-  temp = (INT8)GetNumericStrictValueFromField(6);
+  temp = (int8_t)GetNumericStrictValueFromField(6);
   if (temp == -1)
     gMapInformation.ubRestrictedScrollID = 0;
   else
-    gMapInformation.ubRestrictedScrollID = (UINT8)temp;
+    gMapInformation.ubRestrictedScrollID = (uint8_t)temp;
 
   // set up fields for exitgrid information
   Get16BitStringFromField(7, str, ARR_SIZE(str));
   if (str[0] >= 'a' && str[0] <= 'z') str[0] -= 32;  // uppercase it!
   if (str[0] >= 'A' && str[0] <= 'Z' && str[1] >= '0' &&
       str[1] <= '9') {  // only update, if coordinate is valid.
-    gExitGrid.ubGotoSectorY = (UINT8)(str[0] - 'A' + 1);
-    gExitGrid.ubGotoSectorX = (UINT8)(str[1] - '0');
+    gExitGrid.ubGotoSectorY = (uint8_t)(str[0] - 'A' + 1);
+    gExitGrid.ubGotoSectorX = (uint8_t)(str[1] - '0');
     if (str[2] >= '0' && str[2] <= '9')
-      gExitGrid.ubGotoSectorX = (UINT8)(gExitGrid.ubGotoSectorX * 10 + str[2] - '0');
-    gExitGrid.ubGotoSectorX = (UINT8)max(min(gExitGrid.ubGotoSectorX, 16), 1);
-    gExitGrid.ubGotoSectorY = (UINT8)max(min(gExitGrid.ubGotoSectorY, 16), 1);
+      gExitGrid.ubGotoSectorX = (uint8_t)(gExitGrid.ubGotoSectorX * 10 + str[2] - '0');
+    gExitGrid.ubGotoSectorX = (uint8_t)max(min(gExitGrid.ubGotoSectorX, 16), 1);
+    gExitGrid.ubGotoSectorY = (uint8_t)max(min(gExitGrid.ubGotoSectorY, 16), 1);
   }
-  gExitGrid.ubGotoSectorZ = (UINT8)max(min(GetNumericStrictValueFromField(8), 3), 0);
-  gExitGrid.usGridNo = (UINT16)max(min(GetNumericStrictValueFromField(9), 25600), 0);
+  gExitGrid.ubGotoSectorZ = (uint8_t)max(min(GetNumericStrictValueFromField(8), 3), 0);
+  gExitGrid.usGridNo = (uint16_t)max(min(GetNumericStrictValueFromField(9), 25600), 0);
 
   UpdateMapInfoFields();
 }
 
 BOOLEAN ApplyNewExitGridValuesToTextFields() {
-  CHAR16 str[10];
+  wchar_t str[10];
   // exit grid input fields
   if (iCurrentTaskbar != TASK_MAPINFO) return FALSE;
   swprintf(str, ARR_SIZE(str), L"%c%d", gExitGrid.ubGotoSectorY + 'A' - 1, gExitGrid.ubGotoSectorX);
@@ -231,10 +231,10 @@ BOOLEAN ApplyNewExitGridValuesToTextFields() {
   return TRUE;
 }
 
-UINT16 usCurrentExitGridNo = 0;
+uint16_t usCurrentExitGridNo = 0;
 void LocateNextExitGrid() {
   EXITGRID ExitGrid;
-  UINT16 i;
+  uint16_t i;
   for (i = usCurrentExitGridNo + 1; i < WORLD_MAX; i++) {
     if (GetExitGrid(i, &ExitGrid)) {
       usCurrentExitGridNo = i;
@@ -251,7 +251,7 @@ void LocateNextExitGrid() {
   }
 }
 
-void ChangeLightDefault(INT8 bLightType) {
+void ChangeLightDefault(int8_t bLightType) {
   UnclickEditorButton(MAPINFO_PRIMETIME_LIGHT + gbDefaultLightType);
   gbDefaultLightType = bLightType;
   ClickEditorButton(MAPINFO_PRIMETIME_LIGHT + gbDefaultLightType);

@@ -33,7 +33,7 @@
 // just the way you left it.  This is much simpler to handle in the overall scheme of things.
 
 // Allows access to the current time rate.
-UINT32 GetGameSecondsPerFrame();
+uint32_t GetGameSecondsPerFrame();
 void RenderPausedGameBox(void);
 
 void StartTimeCompression(void);
@@ -49,23 +49,23 @@ enum {
   WARPTIME_PROCESS_EVENTS_NORMALLY,
   WARPTIME_PROCESS_TARGET_TIME_FIRST,
 };
-void WarpGameTime(UINT32 uiAdjustment, UINT8 ubWarpCode);
+void WarpGameTime(uint32_t uiAdjustment, uint8_t ubWarpCode);
 
 // This function is called once per cycle in the game loop.  This determine how often the clock
 // should be as well as how much to update the clock by.
 void UpdateClock();
 
-extern CHAR16 gswzWorldTimeStr[20];  // Day 99, 23:55
+extern wchar_t gswzWorldTimeStr[20];  // Day 99, 23:55
 
 // Advanced function used by certain event callbacks.  In the case where time is warped, certain
 // event need to know how much time was warped since the last query to the event list. This function
 // returns that value
-extern UINT32 guiTimeOfLastEventQuery;
+extern uint32_t guiTimeOfLastEventQuery;
 
 // This value represents the time that the sector was loaded.  If you are in sector A9, and leave
 // the game clock at that moment will get saved into the temp file associated with it.  The next
 // time you enter A9, this value will contain that time.  Used for scheduling purposes.
-extern UINT32 guiTimeCurrentSectorWasLastLoaded;
+extern uint32_t guiTimeCurrentSectorWasLastLoaded;
 
 // is the current pause state due to the player?
 extern BOOLEAN gfPauseDueToPlayerGamePause;
@@ -78,9 +78,9 @@ extern BOOLEAN gfResetAllPlayerKnowsEnemiesFlags;
 
 void InitNewGameClock();
 
-void GotoNextTimeOfDay(UINT32 uiTOD);
+void GotoNextTimeOfDay(uint32_t uiTOD);
 
-void RenderClock(INT16 sX, INT16 sY);
+void RenderClock(int16_t sX, int16_t sY);
 
 // IMPORTANT FUNCTION:  Used whenever an event or situation is deemed important enough to cancel the
 // further processing of time in this current time slice!  This can only be used inside of event
@@ -101,7 +101,7 @@ BOOLEAN HasTimeCompressOccured(void);
 void ResetTimeCompressHasOccured(void);
 
 // create mouse region to pause game
-void CreateMouseRegionForPauseOfClock(INT16 sX, INT16 sY);
+void CreateMouseRegionForPauseOfClock(int16_t sX, int16_t sY);
 
 // remove mouse region for pause game
 void RemoveMouseRegionForPauseOfClock(void);

@@ -5,12 +5,12 @@
 
 struct VObject;
 
-extern UINT32 GetCursorHandle(UINT32 uiCursorIndex);
-extern void UnloadCursorData(UINT32 uiCursorIndex);
-extern BOOLEAN LoadCursorData(UINT32 uiCursorIndex);
+extern uint32_t GetCursorHandle(uint32_t uiCursorIndex);
+extern void UnloadCursorData(uint32_t uiCursorIndex);
+extern BOOLEAN LoadCursorData(uint32_t uiCursorIndex);
 extern void CursorDatabaseClear(void);
-extern UINT16 GetCursorSubIndex(UINT32 uiCursorIndex);
-extern BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex);
+extern uint16_t GetCursorSubIndex(uint32_t uiCursorIndex);
+extern BOOLEAN SetCurrentCursorFromDatabase(uint32_t uiCursorIndex);
 
 #define ANIMATED_CURSOR 0x02
 #define USE_EXTERN_VO_CURSOR 0x04
@@ -43,47 +43,47 @@ extern BOOLEAN SetCurrentCursorFromDatabase(UINT32 uiCursorIndex);
 struct CursorFileData;
 
 typedef struct {
-  UINT32 uiFileIndex;
-  UINT16 uiSubIndex;
-  UINT32 uiCurrentFrame;
-  INT16 usPosX;
-  INT16 usPosY;
+  uint32_t uiFileIndex;
+  uint16_t uiSubIndex;
+  uint32_t uiCurrentFrame;
+  int16_t usPosX;
+  int16_t usPosY;
 
 } CursorImage;
 
 typedef struct {
   CursorImage Composites[MAX_COMPOSITES];
-  UINT16 usNumComposites;
-  INT16 sOffsetX;
-  INT16 sOffsetY;
-  UINT16 usHeight;
-  UINT16 usWidth;
-  UINT8 bFlags;
-  UINT8 bFlashIndex;
+  uint16_t usNumComposites;
+  int16_t sOffsetX;
+  int16_t sOffsetY;
+  uint16_t usHeight;
+  uint16_t usWidth;
+  uint8_t bFlags;
+  uint8_t bFlashIndex;
 
 } CursorData;
 
-extern INT16 gsGlobalCursorYOffset;
+extern int16_t gsGlobalCursorYOffset;
 
 // Globals for cursor database offset values
-extern INT16 gsCurMouseOffsetX;
-extern INT16 gsCurMouseOffsetY;
-extern UINT16 gsCurMouseHeight;
-extern UINT16 gsCurMouseWidth;
+extern int16_t gsCurMouseOffsetX;
+extern int16_t gsCurMouseOffsetY;
+extern uint16_t gsCurMouseHeight;
+extern uint16_t gsCurMouseWidth;
 
-extern UINT32 guiExternVo;
-extern UINT16 gusExternVoSubIndex;
-extern UINT32 guiExtern2Vo;
-extern UINT16 gusExtern2VoSubIndex;
+extern uint32_t guiExternVo;
+extern uint16_t gusExternVoSubIndex;
+extern uint32_t guiExtern2Vo;
+extern uint16_t gusExtern2VoSubIndex;
 extern BOOLEAN gfExternUse2nd;
 
 typedef void (*MOUSEBLT_HOOK)(void);
 
 void InitCursorDatabase(struct CursorFileData *pCursorFileData, CursorData *pCursorData,
-                        UINT16 suNumDataFiles);
+                        uint16_t suNumDataFiles);
 void SetMouseBltHook(MOUSEBLT_HOOK pMouseBltOverride);
 
-void SetExternVOData(UINT32 uiCursorIndex, struct VObject *hVObject, UINT16 usSubIndex);
-void RemoveExternVOData(UINT32 uiCursorIndex);
+void SetExternVOData(uint32_t uiCursorIndex, struct VObject *hVObject, uint16_t usSubIndex);
+void RemoveExternVOData(uint32_t uiCursorIndex);
 
 #endif

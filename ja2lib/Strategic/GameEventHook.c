@@ -50,7 +50,7 @@ extern void HandleHourlyUpdate();
 extern void HandleQuarterHourUpdate();
 extern void HandleMinuteUpdate();
 extern BOOLEAN gfProcessingGameEvents;
-extern UINT32 guiTimeStampOfCurrentlyExecutingEvent;
+extern uint32_t guiTimeStampOfCurrentlyExecutingEvent;
 extern BOOLEAN gfPreventDeletionOfAnyEvent;
 
 BOOLEAN DelayEventIfBattleInProgress(STRATEGICEVENT *pEvent) {
@@ -107,7 +107,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
   switch (pEvent->ubCallbackID) {
     case EVENT_CHANGELIGHTVAL:
       // Change light to value
-      gubEnvLightValue = (UINT8)pEvent->uiParam;
+      gubEnvLightValue = (uint8_t)pEvent->uiParam;
       if (!gfBasement && !gfCaves) gfDoLighting = TRUE;
       break;
     case EVENT_CHECKFORQUESTS:
@@ -123,11 +123,11 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       }
       break;
     case EVENT_AIM_RESET_MERC_ANNOYANCE:
-      ResetMercAnnoyanceAtPlayer((UINT8)pEvent->uiParam);
+      ResetMercAnnoyanceAtPlayer((uint8_t)pEvent->uiParam);
       break;
     // The players purchase from Bobby Ray has arrived
     case EVENT_BOBBYRAY_PURCHASE:
-      BobbyRayPurchaseEventCallback((UINT8)pEvent->uiParam);
+      BobbyRayPurchaseEventCallback((uint8_t)pEvent->uiParam);
       break;
     // Gets called once a day ( at BOBBYRAY_UPDATE_TIME).  To simulate the items being bought and
     // sold at bobby rays
@@ -138,13 +138,13 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       break;
     // Add items to BobbyR's new/used inventory
     case EVENT_UPDATE_BOBBY_RAY_INVENTORY:
-      AddFreshBobbyRayInventory((UINT16)pEvent->uiParam);
+      AddFreshBobbyRayInventory((uint16_t)pEvent->uiParam);
       break;
     // Called once a day to update the number of days that a hired merc from M.E.R.C. has been on
     // contract.
     // Also if the player hasn't paid for a while Specks will start sending e-mails to the player
     case EVENT_DAILY_UPDATE_OF_MERC_SITE:
-      DailyUpdateOfMercSite((UINT16)GetGameTimeInDays());
+      DailyUpdateOfMercSite((uint16_t)GetGameTimeInDays());
       break;
     case EVENT_DAY3_ADD_EMAIL_FROM_SPECK:
       AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetGameTimeInMin());
@@ -157,7 +157,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
     // shows up
     // uiTimeTillMercArrives  minutes later
     case EVENT_DELAYED_HIRING_OF_MERC:
-      MercArrivesCallback((UINT8)pEvent->uiParam);
+      MercArrivesCallback((uint8_t)pEvent->uiParam);
       break;
     // handles the life insurance contract for a merc from AIM.
     case EVENT_HANDLE_INSURED_MERCS:
@@ -165,7 +165,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       break;
     // handles when a merc is killed an there is a life insurance payout
     case EVENT_PAY_LIFE_INSURANCE_FOR_DEAD_MERC:
-      InsuranceContractPayLifeInsuranceForDeadMerc((UINT8)pEvent->uiParam);
+      InsuranceContractPayLifeInsuranceForDeadMerc((uint8_t)pEvent->uiParam);
       break;
     // gets called every day at midnight.
     case EVENT_MERC_DAILY_UPDATE:
@@ -183,7 +183,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       break;
     // When a merc is supposed to leave
     case EVENT_MERC_CONTRACT_OVER:
-      MercsContractIsFinished((UINT8)pEvent->uiParam);
+      MercsContractIsFinished((uint8_t)pEvent->uiParam);
       break;
     case EVENT_ADDSOLDIER_TO_UPDATE_BOX:
       // if the grunt is currently active, add to update box
@@ -192,16 +192,16 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       }
       break;
     case EVENT_SET_MENU_REASON:
-      AddReasonToWaitingListQueue((UINT8)pEvent->uiParam);
+      AddReasonToWaitingListQueue((uint8_t)pEvent->uiParam);
       break;
     // Whenever any group (player or enemy) arrives in a new sector during movement.
     case EVENT_GROUP_ARRIVAL:
       // ValidateGameEvents();
-      GroupArrivedAtSector((UINT8)pEvent->uiParam, TRUE, FALSE);
+      GroupArrivedAtSector((uint8_t)pEvent->uiParam, TRUE, FALSE);
       // ValidateGameEvents();
       break;
     case EVENT_MERC_COMPLAIN_EQUIPMENT:
-      MercComplainAboutEquipment((UINT8)pEvent->uiParam);
+      MercComplainAboutEquipment((uint8_t)pEvent->uiParam);
       break;
     case EVENT_HOURLY_UPDATE:
       HandleHourlyUpdate();
@@ -251,10 +251,10 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       HandleGroupAboutToArrive();
       break;
     case EVENT_PROCESS_TACTICAL_SCHEDULE:
-      ProcessTacticalSchedule((UINT8)pEvent->uiParam);
+      ProcessTacticalSchedule((uint8_t)pEvent->uiParam);
       break;
     case EVENT_BEGINRAINSTORM:
-      // EnvBeginRainStorm( (UINT8)pEvent->uiParam );
+      // EnvBeginRainStorm( (uint8_t)pEvent->uiParam );
       break;
     case EVENT_ENDRAINSTORM:
       // EnvEndRainStorm( );
@@ -269,19 +269,19 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       //}
       // else
       //{
-      //	EnvBeginRainStorm( (UINT8)pEvent->uiParam );
+      //	EnvBeginRainStorm( (uint8_t)pEvent->uiParam );
       //}
       break;
 
     case EVENT_MAKE_CIV_GROUP_HOSTILE_ON_NEXT_SECTOR_ENTRANCE:
-      MakeCivGroupHostileOnNextSectorEntrance((UINT8)pEvent->uiParam);
+      MakeCivGroupHostileOnNextSectorEntrance((uint8_t)pEvent->uiParam);
       break;
     case EVENT_BEGIN_AIR_RAID:
       BeginAirRaid();
       break;
     case EVENT_MEANWHILE:
       if (!DelayEventIfBattleInProgress(pEvent)) {
-        BeginMeanwhile((UINT8)pEvent->uiParam);
+        BeginMeanwhile((uint8_t)pEvent->uiParam);
         InterruptTime();
       }
       break;
@@ -297,13 +297,13 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       CreatureNightPlanning();
       break;
     case EVENT_CREATURE_ATTACK:
-      CreatureAttackTown((UINT8)pEvent->uiParam, FALSE);
+      CreatureAttackTown((uint8_t)pEvent->uiParam, FALSE);
       break;
     case EVENT_EVALUATE_QUEEN_SITUATION:
       EvaluateQueenSituation();
       break;
     case EVENT_CHECK_ENEMY_CONTROLLED_SECTOR:
-      CheckEnemyControlledSector((UINT8)pEvent->uiParam);
+      CheckEnemyControlledSector((uint8_t)pEvent->uiParam);
       break;
     case EVENT_TURN_ON_NIGHT_LIGHTS:
       TurnOnNightLights();
@@ -324,13 +324,13 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       HandleEnricoEmail();
       break;
     case EVENT_INSURANCE_INVESTIGATION_STARTED:
-      StartInsuranceInvestigation((UINT8)pEvent->uiParam);
+      StartInsuranceInvestigation((uint8_t)pEvent->uiParam);
       break;
     case EVENT_INSURANCE_INVESTIGATION_OVER:
-      EndInsuranceInvestigation((UINT8)pEvent->uiParam);
+      EndInsuranceInvestigation((uint8_t)pEvent->uiParam);
       break;
     case EVENT_TEMPERATURE_UPDATE:
-      UpdateTemperature((UINT8)pEvent->uiParam);
+      UpdateTemperature((uint8_t)pEvent->uiParam);
       break;
     case EVENT_KEITH_GOING_OUT_OF_BUSINESS:
       // make sure killbillies are still alive, if so, set fact 274 true
@@ -349,13 +349,13 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       HourlyMinesUpdate();  // not-so hourly, in this case!
       break;
     case EVENT_REMOVE_ASSASSIN:
-      RemoveAssassin((UINT8)pEvent->uiParam);
+      RemoveAssassin((uint8_t)pEvent->uiParam);
       break;
     case EVENT_BEGIN_CONTRACT_RENEWAL_SEQUENCE:
       BeginContractRenewalSequence();
       break;
     case EVENT_RPC_WHINE_ABOUT_PAY:
-      RPCWhineAboutNoPay((UINT8)pEvent->uiParam);
+      RPCWhineAboutNoPay((uint8_t)pEvent->uiParam);
       break;
 
     case EVENT_HAVENT_MADE_IMP_CHARACTER_EMAIL:
@@ -367,7 +367,7 @@ BOOLEAN ExecuteStrategicEvent(STRATEGICEVENT *pEvent) {
       break;
 
     case EVENT_MERC_MERC_WENT_UP_LEVEL_EMAIL_DELAY:
-      MERCMercWentUpALevelSendEmail((UINT8)pEvent->uiParam);
+      MERCMercWentUpALevelSendEmail((uint8_t)pEvent->uiParam);
       break;
 
     case EVENT_MERC_SITE_NEW_MERC_AVAILABLE:

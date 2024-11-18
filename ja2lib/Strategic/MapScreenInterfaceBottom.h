@@ -15,7 +15,7 @@ enum {
 };
 
 // there's no button for entering SAVE/LOAD screen directly...
-extern UINT32 guiMapBottomExitButtons[3];
+extern uint32_t guiMapBottomExitButtons[3];
 
 extern BOOLEAN fLapTop;
 extern BOOLEAN fLeavingMapScreen;
@@ -48,14 +48,14 @@ BOOLEAN CommonTimeCompressionChecks(void);
 
 BOOLEAN AnyUsableRealMercenariesOnTeam(void);
 
-void RequestTriggerExitFromMapscreen(INT8 bExitToWhere);
-BOOLEAN AllowedToExitFromMapscreenTo(INT8 bExitToWhere);
+void RequestTriggerExitFromMapscreen(int8_t bExitToWhere);
+BOOLEAN AllowedToExitFromMapscreenTo(int8_t bExitToWhere);
 void HandleExitsFromMapScreen(void);
 
-void MapScreenMsgScrollDown(UINT8 ubLinesDown);
-void MapScreenMsgScrollUp(UINT8 ubLinesUp);
+void MapScreenMsgScrollDown(uint8_t ubLinesDown);
+void MapScreenMsgScrollUp(uint8_t ubLinesUp);
 
-void ChangeCurrentMapscreenMessageIndex(UINT8 ubNewMessageIndex);
+void ChangeCurrentMapscreenMessageIndex(uint8_t ubNewMessageIndex);
 void MoveToEndOfMapScreenMessageList(void);
 
 #endif

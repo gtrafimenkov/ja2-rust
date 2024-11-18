@@ -7,7 +7,7 @@ void EnterIMPVoices(void);
 void RenderIMPVoices(void);
 void ExitIMPVoices(void);
 void HandleIMPVoices(void);
-UINT32 PlayVoice(void);
+uint32_t PlayVoice(void);
 
-extern INT32 iVoiceId;
+extern int32_t iVoiceId;
 #endif

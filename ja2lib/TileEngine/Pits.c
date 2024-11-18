@@ -22,7 +22,7 @@ BOOLEAN gfShowPits = FALSE;
 
 BOOLEAN gfLoadPitsWithoutArming = FALSE;
 
-void Add3X3Pit(INT32 iMapIndex) {
+void Add3X3Pit(int32_t iMapIndex) {
   EXITGRID ExitGrid;
   if (!gfEditMode) ApplyMapChangesToMapTempFile(TRUE);
   AddObjectToTail(iMapIndex + 159, REGWATERTEXTURE1);
@@ -35,10 +35,10 @@ void Add3X3Pit(INT32 iMapIndex) {
   AddObjectToTail(iMapIndex + 1, REGWATERTEXTURE8);
   AddObjectToTail(iMapIndex - 159, REGWATERTEXTURE9);
   if (!gfEditMode) {  // Add the exitgrids associated with the pit.
-    ExitGrid.ubGotoSectorX = (UINT8)gWorldSectorX;
-    ExitGrid.ubGotoSectorY = (UINT8)gWorldSectorY;
-    ExitGrid.ubGotoSectorZ = (UINT8)(gbWorldSectorZ + 1);
-    ExitGrid.usGridNo = (UINT16)iMapIndex;
+    ExitGrid.ubGotoSectorX = (uint8_t)gWorldSectorX;
+    ExitGrid.ubGotoSectorY = (uint8_t)gWorldSectorY;
+    ExitGrid.ubGotoSectorZ = (uint8_t)(gbWorldSectorZ + 1);
+    ExitGrid.usGridNo = (uint16_t)iMapIndex;
     AddExitGridToWorld(iMapIndex + 159, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 1, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 161, &ExitGrid);
@@ -48,14 +48,14 @@ void Add3X3Pit(INT32 iMapIndex) {
     AddExitGridToWorld(iMapIndex + 161, &ExitGrid);
     AddExitGridToWorld(iMapIndex + 1, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 159, &ExitGrid);
-    RecompileLocalMovementCostsFromRadius((INT16)iMapIndex, 2);
+    RecompileLocalMovementCostsFromRadius((int16_t)iMapIndex, 2);
   }
 
   MarkWorldDirty();
   if (!gfEditMode) ApplyMapChangesToMapTempFile(FALSE);
 }
 
-void Add5X5Pit(INT32 iMapIndex) {
+void Add5X5Pit(int32_t iMapIndex) {
   EXITGRID ExitGrid;
   if (!gfEditMode) ApplyMapChangesToMapTempFile(TRUE);
   AddObjectToTail(iMapIndex + 318, REGWATERTEXTURE10);
@@ -84,10 +84,10 @@ void Add5X5Pit(INT32 iMapIndex) {
   AddObjectToTail(iMapIndex - 158, REGWATERTEXTURE33);
   AddObjectToTail(iMapIndex - 318, REGWATERTEXTURE34);
   if (!gfEditMode) {  // Add the exitgrids associated with the pit.
-    ExitGrid.ubGotoSectorX = (UINT8)gWorldSectorX;
-    ExitGrid.ubGotoSectorY = (UINT8)gWorldSectorY;
-    ExitGrid.ubGotoSectorZ = (UINT8)(gbWorldSectorZ + 1);
-    ExitGrid.usGridNo = (UINT16)iMapIndex;
+    ExitGrid.ubGotoSectorX = (uint8_t)gWorldSectorX;
+    ExitGrid.ubGotoSectorY = (uint8_t)gWorldSectorY;
+    ExitGrid.ubGotoSectorZ = (uint8_t)(gbWorldSectorZ + 1);
+    ExitGrid.usGridNo = (uint16_t)iMapIndex;
     AddExitGridToWorld(iMapIndex + 318, &ExitGrid);
     AddExitGridToWorld(iMapIndex + 158, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 2, &ExitGrid);
@@ -113,13 +113,13 @@ void Add5X5Pit(INT32 iMapIndex) {
     AddExitGridToWorld(iMapIndex + 2, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 158, &ExitGrid);
     AddExitGridToWorld(iMapIndex - 318, &ExitGrid);
-    RecompileLocalMovementCostsFromRadius((INT16)iMapIndex, 3);
+    RecompileLocalMovementCostsFromRadius((int16_t)iMapIndex, 3);
   }
   MarkWorldDirty();
   if (!gfEditMode) ApplyMapChangesToMapTempFile(FALSE);
 }
 
-void Remove3X3Pit(INT32 iMapIndex) {
+void Remove3X3Pit(int32_t iMapIndex) {
   RemoveAllObjectsOfTypeRange(iMapIndex + 159, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex - 1, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex - 161, REGWATERTEXTURE, REGWATERTEXTURE);
@@ -132,7 +132,7 @@ void Remove3X3Pit(INT32 iMapIndex) {
   MarkWorldDirty();
 }
 
-void Remove5X5Pit(INT32 iMapIndex) {
+void Remove5X5Pit(int32_t iMapIndex) {
   RemoveAllObjectsOfTypeRange(iMapIndex + 318, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex + 158, REGWATERTEXTURE, REGWATERTEXTURE);
   RemoveAllObjectsOfTypeRange(iMapIndex - 2, REGWATERTEXTURE, REGWATERTEXTURE);
@@ -162,7 +162,7 @@ void Remove5X5Pit(INT32 iMapIndex) {
 }
 
 void AddAllPits() {
-  UINT32 i;
+  uint32_t i;
   for (i = 0; i < guiNumWorldItems; i++) {
     if (gWorldItems[i].o.usItem == ACTION_ITEM) {
       if (gWorldItems[i].o.bActionValue == ACTION_ITEM_SMALL_PIT)
@@ -174,7 +174,7 @@ void AddAllPits() {
 }
 
 void RemoveAllPits() {
-  UINT32 i;
+  uint32_t i;
   for (i = 0; i < guiNumWorldItems; i++) {
     if (gWorldItems[i].o.usItem == ACTION_ITEM) {
       if (gWorldItems[i].o.bActionValue == ACTION_ITEM_SMALL_PIT)
@@ -185,9 +185,9 @@ void RemoveAllPits() {
   }
 }
 
-void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sRadius) {
-  INT16 x, y, sNewGridNo;
-  UINT8 ubID;
+void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(int16_t sGridNo, int16_t sRadius) {
+  int16_t x, y, sNewGridNo;
+  uint8_t ubID;
   struct SOLDIERTYPE *pSoldier;
 
   PlayJA2Sample(CAVE_COLLAPSE, RATE_11025, SoundVolume(HIGHVOLUME, sGridNo), 1, SoundDir(sGridNo));
@@ -213,13 +213,13 @@ void SearchForOtherMembersWithinPitRadiusAndMakeThemFall(INT16 sGridNo, INT16 sR
     }
 }
 
-void HandleFallIntoPitFromAnimation(UINT8 ubID) {
+void HandleFallIntoPitFromAnimation(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier = MercPtrs[ubID];
   EXITGRID ExitGrid;
-  INT16 sPitGridNo;
+  int16_t sPitGridNo;
   // OK, get exit grid...
 
-  sPitGridNo = (INT16)pSoldier->uiPendingActionData4;
+  sPitGridNo = (int16_t)pSoldier->uiPendingActionData4;
 
   GetExitGrid(sPitGridNo, &ExitGrid);
 

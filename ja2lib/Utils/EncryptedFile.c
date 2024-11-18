@@ -4,11 +4,11 @@
 #include "SGP/Debug.h"
 #include "rust_fileman.h"
 
-BOOLEAN LoadEncryptedDataFromFile(STR pFileName, STR16 pDestString, UINT32 uiSeekFrom,
-                                  UINT32 uiSeekAmount) {
+BOOLEAN LoadEncryptedDataFromFile(char* pFileName, wchar_t* pDestString, uint32_t uiSeekFrom,
+                                  uint32_t uiSeekAmount) {
   FileID hFile = FILE_ID_ERR;
-  UINT16 i;
-  UINT32 uiBytesRead;
+  uint16_t i;
+  uint32_t uiBytesRead;
 
   hFile = File_OpenForReading(pFileName);
   if (!hFile) {

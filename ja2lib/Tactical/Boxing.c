@@ -25,21 +25,21 @@
 #include "Utils/Message.h"
 #include "Utils/MusicControl.h"
 
-INT16 gsBoxerGridNo[NUM_BOXERS] = {11393, 11233, 11073};
-UINT8 gubBoxerID[NUM_BOXERS] = {NOBODY, NOBODY, NOBODY};
+int16_t gsBoxerGridNo[NUM_BOXERS] = {11393, 11233, 11073};
+uint8_t gubBoxerID[NUM_BOXERS] = {NOBODY, NOBODY, NOBODY};
 BOOLEAN gfBoxerFought[NUM_BOXERS] = {FALSE, FALSE, FALSE};
 BOOLEAN gfLastBoxingMatchWonByPlayer = FALSE;
-UINT8 gubBoxingMatchesWon = 0;
-UINT8 gubBoxersRests = 0;
+uint8_t gubBoxingMatchesWon = 0;
+uint8_t gubBoxersRests = 0;
 BOOLEAN gfBoxersResting = FALSE;
 
 extern void RecalculateOppCntsDueToBecomingNeutral(struct SOLDIERTYPE* pSoldier);
 
 void ExitBoxing(void) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
   struct SOLDIERTYPE* pSoldier;
-  UINT32 uiLoop;
-  UINT8 ubPass;
+  uint32_t uiLoop;
+  uint8_t ubPass;
 
   // find boxers and turn them neutral again
 
@@ -78,7 +78,7 @@ void ExitBoxing(void) {
             pSoldier->bLife = max(OKLIFE * 2, pSoldier->bLife);
             if (pSoldier->bBreath < 100) {
               // deduct -ve BPs to grant some BPs back (properly)
-              DeductPoints(pSoldier, 0, (INT16) - ((100 - pSoldier->bBreath) * 100));
+              DeductPoints(pSoldier, 0, (int16_t) - ((100 - pSoldier->bBreath) * 100));
             }
             BeginSoldierGetup(pSoldier);
           }
@@ -113,7 +113,7 @@ void EndBoxingMatch(struct SOLDIERTYPE* pLoser) {
   TriggerNPCRecord(DARREN, 22);
 }
 
-void BoxingPlayerDisqualified(struct SOLDIERTYPE* pOffender, INT8 bReason) {
+void BoxingPlayerDisqualified(struct SOLDIERTYPE* pOffender, int8_t bReason) {
   if (bReason == BOXER_OUT_OF_RING || bReason == NON_BOXER_IN_RING) {
     EVENT_StopMerc(pOffender, pOffender->sGridNo, pOffender->bDirection);
   }
@@ -149,11 +149,11 @@ void TriggerEndOfBoxingRecord(struct SOLDIERTYPE* pSoldier) {
   SetBoxingState(NOT_BOXING);
 }
 
-UINT8 CountPeopleInBoxingRing(void) {
+uint8_t CountPeopleInBoxingRing(void) {
   struct SOLDIERTYPE* pSoldier;
-  UINT32 uiLoop;
-  UINT8 ubRoom;
-  UINT8 ubTotalInRing = 0;
+  uint32_t uiLoop;
+  uint8_t ubRoom;
+  uint8_t ubTotalInRing = 0;
 
   for (uiLoop = 0; uiLoop < guiNumMercSlots; uiLoop++) {
     pSoldier = MercSlots[uiLoop];
@@ -169,10 +169,10 @@ UINT8 CountPeopleInBoxingRing(void) {
 }
 
 void CountPeopleInBoxingRingAndDoActions(void) {
-  UINT32 uiLoop;
-  UINT8 ubTotalInRing = 0;
-  UINT8 ubRoom;
-  UINT8 ubPlayersInRing = 0;
+  uint32_t uiLoop;
+  uint8_t ubTotalInRing = 0;
+  uint8_t ubRoom;
+  uint8_t ubPlayersInRing = 0;
   struct SOLDIERTYPE* pSoldier;
   struct SOLDIERTYPE* pInRing[2] = {NULL, NULL};
   struct SOLDIERTYPE* pNonBoxingPlayer = NULL;
@@ -255,8 +255,8 @@ void CountPeopleInBoxingRingAndDoActions(void) {
 }
 
 BOOLEAN CheckOnBoxers(void) {
-  UINT32 uiLoop;
-  UINT8 ubID;
+  uint32_t uiLoop;
+  uint8_t ubID;
 
   // repick boxer IDs every time
   if (gubBoxerID[0] == NOBODY) {
@@ -278,7 +278,7 @@ BOOLEAN CheckOnBoxers(void) {
 }
 
 BOOLEAN BoxerExists(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
 
   for (uiLoop = 0; uiLoop < NUM_BOXERS; uiLoop++) {
     if (WhoIsThere2(gsBoxerGridNo[uiLoop], 0) != NOBODY) {
@@ -289,7 +289,7 @@ BOOLEAN BoxerExists(void) {
 }
 
 BOOLEAN PickABoxer(void) {
-  UINT32 uiLoop;
+  uint32_t uiLoop;
   struct SOLDIERTYPE* pBoxer;
 
   for (uiLoop = 0; uiLoop < NUM_BOXERS; uiLoop++) {
@@ -326,7 +326,7 @@ BOOLEAN PickABoxer(void) {
 }
 
 BOOLEAN BoxerAvailable(void) {
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   // No way around this, BoxerAvailable will have to go find boxer IDs if they aren't set.
   if (CheckOnBoxers() == FALSE) {
@@ -344,9 +344,9 @@ BOOLEAN BoxerAvailable(void) {
 
 // NOTE THIS IS NOW BROKEN BECAUSE NPC.C ASSUMES THAT BOXERSAVAILABLE < 3 IS A
 // SEQUEL FIGHT.   Maybe we could check Kingpin's location instead!
-UINT8 BoxersAvailable(void) {
-  UINT8 ubLoop;
-  UINT8 ubCount = 0;
+uint8_t BoxersAvailable(void) {
+  uint8_t ubLoop;
+  uint8_t ubCount = 0;
 
   for (ubLoop = 0; ubLoop < NUM_BOXERS; ubLoop++) {
     if (gubBoxerID[ubLoop] != NOBODY && !gfBoxerFought[ubLoop]) {
@@ -362,9 +362,9 @@ BOOLEAN AnotherFightPossible(void) {
   // a player has at least OKLIFE + 5 life
 
   // and at least one fight HAS occurred
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   struct SOLDIERTYPE* pSoldier;
-  UINT8 ubAvailable;
+  uint8_t ubAvailable;
 
   ubAvailable = BoxersAvailable();
 
@@ -386,7 +386,7 @@ BOOLEAN AnotherFightPossible(void) {
 }
 
 void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
 
   if (InARoom(pSoldier->sGridNo, &ubRoom) && ubRoom == BOXING_RING) {
     // someone moving in/into the ring
@@ -404,7 +404,7 @@ void BoxingMovementCheck(struct SOLDIERTYPE* pSoldier) {
   }
 }
 
-void SetBoxingState(INT8 bNewState) {
+void SetBoxingState(int8_t bNewState) {
   if (gTacticalStatus.bBoxingState == NOT_BOXING) {
     if (bNewState != NOT_BOXING) {
       // pause time
@@ -430,7 +430,7 @@ void SetBoxingState(INT8 bNewState) {
 }
 
 void ClearAllBoxerFlags(void) {
-  UINT32 uiSlot;
+  uint32_t uiSlot;
 
   for (uiSlot = 0; uiSlot < guiNumMercSlots; uiSlot++) {
     if (MercSlots[uiSlot] && MercSlots[uiSlot]->uiStatusFlags & SOLDIER_BOXER) {

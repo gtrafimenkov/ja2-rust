@@ -29,8 +29,8 @@ EXITGRID gExitGrid = {0, 1, 1, 0};
 
 BOOLEAN gfOverrideInsertionWithExitGrid = FALSE;
 
-INT32 ConvertExitGridToINT32(EXITGRID *pExitGrid) {
-  INT32 iExitGridInfo;
+int32_t ConvertExitGridToINT32(EXITGRID *pExitGrid) {
+  int32_t iExitGridInfo;
   iExitGridInfo = (pExitGrid->ubGotoSectorX - 1) << 28;
   iExitGridInfo += (pExitGrid->ubGotoSectorY - 1) << 24;
   iExitGridInfo += pExitGrid->ubGotoSectorZ << 20;
@@ -38,15 +38,15 @@ INT32 ConvertExitGridToINT32(EXITGRID *pExitGrid) {
   return iExitGridInfo;
 }
 
-void ConvertINT32ToExitGrid(INT32 iExitGridInfo, EXITGRID *pExitGrid) {
+void ConvertINT32ToExitGrid(int32_t iExitGridInfo, EXITGRID *pExitGrid) {
   // convert the int into 4 unsigned bytes.
-  pExitGrid->ubGotoSectorX = (UINT8)(((iExitGridInfo & 0xf0000000) >> 28) + 1);
-  pExitGrid->ubGotoSectorY = (UINT8)(((iExitGridInfo & 0x0f000000) >> 24) + 1);
-  pExitGrid->ubGotoSectorZ = (UINT8)((iExitGridInfo & 0x00f00000) >> 20);
-  pExitGrid->usGridNo = (UINT16)(iExitGridInfo & 0x0000ffff);
+  pExitGrid->ubGotoSectorX = (uint8_t)(((iExitGridInfo & 0xf0000000) >> 28) + 1);
+  pExitGrid->ubGotoSectorY = (uint8_t)(((iExitGridInfo & 0x0f000000) >> 24) + 1);
+  pExitGrid->ubGotoSectorZ = (uint8_t)((iExitGridInfo & 0x00f00000) >> 20);
+  pExitGrid->usGridNo = (uint16_t)(iExitGridInfo & 0x0000ffff);
 }
 
-BOOLEAN GetExitGrid(UINT16 usMapIndex, EXITGRID *pExitGrid) {
+BOOLEAN GetExitGrid(uint16_t usMapIndex, EXITGRID *pExitGrid) {
   struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[usMapIndex].pShadowHead;
   // Search through object layer for an exitgrid
@@ -64,7 +64,7 @@ BOOLEAN GetExitGrid(UINT16 usMapIndex, EXITGRID *pExitGrid) {
   return FALSE;
 }
 
-BOOLEAN ExitGridAtGridNo(UINT16 usMapIndex) {
+BOOLEAN ExitGridAtGridNo(uint16_t usMapIndex) {
   struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[usMapIndex].pShadowHead;
   // Search through object layer for an exitgrid
@@ -77,7 +77,7 @@ BOOLEAN ExitGridAtGridNo(UINT16 usMapIndex) {
   return FALSE;
 }
 
-BOOLEAN GetExitGridLevelNode(UINT16 usMapIndex, struct LEVELNODE **ppLevelNode) {
+BOOLEAN GetExitGridLevelNode(uint16_t usMapIndex, struct LEVELNODE **ppLevelNode) {
   struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[usMapIndex].pShadowHead;
   // Search through object layer for an exitgrid
@@ -91,7 +91,7 @@ BOOLEAN GetExitGridLevelNode(UINT16 usMapIndex, struct LEVELNODE **ppLevelNode) 
   return FALSE;
 }
 
-void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid) {
+void AddExitGridToWorld(int32_t iMapIndex, EXITGRID *pExitGrid) {
   struct LEVELNODE *pShadow;
   pShadow = gpWorldLevelData[iMapIndex].pShadowHead;
 
@@ -100,7 +100,7 @@ void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid) {
     if (pShadow->uiFlags & LEVELNODE_EXITGRID) {  // we have found an existing exitgrid in this
                                                   // node, so replace it with the new information.
       pShadow->iExitGridInfo = ConvertExitGridToINT32(pExitGrid);
-      // SmoothExitGridRadius( (UINT16)iMapIndex, 0 );
+      // SmoothExitGridRadius( (uint16_t)iMapIndex, 0 );
       return;
     }
     pShadow = pShadow->pNext;
@@ -117,23 +117,23 @@ void AddExitGridToWorld(INT32 iMapIndex, EXITGRID *pExitGrid) {
 
   // Add the exit grid to the sector, only if we call ApplyMapChangesToMapTempFile() first.
   if (!gfEditMode && !gfLoadingExitGrids) {
-    AddExitGridToMapTempFile((UINT16)iMapIndex, pExitGrid, (u8)gWorldSectorX, (u8)gWorldSectorY,
+    AddExitGridToMapTempFile((uint16_t)iMapIndex, pExitGrid, (u8)gWorldSectorX, (u8)gWorldSectorY,
                              gbWorldSectorZ);
   }
 }
 
-void RemoveExitGridFromWorld(INT32 iMapIndex) {
-  UINT16 usDummy;
+void RemoveExitGridFromWorld(int32_t iMapIndex) {
+  uint16_t usDummy;
   if (TypeExistsInShadowLayer(iMapIndex, MOCKFLOOR, &usDummy)) {
     RemoveAllShadowsOfTypeRange(iMapIndex, MOCKFLOOR, MOCKFLOOR);
   }
 }
 
-void SaveExitGrids(FileID fp, UINT16 usNumExitGrids) {
+void SaveExitGrids(FileID fp, uint16_t usNumExitGrids) {
   EXITGRID exitGrid;
-  UINT16 usNumSaved = 0;
-  UINT16 x;
-  UINT32 uiBytesWritten;
+  uint16_t usNumSaved = 0;
+  uint16_t x;
+  uint32_t uiBytesWritten;
   File_Write(fp, &usNumExitGrids, 2, &uiBytesWritten);
   for (x = 0; x < WORLD_MAX; x++) {
     if (GetExitGrid(x, &exitGrid)) {
@@ -146,11 +146,11 @@ void SaveExitGrids(FileID fp, UINT16 usNumExitGrids) {
   Assert(usNumExitGrids == usNumSaved);
 }
 
-void LoadExitGrids(INT8 **hBuffer) {
+void LoadExitGrids(int8_t **hBuffer) {
   EXITGRID exitGrid;
-  UINT16 x;
-  UINT16 usNumSaved;
-  UINT16 usMapIndex;
+  uint16_t x;
+  uint16_t usNumSaved;
+  uint16_t usMapIndex;
   gfLoadingExitGrids = TRUE;
   LOADDATA(&usNumSaved, *hBuffer, 2);
   // File_Read( hfile, &usNumSaved, 2, NULL);
@@ -164,9 +164,9 @@ void LoadExitGrids(INT8 **hBuffer) {
   gfLoadingExitGrids = FALSE;
 }
 
-void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
-  UINT8 ubLookForLevel = 0;
-  UINT16 i;
+void AttemptToChangeFloorLevel(int8_t bRelativeZLevel) {
+  uint8_t ubLookForLevel = 0;
+  uint16_t i;
   if (bRelativeZLevel != 1 && bRelativeZLevel != -1) return;
   // Check if on ground level -- if so, can't go up!
   if (bRelativeZLevel == -1 && !gbWorldSectorZ) {
@@ -178,7 +178,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
     ScreenMsg(FONT_DKYELLOW, MSG_INTERFACE, pMessageStrings[MSG_CANT_GO_DOWN], ubLookForLevel);
     return;
   }
-  ubLookForLevel = (UINT8)(gbWorldSectorZ + bRelativeZLevel);
+  ubLookForLevel = (uint8_t)(gbWorldSectorZ + bRelativeZLevel);
   for (i = 0; i < WORLD_MAX; i++) {
     if (GetExitGrid(i, &gExitGrid)) {
       if (gExitGrid.ubGotoSectorZ ==
@@ -186,7 +186,7 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
         gfOverrideInsertionWithExitGrid = TRUE;
         // change all current mercs in the loaded sector, and move them
         // to the new sector.
-        MoveAllGroupsInCurrentSectorToSector((UINT8)gWorldSectorX, (UINT8)gWorldSectorY,
+        MoveAllGroupsInCurrentSectorToSector((uint8_t)gWorldSectorX, (uint8_t)gWorldSectorY,
                                              ubLookForLevel);
         if (ubLookForLevel)
           ScreenMsg(FONT_YELLOW, MSG_INTERFACE, pMessageStrings[MSG_ENTERING_LEVEL],
@@ -201,21 +201,21 @@ void AttemptToChangeFloorLevel(INT8 bRelativeZLevel) {
   }
 }
 
-UINT16 FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSweetGridNo,
-                                              INT8 ubRadius, UINT8 *pubDirection) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = 0;
-  INT32 leftmost;
+uint16_t FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sSweetGridNo,
+                                              int8_t ubRadius, uint8_t *pubDirection) {
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
+  int32_t uiRange, uiLowestRange = 999999;
+  int16_t sLowestGridNo = 0;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   struct SOLDIERTYPE soldier;
-  UINT8 ubSaveNPCAPBudget;
-  UINT8 ubSaveNPCDistLimit;
+  uint8_t ubSaveNPCAPBudget;
+  uint8_t ubSaveNPCDistLimit;
   EXITGRID ExitGrid;
-  UINT8 ubGotoSectorX, ubGotoSectorY, ubGotoSectorZ;
+  uint8_t ubGotoSectorX, ubGotoSectorY, ubGotoSectorZ;
 
   // Turn off at end of function...
   gfPlotPathToExitGrid = TRUE;
@@ -303,7 +303,7 @@ UINT16 FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT1
 
   if (fFound) {
     // Set direction to center of map!
-    *pubDirection = (UINT8)GetDirectionToGridNoFromGridNo(
+    *pubDirection = (uint8_t)GetDirectionToGridNoFromGridNo(
         sLowestGridNo, (((WORLD_ROWS / 2) * WORLD_COLS) + (WORLD_COLS / 2)));
     return (sLowestGridNo);
   } else {
@@ -311,14 +311,14 @@ UINT16 FindGridNoFromSweetSpotCloseToExitGrid(struct SOLDIERTYPE *pSoldier, INT1
   }
 }
 
-UINT16 FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, INT16 sSrcGridNo, INT8 ubRadius) {
-  INT16 sTop, sBottom;
-  INT16 sLeft, sRight;
-  INT16 cnt1, cnt2;
-  INT16 sGridNo;
-  INT32 uiRange, uiLowestRange = 999999;
-  INT16 sLowestGridNo = 0;
-  INT32 leftmost;
+uint16_t FindClosestExitGrid(struct SOLDIERTYPE *pSoldier, int16_t sSrcGridNo, int8_t ubRadius) {
+  int16_t sTop, sBottom;
+  int16_t sLeft, sRight;
+  int16_t cnt1, cnt2;
+  int16_t sGridNo;
+  int32_t uiRange, uiLowestRange = 999999;
+  int16_t sLowestGridNo = 0;
+  int32_t leftmost;
   BOOLEAN fFound = FALSE;
   EXITGRID ExitGrid;
 

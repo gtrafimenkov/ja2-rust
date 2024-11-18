@@ -19,15 +19,15 @@
 #include "Utils/WordWrap.h"
 
 // current and last pages
-INT32 iCurrentVoices = 0;
-INT32 iLastVoice = 2;
+int32_t iCurrentVoices = 0;
+int32_t iLastVoice = 2;
 
-// INT32 iVoiceId = 0;
+// int32_t iVoiceId = 0;
 
-UINT32 uiVocVoiceSound = 0;
+uint32_t uiVocVoiceSound = 0;
 // buttons needed for the IMP Voices screen
-INT32 giIMPVoicesButton[3];
-INT32 giIMPVoicesButtonImage[3];
+int32_t giIMPVoicesButton[3];
+int32_t giIMPVoicesButtonImage[3];
 
 // hacks to be removeed later
 BOOLEAN fVoiceAVisited = FALSE, fVoiceBVisited = FALSE, fVoiceCVisited = FALSE;
@@ -48,10 +48,10 @@ void DestroyIMPVoiceMouseRegions(void);
 void RenderVoiceIndex(void);
 
 // callbacks
-void BtnIMPVoicesNextCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPVoicesPreviousCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, INT32 reason);
-void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void BtnIMPVoicesNextCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPVoicesPreviousCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, int32_t reason);
+void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 void EnterIMPVoices(void) {
   fVoiceAVisited = FALSE;
@@ -207,7 +207,7 @@ void DestroyIMPVoicesButtons(void) {
   return;
 }
 
-void BtnIMPVoicesNextCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPVoicesNextCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -232,7 +232,7 @@ void BtnIMPVoicesNextCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPVoicesPreviousCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPVoicesPreviousCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -257,7 +257,7 @@ void BtnIMPVoicesPreviousCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -297,8 +297,8 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-UINT32 PlayVoice(void) {
-  //	CHAR16 sString[ 64 ];
+uint32_t PlayVoice(void) {
+  //	wchar_t sString[ 64 ];
 
   // gender?
 
@@ -357,7 +357,7 @@ void DestroyIMPVoiceMouseRegions(void) {
   return;
 }
 
-void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   // callback handler for imp portrait region button events
 
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
@@ -373,8 +373,8 @@ void IMPPortraitRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason
 }
 
 void RenderVoiceIndex(void) {
-  CHAR16 sString[32];
-  INT16 sX, sY;
+  wchar_t sString[32];
+  int16_t sX, sY;
 
   // render the voice index value on the the blank portrait
   swprintf(sString, ARR_SIZE(sString), L"%s %d", pIMPVoicesStrings[0], iCurrentVoices + 1);

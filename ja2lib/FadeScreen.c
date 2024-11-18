@@ -17,20 +17,20 @@
 
 #define SQUARE_STEP 8
 
-extern UINT32 guiExitScreen;
+extern uint32_t guiExitScreen;
 BOOLEAN gfFadeInitialized = FALSE;
-INT8 gbFadeValue;
-INT16 gsFadeLimit;
-UINT32 guiTime;
-UINT32 guiFadeDelay;
+int8_t gbFadeValue;
+int16_t gsFadeLimit;
+uint32_t guiTime;
+uint32_t guiFadeDelay;
 BOOLEAN gfFirstTimeInFade = FALSE;
-INT16 gsFadeCount;
-INT8 gbFadeType;
-INT32 giX1, giX2, giY1, giY2;
-INT16 gsFadeRealCount;
+int16_t gsFadeCount;
+int8_t gbFadeType;
+int32_t giX1, giX2, giY1, giY2;
+int16_t gsFadeRealCount;
 BOOLEAN gfFadeInVideo;
 
-UINT32 uiOldMusicMode;
+uint32_t uiOldMusicMode;
 
 FADE_FUNCTION gFadeFunction = NULL;
 
@@ -58,7 +58,7 @@ void FadeOutNextFrame() {
   gfFadeOutDone = FALSE;
 }
 
-BOOLEAN HandleBeginFadeIn(UINT32 uiScreenExit) {
+BOOLEAN HandleBeginFadeIn(uint32_t uiScreenExit) {
   if (gfFadeIn) {
     BeginFade(uiScreenExit, 35, FADE_IN_REALFADE, 5);
 
@@ -72,7 +72,7 @@ BOOLEAN HandleBeginFadeIn(UINT32 uiScreenExit) {
   return (FALSE);
 }
 
-BOOLEAN HandleBeginFadeOut(UINT32 uiScreenExit) {
+BOOLEAN HandleBeginFadeOut(uint32_t uiScreenExit) {
   if (gfFadeOut) {
     BeginFade(uiScreenExit, 35, FADE_OUT_REALFADE, 5);
 
@@ -118,7 +118,7 @@ BOOLEAN HandleFadeInCallback() {
   return (FALSE);
 }
 
-void BeginFade(UINT32 uiExitScreen, INT8 bFadeValue, INT8 bType, UINT32 uiDelay) {
+void BeginFade(uint32_t uiExitScreen, int8_t bFadeValue, int8_t bType, uint32_t uiDelay) {
   // Init some paramters
   guiExitScreen = uiExitScreen;
   gbFadeValue = bFadeValue;
@@ -160,10 +160,10 @@ void BeginFade(UINT32 uiExitScreen, INT8 bFadeValue, INT8 bType, UINT32 uiDelay)
   SetPendingNewScreen(FADE_SCREEN);
 }
 
-UINT32 FadeScreenInit() { return (TRUE); }
+uint32_t FadeScreenInit() { return (TRUE); }
 
-UINT32 FadeScreenHandle() {
-  UINT32 uiTime;
+uint32_t FadeScreenHandle() {
+  uint32_t uiTime;
 
   if (!gfFadeInitialized) {
     SET_ERROR("Fade Screen called but not intialized ");
@@ -213,7 +213,7 @@ UINT32 FadeScreenHandle() {
   return (FADE_SCREEN);
 }
 
-UINT32 FadeScreenShutdown() { return (FALSE); }
+uint32_t FadeScreenShutdown() { return (FALSE); }
 
 void FadeFrameBufferRealFade() {
   if (gsFadeRealCount != gsFadeCount) {
@@ -223,7 +223,7 @@ void FadeFrameBufferRealFade() {
 }
 
 void FadeInFrameBufferRealFade() {
-  INT32 cnt;
+  int32_t cnt;
 
   if (gsFadeRealCount != gsFadeCount) {
     for (cnt = 0; cnt < (gsFadeLimit - gsFadeCount); cnt++) {
@@ -241,9 +241,9 @@ void FadeInFrameBufferRealFade() {
 }
 
 BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
-  UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
-  UINT8 *pDestBuf, *pSrcBuf;
-  UINT16 usWidth, usHeight;
+  uint32_t uiDestPitchBYTES, uiSrcPitchBYTES;
+  uint8_t *pDestBuf, *pSrcBuf;
+  uint16_t usWidth, usHeight;
 
   // Update saved buffer - do for the viewport size ony!
   GetCurrentVideoSettings(&usWidth, &usHeight);
@@ -251,7 +251,7 @@ BOOLEAN UpdateSaveBufferWithBackbuffer(void) {
   pSrcBuf = VSurfaceLockOld(vsFB, &uiSrcPitchBYTES);
   pDestBuf = VSurfaceLockOld(vsSB, &uiDestPitchBYTES);
 
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0, 0,
                   NewGRect(0, 0, 640, 480));
 
   VSurfaceUnlock(vsFB);

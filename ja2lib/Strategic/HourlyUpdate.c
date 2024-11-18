@@ -22,7 +22,7 @@
 void HourlyQuestUpdate(void);
 void HourlyLarryUpdate(void);
 
-extern INT32 GetCurrentBalance(void);
+extern int32_t GetCurrentBalance(void);
 extern void PayOffSkyriderDebtIfAny();
 void HourlyCheckIfSlayAloneSoHeCanLeave();
 
@@ -72,7 +72,7 @@ void HandleHourlyUpdate() {
 }
 
 void UpdateRegenCounters(void) {
-  UINT8 ubID;
+  uint8_t ubID;
 
   for (ubID = gTacticalStatus.Team[gbPlayerNum].bFirstID;
        ubID <= gTacticalStatus.Team[gbPlayerNum].bLastID; ubID++) {
@@ -90,7 +90,7 @@ void HandleQuarterHourUpdate() {
 }
 
 void HourlyQuestUpdate(void) {
-  UINT32 uiHour = GetGameClockHour();
+  uint32_t uiHour = GetGameClockHour();
 
   // brothel
   if (uiHour == 4) {
@@ -101,7 +101,7 @@ void HourlyQuestUpdate(void) {
 
   // bar/nightclub
   if (uiHour == 15) {
-    UINT8 ubLoop;
+    uint8_t ubLoop;
 
     SetFactTrue(FACT_CLUB_OPEN);
     SetFactFalse(FACT_PAST_CLUB_CLOSING_AND_PLAYER_WARNED);
@@ -135,7 +135,7 @@ void HourlyQuestUpdate(void) {
 
 #define BAR_TEMPTATION 4
 #define NUM_LARRY_ITEMS 6
-UINT16 LarryItems[NUM_LARRY_ITEMS][3] = {
+uint16_t LarryItems[NUM_LARRY_ITEMS][3] = {
     // item, temptation, points to use
     {ADRENALINE_BOOSTER, 5, 100},
     {ALCOHOL, BAR_TEMPTATION, 25},
@@ -149,10 +149,10 @@ UINT16 LarryItems[NUM_LARRY_ITEMS][3] = {
 
 void HourlyLarryUpdate(void) {
   struct SOLDIERTYPE *pSoldier;
-  INT8 bSlot, bBoozeSlot;
-  INT8 bLarryItemLoop;
-  UINT16 usTemptation = 0;
-  UINT16 usCashAmount;
+  int8_t bSlot, bBoozeSlot;
+  int8_t bLarryItemLoop;
+  uint16_t usTemptation = 0;
+  uint16_t usCashAmount;
   BOOLEAN fBar = FALSE;
 
   pSoldier = FindSoldierByProfileID(LARRY_NORMAL, TRUE);
@@ -198,7 +198,7 @@ void HourlyLarryUpdate(void) {
 
     if (usTemptation > 0) {
       if (GetSolProfile(pSoldier) == LARRY_NORMAL) {
-        gMercProfiles[LARRY_NORMAL].bNPCData += (INT8)Random(usTemptation);
+        gMercProfiles[LARRY_NORMAL].bNPCData += (int8_t)Random(usTemptation);
         if (gMercProfiles[LARRY_NORMAL].bNPCData >= LARRY_FALLS_OFF_WAGON) {
           if (fBar) {
             // take $ from player's account
@@ -225,7 +225,7 @@ void HourlyLarryUpdate(void) {
         // so long as he keeps consuming, keep number above level at which he cracked
         gMercProfiles[LARRY_NORMAL].bNPCData =
             max(gMercProfiles[LARRY_NORMAL].bNPCData, LARRY_FALLS_OFF_WAGON);
-        gMercProfiles[LARRY_NORMAL].bNPCData += (INT8)Random(usTemptation);
+        gMercProfiles[LARRY_NORMAL].bNPCData += (int8_t)Random(usTemptation);
         // allow value to keep going up to 24 (about 2 days since we subtract Random( 2 ) when he
         // has no access )
         gMercProfiles[LARRY_NORMAL].bNPCData = min(gMercProfiles[LARRY_NORMAL].bNPCData, 24);
@@ -249,7 +249,7 @@ void HourlyLarryUpdate(void) {
         }
       }
     } else if (GetSolProfile(pSoldier) == LARRY_DRUNK) {
-      gMercProfiles[LARRY_NORMAL].bNPCData -= (INT8)Random(2);
+      gMercProfiles[LARRY_NORMAL].bNPCData -= (int8_t)Random(2);
       if (gMercProfiles[LARRY_NORMAL].bNPCData <= 0) {
         // goes sober!
         SwapLarrysProfiles(pSoldier);
@@ -270,7 +270,7 @@ void HourlyCheckIfSlayAloneSoHeCanLeave() {
   if (!IsSolActive(pSoldier) || !pSoldier->bLife) {
     return;
   }
-  if (PlayerMercsInSector((UINT8)GetSolSectorX(pSoldier), (UINT8)GetSolSectorY(pSoldier),
+  if (PlayerMercsInSector((uint8_t)GetSolSectorX(pSoldier), (uint8_t)GetSolSectorY(pSoldier),
                           GetSolSectorZ(pSoldier)) == 1) {
     if (Chance(15)) {
       pSoldier->ubLeaveHistoryCode = HISTORY_SLAY_MYSTERIOUSLY_LEFT;

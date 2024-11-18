@@ -27,30 +27,30 @@ struct VSurface *vsMouseBuffer = NULL;
 //
 
 struct GRect gListOfDirtyRegions[MAX_DIRTY_REGIONS];
-UINT32 guiDirtyRegionCount;
+uint32_t guiDirtyRegionCount;
 BOOLEAN gfForceFullScreenRefresh;
 
 struct GRect gDirtyRegionsEx[MAX_DIRTY_REGIONS];
-UINT32 gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
-UINT32 guiDirtyRegionExCount;
+uint32_t gDirtyRegionsFlagsEx[MAX_DIRTY_REGIONS];
+uint32_t guiDirtyRegionExCount;
 
 typedef struct VSURFACE_NODE {
   struct VSurface *hVSurface;
-  UINT32 uiIndex;
+  uint32_t uiIndex;
   struct VSURFACE_NODE *next, *prev;
 } VSURFACE_NODE;
 
 VSURFACE_NODE *gpVSurfaceHead = NULL;
 VSURFACE_NODE *gpVSurfaceTail = NULL;
-UINT32 guiVSurfaceIndex = 0;
-UINT32 guiVSurfaceSize = 0;
-UINT32 guiVSurfaceTotalAdded = 0;
+uint32_t guiVSurfaceIndex = 0;
+uint32_t guiVSurfaceSize = 0;
+uint32_t guiVSurfaceTotalAdded = 0;
 
 // Given an struct Image* object, blit imagery into existing Video Surface. Can be from 8->16
 // BPP
-BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, UINT16 usX,
-                                      UINT16 usY, struct GRect *pSrcRect) {
-  UINT16 usEffectiveWidth;
+BOOLEAN SetVideoSurfaceDataFromHImage(struct VSurface *hVSurface, struct Image *hImage, uint16_t usX,
+                                      uint16_t usY, struct GRect *pSrcRect) {
+  uint16_t usEffectiveWidth;
   struct GRect aRect;
 
   // Assertions
@@ -168,13 +168,13 @@ static BOOLEAN GetVSurfaceRect(struct VSurface *hVSurface, struct Rect *pRect) {
 // Blt  will use DD Blt or BltFast depending on flags.
 // Will drop down into user-defined blitter if 8->16 BPP blitting is being done
 
-BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDestX, INT32 iDestY,
-                        INT32 fBltFlags, struct BltOpts *pBltFx) {
+BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, int32_t iDestX, int32_t iDestY,
+                        int32_t fBltFlags, struct BltOpts *pBltFx) {
   if (!dest || !src) {
     return FALSE;
   }
   struct Rect SrcRect, DestRect;
-  UINT32 uiWidth, uiHeight;
+  uint32_t uiWidth, uiHeight;
 
   // Assertions
   Assert(dest != NULL);
@@ -230,15 +230,15 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDest
   // check for position entirely off the screen
   if (iDestX >= DestRect.right) return (FALSE);
   if (iDestY >= DestRect.bottom) return (FALSE);
-  if ((iDestX + (INT32)uiWidth) < (INT32)DestRect.left) return (FALSE);
-  if ((iDestY + (INT32)uiHeight) < (INT32)DestRect.top) return (FALSE);
+  if ((iDestX + (int32_t)uiWidth) < (int32_t)DestRect.left) return (FALSE);
+  if ((iDestY + (int32_t)uiHeight) < (int32_t)DestRect.top) return (FALSE);
 
   {
-    if ((iDestX + (INT32)uiWidth) >= (INT32)DestRect.right) {
+    if ((iDestX + (int32_t)uiWidth) >= (int32_t)DestRect.right) {
       SrcRect.right -= ((iDestX + uiWidth) - DestRect.right);
       uiWidth -= ((iDestX + uiWidth) - DestRect.right);
     }
-    if ((iDestY + (INT32)uiHeight) >= (INT32)DestRect.bottom) {
+    if ((iDestY + (int32_t)uiHeight) >= (int32_t)DestRect.bottom) {
       SrcRect.bottom -= ((iDestY + uiHeight) - DestRect.bottom);
       uiHeight -= ((iDestY + uiHeight) - DestRect.bottom);
     }
@@ -247,7 +247,7 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDest
       uiWidth -= (DestRect.left - iDestX);
       iDestX = DestRect.left;
     }
-    if (iDestY < (INT32)DestRect.top) {
+    if (iDestY < (int32_t)DestRect.top) {
       SrcRect.top += (DestRect.top - iDestY);
       uiHeight -= (DestRect.top - iDestY);
       iDestY = DestRect.top;
@@ -262,17 +262,17 @@ BOOLEAN BltVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDest
   return (TRUE);
 }
 
-BOOLEAN Blt16BPPBufferShadowRectAlternateTable(UINT16 *pBuffer, UINT32 uiDestPitchBYTES,
+BOOLEAN Blt16BPPBufferShadowRectAlternateTable(uint16_t *pBuffer, uint32_t uiDestPitchBYTES,
                                                struct GRect *area);
 
-BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1, INT32 X2,
-                                       INT32 Y2, BOOLEAN fLowPercentShadeTable) {
+BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, int32_t X2,
+                                       int32_t Y2, BOOLEAN fLowPercentShadeTable) {
   if (!dest) {
     return FALSE;
   }
 
-  UINT16 *pBuffer;
-  UINT32 uiPitch;
+  uint16_t *pBuffer;
+  uint32_t uiPitch;
   struct GRect area;
 
   if (X1 < 0) X1 = 0;
@@ -301,7 +301,7 @@ BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1
   area.iRight = X2;
 
   // Lock video surface
-  pBuffer = (UINT16 *)VSurfaceLockOld(dest, &uiPitch);
+  pBuffer = (uint16_t *)VSurfaceLockOld(dest, &uiPitch);
 
   if (pBuffer == NULL) {
     return (FALSE);
@@ -325,19 +325,19 @@ BOOLEAN InternalShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1
   return (TRUE);
 }
 
-BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, INT32 X1, INT32 Y1, INT32 X2, INT32 Y2) {
+BOOLEAN ShadowVideoSurfaceRect(struct VSurface *dest, int32_t X1, int32_t Y1, int32_t X2, int32_t Y2) {
   return (InternalShadowVideoSurfaceRect(dest, X1, Y1, X2, Y2, FALSE));
 }
 
-BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, INT32 X1, INT32 Y1,
-                                                   INT32 X2, INT32 Y2) {
+BOOLEAN ShadowVideoSurfaceRectUsingLowPercentTable(struct VSurface *dest, int32_t X1, int32_t Y1,
+                                                   int32_t X2, int32_t Y2) {
   return (InternalShadowVideoSurfaceRect(dest, X1, Y1, X2, Y2, TRUE));
 }
 
 // This function will stretch the source image to the size of the dest rect.
 // If the 2 images are not 16 Bpp, it returns false.
-BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, INT32 iDestX,
-                               INT32 iDestY, UINT32 fBltFlags, struct GRect *SrcRect,
+BOOLEAN BltStretchVideoSurface(struct VSurface *dest, struct VSurface *src, int32_t iDestX,
+                               int32_t iDestY, uint32_t fBltFlags, struct GRect *SrcRect,
                                struct GRect *DestRect) {
   if (!dest || !src) {
     return FALSE;
@@ -435,7 +435,7 @@ BYTE *VSurfaceLockOld(struct VSurface *vs, u32 *pitch) {
   return res.dest;
 }
 
-BOOLEAN SetVideoSurfaceTransparency(UINT32 uiIndex, COLORVAL TransColor) {
+BOOLEAN SetVideoSurfaceTransparency(uint32_t uiIndex, COLORVAL TransColor) {
   struct VSurface *hVSurface;
 
   //
@@ -513,7 +513,7 @@ BOOLEAN InitializeVideoSurfaceManager() {
   return TRUE;
 }
 
-void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
+void InvalidateRegion(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom) {
   if (gfForceFullScreenRefresh == TRUE) {
     //
     // There's no point in going on since we are forcing a full screen refresh
@@ -560,10 +560,10 @@ void InvalidateRegion(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom) {
   }
 }
 
-static void AddRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags);
+static void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags);
 
-void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags) {
-  INT32 iOldBottom;
+void InvalidateRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags) {
+  int32_t iOldBottom;
 
   iOldBottom = iBottom;
 
@@ -583,7 +583,7 @@ void InvalidateRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UI
   }
 }
 
-static void AddRegionEx(INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom, UINT32 uiFlags) {
+static void AddRegionEx(int32_t iLeft, int32_t iTop, int32_t iRight, int32_t iBottom, uint32_t uiFlags) {
   if (guiDirtyRegionExCount < MAX_DIRTY_REGIONS) {
     // DO SOME PREMIMARY CHECKS FOR VALID RECTS
     if (iLeft < 0) iLeft = 0;
@@ -621,13 +621,13 @@ void InvalidateScreen(void) {
   guiFrameBufferState = BUFFER_DIRTY;
 }
 
-UINT16 GetVSurfaceHeight(const struct VSurface *vs) { return vs->usHeight; }
-UINT16 GetVSurfaceWidth(const struct VSurface *vs) { return vs->usWidth; }
+uint16_t GetVSurfaceHeight(const struct VSurface *vs) { return vs->usHeight; }
+uint16_t GetVSurfaceWidth(const struct VSurface *vs) { return vs->usWidth; }
 
 struct VSurface *VSurfaceNew() { return zmalloc(sizeof(struct VSurface)); }
 
-UINT32 guiRIGHTPANEL = 0;
-UINT32 guiSAVEBUFFER = 0;
+uint32_t guiRIGHTPANEL = 0;
+uint32_t guiSAVEBUFFER = 0;
 
 struct VSurface *vsExtraBuffer = NULL;
 struct VSurface *vsSB = NULL;
@@ -635,8 +635,8 @@ struct VSurface *vsSB = NULL;
 BOOLEAN InitializeSystemVideoObjects() { return (TRUE); }
 
 BOOLEAN InitializeGameVideoObjects() {
-  UINT16 usWidth;
-  UINT16 usHeight;
+  uint16_t usWidth;
+  uint16_t usHeight;
 
   GetCurrentVideoSettings(&usWidth, &usHeight);
 

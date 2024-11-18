@@ -39,10 +39,10 @@
 
 BOOLEAN gfSetPerceivedDoorState = FALSE;
 
-BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure, BOOLEAN fNoAnimations);
 
-void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                                 BOOLEAN fNoAnimations) {
   struct STRUCTURE *pStructure;
   DOOR_STATUS *pDoorStatus;
@@ -79,7 +79,7 @@ void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   }
 }
 
-UINT16 GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor, UINT16 usAnimState) {
+uint16_t GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor, uint16_t usAnimState) {
   switch (usAnimState) {
     case OPEN_DOOR:
 
@@ -182,7 +182,7 @@ UINT16 GetAnimStateForInteraction(struct SOLDIERTYPE *pSoldier, BOOLEAN fDoor, U
   }
 }
 
-void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, UINT8 ubHandleCode) {
+void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, uint8_t ubHandleCode) {
   pSoldier->ubDoorHandleCode = ubHandleCode;
 
   switch (ubHandleCode) {
@@ -210,7 +210,7 @@ void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, UINT8 ubHandleCode) {
 }
 
 BOOLEAN DoTrapCheckOnStartingMenu(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT8 bDetectLevel;
+  int8_t bDetectLevel;
 
   if (pDoor && pDoor->fLocked && pDoor->ubTrapID != NO_TRAP &&
       pDoor->bPerceivedTrapped == DOOR_PERCEIVED_UNKNOWN) {
@@ -229,7 +229,7 @@ BOOLEAN DoTrapCheckOnStartingMenu(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                                UINT8 ubDirection, BOOLEAN fDoor) {
+                                uint8_t ubDirection, BOOLEAN fDoor) {
   struct STRUCTURE *pBaseStructure;
   BOOLEAN fDoMenu = FALSE;
   DOOR *pDoor;
@@ -321,13 +321,13 @@ void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *
 }
 
 void ProcessImplicationsOfPCMessingWithDoor(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubRoom;
+  uint8_t ubRoom;
   struct SOLDIERTYPE *pGoon;
   // if player is hacking at a door in the brothel and a kingpin guy can see him
   if ((InARoom(pSoldier->sGridNo, &ubRoom) && IN_BROTHEL(ubRoom)) ||
       (gWorldSectorX == 5 && gWorldSectorY == MAP_ROW_D && gbWorldSectorZ == 0 &&
        (pSoldier->sGridNo == 11010 || pSoldier->sGridNo == 11177 || pSoldier->sGridNo == 11176))) {
-    UINT8 ubLoop;
+    uint8_t ubLoop;
 
     // see if a kingpin goon can see us
     for (ubLoop = gTacticalStatus.Team[CIV_TEAM].bFirstID;
@@ -355,10 +355,10 @@ void ProcessImplicationsOfPCMessingWithDoor(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure) {
   BOOLEAN fHandleDoor = FALSE;
-  INT16 sAPCost = 0, sBPCost = 0;
+  int16_t sAPCost = 0, sBPCost = 0;
   DOOR *pDoor;
   BOOLEAN fTrapFound = FALSE;
   BOOLEAN fDoAction = TRUE;
@@ -809,15 +809,15 @@ BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   return (fHandleDoor);
 }
 
-BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure, BOOLEAN fNoAnimations) {
   struct LEVELNODE *pNode;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fOpenedGraphic = FALSE;
   ANITILE_PARAMS AniParams;
   BOOLEAN fDoAnimation = TRUE;
   struct STRUCTURE *pBaseStructure;
-  UINT32 uiSoundID;
+  uint32_t uiSoundID;
 
   pBaseStructure = FindBaseStructure(pStructure);
   if (!pBaseStructure) {
@@ -873,7 +873,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
 
   if (!(pStructure->fFlags & STRUCTURE_OPEN)) {
     // ATE, the last parameter is the perceived value, I dont know what it is so could you please
-    // add the value? ModifyDoorStatus( INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fPercievedOpen )
+    // add the value? ModifyDoorStatus( int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fPercievedOpen )
     if (gfSetPerceivedDoorState) {
       ModifyDoorStatus(sGridNo, TRUE, TRUE);
     } else {
@@ -913,7 +913,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
         memset(&AniParams, 0, sizeof(ANITILE_PARAMS));
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;
@@ -925,7 +925,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
         memset(&AniParams, 0, sizeof(ANITILE_PARAMS));
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;
@@ -974,7 +974,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
 
   } else {
     // ATE, the last parameter is the perceived value, I dont know what it is so could you please
-    // add the value? ModifyDoorStatus( INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen
+    // add the value? ModifyDoorStatus( int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fInitiallyPercieveOpen
     // )
 
     if (gfSetPerceivedDoorState) {
@@ -1037,7 +1037,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
       if (fOpenedGraphic) {
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;
@@ -1050,7 +1050,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
       } else {
         AniParams.sGridNo = sGridNo;
         AniParams.ubLevelID = ANI_STRUCT_LEVEL;
-        AniParams.usTileType = (UINT16)gTileDatabase[pNode->usIndex].fType;
+        AniParams.usTileType = (uint16_t)gTileDatabase[pNode->usIndex].fType;
         AniParams.usTileIndex = pNode->usIndex;
         AniParams.sDelay = INTTILE_DOOR_OPENSPEED;
         AniParams.sStartFrame = pNode->sCurrentFrame;
@@ -1087,7 +1087,7 @@ BOOLEAN HandleDoorsOpenClose(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
   return (fDoAnimation);
 }
 
-void SetDoorString(INT16 sGridNo) {
+void SetDoorString(int16_t sGridNo) {
   DOOR *pDoor;
   DOOR_STATUS *pDoorStatus;
   struct STRUCTURE *pStructure;

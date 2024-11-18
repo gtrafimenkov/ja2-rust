@@ -12,7 +12,7 @@
 #include "rust_fileman.h"
 
 #if 0
-static void AILCALLBACK timer_func( UINT32 user )
+static void AILCALLBACK timer_func( uint32_t user )
 {
 	AudioGapList	*pGapList;
 
@@ -41,7 +41,7 @@ static void AILCALLBACK timer_func( UINT32 user )
 }
 #endif
 
-void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
+void AudioGapListInit(char *zSoundFile, AudioGapList *pGapList) {
   // This procedure will load in the appropriate .gap file, corresponding
   // to the .wav file in szSoundEffects indexed by uiSampleNum
   // The procedure will then allocate and load in the AUDIO_GAP information,
@@ -49,15 +49,15 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
 
   //	FILE *pFile;
   FileID pFile = FILE_ID_ERR;
-  STR pSourceFileName;
-  STR pDestFileName;
+  char* pSourceFileName;
+  char* pDestFileName;
   char sFileName[256];
-  UINT8 counter = 0;
+  uint8_t counter = 0;
   AUDIO_GAP *pCurrentGap, *pPreviousGap;
-  UINT32 Start;
-  UINT32 uiNumBytesRead;
+  uint32_t Start;
+  uint32_t uiNumBytesRead;
 
-  UINT32 End;
+  uint32_t End;
 
   pSourceFileName = zSoundFile;
   pDestFileName = sFileName;
@@ -88,9 +88,9 @@ void AudioGapListInit(CHAR8 *zSoundFile, AudioGapList *pGapList) {
     // gap file exists
     // now read in the AUDIO_GAPs
 
-    while (File_Read(pFile, &Start, sizeof(UINT32), &uiNumBytesRead) && uiNumBytesRead != 0) {
+    while (File_Read(pFile, &Start, sizeof(uint32_t), &uiNumBytesRead) && uiNumBytesRead != 0) {
       // can read the first element, there exists a second
-      File_Read(pFile, &End, sizeof(UINT32), &uiNumBytesRead);
+      File_Read(pFile, &End, sizeof(uint32_t), &uiNumBytesRead);
 
       // allocate space for AUDIO_GAP
       pCurrentGap = (AUDIO_GAP *)MemAlloc(sizeof(AUDIO_GAP));
@@ -147,7 +147,7 @@ void AudioGapListDone(AudioGapList *pGapList) {
   DebugMsg(TOPIC_JA2, DBG_INFO, String("Audio Gap List Deleted"));
 }
 
-void PollAudioGap(UINT32 uiSampleNum, AudioGapList *pGapList) {
+void PollAudioGap(uint32_t uiSampleNum, AudioGapList *pGapList) {
   // This procedure will access the AudioGapList pertaining to the .wav about
   // to be played and sets the audio_gap_active flag. This is done by
   // going to the current AUDIO_GAP element in the AudioGapList, comparing to see if
@@ -157,7 +157,7 @@ void PollAudioGap(UINT32 uiSampleNum, AudioGapList *pGapList) {
   // ...if next elements uiStart is larger than current_time, or no more elements..
   // set flag FALSE
 
-  UINT32 time;
+  uint32_t time;
   AUDIO_GAP *pCurrent;
 
   if (!pGapList) {
@@ -206,14 +206,14 @@ void PollAudioGap(UINT32 uiSampleNum, AudioGapList *pGapList) {
   }
 }
 
-UINT32 PlayJA2GapSample(CHAR8 *zSoundFile, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                        UINT32 uiPan, AudioGapList *pData) {
+uint32_t PlayJA2GapSample(char *zSoundFile, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                        uint32_t uiPan, AudioGapList *pData) {
   SOUNDPARMS spParms;
 
   memset(&spParms, 0xff, sizeof(SOUNDPARMS));
 
   spParms.uiSpeed = usRate;
-  spParms.uiVolume = (UINT32)((ubVolume / (FLOAT)HIGHVOLUME) * GetSpeechVolume());
+  spParms.uiVolume = (uint32_t)((ubVolume / (float)HIGHVOLUME) * GetSpeechVolume());
   spParms.uiLoop = ubLoops;
   spParms.uiPan = uiPan;
   spParms.uiPriority = GROUP_PLAYER;

@@ -3,9 +3,9 @@
 
 #include "SGP/Types.h"
 
-UINT32 IntroScreenShutdown(void);
-UINT32 IntroScreenHandle(void);
-UINT32 IntroScreenInit(void);
+uint32_t IntroScreenShutdown(void);
+uint32_t IntroScreenHandle(void);
+uint32_t IntroScreenInit(void);
 
 // enums used for when the intro screen can come up, used with 'gbIntroScreenMode'
 enum {
@@ -15,8 +15,8 @@ enum {
   INTRO_SPLASH,
 };
 
-extern UINT32 guiSmackerSurface;
+extern uint32_t guiSmackerSurface;
 
-void SetIntroType(INT8 bIntroType);
+void SetIntroType(int8_t bIntroType);
 
 #endif

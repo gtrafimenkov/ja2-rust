@@ -23,7 +23,7 @@
 #include "Utils/Text.h"
 #include "rust_sam_sites.h"
 
-void GetSectorFacilitiesFlags(u8 sMapX, u8 sMapY, STR16 sFacilitiesString, size_t bufSize) {
+void GetSectorFacilitiesFlags(u8 sMapX, u8 sMapY, wchar_t* sFacilitiesString, size_t bufSize) {
   // will build a string stating current facilities present in sector
 
   if (SectorInfo[GetSectorID8(sMapX, sMapY)].uiFacilitiesFlags == 0) {
@@ -83,7 +83,7 @@ void GetSectorFacilitiesFlags(u8 sMapX, u8 sMapY, STR16 sFacilitiesString, size_
 }
 
 // ALL changes of control to player must be funneled through here!
-BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN fContested) {
+BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, int8_t bMapZ, BOOLEAN fContested) {
   BOOLEAN fWasEnemyControlled = FALSE;
   TownID bTownId = 0;
 
@@ -168,9 +168,9 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
         if (!SectorInfo[GetSectorID8(sMapX, sMapY)].fSurfaceWasEverPlayerControlled) {
           // grant grace period
           if (gGameOptions.ubDifficultyLevel >= DIF_LEVEL_HARD) {
-            UpdateLastDayOfPlayerActivity((UINT16)(GetGameTimeInDays() + 2));
+            UpdateLastDayOfPlayerActivity((uint16_t)(GetGameTimeInDays() + 2));
           } else {
-            UpdateLastDayOfPlayerActivity((UINT16)(GetGameTimeInDays() + 1));
+            UpdateLastDayOfPlayerActivity((uint16_t)(GetGameTimeInDays() + 1));
           }
         }
       }
@@ -189,7 +189,7 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
     }
 
     if (fContested) {
-      StrategicHandleQueenLosingControlOfSector((UINT8)sMapX, (UINT8)sMapY, (UINT8)bMapZ);
+      StrategicHandleQueenLosingControlOfSector((uint8_t)sMapX, (uint8_t)sMapY, (uint8_t)bMapZ);
     }
   } else {
     if (sMapX == 3 && sMapY == 16 && bMapZ == 1) {  // Basement sector (P3_b1)
@@ -218,11 +218,11 @@ BOOLEAN SetThisSectorAsPlayerControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN 
 }
 
 // ALL changes of control to enemy must be funneled through here!
-BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN fContested) {
+BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, int8_t bMapZ, BOOLEAN fContested) {
   BOOLEAN fWasPlayerControlled = FALSE;
   TownID bTownId = 0;
-  UINT8 ubTheftChance;
-  UINT8 ubSectorID;
+  uint8_t ubTheftChance;
+  uint8_t ubSectorID;
 
   // KM : August 6, 1999 Patch fix
   //     This check was added because this function gets called when player mercs retreat from an
@@ -251,7 +251,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN f
 
       // and it's a town
       if ((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS)) {
-        ubSectorID = (UINT8)GetSectorID8(sMapX, sMapY);
+        ubSectorID = (uint8_t)GetSectorID8(sMapX, sMapY);
         if (!bMapZ && ubSectorID != SEC_J9 && ubSectorID != SEC_K4) {
           HandleMoraleEvent(NULL, MORALE_TOWN_LOST, sMapX, sMapY, bMapZ);
           HandleGlobalLoyaltyEvent(GLOBAL_LOYALTY_LOSE_TOWN_SECTOR, sMapX, sMapY, bMapZ);
@@ -291,7 +291,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN f
 
     // stealing should fail anyway 'cause there shouldn't be a temp file for unvisited sectors, but
     // let's check anyway
-    if (GetSectorFlagStatus(sMapX, sMapY, (UINT8)bMapZ, SF_ALREADY_VISITED) == TRUE) {
+    if (GetSectorFlagStatus(sMapX, sMapY, (uint8_t)bMapZ, SF_ALREADY_VISITED) == TRUE) {
       // enemies can steal items left lying about (random chance).  The more there are, the more
       // they take!
       ubTheftChance = 5 * NumEnemiesInAnySector(sMapX, sMapY, bMapZ);
@@ -323,7 +323,7 @@ BOOLEAN SetThisSectorAsEnemyControlled(u8 sMapX, u8 sMapY, INT8 bMapZ, BOOLEAN f
   return fWasPlayerControlled;
 }
 
-void ReplaceSoldierProfileInPlayerGroup(UINT8 ubGroupID, UINT8 ubOldProfile, UINT8 ubNewProfile) {
+void ReplaceSoldierProfileInPlayerGroup(uint8_t ubGroupID, uint8_t ubOldProfile, uint8_t ubNewProfile) {
   struct GROUP *pGroup;
   PLAYERGROUP *curr;
 

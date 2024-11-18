@@ -27,7 +27,7 @@ enum { CREATURE_MOBILE = 0, CREATURE_CRAWLER, CREATURE_IMMOBILE } CreatureMobili
 #define FRENZY_THRESHOLD 8
 #define MAX_EAT_DIST 5
 
-INT8 gbCallPriority[NUM_CREATURE_CALLS][NUM_CREATURE_CALLERS] = {
+int8_t gbCallPriority[NUM_CREATURE_CALLS][NUM_CREATURE_CALLERS] = {
     {0, 0, 0},   // CALL_NONE
     {3, 5, 12},  // CALL_1_PREY
     {5, 9, 12},  // CALL_MULTIPLE_PREY
@@ -35,7 +35,7 @@ INT8 gbCallPriority[NUM_CREATURE_CALLS][NUM_CREATURE_CALLERS] = {
     {6, 9, 12},  // CALL_CRIPPLED
 };
 
-INT8 gbHuntCallPriority[NUM_CREATURE_CALLS] = {
+int8_t gbHuntCallPriority[NUM_CREATURE_CALLS] = {
     4,  // CALL_1_PREY
     5,  // CALL_MULTIPLE_PREY
     7,  // CALL_ATTACKED
@@ -48,12 +48,12 @@ INT8 gbHuntCallPriority[NUM_CREATURE_CALLS] = {
 #define CALL_MULTIPLE_OPPONENT CALL_MULTIPLE_PREY
 
 void CreatureCall(struct SOLDIERTYPE *pCaller) {
-  UINT8 ubCallerType = 0;
-  UINT8 ubReceiver;
-  INT8 bFullPriority;
-  INT8 bPriority;
+  uint8_t ubCallerType = 0;
+  uint8_t ubReceiver;
+  int8_t bFullPriority;
+  int8_t bPriority;
   struct SOLDIERTYPE *pReceiver;
-  UINT16 usDistToCaller;
+  uint16_t usDistToCaller;
   // communicate call to all creatures on map through ultrasonics
 
   gTacticalStatus.Team[pCaller->bTeam].bAwareOfOpposition = TRUE;
@@ -107,7 +107,7 @@ void CreatureCall(struct SOLDIERTYPE *pCaller) {
       if (pReceiver->ubBodyType != LARVAE_MONSTER && pReceiver->ubBodyType != INFANT_MONSTER &&
           pReceiver->ubBodyType != QUEENMONSTER) {
         usDistToCaller = PythSpacesAway(pReceiver->sGridNo, pCaller->sGridNo);
-        bPriority = bFullPriority - (INT8)(usDistToCaller / PRIORITY_DECR_DISTANCE);
+        bPriority = bFullPriority - (int8_t)(usDistToCaller / PRIORITY_DECR_DISTANCE);
         if (bPriority > pReceiver->bCallPriority) {
           pReceiver->bCallPriority = bPriority;
           pReceiver->bAlertStatus = STATUS_RED;  // our status can't be more than red to begin with
@@ -126,10 +126,10 @@ void CreatureCall(struct SOLDIERTYPE *pCaller) {
   }
 }
 
-INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
-  INT32 iChance, iSneaky = 10;
-  // INT8		bInWater;
-  INT8 bInGas;
+int8_t CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
+  int32_t iChance, iSneaky = 10;
+  // int8_t		bInWater;
+  int8_t bInGas;
 
   // bInWater = MercInWater(pSoldier);
 
@@ -158,7 +158,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         if (!gfTurnBasedAI) {
           // pause at the end of the walk!
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
         }
 
         return (AI_ACTION_POINT_PATROL);
@@ -170,7 +170,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         if (!gfTurnBasedAI) {
           // pause at the end of the walk!
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
         }
 
         return (AI_ACTION_POINT_PATROL);
@@ -270,7 +270,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 
     // if we're in water with land miles (> 25 tiles) away,
     // OR if we roll under the chance calculated
-    if (/*bInWater ||*/ ((INT16)PreRandom(100) < iChance)) {
+    if (/*bInWater ||*/ ((int16_t)PreRandom(100) < iChance)) {
       pSoldier->usActionData = RandDestWithinRange(pSoldier);
 
       if (pSoldier->usActionData != NOWHERE) {
@@ -282,7 +282,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         if (!gfTurnBasedAI) {
           // pause at the end of the walk!
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
           if (pSoldier->bMobility == CREATURE_CRAWLER) {
             pSoldier->usNextActionData *= 2;
           }
@@ -330,7 +330,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
             // reduce chance if breath is down
             iChance -= (100 - pSoldier->bBreath);         // very likely to wait when exhausted
 
-            if ((INT16) PreRandom(100) < iChance)
+            if ((int16_t) PreRandom(100) < iChance)
             {
                     if (RandomFriendWithin(pSoldier))
                     {
@@ -342,7 +342,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
                             {
                                     // pause at the end of the walk!
                                     pSoldier->bNextAction = AI_ACTION_WAIT;
-                                    pSoldier->usNextActionData = (UINT16)
+                                    pSoldier->usNextActionData = (uint16_t)
     REALTIME_CREATURE_AI_DELAY;
                             }
 
@@ -368,7 +368,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 
       if (pSoldier->bAttitude == DEFENSIVE) iChance += 25;
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         // roll random directions (stored in actionData) until different from current
         do {
           // if man has a LEGAL dominant facing, and isn't facing it, he will turn
@@ -377,7 +377,7 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
               (pSoldier->bDirection != pSoldier->bDominantDir) && PreRandom(2)) {
             pSoldier->usActionData = pSoldier->bDominantDir;
           } else {
-            pSoldier->usActionData = (UINT16)PreRandom(8);
+            pSoldier->usActionData = (uint16_t)PreRandom(8);
           }
         } while (pSoldier->usActionData == pSoldier->bDirection);
 
@@ -386,14 +386,14 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         AIPopMessage(tempstr);
 #endif
 
-        if (ValidCreatureTurn(pSoldier, (INT8)pSoldier->usActionData))
+        if (ValidCreatureTurn(pSoldier, (int8_t)pSoldier->usActionData))
 
-        // InternalIsValidStance( pSoldier, (INT8) pSoldier->usActionData, ANIM_STAND ) )
+        // InternalIsValidStance( pSoldier, (int8_t) pSoldier->usActionData, ANIM_STAND ) )
         {
           if (!gfTurnBasedAI) {
             // pause at the end of the turn!
             pSoldier->bNextAction = AI_ACTION_WAIT;
-            pSoldier->usNextActionData = (UINT16)REALTIME_CREATURE_AI_DELAY;
+            pSoldier->usNextActionData = (uint16_t)REALTIME_CREATURE_AI_DELAY;
           }
 
           return (AI_ACTION_CHANGE_FACING);
@@ -412,15 +412,15 @@ INT8 CreatureDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 CreatureDecideActionYellow(struct SOLDIERTYPE *pSoldier) {
+int8_t CreatureDecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   // monster AI - heard something
-  UINT8 ubNoiseDir;
-  INT16 sNoiseGridNo;
-  INT32 iNoiseValue;
-  INT32 iChance, iSneaky;
+  uint8_t ubNoiseDir;
+  int16_t sNoiseGridNo;
+  int32_t iNoiseValue;
+  int32_t iChance, iSneaky;
   BOOLEAN fClimb;
   BOOLEAN fReachable;
-  //	INT16 sClosestFriend;
+  //	int16_t sClosestFriend;
 
   if (pSoldier->bMobility == CREATURE_CRAWLER &&
       pSoldier->bActionPoints < pSoldier->bInitialActionPoints) {
@@ -468,15 +468,15 @@ INT8 CreatureDecideActionYellow(struct SOLDIERTYPE *pSoldier) {
 
       if (pSoldier->bAttitude == DEFENSIVE) iChance += 15;
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         pSoldier->usActionData = ubNoiseDir;
 #ifdef DEBUGDECISIONS
         sprintf(tempstr, "%s - TURNS TOWARDS NOISE to face direction %d", pSoldier->name,
                 pSoldier->usActionData);
         AIPopMessage(tempstr);
 #endif
-        // if ( InternalIsValidStance( pSoldier, (INT8) pSoldier->usActionData, ANIM_STAND ) )
-        if (ValidCreatureTurn(pSoldier, (INT8)pSoldier->usActionData)) {
+        // if ( InternalIsValidStance( pSoldier, (int8_t) pSoldier->usActionData, ANIM_STAND ) )
+        if (ValidCreatureTurn(pSoldier, (int8_t)pSoldier->usActionData)) {
           return (AI_ACTION_CHANGE_FACING);
         }
       }
@@ -555,7 +555,7 @@ INT8 CreatureDecideActionYellow(struct SOLDIERTYPE *pSoldier) {
     // reduce chance if breath is down, less likely to wander around when tired
     iChance -= (100 - pSoldier->bBreath);
 
-    if ((INT16)PreRandom(100) < iChance) {
+    if ((int16_t)PreRandom(100) < iChance) {
       pSoldier->usActionData =
           GoAsFarAsPossibleTowards(pSoldier, sNoiseGridNo, AI_ACTION_SEEK_NOISE);
 
@@ -589,15 +589,15 @@ INT8 CreatureDecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 CreatureDecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
+int8_t CreatureDecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
   // monster AI - hostile mammals somewhere around!
-  INT16 iChance, sClosestOpponent /*,sClosestOpponent,sClosestFriend*/;
-  INT16 sClosestDisturbance;
-  INT16 sDistVisible;
-  UINT8 ubCanMove, ubOpponentDir;
-  // INT8 bInWater;
-  INT8 bInGas;
-  INT16 sAdjustedGridNo;
+  int16_t iChance, sClosestOpponent /*,sClosestOpponent,sClosestFriend*/;
+  int16_t sClosestDisturbance;
+  int16_t sDistVisible;
+  uint8_t ubCanMove, ubOpponentDir;
+  // int8_t bInWater;
+  int8_t bInGas;
+  int16_t sAdjustedGridNo;
   BOOLEAN fChangeLevel;
 
   // if we have absolutely no action points, we can't do a thing under RED!
@@ -697,7 +697,7 @@ INT8 CreatureDecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK
         AINumMessage("Chance to call sighting = ", iChance);
 #endif
 
-        if ((INT16)PreRandom(100) < iChance) {
+        if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
           AINameMessage(pSoldier, "decides to call an alert!", 1000);
 #endif
@@ -773,7 +773,7 @@ INT8 CreatureDecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK
       pSoldier->usActionData = FindNearestRottingCorpse(pSoldier);
       // need smell/visibility check?
       if (PythSpacesAway(pSoldier->sGridNo, pSoldier->usActionData) < MAX_EAT_DIST) {
-        INT16 sGridNo;
+        int16_t sGridNo;
 
         sGridNo = FindAdjacentGridEx(pSoldier, pSoldier->usActionData, &ubOpponentDir,
                                      &sAdjustedGridNo, FALSE, FALSE);
@@ -821,9 +821,9 @@ INT8 CreatureDecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK
 
           if (pSoldier->bAttitude == DEFENSIVE) iChance += 25;
 
-          // if ( (INT16)PreRandom(100) < iChance && InternalIsValidStance( pSoldier, ubOpponentDir,
+          // if ( (int16_t)PreRandom(100) < iChance && InternalIsValidStance( pSoldier, ubOpponentDir,
           // ANIM_STAND ) )
-          if ((INT16)PreRandom(100) < iChance && ValidCreatureTurn(pSoldier, ubOpponentDir)) {
+          if ((int16_t)PreRandom(100) < iChance && ValidCreatureTurn(pSoldier, ubOpponentDir)) {
             pSoldier->usActionData = ubOpponentDir;
 
 #ifdef DEBUGDECISIONS
@@ -858,16 +858,16 @@ INT8 CreatureDecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK
   return (AI_ACTION_NONE);
 }
 
-INT8 CreatureDecideActionBlack(struct SOLDIERTYPE *pSoldier) {
+int8_t CreatureDecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   // monster AI - hostile mammals in sense range
-  INT16 sClosestOpponent;
-  INT16 sClosestDisturbance;
-  UINT8 ubMinAPCost, ubCanMove /*,bInWater*/, bInGas;
-  INT8 bDirection;
-  UINT8 ubBestAttackAction;
-  INT8 bCanAttack;
-  INT8 bSpitIn, bWeaponIn;
-  UINT32 uiChance;
+  int16_t sClosestOpponent;
+  int16_t sClosestDisturbance;
+  uint8_t ubMinAPCost, ubCanMove /*,bInWater*/, bInGas;
+  int8_t bDirection;
+  uint8_t ubBestAttackAction;
+  int8_t bCanAttack;
+  int8_t bSpitIn, bWeaponIn;
+  uint32_t uiChance;
   ATTACKTYPE BestShot, BestStab, BestAttack, CurrStab;
   BOOLEAN fRunAway = FALSE;
   BOOLEAN fChangeLevel;
@@ -1301,8 +1301,8 @@ INT8 CreatureDecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 CreatureDecideAction(struct SOLDIERTYPE *pSoldier) {
-  INT8 bAction = AI_ACTION_NONE;
+int8_t CreatureDecideAction(struct SOLDIERTYPE *pSoldier) {
+  int8_t bAction = AI_ACTION_NONE;
 
   switch (pSoldier->bAlertStatus) {
     case STATUS_GREEN:
@@ -1343,8 +1343,8 @@ INT8 CreatureDecideAction(struct SOLDIERTYPE *pSoldier) {
 }
 
 void CreatureDecideAlertStatus(struct SOLDIERTYPE *pSoldier) {
-  INT8 bOldStatus;
-  INT32 iDummy;
+  int8_t bOldStatus;
+  int32_t iDummy;
   BOOLEAN fClimbDummy, fReachableDummy;
 
   // THE FOUR (4) POSSIBLE ALERT STATUSES ARE:
@@ -1487,7 +1487,7 @@ void CreatureDecideAlertStatus(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 CrowDecideActionRed(struct SOLDIERTYPE *pSoldier) {
+int8_t CrowDecideActionRed(struct SOLDIERTYPE *pSoldier) {
   // OK, Fly away!
   // HandleCrowFlyAway( pSoldier );
   if (!gfTurnBasedAI) {
@@ -1498,10 +1498,10 @@ INT8 CrowDecideActionRed(struct SOLDIERTYPE *pSoldier) {
   }
 }
 
-INT8 CrowDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
-  INT16 sCorpseGridNo;
-  UINT8 ubDirection;
-  INT16 sFacingDir;
+int8_t CrowDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
+  int16_t sCorpseGridNo;
+  uint8_t ubDirection;
+  int16_t sFacingDir;
 
   // Look for a corse!
   sCorpseGridNo = FindNearestRottingCorpse(pSoldier);
@@ -1533,7 +1533,7 @@ INT8 CrowDecideActionGreen(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 CrowDecideAction(struct SOLDIERTYPE *pSoldier) {
+int8_t CrowDecideAction(struct SOLDIERTYPE *pSoldier) {
   if (pSoldier->usAnimState == CROW_FLY) {
     return (AI_ACTION_NONE);
   }

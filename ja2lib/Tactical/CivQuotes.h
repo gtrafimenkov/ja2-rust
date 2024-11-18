@@ -74,7 +74,7 @@ void InitCivQuoteSystem();
 
 void StartCivQuote(struct SOLDIERTYPE *pCiv);
 
-INT8 GetCivType(struct SOLDIERTYPE *pCiv);
+int8_t GetCivType(struct SOLDIERTYPE *pCiv);
 
 void HandleCivQuote();
 
@@ -83,7 +83,7 @@ BOOLEAN LoadCivQuotesFromLoadGameFile(FileID hFile);
 
 BOOLEAN ShutDownQuoteBoxIfActive();
 
-void BeginCivQuote(struct SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 sX,
-                   INT16 sY);
+void BeginCivQuote(struct SOLDIERTYPE *pCiv, uint8_t ubCivQuoteID, uint8_t ubEntryID, int16_t sX,
+                   int16_t sY);
 
 #endif

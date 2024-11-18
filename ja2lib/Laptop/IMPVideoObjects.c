@@ -17,42 +17,42 @@
 // globals
 
 // video object handles
-UINT32 guiBACKGROUND;
-UINT32 guiIMPSYMBOL;
-UINT32 guiBEGININDENT;
-UINT32 guiACTIVATIONINDENT;
-UINT32 guiFRONTPAGEINDENT;
-UINT32 guiFULLNAMEINDENT;
-UINT32 guiNAMEINDENT;
-UINT32 guiNICKNAMEINDENT;
-UINT32 guiGENDERINDENT;
-UINT32 guiSMALLFRAME;
-UINT32 guiANALYSE;
-UINT32 guiATTRIBUTEGRAPH;
-UINT32 guiATTRIBUTEGRAPHBAR;
-UINT32 guiSMALLSILHOUETTE;
-UINT32 guiLARGESILHOUETTE;
-UINT32 guiPORTRAITFRAME;
-UINT32 guiSLIDERBAR;
-UINT32 guiATTRIBUTEFRAME;
-UINT32 guiATTRIBUTESCREENINDENT1;
-UINT32 guiATTRIBUTESCREENINDENT2;
-UINT32 guiATTRIBUTEBAR;
-UINT32 guiBUTTON2IMAGE;
-UINT32 guiBUTTON1IMAGE;
-UINT32 guiBUTTON4IMAGE;
-UINT32 guiMAININDENT;
-UINT32 guiLONGINDENT;
-UINT32 guiSHORTINDENT;
-UINT32 guiSHORTHINDENT;
-UINT32 guiSHORT2INDENT;
-UINT32 guiLONGHINDENT;
-UINT32 guiQINDENT;
-UINT32 guiA1INDENT;
-UINT32 guiA2INDENT;
-UINT32 guiAVGMERCINDENT;
-UINT32 guiABOUTUSINDENT;
-UINT32 guiSHORT2HINDENT;
+uint32_t guiBACKGROUND;
+uint32_t guiIMPSYMBOL;
+uint32_t guiBEGININDENT;
+uint32_t guiACTIVATIONINDENT;
+uint32_t guiFRONTPAGEINDENT;
+uint32_t guiFULLNAMEINDENT;
+uint32_t guiNAMEINDENT;
+uint32_t guiNICKNAMEINDENT;
+uint32_t guiGENDERINDENT;
+uint32_t guiSMALLFRAME;
+uint32_t guiANALYSE;
+uint32_t guiATTRIBUTEGRAPH;
+uint32_t guiATTRIBUTEGRAPHBAR;
+uint32_t guiSMALLSILHOUETTE;
+uint32_t guiLARGESILHOUETTE;
+uint32_t guiPORTRAITFRAME;
+uint32_t guiSLIDERBAR;
+uint32_t guiATTRIBUTEFRAME;
+uint32_t guiATTRIBUTESCREENINDENT1;
+uint32_t guiATTRIBUTESCREENINDENT2;
+uint32_t guiATTRIBUTEBAR;
+uint32_t guiBUTTON2IMAGE;
+uint32_t guiBUTTON1IMAGE;
+uint32_t guiBUTTON4IMAGE;
+uint32_t guiMAININDENT;
+uint32_t guiLONGINDENT;
+uint32_t guiSHORTINDENT;
+uint32_t guiSHORTHINDENT;
+uint32_t guiSHORT2INDENT;
+uint32_t guiLONGHINDENT;
+uint32_t guiQINDENT;
+uint32_t guiA1INDENT;
+uint32_t guiA2INDENT;
+uint32_t guiAVGMERCINDENT;
+uint32_t guiABOUTUSINDENT;
+uint32_t guiSHORT2HINDENT;
 
 // position defines
 #define CHAR_PROFILE_BACKGROUND_TILE_WIDTH 125
@@ -79,7 +79,7 @@ void RemoveProfileBackGround(void) {
 
 void RenderProfileBackGround(void) {
   struct VObject* hHandle;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // this procedure will render the generic backgound to the screen
 
@@ -126,7 +126,7 @@ void DeleteIMPSymbol(void) {
   return;
 }
 
-void RenderIMPSymbol(INT16 sX, INT16 sY) {
+void RenderIMPSymbol(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -156,7 +156,7 @@ void DeleteBeginIndent(void) {
   return;
 }
 
-void RenderBeginIndent(INT16 sX, INT16 sY) {
+void RenderBeginIndent(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -185,7 +185,7 @@ void DeleteActivationIndent(void) {
   return;
 }
 
-void RenderActivationIndent(INT16 sX, INT16 sY) {
+void RenderActivationIndent(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -214,7 +214,7 @@ void DeleteFrontPageIndent(void) {
   return;
 }
 
-void RenderFrontPageIndent(INT16 sX, INT16 sY) {
+void RenderFrontPageIndent(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -243,7 +243,7 @@ void DeleteAnalyse(void) {
   return;
 }
 
-void RenderAnalyse(INT16 sX, INT16 sY, INT8 bImageNumber) {
+void RenderAnalyse(int16_t sX, int16_t sY, int8_t bImageNumber) {
   struct VObject* hHandle;
 
   // get the video object
@@ -272,7 +272,7 @@ void DeleteAttributeGraph(void) {
   return;
 }
 
-void RenderAttributeGraph(INT16 sX, INT16 sY) {
+void RenderAttributeGraph(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -301,7 +301,7 @@ void DeleteAttributeBarGraph(void) {
   return;
 }
 
-void RenderAttributeBarGraph(INT16 sX, INT16 sY) {
+void RenderAttributeBarGraph(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -330,7 +330,7 @@ void DeleteFullNameIndent(void) {
   return;
 }
 
-void RenderFullNameIndent(INT16 sX, INT16 sY) {
+void RenderFullNameIndent(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -359,7 +359,7 @@ void DeleteNickNameIndent(void) {
   return;
 }
 
-void RenderNickNameIndent(INT16 sX, INT16 sY) {
+void RenderNickNameIndent(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -388,7 +388,7 @@ void DeleteNameIndent(void) {
   return;
 }
 
-void RenderNameIndent(INT16 sX, INT16 sY) {
+void RenderNameIndent(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -417,7 +417,7 @@ void DeleteGenderIndent(void) {
   return;
 }
 
-void RenderGenderIndent(INT16 sX, INT16 sY) {
+void RenderGenderIndent(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -446,7 +446,7 @@ void DeleteSmallFrame(void) {
   return;
 }
 
-void RenderSmallFrame(INT16 sX, INT16 sY) {
+void RenderSmallFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -475,7 +475,7 @@ void DeleteSmallSilhouette(void) {
   return;
 }
 
-void RenderSmallSilhouette(INT16 sX, INT16 sY) {
+void RenderSmallSilhouette(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -504,7 +504,7 @@ void DeleteLargeSilhouette(void) {
   return;
 }
 
-void RenderLargeSilhouette(INT16 sX, INT16 sY) {
+void RenderLargeSilhouette(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -531,10 +531,10 @@ void DeleteAttributeFrame(void) {
   return;
 }
 
-void RenderAttributeFrame(INT16 sX, INT16 sY) {
+void RenderAttributeFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
-  INT32 iCounter = 0;
-  INT16 sCurrentY = 0;
+  int32_t iCounter = 0;
+  int16_t sCurrentY = 0;
 
   // get the video object
   GetVideoObject(&hHandle, guiATTRIBUTEFRAME);
@@ -559,8 +559,8 @@ void RenderAttributeFrame(INT16 sX, INT16 sY) {
   return;
 }
 
-void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex) {
-  INT16 sCurrentY = 0;
+void RenderAttributeFrameForIndex(int16_t sX, int16_t sY, int32_t iIndex) {
+  int16_t sCurrentY = 0;
   struct VObject* hHandle;
 
   // valid index?
@@ -568,7 +568,7 @@ void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex) {
     return;
   }
 
-  sCurrentY = (INT16)(10 + (iIndex * 20));
+  sCurrentY = (int16_t)(10 + (iIndex * 20));
 
   // get the video object
   GetVideoObject(&hHandle, guiATTRIBUTEFRAME);
@@ -606,7 +606,7 @@ void DeleteSliderBar(void) {
   return;
 }
 
-void RenderSliderBar(INT16 sX, INT16 sY) {
+void RenderSliderBar(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -635,7 +635,7 @@ void DeleteButton2Image(void) {
   return;
 }
 
-void RenderButton2Image(INT16 sX, INT16 sY) {
+void RenderButton2Image(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -664,7 +664,7 @@ void DeleteButton4Image(void) {
   return;
 }
 
-void RenderButton4Image(INT16 sX, INT16 sY) {
+void RenderButton4Image(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -691,7 +691,7 @@ void DeleteButton1Image(void) {
   return;
 }
 
-void RenderButton1Image(INT16 sX, INT16 sY) {
+void RenderButton1Image(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -720,7 +720,7 @@ void DeletePortraitFrame(void) {
   return;
 }
 
-void RenderPortraitFrame(INT16 sX, INT16 sY) {
+void RenderPortraitFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -747,7 +747,7 @@ void DeleteMainIndentFrame(void) {
   return;
 }
 
-void RenderMainIndentFrame(INT16 sX, INT16 sY) {
+void RenderMainIndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -776,7 +776,7 @@ void DeleteQtnLongIndentFrame(void) {
   return;
 }
 
-void RenderQtnLongIndentFrame(INT16 sX, INT16 sY) {
+void RenderQtnLongIndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -803,7 +803,7 @@ void DeleteQtnShortIndentFrame(void) {
   return;
 }
 
-void RenderQtnShortIndentFrame(INT16 sX, INT16 sY) {
+void RenderQtnShortIndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -830,7 +830,7 @@ void DeleteQtnLongIndentHighFrame(void) {
   return;
 }
 
-void RenderQtnLongIndentHighFrame(INT16 sX, INT16 sY) {
+void RenderQtnLongIndentHighFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -857,7 +857,7 @@ void DeleteQtnShortIndentHighFrame(void) {
   return;
 }
 
-void RenderQtnShortIndentHighFrame(INT16 sX, INT16 sY) {
+void RenderQtnShortIndentHighFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -884,7 +884,7 @@ void DeleteQtnIndentFrame(void) {
   return;
 }
 
-void RenderQtnIndentFrame(INT16 sX, INT16 sY) {
+void RenderQtnIndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -911,7 +911,7 @@ void DeleteAttrib1IndentFrame(void) {
   return;
 }
 
-void RenderAttrib1IndentFrame(INT16 sX, INT16 sY) {
+void RenderAttrib1IndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -938,7 +938,7 @@ void DeleteAttrib2IndentFrame(void) {
   return;
 }
 
-void RenderAttrib2IndentFrame(INT16 sX, INT16 sY) {
+void RenderAttrib2IndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -965,7 +965,7 @@ void DeleteAvgMercIndentFrame(void) {
   return;
 }
 
-void RenderAvgMercIndentFrame(INT16 sX, INT16 sY) {
+void RenderAvgMercIndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -992,7 +992,7 @@ void DeleteAboutUsIndentFrame(void) {
   return;
 }
 
-void RenderAboutUsIndentFrame(INT16 sX, INT16 sY) {
+void RenderAboutUsIndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -1021,7 +1021,7 @@ void DeleteQtnShort2IndentFrame(void) {
   return;
 }
 
-void RenderQtnShort2IndentFrame(INT16 sX, INT16 sY) {
+void RenderQtnShort2IndentFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object
@@ -1048,7 +1048,7 @@ void DeleteQtnShort2IndentHighFrame(void) {
   return;
 }
 
-void RenderQtnShort2IndentHighFrame(INT16 sX, INT16 sY) {
+void RenderQtnShort2IndentHighFrame(int16_t sX, int16_t sY) {
   struct VObject* hHandle;
 
   // get the video object

@@ -64,7 +64,7 @@ BOOLEAN gfPotentialTeamChangeDuringDeath = FALSE;
 
 MERCPROFILESTRUCT gMercProfiles[NUM_PROFILES];
 
-INT8 gbSkillTraitBonus[NUM_SKILLTRAITS] = {
+int8_t gbSkillTraitBonus[NUM_SKILLTRAITS] = {
     0,   // NO_SKILLTRAIT
     25,  // LOCKPICKING
     15,  // HANDTOHAND
@@ -83,18 +83,18 @@ INT8 gbSkillTraitBonus[NUM_SKILLTRAITS] = {
     0,   // CAMOUFLAGED
 };
 
-UINT8 gubBasicInventoryPositions[] = {HELMETPOS,   VESTPOS,     LEGPOS,      HANDPOS,
+uint8_t gubBasicInventoryPositions[] = {HELMETPOS,   VESTPOS,     LEGPOS,      HANDPOS,
                                       BIGPOCK1POS, BIGPOCK2POS, BIGPOCK3POS, BIGPOCK4POS};
 
 #define NUM_TERRORISTS 6
 
-UINT8 gubTerrorists[NUM_TERRORISTS + 1] = {DRUGGIST, SLAY, ANNIE, CHRIS, TIFFANY, T_REX, 0};
+uint8_t gubTerrorists[NUM_TERRORISTS + 1] = {DRUGGIST, SLAY, ANNIE, CHRIS, TIFFANY, T_REX, 0};
 
-UINT8 gubNumTerrorists = 0;
+uint8_t gubNumTerrorists = 0;
 
 #define NUM_TERRORIST_POSSIBLE_LOCATIONS 5
 
-INT16 gsTerroristSector[NUM_TERRORISTS][NUM_TERRORIST_POSSIBLE_LOCATIONS][2] = {
+int16_t gsTerroristSector[NUM_TERRORISTS][NUM_TERRORIST_POSSIBLE_LOCATIONS][2] = {
     // Elgin... preplaced
     {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}},
     // Slay
@@ -108,15 +108,15 @@ INT16 gsTerroristSector[NUM_TERRORISTS][NUM_TERRORIST_POSSIBLE_LOCATIONS][2] = {
     // Rexall
     {{9, MAP_ROW_F}, {14, MAP_ROW_H}, {2, MAP_ROW_H}, {1, MAP_ROW_G}, {2, MAP_ROW_B}}};
 
-INT16 gsRobotGridNo;
+int16_t gsRobotGridNo;
 
 #define NUM_ASSASSINS 6
 
-UINT8 gubAssassins[NUM_ASSASSINS] = {JIM, JACK, OLAF, RAY, OLGA, TYRONE};
+uint8_t gubAssassins[NUM_ASSASSINS] = {JIM, JACK, OLAF, RAY, OLGA, TYRONE};
 
 #define NUM_ASSASSIN_POSSIBLE_TOWNS 5
 
-INT8 gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = {
+int8_t gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = {
     // Jim
     {CAMBRIA, DRASSEN, ALMA, BALIME, GRUMM},
     // Jack
@@ -131,8 +131,8 @@ INT8 gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = {
     {CAMBRIA, BALIME, ALMA, GRUMM, DRASSEN},
 };
 
-UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile);
-INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile);
+uint16_t CalcCompetence(MERCPROFILESTRUCT *pProfile);
+int16_t CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile);
 extern void HandleEndDemoInCreatureLevel();
 void DecideActiveTerrorists(void);
 
@@ -143,9 +143,9 @@ BOOLEAN LoadMercProfiles(void) {
   //	FILE *fptr;
   FileID fptr = FILE_ID_ERR;
   char *pFileName = "BINARYDATA\\Prof.dat";
-  UINT32 uiLoop, uiLoop2, uiLoop3;
-  UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
-  UINT32 uiNumBytesRead;
+  uint32_t uiLoop, uiLoop2, uiLoop3;
+  uint16_t usItem, usNewGun, usAmmo, usNewAmmo;
+  uint32_t uiNumBytesRead;
 
   fptr = File_OpenForReading(pFileName);
   if (!fptr) {
@@ -163,7 +163,7 @@ BOOLEAN LoadMercProfiles(void) {
     }
 
     // if the Dialogue exists for the merc, allow the merc to be hired
-    if (DialogueDataFileExistsForProfile((UINT8)uiLoop, 0, FALSE, NULL)) {
+    if (DialogueDataFileExistsForProfile((uint8_t)uiLoop, 0, FALSE, NULL)) {
       gMercProfiles[uiLoop].bMercStatus = 0;
     } else
       gMercProfiles[uiLoop].bMercStatus = MERC_HAS_NO_TEXT_FILE;
@@ -177,7 +177,7 @@ BOOLEAN LoadMercProfiles(void) {
     // ATE: New, face display indipendent of ID num now
     // Setup face index value
     // Default is the ubCharNum
-    gMercProfiles[uiLoop].ubFaceIndex = (UINT8)uiLoop;
+    gMercProfiles[uiLoop].ubFaceIndex = (uint8_t)uiLoop;
 
     if (!gGameOptions.fGunNut) {
       // CJC: replace guns in profile if they aren't available
@@ -284,12 +284,12 @@ BOOLEAN LoadMercProfiles(void) {
 #define MAX_ADDITIONAL_TERRORISTS 4
 
 void DecideActiveTerrorists(void) {
-  UINT8 ubLoop, ubLoop2;
-  UINT8 ubTerrorist;
-  UINT8 ubNumAdditionalTerrorists, ubNumTerroristsAdded = 0;
-  UINT32 uiChance, uiLocationChoice;
+  uint8_t ubLoop, ubLoop2;
+  uint8_t ubTerrorist;
+  uint8_t ubNumAdditionalTerrorists, ubNumTerroristsAdded = 0;
+  uint32_t uiChance, uiLocationChoice;
   BOOLEAN fFoundSpot;
-  INT16 sTerroristPlacement[MAX_ADDITIONAL_TERRORISTS][2] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
+  int16_t sTerroristPlacement[MAX_ADDITIONAL_TERRORISTS][2] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
 
   // one terrorist will always be Elgin
   // determine how many more terrorists - 2 to 4 more
@@ -372,10 +372,10 @@ void DecideActiveTerrorists(void) {
 }
 
 void MakeRemainingTerroristsTougher(void) {
-  UINT8 ubRemainingTerrorists = 0, ubLoop;
-  UINT16 usNewItem, usOldItem;
+  uint8_t ubRemainingTerrorists = 0, ubLoop;
+  uint16_t usNewItem, usOldItem;
   struct OBJECTTYPE Object;
-  UINT8 ubRemainingDifficulty;
+  uint8_t ubRemainingDifficulty;
 
   for (ubLoop = 0; ubLoop < NUM_TERRORISTS; ubLoop++) {
     if (gMercProfiles[gubTerrorists[ubLoop]].bMercStatus != MERC_IS_DEAD &&
@@ -453,11 +453,11 @@ void MakeRemainingTerroristsTougher(void) {
 }
 
 void DecideOnAssassin(void) {
-  UINT8 ubAssassinPossibility[NUM_ASSASSINS] = {NO_PROFILE, NO_PROFILE, NO_PROFILE,
+  uint8_t ubAssassinPossibility[NUM_ASSASSINS] = {NO_PROFILE, NO_PROFILE, NO_PROFILE,
                                                 NO_PROFILE, NO_PROFILE, NO_PROFILE};
-  UINT8 ubAssassinsPossible = 0;
-  UINT8 ubLoop, ubLoop2;
-  UINT8 ubTown;
+  uint8_t ubAssassinsPossible = 0;
+  uint8_t ubLoop, ubLoop2;
+  uint8_t ubTown;
 
   ubTown = GetTownIdForSector((u8)gWorldSectorX, (u8)gWorldSectorY);
 
@@ -485,10 +485,10 @@ void DecideOnAssassin(void) {
 }
 
 void MakeRemainingAssassinsTougher(void) {
-  UINT8 ubRemainingAssassins = 0, ubLoop;
-  UINT16 usNewItem, usOldItem;
+  uint8_t ubRemainingAssassins = 0, ubLoop;
+  uint16_t usNewItem, usOldItem;
   struct OBJECTTYPE Object;
-  UINT8 ubRemainingDifficulty;
+  uint8_t ubRemainingDifficulty;
 
   for (ubLoop = 0; ubLoop < NUM_ASSASSINS; ubLoop++) {
     if (gMercProfiles[gubAssassins[ubLoop]].bMercStatus != MERC_IS_DEAD) {
@@ -549,9 +549,9 @@ void MakeRemainingAssassinsTougher(void) {
 }
 
 void StartSomeMercsOnAssignment(void) {
-  UINT32 uiCnt;
+  uint32_t uiCnt;
   MERCPROFILESTRUCT *pProfile;
-  UINT32 uiChance;
+  uint32_t uiChance;
 
   // some randomly picked A.I.M. mercs will start off "on assignment" at the beginning of each new
   // game
@@ -575,8 +575,8 @@ void StartSomeMercsOnAssignment(void) {
   }
 }
 
-void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, UINT16 usEyesX, UINT16 usEyesY,
-                        UINT16 usMouthX, UINT16 usMouthY) {
+void SetProfileFaceData(uint8_t ubCharNum, uint8_t ubFaceIndex, uint16_t usEyesX, uint16_t usEyesY,
+                        uint16_t usMouthX, uint16_t usMouthY) {
   gMercProfiles[ubCharNum].ubFaceIndex = ubFaceIndex;
   gMercProfiles[ubCharNum].usEyesX = usEyesX;
   gMercProfiles[ubCharNum].usEyesY = usEyesY;
@@ -584,9 +584,9 @@ void SetProfileFaceData(UINT8 ubCharNum, UINT8 ubFaceIndex, UINT16 usEyesX, UINT
   gMercProfiles[ubCharNum].usMouthY = usMouthY;
 }
 
-UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile) {
-  UINT32 uiStats, uiSkills, uiActionPoints, uiSpecialSkills;
-  UINT16 usCompetence;
+uint16_t CalcCompetence(MERCPROFILESTRUCT *pProfile) {
+  uint32_t uiStats, uiSkills, uiActionPoints, uiSpecialSkills;
+  uint16_t usCompetence;
 
   // count life twice 'cause it's also hit points
   // mental skills are halved 'cause they're actually not that important within the game
@@ -595,7 +595,7 @@ UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile) {
             3;
 
   // marksmanship is very important, count it double
-  uiSkills = (UINT32)((2 * (pow((float)pProfile->bMarksmanship, 3) / 10000)) +
+  uiSkills = (uint32_t)((2 * (pow((float)pProfile->bMarksmanship, 3) / 10000)) +
                       1.5 * (pow((float)pProfile->bMedical, 3) / 10000) +
                       (pow((float)pProfile->bMechanical, 3) / 10000) +
                       (pow((float)pProfile->bExplosive, 3) / 10000));
@@ -610,16 +610,16 @@ UINT16 CalcCompetence(MERCPROFILESTRUCT *pProfile) {
   uiSpecialSkills =
       ((pProfile->bSkillTrait != 0) ? 1 : 0) + ((pProfile->bSkillTrait2 != 0) ? 1 : 0);
 
-  usCompetence = (UINT16)((pow(pProfile->bExpLevel, 0.2) * uiStats * uiSkills *
-                           (uiActionPoints - 6) * (1 + (0.05 * (FLOAT)uiSpecialSkills))) /
+  usCompetence = (uint16_t)((pow(pProfile->bExpLevel, 0.2) * uiStats * uiSkills *
+                           (uiActionPoints - 6) * (1 + (0.05 * (float)uiSpecialSkills))) /
                           1000);
 
   // this currently varies from about 10 (Flo) to 1200 (Gus)
   return (usCompetence);
 }
 
-INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile) {
-  UINT16 usDeposit;
+int16_t CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile) {
+  uint16_t usDeposit;
 
   // this rounds off to the nearest hundred
   usDeposit = (((5 * CalcCompetence(pProfile)) + 50) / 100) * 100;
@@ -627,8 +627,8 @@ INT16 CalcMedicalDeposit(MERCPROFILESTRUCT *pProfile) {
   return (usDeposit);
 }
 
-struct SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMercsOnly) {
-  UINT8 ubLoop, ubLoopLimit;
+struct SOLDIERTYPE *FindSoldierByProfileID(uint8_t ubProfileID, BOOLEAN fPlayerMercsOnly) {
+  uint8_t ubLoop, ubLoopLimit;
   struct SOLDIERTYPE *pSoldier;
 
   if (fPlayerMercsOnly) {
@@ -645,14 +645,14 @@ struct SOLDIERTYPE *FindSoldierByProfileID(UINT8 ubProfileID, BOOLEAN fPlayerMer
   return (NULL);
 }
 
-struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam) {
-  UINT8 ubID;
+struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, uint8_t ubTeam) {
+  uint8_t ubID;
   struct SOLDIERTYPE *pNewSoldier = NULL;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT32 cnt;
-  INT16 sOldGridNo;
+  uint32_t cnt;
+  int16_t sOldGridNo;
 
-  UINT32 uiSlot;
+  uint32_t uiSlot;
   struct SOLDIERTYPE *pGroupMember;
 
   if (gfInTalkPanel) {
@@ -768,7 +768,7 @@ struct SOLDIERTYPE *ChangeSoldierTeam(struct SOLDIERTYPE *pSoldier, UINT8 ubTeam
   return (pNewSoldier);
 }
 
-BOOLEAN RecruitRPC(UINT8 ubCharNum) {
+BOOLEAN RecruitRPC(uint8_t ubCharNum) {
   struct SOLDIERTYPE *pSoldier, *pNewSoldier;
 
   // Get soldier pointer
@@ -797,7 +797,7 @@ BOOLEAN RecruitRPC(UINT8 ubCharNum) {
   HandleTownLoyaltyForNPCRecruitment(pNewSoldier);
 
   // Try putting them into the current squad
-  if (AddCharacterToSquad(pNewSoldier, (INT8)CurrentSquad()) == FALSE) {
+  if (AddCharacterToSquad(pNewSoldier, (int8_t)CurrentSquad()) == FALSE) {
     AddCharacterToAnySquad(pNewSoldier);
   }
 
@@ -807,7 +807,7 @@ BOOLEAN RecruitRPC(UINT8 ubCharNum) {
 
   if (pNewSoldier->inv[HANDPOS].usItem == NOTHING) {
     // empty handed - swap in first available weapon
-    INT8 bSlot;
+    int8_t bSlot;
 
     bSlot = FindObjClass(pNewSoldier, IC_WEAPON);
     if (bSlot != NO_SLOT) {
@@ -845,7 +845,7 @@ BOOLEAN RecruitRPC(UINT8 ubCharNum) {
   return (TRUE);
 }
 
-BOOLEAN RecruitEPC(UINT8 ubCharNum) {
+BOOLEAN RecruitEPC(uint8_t ubCharNum) {
   struct SOLDIERTYPE *pSoldier, *pNewSoldier;
 
   // Get soldier pointer
@@ -865,7 +865,7 @@ BOOLEAN RecruitEPC(UINT8 ubCharNum) {
   pNewSoldier->ubWhatKindOfMercAmI = MERC_TYPE__EPC;
 
   // Try putting them into the current squad
-  if (AddCharacterToSquad(pNewSoldier, (INT8)CurrentSquad()) == FALSE) {
+  if (AddCharacterToSquad(pNewSoldier, (int8_t)CurrentSquad()) == FALSE) {
     AddCharacterToAnySquad(pNewSoldier);
   }
 
@@ -889,7 +889,7 @@ BOOLEAN RecruitEPC(UINT8 ubCharNum) {
   return (TRUE);
 }
 
-BOOLEAN UnRecruitEPC(UINT8 ubCharNum) {
+BOOLEAN UnRecruitEPC(uint8_t ubCharNum) {
   struct SOLDIERTYPE *pSoldier;
 
   // Get soldier pointer
@@ -944,9 +944,9 @@ BOOLEAN UnRecruitEPC(UINT8 ubCharNum) {
   return (TRUE);
 }
 
-INT8 WhichBuddy(UINT8 ubCharNum, UINT8 ubBuddy) {
+int8_t WhichBuddy(uint8_t ubCharNum, uint8_t ubBuddy) {
   MERCPROFILESTRUCT *pProfile;
-  INT8 bLoop;
+  int8_t bLoop;
 
   pProfile = &(gMercProfiles[ubCharNum]);
 
@@ -958,9 +958,9 @@ INT8 WhichBuddy(UINT8 ubCharNum, UINT8 ubBuddy) {
   return (-1);
 }
 
-INT8 WhichHated(UINT8 ubCharNum, UINT8 ubHated) {
+int8_t WhichHated(uint8_t ubCharNum, uint8_t ubHated) {
   MERCPROFILESTRUCT *pProfile;
-  INT8 bLoop;
+  int8_t bLoop;
 
   pProfile = &(gMercProfiles[ubCharNum]);
 
@@ -972,7 +972,7 @@ INT8 WhichHated(UINT8 ubCharNum, UINT8 ubHated) {
   return (-1);
 }
 
-BOOLEAN IsProfileATerrorist(UINT8 ubProfile) {
+BOOLEAN IsProfileATerrorist(uint8_t ubProfile) {
   if (ubProfile == 83 || ubProfile == 111 || ubProfile == 64 || ubProfile == 112 ||
       ubProfile == 82 || ubProfile == 110) {
     return (TRUE);
@@ -981,7 +981,7 @@ BOOLEAN IsProfileATerrorist(UINT8 ubProfile) {
   }
 }
 
-BOOLEAN IsProfileAHeadMiner(UINT8 ubProfile) {
+BOOLEAN IsProfileAHeadMiner(uint8_t ubProfile) {
   if (ubProfile == 106 || ubProfile == 148 || ubProfile == 156 || ubProfile == 157 ||
       ubProfile == 158) {
     return (TRUE);
@@ -991,7 +991,7 @@ BOOLEAN IsProfileAHeadMiner(UINT8 ubProfile) {
 }
 
 void UpdateSoldierPointerDataIntoProfile(BOOLEAN fPlayerMercs) {
-  UINT32 uiCount;
+  uint32_t uiCount;
   struct SOLDIERTYPE *pSoldier = NULL;
   MERCPROFILESTRUCT *pProfile;
   BOOLEAN fDoCopy = FALSE;
@@ -1038,9 +1038,9 @@ void UpdateSoldierPointerDataIntoProfile(BOOLEAN fPlayerMercs) {
   }
 }
 
-BOOLEAN DoesMercHaveABuddyOnTheTeam(UINT8 ubMercID) {
-  UINT8 ubCnt;
-  INT8 bBuddyID;
+BOOLEAN DoesMercHaveABuddyOnTheTeam(uint8_t ubMercID) {
+  uint8_t ubCnt;
+  int8_t bBuddyID;
 
   // loop through the list of people the merc is buddies with
   for (ubCnt = 0; ubCnt < 3; ubCnt++) {
@@ -1072,8 +1072,8 @@ BOOLEAN MercIsHot(struct SOLDIERTYPE *pSoldier) {
 }
 
 struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubSrcProfile;
-  UINT8 ubDestProfile;
+  uint8_t ubSrcProfile;
+  uint8_t ubDestProfile;
   MERCPROFILESTRUCT *pNewProfile;
 
   ubSrcProfile = GetSolProfile(pSoldier);
@@ -1144,11 +1144,11 @@ struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
           pNewProfile->bExplosivesDelta = gMercProfiles[ ubSrcProfile ].bExplosivesDelta;
           */
 
-  memcpy(pNewProfile->bInvStatus, gMercProfiles[ubSrcProfile].bInvStatus, sizeof(UINT8) * 19);
-  memcpy(pNewProfile->bInvStatus, gMercProfiles[ubSrcProfile].bInvStatus, sizeof(UINT8) * 19);
-  memcpy(pNewProfile->inv, gMercProfiles[ubSrcProfile].inv, sizeof(UINT16) * 19);
+  memcpy(pNewProfile->bInvStatus, gMercProfiles[ubSrcProfile].bInvStatus, sizeof(uint8_t) * 19);
+  memcpy(pNewProfile->bInvStatus, gMercProfiles[ubSrcProfile].bInvStatus, sizeof(uint8_t) * 19);
+  memcpy(pNewProfile->inv, gMercProfiles[ubSrcProfile].inv, sizeof(uint16_t) * 19);
   memcpy(pNewProfile->bMercTownReputation, gMercProfiles[ubSrcProfile].bMercTownReputation,
-         sizeof(UINT8) * 20);
+         sizeof(uint8_t) * 20);
 
   // remove face
   DeleteSoldierFace(pSoldier);
@@ -1184,8 +1184,8 @@ struct SOLDIERTYPE *SwapLarrysProfiles(struct SOLDIERTYPE *pSoldier) {
   return (pSoldier);
 }
 
-BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  UINT8 ubRoomInfo;
+BOOLEAN DoesNPCOwnBuilding(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
+  uint8_t ubRoomInfo;
 
   // Get room info
   ubRoomInfo = gubWorldRoomInfo[sGridNo];

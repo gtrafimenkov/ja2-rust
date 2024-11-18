@@ -14,7 +14,7 @@ void DestroySummaryWindow();
 void RenderSummaryWindow();
 void LoadWorldInfo();
 
-void UpdateSectorSummary(STR16 gszFilename, BOOLEAN fUpdate);
+void UpdateSectorSummary(wchar_t* gszFilename, BOOLEAN fUpdate);
 
 void SaveGlobalSummary();
 void LoadGlobalSummary();
@@ -25,10 +25,10 @@ extern BOOLEAN gfSummaryWindowActive;
 
 extern BOOLEAN gSectorExists[16][16];
 
-extern UINT16 gusNumEntriesWithOutdatedOrNoSummaryInfo;
+extern uint16_t gusNumEntriesWithOutdatedOrNoSummaryInfo;
 
 extern BOOLEAN gfUpdateSummaryInfo;
 
-extern UINT8 GetCurrentSummaryVersion();
+extern uint8_t GetCurrentSummaryVersion();
 
 #endif

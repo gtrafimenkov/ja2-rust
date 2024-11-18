@@ -11,155 +11,155 @@ void RemoveProfileBackGround(void);
 BOOLEAN LoadProfileBackGround(void);
 
 // imp symbol
-void RenderIMPSymbol(INT16 sX, INT16 sY);
+void RenderIMPSymbol(int16_t sX, int16_t sY);
 void DeleteIMPSymbol(void);
 BOOLEAN LoadIMPSymbol(void);
 
 BOOLEAN LoadBeginIndent(void);
 void DeleteBeginIndent(void);
-void RenderBeginIndent(INT16 sX, INT16 sY);
+void RenderBeginIndent(int16_t sX, int16_t sY);
 
 BOOLEAN LoadActivationIndent(void);
 void DeleteActivationIndent(void);
-void RenderActivationIndent(INT16 sX, INT16 sY);
+void RenderActivationIndent(int16_t sX, int16_t sY);
 
 BOOLEAN LoadFrontPageIndent(void);
 void DeleteFrontPageIndent(void);
-void RenderFrontPageIndent(INT16 sX, INT16 sY);
+void RenderFrontPageIndent(int16_t sX, int16_t sY);
 
 BOOLEAN LoadAnalyse(void);
 void DeleteAnalyse(void);
-void RenderAnalyse(INT16 sX, INT16 sY, INT8 bImageNumber);
+void RenderAnalyse(int16_t sX, int16_t sY, int8_t bImageNumber);
 
 BOOLEAN LoadAttributeGraph(void);
 void DeleteAttributeGraph(void);
-void RenderAttributeGraph(INT16 sX, INT16 sY);
+void RenderAttributeGraph(int16_t sX, int16_t sY);
 
 BOOLEAN LoadAttributeGraphBar(void);
 void DeleteAttributeBarGraph(void);
-void RenderAttributeBarGraph(INT16 sX, INT16 sY);
+void RenderAttributeBarGraph(int16_t sX, int16_t sY);
 
 BOOLEAN LoadFullNameIndent(void);
 void DeleteFullNameIndent(void);
-void RenderFullNameIndent(INT16 sX, INT16 sY);
+void RenderFullNameIndent(int16_t sX, int16_t sY);
 
 BOOLEAN LoadNameIndent(void);
 void DeleteNameIndent(void);
-void RenderNameIndent(INT16 sX, INT16 sY);
+void RenderNameIndent(int16_t sX, int16_t sY);
 
 BOOLEAN LoadNickNameIndent(void);
 void DeleteNickNameIndent(void);
-void RenderNickNameIndent(INT16 sX, INT16 sY);
+void RenderNickNameIndent(int16_t sX, int16_t sY);
 
 BOOLEAN LoadGenderIndent(void);
 void DeleteGenderIndent(void);
-void RenderGenderIndent(INT16 sX, INT16 sY);
+void RenderGenderIndent(int16_t sX, int16_t sY);
 
 BOOLEAN LoadSmallFrame(void);
 void DeleteSmallFrame(void);
-void RenderSmallFrame(INT16 sX, INT16 sY);
+void RenderSmallFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadSmallSilhouette(void);
 void DeleteSmallSilhouette(void);
-void RenderSmallSilhouette(INT16 sX, INT16 sY);
+void RenderSmallSilhouette(int16_t sX, int16_t sY);
 
 BOOLEAN LoadLargeSilhouette(void);
 void DeleteLargeSilhouette(void);
-void RenderLargeSilhouette(INT16 sX, INT16 sY);
+void RenderLargeSilhouette(int16_t sX, int16_t sY);
 
 BOOLEAN LoadAttributeFrame(void);
 void DeleteAttributeFrame(void);
-void RenderAttributeFrame(INT16 sX, INT16 sY);
+void RenderAttributeFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadSliderBar(void);
 void DeleteSliderBar(void);
-void RenderSliderBar(INT16 sX, INT16 sY);
+void RenderSliderBar(int16_t sX, int16_t sY);
 
 BOOLEAN LoadButton2Image(void);
 void DeleteButton2Image(void);
-void RenderButton2Image(INT16 sX, INT16 sY);
+void RenderButton2Image(int16_t sX, int16_t sY);
 
 BOOLEAN LoadButton4Image(void);
 void DeleteButton4Image(void);
-void RenderButton4Image(INT16 sX, INT16 sY);
+void RenderButton4Image(int16_t sX, int16_t sY);
 
 BOOLEAN LoadButton1Image(void);
 void DeleteButton1Image(void);
-void RenderButton1Image(INT16 sX, INT16 sY);
+void RenderButton1Image(int16_t sX, int16_t sY);
 
 BOOLEAN LoadPortraitFrame(void);
 void DeletePortraitFrame(void);
-void RenderPortraitFrame(INT16 sX, INT16 sY);
+void RenderPortraitFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadMainIndentFrame(void);
 void DeleteMainIndentFrame(void);
-void RenderMainIndentFrame(INT16 sX, INT16 sY);
+void RenderMainIndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadQtnLongIndentFrame(void);
 void DeleteQtnLongIndentFrame(void);
-void RenderQtnLongIndentFrame(INT16 sX, INT16 sY);
+void RenderQtnLongIndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadQtnShortIndentFrame(void);
 void DeleteQtnShortIndentFrame(void);
-void RenderQtnShortIndentFrame(INT16 sX, INT16 sY);
+void RenderQtnShortIndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadQtnLongIndentHighFrame(void);
 void DeleteQtnLongIndentHighFrame(void);
-void RenderQtnLongIndentHighFrame(INT16 sX, INT16 sY);
+void RenderQtnLongIndentHighFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadQtnShortIndentHighFrame(void);
 void DeleteQtnShortIndentHighFrame(void);
-void RenderQtnShortIndentHighFrame(INT16 sX, INT16 sY);
+void RenderQtnShortIndentHighFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadQtnShort2IndentFrame(void);
 void DeleteQtnShort2IndentFrame(void);
-void RenderQtnShort2IndentFrame(INT16 sX, INT16 sY);
+void RenderQtnShort2IndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadQtnShort2IndentHighFrame(void);
 void DeleteQtnShort2IndentHighFrame(void);
-void RenderQtnShort2IndentHighFrame(INT16 sX, INT16 sY);
+void RenderQtnShort2IndentHighFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadQtnIndentFrame(void);
 void DeleteQtnIndentFrame(void);
-void RenderQtnIndentFrame(INT16 sX, INT16 sY);
+void RenderQtnIndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadAttrib1IndentFrame(void);
 void DeleteAttrib1IndentFrame(void);
-void RenderAttrib1IndentFrame(INT16 sX, INT16 sY);
+void RenderAttrib1IndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadAttrib2IndentFrame(void);
 void DeleteAttrib2IndentFrame(void);
-void RenderAttrib2IndentFrame(INT16 sX, INT16 sY);
+void RenderAttrib2IndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadAvgMercIndentFrame(void);
 void DeleteAvgMercIndentFrame(void);
-void RenderAvgMercIndentFrame(INT16 sX, INT16 sY);
+void RenderAvgMercIndentFrame(int16_t sX, int16_t sY);
 
 BOOLEAN LoadAboutUsIndentFrame(void);
 void DeleteAboutUsIndentFrame(void);
-void RenderAboutUsIndentFrame(INT16 sX, INT16 sY);
+void RenderAboutUsIndentFrame(int16_t sX, int16_t sY);
 
-void RenderAttributeFrameForIndex(INT16 sX, INT16 sY, INT32 iIndex);
+void RenderAttributeFrameForIndex(int16_t sX, int16_t sY, int32_t iIndex);
 
 // graphical handles
 
-extern UINT32 guiBACKGROUND;
-extern UINT32 guiIMPSYMBOL;
-extern UINT32 guiBEGININDENT;
-extern UINT32 guiACTIVATIONINDENT;
-extern UINT32 guiFRONTPAGEINDENT;
-extern UINT32 guiFULLNAMEINDENT;
-extern UINT32 guiGENDERINDENT;
-extern UINT32 guiSMALLFRAME;
-extern UINT32 guiANALYSE;
-extern UINT32 guiATTRIBUTEGRAPH;
-extern UINT32 guiATTRIBUTEGRAPHBAR;
-extern UINT32 guiSMALLSILHOUETTE;
-extern UINT32 guiLARGESILHOUETTE;
-extern UINT32 guiPORTRAITFRAME;
-extern UINT32 guiATTRIBUTEFRAME;
-extern UINT32 guiATTRIBUTESCREENINDENT1;
-extern UINT32 guiATTRIBUTESCREENINDENT2;
-extern UINT32 guiSLIDERBAR;
+extern uint32_t guiBACKGROUND;
+extern uint32_t guiIMPSYMBOL;
+extern uint32_t guiBEGININDENT;
+extern uint32_t guiACTIVATIONINDENT;
+extern uint32_t guiFRONTPAGEINDENT;
+extern uint32_t guiFULLNAMEINDENT;
+extern uint32_t guiGENDERINDENT;
+extern uint32_t guiSMALLFRAME;
+extern uint32_t guiANALYSE;
+extern uint32_t guiATTRIBUTEGRAPH;
+extern uint32_t guiATTRIBUTEGRAPHBAR;
+extern uint32_t guiSMALLSILHOUETTE;
+extern uint32_t guiLARGESILHOUETTE;
+extern uint32_t guiPORTRAITFRAME;
+extern uint32_t guiATTRIBUTEFRAME;
+extern uint32_t guiATTRIBUTESCREENINDENT1;
+extern uint32_t guiATTRIBUTESCREENINDENT2;
+extern uint32_t guiSLIDERBAR;
 
 #endif

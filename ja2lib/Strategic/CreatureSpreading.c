@@ -36,7 +36,7 @@
 
 #ifdef JA2BETAVERSION
 BOOLEAN gfClearCreatureQuest = FALSE;
-extern UINT32 uiMeanWhileFlags;
+extern uint32_t uiMeanWhileFlags;
 #endif
 
 // GAME BALANCING DEFINITIONS FOR CREATURE SPREADING
@@ -115,38 +115,38 @@ typedef struct CREATURE_DIRECTIVE {
 } CREATURE_DIRECTIVE;
 
 CREATURE_DIRECTIVE *lair;
-INT32 giHabitatedDistance = 0;
-INT32 giPopulationModifier = 0;
-INT32 giLairID = 0;
-INT32 giDestroyedLairID = 0;
+int32_t giHabitatedDistance = 0;
+int32_t giPopulationModifier = 0;
+int32_t giLairID = 0;
+int32_t giDestroyedLairID = 0;
 
 // various information required for keeping track of the battle sector involved for
 // prebattle interface, autoresolve, etc.
-INT16 gsCreatureInsertionCode = 0;
-INT16 gsCreatureInsertionGridNo = 0;
-UINT8 gubNumCreaturesAttackingTown = 0;
-UINT8 gubYoungMalesAttackingTown = 0;
-UINT8 gubYoungFemalesAttackingTown = 0;
-UINT8 gubAdultMalesAttackingTown = 0;
-UINT8 gubAdultFemalesAttackingTown = 0;
-UINT8 gubCreatureBattleCode = CREATURE_BATTLE_CODE_NONE;
-UINT8 gubSectorIDOfCreatureAttack = 0;
+int16_t gsCreatureInsertionCode = 0;
+int16_t gsCreatureInsertionGridNo = 0;
+uint8_t gubNumCreaturesAttackingTown = 0;
+uint8_t gubYoungMalesAttackingTown = 0;
+uint8_t gubYoungFemalesAttackingTown = 0;
+uint8_t gubAdultMalesAttackingTown = 0;
+uint8_t gubAdultFemalesAttackingTown = 0;
+uint8_t gubCreatureBattleCode = CREATURE_BATTLE_CODE_NONE;
+uint8_t gubSectorIDOfCreatureAttack = 0;
 
-extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, UINT8 bMapZ);
-extern UNDERGROUND_SECTORINFO *NewUndergroundNode(UINT8 ubSectorX, UINT8 ubSectorY,
-                                                  UINT8 ubSectorZ);
+extern UNDERGROUND_SECTORINFO *FindUnderGroundSector(u8 sMapX, u8 sMapY, uint8_t bMapZ);
+extern UNDERGROUND_SECTORINFO *NewUndergroundNode(uint8_t ubSectorX, uint8_t ubSectorY,
+                                                  uint8_t ubSectorZ);
 extern void BuildUndergroundSectorInfoList();
 void DeleteCreatureDirectives();
 
 extern MINE_STATUS_TYPE gMineStatus[MAX_NUMBER_OF_MINES];
 
-CREATURE_DIRECTIVE *NewDirective(UINT8 ubSectorID, UINT8 ubSectorZ, UINT8 ubCreatureHabitat) {
+CREATURE_DIRECTIVE *NewDirective(uint8_t ubSectorID, uint8_t ubSectorZ, uint8_t ubCreatureHabitat) {
   CREATURE_DIRECTIVE *curr;
-  UINT8 ubSectorX, ubSectorY;
+  uint8_t ubSectorX, ubSectorY;
   curr = (CREATURE_DIRECTIVE *)MemAlloc(sizeof(CREATURE_DIRECTIVE));
   Assert(curr);
-  ubSectorX = (UINT8)((ubSectorID % 16) + 1);
-  ubSectorY = (UINT8)((ubSectorID / 16) + 1);
+  ubSectorX = (uint8_t)((ubSectorID % 16) + 1);
+  ubSectorY = (uint8_t)((ubSectorID / 16) + 1);
   curr->pLevel = FindUnderGroundSector(ubSectorX, ubSectorY, ubSectorZ);
   if (!curr->pLevel) {
     AssertMsg(0, String("Could not find underground sector node (%c%db_%d) that should exist.",
@@ -249,12 +249,12 @@ void InitLairGrumm() {
 void InitCreatureQuest() {
   UNDERGROUND_SECTORINFO *curr;
   BOOLEAN fPlayMeanwhile = FALSE;
-  INT32 i = -1;
-  INT32 iChosenMine;
-  INT32 iRandom;
-  INT32 iNumMinesInfectible;
+  int32_t i = -1;
+  int32_t iChosenMine;
+  int32_t iRandom;
+  int32_t iNumMinesInfectible;
 #ifdef JA2BETAVERSION
-  INT32 iOrigRandom;
+  int32_t iOrigRandom;
 #endif
   BOOLEAN fMineInfectible[4];
 
@@ -379,7 +379,7 @@ void InitCreatureQuest() {
     default:
 #ifdef JA2BETAVERSION
     {
-      CHAR16 str[512];
+      wchar_t str[512];
       swprintf(str, ARR_SIZE(str),
                L"Creature quest never chose a lair and won't infect any mines.  Infectible mines = "
                L"%d, iRandom = %d.  "
@@ -430,7 +430,7 @@ void AddCreatureToNode(CREATURE_DIRECTIVE *node) {
   }
 }
 
-BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
+BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, int32_t iDistance) {
   if (!node) return FALSE;
   // check to see if the creatures are permitted to spread into certain areas.  There are 4 mines
   // (human perspective), and creatures won't spread to them until the player controls them.
@@ -443,7 +443,7 @@ BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
     // we have reached the distance limitation for the spreading.  We will determine if
     // the area is populated enough to spread further.  The minimum population must be 4 before
     // spreading is even considered.
-    if (node->pLevel->ubNumCreatures * 10 - 10 <= (INT32)Random(60)) {  // x<=1   100%
+    if (node->pLevel->ubNumCreatures * 10 - 10 <= (int32_t)Random(60)) {  // x<=1   100%
       // x==2		 83%
       // x==3		 67%
       // x==4		 50%
@@ -461,9 +461,9 @@ BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
       // there is ALWAYS a chance to habitate an interior sector, though
       // the chances are slim for
       // highly occupied sectors.  This chance is modified by the type of area we are in.
-      INT32 iAbsoluteMaxPopulation;
-      INT32 iMaxPopulation = -1;
-      INT32 iChanceToPopulate;
+      int32_t iAbsoluteMaxPopulation;
+      int32_t iMaxPopulation = -1;
+      int32_t iChanceToPopulate;
       switch (node->pLevel->ubCreatureHabitat) {
         case QUEEN_LAIR:  // Defend the queen bonus
           iAbsoluteMaxPopulation = 32;
@@ -516,7 +516,7 @@ BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
       // the ratio of current population to the max population.
       iChanceToPopulate = 100 - node->pLevel->ubNumCreatures * 100 / iMaxPopulation;
 
-      if (!node->pLevel->ubNumCreatures || (iChanceToPopulate > (INT32)Random(100) &&
+      if (!node->pLevel->ubNumCreatures || (iChanceToPopulate > (int32_t)Random(100) &&
                                             iMaxPopulation > node->pLevel->ubNumCreatures)) {
         AddCreatureToNode(node);
         return TRUE;
@@ -532,7 +532,7 @@ BOOLEAN PlaceNewCreature(CREATURE_DIRECTIVE *node, INT32 iDistance) {
 }
 
 void SpreadCreatures() {
-  UINT16 usNewCreatures = 0;
+  uint16_t usNewCreatures = 0;
 
   if (giLairID == -1) {
     DecayCreatures();
@@ -543,15 +543,15 @@ void SpreadCreatures() {
   switch (gGameOptions.ubDifficultyLevel) {
     case DIF_LEVEL_EASY:
       usNewCreatures =
-          (UINT16)(EASY_QUEEN_REPRODUCTION_BASE + Random(1 + EASY_QUEEN_REPRODUCTION_BONUS));
+          (uint16_t)(EASY_QUEEN_REPRODUCTION_BASE + Random(1 + EASY_QUEEN_REPRODUCTION_BONUS));
       break;
     case DIF_LEVEL_MEDIUM:
       usNewCreatures =
-          (UINT16)(NORMAL_QUEEN_REPRODUCTION_BASE + Random(1 + NORMAL_QUEEN_REPRODUCTION_BONUS));
+          (uint16_t)(NORMAL_QUEEN_REPRODUCTION_BASE + Random(1 + NORMAL_QUEEN_REPRODUCTION_BONUS));
       break;
     case DIF_LEVEL_HARD:
       usNewCreatures =
-          (UINT16)(HARD_QUEEN_REPRODUCTION_BASE + Random(1 + HARD_QUEEN_REPRODUCTION_BONUS));
+          (uint16_t)(HARD_QUEEN_REPRODUCTION_BASE + Random(1 + HARD_QUEEN_REPRODUCTION_BONUS));
       break;
   }
 
@@ -567,13 +567,13 @@ void DecayCreatures() {  // when the queen dies, we need to kill off the creatur
                          // time.
 }
 
-void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 ubNumAdultMales,
-                          UINT8 ubNumAdultFemales) {
-  INT32 iRandom;
+void AddCreaturesToBattle(uint8_t ubNumYoungMales, uint8_t ubNumYoungFemales, uint8_t ubNumAdultMales,
+                          uint8_t ubNumAdultFemales) {
+  int32_t iRandom;
   struct SOLDIERTYPE *pSoldier;
   MAPEDGEPOINTINFO MapEdgepointInfo;
-  UINT8 bDesiredDirection = 0;
-  UINT8 ubCurrSlot = 0;
+  uint8_t bDesiredDirection = 0;
+  uint8_t ubCurrSlot = 0;
 
   switch (gsCreatureInsertionCode) {
     case INSERTION_CODE_NORTH:
@@ -601,24 +601,24 @@ void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 
 
   if (gsCreatureInsertionCode != INSERTION_CODE_GRIDNO) {
     ChooseMapEdgepoints(
-        &MapEdgepointInfo, (UINT8)gsCreatureInsertionCode,
-        (UINT8)(ubNumYoungMales + ubNumYoungFemales + ubNumAdultMales + ubNumAdultFemales));
+        &MapEdgepointInfo, (uint8_t)gsCreatureInsertionCode,
+        (uint8_t)(ubNumYoungMales + ubNumYoungFemales + ubNumAdultMales + ubNumAdultFemales));
     ubCurrSlot = 0;
   }
   while (ubNumYoungMales || ubNumYoungFemales || ubNumAdultMales || ubNumAdultFemales) {
     iRandom =
-        (INT32)Random(ubNumYoungMales + ubNumYoungFemales + ubNumAdultMales + ubNumAdultFemales);
-    if (ubNumYoungMales && iRandom < (INT32)ubNumYoungMales) {
+        (int32_t)Random(ubNumYoungMales + ubNumYoungFemales + ubNumAdultMales + ubNumAdultFemales);
+    if (ubNumYoungMales && iRandom < (int32_t)ubNumYoungMales) {
       ubNumYoungMales--;
       pSoldier = TacticalCreateCreature(YAM_MONSTER);
-    } else if (ubNumYoungFemales && iRandom < (INT32)(ubNumYoungMales + ubNumYoungFemales)) {
+    } else if (ubNumYoungFemales && iRandom < (int32_t)(ubNumYoungMales + ubNumYoungFemales)) {
       ubNumYoungFemales--;
       pSoldier = TacticalCreateCreature(YAF_MONSTER);
     } else if (ubNumAdultMales &&
-               iRandom < (INT32)(ubNumYoungMales + ubNumYoungFemales + ubNumAdultMales)) {
+               iRandom < (int32_t)(ubNumYoungMales + ubNumYoungFemales + ubNumAdultMales)) {
       ubNumAdultMales--;
       pSoldier = TacticalCreateCreature(AM_MONSTER);
-    } else if (ubNumAdultFemales && iRandom < (INT32)(ubNumYoungMales + ubNumYoungFemales +
+    } else if (ubNumAdultFemales && iRandom < (int32_t)(ubNumYoungMales + ubNumYoungFemales +
                                                       ubNumAdultMales + ubNumAdultFemales)) {
       ubNumAdultFemales--;
       pSoldier = TacticalCreateCreature(ADULTFEMALEMONSTER);
@@ -645,7 +645,7 @@ void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 
       if (ubCurrSlot < MapEdgepointInfo.ubNumPoints) {  // using an edgepoint
         pSoldier->usStrategicInsertionData = MapEdgepointInfo.sGridNo[ubCurrSlot++];
       } else {  // no edgepoints left, so put him at the entrypoint.
-        pSoldier->ubStrategicInsertionCode = (UINT8)gsCreatureInsertionCode;
+        pSoldier->ubStrategicInsertionCode = (uint8_t)gsCreatureInsertionCode;
       }
     } else {
       pSoldier->usStrategicInsertionData = gsCreatureInsertionGridNo;
@@ -664,8 +664,8 @@ void AddCreaturesToBattle(UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8 
   AllTeamsLookForAll(FALSE);
 }
 
-void ChooseTownSectorToAttack(UINT8 ubSectorID, BOOLEAN fOverrideTest) {
-  INT32 iRandom;
+void ChooseTownSectorToAttack(uint8_t ubSectorID, BOOLEAN fOverrideTest) {
+  int32_t iRandom;
 
   if (!fOverrideTest) {
     iRandom = PreRandom(100);
@@ -780,10 +780,10 @@ void ChooseTownSectorToAttack(UINT8 ubSectorID, BOOLEAN fOverrideTest) {
 }
 
 void CreatureAttackTown(
-    UINT8 ubSectorID,
+    uint8_t ubSectorID,
     BOOLEAN fOverrideTest) {  // This is the launching point of the creature attack.
   UNDERGROUND_SECTORINFO *pSector;
-  UINT8 ubSectorX, ubSectorY;
+  uint8_t ubSectorX, ubSectorY;
 
   if (gfWorldLoaded &&
       gTacticalStatus.fEnemyInSector) {  // Battle currently in progress, repost the event
@@ -793,8 +793,8 @@ void CreatureAttackTown(
 
   gubCreatureBattleCode = CREATURE_BATTLE_CODE_NONE;
 
-  ubSectorX = (UINT8)((ubSectorID % 16) + 1);
-  ubSectorY = (UINT8)((ubSectorID / 16) + 1);
+  ubSectorX = (uint8_t)((ubSectorID % 16) + 1);
+  ubSectorY = (uint8_t)((ubSectorID / 16) + 1);
 
   if (!fOverrideTest) {
     // Record the number of creatures in the sector.
@@ -814,8 +814,8 @@ void CreatureAttackTown(
     // Choose one of the town sectors to attack.  Sectors closer to
     // the mine entrance have a greater chance of being chosen.
     ChooseTownSectorToAttack(ubSectorID, FALSE);
-    ubSectorX = (UINT8)((gubSectorIDOfCreatureAttack % 16) + 1);
-    ubSectorY = (UINT8)((gubSectorIDOfCreatureAttack / 16) + 1);
+    ubSectorX = (uint8_t)((gubSectorIDOfCreatureAttack % 16) + 1);
+    ubSectorY = (uint8_t)((gubSectorIDOfCreatureAttack / 16) + 1);
   } else {
     ChooseTownSectorToAttack(ubSectorID, TRUE);
     gubNumCreaturesAttackingTown = 5;
@@ -840,13 +840,13 @@ void CreatureAttackTown(
   } else if (!IsSectorEnemyControlled(ubSectorX, ubSectorY)) {
     // player controlled sector -- eat some civilians
     AdjustLoyaltyForCivsEatenByMonsters(ubSectorX, ubSectorY, gubNumCreaturesAttackingTown);
-    SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (UINT8)GetGameTimeInDays();
+    SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (uint8_t)GetGameTimeInDays();
     return;
   } else {  // enemy controlled sectors don't get attacked.
     return;
   }
 
-  SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (UINT8)GetGameTimeInDays();
+  SectorInfo[ubSectorID].ubDayOfLastCreatureAttack = (uint8_t)GetGameTimeInDays();
   switch (gubCreatureBattleCode) {
     case CREATURE_BATTLE_CODE_PREBATTLEINTERFACE:
       InitPreBattleInterface(NULL, TRUE);
@@ -866,7 +866,7 @@ void CreatureAttackTown(
 
 // Called by campaign init.
 void ChooseCreatureQuestStartDay() {
-  //	INT32 iRandom, iDay;
+  //	int32_t iRandom, iDay;
   if (!gGameOptions.fSciFi) return;  // only available in science fiction mode.
   // Post the event.  Once it becomes due, it will setup the queen monster's location, and
   // begin spreading and attacking towns from there.
@@ -909,7 +909,7 @@ void ClearCreatureQuest() {
 void EndCreatureQuest() {
   CREATURE_DIRECTIVE *curr;
   UNDERGROUND_SECTORINFO *pSector;
-  INT32 i;
+  int32_t i;
 
   // By setting the lairID to -1, when it comes time to spread creatures,
   // They will get subtracted instead.
@@ -941,9 +941,9 @@ void EndCreatureQuest() {
   }
 }
 
-UINT8 CreaturesInUndergroundSector(UINT8 ubSectorID, UINT8 ubSectorZ) {
+uint8_t CreaturesInUndergroundSector(uint8_t ubSectorID, uint8_t ubSectorZ) {
   UNDERGROUND_SECTORINFO *pSector;
-  UINT8 ubSectorX, ubSectorY;
+  uint8_t ubSectorX, ubSectorY;
   ubSectorX = SectorID8_X(ubSectorID);
   ubSectorY = SectorID8_Y(ubSectorID);
   pSector = FindUnderGroundSector(ubSectorX, ubSectorY, ubSectorZ);
@@ -951,7 +951,7 @@ UINT8 CreaturesInUndergroundSector(UINT8 ubSectorID, UINT8 ubSectorZ) {
   return 0;
 }
 
-BOOLEAN MineClearOfMonsters(UINT8 ubMineIndex) {
+BOOLEAN MineClearOfMonsters(uint8_t ubMineIndex) {
   Assert((ubMineIndex >= 0) && (ubMineIndex < MAX_NUMBER_OF_MINES));
 
   if (!gMineStatus[ubMineIndex].fPrevInvadedByMonsters) {
@@ -997,14 +997,14 @@ BOOLEAN MineClearOfMonsters(UINT8 ubMineIndex) {
   return TRUE;
 }
 
-void DetermineCreatureTownComposition(UINT8 ubNumCreatures, UINT8 *pubNumYoungMales,
-                                      UINT8 *pubNumYoungFemales, UINT8 *pubNumAdultMales,
-                                      UINT8 *pubNumAdultFemales) {
-  INT32 i, iRandom;
-  UINT8 ubYoungMalePercentage = 10;
-  UINT8 ubYoungFemalePercentage = 65;
-  UINT8 ubAdultMalePercentage = 5;
-  UINT8 ubAdultFemalePercentage = 20;
+void DetermineCreatureTownComposition(uint8_t ubNumCreatures, uint8_t *pubNumYoungMales,
+                                      uint8_t *pubNumYoungFemales, uint8_t *pubNumAdultMales,
+                                      uint8_t *pubNumAdultFemales) {
+  int32_t i, iRandom;
+  uint8_t ubYoungMalePercentage = 10;
+  uint8_t ubYoungFemalePercentage = 65;
+  uint8_t ubAdultMalePercentage = 5;
+  uint8_t ubAdultFemalePercentage = 20;
 
   // First step is to convert the percentages into the numbers we will use.
   ubYoungFemalePercentage += ubYoungMalePercentage;
@@ -1028,13 +1028,13 @@ void DetermineCreatureTownComposition(UINT8 ubNumCreatures, UINT8 *pubNumYoungMa
   }
 }
 
-void DetermineCreatureTownCompositionBasedOnTacticalInformation(UINT8 *pubNumCreatures,
-                                                                UINT8 *pubNumYoungMales,
-                                                                UINT8 *pubNumYoungFemales,
-                                                                UINT8 *pubNumAdultMales,
-                                                                UINT8 *pubNumAdultFemales) {
+void DetermineCreatureTownCompositionBasedOnTacticalInformation(uint8_t *pubNumCreatures,
+                                                                uint8_t *pubNumYoungMales,
+                                                                uint8_t *pubNumYoungFemales,
+                                                                uint8_t *pubNumAdultMales,
+                                                                uint8_t *pubNumAdultFemales) {
   SECTORINFO *pSector;
-  INT32 i;
+  int32_t i;
   struct SOLDIERTYPE *pSoldier;
 
   pSector = &SectorInfo[GetSectorID8((u8)gWorldSectorX, (u8)gWorldSectorY)];
@@ -1069,23 +1069,23 @@ void DetermineCreatureTownCompositionBasedOnTacticalInformation(UINT8 *pubNumCre
 
 BOOLEAN PrepareCreaturesForBattle() {
   UNDERGROUND_SECTORINFO *pSector;
-  INT32 i, iRandom;
+  int32_t i, iRandom;
   struct SGPPaletteEntry LColors[3];
   BOOLEAN fQueen;
-  UINT8 ubLarvaePercentage;
-  UINT8 ubInfantPercentage;
-  UINT8 ubYoungMalePercentage;
-  UINT8 ubYoungFemalePercentage;
-  UINT8 ubAdultMalePercentage;
-  UINT8 ubAdultFemalePercentage;
-  UINT8 ubCreatureHabitat;
-  UINT8 ubNumLarvae = 0;
-  UINT8 ubNumInfants = 0;
-  UINT8 ubNumYoungMales = 0;
-  UINT8 ubNumYoungFemales = 0;
-  UINT8 ubNumAdultMales = 0;
-  UINT8 ubNumAdultFemales = 0;
-  UINT8 ubNumCreatures;
+  uint8_t ubLarvaePercentage;
+  uint8_t ubInfantPercentage;
+  uint8_t ubYoungMalePercentage;
+  uint8_t ubYoungFemalePercentage;
+  uint8_t ubAdultMalePercentage;
+  uint8_t ubAdultFemalePercentage;
+  uint8_t ubCreatureHabitat;
+  uint8_t ubNumLarvae = 0;
+  uint8_t ubNumInfants = 0;
+  uint8_t ubNumYoungMales = 0;
+  uint8_t ubNumYoungFemales = 0;
+  uint8_t ubNumAdultMales = 0;
+  uint8_t ubNumAdultFemales = 0;
+  uint8_t ubNumCreatures;
 
   if (!gubCreatureBattleCode) {
     LightGetColors(LColors);
@@ -1239,35 +1239,35 @@ BOOLEAN PrepareCreaturesForBattle() {
 
 void CreatureNightPlanning() {  // Check the populations of the mine exits, and factor a chance for
                                 // them to attack at night.
-  UINT8 ubNumCreatures;
+  uint8_t ubNumCreatures;
   ubNumCreatures = CreaturesInUndergroundSector(SEC_H3, 1);
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
-          (INT32)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
+          (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
     AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_H3);
   }
   ubNumCreatures = CreaturesInUndergroundSector(SEC_D13, 1);
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
-          (INT32)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
+          (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
     AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_D13);
   }
   ubNumCreatures = CreaturesInUndergroundSector(SEC_I14, 1);
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
-          (INT32)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
+          (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
     AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_I14);
   }
   ubNumCreatures = CreaturesInUndergroundSector(SEC_H8, 1);
   if (ubNumCreatures > 1 &&
       ubNumCreatures * 10 >
-          (INT32)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
+          (int32_t)PreRandom(100)) {  // 10% chance for each creature to decide it's time to attack.
     AddStrategicEvent(EVENT_CREATURE_ATTACK, GetGameTimeInMin() + 1 + PreRandom(429), SEC_H8);
   }
 }
 
-void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  UINT8 ubValidMines = 0;
+void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+  uint8_t ubValidMines = 0;
   if (!gGameOptions.fSciFi) return;  // No scifi, no creatures...
   if (giLairID) return;              // Creature quest already begun
 
@@ -1291,19 +1291,19 @@ void CheckConditionsForTriggeringCreatureQuest(u8 sSectorX, u8 sSectorY, INT8 bS
 }
 
 BOOLEAN SaveCreatureDirectives(FileID hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   File_Write(hFile, &giHabitatedDistance, 4, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT32)) {
+  if (uiNumBytesWritten != sizeof(int32_t)) {
     return (FALSE);
   }
 
   File_Write(hFile, &giPopulationModifier, 4, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT32)) {
+  if (uiNumBytesWritten != sizeof(int32_t)) {
     return (FALSE);
   }
   File_Write(hFile, &giLairID, 4, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT32)) {
+  if (uiNumBytesWritten != sizeof(int32_t)) {
     return (FALSE);
   }
   File_Write(hFile, &gfUseCreatureMusic, 1, &uiNumBytesWritten);
@@ -1311,26 +1311,26 @@ BOOLEAN SaveCreatureDirectives(FileID hFile) {
     return (FALSE);
   }
   File_Write(hFile, &giDestroyedLairID, 4, &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(INT32)) {
+  if (uiNumBytesWritten != sizeof(int32_t)) {
     return (FALSE);
   }
 
   return (TRUE);
 }
 
-BOOLEAN LoadCreatureDirectives(FileID hFile, UINT32 uiSavedGameVersion) {
-  UINT32 uiNumBytesRead;
+BOOLEAN LoadCreatureDirectives(FileID hFile, uint32_t uiSavedGameVersion) {
+  uint32_t uiNumBytesRead;
   File_Read(hFile, &giHabitatedDistance, 4, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT32)) {
+  if (uiNumBytesRead != sizeof(int32_t)) {
     return (FALSE);
   }
 
   File_Read(hFile, &giPopulationModifier, 4, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT32)) {
+  if (uiNumBytesRead != sizeof(int32_t)) {
     return (FALSE);
   }
   File_Read(hFile, &giLairID, 4, &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(INT32)) {
+  if (uiNumBytesRead != sizeof(int32_t)) {
     return (FALSE);
   }
 
@@ -1341,7 +1341,7 @@ BOOLEAN LoadCreatureDirectives(FileID hFile, UINT32 uiSavedGameVersion) {
 
   if (uiSavedGameVersion >= 82) {
     File_Read(hFile, &giDestroyedLairID, 4, &uiNumBytesRead);
-    if (uiNumBytesRead != sizeof(INT32)) {
+    if (uiNumBytesRead != sizeof(int32_t)) {
       return (FALSE);
     }
   } else {
@@ -1386,16 +1386,16 @@ BOOLEAN LoadCreatureDirectives(FileID hFile, UINT32 uiSavedGameVersion) {
   return (TRUE);
 }
 
-void ForceCreaturesToAvoidMineTemporarily(UINT8 ubMineIndex) {
-  gMineStatus[MINE_GRUMM].usValidDayCreaturesCanInfest = (UINT16)(GetGameTimeInDays() + 2);
+void ForceCreaturesToAvoidMineTemporarily(uint8_t ubMineIndex) {
+  gMineStatus[MINE_GRUMM].usValidDayCreaturesCanInfest = (uint16_t)(GetGameTimeInDays() + 2);
 }
 
 BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   CREATURE_DIRECTIVE *curr;
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
+  int32_t i;
   u8 sSectorX, sSectorY;
-  INT8 bSectorZ;
+  int8_t bSectorZ;
 
   if (giLairID <= 0) {  // Creature quest inactive
     return FALSE;
@@ -1406,7 +1406,7 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
   while (curr) {
     sSectorX = curr->pLevel->ubSectorX;
     sSectorY = curr->pLevel->ubSectorY;
-    bSectorZ = (INT8)curr->pLevel->ubSectorZ;
+    bSectorZ = (int8_t)curr->pLevel->ubSectorZ;
     // Loop through all the creature directives (mine sectors that are infectible) and
     // see if players are there.
     for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
@@ -1426,9 +1426,9 @@ BOOLEAN PlayerGroupIsInACreatureInfestedMine() {
 }
 
 // Returns TRUE if valid and creature quest over, FALSE if creature quest active or not yet started
-BOOLEAN GetWarpOutOfMineCodes(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ,
-                              INT16 *psInsertionGridNo) {
-  INT32 iSwitchValue;
+BOOLEAN GetWarpOutOfMineCodes(u8 *psSectorX, u8 *psSectorY, int8_t *pbSectorZ,
+                              int16_t *psInsertionGridNo) {
+  int32_t iSwitchValue;
 
   if (!gfWorldLoaded) {
     return FALSE;

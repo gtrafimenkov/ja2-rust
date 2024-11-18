@@ -16,7 +16,7 @@
 
 #ifdef JA2TESTVERSION
 
-CHAR16 gEventName[NUMBER_OF_EVENT_TYPES_PLUS_ONE][40] = {
+wchar_t gEventName[NUMBER_OF_EVENT_TYPES_PLUS_ONE][40] = {
     // 1234567890123456789012345678901234567890 (increase size of array if necessary)
     L"Null",
     L"ChangeLightValue",
@@ -117,11 +117,11 @@ BOOLEAN gfPreventDeletionOfAnyEvent = FALSE;
 BOOLEAN gfEventDeletionPending = FALSE;
 
 BOOLEAN gfProcessingGameEvents = FALSE;
-UINT32 guiTimeStampOfCurrentlyExecutingEvent = 0;
+uint32_t guiTimeStampOfCurrentlyExecutingEvent = 0;
 
 // Determines if there are any events that will be processed between the current global time,
 // and the beginning of the next global time.
-BOOLEAN GameEventsPending(UINT32 uiAdjustment) {
+BOOLEAN GameEventsPending(uint32_t uiAdjustment) {
   if (!gpEventList) return FALSE;
   if (gpEventList->uiTimeStamp <= GetGameTimeInSec() + uiAdjustment) return TRUE;
   return FALSE;
@@ -163,8 +163,8 @@ BOOLEAN DeleteEventsWithDeletionPending() {
   return fEventDeleted;
 }
 
-static void AdjustClockToEventStamp(STRATEGICEVENT *pEvent, UINT32 *puiAdjustment) {
-  UINT32 uiDiff = pEvent->uiTimeStamp - GetGameTimeInSec();
+static void AdjustClockToEventStamp(STRATEGICEVENT *pEvent, uint32_t *puiAdjustment) {
+  uint32_t uiDiff = pEvent->uiTimeStamp - GetGameTimeInSec();
   MoveGameTimeForward(uiDiff);
   *puiAdjustment -= uiDiff;
 
@@ -173,7 +173,7 @@ static void AdjustClockToEventStamp(STRATEGICEVENT *pEvent, UINT32 *puiAdjustmen
 
 // If there are any events pending, they are processed, until the time limit is reached, or
 // a major event is processed (one that requires the player's attention).
-void ProcessPendingGameEvents(UINT32 uiAdjustment, UINT8 ubWarpCode) {
+void ProcessPendingGameEvents(uint32_t uiAdjustment, uint8_t ubWarpCode) {
   STRATEGICEVENT *curr, *pEvent, *prev, *temp;
   BOOLEAN fDeleteEvent = FALSE, fDeleteQueuedEvent = FALSE;
 
@@ -272,34 +272,34 @@ void ProcessPendingGameEvents(UINT32 uiAdjustment, UINT8 ubWarpCode) {
   if (uiAdjustment && !gfTimeInterrupt) MoveGameTimeForward(uiAdjustment);
 }
 
-BOOLEAN AddSameDayStrategicEvent(UINT8 ubCallbackID, UINT32 uiMinStamp, UINT32 uiParam) {
+BOOLEAN AddSameDayStrategicEvent(uint8_t ubCallbackID, uint32_t uiMinStamp, uint32_t uiParam) {
   return (AddStrategicEvent(ubCallbackID, uiMinStamp + GetGameTimeInDays() * 24 * 60, uiParam));
 }
 
-BOOLEAN AddSameDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiSecondStamp,
-                                             UINT32 uiParam) {
+BOOLEAN AddSameDayStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiSecondStamp,
+                                             uint32_t uiParam) {
   return (AddStrategicEventUsingSeconds(
       ubCallbackID, uiSecondStamp + GetGameTimeInDays() * NUM_SEC_IN_DAY, uiParam));
 }
 
-BOOLEAN AddFutureDayStrategicEvent(UINT8 ubCallbackID, UINT32 uiMinStamp, UINT32 uiParam,
-                                   UINT32 uiNumDaysFromPresent) {
-  UINT32 uiDay;
+BOOLEAN AddFutureDayStrategicEvent(uint8_t ubCallbackID, uint32_t uiMinStamp, uint32_t uiParam,
+                                   uint32_t uiNumDaysFromPresent) {
+  uint32_t uiDay;
   uiDay = GetGameTimeInDays();
   return (AddStrategicEvent(ubCallbackID, uiMinStamp + 24 * 60 * (uiDay + uiNumDaysFromPresent),
                             uiParam));
 }
 
-BOOLEAN AddFutureDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiSecondStamp,
-                                               UINT32 uiParam, UINT32 uiNumDaysFromPresent) {
-  UINT32 uiDay;
+BOOLEAN AddFutureDayStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiSecondStamp,
+                                               uint32_t uiParam, uint32_t uiNumDaysFromPresent) {
+  uint32_t uiDay;
   uiDay = GetGameTimeInDays();
   return (AddStrategicEventUsingSeconds(
       ubCallbackID, uiSecondStamp + 24 * 60 * (uiDay + uiNumDaysFromPresent) * 60, uiParam));
 }
 
-STRATEGICEVENT *AddAdvancedStrategicEvent(UINT8 ubEventType, UINT8 ubCallbackID, UINT32 uiTimeStamp,
-                                          UINT32 uiParam) {
+STRATEGICEVENT *AddAdvancedStrategicEvent(uint8_t ubEventType, uint8_t ubCallbackID, uint32_t uiTimeStamp,
+                                          uint32_t uiParam) {
   STRATEGICEVENT *pNode, *pNewNode, *pPrevNode;
 
   if (gfProcessingGameEvents &&
@@ -370,18 +370,18 @@ STRATEGICEVENT *AddAdvancedStrategicEvent(UINT8 ubEventType, UINT8 ubCallbackID,
   return pNewNode;
 }
 
-BOOLEAN AddStrategicEvent(UINT8 ubCallbackID, UINT32 uiMinStamp, UINT32 uiParam) {
+BOOLEAN AddStrategicEvent(uint8_t ubCallbackID, uint32_t uiMinStamp, uint32_t uiParam) {
   if (AddAdvancedStrategicEvent(ONETIME_EVENT, ubCallbackID, uiMinStamp * 60, uiParam)) return TRUE;
   return FALSE;
 }
 
-BOOLEAN AddStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiSecondStamp, UINT32 uiParam) {
+BOOLEAN AddStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiSecondStamp, uint32_t uiParam) {
   if (AddAdvancedStrategicEvent(ONETIME_EVENT, ubCallbackID, uiSecondStamp, uiParam)) return TRUE;
   return FALSE;
 }
 
-BOOLEAN AddRangedStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 uiLengthMin,
-                                UINT32 uiParam) {
+BOOLEAN AddRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin, uint32_t uiLengthMin,
+                                uint32_t uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(RANGED_EVENT, ubCallbackID, uiStartMin * 60, uiParam);
   if (pEvent) {
@@ -391,21 +391,21 @@ BOOLEAN AddRangedStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 ui
   return FALSE;
 }
 
-BOOLEAN AddSameDayRangedStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 uiLengthMin,
-                                       UINT32 uiParam) {
+BOOLEAN AddSameDayRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin, uint32_t uiLengthMin,
+                                       uint32_t uiParam) {
   return AddRangedStrategicEvent(ubCallbackID, uiStartMin + GetGameTimeInDays() * 24 * 60,
                                  uiLengthMin, uiParam);
 }
 
-BOOLEAN AddFutureDayRangedStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 uiLengthMin,
-                                         UINT32 uiParam, UINT32 uiNumDaysFromPresent) {
+BOOLEAN AddFutureDayRangedStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin, uint32_t uiLengthMin,
+                                         uint32_t uiParam, uint32_t uiNumDaysFromPresent) {
   return AddRangedStrategicEvent(
       ubCallbackID, uiStartMin + 24 * 60 * (GetGameTimeInDays() + uiNumDaysFromPresent),
       uiLengthMin, uiParam);
 }
 
-BOOLEAN AddRangedStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSeconds,
-                                            UINT32 uiLengthSeconds, UINT32 uiParam) {
+BOOLEAN AddRangedStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiStartSeconds,
+                                            uint32_t uiLengthSeconds, uint32_t uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(RANGED_EVENT, ubCallbackID, uiStartSeconds, uiParam);
   if (pEvent) {
@@ -415,30 +415,30 @@ BOOLEAN AddRangedStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSe
   return FALSE;
 }
 
-BOOLEAN AddSameDayRangedStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSeconds,
-                                                   UINT32 uiLengthSeconds, UINT32 uiParam) {
+BOOLEAN AddSameDayRangedStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiStartSeconds,
+                                                   uint32_t uiLengthSeconds, uint32_t uiParam) {
   return AddRangedStrategicEventUsingSeconds(ubCallbackID,
                                              uiStartSeconds + GetGameTimeInDays() * NUM_SEC_IN_DAY,
                                              uiLengthSeconds, uiParam);
 }
 
-BOOLEAN AddFutureDayRangedStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSeconds,
-                                                     UINT32 uiLengthSeconds, UINT32 uiParam,
-                                                     UINT32 uiNumDaysFromPresent) {
+BOOLEAN AddFutureDayRangedStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiStartSeconds,
+                                                     uint32_t uiLengthSeconds, uint32_t uiParam,
+                                                     uint32_t uiNumDaysFromPresent) {
   return AddRangedStrategicEventUsingSeconds(
       ubCallbackID, uiStartSeconds + 24 * 60 * (GetGameTimeInDays() + uiNumDaysFromPresent) * 60,
       uiLengthSeconds, uiParam);
 }
 
-BOOLEAN AddEveryDayStrategicEvent(UINT8 ubCallbackID, UINT32 uiStartMin, UINT32 uiParam) {
+BOOLEAN AddEveryDayStrategicEvent(uint8_t ubCallbackID, uint32_t uiStartMin, uint32_t uiParam) {
   if (AddAdvancedStrategicEvent(EVERYDAY_EVENT, ubCallbackID,
                                 GetGameTimeInDays() * NUM_SEC_IN_DAY + uiStartMin * 60, uiParam))
     return TRUE;
   return FALSE;
 }
 
-BOOLEAN AddEveryDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStartSeconds,
-                                              UINT32 uiParam) {
+BOOLEAN AddEveryDayStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiStartSeconds,
+                                              uint32_t uiParam) {
   if (AddAdvancedStrategicEvent(EVERYDAY_EVENT, ubCallbackID,
                                 GetGameTimeInDays() * NUM_SEC_IN_DAY + uiStartSeconds, uiParam))
     return TRUE;
@@ -447,7 +447,7 @@ BOOLEAN AddEveryDayStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiStart
 
 // NEW:  Period Events
 // Event will get processed automatically once every X minutes.
-BOOLEAN AddPeriodStrategicEvent(UINT8 ubCallbackID, UINT32 uiOnceEveryXMinutes, UINT32 uiParam) {
+BOOLEAN AddPeriodStrategicEvent(uint8_t ubCallbackID, uint32_t uiOnceEveryXMinutes, uint32_t uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(
       PERIODIC_EVENT, ubCallbackID, GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOnceEveryXMinutes * 60,
@@ -459,8 +459,8 @@ BOOLEAN AddPeriodStrategicEvent(UINT8 ubCallbackID, UINT32 uiOnceEveryXMinutes, 
   return FALSE;
 }
 
-BOOLEAN AddPeriodStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiOnceEveryXSeconds,
-                                            UINT32 uiParam) {
+BOOLEAN AddPeriodStrategicEventUsingSeconds(uint8_t ubCallbackID, uint32_t uiOnceEveryXSeconds,
+                                            uint32_t uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(PERIODIC_EVENT, ubCallbackID,
                                      GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOnceEveryXSeconds,
@@ -472,8 +472,8 @@ BOOLEAN AddPeriodStrategicEventUsingSeconds(UINT8 ubCallbackID, UINT32 uiOnceEve
   return FALSE;
 }
 
-BOOLEAN AddPeriodStrategicEventWithOffset(UINT8 ubCallbackID, UINT32 uiOnceEveryXMinutes,
-                                          UINT32 uiOffsetFromCurrent, UINT32 uiParam) {
+BOOLEAN AddPeriodStrategicEventWithOffset(uint8_t ubCallbackID, uint32_t uiOnceEveryXMinutes,
+                                          uint32_t uiOffsetFromCurrent, uint32_t uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(
       PERIODIC_EVENT, ubCallbackID, GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOffsetFromCurrent * 60,
@@ -485,9 +485,9 @@ BOOLEAN AddPeriodStrategicEventWithOffset(UINT8 ubCallbackID, UINT32 uiOnceEvery
   return FALSE;
 }
 
-BOOLEAN AddPeriodStrategicEventUsingSecondsWithOffset(UINT8 ubCallbackID,
-                                                      UINT32 uiOnceEveryXSeconds,
-                                                      UINT32 uiOffsetFromCurrent, UINT32 uiParam) {
+BOOLEAN AddPeriodStrategicEventUsingSecondsWithOffset(uint8_t ubCallbackID,
+                                                      uint32_t uiOnceEveryXSeconds,
+                                                      uint32_t uiOffsetFromCurrent, uint32_t uiParam) {
   STRATEGICEVENT *pEvent;
   pEvent = AddAdvancedStrategicEvent(PERIODIC_EVENT, ubCallbackID,
                                      GetGameTimeInDays() * NUM_SEC_IN_DAY + uiOffsetFromCurrent,
@@ -499,7 +499,7 @@ BOOLEAN AddPeriodStrategicEventUsingSecondsWithOffset(UINT8 ubCallbackID,
   return FALSE;
 }
 
-void DeleteAllStrategicEventsOfType(UINT8 ubCallbackID) {
+void DeleteAllStrategicEventsOfType(uint8_t ubCallbackID) {
   STRATEGICEVENT *curr, *prev, *temp;
   prev = NULL;
   curr = gpEventList;
@@ -545,7 +545,7 @@ void DeleteAllStrategicEvents() {
 // Searches for and removes the first event matching the supplied information.  There may very well
 // be a need for more specific event removal, so let me know (Kris), of any support needs.  Function
 // returns FALSE if no events were found or if the event wasn't deleted due to delete lock,
-BOOLEAN DeleteStrategicEvent(UINT8 ubCallbackID, UINT32 uiParam) {
+BOOLEAN DeleteStrategicEvent(uint8_t ubCallbackID, uint32_t uiParam) {
   STRATEGICEVENT *curr, *prev;
   curr = gpEventList;
   prev = NULL;
@@ -575,10 +575,10 @@ BOOLEAN DeleteStrategicEvent(UINT8 ubCallbackID, UINT32 uiParam) {
 
 // part of the game.sav files (not map files)
 BOOLEAN SaveStrategicEventsToSavedGame(FileID hFile) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
   STRATEGICEVENT sGameEvent;
 
-  UINT32 uiNumGameEvents = 0;
+  uint32_t uiNumGameEvents = 0;
   STRATEGICEVENT *pTempEvent = gpEventList;
 
   // Go through the list and determine the number of events
@@ -588,8 +588,8 @@ BOOLEAN SaveStrategicEventsToSavedGame(FileID hFile) {
   }
 
   // write the number of strategic events
-  File_Write(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT32)) {
+  File_Write(hFile, &uiNumGameEvents, sizeof(uint32_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint32_t)) {
     return (FALSE);
   }
 
@@ -612,18 +612,18 @@ BOOLEAN SaveStrategicEventsToSavedGame(FileID hFile) {
 }
 
 BOOLEAN LoadStrategicEventsFromSavedGame(FileID hFile) {
-  UINT32 uiNumGameEvents;
+  uint32_t uiNumGameEvents;
   STRATEGICEVENT sGameEvent;
-  UINT32 cnt;
-  UINT32 uiNumBytesRead = 0;
+  uint32_t cnt;
+  uint32_t uiNumBytesRead = 0;
   STRATEGICEVENT *pTemp = NULL;
 
   // erase the old Game Event queue
   DeleteAllStrategicEvents();
 
   // Read the number of strategic events
-  File_Read(hFile, &uiNumGameEvents, sizeof(UINT32), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT32)) {
+  File_Read(hFile, &uiNumGameEvents, sizeof(uint32_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint32_t)) {
     return (FALSE);
   }
 

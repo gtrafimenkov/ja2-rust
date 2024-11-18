@@ -101,17 +101,17 @@
 // #define		AIM_ALUMNI_FILE_RECORD_SIZE			80 * 7 * 2
 #define AIM_ALUMNI_FULL_NAME_SIZE 80 * 2
 
-UINT32 guiAlumniFrame;
-UINT32 guiOldAim;
-UINT32 guiPageButtons;
-UINT32 guiAlumniPopUp;
-UINT32 guiPopUpPic;
+uint32_t guiAlumniFrame;
+uint32_t guiOldAim;
+uint32_t guiPageButtons;
+uint32_t guiAlumniPopUp;
+uint32_t guiPopUpPic;
 
-UINT8 gubPageNum;
-UINT8 gunAlumniButtonDown = 255;
+uint8_t gubPageNum;
+uint8_t gunAlumniButtonDown = 255;
 BOOLEAN gfExitingAimArchives;
-UINT8 gubDrawOldMerc;
-UINT8 gfDrawPopUpBox = FALSE;
+uint8_t gubDrawOldMerc;
+uint8_t gfDrawPopUpBox = FALSE;
 BOOLEAN gfDestroyPopUpBox;
 BOOLEAN gfFaceMouseRegionsActive;
 // BOOLEAN		gfDestroyDoneRegion;
@@ -123,16 +123,16 @@ BOOLEAN AimArchivesSubPagesVisitedFlag[3] = {0, 0, 0};
 
 // Face regions
 struct MOUSE_REGION gMercAlumniFaceMouseRegions[MAX_NUMBER_OLD_MERCS_ON_PAGE];
-void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Done region
 struct MOUSE_REGION gDoneRegion;
-void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 // Previous Button
-void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiAlumniPageButton[3];
-INT32 guiAlumniPageButtonImage;
+void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiAlumniPageButton[3];
+int32_t guiAlumniPageButtonImage;
 
 void ResetAimArchiveButtons();
 void DisableAimArchiveButton();
@@ -140,8 +140,8 @@ void DisplayAlumniOldMercPopUp();
 void DestroyPopUpBox();
 void InitAlumniFaceRegions();
 void RemoveAimAlumniFaceRegion();
-void CreateDestroyDoneMouseRegion(UINT16 usPosY);
-void ChangingAimArchiveSubPage(UINT8 ubSubPageNumber);
+void CreateDestroyDoneMouseRegion(uint16_t usPosY);
+void ChangingAimArchiveSubPage(uint8_t ubSubPageNumber);
 
 void GameInitAimArchives() {}
 
@@ -154,7 +154,7 @@ void EnterInitAimArchives() {
 }
 
 BOOLEAN EnterAimArchives() {
-  UINT16 usPosX, i;
+  uint16_t usPosX, i;
 
   gfExitingAimArchives = FALSE;
   //	gubDrawOldMerc = 255;
@@ -164,7 +164,7 @@ BOOLEAN EnterAimArchives() {
   InitAimDefaults();
   InitAimMenuBar();
 
-  gubPageNum = (UINT8)giCurrentSubPage;
+  gubPageNum = (uint8_t)giCurrentSubPage;
 
   // load the Alumni Frame and add it
   if (!AddVObjectFromFile("LAPTOP\\AlumniFrame.sti", &guiAlumniFrame)) {
@@ -220,7 +220,7 @@ BOOLEAN EnterAimArchives() {
 }
 
 void ExitAimArchives() {
-  UINT16 i;
+  uint16_t i;
 
   gfExitingAimArchives = TRUE;
 
@@ -264,9 +264,9 @@ void RenderAimArchives() {
   struct VObject *hFrameHandle;
   struct VObject *hFaceHandle;
   //  struct VObject*	hBottomButtonHandle;
-  UINT16 usPosX, usPosY, x, y, i = 0;
-  UINT8 ubNumRows = 0;
-  UINT32 uiStartLoc = 0;
+  uint16_t usPosX, usPosY, x, y, i = 0;
+  uint8_t ubNumRows = 0;
+  uint32_t uiStartLoc = 0;
   wchar_t sText[400];
 
   DrawAimDefaults();
@@ -312,8 +312,8 @@ void RenderAimArchives() {
       // Display the merc's name
       uiStartLoc = AIM_ALUMNI_NAME_LINESIZE * i;
       LoadEncryptedDataFromFile(AIM_ALUMNI_NAME_FILE, sText, uiStartLoc, AIM_ALUMNI_NAME_SIZE);
-      DrawTextToScreen(sText, (UINT16)(usPosX + AIM_ALUMNI_NAME_OFFSET_X),
-                       (UINT16)(usPosY + AIM_ALUMNI_NAME_OFFSET_Y), AIM_ALUMNI_NAME_WIDTH,
+      DrawTextToScreen(sText, (uint16_t)(usPosX + AIM_ALUMNI_NAME_OFFSET_X),
+                       (uint16_t)(usPosY + AIM_ALUMNI_NAME_OFFSET_Y), AIM_ALUMNI_NAME_WIDTH,
                        AIM_ALUMNI_NAME_FONT, AIM_ALUMNI_NAME_COLOR, FONT_MCOLOR_BLACK, FALSE,
                        CENTER_JUSTIFIED);
 
@@ -335,8 +335,8 @@ void RenderAimArchives() {
     // Display the merc's name
     uiStartLoc = AIM_ALUMNI_NAME_LINESIZE * i;
     LoadEncryptedDataFromFile(AIM_ALUMNI_NAME_FILE, sText, uiStartLoc, AIM_ALUMNI_NAME_SIZE);
-    DrawTextToScreen(sText, (UINT16)(usPosX + AIM_ALUMNI_NAME_OFFSET_X),
-                     (UINT16)(usPosY + AIM_ALUMNI_NAME_OFFSET_Y), AIM_ALUMNI_NAME_WIDTH,
+    DrawTextToScreen(sText, (uint16_t)(usPosX + AIM_ALUMNI_NAME_OFFSET_X),
+                     (uint16_t)(usPosY + AIM_ALUMNI_NAME_OFFSET_Y), AIM_ALUMNI_NAME_WIDTH,
                      AIM_ALUMNI_NAME_FONT, AIM_ALUMNI_NAME_COLOR, FONT_MCOLOR_BLACK, FALSE,
                      CENTER_JUSTIFIED);
 
@@ -359,19 +359,19 @@ void RenderAimArchives() {
                    LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAlumniFaceRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfDrawPopUpBox = TRUE;
     gfReDrawScreen = TRUE;
 
-    gubDrawOldMerc = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+    gubDrawOldMerc = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
   } else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
   }
 }
 
-void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT8 ubRetValue = (UINT8)MSYS_GetBtnUserData(btn, 0);
+void BtnAlumniPageButtonCallback(GUI_BUTTON *btn, int32_t reason) {
+  uint8_t ubRetValue = (uint8_t)MSYS_GetBtnUserData(btn, 0);
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
 
@@ -433,9 +433,9 @@ void DisableAimArchiveButton() {
 }
 
 void DisplayAlumniOldMercPopUp() {
-  UINT8 i, ubNumLines = 11;  // 17
-  UINT16 usPosY;
-  UINT8 ubNumDescLines;
+  uint8_t i, ubNumLines = 11;  // 17
+  uint16_t usPosY;
+  uint8_t ubNumDescLines;
   struct VObject *hAlumniPopUpHandle;
   struct VObject *hDoneHandle;
   struct VObject *hFacePaneHandle;
@@ -443,8 +443,8 @@ void DisplayAlumniOldMercPopUp() {
   //	WRAPPED_STRING *pFirstWrappedString, *pTempWrappedString;
   wchar_t sName[AIM_ALUMNI_NAME_SIZE];
   wchar_t sDesc[AIM_ALUMNI_DECRIPTION_SIZE];
-  UINT32 uiStartLoc;
-  UINT16 usStringPixLength;
+  uint32_t uiStartLoc;
+  uint16_t usStringPixLength;
 
   GetVideoObject(&hAlumniPopUpHandle, guiAlumniPopUp);
   GetVideoObject(&hDoneHandle, guiDoneButton);
@@ -456,7 +456,7 @@ void DisplayAlumniOldMercPopUp() {
   LoadEncryptedDataFromFile(AIM_ALUMNI_FILE, sDesc, uiStartLoc, AIM_ALUMNI_DECRIPTION_SIZE);
 
   usStringPixLength = StringPixLength(sDesc, AIM_ALUMNI_POPUP_FONT);
-  ubNumDescLines = (UINT8)(usStringPixLength / AIM_POPUP_TEXT_WIDTH);
+  ubNumDescLines = (uint8_t)(usStringPixLength / AIM_POPUP_TEXT_WIDTH);
 
   ubNumLines += ubNumDescLines;
 
@@ -482,8 +482,8 @@ void DisplayAlumniOldMercPopUp() {
                          usPosY + AIM_POPUP_SECTION_HEIGHT + AIM_POPUP_SHADOW_GAP - 1);
   BltVObject(vsFB, hAlumniPopUpHandle, 2, AIM_POPUP_X, usPosY);
   BltVObject(vsFB, hDoneHandle, 0, AIM_ALUMNI_DONE_X, usPosY - AIM_ALUMNI_DONE_HEIGHT);
-  DrawTextToScreen(AimAlumniText[AIM_ALUMNI_DONE], (UINT16)(AIM_ALUMNI_DONE_X + 1),
-                   (UINT16)(usPosY - AIM_ALUMNI_DONE_HEIGHT + 3), AIM_ALUMNI_DONE_WIDTH,
+  DrawTextToScreen(AimAlumniText[AIM_ALUMNI_DONE], (uint16_t)(AIM_ALUMNI_DONE_X + 1),
+                   (uint16_t)(usPosY - AIM_ALUMNI_DONE_HEIGHT + 3), AIM_ALUMNI_DONE_WIDTH,
                    AIM_ALUMNI_POPUP_NAME_FONT, AIM_ALUMNI_POPUP_NAME_COLOR, FONT_MCOLOR_BLACK,
                    FALSE, CENTER_JUSTIFIED);
 
@@ -519,7 +519,7 @@ void DestroyPopUpBox() {
 }
 
 void InitAlumniFaceRegions() {
-  UINT16 usPosX, usPosY, i, x, y, usNumRows;
+  uint16_t usPosX, usPosY, i, x, y, usNumRows;
 
   if (gfFaceMouseRegionsActive) return;
 
@@ -534,8 +534,8 @@ void InitAlumniFaceRegions() {
   for (y = 0; y < usNumRows; y++) {
     for (x = 0; x < AIM_ALUMNI_NUM_FACE_COLS; x++) {
       MSYS_DefineRegion(&gMercAlumniFaceMouseRegions[i], usPosX, usPosY,
-                        (INT16)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
-                        (INT16)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
+                        (int16_t)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
+                        (int16_t)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
                         CURSOR_WWW, MSYS_NO_CALLBACK, SelectAlumniFaceRegionCallBack);
       // Add region
       MSYS_AddRegion(&gMercAlumniFaceMouseRegions[i]);
@@ -551,8 +551,8 @@ void InitAlumniFaceRegions() {
   // the 3rd page now has an additional row with 1 merc on it, so add a new row
   if (gubPageNum == 2) {
     MSYS_DefineRegion(&gMercAlumniFaceMouseRegions[i], usPosX, usPosY,
-                      (INT16)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
-                      (INT16)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
+                      (int16_t)(usPosX + AIM_ALUMNI_ALUMNI_FACE_WIDTH),
+                      (int16_t)(usPosY + AIM_ALUMNI_ALUMNI_FACE_HEIGHT), MSYS_PRIORITY_HIGH,
                       CURSOR_WWW, MSYS_NO_CALLBACK, SelectAlumniFaceRegionCallBack);
     // Add region
     MSYS_AddRegion(&gMercAlumniFaceMouseRegions[i]);
@@ -563,8 +563,8 @@ void InitAlumniFaceRegions() {
 }
 
 void RemoveAimAlumniFaceRegion() {
-  UINT16 i;
-  UINT16 usNumber = 0;
+  uint16_t i;
+  uint16_t usNumber = 0;
 
   if (!gfFaceMouseRegionsActive) return;
 
@@ -588,14 +588,14 @@ void RemoveAimAlumniFaceRegion() {
   gfFaceMouseRegionsActive = FALSE;
 }
 
-void CreateDestroyDoneMouseRegion(UINT16 usPosY) {
+void CreateDestroyDoneMouseRegion(uint16_t usPosY) {
   static BOOLEAN DoneRegionCreated = FALSE;
 
   if ((!DoneRegionCreated) && (usPosY != 0)) {
     usPosY -= AIM_ALUMNI_DONE_HEIGHT;
     MSYS_DefineRegion(&gDoneRegion, AIM_ALUMNI_DONE_X - 2, usPosY,
                       (AIM_ALUMNI_DONE_X - 2 + AIM_ALUMNI_DONE_WIDTH),
-                      (INT16)(usPosY + AIM_ALUMNI_DONE_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
+                      (int16_t)(usPosY + AIM_ALUMNI_DONE_HEIGHT), MSYS_PRIORITY_HIGH, CURSOR_WWW,
                       MSYS_NO_CALLBACK, SelectAlumniDoneRegionCallBack);
     // Add region
     MSYS_AddRegion(&gDoneRegion);
@@ -609,7 +609,7 @@ void CreateDestroyDoneMouseRegion(UINT16 usPosY) {
   }
 }
 
-void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gfDestroyPopUpBox = TRUE;
@@ -619,7 +619,7 @@ void SelectAlumniDoneRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason)
   }
 }
 
-void ChangingAimArchiveSubPage(UINT8 ubSubPageNumber) {
+void ChangingAimArchiveSubPage(uint8_t ubSubPageNumber) {
   fLoadPendingFlag = TRUE;
 
   if (AimArchivesSubPagesVisitedFlag[ubSubPageNumber] == FALSE) {

@@ -3,11 +3,11 @@
 #include "Utils/Text.h"
 #include "rust_fileman.h"
 
-BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
+BOOLEAN LoadItemInfo(uint16_t ubIndex, wchar_t* pNameString, wchar_t* pInfoString) {
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiBytesRead;
-  UINT16 i;
-  UINT32 uiStartSeekAmount;
+  uint32_t uiBytesRead;
+  uint16_t i;
+  uint32_t uiStartSeekAmount;
 
   hFile = File_OpenForReading(ITEMSTRINGFILENAME);
   if (!hFile) {
@@ -182,12 +182,12 @@ BOOLEAN LoadItemInfo(UINT16 ubIndex, STR16 pNameString, STR16 pInfoString) {
   return (TRUE);
 }
 
-BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
+BOOLEAN LoadShortNameItemInfo(uint16_t ubIndex, wchar_t* pNameString) {
   FileID hFile = FILE_ID_ERR;
   //  wchar_t		DestString[ SIZE_MERC_BIO_INFO ];
-  UINT32 uiBytesRead;
-  UINT16 i;
-  UINT32 uiStartSeekAmount;
+  uint32_t uiBytesRead;
+  uint16_t i;
+  uint32_t uiStartSeekAmount;
 
   hFile = File_OpenForReading(ITEMSTRINGFILENAME);
   if (!hFile) {
@@ -277,7 +277,7 @@ BOOLEAN LoadShortNameItemInfo(UINT16 ubIndex, STR16 pNameString) {
 }
 
 void LoadAllItemNames(void) {
-  UINT16 usLoop;
+  uint16_t usLoop;
 
   for (usLoop = 0; usLoop < MAXITEMS; usLoop++) {
     LoadItemInfo(usLoop, ItemNames[usLoop], NULL);
@@ -289,7 +289,7 @@ void LoadAllItemNames(void) {
 
 void LoadAllExternalText(void) { LoadAllItemNames(); }
 
-STR16 GetWeightUnitString(void) {
+wchar_t* GetWeightUnitString(void) {
   if (gGameSettings.fOptions[TOPTION_USE_METRIC_SYSTEM])  // metric
   {
     return (pMessageStrings[MSG_KILOGRAM_ABBREVIATION]);
@@ -298,13 +298,13 @@ STR16 GetWeightUnitString(void) {
   }
 }
 
-FLOAT GetWeightBasedOnMetricOption(UINT32 uiObjectWeight) {
-  FLOAT fWeight = 0.0f;
+float GetWeightBasedOnMetricOption(uint32_t uiObjectWeight) {
+  float fWeight = 0.0f;
 
   // if the user is smart and wants things displayed in 'metric'
   if (gGameSettings.fOptions[TOPTION_USE_METRIC_SYSTEM])  // metric
   {
-    fWeight = (FLOAT)uiObjectWeight;
+    fWeight = (float)uiObjectWeight;
   }
 
   // else the user is a caveman and display it in pounds

@@ -34,7 +34,7 @@
 #define TRAINIMPROVERATE 2  // increase to make training mercs improve more
 
 #define SALARY_CHANGE_PER_LEVEL 1.25  // Mercs salary is multiplied by this
-#define MAX_DAILY_SALARY 30000        // must fit into an INT16 (32k)
+#define MAX_DAILY_SALARY 30000        // must fit into an int16_t (32k)
 #define MAX_LARGE_SALARY 500000       // no limit, really
 
 // training cap: you can't train any stat/skill beyond this value
@@ -55,35 +55,35 @@ enum {
   NUM_EXP_BONUS_TYPES,
 };
 
-void StatChange(struct SOLDIERTYPE *pSoldier, UINT8 ubStat, UINT16 usNumChances, UINT8 ubReason);
-void ProfileStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumChances,
-                       UINT8 ubReason);
-void ProcessStatChange(MERCPROFILESTRUCT *pProfile, UINT8 ubStat, UINT16 usNumChances,
-                       UINT8 ubReason);
+void StatChange(struct SOLDIERTYPE *pSoldier, uint8_t ubStat, uint16_t usNumChances, uint8_t ubReason);
+void ProfileStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usNumChances,
+                       uint8_t ubReason);
+void ProcessStatChange(MERCPROFILESTRUCT *pProfile, uint8_t ubStat, uint16_t usNumChances,
+                       uint8_t ubReason);
 
 void UpdateStats(struct SOLDIERTYPE *pSoldier);
 void ProfileUpdateStats(MERCPROFILESTRUCT *pProfile);
 void ProcessUpdateStats(MERCPROFILESTRUCT *pProfile, struct SOLDIERTYPE *pSoldier);
 
-UINT32 CalcNewSalary(UINT32 uiOldSalary, BOOLEAN fIncrease, UINT32 uiMaxLimit);
-UINT32 RoundOffSalary(UINT32 uiSalary);
-UINT16 SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel);
+uint32_t CalcNewSalary(uint32_t uiOldSalary, BOOLEAN fIncrease, uint32_t uiMaxLimit);
+uint32_t RoundOffSalary(uint32_t uiSalary);
+uint16_t SubpointsPerPoint(uint8_t ubStat, int8_t bExpLevel);
 
 void HandleUnhiredMercImprovement(MERCPROFILESTRUCT *pProfile);
-void HandleUnhiredMercDeaths(INT32 iProfileID);
+void HandleUnhiredMercDeaths(int32_t iProfileID);
 
-UINT8 CurrentPlayerProgressPercentage(void);
-UINT8 HighestPlayerProgressPercentage(void);
+uint8_t CurrentPlayerProgressPercentage(void);
+uint8_t HighestPlayerProgressPercentage(void);
 
 void HourlyProgressUpdate(void);
 
 void HandleAnyStatChangesAfterAttack(void);
 
-void AwardExperienceBonusToActiveSquad(UINT8 ubExpBonusType);
+void AwardExperienceBonusToActiveSquad(uint8_t ubExpBonusType);
 
-void BuildStatChangeString(STR16 wString, size_t bufSize, STR16 wName, BOOLEAN fIncrease,
-                           INT16 sPtsChanged, UINT8 ubStat);
+void BuildStatChangeString(wchar_t* wString, size_t bufSize, wchar_t* wName, BOOLEAN fIncrease,
+                           int16_t sPtsChanged, uint8_t ubStat);
 
-void MERCMercWentUpALevelSendEmail(UINT8 ubMercMercIdValue);
+void MERCMercWentUpALevelSendEmail(uint8_t ubMercMercIdValue);
 
 #endif

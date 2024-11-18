@@ -26,11 +26,11 @@ void AddCharacterToDeadList(struct SOLDIERTYPE *pSoldier);
 void AddCharacterToFiredList(struct SOLDIERTYPE *pSoldier);
 
 // get the total amt of money on this guy
-INT32 GetFundsOnMerc(struct SOLDIERTYPE *pSoldier);
+int32_t GetFundsOnMerc(struct SOLDIERTYPE *pSoldier);
 
-BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, INT32 iCurrentBalance);
-BOOLEAN TransferFundsFromBankToMerc(struct SOLDIERTYPE *pSoldier, INT32 iCurrentBalance);
+BOOLEAN TransferFundsFromMercToBank(struct SOLDIERTYPE *pSoldier, int32_t iCurrentBalance);
+BOOLEAN TransferFundsFromBankToMerc(struct SOLDIERTYPE *pSoldier, int32_t iCurrentBalance);
 
-BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(UINT8 ubProfile);
+BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList(uint8_t ubProfile);
 
 #endif

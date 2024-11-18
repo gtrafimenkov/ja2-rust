@@ -1,7 +1,7 @@
 #include "TileEngine/IsometricUtils.h"
 
-INT16 gsRScreenCenterX, gsRScreenCenterY;
-INT16 gsRDistToCenterY, gsRDistToCenterX;
+int16_t gsRScreenCenterX, gsRScreenCenterY;
+int16_t gsRDistToCenterY, gsRDistToCenterX;
 
 #define GetMapXYWorldY(sWorldCellX, sWorldCellY, sWorldY)           \
   {                                                                 \

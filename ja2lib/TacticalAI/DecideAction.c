@@ -31,18 +31,18 @@
 #include "Utils/Message.h"
 #include "rust_civ_groups.h"
 
-extern BOOLEAN InternalIsValidStance(struct SOLDIERTYPE *pSoldier, INT8 bDirection,
-                                     INT8 bNewStance);
+extern BOOLEAN InternalIsValidStance(struct SOLDIERTYPE *pSoldier, int8_t bDirection,
+                                     int8_t bNewStance);
 extern BOOLEAN gfHiddenInterrupt;
 extern BOOLEAN gfUseAlternateQueenPosition;
 
 // global status time counters to determine what takes the most time
 
 #ifdef AI_TIMING_TESTS
-UINT32 guiGreenTimeTotal = 0, guiYellowTimeTotal = 0, guiRedTimeTotal = 0, guiBlackTimeTotal = 0;
-UINT32 guiGreenCounter = 0, guiYellowCounter = 0, guiRedCounter = 0, guiBlackCounter = 0;
-UINT32 guiRedSeekTimeTotal = 0, guiRedHelpTimeTotal = 0, guiRedHideTimeTotal = 0;
-UINT32 guiRedSeekCounter = 0, guiRedHelpCounter = 0;
+uint32_t guiGreenTimeTotal = 0, guiYellowTimeTotal = 0, guiRedTimeTotal = 0, guiBlackTimeTotal = 0;
+uint32_t guiGreenCounter = 0, guiYellowCounter = 0, guiRedCounter = 0, guiBlackCounter = 0;
+uint32_t guiRedSeekTimeTotal = 0, guiRedHelpTimeTotal = 0, guiRedHideTimeTotal = 0;
+uint32_t guiRedSeekCounter = 0, guiRedHelpCounter = 0;
 guiRedHideCounter = 0;
 #endif
 
@@ -54,13 +54,13 @@ void DoneScheduleAction(struct SOLDIERTYPE *pSoldier) {
   PostNextSchedule(pSoldier);
 }
 
-INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   SCHEDULENODE *pSchedule;
-  INT32 iScheduleIndex;
-  UINT8 ubScheduleAction;
-  UINT16 usGridNo1, usGridNo2;
-  INT16 sX, sY;
-  INT8 bDirection;
+  int32_t iScheduleIndex;
+  uint8_t ubScheduleAction;
+  uint16_t usGridNo1, usGridNo2;
+  int16_t sX, sY;
+  int8_t bDirection;
   struct STRUCTURE *pStructure;
   BOOLEAN fDoUseDoor;
   DOOR_STATUS *pDoorStatus;
@@ -432,10 +432,10 @@ INT8 DecideActionSchedule(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
-  UINT8 ubRoom;
-  INT16 sDesiredMercLoc;
-  UINT8 ubDesiredMercDir;
+int8_t DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
+  uint8_t ubRoom;
+  int16_t sDesiredMercLoc;
+  uint8_t ubDesiredMercDir;
 
   // boxer, should move into ring!
   if (InARoom(pSoldier->sGridNo, &ubRoom)) {
@@ -473,11 +473,11 @@ INT8 DecideActionBoxerEnteringRing(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_ABSOLUTELY_NONE);
 }
 
-INT8 DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
-  INT16 sDesiredMercLoc;
-  UINT8 ubDesiredMercDir;
-  UINT8 ubDesiredMerc;
-  INT16 sDesiredMercDist;
+int8_t DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
+  int16_t sDesiredMercLoc;
+  uint8_t ubDesiredMercDir;
+  uint8_t ubDesiredMerc;
+  int16_t sDesiredMercDist;
 
   // if a quote record has been set and we're not doing movement, then
   // it means we have to wait until someone is nearby and then see
@@ -559,9 +559,9 @@ INT8 DecideActionNamedNPC(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
-  INT32 iChance, iSneaky = 10;
-  INT8 bInWater, bInGas;
+int8_t DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
+  int32_t iChance, iSneaky = 10;
+  int8_t bInWater, bInGas;
 
   BOOLEAN fCivilian =
       (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP || pSoldier->bNeutral ||
@@ -575,8 +575,8 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
       if (gTacticalStatus.bBoxingState == PRE_BOXING) {
         return (DecideActionBoxerEnteringRing(pSoldier));
       } else {
-        UINT8 ubRoom;
-        UINT8 ubLoop;
+        uint8_t ubRoom;
+        uint8_t ubLoop;
 
         // boxer... but since in status green, it's time to leave the ring!
         if (InARoom(pSoldier->sGridNo, &ubRoom)) {
@@ -612,7 +612,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
     // else if ( (gTacticalStatus.bBoxingState == PRE_BOXING || gTacticalStatus.bBoxingState ==
     // BOXING) && ( PythSpacesAway( pSoldier->sGridNo, CENTER_OF_RING ) <= MaxDistanceVisible() ) )
     else if (PythSpacesAway(pSoldier->sGridNo, CENTER_OF_RING) <= MaxDistanceVisible()) {
-      UINT8 ubRingDir;
+      uint8_t ubRingDir;
       // face ring!
 
       ubRingDir = atan8(CenterX(pSoldier->sGridNo), CenterY(pSoldier->sGridNo),
@@ -831,7 +831,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 
     // if we're in water with land miles (> 25 tiles) away,
     // OR if we roll under the chance calculated
-    if (bInWater || ((INT16)PreRandom(100) < iChance)) {
+    if (bInWater || ((int16_t)PreRandom(100) < iChance)) {
       pSoldier->usActionData = RandDestWithinRange(pSoldier);
 
       if (pSoldier->usActionData != NOWHERE) {
@@ -916,7 +916,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
     // reduce chance if breath is down
     iChance -= (100 - pSoldier->bBreath);  // very likely to wait when exhausted
 
-    if ((INT16)PreRandom(100) < iChance) {
+    if ((int16_t)PreRandom(100) < iChance) {
       if (RandomFriendWithin(pSoldier)) {
         if (pSoldier->usActionData ==
             GoAsFarAsPossibleTowards(pSoldier, pSoldier->usActionData, AI_ACTION_SEEK_FRIEND)) {
@@ -928,7 +928,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
           if (fCivilianOrMilitia && !gfTurnBasedAI) {
             // pause at the end of the walk!
             pSoldier->bNextAction = AI_ACTION_WAIT;
-            pSoldier->usNextActionData = (UINT16)REALTIME_CIV_AI_DELAY;
+            pSoldier->usNextActionData = (uint16_t)REALTIME_CIV_AI_DELAY;
           }
 
           return (AI_ACTION_SEEK_FRIEND);
@@ -953,7 +953,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
 
       if (pSoldier->bAttitude == DEFENSIVE) iChance += 25;
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         // roll random directions (stored in actionData) until different from current
         do {
           // if man has a LEGAL dominant facing, and isn't facing it, he will turn
@@ -962,7 +962,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
               (pSoldier->bDirection != pSoldier->bDominantDir) && PreRandom(2)) {
             pSoldier->usActionData = pSoldier->bDominantDir;
           } else {
-            pSoldier->usActionData = (UINT16)PreRandom(8);
+            pSoldier->usActionData = (uint16_t)PreRandom(8);
           }
         } while (pSoldier->usActionData == pSoldier->bDirection);
 
@@ -971,7 +971,7 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
         AIPopMessage(tempstr);
 #endif
 
-        if (InternalIsValidStance(pSoldier, (INT8)pSoldier->usActionData,
+        if (InternalIsValidStance(pSoldier, (int8_t)pSoldier->usActionData,
                                   gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
           if (!gfTurnBasedAI) {
             // wait after this...
@@ -995,13 +995,13 @@ INT8 DecideActionGreen(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
-  INT32 iDummy;
-  UINT8 ubNoiseDir;
-  INT16 sNoiseGridNo;
-  INT32 iNoiseValue;
-  INT32 iChance, iSneaky;
-  INT16 sClosestFriend;
+int8_t DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
+  int32_t iDummy;
+  uint8_t ubNoiseDir;
+  int16_t sNoiseGridNo;
+  int32_t iNoiseValue;
+  int32_t iChance, iSneaky;
+  int16_t sClosestFriend;
   BOOLEAN fCivilian =
       (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP || pSoldier->bNeutral ||
                         (pSoldier->ubBodyType >= FATCIV && pSoldier->ubBodyType <= CRIPPLECIV)));
@@ -1067,7 +1067,7 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
 
       if (pSoldier->bAttitude == DEFENSIVE) iChance += 15;
 
-      if ((INT16)PreRandom(100) < iChance &&
+      if ((int16_t)PreRandom(100) < iChance &&
           InternalIsValidStance(pSoldier, ubNoiseDir,
                                 gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
         pSoldier->usActionData = ubNoiseDir;
@@ -1152,7 +1152,7 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       AINumMessage("Chance to radio yellow alert = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a YELLOW alert!", 1000);
 #endif
@@ -1261,7 +1261,7 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       // reduce chance if breath is down, less likely to wander around when tired
       iChance -= (100 - pSoldier->bBreath);
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         pSoldier->usActionData =
             GoAsFarAsPossibleTowards(pSoldier, sNoiseGridNo, AI_ACTION_SEEK_NOISE);
 
@@ -1351,7 +1351,7 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       // reduce chance if breath is down, less likely to wander around when tired
       iChance -= (100 - pSoldier->bBreath);
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         pSoldier->usActionData =
             GoAsFarAsPossibleTowards(pSoldier, sClosestFriend, AI_ACTION_SEEK_FRIEND);
 
@@ -1441,7 +1441,7 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
       // reduce chance if breath is down, less likely to wander around when tired
       iChance -= (100 - pSoldier->bBreath);
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
         pSoldier->bAIMorale = CalcMorale(pSoldier);
         pSoldier->usActionData = FindBestNearbyCover(pSoldier, pSoldier->bAIMorale, &iDummy);
 
@@ -1460,7 +1460,7 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   ////////////////////////////////////////////////////////////////////////////
   // SWITCH TO GREEN: determine if soldier acts as if nothing at all was wrong
   ////////////////////////////////////////////////////////////////////////////
-  if ((INT16)PreRandom(100) < 50) {
+  if ((int16_t)PreRandom(100) < 50) {
 #ifdef RECORDNET
     fprintf(NetDebugFile,
             "\tDecideActionYellow: guynum %d ignores noise, switching to GREEN AI...\n",
@@ -1506,18 +1506,18 @@ INT8 DecideActionYellow(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
-  INT8 bActionReturned;
-  INT32 iDummy;
-  INT16 iChance, sClosestOpponent, sClosestFriend;
-  INT16 sClosestDisturbance, sDistVisible, sCheckGridNo;
-  UINT8 ubCanMove, ubOpponentDir;
-  INT8 bInWater, bInDeepWater, bInGas;
-  INT8 bSeekPts = 0, bHelpPts = 0, bHidePts = 0, bWatchPts = 0;
-  INT8 bHighestWatchLoc;
+int8_t DecideActionRed(struct SOLDIERTYPE *pSoldier, uint8_t ubUnconsciousOK) {
+  int8_t bActionReturned;
+  int32_t iDummy;
+  int16_t iChance, sClosestOpponent, sClosestFriend;
+  int16_t sClosestDisturbance, sDistVisible, sCheckGridNo;
+  uint8_t ubCanMove, ubOpponentDir;
+  int8_t bInWater, bInDeepWater, bInGas;
+  int8_t bSeekPts = 0, bHelpPts = 0, bHidePts = 0, bWatchPts = 0;
+  int8_t bHighestWatchLoc;
   ATTACKTYPE BestThrow;
 #ifdef AI_TIMING_TEST
-  UINT32 uiStartTime, uiEndTime;
+  uint32_t uiStartTime, uiEndTime;
 #endif
   BOOLEAN fClimb;
   BOOLEAN fCivilian =
@@ -1641,7 +1641,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
         } else  // not in battle, cower for a certain length of time
         {
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CIV_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CIV_AI_DELAY;
           pSoldier->usActionData = ANIM_CROUCH;
           return (AI_ACTION_COWER);
         }
@@ -1701,7 +1701,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
         } else  // not in battle, cower for a certain length of time
         {
           pSoldier->bNextAction = AI_ACTION_WAIT;
-          pSoldier->usNextActionData = (UINT16)REALTIME_CIV_AI_DELAY;
+          pSoldier->usNextActionData = (uint16_t)REALTIME_CIV_AI_DELAY;
           pSoldier->usActionData = ANIM_CROUCH;
           return (AI_ACTION_COWER);
         }
@@ -1724,10 +1724,10 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
     if (BestThrow.ubPossible) {
       // if firing mortar make sure we have room
       if (pSoldier->inv[BestThrow.bWeaponIn].usItem == MORTAR) {
-        ubOpponentDir = (UINT8)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
+        ubOpponentDir = (uint8_t)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
 
         // Get new gridno!
-        sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo, (UINT16)DirectionInc(ubOpponentDir));
+        sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, (uint16_t)DirectionInc(ubOpponentDir));
 
         if (!OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel, ubOpponentDir,
                              pSoldier->usAnimState)) {
@@ -1735,8 +1735,8 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
           BestThrow.ubPossible = FALSE;
 
           // try behind us, see if there's room to move back
-          sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                                   (UINT16)DirectionInc(gOppositeDirection[ubOpponentDir]));
+          sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                                   (uint16_t)DirectionInc(gOppositeDirection[ubOpponentDir]));
           if (OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel,
                               gOppositeDirection[ubOpponentDir], pSoldier->usAnimState)) {
             pSoldier->usActionData = sCheckGridNo;
@@ -1928,7 +1928,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
       AINumMessage("Chance to radio RED alert = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a RED alert!", 1000);
 #endif
@@ -2158,11 +2158,11 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
                   if (PythSpacesAway(pSoldier->usActionData, sClosestDisturbance) < 5 ||
                       LocationToLocationLineOfSightTest(pSoldier->usActionData, pSoldier->bLevel,
                                                         sClosestDisturbance, pSoldier->bLevel,
-                                                        (UINT8)MaxDistanceVisible(), TRUE)) {
+                                                        (uint8_t)MaxDistanceVisible(), TRUE)) {
                     // reserve APs for a possible crouch plus a shot
                     pSoldier->usActionData = InternalGoAsFarAsPossibleTowards(
                         pSoldier, sClosestDisturbance,
-                        (INT8)(MinAPsToAttack(pSoldier, sClosestDisturbance, ADDTURNCOST) +
+                        (int8_t)(MinAPsToAttack(pSoldier, sClosestDisturbance, ADDTURNCOST) +
                                AP_CROUCH),
                         AI_ACTION_SEEK_OPPONENT, FLAG_CAUTIOUS);
                     if (pSoldier->usActionData != NOWHERE) {
@@ -2311,7 +2311,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
                 // ensure will we have enough APs for a possible crouch plus a shot
                 if (InternalGoAsFarAsPossibleTowards(
                         pSoldier, pSoldier->usActionData,
-                        (INT8)(MinAPsToAttack(pSoldier, sClosestOpponent, ADDTURNCOST) + AP_CROUCH),
+                        (int8_t)(MinAPsToAttack(pSoldier, sClosestOpponent, ADDTURNCOST) + AP_CROUCH),
                         AI_ACTION_TAKE_COVER, 0) == pSoldier->usActionData) {
                   return (AI_ACTION_TAKE_COVER);
                 }
@@ -2416,7 +2416,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
           iChance += 50;
         }
 
-        if ((INT16)PreRandom(100) < iChance &&
+        if ((int16_t)PreRandom(100) < iChance &&
             InternalIsValidStance(pSoldier, ubOpponentDir,
                                   gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
           pSoldier->usActionData = ubOpponentDir;
@@ -2441,15 +2441,15 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
         ubOpponentDir = atan8(CenterX(pSoldier->sGridNo), CenterY(pSoldier->sGridNo),
                               CenterX(sClosestDisturbance), CenterY(sClosestDisturbance));
         if (pSoldier->bDirection == ubOpponentDir) {
-          ubOpponentDir = (UINT8)PreRandom(NUM_WORLD_DIRECTIONS);
+          ubOpponentDir = (uint8_t)PreRandom(NUM_WORLD_DIRECTIONS);
         }
       } else {
-        ubOpponentDir = (UINT8)PreRandom(NUM_WORLD_DIRECTIONS);
+        ubOpponentDir = (uint8_t)PreRandom(NUM_WORLD_DIRECTIONS);
       }
 
       if ((pSoldier->bDirection != ubOpponentDir)) {
         if ((pSoldier->bActionPoints == pSoldier->bInitialActionPoints ||
-             (INT16)PreRandom(100) < 60) &&
+             (int16_t)PreRandom(100) < 60) &&
             InternalIsValidStance(pSoldier, ubOpponentDir,
                                   gAnimControl[pSoldier->usAnimState].ubEndHeight)) {
           pSoldier->usActionData = ubOpponentDir;
@@ -2467,7 +2467,7 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
               pSoldier->bNextAction = AI_ACTION_END_TURN;
             } else {
               pSoldier->bNextAction = AI_ACTION_WAIT;
-              pSoldier->usNextActionData = (UINT16)REALTIME_AI_DELAY;
+              pSoldier->usNextActionData = (uint16_t)REALTIME_AI_DELAY;
             }
           }
 
@@ -2607,28 +2607,28 @@ INT8 DecideActionRed(struct SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCoverPercentBetter, iOffense, iDefense, iChance;
-  INT16 sClosestOpponent, sBestCover = NOWHERE;
-  INT16 sClosestDisturbance;
-  UINT8 ubMinAPCost, ubCanMove;
-  INT8 bInDeepWater, bInGas;
-  INT8 bDirection;
-  UINT8 ubBestAttackAction = AI_ACTION_NONE;
-  INT8 bCanAttack, bActionReturned;
-  INT8 bWeaponIn;
+int8_t DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
+  int32_t iCoverPercentBetter, iOffense, iDefense, iChance;
+  int16_t sClosestOpponent, sBestCover = NOWHERE;
+  int16_t sClosestDisturbance;
+  uint8_t ubMinAPCost, ubCanMove;
+  int8_t bInDeepWater, bInGas;
+  int8_t bDirection;
+  uint8_t ubBestAttackAction = AI_ACTION_NONE;
+  int8_t bCanAttack, bActionReturned;
+  int8_t bWeaponIn;
   BOOLEAN fTryPunching = FALSE;
 
   ATTACKTYPE BestShot, BestThrow, BestStab, BestAttack;
   BOOLEAN fCivilian =
       (PTR_CIVILIAN && (pSoldier->ubCivilianGroup == NON_CIV_GROUP || pSoldier->bNeutral ||
                         (pSoldier->ubBodyType >= FATCIV && pSoldier->ubBodyType <= CRIPPLECIV)));
-  UINT8 ubBestStance, ubStanceCost;
+  uint8_t ubBestStance, ubStanceCost;
   BOOLEAN fChangeStanceFirst;  // before firing
   BOOLEAN fClimb;
-  UINT8 ubBurstAPs;
-  UINT8 ubOpponentDir;
-  INT16 sCheckGridNo;
+  uint8_t ubBurstAPs;
+  uint8_t ubOpponentDir;
+  int16_t sCheckGridNo;
 
   BOOLEAN fAllowCoverCheck = FALSE;
 
@@ -2644,7 +2644,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   if ((pSoldier->bTeam == ENEMY_TEAM || GetSolProfile(pSoldier) == WARDEN) &&
       (gTacticalStatus.fPanicFlags & PANIC_TRIGGERS_HERE) &&
       (gTacticalStatus.ubTheChosenOne == NOBODY)) {
-    INT8 bPanicTrigger;
+    int8_t bPanicTrigger;
 
     bPanicTrigger = ClosestPanicTrigger(pSoldier);
     // if it's an alarm trigger and team is alerted, ignore it
@@ -2979,10 +2979,10 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
 
       if (BestThrow.ubPossible) {
         if (pSoldier->inv[BestThrow.bWeaponIn].usItem == MORTAR) {
-          ubOpponentDir = (UINT8)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
+          ubOpponentDir = (uint8_t)GetDirectionFromGridNo(BestThrow.sTarget, pSoldier);
 
           // Get new gridno!
-          sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo, (UINT16)DirectionInc(ubOpponentDir));
+          sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo, (uint16_t)DirectionInc(ubOpponentDir));
 
           if (!OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel, ubOpponentDir,
                                pSoldier->usAnimState)) {
@@ -2990,8 +2990,8 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
             BestThrow.ubPossible = FALSE;
 
             // try behind us, see if there's room to move back
-            sCheckGridNo = NewGridNo((UINT16)pSoldier->sGridNo,
-                                     (UINT16)DirectionInc(gOppositeDirection[ubOpponentDir]));
+            sCheckGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                                     (uint16_t)DirectionInc(gOppositeDirection[ubOpponentDir]));
             if (OKFallDirection(pSoldier, sCheckGridNo, pSoldier->bLevel,
                                 gOppositeDirection[ubOpponentDir], pSoldier->usAnimState)) {
               pSoldier->usActionData = sCheckGridNo;
@@ -3313,7 +3313,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
           }
         }
 
-        if ((INT32)PreRandom(100) < iChance ||
+        if ((int32_t)PreRandom(100) < iChance ||
             GetRangeInCellCoordsFromGridNoDiff(pSoldier->sGridNo, BestAttack.sTarget) <=
                 MIN_PRONE_RANGE) {
           // first get the direction, as we will need to pass that in to ShootingStanceChange
@@ -3346,7 +3346,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
             fChangeStanceFirst = TRUE;
 
             // account for increased AP cost
-            ubStanceCost = (UINT8)GetAPsToChangeStance(pSoldier, ubBestStance);
+            ubStanceCost = (uint8_t)GetAPsToChangeStance(pSoldier, ubBestStance);
             if (BestAttack.ubAPCost + ubStanceCost > pSoldier->bActionPoints) {
               // AP cost would balance (plus X, minus X) but aim time is reduced
               BestAttack.ubAimTime -= (BestAttack.ubAimTime - ubStanceCost);
@@ -3408,7 +3408,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
             }
           }
 
-          if ((INT32)PreRandom(100) < iChance) {
+          if ((int32_t)PreRandom(100) < iChance) {
             BestAttack.ubAimTime = BURSTING;
             BestAttack.ubAPCost =
                 BestAttack.ubAPCost - BestAttack.ubAimTime +
@@ -3575,7 +3575,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
       AINumMessage("Chance to radio for SPOTTING = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a RED for SPOTTING!", 1000);
 #endif
@@ -3599,7 +3599,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
           if ((!gfTurnBasedAI ||
                GetAPsToLook(pSoldier) <=
                    pSoldier->bActionPoints -
-                       GetAPsToChangeStance(pSoldier, (INT8)pSoldier->usActionData)) &&
+                       GetAPsToChangeStance(pSoldier, (int8_t)pSoldier->usActionData)) &&
               (((pSoldier->bAIMorale > MORALE_HOPELESS) || ubCanMove) && !AimingGun(pSoldier))) {
             // determine the location of the known closest opponent
             // (don't care if he's conscious, don't care if he's reachable at all)
@@ -3612,7 +3612,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
 
               // if we're not facing towards him
               if (pSoldier->bDirection != bDirection) {
-                if (InternalIsValidStance(pSoldier, bDirection, (INT8)pSoldier->usActionData)) {
+                if (InternalIsValidStance(pSoldier, bDirection, (int8_t)pSoldier->usActionData)) {
                   // change direction, THEN change stance!
                   pSoldier->bNextAction = AI_ACTION_CHANGE_STANCE;
                   pSoldier->usNextActionData = pSoldier->usActionData;
@@ -3776,7 +3776,7 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
       AINumMessage("Chance to radio RED alert = ", iChance);
 #endif
 
-      if ((INT16)PreRandom(100) < iChance) {
+      if ((int16_t)PreRandom(100) < iChance) {
 #ifdef DEBUGDECISIONS
         AINameMessage(pSoldier, "decides to radio a RED alert!", 1000);
 #endif
@@ -3805,11 +3805,11 @@ INT8 DecideActionBlack(struct SOLDIERTYPE *pSoldier) {
   return (AI_ACTION_NONE);
 }
 
-INT8 DecideAction(struct SOLDIERTYPE *pSoldier) {
-  INT8 bAction = AI_ACTION_NONE;
+int8_t DecideAction(struct SOLDIERTYPE *pSoldier) {
+  int8_t bAction = AI_ACTION_NONE;
 
 #ifdef AI_TIMING_TESTS
-  UINT32 uiStartTime, uiEndTime;
+  uint32_t uiStartTime, uiEndTime;
 #endif
 
   // turn off cautious flag
@@ -3906,7 +3906,7 @@ INT8 DecideAction(struct SOLDIERTYPE *pSoldier) {
   return (bAction);
 }
 
-INT8 DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
+int8_t DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
   // if he has a place to go, and isn't already there... go!
   if (pSoldier->usActionData != NOWHERE && (pSoldier->sGridNo != pSoldier->usActionData)) {
 #ifdef DEBUGDECISIONS
@@ -3920,8 +3920,8 @@ INT8 DecideActionEscort(struct SOLDIERTYPE *pSoldier) {
 }
 
 void DecideAlertStatus(struct SOLDIERTYPE *pSoldier) {
-  INT8 bOldStatus;
-  INT32 iDummy;
+  int8_t bOldStatus;
+  int32_t iDummy;
   BOOLEAN fClimbDummy, fReachableDummy;
 
   // THE FOUR (4) POSSIBLE ALERT STATUSES ARE:

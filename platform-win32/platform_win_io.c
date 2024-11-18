@@ -17,7 +17,7 @@
 
 // Gets the free hard drive space from the drive letter passed in.  It has to be the root dir.  (
 // eg. c:\ )
-static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter);
+static UINT32 GetFreeSpaceOnHardDrive(char *pzDriveLetter);
 
 UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   struct Str512 zExecDir;
@@ -42,7 +42,7 @@ UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() {
   return (uiFreeSpace);
 }
 
-static UINT32 GetFreeSpaceOnHardDrive(STR pzDriveLetter) {
+static UINT32 GetFreeSpaceOnHardDrive(char *pzDriveLetter) {
   DWORD uiBytesFree = 0;
   DWORD uiSectorsPerCluster = 0;
   DWORD uiBytesPerSector = 0;
@@ -140,8 +140,8 @@ extern UINT32 uiTotalFileReadCalls;
 #include "Utils/TimerControl.h"
 #endif
 
-BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) {
-  INT32 x, iWhich = 0;
+BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) {
+  int32_t x, iWhich = 0;
   BOOLEAN fFound;
 
   if (!(pSpec != NULL)) {

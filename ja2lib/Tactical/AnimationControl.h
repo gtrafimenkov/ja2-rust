@@ -82,31 +82,31 @@ struct SOLDIERTYPE;
 // ###################################################################
 
 typedef struct {
-  CHAR8 zAnimStr[MAX_ANIM_STR_SIZE + 1];
-  INT16 sAP;
-  INT16 sSpeed;
-  FLOAT dMovementChange;
-  UINT32 uiFlags;
-  UINT8 ubHeight;
-  UINT8 ubEndHeight;
-  INT8 bProfile;
+  char zAnimStr[MAX_ANIM_STR_SIZE + 1];
+  int16_t sAP;
+  int16_t sSpeed;
+  float dMovementChange;
+  uint32_t uiFlags;
+  uint8_t ubHeight;
+  uint8_t ubEndHeight;
+  int8_t bProfile;
 
 } ANIMCONTROLTYPE;
 
 typedef struct {
-  INT16 sSpeed;
-  FLOAT dMovementChange;
+  int16_t sSpeed;
+  float dMovementChange;
 
 } ANI_SPEED_DEF;
 
 typedef struct {
-  UINT8 ubHandRestriction;
-  INT16 sAnimID;
-  UINT8 ubStartRoll;
-  UINT8 ubEndRoll;
-  UINT8 ubFlags;
-  UINT8 ubAnimHeight;
-  CHAR8 zSoundFile[30];
+  uint8_t ubHandRestriction;
+  int16_t sAnimID;
+  uint8_t ubStartRoll;
+  uint8_t ubEndRoll;
+  uint8_t ubFlags;
+  uint8_t ubAnimHeight;
+  char zSoundFile[30];
 
 } RANDOM_ANI_DEF;
 
@@ -519,37 +519,37 @@ typedef enum {
 
 } AnimationStates;
 
-extern UINT16 gusAnimInst[MAX_ANIMATIONS][MAX_FRAMES_PER_ANIM];
+extern uint16_t gusAnimInst[MAX_ANIMATIONS][MAX_FRAMES_PER_ANIM];
 extern ANIMCONTROLTYPE gAnimControl[];
 
 extern ANI_SPEED_DEF gubAnimWalkSpeeds[TOTALBODYTYPES];
 extern ANI_SPEED_DEF gubAnimRunSpeeds[TOTALBODYTYPES];
 extern ANI_SPEED_DEF gubAnimSwatSpeeds[TOTALBODYTYPES];
 extern ANI_SPEED_DEF gubAnimCrawlSpeeds[TOTALBODYTYPES];
-extern UINT8 gubMaxActionPoints[TOTALBODYTYPES];
+extern uint8_t gubMaxActionPoints[TOTALBODYTYPES];
 
 // OK, this array contains definitions for random animations based on bodytype, total # allowed, and
 // what is in their hand....
 extern RANDOM_ANI_DEF gRandomAnimDefs[TOTALBODYTYPES][MAX_RANDOM_ANIMS_PER_BODYTYPE];
 
 // Corpse Defines
-extern UINT16 gubAnimSurfaceCorpseID[TOTALBODYTYPES][NUMANIMATIONSTATES];
+extern uint16_t gubAnimSurfaceCorpseID[TOTALBODYTYPES][NUMANIMATIONSTATES];
 
 // FUNCTIONS
 BOOLEAN LoadAnimationStateInstructions();
 void InitAnimationSurfacesPerBodytype();
-BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, UINT16 usNewState);
-BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, UINT16 usTestState,
-                                    UINT16 *pusSubState);
-INT8 GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, UINT8 ubBodyType,
-                                        CHAR8 *zColFilename);
+BOOLEAN IsAnimationValidForBodyType(struct SOLDIERTYPE *pSoldier, uint16_t usNewState);
+BOOLEAN SubstituteBodyTypeAnimation(struct SOLDIERTYPE *pSoldier, uint16_t usTestState,
+                                    uint16_t *pusSubState);
+int8_t GetBodyTypePaletteSubstitutionCode(struct SOLDIERTYPE *pSoldier, uint8_t ubBodyType,
+                                        char *zColFilename);
 
-BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
-UINT16 DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
-UINT16 LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+BOOLEAN SetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
+uint16_t DetermineSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
+uint16_t LoadSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
 // This function could be wrapped in a debug marco, since it only returns pSoldier->ubAnimSurface
 // but Also does some debug checking
-UINT16 GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, UINT16 usAnimState);
+uint16_t GetSoldierAnimationSurface(struct SOLDIERTYPE *pSoldier, uint16_t usAnimState);
 
 #endif

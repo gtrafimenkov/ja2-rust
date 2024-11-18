@@ -29,9 +29,9 @@
 
 #define LOOSE_CURSOR_DELAY 300
 static BOOLEAN gfLooseCursorOn = FALSE;
-static INT16 gsLooseCursorGridNo = NOWHERE;
-static UINT32 guiLooseCursorID = 0;
-static UINT32 guiLooseCursorTimeOfLastUpdate = 0;
+static int16_t gsLooseCursorGridNo = NOWHERE;
+static uint32_t guiLooseCursorID = 0;
+static uint32_t guiLooseCursorTimeOfLastUpdate = 0;
 
 void HandleLooseCursorDraw();
 void HandleLooseCursorHide();
@@ -653,17 +653,17 @@ UICursor gUICursors[NUM_UI_CURSORS] = {
 #pragma GCC diagnostic pop
 #endif
 
-UINT32 guiCurUICursor = NO_UICURSOR;
-UINT32 guiOldUICursor = NO_UICURSOR;
-UINT16 gusCurMousePos;
-UINT16 gusTargetDropPos;
+uint32_t guiCurUICursor = NO_UICURSOR;
+uint32_t guiOldUICursor = NO_UICURSOR;
+uint16_t gusCurMousePos;
+uint16_t gusTargetDropPos;
 BOOLEAN gfTargetDropPos = FALSE;
 
 // LOCAL FUNCTIONS
 void EraseSnappingCursor();
 void DrawSnappingCursor();
 
-BOOLEAN SetUICursor(UINT32 uiNewCursor) {
+BOOLEAN SetUICursor(uint32_t uiNewCursor) {
   guiOldUICursor = guiCurUICursor;
   guiCurUICursor = uiNewCursor;
 
@@ -671,12 +671,12 @@ BOOLEAN SetUICursor(UINT32 uiNewCursor) {
 }
 
 BOOLEAN DrawUICursor() {
-  INT16 usMapPos;
+  int16_t usMapPos;
   static BOOLEAN fHideCursor = FALSE;
   struct LEVELNODE *pNode;
-  UINT16 usTileCursor;
+  uint16_t usTileCursor;
 
-  // RaiseMouseToLevel( (INT8)gsInterfaceLevel );
+  // RaiseMouseToLevel( (int8_t)gsInterfaceLevel );
 
   HandleLooseCursorDraw();
 
@@ -1038,7 +1038,7 @@ void EraseSnappingCursor() {
   RemoveAllOnRoofsOfTypeRange(gusCurMousePos, MOCKFLOOR, MOCKFLOOR);
 }
 
-void StartLooseCursor(INT16 sGridNo, UINT32 uiCursorID) {
+void StartLooseCursor(int16_t sGridNo, uint32_t uiCursorID) {
   gfLooseCursorOn = TRUE;
 
   guiLooseCursorID = uiCursorID;
@@ -1068,7 +1068,7 @@ void HandleLooseCursorHide() {
   }
 }
 
-UINT16 GetSnapCursorIndex(UINT16 usAdditionalData) {
+uint16_t GetSnapCursorIndex(uint16_t usAdditionalData) {
   // OK, this function will get the 'true' index for drawing the cursor....
   if (gGameSettings.fOptions[TOPTION_3D_CURSOR]) {
     switch (usAdditionalData) {

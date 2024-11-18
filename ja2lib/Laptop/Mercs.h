@@ -30,8 +30,8 @@ enum {
   MERC_ACCOUNT_VALID_FIRST_WARNING,
   MERC_ACCOUNT_VALID,
 };
-// extern	UINT8			gubPlayersMercAccountStatus;
-// extern	UINT32		guiPlayersMercAccountNumber;
+// extern	uint8_t			gubPlayersMercAccountStatus;
+// extern	uint32_t		guiPlayersMercAccountNumber;
 
 // The video conferencing for the merc page
 #define MERC_VIDEO_SPECK_SPEECH_NOT_TALKING 65535
@@ -53,29 +53,29 @@ void RenderMercs();
 BOOLEAN InitMercBackGround();
 BOOLEAN DrawMecBackGround();
 BOOLEAN RemoveMercBackGround();
-void DailyUpdateOfMercSite(UINT16 usDate);
-UINT8 GetMercIDFromMERCArray(UINT8 ubMercID);
-void DisplayTextForSpeckVideoPopUp(STR16 pString);
+void DailyUpdateOfMercSite(uint16_t usDate);
+uint8_t GetMercIDFromMERCArray(uint8_t ubMercID);
+void DisplayTextForSpeckVideoPopUp(wchar_t* pString);
 
-BOOLEAN IsMercMercAvailable(UINT8 ubMercID);
+BOOLEAN IsMercMercAvailable(uint8_t ubMercID);
 
-void HandlePlayerHiringMerc(UINT8 ubHiredMercID);
+void HandlePlayerHiringMerc(uint8_t ubHiredMercID);
 void EnterInitMercSite();
 
 void GetMercSiteBackOnline();
 
 void DisableMercSiteButton();
 
-extern UINT16 gusMercVideoSpeckSpeech;
+extern uint16_t gusMercVideoSpeckSpeech;
 
-extern UINT8 gubArrivedFromMercSubSite;
+extern uint8_t gubArrivedFromMercSubSite;
 
-extern UINT8 gubMercArray[NUMBER_OF_MERCS];
-extern UINT8 gubCurMercIndex;
-// extern	UINT8			gubLastMercIndex;
+extern uint8_t gubMercArray[NUMBER_OF_MERCS];
+extern uint8_t gubCurMercIndex;
+// extern	uint8_t			gubLastMercIndex;
 
-// extern	UINT32		guiNumberOfMercPaymentsInDays;
-// extern	UINT8			gubNumDaysTillFirstMercArrives;
+// extern	uint32_t		guiNumberOfMercPaymentsInDays;
+// extern	uint8_t			gubNumDaysTillFirstMercArrives;
 
 extern BOOLEAN gfJustHiredAMercMerc;
 

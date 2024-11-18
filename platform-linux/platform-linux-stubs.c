@@ -22,7 +22,7 @@ int strncasecmp(const char *s1, const char *s2, size_t n) { return 0; }
 
 extern u32 Plat_GetTickCount() { return 0; }
 
-UINT32 GetClock(void) { return 0; }
+uint32_t GetClock(void) { return 0; }
 
 /////////////////////////////////////////////////////////////////////////////////
 // I/O
@@ -30,7 +30,7 @@ UINT32 GetClock(void) { return 0; }
 
 BOOLEAN gfProgramIsRunning;
 
-UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
+uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom() { return 0; }
 
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs) { return FALSE; }
 
@@ -44,7 +44,7 @@ BOOLEAN Plat_GetFileIsOffline(const struct GetFile *gfs) { return FALSE; }
 
 BOOLEAN Plat_GetFileIsTemporary(const struct GetFile *gfs) { return FALSE; }
 
-BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct) { return FALSE; }
+BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct) { return FALSE; }
 
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct) { return FALSE; }
 
@@ -57,18 +57,18 @@ void Plat_GetFileClose(struct GetFile *pGFStruct) {}
 BOOLEAN gfKeyState[256];
 BOOLEAN gfLeftButtonState;
 BOOLEAN gfRightButtonState;
-UINT16 gusMouseXPos;
-UINT16 gusMouseYPos;
+uint16_t gusMouseXPos;
+uint16_t gusMouseYPos;
 
 BOOLEAN gfSGPInputReceived = FALSE;
 
-BOOLEAN DequeueSpecificEvent(InputAtom *Event, UINT32 uiMaskFlags) { return FALSE; }
+BOOLEAN DequeueSpecificEvent(InputAtom *Event, uint32_t uiMaskFlags) { return FALSE; }
 
 BOOLEAN DequeueEvent(InputAtom *Event) { return FALSE; }
 
 void GetMousePos(SGPPoint *Point) {}
 
-void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2) {}
+void RestrictMouseToXYXY(uint16_t usX1, uint16_t usY1, uint16_t usX2, uint16_t usY2) {}
 
 void RestrictMouseCursor(struct GRect *pRectangle) {}
 
@@ -78,7 +78,7 @@ void GetRestrictedClipCursor(struct GRect *pRectangle) {}
 
 BOOLEAN IsCursorRestricted(void) { return FALSE; }
 
-void SimulateMouseMovement(UINT32 uiNewXPos, UINT32 uiNewYPos) {}
+void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos) {}
 
 void DequeueAllKeyBoardEvents() {}
 
@@ -97,7 +97,7 @@ void ShutdownJA2Clock(void) {}
 
 void PauseTime(BOOLEAN fPaused) {}
 
-void SetCustomizableTimerCallbackAndDelay(INT32 iDelay, CUSTOMIZABLE_TIMER_CALLBACK pCallback,
+void SetCustomizableTimerCallbackAndDelay(int32_t iDelay, CUSTOMIZABLE_TIMER_CALLBACK pCallback,
                                           BOOLEAN fReplace) {}
 
 void CheckCustomizableTimer(void) {}
@@ -106,23 +106,23 @@ void CheckCustomizableTimer(void) {}
 // Sound
 /////////////////////////////////////////////////////////////////////////////////
 
-UINT32 SoundPlay(STR pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlay(char *pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
 
-UINT32 SoundPlayStreamedFile(STR pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlayStreamedFile(char *pFilename, SOUNDPARMS *pParms) { return (SOUND_ERROR); }
 
-UINT32 SoundPlayRandom(STR pFilename, RANDOMPARMS *pParms) { return (SOUND_ERROR); }
+uint32_t SoundPlayRandom(char *pFilename, RANDOMPARMS *pParms) { return (SOUND_ERROR); }
 
-BOOLEAN SoundIsPlaying(UINT32 uiSoundID) { return FALSE; }
+BOOLEAN SoundIsPlaying(uint32_t uiSoundID) { return FALSE; }
 
-BOOLEAN SoundStop(UINT32 uiSoundID) { return FALSE; }
+BOOLEAN SoundStop(uint32_t uiSoundID) { return FALSE; }
 
 BOOLEAN SoundStopAll(void) { return FALSE; }
 
-BOOLEAN SoundSetVolume(UINT32 uiSoundID, UINT32 uiVolume) { return FALSE; }
+BOOLEAN SoundSetVolume(uint32_t uiSoundID, uint32_t uiVolume) { return FALSE; }
 
-BOOLEAN SoundSetPan(UINT32 uiSoundID, UINT32 uiPan) { return FALSE; }
+BOOLEAN SoundSetPan(uint32_t uiSoundID, uint32_t uiPan) { return FALSE; }
 
-UINT32 SoundGetVolume(UINT32 uiSoundID) { return (SOUND_ERROR); }
+uint32_t SoundGetVolume(uint32_t uiSoundID) { return (SOUND_ERROR); }
 
 BOOLEAN SoundServiceRandom(void) { return FALSE; }
 
@@ -130,15 +130,15 @@ BOOLEAN SoundStopAllRandom(void) { return FALSE; }
 
 BOOLEAN SoundServiceStreams(void) { return FALSE; }
 
-UINT32 SoundGetPosition(UINT32 uiSoundID) { return 0; }
+uint32_t SoundGetPosition(uint32_t uiSoundID) { return 0; }
 
-UINT32 SoundLoadSample(STR pFilename) { return (NO_SAMPLE); }
+uint32_t SoundLoadSample(char *pFilename) { return (NO_SAMPLE); }
 
-UINT32 SoundLockSample(STR pFilename) { return (NO_SAMPLE); }
+uint32_t SoundLockSample(char *pFilename) { return (NO_SAMPLE); }
 
-UINT32 SoundUnlockSample(STR pFilename) { return (NO_SAMPLE); }
+uint32_t SoundUnlockSample(char *pFilename) { return (NO_SAMPLE); }
 
-void SoundRemoveSampleFlags(UINT32 uiSample, UINT32 uiFlags) {}
+void SoundRemoveSampleFlags(uint32_t uiSample, uint32_t uiFlags) {}
 
 /////////////////////////////////////////////////////////////////////////////////
 // Video
@@ -148,7 +148,7 @@ void RefreshScreen() {}
 
 BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) { return FALSE; }
 
-void FatalError(STR8 pError, ...) {}
+void FatalError(char *pError, ...) {}
 
 BOOLEAN SetVideoSurfaceTransparencyColor(struct VSurface *hVSurface, COLORVAL TransColor) {
   return FALSE;
@@ -159,17 +159,18 @@ struct VSurface *CreateVideoSurface(u16 width, u16 height) { return NULL; }
 BOOLEAN DeleteVideoSurface(struct VSurface *hVSurface) { return FALSE; }
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect) {
+                           uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                           struct Rect *SrcRect) {
   return FALSE;
 }
 
 BOOLEAN SmkPollFlics(void) { return FALSE; }
 
-void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight) {}
+void SmkInitialize(uint32_t uiWidth, uint32_t uiHeight) {}
 
 void SmkShutdown(void) {}
 
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
+struct SmkFlic *SmkPlayFlic(char *cFilename, uint32_t uiLeft, uint32_t uiTop, BOOLEAN fClose) {
   return NULL;
 }
 
@@ -187,7 +188,7 @@ struct BufferLockInfo VSurfaceLock(struct VSurface *vs) {
   return res;
 }
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
-                              struct Rect *DestRect) {
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
+                              struct Rect *SrcRect, struct Rect *DestRect) {
   return FALSE;
 }

@@ -23,8 +23,8 @@
 #include "rust_fileman.h"
 
 struct TILE_IMAGERY *gTileSurfaceArray[NUMBEROFTILETYPES];
-UINT8 gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
-UINT8 gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
+uint8_t gbDefaultSurfaceUsed[NUMBEROFTILETYPES];
+uint8_t gbSameAsDefaultSurfaceUsed[NUMBEROFTILETYPES];
 
 struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   // Add tile surface
@@ -32,7 +32,7 @@ struct TILE_IMAGERY *LoadTileSurface(char *cFilename) {
   struct VObject *hVObject;
   struct Image *hImage;
   SGPFILENAME cStructureFilename;
-  STR cEndOfName;
+  char* cEndOfName;
   struct STRUCTURE_FILE_REF *pStructureFileRef;
   BOOLEAN fOk;
 
@@ -135,9 +135,9 @@ void DeleteTileSurface(struct TILE_IMAGERY *pTileSurf) {
 }
 
 void SetRaisedObjectFlag(char *cFilename, struct TILE_IMAGERY *pTileSurf) {
-  INT32 cnt = 0;
-  CHAR8 cRootFile[128];
-  CHAR8 ubRaisedObjectFiles[][80] = {"bones",    "bones2", "grass2", "grass3", "l_weed3", "litter",
+  int32_t cnt = 0;
+  char cRootFile[128];
+  char ubRaisedObjectFiles[][80] = {"bones",    "bones2", "grass2", "grass3", "l_weed3", "litter",
                                      "miniweed", "sblast", "sweeds", "twigs",  "wing",    "1"};
 
   // Loop through array of RAISED objecttype imagery and

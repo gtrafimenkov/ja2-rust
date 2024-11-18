@@ -4,11 +4,11 @@
 #include "SGP/Types.h"
 
 typedef struct {
-  UINT32 TimeStamp;
-  UINT32 uiFlags;
-  UINT16 usDelay;
-  UINT32 uiEvent;
-  UINT32 uiDataSize;
+  uint32_t TimeStamp;
+  uint32_t uiFlags;
+  uint16_t usDelay;
+  uint32_t uiEvent;
+  uint32_t uiDataSize;
   BYTE *pData;
 
 } EVENT;
@@ -23,11 +23,11 @@ typedef struct {
 BOOLEAN InitializeEventManager();
 BOOLEAN ShutdownEventManager();
 
-BOOLEAN AddEvent(UINT32 uiEvent, UINT16 usDelay, PTR pEventData, UINT32 uiDataSize,
-                 UINT8 ubQueueID);
-BOOLEAN RemoveEvent(EVENT **ppEvent, UINT32 uiIndex, UINT8 ubQueueID);
-BOOLEAN PeekEvent(EVENT **ppEvent, UINT32 uiIndex, UINT8 ubQueueID);
+BOOLEAN AddEvent(uint32_t uiEvent, uint16_t usDelay, PTR pEventData, uint32_t uiDataSize,
+                 uint8_t ubQueueID);
+BOOLEAN RemoveEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID);
+BOOLEAN PeekEvent(EVENT **ppEvent, uint32_t uiIndex, uint8_t ubQueueID);
 BOOLEAN FreeEvent(EVENT *pEvent);
-UINT32 EventQueueSize(UINT8 ubQueueID);
+uint32_t EventQueueSize(uint8_t ubQueueID);
 
 #endif

@@ -6,8 +6,8 @@
 #include "ScreenIDs.h"
 #include "Utils/SoundControl.h"
 
-void SpecifyButtonSoundScheme(INT32 iButtonID, INT8 bSoundScheme) {
-  ButtonList[iButtonID]->ubSoundSchemeID = (UINT8)bSoundScheme;
+void SpecifyButtonSoundScheme(int32_t iButtonID, int8_t bSoundScheme) {
+  ButtonList[iButtonID]->ubSoundSchemeID = (uint8_t)bSoundScheme;
   if (bSoundScheme == BUTTON_SOUND_SCHEME_GENERIC) {
     switch (guiCurrentScreen) {
       case MAINMENU_SCREEN:
@@ -48,7 +48,7 @@ void SpecifyButtonSoundScheme(INT32 iButtonID, INT8 bSoundScheme) {
   }
 }
 
-void PlayButtonSound(INT32 iButtonID, INT32 iSoundType) {
+void PlayButtonSound(int32_t iButtonID, int32_t iSoundType) {
   if (ButtonList[iButtonID] == NULL) {
     return;
   }

@@ -28,21 +28,21 @@ struct GRect;
 #define BUTTON_REPEAT_TIME 50
 
 typedef struct {
-  UINT32 uiTimeStamp;
-  UINT16 usKeyState;
-  UINT16 usEvent;
-  UINT32 usParam;
-  UINT32 uiParam;
+  uint32_t uiTimeStamp;
+  uint16_t usKeyState;
+  uint16_t usEvent;
+  uint32_t usParam;
+  uint32_t uiParam;
 } InputAtom;
 
 typedef struct StringInput {
-  UINT16 *pString;
-  UINT16 *pOriginalString;
-  UINT16 *pFilter;
-  UINT16 usMaxStringLength;
-  UINT16 usCurrentStringLength;
-  UINT16 usStringOffset;
-  UINT16 usLastCharacter;
+  uint16_t *pString;
+  uint16_t *pOriginalString;
+  uint16_t *pFilter;
+  uint16_t usMaxStringLength;
+  uint16_t usCurrentStringLength;
+  uint16_t usStringOffset;
+  uint16_t usLastCharacter;
   BOOLEAN fInsertMode;
   BOOLEAN fFocus;
   struct StringInput *pPreviousString;
@@ -53,30 +53,30 @@ typedef struct StringInput {
 extern BOOLEAN InitializeInputManager(void);
 extern void ShutdownInputManager(void);
 extern BOOLEAN DequeueEvent(InputAtom *Event);
-extern void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
+extern void QueueEvent(uint16_t ubInputEvent, uint32_t usParam, uint32_t uiParam);
 
-extern void KeyDown(UINT32 usParam, UINT32 uiParam);
-extern void KeyUp(UINT32 usParam, UINT32 uiParam);
+extern void KeyDown(uint32_t usParam, uint32_t uiParam);
+extern void KeyUp(uint32_t usParam, uint32_t uiParam);
 
 extern void GetMousePos(SGPPoint *Point);
 
-extern BOOLEAN DequeueSpecificEvent(InputAtom *Event, UINT32 uiMaskFlags);
+extern BOOLEAN DequeueSpecificEvent(InputAtom *Event, uint32_t uiMaskFlags);
 
-extern void RestrictMouseToXYXY(UINT16 usX1, UINT16 usY1, UINT16 usX2, UINT16 usY2);
+extern void RestrictMouseToXYXY(uint16_t usX1, uint16_t usY1, uint16_t usX2, uint16_t usY2);
 extern void RestrictMouseCursor(struct GRect *pRectangle);
 extern void FreeMouseCursor(void);
 extern BOOLEAN IsCursorRestricted(void);
 extern void GetRestrictedClipCursor(struct GRect *pRectangle);
 extern void ReapplyCursorClipRect(void);
 
-void SimulateMouseMovement(UINT32 uiNewXPos, UINT32 uiNewYPos);
+void SimulateMouseMovement(uint32_t uiNewXPos, uint32_t uiNewYPos);
 
 extern void DequeueAllKeyBoardEvents();
 
 extern BOOLEAN gfKeyState[256];  // TRUE = Pressed, FALSE = Not Pressed
 
-extern UINT16 gusMouseXPos;         // X position of the mouse on screen
-extern UINT16 gusMouseYPos;         // y position of the mouse on screen
+extern uint16_t gusMouseXPos;         // X position of the mouse on screen
+extern uint16_t gusMouseYPos;         // y position of the mouse on screen
 extern BOOLEAN gfLeftButtonState;   // TRUE = Pressed, FALSE = Not Pressed
 extern BOOLEAN gfRightButtonState;  // TRUE = Pressed, FALSE = Not Pressed
 
@@ -96,8 +96,8 @@ extern BOOLEAN gfSGPInputReceived;
 #define _EvType(a) ((InputAtom *)(a))->usEvent
 #define _EvTimeStamp(a) ((InputAtom *)(a))->uiTimeStamp
 #define _EvKey(a) ((InputAtom *)(a))->usParam
-#define _EvMouseX(a) (UINT16)(((InputAtom *)(a))->uiParam & 0x0000ffff)
-#define _EvMouseY(a) (UINT16)((((InputAtom *)(a))->uiParam & 0xffff0000) >> 16)
+#define _EvMouseX(a) (uint16_t)(((InputAtom *)(a))->uiParam & 0x0000ffff)
+#define _EvMouseY(a) (uint16_t)((((InputAtom *)(a))->uiParam & 0xffff0000) >> 16)
 #define _EvShiftDown(a) (((InputAtom *)(a))->usKeyState & SHIFT_DOWN)
 #define _EvCtrlDown(a) (((InputAtom *)(a))->usKeyState & CTRL_DOWN)
 #define _EvAltDown(a) (((InputAtom *)(a))->usKeyState & ALT_DOWN)

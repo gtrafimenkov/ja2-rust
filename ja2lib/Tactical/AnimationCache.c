@@ -14,25 +14,25 @@
 
 #define EMPTY_CACHE_ENTRY 65000
 
-UINT32 guiCacheSize = MIN_CACHE_SIZE;
+uint32_t guiCacheSize = MIN_CACHE_SIZE;
 
 void DetermineOptimumAnimationCacheSize() {
   // If we have lots-a memory, adjust accordingly!
   guiCacheSize = MIN_CACHE_SIZE;
 }
 
-BOOLEAN InitAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
-  UINT32 cnt;
+BOOLEAN InitAnimationCache(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
+  uint32_t cnt;
 
   // Allocate entries
   AnimDebugMsg(String("*** Initializing anim cache surface for soldier %d", usSoldierID));
-  pAnimCache->usCachedSurfaces = (UINT16 *)MemAlloc(sizeof(UINT16) * guiCacheSize);
+  pAnimCache->usCachedSurfaces = (uint16_t *)MemAlloc(sizeof(uint16_t) * guiCacheSize);
   if (!(pAnimCache->usCachedSurfaces != NULL)) {
     return FALSE;
   }
 
   AnimDebugMsg(String("*** Initializing anim cache hit counter for soldier %d", usSoldierID));
-  pAnimCache->sCacheHits = (INT16 *)MemAlloc(sizeof(INT16) * guiCacheSize);
+  pAnimCache->sCacheHits = (int16_t *)MemAlloc(sizeof(int16_t) * guiCacheSize);
   if (!(pAnimCache->sCacheHits != NULL)) {
     return FALSE;
   }
@@ -50,7 +50,7 @@ BOOLEAN InitAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAn
   return (TRUE);
 }
 
-void DeleteAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
+void DeleteAnimationCache(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
   // Allocate entries
   if (pAnimCache->usCachedSurfaces != NULL) {
     AnimDebugMsg(String("*** Removing Anim Cache surface for soldier %d", usSoldierID));
@@ -63,12 +63,12 @@ void DeleteAnimationCache(UINT16 usSoldierID, struct AnimationSurfaceCache *pAni
   }
 }
 
-BOOLEAN GetCachedAnimationSurface(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache,
-                                  UINT16 usSurfaceIndex, UINT16 usCurrentAnimation) {
-  UINT8 cnt;
-  UINT8 ubLowestIndex = 0;
-  INT16 sMostHits = (INT16)32000;
-  UINT16 usCurrentAnimSurface;
+BOOLEAN GetCachedAnimationSurface(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache,
+                                  uint16_t usSurfaceIndex, uint16_t usCurrentAnimation) {
+  uint8_t cnt;
+  uint8_t ubLowestIndex = 0;
+  int16_t sMostHits = (int16_t)32000;
+  uint16_t usCurrentAnimSurface;
 
   // Check to see if surface exists already
   for (cnt = 0; cnt < pAnimCache->ubCacheSize; cnt++) {
@@ -138,8 +138,8 @@ BOOLEAN GetCachedAnimationSurface(UINT16 usSoldierID, struct AnimationSurfaceCac
   return (TRUE);
 }
 
-void UnLoadCachedAnimationSurfaces(UINT16 usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
-  UINT8 cnt;
+void UnLoadCachedAnimationSurfaces(uint16_t usSoldierID, struct AnimationSurfaceCache *pAnimCache) {
+  uint8_t cnt;
 
   // Check to see if surface exists already
   for (cnt = 0; cnt < pAnimCache->ubCacheSize; cnt++) {

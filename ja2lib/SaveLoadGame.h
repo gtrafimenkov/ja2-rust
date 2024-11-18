@@ -17,58 +17,58 @@ struct SOLDIERTYPE;
 #define SAVE__END_TURN_NUM 98
 
 typedef struct {
-  UINT32 uiSavedGameVersion;
-  CHAR8 zGameVersionNumber[GAME_VERSION_LENGTH];
+  uint32_t uiSavedGameVersion;
+  char zGameVersionNumber[GAME_VERSION_LENGTH];
 
-  CHAR16 sSavedGameDesc[SIZE_OF_SAVE_GAME_DESC];
+  wchar_t sSavedGameDesc[SIZE_OF_SAVE_GAME_DESC];
 
-  UINT32 uiFlags;
+  uint32_t uiFlags;
 
   // The following will be used to quickly access info to display in the save/load screen
-  UINT32 uiDay;
-  UINT8 ubHour;
-  UINT8 ubMin;
-  INT16 sSectorX;
-  INT16 sSectorY;
-  INT8 bSectorZ;
-  UINT8 ubNumOfMercsOnPlayersTeam;
-  INT32 iCurrentBalance;
+  uint32_t uiDay;
+  uint8_t ubHour;
+  uint8_t ubMin;
+  int16_t sSectorX;
+  int16_t sSectorY;
+  int8_t bSectorZ;
+  uint8_t ubNumOfMercsOnPlayersTeam;
+  int32_t iCurrentBalance;
 
-  UINT32 uiCurrentScreen;
+  uint32_t uiCurrentScreen;
 
   BOOLEAN fAlternateSector;
 
   BOOLEAN fWorldLoaded;
 
-  UINT8 ubLoadScreenID;  // The load screen that should be used when loading the saved game
+  uint8_t ubLoadScreenID;  // The load screen that should be used when loading the saved game
 
   GAME_OPTIONS sInitialGameOptions;  // need these in the header so we can get the info from it on
                                      // the save load screen.
 
-  UINT32 uiRandom;
+  uint32_t uiRandom;
 
-  UINT8 ubFiller[110];
+  uint8_t ubFiller[110];
 
 } SAVED_GAME_HEADER;
 
-extern UINT32 guiScreenToGotoAfterLoadingSavedGame;
-extern UINT32 guiSaveGameVersion;
+extern uint32_t guiScreenToGotoAfterLoadingSavedGame;
+extern uint32_t guiSaveGameVersion;
 
-void CreateSavedGameFileNameFromNumber(UINT8 ubSaveGameID, STR pzNewFileName);
+void CreateSavedGameFileNameFromNumber(uint8_t ubSaveGameID, char* pzNewFileName);
 
-BOOLEAN SaveGame(UINT8 ubSaveGameID, STR16 pGameDesc, size_t bufSize);
-BOOLEAN LoadSavedGame(UINT8 ubSavedGameID);
+BOOLEAN SaveGame(uint8_t ubSaveGameID, wchar_t* pGameDesc, size_t bufSize);
+BOOLEAN LoadSavedGame(uint8_t ubSavedGameID);
 
 BOOLEAN CopySavedSoldierInfoToNewSoldier(struct SOLDIERTYPE *pDestSourceInfo,
                                          struct SOLDIERTYPE *pSourceInfo);
 
-BOOLEAN SaveFilesToSavedGame(STR pSrcFileName, FileID hFile);
-BOOLEAN LoadFilesFromSavedGame(STR pSrcFileName, FileID hFile);
+BOOLEAN SaveFilesToSavedGame(char* pSrcFileName, FileID hFile);
+BOOLEAN LoadFilesFromSavedGame(char* pSrcFileName, FileID hFile);
 
 BOOLEAN DoesUserHaveEnoughHardDriveSpace();
 
-void GetBestPossibleSectorXYZValues(u8 *psSectorX, u8 *psSectorY, INT8 *pbSectorZ);
+void GetBestPossibleSectorXYZValues(u8 *psSectorX, u8 *psSectorY, int8_t *pbSectorZ);
 
-extern UINT32 guiLastSaveGameNum;
+extern uint32_t guiLastSaveGameNum;
 
 #endif

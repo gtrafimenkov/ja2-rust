@@ -32,8 +32,8 @@ enum DebugLevel {
 void DebugMsg(enum DebugTopic topic, enum DebugLevel level, const char *message);
 
 extern void PrintToDebuggerConsole(const char *message);
-extern void _DebugMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
-extern void _AssertFailedMessage(STR8 pString, UINT32 uiLineNum, STR8 pSourceFile);
+extern void _DebugMessage(char* pString, uint32_t uiLineNum, char* pSourceFile);
+extern void _AssertFailedMessage(char* pString, uint32_t uiLineNum, char* pSourceFile);
 
 extern void _Null(void);
 extern char *String(const char *String, ...);
@@ -42,8 +42,8 @@ extern BOOLEAN InitializeDebugManager(void);
 extern void ShutdownDebugManager(void);
 
 // #if defined(_DEBUG) || defined(FORCE_ASSERTS_ON)
-#define Assert(a) (a) ? _Null() : _AssertFailedMessage((STR8)NULL, __LINE__, (STR8)__FILE__)
-#define AssertMsg(a, b) (a) ? _Null() : _AssertFailedMessage((STR8)b, __LINE__, (STR8)__FILE__)
+#define Assert(a) (a) ? _Null() : _AssertFailedMessage((char*)NULL, __LINE__, (char*)__FILE__)
+#define AssertMsg(a, b) (a) ? _Null() : _AssertFailedMessage((char*)b, __LINE__, (char*)__FILE__)
 extern char gubAssertString[128];
 // #else
 // #define Assert(a) _Null()
@@ -51,8 +51,8 @@ extern char gubAssertString[128];
 // #endif
 
 // #ifdef SGP_DEBUG
-#define FastDebugMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
-#define ErrorMsg(a) _DebugMessage((STR8)(a), (UINT32)(__LINE__), (STR8)(__FILE__))
+#define FastDebugMsg(a) _DebugMessage((char*)(a), (uint32_t)(__LINE__), (char*)(__FILE__))
+#define ErrorMsg(a) _DebugMessage((char*)(a), (uint32_t)(__LINE__), (char*)(__FILE__))
 // #else
 // #define FastDebugMsg(a) _Null()
 // #define ErrorMsg(a)

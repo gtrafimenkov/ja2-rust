@@ -28,7 +28,7 @@ void ReinitMilitiaTactical() {
 
 void RemoveMilitiaFromTactical() {
   SOLDIERINITNODE *curr;
-  INT32 i;
+  int32_t i;
   for (i = gTacticalStatus.Team[MILITIA_TEAM].bFirstID;
        i <= gTacticalStatus.Team[MILITIA_TEAM].bLastID; i++) {
     if (MercPtrs[i]->bActive) {

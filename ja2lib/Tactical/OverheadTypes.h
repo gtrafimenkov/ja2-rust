@@ -186,11 +186,11 @@ enum {
 #define BEHIND_RATIO 0
 
 // looking distance defines
-#define BEHIND (INT8)(BEHIND_RATIO * STRAIGHT_RANGE)
-#define SBEHIND (INT8)(SBEHIND_RATIO * STRAIGHT_RANGE)
-#define SIDE (INT8)(SIDE_RATIO * STRAIGHT_RANGE)
-#define ANGLE (INT8)(ANGLE_RATIO * STRAIGHT_RANGE)
-#define STRAIGHT (INT8)(STRAIGHT_RATIO * STRAIGHT_RANGE)
+#define BEHIND (int8_t)(BEHIND_RATIO * STRAIGHT_RANGE)
+#define SBEHIND (int8_t)(SBEHIND_RATIO * STRAIGHT_RANGE)
+#define SIDE (int8_t)(SIDE_RATIO * STRAIGHT_RANGE)
+#define ANGLE (int8_t)(ANGLE_RATIO * STRAIGHT_RANGE)
+#define STRAIGHT (int8_t)(STRAIGHT_RATIO * STRAIGHT_RANGE)
 
 // opplist value constants
 #define HEARD_3_TURNS_AGO -4
@@ -249,20 +249,20 @@ typedef enum {
 
 // PALETTE SUBSITUTION TYPES
 typedef struct {
-  UINT8 ubStart;
-  UINT8 ubEnd;
+  uint8_t ubStart;
+  uint8_t ubEnd;
 
 } PaletteSubRangeType;
 
-typedef CHAR8 PaletteRepID[30];
+typedef char PaletteRepID[30];
 
 typedef struct {
-  UINT8 ubType;
+  uint8_t ubType;
   PaletteRepID ID;
-  UINT8 ubPaletteSize;
-  UINT8 *r;
-  UINT8 *g;
-  UINT8 *b;
+  uint8_t ubPaletteSize;
+  uint8_t *r;
+  uint8_t *g;
+  uint8_t *b;
 
 } PaletteReplacementType;
 

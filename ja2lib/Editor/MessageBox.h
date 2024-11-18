@@ -6,10 +6,10 @@
 
 enum { MESSAGEBOX_NONE, MESSAGEBOX_DONE, MESSAGEBOX_WAIT };
 
-extern UINT8 gubMessageBoxStatus;
+extern uint8_t gubMessageBoxStatus;
 extern BOOLEAN gfMessageBoxResult;
 
-void CreateMessageBox(CHAR16 *wzString);
+void CreateMessageBox(wchar_t *wzString);
 BOOLEAN MessageBoxHandled();
 void RemoveMessageBox();
 
@@ -25,7 +25,7 @@ void RemoveMessageBox();
 //		return MYCURRENT_SCREEN;
 //	}
 //
-//  UINT32 ProcessMyOwnMessageBoxResultHandlerFunction()
+//  uint32_t ProcessMyOwnMessageBoxResultHandlerFunction()
 //	{
 //		RemoveMessageBox();  //MUST BE HERE
 //		if( gfMessageBoxResult ) //user selected yes

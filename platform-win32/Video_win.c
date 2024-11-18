@@ -77,7 +77,7 @@ void DDReleaseClipper(LPDIRECTDRAWCLIPPER pDDClipper);
 void DDSetClipperList(LPDIRECTDRAWCLIPPER pDDClipper, LPRGNDATA pClipList, UINT32 uiFlags);
 
 // local functions
-void DirectXAssert(BOOLEAN fValue, INT32 nLine, char *szFilename);
+void DirectXAssert(BOOLEAN fValue, int32_t nLine, char *szFilename);
 void DirectXZeroMem(void *pMemory, int nSize);
 
 #undef ZEROMEM
@@ -176,7 +176,7 @@ BOOLEAN InitializeVideoManager(struct PlatformInitParams *params) {
   HRESULT ReturnCode;
   HWND hWindow;
   WNDCLASS WindowClass;
-  CHAR8 ClassName[] = APPLICATION_NAME;
+  char ClassName[] = APPLICATION_NAME;
   DDSURFACEDESC SurfaceDescription;
   DDCOLORKEY ColorKey;
 
@@ -590,9 +590,9 @@ void ScrollJA2Background(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScr
   static UINT16 usMouseXPos, usMouseYPos;
   static RECT StripRegions[2], MouseRegion;
   UINT16 usNumStrips = 0;
-  INT32 cnt;
+  int32_t cnt;
   INT16 sShiftX, sShiftY;
-  INT32 uiCountY;
+  int32_t uiCountY;
 
   GetCurrentVideoSettings(&usWidth, &usHeight);
   usHeight = (gsVIEWPORT_WINDOW_END_Y - gsVIEWPORT_WINDOW_START_Y);
@@ -1392,7 +1392,7 @@ BOOLEAN Set8BPPPalette(struct SGPPaletteEntry *pPalette) {
   return (TRUE);
 }
 
-void FatalError(STR8 pError, ...) {
+void FatalError(char *pError, ...) {
   va_list argptr;
 
   va_start(argptr, pError);  // Set up variable argument pointer
@@ -1620,7 +1620,7 @@ static BOOLEAN ClipReleatedSrcAndDestRectangles(struct VSurface *hDestVSurface,
 }
 
 BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                           UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect) {
+                           UINT32 fBltFlags, int32_t iDestX, int32_t iDestY, struct Rect *SrcRect) {
   RECT DestRect;
 
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
@@ -1674,7 +1674,7 @@ BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrc
 }
 
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *dest, struct VSurface *src, UINT32 fBltFlags,
-                              INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
+                              int32_t iDestX, int32_t iDestY, struct Rect *SrcRect,
                               struct Rect *DestRect) {
   UINT32 uiDDFlags;
   RECT srcRect = {SrcRect->left, SrcRect->top, SrcRect->right, SrcRect->bottom};
@@ -1738,7 +1738,7 @@ BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *dest, struct VSurface *src, UINT3
 #define SMK_FLIC_AUTOCLOSE 0x00000008  // Close when done
 
 struct SmkFlic {
-  CHAR8 *cFilename;
+  char *cFilename;
   FileID file_id;
   struct SmackTag *SmackHandle;
   struct SmackBufTag *SmackBuffer;
@@ -1763,9 +1763,9 @@ LPDIRECTDRAWSURFACE2 lpVideoPlayback2 = NULL;
 //-Function-Prototypes-------------------------------------------------------------
 void SmkInitialize(UINT32 uiWidth, UINT32 uiHeight);
 void SmkShutdown(void);
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fAutoClose);
+struct SmkFlic *SmkPlayFlic(char *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fAutoClose);
 BOOLEAN SmkPollFlics(void);
-struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename);
+struct SmkFlic *SmkOpenFlic(char *cFilename);
 void SmkSetBlitPosition(struct SmkFlic *pSmack, UINT32 uiLeft, UINT32 uiTop);
 void SmkCloseFlic(struct SmkFlic *pSmack);
 struct SmkFlic *SmkGetFreeFlic(void);
@@ -1837,7 +1837,7 @@ void SmkShutdown(void) {
   }
 }
 
-struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
+struct SmkFlic *SmkPlayFlic(char *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLEAN fClose) {
   struct SmkFlic *pSmack;
 
   // Open the flic
@@ -1853,7 +1853,7 @@ struct SmkFlic *SmkPlayFlic(CHAR8 *cFilename, UINT32 uiLeft, UINT32 uiTop, BOOLE
   return (pSmack);
 }
 
-struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
+struct SmkFlic *SmkOpenFlic(char *cFilename) {
   struct SmkFlic *pSmack;
 
   // Get an available flic slot from the list
@@ -1879,7 +1879,7 @@ struct SmkFlic *SmkOpenFlic(CHAR8 *cFilename) {
     }
 
     if (!(pSmack->SmackHandle =
-              SmackOpen((CHAR8 *)hFile, SMACKFILEHANDLE | SMACKTRACKS, SMACKAUTOEXTRA)))
+              SmackOpen((char *)hFile, SMACKFILEHANDLE | SMACKTRACKS, SMACKAUTOEXTRA)))
     //	if(!(pSmack->SmackHandle=SmackOpen(cFilename, SMACKTRACKS, SMACKAUTOEXTRA)))
     {
       ErrorMsg("SMK ERROR: Smacker won't open the SMK file");
@@ -1958,7 +1958,7 @@ void SmkShutdownVideo(void) {
 
 #include "SGP/Font.h"
 
-INT32 FindFreeWinFont(void);
+int32_t FindFreeWinFont(void);
 BOOLEAN gfEnumSucceed = FALSE;
 
 #define MAX_WIN_FONTS 10
@@ -1976,7 +1976,7 @@ LOGFONT gLogFont;
 struct HWINFONT WinFonts[MAX_WIN_FONTS];
 
 void Convert16BitStringTo8BitChineseBig5String(UINT8 *dst, UINT16 *src) {
-  INT32 i, j;
+  int32_t i, j;
   char *ptr;
 
   i = j = 0;
@@ -1991,8 +1991,8 @@ void Convert16BitStringTo8BitChineseBig5String(UINT8 *dst, UINT16 *src) {
   }
 }
 
-INT32 FindFreeWinFont(void) {
-  INT32 iCount;
+int32_t FindFreeWinFont(void) {
+  int32_t iCount;
 
   for (iCount = 0; iCount < MAX_WIN_FONTS; iCount++) {
     if (WinFonts[iCount].hFont == NULL) {
@@ -2003,7 +2003,7 @@ INT32 FindFreeWinFont(void) {
   return (-1);
 }
 
-struct HWINFONT *GetWinFont(INT32 iFont) {
+struct HWINFONT *GetWinFont(int32_t iFont) {
   if (iFont == -1) {
     return (NULL);
   }
@@ -2015,7 +2015,7 @@ struct HWINFONT *GetWinFont(INT32 iFont) {
   }
 }
 
-CHAR16 gzFontName[32];
+wchar_t gzFontName[32];
 
 int CALLBACK EnumFontFamProc(CONST LOGFONT *lplf, CONST TEXTMETRIC *lptm, DWORD dwType,
                              LPARAM lpData) {
@@ -2026,10 +2026,10 @@ int CALLBACK EnumFontFamProc(CONST LOGFONT *lplf, CONST TEXTMETRIC *lptm, DWORD 
 
 int CALLBACK EnumFontFamExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType,
                                LPARAM lParam) {
-  CHAR8 szFontName[32];
+  char szFontName[32];
 
   sprintf(szFontName, "%S", gzFontName);
-  if (!strcmp(szFontName, (STR8)lpelfe->elfFullName)) {
+  if (!strcmp(szFontName, (char *)lpelfe->elfFullName)) {
     gfEnumSucceed = TRUE;
     memcpy(&gLogFont, &(lpelfe->elfLogFont), sizeof(LOGFONT));
   }

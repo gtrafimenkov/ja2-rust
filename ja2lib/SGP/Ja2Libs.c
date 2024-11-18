@@ -5,20 +5,20 @@
 
 #include "platform.h"
 
-INT8 gbLocale = ENGLISH_LANG;
+int8_t gbLocale = ENGLISH_LANG;
 
-STR8 LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
+char* LocaleNames[LANG_NUMBER] = {"default", "russian", "german", "dutch",
                                  "polish",  "french",  "italian"};
 
 #define _MAX_PATH 260
 
-INT8 DetectLocale() {
+int8_t DetectLocale() {
   gbLocale = ENGLISH_LANG;
   return gbLocale;
 
-  // INT8 bLoc;
+  // int8_t bLoc;
   // struct Str512 zPath;
-  // CHAR8 zLocalePath[_MAX_PATH];
+  // char zLocalePath[_MAX_PATH];
 
   // if (!Plat_GetExecutableDirectory(&zPath)) {
   //   return ENGLISH_LANG;

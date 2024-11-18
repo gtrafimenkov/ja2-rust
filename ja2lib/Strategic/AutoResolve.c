@@ -89,64 +89,64 @@ enum {
 typedef struct SOLDIERCELL {
   struct SOLDIERTYPE *pSoldier;
   struct MOUSE_REGION *pRegion;  // only used for player mercs.
-  UINT32 uiVObjectID;
-  UINT16 usIndex;
-  UINT32 uiFlags;
-  UINT16 usFrame;
-  INT16 xp, yp;
-  UINT16 usAttack, usDefence;
-  UINT16 usNextAttack;
-  UINT16 usNextHit[3];
-  UINT16 usHitDamage[3];
+  uint32_t uiVObjectID;
+  uint16_t usIndex;
+  uint32_t uiFlags;
+  uint16_t usFrame;
+  int16_t xp, yp;
+  uint16_t usAttack, usDefence;
+  uint16_t usNextAttack;
+  uint16_t usNextHit[3];
+  uint16_t usHitDamage[3];
   struct SOLDIERCELL *pAttacker[3];
-  UINT32 uiFlashTime;
-  INT8 bWeaponSlot;
+  uint32_t uiFlashTime;
+  int8_t bWeaponSlot;
 } SOLDIERCELL;
 
 typedef struct AUTORESOLVE_STRUCT {
   SOLDIERCELL *pRobotCell;
 
   // IDs into the graphic images
-  UINT32 iPanelImages;
-  INT32 iButton[NUM_AR_BUTTONS];
-  INT32 iButtonImage[NUM_AR_BUTTONS];
-  UINT32 iFaces;         // for generic civs and enemies
-  INT32 iMercFaces[20];  // for each merc face
-  UINT32 iIndent;
-  UINT32 iInterfaceBuffer;
-  INT32 iNumMercFaces;
-  INT32 iActualMercFaces;  // this represents the real number of merc faces.  Because
+  uint32_t iPanelImages;
+  int32_t iButton[NUM_AR_BUTTONS];
+  int32_t iButtonImage[NUM_AR_BUTTONS];
+  uint32_t iFaces;         // for generic civs and enemies
+  int32_t iMercFaces[20];  // for each merc face
+  uint32_t iIndent;
+  uint32_t iInterfaceBuffer;
+  int32_t iNumMercFaces;
+  int32_t iActualMercFaces;  // this represents the real number of merc faces.  Because
                            // my debug mode allows to freely add and subtract mercs, we
                            // can add/remove temp mercs, but we don't want to remove the
                            // actual mercs.
-  UINT32 uiTimeSlice;
-  UINT32 uiTotalElapsedBattleTimeInMilliseconds;
-  UINT32 uiPrevTime, uiCurrTime;
-  UINT32 uiStartExpanding;
-  UINT32 uiEndExpanding;
-  UINT32 uiPreRandomIndex;
+  uint32_t uiTimeSlice;
+  uint32_t uiTotalElapsedBattleTimeInMilliseconds;
+  uint32_t uiPrevTime, uiCurrTime;
+  uint32_t uiStartExpanding;
+  uint32_t uiEndExpanding;
+  uint32_t uiPreRandomIndex;
 
   struct GRect Rect, ExRect;
 
-  UINT16 usPlayerAttack;
-  UINT16 usPlayerDefence;
-  UINT16 usEnemyAttack;
-  UINT16 usEnemyDefence;
-  INT16 sWidth, sHeight;
-  INT16 sCenterStartX;
+  uint16_t usPlayerAttack;
+  uint16_t usPlayerDefence;
+  uint16_t usEnemyAttack;
+  uint16_t usEnemyDefence;
+  int16_t sWidth, sHeight;
+  int16_t sCenterStartX;
 
-  UINT8 ubEnemyLeadership;
-  UINT8 ubPlayerLeadership;
-  UINT8 ubMercs, ubCivs, ubEnemies;
-  UINT8 ubAdmins, ubTroops, ubElites;
-  UINT8 ubYMCreatures, ubYFCreatures, ubAMCreatures, ubAFCreatures;
-  UINT8 ubAliveMercs, ubAliveCivs, ubAliveEnemies;
-  UINT8 ubMercCols, ubMercRows;
-  UINT8 ubEnemyCols, ubEnemyRows;
-  UINT8 ubCivCols, ubCivRows;
-  UINT8 ubTimeModifierPercentage;
-  UINT8 ubSectorX, ubSectorY;
-  INT8 bVerticalOffset;
+  uint8_t ubEnemyLeadership;
+  uint8_t ubPlayerLeadership;
+  uint8_t ubMercs, ubCivs, ubEnemies;
+  uint8_t ubAdmins, ubTroops, ubElites;
+  uint8_t ubYMCreatures, ubYFCreatures, ubAMCreatures, ubAFCreatures;
+  uint8_t ubAliveMercs, ubAliveCivs, ubAliveEnemies;
+  uint8_t ubMercCols, ubMercRows;
+  uint8_t ubEnemyCols, ubEnemyRows;
+  uint8_t ubCivCols, ubCivRows;
+  uint8_t ubTimeModifierPercentage;
+  uint8_t ubSectorX, ubSectorY;
+  int8_t bVerticalOffset;
 
   BOOLEAN fRenderAutoResolve;
   BOOLEAN fExitAutoResolve;
@@ -258,20 +258,20 @@ enum {
 extern void CreateDestroyMapInvButton();
 
 // Autoresolve sets this variable which defaults to -1 when not needed.
-INT16 gsEnemyGainedControlOfSectorID = -1;
-INT16 gsCiviliansEatenByMonsters = -1;
+int16_t gsEnemyGainedControlOfSectorID = -1;
+int16_t gsCiviliansEatenByMonsters = -1;
 
 // Autoresolve handling -- keyboard input, callbacks
 void HandleAutoResolveInput();
-void PauseButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void PlayButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void FastButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void FinishButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void RetreatButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void BandageButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void DoneButtonCallback(GUI_BUTTON *btn, INT32 reason);
-void MercCellMouseMoveCallback(struct MOUSE_REGION *reg, INT32 reason);
-void MercCellMouseClickCallback(struct MOUSE_REGION *reg, INT32 reason);
+void PauseButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void PlayButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void FastButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void FinishButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void RetreatButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void BandageButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void DoneButtonCallback(GUI_BUTTON *btn, int32_t reason);
+void MercCellMouseMoveCallback(struct MOUSE_REGION *reg, int32_t reason);
+void MercCellMouseClickCallback(struct MOUSE_REGION *reg, int32_t reason);
 
 void DetermineBandageButtonState();
 
@@ -279,8 +279,8 @@ void DetermineBandageButtonState();
 void SetupDoneInterface();
 void SetupSurrenderInterface();
 void HideSurrenderInterface();
-void AcceptSurrenderCallback(GUI_BUTTON *btn, INT32 reason);
-void RejectSurrenderCallback(GUI_BUTTON *btn, INT32 reason);
+void AcceptSurrenderCallback(GUI_BUTTON *btn, int32_t reason);
+void RejectSurrenderCallback(GUI_BUTTON *btn, int32_t reason);
 
 // Precalculations for interface positioning and the calculation routines to do so.
 void CalculateAutoResolveInfo();
@@ -288,7 +288,7 @@ void CalculateSoldierCells(BOOLEAN fReset);
 void CalculateRowsAndColumns();
 void CreateAutoResolveInterface();
 void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood);
-INT32 CalcIndexFromColRowsXY(INT32 iMaxCols, INT32 iMaxRows, INT32 iCol, INT32 iRow);
+int32_t CalcIndexFromColRowsXY(int32_t iMaxCols, int32_t iMaxRows, int32_t iCol, int32_t iRow);
 
 // Battle system routines
 void DetermineTeamLeader(BOOLEAN fFriendlyTeam);
@@ -297,7 +297,7 @@ void ProcessBattleFrame();
 BOOLEAN IsBattleOver();
 BOOLEAN AttemptPlayerCapture();
 
-void AutoBandageFinishedCallback(UINT8 ubResult);
+void AutoBandageFinishedCallback(uint8_t ubResult);
 
 // Debug utilities
 void ResetAutoResolveInterface();
@@ -312,7 +312,7 @@ void RenderSoldierCellBars(SOLDIERCELL *pCell);
 
 #ifdef JA2BETAVERSION
 extern void CountRandomCalls(BOOLEAN fStart);
-extern void GetRandomCalls(UINT32 *puiRandoms, UINT32 *puiPreRandoms);
+extern void GetRandomCalls(uint32_t *puiRandoms, uint32_t *puiPreRandoms);
 #endif
 
 // Dynamic globals -- to conserve memory, all global variables are allocated upon entry
@@ -323,15 +323,15 @@ SOLDIERCELL *gpCivs = NULL;
 SOLDIERCELL *gpEnemies = NULL;
 
 // Simple wrappers for autoresolve sounds that are played.
-void PlayAutoResolveSample(UINT32 usNum, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                           UINT32 uiPan) {
+void PlayAutoResolveSample(uint32_t usNum, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                           uint32_t uiPan) {
   if (gpAR->fSound) {
     PlayJA2Sample(usNum, usRate, ubVolume, ubLoops, uiPan);
   }
 }
 
-void PlayAutoResolveSampleFromFile(STR8 szFileName, UINT32 usRate, UINT32 ubVolume, UINT32 ubLoops,
-                                   UINT32 uiPan) {
+void PlayAutoResolveSampleFromFile(char* szFileName, uint32_t usRate, uint32_t ubVolume, uint32_t ubLoops,
+                                   uint32_t uiPan) {
   if (gpAR->fSound) {
     PlayJA2SampleFromFile(szFileName, usRate, ubVolume, ubLoops, uiPan);
   }
@@ -341,7 +341,7 @@ extern void ClearPreviousAIGroupAssignment(struct GROUP *pGroup);
 
 void EliminateAllMercs() {
   SOLDIERCELL *pAttacker = NULL;
-  INT32 i, iNum = 0;
+  int32_t i, iNum = 0;
   if (gpAR) {
     for (i = 0; i < gpAR->ubEnemies; i++) {
       if (gpEnemies[i].pSoldier->bLife) {
@@ -354,7 +354,7 @@ void EliminateAllMercs() {
         if (gpMercs[i].pSoldier->bLife) {
           iNum++;
           gpMercs[i].pSoldier->bLife = 1;
-          gpMercs[i].usNextHit[0] = (UINT16)(250 * iNum);
+          gpMercs[i].usNextHit[0] = (uint16_t)(250 * iNum);
           gpMercs[i].usHitDamage[0] = 100;
           gpMercs[i].pAttacker[0] = pAttacker;
         }
@@ -364,7 +364,7 @@ void EliminateAllMercs() {
 }
 
 void EliminateAllFriendlies() {
-  INT32 i;
+  int32_t i;
   if (gpAR) {
     for (i = 0; i < gpAR->ubMercs; i++) {
       gpMercs[i].pSoldier->bLife = 0;
@@ -377,12 +377,12 @@ void EliminateAllFriendlies() {
   }
 }
 
-void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
+void EliminateAllEnemies(uint8_t ubSectorX, uint8_t ubSectorY) {
   struct GROUP *pGroup, *pDeleteGroup;
   SECTORINFO *pSector;
-  INT32 i;
-  UINT8 ubNumEnemies[NUM_ENEMY_RANKS];
-  UINT8 ubRankIndex;
+  int32_t i;
+  uint8_t ubNumEnemies[NUM_ENEMY_RANKS];
+  uint8_t ubRankIndex;
 
   // Clear any possible battle locator
   gfBlitBattleSectorLocator = FALSE;
@@ -430,7 +430,7 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
     }
     // set this sector as taken over
     SetThisSectorAsPlayerControlled(ubSectorX, ubSectorY, 0, TRUE);
-    RecalculateSectorWeight((UINT8)GetSectorID8(ubSectorX, ubSectorY));
+    RecalculateSectorWeight((uint8_t)GetSectorID8(ubSectorX, ubSectorY));
 
     // dirty map panel
     SetMapPanelDirty(true);
@@ -452,11 +452,11 @@ void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY) {
 
 void DoTransitionFromPreBattleInterfaceToAutoResolve() {
   struct GRect SrcRect, DstRect;
-  UINT32 uiStartTime, uiCurrTime;
-  INT32 iPercentage, iFactor;
-  UINT32 uiTimeRange;
-  INT16 sStartLeft, sEndLeft, sStartTop, sEndTop;
-  INT32 iLeft, iTop, iWidth, iHeight;
+  uint32_t uiStartTime, uiCurrTime;
+  int32_t iPercentage, iFactor;
+  uint32_t uiTimeRange;
+  int16_t sStartLeft, sEndLeft, sStartTop, sEndTop;
+  int32_t iLeft, iTop, iWidth, iHeight;
 
   PauseTime(FALSE);
 
@@ -487,12 +487,12 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
   RenderButtons();
   RenderButtonsFastHelp();
   // save it
-  VSurfaceBlitBufToBuf(vsFB, vsSB, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
-                       (UINT16)SrcRect.iRight, (UINT16)SrcRect.iBottom);
+  VSurfaceBlitBufToBuf(vsFB, vsSB, (uint16_t)SrcRect.iLeft, (uint16_t)SrcRect.iTop,
+                       (uint16_t)SrcRect.iRight, (uint16_t)SrcRect.iBottom);
 
   // hide the autoresolve
-  VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (UINT16)SrcRect.iLeft, (UINT16)SrcRect.iTop,
-                       (UINT16)SrcRect.iRight, (UINT16)SrcRect.iBottom);
+  VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (uint16_t)SrcRect.iLeft, (uint16_t)SrcRect.iTop,
+                       (uint16_t)SrcRect.iRight, (uint16_t)SrcRect.iBottom);
 
   PlayJA2SampleFromFile("SOUNDS\\Laptop power up (8-11).wav", RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
   while (iPercentage < 100) {
@@ -503,9 +503,9 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
     // Factor the percentage so that it is modified by a gravity falling acceleration effect.
     iFactor = (iPercentage - 50) * 2;
     if (iPercentage < 50)
-      iPercentage = (UINT32)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
+      iPercentage = (uint32_t)(iPercentage + iPercentage * iFactor * 0.01 + 0.5);
     else
-      iPercentage = (UINT32)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
+      iPercentage = (uint32_t)(iPercentage + (100 - iPercentage) * iFactor * 0.01 + 0.05);
 
     // Calculate the center point.
     iLeft = sStartLeft + (sEndLeft - sStartLeft + 1) * iPercentage / 100;
@@ -521,13 +521,13 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve() {
     RefreshScreen();
 
     // Restore the previous rect.
-    VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop,
-                         (UINT16)(DstRect.iRight - DstRect.iLeft + 1),
-                         (UINT16)(DstRect.iBottom - DstRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsExtraBuffer, vsFB, (uint16_t)DstRect.iLeft, (uint16_t)DstRect.iTop,
+                         (uint16_t)(DstRect.iRight - DstRect.iLeft + 1),
+                         (uint16_t)(DstRect.iBottom - DstRect.iTop + 1));
   }
 }
 
-void EnterAutoResolveMode(UINT8 ubSectorX, UINT8 ubSectorY) {
+void EnterAutoResolveMode(uint8_t ubSectorX, uint8_t ubSectorY) {
 #ifdef JA2BETAVERSION
   CountRandomCalls(TRUE);
 #endif
@@ -588,14 +588,14 @@ void EnterAutoResolveMode(UINT8 ubSectorX, UINT8 ubSectorY) {
   }
 }
 
-UINT32 AutoResolveScreenInit() { return TRUE; }
+uint32_t AutoResolveScreenInit() { return TRUE; }
 
-UINT32 AutoResolveScreenShutdown() {
+uint32_t AutoResolveScreenShutdown() {
   gpBattleGroup = NULL;
   return TRUE;
 }
 
-UINT32 AutoResolveScreenHandle() {
+uint32_t AutoResolveScreenHandle() {
   RestoreBackgroundRects();
 
   if (!gpAR) {
@@ -603,8 +603,8 @@ UINT32 AutoResolveScreenHandle() {
     return MAP_SCREEN;
   }
   if (gpAR->fEnteringAutoResolve) {
-    UINT8 *pDestBuf;
-    UINT32 uiDestPitchBYTES;
+    uint8_t *pDestBuf;
+    uint32_t uiDestPitchBYTES;
     struct GRect ClipRect;
     gpAR->fEnteringAutoResolve = FALSE;
     // Take the framebuffer, shade it, and save it to the SAVEBUFFER.
@@ -613,7 +613,7 @@ UINT32 AutoResolveScreenHandle() {
     ClipRect.iRight = 640;
     ClipRect.iBottom = 480;
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-    Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+    Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
     VSurfaceUnlock(vsFB);
     VSurfaceBlitBufToBuf(vsFB, vsSB, 0, 0, 640, 480);
     KillPreBattleInterface();
@@ -631,7 +631,7 @@ UINT32 AutoResolveScreenHandle() {
     RemoveAutoResolveInterface(TRUE);
 #ifdef JA2BETAVERSION
     {
-      UINT32 uiRandoms, uiPreRandoms;
+      uint32_t uiRandoms, uiPreRandoms;
       GetRandomCalls(&uiRandoms, &uiPreRandoms);
     }
 #endif
@@ -670,9 +670,9 @@ void RefreshMerc(struct SOLDIERTYPE *pSoldier) {
 void AssociateEnemiesWithStrategicGroups() {
   SECTORINFO *pSector;
   struct GROUP *pGroup;
-  UINT8 ubNumAdmins, ubNumTroops, ubNumElites;
-  UINT8 ubNumElitesInGroup, ubNumTroopsInGroup, ubNumAdminsInGroup;
-  INT32 i;
+  uint8_t ubNumAdmins, ubNumTroops, ubNumElites;
+  uint8_t ubNumElitesInGroup, ubNumTroopsInGroup, ubNumAdminsInGroup;
+  int32_t i;
 
   if (gubEnemyEncounterCode == CREATURE_ATTACK_CODE) return;
 
@@ -743,9 +743,9 @@ void AssociateEnemiesWithStrategicGroups() {
 }
 
 void CalculateSoldierCells(BOOLEAN fReset) {
-  INT32 i, x, y;
-  INT32 index, iStartY, iTop, gapStartRow;
-  INT32 iMaxTeamSize;
+  int32_t i, x, y;
+  int32_t index, iStartY, iTop, gapStartRow;
+  int32_t iMaxTeamSize;
 
   gpAR->ubAliveMercs = gpAR->ubMercs;
   gpAR->ubAliveCivs = gpAR->ubCivs;
@@ -754,7 +754,7 @@ void CalculateSoldierCells(BOOLEAN fReset) {
   iMaxTeamSize = max(gpAR->ubMercs + gpAR->ubCivs, gpAR->ubEnemies);
 
   if (iMaxTeamSize > 12) {
-    gpAR->ubTimeModifierPercentage = (UINT8)(118 - iMaxTeamSize * 1.5);
+    gpAR->ubTimeModifierPercentage = (uint8_t)(118 - iMaxTeamSize * 1.5);
   } else {
     gpAR->ubTimeModifierPercentage = 100;
   }
@@ -789,7 +789,7 @@ void CalculateSoldierCells(BOOLEAN fReset) {
         Assert(gpMercs[index].pRegion);
         memset(gpMercs[index].pRegion, 0, sizeof(struct MOUSE_REGION));
         MSYS_DefineRegion(gpMercs[index].pRegion, gpMercs[index].xp, gpMercs[index].yp,
-                          (UINT16)(gpMercs[index].xp + 50), (UINT16)(gpMercs[index].yp + 44),
+                          (uint16_t)(gpMercs[index].xp + 50), (uint16_t)(gpMercs[index].yp + 44),
                           MSYS_PRIORITY_HIGH, 0, MercCellMouseMoveCallback,
                           MercCellMouseClickCallback);
         if (fReset) RefreshMerc(gpMercs[index].pSoldier);
@@ -824,7 +824,7 @@ void CalculateSoldierCells(BOOLEAN fReset) {
         index = y * gpAR->ubEnemyCols + x;
         if (y > gapStartRow) index -= y - gapStartRow;
         Assert(index >= 0 && index < gpAR->ubEnemies);
-        gpEnemies[index].xp = (UINT16)(gpAR->sCenterStartX + 141 + 55 * x);
+        gpEnemies[index].xp = (uint16_t)(gpAR->sCenterStartX + 141 + 55 * x);
         gpEnemies[index].yp = iStartY + y * 47;
         if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
           if (index < gpAR->ubElites)
@@ -848,7 +848,7 @@ void CalculateSoldierCells(BOOLEAN fReset) {
 }
 
 void RenderSoldierCell(SOLDIERCELL *pCell) {
-  UINT8 x;
+  uint8_t x;
   if (pCell->uiFlags & CELL_MERC) {
     VSurfaceColorFill(vsFB, pCell->xp + 36, pCell->yp + 2, pCell->xp + 44, pCell->yp + 30, 0);
     BltVObjectFromIndex(vsFB, gpAR->iPanelImages, MERC_PANEL, pCell->xp, pCell->yp);
@@ -885,15 +885,15 @@ void RenderSoldierCell(SOLDIERCELL *pCell) {
       !(pCell->uiFlags &
         (CELL_HITBYATTACKER | CELL_HITLASTFRAME |
          CELL_CREATURE))) {  // Merc is unconcious (and not taking damage), so darken his portrait.
-    UINT8 *pDestBuf;
-    UINT32 uiDestPitchBYTES;
+    uint8_t *pDestBuf;
+    uint32_t uiDestPitchBYTES;
     struct GRect ClipRect;
     ClipRect.iLeft = pCell->xp + 3 + x;
     ClipRect.iTop = pCell->yp + 3;
     ClipRect.iRight = pCell->xp + 33 + x;
     ClipRect.iBottom = pCell->yp + 29;
     pDestBuf = VSurfaceLockOld(vsFB, &uiDestPitchBYTES);
-    Blt16BPPBufferShadowRect((UINT16 *)pDestBuf, uiDestPitchBYTES, &ClipRect);
+    Blt16BPPBufferShadowRect((uint16_t *)pDestBuf, uiDestPitchBYTES, &ClipRect);
     VSurfaceUnlock(vsFB);
   }
 
@@ -920,7 +920,7 @@ void RenderSoldierCell(SOLDIERCELL *pCell) {
 }
 
 void RenderSoldierCellBars(SOLDIERCELL *pCell) {
-  INT32 iStartY;
+  int32_t iStartY;
   // HEALTH BAR
   if (!pCell->pSoldier->bLife) return;
   // yellow one for bleeding
@@ -956,10 +956,10 @@ void RenderSoldierCellBars(SOLDIERCELL *pCell) {
 }
 
 void BuildInterfaceBuffer() {
-  UINT16 usUselessWidth, usUselessHeight;
+  uint16_t usUselessWidth, usUselessHeight;
   struct GRect ClipRect;
   struct GRect DestRect;
-  INT32 x, y;
+  int32_t x, y;
 
   // Setup the blitting clip regions, so we don't draw outside of the region (for excess panelling)
   gpAR->Rect.iLeft = 320 - gpAR->sWidth / 2;
@@ -1033,10 +1033,10 @@ void BuildInterfaceBuffer() {
 
 void ExpandWindow() {
   struct GRect OldRect;
-  UINT32 uiDestPitchBYTES;
-  UINT32 uiCurrentTime, uiTimeRange, uiPercent;
-  UINT8 *pDestBuf;
-  INT32 i;
+  uint32_t uiDestPitchBYTES;
+  uint32_t uiCurrentTime, uiTimeRange, uiPercent;
+  uint8_t *pDestBuf;
+  int32_t i;
 
   if (!gpAR->ExRect.iLeft && !gpAR->ExRect.iRight) {  // First time
     gpAR->ExRect.iLeft = ORIG_LEFT;
@@ -1049,23 +1049,23 @@ void ExpandWindow() {
   } else {
     // Restore the previous area
     // left
-    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop, 1,
-                         (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)gpAR->ExRect.iLeft, (uint16_t)gpAR->ExRect.iTop, 1,
+                         (uint16_t)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iLeft + 1,
                      gpAR->ExRect.iBottom + 1);
     // right
-    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iRight, (UINT16)gpAR->ExRect.iTop, 1,
-                         (UINT16)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)gpAR->ExRect.iRight, (uint16_t)gpAR->ExRect.iTop, 1,
+                         (uint16_t)(gpAR->ExRect.iBottom - gpAR->ExRect.iTop + 1));
     InvalidateRegion(gpAR->ExRect.iRight, gpAR->ExRect.iTop, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iBottom + 1);
     // top
-    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iTop,
-                         (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)gpAR->ExRect.iLeft, (uint16_t)gpAR->ExRect.iTop,
+                         (uint16_t)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iTop + 1);
     // bottom
-    VSurfaceBlitBufToBuf(vsSB, vsFB, (UINT16)gpAR->ExRect.iLeft, (UINT16)gpAR->ExRect.iBottom,
-                         (UINT16)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
+    VSurfaceBlitBufToBuf(vsSB, vsFB, (uint16_t)gpAR->ExRect.iLeft, (uint16_t)gpAR->ExRect.iBottom,
+                         (uint16_t)(gpAR->ExRect.iRight - gpAR->ExRect.iLeft + 1), 1);
     InvalidateRegion(gpAR->ExRect.iLeft, gpAR->ExRect.iBottom, gpAR->ExRect.iRight + 1,
                      gpAR->ExRect.iBottom + 1);
 
@@ -1135,10 +1135,10 @@ void ExpandWindow() {
                    gpAR->ExRect.iBottom + 1);
 }
 
-UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
-                                struct OBJECTTYPE *pKit, INT16 sKitPts, INT16 sStatus) {
-  UINT32 uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
-  UINT8 bBelowOKlife, bPtsLeft;
+uint32_t VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE *pVictim,
+                                struct OBJECTTYPE *pKit, int16_t sKitPts, int16_t sStatus) {
+  uint32_t uiDressSkill, uiPossible, uiActual, uiMedcost, uiDeficiency, uiAvailAPs, uiUsedAPs;
+  uint8_t bBelowOKlife, bPtsLeft;
 
   if (pVictim->bBleeding < 1) return 0;  // nothing to do, shouldn't have even been called!
   if (pVictim->bLife == 0) return 0;
@@ -1194,7 +1194,7 @@ UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE
   if (pKit->usItem == MEDICKIT) {
     uiMedcost = uiActual / 2;  // cost is only half
     if (uiMedcost == 0 && uiActual > 0) uiMedcost = 1;
-    if (uiMedcost > (UINT32)sKitPts)  // if we can't afford this
+    if (uiMedcost > (uint32_t)sKitPts)  // if we can't afford this
     {
       uiMedcost = sKitPts;       // what CAN we afford?
       uiActual = uiMedcost * 2;  // give double this as aid
@@ -1202,11 +1202,11 @@ UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE
   } else {
     uiMedcost = uiActual;
     if (uiMedcost == 0 && uiActual > 0) uiMedcost = 1;
-    if (uiMedcost > (UINT32)sKitPts)   // can't afford it
+    if (uiMedcost > (uint32_t)sKitPts)   // can't afford it
       uiMedcost = uiActual = sKitPts;  // recalc cost AND aid
   }
 
-  bPtsLeft = (INT8)uiActual;
+  bPtsLeft = (int8_t)uiActual;
   // heal real life points first (if below OKLIFE) because we don't want the
   // patient still DYING if bandages run out, or medic is disabled/distracted!
   // NOTE: Dressing wounds for life below OKLIFE now costs 2 pts/life point!
@@ -1262,18 +1262,18 @@ UINT32 VirtualSoldierDressWound(struct SOLDIERTYPE *pSoldier, struct SOLDIERTYPE
 
   if (uiActual / 2)
     // MEDICAL GAIN (actual / 2):  Helped someone by giving first aid
-    StatChange(pSoldier, MEDICALAMT, ((UINT16)(uiActual / 2)), FALSE);
+    StatChange(pSoldier, MEDICALAMT, ((uint16_t)(uiActual / 2)), FALSE);
 
   if (uiActual / 4)
     // DEXTERITY GAIN (actual / 4):  Helped someone by giving first aid
-    StatChange(pSoldier, DEXTAMT, (UINT16)((uiActual / 4)), FALSE);
+    StatChange(pSoldier, DEXTAMT, (uint16_t)((uiActual / 4)), FALSE);
 
   return uiMedcost;
 }
 
 struct OBJECTTYPE *FindMedicalKit() {
-  INT32 i;
-  INT32 iSlot;
+  int32_t i;
+  int32_t iSlot;
   for (i = 0; i < gpAR->ubMercs; i++) {
     iSlot = FindObjClass(gpMercs[i].pSoldier, IC_MEDKIT);
     if (iSlot != NO_SLOT) {
@@ -1283,13 +1283,13 @@ struct OBJECTTYPE *FindMedicalKit() {
   return NULL;
 }
 
-UINT32 AutoBandageMercs() {
-  INT32 i, iBest;
-  UINT32 uiPointsUsed, uiCurrPointsUsed, uiMaxPointsUsed, uiParallelPointsUsed;
-  UINT16 usKitPts;
+uint32_t AutoBandageMercs() {
+  int32_t i, iBest;
+  uint32_t uiPointsUsed, uiCurrPointsUsed, uiMaxPointsUsed, uiParallelPointsUsed;
+  uint16_t usKitPts;
   struct OBJECTTYPE *pKit = NULL;
   BOOLEAN fComplete = TRUE;
-  INT8 bSlot, cnt;
+  int8_t bSlot, cnt;
 
   // Do we have any doctors?  If so, bandage selves first.
   uiMaxPointsUsed = uiParallelPointsUsed = 0;
@@ -1309,7 +1309,7 @@ UINT32 AutoBandageMercs() {
         }
         uiPointsUsed = VirtualSoldierDressWound(gpMercs[i].pSoldier, gpMercs[i].pSoldier, pKit,
                                                 usKitPts, usKitPts);
-        UseKitPoints(pKit, (UINT16)uiPointsUsed, gpMercs[i].pSoldier);
+        UseKitPoints(pKit, (uint16_t)uiPointsUsed, gpMercs[i].pSoldier);
         uiCurrPointsUsed += uiPointsUsed;
         cnt++;
         if (cnt > 50) break;
@@ -1348,7 +1348,7 @@ UINT32 AutoBandageMercs() {
       }
       uiPointsUsed = VirtualSoldierDressWound(gpMercs[iBest].pSoldier, gpMercs[i].pSoldier, pKit,
                                               usKitPts, usKitPts);
-      UseKitPoints(pKit, (UINT16)uiPointsUsed, gpMercs[i].pSoldier);
+      UseKitPoints(pKit, (uint16_t)uiPointsUsed, gpMercs[i].pSoldier);
       uiParallelPointsUsed += uiPointsUsed;
       fComplete = TRUE;
     }
@@ -1366,11 +1366,11 @@ UINT32 AutoBandageMercs() {
 }
 
 void RenderAutoResolve() {
-  INT32 i;
+  int32_t i;
   struct VSurface *hVSurface;
-  INT32 xp, yp;
-  CHAR16 str[100];
-  UINT8 ubGood, ubBad;
+  int32_t xp, yp;
+  wchar_t str[100];
+  uint8_t ubGood, ubBad;
 
   if (gpAR->fExpanding) {  // animate the expansion of the window.
     ExpandWindow();
@@ -1452,7 +1452,7 @@ void RenderAutoResolve() {
   mprintf(xp, yp, str);
 
   // Display the remaining forces
-  ubGood = (UINT8)(gpAR->ubAliveMercs + gpAR->ubAliveCivs);
+  ubGood = (uint8_t)(gpAR->ubAliveMercs + gpAR->ubAliveCivs);
   ubBad = gpAR->ubAliveEnemies;
   swprintf(str, ARR_SIZE(str), gzLateLocalizedString[17], ubGood, ubBad);
 
@@ -1476,8 +1476,8 @@ void RenderAutoResolve() {
 #endif
 
   if (gpAR->fPendingSurrender) {
-    DisplayWrappedString((UINT16)(gpAR->sCenterStartX + 16), (UINT16)(230 + gpAR->bVerticalOffset),
-                         108, 2, (UINT8)FONT10ARIAL, FONT_YELLOW,
+    DisplayWrappedString((uint16_t)(gpAR->sCenterStartX + 16), (uint16_t)(230 + gpAR->bVerticalOffset),
+                         108, 2, (uint8_t)FONT10ARIAL, FONT_YELLOW,
                          gpStrategicString[STR_ENEMY_SURRENDER_OFFER], FONT_BLACK, FALSE,
                          LEFT_JUSTIFIED);
   }
@@ -1493,7 +1493,7 @@ void RenderAutoResolve() {
         if (gpAR->ubBattleStatus == BATTLE_VICTORY) {
           SetFactTrue(FACT_FIRST_BATTLE_WON);
         }
-        SetTheFirstBattleSector((INT16)(gpAR->ubSectorX + gpAR->ubSectorY * MAP_WORLD_X));
+        SetTheFirstBattleSector((int16_t)(gpAR->ubSectorX + gpAR->ubSectorY * MAP_WORLD_X));
         HandleFirstBattleEndingWhileInTown(gpAR->ubSectorX, gpAR->ubSectorY, 0, TRUE);
       }
 
@@ -1569,7 +1569,7 @@ void RenderAutoResolve() {
         if (gpAR->ubBattleStatus == BATTLE_SURRENDERED) {
           swprintf(str, ARR_SIZE(str), gpStrategicString[STR_AR_OVER_SURRENDERED]);
         } else {
-          DisplayWrappedString((UINT16)(gpAR->sCenterStartX + 16), 310, 108, 2, FONT10ARIAL,
+          DisplayWrappedString((uint16_t)(gpAR->sCenterStartX + 16), 310, 108, 2, FONT10ARIAL,
                                FONT_YELLOW, gpStrategicString[STR_ENEMY_CAPTURED], FONT_BLACK,
                                FALSE, LEFT_JUSTIFIED);
           swprintf(str, ARR_SIZE(str), gpStrategicString[STR_AR_OVER_CAPTURED]);
@@ -1610,7 +1610,7 @@ void RenderAutoResolve() {
 }
 
 void CreateAutoResolveInterface() {
-  INT32 i, index;
+  int32_t i, index;
   struct VObject *hVObject;
   // Setup new autoresolve blanket interface.
   MSYS_DefineRegion(&gpAR->AutoResolveRegion, 0, 0, 640, 480, MSYS_PRIORITY_HIGH - 1, 0,
@@ -1821,25 +1821,25 @@ void CreateAutoResolveInterface() {
 
   // Create the buttons -- subject to relocation
   gpAR->iButton[PLAY_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[PLAY_BUTTON], (INT16)(gpAR->sCenterStartX + 11),
-                        (INT16)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[PLAY_BUTTON], (int16_t)(gpAR->sCenterStartX + 11),
+                        (int16_t)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, PlayButtonCallback);
   gpAR->iButton[FAST_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[FAST_BUTTON], (INT16)(gpAR->sCenterStartX + 51),
-                        (INT16)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[FAST_BUTTON], (int16_t)(gpAR->sCenterStartX + 51),
+                        (int16_t)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, FastButtonCallback);
   gpAR->iButton[FINISH_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[FINISH_BUTTON], (INT16)(gpAR->sCenterStartX + 91),
-                        (INT16)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[FINISH_BUTTON], (int16_t)(gpAR->sCenterStartX + 91),
+                        (int16_t)(240 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, FinishButtonCallback);
   gpAR->iButton[PAUSE_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[PAUSE_BUTTON], (INT16)(gpAR->sCenterStartX + 11),
-                        (INT16)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[PAUSE_BUTTON], (int16_t)(gpAR->sCenterStartX + 11),
+                        (int16_t)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, PauseButtonCallback);
 
   gpAR->iButton[RETREAT_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[RETREAT_BUTTON], (INT16)(gpAR->sCenterStartX + 51),
-                        (INT16)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[RETREAT_BUTTON], (int16_t)(gpAR->sCenterStartX + 51),
+                        (int16_t)(274 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, RetreatButtonCallback);
   if (!gpAR->ubMercs) {
     DisableButton(gpAR->iButton[RETREAT_BUTTON]);
@@ -1849,32 +1849,32 @@ void CreateAutoResolveInterface() {
                                      FONT_NEARBLACK);
 
   gpAR->iButton[BANDAGE_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[BANDAGE_BUTTON], (INT16)(gpAR->sCenterStartX + 11),
-                        (INT16)(245 + gpAR->bVerticalOffset), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[BANDAGE_BUTTON], (int16_t)(gpAR->sCenterStartX + 11),
+                        (int16_t)(245 + gpAR->bVerticalOffset), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, BandageButtonCallback);
 
   gpAR->iButton[DONEWIN_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[DONEWIN_BUTTON], (INT16)(gpAR->sCenterStartX + 51),
-                        (INT16)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[DONEWIN_BUTTON], (int16_t)(gpAR->sCenterStartX + 51),
+                        (int16_t)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, DoneButtonCallback);
   SpecifyGeneralButtonTextAttributes(gpAR->iButton[DONEWIN_BUTTON],
                                      gpStrategicString[STR_AR_DONE_BUTTON], BLOCKFONT2, 169,
                                      FONT_NEARBLACK);
 
   gpAR->iButton[DONELOSE_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[DONELOSE_BUTTON], (INT16)(gpAR->sCenterStartX + 25),
-                        (INT16)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[DONELOSE_BUTTON], (int16_t)(gpAR->sCenterStartX + 25),
+                        (int16_t)(245 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, DoneButtonCallback);
   SpecifyGeneralButtonTextAttributes(gpAR->iButton[DONELOSE_BUTTON],
                                      gpStrategicString[STR_AR_DONE_BUTTON], BLOCKFONT2, 169,
                                      FONT_NEARBLACK);
   gpAR->iButton[YES_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[YES_BUTTON], (INT16)(gpAR->sCenterStartX + 21),
-                        (INT16)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[YES_BUTTON], (int16_t)(gpAR->sCenterStartX + 21),
+                        (int16_t)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, AcceptSurrenderCallback);
   gpAR->iButton[NO_BUTTON] =
-      QuickCreateButton(gpAR->iButtonImage[NO_BUTTON], (INT16)(gpAR->sCenterStartX + 81),
-                        (INT16)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+      QuickCreateButton(gpAR->iButtonImage[NO_BUTTON], (int16_t)(gpAR->sCenterStartX + 81),
+                        (int16_t)(257 + gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
                         DEFAULT_MOVE_CALLBACK, RejectSurrenderCallback);
   HideButton(gpAR->iButton[YES_BUTTON]);
   HideButton(gpAR->iButton[NO_BUTTON]);
@@ -1885,8 +1885,8 @@ void CreateAutoResolveInterface() {
 }
 
 void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
-  INT32 i;
-  UINT8 ubCurrentGroupID = 0;
+  int32_t i;
+  uint8_t ubCurrentGroupID = 0;
   BOOLEAN fFirstGroup = TRUE;
 
   MSYS_RemoveRegion(&gpAR->AutoResolveRegion);
@@ -1971,7 +1971,7 @@ void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
   PrepMilitiaPromotion();
   for (i = 0; i < MAX_ALLOWABLE_MILITIA_PER_SECTOR; i++) {
     if (gpCivs[i].pSoldier) {
-      UINT8 rank = SoldierClassToMilitiaRank(gpCivs[i].pSoldier->ubSoldierClass);
+      uint8_t rank = SoldierClassToMilitiaRank(gpCivs[i].pSoldier->ubSoldierClass);
       if (fDeleteForGood && gpCivs[i].pSoldier->bLife < OKLIFE / 2) {
         AddDeadSoldierToUnLoadedSector(gpAR->ubSectorX, gpAR->ubSectorY, 0, gpCivs[i].pSoldier,
                                        RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT);
@@ -2058,7 +2058,7 @@ void RemoveAutoResolveInterface(BOOLEAN fDeleteForGood) {
   // VtPauseSampling();
 }
 
-void PauseButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void PauseButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[gpAR->iButton[PLAY_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[gpAR->iButton[FAST_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -2067,7 +2067,7 @@ void PauseButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void PlayButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void PlayButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[gpAR->iButton[PAUSE_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[gpAR->iButton[FAST_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -2077,7 +2077,7 @@ void PlayButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void FastButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void FastButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[gpAR->iButton[PAUSE_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[gpAR->iButton[PLAY_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -2087,7 +2087,7 @@ void FastButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void FinishButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void FinishButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ButtonList[gpAR->iButton[PAUSE_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
     ButtonList[gpAR->iButton[PLAY_BUTTON]]->uiFlags &= ~BUTTON_CLICKED_ON;
@@ -2099,15 +2099,15 @@ void FinishButtonCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void RetreatButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void RetreatButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    INT32 i;
+    int32_t i;
     for (i = 0; i < gpAR->ubMercs; i++) {
       if (!(gpMercs[i].uiFlags & (CELL_RETREATING | CELL_RETREATED))) {
         gpMercs[i].uiFlags |= CELL_RETREATING | CELL_DIRTY;
         // Gets to retreat after a total of 2 attacks.
         gpMercs[i].usNextAttack =
-            (UINT16)((1000 + gpMercs[i].usNextAttack * 2 + PreRandom(2000 - gpMercs[i].usAttack)) *
+            (uint16_t)((1000 + gpMercs[i].usNextAttack * 2 + PreRandom(2000 - gpMercs[i].usAttack)) *
                      2);
         gpAR->usPlayerAttack -= gpMercs[i].usAttack;
         gpMercs[i].usAttack = 0;
@@ -2115,7 +2115,7 @@ void RetreatButtonCallback(GUI_BUTTON *btn, INT32 reason) {
     }
     if (gpAR->pRobotCell) {  // if robot is retreating, set the retreat time to be the same as the
                              // robot's controller.
-      UINT8 ubRobotControllerID;
+      uint8_t ubRobotControllerID;
 
       ubRobotControllerID = gpAR->pRobotCell->pSoldier->ubRobotRemoteHolderID;
 
@@ -2138,7 +2138,7 @@ void RetreatButtonCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void DetermineBandageButtonState() {
-  INT32 i;
+  int32_t i;
   struct OBJECTTYPE *pKit = NULL;
   BOOLEAN fFound = FALSE;
 
@@ -2182,22 +2182,22 @@ void DetermineBandageButtonState() {
   SetButtonFastHelpText(gpAR->iButton[BANDAGE_BUTTON], gzLateLocalizedString[12]);
 }
 
-void BandageButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void BandageButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     AutoBandageMercs();
     SetupDoneInterface();
   }
 }
 
-void DoneButtonCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoneButtonCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gpAR->fExitAutoResolve = TRUE;
   }
 }
 
-void MercCellMouseMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void MercCellMouseMoveCallback(struct MOUSE_REGION *reg, int32_t reason) {
   // Find the merc with the same region.
-  INT32 i;
+  int32_t i;
   SOLDIERCELL *pCell = NULL;
   for (i = 0; i < gpAR->ubMercs; i++) {
     if (gpMercs[i].pRegion == reg) {
@@ -2222,10 +2222,10 @@ void MercCellMouseMoveCallback(struct MOUSE_REGION *reg, INT32 reason) {
   }
 }
 
-void MercCellMouseClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
+void MercCellMouseClickCallback(struct MOUSE_REGION *reg, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     // Find the merc with the same region.
-    INT32 i;
+    int32_t i;
     SOLDIERCELL *pCell = NULL;
 
     if (gpAR->fPendingSurrender) {  // Can't setup retreats when pending surrender.
@@ -2252,12 +2252,12 @@ void MercCellMouseClickCallback(struct MOUSE_REGION *reg, INT32 reason) {
     pCell->uiFlags |= CELL_RETREATING | CELL_DIRTY;
     // Gets to retreat after a total of 2 attacks.
     pCell->usNextAttack =
-        (UINT16)((1000 + pCell->usNextAttack * 5 + PreRandom(2000 - pCell->usAttack)) * 2);
+        (uint16_t)((1000 + pCell->usNextAttack * 5 + PreRandom(2000 - pCell->usAttack)) * 2);
     gpAR->usPlayerAttack -= pCell->usAttack;
     pCell->usAttack = 0;
 
     if (gpAR->pRobotCell) {  // if controller is retreating, make the robot retreat too.
-      UINT8 ubRobotControllerID;
+      uint8_t ubRobotControllerID;
 
       ubRobotControllerID = gpAR->pRobotCell->pSoldier->ubRobotRemoteHolderID;
 
@@ -2289,7 +2289,7 @@ void CalculateAutoResolveInfo() {
   if (gubEnemyEncounterCode != CREATURE_ATTACK_CODE) {
     GetNumberOfEnemiesInSector(gpAR->ubSectorX, gpAR->ubSectorY, &gpAR->ubAdmins, &gpAR->ubTroops,
                                &gpAR->ubElites);
-    gpAR->ubEnemies = (UINT8)min(gpAR->ubAdmins + gpAR->ubTroops + gpAR->ubElites, 32);
+    gpAR->ubEnemies = (uint8_t)min(gpAR->ubAdmins + gpAR->ubTroops + gpAR->ubElites, 32);
   } else {
     if (gfTransferTacticalOppositionToAutoResolve) {
       DetermineCreatureTownCompositionBasedOnTacticalInformation(
@@ -2300,7 +2300,7 @@ void CalculateAutoResolveInfo() {
                                        &gpAR->ubYFCreatures, &gpAR->ubAMCreatures,
                                        &gpAR->ubAFCreatures);
     }
-    gpAR->ubEnemies = (UINT8)min(
+    gpAR->ubEnemies = (uint8_t)min(
         gpAR->ubYMCreatures + gpAR->ubYFCreatures + gpAR->ubAMCreatures + gpAR->ubAFCreatures, 32);
   }
   gfTransferTacticalOppositionToAutoResolve = FALSE;
@@ -2724,13 +2724,13 @@ void HandleAutoResolveInput() {
 }
 
 void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
-  INT32 cnt, cntStart;
-  INT32 xp, yp;
-  STR16 pStr;
-  CHAR16 str[20];
-  UINT8 *pDestBuf, *pSrcBuf;
-  UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
-  UINT16 usColor;
+  int32_t cnt, cntStart;
+  int32_t xp, yp;
+  wchar_t* pStr;
+  wchar_t str[20];
+  uint8_t *pDestBuf, *pSrcBuf;
+  uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
+  uint16_t usColor;
 
   SetFont(SMALLCOMPFONT);
   // Restore the background before drawing text.
@@ -2738,7 +2738,7 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
   pSrcBuf = VSurfaceLockOld(GetVSByID(gpAR->iInterfaceBuffer), &uiSrcPitchBYTES);
   xp = pCell->xp + 2;
   yp = pCell->yp + 32;
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, xp, yp,
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, xp, yp,
                   NewGRect(xp - gpAR->Rect.iLeft, yp - gpAR->Rect.iTop, 46, 10));
   VSurfaceUnlock(GetVSByID(gpAR->iInterfaceBuffer));
   VSurfaceUnlock(vsFB);
@@ -2804,18 +2804,18 @@ void RenderSoldierCellHealth(SOLDIERCELL *pCell) {
       mprintf(xp, yp, str);
     }
   }
-  SetFontForeground((UINT8)usColor);
+  SetFontForeground((uint8_t)usColor);
   xp = pCell->xp + 25 - StringPixLength(pStr, SMALLCOMPFONT) / 2;
   yp = pCell->yp + 33;
   mprintf(xp, yp, pStr);
 }
 
-UINT8 GetUnusedMercProfileID() {
-  UINT8 ubRandom = 0;
-  INT32 i;
+uint8_t GetUnusedMercProfileID() {
+  uint8_t ubRandom = 0;
+  int32_t i;
   BOOLEAN fUnique = FALSE;
   while (!fUnique) {
-    ubRandom = (UINT8)PreRandom(40);
+    ubRandom = (uint8_t)PreRandom(40);
     for (i = 0; i < 19; i++) {
       fUnique = TRUE;
       if (Menptr[i].ubProfile == ubRandom) {
@@ -2829,7 +2829,7 @@ UINT8 GetUnusedMercProfileID() {
 
 void CreateTempPlayerMerc() {
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT8 ubID;
+  uint8_t ubID;
 
   // Init the merc create structure with basic information
   memset(&MercCreateStruct, 0, sizeof(MercCreateStruct));
@@ -2850,7 +2850,7 @@ void CreateTempPlayerMerc() {
 }
 
 void DetermineTeamLeader(BOOLEAN fFriendlyTeam) {
-  INT32 i;
+  int32_t i;
   SOLDIERCELL *pBestLeaderCell = NULL;
   // For each team (civs and players count as same team), find the merc with the best
   // leadership ability.
@@ -2892,19 +2892,19 @@ void DetermineTeamLeader(BOOLEAN fFriendlyTeam) {
 void ResetNextAttackCounter(SOLDIERCELL *pCell) {
   pCell->usNextAttack = min(1000 - pCell->usAttack, 800);
   pCell->usNextAttack =
-      (UINT16)(1000 + pCell->usNextAttack * 5 + PreRandom(2000 - pCell->usAttack));
+      (uint16_t)(1000 + pCell->usNextAttack * 5 + PreRandom(2000 - pCell->usAttack));
   if (pCell->uiFlags & CELL_CREATURE) {
     pCell->usNextAttack = pCell->usNextAttack * 8 / 10;
   }
 }
 
 void CalculateAttackValues() {
-  INT32 i;
+  int32_t i;
   SOLDIERCELL *pCell;
   struct SOLDIERTYPE *pSoldier;
-  UINT16 usBonus;
-  UINT16 usBestAttack = 0xffff;
-  UINT16 usBreathStrengthPercentage;
+  uint16_t usBonus;
+  uint16_t usBestAttack = 0xffff;
+  uint16_t usBreathStrengthPercentage;
   gpAR->usPlayerAttack = 0;
   gpAR->usPlayerDefence = 0;
 
@@ -2918,7 +2918,7 @@ void CalculateAttackValues() {
     // as the player would typically do much better in tactical.
     if (pCell->usAttack < 1000) {  // A player with 500 attack will be augmented to 625
       // A player with 600 attack will be augmented to 700
-      pCell->usAttack = (UINT16)(pCell->usAttack + (1000 - pCell->usAttack) / 4);
+      pCell->usAttack = (uint16_t)(pCell->usAttack + (1000 - pCell->usAttack) / 4);
     }
     usBreathStrengthPercentage = 100 - (100 - pCell->pSoldier->bBreathMax) / 3;
     pCell->usAttack = pCell->usAttack * usBreathStrengthPercentage / 100;
@@ -2946,7 +2946,7 @@ void CalculateAttackValues() {
     gpAR->usPlayerDefence += pCell->usDefence;
     ResetNextAttackCounter(pCell);
     if (i > 8) {  // Too many mercs, delay attack entry of extra mercs.
-      pCell->usNextAttack += (UINT16)((i - 8) * 2000);
+      pCell->usNextAttack += (uint16_t)((i - 8) * 2000);
     }
     if (pCell->usNextAttack < usBestAttack) usBestAttack = pCell->usNextAttack;
   }
@@ -2974,7 +2974,7 @@ void CalculateAttackValues() {
     gpAR->usPlayerDefence += pCell->usDefence;
     ResetNextAttackCounter(pCell);
     if (i > 6) {  // Too many militia, delay attack entry of extra mercs.
-      pCell->usNextAttack += (UINT16)((i - 4) * 2000);
+      pCell->usNextAttack += (uint16_t)((i - 4) * 2000);
     }
     if (pCell->usNextAttack < usBestAttack) usBestAttack = pCell->usNextAttack;
   }
@@ -2985,8 +2985,8 @@ void CalculateAttackValues() {
   //{
   //	//bonus equals 20 if good guys outnumber bad guys 2 to 1.
   //	sMaxBonus = 20;
-  //	sOutnumberBonus = (INT16)gpAR->ubEnemies * sMaxBonus / (gpAR->ubMercs + gpAR->ubCivs) -
-  // sMaxBonus; 	sOutnumberBonus = (INT16)min( sOutnumberBonus, max( sMaxBonus, 0 ) );
+  //	sOutnumberBonus = (int16_t)gpAR->ubEnemies * sMaxBonus / (gpAR->ubMercs + gpAR->ubCivs) -
+  // sMaxBonus; 	sOutnumberBonus = (int16_t)min( sOutnumberBonus, max( sMaxBonus, 0 ) );
   //}
 
   for (i = 0; i < gpAR->ubEnemies; i++) {
@@ -3014,7 +3014,7 @@ void CalculateAttackValues() {
 
     if (i > 4 && !(pCell->uiFlags &
                    CELL_CREATURE)) {  // Too many enemies, delay attack entry of extra mercs.
-      pCell->usNextAttack += (UINT16)((i - 4) * 1000);
+      pCell->usNextAttack += (uint16_t)((i - 4) * 1000);
     }
 
     if (pCell->usNextAttack < usBestAttack) usBestAttack = pCell->usNextAttack;
@@ -3028,7 +3028,7 @@ void CalculateAttackValues() {
 }
 
 void DrawDebugText(SOLDIERCELL *pCell) {
-  INT32 xp, yp;
+  int32_t xp, yp;
   if (!gpAR->fDebugInfo) return;
   SetFont(SMALLCOMPFONT);
   SetFontForeground(FONT_WHITE);
@@ -3069,11 +3069,11 @@ void DrawDebugText(SOLDIERCELL *pCell) {
 }
 
 SOLDIERCELL *ChooseTarget(SOLDIERCELL *pAttacker) {
-  INT32 iAvailableTargets;
-  INT32 index;
-  INT32 iRandom = -1;
+  int32_t iAvailableTargets;
+  int32_t index;
+  int32_t iRandom = -1;
   SOLDIERCELL *pTarget = NULL;
-  UINT16 usSavedDefence;
+  uint16_t usSavedDefence;
   // Determine what team we are attacking
   if (pAttacker->uiFlags & (CELL_ENEMY | CELL_CREATURE)) {  // enemy team attacking a player
     iAvailableTargets = gpAR->ubMercs + gpAR->ubCivs;
@@ -3128,7 +3128,7 @@ SOLDIERCELL *ChooseTarget(SOLDIERCELL *pAttacker) {
 BOOLEAN FireAShot(SOLDIERCELL *pAttacker) {
   struct OBJECTTYPE *pItem;
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
+  int32_t i;
 
   pSoldier = pAttacker->pSoldier;
 
@@ -3141,7 +3141,7 @@ BOOLEAN FireAShot(SOLDIERCELL *pAttacker) {
     pItem = &pSoldier->inv[i];
 
     if (Item[pItem->usItem].usItemClass == IC_GUN) {
-      pAttacker->bWeaponSlot = (INT8)i;
+      pAttacker->bWeaponSlot = (int8_t)i;
       if (gpAR->fUnlimitedAmmo) {
         PlayAutoResolveSample(Weapon[pItem->usItem].sSound, RATE_11025, 50, 1, MIDDLEPAN);
         return TRUE;
@@ -3171,10 +3171,10 @@ BOOLEAN FireAShot(SOLDIERCELL *pAttacker) {
 }
 
 BOOLEAN AttackerHasKnife(SOLDIERCELL *pAttacker) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < NUM_INV_SLOTS; i++) {
     if (Item[pAttacker->pSoldier->inv[i].usItem].usItemClass == IC_BLADE) {
-      pAttacker->bWeaponSlot = (INT8)i;
+      pAttacker->bWeaponSlot = (int8_t)i;
       return TRUE;
     }
   }
@@ -3183,7 +3183,7 @@ BOOLEAN AttackerHasKnife(SOLDIERCELL *pAttacker) {
 }
 
 BOOLEAN TargetHasLoadedGun(struct SOLDIERTYPE *pSoldier) {
-  INT32 i;
+  int32_t i;
   struct OBJECTTYPE *pItem;
   for (i = 0; i < NUM_INV_SLOTS; i++) {
     pItem = &pSoldier->inv[i];
@@ -3200,24 +3200,24 @@ BOOLEAN TargetHasLoadedGun(struct SOLDIERTYPE *pSoldier) {
 }
 
 void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
-  UINT16 usAttack;
-  UINT16 usDefence;
-  UINT8 ubImpact;
-  UINT8 ubLocation;
-  UINT8 ubAccuracy;
-  INT32 iRandom;
-  INT32 iImpact;
-  INT32 iNewLife;
+  uint16_t usAttack;
+  uint16_t usDefence;
+  uint8_t ubImpact;
+  uint8_t ubLocation;
+  uint8_t ubAccuracy;
+  int32_t iRandom;
+  int32_t iImpact;
+  int32_t iNewLife;
   BOOLEAN fMelee = FALSE;
   BOOLEAN fKnife = FALSE;
   BOOLEAN fClaw = FALSE;
-  INT8 bAttackIndex = -1;
+  int8_t bAttackIndex = -1;
 
   pAttacker->uiFlags |= CELL_FIREDATTARGET | CELL_DIRTY;
   if (pAttacker->usAttack < 950)
-    usAttack = (UINT16)(pAttacker->usAttack + PreRandom(1000 - pAttacker->usAttack));
+    usAttack = (uint16_t)(pAttacker->usAttack + PreRandom(1000 - pAttacker->usAttack));
   else
-    usAttack = (UINT16)(950 + PreRandom(50));
+    usAttack = (uint16_t)(950 + PreRandom(50));
   if (pTarget->uiFlags & CELL_RETREATING &&
       !(pAttacker->uiFlags &
         CELL_FEMALECREATURE)) {  // Attacking a retreating merc is harder.  Modify the attack value
@@ -3226,9 +3226,9 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
     usAttack = usAttack * 7 / 10;
   }
   if (pTarget->usDefence < 950)
-    usDefence = (UINT16)(pTarget->usDefence + PreRandom(1000 - pTarget->usDefence));
+    usDefence = (uint16_t)(pTarget->usDefence + PreRandom(1000 - pTarget->usDefence));
   else
-    usDefence = (UINT16)(950 + PreRandom(50));
+    usDefence = (uint16_t)(950 + PreRandom(50));
   if (pAttacker->uiFlags & CELL_FEMALECREATURE) {
     pAttacker->bWeaponSlot = HANDPOS;
     fMelee = TRUE;
@@ -3256,7 +3256,7 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
       bAttackIndex = 2;
     }
     if (bAttackIndex != -1) {
-      pTarget->usNextHit[bAttackIndex] = (UINT16)(50 + PreRandom(400));
+      pTarget->usNextHit[bAttackIndex] = (uint16_t)(50 + PreRandom(400));
       pTarget->pAttacker[bAttackIndex] = pAttacker;
     }
   }
@@ -3293,26 +3293,26 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
       ubLocation = AIM_SHOT_LEGS;
     else
       ubLocation = AIM_SHOT_TORSO;
-    ubAccuracy = (UINT8)((usAttack - usDefence + PreRandom(usDefence - pTarget->usDefence)) / 10);
+    ubAccuracy = (uint8_t)((usAttack - usDefence + PreRandom(usDefence - pTarget->usDefence)) / 10);
     iImpact = BulletImpact(pAttacker->pSoldier, pTarget->pSoldier, ubLocation, ubImpact, ubAccuracy,
                            NULL);
 
     if (bAttackIndex == -1) {
       // tack damage on to end of last hit
-      pTarget->usHitDamage[2] += (UINT16)iImpact;
+      pTarget->usHitDamage[2] += (uint16_t)iImpact;
     } else {
-      pTarget->usHitDamage[bAttackIndex] = (UINT16)iImpact;
+      pTarget->usHitDamage[bAttackIndex] = (uint16_t)iImpact;
     }
 
   } else {
     struct OBJECTTYPE *pItem;
     struct OBJECTTYPE tempItem;
-    PlayAutoResolveSample((UINT8)(BULLET_IMPACT_1 + PreRandom(3)), RATE_11025, 50, 1, MIDDLEPAN);
+    PlayAutoResolveSample((uint8_t)(BULLET_IMPACT_1 + PreRandom(3)), RATE_11025, 50, 1, MIDDLEPAN);
     if (!pTarget->pSoldier->bLife) {  // Soldier already dead (can't kill him again!)
       return;
     }
 
-    ubAccuracy = (UINT8)((usAttack - usDefence + PreRandom(usDefence - pTarget->usDefence)) / 10);
+    ubAccuracy = (uint8_t)((usAttack - usDefence + PreRandom(usDefence - pTarget->usDefence)) / 10);
 
     // Determine attacking weapon.
     pAttacker->pSoldier->usAttackingWeapon = 0;
@@ -3349,16 +3349,16 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
         CELL_MERC) {  // Target is a player, so increment the times he has been wounded.
       gMercProfiles[GetSolProfile(pTarget->pSoldier)].usTimesWounded++;
       // EXPERIENCE GAIN: Took some damage
-      StatChange(pTarget->pSoldier, EXPERAMT, (UINT16)(5 * (iImpact / 10)), FALSE);
+      StatChange(pTarget->pSoldier, EXPERAMT, (uint16_t)(5 * (iImpact / 10)), FALSE);
     }
     if (pTarget->pSoldier->bLife >= CONSCIOUSNESS || pTarget->uiFlags & CELL_CREATURE) {
       if (gpAR->fSound)
-        DoMercBattleSound(pTarget->pSoldier, (INT8)(BATTLE_SOUND_HIT1 + PreRandom(2)));
+        DoMercBattleSound(pTarget->pSoldier, (int8_t)(BATTLE_SOUND_HIT1 + PreRandom(2)));
     }
     if (!(pTarget->uiFlags & CELL_CREATURE) && iNewLife < OKLIFE &&
         pTarget->pSoldier->bLife >=
             OKLIFE) {  // the hit caused the merc to fall.  Play the falling sound
-      PlayAutoResolveSample((UINT8)FALL_1, RATE_11025, 50, 1, MIDDLEPAN);
+      PlayAutoResolveSample((uint8_t)FALL_1, RATE_11025, 50, 1, MIDDLEPAN);
       pTarget->uiFlags &= ~CELL_RETREATING;
     }
     if (iNewLife <= 0) {                     // soldier has been killed
@@ -3370,22 +3370,22 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
         pAttacker->pSoldier->ubMilitiaKills += 2;
       }
       if (pTarget->uiFlags & CELL_MERC && gpAR->fSound) {
-        PlayAutoResolveSample((UINT8)DOORCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
-        PlayAutoResolveSample((UINT8)HEADCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
+        PlayAutoResolveSample((uint8_t)DOORCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
+        PlayAutoResolveSample((uint8_t)HEADCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
       }
     }
     // Adjust the soldiers stats based on the damage.
-    pTarget->pSoldier->bLife = (INT8)max(iNewLife, 0);
+    pTarget->pSoldier->bLife = (int8_t)max(iNewLife, 0);
     if (pTarget->uiFlags & CELL_MERC && gpAR->pRobotCell) {
       UpdateRobotControllerGivenRobot(gpAR->pRobotCell->pSoldier);
     }
     if (fKnife || fClaw) {
       if (pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bBleeding - iImpact >=
           pTarget->pSoldier->bLife)
-        pTarget->pSoldier->bBleeding += (INT8)iImpact;
+        pTarget->pSoldier->bBleeding += (int8_t)iImpact;
       else
         pTarget->pSoldier->bBleeding =
-            (INT8)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
+            (int8_t)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
     }
     if (!pTarget->pSoldier->bLife) {
       gpAR->fRenderAutoResolve = TRUE;
@@ -3418,8 +3418,8 @@ void AttackTarget(SOLDIERCELL *pAttacker, SOLDIERCELL *pTarget) {
   }
 }
 
-void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
-  INT32 iNewLife;
+void TargetHitCallback(SOLDIERCELL *pTarget, int32_t index) {
+  int32_t iNewLife;
   SOLDIERCELL *pAttacker;
   if (!pTarget->pSoldier->bLife) {  // Soldier already dead (can't kill him again!)
     return;
@@ -3464,21 +3464,21 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
                                       // wounded.
     gMercProfiles[GetSolProfile(pTarget->pSoldier)].usTimesWounded++;
     // EXPERIENCE GAIN: Took some damage
-    StatChange(pTarget->pSoldier, EXPERAMT, (UINT16)(5 * (pTarget->usHitDamage[index] / 10)),
+    StatChange(pTarget->pSoldier, EXPERAMT, (uint16_t)(5 * (pTarget->usHitDamage[index] / 10)),
                FALSE);
   }
 
   // bullet hit -- play an impact sound and a merc hit sound
-  PlayAutoResolveSample((UINT8)(BULLET_IMPACT_1 + PreRandom(3)), RATE_11025, 50, 1, MIDDLEPAN);
+  PlayAutoResolveSample((uint8_t)(BULLET_IMPACT_1 + PreRandom(3)), RATE_11025, 50, 1, MIDDLEPAN);
 
   if (pTarget->pSoldier->bLife >= CONSCIOUSNESS) {
     if (gpAR->fSound)
-      DoMercBattleSound(pTarget->pSoldier, (INT8)(BATTLE_SOUND_HIT1 + PreRandom(2)));
+      DoMercBattleSound(pTarget->pSoldier, (int8_t)(BATTLE_SOUND_HIT1 + PreRandom(2)));
   }
   if (iNewLife < OKLIFE &&
       pTarget->pSoldier->bLife >=
           OKLIFE) {  // the hit caused the merc to fall.  Play the falling sound
-    PlayAutoResolveSample((UINT8)FALL_1, RATE_11025, 50, 1, MIDDLEPAN);
+    PlayAutoResolveSample((uint8_t)FALL_1, RATE_11025, 50, 1, MIDDLEPAN);
     pTarget->uiFlags &= ~CELL_RETREATING;
   }
   if (iNewLife <= 0) {  // soldier has been killed
@@ -3498,7 +3498,7 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
           gMercProfiles[GetSolProfile(pKiller->pSoldier)].usKills++;
           gStrategicStatus.usPlayerKills++;
           // EXPERIENCE CLASS GAIN:  Earned a kill
-          StatChange(pKiller->pSoldier, EXPERAMT, (UINT16)(10 * pTarget->pSoldier->bLevel), FALSE);
+          StatChange(pKiller->pSoldier, EXPERAMT, (uint16_t)(10 * pTarget->pSoldier->bLevel), FALSE);
           HandleMoraleEvent(pKiller->pSoldier, MORALE_KILLED_ENEMY, gpAR->ubSectorX,
                             gpAR->ubSectorY, 0);
         } else if (pKiller->uiFlags & CELL_MILITIA)
@@ -3508,7 +3508,7 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
         if (pAssister1->uiFlags & CELL_MERC) {
           gMercProfiles[GetSolProfile(pAssister1->pSoldier)].usAssists++;
           // EXPERIENCE CLASS GAIN:  Earned an assist
-          StatChange(pAssister1->pSoldier, EXPERAMT, (UINT16)(5 * pTarget->pSoldier->bLevel),
+          StatChange(pAssister1->pSoldier, EXPERAMT, (uint16_t)(5 * pTarget->pSoldier->bLevel),
                      FALSE);
         } else if (pAssister1->uiFlags & CELL_MILITIA)
           pAssister1->pSoldier->ubMilitiaKills++;
@@ -3516,22 +3516,22 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
         if (pAssister2->uiFlags & CELL_MERC) {
           gMercProfiles[GetSolProfile(pAssister2->pSoldier)].usAssists++;
           // EXPERIENCE CLASS GAIN:  Earned an assist
-          StatChange(pAssister2->pSoldier, EXPERAMT, (UINT16)(5 * pTarget->pSoldier->bLevel),
+          StatChange(pAssister2->pSoldier, EXPERAMT, (uint16_t)(5 * pTarget->pSoldier->bLevel),
                      FALSE);
         } else if (pAssister2->uiFlags & CELL_MILITIA)
           pAssister2->pSoldier->ubMilitiaKills++;
       }
     }
     if (pTarget->uiFlags & CELL_MERC && gpAR->fSound) {
-      PlayAutoResolveSample((UINT8)DOORCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
-      PlayAutoResolveSample((UINT8)HEADCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
+      PlayAutoResolveSample((uint8_t)DOORCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
+      PlayAutoResolveSample((uint8_t)HEADCR_1, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
     }
     if (iNewLife < -60 && !(pTarget->uiFlags & CELL_CREATURE)) {  // High damage death
       if (gpAR->fSound) {
         if (PreRandom(3))
-          PlayAutoResolveSample((UINT8)BODY_SPLAT_1, RATE_11025, 50, 1, MIDDLEPAN);
+          PlayAutoResolveSample((uint8_t)BODY_SPLAT_1, RATE_11025, 50, 1, MIDDLEPAN);
         else
-          PlayAutoResolveSample((UINT8)HEADSPLAT_1, RATE_11025, 50, 1, MIDDLEPAN);
+          PlayAutoResolveSample((uint8_t)HEADSPLAT_1, RATE_11025, 50, 1, MIDDLEPAN);
       }
     } else {  // Normal death
       if (gpAR->fSound) {
@@ -3544,16 +3544,16 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
 #endif
   }
   // Adjust the soldiers stats based on the damage.
-  pTarget->pSoldier->bLife = (INT8)max(iNewLife, 0);
+  pTarget->pSoldier->bLife = (int8_t)max(iNewLife, 0);
   if (pTarget->uiFlags & CELL_MERC && gpAR->pRobotCell) {
     UpdateRobotControllerGivenRobot(gpAR->pRobotCell->pSoldier);
   }
 
   if (pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bBleeding - pTarget->usHitDamage[index] >=
       pTarget->pSoldier->bLife)
-    pTarget->pSoldier->bBleeding += (INT8)pTarget->usHitDamage[index];
+    pTarget->pSoldier->bBleeding += (int8_t)pTarget->usHitDamage[index];
   else
-    pTarget->pSoldier->bBleeding = (INT8)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
+    pTarget->pSoldier->bBleeding = (int8_t)(pTarget->pSoldier->bLifeMax - pTarget->pSoldier->bLife);
   if (!pTarget->pSoldier->bLife) {
     gpAR->fRenderAutoResolve = TRUE;
     if (pTarget->uiFlags & CELL_MERC) {
@@ -3579,17 +3579,17 @@ void TargetHitCallback(SOLDIERCELL *pTarget, INT32 index) {
   pTarget->uiFlags |= CELL_HITBYATTACKER | CELL_DIRTY;
 }
 
-void Delay(UINT32 uiMilliseconds) {
-  INT32 iTime;
+void Delay(uint32_t uiMilliseconds) {
+  int32_t iTime;
   iTime = GetJA2Clock();
   while (GetJA2Clock() < iTime + uiMilliseconds)
     ;
 }
 
 BOOLEAN IsBattleOver() {
-  INT32 i;
-  INT32 iNumInvolvedMercs = 0;
-  INT32 iNumMercsRetreated = 0;
+  int32_t i;
+  int32_t iNumInvolvedMercs = 0;
+  int32_t iNumMercsRetreated = 0;
   BOOLEAN fOnlyEPCsLeft = TRUE;
   if (gpAR->ubBattleStatus != BATTLE_IN_PROGRESS) return TRUE;
   for (i = 0; i < gpAR->ubMercs; i++) {
@@ -3658,9 +3658,9 @@ BOOLEAN IsBattleOver() {
 // #define TESTSURRENDER
 
 BOOLEAN AttemptPlayerCapture() {
-  INT32 i;
+  int32_t i;
   BOOLEAN fConcious;
-  INT32 iConciousEnemies;
+  int32_t iConciousEnemies;
 
 #ifndef TESTSURRENDER
 
@@ -3732,7 +3732,7 @@ BOOLEAN AttemptPlayerCapture() {
 }
 
 void SetupDoneInterface() {
-  INT32 i;
+  int32_t i;
   gpAR->fRenderAutoResolve = TRUE;
 
   HideButton(gpAR->iButton[PAUSE_BUTTON]);
@@ -3784,7 +3784,7 @@ void HideSurrenderInterface() {
   gpAR->fRenderAutoResolve = TRUE;
 }
 
-void AcceptSurrenderCallback(GUI_BUTTON *btn, INT32 reason) {
+void AcceptSurrenderCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     BeginCaptureSquence();
 
@@ -3794,7 +3794,7 @@ void AcceptSurrenderCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void RejectSurrenderCallback(GUI_BUTTON *btn, INT32 reason) {
+void RejectSurrenderCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gpAR->fPlayerRejectedSurrenderOffer = TRUE;
     HideSurrenderInterface();
@@ -3802,22 +3802,22 @@ void RejectSurrenderCallback(GUI_BUTTON *btn, INT32 reason) {
 }
 
 void ProcessBattleFrame() {
-  INT32 iRandom;
-  INT32 i;
+  int32_t iRandom;
+  int32_t i;
   SOLDIERCELL *pAttacker, *pTarget;
-  UINT32 uiDiff;
-  static INT32 iTimeSlice = 0;
+  uint32_t uiDiff;
+  static int32_t iTimeSlice = 0;
   static BOOLEAN fContinue = FALSE;
-  static UINT32 uiSlice = 0;
-  static INT32 iTotal = 0;
-  static INT32 iMercs = 0;
-  static INT32 iCivs = 0;
-  static INT32 iEnemies = 0;
-  static INT32 iMercsLeft = 0;
-  static INT32 iCivsLeft = 0;
-  static INT32 iEnemiesLeft = 0;
+  static uint32_t uiSlice = 0;
+  static int32_t iTotal = 0;
+  static int32_t iMercs = 0;
+  static int32_t iCivs = 0;
+  static int32_t iEnemies = 0;
+  static int32_t iMercsLeft = 0;
+  static int32_t iCivsLeft = 0;
+  static int32_t iEnemiesLeft = 0;
   BOOLEAN found = FALSE;
-  INT32 iTime, iAttacksThisFrame;
+  int32_t iTime, iAttacksThisFrame;
 
   pAttacker = NULL;
   iAttacksThisFrame = 0;
@@ -3858,7 +3858,7 @@ void ProcessBattleFrame() {
     for (i = 0; i < gpAR->ubCivs; i++) gpCivs[i].uiFlags &= ~CELL_PROCESSED;
     for (i = 0; i < gpAR->ubEnemies; i++) gpEnemies[i].uiFlags &= ~CELL_PROCESSED;
     while (--iTotal) {
-      INT32 cnt;
+      int32_t cnt;
       if ((iTimeSlice != 0x7fffffff && GetJA2Clock() > gpAR->uiCurrTime + 17) ||
           (!gpAR->fInstantFinish &&
            iAttacksThisFrame > (gpAR->ubMercs + gpAR->ubCivs + gpAR->ubEnemies) / 4)) {
@@ -3917,7 +3917,7 @@ void ProcessBattleFrame() {
             iTime = pAttacker->usNextHit[cnt];
             iTime -= uiSlice;
             if (iTime >= 0) {  // Bullet still on route.
-              pAttacker->usNextHit[cnt] = (UINT16)iTime;
+              pAttacker->usNextHit[cnt] = (uint16_t)iTime;
             } else {  // Bullet is going to hit/miss.
               TargetHitCallback(pAttacker, cnt);
               pAttacker->usNextHit[cnt] = 0;
@@ -3932,7 +3932,7 @@ void ProcessBattleFrame() {
       iTime = pAttacker->usNextAttack;
       iTime -= uiSlice;
       if (iTime > 0) {
-        pAttacker->usNextAttack = (UINT16)iTime;
+        pAttacker->usNextAttack = (uint16_t)iTime;
         continue;
       } else {
         if (pAttacker->uiFlags & CELL_RETREATING) {  // The merc has successfully retreated.  Remove
@@ -3957,7 +3957,7 @@ void ProcessBattleFrame() {
           else
             AttackTarget(pAttacker, pTarget);
           ResetNextAttackCounter(pAttacker);
-          pAttacker->usNextAttack += (UINT16)iTime;  // tack on the remainder
+          pAttacker->usNextAttack += (uint16_t)iTime;  // tack on the remainder
           iAttacksThisFrame++;
         }
       }
@@ -3977,9 +3977,9 @@ BOOLEAN IsAutoResolveActive() {
   return FALSE;
 }
 
-UINT8 GetAutoResolveSectorID() {
+uint8_t GetAutoResolveSectorID() {
   if (gpAR) {
-    return (UINT8)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
+    return (uint8_t)GetSectorID8(gpAR->ubSectorX, gpAR->ubSectorY);
   }
   return 0xff;
 }
@@ -4038,4 +4038,4 @@ BOOLEAN GetCurrentBattleSectorXYZAndReturnTRUEIfThereIsABattle(u8 *psSectorX, u8
   }
 }
 
-void AutoBandageFinishedCallback(UINT8 ubResult) { SetupDoneInterface(); }
+void AutoBandageFinishedCallback(uint8_t ubResult) { SetupDoneInterface(); }

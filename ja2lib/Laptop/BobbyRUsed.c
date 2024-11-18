@@ -13,8 +13,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-UINT32 guiUsedBackground;
-UINT32 guiUsedGrid;
+uint32_t guiUsedBackground;
+uint32_t guiUsedGrid;
 
 void GameInitBobbyRUsed() {}
 

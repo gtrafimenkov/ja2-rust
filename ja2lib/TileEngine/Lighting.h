@@ -79,19 +79,19 @@ struct VObject;
 
 // stucture of node in linked list for lights
 typedef struct light_p {
-  INT16 iDX, iDY;
-  UINT8 uiFlags;
-  UINT8 ubLight;
+  int16_t iDX, iDY;
+  uint8_t uiFlags;
+  uint8_t ubLight;
 } LIGHT_NODE;
 
 // structure of light instance, or sprite (a copy of the template)
 typedef struct {
-  INT16 iX, iY;
-  INT16 iOldX, iOldY;
-  INT16 iAnimSpeed;
-  INT32 iTemplate;
-  UINT32 uiFlags;
-  UINT32 uiLightType;
+  int16_t iX, iY;
+  int16_t iOldX, iOldY;
+  int16_t iAnimSpeed;
+  int32_t iTemplate;
+  uint32_t uiFlags;
+  uint32_t uiLightType;
 } LIGHT_SPRITE;
 
 // Initializes the lighting system
@@ -107,92 +107,92 @@ BOOLEAN SetDefaultWorldLightingColors(void);
 // Low-Level Template Interface
 
 // Sets the normal light level for all tiles in the world
-BOOLEAN LightSetBaseLevel(UINT8 iIntensity);
+BOOLEAN LightSetBaseLevel(uint8_t iIntensity);
 // Adds a light value to all tiles
-BOOLEAN LightAddBaseLevel(UINT32 uiLightType, UINT8 iIntensity);
+BOOLEAN LightAddBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Subtracts a light value from all tiles
-BOOLEAN LightSubtractBaseLevel(UINT32 uiLightType, UINT8 iIntensity);
+BOOLEAN LightSubtractBaseLevel(uint32_t uiLightType, uint8_t iIntensity);
 // Creates an omni (circular) light
-INT32 LightCreateOmni(UINT8 ubIntensity, INT16 iRadius);
+int32_t LightCreateOmni(uint8_t ubIntensity, int16_t iRadius);
 // Creates an oval-shaped light (two separate radii)
-INT32 LightCreateElliptical(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2);
+int32_t LightCreateElliptical(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
 // Creates a square light
-INT32 LightCreateSquare(UINT8 ubIntensity, INT16 iRadius1, INT16 iRadius2);
+int32_t LightCreateSquare(uint8_t ubIntensity, int16_t iRadius1, int16_t iRadius2);
 // Draws a light into the scene at X,Y
-BOOLEAN LightDraw(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite);
+BOOLEAN LightDraw(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
 // Reverts the tiles a light has affected back to normal
-BOOLEAN LightErase(UINT32 uiLightType, INT32 iLight, INT16 iX, INT16 iY, UINT32 uiSprite);
+BOOLEAN LightErase(uint32_t uiLightType, int32_t iLight, int16_t iX, int16_t iY, uint32_t uiSprite);
 // Save a light list into a file
-BOOLEAN LightSave(INT32 uiLight, STR pFilename);
+BOOLEAN LightSave(int32_t uiLight, char* pFilename);
 // Load a light list from a file
-INT32 LightLoad(STR pFilename);
+int32_t LightLoad(char* pFilename);
 
 // Sets the RGB values and number of light colors (1/2)
-BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, UINT8 ubNumColors);
+BOOLEAN LightSetColors(struct SGPPaletteEntry *pPal, uint8_t ubNumColors);
 // Returns the number of colors active (1/2) and the palette colors
-UINT8 LightGetColors(struct SGPPaletteEntry *pPal);
+uint8_t LightGetColors(struct SGPPaletteEntry *pPal);
 
 // High-Level Sprite Interface
 
 // Creates a new light sprite from a given filename/predefined symbol
-INT32 LightSpriteCreate(STR pName, UINT32 uiLightType);
+int32_t LightSpriteCreate(char* pName, uint32_t uiLightType);
 // Destroys the instance of that light
-BOOLEAN LightSpriteDestroy(INT32 iSprite);
+BOOLEAN LightSpriteDestroy(int32_t iSprite);
 // Sets the tile position of the light instance
-BOOLEAN LightSpritePosition(INT32 iSprite, INT16 iX, INT16 iY);
+BOOLEAN LightSpritePosition(int32_t iSprite, int16_t iX, int16_t iY);
 // Makes a light "fake"
-BOOLEAN LightSpriteFake(INT32 iSprite);
+BOOLEAN LightSpriteFake(int32_t iSprite);
 // Updates any change in position in lights
 BOOLEAN LightSpriteRender();
 // Renders all lights
 BOOLEAN LightSpriteRenderAll(void);
 // Turns on/off power to a light
-BOOLEAN LightSpritePower(INT32 iSprite, BOOLEAN fOn);
+BOOLEAN LightSpritePower(int32_t iSprite, BOOLEAN fOn);
 // Moves light to/from roof position
-BOOLEAN LightSpriteRoofStatus(INT32 iSprite, BOOLEAN fOnRoof);
+BOOLEAN LightSpriteRoofStatus(int32_t iSprite, BOOLEAN fOnRoof);
 
 // Reveals translucent walls
-BOOLEAN CalcTranslucentWalls(INT16 iX, INT16 iY);
-BOOLEAN ApplyTranslucencyToWalls(INT16 iX, INT16 iY);
+BOOLEAN CalcTranslucentWalls(int16_t iX, int16_t iY);
+BOOLEAN ApplyTranslucencyToWalls(int16_t iX, int16_t iY);
 // Makes trees translucent
-BOOLEAN LightTranslucentTrees(INT16 iX, INT16 iY);
-BOOLEAN LightHideTrees(INT16 iX, INT16 iY);
-BOOLEAN LightShowRays(INT16 iX, INT16 iY, BOOLEAN fReset);
-BOOLEAN LightHideRays(INT16 iX, INT16 iY);
+BOOLEAN LightTranslucentTrees(int16_t iX, int16_t iY);
+BOOLEAN LightHideTrees(int16_t iX, int16_t iY);
+BOOLEAN LightShowRays(int16_t iX, int16_t iY, BOOLEAN fReset);
+BOOLEAN LightHideRays(int16_t iX, int16_t iY);
 
 // makes the 16-bit palettes
-UINT16 CreateTilePaletteTables(struct VObject *pObj, UINT32 uiType, BOOLEAN fForce);
-BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, UINT32 uiBase,
+uint16_t CreateTilePaletteTables(struct VObject *pObj, uint32_t uiType, BOOLEAN fForce);
+BOOLEAN CreateSoldierShadedPalette(struct SOLDIERTYPE *pSoldier, uint32_t uiBase,
                                    struct SGPPaletteEntry *pShadePal);
-UINT16 CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, UINT32 uiType);
+uint16_t CreateSoldierPaletteTables(struct SOLDIERTYPE *pSoldier, uint32_t uiType);
 
 // returns the true light value at a tile (ignoring fake/merc lights)
-UINT8 LightTrueLevel(INT16 sGridNo, INT8 bLevel);
+uint8_t LightTrueLevel(int16_t sGridNo, int8_t bLevel);
 
 // system variables
 extern LIGHT_NODE *pLightList[MAX_LIGHT_TEMPLATES];
-extern UINT16 usTemplateSize[MAX_LIGHT_TEMPLATES];
-extern UINT16 *pLightRayList[MAX_LIGHT_TEMPLATES];
-extern UINT16 usRaySize[MAX_LIGHT_TEMPLATES];
-extern INT16 LightHeight[MAX_LIGHT_TEMPLATES];
-extern INT16 LightWidth[MAX_LIGHT_TEMPLATES];
-extern INT16 LightXOffset[MAX_LIGHT_TEMPLATES];
-extern INT16 LightYOffset[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapLeft[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapTop[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapRight[MAX_LIGHT_TEMPLATES];
-extern INT16 LightMapBottom[MAX_LIGHT_TEMPLATES];
-extern STR pLightNames[MAX_LIGHT_TEMPLATES];
+extern uint16_t usTemplateSize[MAX_LIGHT_TEMPLATES];
+extern uint16_t *pLightRayList[MAX_LIGHT_TEMPLATES];
+extern uint16_t usRaySize[MAX_LIGHT_TEMPLATES];
+extern int16_t LightHeight[MAX_LIGHT_TEMPLATES];
+extern int16_t LightWidth[MAX_LIGHT_TEMPLATES];
+extern int16_t LightXOffset[MAX_LIGHT_TEMPLATES];
+extern int16_t LightYOffset[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapLeft[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapTop[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapRight[MAX_LIGHT_TEMPLATES];
+extern int16_t LightMapBottom[MAX_LIGHT_TEMPLATES];
+extern char* pLightNames[MAX_LIGHT_TEMPLATES];
 
 // Sprite data
 extern LIGHT_SPRITE LightSprites[MAX_LIGHT_SPRITES];
 
 // Lighting system general data
-extern UINT8 ubAmbientLightLevel;
-extern UINT8 gubNumLightColors;
+extern uint8_t ubAmbientLightLevel;
+extern uint8_t gubNumLightColors;
 
 // Lighting colors
-extern UINT8 gubNumLightColors;
+extern uint8_t gubNumLightColors;
 extern struct SGPPaletteEntry gpLightColors[3];
 
 // macros

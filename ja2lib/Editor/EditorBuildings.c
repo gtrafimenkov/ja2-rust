@@ -23,9 +23,9 @@
 #include "Utils/TextInput.h"
 
 BOOLEAN fBuildingShowRoofs, fBuildingShowWalls, fBuildingShowRoomInfo;
-UINT16 usCurrentMode;
-UINT8 gubCurrRoomNumber;
-UINT8 gubMaxRoomNumber;
+uint16_t usCurrentMode;
+uint8_t gubCurrRoomNumber;
+uint8_t gubMaxRoomNumber;
 BOOLEAN gfEditingDoor;
 
 // BEGINNNING OF BUILDING INITIALIZATION FUNCTIONS
@@ -39,8 +39,8 @@ void GameInitEditorBuildingInfo() {
 
 // BEGINNING OF BUILDING UTILITY FUNCTIONS
 void UpdateRoofsView() {
-  INT32 x;
-  UINT16 usType;
+  int32_t x;
+  uint16_t usType;
   for (x = 0; x < WORLD_MAX; x++) {
     for (usType = FIRSTROOF; usType <= LASTSLANTROOF; usType++) {
       HideStructOfGivenType(x, usType, (BOOLEAN)(!fBuildingShowRoofs));
@@ -50,12 +50,12 @@ void UpdateRoofsView() {
 }
 
 void UpdateWallsView() {
-  INT32 cnt;
+  int32_t cnt;
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (fBuildingShowWalls) {
-      RemoveWallLevelnodeFlags((INT16)cnt, LEVELNODE_HIDDEN);
+      RemoveWallLevelnodeFlags((int16_t)cnt, LEVELNODE_HIDDEN);
     } else {
-      SetWallLevelnodeFlags((INT16)cnt, LEVELNODE_HIDDEN);
+      SetWallLevelnodeFlags((int16_t)cnt, LEVELNODE_HIDDEN);
     }
   }
   gfRenderWorld = TRUE;
@@ -85,7 +85,7 @@ void UpdateBuildingsInfo() {
 // 4) KillBuilding at x  , y-1.
 // 5) KillBuilding at x+1, y.
 // 6) KillBuilding at x  , y+1.
-void KillBuilding(UINT32 iMapIndex) {
+void KillBuilding(uint32_t iMapIndex) {
   BOOLEAN fFound = FALSE;
 
   if (!gfBasement) fFound |= RemoveAllRoofsOfTypeRange(iMapIndex, FIRSTTEXTURE, LASTITEM);
@@ -99,18 +99,18 @@ void KillBuilding(UINT32 iMapIndex) {
     return;
   }
 
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex - WORLD_COLS)))
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex - WORLD_COLS)))
     KillBuilding(iMapIndex - WORLD_COLS);
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex + WORLD_COLS)))
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex + WORLD_COLS)))
     KillBuilding(iMapIndex + WORLD_COLS);
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex + 1))) KillBuilding(iMapIndex + 1);
-  if (GridNoOnVisibleWorldTile((UINT16)(iMapIndex - 1))) KillBuilding(iMapIndex - 1);
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex + 1))) KillBuilding(iMapIndex + 1);
+  if (GridNoOnVisibleWorldTile((uint16_t)(iMapIndex - 1))) KillBuilding(iMapIndex - 1);
 
   if (gfBasement) RebuildRoof(iMapIndex, 0);
 }
 
 BUILDINGLAYOUTNODE *gpBuildingLayoutList = NULL;
-INT16 gsBuildingLayoutAnchorGridNo = -1;
+int16_t gsBuildingLayoutAnchorGridNo = -1;
 extern void RemoveBuildingLayout();
 
 void DeleteBuildingLayout() {
@@ -126,7 +126,7 @@ void DeleteBuildingLayout() {
   gsBuildingLayoutAnchorGridNo = -1;
 }
 
-void BuildLayout(INT32 iMapIndex, INT32 iOffset) {
+void BuildLayout(int32_t iMapIndex, int32_t iOffset) {
   BUILDINGLAYOUTNODE *curr;
   // First, validate the gridno
   iMapIndex += iOffset;
@@ -141,13 +141,13 @@ void BuildLayout(INT32 iMapIndex, INT32 iOffset) {
   // Now, check to make sure this gridno hasn't already been processed.
   curr = gpBuildingLayoutList;
   while (curr) {
-    if ((INT16)iMapIndex == curr->sGridNo) return;
+    if ((int16_t)iMapIndex == curr->sGridNo) return;
     curr = curr->next;
   }
   // Good, it hasn't, so process it and add it to the head of the list.
   curr = (BUILDINGLAYOUTNODE *)MemAlloc(sizeof(BUILDINGLAYOUTNODE));
   Assert(curr);
-  curr->sGridNo = (INT16)iMapIndex;
+  curr->sGridNo = (int16_t)iMapIndex;
   curr->next = gpBuildingLayoutList;
   gpBuildingLayoutList = curr;
 
@@ -159,7 +159,7 @@ void BuildLayout(INT32 iMapIndex, INT32 iOffset) {
 }
 
 // The first step is copying a building.  After that, it either must be pasted or moved.
-void CopyBuilding(INT32 iMapIndex) {
+void CopyBuilding(int32_t iMapIndex) {
   AssertMsg(!gpBuildingLayoutList, "Error:  Attempting to copy building multiple times.");
 
   // First step is to determine if we have a building in the area that we click.  If not, do
@@ -169,11 +169,11 @@ void CopyBuilding(INT32 iMapIndex) {
   // Allocate the basic structure, then calculate the layout.  The head node is
   gpBuildingLayoutList = (BUILDINGLAYOUTNODE *)MemAlloc(sizeof(BUILDINGLAYOUTNODE));
   Assert(gpBuildingLayoutList);
-  gpBuildingLayoutList->sGridNo = (INT16)iMapIndex;
+  gpBuildingLayoutList->sGridNo = (int16_t)iMapIndex;
   gpBuildingLayoutList->next = NULL;
 
   // Set the anchor point for this building -- this is where the user clicked.
-  gsBuildingLayoutAnchorGridNo = (INT16)iMapIndex;
+  gsBuildingLayoutAnchorGridNo = (int16_t)iMapIndex;
 
   // Now, recursively expand out while adding unique gridnos to our list.  The recursion will
   // terminate when complete.
@@ -189,9 +189,9 @@ void CopyBuilding(INT32 iMapIndex) {
 
 // depending on the offset, we will either sort in increasing order, or decreasing order.
 // This will prevent overlapping problems.
-void SortBuildingLayout(INT32 iMapIndex) {
+void SortBuildingLayout(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *head, *curr, *prev, *prevBest, *best;
-  INT32 iBestIndex;
+  int32_t iBestIndex;
   head = NULL;
   if (iMapIndex < gsBuildingLayoutAnchorGridNo) {  // Forward sort (in increasing order)
     while (gpBuildingLayoutList) {
@@ -240,10 +240,10 @@ void SortBuildingLayout(INT32 iMapIndex) {
   gpBuildingLayoutList = head;
 }
 
-void PasteMapElementToNewMapElement(INT32 iSrcGridNo, INT32 iDstGridNo) {
+void PasteMapElementToNewMapElement(int32_t iSrcGridNo, int32_t iDstGridNo) {
   MAP_ELEMENT *pSrcMapElement;
   struct LEVELNODE *pNode;
-  UINT16 usType;
+  uint16_t usType;
 
   DeleteStuffFromMapTile(iDstGridNo);
   DeleteAllLandLayers(iDstGridNo);
@@ -295,9 +295,9 @@ void PasteMapElementToNewMapElement(INT32 iSrcGridNo, INT32 iDstGridNo) {
   }
 }
 
-void MoveBuilding(INT32 iMapIndex) {
+void MoveBuilding(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
+  int32_t iOffset;
   if (!gpBuildingLayoutList) return;
   SortBuildingLayout(iMapIndex);
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
@@ -318,9 +318,9 @@ void MoveBuilding(INT32 iMapIndex) {
   MarkWorldDirty();
 }
 
-void PasteBuilding(INT32 iMapIndex) {
+void PasteBuilding(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
+  int32_t iOffset;
   if (!gpBuildingLayoutList) return;
   SortBuildingLayout(iMapIndex);
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
@@ -341,13 +341,13 @@ void PasteBuilding(INT32 iMapIndex) {
 }
 
 typedef struct ROOFNODE {
-  INT32 iMapIndex;
+  int32_t iMapIndex;
   struct ROOFNODE *next;
 } ROOFNODE;
 
 ROOFNODE *gpRoofList = NULL;
 
-void ReplaceRoof(INT32 iMapIndex, UINT16 usRoofType) {
+void ReplaceRoof(int32_t iMapIndex, uint16_t usRoofType) {
   ROOFNODE *curr;
   // First, validate the gridno
   if (iMapIndex < 0 && iMapIndex >= WORLD_COLS * WORLD_ROWS) return;
@@ -375,15 +375,15 @@ void ReplaceRoof(INT32 iMapIndex, UINT16 usRoofType) {
   ReplaceRoof(iMapIndex + 1, usRoofType);
 }
 
-void ReplaceBuildingWithNewRoof(INT32 iMapIndex) {
-  UINT16 usRoofType;
+void ReplaceBuildingWithNewRoof(int32_t iMapIndex) {
+  uint16_t usRoofType;
   ROOFNODE *curr;
   // Not in normal editor mode, then can't do it.
   if (gfBasement || gfCaves) return;
   // if we don't have a floor here, then we can't replace the roof!
   if (!FloorAtGridNo(iMapIndex)) return;
   // Extract the selected roof type.
-  usRoofType = (UINT16)SelSingleNewRoof[iCurBank].uiObject;
+  usRoofType = (uint16_t)SelSingleNewRoof[iCurBank].uiObject;
 
   // now start building a linked list of all nodes visited -- start the first node.
   gpRoofList = (ROOFNODE *)MemAlloc(sizeof(ROOFNODE));
@@ -408,17 +408,17 @@ void ReplaceBuildingWithNewRoof(INT32 iMapIndex) {
 }
 
 // internal door editing vars.
-INT32 iDoorMapIndex = 0;
+int32_t iDoorMapIndex = 0;
 enum { DOOR_BACKGROUND, DOOR_OKAY, DOOR_CANCEL, DOOR_LOCKED, NUM_DOOR_BUTTONS };
-INT32 iDoorButton[NUM_DOOR_BUTTONS];
+int32_t iDoorButton[NUM_DOOR_BUTTONS];
 struct MOUSE_REGION DoorRegion;
-void DoorOkayCallback(GUI_BUTTON *btn, INT32 reason);
-void DoorCancelCallback(GUI_BUTTON *btn, INT32 reason);
-void DoorToggleLockedCallback(GUI_BUTTON *btn, INT32 reason);
+void DoorOkayCallback(GUI_BUTTON *btn, int32_t reason);
+void DoorCancelCallback(GUI_BUTTON *btn, int32_t reason);
+void DoorToggleLockedCallback(GUI_BUTTON *btn, int32_t reason);
 
-extern BOOLEAN OpenableAtGridNo(UINT32 iMapIndex);
+extern BOOLEAN OpenableAtGridNo(uint32_t iMapIndex);
 
-void InitDoorEditing(INT32 iMapIndex) {
+void InitDoorEditing(int32_t iMapIndex) {
   DOOR *pDoor;
   if (!DoorAtGridNo(iMapIndex) && !OpenableAtGridNo(iMapIndex)) return;
   gfEditingDoor = TRUE;
@@ -459,28 +459,28 @@ void InitDoorEditing(INT32 iMapIndex) {
 
 void ExtractAndUpdateDoorInfo() {
   struct LEVELNODE *pNode;
-  INT32 num;
+  int32_t num;
   DOOR door;
   BOOLEAN fCursor = FALSE;
   BOOLEAN fCursorExists = FALSE;
 
   memset(&door, 0, sizeof(DOOR));
 
-  door.sGridNo = (INT16)iDoorMapIndex;
+  door.sGridNo = (int16_t)iDoorMapIndex;
 
   num = min(GetNumericStrictValueFromField(0), NUM_LOCKS - 1);
-  door.ubLockID = (UINT8)num;
+  door.ubLockID = (uint8_t)num;
   SetInputFieldStringWithNumericStrictValue(0, num);
   if (num >= 0) fCursor = TRUE;
 
   num = min(max(GetNumericStrictValueFromField(1), 0), 10);
-  door.ubTrapID = (UINT8)num;
+  door.ubTrapID = (uint8_t)num;
   SetInputFieldStringWithNumericStrictValue(1, num);
   if (num) fCursor = TRUE;
 
   num = min(max(GetNumericStrictValueFromField(2), 0), 20);
   if (door.ubTrapID && !num) num = 1;  // Can't have a trap without a traplevel!
-  door.ubTrapLevel = (UINT8)num;
+  door.ubTrapLevel = (uint8_t)num;
   SetInputFieldStringWithNumericStrictValue(2, num);
   if (num) fCursor = TRUE;
 
@@ -511,7 +511,7 @@ void ExtractAndUpdateDoorInfo() {
 
 void FindNextLockedDoor() {
   DOOR *pDoor;
-  INT32 i;
+  int32_t i;
   for (i = iDoorMapIndex + 1; i < WORLD_MAX; i++) {
     pDoor = FindDoorInfoAtGridNo(i);
     if (pDoor) {
@@ -546,7 +546,7 @@ void RenderDoorEditingWindow() {
 }
 
 void KillDoorEditing() {
-  INT32 i;
+  int32_t i;
   EnableEditorTaskbar();
   MSYS_RemoveRegion(&DoorRegion);
   for (i = 0; i < NUM_DOOR_BUTTONS; i++) RemoveButton(iDoorButton[i]);
@@ -554,20 +554,20 @@ void KillDoorEditing() {
   KillTextInputMode();
 }
 
-void DoorOkayCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoorOkayCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     ExtractAndUpdateDoorInfo();
     KillDoorEditing();
   }
 }
 
-void DoorCancelCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoorCancelCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     KillDoorEditing();
   }
 }
 
-void DoorToggleLockedCallback(GUI_BUTTON *btn, INT32 reason) {
+void DoorToggleLockedCallback(GUI_BUTTON *btn, int32_t reason) {
   // handled in ExtractAndUpdateDoorInfo();
 }
 
@@ -600,7 +600,7 @@ void RemoveLockedDoorCursors() {
 }
 
 void SetupTextInputForBuildings() {
-  CHAR16 str[4];
+  wchar_t str[4];
   InitTextInputModeWithScheme(DEFAULT_SCHEME);
   AddUserInputField(NULL);  // just so we can use short cut keys while not typing.
   swprintf(str, ARR_SIZE(str), L"%d", gubMaxRoomNumber);
@@ -608,12 +608,12 @@ void SetupTextInputForBuildings() {
 }
 
 void ExtractAndUpdateBuildingInfo() {
-  CHAR16 str[4];
-  INT32 temp;
+  wchar_t str[4];
+  int32_t temp;
   // extract light1 colors
   temp = min(GetNumericStrictValueFromField(1), 255);
   if (temp != -1) {
-    gubCurrRoomNumber = (UINT8)temp;
+    gubCurrRoomNumber = (uint8_t)temp;
   } else {
     gubCurrRoomNumber = 0;
   }

@@ -31,24 +31,24 @@ enum {
 
 typedef struct {
   BOOLEAN fActive;
-  INT16 sItemIndex;
-  UINT32 uiFlags;
+  int16_t sItemIndex;
+  uint32_t uiFlags;
   struct OBJECTTYPE ItemObject;
-  UINT8 ubLocationOfObject;  // An enum value for the location of the item ( either in the arms
+  uint8_t ubLocationOfObject;  // An enum value for the location of the item ( either in the arms
                              // dealers inventory, one of the offer areas or in the users inventory)
-  INT8 bSlotIdInOtherLocation;
+  int8_t bSlotIdInOtherLocation;
 
-  UINT8 ubIdOfMercWhoOwnsTheItem;
-  UINT32 uiItemPrice;  // Only used for the players item that have been evaluated
+  uint8_t ubIdOfMercWhoOwnsTheItem;
+  uint32_t uiItemPrice;  // Only used for the players item that have been evaluated
 
-  INT16 sSpecialItemElement;  // refers to which special item element an item in a dealer's
+  int16_t sSpecialItemElement;  // refers to which special item element an item in a dealer's
                               // inventory area occupies.  -1 Means the item is "perfect" and has no
                               // associated special item.
 
 } INVENTORY_IN_SLOT;
 
 extern INVENTORY_IN_SLOT PlayersOfferArea[SKI_NUM_TRADING_INV_SLOTS];
-extern INT32 giShopKeepDialogueEventinProgress;
+extern int32_t giShopKeepDialogueEventinProgress;
 
 // extern	BOOLEAN		gfRedrawSkiScreen;
 
@@ -58,7 +58,7 @@ enum {
   SKI_DIRTY_LEVEL2,  // redraw everything
 };
 
-extern UINT8 gubSkiDirtyLevel;
+extern uint8_t gubSkiDirtyLevel;
 
 extern struct OBJECTTYPE *gpHighLightedItemObject;
 
@@ -66,38 +66,38 @@ extern INVENTORY_IN_SLOT gMoveingItem;
 
 extern struct OBJECTTYPE *pShopKeeperItemDescObject;
 
-UINT32 ShopKeeperScreenInit(void);
-UINT32 ShopKeeperScreenHandle(void);
-UINT32 ShopKeeperScreenShutdown(void);
+uint32_t ShopKeeperScreenInit(void);
+uint32_t ShopKeeperScreenHandle(void);
+uint32_t ShopKeeperScreenShutdown(void);
 
-void EnterShopKeeperInterfaceScreen(UINT8 ubArmsDealer);
+void EnterShopKeeperInterfaceScreen(uint8_t ubArmsDealer);
 
-void DrawHatchOnInventory(UINT32 uiSurface, UINT16 usPosX, UINT16 usPosY, UINT16 usWidth,
-                          UINT16 usHeight);
-BOOLEAN ShouldSoldierDisplayHatchOnItem(UINT8 ubProfileID, INT16 sSlotNum);
-INT8 AddItemToPlayersOfferArea(UINT8 ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
-                               INT8 bSlotIdInOtherLocation);
-void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(UINT8 bExitValue);
-void ConfirmDontHaveEnoughForTheDealerMessageBoxCallBack(UINT8 bExitValue);
+void DrawHatchOnInventory(uint32_t uiSurface, uint16_t usPosX, uint16_t usPosY, uint16_t usWidth,
+                          uint16_t usHeight);
+BOOLEAN ShouldSoldierDisplayHatchOnItem(uint8_t ubProfileID, int16_t sSlotNum);
+int8_t AddItemToPlayersOfferArea(uint8_t ubProfileID, INVENTORY_IN_SLOT *pInvSlot,
+                               int8_t bSlotIdInOtherLocation);
+void ConfirmToDeductMoneyFromPlayersAccountMessageBoxCallBack(uint8_t bExitValue);
+void ConfirmDontHaveEnoughForTheDealerMessageBoxCallBack(uint8_t bExitValue);
 
 void SkiHelpTextDoneCallBack(void);
-void SetSkiCursor(UINT16 usCursor);
+void SetSkiCursor(uint16_t usCursor);
 
-void InitShopKeeperSubTitledText(STR16 pString);
+void InitShopKeeperSubTitledText(wchar_t* pString);
 
 void AddItemToPlayersOfferAreaAfterShopKeeperOpen(struct OBJECTTYPE *pItemObject,
-                                                  INT8 bPreviousInvPos);
+                                                  int8_t bPreviousInvPos);
 
-void BeginSkiItemPointer(UINT8 ubSource, INT8 bSlotNum, BOOLEAN fOfferToDealerFirst);
+void BeginSkiItemPointer(uint8_t ubSource, int8_t bSlotNum, BOOLEAN fOfferToDealerFirst);
 
 void DeleteShopKeeperItemDescBox();
 
 BOOLEAN CanMercInteractWithSelectedShopkeeper(struct SOLDIERTYPE *pSoldier);
 
-void DealerGetsBribed(UINT8 ubProfileId, UINT32 uiMoneyAmount);
+void DealerGetsBribed(uint8_t ubProfileId, uint32_t uiMoneyAmount);
 
 #ifdef JA2TESTVERSION
-void AddShopkeeperToGridNo(UINT8 ubProfile, INT16 sGridNo);
+void AddShopkeeperToGridNo(uint8_t ubProfile, int16_t sGridNo);
 #endif
 
 void RestrictSkiMouseCursor();

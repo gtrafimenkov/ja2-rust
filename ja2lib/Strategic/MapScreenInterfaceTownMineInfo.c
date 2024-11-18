@@ -40,19 +40,19 @@
 // flag to say if we are showing town/mine box at all
 BOOLEAN fShowTownInfo = FALSE;
 
-INT32 ghTownMineBox = -1;
+int32_t ghTownMineBox = -1;
 SGPPoint TownMinePosition = {300, 150};
 struct GRect TownMineDimensions = {0, 0, 240, 60};
 
-INT8 bCurrentTownMineSectorX = 0;
-INT8 bCurrentTownMineSectorY = 0;
-INT8 bCurrentTownMineSectorZ = 0;
+int8_t bCurrentTownMineSectorX = 0;
+int8_t bCurrentTownMineSectorY = 0;
+int8_t bCurrentTownMineSectorZ = 0;
 
 // inventory button
-UINT32 guiMapButtonInventoryImage[2];
-UINT32 guiMapButtonInventory[2];
+uint32_t guiMapButtonInventoryImage[2];
+uint32_t guiMapButtonInventory[2];
 
-UINT16 sTotalButtonWidth = 0;
+uint16_t sTotalButtonWidth = 0;
 
 extern MINE_LOCATION_TYPE gMineLocation[];
 extern MINE_STATUS_TYPE gMineStatus[];
@@ -86,8 +86,8 @@ void AddInventoryButtonForMapPopUpBox(void);
 void RemoveInventoryButtonForMapPopUpBox(void);
 
 // callback to turn on sector invneotry list
-void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason);
-void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason);
+void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason);
+void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason);
 void MinWidthOfTownMineInfoBox(void);
 
 void DisplayTownInfo(u8 sMapX, u8 sMapY, i8 bMapZ) {
@@ -96,8 +96,8 @@ void DisplayTownInfo(u8 sMapX, u8 sMapY, i8 bMapZ) {
   // set current sector
   if ((bCurrentTownMineSectorX != sMapX) || (bCurrentTownMineSectorY != sMapY) ||
       (bCurrentTownMineSectorZ != bMapZ)) {
-    bCurrentTownMineSectorX = (INT8)sMapX;
-    bCurrentTownMineSectorY = (INT8)sMapY;
+    bCurrentTownMineSectorX = (int8_t)sMapX;
+    bCurrentTownMineSectorY = (int8_t)sMapY;
     bCurrentTownMineSectorZ = bMapZ;
   }
 
@@ -216,9 +216,9 @@ void CreateDestroyTownInfoBox(void) {
     RemoveInventoryButtonForMapPopUpBox();
 
     // restore background
-    RestoreExternBackgroundRect((INT16)pPosition.iX, (INT16)pPosition.iY,
-                                (INT16)(pDimensions.iRight - pDimensions.iLeft),
-                                (INT16)(pDimensions.iBottom - pDimensions.iTop + 3));
+    RestoreExternBackgroundRect((int16_t)pPosition.iX, (int16_t)pPosition.iY,
+                                (int16_t)(pDimensions.iRight - pDimensions.iLeft),
+                                (int16_t)(pDimensions.iBottom - pDimensions.iTop + 3));
 
     fCreated = FALSE;
   }
@@ -253,11 +253,11 @@ void CreateTownInfoBox(void) {
 
 // adds text to town info box
 void AddTextToTownBox(void) {
-  UINT32 hStringHandle = 0;
-  CHAR16 wString[64];
-  UINT8 ubTownId = 0;
-  UINT16 usTownSectorIndex;
-  INT16 sMineSector = 0;
+  uint32_t hStringHandle = 0;
+  wchar_t wString[64];
+  uint8_t ubTownId = 0;
+  uint16_t usTownSectorIndex;
+  int16_t sMineSector = 0;
 
   // remember town id
   ubTownId = GetTownIdForSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
@@ -349,10 +349,10 @@ void AddTextToTownBox(void) {
 
 // adds text to mine info box
 void AddTextToMineBox(void) {
-  UINT8 ubMineIndex;
-  UINT8 ubTown;
-  UINT32 hStringHandle;
-  CHAR16 wString[64];
+  uint8_t ubMineIndex;
+  uint8_t ubTown;
+  uint32_t hStringHandle;
+  wchar_t wString[64];
 
   ubMineIndex = GetMineIndexForSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
 
@@ -465,8 +465,8 @@ void AddTextToMineBox(void) {
 }
 
 void AddTextToBlankSectorBox(void) {
-  UINT32 hStringHandle;
-  UINT16 usSectorValue = 0;
+  uint32_t hStringHandle;
+  uint16_t usSectorValue = 0;
 
   // get the sector value
   usSectorValue = GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
@@ -506,9 +506,9 @@ void AddTextToBlankSectorBox(void) {
 }
 
 void AddSectorToBox(void) {
-  CHAR16 wString[64];
-  CHAR16 wString2[10];
-  UINT32 hStringHandle = 0;
+  wchar_t wString[64];
+  wchar_t wString2[10];
+  uint32_t hStringHandle = 0;
 
   // sector
   swprintf(wString, ARR_SIZE(wString), L"%s:", pwMiscSectorStrings[1]);
@@ -525,10 +525,10 @@ void AddSectorToBox(void) {
 }
 
 void AddCommonInfoToBox(void) {
-  CHAR16 wString[64];
-  UINT32 hStringHandle = 0;
+  wchar_t wString[64];
+  uint32_t hStringHandle = 0;
   BOOLEAN fUnknownSAMSite = FALSE;
-  UINT8 ubNumEnemies;
+  uint8_t ubNumEnemies;
 
   switch (GetSectorID8(bCurrentTownMineSectorX, bCurrentTownMineSectorY)) {
     case SEC_D2:  // Chitzena SAM
@@ -565,7 +565,7 @@ void AddCommonInfoToBox(void) {
     swprintf(wString, ARR_SIZE(wString), L"%s:", pwTownInfoStrings[11]);
     AddMonoString(&hStringHandle, wString);
 
-    UINT8 ubMilitiaTotal = CountMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
+    uint8_t ubMilitiaTotal = CountMilitiaInSector(bCurrentTownMineSectorX, bCurrentTownMineSectorY);
     if (ubMilitiaTotal > 0) {
       // some militia, show total & their breakdown by level
       struct MilitiaCount milCount =
@@ -622,8 +622,8 @@ void AddCommonInfoToBox(void) {
 }
 
 void AddItemsInSectorToBox(void) {
-  CHAR16 wString[64];
-  UINT32 hStringHandle = 0;
+  wchar_t wString[64];
+  uint32_t hStringHandle = 0;
 
   // items in sector (this works even for underground)
 
@@ -642,7 +642,7 @@ void PositionTownMineInfoBox(void) {
   // position town mine info box
   struct GRect pDimensions;
   SGPPoint pPosition;
-  INT16 sX = 0, sY = 0;
+  int16_t sX = 0, sY = 0;
 
   // position the box based on x and y of the selected sector
   GetScreenXYFromMapXY(bCurrentTownMineSectorX, bCurrentTownMineSectorY, &sX, &sY);
@@ -690,12 +690,12 @@ void PositionTownMineInfoBox(void) {
 }
 
 void AddInventoryButtonForMapPopUpBox(void) {
-  INT16 sX, sY;
+  int16_t sX, sY;
   struct GRect pDimensions;
   SGPPoint pPosition;
-  UINT32 uiObject;
+  uint32_t uiObject;
   struct Subimage *pTrav;
-  INT16 sWidthA = 0, sTotalBoxWidth = 0;
+  int16_t sWidthA = 0, sTotalBoxWidth = 0;
   struct VObject *hHandle;
 
   // load the button
@@ -721,7 +721,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
 
   guiMapButtonInventory[0] = CreateIconAndTextButton(
       guiMapButtonInventoryImage[0], pMapPopUpInventoryText[0], BLOCKFONT2, FONT_WHITE, FONT_BLACK,
-      FONT_WHITE, FONT_BLACK, TEXT_CJUSTIFIED, (INT16)(sX), (INT16)(sY), BUTTON_TOGGLE,
+      FONT_WHITE, FONT_BLACK, TEXT_CJUSTIFIED, (int16_t)(sX), (int16_t)(sY), BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGHEST - 1, DEFAULT_MOVE_CALLBACK,
       (GUI_CALLBACK)MapTownMineInventoryButtonCallBack);
 
@@ -733,7 +733,7 @@ void AddInventoryButtonForMapPopUpBox(void) {
   guiMapButtonInventory[1] =
       CreateIconAndTextButton(guiMapButtonInventoryImage[1], pMapPopUpInventoryText[1], BLOCKFONT2,
                               FONT_WHITE, FONT_BLACK, FONT_WHITE, FONT_BLACK, TEXT_CJUSTIFIED,
-                              (INT16)(sX), (INT16)(sY), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+                              (int16_t)(sX), (int16_t)(sY), BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                               DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)MapTownMineExitButtonCallBack);
 
   // delete video object
@@ -761,7 +761,7 @@ void RemoveInventoryButtonForMapPopUpBox(void) {
   return;
 }
 
-void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -784,7 +784,7 @@ void MapTownMineInventoryButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
+void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= (BUTTON_CLICKED_ON);
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -802,8 +802,8 @@ void MapTownMineExitButtonCallBack(GUI_BUTTON *btn, INT32 reason) {
 // get the min width of the town mine info pop up box
 void MinWidthOfTownMineInfoBox(void) {
   struct VObject *hHandle;
-  INT16 sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
-  UINT32 uiObject;
+  int16_t sWidthA = 0, sWidthB = 0, sTotalBoxWidth = 0;
+  uint32_t uiObject;
   struct Subimage *pTrav;
 
   AddVObjectFromFile("INTERFACE\\mapinvbtns.sti", &uiObject);

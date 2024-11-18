@@ -23,16 +23,16 @@
 // this funky union is used for fast 16-bit pixel format conversions
 typedef union {
   struct {
-    UINT16 usLower;
-    UINT16 usHigher;
+    uint16_t usLower;
+    uint16_t usHigher;
   };
-  UINT32 uiValue;
+  uint32_t uiValue;
 } SplitUINT32;
 
 struct Image *CreateImage(const char *ImageFile, bool loadAppData) {
   SGPFILENAME Extension;
-  CHAR8 ExtensionSep[] = ".";
-  STR StrPtr;
+  char ExtensionSep[] = ".";
+  char* StrPtr;
   SGPFILENAME imageFileCopy;
 
   strcopy(imageFileCopy, ARR_SIZE(imageFileCopy), ImageFile);
@@ -87,7 +87,7 @@ void DestroyImage(struct Image *image) {
 }
 
 BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBuf,
-                          UINT16 usDestWidth, UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+                          uint16_t usDestWidth, uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                           struct GRect *srcRect) {
   Assert(hImage != NULL);
 
@@ -112,12 +112,12 @@ BOOLEAN CopyImageToBuffer(struct Image *hImage, u8 bufferBitDepth, BYTE *pDestBu
   return (FALSE);
 }
 
-BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                  UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+                                  uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                   struct GRect *srcRect) {
-  UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-  UINT32 cnt;
-  UINT8 *pDest, *pSrc;
+  uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
+  uint32_t cnt;
+  uint8_t *pDest, *pSrc;
 
   // Assertions
   Assert(hImage != NULL);
@@ -153,8 +153,8 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 u
   Assert(usDestHeight >= uiNumLines);
 
   // Copy line by line
-  pDest = (UINT8 *)pDestBuf + uiDestStart;
-  pSrc = (UINT8 *)hImage->image_data + uiSrcStart;
+  pDest = (uint8_t *)pDestBuf + uiDestStart;
+  pSrc = (uint8_t *)hImage->image_data + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize);
@@ -167,12 +167,12 @@ BOOLEAN Copy8BPPImageTo8BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 u
   return (TRUE);
 }
 
-BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                    UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+                                    uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                     struct GRect *srcRect) {
-  UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-  UINT32 cnt;
-  UINT16 *pDest, *pSrc;
+  uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
+  uint32_t cnt;
+  uint16_t *pDest, *pSrc;
 
   Assert(hImage != NULL);
   Assert(hImage->image_data != NULL);
@@ -211,8 +211,8 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
   }
 
   // Copy line by line
-  pDest = (UINT16 *)pDestBuf + uiDestStart;
-  pSrc = (UINT16 *)hImage->image_data + uiSrcStart;
+  pDest = (uint16_t *)pDestBuf + uiDestStart;
+  pSrc = (uint16_t *)hImage->image_data + uiSrcStart;
 
   for (cnt = 0; cnt < uiNumLines - 1; cnt++) {
     memcpy(pDest, pSrc, uiLineSize * 2);
@@ -225,13 +225,13 @@ BOOLEAN Copy16BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16
   return (TRUE);
 }
 
-BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 usDestWidth,
-                                   UINT16 usDestHeight, UINT16 usX, UINT16 usY,
+BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, uint16_t usDestWidth,
+                                   uint16_t usDestHeight, uint16_t usX, uint16_t usY,
                                    struct GRect *srcRect) {
-  UINT32 uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
-  UINT32 rows, cols;
-  UINT8 *pSrc, *pSrcTemp;
-  UINT16 *pDest, *pDestTemp;
+  uint32_t uiSrcStart, uiDestStart, uiNumLines, uiLineSize;
+  uint32_t rows, cols;
+  uint8_t *pSrc, *pSrcTemp;
+  uint16_t *pDest, *pDestTemp;
 
   Assert(hImage->palette16bpp != NULL);
   Assert(hImage != NULL);
@@ -273,8 +273,8 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   }
 
   // Convert to Pixel specification
-  pDest = (UINT16 *)pDestBuf + uiDestStart;
-  pSrc = (UINT8 *)hImage->image_data + uiSrcStart;
+  pDest = (uint16_t *)pDestBuf + uiDestStart;
+  pSrc = (uint8_t *)hImage->image_data + uiSrcStart;
   DebugMsg(TOPIC_HIMAGE, DBG_INFO, String("Start Copying at %p", pDest));
 
   // For every entry, look up into 16BPP palette
@@ -297,23 +297,23 @@ BOOLEAN Copy8BPPImageTo16BPPBuffer(struct Image *hImage, BYTE *pDestBuf, UINT16 
   return (TRUE);
 }
 
-UINT16 *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
-  UINT16 *p16BPPPalette, r16, g16, b16, usColor;
-  UINT32 cnt;
-  UINT8 r, g, b;
+uint16_t *Create16BPPPalette(struct SGPPaletteEntry *pPalette) {
+  uint16_t *p16BPPPalette, r16, g16, b16, usColor;
+  uint32_t cnt;
+  uint8_t r, g, b;
 
   Assert(pPalette != NULL);
 
-  p16BPPPalette = (UINT16 *)MemAlloc(sizeof(UINT16) * 256);
+  p16BPPPalette = (uint16_t *)MemAlloc(sizeof(uint16_t) * 256);
 
   for (cnt = 0; cnt < 256; cnt++) {
     r = pPalette[cnt].red;
     g = pPalette[cnt].green;
     b = pPalette[cnt].blue;
 
-    r16 = ((UINT16)r << 8);
-    g16 = ((UINT16)g << 3);
-    b16 = ((UINT16)b >> 3);
+    r16 = ((uint16_t)r << 8);
+    g16 = ((uint16_t)g << 3);
+    b16 = ((uint16_t)b >> 3);
 
     usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
 
@@ -350,16 +350,16 @@ shaded according to each pixel's brightness.
         4) For gamma correction, pass in weighted values for each color.
 
 **********************************************************************************************/
-UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale, UINT32 gscale,
-                                 UINT32 bscale, BOOLEAN mono) {
-  UINT16 *p16BPPPalette, r16, g16, b16, usColor;
-  UINT32 cnt, lumin;
-  UINT32 rmod, gmod, bmod;
-  UINT8 r, g, b;
+uint16_t *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, uint32_t rscale, uint32_t gscale,
+                                 uint32_t bscale, BOOLEAN mono) {
+  uint16_t *p16BPPPalette, r16, g16, b16, usColor;
+  uint32_t cnt, lumin;
+  uint32_t rmod, gmod, bmod;
+  uint8_t r, g, b;
 
   Assert(pPalette != NULL);
 
-  p16BPPPalette = (UINT16 *)MemAlloc(sizeof(UINT16) * 256);
+  p16BPPPalette = (uint16_t *)MemAlloc(sizeof(uint16_t) * 256);
 
   for (cnt = 0; cnt < 256; cnt++) {
     if (mono) {
@@ -374,13 +374,13 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
       bmod = (bscale * pPalette[cnt].blue / 256);
     }
 
-    r = (UINT8)min(rmod, 255);
-    g = (UINT8)min(gmod, 255);
-    b = (UINT8)min(bmod, 255);
+    r = (uint8_t)min(rmod, 255);
+    g = (uint8_t)min(gmod, 255);
+    b = (uint8_t)min(bmod, 255);
 
-    r16 = ((UINT16)r << 8);
-    g16 = ((UINT16)g << 3);
-    b16 = ((UINT16)b >> 3);
+    r16 = ((uint16_t)r << 8);
+    g16 = ((uint16_t)g << 3);
+    b16 = ((uint16_t)b >> 3);
 
     // Prevent creation of pure black color
     usColor = (r16 & 0xf800) | (g16 & 0x07e0) | (b16 & 0x001f);
@@ -407,8 +407,8 @@ UINT16 *Create16BPPPaletteShaded(struct SGPPaletteEntry *pPalette, UINT32 rscale
 //
 //*****************************************************************************
 
-struct SGPPaletteEntry *ConvertRGBToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPalette) {
-  UINT16 Index;
+struct SGPPaletteEntry *ConvertRGBToPaletteEntry(uint8_t sbStart, uint8_t sbEnd, uint8_t *pOldPalette) {
+  uint16_t Index;
   struct SGPPaletteEntry *pPalEntry;
   struct SGPPaletteEntry *pInitEntry;
 

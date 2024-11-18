@@ -10,23 +10,23 @@
 #define NO_ROOM 0
 #define MAX_ROOMS 250
 
-extern UINT8 gubWorldRoomHidden[MAX_ROOMS];
-extern UINT8 gubWorldRoomInfo[WORLD_MAX];
+extern uint8_t gubWorldRoomHidden[MAX_ROOMS];
+extern uint8_t gubWorldRoomInfo[WORLD_MAX];
 
 BOOLEAN InitRoomDatabase();
 void ShutdownRoomDatabase();
 
-void SetTileRoomNum(INT16 sGridNo, UINT8 ubRoomNum);
-void SetTileRangeRoomNum(struct GRect *pSelectRegion, UINT8 ubRoomNum);
+void SetTileRoomNum(int16_t sGridNo, uint8_t ubRoomNum);
+void SetTileRangeRoomNum(struct GRect *pSelectRegion, uint8_t ubRoomNum);
 
-void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier);
-BOOLEAN InARoom(UINT16 sGridNo, UINT8 *pubRoomNo);
-BOOLEAN InAHiddenRoom(UINT16 sGridNo, UINT8 *pubRoomNo);
+void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSoldier);
+BOOLEAN InARoom(uint16_t sGridNo, uint8_t *pubRoomNo);
+BOOLEAN InAHiddenRoom(uint16_t sGridNo, uint8_t *pubRoomNo);
 
-void SetGridNoRevealedFlag(UINT16 sGridNo);
+void SetGridNoRevealedFlag(uint16_t sGridNo);
 
-void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo);
+void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo);
 
-void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius);
+void SetRecalculateWireFrameFlagRadius(int16_t sX, int16_t sY, int16_t sRadius);
 
 #endif

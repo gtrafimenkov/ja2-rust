@@ -19,9 +19,9 @@ enum {
 };
 
 // For speed, etc lets make these globals, forget the functions if you want
-extern INT16 gWorldSectorX;
-extern INT16 gWorldSectorY;
-extern INT8 gbWorldSectorZ;
+extern int16_t gWorldSectorX;
+extern int16_t gWorldSectorY;
+extern int8_t gbWorldSectorZ;
 
 extern BOOLEAN fFoundOrta;
 
@@ -34,12 +34,12 @@ extern BOOLEAN gfUseAlternateMap;
 void GetCurrentWorldSector(u8 *psMapX, u8 *psMapY);
 BOOLEAN SetCurrentWorldSector(u8 sMapX, u8 sMapY, i8 bMapZ);
 
-BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
-void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, INT8 bSectorZ);
+BOOLEAN EnterSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+void UpdateMercsInSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
+void UpdateMercInSector(struct SOLDIERTYPE *pSoldier, u8 sSectorX, u8 sSectorY, int8_t bSectorZ);
 
 // get short sector name without town name
-void GetShortSectorString(u8 sMapX, u8 sMapY, STR16 sString, size_t bufSize);
+void GetShortSectorString(u8 sMapX, u8 sMapY, wchar_t* sString, size_t bufSize);
 
 // NEW!
 // Calculates the name of the sector based on the loaded sector values.
@@ -47,15 +47,15 @@ void GetShortSectorString(u8 sMapX, u8 sMapY, STR16 sString, size_t bufSize);
 //						A10_B1
 //						J9_B2_A ( >= BETAVERSION ) else J9_B2 (release
 // equivalent)
-void GetLoadedSectorString(STR16 pString, size_t bufSize);
+void GetLoadedSectorString(wchar_t* pString, size_t bufSize);
 
-void GetMapFileName(u8 sMapX, u8 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder,
+void GetMapFileName(u8 sMapX, u8 sMapY, int8_t bSectorZ, char* bString, BOOLEAN fUsePlaceholder,
                     BOOLEAN fAddAlternateMapLetter);
 
 // Called from within tactical.....
-void JumpIntoAdjacentSector(UINT8 ubDirection, UINT8 ubJumpCode, INT16 sAdditionalData);
+void JumpIntoAdjacentSector(uint8_t ubDirection, uint8_t ubJumpCode, int16_t sAdditionalData);
 
-BOOLEAN CanGoToTacticalInSector(INT16 sX, INT16 sY, UINT8 ubZ);
+BOOLEAN CanGoToTacticalInSector(int16_t sX, int16_t sY, uint8_t ubZ);
 
 void UpdateAirspaceControl(void);
 
@@ -63,15 +63,15 @@ void UpdateAirspaceControl(void);
 void InitializeSAMSites(void);
 
 // get town sector size
-UINT8 GetTownSectorSize(TownID bTownId);
+uint8_t GetTownSectorSize(TownID bTownId);
 
 // get town sector size, that is under play control
-UINT8 GetTownSectorsUnderControl(TownID bTownId);
+uint8_t GetTownSectorsUnderControl(TownID bTownId);
 
-BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, INT8 bExitDirection,
-                               UINT16 usAdditionalData);
-BOOLEAN OKForSectorExit(INT8 bExitDirection, UINT16 usAdditionalData,
-                        UINT32 *puiTraverseTimeInMinutes);
+BOOLEAN SoldierOKForSectorExit(struct SOLDIERTYPE *pSoldier, int8_t bExitDirection,
+                               uint16_t usAdditionalData);
+BOOLEAN OKForSectorExit(int8_t bExitDirection, uint16_t usAdditionalData,
+                        uint32_t *puiTraverseTimeInMinutes);
 void SetupNewStrategicGame();
 
 BOOLEAN LoadStrategicInfoFromSavedFile(FileID hFile);
@@ -79,8 +79,8 @@ BOOLEAN SaveStrategicInfoToSavedFile(FileID hFile);
 
 void AllMercsHaveWalkedOffSector();
 
-void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, INT16 sEndGridNo,
-                                  UINT8 ubTacticalDirection);
+void AdjustSoldierPathToGoOffEdge(struct SOLDIERTYPE *pSoldier, int16_t sEndGridNo,
+                                  uint8_t ubTacticalDirection);
 
 void AllMercsWalkedToExitGrid();
 
@@ -89,7 +89,7 @@ void PrepareLoadedSector();
 // handle for slay...no better place to really put this stuff
 void HandleSlayDailyEvent(void);
 
-void HandleQuestCodeOnSectorEntry(u8 sNewSectorX, u8 sNewSectorY, INT8 bNewSectorZ);
+void HandleQuestCodeOnSectorEntry(u8 sNewSectorX, u8 sNewSectorY, int8_t bNewSectorZ);
 
 // handle a soldier leaving thier squad behind, this sets them up for mvt and potential rejoining of
 // group
@@ -108,7 +108,7 @@ BOOLEAN HandlePotentialBringUpAutoresolveToFinishBattle();
 extern BOOLEAN gfInvalidTraversal;
 extern BOOLEAN gfLoneEPCAttemptingTraversal;
 extern BOOLEAN gfRobotWithoutControllerAttemptingTraversal;
-extern UINT8 gubLoneMercAttemptingToAbandonEPCs;
-extern INT8 gbPotentiallyAbandonedEPCSlotID;
+extern uint8_t gubLoneMercAttemptingToAbandonEPCs;
+extern int8_t gbPotentiallyAbandonedEPCSlotID;
 
 #endif

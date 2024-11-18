@@ -18,16 +18,16 @@ struct STRUCTURE;
 
 extern BOOLEAN gfSetPerceivedDoorState;
 
-BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, INT16 sGridNo,
+BOOLEAN HandleOpenableStruct(struct SOLDIERTYPE *pSoldier, int16_t sGridNo,
                              struct STRUCTURE *pStructure);
 
 void InteractWithOpenableStruct(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                                UINT8 ubDirection, BOOLEAN fDoor);
+                                uint8_t ubDirection, BOOLEAN fDoor);
 
-void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, UINT8 ubHandleCode);
+void InteractWithClosedDoor(struct SOLDIERTYPE *pSoldier, uint8_t ubHandleCode);
 
-void SetDoorString(INT16 sGridNo);
+void SetDoorString(int16_t sGridNo);
 
-void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fNoAnimations);
+void HandleDoorChangeFromGridNo(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, BOOLEAN fNoAnimations);
 
 #endif

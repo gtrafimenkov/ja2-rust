@@ -7,7 +7,7 @@
 
 struct SOLDIERTYPE;
 
-extern UINT32 guiNumObjectSlots;
+extern uint32_t guiNumObjectSlots;
 
 typedef struct {
   BOOLEAN fAllocated;
@@ -36,25 +36,25 @@ typedef struct {
   vector_3 CollisionVelocity;
   real CollisionElasticity;
 
-  INT16 sGridNo;
-  INT32 iID;
+  int16_t sGridNo;
+  int32_t iID;
   struct LEVELNODE *pNode;
   struct LEVELNODE *pShadow;
 
-  INT16 sConsecutiveCollisions;
-  INT16 sConsecutiveZeroVelocityCollisions;
-  INT32 iOldCollisionCode;
+  int16_t sConsecutiveCollisions;
+  int16_t sConsecutiveZeroVelocityCollisions;
+  int32_t iOldCollisionCode;
 
-  FLOAT dLifeLength;
-  FLOAT dLifeSpan;
+  float dLifeLength;
+  float dLifeSpan;
   struct OBJECTTYPE Obj;
   BOOLEAN fFirstTimeMoved;
-  INT16 sFirstGridNo;
-  UINT8 ubOwner;
-  UINT8 ubActionCode;
-  UINT32 uiActionData;
+  int16_t sFirstGridNo;
+  uint8_t ubOwner;
+  uint8_t ubActionCode;
+  uint32_t uiActionData;
   BOOLEAN fDropItem;
-  UINT32 uiNumTilesMoved;
+  uint32_t uiNumTilesMoved;
   BOOLEAN fCatchGood;
   BOOLEAN fAttemptedCatch;
   BOOLEAN fCatchAnimOn;
@@ -63,10 +63,10 @@ typedef struct {
   vector_3 EndedWithCollisionPosition;
   BOOLEAN fHaveHitGround;
   BOOLEAN fPotentialForDebug;
-  INT16 sLevelNodeGridNo;
-  INT32 iSoundID;
-  UINT8 ubLastTargetTakenDamage;
-  UINT8 ubPadding[1];
+  int16_t sLevelNodeGridNo;
+  int32_t iSoundID;
+  uint8_t ubLastTargetTakenDamage;
+  uint8_t ubPadding[1];
 
 } REAL_OBJECT;
 
@@ -75,23 +75,23 @@ typedef struct {
 extern REAL_OBJECT ObjectSlots[NUM_OBJECT_SLOTS];
 
 // OBJECT LIST STUFF
-INT32 CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
-                           real zPos, real xForce, real yForce, real zForce, UINT8 ubOwner,
-                           UINT8 ubActionCode, UINT32 uiActionData);
-BOOLEAN RemoveObjectSlot(INT32 iObject);
+int32_t CreatePhysicalObject(struct OBJECTTYPE *pGameObj, real dLifeLength, real xPos, real yPos,
+                           real zPos, real xForce, real yForce, real zForce, uint8_t ubOwner,
+                           uint8_t ubActionCode, uint32_t uiActionData);
+BOOLEAN RemoveObjectSlot(int32_t iObject);
 void RemoveAllPhysicsObjects();
 
-FLOAT CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubHeight,
-                               real dForce, struct OBJECTTYPE *pItem, INT16 *psGridNo);
+float CalculateLaunchItemAngle(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubHeight,
+                               real dForce, struct OBJECTTYPE *pItem, int16_t *psGridNo);
 
 BOOLEAN CalculateLaunchItemChanceToGetThrough(struct SOLDIERTYPE *pSoldier,
-                                              struct OBJECTTYPE *pItem, INT16 sGridNo,
-                                              UINT8 ubLevel, INT16 sEndZ, INT16 *psFinalGridNo,
-                                              BOOLEAN fArmed, INT8 *pbLevel, BOOLEAN fFromUI);
+                                              struct OBJECTTYPE *pItem, int16_t sGridNo,
+                                              uint8_t ubLevel, int16_t sEndZ, int16_t *psFinalGridNo,
+                                              BOOLEAN fArmed, int8_t *pbLevel, BOOLEAN fFromUI);
 
-void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubLevel,
-                                       INT16 sZPos, struct OBJECTTYPE *pItem, INT8 bMissBy,
-                                       UINT8 ubActionCode, UINT32 uiActionData);
+void CalculateLaunchItemParamsForThrow(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, uint8_t ubLevel,
+                                       int16_t sZPos, struct OBJECTTYPE *pItem, int8_t bMissBy,
+                                       uint8_t ubActionCode, uint32_t uiActionData);
 
 // SIMULATE WORLD
 void SimulateWorld();

@@ -5,8 +5,8 @@
 #include "SGP/VSurface.h"
 
 struct VSurface {
-  UINT16 usHeight;
-  UINT16 usWidth;
+  uint16_t usHeight;
+  uint16_t usWidth;
 
   void* _platformData1;       // platform-specific data
   void* _platformData2;       // platform-specific data

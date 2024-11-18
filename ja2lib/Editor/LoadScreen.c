@@ -56,45 +56,45 @@ extern struct SGPPaletteEntry gEditorLightColor;
 //===========================================================================
 
 BOOLEAN gfErrorCatch = FALSE;
-CHAR16 gzErrorCatchString[256] = L"";
-INT32 giErrorCatchMessageBox = 0;
+wchar_t gzErrorCatchString[256] = L"";
+int32_t giErrorCatchMessageBox = 0;
 
 extern void RemoveMercsInSector();
 
 enum { DIALOG_NONE, DIALOG_SAVE, DIALOG_LOAD, DIALOG_CANCEL, DIALOG_DELETE };
 
-extern UINT16 Counter;
+extern uint16_t Counter;
 
 // Hook into the text input code.  These callbacks help give back control, so we
 // can use the dialog interface in conjunction with the
-void FDlgOkCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgCancelCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgUpCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgDwnCallback(GUI_BUTTON *butn, INT32 reason);
-void FDlgNamesCallback(GUI_BUTTON *butn, INT32 reason);
-void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason);
-void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering);
+void FDlgOkCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgCancelCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgUpCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgDwnCallback(GUI_BUTTON *butn, int32_t reason);
+void FDlgNamesCallback(GUI_BUTTON *butn, int32_t reason);
+void UpdateWorldInfoCallback(GUI_BUTTON *b, int32_t reason);
+void FileDialogModeCallback(uint8_t ubID, BOOLEAN fEntering);
 
-UINT32 ProcessLoadSaveScreenMessageBoxResult();
+uint32_t ProcessLoadSaveScreenMessageBoxResult();
 BOOLEAN RemoveFromFDlgList(struct FileDialogList **head, struct FileDialogList *node);
 
 void DrawFileDialog();
 void HandleMainKeyEvents(InputAtom *pEvent);
-void SetTopFileToLetter(UINT16 usLetter);
+void SetTopFileToLetter(uint16_t usLetter);
 
-INT32 iTotalFiles;
-INT32 iTopFileShown;
-INT32 iCurrFileShown;
-INT32 iLastFileClicked;
-INT32 iLastClickTime;
+int32_t iTotalFiles;
+int32_t iTopFileShown;
+int32_t iCurrFileShown;
+int32_t iLastFileClicked;
+int32_t iLastClickTime;
 
-CHAR16 gzFilename[31];
+wchar_t gzFilename[31];
 
 struct FileDialogList *FileList = NULL;
 
-INT32 iFDlgState = DIALOG_NONE;
+int32_t iFDlgState = DIALOG_NONE;
 BOOLEAN gfDestroyFDlg = FALSE;
-INT32 iFileDlgButtons[7];
+int32_t iFileDlgButtons[7];
 
 BOOLEAN gfLoadError;
 BOOLEAN gfReadOnly;
@@ -103,7 +103,7 @@ BOOLEAN gfIllegalName;
 BOOLEAN gfDeleteFile;
 BOOLEAN gfNoFiles;
 
-CHAR16 zOrigName[60];
+wchar_t zOrigName[60];
 struct GetFile FileInfo;
 
 BOOLEAN fEnteringLoadSaveScreen = TRUE;
@@ -111,22 +111,22 @@ BOOLEAN gfPassedSaveCheck = FALSE;
 
 struct MOUSE_REGION BlanketRegion;
 
-CHAR8 gszCurrFilename[1024];
+char gszCurrFilename[1024];
 
 enum { IOSTATUS_NONE, INITIATE_MAP_SAVE, SAVING_MAP, INITIATE_MAP_LOAD, LOADING_MAP };
-INT8 gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
+int8_t gbCurrentFileIOStatus;  // 1 init saving message, 2 save, 3 init loading message, 4 load, 0
                              // none
-UINT32 ProcessFileIO();
+uint32_t ProcessFileIO();
 
 // BOOLEAN fSavingFile;
-extern UINT16 gusLightLevel, gusSavedLightLevel;
-UINT32 LoadSaveScreenInit(void) {
+extern uint16_t gusLightLevel, gusSavedLightLevel;
+uint32_t LoadSaveScreenInit(void) {
   gfUpdateSummaryInfo = TRUE;
   fEnteringLoadSaveScreen = TRUE;
   return TRUE;
 }
 
-UINT32 LoadSaveScreenShutdown(void) { return TRUE; }
+uint32_t LoadSaveScreenShutdown(void) { return TRUE; }
 
 void LoadSaveScreenEntry() {
   fEnteringLoadSaveScreen = FALSE;
@@ -174,7 +174,7 @@ void LoadSaveScreenEntry() {
   iLastClickTime = 0;
 }
 
-UINT32 ProcessLoadSaveScreenMessageBoxResult() {
+uint32_t ProcessLoadSaveScreenMessageBoxResult() {
   struct FileDialogList *curr, *temp;
   gfRenderWorld = TRUE;
   RemoveMessageBox();
@@ -186,7 +186,7 @@ UINT32 ProcessLoadSaveScreenMessageBoxResult() {
   }
   if (gfDeleteFile) {
     if (gfMessageBoxResult) {  // delete file
-      INT32 x;
+      int32_t x;
       curr = FileList;
       for (x = 0; x < iCurrFileShown && x < iTotalFiles && curr; x++) {
         curr = curr->pNext;
@@ -252,9 +252,9 @@ UINT32 ProcessLoadSaveScreenMessageBoxResult() {
   return LOADSAVE_SCREEN;
 }
 
-UINT32 LoadSaveScreenHandle(void) {
+uint32_t LoadSaveScreenHandle(void) {
   struct FileDialogList *FListNode;
-  INT32 x;
+  int32_t x;
   InputAtom DialogEvent;
 
   if (fEnteringLoadSaveScreen) {
@@ -263,7 +263,7 @@ UINT32 LoadSaveScreenHandle(void) {
 
   if (gbCurrentFileIOStatus)  // loading or saving map
   {
-    UINT32 uiScreen;
+    uint32_t uiScreen;
     uiScreen = ProcessFileIO();
     if (uiScreen == EDIT_SCREEN && gbCurrentFileIOStatus == LOADING_MAP) RemoveProgressBar(0);
     return uiScreen;
@@ -324,7 +324,7 @@ UINT32 LoadSaveScreenHandle(void) {
     case DIALOG_DELETE:
       snprintf(gszCurrFilename, ARR_SIZE(gszCurrFilename), "MAPS\\%ls", gzFilename);
       if (Plat_GetFileFirst(gszCurrFilename, &FileInfo)) {
-        CHAR16 str[40];
+        wchar_t str[40];
         if (Plat_GetFileIsReadonly(&FileInfo) || Plat_GetFileIsSystem(&FileInfo) ||
             Plat_GetFileIsHidden(&FileInfo)) {
           swprintf(str, ARR_SIZE(str), L" Delete READ-ONLY file %s? ", gzFilename);
@@ -384,7 +384,7 @@ UINT32 LoadSaveScreenHandle(void) {
   return LOADSAVE_SCREEN;
 }
 
-void CreateFileDialog(CHAR16 *zTitle) {
+void CreateFileDialog(wchar_t *zTitle) {
   iFDlgState = DIALOG_NONE;
 
   DisableEditorTaskbar();
@@ -433,7 +433,7 @@ void CreateFileDialog(CHAR16 *zTitle) {
   AddUserInputField(FileDialogModeCallback);
 }
 
-void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason) {
+void UpdateWorldInfoCallback(GUI_BUTTON *b, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP)
     gfUpdateSummaryInfo = b->uiFlags & BUTTON_CLICKED_ON ? TRUE : FALSE;
 }
@@ -441,8 +441,8 @@ void UpdateWorldInfoCallback(GUI_BUTTON *b, INT32 reason) {
 // This is a hook into the text input code.  This callback is called whenever the user is currently
 // editing text, and presses Tab to transfer to the file dialog mode.  When this happens, we set the
 // text field to the currently selected file in the list which is already know.
-void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering) {
-  INT32 x;
+void FileDialogModeCallback(uint8_t ubID, BOOLEAN fEntering) {
+  int32_t x;
   struct FileDialogList *FListNode;
   if (fEntering) {
     // Skip to first filename
@@ -463,7 +463,7 @@ void FileDialogModeCallback(UINT8 ubID, BOOLEAN fEntering) {
 }
 
 void RemoveFileDialog(void) {
-  INT32 x;
+  int32_t x;
 
   MSYS_RemoveRegion(&BlanketRegion);
 
@@ -516,9 +516,9 @@ void DrawFileDialog(void) {
 
 // The callback calls this function passing the relative y position of where
 // the user clicked on the hot spot.
-void SelectFileDialogYPos(UINT16 usRelativeYPos) {
-  INT16 sSelName;
-  INT32 x;
+void SelectFileDialogYPos(uint16_t usRelativeYPos) {
+  int16_t sSelName;
+  int32_t x;
   struct FileDialogList *FListNode;
 
   sSelName = usRelativeYPos / 15;
@@ -533,8 +533,8 @@ void SelectFileDialogYPos(UINT16 usRelativeYPos) {
   }
 
   for (x = iTopFileShown; x < (iTopFileShown + 8) && x < iTotalFiles && FListNode != NULL; x++) {
-    if ((INT32)sSelName == (x - iTopFileShown)) {
-      INT32 iCurrClickTime;
+    if ((int32_t)sSelName == (x - iTopFileShown)) {
+      int32_t iCurrClickTime;
       iCurrFileShown = x;
       FListNode->FileInfo.zFileName[30] = 0;
       swprintf(gzFilename, ARR_SIZE(gzFilename), L"%S", FListNode->FileInfo.zFileName);
@@ -616,11 +616,11 @@ void TrashFDlgList(struct FileDialogList *pList) {
   }
 }
 
-void SetTopFileToLetter(UINT16 usLetter) {
-  UINT32 x;
+void SetTopFileToLetter(uint16_t usLetter) {
+  uint32_t x;
   struct FileDialogList *curr;
   struct FileDialogList *prev;
-  UINT16 usNodeLetter;
+  uint16_t usNodeLetter;
 
   // Skip to first filename
   x = 0;
@@ -642,7 +642,7 @@ void SetTopFileToLetter(UINT16 usLetter) {
 }
 
 void HandleMainKeyEvents(InputAtom *pEvent) {
-  INT32 iPrevFileShown = iCurrFileShown;
+  int32_t iPrevFileShown = iCurrFileShown;
   // Replace Alt-x press with ESC.
   if (pEvent->usKeyState & ALT_DOWN && pEvent->usParam == 'x') pEvent->usParam = ESC;
   switch (pEvent->usParam) {
@@ -700,13 +700,13 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
           (pEvent->usParam >= 'A' && pEvent->usParam <= 'Z')) {
         if (pEvent->usParam >= 'A' && pEvent->usParam <= 'Z')  // convert upper case to lower case
           pEvent->usParam += 32;                               // A = 65, a = 97 (difference of 32)
-        SetTopFileToLetter((UINT16)pEvent->usParam);
+        SetTopFileToLetter((uint16_t)pEvent->usParam);
       }
       break;
   }
   // Update the text field if the file value has changed.
   if (iCurrFileShown != iPrevFileShown) {
-    INT32 x;
+    int32_t x;
     struct FileDialogList *curr;
     x = 0;
     curr = FileList;
@@ -722,8 +722,8 @@ void HandleMainKeyEvents(InputAtom *pEvent) {
 }
 
 // editor doesn't care about the z value.  It uses it's own methods.
-void SetGlobalSectorValues(STR16 szFilename) {
-  STR16 pStr;
+void SetGlobalSectorValues(wchar_t* szFilename) {
+  wchar_t* pStr;
   if (ValidCoordinate()) {
     // convert the coordinate string into into the actual global sector coordinates.
     if (gzFilename[0] >= 'A' && gzFilename[0] <= 'P')
@@ -737,7 +737,7 @@ void SetGlobalSectorValues(STR16 szFilename) {
     pStr = wcsstr(gzFilename, L"_b");
     if (pStr) {
       if (pStr[2] >= '1' && pStr[2] <= '3') {
-        gbWorldSectorZ = (INT8)(pStr[2] - 0x30);
+        gbWorldSectorZ = (int8_t)(pStr[2] - 0x30);
       }
     }
   } else {
@@ -760,9 +760,9 @@ void InitErrorCatchDialog() {
 // on the screen and then update it which requires passing the screen back to the main loop.
 // When we come back for the next frame, we then actually save or load the map.  So this
 // process takes two full screen cycles.
-UINT32 ProcessFileIO() {
-  INT16 usStartX, usStartY;
-  CHAR8 ubNewFilename[1024];
+uint32_t ProcessFileIO() {
+  int16_t usStartX, usStartY;
+  char ubNewFilename[1024];
   switch (gbCurrentFileIOStatus) {
     case INITIATE_MAP_SAVE:  // draw save message
       StartFrameBufferRender();
@@ -856,7 +856,7 @@ UINT32 ProcessFileIO() {
           LightSetBaseLevel(ubAmbientLightLevel);
         }
       } else
-        gusLightLevel = (UINT16)(EDITOR_LIGHT_MAX - ubAmbientLightLevel);
+        gusLightLevel = (uint16_t)(EDITOR_LIGHT_MAX - ubAmbientLightLevel);
       gEditorLightColor = gpLightColors[0];
       gfRenderWorld = TRUE;
       gfRenderTaskbar = TRUE;
@@ -896,33 +896,33 @@ UINT32 ProcessFileIO() {
 }
 
 // LOADSCREEN
-void FDlgNamesCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgNamesCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     SelectFileDialogYPos(butn->Area.RelativeYPos);
   }
 }
 
-void FDlgOkCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgOkCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     gfDestroyFDlg = TRUE;
     iFDlgState = iCurrentAction == ACTION_SAVE_MAP ? DIALOG_SAVE : DIALOG_LOAD;
   }
 }
 
-void FDlgCancelCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgCancelCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     gfDestroyFDlg = TRUE;
     iFDlgState = DIALOG_CANCEL;
   }
 }
 
-void FDlgUpCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgUpCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     if (iTopFileShown > 0) iTopFileShown--;
   }
 }
 
-void FDlgDwnCallback(GUI_BUTTON *butn, INT32 reason) {
+void FDlgDwnCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & (MSYS_CALLBACK_REASON_LBUTTON_UP)) {
     if ((iTopFileShown + 7) < iTotalFiles) iTopFileShown++;
   }
@@ -936,7 +936,7 @@ BOOLEAN ExtractFilenameFromFields() {
 BOOLEAN ValidCoordinate() {
   if ((gzFilename[0] >= 'A' && gzFilename[0] <= 'P') ||
       (gzFilename[0] >= 'a' && gzFilename[0] <= 'p')) {
-    UINT16 usTotal;
+    uint16_t usTotal;
     if (gzFilename[1] == '1' && gzFilename[2] >= '0' && gzFilename[2] <= '6') {
       usTotal = (gzFilename[1] - 0x30) * 10 + (gzFilename[2] - 0x30);
     } else if (gzFilename[1] >= '1' && gzFilename[1] <= '9') {
@@ -954,7 +954,7 @@ BOOLEAN ValidCoordinate() {
 }
 
 BOOLEAN ValidFilename() {
-  CHAR16 *pDest;
+  wchar_t *pDest;
   if (gzFilename[0] != '\0')  ///;
   {
     pDest = wcsstr(gzFilename, L".dat");
@@ -964,7 +964,7 @@ BOOLEAN ValidFilename() {
   return FALSE;
 }
 
-BOOLEAN ExternalLoadMap(STR16 szFilename) {
+BOOLEAN ExternalLoadMap(wchar_t* szFilename) {
   Assert(szFilename);
   if (!wcslen(szFilename)) return FALSE;
   wcscpy(gzFilename, szFilename);
@@ -978,7 +978,7 @@ BOOLEAN ExternalLoadMap(STR16 szFilename) {
   return FALSE;
 }
 
-BOOLEAN ExternalSaveMap(STR16 szFilename) {
+BOOLEAN ExternalSaveMap(wchar_t* szFilename) {
   Assert(szFilename);
   if (!wcslen(szFilename)) return FALSE;
   wcscpy(gzFilename, szFilename);

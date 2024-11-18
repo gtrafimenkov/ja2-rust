@@ -11,22 +11,22 @@
 #include "Utils/FontControl.h"
 
 // internal variables.
-INT32 iMsgBoxNum;
-INT32 iMsgBoxOkImg, iMsgBoxCancelImg;
-INT32 iMsgBoxBgrnd, iMsgBoxOk, iMsgBoxCancel;
+int32_t iMsgBoxNum;
+int32_t iMsgBoxOkImg, iMsgBoxCancelImg;
+int32_t iMsgBoxBgrnd, iMsgBoxOk, iMsgBoxCancel;
 struct GRect MsgBoxRect;
 
 BOOLEAN gfMessageBoxResult = FALSE;
-UINT8 gubMessageBoxStatus = MESSAGEBOX_NONE;
+uint8_t gubMessageBoxStatus = MESSAGEBOX_NONE;
 
-void MsgBoxOkClkCallback(GUI_BUTTON *butn, INT32 reason);
-void MsgBoxCnclClkCallback(GUI_BUTTON *butn, INT32 reason);
+void MsgBoxOkClkCallback(GUI_BUTTON *butn, int32_t reason);
+void MsgBoxCnclClkCallback(GUI_BUTTON *butn, int32_t reason);
 
-void CreateMessageBox(CHAR16 *wzString) {
-  INT16 sPixLen;
-  INT16 sStartX, sStartY;
+void CreateMessageBox(wchar_t *wzString) {
+  int16_t sPixLen;
+  int16_t sStartX, sStartY;
 
-  sPixLen = StringPixLength(wzString, (UINT16)gpLargeFontType1) + 10;
+  sPixLen = StringPixLength(wzString, (uint16_t)gpLargeFontType1) + 10;
   if (sPixLen > 600) sPixLen = 600;
 
   sStartX = (640 - sPixLen) / 2;
@@ -36,7 +36,7 @@ void CreateMessageBox(CHAR16 *wzString) {
 
   // Fake button for background w/ text
   iMsgBoxBgrnd =
-      CreateTextButton(wzString, (UINT16)gpLargeFontType1, FONT_LTKHAKI, FONT_DKKHAKI,
+      CreateTextButton(wzString, (uint16_t)gpLargeFontType1, FONT_LTKHAKI, FONT_DKKHAKI,
                        BUTTON_USE_DEFAULT, sStartX, sStartY, sPixLen, 96, BUTTON_NO_TOGGLE,
                        MSYS_PRIORITY_HIGHEST - 2, BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK);
   DisableButton(iMsgBoxBgrnd);
@@ -45,13 +45,13 @@ void CreateMessageBox(CHAR16 *wzString) {
   iMsgBoxOkImg = LoadButtonImage("EDITOR//ok.sti", 0, 1, 2, 3, 4);
   iMsgBoxCancelImg = LoadButtonImage("EDITOR//cancel.sti", 0, 1, 2, 3, 4);
 
-  iMsgBoxOk = QuickCreateButton(iMsgBoxOkImg, (INT16)(sStartX + (sPixLen / 2) - 35),
-                                (INT16)(sStartY + 58), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+  iMsgBoxOk = QuickCreateButton(iMsgBoxOkImg, (int16_t)(sStartX + (sPixLen / 2) - 35),
+                                (int16_t)(sStartY + 58), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                                 BUTTON_NO_CALLBACK, (GUI_CALLBACK)MsgBoxOkClkCallback);
 
   iMsgBoxCancel =
-      QuickCreateButton(iMsgBoxCancelImg, (INT16)(sStartX + (sPixLen / 2) + 5),
-                        (INT16)(sStartY + 58), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
+      QuickCreateButton(iMsgBoxCancelImg, (int16_t)(sStartX + (sPixLen / 2) + 5),
+                        (int16_t)(sStartY + 58), BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
                         BUTTON_NO_CALLBACK, (GUI_CALLBACK)MsgBoxCnclClkCallback);
 
   MsgBoxRect.iLeft = sStartX;
@@ -109,7 +109,7 @@ void RemoveMessageBox() {
 //	Quick Message Box button callback functions.
 //----------------------------------------------------------------------------------------------
 
-void MsgBoxOkClkCallback(GUI_BUTTON *butn, INT32 reason) {
+void MsgBoxOkClkCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     butn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -118,7 +118,7 @@ void MsgBoxOkClkCallback(GUI_BUTTON *butn, INT32 reason) {
   }
 }
 
-void MsgBoxCnclClkCallback(GUI_BUTTON *butn, INT32 reason) {
+void MsgBoxCnclClkCallback(GUI_BUTTON *butn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     butn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {

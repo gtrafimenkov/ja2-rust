@@ -4,14 +4,14 @@
 #include "SGP/Types.h"
 #include "Tactical/Overhead.h"
 
-void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, UINT32 itemsToo, BOOLEAN fShowLocators,
-                         UINT8 ubLevel, BOOLEAN fForce);
+void RevealRoofsAndItems(struct SOLDIERTYPE *pSoldier, uint32_t itemsToo, BOOLEAN fShowLocators,
+                         uint8_t ubLevel, BOOLEAN fForce);
 
-INT32 GetFreeSlantRoof(void);
+int32_t GetFreeSlantRoof(void);
 void RecountSlantRoofs(void);
 void ClearSlantRoofs(void);
-BOOLEAN FindSlantRoofSlot(INT16 sGridNo);
-void AddSlantRoofFOVSlot(INT16 sGridNo);
+BOOLEAN FindSlantRoofSlot(int16_t sGridNo);
+void AddSlantRoofFOVSlot(int16_t sGridNo);
 void ExamineSlantRoofFOVSlots();
 
 #endif

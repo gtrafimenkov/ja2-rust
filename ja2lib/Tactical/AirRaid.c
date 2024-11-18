@@ -51,75 +51,75 @@
 #define BOMB_DIST 150
 
 // BEGIN SERALIZATION
-extern INT32 giTimerAirRaidQuote;
-extern INT32 giTimerAirRaidDiveStarted;
-extern INT32 giTimerAirRaidUpdate;
+extern int32_t giTimerAirRaidQuote;
+extern int32_t giTimerAirRaidDiveStarted;
+extern int32_t giTimerAirRaidUpdate;
 
 BOOLEAN gfInAirRaid = FALSE;
 BOOLEAN gfAirRaidScheduled = FALSE;
-UINT8 gubAirRaidMode;
-UINT32 guiSoundSample;
-UINT32 guiRaidLastUpdate;
+uint8_t gubAirRaidMode;
+uint32_t guiSoundSample;
+uint32_t guiRaidLastUpdate;
 BOOLEAN gfFadingRaidIn = FALSE;
 BOOLEAN gfQuoteSaid = FALSE;
-INT8 gbNumDives = 0;
-INT8 gbMaxDives = 0;
+int8_t gbNumDives = 0;
+int8_t gbMaxDives = 0;
 BOOLEAN gfFadingRaidOut = FALSE;
-INT16 gsDiveX;
-INT16 gsDiveY;
-INT16 gsDiveTargetLocation;
-UINT8 gubDiveDirection;
-INT16 gsNumGridNosMoved;
-INT32 giNumTurnsSinceLastDive;
-INT32 giNumTurnsSinceDiveStarted;
-INT32 giNumGridNosMovedThisTurn;
+int16_t gsDiveX;
+int16_t gsDiveY;
+int16_t gsDiveTargetLocation;
+uint8_t gubDiveDirection;
+int16_t gsNumGridNosMoved;
+int32_t giNumTurnsSinceLastDive;
+int32_t giNumTurnsSinceDiveStarted;
+int32_t giNumGridNosMovedThisTurn;
 BOOLEAN gfAirRaidHasHadTurn = FALSE;
-UINT8 gubBeginTeamTurn = 0;
+uint8_t gubBeginTeamTurn = 0;
 BOOLEAN gfHaveTBBatton = FALSE;
-INT16 gsNotLocatedYet = FALSE;
+int16_t gsNotLocatedYet = FALSE;
 
 AIR_RAID_DEFINITION gAirRaidDef;
 
 typedef struct {
   BOOLEAN fInAirRaid;
   BOOLEAN fAirRaidScheduled;
-  UINT8 ubAirRaidMode;
-  UINT32 uiSoundSample;
-  UINT32 uiRaidLastUpdate;
+  uint8_t ubAirRaidMode;
+  uint32_t uiSoundSample;
+  uint32_t uiRaidLastUpdate;
   BOOLEAN fFadingRaidIn;
   BOOLEAN fQuoteSaid;
-  INT8 bNumDives;
-  INT8 bMaxDives;
+  int8_t bNumDives;
+  int8_t bMaxDives;
   BOOLEAN fFadingRaidOut;
-  INT16 sDiveX;
-  INT16 sDiveY;
-  INT16 sDiveTargetLocation;
-  UINT8 ubDiveDirection;
-  INT16 sNumGridNosMoved;
-  INT32 iNumTurnsSinceLastDive;
-  INT32 iNumTurnsSinceDiveStarted;
-  INT32 iNumGridNosMovedThisTurn;
+  int16_t sDiveX;
+  int16_t sDiveY;
+  int16_t sDiveTargetLocation;
+  uint8_t ubDiveDirection;
+  int16_t sNumGridNosMoved;
+  int32_t iNumTurnsSinceLastDive;
+  int32_t iNumTurnsSinceDiveStarted;
+  int32_t iNumGridNosMovedThisTurn;
   BOOLEAN fAirRaidHasHadTurn;
-  UINT8 ubBeginTeamTurn;
+  uint8_t ubBeginTeamTurn;
   BOOLEAN fHaveTBBatton;
   AIR_RAID_DEFINITION AirRaidDef;
-  INT16 sRaidSoldierID;
+  int16_t sRaidSoldierID;
 
-  INT16 sNotLocatedYet;
-  INT32 iNumFrames;
+  int16_t sNotLocatedYet;
+  int32_t iNumFrames;
 
-  INT8 bLevel;
-  INT8 bTeam;
-  INT8 bSide;
-  UINT8 ubAttackerID;
-  UINT16 usAttackingWeapon;
-  FLOAT dXPos;
-  FLOAT dYPos;
-  INT16 sX;
-  INT16 sY;
-  INT16 sGridNo;
+  int8_t bLevel;
+  int8_t bTeam;
+  int8_t bSide;
+  uint8_t ubAttackerID;
+  uint16_t usAttackingWeapon;
+  float dXPos;
+  float dYPos;
+  int16_t sX;
+  int16_t sY;
+  int16_t sGridNo;
 
-  UINT8 ubFiller[32];
+  uint8_t ubFiller[32];
 
 } AIR_RAID_SAVE_STRUCT;
 
@@ -127,14 +127,14 @@ typedef struct {
 struct SOLDIERTYPE *gpRaidSoldier;
 
 typedef struct {
-  INT8 bDir1;
-  INT8 bDir2;
+  int8_t bDir1;
+  int8_t bDir2;
 
 } AIR_RAID_DIR;
 
 typedef struct {
-  INT8 bX;
-  INT8 bY;
+  int8_t bX;
+  int8_t bY;
 
 } AIR_RAID_POS;
 
@@ -159,7 +159,7 @@ void ScheduleAirRaid(AIR_RAID_DEFINITION *pAirRaidDef) {
 }
 
 BOOLEAN BeginAirRaid() {
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fOK = FALSE;
   struct SOLDIERTYPE *pSoldier;
 
@@ -202,7 +202,7 @@ BOOLEAN BeginAirRaid() {
   }
 
   ChangeSelectedMapSector((u8)gAirRaidDef.sSectorX, (u8)gAirRaidDef.sSectorY,
-                          (INT8)gAirRaidDef.sSectorZ);
+                          (int8_t)gAirRaidDef.sSectorZ);
 
   if (gAirRaidDef.sSectorX != gWorldSectorX || gAirRaidDef.sSectorY != gWorldSectorY ||
       gAirRaidDef.sSectorZ != gbWorldSectorZ || IsMapScreen_2()) {
@@ -211,7 +211,7 @@ BOOLEAN BeginAirRaid() {
     gubAirRaidMode = AIR_RAID_TRYING_TO_START;
     gfQuoteSaid = TRUE;
     SayQuoteFromAnyBodyInThisSector((u8)gAirRaidDef.sSectorX, (u8)gAirRaidDef.sSectorY,
-                                    (INT8)gAirRaidDef.sSectorZ, QUOTE_AIR_RAID);
+                                    (int8_t)gAirRaidDef.sSectorZ, QUOTE_AIR_RAID);
     SpecialCharacterDialogueEvent(DIALOGUE_SPECIAL_EVENT_EXIT_MAP_SCREEN, gAirRaidDef.sSectorX,
                                   gAirRaidDef.sSectorY, gAirRaidDef.sSectorZ, 0, 0);
   } else {
@@ -239,19 +239,19 @@ BOOLEAN BeginAirRaid() {
   gpRaidSoldier->inv[HANDPOS].usItem = HK21E;
 
   // Determine how many dives this one will be....
-  gbMaxDives = (INT8)(gAirRaidDef.bIntensity + Random(gAirRaidDef.bIntensity - 1));
+  gbMaxDives = (int8_t)(gAirRaidDef.bIntensity + Random(gAirRaidDef.bIntensity - 1));
 
   ScreenMsg(FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Begin Air Raid.");
 
   return (TRUE);
 }
 
-INT16 PickLocationNearAnyMercInSector() {
-  UINT8 ubMercsInSector[20] = {0};
-  UINT8 ubNumMercs = 0;
-  UINT8 ubChosenMerc;
+int16_t PickLocationNearAnyMercInSector() {
+  uint8_t ubMercsInSector[20] = {0};
+  uint8_t ubNumMercs = 0;
+  uint8_t ubChosenMerc;
   struct SOLDIERTYPE *pTeamSoldier;
-  INT32 cnt;
+  int32_t cnt;
 
   // Loop through all our guys and randomly say one from someone in our sector
 
@@ -263,14 +263,14 @@ INT16 PickLocationNearAnyMercInSector() {
        cnt++, pTeamSoldier++) {
     // Add guy if he's a candidate...
     if (OK_INSECTOR_MERC(pTeamSoldier)) {
-      ubMercsInSector[ubNumMercs] = (UINT8)cnt;
+      ubMercsInSector[ubNumMercs] = (uint8_t)cnt;
       ubNumMercs++;
     }
   }
 
   // If we are > 0
   if (ubNumMercs > 0) {
-    ubChosenMerc = (UINT8)Random(ubNumMercs);
+    ubChosenMerc = (uint8_t)Random(ubNumMercs);
 
     return (MercPtrs[ubMercsInSector[ubChosenMerc]]->sGridNo);
   }
@@ -278,17 +278,17 @@ INT16 PickLocationNearAnyMercInSector() {
   return (NOWHERE);
 }
 
-INT16 PickRandomLocationAtMinSpacesAway(INT16 sGridNo, INT16 sMinValue, INT16 sRandomVar) {
-  INT16 sNewGridNo = NOWHERE;
+int16_t PickRandomLocationAtMinSpacesAway(int16_t sGridNo, int16_t sMinValue, int16_t sRandomVar) {
+  int16_t sNewGridNo = NOWHERE;
 
-  INT16 sX, sY, sNewX, sNewY;
+  int16_t sX, sY, sNewX, sNewY;
 
   sX = CenterX(sGridNo);
   sY = CenterY(sGridNo);
 
   while (sNewGridNo == NOWHERE) {
-    sNewX = sX + sMinValue + (INT16)Random(sRandomVar);
-    sNewY = sY + sMinValue + (INT16)Random(sRandomVar);
+    sNewX = sX + sMinValue + (int16_t)Random(sRandomVar);
+    sNewY = sY + sMinValue + (int16_t)Random(sRandomVar);
 
     if (Random(2)) {
       sNewX = -1 * sNewX;
@@ -380,7 +380,7 @@ void AirRaidLookForDive() {
 
     // Do morale hit on our guys
     HandleMoraleEvent(NULL, MORALE_AIRSTRIKE, (u8)gAirRaidDef.sSectorX, (u8)gAirRaidDef.sSectorY,
-                      (INT8)gAirRaidDef.sSectorZ);
+                      (int8_t)gAirRaidDef.sSectorZ);
   }
 
   // If NOT in combat....
@@ -396,7 +396,7 @@ void AirRaidLookForDive() {
     }
   } else {
     // How many turns have gone by?
-    if ((UINT32)giNumTurnsSinceLastDive > (Random(2) + 1)) {
+    if ((uint32_t)giNumTurnsSinceLastDive > (Random(2) + 1)) {
       fDoDive = TRUE;
     }
   }
@@ -446,8 +446,8 @@ void AirRaidStartEnding() {
 }
 
 void BeginBombing() {
-  INT16 sGridNo;
-  UINT32 iSoundStartDelay;
+  int16_t sGridNo;
+  uint32_t iSoundStartDelay;
 
   if (!(gTacticalStatus.uiFlags & INCOMBAT)) {
     // Start diving sound...
@@ -482,15 +482,15 @@ void BeginBombing() {
   giNumTurnsSinceDiveStarted = 0;
 
   // Get direction....
-  gubDiveDirection = (INT8)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
+  gubDiveDirection = (int8_t)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
 
   gsNumGridNosMoved = 0;
   gsNotLocatedYet = TRUE;
 }
 
 void BeginDive() {
-  INT16 sGridNo;
-  UINT32 iSoundStartDelay;
+  int16_t sGridNo;
+  uint32_t iSoundStartDelay;
 
   // Start diving sound...
   PlayJA2Sample(S_RAID_DIVE, RATE_11025, HIGHVOLUME, 1, MIDDLEPAN);
@@ -527,36 +527,36 @@ void BeginDive() {
   RESETTIMECOUNTER(giTimerAirRaidDiveStarted, iSoundStartDelay);
 
   // Get direction....
-  gubDiveDirection = (INT8)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
+  gubDiveDirection = (int8_t)GetDirectionToGridNoFromGridNo(sGridNo, gsDiveTargetLocation);
 
   gsNumGridNosMoved = 0;
   gsNotLocatedYet = TRUE;
 }
 
-void MoveDiveAirplane(FLOAT dAngle) {
-  FLOAT dDeltaPos;
+void MoveDiveAirplane(float dAngle) {
+  float dDeltaPos;
 
   // Find delta Movement for X pos
-  dDeltaPos = MOVE_X * (FLOAT)sin(dAngle);
+  dDeltaPos = MOVE_X * (float)sin(dAngle);
 
   // Find new position
-  gsDiveX = (INT16)(gsDiveX + dDeltaPos);
+  gsDiveX = (int16_t)(gsDiveX + dDeltaPos);
 
   // Find delta Movement for Y pos
-  dDeltaPos = MOVE_X * (FLOAT)cos(dAngle);
+  dDeltaPos = MOVE_X * (float)cos(dAngle);
 
   // Find new pos
-  gsDiveY = (INT16)(gsDiveY + dDeltaPos);
+  gsDiveY = (int16_t)(gsDiveY + dDeltaPos);
 }
 
 void DoDive() {
-  INT16 sRange;
-  INT16 sGridNo, sOldGridNo;
+  int16_t sRange;
+  int16_t sGridNo, sOldGridNo;
 
-  INT16 sTargetX, sTargetY;
-  INT16 sStrafeX, sStrafeY;
-  FLOAT dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
-  INT16 sX, sY;
+  int16_t sTargetX, sTargetY;
+  int16_t sStrafeX, sStrafeY;
+  float dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
+  int16_t sX, sY;
 
   // Delay for a specific perion of time to allow sound to Q up...
   if (TIMECOUNTERDONE(giTimerAirRaidDiveStarted, 0)) {
@@ -594,11 +594,11 @@ void DoDive() {
       sTargetY = CenterY(gsDiveTargetLocation);
 
       // Determine deltas
-      dDeltaX = (FLOAT)(sTargetX - gsDiveX);
-      dDeltaY = (FLOAT)(sTargetY - gsDiveY);
+      dDeltaX = (float)(sTargetX - gsDiveX);
+      dDeltaY = (float)(sTargetY - gsDiveY);
 
       // Determine angle
-      dAngle = (FLOAT)atan2(dDeltaX, dDeltaY);
+      dAngle = (float)atan2(dDeltaX, dDeltaY);
 
       MoveDiveAirplane(dAngle);
 
@@ -620,18 +620,18 @@ void DoDive() {
         // Get positions of guns...
 
         // Get target.....
-        dDeltaXPos = STRAFE_DIST * (FLOAT)sin(dAngle);
-        sStrafeX = (INT16)(gsDiveX + dDeltaXPos);
+        dDeltaXPos = STRAFE_DIST * (float)sin(dAngle);
+        sStrafeX = (int16_t)(gsDiveX + dDeltaXPos);
 
         // Find delta Movement for Y pos
-        dDeltaYPos = STRAFE_DIST * (FLOAT)cos(dAngle);
-        sStrafeY = (INT16)(gsDiveY + dDeltaYPos);
+        dDeltaYPos = STRAFE_DIST * (float)cos(dAngle);
+        sStrafeY = (int16_t)(gsDiveY + dDeltaYPos);
 
         if ((gTacticalStatus.uiFlags & INCOMBAT)) {
           LocateGridNo(sGridNo);
         }
 
-        if (GridNoOnVisibleWorldTile((INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
+        if (GridNoOnVisibleWorldTile((int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
           // if ( gsNotLocatedYet && !( gTacticalStatus.uiFlags & INCOMBAT ) )
           //	{
           //	gsNotLocatedYet = FALSE;
@@ -657,8 +657,8 @@ void DoDive() {
         }
 
         // Do second one.... ( ll )
-        sX = (INT16)(gsDiveX + ((FLOAT)sin(dAngle + (PI / 2)) * 40));
-        sY = (INT16)(gsDiveY + ((FLOAT)cos(dAngle + (PI / 2)) * 40));
+        sX = (int16_t)(gsDiveX + ((float)sin(dAngle + (PI / 2)) * 40));
+        sY = (int16_t)(gsDiveY + ((float)cos(dAngle + (PI / 2)) * 40));
 
         gpRaidSoldier->dXPos = sX;
         gpRaidSoldier->sX = sX;
@@ -667,12 +667,12 @@ void DoDive() {
         gpRaidSoldier->sGridNo = GETWORLDINDEXFROMWORLDCOORDS(sY, sX);
 
         // Get target.....
-        sStrafeX = (INT16)(sX + dDeltaXPos);
+        sStrafeX = (int16_t)(sX + dDeltaXPos);
 
         // Find delta Movement for Y pos
-        sStrafeY = (INT16)(sY + dDeltaYPos);
+        sStrafeY = (int16_t)(sY + dDeltaYPos);
 
-        if (GridNoOnVisibleWorldTile((INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
+        if (GridNoOnVisibleWorldTile((int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
           // if ( ( gTacticalStatus.uiFlags & INCOMBAT ) )
           {
             // Increase attacker busy...
@@ -705,13 +705,13 @@ void DoDive() {
 }
 
 void DoBombing() {
-  INT16 sRange;
-  INT16 sGridNo, sOldGridNo, sBombGridNo;
+  int16_t sRange;
+  int16_t sGridNo, sOldGridNo, sBombGridNo;
 
-  INT16 sTargetX, sTargetY;
-  UINT16 usItem;
-  INT16 sStrafeX, sStrafeY;
-  FLOAT dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
+  int16_t sTargetX, sTargetY;
+  uint16_t usItem;
+  int16_t sStrafeX, sStrafeY;
+  float dDeltaX, dDeltaY, dAngle, dDeltaXPos, dDeltaYPos;
   BOOLEAN fLocate = FALSE;
 
   // Delay for a specific perion of time to allow sound to Q up...
@@ -750,11 +750,11 @@ void DoBombing() {
       sTargetY = CenterY(gsDiveTargetLocation);
 
       // Determine deltas
-      dDeltaX = (FLOAT)(sTargetX - gsDiveX);
-      dDeltaY = (FLOAT)(sTargetY - gsDiveY);
+      dDeltaX = (float)(sTargetX - gsDiveX);
+      dDeltaY = (float)(sTargetY - gsDiveY);
 
       // Determine angle
-      dAngle = (FLOAT)atan2(dDeltaX, dDeltaY);
+      dAngle = (float)atan2(dDeltaX, dDeltaY);
 
       MoveDiveAirplane(dAngle);
 
@@ -775,14 +775,14 @@ void DoBombing() {
 
         if ((gsNumGridNosMoved % 4) == 0) {
           // Get target.....
-          dDeltaXPos = BOMB_DIST * (FLOAT)sin(dAngle);
-          sStrafeX = (INT16)(gsDiveX + dDeltaXPos);
+          dDeltaXPos = BOMB_DIST * (float)sin(dAngle);
+          sStrafeX = (int16_t)(gsDiveX + dDeltaXPos);
 
           // Find delta Movement for Y pos
-          dDeltaYPos = BOMB_DIST * (FLOAT)cos(dAngle);
-          sStrafeY = (INT16)(gsDiveY + dDeltaYPos);
+          dDeltaYPos = BOMB_DIST * (float)cos(dAngle);
+          sStrafeY = (int16_t)(gsDiveY + dDeltaYPos);
 
-          if (GridNoOnVisibleWorldTile((INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
+          if (GridNoOnVisibleWorldTile((int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)))) {
             // if ( gsNotLocatedYet && !( gTacticalStatus.uiFlags & INCOMBAT ) )
             //{
             //	gsNotLocatedYet = FALSE;
@@ -797,7 +797,7 @@ void DoBombing() {
 
             // Pick random gridno....
             sBombGridNo = PickRandomLocationAtMinSpacesAway(
-                (INT16)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)), 40, 40);
+                (int16_t)(GETWORLDINDEXFROMWORLDCOORDS(sStrafeY, sStrafeX)), 40, 40);
 
             if ((gTacticalStatus.uiFlags & INCOMBAT)) {
               fLocate = TRUE;
@@ -812,7 +812,7 @@ void DoBombing() {
             // Drop bombs...
             InternalIgniteExplosion(NOBODY, CenterX(sBombGridNo), CenterY(sBombGridNo), 0,
                                     sBombGridNo, usItem, fLocate,
-                                    (UINT8)IsRoofPresentAtGridno(sBombGridNo));
+                                    (uint8_t)IsRoofPresentAtGridno(sBombGridNo));
           }
         }
 
@@ -832,8 +832,8 @@ void DoBombing() {
 }
 
 void HandleAirRaid() {
-  INT32 iVol;
-  UINT32 uiClock;
+  int32_t iVol;
+  uint32_t uiClock;
 
   // OK,
   if (gfInAirRaid) {
@@ -990,7 +990,7 @@ void HandleAirRaid() {
 
 BOOLEAN InAirRaid() { return (gfInAirRaid); }
 
-BOOLEAN HandleAirRaidEndTurn(UINT8 ubTeam) {
+BOOLEAN HandleAirRaidEndTurn(uint8_t ubTeam) {
   if (!gfInAirRaid) {
     return (TRUE);
   }
@@ -1037,7 +1037,7 @@ BOOLEAN HandleAirRaidEndTurn(UINT8 ubTeam) {
 }
 
 BOOLEAN SaveAirRaidInfoToSaveGameFile(FileID hFile) {
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
   AIR_RAID_SAVE_STRUCT sAirRaidSaveStruct;
 
   // Put all the globals into the save struct
@@ -1096,7 +1096,7 @@ BOOLEAN SaveAirRaidInfoToSaveGameFile(FileID hFile) {
 
 BOOLEAN LoadAirRaidInfoFromSaveGameFile(FileID hFile) {
   AIR_RAID_SAVE_STRUCT sAirRaidSaveStruct;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // Load the number of REAL_OBJECTs in the array
   File_Read(hFile, &sAirRaidSaveStruct, sizeof(AIR_RAID_SAVE_STRUCT), &uiNumBytesRead);
@@ -1164,7 +1164,7 @@ void EndAirRaid() {
     if (!gTacticalStatus.Team[ENEMY_TEAM].bTeamActive &&
         !gTacticalStatus.Team[CREATURE_TEAM].bTeamActive) {
       struct SOLDIERTYPE *pTeamSoldier;
-      INT32 cnt;
+      int32_t cnt;
 
       // Loop through all militia and restore them to peaceful status
       cnt = gTacticalStatus.Team[MILITIA_TEAM].bFirstID;
@@ -1195,7 +1195,7 @@ void EndAirRaid() {
                                   // struct GROUP *pGroup;
                                   // Create a patrol group originating from sector B9
                                   // pGroup = CreateNewEnemyGroupDepartingFromSector( SEC_B9,
-                                  // (UINT8)(2 + Random( 2 ) + gGameOptions.ubDifficultyLevel), 0 );
+                                  // (uint8_t)(2 + Random( 2 ) + gGameOptions.ubDifficultyLevel), 0 );
                                   // Move the patrol group north to attack Omerta
                                   // AddWaypointToPGroup( pGroup, 9, 1 ); //A9
                                   // Because we want them to arrive right away, we will toast the

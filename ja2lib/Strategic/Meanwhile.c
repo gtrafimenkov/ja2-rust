@@ -41,7 +41,7 @@
 
 #define MAX_MEANWHILE_PROFILES 10
 
-INT8 gzMeanwhileStr[][30] = {
+int8_t gzMeanwhileStr[][30] = {
     "End of player's first battle",
     "Drassen Lib. ",
     "Cambria Lib.",
@@ -62,17 +62,17 @@ INT8 gzMeanwhileStr[][30] = {
 };
 
 // the snap to grid nos for meanwhile scenes
-UINT16 gusMeanWhileGridNo[] = {
+uint16_t gusMeanWhileGridNo[] = {
     12248, 12248, 12248, 12248, 12248, 12248, 12248, 12248, 12248,
     12248, 12248, 8075,  12248, 12248, 12248, 12248, 12248,
 };
 
 typedef struct {
-  UINT8 ubProfile;
-  INT16 sX;
-  INT16 sY;
-  INT16 sZ;
-  INT16 sGridNo;
+  uint8_t ubProfile;
+  int16_t sX;
+  int16_t sY;
+  int16_t sZ;
+  int16_t sGridNo;
 
 } NPC_SAVE_INFO;
 
@@ -89,22 +89,22 @@ u8 gsOldSelectedSectorX;
 u8 gsOldSelectedSectorY;
 u8 gsOldSelectedSectorZ;
 
-UINT32 guiOldScreen;
+uint32_t guiOldScreen;
 NPC_SAVE_INFO gNPCSaveData[MAX_MEANWHILE_PROFILES];
-UINT32 guiNumNPCSaves = 0;
+uint32_t guiNumNPCSaves = 0;
 BOOLEAN gfReloadingScreenFromMeanwhile = FALSE;
-INT16 gsOldCurInterfacePanel = 0;
+int16_t gsOldCurInterfacePanel = 0;
 BOOLEAN gfWorldWasLoaded = FALSE;
-UINT8 ubCurrentMeanWhileId = 0;
+uint8_t ubCurrentMeanWhileId = 0;
 
-void BeginMeanwhileCallBack(UINT8 bExitValue);
+void BeginMeanwhileCallBack(uint8_t bExitValue);
 void DoneFadeOutMeanwhile(void);
 void DoneFadeInMeanwhile(void);
 void DoneFadeOutMeanwhileOnceDone(void);
 void DoneFadeInMeanwhileOnceDone(void);
 void LocateMeanWhileGrid(void);
 
-UINT32 uiMeanWhileFlags = 0;
+uint32_t uiMeanWhileFlags = 0;
 
 // meanwhile flag defines
 #define END_OF_PLAYERS_FIRST_BATTLE_FLAG 0x00000001
@@ -125,12 +125,12 @@ UINT32 uiMeanWhileFlags = 0;
 #define INTERROGATION_FLAG 0x00008000
 #define BALIME_LIBERATED_FLAG 0x00010000
 
-extern void InternalLocateGridNo(UINT16 sGridNo, BOOLEAN fForce);
+extern void InternalLocateGridNo(uint16_t sGridNo, BOOLEAN fForce);
 
 void ProcessImplicationsOfMeanwhile(void);
 
 // set flag for this event
-void SetMeanWhileFlag(UINT8 ubMeanwhileID) {
+void SetMeanWhileFlag(uint8_t ubMeanwhileID) {
   switch (ubMeanwhileID) {
     case END_OF_PLAYERS_FIRST_BATTLE:
       uiMeanWhileFlags |= END_OF_PLAYERS_FIRST_BATTLE_FLAG;
@@ -187,8 +187,8 @@ void SetMeanWhileFlag(UINT8 ubMeanwhileID) {
 }
 
 // is this flag set?
-BOOLEAN GetMeanWhileFlag(UINT8 ubMeanwhileID) {
-  UINT32 uiTrue = FALSE;
+BOOLEAN GetMeanWhileFlag(uint8_t ubMeanwhileID) {
+  uint32_t uiTrue = FALSE;
   switch (ubMeanwhileID) {
     case END_OF_PLAYERS_FIRST_BATTLE:
       uiTrue = (uiMeanWhileFlags & END_OF_PLAYERS_FIRST_BATTLE_FLAG);
@@ -250,30 +250,30 @@ BOOLEAN GetMeanWhileFlag(UINT8 ubMeanwhileID) {
   }
 }
 
-INT32 GetFreeNPCSave(void) {
-  UINT32 uiCount;
+int32_t GetFreeNPCSave(void) {
+  uint32_t uiCount;
 
   for (uiCount = 0; uiCount < guiNumNPCSaves; uiCount++) {
-    if ((gNPCSaveData[uiCount].ubProfile == NO_PROFILE)) return ((INT32)uiCount);
+    if ((gNPCSaveData[uiCount].ubProfile == NO_PROFILE)) return ((int32_t)uiCount);
   }
 
-  if (guiNumNPCSaves < MAX_MEANWHILE_PROFILES) return ((INT32)guiNumNPCSaves++);
+  if (guiNumNPCSaves < MAX_MEANWHILE_PROFILES) return ((int32_t)guiNumNPCSaves++);
 
   return (-1);
 }
 
 void RecountNPCSaves(void) {
-  INT32 uiCount;
+  int32_t uiCount;
 
   for (uiCount = guiNumNPCSaves - 1; (uiCount >= 0); uiCount--) {
     if ((gNPCSaveData[uiCount].ubProfile != NO_PROFILE)) {
-      guiNumNPCSaves = (UINT32)(uiCount + 1);
+      guiNumNPCSaves = (uint32_t)(uiCount + 1);
       break;
     }
   }
 }
 
-void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, UINT32 uiTime) {
+void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, uint32_t uiTime) {
   // event scheduled to happen before, ignore
   if (GetMeanWhileFlag(pMeanwhileDef->ubMeanwhileID) == TRUE) {
     return;
@@ -300,8 +300,8 @@ void ScheduleMeanwhileEvent(MEANWHILE_DEFINITION *pMeanwhileDef, UINT32 uiTime) 
   AddStrategicEvent(EVENT_MEANWHILE, uiTime, pMeanwhileDef->ubMeanwhileID);
 }
 
-BOOLEAN BeginMeanwhile(UINT8 ubMeanwhileID) {
-  INT32 cnt;
+BOOLEAN BeginMeanwhile(uint8_t ubMeanwhileID) {
+  int32_t cnt;
 
   // copy meanwhile data from array to structure for current
   memcpy(&gCurrentMeanwhileDef, &(gMeanwhileDef[ubMeanwhileID]), sizeof(MEANWHILE_DEFINITION));
@@ -319,7 +319,7 @@ BOOLEAN BeginMeanwhile(UINT8 ubMeanwhileID) {
 }
 
 void BringupMeanwhileBox() {
-  CHAR16 zStr[256];
+  wchar_t zStr[256];
 
 #ifdef JA2TESTVERSION
   swprintf(
@@ -340,7 +340,7 @@ void BringupMeanwhileBox() {
     DoMessageBox(MSG_BOX_BASIC_STYLE, zStr, guiCurrentScreen, MSG_BOX_FLAG_OKSKIP,
                  BeginMeanwhileCallBack, NULL);
   } else {
-    DoMessageBox(MSG_BOX_BASIC_STYLE, zStr, guiCurrentScreen, (UINT8)MSG_BOX_FLAG_OK,
+    DoMessageBox(MSG_BOX_BASIC_STYLE, zStr, guiCurrentScreen, (uint8_t)MSG_BOX_FLAG_OK,
                  BeginMeanwhileCallBack, NULL);
   }
 }
@@ -377,7 +377,7 @@ void CheckForMeanwhileOKStart() {
 }
 
 void StartMeanwhile() {
-  INT32 iIndex;
+  int32_t iIndex;
 
   // OK, save old position...
   if (gfWorldLoaded) {
@@ -398,7 +398,7 @@ void StartMeanwhile() {
   gfWorldWasLoaded = gfWorldLoaded;
 
   // OK, we have been told to start.....
-  SetCurrentInterfacePanel((UINT8)TEAM_PANEL);
+  SetCurrentInterfacePanel((uint8_t)TEAM_PANEL);
 
   // Setup NPC locations, depending on meanwhile type...
   switch (gCurrentMeanwhileDef.ubMeanwhileID) {
@@ -549,11 +549,11 @@ void DoneFadeInMeanwhile() {
     }
 
     TriggerNPCRecordImmediately(gCurrentMeanwhileDef.ubNPCNumber,
-                                (UINT8)gCurrentMeanwhileDef.usTriggerEvent);
+                                (uint8_t)gCurrentMeanwhileDef.usTriggerEvent);
   }
 }
 
-void BeginMeanwhileCallBack(UINT8 bExitValue) {
+void BeginMeanwhileCallBack(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_OK || bExitValue == MSG_BOX_RETURN_YES) {
     gTacticalStatus.uiFlags |= ENGAGED_IN_CONV;
     // Increment reference count...
@@ -667,8 +667,8 @@ void ProcessImplicationsOfMeanwhile(void) {
 }
 
 void EndMeanwhile() {
-  UINT32 cnt;
-  UINT8 ubProfile;
+  uint32_t cnt;
+  uint8_t ubProfile;
 
   EmptyDialogueQueue();
   ProcessImplicationsOfMeanwhile();
@@ -706,8 +706,8 @@ void EndMeanwhile() {
       if (ubProfile != NO_PROFILE) {
         gMercProfiles[ubProfile].sSectorX = gNPCSaveData[cnt].sX;
         gMercProfiles[ubProfile].sSectorY = gNPCSaveData[cnt].sY;
-        gMercProfiles[ubProfile].bSectorZ = (INT8)gNPCSaveData[cnt].sZ;
-        gMercProfiles[ubProfile].sGridNo = (INT8)gNPCSaveData[cnt].sGridNo;
+        gMercProfiles[ubProfile].bSectorZ = (int8_t)gNPCSaveData[cnt].sZ;
+        gMercProfiles[ubProfile].sGridNo = (int8_t)gNPCSaveData[cnt].sGridNo;
 
         // Ensure NPC files loaded...
         ReloadQuoteFile(ubProfile);
@@ -717,14 +717,14 @@ void EndMeanwhile() {
 }
 
 void DoneFadeOutMeanwhileOnceDone() {
-  UINT32 cnt;
-  UINT8 ubProfile;
+  uint32_t cnt;
+  uint8_t ubProfile;
 
   // OK, insertion data found, enter sector!
   gfReloadingScreenFromMeanwhile = TRUE;
 
   if (gfWorldWasLoaded) {
-    SetCurrentWorldSector(gsOldSectorX, gsOldSectorY, (INT8)gsOldSectorZ);
+    SetCurrentWorldSector(gsOldSectorX, gsOldSectorY, (int8_t)gsOldSectorZ);
 
     ExamineCurrentSquadLights();
   } else {
@@ -735,7 +735,7 @@ void DoneFadeOutMeanwhileOnceDone() {
     gbWorldSectorZ = -1;
   }
 
-  ChangeSelectedMapSector(gsOldSelectedSectorX, gsOldSelectedSectorY, (INT8)gsOldSelectedSectorZ);
+  ChangeSelectedMapSector(gsOldSelectedSectorX, gsOldSelectedSectorY, (int8_t)gsOldSelectedSectorZ);
 
   gfReloadingScreenFromMeanwhile = FALSE;
 
@@ -746,8 +746,8 @@ void DoneFadeOutMeanwhileOnceDone() {
     if (ubProfile != NO_PROFILE) {
       gMercProfiles[ubProfile].sSectorX = gNPCSaveData[cnt].sX;
       gMercProfiles[ubProfile].sSectorY = gNPCSaveData[cnt].sY;
-      gMercProfiles[ubProfile].bSectorZ = (INT8)gNPCSaveData[cnt].sZ;
-      gMercProfiles[ubProfile].sGridNo = (INT8)gNPCSaveData[cnt].sGridNo;
+      gMercProfiles[ubProfile].bSectorZ = (int8_t)gNPCSaveData[cnt].sZ;
+      gMercProfiles[ubProfile].sGridNo = (int8_t)gNPCSaveData[cnt].sGridNo;
 
       // Ensure NPC files loaded...
       ReloadQuoteFile(ubProfile);
@@ -764,7 +764,7 @@ void DoneFadeOutMeanwhileOnceDone() {
 
     case GAME_SCREEN:
       // restore old interface panel flag
-      SetCurrentInterfacePanel((UINT8)TEAM_PANEL);
+      SetCurrentInterfacePanel((uint8_t)TEAM_PANEL);
       break;
   }
 
@@ -774,7 +774,7 @@ void DoneFadeOutMeanwhileOnceDone() {
 void DoneFadeInMeanwhileOnceDone() {}
 
 void LocateMeanWhileGrid(void) {
-  INT16 sGridNo = 0;
+  int16_t sGridNo = 0;
 
   // go to the approp. gridno
   sGridNo = gusMeanWhileGridNo[ubCurrentMeanWhileId];
@@ -798,10 +798,10 @@ void LocateToMeanwhileCharacter() {
 
 BOOLEAN AreReloadingFromMeanwhile() { return (gfReloadingScreenFromMeanwhile); }
 
-UINT8 GetMeanwhileID() { return (gCurrentMeanwhileDef.ubMeanwhileID); }
+uint8_t GetMeanwhileID() { return (gCurrentMeanwhileDef.ubMeanwhileID); }
 
 void HandleCreatureRelease(void) {
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
   MeanwhileDef.sSectorX = 3;
@@ -817,12 +817,12 @@ void HandleCreatureRelease(void) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleMeanWhileEventPostingForTownLiberation(UINT8 bTownId) {
+void HandleMeanWhileEventPostingForTownLiberation(uint8_t bTownId) {
   // post event for meanwhile whithin the next 6 hours if it still will be daylight, otherwise the
   // next morning
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
   BOOLEAN fHandled = FALSE;
 
   MeanwhileDef.sSectorX = 3;
@@ -868,8 +868,8 @@ void HandleMeanWhileEventPostingForTownLiberation(UINT8 bTownId) {
   }
 }
 
-void HandleMeanWhileEventPostingForTownLoss(UINT8 bTownId) {
-  UINT32 uiTime = 0;
+void HandleMeanWhileEventPostingForTownLoss(uint8_t bTownId) {
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
   // make sure scene hasn't been used before
@@ -890,10 +890,10 @@ void HandleMeanWhileEventPostingForTownLoss(UINT8 bTownId) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSamId) {
-  UINT32 uiTime = 0;
+void HandleMeanWhileEventPostingForSAMLiberation(int8_t bSamId) {
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
   BOOLEAN fHandled = FALSE;
 
   if (bSamId == -1) {
@@ -938,8 +938,8 @@ void HandleMeanWhileEventPostingForSAMLiberation(INT8 bSamId) {
   }
 }
 
-void HandleFlowersMeanwhileScene(INT8 bTimeCode) {
-  UINT32 uiTime = 0;
+void HandleFlowersMeanwhileScene(int8_t bTimeCode) {
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
   // make sure scene hasn't been used before
@@ -968,7 +968,7 @@ void HandleFlowersMeanwhileScene(INT8 bTimeCode) {
 }
 
 void HandleOutskirtsOfMedunaMeanwhileScene(void) {
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
   // make sure scene hasn't been used before
@@ -990,7 +990,7 @@ void HandleOutskirtsOfMedunaMeanwhileScene(void) {
 }
 
 void HandleKillChopperMeanwhileScene(void) {
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
   // make sure scene hasn't been used before
@@ -1012,7 +1012,7 @@ void HandleKillChopperMeanwhileScene(void) {
 }
 
 void HandleScientistAWOLMeanwhileScene(void) {
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
   // make sure scene hasn't been used before
@@ -1034,7 +1034,7 @@ void HandleScientistAWOLMeanwhileScene(void) {
 }
 
 void HandleInterrogationMeanwhileScene(void) {
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
 
   // make sure scene hasn't been used before
@@ -1056,9 +1056,9 @@ void HandleInterrogationMeanwhileScene(void) {
 }
 
 void HandleFirstBattleVictory(void) {
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
 
   if (GetMeanWhileFlag(END_OF_PLAYERS_FIRST_BATTLE)) {
     return;
@@ -1080,9 +1080,9 @@ void HandleFirstBattleVictory(void) {
 }
 
 void HandleDelayedFirstBattleVictory(void) {
-  UINT32 uiTime = 0;
+  uint32_t uiTime = 0;
   MEANWHILE_DEFINITION MeanwhileDef;
-  UINT8 ubId = 0;
+  uint8_t ubId = 0;
 
   if (GetMeanWhileFlag(END_OF_PLAYERS_FIRST_BATTLE)) {
     return;
@@ -1109,7 +1109,7 @@ void HandleDelayedFirstBattleVictory(void) {
   ScheduleMeanwhileEvent(&MeanwhileDef, uiTime);
 }
 
-void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, INT16 bSectorZ,
+void HandleFirstBattleEndingWhileInTown(u8 sSectorX, u8 sSectorY, int16_t bSectorZ,
                                         BOOLEAN fFromAutoResolve) {
   TownID bTownId = 0;
 

@@ -11,8 +11,8 @@
 #include "rust_fileman.h"
 #include "rust_platform.h"
 
-UINT32 guiSplashFrameFade = 10;
-UINT32 guiSplashStartTime = 0;
+uint32_t guiSplashFrameFade = 10;
+uint32_t guiSplashStartTime = 0;
 
 // Simply create videosurface, load image, and draw it to the screen.
 void InitJA2SplashScreen() {

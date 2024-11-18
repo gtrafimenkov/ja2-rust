@@ -3,9 +3,9 @@
 
 #include "SGP/Types.h"
 
-extern UINT8 gubCurrentSortMode;
-extern UINT8 gubCurrentListMode;
-extern UINT8 gbCurrentIndex;
+extern uint8_t gubCurrentSortMode;
+extern uint8_t gubCurrentListMode;
+extern uint8_t gbCurrentIndex;
 
 #define AIM_ASCEND 6
 #define AIM_DESCEND 7

@@ -18,9 +18,9 @@ struct SOLDIERTYPE;
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY);
 
 // this will check for promotions and handle them for you
-UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts);
+uint8_t CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, uint8_t ubCurrentRank, uint8_t ubRecentKillPts);
 
-void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize);
+void BuildMilitiaPromotionsString(wchar_t *str, size_t bufSize);
 
 // tell player how much it will cost
 void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier);
@@ -42,7 +42,7 @@ void HandleContinueOfTownTraining(void);
 // clear the list of training completed sectors
 void ClearSectorListForCompletedTrainingOfMilitia(void);
 
-BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ);
+BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, int8_t bSectorZ);
 
 void HandleMilitiaPromotions(u8 mapX, u8 mapY);
 void HandleMilitiaDefections(u8 mapX, u8 mapY);

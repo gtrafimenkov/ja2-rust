@@ -534,20 +534,20 @@ typedef enum {
 #define LOYALTY_OK_THRESHOLD 50
 #define LOYALTY_HIGH_THRESHOLD 80
 
-extern UINT8 gubQuest[MAX_QUESTS];
-extern UINT8 gubFact[NUM_FACTS];
+extern uint8_t gubQuest[MAX_QUESTS];
+extern uint8_t gubFact[NUM_FACTS];
 
-extern void SetFactTrue(UINT16 usFact);
-extern void SetFactFalse(UINT16 usFact);
-extern BOOLEAN CheckFact(UINT16 usFact, UINT8 ubProfileID);
+extern void SetFactTrue(uint16_t usFact);
+extern void SetFactFalse(uint16_t usFact);
+extern BOOLEAN CheckFact(uint16_t usFact, uint8_t ubProfileID);
 
-extern void StartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY);
-extern void EndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY);
+extern void StartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY);
+extern void EndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY);
 
-extern void InternalStartQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
-extern void InternalEndQuest(UINT8 ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
+extern void InternalStartQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
+extern void InternalEndQuest(uint8_t ubQuest, u8 sSectorX, u8 sSectorY, BOOLEAN fUpdateHistory);
 
-extern void CheckForQuests(UINT32 uiDay);
+extern void CheckForQuests(uint32_t uiDay);
 
 void InitQuestEngine();
 

@@ -16,8 +16,8 @@
 #include "Utils/WordWrap.h"
 
 // buttons
-INT32 giIMPAttributeFinishButtonImage[2];
-INT32 giIMPAttributeFinishButton[2];
+int32_t giIMPAttributeFinishButtonImage[2];
+int32_t giIMPAttributeFinishButton[2];
 
 // function definitions
 void CreateAttributeFinishButtons(void);
@@ -25,8 +25,8 @@ void DestroyAttributeFinishButtons(void);
 extern void SetGeneratedCharacterAttributes(void);
 
 // callbacks
-void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPAttributeFinishNoCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPAttributeFinishNoCallback(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPAttributeFinish(void) {
   // create the needed buttons
@@ -107,7 +107,7 @@ void DestroyAttributeFinishButtons(void) {
   return;
 }
 
-void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -133,7 +133,7 @@ void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPAttributeFinishNoCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPAttributeFinishNoCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 

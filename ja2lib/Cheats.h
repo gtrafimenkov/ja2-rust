@@ -4,7 +4,7 @@
 #include "LanguageDefines.h"
 #include "SGP/Types.h"
 
-extern UINT8 gubCheatLevel;
+extern uint8_t gubCheatLevel;
 
 // GLOBALS FOR CHEAT MODE......
 #ifdef GERMAN

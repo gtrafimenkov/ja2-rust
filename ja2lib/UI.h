@@ -62,15 +62,15 @@ enum {
   MSG_BOX_LAPTOP_DEFAULT,
 };
 
-typedef void (*MSGBOX_CALLBACK)(UINT8 bExitValue);
+typedef void (*MSGBOX_CALLBACK)(uint8_t bExitValue);
 
-INT32 DoMapMessageBox(UINT8 ubStyle, CHAR16* zString, UINT32 uiExitScreen, UINT16 usFlags,
+int32_t DoMapMessageBox(uint8_t ubStyle, wchar_t* zString, uint32_t uiExitScreen, uint16_t usFlags,
                       MSGBOX_CALLBACK ReturnCallback);
 
-void DoScreenIndependantMessageBox(CHAR16* zString, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback);
-void DoLowerScreenIndependantMessageBox(CHAR16* zString, UINT16 usFlags,
+void DoScreenIndependantMessageBox(wchar_t* zString, uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback);
+void DoLowerScreenIndependantMessageBox(wchar_t* zString, uint16_t usFlags,
                                         MSGBOX_CALLBACK ReturnCallback);
-INT32 DoMessageBox(UINT8 ubStyle, CHAR16* zString, UINT32 uiExitScreen, UINT16 usFlags,
+int32_t DoMessageBox(uint8_t ubStyle, wchar_t* zString, uint32_t uiExitScreen, uint16_t usFlags,
                    MSGBOX_CALLBACK ReturnCallback, const struct GRect* pCenteringRect);
 
 ///////////////////////////////////////////////////////////////////

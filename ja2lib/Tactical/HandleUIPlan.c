@@ -13,7 +13,7 @@
 #include "TileEngine/RenderWorld.h"
 #include "Utils/Message.h"
 
-UINT8 gubNumUIPlannedMoves = 0;
+uint8_t gubNumUIPlannedMoves = 0;
 struct SOLDIERTYPE *gpUIPlannedSoldier = NULL;
 struct SOLDIERTYPE *gpUIStartPlannedSoldier = NULL;
 BOOLEAN gfInUIPlanMode = FALSE;
@@ -33,28 +33,28 @@ BOOLEAN BeginUIPlan(struct SOLDIERTYPE *pSoldier) {
   return (TRUE);
 }
 
-BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
+BOOLEAN AddUIPlan(uint16_t sGridNo, uint8_t ubPlanID) {
   struct SOLDIERTYPE *pPlanSoldier;
-  INT16 sXPos, sYPos;
-  INT16 sAPCost = 0;
-  INT8 bDirection;
-  INT32 iLoop;
+  int16_t sXPos, sYPos;
+  int16_t sAPCost = 0;
+  int8_t bDirection;
+  int32_t iLoop;
   SOLDIERCREATE_STRUCT MercCreateStruct;
-  UINT8 ubNewIndex;
+  uint8_t ubNewIndex;
 
   // Depeding on stance and direction facing, add guy!
 
   // If we have a planned action here, ignore!
 
   // If not OK Dest, ignore!
-  if (!NewOKDestination(gpUIPlannedSoldier, sGridNo, FALSE, (INT8)gsInterfaceLevel)) {
+  if (!NewOKDestination(gpUIPlannedSoldier, sGridNo, FALSE, (int8_t)gsInterfaceLevel)) {
     return (FALSE);
   }
 
   if (ubPlanID == UIPLAN_ACTION_MOVETO) {
     // Calculate cost to move here
     sAPCost = PlotPath(gpUIPlannedSoldier, sGridNo, COPYROUTE, NO_PLOT, TEMPORARY,
-                       (UINT16)gpUIPlannedSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
+                       (uint16_t)gpUIPlannedSoldier->usUIMovementMode, NOT_STEALTH, FORWARD,
                        gpUIPlannedSoldier->bActionPoints);
     // Adjust for running if we are not already running
     if (gpUIPlannedSoldier->usUIMovementMode == RUNNING) {
@@ -72,7 +72,7 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
       // Get Grid Corrdinates of mouse
       if (TacticalCreateSoldier(&MercCreateStruct, &ubNewIndex)) {
         // Get pointer to soldier
-        GetSoldier(&pPlanSoldier, (UINT16)ubNewIndex);
+        GetSoldier(&pPlanSoldier, (uint16_t)ubNewIndex);
 
         pPlanSoldier->sPlannedTargetX = -1;
         pPlanSoldier->sPlannedTargetY = -1;
@@ -95,11 +95,11 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
 
         pPlanSoldier->bActionPoints = gpUIPlannedSoldier->bActionPoints - sAPCost;
 
-        pPlanSoldier->ubPlannedUIAPCost = (UINT8)pPlanSoldier->bActionPoints;
+        pPlanSoldier->ubPlannedUIAPCost = (uint8_t)pPlanSoldier->bActionPoints;
 
         // Get direction
         bDirection =
-            (INT8)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
+            (int8_t)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
 
         // Set direction
         pPlanSoldier->bDirection = bDirection;
@@ -109,7 +109,7 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
         ChangeSoldierState(pPlanSoldier, pPlanSoldier->usUIMovementMode, 0, FALSE);
 
         // Change selected soldier
-        gusSelectedSoldier = (UINT16)pPlanSoldier->ubID;
+        gusSelectedSoldier = (uint16_t)pPlanSoldier->ubID;
 
         // Change global planned mode to this guy!
         gpUIPlannedSoldier = pPlanSoldier;
@@ -125,7 +125,7 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
     }
   } else if (ubPlanID == UIPLAN_ACTION_FIRE) {
     sAPCost = CalcTotalAPsToAttack(gpUIPlannedSoldier, sGridNo, TRUE,
-                                   (INT8)(gpUIPlannedSoldier->bShownAimTime / 2));
+                                   (int8_t)(gpUIPlannedSoldier->bShownAimTime / 2));
 
     // Get XY from Gridno
     ConvertGridNoToCenterCellXY(sGridNo, &sXPos, &sYPos);
@@ -144,7 +144,7 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
         // Get Grid Corrdinates of mouse
         if (TacticalCreateSoldier(&MercCreateStruct, &ubNewIndex)) {
           // Get pointer to soldier
-          GetSoldier(&pPlanSoldier, (UINT16)ubNewIndex);
+          GetSoldier(&pPlanSoldier, (uint16_t)ubNewIndex);
 
           pPlanSoldier->sPlannedTargetX = -1;
           pPlanSoldier->sPlannedTargetY = -1;
@@ -165,11 +165,11 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
 
           pPlanSoldier->bActionPoints = gpUIPlannedSoldier->bActionPoints - sAPCost;
 
-          pPlanSoldier->ubPlannedUIAPCost = (UINT8)pPlanSoldier->bActionPoints;
+          pPlanSoldier->ubPlannedUIAPCost = (uint8_t)pPlanSoldier->bActionPoints;
 
           // Get direction
           bDirection =
-              (INT8)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
+              (int8_t)gpUIPlannedSoldier->usPathingData[gpUIPlannedSoldier->usPathDataSize - 1];
 
           // Set direction
           pPlanSoldier->bDirection = bDirection;
@@ -179,7 +179,7 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
           ChangeSoldierState(pPlanSoldier, pPlanSoldier->usUIMovementMode, 0, FALSE);
 
           // Change selected soldier
-          gusSelectedSoldier = (UINT16)pPlanSoldier->ubID;
+          gusSelectedSoldier = (uint16_t)pPlanSoldier->ubID;
 
           // Change global planned mode to this guy!
           gpUIPlannedSoldier = pPlanSoldier;
@@ -190,10 +190,10 @@ BOOLEAN AddUIPlan(UINT16 sGridNo, UINT8 ubPlanID) {
 
       gpUIPlannedSoldier->bActionPoints = gpUIPlannedSoldier->bActionPoints - sAPCost;
 
-      gpUIPlannedSoldier->ubPlannedUIAPCost = (UINT8)gpUIPlannedSoldier->bActionPoints;
+      gpUIPlannedSoldier->ubPlannedUIAPCost = (uint8_t)gpUIPlannedSoldier->bActionPoints;
 
       // Get direction from gridno
-      bDirection = (INT8)GetDirectionFromGridNo(sGridNo, gpUIPlannedSoldier);
+      bDirection = (int8_t)GetDirectionFromGridNo(sGridNo, gpUIPlannedSoldier);
 
       // Set direction
       gpUIPlannedSoldier->bDirection = bDirection;

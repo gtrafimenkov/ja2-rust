@@ -44,25 +44,25 @@
 extern struct ITEM_POOL *gpEditingItemPool;
 
 // Simply counts the number of items in the world.  This is used for display purposes.
-UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex,
-                                            UINT16 *pusQuantity);  // wrapper for the next three
-UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity);
-UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency);
-UINT16 CountNumberOfPressureActionsInWorld();
-UINT16 CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID);
+uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex,
+                                            uint16_t *pusQuantity);  // wrapper for the next three
+uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuantity);
+uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, int8_t bFrequency);
+uint16_t CountNumberOfPressureActionsInWorld();
+uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID);
 
 // Finds and selects the next item when right clicking on an item type.  Only works if the
 // item actually exists in the world.
 void FindNextItemOfSelectedType();  // wrapper for the next four
-void SelectNextTriggerWithFrequency(UINT16 usItem, INT8 bFrequency);
-void SelectNextItemOfType(UINT16 usItem);
+void SelectNextTriggerWithFrequency(uint16_t usItem, int8_t bFrequency);
+void SelectNextItemOfType(uint16_t usItem);
 void SelectNextPressureAction();
-void SelectNextKeyOfType(UINT8 ubKeyID);
+void SelectNextKeyOfType(uint8_t ubKeyID);
 
-INT32 giDefaultExistChance = 100;
+int32_t giDefaultExistChance = 100;
 
 typedef struct IPListNode {
-  INT16 sGridNo;
+  int16_t sGridNo;
   struct IPListNode *next;
 } IPListNode;
 
@@ -74,7 +74,7 @@ struct ITEM_POOL *gpItemPool = NULL;
 void BuildItemPoolList() {
   struct ITEM_POOL *temp;
   IPListNode *tail;
-  UINT16 i;
+  uint16_t i;
   KillItemPoolList();
   for (i = 0; i < WORLD_MAX; i++) {
     if (GetItemPool(i, &temp, 0)) {
@@ -115,7 +115,7 @@ EditorItemsInfo eInfo;
 // Does some precalculations regarding the number of each item type, so that it
 // isn't calculated every time a player changes categories.
 void EntryInitEditorItemsInfo() {
-  INT32 i;
+  int32_t i;
   INVTYPE *item;
   eInfo.uiBuffer = 0;
   eInfo.fKill = 0;
@@ -182,21 +182,21 @@ void EntryInitEditorItemsInfo() {
   }
 }
 
-void InitEditorItemsInfo(UINT32 uiItemType) {
-  UINT8 *pDestBuf, *pSrcBuf;
-  UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
+void InitEditorItemsInfo(uint32_t uiItemType) {
+  uint8_t *pDestBuf, *pSrcBuf;
+  uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
   struct GRect SaveRect, NewRect;
   struct VObject *hVObject;
-  UINT32 uiVideoObjectIndex;
-  UINT16 usUselessWidth, usUselessHeight;
-  INT16 sWidth, sOffset, sStart;
-  INT16 i, x, y;
-  UINT16 usCounter;
-  CHAR16 pStr[100];  //, pStr2[ 100 ];
-  CHAR16 pItemName[SIZE_ITEM_NAME];
+  uint32_t uiVideoObjectIndex;
+  uint16_t usUselessWidth, usUselessHeight;
+  int16_t sWidth, sOffset, sStart;
+  int16_t i, x, y;
+  uint16_t usCounter;
+  wchar_t pStr[100];  //, pStr2[ 100 ];
+  wchar_t pItemName[SIZE_ITEM_NAME];
   BOOLEAN fTypeMatch;
-  INT32 iEquipCount = 0;
+  int32_t iEquipCount = 0;
 
   // Check to make sure that there isn't already a valid eInfo
   if (eInfo.fActive) {
@@ -266,7 +266,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
       return;
   }
   // Allocate memory to store all the item pointers.
-  eInfo.pusItemIndex = (UINT16 *)MemAlloc(sizeof(UINT16) * eInfo.sNumItems);
+  eInfo.pusItemIndex = (uint16_t *)MemAlloc(sizeof(uint16_t) * eInfo.sNumItems);
 
   // Disable the appropriate scroll buttons based on the saved scroll index if applicable
   // Left most scroll position
@@ -294,7 +294,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
 
   // copy a blank chunk of the editor interface to the new buffer.
   for (i = 0; i < eInfo.sWidth; i += 60) {
-    Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 0 + i,
+    Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 0 + i,
                     0, NewGRect(100, 360, 60, 80));
   }
 
@@ -325,7 +325,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
       SetFontDest(GetVSByID(eInfo.uiBuffer), 0, 0, eInfo.sWidth, eInfo.sHeight, FALSE);
 
       swprintf(pStr, ARR_SIZE(pStr), L"%S", LockTable[i].ubEditorName);
-      DisplayWrappedString(x, (UINT16)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr, FONT_BLACK,
+      DisplayWrappedString(x, (uint16_t)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr, FONT_BLACK,
                            TRUE, CENTER_JUSTIFIED);
 
       // Calculate the center position of the graphic in a 60 pixel wide area.
@@ -439,7 +439,7 @@ void InitEditorItemsInfo(UINT32 uiItemType) {
                 swprintf(pStr, ARR_SIZE(pStr), L"Action%d", (i - 4) / 2);
             }
           }
-          DisplayWrappedString(x, (UINT16)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr,
+          DisplayWrappedString(x, (uint16_t)(y + 25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr,
                                FONT_BLACK, TRUE, CENTER_JUSTIFIED);
 
           // Calculate the center position of the graphic in a 60 pixel wide area.
@@ -482,16 +482,16 @@ void DetermineItemsScrolling() {
 }
 
 void RenderEditorItemsInfo() {
-  UINT8 *pDestBuf, *pSrcBuf;
-  UINT32 uiSrcPitchBYTES, uiDestPitchBYTES;
+  uint8_t *pDestBuf, *pSrcBuf;
+  uint32_t uiSrcPitchBYTES, uiDestPitchBYTES;
   INVTYPE *item;
   struct VObject *hVObject;
-  UINT32 uiVideoObjectIndex;
-  INT16 i;
-  INT16 minIndex, maxIndex;
-  INT16 sWidth, sOffset, sStart, x, y;
-  UINT16 usNumItems;
-  UINT16 usQuantity;
+  uint32_t uiVideoObjectIndex;
+  int16_t i;
+  int16_t minIndex, maxIndex;
+  int16_t sWidth, sOffset, sStart, x, y;
+  uint16_t usNumItems;
+  uint16_t usQuantity;
 
   if (!eInfo.fActive) {
     return;
@@ -505,7 +505,7 @@ void RenderEditorItemsInfo() {
   pSrcBuf = VSurfaceLockOld(GetVSByID(eInfo.uiBuffer), &uiSrcPitchBYTES);
 
   // copy the items buffer to the editor bar
-  Blt16BPPTo16BPP((UINT16 *)pDestBuf, uiDestPitchBYTES, (UINT16 *)pSrcBuf, uiSrcPitchBYTES, 110,
+  Blt16BPPTo16BPP((uint16_t *)pDestBuf, uiDestPitchBYTES, (uint16_t *)pSrcBuf, uiSrcPitchBYTES, 110,
                   360, NewGRect(60 * eInfo.sScrollIndex, 0, 360, 80));
 
   VSurfaceUnlock(GetVSByID(eInfo.uiBuffer));
@@ -624,9 +624,9 @@ void ClearEditorItemsInfo() {
   }
 }
 
-void HandleItemsPanel(UINT16 usScreenX, UINT16 usScreenY, INT8 bEvent) {
-  INT16 sIndex;
-  UINT16 usQuantity;
+void HandleItemsPanel(uint16_t usScreenX, uint16_t usScreenY, int8_t bEvent) {
+  int16_t sIndex;
+  uint16_t usQuantity;
   // Calc base index from scrolling index
   sIndex = eInfo.sScrollIndex * 2;
   // Determine if the index is in the first row or second row from mouse YPos.
@@ -672,7 +672,7 @@ void HandleItemsPanel(UINT16 usScreenX, UINT16 usScreenY, INT8 bEvent) {
   }
 }
 
-void ShowItemCursor(INT32 iMapIndex) {
+void ShowItemCursor(int32_t iMapIndex) {
   struct LEVELNODE *pNode;
   pNode = gpWorldLevelData[iMapIndex].pTopmostHead;
   while (pNode) {
@@ -682,9 +682,9 @@ void ShowItemCursor(INT32 iMapIndex) {
   AddTopmostToTail(iMapIndex, SELRING1);
 }
 
-void HideItemCursor(INT32 iMapIndex) { RemoveTopmost(iMapIndex, SELRING1); }
+void HideItemCursor(int32_t iMapIndex) { RemoveTopmost(iMapIndex, SELRING1); }
 
-BOOLEAN TriggerAtGridNo(INT16 sGridNo) {
+BOOLEAN TriggerAtGridNo(int16_t sGridNo) {
   struct ITEM_POOL *pItemPool;
   if (!GetItemPool(sGridNo, &pItemPool, 0)) {
     return FALSE;
@@ -698,23 +698,23 @@ BOOLEAN TriggerAtGridNo(INT16 sGridNo) {
   return FALSE;
 }
 
-void AddSelectedItemToWorld(INT16 sGridNo) {
+void AddSelectedItemToWorld(int16_t sGridNo) {
   struct OBJECTTYPE tempObject;
   struct OBJECTTYPE *pObject;
   INVTYPE *pItem;
   struct ITEM_POOL *pItemPool;
-  INT32 iItemIndex;
-  INT8 bVisibility = INVISIBLE;
+  int32_t iItemIndex;
+  int8_t bVisibility = INVISIBLE;
   BOOLEAN fFound = FALSE;
   IPListNode *pIPCurr, *pIPPrev;
-  UINT16 usFlags;
+  uint16_t usFlags;
 
   // Extract the currently selected item.
   SpecifyItemToEdit(NULL, -1);
 
   // memset( &tempObject, 0, sizeof( struct OBJECTTYPE ) );
   if (eInfo.uiItemType == TBAR_MODE_ITEM_KEYS) {
-    CreateKeyObject(&tempObject, 1, (UINT8)eInfo.sSelItemIndex);
+    CreateKeyObject(&tempObject, 1, (uint8_t)eInfo.sSelItemIndex);
   } else {
     CreateItem(eInfo.pusItemIndex[eInfo.sSelItemIndex], 100, &tempObject);
   }
@@ -749,7 +749,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
       else if (eInfo.sSelItemIndex < 6)
         tempObject.bFrequency = PANIC_FREQUENCY_3;
       else
-        tempObject.bFrequency = (INT8)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
+        tempObject.bFrequency = (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
       usFlags |= WORLD_ITEM_ARMED_BOMB;
       break;
     case ACTION_ITEM:
@@ -767,7 +767,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
           tempObject.bFrequency = PANIC_FREQUENCY_3;
         else
           tempObject.bFrequency =
-              (INT8)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
+              (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
       } else {
         tempObject.bDetonatorType = BOMB_PRESSURE;
         tempObject.bDelay = 0;
@@ -784,7 +784,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
 
   pObject = InternalAddItemToPool(&sGridNo, &tempObject, bVisibility, 0, usFlags, 0, &iItemIndex);
   if (tempObject.usItem != OWNERSHIP) {
-    gWorldItems[iItemIndex].ubNonExistChance = (UINT8)(100 - giDefaultExistChance);
+    gWorldItems[iItemIndex].ubNonExistChance = (uint8_t)(100 - giDefaultExistChance);
   } else {
     gWorldItems[iItemIndex].ubNonExistChance = 0;
   }
@@ -794,16 +794,16 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
     if (Random(2)) {
       pObject->ubShotsLeft[0] = Magazine[pItem->ubClassIndex].ubMagSize;
     } else {
-      pObject->ubShotsLeft[0] = (UINT8)Random(Magazine[pItem->ubClassIndex].ubMagSize);
+      pObject->ubShotsLeft[0] = (uint8_t)Random(Magazine[pItem->ubClassIndex].ubMagSize);
     }
   } else {
-    pObject->bStatus[0] = (INT8)(70 + Random(26));
+    pObject->bStatus[0] = (int8_t)(70 + Random(26));
   }
   if (pItem->usItemClass & IC_GUN) {
     if (pObject->usItem == ROCKET_LAUNCHER) {
       pObject->ubGunShotsLeft = 1;
     } else {
-      pObject->ubGunShotsLeft = (UINT8)(Random(Weapon[pObject->usItem].ubMagSize));
+      pObject->ubGunShotsLeft = (uint8_t)(Random(Weapon[pObject->usItem].ubMagSize));
     }
   }
 
@@ -853,7 +853,7 @@ void AddSelectedItemToWorld(INT16 sGridNo) {
   }
 }
 
-void HandleRightClickOnItem(INT16 sGridNo) {
+void HandleRightClickOnItem(int16_t sGridNo) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
 
@@ -896,7 +896,7 @@ void DeleteSelectedItem() {
     return;
   }
   if (gpItemPool) {  // Okay, we have a selected item...
-    INT16 sGridNo;
+    int16_t sGridNo;
     // save the mapindex
     if (gpItemPool->pNext) {
       SpecifyItemToEdit(&gWorldItems[gpItemPool->pNext->iItemIndex].o, gpItemPool->sGridNo);
@@ -1009,11 +1009,11 @@ void SelectPrevItemInPool() {
 }
 
 void FindNextItemOfSelectedType() {
-  UINT16 usItem;
+  uint16_t usItem;
   usItem = eInfo.pusItemIndex[eInfo.sSelItemIndex];
   if (usItem == ACTION_ITEM || usItem == SWITCH) {
     if (eInfo.sSelItemIndex < PRESSURE_ACTION_ID) {
-      INT8 bFrequency;
+      int8_t bFrequency;
       if (eInfo.sSelItemIndex < 2)
         bFrequency = PANIC_FREQUENCY;
       else if (eInfo.sSelItemIndex < 4)
@@ -1021,19 +1021,19 @@ void FindNextItemOfSelectedType() {
       else if (eInfo.sSelItemIndex < 6)
         bFrequency = PANIC_FREQUENCY_3;
       else
-        bFrequency = (INT8)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
+        bFrequency = (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (eInfo.sSelItemIndex - 4) / 2);
       SelectNextTriggerWithFrequency(usItem, bFrequency);
     } else {
       SelectNextPressureAction();
     }
   } else if (Item[usItem].usItemClass == IC_KEY) {
-    SelectNextKeyOfType((UINT8)eInfo.sSelItemIndex);
+    SelectNextKeyOfType((uint8_t)eInfo.sSelItemIndex);
   } else {
     SelectNextItemOfType(usItem);
   }
 }
 
-void SelectNextItemOfType(UINT16 usItem) {
+void SelectNextItemOfType(uint16_t usItem) {
   IPListNode *curr;
   struct OBJECTTYPE *pObject;
   if (gpItemPool) {
@@ -1085,7 +1085,7 @@ void SelectNextItemOfType(UINT16 usItem) {
   }
 }
 
-void SelectNextKeyOfType(UINT8 ubKeyID) {
+void SelectNextKeyOfType(uint8_t ubKeyID) {
   IPListNode *curr;
   struct OBJECTTYPE *pObject;
   if (gpItemPool) {
@@ -1137,7 +1137,7 @@ void SelectNextKeyOfType(UINT8 ubKeyID) {
   }
 }
 
-void SelectNextTriggerWithFrequency(UINT16 usItem, INT8 bFrequency) {
+void SelectNextTriggerWithFrequency(uint16_t usItem, int8_t bFrequency) {
   IPListNode *curr;
   struct OBJECTTYPE *pObject;
   if (gpItemPool) {
@@ -1241,10 +1241,10 @@ void SelectNextPressureAction() {
   }
 }
 
-UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity) {
+uint16_t CountNumberOfItemPlacementsInWorld(uint16_t usItem, uint16_t *pusQuantity) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  INT16 num = 0;
+  int16_t num = 0;
   *pusQuantity = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
@@ -1261,10 +1261,10 @@ UINT16 CountNumberOfItemPlacementsInWorld(UINT16 usItem, UINT16 *pusQuantity) {
   return num;
 }
 
-UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency) {
+uint16_t CountNumberOfItemsWithFrequency(uint16_t usItem, int8_t bFrequency) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  UINT16 num = 0;
+  uint16_t num = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
     GetItemPool(pIPCurr->sGridNo, &pItemPool, 0);
@@ -1280,10 +1280,10 @@ UINT16 CountNumberOfItemsWithFrequency(UINT16 usItem, INT8 bFrequency) {
   return num;
 }
 
-UINT16 CountNumberOfPressureActionsInWorld() {
+uint16_t CountNumberOfPressureActionsInWorld() {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  UINT16 num = 0;
+  uint16_t num = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
     GetItemPool(pIPCurr->sGridNo, &pItemPool, 0);
@@ -1299,10 +1299,10 @@ UINT16 CountNumberOfPressureActionsInWorld() {
   return num;
 }
 
-UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex, UINT16 *pusQuantity) {
-  UINT16 usNumPlacements;
+uint16_t CountNumberOfEditorPlacementsInWorld(uint16_t usEInfoIndex, uint16_t *pusQuantity) {
+  uint16_t usNumPlacements;
   if (eInfo.uiItemType == TBAR_MODE_ITEM_TRIGGERS) {  // find identical items with same frequency
-    INT8 bFrequency;
+    int8_t bFrequency;
     if (usEInfoIndex < PRESSURE_ACTION_ID) {
       if (usEInfoIndex < 2)
         bFrequency = PANIC_FREQUENCY;
@@ -1311,7 +1311,7 @@ UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex, UINT16 *pusQuan
       else if (usEInfoIndex < 6)
         bFrequency = PANIC_FREQUENCY_3;
       else
-        bFrequency = (INT8)(FIRST_MAP_PLACED_FREQUENCY + (usEInfoIndex - 4) / 2);
+        bFrequency = (int8_t)(FIRST_MAP_PLACED_FREQUENCY + (usEInfoIndex - 4) / 2);
       usNumPlacements =
           CountNumberOfItemsWithFrequency(eInfo.pusItemIndex[usEInfoIndex], bFrequency);
       *pusQuantity = usNumPlacements;
@@ -1320,7 +1320,7 @@ UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex, UINT16 *pusQuan
       *pusQuantity = usNumPlacements;
     }
   } else if (eInfo.uiItemType == TBAR_MODE_ITEM_KEYS) {
-    usNumPlacements = CountNumberOfKeysOfTypeInWorld((UINT8)usEInfoIndex);
+    usNumPlacements = CountNumberOfKeysOfTypeInWorld((uint8_t)usEInfoIndex);
     *pusQuantity = usNumPlacements;
   } else {
     usNumPlacements =
@@ -1329,10 +1329,10 @@ UINT16 CountNumberOfEditorPlacementsInWorld(UINT16 usEInfoIndex, UINT16 *pusQuan
   return usNumPlacements;
 }
 
-UINT16 CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID) {
+uint16_t CountNumberOfKeysOfTypeInWorld(uint8_t ubKeyID) {
   struct ITEM_POOL *pItemPool;
   IPListNode *pIPCurr;
-  INT16 num = 0;
+  int16_t num = 0;
   pIPCurr = pIPHead;
   while (pIPCurr) {
     GetItemPool(pIPCurr->sGridNo, &pItemPool, 0);
@@ -1351,8 +1351,8 @@ UINT16 CountNumberOfKeysOfTypeInWorld(UINT8 ubKeyID) {
 
 void DisplayItemStatistics() {
   BOOLEAN fUseSelectedItem;
-  INT16 usItemIndex;
-  CHAR16 pItemName[SIZE_ITEM_NAME];
+  int16_t usItemIndex;
+  wchar_t pItemName[SIZE_ITEM_NAME];
 
   if (!eInfo.fActive) {
     return;
@@ -1363,7 +1363,7 @@ void DisplayItemStatistics() {
       eInfo.sHilitedItemIndex == -1 || eInfo.sHilitedItemIndex == eInfo.sSelItemIndex;
 
   SetFont(SMALLCOMPFONT);
-  SetFontForeground((UINT8)(fUseSelectedItem ? FONT_LTRED : FONT_YELLOW));
+  SetFontForeground((uint8_t)(fUseSelectedItem ? FONT_LTRED : FONT_YELLOW));
 
   // Extract all of the item information.
   if (!eInfo.pusItemIndex) return;

@@ -15,20 +15,20 @@
 
 #define SHADE_TABLE_DIR "ShadeTables"
 
-CHAR8 TileSurfaceFilenames[NUMBEROFTILETYPES][32];
+char TileSurfaceFilenames[NUMBEROFTILETYPES][32];
 BOOLEAN gfForceBuildShadeTables = FALSE;
 
 #ifdef JA2TESTVERSION
-extern UINT32 uiNumTablesSaved;
-extern UINT32 uiNumTablesLoaded;
+extern uint32_t uiNumTablesSaved;
+extern uint32_t uiNumTablesLoaded;
 #endif
 
 void DetermineRGBDistributionSettings() {
   char DataDir[600];
   struct Str512 ExecDir;
   char ShadeTableDir[600];
-  UINT32 uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
-  UINT32 uiNumBytesRead;
+  uint32_t uiPrevRBitMask, uiPrevGBitMask, uiPrevBBitMask;
+  uint32_t uiNumBytesRead;
   FileID hfile = FILE_ID_ERR;
   BOOLEAN fSaveRGBDist = FALSE;
   BOOLEAN fCleanShadeTable = FALSE;
@@ -65,9 +65,9 @@ void DetermineRGBDistributionSettings() {
       if (!hfile) {
         AssertMsg(0, "Couldn't open RGBDist.dat, even though it exists!");
       }
-      File_Read(hfile, &uiPrevRBitMask, sizeof(UINT32), &uiNumBytesRead);
-      File_Read(hfile, &uiPrevGBitMask, sizeof(UINT32), &uiNumBytesRead);
-      File_Read(hfile, &uiPrevBBitMask, sizeof(UINT32), &uiNumBytesRead);
+      File_Read(hfile, &uiPrevRBitMask, sizeof(uint32_t), &uiNumBytesRead);
+      File_Read(hfile, &uiPrevGBitMask, sizeof(uint32_t), &uiNumBytesRead);
+      File_Read(hfile, &uiPrevBBitMask, sizeof(uint32_t), &uiNumBytesRead);
       fLoadedPrevRGBDist = TRUE;
       File_Close(hfile);
     }
@@ -103,9 +103,9 @@ void DetermineRGBDistributionSettings() {
     if (!hfile) {
       AssertMsg(0, "Couldn't create RGBDist.dat for writing!");
     }
-    File_Write(hfile, &uiRBitMask, sizeof(UINT32), &uiNumBytesRead);
-    File_Write(hfile, &uiGBitMask, sizeof(UINT32), &uiNumBytesRead);
-    File_Write(hfile, &uiBBitMask, sizeof(UINT32), &uiNumBytesRead);
+    File_Write(hfile, &uiRBitMask, sizeof(uint32_t), &uiNumBytesRead);
+    File_Write(hfile, &uiGBitMask, sizeof(uint32_t), &uiNumBytesRead);
+    File_Write(hfile, &uiBBitMask, sizeof(uint32_t), &uiNumBytesRead);
     File_Close(hfile);
   }
 
@@ -114,12 +114,12 @@ void DetermineRGBDistributionSettings() {
   Plat_SetCurrentDirectory(DataDir);
 }
 
-BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
+BOOLEAN LoadShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   FileID hfile = FILE_ID_ERR;
-  INT32 i;
-  UINT32 uiNumBytesRead;
-  CHAR8 ShadeFileName[100];
-  STR8 ptr;
+  int32_t i;
+  uint32_t uiNumBytesRead;
+  char ShadeFileName[100];
+  char* ptr;
   // ASSUMPTIONS:
   // We are assuming that the uiTileTypeIndex is referring to the correct file
   // stored in the TileSurfaceFilenames[].  If it isn't, then that is a huge problem
@@ -141,7 +141,7 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   // MISSING:  Compare time stamps.
 
   for (i = 0; i < 16; i++) {
-    pObj->pShades[i] = (UINT16*)MemAlloc(512);
+    pObj->pShades[i] = (uint16_t*)MemAlloc(512);
     Assert(pObj->pShades[i]);
     File_Read(hfile, pObj->pShades[i], 512, &uiNumBytesRead);
   }
@@ -154,12 +154,12 @@ BOOLEAN LoadShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
   return TRUE;
 }
 
-BOOLEAN SaveShadeTable(struct VObject* pObj, UINT32 uiTileTypeIndex) {
+BOOLEAN SaveShadeTable(struct VObject* pObj, uint32_t uiTileTypeIndex) {
   FileID hfile = FILE_ID_ERR;
-  INT32 i;
-  UINT32 uiNumBytesWritten;
-  CHAR8 ShadeFileName[100];
-  STR8 ptr;
+  int32_t i;
+  uint32_t uiNumBytesWritten;
+  char ShadeFileName[100];
+  char* ptr;
 #ifdef JA2TESTVERSION
   uiNumTablesSaved++;
 #endif

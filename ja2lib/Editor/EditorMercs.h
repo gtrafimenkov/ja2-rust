@@ -8,7 +8,7 @@
 // NOTE:  The editor uses these enumerations, so please update the text as well if you modify or
 //			 add new groups.  Try to abbreviate the team name as much as possible.  The
 // text is in 			 EditorMercs.c
-extern CHAR16 gszCivGroupNames[NUM_CIV_GROUPS][20];
+extern wchar_t gszCivGroupNames[NUM_CIV_GROUPS][20];
 
 // Merc editing modes.  These are used to determine which buttons to show and hide.
 enum {
@@ -27,7 +27,7 @@ enum {
   MERC_SCHEDULEMODE,    // specifying a schedule for that particular individual
 };
 
-extern UINT8 gubCurrMercMode, gubPrevMercMode;
+extern uint8_t gubCurrMercMode, gubPrevMercMode;
 
 #define EDIT_NUM_COLORS 4
 #define EDIT_COLOR_HEAD 0
@@ -53,11 +53,11 @@ extern UINT8 gubCurrMercMode, gubPrevMercMode;
 
 #define NUM_DIFF_LVLS 5
 
-extern CHAR16 *zDiffNames[NUM_DIFF_LVLS];
-extern INT16 sCurBaseDiff;
-extern INT16 gsSelectedMercID;
-extern INT16 gsSelectedMercGridNo;
-extern UINT8 gubCurrMercMode;
+extern wchar_t *zDiffNames[NUM_DIFF_LVLS];
+extern int16_t sCurBaseDiff;
+extern int16_t gsSelectedMercID;
+extern int16_t gsSelectedMercGridNo;
+extern uint8_t gubCurrMercMode;
 
 enum _ForUseWithIndicateSelectedMerc {
   SELECT_NEXT_CREATURE = -7,
@@ -70,7 +70,7 @@ enum _ForUseWithIndicateSelectedMerc {
   // >= 0 select merc with matching ID
 };
 
-void IndicateSelectedMerc(INT16 sID);
+void IndicateSelectedMerc(int16_t sID);
 
 void GameInitEditorMercsInfo();
 void GameShutdownEditorMercsInfo();
@@ -78,42 +78,42 @@ void EntryInitEditorMercsInfo();
 void UpdateMercsInfo();
 
 void ProcessMercEditing();
-void AddMercToWorld(INT32 iMapIndex);
-void HandleRightClickOnMerc(INT32 iMapIndex);
-void SetMercEditingMode(UINT8 ubNewMode);
+void AddMercToWorld(int32_t iMapIndex);
+void HandleRightClickOnMerc(int32_t iMapIndex);
+void SetMercEditingMode(uint8_t ubNewMode);
 
 void ResetAllMercPositions();
 
 void EraseMercWaypoint();
-void AddMercWaypoint(UINT32 iMapIndex);
+void AddMercWaypoint(uint32_t iMapIndex);
 
-void SetEnemyColorCode(UINT8 ubColorCode);
+void SetEnemyColorCode(uint8_t ubColorCode);
 
-void SpecifyEntryPoint(UINT32 iMapIndex);
+void SpecifyEntryPoint(uint32_t iMapIndex);
 
 // Modify stats of current soldiers
-void SetMercOrders(INT8 bOrders);
-void SetMercAttitude(INT8 bAttitude);
-void SetMercDirection(INT8 bDirection);
-void SetMercRelativeEquipment(INT8 bLevel);
-void SetMercRelativeAttributes(INT8 bLevel);
+void SetMercOrders(int8_t bOrders);
+void SetMercAttitude(int8_t bAttitude);
+void SetMercDirection(int8_t bDirection);
+void SetMercRelativeEquipment(int8_t bLevel);
+void SetMercRelativeAttributes(int8_t bLevel);
 
 void DeleteSelectedMerc();
 
 void CreateEditMercWindow(void);
 void DisplayEditMercWindow(void);
-INT32 IsMercHere(INT32 iMapIndex);
+int32_t IsMercHere(int32_t iMapIndex);
 
 void ExtractCurrentMercModeInfo(BOOLEAN fKillTextInputMode);
 
 void SetMercEditability(BOOLEAN fEditable);
 
-void HandleMercInventoryPanel(INT16 sX, INT16 sY, INT8 bEvent);
+void HandleMercInventoryPanel(int16_t sX, int16_t sY, int8_t bEvent);
 
-extern UINT16 gusMercsNewItemIndex;
+extern uint16_t gusMercsNewItemIndex;
 extern BOOLEAN gfRenderMercInfo;
 
-void ChangeCivGroup(UINT8 ubNewCivGroup);
+void ChangeCivGroup(uint8_t ubNewCivGroup);
 
 #define MERCINV_LGSLOT_WIDTH 48
 #define MERCINV_SMSLOT_WIDTH 24
@@ -121,7 +121,7 @@ void ChangeCivGroup(UINT8 ubNewCivGroup);
 
 extern BOOLEAN gfRoofPlacement;
 
-extern void SetEnemyDroppableStatus(UINT32 uiSlot, BOOLEAN fDroppable);
+extern void SetEnemyDroppableStatus(uint32_t uiSlot, BOOLEAN fDroppable);
 
 void RenderMercStrings();
 
@@ -130,17 +130,17 @@ extern BOOLEAN gfShowEnemies;
 extern BOOLEAN gfShowCreatures;
 extern BOOLEAN gfShowRebels;
 extern BOOLEAN gfShowCivilians;
-void SetMercTeamVisibility(INT8 bTeam, BOOLEAN fVisible);
+void SetMercTeamVisibility(int8_t bTeam, BOOLEAN fVisible);
 
-extern UINT8 gubCurrentScheduleActionIndex;
+extern uint8_t gubCurrentScheduleActionIndex;
 extern BOOLEAN gfSingleAction;
 extern BOOLEAN gfUseScheduleData2;
 
-void UpdateScheduleAction(UINT8 ubNewAction);
-void FindScheduleGridNo(UINT8 ubScheduleData);
+void UpdateScheduleAction(uint8_t ubNewAction);
+void FindScheduleGridNo(uint8_t ubScheduleData);
 void ClearCurrentSchedule();
 void CancelCurrentScheduleAction();
-void RegisterCurrentScheduleAction(INT32 iMapIndex);
+void RegisterCurrentScheduleAction(int32_t iMapIndex);
 void StartScheduleAction();
 
 void InitDetailedPlacementForMerc();

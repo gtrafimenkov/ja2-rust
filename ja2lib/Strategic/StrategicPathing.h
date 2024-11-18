@@ -25,21 +25,21 @@ enum {
   MVT_MODE_FOOT,
 };
 
-INT32 FindStratPath(u8 startX, u8 startY, u8 destX, u8 destY, INT16 sMvtGroupNumber,
+int32_t FindStratPath(u8 startX, u8 startY, u8 destX, u8 destY, int16_t sMvtGroupNumber,
                     BOOLEAN fTacticalTraversal);
 
-BOOLEAN AddSectorToPathList(struct path* pPath, UINT16 uiSectorNum);
+BOOLEAN AddSectorToPathList(struct path* pPath, uint16_t uiSectorNum);
 
 // build a stategic path
-struct path* BuildAStrategicPath(struct path* pPath, INT16 iStartSectorNum, INT16 iEndSectorNum,
-                                 INT16 sMvtGroupNumber,
+struct path* BuildAStrategicPath(struct path* pPath, int16_t iStartSectorNum, int16_t iEndSectorNum,
+                                 int16_t sMvtGroupNumber,
                                  BOOLEAN fTacticalTraversal /*, BOOLEAN fTempPath */);
 
 // append onto path list
 struct path* AppendStrategicPath(struct path* pNewSection, struct path* pHeadOfPathList);
 
 // clear out strategic path list
-struct path* ClearStrategicPathList(struct path* pHeadOfPath, INT16 sMvtGroup);
+struct path* ClearStrategicPathList(struct path* pHeadOfPath, int16_t sMvtGroup);
 
 // move to beginning of list
 struct path* MoveToBeginningOfPathList(struct path* pList);
@@ -59,13 +59,13 @@ struct path* RemoveSectorFromStrategicPathList(struct path* pList, u8 sX, u8 sY)
 // clear out path list after/including this sector sX, sY..will start at end of path and work it's
 // way back till sector is found...removes most recent sectors first
 struct path* ClearStrategicPathListAfterThisSector(struct path* pHeadOfPath, u8 sX, u8 sY,
-                                                   INT16 sMvtGroup);
+                                                   int16_t sMvtGroup);
 
 // get id of last sector in mercs path list
-INT16 GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter);
+int16_t GetLastSectorIdInCharactersPath(struct SOLDIERTYPE* pCharacter);
 
 // get id of last sector in mercs path list
-INT16 GetLastSectorIdInVehiclePath(INT32 iId);
+int16_t GetLastSectorIdInVehiclePath(int32_t iId);
 
 // copy paths
 struct path* CopyPaths(struct path* pSourcePath, struct path* pDestPath);
@@ -79,11 +79,11 @@ void MoveCharacterOnPath( struct SOLDIERTYPE *pCharacter );
 void MoveTeamOnFoot( void );
 
 // get the final eta of this path to the last sector in it's list
-UINT32 GetEtaGivenRoute( struct path* pPath );
+uint32_t GetEtaGivenRoute( struct path* pPath );
 */
 
 // rebuild way points for strategic mapscreen path changes
-void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, INT16 sMvtGroup);
+void RebuildWayPointsForGroupPath(struct path* pHeadOfPath, int16_t sMvtGroup);
 
 // clear strategic movement (mercpaths and waypoints) for this soldier, and his group (including its
 // vehicles)
@@ -92,15 +92,15 @@ void ClearMvtForThisSoldierAndGang(struct SOLDIERTYPE* pSoldier);
 // start movement of this group to this sector...not to be used by the player merc groups.
 BOOLEAN MoveGroupFromSectorToSector(u8 ubGroupID, u8 sStartX, u8 sStartY, u8 sDestX, u8 sDestY);
 
-BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(UINT8 ubGroupID, u8 sStartX,
+BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectors(uint8_t ubGroupID, u8 sStartX,
                                                                    u8 sStartY, u8 sDestX,
                                                                    u8 sDestY);
 BOOLEAN MoveGroupFromSectorToSectorButAvoidPlayerInfluencedSectorsAndStopOneSectorBeforeEnd(
-    UINT8 ubGroupID, u8 sStartX, u8 sStartY, u8 sDestX, u8 sDestY);
+    uint8_t ubGroupID, u8 sStartX, u8 sStartY, u8 sDestX, u8 sDestY);
 
 // get length of path
-INT32 GetLengthOfPath(struct path* pHeadPath);
-INT32 GetLengthOfMercPath(struct SOLDIERTYPE* pSoldier);
+int32_t GetLengthOfPath(struct path* pHeadPath);
+int32_t GetLengthOfMercPath(struct SOLDIERTYPE* pSoldier);
 
 // is the path empty?
 BOOLEAN CheckIfPathIsEmpty(struct path* pHeadPath);
@@ -108,7 +108,7 @@ BOOLEAN CheckIfPathIsEmpty(struct path* pHeadPath);
 struct path* GetSoldierMercPathPtr(struct SOLDIERTYPE* pSoldier);
 struct path* GetGroupMercPathPtr(struct GROUP* pGroup);
 
-UINT8 GetSoldierGroupId(struct SOLDIERTYPE* pSoldier);
+uint8_t GetSoldierGroupId(struct SOLDIERTYPE* pSoldier);
 
 // clears this groups strategic movement (mercpaths and waypoints), include those in the vehicle
 // structs(!)
@@ -116,7 +116,7 @@ void ClearMercPathsAndWaypointsForAllInGroup(struct GROUP* pGroup);
 
 void ClearPathForSoldier(struct SOLDIERTYPE* pSoldier);
 
-void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, UINT8 ubSectorX,
-                                                     UINT8 ubSectorY);
+void AddSectorToFrontOfMercPathForAllSoldiersInGroup(struct GROUP* pGroup, uint8_t ubSectorX,
+                                                     uint8_t ubSectorY);
 
 #endif

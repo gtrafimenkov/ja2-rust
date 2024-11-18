@@ -154,13 +154,13 @@ void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier) {
 // MercDailyUpdate() gets called every day at midnight.  If something is to happen to a merc that
 // day, add an event for it.
 void MercDailyUpdate() {
-  INT32 cnt;
-  INT8 bLastTeamID;
+  int32_t cnt;
+  int8_t bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
   // struct SOLDIERTYPE *pQuitList[ 21 ];
   MERCPROFILESTRUCT *pProfile;
-  UINT32 uiChance;
-  INT32 iOffset = 0;
+  uint32_t uiChance;
+  int32_t iOffset = 0;
 
   // if its the first day, leave
   if (GetGameTimeInDays() == 1) return;
@@ -239,8 +239,8 @@ void MercDailyUpdate() {
 
       // if the character is an RPC
       if (GetSolProfile(pSoldier) >= FIRST_RPC && GetSolProfile(pSoldier) < FIRST_NPC) {
-        INT16 sSalary = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
-        INT32 iMoneyOwedToMerc = 0;
+        int16_t sSalary = gMercProfiles[GetSolProfile(pSoldier)].sSalary;
+        int32_t iMoneyOwedToMerc = 0;
 
         // increment the number of days the mercs has been on the team
         pSoldier->iTotalContractLength++;
@@ -267,7 +267,7 @@ void MercDailyUpdate() {
               gMercProfiles[GetSolProfile(pSoldier)].iBalance = 0;
             }
           } else {
-            CHAR16 zMoney[128];
+            wchar_t zMoney[128];
 
             // create a string for the salary owed to the npc
             swprintf(zMoney, ARR_SIZE(zMoney), L"%d", sSalary);
@@ -351,7 +351,7 @@ void MercDailyUpdate() {
     pProfile->uiPrecedentQuoteSaid = 0;
 
     // skip anyone currently on the player's team
-    if (IsMercOnTeam((UINT8)cnt)) {
+    if (IsMercOnTeam((uint8_t)cnt)) {
       continue;
     }
 
@@ -390,8 +390,8 @@ void MercDailyUpdate() {
             pProfile->ubMiscFlags3 &= ~PROFILE_MISC_FLAG3_PLAYER_LEFT_MSG_FOR_MERC_AT_AIM;
 
             // TO DO: send E-mail to player telling him the merc has returned from an assignment
-            AddEmail((UINT8)(iOffset + (cnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
-                     (UINT8)(6 + cnt), GetGameTimeInMin());
+            AddEmail((uint8_t)(iOffset + (cnt * AIM_REPLY_LENGTH_BARRY)), AIM_REPLY_LENGTH_BARRY,
+                     (uint8_t)(6 + cnt), GetGameTimeInMin());
           }
         }
       }
@@ -444,7 +444,7 @@ void MercDailyUpdate() {
 
 // ATE: This function deals with MERC MERC and NPC's leaving because of not getting paid...
 // NOT AIM renewals....
-void MercsContractIsFinished(UINT8 ubID) {
+void MercsContractIsFinished(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = GetSoldierByID(ubID);
@@ -491,7 +491,7 @@ void MercsContractIsFinished(UINT8 ubID) {
 }
 
 // ATE: Called for RPCs who should now complain about no pay...
-void RPCWhineAboutNoPay(UINT8 ubID) {
+void RPCWhineAboutNoPay(uint8_t ubID) {
   struct SOLDIERTYPE *pSoldier;
 
   pSoldier = GetSoldierByID(ubID);
@@ -507,10 +507,10 @@ void RPCWhineAboutNoPay(UINT8 ubID) {
 
 // OK loop through and check!
 BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
-  INT32 cnt;
-  UINT16 usItem;
-  INT8 bBestArmour = -1;
-  INT8 bBestGun = -1;
+  int32_t cnt;
+  uint16_t usItem;
+  int8_t bBestArmour = -1;
+  int8_t bBestGun = -1;
 
   for (cnt = 0; cnt < NUM_INV_SLOTS; cnt++) {
     usItem = pSoldier->inv[cnt].usItem;
@@ -554,7 +554,7 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier) {
   return (FALSE);
 }
 
-void MercComplainAboutEquipment(UINT8 ubProfile) {
+void MercComplainAboutEquipment(uint8_t ubProfile) {
   struct SOLDIERTYPE *pSoldier;
 
   if (ubProfile == LARRY_NORMAL) {
@@ -582,11 +582,11 @@ void MercComplainAboutEquipment(UINT8 ubProfile) {
 }
 
 void UpdateBuddyAndHatedCounters(void) {
-  INT8 bMercID;
-  INT32 iLoop;
-  INT8 bOtherID;
-  INT8 bLastTeamID;
-  UINT8 ubOtherProfileID;
+  int8_t bMercID;
+  int32_t iLoop;
+  int8_t bOtherID;
+  int8_t bLastTeamID;
+  uint8_t ubOtherProfileID;
   struct SOLDIERTYPE *pSoldier;
   struct SOLDIERTYPE *pOtherSoldier;
   MERCPROFILESTRUCT *pProfile;
@@ -798,7 +798,7 @@ void UpdateBuddyAndHatedCounters(void) {
 }
 
 void HourlyCamouflageUpdate(void) {
-  INT8 bMercID, bLastTeamID;
+  int8_t bMercID, bLastTeamID;
   struct SOLDIERTYPE *pSoldier;
 
   bMercID = gTacticalStatus.Team[gbPlayerNum].bFirstID;

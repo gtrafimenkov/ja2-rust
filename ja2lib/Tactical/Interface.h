@@ -60,23 +60,23 @@ enum { I_GROUND_LEVEL, I_ROOF_LEVEL, I_NUMLEVELS };
 
 extern BOOLEAN gfSwitchPanel;
 extern BOOLEAN gfUIStanceDifferent;
-extern UINT8 gbNewPanel;
-extern UINT8 gubNewPanelParam;
-extern INT16 gsCurInterfacePanel;
+extern uint8_t gbNewPanel;
+extern uint8_t gubNewPanelParam;
+extern int16_t gsCurInterfacePanel;
 
-extern UINT32 guiCLOSE;
-extern UINT32 guiDEAD;
-extern UINT32 guiHATCH;
-extern UINT32 guiGUNSM;
-extern UINT32 guiP1ITEMS;
-extern UINT32 guiP2ITEMS;
-extern UINT32 guiP3ITEMS;
-extern UINT32 guiCOMPANEL;
-extern UINT32 guiCOMPANELB;
-extern UINT32 guiRADIO;
-extern UINT32 guiPORTRAITICONS;
-extern UINT32 guiBURSTACCUM;
-extern UINT32 guiITEMPOINTERHATCHES;
+extern uint32_t guiCLOSE;
+extern uint32_t guiDEAD;
+extern uint32_t guiHATCH;
+extern uint32_t guiGUNSM;
+extern uint32_t guiP1ITEMS;
+extern uint32_t guiP2ITEMS;
+extern uint32_t guiP3ITEMS;
+extern uint32_t guiCOMPANEL;
+extern uint32_t guiCOMPANELB;
+extern uint32_t guiRADIO;
+extern uint32_t guiPORTRAITICONS;
+extern uint32_t guiBURSTACCUM;
+extern uint32_t guiITEMPOINTERHATCHES;
 
 extern struct MOUSE_REGION gViewportRegion;
 extern struct MOUSE_REGION gRadarRegion;
@@ -107,7 +107,7 @@ BOOLEAN ShutdownTacticalInterface();
 extern BOOLEAN fInterfacePanelDirty;
 extern BOOLEAN gfPausedTacticalRenderFlags;
 extern BOOLEAN gfPausedTacticalRenderInterfaceFlags;
-extern INT16 gsInterfaceLevel;
+extern int16_t gsInterfaceLevel;
 extern BOOLEAN gfInMovementMenu;
 
 void PopupPositionMenu(UI_EVENT *pUIEvent);
@@ -120,7 +120,7 @@ void CancelMovementMenu();
 void PopDownOpenDoorMenu();
 void RenderOpenDoorMenu();
 BOOLEAN InitDoorOpenMenu(struct SOLDIERTYPE *pSoldier, struct STRUCTURE *pStructure,
-                         UINT8 ubDirection, BOOLEAN fClosingDoor);
+                         uint8_t ubDirection, BOOLEAN fClosingDoor);
 BOOLEAN HandleOpenDoorMenu();
 void CancelOpenDoorMenu();
 
@@ -128,13 +128,13 @@ void HandleInterfaceBackgrounds();
 
 void EndOverlayMessage();
 
-void DrawSelectedUIAboveGuy(UINT16 usSoldierID);
+void DrawSelectedUIAboveGuy(uint16_t usSoldierID);
 
 void CreateCurrentTacticalPanelButtons();
 void RemoveCurrentTacticalPanelButtons();
-void SetCurrentTacticalPanelCurrentMerc(UINT8 ubID);
-void SetCurrentInterfacePanel(UINT8 ubNewPanel);
-BOOLEAN IsMercPortraitVisible(UINT8 ubSoldierID);
+void SetCurrentTacticalPanelCurrentMerc(uint8_t ubID);
+void SetCurrentInterfacePanel(uint8_t ubNewPanel);
+BOOLEAN IsMercPortraitVisible(uint8_t ubSoldierID);
 
 BOOLEAN InitializeCurrentPanel();
 void ShutdownCurrentPanel();
@@ -149,20 +149,20 @@ void HandleUpDownArrowBackgrounds();
 
 void EndDeadlockMsg();
 
-void HandleLocateSelectMerc(UINT8 ubID, INT8 bFlag);
+void HandleLocateSelectMerc(uint8_t ubID, int8_t bFlag);
 
-void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, UINT8 ubDirtyLevel);
+void DirtyMercPanelInterface(struct SOLDIERTYPE *pSoldier, uint8_t ubDirtyLevel);
 
 void EndUIMessage();
-void BeginUIMessage(CHAR16 *pFontString, ...);
-void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, CHAR16 *pFontString, ...);
+void BeginUIMessage(wchar_t *pFontString, ...);
+void InternalBeginUIMessage(BOOLEAN fUseSkullIcon, wchar_t *pFontString, ...);
 
 // map screen version, for centering over the map area
-void BeginMapUIMessage(UINT8 fPosition, CHAR16 *pFontString, ...);
+void BeginMapUIMessage(uint8_t fPosition, wchar_t *pFontString, ...);
 
-extern UINT16 gusUIOldSelectedSoldier;
-extern INT32 giUIMessageOverlay;
-extern UINT32 guiUIMessageTime;
+extern uint16_t gusUIOldSelectedSoldier;
+extern int32_t giUIMessageOverlay;
+extern uint32_t guiUIMessageTime;
 
 typedef enum {
   NO_MESSAGE,
@@ -176,15 +176,15 @@ typedef enum {
 } MESSAGE_TYPES;
 
 void HandleTopMessages();
-BOOLEAN AddTopMessage(UINT8 ubType, CHAR16 *pzString);
+BOOLEAN AddTopMessage(uint8_t ubType, wchar_t *pzString);
 BOOLEAN InTopMessageBarAnimation();
 void EndTopMessage();
 
 void PauseRT(BOOLEAN fPause);
 
-void InitEnemyUIBar(UINT8 ubNumEnemies, UINT8 ubDoneEnemies);
+void InitEnemyUIBar(uint8_t ubNumEnemies, uint8_t ubDoneEnemies);
 
-CHAR16 *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier);
+wchar_t *GetSoldierHealthString(struct SOLDIERTYPE *pSoldier);
 
 void GetLaunchItemParamsFromUI();
 void RenderAimCubeUI();
@@ -192,14 +192,14 @@ void ResetAimCubeAI();
 void SetupAimCubeAI();
 void IncrementAimCubeUI();
 void EndAimCubeUI();
-void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 ubLevel, UINT8 bStartPower,
-                    INT8 bStartHeight);
+void BeginAimCubeUI(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t ubLevel, uint8_t bStartPower,
+                    int8_t bStartHeight);
 BOOLEAN AimCubeUIClick();
 
 void ResetPhysicsTrajectoryUI();
 void SetupPhysicsTrajectoryUI();
 void EndPhysicsTrajectoryUI();
-void BeginPhysicsTrajectoryUI(INT16 sGridNo, INT8 bLevel, BOOLEAN fBadCTGT);
+void BeginPhysicsTrajectoryUI(int16_t sGridNo, int8_t bLevel, BOOLEAN fBadCTGT);
 
 void InitPlayerUIBar(BOOLEAN fInterrupt);
 
@@ -207,7 +207,7 @@ void ToggleTacticalPanels();
 
 void DirtyTopMessage();
 
-void BeginMultiPurposeLocator(INT16 sGridNo, INT8 bLevel, BOOLEAN fSlideTo);
+void BeginMultiPurposeLocator(int16_t sGridNo, int8_t bLevel, BOOLEAN fSlideTo);
 void HandleMultiPurposeLocator();
 void RenderTopmostMultiPurposeLocator();
 

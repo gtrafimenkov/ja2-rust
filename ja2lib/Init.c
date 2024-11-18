@@ -58,7 +58,7 @@
 extern BOOLEAN gfUseConsecutiveQuickSaveSlots;
 #endif
 
-UINT32 InitializeJA2(void) {
+uint32_t InitializeJA2(void) {
   gfWorldLoaded = FALSE;
 
   // Load external text
@@ -176,7 +176,7 @@ UINT32 InitializeJA2(void) {
 }
 
 void ShutdownJA2(void) {
-  UINT32 uiIndex;
+  uint32_t uiIndex;
 
   // Clear screen....
   VSurfaceColorFill(vsFB, 0, 0, 640, 480, rgb32_to_rgb565(FROMRGB(0, 0, 0)));

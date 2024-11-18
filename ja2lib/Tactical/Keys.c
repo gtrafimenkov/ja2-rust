@@ -42,8 +42,8 @@
 #include "rust_fileman.h"
 
 DOOR_STATUS *gpDoorStatus = NULL;
-UINT8 gubNumDoorStatus = 0;
-extern INT8 gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
+uint8_t gubNumDoorStatus = 0;
+extern int8_t gbMercIsNewInThisSector[MAX_NUM_SOLDIERS];
 
 BOOLEAN InternalIsPerceivedDifferentThanReality(DOOR_STATUS *pDoorStatus);
 void InternalUpdateDoorGraphicFromStatus(DOOR_STATUS *pDoorStatus, BOOLEAN fUsePerceivedStatus,
@@ -68,13 +68,13 @@ KEY KeyTable[NUM_KEYS] = {
 };
 
 // Current number of doors in world.
-UINT8 gubNumDoors = 0;
+uint8_t gubNumDoors = 0;
 
 // Current max number of doors.  This is only used by the editor.  When adding doors to the
 // world, we may run out of space in the DoorTable, so we will allocate a new array with extra
 // slots, then copy everything over again.  gubMaxDoors holds the arrays actual number of slots,
 // even though the current number (gubNumDoors) will be <= to it.
-UINT8 gubMaxDoors = 0;
+uint8_t gubMaxDoors = 0;
 
 LOCK LockTable[NUM_LOCKS] = {0};
 
@@ -127,9 +127,9 @@ DOORTRAP DoorTrapTable[NUM_DOOR_TRAPS] = {
 DOOR *DoorTable = NULL;
 
 BOOLEAN LoadLockTable(void) {
-  UINT32 uiNumBytesRead = 0;
-  UINT32 uiBytesToRead;
-  CHAR8 *pFileName = "BINARYDATA\\Locks.bin";
+  uint32_t uiNumBytesRead = 0;
+  uint32_t uiBytesToRead;
+  char *pFileName = "BINARYDATA\\Locks.bin";
   FileID hFile = FILE_ID_ERR;
 
   // Load the Lock Table
@@ -152,7 +152,7 @@ BOOLEAN LoadLockTable(void) {
   return (TRUE);
 }
 
-BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
+BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID) {
   if (KeyExistsInKeyRing(pSoldier, ubKeyID, NULL) || KeyExistsInInventory(pSoldier, ubKeyID)) {
     return (TRUE);
   }
@@ -160,9 +160,9 @@ BOOLEAN SoldierHasKey(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
   return (FALSE);
 }
 
-BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 *pubPos) {
+BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID, uint8_t *pubPos) {
   // returns the index into the key ring where the key can be found
-  UINT8 ubLoop;
+  uint8_t ubLoop;
 
   if (!(pSoldier->pKeyRing)) {
     // no key ring!
@@ -184,8 +184,8 @@ BOOLEAN KeyExistsInKeyRing(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID, UINT8 *p
   return (FALSE);
 }
 
-BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
-  UINT8 ubLoop;
+BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, uint8_t ubKeyID) {
+  uint8_t ubLoop;
 
   for (ubLoop = 0; ubLoop < NUM_INV_SLOTS; ubLoop++) {
     if (Item[pSoldier->inv[ubLoop].usItem].usItemClass == IC_KEY) {
@@ -198,9 +198,9 @@ BOOLEAN KeyExistsInInventory(struct SOLDIERTYPE *pSoldier, UINT8 ubKeyID) {
   return (FALSE);
 }
 
-BOOLEAN ValidKey(DOOR *pDoor, UINT8 ubKeyID) { return (pDoor->ubLockID == ubKeyID); }
+BOOLEAN ValidKey(DOOR *pDoor, uint8_t ubKeyID) { return (pDoor->ubLockID == ubKeyID); }
 
-BOOLEAN DoLockDoor(DOOR *pDoor, UINT8 ubKeyID) {
+BOOLEAN DoLockDoor(DOOR *pDoor, uint8_t ubKeyID) {
   // if the door is unlocked and this is the right key, lock the door and
   // return true, otherwise return false
   if (!(pDoor->fLocked) && ValidKey(pDoor, ubKeyID)) {
@@ -211,12 +211,12 @@ BOOLEAN DoLockDoor(DOOR *pDoor, UINT8 ubKeyID) {
   }
 }
 
-BOOLEAN DoUnlockDoor(DOOR *pDoor, UINT8 ubKeyID) {
+BOOLEAN DoUnlockDoor(DOOR *pDoor, uint8_t ubKeyID) {
   // if the door is locked and this is the right key, unlock the door and
   // return true, otherwise return false
   if ((pDoor->fLocked) && ValidKey(pDoor, ubKeyID)) {
     // Play lockpicking
-    PlayJA2Sample(((UINT8)UNLOCK_DOOR_1), RATE_11025, SoundVolume(MIDVOLUME, pDoor->sGridNo), 1,
+    PlayJA2Sample(((uint8_t)UNLOCK_DOOR_1), RATE_11025, SoundVolume(MIDVOLUME, pDoor->sGridNo), 1,
                   SoundDir(pDoor->sGridNo));
 
     pDoor->fLocked = FALSE;
@@ -227,8 +227,8 @@ BOOLEAN DoUnlockDoor(DOOR *pDoor, UINT8 ubKeyID) {
 }
 
 BOOLEAN AttemptToUnlockDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  UINT8 ubLoop;
-  UINT8 ubKeyID;
+  uint8_t ubLoop;
+  uint8_t ubKeyID;
 
   for (ubLoop = 0; ubLoop < MAX_KEYS_PER_LOCK; ubLoop++) {
     ubKeyID = pDoor->ubLockID;
@@ -250,8 +250,8 @@ BOOLEAN AttemptToUnlockDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToLockDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  UINT8 ubLoop;
-  UINT8 ubKeyID;
+  uint8_t ubLoop;
+  uint8_t ubKeyID;
 
   for (ubLoop = 0; ubLoop < MAX_KEYS_PER_LOCK; ubLoop++) {
     ubKeyID = pDoor->ubLockID;
@@ -270,8 +270,8 @@ BOOLEAN AttemptToLockDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
-  INT8 bStress, bSlot;
+  int32_t iResult;
+  int8_t bStress, bSlot;
 
   bSlot = FindUsableObj(pSoldier, CROWBAR);
   if (bSlot == ITEM_NOT_FOUND) {
@@ -292,7 +292,7 @@ BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
     // award experience points?
 
     // Play lock busted sound
-    PlayJA2Sample(((UINT8)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
+    PlayJA2Sample(((uint8_t)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
                   SoundDir(pSoldier->sGridNo));
 
     return (TRUE);
@@ -306,39 +306,39 @@ BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   // possibly damage crowbar
   bStress = min(EffectiveStrength(pSoldier), LockTable[pDoor->ubLockID].ubSmashDifficulty + 30);
   // reduce crowbar status by random % between 0 and 5%
-  DamageObj(&(pSoldier->inv[bSlot]), (INT8)PreRandom(bStress / 20));
+  DamageObj(&(pSoldier->inv[bSlot]), (int8_t)PreRandom(bStress / 20));
 
   // did we succeed?
 
   if (LockTable[pDoor->ubLockID].ubSmashDifficulty == OPENING_NOT_POSSIBLE) {
     // do this to get 'can't do this' messages
-    iResult = SkillCheck(pSoldier, OPEN_WITH_CROWBAR, (INT8)(-100));
+    iResult = SkillCheck(pSoldier, OPEN_WITH_CROWBAR, (int8_t)(-100));
     iResult = -100;
   } else {
     iResult = SkillCheck(
         pSoldier, OPEN_WITH_CROWBAR,
-        (INT8)(-(INT8)(LockTable[pDoor->ubLockID].ubSmashDifficulty - pDoor->bLockDamage)));
+        (int8_t)(-(int8_t)(LockTable[pDoor->ubLockID].ubSmashDifficulty - pDoor->bLockDamage)));
   }
 
   if (iResult > 0) {
-    // STR GAIN (20) - Pried open a lock
+    // char* GAIN (20) - Pried open a lock
     StatChange(pSoldier, STRAMT, 20, FALSE);
 
     // succeeded! door can never be locked again, so remove from door list...
     RemoveDoorInfoFromTable(pDoor->sGridNo);
 
     // Play lock busted sound
-    PlayJA2Sample(((UINT8)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
+    PlayJA2Sample(((uint8_t)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
                   SoundDir(pSoldier->sGridNo));
 
     return (TRUE);
   } else {
     if (iResult > -10) {
-      // STR GAIN - Damaged a lock by prying
+      // char* GAIN - Damaged a lock by prying
       StatChange(pSoldier, STRAMT, 5, FALSE);
 
       // we came close... so do some damage to the lock
-      pDoor->bLockDamage += (INT8)(10 + iResult);
+      pDoor->bLockDamage += (int8_t)(10 + iResult);
     } else if (iResult > -40 && pSoldier->sGridNo != pSoldier->sSkillCheckGridNo) {
       // give token point for effort :-)
       StatChange(pSoldier, STRAMT, 1, FALSE);
@@ -349,7 +349,7 @@ BOOLEAN AttemptToCrowbarLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
+  int32_t iResult;
 
   LOCK *pLock;
 
@@ -366,7 +366,7 @@ BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
     // award experience points?
 
     // Play lock busted sound
-    PlayJA2Sample(((UINT8)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
+    PlayJA2Sample(((uint8_t)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
                   SoundDir(pSoldier->sGridNo));
 
     return (TRUE);
@@ -382,15 +382,15 @@ BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   // did we succeed?
   if (pLock->ubSmashDifficulty == OPENING_NOT_POSSIBLE) {
     // do this to get 'can't do this' messages
-    iResult = SkillCheck(pSoldier, SMASH_DOOR_CHECK, (INT8)(-100));
+    iResult = SkillCheck(pSoldier, SMASH_DOOR_CHECK, (int8_t)(-100));
     iResult = -100;
   } else {
     iResult = SkillCheck(
         pSoldier, SMASH_DOOR_CHECK,
-        (INT8)(-(INT8)(LockTable[pDoor->ubLockID].ubSmashDifficulty - pDoor->bLockDamage)));
+        (int8_t)(-(int8_t)(LockTable[pDoor->ubLockID].ubSmashDifficulty - pDoor->bLockDamage)));
   }
   if (iResult > 0) {
-    // STR GAIN (20) - Pried open a lock
+    // char* GAIN (20) - Pried open a lock
     StatChange(pSoldier, STRAMT, 20, FALSE);
 
     // succeeded! door can never be locked again, so remove from door list...
@@ -398,17 +398,17 @@ BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
     // award experience points?
 
     // Play lock busted sound
-    PlayJA2Sample(((UINT8)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
+    PlayJA2Sample(((uint8_t)BREAK_LOCK), RATE_11025, SoundVolume(MIDVOLUME, pSoldier->sGridNo), 1,
                   SoundDir(pSoldier->sGridNo));
 
     return (TRUE);
   } else {
     if (iResult > -10) {
-      // STR GAIN - Damaged a lock by prying
+      // char* GAIN - Damaged a lock by prying
       StatChange(pSoldier, STRAMT, 5, FALSE);
 
       // we came close... so do some damage to the lock
-      pDoor->bLockDamage += (INT8)(10 + iResult);
+      pDoor->bLockDamage += (int8_t)(10 + iResult);
     } else if (iResult > -40 && pSoldier->sGridNo != pSoldier->sSkillCheckGridNo) {
       // give token point for effort :-)
       StatChange(pSoldier, STRAMT, 1, FALSE);
@@ -418,8 +418,8 @@ BOOLEAN AttemptToSmashDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToPickLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
-  INT8 bReason;
+  int32_t iResult;
+  int8_t bReason;
   LOCK *pLock;
 
   if (pDoor->ubLockID == LOCK_UNOPENABLE) {
@@ -438,24 +438,24 @@ BOOLEAN AttemptToPickLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
   // Play lockpicking
   // ATE: Moved to animation
-  // PlayJA2Sample( ( (UINT8)PICKING_LOCK ), RATE_11025, SoundVolume( MIDVOLUME, pSoldier->sGridNo
+  // PlayJA2Sample( ( (uint8_t)PICKING_LOCK ), RATE_11025, SoundVolume( MIDVOLUME, pSoldier->sGridNo
   // ), 1, SoundDir( pSoldier->sGridNo ) );
 
   // See if we measure up to the task.
   // The difficulty is negated here to make it a skill adjustment
   if (pLock->ubPickDifficulty == OPENING_NOT_POSSIBLE) {
     // do this to get 'can't do this' messages
-    iResult = SkillCheck(pSoldier, bReason, (INT8)(-100));
+    iResult = SkillCheck(pSoldier, bReason, (int8_t)(-100));
     iResult = -100;
   } else {
-    iResult = SkillCheck(pSoldier, bReason, (INT8)(-(INT8)(pLock->ubPickDifficulty)));
+    iResult = SkillCheck(pSoldier, bReason, (int8_t)(-(int8_t)(pLock->ubPickDifficulty)));
   }
   if (iResult > 0) {
     // MECHANICAL GAIN:  Picked open a lock
-    StatChange(pSoldier, MECHANAMT, (UINT16)(pLock->ubPickDifficulty / 5), FALSE);
+    StatChange(pSoldier, MECHANAMT, (uint16_t)(pLock->ubPickDifficulty / 5), FALSE);
 
     // DEXTERITY GAIN:  Picked open a lock
-    StatChange(pSoldier, DEXTAMT, (UINT16)(pLock->ubPickDifficulty / 10), FALSE);
+    StatChange(pSoldier, DEXTAMT, (uint16_t)(pLock->ubPickDifficulty / 10), FALSE);
 
     // succeeded!
     pDoor->fLocked = FALSE;
@@ -469,13 +469,13 @@ BOOLEAN AttemptToPickLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToUntrapDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
+  int32_t iResult;
 
   // See if we measure up to the task.
   if (pDoor->ubTrapID == EXPLOSION) {
-    iResult = SkillCheck(pSoldier, DISARM_TRAP_CHECK, (INT8)(pDoor->ubTrapLevel * 7));
+    iResult = SkillCheck(pSoldier, DISARM_TRAP_CHECK, (int8_t)(pDoor->ubTrapLevel * 7));
   } else {
-    iResult = SkillCheck(pSoldier, DISARM_ELECTRONIC_TRAP_CHECK, (INT8)(pDoor->ubTrapLevel * 7));
+    iResult = SkillCheck(pSoldier, DISARM_ELECTRONIC_TRAP_CHECK, (int8_t)(pDoor->ubTrapLevel * 7));
   }
 
   if (iResult > 0) {
@@ -491,7 +491,7 @@ BOOLEAN AttemptToUntrapDoor(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
 BOOLEAN ExamineDoorForTraps(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   // Check to see if there is a trap or not on this door
-  INT8 bDetectLevel;
+  int8_t bDetectLevel;
 
   if (pDoor->ubTrapID == NO_TRAP) {
     // No trap!
@@ -514,7 +514,7 @@ BOOLEAN ExamineDoorForTraps(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
 BOOLEAN HasDoorTrapGoneOff(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   // Check to see if the soldier causes the trap to go off
-  INT8 bDetectLevel;
+  int8_t bDetectLevel;
 
   if (pDoor->ubTrapID != NO_TRAP) {
     // one quick check to see if the guy sees the trap ahead of time!
@@ -549,7 +549,7 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
   switch (pDoor->ubTrapID) {
     case EXPLOSION:
       // cause damage as a regular hand grenade
-      IgniteExplosion(NOBODY, CenterX(pSoldier->sGridNo), (INT16)CenterY(pSoldier->sGridNo), 25,
+      IgniteExplosion(NOBODY, CenterX(pSoldier->sGridNo), (int16_t)CenterY(pSoldier->sGridNo), 25,
                       pSoldier->sGridNo, HAND_GRENADE, 0);
       break;
 
@@ -584,8 +584,8 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
       DebugMsg(TOPIC_JA2, DBG_INFO,
                String("!!!!!!! Trap gone off %d", gTacticalStatus.ubAttackBusyCount));
 
-      SoldierTakeDamage(pSoldier, 0, (UINT16)(10 + PreRandom(10)),
-                        (UINT16)((3 + PreRandom(3) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
+      SoldierTakeDamage(pSoldier, 0, (uint16_t)(10 + PreRandom(10)),
+                        (uint16_t)((3 + PreRandom(3) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
                         pDoor->sGridNo, 0, TRUE);
       break;
 
@@ -602,8 +602,8 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
       DebugMsg(TOPIC_JA2, DBG_INFO,
                String("!!!!!!! Trap gone off %d", gTacticalStatus.ubAttackBusyCount));
 
-      SoldierTakeDamage(pSoldier, 0, (UINT16)(20 + PreRandom(20)),
-                        (UINT16)((6 + PreRandom(6) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
+      SoldierTakeDamage(pSoldier, 0, (uint16_t)(20 + PreRandom(20)),
+                        (uint16_t)((6 + PreRandom(6) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY,
                         pDoor->sGridNo, 0, TRUE);
       break;
 
@@ -614,8 +614,8 @@ void HandleDoorTrap(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 }
 
 BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
-  INT32 iResult;
-  INT8 bSlot = NO_SLOT;
+  int32_t iResult;
+  int8_t bSlot = NO_SLOT;
 
   bSlot = FindObj(pSoldier, SHAPED_CHARGE);
   if (bSlot == NO_SLOT) {
@@ -627,8 +627,8 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
     // Do explosive graphic....
     {
       ANITILE_PARAMS AniParams;
-      INT16 sGridNo;
-      INT16 sX, sY, sZ;
+      int16_t sGridNo;
+      int16_t sX, sY, sZ;
 
       // Get gridno
       sGridNo = pDoor->sGridNo;
@@ -642,7 +642,7 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
       AniParams.sGridNo = sGridNo;
       AniParams.ubLevelID = ANI_TOPMOST_LEVEL;
-      AniParams.sDelay = (INT16)(100);
+      AniParams.sDelay = (int16_t)(100);
       AniParams.sStartFrame = 0;
       AniParams.uiFlags = ANITILE_CACHEDTILE | ANITILE_FORWARD | ANITILE_ALWAYS_TRANSLUCENT;
       AniParams.sX = sX;
@@ -653,7 +653,7 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
       CreateAnimationTile(&AniParams);
 
-      PlayJA2Sample(SMALL_EXPLODE_1, RATE_11025, SoundVolume((INT8)HIGHVOLUME, sGridNo), 1,
+      PlayJA2Sample(SMALL_EXPLODE_1, RATE_11025, SoundVolume((int8_t)HIGHVOLUME, sGridNo), 1,
                     SoundDir(sGridNo));
 
       // Remove the explosive.....
@@ -682,7 +682,7 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
     // OOPS! ... BOOM!
     IgniteExplosion(NOBODY, pSoldier->sX, pSoldier->sY,
-                    (INT16)(gpWorldLevelData[pSoldier->sGridNo].sHeight), pSoldier->sGridNo,
+                    (int16_t)(gpWorldLevelData[pSoldier->sGridNo].sHeight), pSoldier->sGridNo,
                     SHAPED_CHARGE, 0);
   }
   return (FALSE);
@@ -690,8 +690,8 @@ BOOLEAN AttemptToBlowUpLock(struct SOLDIERTYPE *pSoldier, DOOR *pDoor) {
 
 // File I/O for loading the door information from the map.  This automatically allocates
 // the exact number of slots when loading.
-void LoadDoorTableFromMap(INT8 **hBuffer) {
-  INT32 cnt;
+void LoadDoorTableFromMap(int8_t **hBuffer) {
+  int32_t cnt;
 
   TrashDoorTable();
   LOADDATA(&gubNumDoors, *hBuffer, 1);
@@ -712,8 +712,8 @@ void LoadDoorTableFromMap(INT8 **hBuffer) {
 // door still exists.  Otherwise, it'll ignore it.  It is possible in the editor to delete doors in
 // many different ways, so I opted to put it in the saving routine.
 void SaveDoorTableToMap(FileID fp) {
-  INT32 i = 0;
-  UINT32 uiBytesWritten;
+  int32_t i = 0;
+  uint32_t uiBytesWritten;
 
   while (i < gubNumDoors) {
     if (!OpenableAtGridNo(DoorTable[i].sGridNo))
@@ -728,7 +728,7 @@ void SaveDoorTableToMap(FileID fp) {
 // The editor adds locks to the world.  If the gridno already exists, then the currently existing
 // door information is overwritten.
 void AddDoorInfoToTable(DOOR *pDoor) {
-  INT32 i;
+  int32_t i;
   for (i = 0; i < gubNumDoors; i++) {
     if (DoorTable[i].sGridNo == pDoor->sGridNo) {
       memcpy(&DoorTable[i], pDoor, sizeof(DOOR));
@@ -759,9 +759,9 @@ void AddDoorInfoToTable(DOOR *pDoor) {
 // When the editor removes a door from the world, this function looks for and removes accompanying
 // door information.  If the entry is not the last entry, the last entry is move to it's current
 // slot, to keep everything contiguous.
-void RemoveDoorInfoFromTable(INT32 iMapIndex) {
-  INT32 i;
-  INT32 iNumDoorsToCopy;
+void RemoveDoorInfoFromTable(int32_t iMapIndex) {
+  int32_t i;
+  int32_t iNumDoorsToCopy;
   for (i = 0; i < gubNumDoors; i++) {
     if (DoorTable[i].sGridNo == iMapIndex) {
       iNumDoorsToCopy = gubNumDoors - i - 1;
@@ -775,8 +775,8 @@ void RemoveDoorInfoFromTable(INT32 iMapIndex) {
 }
 
 // This is the link to see if a door exists at a gridno.
-DOOR *FindDoorInfoAtGridNo(INT32 iMapIndex) {
-  INT32 i;
+DOOR *FindDoorInfoAtGridNo(int32_t iMapIndex) {
+  int32_t i;
   for (i = 0; i < gubNumDoors; i++) {
     if (DoorTable[i].sGridNo == iMapIndex) return &DoorTable[i];
   }
@@ -806,10 +806,10 @@ void UpdateDoorPerceivedValue(DOOR *pDoor) {
   }
 }
 
-BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  UINT32 uiNumBytesWritten;
-  UINT32 uiSizeToSave = 0;
-  CHAR8 zMapName[128];
+BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+  uint32_t uiNumBytesWritten;
+  uint32_t uiSizeToSave = 0;
+  char zMapName[128];
   FileID hFile = FILE_ID_ERR;
 
   //	return( TRUE );
@@ -840,8 +840,8 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ
   }
 
   // Save the number of doors
-  File_Write(hFile, &gubNumDoors, sizeof(UINT8), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT8)) {
+  File_Write(hFile, &gubNumDoors, sizeof(uint8_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint8_t)) {
     File_Close(hFile);
     return (FALSE);
   }
@@ -866,9 +866,9 @@ BOOLEAN SaveDoorTableToDoorTableTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ
 }
 
 BOOLEAN LoadDoorTableFromDoorTableTempFile() {
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
   FileID hFile = FILE_ID_ERR;
-  CHAR8 zMapName[128];
+  char zMapName[128];
 
   //	return( TRUE );
 
@@ -898,8 +898,8 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
   }
 
   // Read in the number of doors
-  File_Read(hFile, &gubMaxDoors, sizeof(UINT8), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT8)) {
+  File_Read(hFile, &gubMaxDoors, sizeof(uint8_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint8_t)) {
     File_Close(hFile);
     return (FALSE);
   }
@@ -929,8 +929,8 @@ BOOLEAN LoadDoorTableFromDoorTableTempFile() {
 }
 
 // fOpen is True if the door is open, false if it is closed
-BOOLEAN ModifyDoorStatus(INT16 sGridNo, BOOLEAN fOpen, BOOLEAN fPerceivedOpen) {
-  UINT8 ubCnt;
+BOOLEAN ModifyDoorStatus(int16_t sGridNo, BOOLEAN fOpen, BOOLEAN fPerceivedOpen) {
+  uint8_t ubCnt;
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pBaseStructure;
 
@@ -1031,8 +1031,8 @@ void TrashDoorStatusArray() {
   gubNumDoorStatus = 0;
 }
 
-BOOLEAN IsDoorOpen(INT16 sGridNo) {
-  UINT8 ubCnt;
+BOOLEAN IsDoorOpen(int16_t sGridNo) {
+  uint8_t ubCnt;
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pBaseStructure;
 
@@ -1074,8 +1074,8 @@ BOOLEAN IsDoorOpen(INT16 sGridNo) {
 }
 
 // Returns a doors status value, NULL if not found
-DOOR_STATUS *GetDoorStatus(INT16 sGridNo) {
-  UINT8 ubCnt;
+DOOR_STATUS *GetDoorStatus(int16_t sGridNo) {
+  uint8_t ubCnt;
   struct STRUCTURE *pStructure;
   struct STRUCTURE *pBaseStructure;
 
@@ -1105,13 +1105,13 @@ DOOR_STATUS *GetDoorStatus(INT16 sGridNo) {
   return (NULL);
 }
 
-BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
-  INT32 cnt, cnt2;
-  INT8 bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
+BOOLEAN AllMercsLookForDoor(int16_t sGridNo, BOOLEAN fUpdateValue) {
+  int32_t cnt, cnt2;
+  int8_t bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
   struct SOLDIERTYPE *pSoldier;
-  INT16 sDistVisible;
+  int16_t sDistVisible;
   DOOR_STATUS *pDoorStatus;
-  INT16 usNewGridNo;
+  int16_t usNewGridNo;
 
   // Get door
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1136,7 +1136,7 @@ BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
       if (PythSpacesAway(pSoldier->sGridNo, sGridNo) <= sDistVisible) {
         // and we can trace a line of sight to his x,y coordinates?
         // (taking into account we are definitely aware of this guy now)
-        if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, 0, 0, (UINT8)sDistVisible,
+        if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, 0, 0, (uint8_t)sDistVisible,
                                                TRUE)) {
           // Update status...
           if (fUpdateValue) {
@@ -1155,7 +1155,7 @@ BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
         if (PythSpacesAway(pSoldier->sGridNo, usNewGridNo) <= sDistVisible) {
           // and we can trace a line of sight to his x,y coordinates?
           // (taking into account we are definitely aware of this guy now)
-          if (SoldierTo3DLocationLineOfSightTest(pSoldier, usNewGridNo, 0, 0, (UINT8)sDistVisible,
+          if (SoldierTo3DLocationLineOfSightTest(pSoldier, usNewGridNo, 0, 0, (uint8_t)sDistVisible,
                                                  TRUE)) {
             // Update status...
             if (fUpdateValue) {
@@ -1172,12 +1172,12 @@ BOOLEAN AllMercsLookForDoor(INT16 sGridNo, BOOLEAN fUpdateValue) {
 }
 
 BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
-  INT32 cnt, cnt2;
-  INT16 sDistVisible;
-  INT16 sGridNo;
+  int32_t cnt, cnt2;
+  int16_t sDistVisible;
+  int16_t sGridNo;
   DOOR_STATUS *pDoorStatus;
-  INT8 bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
-  INT16 usNewGridNo;
+  int8_t bDirs[8] = {NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
+  int16_t usNewGridNo;
 
   // Loop through all corpses....
   for (cnt = 0; cnt < gubNumDoorStatus; cnt++) {
@@ -1196,7 +1196,7 @@ BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
     if (PythSpacesAway(pSoldier->sGridNo, sGridNo) <= sDistVisible) {
       // and we can trace a line of sight to his x,y coordinates?
       // (taking into account we are definitely aware of this guy now)
-      if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, 0, 0, (UINT8)sDistVisible, TRUE)) {
+      if (SoldierTo3DLocationLineOfSightTest(pSoldier, sGridNo, 0, 0, (uint8_t)sDistVisible, TRUE)) {
         // OK, here... update perceived value....
         if (fUpdateValue) {
           InternalUpdateDoorsPerceivedValue(pDoorStatus);
@@ -1215,7 +1215,7 @@ BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
       if (PythSpacesAway(pSoldier->sGridNo, usNewGridNo) <= sDistVisible) {
         // and we can trace a line of sight to his x,y coordinates?
         // (taking into account we are definitely aware of this guy now)
-        if (SoldierTo3DLocationLineOfSightTest(pSoldier, usNewGridNo, 0, 0, (UINT8)sDistVisible,
+        if (SoldierTo3DLocationLineOfSightTest(pSoldier, usNewGridNo, 0, 0, (uint8_t)sDistVisible,
                                                TRUE)) {
           // Update status...
           if (fUpdateValue) {
@@ -1236,7 +1236,7 @@ BOOLEAN MercLooksForDoors(struct SOLDIERTYPE *pSoldier, BOOLEAN fUpdateValue) {
 void SyncronizeDoorStatusToStructureData(DOOR_STATUS *pDoorStatus) {
   struct STRUCTURE *pStructure, *pBaseStructure;
   struct LEVELNODE *pNode;
-  INT16 sBaseGridNo = NOWHERE;
+  int16_t sBaseGridNo = NOWHERE;
 
   // First look for a door structure here...
   pStructure = FindStructure(pDoorStatus->sGridNo, STRUCTURE_ANYDOOR);
@@ -1286,7 +1286,7 @@ void SyncronizeDoorStatusToStructureData(DOOR_STATUS *pDoorStatus) {
 }
 
 void UpdateDoorGraphicsFromStatus(BOOLEAN fUsePerceivedStatus, BOOLEAN fDirty) {
-  INT32 cnt;
+  int32_t cnt;
   DOOR_STATUS *pDoorStatus;
 
   for (cnt = 0; cnt < gubNumDoorStatus; cnt++) {
@@ -1302,12 +1302,12 @@ void UpdateDoorGraphicsFromStatus(BOOLEAN fUsePerceivedStatus, BOOLEAN fDirty) {
 void InternalUpdateDoorGraphicFromStatus(DOOR_STATUS *pDoorStatus, BOOLEAN fUsePerceivedStatus,
                                          BOOLEAN fDirty) {
   struct STRUCTURE *pStructure, *pBaseStructure;
-  INT32 cnt;
+  int32_t cnt;
   BOOLEAN fOpenedGraphic = FALSE;
   struct LEVELNODE *pNode;
   BOOLEAN fWantToBeOpen = FALSE;
   BOOLEAN fDifferent = FALSE;
-  INT16 sBaseGridNo = NOWHERE;
+  int16_t sBaseGridNo = NOWHERE;
 
   // OK, look at perceived status and adjust graphic
   // First look for a door structure here...
@@ -1475,7 +1475,7 @@ void InternalUpdateDoorsPerceivedValue(DOOR_STATUS *pDoorStatus) {
   }
 }
 
-BOOLEAN UpdateDoorStatusPerceivedValue(INT16 sGridNo) {
+BOOLEAN UpdateDoorStatusPerceivedValue(int16_t sGridNo) {
   DOOR_STATUS *pDoorStatus = NULL;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1488,7 +1488,7 @@ BOOLEAN UpdateDoorStatusPerceivedValue(INT16 sGridNo) {
   return (TRUE);
 }
 
-BOOLEAN IsDoorPerceivedOpen(INT16 sGridNo) {
+BOOLEAN IsDoorPerceivedOpen(int16_t sGridNo) {
   DOOR_STATUS *pDoorStatus;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1519,7 +1519,7 @@ BOOLEAN InternalSetDoorPerceivedOpenStatus(DOOR_STATUS *pDoorStatus, BOOLEAN fPe
   return (TRUE);
 }
 
-BOOLEAN SetDoorPerceivedOpenStatus(INT16 sGridNo, BOOLEAN fPerceivedOpen) {
+BOOLEAN SetDoorPerceivedOpenStatus(int16_t sGridNo, BOOLEAN fPerceivedOpen) {
   DOOR_STATUS *pDoorStatus = NULL;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1531,7 +1531,7 @@ BOOLEAN SetDoorPerceivedOpenStatus(INT16 sGridNo, BOOLEAN fPerceivedOpen) {
   return (InternalSetDoorPerceivedOpenStatus(pDoorStatus, fPerceivedOpen));
 }
 
-BOOLEAN SetDoorOpenStatus(INT16 sGridNo, BOOLEAN fOpen) {
+BOOLEAN SetDoorOpenStatus(int16_t sGridNo, BOOLEAN fOpen) {
   DOOR_STATUS *pDoorStatus;
 
   pDoorStatus = GetDoorStatus(sGridNo);
@@ -1548,11 +1548,11 @@ BOOLEAN SetDoorOpenStatus(INT16 sGridNo, BOOLEAN fOpen) {
   }
 }
 
-BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, INT8 bSectorZ) {
-  CHAR8 zMapName[128];
+BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, int8_t bSectorZ) {
+  char zMapName[128];
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiNumBytesWritten;
-  UINT8 ubCnt;
+  uint32_t uiNumBytesWritten;
+  uint8_t ubCnt;
 
   // Turn off any DOOR BUSY flags....
   for (ubCnt = 0; ubCnt < gubNumDoorStatus; ubCnt++) {
@@ -1575,8 +1575,8 @@ BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, INT8 b
   }
 
   // Save the number of elements in the door array
-  File_Write(hFile, &gubNumDoorStatus, sizeof(UINT8), &uiNumBytesWritten);
-  if (uiNumBytesWritten != sizeof(UINT8)) {
+  File_Write(hFile, &gubNumDoorStatus, sizeof(uint8_t), &uiNumBytesWritten);
+  if (uiNumBytesWritten != sizeof(uint8_t)) {
     // Error Writing size of array to disk
     File_Close(hFile);
     return (FALSE);
@@ -1602,10 +1602,10 @@ BOOLEAN SaveDoorStatusArrayToDoorStatusTempFile(u8 sSectorX, u8 sSectorY, INT8 b
 }
 
 BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
-  CHAR8 zMapName[128];
+  char zMapName[128];
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiNumBytesRead;
-  UINT8 ubLoop;
+  uint32_t uiNumBytesRead;
+  uint8_t ubLoop;
 
   // Convert the current sector location into a file name
   //	GetMapFileName( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, zTempName, FALSE );
@@ -1627,8 +1627,8 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
   }
 
   // Load the number of elements in the door status array
-  File_Read(hFile, &gubNumDoorStatus, sizeof(UINT8), &uiNumBytesRead);
-  if (uiNumBytesRead != sizeof(UINT8)) {
+  File_Read(hFile, &gubNumDoorStatus, sizeof(uint8_t), &uiNumBytesRead);
+  if (uiNumBytesRead != sizeof(uint8_t)) {
     File_Close(hFile);
     return (FALSE);
   }
@@ -1666,7 +1666,7 @@ BOOLEAN LoadDoorStatusArrayFromDoorStatusTempFile() {
 }
 
 BOOLEAN SaveKeyTableToSaveGameFile(FileID hFile) {
-  UINT32 uiNumBytesWritten = 0;
+  uint32_t uiNumBytesWritten = 0;
 
   // Save the KeyTable
   File_Write(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesWritten);
@@ -1678,7 +1678,7 @@ BOOLEAN SaveKeyTableToSaveGameFile(FileID hFile) {
 }
 
 BOOLEAN LoadKeyTableFromSaveedGameFile(FileID hFile) {
-  UINT32 uiNumBytesRead = 0;
+  uint32_t uiNumBytesRead = 0;
 
   // Load the KeyTable
   File_Read(hFile, KeyTable, sizeof(KEY) * NUM_KEYS, &uiNumBytesRead);
@@ -1690,7 +1690,7 @@ BOOLEAN LoadKeyTableFromSaveedGameFile(FileID hFile) {
 }
 
 void ExamineDoorsOnEnteringSector() {
-  INT32 cnt;
+  int32_t cnt;
   DOOR_STATUS *pDoorStatus;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
@@ -1738,11 +1738,11 @@ void ExamineDoorsOnEnteringSector() {
 }
 
 void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
-  INT32 cnt;
+  int32_t cnt;
   DOOR_STATUS *pDoorStatus;
   struct SOLDIERTYPE *pSoldier;
   BOOLEAN fOK = FALSE;
-  INT32 iNumNewMercs = 0;
+  int32_t iNumNewMercs = 0;
   TownID bTownId;
 
   // OK, only do this if conditions are met....
@@ -1808,10 +1808,10 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded() {
   }
 }
 
-void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, INT16 sGridNo, INT8 bLevel, INT8 bVisible,
-                       BOOLEAN fAddToDropList, INT32 iDropListSlot, BOOLEAN fUseUnLoaded) {
-  UINT8 ubLoop;
-  UINT8 ubItem;
+void DropKeysInKeyRing(struct SOLDIERTYPE *pSoldier, int16_t sGridNo, int8_t bLevel, int8_t bVisible,
+                       BOOLEAN fAddToDropList, int32_t iDropListSlot, BOOLEAN fUseUnLoaded) {
+  uint8_t ubLoop;
+  uint8_t ubItem;
   struct OBJECTTYPE Object;
 
   if (!(pSoldier->pKeyRing)) {

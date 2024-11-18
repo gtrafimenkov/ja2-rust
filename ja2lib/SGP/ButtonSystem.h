@@ -88,57 +88,57 @@ struct _GUI_BUTTON;
 #define GUI_SND_DCLK BUTTON_SOUND_DISABLED_CLICK
 #define GUI_SND_DMOV BUTTON_SOUND_DISABLED_MOVED_ONTO
 
-extern UINT32 FRAME_BUFFER;
+extern uint32_t FRAME_BUFFER;
 
 // GUI_BUTTON callback function type
-typedef void (*GUI_CALLBACK)(struct _GUI_BUTTON *, INT32);
+typedef void (*GUI_CALLBACK)(struct _GUI_BUTTON *, int32_t);
 
 // GUI_BUTTON structure definitions.
 typedef struct _GUI_BUTTON {
-  INT32 IDNum;                 // ID Number, contains it's own button number
-  UINT32 ImageNum;             // Image number to use (see DOCs for details)
+  int32_t IDNum;                 // ID Number, contains it's own button number
+  uint32_t ImageNum;             // Image number to use (see DOCs for details)
   struct MOUSE_REGION Area;    // Mouse System's mouse region to use for this button
   GUI_CALLBACK ClickCallback;  // Button Callback when button is clicked
   GUI_CALLBACK MoveCallback;   // Button Callback when mouse moved on this region
-  INT16 Cursor;                // Cursor to use for this button
-  UINT32 uiFlags;              // Button state flags etc.( 32-bit )
-  UINT32 uiOldFlags;           // Old flags from previous render loop
-  INT16 XLoc;                  // Coordinates where button is on the screen
-  INT16 YLoc;
+  int16_t Cursor;                // Cursor to use for this button
+  uint32_t uiFlags;              // Button state flags etc.( 32-bit )
+  uint32_t uiOldFlags;           // Old flags from previous render loop
+  int16_t XLoc;                  // Coordinates where button is on the screen
+  int16_t YLoc;
   uintptr_t UserData[4];  // Place holder for user data etc.
-  INT16 Group;            // Group this button belongs to (see DOCs)
-  INT8 bDefaultStatus;
+  int16_t Group;            // Group this button belongs to (see DOCs)
+  int8_t bDefaultStatus;
   // Button disabled style
-  INT8 bDisabledStyle;
+  int8_t bDisabledStyle;
   // For buttons with text
-  STR16 string;         // the string
-  UINT16 usFont;        // font for text
+  wchar_t* string;         // the string
+  uint16_t usFont;        // font for text
   BOOLEAN fMultiColor;  // font is a multi-color font
-  INT16 sForeColor;     // text colors if there is text
-  INT16 sShadowColor;
-  INT16 sForeColorDown;  // text colors when button is down (optional)
-  INT16 sShadowColorDown;
-  INT16 sForeColorHilited;  // text colors when button is down (optional)
-  INT16 sShadowColorHilited;
-  INT8 bJustification;  // BUTTON_TEXT_LEFT, BUTTON_TEXT_CENTER, BUTTON_TEXT_RIGHT
-  INT8 bTextXOffset;
-  INT8 bTextYOffset;
-  INT8 bTextXSubOffSet;
-  INT8 bTextYSubOffSet;
+  int16_t sForeColor;     // text colors if there is text
+  int16_t sShadowColor;
+  int16_t sForeColorDown;  // text colors when button is down (optional)
+  int16_t sShadowColorDown;
+  int16_t sForeColorHilited;  // text colors when button is down (optional)
+  int16_t sShadowColorHilited;
+  int8_t bJustification;  // BUTTON_TEXT_LEFT, BUTTON_TEXT_CENTER, BUTTON_TEXT_RIGHT
+  int8_t bTextXOffset;
+  int8_t bTextYOffset;
+  int8_t bTextXSubOffSet;
+  int8_t bTextYSubOffSet;
   BOOLEAN fShiftText;
-  INT16 sWrappedWidth;
+  int16_t sWrappedWidth;
   // For buttons with icons (don't confuse this with quickbuttons which have up to 5 states )
-  INT32 iIconID;
-  INT16 usIconIndex;
-  INT8 bIconXOffset;    //-1 means horizontally centered
-  INT8 bIconYOffset;    //-1 means vertically centered
+  int32_t iIconID;
+  int16_t usIconIndex;
+  int8_t bIconXOffset;    //-1 means horizontally centered
+  int8_t bIconYOffset;    //-1 means vertically centered
   BOOLEAN fShiftImage;  // if true, icon is shifted +1,+1 when button state is down.
 
-  UINT8 ubToggleButtonOldState;  // Varibles for new toggle buttons that work
-  UINT8 ubToggleButtonActivated;
+  uint8_t ubToggleButtonOldState;  // Varibles for new toggle buttons that work
+  uint8_t ubToggleButtonActivated;
 
-  INT32 BackRect;  // Handle to a Background Rectangle
-  UINT8 ubSoundSchemeID;
+  int32_t BackRect;  // Handle to a Background Rectangle
+  uint8_t ubSoundSchemeID;
 } GUI_BUTTON;
 
 #define MAX_BUTTONS 400
@@ -150,14 +150,14 @@ extern GUI_BUTTON *ButtonList[MAX_BUTTONS];  // Button System's Main Button List
 // Struct definition for the QuickButton pictures.
 typedef struct {
   struct VObject *vobj;  // The Image itself
-  INT32 Grayed;          // Index to use for a "Grayed-out" button
-  INT32 OffNormal;       // Index to use when button is OFF
-  INT32 OffHilite;       // Index to use when button is OFF w/ hilite on it
-  INT32 OnNormal;        // Index to use when button is ON
-  INT32 OnHilite;        // Index to use when button is ON w/ hilite on it
-  UINT32 MaxWidth;       // Width of largest image in use
-  UINT32 MaxHeight;      // Height of largest image in use
-  UINT32 fFlags;         // Special image flags
+  int32_t Grayed;          // Index to use for a "Grayed-out" button
+  int32_t OffNormal;       // Index to use when button is OFF
+  int32_t OffHilite;       // Index to use when button is OFF w/ hilite on it
+  int32_t OnNormal;        // Index to use when button is ON
+  int32_t OnHilite;        // Index to use when button is ON w/ hilite on it
+  uint32_t MaxWidth;       // Width of largest image in use
+  uint32_t MaxHeight;      // Height of largest image in use
+  uint32_t fFlags;         // Special image flags
 } BUTTON_PICS;
 
 #define MAX_BUTTON_PICS 256
@@ -168,46 +168,46 @@ void ShutdownButtonImageManager(void);
 BOOLEAN InitButtonSystem(void);
 void ShutdownButtonSystem(void);
 
-INT16 FindFreeIconSlot(void);
-INT32 FindFreeButtonSlot(void);
-INT16 FindFreeGenericSlot(void);
-INT16 FindFreeIconSlot(void);
-INT32 GetNextButtonNumber(void);
+int16_t FindFreeIconSlot(void);
+int32_t FindFreeButtonSlot(void);
+int16_t FindFreeGenericSlot(void);
+int16_t FindFreeIconSlot(void);
+int32_t GetNextButtonNumber(void);
 
 // Now used by Wizardry -- DB
-void SetButtonFastHelpText(INT32 iButton, STR16 Text);
+void SetButtonFastHelpText(int32_t iButton, wchar_t* Text);
 
-void SetBtnHelpEndCallback(INT32 iButton, MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn);
+void SetBtnHelpEndCallback(int32_t iButton, MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn);
 // void DisplayFastHelp(GUI_BUTTON *b);
 void RenderButtonsFastHelp(void);
 
 #define RenderButtonsFastHelp() RenderFastHelp()
 
-BOOLEAN SetButtonSavedRect(INT32 iButton);
-void FreeButtonSavedRect(INT32 iButton);
+BOOLEAN SetButtonSavedRect(int32_t iButton);
+void FreeButtonSavedRect(int32_t iButton);
 
-INT16 LoadGenericButtonIcon(STR8 filename);
-BOOLEAN UnloadGenericButtonIcon(INT16 GenImg);
-INT32 LoadButtonImage(STR8 filename, INT32 Grayed, INT32 OffNormal, INT32 OffHilite, INT32 OnNormal,
-                      INT32 OnHilite);
-INT32 UseLoadedButtonImage(INT32 LoadedImg, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
-                           INT32 OnNormal, INT32 OnHilite);
-INT32 UseVObjAsButtonImage(struct VObject *hVObject, INT32 Grayed, INT32 OffNormal, INT32 OffHilite,
-                           INT32 OnNormal, INT32 OnHilite);
-void UnloadButtonImage(INT32 Index);
-INT16 LoadGenericButtonImages(STR8 GrayName, STR8 OffNormName, STR8 OffHiliteName, STR8 OnNormName,
-                              STR8 OnHiliteName, STR8 BkGrndName, INT16 Index, INT16 OffsetX,
-                              INT16 OffsetY);
-BOOLEAN UnloadGenericButtonImage(INT16 GenImg);
+int16_t LoadGenericButtonIcon(char* filename);
+BOOLEAN UnloadGenericButtonIcon(int16_t GenImg);
+int32_t LoadButtonImage(char* filename, int32_t Grayed, int32_t OffNormal, int32_t OffHilite, int32_t OnNormal,
+                      int32_t OnHilite);
+int32_t UseLoadedButtonImage(int32_t LoadedImg, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
+                           int32_t OnNormal, int32_t OnHilite);
+int32_t UseVObjAsButtonImage(struct VObject *hVObject, int32_t Grayed, int32_t OffNormal, int32_t OffHilite,
+                           int32_t OnNormal, int32_t OnHilite);
+void UnloadButtonImage(int32_t Index);
+int16_t LoadGenericButtonImages(char* GrayName, char* OffNormName, char* OffHiliteName, char* OnNormName,
+                              char* OnHiliteName, char* BkGrndName, int16_t Index, int16_t OffsetX,
+                              int16_t OffsetY);
+BOOLEAN UnloadGenericButtonImage(int16_t GenImg);
 
-BOOLEAN EnableButton(INT32 iButtonID);
-BOOLEAN DisableButton(INT32 iButtonID);
-void RemoveButton(INT32 iButtonID);
-void HideButton(INT32 iButtonID);
-void ShowButton(INT32 iButton);
+BOOLEAN EnableButton(int32_t iButtonID);
+BOOLEAN DisableButton(int32_t iButtonID);
+void RemoveButton(int32_t iButtonID);
+void HideButton(int32_t iButtonID);
+void ShowButton(int32_t iButton);
 
 void RenderButtons(void);
-BOOLEAN DrawButton(INT32 iButtonID);
+BOOLEAN DrawButton(int32_t iButtonID);
 void DrawButtonFromPtr(GUI_BUTTON *b);
 
 // Base button types
@@ -225,7 +225,7 @@ extern BOOLEAN gfRenderHilights;
 #define DisableHilightsAndHelpText() gfRenderHilights = FALSE;
 
 // Providing you have allocated your own image, this is a somewhat simplified function.
-INT32 QuickCreateButton(UINT32 Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 Priority,
+int32_t QuickCreateButton(uint32_t Image, int16_t xloc, int16_t yloc, int32_t Type, int16_t Priority,
                         GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
 
 // A hybrid of QuickCreateButton.  Takes a lot less parameters, but makes more assumptions.  It self
@@ -233,58 +233,58 @@ INT32 QuickCreateButton(UINT32 Image, INT16 xloc, INT16 yloc, INT32 Type, INT16 
 // button.  It also uses the default move callback which emulates Win95.  Finally, it sets the
 // priority to normal.  The function you choose also determines the type of button (toggle,
 // notoggle, or newtoggle)
-INT32 CreateEasyNoToggleButton(INT32 x, INT32 y, STR8 filename, GUI_CALLBACK ClickCallback);
-INT32 CreateEasyToggleButton(INT32 x, INT32 y, STR8 filename, GUI_CALLBACK ClickCallback);
-INT32 CreateEasyNewToggleButton(INT32 x, INT32 y, STR8 filename, GUI_CALLBACK ClickCallback);
+int32_t CreateEasyNoToggleButton(int32_t x, int32_t y, char* filename, GUI_CALLBACK ClickCallback);
+int32_t CreateEasyToggleButton(int32_t x, int32_t y, char* filename, GUI_CALLBACK ClickCallback);
+int32_t CreateEasyNewToggleButton(int32_t x, int32_t y, char* filename, GUI_CALLBACK ClickCallback);
 // Same as above, but accepts specify toggle type
-INT32 CreateEasyButton(INT32 x, INT32 y, STR8 filename, INT32 Type, GUI_CALLBACK ClickCallback);
+int32_t CreateEasyButton(int32_t x, int32_t y, char* filename, int32_t Type, GUI_CALLBACK ClickCallback);
 // Same as above, but accepts priority specification.
-INT32 CreateSimpleButton(INT32 x, INT32 y, STR8 filename, INT32 Type, INT16 Priority,
+int32_t CreateSimpleButton(int32_t x, int32_t y, char* filename, int32_t Type, int16_t Priority,
                          GUI_CALLBACK ClickCallback);
 
-INT32 CreateCheckBoxButton(INT16 x, INT16 y, CHAR8 *filename, INT16 Priority,
+int32_t CreateCheckBoxButton(int16_t x, int16_t y, char *filename, int16_t Priority,
                            GUI_CALLBACK ClickCallback);
-INT32 CreateIconButton(INT16 Icon, INT16 IconIndex, INT16 GenImg, INT16 xloc, INT16 yloc, INT16 w,
-                       INT16 h, INT32 Type, INT16 Priority, GUI_CALLBACK MoveCallback,
+int32_t CreateIconButton(int16_t Icon, int16_t IconIndex, int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w,
+                       int16_t h, int32_t Type, int16_t Priority, GUI_CALLBACK MoveCallback,
                        GUI_CALLBACK ClickCallback);
-INT32 CreateHotSpot(INT16 xloc, INT16 yloc, INT16 Width, INT16 Height, INT16 Priority,
+int32_t CreateHotSpot(int16_t xloc, int16_t yloc, int16_t Width, int16_t Height, int16_t Priority,
                     GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
 
-INT32 CreateTextButton(STR16 string, UINT32 uiFont, INT16 sForeColor, INT16 sShadowColor,
-                       INT16 GenImg, INT16 xloc, INT16 yloc, INT16 w, INT16 h, INT32 Type,
-                       INT16 Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
-INT32 CreateIconAndTextButton(INT32 Image, STR16 string, UINT32 uiFont, INT16 sForeColor,
-                              INT16 sShadowColor, INT16 sForeColorDown, INT16 sShadowColorDown,
-                              INT8 bJustification, INT16 xloc, INT16 yloc, INT32 Type,
-                              INT16 Priority, GUI_CALLBACK MoveCallback,
+int32_t CreateTextButton(wchar_t* string, uint32_t uiFont, int16_t sForeColor, int16_t sShadowColor,
+                       int16_t GenImg, int16_t xloc, int16_t yloc, int16_t w, int16_t h, int32_t Type,
+                       int16_t Priority, GUI_CALLBACK MoveCallback, GUI_CALLBACK ClickCallback);
+int32_t CreateIconAndTextButton(int32_t Image, wchar_t* string, uint32_t uiFont, int16_t sForeColor,
+                              int16_t sShadowColor, int16_t sForeColorDown, int16_t sShadowColorDown,
+                              int8_t bJustification, int16_t xloc, int16_t yloc, int32_t Type,
+                              int16_t Priority, GUI_CALLBACK MoveCallback,
                               GUI_CALLBACK ClickCallback);
 
 // New functions
-void SpecifyButtonText(INT32 iButtonID, STR16 string);
-void SpecifyButtonFont(INT32 iButtonID, UINT32 uiFont);
-void SpecifyButtonMultiColorFont(INT32 iButtonID, BOOLEAN fMultiColor);
-void SpecifyButtonUpTextColors(INT32 iButtonID, INT16 sForeColor, INT16 sShadowColor);
-void SpecifyButtonDownTextColors(INT32 iButtonID, INT16 sForeColorDown, INT16 sShadowColorDown);
-void SpecifyButtonHilitedTextColors(INT32 iButtonID, INT16 sForeColorHilited,
-                                    INT16 sShadowColorHilited);
-void SpecifyButtonTextJustification(INT32 iButtonID, INT8 bJustification);
-void SpecifyGeneralButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont,
-                                        INT16 sForeColor, INT16 sShadowColor);
-void SpecifyFullButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont, INT16 sForeColor,
-                                     INT16 sShadowColor, INT16 sForeColorDown,
-                                     INT16 sShadowColorDown, INT8 bJustification);
-void SpecifyGeneralButtonTextAttributes(INT32 iButtonID, STR16 string, INT32 uiFont,
-                                        INT16 sForeColor, INT16 sShadowColor);
-void SpecifyButtonTextOffsets(INT32 iButtonID, INT8 bTextXOffset, INT8 bTextYOffset,
+void SpecifyButtonText(int32_t iButtonID, wchar_t* string);
+void SpecifyButtonFont(int32_t iButtonID, uint32_t uiFont);
+void SpecifyButtonMultiColorFont(int32_t iButtonID, BOOLEAN fMultiColor);
+void SpecifyButtonUpTextColors(int32_t iButtonID, int16_t sForeColor, int16_t sShadowColor);
+void SpecifyButtonDownTextColors(int32_t iButtonID, int16_t sForeColorDown, int16_t sShadowColorDown);
+void SpecifyButtonHilitedTextColors(int32_t iButtonID, int16_t sForeColorHilited,
+                                    int16_t sShadowColorHilited);
+void SpecifyButtonTextJustification(int32_t iButtonID, int8_t bJustification);
+void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, wchar_t* string, int32_t uiFont,
+                                        int16_t sForeColor, int16_t sShadowColor);
+void SpecifyFullButtonTextAttributes(int32_t iButtonID, wchar_t* string, int32_t uiFont, int16_t sForeColor,
+                                     int16_t sShadowColor, int16_t sForeColorDown,
+                                     int16_t sShadowColorDown, int8_t bJustification);
+void SpecifyGeneralButtonTextAttributes(int32_t iButtonID, wchar_t* string, int32_t uiFont,
+                                        int16_t sForeColor, int16_t sShadowColor);
+void SpecifyButtonTextOffsets(int32_t iButtonID, int8_t bTextXOffset, int8_t bTextYOffset,
                               BOOLEAN fShiftText);
-void SpecifyButtonTextSubOffsets(INT32 iButtonID, INT8 bTextXOffset, INT8 bTextYOffset,
+void SpecifyButtonTextSubOffsets(int32_t iButtonID, int8_t bTextXOffset, int8_t bTextYOffset,
                                  BOOLEAN fShiftText);
-void SpecifyButtonTextWrappedWidth(INT32 iButtonID, INT16 sWrappedWidth);
+void SpecifyButtonTextWrappedWidth(int32_t iButtonID, int16_t sWrappedWidth);
 
-void SpecifyButtonSoundScheme(INT32 iButtonID, INT8 bSoundScheme);
-void PlayButtonSound(INT32 iButtonID, INT32 iSoundType);
+void SpecifyButtonSoundScheme(int32_t iButtonID, int8_t bSoundScheme);
+void PlayButtonSound(int32_t iButtonID, int32_t iSoundType);
 
-void AllowDisabledButtonFastHelp(INT32 iButtonID, BOOLEAN fAllow);
+void AllowDisabledButtonFastHelp(int32_t iButtonID, BOOLEAN fAllow);
 
 enum {
   DEFAULT_STATUS_NONE,
@@ -293,8 +293,8 @@ enum {
                                   // button.
   DEFAULT_STATUS_WINDOWS95,       // both DARKBORDER and DOTTEDINTERIOR
 };
-void GiveButtonDefaultStatus(INT32 iButtonID, INT32 iDefaultStatus);
-void RemoveButtonDefaultStatus(INT32 iButtonID);
+void GiveButtonDefaultStatus(int32_t iButtonID, int32_t iDefaultStatus);
+void RemoveButtonDefaultStatus(int32_t iButtonID);
 
 enum  // for use with SpecifyDisabledButtonStyle
 {
@@ -303,52 +303,52 @@ enum  // for use with SpecifyDisabledButtonStyle
   DISABLED_STYLE_HATCHED,  // always hatches the disabled button
   DISABLED_STYLE_SHADED    // always shades the disabled button 25% darker
 };
-void SpecifyDisabledButtonStyle(INT32 iButtonID, INT8 bStyle);
+void SpecifyDisabledButtonStyle(int32_t iButtonID, int8_t bStyle);
 
-void RemoveTextFromButton(INT32 iButtonID);
-void RemoveIconFromButton(INT32 iButtonID);
+void RemoveTextFromButton(int32_t iButtonID);
+void RemoveIconFromButton(int32_t iButtonID);
 
 // Note:  Text is always on top
 // If fShiftImage is true, then the image will shift down one pixel and right one pixel
 // just like the text does.
-BOOLEAN SpecifyButtonIcon(INT32 iButtonID, INT32 iVideoObjectID, UINT16 usVideoObjectIndex,
-                          INT8 bXOffset, INT8 bYOffset, BOOLEAN fShiftImage);
+BOOLEAN SpecifyButtonIcon(int32_t iButtonID, int32_t iVideoObjectID, uint16_t usVideoObjectIndex,
+                          int8_t bXOffset, int8_t bYOffset, BOOLEAN fShiftImage);
 
-void SetButtonPosition(INT32 iButtonID, INT16 x, INT16 y);
-void ResizeButton(INT32 iButtonID, INT16 w, INT16 h);
+void SetButtonPosition(int32_t iButtonID, int16_t x, int16_t y);
+void ResizeButton(int32_t iButtonID, int16_t w, int16_t h);
 
-void QuickButtonCallbackMMove(struct MOUSE_REGION *reg, INT32 reason);
-void QuickButtonCallbackMButn(struct MOUSE_REGION *reg, INT32 reason);
+void QuickButtonCallbackMMove(struct MOUSE_REGION *reg, int32_t reason);
+void QuickButtonCallbackMButn(struct MOUSE_REGION *reg, int32_t reason);
 
-BOOLEAN SetButtonCursor(INT32 iBtnId, UINT16 crsr);
-void MSYS_SetBtnUserData(INT32 iButtonNum, INT32 index, INT32 userdata);
-INT32 MSYS_GetBtnUserData(GUI_BUTTON *b, INT32 index);
-void MarkAButtonDirty(INT32 iButtonNum);  // will mark only selected button dirty
+BOOLEAN SetButtonCursor(int32_t iBtnId, uint16_t crsr);
+void MSYS_SetBtnUserData(int32_t iButtonNum, int32_t index, int32_t userdata);
+int32_t MSYS_GetBtnUserData(GUI_BUTTON *b, int32_t index);
+void MarkAButtonDirty(int32_t iButtonNum);  // will mark only selected button dirty
 void MarkButtonsDirty(
     void);  // Function to mark buttons dirty ( all will redraw at next RenderButtons )
 void PausedMarkButtonsDirty(void);  // mark buttons dirty for button render the frame after the next
-void UnMarkButtonDirty(INT32 iButtonIndex);  // unmark button
+void UnMarkButtonDirty(int32_t iButtonIndex);  // unmark button
 void UnmarkButtonsDirty(void);               // unmark ALL the buttoms on the screen dirty
 void ForceButtonUnDirty(
-    INT32 iButtonIndex);  // forces button undirty no matter the reason, only lasts one frame
+    int32_t iButtonIndex);  // forces button undirty no matter the reason, only lasts one frame
 
 // DB 98-05-05
-BOOLEAN GetButtonArea(INT32 iButtonID, struct GRect *pRect);
+BOOLEAN GetButtonArea(int32_t iButtonID, struct GRect *pRect);
 // DB 99-01-13
-INT32 GetButtonWidth(INT32 iButtonID);
-INT32 GetButtonHeight(INT32 iButtonID);
+int32_t GetButtonWidth(int32_t iButtonID);
+int32_t GetButtonHeight(int32_t iButtonID);
 
 // DB 99-08-27
-INT32 GetButtonX(INT32 iButtonID);
-INT32 GetButtonY(INT32 iButtonID);
+int32_t GetButtonX(int32_t iButtonID);
+int32_t GetButtonY(int32_t iButtonID);
 
-void BtnGenericMouseMoveButtonCallback(GUI_BUTTON *btn, INT32 reason);
+void BtnGenericMouseMoveButtonCallback(GUI_BUTTON *btn, int32_t reason);
 #define DEFAULT_MOVE_CALLBACK BtnGenericMouseMoveButtonCallback
 
-void DrawCheckBoxButtonOn(INT32 iButtonID);
+void DrawCheckBoxButtonOn(int32_t iButtonID);
 
-void DrawCheckBoxButtonOff(INT32 iButtonID);
+void DrawCheckBoxButtonOff(int32_t iButtonID);
 
-extern UINT16 GetWidthOfButtonPic(UINT16 usButtonPicID, INT32 iSlot);
+extern uint16_t GetWidthOfButtonPic(uint16_t usButtonPicID, int32_t iSlot);
 
 #endif

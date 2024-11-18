@@ -32,10 +32,10 @@
 
 #define IMP_MERC_FILE "IMP.dat"
 
-UINT32 giIMPConfirmButton[2];
-UINT32 giIMPConfirmButtonImage[2];
+uint32_t giIMPConfirmButton[2];
+uint32_t giIMPConfirmButtonImage[2];
 BOOLEAN fNoAlreadySelected = FALSE;
-UINT16 uiEyeXPositions[] = {
+uint16_t uiEyeXPositions[] = {
     8, 9,  8, 6, 13, 11, 8, 8,
     4,  // 208
     5,  // 209
@@ -46,7 +46,7 @@ UINT16 uiEyeXPositions[] = {
     5,
 };
 
-UINT16 uiEyeYPositions[] = {
+uint16_t uiEyeYPositions[] = {
     5, 4, 5, 6, 5, 5, 4, 4,
     4,  // 208
     5,
@@ -58,7 +58,7 @@ UINT16 uiEyeYPositions[] = {
     6,
 };
 
-UINT16 uiMouthXPositions[] = {
+uint16_t uiMouthXPositions[] = {
     8, 9, 7, 7, 11, 10, 8, 8,
     5,  // 208
     6,
@@ -70,7 +70,7 @@ UINT16 uiMouthXPositions[] = {
     5,
 };
 
-UINT16 uiMouthYPositions[] = {
+uint16_t uiMouthYPositions[] = {
     21, 23, 24, 25, 23, 24, 24, 24,
     25,  // 208
     24,
@@ -86,16 +86,16 @@ BOOLEAN fLoadingCharacterForPreviousImpProfile = FALSE;
 
 void CreateConfirmButtons(void);
 void DestroyConfirmButtons(void);
-void GiveItemsToPC(UINT8 ubProfileId);
-void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8 ubStatus,
-                               UINT8 ubHowMany);
-void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, UINT32 uiPos, UINT16 usItem,
-                                UINT8 ubStatus, UINT8 ubHowMany);
-INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem);
+void GiveItemsToPC(uint8_t ubProfileId);
+void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, uint8_t ubStatus,
+                               uint8_t ubHowMany);
+void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, uint16_t usItem,
+                                uint8_t ubStatus, uint8_t ubHowMany);
+int32_t FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, uint16_t usItem);
 
 // callbacks
-void BtnIMPConfirmNo(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason);
+void BtnIMPConfirmNo(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPConfirmYes(GUI_BUTTON *btn, int32_t reason);
 
 void EnterIMPConfirm(void) {
   // create buttons
@@ -168,7 +168,7 @@ BOOLEAN AddCharacterToPlayersTeam(void) {
 
   memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));
 
-  HireMercStruct.ubProfileID = (UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId);
+  HireMercStruct.ubProfileID = (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId);
 
   if (fLoadingCharacterForPreviousImpProfile == FALSE) {
     // give them items
@@ -187,7 +187,7 @@ BOOLEAN AddCharacterToPlayersTeam(void) {
   HireMercStruct.ubInsertionCode = INSERTION_CODE_ARRIVING_GAME;
   HireMercStruct.uiTimeTillMercArrives = GetMercArrivalTimeOfDay();
 
-  SetProfileFaceData(HireMercStruct.ubProfileID, (UINT8)(200 + iPortraitNumber),
+  SetProfileFaceData(HireMercStruct.ubProfileID, (uint8_t)(200 + iPortraitNumber),
                      uiEyeXPositions[iPortraitNumber], uiEyeYPositions[iPortraitNumber],
                      uiMouthXPositions[iPortraitNumber], uiMouthYPositions[iPortraitNumber]);
 
@@ -199,7 +199,7 @@ BOOLEAN AddCharacterToPlayersTeam(void) {
   }
 }
 
-void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPConfirmYes(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Homepage About US button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -225,13 +225,13 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
 
       // charge the player
       AddTransactionToPlayersBook(IMP_PROFILE,
-                                  (UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
+                                  (uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId),
                                   -(COST_OF_PROFILE));
       AddHistoryToPlayersLog(HISTORY_CHARACTER_GENERATED, 0, GetGameTimeInMin(), -1, -1);
       AddCharacterToPlayersTeam();
 
       // write the created imp merc
-      WriteOutCurrentImpCharacter((UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId));
+      WriteOutCurrentImpCharacter((uint8_t)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId));
 
       fButtonPendingFlag = TRUE;
       iCurrentImpPage = IMP_HOME_PAGE;
@@ -254,7 +254,7 @@ void BtnIMPConfirmYes(GUI_BUTTON *btn, INT32 reason) {
 }
 
 // fixed? by CJC Nov 28 2002
-void BtnIMPConfirmNo(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPConfirmNo(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP Homepage About US button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -287,7 +287,7 @@ fNoAlreadySelected = TRUE;
 }
 
 /*
-void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
+void BtnIMPConfirmNo( GUI_BUTTON *btn,int32_t reason )
 {
 
 
@@ -319,7 +319,7 @@ void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
 
 #define PROFILE_HAS_SKILL_TRAIT(p, t) ((p->bSkillTrait == t) || (p->bSkillTrait2 == t))
 
-void GiveItemsToPC(UINT8 ubProfileId) {
+void GiveItemsToPC(uint8_t ubProfileId) {
   MERCPROFILESTRUCT *pProfile;
 
   // gives starting items to merc
@@ -331,7 +331,7 @@ void GiveItemsToPC(UINT8 ubProfileId) {
 
   // kevlar vest, leggings, & helmet
   MakeProfileInvItemThisSlot(pProfile, VESTPOS, FLAK_JACKET, 100, 1);
-  if (PreRandom(100) < (UINT32)pProfile->bWisdom) {
+  if (PreRandom(100) < (uint32_t)pProfile->bWisdom) {
     MakeProfileInvItemThisSlot(pProfile, HELMETPOS, STEEL_HELMET, 100, 1);
   }
 
@@ -403,9 +403,9 @@ void GiveItemsToPC(UINT8 ubProfileId) {
   }
 }
 
-void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8 ubStatus,
-                               UINT8 ubHowMany) {
-  INT32 iSlot;
+void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, uint16_t usItem, uint8_t ubStatus,
+                               uint8_t ubHowMany) {
+  int32_t iSlot;
 
   iSlot = FirstFreeBigEnoughPocket(pProfile, usItem);
 
@@ -418,15 +418,15 @@ void MakeProfileInvItemAnySlot(MERCPROFILESTRUCT *pProfile, UINT16 usItem, UINT8
   MakeProfileInvItemThisSlot(pProfile, iSlot, usItem, ubStatus, ubHowMany);
 }
 
-void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, UINT32 uiPos, UINT16 usItem,
-                                UINT8 ubStatus, UINT8 ubHowMany) {
+void MakeProfileInvItemThisSlot(MERCPROFILESTRUCT *pProfile, uint32_t uiPos, uint16_t usItem,
+                                uint8_t ubStatus, uint8_t ubHowMany) {
   pProfile->inv[uiPos] = usItem;
   pProfile->bInvStatus[uiPos] = ubStatus;
   pProfile->bInvNumber[uiPos] = ubHowMany;
 }
 
-INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem) {
-  UINT32 uiPos;
+int32_t FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, uint16_t usItem) {
+  uint32_t uiPos;
 
   // if it fits into a small pocket
   if (Item[usItem].ubPerPocket != 0) {
@@ -448,21 +448,21 @@ INT32 FirstFreeBigEnoughPocket(MERCPROFILESTRUCT *pProfile, UINT16 usItem) {
   return (-1);
 }
 
-void WriteOutCurrentImpCharacter(INT32 iProfileId) {
+void WriteOutCurrentImpCharacter(int32_t iProfileId) {
   // grab the profile number and write out what is contained there in
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiBytesWritten = 0;
+  uint32_t uiBytesWritten = 0;
 
   // open the file for writing
   hFile = File_OpenForWriting(IMP_MERC_FILE);
 
   // write out the profile id
-  if (!File_Write(hFile, &iProfileId, sizeof(INT32), &uiBytesWritten)) {
+  if (!File_Write(hFile, &iProfileId, sizeof(int32_t), &uiBytesWritten)) {
     return;
   }
 
   // write out the portrait id
-  if (!File_Write(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesWritten)) {
+  if (!File_Write(hFile, &iPortraitNumber, sizeof(int32_t), &uiBytesWritten)) {
     return;
   }
 
@@ -478,9 +478,9 @@ void WriteOutCurrentImpCharacter(INT32 iProfileId) {
 }
 
 void LoadInCurrentImpCharacter(void) {
-  INT32 iProfileId = 0;
+  int32_t iProfileId = 0;
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiBytesRead = 0;
+  uint32_t uiBytesRead = 0;
 
   // open the file for writing
   hFile = File_OpenForReading(IMP_MERC_FILE);
@@ -491,12 +491,12 @@ void LoadInCurrentImpCharacter(void) {
   }
 
   // read in the profile
-  if (!File_Read(hFile, &iProfileId, sizeof(INT32), &uiBytesRead)) {
+  if (!File_Read(hFile, &iProfileId, sizeof(int32_t), &uiBytesRead)) {
     return;
   }
 
   // read in the portrait
-  if (!File_Read(hFile, &iPortraitNumber, sizeof(INT32), &uiBytesRead)) {
+  if (!File_Read(hFile, &iPortraitNumber, sizeof(int32_t), &uiBytesRead)) {
     return;
   }
 
@@ -529,7 +529,7 @@ void LoadInCurrentImpCharacter(void) {
   return;
 }
 
-void ResetIMPCharactersEyesAndMouthOffsets(UINT8 ubMercProfileID) {
+void ResetIMPCharactersEyesAndMouthOffsets(uint8_t ubMercProfileID) {
   // ATE: Check boundary conditions!
   if (((gMercProfiles[ubMercProfileID].ubFaceIndex - 200) > 16) ||
       (ubMercProfileID >= PROF_HUMMER)) {

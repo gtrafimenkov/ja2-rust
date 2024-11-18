@@ -61,11 +61,11 @@
 
 #define MAX_DEBUG_PAGES 4
 
-UINT32 guiCurrentScreen;
+uint32_t guiCurrentScreen;
 
 // GLOBAL FOR PAL EDITOR
-UINT8 CurrentPalette = 0;
-UINT32 guiBackgroundRect;
+uint8_t CurrentPalette = 0;
+uint32_t guiBackgroundRect;
 BOOLEAN gfExitPalEditScreen = FALSE;
 BOOLEAN gfExitDebugScreen = FALSE;
 BOOLEAN gfInitRect = TRUE;
@@ -77,12 +77,12 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent);
 
 void DebugRenderHook();
 BOOLEAN DebugKeyboardHook(InputAtom *pInputEvent);
-INT8 gCurDebugPage = 0;
+int8_t gCurDebugPage = 0;
 
 struct VSurface *hVAnims[7];
-INT8 bTitleAnimFrame = 0;
-UINT32 uiTitleAnimTime = 0;
-UINT32 uiDoTitleAnimTime = 0;
+int8_t bTitleAnimFrame = 0;
+uint32_t uiTitleAnimTime = 0;
+uint32_t uiDoTitleAnimTime = 0;
 BOOLEAN gfDoTitleAnimation = FALSE;
 BOOLEAN gfStartTitleAnimation = FALSE;
 
@@ -95,9 +95,9 @@ RENDER_HOOK gDebugRenderOverride[MAX_DEBUG_PAGES] = {
     (RENDER_HOOK)DefaultDebugPage4};
 
 void DisplayFrameRate() {
-  static UINT32 uiFPS = 0;
-  static UINT32 uiFrameCount = 0;
-  INT16 usMapPos;
+  static uint32_t uiFPS = 0;
+  static uint32_t uiFrameCount = 0;
+  int16_t usMapPos;
   VIDEO_OVERLAY_DESC VideoOverlayDesc;
 
   // Increment frame count
@@ -185,21 +185,21 @@ void DisplayFrameRate() {
 }
 
 // USELESS!!!!!!!!!!!!!!!!!!
-UINT32 SavingScreenInitialize(void) { return (TRUE); }
-UINT32 SavingScreenHandle(void) { return SAVING_SCREEN; }
-UINT32 SavingScreenShutdown(void) { return TRUE; }
+uint32_t SavingScreenInitialize(void) { return (TRUE); }
+uint32_t SavingScreenHandle(void) { return SAVING_SCREEN; }
+uint32_t SavingScreenShutdown(void) { return TRUE; }
 
-UINT32 LoadingScreenInitialize(void) { return (TRUE); }
-UINT32 LoadingScreenHandle(void) { return LOADING_SCREEN; }
-UINT32 LoadingScreenShutdown(void) { return (TRUE); }
+uint32_t LoadingScreenInitialize(void) { return (TRUE); }
+uint32_t LoadingScreenHandle(void) { return LOADING_SCREEN; }
+uint32_t LoadingScreenShutdown(void) { return (TRUE); }
 
-UINT32 ErrorScreenInitialize(void) { return (TRUE); }
+uint32_t ErrorScreenInitialize(void) { return (TRUE); }
 
-UINT32 ErrorScreenHandle(void) {
+uint32_t ErrorScreenHandle(void) {
   InputAtom InputEvent;
   static BOOLEAN fFirstTime = FALSE;
 #ifdef JA2BETAVERSION
-  CHAR16 str[256];
+  wchar_t str[256];
 #endif
 
   // For quick setting of new video stuff / to be changed
@@ -253,12 +253,12 @@ UINT32 ErrorScreenHandle(void) {
   return (ERROR_SCREEN);
 }
 
-UINT32 ErrorScreenShutdown(void) { return (TRUE); }
+uint32_t ErrorScreenShutdown(void) { return (TRUE); }
 
-UINT32 InitScreenInitialize(void) { return (TRUE); }
+uint32_t InitScreenInitialize(void) { return (TRUE); }
 
-UINT32 InitScreenHandle(void) {
-  static UINT8 ubCurrentScreen = 255;
+uint32_t InitScreenHandle(void) {
+  static uint8_t ubCurrentScreen = 255;
 
   if (ubCurrentScreen == 255) {
 #ifdef ENGLISH
@@ -311,11 +311,11 @@ UINT32 InitScreenHandle(void) {
   return (INIT_SCREEN);
 }
 
-UINT32 InitScreenShutdown(void) { return (TRUE); }
+uint32_t InitScreenShutdown(void) { return (TRUE); }
 
-UINT32 PalEditScreenInit(void) { return (TRUE); }
+uint32_t PalEditScreenInit(void) { return (TRUE); }
 
-UINT32 PalEditScreenHandle(void) {
+uint32_t PalEditScreenHandle(void) {
   static BOOLEAN FirstTime = TRUE;
 
   if (gfExitPalEditScreen) {
@@ -342,7 +342,7 @@ UINT32 PalEditScreenHandle(void) {
   return (PALEDIT_SCREEN);
 }
 
-UINT32 PalEditScreenShutdown(void) { return (TRUE); }
+uint32_t PalEditScreenShutdown(void) { return (TRUE); }
 
 void PalEditRenderHook() {
   struct SOLDIERTYPE *pSoldier;
@@ -359,12 +359,12 @@ void PalEditRenderHook() {
 }
 
 BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
-  UINT8 ubType;
+  uint8_t ubType;
   struct SOLDIERTYPE *pSoldier;
-  UINT8 ubPaletteRep;
-  UINT32 cnt;
-  UINT8 ubStartRep = 0;
-  UINT8 ubEndRep = 0;
+  uint8_t ubPaletteRep;
+  uint32_t cnt;
+  uint8_t ubStartRep = 0;
+  uint8_t ubEndRep = 0;
 
   if (gusSelectedSoldier == NO_SOLDIER) {
     return (FALSE);
@@ -389,10 +389,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -418,10 +418,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -447,10 +447,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -476,10 +476,10 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
 
     // Count start and end index
     for (cnt = 0; cnt < ubType; cnt++) {
-      ubStartRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
+      ubStartRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[cnt]);
     }
 
-    ubEndRep = (UINT8)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
+    ubEndRep = (uint8_t)(ubStartRep + gubpNumReplacementsPerRange[ubType]);
 
     if (ubPaletteRep == ubEndRep) {
       ubPaletteRep = ubStartRep;
@@ -494,7 +494,7 @@ BOOLEAN PalEditKeyboardHook(InputAtom *pInputEvent) {
   return (FALSE);
 }
 
-UINT32 DebugScreenInit(void) { return (TRUE); }
+uint32_t DebugScreenInit(void) { return (TRUE); }
 
 BOOLEAN CheckForAndExitTacticalDebug() {
   if (gfExitDebugScreen) {
@@ -519,7 +519,7 @@ void ExitDebugScreen() {
   CheckForAndExitTacticalDebug();
 }
 
-UINT32 DebugScreenHandle(void) {
+uint32_t DebugScreenHandle(void) {
   if (CheckForAndExitTacticalDebug()) {
     return (GAME_SCREEN);
   }
@@ -542,7 +542,7 @@ UINT32 DebugScreenHandle(void) {
   return (DEBUG_SCREEN);
 }
 
-UINT32 DebugScreenShutdown(void) { return (TRUE); }
+uint32_t DebugScreenShutdown(void) { return (TRUE); }
 
 void DebugRenderHook() { gDebugRenderOverride[gCurDebugPage](); }
 
@@ -579,7 +579,7 @@ BOOLEAN DebugKeyboardHook(InputAtom *pInputEvent) {
   return (FALSE);
 }
 
-void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, INT8 ubPage) {
+void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, int8_t ubPage) {
   gDebugRenderOverride[ubPage] = pDebugRenderOverride;
 }
 
@@ -603,19 +603,19 @@ void DefaultDebugPage4() {
   gprintf(0, 0, L"DEBUG PAGE FOUR");
 }
 
-UINT32 SexScreenInit(void) { return (TRUE); }
+uint32_t SexScreenInit(void) { return (TRUE); }
 
 #define SMILY_DELAY 100
 #define SMILY_END_DELAY 1000
 
-UINT32 SexScreenHandle(void) {
-  static UINT8 ubCurrentScreen = 0;
-  static UINT32 guiSMILY;
-  static INT8 bCurFrame = 0;
-  static UINT32 uiTimeOfLastUpdate = 0, uiTime;
+uint32_t SexScreenHandle(void) {
+  static uint8_t ubCurrentScreen = 0;
+  static uint32_t guiSMILY;
+  static int8_t bCurFrame = 0;
+  static uint32_t uiTimeOfLastUpdate = 0, uiTime;
   struct Subimage *pTrav;
   struct VObject *hVObject;
-  INT16 sX, sY;
+  int16_t sX, sY;
 
   // OK, Clear screen and show smily face....
   VSurfaceColorFill(vsFB, 0, 0, 640, 480, rgb32_to_rgb565(FROMRGB(0, 0, 0)));
@@ -679,31 +679,31 @@ UINT32 SexScreenHandle(void) {
   GetVideoObject(&hVObject, guiSMILY);
   pTrav = &(hVObject->subimages[0]);
 
-  sX = (INT16)((640 - pTrav->width) / 2);
-  sY = (INT16)((480 - pTrav->height) / 2);
+  sX = (int16_t)((640 - pTrav->width) / 2);
+  sY = (int16_t)((480 - pTrav->height) / 2);
 
   if (bCurFrame < 24) {
     BltVObjectFromIndex(vsFB, guiSMILY, 0, sX, sY);
   } else {
-    BltVObjectFromIndex(vsFB, guiSMILY, (INT8)(bCurFrame % 8), sX, sY);
+    BltVObjectFromIndex(vsFB, guiSMILY, (int8_t)(bCurFrame % 8), sX, sY);
   }
 
-  InvalidateRegion(sX, sY, (INT16)(sX + pTrav->width), (INT16)(sY + pTrav->height));
+  InvalidateRegion(sX, sY, (int16_t)(sX + pTrav->width), (int16_t)(sY + pTrav->height));
 
   return (SEX_SCREEN);
 }
 
-UINT32 SexScreenShutdown(void) { return (TRUE); }
+uint32_t SexScreenShutdown(void) { return (TRUE); }
 
-UINT32 DemoExitScreenInit(void) { return (TRUE); }
+uint32_t DemoExitScreenInit(void) { return (TRUE); }
 
 void DoneFadeOutForDemoExitScreen(void) { gfProgramIsRunning = FALSE; }
 
-extern INT8 gbFadeSpeed;
+extern int8_t gbFadeSpeed;
 
-UINT32 DemoExitScreenHandle(void) {
+uint32_t DemoExitScreenHandle(void) {
   gfProgramIsRunning = FALSE;
   return (DEMO_EXIT_SCREEN);
 }
 
-UINT32 DemoExitScreenShutdown(void) { return (TRUE); }
+uint32_t DemoExitScreenShutdown(void) { return (TRUE); }

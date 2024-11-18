@@ -15,11 +15,11 @@ enum {
   LANG_NUMBER
 };
 
-extern INT8 gbLocale;
+extern int8_t gbLocale;
 
-INT8 DetectLocale();
+int8_t DetectLocale();
 
-extern STR8 LocaleNames[LANG_NUMBER];
+extern char* LocaleNames[LANG_NUMBER];
 
 #define NUMBER_OF_LIBRARIES \
   ((gbLocale != ENGLISH_LANG) ? FULL_NUMBER_OF_LIBRARIES : (FULL_NUMBER_OF_LIBRARIES - 1))

@@ -7,9 +7,9 @@ struct SOLDIERTYPE;
 
 void StrategicHandlePlayerTeamMercDeath(struct SOLDIERTYPE *pSoldier);
 void MercDailyUpdate();
-void MercsContractIsFinished(UINT8 ubID);
-void RPCWhineAboutNoPay(UINT8 ubID);
-void MercComplainAboutEquipment(UINT8 ubProfileID);
+void MercsContractIsFinished(uint8_t ubID);
+void RPCWhineAboutNoPay(uint8_t ubID);
+void MercComplainAboutEquipment(uint8_t ubProfileID);
 BOOLEAN SoldierHasWorseEquipmentThanUsedTo(struct SOLDIERTYPE *pSoldier);
 void UpdateBuddyAndHatedCounters(void);
 void HourlyCamouflageUpdate(void);

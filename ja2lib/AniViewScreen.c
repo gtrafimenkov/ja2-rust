@@ -34,22 +34,22 @@
 void BuildListFile();
 
 BOOLEAN gfAniEditMode = FALSE;
-static UINT16 usStartAnim = 0;
-static UINT8 ubStartHeight = 0;
+static uint16_t usStartAnim = 0;
+static uint8_t ubStartHeight = 0;
 static struct SOLDIERTYPE *pSoldier;
 
 static BOOLEAN fOKFiles = FALSE;
-static UINT8 ubNumStates = 0;
-static UINT16 *pusStates = NULL;
-static INT8 ubCurLoadedState = 0;
+static uint8_t ubNumStates = 0;
+static uint16_t *pusStates = NULL;
+static int8_t ubCurLoadedState = 0;
 
 void CycleAnimations() {
-  INT32 cnt;
+  int32_t cnt;
 
   // FInd the next animation with start height the same...
   for (cnt = usStartAnim + 1; cnt < NUMANIMATIONSTATES; cnt++) {
     if (gAnimControl[cnt].ubHeight == ubStartHeight) {
-      usStartAnim = (UINT8)cnt;
+      usStartAnim = (uint8_t)cnt;
       EVENT_InitNewSoldierAnim(pSoldier, usStartAnim, 0, TRUE);
       return;
     }
@@ -59,17 +59,17 @@ void CycleAnimations() {
   EVENT_InitNewSoldierAnim(pSoldier, usStartAnim, 0, TRUE);
 }
 
-UINT32 AniEditScreenInit(void) { return TRUE; }
+uint32_t AniEditScreenInit(void) { return TRUE; }
 
 // The ShutdownGame function will free up/undo all things that were started in InitializeGame()
 // It will also be responsible to making sure that all Gaming Engine tasks exit properly
 
-UINT32 AniEditScreenShutdown(void) { return TRUE; }
+uint32_t AniEditScreenShutdown(void) { return TRUE; }
 
-UINT32 AniEditScreenHandle(void) {
+uint32_t AniEditScreenHandle(void) {
   InputAtom InputEvent;
   static BOOLEAN fFirstTime = TRUE;
-  static UINT16 usOldState;
+  static uint16_t usOldState;
   static BOOLEAN fToggle = FALSE;
   static BOOLEAN fToggle2 = FALSE;
 
@@ -173,7 +173,7 @@ UINT32 AniEditScreenHandle(void) {
 
     if ((InputEvent.usEvent == KEY_UP) && (InputEvent.usParam == 's')) {
       if (!fToggle) {
-        UINT16 usAnim = 0;
+        uint16_t usAnim = 0;
         usOldState = usStartAnim;
 
         switch (ubStartHeight) {
@@ -257,13 +257,13 @@ UINT32 AniEditScreenHandle(void) {
   return (ANIEDIT_SCREEN);
 }
 
-UINT16 GetAnimStateFromName(STR8 zName) {
-  INT32 cnt;
+uint16_t GetAnimStateFromName(char* zName) {
+  int32_t cnt;
 
   // FInd the next animation with start height the same...
   for (cnt = 0; cnt < NUMANIMATIONSTATES; cnt++) {
     if (strcasecmp(gAnimControl[cnt].zAnimStr, zName) == 0) {
-      return ((UINT16)cnt);
+      return ((uint16_t)cnt);
     }
   }
 
@@ -275,8 +275,8 @@ void BuildListFile() {
   char currFilename[128];
   int numEntries = 0;
   int cnt;
-  UINT16 usState;
-  CHAR16 zError[128];
+  uint16_t usState;
+  wchar_t zError[128];
 
   // Verify the existance of the header text file.
   infoFile = fopen("ANITEST.DAT", "rb");
@@ -293,7 +293,7 @@ void BuildListFile() {
   fseek(infoFile, 0, SEEK_SET);  // reset header file
 
   // Allocate array
-  pusStates = (UINT16 *)MemAlloc(sizeof(UINT16) * numEntries);
+  pusStates = (uint16_t *)MemAlloc(sizeof(uint16_t) * numEntries);
 
   fOKFiles = TRUE;
 
@@ -309,11 +309,11 @@ void BuildListFile() {
 
     if (usState != 5555) {
       cnt++;
-      ubNumStates = (UINT8)cnt;
+      ubNumStates = (uint8_t)cnt;
       pusStates[cnt] = usState;
     } else {
       swprintf(zError, ARR_SIZE(zError), L"Animation str %S is not known: ", currFilename);
-      DoMessageBox(MSG_BOX_BASIC_STYLE, zError, ANIEDIT_SCREEN, (UINT8)MSG_BOX_FLAG_YESNO, NULL,
+      DoMessageBox(MSG_BOX_BASIC_STYLE, zError, ANIEDIT_SCREEN, (uint8_t)MSG_BOX_FLAG_YESNO, NULL,
                    NULL);
       fclose(infoFile);
       return;

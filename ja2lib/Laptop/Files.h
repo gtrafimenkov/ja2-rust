@@ -12,18 +12,18 @@ void HandleFiles();
 void RenderFiles();
 
 struct files {
-  UINT8 ubCode;       // the code index in the files code table
-  UINT8 ubFormat;     // layout format
-  UINT32 uiIdNumber;  // unique id number
-  UINT32 uiDate;      // time in the world in global time (resolution, minutes)
+  uint8_t ubCode;       // the code index in the files code table
+  uint8_t ubFormat;     // layout format
+  uint32_t uiIdNumber;  // unique id number
+  uint32_t uiDate;      // time in the world in global time (resolution, minutes)
   BOOLEAN fRead;
-  STR8 pPicFileNameList[2];
+  char* pPicFileNameList[2];
 
   struct files *Next;  // next unit in the list
 };
 
 struct filestring {
-  STR16 pString;
+  wchar_t* pString;
   struct filestring *Next;
 };
 
@@ -46,7 +46,7 @@ enum {
   ELGIN_BACKGROUND,
 
 };
-extern UINT8 ubFileRecordsLength[];
+extern uint8_t ubFileRecordsLength[];
 extern BOOLEAN fEnteredFileViewerFromNewFileIcon;
 extern BOOLEAN fNewFilesInFileViewer;
 
@@ -56,19 +56,19 @@ typedef struct files *FilesUnitPtr;
 extern FilesUnitPtr pFilesListHead;
 
 struct filerecordwidth {
-  INT32 iRecordNumber;
-  INT32 iRecordWidth;
-  INT32 iRecordHeightAdjustment;
-  UINT8 ubFlags;
+  int32_t iRecordNumber;
+  int32_t iRecordWidth;
+  int32_t iRecordHeightAdjustment;
+  uint8_t ubFlags;
   struct filerecordwidth *Next;
 };
 
 typedef struct filerecordwidth FileRecordWidth;
 typedef struct filerecordwidth *FileRecordWidthPtr;
-UINT32 AddFilesToPlayersLog(UINT8 ubCode, UINT32 uiDate, UINT8 ubFormat, STR8 pFirstPicFile,
-                            STR8 pSecondPicFile);
+uint32_t AddFilesToPlayersLog(uint8_t ubCode, uint32_t uiDate, uint8_t ubFormat, char* pFirstPicFile,
+                            char* pSecondPicFile);
 
 // add a file about this terrorist
-BOOLEAN AddFileAboutTerrorist(INT32 iProfileId);
+BOOLEAN AddFileAboutTerrorist(int32_t iProfileId);
 
 #endif

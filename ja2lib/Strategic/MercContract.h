@@ -13,15 +13,15 @@ enum {
 };
 
 typedef struct {
-  UINT8 ubProfileID;
-  UINT8 ubFiller[3];
+  uint8_t ubProfileID;
+  uint8_t ubFiller[3];
 
 } CONTRACT_NEWAL_LIST_NODE;
 
 extern CONTRACT_NEWAL_LIST_NODE ContractRenewalList[20];
-extern UINT8 ubNumContractRenewals;
+extern uint8_t ubNumContractRenewals;
 extern BOOLEAN gfContractRenewalSquenceOn;
-extern UINT8 ubCurrentContractRenewal;
+extern uint8_t ubCurrentContractRenewal;
 extern BOOLEAN gfInContractMenuFromRenewSequence;
 
 /*
@@ -47,7 +47,7 @@ enum
 };
 */
 
-BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, UINT8 ubDesiredAction);
+BOOLEAN MercContractHandling(struct SOLDIERTYPE *pSoldier, uint8_t ubDesiredAction);
 
 BOOLEAN StrategicRemoveMerc(struct SOLDIERTYPE *pSoldier);
 BOOLEAN BeginStrategicRemoveMerc(struct SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton);
@@ -59,11 +59,11 @@ void FindOutIfAnyMercAboutToLeaveIsGonnaRenew(void);
 void BeginContractRenewalSequence();
 void HandleContractRenewalSequence();
 void EndCurrentContractRenewal();
-void HandleMercIsWillingToRenew(UINT8 ubID);
-void HandleMercIsNotWillingToRenew(UINT8 ubID);
+void HandleMercIsWillingToRenew(uint8_t ubID);
+void HandleMercIsNotWillingToRenew(uint8_t ubID);
 
 BOOLEAN ContractIsExpiring(struct SOLDIERTYPE *pSoldier);
-UINT32 GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier);
+uint32_t GetHourWhenContractDone(struct SOLDIERTYPE *pSoldier);
 BOOLEAN ContractIsGoingToExpireSoon(struct SOLDIERTYPE *pSoldier);
 
 BOOLEAN LoadContractRenewalDataFromSaveGameFile(FileID hFile);
@@ -73,7 +73,7 @@ BOOLEAN SaveContractRenewalDataToSaveGameFile(FileID hFile);
 extern BOOLEAN fEnterMapDueToContract;
 extern struct SOLDIERTYPE *pContractReHireSoldier;
 extern struct SOLDIERTYPE *pLeaveSoldier;
-extern UINT8 ubQuitType;
+extern uint8_t ubQuitType;
 extern BOOLEAN gfFirstMercSayQuote;
 
 #endif

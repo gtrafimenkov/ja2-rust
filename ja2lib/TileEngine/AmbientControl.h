@@ -4,18 +4,18 @@
 #include "SGP/Types.h"
 #include "TileEngine/AmbientTypes.h"
 
-BOOLEAN LoadAmbientControlFile(UINT8 ubAmbientID);
+BOOLEAN LoadAmbientControlFile(uint8_t ubAmbientID);
 
-void HandleNewSectorAmbience(UINT8 ubAmbientID);
-UINT32 SetupNewAmbientSound(UINT32 uiAmbientID);
+void HandleNewSectorAmbience(uint8_t ubAmbientID);
+uint32_t SetupNewAmbientSound(uint32_t uiAmbientID);
 
 void StopAmbients();
 void DeleteAllAmbients();
 
 extern AMBIENTDATA_STRUCT gAmbData[MAX_AMBIENT_SOUNDS];
-extern INT16 gsNumAmbData;
+extern int16_t gsNumAmbData;
 
-BOOLEAN SetSteadyStateAmbience(UINT8 ubAmbience);
+BOOLEAN SetSteadyStateAmbience(uint8_t ubAmbience);
 
 #define SOUND_NAME_SIZE 256
 #define NUM_SOUNDS_PER_TIMEFRAME 8
@@ -36,7 +36,7 @@ enum {
 };
 
 typedef struct {
-  CHAR8 zSoundNames[NUM_SOUNDS_PER_TIMEFRAME][SOUND_NAME_SIZE];
+  char zSoundNames[NUM_SOUNDS_PER_TIMEFRAME][SOUND_NAME_SIZE];
 
 } STEADY_STATE_AMBIENCE;
 

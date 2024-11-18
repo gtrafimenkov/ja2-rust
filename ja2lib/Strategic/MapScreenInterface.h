@@ -8,12 +8,12 @@
 
 typedef struct FASTHELPREGION {
   // the string
-  CHAR16 FastHelpText[256];
+  wchar_t FastHelpText[256];
 
   // the x and y position values
-  INT32 iX;
-  INT32 iY;
-  INT32 iW;
+  int32_t iX;
+  int32_t iY;
+  int32_t iW;
 
 } FASTHELPREGION;
 
@@ -196,7 +196,7 @@ extern BOOLEAN fLockOutMapScreenInterface;
 
 // The character data structure
 typedef struct {
-  UINT16 usSolID;  // soldier ID in MenPtrs
+  uint16_t usSolID;  // soldier ID in MenPtrs
   BOOLEAN fValid;  // is the current soldier a valid soldier
 
 } MapScreenCharacterSt;
@@ -210,14 +210,14 @@ extern BOOLEAN fShowMapScreenHelpText;
 extern BOOLEAN fMapInventoryPoolInited;
 
 // highlighted lines
-extern INT32 giHighLine;
-extern INT32 giAssignHighLine;
-extern INT32 giDestHighLine;
-extern INT32 giContractHighLine;
-extern INT32 giSleepHighLine;
+extern int32_t giHighLine;
+extern int32_t giAssignHighLine;
+extern int32_t giDestHighLine;
+extern int32_t giContractHighLine;
+extern int32_t giSleepHighLine;
 
-extern UINT32 guiUpdatePanel;
-extern UINT32 guiUpdatePanelTactical;
+extern uint32_t guiUpdatePanel;
+extern uint32_t guiUpdatePanelTactical;
 extern BOOLEAN fShowUpdateBox;
 
 extern struct GRect ContractDimensions;
@@ -249,23 +249,23 @@ extern BOOLEAN fDisableDueToBattleRoster;
 extern BOOLEAN gfAtLeastOneMercWasHired;
 
 // curtrent map sector z that is being displayed in the mapscreen
-extern INT32 iCurrentMapSectorZ;
+extern int32_t iCurrentMapSectorZ;
 
 // y position of the pop up box
-extern INT32 giBoxY;
+extern int32_t giBoxY;
 
 // pop up box textures
 extern struct Image *popupTextures;
-extern UINT32 guiPOPUPBORDERS;
+extern uint32_t guiPOPUPBORDERS;
 
 // the level-changing markers on the map border
-extern UINT32 guiLEVELMARKER;
+extern uint32_t guiLEVELMARKER;
 
 // the currently selected character arrow
-extern UINT32 guiSelectedCharArrow;
+extern uint32_t guiSelectedCharArrow;
 
 // sam and mine icons
-extern UINT32 guiSAMICON;
+extern uint32_t guiSAMICON;
 
 extern BOOLEAN fShowMapScreenMovementList;
 
@@ -279,24 +279,24 @@ extern BOOLEAN fResetContractGlow;
 void InitalizeVehicleAndCharacterList(void);
 
 // set this entry to as selected
-void SetEntryInSelectedCharacterList(INT8 bEntry);
+void SetEntryInSelectedCharacterList(int8_t bEntry);
 // set this entry to as unselected
-void ResetEntryForSelectedList(INT8 bEntry);
+void ResetEntryForSelectedList(int8_t bEntry);
 
 // reset selected list
 void ResetSelectedListForMapScreen();
 
 // build a selected list from a to b, inclusive
-void BuildSelectedListFromAToB(INT8 bA, INT8 bB);
+void BuildSelectedListFromAToB(int8_t bA, int8_t bB);
 
 // isa this entry int he selected character list set?
-BOOLEAN IsEntryInSelectedListSet(INT8 bEntry);
+BOOLEAN IsEntryInSelectedListSet(int8_t bEntry);
 
 // is there more than one person selected?
 BOOLEAN MultipleCharacterListEntriesSelected(void);
 
 // toggle this entry on or off
-void ToggleEntryInSelectedList(INT8 bEntry);
+void ToggleEntryInSelectedList(int8_t bEntry);
 
 void RestoreBackgroundForAssignmentGlowRegionList(void);
 void RestoreBackgroundForDestinationGlowRegionList(void);
@@ -307,7 +307,7 @@ void RestoreBackgroundForSleepGlowRegionList(void);
 void PlayGlowRegionSound(void);
 
 // is this character in the action of plotting a path?
-INT16 CharacterIsGettingPathPlotted(INT16 sCharNumber);
+int16_t CharacterIsGettingPathPlotted(int16_t sCharNumber);
 
 // disable team info panels
 void DisableTeamInfoPanels(void);
@@ -316,7 +316,7 @@ void DisableTeamInfoPanels(void);
 void EnableTeamInfoPanels(void);
 
 // activate pop up for soldiers in the pre battle interface
-void ActivateSoldierPopup(struct SOLDIERTYPE *pSoldier, UINT8 ubPopupType, INT16 xp, INT16 yp);
+void ActivateSoldierPopup(struct SOLDIERTYPE *pSoldier, uint8_t ubPopupType, int16_t xp, int16_t yp);
 
 // hop up one leve,l int he map screen level interface
 void GoUpOneLevelInMap(void);
@@ -325,7 +325,7 @@ void GoUpOneLevelInMap(void);
 void GoDownOneLevelInMap(void);
 
 // jump to this level on the map
-void JumpToLevel(INT32 iLevel);
+void JumpToLevel(int32_t iLevel);
 
 // check to see if we need to update the screen
 void CheckAndUpdateBasedOnContractTimes(void);
@@ -340,39 +340,39 @@ void HandleDisplayOfSelectedMercArrows(void);
 void DeselectSelectedListMercsWhoCantMoveWithThisGuy(struct SOLDIERTYPE *pSoldier);
 
 // get morale string for this grunt given this morale level
-void GetMoraleString(struct SOLDIERTYPE *pSoldier, STR16 sString);
+void GetMoraleString(struct SOLDIERTYPE *pSoldier, wchar_t* sString);
 
 // handle leaving of equipment in sector
-void HandleLeavingOfEquipmentInCurrentSector(UINT32 uiMercId);
+void HandleLeavingOfEquipmentInCurrentSector(uint32_t uiMercId);
 
 // set up a linked list of items being dropped and post an event to later drop them
-void HandleMercLeavingEquipmentInDrassen(UINT32 uiMercId);
-void HandleMercLeavingEquipmentInOmerta(UINT32 uiMercId);
+void HandleMercLeavingEquipmentInDrassen(uint32_t uiMercId);
+void HandleMercLeavingEquipmentInOmerta(uint32_t uiMercId);
 
 // actually drop the stored list of items
-void HandleEquipmentLeftInOmerta(UINT32 uiSlotIndex);
-void HandleEquipmentLeftInDrassen(UINT32 uiSlotIndex);
+void HandleEquipmentLeftInOmerta(uint32_t uiSlotIndex);
+void HandleEquipmentLeftInDrassen(uint32_t uiSlotIndex);
 
 // init/shutdown leave item lists
 void InitLeaveList(void);
 void ShutDownLeaveList(void);
 
 // add item to leave equip index
-BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, UINT32 uiIndex);
+BOOLEAN AddItemToLeaveIndex(struct OBJECTTYPE *o, uint32_t uiIndex);
 
 // release memory for all items in this slot's leave item list
-void FreeLeaveListSlot(UINT32 uiSlotIndex);
+void FreeLeaveListSlot(uint32_t uiSlotIndex);
 
 // first free slot in equip leave list
-INT32 FindFreeSlotInLeaveList(void);
+int32_t FindFreeSlotInLeaveList(void);
 
 // set up drop list
-INT32 SetUpDropItemListForMerc(UINT32 uiMercId);
+int32_t SetUpDropItemListForMerc(uint32_t uiMercId);
 // store owner's profile id for the items added to this leave slot index
-void SetUpMercAboutToLeaveEquipment(UINT32 ubProfileId, UINT32 uiSlotIndex);
+void SetUpMercAboutToLeaveEquipment(uint32_t ubProfileId, uint32_t uiSlotIndex);
 
 // remove item from leave index
-// BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, UINT32 uiIndex );
+// BOOLEAN RemoveItemFromLeaveIndex( MERC_LEAVE_ITEM *pItem, uint32_t uiIndex );
 
 // handle a group about to arrive in a sector
 void HandleGroupAboutToArrive(void);
@@ -398,18 +398,18 @@ void RenderMapRegionBackground(void);
 void UpdateMapScreenAssignmentPositions(void);
 
 // get the umber of valid mercs in the mapscreen character list
-INT32 GetNumberOfPeopleInCharacterList(void);
+int32_t GetNumberOfPeopleInCharacterList(void);
 
 // the next and previous people in the mapscreen
 void GoToPrevCharacterInList(void);
 void GoToNextCharacterInList(void);
 
 // this does the whole miner giving player info speil
-void HandleMinerEvent(UINT8 bMinerNumber, u8 sSectorX, u8 sSectorY, INT16 sQuoteNumber,
+void HandleMinerEvent(uint8_t bMinerNumber, u8 sSectorX, u8 sSectorY, int16_t sQuoteNumber,
                       BOOLEAN fForceMapscreen);
 
 // set up the event of animating a mine sector
-void SetUpAnimationOfMineSectors(INT32 iEvent);
+void SetUpAnimationOfMineSectors(int32_t iEvent);
 
 // display map screen
 void DisplayMapScreenFastHelpList(void);
@@ -426,17 +426,17 @@ void StopMapScreenHelpText(void);
 // set up the help text
 void SetUpMapScreenFastHelpText(void);
 
-void TurnOnSectorLocator(UINT8 ubProfileID);
+void TurnOnSectorLocator(uint8_t ubProfileID);
 void TurnOffSectorLocator();
 
 extern u8 gsSectorLocatorX;
 extern u8 gsSectorLocatorY;
-extern UINT8 gubBlitSectorLocatorCode;
+extern uint8_t gubBlitSectorLocatorCode;
 
 enum { LOCATOR_COLOR_NONE, LOCATOR_COLOR_RED, LOCATOR_COLOR_YELLOW };
 
-extern UINT32 guiSectorLocatorGraphicID;
-void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, INT16 sSectorZ, UINT8 ubLocatorID);
+extern uint32_t guiSectorLocatorGraphicID;
+void HandleBlitOfSectorLocatorIcon(u8 sSectorX, u8 sSectorY, int16_t sSectorZ, uint8_t ubLocatorID);
 
 // the tactical version
 
@@ -453,31 +453,31 @@ void StopShowingInterfaceFastHelpText(void);
 BOOLEAN IsTheInterfaceFastHelpTextActive(void);
 
 // set up the tactical lists
-BOOLEAN SetUpFastHelpListRegions(INT32 iXPosition[], INT32 iYPosition[], INT32 iWidth[],
-                                 STR16 sString[], INT32 iSize);
+BOOLEAN SetUpFastHelpListRegions(int32_t iXPosition[], int32_t iYPosition[], int32_t iWidth[],
+                                 wchar_t* sString[], int32_t iSize);
 
 // the alternate mapscreen movement system
 void InitializeMovingLists(void);
 
 // the sector move box
-void DeselectSquadForMovement(INT32 iSquadNumber);
-void SelectedSquadForMovement(INT32 iSquadNumber);
+void DeselectSquadForMovement(int32_t iSquadNumber);
+void SelectedSquadForMovement(int32_t iSquadNumber);
 void DeselectSoldierForMovement(struct SOLDIERTYPE *pSoldier);
 void SelectSoldierForMovement(struct SOLDIERTYPE *pSoldier);
-void SelectVehicleForMovement(INT32 iVehicleId, BOOLEAN fAndAllOnBoard);
-void DeselectVehicleForMovement(INT32 iVehicleId);
-void AddVehicleToMovingLists(INT32 iVehicleId);
-void AddSquadToMovingLists(INT32 iSquadNumber);
+void SelectVehicleForMovement(int32_t iVehicleId, BOOLEAN fAndAllOnBoard);
+void DeselectVehicleForMovement(int32_t iVehicleId);
+void AddVehicleToMovingLists(int32_t iVehicleId);
+void AddSquadToMovingLists(int32_t iSquadNumber);
 void AddSoldierToMovingLists(struct SOLDIERTYPE *pSoldier);
 void CreateDestroyMovementBox(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 void SetUpMovingListsForSector(u8 sSectorX, u8 sSectorY, i8 sSectorZ);
 void ReBuildMoveBox(void);
-BOOLEAN IsCharacterSelectedForAssignment(INT16 sCharNumber);
-BOOLEAN IsCharacterSelectedForSleep(INT16 sCharNumber);
+BOOLEAN IsCharacterSelectedForAssignment(int16_t sCharNumber);
+BOOLEAN IsCharacterSelectedForSleep(int16_t sCharNumber);
 
 // the update box
 void CreateDestroyTheUpdateBox(void);
-void SetSoldierUpdateBoxReason(INT32 iReason);
+void SetSoldierUpdateBoxReason(int32_t iReason);
 void AddSoldierToUpdateBox(struct SOLDIERTYPE *pSoldier);
 void ResetSoldierUpdateBox(void);
 void DisplaySoldierUpdateBox();
@@ -513,11 +513,11 @@ BOOLEAN HandleTimeCompressWithTeamJackedInAndGearedToGo(void);
 // void HandlePlayerEnteringMapScreenBeforeGoingToTactical( void );
 
 // handle sector being taken over uncontested
-BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
+BOOLEAN NotifyPlayerWhenEnemyTakesControlOfImportantSector(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                                            BOOLEAN fContested);
 
 // handle notifying player of invasion by enemy
-void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, INT8 bSectorZ,
+void NotifyPlayerOfInvasionByEnemyForces(u8 sSectorX, u8 sSectorY, int8_t bSectorZ,
                                          MSGBOX_CALLBACK ReturnCallback);
 
 void ShutDownUserDefineHelpTextRegions(void);
@@ -527,12 +527,12 @@ void ShowUpdateBox(void);
 
 // add special events
 void AddSoldierToWaitingListQueue(struct SOLDIERTYPE *pSoldier);
-void AddReasonToWaitingListQueue(INT32 iReason);
+void AddReasonToWaitingListQueue(int32_t iReason);
 void AddDisplayBoxToWaitingQueue(void);
 
 // can this group move it out
-BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
-void ReportMapScreenMovementError(INT8 bErrorNumber);
+BOOLEAN CanEntireMovementGroupMercIsInMove(struct SOLDIERTYPE *pSoldier, int8_t *pbErrorNumber);
+void ReportMapScreenMovementError(int8_t bErrorNumber);
 
 void HandleRebuildingOfMapScreenCharacterList(void);
 
@@ -551,7 +551,7 @@ BOOLEAN CheckIfSalaryIncreasedAndSayQuote(struct SOLDIERTYPE *pSoldier,
 
 void EndUpdateBox(BOOLEAN fContinueTimeCompression);
 
-extern BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, INT8 *pbErrorNumber);
-extern BOOLEAN MapscreenCanPassItemToCharNum(INT32 iNewCharSlot);
+extern BOOLEAN CanCharacterMoveInStrategic(struct SOLDIERTYPE *pSoldier, int8_t *pbErrorNumber);
+extern BOOLEAN MapscreenCanPassItemToCharNum(int32_t iNewCharSlot);
 
 #endif

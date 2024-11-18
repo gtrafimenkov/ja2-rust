@@ -514,21 +514,21 @@ enum {
 
 // Struct for animation 'surface' information
 typedef struct {
-  UINT16 ubName;
-  CHAR8 Filename[50];
-  CHAR8 bStructDataType;
-  UINT8 ubFlags;
-  UINT32 uiNumDirections;
-  UINT32 uiNumFramesPerDir;
+  uint16_t ubName;
+  char Filename[50];
+  char bStructDataType;
+  uint8_t ubFlags;
+  uint32_t uiNumDirections;
+  uint32_t uiNumFramesPerDir;
   struct VObject *hVideoObject;
   void *Unused;
-  INT8 bUsageCount;
-  INT8 bProfile;
+  int8_t bUsageCount;
+  int8_t bProfile;
 
 } AnimationSurfaceType;
 
 typedef struct {
-  CHAR8 Filename[50];
+  char Filename[50];
   struct STRUCTURE_FILE_REF *pStructureFileRef;
 
 } AnimationStructureType;
@@ -539,20 +539,20 @@ extern AnimationStructureType gAnimStructureDatabase[TOTALBODYTYPES][NUM_STRUCT_
 // Functions
 BOOLEAN InitAnimationSystem();
 BOOLEAN DeInitAnimationSystem();
-BOOLEAN LoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex, UINT16 usAnimState);
-BOOLEAN UnLoadAnimationSurface(UINT16 usSoldierID, UINT16 usSurfaceIndex);
-void ClearAnimationSurfacesUsageHistory(UINT16 usSoldierID);
+BOOLEAN LoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex, uint16_t usAnimState);
+BOOLEAN UnLoadAnimationSurface(uint16_t usSoldierID, uint16_t usSurfaceIndex);
+void ClearAnimationSurfacesUsageHistory(uint16_t usSoldierID);
 
 void DeleteAnimationProfiles();
 BOOLEAN LoadAnimationProfiles();
 
-struct STRUCTURE_FILE_REF *GetAnimationStructureRef(UINT16 usSoldierID, UINT16 usSurfaceIndex,
-                                                    UINT16 usAnimState);
-struct STRUCTURE_FILE_REF *GetDefaultStructureRef(UINT16 usSoldierID);
+struct STRUCTURE_FILE_REF *GetAnimationStructureRef(uint16_t usSoldierID, uint16_t usSurfaceIndex,
+                                                    uint16_t usAnimState);
+struct STRUCTURE_FILE_REF *GetDefaultStructureRef(uint16_t usSoldierID);
 
 // Profile data
 extern struct ANIM_PROF *gpAnimProfiles;
-extern UINT8 gubNumAnimProfiles;
+extern uint8_t gubNumAnimProfiles;
 
 void ZeroAnimSurfaceCounts();
 

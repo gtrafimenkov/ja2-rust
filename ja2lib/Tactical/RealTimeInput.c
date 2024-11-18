@@ -65,18 +65,18 @@ extern UIKEYBOARD_HOOK gUIKeyboardHook;
 extern BOOLEAN fRightButtonDown;
 extern BOOLEAN fLeftButtonDown;
 extern BOOLEAN fIgnoreLeftUp;
-extern UINT32 guiCurrentEvent;
-extern UINT32 guiCurrentUICursor;
+extern uint32_t guiCurrentEvent;
+extern uint32_t guiCurrentUICursor;
 extern void DetermineWhichAssignmentMenusCanBeShown(void);
 extern BOOLEAN gfIgnoreOnSelectedGuy;
-extern INT16 gsOverItemsGridNo;
-extern INT16 gsOverItemsLevel;
-extern UINT32 guiUITargetSoldierId;
+extern int16_t gsOverItemsGridNo;
+extern int16_t gsOverItemsLevel;
+extern uint32_t guiUITargetSoldierId;
 extern BOOLEAN gfUIShowExitSouth;
 
 BOOLEAN gfStartLookingForRubberBanding = FALSE;
-UINT16 gusRubberBandX = 0;
-UINT16 gusRubberBandY = 0;
+uint16_t gusRubberBandX = 0;
+uint16_t gusRubberBandY = 0;
 
 BOOLEAN gfBeginBurstSpreadTracking = FALSE;
 
@@ -85,17 +85,17 @@ BOOLEAN gfRTHaveClickedRightWhileLeftDown = FALSE;
 
 extern BOOLEAN ValidQuickExchangePosition();
 
-void GetRTMouseButtonInput(UINT32 *puiNewEvent) {
+void GetRTMouseButtonInput(uint32_t *puiNewEvent) {
   QueryRTLeftButton(puiNewEvent);
   QueryRTRightButton(puiNewEvent);
 }
 
-void QueryRTLeftButton(UINT32 *puiNewEvent) {
-  UINT16 usSoldierIndex;
+void QueryRTLeftButton(uint32_t *puiNewEvent) {
+  uint16_t usSoldierIndex;
   struct SOLDIERTYPE *pSoldier;
-  UINT32 uiMercFlags;
-  static UINT32 uiSingleClickTime;
-  INT16 usMapPos;
+  uint32_t uiMercFlags;
+  static uint32_t uiSingleClickTime;
+  int16_t usMapPos;
   static BOOLEAN fDoubleClickIntercepted = FALSE;
   static BOOLEAN fValidDoubleClickPossible = FALSE;
   static BOOLEAN fCanCheckForSpeechAdvance = FALSE;
@@ -163,7 +163,7 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
                       ResetMultiSelection();
                     }
                   } else {
-                    INT8 bReturnCode;
+                    int8_t bReturnCode;
 
                     bReturnCode = HandleMoveModeInteractiveClick(usMapPos, puiNewEvent);
 
@@ -283,9 +283,9 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
       if (fLeftButtonDown) {
         if (!fIgnoreLeftUp) {
           // set flag for handling single clicks
-          // OK , FOR DOUBLE CLICKS - TAKE TIME STAMP & RECORD EVENT
+          // OK , FOR double CLICKS - TAKE TIME STAMP & RECORD EVENT
           if ((GetJA2Clock() - uiSingleClickTime) < 300) {
-            // CHECK HERE FOR DOUBLE CLICK EVENTS
+            // CHECK HERE FOR double CLICK EVENTS
             if (fValidDoubleClickPossible) {
               if (gpItemPointer == NULL) {
                 fDoubleClickIntercepted = TRUE;
@@ -513,7 +513,7 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
                                 }
                                 gfRTClickLeftHoldIntercepted = TRUE;
                               } else {
-                                INT8 bReturnCode;
+                                int8_t bReturnCode;
 
                                 bReturnCode = HandleMoveModeInteractiveClick(usMapPos, puiNewEvent);
 
@@ -527,7 +527,7 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
                                   //}/
                                   // else
                                   {
-                                    INT16 sIntTileGridNo;
+                                    int16_t sIntTileGridNo;
 
                                     if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
                                       BeginDisplayTimedCursor(
@@ -572,7 +572,7 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
                                               {
 #if 0
 																										struct SOLDIERTYPE *		pTeamSoldier;
-																										INT32						cnt;
+																										int32_t						cnt;
 																										struct SOLDIERTYPE			*pFirstSoldier = NULL;
 
 																										// OK, loop through all guys who are 'multi-selected' and
@@ -772,15 +772,15 @@ void QueryRTLeftButton(UINT32 *puiNewEvent) {
   }
 }
 
-void QueryRTRightButton(UINT32 *puiNewEvent) {
+void QueryRTRightButton(uint32_t *puiNewEvent) {
   static BOOLEAN fClickHoldIntercepted = FALSE;
   static BOOLEAN fClickIntercepted = FALSE;
-  static UINT32 uiSingleClickTime;
+  static uint32_t uiSingleClickTime;
   static BOOLEAN fDoubleClickIntercepted = FALSE;
   static BOOLEAN fValidDoubleClickPossible = FALSE;
 
   struct SOLDIERTYPE *pSoldier;
-  INT16 usMapPos;
+  int16_t usMapPos;
 
   if (gViewportRegion.uiFlags & MSYS_MOUSE_IN_AREA) {
     if (!GetMouseMapPos(&usMapPos)) {
@@ -889,9 +889,9 @@ void QueryRTRightButton(UINT32 *puiNewEvent) {
 
     } else {
       if (fRightButtonDown) {
-        // OK , FOR DOUBLE CLICKS - TAKE TIME STAMP & RECORD EVENT
+        // OK , FOR double CLICKS - TAKE TIME STAMP & RECORD EVENT
         if ((GetJA2Clock() - uiSingleClickTime) < 300) {
-          // CHECK HERE FOR DOUBLE CLICK EVENTS
+          // CHECK HERE FOR double CLICK EVENTS
           if (fValidDoubleClickPossible) {
             fDoubleClickIntercepted = TRUE;
 
@@ -1022,14 +1022,14 @@ void QueryRTRightButton(UINT32 *puiNewEvent) {
   }
 }
 
-extern BOOLEAN ConfirmActionCancel(UINT16 usMapPos, UINT16 usOldMapPos);
+extern BOOLEAN ConfirmActionCancel(uint16_t usMapPos, uint16_t usOldMapPos);
 
 extern BOOLEAN gUIActionModeChangeDueToMouseOver;
 
-void GetRTMousePositionInput(UINT32 *puiNewEvent) {
-  INT16 usMapPos;
-  static UINT16 usOldMapPos = 0;
-  static UINT32 uiMoveTargetSoldierId = NO_SOLDIER;
+void GetRTMousePositionInput(uint32_t *puiNewEvent) {
+  int16_t usMapPos;
+  static uint16_t usOldMapPos = 0;
+  static uint32_t uiMoveTargetSoldierId = NO_SOLDIER;
   struct SOLDIERTYPE *pSoldier;
 
   if (!GetMouseMapPos(&usMapPos)) {
@@ -1141,7 +1141,7 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
 
         // Check for being on terrain
         if (GetSoldier(&pSoldier, gusSelectedSoldier)) {
-          UINT8 ubItemCursor;
+          uint8_t ubItemCursor;
 
           // get cursor for item
           ubItemCursor = GetActionModeCursor(pSoldier);
@@ -1153,7 +1153,7 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
             return;
           } else {
             if (gfUIFullTargetFound) {
-              if (IsValidTalkableNPC((UINT8)gusUIFullTargetID, FALSE, FALSE, FALSE) &&
+              if (IsValidTalkableNPC((uint8_t)gusUIFullTargetID, FALSE, FALSE, FALSE) &&
                   !_KeyDown(SHIFT) && !AM_AN_EPC(pSoldier) &&
                   MercPtrs[gusUIFullTargetID]->bTeam != ENEMY_TEAM &&
                   !ValidQuickExchangePosition()) {
@@ -1192,7 +1192,7 @@ void GetRTMousePositionInput(UINT32 *puiNewEvent) {
         if (gfUIFullTargetFound)
         // if ( gfUIFullTargetFound )
         {
-          if (IsValidTargetMerc((UINT8)gusUIFullTargetID)) {
+          if (IsValidTargetMerc((uint8_t)gusUIFullTargetID)) {
             guiUITargetSoldierId = gusUIFullTargetID;
 
             if (MercPtrs[gusUIFullTargetID]->bTeam != gbPlayerNum) {

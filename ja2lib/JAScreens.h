@@ -3,101 +3,101 @@
 
 #include "SGP/Types.h"
 
-extern UINT32 EditScreenInit(void);
-extern UINT32 EditScreenHandle(void);
-extern UINT32 EditScreenShutdown(void);
+extern uint32_t EditScreenInit(void);
+extern uint32_t EditScreenHandle(void);
+extern uint32_t EditScreenShutdown(void);
 
-extern UINT32 LoadSaveScreenInit(void);
-extern UINT32 LoadSaveScreenHandle(void);
-extern UINT32 LoadSaveScreenShutdown(void);
+extern uint32_t LoadSaveScreenInit(void);
+extern uint32_t LoadSaveScreenHandle(void);
+extern uint32_t LoadSaveScreenShutdown(void);
 
-extern UINT32 SavingScreenInitialize(void);
-extern UINT32 SavingScreenHandle(void);
-extern UINT32 SavingScreenShutdown(void);
+extern uint32_t SavingScreenInitialize(void);
+extern uint32_t SavingScreenHandle(void);
+extern uint32_t SavingScreenShutdown(void);
 
-extern UINT32 LoadingScreenInitialize(void);
-extern UINT32 LoadingScreenHandle(void);
-extern UINT32 LoadingScreenShutdown(void);
+extern uint32_t LoadingScreenInitialize(void);
+extern uint32_t LoadingScreenHandle(void);
+extern uint32_t LoadingScreenShutdown(void);
 
-extern UINT32 ErrorScreenInitialize(void);
-extern UINT32 ErrorScreenHandle(void);
-extern UINT32 ErrorScreenShutdown(void);
+extern uint32_t ErrorScreenInitialize(void);
+extern uint32_t ErrorScreenHandle(void);
+extern uint32_t ErrorScreenShutdown(void);
 
-extern UINT32 InitScreenInitialize(void);
-extern UINT32 InitScreenHandle(void);
-extern UINT32 InitScreenShutdown(void);
+extern uint32_t InitScreenInitialize(void);
+extern uint32_t InitScreenHandle(void);
+extern uint32_t InitScreenShutdown(void);
 
-extern UINT32 MainGameScreenInit(void);
-extern UINT32 MainGameScreenHandle(void);
-extern UINT32 MainGameScreenShutdown(void);
+extern uint32_t MainGameScreenInit(void);
+extern uint32_t MainGameScreenHandle(void);
+extern uint32_t MainGameScreenShutdown(void);
 
-extern UINT32 QuestDebugScreenInit(void);
-extern UINT32 QuestDebugScreenHandle(void);
-extern UINT32 QuestDebugScreenShutdown(void);
+extern uint32_t QuestDebugScreenInit(void);
+extern uint32_t QuestDebugScreenHandle(void);
+extern uint32_t QuestDebugScreenShutdown(void);
 
-UINT32 AniEditScreenInit(void);
-UINT32 AniEditScreenHandle(void);
-UINT32 AniEditScreenShutdown(void);
+uint32_t AniEditScreenInit(void);
+uint32_t AniEditScreenHandle(void);
+uint32_t AniEditScreenShutdown(void);
 
-UINT32 PalEditScreenInit(void);
-UINT32 PalEditScreenHandle(void);
-UINT32 PalEditScreenShutdown(void);
+uint32_t PalEditScreenInit(void);
+uint32_t PalEditScreenHandle(void);
+uint32_t PalEditScreenShutdown(void);
 
-UINT32 DebugScreenInit(void);
-UINT32 DebugScreenHandle(void);
-UINT32 DebugScreenShutdown(void);
+uint32_t DebugScreenInit(void);
+uint32_t DebugScreenHandle(void);
+uint32_t DebugScreenShutdown(void);
 
-extern UINT32 MapScreenInit(void);
-extern UINT32 MapScreenHandle(void);
-extern UINT32 MapScreenShutdown(void);
+extern uint32_t MapScreenInit(void);
+extern uint32_t MapScreenHandle(void);
+extern uint32_t MapScreenShutdown(void);
 
-UINT32 LaptopScreenInit(void);
-UINT32 LaptopScreenHandle(void);
-UINT32 LaptopScreenShutdown(void);
+uint32_t LaptopScreenInit(void);
+uint32_t LaptopScreenHandle(void);
+uint32_t LaptopScreenShutdown(void);
 
-UINT32 FadeScreenInit(void);
-UINT32 FadeScreenHandle(void);
-UINT32 FadeScreenShutdown(void);
+uint32_t FadeScreenInit(void);
+uint32_t FadeScreenHandle(void);
+uint32_t FadeScreenShutdown(void);
 
-UINT32 MessageBoxScreenInit(void);
-UINT32 MessageBoxScreenHandle(void);
-UINT32 MessageBoxScreenShutdown(void);
+uint32_t MessageBoxScreenInit(void);
+uint32_t MessageBoxScreenHandle(void);
+uint32_t MessageBoxScreenShutdown(void);
 
-UINT32 MainMenuScreenInit(void);
-UINT32 MainMenuScreenHandle(void);
-UINT32 MainMenuScreenShutdown(void);
+uint32_t MainMenuScreenInit(void);
+uint32_t MainMenuScreenHandle(void);
+uint32_t MainMenuScreenShutdown(void);
 
-UINT32 AutoResolveScreenInit(void);
-UINT32 AutoResolveScreenHandle(void);
-UINT32 AutoResolveScreenShutdown(void);
+uint32_t AutoResolveScreenInit(void);
+uint32_t AutoResolveScreenHandle(void);
+uint32_t AutoResolveScreenShutdown(void);
 
-UINT32 SaveLoadScreenShutdown(void);
-UINT32 SaveLoadScreenHandle(void);
-UINT32 SaveLoadScreenInit(void);
+uint32_t SaveLoadScreenShutdown(void);
+uint32_t SaveLoadScreenHandle(void);
+uint32_t SaveLoadScreenInit(void);
 
-UINT32 ShopKeeperScreenInit(void);
-UINT32 ShopKeeperScreenHandle(void);
-UINT32 ShopKeeperScreenShutdown(void);
+uint32_t ShopKeeperScreenInit(void);
+uint32_t ShopKeeperScreenHandle(void);
+uint32_t ShopKeeperScreenShutdown(void);
 
-UINT32 SexScreenInit(void);
-UINT32 SexScreenHandle(void);
-UINT32 SexScreenShutdown(void);
+uint32_t SexScreenInit(void);
+uint32_t SexScreenHandle(void);
+uint32_t SexScreenShutdown(void);
 
-UINT32 GameInitOptionsScreenInit(void);
-UINT32 GameInitOptionsScreenHandle(void);
-UINT32 GameInitOptionsScreenShutdown(void);
+uint32_t GameInitOptionsScreenInit(void);
+uint32_t GameInitOptionsScreenHandle(void);
+uint32_t GameInitOptionsScreenShutdown(void);
 
-UINT32 DemoExitScreenInit(void);
-UINT32 DemoExitScreenHandle(void);
-UINT32 DemoExitScreenShutdown(void);
+uint32_t DemoExitScreenInit(void);
+uint32_t DemoExitScreenHandle(void);
+uint32_t DemoExitScreenShutdown(void);
 
-extern UINT32 IntroScreenShutdown(void);
-extern UINT32 IntroScreenHandle(void);
-extern UINT32 IntroScreenInit(void);
+extern uint32_t IntroScreenShutdown(void);
+extern uint32_t IntroScreenHandle(void);
+extern uint32_t IntroScreenInit(void);
 
-extern UINT32 CreditScreenInit(void);
-extern UINT32 CreditScreenHandle(void);
-extern UINT32 CreditScreenShutdown(void);
+extern uint32_t CreditScreenInit(void);
+extern uint32_t CreditScreenHandle(void);
+extern uint32_t CreditScreenShutdown(void);
 
 // External functions
 extern void DisplayFrameRate();
@@ -105,14 +105,14 @@ extern void DisplayFrameRate();
 void HandleTitleScreenAnimation();
 
 // External Globals
-extern CHAR8 gubFilename[200];
-extern UINT32 guiCurrentScreen;
+extern char gubFilename[200];
+extern uint32_t guiCurrentScreen;
 
 typedef void (*RENDER_HOOK)(void);
 
 void SetRenderHook(RENDER_HOOK pRenderOverride);
-void SetCurrentScreen(UINT32 uiNewScreen);
-void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, INT8 ubPage);
+void SetCurrentScreen(uint32_t uiNewScreen);
+void SetDebugRenderHook(RENDER_HOOK pDebugRenderOverride, int8_t ubPage);
 
 void DisableFPSOverlay(BOOLEAN fEnable);
 

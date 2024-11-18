@@ -9,7 +9,7 @@
 struct SectorInfo* GetSectorInfoByID8(SectorID8 sectorID) { return &SectorInfo[sectorID]; }
 struct SectorInfo* GetSectorInfoByXY(u8 x, u8 y) { return &SectorInfo[GetSectorID8(x, y)]; }
 
-BOOLEAN SectorOursAndPeaceful(u8 sMapX, u8 sMapY, INT8 bMapZ) {
+BOOLEAN SectorOursAndPeaceful(u8 sMapX, u8 sMapY, int8_t bMapZ) {
   // if this sector is currently loaded
   if ((sMapX == gWorldSectorX) && (sMapY == gWorldSectorY) && (bMapZ == gbWorldSectorZ)) {
     // and either there are enemies prowling this sector, or combat is in progress

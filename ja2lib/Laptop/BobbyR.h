@@ -20,43 +20,43 @@ void RenderBobbyR();
 #define BOBBYR_GRIDLOC_Y LAPTOP_SCREEN_WEB_UL_Y + 45
 
 /*
-extern	UINT16	gusFirstGunIndex;
-extern	UINT16	gusLastGunIndex;
-extern	UINT8		gubNumGunPages;
+extern	uint16_t	gusFirstGunIndex;
+extern	uint16_t	gusLastGunIndex;
+extern	uint8_t		gubNumGunPages;
 
-extern	UINT16	gusFirstAmmoIndex;
-extern	UINT16	gusLastAmmoIndex;
-extern	UINT8		gubNumAmmoPages;
+extern	uint16_t	gusFirstAmmoIndex;
+extern	uint16_t	gusLastAmmoIndex;
+extern	uint8_t		gubNumAmmoPages;
 
-extern	UINT16	gusFirstMiscIndex;
-extern	UINT16	gusLastMiscIndex;
-extern	UINT8		gubNumMiscPages;
+extern	uint16_t	gusFirstMiscIndex;
+extern	uint16_t	gusLastMiscIndex;
+extern	uint8_t		gubNumMiscPages;
 
-extern	UINT16  gusFirstArmourIndex;
-extern	UINT16  gusLastArmourIndex;
-extern	UINT8		gubNumArmourPages;
+extern	uint16_t  gusFirstArmourIndex;
+extern	uint16_t  gusLastArmourIndex;
+extern	uint8_t		gubNumArmourPages;
 
-extern	UINT16  gusFirstUsedIndex;
-extern	UINT16  gusLastUsedIndex;
-extern	UINT8		gubNumUsedPages;
+extern	uint16_t  gusFirstUsedIndex;
+extern	uint16_t  gusLastUsedIndex;
+extern	uint8_t		gubNumUsedPages;
 */
 
-extern UINT32 guiLastBobbyRayPage;
+extern uint32_t guiLastBobbyRayPage;
 
-// BOOLEAN WebPageTileBackground(UINT8 ubNumX, UINT8 ubNumY, UINT16 usWidth, UINT16 usHeight, UINT32
+// BOOLEAN WebPageTileBackground(uint8_t ubNumX, uint8_t ubNumY, uint16_t usWidth, uint16_t usHeight, uint32_t
 // uiBackGround);
 BOOLEAN DrawBobbyRWoodBackground();
 BOOLEAN DeleteBobbyRWoodBackground();
 BOOLEAN InitBobbyRWoodBackground();
 void DailyUpdateOfBobbyRaysNewInventory();
 void DailyUpdateOfBobbyRaysUsedInventory();
-void OrderBobbyRItem(UINT16 usItemIndex);
-void AddFreshBobbyRayInventory(UINT16 usItemIndex);
+void OrderBobbyRItem(uint16_t usItemIndex);
+void AddFreshBobbyRayInventory(uint16_t usItemIndex);
 void InitBobbyRayInventory();
 BOOLEAN InitBobbyRayNewInventory();
 BOOLEAN InitBobbyRayUsedInventory();
-UINT8 HowManyBRItemsToOrder(UINT16 usItemIndex, UINT8 ubCurrentlyOnHand, UINT8 ubBobbyRayNewUsed);
+uint8_t HowManyBRItemsToOrder(uint16_t usItemIndex, uint8_t ubCurrentlyOnHand, uint8_t ubBobbyRayNewUsed);
 void CancelAllPendingBRPurchaseOrders(void);
-INT16 GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, UINT16 usItemIndex, BOOLEAN fUsed);
+int16_t GetInventorySlotForItem(STORE_INVENTORY *pInventoryArray, uint16_t usItemIndex, BOOLEAN fUsed);
 
 #endif

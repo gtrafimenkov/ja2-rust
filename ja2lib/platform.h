@@ -12,16 +12,16 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 // Gets the amount of free space on the hard drive that the main executeablt is runnning from
-UINT32 Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
+uint32_t Plat_GetFreeSpaceOnHardDriveWhereGameIsRunningFrom();
 
 struct GetFile {
-  INT32 iFindHandle;
-  CHAR8 zFileName[260];  // changed from UINT16, Alex Meduna, Mar-20'98
-  UINT32 uiFileSize;
-  UINT32 uiFileAttribs;
+  int32_t iFindHandle;
+  char zFileName[260];  // changed from uint16_t, Alex Meduna, Mar-20'98
+  uint32_t uiFileSize;
+  uint32_t uiFileAttribs;
 };
 
-BOOLEAN Plat_GetFileFirst(CHAR8 *pSpec, struct GetFile *pGFStruct);
+BOOLEAN Plat_GetFileFirst(char *pSpec, struct GetFile *pGFStruct);
 BOOLEAN Plat_GetFileNext(struct GetFile *pGFStruct);
 void Plat_GetFileClose(struct GetFile *pGFStruct);
 BOOLEAN Plat_GetFileIsReadonly(const struct GetFile *gfs);
@@ -65,12 +65,12 @@ struct BltOpts;
 #define MAX_DIRTY_REGIONS 128
 
 BOOLEAN BltVSurfaceUsingDDBlt(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                              UINT32 fBltFlags, INT32 iDestX, INT32 iDestY, struct Rect *SrcRect,
+                              uint32_t fBltFlags, int32_t iDestX, int32_t iDestY, struct Rect *SrcRect,
                               struct Rect *DestRect);
 
 extern BOOLEAN FillSurfaceRect(struct VSurface *hDestVSurface, struct BltOpts *pBltFx);
 extern BOOLEAN BltVSurfaceUsingDD(struct VSurface *hDestVSurface, struct VSurface *hSrcVSurface,
-                                  UINT32 fBltFlags, INT32 iDestX, INT32 iDestY,
+                                  uint32_t fBltFlags, int32_t iDestX, int32_t iDestY,
                                   struct Rect *SrcRect);
 
 #endif

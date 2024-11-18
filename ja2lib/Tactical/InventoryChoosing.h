@@ -7,8 +7,8 @@
 #define MORTAR_GRENADE_CLASS 100
 
 typedef struct ARMY_GUN_CHOICE_TYPE {
-  UINT8 ubChoices;  // how many valid choices there are in this category
-  INT8 bItemNo[5];  // room for up to 5 choices of gun in each category
+  uint8_t ubChoices;  // how many valid choices there are in this category
+  int8_t bItemNo[5];  // room for up to 5 choices of gun in each category
 } ARMY_GUN_CHOICE_TYPE;
 
 enum {
@@ -47,18 +47,18 @@ void InitArmyGunTypes(void);
 
 // Chooses equipment based on the equipment level (1-11) with best being 11.  It allocates a range
 // of equipment to choose from.
-void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8 bEquipmentRating);
+void GenerateRandomEquipment(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass, int8_t bEquipmentRating);
 
-void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bWeaponClass,
-                                        INT8 bAmmoClips, INT8 bAttachClass, BOOLEAN fAttachment);
+void ChooseWeaponForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bWeaponClass,
+                                        int8_t bAmmoClips, int8_t bAttachClass, BOOLEAN fAttachment);
 
-void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bGrenades,
-                                          INT8 bGrenadeClass, BOOLEAN fGrenadeLauncher);
+void ChooseGrenadesForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bGrenades,
+                                          int8_t bGrenadeClass, BOOLEAN fGrenadeLauncher);
 
-void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bHelmetClass,
-                                        INT8 bArmourClass, INT8 bLeggingsClass);
+void ChooseArmourForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bHelmetClass,
+                                        int8_t bArmourClass, int8_t bLeggingsClass);
 
-void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, INT8 bKnifeClass,
+void ChooseSpecialWeaponsForSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, int8_t bKnifeClass,
                                                 BOOLEAN fGrenadeLauncher, BOOLEAN fLAW,
                                                 BOOLEAN fMortar);
 
@@ -70,12 +70,12 @@ BOOLEAN PlaceObjectInSoldierCreateStruct(SOLDIERCREATE_STRUCT *pp, struct OBJECT
 
 void AssignCreatureInventory(struct SOLDIERTYPE *pSoldier);
 
-void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass);
+void ReplaceExtendedGuns(SOLDIERCREATE_STRUCT *pp, int8_t bSoldierClass);
 
-UINT16 SelectStandardArmyGun(UINT8 uiGunLevel);
+uint16_t SelectStandardArmyGun(uint8_t uiGunLevel);
 
-INT8 GetWeaponClass(UINT16 usGun);
-void MarkAllWeaponsOfSameGunClassAsDropped(UINT16 usWeapon);
+int8_t GetWeaponClass(uint16_t usGun);
+void MarkAllWeaponsOfSameGunClassAsDropped(uint16_t usWeapon);
 
 void ResetMortarsOnTeamCount(void);
 

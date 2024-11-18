@@ -82,28 +82,28 @@
 #define FUNERAL_RIP_SENTENCE_2_Y FUNERAL_CLOSED_RIP_SIGN_Y + 162
 
 // Image Identifiers
-UINT32 guiClosedSign;
-UINT32 guiLeftColumn;
-UINT32 guiLinkCarving;
-UINT32 guiMarbleBackground;
-UINT32 guiMcGillicuttys;
-UINT32 guiMortuary;
-UINT32 guiRightColumn;
+uint32_t guiClosedSign;
+uint32_t guiLeftColumn;
+uint32_t guiLinkCarving;
+uint32_t guiMarbleBackground;
+uint32_t guiMcGillicuttys;
+uint32_t guiMortuary;
+uint32_t guiRightColumn;
 
 // Clicking on Funeral link
 struct MOUSE_REGION gSelectedFuneralLinkRegion[FUNERAL_NUMBER_OF_LINKS];
-void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 // Clicking on rip sign to make it disappear
 struct MOUSE_REGION gSelectedRipSignRegion;
-void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason);
+void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason);
 
 void DisplayFuneralRipTombStone();
 
 void GameInitFuneral() {}
 
 BOOLEAN EnterFuneral() {
-  UINT16 usPosX, i;
+  uint16_t usPosX, i;
 
   // load the Closed graphic and add it
   SGPFILENAME ImageFile;
@@ -149,8 +149,8 @@ BOOLEAN EnterFuneral() {
     // Mouse region for the bottom links
 
     MSYS_DefineRegion(&gSelectedFuneralLinkRegion[i], usPosX, FUNERAL_LINK_1_Y,
-                      (UINT16)(usPosX + FUNERAL_LINK_1_WIDTH),
-                      (UINT16)(FUNERAL_LINK_1_Y + FUNERAL_LINK_1_HEIGHT), MSYS_PRIORITY_HIGH,
+                      (uint16_t)(usPosX + FUNERAL_LINK_1_WIDTH),
+                      (uint16_t)(FUNERAL_LINK_1_Y + FUNERAL_LINK_1_HEIGHT), MSYS_PRIORITY_HIGH,
                       CURSOR_WWW, MSYS_NO_CALLBACK, SelectFuneralLinkRegionCallBack);
     MSYS_AddRegion(&gSelectedFuneralLinkRegion[i]);
     MSYS_SetRegionUserData(&gSelectedFuneralLinkRegion[i], 0, i);
@@ -159,8 +159,8 @@ BOOLEAN EnterFuneral() {
   }
 
   MSYS_DefineRegion(&gSelectedRipSignRegion, FUNERAL_CLOSED_RIP_SIGN_X, FUNERAL_CLOSED_RIP_SIGN_Y,
-                    (UINT16)(FUNERAL_CLOSED_RIP_SIGN_X + FUNERAL_CLOSED_WIDTH),
-                    (UINT16)(FUNERAL_CLOSED_RIP_SIGN_Y + FUNERAL_CLOSED_HEIGHT),
+                    (uint16_t)(FUNERAL_CLOSED_RIP_SIGN_X + FUNERAL_CLOSED_WIDTH),
+                    (uint16_t)(FUNERAL_CLOSED_RIP_SIGN_Y + FUNERAL_CLOSED_HEIGHT),
                     MSYS_PRIORITY_HIGH + 1, CURSOR_LAPTOP_SCREEN, MSYS_NO_CALLBACK,
                     SelectRipSignRegionCallBack);
   MSYS_AddRegion(&gSelectedRipSignRegion);
@@ -172,7 +172,7 @@ BOOLEAN EnterFuneral() {
 }
 
 void ExitFuneral() {
-  UINT8 i;
+  uint8_t i;
 
   DeleteVideoObjectFromIndex(guiClosedSign);
   DeleteVideoObjectFromIndex(guiLeftColumn);
@@ -193,7 +193,7 @@ void HandleFuneral() {}
 
 void RenderFuneral() {
   struct VObject* hPixHandle;
-  UINT16 i, usPosX, usStringHeight;
+  uint16_t i, usPosX, usStringHeight;
 
   WebPageTileBackground(4, 4, FUNERAL_MARBLE_WIDTH, FUNERAL_MARBLE_HEIGHT, guiMarbleBackground);
 
@@ -223,8 +223,8 @@ void RenderFuneral() {
     // Calculate the height of the string, as it needs to be vertically centered.
     usStringHeight = IanWrappedStringHeight(0, 0, FUNERAL_LINK_TEXT_WIDTH, 2, FUNERAL_SENTENCE_FONT,
                                             0, sFuneralString[i + FUNERAL_SEND_FLOWERS], 0, 0, 0);
-    DisplayWrappedString((UINT16)(usPosX + FUNERAL_LINK_TEXT_OFFSET_X),
-                         (UINT16)(FUNERAL_LINK_1_Y + (FUNERAL_LINK_1_HEIGHT - usStringHeight) / 2),
+    DisplayWrappedString((uint16_t)(usPosX + FUNERAL_LINK_TEXT_OFFSET_X),
+                         (uint16_t)(FUNERAL_LINK_1_Y + (FUNERAL_LINK_1_HEIGHT - usStringHeight) / 2),
                          FUNERAL_LINK_TEXT_WIDTH, 2, FUNERAL_SENTENCE_FONT, FUNERAL_TITLE_COLOR,
                          sFuneralString[i + FUNERAL_SEND_FLOWERS], FONT_MCOLOR_BLACK, FALSE,
                          CENTER_JUSTIFIED);
@@ -302,10 +302,10 @@ void DisplayFuneralRipTombStone() {
   MSYS_EnableRegion(&gSelectedRipSignRegion);
 }
 
-void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
-    UINT32 uiUserData;
+    uint32_t uiUserData;
 
     uiUserData = MSYS_GetRegionUserData(pRegion, 0);
 
@@ -320,7 +320,7 @@ void SelectFuneralLinkRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason
   }
 }
 
-void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, INT32 iReason) {
+void SelectRipSignRegionCallBack(struct MOUSE_REGION* pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_INIT) {
   } else if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     MSYS_DisableRegion(&gSelectedRipSignRegion);

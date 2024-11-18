@@ -67,26 +67,26 @@ enum popupMenuIDs {
 // This structure contains all the required information for rendering
 // the popup menu while in
 typedef struct currentPopupMenuInformation {
-  UINT8 ubPopupMenuID;
-  UINT8 ubSelectedIndex;  // current popup menu index hilited.
-  UINT8 ubNumEntries;
-  UINT8 ubColumns;
-  UINT8 ubMaxEntriesPerColumn;
-  UINT8 ubColumnWidth[MAX_COLUMNS];
-  UINT8 ubActiveType;
-  UINT16 usFont;
+  uint8_t ubPopupMenuID;
+  uint8_t ubSelectedIndex;  // current popup menu index hilited.
+  uint8_t ubNumEntries;
+  uint8_t ubColumns;
+  uint8_t ubMaxEntriesPerColumn;
+  uint8_t ubColumnWidth[MAX_COLUMNS];
+  uint8_t ubActiveType;
+  uint16_t usFont;
   BOOLEAN fActive;
   BOOLEAN fUseKeyboardInfoUntilMouseMoves;
-  UINT16 usLeft, usTop, usRight, usBottom;  // popup region coords.
-  UINT16 usLastMouseX, usLastMouseY;
+  uint16_t usLeft, usTop, usRight, usBottom;  // popup region coords.
+  uint16_t usLastMouseX, usLastMouseY;
 } CurrentPopupMenuInformation;
 
 // A global var that keeps the popup menu information.
 extern CurrentPopupMenuInformation gPopup;
-extern UINT16 *popupMenuStrings[5];
+extern uint16_t *popupMenuStrings[5];
 
 // These are the two main functions that outside users would call.
-void InitPopupMenu(INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection);
+void InitPopupMenu(int32_t iButtonID, uint8_t ubPopupMenuID, uint8_t ubDirection);
 BOOLEAN ProcessPopupMenuIfActive();
 
 // Internal functions that handled by ProcessPopupMenuIfActive

@@ -204,7 +204,7 @@ TEST(FileMan, LoadStructureData) {
     EXPECT_TRUE(hInput != 0);
 
     STRUCTURE_FILE_HEADER Header;
-    UINT32 uiBytesRead;
+    uint32_t uiBytesRead;
     BOOLEAN fOk = File_Read(hInput, &Header, sizeof(STRUCTURE_FILE_HEADER), &uiBytesRead);
     EXPECT_TRUE(fOk);
     EXPECT_EQ(16, uiBytesRead);

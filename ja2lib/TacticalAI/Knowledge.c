@@ -11,9 +11,9 @@
 #include "TileEngine/RenderFun.h"
 #include "rust_civ_groups.h"
 
-void CallAvailableEnemiesTo(INT16 sGridNo) {
-  INT32 iLoop;
-  INT32 iLoop2;
+void CallAvailableEnemiesTo(int16_t sGridNo) {
+  int32_t iLoop;
+  int32_t iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
@@ -40,8 +40,8 @@ void CallAvailableEnemiesTo(INT16 sGridNo) {
   }
 }
 
-void CallAvailableTeamEnemiesTo(INT16 sGridno, INT8 bTeam) {
-  INT32 iLoop2;
+void CallAvailableTeamEnemiesTo(int16_t sGridno, int8_t bTeam) {
+  int32_t iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
@@ -66,11 +66,11 @@ void CallAvailableTeamEnemiesTo(INT16 sGridno, INT8 bTeam) {
   }
 }
 
-void CallAvailableKingpinMenTo(INT16 sGridNo) {
+void CallAvailableKingpinMenTo(int16_t sGridNo) {
   // like call all enemies, but only affects civgroup KINGPIN guys with
   // NO PROFILE
 
-  INT32 iLoop2;
+  int32_t iLoop2;
   struct SOLDIERTYPE *pSoldier;
 
   // All enemy teams become aware of a very important "noise" coming from here!
@@ -93,7 +93,7 @@ void CallAvailableKingpinMenTo(INT16 sGridNo) {
   }
 }
 
-void CallEldinTo(INT16 sGridNo) {
+void CallEldinTo(int16_t sGridNo) {
   // like call all enemies, but only affects Eldin
   struct SOLDIERTYPE *pSoldier;
 
@@ -105,7 +105,7 @@ void CallEldinTo(INT16 sGridNo) {
     if (pSoldier && IsSolActive(pSoldier) && pSoldier->bInSector && pSoldier->bLife >= OKLIFE &&
         (pSoldier->bAlertStatus == STATUS_GREEN ||
          pSoldier->ubNoiseVolume < (MAX_MISC_NOISE_DURATION / 2))) {
-      if (SoldierToLocationLineOfSightTest(pSoldier, sGridNo, (UINT8)MaxDistanceVisible(), TRUE)) {
+      if (SoldierToLocationLineOfSightTest(pSoldier, sGridNo, (uint8_t)MaxDistanceVisible(), TRUE)) {
         // sees the player now!
         TriggerNPCWithIHateYouQuote(ELDIN);
         SetNewSituation(pSoldier);
@@ -129,19 +129,19 @@ void CallEldinTo(INT16 sGridNo) {
   }
 }
 
-INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
+int16_t MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, int32_t *piRetValue,
                               BOOLEAN *pfClimbingNecessary, BOOLEAN *pfReachable) {
-  UINT32 uiLoop;
-  INT8 *pbPersOL, *pbPublOL;
-  INT16 *psLastLoc, *psNoiseGridNo;
-  INT8 *pbNoiseLevel;
-  INT8 *pbLastLevel;
-  UINT8 *pubNoiseVolume;
-  INT32 iDistAway;
-  INT32 iNoiseValue, iBestValue = -10000;
-  INT16 sBestGridNo = NOWHERE;
-  INT8 bBestLevel = 0;
-  INT16 sClimbingGridNo;
+  uint32_t uiLoop;
+  int8_t *pbPersOL, *pbPublOL;
+  int16_t *psLastLoc, *psNoiseGridNo;
+  int8_t *pbNoiseLevel;
+  int8_t *pbLastLevel;
+  uint8_t *pubNoiseVolume;
+  int32_t iDistAway;
+  int32_t iNoiseValue, iBestValue = -10000;
+  int16_t sBestGridNo = NOWHERE;
+  int8_t bBestLevel = 0;
+  int16_t sClimbingGridNo;
   BOOLEAN fClimbingNecessary = FALSE;
   struct SOLDIERTYPE *pTemp;
 
@@ -204,7 +204,7 @@ INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
     if (pSoldier->bNoiseLevel != pSoldier->bLevel ||
         PythSpacesAway(pSoldier->sGridNo, pSoldier->sNoiseGridno) >= 6 ||
         SoldierTo3DLocationLineOfSightTest(pSoldier, pSoldier->sNoiseGridno, pSoldier->bNoiseLevel,
-                                           0, (UINT8)MaxDistanceVisible(), FALSE) == 0) {
+                                           0, (uint8_t)MaxDistanceVisible(), FALSE) == 0) {
       // calculate how far this noise was, and its relative "importance"
       iDistAway = SpacesAway(pSoldier->sGridNo, pSoldier->sNoiseGridno);
       iNoiseValue = ((pSoldier->ubNoiseVolume / 2) - 6) * iDistAway;
@@ -228,7 +228,7 @@ INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
       if (*pbNoiseLevel != pSoldier->bLevel ||
           PythSpacesAway(pSoldier->sGridNo, *psNoiseGridNo) >= 6 ||
           SoldierTo3DLocationLineOfSightTest(pSoldier, *psNoiseGridNo, *pbNoiseLevel, 0,
-                                             (UINT8)MaxDistanceVisible(), FALSE) == 0) {
+                                             (uint8_t)MaxDistanceVisible(), FALSE) == 0) {
         // calculate how far this noise was, and its relative "importance"
         iDistAway = SpacesAway(pSoldier->sGridNo, *psNoiseGridNo);
         iNoiseValue = ((*pubNoiseVolume / 2) - 6) * iDistAway;
@@ -248,7 +248,7 @@ INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
     // make civs not walk to noises outside their room if on close patrol/onguard
     if (pSoldier->bOrders <= CLOSEPATROL &&
         (pSoldier->bTeam == CIV_TEAM || GetSolProfile(pSoldier) != NO_PROFILE)) {
-      UINT8 ubRoom, ubNewRoom;
+      uint8_t ubRoom, ubNewRoom;
 
       // any other combo uses the default of ubRoom == 0, set above
       if (InARoom(pSoldier->usPatrolGrid[0], &ubRoom)) {
@@ -292,10 +292,10 @@ INT16 MostImportantNoiseHeard(struct SOLDIERTYPE *pSoldier, INT32 *piRetValue,
   return (sBestGridNo);
 }
 
-INT16 WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, UINT8 ubInSightOnly) {
-  UINT8 ubTotal = 0;
-  UINT32 uiLoop;
-  INT8 *pbPersOL, *pbPublOL;
+int16_t WhatIKnowThatPublicDont(struct SOLDIERTYPE *pSoldier, uint8_t ubInSightOnly) {
+  uint8_t ubTotal = 0;
+  uint32_t uiLoop;
+  int8_t *pbPersOL, *pbPublOL;
   struct SOLDIERTYPE *pTemp;
 
   // if merc knows of a more important misc. noise than his team does

@@ -15,6 +15,6 @@ extern void GameLoop(void);
 // handle exit from game due to shortcut key
 void HandleShortCutExitState(void);
 
-void SetPendingNewScreen(UINT32 uiNewScreen);
+void SetPendingNewScreen(uint32_t uiNewScreen);
 
 #endif

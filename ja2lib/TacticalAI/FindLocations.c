@@ -34,8 +34,8 @@
 #include "Tactical/PathAIDebug.h"
 
 #ifdef _DEBUG
-INT16 gsCoverValue[WORLD_MAX];
-INT16 gsBestCover;
+int16_t gsCoverValue[WORLD_MAX];
+int16_t gsBestCover;
 #ifndef PATHAI_VISIBLE_DEBUG
 // NB Change this to true to get visible cover debug -- CJC
 BOOLEAN gfDisplayCoverValues = FALSE;
@@ -43,14 +43,14 @@ BOOLEAN gfDisplayCoverValues = FALSE;
 extern void RenderCoverDebug(void);
 #endif
 
-INT8 gubAIPathCosts[19][19];
+int8_t gubAIPathCosts[19][19];
 
 // FindBestNearbyCover - "Net" related stuff commented out
-extern UINT8 gubAICounter;
+extern uint8_t gubAICounter;
 extern BOOLEAN gfTurnBasedAI;
 
-INT32 CalcPercentBetter(INT32 iOldValue, INT32 iNewValue, INT32 iOldScale, INT32 iNewScale) {
-  INT32 iValueChange, iScaleSum, iPercentBetter;  //,loopCnt,tempInt;
+int32_t CalcPercentBetter(int32_t iOldValue, int32_t iNewValue, int32_t iOldScale, int32_t iNewScale) {
+  int32_t iValueChange, iScaleSum, iPercentBetter;  //,loopCnt,tempInt;
 
   // calcalate how much better the new cover would be than the current cover
   iValueChange = iNewValue - iOldValue;
@@ -99,21 +99,21 @@ INT32 CalcPercentBetter(INT32 iOldValue, INT32 iNewValue, INT32 iOldScale, INT32
   return (iPercentBetter);
 }
 
-void AICenterXY(INT16 sGridNo, FLOAT *pdX, FLOAT *pdY) {
-  INT16 sXPos, sYPos;
+void AICenterXY(int16_t sGridNo, float *pdX, float *pdY) {
+  int16_t sXPos, sYPos;
 
   sXPos = sGridNo % WORLD_COLS;
   sYPos = sGridNo / WORLD_COLS;
 
-  *pdX = (FLOAT)(sXPos * CELL_X_SIZE + CELL_X_SIZE / 2);
-  *pdY = (FLOAT)(sYPos * CELL_Y_SIZE + CELL_Y_SIZE / 2);
+  *pdX = (float)(sXPos * CELL_X_SIZE + CELL_X_SIZE / 2);
+  *pdY = (float)(sYPos * CELL_Y_SIZE + CELL_Y_SIZE / 2);
 }
 
-INT8 CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16 sOppGridNo,
-                              INT8 bLevel, INT32 iMyAPsLeft) {
+int8_t CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo,
+                              int8_t bLevel, int32_t iMyAPsLeft) {
   // When considering a gridno for cover, we want to take into account cover if we
   // lie down, so we return the LOWEST chance to get through for that location.
-  INT8 bCubeLevel, bThisCTGT, bWorstCTGT = 100;
+  int8_t bCubeLevel, bThisCTGT, bWorstCTGT = 100;
 
   for (bCubeLevel = 1; bCubeLevel <= 3; bCubeLevel++) {
     switch (bCubeLevel) {
@@ -144,12 +144,12 @@ INT8 CalcWorstCTGTForPosition(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16
   return (bWorstCTGT);
 }
 
-INT8 CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16 sOppGridNo,
-                                INT8 bLevel, INT32 iMyAPsLeft) {
+int8_t CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo,
+                                int8_t bLevel, int32_t iMyAPsLeft) {
   // When considering a gridno for cover, we want to take into account cover if we
   // lie down, so we return the LOWEST chance to get through for that location.
-  INT8 bCubeLevel;
-  INT32 iTotalCTGT = 0, bValidCubeLevels = 0;
+  int8_t bCubeLevel;
+  int32_t iTotalCTGT = 0, bValidCubeLevels = 0;
   ;
 
   for (bCubeLevel = 1; bCubeLevel <= 3; bCubeLevel++) {
@@ -172,18 +172,18 @@ INT8 CalcAverageCTGTForPosition(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT
     bValidCubeLevels++;
   }
   iTotalCTGT /= bValidCubeLevels;
-  return ((INT8)iTotalCTGT);
+  return ((int8_t)iTotalCTGT);
 }
 
-INT8 CalcBestCTGT(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16 sOppGridNo, INT8 bLevel,
-                  INT32 iMyAPsLeft) {
+int8_t CalcBestCTGT(struct SOLDIERTYPE *pSoldier, uint8_t ubOppID, int16_t sOppGridNo, int8_t bLevel,
+                  int32_t iMyAPsLeft) {
   // NOTE: CTGT stands for "ChanceToGetThrough..."
 
   // using only ints for maximum execution speed here
   // CJC: Well, so much for THAT idea!
-  INT16 sCentralGridNo, sAdjSpot, sNorthGridNo, sSouthGridNo, sDir, sCheckSpot;
+  int16_t sCentralGridNo, sAdjSpot, sNorthGridNo, sSouthGridNo, sDir, sCheckSpot;
 
-  INT8 bThisCTGT, bBestCTGT = 0;
+  int8_t bThisCTGT, bBestCTGT = 0;
 
   sCheckSpot = -1;
 
@@ -248,16 +248,16 @@ INT8 CalcBestCTGT(struct SOLDIERTYPE *pSoldier, UINT8 ubOppID, INT16 sOppGridNo,
   return (bBestCTGT);
 }
 
-INT32 CalcCoverValue(struct SOLDIERTYPE *pMe, INT16 sMyGridNo, INT32 iMyThreat, INT32 iMyAPsLeft,
-                     UINT32 uiThreatIndex, INT32 iRange, INT32 morale, INT32 *iTotalScale) {
+int32_t CalcCoverValue(struct SOLDIERTYPE *pMe, int16_t sMyGridNo, int32_t iMyThreat, int32_t iMyAPsLeft,
+                     uint32_t uiThreatIndex, int32_t iRange, int32_t morale, int32_t *iTotalScale) {
   // all 32-bit integers for max. speed
-  INT32 iMyPosValue, iHisPosValue, iCoverValue;
-  INT32 iReductionFactor, iThisScale;
-  INT16 sHisGridNo, sMyRealGridNo = NOWHERE, sHisRealGridNo = NOWHERE;
-  INT16 sTempX, sTempY;
-  FLOAT dMyX, dMyY, dHisX, dHisY;
-  INT8 bHisBestCTGT, bHisActualCTGT, bHisCTGT, bMyCTGT;
-  INT32 iRangeChange, iRangeFactor, iRangeFactorMultiplier;
+  int32_t iMyPosValue, iHisPosValue, iCoverValue;
+  int32_t iReductionFactor, iThisScale;
+  int16_t sHisGridNo, sMyRealGridNo = NOWHERE, sHisRealGridNo = NOWHERE;
+  int16_t sTempX, sTempY;
+  float dMyX, dMyY, dHisX, dHisY;
+  int8_t bHisBestCTGT, bHisActualCTGT, bHisCTGT, bMyCTGT;
+  int32_t iRangeChange, iRangeFactor, iRangeFactorMultiplier;
   struct SOLDIERTYPE *pHim;
 
   dMyX = dMyY = dHisX = dHisY = -1.0;
@@ -276,8 +276,8 @@ INT32 CalcCoverValue(struct SOLDIERTYPE *pMe, INT16 sMyGridNo, INT32 iMyThreat, 
 
     pMe->sGridNo = sMyGridNo;  // but pretend I'm standing at sMyGridNo
     ConvertGridNoToCenterCellXY(sMyGridNo, &sTempX, &sTempY);
-    pMe->dXPos = (FLOAT)sTempX;
-    pMe->dYPos = (FLOAT)sTempY;
+    pMe->dXPos = (float)sTempX;
+    pMe->dYPos = (float)sTempY;
   }
 
   // if this is theoretical, and he's not actually at hisGrid right now
@@ -288,8 +288,8 @@ INT32 CalcCoverValue(struct SOLDIERTYPE *pMe, INT16 sMyGridNo, INT32 iMyThreat, 
 
     pHim->sGridNo = sHisGridNo;  // but pretend he's standing at sHisGridNo
     ConvertGridNoToCenterCellXY(sHisGridNo, &sTempX, &sTempY);
-    pHim->dXPos = (FLOAT)sTempX;
-    pHim->dYPos = (FLOAT)sTempY;
+    pHim->dXPos = (float)sTempX;
+    pHim->dYPos = (float)sTempY;
   }
 
   if (InWaterOrGas(pHim, sHisGridNo)) {
@@ -335,8 +335,8 @@ INT32 CalcCoverValue(struct SOLDIERTYPE *pMe, INT16 sMyGridNo, INT32 iMyThreat, 
     if (pHim->sGridNo != sHisGridNo) {
       pHim->sGridNo = sHisGridNo;
       ConvertGridNoToCenterCellXY(sHisGridNo, &sTempX, &sTempY);
-      pHim->dXPos = (FLOAT)sTempX;
-      pHim->dYPos = (FLOAT)sTempY;
+      pHim->dXPos = (float)sTempX;
+      pHim->dYPos = (float)sTempY;
     }
     // bMyCTGT = ChanceToGetThrough(pMe,sHisGridNo,FAKE,ACTUAL,TESTWALLS,9999,M9PISTOL,NOT_FOR_LOS);
     // // assume a gunshot bMyCTGT = SoldierToLocationChanceToGetThrough( pMe, sHisGridNo,
@@ -461,9 +461,9 @@ INT32 CalcCoverValue(struct SOLDIERTYPE *pMe, INT16 sMyGridNo, INT32 iMyThreat, 
   return (iCoverValue);
 }
 
-UINT8 NumberOfTeamMatesAdjacent(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
-  UINT8 ubLoop, ubCount, ubWhoIsThere;
-  INT16 sTempGridNo;
+uint8_t NumberOfTeamMatesAdjacent(struct SOLDIERTYPE *pSoldier, int16_t sGridNo) {
+  uint8_t ubLoop, ubCount, ubWhoIsThere;
+  int16_t sTempGridNo;
 
   ubCount = 0;
 
@@ -481,33 +481,33 @@ UINT8 NumberOfTeamMatesAdjacent(struct SOLDIERTYPE *pSoldier, INT16 sGridNo) {
   return (ubCount);
 }
 
-INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piPercentBetter) {
+int16_t FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, int32_t morale, int32_t *piPercentBetter) {
   // all 32-bit integers for max. speed
-  UINT32 uiLoop;
-  INT32 iCurrentCoverValue, iCoverValue, iBestCoverValue;
-  INT32 iCurrentScale, iCoverScale, iBestCoverScale;
-  INT32 iDistFromOrigin, iDistCoverFromOrigin, iThreatCertainty;
-  INT16 sGridNo, sBestCover = NOWHERE;
-  INT32 iPathCost;
-  INT32 iThreatRange, iClosestThreatRange = 1500;
-  //	INT16 sClosestThreatGridno = NOWHERE;
-  INT32 iMyThreatValue;
-  INT16 sThreatLoc;
-  INT32 iMaxThreatRange;
-  UINT32 uiThreatCnt = 0;
-  INT32 iMaxMoveTilesLeft, iSearchRange, iRoamRange;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  UINT16 sOrigin;  // has to be a short, need a pointer
-  INT16 *pusLastLoc;
-  INT8 *pbPersOL;
-  INT8 *pbPublOL;
+  uint32_t uiLoop;
+  int32_t iCurrentCoverValue, iCoverValue, iBestCoverValue;
+  int32_t iCurrentScale, iCoverScale, iBestCoverScale;
+  int32_t iDistFromOrigin, iDistCoverFromOrigin, iThreatCertainty;
+  int16_t sGridNo, sBestCover = NOWHERE;
+  int32_t iPathCost;
+  int32_t iThreatRange, iClosestThreatRange = 1500;
+  //	int16_t sClosestThreatGridno = NOWHERE;
+  int32_t iMyThreatValue;
+  int16_t sThreatLoc;
+  int32_t iMaxThreatRange;
+  uint32_t uiThreatCnt = 0;
+  int32_t iMaxMoveTilesLeft, iSearchRange, iRoamRange;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+  uint16_t sOrigin;  // has to be a short, need a pointer
+  int16_t *pusLastLoc;
+  int8_t *pbPersOL;
+  int8_t *pbPublOL;
   struct SOLDIERTYPE *pOpponent;
-  UINT16 usMovementMode;
-  INT8 fHasGasMask;
+  uint16_t usMovementMode;
+  int8_t fHasGasMask;
 
-  UINT8 ubBackgroundLightLevel;
-  UINT8 ubBackgroundLightPercent = 0;
-  UINT8 ubLightPercentDifference;
+  uint8_t ubBackgroundLightLevel;
+  uint8_t ubBackgroundLightPercent = 0;
+  uint8_t ubLightPercentDifference;
   BOOLEAN fNight;
 
   switch (FindObj(pSoldier, GASMASK)) {
@@ -537,7 +537,7 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
 
 #if defined(_DEBUG) && !defined(PATHAI_VISIBLE_DEBUG)
   if (gfDisplayCoverValues) {
-    memset(gsCoverValue, 0x7F, sizeof(INT16) * WORLD_MAX);
+    memset(gsCoverValue, 0x7F, sizeof(int16_t) * WORLD_MAX);
   }
 #endif
 
@@ -777,7 +777,7 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
   // walk into within range.  We have to set some things up first...
 
   // set the distance limit of the square region
-  gubNPCDistLimit = (UINT8)iSearchRange;
+  gubNPCDistLimit = (uint8_t)iSearchRange;
   gusNPCMovementMode = usMovementMode;
 
   // reset the "reachable" flags in the region we're looking at
@@ -798,7 +798,7 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
   // so we don't consider it
   gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // HandleMyMouseCursor(KEYBOARDALSO);
@@ -917,7 +917,7 @@ INT16 FindBestNearbyCover(struct SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piP
 
 #if defined(_DEBUG) && !defined(PATHAI_VISIBLE_DEBUG)
       if (gfDisplayCoverValues) {
-        gsCoverValue[sGridNo] = (INT16)(iCoverValue / 100);
+        gsCoverValue[sGridNo] = (int16_t)(iCoverValue / 100);
       }
 #endif
 
@@ -997,27 +997,27 @@ do
       SnuggleDebug(pSoldier, "Found Cover");
 #endif
 
-      return ((INT16)sBestCover);  // return the gridno of that cover
+      return ((int16_t)sBestCover);  // return the gridno of that cover
     }
   }
   return (NOWHERE);  // return that no suitable cover was found
 }
 
-INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
-  INT16 sGridNo;
-  INT16 sBestSpot = NOWHERE;
-  UINT32 uiLoop;
-  INT32 iThreatRange, iClosestThreatRange = 1500, iSpotClosestThreatRange;
-  INT16 sThreatLoc, sThreatGridNo[MAXMERCS];
-  UINT32 uiThreatCnt = 0;
-  INT32 iSearchRange;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  INT8 *pbPersOL, *pbPublOL, bEscapeDirection, bBestEscapeDirection = -1;
+int16_t FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
+  int16_t sGridNo;
+  int16_t sBestSpot = NOWHERE;
+  uint32_t uiLoop;
+  int32_t iThreatRange, iClosestThreatRange = 1500, iSpotClosestThreatRange;
+  int16_t sThreatLoc, sThreatGridNo[MAXMERCS];
+  uint32_t uiThreatCnt = 0;
+  int32_t iSearchRange;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+  int8_t *pbPersOL, *pbPublOL, bEscapeDirection, bBestEscapeDirection = -1;
   struct SOLDIERTYPE *pOpponent;
-  UINT16 sOrigin;
-  INT32 iRoamRange;
+  uint16_t sOrigin;
+  int32_t iRoamRange;
 
-  INT8 fHasGasMask;
+  int8_t fHasGasMask;
 
   switch (FindObj(pSoldier, GASMASK)) {
     case HEAD1POS:
@@ -1132,7 +1132,7 @@ INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
   }
 
   // assume we have to stand up!
-  // use the min macro here to make sure we don't wrap the UINT8 to 255...
+  // use the min macro here to make sure we don't wrap the uint8_t to 255...
 
   // determine maximum horizontal limits
   sMaxLeft = min(iSearchRange, (pSoldier->sGridNo % MAXCOL));
@@ -1150,7 +1150,7 @@ INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
   // walk into within range.  We have to set some things up first...
 
   // set the distance limit of the square region
-  gubNPCDistLimit = (UINT8)iSearchRange;
+  gubNPCDistLimit = (uint8_t)iSearchRange;
 
   // reset the "reachable" flags in the region we're looking at
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
@@ -1260,10 +1260,10 @@ INT16 FindSpotMaxDistFromOpponents(struct SOLDIERTYPE *pSoldier) {
   return (sBestSpot);
 }
 
-INT16 FindNearestUngassedLand(struct SOLDIERTYPE *pSoldier) {
-  INT16 sGridNo, sClosestLand = NOWHERE, sPathCost, sShortestPath = 1000;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  INT32 iSearchRange;
+int16_t FindNearestUngassedLand(struct SOLDIERTYPE *pSoldier) {
+  int16_t sGridNo, sClosestLand = NOWHERE, sPathCost, sShortestPath = 1000;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+  int32_t iSearchRange;
 
   // NameMessage(pSoldier,"looking for nearest reachable land");
 
@@ -1288,7 +1288,7 @@ INT16 FindNearestUngassedLand(struct SOLDIERTYPE *pSoldier) {
     // walk into within range.  We have to set some things up first...
 
     // set the distance limit of the square region
-    gubNPCDistLimit = (UINT8)iSearchRange;
+    gubNPCDistLimit = (uint8_t)iSearchRange;
 
     // reset the "reachable" flags in the region we're looking at
     for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
@@ -1309,7 +1309,7 @@ INT16 FindNearestUngassedLand(struct SOLDIERTYPE *pSoldier) {
     // so we don't consider it
     gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-    // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+    // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
     for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
       for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
         // calculate the next potential gridno
@@ -1358,14 +1358,14 @@ INT16 FindNearestUngassedLand(struct SOLDIERTYPE *pSoldier) {
   return (sClosestLand);
 }
 
-INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
-  INT16 sGridNo, sClosestSpot = NOWHERE, sPathCost;
-  INT32 iSpotValue, iBestSpotValue = 1000;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  INT32 iSearchRange;
-  INT8 bLightLevel, bCurrLightLevel, bLightDiff;
-  INT32 iRoamRange;
-  UINT16 sOrigin;
+int16_t FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
+  int16_t sGridNo, sClosestSpot = NOWHERE, sPathCost;
+  int32_t iSpotValue, iBestSpotValue = 1000;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+  int32_t iSearchRange;
+  int8_t bLightLevel, bCurrLightLevel, bLightDiff;
+  int32_t iRoamRange;
+  uint16_t sOrigin;
 
   bCurrLightLevel = LightTrueLevel(pSoldier->sGridNo, pSoldier->bLevel);
 
@@ -1390,7 +1390,7 @@ INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
     // walk into within range.  We have to set some things up first...
 
     // set the distance limit of the square region
-    gubNPCDistLimit = (UINT8)iSearchRange;
+    gubNPCDistLimit = (uint8_t)iSearchRange;
 
     // reset the "reachable" flags in the region we're looking at
     for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
@@ -1411,7 +1411,7 @@ INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
     // so we don't consider it
     gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-    // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+    // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
     for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
       for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
         // calculate the next potential gridno
@@ -1480,16 +1480,16 @@ INT16 FindNearbyDarkerSpot(struct SOLDIERTYPE *pSoldier) {
 
 #define MINIMUM_REQUIRED_STATUS 70
 
-INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
-  INT32 iSearchRange;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  INT16 sGridNo;
-  INT16 sBestSpot = NOWHERE;
-  INT32 iTempValue, iValue, iBestValue = 0;
+int8_t SearchForItems(struct SOLDIERTYPE *pSoldier, int8_t bReason, uint16_t usItem) {
+  int32_t iSearchRange;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+  int16_t sGridNo;
+  int16_t sBestSpot = NOWHERE;
+  int32_t iTempValue, iValue, iBestValue = 0;
   struct ITEM_POOL *pItemPool;
   struct OBJECTTYPE *pObj;
   INVTYPE *pItem;
-  INT32 iItemIndex, iBestItemIndex;
+  int32_t iItemIndex, iBestItemIndex;
 
   iTempValue = -1;
   iItemIndex = iBestItemIndex = -1;
@@ -1554,7 +1554,7 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
   // walk into within range.  We have to set some things up first...
 
   // set the distance limit of the square region
-  gubNPCDistLimit = (UINT8)iSearchRange;
+  gubNPCDistLimit = (uint8_t)iSearchRange;
 
   // set an AP limit too, to our APs less the cost of picking up an item
   // and less the cost of dropping an item since we might need to do that
@@ -1575,7 +1575,7 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
   FindBestPath(pSoldier, NOWHERE, pSoldier->bLevel,
                DetermineMovementMode(pSoldier, AI_ACTION_PICKUP_ITEM), COPYREACHABLE, 0);
 
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // calculate the next potential gridno
@@ -1775,12 +1775,12 @@ INT8 SearchForItems(struct SOLDIERTYPE *pSoldier, INT8 bReason, UINT16 usItem) {
   return (AI_ACTION_NONE);
 }
 
-INT16 FindClosestDoor(struct SOLDIERTYPE *pSoldier) {
-  INT16 sClosestDoor = NOWHERE;
-  INT32 iSearchRange;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
-  INT16 sGridNo;
-  INT32 iDist, iClosestDist = 10;
+int16_t FindClosestDoor(struct SOLDIERTYPE *pSoldier) {
+  int16_t sClosestDoor = NOWHERE;
+  int32_t iSearchRange;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+  int16_t sGridNo;
+  int32_t iDist, iClosestDist = 10;
 
   iSearchRange = 5;
 
@@ -1795,7 +1795,7 @@ INT16 FindClosestDoor(struct SOLDIERTYPE *pSoldier) {
   // NumMessage("sMaxUp = ",sMaxUp);
   sMaxDown = min(iSearchRange, MAXROW - ((pSoldier->sGridNo / MAXROW) + 1));
   // NumMessage("sMaxDown = ",sMaxDown);
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // calculate the next potential gridno
@@ -1813,11 +1813,11 @@ INT16 FindClosestDoor(struct SOLDIERTYPE *pSoldier) {
   return (sClosestDoor);
 }
 
-INT16 FindNearestEdgepointOnSpecifiedEdge(INT16 sGridNo, INT8 bEdgeCode) {
-  INT32 iLoop;
-  INT16 *psEdgepointArray;
-  INT32 iEdgepointArraySize;
-  INT16 sClosestSpot = NOWHERE, sClosestDist = 0x7FFF, sTempDist;
+int16_t FindNearestEdgepointOnSpecifiedEdge(int16_t sGridNo, int8_t bEdgeCode) {
+  int32_t iLoop;
+  int16_t *psEdgepointArray;
+  int32_t iEdgepointArraySize;
+  int16_t sClosestSpot = NOWHERE, sClosestDist = 0x7FFF, sTempDist;
 
   switch (bEdgeCode) {
     case NORTH_EDGEPOINT_SEARCH:
@@ -1855,15 +1855,15 @@ INT16 FindNearestEdgepointOnSpecifiedEdge(INT16 sGridNo, INT8 bEdgeCode) {
   return (sClosestSpot);
 }
 
-INT16 FindNearestEdgePoint(INT16 sGridNo) {
-  INT16 sGridX, sGridY;
-  INT16 sScreenX, sScreenY, sMaxScreenX, sMaxScreenY;
-  INT16 sDist[5], sMinDist;
-  INT32 iLoop;
-  INT8 bMinIndex;
-  INT16 *psEdgepointArray;
-  INT32 iEdgepointArraySize;
-  INT16 sClosestSpot = NOWHERE, sClosestDist = 0x7FFF, sTempDist;
+int16_t FindNearestEdgePoint(int16_t sGridNo) {
+  int16_t sGridX, sGridY;
+  int16_t sScreenX, sScreenY, sMaxScreenX, sMaxScreenY;
+  int16_t sDist[5], sMinDist;
+  int32_t iLoop;
+  int8_t bMinIndex;
+  int16_t *psEdgepointArray;
+  int32_t iEdgepointArraySize;
+  int16_t sClosestSpot = NOWHERE, sClosestDist = 0x7FFF, sTempDist;
 
   ConvertGridNoToXY(sGridNo, &sGridX, &sGridY);
   GetWorldXYAbsoluteScreenXY(sGridX, sGridY, &sScreenX, &sScreenY);
@@ -1882,7 +1882,7 @@ INT16 FindNearestEdgePoint(INT16 sGridNo) {
   for (iLoop = 1; iLoop < 5; iLoop++) {
     if (sDist[iLoop] < sMinDist) {
       sMinDist = sDist[iLoop];
-      bMinIndex = (INT8)iLoop;
+      bMinIndex = (int8_t)iLoop;
     }
   }
 
@@ -1924,13 +1924,13 @@ INT16 FindNearestEdgePoint(INT16 sGridNo) {
 
 #define EDGE_OF_MAP_SEARCH 5
 
-INT16 FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, INT8 *pbDirection) {
-  INT32 iSearchRange;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+int16_t FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, int8_t *pbDirection) {
+  int32_t iSearchRange;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
 
-  INT16 sGridNo, sClosestSpot = NOWHERE;
-  INT8 bDirection, bClosestDirection;
-  INT32 iPathCost, iClosestPathCost = 1000;
+  int16_t sGridNo, sClosestSpot = NOWHERE;
+  int8_t bDirection, bClosestDirection;
+  int32_t iPathCost, iClosestPathCost = 1000;
 
   bClosestDirection = -1;
 
@@ -1971,7 +1971,7 @@ INT16 FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, INT8 *pbDirection
   // so we don't consider it
   gpWorldLevelData[pSoldier->sGridNo].uiFlags &= ~(MAPELEMENT_REACHABLE);
 
-  // SET UP DOUBLE-LOOP TO STEP THROUGH POTENTIAL GRID #s
+  // SET UP double-LOOP TO STEP THROUGH POTENTIAL GRID #s
   for (sYOffset = -sMaxUp; sYOffset <= sMaxDown; sYOffset++) {
     for (sXOffset = -sMaxLeft; sXOffset <= sMaxRight; sXOffset++) {
       // calculate the next potential gridno
@@ -2001,7 +2001,7 @@ INT16 FindNearbyPointOnEdgeOfMap(struct SOLDIERTYPE *pSoldier, INT8 *pbDirection
   return (sClosestSpot);
 }
 
-INT16 FindRouteBackOntoMap(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo) {
+int16_t FindRouteBackOntoMap(struct SOLDIERTYPE *pSoldier, int16_t sDestGridNo) {
   // the first thing to do is restore the soldier's gridno from the X and Y
   // values
 
@@ -2014,13 +2014,13 @@ INT16 FindRouteBackOntoMap(struct SOLDIERTYPE *pSoldier, INT16 sDestGridNo) {
   }
 }
 
-INT16 FindClosestBoxingRingSpot(struct SOLDIERTYPE *pSoldier, BOOLEAN fInRing) {
-  INT32 iSearchRange;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+int16_t FindClosestBoxingRingSpot(struct SOLDIERTYPE *pSoldier, BOOLEAN fInRing) {
+  int32_t iSearchRange;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
 
-  INT16 sGridNo, sClosestSpot = NOWHERE;
-  INT32 iDistance, iClosestDistance = 9999;
-  UINT8 ubRoom;
+  int16_t sGridNo, sClosestSpot = NOWHERE;
+  int32_t iDistance, iClosestDistance = 9999;
+  uint8_t ubRoom;
 
   // set the distance limit of the square region
   iSearchRange = 7;
@@ -2062,12 +2062,12 @@ INT16 FindClosestBoxingRingSpot(struct SOLDIERTYPE *pSoldier, BOOLEAN fInRing) {
   return (sClosestSpot);
 }
 
-INT16 FindNearestOpenableNonDoor(INT16 sStartGridNo) {
-  INT32 iSearchRange;
-  INT16 sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
+int16_t FindNearestOpenableNonDoor(int16_t sStartGridNo) {
+  int32_t iSearchRange;
+  int16_t sMaxLeft, sMaxRight, sMaxUp, sMaxDown, sXOffset, sYOffset;
 
-  INT16 sGridNo, sClosestSpot = NOWHERE;
-  INT32 iDistance, iClosestDistance = 9999;
+  int16_t sGridNo, sClosestSpot = NOWHERE;
+  int32_t iDistance, iClosestDistance = 9999;
   struct STRUCTURE *pStructure;
 
   // set the distance limit of the square region

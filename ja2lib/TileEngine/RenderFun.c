@@ -21,8 +21,8 @@
 #include "Utils/TimerControl.h"
 
 // Room Information
-UINT8 gubWorldRoomInfo[WORLD_MAX];
-UINT8 gubWorldRoomHidden[MAX_ROOMS];
+uint8_t gubWorldRoomInfo[WORLD_MAX];
+uint8_t gubWorldRoomHidden[MAX_ROOMS];
 
 BOOLEAN InitRoomDatabase() {
   memset(gubWorldRoomInfo, NO_ROOM, sizeof(gubWorldRoomInfo));
@@ -32,22 +32,22 @@ BOOLEAN InitRoomDatabase() {
 
 void ShutdownRoomDatabase() {}
 
-void SetTileRoomNum(INT16 sGridNo, UINT8 ubRoomNum) {
+void SetTileRoomNum(int16_t sGridNo, uint8_t ubRoomNum) {
   // Add to global room list
   gubWorldRoomInfo[sGridNo] = ubRoomNum;
 }
 
-void SetTileRangeRoomNum(struct GRect *pSelectRegion, UINT8 ubRoomNum) {
-  INT32 cnt1, cnt2;
+void SetTileRangeRoomNum(struct GRect *pSelectRegion, uint8_t ubRoomNum) {
+  int32_t cnt1, cnt2;
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
-      gubWorldRoomInfo[(INT16)MAPROWCOLTOPOS(cnt1, cnt2)] = ubRoomNum;
+      gubWorldRoomInfo[(int16_t)MAPROWCOLTOPOS(cnt1, cnt2)] = ubRoomNum;
     }
   }
 }
 
-BOOLEAN InARoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
+BOOLEAN InARoom(uint16_t sGridNo, uint8_t *pubRoomNo) {
   if (gubWorldRoomInfo[sGridNo] != NO_ROOM) {
     if (pubRoomNo) {
       *pubRoomNo = gubWorldRoomInfo[sGridNo];
@@ -58,7 +58,7 @@ BOOLEAN InARoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
   return (FALSE);
 }
 
-BOOLEAN InAHiddenRoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
+BOOLEAN InAHiddenRoom(uint16_t sGridNo, uint8_t *pubRoomNo) {
   if (gubWorldRoomInfo[sGridNo] != NO_ROOM) {
     if ((gubWorldRoomHidden[gubWorldRoomInfo[sGridNo]])) {
       *pubRoomNo = gubWorldRoomInfo[sGridNo];
@@ -70,9 +70,9 @@ BOOLEAN InAHiddenRoom(UINT16 sGridNo, UINT8 *pubRoomNo) {
 }
 
 // @@ATECLIP TO WORLD!
-void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
-  INT16 sCountX, sCountY;
-  UINT32 uiTile;
+void SetRecalculateWireFrameFlagRadius(int16_t sX, int16_t sY, int16_t sRadius) {
+  int16_t sCountX, sCountY;
+  uint32_t uiTile;
 
   for (sCountY = sY - sRadius; sCountY < (sY + sRadius + 2); sCountY++) {
     for (sCountX = sX - sRadius; sCountX < (sX + sRadius + 2); sCountX++) {
@@ -83,10 +83,10 @@ void SetRecalculateWireFrameFlagRadius(INT16 sX, INT16 sY, INT16 sRadius) {
   }
 }
 
-void SetGridNoRevealedFlag(UINT16 sGridNo) {
-  //	UINT32 cnt;
+void SetGridNoRevealedFlag(uint16_t sGridNo) {
+  //	uint32_t cnt;
   //  struct ITEM_POOL					*pItemPool;
-  //	INT16							sX, sY;
+  //	int16_t							sX, sY;
   struct LEVELNODE *pNode = NULL;
   struct STRUCTURE *pStructure, *pBase;
 
@@ -115,7 +115,7 @@ void SetGridNoRevealedFlag(UINT16 sGridNo) {
 
   // ATE: If there are any structs here, we can render them with the obscured flag!
   // Look for anything but walls pn this gridno!
-  pStructure = gpWorldLevelData[(INT16)sGridNo].pStructureHead;
+  pStructure = gpWorldLevelData[(int16_t)sGridNo].pStructureHead;
 
   while (pStructure != NULL) {
     if (pStructure->sCubeOffset == STRUCTURE_ON_GROUND ||
@@ -145,13 +145,13 @@ void SetGridNoRevealedFlag(UINT16 sGridNo) {
   gubWorldRoomHidden[gubWorldRoomInfo[sGridNo]] = FALSE;
 }
 
-void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
+void ExamineGridNoForSlantRoofExtraGraphic(uint16_t sCheckGridNo) {
   struct LEVELNODE *pNode = NULL;
   struct STRUCTURE *pStructure, *pBase;
-  UINT8 ubLoop;
+  uint8_t ubLoop;
   DB_STRUCTURE_TILE **ppTile;
-  INT16 sGridNo;
-  UINT16 usIndex;
+  int16_t sGridNo;
+  uint16_t usIndex;
   BOOLEAN fChanged = FALSE;
 
   // CHECK FOR A SLANTED ROOF HERE....
@@ -203,10 +203,10 @@ void ExamineGridNoForSlantRoofExtraGraphic(UINT16 sCheckGridNo) {
   }
 }
 
-void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier) {
-  UINT32 cnt;
+void RemoveRoomRoof(uint16_t sGridNo, uint8_t bRoomNum, struct SOLDIERTYPE *pSoldier) {
+  uint32_t cnt;
   struct ITEM_POOL *pItemPool;
-  INT16 sX, sY;
+  int16_t sX, sY;
   BOOLEAN fSaidItemSeenQuote = FALSE;
 
   //	struct STRUCTURE					*pStructure;//, *pBase;
@@ -214,12 +214,12 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
   // LOOP THORUGH WORLD AND CHECK ROOM INFO
   for (cnt = 0; cnt < WORLD_MAX; cnt++) {
     if (gubWorldRoomInfo[cnt] == bRoomNum) {
-      SetGridNoRevealedFlag((UINT16)cnt);
+      SetGridNoRevealedFlag((uint16_t)cnt);
 
       RemoveRoofIndexFlagsFromTypeRange(cnt, FIRSTROOF, SECONDSLANTROOF, LEVELNODE_REVEAL);
 
       // Reveal any items if here!
-      if (GetItemPool((INT16)cnt, &pItemPool, 0)) {
+      if (GetItemPool((int16_t)cnt, &pItemPool, 0)) {
         // Set visible! ( only if invisible... )
         if (SetItemPoolVisibilityOn(pItemPool, INVISIBLE, TRUE)) {
           if (!fSaidItemSeenQuote) {
@@ -227,7 +227,7 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
 
             if (pSoldier != NULL) {
               TacticalCharacterDialogue(pSoldier,
-                                        (UINT16)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
+                                        (uint16_t)(QUOTE_SPOTTED_SOMETHING_ONE + Random(2)));
             }
           }
         }
@@ -235,7 +235,7 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
 
       // OK, re-set writeframes ( in a radius )
       // Get XY
-      ConvertGridNoToXY((INT16)cnt, &sX, &sY);
+      ConvertGridNoToXY((int16_t)cnt, &sX, &sY);
       SetRecalculateWireFrameFlagRadius(sX, sY, 2);
     }
   }
@@ -244,7 +244,7 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
   //{
   //	if ( gubWorldRoomInfo[ cnt ] == bRoomNum )
   //	{
-  //		ExamineGridNoForSlantRoofExtraGraphic( (UINT16)cnt );
+  //		ExamineGridNoForSlantRoofExtraGraphic( (uint16_t)cnt );
   //	}
   //}
 
@@ -256,11 +256,11 @@ void RemoveRoomRoof(UINT16 sGridNo, UINT8 bRoomNum, struct SOLDIERTYPE *pSoldier
 }
 
 BOOLEAN AddSpecialTileRange(struct GRect *pSelectRegion) {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
-      AddObjectToHead((INT16)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
+      AddObjectToHead((int16_t)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
     }
   }
 
@@ -268,11 +268,11 @@ BOOLEAN AddSpecialTileRange(struct GRect *pSelectRegion) {
 }
 
 BOOLEAN RemoveSpecialTileRange(struct GRect *pSelectRegion) {
-  INT32 cnt1, cnt2;
+  int32_t cnt1, cnt2;
 
   for (cnt1 = pSelectRegion->iTop; cnt1 <= pSelectRegion->iBottom; cnt1++) {
     for (cnt2 = pSelectRegion->iLeft; cnt2 <= pSelectRegion->iRight; cnt2++) {
-      RemoveObject((INT16)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
+      RemoveObject((int16_t)MAPROWCOLTOPOS(cnt1, cnt2), SPECIALTILE_MAPEXIT);
     }
   }
 

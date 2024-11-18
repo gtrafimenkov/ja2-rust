@@ -40,46 +40,46 @@
 
 BOOLEAN gfInSectorExitMenu = FALSE;
 
-void CheckLoadMapCallback(GUI_BUTTON *btn, INT32 reason);
-void SingleMoveCallback(GUI_BUTTON *btn, INT32 reason);
-void AllMoveCallback(GUI_BUTTON *btn, INT32 reason);
+void CheckLoadMapCallback(GUI_BUTTON *btn, int32_t reason);
+void SingleMoveCallback(GUI_BUTTON *btn, int32_t reason);
+void AllMoveCallback(GUI_BUTTON *btn, int32_t reason);
 
-void OKCallback(GUI_BUTTON *btn, INT32 reason);
-void CancelCallback(GUI_BUTTON *btn, INT32 reason);
+void OKCallback(GUI_BUTTON *btn, int32_t reason);
+void CancelCallback(GUI_BUTTON *btn, int32_t reason);
 
-void SectorExitBackgroundCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SectorExitBackgroundCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
-void SingleRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void AllRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void LoadRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SingleRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void AllRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void LoadRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
+void SingleRegionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void AllRegionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void LoadRegionCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SingleRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void AllRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void LoadRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
 
 typedef struct {
   struct MOUSE_REGION BackRegion;
   struct MOUSE_REGION SingleRegion;
   struct MOUSE_REGION LoadRegion;
   struct MOUSE_REGION AllRegion;
-  UINT32 uiLoadCheckButton;
-  UINT32 uiSingleMoveButton;
-  UINT32 uiAllMoveButton;
-  UINT32 uiOKButton;
-  UINT32 uiCancelButton;
-  INT32 iBoxId;
-  INT32 iButtonImages;
-  UINT16 usWidth;
-  UINT16 usHeight;
-  INT16 sX;
-  INT16 sY;
-  INT16 sAdditionalData;
-  UINT8 ubFlags;
-  UINT8 ubLeaveSectorType;
-  UINT8 ubLeaveSectorCode;
-  UINT8 ubDirection;
-  UINT8 ubNumPeopleOnSquad;
-  INT8 bSingleMoveWillIsolateEPC;  // if not -1, then that means the slot number is an EPC
-  INT8 bHandled;
+  uint32_t uiLoadCheckButton;
+  uint32_t uiSingleMoveButton;
+  uint32_t uiAllMoveButton;
+  uint32_t uiOKButton;
+  uint32_t uiCancelButton;
+  int32_t iBoxId;
+  int32_t iButtonImages;
+  uint16_t usWidth;
+  uint16_t usHeight;
+  int16_t sX;
+  int16_t sY;
+  int16_t sAdditionalData;
+  uint8_t ubFlags;
+  uint8_t ubLeaveSectorType;
+  uint8_t ubLeaveSectorCode;
+  uint8_t ubDirection;
+  uint8_t ubNumPeopleOnSquad;
+  int8_t bSingleMoveWillIsolateEPC;  // if not -1, then that means the slot number is an EPC
+  int8_t bHandled;
   BOOLEAN fRender;
   BOOLEAN fGotoSector;
   BOOLEAN fGotoSectorText;
@@ -102,25 +102,25 @@ typedef struct {
 
 EXIT_DIALOG_STRUCT gExitDialog;
 
-UINT8 gubExitGUIDirection;
-INT16 gsExitGUIAdditionalData;
+uint8_t gubExitGUIDirection;
+int16_t gsExitGUIAdditionalData;
 u8 gsWarpWorldX;
 u8 gsWarpWorldY;
-INT8 gbWarpWorldZ;
-INT16 gsWarpGridNo;
+int8_t gbWarpWorldZ;
+int16_t gsWarpGridNo;
 
 // KM:  New method is coded for more sophistocated rules.  All the information is stored within the
 // gExitDialog struct 		 and calculated upon entry to this function instead of passing in
 // multiple
 // arguments and calculating it prior.
-BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
-  UINT32 uiTraverseTimeInMinutes;
+BOOLEAN InternalInitSectorExitMenu(uint8_t ubDirection, int16_t sAdditionalData) {
+  uint32_t uiTraverseTimeInMinutes;
   struct SOLDIERTYPE *pSoldier;
-  INT32 i;
+  int32_t i;
   struct GRect aRect;
-  UINT16 usTextBoxWidth, usTextBoxHeight;
-  UINT16 usMapPos = 0;
-  INT8 bExitCode = -1;
+  uint16_t usTextBoxWidth, usTextBoxHeight;
+  uint16_t usMapPos = 0;
+  int8_t bExitCode = -1;
   BOOLEAN OkExitCode;
 
   // STEP 1:  Calculate the information for the exit gui
@@ -169,7 +169,7 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
   }
 
   if (gTacticalStatus.uiFlags & INCOMBAT) {
-    INT32 i, cnt = 0;
+    int32_t i, cnt = 0;
     for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
          i++) {
       if (OK_INSECTOR_MERC(MercPtrs[i])) cnt++;
@@ -232,8 +232,8 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
   } else {  // check to see if we have one selected merc and one or more EPCs.
     // If so, don't allow the selected merc to leave by himself.
     // Assuming that the matching squad assignment is in the same sector.
-    UINT8 ubNumMercs = 1;  // selected soldier is a merc
-    UINT8 ubNumEPCs = 0;
+    uint8_t ubNumMercs = 1;  // selected soldier is a merc
+    uint8_t ubNumEPCs = 0;
     for (i = gTacticalStatus.Team[OUR_TEAM].bFirstID; i <= gTacticalStatus.Team[OUR_TEAM].bLastID;
          i++) {
       if (i == gusSelectedSoldier) {
@@ -245,7 +245,7 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
           // record the slot of the epc.  If there are more than one EPCs, then
           // it doesn't matter.  This is used in building the text message explaining
           // why the selected merc can't leave.  This is how we extract the EPC's name.
-          gExitDialog.bSingleMoveWillIsolateEPC = (INT8)i;
+          gExitDialog.bSingleMoveWillIsolateEPC = (int8_t)i;
         } else {  // We have more than one merc, so we will allow the selected merc to leave alone
                   // if
           // the user so desired.
@@ -294,8 +294,8 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
       -1, DIALOG_MERC_POPUP_BACKGROUND, DIALOG_MERC_POPUP_BORDER, TacticalStr[EXIT_GUI_TITLE_STR],
       100, 85, 2, 75, &usTextBoxWidth, &usTextBoxHeight);
 
-  gExitDialog.sX = (INT16)((((aRect.iRight - aRect.iLeft) - usTextBoxWidth) / 2) + aRect.iLeft);
-  gExitDialog.sY = (INT16)((((aRect.iBottom - aRect.iTop) - usTextBoxHeight) / 2) + aRect.iTop);
+  gExitDialog.sX = (int16_t)((((aRect.iRight - aRect.iLeft) - usTextBoxWidth) / 2) + aRect.iLeft);
+  gExitDialog.sY = (int16_t)((((aRect.iBottom - aRect.iTop) - usTextBoxHeight) / 2) + aRect.iTop);
   gExitDialog.usWidth = usTextBoxWidth;
   gExitDialog.usHeight = usTextBoxHeight;
 
@@ -309,46 +309,46 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
 
   gExitDialog.iButtonImages = LoadButtonImage("INTERFACE\\popupbuttons.sti", -1, 0, -1, 1, -1);
 
-  MSYS_DefineRegion(&gExitDialog.SingleRegion, (INT16)(gExitDialog.sX + 20),
-                    (INT16)(gExitDialog.sY + 37), (INT16)(gExitDialog.sX + 45 + 120),
-                    (INT16)(gExitDialog.sY + 37 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
+  MSYS_DefineRegion(&gExitDialog.SingleRegion, (int16_t)(gExitDialog.sX + 20),
+                    (int16_t)(gExitDialog.sY + 37), (int16_t)(gExitDialog.sX + 45 + 120),
+                    (int16_t)(gExitDialog.sY + 37 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
                     SingleRegionMoveCallback, SingleRegionCallback);
   MSYS_AllowDisabledRegionFastHelp(&gExitDialog.SingleRegion, TRUE);
 
-  MSYS_DefineRegion(&(gExitDialog.AllRegion), (INT16)(gExitDialog.sX + 20),
-                    (INT16)(gExitDialog.sY + 57), (INT16)(gExitDialog.sX + 45 + 120),
-                    (INT16)(gExitDialog.sY + 57 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
+  MSYS_DefineRegion(&(gExitDialog.AllRegion), (int16_t)(gExitDialog.sX + 20),
+                    (int16_t)(gExitDialog.sY + 57), (int16_t)(gExitDialog.sX + 45 + 120),
+                    (int16_t)(gExitDialog.sY + 57 + 12), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
                     AllRegionMoveCallback, AllRegionCallback);
   MSYS_AllowDisabledRegionFastHelp(&gExitDialog.AllRegion, TRUE);
 
-  MSYS_DefineRegion(&(gExitDialog.LoadRegion), (INT16)(gExitDialog.sX + 155),
-                    (INT16)(gExitDialog.sY + 45), (INT16)(gExitDialog.sX + 180 + 85),
-                    (INT16)(gExitDialog.sY + 45 + 15), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
+  MSYS_DefineRegion(&(gExitDialog.LoadRegion), (int16_t)(gExitDialog.sX + 155),
+                    (int16_t)(gExitDialog.sY + 45), (int16_t)(gExitDialog.sX + 180 + 85),
+                    (int16_t)(gExitDialog.sY + 45 + 15), MSYS_PRIORITY_HIGHEST, CURSOR_NORMAL,
                     LoadRegionMoveCallback, LoadRegionCallback);
   MSYS_AllowDisabledRegionFastHelp(&gExitDialog.LoadRegion, TRUE);
 
   gExitDialog.uiLoadCheckButton = CreateCheckBoxButton(
-      (INT16)(gExitDialog.sX + 155), (INT16)(gExitDialog.sY + 43), "INTERFACE\\popupcheck.sti",
+      (int16_t)(gExitDialog.sX + 155), (int16_t)(gExitDialog.sY + 43), "INTERFACE\\popupcheck.sti",
       MSYS_PRIORITY_HIGHEST, CheckLoadMapCallback);
 
   gExitDialog.uiSingleMoveButton = CreateCheckBoxButton(
-      (INT16)(gExitDialog.sX + 20), (INT16)(gExitDialog.sY + 35),
+      (int16_t)(gExitDialog.sX + 20), (int16_t)(gExitDialog.sY + 35),
       "INTERFACE\\popupradiobuttons.sti", MSYS_PRIORITY_HIGHEST, SingleMoveCallback);
 
   gExitDialog.uiAllMoveButton = CreateCheckBoxButton(
-      (INT16)(gExitDialog.sX + 20), (INT16)(gExitDialog.sY + 55),
+      (int16_t)(gExitDialog.sX + 20), (int16_t)(gExitDialog.sY + 55),
       "INTERFACE\\popupradiobuttons.sti", MSYS_PRIORITY_HIGHEST, AllMoveCallback);
 
   gExitDialog.uiOKButton = CreateIconAndTextButton(
       gExitDialog.iButtonImages, TacticalStr[OK_BUTTON_TEXT_STR], FONT12ARIAL, FONT_MCOLOR_WHITE,
       DEFAULT_SHADOW, FONT_MCOLOR_WHITE, DEFAULT_SHADOW, TEXT_CJUSTIFIED,
-      (INT16)(gExitDialog.sX + 65), (INT16)(gExitDialog.sY + 78), BUTTON_TOGGLE,
+      (int16_t)(gExitDialog.sX + 65), (int16_t)(gExitDialog.sY + 78), BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)OKCallback);
 
   gExitDialog.uiCancelButton = CreateIconAndTextButton(
       gExitDialog.iButtonImages, TacticalStr[CANCEL_BUTTON_TEXT_STR], FONT12ARIAL,
       FONT_MCOLOR_WHITE, DEFAULT_SHADOW, FONT_MCOLOR_WHITE, DEFAULT_SHADOW, TEXT_CJUSTIFIED,
-      (INT16)(gExitDialog.sX + 135), (INT16)(gExitDialog.sY + 78), BUTTON_TOGGLE,
+      (int16_t)(gExitDialog.sX + 135), (int16_t)(gExitDialog.sY + 78), BUTTON_TOGGLE,
       MSYS_PRIORITY_HIGHEST, DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)CancelCallback);
 
   gfIgnoreScrolling = TRUE;
@@ -363,7 +363,7 @@ BOOLEAN InternalInitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
 void DoneFadeInWarp(void) {}
 
 void DoneFadeOutWarpCallback(void) {
-  INT32 cnt;
+  int32_t cnt;
   struct SOLDIERTYPE *pSoldier;
 
   // Warp!
@@ -405,7 +405,7 @@ void DoneFadeOutWarpCallback(void) {
   FadeInGameScreen();
 }
 
-void WarpToSurfaceCallback(UINT8 bExitValue) {
+void WarpToSurfaceCallback(uint8_t bExitValue) {
   if (bExitValue == MSG_BOX_RETURN_YES) {
     gFadeOutDoneCallback = DoneFadeOutWarpCallback;
 
@@ -415,7 +415,7 @@ void WarpToSurfaceCallback(UINT8 bExitValue) {
   }
 }
 
-BOOLEAN InitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
+BOOLEAN InitSectorExitMenu(uint8_t ubDirection, int16_t sAdditionalData) {
   gubExitGUIDirection = ubDirection;
   gsExitGUIAdditionalData = sAdditionalData;
 
@@ -426,7 +426,7 @@ BOOLEAN InitSectorExitMenu(UINT8 ubDirection, INT16 sAdditionalData) {
       gsWarpWorldY = mapY;
       // ATE: Check if we are in a creature lair and bring up box if so....
       DoMessageBox(MSG_BOX_BASIC_STYLE, gzLateLocalizedString[33], GAME_SCREEN,
-                   (UINT8)MSG_BOX_FLAG_YESNO, WarpToSurfaceCallback, NULL);
+                   (uint8_t)MSG_BOX_FLAG_YESNO, WarpToSurfaceCallback, NULL);
 
       return (TRUE);
     }
@@ -498,7 +498,7 @@ void UpdateSectorExitMenu() {
     MSYS_DisableRegion(&(gExitDialog.SingleRegion));
     if (gExitDialog.fSelectedMercIsEPC) {  // EPCs cannot leave the sector alone and must be
                                            // escorted
-      CHAR16 str[256];
+      wchar_t str[256];
       swprintf(str, ARR_SIZE(str),
                pExitingSectorHelpText[EXIT_GUI_ESCORTED_CHARACTERS_MUST_BE_ESCORTED_HELPTEXT],
                MercPtrs[gusSelectedSoldier]->name);
@@ -509,7 +509,7 @@ void UpdateSectorExitMenu() {
                       // squad, the selected merc
       // isn't an EPC, but the other merc is.  That means that this merc cannot leave the sector
       // alone as he would isolate the EPC.
-      CHAR16 str[256];
+      wchar_t str[256];
       if (!gExitDialog.fSquadHasMultipleEPCs) {
         if (gMercProfiles[MercPtrs[gusSelectedSoldier]->ubProfile].bSex == MALE) {  // male singular
           swprintf(str, ARR_SIZE(str),
@@ -537,7 +537,7 @@ void UpdateSectorExitMenu() {
       SetRegionFastHelpText(&gExitDialog.SingleRegion, str);
     }
   } else {
-    CHAR16 str[256];
+    wchar_t str[256];
     EnableButton(gExitDialog.uiSingleMoveButton);
     MSYS_EnableRegion(&(gExitDialog.SingleRegion));
     swprintf(str, ARR_SIZE(str),
@@ -651,7 +651,7 @@ BOOLEAN HandleSectorExitMenu() {
 }
 
 void RemoveSectorExitMenu(BOOLEAN fOk) {
-  CHAR16 Str[50];
+  wchar_t Str[50];
 
   if (gfInSectorExitMenu) {
     guiPendingOverrideEvent = A_CHANGE_TO_MOVE;
@@ -691,7 +691,7 @@ void RemoveSectorExitMenu(BOOLEAN fOk) {
         swprintf(Str, ARR_SIZE(Str), pMessageStrings[MSG_EPC_CANT_TRAVERSE],
                  MercPtrs[gusSelectedSoldier]->name);
 
-        DoMessageBox(MSG_BOX_BASIC_STYLE, Str, GAME_SCREEN, (UINT8)MSG_BOX_FLAG_OK, NULL, NULL);
+        DoMessageBox(MSG_BOX_BASIC_STYLE, Str, GAME_SCREEN, (uint8_t)MSG_BOX_FLAG_OK, NULL, NULL);
         return;
       }
     }
@@ -733,7 +733,7 @@ void RemoveSectorExitMenu(BOOLEAN fOk) {
   }
 }
 
-void CheckLoadMapCallback(GUI_BUTTON *btn, INT32 reason) {
+void CheckLoadMapCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gExitDialog.fGotoSector = !gExitDialog.fGotoSector;
   }
@@ -781,19 +781,19 @@ void AllMoveAction() {
   */
 }
 
-void SingleMoveCallback(GUI_BUTTON *btn, INT32 reason) {
+void SingleMoveCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     SingleMoveAction();
   }
 }
 
-void AllMoveCallback(GUI_BUTTON *btn, INT32 reason) {
+void AllMoveCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     AllMoveAction();
   }
 }
 
-void OKCallback(GUI_BUTTON *btn, INT32 reason) {
+void OKCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -804,7 +804,7 @@ void OKCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void CancelCallback(GUI_BUTTON *btn, INT32 reason) {
+void CancelCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
   } else if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
@@ -815,31 +815,31 @@ void CancelCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void SectorExitBackgroundCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SectorExitBackgroundCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP) {
     // gMsgBox.bHandled = MSG_BOX_RETURN_NO;
   }
 }
 
-void SingleRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SingleRegionCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     SingleMoveAction();
   }
 }
 
-void AllRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void AllRegionCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     AllMoveAction();
   }
 }
 
-void LoadRegionCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void LoadRegionCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     gExitDialog.fGotoSector = !gExitDialog.fGotoSector;
   }
 }
 
-void SingleRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SingleRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_MOVE) {
     gExitDialog.fSingleMoveHilighted = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
@@ -847,7 +847,7 @@ void SingleRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void AllRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void AllRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_MOVE) {
     gExitDialog.fAllMoveHilighted = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
@@ -855,7 +855,7 @@ void AllRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void LoadRegionMoveCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void LoadRegionMoveCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_MOVE) {
     gExitDialog.fGotoSectorHilighted = TRUE;
   } else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE) {

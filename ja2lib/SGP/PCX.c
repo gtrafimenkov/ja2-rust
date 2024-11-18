@@ -17,32 +17,32 @@
 #define PCX_Y_CLIPPING 128
 
 typedef struct {
-  UINT8 ubManufacturer;
-  UINT8 ubVersion;
-  UINT8 ubEncoding;
-  UINT8 ubBitsPerPixel;
-  UINT16 usLeft, usTop;
-  UINT16 usRight, usBottom;
-  UINT16 usHorRez, usVerRez;
-  UINT8 ubEgaPalette[48];
-  UINT8 ubReserved;
-  UINT8 ubColorPlanes;
-  UINT16 usBytesPerLine;
-  UINT16 usPaletteType;
-  UINT8 ubFiller[58];
+  uint8_t ubManufacturer;
+  uint8_t ubVersion;
+  uint8_t ubEncoding;
+  uint8_t ubBitsPerPixel;
+  uint16_t usLeft, usTop;
+  uint16_t usRight, usBottom;
+  uint16_t usHorRez, usVerRez;
+  uint8_t ubEgaPalette[48];
+  uint8_t ubReserved;
+  uint8_t ubColorPlanes;
+  uint16_t usBytesPerLine;
+  uint16_t usPaletteType;
+  uint8_t ubFiller[58];
 } PcxHeader;
 
 typedef struct {
-  UINT8 *pPcxBuffer;
-  UINT8 ubPalette[768];
-  UINT16 usWidth, usHeight;
-  UINT32 uiBufferSize;
-  UINT16 usPcxFlags;
+  uint8_t *pPcxBuffer;
+  uint8_t ubPalette[768];
+  uint16_t usWidth, usHeight;
+  uint32_t uiBufferSize;
+  uint16_t usPcxFlags;
 } PcxObject;
 
 static BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage);
-static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usBufferWidth,
-                               UINT16 usBufferHeight, UINT16 usX, UINT16 usY, BOOLEAN fTransp);
+static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
+                               uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp);
 static PcxObject *LoadPcx(const char *pFilename);
 
 BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
@@ -62,7 +62,7 @@ BOOLEAN LoadPCXFileToImage(const char *filePath, struct Image *hImage) {
 
   hImage->image_data = MemAlloc(hImage->width * hImage->height);
 
-  if (!BlitPcxToBuffer(pPcxObject, (UINT8 *)hImage->image_data, hImage->width, hImage->height,
+  if (!BlitPcxToBuffer(pPcxObject, (uint8_t *)hImage->image_data, hImage->width, hImage->height,
                        0, 0, FALSE)) {
     MemFree(hImage->image_data);
     return (FALSE);
@@ -89,8 +89,8 @@ PcxObject *LoadPcx(const char *pFilename) {
   PcxHeader Header;
   PcxObject *pCurrentPcxObject;
   FileID hFileHandle = FILE_ID_ERR;
-  UINT32 uiFileSize;
-  UINT8 *pPcxBuffer;
+  uint32_t uiFileSize;
+  uint8_t *pPcxBuffer;
 
   // Open and read in the file
   if ((hFileHandle = File_OpenForReading(pFilename)) == 0) {  // damn we failed to open the file
@@ -109,7 +109,7 @@ PcxObject *LoadPcx(const char *pFilename) {
     return (NULL);
   }
 
-  pCurrentPcxObject->pPcxBuffer = (UINT8 *)MemAlloc(uiFileSize - (sizeof(PcxHeader) + 768));
+  pCurrentPcxObject->pPcxBuffer = (uint8_t *)MemAlloc(uiFileSize - (sizeof(PcxHeader) + 768));
 
   if (pCurrentPcxObject->pPcxBuffer == NULL) {
     return (NULL);
@@ -148,17 +148,17 @@ PcxObject *LoadPcx(const char *pFilename) {
   return pCurrentPcxObject;
 }
 
-static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UINT16 usBufferWidth,
-                               UINT16 usBufferHeight, UINT16 usX, UINT16 usY, BOOLEAN fTransp) {
-  UINT8 *pPcxBuffer;
-  UINT8 ubRepCount;
-  UINT16 usMaxX, usMaxY;
-  UINT32 uiImageSize;
-  UINT8 ubCurrentByte = 0;
-  UINT8 ubMode;
-  UINT16 usCurrentX, usCurrentY;
-  UINT32 uiOffset, uiIndex;
-  UINT32 uiNextLineOffset, uiStartOffset, uiCurrentOffset;
+static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, uint8_t *pBuffer, uint16_t usBufferWidth,
+                               uint16_t usBufferHeight, uint16_t usX, uint16_t usY, BOOLEAN fTransp) {
+  uint8_t *pPcxBuffer;
+  uint8_t ubRepCount;
+  uint16_t usMaxX, usMaxY;
+  uint32_t uiImageSize;
+  uint8_t ubCurrentByte = 0;
+  uint8_t ubMode;
+  uint16_t usCurrentX, usCurrentY;
+  uint32_t uiOffset, uiIndex;
+  uint32_t uiNextLineOffset, uiStartOffset, uiCurrentOffset;
 
   pPcxBuffer = pCurrentPcxObject->pPcxBuffer;
 
@@ -309,8 +309,8 @@ static BOOLEAN BlitPcxToBuffer(PcxObject *pCurrentPcxObject, UINT8 *pBuffer, UIN
 }
 
 static BOOLEAN SetPcxPalette(PcxObject *pCurrentPcxObject, struct Image *hImage) {
-  UINT16 Index;
-  UINT8 *pubPalette;
+  uint16_t Index;
+  uint8_t *pubPalette;
 
   pubPalette = &(pCurrentPcxObject->ubPalette[0]);
 

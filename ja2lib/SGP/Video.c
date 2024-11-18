@@ -5,18 +5,18 @@
 #include "SGP/VSurfaceInternal.h"
 #include "SGP/VideoInternal.h"
 
-UINT16 gusScreenWidth;
-UINT16 gusScreenHeight;
+uint16_t gusScreenWidth;
+uint16_t gusScreenHeight;
 
-void GetCurrentVideoSettings(UINT16 *usWidth, UINT16 *usHeight) {
-  *usWidth = (UINT16)gusScreenWidth;
-  *usHeight = (UINT16)gusScreenHeight;
+void GetCurrentVideoSettings(uint16_t *usWidth, uint16_t *usHeight) {
+  *usWidth = (uint16_t)gusScreenWidth;
+  *usHeight = (uint16_t)gusScreenHeight;
 }
 
-UINT32 guiFrameBufferState;    // BUFFER_READY, BUFFER_DIRTY
-UINT32 guiMouseBufferState;    // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
-UINT32 guiVideoManagerState;   // VIDEO_ON, VIDEO_OFF, VIDEO_SUSPENDED, VIDEO_SHUTTING_DOWN
-UINT32 guiRefreshThreadState;  // THREAD_ON, THREAD_OFF, THREAD_SUSPENDED
+uint32_t guiFrameBufferState;    // BUFFER_READY, BUFFER_DIRTY
+uint32_t guiMouseBufferState;    // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED
+uint32_t guiVideoManagerState;   // VIDEO_ON, VIDEO_OFF, VIDEO_SUSPENDED, VIDEO_SHUTTING_DOWN
+uint32_t guiRefreshThreadState;  // THREAD_ON, THREAD_OFF, THREAD_SUSPENDED
 
 void StartFrameBufferRender(void) {}
 void EndFrameBufferRender(void) { guiFrameBufferState = BUFFER_DIRTY; }
@@ -26,13 +26,13 @@ void DirtyCursor() { guiMouseBufferState = BUFFER_DIRTY; }
 // Globals for mouse cursor
 //
 
-UINT16 gusMouseCursorWidth;
-UINT16 gusMouseCursorHeight;
-INT16 gsMouseCursorXOffset;
-INT16 gsMouseCursorYOffset;
+uint16_t gusMouseCursorWidth;
+uint16_t gusMouseCursorHeight;
+int16_t gsMouseCursorXOffset;
+int16_t gsMouseCursorYOffset;
 
-void SetMouseCursorProperties(INT16 sOffsetX, INT16 sOffsetY, UINT16 usCursorHeight,
-                              UINT16 usCursorWidth) {
+void SetMouseCursorProperties(int16_t sOffsetX, int16_t sOffsetY, uint16_t usCursorHeight,
+                              uint16_t usCursorWidth) {
   gsMouseCursorXOffset = sOffsetX;
   gsMouseCursorYOffset = sOffsetY;
   gusMouseCursorWidth = usCursorWidth;
@@ -48,4 +48,4 @@ BOOLEAN EraseMouseCursor() {
 
 struct VObject *gpCursorStore;
 
-INT32 giNumFrames = 0;
+int32_t giNumFrames = 0;

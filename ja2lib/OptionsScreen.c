@@ -138,73 +138,73 @@
 //
 /////////////////////////////////
 
-UINT32 guiOptionBackGroundImage;
-UINT32 guiOptionsAddOnImages;
+uint32_t guiOptionBackGroundImage;
+uint32_t guiOptionsAddOnImages;
 
-UINT32 guiSoundEffectsSliderID;
-UINT32 guiSpeechSliderID;
-UINT32 guiMusicSliderID;
+uint32_t guiSoundEffectsSliderID;
+uint32_t guiSpeechSliderID;
+uint32_t guiMusicSliderID;
 
 BOOLEAN gfOptionsScreenEntry = TRUE;
 BOOLEAN gfOptionsScreenExit = FALSE;
 BOOLEAN gfRedrawOptionsScreen = TRUE;
 
-CHAR8 gzSavedGameName[128];
+char gzSavedGameName[128];
 BOOLEAN gfEnteredFromMapScreen = FALSE;
 
-UINT32 guiOptionsScreen = OPTIONS_SCREEN;
-UINT32 guiPreviousOptionScreen = OPTIONS_SCREEN;
+uint32_t guiOptionsScreen = OPTIONS_SCREEN;
+uint32_t guiPreviousOptionScreen = OPTIONS_SCREEN;
 
 BOOLEAN gfExitOptionsDueToMessageBox = FALSE;
 BOOLEAN gfExitOptionsAfterMessageBox = FALSE;
 
-UINT32 guiSoundFxSliderMoving = 0xffffffff;
-UINT32 guiSpeechSliderMoving = 0xffffffff;
+uint32_t guiSoundFxSliderMoving = 0xffffffff;
+uint32_t guiSpeechSliderMoving = 0xffffffff;
 
-INT32 giOptionsMessageBox = -1;  // Options pop up messages index value
+int32_t giOptionsMessageBox = -1;  // Options pop up messages index value
 
-INT8 gbHighLightedOptionText = -1;
+int8_t gbHighLightedOptionText = -1;
 
 BOOLEAN gfHideBloodAndGoreOption =
     FALSE;  // If a germany build we are to hide the blood and gore option
-UINT8 gubFirstColOfOptions = OPT_FIRST_COLUMN_TOGGLE_CUT_OFF;
+uint8_t gubFirstColOfOptions = OPT_FIRST_COLUMN_TOGGLE_CUT_OFF;
 
 BOOLEAN gfSettingOfTreeTopStatusOnEnterOfOptionScreen;
 BOOLEAN gfSettingOfItemGlowStatusOnEnterOfOptionScreen;
 BOOLEAN gfSettingOfDontAnimateSmoke;
 
 // Goto save game Button
-void BtnOptGotoSaveGameCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiOptGotoSaveGameBtn;
-INT32 giOptionsButtonImages;
+void BtnOptGotoSaveGameCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiOptGotoSaveGameBtn;
+int32_t giOptionsButtonImages;
 
 // Goto load game button
-void BtnOptGotoLoadGameCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiOptGotoLoadGameBtn;
-INT32 giGotoLoadBtnImage;
+void BtnOptGotoLoadGameCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiOptGotoLoadGameBtn;
+int32_t giGotoLoadBtnImage;
 
 // QuitButton
-void BtnOptQuitCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiQuitButton;
-INT32 giQuitBtnImage;
+void BtnOptQuitCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiQuitButton;
+int32_t giQuitBtnImage;
 
 // Done Button
-void BtnDoneCallback(GUI_BUTTON *btn, INT32 reason);
-UINT32 guiDoneButton;
-INT32 giDoneBtnImage;
+void BtnDoneCallback(GUI_BUTTON *btn, int32_t reason);
+uint32_t guiDoneButton;
+int32_t giDoneBtnImage;
 
 // checkbox to toggle tracking mode on or off
-UINT32 guiOptionsToggles[NUM_GAME_OPTIONS];
-void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason);
+uint32_t guiOptionsToggles[NUM_GAME_OPTIONS];
+void BtnOptionsTogglesCallback(GUI_BUTTON *btn, int32_t reason);
 
 // Mouse regions for the name of the option
 struct MOUSE_REGION gSelectedOptionTextRegion[NUM_GAME_OPTIONS];
-void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
+void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason);
 
 // Mouse regions for the area around the toggle boxs
 struct MOUSE_REGION gSelectedToggleBoxAreaRegion;
-void SelectedToggleBoxAreaRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason);
+void SelectedToggleBoxAreaRegionMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason);
 
 /////////////////////////////////
 //
@@ -217,16 +217,16 @@ void RenderOptionsScreen();
 void ExitOptionsScreen();
 void HandleOptionsScreen();
 void GetOptionsScreenUserInput();
-void SetOptionsExitScreen(UINT32 uiExitScreen);
+void SetOptionsExitScreen(uint32_t uiExitScreen);
 
-void SoundFXSliderChangeCallBack(INT32 iNewValue);
-void SpeechSliderChangeCallBack(INT32 iNewValue);
-void MusicSliderChangeCallBack(INT32 iNewValue);
-// BOOLEAN		DoOptionsMessageBox( UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
-// UINT8 ubFlags, MSGBOX_CALLBACK ReturnCallback );
-void ConfirmQuitToMainMenuMessageBoxCallBack(UINT8 bExitValue);
+void SoundFXSliderChangeCallBack(int32_t iNewValue);
+void SpeechSliderChangeCallBack(int32_t iNewValue);
+void MusicSliderChangeCallBack(int32_t iNewValue);
+// BOOLEAN		DoOptionsMessageBox( uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
+// uint8_t ubFlags, MSGBOX_CALLBACK ReturnCallback );
+void ConfirmQuitToMainMenuMessageBoxCallBack(uint8_t bExitValue);
 void HandleSliderBarMovementSounds();
-void HandleOptionToggle(UINT8 ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound);
+void HandleOptionToggle(uint8_t ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound);
 void HandleHighLightedText(BOOLEAN fHighLight);
 
 extern void ToggleItemGlow(BOOLEAN fOn);
@@ -239,14 +239,14 @@ extern void ToggleItemGlow(BOOLEAN fOn);
 //
 /////////////////////////////////
 
-UINT32 OptionsScreenInit() {
+uint32_t OptionsScreenInit() {
   // Set so next time we come in, we can set up
   gfOptionsScreenEntry = TRUE;
 
   return (TRUE);
 }
 
-UINT32 OptionsScreenHandle() {
+uint32_t OptionsScreenHandle() {
   StartFrameBufferRender();
 
   if (gfOptionsScreenEntry) {
@@ -300,12 +300,12 @@ UINT32 OptionsScreenHandle() {
   return (guiOptionsScreen);
 }
 
-UINT32 OptionsScreenShutdown() { return (TRUE); }
+uint32_t OptionsScreenShutdown() { return (TRUE); }
 
 BOOLEAN EnterOptionsScreen() {
-  UINT16 usPosY;
-  UINT8 cnt;
-  UINT16 usTextWidth, usTextHeight;
+  uint16_t usPosY;
+  uint8_t cnt;
+  uint16_t usTextWidth, usTextHeight;
 
   // Default this to off
   gfHideBloodAndGoreOption = FALSE;
@@ -423,7 +423,7 @@ BOOLEAN EnterOptionsScreen() {
 
     if (usTextWidth > OPT_TOGGLE_BOX_TEXT_WIDTH) {
       // Get how many lines will be used to display the string, without displaying the string
-      UINT8 ubNumLines =
+      uint8_t ubNumLines =
           DisplayWrappedString(0, 0, OPT_TOGGLE_BOX_TEXT_WIDTH, 2, OPT_MAIN_FONT,
                                OPT_HIGHLIGHT_COLOR, zOptionsToggleText[cnt], FONT_MCOLOR_BLACK,
                                TRUE, LEFT_JUSTIFIED | DONT_DISPLAY_TEXT) /
@@ -433,8 +433,8 @@ BOOLEAN EnterOptionsScreen() {
 
       // Create mouse regions for the option toggle text
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_FIRST_COLUMN_X + 13, usPosY,
-                        (UINT16)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
+                        (uint16_t)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
                         CURSOR_NORMAL, SelectedOptionTextRegionMovementCallBack,
                         SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
@@ -442,8 +442,8 @@ BOOLEAN EnterOptionsScreen() {
     } else {
       // Create mouse regions for the option toggle text
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_FIRST_COLUMN_X + 13, usPosY,
-                        (UINT16)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+                        (uint16_t)(OPT_TOGGLE_BOX_FIRST_COL_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
                         SelectedOptionTextRegionMovementCallBack, SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
       MSYS_SetRegionUserData(&gSelectedOptionTextRegion[cnt], 0, cnt);
@@ -472,7 +472,7 @@ BOOLEAN EnterOptionsScreen() {
 
     if (usTextWidth > OPT_TOGGLE_BOX_TEXT_WIDTH) {
       // Get how many lines will be used to display the string, without displaying the string
-      UINT8 ubNumLines =
+      uint8_t ubNumLines =
           DisplayWrappedString(0, 0, OPT_TOGGLE_BOX_TEXT_WIDTH, 2, OPT_MAIN_FONT,
                                OPT_HIGHLIGHT_COLOR, zOptionsToggleText[cnt], FONT_MCOLOR_BLACK,
                                TRUE, LEFT_JUSTIFIED | DONT_DISPLAY_TEXT) /
@@ -481,16 +481,16 @@ BOOLEAN EnterOptionsScreen() {
       usTextWidth = OPT_TOGGLE_BOX_TEXT_WIDTH;
 
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_SECOND_COLUMN_X + 13,
-                        usPosY, (UINT16)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
+                        usPosY, (uint16_t)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight * ubNumLines), MSYS_PRIORITY_HIGH,
                         CURSOR_NORMAL, SelectedOptionTextRegionMovementCallBack,
                         SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
       MSYS_SetRegionUserData(&gSelectedOptionTextRegion[cnt], 0, cnt);
     } else {
       MSYS_DefineRegion(&gSelectedOptionTextRegion[cnt], OPT_TOGGLE_BOX_SECOND_COLUMN_X + 13,
-                        usPosY, (UINT16)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
-                        (UINT16)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
+                        usPosY, (uint16_t)(OPT_TOGGLE_BOX_SECOND_TEXT_X + usTextWidth),
+                        (uint16_t)(usPosY + usTextHeight), MSYS_PRIORITY_HIGH, CURSOR_NORMAL,
                         SelectedOptionTextRegionMovementCallBack, SelectedOptionTextRegionCallBack);
       MSYS_AddRegion(&gSelectedOptionTextRegion[cnt]);
       MSYS_SetRegionUserData(&gSelectedOptionTextRegion[cnt], 0, cnt);
@@ -557,7 +557,7 @@ BOOLEAN EnterOptionsScreen() {
 }
 
 void ExitOptionsScreen() {
-  UINT8 cnt;
+  uint8_t cnt;
 
   if (gfExitOptionsDueToMessageBox) {
     gfOptionsScreenExit = FALSE;
@@ -646,9 +646,9 @@ void HandleOptionsScreen() {
 
 void RenderOptionsScreen() {
   struct VObject *hPixHandle;
-  UINT16 usPosY;
-  UINT8 cnt;
-  UINT16 usWidth = 0;
+  uint16_t usPosY;
+  uint8_t cnt;
+  uint16_t usWidth = 0;
 
   // Get and display the background image
   GetVideoObject(&hPixHandle, guiOptionBackGroundImage);
@@ -735,27 +735,27 @@ void GetOptionsScreenUserInput() {
     // HOOK INTO MOUSE HOOKS
     switch (Event.usEvent) {
       case LEFT_BUTTON_DOWN:
-        MouseSystemHook(LEFT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case LEFT_BUTTON_UP:
-        MouseSystemHook(LEFT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_DOWN:
-        MouseSystemHook(RIGHT_BUTTON_DOWN, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(RIGHT_BUTTON_DOWN, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_UP:
-        MouseSystemHook(RIGHT_BUTTON_UP, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(RIGHT_BUTTON_UP, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case RIGHT_BUTTON_REPEAT:
-        MouseSystemHook(RIGHT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(RIGHT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
       case LEFT_BUTTON_REPEAT:
-        MouseSystemHook(LEFT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y, _LeftButtonDown,
+        MouseSystemHook(LEFT_BUTTON_REPEAT, (int16_t)MousePos.x, (int16_t)MousePos.y, _LeftButtonDown,
                         _RightButtonDown);
         break;
     }
@@ -796,7 +796,7 @@ void GetOptionsScreenUserInput() {
           // Test keys
 
         case 'y': {
-          static UINT32 uiTest2 = NO_SAMPLE;
+          static uint32_t uiTest2 = NO_SAMPLE;
           if (!SoundIsPlaying(uiTest2))
             uiTest2 = PlayJA2SampleFromFile("Sounds\\RAID Dive.wav", RATE_11025, HIGHVOLUME, 1,
                                             MIDDLEPAN);
@@ -809,12 +809,12 @@ void GetOptionsScreenUserInput() {
   }
 }
 
-void SetOptionsExitScreen(UINT32 uiExitScreen) {
+void SetOptionsExitScreen(uint32_t uiExitScreen) {
   guiOptionsScreen = uiExitScreen;
   gfOptionsScreenExit = TRUE;
 }
 
-void BtnOptGotoSaveGameCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnOptGotoSaveGameCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -836,7 +836,7 @@ void BtnOptGotoSaveGameCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnOptGotoLoadGameCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnOptGotoLoadGameCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -858,7 +858,7 @@ void BtnOptGotoLoadGameCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnOptQuitCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnOptQuitCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -883,7 +883,7 @@ void BtnOptQuitCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnDoneCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnDoneCallback(GUI_BUTTON *btn, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     btn->uiFlags |= BUTTON_CLICKED_ON;
     InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY,
@@ -904,8 +904,8 @@ void BtnDoneCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
-  UINT8 ubButton = (UINT8)MSYS_GetBtnUserData(btn, 0);
+void BtnOptionsTogglesCallback(GUI_BUTTON *btn, int32_t reason) {
+  uint8_t ubButton = (uint8_t)MSYS_GetBtnUserData(btn, 0);
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     if (btn->uiFlags & BUTTON_CLICKED_ON) {
@@ -931,8 +931,8 @@ void BtnOptionsTogglesCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void HandleOptionToggle(UINT8 ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound) {
-  static UINT32 uiOptionToggleSound = NO_SAMPLE;
+void HandleOptionToggle(uint8_t ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN fPlaySound) {
+  static uint32_t uiOptionToggleSound = NO_SAMPLE;
 
   if (fState) {
     gGameSettings.fOptions[ubButton] = TRUE;
@@ -980,36 +980,36 @@ void HandleOptionToggle(UINT8 ubButton, BOOLEAN fState, BOOLEAN fDown, BOOLEAN f
   }
 }
 
-void SoundFXSliderChangeCallBack(INT32 iNewValue) {
+void SoundFXSliderChangeCallBack(int32_t iNewValue) {
   SetSoundEffectsVolume(iNewValue);
 
   guiSoundFxSliderMoving = GetJA2Clock();
 }
 
-void SpeechSliderChangeCallBack(INT32 iNewValue) {
+void SpeechSliderChangeCallBack(int32_t iNewValue) {
   SetSpeechVolume(iNewValue);
 
   guiSpeechSliderMoving = GetJA2Clock();
 }
 
-void MusicSliderChangeCallBack(INT32 iNewValue) { MusicSetVolume(iNewValue); }
+void MusicSliderChangeCallBack(int32_t iNewValue) { MusicSetVolume(iNewValue); }
 
-BOOLEAN DoOptionsMessageBoxWithRect(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
-                                    UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback,
+BOOLEAN DoOptionsMessageBoxWithRect(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen,
+                                    uint16_t usFlags, MSGBOX_CALLBACK ReturnCallback,
                                     const struct GRect *pCenteringRect) {
   // reset exit mode
   gfExitOptionsDueToMessageBox = TRUE;
 
   // do message box and return
   giOptionsMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                     (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                     (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                      ReturnCallback, pCenteringRect);
 
   // send back return state
   return ((giOptionsMessageBox != -1));
 }
 
-BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen, UINT16 usFlags,
+BOOLEAN DoOptionsMessageBox(uint8_t ubStyle, wchar_t *zString, uint32_t uiExitScreen, uint16_t usFlags,
                             MSGBOX_CALLBACK ReturnCallback) {
   struct GRect CenteringRect = {0, 0, 639, 479};
 
@@ -1018,14 +1018,14 @@ BOOLEAN DoOptionsMessageBox(UINT8 ubStyle, CHAR16 *zString, UINT32 uiExitScreen,
 
   // do message box and return
   giOptionsMessageBox = DoMessageBox(ubStyle, zString, uiExitScreen,
-                                     (UINT16)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
+                                     (uint16_t)(usFlags | MSG_BOX_FLAG_USE_CENTERING_RECT),
                                      ReturnCallback, &CenteringRect);
 
   // send back return state
   return ((giOptionsMessageBox != -1));
 }
 
-void ConfirmQuitToMainMenuMessageBoxCallBack(UINT8 bExitValue) {
+void ConfirmQuitToMainMenuMessageBoxCallBack(uint8_t bExitValue) {
   // yes, Quit to main menu
   if (bExitValue == MSG_BOX_RETURN_YES) {
     gfEnteredFromMapScreen = FALSE;
@@ -1041,7 +1041,7 @@ void ConfirmQuitToMainMenuMessageBoxCallBack(UINT8 bExitValue) {
 }
 
 void SetOptionsScreenToggleBoxes() {
-  UINT8 cnt;
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_GAME_OPTIONS; cnt++) {
     if (gGameSettings.fOptions[cnt])
@@ -1052,7 +1052,7 @@ void SetOptionsScreenToggleBoxes() {
 }
 
 void GetOptionsScreenToggleBoxes() {
-  UINT8 cnt;
+  uint8_t cnt;
 
   for (cnt = 0; cnt < NUM_GAME_OPTIONS; cnt++) {
     if (ButtonList[guiOptionsToggles[cnt]]->uiFlags & BUTTON_CLICKED_ON)
@@ -1063,10 +1063,10 @@ void GetOptionsScreenToggleBoxes() {
 }
 
 void HandleSliderBarMovementSounds() {
-  static UINT32 uiLastSoundFxTime = 0;
-  static UINT32 uiLastSpeechTime = 0;
-  static UINT32 uiLastPlayingSoundID = NO_SAMPLE;
-  static UINT32 uiLastPlayingSpeechID = NO_SAMPLE;
+  static uint32_t uiLastSoundFxTime = 0;
+  static uint32_t uiLastSpeechTime = 0;
+  static uint32_t uiLastPlayingSoundID = NO_SAMPLE;
+  static uint32_t uiLastPlayingSpeechID = NO_SAMPLE;
 
   if ((uiLastSoundFxTime - OPT_MUSIC_SLIDER_PLAY_SOUND_DELAY) > guiSoundFxSliderMoving) {
     guiSoundFxSliderMoving = 0xffffffff;
@@ -1091,8 +1091,8 @@ void HandleSliderBarMovementSounds() {
     uiLastSpeechTime = GetJA2Clock();
 }
 
-void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  UINT8 ubButton = (UINT8)MSYS_GetRegionUserData(pRegion, 0);
+void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  uint8_t ubButton = (uint8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_UP) {
     HandleOptionToggle(ubButton, (BOOLEAN)(!gGameSettings.fOptions[ubButton]), FALSE, TRUE);
@@ -1112,8 +1112,8 @@ void SelectedOptionTextRegionCallBack(struct MOUSE_REGION *pRegion, INT32 iReaso
   }
 }
 
-void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
-  INT8 bButton = (INT8)MSYS_GetRegionUserData(pRegion, 0);
+void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
+  int8_t bButton = (int8_t)MSYS_GetRegionUserData(pRegion, 0);
 
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
     HandleHighLightedText(FALSE);
@@ -1131,13 +1131,13 @@ void SelectedOptionTextRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT3
 }
 
 void HandleHighLightedText(BOOLEAN fHighLight) {
-  UINT16 usPosX = 0;
-  UINT16 usPosY = 0;
-  UINT8 ubCnt;
-  INT8 bHighLight = -1;
-  UINT16 usWidth;
+  uint16_t usPosX = 0;
+  uint16_t usPosY = 0;
+  uint8_t ubCnt;
+  int8_t bHighLight = -1;
+  uint16_t usWidth;
 
-  static INT8 bLastRegion = -1;
+  static int8_t bLastRegion = -1;
 
   if (gbHighLightedOptionText == -1) fHighLight = FALSE;
 
@@ -1217,10 +1217,10 @@ void HandleHighLightedText(BOOLEAN fHighLight) {
   }
 }
 
-void SelectedToggleBoxAreaRegionMovementCallBack(struct MOUSE_REGION *pRegion, INT32 reason) {
+void SelectedToggleBoxAreaRegionMovementCallBack(struct MOUSE_REGION *pRegion, int32_t reason) {
   if (reason & MSYS_CALLBACK_REASON_LOST_MOUSE) {
   } else if (reason & MSYS_CALLBACK_REASON_GAIN_MOUSE) {
-    UINT8 ubCnt;
+    uint8_t ubCnt;
 
     // loop through all the toggle box's and remove the in area flag
     for (ubCnt = 0; ubCnt < NUM_GAME_OPTIONS; ubCnt++) {

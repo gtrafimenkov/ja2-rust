@@ -3,16 +3,16 @@
 
 #include "SGP/Types.h"
 
-void EnterAutoResolveMode(UINT8 ubSectorX, UINT8 ubSectorY);
+void EnterAutoResolveMode(uint8_t ubSectorX, uint8_t ubSectorY);
 
 // is the autoresolve active?
 BOOLEAN IsAutoResolveActive(void);
 
-void EliminateAllEnemies(UINT8 ubSectorX, UINT8 ubSectorY);
+void EliminateAllEnemies(uint8_t ubSectorX, uint8_t ubSectorY);
 
 void ConvertTacticalBattleIntoStrategicAutoResolveBattle();
 
-UINT8 GetAutoResolveSectorID();
+uint8_t GetAutoResolveSectorID();
 
 extern BOOLEAN gfTransferTacticalOppositionToAutoResolve;
 

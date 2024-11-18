@@ -41,7 +41,7 @@ void InitGameSettings();
 
 BOOLEAN LoadGameSettings() {
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiNumBytesRead;
+  uint32_t uiNumBytesRead;
 
   // if the game settings file does NOT exist, or if it is smaller then what it should be
   if (!File_Exists(GAME_SETTINGS_FILE) || File_Size(GAME_SETTINGS_FILE) != sizeof(GAME_SETTINGS)) {
@@ -124,7 +124,7 @@ BOOLEAN LoadGameSettings() {
 
 BOOLEAN SaveGameSettings() {
   FileID hFile = FILE_ID_ERR;
-  UINT32 uiNumBytesWritten;
+  uint32_t uiNumBytesWritten;
 
   // create the file
   hFile = File_OpenForWriting(GAME_SETTINGS_FILE);
@@ -135,9 +135,9 @@ BOOLEAN SaveGameSettings() {
 
   // Record the current settings into the game settins structure
 
-  gGameSettings.ubSoundEffectsVolume = (UINT8)GetSoundEffectsVolume();
-  gGameSettings.ubSpeechVolume = (UINT8)GetSpeechVolume();
-  gGameSettings.ubMusicVolumeSetting = (UINT8)MusicGetVolume();
+  gGameSettings.ubSoundEffectsVolume = (uint8_t)GetSoundEffectsVolume();
+  gGameSettings.ubSpeechVolume = (uint8_t)GetSpeechVolume();
+  gGameSettings.ubMusicVolumeSetting = (uint8_t)MusicGetVolume();
 
   strcpy(gGameSettings.zVersionNumber, czVersionNumber);
 
@@ -257,8 +257,8 @@ void DisplayGameSettings() {
   }
 }
 
-BOOLEAN MeanwhileSceneSeen(UINT8 ubMeanwhile) {
-  UINT32 uiCheckFlag;
+BOOLEAN MeanwhileSceneSeen(uint8_t ubMeanwhile) {
+  uint32_t uiCheckFlag;
 
   if (ubMeanwhile > 32 || ubMeanwhile > NUM_MEANWHILES) {
     return (FALSE);
@@ -273,8 +273,8 @@ BOOLEAN MeanwhileSceneSeen(UINT8 ubMeanwhile) {
   }
 }
 
-BOOLEAN SetMeanwhileSceneSeen(UINT8 ubMeanwhile) {
-  UINT32 uiCheckFlag;
+BOOLEAN SetMeanwhileSceneSeen(uint8_t ubMeanwhile) {
+  uint32_t uiCheckFlag;
 
   if (ubMeanwhile > 32 || ubMeanwhile > NUM_MEANWHILES) {
     // can't set such a flag!

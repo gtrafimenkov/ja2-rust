@@ -15,8 +15,8 @@
 #include "Utils/Utilities.h"
 #include "Utils/WordWrap.h"
 
-UINT32 guiAmmoBackground;
-UINT32 guiAmmoGrid;
+uint32_t guiAmmoBackground;
+uint32_t guiAmmoGrid;
 
 BOOLEAN DisplayAmmoInfo();
 

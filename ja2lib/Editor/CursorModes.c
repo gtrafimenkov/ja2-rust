@@ -21,20 +21,20 @@
 BOOLEAN fValidCursor = FALSE;
 BOOLEAN fAnchored = FALSE;
 BOOLEAN gfBrushEnabled = TRUE;
-UINT16 gusSelectionWidth = 1, gusPreserveSelectionWidth = 1;
-UINT16 gusSelectionType = SMALLSELECTION;
-UINT16 gusSelectionDensity = 2;
-UINT16 gusSavedSelectionType = SMALLSELECTION;
-UINT16 gusSavedBuildingSelectionType = AREASELECTION;
-INT16 sGridX, sGridY;
-INT16 sBadMarker = -1;
+uint16_t gusSelectionWidth = 1, gusPreserveSelectionWidth = 1;
+uint16_t gusSelectionType = SMALLSELECTION;
+uint16_t gusSelectionDensity = 2;
+uint16_t gusSavedSelectionType = SMALLSELECTION;
+uint16_t gusSavedBuildingSelectionType = AREASELECTION;
+int16_t sGridX, sGridY;
+int16_t sBadMarker = -1;
 
-CHAR16 wszSelType[6][16] = {L"Small", L"Medium", L"Large", L"XLarge", L"Width: xx", L"Area"};
+wchar_t wszSelType[6][16] = {L"Small", L"Medium", L"Large", L"XLarge", L"Width: xx", L"Area"};
 
 BOOLEAN gfAllowRightButtonSelections = FALSE;
 BOOLEAN gfCurrentSelectionWithRightButton = FALSE;
 
-void DrawBuildingLayout(INT32 iMapIndex);
+void DrawBuildingLayout(int32_t iMapIndex);
 void RemoveBuildingLayout();
 
 void ValidateSelectionRegionBoundaries();
@@ -78,7 +78,7 @@ void DecreaseSelectionDensity() {
 }
 
 void RemoveCursors() {
-  INT32 x, y, iMapIndex;
+  int32_t x, y, iMapIndex;
   if (gpBuildingLayoutList) {
     RemoveBuildingLayout();
   }
@@ -118,7 +118,7 @@ void RemoveBadMarker() {
 }
 
 void UpdateCursorAreas() {
-  INT32 x, y, iMapIndex;
+  int32_t x, y, iMapIndex;
 
   RemoveCursors();
 
@@ -174,10 +174,10 @@ void UpdateCursorAreas() {
           RemoveBadMarker();
           if (gfRoofPlacement && FlatRoofAboveGridNo(iMapIndex)) {
             AddTopmostToTail(iMapIndex + ROOF_OFFSET, BADMARKER1);
-            sBadMarker = (INT16)(iMapIndex + ROOF_OFFSET);
+            sBadMarker = (int16_t)(iMapIndex + ROOF_OFFSET);
           } else {
             AddTopmostToTail((iMapIndex), BADMARKER1);
-            sBadMarker = (INT16)(iMapIndex);
+            sBadMarker = (int16_t)(iMapIndex);
           }
         }
       } else {
@@ -199,7 +199,7 @@ void UpdateCursorAreas() {
 }
 
 void ForceAreaSelectionWidth() {
-  UINT16 gusDecSelWidth;
+  uint16_t gusDecSelWidth;
 
   // If the anchor isn't set, we don't want to force the size yet.
   if (!fAnchored) return;
@@ -345,9 +345,9 @@ void EnsureSelectionType() {
   }
 }
 
-void DrawBuildingLayout(INT32 iMapIndex) {
+void DrawBuildingLayout(int32_t iMapIndex) {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
+  int32_t iOffset;
   struct LEVELNODE *pNode;
   BOOLEAN fAdd;
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
@@ -372,8 +372,8 @@ void DrawBuildingLayout(INT32 iMapIndex) {
 
 void RemoveBuildingLayout() {
   BUILDINGLAYOUTNODE *curr;
-  INT32 iOffset;
-  INT32 iMapIndex;
+  int32_t iOffset;
+  int32_t iMapIndex;
   iMapIndex = gSelectRegion.iLeft + gSelectRegion.iTop * WORLD_COLS;
   iOffset = iMapIndex - gsBuildingLayoutAnchorGridNo;
   curr = gpBuildingLayoutList;

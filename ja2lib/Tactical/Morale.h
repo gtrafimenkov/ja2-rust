@@ -49,14 +49,14 @@ typedef enum {
 typedef enum { TACTICAL_MORALE_EVENT = 0, STRATEGIC_MORALE_EVENT } MoraleEventType;
 
 typedef struct MoraleEvent {
-  UINT8 ubType;
-  INT8 bChange;
+  uint8_t ubType;
+  int8_t bChange;
 } MoraleEvent;
 
-extern void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, INT8 bMoraleEvent, u8 sMapX, u8 sMapY,
-                              INT8 bMapZ);
+extern void HandleMoraleEvent(struct SOLDIERTYPE *pSoldier, int8_t bMoraleEvent, u8 sMapX, u8 sMapY,
+                              int8_t bMapZ);
 extern void RefreshSoldierMorale(struct SOLDIERTYPE *pSoldier);
-extern INT8 GetMoraleModifier(struct SOLDIERTYPE *pSoldier);
+extern int8_t GetMoraleModifier(struct SOLDIERTYPE *pSoldier);
 
 void HourlyMoraleUpdate(void);
 void DailyMoraleUpdate(struct SOLDIERTYPE *pSoldier);

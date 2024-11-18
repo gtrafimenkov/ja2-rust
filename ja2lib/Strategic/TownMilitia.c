@@ -27,18 +27,18 @@
 #define SIZE_OF_MILITIA_COMPLETED_TRAINING_LIST 50
 
 struct sectorSearch {
-  UINT8 townID;
-  INT16 skipX;
-  INT16 skipY;
-  UINT8 townSectorsIndex;
+  uint8_t townID;
+  int16_t skipX;
+  int16_t skipY;
+  uint8_t townSectorsIndex;
 };
 
 struct militiaState {
   BOOLEAN promptForContinue;  // whether we're starting new training, or continuing
-  INT32 totalCostOfTraining;
+  int32_t totalCostOfTraining;
 
   // the completed list of sector soldiers for training militia
-  INT32 soldiersCompletedMilitiaTraining[SIZE_OF_MILITIA_COMPLETED_TRAINING_LIST];
+  int32_t soldiersCompletedMilitiaTraining[SIZE_OF_MILITIA_COMPLETED_TRAINING_LIST];
   struct SOLDIERTYPE *trainer;
 
   // note that these sector values are STRATEGIC INDEXES, not 0-255!
@@ -55,13 +55,13 @@ static struct militiaState _st;
 // handle completion of assignment byt his soldier too and inform the player
 static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer);
 
-static void PayMilitiaTrainingYesNoBoxCallback(UINT8 bExitValue);
-static void CantTrainMilitiaOkBoxCallback(UINT8 bExitValue);
+static void PayMilitiaTrainingYesNoBoxCallback(uint8_t bExitValue);
+static void CantTrainMilitiaOkBoxCallback(uint8_t bExitValue);
 static void MilitiaTrainingRejected(void);
-static struct sectorSearch initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX,
-                                                INT16 sSkipSectorY);
+static struct sectorSearch initNextSectorSearch(uint8_t ubTownId, int16_t sSkipSectorX,
+                                                int16_t sSkipSectorY);
 static BOOLEAN getNextSectorInTown(struct sectorSearch *search, u8 *sNeighbourX, u8 *sNeighbourY);
-static INT32 GetNumberOfUnpaidTrainableSectors(void);
+static int32_t GetNumberOfUnpaidTrainableSectors(void);
 static void ContinueTrainingInThisSector();
 static void StartTrainingInAllUnpaidTrainableSectors();
 static void PayForTrainingInSector(u8 x, u8 y);
@@ -73,10 +73,10 @@ static void ResetDoneFlagForAllMilitiaTrainersInSector(u8 x, u8 y);
 //   handleTrainingComplete
 
 void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY) {
-  UINT8 ubMilitiaTrained = 0;
+  uint8_t ubMilitiaTrained = 0;
   BOOLEAN fFoundOne;
   u8 sNeighbourX, sNeighbourY;
-  UINT8 ubTownId;
+  uint8_t ubTownId;
 
   // get town index
   ubTownId = GetTownIdForSector(mapX, mapY);
@@ -181,8 +181,8 @@ void TownMilitiaTrainingCompleted(struct SOLDIERTYPE *pTrainer, u8 mapX, u8 mapY
 }
 
 // kill pts are (2 * kills) + assists
-UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 ubRecentKillPts) {
-  UINT32 uiChanceToLevel = 0;
+uint8_t CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, uint8_t ubCurrentRank, uint8_t ubRecentKillPts) {
+  uint32_t uiChanceToLevel = 0;
 
   switch (ubCurrentRank) {
     case GREEN_MILITIA:
@@ -210,7 +210,7 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
       if (ubRecentKillPts > 2) {
         if (CheckOneMilitiaForPromotion(
                 mapX, mapY, REGULAR_MILITIA,
-                (UINT8)(ubRecentKillPts - 2))) {  // success, this militia was promoted twice
+                (uint8_t)(ubRecentKillPts - 2))) {  // success, this militia was promoted twice
           return 2;
         }
       }
@@ -222,10 +222,10 @@ UINT8 CheckOneMilitiaForPromotion(u8 mapX, u8 mapY, UINT8 ubCurrentRank, UINT8 u
 
 // call this if the player attacks his own militia
 void HandleMilitiaDefections(u8 mapX, u8 mapY) {
-  UINT8 ubRank;
-  UINT8 ubMilitiaCnt;
-  UINT8 ubCount;
-  UINT32 uiChanceToDefect;
+  uint8_t ubRank;
+  uint8_t ubMilitiaCnt;
+  uint8_t ubCount;
+  uint32_t uiChanceToDefect;
 
   for (ubRank = 0; ubRank < MAX_MILITIA_LEVELS; ubRank++) {
     ubMilitiaCnt = GetMilitiaOfRankInSector(mapX, mapY, ubRank);
@@ -256,8 +256,8 @@ void HandleMilitiaDefections(u8 mapX, u8 mapY) {
   }
 }
 
-static struct sectorSearch initNextSectorSearch(UINT8 ubTownId, INT16 sSkipSectorX,
-                                                INT16 sSkipSectorY) {
+static struct sectorSearch initNextSectorSearch(uint8_t ubTownId, int16_t sSkipSectorX,
+                                                int16_t sSkipSectorY) {
   struct sectorSearch search;
   search.townID = ubTownId;
   search.skipX = sSkipSectorX;
@@ -312,8 +312,8 @@ static BOOLEAN getNextSectorInTown(struct sectorSearch *search, u8 *sNeighbourX,
 }
 
 void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier) {
-  CHAR16 sString[128];
-  INT32 iNumberOfSectors = 0;
+  wchar_t sString[128];
+  int32_t iNumberOfSectors = 0;
 
   _st.trainer = pSoldier;
 
@@ -355,7 +355,7 @@ void HandleInterfaceMessageForCostOfTrainingMilitia(struct SOLDIERTYPE *pSoldier
   return;
 }
 
-void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, CHAR16 *str, UINT16 usFlags,
+void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, wchar_t *str, uint16_t usFlags,
                                          MSGBOX_CALLBACK ReturnCallback) {
   if (mapX <= 10 && mapY >= 6 && mapY <= 11) {
     DoLowerScreenIndependantMessageBox(str, usFlags, ReturnCallback);
@@ -365,9 +365,9 @@ void DoContinueMilitiaTrainingMessageBox(u8 mapX, u8 mapY, CHAR16 *str, UINT16 u
 }
 
 void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSoldier) {
-  CHAR16 sString[128];
+  wchar_t sString[128];
   u8 mapX = 0, mapY = 0;
-  CHAR16 sStringB[128];
+  wchar_t sStringB[128];
   TownID bTownId;
 
   mapX = GetSolSectorX(pSoldier);
@@ -434,8 +434,8 @@ void HandleInterfaceMessageForContinuingTrainingMilitia(struct SOLDIERTYPE *pSol
 
 // IMPORTANT: This same callback is used both for initial training and for continue training prompt
 // use '_st.promptForContinue' flag to tell them apart
-static void PayMilitiaTrainingYesNoBoxCallback(UINT8 bExitValue) {
-  CHAR16 sString[128];
+static void PayMilitiaTrainingYesNoBoxCallback(uint8_t bExitValue) {
+  wchar_t sString[128];
 
   Assert(_st.totalCostOfTraining > 0);
 
@@ -474,11 +474,11 @@ static void PayMilitiaTrainingYesNoBoxCallback(UINT8 bExitValue) {
   return;
 }
 
-static void CantTrainMilitiaOkBoxCallback(UINT8 bExitValue) { MilitiaTrainingRejected(); }
+static void CantTrainMilitiaOkBoxCallback(uint8_t bExitValue) { MilitiaTrainingRejected(); }
 
 // reset assignment for mercs trainign militia in this sector
 static void resetTrainersAssignment(u8 mapX, u8 mapY) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
@@ -505,7 +505,7 @@ static void resetTrainersAssignment(u8 mapX, u8 mapY) {
 
 // reset assignments for mercs on selected list who have this assignment
 static void resetAssignmentsForUnpaidSectors() {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
 
   for (iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++) {
@@ -552,7 +552,7 @@ static void MilitiaTrainingRejected(void) {
 
 BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY) {
   i8 sCounterA = 0, sCounterB = 0;
-  UINT8 ubScoutingRange = 1;
+  uint8_t ubScoutingRange = 1;
 
   // get the sector value
   for (sCounterA = mapX - ubScoutingRange; sCounterA <= mapX + ubScoutingRange; sCounterA++) {
@@ -572,8 +572,8 @@ BOOLEAN CanNearbyMilitiaScoutThisSector(u8 mapX, u8 mapY) {
 }
 
 BOOLEAN IsTownFullMilitia(TownID bTownId) {
-  INT32 iNumberOfMilitia = 0;
-  INT32 iMaxNumber = 0;
+  int32_t iNumberOfMilitia = 0;
+  int32_t iMaxNumber = 0;
 
   struct TownSectors townSectors;
   GetAllTownSectors(&townSectors);
@@ -605,8 +605,8 @@ BOOLEAN IsTownFullMilitia(TownID bTownId) {
 
 BOOLEAN IsSAMSiteFullOfMilitia(u8 mapX, u8 mapY) {
   BOOLEAN fSamSitePresent = FALSE;
-  INT32 iNumberOfMilitia = 0;
-  INT32 iMaxNumber = 0;
+  int32_t iNumberOfMilitia = 0;
+  int32_t iMaxNumber = 0;
 
   // check if SAM site is ours?
   fSamSitePresent = IsThisSectorASAMSector(mapX, mapY, 0);
@@ -633,9 +633,9 @@ BOOLEAN IsSAMSiteFullOfMilitia(u8 mapX, u8 mapY) {
 
 static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer) {
   u8 mapX = 0, mapY = 0;
-  INT8 bSectorZ = 0;
+  int8_t bSectorZ = 0;
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // get the sector values
   mapX = GetSolSectorX(pTrainer);
@@ -667,8 +667,8 @@ static void handleTrainingComplete(struct SOLDIERTYPE *pTrainer) {
 }
 
 void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining(struct SOLDIERTYPE *pSoldier) {
-  INT32 iCounter = 0;
-  INT16 sSector = 0, sCurrentSector = 0;
+  int32_t iCounter = 0;
+  int16_t sSector = 0, sCurrentSector = 0;
   struct SOLDIERTYPE *pCurrentSoldier = NULL;
 
   // get the sector value
@@ -700,7 +700,7 @@ void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining(struct SOLDI
 
 // clear out the list of training sectors...should be done once the list is posted
 void ClearSectorListForCompletedTrainingOfMilitia(void) {
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < SIZE_OF_MILITIA_COMPLETED_TRAINING_LIST; iCounter++) {
     _st.soldiersCompletedMilitiaTraining[iCounter] = -1;
@@ -711,7 +711,7 @@ void ClearSectorListForCompletedTrainingOfMilitia(void) {
 
 void HandleContinueOfTownTraining(void) {
   struct SOLDIERTYPE *pSoldier = NULL;
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
   BOOLEAN fContinueEventPosted = FALSE;
 
   while (_st.soldiersCompletedMilitiaTraining[iCounter] != -1) {
@@ -744,7 +744,7 @@ void HandleContinueOfTownTraining(void) {
 }
 
 static void BuildListOfUnpaidTrainableSectors(void) {
-  INT32 iCounter = 0, iCounterB = 0;
+  int32_t iCounter = 0, iCounterB = 0;
 
   memset(_st.unpaidSectors, 0, sizeof(struct SectorPoint) * MAX_CHARACTER_COUNT);
 
@@ -793,8 +793,8 @@ static void BuildListOfUnpaidTrainableSectors(void) {
   }
 }
 
-static INT32 GetNumberOfUnpaidTrainableSectors(void) {
-  INT32 iNumberOfSectors = 0;
+static int32_t GetNumberOfUnpaidTrainableSectors(void) {
+  int32_t iNumberOfSectors = 0;
 
   BuildListOfUnpaidTrainableSectors();
 
@@ -851,7 +851,7 @@ static void ResetDoneFlagForAllMilitiaTrainersInSector(u8 x, u8 y) {
   }
 }
 
-BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, INT8 bSectorZ) {
+BOOLEAN MilitiaTrainingAllowedInSector(u8 mapX, u8 mapY, int8_t bSectorZ) {
   TownID bTownId;
   BOOLEAN fSamSitePresent = FALSE;
 
@@ -911,8 +911,8 @@ void HandleMilitiaPromotions(u8 mapX, u8 mapY) {
   }
 }
 
-void BuildMilitiaPromotionsString(CHAR16 *str, size_t bufSize) {
-  CHAR16 pStr[256];
+void BuildMilitiaPromotionsString(wchar_t *str, size_t bufSize) {
+  wchar_t pStr[256];
   BOOLEAN fAddSpace = FALSE;
   swprintf(str, bufSize, L"");
 

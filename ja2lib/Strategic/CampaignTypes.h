@@ -386,7 +386,7 @@ enum {
 
   NUM_TRAVTERRAIN_TYPES
 };
-extern UINT8 gszTerrain[NUM_TRAVTERRAIN_TYPES][15];
+extern uint8_t gszTerrain[NUM_TRAVTERRAIN_TYPES][15];
 
 #define TRAVELRATING_NONE 0
 #define TRAVELRATING_LOW 25
@@ -404,23 +404,23 @@ extern UINT8 gszTerrain[NUM_TRAVTERRAIN_TYPES][15];
 #define WEST_ADJACENT_SECTOR 0x08
 
 typedef struct UNDERGROUND_SECTORINFO {
-  UINT32 uiFlags;
-  UINT8 ubSectorX, ubSectorY, ubSectorZ;
-  UINT8 ubNumElites, ubNumTroops, ubNumAdmins, ubNumCreatures;
-  UINT8 fVisited;
-  INT8 ubTravelRating;  // Represents how travelled a sector is.  Typically, the higher the travel
+  uint32_t uiFlags;
+  uint8_t ubSectorX, ubSectorY, ubSectorZ;
+  uint8_t ubNumElites, ubNumTroops, ubNumAdmins, ubNumCreatures;
+  uint8_t fVisited;
+  int8_t ubTravelRating;  // Represents how travelled a sector is.  Typically, the higher the travel
                         // rating, the more people go near it.  A travel rating of 0 means there are
                         // never people around.  This value is used for determining how often items
                         // would "vanish" from a sector.
-  UINT32 uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector
+  uint32_t uiTimeCurrentSectorWasLastLoaded;  // Specifies the last time the player was in the sector
   struct UNDERGROUND_SECTORINFO *next;
-  UINT8 ubAdjacentSectors;  // mask containing which sectors are adjacent
-  UINT8
+  uint8_t ubAdjacentSectors;  // mask containing which sectors are adjacent
+  uint8_t
   ubCreatureHabitat;  // determines how creatures live in this sector (see creature spreading.c)
-  UINT8 ubElitesInBattle, ubTroopsInBattle, ubAdminsInBattle, ubCreaturesInBattle;
+  uint8_t ubElitesInBattle, ubTroopsInBattle, ubAdminsInBattle, ubCreaturesInBattle;
 
-  UINT32 uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
-  INT8 bPadding[36];
+  uint32_t uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
+  int8_t bPadding[36];
   // no padding left!
 } UNDERGROUND_SECTORINFO;
 

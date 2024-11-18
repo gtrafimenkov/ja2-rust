@@ -48,22 +48,22 @@ enum {
 };
 
 // the skills as they stand
-INT32 iCurrentStrength = 55;
-INT32 iCurrentAgility = 55;
-INT32 iCurrentDexterity = 55;
-INT32 iCurrentHealth = 55;
-INT32 iCurrentLeaderShip = 55;
-INT32 iCurrentWisdom = 55;
-INT32 iCurrentMarkmanship = 55;
-INT32 iCurrentMechanical = 55;
-INT32 iCurrentMedical = 55;
-INT32 iCurrentExplosives = 55;
+int32_t iCurrentStrength = 55;
+int32_t iCurrentAgility = 55;
+int32_t iCurrentDexterity = 55;
+int32_t iCurrentHealth = 55;
+int32_t iCurrentLeaderShip = 55;
+int32_t iCurrentWisdom = 55;
+int32_t iCurrentMarkmanship = 55;
+int32_t iCurrentMechanical = 55;
+int32_t iCurrentMedical = 55;
+int32_t iCurrentExplosives = 55;
 
 // which stat is message about stat at zero about
-INT32 iCurrentStatAtZero = 0;
+int32_t iCurrentStatAtZero = 0;
 
 // total number of bonus points
-INT32 iCurrentBonusPoints = 40;
+int32_t iCurrentBonusPoints = 40;
 
 // diplsay the 0 skill point warning..if skill set to 0, warn character
 BOOLEAN fSkillAtZeroWarning = FALSE;
@@ -78,12 +78,12 @@ BOOLEAN fFirstIMPAttribTime = TRUE;
 BOOLEAN fReviewStats = FALSE;
 
 // buttons
-UINT32 giIMPAttributeSelectionButton[1];
-UINT32 giIMPAttributeSelectionButtonImage[1];
+uint32_t giIMPAttributeSelectionButton[1];
+uint32_t giIMPAttributeSelectionButtonImage[1];
 
 // slider buttons
-UINT32 giIMPAttributeSelectionSliderButton[20];
-UINT32 giIMPAttributeSelectionSliderButtonImage[20];
+uint32_t giIMPAttributeSelectionSliderButton[20];
+uint32_t giIMPAttributeSelectionSliderButtonImage[20];
 
 // mouse regions
 struct MOUSE_REGION pSliderRegions[10];
@@ -91,12 +91,12 @@ struct MOUSE_REGION pSliderBarRegions[10];
 
 // The currently "anchored scroll bar"
 struct MOUSE_REGION *gpCurrentScrollBox = NULL;
-INT32 giCurrentlySelectedStat = -1;
+int32_t giCurrentlySelectedStat = -1;
 
 // has any of the sliding bars moved?...for re-rendering puposes
 BOOLEAN fHasAnySlidingBarMoved = FALSE;
 
-INT32 uiBarToReRender = -1;
+int32_t uiBarToReRender = -1;
 
 // are we actually coming back to edit, or are we restarting?
 BOOLEAN fReturnStatus = FALSE;
@@ -105,14 +105,14 @@ BOOLEAN fReturnStatus = FALSE;
 void ProcessAttributes(void);
 void DestroyIMPAttributeSelectionButtons(void);
 void CreateIMPAttributeSelectionButtons(void);
-UINT8 IncrementStat(INT32 iStatToIncrement);
-UINT8 DecrementStat(INT32 iStatToDecrement);
-BOOLEAN DoWeHaveThisManyBonusPoints(INT32 iBonusPoints);
+uint8_t IncrementStat(int32_t iStatToIncrement);
+uint8_t DecrementStat(int32_t iStatToDecrement);
+BOOLEAN DoWeHaveThisManyBonusPoints(int32_t iBonusPoints);
 void CreateAttributeSliderButtons(void);
 void DestroyAttributeSliderButtons(void);
 void CreateSlideRegionMouseRegions(void);
 void DestroySlideRegionMouseRegions(void);
-INT32 GetCurrentAttributeValue(INT32 iAttribute);
+int32_t GetCurrentAttributeValue(int32_t iAttribute);
 void CreateSliderBarMouseRegions(void);
 void DestroySlideBarMouseRegions(void);
 void SetAttributes(void);
@@ -120,12 +120,12 @@ void DrawBonusPointsRemaining(void);
 void SetGeneratedCharacterAttributes(void);
 
 // callbacks
-void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPAttributeSliderLeftCallback(GUI_BUTTON *btn, INT32 reason);
-void BtnIMPAttributeSliderRightCallback(GUI_BUTTON *btn, INT32 reason);
-void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason);
-void StatAtZeroBoxCallBack(UINT8 bExitValue);
+void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPAttributeSliderLeftCallback(GUI_BUTTON *btn, int32_t reason);
+void BtnIMPAttributeSliderRightCallback(GUI_BUTTON *btn, int32_t reason);
+void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason);
+void StatAtZeroBoxCallBack(uint8_t bExitValue);
 
 void EnterIMPAttributeSelection(void) {
   // set attributes and skills
@@ -228,9 +228,9 @@ void HandleIMPAttributeSelection(void) {
     else if (gusMouseXPos > (LAPTOP_SCREEN_UL_X + SKILL_SLIDE_START_X + BAR_WIDTH)) {
       IncrementStat(giCurrentlySelectedStat);
     } else {
-      INT32 iCurrentAttributeValue;
-      INT32 sNewX = gusMouseXPos;
-      INT32 iNewValue;
+      int32_t iCurrentAttributeValue;
+      int32_t sNewX = gusMouseXPos;
+      int32_t iNewValue;
 
       // get old stat value
       iCurrentAttributeValue = GetCurrentAttributeValue(giCurrentlySelectedStat);
@@ -386,7 +386,7 @@ void ProcessAttributes(void) {
   return;
 }
 
-UINT8 IncrementStat(INT32 iStatToIncrement) {
+uint8_t IncrementStat(int32_t iStatToIncrement) {
   // this function is responsable for incrementing a stat
 
   // review mode, do not allow changes
@@ -537,7 +537,7 @@ UINT8 IncrementStat(INT32 iStatToIncrement) {
   return (SLIDER_OK);
 }
 
-UINT8 DecrementStat(INT32 iStatToDecrement) {
+uint8_t DecrementStat(int32_t iStatToDecrement) {
   // review mode, do not allow changes
   if (fReviewStats) {
     return (SLIDER_ERROR);
@@ -658,7 +658,7 @@ UINT8 DecrementStat(INT32 iStatToDecrement) {
   return (SLIDER_OK);
 }
 
-BOOLEAN DoWeHaveThisManyBonusPoints(INT32 iBonusPoints) {
+BOOLEAN DoWeHaveThisManyBonusPoints(int32_t iBonusPoints) {
   // returns if player has at least this many bonus points
   if (iCurrentBonusPoints >= iBonusPoints) {
     // yep, return true
@@ -697,7 +697,7 @@ void DestroyIMPAttributeSelectionButtons(void) {
   return;
 }
 
-void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn, INT32 reason) {
+void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn, int32_t reason) {
   // btn callback for IMP attrbite begin button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
@@ -720,10 +720,10 @@ void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn, INT32 reason) {
 
 void RenderAttributeBoxes(void) {
   // this function will render the boxes in the sliding attribute bar, based on position
-  INT32 iCnt = STRENGTH_ATTRIBUTE;
-  INT16 sX = 0;
-  INT16 sY = 0;
-  CHAR16 sString[3];
+  int32_t iCnt = STRENGTH_ATTRIBUTE;
+  int16_t sX = 0;
+  int16_t sY = 0;
+  wchar_t sString[3];
 
   // set last char to null
   sString[2] = 0;
@@ -740,7 +740,7 @@ void RenderAttributeBoxes(void) {
     // unless 0, then it is 0 - for skills
 
     // get y position
-    sY = SKILL_SLIDE_START_Y + SKILL_SLIDE_HEIGHT * ((INT16)iCnt);
+    sY = SKILL_SLIDE_START_Y + SKILL_SLIDE_HEIGHT * ((int16_t)iCnt);
 
     switch (iCnt) {
       case (STRENGTH_ATTRIBUTE):
@@ -750,8 +750,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentStrength);
@@ -766,8 +766,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentDexterity);
@@ -783,8 +783,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentAgility);
@@ -800,8 +800,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentWisdom);
@@ -815,8 +815,8 @@ void RenderAttributeBoxes(void) {
         sX += SKILL_SLIDE_START_X;
         RenderSliderBar(sX, sY);
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentLeaderShip);
@@ -831,8 +831,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentHealth);
@@ -852,8 +852,8 @@ void RenderAttributeBoxes(void) {
         sX += SKILL_SLIDE_START_X;
         RenderSliderBar(sX, sY);
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentMarkmanship);
@@ -874,8 +874,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentMedical);
@@ -896,8 +896,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentMechanical);
@@ -918,8 +918,8 @@ void RenderAttributeBoxes(void) {
         RenderSliderBar(sX, sY);
 
         // set sliderbar mouse region
-        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (INT16)(sX + LAPTOP_SCREEN_UL_X),
-                               (INT16)(sY + LAPTOP_SCREEN_WEB_UL_Y));
+        MSYS_MoveMouseRegionTo(&pSliderBarRegions[iCnt], (int16_t)(sX + LAPTOP_SCREEN_UL_X),
+                               (int16_t)(sY + LAPTOP_SCREEN_WEB_UL_Y));
 
         // the text
         swprintf(sString, ARR_SIZE(sString), L"%d", iCurrentExplosives);
@@ -939,7 +939,7 @@ void RenderAttributeBoxes(void) {
 void CreateAttributeSliderButtons(void) {
   // this function will create the buttons for the attribute slider
   // the finished button
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   giIMPAttributeSelectionSliderButtonImage[0] =
       LoadButtonImage("LAPTOP\\AttributeArrows.sti", -1, 0, -1, 1, -1);
@@ -950,14 +950,14 @@ void CreateAttributeSliderButtons(void) {
     // left button - decrement stat
     giIMPAttributeSelectionSliderButton[iCounter] =
         QuickCreateButton(giIMPAttributeSelectionSliderButtonImage[0], LAPTOP_SCREEN_UL_X + (163),
-                          (INT16)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
+                          (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
                           MSYS_PRIORITY_HIGHEST - 1, BtnGenericMouseMoveButtonCallback,
                           (GUI_CALLBACK)BtnIMPAttributeSliderLeftCallback);
 
     // right button - increment stat
     giIMPAttributeSelectionSliderButton[iCounter + 1] =
         QuickCreateButton(giIMPAttributeSelectionSliderButtonImage[1], LAPTOP_SCREEN_UL_X + (419),
-                          (INT16)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
+                          (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + (99 + iCounter / 2 * 20)), BUTTON_TOGGLE,
                           MSYS_PRIORITY_HIGHEST - 1, BtnGenericMouseMoveButtonCallback,
                           (GUI_CALLBACK)BtnIMPAttributeSliderRightCallback);
 
@@ -973,7 +973,7 @@ void CreateAttributeSliderButtons(void) {
 
 void DestroyAttributeSliderButtons(void) {
   // this function will destroy the buttons used for attribute manipulation
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // get rid of image
   UnloadButtonImage(giIMPAttributeSelectionSliderButtonImage[0]);
@@ -987,13 +987,13 @@ void DestroyAttributeSliderButtons(void) {
   return;
 }
 
-void BtnIMPAttributeSliderLeftCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iValue = -1;
+void BtnIMPAttributeSliderLeftCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iValue = -1;
 
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
-  iValue = (INT32)MSYS_GetBtnUserData(btn, 0);
+  iValue = (int32_t)MSYS_GetBtnUserData(btn, 0);
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_REPEAT) {
     DecrementStat(iValue);
@@ -1014,13 +1014,13 @@ void BtnIMPAttributeSliderLeftCallback(GUI_BUTTON *btn, INT32 reason) {
   }
 }
 
-void BtnIMPAttributeSliderRightCallback(GUI_BUTTON *btn, INT32 reason) {
-  INT32 iValue = -1;
+void BtnIMPAttributeSliderRightCallback(GUI_BUTTON *btn, int32_t reason) {
+  int32_t iValue = -1;
 
   // btn callback for IMP personality quiz answer button
   if (!(btn->uiFlags & BUTTON_ENABLED)) return;
 
-  iValue = (INT32)MSYS_GetBtnUserData(btn, 0);
+  iValue = (int32_t)MSYS_GetBtnUserData(btn, 0);
 
   if (reason & MSYS_CALLBACK_REASON_LBUTTON_REPEAT) {
     IncrementStat(iValue);
@@ -1045,15 +1045,15 @@ void BtnIMPAttributeSliderRightCallback(GUI_BUTTON *btn, INT32 reason) {
 void CreateSlideRegionMouseRegions(void) {
   // this function will create that mouse regions on the sliding area, that, if the player clicks
   // on, the bar will automatically jump to
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   for (iCounter = 0; iCounter < 10; iCounter++) {
     // define the region
     MSYS_DefineRegion(
-        &pSliderRegions[iCounter], (INT16)(SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X),
-        (INT16)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT),
-        (INT16)(LAPTOP_SCREEN_UL_X + SKILL_SLIDE_START_X + BAR_WIDTH),
-        (INT16)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT + 15),
+        &pSliderRegions[iCounter], (int16_t)(SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT),
+        (int16_t)(LAPTOP_SCREEN_UL_X + SKILL_SLIDE_START_X + BAR_WIDTH),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT + 15),
         MSYS_PRIORITY_HIGH + 2, CURSOR_WWW, MSYS_NO_CALLBACK, SliderRegionButtonCallback);
 
     // define user data
@@ -1068,8 +1068,8 @@ void CreateSlideRegionMouseRegions(void) {
 void CreateSliderBarMouseRegions(void) {
   // this function will create that mouse regions on the sliding bars, that, if the player clicks
   // on, the bar will automatically jump to
-  INT32 iCounter = 0;
-  INT16 sX = 0;
+  int32_t iCounter = 0;
+  int16_t sX = 0;
 
   // set the starting X
   sX = (((55 - 35) * BASE_SKILL_PIXEL_UNIT_SIZE) / 50) + SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X;
@@ -1077,10 +1077,10 @@ void CreateSliderBarMouseRegions(void) {
   for (iCounter = 0; iCounter < 10; iCounter++) {
     // define the region
     MSYS_DefineRegion(
-        &pSliderBarRegions[iCounter], (INT16)(sX),
-        (INT16)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT),
-        (INT16)(sX + SLIDER_BAR_WIDTH),
-        (INT16)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT + 15),
+        &pSliderBarRegions[iCounter], (int16_t)(sX),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT),
+        (int16_t)(sX + SLIDER_BAR_WIDTH),
+        (int16_t)(LAPTOP_SCREEN_WEB_UL_Y + SKILL_SLIDE_START_Y + iCounter * SKILL_SLIDE_HEIGHT + 15),
         MSYS_PRIORITY_HIGH + 2, CURSOR_WWW, MSYS_NO_CALLBACK, SliderBarRegionButtonCallback);
 
     // define user data
@@ -1094,7 +1094,7 @@ void CreateSliderBarMouseRegions(void) {
 
 void DestroySlideRegionMouseRegions(void) {
   // this function will destroy the regions user for the slider ' jumping'
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // delete the regions
   for (iCounter = 0; iCounter < 10; iCounter++) {
@@ -1106,7 +1106,7 @@ void DestroySlideRegionMouseRegions(void) {
 
 void DestroySlideBarMouseRegions(void) {
   // this function will destroy the regions user for the slider ' jumping'
-  INT32 iCounter = 0;
+  int32_t iCounter = 0;
 
   // delete the regions
   for (iCounter = 0; iCounter < 10; iCounter++) {
@@ -1116,16 +1116,16 @@ void DestroySlideBarMouseRegions(void) {
   return;
 }
 
-void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
-  INT32 iCurrentAttributeValue = 0;
-  INT32 iNewAttributeValue = 0;
-  INT32 iAttributeDelta = 0;
-  INT32 iCounter = 0;
-  INT16 sX = 0;
-  static INT16 sOldX = -1;
-  static INT32 iAttribute = -1;
-  INT32 iNewValue = 0;
-  INT16 sNewX = -1;
+void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
+  int32_t iCurrentAttributeValue = 0;
+  int32_t iNewAttributeValue = 0;
+  int32_t iAttributeDelta = 0;
+  int32_t iCounter = 0;
+  int16_t sX = 0;
+  static int16_t sOldX = -1;
+  static int32_t iAttribute = -1;
+  int32_t iNewValue = 0;
+  int16_t sNewX = -1;
 
   // if we already have an anchored slider bar
   if (gpCurrentScrollBox != pRegion && gpCurrentScrollBox != NULL) return;
@@ -1272,7 +1272,7 @@ void SliderRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
   }
 }
 
-void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) {
+void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, int32_t iReason) {
   if (iReason & MSYS_CALLBACK_REASON_LBUTTON_DWN) {
     fSlideIsActive = TRUE;
     SliderRegionButtonCallback(&pSliderRegions[MSYS_GetRegionUserData(pRegion, 0)],
@@ -1283,10 +1283,10 @@ void SliderBarRegionButtonCallback(struct MOUSE_REGION *pRegion, INT32 iReason) 
   }
 }
 
-INT32 GetCurrentAttributeValue(INT32 iAttribute) {
+int32_t GetCurrentAttributeValue(int32_t iAttribute) {
   // this function will get the value of the attribute that was passed to this fucntion via
   // iAttribute
-  INT32 iValue = 0;
+  int32_t iValue = 0;
 
   switch (iAttribute) {
     case (STRENGTH_ATTRIBUTE):
@@ -1369,7 +1369,7 @@ void SetAttributes(void) {
 
 void DrawBonusPointsRemaining(void) {
   // draws the amount of points remaining player has
-  CHAR16 sString[64];
+  wchar_t sString[64];
 
   // just reviewing, don't blit stats
   if (fReviewStats == TRUE) {
@@ -1408,7 +1408,7 @@ void SetGeneratedCharacterAttributes(void) {
   return;
 }
 
-void StatAtZeroBoxCallBack(UINT8 bExitValue) {
+void StatAtZeroBoxCallBack(uint8_t bExitValue) {
   // yes, so start over, else stay here and do nothing for now
   if (bExitValue == MSG_BOX_RETURN_YES) {
     MarkButtonsDirty();

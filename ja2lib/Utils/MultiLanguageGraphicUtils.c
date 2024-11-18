@@ -5,7 +5,7 @@
 #include "LanguageDefines.h"
 #include "SGP/Types.h"
 
-BOOLEAN GetMLGFilename(SGPFILENAME filename, UINT16 usMLGGraphicID) {
+BOOLEAN GetMLGFilename(SGPFILENAME filename, uint16_t usMLGGraphicID) {
 #if defined(ENGLISH) || defined(TAIWANESE) || defined(FRENCH)
   switch (usMLGGraphicID) {
     case MLG_AIMSYMBOL:
@@ -219,7 +219,7 @@ BOOLEAN GetMLGFilename(SGPFILENAME filename, UINT16 usMLGGraphicID) {
 
 #else
 
-  CHAR8 zLanguage[64];
+  char zLanguage[64];
 
   // The foreign language defined determines the name of the directory and filename.
   // For example, the German version of:
