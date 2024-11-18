@@ -732,6 +732,8 @@ BOOLEAN AdjustToNextAnimationFrame(struct SOLDIERTYPE *pSoldier) {
           // MOVE TWO FACGIN GRIDNOS
           sNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
                                  (uint16_t)(DirectionInc(pSoldier->bDirection)));
+          sNewGridNo = NewGridNo((uint16_t)pSoldier->sGridNo,
+                                 (uint16_t)(DirectionInc(pSoldier->bDirection)));
           sNewGridNo =
               NewGridNo((uint16_t)sNewGridNo, (uint16_t)(DirectionInc(pSoldier->bDirection)));
           pSoldier->sForcastGridno = sNewGridNo;
